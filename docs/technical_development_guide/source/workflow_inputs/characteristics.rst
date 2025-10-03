@@ -201,17 +201,11 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``site_type``
-     - false
-     - 
-     - Choice
-     - auto, suburban, urban, rural
-     - The type of site. If not provided, the OS-HPXML default (see `HPXML Site <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-site>`_) is used.
    * - ``site_iecc_zone``
      - false
      - 
      - Choice
-     - auto, 1A, 1B, 1C, 2A, 2B, 2C, 3A, 3B, 3C, 4A, 4B, 4C, 5A, 5B, 5C, 6A, 6B, 6C, 7, 8
+     - 1A, 1B, 1C, 2A, 2B, 2C, 3A, 3B, 3C, 4A, 4B, 4C, 5A, 5B, 5C, 6A, 6B, 6C, 7, 8
      - IECC zone of the home address.
 
 Options
@@ -226,76 +220,58 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``site_type``
      - ``site_iecc_zone``
 
    * - 1A
      - 1.8%
-     - auto
      - 1A
    * - 2A
      - 12%
-     - auto
      - 2A
    * - 2B
      - 2%
-     - auto
      - 2B
    * - 3A
      - 13%
-     - auto
      - 3A
    * - 3B
      - 9.3%
-     - auto
      - 3B
    * - 3C
      - 2.3%
-     - auto
      - 3C
    * - 4A
      - 22%
-     - auto
      - 4A
    * - 4B
      - 0.77%
-     - auto
      - 4B
    * - 4C
      - 2.9%
-     - auto
      - 4C
    * - 5A
      - 23%
-     - auto
      - 5A
    * - 5B
      - 3.8%
-     - auto
      - 5B
    * - 6A
      - 6.1%
-     - auto
      - 6A
    * - 6B
      - 0.92%
-     - auto
      - 6B
    * - 7A
      - 0.79%
-     - auto
      - 7
    * - 7AK
      - 0.18%
-     - auto
      - 7
    * - 7B
      - 0.11%
-     - auto
      - 7
    * - 8AK
      - 0.052%
-     - auto
      - 8
 
 .. _ashrae_iecc_climate_zone_2004___sub_cz_split:
@@ -466,36 +442,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``bathroom_fans_quantity``
-     - false
-     - #
-     - Integer
-     - auto
-     - The quantity of the bathroom fans. If not provided, the OS-HPXML default (see `HPXML Local Ventilation Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-local-ventilation-fans>`_) is used.
-   * - ``bathroom_fans_flow_rate``
-     - false
-     - CFM
-     - Double
-     - auto
-     - The flow rate of the bathroom fans. If not provided, the OS-HPXML default (see `HPXML Local Ventilation Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-local-ventilation-fans>`_) is used.
-   * - ``bathroom_fans_hours_in_operation``
-     - false
-     - hrs/day
-     - Double
-     - auto
-     - The hours in operation of the bathroom fans. If not provided, the OS-HPXML default (see `HPXML Local Ventilation Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-local-ventilation-fans>`_) is used.
-   * - ``bathroom_fans_power``
-     - false
-     - W
-     - Double
-     - auto
-     - The fan power of the bathroom fans. If not provided, the OS-HPXML default (see `HPXML Local Ventilation Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-local-ventilation-fans>`_) is used.
    * - ``bathroom_fans_start_hour``
      - false
-     - hr
+     - 
      - Integer
-     - auto
-     - The start hour of the bathroom fans. If not provided, the OS-HPXML default (see `HPXML Local Ventilation Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-local-ventilation-fans>`_) is used.
+     -
+     - The hour of the day when the bathroom fans run.
 
 Options
 *******
@@ -509,179 +461,79 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``bathroom_fans_quantity``
-     - ``bathroom_fans_flow_rate``
-     - ``bathroom_fans_hours_in_operation``
-     - ``bathroom_fans_power``
      - ``bathroom_fans_start_hour``
 
    * - Hour0
      - 6.1%
-     - auto
-     - auto
-     - auto
-     - auto
      - 0
    * - Hour1
      - 6.1%
-     - auto
-     - auto
-     - auto
-     - auto
      - 1
    * - Hour2
      - 6.1%
-     - auto
-     - auto
-     - auto
-     - auto
      - 2
    * - Hour3
      - 6.1%
-     - auto
-     - auto
-     - auto
-     - auto
      - 3
    * - Hour4
      - 6.1%
-     - auto
-     - auto
-     - auto
-     - auto
      - 4
    * - Hour5
      - 6.1%
-     - auto
-     - auto
-     - auto
-     - auto
      - 5
    * - Hour6
      - 6.1%
-     - auto
-     - auto
-     - auto
-     - auto
      - 6
    * - Hour7
      - 5.3%
-     - auto
-     - auto
-     - auto
-     - auto
      - 7
    * - Hour8
      - 2.5%
-     - auto
-     - auto
-     - auto
-     - auto
      - 8
    * - Hour9
      - 1.5%
-     - auto
-     - auto
-     - auto
-     - auto
      - 9
    * - Hour10
      - 1.5%
-     - auto
-     - auto
-     - auto
-     - auto
      - 10
    * - Hour11
      - 1.5%
-     - auto
-     - auto
-     - auto
-     - auto
      - 11
    * - Hour12
      - 1.5%
-     - auto
-     - auto
-     - auto
-     - auto
      - 12
    * - Hour13
      - 1.5%
-     - auto
-     - auto
-     - auto
-     - auto
      - 13
    * - Hour14
      - 1.5%
-     - auto
-     - auto
-     - auto
-     - auto
      - 14
    * - Hour15
      - 1.5%
-     - auto
-     - auto
-     - auto
-     - auto
      - 15
    * - Hour16
      - 1.8%
-     - auto
-     - auto
-     - auto
-     - auto
      - 16
    * - Hour17
      - 3.3%
-     - auto
-     - auto
-     - auto
-     - auto
      - 17
    * - Hour18
      - 5.4%
-     - auto
-     - auto
-     - auto
-     - auto
      - 18
    * - Hour19
      - 5.4%
-     - auto
-     - auto
-     - auto
-     - auto
      - 19
    * - Hour20
      - 5.4%
-     - auto
-     - auto
-     - auto
-     - auto
      - 20
    * - Hour21
      - 6.1%
-     - auto
-     - auto
-     - auto
-     - auto
      - 21
    * - Hour22
      - 6.1%
-     - auto
-     - auto
-     - auto
-     - auto
      - 22
    * - Hour23
      - 6.1%
-     - auto
-     - auto
-     - auto
-     - auto
      - 23
 
 .. _battery:
@@ -718,42 +570,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``battery_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is a lithium ion battery present.
-   * - ``battery_location``
+   * - ``battery``
      - false
      - 
      - Choice
-     - auto, conditioned space, basement - conditioned, basement - unconditioned, crawlspace, crawlspace - vented, crawlspace - unvented, crawlspace - conditioned, attic, attic - vented, attic - unvented, garage, outside
-     - The space type for the lithium ion battery location. If not provided, the OS-HPXML default (see `HPXML Batteries <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-batteries>`_) is used.
-   * - ``battery_power``
-     - false
-     - W
-     - Double
-     - auto
-     - The rated power output of the lithium ion battery. If not provided, the OS-HPXML default (see `HPXML Batteries <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-batteries>`_) is used.
-   * - ``battery_capacity``
-     - false
-     - kWh
-     - Double
-     - auto
-     - The nominal capacity of the lithium ion battery. If not provided, the OS-HPXML default (see `HPXML Batteries <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-batteries>`_) is used.
-   * - ``battery_usable_capacity``
-     - false
-     - kWh
-     - Double
-     - auto
-     - The usable capacity of the lithium ion battery. If not provided, the OS-HPXML default (see `HPXML Batteries <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-batteries>`_) is used.
-   * - ``battery_round_trip_efficiency``
-     - false
-     - Frac
-     - Double
-     - auto
-     - The round trip efficiency of the lithium ion battery. If not provided, the OS-HPXML default (see `HPXML Batteries <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-batteries>`_) is used.
+     - None, 5.0 kWh, 7.5 kWh, 10.0 kWh, 12.5 kWh, 15.0 kWh, 17.5 kWh, 20.0 kWh, Detailed Example: 20.0 kWh, 6 kW, Garage, Detailed Example: 20.0 kWh, 6 kW, Outside, Detailed Example: 20.0 kWh, 6 kW, Outside, 80% Efficiency
+     - The size and type of battery storage.
 
 Options
 *******
@@ -767,37 +589,17 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``battery_present``
-     - ``battery_location``
-     - ``battery_power``
-     - ``battery_capacity``
-     - ``battery_usable_capacity``
-     - ``battery_round_trip_efficiency``
+     - ``battery``
 
    * - None
      - 100%
-     - false
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - None
    * - 10 kWh
      - 0%
-     - true
-     - auto
-     - auto
-     - 10
-     - auto
-     - auto
+     - 10.0 kWh
    * - 20 kWh
      - 0%
-     - true
-     - auto
-     - auto
-     - 20
-     - auto
-     - auto
+     - 20.0 kWh
 
 .. _bedrooms:
 
@@ -845,16 +647,16 @@ Arguments
      - Description
    * - ``geometry_unit_num_bedrooms``
      - true
-     - #
-     - Integer
-     -
+     - 
+     - Choice
+     - 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
      - The number of bedrooms in the unit.
    * - ``geometry_unit_num_bathrooms``
      - false
-     - #
-     - Integer
-     - auto
-     - The number of bathrooms in the unit. If not provided, the OS-HPXML default (see `HPXML Building Construction <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-building-construction>`_) is used.
+     - 
+     - Choice
+     - Default, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+     - The number of bathrooms in the unit. Defaults to NumberofBedrooms/2 + 0.5.
 
 Options
 *******
@@ -874,23 +676,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - 1
      - 13%
      - 1
-     - auto
+     - Default
    * - 2
      - 27%
      - 2
-     - auto
+     - Default
    * - 3
      - 39%
      - 3
-     - auto
+     - Default
    * - 4
      - 17%
      - 4
-     - auto
+     - Default
    * - 5
      - 4.7%
      - 5
-     - auto
+     - Default
 
 .. _building_america_climate_zone:
 
@@ -1072,36 +874,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``ceiling_fan_present``
-     - true
+   * - ``ceiling_fans``
+     - false
      - 
-     - Boolean
-     - true, false
-     - Whether there are any ceiling fans.
-   * - ``ceiling_fan_label_energy_use``
-     - false
-     - W
-     - Double
-     - auto
-     - The label average energy use of the ceiling fan(s). If neither Efficiency nor Label Energy Use provided, the OS-HPXML default (see `HPXML Ceiling Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-ceiling-fans>`_) is used.
-   * - ``ceiling_fan_efficiency``
-     - false
-     - CFM/W
-     - Double
-     - auto
-     - The efficiency rating of the ceiling fan(s) at medium speed. Only used if Label Energy Use not provided. If neither Efficiency nor Label Energy Use provided, the OS-HPXML default (see `HPXML Ceiling Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-ceiling-fans>`_) is used.
-   * - ``ceiling_fan_quantity``
-     - false
-     - #
-     - Integer
-     - auto
-     - Total number of ceiling fans. If not provided, the OS-HPXML default (see `HPXML Ceiling Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-ceiling-fans>`_) is used.
-   * - ``ceiling_fan_cooling_setpoint_temp_offset``
-     - false
-     - F
-     - Double
-     - auto
-     - The cooling setpoint temperature offset during months when the ceiling fans are operating. Only applies if ceiling fan quantity is greater than zero. If not provided, the OS-HPXML default (see `HPXML Ceiling Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-ceiling-fans>`_) is used.
+     - Choice
+     - None, NumBedrooms+1 Fans, 45.0 W, NumBedrooms+1 Fans, 37.5 W, NumBedrooms+1 Fans, 30.0 W, NumBedrooms+1 Fans, 22.5 W, NumBedrooms+1 Fans, 15.0 W, 1 Fan, 45.0 W, 1 Fan, 37.5 W, 1 Fan, 30.0 W, 1 Fan, 22.5 W, 1 Fan, 15.0 W, 2 Fans, 45.0 W, 2 Fans, 37.5 W, 2 Fans, 30.0 W, 2 Fans, 22.5 W, 2 Fans, 15.0 W, 3 Fans, 45.0 W, 3 Fans, 37.5 W, 3 Fans, 30.0 W, 3 Fans, 22.5 W, 3 Fans, 15.0 W, 4 Fans, 45.0 W, 4 Fans, 37.5 W, 4 Fans, 30.0 W, 4 Fans, 22.5 W, 4 Fans, 15.0 W, 5 Fans, 45.0 W, 5 Fans, 37.5 W, 5 Fans, 30.0 W, 5 Fans, 22.5 W, 5 Fans, 15.0 W, Detailed Example: 4 Fans, 39 W, 0.5 deg-F Setpoint Offset, Detailed Example: 4 Fans, 100 cfm/W, 0.5 deg-F Setpoint Offset
+     - The type of ceiling fans.
 
 Options
 *******
@@ -1115,33 +893,17 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``ceiling_fan_present``
-     - ``ceiling_fan_label_energy_use``
-     - ``ceiling_fan_efficiency``
-     - ``ceiling_fan_quantity``
-     - ``ceiling_fan_cooling_setpoint_temp_offset``
+     - ``ceiling_fans``
 
    * - None
      - 28%
-     - false
-     - auto
-     - auto
-     - 0
-     - auto
+     - None
    * - Standard Efficiency
      - 63%
-     - true
-     - 45
-     - auto
-     - auto
-     - auto
+     - NumBedrooms+1 Fans, 45.0 W
    * - Standard Efficiency, No usage
      - 8.7%
-     - false
-     - auto
-     - auto
-     - 0
-     - auto
+     - None
 
 .. _census_division:
 
@@ -1341,26 +1103,6 @@ Assumption
 - \The value 'Not in a census Place' designates the fraction of dwelling units not in a Census Place according to the 2010 Census.
 
 
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``site_city``
-     - false
-     - 
-     - String
-     -
-     - City/municipality of the home address.
-
 Options
 *******
 
@@ -1373,3326 +1115,2219 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``site_city``
 
    * - AK, Anchorage
      - 0.085%
-     - auto
    * - AL, Auburn
      - 0.019%
-     - auto
    * - AL, Birmingham
      - 0.085%
-     - auto
    * - AL, Decatur
      - 0.018%
-     - auto
    * - AL, Dothan
      - 0.023%
-     - auto
    * - AL, Florence
      - 0.015%
-     - auto
    * - AL, Gadsden
      - 0.013%
-     - auto
    * - AL, Hoover
      - 0.027%
-     - auto
    * - AL, Huntsville
      - 0.068%
-     - auto
    * - AL, Madison
      - 0.014%
-     - auto
    * - AL, Mobile
      - 0.068%
-     - auto
    * - AL, Montgomery
      - 0.069%
-     - auto
    * - AL, Phenix City
      - 0.013%
-     - auto
    * - AL, Tuscaloosa
      - 0.034%
-     - auto
    * - AR, Bentonville
      - 0.013%
-     - auto
    * - AR, Conway
      - 0.02%
-     - auto
    * - AR, Fayetteville
      - 0.028%
-     - auto
    * - AR, Fort Smith
      - 0.03%
-     - auto
    * - AR, Hot Springs
      - 0.014%
-     - auto
    * - AR, Jonesboro
      - 0.023%
-     - auto
    * - AR, Little Rock
      - 0.071%
-     - auto
    * - AR, North Little Rock
      - 0.024%
-     - auto
    * - AR, Pine Bluff
      - 0.016%
-     - auto
    * - AR, Rogers
      - 0.017%
-     - auto
    * - AR, Springdale
      - 0.02%
-     - auto
    * - AZ, Apache Junction
      - 0.017%
-     - auto
    * - AZ, Avondale
      - 0.02%
-     - auto
    * - AZ, Buckeye
      - 0.015%
-     - auto
    * - AZ, Bullhead City
      - 0.018%
-     - auto
    * - AZ, Casa Grande
      - 0.016%
-     - auto
    * - AZ, Casas Adobes
      - 0.023%
-     - auto
    * - AZ, Catalina Foothills
      - 0.02%
-     - auto
    * - AZ, Chandler
      - 0.069%
-     - auto
    * - AZ, Flagstaff
      - 0.02%
-     - auto
    * - AZ, Fortuna Foothills
      - 0.015%
-     - auto
    * - AZ, Gilbert
      - 0.058%
-     - auto
    * - AZ, Glendale
      - 0.068%
-     - auto
    * - AZ, Goodyear
      - 0.021%
-     - auto
    * - AZ, Green Valley
      - 0.013%
-     - auto
    * - AZ, Lake Havasu City
      - 0.025%
-     - auto
    * - AZ, Marana
      - 0.012%
-     - auto
    * - AZ, Maricopa
      - 0.013%
-     - auto
    * - AZ, Mesa
      - 0.15%
-     - auto
    * - AZ, Oro Valley
      - 0.016%
-     - auto
    * - AZ, Peoria
      - 0.048%
-     - auto
    * - AZ, Phoenix
      - 0.45%
-     - auto
    * - AZ, Prescott
      - 0.017%
-     - auto
    * - AZ, Prescott Valley
      - 0.014%
-     - auto
    * - AZ, San Tan Valley
      - 0.024%
-     - auto
    * - AZ, Scottsdale
      - 0.098%
-     - auto
    * - AZ, Sierra Vista
      - 0.015%
-     - auto
    * - AZ, Sun City
      - 0.021%
-     - auto
    * - AZ, Sun City West
      - 0.014%
-     - auto
    * - AZ, Surprise
      - 0.042%
-     - auto
    * - AZ, Tempe
      - 0.056%
-     - auto
    * - AZ, Tucson
      - 0.17%
-     - auto
    * - AZ, Yuma
      - 0.03%
-     - auto
    * - CA, Alameda
      - 0.024%
-     - auto
    * - CA, Alhambra
      - 0.023%
-     - auto
    * - CA, Aliso Viejo
      - 0.015%
-     - auto
    * - CA, Altadena
      - 0.012%
-     - auto
    * - CA, Anaheim
      - 0.078%
-     - auto
    * - CA, Antioch
      - 0.027%
-     - auto
    * - CA, Apple Valley
      - 0.019%
-     - auto
    * - CA, Arcadia
      - 0.015%
-     - auto
    * - CA, Arden-Arcade
      - 0.033%
-     - auto
    * - CA, Bakersfield
      - 0.091%
-     - auto
    * - CA, Baldwin Park
      - 0.014%
-     - auto
    * - CA, Bellflower
      - 0.019%
-     - auto
    * - CA, Berkeley
      - 0.037%
-     - auto
    * - CA, Beverly Hills
      - 0.012%
-     - auto
    * - CA, Brea
      - 0.012%
-     - auto
    * - CA, Brentwood
      - 0.014%
-     - auto
    * - CA, Buena Park
      - 0.018%
-     - auto
    * - CA, Burbank
      - 0.034%
-     - auto
    * - CA, Camarillo
      - 0.019%
-     - auto
    * - CA, Campbell
      - 0.013%
-     - auto
    * - CA, Carlsbad
      - 0.035%
-     - auto
    * - CA, Carmichael
      - 0.021%
-     - auto
    * - CA, Carson
      - 0.019%
-     - auto
    * - CA, Castro Valley
      - 0.017%
-     - auto
    * - CA, Cathedral City
      - 0.017%
-     - auto
    * - CA, Cerritos
      - 0.012%
-     - auto
    * - CA, Chico
      - 0.03%
-     - auto
    * - CA, Chino
      - 0.015%
-     - auto
    * - CA, Chino Hills
      - 0.019%
-     - auto
    * - CA, Chula Vista
      - 0.063%
-     - auto
    * - CA, Citrus Heights
      - 0.026%
-     - auto
    * - CA, Clovis
      - 0.027%
-     - auto
    * - CA, Colton
      - 0.013%
-     - auto
    * - CA, Compton
      - 0.019%
-     - auto
    * - CA, Concord
      - 0.036%
-     - auto
    * - CA, Corona
      - 0.039%
-     - auto
    * - CA, Costa Mesa
      - 0.032%
-     - auto
    * - CA, Covina
      - 0.012%
-     - auto
    * - CA, Culver City
      - 0.013%
-     - auto
    * - CA, Cupertino
      - 0.016%
-     - auto
    * - CA, Cypress
      - 0.012%
-     - auto
    * - CA, Daly City
      - 0.024%
-     - auto
    * - CA, Dana Point
      - 0.013%
-     - auto
    * - CA, Danville
      - 0.012%
-     - auto
    * - CA, Davis
      - 0.019%
-     - auto
    * - CA, Diamond Bar
      - 0.014%
-     - auto
    * - CA, Downey
      - 0.026%
-     - auto
    * - CA, Dublin
      - 0.014%
-     - auto
    * - CA, East Los Angeles
      - 0.025%
-     - auto
    * - CA, El Cajon
      - 0.026%
-     - auto
    * - CA, El Dorado Hills
      - 0.011%
-     - auto
    * - CA, El Monte
      - 0.024%
-     - auto
    * - CA, Elk Grove
      - 0.039%
-     - auto
    * - CA, Encinitas
      - 0.019%
-     - auto
    * - CA, Escondido
      - 0.035%
-     - auto
    * - CA, Fairfield
      - 0.028%
-     - auto
    * - CA, Florence-Graham
      - 0.011%
-     - auto
    * - CA, Florin
      - 0.012%
-     - auto
    * - CA, Folsom
      - 0.02%
-     - auto
    * - CA, Fontana
      - 0.04%
-     - auto
    * - CA, Fountain Valley
      - 0.014%
-     - auto
    * - CA, Fremont
      - 0.057%
-     - auto
    * - CA, Fresno
      - 0.13%
-     - auto
    * - CA, Fullerton
      - 0.036%
-     - auto
    * - CA, Garden Grove
      - 0.036%
-     - auto
    * - CA, Gardena
      - 0.016%
-     - auto
    * - CA, Gilroy
      - 0.012%
-     - auto
    * - CA, Glendale
      - 0.057%
-     - auto
    * - CA, Glendora
      - 0.013%
-     - auto
    * - CA, Hacienda Heights
      - 0.013%
-     - auto
    * - CA, Hanford
      - 0.014%
-     - auto
    * - CA, Hawthorne
      - 0.022%
-     - auto
    * - CA, Hayward
      - 0.036%
-     - auto
    * - CA, Hemet
      - 0.025%
-     - auto
    * - CA, Hesperia
      - 0.021%
-     - auto
    * - CA, Highland
      - 0.013%
-     - auto
    * - CA, Huntington Beach
      - 0.059%
-     - auto
    * - CA, Huntington Park
      - 0.011%
-     - auto
    * - CA, Indio
      - 0.024%
-     - auto
    * - CA, Inglewood
      - 0.029%
-     - auto
    * - CA, Irvine
      - 0.073%
-     - auto
    * - CA, La Habra
      - 0.015%
-     - auto
    * - CA, La Mesa
      - 0.019%
-     - auto
    * - CA, La Quinta
      - 0.018%
-     - auto
    * - CA, Laguna Niguel
      - 0.02%
-     - auto
    * - CA, Lake Elsinore
      - 0.012%
-     - auto
    * - CA, Lake Forest
      - 0.02%
-     - auto
    * - CA, Lakewood
      - 0.021%
-     - auto
    * - CA, Lancaster
      - 0.039%
-     - auto
    * - CA, Lincoln
      - 0.013%
-     - auto
    * - CA, Livermore
      - 0.024%
-     - auto
    * - CA, Lodi
      - 0.018%
-     - auto
    * - CA, Long Beach
      - 0.13%
-     - auto
    * - CA, Los Angeles
      - 1.1%
-     - auto
    * - CA, Lynwood
      - 0.012%
-     - auto
    * - CA, Madera
      - 0.014%
-     - auto
    * - CA, Manhattan Beach
      - 0.012%
-     - auto
    * - CA, Manteca
      - 0.018%
-     - auto
    * - CA, Martinez
      - 0.011%
-     - auto
    * - CA, Menifee
      - 0.023%
-     - auto
    * - CA, Merced
      - 0.02%
-     - auto
    * - CA, Milpitas
      - 0.017%
-     - auto
    * - CA, Mission Viejo
      - 0.026%
-     - auto
    * - CA, Modesto
      - 0.056%
-     - auto
    * - CA, Montebello
      - 0.016%
-     - auto
    * - CA, Monterey Park
      - 0.016%
-     - auto
    * - CA, Moreno Valley
      - 0.041%
-     - auto
    * - CA, Mountain View
      - 0.026%
-     - auto
    * - CA, Murrieta
      - 0.025%
-     - auto
    * - CA, Napa
      - 0.023%
-     - auto
    * - CA, National City
      - 0.013%
-     - auto
    * - CA, Newport Beach
      - 0.033%
-     - auto
    * - CA, North Highlands
      - 0.012%
-     - auto
    * - CA, Norwalk
      - 0.021%
-     - auto
    * - CA, Novato
      - 0.017%
-     - auto
    * - CA, Oakland
      - 0.13%
-     - auto
    * - CA, Oceanside
      - 0.049%
-     - auto
    * - CA, Ontario
      - 0.039%
-     - auto
    * - CA, Orange
      - 0.033%
-     - auto
    * - CA, Oxnard
      - 0.041%
-     - auto
    * - CA, Palm Desert
      - 0.029%
-     - auto
    * - CA, Palm Springs
      - 0.027%
-     - auto
    * - CA, Palmdale
      - 0.035%
-     - auto
    * - CA, Palo Alto
      - 0.021%
-     - auto
    * - CA, Pasadena
      - 0.044%
-     - auto
    * - CA, Perris
      - 0.013%
-     - auto
    * - CA, Petaluma
      - 0.017%
-     - auto
    * - CA, Pico Rivera
      - 0.013%
-     - auto
    * - CA, Pittsburg
      - 0.016%
-     - auto
    * - CA, Placentia
      - 0.013%
-     - auto
    * - CA, Pleasanton
      - 0.021%
-     - auto
    * - CA, Pomona
      - 0.03%
-     - auto
    * - CA, Porterville
      - 0.013%
-     - auto
    * - CA, Poway
      - 0.012%
-     - auto
    * - CA, Rancho Cordova
      - 0.019%
-     - auto
    * - CA, Rancho Cucamonga
      - 0.044%
-     - auto
    * - CA, Rancho Palos Verdes
      - 0.012%
-     - auto
    * - CA, Rancho Santa Margarita
      - 0.013%
-     - auto
    * - CA, Redding
      - 0.029%
-     - auto
    * - CA, Redlands
      - 0.019%
-     - auto
    * - CA, Redondo Beach
      - 0.022%
-     - auto
    * - CA, Redwood City
      - 0.023%
-     - auto
    * - CA, Rialto
      - 0.02%
-     - auto
    * - CA, Richmond
      - 0.029%
-     - auto
    * - CA, Riverside
      - 0.073%
-     - auto
    * - CA, Rocklin
      - 0.017%
-     - auto
    * - CA, Rohnert Park
      - 0.013%
-     - auto
    * - CA, Rosemead
      - 0.012%
-     - auto
    * - CA, Roseville
      - 0.037%
-     - auto
    * - CA, Rowland Heights
      - 0.012%
-     - auto
    * - CA, Sacramento
      - 0.14%
-     - auto
    * - CA, Salinas
      - 0.032%
-     - auto
    * - CA, San Bernardino
      - 0.046%
-     - auto
    * - CA, San Bruno
      - 0.011%
-     - auto
    * - CA, San Buenaventura Ventura
      - 0.032%
-     - auto
    * - CA, San Clemente
      - 0.02%
-     - auto
    * - CA, San Diego
      - 0.39%
-     - auto
    * - CA, San Francisco
      - 0.29%
-     - auto
    * - CA, San Jose
      - 0.24%
-     - auto
    * - CA, San Leandro
      - 0.025%
-     - auto
    * - CA, San Luis Obispo
      - 0.015%
-     - auto
    * - CA, San Marcos
      - 0.022%
-     - auto
    * - CA, San Mateo
      - 0.03%
-     - auto
    * - CA, San Rafael
      - 0.018%
-     - auto
    * - CA, San Ramon
      - 0.019%
-     - auto
    * - CA, Santa Ana
      - 0.058%
-     - auto
    * - CA, Santa Barbara
      - 0.029%
-     - auto
    * - CA, Santa Clara
      - 0.035%
-     - auto
    * - CA, Santa Clarita
      - 0.046%
-     - auto
    * - CA, Santa Cruz
      - 0.018%
-     - auto
    * - CA, Santa Maria
      - 0.022%
-     - auto
    * - CA, Santa Monica
      - 0.038%
-     - auto
    * - CA, Santa Rosa
      - 0.051%
-     - auto
    * - CA, Santee
      - 0.015%
-     - auto
    * - CA, Simi Valley
      - 0.032%
-     - auto
    * - CA, South Gate
      - 0.018%
-     - auto
    * - CA, South Lake Tahoe
      - 0.013%
-     - auto
    * - CA, South San Francisco
      - 0.016%
-     - auto
    * - CA, South Whittier
      - 0.012%
-     - auto
    * - CA, Stockton
      - 0.076%
-     - auto
    * - CA, Sunnyvale
      - 0.043%
-     - auto
    * - CA, Temecula
      - 0.026%
-     - auto
    * - CA, Thousand Oaks
      - 0.035%
-     - auto
    * - CA, Torrance
      - 0.044%
-     - auto
    * - CA, Tracy
      - 0.019%
-     - auto
    * - CA, Tulare
      - 0.015%
-     - auto
    * - CA, Turlock
      - 0.019%
-     - auto
    * - CA, Tustin
      - 0.019%
-     - auto
    * - CA, Union City
      - 0.016%
-     - auto
    * - CA, Upland
      - 0.021%
-     - auto
    * - CA, Vacaville
      - 0.025%
-     - auto
    * - CA, Vallejo
      - 0.034%
-     - auto
    * - CA, Victorville
      - 0.027%
-     - auto
    * - CA, Visalia
      - 0.034%
-     - auto
    * - CA, Vista
      - 0.024%
-     - auto
    * - CA, Walnut Creek
      - 0.024%
-     - auto
    * - CA, West Covina
      - 0.024%
-     - auto
    * - CA, West Hollywood
      - 0.018%
-     - auto
    * - CA, West Sacramento
      - 0.014%
-     - auto
    * - CA, Westminster
      - 0.021%
-     - auto
    * - CA, Whittier
      - 0.022%
-     - auto
    * - CA, Woodland
      - 0.016%
-     - auto
    * - CA, Yorba Linda
      - 0.017%
-     - auto
    * - CA, Yuba City
      - 0.017%
-     - auto
    * - CA, Yucaipa
      - 0.015%
-     - auto
    * - CO, Arvada
      - 0.034%
-     - auto
    * - CO, Aurora
      - 0.099%
-     - auto
    * - CO, Boulder
      - 0.034%
-     - auto
    * - CO, Broomfield
      - 0.019%
-     - auto
    * - CO, Castle Rock
      - 0.015%
-     - auto
    * - CO, Centennial
      - 0.029%
-     - auto
    * - CO, Colorado Springs
      - 0.14%
-     - auto
    * - CO, Commerce City
      - 0.012%
-     - auto
    * - CO, Denver
      - 0.22%
-     - auto
    * - CO, Englewood
      - 0.012%
-     - auto
    * - CO, Fort Collins
      - 0.046%
-     - auto
    * - CO, Grand Junction
      - 0.02%
-     - auto
    * - CO, Greeley
      - 0.027%
-     - auto
    * - CO, Highlands Ranch
      - 0.029%
-     - auto
    * - CO, Lakewood
      - 0.049%
-     - auto
    * - CO, Littleton
      - 0.016%
-     - auto
    * - CO, Longmont
      - 0.027%
-     - auto
    * - CO, Loveland
      - 0.023%
-     - auto
    * - CO, Parker
      - 0.013%
-     - auto
    * - CO, Pueblo
      - 0.036%
-     - auto
    * - CO, Thornton
      - 0.034%
-     - auto
    * - CO, Westminster
      - 0.033%
-     - auto
    * - CT, Bridgeport
      - 0.043%
-     - auto
    * - CT, Bristol
      - 0.02%
-     - auto
    * - CT, Danbury
      - 0.024%
-     - auto
    * - CT, East Hartford
      - 0.016%
-     - auto
    * - CT, Hartford
      - 0.04%
-     - auto
    * - CT, Meriden
      - 0.022%
-     - auto
    * - CT, Middletown
      - 0.016%
-     - auto
    * - CT, Milford City Balance
      - 0.017%
-     - auto
    * - CT, New Britain
      - 0.024%
-     - auto
    * - CT, New Haven
      - 0.042%
-     - auto
    * - CT, Norwalk
      - 0.026%
-     - auto
    * - CT, Norwich
      - 0.014%
-     - auto
    * - CT, Shelton
      - 0.013%
-     - auto
    * - CT, Stamford
      - 0.039%
-     - auto
    * - CT, Stratford
      - 0.016%
-     - auto
    * - CT, Torrington
      - 0.013%
-     - auto
    * - CT, Waterbury
      - 0.035%
-     - auto
    * - CT, West Hartford
      - 0.019%
-     - auto
    * - CT, West Haven
      - 0.017%
-     - auto
    * - DC, Washington
      - 0.23%
-     - auto
    * - DE, Dover
      - 0.011%
-     - auto
    * - DE, Wilmington
      - 0.025%
-     - auto
    * - FL, Alafaya
      - 0.024%
-     - auto
    * - FL, Altamonte Springs
      - 0.017%
-     - auto
    * - FL, Apopka
      - 0.014%
-     - auto
    * - FL, Aventura
      - 0.024%
-     - auto
    * - FL, Boca Raton
      - 0.036%
-     - auto
    * - FL, Bonita Springs
      - 0.025%
-     - auto
    * - FL, Boynton Beach
      - 0.027%
-     - auto
    * - FL, Bradenton
      - 0.02%
-     - auto
    * - FL, Brandon
      - 0.033%
-     - auto
    * - FL, Cape Coral
      - 0.06%
-     - auto
    * - FL, Carrollwood
      - 0.011%
-     - auto
    * - FL, Clearwater
      - 0.044%
-     - auto
    * - FL, Coconut Creek
      - 0.02%
-     - auto
    * - FL, Coral Gables
      - 0.016%
-     - auto
    * - FL, Coral Springs
      - 0.033%
-     - auto
    * - FL, Country Club
      - 0.013%
-     - auto
    * - FL, Dania Beach
      - 0.012%
-     - auto
    * - FL, Davie
      - 0.028%
-     - auto
    * - FL, Daytona Beach
      - 0.027%
-     - auto
    * - FL, Deerfield Beach
      - 0.032%
-     - auto
    * - FL, Delray Beach
      - 0.026%
-     - auto
    * - FL, Deltona
      - 0.025%
-     - auto
    * - FL, Doral
      - 0.015%
-     - auto
    * - FL, Dunedin
      - 0.015%
-     - auto
    * - FL, East Lake
      - 0.011%
-     - auto
    * - FL, Estero
      - 0.015%
-     - auto
    * - FL, Fort Lauderdale
      - 0.071%
-     - auto
    * - FL, Fort Myers
      - 0.028%
-     - auto
    * - FL, Fort Pierce
      - 0.016%
-     - auto
    * - FL, Fountainebleau
      - 0.017%
-     - auto
    * - FL, Four Corners
      - 0.021%
-     - auto
    * - FL, Gainesville
      - 0.044%
-     - auto
    * - FL, Greenacres
      - 0.012%
-     - auto
    * - FL, Hallandale Beach
      - 0.022%
-     - auto
    * - FL, Hialeah
      - 0.056%
-     - auto
    * - FL, Hollywood
      - 0.053%
-     - auto
    * - FL, Homestead
      - 0.017%
-     - auto
    * - FL, Jacksonville
      - 0.28%
-     - auto
    * - FL, Jupiter
      - 0.023%
-     - auto
    * - FL, Kendale Lakes
      - 0.014%
-     - auto
    * - FL, Kendall
      - 0.023%
-     - auto
    * - FL, Kissimmee
      - 0.02%
-     - auto
    * - FL, Lake Worth
      - 0.012%
-     - auto
    * - FL, Lakeland
      - 0.036%
-     - auto
    * - FL, Largo
      - 0.034%
-     - auto
    * - FL, Lauderhill
      - 0.021%
-     - auto
    * - FL, Lehigh Acres
      - 0.028%
-     - auto
    * - FL, Marco Island
      - 0.014%
-     - auto
    * - FL, Margate
      - 0.019%
-     - auto
    * - FL, Melbourne
      - 0.03%
-     - auto
    * - FL, Merritt Island
      - 0.013%
-     - auto
    * - FL, Miami
      - 0.14%
-     - auto
    * - FL, Miami Beach
      - 0.052%
-     - auto
    * - FL, Miami Gardens
      - 0.026%
-     - auto
    * - FL, Miramar
      - 0.032%
-     - auto
    * - FL, Naples
      - 0.014%
-     - auto
    * - FL, New Smyrna Beach
      - 0.013%
-     - auto
    * - FL, North Fort Myers
      - 0.019%
-     - auto
    * - FL, North Miami
      - 0.016%
-     - auto
    * - FL, North Miami Beach
      - 0.012%
-     - auto
    * - FL, North Port
      - 0.022%
-     - auto
    * - FL, Oakland Park
      - 0.014%
-     - auto
    * - FL, Ocala
      - 0.019%
-     - auto
    * - FL, Orlando
      - 0.093%
-     - auto
    * - FL, Ormond Beach
      - 0.014%
-     - auto
    * - FL, Palm Bay
      - 0.033%
-     - auto
    * - FL, Palm Beach Gardens
      - 0.021%
-     - auto
    * - FL, Palm Coast
      - 0.026%
-     - auto
    * - FL, Palm Harbor
      - 0.023%
-     - auto
    * - FL, Panama City
      - 0.013%
-     - auto
    * - FL, Panama City Beach
      - 0.013%
-     - auto
    * - FL, Pembroke Pines
      - 0.048%
-     - auto
    * - FL, Pensacola
      - 0.019%
-     - auto
    * - FL, Pine Hills
      - 0.017%
-     - auto
    * - FL, Pinellas Park
      - 0.018%
-     - auto
    * - FL, Plantation
      - 0.03%
-     - auto
    * - FL, Poinciana
      - 0.017%
-     - auto
    * - FL, Pompano Beach
      - 0.041%
-     - auto
    * - FL, Port Charlotte
      - 0.022%
-     - auto
    * - FL, Port Orange
      - 0.021%
-     - auto
    * - FL, Port St Lucie
      - 0.053%
-     - auto
    * - FL, Riverview
      - 0.023%
-     - auto
    * - FL, Riviera Beach
      - 0.012%
-     - auto
    * - FL, Sanford
      - 0.019%
-     - auto
    * - FL, Sarasota
      - 0.022%
-     - auto
    * - FL, Spring Hill
      - 0.034%
-     - auto
    * - FL, St Cloud
      - 0.012%
-     - auto
    * - FL, St Petersburg
      - 0.096%
-     - auto
    * - FL, Sun City Center
      - 0.011%
-     - auto
    * - FL, Sunny Isles Beach
      - 0.016%
-     - auto
    * - FL, Sunrise
      - 0.028%
-     - auto
    * - FL, Tallahassee
      - 0.064%
-     - auto
    * - FL, Tamarac
      - 0.024%
-     - auto
    * - FL, Tamiami
      - 0.013%
-     - auto
    * - FL, Tampa
      - 0.12%
-     - auto
    * - FL, The Hammocks
      - 0.013%
-     - auto
    * - FL, The Villages
      - 0.035%
-     - auto
    * - FL, Titusville
      - 0.018%
-     - auto
    * - FL, Town N Country
      - 0.025%
-     - auto
    * - FL, University
      - 0.022%
-     - auto
    * - FL, Venice
      - 0.014%
-     - auto
    * - FL, Wellington
      - 0.018%
-     - auto
    * - FL, Wesley Chapel
      - 0.014%
-     - auto
    * - FL, West Palm Beach
      - 0.041%
-     - auto
    * - FL, Weston
      - 0.019%
-     - auto
    * - FL, Winter Haven
      - 0.014%
-     - auto
    * - GA, Albany
      - 0.025%
-     - auto
    * - GA, Alpharetta
      - 0.018%
-     - auto
    * - GA, Athens-Clarke County Unified Government Balance
      - 0.038%
-     - auto
    * - GA, Atlanta
      - 0.17%
-     - auto
    * - GA, Augusta-Richmond County Consolidated Government Balance
      - 0.064%
-     - auto
    * - GA, Columbus
      - 0.063%
-     - auto
    * - GA, Dunwoody
      - 0.017%
-     - auto
    * - GA, East Point
      - 0.014%
-     - auto
    * - GA, Hinesville
      - 0.011%
-     - auto
    * - GA, Johns Creek
      - 0.021%
-     - auto
    * - GA, Mableton
      - 0.011%
-     - auto
    * - GA, Macon
      - 0.032%
-     - auto
    * - GA, Marietta
      - 0.02%
-     - auto
    * - GA, Newnan
      - 0.011%
-     - auto
    * - GA, North Atlanta
      - 0.014%
-     - auto
    * - GA, Rome
      - 0.012%
-     - auto
    * - GA, Roswell
      - 0.027%
-     - auto
    * - GA, Sandy Springs
      - 0.036%
-     - auto
    * - GA, Savannah
      - 0.047%
-     - auto
    * - GA, Smyrna
      - 0.019%
-     - auto
    * - GA, Valdosta
      - 0.018%
-     - auto
    * - GA, Warner Robins
      - 0.023%
-     - auto
    * - HI, East Honolulu
      - 0.014%
-     - auto
    * - HI, Hilo
      - 0.014%
-     - auto
    * - HI, Kailua
      - 0.014%
-     - auto
    * - HI, Urban Honolulu
      - 0.11%
-     - auto
    * - IA, Ames
      - 0.019%
-     - auto
    * - IA, Ankeny
      - 0.016%
-     - auto
    * - IA, Cedar Falls
      - 0.012%
-     - auto
    * - IA, Cedar Rapids
      - 0.044%
-     - auto
    * - IA, Council Bluffs
      - 0.02%
-     - auto
    * - IA, Davenport
      - 0.033%
-     - auto
    * - IA, Des Moines
      - 0.067%
-     - auto
    * - IA, Dubuque
      - 0.019%
-     - auto
    * - IA, Iowa City
      - 0.023%
-     - auto
    * - IA, Marion
      - 0.012%
-     - auto
    * - IA, Sioux City
      - 0.025%
-     - auto
    * - IA, Urbandale
      - 0.012%
-     - auto
    * - IA, Waterloo
      - 0.023%
-     - auto
    * - IA, West Des Moines
      - 0.021%
-     - auto
    * - ID, Boise City
      - 0.068%
-     - auto
    * - ID, Caldwell
      - 0.013%
-     - auto
    * - ID, Coeur Dalene
      - 0.016%
-     - auto
    * - ID, Idaho Falls
      - 0.017%
-     - auto
    * - ID, Meridian
      - 0.023%
-     - auto
    * - ID, Nampa
      - 0.023%
-     - auto
    * - ID, Pocatello
      - 0.017%
-     - auto
    * - ID, Twin Falls
      - 0.014%
-     - auto
    * - IL, Arlington Heights
      - 0.024%
-     - auto
    * - IL, Aurora
      - 0.049%
-     - auto
    * - IL, Belleville
      - 0.016%
-     - auto
    * - IL, Berwyn
      - 0.015%
-     - auto
    * - IL, Bloomington
      - 0.025%
-     - auto
    * - IL, Bolingbrook
      - 0.018%
-     - auto
    * - IL, Buffalo Grove
      - 0.012%
-     - auto
    * - IL, Calumet City
      - 0.012%
-     - auto
    * - IL, Carol Stream
      - 0.011%
-     - auto
    * - IL, Champaign
      - 0.028%
-     - auto
    * - IL, Chicago
      - 0.89%
-     - auto
    * - IL, Cicero
      - 0.018%
-     - auto
    * - IL, Crystal Lake
      - 0.011%
-     - auto
    * - IL, Decatur
      - 0.027%
-     - auto
    * - IL, Dekalb
      - 0.012%
-     - auto
    * - IL, Des Plaines
      - 0.017%
-     - auto
    * - IL, Downers Grove
      - 0.015%
-     - auto
    * - IL, Elgin
      - 0.029%
-     - auto
    * - IL, Elmhurst
      - 0.012%
-     - auto
    * - IL, Evanston
      - 0.024%
-     - auto
    * - IL, Glenview
      - 0.013%
-     - auto
    * - IL, Hoffman Estates
      - 0.014%
-     - auto
    * - IL, Joliet
      - 0.038%
-     - auto
    * - IL, Lombard
      - 0.014%
-     - auto
    * - IL, Moline
      - 0.015%
-     - auto
    * - IL, Mount Prospect
      - 0.016%
-     - auto
    * - IL, Naperville
      - 0.04%
-     - auto
    * - IL, Normal
      - 0.016%
-     - auto
    * - IL, Oak Lawn
      - 0.017%
-     - auto
    * - IL, Oak Park
      - 0.017%
-     - auto
    * - IL, Orland Park
      - 0.017%
-     - auto
    * - IL, Palatine
      - 0.021%
-     - auto
    * - IL, Peoria
      - 0.04%
-     - auto
    * - IL, Quincy
      - 0.014%
-     - auto
    * - IL, Rock Island
      - 0.013%
-     - auto
    * - IL, Rockford
      - 0.05%
-     - auto
    * - IL, Schaumburg
      - 0.024%
-     - auto
    * - IL, Skokie
      - 0.018%
-     - auto
    * - IL, Springfield
      - 0.042%
-     - auto
    * - IL, Tinley Park
      - 0.017%
-     - auto
    * - IL, Urbana
      - 0.013%
-     - auto
    * - IL, Waukegan
      - 0.024%
-     - auto
    * - IL, Wheaton
      - 0.015%
-     - auto
    * - IL, Wheeling
      - 0.012%
-     - auto
    * - In another census Place
      - 31%
-     - auto
    * - IN, Anderson
      - 0.021%
-     - auto
    * - IN, Bloomington
      - 0.025%
-     - auto
    * - IN, Carmel
      - 0.026%
-     - auto
    * - IN, Columbus
      - 0.015%
-     - auto
    * - IN, Elkhart
      - 0.016%
-     - auto
    * - IN, Evansville
      - 0.043%
-     - auto
    * - IN, Fishers
      - 0.023%
-     - auto
    * - IN, Fort Wayne
      - 0.085%
-     - auto
    * - IN, Gary
      - 0.032%
-     - auto
    * - IN, Greenwood
      - 0.017%
-     - auto
    * - IN, Hammond
      - 0.024%
-     - auto
    * - IN, Indianapolis City Balance
      - 0.28%
-     - auto
    * - IN, Jeffersonville
      - 0.015%
-     - auto
    * - IN, Kokomo
      - 0.017%
-     - auto
    * - IN, Lafayette
      - 0.024%
-     - auto
    * - IN, Lawrence
      - 0.015%
-     - auto
    * - IN, Mishawaka
      - 0.018%
-     - auto
    * - IN, Muncie
      - 0.024%
-     - auto
    * - IN, New Albany
      - 0.013%
-     - auto
    * - IN, Noblesville
      - 0.017%
-     - auto
    * - IN, Portage
      - 0.011%
-     - auto
    * - IN, Richmond
      - 0.013%
-     - auto
    * - IN, South Bend
      - 0.035%
-     - auto
    * - IN, Terre Haute
      - 0.019%
-     - auto
    * - KS, Hutchinson
      - 0.014%
-     - auto
    * - KS, Kansas City
      - 0.047%
-     - auto
    * - KS, Lawrence
      - 0.029%
-     - auto
    * - KS, Lenexa
      - 0.016%
-     - auto
    * - KS, Manhattan
      - 0.017%
-     - auto
    * - KS, Olathe
      - 0.036%
-     - auto
    * - KS, Overland Park
      - 0.06%
-     - auto
    * - KS, Salina
      - 0.016%
-     - auto
    * - KS, Shawnee
      - 0.019%
-     - auto
    * - KS, Topeka
      - 0.045%
-     - auto
    * - KS, Wichita
      - 0.13%
-     - auto
    * - KY, Bowling Green
      - 0.02%
-     - auto
    * - KY, Covington
      - 0.015%
-     - auto
    * - KY, Lexington-Fayette
      - 0.1%
-     - auto
    * - KY, Louisville Jefferson County Metro Government Balance
      - 0.21%
-     - auto
    * - KY, Owensboro
      - 0.02%
-     - auto
    * - LA, Alexandria
      - 0.016%
-     - auto
    * - LA, Baton Rouge
      - 0.075%
-     - auto
    * - LA, Bossier City
      - 0.021%
-     - auto
    * - LA, Kenner
      - 0.021%
-     - auto
    * - LA, Lafayette
      - 0.041%
-     - auto
    * - LA, Lake Charles
      - 0.026%
-     - auto
    * - LA, Metairie
      - 0.048%
-     - auto
    * - LA, Monroe
      - 0.015%
-     - auto
    * - LA, New Orleans
      - 0.14%
-     - auto
    * - LA, Shreveport
      - 0.067%
-     - auto
    * - MA, Arlington
      - 0.015%
-     - auto
    * - MA, Attleboro
      - 0.013%
-     - auto
    * - MA, Barnstable Town
      - 0.02%
-     - auto
    * - MA, Beverly
      - 0.013%
-     - auto
    * - MA, Boston
      - 0.21%
-     - auto
    * - MA, Brockton
      - 0.026%
-     - auto
    * - MA, Brookline
      - 0.02%
-     - auto
    * - MA, Cambridge
      - 0.036%
-     - auto
    * - MA, Chicopee
      - 0.018%
-     - auto
    * - MA, Everett
      - 0.012%
-     - auto
    * - MA, Fall River
      - 0.032%
-     - auto
    * - MA, Fitchburg
      - 0.013%
-     - auto
    * - MA, Framingham
      - 0.021%
-     - auto
    * - MA, Haverhill
      - 0.019%
-     - auto
    * - MA, Holyoke
      - 0.012%
-     - auto
    * - MA, Lawrence
      - 0.02%
-     - auto
    * - MA, Leominster
      - 0.013%
-     - auto
    * - MA, Lowell
      - 0.031%
-     - auto
    * - MA, Lynn
      - 0.026%
-     - auto
    * - MA, Malden
      - 0.018%
-     - auto
    * - MA, Marlborough
      - 0.012%
-     - auto
    * - MA, Medford
      - 0.017%
-     - auto
    * - MA, Methuen Town
      - 0.014%
-     - auto
    * - MA, New Bedford
      - 0.032%
-     - auto
    * - MA, Newton
      - 0.024%
-     - auto
    * - MA, Peabody
      - 0.017%
-     - auto
    * - MA, Pittsfield
      - 0.016%
-     - auto
    * - MA, Quincy
      - 0.032%
-     - auto
    * - MA, Revere
      - 0.016%
-     - auto
    * - MA, Salem
      - 0.014%
-     - auto
    * - MA, Somerville
      - 0.025%
-     - auto
    * - MA, Springfield
      - 0.046%
-     - auto
    * - MA, Taunton
      - 0.018%
-     - auto
    * - MA, Waltham
      - 0.019%
-     - auto
    * - MA, Watertown Town
      - 0.012%
-     - auto
    * - MA, Westfield
      - 0.012%
-     - auto
    * - MA, Weymouth Town
      - 0.018%
-     - auto
    * - MA, Woburn
      - 0.012%
-     - auto
    * - MA, Worcester
      - 0.057%
-     - auto
    * - MD, Annapolis
      - 0.013%
-     - auto
    * - MD, Aspen Hill
      - 0.013%
-     - auto
    * - MD, Baltimore
      - 0.22%
-     - auto
    * - MD, Bel Air South
      - 0.014%
-     - auto
    * - MD, Bethesda
      - 0.02%
-     - auto
    * - MD, Bowie
      - 0.015%
-     - auto
    * - MD, Catonsville
      - 0.012%
-     - auto
    * - MD, Columbia
      - 0.031%
-     - auto
    * - MD, Dundalk
      - 0.019%
-     - auto
    * - MD, Ellicott City
      - 0.019%
-     - auto
    * - MD, Essex
      - 0.012%
-     - auto
    * - MD, Frederick
      - 0.022%
-     - auto
    * - MD, Gaithersburg
      - 0.019%
-     - auto
    * - MD, Germantown
      - 0.024%
-     - auto
    * - MD, Glen Burnie
      - 0.022%
-     - auto
    * - MD, Hagerstown
      - 0.014%
-     - auto
    * - MD, North Bethesda
      - 0.016%
-     - auto
    * - MD, Ocean City
      - 0.022%
-     - auto
    * - MD, Odenton
      - 0.012%
-     - auto
    * - MD, Potomac
      - 0.013%
-     - auto
    * - MD, Rockville
      - 0.019%
-     - auto
    * - MD, Severn
      - 0.014%
-     - auto
    * - MD, Silver Spring
      - 0.024%
-     - auto
    * - MD, Towson
      - 0.017%
-     - auto
    * - MD, Waldorf
      - 0.021%
-     - auto
    * - MD, Wheaton
      - 0.012%
-     - auto
    * - MD, Woodlawn
      - 0.013%
-     - auto
    * - ME, Bangor
      - 0.012%
-     - auto
    * - ME, Lewiston
      - 0.013%
-     - auto
    * - ME, Portland
      - 0.025%
-     - auto
    * - MI, Ann Arbor
      - 0.037%
-     - auto
    * - MI, Battle Creek
      - 0.018%
-     - auto
    * - MI, Bay City
      - 0.012%
-     - auto
    * - MI, Dearborn
      - 0.026%
-     - auto
    * - MI, Dearborn Heights
      - 0.016%
-     - auto
    * - MI, Detroit
      - 0.27%
-     - auto
    * - MI, Farmington Hills
      - 0.028%
-     - auto
    * - MI, Flint
      - 0.04%
-     - auto
    * - MI, Grand Rapids
      - 0.06%
-     - auto
    * - MI, Jackson
      - 0.011%
-     - auto
    * - MI, Kalamazoo
      - 0.024%
-     - auto
    * - MI, Kentwood
      - 0.016%
-     - auto
    * - MI, Lansing
      - 0.041%
-     - auto
    * - MI, Lincoln Park
      - 0.012%
-     - auto
    * - MI, Livonia
      - 0.029%
-     - auto
    * - MI, Midland
      - 0.014%
-     - auto
    * - MI, Muskegon
      - 0.012%
-     - auto
    * - MI, Novi
      - 0.018%
-     - auto
    * - MI, Pontiac
      - 0.02%
-     - auto
    * - MI, Portage
      - 0.015%
-     - auto
    * - MI, Rochester Hills
      - 0.022%
-     - auto
    * - MI, Roseville
      - 0.016%
-     - auto
    * - MI, Royal Oak
      - 0.023%
-     - auto
    * - MI, Saginaw
      - 0.018%
-     - auto
    * - MI, Southfield
      - 0.027%
-     - auto
    * - MI, St Clair Shores
      - 0.021%
-     - auto
    * - MI, Sterling Heights
      - 0.039%
-     - auto
    * - MI, Taylor
      - 0.019%
-     - auto
    * - MI, Troy
      - 0.024%
-     - auto
    * - MI, Warren
      - 0.044%
-     - auto
    * - MI, Westland
      - 0.027%
-     - auto
    * - MI, Wyoming
      - 0.022%
-     - auto
    * - MN, Apple Valley
      - 0.015%
-     - auto
    * - MN, Blaine
      - 0.017%
-     - auto
    * - MN, Bloomington
      - 0.028%
-     - auto
    * - MN, Brooklyn Park
      - 0.022%
-     - auto
    * - MN, Burnsville
      - 0.019%
-     - auto
    * - MN, Coon Rapids
      - 0.018%
-     - auto
    * - MN, Duluth
      - 0.029%
-     - auto
    * - MN, Eagan
      - 0.02%
-     - auto
    * - MN, Eden Prairie
      - 0.019%
-     - auto
    * - MN, Edina
      - 0.017%
-     - auto
    * - MN, Lakeville
      - 0.016%
-     - auto
    * - MN, Mankato
      - 0.013%
-     - auto
    * - MN, Maple Grove
      - 0.019%
-     - auto
    * - MN, Maplewood
      - 0.012%
-     - auto
    * - MN, Minneapolis
      - 0.14%
-     - auto
    * - MN, Minnetonka
      - 0.018%
-     - auto
    * - MN, Moorhead
      - 0.012%
-     - auto
    * - MN, Plymouth
      - 0.024%
-     - auto
    * - MN, Richfield
      - 0.012%
-     - auto
    * - MN, Rochester
      - 0.036%
-     - auto
    * - MN, Roseville
      - 0.012%
-     - auto
    * - MN, St Cloud
      - 0.02%
-     - auto
    * - MN, St Louis Park
      - 0.018%
-     - auto
    * - MN, St Paul
      - 0.089%
-     - auto
    * - MN, Woodbury
      - 0.019%
-     - auto
    * - MO, Blue Springs
      - 0.015%
-     - auto
    * - MO, Cape Girardeau
      - 0.013%
-     - auto
    * - MO, Chesterfield
      - 0.015%
-     - auto
    * - MO, Columbia
      - 0.038%
-     - auto
    * - MO, Florissant
      - 0.017%
-     - auto
    * - MO, Independence
      - 0.04%
-     - auto
    * - MO, Jefferson City
      - 0.014%
-     - auto
    * - MO, Joplin
      - 0.018%
-     - auto
    * - MO, Kansas City
      - 0.17%
-     - auto
    * - MO, Lees Summit
      - 0.027%
-     - auto
    * - MO, Ofallon
      - 0.024%
-     - auto
    * - MO, Springfield
      - 0.06%
-     - auto
    * - MO, St Charles
      - 0.022%
-     - auto
    * - MO, St Joseph
      - 0.025%
-     - auto
    * - MO, St Louis
      - 0.13%
-     - auto
    * - MO, St Peters
      - 0.017%
-     - auto
    * - MO, University City
      - 0.013%
-     - auto
    * - MS, Biloxi
      - 0.016%
-     - auto
    * - MS, Gulfport
      - 0.025%
-     - auto
    * - MS, Hattiesburg
      - 0.016%
-     - auto
    * - MS, Jackson
      - 0.056%
-     - auto
    * - MS, Meridian
      - 0.014%
-     - auto
    * - MS, Southaven
      - 0.015%
-     - auto
    * - MS, Tupelo
      - 0.012%
-     - auto
    * - MT, Billings
      - 0.036%
-     - auto
    * - MT, Bozeman
      - 0.014%
-     - auto
    * - MT, Butte-Silver Bow Balance
      - 0.012%
-     - auto
    * - MT, Great Falls
      - 0.02%
-     - auto
    * - MT, Missoula
      - 0.024%
-     - auto
    * - NC, Asheville
      - 0.031%
-     - auto
    * - NC, Burlington
      - 0.017%
-     - auto
    * - NC, Cary
      - 0.045%
-     - auto
    * - NC, Chapel Hill
      - 0.016%
-     - auto
    * - NC, Charlotte
      - 0.25%
-     - auto
    * - NC, Concord
      - 0.025%
-     - auto
    * - NC, Durham
      - 0.082%
-     - auto
    * - NC, Fayetteville
      - 0.069%
-     - auto
    * - NC, Gastonia
      - 0.024%
-     - auto
    * - NC, Goldsboro
      - 0.012%
-     - auto
    * - NC, Greensboro
      - 0.096%
-     - auto
    * - NC, Greenville
      - 0.031%
-     - auto
    * - NC, Hickory
      - 0.014%
-     - auto
    * - NC, High Point
      - 0.035%
-     - auto
    * - NC, Huntersville
      - 0.015%
-     - auto
    * - NC, Jacksonville
      - 0.018%
-     - auto
    * - NC, Kannapolis
      - 0.015%
-     - auto
    * - NC, Raleigh
      - 0.14%
-     - auto
    * - NC, Rocky Mount
      - 0.02%
-     - auto
    * - NC, Wilmington
      - 0.042%
-     - auto
    * - NC, Wilson
      - 0.016%
-     - auto
    * - NC, Winston-Salem
      - 0.079%
-     - auto
    * - ND, Bismarck
      - 0.023%
-     - auto
    * - ND, Fargo
      - 0.041%
-     - auto
    * - ND, Grand Forks
      - 0.019%
-     - auto
    * - ND, Minot
      - 0.016%
-     - auto
    * - NE, Bellevue
      - 0.015%
-     - auto
    * - NE, Grand Island
      - 0.015%
-     - auto
    * - NE, Lincoln
      - 0.085%
-     - auto
    * - NE, Omaha
      - 0.13%
-     - auto
    * - NH, Concord
      - 0.014%
-     - auto
    * - NH, Manchester
      - 0.037%
-     - auto
    * - NH, Nashua
      - 0.027%
-     - auto
    * - NJ, Atlantic City
      - 0.015%
-     - auto
    * - NJ, Bayonne
      - 0.021%
-     - auto
    * - NJ, Camden
      - 0.023%
-     - auto
    * - NJ, Clifton
      - 0.024%
-     - auto
    * - NJ, East Orange
      - 0.022%
-     - auto
    * - NJ, Elizabeth
      - 0.033%
-     - auto
    * - NJ, Fort Lee
      - 0.014%
-     - auto
    * - NJ, Hackensack
      - 0.015%
-     - auto
    * - NJ, Hoboken
      - 0.02%
-     - auto
    * - NJ, Jersey City
      - 0.083%
-     - auto
    * - NJ, Linden
      - 0.012%
-     - auto
    * - NJ, New Brunswick
      - 0.012%
-     - auto
    * - NJ, Newark
      - 0.083%
-     - auto
    * - NJ, Ocean City
      - 0.015%
-     - auto
    * - NJ, Passaic
      - 0.016%
-     - auto
    * - NJ, Paterson
      - 0.037%
-     - auto
    * - NJ, Perth Amboy
      - 0.012%
-     - auto
    * - NJ, Plainfield
      - 0.012%
-     - auto
    * - NJ, Sayreville
      - 0.013%
-     - auto
    * - NJ, Toms River
      - 0.027%
-     - auto
    * - NJ, Trenton
      - 0.026%
-     - auto
    * - NJ, Union City
      - 0.02%
-     - auto
    * - NJ, Vineland
      - 0.017%
-     - auto
    * - NJ, West New York
      - 0.015%
-     - auto
    * - NM, Albuquerque
      - 0.18%
-     - auto
    * - NM, Clovis
      - 0.012%
-     - auto
    * - NM, Farmington
      - 0.013%
-     - auto
    * - NM, Las Cruces
      - 0.034%
-     - auto
    * - NM, Rio Rancho
      - 0.026%
-     - auto
    * - NM, Roswell
      - 0.015%
-     - auto
    * - NM, Santa Fe
      - 0.028%
-     - auto
    * - NM, South Valley
      - 0.011%
-     - auto
    * - Not in a census Place
      - 27%
-     - auto
    * - NV, Carson City
      - 0.017%
-     - auto
    * - NV, Enterprise
      - 0.04%
-     - auto
    * - NV, Henderson
      - 0.09%
-     - auto
    * - NV, Las Vegas
      - 0.19%
-     - auto
    * - NV, North Las Vegas
      - 0.058%
-     - auto
    * - NV, Pahrump
      - 0.013%
-     - auto
    * - NV, Paradise
      - 0.084%
-     - auto
    * - NV, Reno
      - 0.077%
-     - auto
    * - NV, Sparks
      - 0.029%
-     - auto
    * - NV, Spring Valley
      - 0.063%
-     - auto
    * - NV, Sunrise Manor
      - 0.053%
-     - auto
    * - NV, Whitney
      - 0.012%
-     - auto
    * - NY, Albany
      - 0.035%
-     - auto
    * - NY, Binghamton
      - 0.018%
-     - auto
    * - NY, Brighton
      - 0.012%
-     - auto
    * - NY, Buffalo
      - 0.098%
-     - auto
    * - NY, Cheektowaga
      - 0.027%
-     - auto
    * - NY, Coram
      - 0.012%
-     - auto
    * - NY, Hempstead
      - 0.013%
-     - auto
    * - NY, Irondequoit
      - 0.018%
-     - auto
    * - NY, Levittown
      - 0.012%
-     - auto
    * - NY, Long Beach
      - 0.012%
-     - auto
    * - NY, Mount Vernon
      - 0.02%
-     - auto
    * - NY, New Rochelle
      - 0.022%
-     - auto
    * - NY, New York
      - 2.6%
-     - auto
    * - NY, Niagara Falls
      - 0.019%
-     - auto
    * - NY, Rochester
      - 0.073%
-     - auto
    * - NY, Rome
      - 0.011%
-     - auto
    * - NY, Schenectady
      - 0.024%
-     - auto
    * - NY, Syracuse
      - 0.049%
-     - auto
    * - NY, Tonawanda
      - 0.026%
-     - auto
    * - NY, Troy
      - 0.017%
-     - auto
    * - NY, Utica
      - 0.02%
-     - auto
    * - NY, West Seneca
      - 0.015%
-     - auto
    * - NY, White Plains
      - 0.017%
-     - auto
    * - NY, Yonkers
      - 0.061%
-     - auto
    * - OH, Akron
      - 0.073%
-     - auto
    * - OH, Beavercreek
      - 0.014%
-     - auto
    * - OH, Boardman
      - 0.012%
-     - auto
    * - OH, Canton
      - 0.027%
-     - auto
    * - OH, Cincinnati
      - 0.12%
-     - auto
    * - OH, Cleveland
      - 0.16%
-     - auto
    * - OH, Cleveland Heights
      - 0.016%
-     - auto
    * - OH, Columbus
      - 0.29%
-     - auto
    * - OH, Cuyahoga Falls
      - 0.018%
-     - auto
    * - OH, Dayton
      - 0.055%
-     - auto
    * - OH, Delaware
      - 0.011%
-     - auto
    * - OH, Dublin
      - 0.012%
-     - auto
    * - OH, Elyria
      - 0.019%
-     - auto
    * - OH, Euclid
      - 0.02%
-     - auto
    * - OH, Fairborn
      - 0.012%
-     - auto
    * - OH, Fairfield
      - 0.014%
-     - auto
    * - OH, Findlay
      - 0.014%
-     - auto
    * - OH, Grove City
      - 0.012%
-     - auto
    * - OH, Hamilton
      - 0.021%
-     - auto
    * - OH, Huber Heights
      - 0.012%
-     - auto
    * - OH, Kettering
      - 0.02%
-     - auto
    * - OH, Lakewood
      - 0.02%
-     - auto
    * - OH, Lancaster
      - 0.013%
-     - auto
    * - OH, Lima
      - 0.012%
-     - auto
    * - OH, Lorain
      - 0.022%
-     - auto
    * - OH, Mansfield
      - 0.016%
-     - auto
    * - OH, Marion
      - 0.011%
-     - auto
    * - OH, Mentor
      - 0.015%
-     - auto
    * - OH, Middletown
      - 0.017%
-     - auto
    * - OH, Newark
      - 0.016%
-     - auto
    * - OH, Parma
      - 0.027%
-     - auto
    * - OH, Springfield
      - 0.021%
-     - auto
    * - OH, Stow
      - 0.011%
-     - auto
    * - OH, Strongsville
      - 0.014%
-     - auto
    * - OH, Toledo
      - 0.1%
-     - auto
    * - OH, Warren
      - 0.015%
-     - auto
    * - OH, Youngstown
      - 0.025%
-     - auto
    * - OK, Bartlesville
      - 0.013%
-     - auto
    * - OK, Broken Arrow
      - 0.03%
-     - auto
    * - OK, Edmond
      - 0.026%
-     - auto
    * - OK, Enid
      - 0.016%
-     - auto
    * - OK, Lawton
      - 0.03%
-     - auto
    * - OK, Midwest City
      - 0.019%
-     - auto
    * - OK, Moore
      - 0.017%
-     - auto
    * - OK, Muskogee
      - 0.013%
-     - auto
    * - OK, Norman
      - 0.038%
-     - auto
    * - OK, Oklahoma City
      - 0.2%
-     - auto
    * - OK, Stillwater
      - 0.016%
-     - auto
    * - OK, Tulsa
      - 0.14%
-     - auto
    * - OR, Albany
      - 0.016%
-     - auto
    * - OR, Aloha
      - 0.013%
-     - auto
    * - OR, Beaverton
      - 0.03%
-     - auto
    * - OR, Bend
      - 0.028%
-     - auto
    * - OR, Corvallis
      - 0.018%
-     - auto
    * - OR, Eugene
      - 0.053%
-     - auto
    * - OR, Grants Pass
      - 0.011%
-     - auto
    * - OR, Gresham
      - 0.031%
-     - auto
    * - OR, Hillsboro
      - 0.029%
-     - auto
    * - OR, Lake Oswego
      - 0.013%
-     - auto
    * - OR, Medford
      - 0.025%
-     - auto
    * - OR, Portland
      - 0.2%
-     - auto
    * - OR, Salem
      - 0.047%
-     - auto
    * - OR, Springfield
      - 0.019%
-     - auto
    * - OR, Tigard
      - 0.015%
-     - auto
    * - PA, Allentown
      - 0.034%
-     - auto
    * - PA, Altoona
      - 0.015%
-     - auto
    * - PA, Bethlehem
      - 0.023%
-     - auto
    * - PA, Erie
      - 0.034%
-     - auto
    * - PA, Harrisburg
      - 0.018%
-     - auto
    * - PA, Lancaster
      - 0.017%
-     - auto
    * - PA, Levittown
      - 0.014%
-     - auto
    * - PA, Philadelphia
      - 0.5%
-     - auto
    * - PA, Pittsburgh
      - 0.11%
-     - auto
    * - PA, Reading
      - 0.025%
-     - auto
    * - PA, Scranton
      - 0.025%
-     - auto
    * - PA, Wilkes-Barre
      - 0.014%
-     - auto
    * - PA, York
      - 0.014%
-     - auto
    * - RI, Cranston
      - 0.024%
-     - auto
    * - RI, East Providence
      - 0.016%
-     - auto
    * - RI, Pawtucket
      - 0.023%
-     - auto
    * - RI, Providence
      - 0.053%
-     - auto
    * - RI, Warwick
      - 0.028%
-     - auto
    * - RI, Woonsocket
      - 0.015%
-     - auto
    * - SC, Charleston
      - 0.047%
-     - auto
    * - SC, Columbia
      - 0.04%
-     - auto
    * - SC, Florence
      - 0.013%
-     - auto
    * - SC, Goose Creek
      - 0.011%
-     - auto
    * - SC, Greenville
      - 0.023%
-     - auto
    * - SC, Hilton Head Island
      - 0.025%
-     - auto
    * - SC, Mount Pleasant
      - 0.024%
-     - auto
    * - SC, Myrtle Beach
      - 0.019%
-     - auto
    * - SC, North Charleston
      - 0.034%
-     - auto
    * - SC, North Myrtle Beach
      - 0.021%
-     - auto
    * - SC, Rock Hill
      - 0.022%
-     - auto
    * - SC, Spartanburg
      - 0.013%
-     - auto
    * - SC, Summerville
      - 0.015%
-     - auto
    * - SC, Sumter
      - 0.014%
-     - auto
    * - SD, Rapid City
      - 0.023%
-     - auto
    * - SD, Sioux Falls
      - 0.053%
-     - auto
    * - TN, Bartlett
      - 0.015%
-     - auto
    * - TN, Chattanooga
      - 0.06%
-     - auto
    * - TN, Clarksville
      - 0.044%
-     - auto
    * - TN, Cleveland
      - 0.014%
-     - auto
    * - TN, Collierville
      - 0.012%
-     - auto
    * - TN, Columbia
      - 0.012%
-     - auto
    * - TN, Franklin
      - 0.022%
-     - auto
    * - TN, Germantown
      - 0.012%
-     - auto
    * - TN, Hendersonville
      - 0.016%
-     - auto
    * - TN, Jackson
      - 0.022%
-     - auto
    * - TN, Johnson City
      - 0.024%
-     - auto
    * - TN, Kingsport
      - 0.018%
-     - auto
    * - TN, Knoxville
      - 0.067%
-     - auto
    * - TN, Memphis
      - 0.22%
-     - auto
    * - TN, Murfreesboro
      - 0.037%
-     - auto
    * - TN, Nashville-Davidson Metropolitan Government Balance
      - 0.21%
-     - auto
    * - TN, Smyrna
      - 0.013%
-     - auto
    * - TX, Abilene
      - 0.036%
-     - auto
    * - TX, Allen
      - 0.023%
-     - auto
    * - TX, Amarillo
      - 0.062%
-     - auto
    * - TX, Arlington
      - 0.11%
-     - auto
    * - TX, Atascocita
      - 0.018%
-     - auto
    * - TX, Austin
      - 0.28%
-     - auto
    * - TX, Baytown
      - 0.022%
-     - auto
    * - TX, Beaumont
      - 0.039%
-     - auto
    * - TX, Bedford
      - 0.017%
-     - auto
    * - TX, Brownsville
      - 0.042%
-     - auto
    * - TX, Bryan
      - 0.024%
-     - auto
    * - TX, Burleson
      - 0.012%
-     - auto
    * - TX, Carrollton
      - 0.036%
-     - auto
    * - TX, Cedar Hill
      - 0.012%
-     - auto
    * - TX, Cedar Park
      - 0.015%
-     - auto
    * - TX, College Station
      - 0.032%
-     - auto
    * - TX, Conroe
      - 0.019%
-     - auto
    * - TX, Coppell
      - 0.012%
-     - auto
    * - TX, Corpus Christi
      - 0.096%
-     - auto
    * - TX, Dallas
      - 0.41%
-     - auto
    * - TX, Denton
      - 0.035%
-     - auto
    * - TX, Desoto
      - 0.015%
-     - auto
    * - TX, Edinburg
      - 0.02%
-     - auto
    * - TX, El Paso
      - 0.18%
-     - auto
    * - TX, Euless
      - 0.017%
-     - auto
    * - TX, Flower Mound
      - 0.018%
-     - auto
    * - TX, Fort Worth
      - 0.23%
-     - auto
    * - TX, Frisco
      - 0.037%
-     - auto
    * - TX, Galveston
      - 0.024%
-     - auto
    * - TX, Garland
      - 0.06%
-     - auto
    * - TX, Georgetown
      - 0.016%
-     - auto
    * - TX, Grand Prairie
      - 0.048%
-     - auto
    * - TX, Grapevine
      - 0.015%
-     - auto
    * - TX, Haltom City
      - 0.012%
-     - auto
    * - TX, Harlingen
      - 0.019%
-     - auto
    * - TX, Houston
      - 0.69%
-     - auto
    * - TX, Hurst
      - 0.012%
-     - auto
    * - TX, Irving
      - 0.067%
-     - auto
    * - TX, Keller
      - 0.011%
-     - auto
    * - TX, Killeen
      - 0.044%
-     - auto
    * - TX, Laredo
      - 0.055%
-     - auto
    * - TX, League City
      - 0.027%
-     - auto
    * - TX, Lewisville
      - 0.031%
-     - auto
    * - TX, Longview
      - 0.025%
-     - auto
    * - TX, Lubbock
      - 0.077%
-     - auto
    * - TX, Lufkin
      - 0.011%
-     - auto
    * - TX, Mansfield
      - 0.017%
-     - auto
    * - TX, Mcallen
      - 0.036%
-     - auto
    * - TX, Mckinney
      - 0.041%
-     - auto
    * - TX, Mesquite
      - 0.038%
-     - auto
    * - TX, Midland
      - 0.035%
-     - auto
    * - TX, Mission
      - 0.022%
-     - auto
    * - TX, Missouri City
      - 0.018%
-     - auto
    * - TX, New Braunfels
      - 0.02%
-     - auto
    * - TX, North Richland Hills
      - 0.02%
-     - auto
    * - TX, Odessa
      - 0.032%
-     - auto
    * - TX, Pasadena
      - 0.04%
-     - auto
    * - TX, Pearland
      - 0.028%
-     - auto
    * - TX, Pflugerville
      - 0.014%
-     - auto
    * - TX, Pharr
      - 0.018%
-     - auto
    * - TX, Plano
      - 0.081%
-     - auto
    * - TX, Port Arthur
      - 0.018%
-     - auto
    * - TX, Richardson
      - 0.032%
-     - auto
    * - TX, Round Rock
      - 0.027%
-     - auto
    * - TX, Rowlett
      - 0.015%
-     - auto
    * - TX, San Angelo
      - 0.03%
-     - auto
    * - TX, San Antonio
      - 0.4%
-     - auto
    * - TX, San Marcos
      - 0.018%
-     - auto
    * - TX, Sherman
      - 0.012%
-     - auto
    * - TX, Spring
      - 0.015%
-     - auto
    * - TX, Sugar Land
      - 0.021%
-     - auto
    * - TX, Temple
      - 0.023%
-     - auto
    * - TX, Texarkana
      - 0.012%
-     - auto
    * - TX, Texas City
      - 0.015%
-     - auto
    * - TX, The Colony
      - 0.012%
-     - auto
    * - TX, The Woodlands
      - 0.031%
-     - auto
    * - TX, Tyler
      - 0.032%
-     - auto
    * - TX, Victoria
      - 0.02%
-     - auto
    * - TX, Waco
      - 0.04%
-     - auto
    * - TX, Wichita Falls
      - 0.032%
-     - auto
    * - TX, Wylie
      - 0.011%
-     - auto
    * - UT, Layton
      - 0.018%
-     - auto
    * - UT, Lehi
      - 0.011%
-     - auto
    * - UT, Logan
      - 0.013%
-     - auto
    * - UT, Millcreek
      - 0.02%
-     - auto
    * - UT, Murray
      - 0.014%
-     - auto
    * - UT, Ogden
      - 0.024%
-     - auto
    * - UT, Orem
      - 0.02%
-     - auto
    * - UT, Provo
      - 0.026%
-     - auto
    * - UT, Salt Lake City
      - 0.061%
-     - auto
    * - UT, Sandy
      - 0.023%
-     - auto
    * - UT, South Jordan
      - 0.015%
-     - auto
    * - UT, St George
      - 0.025%
-     - auto
    * - UT, Taylorsville
      - 0.015%
-     - auto
    * - UT, West Jordan
      - 0.025%
-     - auto
    * - UT, West Valley City
      - 0.029%
-     - auto
    * - VA, Alexandria
      - 0.056%
-     - auto
    * - VA, Arlington
      - 0.083%
-     - auto
    * - VA, Ashburn
      - 0.013%
-     - auto
    * - VA, Blacksburg
      - 0.011%
-     - auto
    * - VA, Centreville
      - 0.019%
-     - auto
    * - VA, Charlottesville
      - 0.015%
-     - auto
    * - VA, Chesapeake
      - 0.066%
-     - auto
    * - VA, Dale City
      - 0.016%
-     - auto
    * - VA, Danville
      - 0.017%
-     - auto
    * - VA, Hampton
      - 0.045%
-     - auto
    * - VA, Harrisonburg
      - 0.013%
-     - auto
    * - VA, Lake Ridge
      - 0.012%
-     - auto
    * - VA, Leesburg
      - 0.013%
-     - auto
    * - VA, Lynchburg
      - 0.024%
-     - auto
    * - VA, Mclean
      - 0.013%
-     - auto
    * - VA, Mechanicsville
      - 0.011%
-     - auto
    * - VA, Newport News
      - 0.058%
-     - auto
    * - VA, Norfolk
      - 0.072%
-     - auto
    * - VA, Petersburg
      - 0.012%
-     - auto
    * - VA, Portsmouth
      - 0.031%
-     - auto
    * - VA, Reston
      - 0.02%
-     - auto
    * - VA, Richmond
      - 0.075%
-     - auto
    * - VA, Roanoke
      - 0.035%
-     - auto
    * - VA, Suffolk
      - 0.026%
-     - auto
    * - VA, Tuckahoe
      - 0.014%
-     - auto
    * - VA, Virginia Beach
      - 0.14%
-     - auto
    * - VT, Burlington
      - 0.012%
-     - auto
    * - WA, Auburn
      - 0.022%
-     - auto
    * - WA, Bellevue
      - 0.042%
-     - auto
    * - WA, Bellingham
      - 0.028%
-     - auto
    * - WA, Bremerton
      - 0.013%
-     - auto
    * - WA, Edmonds
      - 0.014%
-     - auto
    * - WA, Everett
      - 0.034%
-     - auto
    * - WA, Federal Way
      - 0.027%
-     - auto
    * - WA, Kennewick
      - 0.022%
-     - auto
    * - WA, Kent
      - 0.027%
-     - auto
    * - WA, Kirkland
      - 0.018%
-     - auto
    * - WA, Lacey
      - 0.015%
-     - auto
    * - WA, Lakewood
      - 0.02%
-     - auto
    * - WA, Longview
      - 0.012%
-     - auto
    * - WA, Marysville
      - 0.018%
-     - auto
    * - WA, Olympia
      - 0.017%
-     - auto
    * - WA, Pasco
      - 0.015%
-     - auto
    * - WA, Puyallup
      - 0.012%
-     - auto
    * - WA, Redmond
      - 0.019%
-     - auto
    * - WA, Renton
      - 0.03%
-     - auto
    * - WA, Richland
      - 0.016%
-     - auto
    * - WA, Sammamish
      - 0.012%
-     - auto
    * - WA, Seattle
      - 0.24%
-     - auto
    * - WA, Shoreline
      - 0.017%
-     - auto
    * - WA, South Hill
      - 0.015%
-     - auto
    * - WA, Spokane
      - 0.072%
-     - auto
    * - WA, Spokane Valley
      - 0.03%
-     - auto
    * - WA, Tacoma
      - 0.065%
-     - auto
    * - WA, Vancouver
      - 0.052%
-     - auto
    * - WA, Yakima
      - 0.027%
-     - auto
    * - WI, Appleton
      - 0.022%
-     - auto
    * - WI, Beloit
      - 0.011%
-     - auto
    * - WI, Eau Claire
      - 0.022%
-     - auto
    * - WI, Fond Du Lac
      - 0.014%
-     - auto
    * - WI, Green Bay
      - 0.034%
-     - auto
    * - WI, Greenfield
      - 0.013%
-     - auto
    * - WI, Janesville
      - 0.021%
-     - auto
    * - WI, Kenosha
      - 0.03%
-     - auto
    * - WI, La Crosse
      - 0.017%
-     - auto
    * - WI, Madison
      - 0.083%
-     - auto
    * - WI, Manitowoc
      - 0.012%
-     - auto
    * - WI, Menomonee Falls
      - 0.011%
-     - auto
    * - WI, Milwaukee
      - 0.19%
-     - auto
    * - WI, New Berlin
      - 0.013%
-     - auto
    * - WI, Oshkosh
      - 0.021%
-     - auto
    * - WI, Racine
      - 0.025%
-     - auto
    * - WI, Sheboygan
      - 0.017%
-     - auto
    * - WI, Waukesha
      - 0.023%
-     - auto
    * - WI, Wausau
      - 0.014%
-     - auto
    * - WI, Wauwatosa
      - 0.016%
-     - auto
    * - WI, West Allis
      - 0.022%
-     - auto
    * - WV, Charleston
      - 0.019%
-     - auto
    * - WV, Huntington
      - 0.019%
-     - auto
    * - WV, Parkersburg
      - 0.012%
-     - auto
    * - WY, Casper
      - 0.019%
-     - auto
    * - WY, Cheyenne
      - 0.021%
-     - auto
 
 .. _clothes_dryer:
 
@@ -4772,42 +3407,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``clothes_dryer_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is a clothes dryer present.
-   * - ``clothes_dryer_location``
+   * - ``appliance_clothes_dryer``
      - false
      - 
      - Choice
-     - auto, conditioned space, basement - conditioned, basement - unconditioned, garage, other housing unit, other heated space, other multifamily buffer space, other non-freezing space
-     - The space type for the clothes dryer location. If not provided, the OS-HPXML default (see `HPXML Clothes Dryer <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-clothes-dryer>`_) is used.
-   * - ``clothes_dryer_fuel_type``
-     - true
-     - 
-     - Choice
-     - electricity, natural gas, fuel oil, propane, wood, coal
-     - Type of fuel used by the clothes dryer.
-   * - ``clothes_dryer_drying_method``
-     - false
-     - 
-     - Choice
-     - auto, conventional, condensing, heat pump, other
-     - The method of drying used by the clothes dryer. If not provided, the OS-HPXML default (see `HPXML Clothes Dryer <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-clothes-dryer>`_) is used.
-   * - ``clothes_dryer_efficiency_type``
-     - true
-     - 
-     - Choice
-     - EnergyFactor, CombinedEnergyFactor
-     - The efficiency type of the clothes dryer.
-   * - ``clothes_dryer_efficiency``
-     - false
-     - lb/kWh
-     - Double
-     - auto
-     - The efficiency of the clothes dryer. If not provided, the OS-HPXML default (see `HPXML Clothes Dryer <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-clothes-dryer>`_) is used.
+     - None, Electricity, Standard, 50% Usage, Electricity, Standard, 75% Usage, Electricity, Standard, 100% Usage, Electricity, Standard, 150% Usage, Electricity, Standard, 200% Usage, Electricity, Premium, 50% Usage, Electricity, Premium, 75% Usage, Electricity, Premium, 100% Usage, Electricity, Premium, 150% Usage, Electricity, Premium, 200% Usage, Electricity, Heat Pump, 50% Usage, Electricity, Heat Pump, 75% Usage, Electricity, Heat Pump, 100% Usage, Electricity, Heat Pump, 150% Usage, Electricity, Heat Pump, 200% Usage, Natural Gas, Standard, 50% Usage, Natural Gas, Standard, 75% Usage, Natural Gas, Standard, 100% Usage, Natural Gas, Standard, 150% Usage, Natural Gas, Standard, 200% Usage, Natural Gas, Premium, 50% Usage, Natural Gas, Premium, 75% Usage, Natural Gas, Premium, 100% Usage, Natural Gas, Premium, 150% Usage, Natural Gas, Premium, 200% Usage, Propane, Standard, 50% Usage, Propane, Standard, 75% Usage, Propane, Standard, 100% Usage, Propane, Standard, 150% Usage, Propane, Standard, 200% Usage, Detailed Example: Electricity, ERI Reference 2006, Detailed Example: Natural Gas, ERI Reference 2006, Detailed Example: Electricity, EF 4.29, Detailed Example: Electricity, Standard, Conditioned Basement, Detailed Example: Electricity, Standard, Unconditioned Basement, Detailed Example: Electricity, Standard, Garage
+     - The type and usage of clothes dryer.
 
 Options
 *******
@@ -4821,52 +3426,22 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``clothes_dryer_present``
-     - ``clothes_dryer_location``
-     - ``clothes_dryer_fuel_type``
-     - ``clothes_dryer_drying_method``
-     - ``clothes_dryer_efficiency_type``
-     - ``clothes_dryer_efficiency``
+     - ``appliance_clothes_dryer``
 
    * - Electric
      - 67%
-     - true
-     - auto
-     - electricity
-     - auto
-     - CombinedEnergyFactor
-     - 3.73
+     - Electricity, Standard, 100% Usage
    * - Gas
      - 14%
-     - true
-     - auto
-     - natural gas
-     - auto
-     - CombinedEnergyFactor
-     - 3.3
+     - Natural Gas, Standard, 100% Usage
    * - None
      - 18%
-     - false
-     - auto
-     - natural gas
-     - auto
-     - CombinedEnergyFactor
-     - 2.70
+     - None
    * - Propane
      - 1.1%
-     - true
-     - auto
-     - propane
-     - auto
-     - CombinedEnergyFactor
-     - 3.3
+     - Propane, Standard, 100% Usage
    * - Void
      - 0%
-     - 
-     - 
-     - 
-     - 
-     - 
      - 
 
 .. _clothes_dryer_usage_level:
@@ -4913,8 +3488,8 @@ Arguments
      - false
      - 
      - Double
-     - auto
-     - Multiplier on the clothes dryer energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Clothes Dryer <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-clothes-dryer>`_) is used.
+     -
+     - Multiplier on the clothes dryer energy usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -5004,60 +3579,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``clothes_washer_location``
+   * - ``appliance_clothes_washer``
      - false
      - 
      - Choice
-     - auto, conditioned space, basement - conditioned, basement - unconditioned, garage, other housing unit, other heated space, other multifamily buffer space, other non-freezing space
-     - The space type for the clothes washer location. If not provided, the OS-HPXML default (see `HPXML Clothes Washer <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-clothes-washer>`_) is used.
-   * - ``clothes_washer_efficiency_type``
-     - true
-     - 
-     - Choice
-     - ModifiedEnergyFactor, IntegratedModifiedEnergyFactor
-     - The efficiency type of the clothes washer.
-   * - ``clothes_washer_efficiency``
-     - false
-     - ft^3/kWh-cyc
-     - Double
-     - auto
-     - The efficiency of the clothes washer. If not provided, the OS-HPXML default (see `HPXML Clothes Washer <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-clothes-washer>`_) is used.
-   * - ``clothes_washer_rated_annual_kwh``
-     - false
-     - kWh/yr
-     - Double
-     - auto
-     - The annual energy consumed by the clothes washer, as rated, obtained from the EnergyGuide label. This includes both the appliance electricity consumption and the energy required for water heating. If not provided, the OS-HPXML default (see `HPXML Clothes Washer <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-clothes-washer>`_) is used.
-   * - ``clothes_washer_label_electric_rate``
-     - false
-     - $/kWh
-     - Double
-     - auto
-     - The annual energy consumed by the clothes washer, as rated, obtained from the EnergyGuide label. This includes both the appliance electricity consumption and the energy required for water heating. If not provided, the OS-HPXML default (see `HPXML Clothes Washer <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-clothes-washer>`_) is used.
-   * - ``clothes_washer_label_gas_rate``
-     - false
-     - $/therm
-     - Double
-     - auto
-     - The annual energy consumed by the clothes washer, as rated, obtained from the EnergyGuide label. This includes both the appliance electricity consumption and the energy required for water heating. If not provided, the OS-HPXML default (see `HPXML Clothes Washer <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-clothes-washer>`_) is used.
-   * - ``clothes_washer_label_annual_gas_cost``
-     - false
-     - $
-     - Double
-     - auto
-     - The annual cost of using the system under test conditions. Input is obtained from the EnergyGuide label. If not provided, the OS-HPXML default (see `HPXML Clothes Washer <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-clothes-washer>`_) is used.
-   * - ``clothes_washer_label_usage``
-     - false
-     - cyc/wk
-     - Double
-     - auto
-     - The clothes washer loads per week. If not provided, the OS-HPXML default (see `HPXML Clothes Washer <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-clothes-washer>`_) is used.
-   * - ``clothes_washer_capacity``
-     - false
-     - ft^3
-     - Double
-     - auto
-     - Volume of the washer drum. Obtained from the EnergyStar website or the manufacturer's literature. If not provided, the OS-HPXML default (see `HPXML Clothes Washer <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-clothes-washer>`_) is used.
+     - None, Standard, 2008-2017, 50% Usage, Standard, 2008-2017, 75% Usage, Standard, 2008-2017, 100% Usage, Standard, 2008-2017, 150% Usage, Standard, 2008-2017, 200% Usage, Standard, 2018-present, 50% Usage, Standard, 2018-present, 75% Usage, Standard, 2018-present, 100% Usage, Standard, 2018-present, 150% Usage, Standard, 2018-present, 200% Usage, EnergyStar, 2006-2017, 50% Usage, EnergyStar, 2006-2017, 75% Usage, EnergyStar, 2006-2017, 100% Usage, EnergyStar, 2006-2017, 150% Usage, EnergyStar, 2006-2017, 200% Usage, EnergyStar, 2018-present, 50% Usage, EnergyStar, 2018-present, 75% Usage, EnergyStar, 2018-present, 100% Usage, EnergyStar, 2018-present, 150% Usage, EnergyStar, 2018-present, 200% Usage, CEE Tier II, 2018, 50% Usage, CEE Tier II, 2018, 75% Usage, CEE Tier II, 2018, 100% Usage, CEE Tier II, 2018, 150% Usage, CEE Tier II, 2018, 200% Usage, Detailed Example: ERI Reference 2006, Detailed Example: MEF 1.65, Detailed Example: Standard, 2008-2017, Conditioned Basement, Detailed Example: Standard, 2008-2017, Unconditioned Basement, Detailed Example: Standard, 2008-2017, Garage
+     - The type and usage of clothes washer.
 
 Options
 *******
@@ -5071,59 +3598,19 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``clothes_washer_location``
-     - ``clothes_washer_efficiency_type``
-     - ``clothes_washer_efficiency``
-     - ``clothes_washer_rated_annual_kwh``
-     - ``clothes_washer_label_electric_rate``
-     - ``clothes_washer_label_gas_rate``
-     - ``clothes_washer_label_annual_gas_cost``
-     - ``clothes_washer_label_usage``
-     - ``clothes_washer_capacity``
+     - ``appliance_clothes_washer``
 
    * - EnergyStar
      - 34%
-     - auto
-     - IntegratedModifiedEnergyFactor
-     - 1.63
-     - 260
-     - 0.12
-     - 1.09
-     - 18
-     - 6
-     - 3.5
+     - EnergyStar, 2006-2017, 100% Usage
    * - None
      - 16%
-     - auto
-     - IntegratedModifiedEnergyFactor
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
+     - None
    * - Standard
      - 50%
-     - auto
-     - IntegratedModifiedEnergyFactor
-     - 1.21
-     - 380
-     - 0.12
-     - 1.09
-     - 27
-     - 6
-     - 3.2
+     - Standard, 2008-2017, 100% Usage
    * - Void
      - 0%
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
      - 
 
 .. _clothes_washer_presence:
@@ -5193,26 +3680,6 @@ Assumption
 - \In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Geometry Building Type RECS', 'Vintage'], ['Tenure', 'Federal Poverty Level']).
 
 
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``clothes_washer_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is a clothes washer present.
-
 Options
 *******
 
@@ -5225,17 +3692,13 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``clothes_washer_present``
 
    * - None
      - 16%
-     - false
    * - Yes
      - 84%
-     - true
    * - Void
      - 0%
-     - 
 
 .. _clothes_washer_usage_level:
 
@@ -5281,8 +3744,8 @@ Arguments
      - false
      - 
      - Double
-     - auto
-     - Multiplier on the clothes washer energy and hot water usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Clothes Washer <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-clothes-washer>`_) is used.
+     -
+     - Multiplier on the clothes washer energy usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -5392,36 +3855,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``cooking_range_oven_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is a cooking range/oven present.
-   * - ``cooking_range_oven_location``
+   * - ``appliance_cooking_range_oven``
      - false
      - 
      - Choice
-     - auto, conditioned space, basement - conditioned, basement - unconditioned, garage, other housing unit, other heated space, other multifamily buffer space, other non-freezing space
-     - The space type for the cooking range/oven location. If not provided, the OS-HPXML default (see `HPXML Cooking Range/Oven <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-cooking-range-oven>`_) is used.
-   * - ``cooking_range_oven_fuel_type``
-     - true
-     - 
-     - Choice
-     - electricity, natural gas, fuel oil, propane, wood, coal
-     - Type of fuel used by the cooking range/oven.
-   * - ``cooking_range_oven_is_induction``
-     - false
-     - 
-     - Boolean
-     - auto, true, false
-     - Whether the cooking range is induction. If not provided, the OS-HPXML default (see `HPXML Cooking Range/Oven <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-cooking-range-oven>`_) is used.
-   * - ``cooking_range_oven_is_convection``
-     - false
-     - 
-     - Boolean
-     - auto, true, false
-     - Whether the oven is convection. If not provided, the OS-HPXML default (see `HPXML Cooking Range/Oven <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-cooking-range-oven>`_) is used.
+     - None, Electricity, Standard, Non-Convection, 50% Usage, Electricity, Standard, Non-Convection, 75% Usage, Electricity, Standard, Non-Convection, 100% Usage, Electricity, Standard, Non-Convection, 150% Usage, Electricity, Standard, Non-Convection, 200% Usage, Electricity, Standard, Convection, 50% Usage, Electricity, Standard, Convection, 75% Usage, Electricity, Standard, Convection, 100% Usage, Electricity, Standard, Convection, 150% Usage, Electricity, Standard, Convection, 200% Usage, Electricity, Induction, Non-Convection, 50% Usage, Electricity, Induction, Non-Convection, 75% Usage, Electricity, Induction, Non-Convection, 100% Usage, Electricity, Induction, Non-Convection, 150% Usage, Electricity, Induction, Non-Convection, 200% Usage, Electricity, Induction, Convection, 50% Usage, Electricity, Induction, Convection, 75% Usage, Electricity, Induction, Convection, 100% Usage, Electricity, Induction, Convection, 150% Usage, Electricity, Induction, Convection, 200% Usage, Natural Gas, Non-Convection, 50% Usage, Natural Gas, Non-Convection, 75% Usage, Natural Gas, Non-Convection, 100% Usage, Natural Gas, Non-Convection, 150% Usage, Natural Gas, Non-Convection, 200% Usage, Natural Gas, Convection, 50% Usage, Natural Gas, Convection, 75% Usage, Natural Gas, Convection, 100% Usage, Natural Gas, Convection, 150% Usage, Natural Gas, Convection, 200% Usage, Propane, Non-Convection, 50% Usage, Propane, Non-Convection, 75% Usage, Propane, Non-Convection, 100% Usage, Propane, Non-Convection, 150% Usage, Propane, Non-Convection, 200% Usage, Propane, Convection, 50% Usage, Propane, Convection, 75% Usage, Propane, Convection, 100% Usage, Propane, Convection, 150% Usage, Propane, Convection, 200% Usage, Detailed Example: Electricity, Standard, Non-Convection, Conditioned Basement, Detailed Example: Electricity, Standard, Non-Convection, Unconditioned Basement, Detailed Example: Electricity, Standard, Non-Convection, Garage
+     - The type and usage of cooking range/oven.
 
 Options
 *******
@@ -5435,53 +3874,25 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``cooking_range_oven_present``
-     - ``cooking_range_oven_location``
-     - ``cooking_range_oven_fuel_type``
-     - ``cooking_range_oven_is_induction``
-     - ``cooking_range_oven_is_convection``
+     - ``appliance_cooking_range_oven``
 
    * - Electric Induction
      - 2.8%
-     - true
-     - auto
-     - electricity
-     - true
-     - auto
+     - Electricity, Induction, Non-Convection, 100% Usage
    * - Electric Resistance
      - 60%
-     - true
-     - auto
-     - electricity
-     - false
-     - auto
+     - Electricity, Standard, Non-Convection, 100% Usage
    * - Gas
      - 33%
-     - true
-     - auto
-     - natural gas
-     - false
-     - auto
+     - Natural Gas, Non-Convection, 100% Usage
    * - None
      - 0.096%
-     - false
-     - auto
-     - natural gas
-     - false
-     - auto
+     - None
    * - Propane
      - 4.9%
-     - true
-     - auto
-     - propane
-     - false
-     - auto
+     - Propane, Non-Convection, 100% Usage
    * - Void
      - 0%
-     - 
-     - 
-     - 
-     - 
      - 
 
 .. _cooking_range_usage_level:
@@ -5528,8 +3939,8 @@ Arguments
      - false
      - 
      - Double
-     - auto
-     - Multiplier on the cooking range/oven energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Cooking Range/Oven <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-cooking-range-oven>`_) is used.
+     -
+     - Multiplier on the cooking range/oven energy usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -5601,8 +4012,8 @@ Arguments
      - false
      - 
      - String
-     - auto
-     - Enter a date range like 'Jun 1 - Oct 31'. If not provided, the OS-HPXML default (see `HPXML HVAC Control <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-hvac-control>`_) is used. Can also provide 'BuildingAmerica' to use automatic seasons from the Building America House Simulation Protocols.
+     -
+     - Enter a date range like 'Jun 1 - Oct 31'. Defaults to year-round cooling availability.
    * - ``hvac_control_cooling_weekday_setpoint_temp``
      - true
      - deg-F
@@ -5615,12 +4026,6 @@ Arguments
      - Double
      -
      - Specify the weekend cooling setpoint temperature.
-   * - ``use_auto_cooling_season``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Specifies whether to automatically define the cooling season based on the weather file.
 
 Options
 *******
@@ -5637,77 +4042,64 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``hvac_control_cooling_season_period``
      - ``hvac_control_cooling_weekday_setpoint_temp``
      - ``hvac_control_cooling_weekend_setpoint_temp``
-     - ``use_auto_cooling_season``
 
    * - 60F
      - 3.2%
-     - auto
+     - Jan 1 - Dec 31
      - 60
      - 60
-     - false
    * - 62F
      - 0.98%
-     - auto
+     - Jan 1 - Dec 31
      - 62
      - 62
-     - false
    * - 65F
      - 4.1%
-     - auto
+     - Jan 1 - Dec 31
      - 65
      - 65
-     - false
    * - 67F
      - 2%
-     - auto
+     - Jan 1 - Dec 31
      - 67
      - 67
-     - false
    * - 68F
      - 12%
-     - auto
+     - Jan 1 - Dec 31
      - 68
      - 68
-     - false
    * - 70F
      - 19%
-     - auto
+     - Jan 1 - Dec 31
      - 70
      - 70
-     - false
    * - 72F
      - 20%
-     - auto
+     - Jan 1 - Dec 31
      - 72
      - 72
-     - false
    * - 75F
      - 19%
-     - auto
+     - Jan 1 - Dec 31
      - 75
      - 75
-     - false
    * - 76F
      - 8%
-     - auto
+     - Jan 1 - Dec 31
      - 76
      - 76
-     - false
    * - 78F
      - 7.9%
-     - auto
+     - Jan 1 - Dec 31
      - 78
      - 78
-     - false
    * - 80F
      - 4.8%
-     - auto
+     - Jan 1 - Dec 31
      - 80
      - 80
-     - false
    * - Void
      - 0%
-     - 
      - 
      - 
      - 
@@ -6256,14 +4648,8 @@ Arguments
      - true
      - 
      - Choice
-     - Double-Loaded Interior, Double Exterior, Single Exterior (Front), None
+     - Double-Loaded Interior, Double Exterior, Single Exterior Front, None
      - The position of the corridor. Only applies to single-family attached and apartment units. Exterior corridors are shaded, but not enclosed. Interior corridors are enclosed and conditioned.
-   * - ``geometry_corridor_width``
-     - true
-     - ft
-     - Double
-     -
-     - The width of the corridor. Only applies to apartment units.
 
 Options
 *******
@@ -6278,28 +4664,22 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Option name
      - Stock saturation
      - ``geometry_corridor_position``
-     - ``geometry_corridor_width``
 
    * - Not Applicable
      - 74%
      - None
-     - 0
    * - Double-Loaded Interior
      - 26%
      - Double-Loaded Interior
-     - 10
    * - None
      - 0%
      - None
-     - 0
    * - Single Exterior Front
      - 0%
-     - Single Exterior (Front)
-     - 10
+     - Single Exterior Front
    * - Double Exterior
      - 0%
      - Double Exterior
-     - 10
 
 .. _county:
 
@@ -6337,30 +4717,18 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``simulation_control_daylight_saving_enabled``
-     - false
-     - 
-     - Boolean
-     - auto, true, false
-     - Whether to use daylight saving. If not provided, the OS-HPXML default (see `HPXML Building Site <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-building-site>`_) is used.
-   * - ``site_zip_code``
+   * - ``location_zip_code``
      - false
      - 
      - String
      -
-     - Zip code of the home address. Either this or the Weather Station: EnergyPlus Weather (EPW) Filepath input below must be provided.
-   * - ``site_time_zone_utc_offset``
-     - false
-     - hr
-     - Double
-     - auto
-     - Time zone UTC offset of the home address. Must be between -12 and 14. If not provided, the OS-HPXML default (see `HPXML Site <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-site>`_) is used.
-   * - ``weather_station_epw_filepath``
+     - Zip code of the home address. Either this or the EnergyPlus Weather (EPW) File Path input below must be provided.
+   * - ``location_epw_path``
      - false
      - 
      - String
      -
-     - Path of the EPW file. Either this or the Site: Zip Code input above must be provided.
+     - Path to the EPW file. Either this or the Zip Code input above must be provided.
 
 Options
 *******
@@ -6374,18862 +4742,12576 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``simulation_control_daylight_saving_enabled``
-     - ``site_zip_code``
-     - ``site_time_zone_utc_offset``
-     - ``weather_station_epw_filepath``
+     - ``location_zip_code``
+     - ``location_epw_path``
 
    * - AK, Aleutians East Borough
      - 0.00075%
-     - true
      - 99661
-     - -9
      - ../../../weather/G0200130.epw
    * - AK, Aleutians West Census Area
      - 0.0015%
-     - true
      - 99685
-     - -9
      - ../../../weather/G0200160.epw
    * - AK, Anchorage Municipality
      - 0.085%
-     - true
      - 99501
-     - -9
      - ../../../weather/G0200200.epw
    * - AK, Bethel Census Area
      - 0.0045%
-     - true
      - 99545
-     - -9
      - ../../../weather/G0200500.epw
    * - AK, Bristol Bay Borough
      - 0.00068%
-     - true
      - 99633
-     - -9
      - ../../../weather/G0200600.epw
    * - AK, Denali Borough
      - 0.0013%
-     - true
      - 99743
-     - -9
      - ../../../weather/G0200680.epw
    * - AK, Dillingham Census Area
      - 0.0018%
-     - true
      - 99576
-     - -9
      - ../../../weather/G0200700.epw
    * - AK, Fairbanks North Star Borough
      - 0.031%
-     - true
      - 99709
-     - -9
      - ../../../weather/G0200900.epw
    * - AK, Haines Borough
      - 0.0012%
-     - true
      - 99827
-     - -9
      - ../../../weather/G0201000.epw
    * - AK, Hoonah-Angoon Census Area
      - 0.0012%
-     - true
      - 99829
-     - -9
      - ../../../weather/G0201050.epw
    * - AK, Juneau City and Borough
      - 0.0099%
-     - true
      - 99802
-     - -9
      - ../../../weather/G0201100.epw
    * - AK, Kenai Peninsula Borough
      - 0.023%
-     - true
      - 99611
-     - -9
      - ../../../weather/G0201220.epw
    * - AK, Ketchikan Gateway Borough
      - 0.0047%
-     - true
      - 99901
-     - -9
      - ../../../weather/G0201300.epw
    * - AK, Kodiak Island Borough
      - 0.004%
-     - true
      - 99615
-     - -9
      - ../../../weather/G0201500.epw
    * - AK, Kusilvak Census Area
      - 0.0017%
-     - true
      - 99604
-     - -9
      - ../../../weather/G0202700.epw
    * - AK, Lake and Peninsula Borough
      - 0.0011%
-     - true
      - 99653
-     - -9
      - ../../../weather/G0201640.epw
    * - AK, Matanuska-Susitna Borough
      - 0.031%
-     - true
      - 99645
-     - -9
      - ../../../weather/G0201700.epw
    * - AK, Nome Census Area
      - 0.003%
-     - true
      - 99762
-     - -9
      - ../../../weather/G0201800.epw
    * - AK, North Slope Borough
      - 0.0019%
-     - true
      - 99723
-     - -9
      - ../../../weather/G0201850.epw
    * - AK, Northwest Arctic Borough
      - 0.002%
-     - true
      - 99752
-     - -9
      - ../../../weather/G0201880.epw
    * - AK, Petersburg Borough
      - 0.0013%
-     - true
      - 99833
-     - -9
      - ../../../weather/G0201950.epw
    * - AK, Prince of Wales-Hyder Census Area
      - 0.0025%
-     - true
      - 99926
-     - -9
      - ../../../weather/G0201980.epw
    * - AK, Sitka City and Borough
      - 0.0031%
-     - true
      - 99835
-     - -9
      - ../../../weather/G0202200.epw
    * - AK, Skagway Municipality
      - 0.00048%
-     - true
      - 99840
-     - -9
      - ../../../weather/G0202300.epw
    * - AK, Southeast Fairbanks Census Area
      - 0.0029%
-     - true
      - 99731
-     - -9
      - ../../../weather/G0202400.epw
    * - AK, Valdez-Cordova Census Area
      - 0.0046%
-     - true
      - 99686
-     - -9
      - ../../../weather/G0202610.epw
    * - AK, Wrangell City and Borough
      - 0.0011%
-     - true
      - 99903
-     - -9
      - ../../../weather/G0202750.epw
    * - AK, Yakutat City and Borough
      - 0.00029%
-     - true
      - 99689
-     - -9
      - ../../../weather/G0202820.epw
    * - AK, Yukon-Koyukuk Census Area
      - 0.003%
-     - true
      - 99740
-     - -9
      - ../../../weather/G0202900.epw
    * - AL, Autauga County
      - 0.017%
-     - true
      - 36067
-     - -6
      - ../../../weather/G0100010.epw
    * - AL, Baldwin County
      - 0.08%
-     - true
      - 36535
-     - -6
      - ../../../weather/G0100030.epw
    * - AL, Barbour County
      - 0.0088%
-     - true
      - 36027
-     - -6
      - ../../../weather/G0100050.epw
    * - AL, Bibb County
      - 0.0067%
-     - true
      - 35042
-     - -6
      - ../../../weather/G0100070.epw
    * - AL, Blount County
      - 0.018%
-     - true
      - 35121
-     - -6
      - ../../../weather/G0100090.epw
    * - AL, Bullock County
      - 0.0033%
-     - true
      - 36089
-     - -6
      - ../../../weather/G0100110.epw
    * - AL, Butler County
      - 0.0074%
-     - true
      - 36037
-     - -6
      - ../../../weather/G0100130.epw
    * - AL, Calhoun County
      - 0.04%
-     - true
      - 36201
-     - -6
      - ../../../weather/G0100150.epw
    * - AL, Chambers County
      - 0.013%
-     - true
      - 36863
-     - -6
      - ../../../weather/G0100170.epw
    * - AL, Cherokee County
      - 0.012%
-     - true
      - 35960
-     - -6
      - ../../../weather/G0100190.epw
    * - AL, Chilton County
      - 0.014%
-     - true
      - 35045
-     - -6
      - ../../../weather/G0100210.epw
    * - AL, Choctaw County
      - 0.0054%
-     - true
      - 36904
-     - -6
      - ../../../weather/G0100230.epw
    * - AL, Clarke County
      - 0.0094%
-     - true
      - 36545
-     - -6
      - ../../../weather/G0100250.epw
    * - AL, Clay County
      - 0.005%
-     - true
      - 36251
-     - -6
      - ../../../weather/G0100270.epw
    * - AL, Cleburne County
      - 0.005%
-     - true
      - 36264
-     - -6
      - ../../../weather/G0100290.epw
    * - AL, Coffee County
      - 0.017%
-     - true
      - 36330
-     - -6
      - ../../../weather/G0100310.epw
    * - AL, Colbert County
      - 0.02%
-     - true
      - 35674
-     - -6
      - ../../../weather/G0100330.epw
    * - AL, Conecuh County
      - 0.0053%
-     - true
      - 36401
-     - -6
      - ../../../weather/G0100350.epw
    * - AL, Coosa County
      - 0.0048%
-     - true
      - 35151
-     - -6
      - ../../../weather/G0100370.epw
    * - AL, Covington County
      - 0.014%
-     - true
      - 36420
-     - -6
      - ../../../weather/G0100390.epw
    * - AL, Crenshaw County
      - 0.005%
-     - true
      - 36049
-     - -6
      - ../../../weather/G0100410.epw
    * - AL, Cullman County
      - 0.028%
-     - true
      - 35055
-     - -6
      - ../../../weather/G0100430.epw
    * - AL, Dale County
      - 0.017%
-     - true
      - 36360
-     - -6
      - ../../../weather/G0100450.epw
    * - AL, Dallas County
      - 0.015%
-     - true
      - 36701
-     - -6
      - ../../../weather/G0100470.epw
    * - AL, DeKalb County
      - 0.023%
-     - true
      - 35967
-     - -6
      - ../../../weather/G0100490.epw
    * - AL, Elmore County
      - 0.025%
-     - true
      - 36092
-     - -6
      - ../../../weather/G0100510.epw
    * - AL, Escambia County
      - 0.012%
-     - true
      - 36426
-     - -6
      - ../../../weather/G0100530.epw
    * - AL, Etowah County
      - 0.035%
-     - true
      - 35901
-     - -6
      - ../../../weather/G0100550.epw
    * - AL, Fayette County
      - 0.0063%
-     - true
      - 35555
-     - -6
      - ../../../weather/G0100570.epw
    * - AL, Franklin County
      - 0.01%
-     - true
      - 35653
-     - -6
      - ../../../weather/G0100590.epw
    * - AL, Geneva County
      - 0.0094%
-     - true
      - 36375
-     - -6
      - ../../../weather/G0100610.epw
    * - AL, Greene County
      - 0.0037%
-     - true
      - 35462
-     - -6
      - ../../../weather/G0100630.epw
    * - AL, Hale County
      - 0.0057%
-     - true
      - 36744
-     - -6
      - ../../../weather/G0100650.epw
    * - AL, Henry County
      - 0.0067%
-     - true
      - 36310
-     - -6
      - ../../../weather/G0100670.epw
    * - AL, Houston County
      - 0.035%
-     - true
      - 36301
-     - -6
      - ../../../weather/G0100690.epw
    * - AL, Jackson County
      - 0.018%
-     - true
      - 35768
-     - -6
      - ../../../weather/G0100710.epw
    * - AL, Jefferson County
      - 0.23%
-     - true
      - 35215
-     - -6
      - ../../../weather/G0100730.epw
    * - AL, Lamar County
      - 0.0055%
-     - true
      - 35586
-     - -6
      - ../../../weather/G0100750.epw
    * - AL, Lauderdale County
      - 0.033%
-     - true
      - 35630
-     - -6
      - ../../../weather/G0100770.epw
    * - AL, Lawrence County
      - 0.011%
-     - true
      - 35650
-     - -6
      - ../../../weather/G0100790.epw
    * - AL, Lee County
      - 0.049%
-     - true
      - 36830
-     - -6
      - ../../../weather/G0100810.epw
    * - AL, Limestone County
      - 0.026%
-     - true
      - 35611
-     - -6
      - ../../../weather/G0100830.epw
    * - AL, Lowndes County
      - 0.0038%
-     - true
      - 36040
-     - -6
      - ../../../weather/G0100850.epw
    * - AL, Macon County
      - 0.0076%
-     - true
      - 36083
-     - -6
      - ../../../weather/G0100870.epw
    * - AL, Madison County
      - 0.12%
-     - true
      - 35758
-     - -6
      - ../../../weather/G0100890.epw
    * - AL, Marengo County
      - 0.0076%
-     - true
      - 36732
-     - -6
      - ../../../weather/G0100910.epw
    * - AL, Marion County
      - 0.011%
-     - true
      - 35570
-     - -6
      - ../../../weather/G0100930.epw
    * - AL, Marshall County
      - 0.03%
-     - true
      - 35976
-     - -6
      - ../../../weather/G0100950.epw
    * - AL, Mobile County
      - 0.14%
-     - true
      - 36695
-     - -6
      - ../../../weather/G0100970.epw
    * - AL, Monroe County
      - 0.0084%
-     - true
      - 36460
-     - -6
      - ../../../weather/G0100990.epw
    * - AL, Montgomery County
      - 0.077%
-     - true
      - 36117
-     - -6
      - ../../../weather/G0101010.epw
    * - AL, Morgan County
      - 0.038%
-     - true
      - 35601
-     - -6
      - ../../../weather/G0101030.epw
    * - AL, Perry County
      - 0.0035%
-     - true
      - 36756
-     - -6
      - ../../../weather/G0101050.epw
    * - AL, Pickens County
      - 0.007%
-     - true
      - 35466
-     - -6
      - ../../../weather/G0101070.epw
    * - AL, Pike County
      - 0.012%
-     - true
      - 36081
-     - -6
      - ../../../weather/G0101090.epw
    * - AL, Randolph County
      - 0.0089%
-     - true
      - 36274
-     - -6
      - ../../../weather/G0101110.epw
    * - AL, Russell County
      - 0.02%
-     - true
      - 36869
-     - -6
      - ../../../weather/G0101130.epw
    * - AL, Shelby County
      - 0.062%
-     - true
      - 35242
-     - -6
      - ../../../weather/G0101170.epw
    * - AL, St. Clair County
      - 0.027%
-     - true
      - 35120
-     - -6
      - ../../../weather/G0101150.epw
    * - AL, Sumter County
      - 0.005%
-     - true
      - 36925
-     - -6
      - ../../../weather/G0101190.epw
    * - AL, Talladega County
      - 0.028%
-     - true
      - 35160
-     - -6
      - ../../../weather/G0101210.epw
    * - AL, Tallapoosa County
      - 0.016%
-     - true
      - 35010
-     - -6
      - ../../../weather/G0101230.epw
    * - AL, Tuscaloosa County
      - 0.066%
-     - true
      - 35401
-     - -6
      - ../../../weather/G0101250.epw
    * - AL, Walker County
      - 0.023%
-     - true
      - 35504
-     - -6
      - ../../../weather/G0101270.epw
    * - AL, Washington County
      - 0.0062%
-     - true
      - 36558
-     - -6
      - ../../../weather/G0101290.epw
    * - AL, Wilcox County
      - 0.0042%
-     - true
      - 36726
-     - -6
      - ../../../weather/G0101310.epw
    * - AL, Winston County
      - 0.01%
-     - true
      - 35565
-     - -6
      - ../../../weather/G0101330.epw
    * - AR, Arkansas County
      - 0.007%
-     - true
      - 72160
-     - -6
      - ../../../weather/G0500010.epw
    * - AR, Ashley County
      - 0.0075%
-     - true
      - 71635
-     - -6
      - ../../../weather/G0500030.epw
    * - AR, Baxter County
      - 0.017%
-     - true
      - 72653
-     - -6
      - ../../../weather/G0500050.epw
    * - AR, Benton County
      - 0.073%
-     - true
      - 72712
-     - -6
      - ../../../weather/G0500070.epw
    * - AR, Boone County
      - 0.013%
-     - true
      - 72601
-     - -6
      - ../../../weather/G0500090.epw
    * - AR, Bradley County
      - 0.0043%
-     - true
      - 71671
-     - -6
      - ../../../weather/G0500110.epw
    * - AR, Calhoun County
      - 0.0022%
-     - true
      - 71744
-     - -6
      - ../../../weather/G0500130.epw
    * - AR, Carroll County
      - 0.01%
-     - true
      - 72616
-     - -6
      - ../../../weather/G0500150.epw
    * - AR, Chicot County
      - 0.004%
-     - true
      - 71653
-     - -6
      - ../../../weather/G0500170.epw
    * - AR, Clark County
      - 0.0078%
-     - true
      - 71923
-     - -6
      - ../../../weather/G0500190.epw
    * - AR, Clay County
      - 0.006%
-     - true
      - 72454
-     - -6
      - ../../../weather/G0500210.epw
    * - AR, Cleburne County
      - 0.012%
-     - true
      - 72543
-     - -6
      - ../../../weather/G0500230.epw
    * - AR, Cleveland County
      - 0.003%
-     - true
      - 71665
-     - -6
      - ../../../weather/G0500250.epw
    * - AR, Columbia County
      - 0.0086%
-     - true
      - 71753
-     - -6
      - ../../../weather/G0500270.epw
    * - AR, Conway County
      - 0.0073%
-     - true
      - 72110
-     - -6
      - ../../../weather/G0500290.epw
    * - AR, Craighead County
      - 0.032%
-     - true
      - 72401
-     - -6
      - ../../../weather/G0500310.epw
    * - AR, Crawford County
      - 0.02%
-     - true
      - 72956
-     - -6
      - ../../../weather/G0500330.epw
    * - AR, Crittenden County
      - 0.016%
-     - true
      - 72301
-     - -6
      - ../../../weather/G0500350.epw
    * - AR, Cross County
      - 0.0059%
-     - true
      - 72396
-     - -6
      - ../../../weather/G0500370.epw
    * - AR, Dallas County
      - 0.0032%
-     - true
      - 71742
-     - -6
      - ../../../weather/G0500390.epw
    * - AR, Desha County
      - 0.0047%
-     - true
      - 71639
-     - -6
      - ../../../weather/G0500410.epw
    * - AR, Drew County
      - 0.0063%
-     - true
      - 71655
-     - -6
      - ../../../weather/G0500430.epw
    * - AR, Faulkner County
      - 0.036%
-     - true
      - 72034
-     - -6
      - ../../../weather/G0500450.epw
    * - AR, Franklin County
      - 0.006%
-     - true
      - 72949
-     - -6
      - ../../../weather/G0500470.epw
    * - AR, Fulton County
      - 0.005%
-     - true
      - 72554
-     - -6
      - ../../../weather/G0500490.epw
    * - AR, Garland County
      - 0.038%
-     - true
      - 71913
-     - -6
      - ../../../weather/G0500510.epw
    * - AR, Grant County
      - 0.0058%
-     - true
      - 72150
-     - -6
      - ../../../weather/G0500530.epw
    * - AR, Greene County
      - 0.014%
-     - true
      - 72450
-     - -6
      - ../../../weather/G0500550.epw
    * - AR, Hempstead County
      - 0.0078%
-     - true
      - 71801
-     - -6
      - ../../../weather/G0500570.epw
    * - AR, Hot Spring County
      - 0.011%
-     - true
      - 72104
-     - -6
      - ../../../weather/G0500590.epw
    * - AR, Howard County
      - 0.0046%
-     - true
      - 71852
-     - -6
      - ../../../weather/G0500610.epw
    * - AR, Independence County
      - 0.012%
-     - true
      - 72501
-     - -6
      - ../../../weather/G0500630.epw
    * - AR, Izard County
      - 0.0054%
-     - true
      - 72556
-     - -6
      - ../../../weather/G0500650.epw
    * - AR, Jackson County
      - 0.0057%
-     - true
      - 72112
-     - -6
      - ../../../weather/G0500670.epw
    * - AR, Jefferson County
      - 0.025%
-     - true
      - 71603
-     - -6
      - ../../../weather/G0500690.epw
    * - AR, Johnson County
      - 0.0085%
-     - true
      - 72830
-     - -6
      - ../../../weather/G0500710.epw
    * - AR, Lafayette County
      - 0.0032%
-     - true
      - 71860
-     - -6
      - ../../../weather/G0500730.epw
    * - AR, Lawrence County
      - 0.0059%
-     - true
      - 72476
-     - -6
      - ../../../weather/G0500750.epw
    * - AR, Lee County
      - 0.0033%
-     - true
      - 72360
-     - -6
      - ../../../weather/G0500770.epw
    * - AR, Lincoln County
      - 0.0036%
-     - true
      - 71667
-     - -6
      - ../../../weather/G0500790.epw
    * - AR, Little River County
      - 0.0048%
-     - true
      - 71822
-     - -6
      - ../../../weather/G0500810.epw
    * - AR, Logan County
      - 0.0076%
-     - true
      - 72927
-     - -6
      - ../../../weather/G0500830.epw
    * - AR, Lonoke County
      - 0.021%
-     - true
      - 72023
-     - -6
      - ../../../weather/G0500850.epw
    * - AR, Madison County
      - 0.0056%
-     - true
      - 72740
-     - -6
      - ../../../weather/G0500870.epw
    * - AR, Marion County
      - 0.007%
-     - true
      - 72687
-     - -6
      - ../../../weather/G0500890.epw
    * - AR, Miller County
      - 0.014%
-     - true
      - 71854
-     - -6
      - ../../../weather/G0500910.epw
    * - AR, Mississippi County
      - 0.015%
-     - true
      - 72315
-     - -6
      - ../../../weather/G0500930.epw
    * - AR, Monroe County
      - 0.0033%
-     - true
      - 72021
-     - -6
      - ../../../weather/G0500950.epw
    * - AR, Montgomery County
      - 0.0043%
-     - true
      - 71957
-     - -6
      - ../../../weather/G0500970.epw
    * - AR, Nevada County
      - 0.0034%
-     - true
      - 71857
-     - -6
      - ../../../weather/G0500990.epw
    * - AR, Newton County
      - 0.0035%
-     - true
      - 72641
-     - -6
      - ../../../weather/G0501010.epw
    * - AR, Ouachita County
      - 0.0097%
-     - true
      - 71701
-     - -6
      - ../../../weather/G0501030.epw
    * - AR, Perry County
      - 0.0037%
-     - true
      - 72126
-     - -6
      - ../../../weather/G0501050.epw
    * - AR, Phillips County
      - 0.0076%
-     - true
      - 72390
-     - -6
      - ../../../weather/G0501070.epw
    * - AR, Pike County
      - 0.0042%
-     - true
      - 71943
-     - -6
      - ../../../weather/G0501090.epw
    * - AR, Poinsett County
      - 0.0082%
-     - true
      - 72472
-     - -6
      - ../../../weather/G0501110.epw
    * - AR, Polk County
      - 0.0075%
-     - true
      - 71953
-     - -6
      - ../../../weather/G0501130.epw
    * - AR, Pope County
      - 0.019%
-     - true
      - 72802
-     - -6
      - ../../../weather/G0501150.epw
    * - AR, Prairie County
      - 0.0034%
-     - true
      - 72040
-     - -6
      - ../../../weather/G0501170.epw
    * - AR, Pulaski County
      - 0.14%
-     - true
      - 72076
-     - -6
      - ../../../weather/G0501190.epw
    * - AR, Randolph County
      - 0.0064%
-     - true
      - 72455
-     - -6
      - ../../../weather/G0501210.epw
    * - AR, Saline County
      - 0.035%
-     - true
      - 72019
-     - -6
      - ../../../weather/G0501250.epw
    * - AR, Scott County
      - 0.0039%
-     - true
      - 72958
-     - -6
      - ../../../weather/G0501270.epw
    * - AR, Searcy County
      - 0.0037%
-     - true
      - 72650
-     - -6
      - ../../../weather/G0501290.epw
    * - AR, Sebastian County
      - 0.042%
-     - true
      - 72903
-     - -6
      - ../../../weather/G0501310.epw
    * - AR, Sevier County
      - 0.0051%
-     - true
      - 71832
-     - -6
      - ../../../weather/G0501330.epw
    * - AR, Sharp County
      - 0.0073%
-     - true
      - 72529
-     - -6
      - ../../../weather/G0501350.epw
    * - AR, St. Francis County
      - 0.0081%
-     - true
      - 72335
-     - -6
      - ../../../weather/G0501230.epw
    * - AR, Stone County
      - 0.005%
-     - true
      - 72560
-     - -6
      - ../../../weather/G0501370.epw
    * - AR, Union County
      - 0.015%
-     - true
      - 71730
-     - -6
      - ../../../weather/G0501390.epw
    * - AR, Van Buren County
      - 0.0077%
-     - true
      - 72031
-     - -6
      - ../../../weather/G0501410.epw
    * - AR, Washington County
      - 0.067%
-     - true
      - 72701
-     - -6
      - ../../../weather/G0501430.epw
    * - AR, White County
      - 0.025%
-     - true
      - 72143
-     - -6
      - ../../../weather/G0501450.epw
    * - AR, Woodruff County
      - 0.0029%
-     - true
      - 72006
-     - -6
      - ../../../weather/G0501470.epw
    * - AR, Yell County
      - 0.0073%
-     - true
      - 72834
-     - -6
      - ../../../weather/G0501490.epw
    * - AZ, Apache County
      - 0.024%
-     - false
      - 85936
-     - -7
      - ../../../weather/G0400010.epw
    * - AZ, Cochise County
      - 0.045%
-     - false
      - 85635
-     - -7
      - ../../../weather/G0400030.epw
    * - AZ, Coconino County
      - 0.048%
-     - false
      - 86001
-     - -7
      - ../../../weather/G0400050.epw
    * - AZ, Gila County
      - 0.025%
-     - false
      - 85541
-     - -7
      - ../../../weather/G0400070.epw
    * - AZ, Graham County
      - 0.0099%
-     - false
      - 85546
-     - -7
      - ../../../weather/G0400090.epw
    * - AZ, Greenlee County
      - 0.0033%
-     - false
      - 85534
-     - -7
      - ../../../weather/G0400110.epw
    * - AZ, La Paz County
      - 0.012%
-     - false
      - 85344
-     - -7
      - ../../../weather/G0400120.epw
    * - AZ, Maricopa County
      - 1.3%
-     - false
      - 85281
-     - -7
      - ../../../weather/G0400130.epw
    * - AZ, Mohave County
      - 0.084%
-     - false
      - 86442
-     - -7
      - ../../../weather/G0400150.epw
    * - AZ, Navajo County
      - 0.043%
-     - false
      - 85901
-     - -7
      - ../../../weather/G0400170.epw
    * - AZ, Pima County
      - 0.34%
-     - false
      - 85705
-     - -7
      - ../../../weather/G0400190.epw
    * - AZ, Pinal County
      - 0.12%
-     - false
      - 85122
-     - -7
      - ../../../weather/G0400210.epw
    * - AZ, Santa Cruz County
      - 0.014%
-     - false
      - 85621
-     - -7
      - ../../../weather/G0400230.epw
    * - AZ, Yavapai County
      - 0.084%
-     - false
      - 86314
-     - -7
      - ../../../weather/G0400250.epw
    * - AZ, Yuma County
      - 0.067%
-     - false
      - 85364
-     - -7
      - ../../../weather/G0400270.epw
    * - CA, Alameda County
      - 0.44%
-     - true
      - 94501
-     - -8
      - ../../../weather/G0600010.epw
    * - CA, Alpine County
      - 0.0013%
-     - true
      - 96120
-     - -8
      - ../../../weather/G0600030.epw
    * - CA, Amador County
      - 0.014%
-     - true
      - 95642
-     - -8
      - ../../../weather/G0600050.epw
    * - CA, Butte County
      - 0.073%
-     - true
      - 95928
-     - -8
      - ../../../weather/G0600070.epw
    * - CA, Calaveras County
      - 0.021%
-     - true
      - 95252
-     - -8
      - ../../../weather/G0600090.epw
    * - CA, Colusa County
      - 0.0059%
-     - true
      - 95932
-     - -8
      - ../../../weather/G0600110.epw
    * - CA, Contra Costa County
      - 0.3%
-     - true
      - 94565
-     - -8
      - ../../../weather/G0600130.epw
    * - CA, Del Norte County
      - 0.0084%
-     - true
      - 95531
-     - -8
      - ../../../weather/G0600150.epw
    * - CA, El Dorado County
      - 0.066%
-     - true
      - 95762
-     - -8
      - ../../../weather/G0600170.epw
    * - CA, Fresno County
      - 0.24%
-     - true
      - 93722
-     - -8
      - ../../../weather/G0600190.epw
    * - CA, Glenn County
      - 0.0081%
-     - true
      - 95963
-     - -8
      - ../../../weather/G0600210.epw
    * - CA, Humboldt County
      - 0.047%
-     - true
      - 95501
-     - -8
      - ../../../weather/G0600230.epw
    * - CA, Imperial County
      - 0.042%
-     - true
      - 92243
-     - -8
      - ../../../weather/G0600250.epw
    * - CA, Inyo County
      - 0.0071%
-     - true
      - 93514
-     - -8
      - ../../../weather/G0600270.epw
    * - CA, Kern County
      - 0.22%
-     - true
      - 93306
-     - -8
      - ../../../weather/G0600290.epw
    * - CA, Kings County
      - 0.034%
-     - true
      - 93230
-     - -8
      - ../../../weather/G0600310.epw
    * - CA, Lake County
      - 0.027%
-     - true
      - 95422
-     - -8
      - ../../../weather/G0600330.epw
    * - CA, Lassen County
      - 0.0095%
-     - true
      - 96130
-     - -8
      - ../../../weather/G0600350.epw
    * - CA, Los Angeles County
      - 2.6%
-     - true
      - 90250
-     - -8
      - ../../../weather/G0600370.epw
    * - CA, Madera County
      - 0.037%
-     - true
      - 93637
-     - -8
      - ../../../weather/G0600390.epw
    * - CA, Marin County
      - 0.084%
-     - true
      - 94901
-     - -8
      - ../../../weather/G0600410.epw
    * - CA, Mariposa County
      - 0.0077%
-     - true
      - 95338
-     - -8
      - ../../../weather/G0600430.epw
    * - CA, Mendocino County
      - 0.03%
-     - true
      - 95482
-     - -8
      - ../../../weather/G0600450.epw
    * - CA, Merced County
      - 0.063%
-     - true
      - 93635
-     - -8
      - ../../../weather/G0600470.epw
    * - CA, Modoc County
      - 0.0039%
-     - true
      - 96101
-     - -8
      - ../../../weather/G0600490.epw
    * - CA, Mono County
      - 0.01%
-     - true
      - 93546
-     - -8
      - ../../../weather/G0600510.epw
    * - CA, Monterey County
      - 0.1%
-     - true
      - 93906
-     - -8
      - ../../../weather/G0600530.epw
    * - CA, Napa County
      - 0.041%
-     - true
      - 94558
-     - -8
      - ../../../weather/G0600550.epw
    * - CA, Nevada County
      - 0.04%
-     - true
      - 95945
-     - -8
      - ../../../weather/G0600570.epw
    * - CA, Orange County
      - 0.8%
-     - true
      - 92683
-     - -8
      - ../../../weather/G0600590.epw
    * - CA, Placer County
      - 0.12%
-     - true
      - 95747
-     - -8
      - ../../../weather/G0600610.epw
    * - CA, Plumas County
      - 0.012%
-     - true
      - 96122
-     - -8
      - ../../../weather/G0600630.epw
    * - CA, Riverside County
      - 0.61%
-     - true
      - 92503
-     - -8
      - ../../../weather/G0600650.epw
    * - CA, Sacramento County
      - 0.42%
-     - true
      - 95630
-     - -8
      - ../../../weather/G0600670.epw
    * - CA, San Benito County
      - 0.014%
-     - true
      - 95023
-     - -8
      - ../../../weather/G0600690.epw
    * - CA, San Bernardino County
      - 0.53%
-     - true
      - 92336
-     - -8
      - ../../../weather/G0600710.epw
    * - CA, San Diego County
      - 0.89%
-     - true
      - 92101
-     - -8
      - ../../../weather/G0600730.epw
    * - CA, San Francisco County
      - 0.29%
-     - true
      - 94109
-     - -8
      - ../../../weather/G0600750.epw
    * - CA, San Joaquin County
      - 0.18%
-     - true
      - 95206
-     - -8
      - ../../../weather/G0600770.epw
    * - CA, San Luis Obispo County
      - 0.089%
-     - true
      - 93446
-     - -8
      - ../../../weather/G0600790.epw
    * - CA, San Mateo County
      - 0.2%
-     - true
      - 94080
-     - -8
      - ../../../weather/G0600810.epw
    * - CA, Santa Barbara County
      - 0.12%
-     - true
      - 93436
-     - -8
      - ../../../weather/G0600830.epw
    * - CA, Santa Clara County
      - 0.49%
-     - true
      - 95035
-     - -8
      - ../../../weather/G0600850.epw
    * - CA, Santa Cruz County
      - 0.079%
-     - true
      - 95076
-     - -8
      - ../../../weather/G0600870.epw
    * - CA, Shasta County
      - 0.058%
-     - true
      - 96003
-     - -8
      - ../../../weather/G0600890.epw
    * - CA, Sierra County
      - 0.0018%
-     - true
      - 95960
-     - -8
      - ../../../weather/G0600910.epw
    * - CA, Siskiyou County
      - 0.018%
-     - true
      - 96097
-     - -8
      - ../../../weather/G0600930.epw
    * - CA, Solano County
      - 0.12%
-     - true
      - 94533
-     - -8
      - ../../../weather/G0600950.epw
    * - CA, Sonoma County
      - 0.15%
-     - true
      - 95403
-     - -8
      - ../../../weather/G0600970.epw
    * - CA, Stanislaus County
      - 0.13%
-     - true
      - 95355
-     - -8
      - ../../../weather/G0600990.epw
    * - CA, Sutter County
      - 0.025%
-     - true
      - 95991
-     - -8
      - ../../../weather/G0601010.epw
    * - CA, Tehama County
      - 0.02%
-     - true
      - 96080
-     - -8
      - ../../../weather/G0601030.epw
    * - CA, Trinity County
      - 0.0066%
-     - true
      - 96091
-     - -8
      - ../../../weather/G0601050.epw
    * - CA, Tulare County
      - 0.11%
-     - true
      - 93274
-     - -8
      - ../../../weather/G0601070.epw
    * - CA, Tuolumne County
      - 0.023%
-     - true
      - 95370
-     - -8
      - ../../../weather/G0601090.epw
    * - CA, Ventura County
      - 0.21%
-     - true
      - 93065
-     - -8
      - ../../../weather/G0601110.epw
    * - CA, Yolo County
      - 0.057%
-     - true
      - 95616
-     - -8
      - ../../../weather/G0601130.epw
    * - CA, Yuba County
      - 0.021%
-     - true
      - 95901
-     - -8
      - ../../../weather/G0601150.epw
    * - CO, Adams County
      - 0.12%
-     - true
      - 80229
-     - -7
      - ../../../weather/G0800010.epw
    * - CO, Alamosa County
      - 0.005%
-     - true
      - 81101
-     - -7
      - ../../../weather/G0800030.epw
    * - CO, Arapahoe County
      - 0.18%
-     - true
      - 80013
-     - -7
      - ../../../weather/G0800050.epw
    * - CO, Archuleta County
      - 0.0067%
-     - true
      - 81147
-     - -7
      - ../../../weather/G0800070.epw
    * - CO, Baca County
      - 0.0017%
-     - true
      - 81073
-     - -7
      - ../../../weather/G0800090.epw
    * - CO, Bent County
      - 0.0016%
-     - true
      - 81054
-     - -7
      - ../../../weather/G0800110.epw
    * - CO, Boulder County
      - 0.098%
-     - true
      - 80501
-     - -7
      - ../../../weather/G0800130.epw
    * - CO, Broomfield County
      - 0.019%
-     - true
      - 80020
-     - -7
      - ../../../weather/G0800140.epw
    * - CO, Chaffee County
      - 0.0077%
-     - true
      - 81201
-     - -7
      - ../../../weather/G0800150.epw
    * - CO, Cheyenne County
      - 0.00069%
-     - true
      - 80810
-     - -7
      - ../../../weather/G0800170.epw
    * - CO, Clear Creek County
      - 0.0042%
-     - true
      - 80439
-     - -7
      - ../../../weather/G0800190.epw
    * - CO, Conejos County
      - 0.0032%
-     - true
      - 81120
-     - -7
      - ../../../weather/G0800210.epw
    * - CO, Costilla County
      - 0.002%
-     - true
      - 81133
-     - -7
      - ../../../weather/G0800230.epw
    * - CO, Crowley County
      - 0.0012%
-     - true
      - 81063
-     - -7
      - ../../../weather/G0800250.epw
    * - CO, Custer County
      - 0.0032%
-     - true
      - 81252
-     - -7
      - ../../../weather/G0800270.epw
    * - CO, Delta County
      - 0.011%
-     - true
      - 81416
-     - -7
      - ../../../weather/G0800290.epw
    * - CO, Denver County
      - 0.22%
-     - true
      - 80211
-     - -7
      - ../../../weather/G0800310.epw
    * - CO, Dolores County
      - 0.001%
-     - true
      - 81324
-     - -7
      - ../../../weather/G0800330.epw
    * - CO, Douglas County
      - 0.088%
-     - true
      - 80134
-     - -7
      - ../../../weather/G0800350.epw
    * - CO, Eagle County
      - 0.024%
-     - true
      - 81620
-     - -7
      - ../../../weather/G0800370.epw
    * - CO, El Paso County
      - 0.2%
-     - true
      - 80918
-     - -7
      - ../../../weather/G0800410.epw
    * - CO, Elbert County
      - 0.0068%
-     - true
      - 80107
-     - -7
      - ../../../weather/G0800390.epw
    * - CO, Fremont County
      - 0.014%
-     - true
      - 81212
-     - -7
      - ../../../weather/G0800430.epw
    * - CO, Garfield County
      - 0.017%
-     - true
      - 81601
-     - -7
      - ../../../weather/G0800450.epw
    * - CO, Gilpin County
      - 0.0026%
-     - true
      - 80422
-     - -7
      - ../../../weather/G0800470.epw
    * - CO, Grand County
      - 0.012%
-     - true
      - 80459
-     - -7
      - ../../../weather/G0800490.epw
    * - CO, Gunnison County
      - 0.0086%
-     - true
      - 81230
-     - -7
      - ../../../weather/G0800510.epw
    * - CO, Hinsdale County
      - 0.0011%
-     - true
      - 81235
-     - -7
      - ../../../weather/G0800530.epw
    * - CO, Huerfano County
      - 0.0038%
-     - true
      - 81089
-     - -7
      - ../../../weather/G0800550.epw
    * - CO, Jackson County
      - 0.00096%
-     - true
      - 80480
-     - -7
      - ../../../weather/G0800570.epw
    * - CO, Jefferson County
      - 0.17%
-     - true
      - 80127
-     - -7
      - ../../../weather/G0800590.epw
    * - CO, Kiowa County
      - 0.00061%
-     - true
      - 81036
-     - -7
      - ../../../weather/G0800610.epw
    * - CO, Kit Carson County
      - 0.0026%
-     - true
      - 80807
-     - -7
      - ../../../weather/G0800630.epw
    * - CO, La Plata County
      - 0.02%
-     - true
      - 81301
-     - -7
      - ../../../weather/G0800670.epw
    * - CO, Lake County
      - 0.0034%
-     - true
      - 80461
-     - -7
      - ../../../weather/G0800650.epw
    * - CO, Larimer County
      - 0.1%
-     - true
      - 80525
-     - -7
      - ../../../weather/G0800690.epw
    * - CO, Las Animas County
      - 0.0062%
-     - true
      - 81082
-     - -7
      - ../../../weather/G0800710.epw
    * - CO, Lincoln County
      - 0.0015%
-     - true
      - 80828
-     - -7
      - ../../../weather/G0800730.epw
    * - CO, Logan County
      - 0.0067%
-     - true
      - 80751
-     - -7
      - ../../../weather/G0800750.epw
    * - CO, Mesa County
      - 0.048%
-     - true
      - 81504
-     - -7
      - ../../../weather/G0800770.epw
    * - CO, Mineral County
      - 0.00096%
-     - true
      - 81130
-     - -7
      - ../../../weather/G0800790.epw
    * - CO, Moffat County
      - 0.0046%
-     - true
      - 81625
-     - -7
      - ../../../weather/G0800810.epw
    * - CO, Montezuma County
      - 0.009%
-     - true
      - 81321
-     - -7
      - ../../../weather/G0800830.epw
    * - CO, Montrose County
      - 0.014%
-     - true
      - 81401
-     - -7
      - ../../../weather/G0800850.epw
    * - CO, Morgan County
      - 0.0086%
-     - true
      - 80701
-     - -7
      - ../../../weather/G0800870.epw
    * - CO, Otero County
      - 0.0066%
-     - true
      - 81050
-     - -7
      - ../../../weather/G0800890.epw
    * - CO, Ouray County
      - 0.0024%
-     - true
      - 81432
-     - -7
      - ../../../weather/G0800910.epw
    * - CO, Park County
      - 0.011%
-     - true
      - 80421
-     - -7
      - ../../../weather/G0800930.epw
    * - CO, Phillips County
      - 0.0015%
-     - true
      - 80734
-     - -7
      - ../../../weather/G0800950.epw
    * - CO, Pitkin County
      - 0.0097%
-     - true
      - 81612
-     - -7
      - ../../../weather/G0800970.epw
    * - CO, Prowers County
      - 0.0044%
-     - true
      - 81052
-     - -7
      - ../../../weather/G0800990.epw
    * - CO, Pueblo County
      - 0.052%
-     - true
      - 81001
-     - -7
      - ../../../weather/G0801010.epw
    * - CO, Rio Blanco County
      - 0.0025%
-     - true
      - 81648
-     - -7
      - ../../../weather/G0801030.epw
    * - CO, Rio Grande County
      - 0.0049%
-     - true
      - 81144
-     - -7
      - ../../../weather/G0801050.epw
    * - CO, Routt County
      - 0.012%
-     - true
      - 80487
-     - -7
      - ../../../weather/G0801070.epw
    * - CO, Saguache County
      - 0.0029%
-     - true
      - 81125
-     - -7
      - ../../../weather/G0801090.epw
    * - CO, San Juan County
      - 0.00055%
-     - true
      - 81433
-     - -7
      - ../../../weather/G0801110.epw
    * - CO, San Miguel County
      - 0.005%
-     - true
      - 81435
-     - -7
      - ../../../weather/G0801130.epw
    * - CO, Sedgwick County
      - 0.00097%
-     - true
      - 80737
-     - -7
      - ../../../weather/G0801150.epw
    * - CO, Summit County
      - 0.023%
-     - true
      - 80424
-     - -7
      - ../../../weather/G0801170.epw
    * - CO, Teller County
      - 0.0096%
-     - true
      - 80863
-     - -7
      - ../../../weather/G0801190.epw
    * - CO, Washington County
      - 0.0018%
-     - true
      - 80720
-     - -7
      - ../../../weather/G0801210.epw
    * - CO, Weld County
      - 0.075%
-     - true
      - 80634
-     - -7
      - ../../../weather/G0801230.epw
    * - CO, Yuma County
      - 0.0033%
-     - true
      - 80759
-     - -7
      - ../../../weather/G0801250.epw
    * - CT, Fairfield County
      - 0.27%
-     - true
      - 06902
-     - -5
      - ../../../weather/G0900010.epw
    * - CT, Hartford County
      - 0.28%
-     - true
      - 06010
-     - -5
      - ../../../weather/G0900030.epw
    * - CT, Litchfield County
      - 0.065%
-     - true
      - 06790
-     - -5
      - ../../../weather/G0900050.epw
    * - CT, Middlesex County
      - 0.056%
-     - true
      - 06457
-     - -5
      - ../../../weather/G0900070.epw
    * - CT, New Haven County
      - 0.27%
-     - true
      - 06516
-     - -5
      - ../../../weather/G0900090.epw
    * - CT, New London County
      - 0.091%
-     - true
      - 06360
-     - -5
      - ../../../weather/G0900110.epw
    * - CT, Tolland County
      - 0.044%
-     - true
      - 06066
-     - -5
      - ../../../weather/G0900130.epw
    * - CT, Windham County
      - 0.037%
-     - true
      - 06226
-     - -5
      - ../../../weather/G0900150.epw
    * - DC, District of Columbia
      - 0.23%
-     - true
      - 20002
-     - -5
      - ../../../weather/G1100010.epw
    * - DE, Kent County
      - 0.051%
-     - true
      - 19904
-     - -5
      - ../../../weather/G1000010.epw
    * - DE, New Castle County
      - 0.16%
-     - true
      - 19720
-     - -5
      - ../../../weather/G1000030.epw
    * - DE, Sussex County
      - 0.096%
-     - true
      - 19966
-     - -5
      - ../../../weather/G1000050.epw
    * - FL, Alachua County
      - 0.085%
-     - true
      - 32608
-     - -5
      - ../../../weather/G1200010.epw
    * - FL, Baker County
      - 0.0072%
-     - true
      - 32063
-     - -5
      - ../../../weather/G1200030.epw
    * - FL, Bay County
      - 0.075%
-     - true
      - 32404
-     - -6
      - ../../../weather/G1200050.epw
    * - FL, Bradford County
      - 0.0081%
-     - true
      - 32091
-     - -5
      - ../../../weather/G1200070.epw
    * - FL, Brevard County
      - 0.2%
-     - true
      - 32940
-     - -5
      - ../../../weather/G1200090.epw
    * - FL, Broward County
      - 0.61%
-     - true
      - 33027
-     - -5
      - ../../../weather/G1200110.epw
    * - FL, Calhoun County
      - 0.0044%
-     - true
      - 32424
-     - -6
      - ../../../weather/G1200130.epw
    * - FL, Charlotte County
      - 0.076%
-     - true
      - 33950
-     - -5
      - ../../../weather/G1200150.epw
    * - FL, Citrus County
      - 0.058%
-     - true
      - 34446
-     - -5
      - ../../../weather/G1200170.epw
    * - FL, Clay County
      - 0.058%
-     - true
      - 32068
-     - -5
      - ../../../weather/G1200190.epw
    * - FL, Collier County
      - 0.15%
-     - true
      - 34112
-     - -5
      - ../../../weather/G1200210.epw
    * - FL, Columbia County
      - 0.021%
-     - true
      - 32025
-     - -5
      - ../../../weather/G1200230.epw
    * - FL, DeSoto County
      - 0.011%
-     - true
      - 34266
-     - -5
      - ../../../weather/G1200270.epw
    * - FL, Dixie County
      - 0.0068%
-     - true
      - 32680
-     - -5
      - ../../../weather/G1200290.epw
    * - FL, Duval County
      - 0.3%
-     - true
      - 32256
-     - -5
      - ../../../weather/G1200310.epw
    * - FL, Escambia County
      - 0.1%
-     - true
      - 32507
-     - -6
      - ../../../weather/G1200330.epw
    * - FL, Flagler County
      - 0.037%
-     - true
      - 32137
-     - -5
      - ../../../weather/G1200350.epw
    * - FL, Franklin County
      - 0.0064%
-     - true
      - 32328
-     - -5
      - ../../../weather/G1200370.epw
    * - FL, Gadsden County
      - 0.014%
-     - true
      - 32351
-     - -5
      - ../../../weather/G1200390.epw
    * - FL, Gilchrist County
      - 0.0054%
-     - true
      - 32693
-     - -5
      - ../../../weather/G1200410.epw
    * - FL, Glades County
      - 0.0051%
-     - true
      - 33471
-     - -5
      - ../../../weather/G1200430.epw
    * - FL, Gulf County
      - 0.0069%
-     - true
      - 32456
-     - -6
      - ../../../weather/G1200450.epw
    * - FL, Hamilton County
      - 0.0043%
-     - true
      - 32052
-     - -5
      - ../../../weather/G1200470.epw
    * - FL, Hardee County
      - 0.0072%
-     - true
      - 33873
-     - -5
      - ../../../weather/G1200490.epw
    * - FL, Hendry County
      - 0.011%
-     - true
      - 33440
-     - -5
      - ../../../weather/G1200510.epw
    * - FL, Hernando County
      - 0.063%
-     - true
      - 34609
-     - -5
      - ../../../weather/G1200530.epw
    * - FL, Highlands County
      - 0.041%
-     - true
      - 33870
-     - -5
      - ../../../weather/G1200550.epw
    * - FL, Hillsborough County
      - 0.41%
-     - true
      - 33647
-     - -5
      - ../../../weather/G1200570.epw
    * - FL, Holmes County
      - 0.0064%
-     - true
      - 32425
-     - -6
      - ../../../weather/G1200590.epw
    * - FL, Indian River County
      - 0.058%
-     - true
      - 32958
-     - -5
      - ../../../weather/G1200610.epw
    * - FL, Jackson County
      - 0.016%
-     - true
      - 32446
-     - -6
      - ../../../weather/G1200630.epw
    * - FL, Jefferson County
      - 0.0049%
-     - true
      - 32344
-     - -5
      - ../../../weather/G1200650.epw
    * - FL, Lafayette County
      - 0.0024%
-     - true
      - 32066
-     - -5
      - ../../../weather/G1200670.epw
    * - FL, Lake County
      - 0.11%
-     - true
      - 34711
-     - -5
      - ../../../weather/G1200690.epw
    * - FL, Lee County
      - 0.28%
-     - true
      - 34135
-     - -5
      - ../../../weather/G1200710.epw
    * - FL, Leon County
      - 0.094%
-     - true
      - 32303
-     - -5
      - ../../../weather/G1200730.epw
    * - FL, Levy County
      - 0.015%
-     - true
      - 32696
-     - -5
      - ../../../weather/G1200750.epw
    * - FL, Liberty County
      - 0.0026%
-     - true
      - 32321
-     - -5
      - ../../../weather/G1200770.epw
    * - FL, Madison County
      - 0.0063%
-     - true
      - 32340
-     - -5
      - ../../../weather/G1200790.epw
    * - FL, Manatee County
      - 0.13%
-     - true
      - 34221
-     - -5
      - ../../../weather/G1200810.epw
    * - FL, Marion County
      - 0.12%
-     - true
      - 34491
-     - -5
      - ../../../weather/G1200830.epw
    * - FL, Martin County
      - 0.059%
-     - true
      - 34997
-     - -5
      - ../../../weather/G1200850.epw
    * - FL, Miami-Dade County
      - 0.75%
-     - true
      - 33160
-     - -5
      - ../../../weather/G1200860.epw
    * - FL, Monroe County
      - 0.04%
-     - true
      - 33040
-     - -5
      - ../../../weather/G1200870.epw
    * - FL, Nassau County
      - 0.027%
-     - true
      - 32034
-     - -5
      - ../../../weather/G1200890.epw
    * - FL, Okaloosa County
      - 0.071%
-     - true
      - 32541
-     - -6
      - ../../../weather/G1200910.epw
    * - FL, Okeechobee County
      - 0.014%
-     - true
      - 34974
-     - -5
      - ../../../weather/G1200930.epw
    * - FL, Orange County
      - 0.38%
-     - true
      - 34787
-     - -5
      - ../../../weather/G1200950.epw
    * - FL, Osceola County
      - 0.1%
-     - true
      - 34746
-     - -5
      - ../../../weather/G1200970.epw
    * - FL, Palm Beach County
      - 0.5%
-     - true
      - 33411
-     - -5
      - ../../../weather/G1200990.epw
    * - FL, Pasco County
      - 0.17%
-     - true
      - 34668
-     - -5
      - ../../../weather/G1201010.epw
    * - FL, Pinellas County
      - 0.38%
-     - true
      - 34698
-     - -5
      - ../../../weather/G1201030.epw
    * - FL, Polk County
      - 0.21%
-     - true
      - 33810
-     - -5
      - ../../../weather/G1201050.epw
    * - FL, Putnam County
      - 0.027%
-     - true
      - 32177
-     - -5
      - ../../../weather/G1201070.epw
    * - FL, Santa Rosa County
      - 0.05%
-     - true
      - 32566
-     - -6
      - ../../../weather/G1201130.epw
    * - FL, Sarasota County
      - 0.17%
-     - true
      - 34293
-     - -5
      - ../../../weather/G1201150.epw
    * - FL, Seminole County
      - 0.14%
-     - true
      - 32771
-     - -5
      - ../../../weather/G1201170.epw
    * - FL, St. Johns County
      - 0.072%
-     - true
      - 32259
-     - -5
      - ../../../weather/G1201090.epw
    * - FL, St. Lucie County
      - 0.1%
-     - true
      - 34953
-     - -5
      - ../../../weather/G1201110.epw
    * - FL, Sumter County
      - 0.048%
-     - true
      - 32162
-     - -5
      - ../../../weather/G1201190.epw
    * - FL, Suwannee County
      - 0.014%
-     - true
      - 32060
-     - -5
      - ../../../weather/G1201210.epw
    * - FL, Taylor County
      - 0.0081%
-     - true
      - 32348
-     - -5
      - ../../../weather/G1201230.epw
    * - FL, Union County
      - 0.0033%
-     - true
      - 32054
-     - -5
      - ../../../weather/G1201250.epw
    * - FL, Volusia County
      - 0.19%
-     - true
      - 32174
-     - -5
      - ../../../weather/G1201270.epw
    * - FL, Wakulla County
      - 0.0096%
-     - true
      - 32327
-     - -5
      - ../../../weather/G1201290.epw
    * - FL, Walton County
      - 0.036%
-     - true
      - 32459
-     - -6
      - ../../../weather/G1201310.epw
    * - FL, Washington County
      - 0.008%
-     - true
      - 32428
-     - -6
      - ../../../weather/G1201330.epw
    * - GA, Appling County
      - 0.0063%
-     - true
      - 31513
-     - -5
      - ../../../weather/G1300010.epw
    * - GA, Atkinson County
      - 0.0026%
-     - true
      - 31642
-     - -5
      - ../../../weather/G1300030.epw
    * - GA, Bacon County
      - 0.0035%
-     - true
      - 31510
-     - -5
      - ../../../weather/G1300050.epw
    * - GA, Baker County
      - 0.0013%
-     - true
      - 39870
-     - -5
      - ../../../weather/G1300070.epw
    * - GA, Baldwin County
      - 0.015%
-     - true
      - 31061
-     - -5
      - ../../../weather/G1300090.epw
    * - GA, Banks County
      - 0.0056%
-     - true
      - 30547
-     - -5
      - ../../../weather/G1300110.epw
    * - GA, Barrow County
      - 0.02%
-     - true
      - 30680
-     - -5
      - ../../../weather/G1300130.epw
    * - GA, Bartow County
      - 0.03%
-     - true
      - 30120
-     - -5
      - ../../../weather/G1300150.epw
    * - GA, Ben Hill County
      - 0.0059%
-     - true
      - 31750
-     - -5
      - ../../../weather/G1300170.epw
    * - GA, Berrien County
      - 0.0064%
-     - true
      - 31639
-     - -5
      - ../../../weather/G1300190.epw
    * - GA, Bibb County
      - 0.052%
-     - true
      - 31204
-     - -5
      - ../../../weather/G1300210.epw
    * - GA, Bleckley County
      - 0.0039%
-     - true
      - 31014
-     - -5
      - ../../../weather/G1300230.epw
    * - GA, Brantley County
      - 0.0059%
-     - true
      - 31553
-     - -5
      - ../../../weather/G1300250.epw
    * - GA, Brooks County
      - 0.0057%
-     - true
      - 31643
-     - -5
      - ../../../weather/G1300270.epw
    * - GA, Bryan County
      - 0.0097%
-     - true
      - 31324
-     - -5
      - ../../../weather/G1300290.epw
    * - GA, Bulloch County
      - 0.022%
-     - true
      - 30458
-     - -5
      - ../../../weather/G1300310.epw
    * - GA, Burke County
      - 0.0073%
-     - true
      - 30830
-     - -5
      - ../../../weather/G1300330.epw
    * - GA, Butts County
      - 0.0069%
-     - true
      - 30233
-     - -5
      - ../../../weather/G1300350.epw
    * - GA, Calhoun County
      - 0.0018%
-     - true
      - 39846
-     - -5
      - ../../../weather/G1300370.epw
    * - GA, Camden County
      - 0.016%
-     - true
      - 31558
-     - -5
      - ../../../weather/G1300390.epw
    * - GA, Candler County
      - 0.0035%
-     - true
      - 30439
-     - -5
      - ../../../weather/G1300430.epw
    * - GA, Carroll County
      - 0.033%
-     - true
      - 30117
-     - -5
      - ../../../weather/G1300450.epw
    * - GA, Catoosa County
      - 0.02%
-     - true
      - 30736
-     - -5
      - ../../../weather/G1300470.epw
    * - GA, Charlton County
      - 0.0033%
-     - true
      - 31537
-     - -5
      - ../../../weather/G1300490.epw
    * - GA, Chatham County
      - 0.092%
-     - true
      - 31419
-     - -5
      - ../../../weather/G1300510.epw
    * - GA, Chattahoochee County
      - 0.0025%
-     - true
      - 31905
-     - -5
      - ../../../weather/G1300530.epw
    * - GA, Chattooga County
      - 0.0081%
-     - true
      - 30747
-     - -5
      - ../../../weather/G1300550.epw
    * - GA, Cherokee County
      - 0.064%
-     - true
      - 30188
-     - -5
      - ../../../weather/G1300570.epw
    * - GA, Clarke County
      - 0.039%
-     - true
      - 30606
-     - -5
      - ../../../weather/G1300590.epw
    * - GA, Clay County
      - 0.0014%
-     - true
      - 39851
-     - -5
      - ../../../weather/G1300610.epw
    * - GA, Clayton County
      - 0.078%
-     - true
      - 30236
-     - -5
      - ../../../weather/G1300630.epw
    * - GA, Clinch County
      - 0.0022%
-     - true
      - 31634
-     - -5
      - ../../../weather/G1300650.epw
    * - GA, Cobb County
      - 0.22%
-     - true
      - 30080
-     - -5
      - ../../../weather/G1300670.epw
    * - GA, Coffee County
      - 0.013%
-     - true
      - 31533
-     - -5
      - ../../../weather/G1300690.epw
    * - GA, Colquitt County
      - 0.014%
-     - true
      - 31768
-     - -5
      - ../../../weather/G1300710.epw
    * - GA, Columbia County
      - 0.04%
-     - true
      - 30809
-     - -5
      - ../../../weather/G1300730.epw
    * - GA, Cook County
      - 0.0054%
-     - true
      - 31620
-     - -5
      - ../../../weather/G1300750.epw
    * - GA, Coweta County
      - 0.039%
-     - true
      - 30263
-     - -5
      - ../../../weather/G1300770.epw
    * - GA, Crawford County
      - 0.0039%
-     - true
      - 31078
-     - -5
      - ../../../weather/G1300790.epw
    * - GA, Crisp County
      - 0.008%
-     - true
      - 31015
-     - -5
      - ../../../weather/G1300810.epw
    * - GA, Dade County
      - 0.0054%
-     - true
      - 30752
-     - -5
      - ../../../weather/G1300830.epw
    * - GA, Dawson County
      - 0.0079%
-     - true
      - 30534
-     - -5
      - ../../../weather/G1300850.epw
    * - GA, Decatur County
      - 0.009%
-     - true
      - 39819
-     - -5
      - ../../../weather/G1300870.epw
    * - GA, DeKalb County
      - 0.23%
-     - true
      - 30058
-     - -5
      - ../../../weather/G1300890.epw
    * - GA, Dodge County
      - 0.0073%
-     - true
      - 31023
-     - -5
      - ../../../weather/G1300910.epw
    * - GA, Dooly County
      - 0.0046%
-     - true
      - 31092
-     - -5
      - ../../../weather/G1300930.epw
    * - GA, Dougherty County
      - 0.03%
-     - true
      - 31705
-     - -5
      - ../../../weather/G1300950.epw
    * - GA, Douglas County
      - 0.039%
-     - true
      - 30135
-     - -5
      - ../../../weather/G1300970.epw
    * - GA, Early County
      - 0.0037%
-     - true
      - 39823
-     - -5
      - ../../../weather/G1300990.epw
    * - GA, Echols County
      - 0.0012%
-     - true
      - 31636
-     - -5
      - ../../../weather/G1301010.epw
    * - GA, Effingham County
      - 0.015%
-     - true
      - 31326
-     - -5
      - ../../../weather/G1301030.epw
    * - GA, Elbert County
      - 0.0071%
-     - true
      - 30635
-     - -5
      - ../../../weather/G1301050.epw
    * - GA, Emanuel County
      - 0.0074%
-     - true
      - 30401
-     - -5
      - ../../../weather/G1301070.epw
    * - GA, Evans County
      - 0.0035%
-     - true
      - 30417
-     - -5
      - ../../../weather/G1301090.epw
    * - GA, Fannin County
      - 0.012%
-     - true
      - 30513
-     - -5
      - ../../../weather/G1301110.epw
    * - GA, Fayette County
      - 0.031%
-     - true
      - 30269
-     - -5
      - ../../../weather/G1301130.epw
    * - GA, Floyd County
      - 0.03%
-     - true
      - 30165
-     - -5
      - ../../../weather/G1301150.epw
    * - GA, Forsyth County
      - 0.053%
-     - true
      - 30040
-     - -5
      - ../../../weather/G1301170.epw
    * - GA, Franklin County
      - 0.0078%
-     - true
      - 30553
-     - -5
      - ../../../weather/G1301190.epw
    * - GA, Fulton County
      - 0.34%
-     - true
      - 30318
-     - -5
      - ../../../weather/G1301210.epw
    * - GA, Gilmer County
      - 0.012%
-     - true
      - 30540
-     - -5
      - ../../../weather/G1301230.epw
    * - GA, Glascock County
      - 0.0011%
-     - true
      - 30810
-     - -5
      - ../../../weather/G1301250.epw
    * - GA, Glynn County
      - 0.031%
-     - true
      - 31525
-     - -5
      - ../../../weather/G1301270.epw
    * - GA, Gordon County
      - 0.017%
-     - true
      - 30701
-     - -5
      - ../../../weather/G1301290.epw
    * - GA, Grady County
      - 0.008%
-     - true
      - 39828
-     - -5
      - ../../../weather/G1301310.epw
    * - GA, Greene County
      - 0.0068%
-     - true
      - 30642
-     - -5
      - ../../../weather/G1301330.epw
    * - GA, Gwinnett County
      - 0.22%
-     - true
      - 30044
-     - -5
      - ../../../weather/G1301350.epw
    * - GA, Habersham County
      - 0.014%
-     - true
      - 30531
-     - -5
      - ../../../weather/G1301370.epw
    * - GA, Hall County
      - 0.052%
-     - true
      - 30542
-     - -5
      - ../../../weather/G1301390.epw
    * - GA, Hancock County
      - 0.0039%
-     - true
      - 31087
-     - -5
      - ../../../weather/G1301410.epw
    * - GA, Haralson County
      - 0.0091%
-     - true
      - 30110
-     - -5
      - ../../../weather/G1301430.epw
    * - GA, Harris County
      - 0.01%
-     - true
      - 31804
-     - -5
      - ../../../weather/G1301450.epw
    * - GA, Hart County
      - 0.0097%
-     - true
      - 30643
-     - -5
      - ../../../weather/G1301470.epw
    * - GA, Heard County
      - 0.0038%
-     - true
      - 30217
-     - -5
      - ../../../weather/G1301490.epw
    * - GA, Henry County
      - 0.058%
-     - true
      - 30253
-     - -5
      - ../../../weather/G1301510.epw
    * - GA, Houston County
      - 0.045%
-     - true
      - 31088
-     - -5
      - ../../../weather/G1301530.epw
    * - GA, Irwin County
      - 0.003%
-     - true
      - 31774
-     - -5
      - ../../../weather/G1301550.epw
    * - GA, Jackson County
      - 0.018%
-     - true
      - 30549
-     - -5
      - ../../../weather/G1301570.epw
    * - GA, Jasper County
      - 0.0047%
-     - true
      - 31064
-     - -5
      - ../../../weather/G1301590.epw
    * - GA, Jeff Davis County
      - 0.0048%
-     - true
      - 31539
-     - -5
      - ../../../weather/G1301610.epw
    * - GA, Jefferson County
      - 0.0054%
-     - true
      - 30434
-     - -5
      - ../../../weather/G1301630.epw
    * - GA, Jenkins County
      - 0.0036%
-     - true
      - 30442
-     - -5
      - ../../../weather/G1301650.epw
    * - GA, Johnson County
      - 0.003%
-     - true
      - 31096
-     - -5
      - ../../../weather/G1301670.epw
    * - GA, Jones County
      - 0.0086%
-     - true
      - 31032
-     - -5
      - ../../../weather/G1301690.epw
    * - GA, Lamar County
      - 0.0056%
-     - true
      - 30204
-     - -5
      - ../../../weather/G1301710.epw
    * - GA, Lanier County
      - 0.0032%
-     - true
      - 31635
-     - -5
      - ../../../weather/G1301730.epw
    * - GA, Laurens County
      - 0.016%
-     - true
      - 31021
-     - -5
      - ../../../weather/G1301750.epw
    * - GA, Lee County
      - 0.008%
-     - true
      - 31763
-     - -5
      - ../../../weather/G1301770.epw
    * - GA, Liberty County
      - 0.02%
-     - true
      - 31313
-     - -5
      - ../../../weather/G1301790.epw
    * - GA, Lincoln County
      - 0.0036%
-     - true
      - 30817
-     - -5
      - ../../../weather/G1301810.epw
    * - GA, Long County
      - 0.0047%
-     - true
      - 31316
-     - -5
      - ../../../weather/G1301830.epw
    * - GA, Lowndes County
      - 0.034%
-     - true
      - 31601
-     - -5
      - ../../../weather/G1301850.epw
    * - GA, Lumpkin County
      - 0.0098%
-     - true
      - 30533
-     - -5
      - ../../../weather/G1301870.epw
    * - GA, Macon County
      - 0.0045%
-     - true
      - 31063
-     - -5
      - ../../../weather/G1301930.epw
    * - GA, Madison County
      - 0.0088%
-     - true
      - 30633
-     - -5
      - ../../../weather/G1301950.epw
    * - GA, Marion County
      - 0.0031%
-     - true
      - 31803
-     - -5
      - ../../../weather/G1301970.epw
    * - GA, McDuffie County
      - 0.0069%
-     - true
      - 30824
-     - -5
      - ../../../weather/G1301890.epw
    * - GA, McIntosh County
      - 0.0069%
-     - true
      - 31331
-     - -5
      - ../../../weather/G1301910.epw
    * - GA, Meriwether County
      - 0.0074%
-     - true
      - 31816
-     - -5
      - ../../../weather/G1301990.epw
    * - GA, Miller County
      - 0.0021%
-     - true
      - 39837
-     - -5
      - ../../../weather/G1302010.epw
    * - GA, Mitchell County
      - 0.0067%
-     - true
      - 31730
-     - -5
      - ../../../weather/G1302050.epw
    * - GA, Monroe County
      - 0.0082%
-     - true
      - 31029
-     - -5
      - ../../../weather/G1302070.epw
    * - GA, Montgomery County
      - 0.0029%
-     - true
      - 30445
-     - -5
      - ../../../weather/G1302090.epw
    * - GA, Morgan County
      - 0.0056%
-     - true
      - 30650
-     - -5
      - ../../../weather/G1302110.epw
    * - GA, Murray County
      - 0.012%
-     - true
      - 30705
-     - -5
      - ../../../weather/G1302130.epw
    * - GA, Muscogee County
      - 0.063%
-     - true
      - 31907
-     - -5
      - ../../../weather/G1302150.epw
    * - GA, Newton County
      - 0.029%
-     - true
      - 30016
-     - -5
      - ../../../weather/G1302170.epw
    * - GA, Oconee County
      - 0.0098%
-     - true
      - 30677
-     - -5
      - ../../../weather/G1302190.epw
    * - GA, Oglethorpe County
      - 0.0048%
-     - true
      - 30683
-     - -5
      - ../../../weather/G1302210.epw
    * - GA, Paulding County
      - 0.04%
-     - true
      - 30132
-     - -5
      - ../../../weather/G1302230.epw
    * - GA, Peach County
      - 0.0084%
-     - true
      - 31030
-     - -5
      - ../../../weather/G1302250.epw
    * - GA, Pickens County
      - 0.01%
-     - true
      - 30143
-     - -5
      - ../../../weather/G1302270.epw
    * - GA, Pierce County
      - 0.0059%
-     - true
      - 31516
-     - -5
      - ../../../weather/G1302290.epw
    * - GA, Pike County
      - 0.0051%
-     - true
      - 30292
-     - -5
      - ../../../weather/G1302310.epw
    * - GA, Polk County
      - 0.013%
-     - true
      - 30125
-     - -5
      - ../../../weather/G1302330.epw
    * - GA, Pulaski County
      - 0.0035%
-     - true
      - 31036
-     - -5
      - ../../../weather/G1302350.epw
    * - GA, Putnam County
      - 0.0095%
-     - true
      - 31024
-     - -5
      - ../../../weather/G1302370.epw
    * - GA, Quitman County
      - 0.0015%
-     - true
      - 39854
-     - -5
      - ../../../weather/G1302390.epw
    * - GA, Rabun County
      - 0.0093%
-     - true
      - 30525
-     - -5
      - ../../../weather/G1302410.epw
    * - GA, Randolph County
      - 0.0027%
-     - true
      - 39840
-     - -5
      - ../../../weather/G1302430.epw
    * - GA, Richmond County
      - 0.065%
-     - true
      - 30909
-     - -5
      - ../../../weather/G1302450.epw
    * - GA, Rockdale County
      - 0.025%
-     - true
      - 30094
-     - -5
      - ../../../weather/G1302470.epw
    * - GA, Schley County
      - 0.0016%
-     - true
      - 31806
-     - -5
      - ../../../weather/G1302490.epw
    * - GA, Screven County
      - 0.005%
-     - true
      - 30467
-     - -5
      - ../../../weather/G1302510.epw
    * - GA, Seminole County
      - 0.0036%
-     - true
      - 39845
-     - -5
      - ../../../weather/G1302530.epw
    * - GA, Spalding County
      - 0.02%
-     - true
      - 30223
-     - -5
      - ../../../weather/G1302550.epw
    * - GA, Stephens County
      - 0.0093%
-     - true
      - 30577
-     - -5
      - ../../../weather/G1302570.epw
    * - GA, Stewart County
      - 0.0017%
-     - true
      - 31825
-     - -5
      - ../../../weather/G1302590.epw
    * - GA, Sumter County
      - 0.01%
-     - true
      - 31709
-     - -5
      - ../../../weather/G1302610.epw
    * - GA, Talbot County
      - 0.0025%
-     - true
      - 31827
-     - -5
      - ../../../weather/G1302630.epw
    * - GA, Taliaferro County
      - 0.00081%
-     - true
      - 30631
-     - -5
      - ../../../weather/G1302650.epw
    * - GA, Tattnall County
      - 0.0074%
-     - true
      - 30427
-     - -5
      - ../../../weather/G1302670.epw
    * - GA, Taylor County
      - 0.0034%
-     - true
      - 31006
-     - -5
      - ../../../weather/G1302690.epw
    * - GA, Telfair County
      - 0.0054%
-     - true
      - 31055
-     - -5
      - ../../../weather/G1302710.epw
    * - GA, Terrell County
      - 0.0031%
-     - true
      - 39842
-     - -5
      - ../../../weather/G1302730.epw
    * - GA, Thomas County
      - 0.015%
-     - true
      - 31792
-     - -5
      - ../../../weather/G1302750.epw
    * - GA, Tift County
      - 0.012%
-     - true
      - 31794
-     - -5
      - ../../../weather/G1302770.epw
    * - GA, Toombs County
      - 0.009%
-     - true
      - 30474
-     - -5
      - ../../../weather/G1302790.epw
    * - GA, Towns County
      - 0.0059%
-     - true
      - 30546
-     - -5
      - ../../../weather/G1302810.epw
    * - GA, Treutlen County
      - 0.0024%
-     - true
      - 30457
-     - -5
      - ../../../weather/G1302830.epw
    * - GA, Troup County
      - 0.021%
-     - true
      - 30241
-     - -5
      - ../../../weather/G1302850.epw
    * - GA, Turner County
      - 0.0029%
-     - true
      - 31714
-     - -5
      - ../../../weather/G1302870.epw
    * - GA, Twiggs County
      - 0.0031%
-     - true
      - 31044
-     - -5
      - ../../../weather/G1302890.epw
    * - GA, Union County
      - 0.011%
-     - true
      - 30512
-     - -5
      - ../../../weather/G1302910.epw
    * - GA, Upson County
      - 0.009%
-     - true
      - 30286
-     - -5
      - ../../../weather/G1302930.epw
    * - GA, Walker County
      - 0.022%
-     - true
      - 30741
-     - -5
      - ../../../weather/G1302950.epw
    * - GA, Walton County
      - 0.024%
-     - true
      - 30052
-     - -5
      - ../../../weather/G1302970.epw
    * - GA, Ware County
      - 0.012%
-     - true
      - 31503
-     - -5
      - ../../../weather/G1302990.epw
    * - GA, Warren County
      - 0.0022%
-     - true
      - 30828
-     - -5
      - ../../../weather/G1303010.epw
    * - GA, Washington County
      - 0.0068%
-     - true
      - 31082
-     - -5
      - ../../../weather/G1303030.epw
    * - GA, Wayne County
      - 0.009%
-     - true
      - 31545
-     - -5
      - ../../../weather/G1303050.epw
    * - GA, Webster County
      - 0.001%
-     - true
      - 31824
-     - -5
      - ../../../weather/G1303070.epw
    * - GA, Wheeler County
      - 0.0019%
-     - true
      - 30428
-     - -5
      - ../../../weather/G1303090.epw
    * - GA, White County
      - 0.012%
-     - true
      - 30528
-     - -5
      - ../../../weather/G1303110.epw
    * - GA, Whitfield County
      - 0.03%
-     - true
      - 30721
-     - -5
      - ../../../weather/G1303130.epw
    * - GA, Wilcox County
      - 0.0026%
-     - true
      - 31001
-     - -5
      - ../../../weather/G1303150.epw
    * - GA, Wilkes County
      - 0.0038%
-     - true
      - 30673
-     - -5
      - ../../../weather/G1303170.epw
    * - GA, Wilkinson County
      - 0.0033%
-     - true
      - 31031
-     - -5
      - ../../../weather/G1303190.epw
    * - GA, Worth County
      - 0.0069%
-     - true
      - 31791
-     - -5
      - ../../../weather/G1303210.epw
    * - HI, Hawaii County
      - 0.064%
-     - false
      - 96721
-     - -10
      - ../../../weather/G1500010.epw
    * - HI, Honolulu County
      - 0.26%
-     - false
      - 96813
-     - -10
      - ../../../weather/G1500030.epw
    * - HI, Kalawao County
      - 7.3e-05%
-     - false
      - 96742
-     - -10
      - ../../../weather/G1500050.epw
    * - HI, Kauai County
      - 0.023%
-     - false
      - 96746
-     - -10
      - ../../../weather/G1500070.epw
    * - HI, Maui County
      - 0.053%
-     - false
      - 96793
-     - -10
      - ../../../weather/G1500090.epw
    * - IA, Adair County
      - 0.0027%
-     - true
      - 50849
-     - -6
      - ../../../weather/G1900010.epw
    * - IA, Adams County
      - 0.0015%
-     - true
      - 50841
-     - -6
      - ../../../weather/G1900030.epw
    * - IA, Allamakee County
      - 0.0057%
-     - true
      - 52172
-     - -6
      - ../../../weather/G1900050.epw
    * - IA, Appanoose County
      - 0.0049%
-     - true
      - 52544
-     - -6
      - ../../../weather/G1900070.epw
    * - IA, Audubon County
      - 0.0022%
-     - true
      - 50025
-     - -6
      - ../../../weather/G1900090.epw
    * - IA, Benton County
      - 0.0083%
-     - true
      - 52349
-     - -6
      - ../../../weather/G1900110.epw
    * - IA, Black Hawk County
      - 0.042%
-     - true
      - 50613
-     - -6
      - ../../../weather/G1900130.epw
    * - IA, Boone County
      - 0.0088%
-     - true
      - 50036
-     - -6
      - ../../../weather/G1900150.epw
    * - IA, Bremer County
      - 0.0076%
-     - true
      - 50677
-     - -6
      - ../../../weather/G1900170.epw
    * - IA, Buchanan County
      - 0.0067%
-     - true
      - 50644
-     - -6
      - ../../../weather/G1900190.epw
    * - IA, Buena Vista County
      - 0.0062%
-     - true
      - 50588
-     - -6
      - ../../../weather/G1900210.epw
    * - IA, Butler County
      - 0.005%
-     - true
      - 50665
-     - -6
      - ../../../weather/G1900230.epw
    * - IA, Calhoun County
      - 0.0038%
-     - true
      - 50563
-     - -6
      - ../../../weather/G1900250.epw
    * - IA, Carroll County
      - 0.007%
-     - true
      - 51401
-     - -6
      - ../../../weather/G1900270.epw
    * - IA, Cass County
      - 0.0049%
-     - true
      - 50022
-     - -6
      - ../../../weather/G1900290.epw
    * - IA, Cedar County
      - 0.006%
-     - true
      - 52772
-     - -6
      - ../../../weather/G1900310.epw
    * - IA, Cerro Gordo County
      - 0.017%
-     - true
      - 50401
-     - -6
      - ../../../weather/G1900330.epw
    * - IA, Cherokee County
      - 0.0043%
-     - true
      - 51012
-     - -6
      - ../../../weather/G1900350.epw
    * - IA, Chickasaw County
      - 0.0042%
-     - true
      - 50659
-     - -6
      - ../../../weather/G1900370.epw
    * - IA, Clarke County
      - 0.0031%
-     - true
      - 50213
-     - -6
      - ../../../weather/G1900390.epw
    * - IA, Clay County
      - 0.006%
-     - true
      - 51301
-     - -6
      - ../../../weather/G1900410.epw
    * - IA, Clayton County
      - 0.0067%
-     - true
      - 52052
-     - -6
      - ../../../weather/G1900430.epw
    * - IA, Clinton County
      - 0.016%
-     - true
      - 52732
-     - -6
      - ../../../weather/G1900450.epw
    * - IA, Crawford County
      - 0.0052%
-     - true
      - 51442
-     - -6
      - ../../../weather/G1900470.epw
    * - IA, Dallas County
      - 0.024%
-     - true
      - 50263
-     - -6
      - ../../../weather/G1900490.epw
    * - IA, Davis County
      - 0.0027%
-     - true
      - 52537
-     - -6
      - ../../../weather/G1900510.epw
    * - IA, Decatur County
      - 0.0029%
-     - true
      - 50144
-     - -6
      - ../../../weather/G1900530.epw
    * - IA, Delaware County
      - 0.006%
-     - true
      - 52057
-     - -6
      - ../../../weather/G1900550.epw
    * - IA, Des Moines County
      - 0.014%
-     - true
      - 52601
-     - -6
      - ../../../weather/G1900570.epw
    * - IA, Dickinson County
      - 0.0099%
-     - true
      - 51360
-     - -6
      - ../../../weather/G1900590.epw
    * - IA, Dubuque County
      - 0.03%
-     - true
      - 52001
-     - -6
      - ../../../weather/G1900610.epw
    * - IA, Emmet County
      - 0.0036%
-     - true
      - 51334
-     - -6
      - ../../../weather/G1900630.epw
    * - IA, Fayette County
      - 0.0071%
-     - true
      - 50662
-     - -6
      - ../../../weather/G1900650.epw
    * - IA, Floyd County
      - 0.0056%
-     - true
      - 50616
-     - -6
      - ../../../weather/G1900670.epw
    * - IA, Franklin County
      - 0.0036%
-     - true
      - 50441
-     - -6
      - ../../../weather/G1900690.epw
    * - IA, Fremont County
      - 0.0026%
-     - true
      - 51652
-     - -6
      - ../../../weather/G1900710.epw
    * - IA, Greene County
      - 0.0034%
-     - true
      - 50129
-     - -6
      - ../../../weather/G1900730.epw
    * - IA, Grundy County
      - 0.0041%
-     - true
      - 50638
-     - -6
      - ../../../weather/G1900750.epw
    * - IA, Guthrie County
      - 0.0043%
-     - true
      - 50216
-     - -6
      - ../../../weather/G1900770.epw
    * - IA, Hamilton County
      - 0.0053%
-     - true
      - 50595
-     - -6
      - ../../../weather/G1900790.epw
    * - IA, Hancock County
      - 0.004%
-     - true
      - 50438
-     - -6
      - ../../../weather/G1900810.epw
    * - IA, Hardin County
      - 0.0061%
-     - true
      - 50126
-     - -6
      - ../../../weather/G1900830.epw
    * - IA, Harrison County
      - 0.005%
-     - true
      - 51555
-     - -6
      - ../../../weather/G1900850.epw
    * - IA, Henry County
      - 0.0062%
-     - true
      - 52641
-     - -6
      - ../../../weather/G1900870.epw
    * - IA, Howard County
      - 0.0032%
-     - true
      - 52136
-     - -6
      - ../../../weather/G1900890.epw
    * - IA, Humboldt County
      - 0.0035%
-     - true
      - 50548
-     - -6
      - ../../../weather/G1900910.epw
    * - IA, Ida County
      - 0.0026%
-     - true
      - 51445
-     - -6
      - ../../../weather/G1900930.epw
    * - IA, Iowa County
      - 0.0054%
-     - true
      - 52361
-     - -6
      - ../../../weather/G1900950.epw
    * - IA, Jackson County
      - 0.007%
-     - true
      - 52060
-     - -6
      - ../../../weather/G1900970.epw
    * - IA, Jasper County
      - 0.012%
-     - true
      - 50208
-     - -6
      - ../../../weather/G1900990.epw
    * - IA, Jefferson County
      - 0.0056%
-     - true
      - 52556
-     - -6
      - ../../../weather/G1901010.epw
    * - IA, Johnson County
      - 0.044%
-     - true
      - 52240
-     - -6
      - ../../../weather/G1901030.epw
    * - IA, Jones County
      - 0.0066%
-     - true
      - 52205
-     - -6
      - ../../../weather/G1901050.epw
    * - IA, Keokuk County
      - 0.0036%
-     - true
      - 52591
-     - -6
      - ../../../weather/G1901070.epw
    * - IA, Kossuth County
      - 0.0056%
-     - true
      - 50511
-     - -6
      - ../../../weather/G1901090.epw
    * - IA, Lee County
      - 0.012%
-     - true
      - 52627
-     - -6
      - ../../../weather/G1901110.epw
    * - IA, Linn County
      - 0.071%
-     - true
      - 52404
-     - -6
      - ../../../weather/G1901130.epw
    * - IA, Louisa County
      - 0.0037%
-     - true
      - 52653
-     - -6
      - ../../../weather/G1901150.epw
    * - IA, Lucas County
      - 0.0031%
-     - true
      - 50049
-     - -6
      - ../../../weather/G1901170.epw
    * - IA, Lyon County
      - 0.0037%
-     - true
      - 51246
-     - -6
      - ../../../weather/G1901190.epw
    * - IA, Madison County
      - 0.005%
-     - true
      - 50273
-     - -6
      - ../../../weather/G1901210.epw
    * - IA, Mahaska County
      - 0.0073%
-     - true
      - 52577
-     - -6
      - ../../../weather/G1901230.epw
    * - IA, Marion County
      - 0.01%
-     - true
      - 50219
-     - -6
      - ../../../weather/G1901250.epw
    * - IA, Marshall County
      - 0.012%
-     - true
      - 50158
-     - -6
      - ../../../weather/G1901270.epw
    * - IA, Mills County
      - 0.0045%
-     - true
      - 51534
-     - -6
      - ../../../weather/G1901290.epw
    * - IA, Mitchell County
      - 0.0037%
-     - true
      - 50461
-     - -6
      - ../../../weather/G1901310.epw
    * - IA, Monona County
      - 0.0035%
-     - true
      - 51040
-     - -6
      - ../../../weather/G1901330.epw
    * - IA, Monroe County
      - 0.0029%
-     - true
      - 52531
-     - -6
      - ../../../weather/G1901350.epw
    * - IA, Montgomery County
      - 0.0039%
-     - true
      - 51566
-     - -6
      - ../../../weather/G1901370.epw
    * - IA, Muscatine County
      - 0.013%
-     - true
      - 52761
-     - -6
      - ../../../weather/G1901390.epw
    * - IA, O'Brien County
      - 0.005%
-     - true
      - 51201
-     - -6
      - ../../../weather/G1901410.epw
    * - IA, Osceola County
      - 0.0022%
-     - true
      - 51249
-     - -6
      - ../../../weather/G1901430.epw
    * - IA, Page County
      - 0.0054%
-     - true
      - 51632
-     - -6
      - ../../../weather/G1901450.epw
    * - IA, Palo Alto County
      - 0.0034%
-     - true
      - 50536
-     - -6
      - ../../../weather/G1901470.epw
    * - IA, Plymouth County
      - 0.0079%
-     - true
      - 51031
-     - -6
      - ../../../weather/G1901490.epw
    * - IA, Pocahontas County
      - 0.0028%
-     - true
      - 50574
-     - -6
      - ../../../weather/G1901510.epw
    * - IA, Polk County
      - 0.14%
-     - true
      - 50023
-     - -6
      - ../../../weather/G1901530.epw
    * - IA, Pottawattamie County
      - 0.029%
-     - true
      - 51503
-     - -6
      - ../../../weather/G1901550.epw
    * - IA, Poweshiek County
      - 0.0067%
-     - true
      - 50112
-     - -6
      - ../../../weather/G1901570.epw
    * - IA, Ringgold County
      - 0.0019%
-     - true
      - 50854
-     - -6
      - ../../../weather/G1901590.epw
    * - IA, Sac County
      - 0.004%
-     - true
      - 50583
-     - -6
      - ../../../weather/G1901610.epw
    * - IA, Scott County
      - 0.055%
-     - true
      - 52722
-     - -6
      - ../../../weather/G1901630.epw
    * - IA, Shelby County
      - 0.0041%
-     - true
      - 51537
-     - -6
      - ../../../weather/G1901650.epw
    * - IA, Sioux County
      - 0.0094%
-     - true
      - 51250
-     - -6
      - ../../../weather/G1901670.epw
    * - IA, Story County
      - 0.028%
-     - true
      - 50010
-     - -6
      - ../../../weather/G1901690.epw
    * - IA, Tama County
      - 0.0058%
-     - true
      - 52339
-     - -6
      - ../../../weather/G1901710.epw
    * - IA, Taylor County
      - 0.0023%
-     - true
      - 50833
-     - -6
      - ../../../weather/G1901730.epw
    * - IA, Union County
      - 0.0044%
-     - true
      - 50801
-     - -6
      - ../../../weather/G1901750.epw
    * - IA, Van Buren County
      - 0.0027%
-     - true
      - 52565
-     - -6
      - ../../../weather/G1901770.epw
    * - IA, Wapello County
      - 0.012%
-     - true
      - 52501
-     - -6
      - ../../../weather/G1901790.epw
    * - IA, Warren County
      - 0.014%
-     - true
      - 50125
-     - -6
      - ../../../weather/G1901810.epw
    * - IA, Washington County
      - 0.0071%
-     - true
      - 52353
-     - -6
      - ../../../weather/G1901830.epw
    * - IA, Wayne County
      - 0.0024%
-     - true
      - 50060
-     - -6
      - ../../../weather/G1901850.epw
    * - IA, Webster County
      - 0.013%
-     - true
      - 50501
-     - -6
      - ../../../weather/G1901870.epw
    * - IA, Winnebago County
      - 0.0039%
-     - true
      - 50436
-     - -6
      - ../../../weather/G1901890.epw
    * - IA, Winneshiek County
      - 0.0066%
-     - true
      - 52101
-     - -6
      - ../../../weather/G1901910.epw
    * - IA, Woodbury County
      - 0.031%
-     - true
      - 51106
-     - -6
      - ../../../weather/G1901930.epw
    * - IA, Worth County
      - 0.0026%
-     - true
      - 50459
-     - -6
      - ../../../weather/G1901950.epw
    * - IA, Wright County
      - 0.0049%
-     - true
      - 50533
-     - -6
      - ../../../weather/G1901970.epw
    * - ID, Ada County
      - 0.13%
-     - true
      - 83646
-     - -7
      - ../../../weather/G1600010.epw
    * - ID, Adams County
      - 0.002%
-     - true
      - 83612
-     - -7
      - ../../../weather/G1600030.epw
    * - ID, Bannock County
      - 0.025%
-     - true
      - 83201
-     - -7
      - ../../../weather/G1600050.epw
    * - ID, Bear Lake County
      - 0.003%
-     - true
      - 83254
-     - -7
      - ../../../weather/G1600070.epw
    * - ID, Benewah County
      - 0.0034%
-     - true
      - 83861
-     - -8
      - ../../../weather/G1600090.epw
    * - ID, Bingham County
      - 0.012%
-     - true
      - 83221
-     - -7
      - ../../../weather/G1600110.epw
    * - ID, Blaine County
      - 0.011%
-     - true
      - 83333
-     - -7
      - ../../../weather/G1600130.epw
    * - ID, Boise County
      - 0.004%
-     - true
      - 83716
-     - -7
      - ../../../weather/G1600150.epw
    * - ID, Bonner County
      - 0.018%
-     - true
      - 83864
-     - -8
      - ../../../weather/G1600170.epw
    * - ID, Bonneville County
      - 0.03%
-     - true
      - 83401
-     - -7
      - ../../../weather/G1600190.epw
    * - ID, Boundary County
      - 0.0039%
-     - true
      - 83805
-     - -8
      - ../../../weather/G1600210.epw
    * - ID, Butte County
      - 0.00096%
-     - true
      - 83213
-     - -7
      - ../../../weather/G1600230.epw
    * - ID, Camas County
      - 0.00061%
-     - true
      - 83327
-     - -7
      - ../../../weather/G1600250.epw
    * - ID, Canyon County
      - 0.053%
-     - true
      - 83686
-     - -7
      - ../../../weather/G1600270.epw
    * - ID, Caribou County
      - 0.0024%
-     - true
      - 83276
-     - -7
      - ../../../weather/G1600290.epw
    * - ID, Cassia County
      - 0.0063%
-     - true
      - 83318
-     - -7
      - ../../../weather/G1600310.epw
    * - ID, Clark County
      - 0.00041%
-     - true
      - 83423
-     - -7
      - ../../../weather/G1600330.epw
    * - ID, Clearwater County
      - 0.0033%
-     - true
      - 83544
-     - -8
      - ../../../weather/G1600350.epw
    * - ID, Custer County
      - 0.0024%
-     - true
      - 83226
-     - -7
      - ../../../weather/G1600370.epw
    * - ID, Elmore County
      - 0.0091%
-     - true
      - 83647
-     - -7
      - ../../../weather/G1600390.epw
    * - ID, Franklin County
      - 0.0035%
-     - true
      - 83263
-     - -7
      - ../../../weather/G1600410.epw
    * - ID, Fremont County
      - 0.0065%
-     - true
      - 83445
-     - -7
      - ../../../weather/G1600430.epw
    * - ID, Gem County
      - 0.0053%
-     - true
      - 83617
-     - -7
      - ../../../weather/G1600450.epw
    * - ID, Gooding County
      - 0.0045%
-     - true
      - 83330
-     - -7
      - ../../../weather/G1600470.epw
    * - ID, Idaho County
      - 0.0065%
-     - true
      - 83530
-     - -8
      - ../../../weather/G1600490.epw
    * - ID, Jefferson County
      - 0.0066%
-     - true
      - 83442
-     - -7
      - ../../../weather/G1600510.epw
    * - ID, Jerome County
      - 0.0061%
-     - true
      - 83338
-     - -7
      - ../../../weather/G1600530.epw
    * - ID, Kootenai County
      - 0.049%
-     - true
      - 83854
-     - -8
      - ../../../weather/G1600550.epw
    * - ID, Latah County
      - 0.012%
-     - true
      - 83843
-     - -8
      - ../../../weather/G1600570.epw
    * - ID, Lemhi County
      - 0.0035%
-     - true
      - 83467
-     - -7
      - ../../../weather/G1600590.epw
    * - ID, Lewis County
      - 0.0014%
-     - true
      - 83536
-     - -8
      - ../../../weather/G1600610.epw
    * - ID, Lincoln County
      - 0.0015%
-     - true
      - 83352
-     - -7
      - ../../../weather/G1600630.epw
    * - ID, Madison County
      - 0.0095%
-     - true
      - 83440
-     - -7
      - ../../../weather/G1600650.epw
    * - ID, Minidoka County
      - 0.0058%
-     - true
      - 83350
-     - -7
      - ../../../weather/G1600670.epw
    * - ID, Nez Perce County
      - 0.013%
-     - true
      - 83501
-     - -8
      - ../../../weather/G1600690.epw
    * - ID, Oneida County
      - 0.0015%
-     - true
      - 83252
-     - -7
      - ../../../weather/G1600710.epw
    * - ID, Owyhee County
      - 0.0036%
-     - true
      - 83628
-     - -7
      - ../../../weather/G1600730.epw
    * - ID, Payette County
      - 0.0068%
-     - true
      - 83661
-     - -7
      - ../../../weather/G1600750.epw
    * - ID, Power County
      - 0.0022%
-     - true
      - 83211
-     - -7
      - ../../../weather/G1600770.epw
    * - ID, Shoshone County
      - 0.0052%
-     - true
      - 83837
-     - -8
      - ../../../weather/G1600790.epw
    * - ID, Teton County
      - 0.0041%
-     - true
      - 83455
-     - -7
      - ../../../weather/G1600810.epw
    * - ID, Twin Falls County
      - 0.024%
-     - true
      - 83301
-     - -7
      - ../../../weather/G1600830.epw
    * - ID, Valley County
      - 0.0089%
-     - true
      - 83638
-     - -7
      - ../../../weather/G1600850.epw
    * - ID, Washington County
      - 0.0034%
-     - true
      - 83672
-     - -7
      - ../../../weather/G1600870.epw
    * - IL, Adams County
      - 0.022%
-     - true
      - 62301
-     - -6
      - ../../../weather/G1700010.epw
    * - IL, Alexander County
      - 0.003%
-     - true
      - 62914
-     - -6
      - ../../../weather/G1700030.epw
    * - IL, Bond County
      - 0.0053%
-     - true
      - 62246
-     - -6
      - ../../../weather/G1700050.epw
    * - IL, Boone County
      - 0.015%
-     - true
      - 61008
-     - -6
      - ../../../weather/G1700070.epw
    * - IL, Brown County
      - 0.0018%
-     - true
      - 62353
-     - -6
      - ../../../weather/G1700090.epw
    * - IL, Bureau County
      - 0.012%
-     - true
      - 61356
-     - -6
      - ../../../weather/G1700110.epw
    * - IL, Calhoun County
      - 0.0021%
-     - true
      - 62047
-     - -6
      - ../../../weather/G1700130.epw
    * - IL, Carroll County
      - 0.0063%
-     - true
      - 61074
-     - -6
      - ../../../weather/G1700150.epw
    * - IL, Cass County
      - 0.0043%
-     - true
      - 62618
-     - -6
      - ../../../weather/G1700170.epw
    * - IL, Champaign County
      - 0.067%
-     - true
      - 61820
-     - -6
      - ../../../weather/G1700190.epw
    * - IL, Christian County
      - 0.012%
-     - true
      - 62568
-     - -6
      - ../../../weather/G1700210.epw
    * - IL, Clark County
      - 0.0058%
-     - true
      - 62441
-     - -6
      - ../../../weather/G1700230.epw
    * - IL, Clay County
      - 0.0047%
-     - true
      - 62839
-     - -6
      - ../../../weather/G1700250.epw
    * - IL, Clinton County
      - 0.012%
-     - true
      - 62231
-     - -6
      - ../../../weather/G1700270.epw
    * - IL, Coles County
      - 0.017%
-     - true
      - 61938
-     - -6
      - ../../../weather/G1700290.epw
    * - IL, Cook County
      - 1.6%
-     - true
      - 60657
-     - -6
      - ../../../weather/G1700310.epw
    * - IL, Crawford County
      - 0.0065%
-     - true
      - 62454
-     - -6
      - ../../../weather/G1700330.epw
    * - IL, Cumberland County
      - 0.0036%
-     - true
      - 62428
-     - -6
      - ../../../weather/G1700350.epw
    * - IL, De Witt County
      - 0.0056%
-     - true
      - 61727
-     - -6
      - ../../../weather/G1700390.epw
    * - IL, DeKalb County
      - 0.031%
-     - true
      - 60115
-     - -6
      - ../../../weather/G1700370.epw
    * - IL, Douglas County
      - 0.0063%
-     - true
      - 61953
-     - -6
      - ../../../weather/G1700410.epw
    * - IL, DuPage County
      - 0.27%
-     - true
      - 60148
-     - -6
      - ../../../weather/G1700430.epw
    * - IL, Edgar County
      - 0.0065%
-     - true
      - 61944
-     - -6
      - ../../../weather/G1700450.epw
    * - IL, Edwards County
      - 0.0024%
-     - true
      - 62806
-     - -6
      - ../../../weather/G1700470.epw
    * - IL, Effingham County
      - 0.011%
-     - true
      - 62401
-     - -6
      - ../../../weather/G1700490.epw
    * - IL, Fayette County
      - 0.0069%
-     - true
      - 62471
-     - -6
      - ../../../weather/G1700510.epw
    * - IL, Ford County
      - 0.0047%
-     - true
      - 60957
-     - -6
      - ../../../weather/G1700530.epw
    * - IL, Franklin County
      - 0.014%
-     - true
      - 62896
-     - -6
      - ../../../weather/G1700550.epw
    * - IL, Fulton County
      - 0.012%
-     - true
      - 61520
-     - -6
      - ../../../weather/G1700570.epw
    * - IL, Gallatin County
      - 0.002%
-     - true
      - 62984
-     - -6
      - ../../../weather/G1700590.epw
    * - IL, Greene County
      - 0.0048%
-     - true
      - 62016
-     - -6
      - ../../../weather/G1700610.epw
    * - IL, Grundy County
      - 0.015%
-     - true
      - 60450
-     - -6
      - ../../../weather/G1700630.epw
    * - IL, Hamilton County
      - 0.003%
-     - true
      - 62859
-     - -6
      - ../../../weather/G1700650.epw
    * - IL, Hancock County
      - 0.0069%
-     - true
      - 62321
-     - -6
      - ../../../weather/G1700670.epw
    * - IL, Hardin County
      - 0.0017%
-     - true
      - 62931
-     - -6
      - ../../../weather/G1700690.epw
    * - IL, Henderson County
      - 0.0029%
-     - true
      - 61469
-     - -6
      - ../../../weather/G1700710.epw
    * - IL, Henry County
      - 0.016%
-     - true
      - 61443
-     - -6
      - ../../../weather/G1700730.epw
    * - IL, Iroquois County
      - 0.01%
-     - true
      - 60970
-     - -6
      - ../../../weather/G1700750.epw
    * - IL, Jackson County
      - 0.021%
-     - true
      - 62901
-     - -6
      - ../../../weather/G1700770.epw
    * - IL, Jasper County
      - 0.0032%
-     - true
      - 62448
-     - -6
      - ../../../weather/G1700790.epw
    * - IL, Jefferson County
      - 0.013%
-     - true
      - 62864
-     - -6
      - ../../../weather/G1700810.epw
    * - IL, Jersey County
      - 0.0075%
-     - true
      - 62052
-     - -6
      - ../../../weather/G1700830.epw
    * - IL, Jo Daviess County
      - 0.01%
-     - true
      - 61036
-     - -6
      - ../../../weather/G1700850.epw
    * - IL, Johnson County
      - 0.0041%
-     - true
      - 62995
-     - -6
      - ../../../weather/G1700870.epw
    * - IL, Kane County
      - 0.14%
-     - true
      - 60506
-     - -6
      - ../../../weather/G1700890.epw
    * - IL, Kankakee County
      - 0.034%
-     - true
      - 60901
-     - -6
      - ../../../weather/G1700910.epw
    * - IL, Kendall County
      - 0.031%
-     - true
      - 60543
-     - -6
      - ../../../weather/G1700930.epw
    * - IL, Knox County
      - 0.018%
-     - true
      - 61401
-     - -6
      - ../../../weather/G1700950.epw
    * - IL, Lake County
      - 0.2%
-     - true
      - 60085
-     - -6
      - ../../../weather/G1700970.epw
    * - IL, LaSalle County
      - 0.037%
-     - true
      - 61350
-     - -6
      - ../../../weather/G1700990.epw
    * - IL, Lawrence County
      - 0.0048%
-     - true
      - 62439
-     - -6
      - ../../../weather/G1701010.epw
    * - IL, Lee County
      - 0.011%
-     - true
      - 61021
-     - -6
      - ../../../weather/G1701030.epw
    * - IL, Livingston County
      - 0.012%
-     - true
      - 61764
-     - -6
      - ../../../weather/G1701050.epw
    * - IL, Logan County
      - 0.0089%
-     - true
      - 62656
-     - -6
      - ../../../weather/G1701070.epw
    * - IL, Macon County
      - 0.038%
-     - true
      - 62521
-     - -6
      - ../../../weather/G1701150.epw
    * - IL, Macoupin County
      - 0.016%
-     - true
      - 62626
-     - -6
      - ../../../weather/G1701170.epw
    * - IL, Madison County
      - 0.088%
-     - true
      - 62040
-     - -6
      - ../../../weather/G1701190.epw
    * - IL, Marion County
      - 0.014%
-     - true
      - 62801
-     - -6
      - ../../../weather/G1701210.epw
    * - IL, Marshall County
      - 0.0044%
-     - true
      - 61540
-     - -6
      - ../../../weather/G1701230.epw
    * - IL, Mason County
      - 0.0052%
-     - true
      - 62644
-     - -6
      - ../../../weather/G1701250.epw
    * - IL, Massac County
      - 0.0053%
-     - true
      - 62960
-     - -6
      - ../../../weather/G1701270.epw
    * - IL, McDonough County
      - 0.011%
-     - true
      - 61455
-     - -6
      - ../../../weather/G1701090.epw
    * - IL, McHenry County
      - 0.087%
-     - true
      - 60014
-     - -6
      - ../../../weather/G1701110.epw
    * - IL, McLean County
      - 0.053%
-     - true
      - 61761
-     - -6
      - ../../../weather/G1701130.epw
    * - IL, Menard County
      - 0.0042%
-     - true
      - 62675
-     - -6
      - ../../../weather/G1701290.epw
    * - IL, Mercer County
      - 0.0055%
-     - true
      - 61231
-     - -6
      - ../../../weather/G1701310.epw
    * - IL, Monroe County
      - 0.01%
-     - true
      - 62298
-     - -6
      - ../../../weather/G1701330.epw
    * - IL, Montgomery County
      - 0.0097%
-     - true
      - 62056
-     - -6
      - ../../../weather/G1701350.epw
    * - IL, Morgan County
      - 0.011%
-     - true
      - 62650
-     - -6
      - ../../../weather/G1701370.epw
    * - IL, Moultrie County
      - 0.0047%
-     - true
      - 61951
-     - -6
      - ../../../weather/G1701390.epw
    * - IL, Ogle County
      - 0.017%
-     - true
      - 61068
-     - -6
      - ../../../weather/G1701410.epw
    * - IL, Peoria County
      - 0.062%
-     - true
      - 61604
-     - -6
      - ../../../weather/G1701430.epw
    * - IL, Perry County
      - 0.0071%
-     - true
      - 62832
-     - -6
      - ../../../weather/G1701450.epw
    * - IL, Piatt County
      - 0.0055%
-     - true
      - 61856
-     - -6
      - ../../../weather/G1701470.epw
    * - IL, Pike County
      - 0.0059%
-     - true
      - 62363
-     - -6
      - ../../../weather/G1701490.epw
    * - IL, Pope County
      - 0.002%
-     - true
      - 62938
-     - -6
      - ../../../weather/G1701510.epw
    * - IL, Pulaski County
      - 0.0023%
-     - true
      - 62964
-     - -6
      - ../../../weather/G1701530.epw
    * - IL, Putnam County
      - 0.0023%
-     - true
      - 61326
-     - -6
      - ../../../weather/G1701550.epw
    * - IL, Randolph County
      - 0.01%
-     - true
      - 62286
-     - -6
      - ../../../weather/G1701570.epw
    * - IL, Richland County
      - 0.0056%
-     - true
      - 62450
-     - -6
      - ../../../weather/G1701590.epw
    * - IL, Rock Island County
      - 0.049%
-     - true
      - 61265
-     - -6
      - ../../../weather/G1701610.epw
    * - IL, Saline County
      - 0.0087%
-     - true
      - 62946
-     - -6
      - ../../../weather/G1701650.epw
    * - IL, Sangamon County
      - 0.068%
-     - true
      - 62704
-     - -6
      - ../../../weather/G1701670.epw
    * - IL, Schuyler County
      - 0.0026%
-     - true
      - 62681
-     - -6
      - ../../../weather/G1701690.epw
    * - IL, Scott County
      - 0.0018%
-     - true
      - 62694
-     - -6
      - ../../../weather/G1701710.epw
    * - IL, Shelby County
      - 0.0078%
-     - true
      - 62565
-     - -6
      - ../../../weather/G1701730.epw
    * - IL, St. Clair County
      - 0.088%
-     - true
      - 62269
-     - -6
      - ../../../weather/G1701630.epw
    * - IL, Stark County
      - 0.002%
-     - true
      - 61491
-     - -6
      - ../../../weather/G1701750.epw
    * - IL, Stephenson County
      - 0.016%
-     - true
      - 61032
-     - -6
      - ../../../weather/G1701770.epw
    * - IL, Tazewell County
      - 0.043%
-     - true
      - 61554
-     - -6
      - ../../../weather/G1701790.epw
    * - IL, Union County
      - 0.0059%
-     - true
      - 62906
-     - -6
      - ../../../weather/G1701810.epw
    * - IL, Vermilion County
      - 0.027%
-     - true
      - 61832
-     - -6
      - ../../../weather/G1701830.epw
    * - IL, Wabash County
      - 0.0041%
-     - true
      - 62863
-     - -6
      - ../../../weather/G1701850.epw
    * - IL, Warren County
      - 0.0057%
-     - true
      - 61462
-     - -6
      - ../../../weather/G1701870.epw
    * - IL, Washington County
      - 0.0049%
-     - true
      - 62263
-     - -6
      - ../../../weather/G1701890.epw
    * - IL, Wayne County
      - 0.0059%
-     - true
      - 62837
-     - -6
      - ../../../weather/G1701910.epw
    * - IL, White County
      - 0.0053%
-     - true
      - 62821
-     - -6
      - ../../../weather/G1701930.epw
    * - IL, Whiteside County
      - 0.019%
-     - true
      - 61081
-     - -6
      - ../../../weather/G1701950.epw
    * - IL, Will County
      - 0.18%
-     - true
      - 60435
-     - -6
      - ../../../weather/G1701970.epw
    * - IL, Williamson County
      - 0.023%
-     - true
      - 62959
-     - -6
      - ../../../weather/G1701990.epw
    * - IL, Winnebago County
      - 0.094%
-     - true
      - 61107
-     - -6
      - ../../../weather/G1702010.epw
    * - IL, Woodford County
      - 0.011%
-     - true
      - 61548
-     - -6
      - ../../../weather/G1702030.epw
    * - IN, Adams County
      - 0.0098%
-     - true
      - 46733
-     - -5
      - ../../../weather/G1800010.epw
    * - IN, Allen County
      - 0.12%
-     - true
      - 46835
-     - -5
      - ../../../weather/G1800030.epw
    * - IN, Bartholomew County
      - 0.025%
-     - true
      - 47201
-     - -5
      - ../../../weather/G1800050.epw
    * - IN, Benton County
      - 0.0029%
-     - true
      - 47944
-     - -5
      - ../../../weather/G1800070.epw
    * - IN, Blackford County
      - 0.0045%
-     - true
      - 47348
-     - -5
      - ../../../weather/G1800090.epw
    * - IN, Boone County
      - 0.019%
-     - true
      - 46077
-     - -5
      - ../../../weather/G1800110.epw
    * - IN, Brown County
      - 0.0063%
-     - true
      - 47448
-     - -5
      - ../../../weather/G1800130.epw
    * - IN, Carroll County
      - 0.0071%
-     - true
      - 46923
-     - -5
      - ../../../weather/G1800150.epw
    * - IN, Cass County
      - 0.012%
-     - true
      - 46947
-     - -5
      - ../../../weather/G1800170.epw
    * - IN, Clark County
      - 0.037%
-     - true
      - 47130
-     - -5
      - ../../../weather/G1800190.epw
    * - IN, Clay County
      - 0.0087%
-     - true
      - 47834
-     - -5
      - ../../../weather/G1800210.epw
    * - IN, Clinton County
      - 0.0099%
-     - true
      - 46041
-     - -5
      - ../../../weather/G1800230.epw
    * - IN, Crawford County
      - 0.0041%
-     - true
      - 47118
-     - -5
      - ../../../weather/G1800250.epw
    * - IN, Daviess County
      - 0.0093%
-     - true
      - 47501
-     - -5
      - ../../../weather/G1800270.epw
    * - IN, Dearborn County
      - 0.015%
-     - true
      - 47025
-     - -5
      - ../../../weather/G1800290.epw
    * - IN, Decatur County
      - 0.0084%
-     - true
      - 47240
-     - -5
      - ../../../weather/G1800310.epw
    * - IN, DeKalb County
      - 0.013%
-     - true
      - 46706
-     - -5
      - ../../../weather/G1800330.epw
    * - IN, Delaware County
      - 0.039%
-     - true
      - 47304
-     - -5
      - ../../../weather/G1800350.epw
    * - IN, Dubois County
      - 0.013%
-     - true
      - 47546
-     - -5
      - ../../../weather/G1800370.epw
    * - IN, Elkhart County
      - 0.058%
-     - true
      - 46514
-     - -5
      - ../../../weather/G1800390.epw
    * - IN, Fayette County
      - 0.0081%
-     - true
      - 47331
-     - -5
      - ../../../weather/G1800410.epw
    * - IN, Floyd County
      - 0.024%
-     - true
      - 47150
-     - -5
      - ../../../weather/G1800430.epw
    * - IN, Fountain County
      - 0.0058%
-     - true
      - 47918
-     - -5
      - ../../../weather/G1800450.epw
    * - IN, Franklin County
      - 0.0071%
-     - true
      - 47012
-     - -5
      - ../../../weather/G1800470.epw
    * - IN, Fulton County
      - 0.0072%
-     - true
      - 46975
-     - -5
      - ../../../weather/G1800490.epw
    * - IN, Gibson County
      - 0.011%
-     - true
      - 47670
-     - -6
      - ../../../weather/G1800510.epw
    * - IN, Grant County
      - 0.023%
-     - true
      - 46953
-     - -5
      - ../../../weather/G1800530.epw
    * - IN, Greene County
      - 0.011%
-     - true
      - 47441
-     - -5
      - ../../../weather/G1800550.epw
    * - IN, Hamilton County
      - 0.087%
-     - true
      - 46032
-     - -5
      - ../../../weather/G1800570.epw
    * - IN, Hancock County
      - 0.022%
-     - true
      - 46140
-     - -5
      - ../../../weather/G1800590.epw
    * - IN, Harrison County
      - 0.012%
-     - true
      - 47112
-     - -5
      - ../../../weather/G1800610.epw
    * - IN, Hendricks County
      - 0.044%
-     - true
      - 46112
-     - -5
      - ../../../weather/G1800630.epw
    * - IN, Henry County
      - 0.016%
-     - true
      - 47362
-     - -5
      - ../../../weather/G1800650.epw
    * - IN, Howard County
      - 0.029%
-     - true
      - 46901
-     - -5
      - ../../../weather/G1800670.epw
    * - IN, Huntington County
      - 0.012%
-     - true
      - 46750
-     - -5
      - ../../../weather/G1800690.epw
    * - IN, Jackson County
      - 0.014%
-     - true
      - 47274
-     - -5
      - ../../../weather/G1800710.epw
    * - IN, Jasper County
      - 0.01%
-     - true
      - 47978
-     - -6
      - ../../../weather/G1800730.epw
    * - IN, Jay County
      - 0.0069%
-     - true
      - 47371
-     - -5
      - ../../../weather/G1800750.epw
    * - IN, Jefferson County
      - 0.011%
-     - true
      - 47250
-     - -5
      - ../../../weather/G1800770.epw
    * - IN, Jennings County
      - 0.009%
-     - true
      - 47265
-     - -5
      - ../../../weather/G1800790.epw
    * - IN, Johnson County
      - 0.044%
-     - true
      - 46143
-     - -5
      - ../../../weather/G1800810.epw
    * - IN, Knox County
      - 0.013%
-     - true
      - 47591
-     - -5
      - ../../../weather/G1800830.epw
    * - IN, Kosciusko County
      - 0.028%
-     - true
      - 46580
-     - -5
      - ../../../weather/G1800850.epw
    * - IN, LaGrange County
      - 0.011%
-     - true
      - 46761
-     - -5
      - ../../../weather/G1800870.epw
    * - IN, Lake County
      - 0.16%
-     - true
      - 46307
-     - -6
      - ../../../weather/G1800890.epw
    * - IN, LaPorte County
      - 0.036%
-     - true
      - 46360
-     - -6
      - ../../../weather/G1800910.epw
    * - IN, Lawrence County
      - 0.016%
-     - true
      - 47421
-     - -5
      - ../../../weather/G1800930.epw
    * - IN, Madison County
      - 0.044%
-     - true
      - 46016
-     - -5
      - ../../../weather/G1800950.epw
    * - IN, Marion County
      - 0.31%
-     - true
      - 46227
-     - -5
      - ../../../weather/G1800970.epw
    * - IN, Marshall County
      - 0.015%
-     - true
      - 46563
-     - -5
      - ../../../weather/G1800990.epw
    * - IN, Martin County
      - 0.0035%
-     - true
      - 47581
-     - -5
      - ../../../weather/G1801010.epw
    * - IN, Miami County
      - 0.011%
-     - true
      - 46970
-     - -5
      - ../../../weather/G1801030.epw
    * - IN, Monroe County
      - 0.045%
-     - true
      - 47401
-     - -5
      - ../../../weather/G1801050.epw
    * - IN, Montgomery County
      - 0.012%
-     - true
      - 47933
-     - -5
      - ../../../weather/G1801070.epw
    * - IN, Morgan County
      - 0.021%
-     - true
      - 46151
-     - -5
      - ../../../weather/G1801090.epw
    * - IN, Newton County
      - 0.0045%
-     - true
      - 46349
-     - -6
      - ../../../weather/G1801110.epw
    * - IN, Noble County
      - 0.015%
-     - true
      - 46755
-     - -5
      - ../../../weather/G1801130.epw
    * - IN, Ohio County
      - 0.0021%
-     - true
      - 47040
-     - -5
      - ../../../weather/G1801150.epw
    * - IN, Orange County
      - 0.0068%
-     - true
      - 47454
-     - -5
      - ../../../weather/G1801170.epw
    * - IN, Owen County
      - 0.0075%
-     - true
      - 47460
-     - -5
      - ../../../weather/G1801190.epw
    * - IN, Parke County
      - 0.006%
-     - true
      - 47872
-     - -5
      - ../../../weather/G1801210.epw
    * - IN, Perry County
      - 0.0064%
-     - true
      - 47586
-     - -6
      - ../../../weather/G1801230.epw
    * - IN, Pike County
      - 0.0043%
-     - true
      - 47567
-     - -5
      - ../../../weather/G1801250.epw
    * - IN, Porter County
      - 0.05%
-     - true
      - 46383
-     - -6
      - ../../../weather/G1801270.epw
    * - IN, Posey County
      - 0.0085%
-     - true
      - 47620
-     - -6
      - ../../../weather/G1801290.epw
    * - IN, Pulaski County
      - 0.0045%
-     - true
      - 46996
-     - -5
      - ../../../weather/G1801310.epw
    * - IN, Putnam County
      - 0.011%
-     - true
      - 46135
-     - -5
      - ../../../weather/G1801330.epw
    * - IN, Randolph County
      - 0.0087%
-     - true
      - 47394
-     - -5
      - ../../../weather/G1801350.epw
    * - IN, Ripley County
      - 0.009%
-     - true
      - 47006
-     - -5
      - ../../../weather/G1801370.epw
    * - IN, Rush County
      - 0.0056%
-     - true
      - 46173
-     - -5
      - ../../../weather/G1801390.epw
    * - IN, Scott County
      - 0.0078%
-     - true
      - 47170
-     - -5
      - ../../../weather/G1801430.epw
    * - IN, Shelby County
      - 0.014%
-     - true
      - 46176
-     - -5
      - ../../../weather/G1801450.epw
    * - IN, Spencer County
      - 0.0067%
-     - true
      - 47635
-     - -6
      - ../../../weather/G1801470.epw
    * - IN, St. Joseph County
      - 0.086%
-     - true
      - 46544
-     - -5
      - ../../../weather/G1801410.epw
    * - IN, Starke County
      - 0.0082%
-     - true
      - 46534
-     - -6
      - ../../../weather/G1801490.epw
    * - IN, Steuben County
      - 0.015%
-     - true
      - 46703
-     - -5
      - ../../../weather/G1801510.epw
    * - IN, Sullivan County
      - 0.0066%
-     - true
      - 47882
-     - -5
      - ../../../weather/G1801530.epw
    * - IN, Switzerland County
      - 0.0038%
-     - true
      - 47043
-     - -5
      - ../../../weather/G1801550.epw
    * - IN, Tippecanoe County
      - 0.055%
-     - true
      - 47906
-     - -5
      - ../../../weather/G1801570.epw
    * - IN, Tipton County
      - 0.0052%
-     - true
      - 46072
-     - -5
      - ../../../weather/G1801590.epw
    * - IN, Union County
      - 0.0024%
-     - true
      - 47353
-     - -5
      - ../../../weather/G1801610.epw
    * - IN, Vanderburgh County
      - 0.062%
-     - true
      - 47714
-     - -6
      - ../../../weather/G1801630.epw
    * - IN, Vermillion County
      - 0.0056%
-     - true
      - 47842
-     - -5
      - ../../../weather/G1801650.epw
    * - IN, Vigo County
      - 0.035%
-     - true
      - 47802
-     - -5
      - ../../../weather/G1801670.epw
    * - IN, Wabash County
      - 0.011%
-     - true
      - 46992
-     - -5
      - ../../../weather/G1801690.epw
    * - IN, Warren County
      - 0.0027%
-     - true
      - 47993
-     - -5
      - ../../../weather/G1801710.epw
    * - IN, Warrick County
      - 0.019%
-     - true
      - 47630
-     - -6
      - ../../../weather/G1801730.epw
    * - IN, Washington County
      - 0.0091%
-     - true
      - 47167
-     - -5
      - ../../../weather/G1801750.epw
    * - IN, Wayne County
      - 0.023%
-     - true
      - 47374
-     - -5
      - ../../../weather/G1801770.epw
    * - IN, Wells County
      - 0.0087%
-     - true
      - 46714
-     - -5
      - ../../../weather/G1801790.epw
    * - IN, White County
      - 0.0097%
-     - true
      - 47960
-     - -5
      - ../../../weather/G1801810.epw
    * - IN, Whitley County
      - 0.011%
-     - true
      - 46725
-     - -5
      - ../../../weather/G1801830.epw
    * - KS, Allen County
      - 0.0047%
-     - true
      - 66749
-     - -6
      - ../../../weather/G2000010.epw
    * - KS, Anderson County
      - 0.0028%
-     - true
      - 66032
-     - -6
      - ../../../weather/G2000030.epw
    * - KS, Atchison County
      - 0.0052%
-     - true
      - 66002
-     - -6
      - ../../../weather/G2000050.epw
    * - KS, Barber County
      - 0.0021%
-     - true
      - 67104
-     - -6
      - ../../../weather/G2000070.epw
    * - KS, Barton County
      - 0.0094%
-     - true
      - 67530
-     - -6
      - ../../../weather/G2000090.epw
    * - KS, Bourbon County
      - 0.0053%
-     - true
      - 66701
-     - -6
      - ../../../weather/G2000110.epw
    * - KS, Brown County
      - 0.0035%
-     - true
      - 66434
-     - -6
      - ../../../weather/G2000130.epw
    * - KS, Butler County
      - 0.02%
-     - true
      - 67042
-     - -6
      - ../../../weather/G2000150.epw
    * - KS, Chase County
      - 0.0011%
-     - true
      - 66845
-     - -6
      - ../../../weather/G2000170.epw
    * - KS, Chautauqua County
      - 0.0016%
-     - true
      - 67361
-     - -6
      - ../../../weather/G2000190.epw
    * - KS, Cherokee County
      - 0.0073%
-     - true
      - 66713
-     - -6
      - ../../../weather/G2000210.epw
    * - KS, Cheyenne County
      - 0.0011%
-     - true
      - 67756
-     - -6
      - ../../../weather/G2000230.epw
    * - KS, Clark County
      - 0.00086%
-     - true
      - 67865
-     - -6
      - ../../../weather/G2000250.epw
    * - KS, Clay County
      - 0.003%
-     - true
      - 67432
-     - -6
      - ../../../weather/G2000270.epw
    * - KS, Cloud County
      - 0.0035%
-     - true
      - 66901
-     - -6
      - ../../../weather/G2000290.epw
    * - KS, Coffey County
      - 0.003%
-     - true
      - 66839
-     - -6
      - ../../../weather/G2000310.epw
    * - KS, Comanche County
      - 0.00075%
-     - true
      - 67029
-     - -6
      - ../../../weather/G2000330.epw
    * - KS, Cowley County
      - 0.012%
-     - true
      - 67005
-     - -6
      - ../../../weather/G2000350.epw
    * - KS, Crawford County
      - 0.013%
-     - true
      - 66762
-     - -6
      - ../../../weather/G2000370.epw
    * - KS, Decatur County
      - 0.0013%
-     - true
      - 67749
-     - -6
      - ../../../weather/G2000390.epw
    * - KS, Dickinson County
      - 0.0068%
-     - true
      - 67410
-     - -6
      - ../../../weather/G2000410.epw
    * - KS, Doniphan County
      - 0.0026%
-     - true
      - 66090
-     - -6
      - ../../../weather/G2000430.epw
    * - KS, Douglas County
      - 0.036%
-     - true
      - 66049
-     - -6
      - ../../../weather/G2000450.epw
    * - KS, Edwards County
      - 0.0012%
-     - true
      - 67547
-     - -6
      - ../../../weather/G2000470.epw
    * - KS, Elk County
      - 0.0013%
-     - true
      - 67349
-     - -6
      - ../../../weather/G2000490.epw
    * - KS, Ellis County
      - 0.0097%
-     - true
      - 67601
-     - -6
      - ../../../weather/G2000510.epw
    * - KS, Ellsworth County
      - 0.0024%
-     - true
      - 67439
-     - -6
      - ../../../weather/G2000530.epw
    * - KS, Finney County
      - 0.0099%
-     - true
      - 67846
-     - -6
      - ../../../weather/G2000550.epw
    * - KS, Ford County
      - 0.009%
-     - true
      - 67801
-     - -6
      - ../../../weather/G2000570.epw
    * - KS, Franklin County
      - 0.0083%
-     - true
      - 66067
-     - -6
      - ../../../weather/G2000590.epw
    * - KS, Geary County
      - 0.011%
-     - true
      - 66441
-     - -6
      - ../../../weather/G2000610.epw
    * - KS, Gove County
      - 0.001%
-     - true
      - 67752
-     - -6
      - ../../../weather/G2000630.epw
    * - KS, Graham County
      - 0.0011%
-     - true
      - 67642
-     - -6
      - ../../../weather/G2000650.epw
    * - KS, Grant County
      - 0.0022%
-     - true
      - 67880
-     - -6
      - ../../../weather/G2000670.epw
    * - KS, Gray County
      - 0.0018%
-     - true
      - 67867
-     - -6
      - ../../../weather/G2000690.epw
    * - KS, Greeley County
      - 0.00046%
-     - true
      - 67879
-     - -7
      - ../../../weather/G2000710.epw
    * - KS, Greenwood County
      - 0.003%
-     - true
      - 67045
-     - -6
      - ../../../weather/G2000730.epw
    * - KS, Hamilton County
      - 0.00082%
-     - true
      - 67878
-     - -7
      - ../../../weather/G2000750.epw
    * - KS, Harper County
      - 0.0024%
-     - true
      - 67003
-     - -6
      - ../../../weather/G2000770.epw
    * - KS, Harvey County
      - 0.011%
-     - true
      - 67114
-     - -6
      - ../../../weather/G2000790.epw
    * - KS, Haskell County
      - 0.0012%
-     - true
      - 67877
-     - -6
      - ../../../weather/G2000810.epw
    * - KS, Hodgeman County
      - 0.00078%
-     - true
      - 67854
-     - -6
      - ../../../weather/G2000830.epw
    * - KS, Jackson County
      - 0.0043%
-     - true
      - 66436
-     - -6
      - ../../../weather/G2000850.epw
    * - KS, Jefferson County
      - 0.0061%
-     - true
      - 66512
-     - -6
      - ../../../weather/G2000870.epw
    * - KS, Jewell County
      - 0.0015%
-     - true
      - 66956
-     - -6
      - ../../../weather/G2000890.epw
    * - KS, Johnson County
      - 0.17%
-     - true
      - 66062
-     - -6
      - ../../../weather/G2000910.epw
    * - KS, Kearny County
      - 0.0012%
-     - true
      - 67860
-     - -6
      - ../../../weather/G2000930.epw
    * - KS, Kingman County
      - 0.0028%
-     - true
      - 67068
-     - -6
      - ../../../weather/G2000950.epw
    * - KS, Kiowa County
      - 0.00091%
-     - true
      - 67054
-     - -6
      - ../../../weather/G2000970.epw
    * - KS, Labette County
      - 0.0075%
-     - true
      - 67357
-     - -6
      - ../../../weather/G2000990.epw
    * - KS, Lane County
      - 0.00073%
-     - true
      - 67839
-     - -6
      - ../../../weather/G2001010.epw
    * - KS, Leavenworth County
      - 0.022%
-     - true
      - 66048
-     - -6
      - ../../../weather/G2001030.epw
    * - KS, Lincoln County
      - 0.0014%
-     - true
      - 67455
-     - -6
      - ../../../weather/G2001050.epw
    * - KS, Linn County
      - 0.0041%
-     - true
      - 66040
-     - -6
      - ../../../weather/G2001070.epw
    * - KS, Logan County
      - 0.0011%
-     - true
      - 67748
-     - -6
      - ../../../weather/G2001090.epw
    * - KS, Lyon County
      - 0.011%
-     - true
      - 66801
-     - -6
      - ../../../weather/G2001110.epw
    * - KS, Marion County
      - 0.0044%
-     - true
      - 67063
-     - -6
      - ../../../weather/G2001150.epw
    * - KS, Marshall County
      - 0.0037%
-     - true
      - 66508
-     - -6
      - ../../../weather/G2001170.epw
    * - KS, McPherson County
      - 0.0096%
-     - true
      - 67460
-     - -6
      - ../../../weather/G2001130.epw
    * - KS, Meade County
      - 0.0015%
-     - true
      - 67864
-     - -6
      - ../../../weather/G2001190.epw
    * - KS, Miami County
      - 0.0099%
-     - true
      - 66071
-     - -6
      - ../../../weather/G2001210.epw
    * - KS, Mitchell County
      - 0.0025%
-     - true
      - 67420
-     - -6
      - ../../../weather/G2001230.epw
    * - KS, Montgomery County
      - 0.012%
-     - true
      - 67301
-     - -6
      - ../../../weather/G2001250.epw
    * - KS, Morris County
      - 0.0024%
-     - true
      - 66846
-     - -6
      - ../../../weather/G2001270.epw
    * - KS, Morton County
      - 0.0011%
-     - true
      - 67950
-     - -6
      - ../../../weather/G2001290.epw
    * - KS, Nemaha County
      - 0.0034%
-     - true
      - 66538
-     - -6
      - ../../../weather/G2001310.epw
    * - KS, Neosho County
      - 0.0057%
-     - true
      - 66720
-     - -6
      - ../../../weather/G2001330.epw
    * - KS, Ness County
      - 0.0013%
-     - true
      - 67560
-     - -6
      - ../../../weather/G2001350.epw
    * - KS, Norton County
      - 0.0019%
-     - true
      - 67654
-     - -6
      - ../../../weather/G2001370.epw
    * - KS, Osage County
      - 0.0056%
-     - true
      - 66523
-     - -6
      - ../../../weather/G2001390.epw
    * - KS, Osborne County
      - 0.0016%
-     - true
      - 67473
-     - -6
      - ../../../weather/G2001410.epw
    * - KS, Ottawa County
      - 0.0021%
-     - true
      - 67467
-     - -6
      - ../../../weather/G2001430.epw
    * - KS, Pawnee County
      - 0.0023%
-     - true
      - 67550
-     - -6
      - ../../../weather/G2001450.epw
    * - KS, Phillips County
      - 0.0023%
-     - true
      - 67661
-     - -6
      - ../../../weather/G2001470.epw
    * - KS, Pottawatomie County
      - 0.0068%
-     - true
      - 66547
-     - -6
      - ../../../weather/G2001490.epw
    * - KS, Pratt County
      - 0.0033%
-     - true
      - 67124
-     - -6
      - ../../../weather/G2001510.epw
    * - KS, Rawlins County
      - 0.0011%
-     - true
      - 67730
-     - -6
      - ../../../weather/G2001530.epw
    * - KS, Reno County
      - 0.021%
-     - true
      - 67501
-     - -6
      - ../../../weather/G2001550.epw
    * - KS, Republic County
      - 0.0022%
-     - true
      - 66935
-     - -6
      - ../../../weather/G2001570.epw
    * - KS, Rice County
      - 0.0034%
-     - true
      - 67554
-     - -6
      - ../../../weather/G2001590.epw
    * - KS, Riley County
      - 0.022%
-     - true
      - 66502
-     - -6
      - ../../../weather/G2001610.epw
    * - KS, Rooks County
      - 0.0021%
-     - true
      - 67663
-     - -6
      - ../../../weather/G2001630.epw
    * - KS, Rush County
      - 0.0013%
-     - true
      - 67548
-     - -6
      - ../../../weather/G2001650.epw
    * - KS, Russell County
      - 0.0029%
-     - true
      - 67665
-     - -6
      - ../../../weather/G2001670.epw
    * - KS, Saline County
      - 0.018%
-     - true
      - 67401
-     - -6
      - ../../../weather/G2001690.epw
    * - KS, Scott County
      - 0.0017%
-     - true
      - 67871
-     - -6
      - ../../../weather/G2001710.epw
    * - KS, Sedgwick County
      - 0.16%
-     - true
      - 67212
-     - -6
      - ../../../weather/G2001730.epw
    * - KS, Seward County
      - 0.0061%
-     - true
      - 67901
-     - -6
      - ../../../weather/G2001750.epw
    * - KS, Shawnee County
      - 0.059%
-     - true
      - 66614
-     - -6
      - ../../../weather/G2001770.epw
    * - KS, Sheridan County
      - 0.00094%
-     - true
      - 67740
-     - -6
      - ../../../weather/G2001790.epw
    * - KS, Sherman County
      - 0.0023%
-     - true
      - 67735
-     - -7
      - ../../../weather/G2001810.epw
    * - KS, Smith County
      - 0.0017%
-     - true
      - 66967
-     - -6
      - ../../../weather/G2001830.epw
    * - KS, Stafford County
      - 0.0017%
-     - true
      - 67576
-     - -6
      - ../../../weather/G2001850.epw
    * - KS, Stanton County
      - 0.00082%
-     - true
      - 67855
-     - -6
      - ../../../weather/G2001870.epw
    * - KS, Stevens County
      - 0.0017%
-     - true
      - 67951
-     - -6
      - ../../../weather/G2001890.epw
    * - KS, Sumner County
      - 0.0081%
-     - true
      - 67152
-     - -6
      - ../../../weather/G2001910.epw
    * - KS, Thomas County
      - 0.0026%
-     - true
      - 67701
-     - -6
      - ../../../weather/G2001930.epw
    * - KS, Trego County
      - 0.0013%
-     - true
      - 67672
-     - -6
      - ../../../weather/G2001950.epw
    * - KS, Wabaunsee County
      - 0.0024%
-     - true
      - 66401
-     - -6
      - ../../../weather/G2001970.epw
    * - KS, Wallace County
      - 0.00059%
-     - true
      - 67758
-     - -7
      - ../../../weather/G2001990.epw
    * - KS, Washington County
      - 0.0022%
-     - true
      - 66968
-     - -6
      - ../../../weather/G2002010.epw
    * - KS, Wichita County
      - 0.00072%
-     - true
      - 67861
-     - -6
      - ../../../weather/G2002030.epw
    * - KS, Wilson County
      - 0.0035%
-     - true
      - 66736
-     - -6
      - ../../../weather/G2002050.epw
    * - KS, Woodson County
      - 0.0015%
-     - true
      - 66783
-     - -6
      - ../../../weather/G2002070.epw
    * - KS, Wyandotte County
      - 0.05%
-     - true
      - 66102
-     - -6
      - ../../../weather/G2002090.epw
    * - KY, Adair County
      - 0.0063%
-     - true
      - 42728
-     - -6
      - ../../../weather/G2100010.epw
    * - KY, Allen County
      - 0.007%
-     - true
      - 42164
-     - -6
      - ../../../weather/G2100030.epw
    * - KY, Anderson County
      - 0.0069%
-     - true
      - 40342
-     - -5
      - ../../../weather/G2100050.epw
    * - KY, Ballard County
      - 0.0029%
-     - true
      - 42053
-     - -6
      - ../../../weather/G2100070.epw
    * - KY, Barren County
      - 0.014%
-     - true
      - 42141
-     - -6
      - ../../../weather/G2100090.epw
    * - KY, Bath County
      - 0.004%
-     - true
      - 40360
-     - -5
      - ../../../weather/G2100110.epw
    * - KY, Bell County
      - 0.0098%
-     - true
      - 40965
-     - -5
      - ../../../weather/G2100130.epw
    * - KY, Boone County
      - 0.036%
-     - true
      - 41042
-     - -5
      - ../../../weather/G2100150.epw
    * - KY, Bourbon County
      - 0.0067%
-     - true
      - 40361
-     - -5
      - ../../../weather/G2100170.epw
    * - KY, Boyd County
      - 0.016%
-     - true
      - 41102
-     - -5
      - ../../../weather/G2100190.epw
    * - KY, Boyle County
      - 0.0092%
-     - true
      - 40422
-     - -5
      - ../../../weather/G2100210.epw
    * - KY, Bracken County
      - 0.0029%
-     - true
      - 41004
-     - -5
      - ../../../weather/G2100230.epw
    * - KY, Breathitt County
      - 0.0046%
-     - true
      - 41339
-     - -5
      - ../../../weather/G2100250.epw
    * - KY, Breckinridge County
      - 0.0079%
-     - true
      - 40143
-     - -6
      - ../../../weather/G2100270.epw
    * - KY, Bullitt County
      - 0.023%
-     - true
      - 40165
-     - -5
      - ../../../weather/G2100290.epw
    * - KY, Butler County
      - 0.0044%
-     - true
      - 42261
-     - -6
      - ../../../weather/G2100310.epw
    * - KY, Caldwell County
      - 0.0047%
-     - true
      - 42445
-     - -6
      - ../../../weather/G2100330.epw
    * - KY, Calloway County
      - 0.014%
-     - true
      - 42071
-     - -6
      - ../../../weather/G2100350.epw
    * - KY, Campbell County
      - 0.03%
-     - true
      - 41071
-     - -5
      - ../../../weather/G2100370.epw
    * - KY, Carlisle County
      - 0.0018%
-     - true
      - 42023
-     - -6
      - ../../../weather/G2100390.epw
    * - KY, Carroll County
      - 0.0035%
-     - true
      - 41008
-     - -5
      - ../../../weather/G2100410.epw
    * - KY, Carter County
      - 0.0092%
-     - true
      - 41143
-     - -5
      - ../../../weather/G2100430.epw
    * - KY, Casey County
      - 0.0055%
-     - true
      - 42539
-     - -5
      - ../../../weather/G2100450.epw
    * - KY, Christian County
      - 0.022%
-     - true
      - 42240
-     - -6
      - ../../../weather/G2100470.epw
    * - KY, Clark County
      - 0.012%
-     - true
      - 40391
-     - -5
      - ../../../weather/G2100490.epw
    * - KY, Clay County
      - 0.0066%
-     - true
      - 40962
-     - -5
      - ../../../weather/G2100510.epw
    * - KY, Clinton County
      - 0.0039%
-     - true
      - 42602
-     - -6
      - ../../../weather/G2100530.epw
    * - KY, Crittenden County
      - 0.0034%
-     - true
      - 42064
-     - -6
      - ../../../weather/G2100550.epw
    * - KY, Cumberland County
      - 0.0027%
-     - true
      - 42717
-     - -6
      - ../../../weather/G2100570.epw
    * - KY, Daviess County
      - 0.032%
-     - true
      - 42301
-     - -6
      - ../../../weather/G2100590.epw
    * - KY, Edmonson County
      - 0.0048%
-     - true
      - 42210
-     - -6
      - ../../../weather/G2100610.epw
    * - KY, Elliott County
      - 0.0025%
-     - true
      - 41171
-     - -5
      - ../../../weather/G2100630.epw
    * - KY, Estill County
      - 0.0051%
-     - true
      - 40336
-     - -5
      - ../../../weather/G2100650.epw
    * - KY, Fayette County
      - 0.1%
-     - true
      - 40509
-     - -5
      - ../../../weather/G2100670.epw
    * - KY, Fleming County
      - 0.0049%
-     - true
      - 41041
-     - -5
      - ../../../weather/G2100690.epw
    * - KY, Floyd County
      - 0.014%
-     - true
      - 41653
-     - -5
      - ../../../weather/G2100710.epw
    * - KY, Franklin County
      - 0.017%
-     - true
      - 40601
-     - -5
      - ../../../weather/G2100730.epw
    * - KY, Fulton County
      - 0.0025%
-     - true
      - 42041
-     - -6
      - ../../../weather/G2100750.epw
    * - KY, Gallatin County
      - 0.0029%
-     - true
      - 41095
-     - -5
      - ../../../weather/G2100770.epw
    * - KY, Garrard County
      - 0.0056%
-     - true
      - 40444
-     - -5
      - ../../../weather/G2100790.epw
    * - KY, Grant County
      - 0.0074%
-     - true
      - 41035
-     - -5
      - ../../../weather/G2100810.epw
    * - KY, Graves County
      - 0.012%
-     - true
      - 42066
-     - -6
      - ../../../weather/G2100830.epw
    * - KY, Grayson County
      - 0.01%
-     - true
      - 42754
-     - -6
      - ../../../weather/G2100850.epw
    * - KY, Green County
      - 0.0039%
-     - true
      - 42743
-     - -6
      - ../../../weather/G2100870.epw
    * - KY, Greenup County
      - 0.012%
-     - true
      - 41144
-     - -5
      - ../../../weather/G2100890.epw
    * - KY, Hancock County
      - 0.0028%
-     - true
      - 42348
-     - -6
      - ../../../weather/G2100910.epw
    * - KY, Hardin County
      - 0.034%
-     - true
      - 42701
-     - -5
      - ../../../weather/G2100930.epw
    * - KY, Harlan County
      - 0.01%
-     - true
      - 40831
-     - -5
      - ../../../weather/G2100950.epw
    * - KY, Harrison County
      - 0.0061%
-     - true
      - 41031
-     - -5
      - ../../../weather/G2100970.epw
    * - KY, Hart County
      - 0.0065%
-     - true
      - 42765
-     - -6
      - ../../../weather/G2100990.epw
    * - KY, Henderson County
      - 0.015%
-     - true
      - 42420
-     - -6
      - ../../../weather/G2101010.epw
    * - KY, Henry County
      - 0.005%
-     - true
      - 40019
-     - -5
      - ../../../weather/G2101030.epw
    * - KY, Hickman County
      - 0.0017%
-     - true
      - 42031
-     - -6
      - ../../../weather/G2101050.epw
    * - KY, Hopkins County
      - 0.016%
-     - true
      - 42431
-     - -6
      - ../../../weather/G2101070.epw
    * - KY, Jackson County
      - 0.0049%
-     - true
      - 40447
-     - -5
      - ../../../weather/G2101090.epw
    * - KY, Jefferson County
      - 0.25%
-     - true
      - 40214
-     - -5
      - ../../../weather/G2101110.epw
    * - KY, Jessamine County
      - 0.015%
-     - true
      - 40356
-     - -5
      - ../../../weather/G2101130.epw
    * - KY, Johnson County
      - 0.0079%
-     - true
      - 41240
-     - -5
      - ../../../weather/G2101150.epw
    * - KY, Kenton County
      - 0.052%
-     - true
      - 41017
-     - -5
      - ../../../weather/G2101170.epw
    * - KY, Knott County
      - 0.0056%
-     - true
      - 41822
-     - -5
      - ../../../weather/G2101190.epw
    * - KY, Knox County
      - 0.011%
-     - true
      - 40906
-     - -5
      - ../../../weather/G2101210.epw
    * - KY, Larue County
      - 0.0047%
-     - true
      - 42748
-     - -5
      - ../../../weather/G2101230.epw
    * - KY, Laurel County
      - 0.019%
-     - true
      - 40741
-     - -5
      - ../../../weather/G2101250.epw
    * - KY, Lawrence County
      - 0.0054%
-     - true
      - 41230
-     - -5
      - ../../../weather/G2101270.epw
    * - KY, Lee County
      - 0.0026%
-     - true
      - 41311
-     - -5
      - ../../../weather/G2101290.epw
    * - KY, Leslie County
      - 0.0039%
-     - true
      - 41749
-     - -5
      - ../../../weather/G2101310.epw
    * - KY, Letcher County
      - 0.0086%
-     - true
      - 41858
-     - -5
      - ../../../weather/G2101330.epw
    * - KY, Lewis County
      - 0.0048%
-     - true
      - 41179
-     - -5
      - ../../../weather/G2101350.epw
    * - KY, Lincoln County
      - 0.0081%
-     - true
      - 40484
-     - -5
      - ../../../weather/G2101370.epw
    * - KY, Livingston County
      - 0.0036%
-     - true
      - 42045
-     - -6
      - ../../../weather/G2101390.epw
    * - KY, Logan County
      - 0.0092%
-     - true
      - 42276
-     - -6
      - ../../../weather/G2101410.epw
    * - KY, Lyon County
      - 0.0036%
-     - true
      - 42038
-     - -6
      - ../../../weather/G2101430.epw
    * - KY, Madison County
      - 0.027%
-     - true
      - 40475
-     - -5
      - ../../../weather/G2101510.epw
    * - KY, Magoffin County
      - 0.0044%
-     - true
      - 41465
-     - -5
      - ../../../weather/G2101530.epw
    * - KY, Marion County
      - 0.0061%
-     - true
      - 40033
-     - -5
      - ../../../weather/G2101550.epw
    * - KY, Marshall County
      - 0.012%
-     - true
      - 42025
-     - -6
      - ../../../weather/G2101570.epw
    * - KY, Martin County
      - 0.0038%
-     - true
      - 41224
-     - -5
      - ../../../weather/G2101590.epw
    * - KY, Mason County
      - 0.0061%
-     - true
      - 41056
-     - -5
      - ../../../weather/G2101610.epw
    * - KY, McCracken County
      - 0.024%
-     - true
      - 42001
-     - -6
      - ../../../weather/G2101450.epw
    * - KY, McCreary County
      - 0.0055%
-     - true
      - 42653
-     - -5
      - ../../../weather/G2101470.epw
    * - KY, McLean County
      - 0.0032%
-     - true
      - 42327
-     - -6
      - ../../../weather/G2101490.epw
    * - KY, Meade County
      - 0.0091%
-     - true
      - 40108
-     - -5
      - ../../../weather/G2101630.epw
    * - KY, Menifee County
      - 0.0029%
-     - true
      - 40322
-     - -5
      - ../../../weather/G2101650.epw
    * - KY, Mercer County
      - 0.0075%
-     - true
      - 40330
-     - -5
      - ../../../weather/G2101670.epw
    * - KY, Metcalfe County
      - 0.0035%
-     - true
      - 42129
-     - -6
      - ../../../weather/G2101690.epw
    * - KY, Monroe County
      - 0.0039%
-     - true
      - 42167
-     - -6
      - ../../../weather/G2101710.epw
    * - KY, Montgomery County
      - 0.0088%
-     - true
      - 40353
-     - -5
      - ../../../weather/G2101730.epw
    * - KY, Morgan County
      - 0.0044%
-     - true
      - 41472
-     - -5
      - ../../../weather/G2101750.epw
    * - KY, Muhlenberg County
      - 0.01%
-     - true
      - 42345
-     - -6
      - ../../../weather/G2101770.epw
    * - KY, Nelson County
      - 0.014%
-     - true
      - 40004
-     - -5
      - ../../../weather/G2101790.epw
    * - KY, Nicholas County
      - 0.0024%
-     - true
      - 40311
-     - -5
      - ../../../weather/G2101810.epw
    * - KY, Ohio County
      - 0.0076%
-     - true
      - 42320
-     - -6
      - ../../../weather/G2101830.epw
    * - KY, Oldham County
      - 0.016%
-     - true
      - 40014
-     - -5
      - ../../../weather/G2101850.epw
    * - KY, Owen County
      - 0.0042%
-     - true
      - 40359
-     - -5
      - ../../../weather/G2101870.epw
    * - KY, Owsley County
      - 0.0016%
-     - true
      - 41314
-     - -5
      - ../../../weather/G2101890.epw
    * - KY, Pendleton County
      - 0.0047%
-     - true
      - 41040
-     - -5
      - ../../../weather/G2101910.epw
    * - KY, Perry County
      - 0.0095%
-     - true
      - 41701
-     - -5
      - ../../../weather/G2101930.epw
    * - KY, Pike County
      - 0.023%
-     - true
      - 41501
-     - -5
      - ../../../weather/G2101950.epw
    * - KY, Powell County
      - 0.0042%
-     - true
      - 40380
-     - -5
      - ../../../weather/G2101970.epw
    * - KY, Pulaski County
      - 0.023%
-     - true
      - 42503
-     - -5
      - ../../../weather/G2101990.epw
    * - KY, Robertson County
      - 0.00086%
-     - true
      - 41064
-     - -5
      - ../../../weather/G2102010.epw
    * - KY, Rockcastle County
      - 0.0057%
-     - true
      - 40456
-     - -5
      - ../../../weather/G2102030.epw
    * - KY, Rowan County
      - 0.0076%
-     - true
      - 40351
-     - -5
      - ../../../weather/G2102050.epw
    * - KY, Russell County
      - 0.0074%
-     - true
      - 42642
-     - -6
      - ../../../weather/G2102070.epw
    * - KY, Scott County
      - 0.015%
-     - true
      - 40324
-     - -5
      - ../../../weather/G2102090.epw
    * - KY, Shelby County
      - 0.013%
-     - true
      - 40065
-     - -5
      - ../../../weather/G2102110.epw
    * - KY, Simpson County
      - 0.0056%
-     - true
      - 42134
-     - -6
      - ../../../weather/G2102130.epw
    * - KY, Spencer County
      - 0.0052%
-     - true
      - 40071
-     - -5
      - ../../../weather/G2102150.epw
    * - KY, Taylor County
      - 0.0082%
-     - true
      - 42718
-     - -5
      - ../../../weather/G2102170.epw
    * - KY, Todd County
      - 0.0039%
-     - true
      - 42220
-     - -6
      - ../../../weather/G2102190.epw
    * - KY, Trigg County
      - 0.0058%
-     - true
      - 42211
-     - -6
      - ../../../weather/G2102210.epw
    * - KY, Trimble County
      - 0.0029%
-     - true
      - 40006
-     - -5
      - ../../../weather/G2102230.epw
    * - KY, Union County
      - 0.0046%
-     - true
      - 42437
-     - -6
      - ../../../weather/G2102250.epw
    * - KY, Warren County
      - 0.037%
-     - true
      - 42101
-     - -6
      - ../../../weather/G2102270.epw
    * - KY, Washington County
      - 0.0038%
-     - true
      - 40069
-     - -5
      - ../../../weather/G2102290.epw
    * - KY, Wayne County
      - 0.0081%
-     - true
      - 42633
-     - -5
      - ../../../weather/G2102310.epw
    * - KY, Webster County
      - 0.0044%
-     - true
      - 42450
-     - -6
      - ../../../weather/G2102330.epw
    * - KY, Whitley County
      - 0.011%
-     - true
      - 40769
-     - -5
      - ../../../weather/G2102350.epw
    * - KY, Wolfe County
      - 0.0027%
-     - true
      - 41301
-     - -5
      - ../../../weather/G2102370.epw
    * - KY, Woodford County
      - 0.0082%
-     - true
      - 40383
-     - -5
      - ../../../weather/G2102390.epw
    * - LA, Acadia Parish
      - 0.019%
-     - true
      - 70526
-     - -6
      - ../../../weather/G2200010.epw
    * - LA, Allen Parish
      - 0.0073%
-     - true
      - 71463
-     - -6
      - ../../../weather/G2200030.epw
    * - LA, Ascension Parish
      - 0.033%
-     - true
      - 70737
-     - -6
      - ../../../weather/G2200050.epw
    * - LA, Assumption Parish
      - 0.0078%
-     - true
      - 70339
-     - -6
      - ../../../weather/G2200070.epw
    * - LA, Avoyelles Parish
      - 0.014%
-     - true
      - 71351
-     - -6
      - ../../../weather/G2200090.epw
    * - LA, Beauregard Parish
      - 0.011%
-     - true
      - 70634
-     - -6
      - ../../../weather/G2200110.epw
    * - LA, Bienville Parish
      - 0.0058%
-     - true
      - 71001
-     - -6
      - ../../../weather/G2200130.epw
    * - LA, Bossier Parish
      - 0.04%
-     - true
      - 71111
-     - -6
      - ../../../weather/G2200150.epw
    * - LA, Caddo Parish
      - 0.084%
-     - true
      - 71106
-     - -6
      - ../../../weather/G2200170.epw
    * - LA, Calcasieu Parish
      - 0.064%
-     - true
      - 70605
-     - -6
      - ../../../weather/G2200190.epw
    * - LA, Caldwell Parish
      - 0.0038%
-     - true
      - 71418
-     - -6
      - ../../../weather/G2200210.epw
    * - LA, Cameron Parish
      - 0.0027%
-     - true
      - 70607
-     - -6
      - ../../../weather/G2200230.epw
    * - LA, Catahoula Parish
      - 0.0037%
-     - true
      - 71343
-     - -6
      - ../../../weather/G2200250.epw
    * - LA, Claiborne Parish
      - 0.0058%
-     - true
      - 71040
-     - -6
      - ../../../weather/G2200270.epw
    * - LA, Concordia Parish
      - 0.007%
-     - true
      - 71334
-     - -6
      - ../../../weather/G2200290.epw
    * - LA, De Soto Parish
      - 0.0093%
-     - true
      - 71052
-     - -6
      - ../../../weather/G2200310.epw
    * - LA, East Baton Rouge Parish
      - 0.14%
-     - true
      - 70816
-     - -6
      - ../../../weather/G2200330.epw
    * - LA, East Carroll Parish
      - 0.0023%
-     - true
      - 71254
-     - -6
      - ../../../weather/G2200350.epw
    * - LA, East Feliciana Parish
      - 0.0061%
-     - true
      - 70722
-     - -6
      - ../../../weather/G2200370.epw
    * - LA, Evangeline Parish
      - 0.011%
-     - true
      - 70586
-     - -6
      - ../../../weather/G2200390.epw
    * - LA, Franklin Parish
      - 0.0068%
-     - true
      - 71295
-     - -6
      - ../../../weather/G2200410.epw
    * - LA, Grant Parish
      - 0.0067%
-     - true
      - 71467
-     - -6
      - ../../../weather/G2200430.epw
    * - LA, Iberia Parish
      - 0.022%
-     - true
      - 70560
-     - -6
      - ../../../weather/G2200450.epw
    * - LA, Iberville Parish
      - 0.0097%
-     - true
      - 70764
-     - -6
      - ../../../weather/G2200470.epw
    * - LA, Jackson Parish
      - 0.0058%
-     - true
      - 71251
-     - -6
      - ../../../weather/G2200490.epw
    * - LA, Jefferson Davis Parish
      - 0.01%
-     - true
      - 70546
-     - -6
      - ../../../weather/G2200530.epw
    * - LA, Jefferson Parish
      - 0.14%
-     - true
      - 70072
-     - -6
      - ../../../weather/G2200510.epw
    * - LA, La Salle Parish
      - 0.0049%
-     - true
      - 71342
-     - -6
      - ../../../weather/G2200590.epw
    * - LA, Lafayette Parish
      - 0.073%
-     - true
      - 70506
-     - -6
      - ../../../weather/G2200550.epw
    * - LA, Lafourche Parish
      - 0.03%
-     - true
      - 70301
-     - -6
      - ../../../weather/G2200570.epw
    * - LA, Lincoln Parish
      - 0.015%
-     - true
      - 71270
-     - -6
      - ../../../weather/G2200610.epw
    * - LA, Livingston Parish
      - 0.04%
-     - true
      - 70726
-     - -6
      - ../../../weather/G2200630.epw
    * - LA, Madison Parish
      - 0.0037%
-     - true
      - 71282
-     - -6
      - ../../../weather/G2200650.epw
    * - LA, Morehouse Parish
      - 0.0093%
-     - true
      - 71220
-     - -6
      - ../../../weather/G2200670.epw
    * - LA, Natchitoches Parish
      - 0.014%
-     - true
      - 71457
-     - -6
      - ../../../weather/G2200690.epw
    * - LA, Orleans Parish
      - 0.14%
-     - true
      - 70119
-     - -6
      - ../../../weather/G2200710.epw
    * - LA, Ouachita Parish
      - 0.049%
-     - true
      - 71203
-     - -6
      - ../../../weather/G2200730.epw
    * - LA, Plaquemines Parish
      - 0.0074%
-     - true
      - 70037
-     - -6
      - ../../../weather/G2200750.epw
    * - LA, Pointe Coupee Parish
      - 0.0084%
-     - true
      - 70760
-     - -6
      - ../../../weather/G2200770.epw
    * - LA, Rapides Parish
      - 0.043%
-     - true
      - 71360
-     - -6
      - ../../../weather/G2200790.epw
    * - LA, Red River Parish
      - 0.0031%
-     - true
      - 71019
-     - -6
      - ../../../weather/G2200810.epw
    * - LA, Richland Parish
      - 0.0066%
-     - true
      - 71269
-     - -6
      - ../../../weather/G2200830.epw
    * - LA, Sabine Parish
      - 0.011%
-     - true
      - 71449
-     - -6
      - ../../../weather/G2200850.epw
    * - LA, St. Bernard Parish
      - 0.013%
-     - true
      - 70043
-     - -6
      - ../../../weather/G2200870.epw
    * - LA, St. Charles Parish
      - 0.015%
-     - true
      - 70070
-     - -6
      - ../../../weather/G2200890.epw
    * - LA, St. Helena Parish
      - 0.0038%
-     - true
      - 70441
-     - -6
      - ../../../weather/G2200910.epw
    * - LA, St. James Parish
      - 0.0065%
-     - true
      - 70090
-     - -6
      - ../../../weather/G2200930.epw
    * - LA, St. John the Baptist Parish
      - 0.013%
-     - true
      - 70068
-     - -6
      - ../../../weather/G2200950.epw
    * - LA, St. Landry Parish
      - 0.027%
-     - true
      - 70570
-     - -6
      - ../../../weather/G2200970.epw
    * - LA, St. Martin Parish
      - 0.017%
-     - true
      - 70517
-     - -6
      - ../../../weather/G2200990.epw
    * - LA, St. Mary Parish
      - 0.017%
-     - true
      - 70380
-     - -6
      - ../../../weather/G2201010.epw
    * - LA, St. Tammany Parish
      - 0.074%
-     - true
      - 70433
-     - -6
      - ../../../weather/G2201030.epw
    * - LA, Tangipahoa Parish
      - 0.039%
-     - true
      - 70454
-     - -6
      - ../../../weather/G2201050.epw
    * - LA, Tensas Parish
      - 0.0025%
-     - true
      - 71366
-     - -6
      - ../../../weather/G2201070.epw
    * - LA, Terrebonne Parish
      - 0.033%
-     - true
      - 70360
-     - -6
      - ../../../weather/G2201090.epw
    * - LA, Union Parish
      - 0.0085%
-     - true
      - 71241
-     - -6
      - ../../../weather/G2201110.epw
    * - LA, Vermilion Parish
      - 0.019%
-     - true
      - 70510
-     - -6
      - ../../../weather/G2201130.epw
    * - LA, Vernon Parish
      - 0.016%
-     - true
      - 71446
-     - -6
      - ../../../weather/G2201150.epw
    * - LA, Washington Parish
      - 0.016%
-     - true
      - 70427
-     - -6
      - ../../../weather/G2201170.epw
    * - LA, Webster Parish
      - 0.014%
-     - true
      - 71055
-     - -6
      - ../../../weather/G2201190.epw
    * - LA, West Baton Rouge Parish
      - 0.0075%
-     - true
      - 70767
-     - -6
      - ../../../weather/G2201210.epw
    * - LA, West Carroll Parish
      - 0.0038%
-     - true
      - 71263
-     - -6
      - ../../../weather/G2201230.epw
    * - LA, West Feliciana Parish
      - 0.0039%
-     - true
      - 70775
-     - -6
      - ../../../weather/G2201250.epw
    * - LA, Winn Parish
      - 0.0054%
-     - true
      - 71483
-     - -6
      - ../../../weather/G2201270.epw
    * - MA, Barnstable County
      - 0.12%
-     - true
      - 02536
-     - -5
      - ../../../weather/G2500010.epw
    * - MA, Berkshire County
      - 0.051%
-     - true
      - 01201
-     - -5
      - ../../../weather/G2500030.epw
    * - MA, Bristol County
      - 0.17%
-     - true
      - 02780
-     - -5
      - ../../../weather/G2500050.epw
    * - MA, Dukes County
      - 0.013%
-     - true
      - 02568
-     - -5
      - ../../../weather/G2500070.epw
    * - MA, Essex County
      - 0.23%
-     - true
      - 01960
-     - -5
      - ../../../weather/G2500090.epw
    * - MA, Franklin County
      - 0.025%
-     - true
      - 01301
-     - -5
      - ../../../weather/G2500110.epw
    * - MA, Hampden County
      - 0.14%
-     - true
      - 01085
-     - -5
      - ../../../weather/G2500130.epw
    * - MA, Hampshire County
      - 0.047%
-     - true
      - 01002
-     - -5
      - ../../../weather/G2500150.epw
    * - MA, Middlesex County
      - 0.46%
-     - true
      - 02148
-     - -5
      - ../../../weather/G2500170.epw
    * - MA, Nantucket County
      - 0.0088%
-     - true
      - 02554
-     - -5
      - ../../../weather/G2500190.epw
    * - MA, Norfolk County
      - 0.2%
-     - true
      - 02169
-     - -5
      - ../../../weather/G2500210.epw
    * - MA, Plymouth County
      - 0.15%
-     - true
      - 02360
-     - -5
      - ../../../weather/G2500230.epw
    * - MA, Suffolk County
      - 0.24%
-     - true
      - 02151
-     - -5
      - ../../../weather/G2500250.epw
    * - MA, Worcester County
      - 0.25%
-     - true
      - 01453
-     - -5
      - ../../../weather/G2500270.epw
    * - MD, Allegany County
      - 0.025%
-     - true
      - 21502
-     - -5
      - ../../../weather/G2400010.epw
    * - MD, Anne Arundel County
      - 0.16%
-     - true
      - 21122
-     - -5
      - ../../../weather/G2400030.epw
    * - MD, Baltimore city
      - 0.22%
-     - true
      - 21215
-     - -5
      - ../../../weather/G2405100.epw
    * - MD, Baltimore County
      - 0.25%
-     - true
      - 21117
-     - -5
      - ../../../weather/G2400050.epw
    * - MD, Calvert County
      - 0.026%
-     - true
      - 20657
-     - -5
      - ../../../weather/G2400090.epw
    * - MD, Caroline County
      - 0.01%
-     - true
      - 21629
-     - -5
      - ../../../weather/G2400110.epw
    * - MD, Carroll County
      - 0.047%
-     - true
      - 21157
-     - -5
      - ../../../weather/G2400130.epw
    * - MD, Cecil County
      - 0.032%
-     - true
      - 21921
-     - -5
      - ../../../weather/G2400150.epw
    * - MD, Charles County
      - 0.043%
-     - true
      - 20603
-     - -5
      - ../../../weather/G2400170.epw
    * - MD, Dorchester County
      - 0.012%
-     - true
      - 21613
-     - -5
      - ../../../weather/G2400190.epw
    * - MD, Frederick County
      - 0.07%
-     - true
      - 21702
-     - -5
      - ../../../weather/G2400210.epw
    * - MD, Garrett County
      - 0.014%
-     - true
      - 21550
-     - -5
      - ../../../weather/G2400230.epw
    * - MD, Harford County
      - 0.073%
-     - true
      - 21014
-     - -5
      - ../../../weather/G2400250.epw
    * - MD, Howard County
      - 0.086%
-     - true
      - 21044
-     - -5
      - ../../../weather/G2400270.epw
    * - MD, Kent County
      - 0.008%
-     - true
      - 21620
-     - -5
      - ../../../weather/G2400290.epw
    * - MD, Montgomery County
      - 0.29%
-     - true
      - 20906
-     - -5
      - ../../../weather/G2400310.epw
    * - MD, Prince George's County
      - 0.25%
-     - true
      - 20774
-     - -5
      - ../../../weather/G2400330.epw
    * - MD, Queen Anne's County
      - 0.015%
-     - true
      - 21666
-     - -5
      - ../../../weather/G2400350.epw
    * - MD, Somerset County
      - 0.0084%
-     - true
      - 21853
-     - -5
      - ../../../weather/G2400390.epw
    * - MD, St. Mary's County
      - 0.032%
-     - true
      - 20653
-     - -5
      - ../../../weather/G2400370.epw
    * - MD, Talbot County
      - 0.015%
-     - true
      - 21601
-     - -5
      - ../../../weather/G2400410.epw
    * - MD, Washington County
      - 0.046%
-     - true
      - 21740
-     - -5
      - ../../../weather/G2400430.epw
    * - MD, Wicomico County
      - 0.031%
-     - true
      - 21804
-     - -5
      - ../../../weather/G2400450.epw
    * - MD, Worcester County
      - 0.042%
-     - true
      - 21842
-     - -5
      - ../../../weather/G2400470.epw
    * - ME, Androscoggin County
      - 0.037%
-     - true
      - 04240
-     - -5
      - ../../../weather/G2300010.epw
    * - ME, Aroostook County
      - 0.029%
-     - true
      - 04769
-     - -5
      - ../../../weather/G2300030.epw
    * - ME, Cumberland County
      - 0.1%
-     - true
      - 04103
-     - -5
      - ../../../weather/G2300050.epw
    * - ME, Franklin County
      - 0.016%
-     - true
      - 04938
-     - -5
      - ../../../weather/G2300070.epw
    * - ME, Hancock County
      - 0.03%
-     - true
      - 04605
-     - -5
      - ../../../weather/G2300090.epw
    * - ME, Kennebec County
      - 0.046%
-     - true
      - 04901
-     - -5
      - ../../../weather/G2300110.epw
    * - ME, Knox County
      - 0.018%
-     - true
      - 04841
-     - -5
      - ../../../weather/G2300130.epw
    * - ME, Lincoln County
      - 0.018%
-     - true
      - 04572
-     - -5
      - ../../../weather/G2300150.epw
    * - ME, Oxford County
      - 0.027%
-     - true
      - 04276
-     - -5
      - ../../../weather/G2300170.epw
    * - ME, Penobscot County
      - 0.055%
-     - true
      - 04401
-     - -5
      - ../../../weather/G2300190.epw
    * - ME, Piscataquis County
      - 0.011%
-     - true
      - 04426
-     - -5
      - ../../../weather/G2300210.epw
    * - ME, Sagadahoc County
      - 0.014%
-     - true
      - 04530
-     - -5
      - ../../../weather/G2300230.epw
    * - ME, Somerset County
      - 0.023%
-     - true
      - 04976
-     - -5
      - ../../../weather/G2300250.epw
    * - ME, Waldo County
      - 0.016%
-     - true
      - 04915
-     - -5
      - ../../../weather/G2300270.epw
    * - ME, Washington County
      - 0.017%
-     - true
      - 04654
-     - -5
      - ../../../weather/G2300290.epw
    * - ME, York County
      - 0.08%
-     - true
      - 04005
-     - -5
      - ../../../weather/G2300310.epw
    * - MI, Alcona County
      - 0.0082%
-     - true
      - 48740
-     - -5
      - ../../../weather/G2600010.epw
    * - MI, Alger County
      - 0.0049%
-     - true
      - 49862
-     - -5
      - ../../../weather/G2600030.epw
    * - MI, Allegan County
      - 0.037%
-     - true
      - 49010
-     - -5
      - ../../../weather/G2600050.epw
    * - MI, Alpena County
      - 0.012%
-     - true
      - 49707
-     - -5
      - ../../../weather/G2600070.epw
    * - MI, Antrim County
      - 0.013%
-     - true
      - 49615
-     - -5
      - ../../../weather/G2600090.epw
    * - MI, Arenac County
      - 0.0073%
-     - true
      - 48658
-     - -5
      - ../../../weather/G2600110.epw
    * - MI, Baraga County
      - 0.0039%
-     - true
      - 49946
-     - -5
      - ../../../weather/G2600130.epw
    * - MI, Barry County
      - 0.02%
-     - true
      - 49058
-     - -5
      - ../../../weather/G2600150.epw
    * - MI, Bay County
      - 0.036%
-     - true
      - 48706
-     - -5
      - ../../../weather/G2600170.epw
    * - MI, Benzie County
      - 0.0092%
-     - true
      - 49635
-     - -5
      - ../../../weather/G2600190.epw
    * - MI, Berrien County
      - 0.057%
-     - true
      - 49022
-     - -5
      - ../../../weather/G2600210.epw
    * - MI, Branch County
      - 0.015%
-     - true
      - 49036
-     - -5
      - ../../../weather/G2600230.epw
    * - MI, Calhoun County
      - 0.045%
-     - true
      - 49015
-     - -5
      - ../../../weather/G2600250.epw
    * - MI, Cass County
      - 0.019%
-     - true
      - 49047
-     - -5
      - ../../../weather/G2600270.epw
    * - MI, Charlevoix County
      - 0.013%
-     - true
      - 49720
-     - -5
      - ../../../weather/G2600290.epw
    * - MI, Cheboygan County
      - 0.014%
-     - true
      - 49721
-     - -5
      - ../../../weather/G2600310.epw
    * - MI, Chippewa County
      - 0.016%
-     - true
      - 49783
-     - -5
      - ../../../weather/G2600330.epw
    * - MI, Clare County
      - 0.017%
-     - true
      - 48625
-     - -5
      - ../../../weather/G2600350.epw
    * - MI, Clinton County
      - 0.023%
-     - true
      - 48820
-     - -5
      - ../../../weather/G2600370.epw
    * - MI, Crawford County
      - 0.0083%
-     - true
      - 49738
-     - -5
      - ../../../weather/G2600390.epw
    * - MI, Delta County
      - 0.015%
-     - true
      - 49829
-     - -5
      - ../../../weather/G2600410.epw
    * - MI, Dickinson County
      - 0.01%
-     - true
      - 49801
-     - -6
      - ../../../weather/G2600430.epw
    * - MI, Eaton County
      - 0.035%
-     - true
      - 48917
-     - -5
      - ../../../weather/G2600450.epw
    * - MI, Emmet County
      - 0.016%
-     - true
      - 49770
-     - -5
      - ../../../weather/G2600470.epw
    * - MI, Genesee County
      - 0.14%
-     - true
      - 48439
-     - -5
      - ../../../weather/G2600490.epw
    * - MI, Gladwin County
      - 0.013%
-     - true
      - 48624
-     - -5
      - ../../../weather/G2600510.epw
    * - MI, Gogebic County
      - 0.008%
-     - true
      - 49938
-     - -6
      - ../../../weather/G2600530.epw
    * - MI, Grand Traverse County
      - 0.032%
-     - true
      - 49686
-     - -5
      - ../../../weather/G2600550.epw
    * - MI, Gratiot County
      - 0.012%
-     - true
      - 48801
-     - -5
      - ../../../weather/G2600570.epw
    * - MI, Hillsdale County
      - 0.016%
-     - true
      - 49242
-     - -5
      - ../../../weather/G2600590.epw
    * - MI, Houghton County
      - 0.014%
-     - true
      - 49931
-     - -5
      - ../../../weather/G2600610.epw
    * - MI, Huron County
      - 0.016%
-     - true
      - 48413
-     - -5
      - ../../../weather/G2600630.epw
    * - MI, Ingham County
      - 0.091%
-     - true
      - 48823
-     - -5
      - ../../../weather/G2600650.epw
    * - MI, Ionia County
      - 0.018%
-     - true
      - 48846
-     - -5
      - ../../../weather/G2600670.epw
    * - MI, Iosco County
      - 0.015%
-     - true
      - 48750
-     - -5
      - ../../../weather/G2600690.epw
    * - MI, Iron County
      - 0.0069%
-     - true
      - 49935
-     - -6
      - ../../../weather/G2600710.epw
    * - MI, Isabella County
      - 0.021%
-     - true
      - 48858
-     - -5
      - ../../../weather/G2600730.epw
    * - MI, Jackson County
      - 0.052%
-     - true
      - 49201
-     - -5
      - ../../../weather/G2600750.epw
    * - MI, Kalamazoo County
      - 0.083%
-     - true
      - 49009
-     - -5
      - ../../../weather/G2600770.epw
    * - MI, Kalkaska County
      - 0.009%
-     - true
      - 49646
-     - -5
      - ../../../weather/G2600790.epw
    * - MI, Kent County
      - 0.19%
-     - true
      - 49503
-     - -5
      - ../../../weather/G2600810.epw
    * - MI, Keweenaw County
      - 0.0018%
-     - true
      - 49950
-     - -5
      - ../../../weather/G2600830.epw
    * - MI, Lake County
      - 0.011%
-     - true
      - 49304
-     - -5
      - ../../../weather/G2600850.epw
    * - MI, Lapeer County
      - 0.027%
-     - true
      - 48446
-     - -5
      - ../../../weather/G2600870.epw
    * - MI, Leelanau County
      - 0.011%
-     - true
      - 49684
-     - -5
      - ../../../weather/G2600890.epw
    * - MI, Lenawee County
      - 0.032%
-     - true
      - 49221
-     - -5
      - ../../../weather/G2600910.epw
    * - MI, Livingston County
      - 0.056%
-     - true
      - 48843
-     - -5
      - ../../../weather/G2600930.epw
    * - MI, Luce County
      - 0.0032%
-     - true
      - 49868
-     - -5
      - ../../../weather/G2600950.epw
    * - MI, Mackinac County
      - 0.0082%
-     - true
      - 49781
-     - -5
      - ../../../weather/G2600970.epw
    * - MI, Macomb County
      - 0.27%
-     - true
      - 48038
-     - -5
      - ../../../weather/G2600990.epw
    * - MI, Manistee County
      - 0.012%
-     - true
      - 49660
-     - -5
      - ../../../weather/G2601010.epw
    * - MI, Marquette County
      - 0.026%
-     - true
      - 49855
-     - -5
      - ../../../weather/G2601030.epw
    * - MI, Mason County
      - 0.013%
-     - true
      - 49431
-     - -5
      - ../../../weather/G2601050.epw
    * - MI, Mecosta County
      - 0.016%
-     - true
      - 49307
-     - -5
      - ../../../weather/G2601070.epw
    * - MI, Menominee County
      - 0.011%
-     - true
      - 49858
-     - -6
      - ../../../weather/G2601090.epw
    * - MI, Midland County
      - 0.027%
-     - true
      - 48642
-     - -5
      - ../../../weather/G2601110.epw
    * - MI, Missaukee County
      - 0.0068%
-     - true
      - 49651
-     - -5
      - ../../../weather/G2601130.epw
    * - MI, Monroe County
      - 0.047%
-     - true
      - 48162
-     - -5
      - ../../../weather/G2601150.epw
    * - MI, Montcalm County
      - 0.021%
-     - true
      - 48838
-     - -5
      - ../../../weather/G2601170.epw
    * - MI, Montmorency County
      - 0.0071%
-     - true
      - 49709
-     - -5
      - ../../../weather/G2601190.epw
    * - MI, Muskegon County
      - 0.055%
-     - true
      - 49442
-     - -5
      - ../../../weather/G2601210.epw
    * - MI, Newaygo County
      - 0.019%
-     - true
      - 49337
-     - -5
      - ../../../weather/G2601230.epw
    * - MI, Oakland County
      - 0.4%
-     - true
      - 48307
-     - -5
      - ../../../weather/G2601250.epw
    * - MI, Oceana County
      - 0.012%
-     - true
      - 49420
-     - -5
      - ../../../weather/G2601270.epw
    * - MI, Ogemaw County
      - 0.012%
-     - true
      - 48661
-     - -5
      - ../../../weather/G2601290.epw
    * - MI, Ontonagon County
      - 0.0042%
-     - true
      - 49953
-     - -5
      - ../../../weather/G2601310.epw
    * - MI, Osceola County
      - 0.01%
-     - true
      - 49631
-     - -5
      - ../../../weather/G2601330.epw
    * - MI, Oscoda County
      - 0.0068%
-     - true
      - 48647
-     - -5
      - ../../../weather/G2601350.epw
    * - MI, Otsego County
      - 0.011%
-     - true
      - 49735
-     - -5
      - ../../../weather/G2601370.epw
    * - MI, Ottawa County
      - 0.078%
-     - true
      - 49424
-     - -5
      - ../../../weather/G2601390.epw
    * - MI, Presque Isle County
      - 0.0078%
-     - true
      - 49779
-     - -5
      - ../../../weather/G2601410.epw
    * - MI, Roscommon County
      - 0.018%
-     - true
      - 48629
-     - -5
      - ../../../weather/G2601430.epw
    * - MI, Saginaw County
      - 0.065%
-     - true
      - 48601
-     - -5
      - ../../../weather/G2601450.epw
    * - MI, Sanilac County
      - 0.017%
-     - true
      - 48450
-     - -5
      - ../../../weather/G2601510.epw
    * - MI, Schoolcraft County
      - 0.0047%
-     - true
      - 49854
-     - -5
      - ../../../weather/G2601530.epw
    * - MI, Shiawassee County
      - 0.022%
-     - true
      - 48867
-     - -5
      - ../../../weather/G2601550.epw
    * - MI, St. Clair County
      - 0.054%
-     - true
      - 48060
-     - -5
      - ../../../weather/G2601470.epw
    * - MI, St. Joseph County
      - 0.021%
-     - true
      - 49091
-     - -5
      - ../../../weather/G2601490.epw
    * - MI, Tuscola County
      - 0.018%
-     - true
      - 48723
-     - -5
      - ../../../weather/G2601570.epw
    * - MI, Van Buren County
      - 0.027%
-     - true
      - 49090
-     - -5
      - ../../../weather/G2601590.epw
    * - MI, Washtenaw County
      - 0.11%
-     - true
      - 48197
-     - -5
      - ../../../weather/G2601610.epw
    * - MI, Wayne County
      - 0.61%
-     - true
      - 48180
-     - -5
      - ../../../weather/G2601630.epw
    * - MI, Wexford County
      - 0.012%
-     - true
      - 49601
-     - -5
      - ../../../weather/G2601650.epw
    * - MN, Aitkin County
      - 0.012%
-     - true
      - 56431
-     - -6
      - ../../../weather/G2700010.epw
    * - MN, Anoka County
      - 0.096%
-     - true
      - 55303
-     - -6
      - ../../../weather/G2700030.epw
    * - MN, Becker County
      - 0.014%
-     - true
      - 56501
-     - -6
      - ../../../weather/G2700050.epw
    * - MN, Beltrami County
      - 0.016%
-     - true
      - 56601
-     - -6
      - ../../../weather/G2700070.epw
    * - MN, Benton County
      - 0.012%
-     - true
      - 56379
-     - -6
      - ../../../weather/G2700090.epw
    * - MN, Big Stone County
      - 0.0023%
-     - true
      - 56278
-     - -6
      - ../../../weather/G2700110.epw
    * - MN, Blue Earth County
      - 0.02%
-     - true
      - 56001
-     - -6
      - ../../../weather/G2700130.epw
    * - MN, Brown County
      - 0.0086%
-     - true
      - 56073
-     - -6
      - ../../../weather/G2700150.epw
    * - MN, Carlton County
      - 0.012%
-     - true
      - 55720
-     - -6
      - ../../../weather/G2700170.epw
    * - MN, Carver County
      - 0.027%
-     - true
      - 55318
-     - -6
      - ../../../weather/G2700190.epw
    * - MN, Cass County
      - 0.019%
-     - true
      - 56474
-     - -6
      - ../../../weather/G2700210.epw
    * - MN, Chippewa County
      - 0.0043%
-     - true
      - 56265
-     - -6
      - ../../../weather/G2700230.epw
    * - MN, Chisago County
      - 0.016%
-     - true
      - 55056
-     - -6
      - ../../../weather/G2700250.epw
    * - MN, Clay County
      - 0.019%
-     - true
      - 56560
-     - -6
      - ../../../weather/G2700270.epw
    * - MN, Clearwater County
      - 0.0036%
-     - true
      - 56621
-     - -6
      - ../../../weather/G2700290.epw
    * - MN, Cook County
      - 0.0043%
-     - true
      - 55604
-     - -6
      - ../../../weather/G2700310.epw
    * - MN, Cottonwood County
      - 0.004%
-     - true
      - 56101
-     - -6
      - ../../../weather/G2700330.epw
    * - MN, Crow Wing County
      - 0.031%
-     - true
      - 56401
-     - -6
      - ../../../weather/G2700350.epw
    * - MN, Dakota County
      - 0.12%
-     - true
      - 55124
-     - -6
      - ../../../weather/G2700370.epw
    * - MN, Dodge County
      - 0.006%
-     - true
      - 55944
-     - -6
      - ../../../weather/G2700390.epw
    * - MN, Douglas County
      - 0.015%
-     - true
      - 56308
-     - -6
      - ../../../weather/G2700410.epw
    * - MN, Faribault County
      - 0.0052%
-     - true
      - 56013
-     - -6
      - ../../../weather/G2700430.epw
    * - MN, Fillmore County
      - 0.0073%
-     - true
      - 55975
-     - -6
      - ../../../weather/G2700450.epw
    * - MN, Freeborn County
      - 0.011%
-     - true
      - 56007
-     - -6
      - ../../../weather/G2700470.epw
    * - MN, Goodhue County
      - 0.015%
-     - true
      - 55066
-     - -6
      - ../../../weather/G2700490.epw
    * - MN, Grant County
      - 0.0025%
-     - true
      - 56531
-     - -6
      - ../../../weather/G2700510.epw
    * - MN, Hennepin County
      - 0.39%
-     - true
      - 55408
-     - -6
      - ../../../weather/G2700530.epw
    * - MN, Houston County
      - 0.0064%
-     - true
      - 55947
-     - -6
      - ../../../weather/G2700550.epw
    * - MN, Hubbard County
      - 0.011%
-     - true
      - 56470
-     - -6
      - ../../../weather/G2700570.epw
    * - MN, Isanti County
      - 0.012%
-     - true
      - 55008
-     - -6
      - ../../../weather/G2700590.epw
    * - MN, Itasca County
      - 0.02%
-     - true
      - 55744
-     - -6
      - ../../../weather/G2700610.epw
    * - MN, Jackson County
      - 0.0037%
-     - true
      - 56143
-     - -6
      - ../../../weather/G2700630.epw
    * - MN, Kanabec County
      - 0.0058%
-     - true
      - 55051
-     - -6
      - ../../../weather/G2700650.epw
    * - MN, Kandiyohi County
      - 0.015%
-     - true
      - 56201
-     - -6
      - ../../../weather/G2700670.epw
    * - MN, Kittson County
      - 0.0019%
-     - true
      - 56728
-     - -6
      - ../../../weather/G2700690.epw
    * - MN, Koochiching County
      - 0.0059%
-     - true
      - 56649
-     - -6
      - ../../../weather/G2700710.epw
    * - MN, Lac qui Parle County
      - 0.0027%
-     - true
      - 56256
-     - -6
      - ../../../weather/G2700730.epw
    * - MN, Lake County
      - 0.0058%
-     - true
      - 55616
-     - -6
      - ../../../weather/G2700750.epw
    * - MN, Lake of the Woods County
      - 0.0027%
-     - true
      - 56623
-     - -6
      - ../../../weather/G2700770.epw
    * - MN, Le Sueur County
      - 0.0093%
-     - true
      - 56058
-     - -6
      - ../../../weather/G2700790.epw
    * - MN, Lincoln County
      - 0.0023%
-     - true
      - 56178
-     - -6
      - ../../../weather/G2700810.epw
    * - MN, Lyon County
      - 0.0083%
-     - true
      - 56258
-     - -6
      - ../../../weather/G2700830.epw
    * - MN, Mahnomen County
      - 0.0021%
-     - true
      - 56557
-     - -6
      - ../../../weather/G2700870.epw
    * - MN, Marshall County
      - 0.0036%
-     - true
      - 56762
-     - -6
      - ../../../weather/G2700890.epw
    * - MN, Martin County
      - 0.0074%
-     - true
      - 56031
-     - -6
      - ../../../weather/G2700910.epw
    * - MN, McLeod County
      - 0.012%
-     - true
      - 55350
-     - -6
      - ../../../weather/G2700850.epw
    * - MN, Meeker County
      - 0.008%
-     - true
      - 55355
-     - -6
      - ../../../weather/G2700930.epw
    * - MN, Mille Lacs County
      - 0.0095%
-     - true
      - 56353
-     - -6
      - ../../../weather/G2700950.epw
    * - MN, Morrison County
      - 0.012%
-     - true
      - 56345
-     - -6
      - ../../../weather/G2700970.epw
    * - MN, Mower County
      - 0.013%
-     - true
      - 55912
-     - -6
      - ../../../weather/G2700990.epw
    * - MN, Murray County
      - 0.0034%
-     - true
      - 56172
-     - -6
      - ../../../weather/G2701010.epw
    * - MN, Nicollet County
      - 0.0098%
-     - true
      - 56003
-     - -6
      - ../../../weather/G2701030.epw
    * - MN, Nobles County
      - 0.0064%
-     - true
      - 56187
-     - -6
      - ../../../weather/G2701050.epw
    * - MN, Norman County
      - 0.0025%
-     - true
      - 56510
-     - -6
      - ../../../weather/G2701070.epw
    * - MN, Olmsted County
      - 0.046%
-     - true
      - 55901
-     - -6
      - ../../../weather/G2701090.epw
    * - MN, Otter Tail County
      - 0.027%
-     - true
      - 56537
-     - -6
      - ../../../weather/G2701110.epw
    * - MN, Pennington County
      - 0.0047%
-     - true
      - 56701
-     - -6
      - ../../../weather/G2701130.epw
    * - MN, Pine County
      - 0.013%
-     - true
      - 55063
-     - -6
      - ../../../weather/G2701150.epw
    * - MN, Pipestone County
      - 0.0033%
-     - true
      - 56164
-     - -6
      - ../../../weather/G2701170.epw
    * - MN, Polk County
      - 0.011%
-     - true
      - 56721
-     - -6
      - ../../../weather/G2701190.epw
    * - MN, Pope County
      - 0.0049%
-     - true
      - 56334
-     - -6
      - ../../../weather/G2701210.epw
    * - MN, Ramsey County
      - 0.16%
-     - true
      - 55106
-     - -6
      - ../../../weather/G2701230.epw
    * - MN, Red Lake County
      - 0.0014%
-     - true
      - 56750
-     - -6
      - ../../../weather/G2701250.epw
    * - MN, Redwood County
      - 0.0054%
-     - true
      - 56283
-     - -6
      - ../../../weather/G2701270.epw
    * - MN, Renville County
      - 0.0054%
-     - true
      - 56277
-     - -6
      - ../../../weather/G2701290.epw
    * - MN, Rice County
      - 0.018%
-     - true
      - 55021
-     - -6
      - ../../../weather/G2701310.epw
    * - MN, Rock County
      - 0.0032%
-     - true
      - 56156
-     - -6
      - ../../../weather/G2701330.epw
    * - MN, Roseau County
      - 0.0056%
-     - true
      - 56751
-     - -6
      - ../../../weather/G2701350.epw
    * - MN, Scott County
      - 0.037%
-     - true
      - 55379
-     - -6
      - ../../../weather/G2701390.epw
    * - MN, Sherburne County
      - 0.025%
-     - true
      - 55330
-     - -6
      - ../../../weather/G2701410.epw
    * - MN, Sibley County
      - 0.0049%
-     - true
      - 55334
-     - -6
      - ../../../weather/G2701430.epw
    * - MN, St. Louis County
      - 0.077%
-     - true
      - 55811
-     - -6
      - ../../../weather/G2701370.epw
    * - MN, Stearns County
      - 0.047%
-     - true
      - 56301
-     - -6
      - ../../../weather/G2701450.epw
    * - MN, Steele County
      - 0.011%
-     - true
      - 55060
-     - -6
      - ../../../weather/G2701470.epw
    * - MN, Stevens County
      - 0.0031%
-     - true
      - 56267
-     - -6
      - ../../../weather/G2701490.epw
    * - MN, Swift County
      - 0.0036%
-     - true
      - 56215
-     - -6
      - ../../../weather/G2701510.epw
    * - MN, Todd County
      - 0.0097%
-     - true
      - 56347
-     - -6
      - ../../../weather/G2701530.epw
    * - MN, Traverse County
      - 0.0015%
-     - true
      - 56296
-     - -6
      - ../../../weather/G2701550.epw
    * - MN, Wabasha County
      - 0.0075%
-     - true
      - 55041
-     - -6
      - ../../../weather/G2701570.epw
    * - MN, Wadena County
      - 0.0052%
-     - true
      - 56482
-     - -6
      - ../../../weather/G2701590.epw
    * - MN, Waseca County
      - 0.0059%
-     - true
      - 56093
-     - -6
      - ../../../weather/G2701610.epw
    * - MN, Washington County
      - 0.071%
-     - true
      - 55125
-     - -6
      - ../../../weather/G2701630.epw
    * - MN, Watonwan County
      - 0.0038%
-     - true
      - 56081
-     - -6
      - ../../../weather/G2701650.epw
    * - MN, Wilkin County
      - 0.0023%
-     - true
      - 56520
-     - -6
      - ../../../weather/G2701670.epw
    * - MN, Winona County
      - 0.016%
-     - true
      - 55987
-     - -6
      - ../../../weather/G2701690.epw
    * - MN, Wright County
      - 0.037%
-     - true
      - 55313
-     - -6
      - ../../../weather/G2701710.epw
    * - MN, Yellow Medicine County
      - 0.0035%
-     - true
      - 56220
-     - -6
      - ../../../weather/G2701730.epw
    * - MO, Adair County
      - 0.0085%
-     - true
      - 63501
-     - -6
      - ../../../weather/G2900010.epw
    * - MO, Andrew County
      - 0.0054%
-     - true
      - 64485
-     - -6
      - ../../../weather/G2900030.epw
    * - MO, Atchison County
      - 0.0022%
-     - true
      - 64491
-     - -6
      - ../../../weather/G2900050.epw
    * - MO, Audrain County
      - 0.0081%
-     - true
      - 65265
-     - -6
      - ../../../weather/G2900070.epw
    * - MO, Barry County
      - 0.013%
-     - true
      - 65625
-     - -6
      - ../../../weather/G2900090.epw
    * - MO, Barton County
      - 0.0042%
-     - true
      - 64759
-     - -6
      - ../../../weather/G2900110.epw
    * - MO, Bates County
      - 0.0058%
-     - true
      - 64730
-     - -6
      - ../../../weather/G2900130.epw
    * - MO, Benton County
      - 0.01%
-     - true
      - 65355
-     - -6
      - ../../../weather/G2900150.epw
    * - MO, Bollinger County
      - 0.0044%
-     - true
      - 63764
-     - -6
      - ../../../weather/G2900170.epw
    * - MO, Boone County
      - 0.055%
-     - true
      - 65203
-     - -6
      - ../../../weather/G2900190.epw
    * - MO, Buchanan County
      - 0.029%
-     - true
      - 64506
-     - -6
      - ../../../weather/G2900210.epw
    * - MO, Butler County
      - 0.015%
-     - true
      - 63901
-     - -6
      - ../../../weather/G2900230.epw
    * - MO, Caldwell County
      - 0.0034%
-     - true
      - 64644
-     - -6
      - ../../../weather/G2900250.epw
    * - MO, Callaway County
      - 0.014%
-     - true
      - 65251
-     - -6
      - ../../../weather/G2900270.epw
    * - MO, Camden County
      - 0.031%
-     - true
      - 65020
-     - -6
      - ../../../weather/G2900290.epw
    * - MO, Cape Girardeau County
      - 0.025%
-     - true
      - 63701
-     - -6
      - ../../../weather/G2900310.epw
    * - MO, Carroll County
      - 0.0034%
-     - true
      - 64633
-     - -6
      - ../../../weather/G2900330.epw
    * - MO, Carter County
      - 0.0024%
-     - true
      - 63965
-     - -6
      - ../../../weather/G2900350.epw
    * - MO, Cass County
      - 0.03%
-     - true
      - 64012
-     - -6
      - ../../../weather/G2900370.epw
    * - MO, Cedar County
      - 0.0054%
-     - true
      - 64744
-     - -6
      - ../../../weather/G2900390.epw
    * - MO, Chariton County
      - 0.0031%
-     - true
      - 65281
-     - -6
      - ../../../weather/G2900410.epw
    * - MO, Christian County
      - 0.024%
-     - true
      - 65714
-     - -6
      - ../../../weather/G2900430.epw
    * - MO, Clark County
      - 0.0026%
-     - true
      - 63445
-     - -6
      - ../../../weather/G2900450.epw
    * - MO, Clay County
      - 0.071%
-     - true
      - 64118
-     - -6
      - ../../../weather/G2900470.epw
    * - MO, Clinton County
      - 0.0066%
-     - true
      - 64429
-     - -6
      - ../../../weather/G2900490.epw
    * - MO, Cole County
      - 0.024%
-     - true
      - 65109
-     - -6
      - ../../../weather/G2900510.epw
    * - MO, Cooper County
      - 0.0056%
-     - true
      - 65233
-     - -6
      - ../../../weather/G2900530.epw
    * - MO, Crawford County
      - 0.0089%
-     - true
      - 65453
-     - -6
      - ../../../weather/G2900550.epw
    * - MO, Dade County
      - 0.0029%
-     - true
      - 65661
-     - -6
      - ../../../weather/G2900570.epw
    * - MO, Dallas County
      - 0.0057%
-     - true
      - 65622
-     - -6
      - ../../../weather/G2900590.epw
    * - MO, Daviess County
      - 0.0031%
-     - true
      - 64640
-     - -6
      - ../../../weather/G2900610.epw
    * - MO, DeKalb County
      - 0.0032%
-     - true
      - 64429
-     - -6
      - ../../../weather/G2900630.epw
    * - MO, Dent County
      - 0.0054%
-     - true
      - 65560
-     - -6
      - ../../../weather/G2900650.epw
    * - MO, Douglas County
      - 0.0048%
-     - true
      - 65608
-     - -6
      - ../../../weather/G2900670.epw
    * - MO, Dunklin County
      - 0.011%
-     - true
      - 63857
-     - -6
      - ../../../weather/G2900690.epw
    * - MO, Franklin County
      - 0.033%
-     - true
      - 63090
-     - -6
      - ../../../weather/G2900710.epw
    * - MO, Gasconade County
      - 0.0061%
-     - true
      - 65066
-     - -6
      - ../../../weather/G2900730.epw
    * - MO, Gentry County
      - 0.0024%
-     - true
      - 64402
-     - -6
      - ../../../weather/G2900750.epw
    * - MO, Greene County
      - 0.096%
-     - true
      - 65807
-     - -6
      - ../../../weather/G2900770.epw
    * - MO, Grundy County
      - 0.0037%
-     - true
      - 64683
-     - -6
      - ../../../weather/G2900790.epw
    * - MO, Harrison County
      - 0.0033%
-     - true
      - 64424
-     - -6
      - ../../../weather/G2900810.epw
    * - MO, Henry County
      - 0.0081%
-     - true
      - 64735
-     - -6
      - ../../../weather/G2900830.epw
    * - MO, Hickory County
      - 0.005%
-     - true
      - 65779
-     - -6
      - ../../../weather/G2900850.epw
    * - MO, Holt County
      - 0.0021%
-     - true
      - 64470
-     - -6
      - ../../../weather/G2900870.epw
    * - MO, Howard County
      - 0.0034%
-     - true
      - 65248
-     - -6
      - ../../../weather/G2900890.epw
    * - MO, Howell County
      - 0.013%
-     - true
      - 65775
-     - -6
      - ../../../weather/G2900910.epw
    * - MO, Iron County
      - 0.0039%
-     - true
      - 63650
-     - -6
      - ../../../weather/G2900930.epw
    * - MO, Jackson County
      - 0.24%
-     - true
      - 64055
-     - -6
      - ../../../weather/G2900950.epw
    * - MO, Jasper County
      - 0.038%
-     - true
      - 64801
-     - -6
      - ../../../weather/G2900970.epw
    * - MO, Jefferson County
      - 0.066%
-     - true
      - 63010
-     - -6
      - ../../../weather/G2900990.epw
    * - MO, Johnson County
      - 0.016%
-     - true
      - 64093
-     - -6
      - ../../../weather/G2901010.epw
    * - MO, Knox County
      - 0.0017%
-     - true
      - 63537
-     - -6
      - ../../../weather/G2901030.epw
    * - MO, Laclede County
      - 0.012%
-     - true
      - 65536
-     - -6
      - ../../../weather/G2901050.epw
    * - MO, Lafayette County
      - 0.011%
-     - true
      - 64076
-     - -6
      - ../../../weather/G2901070.epw
    * - MO, Lawrence County
      - 0.012%
-     - true
      - 65605
-     - -6
      - ../../../weather/G2901090.epw
    * - MO, Lewis County
      - 0.0034%
-     - true
      - 63435
-     - -6
      - ../../../weather/G2901110.epw
    * - MO, Lincoln County
      - 0.016%
-     - true
      - 63379
-     - -6
      - ../../../weather/G2901130.epw
    * - MO, Linn County
      - 0.0048%
-     - true
      - 64628
-     - -6
      - ../../../weather/G2901150.epw
    * - MO, Livingston County
      - 0.005%
-     - true
      - 64601
-     - -6
      - ../../../weather/G2901170.epw
    * - MO, Macon County
      - 0.0057%
-     - true
      - 63552
-     - -6
      - ../../../weather/G2901210.epw
    * - MO, Madison County
      - 0.0044%
-     - true
      - 63645
-     - -6
      - ../../../weather/G2901230.epw
    * - MO, Maries County
      - 0.0034%
-     - true
      - 65582
-     - -6
      - ../../../weather/G2901250.epw
    * - MO, Marion County
      - 0.0096%
-     - true
      - 63401
-     - -6
      - ../../../weather/G2901270.epw
    * - MO, McDonald County
      - 0.0073%
-     - true
      - 64831
-     - -6
      - ../../../weather/G2901190.epw
    * - MO, Mercer County
      - 0.0016%
-     - true
      - 64673
-     - -6
      - ../../../weather/G2901290.epw
    * - MO, Miller County
      - 0.0095%
-     - true
      - 65026
-     - -6
      - ../../../weather/G2901310.epw
    * - MO, Mississippi County
      - 0.0043%
-     - true
      - 63845
-     - -6
      - ../../../weather/G2901330.epw
    * - MO, Moniteau County
      - 0.0046%
-     - true
      - 65018
-     - -6
      - ../../../weather/G2901350.epw
    * - MO, Monroe County
      - 0.0036%
-     - true
      - 65275
-     - -6
      - ../../../weather/G2901370.epw
    * - MO, Montgomery County
      - 0.0046%
-     - true
      - 63361
-     - -6
      - ../../../weather/G2901390.epw
    * - MO, Morgan County
      - 0.011%
-     - true
      - 65037
-     - -6
      - ../../../weather/G2901410.epw
    * - MO, New Madrid County
      - 0.0064%
-     - true
      - 63873
-     - -6
      - ../../../weather/G2901430.epw
    * - MO, Newton County
      - 0.018%
-     - true
      - 64850
-     - -6
      - ../../../weather/G2901450.epw
    * - MO, Nodaway County
      - 0.0072%
-     - true
      - 64468
-     - -6
      - ../../../weather/G2901470.epw
    * - MO, Oregon County
      - 0.0041%
-     - true
      - 65606
-     - -6
      - ../../../weather/G2901490.epw
    * - MO, Osage County
      - 0.0049%
-     - true
      - 65051
-     - -6
      - ../../../weather/G2901510.epw
    * - MO, Ozark County
      - 0.0042%
-     - true
      - 65655
-     - -6
      - ../../../weather/G2901530.epw
    * - MO, Pemiscot County
      - 0.0061%
-     - true
      - 63830
-     - -6
      - ../../../weather/G2901550.epw
    * - MO, Perry County
      - 0.0064%
-     - true
      - 63775
-     - -6
      - ../../../weather/G2901570.epw
    * - MO, Pettis County
      - 0.014%
-     - true
      - 65301
-     - -6
      - ../../../weather/G2901590.epw
    * - MO, Phelps County
      - 0.015%
-     - true
      - 65401
-     - -6
      - ../../../weather/G2901610.epw
    * - MO, Pike County
      - 0.0058%
-     - true
      - 63334
-     - -6
      - ../../../weather/G2901630.epw
    * - MO, Platte County
      - 0.03%
-     - true
      - 64151
-     - -6
      - ../../../weather/G2901650.epw
    * - MO, Polk County
      - 0.01%
-     - true
      - 65613
-     - -6
      - ../../../weather/G2901670.epw
    * - MO, Pulaski County
      - 0.014%
-     - true
      - 65473
-     - -6
      - ../../../weather/G2901690.epw
    * - MO, Putnam County
      - 0.0022%
-     - true
      - 63565
-     - -6
      - ../../../weather/G2901710.epw
    * - MO, Ralls County
      - 0.0038%
-     - true
      - 63459
-     - -6
      - ../../../weather/G2901730.epw
    * - MO, Randolph County
      - 0.008%
-     - true
      - 65270
-     - -6
      - ../../../weather/G2901750.epw
    * - MO, Ray County
      - 0.0074%
-     - true
      - 64085
-     - -6
      - ../../../weather/G2901770.epw
    * - MO, Reynolds County
      - 0.003%
-     - true
      - 63638
-     - -6
      - ../../../weather/G2901790.epw
    * - MO, Ripley County
      - 0.0049%
-     - true
      - 63935
-     - -6
      - ../../../weather/G2901810.epw
    * - MO, Saline County
      - 0.0075%
-     - true
      - 65340
-     - -6
      - ../../../weather/G2901950.epw
    * - MO, Schuyler County
      - 0.0016%
-     - true
      - 63548
-     - -6
      - ../../../weather/G2901970.epw
    * - MO, Scotland County
      - 0.0018%
-     - true
      - 63555
-     - -6
      - ../../../weather/G2901990.epw
    * - MO, Scott County
      - 0.013%
-     - true
      - 63801
-     - -6
      - ../../../weather/G2902010.epw
    * - MO, Shannon County
      - 0.0031%
-     - true
      - 65588
-     - -6
      - ../../../weather/G2902030.epw
    * - MO, Shelby County
      - 0.0024%
-     - true
      - 63468
-     - -6
      - ../../../weather/G2902050.epw
    * - MO, St. Charles County
      - 0.11%
-     - true
      - 63376
-     - -6
      - ../../../weather/G2901830.epw
    * - MO, St. Clair County
      - 0.0042%
-     - true
      - 64776
-     - -6
      - ../../../weather/G2901850.epw
    * - MO, St. Francois County
      - 0.022%
-     - true
      - 63640
-     - -6
      - ../../../weather/G2901870.epw
    * - MO, St. Louis city
      - 0.13%
-     - true
      - 63116
-     - -6
      - ../../../weather/G2905100.epw
    * - MO, St. Louis County
      - 0.33%
-     - true
      - 63021
-     - -6
      - ../../../weather/G2901890.epw
    * - MO, Ste. Genevieve County
      - 0.0064%
-     - true
      - 63670
-     - -6
      - ../../../weather/G2901860.epw
    * - MO, Stoddard County
      - 0.01%
-     - true
      - 63841
-     - -6
      - ../../../weather/G2902070.epw
    * - MO, Stone County
      - 0.015%
-     - true
      - 65737
-     - -6
      - ../../../weather/G2902090.epw
    * - MO, Sullivan County
      - 0.0025%
-     - true
      - 63556
-     - -6
      - ../../../weather/G2902110.epw
    * - MO, Taney County
      - 0.022%
-     - true
      - 65616
-     - -6
      - ../../../weather/G2902130.epw
    * - MO, Texas County
      - 0.0087%
-     - true
      - 65483
-     - -6
      - ../../../weather/G2902150.epw
    * - MO, Vernon County
      - 0.0071%
-     - true
      - 64772
-     - -6
      - ../../../weather/G2902170.epw
    * - MO, Warren County
      - 0.011%
-     - true
      - 63383
-     - -6
      - ../../../weather/G2902190.epw
    * - MO, Washington County
      - 0.0081%
-     - true
      - 63664
-     - -6
      - ../../../weather/G2902210.epw
    * - MO, Wayne County
      - 0.006%
-     - true
      - 63957
-     - -6
      - ../../../weather/G2902230.epw
    * - MO, Webster County
      - 0.011%
-     - true
      - 65706
-     - -6
      - ../../../weather/G2902250.epw
    * - MO, Worth County
      - 0.00095%
-     - true
      - 64456
-     - -6
      - ../../../weather/G2902270.epw
    * - MO, Wright County
      - 0.0065%
-     - true
      - 65711
-     - -6
      - ../../../weather/G2902290.epw
    * - MS, Adams County
      - 0.011%
-     - true
      - 39120
-     - -6
      - ../../../weather/G2800010.epw
    * - MS, Alcorn County
      - 0.013%
-     - true
      - 38834
-     - -6
      - ../../../weather/G2800030.epw
    * - MS, Amite County
      - 0.0049%
-     - true
      - 39645
-     - -6
      - ../../../weather/G2800050.epw
    * - MS, Attala County
      - 0.0068%
-     - true
      - 39090
-     - -6
      - ../../../weather/G2800070.epw
    * - MS, Benton County
      - 0.0031%
-     - true
      - 38603
-     - -6
      - ../../../weather/G2800090.epw
    * - MS, Bolivar County
      - 0.011%
-     - true
      - 38732
-     - -6
      - ../../../weather/G2800110.epw
    * - MS, Calhoun County
      - 0.0052%
-     - true
      - 38916
-     - -6
      - ../../../weather/G2800130.epw
    * - MS, Carroll County
      - 0.0038%
-     - true
      - 38917
-     - -6
      - ../../../weather/G2800150.epw
    * - MS, Chickasaw County
      - 0.0056%
-     - true
      - 38851
-     - -6
      - ../../../weather/G2800170.epw
    * - MS, Choctaw County
      - 0.0031%
-     - true
      - 39735
-     - -6
      - ../../../weather/G2800190.epw
    * - MS, Claiborne County
      - 0.0031%
-     - true
      - 39150
-     - -6
      - ../../../weather/G2800210.epw
    * - MS, Clarke County
      - 0.0059%
-     - true
      - 39355
-     - -6
      - ../../../weather/G2800230.epw
    * - MS, Clay County
      - 0.0069%
-     - true
      - 39773
-     - -6
      - ../../../weather/G2800250.epw
    * - MS, Coahoma County
      - 0.008%
-     - true
      - 38614
-     - -6
      - ../../../weather/G2800270.epw
    * - MS, Copiah County
      - 0.0091%
-     - true
      - 39059
-     - -6
      - ../../../weather/G2800290.epw
    * - MS, Covington County
      - 0.0063%
-     - true
      - 39428
-     - -6
      - ../../../weather/G2800310.epw
    * - MS, DeSoto County
      - 0.048%
-     - true
      - 38654
-     - -6
      - ../../../weather/G2800330.epw
    * - MS, Forrest County
      - 0.024%
-     - true
      - 39401
-     - -6
      - ../../../weather/G2800350.epw
    * - MS, Franklin County
      - 0.0031%
-     - true
      - 39653
-     - -6
      - ../../../weather/G2800370.epw
    * - MS, George County
      - 0.007%
-     - true
      - 39452
-     - -6
      - ../../../weather/G2800390.epw
    * - MS, Greene County
      - 0.0038%
-     - true
      - 39451
-     - -6
      - ../../../weather/G2800410.epw
    * - MS, Grenada County
      - 0.0076%
-     - true
      - 38901
-     - -6
      - ../../../weather/G2800430.epw
    * - MS, Hancock County
      - 0.018%
-     - true
      - 39520
-     - -6
      - ../../../weather/G2800450.epw
    * - MS, Harrison County
      - 0.067%
-     - true
      - 39503
-     - -6
      - ../../../weather/G2800470.epw
    * - MS, Hinds County
      - 0.078%
-     - true
      - 39209
-     - -6
      - ../../../weather/G2800490.epw
    * - MS, Holmes County
      - 0.0063%
-     - true
      - 39095
-     - -6
      - ../../../weather/G2800510.epw
    * - MS, Humphreys County
      - 0.0029%
-     - true
      - 39038
-     - -6
      - ../../../weather/G2800530.epw
    * - MS, Issaquena County
      - 0.00041%
-     - true
      - 39159
-     - -6
      - ../../../weather/G2800550.epw
    * - MS, Itawamba County
      - 0.0076%
-     - true
      - 38843
-     - -6
      - ../../../weather/G2800570.epw
    * - MS, Jackson County
      - 0.046%
-     - true
      - 39564
-     - -6
      - ../../../weather/G2800590.epw
    * - MS, Jasper County
      - 0.0061%
-     - true
      - 39422
-     - -6
      - ../../../weather/G2800610.epw
    * - MS, Jefferson County
      - 0.0027%
-     - true
      - 39069
-     - -6
      - ../../../weather/G2800630.epw
    * - MS, Jefferson Davis County
      - 0.0044%
-     - true
      - 39474
-     - -6
      - ../../../weather/G2800650.epw
    * - MS, Jones County
      - 0.021%
-     - true
      - 39443
-     - -6
      - ../../../weather/G2800670.epw
    * - MS, Kemper County
      - 0.0035%
-     - true
      - 39328
-     - -6
      - ../../../weather/G2800690.epw
    * - MS, Lafayette County
      - 0.018%
-     - true
      - 38655
-     - -6
      - ../../../weather/G2800710.epw
    * - MS, Lamar County
      - 0.018%
-     - true
      - 39402
-     - -6
      - ../../../weather/G2800730.epw
    * - MS, Lauderdale County
      - 0.026%
-     - true
      - 39301
-     - -6
      - ../../../weather/G2800750.epw
    * - MS, Lawrence County
      - 0.0045%
-     - true
      - 39654
-     - -6
      - ../../../weather/G2800770.epw
    * - MS, Leake County
      - 0.007%
-     - true
      - 39051
-     - -6
      - ../../../weather/G2800790.epw
    * - MS, Lee County
      - 0.027%
-     - true
      - 38801
-     - -6
      - ../../../weather/G2800810.epw
    * - MS, Leflore County
      - 0.0098%
-     - true
      - 38930
-     - -6
      - ../../../weather/G2800830.epw
    * - MS, Lincoln County
      - 0.011%
-     - true
      - 39601
-     - -6
      - ../../../weather/G2800850.epw
    * - MS, Lowndes County
      - 0.02%
-     - true
      - 39702
-     - -6
      - ../../../weather/G2800870.epw
    * - MS, Madison County
      - 0.031%
-     - true
      - 39110
-     - -6
      - ../../../weather/G2800890.epw
    * - MS, Marion County
      - 0.0088%
-     - true
      - 39429
-     - -6
      - ../../../weather/G2800910.epw
    * - MS, Marshall County
      - 0.011%
-     - true
      - 38611
-     - -6
      - ../../../weather/G2800930.epw
    * - MS, Monroe County
      - 0.012%
-     - true
      - 38821
-     - -6
      - ../../../weather/G2800950.epw
    * - MS, Montgomery County
      - 0.004%
-     - true
      - 38967
-     - -6
      - ../../../weather/G2800970.epw
    * - MS, Neshoba County
      - 0.0092%
-     - true
      - 39350
-     - -6
      - ../../../weather/G2800990.epw
    * - MS, Newton County
      - 0.007%
-     - true
      - 39345
-     - -6
      - ../../../weather/G2801010.epw
    * - MS, Noxubee County
      - 0.0039%
-     - true
      - 39341
-     - -6
      - ../../../weather/G2801030.epw
    * - MS, Oktibbeha County
      - 0.016%
-     - true
      - 39759
-     - -6
      - ../../../weather/G2801050.epw
    * - MS, Panola County
      - 0.011%
-     - true
      - 38606
-     - -6
      - ../../../weather/G2801070.epw
    * - MS, Pearl River County
      - 0.018%
-     - true
      - 39466
-     - -6
      - ../../../weather/G2801090.epw
    * - MS, Perry County
      - 0.0041%
-     - true
      - 39476
-     - -6
      - ../../../weather/G2801110.epw
    * - MS, Pike County
      - 0.013%
-     - true
      - 39648
-     - -6
      - ../../../weather/G2801130.epw
    * - MS, Pontotoc County
      - 0.0094%
-     - true
      - 38863
-     - -6
      - ../../../weather/G2801150.epw
    * - MS, Prentiss County
      - 0.0083%
-     - true
      - 38829
-     - -6
      - ../../../weather/G2801170.epw
    * - MS, Quitman County
      - 0.0027%
-     - true
      - 38646
-     - -6
      - ../../../weather/G2801190.epw
    * - MS, Rankin County
      - 0.043%
-     - true
      - 39047
-     - -6
      - ../../../weather/G2801210.epw
    * - MS, Scott County
      - 0.0086%
-     - true
      - 39074
-     - -6
      - ../../../weather/G2801230.epw
    * - MS, Sharkey County
      - 0.0016%
-     - true
      - 39159
-     - -6
      - ../../../weather/G2801250.epw
    * - MS, Simpson County
      - 0.0089%
-     - true
      - 39111
-     - -6
      - ../../../weather/G2801270.epw
    * - MS, Smith County
      - 0.0054%
-     - true
      - 39168
-     - -6
      - ../../../weather/G2801290.epw
    * - MS, Stone County
      - 0.0054%
-     - true
      - 39577
-     - -6
      - ../../../weather/G2801310.epw
    * - MS, Sunflower County
      - 0.0072%
-     - true
      - 38751
-     - -6
      - ../../../weather/G2801330.epw
    * - MS, Tallahatchie County
      - 0.0041%
-     - true
      - 38921
-     - -6
      - ../../../weather/G2801350.epw
    * - MS, Tate County
      - 0.0083%
-     - true
      - 38668
-     - -6
      - ../../../weather/G2801370.epw
    * - MS, Tippah County
      - 0.0073%
-     - true
      - 38663
-     - -6
      - ../../../weather/G2801390.epw
    * - MS, Tishomingo County
      - 0.0077%
-     - true
      - 38852
-     - -6
      - ../../../weather/G2801410.epw
    * - MS, Tunica County
      - 0.0036%
-     - true
      - 38676
-     - -6
      - ../../../weather/G2801430.epw
    * - MS, Union County
      - 0.0088%
-     - true
      - 38652
-     - -6
      - ../../../weather/G2801450.epw
    * - MS, Walthall County
      - 0.0053%
-     - true
      - 39667
-     - -6
      - ../../../weather/G2801470.epw
    * - MS, Warren County
      - 0.016%
-     - true
      - 39180
-     - -6
      - ../../../weather/G2801490.epw
    * - MS, Washington County
      - 0.016%
-     - true
      - 38701
-     - -6
      - ../../../weather/G2801510.epw
    * - MS, Wayne County
      - 0.0069%
-     - true
      - 39367
-     - -6
      - ../../../weather/G2801530.epw
    * - MS, Webster County
      - 0.0036%
-     - true
      - 39744
-     - -6
      - ../../../weather/G2801550.epw
    * - MS, Wilkinson County
      - 0.0038%
-     - true
      - 39669
-     - -6
      - ../../../weather/G2801570.epw
    * - MS, Winston County
      - 0.0065%
-     - true
      - 39339
-     - -6
      - ../../../weather/G2801590.epw
    * - MS, Yalobusha County
      - 0.0048%
-     - true
      - 38965
-     - -6
      - ../../../weather/G2801610.epw
    * - MS, Yazoo County
      - 0.0075%
-     - true
      - 39194
-     - -6
      - ../../../weather/G2801630.epw
    * - MT, Beaverhead County
      - 0.0039%
-     - true
      - 59725
-     - -7
      - ../../../weather/G3000010.epw
    * - MT, Big Horn County
      - 0.0035%
-     - true
      - 59034
-     - -7
      - ../../../weather/G3000030.epw
    * - MT, Blaine County
      - 0.0021%
-     - true
      - 59526
-     - -7
      - ../../../weather/G3000050.epw
    * - MT, Broadwater County
      - 0.002%
-     - true
      - 59644
-     - -7
      - ../../../weather/G3000070.epw
    * - MT, Carbon County
      - 0.0048%
-     - true
      - 59068
-     - -7
      - ../../../weather/G3000090.epw
    * - MT, Carter County
      - 0.00059%
-     - true
      - 59324
-     - -7
      - ../../../weather/G3000110.epw
    * - MT, Cascade County
      - 0.028%
-     - true
      - 59405
-     - -7
      - ../../../weather/G3000130.epw
    * - MT, Chouteau County
      - 0.0021%
-     - true
      - 59442
-     - -7
      - ../../../weather/G3000150.epw
    * - MT, Custer County
      - 0.0042%
-     - true
      - 59301
-     - -7
      - ../../../weather/G3000170.epw
    * - MT, Daniels County
      - 0.00085%
-     - true
      - 59263
-     - -7
      - ../../../weather/G3000190.epw
    * - MT, Dawson County
      - 0.0032%
-     - true
      - 59330
-     - -7
      - ../../../weather/G3000210.epw
    * - MT, Deer Lodge County
      - 0.0038%
-     - true
      - 59711
-     - -7
      - ../../../weather/G3000230.epw
    * - MT, Fallon County
      - 0.0011%
-     - true
      - 59313
-     - -7
      - ../../../weather/G3000250.epw
    * - MT, Fergus County
      - 0.0043%
-     - true
      - 59457
-     - -7
      - ../../../weather/G3000270.epw
    * - MT, Flathead County
      - 0.035%
-     - true
      - 59901
-     - -7
      - ../../../weather/G3000290.epw
    * - MT, Gallatin County
      - 0.034%
-     - true
      - 59718
-     - -7
      - ../../../weather/G3000310.epw
    * - MT, Garfield County
      - 0.00063%
-     - true
      - 59337
-     - -7
      - ../../../weather/G3000330.epw
    * - MT, Glacier County
      - 0.004%
-     - true
      - 59427
-     - -7
      - ../../../weather/G3000350.epw
    * - MT, Golden Valley County
      - 0.00034%
-     - true
      - 59074
-     - -7
      - ../../../weather/G3000370.epw
    * - MT, Granite County
      - 0.0021%
-     - true
      - 59858
-     - -7
      - ../../../weather/G3000390.epw
    * - MT, Hill County
      - 0.0054%
-     - true
      - 59501
-     - -7
      - ../../../weather/G3000410.epw
    * - MT, Jefferson County
      - 0.0038%
-     - true
      - 59634
-     - -7
      - ../../../weather/G3000430.epw
    * - MT, Judith Basin County
      - 0.001%
-     - true
      - 59479
-     - -7
      - ../../../weather/G3000450.epw
    * - MT, Lake County
      - 0.012%
-     - true
      - 59860
-     - -7
      - ../../../weather/G3000470.epw
    * - MT, Lewis and Clark County
      - 0.023%
-     - true
      - 59601
-     - -7
      - ../../../weather/G3000490.epw
    * - MT, Liberty County
      - 0.00081%
-     - true
      - 59522
-     - -7
      - ../../../weather/G3000510.epw
    * - MT, Lincoln County
      - 0.0086%
-     - true
      - 59923
-     - -7
      - ../../../weather/G3000530.epw
    * - MT, Madison County
      - 0.0052%
-     - true
      - 59729
-     - -7
      - ../../../weather/G3000570.epw
    * - MT, McCone County
      - 0.00076%
-     - true
      - 59215
-     - -7
      - ../../../weather/G3000550.epw
    * - MT, Meagher County
      - 0.001%
-     - true
      - 59645
-     - -7
      - ../../../weather/G3000590.epw
    * - MT, Mineral County
      - 0.0018%
-     - true
      - 59872
-     - -7
      - ../../../weather/G3000610.epw
    * - MT, Missoula County
      - 0.038%
-     - true
      - 59801
-     - -7
      - ../../../weather/G3000630.epw
    * - MT, Musselshell County
      - 0.002%
-     - true
      - 59072
-     - -7
      - ../../../weather/G3000650.epw
    * - MT, Park County
      - 0.007%
-     - true
      - 59047
-     - -7
      - ../../../weather/G3000670.epw
    * - MT, Petroleum County
      - 0.00024%
-     - true
      - 59087
-     - -7
      - ../../../weather/G3000690.epw
    * - MT, Phillips County
      - 0.0017%
-     - true
      - 59538
-     - -7
      - ../../../weather/G3000710.epw
    * - MT, Pondera County
      - 0.002%
-     - true
      - 59425
-     - -7
      - ../../../weather/G3000730.epw
    * - MT, Powder River County
      - 0.00077%
-     - true
      - 59317
-     - -7
      - ../../../weather/G3000750.epw
    * - MT, Powell County
      - 0.0023%
-     - true
      - 59722
-     - -7
      - ../../../weather/G3000770.epw
    * - MT, Prairie County
      - 0.0005%
-     - true
      - 59349
-     - -7
      - ../../../weather/G3000790.epw
    * - MT, Ravalli County
      - 0.015%
-     - true
      - 59840
-     - -7
      - ../../../weather/G3000810.epw
    * - MT, Richland County
      - 0.0038%
-     - true
      - 59270
-     - -7
      - ../../../weather/G3000830.epw
    * - MT, Roosevelt County
      - 0.003%
-     - true
      - 59201
-     - -7
      - ../../../weather/G3000850.epw
    * - MT, Rosebud County
      - 0.0031%
-     - true
      - 59327
-     - -7
      - ../../../weather/G3000870.epw
    * - MT, Sanders County
      - 0.005%
-     - true
      - 59859
-     - -7
      - ../../../weather/G3000890.epw
    * - MT, Sheridan County
      - 0.0016%
-     - true
      - 59254
-     - -7
      - ../../../weather/G3000910.epw
    * - MT, Silver Bow County
      - 0.013%
-     - true
      - 59701
-     - -7
      - ../../../weather/G3000930.epw
    * - MT, Stillwater County
      - 0.0036%
-     - true
      - 59019
-     - -7
      - ../../../weather/G3000950.epw
    * - MT, Sweet Grass County
      - 0.0015%
-     - true
      - 59011
-     - -7
      - ../../../weather/G3000970.epw
    * - MT, Teton County
      - 0.0021%
-     - true
      - 59422
-     - -7
      - ../../../weather/G3000990.epw
    * - MT, Toole County
      - 0.0018%
-     - true
      - 59474
-     - -7
      - ../../../weather/G3001010.epw
    * - MT, Treasure County
      - 0.00034%
-     - true
      - 59038
-     - -7
      - ../../../weather/G3001030.epw
    * - MT, Valley County
      - 0.0036%
-     - true
      - 59230
-     - -7
      - ../../../weather/G3001050.epw
    * - MT, Wheatland County
      - 0.00097%
-     - true
      - 59036
-     - -7
      - ../../../weather/G3001070.epw
    * - MT, Wibaux County
      - 0.00042%
-     - true
      - 59353
-     - -7
      - ../../../weather/G3001090.epw
    * - MT, Yellowstone County
      - 0.05%
-     - true
      - 59102
-     - -7
      - ../../../weather/G3001110.epw
    * - NC, Alamance County
      - 0.051%
-     - true
      - 27215
-     - -5
      - ../../../weather/G3700010.epw
    * - NC, Alexander County
      - 0.012%
-     - true
      - 28681
-     - -5
      - ../../../weather/G3700030.epw
    * - NC, Alleghany County
      - 0.006%
-     - true
      - 28675
-     - -5
      - ../../../weather/G3700050.epw
    * - NC, Anson County
      - 0.0086%
-     - true
      - 28170
-     - -5
      - ../../../weather/G3700070.epw
    * - NC, Ashe County
      - 0.013%
-     - true
      - 28694
-     - -5
      - ../../../weather/G3700090.epw
    * - NC, Avery County
      - 0.01%
-     - true
      - 28657
-     - -5
      - ../../../weather/G3700110.epw
    * - NC, Beaufort County
      - 0.019%
-     - true
      - 27889
-     - -5
      - ../../../weather/G3700130.epw
    * - NC, Bertie County
      - 0.0073%
-     - true
      - 27983
-     - -5
      - ../../../weather/G3700150.epw
    * - NC, Bladen County
      - 0.013%
-     - true
      - 28337
-     - -5
      - ../../../weather/G3700170.epw
    * - NC, Brunswick County
      - 0.061%
-     - true
      - 28451
-     - -5
      - ../../../weather/G3700190.epw
    * - NC, Buncombe County
      - 0.087%
-     - true
      - 28806
-     - -5
      - ../../../weather/G3700210.epw
    * - NC, Burke County
      - 0.03%
-     - true
      - 28655
-     - -5
      - ../../../weather/G3700230.epw
    * - NC, Cabarrus County
      - 0.056%
-     - true
      - 28027
-     - -5
      - ../../../weather/G3700250.epw
    * - NC, Caldwell County
      - 0.028%
-     - true
      - 28645
-     - -5
      - ../../../weather/G3700270.epw
    * - NC, Camden County
      - 0.0031%
-     - true
      - 27921
-     - -5
      - ../../../weather/G3700290.epw
    * - NC, Carteret County
      - 0.037%
-     - true
      - 28570
-     - -5
      - ../../../weather/G3700310.epw
    * - NC, Caswell County
      - 0.0079%
-     - true
      - 27379
-     - -5
      - ../../../weather/G3700330.epw
    * - NC, Catawba County
      - 0.051%
-     - true
      - 28601
-     - -5
      - ../../../weather/G3700350.epw
    * - NC, Chatham County
      - 0.022%
-     - true
      - 27312
-     - -5
      - ../../../weather/G3700370.epw
    * - NC, Cherokee County
      - 0.013%
-     - true
      - 28906
-     - -5
      - ../../../weather/G3700390.epw
    * - NC, Chowan County
      - 0.0054%
-     - true
      - 27932
-     - -5
      - ../../../weather/G3700410.epw
    * - NC, Clay County
      - 0.0054%
-     - true
      - 28904
-     - -5
      - ../../../weather/G3700430.epw
    * - NC, Cleveland County
      - 0.032%
-     - true
      - 28150
-     - -5
      - ../../../weather/G3700450.epw
    * - NC, Columbus County
      - 0.019%
-     - true
      - 28472
-     - -5
      - ../../../weather/G3700470.epw
    * - NC, Craven County
      - 0.034%
-     - true
      - 28562
-     - -5
      - ../../../weather/G3700490.epw
    * - NC, Cumberland County
      - 0.11%
-     - true
      - 28314
-     - -5
      - ../../../weather/G3700510.epw
    * - NC, Currituck County
      - 0.011%
-     - true
      - 27958
-     - -5
      - ../../../weather/G3700530.epw
    * - NC, Dare County
      - 0.025%
-     - true
      - 27949
-     - -5
      - ../../../weather/G3700550.epw
    * - NC, Davidson County
      - 0.054%
-     - true
      - 27360
-     - -5
      - ../../../weather/G3700570.epw
    * - NC, Davie County
      - 0.014%
-     - true
      - 27028
-     - -5
      - ../../../weather/G3700590.epw
    * - NC, Duplin County
      - 0.019%
-     - true
      - 28466
-     - -5
      - ../../../weather/G3700610.epw
    * - NC, Durham County
      - 0.096%
-     - true
      - 27703
-     - -5
      - ../../../weather/G3700630.epw
    * - NC, Edgecombe County
      - 0.018%
-     - true
      - 27801
-     - -5
      - ../../../weather/G3700650.epw
    * - NC, Forsyth County
      - 0.12%
-     - true
      - 27284
-     - -5
      - ../../../weather/G3700670.epw
    * - NC, Franklin County
      - 0.02%
-     - true
      - 27549
-     - -5
      - ../../../weather/G3700690.epw
    * - NC, Gaston County
      - 0.067%
-     - true
      - 28054
-     - -5
      - ../../../weather/G3700710.epw
    * - NC, Gates County
      - 0.0039%
-     - true
      - 27937
-     - -5
      - ../../../weather/G3700730.epw
    * - NC, Graham County
      - 0.0044%
-     - true
      - 28771
-     - -5
      - ../../../weather/G3700750.epw
    * - NC, Granville County
      - 0.017%
-     - true
      - 27565
-     - -5
      - ../../../weather/G3700770.epw
    * - NC, Greene County
      - 0.0061%
-     - true
      - 28580
-     - -5
      - ../../../weather/G3700790.epw
    * - NC, Guilford County
      - 0.17%
-     - true
      - 27406
-     - -5
      - ../../../weather/G3700810.epw
    * - NC, Halifax County
      - 0.019%
-     - true
      - 27870
-     - -5
      - ../../../weather/G3700830.epw
    * - NC, Harnett County
      - 0.037%
-     - true
      - 27546
-     - -5
      - ../../../weather/G3700850.epw
    * - NC, Haywood County
      - 0.026%
-     - true
      - 28786
-     - -5
      - ../../../weather/G3700870.epw
    * - NC, Henderson County
      - 0.041%
-     - true
      - 28792
-     - -5
      - ../../../weather/G3700890.epw
    * - NC, Hertford County
      - 0.0079%
-     - true
      - 27910
-     - -5
      - ../../../weather/G3700910.epw
    * - NC, Hoke County
      - 0.015%
-     - true
      - 28376
-     - -5
      - ../../../weather/G3700930.epw
    * - NC, Hyde County
      - 0.0025%
-     - true
      - 27824
-     - -5
      - ../../../weather/G3700950.epw
    * - NC, Iredell County
      - 0.053%
-     - true
      - 28117
-     - -5
      - ../../../weather/G3700970.epw
    * - NC, Jackson County
      - 0.02%
-     - true
      - 28779
-     - -5
      - ../../../weather/G3700990.epw
    * - NC, Johnston County
      - 0.052%
-     - true
      - 27520
-     - -5
      - ../../../weather/G3701010.epw
    * - NC, Jones County
      - 0.0036%
-     - true
      - 28585
-     - -5
      - ../../../weather/G3701030.epw
    * - NC, Lee County
      - 0.018%
-     - true
      - 27330
-     - -5
      - ../../../weather/G3701050.epw
    * - NC, Lenoir County
      - 0.02%
-     - true
      - 28501
-     - -5
      - ../../../weather/G3701070.epw
    * - NC, Lincoln County
      - 0.025%
-     - true
      - 28092
-     - -5
      - ../../../weather/G3701090.epw
    * - NC, Macon County
      - 0.019%
-     - true
      - 28734
-     - -5
      - ../../../weather/G3701130.epw
    * - NC, Madison County
      - 0.008%
-     - true
      - 28753
-     - -5
      - ../../../weather/G3701150.epw
    * - NC, Martin County
      - 0.0086%
-     - true
      - 27892
-     - -5
      - ../../../weather/G3701170.epw
    * - NC, McDowell County
      - 0.016%
-     - true
      - 28752
-     - -5
      - ../../../weather/G3701110.epw
    * - NC, Mecklenburg County
      - 0.31%
-     - true
      - 28269
-     - -5
      - ../../../weather/G3701190.epw
    * - NC, Mitchell County
      - 0.0065%
-     - true
      - 28777
-     - -5
      - ../../../weather/G3701210.epw
    * - NC, Montgomery County
      - 0.012%
-     - true
      - 27371
-     - -5
      - ../../../weather/G3701230.epw
    * - NC, Moore County
      - 0.034%
-     - true
      - 28374
-     - -5
      - ../../../weather/G3701250.epw
    * - NC, Nash County
      - 0.032%
-     - true
      - 27804
-     - -5
      - ../../../weather/G3701270.epw
    * - NC, New Hanover County
      - 0.079%
-     - true
      - 28412
-     - -5
      - ../../../weather/G3701290.epw
    * - NC, Northampton County
      - 0.0086%
-     - true
      - 27831
-     - -5
      - ../../../weather/G3701310.epw
    * - NC, Onslow County
      - 0.056%
-     - true
      - 28540
-     - -5
      - ../../../weather/G3701330.epw
    * - NC, Orange County
      - 0.042%
-     - true
      - 27514
-     - -5
      - ../../../weather/G3701350.epw
    * - NC, Pamlico County
      - 0.0057%
-     - true
      - 28571
-     - -5
      - ../../../weather/G3701370.epw
    * - NC, Pasquotank County
      - 0.013%
-     - true
      - 27909
-     - -5
      - ../../../weather/G3701390.epw
    * - NC, Pender County
      - 0.02%
-     - true
      - 28443
-     - -5
      - ../../../weather/G3701410.epw
    * - NC, Perquimans County
      - 0.0052%
-     - true
      - 27944
-     - -5
      - ../../../weather/G3701430.epw
    * - NC, Person County
      - 0.014%
-     - true
      - 27574
-     - -5
      - ../../../weather/G3701450.epw
    * - NC, Pitt County
      - 0.057%
-     - true
      - 27858
-     - -5
      - ../../../weather/G3701470.epw
    * - NC, Polk County
      - 0.0086%
-     - true
      - 28782
-     - -5
      - ../../../weather/G3701490.epw
    * - NC, Randolph County
      - 0.046%
-     - true
      - 27205
-     - -5
      - ../../../weather/G3701510.epw
    * - NC, Richmond County
      - 0.016%
-     - true
      - 28379
-     - -5
      - ../../../weather/G3701530.epw
    * - NC, Robeson County
      - 0.039%
-     - true
      - 28358
-     - -5
      - ../../../weather/G3701550.epw
    * - NC, Rockingham County
      - 0.033%
-     - true
      - 27320
-     - -5
      - ../../../weather/G3701570.epw
    * - NC, Rowan County
      - 0.045%
-     - true
      - 28146
-     - -5
      - ../../../weather/G3701590.epw
    * - NC, Rutherford County
      - 0.025%
-     - true
      - 28043
-     - -5
      - ../../../weather/G3701610.epw
    * - NC, Sampson County
      - 0.02%
-     - true
      - 28328
-     - -5
      - ../../../weather/G3701630.epw
    * - NC, Scotland County
      - 0.011%
-     - true
      - 28352
-     - -5
      - ../../../weather/G3701650.epw
    * - NC, Stanly County
      - 0.02%
-     - true
      - 28001
-     - -5
      - ../../../weather/G3701670.epw
    * - NC, Stokes County
      - 0.016%
-     - true
      - 27021
-     - -5
      - ../../../weather/G3701690.epw
    * - NC, Surry County
      - 0.025%
-     - true
      - 27030
-     - -5
      - ../../../weather/G3701710.epw
    * - NC, Swain County
      - 0.0066%
-     - true
      - 28713
-     - -5
      - ../../../weather/G3701730.epw
    * - NC, Transylvania County
      - 0.014%
-     - true
      - 28712
-     - -5
      - ../../../weather/G3701750.epw
    * - NC, Tyrrell County
      - 0.0015%
-     - true
      - 27925
-     - -5
      - ../../../weather/G3701770.epw
    * - NC, Union County
      - 0.057%
-     - true
      - 28173
-     - -5
      - ../../../weather/G3701790.epw
    * - NC, Vance County
      - 0.015%
-     - true
      - 27537
-     - -5
      - ../../../weather/G3701810.epw
    * - NC, Wake County
      - 0.3%
-     - true
      - 27610
-     - -5
      - ../../../weather/G3701830.epw
    * - NC, Warren County
      - 0.0088%
-     - true
      - 27589
-     - -5
      - ../../../weather/G3701850.epw
    * - NC, Washington County
      - 0.0048%
-     - true
      - 27962
-     - -5
      - ../../../weather/G3701870.epw
    * - NC, Watauga County
      - 0.025%
-     - true
      - 28607
-     - -5
      - ../../../weather/G3701890.epw
    * - NC, Wayne County
      - 0.04%
-     - true
      - 27530
-     - -5
      - ../../../weather/G3701910.epw
    * - NC, Wilkes County
      - 0.025%
-     - true
      - 28659
-     - -5
      - ../../../weather/G3701930.epw
    * - NC, Wilson County
      - 0.027%
-     - true
      - 27893
-     - -5
      - ../../../weather/G3701950.epw
    * - NC, Yadkin County
      - 0.013%
-     - true
      - 27055
-     - -5
      - ../../../weather/G3701970.epw
    * - NC, Yancey County
      - 0.0083%
-     - true
      - 28714
-     - -5
      - ../../../weather/G3701990.epw
    * - ND, Adams County
      - 0.001%
-     - true
      - 58639
-     - -7
      - ../../../weather/G3800010.epw
    * - ND, Barnes County
      - 0.0043%
-     - true
      - 58072
-     - -6
      - ../../../weather/G3800030.epw
    * - ND, Benson County
      - 0.0022%
-     - true
      - 58348
-     - -6
      - ../../../weather/G3800050.epw
    * - ND, Billings County
      - 0.00039%
-     - true
      - 58622
-     - -7
      - ../../../weather/G3800070.epw
    * - ND, Bottineau County
      - 0.0033%
-     - true
      - 58318
-     - -6
      - ../../../weather/G3800090.epw
    * - ND, Bowman County
      - 0.0013%
-     - true
      - 58623
-     - -7
      - ../../../weather/G3800110.epw
    * - ND, Burke County
      - 0.001%
-     - true
      - 58773
-     - -6
      - ../../../weather/G3800130.epw
    * - ND, Burleigh County
      - 0.03%
-     - true
      - 58503
-     - -6
      - ../../../weather/G3800150.epw
    * - ND, Cass County
      - 0.056%
-     - true
      - 58103
-     - -6
      - ../../../weather/G3800170.epw
    * - ND, Cavalier County
      - 0.0017%
-     - true
      - 58249
-     - -6
      - ../../../weather/G3800190.epw
    * - ND, Dickey County
      - 0.002%
-     - true
      - 58474
-     - -6
      - ../../../weather/G3800210.epw
    * - ND, Divide County
      - 0.0011%
-     - true
      - 58730
-     - -6
      - ../../../weather/G3800230.epw
    * - ND, Dunn County
      - 0.0018%
-     - true
      - 58640
-     - -7
      - ../../../weather/G3800250.epw
    * - ND, Eddy County
      - 0.00098%
-     - true
      - 58356
-     - -6
      - ../../../weather/G3800270.epw
    * - ND, Emmons County
      - 0.0016%
-     - true
      - 58552
-     - -6
      - ../../../weather/G3800290.epw
    * - ND, Foster County
      - 0.0013%
-     - true
      - 58421
-     - -6
      - ../../../weather/G3800310.epw
    * - ND, Golden Valley County
      - 0.00075%
-     - true
      - 58621
-     - -7
      - ../../../weather/G3800330.epw
    * - ND, Grand Forks County
      - 0.023%
-     - true
      - 58201
-     - -6
      - ../../../weather/G3800350.epw
    * - ND, Grant County
      - 0.0013%
-     - true
      - 58533
-     - -7
      - ../../../weather/G3800370.epw
    * - ND, Griggs County
      - 0.0011%
-     - true
      - 58425
-     - -6
      - ../../../weather/G3800390.epw
    * - ND, Hettinger County
      - 0.0011%
-     - true
      - 58646
-     - -7
      - ../../../weather/G3800410.epw
    * - ND, Kidder County
      - 0.0013%
-     - true
      - 58482
-     - -6
      - ../../../weather/G3800430.epw
    * - ND, LaMoure County
      - 0.0017%
-     - true
      - 58458
-     - -6
      - ../../../weather/G3800450.epw
    * - ND, Logan County
      - 0.00088%
-     - true
      - 58561
-     - -6
      - ../../../weather/G3800470.epw
    * - ND, McHenry County
      - 0.0023%
-     - true
      - 58790
-     - -6
      - ../../../weather/G3800490.epw
    * - ND, McIntosh County
      - 0.0014%
-     - true
      - 58495
-     - -6
      - ../../../weather/G3800510.epw
    * - ND, McKenzie County
      - 0.0034%
-     - true
      - 58854
-     - -7
      - ../../../weather/G3800530.epw
    * - ND, McLean County
      - 0.0044%
-     - true
      - 58540
-     - -6
      - ../../../weather/G3800550.epw
    * - ND, Mercer County
      - 0.0035%
-     - true
      - 58545
-     - -6
      - ../../../weather/G3800570.epw
    * - ND, Morton County
      - 0.01%
-     - true
      - 58554
-     - -6
      - ../../../weather/G3800590.epw
    * - ND, Mountrail County
      - 0.0035%
-     - true
      - 58763
-     - -6
      - ../../../weather/G3800610.epw
    * - ND, Nelson County
      - 0.0014%
-     - true
      - 58344
-     - -6
      - ../../../weather/G3800630.epw
    * - ND, Oliver County
      - 0.00071%
-     - true
      - 58530
-     - -6
      - ../../../weather/G3800650.epw
    * - ND, Pembina County
      - 0.0029%
-     - true
      - 58220
-     - -6
      - ../../../weather/G3800670.epw
    * - ND, Pierce County
      - 0.0017%
-     - true
      - 58368
-     - -6
      - ../../../weather/G3800690.epw
    * - ND, Ramsey County
      - 0.0043%
-     - true
      - 58301
-     - -6
      - ../../../weather/G3800710.epw
    * - ND, Ransom County
      - 0.002%
-     - true
      - 58054
-     - -6
      - ../../../weather/G3800730.epw
    * - ND, Renville County
      - 0.00095%
-     - true
      - 58761
-     - -6
      - ../../../weather/G3800750.epw
    * - ND, Richland County
      - 0.0057%
-     - true
      - 58075
-     - -6
      - ../../../weather/G3800770.epw
    * - ND, Rolette County
      - 0.0041%
-     - true
      - 58367
-     - -6
      - ../../../weather/G3800790.epw
    * - ND, Sargent County
      - 0.0015%
-     - true
      - 58060
-     - -6
      - ../../../weather/G3800810.epw
    * - ND, Sheridan County
      - 0.00065%
-     - true
      - 58463
-     - -6
      - ../../../weather/G3800830.epw
    * - ND, Sioux County
      - 0.00099%
-     - true
      - 58538
-     - -6
      - ../../../weather/G3800850.epw
    * - ND, Slope County
      - 0.00033%
-     - true
      - 58620
-     - -7
      - ../../../weather/G3800870.epw
    * - ND, Stark County
      - 0.01%
-     - true
      - 58601
-     - -7
      - ../../../weather/G3800890.epw
    * - ND, Steele County
      - 0.00093%
-     - true
      - 58230
-     - -6
      - ../../../weather/G3800910.epw
    * - ND, Stutsman County
      - 0.0075%
-     - true
      - 58401
-     - -6
      - ../../../weather/G3800930.epw
    * - ND, Towner County
      - 0.00099%
-     - true
      - 58324
-     - -6
      - ../../../weather/G3800950.epw
    * - ND, Traill County
      - 0.0028%
-     - true
      - 58257
-     - -6
      - ../../../weather/G3800970.epw
    * - ND, Walsh County
      - 0.0042%
-     - true
      - 58237
-     - -6
      - ../../../weather/G3800990.epw
    * - ND, Ward County
      - 0.023%
-     - true
      - 58701
-     - -6
      - ../../../weather/G3801010.epw
    * - ND, Wells County
      - 0.0019%
-     - true
      - 58341
-     - -6
      - ../../../weather/G3801030.epw
    * - ND, Williams County
      - 0.012%
-     - true
      - 58801
-     - -6
      - ../../../weather/G3801050.epw
    * - NE, Adams County
      - 0.01%
-     - true
      - 68901
-     - -6
      - ../../../weather/G3100010.epw
    * - NE, Antelope County
      - 0.0024%
-     - true
      - 68756
-     - -6
      - ../../../weather/G3100030.epw
    * - NE, Arthur County
      - 0.00019%
-     - true
      - 69121
-     - -7
      - ../../../weather/G3100050.epw
    * - NE, Banner County
      - 0.00029%
-     - true
      - 69345
-     - -7
      - ../../../weather/G3100070.epw
    * - NE, Blaine County
      - 0.00026%
-     - true
      - 68833
-     - -6
      - ../../../weather/G3100090.epw
    * - NE, Boone County
      - 0.002%
-     - true
      - 68620
-     - -6
      - ../../../weather/G3100110.epw
    * - NE, Box Butte County
      - 0.0041%
-     - true
      - 69301
-     - -7
      - ../../../weather/G3100130.epw
    * - NE, Boyd County
      - 0.001%
-     - true
      - 68777
-     - -6
      - ../../../weather/G3100150.epw
    * - NE, Brown County
      - 0.0014%
-     - true
      - 69210
-     - -6
      - ../../../weather/G3100170.epw
    * - NE, Buffalo County
      - 0.015%
-     - true
      - 68845
-     - -6
      - ../../../weather/G3100190.epw
    * - NE, Burt County
      - 0.0026%
-     - true
      - 68061
-     - -6
      - ../../../weather/G3100210.epw
    * - NE, Butler County
      - 0.003%
-     - true
      - 68632
-     - -6
      - ../../../weather/G3100230.epw
    * - NE, Cass County
      - 0.0084%
-     - true
      - 68048
-     - -6
      - ../../../weather/G3100250.epw
    * - NE, Cedar County
      - 0.0031%
-     - true
      - 68739
-     - -6
      - ../../../weather/G3100270.epw
    * - NE, Chase County
      - 0.0014%
-     - true
      - 69033
-     - -7
      - ../../../weather/G3100290.epw
    * - NE, Cherry County
      - 0.0023%
-     - true
      - 69201
-     - -6
      - ../../../weather/G3100310.epw
    * - NE, Cheyenne County
      - 0.0037%
-     - true
      - 69162
-     - -7
      - ../../../weather/G3100330.epw
    * - NE, Clay County
      - 0.0022%
-     - true
      - 68979
-     - -6
      - ../../../weather/G3100350.epw
    * - NE, Colfax County
      - 0.0031%
-     - true
      - 68661
-     - -6
      - ../../../weather/G3100370.epw
    * - NE, Cuming County
      - 0.0031%
-     - true
      - 68788
-     - -6
      - ../../../weather/G3100390.epw
    * - NE, Custer County
      - 0.0042%
-     - true
      - 68822
-     - -6
      - ../../../weather/G3100410.epw
    * - NE, Dakota County
      - 0.0058%
-     - true
      - 68776
-     - -6
      - ../../../weather/G3100430.epw
    * - NE, Dawes County
      - 0.0032%
-     - true
      - 69337
-     - -7
      - ../../../weather/G3100450.epw
    * - NE, Dawson County
      - 0.0076%
-     - true
      - 68850
-     - -6
      - ../../../weather/G3100470.epw
    * - NE, Deuel County
      - 0.00074%
-     - true
      - 69129
-     - -7
      - ../../../weather/G3100490.epw
    * - NE, Dixon County
      - 0.002%
-     - true
      - 68770
-     - -6
      - ../../../weather/G3100510.epw
    * - NE, Dodge County
      - 0.012%
-     - true
      - 68025
-     - -6
      - ../../../weather/G3100530.epw
    * - NE, Douglas County
      - 0.17%
-     - true
      - 68022
-     - -6
      - ../../../weather/G3100550.epw
    * - NE, Dundy County
      - 0.00082%
-     - true
      - 69021
-     - -7
      - ../../../weather/G3100570.epw
    * - NE, Fillmore County
      - 0.0022%
-     - true
      - 68361
-     - -6
      - ../../../weather/G3100590.epw
    * - NE, Franklin County
      - 0.0013%
-     - true
      - 68939
-     - -6
      - ../../../weather/G3100610.epw
    * - NE, Frontier County
      - 0.0011%
-     - true
      - 69025
-     - -6
      - ../../../weather/G3100630.epw
    * - NE, Furnas County
      - 0.002%
-     - true
      - 69022
-     - -6
      - ../../../weather/G3100650.epw
    * - NE, Gage County
      - 0.0078%
-     - true
      - 68310
-     - -6
      - ../../../weather/G3100670.epw
    * - NE, Garden County
      - 0.001%
-     - true
      - 69154
-     - -7
      - ../../../weather/G3100690.epw
    * - NE, Garfield County
      - 0.0009%
-     - true
      - 68823
-     - -6
      - ../../../weather/G3100710.epw
    * - NE, Gosper County
      - 0.00093%
-     - true
      - 68937
-     - -6
      - ../../../weather/G3100730.epw
    * - NE, Grant County
      - 0.00029%
-     - true
      - 69350
-     - -7
      - ../../../weather/G3100750.epw
    * - NE, Greeley County
      - 0.00097%
-     - true
      - 68665
-     - -6
      - ../../../weather/G3100770.epw
    * - NE, Hall County
      - 0.018%
-     - true
      - 68801
-     - -6
      - ../../../weather/G3100790.epw
    * - NE, Hamilton County
      - 0.003%
-     - true
      - 68818
-     - -6
      - ../../../weather/G3100810.epw
    * - NE, Harlan County
      - 0.0018%
-     - true
      - 68920
-     - -6
      - ../../../weather/G3100830.epw
    * - NE, Hayes County
      - 0.00039%
-     - true
      - 69032
-     - -6
      - ../../../weather/G3100850.epw
    * - NE, Hitchcock County
      - 0.0013%
-     - true
      - 69024
-     - -6
      - ../../../weather/G3100870.epw
    * - NE, Holt County
      - 0.0039%
-     - true
      - 68763
-     - -6
      - ../../../weather/G3100890.epw
    * - NE, Hooker County
      - 0.00032%
-     - true
      - 69152
-     - -7
      - ../../../weather/G3100910.epw
    * - NE, Howard County
      - 0.0022%
-     - true
      - 68873
-     - -6
      - ../../../weather/G3100930.epw
    * - NE, Jefferson County
      - 0.0029%
-     - true
      - 68352
-     - -6
      - ../../../weather/G3100950.epw
    * - NE, Johnson County
      - 0.0016%
-     - true
      - 68450
-     - -6
      - ../../../weather/G3100970.epw
    * - NE, Kearney County
      - 0.0022%
-     - true
      - 68959
-     - -6
      - ../../../weather/G3100990.epw
    * - NE, Keith County
      - 0.004%
-     - true
      - 69153
-     - -7
      - ../../../weather/G3101010.epw
    * - NE, Keya Paha County
      - 0.00038%
-     - true
      - 68778
-     - -6
      - ../../../weather/G3101030.epw
    * - NE, Kimball County
      - 0.0015%
-     - true
      - 69145
-     - -7
      - ../../../weather/G3101050.epw
    * - NE, Knox County
      - 0.0036%
-     - true
      - 68718
-     - -6
      - ../../../weather/G3101070.epw
    * - NE, Lancaster County
      - 0.093%
-     - true
      - 68516
-     - -6
      - ../../../weather/G3101090.epw
    * - NE, Lincoln County
      - 0.012%
-     - true
      - 69101
-     - -6
      - ../../../weather/G3101110.epw
    * - NE, Logan County
      - 0.00031%
-     - true
      - 69163
-     - -6
      - ../../../weather/G3101130.epw
    * - NE, Loup County
      - 0.00031%
-     - true
      - 68823
-     - -6
      - ../../../weather/G3101150.epw
    * - NE, Madison County
      - 0.011%
-     - true
      - 68701
-     - -6
      - ../../../weather/G3101190.epw
    * - NE, McPherson County
      - 0.00018%
-     - true
      - 69167
-     - -6
      - ../../../weather/G3101170.epw
    * - NE, Merrick County
      - 0.0028%
-     - true
      - 68826
-     - -6
      - ../../../weather/G3101210.epw
    * - NE, Morrill County
      - 0.0018%
-     - true
      - 69336
-     - -7
      - ../../../weather/G3101230.epw
    * - NE, Nance County
      - 0.0014%
-     - true
      - 68638
-     - -6
      - ../../../weather/G3101250.epw
    * - NE, Nemaha County
      - 0.0026%
-     - true
      - 68305
-     - -6
      - ../../../weather/G3101270.epw
    * - NE, Nuckolls County
      - 0.0018%
-     - true
      - 68978
-     - -6
      - ../../../weather/G3101290.epw
    * - NE, Otoe County
      - 0.0053%
-     - true
      - 68410
-     - -6
      - ../../../weather/G3101310.epw
    * - NE, Pawnee County
      - 0.0012%
-     - true
      - 68420
-     - -6
      - ../../../weather/G3101330.epw
    * - NE, Perkins County
      - 0.0011%
-     - true
      - 69140
-     - -7
      - ../../../weather/G3101350.epw
    * - NE, Phelps County
      - 0.0031%
-     - true
      - 68949
-     - -6
      - ../../../weather/G3101370.epw
    * - NE, Pierce County
      - 0.0024%
-     - true
      - 68767
-     - -6
      - ../../../weather/G3101390.epw
    * - NE, Platte County
      - 0.01%
-     - true
      - 68601
-     - -6
      - ../../../weather/G3101410.epw
    * - NE, Polk County
      - 0.002%
-     - true
      - 68666
-     - -6
      - ../../../weather/G3101430.epw
    * - NE, Red Willow County
      - 0.0039%
-     - true
      - 69001
-     - -6
      - ../../../weather/G3101450.epw
    * - NE, Richardson County
      - 0.0033%
-     - true
      - 68355
-     - -6
      - ../../../weather/G3101470.epw
    * - NE, Rock County
      - 0.00065%
-     - true
      - 68714
-     - -6
      - ../../../weather/G3101490.epw
    * - NE, Saline County
      - 0.0043%
-     - true
      - 68333
-     - -6
      - ../../../weather/G3101510.epw
    * - NE, Sarpy County
      - 0.049%
-     - true
      - 68046
-     - -6
      - ../../../weather/G3101530.epw
    * - NE, Saunders County
      - 0.007%
-     - true
      - 68066
-     - -6
      - ../../../weather/G3101550.epw
    * - NE, Scotts Bluff County
      - 0.012%
-     - true
      - 69361
-     - -7
      - ../../../weather/G3101570.epw
    * - NE, Seward County
      - 0.0052%
-     - true
      - 68434
-     - -6
      - ../../../weather/G3101590.epw
    * - NE, Sheridan County
      - 0.0022%
-     - true
      - 69343
-     - -7
      - ../../../weather/G3101610.epw
    * - NE, Sherman County
      - 0.0014%
-     - true
      - 68853
-     - -6
      - ../../../weather/G3101630.epw
    * - NE, Sioux County
      - 0.00058%
-     - true
      - 69346
-     - -7
      - ../../../weather/G3101650.epw
    * - NE, Stanton County
      - 0.002%
-     - true
      - 68779
-     - -6
      - ../../../weather/G3101670.epw
    * - NE, Thayer County
      - 0.002%
-     - true
      - 68370
-     - -6
      - ../../../weather/G3101690.epw
    * - NE, Thomas County
      - 0.00029%
-     - true
      - 69166
-     - -6
      - ../../../weather/G3101710.epw
    * - NE, Thurston County
      - 0.0018%
-     - true
      - 68071
-     - -6
      - ../../../weather/G3101730.epw
    * - NE, Valley County
      - 0.0017%
-     - true
      - 68862
-     - -6
      - ../../../weather/G3101750.epw
    * - NE, Washington County
      - 0.0063%
-     - true
      - 68008
-     - -6
      - ../../../weather/G3101770.epw
    * - NE, Wayne County
      - 0.0029%
-     - true
      - 68787
-     - -6
      - ../../../weather/G3101790.epw
    * - NE, Webster County
      - 0.0014%
-     - true
      - 68970
-     - -6
      - ../../../weather/G3101810.epw
    * - NE, Wheeler County
      - 0.00041%
-     - true
      - 68637
-     - -6
      - ../../../weather/G3101830.epw
    * - NE, York County
      - 0.0047%
-     - true
      - 68467
-     - -6
      - ../../../weather/G3101850.epw
    * - NH, Belknap County
      - 0.028%
-     - true
      - 03246
-     - -5
      - ../../../weather/G3300010.epw
    * - NH, Carroll County
      - 0.03%
-     - true
      - 03894
-     - -5
      - ../../../weather/G3300030.epw
    * - NH, Cheshire County
      - 0.026%
-     - true
      - 03431
-     - -5
      - ../../../weather/G3300050.epw
    * - NH, Coos County
      - 0.016%
-     - true
      - 03570
-     - -5
      - ../../../weather/G3300070.epw
    * - NH, Grafton County
      - 0.039%
-     - true
      - 03766
-     - -5
      - ../../../weather/G3300090.epw
    * - NH, Hillsborough County
      - 0.13%
-     - true
      - 03103
-     - -5
      - ../../../weather/G3300110.epw
    * - NH, Merrimack County
      - 0.048%
-     - true
      - 03301
-     - -5
      - ../../../weather/G3300130.epw
    * - NH, Rockingham County
      - 0.096%
-     - true
      - 03038
-     - -5
      - ../../../weather/G3300150.epw
    * - NH, Strafford County
      - 0.039%
-     - true
      - 03820
-     - -5
      - ../../../weather/G3300170.epw
    * - NH, Sullivan County
      - 0.017%
-     - true
      - 03743
-     - -5
      - ../../../weather/G3300190.epw
    * - NJ, Atlantic County
      - 0.095%
-     - true
      - 08401
-     - -5
      - ../../../weather/G3400010.epw
    * - NJ, Bergen County
      - 0.26%
-     - true
      - 07410
-     - -5
      - ../../../weather/G3400030.epw
    * - NJ, Burlington County
      - 0.13%
-     - true
      - 08054
-     - -5
      - ../../../weather/G3400050.epw
    * - NJ, Camden County
      - 0.15%
-     - true
      - 08021
-     - -5
      - ../../../weather/G3400070.epw
    * - NJ, Cape May County
      - 0.074%
-     - true
      - 08260
-     - -5
      - ../../../weather/G3400090.epw
    * - NJ, Cumberland County
      - 0.042%
-     - true
      - 08332
-     - -5
      - ../../../weather/G3400110.epw
    * - NJ, Essex County
      - 0.23%
-     - true
      - 07111
-     - -5
      - ../../../weather/G3400130.epw
    * - NJ, Gloucester County
      - 0.084%
-     - true
      - 08096
-     - -5
      - ../../../weather/G3400150.epw
    * - NJ, Hudson County
      - 0.21%
-     - true
      - 07302
-     - -5
      - ../../../weather/G3400170.epw
    * - NJ, Hunterdon County
      - 0.037%
-     - true
      - 08822
-     - -5
      - ../../../weather/G3400190.epw
    * - NJ, Mercer County
      - 0.11%
-     - true
      - 08618
-     - -5
      - ../../../weather/G3400210.epw
    * - NJ, Middlesex County
      - 0.22%
-     - true
      - 08831
-     - -5
      - ../../../weather/G3400230.epw
    * - NJ, Monmouth County
      - 0.19%
-     - true
      - 07728
-     - -5
      - ../../../weather/G3400250.epw
    * - NJ, Morris County
      - 0.14%
-     - true
      - 07960
-     - -5
      - ../../../weather/G3400270.epw
    * - NJ, Ocean County
      - 0.21%
-     - true
      - 08701
-     - -5
      - ../../../weather/G3400290.epw
    * - NJ, Passaic County
      - 0.13%
-     - true
      - 07055
-     - -5
      - ../../../weather/G3400310.epw
    * - NJ, Salem County
      - 0.021%
-     - true
      - 08069
-     - -5
      - ../../../weather/G3400330.epw
    * - NJ, Somerset County
      - 0.093%
-     - true
      - 08873
-     - -5
      - ../../../weather/G3400350.epw
    * - NJ, Sussex County
      - 0.046%
-     - true
      - 07860
-     - -5
      - ../../../weather/G3400370.epw
    * - NJ, Union County
      - 0.15%
-     - true
      - 07083
-     - -5
      - ../../../weather/G3400390.epw
    * - NJ, Warren County
      - 0.034%
-     - true
      - 08865
-     - -5
      - ../../../weather/G3400410.epw
    * - NM, Bernalillo County
      - 0.21%
-     - true
      - 87111
-     - -7
      - ../../../weather/G3500010.epw
    * - NM, Catron County
      - 0.0029%
-     - true
      - 87829
-     - -7
      - ../../../weather/G3500030.epw
    * - NM, Chaves County
      - 0.02%
-     - true
      - 88203
-     - -7
      - ../../../weather/G3500050.epw
    * - NM, Cibola County
      - 0.0083%
-     - true
      - 87020
-     - -7
      - ../../../weather/G3500060.epw
    * - NM, Colfax County
      - 0.0075%
-     - true
      - 87740
-     - -7
      - ../../../weather/G3500070.epw
    * - NM, Curry County
      - 0.015%
-     - true
      - 88101
-     - -7
      - ../../../weather/G3500090.epw
    * - NM, De Baca County
      - 0.00076%
-     - true
      - 88119
-     - -7
      - ../../../weather/G3500110.epw
    * - NM, Dona Ana County
      - 0.063%
-     - true
      - 88001
-     - -7
      - ../../../weather/G3500130.epw
    * - NM, Eddy County
      - 0.017%
-     - true
      - 88220
-     - -7
      - ../../../weather/G3500150.epw
    * - NM, Grant County
      - 0.011%
-     - true
      - 88061
-     - -7
      - ../../../weather/G3500170.epw
    * - NM, Guadalupe County
      - 0.0017%
-     - true
      - 88435
-     - -7
      - ../../../weather/G3500190.epw
    * - NM, Harding County
      - 0.00038%
-     - true
      - 87743
-     - -7
      - ../../../weather/G3500210.epw
    * - NM, Hidalgo County
      - 0.0018%
-     - true
      - 88045
-     - -7
      - ../../../weather/G3500230.epw
    * - NM, Lea County
      - 0.019%
-     - true
      - 88240
-     - -7
      - ../../../weather/G3500250.epw
    * - NM, Lincoln County
      - 0.013%
-     - true
      - 88355
-     - -7
      - ../../../weather/G3500270.epw
    * - NM, Los Alamos County
      - 0.0062%
-     - true
      - 87544
-     - -7
      - ../../../weather/G3500280.epw
    * - NM, Luna County
      - 0.0082%
-     - true
      - 88030
-     - -7
      - ../../../weather/G3500290.epw
    * - NM, McKinley County
      - 0.019%
-     - true
      - 87301
-     - -7
      - ../../../weather/G3500310.epw
    * - NM, Mora County
      - 0.0022%
-     - true
      - 87722
-     - -7
      - ../../../weather/G3500330.epw
    * - NM, Otero County
      - 0.023%
-     - true
      - 88310
-     - -7
      - ../../../weather/G3500350.epw
    * - NM, Quay County
      - 0.0041%
-     - true
      - 88401
-     - -7
      - ../../../weather/G3500370.epw
    * - NM, Rio Arriba County
      - 0.015%
-     - true
      - 87532
-     - -7
      - ../../../weather/G3500390.epw
    * - NM, Roosevelt County
      - 0.0062%
-     - true
      - 88130
-     - -7
      - ../../../weather/G3500410.epw
    * - NM, San Juan County
      - 0.037%
-     - true
      - 87401
-     - -7
      - ../../../weather/G3500450.epw
    * - NM, San Miguel County
      - 0.012%
-     - true
      - 87701
-     - -7
      - ../../../weather/G3500470.epw
    * - NM, Sandoval County
      - 0.04%
-     - true
      - 87124
-     - -7
      - ../../../weather/G3500430.epw
    * - NM, Santa Fe County
      - 0.054%
-     - true
      - 87507
-     - -7
      - ../../../weather/G3500490.epw
    * - NM, Sierra County
      - 0.0062%
-     - true
      - 87901
-     - -7
      - ../../../weather/G3500510.epw
    * - NM, Socorro County
      - 0.006%
-     - true
      - 87801
-     - -7
      - ../../../weather/G3500530.epw
    * - NM, Taos County
      - 0.015%
-     - true
      - 87571
-     - -7
      - ../../../weather/G3500550.epw
    * - NM, Torrance County
      - 0.0058%
-     - true
      - 87035
-     - -7
      - ../../../weather/G3500570.epw
    * - NM, Union County
      - 0.0017%
-     - true
      - 88415
-     - -7
      - ../../../weather/G3500590.epw
    * - NM, Valencia County
      - 0.023%
-     - true
      - 87031
-     - -7
      - ../../../weather/G3500610.epw
    * - NV, Carson City
      - 0.017%
-     - true
      - 89701
-     - -8
      - ../../../weather/G3205100.epw
    * - NV, Churchill County
      - 0.008%
-     - true
      - 89406
-     - -8
      - ../../../weather/G3200010.epw
    * - NV, Clark County
      - 0.64%
-     - true
      - 89052
-     - -8
      - ../../../weather/G3200030.epw
    * - NV, Douglas County
      - 0.018%
-     - true
      - 89460
-     - -8
      - ../../../weather/G3200050.epw
    * - NV, Elko County
      - 0.015%
-     - true
      - 89801
-     - -8
      - ../../../weather/G3200070.epw
    * - NV, Esmeralda County
      - 0.00072%
-     - true
      - 89010
-     - -8
      - ../../../weather/G3200090.epw
    * - NV, Eureka County
      - 0.00085%
-     - true
      - 89316
-     - -8
      - ../../../weather/G3200110.epw
    * - NV, Humboldt County
      - 0.0054%
-     - true
      - 89445
-     - -8
      - ../../../weather/G3200130.epw
    * - NV, Lander County
      - 0.0019%
-     - true
      - 89820
-     - -8
      - ../../../weather/G3200150.epw
    * - NV, Lincoln County
      - 0.0019%
-     - true
      - 89017
-     - -8
      - ../../../weather/G3200170.epw
    * - NV, Lyon County
      - 0.017%
-     - true
      - 89408
-     - -8
      - ../../../weather/G3200190.epw
    * - NV, Mineral County
      - 0.0021%
-     - true
      - 89415
-     - -8
      - ../../../weather/G3200210.epw
    * - NV, Nye County
      - 0.016%
-     - true
      - 89048
-     - -8
      - ../../../weather/G3200230.epw
    * - NV, Pershing County
      - 0.0018%
-     - true
      - 89419
-     - -8
      - ../../../weather/G3200270.epw
    * - NV, Storey County
      - 0.0015%
-     - true
      - 89521
-     - -8
      - ../../../weather/G3200290.epw
    * - NV, Washoe County
      - 0.14%
-     - true
      - 89502
-     - -8
      - ../../../weather/G3200310.epw
    * - NV, White Pine County
      - 0.0033%
-     - true
      - 89301
-     - -8
      - ../../../weather/G3200330.epw
    * - NY, Albany County
      - 0.1%
-     - true
      - 12203
-     - -5
      - ../../../weather/G3600010.epw
    * - NY, Allegany County
      - 0.019%
-     - true
      - 14895
-     - -5
      - ../../../weather/G3600030.epw
    * - NY, Bronx County
      - 0.39%
-     - true
      - 10467
-     - -5
      - ../../../weather/G3600050.epw
    * - NY, Broome County
      - 0.067%
-     - true
      - 13760
-     - -5
      - ../../../weather/G3600070.epw
    * - NY, Cattaraugus County
      - 0.031%
-     - true
      - 14760
-     - -5
      - ../../../weather/G3600090.epw
    * - NY, Cayuga County
      - 0.027%
-     - true
      - 13021
-     - -5
      - ../../../weather/G3600110.epw
    * - NY, Chautauqua County
      - 0.05%
-     - true
      - 14701
-     - -5
      - ../../../weather/G3600130.epw
    * - NY, Chemung County
      - 0.029%
-     - true
      - 14845
-     - -5
      - ../../../weather/G3600150.epw
    * - NY, Chenango County
      - 0.019%
-     - true
      - 13815
-     - -5
      - ../../../weather/G3600170.epw
    * - NY, Clinton County
      - 0.027%
-     - true
      - 12901
-     - -5
      - ../../../weather/G3600190.epw
    * - NY, Columbia County
      - 0.025%
-     - true
      - 12534
-     - -5
      - ../../../weather/G3600210.epw
    * - NY, Cortland County
      - 0.015%
-     - true
      - 13045
-     - -5
      - ../../../weather/G3600230.epw
    * - NY, Delaware County
      - 0.023%
-     - true
      - 13856
-     - -5
      - ../../../weather/G3600250.epw
    * - NY, Dutchess County
      - 0.089%
-     - true
      - 12601
-     - -5
      - ../../../weather/G3600270.epw
    * - NY, Erie County
      - 0.31%
-     - true
      - 14221
-     - -5
      - ../../../weather/G3600290.epw
    * - NY, Essex County
      - 0.019%
-     - true
      - 12946
-     - -5
      - ../../../weather/G3600310.epw
    * - NY, Franklin County
      - 0.019%
-     - true
      - 12953
-     - -5
      - ../../../weather/G3600330.epw
    * - NY, Fulton County
      - 0.021%
-     - true
      - 12078
-     - -5
      - ../../../weather/G3600350.epw
    * - NY, Genesee County
      - 0.019%
-     - true
      - 14020
-     - -5
      - ../../../weather/G3600370.epw
    * - NY, Greene County
      - 0.022%
-     - true
      - 12414
-     - -5
      - ../../../weather/G3600390.epw
    * - NY, Hamilton County
      - 0.0065%
-     - true
      - 12842
-     - -5
      - ../../../weather/G3600410.epw
    * - NY, Herkimer County
      - 0.025%
-     - true
      - 13357
-     - -5
      - ../../../weather/G3600430.epw
    * - NY, Jefferson County
      - 0.044%
-     - true
      - 13601
-     - -5
      - ../../../weather/G3600450.epw
    * - NY, Kings County
      - 0.76%
-     - true
      - 11226
-     - -5
      - ../../../weather/G3600470.epw
    * - NY, Lewis County
      - 0.011%
-     - true
      - 13367
-     - -5
      - ../../../weather/G3600490.epw
    * - NY, Livingston County
      - 0.02%
-     - true
      - 14454
-     - -5
      - ../../../weather/G3600510.epw
    * - NY, Madison County
      - 0.024%
-     - true
      - 13032
-     - -5
      - ../../../weather/G3600530.epw
    * - NY, Monroe County
      - 0.24%
-     - true
      - 14580
-     - -5
      - ../../../weather/G3600550.epw
    * - NY, Montgomery County
      - 0.017%
-     - true
      - 12010
-     - -5
      - ../../../weather/G3600570.epw
    * - NY, Nassau County
      - 0.35%
-     - true
      - 11758
-     - -5
      - ../../../weather/G3600590.epw
    * - NY, New York County
      - 0.65%
-     - true
      - 10025
-     - -5
      - ../../../weather/G3600610.epw
    * - NY, Niagara County
      - 0.074%
-     - true
      - 14094
-     - -5
      - ../../../weather/G3600630.epw
    * - NY, Oneida County
      - 0.078%
-     - true
      - 13440
-     - -5
      - ../../../weather/G3600650.epw
    * - NY, Onondaga County
      - 0.15%
-     - true
      - 13027
-     - -5
      - ../../../weather/G3600670.epw
    * - NY, Ontario County
      - 0.037%
-     - true
      - 14424
-     - -5
      - ../../../weather/G3600690.epw
    * - NY, Orange County
      - 0.1%
-     - true
      - 12550
-     - -5
      - ../../../weather/G3600710.epw
    * - NY, Orleans County
      - 0.014%
-     - true
      - 14411
-     - -5
      - ../../../weather/G3600730.epw
    * - NY, Oswego County
      - 0.04%
-     - true
      - 13126
-     - -5
      - ../../../weather/G3600750.epw
    * - NY, Otsego County
      - 0.023%
-     - true
      - 13820
-     - -5
      - ../../../weather/G3600770.epw
    * - NY, Putnam County
      - 0.029%
-     - true
      - 10512
-     - -5
      - ../../../weather/G3600790.epw
    * - NY, Queens County
      - 0.63%
-     - true
      - 11375
-     - -5
      - ../../../weather/G3600810.epw
    * - NY, Rensselaer County
      - 0.054%
-     - true
      - 12180
-     - -5
      - ../../../weather/G3600830.epw
    * - NY, Richmond County
      - 0.13%
-     - true
      - 10314
-     - -5
      - ../../../weather/G3600850.epw
    * - NY, Rockland County
      - 0.078%
-     - true
      - 10977
-     - -5
      - ../../../weather/G3600870.epw
    * - NY, Saratoga County
      - 0.076%
-     - true
      - 12866
-     - -5
      - ../../../weather/G3600910.epw
    * - NY, Schenectady County
      - 0.051%
-     - true
      - 12306
-     - -5
      - ../../../weather/G3600930.epw
    * - NY, Schoharie County
      - 0.013%
-     - true
      - 12043
-     - -5
      - ../../../weather/G3600950.epw
    * - NY, Schuyler County
      - 0.0071%
-     - true
      - 14891
-     - -5
      - ../../../weather/G3600970.epw
    * - NY, Seneca County
      - 0.012%
-     - true
      - 13148
-     - -5
      - ../../../weather/G3600990.epw
    * - NY, St. Lawrence County
      - 0.039%
-     - true
      - 13676
-     - -5
      - ../../../weather/G3600890.epw
    * - NY, Steuben County
      - 0.036%
-     - true
      - 14830
-     - -5
      - ../../../weather/G3601010.epw
    * - NY, Suffolk County
      - 0.43%
-     - true
      - 11746
-     - -5
      - ../../../weather/G3601030.epw
    * - NY, Sullivan County
      - 0.037%
-     - true
      - 12701
-     - -5
      - ../../../weather/G3601050.epw
    * - NY, Tioga County
      - 0.017%
-     - true
      - 13827
-     - -5
      - ../../../weather/G3601070.epw
    * - NY, Tompkins County
      - 0.031%
-     - true
      - 14850
-     - -5
      - ../../../weather/G3601090.epw
    * - NY, Ulster County
      - 0.062%
-     - true
      - 12401
-     - -5
      - ../../../weather/G3601110.epw
    * - NY, Warren County
      - 0.029%
-     - true
      - 12804
-     - -5
      - ../../../weather/G3601130.epw
    * - NY, Washington County
      - 0.022%
-     - true
      - 12839
-     - -5
      - ../../../weather/G3601150.epw
    * - NY, Wayne County
      - 0.031%
-     - true
      - 14513
-     - -5
      - ../../../weather/G3601170.epw
    * - NY, Westchester County
      - 0.28%
-     - true
      - 10701
-     - -5
      - ../../../weather/G3601190.epw
    * - NY, Wyoming County
      - 0.013%
-     - true
      - 14569
-     - -5
      - ../../../weather/G3601210.epw
    * - NY, Yates County
      - 0.01%
-     - true
      - 14527
-     - -5
      - ../../../weather/G3601230.epw
    * - OH, Adams County
      - 0.0095%
-     - true
      - 45693
-     - -5
      - ../../../weather/G3900010.epw
    * - OH, Allen County
      - 0.033%
-     - true
      - 45805
-     - -5
      - ../../../weather/G3900030.epw
    * - OH, Ashland County
      - 0.016%
-     - true
      - 44805
-     - -5
      - ../../../weather/G3900050.epw
    * - OH, Ashtabula County
      - 0.034%
-     - true
      - 44004
-     - -5
      - ../../../weather/G3900070.epw
    * - OH, Athens County
      - 0.02%
-     - true
      - 45701
-     - -5
      - ../../../weather/G3900090.epw
    * - OH, Auglaize County
      - 0.015%
-     - true
      - 45895
-     - -5
      - ../../../weather/G3900110.epw
    * - OH, Belmont County
      - 0.024%
-     - true
      - 43950
-     - -5
      - ../../../weather/G3900130.epw
    * - OH, Brown County
      - 0.015%
-     - true
      - 45121
-     - -5
      - ../../../weather/G3900150.epw
    * - OH, Butler County
      - 0.11%
-     - true
      - 45011
-     - -5
      - ../../../weather/G3900170.epw
    * - OH, Carroll County
      - 0.01%
-     - true
      - 44615
-     - -5
      - ../../../weather/G3900190.epw
    * - OH, Champaign County
      - 0.012%
-     - true
      - 43078
-     - -5
      - ../../../weather/G3900210.epw
    * - OH, Clark County
      - 0.046%
-     - true
      - 45503
-     - -5
      - ../../../weather/G3900230.epw
    * - OH, Clermont County
      - 0.061%
-     - true
      - 45103
-     - -5
      - ../../../weather/G3900250.epw
    * - OH, Clinton County
      - 0.013%
-     - true
      - 45177
-     - -5
      - ../../../weather/G3900270.epw
    * - OH, Columbiana County
      - 0.035%
-     - true
      - 43920
-     - -5
      - ../../../weather/G3900290.epw
    * - OH, Coshocton County
      - 0.012%
-     - true
      - 43812
-     - -5
      - ../../../weather/G3900310.epw
    * - OH, Crawford County
      - 0.015%
-     - true
      - 44820
-     - -5
      - ../../../weather/G3900330.epw
    * - OH, Cuyahoga County
      - 0.46%
-     - true
      - 44107
-     - -5
      - ../../../weather/G3900350.epw
    * - OH, Darke County
      - 0.017%
-     - true
      - 45331
-     - -5
      - ../../../weather/G3900370.epw
    * - OH, Defiance County
      - 0.012%
-     - true
      - 43512
-     - -5
      - ../../../weather/G3900390.epw
    * - OH, Delaware County
      - 0.052%
-     - true
      - 43015
-     - -5
      - ../../../weather/G3900410.epw
    * - OH, Erie County
      - 0.028%
-     - true
      - 44870
-     - -5
      - ../../../weather/G3900430.epw
    * - OH, Fairfield County
      - 0.044%
-     - true
      - 43130
-     - -5
      - ../../../weather/G3900450.epw
    * - OH, Fayette County
      - 0.0095%
-     - true
      - 43160
-     - -5
      - ../../../weather/G3900470.epw
    * - OH, Franklin County
      - 0.4%
-     - true
      - 43081
-     - -5
      - ../../../weather/G3900490.epw
    * - OH, Fulton County
      - 0.013%
-     - true
      - 43567
-     - -5
      - ../../../weather/G3900510.epw
    * - OH, Gallia County
      - 0.01%
-     - true
      - 45631
-     - -5
      - ../../../weather/G3900530.epw
    * - OH, Geauga County
      - 0.027%
-     - true
      - 44024
-     - -5
      - ../../../weather/G3900550.epw
    * - OH, Greene County
      - 0.052%
-     - true
      - 45324
-     - -5
      - ../../../weather/G3900570.epw
    * - OH, Guernsey County
      - 0.014%
-     - true
      - 43725
-     - -5
      - ../../../weather/G3900590.epw
    * - OH, Hamilton County
      - 0.28%
-     - true
      - 45238
-     - -5
      - ../../../weather/G3900610.epw
    * - OH, Hancock County
      - 0.025%
-     - true
      - 45840
-     - -5
      - ../../../weather/G3900630.epw
    * - OH, Hardin County
      - 0.0098%
-     - true
      - 43326
-     - -5
      - ../../../weather/G3900650.epw
    * - OH, Harrison County
      - 0.006%
-     - true
      - 43907
-     - -5
      - ../../../weather/G3900670.epw
    * - OH, Henry County
      - 0.0089%
-     - true
      - 43545
-     - -5
      - ../../../weather/G3900690.epw
    * - OH, Highland County
      - 0.014%
-     - true
      - 45133
-     - -5
      - ../../../weather/G3900710.epw
    * - OH, Hocking County
      - 0.0099%
-     - true
      - 43138
-     - -5
      - ../../../weather/G3900730.epw
    * - OH, Holmes County
      - 0.01%
-     - true
      - 44654
-     - -5
      - ../../../weather/G3900750.epw
    * - OH, Huron County
      - 0.019%
-     - true
      - 44857
-     - -5
      - ../../../weather/G3900770.epw
    * - OH, Jackson County
      - 0.011%
-     - true
      - 45640
-     - -5
      - ../../../weather/G3900790.epw
    * - OH, Jefferson County
      - 0.024%
-     - true
      - 43952
-     - -5
      - ../../../weather/G3900810.epw
    * - OH, Knox County
      - 0.019%
-     - true
      - 43050
-     - -5
      - ../../../weather/G3900830.epw
    * - OH, Lake County
      - 0.076%
-     - true
      - 44060
-     - -5
      - ../../../weather/G3900850.epw
    * - OH, Lawrence County
      - 0.02%
-     - true
      - 45638
-     - -5
      - ../../../weather/G3900870.epw
    * - OH, Licking County
      - 0.052%
-     - true
      - 43055
-     - -5
      - ../../../weather/G3900890.epw
    * - OH, Logan County
      - 0.017%
-     - true
      - 43311
-     - -5
      - ../../../weather/G3900910.epw
    * - OH, Lorain County
      - 0.096%
-     - true
      - 44035
-     - -5
      - ../../../weather/G3900930.epw
    * - OH, Lucas County
      - 0.15%
-     - true
      - 43615
-     - -5
      - ../../../weather/G3900950.epw
    * - OH, Madison County
      - 0.012%
-     - true
      - 43140
-     - -5
      - ../../../weather/G3900970.epw
    * - OH, Mahoning County
      - 0.083%
-     - true
      - 44512
-     - -5
      - ../../../weather/G3900990.epw
    * - OH, Marion County
      - 0.021%
-     - true
      - 43302
-     - -5
      - ../../../weather/G3901010.epw
    * - OH, Medina County
      - 0.053%
-     - true
      - 44256
-     - -5
      - ../../../weather/G3901030.epw
    * - OH, Meigs County
      - 0.0082%
-     - true
      - 45769
-     - -5
      - ../../../weather/G3901050.epw
    * - OH, Mercer County
      - 0.013%
-     - true
      - 45822
-     - -5
      - ../../../weather/G3901070.epw
    * - OH, Miami County
      - 0.033%
-     - true
      - 45373
-     - -5
      - ../../../weather/G3901090.epw
    * - OH, Monroe County
      - 0.0056%
-     - true
      - 43793
-     - -5
      - ../../../weather/G3901110.epw
    * - OH, Montgomery County
      - 0.19%
-     - true
      - 45424
-     - -5
      - ../../../weather/G3901130.epw
    * - OH, Morgan County
      - 0.0058%
-     - true
      - 43756
-     - -5
      - ../../../weather/G3901150.epw
    * - OH, Morrow County
      - 0.011%
-     - true
      - 43338
-     - -5
      - ../../../weather/G3901170.epw
    * - OH, Muskingum County
      - 0.028%
-     - true
      - 43701
-     - -5
      - ../../../weather/G3901190.epw
    * - OH, Noble County
      - 0.0045%
-     - true
      - 43724
-     - -5
      - ../../../weather/G3901210.epw
    * - OH, Ottawa County
      - 0.021%
-     - true
      - 43452
-     - -5
      - ../../../weather/G3901230.epw
    * - OH, Paulding County
      - 0.0065%
-     - true
      - 45879
-     - -5
      - ../../../weather/G3901250.epw
    * - OH, Perry County
      - 0.011%
-     - true
      - 43764
-     - -5
      - ../../../weather/G3901270.epw
    * - OH, Pickaway County
      - 0.016%
-     - true
      - 43113
-     - -5
      - ../../../weather/G3901290.epw
    * - OH, Pike County
      - 0.0093%
-     - true
      - 45690
-     - -5
      - ../../../weather/G3901310.epw
    * - OH, Portage County
      - 0.051%
-     - true
      - 44240
-     - -5
      - ../../../weather/G3901330.epw
    * - OH, Preble County
      - 0.013%
-     - true
      - 45320
-     - -5
      - ../../../weather/G3901350.epw
    * - OH, Putnam County
      - 0.01%
-     - true
      - 45875
-     - -5
      - ../../../weather/G3901370.epw
    * - OH, Richland County
      - 0.04%
-     - true
      - 44903
-     - -5
      - ../../../weather/G3901390.epw
    * - OH, Ross County
      - 0.024%
-     - true
      - 45601
-     - -5
      - ../../../weather/G3901410.epw
    * - OH, Sandusky County
      - 0.02%
-     - true
      - 43420
-     - -5
      - ../../../weather/G3901430.epw
    * - OH, Scioto County
      - 0.025%
-     - true
      - 45662
-     - -5
      - ../../../weather/G3901450.epw
    * - OH, Seneca County
      - 0.018%
-     - true
      - 44883
-     - -5
      - ../../../weather/G3901470.epw
    * - OH, Shelby County
      - 0.015%
-     - true
      - 45365
-     - -5
      - ../../../weather/G3901490.epw
    * - OH, Stark County
      - 0.12%
-     - true
      - 44646
-     - -5
      - ../../../weather/G3901510.epw
    * - OH, Summit County
      - 0.18%
-     - true
      - 44224
-     - -5
      - ../../../weather/G3901530.epw
    * - OH, Trumbull County
      - 0.071%
-     - true
      - 44483
-     - -5
      - ../../../weather/G3901550.epw
    * - OH, Tuscarawas County
      - 0.03%
-     - true
      - 44663
-     - -5
      - ../../../weather/G3901570.epw
    * - OH, Union County
      - 0.015%
-     - true
      - 43040
-     - -5
      - ../../../weather/G3901590.epw
    * - OH, Van Wert County
      - 0.0094%
-     - true
      - 45891
-     - -5
      - ../../../weather/G3901610.epw
    * - OH, Vinton County
      - 0.0046%
-     - true
      - 45651
-     - -5
      - ../../../weather/G3901630.epw
    * - OH, Warren County
      - 0.062%
-     - true
      - 45040
-     - -5
      - ../../../weather/G3901650.epw
    * - OH, Washington County
      - 0.021%
-     - true
      - 45750
-     - -5
      - ../../../weather/G3901670.epw
    * - OH, Wayne County
      - 0.034%
-     - true
      - 44691
-     - -5
      - ../../../weather/G3901690.epw
    * - OH, Williams County
      - 0.012%
-     - true
      - 43506
-     - -5
      - ../../../weather/G3901710.epw
    * - OH, Wood County
      - 0.04%
-     - true
      - 43551
-     - -5
      - ../../../weather/G3901730.epw
    * - OH, Wyandot County
      - 0.0074%
-     - true
      - 43351
-     - -5
      - ../../../weather/G3901750.epw
    * - OK, Adair County
      - 0.0069%
-     - true
      - 74960
-     - -6
      - ../../../weather/G4000010.epw
    * - OK, Alfalfa County
      - 0.002%
-     - true
      - 73728
-     - -6
      - ../../../weather/G4000030.epw
    * - OK, Atoka County
      - 0.0047%
-     - true
      - 74525
-     - -6
      - ../../../weather/G4000050.epw
    * - OK, Beaver County
      - 0.002%
-     - true
      - 73932
-     - -6
      - ../../../weather/G4000070.epw
    * - OK, Beckham County
      - 0.0074%
-     - true
      - 73644
-     - -6
      - ../../../weather/G4000090.epw
    * - OK, Blaine County
      - 0.0036%
-     - true
      - 73772
-     - -6
      - ../../../weather/G4000110.epw
    * - OK, Bryan County
      - 0.015%
-     - true
      - 74701
-     - -6
      - ../../../weather/G4000130.epw
    * - OK, Caddo County
      - 0.0099%
-     - true
      - 73005
-     - -6
      - ../../../weather/G4000150.epw
    * - OK, Canadian County
      - 0.035%
-     - true
      - 73099
-     - -6
      - ../../../weather/G4000170.epw
    * - OK, Carter County
      - 0.016%
-     - true
      - 73401
-     - -6
      - ../../../weather/G4000190.epw
    * - OK, Cherokee County
      - 0.016%
-     - true
      - 74464
-     - -6
      - ../../../weather/G4000210.epw
    * - OK, Choctaw County
      - 0.0056%
-     - true
      - 74743
-     - -6
      - ../../../weather/G4000230.epw
    * - OK, Cimarron County
      - 0.0012%
-     - true
      - 73933
-     - -6
      - ../../../weather/G4000250.epw
    * - OK, Cleveland County
      - 0.082%
-     - true
      - 73160
-     - -6
      - ../../../weather/G4000270.epw
    * - OK, Coal County
      - 0.0021%
-     - true
      - 74538
-     - -6
      - ../../../weather/G4000290.epw
    * - OK, Comanche County
      - 0.038%
-     - true
      - 73505
-     - -6
      - ../../../weather/G4000310.epw
    * - OK, Cotton County
      - 0.0022%
-     - true
      - 73572
-     - -6
      - ../../../weather/G4000330.epw
    * - OK, Craig County
      - 0.005%
-     - true
      - 74301
-     - -6
      - ../../../weather/G4000350.epw
    * - OK, Creek County
      - 0.022%
-     - true
      - 74066
-     - -6
      - ../../../weather/G4000370.epw
    * - OK, Custer County
      - 0.0093%
-     - true
      - 73096
-     - -6
      - ../../../weather/G4000390.epw
    * - OK, Delaware County
      - 0.019%
-     - true
      - 74344
-     - -6
      - ../../../weather/G4000410.epw
    * - OK, Dewey County
      - 0.0018%
-     - true
      - 73859
-     - -6
      - ../../../weather/G4000430.epw
    * - OK, Ellis County
      - 0.0017%
-     - true
      - 73858
-     - -6
      - ../../../weather/G4000450.epw
    * - OK, Garfield County
      - 0.02%
-     - true
      - 73703
-     - -6
      - ../../../weather/G4000470.epw
    * - OK, Garvin County
      - 0.0096%
-     - true
      - 73075
-     - -6
      - ../../../weather/G4000490.epw
    * - OK, Grady County
      - 0.017%
-     - true
      - 73018
-     - -6
      - ../../../weather/G4000510.epw
    * - OK, Grant County
      - 0.0018%
-     - true
      - 73759
-     - -6
      - ../../../weather/G4000530.epw
    * - OK, Greer County
      - 0.002%
-     - true
      - 73554
-     - -6
      - ../../../weather/G4000550.epw
    * - OK, Harmon County
      - 0.0011%
-     - true
      - 73550
-     - -6
      - ../../../weather/G4000570.epw
    * - OK, Harper County
      - 0.0014%
-     - true
      - 73848
-     - -6
      - ../../../weather/G4000590.epw
    * - OK, Haskell County
      - 0.0045%
-     - true
      - 74462
-     - -6
      - ../../../weather/G4000610.epw
    * - OK, Hughes County
      - 0.0047%
-     - true
      - 74848
-     - -6
      - ../../../weather/G4000630.epw
    * - OK, Jackson County
      - 0.0091%
-     - true
      - 73521
-     - -6
      - ../../../weather/G4000650.epw
    * - OK, Jefferson County
      - 0.0025%
-     - true
      - 73573
-     - -6
      - ../../../weather/G4000670.epw
    * - OK, Johnston County
      - 0.0038%
-     - true
      - 73460
-     - -6
      - ../../../weather/G4000690.epw
    * - OK, Kay County
      - 0.016%
-     - true
      - 74601
-     - -6
      - ../../../weather/G4000710.epw
    * - OK, Kingfisher County
      - 0.0048%
-     - true
      - 73750
-     - -6
      - ../../../weather/G4000730.epw
    * - OK, Kiowa County
      - 0.0039%
-     - true
      - 73651
-     - -6
      - ../../../weather/G4000750.epw
    * - OK, Latimer County
      - 0.0037%
-     - true
      - 74578
-     - -6
      - ../../../weather/G4000770.epw
    * - OK, Le Flore County
      - 0.016%
-     - true
      - 74953
-     - -6
      - ../../../weather/G4000790.epw
    * - OK, Lincoln County
      - 0.011%
-     - true
      - 74834
-     - -6
      - ../../../weather/G4000810.epw
    * - OK, Logan County
      - 0.013%
-     - true
      - 73044
-     - -6
      - ../../../weather/G4000830.epw
    * - OK, Love County
      - 0.0034%
-     - true
      - 73448
-     - -6
      - ../../../weather/G4000850.epw
    * - OK, Major County
      - 0.0027%
-     - true
      - 73737
-     - -6
      - ../../../weather/G4000930.epw
    * - OK, Marshall County
      - 0.0075%
-     - true
      - 73439
-     - -6
      - ../../../weather/G4000950.epw
    * - OK, Mayes County
      - 0.014%
-     - true
      - 74361
-     - -6
      - ../../../weather/G4000970.epw
    * - OK, McClain County
      - 0.011%
-     - true
      - 73080
-     - -6
      - ../../../weather/G4000870.epw
    * - OK, McCurtain County
      - 0.012%
-     - true
      - 74728
-     - -6
      - ../../../weather/G4000890.epw
    * - OK, McIntosh County
      - 0.01%
-     - true
      - 74432
-     - -6
      - ../../../weather/G4000910.epw
    * - OK, Murray County
      - 0.0051%
-     - true
      - 73086
-     - -6
      - ../../../weather/G4000990.epw
    * - OK, Muskogee County
      - 0.023%
-     - true
      - 74403
-     - -6
      - ../../../weather/G4001010.epw
    * - OK, Noble County
      - 0.004%
-     - true
      - 73077
-     - -6
      - ../../../weather/G4001030.epw
    * - OK, Nowata County
      - 0.0036%
-     - true
      - 74048
-     - -6
      - ../../../weather/G4001050.epw
    * - OK, Okfuskee County
      - 0.004%
-     - true
      - 74859
-     - -6
      - ../../../weather/G4001070.epw
    * - OK, Oklahoma County
      - 0.25%
-     - true
      - 73013
-     - -6
      - ../../../weather/G4001090.epw
    * - OK, Okmulgee County
      - 0.013%
-     - true
      - 74447
-     - -6
      - ../../../weather/G4001110.epw
    * - OK, Osage County
      - 0.016%
-     - true
      - 74070
-     - -6
      - ../../../weather/G4001130.epw
    * - OK, Ottawa County
      - 0.01%
-     - true
      - 74354
-     - -6
      - ../../../weather/G4001150.epw
    * - OK, Pawnee County
      - 0.0058%
-     - true
      - 74020
-     - -6
      - ../../../weather/G4001170.epw
    * - OK, Payne County
      - 0.026%
-     - true
      - 74074
-     - -6
      - ../../../weather/G4001190.epw
    * - OK, Pittsburg County
      - 0.017%
-     - true
      - 74501
-     - -6
      - ../../../weather/G4001210.epw
    * - OK, Pontotoc County
      - 0.012%
-     - true
      - 74820
-     - -6
      - ../../../weather/G4001230.epw
    * - OK, Pottawatomie County
      - 0.022%
-     - true
      - 74801
-     - -6
      - ../../../weather/G4001250.epw
    * - OK, Pushmataha County
      - 0.0046%
-     - true
      - 74523
-     - -6
      - ../../../weather/G4001270.epw
    * - OK, Roger Mills County
      - 0.0014%
-     - true
      - 73628
-     - -6
      - ../../../weather/G4001290.epw
    * - OK, Rogers County
      - 0.027%
-     - true
      - 74017
-     - -6
      - ../../../weather/G4001310.epw
    * - OK, Seminole County
      - 0.0087%
-     - true
      - 74868
-     - -6
      - ../../../weather/G4001330.epw
    * - OK, Sequoyah County
      - 0.014%
-     - true
      - 74955
-     - -6
      - ../../../weather/G4001350.epw
    * - OK, Stephens County
      - 0.015%
-     - true
      - 73533
-     - -6
      - ../../../weather/G4001370.epw
    * - OK, Texas County
      - 0.0061%
-     - true
      - 73942
-     - -6
      - ../../../weather/G4001390.epw
    * - OK, Tillman County
      - 0.003%
-     - true
      - 73542
-     - -6
      - ../../../weather/G4001410.epw
    * - OK, Tulsa County
      - 0.21%
-     - true
      - 74012
-     - -6
      - ../../../weather/G4001430.epw
    * - OK, Wagoner County
      - 0.023%
-     - true
      - 74014
-     - -6
      - ../../../weather/G4001450.epw
    * - OK, Washington County
      - 0.018%
-     - true
      - 74006
-     - -6
      - ../../../weather/G4001470.epw
    * - OK, Washita County
      - 0.0041%
-     - true
      - 73632
-     - -6
      - ../../../weather/G4001490.epw
    * - OK, Woods County
      - 0.0033%
-     - true
      - 73717
-     - -6
      - ../../../weather/G4001510.epw
    * - OK, Woodward County
      - 0.0067%
-     - true
      - 73801
-     - -6
      - ../../../weather/G4001530.epw
    * - OR, Baker County
      - 0.0066%
-     - true
      - 97814
-     - -8
      - ../../../weather/G4100010.epw
    * - OR, Benton County
      - 0.028%
-     - true
      - 97330
-     - -8
      - ../../../weather/G4100030.epw
    * - OR, Clackamas County
      - 0.12%
-     - true
      - 97045
-     - -8
      - ../../../weather/G4100050.epw
    * - OR, Clatsop County
      - 0.016%
-     - true
      - 97103
-     - -8
      - ../../../weather/G4100070.epw
    * - OR, Columbia County
      - 0.015%
-     - true
      - 97051
-     - -8
      - ../../../weather/G4100090.epw
    * - OR, Coos County
      - 0.023%
-     - true
      - 97420
-     - -8
      - ../../../weather/G4100110.epw
    * - OR, Crook County
      - 0.0077%
-     - true
      - 97754
-     - -8
      - ../../../weather/G4100130.epw
    * - OR, Curry County
      - 0.0094%
-     - true
      - 97415
-     - -8
      - ../../../weather/G4100150.epw
    * - OR, Deschutes County
      - 0.062%
-     - true
      - 97702
-     - -8
      - ../../../weather/G4100170.epw
    * - OR, Douglas County
      - 0.037%
-     - true
      - 97471
-     - -8
      - ../../../weather/G4100190.epw
    * - OR, Gilliam County
      - 0.00078%
-     - true
      - 97823
-     - -8
      - ../../../weather/G4100210.epw
    * - OR, Grant County
      - 0.0032%
-     - true
      - 97845
-     - -8
      - ../../../weather/G4100230.epw
    * - OR, Harney County
      - 0.0028%
-     - true
      - 97720
-     - -8
      - ../../../weather/G4100250.epw
    * - OR, Hood River County
      - 0.0071%
-     - true
      - 97031
-     - -8
      - ../../../weather/G4100270.epw
    * - OR, Jackson County
      - 0.069%
-     - true
      - 97504
-     - -8
      - ../../../weather/G4100290.epw
    * - OR, Jefferson County
      - 0.0073%
-     - true
      - 97741
-     - -8
      - ../../../weather/G4100310.epw
    * - OR, Josephine County
      - 0.028%
-     - true
      - 97526
-     - -8
      - ../../../weather/G4100330.epw
    * - OR, Klamath County
      - 0.024%
-     - true
      - 97603
-     - -8
      - ../../../weather/G4100350.epw
    * - OR, Lake County
      - 0.0033%
-     - true
      - 97630
-     - -8
      - ../../../weather/G4100370.epw
    * - OR, Lane County
      - 0.12%
-     - true
      - 97402
-     - -8
      - ../../../weather/G4100390.epw
    * - OR, Lincoln County
      - 0.023%
-     - true
      - 97367
-     - -8
      - ../../../weather/G4100410.epw
    * - OR, Linn County
      - 0.037%
-     - true
      - 97322
-     - -8
      - ../../../weather/G4100430.epw
    * - OR, Malheur County
      - 0.0087%
-     - true
      - 97914
-     - -7
      - ../../../weather/G4100450.epw
    * - OR, Marion County
      - 0.092%
-     - true
      - 97301
-     - -8
      - ../../../weather/G4100470.epw
    * - OR, Morrow County
      - 0.0033%
-     - true
      - 97818
-     - -8
      - ../../../weather/G4100490.epw
    * - OR, Multnomah County
      - 0.25%
-     - true
      - 97206
-     - -8
      - ../../../weather/G4100510.epw
    * - OR, Polk County
      - 0.023%
-     - true
      - 97304
-     - -8
      - ../../../weather/G4100530.epw
    * - OR, Sherman County
      - 0.0007%
-     - true
      - 97065
-     - -8
      - ../../../weather/G4100550.epw
    * - OR, Tillamook County
      - 0.014%
-     - true
      - 97141
-     - -8
      - ../../../weather/G4100570.epw
    * - OR, Umatilla County
      - 0.022%
-     - true
      - 97838
-     - -8
      - ../../../weather/G4100590.epw
    * - OR, Union County
      - 0.0086%
-     - true
      - 97850
-     - -8
      - ../../../weather/G4100610.epw
    * - OR, Wallowa County
      - 0.0031%
-     - true
      - 97828
-     - -8
      - ../../../weather/G4100630.epw
    * - OR, Wasco County
      - 0.0085%
-     - true
      - 97058
-     - -8
      - ../../../weather/G4100650.epw
    * - OR, Washington County
      - 0.16%
-     - true
      - 97229
-     - -8
      - ../../../weather/G4100670.epw
    * - OR, Wheeler County
      - 0.00073%
-     - true
      - 97830
-     - -8
      - ../../../weather/G4100690.epw
    * - OR, Yamhill County
      - 0.028%
-     - true
      - 97128
-     - -8
      - ../../../weather/G4100710.epw
    * - PA, Adams County
      - 0.031%
-     - true
      - 17325
-     - -5
      - ../../../weather/G4200010.epw
    * - PA, Allegheny County
      - 0.44%
-     - true
      - 15237
-     - -5
      - ../../../weather/G4200030.epw
    * - PA, Armstrong County
      - 0.024%
-     - true
      - 16201
-     - -5
      - ../../../weather/G4200050.epw
    * - PA, Beaver County
      - 0.058%
-     - true
      - 15001
-     - -5
      - ../../../weather/G4200070.epw
    * - PA, Bedford County
      - 0.018%
-     - true
      - 15522
-     - -5
      - ../../../weather/G4200090.epw
    * - PA, Berks County
      - 0.12%
-     - true
      - 19606
-     - -5
      - ../../../weather/G4200110.epw
    * - PA, Blair County
      - 0.042%
-     - true
      - 16601
-     - -5
      - ../../../weather/G4200130.epw
    * - PA, Bradford County
      - 0.022%
-     - true
      - 18840
-     - -5
      - ../../../weather/G4200150.epw
    * - PA, Bucks County
      - 0.18%
-     - true
      - 19020
-     - -5
      - ../../../weather/G4200170.epw
    * - PA, Butler County
      - 0.06%
-     - true
      - 16001
-     - -5
      - ../../../weather/G4200190.epw
    * - PA, Cambria County
      - 0.049%
-     - true
      - 15905
-     - -5
      - ../../../weather/G4200210.epw
    * - PA, Cameron County
      - 0.0033%
-     - true
      - 15834
-     - -5
      - ../../../weather/G4200230.epw
    * - PA, Carbon County
      - 0.026%
-     - true
      - 18235
-     - -5
      - ../../../weather/G4200250.epw
    * - PA, Centre County
      - 0.048%
-     - true
      - 16801
-     - -5
      - ../../../weather/G4200270.epw
    * - PA, Chester County
      - 0.15%
-     - true
      - 19380
-     - -5
      - ../../../weather/G4200290.epw
    * - PA, Clarion County
      - 0.015%
-     - true
      - 16214
-     - -5
      - ../../../weather/G4200310.epw
    * - PA, Clearfield County
      - 0.029%
-     - true
      - 15801
-     - -5
      - ../../../weather/G4200330.epw
    * - PA, Clinton County
      - 0.014%
-     - true
      - 17745
-     - -5
      - ../../../weather/G4200350.epw
    * - PA, Columbia County
      - 0.022%
-     - true
      - 17815
-     - -5
      - ../../../weather/G4200370.epw
    * - PA, Crawford County
      - 0.033%
-     - true
      - 16335
-     - -5
      - ../../../weather/G4200390.epw
    * - PA, Cumberland County
      - 0.077%
-     - true
      - 17055
-     - -5
      - ../../../weather/G4200410.epw
    * - PA, Dauphin County
      - 0.091%
-     - true
      - 17112
-     - -5
      - ../../../weather/G4200430.epw
    * - PA, Delaware County
      - 0.17%
-     - true
      - 19063
-     - -5
      - ../../../weather/G4200450.epw
    * - PA, Elk County
      - 0.013%
-     - true
      - 15857
-     - -5
      - ../../../weather/G4200470.epw
    * - PA, Erie County
      - 0.089%
-     - true
      - 16509
-     - -5
      - ../../../weather/G4200490.epw
    * - PA, Fayette County
      - 0.047%
-     - true
      - 15401
-     - -5
      - ../../../weather/G4200510.epw
    * - PA, Forest County
      - 0.0063%
-     - true
      - 16353
-     - -5
      - ../../../weather/G4200530.epw
    * - PA, Franklin County
      - 0.048%
-     - true
      - 17268
-     - -5
      - ../../../weather/G4200550.epw
    * - PA, Fulton County
      - 0.0053%
-     - true
      - 17233
-     - -5
      - ../../../weather/G4200570.epw
    * - PA, Greene County
      - 0.012%
-     - true
      - 15370
-     - -5
      - ../../../weather/G4200590.epw
    * - PA, Huntingdon County
      - 0.017%
-     - true
      - 16652
-     - -5
      - ../../../weather/G4200610.epw
    * - PA, Indiana County
      - 0.029%
-     - true
      - 15701
-     - -5
      - ../../../weather/G4200630.epw
    * - PA, Jefferson County
      - 0.017%
-     - true
      - 15767
-     - -5
      - ../../../weather/G4200650.epw
    * - PA, Juniata County
      - 0.0082%
-     - true
      - 17059
-     - -5
      - ../../../weather/G4200670.epw
    * - PA, Lackawanna County
      - 0.073%
-     - true
      - 18505
-     - -5
      - ../../../weather/G4200690.epw
    * - PA, Lancaster County
      - 0.15%
-     - true
      - 17603
-     - -5
      - ../../../weather/G4200710.epw
    * - PA, Lawrence County
      - 0.03%
-     - true
      - 16101
-     - -5
      - ../../../weather/G4200730.epw
    * - PA, Lebanon County
      - 0.042%
-     - true
      - 17042
-     - -5
      - ../../../weather/G4200750.epw
    * - PA, Lehigh County
      - 0.11%
-     - true
      - 18103
-     - -5
      - ../../../weather/G4200770.epw
    * - PA, Luzerne County
      - 0.11%
-     - true
      - 18702
-     - -5
      - ../../../weather/G4200790.epw
    * - PA, Lycoming County
      - 0.039%
-     - true
      - 17701
-     - -5
      - ../../../weather/G4200810.epw
    * - PA, McKean County
      - 0.016%
-     - true
      - 16701
-     - -5
      - ../../../weather/G4200830.epw
    * - PA, Mercer County
      - 0.038%
-     - true
      - 16148
-     - -5
      - ../../../weather/G4200850.epw
    * - PA, Mifflin County
      - 0.016%
-     - true
      - 17044
-     - -5
      - ../../../weather/G4200870.epw
    * - PA, Monroe County
      - 0.06%
-     - true
      - 18301
-     - -5
      - ../../../weather/G4200890.epw
    * - PA, Montgomery County
      - 0.24%
-     - true
      - 19446
-     - -5
      - ../../../weather/G4200910.epw
    * - PA, Montour County
      - 0.006%
-     - true
      - 17821
-     - -5
      - ../../../weather/G4200930.epw
    * - PA, Northampton County
      - 0.09%
-     - true
      - 18042
-     - -5
      - ../../../weather/G4200950.epw
    * - PA, Northumberland County
      - 0.034%
-     - true
      - 17801
-     - -5
      - ../../../weather/G4200970.epw
    * - PA, Perry County
      - 0.015%
-     - true
      - 17020
-     - -5
      - ../../../weather/G4200990.epw
    * - PA, Philadelphia County
      - 0.5%
-     - true
      - 19143
-     - -5
      - ../../../weather/G4201010.epw
    * - PA, Pike County
      - 0.029%
-     - true
      - 18337
-     - -5
      - ../../../weather/G4201030.epw
    * - PA, Potter County
      - 0.0096%
-     - true
      - 16915
-     - -5
      - ../../../weather/G4201050.epw
    * - PA, Schuylkill County
      - 0.051%
-     - true
      - 17901
-     - -5
      - ../../../weather/G4201070.epw
    * - PA, Snyder County
      - 0.012%
-     - true
      - 17870
-     - -5
      - ../../../weather/G4201090.epw
    * - PA, Somerset County
      - 0.028%
-     - true
      - 15501
-     - -5
      - ../../../weather/G4201110.epw
    * - PA, Sullivan County
      - 0.0047%
-     - true
      - 18614
-     - -5
      - ../../../weather/G4201130.epw
    * - PA, Susquehanna County
      - 0.017%
-     - true
      - 18801
-     - -5
      - ../../../weather/G4201150.epw
    * - PA, Tioga County
      - 0.016%
-     - true
      - 16901
-     - -5
      - ../../../weather/G4201170.epw
    * - PA, Union County
      - 0.013%
-     - true
      - 17837
-     - -5
      - ../../../weather/G4201190.epw
    * - PA, Venango County
      - 0.02%
-     - true
      - 16301
-     - -5
      - ../../../weather/G4201210.epw
    * - PA, Warren County
      - 0.017%
-     - true
      - 16365
-     - -5
      - ../../../weather/G4201230.epw
    * - PA, Washington County
      - 0.07%
-     - true
      - 15301
-     - -5
      - ../../../weather/G4201250.epw
    * - PA, Wayne County
      - 0.024%
-     - true
      - 18431
-     - -5
      - ../../../weather/G4201270.epw
    * - PA, Westmoreland County
      - 0.13%
-     - true
      - 15601
-     - -5
      - ../../../weather/G4201290.epw
    * - PA, Wyoming County
      - 0.0099%
-     - true
      - 18657
-     - -5
      - ../../../weather/G4201310.epw
    * - PA, York County
      - 0.13%
-     - true
      - 17331
-     - -5
      - ../../../weather/G4201330.epw
    * - RI, Bristol County
      - 0.016%
-     - true
      - 02809
-     - -5
      - ../../../weather/G4400010.epw
    * - RI, Kent County
      - 0.055%
-     - true
      - 02893
-     - -5
      - ../../../weather/G4400030.epw
    * - RI, Newport County
      - 0.031%
-     - true
      - 02840
-     - -5
      - ../../../weather/G4400050.epw
    * - RI, Providence County
      - 0.2%
-     - true
      - 02860
-     - -5
      - ../../../weather/G4400070.epw
    * - RI, Washington County
      - 0.047%
-     - true
      - 02891
-     - -5
      - ../../../weather/G4400090.epw
    * - SC, Abbeville County
      - 0.009%
-     - true
      - 29620
-     - -5
      - ../../../weather/G4500010.epw
    * - SC, Aiken County
      - 0.055%
-     - true
      - 29803
-     - -5
      - ../../../weather/G4500030.epw
    * - SC, Allendale County
      - 0.0033%
-     - true
      - 29810
-     - -5
      - ../../../weather/G4500050.epw
    * - SC, Anderson County
      - 0.064%
-     - true
      - 29621
-     - -5
      - ../../../weather/G4500070.epw
    * - SC, Bamberg County
      - 0.0057%
-     - true
      - 29003
-     - -5
      - ../../../weather/G4500090.epw
    * - SC, Barnwell County
      - 0.0077%
-     - true
      - 29812
-     - -5
      - ../../../weather/G4500110.epw
    * - SC, Beaufort County
      - 0.071%
-     - true
      - 29910
-     - -5
      - ../../../weather/G4500130.epw
    * - SC, Berkeley County
      - 0.058%
-     - true
      - 29445
-     - -5
      - ../../../weather/G4500150.epw
    * - SC, Calhoun County
      - 0.0054%
-     - true
      - 29135
-     - -5
      - ../../../weather/G4500170.epw
    * - SC, Charleston County
      - 0.13%
-     - true
      - 29464
-     - -5
      - ../../../weather/G4500190.epw
    * - SC, Cherokee County
      - 0.018%
-     - true
      - 29340
-     - -5
      - ../../../weather/G4500210.epw
    * - SC, Chester County
      - 0.011%
-     - true
      - 29706
-     - -5
      - ../../../weather/G4500230.epw
    * - SC, Chesterfield County
      - 0.016%
-     - true
      - 29520
-     - -5
      - ../../../weather/G4500250.epw
    * - SC, Clarendon County
      - 0.013%
-     - true
      - 29102
-     - -5
      - ../../../weather/G4500270.epw
    * - SC, Colleton County
      - 0.015%
-     - true
      - 29488
-     - -5
      - ../../../weather/G4500290.epw
    * - SC, Darlington County
      - 0.023%
-     - true
      - 29550
-     - -5
      - ../../../weather/G4500310.epw
    * - SC, Dillon County
      - 0.01%
-     - true
      - 29536
-     - -5
      - ../../../weather/G4500330.epw
    * - SC, Dorchester County
      - 0.043%
-     - true
      - 29485
-     - -5
      - ../../../weather/G4500350.epw
    * - SC, Edgefield County
      - 0.0079%
-     - true
      - 29860
-     - -5
      - ../../../weather/G4500370.epw
    * - SC, Fairfield County
      - 0.0087%
-     - true
      - 29180
-     - -5
      - ../../../weather/G4500390.epw
    * - SC, Florence County
      - 0.044%
-     - true
      - 29501
-     - -5
      - ../../../weather/G4500410.epw
    * - SC, Georgetown County
      - 0.025%
-     - true
      - 29440
-     - -5
      - ../../../weather/G4500430.epw
    * - SC, Greenville County
      - 0.15%
-     - true
      - 29681
-     - -5
      - ../../../weather/G4500450.epw
    * - SC, Greenwood County
      - 0.023%
-     - true
      - 29649
-     - -5
      - ../../../weather/G4500470.epw
    * - SC, Hampton County
      - 0.0067%
-     - true
      - 29918
-     - -5
      - ../../../weather/G4500490.epw
    * - SC, Horry County
      - 0.14%
-     - true
      - 29579
-     - -5
      - ../../../weather/G4500510.epw
    * - SC, Jasper County
      - 0.0081%
-     - true
      - 29936
-     - -5
      - ../../../weather/G4500530.epw
    * - SC, Kershaw County
      - 0.021%
-     - true
      - 29020
-     - -5
      - ../../../weather/G4500550.epw
    * - SC, Lancaster County
      - 0.025%
-     - true
      - 29720
-     - -5
      - ../../../weather/G4500570.epw
    * - SC, Laurens County
      - 0.023%
-     - true
      - 29360
-     - -5
      - ../../../weather/G4500590.epw
    * - SC, Lee County
      - 0.0057%
-     - true
      - 29010
-     - -5
      - ../../../weather/G4500610.epw
    * - SC, Lexington County
      - 0.089%
-     - true
      - 29072
-     - -5
      - ../../../weather/G4500630.epw
    * - SC, Marion County
      - 0.011%
-     - true
      - 29571
-     - -5
      - ../../../weather/G4500670.epw
    * - SC, Marlboro County
      - 0.0089%
-     - true
      - 29512
-     - -5
      - ../../../weather/G4500690.epw
    * - SC, McCormick County
      - 0.0041%
-     - true
      - 29835
-     - -5
      - ../../../weather/G4500650.epw
    * - SC, Newberry County
      - 0.013%
-     - true
      - 29108
-     - -5
      - ../../../weather/G4500710.epw
    * - SC, Oconee County
      - 0.029%
-     - true
      - 29678
-     - -5
      - ../../../weather/G4500730.epw
    * - SC, Orangeburg County
      - 0.031%
-     - true
      - 29115
-     - -5
      - ../../../weather/G4500750.epw
    * - SC, Pickens County
      - 0.039%
-     - true
      - 29640
-     - -5
      - ../../../weather/G4500770.epw
    * - SC, Richland County
      - 0.12%
-     - true
      - 29223
-     - -5
      - ../../../weather/G4500790.epw
    * - SC, Saluda County
      - 0.0069%
-     - true
      - 29138
-     - -5
      - ../../../weather/G4500810.epw
    * - SC, Spartanburg County
      - 0.093%
-     - true
      - 29301
-     - -5
      - ../../../weather/G4500830.epw
    * - SC, Sumter County
      - 0.035%
-     - true
      - 29150
-     - -5
      - ../../../weather/G4500850.epw
    * - SC, Union County
      - 0.01%
-     - true
      - 29379
-     - -5
      - ../../../weather/G4500870.epw
    * - SC, Williamsburg County
      - 0.011%
-     - true
      - 29556
-     - -5
      - ../../../weather/G4500890.epw
    * - SC, York County
      - 0.074%
-     - true
      - 29732
-     - -5
      - ../../../weather/G4500910.epw
    * - SD, Aurora County
      - 0.00099%
-     - true
      - 57368
-     - -6
      - ../../../weather/G4600030.epw
    * - SD, Beadle County
      - 0.0062%
-     - true
      - 57350
-     - -6
      - ../../../weather/G4600050.epw
    * - SD, Bennett County
      - 0.00086%
-     - true
      - 57551
-     - -7
      - ../../../weather/G4600070.epw
    * - SD, Bon Homme County
      - 0.0022%
-     - true
      - 57066
-     - -6
      - ../../../weather/G4600090.epw
    * - SD, Brookings County
      - 0.01%
-     - true
      - 57006
-     - -6
      - ../../../weather/G4600110.epw
    * - SD, Brown County
      - 0.013%
-     - true
      - 57401
-     - -6
      - ../../../weather/G4600130.epw
    * - SD, Brule County
      - 0.0018%
-     - true
      - 57325
-     - -6
      - ../../../weather/G4600150.epw
    * - SD, Buffalo County
      - 0.00043%
-     - true
      - 57341
-     - -6
      - ../../../weather/G4600170.epw
    * - SD, Butte County
      - 0.0035%
-     - true
      - 57717
-     - -7
      - ../../../weather/G4600190.epw
    * - SD, Campbell County
      - 0.00074%
-     - true
      - 57632
-     - -6
      - ../../../weather/G4600210.epw
    * - SD, Charles Mix County
      - 0.0029%
-     - true
      - 57380
-     - -6
      - ../../../weather/G4600230.epw
    * - SD, Clark County
      - 0.0013%
-     - true
      - 57225
-     - -6
      - ../../../weather/G4600250.epw
    * - SD, Clay County
      - 0.0043%
-     - true
      - 57069
-     - -6
      - ../../../weather/G4600270.epw
    * - SD, Codington County
      - 0.0095%
-     - true
      - 57201
-     - -6
      - ../../../weather/G4600290.epw
    * - SD, Corson County
      - 0.0011%
-     - true
      - 57642
-     - -7
      - ../../../weather/G4600310.epw
    * - SD, Custer County
      - 0.0036%
-     - true
      - 57730
-     - -7
      - ../../../weather/G4600330.epw
    * - SD, Davison County
      - 0.0068%
-     - true
      - 57301
-     - -6
      - ../../../weather/G4600350.epw
    * - SD, Day County
      - 0.0027%
-     - true
      - 57274
-     - -6
      - ../../../weather/G4600370.epw
    * - SD, Deuel County
      - 0.0016%
-     - true
      - 57226
-     - -6
      - ../../../weather/G4600390.epw
    * - SD, Dewey County
      - 0.0015%
-     - true
      - 57625
-     - -7
      - ../../../weather/G4600410.epw
    * - SD, Douglas County
      - 0.0011%
-     - true
      - 57328
-     - -6
      - ../../../weather/G4600430.epw
    * - SD, Edmunds County
      - 0.0015%
-     - true
      - 57451
-     - -6
      - ../../../weather/G4600450.epw
    * - SD, Fall River County
      - 0.0031%
-     - true
      - 57747
-     - -7
      - ../../../weather/G4600470.epw
    * - SD, Faulk County
      - 0.00089%
-     - true
      - 57438
-     - -6
      - ../../../weather/G4600490.epw
    * - SD, Grant County
      - 0.0026%
-     - true
      - 57252
-     - -6
      - ../../../weather/G4600510.epw
    * - SD, Gregory County
      - 0.0019%
-     - true
      - 57533
-     - -6
      - ../../../weather/G4600530.epw
    * - SD, Haakon County
      - 0.00078%
-     - true
      - 57552
-     - -7
      - ../../../weather/G4600550.epw
    * - SD, Hamlin County
      - 0.0021%
-     - true
      - 57223
-     - -6
      - ../../../weather/G4600570.epw
    * - SD, Hand County
      - 0.0014%
-     - true
      - 57362
-     - -6
      - ../../../weather/G4600590.epw
    * - SD, Hanson County
      - 0.00088%
-     - true
      - 57311
-     - -6
      - ../../../weather/G4600610.epw
    * - SD, Harding County
      - 0.0005%
-     - true
      - 57720
-     - -7
      - ../../../weather/G4600630.epw
    * - SD, Hughes County
      - 0.0058%
-     - true
      - 57501
-     - -6
      - ../../../weather/G4600650.epw
    * - SD, Hutchinson County
      - 0.0025%
-     - true
      - 57366
-     - -6
      - ../../../weather/G4600670.epw
    * - SD, Hyde County
      - 0.00052%
-     - true
      - 57345
-     - -6
      - ../../../weather/G4600690.epw
    * - SD, Jackson County
      - 0.00096%
-     - true
      - 57543
-     - -7
      - ../../../weather/G4600710.epw
    * - SD, Jerauld County
      - 0.00079%
-     - true
      - 57382
-     - -6
      - ../../../weather/G4600730.epw
    * - SD, Jones County
      - 0.00039%
-     - true
      - 57559
-     - -6
      - ../../../weather/G4600750.epw
    * - SD, Kingsbury County
      - 0.002%
-     - true
      - 57231
-     - -6
      - ../../../weather/G4600770.epw
    * - SD, Lake County
      - 0.0042%
-     - true
      - 57042
-     - -6
      - ../../../weather/G4600790.epw
    * - SD, Lawrence County
      - 0.01%
-     - true
      - 57783
-     - -7
      - ../../../weather/G4600810.epw
    * - SD, Lincoln County
      - 0.014%
-     - true
      - 57108
-     - -6
      - ../../../weather/G4600830.epw
    * - SD, Lyman County
      - 0.0013%
-     - true
      - 57569
-     - -6
      - ../../../weather/G4600850.epw
    * - SD, Marshall County
      - 0.0019%
-     - true
      - 57430
-     - -6
      - ../../../weather/G4600910.epw
    * - SD, McCook County
      - 0.0019%
-     - true
      - 57058
-     - -6
      - ../../../weather/G4600870.epw
    * - SD, McPherson County
      - 0.001%
-     - true
      - 57437
-     - -6
      - ../../../weather/G4600890.epw
    * - SD, Meade County
      - 0.0086%
-     - true
      - 57785
-     - -7
      - ../../../weather/G4600930.epw
    * - SD, Mellette County
      - 0.00064%
-     - true
      - 57579
-     - -6
      - ../../../weather/G4600950.epw
    * - SD, Miner County
      - 0.00094%
-     - true
      - 57349
-     - -6
      - ../../../weather/G4600970.epw
    * - SD, Minnehaha County
      - 0.057%
-     - true
      - 57106
-     - -6
      - ../../../weather/G4600990.epw
    * - SD, Moody County
      - 0.0021%
-     - true
      - 57028
-     - -6
      - ../../../weather/G4601010.epw
    * - SD, Oglala Lakota County
      - 0.0027%
-     - true
      - 57770
-     - -7
      - ../../../weather/G4601020.epw
    * - SD, Pennington County
      - 0.035%
-     - true
      - 57701
-     - -7
      - ../../../weather/G4601030.epw
    * - SD, Perkins County
      - 0.0013%
-     - true
      - 57638
-     - -7
      - ../../../weather/G4601050.epw
    * - SD, Potter County
      - 0.0012%
-     - true
      - 57442
-     - -6
      - ../../../weather/G4601070.epw
    * - SD, Roberts County
      - 0.0037%
-     - true
      - 57262
-     - -6
      - ../../../weather/G4601090.epw
    * - SD, Sanborn County
      - 0.00093%
-     - true
      - 57385
-     - -6
      - ../../../weather/G4601110.epw
    * - SD, Spink County
      - 0.0024%
-     - true
      - 57469
-     - -6
      - ../../../weather/G4601150.epw
    * - SD, Stanley County
      - 0.0011%
-     - true
      - 57532
-     - -7
      - ../../../weather/G4601170.epw
    * - SD, Sully County
      - 0.0006%
-     - true
      - 57564
-     - -6
      - ../../../weather/G4601190.epw
    * - SD, Todd County
      - 0.0023%
-     - true
      - 57555
-     - -6
      - ../../../weather/G4601210.epw
    * - SD, Tripp County
      - 0.0023%
-     - true
      - 57580
-     - -6
      - ../../../weather/G4601230.epw
    * - SD, Turner County
      - 0.003%
-     - true
      - 57053
-     - -6
      - ../../../weather/G4601250.epw
    * - SD, Union County
      - 0.005%
-     - true
      - 57049
-     - -6
      - ../../../weather/G4601270.epw
    * - SD, Walworth County
      - 0.0022%
-     - true
      - 57601
-     - -6
      - ../../../weather/G4601290.epw
    * - SD, Yankton County
      - 0.0073%
-     - true
      - 57078
-     - -6
      - ../../../weather/G4601350.epw
    * - SD, Ziebach County
      - 0.00074%
-     - true
      - 57623
-     - -7
      - ../../../weather/G4601370.epw
    * - TN, Anderson County
      - 0.026%
-     - true
      - 37830
-     - -5
      - ../../../weather/G4700010.epw
    * - TN, Bedford County
      - 0.014%
-     - true
      - 37160
-     - -6
      - ../../../weather/G4700030.epw
    * - TN, Benton County
      - 0.0067%
-     - true
      - 38320
-     - -6
      - ../../../weather/G4700050.epw
    * - TN, Bledsoe County
      - 0.0042%
-     - true
      - 37367
-     - -6
      - ../../../weather/G4700070.epw
    * - TN, Blount County
      - 0.042%
-     - true
      - 37803
-     - -5
      - ../../../weather/G4700090.epw
    * - TN, Bradley County
      - 0.032%
-     - true
      - 37312
-     - -5
      - ../../../weather/G4700110.epw
    * - TN, Campbell County
      - 0.015%
-     - true
      - 37766
-     - -5
      - ../../../weather/G4700130.epw
    * - TN, Cannon County
      - 0.0045%
-     - true
      - 37190
-     - -6
      - ../../../weather/G4700150.epw
    * - TN, Carroll County
      - 0.0098%
-     - true
      - 38344
-     - -6
      - ../../../weather/G4700170.epw
    * - TN, Carter County
      - 0.021%
-     - true
      - 37643
-     - -5
      - ../../../weather/G4700190.epw
    * - TN, Cheatham County
      - 0.012%
-     - true
      - 37015
-     - -6
      - ../../../weather/G4700210.epw
    * - TN, Chester County
      - 0.0052%
-     - true
      - 38340
-     - -6
      - ../../../weather/G4700230.epw
    * - TN, Claiborne County
      - 0.011%
-     - true
      - 37879
-     - -5
      - ../../../weather/G4700250.epw
    * - TN, Clay County
      - 0.0032%
-     - true
      - 38551
-     - -6
      - ../../../weather/G4700270.epw
    * - TN, Cocke County
      - 0.013%
-     - true
      - 37821
-     - -5
      - ../../../weather/G4700290.epw
    * - TN, Coffee County
      - 0.018%
-     - true
      - 37355
-     - -6
      - ../../../weather/G4700310.epw
    * - TN, Crockett County
      - 0.0048%
-     - true
      - 38006
-     - -6
      - ../../../weather/G4700330.epw
    * - TN, Cumberland County
      - 0.021%
-     - true
      - 38555
-     - -6
      - ../../../weather/G4700350.epw
    * - TN, Davidson County
      - 0.22%
-     - true
      - 37013
-     - -6
      - ../../../weather/G4700370.epw
    * - TN, Decatur County
      - 0.0051%
-     - true
      - 38363
-     - -6
      - ../../../weather/G4700390.epw
    * - TN, DeKalb County
      - 0.007%
-     - true
      - 37166
-     - -6
      - ../../../weather/G4700410.epw
    * - TN, Dickson County
      - 0.016%
-     - true
      - 37055
-     - -6
      - ../../../weather/G4700430.epw
    * - TN, Dyer County
      - 0.013%
-     - true
      - 38024
-     - -6
      - ../../../weather/G4700450.epw
    * - TN, Fayette County
      - 0.012%
-     - true
      - 38060
-     - -6
      - ../../../weather/G4700470.epw
    * - TN, Fentress County
      - 0.0067%
-     - true
      - 38556
-     - -6
      - ../../../weather/G4700490.epw
    * - TN, Franklin County
      - 0.014%
-     - true
      - 37398
-     - -6
      - ../../../weather/G4700510.epw
    * - TN, Gibson County
      - 0.017%
-     - true
      - 38343
-     - -6
      - ../../../weather/G4700530.epw
    * - TN, Giles County
      - 0.01%
-     - true
      - 38478
-     - -6
      - ../../../weather/G4700550.epw
    * - TN, Grainger County
      - 0.0081%
-     - true
      - 37861
-     - -5
      - ../../../weather/G4700570.epw
    * - TN, Greene County
      - 0.024%
-     - true
      - 37743
-     - -5
      - ../../../weather/G4700590.epw
    * - TN, Grundy County
      - 0.0048%
-     - true
      - 37387
-     - -6
      - ../../../weather/G4700610.epw
    * - TN, Hamblen County
      - 0.02%
-     - true
      - 37814
-     - -5
      - ../../../weather/G4700630.epw
    * - TN, Hamilton County
      - 0.12%
-     - true
      - 37421
-     - -5
      - ../../../weather/G4700650.epw
    * - TN, Hancock County
      - 0.0027%
-     - true
      - 37869
-     - -5
      - ../../../weather/G4700670.epw
    * - TN, Hardeman County
      - 0.0081%
-     - true
      - 38008
-     - -6
      - ../../../weather/G4700690.epw
    * - TN, Hardin County
      - 0.01%
-     - true
      - 38372
-     - -6
      - ../../../weather/G4700710.epw
    * - TN, Hawkins County
      - 0.02%
-     - true
      - 37857
-     - -5
      - ../../../weather/G4700730.epw
    * - TN, Haywood County
      - 0.0063%
-     - true
      - 38012
-     - -6
      - ../../../weather/G4700750.epw
    * - TN, Henderson County
      - 0.0096%
-     - true
      - 38351
-     - -6
      - ../../../weather/G4700770.epw
    * - TN, Henry County
      - 0.013%
-     - true
      - 38242
-     - -6
      - ../../../weather/G4700790.epw
    * - TN, Hickman County
      - 0.0077%
-     - true
      - 37033
-     - -6
      - ../../../weather/G4700810.epw
    * - TN, Houston County
      - 0.0031%
-     - true
      - 37061
-     - -6
      - ../../../weather/G4700830.epw
    * - TN, Humphreys County
      - 0.0066%
-     - true
      - 37185
-     - -6
      - ../../../weather/G4700850.epw
    * - TN, Jackson County
      - 0.0043%
-     - true
      - 38562
-     - -6
      - ../../../weather/G4700870.epw
    * - TN, Jefferson County
      - 0.018%
-     - true
      - 37725
-     - -5
      - ../../../weather/G4700890.epw
    * - TN, Johnson County
      - 0.0067%
-     - true
      - 37683
-     - -5
      - ../../../weather/G4700910.epw
    * - TN, Knox County
      - 0.15%
-     - true
      - 37920
-     - -5
      - ../../../weather/G4700930.epw
    * - TN, Lake County
      - 0.0019%
-     - true
      - 38079
-     - -6
      - ../../../weather/G4700950.epw
    * - TN, Lauderdale County
      - 0.0084%
-     - true
      - 38063
-     - -6
      - ../../../weather/G4700970.epw
    * - TN, Lawrence County
      - 0.014%
-     - true
      - 38464
-     - -6
      - ../../../weather/G4700990.epw
    * - TN, Lewis County
      - 0.0041%
-     - true
      - 38462
-     - -6
      - ../../../weather/G4701010.epw
    * - TN, Lincoln County
      - 0.011%
-     - true
      - 37334
-     - -6
      - ../../../weather/G4701030.epw
    * - TN, Loudon County
      - 0.017%
-     - true
      - 37774
-     - -5
      - ../../../weather/G4701050.epw
    * - TN, Macon County
      - 0.0074%
-     - true
      - 37083
-     - -6
      - ../../../weather/G4701110.epw
    * - TN, Madison County
      - 0.032%
-     - true
      - 38305
-     - -6
      - ../../../weather/G4701130.epw
    * - TN, Marion County
      - 0.0097%
-     - true
      - 37397
-     - -6
      - ../../../weather/G4701150.epw
    * - TN, Marshall County
      - 0.0099%
-     - true
      - 37091
-     - -6
      - ../../../weather/G4701170.epw
    * - TN, Maury County
      - 0.027%
-     - true
      - 38401
-     - -6
      - ../../../weather/G4701190.epw
    * - TN, McMinn County
      - 0.017%
-     - true
      - 37303
-     - -5
      - ../../../weather/G4701070.epw
    * - TN, McNairy County
      - 0.0089%
-     - true
      - 38375
-     - -6
      - ../../../weather/G4701090.epw
    * - TN, Meigs County
      - 0.0042%
-     - true
      - 37322
-     - -5
      - ../../../weather/G4701210.epw
    * - TN, Monroe County
      - 0.016%
-     - true
      - 37354
-     - -5
      - ../../../weather/G4701230.epw
    * - TN, Montgomery County
      - 0.057%
-     - true
      - 37042
-     - -6
      - ../../../weather/G4701250.epw
    * - TN, Moore County
      - 0.0022%
-     - true
      - 37352
-     - -6
      - ../../../weather/G4701270.epw
    * - TN, Morgan County
      - 0.0066%
-     - true
      - 37887
-     - -5
      - ../../../weather/G4701290.epw
    * - TN, Obion County
      - 0.011%
-     - true
      - 38261
-     - -6
      - ../../../weather/G4701310.epw
    * - TN, Overton County
      - 0.0077%
-     - true
      - 38570
-     - -6
      - ../../../weather/G4701330.epw
    * - TN, Perry County
      - 0.0034%
-     - true
      - 37096
-     - -6
      - ../../../weather/G4701350.epw
    * - TN, Pickett County
      - 0.0026%
-     - true
      - 38549
-     - -6
      - ../../../weather/G4701370.epw
    * - TN, Polk County
      - 0.0062%
-     - true
      - 37307
-     - -5
      - ../../../weather/G4701390.epw
    * - TN, Putnam County
      - 0.025%
-     - true
      - 38501
-     - -6
      - ../../../weather/G4701410.epw
    * - TN, Rhea County
      - 0.011%
-     - true
      - 37321
-     - -5
      - ../../../weather/G4701430.epw
    * - TN, Roane County
      - 0.019%
-     - true
      - 37748
-     - -5
      - ../../../weather/G4701450.epw
    * - TN, Robertson County
      - 0.02%
-     - true
      - 37172
-     - -6
      - ../../../weather/G4701470.epw
    * - TN, Rutherford County
      - 0.082%
-     - true
      - 37128
-     - -6
      - ../../../weather/G4701490.epw
    * - TN, Scott County
      - 0.0074%
-     - true
      - 37841
-     - -5
      - ../../../weather/G4701510.epw
    * - TN, Sequatchie County
      - 0.0048%
-     - true
      - 37327
-     - -6
      - ../../../weather/G4701530.epw
    * - TN, Sevier County
      - 0.042%
-     - true
      - 37876
-     - -5
      - ../../../weather/G4701550.epw
    * - TN, Shelby County
      - 0.3%
-     - true
      - 38111
-     - -6
      - ../../../weather/G4701570.epw
    * - TN, Smith County
      - 0.0064%
-     - true
      - 37030
-     - -6
      - ../../../weather/G4701590.epw
    * - TN, Stewart County
      - 0.005%
-     - true
      - 37058
-     - -6
      - ../../../weather/G4701610.epw
    * - TN, Sullivan County
      - 0.055%
-     - true
      - 37660
-     - -5
      - ../../../weather/G4701630.epw
    * - TN, Sumner County
      - 0.051%
-     - true
      - 37075
-     - -6
      - ../../../weather/G4701650.epw
    * - TN, Tipton County
      - 0.017%
-     - true
      - 38019
-     - -6
      - ../../../weather/G4701670.epw
    * - TN, Trousdale County
      - 0.0026%
-     - true
      - 37074
-     - -6
      - ../../../weather/G4701690.epw
    * - TN, Unicoi County
      - 0.0066%
-     - true
      - 37650
-     - -5
      - ../../../weather/G4701710.epw
    * - TN, Union County
      - 0.0068%
-     - true
      - 37807
-     - -5
      - ../../../weather/G4701730.epw
    * - TN, Van Buren County
      - 0.002%
-     - true
      - 38585
-     - -6
      - ../../../weather/G4701750.epw
    * - TN, Warren County
      - 0.013%
-     - true
      - 37110
-     - -6
      - ../../../weather/G4701770.epw
    * - TN, Washington County
      - 0.044%
-     - true
      - 37604
-     - -5
      - ../../../weather/G4701790.epw
    * - TN, Wayne County
      - 0.0054%
-     - true
      - 38485
-     - -6
      - ../../../weather/G4701810.epw
    * - TN, Weakley County
      - 0.012%
-     - true
      - 38237
-     - -6
      - ../../../weather/G4701830.epw
    * - TN, White County
      - 0.0087%
-     - true
      - 38583
-     - -6
      - ../../../weather/G4701850.epw
    * - TN, Williamson County
      - 0.055%
-     - true
      - 37064
-     - -6
      - ../../../weather/G4701870.epw
    * - TN, Wilson County
      - 0.037%
-     - true
      - 37122
-     - -6
      - ../../../weather/G4701890.epw
    * - TX, Anderson County
      - 0.015%
-     - true
      - 75803
-     - -6
      - ../../../weather/G4800010.epw
    * - TX, Andrews County
      - 0.0045%
-     - true
      - 79714
-     - -6
      - ../../../weather/G4800030.epw
    * - TX, Angelina County
      - 0.027%
-     - true
      - 75904
-     - -6
      - ../../../weather/G4800050.epw
    * - TX, Aransas County
      - 0.012%
-     - true
      - 78382
-     - -6
      - ../../../weather/G4800070.epw
    * - TX, Archer County
      - 0.0031%
-     - true
      - 76310
-     - -6
      - ../../../weather/G4800090.epw
    * - TX, Armstrong County
      - 0.00069%
-     - true
      - 79019
-     - -6
      - ../../../weather/G4800110.epw
    * - TX, Atascosa County
      - 0.013%
-     - true
      - 78064
-     - -6
      - ../../../weather/G4800130.epw
    * - TX, Austin County
      - 0.0097%
-     - true
      - 77474
-     - -6
      - ../../../weather/G4800150.epw
    * - TX, Bailey County
      - 0.002%
-     - true
      - 79347
-     - -6
      - ../../../weather/G4800170.epw
    * - TX, Bandera County
      - 0.0087%
-     - true
      - 78003
-     - -6
      - ../../../weather/G4800190.epw
    * - TX, Bastrop County
      - 0.022%
-     - true
      - 78602
-     - -6
      - ../../../weather/G4800210.epw
    * - TX, Baylor County
      - 0.002%
-     - true
      - 76380
-     - -6
      - ../../../weather/G4800230.epw
    * - TX, Bee County
      - 0.0079%
-     - true
      - 78102
-     - -6
      - ../../../weather/G4800250.epw
    * - TX, Bell County
      - 0.1%
-     - true
      - 76502
-     - -6
      - ../../../weather/G4800270.epw
    * - TX, Bexar County
      - 0.51%
-     - true
      - 78245
-     - -6
      - ../../../weather/G4800290.epw
    * - TX, Blanco County
      - 0.0042%
-     - true
      - 78606
-     - -6
      - ../../../weather/G4800310.epw
    * - TX, Borden County
      - 0.0003%
-     - true
      - 79351
-     - -6
      - ../../../weather/G4800330.epw
    * - TX, Bosque County
      - 0.0072%
-     - true
      - 76634
-     - -6
      - ../../../weather/G4800350.epw
    * - TX, Bowie County
      - 0.029%
-     - true
      - 75501
-     - -6
      - ../../../weather/G4800370.epw
    * - TX, Brazoria County
      - 0.095%
-     - true
      - 77584
-     - -6
      - ../../../weather/G4800390.epw
    * - TX, Brazos County
      - 0.062%
-     - true
      - 77845
-     - -6
      - ../../../weather/G4800410.epw
    * - TX, Brewster County
      - 0.0041%
-     - true
      - 79830
-     - -6
      - ../../../weather/G4800430.epw
    * - TX, Briscoe County
      - 0.00075%
-     - true
      - 79257
-     - -6
      - ../../../weather/G4800450.epw
    * - TX, Brooks County
      - 0.0023%
-     - true
      - 78355
-     - -6
      - ../../../weather/G4800470.epw
    * - TX, Brown County
      - 0.014%
-     - true
      - 76801
-     - -6
      - ../../../weather/G4800490.epw
    * - TX, Burleson County
      - 0.0066%
-     - true
      - 77836
-     - -6
      - ../../../weather/G4800510.epw
    * - TX, Burnet County
      - 0.016%
-     - true
      - 78654
-     - -6
      - ../../../weather/G4800530.epw
    * - TX, Caldwell County
      - 0.01%
-     - true
      - 78644
-     - -6
      - ../../../weather/G4800550.epw
    * - TX, Calhoun County
      - 0.0087%
-     - true
      - 77979
-     - -6
      - ../../../weather/G4800570.epw
    * - TX, Callahan County
      - 0.0049%
-     - true
      - 79510
-     - -6
      - ../../../weather/G4800590.epw
    * - TX, Cameron County
      - 0.11%
-     - true
      - 78521
-     - -6
      - ../../../weather/G4800610.epw
    * - TX, Camp County
      - 0.0042%
-     - true
      - 75686
-     - -6
      - ../../../weather/G4800630.epw
    * - TX, Carson County
      - 0.0021%
-     - true
      - 79068
-     - -6
      - ../../../weather/G4800650.epw
    * - TX, Cass County
      - 0.011%
-     - true
      - 75551
-     - -6
      - ../../../weather/G4800670.epw
    * - TX, Castro County
      - 0.0024%
-     - true
      - 79027
-     - -6
      - ../../../weather/G4800690.epw
    * - TX, Chambers County
      - 0.011%
-     - true
      - 77523
-     - -6
      - ../../../weather/G4800710.epw
    * - TX, Cherokee County
      - 0.016%
-     - true
      - 75766
-     - -6
      - ../../../weather/G4800730.epw
    * - TX, Childress County
      - 0.0022%
-     - true
      - 79201
-     - -6
      - ../../../weather/G4800750.epw
    * - TX, Clay County
      - 0.0038%
-     - true
      - 76365
-     - -6
      - ../../../weather/G4800770.epw
    * - TX, Cochran County
      - 0.001%
-     - true
      - 79346
-     - -6
      - ../../../weather/G4800790.epw
    * - TX, Coke County
      - 0.002%
-     - true
      - 76945
-     - -6
      - ../../../weather/G4800810.epw
    * - TX, Coleman County
      - 0.0041%
-     - true
      - 76834
-     - -6
      - ../../../weather/G4800830.epw
    * - TX, Collin County
      - 0.25%
-     - true
      - 75035
-     - -6
      - ../../../weather/G4800850.epw
    * - TX, Collingsworth County
      - 0.0011%
-     - true
      - 79095
-     - -6
      - ../../../weather/G4800870.epw
    * - TX, Colorado County
      - 0.0079%
-     - true
      - 78934
-     - -6
      - ../../../weather/G4800890.epw
    * - TX, Comal County
      - 0.039%
-     - true
      - 78130
-     - -6
      - ../../../weather/G4800910.epw
    * - TX, Comanche County
      - 0.0054%
-     - true
      - 76442
-     - -6
      - ../../../weather/G4800930.epw
    * - TX, Concho County
      - 0.0012%
-     - true
      - 76837
-     - -6
      - ../../../weather/G4800950.epw
    * - TX, Cooke County
      - 0.012%
-     - true
      - 76240
-     - -6
      - ../../../weather/G4800970.epw
    * - TX, Coryell County
      - 0.019%
-     - true
      - 76522
-     - -6
      - ../../../weather/G4800990.epw
    * - TX, Cottle County
      - 0.00078%
-     - true
      - 79248
-     - -6
      - ../../../weather/G4801010.epw
    * - TX, Crane County
      - 0.0012%
-     - true
      - 79731
-     - -6
      - ../../../weather/G4801030.epw
    * - TX, Crockett County
      - 0.0014%
-     - true
      - 76943
-     - -6
      - ../../../weather/G4801050.epw
    * - TX, Crosby County
      - 0.0022%
-     - true
      - 79322
-     - -6
      - ../../../weather/G4801070.epw
    * - TX, Culberson County
      - 0.00075%
-     - true
      - 79847
-     - -6
      - ../../../weather/G4801090.epw
    * - TX, Dallam County
      - 0.0022%
-     - true
      - 79022
-     - -6
      - ../../../weather/G4801110.epw
    * - TX, Dallas County
      - 0.73%
-     - true
      - 75243
-     - -6
      - ../../../weather/G4801130.epw
    * - TX, Dawson County
      - 0.0039%
-     - true
      - 79331
-     - -6
      - ../../../weather/G4801150.epw
    * - TX, Deaf Smith County
      - 0.0053%
-     - true
      - 79045
-     - -6
      - ../../../weather/G4801170.epw
    * - TX, Delta County
      - 0.0018%
-     - true
      - 75432
-     - -6
      - ../../../weather/G4801190.epw
    * - TX, Denton County
      - 0.21%
-     - true
      - 75056
-     - -6
      - ../../../weather/G4801210.epw
    * - TX, DeWitt County
      - 0.0068%
-     - true
      - 77954
-     - -6
      - ../../../weather/G4801230.epw
    * - TX, Dickens County
      - 0.001%
-     - true
      - 79370
-     - -6
      - ../../../weather/G4801250.epw
    * - TX, Dimmit County
      - 0.0032%
-     - true
      - 78834
-     - -6
      - ../../../weather/G4801270.epw
    * - TX, Donley County
      - 0.0016%
-     - true
      - 79226
-     - -6
      - ../../../weather/G4801290.epw
    * - TX, Duval County
      - 0.0041%
-     - true
      - 78384
-     - -6
      - ../../../weather/G4801310.epw
    * - TX, Eastland County
      - 0.0076%
-     - true
      - 76437
-     - -6
      - ../../../weather/G4801330.epw
    * - TX, Ector County
      - 0.042%
-     - true
      - 79762
-     - -6
      - ../../../weather/G4801350.epw
    * - TX, Edwards County
      - 0.0013%
-     - true
      - 78880
-     - -6
      - ../../../weather/G4801370.epw
    * - TX, El Paso County
      - 0.21%
-     - true
      - 79936
-     - -7
      - ../../../weather/G4801410.epw
    * - TX, Ellis County
      - 0.043%
-     - true
      - 75165
-     - -6
      - ../../../weather/G4801390.epw
    * - TX, Erath County
      - 0.013%
-     - true
      - 76401
-     - -6
      - ../../../weather/G4801430.epw
    * - TX, Falls County
      - 0.0058%
-     - true
      - 76661
-     - -6
      - ../../../weather/G4801450.epw
    * - TX, Fannin County
      - 0.011%
-     - true
      - 75418
-     - -6
      - ../../../weather/G4801470.epw
    * - TX, Fayette County
      - 0.01%
-     - true
      - 78945
-     - -6
      - ../../../weather/G4801490.epw
    * - TX, Fisher County
      - 0.0016%
-     - true
      - 79546
-     - -6
      - ../../../weather/G4801510.epw
    * - TX, Floyd County
      - 0.0022%
-     - true
      - 79235
-     - -6
      - ../../../weather/G4801530.epw
    * - TX, Foard County
      - 0.00064%
-     - true
      - 79227
-     - -6
      - ../../../weather/G4801550.epw
    * - TX, Fort Bend County
      - 0.17%
-     - true
      - 77494
-     - -6
      - ../../../weather/G4801570.epw
    * - TX, Franklin County
      - 0.0043%
-     - true
      - 75457
-     - -6
      - ../../../weather/G4801590.epw
    * - TX, Freestone County
      - 0.0069%
-     - true
      - 75860
-     - -6
      - ../../../weather/G4801610.epw
    * - TX, Frio County
      - 0.0044%
-     - true
      - 78061
-     - -6
      - ../../../weather/G4801630.epw
    * - TX, Gaines County
      - 0.0047%
-     - true
      - 79360
-     - -6
      - ../../../weather/G4801650.epw
    * - TX, Galveston County
      - 0.1%
-     - true
      - 77573
-     - -6
      - ../../../weather/G4801670.epw
    * - TX, Garza County
      - 0.0016%
-     - true
      - 79356
-     - -6
      - ../../../weather/G4801690.epw
    * - TX, Gillespie County
      - 0.0096%
-     - true
      - 78624
-     - -6
      - ../../../weather/G4801710.epw
    * - TX, Glasscock County
      - 0.00041%
-     - true
      - 79739
-     - -6
      - ../../../weather/G4801730.epw
    * - TX, Goliad County
      - 0.0028%
-     - true
      - 77963
-     - -6
      - ../../../weather/G4801750.epw
    * - TX, Gonzales County
      - 0.0066%
-     - true
      - 78629
-     - -6
      - ../../../weather/G4801770.epw
    * - TX, Gray County
      - 0.0075%
-     - true
      - 79065
-     - -6
      - ../../../weather/G4801790.epw
    * - TX, Grayson County
      - 0.041%
-     - true
      - 75092
-     - -6
      - ../../../weather/G4801810.epw
    * - TX, Gregg County
      - 0.038%
-     - true
      - 75605
-     - -6
      - ../../../weather/G4801830.epw
    * - TX, Grimes County
      - 0.0082%
-     - true
      - 77868
-     - -6
      - ../../../weather/G4801850.epw
    * - TX, Guadalupe County
      - 0.04%
-     - true
      - 78155
-     - -6
      - ../../../weather/G4801870.epw
    * - TX, Hale County
      - 0.01%
-     - true
      - 79072
-     - -6
      - ../../../weather/G4801890.epw
    * - TX, Hall County
      - 0.0014%
-     - true
      - 79245
-     - -6
      - ../../../weather/G4801910.epw
    * - TX, Hamilton County
      - 0.0034%
-     - true
      - 76531
-     - -6
      - ../../../weather/G4801930.epw
    * - TX, Hansford County
      - 0.0017%
-     - true
      - 79081
-     - -6
      - ../../../weather/G4801950.epw
    * - TX, Hardeman County
      - 0.0018%
-     - true
      - 79252
-     - -6
      - ../../../weather/G4801970.epw
    * - TX, Hardin County
      - 0.018%
-     - true
      - 77657
-     - -6
      - ../../../weather/G4801990.epw
    * - TX, Harris County
      - 1.3%
-     - true
      - 77449
-     - -6
      - ../../../weather/G4802010.epw
    * - TX, Harrison County
      - 0.021%
-     - true
      - 75672
-     - -6
      - ../../../weather/G4802030.epw
    * - TX, Hartley County
      - 0.0015%
-     - true
      - 79022
-     - -6
      - ../../../weather/G4802050.epw
    * - TX, Haskell County
      - 0.0026%
-     - true
      - 79521
-     - -6
      - ../../../weather/G4802070.epw
    * - TX, Hays County
      - 0.052%
-     - true
      - 78666
-     - -6
      - ../../../weather/G4802090.epw
    * - TX, Hemphill County
      - 0.0013%
-     - true
      - 79014
-     - -6
      - ../../../weather/G4802110.epw
    * - TX, Henderson County
      - 0.03%
-     - true
      - 75156
-     - -6
      - ../../../weather/G4802130.epw
    * - TX, Hidalgo County
      - 0.2%
-     - true
      - 78572
-     - -6
      - ../../../weather/G4802150.epw
    * - TX, Hill County
      - 0.012%
-     - true
      - 76692
-     - -6
      - ../../../weather/G4802170.epw
    * - TX, Hockley County
      - 0.0069%
-     - true
      - 79336
-     - -6
      - ../../../weather/G4802190.epw
    * - TX, Hood County
      - 0.019%
-     - true
      - 76048
-     - -6
      - ../../../weather/G4802210.epw
    * - TX, Hopkins County
      - 0.011%
-     - true
      - 75482
-     - -6
      - ../../../weather/G4802230.epw
    * - TX, Houston County
      - 0.0086%
-     - true
      - 75835
-     - -6
      - ../../../weather/G4802250.epw
    * - TX, Howard County
      - 0.0098%
-     - true
      - 79720
-     - -6
      - ../../../weather/G4802270.epw
    * - TX, Hudspeth County
      - 0.0011%
-     - true
      - 79839
-     - -7
      - ../../../weather/G4802290.epw
    * - TX, Hunt County
      - 0.028%
-     - true
      - 75401
-     - -6
      - ../../../weather/G4802310.epw
    * - TX, Hutchinson County
      - 0.0079%
-     - true
      - 79007
-     - -6
      - ../../../weather/G4802330.epw
    * - TX, Irion County
      - 0.00065%
-     - true
      - 76941
-     - -6
      - ../../../weather/G4802350.epw
    * - TX, Jack County
      - 0.0031%
-     - true
      - 76458
-     - -6
      - ../../../weather/G4802370.epw
    * - TX, Jackson County
      - 0.0049%
-     - true
      - 77957
-     - -6
      - ../../../weather/G4802390.epw
    * - TX, Jasper County
      - 0.013%
-     - true
      - 75951
-     - -6
      - ../../../weather/G4802410.epw
    * - TX, Jeff Davis County
      - 0.0012%
-     - true
      - 79734
-     - -6
      - ../../../weather/G4802430.epw
    * - TX, Jefferson County
      - 0.08%
-     - true
      - 77642
-     - -6
      - ../../../weather/G4802450.epw
    * - TX, Jim Hogg County
      - 0.0018%
-     - true
      - 78361
-     - -6
      - ../../../weather/G4802470.epw
    * - TX, Jim Wells County
      - 0.012%
-     - true
      - 78332
-     - -6
      - ../../../weather/G4802490.epw
    * - TX, Johnson County
      - 0.044%
-     - true
      - 76028
-     - -6
      - ../../../weather/G4802510.epw
    * - TX, Jones County
      - 0.0055%
-     - true
      - 79501
-     - -6
      - ../../../weather/G4802530.epw
    * - TX, Karnes County
      - 0.0043%
-     - true
      - 78119
-     - -6
      - ../../../weather/G4802550.epw
    * - TX, Kaufman County
      - 0.029%
-     - true
      - 75126
-     - -6
      - ../../../weather/G4802570.epw
    * - TX, Kendall County
      - 0.011%
-     - true
      - 78006
-     - -6
      - ../../../weather/G4802590.epw
    * - TX, Kenedy County
      - 0.00021%
-     - true
      - 78385
-     - -6
      - ../../../weather/G4802610.epw
    * - TX, Kent County
      - 0.00035%
-     - true
      - 79549
-     - -6
      - ../../../weather/G4802630.epw
    * - TX, Kerr County
      - 0.018%
-     - true
      - 78028
-     - -6
      - ../../../weather/G4802650.epw
    * - TX, Kimble County
      - 0.0026%
-     - true
      - 76849
-     - -6
      - ../../../weather/G4802670.epw
    * - TX, King County
      - 0.00012%
-     - true
      - 79248
-     - -6
      - ../../../weather/G4802690.epw
    * - TX, Kinney County
      - 0.0013%
-     - true
      - 78832
-     - -6
      - ../../../weather/G4802710.epw
    * - TX, Kleberg County
      - 0.0098%
-     - true
      - 78363
-     - -6
      - ../../../weather/G4802730.epw
    * - TX, Knox County
      - 0.0015%
-     - true
      - 76371
-     - -6
      - ../../../weather/G4802750.epw
    * - TX, La Salle County
      - 0.0023%
-     - true
      - 78014
-     - -6
      - ../../../weather/G4802830.epw
    * - TX, Lamar County
      - 0.017%
-     - true
      - 75460
-     - -6
      - ../../../weather/G4802770.epw
    * - TX, Lamb County
      - 0.0046%
-     - true
      - 79339
-     - -6
      - ../../../weather/G4802790.epw
    * - TX, Lampasas County
      - 0.0067%
-     - true
      - 76550
-     - -6
      - ../../../weather/G4802810.epw
    * - TX, Lavaca County
      - 0.0077%
-     - true
      - 77964
-     - -6
      - ../../../weather/G4802850.epw
    * - TX, Lee County
      - 0.0057%
-     - true
      - 78942
-     - -6
      - ../../../weather/G4802870.epw
    * - TX, Leon County
      - 0.0071%
-     - true
      - 75831
-     - -6
      - ../../../weather/G4802890.epw
    * - TX, Liberty County
      - 0.022%
-     - true
      - 77327
-     - -6
      - ../../../weather/G4802910.epw
    * - TX, Limestone County
      - 0.0079%
-     - true
      - 76667
-     - -6
      - ../../../weather/G4802930.epw
    * - TX, Lipscomb County
      - 0.0011%
-     - true
      - 79005
-     - -6
      - ../../../weather/G4802950.epw
    * - TX, Live Oak County
      - 0.0045%
-     - true
      - 78022
-     - -6
      - ../../../weather/G4802970.epw
    * - TX, Llano County
      - 0.011%
-     - true
      - 78657
-     - -6
      - ../../../weather/G4802990.epw
    * - TX, Loving County
      - 4.8e-05%
-     - true
      - 79754
-     - -6
      - ../../../weather/G4803010.epw
    * - TX, Lubbock County
      - 0.09%
-     - true
      - 79424
-     - -6
      - ../../../weather/G4803030.epw
    * - TX, Lynn County
      - 0.002%
-     - true
      - 79373
-     - -6
      - ../../../weather/G4803050.epw
    * - TX, Madison County
      - 0.0039%
-     - true
      - 77864
-     - -6
      - ../../../weather/G4803130.epw
    * - TX, Marion County
      - 0.0047%
-     - true
      - 75657
-     - -6
      - ../../../weather/G4803150.epw
    * - TX, Martin County
      - 0.0014%
-     - true
      - 79782
-     - -6
      - ../../../weather/G4803170.epw
    * - TX, Mason County
      - 0.002%
-     - true
      - 76856
-     - -6
      - ../../../weather/G4803190.epw
    * - TX, Matagorda County
      - 0.014%
-     - true
      - 77414
-     - -6
      - ../../../weather/G4803210.epw
    * - TX, Maverick County
      - 0.013%
-     - true
      - 78852
-     - -6
      - ../../../weather/G4803230.epw
    * - TX, McCulloch County
      - 0.0032%
-     - true
      - 76825
-     - -6
      - ../../../weather/G4803070.epw
    * - TX, McLennan County
      - 0.073%
-     - true
      - 76706
-     - -6
      - ../../../weather/G4803090.epw
    * - TX, McMullen County
      - 0.00031%
-     - true
      - 78072
-     - -6
      - ../../../weather/G4803110.epw
    * - TX, Medina County
      - 0.013%
-     - true
      - 78861
-     - -6
      - ../../../weather/G4803250.epw
    * - TX, Menard County
      - 0.0012%
-     - true
      - 76859
-     - -6
      - ../../../weather/G4803270.epw
    * - TX, Midland County
      - 0.043%
-     - true
      - 79705
-     - -6
      - ../../../weather/G4803290.epw
    * - TX, Milam County
      - 0.0085%
-     - true
      - 76567
-     - -6
      - ../../../weather/G4803310.epw
    * - TX, Mills County
      - 0.0021%
-     - true
      - 76844
-     - -6
      - ../../../weather/G4803330.epw
    * - TX, Mitchell County
      - 0.003%
-     - true
      - 79512
-     - -6
      - ../../../weather/G4803350.epw
    * - TX, Montague County
      - 0.0076%
-     - true
      - 76230
-     - -6
      - ../../../weather/G4803370.epw
    * - TX, Montgomery County
      - 0.15%
-     - true
      - 77386
-     - -6
      - ../../../weather/G4803390.epw
    * - TX, Moore County
      - 0.0059%
-     - true
      - 79029
-     - -6
      - ../../../weather/G4803410.epw
    * - TX, Morris County
      - 0.0045%
-     - true
      - 75638
-     - -6
      - ../../../weather/G4803430.epw
    * - TX, Motley County
      - 0.00059%
-     - true
      - 79234
-     - -6
      - ../../../weather/G4803450.epw
    * - TX, Nacogdoches County
      - 0.021%
-     - true
      - 75964
-     - -6
      - ../../../weather/G4803470.epw
    * - TX, Navarro County
      - 0.015%
-     - true
      - 75110
-     - -6
      - ../../../weather/G4803490.epw
    * - TX, Newton County
      - 0.0053%
-     - true
      - 75966
-     - -6
      - ../../../weather/G4803510.epw
    * - TX, Nolan County
      - 0.0053%
-     - true
      - 79556
-     - -6
      - ../../../weather/G4803530.epw
    * - TX, Nueces County
      - 0.11%
-     - true
      - 78414
-     - -6
      - ../../../weather/G4803550.epw
    * - TX, Ochiltree County
      - 0.003%
-     - true
      - 79070
-     - -6
      - ../../../weather/G4803570.epw
    * - TX, Oldham County
      - 0.0006%
-     - true
      - 79092
-     - -6
      - ../../../weather/G4803590.epw
    * - TX, Orange County
      - 0.027%
-     - true
      - 77630
-     - -6
      - ../../../weather/G4803610.epw
    * - TX, Palo Pinto County
      - 0.011%
-     - true
      - 76067
-     - -6
      - ../../../weather/G4803630.epw
    * - TX, Panola County
      - 0.0082%
-     - true
      - 75633
-     - -6
      - ../../../weather/G4803650.epw
    * - TX, Parker County
      - 0.036%
-     - true
      - 76087
-     - -6
      - ../../../weather/G4803670.epw
    * - TX, Parmer County
      - 0.0028%
-     - true
      - 79035
-     - -6
      - ../../../weather/G4803690.epw
    * - TX, Pecos County
      - 0.0042%
-     - true
      - 79735
-     - -6
      - ../../../weather/G4803710.epw
    * - TX, Polk County
      - 0.018%
-     - true
      - 77351
-     - -6
      - ../../../weather/G4803730.epw
    * - TX, Potter County
      - 0.037%
-     - true
      - 79107
-     - -6
      - ../../../weather/G4803750.epw
    * - TX, Presidio County
      - 0.003%
-     - true
      - 79845
-     - -6
      - ../../../weather/G4803770.epw
    * - TX, Rains County
      - 0.0039%
-     - true
      - 75440
-     - -6
      - ../../../weather/G4803790.epw
    * - TX, Randall County
      - 0.04%
-     - true
      - 79109
-     - -6
      - ../../../weather/G4803810.epw
    * - TX, Reagan County
      - 0.001%
-     - true
      - 76932
-     - -6
      - ../../../weather/G4803830.epw
    * - TX, Real County
      - 0.002%
-     - true
      - 78873
-     - -6
      - ../../../weather/G4803850.epw
    * - TX, Red River County
      - 0.0051%
-     - true
      - 75426
-     - -6
      - ../../../weather/G4803870.epw
    * - TX, Reeves County
      - 0.0035%
-     - true
      - 79772
-     - -6
      - ../../../weather/G4803890.epw
    * - TX, Refugio County
      - 0.0028%
-     - true
      - 78377
-     - -6
      - ../../../weather/G4803910.epw
    * - TX, Roberts County
      - 0.00031%
-     - true
      - 79059
-     - -6
      - ../../../weather/G4803930.epw
    * - TX, Robertson County
      - 0.0064%
-     - true
      - 77859
-     - -6
      - ../../../weather/G4803950.epw
    * - TX, Rockwall County
      - 0.023%
-     - true
      - 75087
-     - -6
      - ../../../weather/G4803970.epw
    * - TX, Runnels County
      - 0.0039%
-     - true
      - 76821
-     - -6
      - ../../../weather/G4803990.epw
    * - TX, Rusk County
      - 0.016%
-     - true
      - 75652
-     - -6
      - ../../../weather/G4804010.epw
    * - TX, Sabine County
      - 0.006%
-     - true
      - 75948
-     - -6
      - ../../../weather/G4804030.epw
    * - TX, San Augustine County
      - 0.004%
-     - true
      - 75972
-     - -6
      - ../../../weather/G4804050.epw
    * - TX, San Jacinto County
      - 0.0098%
-     - true
      - 77331
-     - -6
      - ../../../weather/G4804070.epw
    * - TX, San Patricio County
      - 0.02%
-     - true
      - 78374
-     - -6
      - ../../../weather/G4804090.epw
    * - TX, San Saba County
      - 0.0024%
-     - true
      - 76877
-     - -6
      - ../../../weather/G4804110.epw
    * - TX, Schleicher County
      - 0.0011%
-     - true
      - 76936
-     - -6
      - ../../../weather/G4804130.epw
    * - TX, Scurry County
      - 0.0054%
-     - true
      - 79549
-     - -6
      - ../../../weather/G4804150.epw
    * - TX, Shackelford County
      - 0.0013%
-     - true
      - 76430
-     - -6
      - ../../../weather/G4804170.epw
    * - TX, Shelby County
      - 0.0089%
-     - true
      - 75935
-     - -6
      - ../../../weather/G4804190.epw
    * - TX, Sherman County
      - 0.001%
-     - true
      - 79084
-     - -6
      - ../../../weather/G4804210.epw
    * - TX, Smith County
      - 0.066%
-     - true
      - 75703
-     - -6
      - ../../../weather/G4804230.epw
    * - TX, Somervell County
      - 0.0028%
-     - true
      - 76043
-     - -6
      - ../../../weather/G4804250.epw
    * - TX, Starr County
      - 0.015%
-     - true
      - 78582
-     - -6
      - ../../../weather/G4804270.epw
    * - TX, Stephens County
      - 0.0037%
-     - true
      - 76424
-     - -6
      - ../../../weather/G4804290.epw
    * - TX, Sterling County
      - 0.00044%
-     - true
      - 76951
-     - -6
      - ../../../weather/G4804310.epw
    * - TX, Stonewall County
      - 0.00063%
-     - true
      - 79502
-     - -6
      - ../../../weather/G4804330.epw
    * - TX, Sutton County
      - 0.0015%
-     - true
      - 76950
-     - -6
      - ../../../weather/G4804350.epw
    * - TX, Swisher County
      - 0.0024%
-     - true
      - 79088
-     - -6
      - ../../../weather/G4804370.epw
    * - TX, Tarrant County
      - 0.55%
-     - true
      - 76244
-     - -6
      - ../../../weather/G4804390.epw
    * - TX, Taylor County
      - 0.042%
-     - true
      - 79605
-     - -6
      - ../../../weather/G4804410.epw
    * - TX, Terrell County
      - 0.00057%
-     - true
      - 78851
-     - -6
      - ../../../weather/G4804430.epw
    * - TX, Terry County
      - 0.0036%
-     - true
      - 79316
-     - -6
      - ../../../weather/G4804450.epw
    * - TX, Throckmorton County
      - 0.0008%
-     - true
      - 76483
-     - -6
      - ../../../weather/G4804470.epw
    * - TX, Titus County
      - 0.009%
-     - true
      - 75455
-     - -6
      - ../../../weather/G4804490.epw
    * - TX, Tom Green County
      - 0.036%
-     - true
      - 76904
-     - -6
      - ../../../weather/G4804510.epw
    * - TX, Travis County
      - 0.35%
-     - true
      - 78660
-     - -6
      - ../../../weather/G4804530.epw
    * - TX, Trinity County
      - 0.0065%
-     - true
      - 75862
-     - -6
      - ../../../weather/G4804550.epw
    * - TX, Tyler County
      - 0.0079%
-     - true
      - 75979
-     - -6
      - ../../../weather/G4804570.epw
    * - TX, Upshur County
      - 0.012%
-     - true
      - 75644
-     - -6
      - ../../../weather/G4804590.epw
    * - TX, Upton County
      - 0.0012%
-     - true
      - 79778
-     - -6
      - ../../../weather/G4804610.epw
    * - TX, Uvalde County
      - 0.0082%
-     - true
      - 78801
-     - -6
      - ../../../weather/G4804630.epw
    * - TX, Val Verde County
      - 0.014%
-     - true
      - 78840
-     - -6
      - ../../../weather/G4804650.epw
    * - TX, Van Zandt County
      - 0.017%
-     - true
      - 75103
-     - -6
      - ../../../weather/G4804670.epw
    * - TX, Victoria County
      - 0.027%
-     - true
      - 77901
-     - -6
      - ../../../weather/G4804690.epw
    * - TX, Walker County
      - 0.019%
-     - true
      - 77340
-     - -6
      - ../../../weather/G4804710.epw
    * - TX, Waller County
      - 0.012%
-     - true
      - 77423
-     - -6
      - ../../../weather/G4804730.epw
    * - TX, Ward County
      - 0.0035%
-     - true
      - 79756
-     - -6
      - ../../../weather/G4804750.epw
    * - TX, Washington County
      - 0.012%
-     - true
      - 77833
-     - -6
      - ../../../weather/G4804770.epw
    * - TX, Webb County
      - 0.058%
-     - true
      - 78045
-     - -6
      - ../../../weather/G4804790.epw
    * - TX, Wharton County
      - 0.013%
-     - true
      - 77437
-     - -6
      - ../../../weather/G4804810.epw
    * - TX, Wheeler County
      - 0.002%
-     - true
      - 79079
-     - -6
      - ../../../weather/G4804830.epw
    * - TX, Wichita County
      - 0.042%
-     - true
      - 76311
-     - -6
      - ../../../weather/G4804850.epw
    * - TX, Wilbarger County
      - 0.0047%
-     - true
      - 76384
-     - -6
      - ../../../weather/G4804870.epw
    * - TX, Willacy County
      - 0.0053%
-     - true
      - 78580
-     - -6
      - ../../../weather/G4804890.epw
    * - TX, Williamson County
      - 0.13%
-     - true
      - 78641
-     - -6
      - ../../../weather/G4804910.epw
    * - TX, Wilson County
      - 0.013%
-     - true
      - 78114
-     - -6
      - ../../../weather/G4804930.epw
    * - TX, Winkler County
      - 0.0022%
-     - true
      - 79745
-     - -6
      - ../../../weather/G4804950.epw
    * - TX, Wise County
      - 0.018%
-     - true
      - 76234
-     - -6
      - ../../../weather/G4804970.epw
    * - TX, Wood County
      - 0.016%
-     - true
      - 75773
-     - -6
      - ../../../weather/G4804990.epw
    * - TX, Yoakum County
      - 0.0022%
-     - true
      - 79323
-     - -6
      - ../../../weather/G4805010.epw
    * - TX, Young County
      - 0.0065%
-     - true
      - 76450
-     - -6
      - ../../../weather/G4805030.epw
    * - TX, Zapata County
      - 0.0046%
-     - true
      - 78076
-     - -6
      - ../../../weather/G4805050.epw
    * - TX, Zavala County
      - 0.0032%
-     - true
      - 78839
-     - -6
      - ../../../weather/G4805070.epw
    * - UT, Beaver County
      - 0.0022%
-     - true
      - 84713
-     - -7
      - ../../../weather/G4900010.epw
    * - UT, Box Elder County
      - 0.013%
-     - true
      - 84302
-     - -7
      - ../../../weather/G4900030.epw
    * - UT, Cache County
      - 0.029%
-     - true
      - 84321
-     - -7
      - ../../../weather/G4900050.epw
    * - UT, Carbon County
      - 0.0072%
-     - true
      - 84501
-     - -7
      - ../../../weather/G4900070.epw
    * - UT, Daggett County
      - 0.00087%
-     - true
      - 84046
-     - -7
      - ../../../weather/G4900090.epw
    * - UT, Davis County
      - 0.077%
-     - true
      - 84015
-     - -7
      - ../../../weather/G4900110.epw
    * - UT, Duchesne County
      - 0.0073%
-     - true
      - 84066
-     - -7
      - ../../../weather/G4900130.epw
    * - UT, Emery County
      - 0.0034%
-     - true
      - 84528
-     - -7
      - ../../../weather/G4900150.epw
    * - UT, Garfield County
      - 0.0028%
-     - true
      - 84726
-     - -7
      - ../../../weather/G4900170.epw
    * - UT, Grand County
      - 0.0038%
-     - true
      - 84532
-     - -7
      - ../../../weather/G4900190.epw
    * - UT, Iron County
      - 0.015%
-     - true
      - 84721
-     - -7
      - ../../../weather/G4900210.epw
    * - UT, Juab County
      - 0.0027%
-     - true
      - 84648
-     - -7
      - ../../../weather/G4900230.epw
    * - UT, Kane County
      - 0.0044%
-     - true
      - 84741
-     - -7
      - ../../../weather/G4900250.epw
    * - UT, Millard County
      - 0.0037%
-     - true
      - 84624
-     - -7
      - ../../../weather/G4900270.epw
    * - UT, Morgan County
      - 0.0025%
-     - true
      - 84050
-     - -7
      - ../../../weather/G4900290.epw
    * - UT, Piute County
      - 0.0007%
-     - true
      - 84750
-     - -7
      - ../../../weather/G4900310.epw
    * - UT, Rich County
      - 0.0022%
-     - true
      - 84028
-     - -7
      - ../../../weather/G4900330.epw
    * - UT, Salt Lake County
      - 0.28%
-     - true
      - 84096
-     - -7
      - ../../../weather/G4900350.epw
    * - UT, San Juan County
      - 0.0043%
-     - true
      - 84511
-     - -7
      - ../../../weather/G4900370.epw
    * - UT, Sanpete County
      - 0.0078%
-     - true
      - 84627
-     - -7
      - ../../../weather/G4900390.epw
    * - UT, Sevier County
      - 0.0064%
-     - true
      - 84701
-     - -7
      - ../../../weather/G4900410.epw
    * - UT, Summit County
      - 0.02%
-     - true
      - 84098
-     - -7
      - ../../../weather/G4900430.epw
    * - UT, Tooele County
      - 0.015%
-     - true
      - 84074
-     - -7
      - ../../../weather/G4900450.epw
    * - UT, Uintah County
      - 0.0097%
-     - true
      - 84078
-     - -7
      - ../../../weather/G4900470.epw
    * - UT, Utah County
      - 0.12%
-     - true
      - 84043
-     - -7
      - ../../../weather/G4900490.epw
    * - UT, Wasatch County
      - 0.0087%
-     - true
      - 84032
-     - -7
      - ../../../weather/G4900510.epw
    * - UT, Washington County
      - 0.047%
-     - true
      - 84770
-     - -7
      - ../../../weather/G4900530.epw
    * - UT, Wayne County
      - 0.0012%
-     - true
      - 84775
-     - -7
      - ../../../weather/G4900550.epw
    * - UT, Weber County
      - 0.066%
-     - true
      - 84404
-     - -7
      - ../../../weather/G4900570.epw
    * - VA, Accomack County
      - 0.016%
-     - true
      - 23336
-     - -5
      - ../../../weather/G5100010.epw
    * - VA, Albemarle County
      - 0.033%
-     - true
      - 22901
-     - -5
      - ../../../weather/G5100030.epw
    * - VA, Alexandria city
      - 0.056%
-     - true
      - 22304
-     - -5
      - ../../../weather/G5105100.epw
    * - VA, Alleghany County
      - 0.006%
-     - true
      - 24426
-     - -5
      - ../../../weather/G5100050.epw
    * - VA, Amelia County
      - 0.0041%
-     - true
      - 23002
-     - -5
      - ../../../weather/G5100070.epw
    * - VA, Amherst County
      - 0.01%
-     - true
      - 24572
-     - -5
      - ../../../weather/G5100090.epw
    * - VA, Appomattox County
      - 0.0053%
-     - true
      - 24522
-     - -5
      - ../../../weather/G5100110.epw
    * - VA, Arlington County
      - 0.083%
-     - true
      - 22204
-     - -5
      - ../../../weather/G5100130.epw
    * - VA, Augusta County
      - 0.024%
-     - true
      - 24401
-     - -5
      - ../../../weather/G5100150.epw
    * - VA, Bath County
      - 0.0026%
-     - true
      - 24460
-     - -5
      - ../../../weather/G5100170.epw
    * - VA, Bedford County
      - 0.027%
-     - true
      - 24551
-     - -5
      - ../../../weather/G5100190.epw
    * - VA, Bland County
      - 0.0024%
-     - true
      - 24315
-     - -5
      - ../../../weather/G5100210.epw
    * - VA, Botetourt County
      - 0.011%
-     - true
      - 24175
-     - -5
      - ../../../weather/G5100230.epw
    * - VA, Bristol city
      - 0.0066%
-     - true
      - 24201
-     - -5
      - ../../../weather/G5105200.epw
    * - VA, Brunswick County
      - 0.0061%
-     - true
      - 23868
-     - -5
      - ../../../weather/G5100250.epw
    * - VA, Buchanan County
      - 0.0085%
-     - true
      - 24614
-     - -5
      - ../../../weather/G5100270.epw
    * - VA, Buckingham County
      - 0.0054%
-     - true
      - 23936
-     - -5
      - ../../../weather/G5100290.epw
    * - VA, Buena Vista city
      - 0.0022%
-     - true
      - 24416
-     - -5
      - ../../../weather/G5105300.epw
    * - VA, Campbell County
      - 0.019%
-     - true
      - 24502
-     - -5
      - ../../../weather/G5100310.epw
    * - VA, Caroline County
      - 0.0089%
-     - true
      - 22546
-     - -5
      - ../../../weather/G5100330.epw
    * - VA, Carroll County
      - 0.012%
-     - true
      - 24343
-     - -5
      - ../../../weather/G5100350.epw
    * - VA, Charles City County
      - 0.0025%
-     - true
      - 23030
-     - -5
      - ../../../weather/G5100360.epw
    * - VA, Charlotte County
      - 0.0047%
-     - true
      - 23923
-     - -5
      - ../../../weather/G5100370.epw
    * - VA, Charlottesville city
      - 0.015%
-     - true
      - 22903
-     - -5
      - ../../../weather/G5105400.epw
    * - VA, Chesapeake city
      - 0.066%
-     - true
      - 23320
-     - -5
      - ../../../weather/G5105500.epw
    * - VA, Chesterfield County
      - 0.094%
-     - true
      - 23112
-     - -5
      - ../../../weather/G5100410.epw
    * - VA, Clarke County
      - 0.0047%
-     - true
      - 22611
-     - -5
      - ../../../weather/G5100430.epw
    * - VA, Colonial Heights city
      - 0.0058%
-     - true
      - 23834
-     - -5
      - ../../../weather/G5105700.epw
    * - VA, Covington city
      - 0.0023%
-     - true
      - 24426
-     - -5
      - ../../../weather/G5105800.epw
    * - VA, Craig County
      - 0.0022%
-     - true
      - 24127
-     - -5
      - ../../../weather/G5100450.epw
    * - VA, Culpeper County
      - 0.014%
-     - true
      - 22701
-     - -5
      - ../../../weather/G5100470.epw
    * - VA, Cumberland County
      - 0.0035%
-     - true
      - 23040
-     - -5
      - ../../../weather/G5100490.epw
    * - VA, Danville city
      - 0.017%
-     - true
      - 24541
-     - -5
      - ../../../weather/G5105900.epw
    * - VA, Dickenson County
      - 0.0056%
-     - true
      - 24228
-     - -5
      - ../../../weather/G5100510.epw
    * - VA, Dinwiddie County
      - 0.0086%
-     - true
      - 23803
-     - -5
      - ../../../weather/G5100530.epw
    * - VA, Emporia city
      - 0.0018%
-     - true
      - 23847
-     - -5
      - ../../../weather/G5105950.epw
    * - VA, Essex County
      - 0.0043%
-     - true
      - 22560
-     - -5
      - ../../../weather/G5100570.epw
    * - VA, Fairfax city
      - 0.0066%
-     - true
      - 22030
-     - -5
      - ../../../weather/G5106000.epw
    * - VA, Fairfax County
      - 0.31%
-     - true
      - 20171
-     - -5
      - ../../../weather/G5100590.epw
    * - VA, Falls Church city
      - 0.0043%
-     - true
      - 22046
-     - -5
      - ../../../weather/G5106100.epw
    * - VA, Fauquier County
      - 0.02%
-     - true
      - 20187
-     - -5
      - ../../../weather/G5100610.epw
    * - VA, Floyd County
      - 0.0059%
-     - true
      - 24091
-     - -5
      - ../../../weather/G5100630.epw
    * - VA, Fluvanna County
      - 0.008%
-     - true
      - 22963
-     - -5
      - ../../../weather/G5100650.epw
    * - VA, Franklin city
      - 0.0029%
-     - true
      - 23851
-     - -5
      - ../../../weather/G5106200.epw
    * - VA, Franklin County
      - 0.022%
-     - true
      - 24151
-     - -5
      - ../../../weather/G5100670.epw
    * - VA, Frederick County
      - 0.024%
-     - true
      - 22602
-     - -5
      - ../../../weather/G5100690.epw
    * - VA, Fredericksburg city
      - 0.0085%
-     - true
      - 22401
-     - -5
      - ../../../weather/G5106300.epw
    * - VA, Galax city
      - 0.0025%
-     - true
      - 24333
-     - -5
      - ../../../weather/G5106400.epw
    * - VA, Giles County
      - 0.0062%
-     - true
      - 24134
-     - -5
      - ../../../weather/G5100710.epw
    * - VA, Gloucester County
      - 0.012%
-     - true
      - 23061
-     - -5
      - ../../../weather/G5100730.epw
    * - VA, Goochland County
      - 0.0066%
-     - true
      - 23103
-     - -5
      - ../../../weather/G5100750.epw
    * - VA, Grayson County
      - 0.0068%
-     - true
      - 24333
-     - -5
      - ../../../weather/G5100770.epw
    * - VA, Greene County
      - 0.006%
-     - true
      - 22968
-     - -5
      - ../../../weather/G5100790.epw
    * - VA, Greensville County
      - 0.0031%
-     - true
      - 23847
-     - -5
      - ../../../weather/G5100810.epw
    * - VA, Halifax County
      - 0.013%
-     - true
      - 24592
-     - -5
      - ../../../weather/G5100830.epw
    * - VA, Hampton city
      - 0.045%
-     - true
      - 23666
-     - -5
      - ../../../weather/G5106500.epw
    * - VA, Hanover County
      - 0.03%
-     - true
      - 23111
-     - -5
      - ../../../weather/G5100850.epw
    * - VA, Harrisonburg city
      - 0.013%
-     - true
      - 22801
-     - -5
      - ../../../weather/G5106600.epw
    * - VA, Henrico County
      - 0.1%
-     - true
      - 23228
-     - -5
      - ../../../weather/G5100870.epw
    * - VA, Henry County
      - 0.019%
-     - true
      - 24112
-     - -5
      - ../../../weather/G5100890.epw
    * - VA, Highland County
      - 0.0015%
-     - true
      - 24465
-     - -5
      - ../../../weather/G5100910.epw
    * - VA, Hopewell city
      - 0.0077%
-     - true
      - 23860
-     - -5
      - ../../../weather/G5106700.epw
    * - VA, Isle of Wight County
      - 0.011%
-     - true
      - 23430
-     - -5
      - ../../../weather/G5100930.epw
    * - VA, James City County
      - 0.024%
-     - true
      - 23188
-     - -5
      - ../../../weather/G5100950.epw
    * - VA, King and Queen County
      - 0.0026%
-     - true
      - 23156
-     - -5
      - ../../../weather/G5100970.epw
    * - VA, King George County
      - 0.0073%
-     - true
      - 22485
-     - -5
      - ../../../weather/G5100990.epw
    * - VA, King William County
      - 0.005%
-     - true
      - 23009
-     - -5
      - ../../../weather/G5101010.epw
    * - VA, Lancaster County
      - 0.0057%
-     - true
      - 22503
-     - -5
      - ../../../weather/G5101030.epw
    * - VA, Lee County
      - 0.0087%
-     - true
      - 24263
-     - -5
      - ../../../weather/G5101050.epw
    * - VA, Lexington city
      - 0.0016%
-     - true
      - 24450
-     - -5
      - ../../../weather/G5106780.epw
    * - VA, Loudoun County
      - 0.091%
-     - true
      - 20189
-     - -5
      - ../../../weather/G5101070.epw
    * - VA, Louisa County
      - 0.013%
-     - true
      - 23093
-     - -5
      - ../../../weather/G5101090.epw
    * - VA, Lunenburg County
      - 0.0044%
-     - true
      - 23974
-     - -5
      - ../../../weather/G5101110.epw
    * - VA, Lynchburg city
      - 0.024%
-     - true
      - 24502
-     - -5
      - ../../../weather/G5106800.epw
    * - VA, Madison County
      - 0.0045%
-     - true
      - 22727
-     - -5
      - ../../../weather/G5101130.epw
    * - VA, Manassas city
      - 0.01%
-     - true
      - 20110
-     - -5
      - ../../../weather/G5106830.epw
    * - VA, Manassas Park city
      - 0.0036%
-     - true
      - 20111
-     - -5
      - ../../../weather/G5106850.epw
    * - VA, Martinsville city
      - 0.0053%
-     - true
      - 24112
-     - -5
      - ../../../weather/G5106900.epw
    * - VA, Mathews County
      - 0.0043%
-     - true
      - 23109
-     - -5
      - ../../../weather/G5101150.epw
    * - VA, Mecklenburg County
      - 0.014%
-     - true
      - 23970
-     - -5
      - ../../../weather/G5101170.epw
    * - VA, Middlesex County
      - 0.0054%
-     - true
      - 23043
-     - -5
      - ../../../weather/G5101190.epw
    * - VA, Montgomery County
      - 0.029%
-     - true
      - 24060
-     - -5
      - ../../../weather/G5101210.epw
    * - VA, Nelson County
      - 0.0075%
-     - true
      - 22967
-     - -5
      - ../../../weather/G5101250.epw
    * - VA, New Kent County
      - 0.0059%
-     - true
      - 23141
-     - -5
      - ../../../weather/G5101270.epw
    * - VA, Newport News city
      - 0.058%
-     - true
      - 23608
-     - -5
      - ../../../weather/G5107000.epw
    * - VA, Norfolk city
      - 0.072%
-     - true
      - 23503
-     - -5
      - ../../../weather/G5107100.epw
    * - VA, Northampton County
      - 0.0055%
-     - true
      - 23310
-     - -5
      - ../../../weather/G5101310.epw
    * - VA, Northumberland County
      - 0.0068%
-     - true
      - 22473
-     - -5
      - ../../../weather/G5101330.epw
    * - VA, Norton city
      - 0.0015%
-     - true
      - 24273
-     - -5
      - ../../../weather/G5107200.epw
    * - VA, Nottoway County
      - 0.005%
-     - true
      - 23824
-     - -5
      - ../../../weather/G5101350.epw
    * - VA, Orange County
      - 0.011%
-     - true
      - 22508
-     - -5
      - ../../../weather/G5101370.epw
    * - VA, Page County
      - 0.0087%
-     - true
      - 22835
-     - -5
      - ../../../weather/G5101390.epw
    * - VA, Patrick County
      - 0.0075%
-     - true
      - 24171
-     - -5
      - ../../../weather/G5101410.epw
    * - VA, Petersburg city
      - 0.012%
-     - true
      - 23803
-     - -5
      - ../../../weather/G5107300.epw
    * - VA, Pittsylvania County
      - 0.023%
-     - true
      - 24540
-     - -5
      - ../../../weather/G5101430.epw
    * - VA, Poquoson city
      - 0.0035%
-     - true
      - 23662
-     - -5
      - ../../../weather/G5107350.epw
    * - VA, Portsmouth city
      - 0.031%
-     - true
      - 23703
-     - -5
      - ../../../weather/G5107400.epw
    * - VA, Powhatan County
      - 0.0078%
-     - true
      - 23139
-     - -5
      - ../../../weather/G5101450.epw
    * - VA, Prince Edward County
      - 0.0069%
-     - true
      - 23901
-     - -5
      - ../../../weather/G5101470.epw
    * - VA, Prince George County
      - 0.0091%
-     - true
      - 23875
-     - -5
      - ../../../weather/G5101490.epw
    * - VA, Prince William County
      - 0.11%
-     - true
      - 22191
-     - -5
      - ../../../weather/G5101530.epw
    * - VA, Pulaski County
      - 0.013%
-     - true
      - 24301
-     - -5
      - ../../../weather/G5101550.epw
    * - VA, Radford city
      - 0.0049%
-     - true
      - 24141
-     - -5
      - ../../../weather/G5107500.epw
    * - VA, Rappahannock County
      - 0.0029%
-     - true
      - 20106
-     - -5
      - ../../../weather/G5101570.epw
    * - VA, Richmond city
      - 0.075%
-     - true
      - 23220
-     - -5
      - ../../../weather/G5107600.epw
    * - VA, Richmond County
      - 0.0029%
-     - true
      - 22572
-     - -5
      - ../../../weather/G5101590.epw
    * - VA, Roanoke city
      - 0.035%
-     - true
      - 24017
-     - -5
      - ../../../weather/G5107700.epw
    * - VA, Roanoke County
      - 0.03%
-     - true
      - 24018
-     - -5
      - ../../../weather/G5101610.epw
    * - VA, Rockbridge County
      - 0.0084%
-     - true
      - 24450
-     - -5
      - ../../../weather/G5101630.epw
    * - VA, Rockingham County
      - 0.026%
-     - true
      - 22801
-     - -5
      - ../../../weather/G5101650.epw
    * - VA, Russell County
      - 0.01%
-     - true
      - 24266
-     - -5
      - ../../../weather/G5101670.epw
    * - VA, Salem city
      - 0.0081%
-     - true
      - 24153
-     - -5
      - ../../../weather/G5107750.epw
    * - VA, Scott County
      - 0.0089%
-     - true
      - 24251
-     - -5
      - ../../../weather/G5101690.epw
    * - VA, Shenandoah County
      - 0.016%
-     - true
      - 22657
-     - -5
      - ../../../weather/G5101710.epw
    * - VA, Smyth County
      - 0.011%
-     - true
      - 24354
-     - -5
      - ../../../weather/G5101730.epw
    * - VA, Southampton County
      - 0.0056%
-     - true
      - 23851
-     - -5
      - ../../../weather/G5101750.epw
    * - VA, Spotsylvania County
      - 0.035%
-     - true
      - 22407
-     - -5
      - ../../../weather/G5101770.epw
    * - VA, Stafford County
      - 0.035%
-     - true
      - 22554
-     - -5
      - ../../../weather/G5101790.epw
    * - VA, Staunton city
      - 0.0088%
-     - true
      - 24401
-     - -5
      - ../../../weather/G5107900.epw
    * - VA, Suffolk city
      - 0.026%
-     - true
      - 23434
-     - -5
      - ../../../weather/G5108000.epw
    * - VA, Surry County
      - 0.0026%
-     - true
      - 23883
-     - -5
      - ../../../weather/G5101810.epw
    * - VA, Sussex County
      - 0.0034%
-     - true
      - 23890
-     - -5
      - ../../../weather/G5101830.epw
    * - VA, Tazewell County
      - 0.015%
-     - true
      - 24605
-     - -5
      - ../../../weather/G5101850.epw
    * - VA, Virginia Beach city
      - 0.14%
-     - true
      - 23462
-     - -5
      - ../../../weather/G5108100.epw
    * - VA, Warren County
      - 0.012%
-     - true
      - 22630
-     - -5
      - ../../../weather/G5101870.epw
    * - VA, Washington County
      - 0.019%
-     - true
      - 24210
-     - -5
      - ../../../weather/G5101910.epw
    * - VA, Waynesboro city
      - 0.0074%
-     - true
      - 22980
-     - -5
      - ../../../weather/G5108200.epw
    * - VA, Westmoreland County
      - 0.0081%
-     - true
      - 22443
-     - -5
      - ../../../weather/G5101930.epw
    * - VA, Williamsburg city
      - 0.0038%
-     - true
      - 23185
-     - -5
      - ../../../weather/G5108300.epw
    * - VA, Winchester city
      - 0.0089%
-     - true
      - 22601
-     - -5
      - ../../../weather/G5108400.epw
    * - VA, Wise County
      - 0.013%
-     - true
      - 24219
-     - -5
      - ../../../weather/G5101950.epw
    * - VA, Wythe County
      - 0.011%
-     - true
      - 24382
-     - -5
      - ../../../weather/G5101970.epw
    * - VA, York County
      - 0.02%
-     - true
      - 23692
-     - -5
      - ../../../weather/G5101990.epw
    * - VT, Addison County
      - 0.013%
-     - true
      - 05753
-     - -5
      - ../../../weather/G5000010.epw
    * - VT, Bennington County
      - 0.016%
-     - true
      - 05201
-     - -5
      - ../../../weather/G5000030.epw
    * - VT, Caledonia County
      - 0.012%
-     - true
      - 05819
-     - -5
      - ../../../weather/G5000050.epw
    * - VT, Chittenden County
      - 0.05%
-     - true
      - 05401
-     - -5
      - ../../../weather/G5000070.epw
    * - VT, Essex County
      - 0.0038%
-     - true
      - 05906
-     - -5
      - ../../../weather/G5000090.epw
    * - VT, Franklin County
      - 0.016%
-     - true
      - 05478
-     - -5
      - ../../../weather/G5000110.epw
    * - VT, Grand Isle County
      - 0.0038%
-     - true
      - 05440
-     - -5
      - ../../../weather/G5000130.epw
    * - VT, Lamoille County
      - 0.0099%
-     - true
      - 05672
-     - -5
      - ../../../weather/G5000150.epw
    * - VT, Orange County
      - 0.011%
-     - true
      - 05060
-     - -5
      - ../../../weather/G5000170.epw
    * - VT, Orleans County
      - 0.012%
-     - true
      - 05855
-     - -5
      - ../../../weather/G5000190.epw
    * - VT, Rutland County
      - 0.025%
-     - true
      - 05701
-     - -5
      - ../../../weather/G5000210.epw
    * - VT, Washington County
      - 0.022%
-     - true
      - 05641
-     - -5
      - ../../../weather/G5000230.epw
    * - VT, Windham County
      - 0.022%
-     - true
      - 05301
-     - -5
      - ../../../weather/G5000250.epw
    * - VT, Windsor County
      - 0.026%
-     - true
      - 05156
-     - -5
      - ../../../weather/G5000270.epw
    * - WA, Adams County
      - 0.0047%
-     - true
      - 99344
-     - -8
      - ../../../weather/G5300010.epw
    * - WA, Asotin County
      - 0.0073%
-     - true
      - 99403
-     - -8
      - ../../../weather/G5300030.epw
    * - WA, Benton County
      - 0.054%
-     - true
      - 99336
-     - -8
      - ../../../weather/G5300050.epw
    * - WA, Chelan County
      - 0.027%
-     - true
      - 98801
-     - -8
      - ../../../weather/G5300070.epw
    * - WA, Clallam County
      - 0.027%
-     - true
      - 98382
-     - -8
      - ../../../weather/G5300090.epw
    * - WA, Clark County
      - 0.13%
-     - true
      - 98682
-     - -8
      - ../../../weather/G5300110.epw
    * - WA, Columbia County
      - 0.0016%
-     - true
      - 99328
-     - -8
      - ../../../weather/G5300130.epw
    * - WA, Cowlitz County
      - 0.032%
-     - true
      - 98632
-     - -8
      - ../../../weather/G5300150.epw
    * - WA, Douglas County
      - 0.012%
-     - true
      - 98802
-     - -8
      - ../../../weather/G5300170.epw
    * - WA, Ferry County
      - 0.0033%
-     - true
      - 99166
-     - -8
      - ../../../weather/G5300190.epw
    * - WA, Franklin County
      - 0.02%
-     - true
      - 99301
-     - -8
      - ../../../weather/G5300210.epw
    * - WA, Garfield County
      - 0.0009%
-     - true
      - 99347
-     - -8
      - ../../../weather/G5300230.epw
    * - WA, Grant County
      - 0.027%
-     - true
      - 98837
-     - -8
      - ../../../weather/G5300250.epw
    * - WA, Grays Harbor County
      - 0.026%
-     - true
      - 98520
-     - -8
      - ../../../weather/G5300270.epw
    * - WA, Island County
      - 0.03%
-     - true
      - 98277
-     - -8
      - ../../../weather/G5300290.epw
    * - WA, Jefferson County
      - 0.013%
-     - true
      - 98368
-     - -8
      - ../../../weather/G5300310.epw
    * - WA, King County
      - 0.66%
-     - true
      - 98052
-     - -8
      - ../../../weather/G5300330.epw
    * - WA, Kitsap County
      - 0.081%
-     - true
      - 98312
-     - -8
      - ../../../weather/G5300350.epw
    * - WA, Kittitas County
      - 0.017%
-     - true
      - 98926
-     - -8
      - ../../../weather/G5300370.epw
    * - WA, Klickitat County
      - 0.0074%
-     - true
      - 98672
-     - -8
      - ../../../weather/G5300390.epw
    * - WA, Lewis County
      - 0.025%
-     - true
      - 98531
-     - -8
      - ../../../weather/G5300410.epw
    * - WA, Lincoln County
      - 0.0044%
-     - true
      - 99122
-     - -8
      - ../../../weather/G5300430.epw
    * - WA, Mason County
      - 0.024%
-     - true
      - 98584
-     - -8
      - ../../../weather/G5300450.epw
    * - WA, Okanogan County
      - 0.017%
-     - true
      - 98841
-     - -8
      - ../../../weather/G5300470.epw
    * - WA, Pacific County
      - 0.012%
-     - true
      - 98640
-     - -8
      - ../../../weather/G5300490.epw
    * - WA, Pend Oreille County
      - 0.006%
-     - true
      - 99156
-     - -8
      - ../../../weather/G5300510.epw
    * - WA, Pierce County
      - 0.25%
-     - true
      - 98391
-     - -8
      - ../../../weather/G5300530.epw
    * - WA, San Juan County
      - 0.01%
-     - true
      - 98250
-     - -8
      - ../../../weather/G5300550.epw
    * - WA, Skagit County
      - 0.039%
-     - true
      - 98273
-     - -8
      - ../../../weather/G5300570.epw
    * - WA, Skamania County
      - 0.0042%
-     - true
      - 98648
-     - -8
      - ../../../weather/G5300590.epw
    * - WA, Snohomish County
      - 0.22%
-     - true
      - 98012
-     - -8
      - ../../../weather/G5300610.epw
    * - WA, Spokane County
      - 0.15%
-     - true
      - 99208
-     - -8
      - ../../../weather/G5300630.epw
    * - WA, Stevens County
      - 0.016%
-     - true
      - 99114
-     - -8
      - ../../../weather/G5300650.epw
    * - WA, Thurston County
      - 0.083%
-     - true
      - 98501
-     - -8
      - ../../../weather/G5300670.epw
    * - WA, Wahkiakum County
      - 0.0016%
-     - true
      - 98612
-     - -8
      - ../../../weather/G5300690.epw
    * - WA, Walla Walla County
      - 0.018%
-     - true
      - 99362
-     - -8
      - ../../../weather/G5300710.epw
    * - WA, Whatcom County
      - 0.069%
-     - true
      - 98225
-     - -8
      - ../../../weather/G5300730.epw
    * - WA, Whitman County
      - 0.015%
-     - true
      - 99163
-     - -8
      - ../../../weather/G5300750.epw
    * - WA, Yakima County
      - 0.064%
-     - true
      - 98902
-     - -8
      - ../../../weather/G5300770.epw
    * - WI, Adams County
      - 0.013%
-     - true
      - 53934
-     - -6
      - ../../../weather/G5500010.epw
    * - WI, Ashland County
      - 0.0072%
-     - true
      - 54806
-     - -6
      - ../../../weather/G5500030.epw
    * - WI, Barron County
      - 0.018%
-     - true
      - 54868
-     - -6
      - ../../../weather/G5500050.epw
    * - WI, Bayfield County
      - 0.0098%
-     - true
      - 54891
-     - -6
      - ../../../weather/G5500070.epw
    * - WI, Brown County
      - 0.08%
-     - true
      - 54115
-     - -6
      - ../../../weather/G5500090.epw
    * - WI, Buffalo County
      - 0.005%
-     - true
      - 54755
-     - -6
      - ../../../weather/G5500110.epw
    * - WI, Burnett County
      - 0.011%
-     - true
      - 54830
-     - -6
      - ../../../weather/G5500130.epw
    * - WI, Calumet County
      - 0.015%
-     - true
      - 54915
-     - -6
      - ../../../weather/G5500150.epw
    * - WI, Chippewa County
      - 0.021%
-     - true
      - 54729
-     - -6
      - ../../../weather/G5500170.epw
    * - WI, Clark County
      - 0.011%
-     - true
      - 54456
-     - -6
      - ../../../weather/G5500190.epw
    * - WI, Columbia County
      - 0.02%
-     - true
      - 53901
-     - -6
      - ../../../weather/G5500210.epw
    * - WI, Crawford County
      - 0.0066%
-     - true
      - 53821
-     - -6
      - ../../../weather/G5500230.epw
    * - WI, Dane County
      - 0.17%
-     - true
      - 53711
-     - -6
      - ../../../weather/G5500250.epw
    * - WI, Dodge County
      - 0.028%
-     - true
      - 53916
-     - -6
      - ../../../weather/G5500270.epw
    * - WI, Door County
      - 0.018%
-     - true
      - 54235
-     - -6
      - ../../../weather/G5500290.epw
    * - WI, Douglas County
      - 0.017%
-     - true
      - 54880
-     - -6
      - ../../../weather/G5500310.epw
    * - WI, Dunn County
      - 0.013%
-     - true
      - 54751
-     - -6
      - ../../../weather/G5500330.epw
    * - WI, Eau Claire County
      - 0.032%
-     - true
      - 54703
-     - -6
      - ../../../weather/G5500350.epw
    * - WI, Florence County
      - 0.0036%
-     - true
      - 54121
-     - -6
      - ../../../weather/G5500370.epw
    * - WI, Fond du Lac County
      - 0.033%
-     - true
      - 54935
-     - -6
      - ../../../weather/G5500390.epw
    * - WI, Forest County
      - 0.0068%
-     - true
      - 54520
-     - -6
      - ../../../weather/G5500410.epw
    * - WI, Grant County
      - 0.016%
-     - true
      - 53818
-     - -6
      - ../../../weather/G5500430.epw
    * - WI, Green County
      - 0.012%
-     - true
      - 53566
-     - -6
      - ../../../weather/G5500450.epw
    * - WI, Green Lake County
      - 0.0079%
-     - true
      - 54923
-     - -6
      - ../../../weather/G5500470.epw
    * - WI, Iowa County
      - 0.008%
-     - true
      - 53533
-     - -6
      - ../../../weather/G5500490.epw
    * - WI, Iron County
      - 0.0045%
-     - true
      - 54547
-     - -6
      - ../../../weather/G5500510.epw
    * - WI, Jackson County
      - 0.0073%
-     - true
      - 54615
-     - -6
      - ../../../weather/G5500530.epw
    * - WI, Jefferson County
      - 0.026%
-     - true
      - 53538
-     - -6
      - ../../../weather/G5500550.epw
    * - WI, Juneau County
      - 0.011%
-     - true
      - 53948
-     - -6
      - ../../../weather/G5500570.epw
    * - WI, Kenosha County
      - 0.052%
-     - true
      - 53142
-     - -6
      - ../../../weather/G5500590.epw
    * - WI, Kewaunee County
      - 0.007%
-     - true
      - 54216
-     - -6
      - ../../../weather/G5500610.epw
    * - WI, La Crosse County
      - 0.037%
-     - true
      - 54601
-     - -6
      - ../../../weather/G5500630.epw
    * - WI, Lafayette County
      - 0.0054%
-     - true
      - 53530
-     - -6
      - ../../../weather/G5500650.epw
    * - WI, Langlade County
      - 0.0092%
-     - true
      - 54409
-     - -6
      - ../../../weather/G5500670.epw
    * - WI, Lincoln County
      - 0.013%
-     - true
      - 54452
-     - -6
      - ../../../weather/G5500690.epw
    * - WI, Manitowoc County
      - 0.028%
-     - true
      - 54220
-     - -6
      - ../../../weather/G5500710.epw
    * - WI, Marathon County
      - 0.044%
-     - true
      - 54401
-     - -6
      - ../../../weather/G5500730.epw
    * - WI, Marinette County
      - 0.023%
-     - true
      - 54143
-     - -6
      - ../../../weather/G5500750.epw
    * - WI, Marquette County
      - 0.0074%
-     - true
      - 53949
-     - -6
      - ../../../weather/G5500770.epw
    * - WI, Menominee County
      - 0.0017%
-     - true
      - 54135
-     - -6
      - ../../../weather/G5500780.epw
    * - WI, Milwaukee County
      - 0.31%
-     - true
      - 53209
-     - -6
      - ../../../weather/G5500790.epw
    * - WI, Monroe County
      - 0.015%
-     - true
      - 54656
-     - -6
      - ../../../weather/G5500810.epw
    * - WI, Oconto County
      - 0.018%
-     - true
      - 54153
-     - -6
      - ../../../weather/G5500830.epw
    * - WI, Oneida County
      - 0.023%
-     - true
      - 54501
-     - -6
      - ../../../weather/G5500850.epw
    * - WI, Outagamie County
      - 0.056%
-     - true
      - 54911
-     - -6
      - ../../../weather/G5500870.epw
    * - WI, Ozaukee County
      - 0.027%
-     - true
      - 53092
-     - -6
      - ../../../weather/G5500890.epw
    * - WI, Pepin County
      - 0.0027%
-     - true
      - 54736
-     - -6
      - ../../../weather/G5500910.epw
    * - WI, Pierce County
      - 0.012%
-     - true
      - 54022
-     - -6
      - ../../../weather/G5500930.epw
    * - WI, Polk County
      - 0.018%
-     - true
      - 54001
-     - -6
      - ../../../weather/G5500950.epw
    * - WI, Portage County
      - 0.023%
-     - true
      - 54481
-     - -6
      - ../../../weather/G5500970.epw
    * - WI, Price County
      - 0.0082%
-     - true
      - 54555
-     - -6
      - ../../../weather/G5500990.epw
    * - WI, Racine County
      - 0.061%
-     - true
      - 53402
-     - -6
      - ../../../weather/G5501010.epw
    * - WI, Richland County
      - 0.0066%
-     - true
      - 53581
-     - -6
      - ../../../weather/G5501030.epw
    * - WI, Rock County
      - 0.051%
-     - true
      - 53511
-     - -6
      - ../../../weather/G5501050.epw
    * - WI, Rusk County
      - 0.0067%
-     - true
      - 54848
-     - -6
      - ../../../weather/G5501070.epw
    * - WI, Sauk County
      - 0.022%
-     - true
      - 53913
-     - -6
      - ../../../weather/G5501110.epw
    * - WI, Sawyer County
      - 0.012%
-     - true
      - 54843
-     - -6
      - ../../../weather/G5501130.epw
    * - WI, Shawano County
      - 0.015%
-     - true
      - 54166
-     - -6
      - ../../../weather/G5501150.epw
    * - WI, Sheboygan County
      - 0.038%
-     - true
      - 53081
-     - -6
      - ../../../weather/G5501170.epw
    * - WI, St. Croix County
      - 0.026%
-     - true
      - 54016
-     - -6
      - ../../../weather/G5501090.epw
    * - WI, Taylor County
      - 0.0079%
-     - true
      - 54451
-     - -6
      - ../../../weather/G5501190.epw
    * - WI, Trempealeau County
      - 0.0096%
-     - true
      - 54612
-     - -6
      - ../../../weather/G5501210.epw
    * - WI, Vernon County
      - 0.01%
-     - true
      - 54665
-     - -6
      - ../../../weather/G5501230.epw
    * - WI, Vilas County
      - 0.019%
-     - true
      - 54521
-     - -6
      - ../../../weather/G5501250.epw
    * - WI, Walworth County
      - 0.039%
-     - true
      - 53147
-     - -6
      - ../../../weather/G5501270.epw
    * - WI, Washburn County
      - 0.0097%
-     - true
      - 54801
-     - -6
      - ../../../weather/G5501290.epw
    * - WI, Washington County
      - 0.041%
-     - true
      - 53022
-     - -6
      - ../../../weather/G5501310.epw
    * - WI, Waukesha County
      - 0.12%
-     - true
      - 53051
-     - -6
      - ../../../weather/G5501330.epw
    * - WI, Waupaca County
      - 0.019%
-     - true
      - 54981
-     - -6
      - ../../../weather/G5501350.epw
    * - WI, Waushara County
      - 0.011%
-     - true
      - 54982
-     - -6
      - ../../../weather/G5501370.epw
    * - WI, Winnebago County
      - 0.055%
-     - true
      - 54956
-     - -6
      - ../../../weather/G5501390.epw
    * - WI, Wood County
      - 0.026%
-     - true
      - 54449
-     - -6
      - ../../../weather/G5501410.epw
    * - WV, Barbour County
      - 0.0059%
-     - true
      - 26416
-     - -5
      - ../../../weather/G5400010.epw
    * - WV, Berkeley County
      - 0.035%
-     - true
      - 25404
-     - -5
      - ../../../weather/G5400030.epw
    * - WV, Boone County
      - 0.0082%
-     - true
      - 25130
-     - -5
      - ../../../weather/G5400050.epw
    * - WV, Braxton County
      - 0.0055%
-     - true
      - 26601
-     - -5
      - ../../../weather/G5400070.epw
    * - WV, Brooke County
      - 0.0081%
-     - true
      - 26070
-     - -5
      - ../../../weather/G5400090.epw
    * - WV, Cabell County
      - 0.035%
-     - true
      - 25701
-     - -5
      - ../../../weather/G5400110.epw
    * - WV, Calhoun County
      - 0.0029%
-     - true
      - 26147
-     - -5
      - ../../../weather/G5400130.epw
    * - WV, Clay County
      - 0.0034%
-     - true
      - 25043
-     - -5
      - ../../../weather/G5400150.epw
    * - WV, Doddridge County
      - 0.0029%
-     - true
      - 26456
-     - -5
      - ../../../weather/G5400170.epw
    * - WV, Fayette County
      - 0.016%
-     - true
      - 25901
-     - -5
      - ../../../weather/G5400190.epw
    * - WV, Gilmer County
      - 0.0026%
-     - true
      - 26351
-     - -5
      - ../../../weather/G5400210.epw
    * - WV, Grant County
      - 0.0048%
-     - true
      - 26847
-     - -5
      - ../../../weather/G5400230.epw
    * - WV, Greenbrier County
      - 0.014%
-     - true
      - 24901
-     - -5
      - ../../../weather/G5400250.epw
    * - WV, Hampshire County
      - 0.01%
-     - true
      - 26757
-     - -5
      - ../../../weather/G5400270.epw
    * - WV, Hancock County
      - 0.011%
-     - true
      - 26062
-     - -5
      - ../../../weather/G5400290.epw
    * - WV, Hardy County
      - 0.0061%
-     - true
      - 26836
-     - -5
      - ../../../weather/G5400310.epw
    * - WV, Harrison County
      - 0.024%
-     - true
      - 26301
-     - -5
      - ../../../weather/G5400330.epw
    * - WV, Jackson County
      - 0.0099%
-     - true
      - 25271
-     - -5
      - ../../../weather/G5400350.epw
    * - WV, Jefferson County
      - 0.017%
-     - true
      - 25414
-     - -5
      - ../../../weather/G5400370.epw
    * - WV, Kanawha County
      - 0.069%
-     - true
      - 25177
-     - -5
      - ../../../weather/G5400390.epw
    * - WV, Lewis County
      - 0.0059%
-     - true
      - 26452
-     - -5
      - ../../../weather/G5400410.epw
    * - WV, Lincoln County
      - 0.0073%
-     - true
      - 25506
-     - -5
      - ../../../weather/G5400430.epw
    * - WV, Logan County
      - 0.012%
-     - true
      - 25601
-     - -5
      - ../../../weather/G5400450.epw
    * - WV, Marion County
      - 0.02%
-     - true
      - 26554
-     - -5
      - ../../../weather/G5400490.epw
    * - WV, Marshall County
      - 0.012%
-     - true
      - 26041
-     - -5
      - ../../../weather/G5400510.epw
    * - WV, Mason County
      - 0.0097%
-     - true
      - 25550
-     - -5
      - ../../../weather/G5400530.epw
    * - WV, McDowell County
      - 0.0083%
-     - true
      - 24801
-     - -5
      - ../../../weather/G5400470.epw
    * - WV, Mercer County
      - 0.022%
-     - true
      - 24701
-     - -5
      - ../../../weather/G5400550.epw
    * - WV, Mineral County
      - 0.0098%
-     - true
      - 26726
-     - -5
      - ../../../weather/G5400570.epw
    * - WV, Mingo County
      - 0.0094%
-     - true
      - 25661
-     - -5
      - ../../../weather/G5400590.epw
    * - WV, Monongalia County
      - 0.033%
-     - true
      - 26505
-     - -5
      - ../../../weather/G5400610.epw
    * - WV, Monroe County
      - 0.0057%
-     - true
      - 24963
-     - -5
      - ../../../weather/G5400630.epw
    * - WV, Morgan County
      - 0.0073%
-     - true
      - 25411
-     - -5
      - ../../../weather/G5400650.epw
    * - WV, Nicholas County
      - 0.0097%
-     - true
      - 26651
-     - -5
      - ../../../weather/G5400670.epw
    * - WV, Ohio County
      - 0.016%
-     - true
      - 26003
-     - -5
      - ../../../weather/G5400690.epw
    * - WV, Pendleton County
      - 0.0039%
-     - true
      - 26807
-     - -5
      - ../../../weather/G5400710.epw
    * - WV, Pleasants County
      - 0.0025%
-     - true
      - 26170
-     - -5
      - ../../../weather/G5400730.epw
    * - WV, Pocahontas County
      - 0.0066%
-     - true
      - 24954
-     - -5
      - ../../../weather/G5400750.epw
    * - WV, Preston County
      - 0.011%
-     - true
      - 26537
-     - -5
      - ../../../weather/G5400770.epw
    * - WV, Putnam County
      - 0.018%
-     - true
      - 25526
-     - -5
      - ../../../weather/G5400790.epw
    * - WV, Raleigh County
      - 0.027%
-     - true
      - 25801
-     - -5
      - ../../../weather/G5400810.epw
    * - WV, Randolph County
      - 0.011%
-     - true
      - 26241
-     - -5
      - ../../../weather/G5400830.epw
    * - WV, Ritchie County
      - 0.0043%
-     - true
      - 26362
-     - -5
      - ../../../weather/G5400850.epw
    * - WV, Roane County
      - 0.0055%
-     - true
      - 25276
-     - -5
      - ../../../weather/G5400870.epw
    * - WV, Summers County
      - 0.0057%
-     - true
      - 25951
-     - -5
      - ../../../weather/G5400890.epw
    * - WV, Taylor County
      - 0.0056%
-     - true
      - 26354
-     - -5
      - ../../../weather/G5400910.epw
    * - WV, Tucker County
      - 0.004%
-     - true
      - 26287
-     - -5
      - ../../../weather/G5400930.epw
    * - WV, Tyler County
      - 0.0037%
-     - true
      - 26175
-     - -5
      - ../../../weather/G5400950.epw
    * - WV, Upshur County
      - 0.0084%
-     - true
      - 26201
-     - -5
      - ../../../weather/G5400970.epw
    * - WV, Wayne County
      - 0.014%
-     - true
      - 25704
-     - -5
      - ../../../weather/G5400990.epw
    * - WV, Webster County
      - 0.004%
-     - true
      - 26288
-     - -5
      - ../../../weather/G5401010.epw
    * - WV, Wetzel County
      - 0.0061%
-     - true
      - 26155
-     - -5
      - ../../../weather/G5401030.epw
    * - WV, Wirt County
      - 0.0024%
-     - true
      - 26143
-     - -5
      - ../../../weather/G5401050.epw
    * - WV, Wood County
      - 0.03%
-     - true
      - 26101
-     - -5
      - ../../../weather/G5401070.epw
    * - WV, Wyoming County
      - 0.0081%
-     - true
      - 25882
-     - -5
      - ../../../weather/G5401090.epw
    * - WY, Albany County
      - 0.014%
-     - true
      - 82070
-     - -7
      - ../../../weather/G5600010.epw
    * - WY, Big Horn County
      - 0.004%
-     - true
      - 82431
-     - -7
      - ../../../weather/G5600030.epw
    * - WY, Campbell County
      - 0.015%
-     - true
      - 82718
-     - -7
      - ../../../weather/G5600050.epw
    * - WY, Carbon County
      - 0.0064%
-     - true
      - 82301
-     - -7
      - ../../../weather/G5600070.epw
    * - WY, Converse County
      - 0.0049%
-     - true
      - 82633
-     - -7
      - ../../../weather/G5600090.epw
    * - WY, Crook County
      - 0.0027%
-     - true
      - 82729
-     - -7
      - ../../../weather/G5600110.epw
    * - WY, Fremont County
      - 0.013%
-     - true
      - 82501
-     - -7
      - ../../../weather/G5600130.epw
    * - WY, Goshen County
      - 0.0044%
-     - true
      - 82240
-     - -7
      - ../../../weather/G5600150.epw
    * - WY, Hot Springs County
      - 0.0019%
-     - true
      - 82443
-     - -7
      - ../../../weather/G5600170.epw
    * - WY, Johnson County
      - 0.0034%
-     - true
      - 82834
-     - -7
      - ../../../weather/G5600190.epw
    * - WY, Laramie County
      - 0.031%
-     - true
      - 82001
-     - -7
      - ../../../weather/G5600210.epw
    * - WY, Lincoln County
      - 0.0067%
-     - true
      - 83127
-     - -7
      - ../../../weather/G5600230.epw
    * - WY, Natrona County
      - 0.027%
-     - true
      - 82601
-     - -7
      - ../../../weather/G5600250.epw
    * - WY, Niobrara County
      - 0.00096%
-     - true
      - 82225
-     - -7
      - ../../../weather/G5600270.epw
    * - WY, Park County
      - 0.01%
-     - true
      - 82414
-     - -7
      - ../../../weather/G5600290.epw
    * - WY, Platte County
      - 0.0035%
-     - true
      - 82201
-     - -7
      - ../../../weather/G5600310.epw
    * - WY, Sheridan County
      - 0.011%
-     - true
      - 82801
-     - -7
      - ../../../weather/G5600330.epw
    * - WY, Sublette County
      - 0.0044%
-     - true
      - 82941
-     - -7
      - ../../../weather/G5600350.epw
    * - WY, Sweetwater County
      - 0.014%
-     - true
      - 82901
-     - -7
      - ../../../weather/G5600370.epw
    * - WY, Teton County
      - 0.0099%
-     - true
      - 83001
-     - -7
      - ../../../weather/G5600390.epw
    * - WY, Uinta County
      - 0.0065%
-     - true
      - 82930
-     - -7
      - ../../../weather/G5600410.epw
    * - WY, Washakie County
      - 0.0028%
-     - true
      - 82401
-     - -7
      - ../../../weather/G5600430.epw
    * - WY, Weston County
      - 0.0026%
-     - true
      - 82701
-     - -7
      - ../../../weather/G5600450.epw
 
 .. _county_metro_status:
@@ -34469,42 +26551,18 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``dehumidifier_type``
-     - true
+   * - ``appliance_dehumidifier``
+     - false
      - 
      - Choice
-     - none, portable, whole-home
+     - None, Portable, 15 pints/day, Portable, 20 pints/day, Portable, 30 pints/day, Portable, 40 pints/day, Whole-Home, 60 pints/day, Whole-Home, 75 pints/day, Whole-Home, 95 pints/day, Whole-Home, 125 pints/day, Detailed Example: Portable, 40 pints/day, EF 1.8, Detailed Example: Whole-Home, 60 pints/day, EF 2.3, Detailed Example: Portable, 40 pints/day, IEF 1.4
      - The type of dehumidifier.
-   * - ``dehumidifier_efficiency_type``
-     - true
+   * - ``appliance_dehumidifier_setpoint``
+     - false
      - 
      - Choice
-     - EnergyFactor, IntegratedEnergyFactor
-     - The efficiency type of dehumidifier.
-   * - ``dehumidifier_efficiency``
-     - true
-     - liters/kWh
-     - Double
-     -
-     - The efficiency of the dehumidifier.
-   * - ``dehumidifier_capacity``
-     - true
-     - pint/day
-     - Double
-     -
-     - The capacity (water removal rate) of the dehumidifier.
-   * - ``dehumidifier_rh_setpoint``
-     - true
-     - Frac
-     - Double
-     -
-     - The relative humidity setpoint of the dehumidifier.
-   * - ``dehumidifier_fraction_dehumidification_load_served``
-     - true
-     - Frac
-     - Double
-     -
-     - The dehumidification load served fraction of the dehumidifier.
+     - 40% RH, 45% RH, 50% RH, 55% RH, 60% RH, 65% RH
+     - The dehumidifier's relative humidity (RH) setpoint.
 
 Options
 *******
@@ -34518,21 +26576,13 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``dehumidifier_type``
-     - ``dehumidifier_efficiency_type``
-     - ``dehumidifier_efficiency``
-     - ``dehumidifier_capacity``
-     - ``dehumidifier_rh_setpoint``
-     - ``dehumidifier_fraction_dehumidification_load_served``
+     - ``appliance_dehumidifier``
+     - ``appliance_dehumidifier_setpoint``
 
    * - None
      - 100%
-     - none
-     - EnergyFactor
-     - 0
-     - 40
-     - 0.5
-     - 1
+     - None
+     - 50% RH
 
 .. _dishwasher:
 
@@ -34594,60 +26644,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``dishwasher_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is a dishwasher present.
-   * - ``dishwasher_location``
+   * - ``appliance_dishwasher``
      - false
      - 
      - Choice
-     - auto, conditioned space, basement - conditioned, basement - unconditioned, garage, other housing unit, other heated space, other multifamily buffer space, other non-freezing space
-     - The space type for the dishwasher location. If not provided, the OS-HPXML default (see `HPXML Dishwasher <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-dishwasher>`_) is used.
-   * - ``dishwasher_efficiency_type``
-     - true
-     - 
-     - Choice
-     - RatedAnnualkWh, EnergyFactor
-     - The efficiency type of dishwasher.
-   * - ``dishwasher_efficiency``
-     - false
-     - RatedAnnualkWh or EnergyFactor
-     - Double
-     - auto
-     - The efficiency of the dishwasher. If not provided, the OS-HPXML default (see `HPXML Dishwasher <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-dishwasher>`_) is used.
-   * - ``dishwasher_label_electric_rate``
-     - false
-     - $/kWh
-     - Double
-     - auto
-     - The label electric rate of the dishwasher. If not provided, the OS-HPXML default (see `HPXML Dishwasher <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-dishwasher>`_) is used.
-   * - ``dishwasher_label_gas_rate``
-     - false
-     - $/therm
-     - Double
-     - auto
-     - The label gas rate of the dishwasher. If not provided, the OS-HPXML default (see `HPXML Dishwasher <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-dishwasher>`_) is used.
-   * - ``dishwasher_label_annual_gas_cost``
-     - false
-     - $
-     - Double
-     - auto
-     - The label annual gas cost of the dishwasher. If not provided, the OS-HPXML default (see `HPXML Dishwasher <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-dishwasher>`_) is used.
-   * - ``dishwasher_label_usage``
-     - false
-     - cyc/wk
-     - Double
-     - auto
-     - The dishwasher loads per week. If not provided, the OS-HPXML default (see `HPXML Dishwasher <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-dishwasher>`_) is used.
-   * - ``dishwasher_place_setting_capacity``
-     - false
-     - #
-     - Integer
-     - auto
-     - The number of place settings for the unit. Data obtained from manufacturer's literature. If not provided, the OS-HPXML default (see `HPXML Dishwasher <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-dishwasher>`_) is used.
+     - None, Federal Minimum, Standard, 50% Usage, Federal Minimum, Standard, 75% Usage, Federal Minimum, Standard, 100% Usage, Federal Minimum, Standard, 150% Usage, Federal Minimum, Standard, 200% Usage, EnergyStar, Standard, 50% Usage, EnergyStar, Standard, 75% Usage, EnergyStar, Standard, 100% Usage, EnergyStar, Standard, 150% Usage, EnergyStar, Standard, 200% Usage, EnergyStar, Compact, 50% Usage, EnergyStar, Compact, 75% Usage, EnergyStar, Compact, 100% Usage, EnergyStar, Compact, 150% Usage, EnergyStar, Compact, 200% Usage, Detailed Example: ERI Reference 2006, Detailed Example: EF 0.7, Compact, Detailed Example: Federal Minimum, Standard, Conditioned Basement, Detailed Example: Federal Minimum, Standard, Unconditioned Basement, Detailed Example: Federal Minimum, Standard, Garage
+     - The type and usage of dishwasher.
 
 Options
 *******
@@ -34661,59 +26663,19 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``dishwasher_present``
-     - ``dishwasher_location``
-     - ``dishwasher_efficiency_type``
-     - ``dishwasher_efficiency``
-     - ``dishwasher_label_electric_rate``
-     - ``dishwasher_label_gas_rate``
-     - ``dishwasher_label_annual_gas_cost``
-     - ``dishwasher_label_usage``
-     - ``dishwasher_place_setting_capacity``
+     - ``appliance_dishwasher``
 
    * - EnergyStar
      - 30%
-     - true
-     - auto
-     - RatedAnnualkWh
-     - 270
-     - 0.12
-     - 1.09
-     - 22.23
-     - 4
-     - 12
+     - EnergyStar, Standard, 100% Usage
    * - None
      - 28%
-     - false
-     - auto
-     - RatedAnnualkWh
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
+     - None
    * - Standard
      - 42%
-     - true
-     - auto
-     - RatedAnnualkWh
-     - 307
-     - 0.12
-     - 1.09
-     - 22.32
-     - 4
-     - 12
+     - Federal Minimum, Standard, 100% Usage
    * - Void
      - 0%
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
      - 
 
 .. _dishwasher_usage_level:
@@ -34760,8 +26722,8 @@ Arguments
      - false
      - 
      - Double
-     - auto
-     - Multiplier on the dishwasher energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Dishwasher <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-dishwasher>`_) is used.
+     -
+     - Multiplier on the dishwasher energy usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -34821,12 +26783,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``door_area``
-     - true
-     - ft^2
+   * - ``geometry_door_area``
+     - false
+     - ft2
      - Double
      -
-     - The area of the opaque door(s).
+     - The area of the opaque door(s). Any door glazing (e.g., sliding glass doors) should be captured as window area.
 
 Options
 *******
@@ -34840,7 +26802,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``door_area``
+     - ``geometry_door_area``
 
    * - 20 ft^2
      - 100%
@@ -34880,12 +26842,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``door_rvalue``
-     - true
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - R-value of the opaque door(s).
+   * - ``enclosure_door``
+     - false
+     - 
+     - Choice
+     - Solid Wood, R-2, Solid Wood, R-3, Insulated Fiberglass/Steel, R-4, Insulated Fiberglass/Steel, R-5, Insulated Fiberglass/Steel, R-6, Insulated Fiberglass/Steel, R-7, IECC U-1.20, IECC U-0.75, IECC U-0.65, IECC U-0.50, IECC U-0.40, IECC U-0.35, IECC U-0.32, IECC U-0.30, Detailed Example: Solid Wood, R-3.04, Detailed Example: Insulated Fiberglass/Steel, R-4.4
+     - The type of doors.
 
 Options
 *******
@@ -34899,11 +26861,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``door_rvalue``
+     - ``enclosure_door``
 
    * - Fiberglass
      - 100%
-     - 5
+     - Insulated Fiberglass/Steel, R-5
 
 .. _duct_leakage_and_insulation:
 
@@ -34947,60 +26909,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``ducts_leakage_units``
+   * - ``hvac_ducts``
      - true
      - 
      - Choice
-     - CFM25, CFM50, Percent
-     - The leakage units of the ducts.
-   * - ``ducts_supply_leakage_to_outside_value``
-     - true
-     - 
-     - Double
-     -
-     - The leakage value to outside for the supply ducts.
-   * - ``ducts_supply_insulation_r``
-     - true
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - The nominal insulation r-value of the supply ducts excluding air films. Use 0 for uninsulated ducts.
-   * - ``ducts_supply_buried_insulation_level``
-     - false
-     - 
-     - Choice
-     - auto, not buried, partially buried, fully buried, deeply buried
-     - Whether the supply ducts are buried in, e.g., attic loose-fill insulation. Partially buried ducts have insulation that does not cover the top of the ducts. Fully buried ducts have insulation that just covers the top of the ducts. Deeply buried ducts have insulation that continues above the top of the ducts.
-   * - ``ducts_supply_fraction_rectangular``
-     - false
-     - frac
-     - Double
-     - auto
-     - The fraction of supply ducts that are rectangular (as opposed to round); this affects the duct effective R-value used for modeling. If not provided, the OS-HPXML default (see `Air Distribution <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-distribution>`_) is used.
-   * - ``ducts_return_leakage_to_outside_value``
-     - true
-     - 
-     - Double
-     -
-     - The leakage value to outside for the return ducts.
-   * - ``ducts_return_insulation_r``
-     - true
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - The nominal insulation r-value of the return ducts excluding air films. Use 0 for uninsulated ducts.
-   * - ``ducts_return_buried_insulation_level``
-     - false
-     - 
-     - Choice
-     - auto, not buried, partially buried, fully buried, deeply buried
-     - Whether the return ducts are buried in, e.g., attic loose-fill insulation. Partially buried ducts have insulation that does not cover the top of the ducts. Fully buried ducts have insulation that just covers the top of the ducts. Deeply buried ducts have insulation that continues above the top of the ducts.
-   * - ``ducts_return_fraction_rectangular``
-     - false
-     - frac
-     - Double
-     - auto
-     - The fraction of return ducts that are rectangular (as opposed to round); this affects the duct effective R-value used for modeling. If not provided, the OS-HPXML default (see `Air Distribution <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-distribution>`_) is used.
+     - None, 0% Leakage, Uninsulated, 0% Leakage, R-4, 0% Leakage, R-6, 0% Leakage, R-8, 5% Leakage, Uninsulated, 5% Leakage, R-4, 5% Leakage, R-6, 5% Leakage, R-8, 10% Leakage, Uninsulated, 10% Leakage, R-4, 10% Leakage, R-6, 10% Leakage, R-8, 15% Leakage, Uninsulated, 15% Leakage, R-4, 15% Leakage, R-6, 15% Leakage, R-8, 20% Leakage, Uninsulated, 20% Leakage, R-4, 20% Leakage, R-6, 20% Leakage, R-8, 25% Leakage, Uninsulated, 25% Leakage, R-4, 25% Leakage, R-6, 25% Leakage, R-8, 30% Leakage, Uninsulated, 30% Leakage, R-4, 30% Leakage, R-6, 30% Leakage, R-8, 35% Leakage, Uninsulated, 35% Leakage, R-4, 35% Leakage, R-6, 35% Leakage, R-8, 0 CFM25 per 100ft2, Uninsulated, 0 CFM25 per 100ft2, R-4, 0 CFM25 per 100ft2, R-6, 0 CFM25 per 100ft2, R-8, 1 CFM25 per 100ft2, Uninsulated, 1 CFM25 per 100ft2, R-4, 1 CFM25 per 100ft2, R-6, 1 CFM25 per 100ft2, R-8, 2 CFM25 per 100ft2, Uninsulated, 2 CFM25 per 100ft2, R-4, 2 CFM25 per 100ft2, R-6, 2 CFM25 per 100ft2, R-8, 4 CFM25 per 100ft2, Uninsulated, 4 CFM25 per 100ft2, R-4, 4 CFM25 per 100ft2, R-6, 4 CFM25 per 100ft2, R-8, 6 CFM25 per 100ft2, Uninsulated, 6 CFM25 per 100ft2, R-4, 6 CFM25 per 100ft2, R-6, 6 CFM25 per 100ft2, R-8, 8 CFM25 per 100ft2, Uninsulated, 8 CFM25 per 100ft2, R-4, 8 CFM25 per 100ft2, R-6, 8 CFM25 per 100ft2, R-8, 12 CFM25 per 100ft2, Uninsulated, 12 CFM25 per 100ft2, R-4, 12 CFM25 per 100ft2, R-6, 12 CFM25 per 100ft2, R-8, Detailed Example: 4 CFM25 per 100ft2 (75% Supply), R-4, Detailed Example: 5 CFM50 per 100ft2 (75% Supply), R-4, Detailed Example: 250 CFM25, R-6, Detailed Example: 400 CFM50 (75% Supply), R-6
+     - The leakage to outside and insulation level of the ducts.
 
 Options
 *******
@@ -35014,170 +26928,50 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``ducts_leakage_units``
-     - ``ducts_supply_leakage_to_outside_value``
-     - ``ducts_supply_insulation_r``
-     - ``ducts_supply_buried_insulation_level``
-     - ``ducts_supply_fraction_rectangular``
-     - ``ducts_return_leakage_to_outside_value``
-     - ``ducts_return_insulation_r``
-     - ``ducts_return_buried_insulation_level``
-     - ``ducts_return_fraction_rectangular``
+     - ``hvac_ducts``
 
    * - 0% Leakage to Outside, Uninsulated
      - 30%
-     - Percent
-     - 0
-     - 0
-     - auto
-     - auto
-     - 0
-     - 0
-     - auto
-     - auto
+     - 0% Leakage, Uninsulated
    * - 10% Leakage to Outside, R-4
      - 3.9%
-     - Percent
-     - 0.05
-     - 4
-     - auto
-     - auto
-     - 0.05
-     - 4
-     - auto
-     - auto
+     - 10% Leakage, R-4
    * - 10% Leakage to Outside, R-6
      - 0.89%
-     - Percent
-     - 0.05
-     - 6
-     - auto
-     - auto
-     - 0.05
-     - 6
-     - auto
-     - auto
+     - 10% Leakage, R-6
    * - 10% Leakage to Outside, R-8
      - 1.8%
-     - Percent
-     - 0.05
-     - 8
-     - auto
-     - auto
-     - 0.05
-     - 8
-     - auto
-     - auto
+     - 10% Leakage, R-8
    * - 10% Leakage to Outside, Uninsulated
      - 5.5%
-     - Percent
-     - 0.05
-     - 0
-     - auto
-     - auto
-     - 0.05
-     - 0
-     - auto
-     - auto
+     - 10% Leakage, Uninsulated
    * - 20% Leakage to Outside, R-4
      - 7%
-     - Percent
-     - 0.1
-     - 4
-     - auto
-     - auto
-     - 0.1
-     - 4
-     - auto
-     - auto
+     - 20% Leakage, R-4
    * - 20% Leakage to Outside, R-6
      - 1.6%
-     - Percent
-     - 0.1
-     - 6
-     - auto
-     - auto
-     - 0.1
-     - 6
-     - auto
-     - auto
+     - 20% Leakage, R-6
    * - 20% Leakage to Outside, R-8
      - 3.2%
-     - Percent
-     - 0.1
-     - 8
-     - auto
-     - auto
-     - 0.1
-     - 8
-     - auto
-     - auto
+     - 20% Leakage, R-8
    * - 20% Leakage to Outside, Uninsulated
      - 9.9%
-     - Percent
-     - 0.1
-     - 0
-     - auto
-     - auto
-     - 0.1
-     - 0
-     - auto
-     - auto
+     - 20% Leakage, Uninsulated
    * - 30% Leakage to Outside, R-4
      - 4%
-     - Percent
-     - 0.150
-     - 4
-     - auto
-     - auto
-     - 0.15
-     - 4
-     - auto
-     - auto
+     - 30% Leakage, R-4
    * - 30% Leakage to Outside, R-6
      - 0.93%
-     - Percent
-     - 0.150
-     - 6
-     - auto
-     - auto
-     - 0.15
-     - 6
-     - auto
-     - auto
+     - 30% Leakage, R-6
    * - 30% Leakage to Outside, R-8
      - 1.8%
-     - Percent
-     - 0.150
-     - 8
-     - auto
-     - auto
-     - 0.15
-     - 8
-     - auto
-     - auto
+     - 30% Leakage, R-8
    * - 30% Leakage to Outside, Uninsulated
      - 5.7%
-     - Percent
-     - 0.150
-     - 0
-     - auto
-     - auto
-     - 0.15
-     - 0
-     - auto
-     - auto
+     - 30% Leakage, Uninsulated
    * - None
      - 24%
-     - Percent
-     - 0
-     - 0
-     - auto
-     - auto
-     - 0
-     - 0
-     - auto
-     - auto
+     - None
 
 .. _duct_location:
 
@@ -35219,48 +27013,18 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``ducts_supply_location``
+   * - ``hvac_ducts_supply_location``
      - false
      - 
      - Choice
-     - auto, conditioned space, basement - conditioned, basement - unconditioned, crawlspace, crawlspace - vented, crawlspace - unvented, crawlspace - conditioned, attic, attic - vented, attic - unvented, garage, exterior wall, under slab, roof deck, outside, other housing unit, other heated space, other multifamily buffer space, other non-freezing space, manufactured home belly
-     - The location of the supply ducts. If not provided, the OS-HPXML default (see `Air Distribution <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-distribution>`_) is used.
-   * - ``ducts_supply_surface_area``
-     - false
-     - ft^2
-     - Double
-     - auto
-     - The supply ducts surface area in the given location. If neither Surface Area nor Area Fraction provided, the OS-HPXML default (see `Air Distribution <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-distribution>`_) is used.
-   * - ``ducts_supply_surface_area_fraction``
-     - false
-     - frac
-     - Double
-     - auto
-     - The fraction of supply ducts surface area in the given location. Only used if Surface Area is not provided. If the fraction is less than 1, the remaining duct area is assumed to be in conditioned space. If neither Surface Area nor Area Fraction provided, the OS-HPXML default (see `Air Distribution <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-distribution>`_) is used.
-   * - ``ducts_return_location``
+     - Default, Conditioned Space, Basement, Crawlspace, Attic, Garage, Outside, Exterior Wall, Under Slab, Roof Deck, Manufactured Home Belly, Detailed Example: Attic, 75%
+     - The primary location of the supply ducts. The remainder of the supply ducts are assumed to be in conditioned space. Defaults based on the foundation/attic/garage type.
+   * - ``hvac_ducts_return_location``
      - false
      - 
      - Choice
-     - auto, conditioned space, basement - conditioned, basement - unconditioned, crawlspace, crawlspace - vented, crawlspace - unvented, crawlspace - conditioned, attic, attic - vented, attic - unvented, garage, exterior wall, under slab, roof deck, outside, other housing unit, other heated space, other multifamily buffer space, other non-freezing space, manufactured home belly
-     - The location of the return ducts. If not provided, the OS-HPXML default (see `Air Distribution <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-distribution>`_) is used.
-   * - ``ducts_return_surface_area``
-     - false
-     - ft^2
-     - Double
-     - auto
-     - The return ducts surface area in the given location. If neither Surface Area nor Area Fraction provided, the OS-HPXML default (see `Air Distribution <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-distribution>`_) is used.
-   * - ``ducts_return_surface_area_fraction``
-     - false
-     - frac
-     - Double
-     - auto
-     - The fraction of return ducts surface area in the given location. Only used if Surface Area is not provided. If the fraction is less than 1, the remaining duct area is assumed to be in conditioned space. If neither Surface Area nor Area Fraction provided, the OS-HPXML default (see `Air Distribution <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-distribution>`_) is used.
-   * - ``ducts_number_of_return_registers``
-     - false
-     - #
-     - Integer
-     - auto
-     - The number of return registers of the ducts. Only used to calculate default return duct surface area. If not provided, the OS-HPXML default (see `Air Distribution <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-distribution>`_) is used.
+     - Default, Conditioned Space, Basement, Crawlspace, Attic, Garage, Outside, Exterior Wall, Under Slab, Roof Deck, Manufactured Home Belly, Detailed Example: Attic, 75%
+     - The primary location of the return ducts. The remainder of the return ducts are assumed to be in conditioned space. Defaults based on the foundation/attic/garage type.
 
 Options
 *******
@@ -35274,77 +27038,37 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``ducts_supply_location``
-     - ``ducts_supply_surface_area``
-     - ``ducts_supply_surface_area_fraction``
-     - ``ducts_return_location``
-     - ``ducts_return_surface_area``
-     - ``ducts_return_surface_area_fraction``
-     - ``ducts_number_of_return_registers``
+     - ``hvac_ducts_supply_location``
+     - ``hvac_ducts_return_location``
 
    * - Attic
      - 17%
-     - attic
-     - auto
-     - auto
-     - attic
-     - auto
-     - auto
-     - auto
+     - Attic
+     - Attic
    * - Crawlspace
      - 15%
-     - crawlspace
-     - auto
-     - auto
-     - crawlspace
-     - auto
-     - auto
-     - auto
+     - Crawlspace
+     - Crawlspace
    * - Garage
      - 4.8%
-     - garage
-     - auto
-     - auto
-     - garage
-     - auto
-     - auto
-     - auto
+     - Garage
+     - Garage
    * - Heated Basement
      - 11%
-     - basement - conditioned
-     - auto
-     - auto
-     - basement - conditioned
-     - auto
-     - auto
-     - auto
+     - Basement
+     - Basement
    * - Living Space
      - 20%
-     - conditioned space
-     - auto
-     - auto
-     - conditioned space
-     - auto
-     - auto
-     - auto
+     - Conditioned Space
+     - Conditioned Space
    * - None
      - 24%
-     - conditioned space
-     - auto
-     - auto
-     - conditioned space
-     - auto
-     - auto
-     - 0
+     - Conditioned Space
+     - Conditioned Space
    * - Unheated Basement
      - 9%
-     - basement - unconditioned
-     - auto
-     - auto
-     - basement - unconditioned
-     - auto
-     - auto
-     - auto
+     - Basement
+     - Basement
 
 .. _eaves:
 
@@ -35380,84 +27104,18 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``geometry_eaves_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The eaves depth of the roof.
-   * - ``overhangs_front_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the front facade.
-   * - ``overhangs_front_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the front facade.
-   * - ``overhangs_front_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the front facade.
-   * - ``overhangs_back_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the back facade.
-   * - ``overhangs_back_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the back facade.
-   * - ``overhangs_back_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the back facade.
-   * - ``overhangs_left_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the left facade.
-   * - ``overhangs_left_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the left facade.
-   * - ``overhangs_left_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the left facade.
-   * - ``overhangs_right_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the right facade.
-   * - ``overhangs_right_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the right facade.
-   * - ``overhangs_right_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the right facade.
+   * - ``geometry_eaves``
+     - false
+     - 
+     - Choice
+     - None, 1 ft, 2 ft, 3 ft, 4 ft, 5 ft
+     - The type of eaves extending from the roof.
+   * - ``enclosure_overhangs``
+     - false
+     - 
+     - Choice
+     - None, 1ft, All Windows, 2ft, All Windows, 3ft, All Windows, 4ft, All Windows, 5ft, All Windows, 10ft, All Windows, 1ft, Front Windows, 2ft, Front Windows, 3ft, Front Windows, 4ft, Front Windows, 5ft, Front Windows, 10ft, Front Windows, 1ft, Back Windows, 2ft, Back Windows, 3ft, Back Windows, 4ft, Back Windows, 5ft, Back Windows, 10ft, Back Windows, 1ft, Left Windows, 2ft, Left Windows, 3ft, Left Windows, 4ft, Left Windows, 5ft, Left Windows, 10ft, Left Windows, 1ft, Right Windows, 2ft, Right Windows, 3ft, Right Windows, 4ft, Right Windows, 5ft, Right Windows, 10ft, Right Windows, Detailed Example: 1.5ft, Back/Left/Right Windows, 2ft Offset, 4ft Window Height, Detailed Example: 2.5ft, Front Windows, 1ft Offset, 5ft Window Height
+     - The type of window overhangs.
 
 Options
 *******
@@ -35471,35 +27129,13 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``geometry_eaves_depth``
-     - ``overhangs_front_depth``
-     - ``overhangs_front_distance_to_top_of_window``
-     - ``overhangs_front_distance_to_bottom_of_window``
-     - ``overhangs_back_depth``
-     - ``overhangs_back_distance_to_top_of_window``
-     - ``overhangs_back_distance_to_bottom_of_window``
-     - ``overhangs_left_depth``
-     - ``overhangs_left_distance_to_top_of_window``
-     - ``overhangs_left_distance_to_bottom_of_window``
-     - ``overhangs_right_depth``
-     - ``overhangs_right_distance_to_top_of_window``
-     - ``overhangs_right_distance_to_bottom_of_window``
+     - ``geometry_eaves``
+     - ``enclosure_overhangs``
 
    * - 2 ft
      - 100%
-     - 2
-     - 0
-     - 1
-     - 4
-     - 0
-     - 1
-     - 4
-     - 0
-     - 1
-     - 4
-     - 0
-     - 1
-     - 4
+     - 2 ft
+     - None
 
 .. _electric_vehicle_battery:
 
@@ -35545,36 +27181,18 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``vehicle_battery_usable_capacity``
-     - false
-     - kWh
-     - Double
-     - auto
-     - The usable capacity of the vehicle battery, only applies to electric vehicles. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-vehicles>`_) is used.
-   * - ``vehicle_fuel_economy_units``
+   * - ``electric_vehicle``
      - false
      - 
      - Choice
-     - auto, kWh/mile, mile/kWh, mpge, mpg
-     - The combined fuel economy units of the vehicle. Only 'kWh/mile', 'mile/kWh', or 'mpge' are allow for electric vehicles. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-vehicles>`_) is used.
-   * - ``vehicle_fuel_economy_combined``
+     - None, Compact, 200 Mile Range, 1000 miles/yr, Compact, 200 Mile Range, 3000 miles/yr, Compact, 200 Mile Range, 5000 miles/yr, Compact, 200 Mile Range, 7000 miles/yr, Compact, 200 Mile Range, 9000 miles/yr, Compact, 200 Mile Range, 11000 miles/yr, Compact, 200 Mile Range, 13000 miles/yr, Compact, 200 Mile Range, 15000 miles/yr, Compact, 200 Mile Range, 17000 miles/yr, Compact, 200 Mile Range, 19000 miles/yr, Compact, 200 Mile Range, 22500 miles/yr, Compact, 300 Mile Range, 1000 miles/yr, Compact, 300 Mile Range, 3000 miles/yr, Compact, 300 Mile Range, 5000 miles/yr, Compact, 300 Mile Range, 7000 miles/yr, Compact, 300 Mile Range, 9000 miles/yr, Compact, 300 Mile Range, 11000 miles/yr, Compact, 300 Mile Range, 13000 miles/yr, Compact, 300 Mile Range, 15000 miles/yr, Compact, 300 Mile Range, 17000 miles/yr, Compact, 300 Mile Range, 19000 miles/yr, Compact, 300 Mile Range, 22500 miles/yr, Midsize, 200 Mile Range, 1000 miles/yr, Midsize, 200 Mile Range, 3000 miles/yr, Midsize, 200 Mile Range, 5000 miles/yr, Midsize, 200 Mile Range, 7000 miles/yr, Midsize, 200 Mile Range, 9000 miles/yr, Midsize, 200 Mile Range, 11000 miles/yr, Midsize, 200 Mile Range, 13000 miles/yr, Midsize, 200 Mile Range, 15000 miles/yr, Midsize, 200 Mile Range, 17000 miles/yr, Midsize, 200 Mile Range, 19000 miles/yr, Midsize, 200 Mile Range, 22500 miles/yr, Midsize, 300 Mile Range, 1000 miles/yr, Midsize, 300 Mile Range, 3000 miles/yr, Midsize, 300 Mile Range, 5000 miles/yr, Midsize, 300 Mile Range, 7000 miles/yr, Midsize, 300 Mile Range, 9000 miles/yr, Midsize, 300 Mile Range, 11000 miles/yr, Midsize, 300 Mile Range, 13000 miles/yr, Midsize, 300 Mile Range, 15000 miles/yr, Midsize, 300 Mile Range, 17000 miles/yr, Midsize, 300 Mile Range, 19000 miles/yr, Midsize, 300 Mile Range, 22500 miles/yr, Pickup, 200 Mile Range, 1000 miles/yr, Pickup, 200 Mile Range, 3000 miles/yr, Pickup, 200 Mile Range, 5000 miles/yr, Pickup, 200 Mile Range, 7000 miles/yr, Pickup, 200 Mile Range, 9000 miles/yr, Pickup, 200 Mile Range, 11000 miles/yr, Pickup, 200 Mile Range, 13000 miles/yr, Pickup, 200 Mile Range, 15000 miles/yr, Pickup, 200 Mile Range, 17000 miles/yr, Pickup, 200 Mile Range, 19000 miles/yr, Pickup, 200 Mile Range, 22500 miles/yr, Pickup, 300 Mile Range, 1000 miles/yr, Pickup, 300 Mile Range, 3000 miles/yr, Pickup, 300 Mile Range, 5000 miles/yr, Pickup, 300 Mile Range, 7000 miles/yr, Pickup, 300 Mile Range, 9000 miles/yr, Pickup, 300 Mile Range, 11000 miles/yr, Pickup, 300 Mile Range, 13000 miles/yr, Pickup, 300 Mile Range, 15000 miles/yr, Pickup, 300 Mile Range, 17000 miles/yr, Pickup, 300 Mile Range, 19000 miles/yr, Pickup, 300 Mile Range, 22500 miles/yr, SUV, 200 Mile Range, 1000 miles/yr, SUV, 200 Mile Range, 3000 miles/yr, SUV, 200 Mile Range, 5000 miles/yr, SUV, 200 Mile Range, 7000 miles/yr, SUV, 200 Mile Range, 9000 miles/yr, SUV, 200 Mile Range, 11000 miles/yr, SUV, 200 Mile Range, 13000 miles/yr, SUV, 200 Mile Range, 15000 miles/yr, SUV, 200 Mile Range, 17000 miles/yr, SUV, 200 Mile Range, 19000 miles/yr, SUV, 200 Mile Range, 22500 miles/yr, SUV, 300 Mile Range, 1000 miles/yr, SUV, 300 Mile Range, 3000 miles/yr, SUV, 300 Mile Range, 5000 miles/yr, SUV, 300 Mile Range, 7000 miles/yr, SUV, 300 Mile Range, 9000 miles/yr, SUV, 300 Mile Range, 11000 miles/yr, SUV, 300 Mile Range, 13000 miles/yr, SUV, 300 Mile Range, 15000 miles/yr, SUV, 300 Mile Range, 17000 miles/yr, SUV, 300 Mile Range, 19000 miles/yr, SUV, 300 Mile Range, 22500 miles/yr, Detailed Example: 100 kWh battery, 0.25 kWh/mile, Detailed Example: 100 kWh battery, 4.0 miles/kWh, Detailed Example: 100 kWh battery, 135.0 mpge
+     - The type of battery electric vehicle.
+   * - ``misc_electric_vehicle_charging``
      - false
      - 
-     - Double
-     - auto
-     - The combined fuel economy of the vehicle. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-vehicles>`_) is used.
-   * - ``ev_average_mph``
-     - false
-     - miles/hour
-     - Double
-     -
-     - The average miles/hour driven by the vehicle.
-   * - ``ev_efficiency_percent_increase``
-     - false
-     - Frac
-     - Double
-     -
-     - The increase (fraction) in efficiency of the electric vehicle.
+     - Choice
+     - None, 25% Usage, 33% Usage, 50% Usage, 75% Usage, 80% Usage, 90% Usage, 100% Usage, 110% Usage, 125% Usage, 150% Usage, 200% Usage, 300% Usage, 400% Usage, Detailed Example: 1500 kWh/yr, Detailed Example: 3000 kWh/yr
+     - The amount of EV charging usage, relative to the national average. Only use this if a detailed EV & EV charger were not otherwise specified.
 
 Options
 *******
@@ -35588,68 +27206,41 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``vehicle_battery_usable_capacity``
-     - ``vehicle_fuel_economy_units``
-     - ``vehicle_fuel_economy_combined``
-     - ``ev_average_mph``
-     - ``ev_efficiency_percent_increase``
+     - ``electric_vehicle``
+     - ``misc_electric_vehicle_charging``
 
    * - Compact, Battery Electric Vehicle, 200 mile range
      - 12%
-     - 40.168
-     - kWh/mile
-     - 0.209901
-     - 21.975
-     - 0.0
+     - Compact, 200 Mile Range, 11000 miles/yr
+     - None
    * - Compact, Battery Electric Vehicle, 300 mile range
      - 34%
-     - 63.433
-     - kWh/mile
-     - 0.220020
-     - 21.975
-     - 0.0
+     - Compact, 300 Mile Range, 11000 miles/yr
+     - None
    * - Midsize, Battery Electric Vehicle, 200 mile range
      - 3%
-     - 41.978
-     - kWh/mile
-     - 0.219174
-     - 21.975
-     - 0.0
+     - Midsize, 200 Mile Range, 11000 miles/yr
+     - None
    * - Midsize, Battery Electric Vehicle, 300 mile range
      - 7.6%
-     - 65.441
-     - kWh/mile
-     - 0.229449
-     - 21.975
-     - 0.0
+     - Midsize, 300 Mile Range, 11000 miles/yr
+     - None
    * - Pickup, Battery Electric Vehicle, 200 mile range
      - 0.0055%
-     - 67.738
-     - kWh/mile
-     - 0.357648
-     - 21.975
-     - 0.0
+     - Pickup, 200 Mile Range, 11000 miles/yr
+     - None
    * - Pickup, Battery Electric Vehicle, 300 mile range
      - 0.77%
-     - 105.946
-     - kWh/mile
-     - 0.373794
-     - 21.975
-     - 0.0
+     - Pickup, 300 Mile Range, 11000 miles/yr
+     - None
    * - SUV, Battery Electric Vehicle, 200 mile range
      - 12%
-     - 53.503
-     - kWh/mile
-     - 0.267513
-     - 21.975
-     - 0.0
+     - SUV, 200 Mile Range, 11000 miles/yr
+     - None
    * - SUV, Battery Electric Vehicle, 300 mile range
      - 31%
-     - 83.680
-     - kWh/mile
-     - 0.278934
-     - 21.975
-     - 0.0
+     - SUV, 300 Mile Range, 11000 miles/yr
+     - None
 
 .. _electric_vehicle_charge_at_home:
 
@@ -35691,12 +27282,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``vehicle_fraction_charged_home``
+   * - ``ev_fraction_charged_home``
      - false
      - 
      - Double
-     - auto
-     - The fraction of charging energy provided by the at-home charger to the vehicle, only applies to electric vehicles. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-vehicles>`_) is used.
+     -
+     - The fraction of charging energy provided by the at-home charger to the electric vehicle.
 
 Options
 *******
@@ -35710,7 +27301,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``vehicle_fraction_charged_home``
+     - ``ev_fraction_charged_home``
 
    * - 0-19%
      - 13%
@@ -35781,24 +27372,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``ev_charger_present``
-     - false
-     - 
-     - Boolean
-     - auto, true, false
-     - Whether there is an electric vehicle charger present.
-   * - ``ev_charger_level``
+   * - ``electric_vehicle_charger``
      - false
      - 
      - Choice
-     - auto, 1, 2, 3
-     - The charging level of the EV charger. If not provided, the OS-HPXML default (see `HPXML Electric Vehicle Chargers <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-electric-vehicle-chargers>`_) is used.
-   * - ``ev_charger_power``
-     - false
-     - W
-     - Double
-     - auto
-     - The rated power output of the EV charger. If not provided, the OS-HPXML default (see `HPXML Electric Vehicle Chargers <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-electric-vehicle-chargers>`_) is used.
+     - None, Level 1, 10% Charging at Home, Level 1, 30% Charging at Home, Level 1, 50% Charging at Home, Level 1, 70% Charging at Home, Level 1, 90% Charging at Home, Level 1, 100% Charging at Home, Level 2, 10% Charging at Home, Level 2, 30% Charging at Home, Level 2, 50% Charging at Home, Level 2, 70% Charging at Home, Level 2, 90% Charging at Home, Level 2, 100% Charging at Home, Detailed Example: Level 2, 7000 W, 75% Charging at Home
+     - The type and usage of electric vehicle charger.
 
 Options
 *******
@@ -35812,29 +27391,19 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``ev_charger_present``
-     - ``ev_charger_level``
-     - ``ev_charger_power``
+     - ``electric_vehicle_charger``
 
    * - Level 1 charger
      - 0.86%
-     - true
-     - 1
-     - 1600
+     - Level 1, 100% Charging at Home
    * - Level 2 charger
      - 0.59%
-     - true
-     - 2
-     - 5690
+     - Level 2, 100% Charging at Home
    * - None
      - 99%
-     - false
-     - 
-     - 
+     - None
    * - Void
      - 0%
-     - false
-     - 
      - 
 
 .. _electric_vehicle_miles_traveled:
@@ -35875,8 +27444,8 @@ Arguments
      - false
      - miles
      - Double
-     - auto
-     - The annual miles the vehicle is driven. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-vehicles>`_) is used.
+     -
+     - The annual miles the vehicle is driven.
 
 Options
 *******
@@ -36030,26 +27599,6 @@ Assumption
 - \The RECS 2020 saturations for each segment in a given PUMA are scaled to match the Experian PUMA weighted averaged battery electric vehicle saturation using the segment unit counts from PUMS 2019-5yrs survey.
 
 
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``vehicle_type``
-     - false
-     - 
-     - String
-     -
-     - The type of vehicle present at the home.
-
 Options
 *******
 
@@ -36062,17 +27611,13 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``vehicle_type``
 
    * - No
      - 99%
-     - 
    * - Yes
      - 1.4%
-     - BatteryElectricVehicle
    * - Void
      - 0%
-     - 
 
 .. _energystar_climate_zone_2023:
 
@@ -36301,19 +27846,13 @@ Arguments
      - true
      - 
      - Choice
-     - FlatRoof, VentedAttic, UnventedAttic, ConditionedAttic, BelowApartment
-     - The attic type of the building. Attic type ConditionedAttic is not allowed for apartment units.
-   * - ``geometry_roof_type``
-     - true
-     - 
-     - Choice
-     - gable, hip
-     - The roof type of the building. Ignored if the building has a flat roof.
+     - Flat Roof, Attic, Vented, Gable, Attic, Vented, Hip, Attic, Unvented, Gable, Attic, Unvented, Hip, Attic, Conditioned, Gable, Attic, Conditioned, Hip, Below Apartment
+     - The attic/roof type of the building.
    * - ``geometry_roof_pitch``
-     - true
+     - false
      - 
      - Choice
-     - 1:12, 2:12, 3:12, 4:12, 5:12, 6:12, 7:12, 8:12, 9:12, 10:12, 11:12, 12:12
+     - 1:12, 2:12, 3:12, 4:12, 5:12, 6:12, 7:12, 8:12, 9:12, 10:12, 11:12, 12:12, 13:12, 14:12, 15:12, 16:12
      - The roof pitch of the attic. Ignored if the building has a flat roof.
 
 Options
@@ -36329,28 +27868,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Option name
      - Stock saturation
      - ``geometry_attic_type``
-     - ``geometry_roof_type``
      - ``geometry_roof_pitch``
 
    * - Finished Attic or Cathedral Ceilings
      - 1.4%
-     - ConditionedAttic
-     - gable
+     - Attic, Conditioned, Gable
      - 6:12
    * - None
      - 56%
-     - FlatRoof
-     - gable
+     - Flat Roof
      - 6:12
    * - Unvented Attic
      - 3.3%
-     - UnventedAttic
-     - gable
+     - Attic, Unvented, Gable
      - 6:12
    * - Vented Attic
      - 40%
-     - VentedAttic
-     - gable
+     - Attic, Vented, Gable
      - 6:12
 
 .. _geometry_building_horizontal_location_mf:
@@ -36621,7 +28155,7 @@ Arguments
      - #
      - Integer
      -
-     - The number of units in the building. Required for single-family attached and apartment units.
+     - The number of units in the building.
 
 Options
 *******
@@ -36761,7 +28295,7 @@ Arguments
      - #
      - Integer
      -
-     - The number of units in the building. Required for single-family attached and apartment units.
+     - The number of units in the building.
 
 Options
 *******
@@ -36977,24 +28511,24 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``geometry_unit_type``
-     - true
-     - 
-     - Choice
-     - single-family detached, single-family attached, apartment unit, manufactured home
-     - The type of dwelling unit. Use single-family attached for a dwelling unit with 1 or more stories, attached units to one or both sides, and no units above/below. Use apartment unit for a dwelling unit with 1 story, attached units to one, two, or three sides, and units above and/or below.
    * - ``geometry_unit_aspect_ratio``
      - true
      - Frac
      - Double
      -
      - The ratio of front/back wall length to left/right wall length for the unit, excluding any protruding garage wall area.
-   * - ``geometry_average_ceiling_height``
-     - true
-     - ft
-     - Double
-     -
+   * - ``geometry_ceiling_height``
+     - false
+     - 
+     - Choice
+     - 6.0 ft, 6.5 ft, 7.0 ft, 7.5 ft, 8.0 ft, 8.5 ft, 9.0 ft, 9.5 ft, 10.0 ft, 10.5 ft, 11.0 ft, 11.5 ft, 12.0 ft, 12.5 ft, 13.0 ft, 13.5 ft, 14.0 ft, 14.5 ft, 15.0 ft
      - Average distance from the floor to the ceiling.
+   * - ``geometry_facility_type``
+     - true
+     - 
+     - Choice
+     - single-family detached, single-family attached, apartment unit, manufactured home
+     - The facility type of the dwelling unit.
 
 Options
 *******
@@ -37008,35 +28542,35 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``geometry_unit_type``
      - ``geometry_unit_aspect_ratio``
-     - ``geometry_average_ceiling_height``
+     - ``geometry_ceiling_height``
+     - ``geometry_facility_type``
 
    * - Mobile Home
      - 6.2%
-     - manufactured home
      - 1.8
-     - 8
+     - 8.0 ft
+     - manufactured home
    * - Multi-Family with 2 - 4 Units
      - 8%
-     - apartment unit
      - 0.5556
-     - 8
+     - 8.0 ft
+     - apartment unit
    * - Multi-Family with 5+ Units
      - 18%
-     - apartment unit
      - 0.5556
-     - 8
+     - 8.0 ft
+     - apartment unit
    * - Single-Family Attached
      - 5.9%
-     - single-family attached
      - 0.5556
-     - 8
+     - 8.0 ft
+     - single-family attached
    * - Single-Family Detached
      - 61%
-     - single-family detached
      - 1.8
-     - 8
+     - 8.0 ft
+     - single-family detached
 
 .. _geometry_floor_area:
 
@@ -37084,18 +28618,6 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``geometry_unit_cfa``
-     - true
-     - ft^2
-     - Double
-     - auto
-     - The total floor area of the unit's conditioned space (including any conditioned basement floor area). E.g., '2000' or 'auto'.
-   * - ``geometry_garage_protrusion``
-     - true
-     - Frac
-     - Double
-     -
-     - The fraction of the garage that is protruding from the conditioned space. Only applies to single-family detached units.
    * - ``geometry_unit_cfa_bin``
      - true
      - 
@@ -37115,54 +28637,34 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``geometry_unit_cfa``
-     - ``geometry_garage_protrusion``
      - ``geometry_unit_cfa_bin``
 
    * - 0-499
      - 3.2%
-     - auto
-     - 0.5
      - 0-499
    * - 500-749
      - 8.5%
-     - auto
-     - 0.5
      - 500-749
    * - 750-999
      - 15%
-     - auto
-     - 0.5
      - 750-999
    * - 1000-1499
      - 26%
-     - auto
-     - 0.5
      - 1000-1499
    * - 1500-1999
      - 19%
-     - auto
-     - 0.5
      - 1500-1999
    * - 2000-2499
      - 12%
-     - auto
-     - 0.5
      - 2000-2499
    * - 2500-2999
      - 6.5%
-     - auto
-     - 0.5
      - 2500-2999
    * - 3000-3999
      - 6.1%
-     - auto
-     - 0.5
      - 3000-3999
    * - 4000+
      - 3%
-     - auto
-     - 0.5
      - 4000+
 
 .. _geometry_floor_area_bin:
@@ -37264,26 +28766,8 @@ Arguments
      - true
      - 
      - Choice
-     - SlabOnGrade, VentedCrawlspace, UnventedCrawlspace, ConditionedCrawlspace, UnconditionedBasement, ConditionedBasement, Ambient, AboveApartment, BellyAndWingWithSkirt, BellyAndWingNoSkirt
-     - The foundation type of the building. Foundation types ConditionedBasement and ConditionedCrawlspace are not allowed for apartment units.
-   * - ``geometry_foundation_height``
-     - true
-     - ft
-     - Double
-     -
-     - The height of the foundation (e.g., 3ft for crawlspace, 8ft for basement). Only applies to basements/crawlspaces.
-   * - ``geometry_foundation_height_above_grade``
-     - true
-     - ft
-     - Double
-     -
-     - The depth above grade of the foundation wall. Only applies to basements/crawlspaces.
-   * - ``geometry_rim_joist_height``
-     - false
-     - in
-     - Double
-     -
-     - The height of the rim joists. Only applies to basements/crawlspaces.
+     - Slab-on-Grade, Crawlspace, Vented, Crawlspace, Unvented, Crawlspace, Conditioned, Basement, Unconditioned, Basement, Unconditioned, Half Above-Grade, Basement, Conditioned, Basement, Conditioned, Half Above-Grade, Ambient, Above Apartment, Belly and Wing, With Skirt, Belly and Wing, No Skirt, Detailed Example: Basement, Unconditioned, 7.25 ft Height, 8 in Above-Grade, 9 in Rim Joists, Detailed Example: Basement, Conditioned, 7.25 ft Height, 8 in Above-Grade, 9 in Rim Joists, Detailed Example: Basement, Conditioned, 5 ft Height, Detailed Example: Crawlspace, Vented, Above-Grade
+     - The foundation type of the building. Garages are assumed to be over slab-on-grade.
 
 Options
 *******
@@ -37298,46 +28782,25 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Option name
      - Stock saturation
      - ``geometry_foundation_type``
-     - ``geometry_foundation_height``
-     - ``geometry_foundation_height_above_grade``
-     - ``geometry_rim_joist_height``
 
    * - Ambient
      - 8.9%
      - Ambient
-     - 4
-     - 4
-     - 0
    * - Heated Basement
      - 12%
-     - ConditionedBasement
-     - 8
-     - 1
-     - 9.25
+     - Basement, Conditioned
    * - Slab
      - 39%
-     - SlabOnGrade
-     - 0
-     - 0
-     - 0
+     - Slab-on-Grade
    * - Unheated Basement
      - 15%
-     - UnconditionedBasement
-     - 8
-     - 1
-     - 9.25
+     - Basement, Unconditioned
    * - Unvented Crawlspace
      - 1.9%
-     - UnventedCrawlspace
-     - 4
-     - 1
-     - 9.25
+     - Crawlspace, Unvented
    * - Vented Crawlspace
      - 22%
-     - VentedCrawlspace
-     - 4
-     - 1
-     - 9.25
+     - Crawlspace, Vented
 
 .. _geometry_garage:
 
@@ -37397,24 +28860,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``geometry_garage_width``
-     - true
-     - ft
-     - Double
-     -
-     - The width of the garage. Enter zero for no garage. Only applies to single-family detached units.
-   * - ``geometry_garage_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of the garage. Only applies to single-family detached units.
-   * - ``geometry_garage_position``
-     - true
+   * - ``geometry_garage_type``
+     - false
      - 
      - Choice
-     - Right, Left
-     - The position of the garage. Only applies to single-family detached units.
+     - None, 1 Car, Left, Fully Inset, 1 Car, Left, Half Protruding, 1 Car, Left, Fully Protruding, 1 Car, Right, Fully Inset, 1 Car, Right, Half Protruding, 1 Car, Right, Fully Protruding, 2 Car, Left, Fully Inset, 2 Car, Left, Half Protruding, 2 Car, Left, Fully Protruding, 2 Car, Right, Fully Inset, 2 Car, Right, Half Protruding, 2 Car, Right, Fully Protruding, 3 Car, Left, Fully Inset, 3 Car, Left, Half Protruding, 3 Car, Left, Fully Protruding, 3 Car, Right, Fully Inset, 3 Car, Right, Half Protruding, 3 Car, Right, Fully Protruding
+     - The type of attached garage. Only applies to single-family detached units.
 
 Options
 *******
@@ -37428,30 +28879,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``geometry_garage_width``
-     - ``geometry_garage_depth``
-     - ``geometry_garage_position``
+     - ``geometry_garage_type``
 
    * - 1 Car
      - 10%
-     - 12
-     - 20
-     - Right
+     - 1 Car, Right, Half Protruding
    * - 2 Car
      - 19%
-     - 21
-     - 20
-     - Right
+     - 2 Car, Right, Half Protruding
    * - 3 Car
      - 2.6%
-     - 30
-     - 20
-     - Right
+     - 3 Car, Right, Half Protruding
    * - None
      - 68%
-     - 0
-     - 0
-     - Right
+     - None
 
 .. _geometry_space_combination:
 
@@ -38010,24 +29451,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``wall_siding_type``
+   * - ``enclosure_wall_siding``
      - false
      - 
      - Choice
-     - auto, aluminum siding, asbestos siding, brick veneer, composite shingle siding, fiber cement siding, masonite siding, none, stucco, synthetic stucco, vinyl siding, wood siding
-     - The siding type of the walls. Also applies to rim joists. If not provided, the OS-HPXML default (see `HPXML Walls <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-walls>`_) is used.
-   * - ``wall_color``
-     - false
-     - 
-     - Choice
-     - auto, dark, light, medium, medium dark, reflective
-     - The color of the walls. Also applies to rim joists. If not provided, the OS-HPXML default (see `HPXML Walls <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-walls>`_) is used.
-   * - ``exterior_finish_r``
-     - true
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - R-value of the exterior finish.
+     - None, Aluminum, Dark, Aluminum, Medium, Aluminum, Medium Dark, Aluminum, Light, Aluminum, Reflective, Brick, Dark, Brick, Medium, Brick, Medium Dark, Brick, Light, Brick, Reflective, Fiber-Cement, Dark, Fiber-Cement, Medium, Fiber-Cement, Medium Dark, Fiber-Cement, Light, Fiber-Cement, Reflective, Asbestos, Dark, Asbestos, Medium, Asbestos, Medium Dark, Asbestos, Light, Asbestos, Reflective, Composition Shingle, Dark, Composition Shingle, Medium, Composition Shingle, Medium Dark, Composition Shingle, Light, Composition Shingle, Reflective, Stucco, Dark, Stucco, Medium, Stucco, Medium Dark, Stucco, Light, Stucco, Reflective, Vinyl, Dark, Vinyl, Medium, Vinyl, Medium Dark, Vinyl, Light, Vinyl, Reflective, Wood, Dark, Wood, Medium, Wood, Medium Dark, Wood, Light, Wood, Reflective, Synthetic Stucco, Dark, Synthetic Stucco, Medium, Synthetic Stucco, Medium Dark, Synthetic Stucco, Light, Synthetic Stucco, Reflective, Masonite, Dark, Masonite, Medium, Masonite, Medium Dark, Masonite, Light, Masonite, Reflective, Detailed Example: 0.2 Solar Absorptance, Detailed Example: 0.4 Solar Absorptance, Detailed Example: 0.6 Solar Absorptance, Detailed Example: 0.75 Solar Absorptance
+     - The type, color, and insulation level of the wall siding. The R-value of the siding will be ignored if a wall option with an IECC U-factor is selected.
 
 Options
 *******
@@ -38041,65 +29470,41 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``wall_siding_type``
-     - ``wall_color``
-     - ``exterior_finish_r``
+     - ``enclosure_wall_siding``
 
    * - Aluminum, Light
      - 2.5%
-     - aluminum siding
-     - light
-     - 0.6
+     - Aluminum, Light
    * - Brick, Light
      - 0.11%
-     - brick veneer
-     - light
-     - 0.7
+     - Brick, Light
    * - Brick, Medium/Dark
      - 19%
-     - brick veneer
-     - medium dark
-     - 0.7
+     - Brick, Medium Dark
    * - Fiber-Cement, Light
      - 0.24%
-     - fiber cement siding
-     - light
-     - 0.2
+     - Fiber-Cement, Light
    * - None
      - 18%
-     - none
-     - medium
-     - 0
+     - None
    * - Shingle, Asbestos, Medium
      - 0.71%
-     - asbestos siding
-     - medium
-     - 0.6
+     - Asbestos, Medium
    * - Shingle, Composition, Medium
      - 1.2%
-     - composite shingle siding
-     - medium
-     - 0.6
+     - Composition Shingle, Medium
    * - Stucco, Light
      - 12%
-     - stucco
-     - light
-     - 0.2
+     - Stucco, Light
    * - Stucco, Medium/Dark
      - 0.037%
-     - stucco
-     - medium dark
-     - 0.2
+     - Stucco, Medium Dark
    * - Vinyl, Light
      - 24%
-     - vinyl siding
-     - light
-     - 0.6
+     - Vinyl, Light
    * - Wood, Medium/Dark
      - 21%
-     - wood siding
-     - medium dark
-     - 1.4
+     - Wood, Medium Dark
 
 .. _geometry_wall_type:
 
@@ -38198,24 +29603,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``site_soil_and_moisture_type``
+   * - ``location_soil_type``
      - false
      - 
      - Choice
-     - auto, clay, dry, clay, mixed, clay, wet, gravel, dry, gravel, mixed, gravel, wet, loam, dry, loam, mixed, loam, wet, sand, dry, sand, mixed, sand, wet, silt, dry, silt, mixed, silt, wet, unknown, dry, unknown, mixed, unknown, wet
-     - Type of soil and moisture. This is used to inform ground conductivity and diffusivity. If not provided, the OS-HPXML default (see `HPXML Site <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-site>`_) is used.
-   * - ``site_ground_conductivity``
-     - false
-     - Btu/hr-ft-F
-     - Double
-     -
-     - Conductivity of the ground soil. If provided, overrides the previous site and moisture type input.
-   * - ``site_ground_diffusivity``
-     - false
-     - ft^2/hr
-     - Double
-     -
-     - Diffusivity of the ground soil. If provided, overrides the previous site and moisture type input.
+     - Unknown, Clay, Dry, Clay, Mixed, Clay, Wet, Gravel, Dry, Gravel, Mixed, Gravel, Wet, Loam, Dry, Loam, Mixed, Loam, Wet, Sand, Dry, Sand, Mixed, Sand, Wet, Silt, Dry, Silt, Mixed, Silt, Wet, 0.5 Btu/hr-ft-F, 0.8 Btu/hr-ft-F, 1.1 Btu/hr-ft-F, 1.4 Btu/hr-ft-F, 1.7 Btu/hr-ft-F, 2.0 Btu/hr-ft-F, 2.3 Btu/hr-ft-F, 2.6 Btu/hr-ft-F, Detailed Example: Sand, Dry, 0.03 Diffusivity
+     - The soil and moisture type.
 
 Options
 *******
@@ -38229,50 +29622,32 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``site_soil_and_moisture_type``
-     - ``site_ground_conductivity``
-     - ``site_ground_diffusivity``
+     - ``location_soil_type``
 
    * - 0.5
      - 0.59%
-     - auto
-     - 0.5
-     - auto
+     - 0.5 Btu/hr-ft-F
    * - 0.8
      - 7%
-     - auto
-     - 0.8
-     - auto
+     - 0.8 Btu/hr-ft-F
    * - 1.1
      - 46%
-     - auto
-     - 1.1
-     - auto
+     - 1.1 Btu/hr-ft-F
    * - 1.4
      - 36%
-     - auto
-     - 1.4
-     - auto
+     - 1.4 Btu/hr-ft-F
    * - 1.7
      - 7.8%
-     - auto
-     - 1.7
-     - auto
+     - 1.7 Btu/hr-ft-F
    * - 2.0
      - 2.3%
-     - auto
-     - 2.0
-     - auto
+     - 2.0 Btu/hr-ft-F
    * - 2.3
      - 0.23%
-     - auto
-     - 2.3
-     - auto
+     - 2.3 Btu/hr-ft-F
    * - 2.6
      - 0.16%
-     - auto
-     - 2.6
-     - auto
+     - 2.6 Btu/hr-ft-F
 
 .. _hvac_cooling_autosizing_factor:
 
@@ -38349,7 +29724,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - 40% Oversized
      - 0%
      - 1.4
-     - auto
+     - 1.0
 
 .. _hvac_cooling_efficiency:
 
@@ -38393,78 +29768,18 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``cooling_system_type``
+   * - ``hvac_cooling_system``
      - true
      - 
      - Choice
-     - none, central air conditioner, room air conditioner, evaporative cooler, mini-split, packaged terminal air conditioner
-     - The type of cooling system. Use 'none' if there is no cooling system or if there is a heat pump serving a cooling load.
-   * - ``cooling_system_compressor_type``
+     - None, Central AC, SEER 8.0, Central AC, SEER 10.0, Central AC, SEER 13.0, Central AC, SEER 14.0, Central AC, SEER 15.0, Central AC, SEER2 13.4, Central AC, SEER2 14.0, Central AC, SEER2 15.0, Central AC, SEER2 16.0, Central AC, SEER2 17.0, Central AC, SEER2 18.0, Central AC, SEER2 19.0, Central AC, SEER2 20.0, Central AC, SEER2 21.0, Central AC, SEER2 22.0, Central AC, SEER2 23.0, Central AC, SEER2 24.0, Central AC, SEER2 25.0, Ductless Mini-Split AC, SEER2 14.5, Ductless Mini-Split AC, SEER2 16.0, Ductless Mini-Split AC, SEER2 17.0, Ductless Mini-Split AC, SEER2 18.0, Ductless Mini-Split AC, SEER2 19.0, Ductless Mini-Split AC, SEER2 20.0, Ductless Mini-Split AC, SEER2 21.0, Ductless Mini-Split AC, SEER2 22.0, Ductless Mini-Split AC, SEER2 23.0, Ductless Mini-Split AC, SEER2 24.0, Ductless Mini-Split AC, SEER2 25.0, Ductless Mini-Split AC, SEER2 26.0, Ductless Mini-Split AC, SEER2 27.0, Ductless Mini-Split AC, SEER2 28.0, Room AC, CEER 8.4, Room AC, CEER 9.7, Room AC, CEER 10.6, Room AC, CEER 11.8, Room AC, CEER 13.1, Packaged Terminal AC, EER 8.5, Packaged Terminal AC, EER 9.8, Packaged Terminal AC, EER 10.7, Packaged Terminal AC, EER 11.9, Packaged Terminal AC, EER 13.2, Evaporative Cooler, Detailed Example: Central AC, SEER2 13.4, Absolute Detailed Performance, Detailed Example: Central AC, SEER2 17.1, Absolute Detailed Performance, Detailed Example: Central AC, SEER 17.5, Absolute Detailed Performance, Detailed Example: Central AC, SEER 17.5, Normalized Detailed Performance, Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Absolute Detailed Performance, Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Normalized Detailed Performance
+     - The type and efficiency of the cooling system. Use 'None' if there is no cooling system or if there is a heat pump serving a cooling load.
+   * - ``hvac_cooling_system_capacity``
      - false
      - 
      - Choice
-     - auto, single stage, two stage, variable speed
-     - The compressor type of the cooling system. Required for central air conditioner and mini-split.
-   * - ``cooling_system_cooling_efficiency_type``
-     - true
-     - 
-     - Choice
-     - SEER, SEER2, EER, CEER
-     - The efficiency type of the cooling system. System types central air conditioner and mini-split use SEER or SEER2. System types room air conditioner and packaged terminal air conditioner use EER or CEER. Ignored for system type evaporative cooler.
-   * - ``cooling_system_cooling_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - The rated efficiency value of the cooling system. Ignored for evaporative cooler.
-   * - ``cooling_system_cooling_capacity``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The output cooling capacity of the cooling system. If not provided, the OS-HPXML autosized default (see `Central Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#central-air-conditioner>`_, `Room Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#room-air-conditioner>`_, `Packaged Terminal Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#packaged-terminal-air-conditioner>`_, `Evaporative Cooler <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#evaporative-cooler>`_, `Mini-Split Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#mini-split-air-conditioner>`_) is used.
-   * - ``cooling_system_cooling_autosizing_limit``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-   * - ``cooling_system_is_ducted``
-     - false
-     - 
-     - Boolean
-     - auto, true, false
-     - Whether the cooling system is ducted or not. Only used for mini-split and evaporative cooler. It's assumed that central air conditioner is ducted, and room air conditioner and packaged terminal air conditioner are not ducted.
-   * - ``cooling_system_crankcase_heater_watts``
-     - false
-     - W
-     - Double
-     - auto
-     - Cooling system crankcase heater power consumption in Watts. Applies only to central air conditioner, room air conditioner, packaged terminal air conditioner and mini-split. If not provided, the OS-HPXML default (see `Central Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#central-air-conditioner>`_, `Room Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#room-air-conditioner>`_, `Packaged Terminal Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#packaged-terminal-air-conditioner>`_, `Mini-Split Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#mini-split-air-conditioner>`_) is used.
-   * - ``cooling_system_integrated_heating_system_fuel``
-     - false
-     - 
-     - Choice
-     - auto, electricity, natural gas, fuel oil, propane, wood, wood pellets, coal
-     - The fuel type of the heating system integrated into cooling system. Only used for packaged terminal air conditioner and room air conditioner.
-   * - ``cooling_system_integrated_heating_system_efficiency_percent``
-     - false
-     - Frac
-     - Double
-     -
-     - The rated heating efficiency value of the heating system integrated into cooling system. Only used for packaged terminal air conditioner and room air conditioner.
-   * - ``cooling_system_integrated_heating_system_capacity``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The output heating capacity of the heating system integrated into cooling system. If not provided, the OS-HPXML autosized default (see `Room Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#room-air-conditioner>`_, `Packaged Terminal Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#packaged-terminal-air-conditioner>`_) is used. Only used for room air conditioner and packaged terminal air conditioner.
-   * - ``cooling_system_integrated_heating_system_fraction_heat_load_served``
-     - false
-     - Frac
-     - Double
-     -
-     - The heating load served by the heating system integrated into cooling system. Only used for packaged terminal air conditioner and room air conditioner.
+     - Autosize, 0.5 tons, 0.75 tons, 1.0 tons, 1.5 tons, 2.0 tons, 2.5 tons, 3.0 tons, 3.5 tons, 4.0 tons, 4.5 tons, 5.0 tons, 5.5 tons, 6.0 tons, 6.5 tons, 7.0 tons, 7.5 tons, 8.0 tons, 8.5 tons, 9.0 tons, 9.5 tons, 10.0 tons, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit
+     - The output capacity of the cooling system.
 
 Options
 *******
@@ -38478,185 +29793,55 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``cooling_system_type``
-     - ``cooling_system_compressor_type``
-     - ``cooling_system_cooling_efficiency_type``
-     - ``cooling_system_cooling_efficiency``
-     - ``cooling_system_cooling_capacity``
-     - ``cooling_system_cooling_autosizing_limit``
-     - ``cooling_system_is_ducted``
-     - ``cooling_system_crankcase_heater_watts``
-     - ``cooling_system_integrated_heating_system_fuel``
-     - ``cooling_system_integrated_heating_system_efficiency_percent``
-     - ``cooling_system_integrated_heating_system_capacity``
-     - ``cooling_system_integrated_heating_system_fraction_heat_load_served``
+     - ``hvac_cooling_system``
+     - ``hvac_cooling_system_capacity``
 
    * - AC, SEER 8
      - 0.9%
-     - central air conditioner
-     - single stage
-     - SEER
-     - 8
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - Central AC, SEER 8.0
+     - Autosize
    * - AC, SEER 10
      - 6%
-     - central air conditioner
-     - single stage
-     - SEER
-     - 10
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - Central AC, SEER 10.0
+     - Autosize
    * - AC, SEER 13
      - 29%
-     - central air conditioner
-     - single stage
-     - SEER
-     - 13
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - Central AC, SEER 13.0
+     - Autosize
    * - AC, SEER 15
      - 13%
-     - central air conditioner
-     - single stage
-     - SEER
-     - 15
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - Central AC, SEER 15.0
+     - Autosize
    * - Ducted Heat Pump
      - 15%
-     - none
-     - auto
-     - SEER
-     - 0
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - None
+     - Autosize
    * - Non-Ducted Heat Pump
      - 0.97%
-     - none
-     - auto
-     - SEER
-     - 0
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - None
+     - Autosize
    * - None
      - 11%
-     - none
-     - auto
-     - SEER
-     - 0
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - None
+     - Autosize
    * - Room AC, EER 8.5
      - 0.43%
-     - room air conditioner
-     - auto
-     - EER
-     - 8.5
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - Room AC, CEER 8.4
+     - Autosize
    * - Room AC, EER 9.8
      - 2.6%
-     - room air conditioner
-     - auto
-     - EER
-     - 9.8
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - Room AC, CEER 9.7
+     - Autosize
    * - Room AC, EER 10.7
      - 9.6%
-     - room air conditioner
-     - auto
-     - EER
-     - 10.7
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - Room AC, CEER 10.6
+     - Autosize
    * - Room AC, EER 12.0
      - 7.4%
-     - room air conditioner
-     - auto
-     - EER
-     - 12
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - Room AC, CEER 11.8
+     - Autosize
    * - Shared Cooling
      - 3.8%
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
      - 
      - 
 
@@ -38708,12 +29893,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``cooling_system_fraction_cool_load_served``
-     - true
-     - Frac
-     - Double
-     -
-     - The cooling load served by the cooling system.
+   * - ``hvac_cooling_system_cooling_load_served``
+     - false
+     - 
+     - Choice
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - The fraction of the cooling load served by the cooling system.
 
 Options
 *******
@@ -38727,29 +29912,29 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``cooling_system_fraction_cool_load_served``
+     - ``hvac_cooling_system_cooling_load_served``
 
    * - <10% Conditioned
      - 0.47%
-     - 0.1
+     - 10%
    * - 20% Conditioned
      - 6.4%
-     - 0.2
+     - 20%
    * - 40% Conditioned
      - 5.9%
-     - 0.4
+     - 40%
    * - 60% Conditioned
      - 6.6%
-     - 0.6
+     - 60%
    * - 80% Conditioned
      - 3.6%
-     - 0.8
+     - 80%
    * - 100% Conditioned
      - 67%
-     - 1
+     - 100%
    * - None
      - 11%
-     - 0
+     - 0%
    * - Void
      - 0%
      - 
@@ -38858,26 +30043,6 @@ Assumption
 - \None of the shared system options currently modeled (in HVAC Shared Efficiencies) are ducted, therefore where there are discrepancies between HVAC Heating Type, HVAC Cooling Type, and HVAC Has Shared System, HVAC Has Shared System takes precedence. (e.g., Central AC + Ducted Heating + Shared Heating and Cooling = No (Ducts)) (This is a temporary fix and will change when ducted shared system options are introduced.)
 
 
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``hvac_blower_fan_watts_per_cfm``
-     - false
-     - W/CFM
-     - Double
-     - auto
-     - The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems). If not provided, the OS-HPXML default (see `HPXML Heating Systems <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-heating-systems>`_, `HPXML Cooling Systems <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-cooling-systems>`_, `HPXML Heat Pumps <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-heat-pumps>`_) is used.
-
 Options
 *******
 
@@ -38890,17 +30055,13 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``hvac_blower_fan_watts_per_cfm``
 
    * - No
      - 24%
-     - auto
    * - Yes
      - 76%
-     - auto
    * - Void
      - 0%
-     - 
 
 .. _hvac_has_shared_system:
 
@@ -39046,6 +30207,12 @@ Arguments
      - Double
      -
      - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+   * - ``heating_system_2_heating_autosizing_factor``
+     - false
+     - 
+     - Double
+     -
+     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
    * - ``heat_pump_heating_autosizing_factor``
      - false
      - 
@@ -39057,13 +30224,7 @@ Arguments
      - 
      - Double
      -
-     - The capacity scaling factor applied to the auto-sizing methodology if Backup Type is 'integrated'. If not provided, 1.0 is used. If Backup Type is 'separate', use Heating System 2: Heating Autosizing Factor.
-   * - ``heating_system_2_heating_autosizing_factor``
-     - false
-     - 
-     - Double
-     -
-     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+     - The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.
 
 Options
 *******
@@ -39078,9 +30239,9 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Option name
      - Stock saturation
      - ``heating_system_heating_autosizing_factor``
+     - ``heating_system_2_heating_autosizing_factor``
      - ``heat_pump_heating_autosizing_factor``
      - ``heat_pump_backup_heating_autosizing_factor``
-     - ``heating_system_2_heating_autosizing_factor``
 
    * - None
      - 100%
@@ -39091,9 +30252,9 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - 40% Oversized
      - 0%
      - 1.4
-     - auto
-     - auto
-     - auto
+     - 1.0
+     - 1.0
+     - 1.0
 
 .. _hvac_heating_efficiency:
 
@@ -39163,282 +30324,84 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``simulation_control_ground_to_air_heat_pump_model_type``
-     - false
-     - 
-     - Choice
-     - auto, standard, experimental
-     - Research feature to select the type of ground-to-air heat pump model. Use standard for standard ground-to-air heat pump modeling. Use experimental for an improved model that better accounts for coil staging. If not provided, the OS-HPXML default (see `HPXML Simulation Control <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-simulation-control>`_) is used.
-   * - ``heating_system_type``
+   * - ``hvac_heating_system``
      - true
      - 
      - Choice
-     - none, Furnace, WallFurnace, FloorFurnace, Boiler, ElectricResistance, Stove, SpaceHeater, Fireplace, Shared Boiler w/ Baseboard, Shared Boiler w/ Ductless Fan Coil
-     - The type of heating system. Use 'none' if there is no heating system or if there is a heat pump serving a heating load.
-   * - ``heating_system_heating_efficiency``
-     - true
-     - Frac
-     - Double
-     -
-     - The rated heating efficiency value of the heating system.
-   * - ``heating_system_heating_capacity``
+     - None, Electric Resistance, Central Furnace, 60% AFUE, Central Furnace, 64% AFUE, Central Furnace, 68% AFUE, Central Furnace, 72% AFUE, Central Furnace, 76% AFUE, Central Furnace, 78% AFUE, Central Furnace, 80% AFUE, Central Furnace, 83% AFUE, Central Furnace, 85% AFUE, Central Furnace, 88% AFUE, Central Furnace, 90% AFUE, Central Furnace, 92% AFUE, Central Furnace, 92.5% AFUE, Central Furnace, 95% AFUE, Central Furnace, 96% AFUE, Central Furnace, 98% AFUE, Central Furnace, 100% AFUE, Wall Furnace, 60% AFUE, Wall Furnace, 68% AFUE, Wall Furnace, 82% AFUE, Wall Furnace, 98% AFUE, Wall Furnace, 100% AFUE, Floor Furnace, 60% AFUE, Floor Furnace, 70% AFUE, Floor Furnace, 80% AFUE, Boiler, 60% AFUE, Boiler, 72% AFUE, Boiler, 76% AFUE, Boiler, 78% AFUE, Boiler, 80% AFUE, Boiler, 83% AFUE, Boiler, 85% AFUE, Boiler, 88% AFUE, Boiler, 90% AFUE, Boiler, 92% AFUE, Boiler, 92.5% AFUE, Boiler, 95% AFUE, Boiler, 96% AFUE, Boiler, 98% AFUE, Boiler, 100% AFUE, Stove, 60% Efficiency, Stove, 70% Efficiency, Stove, 80% Efficiency, Space Heater, 60% Efficiency, Space Heater, 70% Efficiency, Space Heater, 80% Efficiency, Space Heater, 92% Efficiency, Space Heater, 100% Efficiency, Fireplace, 60% Efficiency, Fireplace, 70% Efficiency, Fireplace, 80% Efficiency, Fireplace, 100% Efficiency, Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light
+     - The type and efficiency of the heating system. Use 'None' if there is no heating system or if there is a heat pump serving a heating load.
+   * - ``hvac_heating_system_capacity``
      - false
-     - Btu/hr
-     - Double
-     -
-     - The output heating capacity of the heating system. If not provided, the OS-HPXML autosized default (see `HPXML Heating Systems <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-heating-systems>`_) is used.
-   * - ``heating_system_heating_autosizing_limit``
+     - 
+     - Choice
+     - Autosize, 5 kBtu/hr, 10 kBtu/hr, 15 kBtu/hr, 20 kBtu/hr, 25 kBtu/hr, 30 kBtu/hr, 35 kBtu/hr, 40 kBtu/hr, 45 kBtu/hr, 50 kBtu/hr, 55 kBtu/hr, 60 kBtu/hr, 65 kBtu/hr, 70 kBtu/hr, 75 kBtu/hr, 80 kBtu/hr, 85 kBtu/hr, 90 kBtu/hr, 95 kBtu/hr, 100 kBtu/hr, 105 kBtu/hr, 110 kBtu/hr, 115 kBtu/hr, 120 kBtu/hr, 125 kBtu/hr, 130 kBtu/hr, 135 kBtu/hr, 140 kBtu/hr, 145 kBtu/hr, 150 kBtu/hr, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit, Detailed Example: Autosize, 140% Multiplier, 45 kBtu/hr Limit
+     - The output capacity of the heating system.
+   * - ``hvac_heating_system_heating_load_served``
      - false
-     - Btu/hr
-     - Double
-     -
-     - The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-   * - ``heating_system_fraction_heat_load_served``
-     - true
-     - Frac
-     - Double
-     -
-     - The heating load served by the heating system.
-   * - ``heating_system_pilot_light``
-     - false
-     - Btuh
-     - Double
-     -
-     - The fuel usage of the pilot light. Applies only to Furnace, WallFurnace, FloorFurnace, Stove, Boiler, and Fireplace with non-electric fuel type. If not provided, assumes no pilot light.
-   * - ``heat_pump_type``
+     - 
+     - Choice
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - The fraction of the heating load served by the heating system.
+   * - ``hvac_heat_pump``
      - true
      - 
      - Choice
-     - none, air-to-air, mini-split, ground-to-air, packaged terminal heat pump, room air conditioner with reverse cycle
-     - The type of heat pump. Use 'none' if there is no heat pump.
-   * - ``heat_pump_compressor_type``
+     - None, Central HP, SEER 8.0, HSPF 6.0, Central HP, SEER 10.0, HSPF 6.8, Central HP, SEER 13.0, HSPF 7.7, Central HP, SEER 14.0, HSPF 8.2, Central HP, SEER 15.0, HSPF 8.5, Central HP, SEER2 13.4, HSPF2 7.0, Central HP, SEER2 14.0, HSPF2 7.3, Central HP, SEER2 15.0, HSPF2 7.6, Central HP, SEER2 16.0, HSPF2 7.9, Central HP, SEER2 17.0, HSPF2 8.2, Central HP, SEER2 18.0, HSPF2 8.5, Central HP, SEER2 19.0, HSPF2 8.7, Central HP, SEER2 20.0, HSPF2 9.0, Central HP, SEER2 21.0, HSPF2 9.2, Central HP, SEER2 22.0, HSPF2 9.5, Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7, Ductless Mini-Split HP, SEER2 16.0, HSPF2 8.1, Ductless Mini-Split HP, SEER2 17.0, HSPF2 8.5, Ductless Mini-Split HP, SEER2 18.0, HSPF2 8.8, Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Ductless Mini-Split HP, SEER2 20.0, HSPF2 9.4, Ductless Mini-Split HP, SEER2 21.0, HSPF2 9.7, Ductless Mini-Split HP, SEER2 22.0, HSPF2 10.1, Ductless Mini-Split HP, SEER2 23.0, HSPF2 10.4, Ductless Mini-Split HP, SEER2 24.0, HSPF2 10.7, Ductless Mini-Split HP, SEER2 25.0, HSPF2 11.0, Ductless Mini-Split HP, SEER2 26.0, HSPF2 11.4, Ductless Mini-Split HP, SEER2 27.0, HSPF2 11.7, Ductless Mini-Split HP, SEER2 28.0, HSPF2 12.0, Ductless Mini-Split HP, SEER2 29.0, HSPF2 12.3, Ductless Mini-Split HP, SEER2 30.0, HSPF2 12.7, Ductless Mini-Split HP, SEER2 32.0, HSPF2 13.3, Geothermal HP, EER 16.6, COP 3.6, Geothermal HP, EER 18.6, COP 3.8, Geothermal HP, EER 20.5, COP 4.0, Geothermal HP, EER 30.9, COP 4.4, Room HP, CEER 8.4, COP 2.7, Room HP, CEER 9.7, COP 3.0, Room HP, CEER 10.6, COP 3.3, Room HP, CEER 11.8, COP 3.6, Room HP, CEER 13.1, COP 3.9, Packaged Terminal HP, EER 8.5, COP 2.7, Packaged Terminal HP, EER 9.8, COP 3.0, Packaged Terminal HP, EER 10.7, COP 3.3, Packaged Terminal HP, EER 11.9, COP 3.6, Packaged Terminal HP, EER 13.2, COP 3.9, Detailed Example: Central HP, SEER 13.0, HSPF 9.85, Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance, Detailed Example: Central HP, SEER2 17.1, HSPF2 7.9, Absolute Detailed Performance, Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Absolute Detailed Performance, Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Normalized Detailed Performance, Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Absolute Detailed Performance, Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance
+     - The type and efficiency of the heat pump.
+   * - ``hvac_heat_pump_capacity``
      - false
      - 
      - Choice
-     - auto, single stage, two stage, variable speed
-     - The compressor type of the heat pump. Required for air-to-air, mini-split and ground-to-air.
-   * - ``heat_pump_heating_efficiency_type``
-     - true
-     - 
-     - Choice
-     - HSPF, HSPF2, COP
-     - The heating efficiency type of heat pump. System types air-to-air and mini-split use HSPF or HSPF2. System types ground-to-air, packaged terminal heat pump and room air conditioner with reverse cycle use COP.
-   * - ``heat_pump_heating_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - The rated heating efficiency value of the heat pump.
-   * - ``heat_pump_cooling_efficiency_type``
-     - true
-     - 
-     - Choice
-     - SEER, SEER2, EER, CEER
-     - The cooling efficiency type of heat pump. System types air-to-air and mini-split use SEER or SEER2. System types ground-to-air, packaged terminal heat pump and room air conditioner with reverse cycle use EER.
-   * - ``heat_pump_cooling_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - The rated cooling efficiency value of the heat pump.
-   * - ``heat_pump_heating_capacity``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The output heating capacity of the heat pump. If not provided, the OS-HPXML autosized default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#mini-split-heat-pump>`_, `Packaged Terminal Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#packaged-terminal-heat-pump>`_, `Room Air Conditioner w/ Reverse Cycle <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle>`_, `Ground-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#ground-to-air-heat-pump>`_) is used.
-   * - ``heat_pump_heating_autosizing_limit``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-   * - ``heat_pump_heating_capacity_fraction_17_f``
-     - false
-     - Frac
-     - Double
-     - auto
-     - The output heating capacity of the heat pump at 17F divided by the above nominal heating capacity at 47F. Applies to all heat pump types except ground-to-air. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#mini-split-heat-pump>`_, `Packaged Terminal Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#packaged-terminal-heat-pump>`_, `Room Air Conditioner w/ Reverse Cycle <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle>`_) is used.
-   * - ``heat_pump_cooling_capacity``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The output cooling capacity of the heat pump. If not provided, the OS-HPXML autosized default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#mini-split-heat-pump>`_, `Packaged Terminal Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#packaged-terminal-heat-pump>`_, `Room Air Conditioner w/ Reverse Cycle <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle>`_, `Ground-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#ground-to-air-heat-pump>`_) is used.
-   * - ``heat_pump_cooling_autosizing_limit``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-   * - ``heat_pump_fraction_heat_load_served``
-     - true
-     - Frac
-     - Double
-     -
-     - The heating load served by the heat pump.
-   * - ``heat_pump_fraction_cool_load_served``
-     - true
-     - Frac
-     - Double
-     -
-     - The cooling load served by the heat pump.
-   * - ``heat_pump_compressor_lockout_temp``
-     - false
-     - F
-     - Double
-     - auto
-     - The temperature below which the heat pump compressor is disabled. If both this and Backup Heating Lockout Temperature are provided and use the same value, it essentially defines a switchover temperature (for, e.g., a dual-fuel heat pump). Applies to all heat pump types other than ground-to-air. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#mini-split-heat-pump>`_, `Packaged Terminal Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#packaged-terminal-heat-pump>`_, `Room Air Conditioner w/ Reverse Cycle <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle>`_) is used.
-   * - ``heat_pump_backup_type``
-     - true
-     - 
-     - Choice
-     - auto, none, integrated, separate
-     - The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating. E.g., 'integrated' or 'auto'. Use 'auto' when Backup Use Existing System is true.
-   * - ``heat_pump_backup_heating_autosizing_limit``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The maximum capacity limit applied to the auto-sizing methodology if Backup Type is 'integrated'. If not provided, no limit is used. If Backup Type is 'separate', use Heating System 2: Heating Autosizing Limit.
-   * - ``heat_pump_backup_fuel``
-     - true
-     - 
-     - Choice
-     - auto, electricity, natural gas, fuel oil, propane
-     - The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'. E.g., 'electricity' or 'auto'. Use 'auto' when Backup Use Existing System is true.
-   * - ``heat_pump_backup_heating_efficiency``
-     - true
-     - 
-     - Double
-     - auto
-     - The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'. E.g., '1' or 'auto'. Use 'auto' when Backup Use Existing System is true.
-   * - ``heat_pump_backup_heating_capacity``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The backup output heating capacity of the heat pump. If not provided, the OS-HPXML autosized default (see `Backup <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#backup>`_) is used. Only applies if Backup Type is 'integrated'.
-   * - ``heat_pump_backup_heating_lockout_temp``
-     - false
-     - F
-     - Double
-     - auto
-     - The temperature above which the heat pump backup system is disabled. If both this and Compressor Lockout Temperature are provided and use the same value, it essentially defines a switchover temperature (for, e.g., a dual-fuel heat pump). Applies for both Backup Type of 'integrated' and 'separate'. If not provided, the OS-HPXML default (see `Backup <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#backup>`_) is used.
-   * - ``heat_pump_sizing_methodology``
+     - Autosize, Autosize (ACCA), Autosize (MaxLoad), 0.5 tons, 0.75 tons, 1.0 tons, 1.5 tons, 2.0 tons, 2.5 tons, 3.0 tons, 3.5 tons, 4.0 tons, 4.5 tons, 5.0 tons, 5.5 tons, 6.0 tons, 6.5 tons, 7.0 tons, 7.5 tons, 8.0 tons, 8.5 tons, 9.0 tons, 9.5 tons, 10.0 tons, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit
+     - The output capacity of the heat pump.
+   * - ``hvac_heat_pump_heating_load_served``
      - false
      - 
      - Choice
-     - auto, ACCA, HERS, MaxLoad
-     - The auto-sizing methodology to use when the heat pump capacity is not provided. If not provided, the OS-HPXML default (see `HPXML HVAC Sizing Control <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-hvac-sizing-control>`_) is used.
-   * - ``heat_pump_backup_sizing_methodology``
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - The fraction of the heating load served by the heat pump.
+   * - ``hvac_heat_pump_cooling_load_served``
      - false
      - 
      - Choice
-     - auto, emergency, supplemental
-     - The auto-sizing methodology to use when the heat pump backup capacity is not provided. If not provided, the OS-HPXML default (see `HPXML HVAC Sizing Control <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-hvac-sizing-control>`_) is used.
-   * - ``heat_pump_is_ducted``
-     - false
-     - 
-     - Boolean
-     - auto, true, false
-     - Whether the heat pump is ducted or not. Only used for mini-split. It's assumed that air-to-air and ground-to-air are ducted, and packaged terminal heat pump and room air conditioner with reverse cycle are not ducted. If not provided, assumes not ducted.
-   * - ``heat_pump_crankcase_heater_watts``
-     - false
-     - W
-     - Double
-     - auto
-     - Heat Pump crankcase heater power consumption in Watts. Applies only to air-to-air, mini-split, packaged terminal heat pump and room air conditioner with reverse cycle. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#mini-split-heat-pump>`_, `Packaged Terminal Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#packaged-terminal-heat-pump>`_, `Room Air Conditioner w/ Reverse Cycle <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle>`_) is used.
-   * - ``heat_pump_pan_heater_watts``
-     - false
-     - W
-     - Double
-     - auto
-     - Heat Pump pan heater power consumption in Watts. Applies only to air-to-air and mini-split. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#mini-split-heat-pump>`_) is used.
-   * - ``heat_pump_pan_heater_control_type``
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - The fraction of the cooling load served by the heat pump.
+   * - ``hvac_heat_pump_temperatures``
      - false
      - 
      - Choice
-     - auto, continuous, defrost mode
-     - Heat pump pan heater control type. If 'continuous', operates continuously when outdoor temperature is below 32F. If 'defrost mode', operates only during defrost mode when outdoor temperature is below 32F. Applies only to air-to-air and mini-split. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#mini-split-heat-pump>`_) is used.
-   * - ``geothermal_loop_configuration``
+     - Default, -20F Min Compressor Temp, -15F Min Compressor Temp, -10F Min Compressor Temp, -5F Min Compressor Temp, 0F Min Compressor Temp, 5F Min Compressor Temp, 10F Min Compressor Temp, 15F Min Compressor Temp, 20F Min Compressor Temp, 25F Min Compressor Temp, 30F Min Compressor Temp, 35F Min Compressor Temp, 40F Min Compressor Temp, 30F Min Compressor Temp, 30F Max HP Backup Temp, 35F Min Compressor Temp, 35F Max HP Backup Temp, 40F Min Compressor Temp, 40F Max HP Backup Temp, Detailed Example: 5F Min Compressor Temp, 35F Max HP Backup Temp, Detailed Example: 25F Min Compressor Temp, 45F Max HP Backup Temp
+     - Specifies the minimum compressor temperature and/or maximum HP backup temperature. If both are the same, a binary switchover temperature is used.
+   * - ``hvac_heat_pump_backup``
      - false
      - 
      - Choice
-     - auto, none, vertical
-     - Configuration of the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see `Ground-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#ground-to-air-heat-pump>`_) is used.
-   * - ``geothermal_loop_borefield_configuration``
+     - None, Integrated, Electricity, 100% Efficiency, Integrated, Natural Gas, 60% AFUE, Integrated, Natural Gas, 76% AFUE, Integrated, Natural Gas, 80% AFUE, Integrated, Natural Gas, 92.5% AFUE, Integrated, Natural Gas, 95% AFUE, Integrated, Fuel Oil, 60% AFUE, Integrated, Fuel Oil, 76% AFUE, Integrated, Fuel Oil, 80% AFUE, Integrated, Fuel Oil, 92.5% AFUE, Integrated, Fuel Oil, 95% AFUE, Integrated, Propane, 60% AFUE, Integrated, Propane, 76% AFUE, Integrated, Propane, 80% AFUE, Integrated, Propane, 92.5% AFUE, Integrated, Propane, 95% AFUE, Separate Heating System
+     - The type and efficiency of the heat pump backup. Use 'None' if there is no backup heating. If Backup Type is Separate Heating System, Heating System 2 is used to specify the backup.
+   * - ``hvac_heat_pump_backup_capacity``
      - false
      - 
      - Choice
-     - auto, Rectangle, Open Rectangle, C, L, U, Lopsided U
-     - Borefield configuration of the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_loop_flow``
-     - false
-     - gpm
-     - Double
-     -
-     - Water flow rate through the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML autosized default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_boreholes_count``
-     - false
-     - #
-     - Integer
-     -
-     - Number of boreholes. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML autosized default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_boreholes_length``
-     - false
-     - ft
-     - Double
-     -
-     - Average length of each borehole (vertical). Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML autosized default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_boreholes_spacing``
-     - false
-     - ft
-     - Double
-     - auto
-     - Distance between bores. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_boreholes_diameter``
-     - false
-     - in
-     - Double
-     - auto
-     - Diameter of bores. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_grout_type``
+     - Autosize, Autosize (Supplemental), 5 kW, 10 kW, 15 kW, 20 kW, 25 kW, 5 kBtu/hr, 10 kBtu/hr, 15 kBtu/hr, 20 kBtu/hr, 25 kBtu/hr, 30 kBtu/hr, 35 kBtu/hr, 40 kBtu/hr, 45 kBtu/hr, 50 kBtu/hr, 55 kBtu/hr, 60 kBtu/hr, 65 kBtu/hr, 70 kBtu/hr, 75 kBtu/hr, 80 kBtu/hr, 85 kBtu/hr, 90 kBtu/hr, 95 kBtu/hr, 100 kBtu/hr, 105 kBtu/hr, 110 kBtu/hr, 115 kBtu/hr, 120 kBtu/hr, 125 kBtu/hr, 130 kBtu/hr, 135 kBtu/hr, 140 kBtu/hr, 145 kBtu/hr, 150 kBtu/hr, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit
+     - The output capacity of the heat pump backup if there is integrated backup heating.
+   * - ``hvac_geothermal_loop``
      - false
      - 
      - Choice
-     - auto, standard, thermally enhanced
-     - Grout type of the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_pipe_type``
+     - Default, Vertical Loop, Enhanced Grout, Vertical Loop, Enhanced Pipe, Vertical Loop, Enhanced Grout & Pipe, Detailed Example: Lopsided U Configuration, 10 Boreholes
+     - The geothermal loop configuration if there's a ground-to-air heat pump.
+   * - ``advanced_feature``
      - false
      - 
      - Choice
-     - auto, standard, thermally enhanced
-     - Pipe type of the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_pipe_diameter``
+     - None, Temperature Capacitance Multiplier, 1, Temperature Capacitance Multiplier, 4, Temperature Capacitance Multiplier, 10, Temperature Capacitance Multiplier, 15, On/Off Thermostat Deadband, 1F, On/Off Thermostat Deadband, 2F, On/Off Thermostat Deadband, 3F, Heat Pump Backup Staging, 5 kW, Heat Pump Backup Staging, 10 kW, Experimental Ground-to-Air Heat Pump Model, HVAC Allow Increased Fixed Capacities
+     - Select an advanced research feature to use in the model, if desired.
+   * - ``hvac_heating_shared_system``
      - false
-     - in
+     - 
      - Choice
-     - auto, 3/4" pipe, 1" pipe, 1-1/4" pipe
-     - Pipe diameter of the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``heating_system_has_flue_or_chimney``
-     - true
-     - 
-     - String
-     -
-     - Whether the heating system has a flue or chimney.
-   * - ``heat_pump_backup_use_existing_system``
-     - false
-     - 
-     - Boolean
-     - true, false
-     - Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system. This argument is only applicable for heat pump upgrades.
-   * - ``heat_pump_sizing_is_duct_limited``
-     - false
-     - 
-     - Boolean
-     - true, false
-     - Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.
+     - None, Baseboard, FanCoil
+     - The type of shared system.
 
 Options
 *******
@@ -39452,965 +30415,305 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``simulation_control_ground_to_air_heat_pump_model_type``
-     - ``heating_system_type``
-     - ``heating_system_heating_efficiency``
-     - ``heating_system_heating_capacity``
-     - ``heating_system_heating_autosizing_limit``
-     - ``heating_system_fraction_heat_load_served``
-     - ``heating_system_pilot_light``
-     - ``heat_pump_type``
-     - ``heat_pump_compressor_type``
-     - ``heat_pump_heating_efficiency_type``
-     - ``heat_pump_heating_efficiency``
-     - ``heat_pump_cooling_efficiency_type``
-     - ``heat_pump_cooling_efficiency``
-     - ``heat_pump_heating_capacity``
-     - ``heat_pump_heating_autosizing_limit``
-     - ``heat_pump_heating_capacity_fraction_17_f``
-     - ``heat_pump_cooling_capacity``
-     - ``heat_pump_cooling_autosizing_limit``
-     - ``heat_pump_fraction_heat_load_served``
-     - ``heat_pump_fraction_cool_load_served``
-     - ``heat_pump_compressor_lockout_temp``
-     - ``heat_pump_backup_type``
-     - ``heat_pump_backup_heating_autosizing_limit``
-     - ``heat_pump_backup_fuel``
-     - ``heat_pump_backup_heating_efficiency``
-     - ``heat_pump_backup_heating_capacity``
-     - ``heat_pump_backup_heating_lockout_temp``
-     - ``heat_pump_sizing_methodology``
-     - ``heat_pump_backup_sizing_methodology``
-     - ``heat_pump_is_ducted``
-     - ``heat_pump_crankcase_heater_watts``
-     - ``heat_pump_pan_heater_watts``
-     - ``heat_pump_pan_heater_control_type``
-     - ``geothermal_loop_configuration``
-     - ``geothermal_loop_borefield_configuration``
-     - ``geothermal_loop_loop_flow``
-     - ``geothermal_loop_boreholes_count``
-     - ``geothermal_loop_boreholes_length``
-     - ``geothermal_loop_boreholes_spacing``
-     - ``geothermal_loop_boreholes_diameter``
-     - ``geothermal_loop_grout_type``
-     - ``geothermal_loop_pipe_type``
-     - ``geothermal_loop_pipe_diameter``
-     - ``heating_system_has_flue_or_chimney``
-     - ``heat_pump_backup_use_existing_system``
-     - ``heat_pump_sizing_is_duct_limited``
+     - ``hvac_heating_system``
+     - ``hvac_heating_system_capacity``
+     - ``hvac_heating_system_heating_load_served``
+     - ``hvac_heat_pump``
+     - ``hvac_heat_pump_capacity``
+     - ``hvac_heat_pump_heating_load_served``
+     - ``hvac_heat_pump_cooling_load_served``
+     - ``hvac_heat_pump_temperatures``
+     - ``hvac_heat_pump_backup``
+     - ``hvac_heat_pump_backup_capacity``
+     - ``hvac_geothermal_loop``
+     - ``advanced_feature``
+     - ``hvac_heating_shared_system``
 
    * - ASHP, SEER 10, 6.8 HSPF
      - 1.1%
-     - 
-     - none
-     - 0
-     - auto
-     - auto
-     - 1
-     - 
-     - air-to-air
-     - single stage
-     - HSPF
-     - 6.8
-     - SEER
-     - 10
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - 1
-     - 1
-     - auto
-     - integrated
-     - auto
-     - electricity
-     - 1
-     - auto
-     - auto
-     - ACCA
-     - auto
-     - true
-     - auto
-     - auto
-     - auto
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - None
+     - Autosize
+     - 100%
+     - Central HP, SEER 10.0, HSPF 6.8
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - Integrated, Electricity, 100% Efficiency
+     - Autosize
+     - Default
+     - None
+     - None
    * - ASHP, SEER 13, 7.7 HSPF
      - 7%
-     - 
-     - none
-     - 0
-     - auto
-     - auto
-     - 1
-     - 
-     - air-to-air
-     - single stage
-     - HSPF
-     - 7.7
-     - SEER
-     - 13
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - 1
-     - 1
-     - auto
-     - integrated
-     - auto
-     - electricity
-     - 1
-     - auto
-     - auto
-     - ACCA
-     - auto
-     - true
-     - auto
-     - auto
-     - auto
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - None
+     - Autosize
+     - 100%
+     - Central HP, SEER 13.0, HSPF 7.7
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - Integrated, Electricity, 100% Efficiency
+     - Autosize
+     - Default
+     - None
+     - None
    * - ASHP, SEER 15, 8.5 HSPF
      - 7.2%
-     - 
-     - none
-     - 0
-     - auto
-     - auto
-     - 1
-     - 
-     - air-to-air
-     - single stage
-     - HSPF
-     - 8.5
-     - SEER
-     - 15
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - 1
-     - 1
-     - auto
-     - integrated
-     - auto
-     - electricity
-     - 1
-     - auto
-     - auto
-     - ACCA
-     - auto
-     - true
-     - auto
-     - auto
-     - auto
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - None
+     - Autosize
+     - 100%
+     - Central HP, SEER 15.0, HSPF 8.5
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - Integrated, Electricity, 100% Efficiency
+     - Autosize
+     - Default
+     - None
+     - None
    * - Electric Baseboard, 100% Efficiency
      - 6.3%
-     - 
-     - ElectricResistance
-     - 1
-     - auto
-     - auto
-     - 1
-     - 
-     - none
-     - 
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - 
-     - auto
-     - auto
-     - 1
-     - 1
-     - 
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - 
-     - ACCA
-     - auto
-     - 
-     - 
-     - 
-     - 
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - Electric Resistance
+     - Autosize
+     - 100%
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - None
    * - Electric Boiler, 100% AFUE
      - 0.21%
-     - 
-     - Boiler
-     - 1
-     - auto
-     - auto
-     - 1
-     - 
-     - none
-     - 
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - 
-     - auto
-     - auto
-     - 1
-     - 1
-     - 
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - 
-     - ACCA
-     - auto
-     - 
-     - 
-     - 
-     - 
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - Boiler, 100% AFUE
+     - Autosize
+     - 100%
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - None
    * - Electric Furnace, 100% AFUE
      - 11%
-     - 
-     - Furnace
-     - 1
-     - auto
-     - auto
-     - 1
-     - 
-     - none
-     - 
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - 
-     - auto
-     - auto
-     - 1
-     - 1
-     - 
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - 
-     - ACCA
-     - auto
-     - 
-     - 
-     - 
-     - 
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - Central Furnace, 100% AFUE
+     - Autosize
+     - 100%
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - None
    * - Electric Wall Furnace, 100% AFUE
      - 1.1%
-     - 
-     - WallFurnace
-     - 1
-     - auto
-     - auto
-     - 1
-     - 
-     - none
-     - 
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - 
-     - auto
-     - auto
-     - 1
-     - 1
-     - 
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - 
-     - ACCA
-     - auto
-     - 
-     - 
-     - 
-     - 
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - Wall Furnace, 100% AFUE
+     - Autosize
+     - 100%
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - None
    * - Fuel Boiler, 76% AFUE
      - 0.89%
-     - 
-     - Boiler
-     - 0.76
-     - auto
-     - auto
-     - 1
-     - auto
-     - none
-     - 
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - 
-     - auto
-     - auto
-     - 1
-     - 1
-     - 
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - 
-     - ACCA
-     - auto
-     - 
-     - 
-     - 
-     - 
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - Boiler, 76% AFUE
+     - Autosize
+     - 100%
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - None
    * - Fuel Boiler, 80% AFUE
      - 3.3%
-     - 
-     - Boiler
-     - 0.8
-     - auto
-     - auto
-     - 1
-     - auto
-     - none
-     - 
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - 
-     - auto
-     - auto
-     - 1
-     - 1
-     - 
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - 
-     - ACCA
-     - auto
-     - 
-     - 
-     - 
-     - 
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - Boiler, 80% AFUE
+     - Autosize
+     - 100%
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - None
    * - Fuel Boiler, 90% AFUE
      - 0.49%
-     - 
-     - Boiler
-     - 0.9
-     - auto
-     - auto
-     - 1
-     - auto
-     - none
-     - 
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - 
-     - auto
-     - auto
-     - 1
-     - 1
-     - 
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - 
-     - ACCA
-     - auto
-     - 
-     - 
-     - 
-     - 
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - Boiler, 90% AFUE
+     - Autosize
+     - 100%
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - None
    * - Fuel Furnace, 60% AFUE
      - 0.49%
-     - 
-     - Furnace
-     - 0.6
-     - auto
-     - auto
-     - 1
-     - auto
-     - none
-     - 
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - 
-     - auto
-     - auto
-     - 1
-     - 1
-     - 
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - 
-     - ACCA
-     - auto
-     - 
-     - 
-     - 
-     - 
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - Central Furnace, 60% AFUE
+     - Autosize
+     - 100%
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - None
    * - Fuel Furnace, 76% AFUE
      - 2.8%
-     - 
-     - Furnace
-     - 0.76
-     - auto
-     - auto
-     - 1
-     - auto
-     - none
-     - 
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - 
-     - auto
-     - auto
-     - 1
-     - 1
-     - 
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - 
-     - ACCA
-     - auto
-     - 
-     - 
-     - 
-     - 
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - Central Furnace, 76% AFUE
+     - Autosize
+     - 100%
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - None
    * - Fuel Furnace, 80% AFUE
      - 25%
-     - 
-     - Furnace
-     - 0.8
-     - auto
-     - auto
-     - 1
-     - auto
-     - none
-     - 
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - 
-     - auto
-     - auto
-     - 1
-     - 1
-     - 
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - 
-     - ACCA
-     - auto
-     - 
-     - 
-     - 
-     - 
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - Central Furnace, 80% AFUE
+     - Autosize
+     - 100%
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - None
    * - Fuel Furnace, 92.5% AFUE
      - 15%
-     - 
-     - Furnace
-     - 0.925
-     - auto
-     - auto
-     - 1
-     - auto
-     - none
-     - 
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - 
-     - auto
-     - auto
-     - 1
-     - 1
-     - 
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - 
-     - ACCA
-     - auto
-     - 
-     - 
-     - 
-     - 
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - Central Furnace, 92.5% AFUE
+     - Autosize
+     - 100%
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - None
    * - Fuel Wall/Floor Furnace, 60% AFUE
      - 3.2%
-     - 
-     - WallFurnace
-     - 0.6
-     - auto
-     - auto
-     - 1
-     - auto
-     - none
-     - 
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - 
-     - auto
-     - auto
-     - 1
-     - 1
-     - 
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - 
-     - ACCA
-     - auto
-     - 
-     - 
-     - 
-     - 
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - Wall Furnace, 60% AFUE
+     - Autosize
+     - 100%
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - None
    * - Fuel Wall/Floor Furnace, 68% AFUE
      - 2.8%
-     - 
-     - WallFurnace
-     - 0.68
-     - auto
-     - auto
-     - 1
-     - auto
-     - none
-     - 
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - 
-     - auto
-     - auto
-     - 1
-     - 1
-     - 
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - 
-     - ACCA
-     - auto
-     - 
-     - 
-     - 
-     - 
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - Wall Furnace, 68% AFUE
+     - Autosize
+     - 100%
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - None
    * - MSHP, SEER 14.5, 7.7 HSPF
      - 0.87%
-     - 
-     - none
-     - 0
-     - auto
-     - auto
-     - 1
-     - 
-     - mini-split
-     - variable speed
-     - HSPF
-     - 7.7
-     - SEER
-     - 14.5
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - 1
-     - 1
-     - auto
-     - integrated
-     - auto
-     - electricity
-     - 1
-     - auto
-     - auto
-     - ACCA
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - None
+     - Autosize
+     - 100%
+     - Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - Integrated, Electricity, 100% Efficiency
+     - Autosize
+     - Default
+     - None
+     - None
    * - MSHP, SEER 29, 12.3 HSPF
      - 0.1%
-     - 
-     - none
-     - 0
-     - auto
-     - auto
-     - 1
-     - 
-     - mini-split
-     - variable speed
-     - HSPF
-     - 12.3
-     - SEER
-     - 29
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - 1
-     - 1
-     - auto
-     - integrated
-     - auto
-     - electricity
-     - 1
-     - auto
-     - auto
-     - ACCA
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - None
+     - Autosize
+     - 100%
+     - Ductless Mini-Split HP, SEER2 29.0, HSPF2 12.3
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - Integrated, Electricity, 100% Efficiency
+     - Autosize
+     - Default
+     - None
+     - None
    * - None
      - 1.1%
-     - 
-     - none
-     - 0
-     - auto
-     - auto
-     - 1
-     - 
-     - none
-     - 
-     - HSPF
-     - 6.2
-     - SEER
-     - 10
-     - auto
-     - auto
-     - 
-     - auto
-     - auto
-     - 1
-     - 1
-     - 
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - 
-     - ACCA
-     - auto
-     - 
-     - 
-     - 
-     - 
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - false
+     - None
+     - Autosize
+     - 100%
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - None
    * - Shared Heating
      - 9.6%
      - 
@@ -40426,74 +30729,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
    * - Void
      - 0%
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
      - 
      - 
      - 
@@ -40696,36 +30933,18 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``heating_system_2_type``
-     - true
+   * - ``hvac_heating_system_2``
+     - false
      - 
      - Choice
-     - none, Furnace, WallFurnace, FloorFurnace, Boiler, ElectricResistance, Stove, SpaceHeater, Fireplace
-     - The type of the second heating system. If a heat pump is specified and the backup type is 'separate', this heating system represents 'separate' backup heating. For ducted heat pumps where the backup heating system is a 'Furnace', the backup would typically be characterized as 'integrated' in that the furnace and heat pump share the same distribution system and blower fan; a 'Furnace' as 'separate' backup to a ducted heat pump is not supported.
-   * - ``heating_system_2_heating_efficiency``
-     - true
-     - Frac
-     - Double
-     -
-     - The rated heating efficiency value of the second heating system.
-   * - ``heating_system_2_heating_capacity``
+     - None, Electric Resistance, Central Furnace, 60% AFUE, Central Furnace, 64% AFUE, Central Furnace, 68% AFUE, Central Furnace, 72% AFUE, Central Furnace, 76% AFUE, Central Furnace, 78% AFUE, Central Furnace, 80% AFUE, Central Furnace, 83% AFUE, Central Furnace, 85% AFUE, Central Furnace, 88% AFUE, Central Furnace, 90% AFUE, Central Furnace, 92% AFUE, Central Furnace, 92.5% AFUE, Central Furnace, 95% AFUE, Central Furnace, 96% AFUE, Central Furnace, 98% AFUE, Central Furnace, 100% AFUE, Wall Furnace, 60% AFUE, Wall Furnace, 68% AFUE, Wall Furnace, 82% AFUE, Wall Furnace, 98% AFUE, Wall Furnace, 100% AFUE, Floor Furnace, 60% AFUE, Floor Furnace, 70% AFUE, Floor Furnace, 80% AFUE, Boiler, 60% AFUE, Boiler, 72% AFUE, Boiler, 76% AFUE, Boiler, 78% AFUE, Boiler, 80% AFUE, Boiler, 83% AFUE, Boiler, 85% AFUE, Boiler, 88% AFUE, Boiler, 90% AFUE, Boiler, 92% AFUE, Boiler, 92.5% AFUE, Boiler, 95% AFUE, Boiler, 96% AFUE, Boiler, 98% AFUE, Boiler, 100% AFUE, Stove, 60% Efficiency, Stove, 70% Efficiency, Stove, 80% Efficiency, Space Heater, 60% Efficiency, Space Heater, 70% Efficiency, Space Heater, 80% Efficiency, Space Heater, 92% Efficiency, Space Heater, 100% Efficiency, Fireplace, 60% Efficiency, Fireplace, 70% Efficiency, Fireplace, 80% Efficiency, Fireplace, 100% Efficiency, Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light
+     - The type and efficiency of the second heating system. If a heat pump is specified and the backup type is 'separate', this heating system represents the 'separate' backup heating.
+   * - ``hvac_heating_system_2_capacity``
      - false
-     - Btu/hr
-     - Double
-     -
-     - The output heating capacity of the second heating system. If not provided, the OS-HPXML autosized default (see `HPXML Heating Systems <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-heating-systems>`_) is used.
-   * - ``heating_system_2_heating_autosizing_limit``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-   * - ``heating_system_2_has_flue_or_chimney``
-     - true
      - 
-     - String
-     -
-     - Whether the second heating system has a flue or chimney.
+     - Choice
+     - Autosize, 5 kBtu/hr, 10 kBtu/hr, 15 kBtu/hr, 20 kBtu/hr, 25 kBtu/hr, 30 kBtu/hr, 35 kBtu/hr, 40 kBtu/hr, 45 kBtu/hr, 50 kBtu/hr, 55 kBtu/hr, 60 kBtu/hr, 65 kBtu/hr, 70 kBtu/hr, 75 kBtu/hr, 80 kBtu/hr, 85 kBtu/hr, 90 kBtu/hr, 95 kBtu/hr, 100 kBtu/hr, 105 kBtu/hr, 110 kBtu/hr, 115 kBtu/hr, 120 kBtu/hr, 125 kBtu/hr, 130 kBtu/hr, 135 kBtu/hr, 140 kBtu/hr, 145 kBtu/hr, 150 kBtu/hr, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit, Detailed Example: Autosize, 140% Multiplier, 45 kBtu/hr Limit
+     - The output capacity of the second heating system.
 
 Options
 *******
@@ -40739,80 +30958,47 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``heating_system_2_type``
-     - ``heating_system_2_heating_efficiency``
-     - ``heating_system_2_heating_capacity``
-     - ``heating_system_2_heating_autosizing_limit``
-     - ``heating_system_2_has_flue_or_chimney``
+     - ``hvac_heating_system_2``
+     - ``hvac_heating_system_2_capacity``
 
    * - Fuel Boiler, 76% AFUE
      - 0.019%
-     - Boiler
-     - 0.76
-     - auto
-     - auto
-     - auto
+     - Boiler, 76% AFUE
+     - Autosize
    * - Fuel Boiler, 80% AFUE
      - 0.015%
-     - Boiler
-     - 0.8
-     - auto
-     - auto
-     - auto
+     - Boiler, 80% AFUE
+     - Autosize
    * - Fuel Boiler, 90% AFUE
      - 0.0028%
-     - Boiler
-     - 0.90
-     - auto
-     - auto
-     - auto
+     - Boiler, 90% AFUE
+     - Autosize
    * - Fuel Furnace, 60% AFUE
      - 2.5e-05%
-     - Furnace
-     - 0.6
-     - auto
-     - auto
-     - auto
+     - Central Furnace, 60% AFUE
+     - Autosize
    * - Fuel Furnace, 76% AFUE
      - 0.00036%
-     - Furnace
-     - 0.76
-     - auto
-     - auto
-     - auto
+     - Central Furnace, 76% AFUE
+     - Autosize
    * - Fuel Furnace, 80% AFUE
      - 0.0011%
-     - Furnace
-     - 0.8
-     - auto
-     - auto
-     - auto
+     - Central Furnace, 80% AFUE
+     - Autosize
    * - Fuel Furnace, 92.5% AFUE
      - 0.00049%
-     - Furnace
-     - 0.925
-     - auto
-     - auto
-     - auto
+     - Central Furnace, 92.5% AFUE
+     - Autosize
    * - None
      - 1e+02%
-     - none
-     - 0
-     - auto
-     - auto
-     - auto
+     - None
+     - Autosize
    * - Shared Heating
      - 0%
-     - none
-     - 0
-     - auto
-     - auto
-     - auto
+     - None
+     - Autosize
    * - Void
      - 0%
-     - 
-     - 
-     - 
      - 
      - 
 
@@ -40862,11 +31048,11 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``heating_system_2_fuel``
-     - true
+   * - ``hvac_heating_system_2_fuel``
+     - false
      - 
      - Choice
-     - electricity, natural gas, fuel oil, propane, wood, wood pellets, coal
+     - Electricity, Natural Gas, Fuel Oil, Propane, Wood Cord, Wood Pellets, Coal
      - The fuel type of the second heating system. Ignored for ElectricResistance.
 
 Options
@@ -40881,29 +31067,29 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``heating_system_2_fuel``
+     - ``hvac_heating_system_2_fuel``
 
    * - Electricity
      - 0%
-     - electricity
+     - Electricity
    * - Fuel Oil
      - 0.01%
-     - fuel oil
+     - Fuel Oil
    * - Natural Gas
      - 0.0039%
-     - natural gas
+     - Natural Gas
    * - None
      - 1e+02%
-     - electricity
+     - Electricity
    * - Other Fuel
      - 0.00017%
-     - wood
+     - Wood Cord
    * - Propane
      - 0.0013%
-     - propane
+     - Propane
    * - Wood
      - 0.023%
-     - wood
+     - Wood Cord
 
 .. _hvac_secondary_heating_partial_space_conditioning:
 
@@ -40947,12 +31133,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``heating_system_2_fraction_heat_load_served``
-     - true
-     - Frac
-     - Double
-     -
-     - The heat load served fraction of the second heating system. Ignored if this heating system serves as a backup system for a heat pump.
+   * - ``hvac_heating_system_2_heating_load_served``
+     - false
+     - 
+     - Choice
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - The fraction of the heating load served by the second heating system.
 
 Options
 *******
@@ -40966,26 +31152,26 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``heating_system_2_fraction_heat_load_served``
+     - ``hvac_heating_system_2_heating_load_served``
 
    * - 0%
      - 1e+02%
-     - 0
+     - 0%
    * - 10%
      - 0.0046%
-     - 0.1
+     - 10%
    * - 20%
      - 0.0082%
-     - 0.2
+     - 20%
    * - 30%
      - 0.014%
-     - 0.3
+     - 30%
    * - 40%
      - 0.0067%
-     - 0.4
+     - 40%
    * - 50%
      - 0.0055%
-     - 0.5
+     - 50%
    * - Void
      - 0%
      - 
@@ -41087,252 +31273,96 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``heating_system_type``
+   * - ``hvac_heating_system``
      - true
      - 
      - Choice
-     - none, Furnace, WallFurnace, FloorFurnace, Boiler, ElectricResistance, Stove, SpaceHeater, Fireplace, Shared Boiler w/ Baseboard, Shared Boiler w/ Ductless Fan Coil
-     - The type of heating system. Use 'none' if there is no heating system or if there is a heat pump serving a heating load.
-   * - ``heating_system_heating_efficiency``
-     - true
-     - Frac
-     - Double
-     -
-     - The rated heating efficiency value of the heating system.
-   * - ``heating_system_heating_capacity``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The output heating capacity of the heating system. If not provided, the OS-HPXML autosized default (see `HPXML Heating Systems <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-heating-systems>`_) is used.
-   * - ``heating_system_heating_autosizing_limit``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-   * - ``heating_system_fraction_heat_load_served``
-     - true
-     - Frac
-     - Double
-     -
-     - The heating load served by the heating system.
-   * - ``cooling_system_type``
-     - true
-     - 
-     - Choice
-     - none, central air conditioner, room air conditioner, evaporative cooler, mini-split, packaged terminal air conditioner
-     - The type of cooling system. Use 'none' if there is no cooling system or if there is a heat pump serving a cooling load.
-   * - ``cooling_system_compressor_type``
+     - None, Electric Resistance, Central Furnace, 60% AFUE, Central Furnace, 64% AFUE, Central Furnace, 68% AFUE, Central Furnace, 72% AFUE, Central Furnace, 76% AFUE, Central Furnace, 78% AFUE, Central Furnace, 80% AFUE, Central Furnace, 83% AFUE, Central Furnace, 85% AFUE, Central Furnace, 88% AFUE, Central Furnace, 90% AFUE, Central Furnace, 92% AFUE, Central Furnace, 92.5% AFUE, Central Furnace, 95% AFUE, Central Furnace, 96% AFUE, Central Furnace, 98% AFUE, Central Furnace, 100% AFUE, Wall Furnace, 60% AFUE, Wall Furnace, 68% AFUE, Wall Furnace, 82% AFUE, Wall Furnace, 98% AFUE, Wall Furnace, 100% AFUE, Floor Furnace, 60% AFUE, Floor Furnace, 70% AFUE, Floor Furnace, 80% AFUE, Boiler, 60% AFUE, Boiler, 72% AFUE, Boiler, 76% AFUE, Boiler, 78% AFUE, Boiler, 80% AFUE, Boiler, 83% AFUE, Boiler, 85% AFUE, Boiler, 88% AFUE, Boiler, 90% AFUE, Boiler, 92% AFUE, Boiler, 92.5% AFUE, Boiler, 95% AFUE, Boiler, 96% AFUE, Boiler, 98% AFUE, Boiler, 100% AFUE, Stove, 60% Efficiency, Stove, 70% Efficiency, Stove, 80% Efficiency, Space Heater, 60% Efficiency, Space Heater, 70% Efficiency, Space Heater, 80% Efficiency, Space Heater, 92% Efficiency, Space Heater, 100% Efficiency, Fireplace, 60% Efficiency, Fireplace, 70% Efficiency, Fireplace, 80% Efficiency, Fireplace, 100% Efficiency, Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light
+     - The type and efficiency of the heating system. Use 'None' if there is no heating system or if there is a heat pump serving a heating load.
+   * - ``hvac_heating_system_capacity``
      - false
      - 
      - Choice
-     - auto, single stage, two stage, variable speed
-     - The compressor type of the cooling system. Required for central air conditioner and mini-split.
-   * - ``cooling_system_cooling_efficiency_type``
-     - true
-     - 
-     - Choice
-     - SEER, SEER2, EER, CEER
-     - The efficiency type of the cooling system. System types central air conditioner and mini-split use SEER or SEER2. System types room air conditioner and packaged terminal air conditioner use EER or CEER. Ignored for system type evaporative cooler.
-   * - ``cooling_system_cooling_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - The rated efficiency value of the cooling system. Ignored for evaporative cooler.
-   * - ``cooling_system_cooling_capacity``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The output cooling capacity of the cooling system. If not provided, the OS-HPXML autosized default (see `Central Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#central-air-conditioner>`_, `Room Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#room-air-conditioner>`_, `Packaged Terminal Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#packaged-terminal-air-conditioner>`_, `Evaporative Cooler <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#evaporative-cooler>`_, `Mini-Split Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#mini-split-air-conditioner>`_) is used.
-   * - ``cooling_system_cooling_autosizing_limit``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-   * - ``cooling_system_is_ducted``
-     - false
-     - 
-     - Boolean
-     - auto, true, false
-     - Whether the cooling system is ducted or not. Only used for mini-split and evaporative cooler. It's assumed that central air conditioner is ducted, and room air conditioner and packaged terminal air conditioner are not ducted.
-   * - ``heat_pump_type``
-     - true
-     - 
-     - Choice
-     - none, air-to-air, mini-split, ground-to-air, packaged terminal heat pump, room air conditioner with reverse cycle
-     - The type of heat pump. Use 'none' if there is no heat pump.
-   * - ``heat_pump_heating_efficiency_type``
-     - true
-     - 
-     - Choice
-     - HSPF, HSPF2, COP
-     - The heating efficiency type of heat pump. System types air-to-air and mini-split use HSPF or HSPF2. System types ground-to-air, packaged terminal heat pump and room air conditioner with reverse cycle use COP.
-   * - ``heat_pump_heating_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - The rated heating efficiency value of the heat pump.
-   * - ``heat_pump_cooling_efficiency_type``
-     - true
-     - 
-     - Choice
-     - SEER, SEER2, EER, CEER
-     - The cooling efficiency type of heat pump. System types air-to-air and mini-split use SEER or SEER2. System types ground-to-air, packaged terminal heat pump and room air conditioner with reverse cycle use EER.
-   * - ``heat_pump_cooling_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - The rated cooling efficiency value of the heat pump.
-   * - ``heat_pump_heating_capacity``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The output heating capacity of the heat pump. If not provided, the OS-HPXML autosized default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#mini-split-heat-pump>`_, `Packaged Terminal Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#packaged-terminal-heat-pump>`_, `Room Air Conditioner w/ Reverse Cycle <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle>`_, `Ground-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#ground-to-air-heat-pump>`_) is used.
-   * - ``heat_pump_heating_autosizing_limit``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-   * - ``heat_pump_cooling_capacity``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The output cooling capacity of the heat pump. If not provided, the OS-HPXML autosized default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#mini-split-heat-pump>`_, `Packaged Terminal Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#packaged-terminal-heat-pump>`_, `Room Air Conditioner w/ Reverse Cycle <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle>`_, `Ground-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#ground-to-air-heat-pump>`_) is used.
-   * - ``heat_pump_cooling_autosizing_limit``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-   * - ``heat_pump_fraction_heat_load_served``
-     - true
-     - Frac
-     - Double
-     -
-     - The heating load served by the heat pump.
-   * - ``heat_pump_fraction_cool_load_served``
-     - true
-     - Frac
-     - Double
-     -
-     - The cooling load served by the heat pump.
-   * - ``heat_pump_backup_type``
-     - true
-     - 
-     - Choice
-     - auto, none, integrated, separate
-     - The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating. E.g., 'integrated' or 'auto'. Use 'auto' when Backup Use Existing System is true.
-   * - ``heat_pump_backup_heating_autosizing_limit``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The maximum capacity limit applied to the auto-sizing methodology if Backup Type is 'integrated'. If not provided, no limit is used. If Backup Type is 'separate', use Heating System 2: Heating Autosizing Limit.
-   * - ``heat_pump_backup_fuel``
-     - true
-     - 
-     - Choice
-     - auto, electricity, natural gas, fuel oil, propane
-     - The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'. E.g., 'electricity' or 'auto'. Use 'auto' when Backup Use Existing System is true.
-   * - ``heat_pump_backup_heating_efficiency``
-     - true
-     - 
-     - Double
-     - auto
-     - The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'. E.g., '1' or 'auto'. Use 'auto' when Backup Use Existing System is true.
-   * - ``heat_pump_backup_heating_capacity``
-     - false
-     - Btu/hr
-     - Double
-     -
-     - The backup output heating capacity of the heat pump. If not provided, the OS-HPXML autosized default (see `Backup <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#backup>`_) is used. Only applies if Backup Type is 'integrated'.
-   * - ``heat_pump_sizing_methodology``
+     - Autosize, 5 kBtu/hr, 10 kBtu/hr, 15 kBtu/hr, 20 kBtu/hr, 25 kBtu/hr, 30 kBtu/hr, 35 kBtu/hr, 40 kBtu/hr, 45 kBtu/hr, 50 kBtu/hr, 55 kBtu/hr, 60 kBtu/hr, 65 kBtu/hr, 70 kBtu/hr, 75 kBtu/hr, 80 kBtu/hr, 85 kBtu/hr, 90 kBtu/hr, 95 kBtu/hr, 100 kBtu/hr, 105 kBtu/hr, 110 kBtu/hr, 115 kBtu/hr, 120 kBtu/hr, 125 kBtu/hr, 130 kBtu/hr, 135 kBtu/hr, 140 kBtu/hr, 145 kBtu/hr, 150 kBtu/hr, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit, Detailed Example: Autosize, 140% Multiplier, 45 kBtu/hr Limit
+     - The output capacity of the heating system.
+   * - ``hvac_heating_system_heating_load_served``
      - false
      - 
      - Choice
-     - auto, ACCA, HERS, MaxLoad
-     - The auto-sizing methodology to use when the heat pump capacity is not provided. If not provided, the OS-HPXML default (see `HPXML HVAC Sizing Control <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-hvac-sizing-control>`_) is used.
-   * - ``heat_pump_backup_sizing_methodology``
-     - false
-     - 
-     - Choice
-     - auto, emergency, supplemental
-     - The auto-sizing methodology to use when the heat pump backup capacity is not provided. If not provided, the OS-HPXML default (see `HPXML HVAC Sizing Control <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-hvac-sizing-control>`_) is used.
-   * - ``geothermal_loop_configuration``
-     - false
-     - 
-     - Choice
-     - auto, none, vertical
-     - Configuration of the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see `Ground-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#ground-to-air-heat-pump>`_) is used.
-   * - ``geothermal_loop_borefield_configuration``
-     - false
-     - 
-     - Choice
-     - auto, Rectangle, Open Rectangle, C, L, U, Lopsided U
-     - Borefield configuration of the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_loop_flow``
-     - false
-     - gpm
-     - Double
-     -
-     - Water flow rate through the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML autosized default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_boreholes_count``
-     - false
-     - #
-     - Integer
-     -
-     - Number of boreholes. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML autosized default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_boreholes_length``
-     - false
-     - ft
-     - Double
-     -
-     - Average length of each borehole (vertical). Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML autosized default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_boreholes_spacing``
-     - false
-     - ft
-     - Double
-     - auto
-     - Distance between bores. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_boreholes_diameter``
-     - false
-     - in
-     - Double
-     - auto
-     - Diameter of bores. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_grout_type``
-     - false
-     - 
-     - Choice
-     - auto, standard, thermally enhanced
-     - Grout type of the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_pipe_type``
-     - false
-     - 
-     - Choice
-     - auto, standard, thermally enhanced
-     - Pipe type of the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``geothermal_loop_pipe_diameter``
-     - false
-     - in
-     - Choice
-     - auto, 3/4" pipe, 1" pipe, 1-1/4" pipe
-     - Pipe diameter of the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see `HPXML Geothermal Loops <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-geothermal-loops>`_) is used.
-   * - ``heating_system_has_flue_or_chimney``
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - The fraction of the heating load served by the heating system.
+   * - ``hvac_cooling_system``
      - true
      - 
-     - String
-     -
-     - Whether the heating system has a flue or chimney.
+     - Choice
+     - None, Central AC, SEER 8.0, Central AC, SEER 10.0, Central AC, SEER 13.0, Central AC, SEER 14.0, Central AC, SEER 15.0, Central AC, SEER2 13.4, Central AC, SEER2 14.0, Central AC, SEER2 15.0, Central AC, SEER2 16.0, Central AC, SEER2 17.0, Central AC, SEER2 18.0, Central AC, SEER2 19.0, Central AC, SEER2 20.0, Central AC, SEER2 21.0, Central AC, SEER2 22.0, Central AC, SEER2 23.0, Central AC, SEER2 24.0, Central AC, SEER2 25.0, Ductless Mini-Split AC, SEER2 14.5, Ductless Mini-Split AC, SEER2 16.0, Ductless Mini-Split AC, SEER2 17.0, Ductless Mini-Split AC, SEER2 18.0, Ductless Mini-Split AC, SEER2 19.0, Ductless Mini-Split AC, SEER2 20.0, Ductless Mini-Split AC, SEER2 21.0, Ductless Mini-Split AC, SEER2 22.0, Ductless Mini-Split AC, SEER2 23.0, Ductless Mini-Split AC, SEER2 24.0, Ductless Mini-Split AC, SEER2 25.0, Ductless Mini-Split AC, SEER2 26.0, Ductless Mini-Split AC, SEER2 27.0, Ductless Mini-Split AC, SEER2 28.0, Room AC, CEER 8.4, Room AC, CEER 9.7, Room AC, CEER 10.6, Room AC, CEER 11.8, Room AC, CEER 13.1, Packaged Terminal AC, EER 8.5, Packaged Terminal AC, EER 9.8, Packaged Terminal AC, EER 10.7, Packaged Terminal AC, EER 11.9, Packaged Terminal AC, EER 13.2, Evaporative Cooler, Detailed Example: Central AC, SEER2 13.4, Absolute Detailed Performance, Detailed Example: Central AC, SEER2 17.1, Absolute Detailed Performance, Detailed Example: Central AC, SEER 17.5, Absolute Detailed Performance, Detailed Example: Central AC, SEER 17.5, Normalized Detailed Performance, Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Absolute Detailed Performance, Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Normalized Detailed Performance
+     - The type and efficiency of the cooling system. Use 'None' if there is no cooling system or if there is a heat pump serving a cooling load.
+   * - ``hvac_cooling_system_capacity``
+     - false
+     - 
+     - Choice
+     - Autosize, 0.5 tons, 0.75 tons, 1.0 tons, 1.5 tons, 2.0 tons, 2.5 tons, 3.0 tons, 3.5 tons, 4.0 tons, 4.5 tons, 5.0 tons, 5.5 tons, 6.0 tons, 6.5 tons, 7.0 tons, 7.5 tons, 8.0 tons, 8.5 tons, 9.0 tons, 9.5 tons, 10.0 tons, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit
+     - The output capacity of the cooling system.
+   * - ``hvac_heat_pump``
+     - true
+     - 
+     - Choice
+     - None, Central HP, SEER 8.0, HSPF 6.0, Central HP, SEER 10.0, HSPF 6.8, Central HP, SEER 13.0, HSPF 7.7, Central HP, SEER 14.0, HSPF 8.2, Central HP, SEER 15.0, HSPF 8.5, Central HP, SEER2 13.4, HSPF2 7.0, Central HP, SEER2 14.0, HSPF2 7.3, Central HP, SEER2 15.0, HSPF2 7.6, Central HP, SEER2 16.0, HSPF2 7.9, Central HP, SEER2 17.0, HSPF2 8.2, Central HP, SEER2 18.0, HSPF2 8.5, Central HP, SEER2 19.0, HSPF2 8.7, Central HP, SEER2 20.0, HSPF2 9.0, Central HP, SEER2 21.0, HSPF2 9.2, Central HP, SEER2 22.0, HSPF2 9.5, Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7, Ductless Mini-Split HP, SEER2 16.0, HSPF2 8.1, Ductless Mini-Split HP, SEER2 17.0, HSPF2 8.5, Ductless Mini-Split HP, SEER2 18.0, HSPF2 8.8, Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Ductless Mini-Split HP, SEER2 20.0, HSPF2 9.4, Ductless Mini-Split HP, SEER2 21.0, HSPF2 9.7, Ductless Mini-Split HP, SEER2 22.0, HSPF2 10.1, Ductless Mini-Split HP, SEER2 23.0, HSPF2 10.4, Ductless Mini-Split HP, SEER2 24.0, HSPF2 10.7, Ductless Mini-Split HP, SEER2 25.0, HSPF2 11.0, Ductless Mini-Split HP, SEER2 26.0, HSPF2 11.4, Ductless Mini-Split HP, SEER2 27.0, HSPF2 11.7, Ductless Mini-Split HP, SEER2 28.0, HSPF2 12.0, Ductless Mini-Split HP, SEER2 29.0, HSPF2 12.3, Ductless Mini-Split HP, SEER2 30.0, HSPF2 12.7, Ductless Mini-Split HP, SEER2 32.0, HSPF2 13.3, Geothermal HP, EER 16.6, COP 3.6, Geothermal HP, EER 18.6, COP 3.8, Geothermal HP, EER 20.5, COP 4.0, Geothermal HP, EER 30.9, COP 4.4, Room HP, CEER 8.4, COP 2.7, Room HP, CEER 9.7, COP 3.0, Room HP, CEER 10.6, COP 3.3, Room HP, CEER 11.8, COP 3.6, Room HP, CEER 13.1, COP 3.9, Packaged Terminal HP, EER 8.5, COP 2.7, Packaged Terminal HP, EER 9.8, COP 3.0, Packaged Terminal HP, EER 10.7, COP 3.3, Packaged Terminal HP, EER 11.9, COP 3.6, Packaged Terminal HP, EER 13.2, COP 3.9, Detailed Example: Central HP, SEER 13.0, HSPF 9.85, Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance, Detailed Example: Central HP, SEER2 17.1, HSPF2 7.9, Absolute Detailed Performance, Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Absolute Detailed Performance, Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Normalized Detailed Performance, Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Absolute Detailed Performance, Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance
+     - The type and efficiency of the heat pump.
+   * - ``hvac_heat_pump_capacity``
+     - false
+     - 
+     - Choice
+     - Autosize, Autosize (ACCA), Autosize (MaxLoad), 0.5 tons, 0.75 tons, 1.0 tons, 1.5 tons, 2.0 tons, 2.5 tons, 3.0 tons, 3.5 tons, 4.0 tons, 4.5 tons, 5.0 tons, 5.5 tons, 6.0 tons, 6.5 tons, 7.0 tons, 7.5 tons, 8.0 tons, 8.5 tons, 9.0 tons, 9.5 tons, 10.0 tons, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit
+     - The output capacity of the heat pump.
+   * - ``hvac_heat_pump_heating_load_served``
+     - false
+     - 
+     - Choice
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - The fraction of the heating load served by the heat pump.
+   * - ``hvac_heat_pump_cooling_load_served``
+     - false
+     - 
+     - Choice
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - The fraction of the cooling load served by the heat pump.
+   * - ``hvac_heat_pump_temperatures``
+     - false
+     - 
+     - Choice
+     - Default, -20F Min Compressor Temp, -15F Min Compressor Temp, -10F Min Compressor Temp, -5F Min Compressor Temp, 0F Min Compressor Temp, 5F Min Compressor Temp, 10F Min Compressor Temp, 15F Min Compressor Temp, 20F Min Compressor Temp, 25F Min Compressor Temp, 30F Min Compressor Temp, 35F Min Compressor Temp, 40F Min Compressor Temp, 30F Min Compressor Temp, 30F Max HP Backup Temp, 35F Min Compressor Temp, 35F Max HP Backup Temp, 40F Min Compressor Temp, 40F Max HP Backup Temp, Detailed Example: 5F Min Compressor Temp, 35F Max HP Backup Temp, Detailed Example: 25F Min Compressor Temp, 45F Max HP Backup Temp
+     - Specifies the minimum compressor temperature and/or maximum HP backup temperature. If both are the same, a binary switchover temperature is used.
+   * - ``hvac_heat_pump_backup``
+     - false
+     - 
+     - Choice
+     - None, Integrated, Electricity, 100% Efficiency, Integrated, Natural Gas, 60% AFUE, Integrated, Natural Gas, 76% AFUE, Integrated, Natural Gas, 80% AFUE, Integrated, Natural Gas, 92.5% AFUE, Integrated, Natural Gas, 95% AFUE, Integrated, Fuel Oil, 60% AFUE, Integrated, Fuel Oil, 76% AFUE, Integrated, Fuel Oil, 80% AFUE, Integrated, Fuel Oil, 92.5% AFUE, Integrated, Fuel Oil, 95% AFUE, Integrated, Propane, 60% AFUE, Integrated, Propane, 76% AFUE, Integrated, Propane, 80% AFUE, Integrated, Propane, 92.5% AFUE, Integrated, Propane, 95% AFUE, Separate Heating System
+     - The type and efficiency of the heat pump backup. Use 'None' if there is no backup heating. If Backup Type is Separate Heating System, Heating System 2 is used to specify the backup.
+   * - ``hvac_heat_pump_backup_capacity``
+     - false
+     - 
+     - Choice
+     - Autosize, Autosize (Supplemental), 5 kW, 10 kW, 15 kW, 20 kW, 25 kW, 5 kBtu/hr, 10 kBtu/hr, 15 kBtu/hr, 20 kBtu/hr, 25 kBtu/hr, 30 kBtu/hr, 35 kBtu/hr, 40 kBtu/hr, 45 kBtu/hr, 50 kBtu/hr, 55 kBtu/hr, 60 kBtu/hr, 65 kBtu/hr, 70 kBtu/hr, 75 kBtu/hr, 80 kBtu/hr, 85 kBtu/hr, 90 kBtu/hr, 95 kBtu/hr, 100 kBtu/hr, 105 kBtu/hr, 110 kBtu/hr, 115 kBtu/hr, 120 kBtu/hr, 125 kBtu/hr, 130 kBtu/hr, 135 kBtu/hr, 140 kBtu/hr, 145 kBtu/hr, 150 kBtu/hr, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit
+     - The output capacity of the heat pump backup if there is integrated backup heating.
+   * - ``hvac_geothermal_loop``
+     - false
+     - 
+     - Choice
+     - Default, Vertical Loop, Enhanced Grout, Vertical Loop, Enhanced Pipe, Vertical Loop, Enhanced Grout & Pipe, Detailed Example: Lopsided U Configuration, 10 Boreholes
+     - The geothermal loop configuration if there's a ground-to-air heat pump.
+   * - ``advanced_feature``
+     - false
+     - 
+     - Choice
+     - None, Temperature Capacitance Multiplier, 1, Temperature Capacitance Multiplier, 4, Temperature Capacitance Multiplier, 10, Temperature Capacitance Multiplier, 15, On/Off Thermostat Deadband, 1F, On/Off Thermostat Deadband, 2F, On/Off Thermostat Deadband, 3F, Heat Pump Backup Staging, 5 kW, Heat Pump Backup Staging, 10 kW, Experimental Ground-to-Air Heat Pump Model, HVAC Allow Increased Fixed Capacities
+     - Select an advanced research feature to use in the model, if desired.
+   * - ``hvac_heating_shared_system``
+     - false
+     - 
+     - Choice
+     - None, Baseboard, FanCoil
+     - The type of shared system.
 
 Options
 *******
@@ -41346,167 +31376,63 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``heating_system_type``
-     - ``heating_system_heating_efficiency``
-     - ``heating_system_heating_capacity``
-     - ``heating_system_heating_autosizing_limit``
-     - ``heating_system_fraction_heat_load_served``
-     - ``cooling_system_type``
-     - ``cooling_system_compressor_type``
-     - ``cooling_system_cooling_efficiency_type``
-     - ``cooling_system_cooling_efficiency``
-     - ``cooling_system_cooling_capacity``
-     - ``cooling_system_cooling_autosizing_limit``
-     - ``cooling_system_is_ducted``
-     - ``heat_pump_type``
-     - ``heat_pump_heating_efficiency_type``
-     - ``heat_pump_heating_efficiency``
-     - ``heat_pump_cooling_efficiency_type``
-     - ``heat_pump_cooling_efficiency``
-     - ``heat_pump_heating_capacity``
-     - ``heat_pump_heating_autosizing_limit``
-     - ``heat_pump_cooling_capacity``
-     - ``heat_pump_cooling_autosizing_limit``
-     - ``heat_pump_fraction_heat_load_served``
-     - ``heat_pump_fraction_cool_load_served``
-     - ``heat_pump_backup_type``
-     - ``heat_pump_backup_heating_autosizing_limit``
-     - ``heat_pump_backup_fuel``
-     - ``heat_pump_backup_heating_efficiency``
-     - ``heat_pump_backup_heating_capacity``
-     - ``heat_pump_sizing_methodology``
-     - ``heat_pump_backup_sizing_methodology``
-     - ``geothermal_loop_configuration``
-     - ``geothermal_loop_borefield_configuration``
-     - ``geothermal_loop_loop_flow``
-     - ``geothermal_loop_boreholes_count``
-     - ``geothermal_loop_boreholes_length``
-     - ``geothermal_loop_boreholes_spacing``
-     - ``geothermal_loop_boreholes_diameter``
-     - ``geothermal_loop_grout_type``
-     - ``geothermal_loop_pipe_type``
-     - ``geothermal_loop_pipe_diameter``
-     - ``heating_system_has_flue_or_chimney``
+     - ``hvac_heating_system``
+     - ``hvac_heating_system_capacity``
+     - ``hvac_heating_system_heating_load_served``
+     - ``hvac_cooling_system``
+     - ``hvac_cooling_system_capacity``
+     - ``hvac_heat_pump``
+     - ``hvac_heat_pump_capacity``
+     - ``hvac_heat_pump_heating_load_served``
+     - ``hvac_heat_pump_cooling_load_served``
+     - ``hvac_heat_pump_temperatures``
+     - ``hvac_heat_pump_backup``
+     - ``hvac_heat_pump_backup_capacity``
+     - ``hvac_geothermal_loop``
+     - ``advanced_feature``
+     - ``hvac_heating_shared_system``
 
    * - Boiler Baseboards Heating Only, Electricity
      - 2.8%
-     - Shared Boiler w/ Baseboard
-     - 1
-     - auto
-     - auto
-     - 1
+     - Boiler, 100% AFUE
+     - Autosize
+     - 100%
      - 
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - 1
-     - 1
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - ACCA
-     - auto
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - Baseboard
    * - Boiler Baseboards Heating Only, Fuel
      - 4.4%
-     - Shared Boiler w/ Baseboard
-     - 0.78
-     - auto
-     - auto
-     - 1
+     - Boiler, 78% AFUE
+     - Autosize
+     - 100%
      - 
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - 1
-     - 1
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - ACCA
-     - auto
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - Baseboard
    * - Fan Coil Cooling Only
      - 1.4%
      - 
      - 
      - 
-     - 
-     - 
-     - mini-split
-     - variable speed
-     - SEER
-     - 13
-     - auto
-     - auto
-     - false
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
+     - Ductless Mini-Split AC, SEER2 14.5
+     - Autosize
      - 
      - 
      - 
@@ -41519,90 +31445,38 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
    * - Fan Coil Heating and Cooling, Electricity
      - 1.3%
-     - Shared Boiler w/ Ductless Fan Coil
-     - 1
-     - auto
-     - auto
-     - 1
-     - mini-split
-     - variable speed
-     - SEER
-     - 13
-     - auto
-     - 
-     - false
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - 1
-     - 1
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - ACCA
-     - auto
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - Boiler, 100% AFUE
+     - Autosize
+     - 100%
+     - Ductless Mini-Split AC, SEER2 14.5
+     - Autosize
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - FanCoil
    * - Fan Coil Heating and Cooling, Fuel
      - 1.1%
-     - Shared Boiler w/ Ductless Fan Coil
-     - 0.78
-     - auto
-     - auto
-     - 1
-     - mini-split
-     - variable speed
-     - SEER
-     - 13
-     - auto
-     - 
-     - false
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - 1
-     - 1
-     - none
-     - auto
-     - electricity
-     - 1
-     - auto
-     - ACCA
-     - auto
-     - none
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
+     - Boiler, 78% AFUE
+     - Autosize
+     - 100%
+     - Ductless Mini-Split AC, SEER2 14.5
+     - Autosize
+     - None
+     - Autosize (ACCA)
+     - 100%
+     - 100%
+     - Default
+     - None
+     - Autosize
+     - Default
+     - None
+     - FanCoil
    * - None
      - 89%
      - 
@@ -41620,60 +31494,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
    * - Void
      - 0%
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
      - 
      - 
      - 
@@ -42255,11 +32077,11 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``heating_system_fuel``
-     - true
+   * - ``hvac_heating_system_fuel``
+     - false
      - 
      - Choice
-     - electricity, natural gas, fuel oil, propane, wood, wood pellets, coal
+     - Electricity, Natural Gas, Fuel Oil, Propane, Wood Cord, Wood Pellets, Coal
      - The fuel type of the heating system. Ignored for ElectricResistance.
 
 Options
@@ -42274,29 +32096,29 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``heating_system_fuel``
+     - ``hvac_heating_system_fuel``
 
    * - Electricity
      - 39%
-     - electricity
+     - Electricity
    * - Fuel Oil
      - 4.9%
-     - fuel oil
+     - Fuel Oil
    * - Natural Gas
      - 47%
-     - natural gas
+     - Natural Gas
    * - None
      - 1.1%
-     - natural gas
+     - Natural Gas
    * - Other Fuel
      - 0.74%
-     - wood
+     - Wood Cord
    * - Propane
      - 5%
-     - propane
+     - Propane
    * - Wood
      - 2%
-     - wood
+     - Wood Cord
 
 .. _heating_setpoint:
 
@@ -42346,8 +32168,8 @@ Arguments
      - false
      - 
      - String
-     - auto
-     - Enter a date range like 'Nov 1 - Jun 30'. If not provided, the OS-HPXML default (see `HPXML HVAC Control <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-hvac-control>`_) is used. Can also provide 'BuildingAmerica' to use automatic seasons from the Building America House Simulation Protocols.
+     -
+     - Enter a date range like 'Nov 1 - Jun 30'. Defaults to year-round heating availability.
    * - ``hvac_control_heating_weekday_setpoint_temp``
      - true
      - deg-F
@@ -42360,12 +32182,6 @@ Arguments
      - Double
      -
      - Specify the weekend heating setpoint temperature.
-   * - ``use_auto_heating_season``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Specifies whether to automatically define the heating season based on the weather file.
 
 Options
 *******
@@ -42382,80 +32198,67 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``hvac_control_heating_season_period``
      - ``hvac_control_heating_weekday_setpoint_temp``
      - ``hvac_control_heating_weekend_setpoint_temp``
-     - ``use_auto_heating_season``
 
    * - 55F
      - 12%
-     - auto
+     - Jan 1 - Dec 31
      - 55
      - 55
-     - false
    * - 60F
      - 2.3%
-     - auto
+     - Jan 1 - Dec 31
      - 60
      - 60
-     - false
    * - 62F
      - 1.1%
-     - auto
+     - Jan 1 - Dec 31
      - 62
      - 62
-     - false
    * - 65F
      - 5.8%
-     - auto
+     - Jan 1 - Dec 31
      - 65
      - 65
-     - false
    * - 67F
      - 4.9%
-     - auto
+     - Jan 1 - Dec 31
      - 67
      - 67
-     - false
    * - 68F
      - 20%
-     - auto
+     - Jan 1 - Dec 31
      - 68
      - 68
-     - false
    * - 70F
      - 23%
-     - auto
+     - Jan 1 - Dec 31
      - 70
      - 70
-     - false
    * - 72F
      - 15%
-     - auto
+     - Jan 1 - Dec 31
      - 72
      - 72
-     - false
    * - 75F
      - 9.4%
-     - auto
+     - Jan 1 - Dec 31
      - 75
      - 75
-     - false
    * - 76F
      - 2.3%
-     - auto
+     - Jan 1 - Dec 31
      - 76
      - 76
-     - false
    * - 78F
      - 1.8%
-     - auto
+     - Jan 1 - Dec 31
      - 78
      - 78
-     - false
    * - 80F
      - 1%
-     - auto
+     - Jan 1 - Dec 31
      - 80
      - 80
-     - false
 
 .. _heating_setpoint_has_offset:
 
@@ -42909,38 +32712,6 @@ Source
 - \n/a
 
 
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``holiday_lighting_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is holiday lighting.
-   * - ``holiday_lighting_daily_kwh``
-     - false
-     - kWh/day
-     - Double
-     - auto
-     - The daily energy consumption for holiday lighting (exterior). If not provided, the OS-HPXML default (see `HPXML Lighting <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-lighting>`_) is used.
-   * - ``holiday_lighting_period``
-     - false
-     - 
-     - String
-     - auto
-     - Enter a date range like 'Nov 25 - Jan 5'. If not provided, the OS-HPXML default (see `HPXML Lighting <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-lighting>`_) is used.
-
 Options
 *******
 
@@ -42953,15 +32724,9 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``holiday_lighting_present``
-     - ``holiday_lighting_daily_kwh``
-     - ``holiday_lighting_period``
 
    * - No Exterior Use
      - 100%
-     - false
-     - 0
-     - auto
 
 .. _hot_water_distribution:
 
@@ -42997,66 +32762,24 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``hot_water_distribution_system_type``
-     - true
-     - 
-     - Choice
-     - Standard, Recirculation
-     - The type of the hot water distribution system.
-   * - ``hot_water_distribution_standard_piping_length``
-     - false
-     - ft
-     - Double
-     - auto
-     - If the distribution system is Standard, the length of the piping. If not provided, the OS-HPXML default (see `Standard <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#standard>`_) is used.
-   * - ``hot_water_distribution_recirc_control_type``
+   * - ``dhw_distribution``
      - false
      - 
      - Choice
-     - auto, no control, timer, temperature, presence sensor demand control, manual demand control
-     - If the distribution system is Recirculation, the type of hot water recirculation control, if any.
-   * - ``hot_water_distribution_recirc_piping_length``
+     - Uninsulated, Standard, Uninsulated, Recirc, Uncontrolled, Uninsulated, Recirc, Timer Control, Uninsulated, Recirc, Temperature Control, Uninsulated, Recirc, Presence Sensor Demand Control, Uninsulated, Recirc, Manual Demand Control, Insulated, Standard, Insulated, Recirc, Uncontrolled, Insulated, Recirc, Timer Control, Insulated, Recirc, Temperature Control, Insulated, Recirc, Presence Sensor Demand Control, Insulated, Recirc, Manual Demand Control, Detailed Example: Insulated, Recirc, Uncontrolled, 156.9ft Loop, 10ft Branch, 50 W, Detailed Example: Insulated, Recirc, Manual Demand Control, 156.9ft Loop, 10ft Branch, 50 W
+     - The type of domestic hot water distrubtion.
+   * - ``dhw_fixtures``
      - false
-     - ft
-     - Double
-     - auto
-     - If the distribution system is Recirculation, the length of the recirculation piping. If not provided, the OS-HPXML default (see `Recirculation (In-Unit) <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#recirculation-in-unit>`_) is used.
-   * - ``hot_water_distribution_recirc_branch_piping_length``
-     - false
-     - ft
-     - Double
-     - auto
-     - If the distribution system is Recirculation, the length of the recirculation branch piping. If not provided, the OS-HPXML default (see `Recirculation (In-Unit) <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#recirculation-in-unit>`_) is used.
-   * - ``hot_water_distribution_recirc_pump_power``
-     - false
-     - W
-     - Double
-     - auto
-     - If the distribution system is Recirculation, the recirculation pump power. If not provided, the OS-HPXML default (see `Recirculation (In-Unit) <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#recirculation-in-unit>`_) is used.
-   * - ``hot_water_distribution_pipe_r``
-     - false
-     - h-ft^2-R/Btu
-     - Double
-     - auto
-     - Nominal R-value of the pipe insulation. If not provided, the OS-HPXML default (see `HPXML Hot Water Distribution <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-hot-water-distribution>`_) is used.
-   * - ``dwhr_facilities_connected``
-     - true
      - 
      - Choice
-     - none, one, all
-     - Which facilities are connected for the drain water heat recovery. Use 'none' if there is no drain water heat recovery system.
-   * - ``dwhr_equal_flow``
+     - Standard, 25% Usage, Standard, 50% Usage, Standard, 75% Usage, Standard, 100% Usage, Standard, 125% Usage, Standard, 150% Usage, Standard, 175% Usage, Standard, 200% Usage, Standard, 400% Usage, Low Flow, 25% Usage, Low Flow, 50% Usage, Low Flow, 75% Usage, Low Flow, 100% Usage, Low Flow, 125% Usage, Low Flow, 150% Usage, Low Flow, 175% Usage, Low Flow, 200% Usage, Low Flow, 400% Usage
+     - The type and usage of domestic hot water fixtures.
+   * - ``dhw_drain_water_heat_recovery``
      - false
      - 
-     - Boolean
-     - auto, true, false
-     - Whether the drain water heat recovery has equal flow.
-   * - ``dwhr_efficiency``
-     - false
-     - Frac
-     - Double
-     -
-     - The efficiency of the drain water heat recovery.
+     - Choice
+     - None, 25% Efficient, Preheats Hot Only, All Showers, 25% Efficient, Preheats Hot Only, 1 Shower, 25% Efficient, Preheats Hot and Cold, All Showers, 25% Efficient, Preheats Hot and Cold, 1 Shower, 35% Efficient, Preheats Hot Only, All Showers, 35% Efficient, Preheats Hot Only, 1 Shower, 35% Efficient, Preheats Hot and Cold, All Showers, 35% Efficient, Preheats Hot and Cold, 1 Shower, 45% Efficient, Preheats Hot Only, All Showers, 45% Efficient, Preheats Hot Only, 1 Shower, 45% Efficient, Preheats Hot and Cold, All Showers, 45% Efficient, Preheats Hot and Cold, 1 Shower, 55% Efficient, Preheats Hot Only, All Showers, 55% Efficient, Preheats Hot Only, 1 Shower, 55% Efficient, Preheats Hot and Cold, All Showers, 55% Efficient, Preheats Hot and Cold, 1 Shower, Detailed Example: 54% Efficient, Preheats Hot and Cold, All Showers
+     - The type of drain water heater recovery.
 
 Options
 *******
@@ -43070,29 +32793,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``hot_water_distribution_system_type``
-     - ``hot_water_distribution_standard_piping_length``
-     - ``hot_water_distribution_recirc_control_type``
-     - ``hot_water_distribution_recirc_piping_length``
-     - ``hot_water_distribution_recirc_branch_piping_length``
-     - ``hot_water_distribution_recirc_pump_power``
-     - ``hot_water_distribution_pipe_r``
-     - ``dwhr_facilities_connected``
-     - ``dwhr_equal_flow``
-     - ``dwhr_efficiency``
+     - ``dhw_distribution``
+     - ``dhw_fixtures``
+     - ``dhw_drain_water_heat_recovery``
 
    * - Uninsulated
      - 100%
-     - Standard
-     - auto
-     - no control
-     - 0
-     - 0
-     - 0
-     - 0
-     - none
-     - true
-     - 0.0
+     - Uninsulated, Standard
+     - Standard, 100% Usage
+     - None
 
 .. _hot_water_fixtures:
 
@@ -43134,24 +32843,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``water_fixtures_shower_low_flow``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether the shower fixture is low flow.
-   * - ``water_fixtures_sink_low_flow``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether the sink fixture is low flow.
    * - ``water_fixtures_usage_multiplier``
      - false
      - 
      - Double
-     - auto
-     - Multiplier on the hot water usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Water Fixtures <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-water-fixtures>`_) is used.
+     -
+     - Multiplier on the hot water usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -43165,89 +32862,55 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``water_fixtures_shower_low_flow``
-     - ``water_fixtures_sink_low_flow``
      - ``water_fixtures_usage_multiplier``
 
    * - 50% Usage
      - 0.47%
-     - false
-     - false
      - 0.5
    * - 60% Usage
      - 3.6%
-     - false
-     - false
      - 0.6
    * - 70% Usage
      - 9.9%
-     - false
-     - false
      - 0.7
    * - 80% Usage
      - 14%
-     - false
-     - false
      - 0.8
    * - 90% Usage
      - 17%
-     - false
-     - false
      - 0.9
    * - 100% Usage
      - 18%
-     - false
-     - false
      - 1.0
    * - 110% Usage
      - 13%
-     - false
-     - false
      - 1.1
    * - 120% Usage
      - 8.9%
-     - false
-     - false
      - 1.2
    * - 130% Usage
      - 6.8%
-     - false
-     - false
      - 1.3
    * - 140% Usage
      - 3.8%
-     - false
-     - false
      - 1.4
    * - 150% Usage
      - 2.1%
-     - false
-     - false
      - 1.5
    * - 160% Usage
      - 0.99%
-     - false
-     - false
      - 1.6
    * - 170% Usage
      - 0.73%
-     - false
-     - false
      - 1.7
    * - 180% Usage
      - 0.31%
-     - false
-     - false
      - 1.8
    * - 190% Usage
      - 0%
-     - false
-     - false
      - 1.9
    * - 200% Usage
      - 0.1%
-     - false
-     - false
      - 2.0
 
 .. _household_has_tribal_persons:
@@ -43603,42 +33266,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``site_shielding_of_home``
+   * - ``enclosure_air_leakage``
      - false
      - 
      - Choice
-     - auto, exposed, normal, well-shielded
-     - Presence of nearby buildings, trees, obstructions for infiltration model. If not provided, the OS-HPXML default (see `HPXML Site <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-site>`_) is used.
-   * - ``air_leakage_leakiness_description``
-     - false
-     - 
-     - Choice
-     - auto, very tight, tight, average, leaky, very leaky
-     - Qualitative description of infiltration. If provided, the Year Built of the home is required. Either provide this input or provide a numeric air leakage value below.
-   * - ``air_leakage_units``
-     - false
-     - 
-     - Choice
-     - auto, ACH, CFM, ACHnatural, CFMnatural, EffectiveLeakageArea
-     - The unit of measure for the air leakage if providing a numeric air leakage value.
-   * - ``air_leakage_house_pressure``
-     - false
-     - Pa
-     - Double
-     -
-     - The house pressure relative to outside if providing a numeric air leakage value. Required when units are ACH or CFM.
-   * - ``air_leakage_value``
-     - false
-     - 
-     - Double
-     -
-     - Numeric air leakage value. For 'EffectiveLeakageArea', provide value in sq. in. If provided, overrides Leakiness Description input.
-   * - ``air_leakage_type``
-     - false
-     - 
-     - Choice
-     - auto, unit total, unit exterior only
-     - Type of air leakage if providing a numeric air leakage value. If 'unit total', represents the total infiltration to the unit as measured by a compartmentalization test, in which case the air leakage value will be adjusted by the ratio of exterior envelope surface area to total envelope surface area. Otherwise, if 'unit exterior only', represents the infiltration to the unit from outside only as measured by a guarded test. Required when unit type is single-family attached or apartment unit.
+     - Very Tight, Tight, Average, Leaky, Very Leaky, 1 ACH50, 2 ACH50, 3 ACH50, 4 ACH50, 5 ACH50, 6 ACH50, 7 ACH50, 8 ACH50, 9 ACH50, 10 ACH50, 11 ACH50, 12 ACH50, 13 ACH50, 14 ACH50, 15 ACH50, 16 ACH50, 17 ACH50, 18 ACH50, 19 ACH50, 20 ACH50, 25 ACH50, 30 ACH50, 35 ACH50, 40 ACH50, 45 ACH50, 50 ACH50, 0.2 nACH, 0.3 nACH, 0.335 nACH, 0.5 nACH, 0.67 nACH, 1.0 nACH, 1.5 nACH, Detailed Example: 3.57 ACH50, Detailed Example: 12.16 ACH50, Detailed Example: 2.8 ACH45, Detailed Example: 0.375 nACH, Detailed Example: 72 nCFM, Detailed Example: 79.8 sq. in. ELA, Detailed Example: 123 sq. in. ELA, Detailed Example: 1080 CFM50, Detailed Example: 1010 CFM45
+     - The amount of air leakage coming from outside. If a qualitative leakiness description (e.g., 'Average') is selected, the Year Built of the home is also required.
 
 Options
 *******
@@ -43652,133 +33285,53 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``site_shielding_of_home``
-     - ``air_leakage_leakiness_description``
-     - ``air_leakage_units``
-     - ``air_leakage_house_pressure``
-     - ``air_leakage_value``
-     - ``air_leakage_type``
+     - ``enclosure_air_leakage``
 
    * - 1 ACH50
      - 0.064%
-     - auto
-     - auto
-     - ACH
-     - 50
-     - 1
-     - unit total
+     - 1 ACH50
    * - 2 ACH50
      - 0.66%
-     - auto
-     - auto
-     - ACH
-     - 50
-     - 2
-     - unit total
+     - 2 ACH50
    * - 3 ACH50
      - 1.4%
-     - auto
-     - auto
-     - ACH
-     - 50
-     - 3
-     - unit total
+     - 3 ACH50
    * - 4 ACH50
      - 2.3%
-     - auto
-     - auto
-     - ACH
-     - 50
-     - 4
-     - unit total
+     - 4 ACH50
    * - 5 ACH50
      - 3.4%
-     - auto
-     - auto
-     - ACH
-     - 50
-     - 5
-     - unit total
+     - 5 ACH50
    * - 6 ACH50
      - 4.3%
-     - auto
-     - auto
-     - ACH
-     - 50
-     - 6
-     - unit total
+     - 6 ACH50
    * - 7 ACH50
      - 4.9%
-     - auto
-     - auto
-     - ACH
-     - 50
-     - 7
-     - unit total
+     - 7 ACH50
    * - 8 ACH50
      - 5.3%
-     - auto
-     - auto
-     - ACH
-     - 50
-     - 8
-     - unit total
+     - 8 ACH50
    * - 10 ACH50
      - 11%
-     - auto
-     - auto
-     - ACH
-     - 50
-     - 10
-     - unit total
+     - 10 ACH50
    * - 15 ACH50
      - 24%
-     - auto
-     - auto
-     - ACH
-     - 50
-     - 15
-     - unit total
+     - 15 ACH50
    * - 20 ACH50
      - 17%
-     - auto
-     - auto
-     - ACH
-     - 50
-     - 20
-     - unit total
+     - 20 ACH50
    * - 25 ACH50
      - 10%
-     - auto
-     - auto
-     - ACH
-     - 50
-     - 25
-     - unit total
+     - 25 ACH50
    * - 30 ACH50
      - 6.1%
-     - auto
-     - auto
-     - ACH
-     - 50
-     - 30
-     - unit total
+     - 30 ACH50
    * - 40 ACH50
      - 5.7%
-     - auto
-     - auto
-     - ACH
-     - 50
-     - 40
-     - unit total
+     - 40 ACH50
    * - 50 ACH50
      - 3.2%
-     - auto
-     - auto
-     - ACH
-     - 50
-     - 50
-     - unit total
+     - 50 ACH50
 
 .. _insulation_ceiling:
 
@@ -43820,12 +33373,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``ceiling_assembly_r``
+   * - ``enclosure_ceiling``
      - true
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - Assembly R-value for the ceiling (attic floor).
+     - 
+     - Choice
+     - Uninsulated, R-7, R-13, R-19, R-30, R-38, R-49, R-60, IECC U-0.035, IECC U-0.030, IECC U-0.026, IECC U-0.024, Detailed Example: R-11, 2x6, 24 in o.c., 10% Framing, Detailed Example: R-19, 2x6, 24 in o.c., 10% Framing, Detailed Example: R-19 + R-38, 2x6, 24 in o.c., 10% Framing
+     - The type and insulation level of the ceiling (attic floor).
    * - ``ceiling_insulation_r``
      - true
      - h-ft^2-R/Btu
@@ -43845,40 +33398,40 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``ceiling_assembly_r``
+     - ``enclosure_ceiling``
      - ``ceiling_insulation_r``
 
    * - None
      - 57%
-     - 0
+     - Uninsulated
      - 0
    * - Uninsulated
      - 1.2%
-     - 2.1
+     - Uninsulated
      - 0
    * - R-7
      - 2.7%
-     - 8.7
+     - R-7
      - 7
    * - R-13
      - 5.3%
-     - 14.6
+     - R-13
      - 13
    * - R-19
      - 8.4%
-     - 20.6
+     - R-19
      - 19
    * - R-30
      - 14%
-     - 31.6
+     - R-30
      - 30
    * - R-38
      - 8.3%
-     - 39.6
+     - R-38
      - 38
    * - R-49
      - 2.7%
-     - 50.6
+     - R-49
      - 49
 
 .. _insulation_floor:
@@ -43915,24 +33468,18 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``floor_over_foundation_assembly_r``
-     - true
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - Assembly R-value for the floor over the foundation. Ignored if the building has a slab-on-grade foundation.
-   * - ``floor_over_garage_assembly_r``
-     - true
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - Assembly R-value for the floor over the garage. Ignored unless the building has a garage under conditioned space.
-   * - ``floor_type``
-     - true
+   * - ``enclosure_floor_over_foundation``
+     - false
      - 
      - Choice
-     - WoodFrame, StructuralInsulatedPanel, SolidConcrete, SteelFrame
-     - The type of floors.
+     - Wood Frame, Uninsulated, Wood Frame, R-11, Wood Frame, R-13, Wood Frame, R-15, Wood Frame, R-19, Wood Frame, R-21, Wood Frame, R-25, Wood Frame, R-30, Wood Frame, R-35, Wood Frame, R-38, Wood Frame, IECC U-0.064, Wood Frame, IECC U-0.047, Wood Frame, IECC U-0.033, Wood Frame, IECC U-0.028, Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor, Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor, Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor
+     - The type and insulation level of the floor over the foundation (e.g., crawlspace or basement).
+   * - ``enclosure_floor_over_garage``
+     - false
+     - 
+     - Choice
+     - Wood Frame, Uninsulated, Wood Frame, R-11, Wood Frame, R-13, Wood Frame, R-15, Wood Frame, R-19, Wood Frame, R-21, Wood Frame, R-25, Wood Frame, R-30, Wood Frame, R-35, Wood Frame, R-38, Wood Frame, IECC U-0.064, Wood Frame, IECC U-0.047, Wood Frame, IECC U-0.033, Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor, Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor, Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor
+     - The type and insulation level of the floor over the garage.
 
 Options
 *******
@@ -43946,35 +33493,29 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``floor_over_foundation_assembly_r``
-     - ``floor_over_garage_assembly_r``
-     - ``floor_type``
+     - ``enclosure_floor_over_foundation``
+     - ``enclosure_floor_over_garage``
 
    * - None
      - 39%
-     - 0
-     - 5.3
-     - WoodFrame
+     - Wood Frame, Uninsulated
+     - Wood Frame, Uninsulated
    * - Uninsulated
      - 48%
-     - 5.3
-     - 5.3
-     - WoodFrame
+     - Wood Frame, Uninsulated
+     - Wood Frame, Uninsulated
    * - Ceiling R-13
      - 4.8%
-     - 17.8
-     - 17.8
-     - WoodFrame
+     - Wood Frame, R-13
+     - Wood Frame, R-13
    * - Ceiling R-19
      - 7.7%
-     - 22.6
-     - 22.6
-     - WoodFrame
+     - Wood Frame, R-19
+     - Wood Frame, R-19
    * - Ceiling R-30
      - 0.29%
-     - 30.3
-     - 30.3
-     - WoodFrame
+     - Wood Frame, R-30
+     - Wood Frame, R-30
 
 .. _insulation_foundation_wall:
 
@@ -44010,48 +33551,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``foundation_wall_type``
+   * - ``enclosure_foundation_wall``
      - false
      - 
      - Choice
-     - auto, solid concrete, concrete block, concrete block foam core, concrete block perlite core, concrete block vermiculite core, concrete block solid core, double brick, wood
-     - The material type of the foundation wall. If not provided, the OS-HPXML default (see `HPXML Foundation Walls <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-foundation-walls>`_) is used.
-   * - ``foundation_wall_thickness``
-     - false
-     - in
-     - Double
-     - auto
-     - The thickness of the foundation wall. If not provided, the OS-HPXML default (see `HPXML Foundation Walls <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-foundation-walls>`_) is used.
-   * - ``foundation_wall_insulation_r``
-     - true
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - Nominal R-value for the foundation wall insulation. Only applies to basements/crawlspaces.
-   * - ``foundation_wall_insulation_location``
-     - false
-     - ft
-     - Choice
-     - auto, interior, exterior
-     - Whether the insulation is on the interior or exterior of the foundation wall. Only applies to basements/crawlspaces.
-   * - ``foundation_wall_insulation_distance_to_top``
-     - false
-     - ft
-     - Double
-     - auto
-     - The distance from the top of the foundation wall to the top of the foundation wall insulation. Only applies to basements/crawlspaces. If not provided, the OS-HPXML default (see `HPXML Foundation Walls <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-foundation-walls>`_) is used.
-   * - ``foundation_wall_insulation_distance_to_bottom``
-     - false
-     - ft
-     - Double
-     - auto
-     - The distance from the top of the foundation wall to the bottom of the foundation wall insulation. Only applies to basements/crawlspaces. If not provided, the OS-HPXML default (see `HPXML Foundation Walls <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-foundation-walls>`_) is used.
-   * - ``foundation_wall_assembly_r``
-     - false
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - Assembly R-value for the foundation walls. Only applies to basements/crawlspaces. If provided, overrides the previous foundation wall insulation inputs. If not provided, it is ignored.
+     - Solid Concrete, Uninsulated, Solid Concrete, Half Wall, R-5, Solid Concrete, Half Wall, R-10, Solid Concrete, Half Wall, R-15, Solid Concrete, Half Wall, R-20, Solid Concrete, Whole Wall, R-5, Solid Concrete, Whole Wall, R-10, Solid Concrete, Whole Wall, R-10.2, Interior, Solid Concrete, Whole Wall, R-15, Solid Concrete, Whole Wall, R-20, Solid Concrete, Assembly R-10.69, Concrete Block Foam Core, Whole Wall, R-18.9
+     - The type and insulation level of the foundation walls.
 
 Options
 *******
@@ -44065,59 +33570,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``foundation_wall_type``
-     - ``foundation_wall_thickness``
-     - ``foundation_wall_insulation_r``
-     - ``foundation_wall_insulation_location``
-     - ``foundation_wall_insulation_distance_to_top``
-     - ``foundation_wall_insulation_distance_to_bottom``
-     - ``foundation_wall_assembly_r``
+     - ``enclosure_foundation_wall``
 
    * - None
      - 48%
-     - solid concrete
-     - auto
-     - 0
-     - exterior
-     - 0
-     - 0
-     - auto
+     - Solid Concrete, Uninsulated
    * - Uninsulated
      - 47%
-     - solid concrete
-     - auto
-     - 0
-     - exterior
-     - 0
-     - 0
-     - auto
+     - Solid Concrete, Uninsulated
    * - Wall R-5, Exterior
      - 1.2%
-     - solid concrete
-     - auto
-     - 5
-     - exterior
-     - 0
-     - auto
-     - auto
+     - Solid Concrete, Whole Wall, R-5
    * - Wall R-10, Exterior
      - 2.8%
-     - solid concrete
-     - auto
-     - 10
-     - exterior
-     - 0
-     - auto
-     - auto
+     - Solid Concrete, Whole Wall, R-10
    * - Wall R-15, Exterior
      - 0.52%
-     - solid concrete
-     - auto
-     - 15
-     - exterior
-     - 0
-     - auto
-     - auto
+     - Solid Concrete, Whole Wall, R-15
 
 .. _insulation_rim_joist:
 
@@ -44159,30 +33628,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``rim_joist_assembly_r``
+   * - ``enclosure_rim_joist``
      - false
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - Assembly R-value for the rim joists. Only applies to basements/crawlspaces. Required if a rim joist height is provided.
-   * - ``rim_joist_continuous_exterior_r``
-     - true
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - Nominal R-value for the rim joist continuous exterior insulation. Only applies to basements/crawlspaces.
-   * - ``rim_joist_continuous_interior_r``
-     - true
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - Nominal R-value for the rim joist continuous interior insulation that runs parallel to floor joists. Only applies to basements/crawlspaces.
-   * - ``rim_joist_assembly_interior_r``
-     - true
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - Assembly R-value for the rim joist assembly interior insulation that runs perpendicular to floor joists. Only applies to basements/crawlspaces.
+     - 
+     - Choice
+     - Uninsulated, Interior, R-7, Interior, R-11, Interior, R-13, Interior, R-15, Interior, R-19, Interior, R-21, Exterior, R-5, Exterior, R-10, Exterior, R-15, Exterior, R-20, Detailed Example: Uninsulated, Fiberboard Sheathing, Hardboard Siding, Detailed Example: R-11, Fiberboard Sheathing, Hardboard Siding
+     - The type and insulation level of the rim joists.
 
 Options
 *******
@@ -44196,41 +33647,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``rim_joist_assembly_r``
-     - ``rim_joist_continuous_exterior_r``
-     - ``rim_joist_continuous_interior_r``
-     - ``rim_joist_assembly_interior_r``
+     - ``enclosure_rim_joist``
 
    * - None
      - 48%
-     - auto
-     - 0
-     - 0
-     - 0
+     - Uninsulated
    * - Uninsulated
      - 47%
-     - auto
-     - 0
-     - 0
-     - 0
+     - Uninsulated
    * - R-5, Exterior
      - 1.2%
-     - auto
-     - 5
-     - 0
-     - 0
+     - Exterior, R-5
    * - R-10, Exterior
      - 2.8%
-     - auto
-     - 10
-     - 0
-     - 0
+     - Exterior, R-10
    * - R-15, Exterior
      - 0.52%
-     - auto
-     - 15
-     - 0
-     - 0
+     - Exterior, R-15
 
 .. _insulation_roof:
 
@@ -44268,12 +33701,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``roof_assembly_r``
+   * - ``enclosure_roof``
      - true
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - Assembly R-value of the roof.
+     - 
+     - Choice
+     - Uninsulated, R-7, R-13, R-19, R-30, R-38, R-49, IECC U-0.035, IECC U-0.030, IECC U-0.026, IECC U-0.024, Detailed Example: Uninsulated, 0.5 in plywood, 0.25 in asphalt shingle
+     - The type and insulation level of the roof.
 
 Options
 *******
@@ -44287,32 +33720,32 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``roof_assembly_r``
+     - ``enclosure_roof``
 
    * - Unfinished, Uninsulated
      - 43%
-     - 2.3
+     - Uninsulated
    * - Finished, Uninsulated
      - 1.9%
-     - 3.7
+     - Uninsulated
    * - Finished, R-7
      - 3.7%
-     - 10.2
+     - R-7
    * - Finished, R-13
      - 7.2%
-     - 14.3
+     - R-13
    * - Finished, R-19
      - 11%
-     - 21.2
+     - R-19
    * - Finished, R-30
      - 19%
-     - 29.7
+     - R-30
    * - Finished, R-38
      - 11%
-     - 36.5
+     - R-38
    * - Finished, R-49
      - 3.7%
-     - 47.0
+     - R-49
 
 .. _insulation_slab:
 
@@ -44358,66 +33791,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``slab_perimeter_insulation_r``
-     - true
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - Nominal R-value of the vertical slab perimeter insulation. Applies to slab-on-grade foundations and basement/crawlspace floors.
-   * - ``slab_perimeter_insulation_depth``
-     - true
-     - ft
-     - Double
-     -
-     - Depth from grade to bottom of vertical slab perimeter insulation. Applies to slab-on-grade foundations and basement/crawlspace floors.
-   * - ``slab_exterior_horizontal_insulation_r``
+   * - ``enclosure_slab``
      - false
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - Nominal R-value of the slab exterior horizontal insulation. Applies to slab-on-grade foundations and basement/crawlspace floors.
-   * - ``slab_exterior_horizontal_insulation_width``
-     - false
-     - ft
-     - Double
-     -
-     - Width of the slab exterior horizontal insulation measured from the exterior surface of the vertical slab perimeter insulation. Applies to slab-on-grade foundations and basement/crawlspace floors.
-   * - ``slab_exterior_horizontal_insulation_depth_below_grade``
-     - false
-     - ft
-     - Double
-     -
-     - Depth of the slab exterior horizontal insulation measured from the top surface of the slab exterior horizontal insulation. Applies to slab-on-grade foundations and basement/crawlspace floors.
-   * - ``slab_under_insulation_r``
-     - true
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - Nominal R-value of the horizontal under slab insulation. Applies to slab-on-grade foundations and basement/crawlspace floors.
-   * - ``slab_under_insulation_width``
-     - true
-     - ft
-     - Double
-     -
-     - Width from slab edge inward of horizontal under-slab insulation. Enter 999 to specify that the under slab insulation spans the entire slab. Applies to slab-on-grade foundations and basement/crawlspace floors.
-   * - ``slab_thickness``
-     - false
-     - in
-     - Double
-     - auto
-     - The thickness of the slab. Zero can be entered if there is a dirt floor instead of a slab. If not provided, the OS-HPXML default (see `HPXML Slabs <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-slabs>`_) is used.
-   * - ``slab_carpet_fraction``
-     - false
-     - Frac
-     - Double
-     - auto
-     - Fraction of the slab floor area that is carpeted. If not provided, the OS-HPXML default (see `HPXML Slabs <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-slabs>`_) is used.
-   * - ``slab_carpet_r``
-     - false
-     - h-ft^2-R/Btu
-     - Double
-     - auto
-     - R-value of the slab carpet. If not provided, the OS-HPXML default (see `HPXML Slabs <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-slabs>`_) is used.
+     - 
+     - Choice
+     - Uninsulated, Under Slab, 2ft, R-5, Under Slab, 2ft, R-10, Under Slab, 2ft, R-15, Under Slab, 2ft, R-20, Under Slab, 4ft, R-5, Under Slab, 4ft, R-10, Under Slab, 4ft, R-15, Under Slab, 4ft, R-20, Perimeter, 2ft, R-5, Perimeter, 2ft, R-10, Perimeter, 2ft, R-15, Perimeter, 2ft, R-20, Perimeter, 4ft, R-5, Perimeter, 4ft, R-10, Perimeter, 4ft, R-15, Perimeter, 4ft, R-20, Whole Slab, R-5, Whole Slab, R-10, Whole Slab, R-15, Whole Slab, R-20, Whole Slab, R-30, Whole Slab, R-40, Detailed Example: Uninsulated, No Carpet, Detailed Example: Uninsulated, 100% R-2.08 Carpet, Detailed Example: Uninsulated, 100% R-2.50 Carpet, Detailed Example: Perimeter, 2ft, R-5, 100% R-2.08 Carpet, Detailed Example: Whole Slab, R-5, 100% R-2.5 Carpet
+     - The type and insulation level of the slab. Applies to slab-on-grade as well as basement/crawlspace foundations. Under Slab insulation is placed horizontally from the edge of the slab inward. Perimeter insulation is placed vertically from the top of the slab downward. Whole Slab insulation is placed horizontally below the entire slab area.
 
 Options
 *******
@@ -44431,113 +33810,32 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``slab_perimeter_insulation_r``
-     - ``slab_perimeter_insulation_depth``
-     - ``slab_exterior_horizontal_insulation_r``
-     - ``slab_exterior_horizontal_insulation_width``
-     - ``slab_exterior_horizontal_insulation_depth_below_grade``
-     - ``slab_under_insulation_r``
-     - ``slab_under_insulation_width``
-     - ``slab_thickness``
-     - ``slab_carpet_fraction``
-     - ``slab_carpet_r``
+     - ``enclosure_slab``
 
    * - None
      - 61%
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - auto
-     - auto
-     - auto
+     - Uninsulated
    * - Uninsulated
      - 30%
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - auto
-     - auto
-     - auto
+     - Uninsulated
    * - 2ft R5 Under, Horizontal
      - 2.6%
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 5
-     - 2
-     - auto
-     - auto
-     - auto
+     - Under Slab, 2ft, R-5
    * - 2ft R10 Under, Horizontal
      - 2.3%
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 10
-     - 2
-     - auto
-     - auto
-     - auto
+     - Under Slab, 2ft, R-10
    * - 4ft R5 Under, Horizontal
      - 0%
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 5
-     - 4
-     - auto
-     - auto
-     - auto
+     - Under Slab, 4ft, R-5
    * - 2ft R5 Perimeter, Vertical
      - 1.8%
-     - 5
-     - 2
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - auto
-     - auto
-     - auto
+     - Perimeter, 2ft, R-5
    * - 2ft R10 Perimeter, Vertical
      - 2.8%
-     - 10
-     - 2
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - auto
-     - auto
-     - auto
+     - Perimeter, 2ft, R-10
    * - R10 Whole Slab, Horizontal
      - 0%
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 10
-     - 999
-     - auto
-     - auto
-     - auto
+     - Whole Slab, R-10
 
 .. _insulation_wall:
 
@@ -44583,18 +33881,18 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``wall_type``
+   * - ``enclosure_wall``
      - true
      - 
      - Choice
-     - WoodStud, ConcreteMasonryUnit, DoubleWoodStud, InsulatedConcreteForms, LogWall, StructuralInsulatedPanel, SolidConcrete, SteelFrame, Stone, StrawBale, StructuralBrick
-     - The type of walls.
-   * - ``wall_assembly_r``
-     - true
-     - h-ft^2-R/Btu
-     - Double
-     -
-     - Assembly R-value of the walls.
+     - Wood Stud, Uninsulated, Wood Stud, R-7, Wood Stud, R-11, Wood Stud, R-13, Wood Stud, R-15, Wood Stud, R-19, Wood Stud, R-21, Double Wood Stud, R-33, Double Wood Stud, R-39, Double Wood Stud, R-45, Steel Stud, Uninsulated, Steel Stud, R-11, Steel Stud, R-13, Steel Stud, R-15, Steel Stud, R-19, Steel Stud, R-21, Steel Stud, R-25, Concrete Masonry Unit, Hollow or Concrete Filled, Uninsulated, Concrete Masonry Unit, Hollow or Concrete Filled, R-7, Concrete Masonry Unit, Hollow or Concrete Filled, R-11, Concrete Masonry Unit, Hollow or Concrete Filled, R-13, Concrete Masonry Unit, Hollow or Concrete Filled, R-15, Concrete Masonry Unit, Hollow or Concrete Filled, R-19, Concrete Masonry Unit, Perlite Filled, Uninsulated, Concrete Masonry Unit, Perlite Filled, R-7, Concrete Masonry Unit, Perlite Filled, R-11, Concrete Masonry Unit, Perlite Filled, R-13, Concrete Masonry Unit, Perlite Filled, R-15, Concrete Masonry Unit, Perlite Filled, R-19, Structural Insulated Panel, R-17.5, Structural Insulated Panel, R-27.5, Structural Insulated Panel, R-37.5, Structural Insulated Panel, R-47.5, Insulated Concrete Forms, R-5 per side, Insulated Concrete Forms, R-10 per side, Insulated Concrete Forms, R-15 per side, Insulated Concrete Forms, R-20 per side, Structural Brick, Uninsulated, Structural Brick, R-7, Structural Brick, R-11, Structural Brick, R-15, Structural Brick, R-19, Wood Stud, IECC U-0.084, Wood Stud, IECC U-0.082, Wood Stud, IECC U-0.060, Wood Stud, IECC U-0.057, Wood Stud, IECC U-0.048, Wood Stud, IECC U-0.045, Detailed Example: Wood Stud, Uninsulated, 2x4, 16 in o.c., 25% Framing, Detailed Example: Wood Stud, R-11, 2x4, 16 in o.c., 25% Framing, Detailed Example: Wood Stud, R-18, 2x6, 24 in o.c., 25% Framing
+     - The type and insulation level of the walls.
+   * - ``enclosure_wall_continuous_insulation``
+     - false
+     - 
+     - Choice
+     - Uninsulated, R-5, R-6, R-7, R-10, R-12, R-14, R-15, R-18, R-20, R-21, Detailed Example: R-7.2
+     - The insulation level of the wall continuous insulation. The R-value of the continuous insulation will be ignored if a wall option with an IECC U-factor is selected.
 
 Options
 *******
@@ -44608,69 +33906,69 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``wall_type``
-     - ``wall_assembly_r``
+     - ``enclosure_wall``
+     - ``enclosure_wall_continuous_insulation``
 
    * - Wood Stud, Uninsulated
      - 31%
-     - WoodStud
-     - 3.4
+     - Wood Stud, Uninsulated
+     - Uninsulated
    * - Wood Stud, R-7
      - 7.3%
-     - WoodStud
-     - 8.7
+     - Wood Stud, R-7
+     - Uninsulated
    * - Wood Stud, R-11
      - 23%
-     - WoodStud
-     - 10.3
+     - Wood Stud, R-11
+     - Uninsulated
    * - Wood Stud, R-15
      - 4.7%
-     - WoodStud
-     - 12.1
+     - Wood Stud, R-15
+     - Uninsulated
    * - Wood Stud, R-19
      - 10%
-     - WoodStud
-     - 15.4
+     - Wood Stud, R-19
+     - Uninsulated
    * - CMU, 6-in, Uninsulated
      - 1.4%
-     - ConcreteMasonryUnit
-     - 4
+     - Concrete Masonry Unit, Hollow or Concrete Filled, Uninsulated
+     - Uninsulated
    * - CMU, 6-in, R-7
      - 0.4%
-     - ConcreteMasonryUnit
-     - 9.7
+     - Concrete Masonry Unit, Hollow or Concrete Filled, R-7
+     - Uninsulated
    * - CMU, 6-in, R-11
      - 0.9%
-     - ConcreteMasonryUnit
-     - 13.0
+     - Concrete Masonry Unit, Hollow or Concrete Filled, R-11
+     - Uninsulated
    * - CMU, 6-in, R-15
      - 0.17%
-     - ConcreteMasonryUnit
-     - 15.9
+     - Concrete Masonry Unit, Hollow or Concrete Filled, R-15
+     - Uninsulated
    * - CMU, 6-in, R-19
      - 0.43%
-     - ConcreteMasonryUnit
-     - 19.7
+     - Concrete Masonry Unit, Hollow or Concrete Filled, R-19
+     - Uninsulated
    * - Brick, 12-in, 3-wythe, Uninsulated
      - 9.9%
-     - StructuralBrick
-     - 4.9
+     - Structural Brick, Uninsulated
+     - Uninsulated
    * - Brick, 12-in, 3-wythe, R-7
      - 2.6%
-     - StructuralBrick
-     - 10.3
+     - Structural Brick, R-7
+     - Uninsulated
    * - Brick, 12-in, 3-wythe, R-11
      - 5.5%
-     - StructuralBrick
-     - 13.3
+     - Structural Brick, R-11
+     - Uninsulated
    * - Brick, 12-in, 3-wythe, R-15
      - 1.4%
-     - StructuralBrick
-     - 15.9
+     - Structural Brick, R-15
+     - Uninsulated
    * - Brick, 12-in, 3-wythe, R-19
      - 1.5%
-     - StructuralBrick
-     - 18.3
+     - Structural Brick, R-19
+     - Uninsulated
    * - Void
      - 0%
      - 
@@ -44710,24 +34008,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``window_interior_shading_type``
+   * - ``enclosure_window_interior_shading``
      - false
      - 
      - Choice
-     - auto, light curtains, light shades, light blinds, medium curtains, medium shades, medium blinds, dark curtains, dark shades, dark blinds, none
-     - Type of window interior shading. Summer/winter shading coefficients can be provided below instead. If neither is provided, the OS-HPXML default (see `HPXML Interior Shading <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-interior-shading>`_) is used.
-   * - ``window_interior_shading_winter``
-     - false
-     - Frac
-     - Double
-     - auto
-     - Interior shading coefficient for the winter season, which if provided overrides the shading type input. 1.0 indicates no reduction in solar gain, 0.85 indicates 15% reduction, etc. If not provided, the OS-HPXML default (see `HPXML Interior Shading <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-interior-shading>`_) is used.
-   * - ``window_interior_shading_summer``
-     - false
-     - Frac
-     - Double
-     - auto
-     - Interior shading coefficient for the summer season, which if provided overrides the shading type input. 1.0 indicates no reduction in solar gain, 0.85 indicates 15% reduction, etc. If not provided, the OS-HPXML default (see `HPXML Interior Shading <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-interior-shading>`_) is used.
+     - None, Curtains, Light, Curtains, Medium, Curtains, Dark, Shades, Light, Shades, Medium, Shades, Dark, Blinds, Light, Blinds, Medium, Blinds, Dark, Summer 0.5, Winter 0.5, Summer 0.5, Winter 0.6, Summer 0.5, Winter 0.7, Summer 0.5, Winter 0.8, Summer 0.5, Winter 0.9, Summer 0.6, Winter 0.6, Summer 0.6, Winter 0.7, Summer 0.6, Winter 0.8, Summer 0.6, Winter 0.9, Summer 0.7, Winter 0.7, Summer 0.7, Winter 0.8, Summer 0.7, Winter 0.9, Summer 0.8, Winter 0.8, Summer 0.8, Winter 0.9, Summer 0.9, Winter 0.9
+     - The type of window interior shading. If shading coefficients are selected, note they indicate the reduction in solar gain (e.g., 0.7 indicates 30% reduction).
 
 Options
 *******
@@ -44741,15 +34027,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``window_interior_shading_type``
-     - ``window_interior_shading_winter``
-     - ``window_interior_shading_summer``
+     - ``enclosure_window_interior_shading``
 
    * - Light Curtains
      - 100%
-     - light curtains
-     - auto
-     - auto
+     - Curtains, Light
 
 .. _lighting:
 
@@ -44799,66 +34081,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``lighting_present``
-     - true
+   * - ``lighting``
+     - false
      - 
-     - Boolean
-     - true, false
-     - Whether there is lighting energy use.
-   * - ``lighting_interior_fraction_cfl``
-     - true
-     - 
-     - Double
-     -
-     - Fraction of all lamps (interior) that are compact fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_interior_fraction_lfl``
-     - true
-     - 
-     - Double
-     -
-     - Fraction of all lamps (interior) that are linear fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_interior_fraction_led``
-     - true
-     - 
-     - Double
-     -
-     - Fraction of all lamps (interior) that are light emitting diodes. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_exterior_fraction_cfl``
-     - true
-     - 
-     - Double
-     -
-     - Fraction of all lamps (exterior) that are compact fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_exterior_fraction_lfl``
-     - true
-     - 
-     - Double
-     -
-     - Fraction of all lamps (exterior) that are linear fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_exterior_fraction_led``
-     - true
-     - 
-     - Double
-     -
-     - Fraction of all lamps (exterior) that are light emitting diodes. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_garage_fraction_cfl``
-     - true
-     - 
-     - Double
-     -
-     - Fraction of all lamps (garage) that are compact fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_garage_fraction_lfl``
-     - true
-     - 
-     - Double
-     -
-     - Fraction of all lamps (garage) that are linear fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_garage_fraction_led``
-     - true
-     - 
-     - Double
-     -
-     - Fraction of all lamps (garage) that are light emitting diodes. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
+     - Choice
+     - None, 100% Incandescent, 50% Usage, 100% Incandescent, 75% Usage, 100% Incandescent, 100% Usage, 100% Incandescent, 150% Usage, 100% Incandescent, 200% Usage, 25% LED, 50% Usage, 25% LED, 75% Usage, 25% LED, 100% Usage, 25% LED, 150% Usage, 25% LED, 200% Usage, 50% LED, 50% Usage, 50% LED, 75% Usage, 50% LED, 100% Usage, 50% LED, 150% Usage, 50% LED, 200% Usage, 75% LED, 50% Usage, 75% LED, 75% Usage, 75% LED, 100% Usage, 75% LED, 150% Usage, 75% LED, 200% Usage, 100% LED, 50% Usage, 100% LED, 75% Usage, 100% LED, 100% Usage, 100% LED, 150% Usage, 100% LED, 200% Usage, 25% CFL, 50% Usage, 25% CFL, 75% Usage, 25% CFL, 100% Usage, 25% CFL, 150% Usage, 25% CFL, 200% Usage, 50% CFL, 50% Usage, 50% CFL, 75% Usage, 50% CFL, 100% Usage, 50% CFL, 150% Usage, 50% CFL, 200% Usage, 75% CFL, 50% Usage, 75% CFL, 75% Usage, 75% CFL, 100% Usage, 75% CFL, 150% Usage, 75% CFL, 200% Usage, 100% CFL, 50% Usage, 100% CFL, 75% Usage, 100% CFL, 100% Usage, 100% CFL, 150% Usage, 100% CFL, 200% Usage, Detailed Example: 10% CFL, Detailed Example: 40% CFL, 10% LFL, 25% LED
+     - The type and usage of interior, exterior, and garage lighting.
 
 Options
 *******
@@ -44872,53 +34100,17 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``lighting_present``
-     - ``lighting_interior_fraction_cfl``
-     - ``lighting_interior_fraction_lfl``
-     - ``lighting_interior_fraction_led``
-     - ``lighting_exterior_fraction_cfl``
-     - ``lighting_exterior_fraction_lfl``
-     - ``lighting_exterior_fraction_led``
-     - ``lighting_garage_fraction_cfl``
-     - ``lighting_garage_fraction_lfl``
-     - ``lighting_garage_fraction_led``
+     - ``lighting``
 
    * - 100% CFL
      - 23%
-     - true
-     - 1
-     - 0
-     - 0
-     - 1
-     - 0
-     - 0
-     - 1
-     - 0
-     - 0
+     - 100% CFL, 100% Usage
    * - 100% Incandescent
      - 25%
-     - true
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
+     - 100% Incandescent, 100% Usage
    * - 100% LED
      - 52%
-     - true
-     - 0
-     - 0
-     - 1
-     - 0
-     - 0
-     - 1
-     - 0
-     - 0
-     - 1
+     - 100% LED, 100% Usage
 
 .. _lighting_interior_use:
 
@@ -44954,12 +34146,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``lighting_interior_usage_multiplier``
+   * - ``interior_lighting_usage_multiplier``
      - false
      - 
      - Double
-     - auto
-     - Multiplier on the lighting energy usage (interior) that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Lighting <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-lighting>`_) is used.
+     -
+     - Multiplier on the lighting energy usage (interior) that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -44973,7 +34165,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``lighting_interior_usage_multiplier``
+     - ``interior_lighting_usage_multiplier``
 
    * - 100% Usage
      - 100%
@@ -45013,18 +34205,18 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``lighting_exterior_usage_multiplier``
+   * - ``exterior_lighting_usage_multiplier``
      - false
      - 
      - Double
-     - auto
-     - Multiplier on the lighting energy usage (exterior) that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Lighting <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-lighting>`_) is used.
-   * - ``lighting_garage_usage_multiplier``
+     -
+     - Multiplier on the lighting energy usage (exterior) that can reflect, e.g., high/low usage occupants.
+   * - ``garage_lighting_usage_multiplier``
      - false
      - 
      - Double
-     - auto
-     - Multiplier on the lighting energy usage (garage) that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Lighting <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-lighting>`_) is used.
+     -
+     - Multiplier on the lighting energy usage (garage) that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -45038,8 +34230,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``lighting_exterior_usage_multiplier``
-     - ``lighting_garage_usage_multiplier``
+     - ``exterior_lighting_usage_multiplier``
+     - ``garage_lighting_usage_multiplier``
 
    * - 100% Usage
      - 100%
@@ -45143,156 +34335,30 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``mech_vent_fan_type``
-     - true
-     - 
-     - Choice
-     - none, exhaust only, supply only, energy recovery ventilator, heat recovery ventilator, balanced, central fan integrated supply
-     - The type of the mechanical ventilation. Use 'none' if there is no mechanical ventilation system.
-   * - ``mech_vent_flow_rate``
-     - false
-     - CFM
-     - Double
-     - auto
-     - The flow rate of the mechanical ventilation. If not provided, the OS-HPXML default (see `HPXML Mechanical Ventilation Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-mechanical-ventilation-fans>`_) is used.
-   * - ``mech_vent_hours_in_operation``
-     - false
-     - hrs/day
-     - Double
-     - auto
-     - The hours in operation of the mechanical ventilation. If not provided, the OS-HPXML default (see `HPXML Mechanical Ventilation Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-mechanical-ventilation-fans>`_) is used.
-   * - ``mech_vent_recovery_efficiency_type``
-     - true
-     - 
-     - Choice
-     - Unadjusted, Adjusted
-     - The total recovery efficiency type of the mechanical ventilation.
-   * - ``mech_vent_total_recovery_efficiency``
-     - true
-     - Frac
-     - Double
-     -
-     - The Unadjusted or Adjusted total recovery efficiency of the mechanical ventilation. Applies to energy recovery ventilator.
-   * - ``mech_vent_sensible_recovery_efficiency``
-     - true
-     - Frac
-     - Double
-     -
-     - The Unadjusted or Adjusted sensible recovery efficiency of the mechanical ventilation. Applies to energy recovery ventilator and heat recovery ventilator.
-   * - ``mech_vent_fan_power``
-     - false
-     - W
-     - Double
-     - auto
-     - The fan power of the mechanical ventilation. If not provided, the OS-HPXML default (see `HPXML Mechanical Ventilation Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-mechanical-ventilation-fans>`_) is used.
-   * - ``mech_vent_num_units_served``
-     - true
-     - #
-     - Integer
-     -
-     - Number of dwelling units served by the mechanical ventilation system. Must be 1 if single-family detached. Used to apportion flow rate and fan power to the unit.
-   * - ``mech_vent_shared_frac_recirculation``
-     - false
-     - Frac
-     - Double
-     -
-     - Fraction of the total supply air that is recirculated, with the remainder assumed to be outdoor air. The value must be 0 for exhaust only systems. Required for a shared mechanical ventilation system.
-   * - ``mech_vent_shared_preheating_fuel``
+   * - ``ventilation_mechanical``
      - false
      - 
      - Choice
-     - auto, electricity, natural gas, fuel oil, propane, wood, wood pellets, coal
-     - Fuel type of the preconditioning heating equipment. Only used for a shared mechanical ventilation system. If not provided, assumes no preheating.
-   * - ``mech_vent_shared_preheating_efficiency``
-     - false
-     - COP
-     - Double
-     -
-     - Efficiency of the preconditioning heating equipment. Only used for a shared mechanical ventilation system. If not provided, assumes no preheating.
-   * - ``mech_vent_shared_preheating_fraction_heat_load_served``
-     - false
-     - Frac
-     - Double
-     -
-     - Fraction of heating load introduced by the shared ventilation system that is met by the preconditioning heating equipment. If not provided, assumes no preheating.
-   * - ``mech_vent_shared_precooling_fuel``
+     - None, Exhaust Only, Supply Only, Balanced, CFIS, HRV, 55%, HRV, 60%, HRV, 65%, HRV, 70%, HRV, 75%, HRV, 80%, HRV, 85%, ERV, 55%, ERV, 60%, ERV, 65%, ERV, 70%, ERV, 75%, ERV, 80%, ERV, 85%
+     - The type of mechanical ventilation system used for whole building ventilation.
+   * - ``ventilation_kitchen``
      - false
      - 
      - Choice
-     - auto, electricity
-     - Fuel type of the preconditioning cooling equipment. Only used for a shared mechanical ventilation system. If not provided, assumes no precooling.
-   * - ``mech_vent_shared_precooling_efficiency``
+     - None, Default, 100 cfm, 1 hr/day, 100 cfm, 2 hrs/day, 200 cfm, 1 hr/day, 200 cfm, 2 hrs/day, 300 cfm, 1 hr/day, 300 cfm, 2 hrs/day, Detailed Example: 100 cfm, 1.5 hrs/day @ 6pm, 30 W
+     - The type of kitchen exhaust fan used for local ventilation.
+   * - ``ventilation_bathroom``
      - false
-     - COP
-     - Double
-     -
-     - Efficiency of the preconditioning cooling equipment. Only used for a shared mechanical ventilation system. If not provided, assumes no precooling.
-   * - ``mech_vent_shared_precooling_fraction_cool_load_served``
-     - false
-     - Frac
-     - Double
-     -
-     - Fraction of cooling load introduced by the shared ventilation system that is met by the preconditioning cooling equipment. If not provided, assumes no precooling.
-   * - ``mech_vent_2_fan_type``
-     - true
      - 
      - Choice
-     - none, exhaust only, supply only, energy recovery ventilator, heat recovery ventilator, balanced
-     - The type of the second mechanical ventilation. Use 'none' if there is no second mechanical ventilation system.
-   * - ``mech_vent_2_flow_rate``
-     - true
-     - CFM
-     - Double
-     -
-     - The flow rate of the second mechanical ventilation.
-   * - ``mech_vent_2_hours_in_operation``
-     - true
-     - hrs/day
-     - Double
-     -
-     - The hours in operation of the second mechanical ventilation.
-   * - ``mech_vent_2_recovery_efficiency_type``
-     - true
+     - None, Default, 50 cfm/bathroom, 1 hr/day, 50 cfm/bathroom, 2 hrs/day, 80 cfm/bathroom, 1 hr/day, 80 cfm/bathroom, 2 hrs/day, 100 cfm/bathroom, 1 hr/day, 100 cfm/bathroom, 2 hrs/day, Detailed Example: 50 cfm/bathroom, 1.5 hrs/day @ 7am, 15 W
+     - The type of bathroom exhaust fans used for local ventilation.
+   * - ``ventilation_whole_house_fan``
+     - false
      - 
      - Choice
-     - Unadjusted, Adjusted
-     - The total recovery efficiency type of the second mechanical ventilation.
-   * - ``mech_vent_2_total_recovery_efficiency``
-     - true
-     - Frac
-     - Double
-     -
-     - The Unadjusted or Adjusted total recovery efficiency of the second mechanical ventilation. Applies to energy recovery ventilator.
-   * - ``mech_vent_2_sensible_recovery_efficiency``
-     - true
-     - Frac
-     - Double
-     -
-     - The Unadjusted or Adjusted sensible recovery efficiency of the second mechanical ventilation. Applies to energy recovery ventilator and heat recovery ventilator.
-   * - ``mech_vent_2_fan_power``
-     - true
-     - W
-     - Double
-     -
-     - The fan power of the second mechanical ventilation.
-   * - ``whole_house_fan_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is a whole house fan.
-   * - ``whole_house_fan_flow_rate``
-     - false
-     - CFM
-     - Double
-     - auto
-     - The flow rate of the whole house fan. If not provided, the OS-HPXML default (see `HPXML Whole House Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-whole-house-fans>`_) is used.
-   * - ``whole_house_fan_power``
-     - false
-     - W
-     - Double
-     - auto
-     - The fan power of the whole house fan. If not provided, the OS-HPXML default (see `HPXML Whole House Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-whole-house-fans>`_) is used.
+     - None, 1000 cfm, 1500 cfm, 2000 cfm, 2500 cfm, 3000 cfm, 3500 cfm, 4000 cfm, 4500 cfm, 5000 cfm, 5500 cfm, 6000 cfm, Detailed Example: 4500 cfm, 300 W
+     - The type of whole house fans used for seasonal cooling load reduction.
 
 Options
 *******
@@ -45306,59 +34372,17 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``mech_vent_fan_type``
-     - ``mech_vent_flow_rate``
-     - ``mech_vent_hours_in_operation``
-     - ``mech_vent_recovery_efficiency_type``
-     - ``mech_vent_total_recovery_efficiency``
-     - ``mech_vent_sensible_recovery_efficiency``
-     - ``mech_vent_fan_power``
-     - ``mech_vent_num_units_served``
-     - ``mech_vent_shared_frac_recirculation``
-     - ``mech_vent_shared_preheating_fuel``
-     - ``mech_vent_shared_preheating_efficiency``
-     - ``mech_vent_shared_preheating_fraction_heat_load_served``
-     - ``mech_vent_shared_precooling_fuel``
-     - ``mech_vent_shared_precooling_efficiency``
-     - ``mech_vent_shared_precooling_fraction_cool_load_served``
-     - ``mech_vent_2_fan_type``
-     - ``mech_vent_2_flow_rate``
-     - ``mech_vent_2_hours_in_operation``
-     - ``mech_vent_2_recovery_efficiency_type``
-     - ``mech_vent_2_total_recovery_efficiency``
-     - ``mech_vent_2_sensible_recovery_efficiency``
-     - ``mech_vent_2_fan_power``
-     - ``whole_house_fan_present``
-     - ``whole_house_fan_flow_rate``
-     - ``whole_house_fan_power``
+     - ``ventilation_mechanical``
+     - ``ventilation_kitchen``
+     - ``ventilation_bathroom``
+     - ``ventilation_whole_house_fan``
 
    * - None
      - 100%
-     - none
-     - 0
-     - 0
-     - Unadjusted
-     - 0
-     - 0
-     - 0
-     - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 0
-     - 0
-     - Unadjusted
-     - 0
-     - 0
-     - 0
-     - false
-     - 0
-     - 0
+     - None
+     - Default
+     - Default
+     - None
 
 .. _metropolitan_and_micropolitan_statistical_area:
 
@@ -47325,24 +36349,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``extra_refrigerator_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is an extra refrigerator present.
-   * - ``extra_refrigerator_location``
+   * - ``appliance_extra_refrigerator``
      - false
      - 
      - Choice
-     - auto, conditioned space, basement - conditioned, basement - unconditioned, garage, other housing unit, other heated space, other multifamily buffer space, other non-freezing space
-     - The space type for the extra refrigerator location. If not provided, the OS-HPXML default (see `HPXML Refrigerators <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-refrigerators>`_) is used.
-   * - ``extra_refrigerator_rated_annual_kwh``
-     - false
-     - kWh/yr
-     - Double
-     - auto
-     - The EnergyGuide rated annual energy consumption for an extra refrigerator. If not provided, the OS-HPXML default (see `HPXML Refrigerators <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-refrigerators>`_) is used.
+     - None, 1139 kWh/yr, 90% Usage, 1139 kWh/yr, 100% Usage, 1139 kWh/yr, 110% Usage, 748 kWh/yr, 90% Usage, 748 kWh/yr, 100% Usage, 748 kWh/yr, 110% Usage, 727 kWh/yr, 90% Usage, 727 kWh/yr, 100% Usage, 727 kWh/yr, 110% Usage, 650 kWh/yr, 90% Usage, 650 kWh/yr, 100% Usage, 650 kWh/yr, 110% Usage, 574 kWh/yr, 90% Usage, 574 kWh/yr, 100% Usage, 574 kWh/yr, 110% Usage, 547 kWh/yr, 90% Usage, 547 kWh/yr, 100% Usage, 547 kWh/yr, 110% Usage, 480 kWh/yr, 90% Usage, 480 kWh/yr, 100% Usage, 480 kWh/yr, 110% Usage, 458 kWh/yr, 90% Usage, 458 kWh/yr, 100% Usage, 458 kWh/yr, 110% Usage, 434 kWh/yr, 90% Usage, 434 kWh/yr, 100% Usage, 434 kWh/yr, 110% Usage, 384 kWh/yr, 90% Usage, 384 kWh/yr, 100% Usage, 384 kWh/yr, 110% Usage, 348 kWh/yr, 90% Usage, 348 kWh/yr, 100% Usage, 348 kWh/yr, 110% Usage, Detailed Example: 748 kWh/yr, Conditioned Basement, Detailed Example: 748 kWh/yr, Unconditioned Basement, Detailed Example: 748 kWh/yr, Garage
+     - The type and usage of extra refrigerator.
 
 Options
 *******
@@ -47356,54 +36368,34 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``extra_refrigerator_present``
-     - ``extra_refrigerator_location``
-     - ``extra_refrigerator_rated_annual_kwh``
+     - ``appliance_extra_refrigerator``
 
    * - EF 6.7
      - 1.9%
-     - true
-     - auto
-     - 1139
+     - 1139 kWh/yr, 100% Usage
    * - EF 10.2
      - 0.31%
-     - true
-     - auto
-     - 748
+     - 748 kWh/yr, 100% Usage
    * - EF 10.5
      - 0.84%
-     - true
-     - auto
-     - 727
+     - 727 kWh/yr, 100% Usage
    * - EF 15.9
      - 4.5%
-     - true
-     - auto
-     - 480
+     - 480 kWh/yr, 100% Usage
    * - EF 17.6
      - 11%
-     - true
-     - auto
-     - 434
+     - 434 kWh/yr, 100% Usage
    * - EF 19.9
      - 6.9%
-     - true
-     - auto
-     - 384
+     - 384 kWh/yr, 100% Usage
    * - EF 21.9
      - 0.47%
-     - true
-     - auto
-     - 348
+     - 348 kWh/yr, 100% Usage
    * - None
      - 74%
-     - false
-     - auto
-     - 0
+     - None
    * - Void
      - 0%
-     - 
-     - 
      - 
 
 .. _misc_freezer:
@@ -47464,24 +36456,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``freezer_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is a freezer present.
-   * - ``freezer_location``
+   * - ``appliance_freezer``
      - false
      - 
      - Choice
-     - auto, conditioned space, basement - conditioned, basement - unconditioned, garage, other housing unit, other heated space, other multifamily buffer space, other non-freezing space
-     - The space type for the freezer location. If not provided, the OS-HPXML default (see `HPXML Freezers <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-freezers>`_) is used.
-   * - ``freezer_rated_annual_kwh``
-     - false
-     - kWh/yr
-     - Double
-     - auto
-     - The EnergyGuide rated annual energy consumption for a freezer. If not provided, the OS-HPXML default (see `HPXML Freezers <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-freezers>`_) is used.
+     - None, 935 kWh/yr, 90% Usage, 935 kWh/yr, 100% Usage, 935 kWh/yr, 110% Usage, 712 kWh/yr, 90% Usage, 712 kWh/yr, 100% Usage, 712 kWh/yr, 110% Usage, 641 kWh/yr, 90% Usage, 641 kWh/yr, 100% Usage, 641 kWh/yr, 110% Usage, 568 kWh/yr, 90% Usage, 568 kWh/yr, 100% Usage, 568 kWh/yr, 110% Usage, 417 kWh/yr, 90% Usage, 417 kWh/yr, 100% Usage, 417 kWh/yr, 110% Usage, 375 kWh/yr, 90% Usage, 375 kWh/yr, 100% Usage, 375 kWh/yr, 110% Usage, 354 kWh/yr, 90% Usage, 354 kWh/yr, 100% Usage, 354 kWh/yr, 110% Usage, Detailed Example: 712 kWh/yr, Conditioned Basement, Detailed Example: 712 kWh/yr, Unconditioned Basement, Detailed Example: 712 kWh/yr, Garage
+     - The type and usage of freezer.
 
 Options
 *******
@@ -47495,24 +36475,16 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``freezer_present``
-     - ``freezer_location``
-     - ``freezer_rated_annual_kwh``
+     - ``appliance_freezer``
 
    * - EF 12, National Average
      - 33%
-     - true
-     - auto
-     - 935
+     - 935 kWh/yr, 100% Usage
    * - None
      - 67%
-     - false
-     - auto
-     - 0
+     - None
    * - Void
      - 0%
-     - 
-     - 
      - 
 
 .. _misc_gas_fireplace:
@@ -47549,42 +36521,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``misc_fuel_loads_fireplace_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is fuel loads fireplace.
-   * - ``misc_fuel_loads_fireplace_fuel_type``
-     - true
+   * - ``misc_fireplace``
+     - false
      - 
      - Choice
-     - natural gas, fuel oil, propane, wood, wood pellets
-     - The fuel type of the fuel loads fireplace.
-   * - ``misc_fuel_loads_fireplace_annual_therm``
-     - false
-     - therm/yr
-     - Double
-     - auto
-     - The annual energy consumption of the fuel loads fireplace. If not provided, the OS-HPXML default (see `HPXML Fuel Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-fuel-loads>`_) is used.
-   * - ``misc_fuel_loads_fireplace_frac_sensible``
-     - false
-     - Frac
-     - Double
-     - auto
-     - Fraction of fireplace residual fuel loads' internal gains that are sensible. If not provided, the OS-HPXML default (see `HPXML Fuel Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-fuel-loads>`_) is used.
-   * - ``misc_fuel_loads_fireplace_frac_latent``
-     - false
-     - Frac
-     - Double
-     - auto
-     - Fraction of fireplace residual fuel loads' internal gains that are latent. If not provided, the OS-HPXML default (see `HPXML Fuel Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-fuel-loads>`_) is used.
-   * - ``misc_fuel_loads_fireplace_usage_multiplier``
-     - false
-     - 
-     - Double
-     - auto
-     - Multiplier on the fuel loads fireplace energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Fuel Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-fuel-loads>`_) is used.
+     - None, Natural Gas, 25% Usage, Natural Gas, 50% Usage, Natural Gas, 75% Usage, Natural Gas, 100% Usage, Natural Gas, 150% Usage, Natural Gas, 200% Usage, Natural Gas, 400% Usage, Propane, 25% Usage, Propane, 50% Usage, Propane, 75% Usage, Propane, 100% Usage, Propane, 150% Usage, Propane, 200% Usage, Propane, 400% Usage, Wood, 25% Usage, Wood, 50% Usage, Wood, 75% Usage, Wood, 100% Usage, Wood, 150% Usage, Wood, 200% Usage, Wood, 400% Usage, Electric, 25% Usage, Electric, 50% Usage, Electric, 75% Usage, Electric, 100% Usage, Electric, 150% Usage, Electric, 200% Usage, Electric, 400% Usage, Detailed Example: Wood, 55 therm/yr
+     - The amount of fireplace usage, relative to the national average. Fireplaces can also be specified as heating systems that meet a portion of the heating load.
 
 Options
 *******
@@ -47598,29 +36540,14 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``misc_fuel_loads_fireplace_present``
-     - ``misc_fuel_loads_fireplace_fuel_type``
-     - ``misc_fuel_loads_fireplace_annual_therm``
-     - ``misc_fuel_loads_fireplace_frac_sensible``
-     - ``misc_fuel_loads_fireplace_frac_latent``
-     - ``misc_fuel_loads_fireplace_usage_multiplier``
+     - ``misc_fireplace``
 
    * - Gas Fireplace
      - 3.2%
-     - true
-     - natural gas
-     - auto
-     - auto
-     - auto
-     - 1.0
+     - Natural Gas, 100% Usage
    * - None
      - 97%
-     - false
-     - natural gas
-     - 0
-     - auto
-     - auto
-     - 0
+     - None
 
 .. _misc_gas_grill:
 
@@ -47656,30 +36583,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``misc_fuel_loads_grill_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is a fuel loads grill.
-   * - ``misc_fuel_loads_grill_fuel_type``
-     - true
+   * - ``misc_grill``
+     - false
      - 
      - Choice
-     - natural gas, fuel oil, propane, wood, wood pellets
-     - The fuel type of the fuel loads grill.
-   * - ``misc_fuel_loads_grill_annual_therm``
-     - false
-     - therm/yr
-     - Double
-     - auto
-     - The annual energy consumption of the fuel loads grill. If not provided, the OS-HPXML default (see `HPXML Fuel Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-fuel-loads>`_) is used.
-   * - ``misc_fuel_loads_grill_usage_multiplier``
-     - false
-     - 
-     - Double
-     - auto
-     - Multiplier on the fuel loads grill energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Fuel Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-fuel-loads>`_) is used.
+     - None, Natural Gas, 25% Usage, Natural Gas, 50% Usage, Natural Gas, 75% Usage, Natural Gas, 100% Usage, Natural Gas, 150% Usage, Natural Gas, 200% Usage, Natural Gas, 400% Usage, Propane, 25% Usage, Propane, 50% Usage, Propane, 75% Usage, Propane, 100% Usage, Propane, 150% Usage, Propane, 200% Usage, Propane, 400% Usage, Detailed Example: Propane, 25 therm/yr
+     - The amount of outdoor gas grill usage, relative to the national average.
 
 Options
 *******
@@ -47693,23 +36602,14 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``misc_fuel_loads_grill_present``
-     - ``misc_fuel_loads_grill_fuel_type``
-     - ``misc_fuel_loads_grill_annual_therm``
-     - ``misc_fuel_loads_grill_usage_multiplier``
+     - ``misc_grill``
 
    * - Gas Grill
      - 2.9%
-     - true
-     - natural gas
-     - auto
-     - 1.0
+     - Natural Gas, 100% Usage
    * - None
      - 97%
-     - false
-     - natural gas
-     - 0
-     - 0
+     - None
 
 .. _misc_gas_lighting:
 
@@ -47745,30 +36645,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``misc_fuel_loads_lighting_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is fuel loads lighting.
-   * - ``misc_fuel_loads_lighting_fuel_type``
-     - true
+   * - ``misc_gas_lighting``
+     - false
      - 
      - Choice
-     - natural gas, fuel oil, propane, wood, wood pellets
-     - The fuel type of the fuel loads lighting.
-   * - ``misc_fuel_loads_lighting_annual_therm``
-     - false
-     - therm/yr
-     - Double
-     - auto
-     - The annual energy consumption of the fuel loads lighting. If not provided, the OS-HPXML default (see `HPXML Fuel Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-fuel-loads>`_)is used.
-   * - ``misc_fuel_loads_lighting_usage_multiplier``
-     - false
-     - 
-     - Double
-     - auto
-     - Multiplier on the fuel loads lighting energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Fuel Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-fuel-loads>`_) is used.
+     - None, Natural Gas, 25% Usage, Natural Gas, 50% Usage, Natural Gas, 75% Usage, Natural Gas, 100% Usage, Natural Gas, 150% Usage, Natural Gas, 200% Usage, Natural Gas, 400% Usage, Detailed Example: Natural Gas, 28 therm/yr
+     - The amount of gas lighting usage, relative to the national average.
 
 Options
 *******
@@ -47782,23 +36664,14 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``misc_fuel_loads_lighting_present``
-     - ``misc_fuel_loads_lighting_fuel_type``
-     - ``misc_fuel_loads_lighting_annual_therm``
-     - ``misc_fuel_loads_lighting_usage_multiplier``
+     - ``misc_gas_lighting``
 
    * - Gas Lighting
      - 1.2%
-     - true
-     - natural gas
-     - auto
-     - 1.0
+     - Natural Gas, 100% Usage
    * - None
      - 99%
-     - false
-     - natural gas
-     - 0
-     - 0
+     - None
 
 .. _misc_hot_tub_spa:
 
@@ -47878,48 +36751,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``permanent_spa_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is a permanent spa.
-   * - ``permanent_spa_pump_annual_kwh``
+   * - ``misc_permanent_spa``
      - false
-     - kWh/yr
-     - Double
-     - auto
-     - The annual energy consumption of the permanent spa pump. If not provided, the OS-HPXML default (see `Permanent Spa Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#permanent-spa-pump>`_) is used.
-   * - ``permanent_spa_pump_usage_multiplier``
-     - false
-     - 
-     - Double
-     - auto
-     - Multiplier on the permanent spa pump energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `Permanent Spa Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#permanent-spa-pump>`_) is used.
-   * - ``permanent_spa_heater_type``
-     - true
      - 
      - Choice
-     - none, electric resistance, gas fired, heat pump
-     - The type of permanent spa heater. Use 'none' if there is no permanent spa heater.
-   * - ``permanent_spa_heater_annual_kwh``
-     - false
-     - kWh/yr
-     - Double
-     - auto
-     - The annual energy consumption of the electric resistance permanent spa heater. If not provided, the OS-HPXML default (see `Permanent Spa Heater <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#permanent-spa-heater>`_) is used.
-   * - ``permanent_spa_heater_annual_therm``
-     - false
-     - therm/yr
-     - Double
-     - auto
-     - The annual energy consumption of the gas fired permanent spa heater. If not provided, the OS-HPXML default (see `Permanent Spa Heater <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#permanent-spa-heater>`_) is used.
-   * - ``permanent_spa_heater_usage_multiplier``
-     - false
-     - 
-     - Double
-     - auto
-     - Multiplier on the permanent spa heater energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `Permanent Spa Heater <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#permanent-spa-heater>`_) is used.
+     - None, Unheated, 25% Usage, Unheated, 50% Usage, Unheated, 75% Usage, Unheated, 100% Usage, Unheated, 150% Usage, Unheated, 200% Usage, Unheated, 400% Usage, Electric Resistance Heater, 25% Usage, Electric Resistance Heater, 50% Usage, Electric Resistance Heater, 75% Usage, Electric Resistance Heater, 100% Usage, Electric Resistance Heater, 150% Usage, Electric Resistance Heater, 200% Usage, Electric Resistance Heater, 400% Usage, Heat Pump Heater, 25% Usage, Heat Pump Heater, 50% Usage, Heat Pump Heater, 75% Usage, Heat Pump Heater, 100% Usage, Heat Pump Heater, 150% Usage, Heat Pump Heater, 200% Usage, Heat Pump Heater, 400% Usage, Natural Gas Heater, 25% Usage, Natural Gas Heater, 50% Usage, Natural Gas Heater, 75% Usage, Natural Gas Heater, 100% Usage, Natural Gas Heater, 150% Usage, Natural Gas Heater, 200% Usage, Natural Gas Heater, 400% Usage, Detailed Example: 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater, Detailed Example: 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater
+     - The type of permanent spa (pump & heater).
 
 Options
 *******
@@ -47933,58 +36770,22 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``permanent_spa_present``
-     - ``permanent_spa_pump_annual_kwh``
-     - ``permanent_spa_pump_usage_multiplier``
-     - ``permanent_spa_heater_type``
-     - ``permanent_spa_heater_annual_kwh``
-     - ``permanent_spa_heater_annual_therm``
-     - ``permanent_spa_heater_usage_multiplier``
+     - ``misc_permanent_spa``
 
    * - Electricity
      - 3.5%
-     - true
-     - auto
-     - 1.0
-     - electric resistance
-     - auto
-     - 0
-     - 1.0
+     - Electric Resistance Heater, 100% Usage
    * - Natural Gas
      - 1.1%
-     - true
-     - auto
-     - 1.0
-     - gas fired
-     - 0
-     - auto
-     - 1.0
+     - Natural Gas Heater, 100% Usage
    * - None
      - 95%
-     - false
-     - 0
-     - 0
-     - none
-     - 0
-     - 0
-     - 0
+     - None
    * - Other Fuel
      - 0.33%
-     - false
-     - 0
-     - 0
-     - none
-     - 0
-     - 0
-     - 0
+     - None
    * - Void
      - 0%
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
      - 
 
 .. _misc_pool:
@@ -48049,12 +36850,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``pool_present``
-     - true
+   * - ``misc_has_pool``
+     - false
      - 
      - Boolean
      - true, false
-     - Whether there is a pool.
+     - Whether a pool is present.
 
 Options
 *******
@@ -48068,7 +36869,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``pool_present``
+     - ``misc_has_pool``
 
    * - Has Pool
      - 7.1%
@@ -48078,7 +36879,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - false
    * - Void
      - 0%
-     - 
+     - false
 
 .. _misc_pool_heater:
 
@@ -48122,30 +36923,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``pool_heater_type``
-     - true
+   * - ``misc_pool``
+     - false
      - 
      - Choice
-     - none, electric resistance, gas fired, heat pump
-     - The type of pool heater. Use 'none' if there is no pool heater.
-   * - ``pool_heater_annual_kwh``
-     - false
-     - kWh/yr
-     - Double
-     - auto
-     - The annual energy consumption of the electric resistance pool heater. If not provided, the OS-HPXML default (see `Pool Heater <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#pool-heater>`_) is used.
-   * - ``pool_heater_annual_therm``
-     - false
-     - therm/yr
-     - Double
-     - auto
-     - The annual energy consumption of the gas fired pool heater. If not provided, the OS-HPXML default (see `Pool Heater <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#pool-heater>`_) is used.
-   * - ``pool_heater_usage_multiplier``
-     - false
-     - 
-     - Double
-     - auto
-     - Multiplier on the pool heater energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `Pool Heater <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#pool-heater>`_) is used.
+     - None, Unheated, 25% Usage, Unheated, 50% Usage, Unheated, 75% Usage, Unheated, 100% Usage, Unheated, 150% Usage, Unheated, 200% Usage, Unheated, 400% Usage, Electric Resistance Heater, 25% Usage, Electric Resistance Heater, 50% Usage, Electric Resistance Heater, 75% Usage, Electric Resistance Heater, 100% Usage, Electric Resistance Heater, 150% Usage, Electric Resistance Heater, 200% Usage, Electric Resistance Heater, 400% Usage, Heat Pump Heater, 25% Usage, Heat Pump Heater, 50% Usage, Heat Pump Heater, 75% Usage, Heat Pump Heater, 100% Usage, Heat Pump Heater, 150% Usage, Heat Pump Heater, 200% Usage, Heat Pump Heater, 400% Usage, Natural Gas Heater, 25% Usage, Natural Gas Heater, 50% Usage, Natural Gas Heater, 75% Usage, Natural Gas Heater, 100% Usage, Natural Gas Heater, 150% Usage, Natural Gas Heater, 200% Usage, Natural Gas Heater, 400% Usage, Detailed Example: 2700 kWh/yr Pump, Unheated, Detailed Example: 2700 kWh/yr Pump, 500 therms/yr Natural Gas Heater
+     - The type of pool (pump & heater).
 
 Options
 *******
@@ -48159,41 +36942,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``pool_heater_type``
-     - ``pool_heater_annual_kwh``
-     - ``pool_heater_annual_therm``
-     - ``pool_heater_usage_multiplier``
+     - ``misc_pool``
 
    * - Electric Heat Pump
      - 0.13%
-     - heat pump
-     - auto
-     - 0
-     - 1.0
+     - Heat Pump Heater, 100% Usage
    * - Electricity
      - 0.57%
-     - electric resistance
-     - auto
-     - 0
-     - 1.0
+     - Electric Resistance Heater, 100% Usage
    * - Natural Gas
      - 1%
-     - gas fired
-     - 0
-     - auto
-     - 1.0
+     - Natural Gas Heater, 100% Usage
    * - None
      - 98%
-     - none
-     - 0
-     - 0
-     - 0
+     - Unheated, 100% Usage
    * - Other Fuel
      - 0.65%
-     - none
-     - 0
-     - 0
-     - 0
+     - Unheated, 100% Usage
 
 .. _misc_pool_pump:
 
@@ -48229,18 +36994,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``pool_pump_annual_kwh``
-     - false
-     - kWh/yr
-     - Double
-     - auto
-     - The annual energy consumption of the pool pump. If not provided, the OS-HPXML default (see `Pool Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#pool-pump>`_) is used.
    * - ``pool_pump_usage_multiplier``
      - false
      - 
      - Double
-     - auto
-     - Multiplier on the pool pump energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `Pool Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#pool-pump>`_) is used.
+     -
+     - Multiplier on the pool pump energy usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -48254,16 +37013,13 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``pool_pump_annual_kwh``
      - ``pool_pump_usage_multiplier``
 
    * - None
      - 93%
-     - 0
-     - 0
+     - 
    * - 1.0 HP Pump
      - 7.1%
-     - auto
      - 1.0
 
 .. _misc_well_pump:
@@ -48312,30 +37068,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``misc_plug_loads_well_pump_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is a well pump.
-   * - ``misc_plug_loads_well_pump_annual_kwh``
-     - false
-     - kWh/yr
-     - Double
-     - auto
-     - The annual energy consumption of the well pump plug loads. If not provided, the OS-HPXML default (see `HPXML Plug Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-plug-loads>`_) is used.
-   * - ``misc_plug_loads_well_pump_usage_multiplier``
+   * - ``misc_well_pump``
      - false
      - 
-     - Double
-     - auto
-     - Multiplier on the well pump energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Plug Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-plug-loads>`_) is used.
-   * - ``misc_plug_loads_well_pump_2_usage_multiplier``
-     - true
-     - 
-     - Double
-     -
-     - Additional multiplier on the well pump energy usage that can reflect, e.g., high/low usage occupants.
+     - Choice
+     - None, Typical Efficiency, High Efficiency, Detailed Example: 475 kWh/yr
+     - The amount of well pump usage, relative to the national average.
 
 Options
 *******
@@ -48349,23 +37087,14 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``misc_plug_loads_well_pump_present``
-     - ``misc_plug_loads_well_pump_annual_kwh``
-     - ``misc_plug_loads_well_pump_usage_multiplier``
-     - ``misc_plug_loads_well_pump_2_usage_multiplier``
+     - ``misc_well_pump``
 
    * - None
      - 87%
-     - false
-     - 0
-     - 0
-     - 0
+     - None
    * - Typical Efficiency
      - 13%
-     - true
-     - auto
-     - 1.0
-     - 1.0
+     - Typical Efficiency
 
 .. _natural_ventilation:
 
@@ -48401,12 +37130,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``window_fraction_operable``
+   * - ``enclosure_window_natural_ventilation``
      - false
-     - Frac
-     - Double
-     - auto
-     - Fraction of windows that are operable. If not provided, the OS-HPXML default (see `HPXML Windows <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-windows>`_) is used.
+     - 
+     - Choice
+     - None, 33% Operable Windows, 50% Operable Windows, 67% Operable Windows, 100% Operable Windows, Detailed Example: 67% Operable Windows, 7 Days/Week
+     - The amount of natural ventilation from occupants opening operable windows when outdoor conditions are favorable.
 
 Options
 *******
@@ -48420,11 +37149,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``window_fraction_operable``
+     - ``enclosure_window_natural_ventilation``
 
    * - Cooling Season, 7 days/wk
      - 100%
-     - 0.67
+     - 67% Operable Windows
 
 .. _neighbors:
 
@@ -48462,54 +37191,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``neighbor_front_distance``
-     - true
-     - ft
-     - Double
-     -
-     - The distance between the unit and the neighboring building to the front (not including eaves). A value of zero indicates no neighbors. Used for shading.
-   * - ``neighbor_back_distance``
-     - true
-     - ft
-     - Double
-     -
-     - The distance between the unit and the neighboring building to the back (not including eaves). A value of zero indicates no neighbors. Used for shading.
-   * - ``neighbor_left_distance``
-     - true
-     - ft
-     - Double
-     -
-     - The distance between the unit and the neighboring building to the left (not including eaves). A value of zero indicates no neighbors. Used for shading.
-   * - ``neighbor_right_distance``
-     - true
-     - ft
-     - Double
-     -
-     - The distance between the unit and the neighboring building to the right (not including eaves). A value of zero indicates no neighbors. Used for shading.
-   * - ``neighbor_front_height``
+   * - ``geometry_neighbor_buildings``
      - false
-     - ft
-     - Double
-     - auto
-     - The height of the neighboring building to the front. If not provided, the OS-HPXML default (see `HPXML Neighbor Building <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-neighbor-buildings>`_) is used.
-   * - ``neighbor_back_height``
-     - false
-     - ft
-     - Double
-     - auto
-     - The height of the neighboring building to the back. If not provided, the OS-HPXML default (see `HPXML Neighbor Building <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-neighbor-buildings>`_) is used.
-   * - ``neighbor_left_height``
-     - false
-     - ft
-     - Double
-     - auto
-     - The height of the neighboring building to the left. If not provided, the OS-HPXML default (see `HPXML Neighbor Building <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-neighbor-buildings>`_) is used.
-   * - ``neighbor_right_height``
-     - false
-     - ft
-     - Double
-     - auto
-     - The height of the neighboring building to the right. If not provided, the OS-HPXML default (see `HPXML Neighbor Building <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-neighbor-buildings>`_) is used.
+     - 
+     - Choice
+     - None, Left/Right at 2ft, Left/Right at 4ft, Left/Right at 5ft, Left/Right at 7ft, Left/Right at 10ft, Left/Right at 12ft, Left/Right at 15ft, Left/Right at 20ft, Left/Right at 25ft, Left/Right at 27ft, Left at 2ft, Left at 4ft, Left at 5ft, Left at 7ft, Left at 10ft, Left at 12ft, Left at 15ft, Left at 20ft, Left at 25ft, Left at 27ft, Right at 2ft, Right at 4ft, Right at 5ft, Right at 7ft, Right at 10ft, Right at 12ft, Right at 15ft, Right at 20ft, Right at 25ft, Right at 27ft, Detailed Example: Left/Right at 25ft, Front/Back at 80ft, 12ft Height
+     - The presence and geometry of neighboring buildings, for shading purposes.
 
 Options
 *******
@@ -48523,85 +37210,29 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``neighbor_front_distance``
-     - ``neighbor_back_distance``
-     - ``neighbor_left_distance``
-     - ``neighbor_right_distance``
-     - ``neighbor_front_height``
-     - ``neighbor_back_height``
-     - ``neighbor_left_height``
-     - ``neighbor_right_height``
+     - ``geometry_neighbor_buildings``
 
    * - Left/Right at 15ft
      - 68%
-     - 0
-     - 0
-     - 15
-     - 15
-     - auto
-     - auto
-     - auto
-     - auto
+     - Left/Right at 15ft
    * - 2
      - 0.19%
-     - 0
-     - 0
-     - 2
-     - 2
-     - auto
-     - auto
-     - auto
-     - auto
+     - Left/Right at 2ft
    * - 4
      - 3.4%
-     - 0
-     - 0
-     - 4
-     - 4
-     - auto
-     - auto
-     - auto
-     - auto
+     - Left/Right at 4ft
    * - 7
      - 5%
-     - 0
-     - 0
-     - 7
-     - 7
-     - auto
-     - auto
-     - auto
-     - auto
+     - Left/Right at 7ft
    * - 12
      - 9.2%
-     - 0
-     - 0
-     - 12
-     - 12
-     - auto
-     - auto
-     - auto
-     - auto
+     - Left/Right at 12ft
    * - 27
      - 13%
-     - 0
-     - 0
-     - 27
-     - 27
-     - auto
-     - auto
-     - auto
-     - auto
+     - Left/Right at 27ft
    * - None
      - 1.3%
-     - 0
-     - 0
-     - 0
-     - 0
-     - auto
-     - auto
-     - auto
-     - auto
+     - None
 
 .. _occupants:
 
@@ -48645,16 +37276,10 @@ Arguments
      - Description
    * - ``geometry_unit_num_occupants``
      - false
-     - #
-     - Double
-     - auto
-     - The number of occupants in the unit. If not provided, an *asset* calculation is performed assuming standard occupancy, in which various end use defaults (e.g., plug loads, appliances, and hot water usage) are calculated based on Number of Bedrooms and Conditioned Floor Area per ANSI/RESNET/ICC 301. If provided, an *operational* calculation is instead performed in which the end use defaults to reflect real-world data (where possible).
-   * - ``general_water_use_usage_multiplier``
-     - false
      - 
-     - Double
-     - auto
-     - Multiplier on internal gains from general water use (floor mopping, shower evaporation, water films on showers, tubs & sinks surfaces, plant watering, etc.) that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Building Occupancy <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-building-occupancy>`_) is used.
+     - Choice
+     - auto, Default, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+     - The number of occupants in the unit. Defaults to an *asset* calculation assuming standard occupancy, in which various end use defaults (e.g., plug loads, appliances, and hot water usage) are calculated based on Number of Bedrooms and Conditioned Floor Area. If provided, an *operational* calculation is instead performed in which the end use defaults reflect real-world data (where possible).
 
 Options
 *******
@@ -48669,52 +37294,40 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Option name
      - Stock saturation
      - ``geometry_unit_num_occupants``
-     - ``general_water_use_usage_multiplier``
 
    * - 0
      - 12%
      - 0
-     - auto
    * - 1
      - 24%
      - 1
-     - auto
    * - 2
      - 30%
      - 2
-     - auto
    * - 3
      - 14%
      - 3
-     - auto
    * - 4
      - 11%
      - 4
-     - auto
    * - 5
      - 5.2%
      - 5
-     - auto
    * - 6
      - 2.1%
      - 6
-     - auto
    * - 7
      - 0.76%
      - 7
-     - auto
    * - 8
      - 0.31%
      - 8
-     - auto
    * - 9
      - 0.12%
      - 9
-     - auto
    * - 10+
      - 0.12%
      - 11
-     - auto
 
 .. _orientation:
 
@@ -48750,12 +37363,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``geometry_unit_orientation``
+   * - ``geometry_unit_direction``
      - true
-     - degrees
-     - Double
-     -
-     - The unit's orientation is measured clockwise from north (e.g., North=0, East=90, South=180, West=270).
+     - 
+     - Choice
+     - North, North-Northeast, Northeast, East-Northeast, East, East-Southeast, Southeast, South-Southeast, South, South-Southwest, Southwest, West-Southwest, West, West-Northwest, Northwest, North-Northwest
+     - Direction of the front of the unit.
 
 Options
 *******
@@ -48769,32 +37382,32 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``geometry_unit_orientation``
+     - ``geometry_unit_direction``
 
    * - East
      - 17%
-     - 90
+     - East
    * - West
      - 17%
-     - 270
+     - West
    * - Northeast
      - 7.2%
-     - 45
+     - Northeast
    * - Southwest
      - 7.2%
-     - 225
+     - Southwest
    * - North
      - 18%
-     - 0
+     - North
    * - South
      - 18%
-     - 180
+     - South
    * - Northwest
      - 7.7%
-     - 315
+     - Northwest
    * - Southeast
      - 7.7%
-     - 135
+     - Southeast
 
 .. _puma:
 
@@ -48819,38 +37432,6 @@ Source
 - \Unit counts are from the American Community Survey 5-yr 2016.
 
 
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``site_elevation``
-     - false
-     - ft
-     - Double
-     - auto
-     - Elevation of the home address. If not provided, the OS-HPXML default (see `HPXML Site <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-site>`_) is used.
-   * - ``site_latitude``
-     - false
-     - deg
-     - Double
-     - auto
-     - Latitude of the home address. Must be between -90 and 90. Use negative values for southern hemisphere. If not provided, the OS-HPXML default (see `HPXML Site <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-site>`_) is used.
-   * - ``site_longitude``
-     - false
-     - deg
-     - Double
-     - auto
-     - Longitude of the home address. Must be between -180 and 180. Use negative values for the western hemisphere. If not provided, the OS-HPXML default (see `HPXML Site <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-site>`_) is used.
-
 Options
 *******
 
@@ -48863,11765 +37444,4709 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``site_elevation``
-     - ``site_latitude``
-     - ``site_longitude``
 
    * - AK, 00101
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - AK, 00102
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - AK, 00200
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - AK, 00300
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - AK, 00400
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - AL, 00100
      - 0.066%
-     - auto
-     - auto
-     - auto
    * - AL, 00200
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - AL, 00301
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - AL, 00302
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - AL, 00400
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - AL, 00500
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - AL, 00600
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - AL, 00700
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - AL, 00800
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - AL, 00900
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - AL, 01000
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - AL, 01100
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - AL, 01200
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - AL, 01301
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - AL, 01302
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - AL, 01303
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - AL, 01304
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - AL, 01305
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - AL, 01400
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - AL, 01500
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - AL, 01600
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - AL, 01700
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - AL, 01800
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - AL, 01900
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - AL, 02000
      - 0.067%
-     - auto
-     - auto
-     - auto
    * - AL, 02100
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - AL, 02200
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - AL, 02300
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - AL, 02400
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - AL, 02500
      - 0.068%
-     - auto
-     - auto
-     - auto
    * - AL, 02600
      - 0.08%
-     - auto
-     - auto
-     - auto
    * - AL, 02701
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - AL, 02702
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - AL, 02703
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - AR, 00100
      - 0.073%
-     - auto
-     - auto
-     - auto
    * - AR, 00200
      - 0.067%
-     - auto
-     - auto
-     - auto
    * - AR, 00300
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - AR, 00400
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - AR, 00500
      - 0.061%
-     - auto
-     - auto
-     - auto
    * - AR, 00600
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - AR, 00700
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - AR, 00800
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - AR, 00900
      - 0.068%
-     - auto
-     - auto
-     - auto
    * - AR, 01000
      - 0.067%
-     - auto
-     - auto
-     - auto
    * - AR, 01100
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - AR, 01200
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - AR, 01300
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - AR, 01400
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - AR, 01500
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - AR, 01600
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - AR, 01700
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - AR, 01800
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - AR, 01900
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - AR, 02000
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - AZ, 00100
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - AZ, 00101
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - AZ, 00102
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - AZ, 00103
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - AZ, 00104
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - AZ, 00105
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - AZ, 00106
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - AZ, 00107
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - AZ, 00108
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - AZ, 00109
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - AZ, 00110
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - AZ, 00111
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - AZ, 00112
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - AZ, 00113
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - AZ, 00114
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - AZ, 00115
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - AZ, 00116
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - AZ, 00117
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - AZ, 00118
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - AZ, 00119
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - AZ, 00120
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - AZ, 00121
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - AZ, 00122
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - AZ, 00123
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - AZ, 00124
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - AZ, 00125
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - AZ, 00126
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - AZ, 00127
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - AZ, 00128
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - AZ, 00129
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - AZ, 00130
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - AZ, 00131
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - AZ, 00132
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - AZ, 00133
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - AZ, 00134
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - AZ, 00201
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - AZ, 00202
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - AZ, 00203
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - AZ, 00204
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - AZ, 00205
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - AZ, 00206
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - AZ, 00207
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - AZ, 00208
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - AZ, 00209
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - AZ, 00300
      - 0.067%
-     - auto
-     - auto
-     - auto
    * - AZ, 00400
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - AZ, 00500
      - 0.084%
-     - auto
-     - auto
-     - auto
    * - AZ, 00600
      - 0.096%
-     - auto
-     - auto
-     - auto
    * - AZ, 00700
      - 0.067%
-     - auto
-     - auto
-     - auto
    * - AZ, 00800
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - AZ, 00803
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - AZ, 00805
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - AZ, 00807
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - AZ, 00900
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - CA, 00101
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - CA, 00102
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - CA, 00103
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - CA, 00104
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - CA, 00105
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - CA, 00106
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CA, 00107
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CA, 00108
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - CA, 00109
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - CA, 00110
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - CA, 00300
      - 0.085%
-     - auto
-     - auto
-     - auto
    * - CA, 00701
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - CA, 00702
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - CA, 01100
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - CA, 01301
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - CA, 01302
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - CA, 01303
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CA, 01304
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CA, 01305
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - CA, 01306
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CA, 01307
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - CA, 01308
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - CA, 01309
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - CA, 01500
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - CA, 01700
      - 0.066%
-     - auto
-     - auto
-     - auto
    * - CA, 01901
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - CA, 01902
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - CA, 01903
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - CA, 01904
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - CA, 01905
      - 0.024%
-     - auto
-     - auto
-     - auto
    * - CA, 01906
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - CA, 01907
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - CA, 02300
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - CA, 02500
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - CA, 02901
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - CA, 02902
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - CA, 02903
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - CA, 02904
      - 0.024%
-     - auto
-     - auto
-     - auto
    * - CA, 02905
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - CA, 03100
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - CA, 03300
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - CA, 03701
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - CA, 03702
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - CA, 03703
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - CA, 03704
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - CA, 03705
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - CA, 03706
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - CA, 03707
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - CA, 03708
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - CA, 03709
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - CA, 03710
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CA, 03711
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - CA, 03712
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - CA, 03713
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - CA, 03714
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - CA, 03715
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - CA, 03716
      - 0.02%
-     - auto
-     - auto
-     - auto
    * - CA, 03717
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - CA, 03718
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - CA, 03719
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - CA, 03720
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - CA, 03721
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - CA, 03722
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - CA, 03723
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - CA, 03724
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - CA, 03725
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - CA, 03726
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - CA, 03727
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - CA, 03728
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - CA, 03729
      - 0.07%
-     - auto
-     - auto
-     - auto
    * - CA, 03730
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - CA, 03731
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - CA, 03732
      - 0.064%
-     - auto
-     - auto
-     - auto
    * - CA, 03733
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CA, 03734
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - CA, 03735
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - CA, 03736
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - CA, 03737
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - CA, 03738
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - CA, 03739
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - CA, 03740
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - CA, 03741
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - CA, 03742
      - 0.024%
-     - auto
-     - auto
-     - auto
    * - CA, 03743
      - 0.024%
-     - auto
-     - auto
-     - auto
    * - CA, 03744
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - CA, 03745
      - 0.022%
-     - auto
-     - auto
-     - auto
    * - CA, 03746
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - CA, 03747
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - CA, 03748
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - CA, 03749
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - CA, 03750
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - CA, 03751
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - CA, 03752
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - CA, 03753
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - CA, 03754
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - CA, 03755
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - CA, 03756
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - CA, 03757
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - CA, 03758
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - CA, 03759
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - CA, 03760
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - CA, 03761
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CA, 03762
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - CA, 03763
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - CA, 03764
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CA, 03765
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - CA, 03766
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - CA, 03767
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - CA, 03768
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - CA, 03769
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - CA, 03900
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CA, 04101
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CA, 04102
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - CA, 04701
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - CA, 04702
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - CA, 05301
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - CA, 05302
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - CA, 05303
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - CA, 05500
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - CA, 05700
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - CA, 05901
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - CA, 05902
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - CA, 05903
      - 0.073%
-     - auto
-     - auto
-     - auto
    * - CA, 05904
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - CA, 05905
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - CA, 05906
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - CA, 05907
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - CA, 05908
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - CA, 05909
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - CA, 05910
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - CA, 05911
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - CA, 05912
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - CA, 05913
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - CA, 05914
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - CA, 05915
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - CA, 05916
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - CA, 05917
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - CA, 05918
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - CA, 06101
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CA, 06102
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - CA, 06103
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - CA, 06501
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - CA, 06502
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - CA, 06503
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - CA, 06504
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - CA, 06505
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - CA, 06506
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - CA, 06507
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - CA, 06508
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CA, 06509
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - CA, 06510
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CA, 06511
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CA, 06512
      - 0.024%
-     - auto
-     - auto
-     - auto
    * - CA, 06513
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - CA, 06514
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - CA, 06515
      - 0.07%
-     - auto
-     - auto
-     - auto
    * - CA, 06701
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - CA, 06702
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - CA, 06703
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CA, 06704
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CA, 06705
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - CA, 06706
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - CA, 06707
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - CA, 06708
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CA, 06709
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - CA, 06710
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - CA, 06711
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - CA, 06712
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - CA, 07101
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - CA, 07102
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CA, 07103
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - CA, 07104
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - CA, 07105
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CA, 07106
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - CA, 07107
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - CA, 07108
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CA, 07109
      - 0.022%
-     - auto
-     - auto
-     - auto
    * - CA, 07110
      - 0.021%
-     - auto
-     - auto
-     - auto
    * - CA, 07111
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - CA, 07112
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - CA, 07113
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CA, 07114
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - CA, 07115
      - 0.023%
-     - auto
-     - auto
-     - auto
    * - CA, 07301
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - CA, 07302
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CA, 07303
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - CA, 07304
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - CA, 07305
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - CA, 07306
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - CA, 07307
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - CA, 07308
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CA, 07309
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - CA, 07310
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - CA, 07311
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - CA, 07312
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - CA, 07313
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - CA, 07314
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - CA, 07315
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - CA, 07316
      - 0.064%
-     - auto
-     - auto
-     - auto
    * - CA, 07317
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - CA, 07318
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - CA, 07319
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - CA, 07320
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - CA, 07321
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - CA, 07322
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - CA, 07501
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - CA, 07502
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - CA, 07503
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - CA, 07504
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - CA, 07505
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - CA, 07506
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - CA, 07507
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - CA, 07701
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - CA, 07702
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - CA, 07703
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - CA, 07704
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - CA, 07901
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - CA, 07902
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - CA, 08101
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - CA, 08102
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - CA, 08103
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - CA, 08104
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CA, 08105
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CA, 08106
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - CA, 08301
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - CA, 08302
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - CA, 08303
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - CA, 08501
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - CA, 08502
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - CA, 08503
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - CA, 08504
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - CA, 08505
      - 0.022%
-     - auto
-     - auto
-     - auto
    * - CA, 08506
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - CA, 08507
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CA, 08508
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - CA, 08509
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CA, 08510
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - CA, 08511
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - CA, 08512
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - CA, 08513
      - 0.024%
-     - auto
-     - auto
-     - auto
    * - CA, 08514
      - 0.02%
-     - auto
-     - auto
-     - auto
    * - CA, 08701
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - CA, 08702
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - CA, 08900
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - CA, 09501
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - CA, 09502
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CA, 09503
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CA, 09701
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - CA, 09702
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - CA, 09703
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - CA, 09901
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - CA, 09902
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - CA, 09903
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - CA, 09904
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - CA, 10100
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - CA, 10701
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CA, 10702
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - CA, 10703
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CA, 11101
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - CA, 11102
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - CA, 11103
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - CA, 11104
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - CA, 11105
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - CA, 11106
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - CA, 11300
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - CO, 00100
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - CO, 00102
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - CO, 00103
      - 0.061%
-     - auto
-     - auto
-     - auto
    * - CO, 00200
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CO, 00300
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - CO, 00400
      - 0.069%
-     - auto
-     - auto
-     - auto
    * - CO, 00600
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - CO, 00700
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - CO, 00800
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CO, 00801
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CO, 00802
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - CO, 00803
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CO, 00804
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - CO, 00805
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CO, 00806
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - CO, 00807
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - CO, 00808
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - CO, 00809
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - CO, 00810
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - CO, 00811
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CO, 00812
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - CO, 00813
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - CO, 00814
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - CO, 00815
      - 0.064%
-     - auto
-     - auto
-     - auto
    * - CO, 00816
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - CO, 00817
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CO, 00818
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - CO, 00819
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - CO, 00820
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CO, 00821
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CO, 00822
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - CO, 00823
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - CO, 00824
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - CO, 00900
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - CO, 01001
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - CO, 01002
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - CO, 04101
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - CO, 04102
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - CO, 04103
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CO, 04104
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - CO, 04105
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - CO, 04106
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - CT, 00100
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - CT, 00101
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - CT, 00102
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - CT, 00103
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CT, 00104
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - CT, 00105
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - CT, 00300
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - CT, 00301
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - CT, 00302
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - CT, 00303
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - CT, 00304
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CT, 00305
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - CT, 00306
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CT, 00500
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - CT, 00700
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - CT, 00900
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - CT, 00901
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - CT, 00902
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - CT, 00903
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CT, 00904
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - CT, 00905
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - CT, 00906
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - CT, 01100
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - CT, 01101
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - CT, 01300
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - CT, 01500
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - DC, 00101
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - DC, 00102
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - DC, 00103
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - DC, 00104
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - DC, 00105
      - 0.064%
-     - auto
-     - auto
-     - auto
    * - DE, 00101
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - DE, 00102
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - DE, 00103
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - DE, 00104
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - DE, 00200
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - DE, 00300
      - 0.096%
-     - auto
-     - auto
-     - auto
    * - FL, 00101
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - FL, 00102
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - FL, 00500
      - 0.12%
-     - auto
-     - auto
-     - auto
    * - FL, 00901
      - 0.066%
-     - auto
-     - auto
-     - auto
    * - FL, 00902
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - FL, 00903
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - FL, 00904
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - FL, 01101
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - FL, 01102
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - FL, 01103
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - FL, 01104
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - FL, 01105
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - FL, 01106
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - FL, 01107
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - FL, 01108
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - FL, 01109
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - FL, 01110
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - FL, 01111
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - FL, 01112
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - FL, 01113
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - FL, 01114
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - FL, 01500
      - 0.076%
-     - auto
-     - auto
-     - auto
    * - FL, 01701
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - FL, 01900
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - FL, 02101
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - FL, 02102
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - FL, 02103
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - FL, 02300
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - FL, 02700
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - FL, 03101
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - FL, 03102
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - FL, 03103
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - FL, 03104
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - FL, 03105
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - FL, 03106
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - FL, 03107
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - FL, 03301
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - FL, 03302
      - 0.067%
-     - auto
-     - auto
-     - auto
    * - FL, 03500
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - FL, 05301
      - 0.063%
-     - auto
-     - auto
-     - auto
    * - FL, 05701
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - FL, 05702
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - FL, 05703
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - FL, 05704
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - FL, 05705
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - FL, 05706
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - FL, 05707
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - FL, 05708
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - FL, 06100
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - FL, 06300
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - FL, 06901
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - FL, 06902
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - FL, 06903
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - FL, 07101
      - 0.075%
-     - auto
-     - auto
-     - auto
    * - FL, 07102
      - 0.063%
-     - auto
-     - auto
-     - auto
    * - FL, 07103
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - FL, 07104
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - FL, 07105
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - FL, 07300
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - FL, 07301
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - FL, 08101
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - FL, 08102
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - FL, 08103
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - FL, 08301
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - FL, 08302
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - FL, 08303
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - FL, 08500
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - FL, 08601
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - FL, 08602
      - 0.023%
-     - auto
-     - auto
-     - auto
    * - FL, 08603
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - FL, 08604
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - FL, 08605
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - FL, 08606
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - FL, 08607
      - 0.024%
-     - auto
-     - auto
-     - auto
    * - FL, 08608
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - FL, 08609
      - 0.024%
-     - auto
-     - auto
-     - auto
    * - FL, 08610
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - FL, 08611
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - FL, 08612
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - FL, 08613
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - FL, 08614
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - FL, 08615
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - FL, 08616
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - FL, 08617
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - FL, 08618
      - 0.024%
-     - auto
-     - auto
-     - auto
    * - FL, 08619
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - FL, 08620
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - FL, 08621
      - 0.024%
-     - auto
-     - auto
-     - auto
    * - FL, 08622
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - FL, 08623
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - FL, 08624
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - FL, 08700
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - FL, 08900
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - FL, 09100
      - 0.071%
-     - auto
-     - auto
-     - auto
    * - FL, 09300
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - FL, 09501
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - FL, 09502
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - FL, 09503
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - FL, 09504
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - FL, 09505
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - FL, 09506
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - FL, 09507
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - FL, 09508
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - FL, 09509
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - FL, 09510
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - FL, 09701
      - 0.064%
-     - auto
-     - auto
-     - auto
    * - FL, 09702
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - FL, 09901
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - FL, 09902
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - FL, 09903
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - FL, 09904
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - FL, 09905
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - FL, 09906
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - FL, 09907
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - FL, 09908
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - FL, 09909
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - FL, 09910
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - FL, 09911
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - FL, 10101
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - FL, 10102
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - FL, 10103
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - FL, 10104
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - FL, 10301
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - FL, 10302
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - FL, 10303
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - FL, 10304
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - FL, 10305
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - FL, 10306
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - FL, 10307
      - 0.061%
-     - auto
-     - auto
-     - auto
    * - FL, 10308
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - FL, 10501
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - FL, 10502
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - FL, 10503
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - FL, 10504
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - FL, 10700
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - FL, 10900
      - 0.061%
-     - auto
-     - auto
-     - auto
    * - FL, 11101
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - FL, 11102
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - FL, 11300
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - FL, 11501
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - FL, 11502
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - FL, 11503
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - FL, 11701
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - FL, 11702
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - FL, 11703
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - FL, 11704
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - FL, 12100
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - FL, 12701
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - FL, 12702
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - FL, 12703
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - FL, 12704
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - GA, 00100
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - GA, 00200
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - GA, 00300
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - GA, 00401
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - GA, 00402
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - GA, 00500
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - GA, 00600
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - GA, 00700
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - GA, 00800
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - GA, 00900
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - GA, 01001
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - GA, 01002
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - GA, 01003
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - GA, 01004
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - GA, 01005
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - GA, 01006
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - GA, 01007
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - GA, 01008
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - GA, 01100
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - GA, 01200
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - GA, 01300
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - GA, 01400
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - GA, 01500
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - GA, 01600
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - GA, 01700
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - GA, 01800
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - GA, 01900
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - GA, 02001
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - GA, 02002
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - GA, 02003
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - GA, 02004
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - GA, 02100
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - GA, 02200
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - GA, 02300
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - GA, 02400
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - GA, 02500
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - GA, 02600
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - GA, 02700
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - GA, 02800
      - 0.063%
-     - auto
-     - auto
-     - auto
    * - GA, 02900
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - GA, 03001
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - GA, 03002
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - GA, 03003
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - GA, 03004
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - GA, 03005
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - GA, 03101
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - GA, 03102
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - GA, 03200
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - GA, 03300
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - GA, 03400
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - GA, 03500
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - GA, 03600
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - GA, 03700
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - GA, 03800
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - GA, 03900
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - GA, 04000
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - GA, 04001
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - GA, 04002
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - GA, 04003
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - GA, 04004
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - GA, 04005
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - GA, 04006
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - GA, 04100
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - GA, 04200
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - GA, 04300
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - GA, 04400
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - GA, 04500
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - GA, 04600
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - GA, 05001
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - GA, 05002
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - GA, 06001
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - GA, 06002
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - HI, 00100
      - 0.076%
-     - auto
-     - auto
-     - auto
    * - HI, 00200
      - 0.064%
-     - auto
-     - auto
-     - auto
    * - HI, 00301
      - 0.023%
-     - auto
-     - auto
-     - auto
    * - HI, 00302
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - HI, 00303
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - HI, 00304
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - HI, 00305
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - HI, 00306
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - HI, 00307
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - HI, 00308
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - IA, 00100
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - IA, 00200
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - IA, 00400
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - IA, 00500
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - IA, 00600
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - IA, 00700
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - IA, 00800
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - IA, 00900
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - IA, 01000
      - 0.071%
-     - auto
-     - auto
-     - auto
    * - IA, 01100
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - IA, 01200
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - IA, 01300
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - IA, 01400
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - IA, 01500
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - IA, 01600
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - IA, 01700
      - 0.064%
-     - auto
-     - auto
-     - auto
    * - IA, 01800
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - IA, 01900
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - IA, 02000
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - IA, 02100
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - IA, 02200
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - IA, 02300
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - ID, 00100
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - ID, 00200
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - ID, 00300
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - ID, 00400
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - ID, 00500
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - ID, 00600
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - ID, 00701
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - ID, 00702
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - ID, 00800
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - ID, 00900
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - ID, 01000
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - ID, 01100
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - ID, 01200
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - ID, 01300
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - IL, 00104
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - IL, 00105
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - IL, 00202
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - IL, 00300
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - IL, 00401
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - IL, 00501
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - IL, 00600
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - IL, 00700
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - IL, 00800
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - IL, 00900
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - IL, 01001
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - IL, 01104
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - IL, 01105
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - IL, 01204
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - IL, 01205
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - IL, 01300
      - 0.068%
-     - auto
-     - auto
-     - auto
    * - IL, 01500
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - IL, 01602
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - IL, 01701
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - IL, 01900
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - IL, 02000
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - IL, 02100
      - 0.067%
-     - auto
-     - auto
-     - auto
    * - IL, 02200
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - IL, 02300
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - IL, 02400
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - IL, 02501
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - IL, 02601
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - IL, 02700
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - IL, 02801
      - 0.066%
-     - auto
-     - auto
-     - auto
    * - IL, 02901
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - IL, 03005
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - IL, 03007
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - IL, 03008
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - IL, 03009
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - IL, 03102
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - IL, 03105
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - IL, 03106
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - IL, 03107
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - IL, 03108
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - IL, 03202
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - IL, 03203
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - IL, 03204
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - IL, 03205
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - IL, 03207
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - IL, 03208
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - IL, 03209
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - IL, 03306
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - IL, 03307
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - IL, 03308
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - IL, 03309
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - IL, 03310
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - IL, 03401
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - IL, 03407
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - IL, 03408
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - IL, 03409
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - IL, 03410
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - IL, 03411
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - IL, 03412
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - IL, 03413
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - IL, 03414
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - IL, 03415
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - IL, 03416
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - IL, 03417
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - IL, 03418
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - IL, 03419
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - IL, 03420
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - IL, 03421
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - IL, 03422
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - IL, 03501
      - 0.069%
-     - auto
-     - auto
-     - auto
    * - IL, 03502
      - 0.069%
-     - auto
-     - auto
-     - auto
    * - IL, 03503
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - IL, 03504
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - IL, 03520
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - IL, 03521
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - IL, 03522
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - IL, 03523
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - IL, 03524
      - 0.063%
-     - auto
-     - auto
-     - auto
    * - IL, 03525
      - 0.075%
-     - auto
-     - auto
-     - auto
    * - IL, 03526
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - IL, 03527
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - IL, 03528
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - IL, 03529
      - 0.074%
-     - auto
-     - auto
-     - auto
    * - IL, 03530
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - IL, 03531
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - IL, 03532
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - IL, 03601
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - IL, 03602
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - IL, 03700
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - IN, 00101
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - IN, 00102
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - IN, 00103
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - IN, 00104
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - IN, 00200
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - IN, 00300
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - IN, 00401
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - IN, 00402
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - IN, 00500
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - IN, 00600
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - IN, 00700
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - IN, 00800
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - IN, 00900
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - IN, 01001
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - IN, 01002
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - IN, 01003
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - IN, 01100
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - IN, 01200
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - IN, 01300
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - IN, 01400
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - IN, 01500
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - IN, 01600
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - IN, 01700
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - IN, 01801
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - IN, 01802
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - IN, 01803
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - IN, 01900
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - IN, 02000
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - IN, 02100
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - IN, 02200
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - IN, 02301
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - IN, 02302
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - IN, 02303
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - IN, 02304
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - IN, 02305
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - IN, 02306
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - IN, 02307
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - IN, 02400
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - IN, 02500
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - IN, 02600
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - IN, 02700
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - IN, 02800
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - IN, 02900
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - IN, 03000
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - IN, 03100
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - IN, 03200
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - IN, 03300
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - IN, 03400
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - IN, 03500
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - IN, 03600
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - KS, 00100
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - KS, 00200
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - KS, 00300
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - KS, 00400
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - KS, 00500
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - KS, 00601
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - KS, 00602
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - KS, 00603
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - KS, 00604
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - KS, 00700
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - KS, 00801
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - KS, 00802
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - KS, 00900
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - KS, 01000
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - KS, 01100
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - KS, 01200
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - KS, 01301
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - KS, 01302
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - KS, 01303
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - KS, 01304
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - KS, 01400
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - KS, 01500
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - KY, 00100
      - 0.071%
-     - auto
-     - auto
-     - auto
    * - KY, 00200
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - KY, 00300
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - KY, 00400
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - KY, 00500
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - KY, 00600
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - KY, 00700
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - KY, 00800
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - KY, 00900
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - KY, 01000
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - KY, 01100
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - KY, 01200
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - KY, 01300
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - KY, 01400
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - KY, 01500
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - KY, 01600
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - KY, 01701
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - KY, 01702
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - KY, 01703
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - KY, 01704
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - KY, 01705
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - KY, 01706
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - KY, 01800
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - KY, 01901
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - KY, 01902
      - 0.063%
-     - auto
-     - auto
-     - auto
    * - KY, 02000
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - KY, 02100
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - KY, 02200
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - KY, 02300
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - KY, 02400
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - KY, 02500
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - KY, 02600
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - KY, 02700
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - KY, 02800
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - LA, 00100
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - LA, 00101
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - LA, 00200
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - LA, 00300
      - 0.063%
-     - auto
-     - auto
-     - auto
    * - LA, 00400
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - LA, 00500
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - LA, 00600
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - LA, 00700
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - LA, 00800
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - LA, 00900
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - LA, 01000
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - LA, 01100
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - LA, 01200
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - LA, 01201
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - LA, 01300
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - LA, 01400
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - LA, 01500
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - LA, 01501
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - LA, 01502
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - LA, 01600
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - LA, 01700
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - LA, 01800
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - LA, 01900
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - LA, 02000
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - LA, 02100
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - LA, 02200
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - LA, 02201
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - LA, 02300
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - LA, 02301
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - LA, 02302
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - LA, 02400
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - LA, 02401
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - LA, 02402
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - LA, 02500
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MA, 00100
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - MA, 00200
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MA, 00300
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - MA, 00301
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - MA, 00302
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MA, 00303
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - MA, 00304
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - MA, 00400
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - MA, 00501
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - MA, 00502
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - MA, 00503
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - MA, 00504
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - MA, 00505
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - MA, 00506
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MA, 00507
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MA, 00508
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MA, 00701
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - MA, 00702
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - MA, 00703
      - 0.069%
-     - auto
-     - auto
-     - auto
    * - MA, 00704
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - MA, 01000
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - MA, 01300
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - MA, 01400
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - MA, 01600
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - MA, 01900
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - MA, 01901
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - MA, 01902
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MA, 02400
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - MA, 02800
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - MA, 03301
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - MA, 03302
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - MA, 03303
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - MA, 03304
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MA, 03305
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - MA, 03306
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - MA, 03400
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - MA, 03500
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - MA, 03601
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MA, 03602
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MA, 03603
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MA, 03900
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - MA, 04000
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MA, 04200
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MA, 04301
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MA, 04302
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - MA, 04303
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MA, 04500
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - MA, 04700
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - MA, 04800
      - 0.083%
-     - auto
-     - auto
-     - auto
    * - MA, 04901
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - MA, 04902
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - MA, 04903
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - MD, 00100
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MD, 00200
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - MD, 00301
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - MD, 00302
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MD, 00400
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - MD, 00501
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MD, 00502
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MD, 00503
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MD, 00504
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MD, 00505
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - MD, 00506
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - MD, 00507
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - MD, 00601
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - MD, 00602
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - MD, 00700
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - MD, 00801
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - MD, 00802
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - MD, 00803
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MD, 00804
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - MD, 00805
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - MD, 00901
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MD, 00902
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - MD, 01001
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - MD, 01002
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MD, 01003
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - MD, 01004
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - MD, 01005
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - MD, 01006
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - MD, 01007
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - MD, 01101
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - MD, 01102
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - MD, 01103
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - MD, 01104
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - MD, 01105
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - MD, 01106
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - MD, 01107
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MD, 01201
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - MD, 01202
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - MD, 01203
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MD, 01204
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - MD, 01300
      - 0.061%
-     - auto
-     - auto
-     - auto
    * - MD, 01400
      - 0.081%
-     - auto
-     - auto
-     - auto
    * - MD, 01500
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - MD, 01600
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - ME, 00100
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - ME, 00200
      - 0.077%
-     - auto
-     - auto
-     - auto
    * - ME, 00300
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - ME, 00400
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - ME, 00500
      - 0.082%
-     - auto
-     - auto
-     - auto
    * - ME, 00600
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - ME, 00700
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - ME, 00800
      - 0.074%
-     - auto
-     - auto
-     - auto
    * - ME, 00900
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - ME, 01000
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - MI, 00100
      - 0.075%
-     - auto
-     - auto
-     - auto
    * - MI, 00200
      - 0.063%
-     - auto
-     - auto
-     - auto
    * - MI, 00300
      - 0.075%
-     - auto
-     - auto
-     - auto
    * - MI, 00400
      - 0.07%
-     - auto
-     - auto
-     - auto
    * - MI, 00500
      - 0.064%
-     - auto
-     - auto
-     - auto
    * - MI, 00600
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - MI, 00700
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - MI, 00801
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - MI, 00802
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - MI, 00900
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MI, 01001
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - MI, 01002
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - MI, 01003
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - MI, 01004
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - MI, 01100
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - MI, 01200
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - MI, 01300
      - 0.066%
-     - auto
-     - auto
-     - auto
    * - MI, 01400
      - 0.063%
-     - auto
-     - auto
-     - auto
    * - MI, 01500
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - MI, 01600
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - MI, 01701
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - MI, 01702
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MI, 01703
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - MI, 01704
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - MI, 01801
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - MI, 01802
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - MI, 01900
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - MI, 02000
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - MI, 02101
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - MI, 02102
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - MI, 02200
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MI, 02300
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - MI, 02400
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - MI, 02500
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - MI, 02600
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - MI, 02701
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - MI, 02702
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - MI, 02703
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - MI, 02800
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - MI, 02901
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - MI, 02902
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MI, 02903
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - MI, 02904
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - MI, 02905
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MI, 02906
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - MI, 02907
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - MI, 02908
      - 0.07%
-     - auto
-     - auto
-     - auto
    * - MI, 03001
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MI, 03002
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - MI, 03003
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MI, 03004
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - MI, 03005
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - MI, 03006
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - MI, 03100
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - MI, 03201
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - MI, 03202
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - MI, 03203
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - MI, 03204
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - MI, 03205
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - MI, 03206
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - MI, 03207
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MI, 03208
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - MI, 03209
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - MI, 03210
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - MI, 03211
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - MI, 03212
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - MI, 03213
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - MI, 03300
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - MN, 00100
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - MN, 00200
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - MN, 00300
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - MN, 00400
      - 0.061%
-     - auto
-     - auto
-     - auto
    * - MN, 00500
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - MN, 00600
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - MN, 00700
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - MN, 00800
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - MN, 00900
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - MN, 01000
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MN, 01101
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - MN, 01102
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - MN, 01103
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - MN, 01201
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - MN, 01202
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - MN, 01301
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - MN, 01302
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - MN, 01303
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MN, 01304
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - MN, 01401
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - MN, 01402
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - MN, 01403
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - MN, 01404
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - MN, 01405
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - MN, 01406
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - MN, 01407
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - MN, 01408
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - MN, 01409
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MN, 01410
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - MN, 01501
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - MN, 01502
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - MN, 01503
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - MN, 01600
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - MN, 01700
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - MN, 01800
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MN, 01900
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - MN, 02000
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - MN, 02100
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - MN, 02200
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MN, 02300
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - MN, 02400
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - MN, 02500
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - MN, 02600
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MO, 00100
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - MO, 00200
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MO, 00300
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - MO, 00400
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - MO, 00500
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - MO, 00600
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - MO, 00700
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - MO, 00800
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - MO, 00901
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - MO, 00902
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MO, 00903
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - MO, 01001
      - 0.07%
-     - auto
-     - auto
-     - auto
    * - MO, 01002
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - MO, 01003
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - MO, 01004
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - MO, 01005
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - MO, 01100
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - MO, 01200
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - MO, 01300
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - MO, 01400
      - 0.066%
-     - auto
-     - auto
-     - auto
    * - MO, 01500
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MO, 01600
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - MO, 01701
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - MO, 01702
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - MO, 01703
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - MO, 01801
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - MO, 01802
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - MO, 01803
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - MO, 01804
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - MO, 01805
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - MO, 01806
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - MO, 01807
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - MO, 01808
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - MO, 01901
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - MO, 01902
      - 0.074%
-     - auto
-     - auto
-     - auto
    * - MO, 02001
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - MO, 02002
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - MO, 02100
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - MO, 02200
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - MO, 02300
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - MO, 02400
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MO, 02500
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - MO, 02601
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - MO, 02602
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - MO, 02603
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - MO, 02700
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - MO, 02800
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - MS, 00100
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - MS, 00200
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - MS, 00300
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - MS, 00400
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - MS, 00500
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - MS, 00600
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - MS, 00700
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - MS, 00800
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MS, 00900
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - MS, 01000
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - MS, 01100
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - MS, 01200
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - MS, 01300
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - MS, 01400
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - MS, 01500
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - MS, 01600
      - 0.063%
-     - auto
-     - auto
-     - auto
    * - MS, 01700
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - MS, 01800
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - MS, 01900
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - MS, 02000
      - 0.067%
-     - auto
-     - auto
-     - auto
    * - MS, 02100
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - MT, 00100
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - MT, 00200
      - 0.072%
-     - auto
-     - auto
-     - auto
    * - MT, 00300
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - MT, 00400
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - MT, 00500
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - MT, 00600
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - MT, 00700
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NC, 00100
      - 0.063%
-     - auto
-     - auto
-     - auto
    * - NC, 00200
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - NC, 00300
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - NC, 00400
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NC, 00500
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - NC, 00600
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NC, 00700
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - NC, 00800
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - NC, 00900
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - NC, 01000
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - NC, 01100
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - NC, 01201
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - NC, 01202
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - NC, 01203
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - NC, 01204
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NC, 01205
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - NC, 01206
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NC, 01207
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - NC, 01208
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - NC, 01301
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - NC, 01302
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NC, 01400
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NC, 01500
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - NC, 01600
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - NC, 01701
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - NC, 01702
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NC, 01703
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NC, 01704
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - NC, 01801
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NC, 01802
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NC, 01803
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - NC, 01900
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NC, 02000
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - NC, 02100
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - NC, 02201
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - NC, 02202
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NC, 02300
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - NC, 02400
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - NC, 02500
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - NC, 02600
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - NC, 02700
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - NC, 02800
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - NC, 02900
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - NC, 03001
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - NC, 03002
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NC, 03101
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - NC, 03102
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NC, 03103
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NC, 03104
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - NC, 03105
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NC, 03106
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - NC, 03107
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NC, 03108
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NC, 03200
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NC, 03300
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NC, 03400
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - NC, 03500
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - NC, 03600
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - NC, 03700
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - NC, 03800
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NC, 03900
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NC, 04000
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - NC, 04100
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NC, 04200
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - NC, 04300
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NC, 04400
      - 0.061%
-     - auto
-     - auto
-     - auto
    * - NC, 04500
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - NC, 04600
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - NC, 04700
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - NC, 04800
      - 0.061%
-     - auto
-     - auto
-     - auto
    * - NC, 04900
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NC, 05001
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - NC, 05002
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - NC, 05003
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NC, 05100
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NC, 05200
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NC, 05300
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NC, 05400
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - ND, 00100
      - 0.075%
-     - auto
-     - auto
-     - auto
    * - ND, 00200
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - ND, 00300
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - ND, 00400
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - ND, 00500
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - NE, 00100
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - NE, 00200
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - NE, 00300
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NE, 00400
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NE, 00500
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NE, 00600
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - NE, 00701
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NE, 00702
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - NE, 00801
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - NE, 00802
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NE, 00901
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - NE, 00902
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - NE, 00903
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NE, 00904
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NH, 00100
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - NH, 00200
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - NH, 00300
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - NH, 00400
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NH, 00500
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - NH, 00600
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NH, 00700
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - NH, 00800
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NH, 00900
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - NH, 01000
      - 0.064%
-     - auto
-     - auto
-     - auto
    * - NJ, 00101
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - NJ, 00102
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - NJ, 00301
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NJ, 00302
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NJ, 00303
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - NJ, 00304
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NJ, 00305
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - NJ, 00306
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - NJ, 00307
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - NJ, 00308
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - NJ, 00400
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NJ, 00501
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NJ, 00502
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - NJ, 00503
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - NJ, 00601
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - NJ, 00602
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NJ, 00701
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NJ, 00702
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - NJ, 00703
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - NJ, 00800
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NJ, 00901
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NJ, 00902
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - NJ, 00903
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - NJ, 00904
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - NJ, 00905
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - NJ, 00906
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NJ, 00907
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - NJ, 01001
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - NJ, 01002
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - NJ, 01003
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - NJ, 01101
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NJ, 01102
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - NJ, 01103
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NJ, 01104
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - NJ, 01105
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - NJ, 01106
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - NJ, 01201
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - NJ, 01202
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NJ, 01203
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NJ, 01204
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - NJ, 01205
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - NJ, 01301
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - NJ, 01302
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NJ, 01401
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - NJ, 01402
      - 0.061%
-     - auto
-     - auto
-     - auto
    * - NJ, 01403
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - NJ, 01404
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - NJ, 01501
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - NJ, 01502
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NJ, 01503
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - NJ, 01504
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NJ, 01600
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - NJ, 01700
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NJ, 01800
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - NJ, 01901
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - NJ, 01902
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - NJ, 01903
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - NJ, 01904
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - NJ, 02001
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NJ, 02002
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - NJ, 02003
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - NJ, 02101
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NJ, 02102
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - NJ, 02103
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NJ, 02104
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NJ, 02201
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - NJ, 02202
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - NJ, 02301
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NJ, 02302
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - NJ, 02303
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - NJ, 02400
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - NJ, 02500
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - NJ, 02600
      - 0.078%
-     - auto
-     - auto
-     - auto
    * - NM, 00100
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NM, 00200
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - NM, 00300
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - NM, 00400
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - NM, 00500
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - NM, 00600
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - NM, 00700
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - NM, 00801
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NM, 00802
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NM, 00803
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NM, 00804
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NM, 00805
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NM, 00806
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - NM, 00900
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NM, 01001
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - NM, 01002
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NM, 01100
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - NM, 01200
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NV, 00101
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - NV, 00102
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NV, 00103
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NV, 00200
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - NV, 00300
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - NV, 00401
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NV, 00402
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NV, 00403
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - NV, 00404
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NV, 00405
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - NV, 00406
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NV, 00407
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - NV, 00408
      - 0.068%
-     - auto
-     - auto
-     - auto
    * - NV, 00409
      - 0.066%
-     - auto
-     - auto
-     - auto
    * - NV, 00410
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - NV, 00411
      - 0.07%
-     - auto
-     - auto
-     - auto
    * - NV, 00412
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - NV, 00413
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - NY, 00100
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NY, 00200
      - 0.071%
-     - auto
-     - auto
-     - auto
    * - NY, 00300
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - NY, 00401
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - NY, 00402
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - NY, 00403
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - NY, 00500
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - NY, 00600
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - NY, 00701
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - NY, 00702
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - NY, 00703
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - NY, 00704
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NY, 00800
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - NY, 00901
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - NY, 00902
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NY, 00903
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NY, 00904
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - NY, 00905
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - NY, 00906
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - NY, 01000
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - NY, 01101
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NY, 01102
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NY, 01201
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - NY, 01202
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NY, 01203
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - NY, 01204
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - NY, 01205
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - NY, 01206
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - NY, 01207
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - NY, 01300
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NY, 01400
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - NY, 01500
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NY, 01600
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NY, 01700
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - NY, 01801
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NY, 01802
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NY, 01900
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - NY, 02001
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NY, 02002
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - NY, 02100
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - NY, 02201
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - NY, 02202
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NY, 02203
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - NY, 02300
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - NY, 02401
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NY, 02402
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - NY, 02500
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - NY, 02600
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - NY, 02701
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - NY, 02702
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - NY, 02801
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - NY, 02802
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - NY, 02901
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NY, 02902
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NY, 02903
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - NY, 03001
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - NY, 03002
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - NY, 03003
      - 0.022%
-     - auto
-     - auto
-     - auto
    * - NY, 03101
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - NY, 03102
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - NY, 03103
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - NY, 03104
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - NY, 03105
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - NY, 03106
      - 0.061%
-     - auto
-     - auto
-     - auto
    * - NY, 03107
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - NY, 03201
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - NY, 03202
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - NY, 03203
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - NY, 03204
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - NY, 03205
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - NY, 03206
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - NY, 03207
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - NY, 03208
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - NY, 03209
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - NY, 03210
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - NY, 03211
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - NY, 03212
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - NY, 03301
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - NY, 03302
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - NY, 03303
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - NY, 03304
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - NY, 03305
      - 0.074%
-     - auto
-     - auto
-     - auto
    * - NY, 03306
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NY, 03307
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NY, 03308
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - NY, 03309
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - NY, 03310
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - NY, 03311
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - NY, 03312
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - NY, 03313
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - NY, 03701
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NY, 03702
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - NY, 03703
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NY, 03704
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NY, 03705
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - NY, 03706
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NY, 03707
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NY, 03708
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - NY, 03709
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - NY, 03710
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - NY, 03801
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - NY, 03802
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - NY, 03803
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - NY, 03804
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - NY, 03805
      - 0.1%
-     - auto
-     - auto
-     - auto
    * - NY, 03806
      - 0.088%
-     - auto
-     - auto
-     - auto
    * - NY, 03807
      - 0.078%
-     - auto
-     - auto
-     - auto
    * - NY, 03808
      - 0.072%
-     - auto
-     - auto
-     - auto
    * - NY, 03809
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - NY, 03810
      - 0.069%
-     - auto
-     - auto
-     - auto
    * - NY, 03901
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - NY, 03902
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - NY, 03903
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - NY, 04001
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - NY, 04002
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NY, 04003
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - NY, 04004
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - NY, 04005
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - NY, 04006
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - NY, 04007
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NY, 04008
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - NY, 04009
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - NY, 04010
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - NY, 04011
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NY, 04012
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NY, 04013
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - NY, 04014
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - NY, 04015
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - NY, 04016
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - NY, 04017
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - NY, 04018
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NY, 04101
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - NY, 04102
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - NY, 04103
      - 0.071%
-     - auto
-     - auto
-     - auto
    * - NY, 04104
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - NY, 04105
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - NY, 04106
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - NY, 04107
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - NY, 04108
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - NY, 04109
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - NY, 04110
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - NY, 04111
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - NY, 04112
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - NY, 04113
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - NY, 04114
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - OH, 00100
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - OH, 00200
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OH, 00300
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - OH, 00400
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - OH, 00500
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - OH, 00600
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - OH, 00700
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - OH, 00801
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - OH, 00802
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - OH, 00901
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - OH, 00902
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - OH, 00903
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - OH, 00904
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - OH, 00905
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - OH, 00906
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - OH, 00907
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - OH, 00908
      - 0.072%
-     - auto
-     - auto
-     - auto
    * - OH, 00909
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - OH, 00910
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - OH, 01000
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OH, 01100
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - OH, 01200
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - OH, 01300
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - OH, 01400
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - OH, 01500
      - 0.07%
-     - auto
-     - auto
-     - auto
    * - OH, 01600
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - OH, 01700
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - OH, 01801
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OH, 01802
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - OH, 01803
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - OH, 01804
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - OH, 01805
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - OH, 01900
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - OH, 02000
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - OH, 02100
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OH, 02200
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - OH, 02300
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - OH, 02400
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OH, 02500
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - OH, 02600
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - OH, 02700
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - OH, 02800
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - OH, 02900
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - OH, 03000
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - OH, 03100
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - OH, 03200
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - OH, 03300
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - OH, 03400
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OH, 03500
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - OH, 03600
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - OH, 03700
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - OH, 03800
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - OH, 03900
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - OH, 04000
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - OH, 04101
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OH, 04102
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - OH, 04103
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OH, 04104
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - OH, 04105
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - OH, 04106
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - OH, 04107
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - OH, 04108
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - OH, 04109
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - OH, 04110
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OH, 04111
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - OH, 04200
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - OH, 04300
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - OH, 04400
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - OH, 04500
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - OH, 04601
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - OH, 04602
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - OH, 04603
      - 0.066%
-     - auto
-     - auto
-     - auto
    * - OH, 04604
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - OH, 04700
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - OH, 04800
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - OH, 04900
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OH, 05000
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - OH, 05100
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - OH, 05200
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - OH, 05301
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - OH, 05302
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - OH, 05401
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - OH, 05402
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - OH, 05403
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - OH, 05501
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - OH, 05502
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - OH, 05503
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - OH, 05504
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - OH, 05505
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - OH, 05506
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OH, 05507
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - OH, 05600
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - OH, 05700
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OK, 00100
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - OK, 00200
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - OK, 00300
      - 0.063%
-     - auto
-     - auto
-     - auto
    * - OK, 00400
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - OK, 00500
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - OK, 00601
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - OK, 00602
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - OK, 00701
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - OK, 00702
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - OK, 00800
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OK, 00900
      - 0.082%
-     - auto
-     - auto
-     - auto
    * - OK, 01001
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - OK, 01002
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - OK, 01003
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - OK, 01004
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - OK, 01005
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OK, 01006
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - OK, 01101
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - OK, 01102
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - OK, 01201
      - 0.076%
-     - auto
-     - auto
-     - auto
    * - OK, 01202
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - OK, 01203
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - OK, 01204
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - OK, 01301
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OK, 01302
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - OK, 01400
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - OK, 01501
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - OK, 01601
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OR, 00100
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - OR, 00200
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - OR, 00300
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - OR, 00400
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - OR, 00500
      - 0.069%
-     - auto
-     - auto
-     - auto
    * - OR, 00600
      - 0.064%
-     - auto
-     - auto
-     - auto
    * - OR, 00703
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - OR, 00704
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OR, 00705
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - OR, 00800
      - 0.061%
-     - auto
-     - auto
-     - auto
    * - OR, 00901
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - OR, 00902
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OR, 01000
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - OR, 01103
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - OR, 01104
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - OR, 01105
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - OR, 01200
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - OR, 01301
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - OR, 01302
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - OR, 01303
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - OR, 01305
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - OR, 01314
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - OR, 01316
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - OR, 01317
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - OR, 01318
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - OR, 01319
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - OR, 01320
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - OR, 01321
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - OR, 01322
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - OR, 01323
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - OR, 01324
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - PA, 00101
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - PA, 00102
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - PA, 00200
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - PA, 00300
      - 0.07%
-     - auto
-     - auto
-     - auto
    * - PA, 00400
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - PA, 00500
      - 0.07%
-     - auto
-     - auto
-     - auto
    * - PA, 00600
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - PA, 00701
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - PA, 00702
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - PA, 00801
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - PA, 00802
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - PA, 00803
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - PA, 00900
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - PA, 01000
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - PA, 01100
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - PA, 01200
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - PA, 01300
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - PA, 01400
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - PA, 01501
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - PA, 01502
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - PA, 01600
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - PA, 01701
      - 0.072%
-     - auto
-     - auto
-     - auto
    * - PA, 01702
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - PA, 01801
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - PA, 01802
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - PA, 01803
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - PA, 01804
      - 0.067%
-     - auto
-     - auto
-     - auto
    * - PA, 01805
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - PA, 01806
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - PA, 01807
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - PA, 01900
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - PA, 02001
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - PA, 02002
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - PA, 02003
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - PA, 02100
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - PA, 02200
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - PA, 02301
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - PA, 02302
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - PA, 02401
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - PA, 02402
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - PA, 02500
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - PA, 02600
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - PA, 02701
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - PA, 02702
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - PA, 02703
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - PA, 02801
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - PA, 02802
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - PA, 02803
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - PA, 02901
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - PA, 02902
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - PA, 03001
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - PA, 03002
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - PA, 03003
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - PA, 03004
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - PA, 03101
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - PA, 03102
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - PA, 03103
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - PA, 03104
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - PA, 03105
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - PA, 03106
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - PA, 03201
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - PA, 03202
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - PA, 03203
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - PA, 03204
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - PA, 03205
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - PA, 03206
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - PA, 03207
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - PA, 03208
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - PA, 03209
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - PA, 03210
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - PA, 03211
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - PA, 03301
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - PA, 03302
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - PA, 03303
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - PA, 03304
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - PA, 03401
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - PA, 03402
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - PA, 03403
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - PA, 03404
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - PA, 03501
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - PA, 03502
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - PA, 03503
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - PA, 03504
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - PA, 03601
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - PA, 03602
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - PA, 03603
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - PA, 03701
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - PA, 03702
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - PA, 03800
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - PA, 03900
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - PA, 04001
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - PA, 04002
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - RI, 00101
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - RI, 00102
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - RI, 00103
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - RI, 00104
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - RI, 00201
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - RI, 00300
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - RI, 00400
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - SC, 00101
      - 0.068%
-     - auto
-     - auto
-     - auto
    * - SC, 00102
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - SC, 00103
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - SC, 00104
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - SC, 00105
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - SC, 00200
      - 0.064%
-     - auto
-     - auto
-     - auto
    * - SC, 00301
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - SC, 00302
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - SC, 00400
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - SC, 00501
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - SC, 00502
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - SC, 00601
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - SC, 00602
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - SC, 00603
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - SC, 00604
      - 0.066%
-     - auto
-     - auto
-     - auto
    * - SC, 00605
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - SC, 00700
      - 0.05%
-     - auto
-     - auto
-     - auto
    * - SC, 00800
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - SC, 00900
      - 0.067%
-     - auto
-     - auto
-     - auto
    * - SC, 01000
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - SC, 01101
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - SC, 01102
      - 0.097%
-     - auto
-     - auto
-     - auto
    * - SC, 01201
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - SC, 01202
      - 0.076%
-     - auto
-     - auto
-     - auto
    * - SC, 01203
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - SC, 01204
      - 0.063%
-     - auto
-     - auto
-     - auto
    * - SC, 01300
      - 0.07%
-     - auto
-     - auto
-     - auto
    * - SC, 01400
      - 0.079%
-     - auto
-     - auto
-     - auto
    * - SC, 01500
      - 0.063%
-     - auto
-     - auto
-     - auto
    * - SC, 01600
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - SD, 00100
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - SD, 00200
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - SD, 00300
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - SD, 00400
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - SD, 00500
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - SD, 00600
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - TN, 00100
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - TN, 00200
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - TN, 00300
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - TN, 00400
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - TN, 00500
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - TN, 00600
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - TN, 00700
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - TN, 00800
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - TN, 00900
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - TN, 01000
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - TN, 01100
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - TN, 01200
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - TN, 01300
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - TN, 01400
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - TN, 01500
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - TN, 01601
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TN, 01602
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - TN, 01603
      - 0.064%
-     - auto
-     - auto
-     - auto
    * - TN, 01604
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - TN, 01700
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - TN, 01800
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - TN, 01900
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - TN, 02001
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - TN, 02002
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - TN, 02003
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - TN, 02100
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - TN, 02200
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - TN, 02300
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - TN, 02401
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TN, 02402
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - TN, 02501
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - TN, 02502
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TN, 02503
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - TN, 02504
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - TN, 02505
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - TN, 02600
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - TN, 02700
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - TN, 02800
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - TN, 02900
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - TN, 03000
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - TN, 03100
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - TN, 03201
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - TN, 03202
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - TN, 03203
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TN, 03204
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - TN, 03205
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - TN, 03206
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TN, 03207
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TN, 03208
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - TX, 00100
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - TX, 00200
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - TX, 00300
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - TX, 00400
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - TX, 00501
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TX, 00502
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - TX, 00600
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - TX, 00700
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - TX, 00800
      - 0.064%
-     - auto
-     - auto
-     - auto
    * - TX, 00900
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - TX, 01000
      - 0.053%
-     - auto
-     - auto
-     - auto
    * - TX, 01100
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - TX, 01200
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - TX, 01300
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - TX, 01400
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - TX, 01501
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 01502
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TX, 01600
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - TX, 01700
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - TX, 01800
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - TX, 01901
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - TX, 01902
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TX, 01903
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 01904
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - TX, 01905
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - TX, 01906
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TX, 01907
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TX, 02001
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - TX, 02002
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - TX, 02003
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - TX, 02004
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TX, 02005
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - TX, 02006
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TX, 02101
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - TX, 02102
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - TX, 02200
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - TX, 02301
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - TX, 02302
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - TX, 02303
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 02304
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - TX, 02305
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 02306
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - TX, 02307
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - TX, 02308
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - TX, 02309
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TX, 02310
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - TX, 02311
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - TX, 02312
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - TX, 02313
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - TX, 02314
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - TX, 02315
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - TX, 02316
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - TX, 02317
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - TX, 02318
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - TX, 02319
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - TX, 02320
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - TX, 02321
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TX, 02322
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - TX, 02400
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TX, 02501
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - TX, 02502
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - TX, 02503
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TX, 02504
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - TX, 02505
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - TX, 02506
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 02507
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - TX, 02508
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - TX, 02509
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - TX, 02510
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - TX, 02511
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - TX, 02512
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - TX, 02513
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TX, 02514
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - TX, 02515
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TX, 02516
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TX, 02600
      - 0.071%
-     - auto
-     - auto
-     - auto
    * - TX, 02700
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - TX, 02800
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TX, 02900
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TX, 03000
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - TX, 03100
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - TX, 03200
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TX, 03301
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - TX, 03302
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - TX, 03303
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 03304
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - TX, 03305
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - TX, 03306
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - TX, 03400
      - 0.061%
-     - auto
-     - auto
-     - auto
    * - TX, 03501
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - TX, 03502
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - TX, 03601
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - TX, 03602
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - TX, 03700
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - TX, 03801
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - TX, 03802
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - TX, 03900
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - TX, 04000
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - TX, 04100
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - TX, 04200
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - TX, 04301
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - TX, 04302
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - TX, 04400
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - TX, 04501
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - TX, 04502
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - TX, 04503
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TX, 04504
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - TX, 04601
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - TX, 04602
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 04603
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - TX, 04604
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - TX, 04605
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 04606
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - TX, 04607
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 04608
      - 0.024%
-     - auto
-     - auto
-     - auto
    * - TX, 04609
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TX, 04610
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - TX, 04611
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 04612
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 04613
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - TX, 04614
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - TX, 04615
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 04616
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TX, 04617
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - TX, 04618
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - TX, 04619
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - TX, 04620
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 04621
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - TX, 04622
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - TX, 04623
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 04624
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - TX, 04625
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - TX, 04626
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TX, 04627
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - TX, 04628
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 04629
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - TX, 04630
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - TX, 04631
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - TX, 04632
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - TX, 04633
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - TX, 04634
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - TX, 04635
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - TX, 04636
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TX, 04637
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - TX, 04638
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - TX, 04701
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - TX, 04702
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - TX, 04801
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 04802
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 04803
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - TX, 04901
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - TX, 04902
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - TX, 04903
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - TX, 04904
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - TX, 04905
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - TX, 05000
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - TX, 05100
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - TX, 05201
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TX, 05202
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - TX, 05203
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - TX, 05204
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - TX, 05301
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - TX, 05302
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - TX, 05303
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - TX, 05304
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - TX, 05305
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TX, 05306
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - TX, 05307
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - TX, 05308
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - TX, 05309
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TX, 05400
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - TX, 05500
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - TX, 05600
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - TX, 05700
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - TX, 05800
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - TX, 05901
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - TX, 05902
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - TX, 05903
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - TX, 05904
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 05905
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - TX, 05906
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - TX, 05907
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - TX, 05908
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - TX, 05909
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 05910
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - TX, 05911
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - TX, 05912
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - TX, 05913
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - TX, 05914
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - TX, 05915
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - TX, 05916
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - TX, 06000
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - TX, 06100
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - TX, 06200
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - TX, 06301
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - TX, 06302
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - TX, 06400
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - TX, 06500
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - TX, 06601
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - TX, 06602
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TX, 06603
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TX, 06701
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TX, 06702
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - TX, 06703
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - TX, 06801
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - TX, 06802
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - TX, 06803
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - TX, 06804
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - TX, 06805
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - TX, 06806
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - TX, 06807
      - 0.023%
-     - auto
-     - auto
-     - auto
    * - TX, 06900
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - UT, 03001
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - UT, 05001
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - UT, 11001
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - UT, 11002
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - UT, 13001
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - UT, 21001
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - UT, 35001
      - 0.024%
-     - auto
-     - auto
-     - auto
    * - UT, 35002
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - UT, 35003
      - 0.023%
-     - auto
-     - auto
-     - auto
    * - UT, 35004
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - UT, 35005
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - UT, 35006
      - 0.024%
-     - auto
-     - auto
-     - auto
    * - UT, 35007
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - UT, 35008
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - UT, 35009
      - 0.025%
-     - auto
-     - auto
-     - auto
    * - UT, 49001
      - 0.024%
-     - auto
-     - auto
-     - auto
    * - UT, 49002
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - UT, 49003
      - 0.026%
-     - auto
-     - auto
-     - auto
    * - UT, 49004
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - UT, 53001
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - UT, 57001
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - UT, 57002
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - VA, 01301
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - VA, 01302
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - VA, 04101
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - VA, 04102
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - VA, 04103
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - VA, 10701
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - VA, 10702
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - VA, 10703
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - VA, 51010
      - 0.072%
-     - auto
-     - auto
-     - auto
    * - VA, 51020
      - 0.072%
-     - auto
-     - auto
-     - auto
    * - VA, 51040
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - VA, 51044
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - VA, 51045
      - 0.071%
-     - auto
-     - auto
-     - auto
    * - VA, 51080
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - VA, 51084
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - VA, 51085
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - VA, 51087
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - VA, 51089
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - VA, 51090
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - VA, 51095
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - VA, 51096
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - VA, 51097
      - 0.072%
-     - auto
-     - auto
-     - auto
    * - VA, 51105
      - 0.068%
-     - auto
-     - auto
-     - auto
    * - VA, 51110
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - VA, 51115
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - VA, 51120
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - VA, 51125
      - 0.073%
-     - auto
-     - auto
-     - auto
    * - VA, 51135
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - VA, 51145
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - VA, 51154
      - 0.066%
-     - auto
-     - auto
-     - auto
    * - VA, 51155
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - VA, 51164
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - VA, 51165
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - VA, 51167
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - VA, 51175
      - 0.058%
-     - auto
-     - auto
-     - auto
    * - VA, 51186
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - VA, 51206
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - VA, 51215
      - 0.057%
-     - auto
-     - auto
-     - auto
    * - VA, 51224
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - VA, 51225
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - VA, 51235
      - 0.075%
-     - auto
-     - auto
-     - auto
    * - VA, 51244
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - VA, 51245
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - VA, 51246
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - VA, 51255
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - VA, 55001
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - VA, 55002
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - VA, 59301
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - VA, 59302
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - VA, 59303
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - VA, 59304
      - 0.027%
-     - auto
-     - auto
-     - auto
    * - VA, 59305
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - VA, 59306
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - VA, 59307
      - 0.047%
-     - auto
-     - auto
-     - auto
    * - VA, 59308
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - VA, 59309
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - VT, 00100
      - 0.071%
-     - auto
-     - auto
-     - auto
    * - VT, 00200
      - 0.061%
-     - auto
-     - auto
-     - auto
    * - VT, 00300
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - VT, 00400
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - WA, 10100
      - 0.069%
-     - auto
-     - auto
-     - auto
    * - WA, 10200
      - 0.079%
-     - auto
-     - auto
-     - auto
    * - WA, 10300
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - WA, 10400
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - WA, 10501
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - WA, 10502
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - WA, 10503
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - WA, 10504
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - WA, 10600
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - WA, 10701
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - WA, 10702
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - WA, 10703
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - WA, 10800
      - 0.043%
-     - auto
-     - auto
-     - auto
    * - WA, 10901
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - WA, 10902
      - 0.029%
-     - auto
-     - auto
-     - auto
    * - WA, 11000
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - WA, 11101
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - WA, 11102
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - WA, 11103
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - WA, 11104
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - WA, 11200
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - WA, 11300
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - WA, 11401
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - WA, 11402
      - 0.031%
-     - auto
-     - auto
-     - auto
    * - WA, 11501
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - WA, 11502
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - WA, 11503
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - WA, 11504
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - WA, 11505
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - WA, 11506
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - WA, 11507
      - 0.03%
-     - auto
-     - auto
-     - auto
    * - WA, 11601
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - WA, 11602
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - WA, 11603
      - 0.061%
-     - auto
-     - auto
-     - auto
    * - WA, 11604
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - WA, 11605
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - WA, 11606
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - WA, 11607
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - WA, 11608
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - WA, 11609
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - WA, 11610
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - WA, 11611
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - WA, 11612
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - WA, 11613
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - WA, 11614
      - 0.032%
-     - auto
-     - auto
-     - auto
    * - WA, 11615
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - WA, 11616
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - WA, 11701
      - 0.036%
-     - auto
-     - auto
-     - auto
    * - WA, 11702
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - WA, 11703
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - WA, 11704
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - WA, 11705
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - WA, 11706
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - WA, 11801
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - WA, 11802
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - WA, 11900
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - WI, 00100
      - 0.095%
-     - auto
-     - auto
-     - auto
    * - WI, 00101
      - 0.04%
-     - auto
-     - auto
-     - auto
    * - WI, 00102
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - WI, 00103
      - 0.067%
-     - auto
-     - auto
-     - auto
    * - WI, 00200
      - 0.034%
-     - auto
-     - auto
-     - auto
    * - WI, 00300
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - WI, 00600
      - 0.07%
-     - auto
-     - auto
-     - auto
    * - WI, 00700
      - 0.068%
-     - auto
-     - auto
-     - auto
    * - WI, 00800
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - WI, 00900
      - 0.037%
-     - auto
-     - auto
-     - auto
    * - WI, 01000
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - WI, 01001
      - 0.054%
-     - auto
-     - auto
-     - auto
    * - WI, 01300
      - 0.062%
-     - auto
-     - auto
-     - auto
    * - WI, 01301
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - WI, 01400
      - 0.063%
-     - auto
-     - auto
-     - auto
    * - WI, 01401
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - WI, 01500
      - 0.056%
-     - auto
-     - auto
-     - auto
    * - WI, 01501
      - 0.055%
-     - auto
-     - auto
-     - auto
    * - WI, 01600
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - WI, 01601
      - 0.072%
-     - auto
-     - auto
-     - auto
    * - WI, 02400
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - WI, 02500
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - WI, 10000
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - WI, 20000
      - 0.069%
-     - auto
-     - auto
-     - auto
    * - WI, 30000
      - 0.061%
-     - auto
-     - auto
-     - auto
    * - WI, 40101
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - WI, 40301
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - WI, 40701
      - 0.06%
-     - auto
-     - auto
-     - auto
    * - WI, 41001
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - WI, 41002
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - WI, 41003
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - WI, 41004
      - 0.028%
-     - auto
-     - auto
-     - auto
    * - WI, 41005
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - WI, 50000
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - WI, 55101
      - 0.051%
-     - auto
-     - auto
-     - auto
    * - WI, 55102
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - WI, 55103
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - WI, 70101
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - WI, 70201
      - 0.048%
-     - auto
-     - auto
-     - auto
    * - WI, 70301
      - 0.039%
-     - auto
-     - auto
-     - auto
    * - WV, 00100
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - WV, 00200
      - 0.052%
-     - auto
-     - auto
-     - auto
    * - WV, 00300
      - 0.044%
-     - auto
-     - auto
-     - auto
    * - WV, 00400
      - 0.079%
-     - auto
-     - auto
-     - auto
    * - WV, 00500
      - 0.049%
-     - auto
-     - auto
-     - auto
    * - WV, 00600
      - 0.041%
-     - auto
-     - auto
-     - auto
    * - WV, 00700
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - WV, 00800
      - 0.059%
-     - auto
-     - auto
-     - auto
    * - WV, 00900
      - 0.033%
-     - auto
-     - auto
-     - auto
    * - WV, 01000
      - 0.072%
-     - auto
-     - auto
-     - auto
    * - WV, 01100
      - 0.046%
-     - auto
-     - auto
-     - auto
    * - WV, 01200
      - 0.065%
-     - auto
-     - auto
-     - auto
    * - WV, 01300
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - WY, 00100
      - 0.042%
-     - auto
-     - auto
-     - auto
    * - WY, 00200
      - 0.035%
-     - auto
-     - auto
-     - auto
    * - WY, 00300
      - 0.045%
-     - auto
-     - auto
-     - auto
    * - WY, 00400
      - 0.038%
-     - auto
-     - auto
-     - auto
    * - WY, 00500
      - 0.04%
-     - auto
-     - auto
-     - auto
 
 .. _puma_metro_status:
 
@@ -60710,18 +42235,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``pv_system_array_azimuth``
-     - true
-     - degrees
-     - Double
-     -
-     - Array azimuth of the PV system. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270).
-   * - ``pv_system_2_array_azimuth``
-     - true
-     - degrees
-     - Double
-     -
-     - Array azimuth of the second PV system. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270).
+   * - ``pv_system_direction``
+     - false
+     - 
+     - Choice
+     - Roof Pitch, West, Roof Pitch, Southwest, Roof Pitch, South, Roof Pitch, Southeast, Roof Pitch, East, Roof Pitch, Northeast, Roof Pitch, North, Roof Pitch, Northwest, 0 Degrees, 5 Degrees, West, 5 Degrees, Southwest, 5 Degrees, South, 5 Degrees, Southeast, 5 Degrees, East, 10 Degrees, West, 10 Degrees, Southwest, 10 Degrees, South, 10 Degrees, Southeast, 10 Degrees, East, 15 Degrees, West, 15 Degrees, Southwest, 15 Degrees, South, 15 Degrees, Southeast, 15 Degrees, East, 20 Degrees, West, 20 Degrees, Southwest, 20 Degrees, South, 20 Degrees, Southeast, 20 Degrees, East, 25 Degrees, West, 25 Degrees, Southwest, 25 Degrees, South, 25 Degrees, Southeast, 25 Degrees, East, 30 Degrees, West, 30 Degrees, Southwest, 30 Degrees, South, 30 Degrees, Southeast, 30 Degrees, East, 35 Degrees, West, 35 Degrees, Southwest, 35 Degrees, South, 35 Degrees, Southeast, 35 Degrees, East, 40 Degrees, West, 40 Degrees, Southwest, 40 Degrees, South, 40 Degrees, Southeast, 40 Degrees, East, 45 Degrees, West, 45 Degrees, Southwest, 45 Degrees, South, 45 Degrees, Southeast, 45 Degrees, East, 50 Degrees, West, 50 Degrees, Southwest, 50 Degrees, South, 50 Degrees, Southeast, 50 Degrees, East
+     - The azimuth and tilt of the PV system array.
 
 Options
 *******
@@ -60735,45 +42254,35 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``pv_system_array_azimuth``
-     - ``pv_system_2_array_azimuth``
+     - ``pv_system_direction``
 
    * - East
      - 0.16%
-     - 90
-     - 0
+     - Roof Pitch, East
    * - None
      - 99%
-     - 180
-     - 0
+     - Roof Pitch, South
    * - North
      - 0.017%
-     - 0
-     - 0
+     - Roof Pitch, North
    * - Northeast
      - 0.015%
-     - 45
-     - 0
+     - Roof Pitch, Northeast
    * - Northwest
      - 0.01%
-     - 315
-     - 0
+     - Roof Pitch, Northwest
    * - South
      - 0.46%
-     - 180
-     - 0
+     - Roof Pitch, South
    * - Southeast
      - 0.15%
-     - 135
-     - 0
+     - Roof Pitch, Southeast
    * - Southwest
      - 0.12%
-     - 225
-     - 0
+     - Roof Pitch, Southwest
    * - West
      - 0.089%
-     - 270
-     - 0
+     - Roof Pitch, West
 
 .. _pv_system_size:
 
@@ -60817,90 +42326,24 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``pv_system_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is a PV system present.
-   * - ``pv_system_module_type``
+   * - ``pv_system``
      - false
      - 
      - Choice
-     - auto, standard, premium, thin film
-     - Module type of the PV system. If not provided, the OS-HPXML default (see `HPXML Photovoltaics <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-photovoltaics>`_) is used.
-   * - ``pv_system_location``
+     - None, 0.5 kW, 1.0 kW, 1.5 kW, 2.0 kW, 2.5 kW, 3.0 kW, 3.5 kW, 4.0 kW, 4.5 kW, 5.0 kW, 5.5 kW, 6.0 kW, 6.5 kW, 7.0 kW, 7.5 kW, 8.0 kW, 8.5 kW, 9.0 kW, 9.5 kW, 10.0 kW, 10.5 kW, 11.0 kW, 11.5 kW, 12.0 kW, 12.5 kW, 13.0 kW, 13.5 kW, 14.0 kW, 14.5 kW, 15.0 kW, Detailed Example: 10.0 kW, Standard, 14% System Losses, 96% Inverter Efficiency, Detailed Example: 1.5 kW, Premium, Detailed Example: 1.5 kW, Thin Film
+     - The size and type of the PV system.
+   * - ``pv_system_2``
      - false
      - 
      - Choice
-     - auto, roof, ground
-     - Location of the PV system. If not provided, the OS-HPXML default (see `HPXML Photovoltaics <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-photovoltaics>`_) is used.
-   * - ``pv_system_tracking``
+     - None, 0.5 kW, 1.0 kW, 1.5 kW, 2.0 kW, 2.5 kW, 3.0 kW, 3.5 kW, 4.0 kW, 4.5 kW, 5.0 kW, 5.5 kW, 6.0 kW, 6.5 kW, 7.0 kW, 7.5 kW, 8.0 kW, 8.5 kW, 9.0 kW, 9.5 kW, 10.0 kW, 10.5 kW, 11.0 kW, 11.5 kW, 12.0 kW, 12.5 kW, 13.0 kW, 13.5 kW, 14.0 kW, 14.5 kW, 15.0 kW, Detailed Example: 10.0 kW, Standard, 14% System Losses, Detailed Example: 1.5 kW, Premium, Detailed Example: 1.5 kW, Thin Film
+     - The size and type of the second PV system.
+   * - ``pv_system_2_direction``
      - false
      - 
      - Choice
-     - auto, fixed, 1-axis, 1-axis backtracked, 2-axis
-     - Type of tracking for the PV system. If not provided, the OS-HPXML default (see `HPXML Photovoltaics <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-photovoltaics>`_) is used.
-   * - ``pv_system_array_tilt``
-     - true
-     - degrees
-     - String
-     -
-     - Array tilt of the PV system. Can also enter, e.g., RoofPitch, RoofPitch+20, Latitude, Latitude-15, etc.
-   * - ``pv_system_max_power_output``
-     - true
-     - W
-     - Double
-     -
-     - Maximum power output of the PV system. For a shared system, this is the total building maximum power output.
-   * - ``pv_system_inverter_efficiency``
-     - false
-     - Frac
-     - Double
-     - auto
-     - Inverter efficiency of the PV system. If there are two PV systems, this will apply to both. If not provided, the OS-HPXML default (see `HPXML Photovoltaics <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-photovoltaics>`_) is used.
-   * - ``pv_system_system_losses_fraction``
-     - false
-     - Frac
-     - Double
-     - auto
-     - System losses fraction of the PV system. If there are two PV systems, this will apply to both. If not provided, the OS-HPXML default (see `HPXML Photovoltaics <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-photovoltaics>`_) is used.
-   * - ``pv_system_2_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is a second PV system present.
-   * - ``pv_system_2_module_type``
-     - false
-     - 
-     - Choice
-     - auto, standard, premium, thin film
-     - Module type of the second PV system. If not provided, the OS-HPXML default (see `HPXML Photovoltaics <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-photovoltaics>`_) is used.
-   * - ``pv_system_2_location``
-     - false
-     - 
-     - Choice
-     - auto, roof, ground
-     - Location of the second PV system. If not provided, the OS-HPXML default (see `HPXML Photovoltaics <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-photovoltaics>`_) is used.
-   * - ``pv_system_2_tracking``
-     - false
-     - 
-     - Choice
-     - auto, fixed, 1-axis, 1-axis backtracked, 2-axis
-     - Type of tracking for the second PV system. If not provided, the OS-HPXML default (see `HPXML Photovoltaics <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-photovoltaics>`_) is used.
-   * - ``pv_system_2_array_tilt``
-     - true
-     - degrees
-     - String
-     -
-     - Array tilt of the second PV system. Can also enter, e.g., RoofPitch, RoofPitch+20, Latitude, Latitude-15, etc.
-   * - ``pv_system_2_max_power_output``
-     - true
-     - W
-     - Double
-     -
-     - Maximum power output of the second PV system. For a shared system, this is the total building maximum power output.
+     - Roof Pitch, West, Roof Pitch, Southwest, Roof Pitch, South, Roof Pitch, Southeast, Roof Pitch, East, Roof Pitch, Northeast, Roof Pitch, North, Roof Pitch, Northwest, 0 Degrees, 5 Degrees, West, 5 Degrees, Southwest, 5 Degrees, South, 5 Degrees, Southeast, 5 Degrees, East, 10 Degrees, West, 10 Degrees, Southwest, 10 Degrees, South, 10 Degrees, Southeast, 10 Degrees, East, 15 Degrees, West, 15 Degrees, Southwest, 15 Degrees, South, 15 Degrees, Southeast, 15 Degrees, East, 20 Degrees, West, 20 Degrees, Southwest, 20 Degrees, South, 20 Degrees, Southeast, 20 Degrees, East, 25 Degrees, West, 25 Degrees, Southwest, 25 Degrees, South, 25 Degrees, Southeast, 25 Degrees, East, 30 Degrees, West, 30 Degrees, Southwest, 30 Degrees, South, 30 Degrees, Southeast, 30 Degrees, East, 35 Degrees, West, 35 Degrees, Southwest, 35 Degrees, South, 35 Degrees, Southeast, 35 Degrees, East, 40 Degrees, West, 40 Degrees, Southwest, 40 Degrees, South, 40 Degrees, Southeast, 40 Degrees, East, 45 Degrees, West, 45 Degrees, Southwest, 45 Degrees, South, 45 Degrees, Southeast, 45 Degrees, East, 50 Degrees, West, 50 Degrees, Southwest, 50 Degrees, South, 50 Degrees, Southeast, 50 Degrees, East
+     - The azimuth and tilt of the second PV system array.
 
 Options
 *******
@@ -60914,149 +42357,50 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``pv_system_present``
-     - ``pv_system_module_type``
-     - ``pv_system_location``
-     - ``pv_system_tracking``
-     - ``pv_system_array_tilt``
-     - ``pv_system_max_power_output``
-     - ``pv_system_inverter_efficiency``
-     - ``pv_system_system_losses_fraction``
-     - ``pv_system_2_present``
-     - ``pv_system_2_module_type``
-     - ``pv_system_2_location``
-     - ``pv_system_2_tracking``
-     - ``pv_system_2_array_tilt``
-     - ``pv_system_2_max_power_output``
+     - ``pv_system``
+     - ``pv_system_2``
+     - ``pv_system_2_direction``
 
    * - 1.0 kWDC
      - 0.028%
-     - true
-     - auto
-     - roof
-     - auto
-     - roofpitch
-     - 1000
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - roofpitch
-     - 0
+     - 1.0 kW
+     - None
+     - Roof Pitch, South
    * - 3.0 kWDC
      - 0.2%
-     - true
-     - auto
-     - roof
-     - auto
-     - roofpitch
-     - 3000
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - roofpitch
-     - 0
+     - 3.0 kW
+     - None
+     - Roof Pitch, South
    * - 5.0 kWDC
      - 0.31%
-     - true
-     - auto
-     - roof
-     - auto
-     - roofpitch
-     - 5000
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - roofpitch
-     - 0
+     - 5.0 kW
+     - None
+     - Roof Pitch, South
    * - 7.0 kWDC
      - 0.23%
-     - true
-     - auto
-     - roof
-     - auto
-     - roofpitch
-     - 7000
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - roofpitch
-     - 0
+     - 7.0 kW
+     - None
+     - Roof Pitch, South
    * - 9.0 kWDC
      - 0.15%
-     - true
-     - auto
-     - roof
-     - auto
-     - roofpitch
-     - 9000
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - roofpitch
-     - 0
+     - 9.0 kW
+     - None
+     - Roof Pitch, South
    * - 11.0 kWDC
      - 0.078%
-     - true
-     - auto
-     - roof
-     - auto
-     - roofpitch
-     - 11000
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - roofpitch
-     - 0
+     - 11.0 kW
+     - None
+     - Roof Pitch, South
    * - 13.0 kWDC
      - 0.032%
-     - true
-     - auto
-     - roof
-     - auto
-     - roofpitch
-     - 13000
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - roofpitch
-     - 0
+     - 13.0 kW
+     - None
+     - Roof Pitch, South
    * - None
      - 99%
-     - false
-     - auto
-     - roof
-     - auto
-     - roofpitch
-     - 0
-     - auto
-     - auto
-     - false
-     - auto
-     - auto
-     - auto
-     - roofpitch
-     - 0
+     - None
+     - 
+     - 
 
 .. _plug_load_diversity:
 
@@ -61092,18 +42436,18 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``misc_plug_loads_television_2_usage_multiplier``
-     - true
+   * - ``misc_television``
+     - false
      - 
-     - Double
-     -
-     - Additional multiplier on the television energy usage that can reflect, e.g., high/low usage occupants.
-   * - ``misc_plug_loads_other_2_usage_multiplier``
-     - true
+     - Choice
+     - None, 25% Usage, 33% Usage, 50% Usage, 75% Usage, 80% Usage, 90% Usage, 100% Usage, 110% Usage, 125% Usage, 150% Usage, 200% Usage, 300% Usage, 400% Usage, Detailed Example: 620 kWh/yr
+     - The amount of television usage, relative to the national average.
+   * - ``misc_plug_loads``
+     - false
      - 
-     - Double
-     -
-     - Additional multiplier on the other energy usage that can reflect, e.g., high/low usage occupants.
+     - Choice
+     - None, 25% Usage, 33% Usage, 50% Usage, 75% Usage, 80% Usage, 90% Usage, 100% Usage, 110% Usage, 125% Usage, 150% Usage, 200% Usage, 300% Usage, 400% Usage, Detailed Example: 2457 kWh/yr, 85.5% Sensible, 4.5% Latent, Detailed Example: 7302 kWh/yr, 82.2% Sensible, 17.8% Latent
+     - The amount of additional plug load usage, relative to the national average.
 
 Options
 *******
@@ -61117,21 +42461,21 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``misc_plug_loads_television_2_usage_multiplier``
-     - ``misc_plug_loads_other_2_usage_multiplier``
+     - ``misc_television``
+     - ``misc_plug_loads``
 
    * - 50%
      - 25%
-     - 0.5
-     - 0.5
+     - 50% Usage
+     - 50% Usage
    * - 100%
      - 50%
-     - 1.0
-     - 1.0
+     - 100% Usage
+     - 100% Usage
    * - 200%
      - 25%
-     - 2.0
-     - 2.0
+     - 200% Usage
+     - 200% Usage
 
 .. _plug_loads:
 
@@ -61173,48 +42517,18 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``misc_plug_loads_television_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there are televisions.
-   * - ``misc_plug_loads_television_annual_kwh``
-     - false
-     - kWh/yr
-     - Double
-     - auto
-     - The annual energy consumption of the television plug loads. If not provided, the OS-HPXML default (see `HPXML Plug Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-plug-loads>`_) is used.
    * - ``misc_plug_loads_television_usage_multiplier``
      - false
      - 
      - Double
-     - auto
-     - Multiplier on the television energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Plug Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-plug-loads>`_) is used.
-   * - ``misc_plug_loads_other_annual_kwh``
-     - false
-     - kWh/yr
-     - Double
-     - auto
-     - The annual energy consumption of the other residual plug loads. If not provided, the OS-HPXML default (see `HPXML Plug Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-plug-loads>`_) is used.
-   * - ``misc_plug_loads_other_frac_sensible``
-     - false
-     - Frac
-     - Double
-     - auto
-     - Fraction of other residual plug loads' internal gains that are sensible. If not provided, the OS-HPXML default (see `HPXML Plug Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-plug-loads>`_) is used.
-   * - ``misc_plug_loads_other_frac_latent``
-     - false
-     - Frac
-     - Double
-     - auto
-     - Fraction of other residual plug loads' internal gains that are latent. If not provided, the OS-HPXML default (see `HPXML Plug Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-plug-loads>`_) is used.
+     -
+     - Multiplier on the television energy usage that can reflect, e.g., high/low usage occupants.
    * - ``misc_plug_loads_other_usage_multiplier``
      - false
      - 
      - Double
-     - auto
-     - Multiplier on the other energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Plug Loads <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-plug-loads>`_) is used.
+     -
+     - Multiplier on the other energy usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -61228,292 +42542,132 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``misc_plug_loads_television_present``
-     - ``misc_plug_loads_television_annual_kwh``
      - ``misc_plug_loads_television_usage_multiplier``
-     - ``misc_plug_loads_other_annual_kwh``
-     - ``misc_plug_loads_other_frac_sensible``
-     - ``misc_plug_loads_other_frac_latent``
      - ``misc_plug_loads_other_usage_multiplier``
 
    * - 78%
      - 0.21%
-     - true
-     - auto
      - 0.78
-     - auto
-     - auto
-     - auto
      - 0.78
    * - 79%
      - 0.21%
-     - true
-     - auto
      - 0.79
-     - auto
-     - auto
-     - auto
      - 0.79
    * - 82%
      - 1.1%
-     - true
-     - auto
      - 0.82
-     - auto
-     - auto
-     - auto
      - 0.82
    * - 84%
      - 2.9%
-     - true
-     - auto
      - 0.84
-     - auto
-     - auto
-     - auto
      - 0.84
    * - 85%
      - 10%
-     - true
-     - auto
      - 0.85
-     - auto
-     - auto
-     - auto
      - 0.85
    * - 86%
      - 1%
-     - true
-     - auto
      - 0.86
-     - auto
-     - auto
-     - auto
      - 0.86
    * - 89%
      - 5.5%
-     - true
-     - auto
      - 0.89
-     - auto
-     - auto
-     - auto
      - 0.89
    * - 91%
      - 5.6%
-     - true
-     - auto
      - 0.91
-     - auto
-     - auto
-     - auto
      - 0.91
    * - 94%
      - 10%
-     - true
-     - auto
      - 0.94
-     - auto
-     - auto
-     - auto
      - 0.94
    * - 95%
      - 5%
-     - true
-     - auto
      - 0.95
-     - auto
-     - auto
-     - auto
      - 0.95
    * - 96%
      - 4%
-     - true
-     - auto
      - 0.96
-     - auto
-     - auto
-     - auto
      - 0.96
    * - 97%
      - 0.74%
-     - true
-     - auto
      - 0.97
-     - auto
-     - auto
-     - auto
      - 0.97
    * - 99%
      - 2.8%
-     - true
-     - auto
      - 0.99
-     - auto
-     - auto
-     - auto
      - 0.99
    * - 100%
      - 0.28%
-     - true
-     - auto
      - 1.0
-     - auto
-     - auto
-     - auto
      - 1.0
    * - 101%
      - 7.6%
-     - true
-     - auto
      - 1.01
-     - auto
-     - auto
-     - auto
      - 1.01
    * - 102%
      - 0.66%
-     - true
-     - auto
      - 1.02
-     - auto
-     - auto
-     - auto
      - 1.02
    * - 103%
      - 0.17%
-     - true
-     - auto
      - 1.03
-     - auto
-     - auto
-     - auto
      - 1.03
    * - 104%
      - 2.7%
-     - true
-     - auto
      - 1.04
-     - auto
-     - auto
-     - auto
      - 1.04
    * - 105%
      - 0.57%
-     - true
-     - auto
      - 1.05
-     - auto
-     - auto
-     - auto
      - 1.05
    * - 106%
      - 17%
-     - true
-     - auto
      - 1.06
-     - auto
-     - auto
-     - auto
      - 1.06
    * - 108%
      - 1.3%
-     - true
-     - auto
      - 1.08
-     - auto
-     - auto
-     - auto
      - 1.08
    * - 110%
      - 6.1%
-     - true
-     - auto
      - 1.1
-     - auto
-     - auto
-     - auto
      - 1.1
    * - 113%
      - 8%
-     - true
-     - auto
      - 1.13
-     - auto
-     - auto
-     - auto
      - 1.13
    * - 119%
      - 1.8%
-     - true
-     - auto
      - 1.19
-     - auto
-     - auto
-     - auto
      - 1.19
    * - 121%
      - 0.84%
-     - true
-     - auto
      - 1.21
-     - auto
-     - auto
-     - auto
      - 1.21
    * - 123%
      - 1.4%
-     - true
-     - auto
      - 1.23
-     - auto
-     - auto
-     - auto
      - 1.23
    * - 134%
      - 0.74%
-     - true
-     - auto
      - 1.34
-     - auto
-     - auto
-     - auto
      - 1.34
    * - 137%
      - 0.12%
-     - true
-     - auto
      - 1.37
-     - auto
-     - auto
-     - auto
      - 1.37
    * - 140%
      - 0.37%
-     - true
-     - auto
      - 1.4
-     - auto
-     - auto
-     - auto
      - 1.4
    * - 144%
      - 1%
-     - true
-     - auto
      - 1.44
-     - auto
-     - auto
-     - auto
      - 1.44
    * - 166%
      - 0.4%
-     - true
-     - auto
      - 1.66
-     - auto
-     - auto
-     - auto
      - 1.66
 
 .. _reeds_balancing_area:
@@ -61861,18 +43015,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``radiant_barrier_attic_location``
+   * - ``enclosure_radiant_barrier``
      - false
      - 
      - Choice
-     - auto, none, Attic roof only, Attic roof and gable walls, Attic floor
-     - The location of the radiant barrier in the attic.
-   * - ``radiant_barrier_grade``
-     - false
-     - 
-     - Choice
-     - auto, 1, 2, 3
-     - The grade of the radiant barrier in the attic. If not provided, the OS-HPXML default (see `HPXML Roofs <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-roofs>`_) is used.
+     - None, Attic Roof Only, Attic Roof and Gable Walls, Attic Floor
+     - The type of radiant barrier in the attic.
 
 Options
 *******
@@ -61886,21 +43034,17 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``radiant_barrier_attic_location``
-     - ``radiant_barrier_grade``
+     - ``enclosure_radiant_barrier``
 
    * - None
      - 26%
-     - none
-     - 1
+     - None
    * - Yes
      - 0%
-     - Attic roof only
-     - 1
+     - Attic Roof Only
    * - No
      - 74%
-     - none
-     - 1
+     - None
 
 .. _range_spot_vent_hour:
 
@@ -61936,36 +43080,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``kitchen_fans_quantity``
-     - false
-     - #
-     - Integer
-     - auto
-     - The quantity of the kitchen fans. If not provided, the OS-HPXML default (see `HPXML Local Ventilation Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-local-ventilation-fans>`_) is used.
-   * - ``kitchen_fans_flow_rate``
-     - false
-     - CFM
-     - Double
-     - auto
-     - The flow rate of the kitchen fan. If not provided, the OS-HPXML default (see `HPXML Local Ventilation Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-local-ventilation-fans>`_) is used.
-   * - ``kitchen_fans_hours_in_operation``
-     - false
-     - hrs/day
-     - Double
-     - auto
-     - The hours in operation of the kitchen fan. If not provided, the OS-HPXML default (see `HPXML Local Ventilation Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-local-ventilation-fans>`_) is used.
-   * - ``kitchen_fans_power``
-     - false
-     - W
-     - Double
-     - auto
-     - The fan power of the kitchen fan. If not provided, the OS-HPXML default (see `HPXML Local Ventilation Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-local-ventilation-fans>`_) is used.
    * - ``kitchen_fans_start_hour``
      - false
-     - hr
+     - 
      - Integer
-     - auto
-     - The start hour of the kitchen fan. If not provided, the OS-HPXML default (see `HPXML Local Ventilation Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-local-ventilation-fans>`_) is used.
+     -
+     - The hour of the day when the kitchen fans run.
 
 Options
 *******
@@ -61979,179 +43099,79 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``kitchen_fans_quantity``
-     - ``kitchen_fans_flow_rate``
-     - ``kitchen_fans_hours_in_operation``
-     - ``kitchen_fans_power``
      - ``kitchen_fans_start_hour``
 
    * - Hour0
      - 0.7%
-     - auto
-     - auto
-     - auto
-     - auto
      - 0
    * - Hour1
      - 0.7%
-     - auto
-     - auto
-     - auto
-     - auto
      - 1
    * - Hour2
      - 0.4%
-     - auto
-     - auto
-     - auto
-     - auto
      - 2
    * - Hour3
      - 0.4%
-     - auto
-     - auto
-     - auto
-     - auto
      - 3
    * - Hour4
      - 0.7%
-     - auto
-     - auto
-     - auto
-     - auto
      - 4
    * - Hour5
      - 1.1%
-     - auto
-     - auto
-     - auto
-     - auto
      - 5
    * - Hour6
      - 2.5%
-     - auto
-     - auto
-     - auto
-     - auto
      - 6
    * - Hour7
      - 4.2%
-     - auto
-     - auto
-     - auto
-     - auto
      - 7
    * - Hour8
      - 4.6%
-     - auto
-     - auto
-     - auto
-     - auto
      - 8
    * - Hour9
      - 4.8%
-     - auto
-     - auto
-     - auto
-     - auto
      - 9
    * - Hour10
      - 4.2%
-     - auto
-     - auto
-     - auto
-     - auto
      - 10
    * - Hour11
      - 5%
-     - auto
-     - auto
-     - auto
-     - auto
      - 11
    * - Hour12
      - 5.7%
-     - auto
-     - auto
-     - auto
-     - auto
      - 12
    * - Hour13
      - 4.6%
-     - auto
-     - auto
-     - auto
-     - auto
      - 13
    * - Hour14
      - 5.7%
-     - auto
-     - auto
-     - auto
-     - auto
      - 14
    * - Hour15
      - 4.4%
-     - auto
-     - auto
-     - auto
-     - auto
      - 15
    * - Hour16
      - 9.2%
-     - auto
-     - auto
-     - auto
-     - auto
      - 16
    * - Hour17
      - 15%
-     - auto
-     - auto
-     - auto
-     - auto
      - 17
    * - Hour18
      - 12%
-     - auto
-     - auto
-     - auto
-     - auto
      - 18
    * - Hour19
      - 6%
-     - auto
-     - auto
-     - auto
-     - auto
      - 19
    * - Hour20
      - 3.5%
-     - auto
-     - auto
-     - auto
-     - auto
      - 20
    * - Hour21
      - 2.5%
-     - auto
-     - auto
-     - auto
-     - auto
      - 21
    * - Hour22
      - 1.6%
-     - auto
-     - auto
-     - auto
-     - auto
      - 22
    * - Hour23
      - 1.1%
-     - auto
-     - auto
-     - auto
-     - auto
      - 23
 
 .. _refrigerator:
@@ -62220,24 +43240,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``refrigerator_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is a refrigerator present.
-   * - ``refrigerator_location``
+   * - ``appliance_refrigerator``
      - false
      - 
      - Choice
-     - auto, conditioned space, basement - conditioned, basement - unconditioned, garage, other housing unit, other heated space, other multifamily buffer space, other non-freezing space
-     - The space type for the refrigerator location. If not provided, the OS-HPXML default (see `HPXML Refrigerators <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-refrigerators>`_) is used.
-   * - ``refrigerator_rated_annual_kwh``
-     - false
-     - kWh/yr
-     - Double
-     - auto
-     - The EnergyGuide rated annual energy consumption for a refrigerator. If not provided, the OS-HPXML default (see `HPXML Refrigerators <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-refrigerators>`_) is used.
+     - None, 1139 kWh/yr, 90% Usage, 1139 kWh/yr, 100% Usage, 1139 kWh/yr, 110% Usage, 748 kWh/yr, 90% Usage, 748 kWh/yr, 100% Usage, 748 kWh/yr, 110% Usage, 727 kWh/yr, 90% Usage, 727 kWh/yr, 100% Usage, 727 kWh/yr, 110% Usage, 650 kWh/yr, 90% Usage, 650 kWh/yr, 100% Usage, 650 kWh/yr, 110% Usage, 574 kWh/yr, 90% Usage, 574 kWh/yr, 100% Usage, 574 kWh/yr, 110% Usage, 547 kWh/yr, 90% Usage, 547 kWh/yr, 100% Usage, 547 kWh/yr, 110% Usage, 480 kWh/yr, 90% Usage, 480 kWh/yr, 100% Usage, 480 kWh/yr, 110% Usage, 458 kWh/yr, 90% Usage, 458 kWh/yr, 100% Usage, 458 kWh/yr, 110% Usage, 434 kWh/yr, 90% Usage, 434 kWh/yr, 100% Usage, 434 kWh/yr, 110% Usage, 384 kWh/yr, 90% Usage, 384 kWh/yr, 100% Usage, 384 kWh/yr, 110% Usage, 348 kWh/yr, 90% Usage, 348 kWh/yr, 100% Usage, 348 kWh/yr, 110% Usage, Detailed Example: ERI Reference 2006, 2-Bedroom Home, Detailed Example: ERI Reference 2006, 3-Bedroom Home, Detailed Example: ERI Reference 2006, 4-Bedroom Home, Detailed Example: 650 kWh/yr, Conditioned Basement, Detailed Example: 650 kWh/yr, Unconditioned Basement, Detailed Example: 650 kWh/yr, Garage
+     - The type and usage of refrigerator.
 
 Options
 *******
@@ -62251,54 +43259,34 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``refrigerator_present``
-     - ``refrigerator_location``
-     - ``refrigerator_rated_annual_kwh``
+     - ``appliance_refrigerator``
 
    * - EF 6.7
      - 2.6%
-     - true
-     - auto
-     - 1139
+     - 1139 kWh/yr, 100% Usage
    * - EF 10.2
      - 0.4%
-     - true
-     - auto
-     - 748
+     - 748 kWh/yr, 100% Usage
    * - EF 10.5
      - 1.2%
-     - true
-     - auto
-     - 727
+     - 727 kWh/yr, 100% Usage
    * - EF 15.9
      - 8.8%
-     - true
-     - auto
-     - 480
+     - 480 kWh/yr, 100% Usage
    * - EF 17.6
      - 40%
-     - true
-     - auto
-     - 434
+     - 434 kWh/yr, 100% Usage
    * - EF 19.9
      - 41%
-     - true
-     - auto
-     - 384
+     - 384 kWh/yr, 100% Usage
    * - EF 21.9
      - 4.7%
-     - true
-     - auto
-     - 348
+     - 348 kWh/yr, 100% Usage
    * - None
      - 1.3%
-     - false
-     - auto
-     - 0
+     - None
    * - Void
      - 0%
-     - 
-     - 
      - 
 
 .. _refrigerator_usage_level:
@@ -62345,8 +43333,8 @@ Arguments
      - false
      - 
      - Double
-     - auto
-     - Multiplier on the refrigerator energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Refrigerators <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-refrigerators>`_) is used.
+     -
+     - Multiplier on the refrigerator energy usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -62418,18 +43406,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``roof_material_type``
+   * - ``enclosure_roof_material``
      - false
      - 
      - Choice
-     - auto, asphalt or fiberglass shingles, concrete, cool roof, slate or tile shingles, expanded polystyrene sheathing, metal surfacing, plastic/rubber/synthetic sheeting, shingles, wood shingles or shakes
-     - The material type of the roof. If not provided, the OS-HPXML default (see `HPXML Roofs <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-roofs>`_) is used.
-   * - ``roof_color``
-     - false
-     - 
-     - Choice
-     - auto, dark, light, medium, medium dark, reflective
-     - The color of the roof. If not provided, the OS-HPXML default (see `HPXML Roofs <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-roofs>`_) is used.
+     - Asphalt/Fiberglass Shingles, Dark, Asphalt/Fiberglass Shingles, Medium Dark, Asphalt/Fiberglass Shingles, Medium, Asphalt/Fiberglass Shingles, Light, Asphalt/Fiberglass Shingles, Reflective, Tile/Slate, Dark, Tile/Slate, Medium Dark, Tile/Slate, Medium, Tile/Slate, Light, Tile/Slate, Reflective, Metal, Dark, Metal, Medium Dark, Metal, Medium, Metal, Light, Metal, Reflective, Wood Shingles/Shakes, Dark, Wood Shingles/Shakes, Medium Dark, Wood Shingles/Shakes, Medium, Wood Shingles/Shakes, Light, Wood Shingles/Shakes, Reflective, Shingles, Dark, Shingles, Medium Dark, Shingles, Medium, Shingles, Light, Shingles, Reflective, Synthetic Sheeting, Dark, Synthetic Sheeting, Medium Dark, Synthetic Sheeting, Medium, Synthetic Sheeting, Light, Synthetic Sheeting, Reflective, EPS Sheathing, Dark, EPS Sheathing, Medium Dark, EPS Sheathing, Medium, EPS Sheathing, Light, EPS Sheathing, Reflective, Concrete, Dark, Concrete, Medium Dark, Concrete, Medium, Concrete, Light, Concrete, Reflective, Cool Roof, Detailed Example: 0.2 Solar Absorptance, Detailed Example: 0.4 Solar Absorptance, Detailed Example: 0.6 Solar Absorptance, Detailed Example: 0.75 Solar Absorptance
+     - The material type and color of the roof.
 
 Options
 *******
@@ -62443,37 +43425,29 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``roof_material_type``
-     - ``roof_color``
+     - ``enclosure_roof_material``
 
    * - Asphalt Shingles, Medium
      - 45%
-     - asphalt or fiberglass shingles
-     - medium
+     - Asphalt/Fiberglass Shingles, Medium
    * - Composition Shingles
      - 36%
-     - asphalt or fiberglass shingles
-     - medium
+     - Asphalt/Fiberglass Shingles, Medium
    * - Metal, Dark
      - 8.4%
-     - metal surfacing
-     - dark
+     - Metal, Dark
    * - Slate
      - 1.2%
-     - slate or tile shingles
-     - medium
+     - Tile/Slate, Medium
    * - Tile, Clay or Ceramic
      - 3.8%
-     - slate or tile shingles
-     - medium
+     - Tile/Slate, Medium
    * - Tile, Concrete
      - 1.7%
-     - slate or tile shingles
-     - medium
+     - Tile/Slate, Medium
    * - Wood Shingles
      - 4.2%
-     - wood shingles or shakes
-     - medium
+     - Wood Shingles/Shakes, Medium
 
 .. _state:
 
@@ -62511,24 +43485,18 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``site_state_code``
-     - false
-     - 
-     - Choice
-     - auto, AK, AL, AR, AZ, CA, CO, CT, DC, DE, FL, GA, HI, IA, ID, IL, IN, KS, KY, LA, MA, MD, ME, MI, MN, MO, MS, MT, NC, ND, NE, NH, NJ, NM, NV, NY, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VA, VT, WA, WI, WV, WY
-     - State code of the home address. If not provided, the OS-HPXML default (see `HPXML Site <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-site>`_) is used.
    * - ``extra_refrigerator_usage_multiplier``
      - false
      - 
      - Double
-     - auto
-     - Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Refrigerators <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-refrigerators>`_) is used.
+     -
+     - Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/low usage occupants.
    * - ``freezer_usage_multiplier``
      - false
      - 
      - Double
-     - auto
-     - Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Freezers <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-freezers>`_) is used.
+     -
+     - Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -62542,263 +43510,211 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``site_state_code``
      - ``extra_refrigerator_usage_multiplier``
      - ``freezer_usage_multiplier``
 
    * - AK
      - 0.23%
-     - AK
      - 1.80
      - 1.27
    * - AL
      - 1.6%
-     - AL
      - 1.76
      - 1.34
    * - AR
      - 1%
-     - AR
      - 1.90
      - 1.25
    * - AZ
      - 2.2%
-     - AZ
      - 1.74
      - 1.09
    * - CA
      - 10%
-     - CA
      - 1.86
      - 1.06
    * - CO
      - 1.7%
-     - CO
      - 1.85
      - 1.06
    * - CT
      - 1.1%
-     - CT
      - 1.96
      - 1.08
    * - DC
      - 0.23%
-     - DC
      - 2.15
      - 1.21
    * - DE
      - 0.31%
-     - DE
      - 1.68
      - 1.12
    * - FL
      - 6.8%
-     - FL
      - 1.87
      - 1.04
    * - GA
      - 3.1%
-     - GA
      - 1.74
      - 1.26
    * - HI
      - 0.4%
-     - HI
      - 1.94
      - 1.21
    * - IA
      - 1%
-     - IA
      - 1.77
      - 1.13
    * - ID
      - 0.51%
-     - ID
      - 1.62
      - 1.38
    * - IL
      - 4%
-     - IL
      - 1.82
      - 1.07
    * - IN
      - 2.1%
-     - IN
      - 1.78
      - 1.25
    * - KS
      - 0.93%
-     - KS
      - 1.77
      - 1.04
    * - KY
      - 1.5%
-     - KY
      - 1.80
      - 1.19
    * - LA
      - 1.5%
-     - LA
      - 1.88
      - 1.32
    * - MA
      - 2.1%
-     - MA
      - 2.00
      - 1.06
    * - MD
      - 1.8%
-     - MD
      - 1.94
      - 1.20
    * - ME
      - 0.54%
-     - ME
      - 1.88
      - 1.09
    * - MI
      - 3.4%
-     - MI
      - 1.73
      - 1.22
    * - MN
      - 1.8%
-     - MN
      - 1.72
      - 1.27
    * - MO
      - 2%
-     - MO
      - 1.76
      - 1.07
    * - MS
      - 0.97%
-     - MS
      - 1.85
      - 1.34
    * - MT
      - 0.37%
-     - MT
      - 1.69
      - 1.33
    * - NC
      - 3.3%
-     - NC
      - 1.80
      - 1.10
    * - ND
      - 0.26%
-     - ND
      - 1.73
      - 1.29
    * - NE
      - 0.61%
-     - NE
      - 1.85
      - 1.19
    * - NH
      - 0.46%
-     - NH
      - 1.90
      - 1.23
    * - NJ
      - 2.7%
-     - NJ
      - 1.81
      - 1.05
    * - NM
      - 0.68%
-     - NM
      - 1.90
      - 1.17
    * - NV
      - 0.9%
-     - NV
      - 1.87
      - 1.02
    * - NY
      - 6.1%
-     - NY
      - 1.91
      - 1.06
    * - OH
      - 3.8%
-     - OH
      - 1.81
      - 1.12
    * - OK
      - 1.3%
-     - OK
      - 1.86
      - 1.26
    * - OR
      - 1.3%
-     - OR
      - 1.84
      - 1.39
    * - PA
      - 4.2%
-     - PA
      - 1.73
      - 1.18
    * - RI
      - 0.35%
-     - RI
      - 1.91
      - 0.97
    * - SC
      - 1.6%
-     - SC
      - 1.83
      - 1.13
    * - SD
      - 0.28%
-     - SD
      - 1.83
      - 1.37
    * - TN
      - 2.1%
-     - TN
      - 1.86
      - 1.25
    * - TX
      - 7.8%
-     - TX
      - 1.84
      - 1.18
    * - UT
      - 0.76%
-     - UT
      - 1.78
      - 1.20
    * - VA
      - 2.6%
-     - VA
      - 1.80
      - 1.14
    * - VT
      - 0.24%
-     - VT
      - 1.82
      - 1.25
    * - WA
      - 2.2%
-     - WA
      - 1.76
      - 1.14
    * - WI
      - 2%
-     - WI
      - 1.74
      - 1.20
    * - WV
      - 0.66%
-     - WV
      - 1.68
      - 1.15
    * - WY
      - 0.2%
-     - WY
      - 1.80
      - 1.32
 
@@ -63051,12 +43967,6 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``year_built``
-     - false
-     - 
-     - Integer
-     - auto
-     - The year the building was built.
    * - ``vintage``
      - false
      - 
@@ -63076,44 +43986,34 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``year_built``
      - ``vintage``
 
    * - <1940
      - 13%
-     - auto
      - <1940
    * - 1940s
      - 4.9%
-     - auto
      - 1940s
    * - 1950s
      - 10%
-     - auto
      - 1950s
    * - 1960s
      - 11%
-     - auto
      - 1960s
    * - 1970s
      - 15%
-     - auto
      - 1970s
    * - 1980s
      - 13%
-     - auto
      - 1980s
    * - 1990s
      - 14%
-     - auto
      - 1990s
    * - 2000s
      - 14%
-     - auto
      - 2000s
    * - 2010s
      - 5.1%
-     - auto
      - 2010s
 
 .. _vintage_acs:
@@ -63221,168 +44121,30 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``water_heater_type``
+   * - ``dhw_water_heater``
      - true
      - 
      - Choice
-     - none, storage water heater, instantaneous water heater, heat pump water heater, space-heating boiler with storage tank, space-heating boiler with tankless coil
-     - The type of water heater. Use 'none' if there is no water heater.
-   * - ``water_heater_fuel_type``
-     - true
-     - 
-     - Choice
-     - electricity, natural gas, fuel oil, propane, wood, coal
-     - The fuel type of water heater. Ignored for heat pump water heater.
-   * - ``water_heater_tank_volume``
-     - false
-     - gal
-     - Double
-     - auto
-     - Nominal volume of water heater tank. If not provided, the OS-HPXML default (see `Conventional Storage <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#conventional-storage>`_, `Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#heat-pump>`_, `Combi Boiler w/ Storage <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#combi-boiler-w-storage>`_) is used.
-   * - ``water_heater_efficiency_type``
-     - true
-     - 
-     - Choice
-     - EnergyFactor, UniformEnergyFactor
-     - The efficiency type of water heater. Does not apply to space-heating boilers.
-   * - ``water_heater_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - Rated Energy Factor or Uniform Energy Factor. Does not apply to space-heating boilers.
-   * - ``water_heater_usage_bin``
+     - None, Electricity, Tank, UEF 0.90, Electricity, Tank, UEF 0.92, Electricity, Tank, UEF 0.94, Electricity, Tankless, UEF 0.94, Electricity, Tankless, UEF 0.98, Electricity, Heat Pump, UEF 3.50, Electricity, Heat Pump, UEF 3.75, Electricity, Heat Pump, UEF 4.00, Natural Gas, Tank, UEF 0.57, Natural Gas, Tank, UEF 0.60, Natural Gas, Tank, UEF 0.64, Natural Gas, Tank, UEF 0.67, Natural Gas, Tank, UEF 0.70, Natural Gas, Tank, UEF 0.80, Natural Gas, Tankless, UEF 0.82, Natural Gas, Tankless, UEF 0.93, Natural Gas, Tankless, UEF 0.96, Natural Gas, Tankless, UEF 0.98, Fuel Oil, Tank, UEF 0.61, Fuel Oil, Tank, UEF 0.64, Fuel Oil, Tank, UEF 0.67, Propane, Tank, UEF 0.57, Propane, Tank, UEF 0.60, Propane, Tank, UEF 0.64, Propane, Tank, UEF 0.67, Propane, Tank, UEF 0.70, Propane, Tank, UEF 0.80, Propane, Tankless, UEF 0.82, Propane, Tankless, UEF 0.93, Propane, Tankless, UEF 0.96, Wood, Tank, UEF 0.60, Coal, Tank, UEF 0.60, Space-Heating Boiler w/ Storage Tank, Space-Heating Boiler w/ Tankless Coil, Detailed Example: Electricity, Tank, 40 gal, EF 0.93, Detailed Example: Electricity, Tank, UEF 0.94, 135F, Detailed Example: Electricity, Tankless, EF 0.96, Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1, Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78, Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78, Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76, Detailed Example: Natural Gas, Tankless, EF 0.95
+     - The type and efficiency of the water heater.
+   * - ``dhw_solar_thermal``
      - false
      - 
      - Choice
-     - auto, very small, low, medium, high
-     - The usage of the water heater. Only applies if Efficiency Type is UniformEnergyFactor and Type is not instantaneous water heater. Does not apply to space-heating boilers. If not provided, the OS-HPXML default (see `Conventional Storage <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#conventional-storage>`_, `Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#heat-pump>`_) is used.
-   * - ``water_heater_recovery_efficiency``
+     - None, Indirect, Flat Plate, 40 sqft, Indirect, Flat Plate, 64 sqft, Direct, Flat Plate, 40 sqft, Direct. Flat Plate, 64 sqft, Direct, Integrated Collector Storage, 40 sqft, Direct, Integrated Collector Storage, 64 sqft, Direct, Evacuated Tube, 40 sqft, Direct, Evacuated Tube, 64 sqft, Thermosyphon, Flat Plate, 40 sqft, Thermosyphon, Flat Plate, 64 sqft, 60% Solar Fraction, 65% Solar Fraction, 70% Solar Fraction, 75% Solar Fraction, 80% Solar Fraction, 85% Solar Fraction, 90% Solar Fraction, 95% Solar Fraction
+     - The size and type of the solar thermal system for domestic hot water.
+   * - ``dhw_solar_thermal_direction``
      - false
-     - Frac
-     - Double
-     - auto
-     - Ratio of energy delivered to water heater to the energy content of the fuel consumed by the water heater. Only used for non-electric storage water heaters. If not provided, the OS-HPXML default (see `Conventional Storage <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#conventional-storage>`_) is used.
-   * - ``water_heater_heating_capacity``
-     - false
-     - Btu/hr
-     - Double
-     - auto
-     - Heating capacity. Only applies to storage water heater and heat pump water heater (compressor). If not provided, the OS-HPXML default (see `Conventional Storage <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#conventional-storage>`_, `Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#heat-pump>`_) is used.
-   * - ``water_heater_backup_heating_capacity``
-     - false
-     - Btu/hr
-     - Double
-     - auto
-     - Backup heating capacity for a heat pump water heater. If not provided, the OS-HPXML default (see `Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#heat-pump>`_) is used.
-   * - ``water_heater_standby_loss``
-     - false
-     - F/hr
-     - Double
-     - auto
-     - The standby loss of water heater. Only applies to space-heating boilers. If not provided, the OS-HPXML default (see `Combi Boiler w/ Storage <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#combi-boiler-w-storage>`_) is used.
-   * - ``water_heater_jacket_rvalue``
-     - false
+     - 
+     - Choice
+     - Roof Pitch, West, Roof Pitch, Southwest, Roof Pitch, South, Roof Pitch, Southeast, Roof Pitch, East, Roof Pitch, Northeast, Roof Pitch, North, Roof Pitch, Northwest, 0 Degrees, 5 Degrees, West, 5 Degrees, Southwest, 5 Degrees, South, 5 Degrees, Southeast, 5 Degrees, East, 10 Degrees, West, 10 Degrees, Southwest, 10 Degrees, South, 10 Degrees, Southeast, 10 Degrees, East, 15 Degrees, West, 15 Degrees, Southwest, 15 Degrees, South, 15 Degrees, Southeast, 15 Degrees, East, 20 Degrees, West, 20 Degrees, Southwest, 20 Degrees, South, 20 Degrees, Southeast, 20 Degrees, East, 25 Degrees, West, 25 Degrees, Southwest, 25 Degrees, South, 25 Degrees, Southeast, 25 Degrees, East, 30 Degrees, West, 30 Degrees, Southwest, 30 Degrees, South, 30 Degrees, Southeast, 30 Degrees, East, 35 Degrees, West, 35 Degrees, Southwest, 35 Degrees, South, 35 Degrees, Southeast, 35 Degrees, East, 40 Degrees, West, 40 Degrees, Southwest, 40 Degrees, South, 40 Degrees, Southeast, 40 Degrees, East, 45 Degrees, West, 45 Degrees, Southwest, 45 Degrees, South, 45 Degrees, Southeast, 45 Degrees, East, 50 Degrees, West, 50 Degrees, Southwest, 50 Degrees, South, 50 Degrees, Southeast, 50 Degrees, East
+     - The azimuth and tilt of the solar thermal system collectors.
+   * - ``dhw_water_heater_jacket_rvalue``
+     - true
      - h-ft^2-R/Btu
      - Double
      -
-     - The jacket R-value of water heater. Doesn't apply to instantaneous water heater or space-heating boiler with tankless coil. If not provided, defaults to no jacket insulation.
-   * - ``water_heater_setpoint_temperature``
-     - false
-     - F
-     - Double
-     - auto
-     - The setpoint temperature of water heater. If not provided, the OS-HPXML default (see `HPXML Water Heating Systems <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-water-heating-systems>`_) is used.
-   * - ``water_heater_num_bedrooms_served``
-     - false
-     - #
-     - Integer
-     -
-     - Number of bedrooms served (directly or indirectly) by the water heater. Only needed if single-family attached or apartment unit and it is a shared water heater serving multiple dwelling units. Used to apportion water heater tank losses to the unit.
-   * - ``water_heater_uses_desuperheater``
-     - false
-     - 
-     - Boolean
-     - auto, true, false
-     - Requires that the dwelling unit has a air-to-air, mini-split, or ground-to-air heat pump or a central air conditioner or mini-split air conditioner. If not provided, assumes no desuperheater.
-   * - ``water_heater_tank_model_type``
-     - false
-     - 
-     - Choice
-     - auto, mixed, stratified
-     - Type of tank model to use. The 'stratified' tank generally provide more accurate results, but may significantly increase run time. Applies only to storage water heater. If not provided, the OS-HPXML default (see `Conventional Storage <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#conventional-storage>`_) is used.
-   * - ``water_heater_operating_mode``
-     - false
-     - 
-     - Choice
-     - auto, hybrid/auto, heat pump only
-     - The water heater operating mode. The 'heat pump only' option only uses the heat pump, while 'hybrid/auto' allows the backup electric resistance to come on in high demand situations. This is ignored if a scheduled operating mode type is selected. Applies only to heat pump water heater. If not provided, the OS-HPXML default (see `Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#heat-pump>`_) is used.
-   * - ``solar_thermal_system_type``
-     - true
-     - 
-     - Choice
-     - none, hot water
-     - The type of solar thermal system. Use 'none' if there is no solar thermal system.
-   * - ``solar_thermal_collector_area``
-     - true
-     - ft^2
-     - Double
-     -
-     - The collector area of the solar thermal system.
-   * - ``solar_thermal_collector_loop_type``
-     - true
-     - 
-     - Choice
-     - liquid direct, liquid indirect, passive thermosyphon
-     - The collector loop type of the solar thermal system.
-   * - ``solar_thermal_collector_type``
-     - true
-     - 
-     - Choice
-     - evacuated tube, single glazing black, double glazing black, integrated collector storage
-     - The collector type of the solar thermal system.
-   * - ``solar_thermal_collector_azimuth``
-     - true
-     - degrees
-     - Double
-     -
-     - The collector azimuth of the solar thermal system. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270).
-   * - ``solar_thermal_collector_tilt``
-     - true
-     - degrees
-     - String
-     -
-     - The collector tilt of the solar thermal system. Can also enter, e.g., RoofPitch, RoofPitch+20, Latitude, Latitude-15, etc.
-   * - ``solar_thermal_collector_rated_optical_efficiency``
-     - true
-     - Frac
-     - Double
-     -
-     - The collector rated optical efficiency of the solar thermal system.
-   * - ``solar_thermal_collector_rated_thermal_losses``
-     - true
-     - Btu/hr-ft^2-R
-     - Double
-     -
-     - The collector rated thermal losses of the solar thermal system.
-   * - ``solar_thermal_storage_volume``
-     - false
-     - gal
-     - Double
-     - auto
-     - The storage volume of the solar thermal system. If not provided, the OS-HPXML default (see `Detailed Inputs <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#detailed-inputs>`_) is used.
-   * - ``solar_thermal_solar_fraction``
-     - true
-     - Frac
-     - Double
-     -
-     - The solar fraction of the solar thermal system. If provided, overrides all other solar thermal inputs.
-   * - ``water_heater_has_flue_or_chimney``
-     - true
-     - 
-     - String
-     -
-     - Whether the water heater has a flue or chimney.
+     - The jacket R-value of the storage water heater.
 
 Options
 *******
@@ -63396,672 +44158,143 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``water_heater_type``
-     - ``water_heater_fuel_type``
-     - ``water_heater_tank_volume``
-     - ``water_heater_efficiency_type``
-     - ``water_heater_efficiency``
-     - ``water_heater_usage_bin``
-     - ``water_heater_recovery_efficiency``
-     - ``water_heater_heating_capacity``
-     - ``water_heater_backup_heating_capacity``
-     - ``water_heater_standby_loss``
-     - ``water_heater_jacket_rvalue``
-     - ``water_heater_setpoint_temperature``
-     - ``water_heater_num_bedrooms_served``
-     - ``water_heater_uses_desuperheater``
-     - ``water_heater_tank_model_type``
-     - ``water_heater_operating_mode``
-     - ``solar_thermal_system_type``
-     - ``solar_thermal_collector_area``
-     - ``solar_thermal_collector_loop_type``
-     - ``solar_thermal_collector_type``
-     - ``solar_thermal_collector_azimuth``
-     - ``solar_thermal_collector_tilt``
-     - ``solar_thermal_collector_rated_optical_efficiency``
-     - ``solar_thermal_collector_rated_thermal_losses``
-     - ``solar_thermal_storage_volume``
-     - ``solar_thermal_solar_fraction``
-     - ``water_heater_has_flue_or_chimney``
+     - ``dhw_water_heater``
+     - ``dhw_solar_thermal``
+     - ``dhw_solar_thermal_direction``
+     - ``dhw_water_heater_jacket_rvalue``
 
    * - Electric Heat Pump, 3.5 UEF
      - 0.31%
-     - heat pump water heater
-     - electricity
-     - auto
-     - UniformEnergyFactor
-     - 3.5
-     - auto
-     - auto
-     - auto
-     - auto
+     - Electricity, Heat Pump, UEF 3.50
+     - None
+     - Roof Pitch, South
      - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Electric Premium
      - 9.9%
-     - storage water heater
-     - electricity
-     - auto
-     - UniformEnergyFactor
-     - 0.94
-     - auto
-     - auto
-     - auto
-     - auto
+     - Electricity, Tank, UEF 0.94
+     - None
+     - Roof Pitch, South
      - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Electric Standard
      - 36%
-     - storage water heater
-     - electricity
-     - auto
-     - UniformEnergyFactor
-     - 0.92
-     - auto
-     - auto
-     - auto
-     - auto
+     - Electricity, Tank, UEF 0.92
+     - None
+     - Roof Pitch, South
      - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Electric Tankless
      - 2%
-     - instantaneous water heater
-     - electricity
+     - Electricity, Tankless, UEF 0.94
+     - None
+     - Roof Pitch, South
      - 0
-     - UniformEnergyFactor
-     - 0.94
-     - auto
-     - auto
-     - auto
-     - auto
-     - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - FIXME Fuel Oil Indirect
      - 0.72%
-     - storage water heater
-     - fuel oil
-     - auto
-     - UniformEnergyFactor
-     - 0.64
-     - auto
-     - auto
-     - auto
-     - auto
+     - Fuel Oil, Tank, UEF 0.64
+     - None
+     - Roof Pitch, South
      - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Fuel Oil Premium
      - 0.47%
-     - storage water heater
-     - fuel oil
-     - auto
-     - UniformEnergyFactor
-     - 0.67
-     - auto
-     - auto
-     - auto
-     - auto
+     - Fuel Oil, Tank, UEF 0.67
+     - None
+     - Roof Pitch, South
      - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Fuel Oil Standard
      - 1.4%
-     - storage water heater
-     - fuel oil
-     - auto
-     - UniformEnergyFactor
-     - 0.64
-     - auto
-     - auto
-     - auto
-     - auto
+     - Fuel Oil, Tank, UEF 0.64
+     - None
+     - Roof Pitch, South
      - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Natural Gas Premium
      - 8.3%
-     - storage water heater
-     - natural gas
-     - auto
-     - UniformEnergyFactor
-     - 0.7
-     - auto
-     - auto
-     - auto
-     - auto
+     - Natural Gas, Tank, UEF 0.70
+     - None
+     - Roof Pitch, South
      - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Natural Gas Standard
      - 33%
-     - storage water heater
-     - natural gas
-     - auto
-     - UniformEnergyFactor
-     - 0.6
-     - auto
-     - auto
-     - auto
-     - auto
+     - Natural Gas, Tank, UEF 0.60
+     - None
+     - Roof Pitch, South
      - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Natural Gas Tankless
      - 2.9%
-     - instantaneous water heater
-     - natural gas
+     - Natural Gas, Tankless, UEF 0.82
+     - None
+     - Roof Pitch, South
      - 0
-     - UniformEnergyFactor
-     - 0.82
-     - auto
-     - auto
-     - auto
-     - auto
-     - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Other Fuel
      - 0.044%
-     - storage water heater
-     - coal
-     - auto
-     - UniformEnergyFactor
-     - 0.6
-     - auto
-     - auto
-     - auto
-     - auto
+     - Coal, Tank, UEF 0.60
+     - None
+     - Roof Pitch, South
      - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Propane Premium
      - 0.63%
-     - storage water heater
-     - propane
-     - auto
-     - UniformEnergyFactor
-     - 0.67
-     - auto
-     - auto
-     - auto
-     - auto
+     - Propane, Tank, UEF 0.67
+     - None
+     - Roof Pitch, South
      - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Propane Standard
      - 2.4%
-     - storage water heater
-     - propane
-     - auto
-     - UniformEnergyFactor
-     - 0.6
-     - auto
-     - auto
-     - auto
-     - auto
+     - Propane, Tank, UEF 0.60
+     - None
+     - Roof Pitch, South
      - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Propane Tankless
      - 0.92%
-     - instantaneous water heater
-     - propane
+     - Propane, Tankless, UEF 0.82
+     - None
+     - Roof Pitch, South
      - 0
-     - UniformEnergyFactor
-     - 0.82
-     - auto
-     - auto
-     - auto
-     - auto
-     - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup
      - 0.037%
-     - storage water heater
-     - electricity
-     - auto
-     - UniformEnergyFactor
-     - 0.92
-     - auto
-     - auto
-     - auto
-     - auto
-     - 0
+     - Electricity, Tank, UEF 0.92
+     - Indirect, Flat Plate, 40 sqft
+     - Roof Pitch, East
      - 6.2
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - hot water
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 90
-     - roofpitch
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Solar Thermal, 40 sqft, North, Roof Pitch, Electric Standard Backup
      - 0.004%
-     - storage water heater
-     - electricity
-     - auto
-     - UniformEnergyFactor
-     - 0.92
-     - auto
-     - auto
-     - auto
-     - auto
-     - 0
+     - Electricity, Tank, UEF 0.92
+     - Indirect, Flat Plate, 40 sqft
+     - Roof Pitch, North
      - 6.2
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - hot water
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - roofpitch
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup
      - 0.093%
-     - storage water heater
-     - electricity
-     - auto
-     - UniformEnergyFactor
-     - 0.92
-     - auto
-     - auto
-     - auto
-     - auto
-     - 0
+     - Electricity, Tank, UEF 0.92
+     - Indirect, Flat Plate, 40 sqft
+     - Roof Pitch, South
      - 6.2
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - hot water
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 180
-     - roofpitch
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup
      - 0.00032%
-     - storage water heater
-     - fuel oil
-     - auto
-     - UniformEnergyFactor
-     - 0.64
-     - auto
-     - auto
-     - auto
-     - auto
+     - Fuel Oil, Tank, UEF 0.64
+     - Indirect, Flat Plate, 40 sqft
+     - Roof Pitch, South
      - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - hot water
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 180
-     - roofpitch
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup
      - 0.002%
-     - storage water heater
-     - natural gas
-     - auto
-     - UniformEnergyFactor
-     - 0.60
-     - auto
-     - auto
-     - auto
-     - auto
+     - Natural Gas, Tank, UEF 0.60
+     - Indirect, Flat Plate, 40 sqft
+     - Roof Pitch, South
      - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - hot water
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 180
-     - roofpitch
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup
      - 0.0058%
-     - storage water heater
-     - propane
-     - auto
-     - UniformEnergyFactor
-     - 0.60
-     - auto
-     - auto
-     - auto
-     - auto
+     - Propane, Tank, UEF 0.60
+     - Indirect, Flat Plate, 40 sqft
+     - Roof Pitch, South
      - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - hot water
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 180
-     - roofpitch
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup
      - 0.022%
-     - storage water heater
-     - electricity
-     - auto
-     - UniformEnergyFactor
-     - 0.92
-     - auto
-     - auto
-     - auto
-     - auto
-     - 0
+     - Electricity, Tank, UEF 0.92
+     - Indirect, Flat Plate, 40 sqft
+     - Roof Pitch, West
      - 6.2
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - hot water
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 270
-     - roofpitch
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
    * - Wood
      - 0.076%
-     - storage water heater
-     - wood
-     - auto
-     - UniformEnergyFactor
-     - 0.6
-     - auto
-     - auto
-     - auto
-     - auto
+     - Wood, Tank, UEF 0.60
+     - None
+     - Roof Pitch, South
      - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
 
 .. _water_heater_fuel:
 
@@ -64257,12 +44490,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``water_heater_location``
+   * - ``dhw_water_heater_location``
      - false
      - 
      - Choice
-     - auto, conditioned space, basement - conditioned, basement - unconditioned, garage, attic, attic - vented, attic - unvented, crawlspace, crawlspace - vented, crawlspace - unvented, crawlspace - conditioned, other exterior, other housing unit, other heated space, other multifamily buffer space, other non-freezing space
-     - The location of water heater. If not provided, the OS-HPXML default (see `HPXML Water Heating Systems <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-water-heating-systems>`_) is used.
+     - Default, Conditioned Space, Basement, Garage, Crawlspace, Attic, Other Heated Space, Outside
+     - The location of the water heater. Defaults based on the foundation/garage type.
 
 Options
 *******
@@ -64276,32 +44509,32 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``water_heater_location``
+     - ``dhw_water_heater_location``
 
    * - Attic
      - 0.87%
-     - attic
+     - Attic
    * - Conditioned Mechanical Room
      - 14%
-     - other heated space
+     - Other Heated Space
    * - Crawlspace
      - 0.18%
-     - crawlspace
+     - Crawlspace
    * - Garage
      - 15%
-     - garage
+     - Garage
    * - Heated Basement
      - 11%
-     - basement - conditioned
+     - Basement
    * - Living Space
      - 43%
-     - conditioned space
+     - Conditioned Space
    * - Outside
      - 7.1%
-     - other exterior
+     - Outside
    * - Unheated Basement
      - 8.7%
-     - basement - unconditioned
+     - Basement
 
 .. _window_areas:
 
@@ -64351,84 +44584,18 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``window_front_wwr``
-     - true
-     - Frac
-     - Double
+   * - ``geometry_window_areas_or_wwrs``
+     - false
+     - ft2 or frac
+     - String
      -
-     - The ratio of window area to wall area for the unit's front facade. Enter 0 if specifying Front Window Area instead. If the front wall is adiabatic, the value will be ignored.
-   * - ``window_back_wwr``
-     - true
-     - Frac
-     - Double
+     - The amount of window area on the unit's front/back/left/right facades. Use a comma-separated list like '0.2, 0.2, 0.1, 0.1' to specify Window-to-Wall Ratios (WWR) or '108, 108, 72, 72' to specify absolute areas. If a facade is adiabatic, the value will be ignored.
+   * - ``geometry_skylight_areas``
+     - false
+     - ft2
+     - String
      -
-     - The ratio of window area to wall area for the unit's back facade. Enter 0 if specifying Back Window Area instead. If the back wall is adiabatic, the value will be ignored.
-   * - ``window_left_wwr``
-     - true
-     - Frac
-     - Double
-     -
-     - The ratio of window area to wall area for the unit's left facade (when viewed from the front). Enter 0 if specifying Left Window Area instead. If the left wall is adiabatic, the value will be ignored.
-   * - ``window_right_wwr``
-     - true
-     - Frac
-     - Double
-     -
-     - The ratio of window area to wall area for the unit's right facade (when viewed from the front). Enter 0 if specifying Right Window Area instead. If the right wall is adiabatic, the value will be ignored.
-   * - ``window_area_front``
-     - true
-     - ft^2
-     - Double
-     -
-     - The amount of window area on the unit's front facade. Enter 0 if specifying Front Window-to-Wall Ratio instead. If the front wall is adiabatic, the value will be ignored.
-   * - ``window_area_back``
-     - true
-     - ft^2
-     - Double
-     -
-     - The amount of window area on the unit's back facade. Enter 0 if specifying Back Window-to-Wall Ratio instead. If the back wall is adiabatic, the value will be ignored.
-   * - ``window_area_left``
-     - true
-     - ft^2
-     - Double
-     -
-     - The amount of window area on the unit's left facade (when viewed from the front). Enter 0 if specifying Left Window-to-Wall Ratio instead. If the left wall is adiabatic, the value will be ignored.
-   * - ``window_area_right``
-     - true
-     - ft^2
-     - Double
-     -
-     - The amount of window area on the unit's right facade (when viewed from the front). Enter 0 if specifying Right Window-to-Wall Ratio instead. If the right wall is adiabatic, the value will be ignored.
-   * - ``window_aspect_ratio``
-     - true
-     - Frac
-     - Double
-     -
-     - Ratio of window height to width.
-   * - ``skylight_area_front``
-     - true
-     - ft^2
-     - Double
-     -
-     - The amount of skylight area on the unit's front conditioned roof facade.
-   * - ``skylight_area_back``
-     - true
-     - ft^2
-     - Double
-     -
-     - The amount of skylight area on the unit's back conditioned roof facade.
-   * - ``skylight_area_left``
-     - true
-     - ft^2
-     - Double
-     -
-     - The amount of skylight area on the unit's left conditioned roof facade (when viewed from the front).
-   * - ``skylight_area_right``
-     - true
-     - ft^2
-     - Double
-     -
-     - The amount of skylight area on the unit's right conditioned roof facade (when viewed from the front).
+     - The amount of skylight area on the unit's front/back/left/right roofs. Use a comma-separated list like '50, 0, 0, 0'.
 
 Options
 *******
@@ -64442,110 +44609,33 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``window_front_wwr``
-     - ``window_back_wwr``
-     - ``window_left_wwr``
-     - ``window_right_wwr``
-     - ``window_area_front``
-     - ``window_area_back``
-     - ``window_area_left``
-     - ``window_area_right``
-     - ``window_aspect_ratio``
-     - ``skylight_area_front``
-     - ``skylight_area_back``
-     - ``skylight_area_left``
-     - ``skylight_area_right``
+     - ``geometry_window_areas_or_wwrs``
+     - ``geometry_skylight_areas``
 
    * - F6 B6 L6 R6
      - 7.8%
-     - 0.06
-     - 0.06
-     - 0.06
-     - 0.06
-     - 0
-     - 0
-     - 0
-     - 0
-     - 1.333
-     - 0
-     - 0
-     - 0
-     - 0
+     - 0.06, 0.06, 0.06, 0.06
+     - 0, 0, 0, 0
    * - F9 B9 L9 R9
      - 25%
-     - 0.09
-     - 0.09
-     - 0.09
-     - 0.09
-     - 0
-     - 0
-     - 0
-     - 0
-     - 1.333
-     - 0
-     - 0
-     - 0
-     - 0
+     - 0.09, 0.09, 0.09, 0.09
+     - 0, 0, 0, 0
    * - F12 B12 L12 R12
      - 25%
-     - 0.12
-     - 0.12
-     - 0.12
-     - 0.12
-     - 0
-     - 0
-     - 0
-     - 0
-     - 1.333
-     - 0
-     - 0
-     - 0
-     - 0
+     - 0.12, 0.12, 0.12, 0.12
+     - 0, 0, 0, 0
    * - F15 B15 L15 R15
      - 16%
-     - 0.15
-     - 0.15
-     - 0.15
-     - 0.15
-     - 0
-     - 0
-     - 0
-     - 0
-     - 1.333
-     - 0
-     - 0
-     - 0
-     - 0
+     - 0.15, 0.15, 0.15, 0.15
+     - 0, 0, 0, 0
    * - F18 B18 L18 R18
      - 17%
-     - 0.18
-     - 0.18
-     - 0.18
-     - 0.18
-     - 0
-     - 0
-     - 0
-     - 0
-     - 1.333
-     - 0
-     - 0
-     - 0
-     - 0
+     - 0.18, 0.18, 0.18, 0.18
+     - 0, 0, 0, 0
    * - F30 B30 L30 R30
      - 8.9%
-     - 0.30
-     - 0.30
-     - 0.30
-     - 0.30
-     - 0
-     - 0
-     - 0
-     - 0
-     - 1.333
-     - 0
-     - 0
-     - 0
-     - 0
+     - 0.30, 0.30, 0.30, 0.30
+     - 0, 0, 0, 0
 
 .. _windows:
 
@@ -64621,78 +44711,36 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``window_natvent_availability``
-     - false
-     - Days/week
-     - Integer
-     - auto
-     - For operable windows, the number of days/week that windows can be opened by occupants for natural ventilation. If not provided, the OS-HPXML default (see `HPXML Windows <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-windows>`_) is used.
-   * - ``window_ufactor``
-     - true
-     - Btu/hr-ft^2-R
-     - Double
-     -
-     - Full-assembly NFRC U-factor.
-   * - ``window_shgc``
+   * - ``enclosure_window``
      - true
      - 
-     - Double
-     -
-     - Full-assembly NFRC solar heat gain coefficient.
-   * - ``window_exterior_shading_type``
+     - Choice
+     - Single, Clear, Metal, Single, Clear, Non-Metal, Double, Clear, Metal, Air, Double, Clear, Thermal-Break, Air, Double, Clear, Non-Metal, Air, Double, Low-E, Non-Metal, Air, High Gain, Double, Low-E, Non-Metal, Air, Med Gain, Double, Low-E, Non-Metal, Air, Low Gain, Double, Low-E, Non-Metal, Gas, High Gain, Double, Low-E, Non-Metal, Gas, Med Gain, Double, Low-E, Non-Metal, Gas, Low Gain, Double, Low-E, Insulated, Air, High Gain, Double, Low-E, Insulated, Air, Med Gain, Double, Low-E, Insulated, Air, Low Gain, Double, Low-E, Insulated, Gas, High Gain, Double, Low-E, Insulated, Gas, Med Gain, Double, Low-E, Insulated, Gas, Low Gain, Triple, Low-E, Non-Metal, Air, High Gain, Triple, Low-E, Non-Metal, Air, Low Gain, Triple, Low-E, Non-Metal, Gas, High Gain, Triple, Low-E, Non-Metal, Gas, Low Gain, Triple, Low-E, Insulated, Air, High Gain, Triple, Low-E, Insulated, Air, Low Gain, Triple, Low-E, Insulated, Gas, High Gain, Triple, Low-E, Insulated, Gas, Low Gain, IECC U-1.20, SHGC 0.40, IECC U-1.20, SHGC 0.30, IECC U-1.20, SHGC 0.25, IECC U-0.75, SHGC 0.40, IECC U-0.65, SHGC 0.40, IECC U-0.65, SHGC 0.30, IECC U-0.50, SHGC 0.30, IECC U-0.50, SHGC 0.25, IECC U-0.40, SHGC 0.40, IECC U-0.40, SHGC 0.25, IECC U-0.35, SHGC 0.40, IECC U-0.35, SHGC 0.30, IECC U-0.35, SHGC 0.25, IECC U-0.32, SHGC 0.25, IECC U-0.30, SHGC 0.25, EnergyStar, North-Central, EnergyStar, Northern, EnergyStar, South-Central, EnergyStar, Southern, Detailed Example: Single, Clear, Aluminum w/ Thermal Break, Detailed Example: Double, Low-E, Wood, Argon, Insulated Spacer
+     - The type of windows.
+   * - ``enclosure_window_exterior_shading``
      - false
      - 
      - Choice
-     - auto, solar film, solar screens, none
-     - Type of window exterior shading. Summer/winter shading coefficients can be provided below instead. If neither is provided, the OS-HPXML default (see `HPXML Exterior Shading <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-exterior-shading>`_) is used.
-   * - ``window_exterior_shading_winter``
-     - false
-     - Frac
-     - Double
-     - auto
-     - Exterior shading coefficient for the winter season, which if provided overrides the shading type input. 1.0 indicates no reduction in solar gain, 0.85 indicates 15% reduction, etc. If not provided, the OS-HPXML default (see `HPXML Exterior Shading <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-exterior-shading>`_) is used.
-   * - ``window_exterior_shading_summer``
-     - false
-     - Frac
-     - Double
-     - auto
-     - Exterior shading coefficient for the summer season, which if provided overrides the shading type input. 1.0 indicates no reduction in solar gain, 0.85 indicates 15% reduction, etc. If not provided, the OS-HPXML default (see `HPXML Exterior Shading <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-exterior-shading>`_) is used.
-   * - ``window_shading_summer_season``
-     - false
-     - 
-     - String
-     - auto
-     - Enter a date range like 'May 1 - Sep 30'. Defines the summer season for purposes of shading coefficients; the rest of the year is assumed to be winter. If not provided, the OS-HPXML default (see `HPXML Windows <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-windows>`_) is used.
-   * - ``window_insect_screens``
+     - None, Solar Film, Solar Screen, Summer 0.25, Winter 0.25, Summer 0.25, Winter 0.50, Summer 0.25, Winter 0.75, Summer 0.25, Winter 1.00, Summer 0.50, Winter 0.25, Summer 0.50, Winter 0.50, Summer 0.50, Winter 0.75, Summer 0.50, Winter 1.00, Summer 0.75, Winter 0.25, Summer 0.75, Winter 0.50, Summer 0.75, Winter 0.75, Summer 0.75, Winter 1.00, Summer 1.00, Winter 0.25, Summer 1.00, Winter 0.50, Summer 1.00, Winter 0.75, Summer 1.00, Winter 1.00
+     - The type of window exterior shading. If shading coefficients are selected, note they indicate the reduction in solar gain (e.g., 0.7 indicates 30% reduction).
+   * - ``enclosure_window_insect_screens``
      - false
      - 
      - Choice
-     - auto, none, exterior, interior
-     - The type of insect screens, if present. If not provided, assumes there are no insect screens.
-   * - ``window_storm_type``
+     - None, Exterior, Interior
+     - The type of window insect screens.
+   * - ``enclosure_window_storm``
      - false
      - 
      - Choice
-     - auto, clear, low-e
-     - The type of storm, if present. If not provided, assumes there is no storm.
-   * - ``skylight_ufactor``
-     - true
-     - Btu/hr-ft^2-R
-     - Double
-     -
-     - Full-assembly NFRC U-factor.
-   * - ``skylight_shgc``
-     - true
-     - 
-     - Double
-     -
-     - Full-assembly NFRC solar heat gain coefficient.
-   * - ``skylight_storm_type``
+     - None, Clear, Low-E
+     - The type of storm window.
+   * - ``enclosure_skylight``
      - false
      - 
      - Choice
-     - auto, clear, low-e
-     - The type of storm, if present. If not provided, assumes there is no storm.
+     - Single, Clear, Metal, Single, Clear, Non-Metal, Double, Clear, Metal, Double, Clear, Non-Metal, Double, Low-E, Metal, High Gain, Double, Low-E, Non-Metal, High Gain, Double, Low-E, Metal, Med Gain, Double, Low-E, Non-Metal, Med Gain, Double, Low-E, Metal, Low Gain, Double, Low-E, Non-Metal, Low Gain, Triple, Clear, Metal, Triple, Clear, Non-Metal, IECC U-0.75, SHGC 0.40, IECC U-0.75, SHGC 0.30, IECC U-0.75, SHGC 0.25, IECC U-0.65, SHGC 0.40, IECC U-0.65, SHGC 0.30, IECC U-0.65, SHGC 0.25, IECC U-0.60, SHGC 0.40, IECC U-0.60, SHGC 0.30, IECC U-0.55, SHGC 0.40, IECC U-0.55, SHGC 0.25
+     - The type of skylights.
 
 Options
 *******
@@ -64706,168 +44754,84 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``window_natvent_availability``
-     - ``window_ufactor``
-     - ``window_shgc``
-     - ``window_exterior_shading_type``
-     - ``window_exterior_shading_winter``
-     - ``window_exterior_shading_summer``
-     - ``window_shading_summer_season``
-     - ``window_insect_screens``
-     - ``window_storm_type``
-     - ``skylight_ufactor``
-     - ``skylight_shgc``
-     - ``skylight_storm_type``
+     - ``enclosure_window``
+     - ``enclosure_window_exterior_shading``
+     - ``enclosure_window_insect_screens``
+     - ``enclosure_window_storm``
+     - ``enclosure_skylight``
 
    * - Double, Clear, Metal, Air
      - 19%
-     - auto
-     - 0.76
-     - 0.67
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - 0.37
-     - 0.3
-     - auto
+     - Double, Clear, Metal, Air
+     - None
+     - None
+     - None
+     - Single, Clear, Metal
    * - Double, Clear, Metal, Air, Exterior Clear Storm
      - 1.5%
-     - auto
-     - 0.76
-     - 0.67
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - clear
-     - 0.37
-     - 0.3
-     - auto
+     - Double, Clear, Metal, Air
+     - None
+     - None
+     - Clear
+     - Single, Clear, Metal
    * - Double, Clear, Non-metal, Air
      - 19%
-     - auto
-     - 0.49
-     - 0.56
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - 0.37
-     - 0.3
-     - auto
+     - Double, Clear, Non-Metal, Air
+     - None
+     - None
+     - None
+     - Single, Clear, Metal
    * - Double, Clear, Non-metal, Air, Exterior Clear Storm
      - 3.5%
-     - auto
-     - 0.49
-     - 0.56
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - clear
-     - 0.37
-     - 0.3
-     - auto
+     - Double, Clear, Non-Metal, Air
+     - None
+     - None
+     - Clear
+     - Single, Clear, Metal
    * - Double, Low-E, Non-metal, Air, M-Gain
      - 22%
-     - auto
-     - 0.38
-     - 0.44
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - 0.37
-     - 0.3
-     - auto
+     - Double, Low-E, Non-Metal, Air, Med Gain
+     - None
+     - None
+     - None
+     - Single, Clear, Metal
    * - Single, Clear, Metal
      - 14%
-     - auto
-     - 1.16
-     - 0.76
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - 0.37
-     - 0.3
-     - auto
+     - Single, Clear, Metal
+     - None
+     - None
+     - None
+     - Single, Clear, Metal
    * - Single, Clear, Metal, Exterior Clear Storm
      - 0.99%
-     - auto
-     - 1.16
-     - 0.76
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - clear
-     - 0.37
-     - 0.3
-     - auto
+     - Single, Clear, Metal
+     - None
+     - None
+     - Clear
+     - Single, Clear, Metal
    * - Single, Clear, Non-metal
      - 17%
-     - auto
-     - 0.84
-     - 0.63
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - 0.37
-     - 0.3
-     - auto
+     - Single, Clear, Non-Metal
+     - None
+     - None
+     - None
+     - Single, Clear, Metal
    * - Single, Clear, Non-metal, Exterior Clear Storm
      - 1.5%
-     - auto
-     - 0.84
-     - 0.63
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - clear
-     - 0.37
-     - 0.3
-     - auto
+     - Single, Clear, Non-Metal
+     - None
+     - None
+     - Clear
+     - Single, Clear, Metal
    * - Triple, Low-E, Non-metal, Air, L-Gain
      - 1.8%
-     - auto
-     - 0.29
-     - 0.26
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - auto
-     - 0.37
-     - 0.3
-     - auto
+     - Triple, Low-E, Non-Metal, Air, Low Gain
+     - None
+     - None
+     - None
+     - Single, Clear, Metal
    * - Void
      - 0%
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
      - 
      - 
      - 
