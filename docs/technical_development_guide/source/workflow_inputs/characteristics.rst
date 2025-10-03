@@ -39499,8 +39499,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``heat_pump_backup_use_existing_system``
      - ``heat_pump_sizing_is_duct_limited``
 
-   * - ASHP, SEER 10, 6.2 HSPF
-     - 0.72%
+   * - ASHP, SEER 10, 6.8 HSPF
+     - 1.1%
      - 
      - none
      - 0
@@ -39511,7 +39511,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - air-to-air
      - single stage
      - HSPF
-     - 6.2
+     - 6.8
      - SEER
      - 10
      - auto
@@ -39548,7 +39548,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - false
      - false
    * - ASHP, SEER 13, 7.7 HSPF
-     - 7.4%
+     - 7%
      - 
      - none
      - 0
@@ -40267,8 +40267,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - false
      - false
-   * - MSHP, SEER 14.5, 8.2 HSPF
-     - 0.96%
+   * - MSHP, SEER 14.5, 7.7 HSPF
+     - 0.87%
      - 
      - none
      - 0
@@ -40279,7 +40279,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - mini-split
      - variable speed
      - HSPF
-     - 8.2
+     - 7.7
      - SEER
      - 14.5
      - auto
@@ -40315,8 +40315,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - false
      - false
-   * - MSHP, SEER 29.3, 14 HSPF
-     - 0.015%
+   * - MSHP, SEER 29, 12.3 HSPF
+     - 0.1%
      - 
      - none
      - 0
@@ -40327,9 +40327,9 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - mini-split
      - variable speed
      - HSPF
-     - 14
+     - 12.3
      - SEER
-     - 29.3
+     - 29
      - auto
      - auto
      - auto
