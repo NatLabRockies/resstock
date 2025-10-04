@@ -1250,15 +1250,15 @@ and => 413635 (75.2%)
 Overall applied to => 72170 (13.1%).
 ------------------------------------
 
-------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade3:'Minimum Efficiency Furnaces and Air Conditioners Circa 2025', Option18:'HVAC Cooling Efficiency|Room AC, EER 12.0'
-------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade3:'Minimum Efficiency Furnaces and Air Conditioners Circa 2025', Option18:'HVAC Cooling Efficiency|Room AC, CEER 11.8'
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 109011 (19.8%)
-  HVAC Cooling Efficiency|Room AC, EER 8.5 => 2336 (0.4%)
-  HVAC Cooling Efficiency|Room AC, EER 9.8 => 14052 (2.6%)
-  HVAC Cooling Efficiency|Room AC, EER 10.7 => 52424 (9.5%)
-  HVAC Cooling Efficiency|Room AC, EER 12.0 => 40199 (7.3%)
------------------------------------------------------------
+  HVAC Cooling Efficiency|Room AC, CEER 8.4 => 2336 (0.4%)
+  HVAC Cooling Efficiency|Room AC, CEER 9.7 => 14052 (2.6%)
+  HVAC Cooling Efficiency|Room AC, CEER 10.6 => 52424 (9.5%)
+  HVAC Cooling Efficiency|Room AC, CEER 11.8 => 40199 (7.3%)
+------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
 and => 413635 (75.2%)
