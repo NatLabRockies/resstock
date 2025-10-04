@@ -771,13 +771,13 @@ upgrades:
           - HVAC Cooling Efficiency|AC, SEER 15
 
       # Room (window) AC
-      - option: HVAC Cooling Efficiency|Room AC, EER 12.0 #CEER 11.0; EER 12.0 single package
+      - option: HVAC Cooling Efficiency|Room AC, CEER 11.8 #CEER 11.0; EER 12.0 single package
         apply_logic:
           - or:
-            - HVAC Cooling Efficiency|Room AC, EER 8.5
-            - HVAC Cooling Efficiency|Room AC, EER 9.8
-            - HVAC Cooling Efficiency|Room AC, EER 10.7
-            - HVAC Cooling Efficiency|Room AC, EER 12.0
+            - HVAC Cooling Efficiency|Room AC, CEER 8.4
+            - HVAC Cooling Efficiency|Room AC, CEER 9.7
+            - HVAC Cooling Efficiency|Room AC, CEER 10.6
+            - HVAC Cooling Efficiency|Room AC, CEER 11.8
 
   ### -- HVAC: Air Source Heat Pumps -- ###
   - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump Circa 2025
