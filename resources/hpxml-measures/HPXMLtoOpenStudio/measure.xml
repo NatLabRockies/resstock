@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>3b2aed8f-5d99-47e7-aaad-8f906f096ede</version_id>
-  <version_modified>2025-09-09T22:21:57Z</version_modified>
+  <version_id>5fd931e3-f6fc-4182-aa0d-506a742a1d87</version_id>
+  <version_modified>2025-09-16T21:04:05Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -198,7 +198,7 @@
       <filename>airflow.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>842E4D55</checksum>
+      <checksum>A9DCF216</checksum>
     </file>
     <file>
       <filename>battery.rb</filename>
@@ -216,7 +216,7 @@
       <filename>constants.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>97F54163</checksum>
+      <checksum>DB20CDBC</checksum>
     </file>
     <file>
       <filename>constructions.rb</filename>
@@ -414,7 +414,7 @@
       <filename>hvac.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1275B557</checksum>
+      <checksum>C4377DC7</checksum>
     </file>
     <file>
       <filename>hvac_sizing.rb</filename>
@@ -762,7 +762,7 @@
       <filename>test_hvac.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>E3545A16</checksum>
+      <checksum>A690C55B</checksum>
     </file>
     <file>
       <filename>test_hvac_sizing.rb</filename>

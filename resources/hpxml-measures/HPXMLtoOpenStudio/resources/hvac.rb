@@ -845,6 +845,9 @@ module HVAC
 
     # Pump
     pump_w = get_pump_power_watts(heat_pump)
+    if heat_pump.is_shared_system
+      pump_w += heat_pump.shared_loop_watts / heat_pump.number_of_units_served.to_f
+    end
     pump_w = [pump_w, 1.0].max # prevent error if zero
     pump = Model.add_pump_variable_speed(
       model,
@@ -882,24 +885,6 @@ module HVAC
     add_pump_power_ems_program(model, pump, air_loop_unitary, heat_pump)
     if (heat_pump.compressor_type == HPXML::HVACCompressorTypeVariableSpeed) && (hpxml_header.ground_to_air_heat_pump_model_type == HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeExperimental)
       add_ghp_pump_mass_flow_rate_ems_program(model, pump, control_zone, htg_coil, clg_coil)
-    end
-
-    if heat_pump.is_shared_system
-      # Shared pump power per ANSI/RESNET/ICC 301-2022 Section 4.4.5.1 (pump runs 8760)
-      design_level = heat_pump.shared_loop_watts / heat_pump.number_of_units_served.to_f
-
-      equip = Model.add_electric_equipment(
-        model,
-        name: Constants::ObjectTypeGSHPSharedPump,
-        end_use: Constants::ObjectTypeGSHPSharedPump,
-        space: control_zone.spaces[0], # no heat gain, so assign the equipment to an arbitrary space
-        design_level: design_level,
-        frac_radiant: 0,
-        frac_latent: 0,
-        frac_lost: 1,
-        schedule: model.alwaysOnDiscreteSchedule
-      )
-      equip.additionalProperties.setFeature('HPXML_ID', heat_pump.id) # Used by reporting measure
     end
 
     # Air Loop
