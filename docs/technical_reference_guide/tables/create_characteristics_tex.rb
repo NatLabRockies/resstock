@@ -192,13 +192,13 @@ parameters.each do |parameter|
 
             arg_map[arg] = args.keys
             args.keys.each do |arg_key|
+              if parameter == 'HVAC Shared Efficiencies'
+                next if arg_key.to_s.include?('cooling_system_')
+              end
+
               options[option][arg_key.to_s] = args[arg_key]
             end
           else
-            if parameter == 'HVAC Shared Efficiencies'
-              next if arg.include?('cooling_system_')
-            end
-
             if argument == arg
               options[option][arg] = value
             end
