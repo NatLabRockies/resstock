@@ -1,4 +1,4 @@
-Dependency=HVAC Cooling Type	Dependency=HVAC Has Shared System	Dependency=Vintage	Option=AC, SEER 8	Option=AC, SEER 10	Option=AC, SEER 13	Option=AC, SEER 15	Option=Ducted Heat Pump	Option=Non-Ducted Heat Pump	Option=None	Option=Room AC, EER 8.5	Option=Room AC, EER 9.8	Option=Room AC, EER 10.7	Option=Room AC, EER 12.0	Option=Shared Cooling	source_count	source_weight	sampling_probability
+Dependency=HVAC Cooling Type	Dependency=HVAC Has Shared System	Dependency=Vintage	Option=AC, SEER 8	Option=AC, SEER 10	Option=AC, SEER 13	Option=AC, SEER 15	Option=Ducted Heat Pump	Option=Non-Ducted Heat Pump	Option=None	Option=Room AC, CEER 8.4	Option=Room AC, CEER 9.7	Option=Room AC, CEER 10.6	Option=Room AC, CEER 11.8	Option=Shared Cooling	source_count	source_weight	sampling_probability
 Central AC	Cooling Only	1940s	0	0	0	0	0	0	0	0	0	0	0	1	15	38353.9	0.000281924
 Central AC	Heating Only	1940s	0.0377343	0.196367	0.527782	0.238117	0	0	0	0	0	0	0	0	14	41099.7	0.000299574
 Central AC	Heating and Cooling	1940s	0	0	0	0	0	0	0	0	0	0	0	1	31	81829	0.000574479

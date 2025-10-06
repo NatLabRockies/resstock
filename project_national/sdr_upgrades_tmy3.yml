@@ -81,45 +81,45 @@ workflow_generator:
       - scenario_name: AER_HighRECostLowNGPrice_Avg
         type: CO2e
         elec_folder: data/emissions/cambium/2024/AER_HighRECostLowNGPrice_Avg
-      - scenario_name: AER_LowRECost_Avg
-        type: CO2e
-        elec_folder: data/emissions/cambium/2024/AER_LowRECost_Avg
-      - scenario_name: AER_LowRECostHighNGPrice_Avg
-        type: CO2e
-        elec_folder: data/emissions/cambium/2024/AER_LowRECostHighNGPrice_Avg
-      - scenario_name: AER_MidCase_Avg
-        type: CO2e
-        elec_folder: data/emissions/cambium/2024/AER_MidCase_Avg
-      - scenario_name: LRMER_HighRECost_15
-        type: CO2e
-        elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_15
-      - scenario_name: LRMER_HighRECost_25
-        type: CO2e
-        elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_25
-      - scenario_name: LRMER_HighRECostLowNGPrice_15
-        type: CO2e
-        elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_15
-      - scenario_name: LRMER_HighRECostLowNGPrice_25
-        type: CO2e
-        elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_25
-      - scenario_name: LRMER_LowRECost_15
-        type: CO2e
-        elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_15
-      - scenario_name: LRMER_LowRECost_25
-        type: CO2e
-        elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_25
-      - scenario_name: LRMER_LowRECostHighNGPrice_15
-        type: CO2e
-        elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_15
-      - scenario_name: LRMER_LowRECostHighNGPrice_25
-        type: CO2e
-        elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_25
-      - scenario_name: LRMER_MidCase_15
-        type: CO2e
-        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_15
-      - scenario_name: LRMER_MidCase_25
-        type: CO2e
-        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_25
+      # - scenario_name: AER_LowRECost_Avg
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2024/AER_LowRECost_Avg
+      # - scenario_name: AER_LowRECostHighNGPrice_Avg
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2024/AER_LowRECostHighNGPrice_Avg
+      # - scenario_name: AER_MidCase_Avg
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2024/AER_MidCase_Avg
+      # - scenario_name: LRMER_HighRECost_15
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_15
+      # - scenario_name: LRMER_HighRECost_25
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_25
+      # - scenario_name: LRMER_HighRECostLowNGPrice_15
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_15
+      # - scenario_name: LRMER_HighRECostLowNGPrice_25
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_25
+      # - scenario_name: LRMER_LowRECost_15
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_15
+      # - scenario_name: LRMER_LowRECost_25
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_25
+      # - scenario_name: LRMER_LowRECostHighNGPrice_15
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_15
+      # - scenario_name: LRMER_LowRECostHighNGPrice_25
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_25
+      # - scenario_name: LRMER_MidCase_15
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2024/LRMER_MidCase_15
+      # - scenario_name: LRMER_MidCase_25
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2024/LRMER_MidCase_25
 
     # Utility bill rates
     utility_bills:
@@ -128,7 +128,7 @@ workflow_generator:
 
     # Outputs to include
     simulation_output_report:
-      timeseries_frequency: timestep
+      timeseries_frequency: daily
       include_timeseries_total_consumptions: true
       include_timeseries_fuel_consumptions: true
       include_timeseries_end_use_consumptions: true
@@ -771,13 +771,13 @@ upgrades:
           - HVAC Cooling Efficiency|AC, SEER 15
 
       # Room (window) AC
-      - option: HVAC Cooling Efficiency|Room AC, EER 12.0 #CEER 11.0; EER 12.0 single package
+      - option: HVAC Cooling Efficiency|Room AC, CEER 11.8 #CEER 11.0; EER 12.0 single package
         apply_logic:
           - or:
-            - HVAC Cooling Efficiency|Room AC, EER 8.5
-            - HVAC Cooling Efficiency|Room AC, EER 9.8
-            - HVAC Cooling Efficiency|Room AC, EER 10.7
-            - HVAC Cooling Efficiency|Room AC, EER 12.0
+            - HVAC Cooling Efficiency|Room AC, CEER 8.4
+            - HVAC Cooling Efficiency|Room AC, CEER 9.7
+            - HVAC Cooling Efficiency|Room AC, CEER 10.6
+            - HVAC Cooling Efficiency|Room AC, CEER 11.8
 
   ### -- HVAC: Air Source Heat Pumps -- ###
   - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump Circa 2025

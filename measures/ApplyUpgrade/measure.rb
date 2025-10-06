@@ -466,6 +466,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   def set_resstock_arguments(measures, child_runner)
     # Assign ResStockArgument's runner arguments to BuildResidentialHPXML
     child_runner.result.stepValues.each do |step_value|
+      next unless measures['BuildResidentialHPXML'][0][step_value.name].nil?
+
       value = get_value_from_workflow_step_value(step_value)
       next if value == ''
 
@@ -818,7 +820,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
         panel_system_additions['electric_panel_load_kitchen_fans_new_load'] = true
       elsif arg_name == 'ventilation_bathroom'
         panel_system_additions['electric_panel_load_bathroom_fans_new_load'] = true
-      elsif arg_name == 'dhw_wather_heater'
+      elsif arg_name == 'dhw_water_heater'
         panel_system_additions['electric_panel_load_electric_water_heater_new_load'] = true
       elsif arg_name == 'appliance_clothes_dryer'
         panel_system_additions['electric_panel_load_electric_clothes_dryer_new_load'] = true

@@ -701,7 +701,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     cap_value = args[:electric_panel_service_max_current_rating]
     headroom_spaces = args[:electric_panel_breaker_spaces_headroom]
     total_spaces = args[:electric_panel_breaker_spaces_rated_total]
-    if cap_value.nil? || headroom_spaces.nil?
+    if cap_value.nil?
       cap_bin, cap_value = panel_sampler.assign_rated_capacity()
       register_value(runner, 'electric_panel_service_max_current_rating_bin', cap_bin)
 

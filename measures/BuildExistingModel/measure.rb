@@ -597,6 +597,8 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
   def set_resstock_arguments(measures, child_runner)
     # Assign ResStockArgument's runner arguments to BuildResidentialHPXML
     child_runner.result.stepValues.each do |step_value|
+      next unless measures['BuildResidentialHPXML'][0][step_value.name].nil?
+
       value = get_value_from_workflow_step_value(step_value)
       next if value == ''
 
