@@ -5,6 +5,8 @@ require_relative '../../resources/util'
 
 resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../../resources'))
 
+require_relative File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/resources/options')
+
 filepath = File.read(File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/measure.xml'))
 buildreshpxmlarguments_xml = get_measure_xml(filepath)
 
@@ -55,6 +57,8 @@ parameters << 'HVAC Heating Efficiency - heat_pump'
 # Accommodate special "storage and tankless" and "solar" options
 parameters << 'Water Heater Efficiency - water_heater'
 parameters << 'Water Heater Efficiency - solar_thermal'
+
+arg_map = {}
 
 parameters.each do |parameter|
   parameter_name = parameter
@@ -172,8 +176,7 @@ parameters.each do |parameter|
     lookup_csv_data.each do |lookup_row|
       next if lookup_row[0] != parameter_name
       next if lookup_row[1] != option
-
-      next unless lookup_row[2] == 'ResStockArguments'
+      next if lookup_row[2] != 'ResStockArguments'
 
       # If option specifies arguments, insert arguments according to the order of r_arguments
       r_arguments.each do |argument|
@@ -181,12 +184,24 @@ parameters.each do |parameter|
         lookup_row[3..-1].each do |argument_value|
           arg, value = argument_value.split('=')
 
-          if parameter == 'HVAC Shared Efficiencies'
-            next if arg.include?('cooling_system_')
-          end
+          tsv_filename = "#{arg}.tsv"
+          tsv_filepath = File.join(resources_dir, "hpxml-measures/BuildResidentialHPXML/resources/options/#{tsv_filename}")
+          if File.exist?(tsv_filepath)
+            args = {}
+            get_option_properties(args, tsv_filename, value)
 
-          if argument == arg
-            options[option][arg] = value
+            arg_map[arg] = args.keys
+            args.keys.each do |arg_key|
+              options[option][arg_key.to_s] = args[arg_key]
+            end
+          else
+            if parameter == 'HVAC Shared Efficiencies'
+              next if arg.include?('cooling_system_')
+            end
+
+            if argument == arg
+              options[option][arg] = value
+            end
           end
         end
       end
@@ -195,12 +210,20 @@ parameters.each do |parameter|
 
   changing_args = []
   r_arguments.each do |r_argument|
-    vals = []
-    options.keys.each do |option|
-      vals << options[option][r_argument]
+    if arg_map.keys.include?(r_argument)
+      arguments = arg_map[r_argument]
+    else
+      arguments = [r_argument]
     end
-    if (vals.uniq.size != 1) || (vals.size == 1)
-      changing_args << r_argument
+
+    arguments.each do |r_arg|
+      vals = []
+      options.keys.each do |option|
+        vals << options[option][r_arg.to_s]
+      end
+      if (vals.uniq.size != 1) || (vals.size == 1)
+        changing_args << r_arg.to_s
+      end
     end
   end
 
