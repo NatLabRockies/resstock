@@ -81,45 +81,45 @@ workflow_generator:
       - scenario_name: AER_HighRECostLowNGPrice_Avg
         type: CO2e
         elec_folder: data/emissions/cambium/2024/AER_HighRECostLowNGPrice_Avg
-      # - scenario_name: AER_LowRECost_Avg
-        # type: CO2e
-        # elec_folder: data/emissions/cambium/2024/AER_LowRECost_Avg
-      # - scenario_name: AER_LowRECostHighNGPrice_Avg
-        # type: CO2e
-        # elec_folder: data/emissions/cambium/2024/AER_LowRECostHighNGPrice_Avg
-      # - scenario_name: AER_MidCase_Avg
-        # type: CO2e
-        # elec_folder: data/emissions/cambium/2024/AER_MidCase_Avg
-      # - scenario_name: LRMER_HighRECost_15
-        # type: CO2e
-        # elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_15
-      # - scenario_name: LRMER_HighRECost_25
-        # type: CO2e
-        # elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_25
-      # - scenario_name: LRMER_HighRECostLowNGPrice_15
-        # type: CO2e
-        # elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_15
-      # - scenario_name: LRMER_HighRECostLowNGPrice_25
-        # type: CO2e
-        # elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_25
-      # - scenario_name: LRMER_LowRECost_15
-        # type: CO2e
-        # elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_15
-      # - scenario_name: LRMER_LowRECost_25
-        # type: CO2e
-        # elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_25
-      # - scenario_name: LRMER_LowRECostHighNGPrice_15
-        # type: CO2e
-        # elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_15
-      # - scenario_name: LRMER_LowRECostHighNGPrice_25
-        # type: CO2e
-        # elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_25
-      # - scenario_name: LRMER_MidCase_15
-        # type: CO2e
-        # elec_folder: data/emissions/cambium/2024/LRMER_MidCase_15
-      # - scenario_name: LRMER_MidCase_25
-        # type: CO2e
-        # elec_folder: data/emissions/cambium/2024/LRMER_MidCase_25
+      - scenario_name: AER_LowRECost_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_LowRECost_Avg
+      - scenario_name: AER_LowRECostHighNGPrice_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_LowRECostHighNGPrice_Avg
+      - scenario_name: AER_MidCase_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_MidCase_Avg
+      - scenario_name: LRMER_HighRECost_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_15
+      - scenario_name: LRMER_HighRECost_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_25
+      - scenario_name: LRMER_HighRECostLowNGPrice_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_15
+      - scenario_name: LRMER_HighRECostLowNGPrice_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_25
+      - scenario_name: LRMER_LowRECost_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_15
+      - scenario_name: LRMER_LowRECost_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_25
+      - scenario_name: LRMER_LowRECostHighNGPrice_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_15
+      - scenario_name: LRMER_LowRECostHighNGPrice_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_25
+      - scenario_name: LRMER_MidCase_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_15
+      - scenario_name: LRMER_MidCase_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_25
 
     # Utility bill rates
     utility_bills:
