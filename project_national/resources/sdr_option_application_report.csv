@@ -23,7 +23,7 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,15,"HVAC Cooling Efficiency|AC, SEER2 14.3",100330,18.2
 3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,16,"HVAC Cooling Efficiency|AC, SEER2 13.4",93436,17.0
 3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,17,"HVAC Cooling Efficiency|AC, SEER 15",72170,13.1
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,18,"HVAC Cooling Efficiency|Room AC, EER 12.0",34444,6.3
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,18,"HVAC Cooling Efficiency|Room AC, CEER 11.8",34444,6.3
 3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,-1,All,413635,75.2
 4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,1,"HVAC Heating Efficiency|ASHP, SEER2 18, 8.5 HSPF2, Typical Cold Climate",413635,75.2
 4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,2,HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted,413635,75.2

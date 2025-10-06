@@ -130,7 +130,7 @@ workflow_generator:
     # Other reporting measures to run
     reporting_measures:
       - measure_dir_name: QOIReport
-      - measure_dir_name: ServerDirectoryCleanup # tack this on so we can save some disk space (when using debug: true)
+      - measure_dir_name: ServerDirectoryCleanup # include an additional ServerDirectoryCleanup to remove all the extra files that debug: true wrote (i.e., save disk space)
         arguments:
           retain_in_osm: true
           retain_eplusout_err: true
@@ -138,4 +138,4 @@ workflow_generator:
           retain_eplusout_rdd: true
           retain_eplustbl_htm: true
 
-    debug: true
+    debug: true # passed into HPXMLtoOpenStudio, UpgradeCosts, and first instance of ServerDirectoryCleanup
