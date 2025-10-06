@@ -11,7 +11,7 @@ Input,build_existing_model.ahs_region,,in.ahs_region,in.ahs_region,,,,,,,,,Ameri
 Input,build_existing_model.aiannh_area,,in.aiannh_area,in.aiannh_area,,,,,,,,,The sample is or is not located in census-deisgnated American Indian/Alaska Native/Native Hawaiian Area
 Input,build_existing_model.area_median_income,,in.area_median_income,in.area_median_income,,,,,,,,,Area median income of the household occupying the dwelling unit
 Input,build_existing_model.ashrae_iecc_climate_zone_2004,,in.ashrae_iecc_climate_zone_2004,in.ashrae_iecc_climate_zone_2004,,,,,,,,,IECC climate zone according to ASHRAE 169 in 2004 and IECC in 2012
-Input,build_existing_model.ashrae_iecc_climate_zone_2004_sub_cz_split,,in.ashrae_iecc_climate_zone_2004_sub_cz_split,in.ashrae_iecc_climate_zone_2004_sub_cz_split,,,,,,,,,:ref:`ashrae_iecc_climate_zone_2004___2_a_split`
+Input,build_existing_model.ashrae_iecc_climate_zone_2004_sub_cz_split,,in.ashrae_iecc_climate_zone_2004_sub_cz_split,in.ashrae_iecc_climate_zone_2004_sub_cz_split,,,,,,,,,"Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located. Climate zone where climate zone 2A is split between counties in TX, LA and FL, GA, AL, and MSClimate zone where climate zone 1A is split between counties in FL and HI"
 Input,build_existing_model.bathroom_spot_vent_hour,,in.bathroom_spot_vent_hour,in.bathroom_spot_vent_hour,,,,,,,,,Bathroom spot ventilation daily start hour
 Input,build_existing_model.battery,,in.battery,in.battery,,,,,,,,,"The presence, size, location, and efficiency of an onsite battery (not modeled in 2025.1 dataset)"
 Input,build_existing_model.bedrooms,,in.bedrooms,in.bedrooms,,,,,,,,,Number of bedrooms
@@ -29,7 +29,7 @@ Input,build_existing_model.clothes_washer_presence,,in.clothes_washer_presence,i
 Input,build_existing_model.clothes_washer_usage_level,,in.clothes_washer_usage_level,in.clothes_washer_usage_level,,,,,,,,,Clothes washer energy usage level multiplier
 Input,build_existing_model.cooking_range,,in.cooking_range,in.cooking_range,,,,,,,,,Presence and fuel type of the cooking range
 Input,build_existing_model.cooking_range_usage_level,,in.cooking_range_usage_level,in.cooking_range_usage_level,,,,,,,,,Cooking range energy usage level multiplier
-Input,build_existing_model.cooling_unavailable_days,,in.cooling_unavailable_days,in.cooling_unavailable_days,,,,,,,,,:ref:`cooling_unavailable_days`
+Input,build_existing_model.cooling_unavailable_days,,in.cooling_unavailable_days,in.cooling_unavailable_days,,,,,,,,,Number of days in a year the cooling system is unavailable
 Input,build_existing_model.cooling_setpoint,,in.cooling_setpoint,in.cooling_setpoint,,,,,,,,,Baseline cooling setpoint with no offset applied
 Input,build_existing_model.cooling_setpoint_has_offset,,in.cooling_setpoint_has_offset,in.cooling_setpoint_has_offset,,,,,,,,,Presence of cooling setpoint offset
 Input,build_existing_model.cooling_setpoint_offset_magnitude,,in.cooling_setpoint_offset_magnitude,in.cooling_setpoint_offset_magnitude,,,,,,,,,The magnitude of cooling setpoint offset
@@ -37,8 +37,8 @@ Input,build_existing_model.cooling_setpoint_offset_period,,in.cooling_setpoint_o
 Input,build_existing_model.corridor,,in.corridor,in.corridor,,,,,,,,,Type of corridor
 Input,build_existing_model.county,,in.county,in.county,,,,,,,,,County GISJOIN identifier
 Input,build_existing_model.county_and_puma,,in.county_and_puma,in.county_and_puma,,,,,,,,,The GISJOIN identifier for the County and the Public Use Microdata Area that the sample is located
-Input,build_existing_model.county_metro_status,,in.county_metro_status,in.county_metro_status,,,,,,,,,:ref:`county_metro_status`
-Input,build_existing_model.custom_state,,in.custom_state,in.custom_state,,,,,,,,,:ref:`custom_state`
+Input,build_existing_model.county_metro_status,,in.county_metro_status,in.county_metro_status,,,,,,,,,"The Metro Status of the county that the sample is located, based on MSA and MicroSA"
+Input,build_existing_model.custom_state,,in.custom_state,in.custom_state,,,,,,,,,A custom selection of states to be able to have more fine tuned probability distributionin states where we have more data
 Input,build_existing_model.dehumidifier,,in.dehumidifier,in.dehumidifier,,,,,,,,,"Presence, water removal rate, and humidity setpoint of dehumidifier (not modeled in 2025.1 dataset)"
 Input,build_existing_model.dishwasher,,in.dishwasher,in.dishwasher,,,,,,,,,Presence and rated efficiency of dishwasher
 Input,build_existing_model.dishwasher_usage_level,,in.dishwasher_usage_level,in.dishwasher_usage_level,,,,,,,,,Dishwasher energy usage level multiplier
@@ -47,14 +47,14 @@ Input,build_existing_model.doors,,in.doors,in.doors,,,,,,,,,Exterior door materi
 Input,build_existing_model.duct_leakage_and_insulation,,in.duct_leakage_and_insulation,in.duct_leakage_and_insulation,,,,,,,,,Duct insulation and leakage to outside from the portion of ducts in unconditioned spaces
 Input,build_existing_model.duct_location,,in.duct_location,in.duct_location,,,,,,,,,Location of Duct System
 Input,build_existing_model.eaves,,in.eaves,in.eaves,,,,,,,,,Depth of roof eaves
-Input,build_existing_model.electric_panel_service_rating,amp,in.electric_panel_service_rating,in.electric_panel_service_rating,amp,1,,,,,,,:ref:`electric_panel_service_rating`
-Input,build_existing_model.electric_panel_service_rating_bin,amp,in.electric_panel_service_rating_bin,in.electric_panel_service_rating_bin,amp,,,,,,,,:ref:`electric_panel_service_rating_bin`
-Input,build_existing_model.electric_vehicle_battery,,in.electric_vehicle_battery,in.electric_vehicle_battery,,,,,,,,,:ref:`electric_vehicle_battery`
-Input,build_existing_model.electric_vehicle_charge_at_home,,in.electric_vehicle_charge_at_home,in.electric_vehicle_charge_at_home,,,,,,,,,:ref:`electric_vehicle_charge_at_home`
-Input,build_existing_model.electric_vehicle_charger,,in.electric_vehicle_charger,in.electric_vehicle_charger,,,,,,,,,:ref:`electric_vehicle_charger`
-Input,build_existing_model.electric_vehicle_miles_traveled,,in.electric_vehicle_miles_traveled,in.electric_vehicle_miles_traveled,,,,,,,,,:ref:`electric_vehicle_miles_traveled`
-Input,build_existing_model.electric_vehicle_outlet_access,,in.electric_vehicle_outlet_access,in.electric_vehicle_outlet_access,,,,,,,,,:ref:`electric_vehicle_outlet_access`
-Input,build_existing_model.electric_vehicle_ownership,,in.electric_vehicle_ownership,in.electric_vehicle_ownership,,,,,,,,,:ref:`electric_vehicle_ownership`
+Input,build_existing_model.electric_panel_service_rating,amp,in.electric_panel_service_rating,in.electric_panel_service_rating,amp,1,,,,,,,Electrical panel service rating (A)
+Input,build_existing_model.electric_panel_service_rating_bin,amp,in.electric_panel_service_rating_bin,in.electric_panel_service_rating_bin,amp,,,,,,,,Electrical panel service rating bin (A)
+Input,build_existing_model.electric_vehicle_battery,,in.electric_vehicle_battery,in.electric_vehicle_battery,,,,,,,,,The type of electric vehicle and battery range in miles
+Input,build_existing_model.electric_vehicle_charge_at_home,,in.electric_vehicle_charge_at_home,in.electric_vehicle_charge_at_home,,,,,,,,,The percentage a household would or do charge their electric vehicle at home
+Input,build_existing_model.electric_vehicle_charger,,in.electric_vehicle_charger,in.electric_vehicle_charger,,,,,,,,,Type of electric vehicle charger used at the dwelling unit
+Input,build_existing_model.electric_vehicle_miles_traveled,,in.electric_vehicle_miles_traveled,in.electric_vehicle_miles_traveled,,,,,,,,,The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle
+Input,build_existing_model.electric_vehicle_outlet_access,,in.electric_vehicle_outlet_access,in.electric_vehicle_outlet_access,,,,,,,,,The unit has an outlet within 20 feet of vehicle parking
+Input,build_existing_model.electric_vehicle_ownership,,in.electric_vehicle_ownership,in.electric_vehicle_ownership,,,,,,,,,The dwelling unit owns an electric vehicle
 Input,build_existing_model.energystar_climate_zone_2023,,in.energystar_climate_zone_2023,in.energystar_climate_zone_2023,,,,,,,,,"Climate zones for windows, doors, and skylights per EnergyStar guidelines as of 2023"
 Input,build_existing_model.federal_poverty_level,,in.federal_poverty_level,in.federal_poverty_level,,,,,,,,,Federal poverty level of the household occupying the dwelling unit
 Input,build_existing_model.generation_and_emissions_assessment_region,,in.generation_and_emissions_assessment_region,in.generation_and_emissions_assessment_region,,,,,,,,,Generation and carbon emissions assessment (GEA) region from Cambium 2022
@@ -80,7 +80,7 @@ Input,build_existing_model.geometry_wall_type,,in.geometry_wall_type,in.geometry
 Input,build_existing_model.ground_thermal_conductivity,,in.ground_thermal_conductivity,in.ground_thermal_conductivity,,,,,,,,,The thermal conductivity of the ground using in foundation and geothermal heat pump heat transfer calculations
 Input,build_existing_model.has_pv,,in.has_pv,in.has_pv,,,,,,,,,Presence of rooftop PV
 Input,build_existing_model.heating_fuel,,in.heating_fuel,in.heating_fuel,,,,,,,,,Fuel used for primary heating
-Input,build_existing_model.heating_unavailable_days,,in.heating_unavailable_days,in.heating_unavailable_days,,,,,,,,,:ref:`heating_unavailable_days`
+Input,build_existing_model.heating_unavailable_days,,in.heating_unavailable_days,in.heating_unavailable_days,,,,,,,,,Number of days in a year the heating system is unavailable
 Input,build_existing_model.heating_setpoint,,in.heating_setpoint,in.heating_setpoint,,,,,,,,,Baseline heating setpoint with no offset applied
 Input,build_existing_model.heating_setpoint_has_offset,,in.heating_setpoint_has_offset,in.heating_setpoint_has_offset,,,,,,,,,Presence of heating setpoint offset
 Input,build_existing_model.heating_setpoint_offset_magnitude,,in.heating_setpoint_offset_magnitude,in.heating_setpoint_offset_magnitude,,,,,,,,,The magnitude of heating setpoint offset
@@ -89,21 +89,21 @@ Input,build_existing_model.holiday_lighting,,in.holiday_lighting,in.holiday_ligh
 Input,build_existing_model.hot_water_distribution,,in.hot_water_distribution,in.hot_water_distribution,,,,,,,,,Hot water piping material and insulation level
 Input,build_existing_model.hot_water_fixtures,,in.hot_water_fixtures,in.hot_water_fixtures,,,,,,,,,Hot water fixture usage and flow levels
 Input,build_existing_model.household_has_tribal_persons,,in.household_has_tribal_persons,in.household_has_tribal_persons,,,,,,,,,The the dwelling unit houses at least one tribal person
-Input,build_existing_model.hvac_cooling_autosizing_factor,,in.hvac_cooling_autosizing_factor,in.hvac_cooling_autosizing_factor,,,,,,,,,:ref:`hvac_cooling_autosizing_factor`
+Input,build_existing_model.hvac_cooling_autosizing_factor,,in.hvac_cooling_autosizing_factor,in.hvac_cooling_autosizing_factor,,,,,,,,,The cooling airflow and capacity scaling factor applied to the auto-sizing methodology (not modeled in 2025.1 dataset)
 Input,build_existing_model.hvac_cooling_efficiency,,in.hvac_cooling_efficiency,in.hvac_cooling_efficiency,,,,,,,,,Presence and efficiency of cooling system
 Input,build_existing_model.hvac_cooling_partial_space_conditioning,,in.hvac_cooling_partial_space_conditioning,in.hvac_cooling_partial_space_conditioning,,,,,,,,,The fraction of the finished floor area that the cooling system provides cooling for
 Input,build_existing_model.hvac_cooling_type,,in.hvac_cooling_type,in.hvac_cooling_type,,,,,,,,,Presence and type of cooling system
 Input,build_existing_model.hvac_has_ducts,,in.hvac_has_ducts,in.hvac_has_ducts,,,,,,,,,Presence of ducts
 Input,build_existing_model.hvac_has_shared_system,,in.hvac_has_shared_system,in.hvac_has_shared_system,,,,,,,,,Presence of shared HVAC system
 Input,build_existing_model.hvac_has_zonal_electric_heating,,in.hvac_has_zonal_electric_heating,in.hvac_has_zonal_electric_heating,,,,,,,,,Presence of electric baseboard heating
-Input,build_existing_model.hvac_heating_autosizing_factor,,in.hvac_heating_autosizing_factor,in.hvac_heating_autosizing_factor,,,,,,,,,:ref:`hvac_heating_autosizing_factor`
+Input,build_existing_model.hvac_heating_autosizing_factor,,in.hvac_heating_autosizing_factor,in.hvac_heating_autosizing_factor,,,,,,,,,The heating airflow and capacity scaling factor applied to the auto-sizing methodology (not modeled in 2025.1 dataset)
 Input,build_existing_model.hvac_heating_efficiency,,in.hvac_heating_efficiency,in.hvac_heating_efficiency,,,,,,,,,Presence and efficiency of primary heating system
 Input,build_existing_model.hvac_heating_type,,in.hvac_heating_type,in.hvac_heating_type,,,,,,,,,Presence and type of primary heating system
 Input,build_existing_model.hvac_heating_type_and_fuel,,in.hvac_heating_type_and_fuel,in.hvac_heating_type_and_fuel,,,,,,,,,"Presence, type, and fuel of primary heating system"
 Input,build_existing_model.hvac_secondary_heating_efficiency,,in.hvac_secondary_heating_efficiency,in.hvac_secondary_heating_efficiency,,,,,,,,,"Presence and efficiency of secondary heating system"
 Input,build_existing_model.hvac_secondary_heating_fuel,,in.hvac_secondary_heating_fuel,in.hvac_secondary_heating_fuel,,,,,,,,,Secondary HVAC system heating type and fuel
 Input,build_existing_model.hvac_secondary_heating_partial_space_conditioning,,in.hvac_secondary_heating_partial_space_conditioning,in.hvac_secondary_heating_partial_space_conditioning,,,,,,,,,Fraction of heat load served by secondary heating system
-Input,build_existing_model.hvac_secondary_heating_type,,in.hvac_secondary_heating_type,in.hvac_secondary_heating_type,,,,,,,,,:ref:`hvac_secondary_heating_type`
+Input,build_existing_model.hvac_secondary_heating_type,,in.hvac_secondary_heating_type,in.hvac_secondary_heating_type,,,,,,,,,The efficiency and type of the secondary heating system
 Input,build_existing_model.hvac_shared_efficiencies,,in.hvac_shared_efficiencies,in.hvac_shared_efficiencies,,,,,,,,,Presence and efficiency of shared HVAC system
 Input,build_existing_model.hvac_system_is_faulted,,in.hvac_system_is_faulted,in.hvac_system_is_faulted,,,,,,,,,Not used
 Input,build_existing_model.hvac_system_is_scaled,,in.hvac_system_is_scaled,in.hvac_system_is_scaled,,,,,,,,,Not used
@@ -129,7 +129,7 @@ Input,build_existing_model.lighting_interior_use,,in.lighting_interior_use,in.li
 Input,build_existing_model.lighting_other_use,,in.lighting_other_use,in.lighting_other_use,,,,,,,,,Exterior and garage lighting usage relative to the national average
 Input,build_existing_model.location_region,,in.location_region,in.location_region,,,,,,,,,Custom ResStock region
 Input,build_existing_model.mechanical_ventilation,,in.mechanical_ventilation,in.mechanical_ventilation,,,,,,,,,Mechanical ventilation type and efficiency
-Input,build_existing_model.metropolitan_and_micropolitan_statistical_area,,in.metropolitan_and_micropolitan_statistical_area,in.metropolitan_and_micropolitan_statistical_area,,,,,,,,,:ref:`metropolitan_and_micropolitan_statistical_area`
+Input,build_existing_model.metropolitan_and_micropolitan_statistical_area,,in.metropolitan_and_micropolitan_statistical_area,in.metropolitan_and_micropolitan_statistical_area,,,,,,,,,The U.S. Metropolitan Statistical Area (MSA) or Micropolitan Statistical Area (MicroSA) that the sample is located
 Input,build_existing_model.misc_extra_refrigerator,,in.misc_extra_refrigerator,in.misc_extra_refrigerator,,,,,,,,,Presence and rated efficiency of extra refrigerator
 Input,build_existing_model.misc_freezer,,in.misc_freezer,in.misc_freezer,,,,,,,,,Presence and rated efficiency of standalone freezer
 Input,build_existing_model.misc_gas_fireplace,,in.misc_gas_fireplace,in.misc_gas_fireplace,,,,,,,,,Presence of gas fireplace
@@ -158,7 +158,7 @@ Input,build_existing_model.refrigerator,,in.refrigerator,in.refrigerator,,,,,,,,
 Input,build_existing_model.refrigerator_usage_level,,in.refrigerator_usage_level,in.refrigerator_usage_level,,,,,,,,,Refrigerator energy usage level multiplier
 Input,build_existing_model.roof_material,,in.roof_material,in.roof_material,,,,,,,,,Roof material type
 Input,build_existing_model.state,,in.state,in.state,,,,,,,,,State
-Input,build_existing_model.state_metro_median_income,,in.state_metro_median_income,in.state_metro_median_income,,,,,,,,,:ref:`state_metro_median_income`
+Input,build_existing_model.state_metro_median_income,,in.state_metro_median_income,in.state_metro_median_income,,,,,,,,,State Metro median income of the household occupying the dwelling unit. This is different from State Median Income in that the Income Limits are differentiated by Metro and Nonmetro portions of the state
 Input,build_existing_model.tenure,,in.tenure,in.tenure,,,,,,,,,The tenancy (owner or renter) of the household occupying the dwelling unit
 Input,build_existing_model.usage_level,,in.usage_level,in.usage_level,,,,,,,,,Usage of major appliances relative to the national average
 Input,build_existing_model.vacancy_status,,in.vacancy_status,in.vacancy_status,,,,,,,,,Presence of occupants
