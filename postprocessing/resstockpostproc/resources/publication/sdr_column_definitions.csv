@@ -8,169 +8,169 @@ Calculated,yes,yes,,,applicability,applicability,,,,,,,,,Whether the upgrade is 
 Output,yes,yes,upgrade_costs.floor_area_conditioned_ft_2,ft^2,in.sqft..ft2,in.sqft,ft2,1,,,,,,,"Floor Area, Conditioned"
 Calculated,yes,yes,,,in.representative_income,in.representative_income,usd,,,,,,,,Average representative income of the country
 Calculated,yes,yes,,,in.county_name,in.county_name,,,,,,,,,County name
-Input,yes,yes,build_existing_model.ahs_region,,in.ahs_region,in.ahs_region,,,,,,,,,:ref:`ahs_region`
-Input,yes,yes,build_existing_model.aiannh_area,,in.aiannh_area,in.aiannh_area,,,,,,,,,:ref:`aiannh_area`
-Input,yes,yes,build_existing_model.area_median_income,,in.area_median_income,in.area_median_income,,,,,,,,,:ref:`area_median_income`
-Input,yes,yes,build_existing_model.ashrae_iecc_climate_zone_2004,,in.ashrae_iecc_climate_zone_2004,in.ashrae_iecc_climate_zone_2004,,,,,,,,,:ref:`ashrae_iecc_climate_zone_2004`
-Input,yes,yes,build_existing_model.ashrae_iecc_climate_zone_2004_sub_cz_split,,in.ashrae_iecc_climate_zone_2004_sub_cz_split,in.ashrae_iecc_climate_zone_2004_sub_cz_split,,,,,,,,,:ref:`ashrae_iecc_climate_zone_2004___2_a_split`
-Input,yes,yes,build_existing_model.bathroom_spot_vent_hour,,in.bathroom_spot_vent_hour,in.bathroom_spot_vent_hour,,,,,,,,,:ref:`bathroom_spot_vent_hour`
-Input,yes,yes,build_existing_model.battery,,in.battery,in.battery,,,,,,,,,:ref:`battery`
-Input,yes,yes,build_existing_model.bedrooms,,in.bedrooms,in.bedrooms,,,,,,,,,:ref:`bedrooms`
-Input,yes,yes,build_existing_model.building_america_climate_zone,,in.building_america_climate_zone,in.building_america_climate_zone,,,,,,,,,:ref:`building_america_climate_zone`
-Input,yes,yes,build_existing_model.cec_climate_zone,,in.cec_climate_zone,in.cec_climate_zone,,,,,,,,,:ref:`cec_climate_zone`
-Input,yes,yes,build_existing_model.ceiling_fan,,in.ceiling_fan,in.ceiling_fan,,,,,,,,,:ref:`ceiling_fan`
-Input,yes,yes,build_existing_model.census_division,,in.census_division,in.census_division,,,,,,,,,:ref:`census_division`
-Input,yes,yes,build_existing_model.census_division_recs,,in.census_division_recs,in.census_division_recs,,,,,,,,,:ref:`census_division_recs`
-Input,yes,yes,build_existing_model.census_region,,in.census_region,in.census_region,,,,,,,,,:ref:`census_region`
-Input,yes,yes,build_existing_model.city,,in.city,in.city,,,,,,,,,:ref:`city`
-Input,yes,yes,build_existing_model.clothes_dryer,,in.clothes_dryer,in.clothes_dryer,,,,,,,,,:ref:`clothes_dryer`
-Input,yes,yes,build_existing_model.clothes_dryer_usage_level,,in.clothes_dryer_usage_level,in.clothes_dryer_usage_level,,,,,,,,,:ref:`clothes_dryer_usage_level`
-Input,yes,yes,build_existing_model.clothes_washer,,in.clothes_washer,in.clothes_washer,,,,,,,,,:ref:`clothes_washer`
-Input,yes,yes,build_existing_model.clothes_washer_presence,,in.clothes_washer_presence,in.clothes_washer_presence,,,,,,,,,:ref:`clothes_washer_presence`
-Input,yes,yes,build_existing_model.clothes_washer_usage_level,,in.clothes_washer_usage_level,in.clothes_washer_usage_level,,,,,,,,,:ref:`clothes_washer_usage_level`
-Input,yes,yes,build_existing_model.cooking_range,,in.cooking_range,in.cooking_range,,,,,,,,,:ref:`cooking_range`
-Input,yes,yes,build_existing_model.cooking_range_usage_level,,in.cooking_range_usage_level,in.cooking_range_usage_level,,,,,,,,,:ref:`cooking_range_usage_level`
-Input,yes,yes,build_existing_model.cooling_unavailable_days,,in.cooling_unavailable_days,in.cooling_unavailable_days,,,,,,,,,:ref:`cooling_unavailable_days`
-Input,yes,yes,build_existing_model.cooling_setpoint,,in.cooling_setpoint,in.cooling_setpoint,,,,,,,,,:ref:`cooling_setpoint`
-Input,yes,yes,build_existing_model.cooling_setpoint_has_offset,,in.cooling_setpoint_has_offset,in.cooling_setpoint_has_offset,,,,,,,,,:ref:`cooling_setpoint_has_offset`
-Input,yes,yes,build_existing_model.cooling_setpoint_offset_magnitude,,in.cooling_setpoint_offset_magnitude,in.cooling_setpoint_offset_magnitude,,,,,,,,,:ref:`cooling_setpoint_offset_magnitude`
-Input,yes,yes,build_existing_model.cooling_setpoint_offset_period,,in.cooling_setpoint_offset_period,in.cooling_setpoint_offset_period,,,,,,,,,:ref:`cooling_setpoint_offset_period`
-Input,yes,yes,build_existing_model.corridor,,in.corridor,in.corridor,,,,,,,,,:ref:`corridor`
-Input,yes,yes,build_existing_model.county,,in.county,in.county,,,,,,,,,:ref:`county`
-Input,yes,yes,build_existing_model.county_and_puma,,in.county_and_puma,in.county_and_puma,,,,,,,,,:ref:`county_and_puma`
-Input,yes,yes,build_existing_model.county_metro_status,,in.county_metro_status,in.county_metro_status,,,,,,,,,:ref:`county_metro_status`
-Input,yes,yes,build_existing_model.custom_state,,in.custom_state,in.custom_state,,,,,,,,,:ref:`custom_state`
-Input,yes,yes,build_existing_model.dehumidifier,,in.dehumidifier,in.dehumidifier,,,,,,,,,:ref:`dehumidifier`
-Input,yes,yes,build_existing_model.dishwasher,,in.dishwasher,in.dishwasher,,,,,,,,,:ref:`dishwasher`
-Input,yes,yes,build_existing_model.dishwasher_usage_level,,in.dishwasher_usage_level,in.dishwasher_usage_level,,,,,,,,,:ref:`dishwasher_usage_level`
-Input,yes,yes,build_existing_model.door_area,,in.door_area,in.door_area,,,,,,,,,:ref:`door_area`
-Input,yes,yes,build_existing_model.doors,,in.doors,in.doors,,,,,,,,,:ref:`doors`
-Input,yes,yes,build_existing_model.duct_leakage_and_insulation,,in.duct_leakage_and_insulation,in.duct_leakage_and_insulation,,,,,,,,,:ref:`duct_leakage_and_insulation`
-Input,yes,yes,build_existing_model.duct_location,,in.duct_location,in.duct_location,,,,,,,,,:ref:`duct_location`
-Input,yes,yes,build_existing_model.eaves,,in.eaves,in.eaves,,,,,,,,,:ref:`eaves`
-Input,yes,yes,build_existing_model.electric_panel_service_rating,amp,in.electric_panel_service_rating..a,in.electric_panel_service_rating,amp,1,,,,,,,:ref:`electric_panel_service_rating`
-Input,yes,yes,build_existing_model.electric_panel_service_rating_bin,amp,in.electric_panel_service_rating_bin..a,in.electric_panel_service_rating_bin,amp,,,,,,,,:ref:`electric_panel_service_rating_bin`
-Input,yes,yes,build_existing_model.electric_vehicle_battery,,in.electric_vehicle_battery,in.electric_vehicle_battery,,,,,,,,,:ref:`electric_vehicle_battery`
-Input,yes,yes,build_existing_model.electric_vehicle_charge_at_home,,in.electric_vehicle_charge_at_home,in.electric_vehicle_charge_at_home,,,,,,,,,:ref:`electric_vehicle_charge_at_home`
-Input,yes,yes,build_existing_model.electric_vehicle_charger,,in.electric_vehicle_charger,in.electric_vehicle_charger,,,,,,,,,:ref:`electric_vehicle_charger`
-Input,yes,yes,build_existing_model.electric_vehicle_miles_traveled,,in.electric_vehicle_miles_traveled,in.electric_vehicle_miles_traveled,,,,,,,,,:ref:`electric_vehicle_miles_traveled`
-Input,yes,yes,build_existing_model.electric_vehicle_outlet_access,,in.electric_vehicle_outlet_access,in.electric_vehicle_outlet_access,,,,,,,,,:ref:`electric_vehicle_outlet_access`
-Input,yes,yes,build_existing_model.electric_vehicle_ownership,,in.electric_vehicle_ownership,in.electric_vehicle_ownership,,,,,,,,,:ref:`electric_vehicle_ownership`
-Input,yes,yes,build_existing_model.energystar_climate_zone_2023,,in.energystar_climate_zone_2023,in.energystar_climate_zone_2023,,,,,,,,,:ref:`energystar_climate_zone_2023`
-Input,yes,yes,build_existing_model.federal_poverty_level,,in.federal_poverty_level,in.federal_poverty_level,,,,,,,,,:ref:`federal_poverty_level`
-Input,yes,yes,build_existing_model.generation_and_emissions_assessment_region,,in.generation_and_emissions_assessment_region,in.generation_and_emissions_assessment_region,,,,,,,,,:ref:`generation_and_emissions_assessment_region`
-Input,yes,yes,build_existing_model.geometry_attic_type,,in.geometry_attic_type,in.geometry_attic_type,,,,,,,,,:ref:`geometry_attic_type`
-Input,yes,yes,build_existing_model.geometry_building_horizontal_location_mf,,in.geometry_building_horizontal_location_mf,in.geometry_building_horizontal_location_mf,,,,,,,,,:ref:`geometry_building_horizontal_location_mf`
-Input,yes,yes,build_existing_model.geometry_building_horizontal_location_sfa,,in.geometry_building_horizontal_location_sfa,in.geometry_building_horizontal_location_sfa,,,,,,,,,:ref:`geometry_building_horizontal_location_sfa`
-Input,yes,yes,build_existing_model.geometry_building_level_mf,,in.geometry_building_level_mf,in.geometry_building_level_mf,,,,,,,,,:ref:`geometry_building_level_mf`
-Input,yes,yes,build_existing_model.geometry_building_number_units_mf,,in.geometry_building_number_units_mf,in.geometry_building_number_units_mf,,,,,,,,,:ref:`geometry_building_number_units_mf`
-Input,yes,yes,build_existing_model.geometry_building_number_units_sfa,,in.geometry_building_number_units_sfa,in.geometry_building_number_units_sfa,,,,,,,,,:ref:`geometry_building_number_units_sfa`
-Input,yes,yes,build_existing_model.geometry_building_type_acs,,in.geometry_building_type_acs,in.geometry_building_type_acs,,,,,,,,,:ref:`geometry_building_type_acs`
-Input,yes,yes,build_existing_model.geometry_building_type_height,,in.geometry_building_type_height,in.geometry_building_type_height,,,,,,,,,:ref:`geometry_building_type_height`
-Input,yes,yes,build_existing_model.geometry_building_type_recs,,in.geometry_building_type_recs,in.geometry_building_type_recs,,,,,,,,,:ref:`geometry_building_type_recs`
-Input,yes,yes,build_existing_model.geometry_floor_area,,in.geometry_floor_area,in.geometry_floor_area,,,,,,,,,:ref:`geometry_floor_area`
-Input,yes,yes,build_existing_model.geometry_floor_area_bin,,in.geometry_floor_area_bin,in.geometry_floor_area_bin,,,,,,,,,:ref:`geometry_floor_area_bin`
-Input,yes,yes,build_existing_model.geometry_foundation_type,,in.geometry_foundation_type,in.geometry_foundation_type,,,,,,,,,:ref:`geometry_foundation_type`
-Input,yes,yes,build_existing_model.geometry_garage,,in.geometry_garage,in.geometry_garage,,,,,,,,,:ref:`geometry_garage`
-Input,yes,yes,build_existing_model.geometry_space_combination,,in.geometry_space_combination,in.geometry_space_combination,,,,,,,,,:ref:`geometry_space_combination`
-Input,yes,yes,build_existing_model.geometry_stories,,in.geometry_stories,in.geometry_stories,,,,,,,,,:ref:`geometry_stories`
-Input,yes,yes,build_existing_model.geometry_stories_low_rise,,in.geometry_stories_low_rise,in.geometry_stories_low_rise,,,,,,,,,:ref:`geometry_stories_low_rise`
-Input,yes,yes,build_existing_model.geometry_story_bin,,in.geometry_story_bin,in.geometry_story_bin,,,,,,,,,:ref:`geometry_story_bin`
-Input,yes,yes,build_existing_model.geometry_wall_exterior_finish,,in.geometry_wall_exterior_finish,in.geometry_wall_exterior_finish,,,,,,,,,:ref:`geometry_wall_exterior_finish`
-Input,yes,yes,build_existing_model.geometry_wall_type,,in.geometry_wall_type,in.geometry_wall_type,,,,,,,,,:ref:`geometry_wall_type`
-Input,yes,yes,build_existing_model.ground_thermal_conductivity,,in.ground_thermal_conductivity,in.ground_thermal_conductivity,,,,,,,,,:ref:`ground_thermal_conductivity`
-Input,yes,yes,build_existing_model.has_pv,,in.has_pv,in.has_pv,,,,,,,,,:ref:`has_pv`
-Input,yes,yes,build_existing_model.heating_fuel,,in.heating_fuel,in.heating_fuel,,,,,,,,,:ref:`heating_fuel`
-Input,yes,yes,build_existing_model.heating_unavailable_days,,in.heating_unavailable_days,in.heating_unavailable_days,,,,,,,,,:ref:`heating_unavailable_days`
-Input,yes,yes,build_existing_model.heating_setpoint,,in.heating_setpoint,in.heating_setpoint,,,,,,,,,:ref:`heating_setpoint`
-Input,yes,yes,build_existing_model.heating_setpoint_has_offset,,in.heating_setpoint_has_offset,in.heating_setpoint_has_offset,,,,,,,,,:ref:`heating_setpoint_has_offset`
-Input,yes,yes,build_existing_model.heating_setpoint_offset_magnitude,,in.heating_setpoint_offset_magnitude,in.heating_setpoint_offset_magnitude,,,,,,,,,:ref:`heating_setpoint_offset_magnitude`
-Input,yes,yes,build_existing_model.heating_setpoint_offset_period,,in.heating_setpoint_offset_period,in.heating_setpoint_offset_period,,,,,,,,,:ref:`heating_setpoint_offset_period`
-Input,yes,yes,build_existing_model.holiday_lighting,,in.holiday_lighting,in.holiday_lighting,,,,,,,,,:ref:`holiday_lighting`
-Input,yes,yes,build_existing_model.hot_water_distribution,,in.hot_water_distribution,in.hot_water_distribution,,,,,,,,,:ref:`hot_water_distribution`
-Input,yes,yes,build_existing_model.hot_water_fixtures,,in.hot_water_fixtures,in.hot_water_fixtures,,,,,,,,,:ref:`hot_water_fixtures`
-Input,yes,yes,build_existing_model.household_has_tribal_persons,,in.household_has_tribal_persons,in.household_has_tribal_persons,,,,,,,,,:ref:`household_has_tribal_persons`
-Input,yes,yes,build_existing_model.hvac_cooling_autosizing_factor,,in.hvac_cooling_autosizing_factor,in.hvac_cooling_autosizing_factor,,,,,,,,,:ref:`hvac_cooling_autosizing_factor`
-Input,yes,yes,build_existing_model.hvac_cooling_efficiency,,in.hvac_cooling_efficiency,in.hvac_cooling_efficiency,,,,,,,,,:ref:`hvac_cooling_efficiency`
-Input,yes,yes,build_existing_model.hvac_cooling_partial_space_conditioning,,in.hvac_cooling_partial_space_conditioning,in.hvac_cooling_partial_space_conditioning,,,,,,,,,:ref:`hvac_cooling_partial_space_conditioning`
-Input,yes,yes,build_existing_model.hvac_cooling_type,,in.hvac_cooling_type,in.hvac_cooling_type,,,,,,,,,:ref:`hvac_cooling_type`
-Input,yes,yes,build_existing_model.hvac_has_ducts,,in.hvac_has_ducts,in.hvac_has_ducts,,,,,,,,,:ref:`hvac_has_ducts`
-Input,yes,yes,build_existing_model.hvac_has_shared_system,,in.hvac_has_shared_system,in.hvac_has_shared_system,,,,,,,,,:ref:`hvac_has_shared_system`
-Input,yes,yes,build_existing_model.hvac_has_zonal_electric_heating,,in.hvac_has_zonal_electric_heating,in.hvac_has_zonal_electric_heating,,,,,,,,,:ref:`hvac_has_zonal_electric_heating`
-Input,yes,yes,build_existing_model.hvac_heating_autosizing_factor,,in.hvac_heating_autosizing_factor,in.hvac_heating_autosizing_factor,,,,,,,,,:ref:`hvac_heating_autosizing_factor`
-Input,yes,yes,build_existing_model.hvac_heating_efficiency,,in.hvac_heating_efficiency,in.hvac_heating_efficiency,,,,,,,,,:ref:`hvac_heating_efficiency`
-Input,yes,yes,build_existing_model.hvac_heating_type,,in.hvac_heating_type,in.hvac_heating_type,,,,,,,,,:ref:`hvac_heating_type`
-Input,yes,yes,build_existing_model.hvac_heating_type_and_fuel,,in.hvac_heating_type_and_fuel,in.hvac_heating_type_and_fuel,,,,,,,,,:ref:`hvac_heating_type_and_fuel`
-Input,yes,yes,build_existing_model.hvac_secondary_heating_efficiency,,in.hvac_secondary_heating_efficiency,in.hvac_secondary_heating_efficiency,,,,,,,,,:ref:`hvac_secondary_heating_efficiency`
-Input,yes,yes,build_existing_model.hvac_secondary_heating_fuel,,in.hvac_secondary_heating_fuel,in.hvac_secondary_heating_fuel,,,,,,,,,:ref:`hvac_secondary_heating_fuel`
-Input,yes,yes,build_existing_model.hvac_secondary_heating_partial_space_conditioning,,in.hvac_secondary_heating_partial_space_conditioning,in.hvac_secondary_heating_partial_space_conditioning,,,,,,,,,:ref:`hvac_secondary_heating_partial_space_conditioning`
-Input,yes,yes,build_existing_model.hvac_secondary_heating_type,,in.hvac_secondary_heating_type,in.hvac_secondary_heating_type,,,,,,,,,:ref:`hvac_secondary_heating_type`
-Input,yes,yes,build_existing_model.hvac_shared_efficiencies,,in.hvac_shared_efficiencies,in.hvac_shared_efficiencies,,,,,,,,,:ref:`hvac_shared_efficiencies`
-Input,yes,yes,build_existing_model.hvac_system_is_faulted,,in.hvac_system_is_faulted,in.hvac_system_is_faulted,,,,,,,,,:ref:`hvac_system_is_faulted`
-Input,yes,yes,build_existing_model.hvac_system_is_scaled,,in.hvac_system_is_scaled,in.hvac_system_is_scaled,,,,,,,,,:ref:`hvac_system_is_scaled`
-Input,yes,yes,build_existing_model.hvac_system_single_speed_ac_airflow,,in.hvac_system_single_speed_ac_airflow,in.hvac_system_single_speed_ac_airflow,,,,,,,,,:ref:`hvac_system_single_speed_ac_airflow`
-Input,yes,yes,build_existing_model.hvac_system_single_speed_ac_charge,,in.hvac_system_single_speed_ac_charge,in.hvac_system_single_speed_ac_charge,,,,,,,,,:ref:`hvac_system_single_speed_ac_charge`
-Input,yes,yes,build_existing_model.hvac_system_single_speed_ashp_airflow,,in.hvac_system_single_speed_ashp_airflow,in.hvac_system_single_speed_ashp_airflow,,,,,,,,,:ref:`hvac_system_single_speed_ashp_airflow`
-Input,yes,yes,build_existing_model.hvac_system_single_speed_ashp_charge,,in.hvac_system_single_speed_ashp_charge,in.hvac_system_single_speed_ashp_charge,,,,,,,,,:ref:`hvac_system_single_speed_ashp_charge`
-Input,yes,yes,build_existing_model.income,,in.income,in.income,,,,,,,,,:ref:`income`
-Input,yes,yes,build_existing_model.income_recs_2015,,in.income_recs_2015,in.income_recs_2015,,,,,,,,,:ref:`income_recs2015`
-Input,yes,yes,build_existing_model.income_recs_2020,,in.income_recs_2020,in.income_recs_2020,,,,,,,,,:ref:`income_recs2020`
-Input,yes,yes,build_existing_model.infiltration,,in.infiltration,in.infiltration,,,,,,,,,:ref:`infiltration`
-Input,yes,yes,build_existing_model.insulation_ceiling,,in.insulation_ceiling,in.insulation_ceiling,,,,,,,,,:ref:`insulation_ceiling`
-Input,yes,yes,build_existing_model.insulation_floor,,in.insulation_floor,in.insulation_floor,,,,,,,,,:ref:`insulation_floor`
-Input,yes,yes,build_existing_model.insulation_foundation_wall,,in.insulation_foundation_wall,in.insulation_foundation_wall,,,,,,,,,:ref:`insulation_foundation_wall`
-Input,yes,yes,build_existing_model.insulation_rim_joist,,in.insulation_rim_joist,in.insulation_rim_joist,,,,,,,,,:ref:`insulation_rim_joist`
-Input,yes,yes,build_existing_model.insulation_roof,,in.insulation_roof,in.insulation_roof,,,,,,,,,:ref:`insulation_roof`
-Input,yes,yes,build_existing_model.insulation_slab,,in.insulation_slab,in.insulation_slab,,,,,,,,,:ref:`insulation_slab`
-Input,yes,yes,build_existing_model.insulation_wall,,in.insulation_wall,in.insulation_wall,,,,,,,,,:ref:`insulation_wall`
-Input,yes,yes,build_existing_model.interior_shading,,in.interior_shading,in.interior_shading,,,,,,,,,:ref:`interior_shading`
-Input,yes,yes,build_existing_model.iso_rto_region,,in.iso_rto_region,in.iso_rto_region,,,,,,,,,:ref:`iso_rto_region`
-Input,yes,yes,build_existing_model.lighting,,in.lighting,in.lighting,,,,,,,,,:ref:`lighting`
-Input,yes,yes,build_existing_model.lighting_interior_use,,in.lighting_interior_use,in.lighting_interior_use,,,,,,,,,:ref:`lighting_interior_use`
-Input,yes,yes,build_existing_model.lighting_other_use,,in.lighting_other_use,in.lighting_other_use,,,,,,,,,:ref:`lighting_other_use`
-Input,yes,yes,build_existing_model.location_region,,in.location_region,in.location_region,,,,,,,,,:ref:`location_region`
-Input,yes,yes,build_existing_model.mechanical_ventilation,,in.mechanical_ventilation,in.mechanical_ventilation,,,,,,,,,:ref:`mechanical_ventilation`
-Input,yes,yes,build_existing_model.metropolitan_and_micropolitan_statistical_area,,in.metropolitan_and_micropolitan_statistical_area,in.metropolitan_and_micropolitan_statistical_area,,,,,,,,,:ref:`metropolitan_and_micropolitan_statistical_area`
-Input,yes,yes,build_existing_model.misc_extra_refrigerator,,in.misc_extra_refrigerator,in.misc_extra_refrigerator,,,,,,,,,:ref:`misc_extra_refrigerator`
-Input,yes,yes,build_existing_model.misc_freezer,,in.misc_freezer,in.misc_freezer,,,,,,,,,:ref:`misc_freezer`
-Input,yes,yes,build_existing_model.misc_gas_fireplace,,in.misc_gas_fireplace,in.misc_gas_fireplace,,,,,,,,,:ref:`misc_gas_fireplace`
-Input,yes,yes,build_existing_model.misc_gas_grill,,in.misc_gas_grill,in.misc_gas_grill,,,,,,,,,:ref:`misc_gas_grill`
-Input,yes,yes,build_existing_model.misc_gas_lighting,,in.misc_gas_lighting,in.misc_gas_lighting,,,,,,,,,:ref:`misc_gas_lighting`
-Input,yes,yes,build_existing_model.misc_hot_tub_spa,,in.misc_hot_tub_spa,in.misc_hot_tub_spa,,,,,,,,,:ref:`misc_hot_tub_spa`
-Input,yes,yes,build_existing_model.misc_pool,,in.misc_pool,in.misc_pool,,,,,,,,,:ref:`misc_pool`
-Input,yes,yes,build_existing_model.misc_pool_heater,,in.misc_pool_heater,in.misc_pool_heater,,,,,,,,,:ref:`misc_pool_heater`
-Input,yes,yes,build_existing_model.misc_pool_pump,,in.misc_pool_pump,in.misc_pool_pump,,,,,,,,,:ref:`misc_pool_pump`
-Input,yes,yes,build_existing_model.misc_well_pump,,in.misc_well_pump,in.misc_well_pump,,,,,,,,,:ref:`misc_well_pump`
-Input,yes,yes,build_existing_model.natural_ventilation,,in.natural_ventilation,in.natural_ventilation,,,,,,,,,:ref:`natural_ventilation`
-Input,yes,yes,build_existing_model.neighbors,,in.neighbors,in.neighbors,,,,,,,,,:ref:`neighbors`
-Input,yes,yes,build_existing_model.occupants,,in.occupants,in.occupants,,,,,,,,,:ref:`occupants`
-Input,yes,yes,build_existing_model.orientation,,in.orientation,in.orientation,,,,,,,,,:ref:`orientation`
-Input,yes,yes,build_existing_model.overhangs,,in.overhangs,in.overhangs,,,,,,,,,:ref:`overhangs`
-Input,yes,yes,build_existing_model.plug_load_diversity,,in.plug_load_diversity,in.plug_load_diversity,,,,,,,,,:ref:`plug_load_diversity`
-Input,yes,yes,build_existing_model.plug_loads,,in.plug_loads,in.plug_loads,,,,,,,,,:ref:`plug_loads`
-Input,yes,yes,build_existing_model.puma,,in.puma,in.puma,,,,,,,,,:ref:`puma`
-Input,yes,yes,build_existing_model.puma_metro_status,,in.puma_metro_status,in.puma_metro_status,,,,,,,,,:ref:`puma_metro_status`
-Input,yes,yes,build_existing_model.pv_orientation,,in.pv_orientation,in.pv_orientation,,,,,,,,,:ref:`pv_orientation`
-Input,yes,yes,build_existing_model.pv_system_size,,in.pv_system_size,in.pv_system_size,,,,,,,,,:ref:`pv_system_size`
-Input,yes,yes,build_existing_model.radiant_barrier,,in.radiant_barrier,in.radiant_barrier,,,,,,,,,:ref:`radiant_barrier`
-Input,yes,yes,build_existing_model.range_spot_vent_hour,,in.range_spot_vent_hour,in.range_spot_vent_hour,,,,,,,,,:ref:`range_spot_vent_hour`
-Input,yes,yes,build_existing_model.reeds_balancing_area,,in.reeds_balancing_area,in.reeds_balancing_area,,,,,,,,,:ref:`reeds_balancing_area`
-Input,yes,yes,build_existing_model.refrigerator,,in.refrigerator,in.refrigerator,,,,,,,,,:ref:`refrigerator`
-Input,yes,yes,build_existing_model.refrigerator_usage_level,,in.refrigerator_usage_level,in.refrigerator_usage_level,,,,,,,,,:ref:`refrigerator_usage_level`
-Input,yes,yes,build_existing_model.roof_material,,in.roof_material,in.roof_material,,,,,,,,,:ref:`roof_material`
-Input,yes,yes,build_existing_model.state,,in.state,in.state,,,,,,,,,:ref:`state`
-Input,yes,yes,build_existing_model.state_metro_median_income,,in.state_metro_median_income,in.state_metro_median_income,,,,,,,,,:ref:`state_metro_median_income`
-Input,yes,yes,build_existing_model.tenure,,in.tenure,in.tenure,,,,,,,,,:ref:`tenure`
-Input,yes,yes,build_existing_model.usage_level,,in.usage_level,in.usage_level,,,,,,,,,:ref:`usage_level`
-Input,yes,yes,build_existing_model.vacancy_status,,in.vacancy_status,in.vacancy_status,,,,,,,,,:ref:`vacancy_status`
-Input,yes,yes,build_existing_model.vintage,,in.vintage,in.vintage,,,,,,,,,:ref:`vintage`
-Input,yes,yes,build_existing_model.vintage_acs,,in.vintage_acs,in.vintage_acs,,,,,,,,,:ref:`vintage_acs`
-Input,yes,yes,build_existing_model.water_heater_efficiency,,in.water_heater_efficiency,in.water_heater_efficiency,,,,,,,,,:ref:`water_heater_efficiency`
-Input,yes,yes,build_existing_model.water_heater_fuel,,in.water_heater_fuel,in.water_heater_fuel,,,,,,,,,:ref:`water_heater_fuel`
-Input,yes,yes,build_existing_model.water_heater_in_unit,,in.water_heater_in_unit,in.water_heater_in_unit,,,,,,,,,:ref:`water_heater_in_unit`
-Input,yes,yes,build_existing_model.water_heater_location,,in.water_heater_location,in.water_heater_location,,,,,,,,,:ref:`water_heater_location`
-Input,yes,yes,build_existing_model.window_areas,,in.window_areas,in.window_areas,,,,,,,,,:ref:`window_areas`
-Input,yes,yes,build_existing_model.windows,,in.windows,in.windows,,,,,,,,,:ref:`windows`
+Input,yes,yes,build_existing_model.ahs_region,,in.ahs_region,in.ahs_region,,,,,,,,,The American Housing Survey region that the sample is located.
+Input,yes,yes,build_existing_model.aiannh_area,,in.aiannh_area,in.aiannh_area,,,,,,,,,American Indian/Alaska Native/Native Hawaiian Area that the sample is located.
+Input,yes,yes,build_existing_model.area_median_income,,in.area_median_income,in.area_median_income,,,,,,,,,Area median income of the household occupying the dwelling unit.
+Input,yes,yes,build_existing_model.ashrae_iecc_climate_zone_2004,,in.ashrae_iecc_climate_zone_2004,in.ashrae_iecc_climate_zone_2004,,,,,,,,,Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located.
+Input,yes,yes,build_existing_model.ashrae_iecc_climate_zone_2004_sub_cz_split,,in.ashrae_iecc_climate_zone_2004_sub_cz_split,in.ashrae_iecc_climate_zone_2004_sub_cz_split,,,,,,,,,"Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located. Climate zone where climate zone 2A is split between counties in TX, LA and FL, GA, AL, and MSClimate zone where climate zone 1A is split between counties in FL and HI."
+Input,yes,yes,build_existing_model.bathroom_spot_vent_hour,,in.bathroom_spot_vent_hour,in.bathroom_spot_vent_hour,,,,,,,,,Bathroom spot ventilation daily start hour.
+Input,yes,yes,build_existing_model.battery,,in.battery,in.battery,,,,,,,,,The size of an onsite battery (not used in baseline models).
+Input,yes,yes,build_existing_model.bedrooms,,in.bedrooms,in.bedrooms,,,,,,,,,The number of bedrooms in the dwelling unit.
+Input,yes,yes,build_existing_model.building_america_climate_zone,,in.building_america_climate_zone,in.building_america_climate_zone,,,,,,,,,The Building America Climate Zone that the sample is located.
+Input,yes,yes,build_existing_model.cec_climate_zone,,in.cec_climate_zone,in.cec_climate_zone,,,,,,,,,The California Energy Commission Climate Zone that the sample is located.
+Input,yes,yes,build_existing_model.ceiling_fan,,in.ceiling_fan,in.ceiling_fan,,,,,,,,,Presence and energy usage of ceiling fans at medium speed.
+Input,yes,yes,build_existing_model.census_division,,in.census_division,in.census_division,,,,,,,,,The U.S. Census Division that the sample is located.
+Input,yes,yes,build_existing_model.census_division_recs,,in.census_division_recs,in.census_division_recs,,,,,,,,,"Census Division as used in RECS 2015 that the sample is located. RECS 2015 splits the Mountain Census Division into north (CO, ID, MT, UT, WY) and south (AZ, NM, NV)."
+Input,yes,yes,build_existing_model.census_region,,in.census_region,in.census_region,,,,,,,,,The U.S. Census Region that the sample is located.
+Input,yes,yes,build_existing_model.city,,in.city,in.city,,,,,,,,,The City that the sample is located.
+Input,yes,yes,build_existing_model.clothes_dryer,,in.clothes_dryer,in.clothes_dryer,,,,,,,,,"The presence, rated efficiency, and fuel type of the clothes dryer in a dwelling unit."
+Input,yes,yes,build_existing_model.clothes_dryer_usage_level,,in.clothes_dryer_usage_level,in.clothes_dryer_usage_level,,,,,,,,,Clothes dryer energy usage level multiplier.
+Input,yes,yes,build_existing_model.clothes_washer,,in.clothes_washer,in.clothes_washer,,,,,,,,,Presence and rated efficiency of the clothes washer.
+Input,yes,yes,build_existing_model.clothes_washer_presence,,in.clothes_washer_presence,in.clothes_washer_presence,,,,,,,,,"The presence of a clothes washer in the dwelling unit."
+Input,yes,yes,build_existing_model.clothes_washer_usage_level,,in.clothes_washer_usage_level,in.clothes_washer_usage_level,,,,,,,,,Clothes washer energy usage level multiplier.
+Input,yes,yes,build_existing_model.cooking_range,,in.cooking_range,in.cooking_range,,,,,,,,,Presence and fuel type of the cooking range.
+Input,yes,yes,build_existing_model.cooking_range_usage_level,,in.cooking_range_usage_level,in.cooking_range_usage_level,,,,,,,,,Cooking range energy usage level multiplier.
+Input,yes,yes,build_existing_model.cooling_unavailable_days,,in.cooling_unavailable_days,in.cooling_unavailable_days,,,,,,,,,Number of days in a year the cooling system is unavailable.
+Input,yes,yes,build_existing_model.cooling_setpoint,,in.cooling_setpoint,in.cooling_setpoint,,,,,,,,,Baseline cooling setpoint with no offset applied.
+Input,yes,yes,build_existing_model.cooling_setpoint_has_offset,,in.cooling_setpoint_has_offset,in.cooling_setpoint_has_offset,,,,,,,,,Presence of a cooling setpoint offset.
+Input,yes,yes,build_existing_model.cooling_setpoint_offset_magnitude,,in.cooling_setpoint_offset_magnitude,in.cooling_setpoint_offset_magnitude,,,,,,,,,The magnitude of cooling setpoint offset.
+Input,yes,yes,build_existing_model.cooling_setpoint_offset_period,,in.cooling_setpoint_offset_period,in.cooling_setpoint_offset_period,,,,,,,,,The period and offset for the dwelling unit’s cooling setpoint. Default for the day is from 9am to 5pm and for the night is 10pm to 7am.
+Input,yes,yes,build_existing_model.corridor,,in.corridor,in.corridor,,,,,,,,,Type of corridor attached to multi-family units.
+Input,yes,yes,build_existing_model.county,,in.county,in.county,,,,,,,,,The U.S. County that the sample is located.
+Input,yes,yes,build_existing_model.county_and_puma,,in.county_and_puma,in.county_and_puma,,,,,,,,,The GISJOIN identifier for the County and the Public Use Microdata Area that the sample is located.
+Input,yes,yes,build_existing_model.county_metro_status,,in.county_metro_status,in.county_metro_status,,,,,,,,,"The Metro Status of the county that the sample is located, based on MSA and MicroSA."
+Input,yes,yes,build_existing_model.custom_state,,in.custom_state,in.custom_state,,,,,,,,,A custom selection of states to be able to have more fine tuned probability distributionin states where we have more data.
+Input,yes,yes,build_existing_model.dehumidifier,,in.dehumidifier,in.dehumidifier,,,,,,,,,"Presence, water removal rate, and humidity setpoint of the dehumidifier."
+Input,yes,yes,build_existing_model.dishwasher,,in.dishwasher,in.dishwasher,,,,,,,,,"The presence and rated efficiency of the dishwasher."
+Input,yes,yes,build_existing_model.dishwasher_usage_level,,in.dishwasher_usage_level,in.dishwasher_usage_level,,,,,,,,,Dishwasher energy usage level multiplier.
+Input,yes,yes,build_existing_model.door_area,,in.door_area,in.door_area,,,,,,,,,Area of exterior doors.
+Input,yes,yes,build_existing_model.doors,,in.doors,in.doors,,,,,,,,,Exterior door material and properties.
+Input,yes,yes,build_existing_model.duct_leakage_and_insulation,,in.duct_leakage_and_insulation,in.duct_leakage_and_insulation,,,,,,,,,Duct insulation and leakage to outside from the portion of ducts in unconditioned spaces.
+Input,yes,yes,build_existing_model.duct_location,,in.duct_location,in.duct_location,,,,,,,,,Location of Duct System.
+Input,yes,yes,build_existing_model.eaves,,in.eaves,in.eaves,,,,,,,,,Depth of roof eaves.
+Input,yes,yes,build_existing_model.electric_panel_service_rating,amp,in.electric_panel_service_rating..a,in.electric_panel_service_rating,amp,1,,,,,,,The rating of electric panel in Ampere.
+Input,yes,yes,build_existing_model.electric_panel_service_rating_bin,amp,in.electric_panel_service_rating_bin..a,in.electric_panel_service_rating_bin,amp,,,,,,,,The rating bin of electric panel in Ampere.
+Input,yes,yes,build_existing_model.electric_vehicle_battery,,in.electric_vehicle_battery,in.electric_vehicle_battery,,,,,,,,,The type of electric vehicle and battery range in miles.
+Input,yes,yes,build_existing_model.electric_vehicle_charge_at_home,,in.electric_vehicle_charge_at_home,in.electric_vehicle_charge_at_home,,,,,,,,,The percentage a household would or do charge their electric vehicle at home.
+Input,yes,yes,build_existing_model.electric_vehicle_charger,,in.electric_vehicle_charger,in.electric_vehicle_charger,,,,,,,,,Type of electric vehicle charger used at the dwelling unit.
+Input,yes,yes,build_existing_model.electric_vehicle_miles_traveled,,in.electric_vehicle_miles_traveled,in.electric_vehicle_miles_traveled,,,,,,,,,"The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle. Because EVs drive less miles/year than ICE, the max value is capped at 22,500 miles/yr and the distribution is shifted to reduce the mean."
+Input,yes,yes,build_existing_model.electric_vehicle_outlet_access,,in.electric_vehicle_outlet_access,in.electric_vehicle_outlet_access,,,,,,,,,The unit has an outlet within 20 feet of vehicle parking.
+Input,yes,yes,build_existing_model.electric_vehicle_ownership,,in.electric_vehicle_ownership,in.electric_vehicle_ownership,,,,,,,,,The dwelling unit owns an electric vehicle.
+Input,yes,yes,build_existing_model.energystar_climate_zone_2023,,in.energystar_climate_zone_2023,in.energystar_climate_zone_2023,,,,,,,,,"Climate zones for windows, doors, and skylights per EnergyStar guidelines as of 2023."
+Input,yes,yes,build_existing_model.federal_poverty_level,,in.federal_poverty_level,in.federal_poverty_level,,,,,,,,,Federal poverty level of the household occupying the dwelling unit.
+Input,yes,yes,build_existing_model.generation_and_emissions_assessment_region,,in.generation_and_emissions_assessment_region,in.generation_and_emissions_assessment_region,,,,,,,,,The generation and carbon emissions assessment region that the sample is located in.
+Input,yes,yes,build_existing_model.geometry_attic_type,,in.geometry_attic_type,in.geometry_attic_type,,,,,,,,,The dwelling unit attic type.
+Input,yes,yes,build_existing_model.geometry_building_horizontal_location_mf,,in.geometry_building_horizontal_location_mf,in.geometry_building_horizontal_location_mf,,,,,,,,,"Location of the single-family attached unit horizontally within the building (left, middle, right)."
+Input,yes,yes,build_existing_model.geometry_building_horizontal_location_sfa,,in.geometry_building_horizontal_location_sfa,in.geometry_building_horizontal_location_sfa,,,,,,,,,"Location of the single-family attached unit horizontally within the building (left, middle, right)."
+Input,yes,yes,build_existing_model.geometry_building_level_mf,,in.geometry_building_level_mf,in.geometry_building_level_mf,,,,,,,,,"Location of the multi-family unit vertically within the building (bottom, middle, top)."
+Input,yes,yes,build_existing_model.geometry_building_number_units_mf,,in.geometry_building_number_units_mf,in.geometry_building_number_units_mf,,,,,,,,,The number of dwelling units in the multi-family building.
+Input,yes,yes,build_existing_model.geometry_building_number_units_sfa,,in.geometry_building_number_units_sfa,in.geometry_building_number_units_sfa,,,,,,,,,Number of units in the single-family attached building.
+Input,yes,yes,build_existing_model.geometry_building_type_acs,,in.geometry_building_type_acs,in.geometry_building_type_acs,,,,,,,,,The building type classification according to the U.S. Census American Community Survey.
+Input,yes,yes,build_existing_model.geometry_building_type_height,,in.geometry_building_type_height,in.geometry_building_type_height,,,,,,,,,"The 2009 U.S. Energy Information Administration Residential Energy Consumption Survey building type with multi-family buildings split out by low-rise, mid-rise, and high-rise."
+Input,yes,yes,build_existing_model.geometry_building_type_recs,,in.geometry_building_type_recs,in.geometry_building_type_recs,,,,,,,,,"The building type classification according to the U.S. Energy Information Administration Residential Energy Consumption Survey."
+Input,yes,yes,build_existing_model.geometry_floor_area,,in.geometry_floor_area,in.geometry_floor_area,,,,,,,,,The finished floor area of the dwelling unit using bins from 2017-2019 AHS.
+Input,yes,yes,build_existing_model.geometry_floor_area_bin,,in.geometry_floor_area_bin,in.geometry_floor_area_bin,,,,,,,,,The finished floor area of the dwelling unit using bins from the U.S. Energy Information Administration Residential Energy Consumption Survey.
+Input,yes,yes,build_existing_model.geometry_foundation_type,,in.geometry_foundation_type,in.geometry_foundation_type,,,,,,,,,The type of foundation.
+Input,yes,yes,build_existing_model.geometry_garage,,in.geometry_garage,in.geometry_garage,,,,,,,,,The size of an attached garage.
+Input,yes,yes,build_existing_model.geometry_space_combination,,in.geometry_space_combination,in.geometry_space_combination,,,,,,,,,"Valid combinations of building type, building level mf, attic, foundation, and garage."
+Input,yes,yes,build_existing_model.geometry_stories,,in.geometry_stories,in.geometry_stories,,,,,,,,,The number of building stories.
+Input,yes,yes,build_existing_model.geometry_stories_low_rise,,in.geometry_stories_low_rise,in.geometry_stories_low_rise,,,,,,,,,Number of building stories for low-rise buildings.
+Input,yes,yes,build_existing_model.geometry_story_bin,,in.geometry_story_bin,in.geometry_story_bin,,,,,,,,,The building has more than 8 or less than 8 stories.
+Input,yes,yes,build_existing_model.geometry_wall_exterior_finish,,in.geometry_wall_exterior_finish,in.geometry_wall_exterior_finish,,,,,,,,,Wall siding material and color.
+Input,yes,yes,build_existing_model.geometry_wall_type,,in.geometry_wall_type,in.geometry_wall_type,,,,,,,,,The wall material used for thermal mass calculations of exterior walls.
+Input,yes,yes,build_existing_model.ground_thermal_conductivity,,in.ground_thermal_conductivity,in.ground_thermal_conductivity,,,,,,,,,The thermal conductivity (in Btu/hr-ft-F) of the ground using in foundation and geothermal heat pump heat transfer calculations.
+Input,yes,yes,build_existing_model.has_pv,,in.has_pv,in.has_pv,,,,,,,,,The dwelling unit has a rooftop photovoltaic system.
+Input,yes,yes,build_existing_model.heating_fuel,,in.heating_fuel,in.heating_fuel,,,,,,,,,The primary fuel used for heating the dwelling unit.
+Input,yes,yes,build_existing_model.heating_unavailable_days,,in.heating_unavailable_days,in.heating_unavailable_days,,,,,,,,,Number of days in a year the heating system is unavailable.
+Input,yes,yes,build_existing_model.heating_setpoint,,in.heating_setpoint,in.heating_setpoint,,,,,,,,,Baseline heating setpoint with no offset applied.
+Input,yes,yes,build_existing_model.heating_setpoint_has_offset,,in.heating_setpoint_has_offset,in.heating_setpoint_has_offset,,,,,,,,,Presence of a heating setpoint offset.
+Input,yes,yes,build_existing_model.heating_setpoint_offset_magnitude,,in.heating_setpoint_offset_magnitude,in.heating_setpoint_offset_magnitude,,,,,,,,,Magnitude of the heating setpoint offset.
+Input,yes,yes,build_existing_model.heating_setpoint_offset_period,,in.heating_setpoint_offset_period,in.heating_setpoint_offset_period,,,,,,,,,The period and offset for the dwelling unit’s heating setpoint. Default for the day is from 9am to 5pm and for the night is 10pm to 7am.
+Input,yes,yes,build_existing_model.holiday_lighting,,in.holiday_lighting,in.holiday_lighting,,,,,,,,,Use of holiday lighting (not currently modeled separately from other exterior lighting).
+Input,yes,yes,build_existing_model.hot_water_distribution,,in.hot_water_distribution,in.hot_water_distribution,,,,,,,,,Type of distribution system and presence of hot water piping insulation.
+Input,yes,yes,build_existing_model.hot_water_fixtures,,in.hot_water_fixtures,in.hot_water_fixtures,,,,,,,,,Hot water fixture usage and flow levels.
+Input,yes,yes,build_existing_model.household_has_tribal_persons,,in.household_has_tribal_persons,in.household_has_tribal_persons,,,,,,,,,The household occupying the dwelling unit has at least one tribal person in the household.
+Input,yes,yes,build_existing_model.hvac_cooling_autosizing_factor,,in.hvac_cooling_autosizing_factor,in.hvac_cooling_autosizing_factor,,,,,,,,,The cooling airflow and capacity scaling factor applied to the auto-sizing methodology (not used in baseline models).
+Input,yes,yes,build_existing_model.hvac_cooling_efficiency,,in.hvac_cooling_efficiency,in.hvac_cooling_efficiency,,,,,,,,,The presence and efficiency of primary cooling system in the dwelling unit.
+Input,yes,yes,build_existing_model.hvac_cooling_partial_space_conditioning,,in.hvac_cooling_partial_space_conditioning,in.hvac_cooling_partial_space_conditioning,,,,,,,,,The fraction of the finished floor area that the cooling system provides cooling.
+Input,yes,yes,build_existing_model.hvac_cooling_type,,in.hvac_cooling_type,in.hvac_cooling_type,,,,,,,,,The presence and type of primary cooling system in the dwelling unit.
+Input,yes,yes,build_existing_model.hvac_has_ducts,,in.hvac_has_ducts,in.hvac_has_ducts,,,,,,,,,The presence of ducts in the dwelling unit.
+Input,yes,yes,build_existing_model.hvac_has_shared_system,,in.hvac_has_shared_system,in.hvac_has_shared_system,,,,,,,,,The presence of an HVAC system shared between multiple dwelling units.
+Input,yes,yes,build_existing_model.hvac_has_zonal_electric_heating,,in.hvac_has_zonal_electric_heating,in.hvac_has_zonal_electric_heating,,,,,,,,,Presence of electric baseboard heating.
+Input,yes,yes,build_existing_model.hvac_heating_autosizing_factor,,in.hvac_heating_autosizing_factor,in.hvac_heating_autosizing_factor,,,,,,,,,The heating airflow and capacity scaling factor applied to the auto-sizing methodology (not used).
+Input,yes,yes,build_existing_model.hvac_heating_efficiency,,in.hvac_heating_efficiency,in.hvac_heating_efficiency,,,,,,,,,The presence and efficiency of the primary heating system in the dwelling unit.
+Input,yes,yes,build_existing_model.hvac_heating_type,,in.hvac_heating_type,in.hvac_heating_type,,,,,,,,,The presence and type of the primary heating system in the dwelling unit.
+Input,yes,yes,build_existing_model.hvac_heating_type_and_fuel,,in.hvac_heating_type_and_fuel,in.hvac_heating_type_and_fuel,,,,,,,,,"The presence, type, and fuel of primary heating system."
+Input,yes,yes,build_existing_model.hvac_secondary_heating_efficiency,,in.hvac_secondary_heating_efficiency,in.hvac_secondary_heating_efficiency,,,,,,,,,The efficiency and type of the secondary heating system.
+Input,yes,yes,build_existing_model.hvac_secondary_heating_fuel,,in.hvac_secondary_heating_fuel,in.hvac_secondary_heating_fuel,,,,,,,,,Secondary Heating Fuel for the dwelling unit
+Input,yes,yes,build_existing_model.hvac_secondary_heating_partial_space_conditioning,,in.hvac_secondary_heating_partial_space_conditioning,in.hvac_secondary_heating_partial_space_conditioning,,,,,,,,,The fraction of heating load served by secondary heating system.
+Input,yes,yes,build_existing_model.hvac_secondary_heating_type,,in.hvac_secondary_heating_type,in.hvac_secondary_heating_type,,,,,,,,,The efficiency and type of the secondary heating system.
+Input,yes,yes,build_existing_model.hvac_shared_efficiencies,,in.hvac_shared_efficiencies,in.hvac_shared_efficiencies,,,,,,,,,The presence and efficiency of the shared HVAC system.
+Input,yes,yes,build_existing_model.hvac_system_is_faulted,,in.hvac_system_is_faulted,in.hvac_system_is_faulted,,,,,,,,,The presence of the HVAC system having a fault (not used).
+Input,yes,yes,build_existing_model.hvac_system_is_scaled,,in.hvac_system_is_scaled,in.hvac_system_is_scaled,,,,,,,,,Whether the HVAC system has been undersized or oversized (not used).
+Input,yes,yes,build_existing_model.hvac_system_single_speed_ac_airflow,,in.hvac_system_single_speed_ac_airflow,in.hvac_system_single_speed_ac_airflow,,,,,,,,,Single speed central and room air conditioner actual air flow rates.
+Input,yes,yes,build_existing_model.hvac_system_single_speed_ac_charge,,in.hvac_system_single_speed_ac_charge,in.hvac_system_single_speed_ac_charge,,,,,,,,,Central and room air conditioner deviation between design/installed charge.
+Input,yes,yes,build_existing_model.hvac_system_single_speed_ashp_airflow,,in.hvac_system_single_speed_ashp_airflow,in.hvac_system_single_speed_ashp_airflow,,,,,,,,,Single speed air source heat pump actual air flow rates.
+Input,yes,yes,build_existing_model.hvac_system_single_speed_ashp_charge,,in.hvac_system_single_speed_ashp_charge,in.hvac_system_single_speed_ashp_charge,,,,,,,,,Air source heat pump deviation between design/installed charge.
+Input,yes,yes,build_existing_model.income,,in.income,in.income,,,,,,,,,Income of the household occupying the dwelling unit.
+Input,yes,yes,build_existing_model.income_recs_2015,,in.income_recs_2015,in.income_recs_2015,,,,,,,,,Income of the household occupying the dwelling unit that are aligned with the 2015 U.S. Energy Information Administration Residential Energy Consumption Survey.
+Input,yes,yes,build_existing_model.income_recs_2020,,in.income_recs_2020,in.income_recs_2020,,,,,,,,,Income of the household occupying the dwelling unit that are aligned with the 2020 U.S. Energy Information Administration Residential Energy Consumption Survey.
+Input,yes,yes,build_existing_model.infiltration,,in.infiltration,in.infiltration,,,,,,,,,Total infiltration to the dwelling unit.
+Input,yes,yes,build_existing_model.insulation_ceiling,,in.insulation_ceiling,in.insulation_ceiling,,,,,,,,,Ceiling insulation level (between the living space and unconditioned attic).
+Input,yes,yes,build_existing_model.insulation_floor,,in.insulation_floor,in.insulation_floor,,,,,,,,,Floor insulation level.
+Input,yes,yes,build_existing_model.insulation_foundation_wall,,in.insulation_foundation_wall,in.insulation_foundation_wall,,,,,,,,,Foundation walls insulation level.
+Input,yes,yes,build_existing_model.insulation_rim_joist,,in.insulation_rim_joist,in.insulation_rim_joist,,,,,,,,,Insulation level for rim joists.
+Input,yes,yes,build_existing_model.insulation_roof,,in.insulation_roof,in.insulation_roof,,,,,,,,,Finished roof insulation level.
+Input,yes,yes,build_existing_model.insulation_slab,,in.insulation_slab,in.insulation_slab,,,,,,,,,Slab insulation level.
+Input,yes,yes,build_existing_model.insulation_wall,,in.insulation_wall,in.insulation_wall,,,,,,,,,Wall construction type and insulation level.
+Input,yes,yes,build_existing_model.interior_shading,,in.interior_shading,in.interior_shading,,,,,,,,,Type of window interior shading.
+Input,yes,yes,build_existing_model.iso_rto_region,,in.iso_rto_region,in.iso_rto_region,,,,,,,,,The independent system operator or regional transmission organization region that the sample is located.
+Input,yes,yes,build_existing_model.lighting,,in.lighting,in.lighting,,,,,,,,,"Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options."
+Input,yes,yes,build_existing_model.lighting_interior_use,,in.lighting_interior_use,in.lighting_interior_use,,,,,,,,,Interior lighting usage relative to the national average.
+Input,yes,yes,build_existing_model.lighting_other_use,,in.lighting_other_use,in.lighting_other_use,,,,,,,,,Exterior and garage lighting usage relative to the national average.
+Input,yes,yes,build_existing_model.location_region,,in.location_region,in.location_region,,,,,,,,,A custom ResStock region constructed of RECS 2009 reportable domains that the sample is located.
+Input,yes,yes,build_existing_model.mechanical_ventilation,,in.mechanical_ventilation,in.mechanical_ventilation,,,,,,,,,Mechanical ventilation type and efficiency.
+Input,yes,yes,build_existing_model.metropolitan_and_micropolitan_statistical_area,,in.metropolitan_and_micropolitan_statistical_area,in.metropolitan_and_micropolitan_statistical_area,,,,,,,,,The U.S. Metropolitan Statistical Area (MSA) or Micropolitan Statistical Area (MicroSA) that the sample is located.
+Input,yes,yes,build_existing_model.misc_extra_refrigerator,,in.misc_extra_refrigerator,in.misc_extra_refrigerator,,,,,,,,,The presence and rated efficiency of the secondary refrigerator.
+Input,yes,yes,build_existing_model.misc_freezer,,in.misc_freezer,in.misc_freezer,,,,,,,,,The presence and rated efficiency of a standalone freezer.
+Input,yes,yes,build_existing_model.misc_gas_fireplace,,in.misc_gas_fireplace,in.misc_gas_fireplace,,,,,,,,,Presence of a gas fireplace.`
+Input,yes,yes,build_existing_model.misc_gas_grill,,in.misc_gas_grill,in.misc_gas_grill,,,,,,,,,Presence of a gas grill.
+Input,yes,yes,build_existing_model.misc_gas_lighting,,in.misc_gas_lighting,in.misc_gas_lighting,,,,,,,,,Presence of exterior gas lighting.
+Input,yes,yes,build_existing_model.misc_hot_tub_spa,,in.misc_hot_tub_spa,in.misc_hot_tub_spa,,,,,,,,,The presence and heating fuel of a hot tub/spa at the dwelling unit.
+Input,yes,yes,build_existing_model.misc_pool,,in.misc_pool,in.misc_pool,,,,,,,,,The presence of a pool at the dwelling unit.
+Input,yes,yes,build_existing_model.misc_pool_heater,,in.misc_pool_heater,in.misc_pool_heater,,,,,,,,,The heating fuel of the pool heater if there is a pool.
+Input,yes,yes,build_existing_model.misc_pool_pump,,in.misc_pool_pump,in.misc_pool_pump,,,,,,,,,Presence and size of pool pump.
+Input,yes,yes,build_existing_model.misc_well_pump,,in.misc_well_pump,in.misc_well_pump,,,,,,,,,Presence of well pump according to the use of well for domestic water source.
+Input,yes,yes,build_existing_model.natural_ventilation,,in.natural_ventilation,in.natural_ventilation,,,,,,,,,Schedule of natural ventilation from windows.
+Input,yes,yes,build_existing_model.neighbors,,in.neighbors,in.neighbors,,,,,,,,,Presence and distance between the dwelling unit and the nearest neighbors to the left and right.
+Input,yes,yes,build_existing_model.occupants,,in.occupants,in.occupants,,,,,,,,,The number of occupants living in the dwelling unit.
+Input,yes,yes,build_existing_model.orientation,,in.orientation,in.orientation,,,,,,,,,Orientation of the front of the dwelling unit as it faces the street.
+Input,yes,yes,build_existing_model.overhangs,,in.overhangs,in.overhangs,,,,,,,,,"Presence, depth, and location of window overhangs"
+Input,yes,yes,build_existing_model.plug_load_diversity,,in.plug_load_diversity,in.plug_load_diversity,,,,,,,,,Plug load diversity multiplier intended to add variation in plug load profiles across all simulations.
+Input,yes,yes,build_existing_model.plug_loads,,in.plug_loads,in.plug_loads,,,,,,,,,Plug load usage level which is varied by Census Division RECS and Building Type RECS.
+Input,yes,yes,build_existing_model.puma,,in.puma,in.puma,,,,,,,,,The Public Use Microdata Area from 2010 U.S. Census that the sample is located.
+Input,yes,yes,build_existing_model.puma_metro_status,,in.puma_metro_status,in.puma_metro_status,,,,,,,,,The public use microdata area metropolitan status that the dwelling unit is located.
+Input,yes,yes,build_existing_model.pv_orientation,,in.pv_orientation,in.pv_orientation,,,,,,,,,The orientation of the photovoltaic system.
+Input,yes,yes,build_existing_model.pv_system_size,,in.pv_system_size,in.pv_system_size,,,,,,,,,The size of the photovoltaic system.
+Input,yes,yes,build_existing_model.radiant_barrier,,in.radiant_barrier,in.radiant_barrier,,,,,,,,,Presence of radiant barrier in the attic (not modeled).
+Input,yes,yes,build_existing_model.range_spot_vent_hour,,in.range_spot_vent_hour,in.range_spot_vent_hour,,,,,,,,,Range spot ventilation daily start hour.
+Input,yes,yes,build_existing_model.reeds_balancing_area,,in.reeds_balancing_area,in.reeds_balancing_area,,,,,,,,,The Regional Energy Deployment System Model (ReEDS) balancing area that the sample is located.
+Input,yes,yes,build_existing_model.refrigerator,,in.refrigerator,in.refrigerator,,,,,,,,,The presence and rated efficiency of the primary refrigerator.
+Input,yes,yes,build_existing_model.refrigerator_usage_level,,in.refrigerator_usage_level,in.refrigerator_usage_level,,,,,,,,,Refrigerator energy usage level multiplier.
+Input,yes,yes,build_existing_model.roof_material,,in.roof_material,in.roof_material,,,,,,,,,Roof material and color.
+Input,yes,yes,build_existing_model.state,,in.state,in.state,,,,,,,,,The U.S. State the sample is located.
+Input,yes,yes,build_existing_model.state_metro_median_income,,in.state_metro_median_income,in.state_metro_median_income,,,,,,,,,State Metro median income of the household occupying the dwelling unit. This is different from State Median Income in that the Income Limits are differentiated by Metro and Nonmetro portions of the state.
+Input,yes,yes,build_existing_model.tenure,,in.tenure,in.tenure,,,,,,,,,The tenancy (owner or renter) of the household occupying the dwelling unit.
+Input,yes,yes,build_existing_model.usage_level,,in.usage_level,in.usage_level,,,,,,,,,Usage of major appliances relative to the national average.
+Input,yes,yes,build_existing_model.vacancy_status,,in.vacancy_status,in.vacancy_status,,,,,,,,,The vacancy status (occupied or vacant) of the dwelling unit.
+Input,yes,yes,build_existing_model.vintage,,in.vintage,in.vintage,,,,,,,,,Time period in which the building was constructed.
+Input,yes,yes,build_existing_model.vintage_acs,,in.vintage_acs,in.vintage_acs,,,,,,,,,Time period in which the dwelling unit was constructed as defined by the U.S. Census American Community Survey.
+Input,yes,yes,build_existing_model.water_heater_efficiency,,in.water_heater_efficiency,in.water_heater_efficiency,,,,,,,,,"The efficiency, type, and heating fuel of water heater."
+Input,yes,yes,build_existing_model.water_heater_fuel,,in.water_heater_fuel,in.water_heater_fuel,,,,,,,,,The water heater fuel type.
+Input,yes,yes,build_existing_model.water_heater_in_unit,,in.water_heater_in_unit,in.water_heater_in_unit,,,,,,,,,Individual water heater present or not present in the dwelling unit that solely serves the specific dwelling unit.
+Input,yes,yes,build_existing_model.water_heater_location,,in.water_heater_location,in.water_heater_location,,,,,,,,,location of water heater.
+Input,yes,yes,build_existing_model.window_areas,,in.window_areas,in.window_areas,,,,,,,,,"Window to wall ratios of the front, back, left, and right walls."
+Input,yes,yes,build_existing_model.windows,,in.windows,in.windows,,,,,,,,,Construction type and efficiency levels of windows.
 Input,yes,yes,build_existing_model.air_leakage_to_outside_ach_50,,in.air_leakage_to_outside_ach50,in.air_leakage_to_outside_ach_50,,,,,,,,,Total infiltration to the dwelling unit adjusted by ratio of exterior envelope surface area to total envelope surface area.
 Input,yes,no,build_existing_model.applicable,,in.applicable,in.applicable,,,,,,,,,The measure was applied to the workflow.
 Input,yes,yes,build_existing_model.buildstock_csv_path,,in.buildstock_csv_path,in.buildstock_csv_path,,,,,,,,,Absolute/relative path of the buildstock CSV file. Relative is compared to the 'lib/housing_characteristics' directory.
