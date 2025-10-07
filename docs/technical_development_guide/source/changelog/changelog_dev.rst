@@ -7,6 +7,21 @@ Development Changelog
     :released: pending
 
     .. change::
+        :tags: documentation, technical reference guide
+        :pullreq: 1493, 1466, 1460
+
+        **Date**: 2025-09-24
+
+        Title:
+        Update the documentation
+
+        Description:
+        Create a new script for creating options/arguments table tex files corresponding to each Parameter.
+        This will help to automate creating many of the tables in the ResStock Technical Reference Documentation.
+
+        Assignees: Joe Robertson
+
+    .. change::
         :tags: software, openstudio, feature
         :pullreq: 1466
 
