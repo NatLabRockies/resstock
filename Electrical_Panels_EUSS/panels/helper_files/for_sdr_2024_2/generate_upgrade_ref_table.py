@@ -7,10 +7,33 @@ file_name, upgrade_name, n_units, Occupied, Vacant
 import numpy as np
 from pathlib import Path
 import argparse
-from typing import Optional
+from typing import Optional, Literal
 
 import pandas as pd
 
+
+file_kw = {
+    "oedi": "metadata_and_annual_results",
+    "pub_annual": "results_up",
+    "raw": "results_up",
+}
+
+baseline_kw = {
+    "oedi": "baseline",
+    "pub_annual": "00",
+    "raw": "00",
+}
+
+vacancy_col = {
+    "oedi": "in.vacancy_status",
+    "pub_annual": "in.vacancy_status",
+    "raw": "build_existing_model.vacancy_status",
+}
+applicable_col = {
+    "oedi": "applicability",
+    "pub_annual": "applicability",
+    "raw": "apply_upgrade.applicable",
+}
 
 def parse_filename(file):
     suffixes = file.suffixes
@@ -50,23 +73,29 @@ def save_to_file(df, file):
 
 
 def get_summary(
-    file_dir: Path, output_file: Optional[Path] = None, remove_vacant: bool = False
+    file_dir: Path, output_file: Optional[Path] = None,
+    file_type: Literal["oedi", "pub_annual", "raw"] = "raw",
+    remove_vacant: bool = False,
 ):
-    file_list = sorted(file_dir.glob("*metadata_and_annual_results*"))
+    pattern = file_kw[file_type]
+    file_list = sorted(file_dir.rglob("*"+pattern+"*"))
+    bl_pattern = baseline_kw[file_type]
     if remove_vacant:
         print(" ** All files are to be modified by removing vacant units in place...")
-        baseline_file = [x for x in file_list if "results_up00" in str(x)]
+        baseline_file = [x for x in file_list if bl_pattern in str(x)]
         assert (
             len(baseline_file) == 1
         ), f"Baseline file not found or ambiguous:\n{baseline_file=}"
         file_list = baseline_file + [x for x in file_list if x not in baseline_file]
 
+    vac_col = vacancy_col[file_type]
     ref_table = []
     for file in file_list:
         df = read_file(file)
         file_name = parse_filename(file)
-        if "baseline" in file_name:
+        if bl_pattern in file_name:
             upgrade_name = "baseline"
+            cond = df.index
         else:
             upg_names = [
                 x
@@ -77,13 +106,19 @@ def get_summary(
                 len(upg_names) == 1
             ), f"Difficulty extracting upgrade name: {upg_names}"
             upgrade_name = upg_names[0]
+            if file_type == "oedi":
+                cond = df.index
+            else:
+                cond = df[applicable_col[file_type]]==True
 
-        vacancy_stats = df.groupby(["in.vacancy_status"])["upgrade"].count()
+        n_app = len(df.loc[cond])
+        vacancy_stats = df.loc[cond].groupby([vac_col])["upgrade"].count()
         stats = pd.Series(
             {
                 "filename": file_name,
                 "upgrade_name": upgrade_name,
                 "n_units": len(df),
+                "n_applicable": n_app,
             }
         )
 
@@ -92,10 +127,11 @@ def get_summary(
         # modify file
         if remove_vacant:
             n1 = len(df)
-            df = df.loc[df["in.vacancy_status"] == "Occupied"]
+            df = df.loc[df[vac_col] == "Occupied"]
             n2 = len(df)
             assert n2 > 0, "After removing vacant units, df is empty."
             print(f"   Removed {n1-n2} vacant units, n={n1} -> {n2}")
+
         # export file
         if remove_vacant:
             save_to_file(df, file)
@@ -120,11 +156,16 @@ if __name__ == "__main__":
         help="Path to oedi-formatted resstock results directory",
     )
     parser.add_argument(
-        "output_file",
-        nargs="?",
-        action="store",
-        default=None,
-        help="Path to save the ref_table to, default to save file to file_dir as 'summmary_table.csv'",
+        "-o",
+        "--output_file",
+        type=str,
+        help="Path to save the ref_table to. Default to save file to file_dir/'summmary_table.csv'",
+    )
+    parser.add_argument(
+        "-f",
+        "--file_type",
+        type=str,
+        help="Type of result files. Options: 'oedi', 'pub_annual', 'raw' (default).",
     )
     parser.add_argument(
         "-v",
@@ -140,4 +181,4 @@ if __name__ == "__main__":
     if output_file is not None:
         output_file = Path(output_file)
 
-    get_summary(file_dir, output_file=output_file, remove_vacant=args.remove_vacant)
+    get_summary(file_dir, output_file=output_file, file_type=args.file_type, remove_vacant=args.remove_vacant)
