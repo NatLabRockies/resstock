@@ -346,7 +346,7 @@ class DataProcessor:
                     ((pl.col("upgrade") == plot_spec.upgrade) & pl.col("applicability"))
                     | ((pl.col("upgrade") == 0) & is_upgrade_applicable)
                 )
-                
+
         return combined_df
 
     def _process_upgrades_inclusion(self, plot_spec, selected_upgrades, combined_df):
@@ -635,7 +635,7 @@ class DataProcessor:
             # where non_zero ensures that denominator is at least MIN_BASELINE
             agg_exprs = [
                 (
-                    (pl.col(quantity) * 
+                    (pl.col(quantity) *
                         pl.when(pl.col(f"baseline_{quantity}").abs() < MIN_BASELINE)
                         .then(
                             pl.when(pl.col(f"baseline_{quantity}").sign() == 0)
