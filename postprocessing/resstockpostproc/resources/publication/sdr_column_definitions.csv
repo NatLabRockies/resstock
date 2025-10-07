@@ -1,6 +1,6 @@
 Column Type,Import From Raw,Publish In Full,Annual Name,Annual Units,Published Annual Name,Published Annual Name Sightglass,Published Annual Unit,ResStock To Published Annual Unit Conversion Factor,Timeseries Name,Timeseries Units,Published Timeseries Name,Published Timeseries Name Sightglass,Published Timeseries Unit,ResStock To Published Timeseries Unit Conversion Factor,Notes
 Input,yes,yes,building_id,,bldg_id,bldg_id,,,,,,,,,The building unit number (between 1 and the number of samples).
-Input,yes,yes,completed_status,,completed_status,,,,,,,,,,
+Input,yes,yes,completed_status,,completed_status,,,,,,,,,,The simulation status.
 Input,yes,yes,upgrade,,upgrade,upgrade,,,,,,,,,The upgrade number
 Input,yes,yes,apply_upgrade.upgrade_name,,in.upgrade_name,upgrade_name,,,,,,,,,User-specificed name that describes the upgrade.
 Input,yes,yes,build_existing_model.sample_weight,,weight,weight,,1,,,,,,,Number of buildings this simulation represents.
