@@ -282,36 +282,31 @@ As an output, the energy consumption results are all preceded with an ``out.'' p
 \section{Cost Multipliers}
 The ResStock workflow calculates and outputs certain values to support the calculation of costs of implementation of upgrades and upgrade packages. These are values that are available to scale measure implementation cost---for example, the total square feet of exterior window area in a housing unit model sample that can be multiplied by a user-provided window cost per square foot for a specific measure to get a per-housing-unit measure cost. They are calculated from the building energy models. ResStock currently provides 21 such values, as listed in Table \ref{table:cost_multipliers}. In published ResStock datasets, these cost multipliers are the fields that use the ``out.params'' prefix, for example ``out.params.window\_area\_ft\_2.'' The exception is that ``upgrade\_costs.floor\_area\_conditioned\_ft\_2'' has to-date been published as ``in.sqft.''
 
-\begin{longtable}[]{ |p{6.cm}|p{2.5cm}|p{6cm}| }
-\caption{ResStock cost multiplier output field names, units, and descriptions} \label{table:cost_multipliers} \\
-\toprule\noalign{}
-\textbf{Field Name} & \textbf{Units} & \textbf{Description} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
+\begin{customLongTable}{ |p{6cm}|p{2.5cm}|p{6cm}| }
+{ResStock cost multiplier output field names, units, and descriptions} {table:cost_multipliers}
+{\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}}
 upgrade\_costs.door\_area\_ft\_2 & ft\textsuperscript{2} & Door Area \\ \hline
-upgrade\_costs.duct\_unconditioned\_surface\_area\_ft\_2 & ft\textsuperscript{2}& Duct Unconditioned Surface Area \\ \hline
-upgrade\_costs.floor\_area\_attic\_ft\_2 & ft\textsuperscript{2}& Floor Area, Attic \\ \hline
-upgrade\_costs.floor\_area\_attic\_insulation\_increase\_ft\_2\_delta\_r\_value & ft\textsuperscript{2} * $\Delta$ R-value& Floor Area, Attic * Insulation Increase \\ \hline
-upgrade\_costs.floor\_area\_conditioned\_ft\_2 & ft\textsuperscript{2}& Floor Area, Conditioned \\ \hline
-upgrade\_costs.floor\_area\_conditioned\_infiltration\_reduction\_ft\_2\_delta\_ach\_50 & ft\textsuperscript{2} * $\Delta$ ACH50& Floor Area, Conditioned * Infiltration Reduction \\ \hline
-upgrade\_costs.floor\_area\_foundation\_ft\_2 & ft\textsuperscript{2}& Floor Area, Foundation \\ \hline
-upgrade\_costs.floor\_area\_lighting\_ft\_2 & ft\textsuperscript{2}& Floor Area, Lighting \\ \hline
-upgrade\_costs.flow\_rate\_mechanical\_ventilation\_cfm  & cfm & Flow Rate, Mechanical Ventilation \\ \hline
-upgrade\_costs.rim\_joist\_area\_above\_grade\_exterior\_ft\_2  & ft\textsuperscript{2}& Rim Joist Area, Above-Grade, Exterior \\ \hline
-upgrade\_costs.roof\_area\_ft\_2  &  ft\textsuperscript{2}& Roof Area \\ \hline
-upgrade\_costs.size\_cooling\_system\_primary\_k\_btu\_h  & kBtu/h & Size, Cooling System Primary \\ \hline
+upgrade\_costs.duct\_unconditioned\_surface\_area\_ft\_2 & ft\textsuperscript{2} & Duct Unconditioned Surface Area \\ \hline
+upgrade\_costs.floor\_area\_attic\_ft\_2 & ft\textsuperscript{2} & Floor Area, Attic \\ \hline
+upgrade\_costs.floor\_area\_attic\_insulation\_increase\_ft\_2\_delta\_r\_value & ft\textsuperscript{2} * $\Delta$ R-value & Floor Area, Attic * Insulation Increase \\ \hline
+upgrade\_costs.floor\_area\_conditioned\_ft\_2 & ft\textsuperscript{2} & Floor Area, Conditioned \\ \hline
+upgrade\_costs.floor\_area\_conditioned\_infiltration\_reduction\_ft\_2\_delta\_ach\_50 & ft\textsuperscript{2} * $\Delta$ ACH50 & Floor Area, Conditioned * Infiltration Reduction \\ \hline
+upgrade\_costs.floor\_area\_foundation\_ft\_2 & ft\textsuperscript{2} & Floor Area, Foundation \\ \hline
+upgrade\_costs.floor\_area\_lighting\_ft\_2 & ft\textsuperscript{2} & Floor Area, Lighting \\ \hline
+upgrade\_costs.flow\_rate\_mechanical\_ventilation\_cfm & cfm & Flow Rate, Mechanical Ventilation \\ \hline
+upgrade\_costs.rim\_joist\_area\_above\_grade\_exterior\_ft\_2 & ft\textsuperscript{2} & Rim Joist Area, Above-Grade, Exterior \\ \hline
+upgrade\_costs.roof\_area\_ft\_2 & ft\textsuperscript{2} & Roof Area \\ \hline
+upgrade\_costs.size\_cooling\_system\_primary\_k\_btu\_h & kBtu/h & Size, Cooling System Primary \\ \hline
 upgrade\_costs.size\_heat\_pump\_backup\_primary\_k\_btu\_h & kBtu/h & Size, Heat Pump Backup Primary \\ \hline
 upgrade\_costs.size\_heating\_system\_primary\_k\_btu\_h & kBtu/h & Size, Heating System Primary \\ \hline
 upgrade\_costs.size\_heating\_system\_secondary\_k\_btu\_h & kBtu/h & Size, Heating System Secondary \\ \hline
 upgrade\_costs.size\_water\_heater\_gal & gal & Size, Water Heater \\ \hline
 upgrade\_costs.slab\_perimeter\_exposed\_conditioned\_ft & ft & Slab Perimeter, Exposed, Conditioned \\ \hline
-upgrade\_costs.wall\_area\_above\_grade\_conditioned\_ft\_2 & ft\textsuperscript{2}& Wall Area, Above-Grade, Conditioned \\ \hline
-upgrade\_costs.wall\_area\_above\_grade\_exterior\_ft\_2 & ft\textsuperscript{2}& Wall Area, Above-Grade, Exterior \\ \hline
-upgrade\_costs.wall\_area\_below\_grade\_ft\_2 & ft\textsuperscript{2}& Wall Area, Below-Grade \\ \hline
-upgrade\_costs.window\_area\_ft\_2 & ft\textsuperscript{2}& Window Area
-\end{longtable}
+upgrade\_costs.wall\_area\_above\_grade\_conditioned\_ft\_2 & ft\textsuperscript{2} & Wall Area, Above-Grade, Conditioned \\ \hline
+upgrade\_costs.wall\_area\_above\_grade\_exterior\_ft\_2 & ft\textsuperscript{2} & Wall Area, Above-Grade, Exterior \\ \hline
+upgrade\_costs.wall\_area\_below\_grade\_ft\_2 & ft\textsuperscript{2} & Wall Area, Below-Grade \\ \hline
+upgrade\_costs.window\_area\_ft\_2 & ft\textsuperscript{2} & Window Area \\
+\end{customLongTable}
 
 \section{Emissions}
 %Standard convention of how we do this. Methodology.
@@ -328,7 +323,7 @@ The ResStock workflow currently accepts emissions factors for electricity consum
 The full list of emissions output fields from electric energy consumption is in Table \ref{table:emissions_output}. In published ResStock datasets, we convert the units on these results to kilograms of CO\textsubscript{2} equivalent emissions. These are the fields in public datasets that begin ``out.emissions.electricity.''
 
 \begin{customLongTable}{ |p{5cm}|p{1.5cm}|p{8cm}| }
-{ResStock utility bill output field names, units, and descriptions} {table:emissions_output}
+{ResStock emissions output field names, units, and descriptions} {table:emissions_output}
 {\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}}
 out.emissions.all\_fuels.lrmer\_mid\_case\_25.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 mid case scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
 out.emissions.all\_fuels.lrmer\_mid\_case\_15.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 mid case scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
@@ -348,7 +343,7 @@ out.emissions.all\_fuels.aer\_mid\_case\_avg.co2e\_kg & co2e\_kg & Emissions usi
 \end{customLongTable}
 
 \section{Utility Bills}
-The ResStock workflow is able to accept a limited range of utility rate inputs and output the corresponding utility bills. The inputs available are fixed charges and volumetric rates for each modeled fuel (typically electricity, natural gas, propane, and fuel oil). These can vary by any one housing characteristic, such as State. Multiple scenarios may be specified. For the list of utility bill outputs, see Table \ref{table:cost_multipliers}.
+The ResStock workflow is able to accept a limited range of utility rate inputs and output the corresponding utility bills. The inputs available are fixed charges and volumetric rates for each modeled fuel (typically electricity, natural gas, propane, and fuel oil). These can vary by any one housing characteristic, such as State. Multiple scenarios may be specified. For the list of utility bill outputs, see Table \ref{table:utility_bill_outputs}.
 
 Our most common approach within the ResStock workflow for utility rates for electricity and natural gas is to use a single scenario, using both a flat charge and a per-consumption charge. We typically use data downloaded from \href{https://openei.org/wiki/Utility_Rate_Database}{NREL's Utility Rate Database} to calculate the customer-weighted average fixed monthly electricity charge across all utilities in the database, which comes out to approximately \$10/customer/month or \$120/customer/year. For natural gas, we use the American Gas Association's 2015 value of \$11.25/customer/month for the fixed portion of the utility bill (generally referred to as the ``customer charge''). We additionally use EIA state-level information on revenue, sales, and number of customers to calculate the average per-consumption electricity and natural gas rate for each state with the fixed charges removed. The total electricity and natural gas bills for each housing unit model sample are then calculated by summing the flat charge and the product of the per-consumption charge and the total consumption. For example, this process may result in a flat charge of \$120/year and a per-consumption electricity rate of \$0.20/kWh---for a housing unit with a full year electricity consumption of 3000 kWh, the total electricity bill would be \$120 + (3,000 kWh * \$0.20/kWh) = \$720. If a housing unit has uses no natural gas for the year, the flat charge is not included as it is presumed not to have natural gas service.
 
@@ -358,20 +353,15 @@ In public ResStock datasets, these fields are prefixed with ``out.bills.''
 
 We do not currently commonly model other on-site fuel use in ResStock, such as on-site use of wood or coal, or district steam, and we do not have a common approach for calculating associated bills.%What about district steam?
 
-\begin{longtable}[]{ |p{5cm}|p{1.5cm}|p{7.5cm}| }
-\caption{ResStock utility bill output field names, units, and descriptions} \label{table:hc_cost_multipliers} \\
-\toprule\noalign{}
-\textbf{Field Name} & \textbf{Units} & \textbf{Description} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-        out.bills.all\_fuels.usd & \$ & Annual total charges for electricity, fuel oil, natural gas, and propane \\ \hline
-        out.bills.electricity.usd & \$ & Annual total charges for electricity \\ \hline
-        out.bills.fuel\_oil.usd & \$ & Annual total charges for fuel oil \\ \hline
-        out.bills.natural\_gas.usd & \$ & Annual total charges for natural gas \\ \hline
-        out.bills.propane.usd & \$ & Annual total charges for propane
-\end{longtable}
+\begin{customLongTable}{ |p{5cm}|p{1.5cm}|p{7.5cm}| }
+{ResStock utility bill output field names, units, and descriptions} {table:utility_bill_outputs}
+{\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}}
+out.bills.all\_fuels.usd & \$ & Annual total charges for electricity, fuel oil, natural gas, and propane \\ \hline
+out.bills.electricity.usd & \$ & Annual total charges for electricity \\ \hline
+out.bills.fuel\_oil.usd & \$ & Annual total charges for fuel oil \\ \hline
+out.bills.natural\_gas.usd & \$ & Annual total charges for natural gas \\ \hline
+out.bills.propane.usd & \$ & Annual total charges for propane \\
+\end{customLongTable}
 
 ResStock results can also be used as inputs to calculate utility bills using other rate structures, such as time-of-use electricity rates or tiered rates. However, these calculations are currently not included in the primary ResStock workflow or any published datasets.
 
