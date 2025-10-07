@@ -817,6 +817,9 @@ def get_app() -> DashProxy:
                 ["toImage"],
                 ["zoom2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d"],
             ],
+            "toImageButtonOptions": {
+                "format": "svg",  # one of png, svg, jpeg, webp
+            },
         }
         if "editable" in editable_vals:
             base_cfg["editable"] = True
