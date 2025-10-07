@@ -152,15 +152,12 @@ workflow_generator:
     # Other reporting measures to run
     reporting_measures:
       - measure_dir_name: QOIReport
-      - measure_dir_name: ServerDirectoryCleanup # tack this on so we can save some disk space (when using debug: true)
 
     # Files to keep
     server_directory_cleanup:
       retain_in_idf: true
       retain_schedules_csv: true
       retain_in_osm: true
-
-    debug: true
 
 references:
   ### -- Anchors not dependent on other anchors -- ###
