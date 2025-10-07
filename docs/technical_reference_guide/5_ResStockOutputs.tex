@@ -1,5 +1,5 @@
 \chapter{ResStock Outputs}\label{sec:resstock_outputs}
-ResStock produces a range of results around energy, housing characteristics, schedules, emissions, and costs. This section overviews the outputs available in the latest ResStock data release (2024 release 2). The data dictionary that summarizes these outputs is available with the \href{https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2024/resstock_amy2018_release_2/data_dictionary.tsv}{data release}.
+ResStock produces a range of results around energy, housing characteristics, schedules, emissions, and costs. This section overviews the outputs available in the latest ResStock data release. The data dictionary that summarizes these outputs is available with the \href{https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/resstock_amy2018_release_1/data_dictionary.tsv}{data release}.
 
 \section{Building Characteristics}
 %Tables - basically our data dictionaries (ideally automated). Data dictionaries are already automated but need heavy QC
@@ -13,8 +13,13 @@ Note that ResStock assigns certain characteristics that are not always used. Two
 \begin{customLongTable}{ |p{6cm}|p{9cm}| }
 {ResStock building characteristic output field names and descriptions} {table:hc_output_fields}
 {\textbf{Field Name} & \textbf{Field Description}}
+        applicability & Whether the upgrade is applicable to this model. Always True for baseline.  \\ \hline
+        bldg\_id & The identifier for this model, which can be traced back to the building characteristics input file \\ \hline
+        completed\_status & Whether the simulation for this model was successful or not \\ \hline
         in.ahs\_region & American Housing Survey region \\ \hline
         in.aiannh\_area & The sample is or is not located in census-designated American Indian/Alaska Native/Native Hawaiian Area \\ \hline
+        in.air\_leakage\_to\_outside\_ach50 & Nominal air infiltration rate \\ \hline
+        in.applicable & Whether the upgrade is applicable to this model. Always True for baseline.  \\ \hline
         in.area\_median\_income & Area median income of the household occupying the housing unit \\ \hline
         in.ashrae\_iecc\_climate\_zone\_2004 & IECC climate zone according to ASHRAE 169 in 2004 and IECC in 2012 \\ \hline
         in.ashrae\_iecc\_climate\_zone\_2004\_sub\_cz\_split & Climate zone according to ASHRAE 169 in 2004 and IECC in 2012, where climate zone 2A is split between counties in TX, LA versus FL, GA, AL, and MS and climate zone 1A is split between FL and HI\\ \hline
@@ -22,6 +27,7 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.battery & The presence, size, location, and efficiency of an on-site battery (not modeled in 2024.2 dataset) \\ \hline
         in.bedrooms & Number of bedrooms \\ \hline
         in.building\_america\_climate\_zone & Building America climate zone \\ \hline
+        in.buildstock\_csv\_path & Where the building characteristics file is located \\ \hline
         in.cec\_climate\_zone & California Energy Code climate zone \\ \hline
         in.ceiling\_fan & Presence and energy usage of ceiling fans at medium speed \\ \hline
         in.census\_division & 2010 U.S. Census Division \\ \hline
@@ -40,9 +46,12 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.cooling\_setpoint\_offset\_magnitude & The magnitude of cooling setpoint offset \\ \hline
         in.cooling\_setpoint\_offset\_period & The period during which the cooling setpoint offset is applied \\ \hline
         in.cooling\_unavailable\_days & The number of days in a year the cooling system is unavailable. \\ \hline
+        in.cooling\_unavailable\_period & The time during the year when the cooling system is unavailable. \\ \hline
         in.corridor & Type of corridor \\ \hline
         in.county & County GISJOIN identifier \\ \hline
         in.county\_and\_puma & The GISJOIN identifier for the County and the PUMA that the sample is located \\ \hline
+        in.county\_metro\_status & Whether the county is part of a census-defined metro area \\ \hline
+        in.county\_name & The name of the county the building is located in \\ \hline
         in.dehumidifier & Presence, water removal rate, and humidity setpoint of dehumidifier (not modeled in 2024.2 dataset) \\ \hline
         in.dishwasher & Presence and rated efficiency of dishwasher \\ \hline
         in.dishwasher\_usage\_level & Dishwasher energy usage level multiplier \\ \hline
@@ -52,8 +61,8 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.duct\_location & Location of duct system \\ \hline
         in.eaves & Depth of roof eaves \\ \hline
         in.electric\_panel\_breaker\_space\_total\_count & Total breaker spaces on electric panel \\ \hline
-        in.electric\_panel\_service\_rating & Electrical panel service or max current rating (A) \\ \hline
-        in.electric\_panel\_service\_rating\_bin & Electrical panel service or max current rating in bins (A) \\ \hline
+        in.electric\_panel\_service\_rating..a & Electrical panel service or max current rating (A) \\ \hline
+        in.electric\_panel\_service\_rating\_bin..a & Electrical panel service or max current rating in bins (A) \\ \hline
         in.electric\_vehicle\_battery & The type of battery used by EV \\ \hline
         in.electric\_vehicle\_charge\_at\_home & Percentage of EV charging that occurs at home \\ \hline
         in.electric\_vehicle\_charger & The type of charger used by EV \\ \hline
@@ -90,24 +99,30 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.heating\_setpoint\_offset\_magnitude & The magnitude of heating setpoint offset \\ \hline
         in.heating\_setpoint\_offset\_period & The period during which the heating setpoint offset is applied \\ \hline
         in.heating\_unavailable\_days & The number of days in a year the heating system is unavailable. \\ \hline
+        in.heating\_unavailable\_period & The time during the year when the heating system is unavailable. \\ \hline
         in.holiday\_lighting & Presence, energy usage, and schedule of holiday lighting \\ \hline
         in.hot\_water\_distribution & Hot water piping material and insulation level \\ \hline
         in.hot\_water\_fixtures & Hot water fixture usage and flow levels \\ \hline
         in.household\_has\_tribal\_persons & The housing unit houses at least one Tribal person \\ \hline
+        in.hvac\_cooling\_autosizing\_factor & The additional safety factor applied to the HVAC system cooling capacity \\ \hline
         in.hvac\_cooling\_efficiency & Presence and efficiency of cooling system \\ \hline
         in.hvac\_cooling\_partial\_space\_conditioning & The fraction of the finished floor area that is cooled by the cooling system \\ \hline
         in.hvac\_cooling\_type & Presence and type of cooling system \\ \hline
         in.hvac\_has\_ducts & Presence of ducts \\ \hline
         in.hvac\_has\_shared\_system & Presence of shared HVAC system \\ \hline
         in.hvac\_has\_zonal\_electric\_heating & Presence of electric baseboard heating \\ \hline
+        in.hvac\_heating\_autosizing\_factor & The additional safety factor applied to the HVAC system heating capacity \\ \hline
         in.hvac\_heating\_efficiency & Presence and efficiency of primary heating system \\ \hline
         in.hvac\_heating\_type & Presence and type of primary heating system \\ \hline
         in.hvac\_heating\_type\_and\_fuel & Presence, type, and fuel of primary heating system \\ \hline
         in.hvac\_secondary\_heating\_efficiency & Presence and efficiency of secondary heating system \\ \hline
         in.hvac\_secondary\_heating\_fuel & Secondary HVAC system heating type and fuel \\ \hline
-        in.hvac\_secondary\_heating\_partial\_space\_conditioning & Fraction of heat load served by secondary heating system (not modeled in 2024.2 baseline dataset) \\ \hline
+        in.hvac\_secondary\_heating\_heating\_type & The type of the secondary heating system \\ \hline
+        in.hvac\_secondary\_heating\_partial\_space\_conditioning & Fraction of heat load served by secondary heating system \\ \hline
+        in.hvac\_secondary\_heating\_type & Secondary HVAC system heating type \\ \hline
         in.hvac\_shared\_efficiencies & Presence and efficiency of shared HVAC system \\ \hline
         in.hvac\_system\_is\_faulted & Not used \\ \hline
+        in.hvac\_system\_is\_scaled & Not used \\ \hline
         in.hvac\_system\_single\_speed\_ac\_airflow & Not used \\ \hline
         in.hvac\_system\_single\_speed\_ac\_charge & Not used \\ \hline
         in.hvac\_system\_single\_speed\_ashp\_airflow & Not used \\ \hline
@@ -130,6 +145,7 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.lighting\_other\_use & Exterior and garage lighting usage relative to the national average \\ \hline
         in.location\_region & Custom ResStock region \\ \hline
         in.mechanical\_ventilation & Mechanical ventilation type and efficiency \\ \hline
+        in.metropolitan\_and\_micropolitan\_statistical\_area & The census metropolitan or micropolitan statistical area where this model is located \\ \hline
         in.misc\_extra\_refrigerator & Presence and rated efficiency of extra refrigerator \\ \hline
         in.misc\_freezer & Presence and rated efficiency of standalone freezer \\ \hline
         in.misc\_gas\_fireplace & Presence of gas fireplace \\ \hline
@@ -156,14 +172,16 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.reeds\_balancing\_area & Regional Energy Deployment System Model balancing area \\ \hline
         in.refrigerator & The presence and rated efficiency of the primary refrigerator \\ \hline
         in.refrigerator\_usage\_level & Refrigerator energy usage level multiplier \\ \hline
+        in.representative\_income & The income assumed for the household in this unit for energy burden calculation \\ \hline
         in.roof\_material & Roof material type \\ \hline
-
         in.solar\_hot\_water & Presence, size, and location of solar hot water system \\ \hline
-        in.sqft & Finished floor area of the representative housing unit \\ \hline
+        in.sqft..ft2 & Finished floor area of the representative housing unit \\ \hline
         in.state & State \\ \hline
+        in.state\_metro\_median\_income & The census-supplied median income for households in the metro area where this unit is located. \\ \hline
         in.tenure & The tenancy (owner or renter) of the household occupying the housing unit \\ \hline
         in.units\_represented & Number of housing units the building model represents (this field is no longer used) \\ \hline
         in.usage\_level & Usage of major appliances relative to the national average \\ \hline
+        in.upgrade\_name & Name of the upgrade applied, or Baseline when no upgrade is applied \\ \hline
 
         in.vacancy\_status & Presence of occupants \\ \hline
         in.vintage & Range in which the building was constructed \\ \hline
@@ -226,61 +244,76 @@ As an output, the energy consumption results are all preceded with an ``out.'' p
 \begin{customLongTable}{ |p{6cm}|p{1.5cm}|p{7cm}| }
 {ResStock energy output field names, units, and descriptions} {table:results_output_fields}
 {\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}}
-        out.electricity.ceiling\_fan.energy\_consumption.kwh & kWh & Electricity consumed by ceiling fans \\ \hline
-        out.electricity.clothes\_dryer.energy\_consumption.kwh & kWh & Electricity consumed by clothes dryers \\ \hline
-        out.electricity.clothes\_washer.energy\_consumption.kwh & kWh & Electricity consumed by clothes washers \\ \hline
-        out.electricity.cooling.energy\_consumption.kwh & kWh & Electricity consumed by cooling systems; excludes usage by fans/pumps \\ \hline
-        out.electricity.cooling\_fans\_pumps.energy\_consumption.kwh & kWh & Electricity consumed by supply fan (air distribution) or circulating pump (geothermal loop) during cooling \\ \hline
-        out.electricity.dishwasher.energy\_consumption.kwh & kWh & Electricity consumed by dishwashers \\ \hline
-        out.electricity.electric\_vehicle\_charging.energy\_consumption.kwh & kWh & Electricity consumed by charging electric vehicles \\ \hline
-        out.electricity.freezer.energy\_consumption.kwh & kWh & Electricity consumed by standalone freezers \\ \hline
-        out.electricity.heating.energy\_consumption.kwh & kWh & Electricity consumed by heating systems; excludes usage by fans/pumps \\ \hline
-        out.electricity.heating\_fans\_pumps.energy\_consumption.kwh & kWh & Electricity consumed by supply fan (air distribution) or circulating pump (hydronic distribution or geothermal loop) during heating \\ \hline
-        out.electricity.heating\_hp\_bkup.energy\_consumption.kwh & kWh & Electricity consumed by heat pump backup; excludes usage by heat pump backup fans/pumps \\ \hline
-        out.electricity.heating\_hp\_bkup\_fa.energy\_consumption.kwh & kWh & Electricity consumed by supply fan (air distribution) or circulating pump (hydronic distribution) during heat pump backup \\ \hline
-        out.electricity.hot\_water.energy\_consumption.kwh & kWh & Electricity consumed by hot water system excludes recirculation pump and solar thermal pump \\ \hline
-        out.electricity.lighting\_exterior.energy\_consumption.kwh & kWh & Electricity consumed by exterior lighting \\ \hline
-        out.electricity.lighting\_garage.energy\_consumption.kwh & kWh & Electricity consumed by lighting in the garage \\ \hline
-        out.electricity.lighting\_interior.energy\_consumption.kwh & kWh & Electricity consumed by interior lighting \\ \hline
-        out.electricity.mech\_vent.energy\_consumption.kwh & kWh & Electricity consumed by mechanical ventilation system \\ \hline
-        out.electricity.net.energy\_consumption.kwh & kWh & Total electricity consumed subtracts any power produced by PV or generators \\ \hline
-        out.electricity.permanent\_spa\_heat.energy\_consumption.kwh & kWh & Electricity consumed by spa heating \\ \hline
-        out.electricity.permanent\_spa\_pump.energy\_consumption.kwh & kWh & Electricity consumed by spa pump \\ \hline
-        out.electricity.plug\_loads.energy\_consumption.kwh & kWh & Electricity consumed by plug loads not elsewhere accounted for \\ \hline
-        out.electricity.pool\_heater.energy\_consumption.kwh & kWh & Electricity consumed by pool heaters \\ \hline
-        out.electricity.pool\_pump.energy\_consumption.kwh & kWh & Electricity consumed by pool pumps \\ \hline
-        out.electricity.pv.energy\_consumption.kwh & kWh & Energy produced by rooftop PV systems. Negative value for any power produced. \\ \hline
-        out.electricity.range\_oven.energy\_consumption.kwh & kWh & Electricity consumed by range and oven \\ \hline
-        out.electricity.refrigerator.energy\_consumption.kwh & kWh & Electricity consumed by refrigerators \\ \hline
-        out.electricity.total.energy\_consumption.kwh & kWh & Total electricity consumed \\ \hline
-        out.natural\_gas.clothes\_dryer.energy\_consumption.kwh & kWh & Natural gas consumed by natural gas clothes dryers \\ \hline
-        out.natural\_gas.fireplace.energy\_consumption.kwh & kWh & Natural gas consumed by natural gas fireplaces \\ \hline
-        out.natural\_gas.grill.energy\_consumption.kwh & kWh & Natural gas consumed by natural gas grills \\ \hline
-        out.natural\_gas.heating.energy\_consumption.kwh & kWh & Natural gas consumed by natural gas heating systems \\ \hline
-        out.natural\_gas.heating\_hp\_bkup.energy\_consumption.kwh & kWh & Natural gas consumed by heat pump backup \\ \hline
-        out.natural\_gas.hot\_water.energy\_consumption.kwh & kWh & Natural gas consumed by natural gas hot water systems \\ \hline
-        out.natural\_gas.lighting.energy\_consumption.kwh & kWh & Natural gas consumed by natural gas lighting \\ \hline
-        out.natural\_gas.permanent\_spa\_heat.energy\_consumption.kwh & kWh & Natural gas consumed by spa heating \\ \hline
-        out.natural\_gas.permanent\_spa\_pump.energy\_consumption.kwh & kWh & Natural gas consumed by spa pump \\ \hline
-        out.natural\_gas.pool\_heater.energy\_consumption.kwh & kWh & Natural gas consumed by natural gas pool heaters \\ \hline
-        out.natural\_gas.range\_oven.energy\_consumption.kwh & kWh & Natural gas consumed by natural gas range and oven \\ \hline
-        out.natural\_gas.total.energy\_consumption.kwh & kWh & Total natural gas consumed \\ \hline
-        out.params.size\_cooling\_system\_primary\_k\_btu\_h & kBtu/h & Size of primary cooling system \\ \hline
-        out.params.size\_heat\_pump\_backup\_primary\_k\_btu\_h & kBtu/h & Size of primary heat pump backup \\ \hline
-        out.params.size\_heating\_system\_primary\_k\_btu\_h & kBtu/h & Size of primary heating system \\ \hline
-        out.params.size\_heating\_system\_secondary\_k\_btu\_h & kBtu/h & Size of secondary heating system \\ \hline
-        out.propane.clothes\_dryer.energy\_consumption.kwh & kWh & Propane consumed by propane clothes dryers \\ \hline
-        out.propane.heating.energy\_consumption.kwh & kWh & Propane consumed by propane heating systems \\ \hline
-        out.propane.heating\_hp\_bkup.energy\_consumption.kwh & kWh & Propane consumed by heat pump backup \\ \hline
-        out.propane.hot\_water.energy\_consumption.kwh & kWh & Propane consumed by propane hot water systems \\ \hline
-        out.propane.range\_oven.energy\_consumption.kwh & kWh & Propane consumed by propane range and oven \\ \hline
-        out.propane.total.energy\_consumption.kwh & kWh & Total propane energy consumed \\ \hline
-        out.site\_energy.net.energy\_consumption.kwh & kWh & Total site energy consumed subtracts any power produced by PV or generators \\ \hline
-        out.site\_energy.total.energy\_consumption.kwh & kWh & Total site energy consumed \\
+        out.electricity.ceiling\_fan.energy\_consumption..kwh & kWh & Electricity consumed by ceiling fans \\ \hline
+        out.electricity.clothes\_dryer.energy\_consumption..kwh & kWh & Electricity consumed by clothes dryers \\ \hline
+        out.electricity.clothes\_washer.energy\_consumption..kwh & kWh & Electricity consumed by clothes washers \\ \hline
+        out.electricity.cooling.energy\_consumption..kwh & kWh & Electricity consumed by cooling systems; excludes usage by fans/pumps \\ \hline
+        out.electricity.cooling\_fans\_pumps.energy\_consumption..kwh & kWh & Electricity consumed by supply fan (air distribution) or circulating pump (geothermal loop) during cooling \\ \hline
+        out.electricity.dishwasher.energy\_consumption..kwh & kWh & Electricity consumed by dishwashers \\ \hline
+        out.electricity.ev\_charging.energy\_consumption..kwh & kWh & Electricity consumed by charging electric vehicles \\ \hline
+        out.electricity.freezer.energy\_consumption..kwh & kWh & Electricity consumed by standalone freezers \\ \hline
+        out.electricity.heating.energy\_consumption..kwh & kWh & Electricity consumed by heating systems; excludes usage by fans/pumps \\ \hline
+        out.electricity.heating\_fans\_pumps.energy\_consumption..kwh & kWh & Electricity consumed by supply fan (air distribution) or circulating pump (hydronic distribution or geothermal loop) during heating \\ \hline
+        out.electricity.heating\_hp\_bkup.energy\_consumption..kwh & kWh & Electricity consumed by heat pump backup; excludes usage by heat pump backup fans/pumps \\ \hline
+        out.electricity.heating\_hp\_bkup\_fa.energy\_consumption..kwh & kWh & Electricity consumed by supply fan (air distribution) or circulating pump (hydronic distribution) during heat pump backup \\ \hline
+        out.electricity.hot\_water.energy\_consumption..kwh & kWh & Electricity consumed by hot water system excludes recirculation pump and solar thermal pump \\ \hline
+        out.electricity.hot\_water\_solar\_th.energy\_consumption..kwh & kWh & Electricity consumed by the solar hot water system pump \\ \hline
+        out.electricity.lighting\_exterior.energy\_consumption..kwh & kWh & Electricity consumed by exterior lighting \\ \hline
+        out.electricity.lighting\_garage.energy\_consumption..kwh & kWh & Electricity consumed by lighting in the garage \\ \hline
+        out.electricity.lighting\_interior.energy\_consumption..kwh & kWh & Electricity consumed by interior lighting \\ \hline
+        out.electricity.mech\_vent.energy\_consumption..kwh & kWh & Electricity consumed by mechanical ventilation system \\ \hline
+        out.electricity.net.energy\_consumption..kwh & kWh & Total electricity consumed subtracts any power produced by PV or generators \\ \hline
+        out.electricity.permanent\_spa\_heat.energy\_consumption..kwh & kWh & Electricity consumed by spa heating \\ \hline
+        out.electricity.permanent\_spa\_pump.energy\_consumption..kwh & kWh & Electricity consumed by spa pump \\ \hline
+        out.electricity.plug\_loads.energy\_consumption..kwh & kWh & Electricity consumed by plug loads not elsewhere accounted for \\ \hline
+        out.electricity.pool\_heater.energy\_consumption..kwh & kWh & Electricity consumed by pool heaters \\ \hline
+        out.electricity.pool\_pump.energy\_consumption..kwh & kWh & Electricity consumed by pool pumps \\ \hline
+        out.electricity.pv.energy\_consumption..kwh & kWh & Energy produced by rooftop PV systems. Negative value for any power produced. \\ \hline
+        out.electricity.range\_oven.energy\_consumption..kwh & kWh & Electricity consumed by range and oven \\ \hline
+        out.electricity.refrigerator.energy\_consumption..kwh & kWh & Electricity consumed by refrigerators \\ \hline
+        out.electricity.television.energy\_consumption..kwh & kWh & Electricity consumed by televisions \\ \hline
+        out.electricity.total.energy\_consumption..kwh & kWh & Total electricity consumed \\ \hline
+        out.electricity.well\_pump.energy\_consumption..kwh & kWh & Electricity consumed by the well pump, if present \\ \hline
+        out.fuel\_oil.heating.energy\_consumption..kwh & kWh & Propane consumed by propane heating systems \\ \hline
+        out.fuel\_oil.hot\_water.energy\_consumption..kwh & kWh & Propane consumed by propane hot water systems \\ \hline
+        out.fuel\_oil.total.energy\_consumption..kwh & kWh & Total propane energy consumed \\ \hline
+        out.hot\_water.clothes\_washer..gal & gal & Hot water consumed by the clothes washer \\ \hline
+        out.hot\_water.dishwasher..gal & gal & Hot water consumed by the dishwasher \\ \hline
+        out.hot\_water.distribution\_waste..gal & gal & TODO \\ \hline
+        out.hot\_water.fixtures..gal & gal & Hot water consumed by sinks and showers \\ \hline
+        out.natural\_gas.clothes\_dryer.energy\_consumption..kwh & kWh & Natural gas consumed by natural gas clothes dryers \\ \hline
+        out.natural\_gas.fireplace.energy\_consumption..kwh & kWh & Natural gas consumed by natural gas fireplaces \\ \hline
+        out.natural\_gas.grill.energy\_consumption..kwh & kWh & Natural gas consumed by natural gas grills \\ \hline
+        out.natural\_gas.heating.energy\_consumption..kwh & kWh & Natural gas consumed by natural gas heating systems \\ \hline
+        out.natural\_gas.heating\_hp\_bkup.energy\_consumption..kwh & kWh & Natural gas consumed by heat pump backup \\ \hline
+        out.natural\_gas.hot\_water.energy\_consumption..kwh & kWh & Natural gas consumed by natural gas hot water systems \\ \hline
+        out.natural\_gas.lighting.energy\_consumption..kwh & kWh & Natural gas consumed by natural gas lighting \\ \hline
+        out.natural\_gas.permanent\_spa\_heat.energy\_consumption..kwh & kWh & Natural gas consumed by spa heating \\ \hline
+        out.natural\_gas.permanent\_spa\_pump.energy\_consumption..kwh & kWh & Natural gas consumed by spa pump \\ \hline
+        out.natural\_gas.pool\_heater.energy\_consumption..kwh & kWh & Natural gas consumed by natural gas pool heaters \\ \hline
+        out.natural\_gas.range\_oven.energy\_consumption..kwh & kWh & Natural gas consumed by natural gas range and oven \\ \hline
+        out.natural\_gas.total.energy\_consumption..kwh & kWh & Total natural gas consumed \\ \hline
+        out.propane.clothes\_dryer.energy\_consumption..kwh & kWh & Propane consumed by propane clothes dryers \\ \hline
+        out.propane.heating.energy\_consumption..kwh & kWh & Propane consumed by propane heating systems \\ \hline
+        out.propane.heating\_hp\_bkup.energy\_consumption..kwh & kWh & Propane consumed by heat pump backup \\ \hline
+        out.propane.hot\_water.energy\_consumption..kwh & kWh & Propane consumed by propane hot water systems \\ \hline
+        out.propane.range\_oven.energy\_consumption..kwh & kWh & Propane consumed by propane range and oven \\ \hline
+        out.propane.total.energy\_consumption..kwh & kWh & Total propane energy consumed \\ \hline
+        out.site\_energy.net.energy\_consumption..kwh & kWh & Total site energy consumed subtracts any power produced by PV or generators \\ \hline
+        out.site\_energy.total.energy\_consumption..kwh & kWh & Total site energy consumed \\
 \end{customLongTable}
 
+For each of the outputs above, there are five related columns:
+\begin{itemize}
+        \item out.<fuel>.<enduse>.energy\_savings..kwh: The difference in energy consumption between the baseline and this upgrade.
+        \item out.<fuel>.<enduse>.energy\_consumption\_intensity..kwh: The energy consumption per floor area of the home.
+        \item out.<fuel>.<enduse>.energy\_savings\_intensity..kwh: The difference in energy consumption between the baseline and this upgrade per floor area of the home.
+        \item calc.weighted.<fuel>.<enduse>.energy\_consumption..tbtu: The energy consumption scaled by the weight to represent the national total for this value.
+        \item calc.weighted.<fuel>.<enduse>.energy\_savings..tbtu: The difference in energy consumption between the baseline and this upgrade, scaled by the weight to represent the national total for this value.
+\end{itemize}
+
 \section{Cost Multipliers}
-The ResStock workflow calculates and outputs certain values to support the calculation of costs of implementation of upgrades and upgrade packages. These are values that are available to scale measure implementation cost---for example, the total square feet of exterior window area in a housing unit model sample that can be multiplied by a user-provided window cost per square foot for a specific measure to get a per-housing-unit measure cost. They are calculated from the building energy models. ResStock currently provides 21 such values, as listed in Table \ref{table:cost_multipliers}. In published ResStock datasets, these cost multipliers are the fields that use the ``out.params'' prefix, for example ``out.params.window\_area\_ft\_2.'' The exception is that ``upgrade\_costs.floor\_area\_conditioned\_ft\_2'' has to-date been published as ``in.sqft.''
+The ResStock workflow calculates and outputs certain values to support the calculation of costs of implementation of upgrades and upgrade packages. These are values that are available to scale measure implementation cost---for example, the total square feet of exterior window area in a housing unit model sample that can be multiplied by a user-provided window cost per square foot for a specific measure to get a per-housing-unit measure cost. They are calculated from the building energy models. ResStock currently provides the values listed in Table \ref{table:cost_multipliers}. In published ResStock datasets, these cost multipliers are the fields that use the ``out.params'' prefix, for example ``out.params.window\_area..ft2.'' The exception is that ``out.params.floor\_area\_conditioned..ft2'' has to-date been published as ``in.sqft..ft2''
 
 \begin{longtable}[]{ |p{6.cm}|p{2.5cm}|p{6cm}| }
 \caption{ResStock cost multiplier output field names, units, and descriptions} \label{table:cost_multipliers} \\
@@ -290,27 +323,29 @@ The ResStock workflow calculates and outputs certain values to support the calcu
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-upgrade\_costs.door\_area\_ft\_2 & ft\textsuperscript{2} & Door Area \\ \hline
-upgrade\_costs.duct\_unconditioned\_surface\_area\_ft\_2 & ft\textsuperscript{2}& Duct Unconditioned Surface Area \\ \hline
-upgrade\_costs.floor\_area\_attic\_ft\_2 & ft\textsuperscript{2}& Floor Area, Attic \\ \hline
-upgrade\_costs.floor\_area\_attic\_insulation\_increase\_ft\_2\_delta\_r\_value & ft\textsuperscript{2} * $\Delta$ R-value& Floor Area, Attic * Insulation Increase \\ \hline
-upgrade\_costs.floor\_area\_conditioned\_ft\_2 & ft\textsuperscript{2}& Floor Area, Conditioned \\ \hline
-upgrade\_costs.floor\_area\_conditioned\_infiltration\_reduction\_ft\_2\_delta\_ach\_50 & ft\textsuperscript{2} * $\Delta$ ACH50& Floor Area, Conditioned * Infiltration Reduction \\ \hline
-upgrade\_costs.floor\_area\_foundation\_ft\_2 & ft\textsuperscript{2}& Floor Area, Foundation \\ \hline
-upgrade\_costs.floor\_area\_lighting\_ft\_2 & ft\textsuperscript{2}& Floor Area, Lighting \\ \hline
-upgrade\_costs.flow\_rate\_mechanical\_ventilation\_cfm  & cfm & Flow Rate, Mechanical Ventilation \\ \hline
-upgrade\_costs.rim\_joist\_area\_above\_grade\_exterior\_ft\_2  & ft\textsuperscript{2}& Rim Joist Area, Above-Grade, Exterior \\ \hline
-upgrade\_costs.roof\_area\_ft\_2  &  ft\textsuperscript{2}& Roof Area \\ \hline
-upgrade\_costs.size\_cooling\_system\_primary\_k\_btu\_h  & kBtu/h & Size, Cooling System Primary \\ \hline
-upgrade\_costs.size\_heat\_pump\_backup\_primary\_k\_btu\_h & kBtu/h & Size, Heat Pump Backup Primary \\ \hline
-upgrade\_costs.size\_heating\_system\_primary\_k\_btu\_h & kBtu/h & Size, Heating System Primary \\ \hline
-upgrade\_costs.size\_heating\_system\_secondary\_k\_btu\_h & kBtu/h & Size, Heating System Secondary \\ \hline
-upgrade\_costs.size\_water\_heater\_gal & gal & Size, Water Heater \\ \hline
-upgrade\_costs.slab\_perimeter\_exposed\_conditioned\_ft & ft & Slab Perimeter, Exposed, Conditioned \\ \hline
-upgrade\_costs.wall\_area\_above\_grade\_conditioned\_ft\_2 & ft\textsuperscript{2}& Wall Area, Above-Grade, Conditioned \\ \hline
-upgrade\_costs.wall\_area\_above\_grade\_exterior\_ft\_2 & ft\textsuperscript{2}& Wall Area, Above-Grade, Exterior \\ \hline
-upgrade\_costs.wall\_area\_below\_grade\_ft\_2 & ft\textsuperscript{2}& Wall Area, Below-Grade \\ \hline
-upgrade\_costs.window\_area\_ft\_2 & ft\textsuperscript{2}& Window Area
+out.params.door\_area..ft2 & ft\textsuperscript{2} & Door Area \\ \hline
+out.params.duct\_unconditioned\_surface\_area..ft2 & ft\textsuperscript{2}& Duct Unconditioned Surface Area \\ \hline
+out.params.floor\_area\_attic..ft2 & ft\textsuperscript{2}& Floor Area, Attic \\ \hline
+out.params.floor\_area\_attic\_insulation\_increase..ft2\_delta\_r\_value & ft\textsuperscript{2} * $\Delta$ R-value& Floor Area, Attic * Insulation Increase \\ \hline
+out.params.floor\_area\_conditioned..ft2 & ft\textsuperscript{2}& Floor Area, Conditioned \\ \hline
+out.params.floor\_area\_conditioned\_infiltration\_reduction..ft2\_delta\_ach50 & ft\textsuperscript{2} * $\Delta$ ACH50& Floor Area, Conditioned * Infiltration Reduction \\ \hline
+out.params.floor\_area\_foundation..ft2 & ft\textsuperscript{2}& Floor Area, Foundation \\ \hline
+out.params.floor\_area\_lighting..ft2 & ft\textsuperscript{2}& Floor Area, Lighting \\ \hline
+out.params.flow\_rate\_mechanical\_ventilation..cfm  & cfm & Flow Rate, Mechanical Ventilation \\ \hline
+out.params.hvac\_geothermal\_loop\_borehole\_trench\_count  & count & The number or boreholes used in the geothermal system \\ \hline
+out.params.hvac\_geothermal\_loop\_borehole\_trench\_length..ft & ft & The length/depth of each borehole used in the geothermal system \\ \hline
+out.params.rim\_joist\_area\_above\_grade\_exterior..ft2  & ft\textsuperscript{2}& Rim Joist Area, Above-Grade, Exterior \\ \hline
+out.params.roof\_area..ft2  &  ft\textsuperscript{2}& Roof Area \\ \hline
+out.params.size\_cooling\_system\_primary..kbtu\_per\_hr  & kBtu/h & Size, Cooling System Primary \\ \hline
+out.params.size\_heat\_pump\_backup\_primary..kbtu\_per\_hr & kBtu/h & Size, Heat Pump Backup Primary \\ \hline
+out.params.size\_heating\_system\_primary..kbtu\_per\_hr & kBtu/h & Size, Heating System Primary \\ \hline
+out.params.size\_heating\_system\_secondary..kbtu\_per\_hr & kBtu/h & Size, Heating System Secondary \\ \hline
+out.params.size\_water\_heater..gal & gal & Size, Water Heater \\ \hline
+out.params.slab\_perimeter\_exposed\_conditioned..ft & ft & Slab Perimeter, Exposed, Conditioned \\ \hline
+out.params.wall\_area\_above\_grade\_conditioned..ft2 & ft\textsuperscript{2}& Wall Area, Above-Grade, Conditioned \\ \hline
+out.params.wall\_area\_above\_grade\_exterior..ft2 & ft\textsuperscript{2}& Wall Area, Above-Grade, Exterior \\ \hline
+out.params.wall\_area\_below\_grade..ft2 & ft\textsuperscript{2}& Wall Area, Below-Grade \\ \hline
+out.params.window\_area..ft2 & ft\textsuperscript{2}& Window Area
 \end{longtable}
 
 \section{Emissions}
@@ -330,22 +365,47 @@ The full list of emissions output fields from electric energy consumption is in 
 \begin{customLongTable}{ |p{5cm}|p{1.5cm}|p{8cm}| }
 {ResStock emissions output field names, units, and descriptions} {table:emissions_output}
 {\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}}
-out.emissions.all\_fuels.lrmer\_mid\_case\_25.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 mid case scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
-out.emissions.all\_fuels.lrmer\_mid\_case\_15.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 mid case scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
-out.emissions.all\_fuels.lrmer\_high\_re\_cost\_25.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
-out.emissions.all\_fuels.lrmer\_high\_re\_cost\_15.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
-out.emissions.all\_fuels.lrmer\_low\_re\_cost\_25.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
-out.emissions.all\_fuels.lrmer\_low\_re\_cost\_15.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
-out.emissions.all\_fuels.lrmer\_low\_re\_cost\_high\_ng\_price\_25.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost high natural gas price scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
-out.emissions.all\_fuels.lrmer\_low\_re\_cost\_high\_ng\_price\_15.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost high natural gas price scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
-out.emissions.all\_fuels.lrmer\_high\_re\_cost\_low\_ng\_price\_25.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost low natural gas price scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
-out.emissions.all\_fuels.lrmer\_high\_re\_cost\_low\_ng\_price\_15.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost low natural gas price scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
-out.emissions.all\_fuels.aer\_high\_re\_cost\_avg.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost scenario with average emissions rates averaged from 2025-2050.  \\ \hline
-out.emissions.all\_fuels.aer\_high\_re\_cost\_low\_ng\_price\_avg.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost low natural gas price scenario with average emissions rates averaged from 2025-2050.  \\ \hline
-out.emissions.all\_fuels.aer\_low\_re\_cost\_avg.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost scenario with average emissions rates averaged from 2025-2050.  \\ \hline
-out.emissions.all\_fuels.aer\_low\_re\_cost\_high\_ng\_price\_avg.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost high natural gas price scenario with average emissions rates averaged from 2025-2050.  \\ \hline
-out.emissions.all\_fuels.aer\_mid\_case\_avg.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 mid case scenario with average emissions rates averaged from 2025-2050.  \\
+out.emissions.electricity.lrmer\_mid\_case\_25..co2e\_kg & co2e\_kg & Scope 2 emissions from onsite use of electricity using Cambium 2024 mid case scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
+out.emissions.electricity.lrmer\_mid\_case\_15..co2e\_kg & co2e\_kg & Scope 2 emissions from onsite use of electricity using Cambium 2024 mid case scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
+out.emissions.electricity.lrmer\_high\_re\_cost\_25..co2e\_kg & co2e\_kg & Scope 2 emissions from onsite use of electricity using Cambium 2024 high renewable cost scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
+out.emissions.electricity.lrmer\_high\_re\_cost\_15..co2e\_kg & co2e\_kg & Scope 2 emissions from onsite use of electricity using Cambium 2024 high renewable cost scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
+out.emissions.electricity.lrmer\_low\_re\_cost\_25..co2e\_kg & co2e\_kg & Scope 2 emissions from onsite use of electricity using Cambium 2024 low renewable cost scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
+out.emissions.electricity.lrmer\_low\_re\_cost\_15..co2e\_kg & co2e\_kg & Scope 2 emissions from onsite use of electricity using Cambium 2024 low renewable cost scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
+out.emissions.electricity.lrmer\_low\_re\_cost\_high\_ng\_price\_25..co2e\_kg & co2e\_kg & Scope 2 emissions from onsite use of electricity using Cambium 2024 low renewable cost high natural gas price scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
+out.emissions.electricity.lrmer\_low\_re\_cost\_high\_ng\_price\_15..co2e\_kg & co2e\_kg & Scope 2 emissions from onsite use of electricity using Cambium 2024 low renewable cost high natural gas price scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
+out.emissions.electricity.lrmer\_high\_re\_cost\_low\_ng\_price\_25..co2e\_kg & co2e\_kg & Scope 2 emissions from onsite use of electricity using Cambium 2024 high renewable cost low natural gas price scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
+out.emissions.electricity.lrmer\_high\_re\_cost\_low\_ng\_price\_15..co2e\_kg & co2e\_kg & Scope 2 emissions from onsite use of electricity using Cambium 2024 high renewable cost low natural gas price scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
+out.emissions.electricity.aer\_high\_re\_cost\_avg..co2e\_kg & co2e\_kg & Scope 2 emissions from onsite use of electricity using Cambium 2024 high renewable cost scenario with average emissions rates averaged from 2025-2050.  \\ \hline
+out.emissions.electricity.aer\_high\_re\_cost\_low\_ng\_price\_avg..co2e\_kg & co2e\_kg & Scope 2 emissions from onsite use of electricity using Cambium 2024 high renewable cost low natural gas price scenario with average emissions rates averaged from 2025-2050.  \\ \hline
+out.emissions.electricity.aer\_low\_re\_cost\_avg..co2e\_kg & co2e\_kg & Scope 2 emissions from onsite use of electricity using Cambium 2024 low renewable cost scenario with average emissions rates averaged from 2025-2050.  \\ \hline
+out.emissions.electricity.aer\_low\_re\_cost\_high\_ng\_price\_avg..co2e\_kg & co2e\_kg & Scope 2 emissions from onsite use of electricity using Cambium 2024 low renewable cost high natural gas price scenario with average emissions rates averaged from 2025-2050.  \\ \hline
+out.emissions.electricity.aer\_mid\_case\_avg..co2e\_kg & co2e\_kg & Scope 2 emissions from onsite use of electricity using Cambium 2024 mid case scenario with average emissions rates averaged from 2025-2050.  \\ \hline
+out.emissions.fuel\_oil.total..co2e\_kg & co2e\_kg & Scope 1 emissions from onsite combustion of fuel oil  \\ \hline
+out.emissions.natural\_gas.total..co2e\_kg & co2e\_kg & Scope 1 emissions from onsite combustion of natural gas  \\ \hline
+out.emissions.propane.total..co2e\_kg & co2e\_kg & Scope 1 emissions from onsite combustion of propane  \\
+out.emissions.total.lrmer\_mid\_case\_25..co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 mid case scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
+out.emissions.total.lrmer\_mid\_case\_15..co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 mid case scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
+out.emissions.total.lrmer\_high\_re\_cost\_25..co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
+out.emissions.total.lrmer\_high\_re\_cost\_15..co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
+out.emissions.total.lrmer\_low\_re\_cost\_25..co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
+out.emissions.total.lrmer\_low\_re\_cost\_15..co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
+out.emissions.total.lrmer\_low\_re\_cost\_high\_ng\_price\_25..co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost high natural gas price scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
+out.emissions.total.lrmer\_low\_re\_cost\_high\_ng\_price\_15..co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost high natural gas price scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
+out.emissions.total.lrmer\_high\_re\_cost\_low\_ng\_price\_25..co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost low natural gas price scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
+out.emissions.total.lrmer\_high\_re\_cost\_low\_ng\_price\_15..co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost low natural gas price scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
+out.emissions.total.aer\_high\_re\_cost\_avg..co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost scenario with average emissions rates averaged from 2025-2050.  \\ \hline
+out.emissions.total.aer\_high\_re\_cost\_low\_ng\_price\_avg..co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost low natural gas price scenario with average emissions rates averaged from 2025-2050.  \\ \hline
+out.emissions.total.aer\_low\_re\_cost\_avg..co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost scenario with average emissions rates averaged from 2025-2050.  \\ \hline
+out.emissions.total.aer\_low\_re\_cost\_high\_ng\_price\_avg..co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost high natural gas price scenario with average emissions rates averaged from 2025-2050.  \\ \hline
+out.emissions.total.aer\_mid\_case\_avg..co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 mid case scenario with average emissions rates averaged from 2025-2050.  \\ \hline
 \end{customLongTable}
+
+For each of the outputs above, there are three related columns:
+\begin{itemize}
+        \item \texttt{out.emissions_reduction.<fuel>.<scenario>.co2e\_kg}: The difference in emissions between the baseline and this upgrade.
+        \item \texttt{calc.weighted.emissions.<fuel>.<scenario>.co2e\_mmt}: The emissions scaled by the weight to represent the national total for this value.
+        \item \texttt{calc.weighted.emissions_reduction.<fuel>.<scenario>.co2e\_mmt}: The difference in emissions between the baseline and this upgrade, scaled by the weight to represent the national total for this value.
+\end{itemize}
 
 \section{Utility Bills}
 Utility bills are calculated using state-average utility rates plus a fixed charge in this ResStock dataset. This dataset includes the addition of energy prices for Alaska and Hawaii. A summary is below.
@@ -360,16 +420,16 @@ Utility costs are calculated for electricity, natural gas, propane, and No. 2 fu
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-        out.bills.all\_fuels.usd & \$ & Annual total charges for electricity, fuel oil, natural gas, and propane \\ \hline
-        out.bills.electricity.usd & \$ & Annual total charges for electricity \\ \hline
-        out.bills.fuel\_oil.usd & \$ & Annual total charges for fuel oil \\ \hline
-        out.bills.natural\_gas.usd & \$ & Annual total charges for natural gas \\ \hline
-        out.bills.propane.usd & \$ & Annual total charges for propane \\ \hline
-        out.bills.all\_fuels.usd.savings & \$ & Annual total savings for electricity, fuel oil, natural gas, and propane \\ \hline
-        out.bills.electricity.usd.savings & \$ & Annual total savings for electricity \\ \hline
-        out.bills.fuel\_oil.usd.savings & \$ & Annual total savings for fuel oil \\ \hline
-        out.bills.natural\_gas.usd.savings & \$ & Annual total savings for natural gas \\ \hline
-        out.bills.propane.usd.savings & \$ & Annual total savings for propane
+        out.utility\_bills.total\_bill..usd & \$ & Annual total charges for electricity, fuel oil, natural gas, and propane \\ \hline
+        out.utility\_bills.electricity\_bill..usd & \$ & Annual total charges for electricity \\ \hline
+        out.utility\_bills.fuel\_oil\_bill..usd & \$ & Annual total charges for fuel oil \\ \hline
+        out.utility\_bills.natural\_gas\_bill..usd & \$ & Annual total charges for natural gas \\ \hline
+        out.utility\_bills.propane\_bill..usd & \$ & Annual total charges for propane \\ \hline
+        out.utility\_bills.total\_bill\_savings..usd & \$ & Annual total savings for electricity, fuel oil, natural gas, and propane \\ \hline
+        out.utility\_bills.electricity\_bill\_savings..usd & \$ & Annual total savings for electricity \\ \hline
+        out.utility\_bills.fuel\_oil\_bill\_savings..usd & \$ & Annual total savings for fuel oil \\ \hline
+        out.utility\_bills.natural\_gas\_bill\_savings..usd & \$ & Annual total savings for natural gas \\ \hline
+        out.utility\_bills.propane\_bill\_savings..usd & \$ & Annual total savings for propane
 \end{longtable}
 
 ResStock results can also be used as inputs to calculate utility bills using other rate structures, such as time-of-use electricity rates or tiered rates. However, these calculations are currently not included in the primary ResStock workflow or any published datasets.
@@ -511,9 +571,9 @@ out.schedules\_vacancy & 0,1 & Vacancy unavailable period. \\
 \end{customLongTable}
 
 \section{Electrical Panels} \label{sec:output_panels}
-For electrical panel, occupied capacity and breaker spaces are tabulated by end use. The total occupied capacity and spaces are calculated as well as their headroom, or the amount of capacity or space left unused.  In public ResStock datasets, these fields are prefixed with ``out.electric\_panel`` and described in \ref{tab:panels}. 
-For capacity, the total occupied load (W) can be calculated using different methods and will be labeled accordingly. In the public datasets, results are available for the 2023 load-based (NEC 220.83) method only for existing dwellings. See Section \ref{sec:input_panels} for the method description. The occupied capacity (A) is converted from occupied load (W) by dividing by 240V, the panel voltage, and then subtracted from the input field ``in.electrical\_panel\_service\_rating``'' (A) to get the headroom capacity (A). 
-The headroom capacity is used to determine capacity constraint – the panel is considered capacity-constrained if headroom is negative and unconstrained otherwise. This outcome is useful to account for any additional costs needed to resolve the constraint, such as through an electrical panel or service upgrade, or by using lower power appliances as an alternative. 
+For electrical panel, occupied capacity and breaker spaces are tabulated by end use. The total occupied capacity and spaces are calculated as well as their headroom, or the amount of capacity or space left unused.  In public ResStock datasets, these fields are prefixed with ``out.electric\_panel`` and described in \ref{tab:panels}.
+For capacity, the total occupied load (W) can be calculated using different methods and will be labeled accordingly. In the public datasets, results are available for the 2023 load-based (NEC 220.83) method only for existing dwellings. See Section \ref{sec:input_panels} for the method description. The occupied capacity (A) is converted from occupied load (W) by dividing by 240V, the panel voltage, and then subtracted from the input field ``in.electrical\_panel\_service\_rating``'' (A) to get the headroom capacity (A).
+The headroom capacity is used to determine capacity constraint – the panel is considered capacity-constrained if headroom is negative and unconstrained otherwise. This outcome is useful to account for any additional costs needed to resolve the constraint, such as through an electrical panel or service upgrade, or by using lower power appliances as an alternative.
 Users are encouraged to calculate the capacity constraint on their own to reflect their desired margin of error.
 
 For breaker space, total rated count is labeled as an input metric in table \ref{table:hc_output_fields}. This is actually derived from the breaker space headroom, which is probabilistically assigned based on the panel ampacity rating and other housing characteristics, and a tabulation of electrical equipment in the baseline home. In the upgrade simulations, the total breaker space count is carried over from the baseline simulation and the headroom count is recalculated according to the content of the upgrade package. See Section \ref{sec:input_panels} for details.
@@ -522,52 +582,53 @@ Breaker space headroom is used to calculate the space constraint, which exists w
 
 All results should be interpreted with uncertainty in mind, even if they look reasonable. The prediction of the panel service rating and headroom space do not account for all electrical and connected loads in the model. As a result, the capacity headroom can be negative for a model in the baseline, although it is uncommon.
 This can be interpreted as the house already being constrained prior to any upgrade and is consistent with anecdotal observations that some houses do trip their breakers often, an indication of a capacity shortfall.
-On the otherhand, the breaker space headroom in the baseline can never be negative because our modeling approach prevents this by sampling a non-negative headroom count directly. This is also consistent with the physical constraint of breaker space. 
+On the otherhand, the breaker space headroom in the baseline can never be negative because our modeling approach prevents this by sampling a non-negative headroom count directly. This is also consistent with the physical constraint of breaker space.
 
 \begin{customLongTable}{ |p{6cm}|p{1.5cm}|p{7.5cm}| }
-        {ResStock electrical panel output field names, units, and descriptions} {tab:panels} 
-        {\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}} 
-                out.panel.load.total\_load.<method>.w & W & Total service feeder load calculated per selected NEC method \\ \hline
-                out.panel.load.occupied\_capacity.<method>.a & A & Total capacity occupied on the panel, calculated as total load (W) divided by panel voltage (240V) \\ \hline
-                out.panel.load.headroom\_capacity.<method>.a & A & Available capacity on the panel, calculated as panel service rating (A) minus total occupied capacity (A) \\ \hline
-                out.panel.load.heating.w & W & Sum of space heating system and heat pump heating electric loads. For the load calculation, only the max of heating or cooling is used, not both \\ \hline
-                out.panel.load.cooling.w & W & Sum of space cooling system and heat pump cooling electric loads. For the load calculation, only the max of heating or cooling is used, not both \\ \hline
-                out.panel.load.hot\_water.w & W & Sum of water heating system electric loads, for electric only \\ \hline
-                out.panel.load.clothes\_dryer.w & W & Sum of clothes dryer electric loads, for electric only \\ \hline
-                out.panel.load.dishwasher.w & W & Sum of dishwasher electric loads \\ \hline
-                out.panel.load.range\_oven.w & W & Sum of range/oven electric loads, for electric only \\ \hline
-                out.panel.load.mech\_vent.w & W & Sum of mechanical ventilation electric loads \\ \hline
-                out.panel.load.permanent\_spa\_heat.w & W & Sum of permanent spa heater electric load, for electric only \\ \hline
-                out.panel.load.permanent\_spa\_pump.w & W & Sum of permanent spa pump electric loads \\ \hline
-                out.panel.load.pool\_heater.w & W & Sum of pool heater electric loads \\ \hline
-                out.panel.load.pool\_pump.w & W & Sum of pool pump electric loads \\ \hline
-                out.panel.load.well\_pump.w & W & Sum of well pump electric loads \\ \hline
-                out.panel.load.ev\_charging.w & W & Sum of electric vehicle charging equipment electric loads \\ \hline
-                out.panel.load.other.w & W & Sum of other electric loads, including but not limited to lighting/general receptacles at 3 W/sqft, refrigerator, microwave, and garbage disposal \\ \hline
-                out.panel.breaker\_space.occupied.count & count & Total number of occupied spaces on the panel \\ \hline
-                out.panel.breaker\_space.headroom.count & count & Available spaces, calculated as total rated spaces minus occupied spaces \\ \hline
-                out.panel.breaker\_space.heating.count & count & Sum of heating system and heat pump heating occupied spaces \\ \hline
-                out.panel.breaker\_space.cooling.count & count & Sum of cooling system and heat pump cooling occupied spaces \\ \hline
-                out.panel.breaker\_space.hot\_water.count & count & Sum of water heating system occupied spaces \\ \hline
-                out.panel.breaker\_space.clothes\_dryer.count & count & Sum of clothes dryer occupied spaces \\ \hline
-                out.panel.breaker\_space.dishwasher.count & count & Sum of dishwasher occupied spaces \\ \hline
-                out.panel.breaker\_space.range\_oven.count & count & Sum of range/oven occupied spaces \\ \hline
-                out.panel.breaker\_space.mech\_vent.count & count & Sum of mechanical ventilation occupied spaces \\ \hline
-                out.panel.breaker\_space.permanent\_spa\_heat.count & count & Sum of permanent spa heater occupied spaces \\ \hline
-                out.panel.breaker\_space.permanent\_spa\_pump.count & count & Sum of permanent spa pump occupied spaces \\ \hline
-                out.panel.breaker\_space.pool\_heater.count & count & Sum of pool heater occupied spaces \\ \hline
-                out.panel.breaker\_space.pool\_pump.count & count & Sum of pool pump occupied spaces \\ \hline
-                out.panel.breaker\_space.well\_pump.count & count & Sum of well pump occupied spaces \\ \hline
-                out.panel.breaker\_space.ev\_charging.count & count & Sum of electric vehicle charging occupied spaces \\ \hline
-                out.panel.breaker\_space.other.count & count & Sum of other electric load occupied spaces \\ \hline
-                
-                out.panel.constraint.capacity.<method> & bool & Whether electric panel is capacity-constrained per the given method, defined as when out.panel.load.headroom\_capacity.<method>.a < 0 \\ \hline
-                out.panel.constraint.breaker\_space & bool & Whether electric panel is space-constrained, defined as when out.panel.breaker\_space.headroom.count < 0 \\ \hline
-                out.panel.constraint.overall.<method> & categorical & Summarize overall electric panel constraint per the given method as "no constraint", "space constrained only", "capacity constrained only", or "capacity and space constrained" \\ \hline
+        {ResStock electrical panel output field names, units, and descriptions} {tab:panels}
+        {\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}}
+                out.params.panel\_load\_total\_load.2023\_nec\_existing\_dwelling\_load\_based..w & W & Total service feeder load calculated per selected NEC method \\ \hline
+                out.params.panel\_load\_occupied\_capacity.2023\_nec\_existing\_dwelling\_load\_based..a & A & Total capacity occupied on the panel, calculated as total load (W) divided by panel voltage (240V) \\ \hline
+                out.params.panel\_load\_headroom\_capacity.2023\_nec\_existing\_dwelling\_load\_based..a & A & Available capacity on the panel, calculated as panel service rating (A) minus total occupied capacity (A) \\ \hline
+                out.params.panel\_load\_heating..w & W & Sum of space heating system and heat pump heating electric loads. For the load calculation, only the max of heating or cooling is used, not both \\ \hline
+                out.params.panel\_load\_cooling..w & W & Sum of space cooling system and heat pump cooling electric loads. For the load calculation, only the max of heating or cooling is used, not both \\ \hline
+                out.params.panel\_load\_hot\_water..w & W & Sum of water heating system electric loads, for electric only \\ \hline
+                out.params.panel\_load\_clothes\_dryer..w & W & Sum of clothes dryer electric loads, for electric only \\ \hline
+                out.params.panel\_load\_dishwasher..w & W & Sum of dishwasher electric loads \\ \hline
+                out.params.panel\_load\_range\_oven..w & W & Sum of range/oven electric loads, for electric only \\ \hline
+                out.params.panel\_load\_mech\_vent..w & W & Sum of mechanical ventilation electric loads \\ \hline
+                out.params.panel\_load\_permanent\_spa\_heat..w & W & Sum of permanent spa heater electric load, for electric only \\ \hline
+                out.params.panel\_load\_permanent\_spa\_pump..w & W & Sum of permanent spa pump electric loads \\ \hline
+                out.params.panel\_load\_pool\_heater..w & W & Sum of pool heater electric loads \\ \hline
+                out.params.panel\_load\_pool\_pump..w & W & Sum of pool pump electric loads \\ \hline
+                out.params.panel\_load\_well\_pump..w & W & Sum of well pump electric loads \\ \hline
+                out.params.panel\_load\_ev\_charging..w & W & Sum of electric vehicle charging equipment electric loads \\ \hline
+                out.params.panel\_load\_other..w & W & Sum of other electric loads, including but not limited to lighting/general receptacles at 3 W/sqft, refrigerator, microwave, and garbage disposal \\ \hline
+                out.params.panel\_breaker\_space\_occupied\_savings\_count & count & TODO \\ \hline
+                out.params.panel\_breaker\_space\_occupied\_count & count & Total number of occupied spaces on the panel \\ \hline
+                out.params.panel\_breaker\_space\_headroom\_count & count & Available spaces, calculated as total rated spaces minus occupied spaces \\ \hline
+                out.params.panel\_breaker\_space\_heating\_count & count & Sum of heating system and heat pump heating occupied spaces \\ \hline
+                out.params.panel\_breaker\_space\_cooling\_count & count & Sum of cooling system and heat pump cooling occupied spaces \\ \hline
+                out.params.panel\_breaker\_space\_hot\_water\_count & count & Sum of water heating system occupied spaces \\ \hline
+                out.params.panel\_breaker\_space\_clothes\_dryer\_count & count & Sum of clothes dryer occupied spaces \\ \hline
+                out.params.panel\_breaker\_space\_dishwasher\_count & count & Sum of dishwasher occupied spaces \\ \hline
+                out.params.panel\_breaker\_space\_range\_oven\_count & count & Sum of range/oven occupied spaces \\ \hline
+                out.params.panel\_breaker\_space\_mech\_vent\_count & count & Sum of mechanical ventilation occupied spaces \\ \hline
+                out.params.panel\_breaker\_space\_permanent\_spa\_heat\_count & count & Sum of permanent spa heater occupied spaces \\ \hline
+                out.params.panel\_breaker\_space\_permanent\_spa\_pump\_count & count & Sum of permanent spa pump occupied spaces \\ \hline
+                out.params.panel\_breaker\_space\_pool\_heater\_count & count & Sum of pool heater occupied spaces \\ \hline
+                out.params.panel\_breaker\_space\_pool\_pump\_count & count & Sum of pool pump occupied spaces \\ \hline
+                out.params.panel\_breaker\_space\_well\_pump\_count & count & Sum of well pump occupied spaces \\ \hline
+                out.params.panel\_breaker\_space\_ev\_charging\_count & count & Sum of electric vehicle charging occupied spaces \\ \hline
+                out.params.panel\_breaker\_space\_other\_count & count & Sum of other electric load occupied spaces \\ \hline
 
-                out.panel.load.total\_load.<method>.w.savings & W & For an upgrade measure only, total service feeder load reduced per selected NEC method \\ \hline
-                out.panel.load.occupied\_capacity.<method>.a.savings & A & For an upgrade measure only, total occupied capacity reduced per selected NEC method \\ \hline
-                out.panel.breaker\_space.occupied.count.savings & count & For an upgrade measure only, total number of occupied spaces reduced \\
+                out.params.panel\_constraint\_capacity.2023\_nec\_existing\_dwelling\_load\_based & bool & Whether electric panel is capacity-constrained per the given method, defined as when out.params.panel\_load\_headroom\_capacity.2023\_nec\_existing\_dwelling\_load\_based.a < 0 \\ \hline
+                out.params.panel\_constraint\_breaker\_space & bool & Whether electric panel is space-constrained, defined as when out.panel.breaker\_space.headroom\_count < 0 \\ \hline
+                out.params.panel\_constraint\_overall.2023\_nec\_existing\_dwelling\_load\_based & categorical & Summarize overall electric panel constraint per the given method as "no constraint", "space constrained only", "capacity constrained only", or "capacity and space constrained" \\ \hline
+
+                out.params.panel\_load\_total\_load.2023\_nec\_existing\_dwelling\_load\_based..w.savings & W & For an upgrade measure only, total service feeder load reduced per selected NEC method \\ \hline
+                out.params.panel\_load\_occupied\_capacity.2023\_nec\_existing\_dwelling\_load\_based.a.savings & A & For an upgrade measure only, total occupied capacity reduced per selected NEC method \\ \hline
+                out.panel.breaker\_space.occupied\_count.savings & count & For an upgrade measure only, total number of occupied spaces reduced \\
 \end{customLongTable}
 
 \section{Other Outputs}
@@ -587,13 +648,18 @@ Table \ref{tab:other_outputs} shows a list of output variables that are not cove
         out.hot\_water.dishwasher.gal & gal & Hot water consumed by dishwasher \\ \hline
         out.hot\_water.distribution\_waste.gal & gal & Hot water consumed by water distribution system (water remaining in the pipe) \\ \hline
         out.hot\_water.fixtures.gal & gal & Hot water consumed by showers, sinks, and baths \\ \hline
-        out.params.size\_water\_heater\_gal & gal & Size of water heater \\ \hline
-        out.load.cooling.energy\_delivered.kbtu & kbtu & Total energy delivered by cooling system includes HVAC distribution losses \\ \hline
-        out.load.cooling.peak.kbtu\_hr & kbtu/hr & Maximum cooling load delivered by cooling system includes HVAC distribution losses \\ \hline
-        out.load.heating.energy\_delivered.kbtu & kbtu & Total energy delivered by heating system includes HVAC distribution losses \\ \hline
-        out.load.heating.peak.kbtu\_hr & kbtu/hr & Maximum heating energy delivered by heating system includes HVAC distribution losses over a 60 min time period \\ \hline
-        out.load.hot\_water.energy\_delivered.kbtu & kbtu & Total energy delivered by hot water system includes contributions by desuperheaters or solar thermal systems \\ \hline
-        out.unmet\_hours.cooling.hour & hr & Number of hours where the cooling setpoint is not maintained \\ \hline
-        out.unmet\_hours.heating.hour & hr & Number of hours where the heating setpoint is not maintained \\ \hline
+        out.params.size\_water\_heater..gal & gal & Size of water heater \\ \hline
+        out.load.cooling.energy\_delivered..kbtu & kbtu & Total energy delivered by cooling system includes HVAC distribution losses \\ \hline
+        out.load.cooling.peak..kbtu\_per\_hr & kbtu/hr & Maximum cooling load delivered by cooling system includes HVAC distribution losses \\ \hline
+        out.load.heating.energy\_delivered..kbtu & kbtu & Total energy delivered by heating system includes HVAC distribution losses \\ \hline
+        out.load.heating.peak..kbtu\_per\_hr & kbtu/hr & Maximum heating energy delivered by heating system includes HVAC distribution losses over a 60 min time period \\ \hline
+        out.load.hot\_water.energy\_delivered..kbtu & kbtu & Total energy delivered by hot water system includes contributions by desuperheaters or solar thermal systems \\ \hline
+        out.load.hot\_water.energy\_solar\_thermal..kbtu & kbtu & Total energy delivered by solar hot water system \\ \hline
+        out.load.hot\_water.energy\_tank\_losses..kbtu & kbtu & Total energy lost by hot water system tanks \\ \hline
+        out.unmet\_hours.cooling..hr & hr & Number of hours where the cooling setpoint is not maintained \\ \hline
+        out.unmet\_hours.heating..hr & hr & Number of hours where the heating setpoint is not maintained \\ \hline
+        out.unmet\_hours.ev\_driving..hr & hr & Number of EV driving that cannot be achieved due to lack of charge \\ \hline
         weight & n/a & the number of housing units the sample represents \\
 \end{customLongTable}
+
+For several of the outputs above, there is an associated savings or reduction column.
