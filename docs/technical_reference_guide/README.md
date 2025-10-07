@@ -4,8 +4,8 @@ This folder contains the LaTeX project for the ResStock Technical Reference Guid
 The main file is the `ResStockTechnicalReferenceGuide.tex` file and when compiled produces `ResStockTechnicalReferenceGuide.pdf` in this directory. 
 
 ## GitHub Actions
-In the `.github/workflows/config.yml` file, the `updates-results` job `Build technical reference guide` task compiles the project into the `ResStockTechnicalReferenceGuide.pdf` file.
-This file is then committed in the "Latest results" commit in the `Commit latest results` task.
+In the `.github/workflows/config.yml` file, the `Build technical reference guide` step of the `build-documentation` job compiles the project into the `ResStockTechnicalReferenceGuide.pdf` file.
+This file is then uploaded in the `Save documentation` step.
 These actions will help keep the document up to date with any changes and fail in the tests if the document does not compile.
 
 ## Building Technical Reference Guide Locally
@@ -23,13 +23,13 @@ cd <RESSTOCK_DIR>/docs/technical_reference_guide
 $ docker pull mfisherman/texlive-full
 ```
 
-3. Run the container and mount the current directory contents in the workspace directory of the container. Use /bin/bash as the default shell.
+3. Run the container and mount the current directory contents in the workspace directory of the container. Use /bin/bash as the default shell. (For Windows, use ```docker run --rm -it -v "%CD%":/data mfisherman/texlive-full:latest```.)
 
 ```
 docker run --rm -it -v $(pwd):/workspace mfisherman/texlive-full /bin/bash
 ```
 
-4. The container should start running immediately. Once in the container, your CLI looks something like this: `19603f1794b0:/data#`, with `19603f1794b0` likely being different. Go to the workspace folder where the Technical Reference Guide directory is located.
+4. The container should start running immediately. Once in the container, your CLI looks something like this: `19603f1794b0:/data#`, with `19603f1794b0` likely being different. Go to the workspace folder where the Technical Reference Guide directory is located. (For Windows, the current directory contents have been mounted to the data folder.)
 
 ```
 cd ../workspace
