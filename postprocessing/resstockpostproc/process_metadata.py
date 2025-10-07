@@ -668,7 +668,7 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
 
                         for file_type in file_types:
                             file_path = get_file_path(output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, data_type, upgrade_id)
-                            print(f"Queuing {file_path}")
+                            print(f"Writing {file_path}")
                             input_args = (geo_df, output_dir, file_type, file_path)
                             write_geo_data(input_args)
         else:
@@ -680,7 +680,7 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
 
                 for file_type in file_types:
                     file_path = get_file_path(output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, data_type, upgrade_id)
-                    print(f"Queuing {file_path}")
+                    print(f"Writing {file_path}")
                     input_args = (up_df, output_dir, file_type, file_path)
                     write_geo_data(input_args)
 
