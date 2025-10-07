@@ -182,7 +182,7 @@ class DataProcessor:
             raise ValueError(f"No data found in {self.local_results_dir}. Make sure the s3_results_dir is synced.")
         return pl.concat(lazyframes.values(), how="diagonal")
 
-    def fill_missing_quantities(self, combined_df: pl.LazyFrame, quantities: list[str]) -> pl.LazyFrame:
+    def _fill_missing_quantities(self, combined_df: pl.LazyFrame, quantities: list[str]) -> pl.LazyFrame:
         """
         Fills missing quantity columns in a LazyFrame. If a quantity can be
         calculated by summing existing columns, it does so. Otherwise, it fills
@@ -216,8 +216,8 @@ class DataProcessor:
 
         return combined_df.with_columns(new_column_exprs)
 
-    def convert_quantity_type(
-        self, combined_df: pl.LazyFrame, quantities: list[str], quantity_type: QuantityType
+    def _convert_quantity_type(
+        self, quantities: list[str], quantity_type: QuantityType, combined_df: pl.LazyFrame
     ) -> pl.LazyFrame:
         """Convert the values in ``combined_df`` according to the desired quantity type.
 
@@ -288,41 +288,16 @@ class DataProcessor:
             DataFrame prepared for plotting with aggregated (mean) values
         """
 
-        quantities = []
-        if isinstance(plot_spec.quantity, str):
-            quantities.append(plot_spec.quantity)
-        elif isinstance(plot_spec.quantity, QuantityGroup):
-            quantities.extend(plot_spec.quantity.constituents)
-            if plot_spec.quantity.sum:
-                quantities.append(plot_spec.quantity.sum)
+        quantities = self._get_quantities(plot_spec)
 
-        combined_df = self.fill_missing_quantities(self.combined_df, quantities)
-        combined_df = self.convert_quantity_type(combined_df, quantities, plot_spec.quantity_type)
-
-        if selected_upgrades is not None:
-            keep_upgrades = set([0, *selected_upgrades])  # keep baseline because needed for certain calculations
-            combined_df = combined_df.filter(pl.col("upgrade").is_in(keep_upgrades))
-
-        if plot_spec.upgrade is not None:
-            combined_df = combined_df.filter(pl.col("upgrade").is_in([0, plot_spec.upgrade]))
-
-        if plot_spec.building_inclusion == BuildingInclusion.applied_only:
-            if plot_spec.upgrade is None:  # Applied in respective upgrades (No Baseline)
-                combined_df = combined_df.filter(pl.col("applicability") & (pl.col("upgrade") != 0))
-            else:  # Applied in upgrade x (include baseline in this case)
-                is_upgrade_applicable = (
-                    ((pl.col("upgrade") == plot_spec.upgrade) & pl.col("applicability")).any().over("bldg_id")
-                )
-                combined_df = combined_df.filter(
-                    ((pl.col("upgrade") == plot_spec.upgrade) & pl.col("applicability"))
-                    | ((pl.col("upgrade") == 0) & is_upgrade_applicable)
-                )
-
-        if plot_spec.vacancy_inclusion == VacancyInclusion.occupied_only:
-            combined_df = combined_df.filter(pl.col("in.vacancy_status") == "Occupied")
+        combined_df = self._fill_missing_quantities(self.combined_df, quantities)
+        combined_df = self._convert_quantity_type(quantities, plot_spec.quantity_type, combined_df)
+        combined_df = self._process_upgrades_inclusion(plot_spec, selected_upgrades, combined_df)
+        combined_df = self._process_building_inclusion(plot_spec, combined_df)
+        combined_df = self._process_vacancy_inclusion(plot_spec, combined_df)
 
         if plot_spec.quantity_type in [QuantityType.savings, QuantityType.percent_savings]:
-            # remove baseline for savings calculation
+            # baseline should not be included when plotting savings
             combined_df = combined_df.filter(pl.col("upgrade") != 0)
 
         if plot_spec.visualization_type == VizType.box:
@@ -353,6 +328,45 @@ class DataProcessor:
             plot_data = human_sort(plot_data.lazy(), plot_spec.group_by).collect()
 
         return plot_data
+
+    def _process_vacancy_inclusion(self, plot_spec, combined_df):
+        if plot_spec.vacancy_inclusion == VacancyInclusion.occupied_only:
+            combined_df = combined_df.filter(pl.col("in.vacancy_status") == "Occupied")
+        return combined_df
+
+    def _process_building_inclusion(self, plot_spec, combined_df):
+        if plot_spec.building_inclusion == BuildingInclusion.applied_only:
+            if plot_spec.upgrade is None:  # Applied in respective upgrades (No Baseline)
+                combined_df = combined_df.filter(pl.col("applicability") & (pl.col("upgrade") != 0))
+            else:  # Applied in upgrade x (include baseline in this case)
+                is_upgrade_applicable = (
+                    ((pl.col("upgrade") == plot_spec.upgrade) & pl.col("applicability")).any().over("bldg_id")
+                )
+                combined_df = combined_df.filter(
+                    ((pl.col("upgrade") == plot_spec.upgrade) & pl.col("applicability"))
+                    | ((pl.col("upgrade") == 0) & is_upgrade_applicable)
+                )
+                
+        return combined_df
+
+    def _process_upgrades_inclusion(self, plot_spec, selected_upgrades, combined_df):
+        if selected_upgrades is not None:
+            keep_upgrades = set([0, *selected_upgrades])  # keep baseline because needed for certain calculations
+            combined_df = combined_df.filter(pl.col("upgrade").is_in(keep_upgrades))
+        if plot_spec.upgrade is not None:
+            combined_df = combined_df.filter(pl.col("upgrade").is_in([0, plot_spec.upgrade]))
+        return combined_df
+
+    @classmethod
+    def _get_quantities(cls, plot_spec):
+        quantities = []
+        if isinstance(plot_spec.quantity, str):
+            quantities.append(plot_spec.quantity)
+        elif isinstance(plot_spec.quantity, QuantityGroup):
+            quantities.extend(plot_spec.quantity.constituents)
+            if plot_spec.quantity.sum:
+                quantities.append(plot_spec.quantity.sum)
+        return quantities
 
     def prepare_data_for_histogram_plot(
         self,
@@ -621,7 +635,15 @@ class DataProcessor:
             # where non_zero ensures that denominator is at least MIN_BASELINE
             agg_exprs = [
                 (
-                    (pl.col(quantity) * pl.col(f"baseline_{quantity}")).sum()
+                    (pl.col(quantity) * 
+                        pl.when(pl.col(f"baseline_{quantity}").abs() < MIN_BASELINE)
+                        .then(
+                            pl.when(pl.col(f"baseline_{quantity}").sign() == 0)
+                            .then(MIN_BASELINE)
+                            .otherwise(pl.col(f"baseline_{quantity}").sign() * MIN_BASELINE)
+                        )
+                        .otherwise(pl.col(f"baseline_{quantity}"))
+                    ).sum()
                     / pl.when(pl.col(f"baseline_{quantity}").sum().abs() < MIN_BASELINE)
                     .then(
                         pl.when(pl.col(f"baseline_{quantity}").sum().sign() == 0)

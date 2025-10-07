@@ -93,12 +93,16 @@ def combined_df() -> pl.LazyFrame:
     upgrade2 = _make_upgrade(baseline, 2, not_applicable_ids=[1, 2], reduction=0.5)
 
     combined = pl.concat([baseline, upgrade1, upgrade2], how="vertical_relaxed")
-    # for building 4 in upgrade 2, make elec_kwh 10 to mimic fuel switch
+    # for building 4 in upgrade 2, make elec_kwh 10 from 0 and gas_kwh 0 from 75 to mimic fuel switch
     combined = combined.with_columns(
         pl.when((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4))
         .then(10)
         .otherwise(pl.col("elec_kwh"))
-        .alias("elec_kwh")
+        .alias("elec_kwh"),
+        pl.when((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4))
+        .then(0)
+        .otherwise(pl.col("gas_kwh"))
+        .alias("gas_kwh"),
     )
     return combined.lazy()
 
@@ -176,6 +180,7 @@ def _build_base_spec(**kwargs) -> PlotSpec:  # type: ignore[return-value]
     [
         (AggregationType.total),
         (AggregationType.average),
+        (AggregationType.distribution),
     ],
 )
 @pytest.mark.parametrize(
@@ -194,6 +199,13 @@ def _build_base_spec(**kwargs) -> PlotSpec:  # type: ignore[return-value]
     ],
 )
 @pytest.mark.parametrize(
+    ("quantity"),
+    [
+        ("elec_kwh"),
+        (QuantityGroup(name="energy", constituents=("elec_kwh", "gas_kwh"), sum="total_kwh")),
+    ]
+)
+@pytest.mark.parametrize(
     ("group_by", "expected_rows"),
     [
         (None, 3),
@@ -209,13 +221,10 @@ def test_prepare_basic(
     quantity_type: QuantityType,
     viz_type: VizType,
     group_by: str | None,
+    quantity: str | QuantityGroup,
     expected_rows: int,
 ):
     """Baseline sanity check for box & bar plots without additional filters."""
-    if quantity_type == QuantityType.percent_savings and aggregation_type == AggregationType.total:
-        # skip
-        return
-
     spec = PlotSpec(
         visualization_type=viz_type,
         quantity_type=quantity_type,
@@ -223,16 +232,28 @@ def test_prepare_basic(
         building_inclusion=building_inclusion,
         aggregation_type=aggregation_type,
         vacancy_inclusion=vacancy_inclusion,
-        quantity="elec_kwh",
+        quantity=quantity,
         quantity_group_name="energy",
     )
+    if not spec.is_valid():
+        pytest.skip(f"Invalid spec: {spec.get_error()}")
     df = processor.prepare_data_for_plot(spec)
+    assert isinstance(df, pl.DataFrame)
+
     if quantity_type in [QuantityType.percent_savings, QuantityType.savings] or (
         building_inclusion == BuildingInclusion.applied_only
     ):
         expected_rows = (expected_rows * 2) // 3  # No baseline
-    assert isinstance(df, pl.DataFrame)
-    assert df.height == expected_rows
+    quantities = DataProcessor._get_quantities(spec)
+    if isinstance(quantity, QuantityGroup) and viz_type == VizType.box:
+        for col in quantities:
+            assert len(df.filter(pl.col("End Use") == col)) == expected_rows
+    elif isinstance(quantity, str) and viz_type == VizType.box:
+        assert len(df) == expected_rows
+    else:
+        assert df.height == expected_rows
+        for col in quantities:
+            assert col in df.columns
 
 
 def test_vacancy_filter(processor: DataProcessor):
@@ -333,19 +354,21 @@ def test_percent_savings_calculation(processor: DataProcessor):
     )
     df = processor.prepare_data_for_plot(spec)
 
-    # Building 3, Upgrade 1: baseline 20 kWh -> 18 kWh after 10% reduction => savings = 2
+    # elec_kwh_base = [100.0, 20.0, 110.0, 0.0]
+    # gas_kwh_base = [0.0, 80.0, 0.0, 75.0]
+
+    # Building 2, upgrade 1: baseline 75 kwh -> 0.9 * 75 (10% reduction)
     pct = df.filter((pl.col("upgrade") == 1) & (pl.col("bldg_id") == 4)).select("gas_kwh").item()
     assert pct == pytest.approx(10)
-    # Building 3, Upgrade 2: baseline 20 kWh -> 10 kWh after 50% reduction => savings = 10
+    # Building 4, Upgrade 2: baseline 75 kWh -> 0 kWh -- 100% reduction
     pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4)).select("gas_kwh").item()
-    assert pct == pytest.approx(50)
+    assert pct == pytest.approx(100)
     # Building 2, Upgrade 2: non-applicable building should have 0% savings
     pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 2)).select("gas_kwh").item()
     assert pct == pytest.approx(0.0)
     # There should be no baseline when doing percent_savings
     assert len(df.filter(pl.col("upgrade") == 0)) == 0
 
-    # % savings for box-plot is not weighted by baseline values
     spec = _build_base_spec(
         visualization_type=VizType.box,
         group_by="bldg_id",
@@ -354,11 +377,11 @@ def test_percent_savings_calculation(processor: DataProcessor):
         quantity="elec_kwh",
     )
     df = processor.prepare_data_for_plot(spec)
-    # Building 4, Upgrade 2: baseline 0 kWh -> 10 kWh.
+    # Building 4, Upgrade 2: baseline 0 kWh -> 10 kWh. % savings = 100 * (10-0)/(1e-6) = -1e9 (per current impl)
+    # Using 1e-6 as the "small number" to avoid division by zero
     pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4)).select("median").item()
-    assert pct == pytest.approx(-1e9)  # minimum assumed value for baseline is 1e-6 so, 100*10/(1e-6) = 1e9
+    assert pct == pytest.approx(-1e9)
 
-    # % savings for bar-plot is weighted by baseline values
     spec = _build_base_spec(
         visualization_type=VizType.bar,
         group_by="bldg_id",
@@ -367,11 +390,9 @@ def test_percent_savings_calculation(processor: DataProcessor):
         quantity="elec_kwh",
     )
     df = processor.prepare_data_for_plot(spec)
-    # Building 4, Upgrade 2: baseline 0 kWh -> 10 kWh.
     pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4)).select("elec_kwh").item()
-    assert pct == pytest.approx(0)  # since baseline is 0 kWh, savings is 0% when weighted by baseline
+    assert pct == pytest.approx(-1e9)
 
-    # Change the baseline value for elec_kwh to 0.001 from 0.0 for building 4
     processor.combined_df = processor.combined_df.with_columns(
         pl.when((pl.col("bldg_id") == 4) & (pl.col("upgrade") == 0))
         .then(pl.lit(0.001))
@@ -379,6 +400,28 @@ def test_percent_savings_calculation(processor: DataProcessor):
         .alias("elec_kwh")
     )
     df = processor.prepare_data_for_plot(spec)
-    # Building 4, Upgrade 2: baseline 0.001 kWh -> 10 kWh. % savings = 100 * (10-0.001)/0.001 = 100000
     pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4)).select("elec_kwh").item()
     assert pct == pytest.approx(-999900)
+
+@pytest.mark.parametrize(
+    "quantity",
+    ["elec_kwh", "gas_kwh", "total_kwh"],
+)
+def test_integrity(processor: DataProcessor, quantity: str):
+    spec = _build_base_spec(
+        visualization_type=VizType.bar,
+        group_by=None,
+        quantity_type=QuantityType.percent_savings,
+        aggregation_type=AggregationType.average,
+        quantity=quantity,
+    )
+    avg_percent_savings_df = processor.prepare_data_for_plot(spec)
+    spec.quantity_type = QuantityType.savings
+    spec.aggregation_type = AggregationType.total
+    savings_df = processor.prepare_data_for_plot(spec)
+    spec.quantity_type = QuantityType.absolute
+    absolute_df = processor.prepare_data_for_plot(spec)
+    absolute_df = absolute_df.filter(pl.col("upgrade") == 0).select(pl.col(quantity).alias("baseline_value"))  # % savings calculated in reference to baseline
+    all_df = avg_percent_savings_df.join(savings_df, on="upgrade", suffix="_savings").join(absolute_df, how='cross')
+    all_df = all_df.with_columns((100 * pl.col(f"{quantity}_savings") / pl.col("baseline_value")).alias("calc_percent_savings"))
+    assert (all_df[quantity] == all_df['calc_percent_savings']).all()

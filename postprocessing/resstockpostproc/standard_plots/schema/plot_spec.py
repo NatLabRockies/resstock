@@ -23,7 +23,7 @@ class PlotSpec(BaseModel):
 
     building_inclusion: BuildingInclusion = Field(..., description="all / applied_only")
     vacancy_inclusion: VacancyInclusion = Field(..., description="all / occupied_only")
-    quantity_type: QuantityType = Field(..., description="absolute / mean / percent_savings")
+    quantity_type: QuantityType = Field(..., description="absolute / savings / percent_savings / model_count")
     aggregation_type: AggregationType = Field(..., description="total or average")
     visualization_type: VizType = Field(..., alias="visualization_type")
     group_by: str | None = Field(default=None, description="Column to facet/group by.")
