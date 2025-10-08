@@ -57,7 +57,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **AHS Region** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **AHS Region** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -148,7 +148,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **AIANNH Area** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **AIANNH Area** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -211,7 +211,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **ASHRAE IECC Climate Zone 2004** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **ASHRAE IECC Climate Zone 2004** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -308,7 +308,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **ASHRAE IECC Climate Zone 2004 - Sub-CZ Split** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **ASHRAE IECC Climate Zone 2004 - Sub-CZ Split** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -381,7 +381,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Area Median Income** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Area Median Income** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -452,7 +452,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Bathroom Spot Vent Hour** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Bathroom Spot Vent Hour** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -580,7 +580,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Battery** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Battery** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -661,7 +661,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Bedrooms** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Bedrooms** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -722,7 +722,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Building America Climate Zone** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Building America Climate Zone** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -789,7 +789,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **CEC Climate Zone** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **CEC Climate Zone** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -884,7 +884,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Ceiling Fan** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Ceiling Fan** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -931,7 +931,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Census Division** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Census Division** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -988,7 +988,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Census Division RECS** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Census Division RECS** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -1045,7 +1045,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Census Region** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Census Region** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -1106,7 +1106,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **City** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **City** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -3417,7 +3417,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Clothes Dryer** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Clothes Dryer** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -3494,7 +3494,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Clothes Dryer Usage Level** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Clothes Dryer Usage Level** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -3589,7 +3589,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Clothes Washer** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Clothes Washer** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -3683,7 +3683,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Clothes Washer Presence** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Clothes Washer Presence** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -3750,7 +3750,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Clothes Washer Usage Level** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Clothes Washer Usage Level** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -3865,7 +3865,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Cooking Range** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Cooking Range** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -3945,7 +3945,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Cooking Range Usage Level** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Cooking Range Usage Level** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -4030,7 +4030,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Cooling Setpoint** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Cooling Setpoint** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -4134,7 +4134,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Cooling Setpoint Has Offset** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Cooling Setpoint Has Offset** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -4205,7 +4205,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Cooling Setpoint Offset Magnitude** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Cooling Setpoint Offset Magnitude** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -4290,7 +4290,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Cooling Setpoint Offset Period** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Cooling Setpoint Offset Period** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -4571,7 +4571,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Cooling Unavailable Days** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Cooling Unavailable Days** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -4654,7 +4654,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Corridor** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Corridor** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -4733,7 +4733,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **County** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **County** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -17342,7 +17342,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **County Metro Status** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **County Metro Status** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -17383,7 +17383,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **County and PUMA** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **County and PUMA** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -26502,7 +26502,7 @@ Created by
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Custom State** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Custom State** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -26567,7 +26567,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Dehumidifier** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Dehumidifier** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -26654,7 +26654,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Dishwasher** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Dishwasher** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -26728,7 +26728,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Dishwasher Usage Level** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Dishwasher Usage Level** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -26793,7 +26793,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Door Area** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Door Area** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -26852,7 +26852,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Doors** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Doors** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -26919,7 +26919,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Duct Leakage and Insulation** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Duct Leakage and Insulation** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -27029,7 +27029,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Duct Location** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Duct Location** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -27120,7 +27120,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Eaves** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Eaves** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -27197,7 +27197,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Electric Vehicle Battery** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Electric Vehicle Battery** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -27292,7 +27292,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Electric Vehicle Charge At Home** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Electric Vehicle Charge At Home** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -27382,7 +27382,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Electric Vehicle Charger** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Electric Vehicle Charger** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -27450,7 +27450,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Electric Vehicle Miles Traveled** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Electric Vehicle Miles Traveled** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -27539,7 +27539,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Electric Vehicle Outlet Access** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Electric Vehicle Outlet Access** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -27602,7 +27602,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Electric Vehicle Ownership** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Electric Vehicle Ownership** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -27651,7 +27651,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Energystar Climate Zone 2023** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Energystar Climate Zone 2023** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -27702,7 +27702,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Federal Poverty Level** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Federal Poverty Level** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -27751,7 +27751,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Generation And Emissions Assessment Region** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Generation And Emissions Assessment Region** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -27858,7 +27858,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Attic Type** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Attic Type** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -27937,7 +27937,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Building Horizontal Location MF** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Building Horizontal Location MF** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -28008,7 +28008,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Building Horizontal Location SFA** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Building Horizontal Location SFA** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -28082,7 +28082,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Building Level MF** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Building Level MF** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -28160,7 +28160,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Building Number Units MF** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Building Number Units MF** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -28300,7 +28300,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Building Number Units SFA** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Building Number Units SFA** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -28399,7 +28399,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Building Type ACS** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Building Type ACS** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -28452,7 +28452,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Building Type Height** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Building Type Height** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -28533,7 +28533,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Building Type RECS** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Building Type RECS** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -28628,7 +28628,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Floor Area** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Floor Area** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -28693,7 +28693,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Floor Area Bin** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Floor Area Bin** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -28772,7 +28772,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Foundation Type** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Foundation Type** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -28870,7 +28870,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Garage** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Garage** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -28930,7 +28930,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Space Combination** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Space Combination** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -29259,7 +29259,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Stories** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Stories** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -29349,7 +29349,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Stories Low Rise** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Stories Low Rise** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -29392,7 +29392,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Story Bin** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Story Bin** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -29461,7 +29461,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Wall Exterior Finish** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Wall Exterior Finish** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -29536,7 +29536,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Geometry Wall Type** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Geometry Wall Type** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -29613,7 +29613,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Ground Thermal Conductivity** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Ground Thermal Conductivity** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -29705,7 +29705,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Cooling Autosizing Factor** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Cooling Autosizing Factor** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -29784,7 +29784,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Cooling Efficiency** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Cooling Efficiency** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -29903,7 +29903,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Cooling Partial Space Conditioning** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Cooling Partial Space Conditioning** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -29985,7 +29985,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Cooling Type** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Cooling Type** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -30046,7 +30046,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Has Ducts** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Has Ducts** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -30101,7 +30101,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Has Shared System** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Has Shared System** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -30146,7 +30146,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Has Zonal Electric Heating** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Has Zonal Electric Heating** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -30229,7 +30229,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Heating Autosizing Factor** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Heating Autosizing Factor** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -30406,7 +30406,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Heating Efficiency** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Heating Efficiency** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -30781,7 +30781,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Heating Type** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Heating Type** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -30826,7 +30826,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Heating Type And Fuel** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Heating Type And Fuel** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -30949,7 +30949,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Secondary Heating Efficiency** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Secondary Heating Efficiency** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -31058,7 +31058,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Secondary Heating Fuel** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Secondary Heating Fuel** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -31143,7 +31143,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Secondary Heating Partial Space Conditioning** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Secondary Heating Partial Space Conditioning** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -31212,7 +31212,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Secondary Heating Type** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Secondary Heating Type** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -31367,7 +31367,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC Shared Efficiencies** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC Shared Efficiencies** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -31536,7 +31536,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC System Is Faulted** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC System Is Faulted** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -31575,7 +31575,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC System Is Scaled** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC System Is Scaled** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -31640,7 +31640,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC System Single Speed AC Airflow** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC System Single Speed AC Airflow** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -31749,7 +31749,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC System Single Speed AC Charge** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC System Single Speed AC Charge** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -31835,7 +31835,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC System Single Speed ASHP Airflow** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC System Single Speed ASHP Airflow** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -31944,7 +31944,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **HVAC System Single Speed ASHP Charge** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **HVAC System Single Speed ASHP Charge** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -32012,7 +32012,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Has PV** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Has PV** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -32087,7 +32087,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Heating Fuel** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Heating Fuel** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -32186,7 +32186,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Heating Setpoint** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Heating Setpoint** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -32290,7 +32290,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Heating Setpoint Has Offset** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Heating Setpoint Has Offset** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -32361,7 +32361,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Heating Setpoint Offset Magnitude** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Heating Setpoint Offset Magnitude** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -32446,7 +32446,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Heating Setpoint Offset Period** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Heating Setpoint Offset Period** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -32655,7 +32655,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Heating Unavailable Days** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Heating Unavailable Days** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -32715,7 +32715,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Holiday Lighting** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Holiday Lighting** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -32784,7 +32784,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Hot Water Distribution** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Hot Water Distribution** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -32853,7 +32853,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Hot Water Fixtures** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Hot Water Fixtures** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -32943,7 +32943,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Household Has Tribal Persons** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Household Has Tribal Persons** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -32988,7 +32988,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **ISO RTO Region** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **ISO RTO Region** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -33045,7 +33045,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Income** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Income** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -33126,7 +33126,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Income RECS2015** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Income RECS2015** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -33185,7 +33185,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Income RECS2020** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Income RECS2020** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -33276,7 +33276,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Infiltration** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Infiltration** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -33389,7 +33389,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Insulation Ceiling** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Insulation Ceiling** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -33484,7 +33484,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Insulation Floor** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Insulation Floor** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -33561,7 +33561,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Insulation Foundation Wall** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Insulation Foundation Wall** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -33638,7 +33638,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Insulation Rim Joist** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Insulation Rim Joist** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -33711,7 +33711,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Insulation Roof** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Insulation Roof** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -33801,7 +33801,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Insulation Slab** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Insulation Slab** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -33897,7 +33897,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Insulation Wall** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Insulation Wall** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -34018,7 +34018,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Interior Shading** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Interior Shading** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -34091,7 +34091,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Lighting** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Lighting** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -34156,7 +34156,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Lighting Interior Use** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Lighting Interior Use** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -34221,7 +34221,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Lighting Other Use** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Lighting Other Use** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -34266,7 +34266,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Location Region** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Location Region** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -34363,7 +34363,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Mechanical Ventilation** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Mechanical Ventilation** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -34416,7 +34416,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Metropolitan and Micropolitan Statistical Area** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Metropolitan and Micropolitan Statistical Area** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -36359,7 +36359,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Misc Extra Refrigerator** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Misc Extra Refrigerator** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -36466,7 +36466,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Misc Freezer** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Misc Freezer** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -36531,7 +36531,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Misc Gas Fireplace** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Misc Gas Fireplace** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -36593,7 +36593,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Misc Gas Grill** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Misc Gas Grill** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -36655,7 +36655,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Misc Gas Lighting** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Misc Gas Lighting** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -36761,7 +36761,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Misc Hot Tub Spa** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Misc Hot Tub Spa** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -36860,7 +36860,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Misc Pool** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Misc Pool** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -36933,7 +36933,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Misc Pool Heater** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Misc Pool Heater** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -37004,7 +37004,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Misc Pool Pump** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Misc Pool Pump** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -37078,7 +37078,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Misc Well Pump** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Misc Well Pump** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -37140,7 +37140,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Natural Ventilation** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Natural Ventilation** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -37201,7 +37201,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Neighbors** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Neighbors** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -37284,7 +37284,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Occupants** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Occupants** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -37373,7 +37373,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Orientation** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Orientation** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -37435,7 +37435,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **PUMA** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **PUMA** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -42178,7 +42178,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **PUMA Metro Status** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **PUMA Metro Status** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -42245,7 +42245,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **PV Orientation** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **PV Orientation** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -42348,7 +42348,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **PV System Size** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **PV System Size** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -42452,7 +42452,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Plug Load Diversity** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Plug Load Diversity** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -42533,7 +42533,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Plug Loads** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Plug Loads** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -42698,7 +42698,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **REEDS Balancing Area** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **REEDS Balancing Area** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -43025,7 +43025,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Radiant Barrier** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Radiant Barrier** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -43090,7 +43090,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Range Spot Vent Hour** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Range Spot Vent Hour** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -43250,7 +43250,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Refrigerator** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Refrigerator** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -43339,7 +43339,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Refrigerator Usage Level** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Refrigerator Usage Level** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -43416,7 +43416,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Roof Material** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Roof Material** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -43501,7 +43501,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **State** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **State** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -43742,7 +43742,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **State Metro Median Income** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **State Metro Median Income** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -43799,7 +43799,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Tenure** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Tenure** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -43840,7 +43840,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Usage Level** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Usage Level** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -43909,7 +43909,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Vacancy Status** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Vacancy Status** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -43977,7 +43977,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Vintage** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Vintage** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -44040,7 +44040,7 @@ Source
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Vintage ACS** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Vintage ACS** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -44149,7 +44149,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Water Heater Efficiency** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Water Heater Efficiency** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -44346,7 +44346,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Water Heater Fuel** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Water Heater Fuel** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -44413,7 +44413,7 @@ Assumption
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Water Heater In Unit** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Water Heater In Unit** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -44500,7 +44500,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Water Heater Location** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Water Heater Location** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -44600,7 +44600,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Window Areas** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Window Areas** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -44745,7 +44745,7 @@ Arguments
 Options
 *******
 
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Windows** characteristic.
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Windows** characteristic.
 
 .. list-table::
    :header-rows: 1

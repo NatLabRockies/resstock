@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require 'fileutils'
-require_relative '../../resources/util'
-
 resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../../resources'))
 
+require 'fileutils'
+require_relative '../../resources/util'
 require_relative File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/resources/options')
 
 filepath = File.read(File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/measure.xml'))
