@@ -246,17 +246,18 @@ parameters.each do |parameter|
     end
   end
   f.puts("#{row}| }")
+  caption = "{#{parameter_name}"
   if parameter.include?('heating_system')
-    f.puts("{#{parameter_name} non-heat pump heating system options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
+    caption += ' non-heat pump heating system'
   elsif parameter.include?('heat_pump')
-    f.puts("{#{parameter_name} heat pump options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
+    caption += ' heat pump'
   elsif parameter.include?('water_heater')
-    f.puts("{#{parameter_name} storage and tankless options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
+    caption += ' storage and tankless'
   elsif parameter.include?('solar_thermal')
-    f.puts("{#{parameter_name} solar thermal options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
-  else
-    f.puts("{#{parameter_name} options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
+    caption += ' solar thermal'
   end
+  caption += " options and properties that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}"
+  f.puts(caption)
 
   row = '{Option name'
   if saturation_inclusions.include?(parameter_name)
