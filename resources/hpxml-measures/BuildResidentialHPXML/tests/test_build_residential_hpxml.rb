@@ -152,6 +152,8 @@ class BuildResidentialHPXMLTest < Minitest::Test
       'error-ambient-with-garage.xml' => 'base-sfd.xml',
       'error-could-not-find-epw-file.xml' => 'base-sfd.xml',
 
+      'warning-tiny-home-wide-garage.xml' => 'base-sfd.xml',
+      'warning-tiny-home-deep-garage.xml' => 'base-sfd.xml',
       'warning-vented-crawlspace-with-wall-and-ceiling-insulation.xml' => 'base-sfd.xml',
       'warning-unvented-crawlspace-with-wall-and-ceiling-insulation.xml' => 'base-sfd.xml',
       'warning-unconditioned-basement-with-wall-and-ceiling-insulation.xml' => 'base-sfd.xml',
@@ -180,6 +182,10 @@ class BuildResidentialHPXMLTest < Minitest::Test
     }
 
     expected_warnings = {
+      'warning-tiny-home-wide-garage.xml' => ['Garage is as wide as the single-family detached unit; garage width reduced from 12 ft to 8.0 ft.',
+                                              'The garage pitch was changed to accommodate garage ridge >= house ridge (from 0.5 to 0.338).'],
+      'warning-tiny-home-deep-garage.xml' => ['Garage is as deep as the single-family detached unit; garage depth reduced from 20 ft to 19.0 ft.',
+                                              'The garage pitch was changed to accommodate garage ridge >= house ridge (from 0.5 to 0.393).'],
       'warning-vented-crawlspace-with-wall-and-ceiling-insulation.xml' => ['Home with unconditioned basement/crawlspace foundation type has both foundation wall insulation and floor insulation.'],
       'warning-unvented-crawlspace-with-wall-and-ceiling-insulation.xml' => ['Home with unconditioned basement/crawlspace foundation type has both foundation wall insulation and floor insulation.'],
       'warning-unconditioned-basement-with-wall-and-ceiling-insulation.xml' => ['Home with unconditioned basement/crawlspace foundation type has both foundation wall insulation and floor insulation.'],
@@ -706,6 +712,14 @@ class BuildResidentialHPXMLTest < Minitest::Test
 
     # Warning
     case hpxml_file
+    when 'warning-tiny-home-wide-garage.xml'
+      args['geometry_unit_conditioned_floor_area'] = '298'
+      args['geometry_unit_type'] = 'Single-Family Detached, 2 Stories'
+      args['geometry_garage_type'] = '1 Car, Left, Fully Protruding'
+    when 'warning-tiny-home-deep-garage.xml'
+      args['geometry_unit_conditioned_floor_area'] = '298'
+      args['geometry_unit_type'] = 'Single-Family Detached, 2 Stories'
+      args['geometry_garage_type'] = '1 Car, Left, Half Protruding'
     when 'warning-vented-crawlspace-with-wall-and-ceiling-insulation.xml'
       args['geometry_foundation_type'] = 'Crawlspace, Vented'
       args['enclosure_floor_over_foundation'] = 'Wood Frame, R-11'
