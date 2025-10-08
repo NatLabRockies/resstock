@@ -83,7 +83,7 @@ source_report_cols.each do |source_report_col|
   f.puts("- **#{source_report_col}**")
 end
 f.puts
-f.puts('Additionally, for each parameter an **Arguments** table is populated (if applicable) based on the contents of `ResStockArguments <https://github.com/NREL/resstock/blob/develop/measures/ResStockArguments>`_ and `BuildResidentialHPXML <https://github.com/NREL/resstock/blob/develop/resources/hpxml-measures/BuildResidentialHPXML>`_ measure.xml files.')
+f.puts('For each parameter an **Arguments** table is populated (if applicable) based on the contents of `ResStockArguments <https://github.com/NREL/resstock/blob/develop/measures/ResStockArguments>`_ and `BuildResidentialHPXML <https://github.com/NREL/resstock/blob/develop/resources/hpxml-measures/BuildResidentialHPXML>`_ measure.xml files, each containing the following columns:')
 f.puts
 arguments_cols.each do |arguments_col|
   if ['Name', 'Required', 'Type'].include?(arguments_col)
@@ -97,10 +97,7 @@ f.puts('.. [#] Each **Name** entry is an argument that is assigned using defined
 f.puts('.. [#] May be "true" or "false".')
 f.puts('.. [#] May be "String", "Double", "Integer", "Boolean", or "Choice".')
 f.puts
-f.puts('Furthermore, all *optional* Choice arguments include "auto" as one of the possible **Choices**.')
-f.puts('Most *optional* String/Double/Integer/Boolean arguments can also be assigned a value of "auto" (e.g., ``site_ground_conductivity``).')
-f.puts('Assigning "auto" means that downstream default values (e.g., from OpenStudio-HPXML) will be used (if applicable).')
-f.puts('When an argument is defaulted using OpenStudio-HPXML, the **Description** field will include link(s) to `OpenStudio-HPXML documentation <https://openstudio-hpxml.readthedocs.io/en/latest/?badge=latest>`_ describing these default values.')
+f.puts('For each parameter an **Options** table is populated based on the contents of the `options_lookup.tsv <https://github.com/NREL/resstock/blob/develop/resources/options_lookup.tsv>`_, `options_saturations.csv <https://github.com/NREL/resstock/blob/develop/project_national/resources/options_saturations.csv>`_, and `BuildResidentialHPXML/resources/options/*.tsv <https://github.com/NREL/resstock/blob/develop/resources/hpxml-measures/BuildResidentialHPXML/resources/options>`_ files.')
 f.puts
 
 lookup_csv_data, option_sat_csv_data = get_lookup_and_saturations_csv_data(resources_dir)
@@ -164,7 +161,7 @@ source_report.each do |row|
       if choices.empty?
         f.puts('     -')
       else
-        f.puts("     - #{choices.join(', ')}")
+        f.puts("     - #{choices.join('; ')}")
       end
       f.puts("     - #{resstockarguments_xml[r_argument]['description']}")
     end
@@ -249,6 +246,11 @@ source_report.each do |row|
   end
 
   cols.each do |col|
+    n_vals = cols[0].size - col.size
+    (1..n_vals).to_a.each do |_n|
+      col << ''
+    end
+
     col.each_with_index do |val, ix|
       if ix == 0
         f.puts("   * - #{val}")

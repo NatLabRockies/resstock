@@ -54,11 +54,4 @@ def refine_resstockarguments_xml(resstockarguments_xml, buildreshpxmlarguments_x
   ['required', 'type'].each do |property|
     resstockarguments_xml[name][property] = buildreshpxmlarguments_xml[name][property] if buildreshpxmlarguments_xml.keys.include?(name)
   end
-
-  # Add "auto" to Choices for optional String/Double/Integer
-  extra_args_with_auto = ['year_built', 'geometry_unit_num_occupants', 'geometry_unit_cfa', 'heat_pump_backup_heating_efficiency'] # these are special because ResStockArguments provides the default instead of OS-HPXML
-  if (properties['description'].include?('OS-HPXML default') && ['String', 'Double', 'Integer'].include?(properties['type'])) ||
-     extra_args_with_auto.include?(name)
-    resstockarguments_xml[name]['choices'].unshift('auto')
-  end
 end
