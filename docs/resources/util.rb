@@ -49,7 +49,7 @@ def get_lookup_and_saturations_csv_data(resources_dir)
 end
 
 # Refine resstockarguments_xml
-def refine_resstockarguments_xml(resstockarguments_xml, buildreshpxmlarguments_xml, name, properties)
+def refine_resstockarguments_xml(resstockarguments_xml, buildreshpxmlarguments_xml, name)
   # Get required and type from BuildResidentialHPXML
   ['required', 'type'].each do |property|
     resstockarguments_xml[name][property] = buildreshpxmlarguments_xml[name][property] if buildreshpxmlarguments_xml.keys.include?(name)

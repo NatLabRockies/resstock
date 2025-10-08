@@ -39618,7 +39618,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto; Default; 0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10; 11; 12
+     - Default; 0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10; 11; 12
      - The number of occupants in the unit. Defaults to an *asset* calculation assuming standard occupancy, in which various end use defaults (e.g., plug loads, appliances, and hot water usage) are calculated based on Number of Bedrooms and Conditioned Floor Area. If provided, an *operational* calculation is instead performed in which the end use defaults reflect real-world data (where possible).
 
 Options

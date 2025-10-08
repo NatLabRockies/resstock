@@ -61,8 +61,8 @@ buildreshpxmlarguments_xml = get_measure_xml(filepath)
 filepath = File.read(File.join(resources_dir, '../measures/ResStockArguments/measure.xml'))
 resstockarguments_xml = get_measure_xml(filepath)
 
-resstockarguments_xml.each do |name, properties|
-  refine_resstockarguments_xml(resstockarguments_xml, buildreshpxmlarguments_xml, name, properties)
+resstockarguments_xml.keys.each do |name|
+  refine_resstockarguments_xml(resstockarguments_xml, buildreshpxmlarguments_xml, name)
   resstockarguments_xml[name]['description'] = href_to_rst(resstockarguments_xml[name]['description'])
 end
 
