@@ -5108,7 +5108,7 @@ module HPXMLFile
     hpxml_bldg.building_construction.conditioned_building_volume = args[:geometry_unit_cfa] * args[:geometry_average_ceiling_height]
     hpxml_bldg.building_construction.average_ceiling_height = args[:geometry_average_ceiling_height]
     hpxml_bldg.building_construction.residential_facility_type = args[:geometry_unit_type]
-    # hpxml_bldg.building_construction.number_of_units_in_building = args[:geometry_building_num_units]
+    hpxml_bldg.building_construction.number_of_units_in_building = args[:geometry_building_num_units]
     hpxml_bldg.building_construction.year_built = args[:year_built]
     hpxml_bldg.building_construction.number_of_units = args[:unit_multiplier]
     hpxml_bldg.building_construction.unit_height_above_grade = args[:geometry_unit_height_above_grade]

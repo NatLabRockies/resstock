@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>c17fea11-5360-49b1-928e-22fe6122fd51</version_id>
-  <version_modified>2025-08-28T03:34:02Z</version_modified>
+  <version_id>3b2aed8f-5d99-47e7-aaad-8f906f096ede</version_id>
+  <version_modified>2025-09-09T22:21:57Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -348,7 +348,7 @@
       <filename>defaults.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>CCE4785C</checksum>
+      <checksum>4D4C5301</checksum>
     </file>
     <file>
       <filename>electric_panel.rb</filename>
@@ -696,7 +696,7 @@
       <filename>waterheater.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>DDDA2CD0</checksum>
+      <checksum>003609A7</checksum>
     </file>
     <file>
       <filename>weather.rb</filename>
@@ -732,7 +732,7 @@
       <filename>test_defaults.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>95B6BD58</checksum>
+      <checksum>6A55393D</checksum>
     </file>
     <file>
       <filename>test_electric_panel.rb</filename>
@@ -822,7 +822,7 @@
       <filename>test_water_heater.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>CE9FC3E5</checksum>
+      <checksum>4B3C5F26</checksum>
     </file>
     <file>
       <filename>test_weather.rb</filename>

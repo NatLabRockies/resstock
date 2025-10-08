@@ -1,0 +1,13 @@
+\begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
+{The ResStock argument definitions set in the Dishwasher characteristic} {table:hc_arg_def_dishwasher}
+{Name & Required & Units & Type & Choices & Description}
+\texttt{dishwasher\_present} & true &  & Boolean & true, false & Whether there is a dishwasher present.  \\ \hline
+\texttt{dishwasher\_location} & false &  & Choice & auto, conditioned space, basement - conditioned, basement - unconditioned, garage, other housing unit, other heated space, other multifamily buffer space, other non-freezing space & The space type for the dishwasher location.   \\ \hline
+\texttt{dishwasher\_efficiency\_type} & true &  & Choice & RatedAnnualkWh, EnergyFactor & The efficiency type of dishwasher.  \\ \hline
+\texttt{dishwasher\_efficiency} & false & RatedAnnualkWh or EnergyFactor & Double & auto & The efficiency of the dishwasher.   \\ \hline
+\texttt{dishwasher\_label\_electric\_rate} & false & \$/kWh & Double & auto & The label electric rate of the dishwasher.   \\ \hline
+\texttt{dishwasher\_label\_gas\_rate} & false & \$/therm & Double & auto & The label gas rate of the dishwasher.   \\ \hline
+\texttt{dishwasher\_label\_annual\_gas\_cost} & false & \$ & Double & auto & The label annual gas cost of the dishwasher.   \\ \hline
+\texttt{dishwasher\_label\_usage} & false & cyc/wk & Double & auto & The dishwasher loads per week.   \\ \hline
+\texttt{dishwasher\_place\_setting\_capacity} & false & \# & Integer & auto & The number of place settings for the unit. Data obtained from manufacturer's literature.   \\
+\end{customLongTable}

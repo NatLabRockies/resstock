@@ -1,0 +1,7 @@
+\begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
+{The ResStock argument definitions set in the Insulation Floor characteristic} {table:hc_arg_def_insulation_floor}
+{Name & Required & Units & Type & Choices & Description}
+\texttt{floor\_over\_foundation\_assembly\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double &  & Assembly R-value for the floor over the foundation. Ignored if the building has a slab-on-grade foundation.  \\ \hline
+\texttt{floor\_over\_garage\_assembly\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double &  & Assembly R-value for the floor over the garage. Ignored unless the building has a garage under conditioned space.  \\ \hline
+\texttt{floor\_type} & true &  & Choice & WoodFrame, StructuralInsulatedPanel, SolidConcrete, SteelFrame & The type of floors.  \\
+\end{customLongTable}

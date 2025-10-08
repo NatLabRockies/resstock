@@ -135,7 +135,7 @@ class BaseCompare:
 
     def visualize(self, aggregate_column=None, aggregate_function=None, display_column=None,
                   excludes=[], enum_maps={}, cols_to_ignore=[]):
-        colors = px.colors.qualitative.Dark24
+        colors = px.colors.qualitative.Dark24 * 2
 
         aggregate_columns = []
         if aggregate_column:

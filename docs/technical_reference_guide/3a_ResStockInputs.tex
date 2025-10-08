@@ -103,22 +103,9 @@ The U.S.~state where the sample is located. In ResStock, States are defined by a
 \end{itemize}
 
 \paragraph{Options}
-The options for each State are the collection of postal abbreviations (e.g., AL, AK, AR). Each option sets the \texttt{site\_state\_code} argument. The \texttt{site\_state\_code} argument choices are also the State abbreviations. An example option and argument assignment for Alabama is as follows: the option name is AL and \texttt{site\_state\_code}=AL. The rest of the States follow this structure.
+The options for each State are the collection of postal abbreviations (e.g., AL, AK, AR). Each option sets the \texttt{site\_state\_code}, \texttt{extra\_refrigerator\_usage\_multiplier}, and \texttt{freezer\_usage\_multiplier} arguments. The \texttt{site\_state\_code} argument choices are also the State abbreviations. An example option and argument assignment for Alabama is as follows: the option name is AL and \texttt{site\_state\_code}=AL. The rest of the States follow this structure.
 
-\begin{longtable}[]{ |p{3.5cm}|p{1.5cm}|p{1cm}|p{4.5cm}|p{3cm}| }
-\caption{The ResStock argument definitions for the State characteristic} \label{table:hc_arg_def_state}  \\
-\toprule\noalign{}
-Name & Required & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{site\_state\_code} & false  & Choice & auto, AK, AL, AR, AZ,
-CA, CO, CT, DC, DE, FL, GA, HI, IA, ID, IL, IN, KS, KY, LA, MA, MD, ME,
-MI, MN, MO, MS, MT, NC, ND, NE, NH, NJ, NM, NV, NY, OH, OK, OR, PA, RI,
-SC, SD, TN, TX, UT, VA, VT, WA, WI, WV, WY & State code of the home
-address. \\
-\end{longtable}
+\input{tables/arguments/State}
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made.
@@ -153,26 +140,7 @@ The \texttt{site\_time\_zone\_utc\_offset} argument is assigned using the popula
 
 The \texttt{weather\_station\_epw\_filepath} argument is ``../../../weather/<County GISJOIN>.epw'' where <County GISJOIN> is the NHGIS GISJOIN value for the county. The NHGISJOIN for a county always starts with the letter ``G'' followed by the state's two-digit FIPS, a ``0,'' and then the County 3-digit FIPS code. An example of this argument assignment for the option ``CO, Denver County'' is \texttt{weather\_station\_epw\_filepath}=../../../weather/G0800310.epw.
 
-\begin{longtable}[]{ |p{3.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.9cm}|p{5cm}| }
-\caption{The ResStock argument definitions for the County characteristic} \label{table:hc_arg_def_county}  \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{simulation\_control\_daylight\_saving\_enabled} & false & &
-Boolean & auto, true, false & Whether to use daylight saving. \\
-\hline
-\texttt{site\_zip\_code} & false & & String & & Zip code of the home
-address. \\
-\hline
-\texttt{site\_time\_zone\_utc\_offset} & false & hr & Double & auto &
-Time zone UTC offset of the home address. Must be between -12 and 14.  \\
-\hline
-\texttt{weather\_station\_epw\_filepath} & true & & String & & Path of
-the EnergyPlus Weather (EPW) file. \\
-\end{longtable}
+\input{tables/arguments/County}
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made.
@@ -205,25 +173,7 @@ The options for PUMAs are structured by their state abbreviation and the PUMA co
 
 There are three ResStock arguments set with the PUMA options: \texttt{site\_elevation}, \texttt{site\_latitude}, and \texttt{site\_longitude}. All three of these arguments are set to ``auto'' and use the default \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-site}{OpenStudio-HPXML Building Site} values.
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-\caption{The ResStock argument definitions set in the PUMA characteristic} \label{table:hc_arg_def_puma}  \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{site\_elevation} & false & ft & Double & auto & Elevation of the
-home address.  \\
-\hline
-\texttt{site\_latitude} & false & deg & Double & auto & Latitude of the
-home address. Must be between -90 and 90. Use negative values for
-southern hemisphere.\\
-\hline
-\texttt{site\_longitude} & false & deg & Double & auto & Longitude of
-the home address. Must be between -180 and 180. Use negative values for
-the western hemisphere.\\
-\end{longtable}
+\input{tables/arguments/PUMA}
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made.
@@ -309,17 +259,7 @@ The options are structured as the State abbreviation of the city, a comma, and t
 
 The ResStock argument \texttt{site\_city} is assigned in the City characteristic. The argument is set to ``auto,'' which is the OpenStudio-HPXML default value; see the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-site}{Building Site} section of the documentation for the default values.
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1.1cm}|p{6cm}| }
-\caption{The ResStock argument definitions set in the City characteristic} \label{table:hc_arg_def_city}  \\
-\toprule\noalign{}
-Name & Required & Type  & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{site\_city} & false & String & City/municipality of the home
-address. \\
-\end{longtable}
+\input{tables/arguments/City}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -452,16 +392,7 @@ A set of counties defines each climate and moisture zone. Climate zones range fr
 
 The ASHRAE IECC Climate Zone 2004 sets the \texttt{site\_type} and \texttt{site\_iecc\_zone} arguments. The \texttt{site\_type} is always set to ``auto.'' The \texttt{site\_iecc\_zone} argument matches the climate zone with the exception of climate zones 7 and 8 in Alaska. ResStock departs from the climate zone definitions by using 7AK and 8AK instead of 7 and 8 from the standards.
 
-\begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1.1cm}|p{4.4cm}|p{4cm}| }
-{The ResStock arguments set in the ASHRAE IECC Climate Zone 2004 characteristic} {table:hc_arg_def_ashrae_2004}
-{Name & Required & Type & Choices & Description}
-\texttt{site\_type} & false & Choice & auto, suburban, urban, rural &
-The type of site.  \\
-\hline
-\texttt{site\_iecc\_zone} & false & Choice & auto, 1A, 1B, 1C, 2A, 2B,
-2C, 3A, 3B, 3C, 4A, 4B, 4C, 5A, 5B, 5C, 6A, 6B, 6C, 7, 8 & IECC zone of
-the home address. \\
-\end{customLongTable}
+\input{tables/arguments/ASHRAE IECC Climate Zone 2004}
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made.
@@ -868,39 +799,13 @@ Orientation of the front of the housing unit as it faces the street. The front d
 No direct conditional dependencies.
 
 \paragraph{Options}
-The options for the Orientation characteristic are east, west, northeast, southwest, north, south, northwest, and southeast. The options set the \texttt{geometry\_unit\_orientation} ResStock argument; see Table \ref{table:hc_opt_orient}. The argument definition can be found in Table \ref{table:hc_arg_def_oient}.
+The options for the Orientation characteristic are east, west, northeast, southwest, north, south, northwest, and southeast. The options set the \texttt{geometry\_unit\_orientation} ResStock argument; see Table \ref{table:hc_opt_orientation}. The argument definition can be found in Table \ref{table:hc_arg_def_orientation}.
 
-\begin{longtable}[]{ |p{4.cm}|p{2cm}|p{6cm}| } \caption{Orientation options and arguments that vary for each option} \label{table:hc_opt_orient} \\
-\toprule\noalign{}
-Option name & Stock saturation & \texttt{geometry\_unit\_orientation} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-East & 17\% & 90 \\
-West & 17\% & 270 \\
-Northeast & 7.2\% & 45 \\
-Southwest & 7.2\% & 225 \\
-North & 18\% & 0 \\
-South & 18\% & 180 \\
-Northwest & 7.7\% & 315 \\
-Southeast & 7.7\% & 135 \\
-\end{longtable}
+\input{tables/options/Orientation}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_geom_stories}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_orientation}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-site}{Building Site} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3cm}|}
-\caption{The ResStock argument definitions set in the Orientation characteristic} \label{table:hc_arg_def_oient} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{geometry\_unit\_orientation} & true & degrees & Double & The
-unit's orientation is measured clockwise from north
-(e.g., North=0, East=90, South=180, West=270). \\
-\end{longtable}
+\input{tables/arguments/Orientation}
 
 \paragraph{Distribution Assumption(s)}
 No assumptions were made. The distribution was taken directly from the Radiant Labs query.
@@ -921,52 +826,13 @@ The number of stories in the building in which the housing unit is located.
 \end{itemize}
 
 \paragraph{Options}
-The options for Geometry stories are a set of integers between 1 and 35; see Table \ref{table:hc_opt_geom_stories}. The stories of a building refer to the number of floors above grade. The number of stories does not include basements but would include finished attics. The \texttt{geometry\_num\_floors\_above\_grade} argument definition is in Table \ref{table:hc_arg_def_geom_stories}.
+The options for Geometry stories are a set of integers between 1 and 35; see Table \ref{table:hc_opt_geometry_stories}. The stories of a building refer to the number of floors above grade. The number of stories does not include basements but would include finished attics. The \texttt{geometry\_num\_floors\_above\_grade} argument definition is in Table \ref{table:hc_arg_def_geometry_stories}.
 
-\begin{longtable}[]{ |p{3cm}|p{3cm}|p{3cm}| }
-\caption{Geometry Stories options and arguments that vary for each option} \label{table:hc_opt_geom_stories} \\
-\toprule\noalign{}
-Option name & Stock saturation &
-\texttt{geometry\_num\_floors\_above\_grade} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-1 & 49\% & 1 \\
-2 & 37\% & 2 \\
-3 & 8\% & 3 \\
-4 & 2\% & 4 \\
-5 & 0.79\% & 5 \\
-6 & 0.7\% & 6 \\
-7 & 0.16\% & 7 \\
-8 & 0.16\% & 8 \\
-9 & 0.13\% & 9 \\
-10 & 0.17\% & 10 \\
-11 & 0.09\% & 11 \\
-12 & 0.19\% & 12 \\
-13 & 0.12\% & 13 \\
-14 & 0.11\% & 14 \\
-15 & 0.12\% & 15 \\
-20 & 0.21\% & 20 \\
-21 & 0.66\% & 21 \\
-35 & 0.11\% & 35 \\
-\end{longtable}
+\input{tables/options/Geometry Stories}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_geom_stories}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_geometry_stories}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-\caption{Argument definitions for the Geometry Stories characteristics} \label{table:hc_arg_def_geom_stories}  \\
-\toprule\noalign{}
-Name & Required & Units & Type &  Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{geometry\_num\_floors\_above\_grade} & true & \# & Integer &
-The number of floors above grade (in the unit if single-family detached
-or single-family attached, and in the building if apartment unit).
-Conditioned attics are included. \\
-\end{longtable}
+\input{tables/arguments/Geometry Stories}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -994,18 +860,7 @@ Tags the building in which the housing unit is located as having more than 8 sto
 \paragraph{Options}
 The options are either <8 stories or 8+ stories. This characteristic is an aggregation of the Geometry stories characteristic to identify units in high-rise buildings. No arguments are assigned based on this housing characteristic, but it is used as a dependency for other input files.
 
-\begin{longtable}[]{@{}ll@{}}
-\caption{Options and saturation for the Geometry Story Bin}  \\
-\toprule\noalign{}
-Option name & Stock saturation \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\textless8 & 98\% \\
-8+ & 2.1\% \\
-\end{longtable}
-
+\input{tables/options/Geometry Story Bin}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1030,22 +885,7 @@ The 2009 U.S.~EIA RECS building type with multifamily buildings split out by low
 \paragraph{Options}
 The options break up the Geometry Building Type RECS multi-family 5+ unit buildings into low-rise (1--3 stories), mid-rise (4--7 stories), and high-rise (8+ stories). No arguments are directly assigned based on the options in this input file.
 
-\begin{longtable}[]{@{}ll@{}}
-\caption{Options and saturation for Geometry Building Type Height} \\
-\toprule\noalign{}
-Option name & Stock saturation \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Mobile Home & 6.2\% \\
-Multi-Family with 2-4 Units & 8\% \\
-Multi-Family with 5+ Units, 1-3 Stories & 13\% \\
-Multi-Family with 5+ Units, 4-7 Stories & 3.4\% \\
-Multi-Family with 5+ Units, 8+ Stories & 2.1\% \\
-Single-Family Attached & 5.9\% \\
-Single-Family Detached & 61\% \\
-\end{longtable}
+\input{tables/options/Geometry Building Type Height}
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made.
@@ -1086,61 +926,13 @@ The number of housing units in the multifamily building.
 \end{itemize}
 
 \paragraph{Options}
-The options for the Geometry Building Level MF characteristic are a set of integers between 2 and 326; see Table \ref{table:hc_opt_geom_build_units_mf}. The ``None'' option is used for all building types other than multifamily. The options set the \texttt{geometry\_building\_num\_units} ResStock argument; see Table \ref{table:hc_arg_def_geom_build_units_mf}.
+The options for the Geometry Building Level MF characteristic are a set of integers between 2 and 326; see Table \ref{table:hc_opt_geometry_building_number_units_mf}. The ``None'' option is used for all building types other than multifamily. The options set the \texttt{geometry\_building\_num\_units} ResStock argument; see Table \ref{table:hc_arg_def_geometry_building_number_units_mf}.
 
-\begin{longtable}[]{ |p{3.cm}|p{4cm}|p{4cm}| }
-\caption{Geometry Building Level Number of Units MF options and arguments that vary for each option} \label{table:hc_opt_geom_build_units_mf}  \\
-\toprule\noalign{}
-Option name & Stock saturation &
-\texttt{geometry\_building\_num\_units} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-2 & 3.6\% & 2 \\
-3 & 1.4\% & 3 \\
-4 & 3\% & 4 \\
-5 & 0.54\% & 5 \\
-6 & 1.5\% & 6 \\
-7 & 0.26\% & 7 \\
-8 & 2.3\% & 8 \\
-9 & 0.15\% & 9 \\
-10 & 0.95\% & 10 \\
-11 & 0.098\% & 11 \\
-12 & 1.9\% & 12 \\
-13 & 0.15\% & 13 \\
-14 & 0.18\% & 14 \\
-15 & 0.27\% & 15 \\
-16 & 0.61\% & 16 \\
-17 & 0.023\% & 17 \\
-18 & 0.22\% & 18 \\
-19 & 0.016\% & 19 \\
-20 & 0.75\% & 20 \\
-24 & 0.96\% & 24 \\
-30 & 0.81\% & 30 \\
-36 & 0.48\% & 36 \\
-43 & 0.67\% & 43 \\
-67 & 2.7\% & 67 \\
-116 & 1.2\% & 116 \\
-183 & 0.62\% & 183 \\
-326 & 1\% & 326 \\
-None & 74\% & \\
-\end{longtable}
+\input{tables/options/Geometry Building Number Units MF}
 
-For the argument definitions, see Table~\ref{table:hc_arg_def_geom_build_units_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#whole-sfa-mf-buildings}{Whole-SFA-MF-Buildings} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table~\ref{table:hc_arg_def_geometry_building_number_units_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#whole-sfa-mf-buildings}{Whole-SFA-MF-Buildings} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{6cm}| }
-\caption{Argument definitions for the Geometry Building Number of Units MF characteristic} \label{table:hc_arg_def_geom_build_units_mf}  \\
-\toprule\noalign{}
-Name & Required & Units & Type & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{geometry\_building\_num\_units} & false & \# & Integer & The
-number of units in the building. Required for single-family attached and
-apartment units. \\
-\end{longtable}
+\input{tables/arguments/Geometry Building Number Units MF}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1149,7 +941,7 @@ apartment units. \\
     \item Data were sampled from the following bins of Geometry Stories: 1, 2, 3, 4-7, 8+.
 \end{itemize}
 
-\subsubsection{Geometry Building Number Units Single-Family Attached}
+\subsubsection{Geometry Building Number Units SFA}
 
 \paragraph{Description}
 The number of housing units in the single-family attached (SFA) building.
@@ -1165,41 +957,16 @@ The number of housing units in the single-family attached (SFA) building.
 \end{itemize}
 
 \paragraph{Options}
-The options for the Geometry Building Level SFA characteristic are a set of integers between 2 and 144; see Table \ref{table:hc_opt_geom_build_units_sfa}. The ``None'' option is used for all building types other than SFA.
+The options for the Geometry Building Level SFA characteristic are a set of integers between 2 and 144; see Table \ref{table:hc_opt_geometry_building_number_units_sfa}. The ``None'' option is used for all building types other than SFA.
 
-\begin{customLongTable}{ |p{3.cm}|p{4cm}|p{4cm}| }
-{Geometry Building Level Number of Units SFA options and arguments that vary for each option} {table:hc_opt_geom_build_units_sfa}
-{Option name & Stock saturation &
-\texttt{geometry\_building\_num\_units}} \hline
-None & 94\% & \\ \hline
-2 & 0\% & 2 \\ \hline
-3 & 0\% & 3 \\ \hline
-4 & 0\% & 4 \\ \hline
-5 & 0.72\% & 5 \\ \hline
-6 & 0.78\% & 6 \\ \hline
-7 & 0.36\% & 7 \\ \hline
-8 & 1.1\% & 8 \\ \hline
-9 & 0\% & 9 \\ \hline
-10 & 0.38\% & 10 \\ \hline
-12 & 0.57\% & 12 \\ \hline
-15 & 0.14\% & 15 \\ \hline
-16 & 0.33\% & 16 \\ \hline
-20 & 0.27\% & 20 \\ \hline
-24 & 0.27\% & 24 \\ \hline
-30 & 0.27\% & 30 \\ \hline
-36 & 0.27\% & 36 \\ \hline
-50 & 0.13\% & 50 \\ \hline
-60 & 0.1\% & 60 \\ \hline
-90 & 0.086\% & 90 \\ \hline
-144 & 0.11\% & 144 \\
-\end{customLongTable}
+\input{tables/options/Geometry Building Number Units SFA}
 
-For the argument definitions, see Table~\ref{table:hc_arg_def_geom_build_units_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#whole-sfa-mf-buildings}{Whole-SFA-MF-Buildings} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table~\ref{table:hc_arg_def_geometry_building_number_units_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#whole-sfa-mf-buildings}{Whole-SFA-MF-Buildings} documentation for the available HPXML schema elements, default values, and constraints.
 
 \paragraph{Distribution Assumption(s)}
 No assumptions were made.
 
-\subsubsection{Geometry Building Level Multifamily}
+\subsubsection{Geometry Building Level MF}
 
 \paragraph{Description}
 Location of the multifamily (MF) unit vertically within the building (bottom, middle, top).
@@ -1216,43 +983,20 @@ Location of the multifamily (MF) unit vertically within the building (bottom, mi
 \end{itemize}
 
 \paragraph{Options}
-The options for the Geometry Building Level MF characteristic are Bottom, Middle, None, and Top; see Table \ref{table:hc_opt_geom_build_lev_mf}. The None option is used for all building types other than MF. The characteristic sets the \texttt{geometry\_unit\_level} ResStock argument; see Table \ref{table:hc_arg_def_build_lev_mf}.
+The options for the Geometry Building Level MF characteristic are Bottom, Middle, None, and Top; see Table \ref{table:hc_opt_geometry_building_level_mf}. The None option is used for all building types other than MF. The characteristic sets the \texttt{geometry\_unit\_level} ResStock argument; see Table \ref{table:hc_arg_def_geometry_building_level_mf}.
 
-\begin{longtable}[]{ |p{3.cm}|p{4cm}|p{4cm}| }
-\caption{Geometry Building Level MF options and arguments that vary for each option} \label{table:hc_opt_geom_build_lev_mf}  \\
-\toprule\noalign{}
-Option name & Stock saturation & \texttt{geometry\_unit\_level} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Bottom & 11\% & Bottom \\ \hline
-Middle & 6.1\% & Middle \\ \hline
-Top & 8.9\% & Top \\ \hline
-None & 74\% & \\
-\end{longtable}
+\input{tables/options/Geometry Building Level MF}
 
-For the argument definitions, see Table~\ref{table:hc_arg_def_build_lev_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table~\ref{table:hc_arg_def_geometry_building_level_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-\caption{Argument definitions for the Geometry Building Level MF characteristic} \label{table:hc_arg_def_build_lev_mf}  \\
-\toprule\noalign{}
-Name & Required & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{geometry\_unit\_level} & false & Choice & Bottom, Middle, Top
-& The level of the unit. This is required for apartment units. \\
-\end{longtable}
+\input{tables/arguments/Geometry Building Level MF}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
     \item Calculated using the number of stories, where buildings greater than or equal to 2 stories have Top and Bottom probabilities = 1/Geometry Stories, and Middle probabilities = 1--2/Geometry stories.
 \end{itemize}
 
-
-\subsubsection{Geometry Building Horizontal Location Multifamily}
+\subsubsection{Geometry Building Horizontal Location MF}
 \paragraph{Description}
 Location of the multifamily unit horizontally within the building (left, middle, right).
 
@@ -1268,46 +1012,20 @@ Location of the multifamily unit horizontally within the building (left, middle,
 \end{itemize}
 
 \paragraph{Options}
-The options of the Geometry Building Horizontal Location MF characteristic are None, Left, Middle, Right, and Not Applicable. The characteristic sets the \texttt{geometry\_unit\_horizontal\_location} ResStock argument; see Table \ref{table:hc_opt_geom_build_hor_loc_mf}. The ``Not Applicable'' option is used for a pair of number of units and stories that cannot be sampled. For example, a 9-story, 2-unit multifamily building is unlikely to exist in reality and cannot be modeled in ResStock. ResStock does not model units in buildings with more stories than units. All building types other than multifamily receive the ``None'' option. For the argument definitions, see Table \ref{table:hc_arg_def_geom_build_hor_loc_mf}.
+The options of the Geometry Building Horizontal Location MF characteristic are None, Left, Middle, Right, and Not Applicable. The characteristic sets the \texttt{geometry\_unit\_horizontal\_location} ResStock argument; see Table \ref{table:hc_opt_geometry_building_horizontal_location_mf}. The ``Not Applicable'' option is used for a pair of number of units and stories that cannot be sampled. For example, a 9-story, 2-unit multifamily building is unlikely to exist in reality and cannot be modeled in ResStock. ResStock does not model units in buildings with more stories than units. All building types other than multifamily receive the ``None'' option. For the argument definitions, see Table \ref{table:hc_arg_def_geometry_building_horizontal_location_mf}.
 
+\input{tables/options/Geometry Building Horizontal Location MF}
 
-\begin{longtable}[]{ |p{3.cm}|p{4cm}| p{4cm}|}
-\caption{Geometry Building Horizontal Location Multifamily options and arguments that vary for each option} \label{table:hc_opt_geom_build_hor_loc_mf}  \\
-\toprule\noalign{}
-Option name  & Stock saturation & \texttt{geometry\_unit\_horizontal\_location} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Left & 7.1\% & Left \\ \hline
-Middle & 8\% & Middle \\ \hline
-Right & 7.1\% & Right \\ \hline
-Not Applicable & 4.2\% & None \\ \hline
-None & 74\% & \\
-\end{longtable}
+For the argument definitions, see Table \ref{table:hc_arg_def_geometry_building_horizontal_location_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_geom_build_hor_loc_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
-
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-\caption{Argument definitions for the Geometry Building Horizontal Location MF and Geometry Building Horizontal Location SFA characteristics} \label{table:hc_arg_def_geom_build_hor_loc_mf}  \\
-\toprule\noalign{}
-Name & Required & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{geometry\_unit\_horizontal\_location} & false & Choice & None,
-Left, Middle, Right & The horizontal location of the unit when viewing
-the front of the building. This is required for single-family attached
-and apartment units. \\
-\end{longtable}
+\input{tables/arguments/Geometry Building Horizontal Location MF}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
     \item All probabilities are calculated assuming the building has double-loaded corridors (with some exceptions like 3 units in a single-story building).
 \end{itemize}
 
-\subsubsection{Geometry Building Horizontal Location Single-Family Attached}
+\subsubsection{Geometry Building Horizontal Location SFA}
 \paragraph{Description}
 Location of the SFA unit horizontally within the building (left, middle, right).
 
@@ -1323,30 +1041,16 @@ Location of the SFA unit horizontally within the building (left, middle, right).
 \end{itemize}
 
 \paragraph{Options}
-The options of the Geometry Building Horizontal Location SFA characteristic are None, Left, Middle, and Right. The characteristic sets the \texttt{geometry\_unit\_horizontal\_location} ResStock argument; see Table \ref{table:hc_opt_geom_build_hor_loc_sfa}. All non-single-family-attached building types receive the ``None'' option. For the argument definitions, see Table \ref{table:hc_arg_def_geom_build_hor_loc_mf}.
+The options of the Geometry Building Horizontal Location SFA characteristic are None, Left, Middle, and Right. The characteristic sets the \texttt{geometry\_unit\_horizontal\_location} ResStock argument; see Table \ref{table:hc_opt_geometry_building_horizontal_location_sfa}. All non-single-family-attached building types receive the ``None'' option. For the argument definitions, see Table \ref{table:hc_arg_def_geometry_building_horizontal_location_mf}.
 
+\input{tables/options/Geometry Building Horizontal Location SFA}
 
-\begin{longtable}[]{ |p{3.cm}|p{4cm}| p{4cm}|}
-\caption{Geometry Building Horizontal Location SFA options and arguments that vary for each option} \label{table:hc_opt_geom_build_hor_loc_sfa}  \\
-\toprule\noalign{}
-Option name  & Stock saturation & \texttt{geometry\_unit\_horizontal\_location} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Left & 0.63\% & Left \\ \hline
-Middle & 4.6\% & Middle \\ \hline
-Right & 0.63\% & Right \\ \hline
-None & 94\% & \\
-\end{longtable}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_geom_build_hor_loc_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_geometry_building_horizontal_location_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
     \item All probabilities are calculated from the direct conditional dependencies.
 \end{itemize}
-
 
 \subsubsection{Neighbors}
 \paragraph{Description}
@@ -1361,61 +1065,13 @@ Presence and distance between the housing unit and the nearest neighbors to the 
     \item Geometry Building Type RECS.
 \end{itemize}
 \paragraph{Options}
-The options for Neighbors are Left/Right at 15 ft, 2, 4,	7, 12, 27, and None. The option values correspond to distances in feet to the nearest neighbor on the left and right sides of the building. The options set ResStock arguments corresponding to the distance and height a shading object. The \texttt{neighbor\_front\_height}, \texttt{neighbor\_back\_height}, \texttt{neighbor\_left\_height} and \texttt{neighbor\_right\_height} arguments are all set to ``auto,'' which sets the shading object height to the total height of the housing unit. The other arguments assign the distance from the housing unit. The \texttt{neighbor\_front\_distance} and \texttt{neighbor\_back\_distance} arguments are set to 0 (meaning there are no neighbors to the front and back of the unit). The left and right distances are set by Table \ref{table:hc_opt_neighbor}. The None option sets distances to 0 (meaning there are no neighbors). The argument definitions can be seen in Table \ref{table:hc_arg_def_neighbors}.
+The options for Neighbors are Left/Right at 15 ft, 2, 4, 7, 12, 27, and None. The option values correspond to distances in feet to the nearest neighbor on the left and right sides of the building. The options set ResStock arguments corresponding to the distance and height a shading object. The \texttt{neighbor\_front\_height}, \texttt{neighbor\_back\_height}, \texttt{neighbor\_left\_height} and \texttt{neighbor\_right\_height} arguments are all set to ``auto,'' which sets the shading object height to the total height of the housing unit. The other arguments assign the distance from the housing unit. The \texttt{neighbor\_front\_distance} and \texttt{neighbor\_back\_distance} arguments are set to 0 (meaning there are no neighbors to the front and back of the unit). The left and right distances are set by Table \ref{table:hc_opt_neighbors}. The None option sets distances to 0 (meaning there are no neighbors). The argument definitions can be seen in Table \ref{table:hc_arg_def_neighbors}.
 
-\begin{customLongTable}
-{ |p{3.cm}|p{3cm}|p{3cm}|p{3cm}| }
-{Neighbors options and arguments that vary for each option}
-{table:hc_opt_neighbor}
-{Option name & Stock saturation & \texttt{neighbor\_left\_distance} &
-\texttt{neighbor\_right\_distance}
-}
-Left/Right at 15ft & 68\% & 15 & 15 \\ \hline
-2 & 0.19\% & 2 & 2  \\ \hline
-4 & 3.4\% & 4 & 4 \\ \hline
-7 & 5\% & 7 & 7 \\ \hline
-12 & 9.2\% & 12 & 12 \\ \hline
-27 & 13\% & 27 & 27 \\ \hline
-None & 1.3\% & 0 & 0 \\ \hline
-\end{customLongTable}
+\input{tables/options/Neighbors}
 
 For the argument definitions, see Table~\ref{table:hc_arg_def_neighbors}. See the OpenStudio-HPXML documentation section \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-neighbor-buildings}{Neighbor Buildings} for the available elements, default values, and constraints.
 
-\begin{customLongTable}
-{ |p{3cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-{The ResStock argument definitions set in the Neighbors characteristic}
-{table:hc_arg_def_neighbors}
-{Name & Required & Units & Type & Choices & Description}
-\texttt{neighbor\_front\_distance} & true & ft & Double & & The distance
-between the unit and the neighboring building to the front (not
-including eaves). A value of zero indicates no neighbors. Used for
-shading. \\
-\hline
-\texttt{neighbor\_back\_distance} & true & ft & Double & & The distance
-between the unit and the neighboring building to the back (not including
-eaves). A value of zero indicates no neighbors. Used for shading. \\
-\hline
-\texttt{neighbor\_left\_distance} & true & ft & Double & & The distance
-between the unit and the neighboring building to the left (not including
-eaves). A value of zero indicates no neighbors. Used for shading. \\
-\hline
-\texttt{neighbor\_right\_distance} & true & ft & Double & & The distance
-between the unit and the neighboring building to the right (not
-including eaves). A value of zero indicates no neighbors. Used for
-shading. \\
-\hline
-\texttt{neighbor\_front\_height} & false & ft & Double & auto & The
-height of the neighboring building to the front. \\
-\hline
-\texttt{neighbor\_back\_height} & false & ft & Double & auto & The
-height of the neighboring building to the back. \\
-\hline
-\texttt{neighbor\_left\_height} & false & ft & Double & auto & The
-height of the neighboring building to the left.  \\
-\hline
-\texttt{neighbor\_right\_height} & false & ft & Double & auto & The
-height of the neighboring building to the right.  \\
-\end{customLongTable}
+\input{tables/arguments/Neighbors}
 
 \paragraph{Distribution Assumption(s)}
 None
@@ -1439,50 +1095,17 @@ Single-family attached and multifamily buildings can have corridors, which are p
 \paragraph{Options}
 For Mobile Homes, Single-Family Detached, and Single-Family Attached building types the option assigned is ``Not Applicable.'' Multifamily units all have a ``Double-Loaded Interior'' corridor with a width of 10 feet. The Corridor characteristic assigns the \texttt{geometry\_corridor\_position} and the \texttt{geometry\_corridor\_width} arguments. For the options and arguments set for each option, see Table \ref{table:hc_opt_corridor}. For the argument definitions, see Table \ref{table:hc_arg_def_corridor}.
 
-
-
-\begin{longtable}[]{ |p{3.cm}|p{3.cm}|p{3cm}|p{3cm}| }
-\caption{Corridor options and arguments that vary for each option} \label{table:hc_opt_corridor}  \\
-\toprule\noalign{}
-Option name & Stock saturation & \texttt{geometry\_corridor\_position} &
-\texttt{geometry\_corridor\_width} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Not Applicable & 74\% & None & 0 \\ \hline
-Double-Loaded Interior & 26\% & Double-Loaded Interior & 10 \\ \hline
-None & 0\% & None & 0 \\ \hline
-Single Exterior Front & 0\% & Single Exterior (Front) & 10 \\ \hline
-Double Exterior & 0\% & Double Exterior & 10 \\
-\end{longtable}
+\input{tables/options/Corridor}
 
 For the argument definitions, see Table~\ref{table:hc_arg_def_corridor}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#dwelling-units}{Dwelling Units} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-\caption{Argument definitions for the Corridor characteristic} \label{table:hc_arg_def_corridor}  \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{geometry\_corridor\_position} & true & & Choice & Double-Loaded
-Interior, Double Exterior, Single Exterior (Front), None & The position
-of the corridor. Only applies to single-family attached and apartment
-units. Exterior corridors are shaded, but not enclosed. Interior
-corridors are enclosed and conditioned. \\
-\hline
-\texttt{geometry\_corridor\_width} & true & ft & Double & & The width of
-the corridor. Only applies to apartment units. \\
-\end{longtable}
+\input{tables/arguments/Corridor}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
     \item Single-Family Attached units do not have corridors.
     \item All Multifamily units have a double-loaded interior corridor with a width of 10 ft.
 \end{itemize}
-
 
 \subsection{Building Type}
 This section discusses the ResStock input files that control tagging and model differentiation of building type.  These building types control a lot of assumptions and treatment of variables in the OpenStudio-HPXML workflow. An example is that the plug load energy is based on a regression equation, and the equation coefficients are different between the building types.
@@ -1510,21 +1133,7 @@ The building type classification according to the U.S.~Census American Community
 \paragraph{Options}
 ACS considers nine building types, which are tagged in ResStock based on PUMA. No arguments are directly assigned based on this input characteristic.
 
-\begin{customLongTable}
-{@{}ll@{}}
-{Options and saturation for Geometry Building Type ACS}
-{table:test}
-{Option name & Stock saturation} \\\hline
-2 Unit & 3.6\% \\
-3 or 4 Unit & 4.4\% \\
-5 to 9 Unit & 4.7\% \\
-10 to 19 Unit & 4.5\% \\
-20 to 49 Unit & 3.7\% \\
-50 or More Unit & 5.6\% \\
-Mobile Home & 6.2\% \\
-Single-Family Attached & 5.9\% \\
-Single-Family Detached & 61\% \\
-\end{customLongTable}
+\input{tables/options/Geometry Building Type ACS}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -1544,49 +1153,13 @@ The building type classification according to the U.S.~EIA RECS.
 \end{itemize}
 
 \paragraph{Options}
-The EIA RECS building types are direct aggregations of the ACS building types. Multifamily units are grouped into 2--4 unit buildings and 5+ unit buildings. The options set the \texttt{geometry\_unit\_type}, \texttt{geometry\_unit\_aspect\_ratio}, and \texttt{geometry\_average\_ceiling\_height} ResStock arguments; see Table \ref{table:hc_opt_gbt_recs}. The \texttt{geometry\_average\_ceiling\_height} is always set to 8 ft. The argument definitions are in Table \ref{table:hc_arg_def_gbt_recs}.
+The EIA RECS building types are direct aggregations of the ACS building types. Multifamily units are grouped into 2--4 unit buildings and 5+ unit buildings. The options set the \texttt{geometry\_unit\_type}, \texttt{geometry\_unit\_aspect\_ratio}, and \texttt{geometry\_average\_ceiling\_height} ResStock arguments; see Table \ref{table:hc_opt_geometry_building_type_recs}. The \texttt{geometry\_average\_ceiling\_height} is always set to 8 ft. The argument definitions are in Table \ref{table:hc_arg_def_geometry_building_type_recs}.
 
-\begin{longtable}[]{ |p{5.cm}|p{2cm}|p{4cm}|p{3cm}| }
-\caption{Geometry Building Type RECS options and arguments that vary for each option} \label{table:hc_opt_gbt_recs} \\
-\toprule\noalign{}
-Option name & Stock saturation & \texttt{geometry\_unit\_type} &
-\texttt{geometry\_unit\_aspect\_ratio} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Mobile Home & 6.2\% & manufactured home & 1.8\\
-Multifamily with 2--4 Units & 8\% & apartment unit & 0.5556\\
-Multifamily with 5+ Units & 18\% & apartment unit & 0.5556 \\
-Single-Family Attached & 5.9\% & single-family attached & 0.5556\\
-Single-Family Detached & 61\% & single-family detached & 1.8 \\
-\end{longtable}
+\input{tables/options/Geometry Building Type RECS}
 
-For the argument definitions, see Table~\ref{table:hc_arg_def_gbt_recs}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table~\ref{table:hc_arg_def_geometry_building_type_recs}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-\caption{The ResStock argument definitions set in the Geometry Building Type RECS characteristic} \label{table:hc_arg_def_gbt_recs}  \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{geometry\_unit\_type} & true & & Choice & single-family
-detached, single-family attached, apartment unit, manufactured home &
-The type of housing unit. Use single-family attached for a housing
-unit with 1 or more stories, attached units to one or both sides, and no
-units above/below. Use apartment unit for a housing unit with 1 story,
-attached units to one, two, or three sides, and units above and/or
-below. \\
-\hline
-\texttt{geometry\_unit\_aspect\_ratio} & true & Frac & Double & & The
-ratio of front/back wall length to left/right wall length for the unit,
-excluding any protruding garage wall area. \\
-\hline
-\texttt{geometry\_average\_ceiling\_height} & true & ft & Double & &
-Average distance from the floor to the ceiling. \\
-\end{longtable}
+\input{tables/arguments/Geometry Building Type RECS}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -1619,42 +1192,11 @@ Time period in which the building was originally constructed.
 \paragraph{Options}
 The options are decade bins for when the building was constructed: <1940, 1940s, 1950s, 1960s, 1970s, 1980s, 1990s, 2000s, 2010s. The options set the \texttt{year\_built} and \texttt{vintage} ResStock arguments. The \texttt{year\_built} argument is always set to ``auto.'' The \texttt{vintage} argument is set to the same value as the option name; see Table \ref{table:hc_opt_vintage}.
 
-\begin{longtable}[]{ |p{3.cm}|p{3cm}|p{3cm}| }
-\caption{Vintage options and arguments that vary for each option} \label{table:hc_opt_vintage} \\
-\toprule\noalign{}
-Option name & Stock saturation &
-\texttt{vintage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\textless1940 & 13\% & \textless1940 \\
-1940s & 4.9\% & 1940s \\
-1950s & 10\% & 1950s \\
-1960s & 11\% & 1960s \\
-1970s & 15\% & 1970s \\
-1980s & 13\% & 1980s \\
-1990s & 14\% & 1990s \\
-2000s & 14\% & 2000s \\
-2010s & 5.1\% & 2010s \\
-\end{longtable}
+\input{tables/options/Vintage}
 
 For the argument definitions, see Table \ref{table:hc_arg_def_vintage}.
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1.1cm}|p{6cm}| }
-\caption{The ResStock argument definitions set in the Vintage characteristic} \label{table:hc_arg_def_vintage}  \\
-\toprule\noalign{}
-Name & Required & Type & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{year\_built} & false & Integer & The year the building was
-built. \\
-\hline
-\texttt{vintage} & false & String & The building vintage, used for
-informational purposes only. \\
-\end{longtable}
+\input{tables/arguments/Vintage}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1678,18 +1220,9 @@ Time period in which the housing unit was constructed as defined by the U.S.~Cen
 \end{itemize}
 
 \paragraph{Options}
-The options for Vintage ACS are the same vintage bins as ACS, \ref{table:hc_vintage_acs}. They are roughly 20-year bins. No arguments are set based on this input file.
+The options for Vintage ACS are the same vintage bins as ACS, Table \ref{table:hc_opt_vintage_acs}. They are roughly 20-year bins. No arguments are set based on this input file.
 
-\begin{customLongTable}{ |p{4.cm}|p{4cm}|p{4cm}| }
-{Option and saturation for Vintage ACS} {table:hc_vintage_acs}
-{Option name & Stock saturation}
-\textless1940 & 13\% \\ \hline
-1940--59 & 15\% \\ \hline
-1960--79 & 26\% \\ \hline
-1980--99 & 27\% \\ \hline
-2000--09 & 14\% \\ \hline
-2010s & 5.1\% \\
-\end{customLongTable}
+\input{tables/options/Vintage ACS}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1710,8 +1243,6 @@ There are seven input files controlling housing unit geometry in ResStock:
     \item Geometry Space Combination.
 \end{itemize}
 
-
-
 \subsubsection{Geometry Floor Area}
 \paragraph{Description}
 The conditioned floor area of the housing unit using bins from 2017--2019 American Housing Survey.
@@ -1731,56 +1262,11 @@ The conditioned floor area of the housing unit using bins from 2017--2019 Americ
 \end{itemize}
 
 \paragraph{Options}
-The options of Geometry Floor Area characteristic are the American Housing Survey floor area bins. The options set the \texttt{geometry\_unit\_cfa}, \texttt{geometry\_unit\_cfa\_bin}, and the \texttt{geometry\_garage\_protrusion} ResStock arguments; see Table \ref{table:hc_opt_geom_floor_area}. The \texttt{geometry\_unit\_cfa} argument is always set to ``auto.'' Because in the ResStockArguments measure ``auto'' is used for the \texttt{geometry\_unit\_cfa} argument, a representative conditioned floor area is assigned using the \texttt{geometry\_unit\_cfa\_bin} argument. The values of the conditioned floor area bin are taken from the 2017 and 2019 American Housing Surveys and split out by housing type. The housing types are single-family detached, single-family attached, apartment, and manufactured homes. Currently, the same conditioned floor area values are used for single-family detached and manufactured homes. For the ResStock argument definition see Table \ref{table:hc_arg_def_geom_floor_area}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} section of the documentation. The floor area is used many places in the OpenStudio-HPXML model workflow.
+The options of Geometry Floor Area characteristic are the American Housing Survey floor area bins. The options set the \texttt{geometry\_unit\_cfa}, \texttt{geometry\_unit\_cfa\_bin}, and the \texttt{geometry\_garage\_protrusion} ResStock arguments; see Table \ref{table:hc_opt_geometry_floor_area}. The \texttt{geometry\_unit\_cfa} argument is always set to ``auto.'' The \texttt{geometry\_garage\_protrusion} argument is always set to 0.5. Because in the ResStockArguments measure ``auto'' is used for the \texttt{geometry\_unit\_cfa} argument, a representative conditioned floor area is assigned using the \texttt{geometry\_unit\_cfa\_bin} argument. The values of the conditioned floor area bin are taken from the 2017 and 2019 American Housing Surveys and split out by housing type. The housing types are single-family detached, single-family attached, apartment, and manufactured homes. Currently, the same conditioned floor area values are used for single-family detached and manufactured homes. For the ResStock argument definition see Table \ref{table:hc_arg_def_geometry_floor_area}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} section of the documentation. The floor area is used many places in the OpenStudio-HPXML model workflow.
 
-\begin{longtable}[]{ |p{4.cm}|p{4cm}|p{4cm}| }
-\caption{Geometry Floor Area options and arguments that vary for each option} \label{table:hc_opt_geom_floor_area} \\
-\toprule\noalign{}
-Option name & \texttt{geometry\_garage\_protrusion} &
-\texttt{geometry\_unit\_cfa\_bin}\\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-0--499 & 0.72 & 0-499 \\
-\hline
-500--749 & 0.75 & 500-749 \\
-\hline
-750--999 & 0.5 & 750-999 \\
-\hline
-1000--1499 & 0.5 & 1000-1499 \\
-\hline
-1500--1999 & 0.5 & 1500-1999 \\
-\hline
-2000--2499 & 0.5 & 2000-2499 \\
-\hline
-2500--2999 & 0.5 & 2500-2999 \\
-\hline
-3000--3999 & 0.5 & 3000-3999 \\
-\hline
-4000+ & 0.5 & 4000+ \\
-\end{longtable}
+\input{tables/options/Geometry Floor Area}
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-\caption{The ResStock argument definitions set in the Geometry Floor Area characteristic} \label{table:hc_arg_def_geom_floor_area}  \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-
-\texttt{geometry\_unit\_cfa\_bin} & true & & String & & E.g.,
-\textquotesingle2000-2499\textquotesingle. \\
-\hline
-\texttt{geometry\_unit\_cfa} & true & ft\textsuperscript{2} & Double & & E.g.,
-\textquotesingle2000\textquotesingle{} or
-\textquotesingle auto\textquotesingle. \\\hline
-\texttt{geometry\_garage\_protrusion} & true & Frac & Double & & The
-fraction of the garage that is protruding from the conditioned space.
-Only applies to single-family detached units. \\
-
-\end{longtable}
+\input{tables/arguments/Geometry Floor Area}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1855,41 +1341,11 @@ The number of bedrooms in the housing unit.
 \end{itemize}
 
 \paragraph{Options}
-The Bedrooms characteristic set the \texttt{geometry\_unit\_num\_bedrooms} and the \texttt{geometry\_unit\_num\_bathrooms} ResStock arguments. The options for bedrooms are integers from 1 to 5; see Table \ref{table:hc_opt_bed}. The \texttt{geometry\_unit\_num\_bathrooms} argument is always set to ``auto.'' For the argument definitions, see Table \ref{table:hc_arg_def_bed}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} section of the documentation. The number of bedrooms is used many places in the OpenStudio-HPXML model workflow.
+The Bedrooms characteristic set the \texttt{geometry\_unit\_num\_bedrooms} and the \texttt{geometry\_unit\_num\_bathrooms} ResStock arguments. The options for bedrooms are integers from 1 to 5; see Table \ref{table:hc_opt_bedrooms}. The \texttt{geometry\_unit\_num\_bathrooms} argument is always set to ``auto.'' For the argument definitions, see Table \ref{table:hc_arg_def_bedrooms}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} section of the documentation. The number of bedrooms is used many places in the OpenStudio-HPXML model workflow.
 
-\begin{longtable}[]{ |p{4.cm}|p{4cm}| }
-\caption{Bedroom options and arguments that vary for each option} \label{table:hc_opt_bed} \\
-\toprule\noalign{}
-Option name & \texttt{geometry\_unit\_num\_bedrooms} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-1 & 1 \\
-\hline
-2 & 2 \\
-\hline
-3 & 3 \\
-\hline
-4 & 4 \\
-\hline
-5 & 5 \\
-\end{longtable}
+\input{tables/options/Bedrooms}
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-\caption{The ResStock argument definitions set in the Bedrooms characteristic} \label{table:hc_arg_def_bed} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{geometry\_unit\_num\_bedrooms} & true & \# & Integer & & The
-number of bedrooms in the unit. \\
-\hline
-\texttt{geometry\_unit\_num\_bathrooms} & false & \# & Integer & auto &
-The number of bathrooms in the unit.  \\
-\end{longtable}
+\input{tables/arguments/Bedrooms}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1915,45 +1371,11 @@ The housing unit attic type.
 \end{itemize}
 
 \paragraph{Options}
-The options for Geometry Attic Type are Finished Attic or Cathedral Ceilings, Unvented Attic, Vented Attic. The None option is used for multifamily and mobile homes. The options in the Geometry Attic Type characteristic set the \texttt{geometry\_attic\_type}, \texttt{geometry\_roof\_type}, and \texttt{geometry\_roof\_pitch} ResStock arguments; see Table \ref{table:hc_opt_attic}. The \texttt{geometry\_roof\_type} is always set to ``gable.'' The \texttt{geometry\_roof\_pitch} is always set to 6:12. For ResStock argument definitions, see Table \ref{table:hc_arg_def_attic}. See OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-attics}{Attics} section of the documentation for elements, constraints, and default values.
+The options for Geometry Attic Type are Finished Attic or Cathedral Ceilings, Unvented Attic, Vented Attic. The None option is used for multifamily and mobile homes. The options in the Geometry Attic Type characteristic set the \texttt{geometry\_attic\_type}, \texttt{geometry\_roof\_type}, and \texttt{geometry\_roof\_pitch} ResStock arguments; see Table \ref{table:hc_opt_geometry_attic_type}. The \texttt{geometry\_roof\_type} is always set to ``gable.'' The \texttt{geometry\_roof\_pitch} is always set to 6:12. For ResStock argument definitions, see Table \ref{table:hc_arg_def_geometry_attic_type}. See OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-attics}{Attics} section of the documentation for elements, constraints, and default values.
 
-\begin{longtable}[]{ |p{6.cm}|p{6cm}| }
-\caption{Geometry Attic Type options and arguments that vary for each option} \label{table:hc_opt_attic} \\
-\toprule\noalign{}
-Option name & \texttt{geometry\_attic\_type} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Finished Attic or Cathedral Ceilings & ConditionedAttic \\
-\hline
-None & FlatRoof \\
-\hline
-Unvented Attic & UnventedAttic \\
-\hline
-Vented Attic & VentedAttic \\
-\end{longtable}
+\input{tables/options/Geometry Attic Type}
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
-\caption{The ResStock argument definitions set in the Geometry Attic characteristic} \label{table:hc_arg_def_attic} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{geometry\_attic\_type} & true & & Choice & FlatRoof,
-VentedAttic, UnventedAttic, ConditionedAttic, BelowApartment & The attic
-type of the building. Attic type ConditionedAttic is not allowed for
-apartment units. \\
-\hline
-\texttt{geometry\_roof\_type} & true & & Choice & gable, hip & The roof
-type of the building. Ignored if the building has a flat roof. \\
-\hline
-\texttt{geometry\_roof\_pitch} & true & & Choice & 1:12, 2:12, 3:12,
-4:12, 5:12, 6:12, 7:12, 8:12, 9:12, 10:12, 11:12, 12:12 & The roof pitch
-of the attic. Ignored if the building has a flat roof. \\
-\end{longtable}
+\input{tables/arguments/Geometry Attic Type}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1979,58 +1401,11 @@ The type of foundation.
 \end{itemize}
 
 \paragraph{Options}
-The options of the Geometry Foundation type characteristic are Ambient, Heated Basement, Slab, Unheated Basement, Unvented Crawlspace, and Vented Crawlspace. The options set the \texttt{geometry\_foundation\_type}, \texttt{geometry\_foundation\_height}, \texttt{geometry\_foundation\_height\_above\_grade}, and \texttt{geometry\_rim\_joist\_height} ResStock arguments; see Table \ref{table:hc_opt_geom_found_type}. For ResStock argument definitions, see Table \ref{table:hc_arg_def_geom_found_type}. Another name for Ambient foundations is pier and beam.
+The options of the Geometry Foundation type characteristic are Ambient, Heated Basement, Slab, Unheated Basement, Unvented Crawlspace, and Vented Crawlspace. The options set the \texttt{geometry\_foundation\_type}, \texttt{geometry\_foundation\_height}, \texttt{geometry\_foundation\_height\_above\_grade}, and \texttt{geometry\_rim\_joist\_height} ResStock arguments; see Table \ref{table:hc_opt_geometry_foundation_type}. For ResStock argument definitions, see Table \ref{table:hc_arg_def_geometry_foundation_type}. Another name for Ambient foundations is pier and beam.
 
-\begin{longtable}[]{ |p{3.3cm}|p{3.5cm}|p{2.4cm}|p{2.4cm}|p{2.2cm}| }
-\caption{Geometry Foundation Type options and arguments that vary for each option} \label{table:hc_opt_geom_found_type} \\
-\toprule\noalign{}
-Option name & \texttt{geometry\_foundation\_type} &
-\texttt{geometry\_foundation\_height} &
-\texttt{geometry\_foundation\_height\_above\_grade} &
-\texttt{geometry\_rim\_joist\_height} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Ambient & Ambient & 4 & 4 & 0 \\
-\hline
-Heated Basement & ConditionedBasement & 8 & 1 & 9.25 \\
-\hline
-Slab & SlabOnGrade & 0 & 0 & 0 \\
-\hline
-Unheated Basement & UnconditionedBasement & 8 & 1 & 9.25 \\
-\hline
-Unvented Crawlspace& UnventedCrawlspace & 4 & 1 & 9.25 \\
-\hline
-Vented Crawlspace & VentedCrawlspace & 4 & 1 & 9.25 \\
-\end{longtable}
+\input{tables/options/Geometry Foundation Type}
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
-\caption{The ResStock argument definitions set in the Geometry Foundation Type characteristic} \label{table:hc_arg_def_geom_found_type}  \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{geometry\_foundation\_type} & true & & Choice & SlabOnGrade,
-VentedCrawlspace, UnventedCrawlspace, ConditionedCrawlspace,
-UnconditionedBasement, ConditionedBasement, Ambient, AboveApartment,
-BellyAndWingWithSkirt, BellyAndWingNoSkirt & The foundation type of the
-building. Foundation types ConditionedBasement and ConditionedCrawlspace
-are not allowed for apartment units. \\
-\hline
-\texttt{geometry\_foundation\_height} & true & ft & Double & & The
-height of the foundation (e.g., 3 ft for crawlspace, 8 ft for basement).
-Only applies to basements/crawlspaces and Ambient. \\
-\hline
-\texttt{geometry\_foundation\_height\_above\_grade} & true & ft & Double
-& & The depth above grade of the foundation wall. Only applies to
-basements/crawlspaces and Ambient. \\
-\hline
-\texttt{geometry\_rim\_joist\_height} & false & in & Double & & The
-height of the rim joists. Only applies to basements/crawlspaces. \\
-\end{longtable}
+\input{tables/arguments/Geometry Foundation Type}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -2061,44 +1436,11 @@ The presence and size of an attached garage.
 \end{itemize}
 
 \paragraph{Options}
-The options for the Geometry Garage characteristic are 1 Car, 2 Car, 3 Car, and None. The options set the \texttt{geometry\_garage\_width}, \texttt{geometry\_garage\_depth}, and \texttt{geometry\_garage\_position} ResStock arguments; see Table \ref{table:hc_opt_garage}. The \texttt{geometry\_garage\_depth} argument is always set to 24 ft. The \texttt{geometry\_garage\_position} argument is always set to ``Right.'' ResStock argument definitions can be seen in Table \ref{table:hc_arg_def_garage}.
+The options for the Geometry Garage characteristic are 1 Car, 2 Car, 3 Car, and None. The options set the \texttt{geometry\_garage\_width}, \texttt{geometry\_garage\_depth}, and \texttt{geometry\_garage\_position} ResStock arguments; see Table \ref{table:hc_opt_geometry_garage}. The \texttt{geometry\_garage\_depth} argument is always set to 24 ft. The \texttt{geometry\_garage\_position} argument is always set to ``Right.'' ResStock argument definitions can be seen in Table \ref{table:hc_arg_def_geometry_garage}.
 
-\begin{longtable}[]{ |p{4.cm}|p{4cm}|p{4cm}|p{4cm}| }
-\caption{Bedroom options and arguments that vary for each option} \label{table:hc_opt_garage} \\
-\toprule\noalign{}
-Option name & \texttt{geometry\_garage\_width} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-1 Car & 12 \\
-\hline
-2 Car & 24 \\
-\hline
-3 Car & 36 \\
-\hline
-None & 0 \\
-\end{longtable}
+\input{tables/options/Geometry Garage}
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-\caption{The ResStock argument definitions set in the Geometry Garage characteristic} \label{table:hc_arg_def_garage} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{geometry\_garage\_width} & true & ft & Double & & The width of
-the garage. Enter zero for no garage. Only applies to single-family
-detached units. \\
-\hline
-\texttt{geometry\_garage\_depth} & true & ft & Double & & The depth of
-the garage. Only applies to single-family detached units. \\
-\hline
-\texttt{geometry\_garage\_position} & true & & Choice & Right, Left &
-The position of the garage. Only applies to single-family detached
-units. \\
-\end{longtable}
+\input{tables/arguments/Geometry Garage}
 
 \paragraph{Distribution Assumption(s)}
 Most of the assumptions below are not from the survey data, but are constraints of the geometry modeling in OpenStudio and are set to avoid errors.
@@ -2211,54 +1553,14 @@ Wall siding material and color. This is the main input file that provides the th
     \item Vintage ACS.
 \end{itemize}
 \paragraph{Option(s)}
-ResStock uses 11 options (see Table \ref{table:hc_opt_geo_wall_ext_fin}) for the exterior finish of the walls---correlated with the Geometry Wall Type via the input dependencies. A portion of the wall R-value is attributable to this exterior finish.
+ResStock uses 11 options (see Table \ref{table:hc_opt_geometry_wall_exterior_finish}) for the exterior finish of the walls---correlated with the Geometry Wall Type via the input dependencies. A portion of the wall R-value is attributable to this exterior finish.
 
-\begin{longtable}[]{|p{3.5cm}|p{2.5cm}|p{3.cm}|p{2.5cm}|p{2.5cm}|} \caption{Geometry Wall Exterior Finish options and arguments that vary for each option} \label{table:hc_opt_geo_wall_ext_fin} \\
+\input{tables/options/Geometry Wall Exterior Finish}
 
-\toprule\noalign{}
-Option name & \texttt{wall\_siding\_type} &
-\texttt{wall\_color} & \texttt{exterior\_finish\_r} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Aluminum, Light & aluminum siding & light & 0.6 \\ \hline
-Brick, Light & brick veneer & light & 0.7 \\\hline
-Brick, Medium/Dark & brick veneer & medium dark & 0.7 \\\hline
-Fiber-Cement, Light & fiber cement siding & light & 0.2 \\\hline
-None & none & medium & 0 \\\hline
-Shingle, Asbestos, Medium & asbestos siding & medium & 0.6 \\\hline
-Shingle, Composition, Medium & composite shingle siding & medium
-& 0.6 \\\hline
-Stucco, Light & stucco & light & 0.2 \\\hline
-Stucco, Medium/Dark & stucco & medium dark & 0.2 \\\hline
-Vinyl, Light & vinyl siding & light & 0.6 \\\hline
-Wood, Medium/Dark & wood siding & medium dark & 1.4 \\
-\end{longtable}
+For the argument definitions, see Table \ref{table:hc_arg_def_geometry_wall_exterior_finish}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-walls}{Walls} documentation for the available HPXML schema elements, default values, and constraints.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_ext_finish}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-walls}{Walls} documentation for the available HPXML schema elements, default values, and constraints.
+\input{tables/arguments/Geometry Wall Exterior Finish}
 
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|}
-\caption{The ResStock argument definitions for the Geometry Exterior Finish characteristic} \label{table:hc_arg_def_ext_finish} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{wall\_siding\_type} & false & & Choice & auto, aluminum siding,
-asbestos siding, brick veneer, composite shingle siding, fiber cement
-siding, masonite siding, none, stucco, synthetic stucco, vinyl siding,
-wood siding & The siding type of the walls. Also applies to rim joists. \\
-\hline
-\texttt{wall\_color} & false & & Choice & auto, dark, light, medium,
-medium dark, reflective & The color of the walls. Also applies to rim
-joists.  \\
-\hline
-\texttt{exterior\_finish\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double & &
-R-value of the exterior finish. \\
-\end{longtable}
-% Template starting-place header swap: %{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|}
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
 \item
@@ -2297,51 +1599,14 @@ Wall construction type and insulation level. Provides the main R-value for the w
     \item Vintage.
 \end{itemize}
 \paragraph{Option(s)}
-ResStock models 15 different Insulation Wall levels; see Table \ref{table:hc_ins_wall}. These are based upon the Geometry Wall Type defined, but provide a distribution of insulation levels for each of those options.
+ResStock models 15 different Insulation Wall levels; see Table \ref{table:hc_opt_insulation_wall}. These are based upon the Geometry Wall Type defined, but provide a distribution of insulation levels for each of those options.
 
-\begin{longtable}[]{|p{5.5cm}|p{4cm}|p{3.2cm}|p{3cm}|} \caption{Insulation Wall options and arguments that vary for each option} \label{table:hc_ins_wall} \\
-\toprule\noalign{}
-Option name & \texttt{wall\_type} &
-\texttt{wall\_assembly\_r} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Wood Stud, Uninsulated & WoodStud & 3.4 \\
-Wood Stud, R-7 & WoodStud & 8.7 \\
-Wood Stud, R-11 & WoodStud & 10.3 \\
-Wood Stud, R-15 & WoodStud & 12.1 \\
-Wood Stud, R-19 & WoodStud & 15.4 \\
-CMU, 6-in Hollow, Uninsulated & ConcreteMasonryUnit & 4 \\
-CMU, 6-in Hollow, R-7 & ConcreteMasonryUnit & 9.4 \\
-CMU, 6-in Hollow, R-11 & ConcreteMasonryUnit & 12.4 \\
-CMU, 6-in Hollow, R-15 & ConcreteMasonryUnit & 15 \\
-CMU, 6-in Hollow, R-19 & ConcreteMasonryUnit & 17.4 \\
-Brick, 12-in, 3-wythe, Uninsulated & StructuralBrick & 4.9 \\
-Brick, 12-in, 3-wythe, R-7 & StructuralBrick & 10.3 \\
-Brick, 12-in, 3-wythe, R-11 & StructuralBrick & 13.3 \\
-Brick, 12-in, 3-wythe, R-15 & StructuralBrick & 15.9 \\
-Brick, 12-in, 3-wythe, R-19 & StructuralBrick & 18.3 \\
-\end{longtable}
+\input{tables/options/Insulation Wall}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_ins_wall}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-walls}{Walls} documentation for the available HPXML schema elements, default values, and constraints.
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|}
-\caption{The ResStock argument definitions set in the Insulation Wall characteristic} \label{table:hc_arg_def_ins_wall} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{wall\_type} & true & & Choice & WoodStud, ConcreteMasonryUnit,
-DoubleWoodStud, InsulatedConcreteForms, LogWall,
-StructuralInsulatedPanel, SolidConcrete, SteelFrame, Stone, StrawBale,
-StructuralBrick & The type of walls. \\
-\hline
-\texttt{wall\_assembly\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double & &
-Assembly R-value of the walls. \\
-\end{longtable}
-% Template starting-place header swap: %{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|}
+For the argument definitions, see Table \ref{table:hc_arg_def_insulation_wall}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-walls}{Walls} documentation for the available HPXML schema elements, default values, and constraints.
+
+\input{tables/arguments/Insulation Wall}
+
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
 
@@ -2381,38 +1646,13 @@ Finished roof insulation level. Insulation levels for unfinished attics covered 
     \item Geometry Attic Type.
 \end{itemize}
 \paragraph{Option(s)}
-Insulation roof options correspond to the amount of insulation at the roof deck and if the roof is finished; see Table \ref{table:hc_ins_roof}. A finished roof is a cathedralized construction of the roof. An unfinished roof corresponds to the roof deck being open to the attic.
+Insulation roof options correspond to the amount of insulation at the roof deck and if the roof is finished; see Table \ref{table:hc_opt_insulation_roof}. A finished roof is a cathedralized construction of the roof. An unfinished roof corresponds to the roof deck being open to the attic.
 
-\begin{longtable}[]{|p{3.5cm}|p{3.5cm}|}
-\caption{Insulation Roof options and arguments that vary for each option} \label{table:hc_ins_roof} \\
-\toprule\noalign{}
-Option name & \texttt{roof\_assembly\_r} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Unfinished, Uninsulated  & 2.3 \\
-Finished, Uninsulated & 3.7 \\
-Finished, R-7 & 10.2 \\
-Finished, R-13 & 14.3 \\
-Finished, R-19 & 21.2 \\
-Finished, R-30 & 29.7 \\
-Finished, R-38 & 36.5 \\
-Finished, R-49 & 47.0 \\
-\end{longtable}
+\input{tables/options/Insulation Roof}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_ins_roof}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-roofs}{Roofs} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_insulation_roof}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-roofs}{Roofs} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} \caption{The ResStock argument definitions set in the Insulation Roof characteristic} \label{table:hc_arg_def_ins_roof} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{roof\_assembly\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double & &
-Assembly R-value of the roof \\
-\end{longtable}
+\input{tables/arguments/Insulation Roof}
 
 \paragraph{Distribution Assumption(s)}
 None
@@ -2436,40 +1676,14 @@ ResStock).
     \item Geometry Building Type RECS.
 \end{itemize}
 \paragraph{Option(s)}
-Three options for radiant barriers are available in ResStock: ``Yes,'' ``No,'' and ``None''; see Table \ref{table:hc_opt_rad_bar}. ``No'' is assigned to homes with attics but without radiant barriers, while ``None'' is assigned to homes without attics. No homes in ResStock currently have the ``Yes'' option assigned.
+Three options for radiant barriers are available in ResStock: ``Yes,'' ``No,'' and ``None''; see Table \ref{table:hc_opt_radiant_barrier}. ``No'' is assigned to homes with attics but without radiant barriers, while ``None'' is assigned to homes without attics. No homes in ResStock currently have the ``Yes'' option assigned.
 
-\begin{longtable}[]{|p{2.5cm}|p{2.5cm}|p{3cm}|p{3cm}|} \caption{Radiant Barrier options and arguments that vary for each option} \label{table:hc_opt_rad_bar} \\
+\input{tables/options/Radiant Barrier}
 
-\toprule\noalign{}
-Option name &
-\texttt{radiant\_barrier\_attic\_location} &
-\texttt{radiant\_barrier\_grade} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-None & none & 1 \\
-Yes & attic roof only & 1 \\
-No & none & 1 \\
-\end{longtable}
+For the argument definitions, see Table \ref{table:hc_arg_def_radiant_barrier}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-roofs}{Roofs} documentation for the available HPXML schema elements, default values, and constraints.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_rad_bar}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-roofs}{Roofs} documentation for the available HPXML schema elements, default values, and constraints.
+\input{tables/arguments/Radiant Barrier}
 
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.1cm}|p{3.3cm}|p{4.3cm}|} \caption{The ResStock argument definitions set in the Radiant Barrier characteristic} \label{table:hc_arg_def_rad_bar} \\
-
-\toprule\noalign{}
-Name & Required &  Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{radiant\_barrier\_attic\_location} & false & Choice & auto,
-none, attic roof only, attic roof and gable walls, attic floor & The
-location of the radiant barrier in the attic \\
-\hline
-\texttt{radiant\_barrier\_grade} & false &  Choice & auto, 1, 2, 3 &
-The grade of the radiant barrier in the attic \\
-\end{longtable}%{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|}
 \paragraph{Distribution Assumption(s)}
 None
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2490,42 +1704,14 @@ Roof material and color.
     \item Vintage ACS.
 \end{itemize}
 \paragraph{Option(s)}
-Seven roof material options are used in the ResStock baseline; see Table \ref{table:hc_opt_roof_mat}. These correspond to options available within OpenStudio-HPXML and have thermal properties associated with each within OpenStudio-HPXML, but this is not specified at the ResStock level.
+Seven roof material options are used in the ResStock baseline; see Table \ref{table:hc_opt_roof_material}. These correspond to options available within OpenStudio-HPXML and have thermal properties associated with each within OpenStudio-HPXML, but this is not specified at the ResStock level.
 
-\begin{customLongTable}{|p{3.5cm}|p{4.cm}|p{2.3cm}|}
-{Roof Material options and arguments that vary for each option}
-{table:hc_opt_roof_mat}
-{Option name & \texttt{roof\_material\_type} &
-\texttt{roof\_color}}
-Asphalt Shingles, Medium & asphalt or fiberglass shingles &
-medium \\ \hline
-Composition Shingles & asphalt or fiberglass shingles & medium \\ \hline
-Metal, Dark & metal surfacing & dark \\ \hline
-Slate & slate or tile shingles & medium \\ \hline
-Tile, Clay or Ceramic & slate or tile shingles & medium \\ \hline
-Tile, Concrete & slate or tile shingles & medium \\ \hline
-Wood Shingles & wood shingles or shakes & medium \\
-\end{customLongTable}
+\input{tables/options/Roof Material}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_roof_mat}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-roof}{Roof} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_roof_material}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-roof}{Roof} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{|p{3.5cm}|p{1.1cm}|p{1.1cm}|p{3.5cm}|p{3.3cm}|} \caption{The ResStock argument definitions set in the Roof Material characteristic} \label{table:hc_arg_def_roof_mat} \\
+\input{tables/arguments/Roof Material}
 
-\toprule\noalign{}
-Name & Required &  Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{roof\_material\_type} & false & Choice & auto, asphalt or
-fiberglass shingles, concrete, cool roof, slate or tile shingles,
-expanded polystyrene sheathing, metal surfacing,
-plastic/rubber/synthetic sheeting, shingles, wood shingles or shakes &
-The material type of the roof \\
-\hline
-\texttt{roof\_color} & false  & Choice & auto, dark, light, medium,
-medium dark, reflective & The color of the roof \\
-\end{longtable}
 \paragraph{Distribution Assumption(s)}
 
 \begin{itemize}
@@ -2569,41 +1755,13 @@ This characteristic in ResStock specifies the insulation level of the ceiling on
     \item Vintage.
 \end{itemize}
 \paragraph{Option(s)}
-The options are levels of ceiling insulation by R-value; see Table \ref{table:hc_opt_ins_ceil}. Uninsulated indicates that the housing unit could have ceiling insulation, but doesn't, whereas ``None'' indicates the housing unit cannot have ceiling insulation because it does not have an unfinished attic.
+The options are levels of ceiling insulation by R-value; see Table \ref{table:hc_opt_insulation_ceiling}. Uninsulated indicates that the housing unit could have ceiling insulation, but doesn't, whereas ``None'' indicates the housing unit cannot have ceiling insulation because it does not have an unfinished attic.
 
-\begin{longtable}[]{|p{3.5cm}|p{3.3cm}|p{3.3cm}|} \caption{Insulation Ceiling options and arguments that vary for each option} \label{table:hc_opt_ins_ceil} \\
-\toprule\noalign{}
-Option name & \texttt{ceiling\_assembly\_r} &
-\texttt{ceiling\_insulation\_r} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-None & 0 & 0 \\
-Uninsulated & 2.1 & 0 \\
-R-7 & 8.7 & 7 \\
-R-13 & 14.6 & 13 \\
-R-19 & 20.6 & 19 \\
-R-30 & 31.6 & 30 \\
-R-38 & 39.6 & 38 \\
-R-49 & 50.6 & 49 \\
-\end{longtable}
+\input{tables/options/Insulation Ceiling}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_ins_ceil}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-attics}{Attics} documentation for the available HPXML schema elements, default values, and constraints.
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{4.3cm}|} \caption{The ResStock argument definitions set in the Insulation Ceiling characteristic} \label{table:hc_arg_def_ins_ceil} \\
+For the argument definitions, see Table \ref{table:hc_arg_def_insulation_ceiling}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-attics}{Attics} documentation for the available HPXML schema elements, default values, and constraints.
 
-\toprule\noalign{}
-Name & Required & Units & Type &  Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{ceiling\_assembly\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double &
-Assembly R-value for the ceiling (attic floor). \\
-\hline
-\texttt{ceiling\_insulation\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double &
-Nominal R-value for the ceiling (attic floor). \\
-\end{longtable}
+\input{tables/arguments/Insulation Ceiling}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -2649,41 +1807,13 @@ Sets the insulation levels of all foundation types except for slab-on-grade.
     \item Geometry Foundation Type.
 \end{itemize}
 \paragraph{Option(s)}
-ResStock has three different levels of floor insulation, plus a None option that is assigned to buildings with an illegible foundation type for the Insulation Floor characteristic; see Table \ref{table:hc_opt_ins_floor}. All options set the \texttt{floor\_type} to \texttt{WoodFrame}.
+ResStock has three different levels of floor insulation, plus a None option that is assigned to buildings with an illegible foundation type for the Insulation Floor characteristic; see Table \ref{table:hc_opt_insulation_floor}. All options set the \texttt{floor\_type} to \texttt{WoodFrame}.
 
-\begin{longtable}[]{|p{3.5cm}|p{3cm}|p{3cm}|} \caption{Insulation Floor options and arguments that vary for each option} \label{table:hc_opt_ins_floor} \\
-\toprule\noalign{}
-Option name &
-\texttt{floor\_over\_foundation\_assembly\_r} &
-\texttt{floor\_over\_garage\_assembly\_r}  \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-None & 0 & 5.3  \\
-Uninsulated & 5.3 & 5.3  \\
-Ceiling R-13 & 17.8 & 17.8  \\
-Ceiling R-19 & 22.6 & 22.6 \\
-Ceiling R-30 & 30.3 & 30.3  \\
-\end{longtable}
+\input{tables/options/Insulation Floor}
 
+For the argument definitions, see Table \ref{table:hc_arg_def_insulation_floor}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-floors}{Floors} documentation for the available HPXML schema elements, default values, and constraints.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_ins_floor}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-floors}{Floors} documentation for the available HPXML schema elements, default values, and constraints.
-
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} {The ResStock argument definitions set in the Insulation Floor characteristic} {table:hc_arg_def_ins_floor}
-{Name & Required & Units & Type & Choices & Description}
-\texttt{floor\_over\_foundation\_assembly\_r} & true & h-ft\textsuperscript{2}-R/Btu &
-Double & & Assembly R-value for the floor over the foundation. Ignored
-if the building has a slab-on-grade foundation. \\
-\hline
-\texttt{floor\_over\_garage\_assembly\_r} & true & h-ft\textsuperscript{2}-R/Btu &
-Double & & Assembly R-value for the floor over the garage. Ignored
-unless the building has a garage under conditioned space. \\
-\hline
-\texttt{floor\_type} & true & & Choice & WoodFrame,
-StructuralInsulatedPanel, SolidConcrete, SteelFrame & The type of
-floors. \\
-\end{customLongTable}
+\input{tables/arguments/Insulation Floor}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -2714,50 +1844,15 @@ Defines the insulation level for all slab-on-grade foundation types.
     \item Geometry Foundation Type.
 \end{itemize}
 \paragraph{Option(s)}
-ResStock uses eight different options for Insulation Slab, plus a ``None'' flag for homes without a slab-on-grade foundation; see Table \ref{table:hc_opt_ins_slab}. The options specify both the R-value as well as the location of the slab insulation. The ResStock arguments \texttt{slab\_thickness},\texttt{slab\_carpet\_fraction}, and
+ResStock uses eight different options for Insulation Slab, plus a ``None'' flag for homes without a slab-on-grade foundation; see Table \ref{table:hc_opt_insulation_slab}. The options specify both the R-value as well as the location of the slab insulation. The ResStock arguments \texttt{slab\_thickness},\texttt{slab\_carpet\_fraction}, and
 \texttt{slab\_carpet\_r} are constant across all the options and are all set to auto. The ResStock arguments \texttt{slab\_under\_insulation\_width}, \texttt{slab\_exterior\_horizontal\_insulation\_width}, and \texttt{lab\_exterior\_horizontal\_insulation\_depth\_below\_grade} are constant and set to 0.
 
-\begin{customLongTable}{|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|} {Insulation Slab options and arguments that vary for each option} {table:hc_opt_ins_slab}
-{Option name & \texttt{slab\_perimeter\_insulation\_r}
-& \texttt{slab\_perimeter\_depth} & \texttt{slab\_under\_insulation\_r}
-& \texttt{slab\_under\_insulation\_width}}
-None & 0 & 0 & 0 & 0  \\
-Uninsulated & 0 & 0 & 0 & 0 \\
-2ft R5 Under, Horizontal & 0 & 0 & 5 & 2 \\
-2ft R10 Under, Horizontal & 0 & 0 & 10 & 2  \\
-4ft R5 Under, Horizontal & 0 & 0 & 5 & 4  \\
-2ft R5 Perimeter, Vertical & 5 & 2 & 0 & 0 \\
-2ft R10 Perimeter, Vertical & 10 & 2 & 0 & 0  \\
-R10 Whole Slab, Horizontal & 0 & 0 & 10 & 999  \\
-\end{customLongTable}
-% Template starting-place header swap: %
-For the argument definitions, see Table \ref{table:hc_arg_def_ins_slab}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-slabs}{
+\input{tables/options/Insulation Slab}
+
+For the argument definitions, see Table \ref{table:hc_arg_def_insulation_slab}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-slabs}{
 Slabs} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} {The ResStock argument definitions set in the Insulation Slab characteristic} {table:hc_arg_def_ins_slab}
-{Name & Required & Units & Type & Choices & Description}
-\texttt{slab\_perimeter\_insulation\_r} & true & h-ft\textsuperscript{2}-R/Btu &
-Double & & Nominal R-value of the vertical slab perimeter insulation.
-Applies to slab-on-grade foundations and basement/crawlspace floors. \\ \hline
-\texttt{slab\_perimeter\_insulation\_depth} & true & ft & Double & & Depth from
-grade to bottom of vertical slab perimeter insulation. Applies to
-slab-on-grade foundations and basement/crawlspace floors. \\ \hline
-\texttt{slab\_exterior\_horizontal\_insulation\_width} & false & h-ft\textsuperscript{2}-R/Btu & Double & & Nominal R-value of the slab exterior horizontal insulation. Applies to slab-on-grade foundations and basement/crawlspace floors. \\ \hline
-\texttt{slab\_exterior\_horizontal\_insulation\_width} & false & ft & Double & & Width of the slab exterior horizontal insulation measured from the exterior surface of the vertical slab perimeter insulation. Applies to slab-on-grade foundations and basement/crawlspace floors. \\ \hline
-\texttt{slab\_exterior\_horizontal\_insulation\_depth\_below\_grade} & false & ft & Double &
-& Depth of the slab exterior horizontal insulation measured from the top surface of the slab exterior horizontal insulation. Applies to slab-on-grade foundations and basement/crawlspace floors. \\ \hline
-\texttt{slab\_under\_insulation\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double &
-& Nominal R-value of the horizontal under slab insulation. Applies to
-slab-on-grade foundations and basement/crawlspace floors. \\ \hline
-\texttt{slab\_under\_insulation\_width} & true & ft & Double & & Width from slab edge inward of horizontal under-slab insulation. Enter 999 to specify that the under slab insulation spans the entire slab. Applies to slab-on-grade foundations and basement/crawlspace floors. \\ \hline
-\texttt{slab\_thickness} & false & in & Double & auto & The thickness of
-the slab. Zero can be entered if there is a dirt floor instead of a
-slab.  \\ \hline
-\texttt{slab\_carpet\_fraction} & false & Frac & Double & auto &
-Fraction of the slab floor area that is carpeted.  \\ \hline
-\texttt{slab\_carpet\_r} & false & h-ft\textsuperscript{2}-R/Btu & Double & auto &
-R-value of the slab carpet. \\
-\end{customLongTable}
+\input{tables/arguments/Insulation Slab}
 
 \paragraph{Distribution Assumption(s)}
 
@@ -2791,62 +1886,14 @@ Specifies the insulation level of foundation types with foundation walls (i.e., 
     \item Geometry Foundation Type.
 \end{itemize}
 \paragraph{Option(s)}
-ResStock provides four different options for Insulation Foundation Wall, plus a ``None'' flag for homes without foundation walls (Table \ref{table:hc_opt_ins_found_wall}). Several ResStock arguments are constant across all options:
+ResStock provides four different options for Insulation Foundation Wall, plus a ``None'' flag for homes without foundation walls (Table \ref{table:hc_opt_insulation_foundation_wall}). Several ResStock arguments are constant across all options:
 \texttt{foundation\_wall\_thickness} and \texttt{foundation\_wall\_assembly\_r} are always set to \textit{auto}, \texttt{foundation\_wall\_insulation\_location} is always \textit{exterior}, and \texttt{foundation\_wall\_insulation\_distance\_to\_top}  is 0.
 
-\begin{customLongTable}{|p{3.5cm}|p{3.3cm}|p{3.1cm}|p{3.cm}|} {Insulation Foundation Wall options and arguments that vary for each option} {table:hc_opt_ins_found_wall}
-{Option name & \texttt{foundation\_wall\_type} &
+\input{tables/options/Insulation Foundation Wall}
 
-\texttt{foundation\_wall\_insulation\_r} &
+For the argument definitions, see Table \ref{table:hc_arg_def_insulation_foundation_wall}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-foundation-walls}{Foundation Walls} documentation for the available HPXML schema elements, default values, and constraints.
 
-
-\texttt{foundation\_wall\_insulation\_distance\_to\_bottom}}
-None & solid concrete &  0 &  0 \\
-Uninsulated & solid concrete &  0 &  0  \\
-Wall R-5, Exterior & solid concrete &  5 &
-auto \\
-Wall R-10, Exterior & solid concrete  & 10
-& auto \\
-Wall R-15, Exterior & solid concrete  & 15
-& auto  \\
-\end{customLongTable}
-
-
-For the argument definitions, see Table \ref{table:hc_arg_def_ins_found_wall}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-foundation-walls}{Foundation Walls} documentation for the available HPXML schema elements, default values, and constraints.
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} {The ResStock argument definitions set in the Insulation Foundation Wall characteristic} {table:hc_arg_def_ins_found_wall}
-{Name & Required & Units & Type & Choices & Description}
-\texttt{foundation\_wall\_type} & false & & Choice & auto, solid
-concrete, concrete block, concrete block foam core, concrete block
-perlite core, concrete block vermiculite core, concrete block solid
-core, double brick, wood & The material type of the foundation wall. \\
-\hline
-\texttt{foundation\_wall\_thickness} & false & in & Double & auto & The
-thickness of the foundation wall. \\
-\hline
-\texttt{foundation\_wall\_insulation\_r} & true & h-ft\textsuperscript{2}-R/Btu &
-Double & & Nominal R-value for the foundation wall insulation. Only
-applies to basements/crawlspaces. \\
-\hline
-\texttt{foundation\_wall\_insulation\_location} & false & ft & Choice &
-auto, interior, exterior & Whether the insulation is on the interior or
-exterior of the foundation wall. Only applies to
-basements/crawlspaces. \\
-\hline
-\texttt{foundation\_wall\_insulation\_distance\_to\_top} & false & ft &
-Double & auto & The distance from the top of the foundation wall to the
-top of the foundation wall insulation. Only applies to
-basements/crawlspaces.  \\
-\hline
-\texttt{foundation\_wall\_insulation\_distance\_to\_bottom} & false & ft
-& Double & auto & The distance from the top of the foundation wall to
-the bottom of the foundation wall insulation. Only applies to
-basements/crawlspaces.  \\
-\hline
-\texttt{foundation\_wall\_assembly\_r} & false & h-ft\textsuperscript{2}-R/Btu &
-Double & & Assembly R-value for the foundation walls. Only applies to
-basements/crawlspaces. If provided, overrides the previous foundation
-wall insulation inputs. \\
-\end{customLongTable}
+\input{tables/arguments/Insulation Foundation Wall}
 
 \paragraph{Distribution Assumption(s)}
 
@@ -2885,54 +1932,11 @@ ResStock uses four different levels of rim-joist insulation as well as a ``None'
 \texttt{rim\_joist\_continuous\_interior\_r} and
 \texttt{rim\_joist\_assembly\_interior\_r} are both set to 0 for all options.
 
+\input{tables/options/Insulation Rim Joist}
 
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{3.5cm}|}
-\caption{Options and saturation for Insulation Rim Joist} \\
-\toprule\noalign{}
-Option name & Stock saturation &
-\texttt{rim\_joist\_continuous\_exterior\_r}
- \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-None & 48\% &  0  \\
-Uninsulated & 47\% &  0 \\
-R-5, Exterior & 1.2\% & 5\\
-R-10, Exterior & 2.8\% &  10  \\
-R-15, Exterior & 0.52\%  & 15  \\
-\end{longtable}
+For the argument definitions, see Table \ref{table:hc_arg_def_insulation_rim_joist}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-rim-joists}{Rim Joists} documentation for the available HPXML schema elements, default values, and constraints.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_ins_rim_joists}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-rim-joists}{Rim Joists} documentation for the available HPXML schema elements, default values, and constraints.
-
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|}
-\caption{The ResStock argument definitions set in the Rim Joist characteristic}
-\label{table:hc_arg_def_ins_rim_joists} \\
-
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{rim\_joist\_assembly\_r} & false & h-ft\textsuperscript{2}-R/Btu & Double & &
-Assembly R-value for the rim joists. Only applies to
-basements/crawlspaces. Required if a rim joist height is provided. \\
-\hline
-\texttt{rim\_joist\_continuous\_exterior\_r} & true & h-ft\textsuperscript{2}-R/Btu &
-Double & & Nominal R-value for the rim joist continuous exterior
-insulation. Only applies to basements/crawlspaces. \\
-\hline
-\texttt{rim\_joist\_continuous\_interior\_r} & true & h-ft\textsuperscript{2}-R/Btu &
-Double & & Nominal R-value for the rim joist continuous interior
-insulation that runs parallel to floor joists. Only applies to
-basements/crawlspaces. \\
-\hline
-\texttt{rim\_joist\_assembly\_interior\_r} & true & h-ft\textsuperscript{2}-R/Btu &
-Double & & Assembly R-value for the rim joist assembly interior
-insulation that runs perpendicular to floor joists. Only applies to
-basements/crawlspaces. \\
-\end{longtable}
+\input{tables/arguments/Insulation Rim Joist}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -2962,54 +1966,15 @@ foundation and geothermal heat pump heat transfer calculations.
 
 \paragraph{Option(s)}
 
-ResStock uses 8 options for Thermal Ground Conductivity, which is expressed in BTU/hr-ft-F (Table \ref{table:hc_opt_ground_k}). The ResStock arguments associated with each option vary only in the \texttt{site\_ground\_conductivity} parameter. The other two arguments, \texttt{site\_soil\_and\_moisture\_type} and
+ResStock uses 8 options for Thermal Ground Conductivity, which is expressed in BTU/hr-ft-F (Table \ref{table:hc_opt_ground_thermal_conductivity}). The ResStock arguments associated with each option vary only in the \texttt{site\_ground\_conductivity} parameter. The other two arguments, \texttt{site\_soil\_and\_moisture\_type} and
 \texttt{site\_ground\_diffusivity}, both receive \texttt{auto} assignment, regardless of the ResStock option.
 
+\input{tables/options/Ground Thermal Conductivity}
 
-\begin{longtable}[]{|p{3.5cm}|p{2.5cm}|p{3.3cm}|} \caption{Ground Thermal Conductivity options and arguments that vary for each option} \label{table:hc_opt_ground_k} \\
+For the argument definitions, see Table \ref{table:hc_arg_def_ground_thermal_conductivity}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-site}{Site} documentation for the available HPXML schema elements, default values, and constraints.
 
-\toprule\noalign{}
-Option name & \texttt{site\_ground\_conductivity}
-\\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-0.5 &  0.5 \\
-0.8 & 0.8  \\
-1.1 & 1.1  \\
-1.4 &  1.4 \\
-1.7 &  1.7  \\
-2.0 & 2.0  \\
-2.3 & 2.3  \\
-2.6 &  2.6  \\
-\end{longtable}
+\input{tables/arguments/Ground Thermal Conductivity}
 
-
-For the argument definitions, see Table \ref{table:hc_arg_def_ground_k}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-site}{Site} documentation for the available HPXML schema elements, default values, and constraints.
-
-
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} \caption{The ResStock argument definitions set in the Ground Thermal Conductivity characteristic} \label{table:hc_arg_def_ground_k} \\
-
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{site\_soil\_and\_moisture\_type} & false & & Choice & auto,
-clay, dry, clay, mixed, clay, wet, gravel, dry, gravel, mixed, gravel,
-wet, loam, dry, loam, mixed, loam, wet, sand, dry, sand, mixed, sand,
-wet, silt, dry, silt, mixed, silt, wet, unknown, dry, unknown, mixed,
-unknown, wet & Type of soil and moisture. This is used to inform ground
-conductivity and diffusivity.  \\ \hline
-\texttt{site\_ground\_conductivity} & false & Btu/hr-ft-F & Double & &
-Conductivity of the ground soil. If provided, overrides the previous
-soil and moisture type input. \\ \hline
-\texttt{site\_ground\_diffusivity} & false & ft\textsuperscript{2}/hr & Double & &
-Diffusivity of the ground soil. If provided, overrides the previous soil
-and moisture type input. \\
-\end{longtable}
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
 \item
@@ -3072,27 +2037,13 @@ Area of exterior doors. All ResStock models currently receive the same option.
 \end{itemize}
 \paragraph{Option(s)}
 All ResStock housing units currently receive an option of 20 ft\textsuperscript{2} for the exterior area of doors; see Table \ref{table:hc_opt_door_area}.
-\begin{longtable}[]{|p{3.5cm}|p{3.3cm}|} \caption{Door Area options and arguments that vary for each option} \label{table:hc_opt_door_area} \\
-\toprule\noalign{}
-Option name & \texttt{door\_area} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-20 ft\textsuperscript{2} & 20 \\
-\end{longtable}
-For the argument definitions, see Table \ref{table:hc_arg_def_door_area}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-doors}{Doors} documentation for the available HPXML schema elements, default values, and constraints.
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} \caption{The ResStock argument definitions set in the Door Area characteristic} \label{table:hc_arg_def_door_area} \\
 
-\toprule\noalign{}
-Name & Required & Units & Type  & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{door\_area} & true & ft\textsuperscript{2} & Double &  The area of the opaque
-door(s). \\
-\end{longtable}
+\input{tables/options/Door Area}
+
+For the argument definitions, see Table \ref{table:hc_arg_def_door_area}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-doors}{Doors} documentation for the available HPXML schema elements, default values, and constraints.
+
+\input{tables/arguments/Door Area}
+
 \paragraph{Distribution Assumption(s)}
 None
 
@@ -3114,30 +2065,13 @@ Exterior door material and properties.
     \item None
 \end{itemize}
 \paragraph{Option(s)}
-All homes in ResStock receive Fiberglass doors with an R-value of 5 (Table \ref{table:hc_opt_door}).
+All homes in ResStock receive Fiberglass doors with an R-value of 5 (Table \ref{table:hc_opt_doors}).
 
-\begin{longtable}[]{|p{3.5cm}|p{3.3cm}|} \caption{Door options and arguments that vary for each option} \label{table:hc_opt_door} \\
+\input{tables/options/Doors}
 
-\toprule\noalign{}
-Option name & \texttt{door\_rvalue} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Fiberglass & 5 \\
-\end{longtable}
+For the argument definitions, see Table \ref{table:hc_arg_def_doors}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-doors}{Doors} documentation for the available HPXML schema elements, default values, and constraints.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_door}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-doors}{Doors} documentation for the available HPXML schema elements, default values, and constraints.
-
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} \caption{The ResStock argument definitions set in the Door characteristic} \label{table:hc_arg_def_door} \\\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{door\_rvalue} & true & h-ft\textsuperscript{2}-R/Btu & Double & & R-value of
-the opaque door(s) \\
-\end{longtable}
+\input{tables/arguments/Doors}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -3166,7 +2100,7 @@ Construction type and efficiency levels of windows.
 \end{itemize}
 
 \paragraph{Option(s)}
-ResStock uses 10 window options in the baseline, with variation across number of panes, low-emissivity coating, and frame material. Across all Window options, multiple ResStock arguments are constant (Table \ref{table:hc_opt_window}). \texttt{window\_natvent\_availability},
+ResStock uses 10 window options in the baseline, with variation across number of panes, low-emissivity coating, and frame material. Across all Window options, multiple ResStock arguments are constant (Table \ref{table:hc_opt_windows}). \texttt{window\_natvent\_availability},
 \texttt{window\_exterior\_shading\_winter},
 \texttt{window\_exterior\_shading\_summer},
 \texttt{window\_shading\_summer\_season}, and
@@ -3174,63 +2108,12 @@ ResStock uses 10 window options in the baseline, with variation across number of
 \texttt{skylight\_ufactor} is always set to 0.37
 and \texttt{skylight\_shgc} is always 0.3.
 
-\begin{customLongTable}
-{|p{6.0cm}|p{3cm}|p{3cm}|}
-{Windows options and arguments that vary for each option} {table:hc_opt_window}
-{Option name & \texttt{window\_ufactor} & \texttt{window\_shgc}}
+\input{tables/options/Windows}
 
-Single, Clear, Metal & 1.16 & 0.76 \\ \hline
-Single, Clear, Metal, Exterior Clear Storm & 0.67 & 0.56
-  \\ \hline
-Single, Clear, Non-metal & 0.84 & 0.63   \\ \hline
-Single, Clear, Non-metal, Exterior Clear Storm & 0.47 &
-0.54  \\ \hline
-Double, Clear, Metal, Air & 0.76 & 0.67 \\ \hline
-Double, Clear, Metal, Air, Exterior Clear Storm & 0.55 &
-0.51\\ \hline
-Double, Clear, Non-metal, Air & 0.49 & 0.56  \\ \hline
-Double, Clear, Non-metal, Air, Exterior Clear Storm &
-0.34 & 0.49 \\ \hline
-Double, Low-E, Non-metal, Air, M-Gain & 0.38 & 0.44 \\ \hline
-Triple, Low-E, Non-metal, Air, L-Gain & 0.29 & 0.26  \\
+For the argument definitions, see Table \ref{table:hc_arg_def_windows}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-windows}{Windows} documentation for the available HPXML schema elements, default values, and constraints.
 
-\end{customLongTable}
-For the argument definitions, see Table \ref{table:hc_arg_def_wind}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-windows}{Windows} documentation for the available HPXML schema elements, default values, and constraints.
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{1.5cm}|p{5cm}|} {The ResStock argument definitions set in the Windows characteristic} {table:hc_arg_def_wind}
-{Name & Required & Units & Type & Choices & Description}
-\texttt{window\_natvent\_availability} & false & Days/week & Integer &
-auto & For operable windows, the number of days/week that windows can be
-opened by occupants for natural ventilation.  \\
-\hline
-\texttt{window\_ufactor} & true & Btu/hr-ft\textsuperscript{2}-R & Double & &
-Full-assembly National Fenestration Rating Council (NFRC) U-factor. \\
-\hline
-\texttt{window\_shgc} & true & & Double & & Full-assembly NFRC solar
-heat gain coefficient. \\
-\hline
-\texttt{window\_exterior\_shading\_winter} & false & Frac & Double &
-auto & Exterior shading coefficient for the winter season. 1.0 indicates
-no reduction in solar gain, 0.85 indicates 15\% reduction, etc. \\
-\hline
-\texttt{window\_exterior\_shading\_summer} & false & Frac & Double &
-auto & Exterior shading coefficient for the summer season. 1.0 indicates
-no reduction in solar gain, 0.85 indicates 15\% reduction, etc. \\
-\hline
-\texttt{window\_shading\_summer\_season} & false & & String & auto &
-Enter a date like \textquotesingle May 1 - Sep 30\textquotesingle.
-Defines the summer season for purposes of shading coefficients; the rest
-of the year is assumed to be winter.  \\
-\hline
-\texttt{skylight\_ufactor} & true & Btu/hr-ft\textsuperscript{2}-R & Double & &
-Full-assembly NFRC U-factor. \\
-\hline
-\texttt{skylight\_shgc} & true & & Double & & Full-assembly NFRC solar
-heat gain coefficient. \\
-\hline
-\texttt{skylight\_storm\_type} & false & & Choice & auto, clear, low-e &
-The type of storm, if present. If not provided, assumes there is no
-storm. \\
-\end{customLongTable}
+\input{tables/arguments/Windows}
+
 \paragraph{Distribution Assumption(s)}
 
 \begin{itemize}
@@ -3320,87 +2203,16 @@ ResStock arguments use window-to-wall ratios to specify the window area instead 
 
 \end{itemize}
 
-ResStock has six different levels of window-to-wall ratios between 0.06 and 0.3 (Table \ref{table:hc_opt_window_area}). Window-to-wall ratios are assumed constant on all sides of the home.
+ResStock has six different levels of window-to-wall ratios between 0.06 and 0.3 (Table \ref{table:hc_opt_window_areas}). Window-to-wall ratios are assumed constant on all sides of the home.
 
 Additionally, the \texttt{window\_aspect\_ratio} is set to 1.333 for all ResStock options.
 
-\begin{longtable}[]{|p{3.cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|} \caption{Window Area options and arguments that vary for each option} \label{table:hc_opt_window_area} \\
+\input{tables/options/Window Areas}
 
-\toprule\noalign{}
-Option name & \texttt{window\_front\_wwr} &
-\texttt{window\_back\_wwr} & \texttt{window\_left\_wwr} &
-\texttt{window\_right\_wwr}
- \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-F6 B6 L6 R6 & 0.06 & 0.06 & 0.06 & 0.06
- \\
-F9 B9 L9 R9 & 0.09 & 0.09 & 0.09 & 0.09
- \\
-F12 B12 L12 R12 & 0.12 & 0.12 & 0.12 & 0.12  \\
-F15 B15 L15 R15  & 0.15 & 0.15 & 0.15 & 0.15 \\
-F18 B18 L18 R18 & 0.18 & 0.18 & 0.18 & 0.18 \\
-F30 B30 L30 R30 & 0.30 & 0.30 & 0.30 & 0.30\\
-\end{longtable}
-For the argument definitions, see Table \ref{table:hc_arg_window_area}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-windows}{Windows} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_window_areas}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-windows}{Windows} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{5cm}|} {The ResStock argument definitions set in the Window Area characteristic} {table:hc_arg_window_area}
-{Name & Required & Units & Type & Description}
-\texttt{window\_front\_wwr} & true & Frac & Double & The ratio of
-window area to wall area for the unit's front facade.
-Enter 0 if specifying Front Window Area instead. \\
-\hline
-\texttt{window\_back\_wwr} & true & Frac & Double  & The ratio of
-window area to wall area for the unit's back facade.
-Enter 0 if specifying Back Window Area instead. \\
-\hline
-\texttt{window\_left\_wwr} & true & Frac & Double  & The ratio of
-window area to wall area for the unit's left facade
-(when viewed from the front). Enter 0 if specifying Left Window Area
-instead. \\
-\hline
-\texttt{window\_right\_wwr} & true & Frac & Double  & The ratio of
-window area to wall area for the unit's right facade
-(when viewed from the front). Enter 0 if specifying Right Window Area
-instead. \\
-\hline
-\texttt{window\_area\_front} & true & ft\textsuperscript{2} & Double  & The amount of
-window area on the unit's front facade. Enter 0 if
-specifying Front Window-to-Wall Ratio instead. \\
-\hline
-\texttt{window\_area\_back} & true & ft\textsuperscript{2} & Double  & The amount of
-window area on the unit's back facade. Enter 0 if
-specifying Back Window-to-Wall Ratio instead. \\
-\hline
-\texttt{window\_area\_left} & true & ft\textsuperscript{2} & Double  & The amount of
-window area on the unit's left facade (when viewed from
-the front). Enter 0 if specifying Left Window-to-Wall Ratio instead. \\
-\hline
-\texttt{window\_area\_right} & true & ft\textsuperscript{2} & Double  & The amount of
-window area on the unit's right facade (when viewed from
-the front). Enter 0 if specifying Right Window-to-Wall Ratio instead. \\
-\hline
-\texttt{window\_aspect\_ratio} & true & Frac & Double & Ratio of
-window height to width. \\
-\hline
-\texttt{skylight\_area\_front} & true & ft\textsuperscript{2} & Double  & The amount
-of skylight area on the unit's front conditioned roof
-facade. \\
-\hline
-\texttt{skylight\_area\_back} & true & ft\textsuperscript{2} & Double  & The amount
-of skylight area on the unit's back conditioned roof
-facade. \\
-\hline
-\texttt{skylight\_area\_left} & true & ft\textsuperscript{2} & Double  & The amount
-of skylight area on the unit's left conditioned roof
-facade (when viewed from the front). \\
-\hline
-\texttt{skylight\_area\_right} & true & ft\textsuperscript{2} & Double  & The amount
-of skylight area on the unit's right conditioned roof
-facade (when viewed from the front). \\
-\end{customLongTable}
+\input{tables/arguments/Window Areas}
+
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
 
@@ -3418,124 +2230,45 @@ facade (when viewed from the front). \\
   SFD, SFA, and Mobile Homes are represented by the SFD window area
   distribution.
 \end{itemize}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Overhangs}\label{overhangs}
-\paragraph{Description}
-Presence, depth, and location of window overhangs (not currently used in ResStock baseline).
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item Not applicable.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item None.
-\end{itemize}
-\paragraph{Option(s)}
-ResStock currently assumes all buildings have no overhang. Therefore, all models are assigned the option of ``None'' for this characteristic, and receive the following ResStock arguments:
-\begin{itemize}
-    \item \texttt{overhangs\_front\_depth} = 0
-\item \texttt{overhangs\_front\_distance\_to\_top\_of\_window} = 0
-\item \texttt{overhangs\_front\_distance\_to\_bottom\_of\_window} = 4
-\item \texttt{overhangs\_back\_depth} = 0
-\item \texttt{overhangs\_back\_distance\_to\_top\_of\_window} = 0
-\item \texttt{overhangs\_back\_distance\_to\_bottom\_of\_window} = 4
-\item \texttt{overhangs\_left\_depth} = 0
-\item \texttt{overhangs\_left\_distance\_to\_top\_of\_window} = 0
-\item \texttt{overhangs\_left\_distance\_to\_bottom\_of\_window} = 4
-\item \texttt{overhangs\_right\_depth} = 0
-\item \texttt{overhangs\_right\_distance\_to\_top\_of\_window} = 0
-\item \texttt{overhangs\_right\_distance\_to\_bottom\_of\_window} = 4
-\end{itemize}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_overhang}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-overhangs}{Overhangs} documentation for the available HPXML schema elements, default values, and constraints.
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{5.3cm}|} {The ResStock argument definitions set in the Overhangs characteristic} {table:hc_arg_def_overhang}
-{Name & Required & Units & Type & Description}
-\texttt{overhangs\_front\_depth} & true & ft & Double &  The depth of
-overhangs for windows for the front facade. \\
-\hline
-\texttt{overhangs\_front\_distance\_to\_top\_of\_window} & true & ft &
-Double &  The overhangs distance to the top of window for the front
-facade. \\
-\hline
-\texttt{overhangs\_front\_distance\_to\_bottom\_of\_window} & true & ft
-& Double &  The overhangs distance to the bottom of window for the
-front facade. \\
-\hline
-\texttt{overhangs\_back\_depth} & true & ft & Double & The depth of
-overhangs for windows for the back facade. \\
-\hline
-\texttt{overhangs\_back\_distance\_to\_top\_of\_window} & true & ft &
-Double &  The overhangs distance to the top of window for the back
-facade. \\
-\hline
-\texttt{overhangs\_back\_distance\_to\_bottom\_of\_window} & true & ft &
-Double &  The overhangs distance to the bottom of window for the back
-facade. \\
-\hline
-\texttt{overhangs\_left\_depth} & true & ft & Double &  The depth of
-overhangs for windows for the left facade. \\
-\hline
-\texttt{overhangs\_left\_distance\_to\_top\_of\_window} & true & ft &
-Double &  The overhangs distance to the top of window for the left
-facade. \\
-\hline
-\texttt{overhangs\_left\_distance\_to\_bottom\_of\_window} & true & ft &
-Double & The overhangs distance to the bottom of window for the left
-facade. \\
-\hline
-\texttt{overhangs\_right\_depth} & true & ft & Double &  The depth of
-overhangs for windows for the right facade. \\
-\hline
-\texttt{overhangs\_right\_distance\_to\_top\_of\_window} & true & ft &
-Double &  The overhangs distance to the top of window for the right
-facade. \\
-\hline
-\texttt{overhangs\_right\_distance\_to\_bottom\_of\_window} & true & ft
-& Double &  The overhangs distance to the bottom of window for the
-right facade. \\
-\end{customLongTable}
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-\item
-  All homes are assumed to not have window overhangs (roof eaves are defined separately).
-\end{itemize}
-%%%%%%%%%%
-
 \subsubsection{Eaves}\label{eaves}
 \paragraph{Description}
 Depth of roof eaves.
+
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
-
-\item
-  Building America House Simulation Protocols (\cite{Wilson2014}).
+    \item Building America House Simulation Protocols (\cite{Wilson2014}).
 \end{itemize}
+
 \paragraph{Direct Conditional Dependencies}
-
-
 None.
 
 \paragraph{Option(s)}
+ResStock currently assumes 2 ft eaves (which are modeled as overhangs) for all buildings. Therefore, all models receive the following ResStock arguments:
+\begin{itemize}
+    \item \texttt{geometry\_eaves\_depth} = 2
+    \item \texttt{overhangs\_front\_depth} = 0
+    \item \texttt{overhangs\_front\_distance\_to\_top\_of\_window} = 0
+    \item \texttt{overhangs\_front\_distance\_to\_bottom\_of\_window} = 4
+    \item \texttt{overhangs\_back\_depth} = 0
+    \item \texttt{overhangs\_back\_distance\_to\_top\_of\_window} = 0
+    \item \texttt{overhangs\_back\_distance\_to\_bottom\_of\_window} = 4
+    \item \texttt{overhangs\_left\_depth} = 0
+    \item \texttt{overhangs\_left\_distance\_to\_top\_of\_window} = 0
+    \item \texttt{overhangs\_left\_distance\_to\_bottom\_of\_window} = 4
+    \item \texttt{overhangs\_right\_depth} = 0
+    \item \texttt{overhangs\_right\_distance\_to\_top\_of\_window} = 0
+    \item \texttt{overhangs\_right\_distance\_to\_bottom\_of\_window} = 4
+\end{itemize}
 
-All buildings receive the same value of 2 feet for \texttt{geometry\_eaves\_depth}.
+For the argument definitions, see Table \ref{table:hc_arg_def_eaves}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-overhangs}{Overhangs} documentation for the available HPXML schema elements, default values, and constraints.
 
+\input{tables/arguments/Eaves}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_eaves}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-enclosure}{Enclosure} documentation for the available HPXML schema elements, default values, and constraints.
-\begin{longtable}[]{|p{4.5cm}|p{1.1cm}|p{1.cm}|p{1.1cm}|p{1.1cm}|p{4.5cm}|} \caption{The ResStock argument definitions set in the Eaves characteristic} \label{table:hc_arg_def_eaves} \\
-
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{geometry\_eaves\_depth} & true & ft & Double & & The eaves depth
-of the roof. \\
-\end{longtable}
-% Template starting-place header swap: %{}
 \paragraph{Distribution Assumption(s)}
 None.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Interior Shading}\label{interior_shading}
 \paragraph{Description}
@@ -3552,37 +2285,14 @@ Amount of window shading in the summer and winter.
     \item None.
 \end{itemize}
 \paragraph{Option(s)}
-All models in ResStock receive the same shading option (Table \ref{table:hc_opt_int_shade}).
-\begin{longtable}[]
-{|p{4.5cm}|p{4.cm}|p{4.cm}|} \caption{Interior Shading options and arguments that vary for each option} \label{table:hc_opt_int_shade} \\
-\toprule\noalign{}
-Option name &
-\texttt{window\_interior\_shading\_winter} &
-\texttt{window\_interior\_shading\_summer} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Summer = 0.7, Winter = 0.85 & 0.85 & 0.7 \\
-\end{longtable}
+All models in ResStock receive the same shading option (Table \ref{table:hc_opt_interior_shading}).
 
-For the argument definitions, see Table \ref{table:hc_arg_def_int_shad}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-windows}{Windows} documentation for the available HPXML schema elements, default values, and constraints.
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{5.cm}|} \caption{The ResStock argument definitions set in the Interior Shading characteristic} \label{table:hc_arg_def_int_shad} \\
+\input{tables/options/Interior Shading}
 
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{window\_interior\_shading\_winter} & false & Frac & Double &
-auto & Interior shading coefficient for the winter season. 1.0 indicates
-no reduction in solar gain, 0.85 indicates 15\% reduction, etc. \\
-\hline
-\texttt{window\_interior\_shading\_summer} & false & Frac & Double &
-auto & Interior shading coefficient for the summer season. 1.0 indicates
-no reduction in solar gain, 0.85 indicates 15\% reduction, etc.  \\
-\end{longtable}
+For the argument definitions, see Table \ref{table:hc_arg_def_interior_shading}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-windows}{Windows} documentation for the available HPXML schema elements, default values, and constraints.
+
+\input{tables/arguments/Interior Shading}
+
 \paragraph{Distribution Assumption(s)}
 None.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3603,8 +2313,6 @@ Total infiltration to the dwelling unit.
   Corporation.
 \end{itemize}
 
-
-
 \paragraph{Direct Conditional Dependencies}
 
 \begin{itemize}
@@ -3613,28 +2321,11 @@ Total infiltration to the dwelling unit.
     \item Vintage.
 \end{itemize}
 \paragraph{Option(s)}
-All infiltration options in ResStock are provided in air changes per hour (ACH) at 50 Pascals, as calculated by a blower door test. The characteristic sets the \texttt{air\_leakage\_leakiness\_description}, \texttt{air\_leakage\_units}, \texttt{air\_leakage\_house\_pressure}, \texttt{air\_leakage\_value}, \texttt{air\_leakage\_type}, and \texttt{site\_shielding\_of\_home} ResStock arguments. For the argument definitions, see Table \ref{table:hc_arg_def_infil}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html##hpxml-site}{Site} documentation for the available HPXML schema elements, default values, and constraints.
+All infiltration options in ResStock are provided in air changes per hour (ACH) at 50 Pascals, as calculated by a blower door test. The characteristic sets the \texttt{air\_leakage\_leakiness\_description}, \texttt{air\_leakage\_units}, \texttt{air\_leakage\_house\_pressure}, \texttt{air\_leakage\_value}, \texttt{air\_leakage\_type}, and \texttt{site\_shielding\_of\_home} ResStock arguments. For the argument definitions, see Table \ref{table:hc_arg_def_infiltration}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html##hpxml-air-infiltration}{Air Infiltration} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{customLongTable}{|p{2.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{2.cm}|p{5.5cm}|} {The ResStock argument definitions set in the Infiltration characteristic} {table:hc_arg_def_infil}
-{Name & Required & Units & Type & Choices & Description}
-\texttt{site\_shielding\_of\_home} & false & & Choice & auto, exposed,
-normal, well-shielded & Presence of nearby buildings, trees,
-obstructions for infiltration model.  \\
-\hline
-\texttt{air\_leakage\_leakiness\_description} & false & & Choice & auto, very tight, tight, average, leaky, very leaky & Qualitative description of infiltration. If provided, the Year Built of the home is required. Either provide this input or provide a numeric air leakage value below. \\
-\hline
-\texttt{air\_leakage\_units} & true & & Choice & ACH, CFM (cubic feet per minute), ACHnatural,
-CFMnatural, EffectiveLeakageArea & The unit of measure for the air leakage if providing a numeric air leakage value. \\
-\hline
-\texttt{air\_leakage\_house\_pressure} & false & Pa & Double & & The house pressure relative to outside if providing a numeric air leakage value. Required when units are ACH or CFM. \\
-\hline
-\texttt{air\_leakage\_value} & false & & string & & Numeric air leakage value. For \textquotesingle EffectiveLeakageArea\textquotesingle, provide value in sq. in. If provided, overrides Leakiness Description input. \\
-\hline
-\texttt{air\_leakage\_type} & false & & Choice & auto, unit total, unit
-exterior only & Type of air leakage. Type of air leakage if providing a numeric air leakage value. If \textquotesingle unit total\textquotesingle, represents the total infiltration to the unit as measured by a compartmentalization test, in which case the air leakage value will be adjusted by the ratio of exterior envelope surface area to total envelope surface area. Otherwise, if \textquotesingle unit exterior only\textquotesingle, represents the infiltration to the unit from outside only as measured by a guarded test. Required when unit type is single-family attached or apartment unit. \\
-\end{customLongTable}
+\input{tables/arguments/Infiltration}
 
-The options of the Infiltration characteristic range between 1 ACH 50 to 50 ACH 50 and set the \texttt{air\_leakage\_value} ResStock argument, Table \ref{table:hc_opt_infil}.
+The options of the Infiltration characteristic range between 1 ACH 50 to 50 ACH 50 and set the \texttt{air\_leakage\_value} ResStock argument, Table \ref{table:hc_opt_infiltration}.
 
 Below is a list of arguments and their values that are constant across all the options.
 \begin{itemize}
@@ -3645,32 +2336,7 @@ Below is a list of arguments and their values that are constant across all the o
 	\item \texttt{site\_shielding\_of\_home} = normal
 \end{itemize}
 
-
-\begin{longtable}[]{|p{2.cm}|p{3.5cm}|} \caption{Infiltration options and arguments that vary for each option} \label{table:hc_opt_infil} \\
-\toprule\noalign{}
-Option name &
-
-\texttt{air\_leakage\_value}  \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-1 ACH50 & 1  \\
-2 ACH50 & 2  \\
-3 ACH50 & 3 \\
-4 ACH50 & 4  \\
-5 ACH50 & 5 \\
-6 ACH50 & 6\\
-7 ACH50 & 7\\
-8 ACH50 & 8  \\
-10 ACH50 & 10  \\
-15 ACH50 & 15  \\
-20 ACH50 & 20  \\
-25 ACH50 & 25  \\
-30 ACH50 & 30  \\
-40 ACH50 & 40  \\
-50 ACH50 & 50  \\
-\end{longtable}
+\input{tables/options/Infiltration}
 
 \paragraph{Distribution Assumption(s)}
 

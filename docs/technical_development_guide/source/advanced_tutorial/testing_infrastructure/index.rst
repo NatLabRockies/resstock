@@ -120,8 +120,9 @@ Executes:
 
 Artifacts uploaded:
 
-- coverage
+- precomputed_buildstocks
 - feature_samples
+- coverage
 
 .. note::
 
@@ -160,7 +161,6 @@ Uses ``project_testing/testing_baseline.yml`` and ``project_national/national_ba
 
 Artifacts uploaded:
 
-- precomputed_buildstocks
 - run_analysis_results_csvs
 
 .. note::
@@ -175,34 +175,16 @@ Runs full simulations of project_testing and project_national using BuildStockBa
 The data is then processed to be compared with the results from ``run_analysis.rb`` run in the analysis-tests job.
 Uses ``project_testing/testing_baseline.yml`` and ``project_national/national_baseline.yml`` for the simulation.
 
-Artifacts uploaded:
+Commits validated result sets to version control:
 
-- feature_results
-- buildstockbatch_results_csvs
-- raw_simulation_output
-
-.. note::
-
-  Using ``buildstock_local`` is the easiest way to locally run a small stock simulation for debugging purposes.
-  This is especially useful when modifying the input characteristics or inspecting results changes accross models.
-
-compare-tools
-~~~~~~~~~~~~~
-
-This job compares outputs from ``run_analysis.rb`` (run in the analysis-tests job) vs. BuildStockBatch (run in the integration-tests job).
-It does this by comparing the columns and ensuring there are no missing or extra columns in either of the results.
-The job also tests to ensures the total annual energy is the same between the two simulation tools.
-
-compare-results
-~~~~~~~~~~~~~~~
+- Base branch samples
+- Base branch annual and timeseries results
+- Precomputed buildstocks
+- Formatted `options_lookup.tsv`
 
 Runs (only on pull requests) to compare the base branch results with the feature branch results.
 This job is useful for comparing impacts of model changes.
 A model change happens when something is modified/added/deleted (e.g., piece of code) in ResStock or OpenStudio-HPXML measures.
-
-.. note::
-
-  This job is *not* useful for TSV changes as the samples are shuffled between the base and feature branches.
 
 Compares:
 
@@ -211,17 +193,26 @@ Compares:
 
 Artifacts uploaded:
 
+- base_results
+- buildstockbatch_results_csvs
+- raw_simulation_output
 - comparisons
 
-update-results
-~~~~~~~~~~~~~~
+.. note::
 
-Commits validated result sets to version control:
+  Using ``buildstock_local`` is the easiest way to locally run a small stock simulation for debugging purposes.
+  This is especially useful when modifying the input characteristics or inspecting results changes accross models.
 
-- Base branch samples
-- Base branch annual and timeseries results
-- Precomputed buildstocks
-- Formatted `options_lookup.tsv`
+.. note::
+
+  This job is *not* useful for TSV changes as the samples are shuffled between the base and feature branches.
+
+compare-tools
+~~~~~~~~~~~~~
+
+This job compares outputs from ``run_analysis.rb`` (run in the analysis-tests job) vs. BuildStockBatch (run in the integration-tests job).
+It does this by comparing the columns and ensuring there are no missing or extra columns in either of the results.
+The job also tests to ensures the total annual energy is the same between the two simulation tools.
 
 sdr-options-analysis
 ~~~~~~~~~~~~~~~~~~~~
@@ -256,6 +247,7 @@ Artifacts uploaded:
 
 - buildstockbatch_results_sdr_raw_csvs
 - buildstockbatch_results_sdr_published_csvs
+- sdr_comparisons
 
 Commits:
 
@@ -304,19 +296,20 @@ Artifacts Produced
 Artifacts produced if tests are successful:
 
 - options_lookup: A sorted and formatted version of ``options_lookup.tsv`` that allows diffs to easily be seen.
-- coverage: Coverage logs.
-- feature_samples: The samples simulated in the feature branch for the analysis and integration tests.
-- documentation: A current version of the ResStock documentation in Read-the-Docs and the Technical Reference Guide PDF.
 - precomputed_buildstocks: Precomputed `buildstock.csv` for ``test/test_yml_files``.
+- feature_samples: The samples simulated in the feature branch for the analysis and integration tests.
+- coverage: Coverage logs.
+- documentation: A current version of the ResStock documentation in Read-the-Docs and the Technical Reference Guide PDF.
 - run_analysis_results_csvs: Annual results from the analysis tests.
-- feature_results: Processed baseline annual and timeseries results from the integration tests.
+- base_results: Baseline and upgrades results stored on the base branch.
 - buildstockbatch_results_csvs: Annual results from the integration tests.
 - raw_simulation_output: Unprocessed simulation output files from the integration tests.
-- comparisons: Plots that show the difference in the results between the base branch and feature branch. Helpful during model changes, not characteristics changes.
+- comparisons: Plots that show the difference in the results between the base branch and feature branch for integration-tests. Helpful during model changes, not characteristics changes.
 - national_550ksamples: The current 550,000 sample in ResStock that will be simulated. Used in the SDR integration tests.
 - sdr_options_analysis: Analysis of the upgrade options and their percent applicability based on the current national 550,000 sample. The minimal buildstock for SDR integration tests.
 - buildstockbatch_results_sdr_raw_csvs: The results.csv files from the ResStock SDR upgrades project file being run with BuildStock-Batch.
 - buildstockbatch_results_sdr_published_csvs: The results.csv files from the ResStock SDR upgrades project file being run with Buildstock-Batch transformed into what is being published on OEDI.
+- sdr_comparisons: Plots that show the difference in the results between the base branch and feature branch for sdr-integration-tests. Helpful during model changes, not characteristics changes.
 
 Test Suites and Files
 =====================
