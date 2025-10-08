@@ -1,0 +1,846 @@
+field_name	field_location	units	field_description
+bldg_id	metadata_and_annual	n/a	The building unit number (between 1 and the number of samples).
+completed_status	metadata_and_annual	n/a	The simulation status.
+upgrade	metadata_and_annual	n/a	The upgrade number
+in.upgrade_name	metadata_and_annual	n/a	User-specificed name that describes the upgrade.
+weight	metadata_and_annual	n/a	Number of buildings this simulation represents.
+applicability	metadata_and_annual	n/a	Whether the upgrade is applicable to the building. Will be always True for baseline.
+in.sqft..ft2	metadata_and_annual	ft2	"Floor Area, Conditioned"
+in.representative_income	metadata_and_annual	usd	Average representative income of the country
+in.county_name	metadata_and_annual	n/a	County name
+in.ahs_region	metadata_and_annual	n/a	The American Housing Survey region that the sample is located.
+in.aiannh_area	metadata_and_annual	n/a	American Indian/Alaska Native/Native Hawaiian Area that the sample is located.
+in.area_median_income	metadata_and_annual	n/a	Area median income of the household occupying the dwelling unit.
+in.ashrae_iecc_climate_zone_2004	metadata_and_annual	n/a	Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located.
+in.ashrae_iecc_climate_zone_2004_sub_cz_split	metadata_and_annual	n/a	"Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located. Climate zone where climate zone 2A is split between counties in TX, LA and FL, GA, AL, and MSClimate zone where climate zone 1A is split between counties in FL and HI."
+in.bathroom_spot_vent_hour	metadata_and_annual	n/a	Bathroom spot ventilation daily start hour.
+in.battery	metadata_and_annual	n/a	The size of an onsite battery (not used in baseline models).
+in.bedrooms	metadata_and_annual	n/a	The number of bedrooms in the dwelling unit.
+in.building_america_climate_zone	metadata_and_annual	n/a	The Building America Climate Zone that the sample is located.
+in.cec_climate_zone	metadata_and_annual	n/a	The California Energy Commission Climate Zone that the sample is located.
+in.ceiling_fan	metadata_and_annual	n/a	Presence and energy usage of ceiling fans at medium speed.
+in.census_division	metadata_and_annual	n/a	The U.S. Census Division that the sample is located.
+in.census_division_recs	metadata_and_annual	n/a	"Census Division as used in RECS 2015 that the sample is located. RECS 2015 splits the Mountain Census Division into north (CO, ID, MT, UT, WY) and south (AZ, NM, NV)."
+in.census_region	metadata_and_annual	n/a	The U.S. Census Region that the sample is located.
+in.city	metadata_and_annual	n/a	The City that the sample is located.
+in.clothes_dryer	metadata_and_annual	n/a	"The presence, rated efficiency, and fuel type of the clothes dryer in a dwelling unit."
+in.clothes_dryer_usage_level	metadata_and_annual	n/a	Clothes dryer energy usage level multiplier.
+in.clothes_washer	metadata_and_annual	n/a	Presence and rated efficiency of the clothes washer.
+in.clothes_washer_presence	metadata_and_annual	n/a	The presence of a clothes washer in the dwelling unit.
+in.clothes_washer_usage_level	metadata_and_annual	n/a	Clothes washer energy usage level multiplier.
+in.cooking_range	metadata_and_annual	n/a	Presence and fuel type of the cooking range.
+in.cooking_range_usage_level	metadata_and_annual	n/a	Cooking range energy usage level multiplier.
+in.cooling_unavailable_days	metadata_and_annual	n/a	Number of days in a year the cooling system is unavailable.
+in.cooling_setpoint	metadata_and_annual	n/a	Baseline cooling setpoint with no offset applied.
+in.cooling_setpoint_has_offset	metadata_and_annual	n/a	Presence of a cooling setpoint offset.
+in.cooling_setpoint_offset_magnitude	metadata_and_annual	n/a	The magnitude of cooling setpoint offset.
+in.cooling_setpoint_offset_period	metadata_and_annual	n/a	The period and offset for the dwelling unit’s cooling setpoint. Default for the day is from 9am to 5pm and for the night is 10pm to 7am.
+in.corridor	metadata_and_annual	n/a	Type of corridor attached to multi-family units.
+in.county	metadata_and_annual	n/a	The U.S. County that the sample is located.
+in.county_and_puma	metadata_and_annual	n/a	The GISJOIN identifier for the County and the Public Use Microdata Area that the sample is located.
+in.county_metro_status	metadata_and_annual	n/a	"The Metro Status of the county that the sample is located, based on MSA and MicroSA."
+in.custom_state	metadata_and_annual	n/a	A custom selection of states to be able to have more fine tuned probability distributionin states where we have more data.
+in.dehumidifier	metadata_and_annual	n/a	"Presence, water removal rate, and humidity setpoint of the dehumidifier."
+in.dishwasher	metadata_and_annual	n/a	The presence and rated efficiency of the dishwasher.
+in.dishwasher_usage_level	metadata_and_annual	n/a	Dishwasher energy usage level multiplier.
+in.door_area	metadata_and_annual	n/a	Area of exterior doors.
+in.doors	metadata_and_annual	n/a	Exterior door material and properties.
+in.duct_leakage_and_insulation	metadata_and_annual	n/a	Duct insulation and leakage to outside from the portion of ducts in unconditioned spaces.
+in.duct_location	metadata_and_annual	n/a	Location of Duct System.
+in.eaves	metadata_and_annual	n/a	Depth of roof eaves.
+in.electric_panel_service_rating..a	metadata_and_annual	amp	The rating of electric panel in Ampere.
+in.electric_panel_service_rating_bin..a	metadata_and_annual	amp	The rating bin of electric panel in Ampere.
+in.electric_vehicle_battery	metadata_and_annual	n/a	The type of electric vehicle and battery range in miles.
+in.electric_vehicle_charge_at_home	metadata_and_annual	n/a	The percentage a household would or do charge their electric vehicle at home.
+in.electric_vehicle_charger	metadata_and_annual	n/a	Type of electric vehicle charger used at the dwelling unit.
+in.electric_vehicle_miles_traveled	metadata_and_annual	n/a	"The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle. Because EVs drive less miles/year than ICE, the max value is capped at 22,500 miles/yr and the distribution is shifted to reduce the mean."
+in.electric_vehicle_outlet_access	metadata_and_annual	n/a	The unit has an outlet within 20 feet of vehicle parking.
+in.electric_vehicle_ownership	metadata_and_annual	n/a	The dwelling unit owns an electric vehicle.
+in.energystar_climate_zone_2023	metadata_and_annual	n/a	"Climate zones for windows, doors, and skylights per EnergyStar guidelines as of 2023."
+in.federal_poverty_level	metadata_and_annual	n/a	Federal poverty level of the household occupying the dwelling unit.
+in.generation_and_emissions_assessment_region	metadata_and_annual	n/a	The generation and carbon emissions assessment region that the sample is located in.
+in.geometry_attic_type	metadata_and_annual	n/a	The dwelling unit attic type.
+in.geometry_building_horizontal_location_mf	metadata_and_annual	n/a	"Location of the single-family attached unit horizontally within the building (left, middle, right)."
+in.geometry_building_horizontal_location_sfa	metadata_and_annual	n/a	"Location of the single-family attached unit horizontally within the building (left, middle, right)."
+in.geometry_building_level_mf	metadata_and_annual	n/a	"Location of the multi-family unit vertically within the building (bottom, middle, top)."
+in.geometry_building_number_units_mf	metadata_and_annual	n/a	The number of dwelling units in the multi-family building.
+in.geometry_building_number_units_sfa	metadata_and_annual	n/a	Number of units in the single-family attached building.
+in.geometry_building_type_acs	metadata_and_annual	n/a	The building type classification according to the U.S. Census American Community Survey.
+in.geometry_building_type_height	metadata_and_annual	n/a	"The 2009 U.S. Energy Information Administration Residential Energy Consumption Survey building type with multi-family buildings split out by low-rise, mid-rise, and high-rise."
+in.geometry_building_type_recs	metadata_and_annual	n/a	The building type classification according to the U.S. Energy Information Administration Residential Energy Consumption Survey.
+in.geometry_floor_area	metadata_and_annual	n/a	The finished floor area of the dwelling unit using bins from 2017-2019 AHS.
+in.geometry_floor_area_bin	metadata_and_annual	n/a	The finished floor area of the dwelling unit using bins from the U.S. Energy Information Administration Residential Energy Consumption Survey.
+in.geometry_foundation_type	metadata_and_annual	n/a	The type of foundation.
+in.geometry_garage	metadata_and_annual	n/a	The size of an attached garage.
+in.geometry_space_combination	metadata_and_annual	n/a	"Valid combinations of building type, building level mf, attic, foundation, and garage."
+in.geometry_stories	metadata_and_annual	n/a	The number of building stories.
+in.geometry_stories_low_rise	metadata_and_annual	n/a	Number of building stories for low-rise buildings.
+in.geometry_story_bin	metadata_and_annual	n/a	The building has more than 8 or less than 8 stories.
+in.geometry_wall_exterior_finish	metadata_and_annual	n/a	Wall siding material and color.
+in.geometry_wall_type	metadata_and_annual	n/a	The wall material used for thermal mass calculations of exterior walls.
+in.ground_thermal_conductivity	metadata_and_annual	n/a	The thermal conductivity (in Btu/hr-ft-F) of the ground using in foundation and geothermal heat pump heat transfer calculations.
+in.has_pv	metadata_and_annual	n/a	The dwelling unit has a rooftop photovoltaic system.
+in.heating_fuel	metadata_and_annual	n/a	The primary fuel used for heating the dwelling unit.
+in.heating_unavailable_days	metadata_and_annual	n/a	Number of days in a year the heating system is unavailable.
+in.heating_setpoint	metadata_and_annual	n/a	Baseline heating setpoint with no offset applied.
+in.heating_setpoint_has_offset	metadata_and_annual	n/a	Presence of a heating setpoint offset.
+in.heating_setpoint_offset_magnitude	metadata_and_annual	n/a	Magnitude of the heating setpoint offset.
+in.heating_setpoint_offset_period	metadata_and_annual	n/a	The period and offset for the dwelling unit’s heating setpoint. Default for the day is from 9am to 5pm and for the night is 10pm to 7am.
+in.holiday_lighting	metadata_and_annual	n/a	Use of holiday lighting (not currently modeled separately from other exterior lighting).
+in.hot_water_distribution	metadata_and_annual	n/a	Type of distribution system and presence of hot water piping insulation.
+in.hot_water_fixtures	metadata_and_annual	n/a	Hot water fixture usage and flow levels.
+in.household_has_tribal_persons	metadata_and_annual	n/a	The household occupying the dwelling unit has at least one tribal person in the household.
+in.hvac_cooling_autosizing_factor	metadata_and_annual	n/a	The cooling airflow and capacity scaling factor applied to the auto-sizing methodology (not used in baseline models).
+in.hvac_cooling_efficiency	metadata_and_annual	n/a	The presence and efficiency of primary cooling system in the dwelling unit.
+in.hvac_cooling_partial_space_conditioning	metadata_and_annual	n/a	The fraction of the finished floor area that the cooling system provides cooling.
+in.hvac_cooling_type	metadata_and_annual	n/a	The presence and type of primary cooling system in the dwelling unit.
+in.hvac_has_ducts	metadata_and_annual	n/a	The presence of ducts in the dwelling unit.
+in.hvac_has_shared_system	metadata_and_annual	n/a	The presence of an HVAC system shared between multiple dwelling units.
+in.hvac_has_zonal_electric_heating	metadata_and_annual	n/a	Presence of electric baseboard heating.
+in.hvac_heating_autosizing_factor	metadata_and_annual	n/a	The heating airflow and capacity scaling factor applied to the auto-sizing methodology (not used).
+in.hvac_heating_efficiency	metadata_and_annual	n/a	The presence and efficiency of the primary heating system in the dwelling unit.
+in.hvac_heating_type	metadata_and_annual	n/a	The presence and type of the primary heating system in the dwelling unit.
+in.hvac_heating_type_and_fuel	metadata_and_annual	n/a	"The presence, type, and fuel of primary heating system."
+in.hvac_secondary_heating_efficiency	metadata_and_annual	n/a	The efficiency and type of the secondary heating system.
+in.hvac_secondary_heating_fuel	metadata_and_annual	n/a	Secondary Heating Fuel for the dwelling unit
+in.hvac_secondary_heating_partial_space_conditioning	metadata_and_annual	n/a	The fraction of heating load served by secondary heating system.
+in.hvac_secondary_heating_type	metadata_and_annual	n/a	The efficiency and type of the secondary heating system.
+in.hvac_shared_efficiencies	metadata_and_annual	n/a	The presence and efficiency of the shared HVAC system.
+in.hvac_system_is_faulted	metadata_and_annual	n/a	The presence of the HVAC system having a fault (not used).
+in.hvac_system_is_scaled	metadata_and_annual	n/a	Whether the HVAC system has been undersized or oversized (not used).
+in.hvac_system_single_speed_ac_airflow	metadata_and_annual	n/a	Single speed central and room air conditioner actual air flow rates.
+in.hvac_system_single_speed_ac_charge	metadata_and_annual	n/a	Central and room air conditioner deviation between design/installed charge.
+in.hvac_system_single_speed_ashp_airflow	metadata_and_annual	n/a	Single speed air source heat pump actual air flow rates.
+in.hvac_system_single_speed_ashp_charge	metadata_and_annual	n/a	Air source heat pump deviation between design/installed charge.
+in.income	metadata_and_annual	n/a	Income of the household occupying the dwelling unit.
+in.income_recs_2015	metadata_and_annual	n/a	Income of the household occupying the dwelling unit that are aligned with the 2015 U.S. Energy Information Administration Residential Energy Consumption Survey.
+in.income_recs_2020	metadata_and_annual	n/a	Income of the household occupying the dwelling unit that are aligned with the 2020 U.S. Energy Information Administration Residential Energy Consumption Survey.
+in.infiltration	metadata_and_annual	n/a	Total infiltration to the dwelling unit.
+in.insulation_ceiling	metadata_and_annual	n/a	Ceiling insulation level (between the living space and unconditioned attic).
+in.insulation_floor	metadata_and_annual	n/a	Floor insulation level.
+in.insulation_foundation_wall	metadata_and_annual	n/a	Foundation walls insulation level.
+in.insulation_rim_joist	metadata_and_annual	n/a	Insulation level for rim joists.
+in.insulation_roof	metadata_and_annual	n/a	Finished roof insulation level.
+in.insulation_slab	metadata_and_annual	n/a	Slab insulation level.
+in.insulation_wall	metadata_and_annual	n/a	Wall construction type and insulation level.
+in.interior_shading	metadata_and_annual	n/a	Type of window interior shading.
+in.iso_rto_region	metadata_and_annual	n/a	The independent system operator or regional transmission organization region that the sample is located.
+in.lighting	metadata_and_annual	n/a	"Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options."
+in.lighting_interior_use	metadata_and_annual	n/a	Interior lighting usage relative to the national average.
+in.lighting_other_use	metadata_and_annual	n/a	Exterior and garage lighting usage relative to the national average.
+in.location_region	metadata_and_annual	n/a	A custom ResStock region constructed of RECS 2009 reportable domains that the sample is located.
+in.mechanical_ventilation	metadata_and_annual	n/a	Mechanical ventilation type and efficiency.
+in.metropolitan_and_micropolitan_statistical_area	metadata_and_annual	n/a	The U.S. Metropolitan Statistical Area (MSA) or Micropolitan Statistical Area (MicroSA) that the sample is located.
+in.misc_extra_refrigerator	metadata_and_annual	n/a	The presence and rated efficiency of the secondary refrigerator.
+in.misc_freezer	metadata_and_annual	n/a	The presence and rated efficiency of a standalone freezer.
+in.misc_gas_fireplace	metadata_and_annual	n/a	Presence of a gas fireplace.`
+in.misc_gas_grill	metadata_and_annual	n/a	Presence of a gas grill.
+in.misc_gas_lighting	metadata_and_annual	n/a	Presence of exterior gas lighting.
+in.misc_hot_tub_spa	metadata_and_annual	n/a	The presence and heating fuel of a hot tub/spa at the dwelling unit.
+in.misc_pool	metadata_and_annual	n/a	The presence of a pool at the dwelling unit.
+in.misc_pool_heater	metadata_and_annual	n/a	The heating fuel of the pool heater if there is a pool.
+in.misc_pool_pump	metadata_and_annual	n/a	Presence and size of pool pump.
+in.misc_well_pump	metadata_and_annual	n/a	Presence of well pump according to the use of well for domestic water source.
+in.natural_ventilation	metadata_and_annual	n/a	Schedule of natural ventilation from windows.
+in.neighbors	metadata_and_annual	n/a	Presence and distance between the dwelling unit and the nearest neighbors to the left and right.
+in.occupants	metadata_and_annual	n/a	The number of occupants living in the dwelling unit.
+in.orientation	metadata_and_annual	n/a	Orientation of the front of the dwelling unit as it faces the street.
+in.overhangs	metadata_and_annual	n/a	"Presence, depth, and location of window overhangs"
+in.plug_load_diversity	metadata_and_annual	n/a	Plug load diversity multiplier intended to add variation in plug load profiles across all simulations.
+in.plug_loads	metadata_and_annual	n/a	Plug load usage level which is varied by Census Division RECS and Building Type RECS.
+in.puma	metadata_and_annual	n/a	The Public Use Microdata Area from 2010 U.S. Census that the sample is located.
+in.puma_metro_status	metadata_and_annual	n/a	The public use microdata area metropolitan status that the dwelling unit is located.
+in.pv_orientation	metadata_and_annual	n/a	The orientation of the photovoltaic system.
+in.pv_system_size	metadata_and_annual	n/a	The size of the photovoltaic system.
+in.radiant_barrier	metadata_and_annual	n/a	Presence of radiant barrier in the attic (not modeled).
+in.range_spot_vent_hour	metadata_and_annual	n/a	Range spot ventilation daily start hour.
+in.reeds_balancing_area	metadata_and_annual	n/a	The Regional Energy Deployment System Model (ReEDS) balancing area that the sample is located.
+in.refrigerator	metadata_and_annual	n/a	The presence and rated efficiency of the primary refrigerator.
+in.refrigerator_usage_level	metadata_and_annual	n/a	Refrigerator energy usage level multiplier.
+in.roof_material	metadata_and_annual	n/a	Roof material and color.
+in.state	metadata_and_annual	n/a	The U.S. State the sample is located.
+in.state_metro_median_income	metadata_and_annual	n/a	State Metro median income of the household occupying the dwelling unit. This is different from State Median Income in that the Income Limits are differentiated by Metro and Nonmetro portions of the state.
+in.tenure	metadata_and_annual	n/a	The tenancy (owner or renter) of the household occupying the dwelling unit.
+in.usage_level	metadata_and_annual	n/a	Usage of major appliances relative to the national average.
+in.vacancy_status	metadata_and_annual	n/a	The vacancy status (occupied or vacant) of the dwelling unit.
+in.vintage	metadata_and_annual	n/a	Time period in which the building was constructed.
+in.vintage_acs	metadata_and_annual	n/a	Time period in which the dwelling unit was constructed as defined by the U.S. Census American Community Survey.
+in.water_heater_efficiency	metadata_and_annual	n/a	"The efficiency, type, and heating fuel of water heater."
+in.water_heater_fuel	metadata_and_annual	n/a	The water heater fuel type.
+in.water_heater_in_unit	metadata_and_annual	n/a	Individual water heater present or not present in the dwelling unit that solely serves the specific dwelling unit.
+in.water_heater_location	metadata_and_annual	n/a	location of water heater.
+in.window_areas	metadata_and_annual	n/a	"Window to wall ratios of the front, back, left, and right walls."
+in.windows	metadata_and_annual	n/a	Construction type and efficiency levels of windows.
+in.air_leakage_to_outside_ach50	metadata_and_annual	n/a	Total infiltration to the dwelling unit adjusted by ratio of exterior envelope surface area to total envelope surface area.
+in.applicable	metadata_and_annual	n/a	The measure was applied to the workflow.
+in.buildstock_csv_path	metadata_and_annual	n/a	Absolute/relative path of the buildstock CSV file. Relative is compared to the 'lib/housing_characteristics' directory.
+in.units_represented	metadata_and_annual	n/a	The number of dwelling units this simulation represents. Should always be one.
+in.simulation_control_run_period_begin_day_of_month	metadata_and_annual	n/a	This numeric field should contain the starting day of the starting month (must be valid for month) for the annual run period desired.
+in.simulation_control_run_period_begin_month	metadata_and_annual	n/a	"This numeric field should contain the starting month number (1 = January, 2 = February, etc.) for the annual run period desired."
+in.simulation_control_run_period_calendar_year	metadata_and_annual	n/a	"This numeric field should contain the calendar year that determines the start day of week. If you are running simulations using AMY weather files, the value entered for calendar year will not be used; it will be overridden by the actual year found in the AMY weather file."
+in.simulation_control_run_period_end_day_of_month	metadata_and_annual	n/a	This numeric field should contain the ending day of the ending month (must be valid for month) for the annual run period desired.
+in.simulation_control_run_period_end_month	metadata_and_annual	n/a	"This numeric field should contain the end month number (1 = January, 2 = February, etc.) for the annual run period desired."
+in.simulation_control_timestep	metadata_and_annual	n/a	Value must be a divisor of 60.
+in.utility_bill_electricity_fixed_charges	metadata_and_annual	usd	"Electricity utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list."
+in.utility_bill_electricity_marginal_rates	metadata_and_annual	usd	"Electricity utility bill marginal rates. If multiple scenarios, use a comma-separated list."
+in.utility_bill_fuel_oil_fixed_charges	metadata_and_annual	usd	"Fuel oil utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list."
+in.utility_bill_fuel_oil_marginal_rates	metadata_and_annual	usd	"Fuel oil utility bill marginal rates. If multiple scenarios, use a comma-separated list."
+in.utility_bill_natural_gas_fixed_charges	metadata_and_annual	usd	"Natural gas utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list."
+in.utility_bill_natural_gas_marginal_rates	metadata_and_annual	usd	"Natural gas utility bill marginal rates. If multiple scenarios, use a comma-separated list."
+in.utility_bill_propane_fixed_charges	metadata_and_annual	usd	"Propane utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list."
+in.utility_bill_propane_marginal_rates	metadata_and_annual	usd	"Propane utility bill marginal rates. If multiple scenarios, use a comma-separated list."
+in.utility_bill_scenario_names	metadata_and_annual	n/a	"Names of utility bill scenarios. If multiple scenarios, use a comma-separated list. If multiple scenarios, use a comma-separated list."
+in.utility_bill_simple_filepaths	metadata_and_annual	n/a	"Relative paths of simple utility rates. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. Files must contain the name of the Parameter as the column header."
+in.weather_file_city	metadata_and_annual	n/a	City from the EPW weather file.
+in.weather_file_latitude	metadata_and_annual	n/a	Latitude from the EPW weather file.
+in.weather_file_longitude	metadata_and_annual	n/a	Longitude from the EPW weather file.
+in.heating_unavailable_period	metadata_and_annual	n/a	Heating unavailable period.
+in.cooling_unavailable_period	metadata_and_annual	n/a	Cooling unavailable period.
+out.params.door_area..ft2	metadata_and_annual	ft2	Door Area
+out.params.duct_unconditioned_surface_area..ft2	metadata_and_annual	ft2	Duct Unconditioned Surface Area
+out.params.floor_area_attic..ft2	metadata_and_annual	ft2	"Floor Area, Attic"
+out.params.floor_area_attic_insulation_increase..ft2_delta_r_value	metadata_and_annual	r_value	"Floor Area, Attic * Insulation Increase"
+out.params.floor_area_conditioned_infiltration_reduction..ft2_delta_ach50	metadata_and_annual	ach_50	"Floor Area, Conditioned * Infiltration Reduction"
+out.params.floor_area_foundation..ft2	metadata_and_annual	ft2	"Floor Area, Foundation"
+out.params.floor_area_lighting..ft2	metadata_and_annual	ft2	"Floor Area, Lighting"
+out.params.flow_rate_mechanical_ventilation..cfm	metadata_and_annual	cfm	"Flow Rate, Mechanical Ventilation"
+out.params.rim_joist_area_above_grade_exterior..ft2	metadata_and_annual	ft2	"Rim Joist Area, Above-Grade, Exterior"
+out.params.roof_area..ft2	metadata_and_annual	ft2	Roof Area
+out.params.size_cooling_system_primary..kbtu_per_hr	metadata_and_annual	k_btu_h	"Size, Cooling System Primary"
+out.params.size_heat_pump_backup_primary..kbtu_per_hr	metadata_and_annual	k_btu_h	"Size, Heat Pump Backup Primary"
+out.params.size_heating_system_primary..kbtu_per_hr	metadata_and_annual	k_btu_h	"Size, Heating System Primary"
+out.params.size_heating_system_secondary..kbtu_per_hr	metadata_and_annual	k_btu_h	"Size, Heating System Secondary"
+out.params.size_water_heater..gal	metadata_and_annual	gal	"Size, Water Heater"
+out.params.slab_perimeter_exposed_conditioned..ft	metadata_and_annual	ft	"Slab Perimeter, Exposed, Conditioned"
+out.params.wall_area_above_grade_conditioned..ft2	metadata_and_annual	ft2	"Wall Area, Above-Grade, Conditioned"
+out.params.wall_area_above_grade_exterior..ft2	metadata_and_annual	ft2	"Wall Area, Above-Grade, Exterior"
+out.params.wall_area_below_grade..ft2	metadata_and_annual	ft2	"Wall Area, Below-Grade"
+out.params.window_area..ft2	metadata_and_annual	ft2	Window Area
+out.params.hvac_geothermal_loop_borehole_trench_count	metadata_and_annual	n/a	Number of boreholes used for the geothermal heat pump system.
+out.params.hvac_geothermal_loop_borehole_trench_length..ft	metadata_and_annual	ft	Single borehole length used for the geothermal heat pump system. Multiply by number of boreholes for total length.
+out.electricity.ceiling_fan.energy_consumption..kwh	metadata_and_annual	kwh	
+out.electricity.clothes_dryer.energy_consumption..kwh	metadata_and_annual	kwh	
+out.electricity.clothes_washer.energy_consumption..kwh	metadata_and_annual	kwh	
+out.electricity.cooling_fans_pumps.energy_consumption..kwh	metadata_and_annual	kwh	Supply fan (air distribution) or circulating pump (geothermal loop)
+out.electricity.cooling.energy_consumption..kwh	metadata_and_annual	kwh	Excludes fans/pumps
+out.electricity.dishwasher.energy_consumption..kwh	metadata_and_annual	kwh	
+out.electricity.ev_charging.energy_consumption..kwh	metadata_and_annual	kwh	
+out.electricity.freezer.energy_consumption..kwh	metadata_and_annual	kwh	
+out.electricity.heating_fans_pumps.energy_consumption..kwh	metadata_and_annual	kwh	Supply fan (air distribution) or circulating pump (hydronic distribution or geothermal loop)
+out.electricity.heating_hp_bkup.energy_consumption..kwh	metadata_and_annual	kwh	Excludes heat pump backup fans/pumps
+out.electricity.heating_hp_bkup_fa.energy_consumption..kwh	metadata_and_annual	kwh	Includes supply fan (air distribution) or circulating pump (hydronic distribution) during heat pump backup
+out.electricity.heating.energy_consumption..kwh	metadata_and_annual	kwh	Excludes heat pump backup and fans/pumps
+out.electricity.permanent_spa_heat.energy_consumption..kwh	metadata_and_annual	kwh	
+out.electricity.permanent_spa_pump.energy_consumption..kwh	metadata_and_annual	kwh	
+out.electricity.hot_water.energy_consumption..kwh	metadata_and_annual	kwh	Excludes recirc pump and solar thermal pump
+out.electricity.hot_water_solar_th.energy_consumption..kwh	metadata_and_annual	kwh	Non-zero only when using detailed (not simple) solar thermal inputs
+out.electricity.lighting_exterior.energy_consumption..kwh	metadata_and_annual	kwh	Includes exterior holiday lighting
+out.electricity.lighting_garage.energy_consumption..kwh	metadata_and_annual	kwh	
+out.electricity.lighting_interior.energy_consumption..kwh	metadata_and_annual	kwh	
+out.electricity.mech_vent.energy_consumption..kwh	metadata_and_annual	kwh	Excludes preheating/precooling
+out.electricity.plug_loads.energy_consumption..kwh	metadata_and_annual	kwh	"Excludes independently reported plug loads (e.g., well pump)"
+out.electricity.pool_heater.energy_consumption..kwh	metadata_and_annual	kwh	
+out.electricity.pool_pump.energy_consumption..kwh	metadata_and_annual	kwh	
+out.electricity.pv.energy_consumption..kwh	metadata_and_annual	kwh	Negative value for any power produced
+out.electricity.range_oven.energy_consumption..kwh	metadata_and_annual	kwh	
+out.electricity.refrigerator.energy_consumption..kwh	metadata_and_annual	kwh	
+out.electricity.television.energy_consumption..kwh	metadata_and_annual	kwh	
+out.electricity.well_pump.energy_consumption..kwh	metadata_and_annual	kwh	
+out.fuel_oil.heating.energy_consumption..kwh	metadata_and_annual	kwh	Excludes heat pump backup
+out.fuel_oil.hot_water.energy_consumption..kwh	metadata_and_annual	kwh	
+out.natural_gas.clothes_dryer.energy_consumption..kwh	metadata_and_annual	kwh	
+out.natural_gas.fireplace.energy_consumption..kwh	metadata_and_annual	kwh	
+out.natural_gas.grill.energy_consumption..kwh	metadata_and_annual	kwh	
+out.natural_gas.heating.energy_consumption..kwh	metadata_and_annual	kwh	Excludes heat pump backup
+out.natural_gas.permanent_spa_heat.energy_consumption..kwh	metadata_and_annual	kwh	
+out.natural_gas.hot_water.energy_consumption..kwh	metadata_and_annual	kwh	
+out.natural_gas.lighting.energy_consumption..kwh	metadata_and_annual	kwh	
+out.natural_gas.pool_heater.energy_consumption..kwh	metadata_and_annual	kwh	
+out.natural_gas.range_oven.energy_consumption..kwh	metadata_and_annual	kwh	
+out.propane.clothes_dryer.energy_consumption..kwh	metadata_and_annual	kwh	
+out.propane.heating.energy_consumption..kwh	metadata_and_annual	kwh	Excludes heat pump backup
+out.propane.hot_water.energy_consumption..kwh	metadata_and_annual	kwh	
+out.propane.range_oven.energy_consumption..kwh	metadata_and_annual	kwh	
+out.site_energy.net.energy_consumption..kwh	metadata_and_annual	kwh	Subtracts any power produced by PV or generators.
+out.site_energy.total.energy_consumption..kwh	metadata_and_annual	kwh	Includes any battery charging/discharging
+out.electricity.net.energy_consumption..kwh	metadata_and_annual	kwh	Subtracts any power produced by PV or generators.
+out.electricity.total.energy_consumption..kwh	metadata_and_annual	kwh	Includes any battery charging/discharging
+out.fuel_oil.total.energy_consumption..kwh	metadata_and_annual	kwh	"Includes 'fuel oil', 'fuel oil 1', 'fuel oil 2', 'fuel oil 4', 'fuel oil 5/6', 'kerosene', and 'diesel'"
+out.natural_gas.total.energy_consumption..kwh	metadata_and_annual	kwh	
+out.propane.total.energy_consumption..kwh	metadata_and_annual	kwh	
+out.hot_water.clothes_washer..gal	metadata_and_annual	gal	
+out.hot_water.dishwasher..gal	metadata_and_annual	gal	
+out.hot_water.distribution_waste..gal	metadata_and_annual	gal	
+out.hot_water.fixtures..gal	metadata_and_annual	gal	Showers and faucets.
+out.capacity.cooling..btu_per_hr	metadata_and_annual	btu_h	
+out.capacity.heat_pump_backup..btu_per_hr	metadata_and_annual	btu_h	
+out.capacity.heating..btu_per_hr	metadata_and_annual	btu_h	
+out.load.cooling.energy_delivered..kbtu	metadata_and_annual	kbtu	Includes HVAC distribution losses.
+out.load.heating.energy_delivered..kbtu	metadata_and_annual	kbtu	Includes HVAC distribution losses.
+out.load.hot_water.energy_delivered..kbtu	metadata_and_annual	kbtu	Includes contributions by desuperheaters or solar thermal systems.
+out.load.hot_water.energy_solar_thermal..kbtu	metadata_and_annual	kbtu	Water heater solar thermal energy.
+out.load.hot_water.energy_tank_losses..kbtu	metadata_and_annual	kbtu	Water heater tank losses energy.
+out.load.cooling.peak..kbtu_per_hr	metadata_and_annual	kbtu_hr	Includes HVAC distribution losses.
+out.load.heating.peak..kbtu_per_hr	metadata_and_annual	kbtu_hr	Includes HVAC distribution losses.
+out.qoi.electricity.maximum_daily_peak_summer..kw	metadata_and_annual	kw	Maximum value in Jun/Jul/Aug (or Dec/Jan/Feb in the southern hemisphere)
+out.qoi.electricity.maximum_daily_peak_winter..kw	metadata_and_annual	kw	Maximum value in Dec/Jan/Feb (or Jun/Jul/Aug in the southern hemisphere)
+out.unmet_hours.cooling..hr	metadata_and_annual	hr	Number of hours where the cooling setpoint is not maintained.
+out.unmet_hours.ev_driving..hr	metadata_and_annual	hr	Number of hours that an EV user cannot drive to due to insufficient charge in battery.
+out.unmet_hours.heating..hr	metadata_and_annual	hr	Number of hours where the heating setpoint is not maintained.
+out.emissions.electricity.lrmer_mid_case_25..co2e_kg	metadata_and_annual	kg	"Scenario total emissions for Electricity only, includes any battery charging/discharging"
+out.emissions.total.lrmer_mid_case_25..co2e_kg	metadata_and_annual	kg	"Scenario total emissions, includes any battery charging/discharging"
+out.emissions.electricity.lrmer_mid_case_15..co2e_kg	metadata_and_annual	kg	"Scenario total emissions for Electricity only, includes any battery charging/discharging"
+out.emissions.total.lrmer_mid_case_15..co2e_kg	metadata_and_annual	kg	"Scenario total emissions, includes any battery charging/discharging"
+out.emissions.electricity.lrmer_high_re_cost_25..co2e_kg	metadata_and_annual	kg	"Scenario total emissions for Electricity only, includes any battery charging/discharging"
+out.emissions.total.lrmer_high_re_cost_25..co2e_kg	metadata_and_annual	kg	"Scenario total emissions, includes any battery charging/discharging"
+out.emissions.electricity.lrmer_high_re_cost_15..co2e_kg	metadata_and_annual	kg	"Scenario total emissions for Electricity only, includes any battery charging/discharging"
+out.emissions.total.lrmer_high_re_cost_15..co2e_kg	metadata_and_annual	kg	"Scenario total emissions, includes any battery charging/discharging"
+out.emissions.electricity.lrmer_low_re_cost_25..co2e_kg	metadata_and_annual	kg	"Scenario total emissions for Electricity only, includes any battery charging/discharging"
+out.emissions.total.lrmer_low_re_cost_25..co2e_kg	metadata_and_annual	kg	"Scenario total emissions, includes any battery charging/discharging"
+out.emissions.electricity.lrmer_low_re_cost_15..co2e_kg	metadata_and_annual	kg	"Scenario total emissions for Electricity only, includes any battery charging/discharging"
+out.emissions.total.lrmer_low_re_cost_15..co2e_kg	metadata_and_annual	kg	"Scenario total emissions, includes any battery charging/discharging"
+out.emissions.electricity.lrmer_low_re_cost_high_ng_price_25..co2e_kg	metadata_and_annual	kg	"Scenario total emissions for Electricity only, includes any battery charging/discharging"
+out.emissions.total.lrmer_low_re_cost_high_ng_price_25..co2e_kg	metadata_and_annual	kg	"Scenario total emissions, includes any battery charging/discharging"
+out.emissions.electricity.lrmer_low_re_cost_high_ng_price_15..co2e_kg	metadata_and_annual	kg	"Scenario total emissions for Electricity only, includes any battery charging/discharging"
+out.emissions.total.lrmer_low_re_cost_high_ng_price_15..co2e_kg	metadata_and_annual	kg	"Scenario total emissions, includes any battery charging/discharging"
+out.emissions.electricity.lrmer_high_re_cost_low_ng_price_25..co2e_kg	metadata_and_annual	kg	"Scenario total emissions for Electricity only, includes any battery charging/discharging"
+out.emissions.total.lrmer_high_re_cost_low_ng_price_25..co2e_kg	metadata_and_annual	kg	"Scenario total emissions, includes any battery charging/discharging"
+out.emissions.electricity.lrmer_high_re_cost_low_ng_price_15..co2e_kg	metadata_and_annual	kg	"Scenario total emissions for Electricity only, includes any battery charging/discharging"
+out.emissions.total.lrmer_high_re_cost_low_ng_price_15..co2e_kg	metadata_and_annual	kg	"Scenario total emissions, includes any battery charging/discharging"
+out.emissions.electricity.aer_high_re_cost_avg..co2e_kg	metadata_and_annual	kg	"Scenario total emissions for Electricity only, includes any battery charging/discharging"
+out.emissions.total.aer_high_re_cost_avg..co2e_kg	metadata_and_annual	kg	"Scenario total emissions, includes any battery charging/discharging"
+out.emissions.electricity.aer_high_re_cost_low_ng_price_avg..co2e_kg	metadata_and_annual	kg	"Scenario total emissions for Electricity only, includes any battery charging/discharging"
+out.emissions.total.aer_high_re_cost_low_ng_price_avg..co2e_kg	metadata_and_annual	kg	"Scenario total emissions, includes any battery charging/discharging"
+out.emissions.electricity.aer_low_re_cost_avg..co2e_kg	metadata_and_annual	kg	"Scenario total emissions for Electricity only, includes any battery charging/discharging"
+out.emissions.total.aer_low_re_cost_avg..co2e_kg	metadata_and_annual	kg	"Scenario total emissions, includes any battery charging/discharging"
+out.emissions.electricity.aer_low_re_cost_high_ng_price_avg..co2e_kg	metadata_and_annual	kg	"Scenario total emissions for Electricity only, includes any battery charging/discharging"
+out.emissions.total.aer_low_re_cost_high_ng_price_avg..co2e_kg	metadata_and_annual	kg	"Scenario total emissions, includes any battery charging/discharging"
+out.emissions.electricity.aer_mid_case_avg..co2e_kg	metadata_and_annual	kg	"Scenario total emissions for Electricity only, includes any battery charging/discharging"
+out.emissions.total.aer_mid_case_avg..co2e_kg	metadata_and_annual	kg	"Scenario total emissions, includes any battery charging/discharging"
+out.utility_bills.electricity_bill..usd	metadata_and_annual	usd	Scenario annual total charges for electricity.
+out.utility_bills.fuel_oil_bill..usd	metadata_and_annual	usd	Scenario annual total charges for fuel oil.
+out.utility_bills.natural_gas_bill..usd	metadata_and_annual	usd	Scenario annual total charges for natural gas.
+out.utility_bills.propane_bill..usd	metadata_and_annual	usd	Scenario annual total charges for propane.
+out.utility_bills.total_bill..usd	metadata_and_annual	usd	Scenario annual total charges.
+out.params.panel_load_total_load.2023_nec_existing_dwelling_load_based..w	metadata_and_annual	w	Total electric load calculated using load-based method for existing dwelings per 2023 National Electrical Code
+out.params.panel_load_occupied_capacity.2023_nec_existing_dwelling_load_based..a	metadata_and_annual	amp	"Electric panel total occupied capacity, = out.panel.load.total_load.2023_nec_existing_dwelling_load_based.w  / 240"
+out.params.panel_load_headroom_capacity.2023_nec_existing_dwelling_load_based..a	metadata_and_annual	amp	"Electric panel total headroom capacity, = in.electric_panel_service_rating - out.panel.load.occupied_capacity.2023_nec_existing_dwelling_load_based.a"
+out.params.panel_load_clothes_dryer..w	metadata_and_annual	w	"Electric load of clothes dryer, for electric only"
+out.params.panel_load_cooling..w	metadata_and_annual	w	"Electric load of space cooling. For the total load calculation, the max of heating or cooling is used, not both"
+out.params.panel_load_dishwasher..w	metadata_and_annual	w	Electric load of dishwasher
+out.params.panel_load_ev_charging..w	metadata_and_annual	w	Electric load of electric vehicle charging equipment
+out.params.panel_load_heating..w	metadata_and_annual	w	"Electric load of space heating. For the total load calculation, the max of heating or cooling is used, not both"
+out.params.panel_load_hot_water..w	metadata_and_annual	w	"Electric load of water heater, for electric only"
+out.params.panel_load_mech_vent..w	metadata_and_annual	w	Electric load of mechanical ventilation
+out.params.panel_load_other..w	metadata_and_annual	w	"Other electric load, including but not limited to lighting/general receptacles at 3 W/sqft, refrigerator, microwave, and garbage disposal."
+out.params.panel_load_permanent_spa_heat..w	metadata_and_annual	w	"Electric load of permanent spa heater, for electric only"
+out.params.panel_load_permanent_spa_pump..w	metadata_and_annual	w	Electric load of permanent spa pump
+out.params.panel_load_pool_heater..w	metadata_and_annual	w	"Electric load of pool heater, for electric only"
+out.params.panel_load_pool_pump..w	metadata_and_annual	w	Electric load of pool pump
+out.params.panel_load_range_oven..w	metadata_and_annual	w	"Electric load of range oven, for electric only"
+out.params.panel_load_.well_pump..w	metadata_and_annual	n/a	
+in.electric_panel_breaker_space_total_count	metadata_and_annual	count	Total breaker spaces on electric panel
+out.params.panel_breaker_space_occupied_count	metadata_and_annual	count	Total occupied breaker spaces on electric panel
+out.params.panel_breaker_space_headroom_count	metadata_and_annual	count	"Total headroom breaker spaces on electric panel, = in.electric_panel_breaker_space_total_count - out.panel.breaker_space.occupied.count"
+out.params.panel_breaker_space_clothes_dryer_count	metadata_and_annual	count	Breaker spaces occupied by clothes dryer
+out.params.panel_breaker_space_cooling_count	metadata_and_annual	count	Breaker spaces occupied by space cooling
+out.params.panel_breaker_space_dishwasher_count	metadata_and_annual	count	Breaker spaces occupied by dishwasher
+out.params.panel_breaker_space_ev_charging_count	metadata_and_annual	count	Breaker spaces occupied by electric vehicle charging equipment
+out.params.panel_breaker_space_heating_count	metadata_and_annual	count	Breaker spaces occupied by space heating
+out.params.panel_breaker_space_hot_water_count	metadata_and_annual	count	Breaker spaces occupied by water heater
+out.params.panel_breaker_space_mech_vent_count	metadata_and_annual	count	Breaker spaces occupied by mechanical ventilation
+out.params.panel_breaker_space_other_count	metadata_and_annual	count	Breaker spaces occupied by other loads
+out.params.panel_breaker_space_permanent_spa_heat_count	metadata_and_annual	count	Breaker spaces occupied by permanent spa heater
+out.params.panel_breaker_space_permanent_spa_pump_count	metadata_and_annual	count	Breaker spaces occupied by permanent spa pump
+out.params.panel_breaker_space_pool_heater_count	metadata_and_annual	count	Breaker spaces occupied by pool heater
+out.params.panel_breaker_space_pool_pump_count	metadata_and_annual	count	Breaker spaces occupied by pool pump
+out.params.panel_breaker_space_range_oven_count	metadata_and_annual	count	Breaker spaces occupied by range oven
+out.params.panel_breaker_space_well_pump_count	metadata_and_annual	count	Breaker spaces occupied by well pump
+out.params.panel_load_total_load_savings.2023_nec_existing_dwelling_load_based..w	metadata_and_annual	w	Total amount of electrical load reduced from an energy measure per load-based method for existing dwelings per 2023 National Electrical Code
+out.params.panel_load_occupied_capacity_savings.2023_nec_existing_dwelling_load_based..a	metadata_and_annual	amp	Total amount of occupied electrical capacity reduced from an energy measure per load-based method for existing dwelings per 2023 National Electrical Code
+out.params.panel_breaker_space_occupied_savings_count	metadata_and_annual	count	Number of breaker spaces reduced from an energy measure
+out.params.panel_constraint_capacity.2023_nec_existing_dwelling_load_based	metadata_and_annual	bool	"Whether electric panel is capacity-constrained per the given method, defined as when out.panel.load.headroom_capacity.2023_nec_existing_dwelling_load_based.a < 0"
+out.params.panel_constraint_breaker_space	metadata_and_annual	bool	"Whether electric panel is space-constrained, defined as when out.panel.breaker_space.headroom.count < 0"
+out.params.panel_constraint_overall.2023_nec_existing_dwelling_load_based	metadata_and_annual	categorical	"Summarize overall electric panel constraint per the given method as ""No Constraint"", ""Space Constrained Only"", ""Capacity Constrained Only"", or ""Capacity and Space Constrained"""
+out.energy_burden..percentage	metadata_and_annual	percentage	Percentage of income spent on energy
+out.electricity.ceiling_fan.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.clothes_dryer.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.clothes_washer.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.cooling_fans_pumps.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.cooling.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.dishwasher.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.ev_charging.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.freezer.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.heating_fans_pumps.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.heating_hp_bkup.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.heating_hp_bkup_fa.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.heating.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.permanent_spa_heat.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.permanent_spa_pump.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.hot_water.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.hot_water_solar_th.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.lighting_exterior.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.lighting_garage.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.lighting_interior.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.mech_vent.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.plug_loads.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.pool_heater.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.pool_pump.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.pv.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.range_oven.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.refrigerator.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.television.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.well_pump.energy_savings..kwh	metadata_and_annual	kwh	
+out.fuel_oil.heating.energy_savings..kwh	metadata_and_annual	kwh	
+out.fuel_oil.hot_water.energy_savings..kwh	metadata_and_annual	kwh	
+out.natural_gas.clothes_dryer.energy_savings..kwh	metadata_and_annual	kwh	
+out.natural_gas.fireplace.energy_savings..kwh	metadata_and_annual	kwh	
+out.natural_gas.grill.energy_savings..kwh	metadata_and_annual	kwh	
+out.natural_gas.heating.energy_savings..kwh	metadata_and_annual	kwh	
+out.natural_gas.permanent_spa_heat.energy_savings..kwh	metadata_and_annual	kwh	
+out.natural_gas.hot_water.energy_savings..kwh	metadata_and_annual	kwh	
+out.natural_gas.lighting.energy_savings..kwh	metadata_and_annual	kwh	
+out.natural_gas.pool_heater.energy_savings..kwh	metadata_and_annual	kwh	
+out.natural_gas.range_oven.energy_savings..kwh	metadata_and_annual	kwh	
+out.propane.clothes_dryer.energy_savings..kwh	metadata_and_annual	kwh	
+out.propane.heating.energy_savings..kwh	metadata_and_annual	kwh	
+out.propane.hot_water.energy_savings..kwh	metadata_and_annual	kwh	
+out.propane.range_oven.energy_savings..kwh	metadata_and_annual	kwh	
+out.site_energy.net.energy_savings..kwh	metadata_and_annual	kwh	
+out.site_energy.total.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.net.energy_savings..kwh	metadata_and_annual	kwh	
+out.electricity.total.energy_savings..kwh	metadata_and_annual	kwh	
+out.fuel_oil.total.energy_savings..kwh	metadata_and_annual	kwh	
+out.natural_gas.total.energy_savings..kwh	metadata_and_annual	kwh	
+out.propane.total.energy_savings..kwh	metadata_and_annual	kwh	
+out.load.cooling.energy_delivered_savings..kbtu	metadata_and_annual	kbtu	
+out.load.heating.energy_delivered_savings..kbtu	metadata_and_annual	kbtu	
+out.load.hot_water.energy_delivered_savings..kbtu	metadata_and_annual	kbtu	
+out.load.hot_water.energy_solar_thermal_savings..kbtu	metadata_and_annual	kbtu	
+out.load.hot_water.energy_tank_losses_savings..kbtu	metadata_and_annual	kbtu	
+out.load.cooling.peak_savings..kbtu_per_hr	metadata_and_annual	kbtu_hr	
+out.load.heating.peak_savings..kbtu_per_hr	metadata_and_annual	kbtu_hr	
+out.qoi.electricity.maximum_daily_peak_savings_summer..kw	metadata_and_annual	kw	
+out.qoi.electricity.maximum_daily_peak_savings_winter..kw	metadata_and_annual	kw	
+out.unmet_hours_reduction.cooling..hr	metadata_and_annual	hour	
+out.unmet_hours_reduction.heating..hr	metadata_and_annual	hour	
+out.emissions.fuel_oil.total..co2e_kg	metadata_and_annual	n/a	
+out.emissions.natural_gas.total..co2e_kg	metadata_and_annual	n/a	
+out.emissions.propane.total..co2e_kg	metadata_and_annual	n/a	
+out.emissions_reduction.fuel_oil.total..co2e_kg	metadata_and_annual	n/a	
+out.emissions_reduction.natural_gas.total..co2e_kg	metadata_and_annual	n/a	
+out.emissions_reduction.propane.total..co2e_kg	metadata_and_annual	n/a	
+out.emissions_reduction.electricity.lrmer_mid_case_25..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.total.lrmer_mid_case_25..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.electricity.lrmer_mid_case_15..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.total.lrmer_mid_case_15..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.electricity.lrmer_high_re_cost_25..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.total.lrmer_high_re_cost_25..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.electricity.lrmer_high_re_cost_15..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.total.lrmer_high_re_cost_15..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.electricity.lrmer_low_re_cost_25..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.total.lrmer_low_re_cost_25..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.electricity.lrmer_low_re_cost_15..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.total.lrmer_low_re_cost_15..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.electricity.lrmer_low_re_cost_high_ng_price_25..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.total.lrmer_low_re_cost_high_ng_price_25..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.electricity.lrmer_low_re_cost_high_ng_price_15..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.total.lrmer_low_re_cost_high_ng_price_15..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.electricity.lrmer_high_re_cost_low_ng_price_25..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.total.lrmer_high_re_cost_low_ng_price_25..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.electricity.lrmer_high_re_cost_low_ng_price_15..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.total.lrmer_high_re_cost_low_ng_price_15..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.electricity.aer_high_re_cost_avg..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.total.aer_high_re_cost_avg..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.electricity.aer_high_re_cost_low_ng_price_avg..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.total.aer_high_re_cost_low_ng_price_avg..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.electricity.aer_low_re_cost_avg..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.total.aer_low_re_cost_avg..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.electricity.aer_low_re_cost_high_ng_price_avg..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.total.aer_low_re_cost_high_ng_price_avg..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.electricity.aer_mid_case_avg..co2e_kg	metadata_and_annual	kg	
+out.emissions_reduction.total.aer_mid_case_avg..co2e_kg	metadata_and_annual	kg	
+out.utility_bills.electricity_bill_savings..usd	metadata_and_annual	usd	
+out.utility_bills.fuel_oil_bill_savings..usd	metadata_and_annual	usd	
+out.utility_bills.natural_gas_bill_savings..usd	metadata_and_annual	usd	
+out.utility_bills.propane_bill_savings..usd	metadata_and_annual	usd	
+out.utility_bills.total_bill_savings..usd	metadata_and_annual	usd	
+out.energy_burden_savings..percentage	metadata_and_annual	percentage	
+out.electricity.ceiling_fan.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.ceiling_fan.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.clothes_dryer.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.clothes_dryer.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.clothes_washer.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.clothes_washer.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.cooling.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.cooling.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.cooling_fans_pumps.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.cooling_fans_pumps.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.dishwasher.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.dishwasher.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.ev_charging.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.ev_charging.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.freezer.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.freezer.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.heating.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.heating.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.heating_fans_pumps.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.heating_fans_pumps.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.heating_hp_bkup.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.heating_hp_bkup.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.heating_hp_bkup_fa.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.heating_hp_bkup_fa.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.hot_water.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.hot_water.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.hot_water_solar_th.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.hot_water_solar_th.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.lighting_exterior.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.lighting_exterior.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.lighting_garage.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.lighting_garage.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.lighting_interior.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.lighting_interior.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.mech_vent.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.mech_vent.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.net.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.net.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.permanent_spa_heat.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.permanent_spa_heat.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.permanent_spa_pump.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.permanent_spa_pump.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.plug_loads.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.plug_loads.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.pool_heater.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.pool_heater.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.pool_pump.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.pool_pump.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.pv.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.pv.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.range_oven.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.range_oven.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.refrigerator.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.refrigerator.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.television.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.television.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.total.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.total.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.well_pump.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.electricity.well_pump.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.fuel_oil.heating.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.fuel_oil.heating.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.fuel_oil.hot_water.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.fuel_oil.hot_water.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.fuel_oil.total.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.fuel_oil.total.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.clothes_dryer.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.clothes_dryer.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.fireplace.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.fireplace.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.grill.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.grill.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.heating.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.heating.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.hot_water.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.hot_water.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.lighting.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.lighting.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.permanent_spa_heat.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.permanent_spa_heat.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.pool_heater.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.pool_heater.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.range_oven.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.range_oven.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.total.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.natural_gas.total.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.propane.clothes_dryer.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.propane.clothes_dryer.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.propane.heating.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.propane.heating.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.propane.hot_water.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.propane.hot_water.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.propane.range_oven.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.propane.range_oven.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.propane.total.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.propane.total.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.site_energy.net.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.site_energy.net.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.site_energy.total.energy_consumption_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+out.site_energy.total.energy_savings_intensity..kwh_per_ft2	metadata_and_annual	kwh_per_ft2	
+upgrade.electric_vehicle_charger	metadata_and_annual	n/a	Indicates the electric vehicle charger the model is upgraded to. Blank value indicates no upgrade.
+upgrade.electric_vehicle_efficiency_increase	metadata_and_annual	n/a	Indicates the efficiency increase of the electric vehicle the model is upgraded to. Blank value indicates no upgrade.
+upgrade.electric_vehicle_ownership	metadata_and_annual	n/a	Indicates the electric vehicle ownership of the building the model is upgraded to. Blank value indicates no upgrade.
+upgrade.heating_fuel	metadata_and_annual	n/a	Indicates the heating fuel the model is upgraded to. Blank value indicates no upgrade.
+upgrade.hvac_cooling_efficiency	metadata_and_annual	n/a	Indicates the efficiency of the HVAC cooling the model is upgraded to. Blank value indicates no upgrade.
+upgrade.hvac_cooling_partial_space_conditioning	metadata_and_annual	n/a	Indicates the partial space conditioning of the HVAC cooling the model is upgraded to. Blank value indicates no upgrade.
+upgrade.hvac_heating_efficiency	metadata_and_annual	n/a	Indicates the efficiency of the HVAC heating the model is upgraded to. Blank value indicates no upgrade.
+upgrade.hvac_heating_type_and_fuel	metadata_and_annual	n/a	Indicates the heating type and fuel the model is upgraded to. Blank value indicates no upgrade.
+upgrade.infiltration_reduction	metadata_and_annual	n/a	Indicates the infiltration reduction of the building the model is upgraded to. Blank value indicates no upgrade.
+upgrade.insulation_ceiling	metadata_and_annual	n/a	Indicates the insulation ceiling of the building the model is upgraded to. Blank value indicates no upgrade.
+upgrade.water_heater_efficiency	metadata_and_annual	n/a	Indicates the efficiency of the water heater the model is upgraded to. Blank value indicates no upgrade.
+upgrade.water_heater_fuel	metadata_and_annual	n/a	Indicates which fuel is used for the water heater the model is upgraded to. Blank value indicates no upgrade.
+upgrade.hvac_detailed_performance_data	metadata_and_annual	n/a	Indicates the HVAC detailed performance data the model is upgraded to. Blank value indicates no upgrade.
+upgrade.demand_flexibility_electric_vehicle	metadata_and_annual	n/a	Indicates if demand flexibility is applied to electric vehicle in the model. Blank value indicates the upgrade didn't apply.
+upgrade.demand_flexibility_hvac	metadata_and_annual	n/a	Indicates if demand flexibility is applied to HVAC in the model. Blank value indicates the upgrade didn't apply.
+upgrade.demand_flexibility_random_shift	metadata_and_annual	n/a	Indicates the number of minutes of random shift applied for demand flexibility in the model. Blank value indicates the upgrade didn't apply.
+upgrade.duct_leakage_and_insulation	metadata_and_annual	n/a	Indicates the duct leakge to outside and duct insulation the model is upgraded to. Blank value indicates the upgrade didn't apply.
+upgrade.infiltration	metadata_and_annual	n/a	Indicates the infiltration rate the model is upgraded to. Blank value indicates the upgrade didn't apply.
+upgrade.insulation_wall	metadata_and_annual	n/a	Indicates the wall type and insulation the model is upgraded to. Blank value indicates the upgrade didn't apply.
+upgrade.windows	metadata_and_annual	n/a	Only appears when at least one building has this upgrade.
+calc.weighted.electricity.ceiling_fan.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.clothes_dryer.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.clothes_washer.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.cooling.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.cooling_fans_pumps.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.dishwasher.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.ev_charging.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.freezer.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.heating.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.heating_fans_pumps.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.heating_hp_bkup.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.heating_hp_bkup_fa.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.hot_water.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.hot_water_solar_th.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.lighting_exterior.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.lighting_garage.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.lighting_interior.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.mech_vent.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.net.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.permanent_spa_heat.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.permanent_spa_pump.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.plug_loads.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.pool_heater.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.pool_pump.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.pv.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.range_oven.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.refrigerator.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.television.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.total.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.well_pump.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.fuel_oil.heating.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.fuel_oil.hot_water.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.fuel_oil.total.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.clothes_dryer.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.fireplace.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.grill.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.heating.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.hot_water.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.lighting.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.permanent_spa_heat.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.pool_heater.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.range_oven.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.total.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.propane.clothes_dryer.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.propane.heating.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.propane.hot_water.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.propane.range_oven.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.propane.total.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.site_energy.net.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.site_energy.total.energy_consumption..tbtu	metadata_and_annual	tbtu	
+calc.weighted.emissions.total.aer_high_re_cost_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.total.aer_high_re_cost_low_ng_price_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.total.aer_low_re_cost_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.total.aer_low_re_cost_high_ng_price_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.total.aer_mid_case_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.total.lrmer_high_re_cost_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.total.lrmer_high_re_cost_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.total.lrmer_high_re_cost_low_ng_price_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.total.lrmer_high_re_cost_low_ng_price_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.total.lrmer_low_re_cost_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.total.lrmer_low_re_cost_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.total.lrmer_low_re_cost_high_ng_price_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.total.lrmer_low_re_cost_high_ng_price_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.total.lrmer_mid_case_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.total.lrmer_mid_case_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.electricity.aer_high_re_cost_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.electricity.aer_high_re_cost_low_ng_price_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.electricity.aer_low_re_cost_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.electricity.aer_low_re_cost_high_ng_price_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.electricity.aer_mid_case_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.electricity.lrmer_high_re_cost_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.electricity.lrmer_high_re_cost_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.electricity.lrmer_high_re_cost_low_ng_price_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.electricity.lrmer_high_re_cost_low_ng_price_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.electricity.lrmer_low_re_cost_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.electricity.lrmer_low_re_cost_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.electricity.lrmer_low_re_cost_high_ng_price_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.electricity.lrmer_low_re_cost_high_ng_price_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.electricity.lrmer_mid_case_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.electricity.lrmer_mid_case_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.fuel_oil.total..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.natural_gas.total..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions.propane.total..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.total.aer_high_re_cost_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.total.aer_high_re_cost_low_ng_price_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.total.aer_low_re_cost_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.total.aer_low_re_cost_high_ng_price_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.total.aer_mid_case_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.total.lrmer_high_re_cost_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.total.lrmer_high_re_cost_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.total.lrmer_high_re_cost_low_ng_price_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.total.lrmer_high_re_cost_low_ng_price_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.total.lrmer_low_re_cost_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.total.lrmer_low_re_cost_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.total.lrmer_low_re_cost_high_ng_price_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.total.lrmer_low_re_cost_high_ng_price_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.total.lrmer_mid_case_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.total.lrmer_mid_case_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.fuel_oil.total..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.natural_gas.total..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.propane.total..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.electricity.ceiling_fan.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.clothes_dryer.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.clothes_washer.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.cooling.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.cooling_fans_pumps.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.dishwasher.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.ev_charging.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.freezer.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.heating.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.heating_fans_pumps.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.heating_hp_bkup.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.heating_hp_bkup_fa.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.hot_water.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.hot_water_solar_th.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.lighting_exterior.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.lighting_garage.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.lighting_interior.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.mech_vent.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.net.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.permanent_spa_heat.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.permanent_spa_pump.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.plug_loads.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.pool_heater.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.pool_pump.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.pv.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.range_oven.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.refrigerator.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.television.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.total.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.electricity.well_pump.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.fuel_oil.heating.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.fuel_oil.hot_water.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.fuel_oil.total.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.clothes_dryer.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.fireplace.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.grill.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.heating.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.hot_water.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.lighting.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.permanent_spa_heat.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.pool_heater.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.range_oven.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.natural_gas.total.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.propane.clothes_dryer.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.propane.heating.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.propane.hot_water.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.propane.range_oven.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.propane.total.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.site_energy.net.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.site_energy.total.energy_savings..tbtu	metadata_and_annual	tbtu	
+calc.weighted.emissions_reduction.electricity.aer_high_re_cost_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.electricity.aer_high_re_cost_low_ng_price_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.electricity.aer_low_re_cost_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.electricity.aer_low_re_cost_high_ng_price_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.electricity.aer_mid_case_avg..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.electricity.lrmer_high_re_cost_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.electricity.lrmer_high_re_cost_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.electricity.lrmer_high_re_cost_low_ng_price_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.electricity.lrmer_high_re_cost_low_ng_price_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.electricity.lrmer_low_re_cost_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.electricity.lrmer_low_re_cost_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.electricity.lrmer_low_re_cost_high_ng_price_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.electricity.lrmer_low_re_cost_high_ng_price_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.electricity.lrmer_mid_case_15..co2e_mmt	metadata_and_annual	co2e_mmt	
+calc.weighted.emissions_reduction.electricity.lrmer_mid_case_25..co2e_mmt	metadata_and_annual	co2e_mmt	
+models_used	timeseries_aggregates	n/a	
+units_represented	timeseries_aggregates	n/a	
+out.electricity.ceiling_fan.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.clothes_dryer.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.clothes_washer.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.cooling.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.cooling_fans_pumps.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.dishwasher.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.ev_charging.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.freezer.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.heating.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.heating_fans_pumps.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.heating_hp_bkup.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.heating_hp_bkup_fa.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.hot_water.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.hot_water_solar_th.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.lighting_exterior.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.lighting_garage.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.lighting_interior.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.mech_vent.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.net.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.permanent_spa_heat.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.permanent_spa_pump.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.plug_loads.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.pool_heater.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.pool_pump.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.pv.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.range_oven.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.refrigerator.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.television.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.total.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.electricity.well_pump.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.fuel_oil.heating.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.fuel_oil.hot_water.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.fuel_oil.total.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.natural_gas.clothes_dryer.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.natural_gas.fireplace.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.natural_gas.grill.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.natural_gas.heating.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.natural_gas.heating_hp_bkup.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.natural_gas.hot_water.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.natural_gas.lighting.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.natural_gas.permanent_spa_heat.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.natural_gas.pool_heater.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.natural_gas.range_oven.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.natural_gas.total.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.propane.clothes_dryer.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.propane.heating.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.propane.hot_water.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.propane.range_oven.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.propane.total.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.site_energy.net.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.site_energy.total.energy_consumption..kwh	timeseries_aggregates	n/a	
+out.emissions.electricity.total.aer_highrecost_avg..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.electricity.total.aer_highrecostlowngprice_avg..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.electricity.total.aer_lowrecost_avg..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.electricity.total.aer_lowrecosthighngprice_avg..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.electricity.total.aer_midcase_avg..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.electricity.total.lrmer_highrecost_15..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.electricity.total.lrmer_highrecost_25..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.electricity.total.lrmer_highrecostlowngprice_15..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.electricity.total.lrmer_highrecostlowngprice_25..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.electricity.total.lrmer_lowrecost_15..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.electricity.total.lrmer_lowrecost_25..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.electricity.total.lrmer_lowrecosthighngprice_15..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.electricity.total.lrmer_lowrecosthighngprice_25..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.electricity.total.lrmer_midcase_15..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.electricity.total.lrmer_midcase_25..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.natural_gas.total..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.propane.total..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.fuel_oil.total..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.total.aer_highrecost_avg..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.total.aer_highrecostlowngprice_avg..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.total.aer_lowrecost_avg..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.total.aer_lowrecosthighngprice_avg..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.total.aer_midcase_avg..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.total.lrmer_highrecost_15..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.total.lrmer_highrecost_25..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.total.lrmer_highrecostlowngprice_15..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.total.lrmer_highrecostlowngprice_25..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.total.lrmer_lowrecost_15..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.total.lrmer_lowrecost_25..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.total.lrmer_lowrecosthighngprice_15..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.total.lrmer_lowrecosthighngprice_25..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.total.lrmer_midcase_15..co2e_kg	timeseries_aggregates	n/a	
+out.emissions.total.lrmer_midcase_25..co2e_kg	timeseries_aggregates	n/a	
+out.load.cooling.energy_delivered..kbtu	timeseries_aggregates	n/a	
+out.load.heating.energy_delivered..kbtu	timeseries_aggregates	n/a	
+out.load.heating_heat_pump_backup..kbtu	timeseries_aggregates	n/a	
+out.load.hot_water.energy_delivered..kbtu	timeseries_aggregates	n/a	
+out.load.hot_water_solar_thermal..kbtu	timeseries_aggregates	n/a	
+out.load.hot_water_tank_losses..kbtu	timeseries_aggregates	n/a	
