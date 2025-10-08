@@ -296,7 +296,7 @@ base-hvac-ground-to-air-heat-pump-backup-stove.xml,0.0,0.0,0.0,1286.4,890.5,1146
 base-hvac-ground-to-air-heat-pump-cooling-only.xml,0.0,0.0,0.0,1286.4,890.5,11468.5,3942.3,2121.4,3473.5,3473.5,2121.4,3473.5,3473.5,0.0,23.663,0.0
 base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop.xml,0.0,0.0,0.0,1286.4,890.5,11468.5,3942.3,4057.3,3185.1,4057.3,4057.3,3185.1,4057.3,31.238,23.942,0.0
 base-hvac-ground-to-air-heat-pump-heating-only.xml,0.0,0.0,0.0,1286.4,890.5,11468.6,3942.3,4487.7,1890.2,4487.7,4487.7,1890.2,4487.7,30.981,0.0,0.0
-base-hvac-ground-to-air-heat-pump-var-speed-experimental.xml,10.0,0.0,0.0,1286.4,890.5,11468.5,3942.3,4354.5,2470.6,4354.5,4354.5,2470.6,4354.5,27.899,25.563,0.0
+base-hvac-ground-to-air-heat-pump-var-speed-experimental.xml,10.0,0.0,0.0,1286.4,890.5,11468.5,3942.3,4354.3,2470.4,4354.3,4354.3,2470.4,4354.3,27.899,25.563,0.0
 base-hvac-ground-to-air-heat-pump-var-speed.xml,0.0,0.0,0.0,1286.4,890.5,11468.5,3942.3,4016.2,2628.3,4016.2,4016.2,2628.3,4016.2,31.346,24.084,0.0
 base-hvac-install-quality-air-to-air-heat-pump-1-speed.xml,0.0,0.0,0.0,1286.4,890.5,11468.5,3942.3,10186.4,4592.1,10186.4,10186.4,4592.1,10186.4,33.094,26.404,0.0
 base-hvac-install-quality-air-to-air-heat-pump-2-speed.xml,0.0,0.0,0.0,1286.4,890.5,11468.5,3942.3,9944.3,4294.6,9944.3,9944.3,4294.6,9944.3,33.089,26.109,0.0
@@ -308,7 +308,7 @@ base-hvac-install-quality-furnace-gas-central-ac-var-speed.xml,0.0,278.0,0.0,128
 base-hvac-install-quality-furnace-gas-only.xml,1.0,0.0,0.0,1286.4,890.5,11468.6,3942.3,2218.0,1904.5,2218.0,2218.0,1904.5,2218.0,35.752,0.0,0.0
 base-hvac-install-quality-ground-to-air-heat-pump-1-speed.xml,6.0,1.0,0.0,1286.4,890.5,11468.5,3942.3,4680.8,3679.9,4680.8,4680.8,3679.9,4680.8,30.43,25.538,0.0
 base-hvac-install-quality-ground-to-air-heat-pump-2-speed-experimental.xml,123.0,7.0,0.0,1286.4,890.5,11468.5,3942.3,4750.8,3387.2,4750.8,4750.8,3387.2,4750.8,26.338,24.72,0.0
-base-hvac-install-quality-ground-to-air-heat-pump-var-speed-experimental.xml,97.0,0.0,0.0,1286.4,890.5,11468.5,3942.3,4696.4,2865.0,4696.4,4696.4,2865.0,4696.4,26.768,25.567,0.0
+base-hvac-install-quality-ground-to-air-heat-pump-var-speed-experimental.xml,97.0,0.0,0.0,1286.4,890.5,11468.5,3942.3,4696.4,2864.8,4696.4,4696.4,2864.8,4696.4,26.768,25.568,0.0
 base-hvac-install-quality-mini-split-air-conditioner-only-ducted.xml,0.0,0.0,0.0,1286.4,890.5,11468.5,3942.3,2141.4,3356.1,3356.1,2141.4,3356.1,3356.1,0.0,15.407,0.0
 base-hvac-install-quality-mini-split-heat-pump-ducted.xml,0.0,0.0,0.0,1286.4,890.5,11468.5,3942.3,5999.7,3221.3,5999.7,5999.7,3221.3,5999.7,19.852,15.383,0.0
 base-hvac-mini-split-air-conditioner-only-ducted.xml,0.0,0.0,0.0,1286.4,890.5,11468.5,3942.3,2141.4,2945.3,2945.3,2141.4,2945.3,2945.3,0.0,15.207,0.0

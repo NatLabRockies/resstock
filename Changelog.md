@@ -25,6 +25,7 @@ __Bugfixes__
 - Fixes an EMS bug in heat pump defrost models that over-estimates defrost fractions.
 - Fixes zero mech vent fan energy when CFIS system w/ `AdditionalRuntimeOperatingMode="air handler fan"` has the airflow rate set to zero.
 - Fixes requested EnergyPlus timeseries output variables/meters not displayed in DView if they don't have units.
+- Fixes possible errors when small water flow rates for variable-speed experimental ground-source heat pump model.
 
 ## OpenStudio-HPXML v1.10.0
 
