@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_hpxml</name>
   <uid>a13a8983-2b01-4930-8af2-42030b6e4233</uid>
-  <version_id>805aba31-c196-4da0-9c9a-e614426bed08</version_id>
-  <version_modified>2025-10-02T18:51:34Z</version_modified>
+  <version_id>41785f52-53b3-4e36-88b0-eeeb0acd7182</version_id>
+  <version_modified>2025-10-08T15:10:13Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>BuildResidentialHPXML</class_name>
   <display_name>HPXML Builder</display_name>
@@ -11319,7 +11319,7 @@
       <filename>geometry.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>3538B821</checksum>
+      <checksum>7B56FACC</checksum>
     </file>
     <file>
       <filename>options/advanced_feature.tsv</filename>
@@ -11703,7 +11703,7 @@
       <filename>options/hvac_heat_pump.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>357667E5</checksum>
+      <checksum>5C1F49B1</checksum>
     </file>
     <file>
       <filename>options/hvac_heat_pump_backup.tsv</filename>
@@ -11943,7 +11943,7 @@
       <filename>test_build_residential_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>E92E8313</checksum>
+      <checksum>0F9DCECE</checksum>
     </file>
   </files>
 </measure>

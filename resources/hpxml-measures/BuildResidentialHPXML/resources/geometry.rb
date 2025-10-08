@@ -74,7 +74,7 @@ module Geometry
       garage_width_adjusted = true
     end
     if garage_width_adjusted
-      runner.registerWarning("Garage is as wide as the single-family detached unit; garage width reduced from #{geometry_garage_width} ft to #{UnitConversions.convert(garage_width, 'm', 'ft').round(1)} ft.")
+      runner.registerWarning("Garage is as wide as the single-family detached unit; garage width reduced from #{geometry_garage_type_width} ft to #{UnitConversions.convert(garage_width, 'm', 'ft').round(1)} ft.")
     end
 
     # Error checking: adjust garage depth if too deep relative the living space dimensions
@@ -86,7 +86,7 @@ module Geometry
       garage_depth_adjusted = true
     end
     if garage_depth_adjusted
-      runner.registerWarning("Garage is as deep as the single-family detached unit; garage depth reduced from #{geometry_garage_depth} ft to #{UnitConversions.convert(garage_depth, 'm', 'ft').round(1)} ft.")
+      runner.registerWarning("Garage is as deep as the single-family detached unit; garage depth reduced from #{geometry_garage_type_depth} ft to #{UnitConversions.convert(garage_depth, 'm', 'ft').round(1)} ft.")
     end
 
     # create conditioned zone
