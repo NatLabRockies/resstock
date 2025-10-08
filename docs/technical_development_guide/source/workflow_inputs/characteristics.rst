@@ -32979,6 +32979,21 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 1.0
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
      - none
      - 
      - 
@@ -33032,21 +33047,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - Baseboard
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
    * - Boiler Baseboards Heating Only, Fuel
      - 4.4%
      - Boiler
@@ -33056,6 +33056,21 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 1.0
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
      - none
      - 
      - 
@@ -33109,34 +33124,19 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - Baseboard
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
    * - Fan Coil Cooling Only
      - 1.4%
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
      - mini-split
      - SEER2
      - 14.5
      - variable speed
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
      - 
      - 
      - 

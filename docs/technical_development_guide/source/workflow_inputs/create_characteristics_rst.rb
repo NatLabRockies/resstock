@@ -162,11 +162,11 @@ source_report.each do |row|
   f.puts('   :stub-columns: 1')
   f.puts('   :widths: auto')
   f.puts
-
-  cols = []
-  cols << ['Option name', 'Stock saturation']
+  f.puts('   * - Option name')
+  f.puts('     - Stock saturation')
 
   # Options and stock saturation
+  options = {}
   option_sat_csv_data.each do |param_option_row|
     # If the parameter does not match next
     next if param_option_row[1] != parameter
@@ -174,13 +174,18 @@ source_report.each do |row|
     # Insert the options and the stock saturation
     option = param_option_row[2]
 
+    if not options.keys.include?(option)
+      options[option] = {}
+    end
+
     sat_percent = Float(param_option_row[3]) * 100.0
     if Integer(sat_percent.truncate()) == 100
       sat_percent = '%.3g%%' % [sat_percent]
     else
       sat_percent = '%.2g%%' % [sat_percent]
     end
-    cols << [option, sat_percent]
+
+    options[option]['sat'] = sat_percent
 
     # Check if there are arguments
     next unless !r_arguments.empty?
@@ -199,8 +204,6 @@ source_report.each do |row|
         lookup_row[3..-1].each do |argument_value|
           arg, value = argument_value.split('=')
 
-          next if argument != arg
-
           tsv_filename = "#{arg}.tsv"
           tsv_filepath = File.join(resources_dir, "hpxml-measures/BuildResidentialHPXML/resources/options/#{tsv_filename}")
           if File.exist?(tsv_filepath)
@@ -208,9 +211,13 @@ source_report.each do |row|
             get_option_properties(args, tsv_filename, value)
 
             arg_map[arg] = args.keys
-            cols[-1] += args.values
+            args.keys.each do |arg_key|
+              options[option][arg_key.to_s] = args[arg_key]
+            end
           else
-            cols[-1] << value
+            if argument == arg
+              options[option][arg] = value
+            end
           end
         end
       end
@@ -220,24 +227,23 @@ source_report.each do |row|
   r_arguments.each do |r_argument|
     if arg_map.keys.include?(r_argument)
       arg_map[r_argument].each do |arg|
-        cols[0] << "``#{arg}``"
+        f.puts("     - ``#{arg}``")
       end
     else
-      cols[0] << "``#{r_argument}``"
+      f.puts("     - ``#{r_argument}``")
     end
   end
 
-  cols.each do |col|
-    n_vals = cols[0].size - col.size
-    (1..n_vals).to_a.each do |_n|
-      col << ''
-    end
-
-    col.each_with_index do |val, ix|
-      if ix == 0
-        f.puts("   * - #{val}")
+  options.each do |option_name, properties|
+    f.puts("   * - #{option_name}")
+    f.puts("     - #{properties['sat']}")
+    r_arguments.each do |r_argument|
+      if arg_map.keys.include?(r_argument)
+        arg_map[r_argument].each do |arg|
+          f.puts("     - #{options[option_name][arg.to_s]}")
+        end
       else
-        f.puts("     - #{val}")
+        f.puts("     - #{options[option_name][r_argument]}")
       end
     end
   end

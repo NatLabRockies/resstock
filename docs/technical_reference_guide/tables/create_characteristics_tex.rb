@@ -122,6 +122,7 @@ parameters.each do |parameter|
 
   f = File.open(File.join(options_folder, "#{parameter}.tex"), 'w')
 
+  # Options and stock saturation
   options = {}
   option_sat_csv_data.each do |param_option_row|
     # If the parameter does not match next
