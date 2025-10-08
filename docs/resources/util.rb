@@ -47,11 +47,3 @@ def get_lookup_and_saturations_csv_data(resources_dir)
   option_sat_csv_data = CSV.open(option_sat_file, quote_char: '"', col_sep: ',').each.to_a
   return lookup_csv_data, option_sat_csv_data
 end
-
-# Refine resstockarguments_xml
-def refine_resstockarguments_xml(resstockarguments_xml, buildreshpxmlarguments_xml, name)
-  # Get required and type from BuildResidentialHPXML
-  ['required', 'type'].each do |property|
-    resstockarguments_xml[name][property] = buildreshpxmlarguments_xml[name][property] if buildreshpxmlarguments_xml.keys.include?(name)
-  end
-end

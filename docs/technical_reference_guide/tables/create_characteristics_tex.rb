@@ -12,10 +12,6 @@ buildreshpxmlarguments_xml = get_measure_xml(filepath)
 filepath = File.read(File.join(resources_dir, '../measures/ResStockArguments/measure.xml'))
 resstockarguments_xml = get_measure_xml(filepath)
 
-resstockarguments_xml.keys.each do |name|
-  refine_resstockarguments_xml(resstockarguments_xml, buildreshpxmlarguments_xml, name)
-end
-
 arg_order = get_arg_order(buildreshpxmlarguments_xml, resstockarguments_xml)
 arguments_cols = get_arguments_cols()
 lookup_csv_data, option_sat_csv_data = get_lookup_and_saturations_csv_data(resources_dir)

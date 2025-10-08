@@ -42,29 +42,11 @@ def write_subsection(f, row, name, sc, delim)
   f.puts
 end
 
-# Convert href to rst for description
-def href_to_rst(str)
-  urls_names = str.scan(/<a href='(.+?)'>(.+?)<\/a>/)
-  return str if urls_names.empty?
-
-  urls_names.each do |url_name|
-    url, name = url_name
-
-    str = str.gsub("<a href='#{url}'>#{name}</a>", "`#{name} <#{url}>`_")
-  end
-  return str
-end
-
 filepath = File.read(File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/measure.xml'))
 buildreshpxmlarguments_xml = get_measure_xml(filepath)
 
 filepath = File.read(File.join(resources_dir, '../measures/ResStockArguments/measure.xml'))
 resstockarguments_xml = get_measure_xml(filepath)
-
-resstockarguments_xml.keys.each do |name|
-  refine_resstockarguments_xml(resstockarguments_xml, buildreshpxmlarguments_xml, name)
-  resstockarguments_xml[name]['description'] = href_to_rst(resstockarguments_xml[name]['description'])
-end
 
 arg_order = get_arg_order(buildreshpxmlarguments_xml, resstockarguments_xml)
 source_report_cols = ['Description', 'Created by', 'Source', 'Assumption']
