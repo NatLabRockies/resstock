@@ -1,0 +1,35 @@
+Option Name	Fuel Type	Annual Energy Use [therm/yr]	Usage Multiplier
+None		0	
+"Natural Gas, 25% Usage"	natural gas		0.25
+"Natural Gas, 50% Usage"	natural gas		0.5
+"Natural Gas, 75% Usage"	natural gas		0.75
+"Natural Gas, 100% Usage"	natural gas		
+"Natural Gas, 150% Usage"	natural gas		1.5
+"Natural Gas, 200% Usage"	natural gas		2
+"Natural Gas, 400% Usage"	natural gas		4
+"Propane, 25% Usage"	propane		0.25
+"Propane, 50% Usage"	propane		0.5
+"Propane, 75% Usage"	propane		0.75
+"Propane, 100% Usage"	propane		
+"Propane, 150% Usage"	propane		1.5
+"Propane, 200% Usage"	propane		2
+"Propane, 400% Usage"	propane		4
+"Wood, 25% Usage"	wood		0.25
+"Wood, 50% Usage"	wood		0.5
+"Wood, 75% Usage"	wood		0.75
+"Wood, 100% Usage"	wood		
+"Wood, 150% Usage"	wood		1.5
+"Wood, 200% Usage"	wood		2
+"Wood, 400% Usage"	wood		4
+"Electric, 25% Usage"	electricity		0.25
+"Electric, 50% Usage"	electricity		0.5
+"Electric, 75% Usage"	electricity		0.75
+"Electric, 100% Usage"	electricity		
+"Electric, 150% Usage"	electricity		1.5
+"Electric, 200% Usage"	electricity		2
+"Electric, 400% Usage"	electricity		4
+"Detailed Example: Wood, 55 therm/yr"	wood	55	
+			
+# Fuel Type: The fuel type of the grill.			
+# Annual Energy Use: The annual energy consumption of the grill.			
+"# Usage Multiplier: Multiplier on the energy usage that can reflect, e.g., high/low usage occupants."			
