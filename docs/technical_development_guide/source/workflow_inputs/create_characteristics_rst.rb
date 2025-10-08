@@ -105,10 +105,12 @@ f.puts
 
 lookup_csv_data, option_sat_csv_data = get_lookup_and_saturations_csv_data(resources_dir)
 
+arg_map = {}
+
 source_report = CSV.read(File.join(File.dirname(__FILE__), '../../../../project_national/resources/source_report.csv'), headers: true)
 source_report.each do |row|
   parameter = row['Parameter']
-next if parameter != 'Water Heater Efficiency'
+
   # ref
   f.puts(".. _#{parameter.to_underscore_case}:")
   f.puts
@@ -181,16 +183,9 @@ next if parameter != 'Water Heater Efficiency'
   f.puts('   :stub-columns: 1')
   f.puts('   :widths: auto')
   f.puts
-  f.puts('   * - Option name')
-  f.puts('     - Stock saturation')
 
-  # Get arguments for table header
-  if !r_arguments.empty?
-    r_arguments.each do |r_argument|
-      f.puts("     - ``#{r_argument}``")
-    end
-  end
-  f.puts
+  cols = []
+  cols << ['Option name', 'Stock saturation']
 
   # Options and stock saturation
   option_sat_csv_data.each do |param_option_row|
@@ -199,13 +194,14 @@ next if parameter != 'Water Heater Efficiency'
 
     # Insert the options and the stock saturation
     option = param_option_row[2]
-    f.puts("   * - #{option}")
+
     sat_percent = Float(param_option_row[3]) * 100.0
     if Integer(sat_percent.truncate()) == 100
-      f.puts('     - %.3g%%' % [sat_percent])
+      sat_percent = '%.3g%%' % [sat_percent]
     else
-      f.puts('     - %.2g%%' % [sat_percent])
+      sat_percent = '%.2g%%' % [sat_percent]
     end
+    cols << [option, sat_percent]
 
     # Check if there are arguments
     next unless !r_arguments.empty?
@@ -216,30 +212,49 @@ next if parameter != 'Water Heater Efficiency'
       next if lookup_row[1] != option
 
       # When the option is found
-      if lookup_row[2] != 'ResStockArguments'
-        # Put all blank rows if there is no arguments
-        for _a in 1..r_arguments.length() do
-          f.puts('     - ')
-        end
-      else
-        # If option specifies arguments, insert arguments according to the order of r_arguments
-        r_arguments.each do |argument|
-          # Look for each argument in r_arguments
-          found_arg = false
-          lookup_row[3..-1].each do |argument_value|
-            arg, value = argument_value.split('=')
-            if argument == arg
-              found_arg = true
-              f.puts("     - #{value}")
-            end
-          end
-          # if the argument is not found (a not specified optional argument)
-          if !found_arg
-            f.puts('     - ')
+      next unless lookup_row[2] == 'ResStockArguments'
+
+      # If option specifies arguments, insert arguments according to the order of r_arguments
+      r_arguments.each do |argument|
+        # Look for each argument in r_arguments
+        lookup_row[3..-1].each do |argument_value|
+          arg, value = argument_value.split('=')
+
+          next if argument != arg
+
+          tsv_filename = "#{arg}.tsv"
+          tsv_filepath = File.join(resources_dir, "hpxml-measures/BuildResidentialHPXML/resources/options/#{tsv_filename}")
+          if File.exist?(tsv_filepath)
+            args = {}
+            get_option_properties(args, tsv_filename, value)
+
+            arg_map[arg] = args.keys
+            cols[-1] += args.values
+          else
+            cols[-1] << value
           end
         end
       end
     end
   end
-  f.puts
+
+  r_arguments.each do |r_argument|
+    if arg_map.keys.include?(r_argument)
+      arg_map[r_argument].each do |arg|
+        cols[0] << "``#{arg}``"
+      end
+    else
+      cols[0] << "``#{r_argument}``"
+    end
+  end
+
+  cols.each do |col|
+    col.each_with_index do |val, ix|
+      if ix == 0
+        f.puts("   * - #{val}")
+      else
+        f.puts("     - #{val}")
+      end
+    end
+  end
 end
