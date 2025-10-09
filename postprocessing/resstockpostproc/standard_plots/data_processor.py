@@ -78,7 +78,6 @@ class DataProcessor:
             else:
                 print("All upgrades are available, skipping download")
         self.combined_df = self.load_data()
-        self.all_cols = set(self.combined_df.collect_schema().names())
 
     @staticmethod
     def get_available_upgrades(workflow: WorkflowConfig) -> list[int]:
@@ -205,7 +204,9 @@ class DataProcessor:
         calculated by summing existing columns, it does so. Otherwise, it fills
         the quantity with 0.
         """
-        missing_quantity_cols: set[str] = set(quantities) - set(self.all_cols)
+        # Work off of the provided LazyFrame's current schema
+        current_cols: set[str] = set(combined_df.collect_schema().names())
+        missing_quantity_cols: set[str] = set(quantities) - current_cols
 
         if not missing_quantity_cols:
             return combined_df
@@ -216,7 +217,7 @@ class DataProcessor:
         new_column_exprs = []
         used_cols = []  # which of the cols in combined_df are used to calculate the missing quantity
         for quantity in defined_quantity:
-            available_constituent_cols = [col for col in EnduseGroupToEnduses[quantity] if col in self.all_cols]
+            available_constituent_cols = [col for col in EnduseGroupToEnduses[quantity] if col in current_cols]
             if available_constituent_cols:
                 expression = pl.sum_horizontal([pl.col(c) for c in available_constituent_cols]).alias(quantity)
                 new_column_exprs.append(expression)
