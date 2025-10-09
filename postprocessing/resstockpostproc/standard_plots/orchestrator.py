@@ -17,6 +17,7 @@ from resstockpostproc.standard_plots.box_plotter import BoxPlotter
 from resstockpostproc.standard_plots.data_processor import DataProcessor
 from resstockpostproc.standard_plots.heatmap_plotter import HeatmapPlotter
 from resstockpostproc.standard_plots.histogram_plotter import HistogramPlotter
+from resstockpostproc.standard_plots.input_manager import InputManager
 from resstockpostproc.standard_plots.output_manager import OutputManager
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, VizType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
@@ -56,7 +57,9 @@ class PlotOrchestrator:
 
         # Setup the data processor
         start_time = time.time()
-        self.processor = DataProcessor(self.workflow)
+        self.inp_mgr = InputManager(self.workflow)
+        combined_df = self.inp_mgr.load_data()
+        self.processor = DataProcessor(combined_df)
         self.data_loading_time = time.time() - start_time
         self.out_mgr = OutputManager(self.workflow, output_types=output_types, overwrite=overwrite)
         self.theme = ThemeManager(self.workflow)

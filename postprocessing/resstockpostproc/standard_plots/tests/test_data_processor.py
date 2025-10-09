@@ -111,32 +111,7 @@ def combined_df() -> pl.LazyFrame:
 def processor(monkeypatch: pytest.MonkeyPatch, combined_df: pl.LazyFrame) -> DataProcessor:
     """Return a DataProcessor whose data has been monkey-patched with the fixture."""
 
-    def _fake_load(_):
-        return combined_df
-
-    # Patch the private _load_data before instantiation
-    monkeypatch.setattr(DataProcessor, "load_data", _fake_load, raising=True)
-    monkeypatch.setattr(DataProcessor, "get_available_upgrades", lambda _, __: [0, 1, 2], raising=True)
-    proc = DataProcessor(
-        WorkflowConfig(
-            s3_results_dir="dummy",
-            output_dir="dummy",
-            run_name="dummy",
-            upgrades=(0, 1, 2),
-            upgrade_names=("Baseline", "Upgrade1", "Upgrade2"),
-            selection_logic=None,
-            quantities=(QuantityGroup(name="dummy", constituents=("dummy",), sum="dummy"),),
-            group_by=("in.heating_fuel",),
-            aggregation_types=(AggregationType.total,),
-            visualization_types=(VizType.bar,),
-            quantity_types=(QuantityType.absolute,),
-            building_inclusion=(BuildingInclusion.all,),
-            vacancy_inclusion=(VacancyInclusion.all,),
-        )
-    )
-    # all_cols is computed in __init__, but we ensure it matches our fixture
-    proc.all_cols = set(combined_df.collect_schema().names())
-    return proc
+    return DataProcessor(combined_df)
 
 
 # -----------------------------------------------------------------------------
