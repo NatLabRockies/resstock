@@ -36,6 +36,14 @@ logger = logging.getLogger(__name__)
 s3_client = boto3.client("s3", config=Config(read_timeout=60 * 60, max_pool_connections=50))
 MIN_BASELINE = 1e-6  # used in denominator of percent savings calculation to avoid division by zero
 
+# Column name constants to avoid typos and centralize schema changes
+BLDG_ID_COL = "bldg_id"
+UPGRADE_COL = "upgrade"
+UPGRADE_NAME_COL = "upgrade_name"
+APPLICABILITY_COL = "applicability"
+VACANCY_STATUS_COL = "in.vacancy_status"
+WEIGHT_COL = "weight"
+
 
 def _safe_nonzero(expr: pl.Expr) -> pl.Expr:
     """Return an expression guaranteed to be at least MIN_BASELINE in magnitude.
@@ -179,18 +187,18 @@ class DataProcessor:
                     glob=False,
                 )
             upgrade_name = upgrade_to_name[upgrade]
-            lazyframes[upgrade] = lazyframes[upgrade].with_columns(pl.lit(upgrade_name).alias("upgrade_name"))
+            lazyframes[upgrade] = lazyframes[upgrade].with_columns(pl.lit(upgrade_name).alias(UPGRADE_NAME_COL))
             # ----- Data coercion -----------------------------------------------------------------
             # Convert the 'applicability' column to Boolean if it exists and is not already Boolean.
             # Can be removed after https://github.com/NREL/resstock/pull/1439 is merged.
             schema = lazyframes[upgrade].collect_schema()
-            if "applicability" in schema and schema["applicability"] != pl.Boolean:
+            if APPLICABILITY_COL in schema and schema[APPLICABILITY_COL] != pl.Boolean:
                 truthy_values = ["true", "True", "1"]
                 lazyframes[upgrade] = lazyframes[upgrade].with_columns(
-                    pl.when(pl.col("applicability").is_in(truthy_values))
+                    pl.when(pl.col(APPLICABILITY_COL).is_in(truthy_values))
                     .then(True)
                     .otherwise(False)
-                    .alias("applicability")
+                    .alias(APPLICABILITY_COL)
                     .cast(pl.Boolean)
                 )
 
@@ -267,7 +275,7 @@ class DataProcessor:
         lf: pl.LazyFrame,
         quantities: list[str],
         *,
-        join_key: str = "bldg_id",
+        join_key: str = BLDG_ID_COL,
     ) -> pl.LazyFrame:
         """Attach baseline columns for quantities to the given LazyFrame.
 
@@ -277,7 +285,7 @@ class DataProcessor:
             raise ValueError(f"'{join_key}' column not found in data - cannot compute savings per building.")
         baseline_cols = [join_key, *quantities]
         baseline_df = (
-            lf.filter(pl.col("upgrade") == 0)
+            lf.filter(pl.col(UPGRADE_COL) == 0)
             .select(baseline_cols)
             .rename({q: f"baseline_{q}" for q in quantities})
         )
@@ -318,13 +326,13 @@ class DataProcessor:
 
         if plot_spec.quantity_type in [QuantityType.savings, QuantityType.percent_savings]:
             # baseline should not be included when plotting savings
-            combined_df = combined_df.filter(pl.col("upgrade") != 0)
+            combined_df = combined_df.filter(pl.col(UPGRADE_COL) != 0)
 
         if plot_spec.visualization_type == VizType.box:
             if not isinstance(plot_spec.quantity, str):
                 combined_df = combined_df.unpivot(
                     quantities,
-                    index=["upgrade", "upgrade_name", "bldg_id"],
+                    index=[UPGRADE_COL, UPGRADE_NAME_COL, BLDG_ID_COL],
                     variable_name="End Use",
                     value_name="value (kWh)",
                 )
@@ -351,20 +359,20 @@ class DataProcessor:
 
     def _process_vacancy_inclusion(self, plot_spec, combined_df):
         if plot_spec.vacancy_inclusion == VacancyInclusion.occupied_only:
-            combined_df = combined_df.filter(pl.col("in.vacancy_status") == "Occupied")
+            combined_df = combined_df.filter(pl.col(VACANCY_STATUS_COL) == "Occupied")
         return combined_df
 
     def _process_building_inclusion(self, plot_spec, combined_df):
         if plot_spec.building_inclusion == BuildingInclusion.applied_only:
             if plot_spec.upgrade is None:  # Applied in respective upgrades (No Baseline)
-                combined_df = combined_df.filter(pl.col("applicability") & (pl.col("upgrade") != 0))
+                combined_df = combined_df.filter(pl.col(APPLICABILITY_COL) & (pl.col(UPGRADE_COL) != 0))
             else:  # Applied in upgrade x (include baseline in this case)
                 is_upgrade_applicable = (
-                    ((pl.col("upgrade") == plot_spec.upgrade) & pl.col("applicability")).any().over("bldg_id")
+                    ((pl.col(UPGRADE_COL) == plot_spec.upgrade) & pl.col(APPLICABILITY_COL)).any().over(BLDG_ID_COL)
                 )
                 combined_df = combined_df.filter(
-                    ((pl.col("upgrade") == plot_spec.upgrade) & pl.col("applicability"))
-                    | ((pl.col("upgrade") == 0) & is_upgrade_applicable)
+                    ((pl.col(UPGRADE_COL) == plot_spec.upgrade) & pl.col(APPLICABILITY_COL))
+                    | ((pl.col(UPGRADE_COL) == 0) & is_upgrade_applicable)
                 )
 
         return combined_df
@@ -372,9 +380,9 @@ class DataProcessor:
     def _process_upgrades_inclusion(self, plot_spec, selected_upgrades, combined_df):
         if selected_upgrades is not None:
             keep_upgrades = set([0, *selected_upgrades])  # keep baseline because needed for certain calculations
-            combined_df = combined_df.filter(pl.col("upgrade").is_in(keep_upgrades))
+            combined_df = combined_df.filter(pl.col(UPGRADE_COL).is_in(keep_upgrades))
         if plot_spec.upgrade is not None:
-            combined_df = combined_df.filter(pl.col("upgrade").is_in([0, plot_spec.upgrade]))
+            combined_df = combined_df.filter(pl.col(UPGRADE_COL).is_in([0, plot_spec.upgrade]))
         return combined_df
 
     @classmethod
@@ -442,13 +450,13 @@ class DataProcessor:
         lf_binned = combined_df.with_columns(bin_expr)
 
         # ---------- 3. Aggregate real counts ----------
-        group_keys = ["upgrade", "upgrade_name", group_by, "bin"] if group_by else ["upgrade", "upgrade_name", "bin"]
+        group_keys = [UPGRADE_COL, UPGRADE_NAME_COL, group_by, "bin"] if group_by else [UPGRADE_COL, UPGRADE_NAME_COL, "bin"]
         counts = lf_binned.group_by(group_keys, maintain_order=True).agg(pl.count().alias("count"))
 
         # ---------- 4. Build full grid ----------
         full_bins = pl.Series("bin", [-1, *list(range(100)), 100], dtype=pl.Int32)
 
-        groups = combined_df.select("upgrade", "upgrade_name", *(group_by,) if group_by else ()).unique(
+        groups = combined_df.select(UPGRADE_COL, UPGRADE_NAME_COL, *(group_by,) if group_by else ()).unique(
             maintain_order=True
         )
 
@@ -477,8 +485,8 @@ class DataProcessor:
             )
             .with_columns(((pl.col("bin_left") + pl.col("bin_right")) / 2).alias("bin_center"))
             .select(
-                "upgrade",
-                "upgrade_name",
+                UPGRADE_COL,
+                UPGRADE_NAME_COL,
                 *(group_by,) if group_by else (),
                 "bin",
                 "bin_left",
@@ -501,7 +509,7 @@ class DataProcessor:
     ) -> pl.DataFrame:
 
         # ─── 1. keys ──────────────────────────────────────────────────────────────
-        gcols = ["upgrade", "upgrade_name"]
+        gcols = [UPGRADE_COL, UPGRADE_NAME_COL]
         if group_by:
             gcols.append(group_by)
         max_items_per_group = max(combined_df.group_by(gcols).agg(pl.len()).collect()['len'].to_list())
@@ -516,7 +524,7 @@ class DataProcessor:
             .group_by(gcols, maintain_order=True)
             .agg(
                 pl.col(quantity).alias("vals"),
-                pl.col("bldg_id").alias("bldg_ids"),
+                pl.col(BLDG_ID_COL).alias("bldg_ids"),
                 pl.col(quantity).min().alias("min"),
                 pl.col(quantity).quantile(cutoff).alias("lower_cutoff"),
                 pl.col(quantity).quantile(0.25).alias("q1"),
@@ -640,7 +648,7 @@ class DataProcessor:
             DataFrame prepared for plotting with all requested quantities
         """
 
-        grouping_cols = ["upgrade", "upgrade_name"]
+        grouping_cols = [UPGRADE_COL, UPGRADE_NAME_COL]
         if group_by:
             grouping_cols.append(group_by)
         columns_to_select = grouping_cols + quantities + ["model_count"]
@@ -663,10 +671,10 @@ class DataProcessor:
         elif aggregation_type == AggregationType.average:
             agg_exprs = [pl.col(quantity).mean().alias(quantity) for quantity in quantities]
         elif aggregation_type == AggregationType.total:
-            agg_exprs = [(pl.col(quantity) * pl.col("weight")).sum().alias(quantity) for quantity in quantities]
+            agg_exprs = [(pl.col(quantity) * pl.col(WEIGHT_COL)).sum().alias(quantity) for quantity in quantities]
         else:
             raise ValueError(f"Unsupported value type: {aggregation_type}")
-        agg_exprs.append(pl.col("bldg_id").count().alias("model_count"))
+        agg_exprs.append(pl.col(BLDG_ID_COL).count().alias("model_count"))
         result = combined_df.group_by(grouping_cols, maintain_order=True).agg(agg_exprs)
         result = result.select(columns_to_select)
         return result.collect()
