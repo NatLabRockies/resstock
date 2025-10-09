@@ -37,6 +37,23 @@ s3_client = boto3.client("s3", config=Config(read_timeout=60 * 60, max_pool_conn
 MIN_BASELINE = 1e-6  # used in denominator of percent savings calculation to avoid division by zero
 
 
+def _safe_nonzero(expr: pl.Expr) -> pl.Expr:
+    """Return an expression guaranteed to be at least MIN_BASELINE in magnitude.
+
+    Preserves the sign of the input expression when it's very close to zero,
+    using MIN_BASELINE as the floor. If the sign is exactly zero, uses +MIN_BASELINE.
+    """
+    return (
+        pl.when(expr.abs() < MIN_BASELINE)
+        .then(
+            pl.when(expr.sign() == 0)
+            .then(MIN_BASELINE)
+            .otherwise(expr.sign() * MIN_BASELINE)
+        )
+        .otherwise(expr)
+    )
+
+
 class DataProcessor:
     """
     Processes simulation result data for plotting
@@ -258,17 +275,7 @@ class DataProcessor:
                 return result
             # percent savings
             percent_savings_exprs = [
-                (
-                    100
-                    * pl.col(q)
-                    / pl.when(pl.col(f"baseline_{q}").abs() < MIN_BASELINE)
-                    .then(
-                        pl.when(pl.col(f"baseline_{q}").sign() == 0)
-                        .then(MIN_BASELINE)
-                        .otherwise(pl.col(f"baseline_{q}").sign() * MIN_BASELINE)
-                    )
-                    .otherwise(pl.col(f"baseline_{q}"))
-                ).alias(q)
+                (100 * pl.col(q) / _safe_nonzero(pl.col(f"baseline_{q}"))).alias(q)
                 for q in quantities
             ]
             # Keep the baseline values for the percent savings so they can be used for weighted average
@@ -635,22 +642,8 @@ class DataProcessor:
             # where non_zero ensures that denominator is at least MIN_BASELINE
             agg_exprs = [
                 (
-                    (pl.col(quantity) *
-                        pl.when(pl.col(f"baseline_{quantity}").abs() < MIN_BASELINE)
-                        .then(
-                            pl.when(pl.col(f"baseline_{quantity}").sign() == 0)
-                            .then(MIN_BASELINE)
-                            .otherwise(pl.col(f"baseline_{quantity}").sign() * MIN_BASELINE)
-                        )
-                        .otherwise(pl.col(f"baseline_{quantity}"))
-                    ).sum()
-                    / pl.when(pl.col(f"baseline_{quantity}").sum().abs() < MIN_BASELINE)
-                    .then(
-                        pl.when(pl.col(f"baseline_{quantity}").sum().sign() == 0)
-                        .then(MIN_BASELINE)
-                        .otherwise(pl.col(f"baseline_{quantity}").sum().sign() * MIN_BASELINE)
-                    )
-                    .otherwise(pl.col(f"baseline_{quantity}").sum())
+                    (pl.col(quantity) * _safe_nonzero(pl.col(f"baseline_{quantity}"))).sum()
+                    / _safe_nonzero(pl.col(f"baseline_{quantity}").sum())
                 ).alias(quantity)
                 for quantity in quantities
             ]
