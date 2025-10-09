@@ -196,6 +196,8 @@ def _build_base_spec(**kwargs) -> PlotSpec:  # type: ignore[return-value]
     [
         (VizType.box),
         (VizType.bar),
+        (VizType.heatmap),
+        (VizType.hist),
     ],
 )
 @pytest.mark.parametrize(
@@ -250,6 +252,8 @@ def test_prepare_basic(
             assert len(df.filter(pl.col("End Use") == col)) == expected_rows
     elif isinstance(quantity, str) and viz_type == VizType.box:
         assert len(df) == expected_rows
+    elif isinstance(quantity, str) and viz_type == VizType.hist:
+        assert len(df) == expected_rows * 102 # 100 bins and 2 overflow/underflow per upgrade-group
     else:
         assert df.height == expected_rows
         for col in quantities:

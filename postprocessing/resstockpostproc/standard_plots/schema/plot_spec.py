@@ -77,7 +77,9 @@ class PlotSpec(BaseModel):
         if self.visualization_type == VizType.box and not isinstance(self.quantity, str) and self.group_by:
             return "Box plot can only be generated from stacked quantities when group_by is None."
         if self.visualization_type == VizType.heatmap and not isinstance(self.quantity, QuantityGroup):
-            return "Heatmap cannot be generated from stacked quantities"
+            return "Heatmap can only be generated from stacked quantities"
+        if self.visualization_type == VizType.hist and isinstance(self.quantity, QuantityGroup):
+            return "Histogram cannot be generated from stacked quantities"
         if self.upgrade == 0 and self.building_inclusion == BuildingInclusion.applied_only:
             return "Baseline can't be passed as an upgrade to plot when building_inclusion is applied_only."
         if self.upgrade == 0 and self.quantity_type in [QuantityType.percent_savings, QuantityType.savings]:

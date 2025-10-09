@@ -387,17 +387,15 @@ class DataProcessor:
         Every bin (-1, 0-99, 100) is present; empty bins have count == 0.
         """
 
-        # ---------- 1. Percentile bounds ----------
-        q1, q99 = (
-            combined_df.select(
+        # ---------- 1. Percentile and absolute bounds (single pass) ----------
+        q1, q99, minimum, maximum = (
+            combined_df
+            .select(
                 pl.col(quantity).quantile(0.01, "midpoint").alias("q1"),
                 pl.col(quantity).quantile(0.99, "midpoint").alias("q99"),
+                pl.col(quantity).min().alias("minimum"),
+                pl.col(quantity).max().alias("maximum"),
             )
-            .collect()
-            .row(0)
-        )
-        minimum, maximum = (
-            combined_df.select(pl.col(quantity).min().alias("minimum"), pl.col(quantity).max().alias("maximum"))
             .collect()
             .row(0)
         )
