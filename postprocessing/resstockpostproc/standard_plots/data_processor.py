@@ -250,39 +250,51 @@ class DataProcessor:
             A LazyFrame where the requested ``quantities`` columns have been transformed as requested.
         """
         if quantity_type in [QuantityType.absolute, QuantityType.model_count]:
-            # No transformation required
             return combined_df
 
         if quantity_type in [QuantityType.savings, QuantityType.percent_savings]:
-            join_key = "bldg_id"
-            if join_key not in combined_df.collect_schema().names():
-                raise ValueError(f"'{join_key}' column not found in data - cannot compute savings per building.")
-            baseline_cols = [join_key, *quantities]
-            baseline_df = (
-                combined_df.filter(pl.col("upgrade") == 0)
-                .select(baseline_cols)
-                .rename({q: f"baseline_{q}" for q in quantities})
-            )
-
-            # 2. Join the baseline values back to the full dataset on `building_id`.
-            df_with_baseline = combined_df.join(baseline_df, on=join_key, how="left", validate="m:1",
-                                                maintain_order='left')
-
-            # 3. Replace the quantity columns with the calculated savings.
-            savings_exprs = [(pl.col(f"baseline_{q}") - pl.col(q)).alias(q) for q in quantities]
-            result = df_with_baseline.with_columns(savings_exprs)
+            df = self._attach_baseline(combined_df, quantities, join_key="bldg_id")
+            df = self._compute_savings(df, quantities)
             if quantity_type == QuantityType.savings:
-                result = result.drop([f"baseline_{q}" for q in quantities])  # Clean-up helper columns
-                return result
-            # percent savings
-            percent_savings_exprs = [
-                (100 * pl.col(q) / _safe_nonzero(pl.col(f"baseline_{q}"))).alias(q)
-                for q in quantities
-            ]
-            # Keep the baseline values for the percent savings so they can be used for weighted average
-            result = result.with_columns(percent_savings_exprs)
-            return result
+                return df.drop([f"baseline_{q}" for q in quantities])
+
+            df = self._compute_percent_savings(df, quantities)
+            return df
         raise ValueError(f"Unsupported quantity type: {quantity_type}")
+
+    def _attach_baseline(
+        self,
+        lf: pl.LazyFrame,
+        quantities: list[str],
+        *,
+        join_key: str = "bldg_id",
+    ) -> pl.LazyFrame:
+        """Attach baseline columns for quantities to the given LazyFrame.
+
+        Produces columns named baseline_<q> via a left join on the join_key.
+        """
+        if join_key not in lf.collect_schema().names():
+            raise ValueError(f"'{join_key}' column not found in data - cannot compute savings per building.")
+        baseline_cols = [join_key, *quantities]
+        baseline_df = (
+            lf.filter(pl.col("upgrade") == 0)
+            .select(baseline_cols)
+            .rename({q: f"baseline_{q}" for q in quantities})
+        )
+        return lf.join(baseline_df, on=join_key, how="left", validate="m:1", maintain_order='left')
+
+    def _compute_savings(self, lf: pl.LazyFrame, quantities: list[str]) -> pl.LazyFrame:
+        """Replace quantity columns with savings = baseline - value."""
+        savings_exprs = [(pl.col(f"baseline_{q}") - pl.col(q)).alias(q) for q in quantities]
+        return lf.with_columns(savings_exprs)
+
+    def _compute_percent_savings(self, lf: pl.LazyFrame, quantities: list[str]) -> pl.LazyFrame:
+        """Convert savings columns into percent savings using safe non-zero baseline as denominator."""
+        pct_exprs = [
+            (100 * pl.col(q) / _safe_nonzero(pl.col(f"baseline_{q}"))).alias(q)
+            for q in quantities
+        ]
+        return lf.with_columns(pct_exprs)
 
     def prepare_data_for_plot(self, plot_spec: PlotSpec, *, selected_upgrades: list[int] | None = None) -> pl.DataFrame:
         """
