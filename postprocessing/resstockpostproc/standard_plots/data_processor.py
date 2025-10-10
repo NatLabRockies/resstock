@@ -67,46 +67,57 @@ class DataProcessor:
         self.enduse_group_mapping = enduse_group_mapping.copy()
 
     def _fill_missing_quantities(self, combined_df: pl.LazyFrame, quantities: list[str]) -> pl.LazyFrame:
-        """
-        Fills missing quantity columns in a LazyFrame. If a quantity can be
-        calculated by summing existing columns, it does so. Otherwise, it fills
-        the quantity with 0.
-        """
-        # Work off of the provided LazyFrame's current schema
-        current_cols: set[str] = set(combined_df.collect_schema().names())
-        missing_quantity_cols: set[str] = set(quantities) - current_cols
+        """Ensure requested quantity columns exist by summing mapped constituents or zero-filling.
 
-        if not missing_quantity_cols:
+        This implementation flattens control-flow by classifying missing quantities first,
+        then applying actions per category (full/partial/none/undefined).
+        """
+        current_cols: set[str] = set(combined_df.collect_schema().names())
+        missing_cols: set[str] = set(quantities) - current_cols
+        if not missing_cols:
             return combined_df
 
-        # They could be either be defined in enduse_group_mapping
-        defined_quantity = [quantity for quantity in missing_quantity_cols if quantity in self.enduse_group_mapping]
-        truly_missing_quantity = [quantity for quantity in missing_quantity_cols if quantity not in defined_quantity]
-        new_column_exprs = []
-        used_cols = []  # which of the cols in combined_df are used to calculate the missing quantity
-        for quantity in defined_quantity:
-            available_constituent_cols = [col for col in self.enduse_group_mapping[quantity] if col in current_cols]
-            missing_constituent_cols = set(self.enduse_group_mapping[quantity]) - set(available_constituent_cols)
-            if available_constituent_cols:
-                expression = pl.sum_horizontal([pl.col(c) for c in available_constituent_cols]).alias(quantity)
-                new_column_exprs.append(expression)
-                used_cols.extend(available_constituent_cols)
-                if missing_constituent_cols:
-                    logger.warning(
-                        f"Quantity group {quantity} is defined but only some of the constituent are available. "
-                        f"Missing constituents: {missing_constituent_cols}"
-                    )
-            else:
-                logger.warning(f"Quantity group {quantity} is defined but none of the constituent are available")
-                expression = pl.lit(0, dtype=pl.Int32).alias(quantity)
-                new_column_exprs.append(expression)
-        # Or they are truly missing. If they are truly missing, we will fill them with 0
-        for quantity in truly_missing_quantity:
-            logger.warning(f"Quantity {quantity} is not available and is not a defined group in end_use_dict")
-            expression = pl.lit(0, dtype=pl.Int32).alias(quantity)
-            new_column_exprs.append(expression)
+        mapping = self.enduse_group_mapping
+        defined_cols = {q for q in missing_cols if q in mapping}
+        not_found_cols = missing_cols - defined_cols
 
-        return combined_df.with_columns(new_column_exprs)
+        # Map each defined quantity to its available constituents in the current dataframe
+        avail_map: dict[str, list[str]] = {
+            q: [c for c in mapping[q] if c in current_cols] for q in defined_cols
+        }
+        defined_all_missing = {q for q, cols in avail_map.items() if not cols}
+        defined_partial_missing = {q for q, cols in avail_map.items() if cols and len(cols) < len(mapping[q])}
+        defined_not_missing = {q for q, cols in avail_map.items() if len(cols) == len(mapping[q])}
+
+        new_columns: list[pl.Expr] = []
+
+        # Build sum expressions for groups with at least one available constituent
+        for defined_col in (*sorted(defined_not_missing), *sorted(defined_partial_missing)):
+            cols = avail_map[defined_col]
+            new_columns.append(pl.sum_horizontal([pl.col(c) for c in cols]).alias(defined_col))
+
+        # Emit warnings for partial availability
+        for defined_col in sorted(defined_partial_missing):
+            missing_set = set(mapping[defined_col]) - set(avail_map[defined_col])
+            logger.warning(
+                f"Quantity group {defined_col} is defined but only some of the constituent are available. Missing constituents: {missing_set}"
+            )
+
+        # For defined groups with no available constituents: warn + zero-fill
+        for defined_col in sorted(defined_all_missing):
+            logger.warning(
+                f"Quantity group {defined_col} is defined but none of the constituent are available"
+            )
+            new_columns.append(pl.lit(0, dtype=pl.Int32).alias(defined_col))
+
+        # For completely undefined quantities: warn + zero-fill
+        for not_found_col in sorted(not_found_cols):
+            logger.warning(
+                f"Quantity {not_found_col} is not available and is not a defined group in end_use_dict"
+            )
+            new_columns.append(pl.lit(0, dtype=pl.Int32).alias(not_found_col))
+
+        return combined_df.with_columns(new_columns)
 
     def _convert_quantity_type(
         self, quantities: list[str], quantity_type: QuantityType, combined_df: pl.LazyFrame
