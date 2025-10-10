@@ -56,7 +56,7 @@ class DataProcessor:
     Processes simulation result data for plotting
     """
 
-    def __init__(self, combined_df: pl.LazyFrame):
+    def __init__(self, combined_df: pl.LazyFrame, enduse_group_mapping: dict[str, list[str]] = EnduseGroupToEnduses):
         """
         Initialize the data processor with pre-loaded data
 
@@ -64,6 +64,7 @@ class DataProcessor:
             combined_df: Pre-loaded LazyFrame from InputManager containing all upgrade data
         """
         self.combined_df = combined_df
+        self.enduse_group_mapping = enduse_group_mapping.copy()
 
     def _fill_missing_quantities(self, combined_df: pl.LazyFrame, quantities: list[str]) -> pl.LazyFrame:
         """
@@ -78,22 +79,28 @@ class DataProcessor:
         if not missing_quantity_cols:
             return combined_df
 
-        # They could be either be defined in EnduseGroupToEnduses or are truly missing
-        defined_quantity = [quantity for quantity in missing_quantity_cols if quantity in EnduseGroupToEnduses]
+        # They could be either be defined in enduse_group_mapping
+        defined_quantity = [quantity for quantity in missing_quantity_cols if quantity in self.enduse_group_mapping]
         truly_missing_quantity = [quantity for quantity in missing_quantity_cols if quantity not in defined_quantity]
         new_column_exprs = []
         used_cols = []  # which of the cols in combined_df are used to calculate the missing quantity
         for quantity in defined_quantity:
-            available_constituent_cols = [col for col in EnduseGroupToEnduses[quantity] if col in current_cols]
+            available_constituent_cols = [col for col in self.enduse_group_mapping[quantity] if col in current_cols]
+            missing_constituent_cols = set(self.enduse_group_mapping[quantity]) - set(available_constituent_cols)
             if available_constituent_cols:
                 expression = pl.sum_horizontal([pl.col(c) for c in available_constituent_cols]).alias(quantity)
                 new_column_exprs.append(expression)
                 used_cols.extend(available_constituent_cols)
+                if missing_constituent_cols:
+                    logger.warning(
+                        f"Quantity group {quantity} is defined but only some of the constituent are available. "
+                        f"Missing constituents: {missing_constituent_cols}"
+                    )
             else:
                 logger.warning(f"Quantity group {quantity} is defined but none of the constituent are available")
                 expression = pl.lit(0, dtype=pl.Int32).alias(quantity)
                 new_column_exprs.append(expression)
-        # Since they are truly missing, we will fill them with 0
+        # Or they are truly missing. If they are truly missing, we will fill them with 0
         for quantity in truly_missing_quantity:
             logger.warning(f"Quantity {quantity} is not available and is not a defined group in end_use_dict")
             expression = pl.lit(0, dtype=pl.Int32).alias(quantity)

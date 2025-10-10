@@ -404,3 +404,85 @@ def test_integrity(processor: DataProcessor, quantity: str):
     all_df = avg_percent_savings_df.join(savings_df, on="upgrade", suffix="_savings").join(absolute_df, how='cross')
     all_df = all_df.with_columns((100 * pl.col(f"{quantity}_savings") / pl.col("baseline_value")).alias("calc_percent_savings"))
     assert (all_df[quantity] == all_df['calc_percent_savings']).all()
+
+
+def test_missing_quantities_are_filled(combined_df: pl.LazyFrame, caplog: pytest.LogCaptureFixture):
+    """Request a quantity group SUM column that isn't present to trigger fill.
+
+    We use a QuantityGroup whose `sum` field (a synthetic group name) is not in
+    the dataset columns. This forces DataProcessor.prepare_data_for_plot to call
+    the helper that fills missing quantities, which should create the grouped
+    SUM column by combining its constituents. We don't call the helper directly.
+    """
+
+    # Provide an explicit enduse_group_mapping so we can control behavior:
+    # - "My Group" should sum existing columns elec_kwh + gas_kwh
+    # - "Defined But Missing" is defined but its constituents do not exist
+    # - Anything else (e.g., "Truly Missing") is not defined at all
+    mapping = {
+        "My Group": ["elec_kwh", "gas_kwh"],
+        "Defined But All Missing": ["does_not_exist_1", "does_not_exist_2"],
+        "Defined But Partially Missing": ["elec_kwh", "does_not_exist_2"],
+    }
+
+    dp = DataProcessor(combined_df, enduse_group_mapping=mapping)
+
+    # Create a group with constituents that exist in the fixture, and a sum
+    qgroup = QuantityGroup(name="energy", constituents=("elec_kwh", "gas_kwh"), sum="My Group")
+
+    spec = _build_base_spec(
+        visualization_type=VizType.bar,
+        aggregation_type=AggregationType.total,
+        quantity_type=QuantityType.absolute,
+        quantity=qgroup,
+        group_by=None,
+        quantity_group_name="energy",
+    )
+
+    caplog.set_level("WARNING")
+    caplog.clear()
+    df = dp.prepare_data_for_plot(spec)
+
+    # The group sum column should now exist because it was filled.
+    assert "My Group" in df.columns
+
+    # And it should equal elec_kwh + gas_kwh (total aggregation with weights).
+    assert (
+        (df["My Group"] - df["elec_kwh"] - df["gas_kwh"]).abs() < 1e-9
+    ).all()
+    # No warnings expected for successful summation
+    assert not caplog.records
+
+    # Now request a defined group whose constituents are missing -> should be zero-filled
+    spec.quantity = QuantityGroup(name="energy", constituents=("elec_kwh", "gas_kwh"), sum="Defined But All Missing")
+    caplog.clear()
+    df2 = dp.prepare_data_for_plot(spec)
+    assert "Defined But All Missing" in df2.columns
+    assert (df2["Defined But All Missing"] == 0).all()
+    assert any(
+        "defined but none of the constituent are available" in rec.getMessage()
+        for rec in caplog.records
+    )
+
+    # Now request a defined group whose some constituents are missing -> should sum existing ones
+    spec.quantity = QuantityGroup(name="energy", constituents=("elec_kwh", "gas_kwh"), sum="Defined But Partially Missing")
+    caplog.clear()
+    df2 = dp.prepare_data_for_plot(spec)
+    assert "Defined But Partially Missing" in df2.columns
+    assert ((df2["Defined But Partially Missing"] - df2["elec_kwh"]).abs() < 1e-9).all()
+    # No warning expected here because at least one constituent exists and is used
+    assert any(
+        "is defined but only some of the constituent are available" in rec.getMessage()
+        for rec in caplog.records
+    )
+
+    # Finally request a completely undefined group -> also zero-filled
+    spec.quantity = QuantityGroup(name="energy", constituents=("elec_kwh", "gas_kwh"), sum="Truly Missing")
+    caplog.clear()
+    df3 = dp.prepare_data_for_plot(spec)
+    assert "Truly Missing" in df3.columns
+    assert (df3["Truly Missing"] == 0).all()
+    assert any(
+        "is not available and is not a defined group" in rec.getMessage()
+        for rec in caplog.records
+    )
