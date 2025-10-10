@@ -793,18 +793,18 @@ Calculated,yes,yes,,,out.site_energy.net.energy_consumption_intensity..kwh_per_f
 Calculated,yes,yes,,,out.site_energy.net.energy_savings_intensity..kwh_per_ft2,,kwh_per_ft2,,,,,,,,
 Calculated,yes,yes,,,out.site_energy.total.energy_consumption_intensity..kwh_per_ft2,,kwh_per_ft2,,,,,,,,
 Calculated,yes,yes,,,out.site_energy.total.energy_savings_intensity..kwh_per_ft2,,kwh_per_ft2,,,,,,,,
-Calculated,yes,yes,,,upgrade.clothes_dryer,,,,,,,,,,Indicates the type of clothes dryer the model is upgraded to. Blank value indicates no upgrade.
-Calculated,yes,yes,,,upgrade.cooking_range,,,,,,,,,,Indicates the type of cooking range the model is upgraded to. Blank value indicates no upgrade.
-Calculated,yes,yes,,,upgrade.cooling_setpoint_has_offset,,,,,,,,,,Indicates the cooling setpoint the model is upgraded to. Blank value indicates no upgrade.
-Calculated,yes,yes,,,upgrade.cooling_setpoint_offset_magnitude,,,,,,,,,,Indicates the magnitude of the cooling setpoint the model is upgraded to. Blank value indicates no upgrade.
-Calculated,yes,yes,,,upgrade.cooling_setpoint_offset_period,,,,,,,,,,Indicates the period of the cooling setpoint the model is upgraded to. Blank value indicates no upgrade.
+Calculated,yes,no,,,upgrade.clothes_dryer,,,,,,,,,,Indicates the type of clothes dryer the model is upgraded to. Blank value indicates no upgrade.
+Calculated,yes,no,,,upgrade.cooking_range,,,,,,,,,,Indicates the type of cooking range the model is upgraded to. Blank value indicates no upgrade.
+Calculated,yes,no,,,upgrade.cooling_setpoint_has_offset,,,,,,,,,,Indicates the cooling setpoint the model is upgraded to. Blank value indicates no upgrade.
+Calculated,yes,no,,,upgrade.cooling_setpoint_offset_magnitude,,,,,,,,,,Indicates the magnitude of the cooling setpoint the model is upgraded to. Blank value indicates no upgrade.
+Calculated,yes,no,,,upgrade.cooling_setpoint_offset_period,,,,,,,,,,Indicates the period of the cooling setpoint the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,,,upgrade.electric_vehicle_charger,,,,,,,,,,Indicates the electric vehicle charger the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,,,upgrade.electric_vehicle_efficiency_increase,,,,,,,,,,Indicates the efficiency increase of the electric vehicle the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,,,upgrade.electric_vehicle_ownership,,,,,,,,,,Indicates the electric vehicle ownership of the building the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,,,upgrade.heating_fuel,,,,,,,,,,Indicates the heating fuel the model is upgraded to. Blank value indicates no upgrade.
-Calculated,yes,yes,,,upgrade.heating_setpoint_has_offset,,,,,,,,,,Indicates the heating setpoint offset the model is upgraded to. Blank value indicates no upgrade.
-Calculated,yes,yes,,,upgrade.heating_setpoint_offset_magnitude,,,,,,,,,,Indicates the magnitude of the heating setpoint offset the model is upgraded to. Blank value indicates no upgrade.
-Calculated,yes,yes,,,upgrade.heating_setpoint_offset_period,,,,,,,,,,Indicates the period of the heating setpoint offset the model is upgraded to. Blank value indicates no upgrade.
+Calculated,yes,no,,,upgrade.heating_setpoint_has_offset,,,,,,,,,,Indicates the heating setpoint offset the model is upgraded to. Blank value indicates no upgrade.
+Calculated,yes,no,,,upgrade.heating_setpoint_offset_magnitude,,,,,,,,,,Indicates the magnitude of the heating setpoint offset the model is upgraded to. Blank value indicates no upgrade.
+Calculated,yes,no,,,upgrade.heating_setpoint_offset_period,,,,,,,,,,Indicates the period of the heating setpoint offset the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,,,upgrade.hvac_cooling_efficiency,,,,,,,,,,Indicates the efficiency of the HVAC cooling the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,,,upgrade.hvac_cooling_partial_space_conditioning,,,,,,,,,,Indicates the partial space conditioning of the HVAC cooling the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,,,upgrade.hvac_heating_efficiency,,,,,,,,,,Indicates the efficiency of the HVAC heating the model is upgraded to. Blank value indicates no upgrade.
@@ -813,8 +813,8 @@ Calculated,yes,yes,,,upgrade.hvac_secondary_heating_efficiency,,,,,,,,,,Indicate
 Calculated,yes,yes,,,upgrade.hvac_secondary_heating_fuel,,,,,,,,,,Indicates the fuel of the HVAC secondary heating the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,,,upgrade.infiltration_reduction,,,,,,,,,,Indicates the infiltration reduction of the building the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,,,upgrade.insulation_ceiling,,,,,,,,,,Indicates the insulation ceiling of the building the model is upgraded to. Blank value indicates no upgrade.
-Calculated,yes,yes,,,upgrade.misc_hot_tub_spa,,,,,,,,,,Indicates the hot tub or spa the model is upgraded to. Blank value indicates no upgrade.
-Calculated,yes,yes,,,upgrade.misc_pool_heater,,,,,,,,,,Indicates the pool heater the model is upgraded to. Blank value indicates no upgrade.
+Calculated,yes,no,,,upgrade.misc_hot_tub_spa,,,,,,,,,,Indicates the hot tub or spa the model is upgraded to. Blank value indicates no upgrade.
+Calculated,yes,no,,,upgrade.misc_pool_heater,,,,,,,,,,Indicates the pool heater the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,,,upgrade.water_heater_efficiency,,,,,,,,,,Indicates the efficiency of the water heater the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,,,upgrade.water_heater_fuel,,,,,,,,,,Indicates which fuel is used for the water heater the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,,,upgrade.hvac_detailed_performance_data,,,,,,,,,,Indicates the HVAC detailed performance data the model is upgraded to. Blank value indicates no upgrade.
