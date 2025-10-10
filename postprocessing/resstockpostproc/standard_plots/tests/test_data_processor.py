@@ -258,6 +258,183 @@ def test_upgrade_applied_only(processor: DataProcessor):
     assert (df["in.heating_fuel"] == "Gas").sum() == 2
 
 
+def test_specific_upgrade_filter(processor: DataProcessor):
+    """Setting plot_spec.upgrade filters to baseline + that upgrade.
+
+    For savings/percent_savings, baseline rows are removed after computations.
+    """
+    # Absolute values: should include baseline (0) and selected upgrade (1)
+    spec = _build_base_spec(
+        visualization_type=VizType.bar,
+        aggregation_type=AggregationType.average,
+        quantity_type=QuantityType.absolute,
+        upgrade=1,
+    )
+    df_abs = processor.prepare_data_for_plot(spec)
+    assert set(df_abs["upgrade"].to_list()) == {0, 1}
+
+    # Savings: baseline excluded
+    spec.quantity_type = QuantityType.savings
+    df_sav = processor.prepare_data_for_plot(spec)
+    assert set(df_sav["upgrade"].to_list()) == {1}
+
+    # Percent savings: baseline excluded
+    spec.quantity_type = QuantityType.percent_savings
+    df_pct = processor.prepare_data_for_plot(spec)
+    assert set(df_pct["upgrade"].to_list()) == {1}
+
+
+def test_specific_upgrade_with_applied_only(processor: DataProcessor):
+    """Applied-only with a specific upgrade includes only applicable buildings, plus baseline for those buildings."""
+    spec = _build_base_spec(
+        visualization_type=VizType.bar,
+        aggregation_type=AggregationType.total,
+        quantity_type=QuantityType.absolute,
+        upgrade=1,
+        building_inclusion=BuildingInclusion.applied_only,
+        group_by="bldg_id",
+    )
+    df = processor.prepare_data_for_plot(spec)
+
+    # Only baseline (0) and upgrade 1 should be present
+    assert set(df["upgrade"].to_list()) <= {0, 1}
+    assert 2 not in set(df["upgrade"].to_list())
+
+    # For upgrade 1 in the fixture, bldg_id 1 is not applicable. Applied-only should
+    # exclude bldg_id 1 for both upgrade 1 and its corresponding baseline row.
+    baseline_ids = set(
+        df.filter(pl.col("upgrade") == 0)["bldg_id"].to_list()
+    )
+    up1_ids = set(
+        df.filter(pl.col("upgrade") == 1)["bldg_id"].to_list()
+    )
+    assert baseline_ids == {2, 3, 4}
+    assert up1_ids == {2, 3, 4}
+
+
+def test_selected_upgrades_filters_including_baseline(processor: DataProcessor):
+    """selected_upgrades keeps baseline plus listed upgrades for absolute quantities."""
+    spec = _build_base_spec(
+        visualization_type=VizType.bar,
+        aggregation_type=AggregationType.total,
+        quantity_type=QuantityType.absolute,
+    )
+    df = processor.prepare_data_for_plot(spec, selected_upgrades=[2])
+    assert set(df["upgrade"].to_list()) == {0, 2}
+
+
+def test_selected_upgrades_with_percent_savings(processor: DataProcessor):
+    """For percent_savings, baseline is used for calc but excluded from results."""
+    spec = _build_base_spec(
+        visualization_type=VizType.bar,
+        aggregation_type=AggregationType.average,
+        quantity_type=QuantityType.percent_savings,
+    )
+    df = processor.prepare_data_for_plot(spec, selected_upgrades=[1, 2])
+    assert set(df["upgrade"].to_list()) == {1, 2}
+
+
+def test_histogram_is_degenerate_all_equal(processor: DataProcessor):
+    """Histogram degenerate case: all values equal -> all counts in bin 0 per group."""
+    # Create a constant column used for histogram; ensures q1==q99==min==max
+    processor.combined_df = processor.combined_df.with_columns(pl.lit(7.0).alias("toy_deg"))
+    spec = _build_base_spec(
+        visualization_type=VizType.hist,
+        quantity_type=QuantityType.absolute,
+        aggregation_type=AggregationType.distribution,
+        quantity="toy_deg",
+        group_by=None,
+    )
+    df = processor.prepare_data_for_plot(spec)
+
+    # For each upgrade group, only bin 0 should have non-zero count; totals equal rows per upgrade
+    for up in [0, 1, 2]:
+        grp = df.filter(pl.col("upgrade") == up)
+        total = int(grp["count"].sum())
+        nonzero_bins = grp.filter(pl.col("count") > 0)["bin"].to_list()
+        assert set(nonzero_bins) == {0}
+        # Our fixture has 4 rows per upgrade
+        assert total == 4
+
+
+def test_histogram_q1_equals_q99_non_degenerate():
+    """When q1==q99 but min<max, code resets to min/max and uses non-degenerate binning."""
+    # Build a synthetic dataset: for each upgrade, 99 zeros and 1 one-hundred
+    # Use a larger n so that both 1st and 99th percentiles exactly equal 0.0
+    # ensuring q1 == q99, but min < max to trigger the reset path.
+    n = 1000
+    base_vals = [0.0] * (n - 1) + [100.0]
+    up_vals = [0.0] * (n - 1) + [100.0]
+
+    df = pl.DataFrame(
+        {
+            "upgrade": [0] * n + [1] * n,
+            "upgrade_name": ["baseline"] * n + ["Upgrade1"] * n,
+            "bldg_id": list(range(1, n + 1)) + list(range(1, n + 1)),
+            "weight": [1] * (2 * n),
+            "in.building_type": ["Single Family"] * (2 * n),
+            "applicability": [True] * (2 * n),
+            "in.vacancy_status": ["Occupied"] * (2 * n),
+            "toy_q": base_vals + up_vals,
+        }
+    ).lazy()
+
+    dp = DataProcessor(df)
+    spec = _build_base_spec(
+        visualization_type=VizType.hist,
+        quantity_type=QuantityType.absolute,
+        aggregation_type=AggregationType.distribution,
+        quantity="toy_q",
+        group_by=None,
+    )
+    hist = dp.prepare_data_for_plot(spec)
+
+    # For each upgrade group: n-1 entries in bin -1 (zeros) and 1 in bin 99 (max value)
+    for up in [0, 1]:
+        grp = hist.filter(pl.col("upgrade") == up)
+        count_m1 = grp.filter(pl.col("bin") == -1)["count"].sum()
+        count_99 = grp.filter(pl.col("bin") == 99)["count"].sum()
+        # Assert expected counts
+        assert int(count_m1) == n - 1
+        assert int(count_99) == 1
+
+
+def test_model_count_per_upgrade(processor: DataProcessor):
+    """model_count returns number of models per (upgrade, upgrade_name)."""
+    spec = _build_base_spec(
+        visualization_type=VizType.bar,
+        aggregation_type=AggregationType.total,
+        quantity_type=QuantityType.model_count,
+        quantity="elec_kwh",
+        group_by=None,
+    )
+    df = processor.prepare_data_for_plot(spec)
+
+    # Expect 3 rows (baseline + 2 upgrades), each with 4 models in our fixture
+    assert set(df["upgrade"].to_list()) == {0, 1, 2}
+    for up in [0, 1, 2]:
+        row = df.filter(pl.col("upgrade") == up).row(0, named=True)
+        assert row["model_count"] == 4
+
+
+def test_model_count_grouped_by_fuel(processor: DataProcessor):
+    """model_count grouped by fuel yields correct counts per upgrade."""
+    spec = _build_base_spec(
+        visualization_type=VizType.bar,
+        aggregation_type=AggregationType.total,
+        quantity_type=QuantityType.model_count,
+        quantity="elec_kwh",
+        group_by="in.heating_fuel",
+    )
+    df = processor.prepare_data_for_plot(spec)
+
+    # For each upgrade, we have 2 Electric and 2 Gas buildings in the fixture
+    for up in [0, 1, 2]:
+        grp = df.filter(pl.col("upgrade") == up)
+        assert grp.filter(pl.col("in.heating_fuel") == "Electric")["model_count"].item() == 2
+        assert grp.filter(pl.col("in.heating_fuel") == "Gas")["model_count"].item() == 2
+
+
 @pytest.mark.parametrize(
     "aggregation_type",
     [AggregationType.average, AggregationType.total],
