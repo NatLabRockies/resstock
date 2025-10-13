@@ -1,0 +1,5 @@
+PWD /workspace
+INPUT /usr/share/texmf-dist/web2c/texmf.cnf
+INPUT /usr/share/texmf-var/web2c/pdftex/latex.fmt
+INPUT 2_ResStockStructureAndSampling.tex
+OUTPUT 2_ResStockStructureAndSampling.log
