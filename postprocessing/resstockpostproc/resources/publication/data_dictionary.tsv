@@ -574,8 +574,6 @@ metadata_and_annual	upgrade.hvac_cooling_efficiency	string	n/a	Indicates the eff
 metadata_and_annual	upgrade.hvac_cooling_partial_space_conditioning	string	n/a	Indicates the partial space conditioning of the HVAC cooling the model is upgraded to. Blank value indicates no upgrade.
 metadata_and_annual	upgrade.hvac_heating_efficiency	string	n/a	Indicates the efficiency of the HVAC heating the model is upgraded to. Blank value indicates no upgrade.
 metadata_and_annual	upgrade.hvac_heating_type_and_fuel	string	n/a	Indicates the heating type and fuel the model is upgraded to. Blank value indicates no upgrade.
-metadata_and_annual	upgrade.hvac_secondary_heating_efficiency	string	n/a	Indicates the efficiency of the HVAC secondary heating the model is upgraded to. Blank value indicates no upgrade.
-metadata_and_annual	upgrade.hvac_secondary_heating_fuel	string	n/a	Indicates the fuel of the HVAC secondary heating the model is upgraded to. Blank value indicates no upgrade.
 metadata_and_annual	upgrade.infiltration_reduction	string	n/a	Indicates the infiltration reduction of the building the model is upgraded to. Blank value indicates no upgrade.
 metadata_and_annual	upgrade.insulation_ceiling	string	n/a	Indicates the insulation ceiling of the building the model is upgraded to. Blank value indicates no upgrade.
 metadata_and_annual	upgrade.water_heater_efficiency	string	n/a	Indicates the efficiency of the water heater the model is upgraded to. Blank value indicates no upgrade.

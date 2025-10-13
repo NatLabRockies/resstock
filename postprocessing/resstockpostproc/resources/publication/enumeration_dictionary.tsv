@@ -27,6 +27,14 @@ in.ahs_region	Non-CBSA West North Central
 in.ahs_region	Non-CBSA West South Central
 in.aiannh_area	No
 in.aiannh_area	Yes
+in.air_leakage_to_outside_ach50	6
+in.air_leakage_to_outside_ach50	7
+in.air_leakage_to_outside_ach50	10
+in.air_leakage_to_outside_ach50	15
+in.air_leakage_to_outside_ach50	20
+in.air_leakage_to_outside_ach50	25
+in.air_leakage_to_outside_ach50	30
+in.air_leakage_to_outside_ach50	40
 in.applicable	True
 in.area_median_income	0-30%
 in.area_median_income	100-120%
@@ -96,6 +104,7 @@ in.bathroom_spot_vent_hour	Hour6
 in.bathroom_spot_vent_hour	Hour7
 in.bathroom_spot_vent_hour	Hour8
 in.bathroom_spot_vent_hour	Hour9
+in.battery	None
 in.bedrooms	1
 in.bedrooms	2
 in.bedrooms	3
@@ -126,6 +135,8 @@ in.cec_climate_zone	13.0
 in.cec_climate_zone	14.0
 in.cec_climate_zone	15.0
 in.cec_climate_zone	16.0
+in.cec_climate_zone	None
+in.ceiling_fan	None
 in.ceiling_fan	Standard Efficiency
 in.ceiling_fan	Standard Efficiency, No usage
 in.census_division	East North Central
@@ -1259,12 +1270,15 @@ in.city	WY, Casper
 in.city	WY, Cheyenne
 in.clothes_dryer	Electric
 in.clothes_dryer	Gas
+in.clothes_dryer	None
 in.clothes_dryer	Propane
 in.clothes_dryer_usage_level	100% Usage
 in.clothes_dryer_usage_level	120% Usage
 in.clothes_dryer_usage_level	80% Usage
 in.clothes_washer	EnergyStar
+in.clothes_washer	None
 in.clothes_washer	Standard
+in.clothes_washer_presence	None
 in.clothes_washer_presence	Yes
 in.clothes_washer_usage_level	100% Usage
 in.clothes_washer_usage_level	120% Usage
@@ -1272,6 +1286,7 @@ in.clothes_washer_usage_level	80% Usage
 in.cooking_range	Electric Induction
 in.cooking_range	Electric Resistance
 in.cooking_range	Gas
+in.cooking_range	None
 in.cooking_range	Propane
 in.cooking_range_usage_level	100% Usage
 in.cooking_range_usage_level	120% Usage
@@ -1348,6 +1363,7 @@ in.cooling_setpoint_offset_period	Night Setup -2h
 in.cooling_setpoint_offset_period	Night Setup -3h
 in.cooling_setpoint_offset_period	Night Setup -4h
 in.cooling_setpoint_offset_period	Night Setup -5h
+in.cooling_setpoint_offset_period	None
 in.cooling_unavailable_days	1 day
 in.cooling_unavailable_days	1 month
 in.cooling_unavailable_days	1 week
@@ -7160,8 +7176,10 @@ in.county_name	Sequoyah County
 in.county_name	Spalding County
 in.custom_state	AK
 in.custom_state	Others
+in.dehumidifier	None
 in.dishwasher	290 Rated kWh
 in.dishwasher	318 Rated kWh
+in.dishwasher	None
 in.dishwasher_usage_level	100% Usage
 in.dishwasher_usage_level	120% Usage
 in.dishwasher_usage_level	80% Usage
@@ -7180,11 +7198,13 @@ in.duct_leakage_and_insulation	30% Leakage to Outside, R-4
 in.duct_leakage_and_insulation	30% Leakage to Outside, R-6
 in.duct_leakage_and_insulation	30% Leakage to Outside, R-8
 in.duct_leakage_and_insulation	30% Leakage to Outside, Uninsulated
+in.duct_leakage_and_insulation	None
 in.duct_location	Attic
 in.duct_location	Crawlspace
 in.duct_location	Garage
 in.duct_location	Heated Basement
 in.duct_location	Living Space
+in.duct_location	None
 in.duct_location	Unheated Basement
 in.eaves	2 ft
 in.electric_panel_breaker_space_total_count	11.0
@@ -7197,6 +7217,12 @@ in.electric_panel_breaker_space_total_count	22.0
 in.electric_panel_breaker_space_total_count	23.0
 in.electric_panel_breaker_space_total_count	25.0
 in.electric_panel_breaker_space_total_count	30.0
+in.electric_panel_service_rating..a	100.0
+in.electric_panel_service_rating..a	200.0
+in.electric_panel_service_rating..a	250.0
+in.electric_panel_service_rating_bin..a	100
+in.electric_panel_service_rating_bin..a	200
+in.electric_panel_service_rating_bin..a	201+
 in.electric_vehicle_battery	Compact, Battery Electric Vehicle, 200 mile range
 in.electric_vehicle_battery	Compact, Battery Electric Vehicle, 300 mile range
 in.electric_vehicle_battery	Midsize, Battery Electric Vehicle, 200 mile range
@@ -7213,6 +7239,7 @@ in.electric_vehicle_charge_at_home	60-79%
 in.electric_vehicle_charge_at_home	80-99%
 in.electric_vehicle_charger	Level 1 charger
 in.electric_vehicle_charger	Level 2 charger
+in.electric_vehicle_charger	None
 in.electric_vehicle_miles_traveled	1000
 in.electric_vehicle_miles_traveled	3000
 in.electric_vehicle_miles_traveled	5000
@@ -7247,6 +7274,7 @@ in.generation_and_emissions_assessment_region	MISO Central
 in.generation_and_emissions_assessment_region	MISO North
 in.generation_and_emissions_assessment_region	MISO South
 in.generation_and_emissions_assessment_region	NYISO
+in.generation_and_emissions_assessment_region	None
 in.generation_and_emissions_assessment_region	Northern Grid East
 in.generation_and_emissions_assessment_region	Northern Grid South
 in.generation_and_emissions_assessment_region	Northern Grid West
@@ -7258,17 +7286,21 @@ in.generation_and_emissions_assessment_region	SPP South
 in.generation_and_emissions_assessment_region	West Connect North
 in.generation_and_emissions_assessment_region	West Connect South
 in.geometry_attic_type	Finished Attic or Cathedral Ceilings
+in.geometry_attic_type	None
 in.geometry_attic_type	Unvented Attic
 in.geometry_attic_type	Vented Attic
 in.geometry_building_horizontal_location_mf	Left
 in.geometry_building_horizontal_location_mf	Middle
+in.geometry_building_horizontal_location_mf	None
 in.geometry_building_horizontal_location_mf	Not Applicable
 in.geometry_building_horizontal_location_mf	Right
 in.geometry_building_horizontal_location_sfa	Left
 in.geometry_building_horizontal_location_sfa	Middle
+in.geometry_building_horizontal_location_sfa	None
 in.geometry_building_horizontal_location_sfa	Right
 in.geometry_building_level_mf	Bottom
 in.geometry_building_level_mf	Middle
+in.geometry_building_level_mf	None
 in.geometry_building_level_mf	Top
 in.geometry_building_number_units_mf	2.0
 in.geometry_building_number_units_mf	3.0
@@ -7297,6 +7329,7 @@ in.geometry_building_number_units_mf	67.0
 in.geometry_building_number_units_mf	116.0
 in.geometry_building_number_units_mf	183.0
 in.geometry_building_number_units_mf	326.0
+in.geometry_building_number_units_mf	None
 in.geometry_building_number_units_sfa	5.0
 in.geometry_building_number_units_sfa	6.0
 in.geometry_building_number_units_sfa	7.0
@@ -7313,6 +7346,7 @@ in.geometry_building_number_units_sfa	50.0
 in.geometry_building_number_units_sfa	60.0
 in.geometry_building_number_units_sfa	90.0
 in.geometry_building_number_units_sfa	144.0
+in.geometry_building_number_units_sfa	None
 in.geometry_building_type_acs	10 to 19 Unit
 in.geometry_building_type_acs	2 Unit
 in.geometry_building_type_acs	20 to 49 Unit
@@ -7356,6 +7390,7 @@ in.geometry_foundation_type	Vented Crawlspace
 in.geometry_garage	1 Car
 in.geometry_garage	2 Car
 in.geometry_garage	3 Car
+in.geometry_garage	None
 in.geometry_space_combination	Mobile Home, Ambient, No Attic, No Garage
 in.geometry_space_combination	Multi-Family with 2 - 4 Units Bottom Unit, Slab, No Attic, No Garage
 in.geometry_space_combination	Multi-Family with 2 - 4 Units Bottom Unit, Unheated Basement, No Attic, No Garage
@@ -7497,6 +7532,7 @@ in.geometry_wall_exterior_finish	Aluminum, Light
 in.geometry_wall_exterior_finish	Brick, Light
 in.geometry_wall_exterior_finish	Brick, Medium/Dark
 in.geometry_wall_exterior_finish	Fiber-Cement, Light
+in.geometry_wall_exterior_finish	None
 in.geometry_wall_exterior_finish	Shingle, Asbestos, Medium
 in.geometry_wall_exterior_finish	Shingle, Composition, Medium
 in.geometry_wall_exterior_finish	Stucco, Light
@@ -7520,6 +7556,7 @@ in.has_pv	Yes
 in.heating_fuel	Electricity
 in.heating_fuel	Fuel Oil
 in.heating_fuel	Natural Gas
+in.heating_fuel	None
 in.heating_fuel	Propane
 in.heating_fuel	Wood
 in.heating_setpoint	55F
@@ -7573,6 +7610,7 @@ in.heating_setpoint_offset_period	Night -2h
 in.heating_setpoint_offset_period	Night -3h
 in.heating_setpoint_offset_period	Night -4h
 in.heating_setpoint_offset_period	Night -5h
+in.heating_setpoint_offset_period	None
 in.heating_unavailable_days	1 day
 in.heating_unavailable_days	1 month
 in.heating_unavailable_days	1 week
@@ -7602,12 +7640,14 @@ in.hot_water_fixtures	90% Usage
 in.household_has_tribal_persons	No
 in.household_has_tribal_persons	Not Available
 in.household_has_tribal_persons	Yes
+in.hvac_cooling_autosizing_factor	None
 in.hvac_cooling_efficiency	AC, SEER 10
 in.hvac_cooling_efficiency	AC, SEER 13
 in.hvac_cooling_efficiency	AC, SEER 15
 in.hvac_cooling_efficiency	AC, SEER 8
 in.hvac_cooling_efficiency	Ducted Heat Pump
 in.hvac_cooling_efficiency	Non-Ducted Heat Pump
+in.hvac_cooling_efficiency	None
 in.hvac_cooling_efficiency	Room AC, EER 10.7
 in.hvac_cooling_efficiency	Room AC, EER 12.0
 in.hvac_cooling_efficiency	Room AC, EER 8.5
@@ -7619,17 +7659,21 @@ in.hvac_cooling_partial_space_conditioning	40% Conditioned
 in.hvac_cooling_partial_space_conditioning	60% Conditioned
 in.hvac_cooling_partial_space_conditioning	80% Conditioned
 in.hvac_cooling_partial_space_conditioning	<10% Conditioned
+in.hvac_cooling_partial_space_conditioning	None
 in.hvac_cooling_type	Central AC
 in.hvac_cooling_type	Ducted Heat Pump
 in.hvac_cooling_type	Non-Ducted Heat Pump
+in.hvac_cooling_type	None
 in.hvac_cooling_type	Room AC
 in.hvac_has_ducts	No
 in.hvac_has_ducts	Yes
 in.hvac_has_shared_system	Cooling Only
 in.hvac_has_shared_system	Heating Only
 in.hvac_has_shared_system	Heating and Cooling
+in.hvac_has_shared_system	None
 in.hvac_has_zonal_electric_heating	No
 in.hvac_has_zonal_electric_heating	Yes
+in.hvac_heating_autosizing_factor	None
 in.hvac_heating_efficiency	ASHP, SEER 10, 6.2 HSPF
 in.hvac_heating_efficiency	ASHP, SEER 13, 7.7 HSPF
 in.hvac_heating_efficiency	ASHP, SEER 15, 8.5 HSPF
@@ -7647,11 +7691,13 @@ in.hvac_heating_efficiency	Fuel Furnace, 92.5% AFUE
 in.hvac_heating_efficiency	Fuel Wall/Floor Furnace, 60% AFUE
 in.hvac_heating_efficiency	Fuel Wall/Floor Furnace, 68% AFUE
 in.hvac_heating_efficiency	MSHP, SEER 14.5, 8.2 HSPF
+in.hvac_heating_efficiency	None
 in.hvac_heating_efficiency	Shared Heating
 in.hvac_heating_type	Ducted Heat Pump
 in.hvac_heating_type	Ducted Heating
 in.hvac_heating_type	Non-Ducted Heat Pump
 in.hvac_heating_type	Non-Ducted Heating
+in.hvac_heating_type	None
 in.hvac_heating_type_and_fuel	Electricity ASHP
 in.hvac_heating_type_and_fuel	Electricity Baseboard
 in.hvac_heating_type_and_fuel	Electricity Electric Boiler
@@ -7667,22 +7713,31 @@ in.hvac_heating_type_and_fuel	Natural Gas Fuel Boiler
 in.hvac_heating_type_and_fuel	Natural Gas Fuel Furnace
 in.hvac_heating_type_and_fuel	Natural Gas Fuel Wall/Floor Furnace
 in.hvac_heating_type_and_fuel	Natural Gas Shared Heating
+in.hvac_heating_type_and_fuel	None
 in.hvac_heating_type_and_fuel	Other Fuel Fuel Wall/Floor Furnace
 in.hvac_heating_type_and_fuel	Propane Fuel Boiler
 in.hvac_heating_type_and_fuel	Propane Fuel Furnace
 in.hvac_heating_type_and_fuel	Propane Fuel Wall/Floor Furnace
 in.hvac_secondary_heating_efficiency	Fuel Boiler, 76% AFUE
+in.hvac_secondary_heating_efficiency	None
+in.hvac_secondary_heating_fuel	None
 in.hvac_secondary_heating_fuel	Wood
 in.hvac_secondary_heating_partial_space_conditioning	0%
 in.hvac_secondary_heating_partial_space_conditioning	30%
 in.hvac_secondary_heating_type	Non-Ducted Heating
+in.hvac_secondary_heating_type	None
 in.hvac_shared_efficiencies	Boiler Baseboards Heating Only, Electricity
 in.hvac_shared_efficiencies	Boiler Baseboards Heating Only, Fuel
 in.hvac_shared_efficiencies	Fan Coil Cooling Only
 in.hvac_shared_efficiencies	Fan Coil Heating and Cooling, Electricity
 in.hvac_shared_efficiencies	Fan Coil Heating and Cooling, Fuel
+in.hvac_shared_efficiencies	None
 in.hvac_system_is_faulted	No
 in.hvac_system_is_scaled	No
+in.hvac_system_single_speed_ac_airflow	None
+in.hvac_system_single_speed_ac_charge	None
+in.hvac_system_single_speed_ashp_airflow	None
+in.hvac_system_single_speed_ashp_charge	None
 in.income	10000-14999
 in.income	100000-119999
 in.income	120000-139999
@@ -7734,6 +7789,7 @@ in.infiltration	50 ACH50
 in.infiltration	6 ACH50
 in.infiltration	7 ACH50
 in.infiltration	8 ACH50
+in.insulation_ceiling	None
 in.insulation_ceiling	R-13
 in.insulation_ceiling	R-19
 in.insulation_ceiling	R-30
@@ -7744,11 +7800,14 @@ in.insulation_ceiling	Uninsulated
 in.insulation_floor	Ceiling R-13
 in.insulation_floor	Ceiling R-19
 in.insulation_floor	Ceiling R-30
+in.insulation_floor	None
 in.insulation_floor	Uninsulated
+in.insulation_foundation_wall	None
 in.insulation_foundation_wall	Uninsulated
 in.insulation_foundation_wall	Wall R-10, Exterior
 in.insulation_foundation_wall	Wall R-15, Exterior
 in.insulation_foundation_wall	Wall R-5, Exterior
+in.insulation_rim_joist	None
 in.insulation_rim_joist	R-10, Exterior
 in.insulation_rim_joist	R-15, Exterior
 in.insulation_rim_joist	R-5, Exterior
@@ -7765,6 +7824,7 @@ in.insulation_slab	2ft R10 Perimeter, Vertical
 in.insulation_slab	2ft R10 Under, Horizontal
 in.insulation_slab	2ft R5 Perimeter, Vertical
 in.insulation_slab	2ft R5 Under, Horizontal
+in.insulation_slab	None
 in.insulation_slab	Uninsulated
 in.insulation_wall	Brick, 12-in, 3-wythe, R-11
 in.insulation_wall	Brick, 12-in, 3-wythe, R-15
@@ -7787,6 +7847,7 @@ in.iso_rto_region	ERCOT
 in.iso_rto_region	MISO
 in.iso_rto_region	NEISO
 in.iso_rto_region	NYISO
+in.iso_rto_region	None
 in.iso_rto_region	PJM
 in.iso_rto_region	SPP
 in.lighting	100% CFL
@@ -7806,6 +7867,7 @@ in.location_region	CR10
 in.location_region	CR11
 in.location_region	CRAK
 in.location_region	CRHI
+in.mechanical_ventilation	None
 in.metropolitan_and_micropolitan_statistical_area	Aberdeen, SD MicroSA
 in.metropolitan_and_micropolitan_statistical_area	Aberdeen, WA MicroSA
 in.metropolitan_and_micropolitan_statistical_area	Abilene, TX MSA
@@ -8403,6 +8465,7 @@ in.metropolitan_and_micropolitan_statistical_area	Newport, TN MicroSA
 in.metropolitan_and_micropolitan_statistical_area	Newton, IA MicroSA
 in.metropolitan_and_micropolitan_statistical_area	Niles-Benton Harbor, MI MSA
 in.metropolitan_and_micropolitan_statistical_area	Nogales, AZ MicroSA
+in.metropolitan_and_micropolitan_statistical_area	None
 in.metropolitan_and_micropolitan_statistical_area	Norfolk, NE MicroSA
 in.metropolitan_and_micropolitan_statistical_area	North Platte, NE MicroSA
 in.metropolitan_and_micropolitan_statistical_area	North Port-Sarasota-Bradenton, FL MSA
@@ -8724,19 +8787,29 @@ in.misc_extra_refrigerator	EF 17.6
 in.misc_extra_refrigerator	EF 19.9
 in.misc_extra_refrigerator	EF 21.9
 in.misc_extra_refrigerator	EF 6.7
+in.misc_extra_refrigerator	None
 in.misc_freezer	EF 12, National Average
+in.misc_freezer	None
 in.misc_gas_fireplace	Gas Fireplace
+in.misc_gas_fireplace	None
 in.misc_gas_grill	Gas Grill
+in.misc_gas_grill	None
 in.misc_gas_lighting	Gas Lighting
+in.misc_gas_lighting	None
 in.misc_hot_tub_spa	Electricity
 in.misc_hot_tub_spa	Natural Gas
+in.misc_hot_tub_spa	None
 in.misc_hot_tub_spa	Other Fuel
 in.misc_pool	Has Pool
+in.misc_pool	None
 in.misc_pool_heater	Electric Heat Pump
 in.misc_pool_heater	Electricity
 in.misc_pool_heater	Natural Gas
+in.misc_pool_heater	None
 in.misc_pool_heater	Other Fuel
 in.misc_pool_pump	1.0 HP Pump
+in.misc_pool_pump	None
+in.misc_well_pump	None
 in.misc_well_pump	Typical Efficiency
 in.natural_ventilation	Cooling Season, 7 days/wk
 in.neighbors	12
@@ -8745,6 +8818,7 @@ in.neighbors	27
 in.neighbors	4
 in.neighbors	7
 in.neighbors	Left/Right at 15ft
+in.neighbors	None
 in.occupants	0
 in.occupants	1
 in.occupants	2
@@ -8762,6 +8836,7 @@ in.orientation	South
 in.orientation	Southeast
 in.orientation	Southwest
 in.orientation	West
+in.overhangs	None
 in.plug_load_diversity	100%
 in.plug_load_diversity	200%
 in.plug_load_diversity	50%
@@ -11150,6 +11225,7 @@ in.puma_metro_status	In metro area, not/partially in principal city
 in.puma_metro_status	In metro area, principal city
 in.puma_metro_status	Not/partially in metro area
 in.pv_orientation	East
+in.pv_orientation	None
 in.pv_orientation	North
 in.pv_orientation	Northeast
 in.pv_orientation	Northwest
@@ -11164,7 +11240,9 @@ in.pv_system_size	3.0 kWDC
 in.pv_system_size	5.0 kWDC
 in.pv_system_size	7.0 kWDC
 in.pv_system_size	9.0 kWDC
+in.pv_system_size	None
 in.radiant_barrier	No
+in.radiant_barrier	None
 in.range_spot_vent_hour	Hour0
 in.range_spot_vent_hour	Hour1
 in.range_spot_vent_hour	Hour10
@@ -11322,6 +11400,7 @@ in.reeds_balancing_area	131.0
 in.reeds_balancing_area	132.0
 in.reeds_balancing_area	133.0
 in.reeds_balancing_area	134.0
+in.reeds_balancing_area	None
 in.refrigerator	EF 10.2
 in.refrigerator	EF 10.5
 in.refrigerator	EF 15.9
@@ -11329,6 +11408,7 @@ in.refrigerator	EF 17.6
 in.refrigerator	EF 19.9
 in.refrigerator	EF 21.9
 in.refrigerator	EF 6.7
+in.refrigerator	None
 in.refrigerator_usage_level	100% Usage
 in.refrigerator_usage_level	105% Usage
 in.refrigerator_usage_level	95% Usage
@@ -11357,6 +11437,10 @@ in.simulation_control_run_period_calendar_year	2018
 in.simulation_control_run_period_end_day_of_month	31
 in.simulation_control_run_period_end_month	12
 in.simulation_control_timestep	15
+in.sqft..ft2	881.0
+in.sqft..ft2	1228.0
+in.sqft..ft2	2179.0
+in.sqft..ft2	2678.0
 in.state	AK
 in.state	AL
 in.state	AR
@@ -11420,6 +11504,35 @@ in.tenure	Not Available
 in.tenure	Owner
 in.tenure	Renter
 in.units_represented	1
+in.upgrade_name	Air Sealing
+in.upgrade_name	Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation
+in.upgrade_name	Air Sealing, Attic Floor Insulation, and Duct sealing
+in.upgrade_name	Attic Floor Insulation for Unfinished Attics
+in.upgrade_name	Baseline
+in.upgrade_name	Drill and Fill Wall Insulation with Air Sealing
+in.upgrade_name	Dual Fuel Heat Pump System
+in.upgrade_name	Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
+in.upgrade_name	Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing
+in.upgrade_name	Duct Sealing and Insulation
+in.upgrade_name	ENERGY STAR Windows
+in.upgrade_name	Efficient Electric Vehicle Adoption with Level 2 Charging
+in.upgrade_name	Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
+in.upgrade_name	Electric Vehicle Adoption with Level 1 Charging
+in.upgrade_name	Electric Vehicle Adoption with Level 2 Charging
+in.upgrade_name	Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
+in.upgrade_name	HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset
+in.upgrade_name	HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset
+in.upgrade_name	HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
+in.upgrade_name	HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
+in.upgrade_name	HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
+in.upgrade_name	Heat Pump Water Heater
+in.upgrade_name	High Efficiency Natural Gas Tankless Water Heater
+in.upgrade_name	Minimum Efficiency Furnaces and Air Conditioners Circa 2025
+in.upgrade_name	Natural Gas Furnace 95% AFUE for All Dwellings with Ducts
+in.upgrade_name	Propane Furnace 95% AFUE or Fuel Oil Furnace 88% AFUE
+in.upgrade_name	Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
+in.upgrade_name	Typical Cold Climate Ducted Air Source Heat Pump Circa 2025
+in.upgrade_name	Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
 in.usage_level	High
 in.usage_level	Low
 in.usage_level	Medium
@@ -11604,18 +11717,22 @@ upgrade.demand_flexibility_hvac	Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak 
 upgrade.demand_flexibility_random_shift	30 minutes
 upgrade.duct_leakage_and_insulation	5% Leakage to Outside, R-6
 upgrade.duct_leakage_and_insulation	5% Leakage to Outside, R-8
+upgrade.duct_leakage_and_insulation	None
 upgrade.electric_vehicle_charger	Level 1 charger
 upgrade.electric_vehicle_charger	Level 2 charger
 upgrade.electric_vehicle_efficiency_increase	15%
 upgrade.electric_vehicle_ownership	Yes
 upgrade.heating_fuel	Electricity
 upgrade.heating_fuel	Natural Gas
+upgrade.heating_fuel	None
 upgrade.hvac_cooling_efficiency	AC, SEER 15
 upgrade.hvac_cooling_efficiency	AC, SEER2 13.4
 upgrade.hvac_cooling_efficiency	AC, SEER2 14.3
 upgrade.hvac_cooling_efficiency	Ducted Heat Pump
+upgrade.hvac_cooling_efficiency	None
 upgrade.hvac_cooling_efficiency	Room AC, EER 12.0
 upgrade.hvac_cooling_partial_space_conditioning	100% Conditioned
+upgrade.hvac_cooling_partial_space_conditioning	None
 upgrade.hvac_detailed_performance_data	Cold Climate Heat Pump Ducted
 upgrade.hvac_heating_efficiency	ASHP, SEER2 14.3, 7.5 HSPF2
 upgrade.hvac_heating_efficiency	ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate
@@ -11638,20 +11755,26 @@ upgrade.hvac_heating_efficiency	Fuel Wall/Floor Furnace, 68% AFUE
 upgrade.hvac_heating_efficiency	GSHP, EER 18.6, COP 3.8
 upgrade.hvac_heating_efficiency	GSHP, EER 20.5, COP 4.0
 upgrade.hvac_heating_efficiency	GSHP, EER 30.9, COP 4.4
+upgrade.hvac_heating_efficiency	None
 upgrade.hvac_heating_type_and_fuel	Electricity ASHP
 upgrade.hvac_heating_type_and_fuel	Natural Gas Fuel Furnace
+upgrade.hvac_heating_type_and_fuel	None
 upgrade.infiltration	5 ACH50
 upgrade.infiltration_reduction	13%
 upgrade.infiltration_reduction	30%
+upgrade.insulation_ceiling	None
 upgrade.insulation_ceiling	R-49
 upgrade.insulation_ceiling	R-60
+upgrade.insulation_wall	None
 upgrade.insulation_wall	Wood Stud, R-13
 upgrade.water_heater_efficiency	Electric Heat Pump, 50 gal, 3.78 UEF
 upgrade.water_heater_efficiency	Electric Heat Pump, 66 gal, 3.95 UEF
 upgrade.water_heater_efficiency	Electric Heat Pump, 80 gal, 3.98 UEF
 upgrade.water_heater_efficiency	High Efficiency Natural Gas Tankless, Condensing
+upgrade.water_heater_efficiency	None
 upgrade.water_heater_fuel	Electricity
 upgrade.water_heater_fuel	Natural Gas
+upgrade.water_heater_fuel	None
 upgrade.windows	EnergyStar, North-Central
 upgrade.windows	EnergyStar, Northern
 upgrade.windows	EnergyStar, South-Central
