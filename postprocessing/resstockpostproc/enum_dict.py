@@ -40,7 +40,7 @@ def enum_dict(df_data_dict, df_bs_csv, df_meta_up, up_files):
     #enumerations from released data
     df_enum_meta = pd.DataFrame(columns=['metadata_column', 'enumeration'])
     for up in up_files:
-        #may not need the renaming for the released parquet file
+        #Do not need the renaming for the released parquet file
         df_meta_up[up] = df_meta_up[up].rename(columns={
             'in.sqft': 'in.sqft..ft2',
             'in.air_leakage_to_outside_ach_50': 'in.air_leakage_to_outside_ach50',
