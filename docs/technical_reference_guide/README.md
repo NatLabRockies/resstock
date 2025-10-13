@@ -17,16 +17,16 @@ Docker can be used to compile the ResStock Technical Reference Guide locally. Fi
 cd <RESSTOCK_DIR>/docs/technical_reference_guide
 ```
 
-2. Pull a docker container with the full version of textlive (this might take several minutes, but only needs to be done once. If you have issues, get off the VPN during the pull)
+2. Pull a docker container with the full version of textlive (this might take several minutes, but only needs to be done once. If you have issues, get off the VPN during the pull) Note: 2025 docker image had formatting issue so let's use 2024 until the latest does not have this issue.
 
 ```
-$ docker pull mfisherman/texlive-full
+$ docker pull mfisherman/texlive-full:2024
 ```
 
 3. Run the container and mount the current directory contents in the workspace directory of the container. Use /bin/bash as the default shell. (For Windows, use ```docker run --rm -it -v "%CD%":/data mfisherman/texlive-full:latest```.)
 
 ```
-docker run --rm -it -v $(pwd):/workspace mfisherman/texlive-full /bin/bash
+docker run --rm -it -v $(pwd):/workspace mfisherman/texlive-full:2024 /bin/bash
 ```
 
 4. The container should start running immediately. Once in the container, your CLI looks something like this: `19603f1794b0:/data#`, with `19603f1794b0` likely being different. Go to the workspace folder where the Technical Reference Guide directory is located. (For Windows, the current directory contents have been mounted to the data folder.)
