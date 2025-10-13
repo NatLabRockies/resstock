@@ -1,4 +1,4 @@
-%  File: nrel.cls v4.0.0, October 2025
+%  File: nrel.cls v4.0.1, October 2025
 % This class file provides basic functionality for producing
 % PDFs that meet NREL's style and formatting requirements.
 
@@ -8,7 +8,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{nrel}
 \typeout{ }
-\typeout{NREL.cls -- v4.0.0, October 2025}
+\typeout{NREL.cls -- v4.0.1, October 2025}
 \typeout{Formats documents according to the NREL style guide}
 \typeout{ }
 
