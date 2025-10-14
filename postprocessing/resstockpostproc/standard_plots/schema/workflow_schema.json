@@ -168,7 +168,8 @@
         "bar",
         "box",
         "histogram",
-        "heatmap"
+        "heatmap",
+        "choropleth"
       ],
       "title": "VizType",
       "type": "string"

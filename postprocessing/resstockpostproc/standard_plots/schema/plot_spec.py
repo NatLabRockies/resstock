@@ -47,10 +47,10 @@ class PlotSpec(BaseModel):
     ) -> list[VizType]:
         """Return list of valid value types for the given visualization type."""
         if quantity_type in [QuantityType.model_count]:
-            return [VizType.bar]
+            return [VizType.bar, VizType.choropleth]
         if aggregation_type in [AggregationType.distribution]:
             return [VizType.box, VizType.hist]
-        return [VizType.bar, VizType.heatmap]
+        return [VizType.bar, VizType.heatmap, VizType.choropleth]
 
     @classmethod
     def get_valid_aggregation_types(cls, quantity_type: QuantityType) -> list[AggregationType]:
@@ -80,6 +80,13 @@ class PlotSpec(BaseModel):
             return "Heatmap can only be generated from stacked quantities"
         if self.visualization_type == VizType.hist and isinstance(self.quantity, QuantityGroup):
             return "Histogram cannot be generated from stacked quantities"
+        if self.visualization_type == VizType.choropleth:
+            if self.aggregation_type == AggregationType.distribution:
+                return "Choropleth cannot be generated for distribution aggregation."
+            if self.group_by not in {"in.state", "in.county"}:
+                return "Choropleth plots require group_by to be either 'in.state' or 'in.county'."
+            if isinstance(self.quantity, QuantityGroup):
+                return "Choropleth plots require a single quantity column."
         if self.upgrade == 0 and self.building_inclusion == BuildingInclusion.applied_only:
             return "Baseline can't be passed as an upgrade to plot when building_inclusion is applied_only."
         if self.upgrade == 0 and self.quantity_type in [QuantityType.percent_savings, QuantityType.savings]:

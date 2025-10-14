@@ -10,6 +10,7 @@ from __future__ import annotations
 import polars as pl
 import pytest
 
+from resstockpostproc.standard_plots.choropleth_plotter import ChoroplethPlotter
 from resstockpostproc.standard_plots.data_processor import DataProcessor
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.schema.workflow_schema import (
@@ -39,6 +40,8 @@ def combined_df() -> pl.LazyFrame:
     heating_fuel = ["Electric", "Gas", "Electric", "Gas"]
     vacancy_status = ["Vacant", "Occupied", "Occupied", "Occupied"]
     building_type = ["Single Family", "Single Family", "Single Family", "Single Family"]
+    states = ["CO", "CO", "CA", "CA"]
+    counties = ["G0800010", "G0800050", "G0600370", "G0600710"]
     # Base energy use: electric buildings draw all electricity, gas buildings draw mostly gas
     elec_kwh_base = [100.0, 20.0, 110.0, 0.0]
     gas_kwh_base = [0.0, 80.0, 0.0, 75.0]
@@ -51,6 +54,8 @@ def combined_df() -> pl.LazyFrame:
             "bldg_id": bldg_ids,
             "weight": weights,
             "in.building_type": building_type,
+            "in.state": states,
+            "in.county": counties,
             "applicability": True,
             "in.vacancy_status": vacancy_status,
             "in.heating_fuel": heating_fuel,
@@ -173,6 +178,7 @@ def _build_base_spec(**kwargs) -> PlotSpec:  # type: ignore[return-value]
         (VizType.bar),
         (VizType.heatmap),
         (VizType.hist),
+        (VizType.choropleth),
     ],
 )
 @pytest.mark.parametrize(
@@ -188,6 +194,7 @@ def _build_base_spec(**kwargs) -> PlotSpec:  # type: ignore[return-value]
         (None, 3),
         ("in.heating_fuel", 6),
         ("in.building_type", 3),
+        ("in.state", 6),
     ],
 )
 def test_prepare_basic(
@@ -470,6 +477,14 @@ def test_quantity_group_mean_aggregation(processor: DataProcessor, aggregation_t
     row = df.filter((pl.col("upgrade") == 1) & (pl.col("in.heating_fuel") == "Electric")).select("elec_kwh").item()
     multiplier = 1 if aggregation_type == AggregationType.average else 20  # weight of 10 and two samples
     assert row == pytest.approx(99.5 * multiplier)
+
+
+def test_normalize_county_code():
+    """GIS-style codes should convert to 5-digit county FIPS strings."""
+    assert ChoroplethPlotter._normalize_county_code("G3600050") == "36005"
+    assert ChoroplethPlotter._normalize_county_code("G0100010") == "01001"
+    assert ChoroplethPlotter._normalize_county_code("36005") == "36005"
+    assert ChoroplethPlotter._normalize_county_code("123") == "00123"
 
 
 @pytest.mark.parametrize(

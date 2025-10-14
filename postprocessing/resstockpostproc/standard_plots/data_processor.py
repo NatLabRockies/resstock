@@ -219,7 +219,7 @@ class DataProcessor:
                 quantity = plot_spec.quantity
                 group_by = plot_spec.group_by
             plot_data = self.prepare_data_for_box_plot(combined_df, quantity, group_by)
-        elif plot_spec.visualization_type in (VizType.bar, VizType.heatmap):
+        elif plot_spec.visualization_type in (VizType.bar, VizType.heatmap, VizType.choropleth):
             plot_data = self.prepare_data_for_bar_plot(
                 combined_df, quantities, plot_spec.group_by, plot_spec.aggregation_type, plot_spec.quantity_type
             )

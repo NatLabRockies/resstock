@@ -14,6 +14,7 @@ from prefect.runtime import flow_run
 
 from resstockpostproc.standard_plots.bar_plotter import BarPlotter
 from resstockpostproc.standard_plots.box_plotter import BoxPlotter
+from resstockpostproc.standard_plots.choropleth_plotter import ChoroplethPlotter
 from resstockpostproc.standard_plots.data_processor import DataProcessor
 from resstockpostproc.standard_plots.heatmap_plotter import HeatmapPlotter
 from resstockpostproc.standard_plots.histogram_plotter import HistogramPlotter
@@ -163,6 +164,8 @@ class PlotOrchestrator:
             return HeatmapPlotter(theme=self.theme)
         if viz == VizType.hist:
             return HistogramPlotter(theme=self.theme)
+        if viz == VizType.choropleth:
+            return ChoroplethPlotter(theme=self.theme)
         raise ValueError(f"Unsupported visualization type: {viz}")
 
     def print_time_spent(self) -> None:

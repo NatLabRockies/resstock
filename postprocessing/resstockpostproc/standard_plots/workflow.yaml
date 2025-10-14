@@ -135,6 +135,7 @@ visualization_types:
   - bar
   - box
   - heatmap
+  - choropleth
 
 group_by:
   - in.census_division

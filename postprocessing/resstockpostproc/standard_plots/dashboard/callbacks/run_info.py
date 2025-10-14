@@ -113,13 +113,16 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
         workflow_group_by: tuple[str, ...] = orchestrator.workflow.group_by
 
         small_chars: list[str] = []
+        geo_columns: list[str] = []
         try:
             base_df: pl.LazyFrame = orchestrator.processor.combined_df.filter(pl.col("upgrade") == 0)
-            in_cols = [col for col in base_df.collect_schema().names() if col.startswith("in.")]
+            schema_names = base_df.collect_schema().names()
+            in_cols = [col for col in schema_names if col.startswith("in.")]
             if in_cols:
                 unique_df = base_df.select([pl.col(col).n_unique().alias(col) for col in in_cols]).collect()
                 unique_counts = dict(zip(in_cols, unique_df.row(0)))
                 small_chars = sorted([col for col, count in unique_counts.items() if 1 < count <= 20])
+            geo_columns = [col for col in ("in.state", "in.county") if col in schema_names]
         except Exception as exc:  # noqa: BLE001
             logger.warning("Failed to compute additional group-by characteristics: %s", exc)
 
@@ -128,6 +131,18 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
             {"label": "— Workflow group-by —", "value": "__sep_wf__", "disabled": True},
             *[{"label": col, "value": col} for col in workflow_group_by],
         ]
+
+        if geo_columns:
+            options.extend(
+                [
+                    {"label": "— Geography —", "value": "__sep_geo__", "disabled": True},
+                    *[
+                        {"label": col, "value": col}
+                        for col in geo_columns
+                        if col not in workflow_group_by
+                    ],
+                ]
+            )
 
         if small_chars:
             options.extend(
