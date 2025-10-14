@@ -41,6 +41,21 @@ nrel_color_series = [  # from https://www.nrel.gov/comm-standards/web/typography
     ],
 ]
 
+# from: https://www.nrel.gov/docs/libraries/comm-standards/nrel-rgb-guidelines-042525.pdf?sfvrsn=3447a02_2
+qualitative_series = [
+    "#0079C2",
+    "#7DA544",
+    "#EE9521",
+    "#6D1496",
+    "#812E36",
+    "#626D72",
+    "#00A4E4",
+    "#9ECE42",
+    "#FFC423",
+    "#B365D1",
+    "#A32F1C",
+]
+
 fuel_colors = {
     "electricity": nrel_color_series[1][1],  # EE9521 orange
     "natural gas": nrel_color_series[0][2],  # 0079C2 blue
@@ -60,7 +75,7 @@ class ThemeManager:
         # Base template - can be changed via config
         self.template: str = "plotly_white"
         # Color palette used across plots
-        self.primary_color_sequence = nrel_color_series[0]
+        self.primary_color_sequence = qualitative_series
         self.end_use_to_color = column2color
         self.end_use_to_pattern = column2pattern
         self.fig_width: int = 1000
@@ -72,7 +87,7 @@ class ThemeManager:
 
     def update_upgrade_palette(self, upgrades: tuple[int, ...] | None = None) -> None:
         upgrades = upgrades or self.workflow.upgrades
-        color_list = nrel_color_series[0]
+        color_list = qualitative_series
         workflow_upgrade2name = dict(zip(self.workflow.upgrades, self.workflow.upgrade_names))
         upgrade2name = {upgrade: workflow_upgrade2name[int(upgrade)] for upgrade in upgrades}
         if len(upgrades) > len(color_list):
