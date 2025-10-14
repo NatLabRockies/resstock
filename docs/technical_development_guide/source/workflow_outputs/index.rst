@@ -11,12 +11,12 @@ See the `Residential HPXML Workflow Generator <https://buildstockbatch.readthedo
 Tables in the :ref:`default_outputs` and :ref:`optional_outputs` sections are generated based on `data dictionary files for inputs and outputs <https://github.com/NREL/resstock/tree/data-dictionary/resources/data/dictionary/>`_.
 The data dictionary files, along with their data columns, are shown below:
 
-- ``resources/data/dictionary/inputs.csv``
+- ``postprocessing/resstockpostproc/resources/dictionary/inputs.csv``
 
   - Input Name
   - Input Description
 
-- ``resources/data/dictionary/outputs.csv``:
+- ``postprocessing/resstockpostproc/resources/dictionary/outputs.csv``:
 
   - Row Index
   - Sums To

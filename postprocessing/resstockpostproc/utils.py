@@ -76,3 +76,30 @@ def get_col_maps():
     col_maps = col_map_df.to_dicts()
     return col_maps
 
+def get_polars_schema_from_data_dictionary(all_cols: List[str]) -> dict[str, pl.DataType]:
+    """
+     Returns a dictionary of column name: dtype for all provided columns, making use of the data dictionary.
+     Currently, only the columns defined in input dictionary is assigned dtypes based on the data dictionary.
+     Columns absent in the input dictionary and that starts with "build_existing_model." is assigned string dtype.
+     All other columns, including those defined in the output dictionary, are assigned float64 dtype.
+    """
+    resources_path = pathlib.Path(__file__).parent / "resources"
+    polar_dtypes = {
+        "bool": pl.Boolean,
+        "int": pl.Int64,
+        "float": pl.Float64,
+        "string": pl.String,
+        "datetime": pl.Datetime(time_unit="ms"),
+    }
+    input_dict_df = pl.read_csv(resources_path / "dictionary" / "inputs.csv")
+    input_schema_dict = dict(zip(input_dict_df["Input Name"].to_list(), [polar_dtypes[x] for x in input_dict_df["Data Type"].to_list()]))
+    # since there are multiple of upgrade_costs.option_ columns, this definition is currently not in the dictionary
+    input_schema_dict |= {col: pl.String for col in all_cols if col.startswith("upgrade_costs.option_") and col.endswith("_name")}
+    # for build_existing_model columns that are not in the input dictionary, assign string dtype
+    input_schema_dict |= {col: pl.String for col in all_cols if col.startswith("build_existing_model.") and col not in input_schema_dict}
+    # This is also not in the dictionary
+    input_schema_dict |= {"step_failures":pl.String}
+    
+    matching_schema = {k: v for k, v in input_schema_dict.items() if k in set(all_cols)}
+    full_schema = {k: pl.Float64 for k in all_cols if k not in matching_schema} | matching_schema
+    return full_schema

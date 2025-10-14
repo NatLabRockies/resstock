@@ -41,10 +41,10 @@ class TestBuildStockBatch < Minitest::Test
   end
 
   def test_testing_inputs
-    expected_inputs = CSV.read(File.join('resources', 'data', 'dictionary', 'inputs.csv'), headers: true)
+    expected_inputs = CSV.read(File.join('postprocessing', 'resstockpostproc', 'resources', 'dictionary', 'inputs.csv'), headers: true)
     expected_names = expected_inputs['Input Name']
 
-    expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
+    expected_outputs = CSV.read(File.join('postprocessing', 'resstockpostproc', 'resources', 'dictionary', 'outputs.csv'), headers: true)
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
@@ -66,10 +66,10 @@ class TestBuildStockBatch < Minitest::Test
   end
 
   def test_national_inputs
-    expected_inputs = CSV.read(File.join('resources', 'data', 'dictionary', 'inputs.csv'), headers: true)
+    expected_inputs = CSV.read(File.join('postprocessing', 'resstockpostproc', 'resources', 'dictionary', 'inputs.csv'), headers: true)
     expected_names = expected_inputs['Input Name']
 
-    expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
+    expected_outputs = CSV.read(File.join('postprocessing', 'resstockpostproc', 'resources', 'dictionary', 'outputs.csv'), headers: true)
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
@@ -88,10 +88,10 @@ class TestBuildStockBatch < Minitest::Test
   end
 
   def test_testing_annual_outputs
-    expected_inputs = CSV.read(File.join('resources', 'data', 'dictionary', 'inputs.csv'), headers: true)
+    expected_inputs = CSV.read(File.join('postprocessing', 'resstockpostproc', 'resources', 'dictionary', 'inputs.csv'), headers: true)
     expected_names = expected_inputs['Input Name']
 
-    expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
+    expected_outputs = CSV.read(File.join('postprocessing', 'resstockpostproc', 'resources', 'dictionary', 'outputs.csv'), headers: true)
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
@@ -130,10 +130,10 @@ class TestBuildStockBatch < Minitest::Test
   end
 
   def test_national_annual_outputs
-    expected_inputs = CSV.read(File.join('resources', 'data', 'dictionary', 'inputs.csv'), headers: true)
+    expected_inputs = CSV.read(File.join('postprocessing', 'resstockpostproc', 'resources', 'dictionary', 'inputs.csv'), headers: true)
     expected_names = expected_inputs['Input Name']
 
-    expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
+    expected_outputs = CSV.read(File.join('postprocessing', 'resstockpostproc', 'resources', 'dictionary', 'outputs.csv'), headers: true)
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
@@ -171,7 +171,7 @@ class TestBuildStockBatch < Minitest::Test
   def test_timeseries_resstock_outputs
     ts_col = 'Timeseries ResStock Name'
 
-    expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
+    expected_outputs = CSV.read(File.join('postprocessing', 'resstockpostproc', 'resources', 'dictionary', 'outputs.csv'), headers: true)
     expected_outputs[ts_col] = _map_scenario_names(expected_outputs[ts_col], 'Emissions: <type>: <scenario_name>', 'Emissions: CO2e: LRMER_MidCase_15')
     expected_timeseries_names = expected_outputs[ts_col].select { |n| !n.nil? }
 
@@ -216,7 +216,7 @@ class TestBuildStockBatch < Minitest::Test
   def test_timeseries_buildstockbatch_outputs
     ts_col = 'Timeseries BuildStockBatch Name'
 
-    expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
+    expected_outputs = CSV.read(File.join('postprocessing', 'resstockpostproc', 'resources', 'dictionary', 'outputs.csv'), headers: true)
     expected_outputs[ts_col] = _map_scenario_names(expected_outputs[ts_col], 'emissions__<type>__<scenario_name>', 'emissions__co2e__lrmer_midcase_15')
     expected_timeseries_names = expected_outputs[ts_col].select { |n| !n.nil? }
 

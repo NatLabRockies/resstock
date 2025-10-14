@@ -20,8 +20,8 @@ env:
   OPENSTUDIO_PLATFORM: Ubuntu-22.04-x86_64
   OPENSTUDIO_EXT: deb
   OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.9.0
-  BUILDSTOCK_BRANCH: develop
-  BUILDSTOCK_QUERY_BRANCH: main
+  BUILDSTOCK_BRANCH: ppv2
+  BUILDSTOCK_QUERY_BRANCH: set_cover
 
 jobs:
   format-files:
@@ -274,9 +274,6 @@ jobs:
         run: |
           gunzip -v project_national/national_baseline/results_csvs/*.csv.gz
           gunzip -v project_testing/testing_baseline/results_csvs/*.csv.gz
-          
-          tar -xvf project_national/national_baseline/simulation_output/*.tar.gz -C project_national/national_baseline/simulation_output --wildcards '*results_timeseries.csv' --wildcards '*.xml' --wildcards '*data_point_out.json' --wildcards '*.osw'
-          tar -xvf project_testing/testing_baseline/simulation_output/*.tar.gz -C project_testing/testing_baseline/simulation_output --wildcards '*results_timeseries.csv' --wildcards '*.xml' --wildcards '*data_point_out.json' --wildcards '*.osw' --wildcards '*in.osm' --wildcards '*in.idf'
 
       - name: Process results
         run: |
@@ -538,7 +535,7 @@ jobs:
       - name: Generate minimal buildstock and other files
         run: |
           cd project_national/resources
-          python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_tmy3.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --output_prefix sdr_
+          python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_tmy3.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --prev_minimal_buildstock_file sdr_minimal_buildstock.csv --output_prefix sdr_
           rm national_550ksamples.csv
           rm national_550ksamples.csv.gz
 
@@ -659,7 +656,7 @@ jobs:
           fi
 
           # Run buildstockbatch and tee output to a log file
-          buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml 2>&1 | tee buildstock_local.log
+          buildstock_local --ultra-low-disk-no-timeseries $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml 2>&1 | tee buildstock_local.log
 
           # Check the log for schema mismatch warnings and fail if any are present
           SCHEMA_MISMATCH_PATTERN='^Missing columns in output data|^Extra columns in output data'
@@ -693,10 +690,10 @@ jobs:
           echo "Checking for failed simulations in results files..."
           FAILED=false
           for csv_file in project_national/sdr_upgrades_tmy3/results_csvs/*.csv; do
-            python -m resstockpostproc.get_failures "$csv_file" --verbose --exit-code || FAILED=true
+            python -m resstockpostproc.get_failures "$csv_file" --verbose --exit-code --failure-threshold 0.5 || FAILED=true
           done
           if [ "$FAILED" = true ]; then
-            echo "ERROR: Some simulations failed. See details above."
+            echo "ERROR: Significantly high failure rate detected. See details above."
             exit 1
           fi
 

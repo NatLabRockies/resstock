@@ -8,7 +8,7 @@ import argparse
 import sys
 from pathlib import Path
 from typing import Any
-
+import json
 import polars as pl
 
 
@@ -21,12 +21,12 @@ def get_failures(csv_path: str, verbose: bool = False) -> list[dict[str, Any]]:
         verbose: Whether to print detailed information during processing
 
     Returns:
-        List of dictionaries containing details of failed simulations
+        List of dictionaries containing details of failed simulations and the percentage of failed simulations
     """
     path = Path(csv_path)
     if not path.exists():
         print(f"Error: File {csv_path} does not exist.")
-        return [{"building_id": "N/A", "completed_status": "N/A", "step_failures": f"Path {csv_path} does not exist."}]
+        return [{"building_id": "N/A", "completed_status": "N/A", "step_failures": f"Path {csv_path} does not exist."}], 1.0
 
     if verbose:
         print(f"Checking file: {csv_path}")
@@ -35,7 +35,7 @@ def get_failures(csv_path: str, verbose: bool = False) -> list[dict[str, Any]]:
     try:
         # Scan the CSV lazily
         df_lazy = pl.scan_csv(csv_path)
-
+        row_count = df_lazy.select(pl.len()).collect().item()
         # Check if completed_status column exists
         schema = df_lazy.collect_schema()
         if "completed_status" not in schema:
@@ -46,7 +46,7 @@ def get_failures(csv_path: str, verbose: bool = False) -> list[dict[str, Any]]:
                     "completed_status": "N/A",
                     "step_failures": f"completed_status column not found in {csv_path}",
                 }
-            ]
+            ], 1.0
         columns_to_select = [pl.col("building_id"), pl.col("completed_status")]
 
         if "step_failures" in schema:
@@ -61,7 +61,7 @@ def get_failures(csv_path: str, verbose: bool = False) -> list[dict[str, Any]]:
 
         failed_sims = df_lazy.select(columns_to_select).filter(pl.col("completed_status") == "Fail").collect()
         failures = failed_sims.to_dicts() if not failed_sims.is_empty() else []
-        return failures
+        return failures, len(failures) * 1.0 / row_count
     except Exception as e:  # noqa: BLE001
         print(f"Error processing {csv_path}: {e!s}")
         return [
@@ -71,7 +71,7 @@ def get_failures(csv_path: str, verbose: bool = False) -> list[dict[str, Any]]:
                 "step_failures": f"Error processing {csv_path}: {e!s}",
                 "eplusout_err": "N/A",
             }
-        ]
+        ], 1.0
 
 
 def print_failures(failures: list[dict[str, Any]], csv_path: str) -> None:
@@ -102,7 +102,7 @@ def print_failures(failures: list[dict[str, Any]], csv_path: str) -> None:
             # If step_failures is a string representation of a Python list
             if isinstance(step_failures, str) and step_failures.strip().startswith("["):
                 # Parse the Python literal string into a Python object
-                failures_data = ast.literal_eval(step_failures)
+                failures_data = json.loads(step_failures)
                 print("     Step Failures:")
 
                 # Format each failure entry
@@ -137,13 +137,15 @@ def main():
     parser.add_argument("csv_file", help="Path to the CSV file to check for failures.")
     parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose output.")
     parser.add_argument("--exit-code", "-e", action="store_true", help="Exit with non-zero code if failures are found.")
+    parser.add_argument("--failure-threshold", "-f", type=float, default=0.0, help="Failure threshold percentage.")
 
     args = parser.parse_args()
 
-    failures = get_failures(args.csv_file, args.verbose)
+    failures, failure_rate = get_failures(args.csv_file, args.verbose)
     print_failures(failures, args.csv_file)
+    print(f"Failure rate: {failure_rate * 100:.2f}%")
 
-    if args.exit_code and failures:
+    if args.exit_code and failure_rate > args.failure_threshold:
         print(f"ERROR: {len(failures)} simulation(s) failed. Check the logs above for details.")
         sys.exit(1)
 

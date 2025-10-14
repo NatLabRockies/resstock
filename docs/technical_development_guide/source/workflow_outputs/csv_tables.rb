@@ -2,8 +2,8 @@
 
 require 'csv'
 
-inputs = CSV.read(File.join(File.dirname(__FILE__), '../../../../resources/data/dictionary/inputs.csv'), headers: true)
-outputs = CSV.read(File.join(File.dirname(__FILE__), '../../../../resources/data/dictionary/outputs.csv'), headers: true)
+inputs = CSV.read(File.join(File.dirname(__FILE__), '../../../../postprocessing/resstockpostproc/resources/dictionary/inputs.csv'), headers: true)
+outputs = CSV.read(File.join(File.dirname(__FILE__), '../../../../postprocessing/resstockpostproc/resources/dictionary/outputs.csv'), headers: true)
 
 csv_tables = {
   'characteristics.csv' => { 'annual' => false, 'timeseries' => false, 'kws' => ['build_existing_model.'], 'usecols' => ['Input Name', 'Input Description'] },
