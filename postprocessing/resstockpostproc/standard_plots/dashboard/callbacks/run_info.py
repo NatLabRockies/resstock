@@ -105,9 +105,10 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
         Output("group-by", "value"),
         Input("run-folder", "value"),
         State("group-by", "value"),
+        State("group-by-store", "data"),
         prevent_initial_call=True,
     )
-    def _update_group_by_options(run_folder: str, current_val: str | None):
+    def _update_group_by_options(run_folder: str, current_val: str | None, persisted_val: str | None):
         orchestrator = ctx.get_orchestrator(run_folder)
         if orchestrator is None:
             raise PreventUpdate
@@ -156,15 +157,41 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
 
         valid_values = {option["value"] for option in options if not option.get("disabled")}
 
-        if current_val is None:
-            new_val = dash.no_update
-        elif current_val in valid_values:
+        # Prefer the dropdown's current value if valid; otherwise try the
+        # persisted store; otherwise fall back to "__none__".
+        if current_val in valid_values:
             new_val = current_val
+        elif persisted_val in valid_values:
+            new_val = persisted_val
         else:
             new_val = "__none__"
 
         logger.info("Updating group by options: %s", [option["label"] for option in options])
         return options, new_val
+
+    # Mirror the dropdown selection into a local-storage store for robust persistence
+    @app.callback(
+        Output("group-by-store", "data"),
+        Input("group-by", "value"),
+        prevent_initial_call=True,
+    )
+    def _persist_group_by_selection(val: str | None):
+        return val
+
+    # Apply persisted store value back to dropdown when it becomes available
+    # MultiplexerTransform allows shared outputs across callbacks.
+    @app.callback(
+        Output("group-by", "value"),
+        Input("group-by-store", "data"),
+        State("group-by", "options"),
+    )
+    def _apply_persisted_group_by(val: str | None, options: list[dict[str, Any]] | None):
+        if not options or val is None:
+            raise PreventUpdate
+        valid_values = {opt["value"] for opt in options if not opt.get("disabled")}
+        if val in valid_values:
+            return val
+        raise PreventUpdate
 
     @app.callback(
         Output("building-inclusion", "options"),
