@@ -85,6 +85,7 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
         Input("legend-show", "value"),
         Input("legend-position", "value"),
         Input("choropleth-labels", "value"),
+        Input("choropleth-boundaries", "value"),
         Input("facet-vertical", "value"),
         Input("facet-wrap-width", "value"),
         Input("dynamic-toggle", "value"),
@@ -106,6 +107,7 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
         legend_show: list[str],
         legend_pos: str,
         choropleth_labels: list[str],
+        choropleth_boundaries: list[str],
         facet_orientation: list[str],
         wrap_width: int,
         dynamic_mode: bool,
@@ -142,6 +144,7 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
                 run_folder_val=run_folder_val,
                 selected_upgrades=selected_upgrades,
                 choropleth_labels=choropleth_labels,
+                choropleth_boundaries=choropleth_boundaries,
             )
         except Exception:
             error = f"Failed to generate figure for plot spec: {plot_spec}. Error: {traceback.format_exc()}"
@@ -171,6 +174,7 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
         run_folder_val: str,
         selected_upgrades: list[int] | None,
         choropleth_labels: list[str],
+        choropleth_boundaries: list[str],
     ) -> tuple[pl.DataFrame, go.Figure, bool]:
         if not run_folder_val:
             raise PreventUpdate
@@ -230,8 +234,14 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
                 tuple(selected_upgrades) if selected_upgrades is not None else None
             )
             show_labels = "labels" in (choropleth_labels or [])
+            show_boundaries = "boundaries" in (choropleth_boundaries or [])
             if plot_spec.visualization_type == VizType.choropleth:
-                fig = plotter.create_plot(df, plot_spec, show_labels=show_labels)
+                fig = plotter.create_plot(
+                    df,
+                    plot_spec,
+                    show_labels=show_labels,
+                    show_boundaries=show_boundaries,
+                )
             else:
                 fig = plotter.create_plot(df, plot_spec)
             print(f"Figure generated in {time.time() - start_time:.1f} seconds.")

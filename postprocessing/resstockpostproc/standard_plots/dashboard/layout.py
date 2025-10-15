@@ -423,12 +423,21 @@ def build_legend_adjustment_section() -> html.Div:
                 className="mb-2",
             ),
             html.Div(
-                make_checklist(
-                    "choropleth-labels",
-                    options=[{"label": "Show labels", "value": "labels"}],
-                    value=["labels"],
-                    switch=True,
-                ),
+                [
+                    make_checklist(
+                        "choropleth-labels",
+                        options=[{"label": "Show labels", "value": "labels"}],
+                        value=["labels"],
+                        switch=True,
+                        className="mb-2",
+                    ),
+                    make_checklist(
+                        "choropleth-boundaries",
+                        options=[{"label": "Show boundary lines", "value": "boundaries"}],
+                        value=["boundaries"],
+                        switch=True,
+                    ),
+                ],
                 id="choropleth-labels-container",
                 className="mb-2",
             ),

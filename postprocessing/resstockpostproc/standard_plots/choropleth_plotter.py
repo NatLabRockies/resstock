@@ -99,6 +99,7 @@ class ChoroplethPlotter(BasePlotter):
         plot_spec: PlotSpec,
         *,
         show_labels: bool = True,
+        show_boundaries: bool = True,
     ) -> go.Figure:
         """Create a choropleth map for the provided data."""
         if plot_spec.group_by is None:
@@ -147,6 +148,7 @@ class ChoroplethPlotter(BasePlotter):
 
         level = "state" if group_col == "in.state" else "county"
         geojson = self._load_county_geojson() if level == "county" else None
+        county_extent_added = [False] * n_cols if level == "county" else []
 
         for idx, upgrade_name in enumerate(upgrades):
             subset = df.filter(pl.col("upgrade_name") == upgrade_name)
@@ -162,6 +164,11 @@ class ChoroplethPlotter(BasePlotter):
                 else None
             )
 
+            default_line_width = 1.4 if level == "state" else 0.6
+            subtle_line_width = max(default_line_width * 0.2, 0.2)
+            marker_line_width = default_line_width if show_boundaries else subtle_line_width
+            marker_line_color = "rgba(0,0,0,0.85)" if show_boundaries else "rgba(0,0,0,0.25)"
+
             trace = go.Choropleth(
                 locations=locations,
                 z=values,
@@ -169,8 +176,8 @@ class ChoroplethPlotter(BasePlotter):
                 geojson=geojson,
                 featureidkey="id" if level == "county" else None,
                 coloraxis="coloraxis",
-                marker_line_width=1.4 if level == "state" else 0.6,
-                marker_line_color="rgba(0,0,0,0.85)",
+                marker_line_width=marker_line_width,
+                marker_line_color=marker_line_color,
                 customdata=list(zip(labels, model_counts)),
                 hovertemplate=self._build_hovertemplate(quantity_title),
             )
@@ -180,6 +187,9 @@ class ChoroplethPlotter(BasePlotter):
                     hovertemplate=self._build_hovertemplate(quantity_title),
                 )
             fig.add_trace(trace, row=1, col=idx + 1)
+            if level == "county" and not county_extent_added[idx]:
+                fig.add_trace(self._build_county_extent_trace(), row=1, col=idx + 1)
+                county_extent_added[idx] = True
 
             if text_values:
                 label_positions = self._state_label_positions()
@@ -204,19 +214,19 @@ class ChoroplethPlotter(BasePlotter):
                     )
                     fig.add_trace(scatter, row=1, col=idx + 1)
 
-            fig.update_geos(
-                scope="usa",
-                fitbounds="locations",
-                showcountries=False,
-                showsubunits=False,
-                showlakes=False,
-                showframe=False,
-                showcoastlines=False,
-                bgcolor="rgba(0,0,0,0)",
-                projection={"type": "albers usa"},
-                row=1,
-                col=idx + 1,
-            )
+            geo_kwargs: dict[str, Any] = {
+                "scope": "usa",
+                "showcountries": False,
+                "showsubunits": False,
+                "showlakes": False,
+                "showframe": False,
+                "showcoastlines": False,
+                "bgcolor": "rgba(0,0,0,0)",
+                "projection": {"type": "albers usa"},
+            }
+            geo_kwargs["fitbounds"] = "locations"
+
+            fig.update_geos(row=1, col=idx + 1, **geo_kwargs)
 
         colorbar: dict[str, Any] = {"title": quantity_title}
         if tickvals and ticktext:
@@ -356,6 +366,21 @@ class ChoroplethPlotter(BasePlotter):
 
         ticktext = [cls._format_colorbar_tick(val, suffix=suffix) for val in tickvals]
         return tickvals, ticktext
+
+    @staticmethod
+    def _build_county_extent_trace() -> go.Scattergeo:
+        """Invisible reference points to keep AK/HI/PR in view for county maps."""
+        latitudes = [63.0, 20.9, 18.2]
+        longitudes = [-150.0, -157.5, -66.5]
+        return go.Scattergeo(
+            lat=latitudes,
+            lon=longitudes,
+            mode="markers",
+            marker={"size": 0},
+            opacity=0.0,
+            showlegend=False,
+            hoverinfo="skip",
+        )
 
     @staticmethod
     def _format_colorbar_tick(value: float, *, suffix: str = "") -> str:
