@@ -6,6 +6,7 @@ Produces state- or county-level choropleth maps using Plotly.
 from __future__ import annotations
 
 import csv
+import math
 import json
 from pathlib import Path
 from typing import Any
@@ -125,14 +126,14 @@ class ChoroplethPlotter(BasePlotter):
         z_min, z_max = df.select(
             pl.min(quantity_col).alias("min"), pl.max(quantity_col).alias("max")
         ).row(0)
-        z_min = float(z_min)
-        z_max = float(z_max)
-        if z_min == z_max:
-            delta = abs(z_min) if z_min else 1.0
-            z_min -= delta * 0.05
-            z_max += delta * 0.05
+        data_min = float(z_min)
+        data_max = float(z_max)
 
-        colorscale, z_min, z_max = self._choose_colorscale(z_min, z_max, plot_spec)
+        colorscale, cmin, cmax, tickvals, ticktext = self._choose_colorscale(
+            data_min,
+            data_max,
+            plot_spec,
+        )
         quantity_title = self.get_quantity_title(plot_spec)
 
         upgrades = df["upgrade_name"].unique(maintain_order=True).to_list()
@@ -217,39 +218,165 @@ class ChoroplethPlotter(BasePlotter):
                 col=idx + 1,
             )
 
+        colorbar: dict[str, Any] = {"title": quantity_title}
+        if tickvals and ticktext:
+            colorbar.update({"tickmode": "array", "tickvals": tickvals, "ticktext": ticktext})
+
         fig.update_layout(
             coloraxis={
                 "colorscale": colorscale,
-                "cmin": z_min,
-                "cmax": z_max,
-                "colorbar": {"title": quantity_title},
+                "cmin": cmin,
+                "cmax": cmax,
+                "colorbar": colorbar,
             }
         )
         self.theme.apply_layout(fig)
         fig.update_layout(margin={"l": 10, "r": 70, "t": 90, "b": 40})
         return fig
 
-    @staticmethod
+    @classmethod
     def _choose_colorscale(
+        cls,
         z_min: float,
         z_max: float,
         plot_spec: PlotSpec,
-    ) -> tuple[list[str], float, float]:
-        """Select colorscale and enforce range for percent savings."""
-        if plot_spec.quantity_type == QuantityType.percent_savings:
-            # Fixed diverging range: -100% (orange) → 0 (white) → +100% (blue)
-            colorscale = [
-                [0.0, "#EA580C"],  # deep orange
-                [0.5, "#FFFFFF"],  # neutral white
-                [1.0, "#1D4ED8"],  # deep blue
-            ]
-            return colorscale, -100.0, 100.0
+    ) -> tuple[list[list[float | str]], float, float, list[float], list[str]]:
+        """Select colorscale, range, and tick labels for the colorbar."""
+        suffix = "%" if plot_spec.quantity_type == QuantityType.percent_savings else ""
+        has_neg = z_min < 0
+        has_pos = z_max > 0
 
-        if z_min < 0 < z_max:
-            return pc.diverging.RdBu[::-1], z_min, z_max
-        if z_max <= 0:
-            return pc.sequential.Reds[::-1], z_min, z_max
-        return pc.sequential.Blues, z_min, z_max
+        if has_neg and has_pos:
+            cmin, cmax = z_min, z_max
+            colorscale = cls._build_diverging_colorscale(cmin, cmax)
+        elif has_neg:
+            cmin, cmax = z_min, 0.0
+            colorscale = cls._build_negative_colorscale()
+        elif has_pos:
+            cmin, cmax = 0.0, z_max
+            colorscale = cls._build_positive_colorscale()
+        else:
+            cmin, cmax = -1.0, 1.0
+            colorscale = cls._build_diverging_colorscale(cmin, cmax)
+
+        if math.isclose(cmax, cmin, rel_tol=1e-12, abs_tol=1e-12):
+            delta = abs(cmin) if not math.isclose(cmin, 0.0, abs_tol=1e-12) else 1.0
+            if has_neg and has_pos:
+                cmin -= delta * 0.05
+                cmax += delta * 0.05
+            elif has_neg:
+                cmin -= delta * 0.05
+            else:
+                cmax += delta * 0.05
+
+        tickvals, ticktext = cls._build_colorbar_ticks(z_min, z_max, cmin, cmax, suffix=suffix)
+        return colorscale, cmin, cmax, tickvals, ticktext
+
+    @staticmethod
+    def _build_positive_colorscale(palette: list[str] | None = None) -> list[list[float | str]]:
+        """White at zero transitioning to deep blue for positive values."""
+        positive_colors = palette or ["#DBEAFE", "#93C5FD", "#3B82F6", "#1D4ED8"]
+        count = len(positive_colors)
+        colorscale: list[list[float | str]] = [[0.0, "#FFFFFF"]]
+        for idx, color in enumerate(positive_colors, start=1):
+            position = idx / count
+            colorscale.append([position, color])
+        return colorscale
+
+    @staticmethod
+    def _build_negative_colorscale(palette: list[str] | None = None) -> list[list[float | str]]:
+        """Deep red at the minimum transitioning to white at zero."""
+        negative_colors = palette or ["#7F1D1D", "#B91C1C", "#EF4444", "#FECACA"]
+        count = len(negative_colors)
+        colorscale: list[list[float | str]] = []
+        for idx, color in enumerate(negative_colors):
+            position = idx / count
+            colorscale.append([position, color])
+        colorscale.append([1.0, "#FFFFFF"])
+        return colorscale
+
+    @staticmethod
+    def _build_diverging_colorscale(
+        cmin: float,
+        cmax: float,
+        neg_palette: list[str] | None = None,
+        pos_palette: list[str] | None = None,
+    ) -> list[list[float | str]]:
+        """Blend negative (red) and positive (blue) colors with white anchored at zero."""
+        if cmin >= 0 or cmax <= 0:
+            raise ValueError("Diverging colorscale requires a range spanning zero.")
+
+        zero_pos = (0.0 - cmin) / (cmax - cmin)
+        neg_colors = neg_palette or ["#7F1D1D", "#B91C1C", "#EF4444", "#FECACA"]
+        pos_colors = pos_palette or ["#DBEAFE", "#93C5FD", "#3B82F6", "#1D4ED8"]
+
+        colorscale: list[list[float | str]] = []
+        neg_count = len(neg_colors)
+        if neg_count:
+            for idx, color in enumerate(neg_colors):
+                position = zero_pos * (idx / neg_count)
+                colorscale.append([position, color])
+
+        colorscale.append([zero_pos, "#FFFFFF"])
+
+        pos_count = len(pos_colors)
+        if pos_count:
+            for idx, color in enumerate(pos_colors):
+                position = zero_pos + (1.0 - zero_pos) * ((idx + 1) / pos_count)
+                colorscale.append([position, color])
+
+        return colorscale
+
+    @classmethod
+    def _build_colorbar_ticks(
+        cls,
+        z_min: float,
+        z_max: float,
+        cmin: float,
+        cmax: float,
+        *,
+        suffix: str = "",
+    ) -> tuple[list[float], list[str]]:
+        """Generate tick positions/text ensuring min, max, and zero (if applicable) are shown."""
+        tick_candidates: list[float] = [z_min, z_max]
+        if cmin <= 0 <= cmax:
+            tick_candidates.append(0.0)
+
+        bounded_ticks = [
+            val for val in tick_candidates if (cmin - 1e-9) <= val <= (cmax + 1e-9)
+        ]
+        if not bounded_ticks:
+            bounded_ticks = [cmin, cmax]
+
+        sorted_ticks = sorted(bounded_ticks)
+        tickvals: list[float] = []
+        for val in sorted_ticks:
+            if not tickvals or not math.isclose(val, tickvals[-1], rel_tol=1e-9, abs_tol=1e-9):
+                tickvals.append(val)
+
+        ticktext = [cls._format_colorbar_tick(val, suffix=suffix) for val in tickvals]
+        return tickvals, ticktext
+
+    @staticmethod
+    def _format_colorbar_tick(value: float, *, suffix: str = "") -> str:
+        """Format colorbar tick values using abbreviated units."""
+        abs_val = abs(value)
+        sign = "-" if value < 0 else ""
+        if math.isclose(abs_val, 0.0, abs_tol=1e-9):
+            base = "0"
+        elif abs_val >= 1_000_000_000:
+            base = f"{abs_val / 1_000_000_000:.1f}B"
+        elif abs_val >= 1_000_000:
+            base = f"{abs_val / 1_000_000:.1f}M"
+        elif abs_val >= 1_000:
+            base = f"{abs_val / 1_000:.1f}K"
+        elif abs_val >= 1.0:
+            base = f"{abs_val:,.0f}"
+        else:
+            base = f"{abs_val:.2f}"
+
+        base = base.rstrip("0").rstrip(".") if "." in base else base
+        return f"{sign}{base}{suffix}"
 
     @staticmethod
     def _build_hovertemplate(quantity_title: str) -> str:
