@@ -4,7 +4,7 @@ from typing import Any
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
-from resstockpostproc.standard_plots.schema.plot_spec import AggregationType, PlotSpec, QuantityType
+from resstockpostproc.standard_plots.schema.plot_spec import AggregationType, PlotSpec, QuantityType, VizType
 
 from ..run_context import RunContext
 
@@ -64,6 +64,18 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         valid_values = {opt["value"] for opt in options}
         new_val = current_val if current_val in valid_values else options[0]["value"]
         return options, new_val
+
+    @app.callback(
+        Output("choropleth-labels-container", "style"),
+        Input("viz-type", "value"),
+    )
+    def _toggle_choropleth_label_toggle(viz_type_val: str):
+        try:
+            viz = VizType(viz_type_val)
+        except ValueError:
+            raise PreventUpdate
+        return {} if viz == VizType.choropleth else {"display": "none"}
+
 
     @app.callback(
         Output("facet-title-orientation-div", "style"),

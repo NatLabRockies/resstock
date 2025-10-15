@@ -92,7 +92,13 @@ class ChoroplethPlotter(BasePlotter):
     _county_label_map: dict[str, str] | None = None
     _state_label_cache: dict[str, tuple[float, float]] | None = None
 
-    def create_plot(self, data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
+    def create_plot(
+        self,
+        data: pl.DataFrame,
+        plot_spec: PlotSpec,
+        *,
+        show_labels: bool = True,
+    ) -> go.Figure:
         """Create a choropleth map for the provided data."""
         if plot_spec.group_by is None:
             raise ValueError("Choropleth plots require a group_by column.")
@@ -149,7 +155,11 @@ class ChoroplethPlotter(BasePlotter):
             locations, labels = self._extract_locations(subset[group_col].to_list(), level)
             values = subset[quantity_col].to_list()
             model_counts = subset["model_count"].to_list()
-            text_values = self._build_text_labels(level, values, plot_spec, quantity_title)
+            text_values = (
+                self._build_text_labels(level, values, plot_spec, quantity_title)
+                if show_labels
+                else None
+            )
 
             trace = go.Choropleth(
                 locations=locations,
@@ -216,7 +226,7 @@ class ChoroplethPlotter(BasePlotter):
             }
         )
         self.theme.apply_layout(fig)
-        fig.update_layout(margin={"l": 10, "r": 70, "t": 60, "b": 10})
+        fig.update_layout(margin={"l": 10, "r": 70, "t": 90, "b": 40})
         return fig
 
     @staticmethod

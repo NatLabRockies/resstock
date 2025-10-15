@@ -326,7 +326,11 @@ def build_visualization_type_control(workflow) -> html.Div:
 def build_group_by_control() -> html.Div:
     return make_labeled_control(
         "Group by",
-        make_dropdown("group-by", options=[], value="__none__"),
+        make_dropdown(
+            "group-by",
+            options=[{"label": "None", "value": "__none__"}],
+            value="__none__",
+        ),
     )
 
 
@@ -414,6 +418,16 @@ def build_legend_adjustment_section() -> html.Div:
                 options=[{"label": "Show legend", "value": "show"}],
                 value=["show"],
                 switch=True,
+                className="mb-2",
+            ),
+            html.Div(
+                make_checklist(
+                    "choropleth-labels",
+                    options=[{"label": "Show labels", "value": "labels"}],
+                    value=["labels"],
+                    switch=True,
+                ),
+                id="choropleth-labels-container",
                 className="mb-2",
             ),
             build_legend_position_control(),

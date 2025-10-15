@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 from typing import Any
 
+import dash
 import polars as pl  # type: ignore
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
@@ -104,6 +105,7 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
         Output("group-by", "value"),
         Input("run-folder", "value"),
         State("group-by", "value"),
+        prevent_initial_call=True,
     )
     def _update_group_by_options(run_folder: str, current_val: str | None):
         orchestrator = ctx.get_orchestrator(run_folder)
@@ -153,7 +155,13 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
             )
 
         valid_values = {option["value"] for option in options if not option.get("disabled")}
-        new_val = current_val if current_val in valid_values else "__none__"
+
+        if current_val is None:
+            new_val = dash.no_update
+        elif current_val in valid_values:
+            new_val = current_val
+        else:
+            new_val = "__none__"
 
         logger.info("Updating group by options: %s", [option["label"] for option in options])
         return options, new_val
