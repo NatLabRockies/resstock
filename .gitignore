@@ -10,6 +10,7 @@
 # Project-specific files
 /project_national/national_baseline
 /project_national/sdr_upgrades_tmy3*
+/project_national/sdr_upgrades_amy2018*
 /project_testing/testing_baseline
 /national_baseline
 /testing_baseline
