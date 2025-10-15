@@ -1,0 +1,17 @@
+/output
+*.aux
+*-blx.bib
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.pdf
+*.run.xml
+*.synctex.gz
+*.toc
+*.upa
+*.bbl
+*.bcf
+*.blg

@@ -1,9 +1,0 @@
-PWD /workspace
-INPUT /usr/share/texmf-dist/web2c/texmf.cnf
-INPUT /usr/share/texmf-var/web2c/pdftex/latex.fmt
-INPUT 1_Introduction.tex
-OUTPUT 1_Introduction.log
-INPUT /usr/share/texmf-dist/fonts/map/fontname/texfonts.map
-INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm0700.tfm
-INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
-INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
