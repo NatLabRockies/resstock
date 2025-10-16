@@ -12926,16 +12926,16 @@ Level,Parameter,Option,Saturation
 9,HVAC Cooling Efficiency,Ducted Heat Pump,0.153727
 9,HVAC Cooling Efficiency,Non-Ducted Heat Pump,0.00974977
 9,HVAC Cooling Efficiency,None,0.105864
-9,HVAC Cooling Efficiency,"Room AC, EER 8.5",0.00427306
-9,HVAC Cooling Efficiency,"Room AC, EER 9.8",0.025774
-9,HVAC Cooling Efficiency,"Room AC, EER 10.7",0.096399
-9,HVAC Cooling Efficiency,"Room AC, EER 12.0",0.0739384
+9,HVAC Cooling Efficiency,"Room AC, CEER 8.4",0.00427306
+9,HVAC Cooling Efficiency,"Room AC, CEER 9.7",0.025774
+9,HVAC Cooling Efficiency,"Room AC, CEER 10.6",0.096399
+9,HVAC Cooling Efficiency,"Room AC, CEER 11.8",0.0739384
 9,HVAC Cooling Efficiency,Shared Cooling,0.03826
 9,HVAC Has Ducts,No,0.235373
 9,HVAC Has Ducts,Yes,0.764627
 9,HVAC Has Ducts,Void,0
-9,HVAC Heating Efficiency,"ASHP, SEER 10, 6.2 HSPF",0.00718034
-9,HVAC Heating Efficiency,"ASHP, SEER 13, 7.7 HSPF",0.0740766
+9,HVAC Heating Efficiency,"ASHP, SEER 10, 6.8 HSPF",0.0113708
+9,HVAC Heating Efficiency,"ASHP, SEER 13, 7.7 HSPF",0.0698861
 9,HVAC Heating Efficiency,"ASHP, SEER 15, 8.5 HSPF",0.0724697
 9,HVAC Heating Efficiency,"Electric Baseboard, 100% Efficiency",0.062826
 9,HVAC Heating Efficiency,"Electric Boiler, 100% AFUE",0.00205743
@@ -12950,8 +12950,8 @@ Level,Parameter,Option,Saturation
 9,HVAC Heating Efficiency,"Fuel Furnace, 92.5% AFUE",0.153316
 9,HVAC Heating Efficiency,"Fuel Wall/Floor Furnace, 60% AFUE",0.0318915
 9,HVAC Heating Efficiency,"Fuel Wall/Floor Furnace, 68% AFUE",0.0282638
-9,HVAC Heating Efficiency,"MSHP, SEER 14.5, 8.2 HSPF",0.00959704
-9,HVAC Heating Efficiency,"MSHP, SEER 29.3, 14 HSPF",0.000152729
+9,HVAC Heating Efficiency,"MSHP, SEER2 14.5, 7.7 HSPF2",0.00873868
+9,HVAC Heating Efficiency,"MSHP, SEER2 29, 12.3 HSPF2",0.0010111
 9,HVAC Heating Efficiency,None,0.0113431
 9,HVAC Heating Efficiency,Shared Heating,0.096292
 9,HVAC Heating Efficiency,Void,0

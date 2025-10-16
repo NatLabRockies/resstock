@@ -38589,12 +38589,12 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - auto
      - auto
-   * - Room AC, EER 8.5
+   * - Room AC, CEER 8.4
      - 0.43%
      - room air conditioner
      - auto
-     - EER
-     - 8.5
+     - CEER
+     - 8.4
      - auto
      - auto
      - false
@@ -38603,12 +38603,12 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - auto
      - auto
-   * - Room AC, EER 9.8
+   * - Room AC, CEER 9.7
      - 2.6%
      - room air conditioner
      - auto
-     - EER
-     - 9.8
+     - CEER
+     - 9.7
      - auto
      - auto
      - false
@@ -38617,12 +38617,12 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - auto
      - auto
-   * - Room AC, EER 10.7
+   * - Room AC, CEER 10.6
      - 9.6%
      - room air conditioner
      - auto
-     - EER
-     - 10.7
+     - CEER
+     - 10.6
      - auto
      - auto
      - false
@@ -38631,12 +38631,12 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - auto
      - auto
-   * - Room AC, EER 12.0
+   * - Room AC, CEER 11.8
      - 7.4%
      - room air conditioner
      - auto
-     - EER
-     - 12
+     - CEER
+     - 11.8
      - auto
      - auto
      - false
@@ -39499,8 +39499,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``heat_pump_backup_use_existing_system``
      - ``heat_pump_sizing_is_duct_limited``
 
-   * - ASHP, SEER 10, 6.2 HSPF
-     - 0.72%
+   * - ASHP, SEER 10, 6.8 HSPF
+     - 1.1%
      - 
      - none
      - 0
@@ -39511,7 +39511,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - air-to-air
      - single stage
      - HSPF
-     - 6.2
+     - 6.8
      - SEER
      - 10
      - auto
@@ -39548,7 +39548,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - false
      - false
    * - ASHP, SEER 13, 7.7 HSPF
-     - 7.4%
+     - 7%
      - 
      - none
      - 0
@@ -40267,8 +40267,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - false
      - false
-   * - MSHP, SEER 14.5, 8.2 HSPF
-     - 0.96%
+   * - MSHP, SEER2 14.5, 7.7 HSPF2
+     - 0.87%
      - 
      - none
      - 0
@@ -40278,9 +40278,9 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - mini-split
      - variable speed
-     - HSPF
-     - 8.2
-     - SEER
+     - HSPF2
+     - 7.7
+     - SEER2
      - 14.5
      - auto
      - auto
@@ -40315,8 +40315,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - false
      - false
-   * - MSHP, SEER 29.3, 14 HSPF
-     - 0.015%
+   * - MSHP, SEER2 29, 12.3 HSPF2
+     - 0.1%
      - 
      - none
      - 0
@@ -40326,10 +40326,10 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - mini-split
      - variable speed
-     - HSPF
-     - 14
-     - SEER
-     - 29.3
+     - HSPF2
+     - 12.3
+     - SEER2
+     - 29
      - auto
      - auto
      - auto
@@ -41483,8 +41483,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - mini-split
      - variable speed
-     - SEER
-     - 13
+     - SEER2
+     - 14.5
      - auto
      - auto
      - false
@@ -41526,8 +41526,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1
      - mini-split
      - variable speed
-     - SEER
-     - 13
+     - SEER2
+     - 14.5
      - auto
      - 
      - false
@@ -41569,8 +41569,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1
      - mini-split
      - variable speed
-     - SEER
-     - 13
+     - SEER2
+     - 14.5
      - auto
      - 
      - false
