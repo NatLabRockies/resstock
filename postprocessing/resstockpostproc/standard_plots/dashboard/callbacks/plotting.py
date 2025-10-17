@@ -17,7 +17,7 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 from plotly.graph_objects import Figure
 
-from resstockpostproc.standard_plots.schema.plot_spec import AggregationType, PlotSpec, QuantityType, VizType
+from resstockpostproc.standard_plots.schema.plot_spec import AggregationType, PlotSpec, VizType
 
 from ..run_context import RunContext
 from ..services.plot_helpers import apply_facet_orientation, build_error_dataframe_and_figure, build_plot_spec
@@ -26,64 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 def register_plotting_callbacks(app, ctx: RunContext) -> None:
-    quantity_groups = ctx.quantity_groups
     workflow = ctx.workflow
-
-    @app.callback(
-        Output("quantity", "options"),
-        Output("quantity", "value"),
-        Input("quantity-group", "value"),
-        Input("viz-type", "value"),
-        Input("group-by", "value"),
-        Input("quantity-type", "value"),
-        Input("run-folder", "value"),
-        State("quantity", "value"),
-    )
-    def _update_quantity_dd(
-        qgroup_name: str,
-        viz_type_val: str,
-        group_by_val: str,
-        quantity_type_val: str,
-        run_folder_val: str,
-        current_val: str | None,
-    ):
-        try:
-            qtype = QuantityType(quantity_type_val)
-        except ValueError:
-            raise PreventUpdate
-
-        viz_type = VizType(viz_type_val)
-
-        if qtype == QuantityType.prevalence:
-            if not run_folder_val:
-                raise PreventUpdate
-            categorical_cols = ctx.list_categorical_quantities(run_folder_val)
-            if not categorical_cols:
-                return [], None
-            options = [{"label": col, "value": col} for col in categorical_cols]
-            valid_values = {opt["value"] for opt in options}
-            default_value = current_val if current_val in valid_values else options[0]["value"]
-            return options, default_value
-
-        if not qgroup_name:
-            raise PreventUpdate
-
-        qg = quantity_groups[qgroup_name]
-
-        options: list[dict[str, Any]] = []
-        options.extend({"label": c, "value": c} for c in qg.constituents)
-        if qg.sum:
-            options.append({"label": qg.sum, "value": qg.sum})
-
-        if viz_type in [VizType.bar] or (viz_type == VizType.box and group_by_val in (None, "__none__")):
-            options.append({"label": "ALL - stacked", "value": "__group_stacked__"})
-
-        if viz_type in [VizType.heatmap]:
-            options = [{"label": "ALL - stacked", "value": "__group_stacked__"}]
-
-        valid_values = {opt["value"] for opt in options}
-        default_value = current_val if current_val in valid_values else options[0]["value"]
-        return options, default_value
 
     @app.callback(
         Output("plot-graph", "figure"),
