@@ -1,4 +1,4 @@
-/output
+/_build
 *.aux
 *-blx.bib
 *.fdb_latexmk
@@ -12,6 +12,7 @@
 *.synctex.gz
 *.toc
 *.upa
+*.upb
 *.bbl
 *.bcf
 *.blg
