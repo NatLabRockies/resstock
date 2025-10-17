@@ -5,7 +5,7 @@
 [![Documentation Status](https://readthedocs.org/projects/openstudio-hpxml/badge/?version=latest)](https://openstudio-hpxml.readthedocs.io/en/latest/?badge=latest)
 
 OpenStudio-HPXML allows running residential [EnergyPlus™ simulations](https://energyplus.net/) using an [HPXML file](https://hpxml.nrel.gov/) for the building description.
-It is intended to be used by user interfaces or other automated software workflows that automatically produce the HPXML file.
+It is primarily intended to be used by user interfaces or other automated software workflows that automatically produce the HPXML file.
 
 OpenStudio-HPXML can accommodate a wide range of different building technologies and geometries.
 End-to-end simulations typically run in 3-10 seconds, depending on complexity, computer platform and speed, etc.

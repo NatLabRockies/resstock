@@ -1,0 +1,45 @@
+Option Name	Efficiency Type	Efficiency [lb/kWh]	Fuel Type	Drying Method	Usage Multiplier	Location
+None						
+"Electricity, Standard, 50% Usage"	CombinedEnergyFactor	3.73	electricity	conventional	0.5	
+"Electricity, Standard, 75% Usage"	CombinedEnergyFactor	3.73	electricity	conventional	0.75	
+"Electricity, Standard, 100% Usage"	CombinedEnergyFactor	3.73	electricity	conventional		
+"Electricity, Standard, 150% Usage"	CombinedEnergyFactor	3.73	electricity	conventional	1.5	
+"Electricity, Standard, 200% Usage"	CombinedEnergyFactor	3.73	electricity	conventional	2	
+"Electricity, Premium, 50% Usage"	CombinedEnergyFactor	3.93	electricity	conventional	0.5	
+"Electricity, Premium, 75% Usage"	CombinedEnergyFactor	3.93	electricity	conventional	0.75	
+"Electricity, Premium, 100% Usage"	CombinedEnergyFactor	3.93	electricity	conventional		
+"Electricity, Premium, 150% Usage"	CombinedEnergyFactor	3.93	electricity	conventional	1.5	
+"Electricity, Premium, 200% Usage"	CombinedEnergyFactor	3.93	electricity	conventional	2	
+"Electricity, Heat Pump, 50% Usage"	CombinedEnergyFactor	5.2	electricity	heat pump	0.5	
+"Electricity, Heat Pump, 75% Usage"	CombinedEnergyFactor	5.2	electricity	heat pump	0.75	
+"Electricity, Heat Pump, 100% Usage"	CombinedEnergyFactor	5.2	electricity	heat pump		
+"Electricity, Heat Pump, 150% Usage"	CombinedEnergyFactor	5.2	electricity	heat pump	1.5	
+"Electricity, Heat Pump, 200% Usage"	CombinedEnergyFactor	5.2	electricity	heat pump	2	
+"Natural Gas, Standard, 50% Usage"	CombinedEnergyFactor	3.3	natural gas	conventional	0.5	
+"Natural Gas, Standard, 75% Usage"	CombinedEnergyFactor	3.3	natural gas	conventional	0.75	
+"Natural Gas, Standard, 100% Usage"	CombinedEnergyFactor	3.3	natural gas	conventional		
+"Natural Gas, Standard, 150% Usage"	CombinedEnergyFactor	3.3	natural gas	conventional	1.5	
+"Natural Gas, Standard, 200% Usage"	CombinedEnergyFactor	3.3	natural gas	conventional	2	
+"Natural Gas, Premium, 50% Usage"	CombinedEnergyFactor	3.48	natural gas	conventional	0.5	
+"Natural Gas, Premium, 75% Usage"	CombinedEnergyFactor	3.48	natural gas	conventional	0.75	
+"Natural Gas, Premium, 100% Usage"	CombinedEnergyFactor	3.48	natural gas	conventional		
+"Natural Gas, Premium, 150% Usage"	CombinedEnergyFactor	3.48	natural gas	conventional	1.5	
+"Natural Gas, Premium, 200% Usage"	CombinedEnergyFactor	3.48	natural gas	conventional	2	
+"Propane, Standard, 50% Usage"	CombinedEnergyFactor	3.3	propane	conventional	0.5	
+"Propane, Standard, 75% Usage"	CombinedEnergyFactor	3.3	propane	conventional	0.75	
+"Propane, Standard, 100% Usage"	CombinedEnergyFactor	3.3	propane	conventional		
+"Propane, Standard, 150% Usage"	CombinedEnergyFactor	3.3	propane	conventional	1.5	
+"Propane, Standard, 200% Usage"	CombinedEnergyFactor	3.3	propane	conventional	2	
+"Detailed Example: Electricity, ERI Reference 2006"	CombinedEnergyFactor	3.01	electricity	conventional		
+"Detailed Example: Natural Gas, ERI Reference 2006"	CombinedEnergyFactor	3.01	natural gas	conventional		
+"Detailed Example: Electricity, EF 4.29"	EnergyFactor	4.29	electricity	condensing		
+"Detailed Example: Electricity, Standard, Conditioned Basement"	CombinedEnergyFactor	3.73	electricity	conventional		basement - conditioned
+"Detailed Example: Electricity, Standard, Unconditioned Basement"	CombinedEnergyFactor	3.73	electricity	conventional		basement - unconditioned
+"Detailed Example: Electricity, Standard, Garage"	CombinedEnergyFactor	3.73	electricity	conventional		garage
+						
+# Efficiency Type: The efficiency type of the clothes dryer.						
+# Efficiency: The efficiency from the EnergyGuide label.						
+# Fuel Type: Type of fuel used by the clothes dryer.						
+# Drying Method: The method of drying used by the clothes dryer.						
+"# Usage Multiplier: Multiplier on the clothes dryer energy usage that can reflect, e.g., high/low usage occupants."						
+# Location: The space type where the clothes dryer is located.						

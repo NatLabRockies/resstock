@@ -1,0 +1,45 @@
+Option Name	Rated Annual Consumption [kWh/yr]	Usage Multiplier	Location
+None			
+"1139 kWh/yr, 90% Usage"	1139	0.9	
+"1139 kWh/yr, 100% Usage"	1139		
+"1139 kWh/yr, 110% Usage"	1139	1.1	
+"748 kWh/yr, 90% Usage"	748	0.9	
+"748 kWh/yr, 100% Usage"	748		
+"748 kWh/yr, 110% Usage"	748	1.1	
+"727 kWh/yr, 90% Usage"	727	0.9	
+"727 kWh/yr, 100% Usage"	727		
+"727 kWh/yr, 110% Usage"	727	1.1	
+"650 kWh/yr, 90% Usage"	650	0.9	
+"650 kWh/yr, 100% Usage"	650		
+"650 kWh/yr, 110% Usage"	650	1.1	
+"574 kWh/yr, 90% Usage"	574	0.9	
+"574 kWh/yr, 100% Usage"	574		
+"574 kWh/yr, 110% Usage"	574	1.1	
+"547 kWh/yr, 90% Usage"	547	0.9	
+"547 kWh/yr, 100% Usage"	547		
+"547 kWh/yr, 110% Usage"	547	1.1	
+"480 kWh/yr, 90% Usage"	480	0.9	
+"480 kWh/yr, 100% Usage"	480		
+"480 kWh/yr, 110% Usage"	480	1.1	
+"458 kWh/yr, 90% Usage"	458	0.9	
+"458 kWh/yr, 100% Usage"	458		
+"458 kWh/yr, 110% Usage"	458	1.1	
+"434 kWh/yr, 90% Usage"	434	0.9	
+"434 kWh/yr, 100% Usage"	434		
+"434 kWh/yr, 110% Usage"	434	1.1	
+"384 kWh/yr, 90% Usage"	384	0.9	
+"384 kWh/yr, 100% Usage"	384		
+"384 kWh/yr, 110% Usage"	384	1.1	
+"348 kWh/yr, 90% Usage"	348	0.9	
+"348 kWh/yr, 100% Usage"	348		
+"348 kWh/yr, 110% Usage"	348	1.1	
+"Detailed Example: ERI Reference 2006, 2-Bedroom Home"	673		
+"Detailed Example: ERI Reference 2006, 3-Bedroom Home"	691		
+"Detailed Example: ERI Reference 2006, 4-Bedroom Home"	709		
+"Detailed Example: 650 kWh/yr, Conditioned Basement"	650		basement - conditioned
+"Detailed Example: 650 kWh/yr, Unconditioned Basement"	650		basement - unconditioned
+"Detailed Example: 650 kWh/yr, Garage"	650		garage
+			
+# Rated Annual Consumption: The EnergyGuide rated annual energy consumption for the refrigerator.			
+"# Usage Multiplier: Multiplier on the refrigerator energy usage that can reflect, e.g., high/low usage occupants."			
+# Location: The space type where the refrigerator is located.			

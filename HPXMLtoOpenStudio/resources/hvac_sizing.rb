@@ -2790,7 +2790,7 @@ module HVACSizing
 
       entering_temp = clg_ap.design_chw
       hvac_cooling_speed = get_nominal_speed(clg_ap, true)
-      if [HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeStandard].include? hpxml_header.ground_to_air_heat_pump_model_type
+      if [HPXML::GroundToAirHeatPumpModelTypeStandard].include? hpxml_header.ground_to_air_heat_pump_model_type
         # TODO: replace hardcoded bypass factor and curve?
         gshp_coil_bf = 0.0806
         gshp_coil_bf_ft_spec = [1.21005458, -0.00664200, 0.00000000, 0.00348246, 0.00000000, 0.00000000]
@@ -2815,7 +2815,7 @@ module HVACSizing
         hvac_sizings.Cool_Capacity = cool_cap_design / total_cap_curve_value
         hvac_sizings.Cool_Capacity_Sens = hvac_sizings.Cool_Capacity * clg_ap.cool_rated_shr_gross
         hvac_sizings.Cool_Airflow = calc_airflow_rate(:clg, hvac_cooling, hvac_sizings.Cool_Capacity, hpxml_bldg)
-      elsif [HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeExperimental].include? hpxml_header.ground_to_air_heat_pump_model_type
+      elsif [HPXML::GroundToAirHeatPumpModelTypeExperimental].include? hpxml_header.ground_to_air_heat_pump_model_type
         total_cap_curve_value = MathTools.biquadratic(UnitConversions.convert(mj.cool_indoor_wetbulb, 'F', 'C'), UnitConversions.convert(entering_temp, 'F', 'C'), clg_ap.cool_cap_ft_spec[hvac_cooling_speed])
         calculate_cooling_capacities(mj, clg_ap, hvac_sizings, hpxml_bldg.header.manualj_humidity_setpoint, total_cap_curve_value, undersize_limit, oversize_limit, HVAC::GroundSourceCoolRatedIDB, HVAC::GroundSourceCoolRatedIWB, hvac_cooling, hpxml_bldg)
       end
@@ -2886,7 +2886,7 @@ module HVACSizing
       hvac_sizings.Heat_Capacity = hvac_sizings.Heat_Load / htg_cap_curve_value
       hvac_sizings.Heat_Capacity_Supp = hvac_sizings.Heat_Load_Supp
       if hvac_sizings.Cool_Capacity > 0
-        if (hpxml_header.ground_to_air_heat_pump_model_type == HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeStandard) && (hvac_heating.compressor_type == HPXML::HVACCompressorTypeSingleStage)
+        if (hpxml_header.ground_to_air_heat_pump_model_type == HPXML::GroundToAirHeatPumpModelTypeStandard) && (hvac_heating.compressor_type == HPXML::HVACCompressorTypeSingleStage)
           # For single stage compressor, when heating capacity is much larger than cooling capacity,
           # in order to avoid frequent cycling in cooling mode, heating capacity is derated to 75%.
           # Currently only keep it for standard ghp models
@@ -3852,7 +3852,7 @@ module HVACSizing
   # @param hvac_heating_speed [Integer] Array index of the nominal speed
   # @return [Double] Heating capacity fraction of nominal
   def self.calc_gshp_htg_curve_value(htg_ap, hpxml_header, db_temp, w_temp, hvac_heating_speed)
-    if (hpxml_header.ground_to_air_heat_pump_model_type == HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeStandard)
+    if (hpxml_header.ground_to_air_heat_pump_model_type == HPXML::GroundToAirHeatPumpModelTypeStandard)
 
       # Reference conditions in thesis with largest capacity:
       # See Appendix B Figure B.3 of  https://hvac.okstate.edu/sites/default/files/pubs/theses/MS/27-Tang_Thesis_05.pdf
@@ -3862,7 +3862,7 @@ module HVACSizing
       w_temp = UnitConversions.convert(w_temp, 'F', 'K')
 
       htg_cap_curve_value = MathTools.quadlinear(db_temp / ref_temp, w_temp / ref_temp, 1.0, 1.0, htg_ap.heat_cap_curve_spec[hvac_heating_speed])
-    elsif (hpxml_header.ground_to_air_heat_pump_model_type == HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeExperimental)
+    elsif (hpxml_header.ground_to_air_heat_pump_model_type == HPXML::GroundToAirHeatPumpModelTypeExperimental)
       htg_cap_curve_value = MathTools.biquadratic(UnitConversions.convert(db_temp, 'F', 'C'), UnitConversions.convert(w_temp, 'F', 'C'), htg_ap.heat_cap_ft_spec[hvac_heating_speed])
     end
 

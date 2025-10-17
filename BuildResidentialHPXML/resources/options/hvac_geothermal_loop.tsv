@@ -1,0 +1,18 @@
+Option Name	Configuration	Borefield Configuration	Loop Flow [gpm]	Boreholes Count [#]	Boreholes Length [ft]	Boreholes Spacing [ft]	Boreholes Diameter [in]	Grout Type	Pipe Type	Pipe Diameter	Pipe Shank Spacing [in]
+Default											
+"Vertical Loop, Enhanced Grout"	vertical							thermally enhanced			
+"Vertical Loop, Enhanced Pipe"	vertical								thermally enhanced		
+"Vertical Loop, Enhanced Grout & Pipe"	vertical							thermally enhanced	thermally enhanced		
+"Detailed Example: Lopsided U Configuration, 10 Boreholes"	vertical	Lopsided U	10	9	315	16.4	5.9	standard	standard	"1"" pipe"	2.5
+											
+# Configuration: Configuration of the geothermal loop for ground-to-air heat pumps.											
+# Borefield Configuration: Borefield configuration of the geothermal loop.											
+# Loop Flow: Water flow rate through the geothermal loop.											
+# Boreholes Count: Number of boreholes.											
+# Boreholes Length: Average length of each vertical borehole.											
+# Boreholes Spacing: Distance between boreholes.											
+# Boreholes Diameter: Diameter of each borehole.											
+# Grout Type: Type of grout.											
+# Pipe Type: Type of pipe.											
+# Pipe Diameter: Diameter of the pipe.											
+# Pipe Shank Spacing: Center-to-center distance between two branches of a vertical U-tube.											
