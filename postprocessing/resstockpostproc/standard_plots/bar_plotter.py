@@ -50,6 +50,9 @@ class BarPlotter(BasePlotter):
                     orientation="h",
                 )
         elif plot_spec.quantity_type == QuantityType.prevalence:
+            upgrades = data["upgrade_name"].unique(maintain_order=True).to_list()
+            upgrade_to_use = upgrades[-1]  # Use only the last upgrade scenario
+            data = data.filter(pl.col("upgrade_name") == upgrade_to_use)
             return self.create_bar_plot(
                 data=data,
                 quantity_column="prevalence",
@@ -59,6 +62,7 @@ class BarPlotter(BasePlotter):
                 quantity_title=self.get_quantity_title(plot_spec),
                 first_category_title=plot_spec.quantity,
                 orientation="h",
+                title_text=f"Prevalence in Upgrade Scenario: {upgrade_to_use}",
             )
 
         # For simple bars, the quantity is the x-axis
@@ -84,6 +88,7 @@ class BarPlotter(BasePlotter):
         first_category_title: str,
         second_category_title: str | None = None,
         orientation: Literal["h", "v"] = "h",
+        title_text: str = "",
     ) -> go.Figure:
         """
         Creates a simple, grouped or stacked bar plot.
@@ -208,7 +213,7 @@ class BarPlotter(BasePlotter):
         fig = go.Figure(
             data=traces[::-1] if orientation == "h" else traces,
             layout=go.Layout(
-                title_text="",
+                title_text=title_text,
                 barmode="relative" if is_stacked else "group",  # <-- key change
                 xaxis_title=xtitle,
                 yaxis_title=ytitle,

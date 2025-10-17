@@ -90,4 +90,5 @@ keep_last_keys = [
     "No",
     "Never",
     "Not Available",
+    "No Constraint"
 ]
