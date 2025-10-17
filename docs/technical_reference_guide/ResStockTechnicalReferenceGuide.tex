@@ -1,6 +1,6 @@
 \documentclass[]{nrel}
 
-\usepackage{lipsum} 
+\usepackage{lipsum}
 \usepackage{longtable}
 \usepackage{ragged2e}
 \usepackage{comment}
@@ -35,11 +35,11 @@
 % -----------------------------------
 \title{ResStock Technical Reference Documentation, Active Development Version}
 
-\author{Janet Reyna} 
+\author{Janet Reyna}
 \author{Anthony Fontanini}
 \author{Andrew Parker}
-\author{Elaina Present} 
-\author{Lixi Liu} 
+\author{Elaina Present}
+\author{Lixi Liu}
 
 \author{Rajendra Adhikari}
 \author{Carlo Bianchi}
@@ -86,7 +86,7 @@ The primary objective of ResStock is to empower decision makers to make data-dri
 
 \section*{How Is ResStock Accessed?}
 
-The ResStock model and its published datasets are foundational for a wide range of stakeholders. Professionals and researchers have several pathways for using ResStock data and insights. They can review published fact sheets and reports based upon ResStock data. They can use a web-based visualization platform to interact with the dataset of annual and timeseries results, or they can use a simple spreadsheet-type analysis to interact with annual energy consumption results and aggregated timeseries load profiles. If users want to go deeper, they can even use the raw simulation results dataset, which may require big-data skills and cloud or high-performance computing assets. 
+The ResStock model and its published datasets are foundational for a wide range of stakeholders. Professionals and researchers have several pathways for using ResStock data and insights. They can review published fact sheets and reports based upon ResStock data. They can use a web-based visualization platform to interact with the dataset of annual and timeseries results, or they can use a simple spreadsheet-type analysis to interact with annual energy consumption results and aggregated timeseries load profiles. If users want to go deeper, they can even use the raw simulation results dataset, which may require big-data skills and cloud or high-performance computing assets.
 
 \section*{Impact}
 
@@ -101,7 +101,7 @@ The purpose of this document is to provide a central technical reference of the 
 \chapter{Acknowledgments}
 Since initial development over a decade ago, ResStock has had dozens of researchers contribute to the structure, features, theory, and publication of data. In particular, we'd like to acknowledge Craig Christensen, who was instrumental in the initial model development. Additionally, we'd like to acknowledge our peer reviewers on this document: Andrew Parker and Jon Winkler. Additionally, we'd like to acknowledge U.S. Department of Energy (DOE) staff who have supported and guided ResStock development, including Dale Hoffmeyer, Amir Roth, Gretchen Maia, Asa Foss, Amy Royden-Bloom, and Eric Werling of the Building Technologies Office; Joan Glickman of the Office of State and Community Energy Programs; John Agan, Jenah Zweig, and Erin Boyd of the Office of Policy; and Robert Weber of the Bonneville Power Administration. Additionally, ResStock has been improved upon through work for parties outside of DOE, most notably the Los Angeles Department of Water and Power. We also would like to acknowledge the work of the EnergyPlus\textsuperscript{\textregistered} whole-building energy modeling tool, the OpenStudio\textsuperscript{\textregistered} SDK, and the OpenStudio-HPXML schema implementation, which provide the foundational model underpinnings of energy simulation in ResStock and which are the result of years of hard work by many people across DOE, the national laboratories, and the private sector.
 
-This work was authored by the National Renewable Energy Laboratory, operated by Alliance for Sustainable Energy, LLC, for the U.S. Department of Energy (DOE) under Contract No. DE-AC36-08GO28308. Funding provided by U.S. Department of Energy Office of Energy Efficiency and Renewable Energy Building Technologies Office. The views expressed in the article do not necessarily represent the views of the DOE or the U.S. Government. 
+This work was authored by the National Renewable Energy Laboratory, operated by Alliance for Sustainable Energy, LLC, for the U.S. Department of Energy (DOE) under Contract No. DE-AC36-08GO28308. Funding provided by U.S. Department of Energy Office of Energy Efficiency and Renewable Energy Building Technologies Office. The views expressed in the article do not necessarily represent the views of the DOE or the U.S. Government.
 
 A portion of this research was performed using computational resources sponsored by the U.S. Department of Energy's Office of Energy Efficiency and Renewable Energy and located at the National Renewable Energy Laboratory.
 
@@ -113,15 +113,20 @@ A portion of this research was performed using computational resources sponsored
 \begin{center}
 \begin{tabular}{ |c || c c c c|}
 \hline
- Technical Reference Documentation & Standard Data Release & ResStock & BuildStock Batch  & OpenStudio-HPXML \\ \hline \hline
-Draft, v4.0.0, October 2025 & \href{https://resstock.nrel.gov/datasets}{2025 Release 1} & \href{https://github.com/NREL/resstock/tree/sdr_2025_release_1}{sdr_2025_Release_1} &  \href{https://github.com/NREL/buildstockbatch} {develop} & \href{https://github.com/NREL/OpenStudio-HPXML/releases/tag/v1.10.0}{v1.10.0} \\\hline
- v3.3.0, July 2025 & \href{https://resstock.nrel.gov/datasets}{2024.2} & \href{https://github.com/NREL/resstock/tree/v3.3.0}{v3.3.0} &  \href{https://github.com/NREL/buildstockbatch/tree/v2023.10.0} {v2023.10.0} & \href{https://github.com/NREL/OpenStudio-HPXML/tree/v1.8.1}{v1.8.0} \\\hline
- 
+    Technical Reference Documentation & Standard Data Release & ResStock & BuildStock Batch  & OpenStudio-HPXML \\ \hline \hline
+Draft, v4.0.0, October 2025 & \href{https://resstock.nrel.gov/datasets}{2025 Release 1} &
+\href{https://github.com/NREL/resstock/tree/sdr_2025_release_1}{\texttt{sdr\_2025\_Release\_1}} &
+\href{https://github.com/NREL/buildstockbatch}{develop} &
+\href{https://github.com/NREL/OpenStudio-HPXML/releases/tag/v1.10.0}{v1.10.0} \\\hline
+v3.3.0, July 2025 & \href{https://resstock.nrel.gov/datasets}{2024.2} &
+\href{https://github.com/NREL/resstock/tree/v3.3.0}{v3.3.0} &
+\href{https://github.com/NREL/buildstockbatch/tree/v2023.10.0}{v2023.10.0} &
+\href{https://github.com/NREL/OpenStudio-HPXML/tree/v1.8.1}{v1.8.1} \\\hline
 \end{tabular}
 \end{center}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{List of Acronyms}
 
 \begin{acronym}
