@@ -15,6 +15,7 @@ __New Features__
 - Minor PV improvements:
   - Allow `PVSystem/AttachedToInverter` to be omitted (unless there are multiple `Inverter` elements).
   - Allow multiple inverters with different efficiencies and use a weighted-average efficiency in the model (previously threw an error)
+- For storm windows, removes minimum base window U-factor limit and throws a warning instead if the base window U-factor is below 0.3.
 - BuildResidentialHPXML measure:
   - Automatically adjusts garage dimensions for dwelling units with small footprints to avoid errors.
 

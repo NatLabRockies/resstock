@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>986e6f61-503d-403e-85ae-699764aea0a6</version_id>
-  <version_modified>2025-10-07T21:33:51Z</version_modified>
+  <version_id>8a86cd75-6628-4e73-bbfe-381e64e9a7e1</version_id>
+  <version_modified>2025-10-10T18:19:41Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -192,7 +192,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>9117AAFC</checksum>
+      <checksum>B532C73E</checksum>
     </file>
     <file>
       <filename>airflow.rb</filename>
@@ -222,7 +222,7 @@
       <filename>constructions.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>6EC304A4</checksum>
+      <checksum>D660B161</checksum>
     </file>
     <file>
       <filename>data/Xing_okstate_0664D_13659_Table_A-3.csv</filename>
@@ -372,7 +372,7 @@
       <filename>geometry.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>CD6C3011</checksum>
+      <checksum>07196F97</checksum>
     </file>
     <file>
       <filename>hotwater_appliances.rb</filename>
@@ -420,7 +420,7 @@
       <filename>hvac_sizing.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>30537BFF</checksum>
+      <checksum>A225F110</checksum>
     </file>
     <file>
       <filename>internal_gains.rb</filename>
@@ -744,7 +744,7 @@
       <filename>test_enclosure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>7BC67BEB</checksum>
+      <checksum>1AF9483F</checksum>
     </file>
     <file>
       <filename>test_generator.rb</filename>
@@ -810,7 +810,7 @@
       <filename>test_validation.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>A6808E1C</checksum>
+      <checksum>AC7D67C4</checksum>
     </file>
     <file>
       <filename>test_vehicle.rb</filename>
