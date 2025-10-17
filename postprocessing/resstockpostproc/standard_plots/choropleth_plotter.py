@@ -241,6 +241,12 @@ class ChoroplethPlotter(BasePlotter):
             }
         )
         self.theme.apply_layout(fig)
+        preferred_height = 620 if level == "county" else 540
+        current_height = fig.layout.height or 0
+        if current_height < preferred_height:
+            # Ensure the geographic viewport is tall enough so the map is not vertically clipped.
+            fig.update_layout(height=preferred_height)
+        self._stretch_geo_height(fig)
         fig.update_layout(margin={"l": 10, "r": 70, "t": 90, "b": 40})
         return fig
 
@@ -412,6 +418,50 @@ class ChoroplethPlotter(BasePlotter):
             "Number of models: %{customdata[1]:,}"
             "<extra></extra>"
         )
+
+    @staticmethod
+    def _stretch_geo_height(fig: go.Figure, padding: float = 0.02) -> None:
+        """Expand geo subplot domains vertically so maps are not squashed."""
+        layout_dict = fig.to_dict().get("layout", {})
+        geo_entries = [
+            (name, data)
+            for name, data in layout_dict.items()
+            if name.startswith("geo") and isinstance(data, dict) and "domain" in data
+        ]
+        if not geo_entries:
+            return
+
+        y_domains: set[tuple[float, float]] = set()
+        for _, entry in geo_entries:
+            domain = entry.get("domain")
+            if not isinstance(domain, dict):
+                continue
+            y_vals = domain.get("y")
+            if (
+                isinstance(y_vals, (list, tuple))
+                and len(y_vals) == 2
+                and all(isinstance(val, (int, float)) for val in y_vals)
+            ):
+                y_domains.add((float(y_vals[0]), float(y_vals[1])))
+        if len(y_domains) != 1:
+            return
+
+        current_y = next(iter(y_domains), ())
+        if not current_y:
+            return
+        span = current_y[1] - current_y[0]
+        desired_span = 1.0 - (padding * 2)
+        if span >= desired_span - 1e-6:
+            return
+
+        for name, _ in geo_entries:
+            geo = getattr(fig.layout, name, None)
+            if geo is None or getattr(geo, "domain", None) is None:
+                continue
+            domain = geo.domain
+            x_domain = list(domain.x) if domain.x else [0.0, 1.0]
+            # Stretch the y-domain while preserving horizontal placement.
+            geo.update(domain={"x": x_domain, "y": [padding, 1.0 - padding]})
 
     def _build_text_labels(
         self,

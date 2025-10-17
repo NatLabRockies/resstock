@@ -23,14 +23,14 @@ class PlotSpec(BaseModel):
 
     building_inclusion: BuildingInclusion = Field(..., description="all / applied_only")
     vacancy_inclusion: VacancyInclusion = Field(..., description="all / occupied_only")
-    quantity_type: QuantityType = Field(..., description="absolute / savings / percent_savings / model_count")
+    quantity_type: QuantityType = Field(
+        ..., description="absolute / savings / percent_savings / model_count / prevalence"
+    )
     aggregation_type: AggregationType = Field(..., description="total or average")
     visualization_type: VizType = Field(..., alias="visualization_type")
     group_by: str | None = Field(default=None, description="Column to facet/group by.")
     quantity: str | QuantityGroup = Field(..., description="Column(s) to visualise.")
-    quantity_group_name: str = Field(
-        ..., description="Name of the quantity group - used when quantity is part of group"
-    )
+    quantity_group_name: str = Field(..., description="Name of the quantity group - used when quantity is part of group")
     upgrade: int | None = Field(default=None, description="Upgrade to visualise. Can be None for all.")
 
     @field_validator("quantity")
@@ -46,7 +46,7 @@ class PlotSpec(BaseModel):
         cls, quantity_type: QuantityType, aggregation_type: AggregationType
     ) -> list[VizType]:
         """Return list of valid value types for the given visualization type."""
-        if quantity_type in [QuantityType.model_count]:
+        if quantity_type in [QuantityType.model_count, QuantityType.prevalence]:
             return [VizType.bar, VizType.choropleth]
         if aggregation_type in [AggregationType.distribution]:
             return [VizType.box, VizType.hist]
@@ -54,7 +54,7 @@ class PlotSpec(BaseModel):
 
     @classmethod
     def get_valid_aggregation_types(cls, quantity_type: QuantityType) -> list[AggregationType]:
-        if quantity_type in [QuantityType.model_count]:
+        if quantity_type in [QuantityType.model_count, QuantityType.prevalence]:
             return [AggregationType.total]
         if quantity_type in [QuantityType.percent_savings]:
             return [AggregationType.average, AggregationType.distribution]
@@ -74,6 +74,8 @@ class PlotSpec(BaseModel):
             return error
         if self.aggregation_type == AggregationType.total and self.quantity_type == QuantityType.percent_savings:
             return "Percent savings can only be aggregated as weighted average"
+        if self.quantity_type == QuantityType.prevalence and not isinstance(self.quantity, str):
+            return "Prevalence plots require selecting a single categorical column."
         if self.visualization_type == VizType.box and not isinstance(self.quantity, str) and self.group_by:
             return "Box plot can only be generated from stacked quantities when group_by is None."
         if self.visualization_type == VizType.heatmap and not isinstance(self.quantity, QuantityGroup):

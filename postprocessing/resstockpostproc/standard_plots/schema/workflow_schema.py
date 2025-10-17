@@ -46,6 +46,7 @@ class QuantityType(str, Enum):
     savings = "savings"  # pre-aggregated mean across simulation rows
     percent_savings = "percent_savings"  # percentage savings compared to baseline
     model_count = "model_count"
+    prevalence = "prevalence"  # percentage of models with given characteristic
 
 
 class AggregationType(str, Enum):

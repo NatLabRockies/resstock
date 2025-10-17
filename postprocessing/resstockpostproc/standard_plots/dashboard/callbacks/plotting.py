@@ -35,19 +35,40 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
         Input("quantity-group", "value"),
         Input("viz-type", "value"),
         Input("group-by", "value"),
+        Input("quantity-type", "value"),
+        Input("run-folder", "value"),
         State("quantity", "value"),
     )
     def _update_quantity_dd(
         qgroup_name: str,
         viz_type_val: str,
         group_by_val: str,
+        quantity_type_val: str,
+        run_folder_val: str,
         current_val: str | None,
     ):
+        try:
+            qtype = QuantityType(quantity_type_val)
+        except ValueError:
+            raise PreventUpdate
+
+        viz_type = VizType(viz_type_val)
+
+        if qtype == QuantityType.prevalence:
+            if not run_folder_val:
+                raise PreventUpdate
+            categorical_cols = ctx.list_categorical_quantities(run_folder_val)
+            if not categorical_cols:
+                return [], None
+            options = [{"label": col, "value": col} for col in categorical_cols]
+            valid_values = {opt["value"] for opt in options}
+            default_value = current_val if current_val in valid_values else options[0]["value"]
+            return options, default_value
+
         if not qgroup_name:
             raise PreventUpdate
 
         qg = quantity_groups[qgroup_name]
-        viz_type = VizType(viz_type_val)
 
         options: list[dict[str, Any]] = []
         options.extend({"label": c, "value": c} for c in qg.constituents)

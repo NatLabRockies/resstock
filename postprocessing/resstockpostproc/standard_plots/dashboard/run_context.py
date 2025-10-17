@@ -5,6 +5,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+import polars as pl  # type: ignore
+
 from resstockpostproc.standard_plots.orchestrator import PlotOrchestrator
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
 
@@ -19,6 +21,8 @@ class RunContext:
     quantity_groups: dict[str, QuantityGroup]
     plots_root_folder: str | None = None
     _orchestrators: dict[str, PlotOrchestrator] = field(default_factory=dict)
+    _categorical_columns: dict[str, list[str]] = field(default_factory=dict)
+    _quantity_categories: dict[tuple[str, str], list[str]] = field(default_factory=dict)
 
     @classmethod
     def from_environment(cls, workflow_yaml: Path, plots_root_folder: str | None = None) -> "RunContext":
@@ -79,3 +83,83 @@ class RunContext:
         self._orchestrators[run_folder] = PlotOrchestrator(workflow, overwrite=False)
         return self._orchestrators[run_folder]
 
+    def list_categorical_quantities(self, run_folder: str) -> list[str]:
+        """Return cached list of categorical columns suitable for prevalence plots."""
+        if run_folder in self._categorical_columns:
+            return self._categorical_columns[run_folder]
+
+        orchestrator = self.get_orchestrator(run_folder)
+        if orchestrator is None:
+            return []
+
+        lf = orchestrator.processor.combined_df
+        schema = lf.collect_schema()
+
+        def _is_numeric(dtype: pl.DataType) -> bool:
+            return (
+                dtype.is_numeric()
+                if hasattr(dtype, "is_numeric")
+                else pl.datatypes.is_numeric_dtype(dtype)
+            )
+
+        excluded_columns = {
+            "upgrade",
+            "upgrade_name",
+            "bldg_id",
+            "weight",
+            "applicability",
+        }
+
+        candidate_cols = [
+            name
+            for name, dtype in schema.items()
+            if name not in excluded_columns
+            and not _is_numeric(dtype)
+            and dtype != pl.Boolean
+        ]
+
+        if not candidate_cols:
+            self._categorical_columns[run_folder] = []
+            return []
+
+        uniques = (
+            lf.select([pl.col(col).n_unique().alias(col) for col in candidate_cols])
+            .collect()
+            .row(0)
+        )
+
+        categorical_cols = [
+            col
+            for col, count in zip(candidate_cols, uniques)
+            if isinstance(count, (int, float)) and 1 < count <= 100
+        ]
+        categorical_cols.sort()
+
+        self._categorical_columns[run_folder] = categorical_cols
+        return categorical_cols
+
+    def list_quantity_categories(self, run_folder: str, column: str) -> list[str]:
+        """Return cached list of category values for the requested column."""
+        cache_key = (run_folder, column)
+        if cache_key in self._quantity_categories:
+            return self._quantity_categories[cache_key]
+
+        orchestrator = self.get_orchestrator(run_folder)
+        if orchestrator is None:
+            return []
+
+        lf = orchestrator.processor.combined_df
+        try:
+            categories_df = (
+                lf.select(pl.col(column))
+                .drop_nulls()
+                .unique(maintain_order=True)
+                .collect()
+            )
+            categories = categories_df[column].to_list()
+        except Exception:
+            categories = []
+
+        categories = [cat for cat in categories if cat is not None][:100]
+        self._quantity_categories[cache_key] = categories
+        return categories

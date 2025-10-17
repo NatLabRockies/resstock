@@ -34,13 +34,20 @@ def build_plot_spec(
     """Construct a PlotSpec instance from UI selections."""
 
     viz_type = VizType(viz_type_val)
+    qtype_enum = QuantityType(quantity_type)
     group_by = group_by_val if group_by_val != "__none__" else None
 
     quantity: str | QuantityGroup
-    if quantity_val == "__group_stacked__":
+    if qtype_enum == QuantityType.prevalence:
+        quantity = quantity_val
+    elif quantity_val == "__group_stacked__":
         quantity = ctx.quantity_groups[qgroup_name]
     else:
         quantity = quantity_val
+
+    quantity_group_name = qgroup_name
+    if qtype_enum == QuantityType.prevalence:
+        quantity_group_name = quantity_val
 
     if building_incl == "__all__":
         upg_incl_enum = BuildingInclusion.all
@@ -58,12 +65,12 @@ def build_plot_spec(
     return PlotSpec(
         building_inclusion=upg_incl_enum,
         vacancy_inclusion=VacancyInclusion(vacancy_incl),
-        quantity_type=QuantityType(quantity_type),
+        quantity_type=qtype_enum,
         aggregation_type=AggregationType(aggregation_type),
         visualization_type=viz_type,
         group_by=group_by,
         quantity=quantity,
-        quantity_group_name=qgroup_name,
+        quantity_group_name=quantity_group_name,
         upgrade=upgrade_num,
     )
 
@@ -116,4 +123,3 @@ def apply_facet_orientation(fig: Figure, vertical: bool, wrap_width: int | None 
         if extra_top > current_margin:
             existing_margin: dict[str, Any] = fig.layout.margin.to_plotly_json() if fig.layout.margin else {}
             fig.update_layout(margin={**existing_margin, "t": extra_top})
-

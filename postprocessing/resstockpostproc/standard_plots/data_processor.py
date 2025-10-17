@@ -134,7 +134,7 @@ class DataProcessor:
         pl.LazyFrame
             A LazyFrame where the requested ``quantities`` columns have been transformed as requested.
         """
-        if quantity_type in [QuantityType.absolute, QuantityType.model_count]:
+        if quantity_type in [QuantityType.absolute, QuantityType.model_count, QuantityType.prevalence]:
             return combined_df
 
         if quantity_type in [QuantityType.savings, QuantityType.percent_savings]:
@@ -204,8 +204,13 @@ class DataProcessor:
         if plot_spec.quantity_type in [QuantityType.savings, QuantityType.percent_savings]:
             # baseline should not be included when plotting savings
             combined_df = combined_df.filter(pl.col(UPGRADE_COL) != 0)
-
-        if plot_spec.visualization_type == VizType.box:
+        if plot_spec.quantity_type == QuantityType.prevalence:
+            if len(quantities) != 1:
+                raise ValueError("Prevalence plots require a single categorical quantity.")
+            return self.prepare_data_for_prevalence_plot(
+                combined_df, quantities[0], plot_spec.group_by,
+            )
+        elif plot_spec.visualization_type == VizType.box:
             if not isinstance(plot_spec.quantity, str):
                 combined_df = combined_df.unpivot(
                     quantities,
@@ -502,6 +507,39 @@ class DataProcessor:
                 pl.col("upper_whisker").cast(pl.Float64),
             ]
         )
+    def prepare_data_for_prevalence_plot(
+        self,
+        combined_df: pl.LazyFrame,
+        quantity: str,
+        group_by: str | None,
+    ) -> pl.DataFrame:
+        """
+        Prepare data for prevalence plotting by grouping and counting
+
+        Args:
+            combined_df: Combined DataFrame containing all data
+            quantity: Quantity to plot
+            group_by: Column to group by
+
+        Returns:
+            DataFrame prepared for prevalence plotting
+        """
+        grouping_cols = [UPGRADE_COL, UPGRADE_NAME_COL]
+        if group_by:
+            grouping_cols.append(group_by)
+        
+        all_groups_df = combined_df.select(pl.col(grouping_cols)).unique()
+        all_cats_df = combined_df.select(pl.col(quantity)).unique().rename({quantity: quantity})
+        full_df = all_groups_df.join(all_cats_df, how="cross")
+        count_df = combined_df.group_by([*grouping_cols, quantity]).agg(pl.count().alias("model_count"))
+        count_df = full_df.join(count_df, on=[*grouping_cols, quantity], how="left").fill_null(0)
+        group_total_df = combined_df.group_by(grouping_cols).agg(pl.count().alias("total_count"))
+        count_df = count_df.join(group_total_df, on=grouping_cols)
+        count_df = count_df.with_columns(
+            (pl.col("model_count") / pl.col("total_count") * 100).round(2).alias("prevalence")
+        ).drop("total_count")
+        return  human_sort(count_df, [*grouping_cols, quantity]).collect()
+
 
     def prepare_data_for_bar_plot(
         self,

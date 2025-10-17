@@ -72,6 +72,9 @@ class BasePlotter(ABC):
         if plot_spec.quantity_type == QuantityType.model_count:
             type_suffix = ""
             unit_suffix = ""
+        elif plot_spec.quantity_type == QuantityType.prevalence:
+            type_suffix = " Prevalence"
+            unit_suffix = " (%)"
         elif plot_spec.quantity_type == QuantityType.percent_savings:
             type_suffix = " Percentage Savings"
             unit_suffix = ""

@@ -149,6 +149,7 @@ quantity_types:
   - savings
   - percent_savings
   - model_count
+  - prevalence
 
 aggregation_types:
   - total

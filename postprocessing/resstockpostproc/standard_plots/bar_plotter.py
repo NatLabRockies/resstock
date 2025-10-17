@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 import polars as pl
 
 from resstockpostproc.standard_plots.base_plotter import BasePlotter
-from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
+from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, QuantityType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 from typing import Literal
 
@@ -49,6 +49,17 @@ class BarPlotter(BasePlotter):
                     first_category_title="Upgrade Scenario",
                     orientation="h",
                 )
+        elif plot_spec.quantity_type == QuantityType.prevalence:
+            return self.create_bar_plot(
+                data=data,
+                quantity_column="prevalence",
+                first_category_column=plot_spec.quantity,
+                second_category_column=plot_spec.group_by,
+                second_category_title=self.format_label(plot_spec.group_by) if plot_spec.group_by else "",
+                quantity_title=self.get_quantity_title(plot_spec),
+                first_category_title=plot_spec.quantity,
+                orientation="h",
+            )
 
         # For simple bars, the quantity is the x-axis
         return self.create_bar_plot(
@@ -106,12 +117,12 @@ class BarPlotter(BasePlotter):
                     x_data = list(reversed(data[qcol]))
                     y_data = list(reversed(data[first_category_column]))
                     xtitle, ytitle = quantity_title, first_category_title
-                    colors = [self.theme.upgrade_palette.get(y) for y in y_data]
+                    colors = [self.theme.upgrade_palette.get(y, "#626D72") for y in y_data]
                 else:
                     x_data = list(reversed(data[first_category_column]))
                     y_data = list(reversed(data[qcol]))
                     xtitle, ytitle = first_category_title, quantity_title
-                    colors = [self.theme.upgrade_palette.get(x) for x in x_data]
+                    colors = [self.theme.upgrade_palette.get(x, "#626D72") for x in x_data]
 
                 if len(quantity_cols) > 1:
                     marker_pattern_shape = self.theme.end_use_to_pattern.get(qcol, None)

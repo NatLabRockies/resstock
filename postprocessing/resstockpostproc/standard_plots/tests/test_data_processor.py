@@ -678,3 +678,30 @@ def test_missing_quantities_are_filled(combined_df: pl.LazyFrame, caplog: pytest
         "is not available and is not a defined group" in rec.getMessage()
         for rec in caplog.records
     )
+
+
+def test_prepare_data_for_prevalence(processor: DataProcessor):
+    """Prevalence plots should report percentage shares per category."""
+    spec = PlotSpec(
+        building_inclusion=BuildingInclusion.all,
+        vacancy_inclusion=VacancyInclusion.all,
+        quantity_type=QuantityType.prevalence,
+        aggregation_type=AggregationType.total,
+        visualization_type=VizType.bar,
+        group_by=None,
+        quantity="in.heating_fuel",
+        quantity_group_name="in.heating_fuel",
+        upgrade=2,
+    )
+
+    df = processor.prepare_data_for_plot(spec)
+    assert df.shape[0] == 2  # two heating fuel categories
+    assert set(df["in.heating_fuel"].to_list()) == {"Electric", "Gas"}
+
+    prevalence_map = dict(zip(df["in.heating_fuel"].to_list(), df["prevalence"].to_list()))
+    model_counts = dict(zip(df["in.heating_fuel"].to_list(), df["model_count"].to_list()))
+
+    assert prevalence_map["Electric"] == pytest.approx(50.0)
+    assert prevalence_map["Gas"] == pytest.approx(50.0)
+    assert model_counts["Electric"] == 2
+    assert model_counts["Gas"] == 2
