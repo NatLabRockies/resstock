@@ -33,6 +33,26 @@ def get_property_names(tsv_file_name)
   return property_names
 end
 
+# Returns the list of property units specified in the given TSV resource file.
+#
+# @param tsv_file_name [String] Name of the TSV resource file
+# @return [OpenStudio::StringVector] List of property units, in the same order as the property names
+def get_property_units(tsv_file_name)
+  csv_data = get_csv_data_for_tsv_file(tsv_file_name)
+  property_units = OpenStudio::StringVector.new
+  csv_data.headers.each do |header|
+    next if header == 'Option Name'
+
+    if header.include?('[') && header.include?(']') # get units
+      header = header[header.index('[') + 1..header.index(']') - 1].strip
+    else
+      header = ''
+    end
+    property_units << header
+  end
+  return property_units
+end
+
 # Updates the args hash with key-value detailed properties for the
 # given option name and TSV resource file.
 #

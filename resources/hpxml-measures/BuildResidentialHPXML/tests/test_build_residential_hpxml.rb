@@ -324,6 +324,8 @@ class BuildResidentialHPXMLTest < Minitest::Test
 
       # Check that every property has a description at the end of the file
       property_names = get_property_names(tsv_name).to_a
+      property_units = get_property_units(tsv_name).to_a
+      assert(property_names.size == property_units.size)
       comment_names = get_comment_rows(tsv_name).to_a
       puts "  Number of comments: #{comment_names.size}"
       assert_operator(property_names.size, :>, 0)
