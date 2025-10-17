@@ -21,7 +21,7 @@ module HVACSizing
 
     # Calculate individual design load components
     all_zone_loads, all_space_loads = init_loads(hpxml_bldg)
-    process_load_windows_skylights(mj, hpxml_bldg, all_zone_loads, all_space_loads)
+    process_load_windows_skylights(mj, runner, hpxml_bldg, all_zone_loads, all_space_loads)
     process_load_doors(mj, hpxml_bldg, all_zone_loads, all_space_loads)
     process_load_walls(mj, hpxml_bldg, all_zone_loads, all_space_loads)
     process_load_roofs(mj, hpxml_bldg, all_zone_loads, all_space_loads)
@@ -584,11 +584,12 @@ module HVACSizing
   # Calculates heating and cooling loads for windows & skylights.
   #
   # @param mj [MJValues] Object with a collection of misc Manual J values
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param all_zone_loads [Hash] Map of HPXML::Zones => DesignLoadValues object
   # @param all_space_loads [Hash] Map of HPXML::Spaces => DesignLoadValues object
   # @return [nil]
-  def self.process_load_windows_skylights(mj, hpxml_bldg, all_zone_loads, all_space_loads)
+  def self.process_load_windows_skylights(mj, runner, hpxml_bldg, all_zone_loads, all_space_loads)
     # Average cooling load factors (CLF) for windows/skylights WITHOUT internal shading (MJ8 Table 3D-3)
     clf_avg_nois = [0.24, 0.35, 0.38, 0.4, 0.48, 0.4, 0.38, 0.35, 0.24]
     clf_avg_nois_horiz = 0.68
@@ -726,7 +727,7 @@ module HVACSizing
 
       cnt45 = (get_mj_azimuth(window.azimuth) / 45.0).round.to_i
 
-      window_ufactor, window_shgc = Constructions.get_ufactor_shgc_adjusted_by_storms(window.storm_type, window.ufactor, window.shgc)
+      window_ufactor, window_shgc = Constructions.get_ufactor_shgc_adjusted_by_storms(runner, window.storm_type, window.ufactor, window.shgc)
       htg_htm = window_ufactor * mj.htd
       htg_loads = htg_htm * window.area
       all_zone_loads[zone].Heat_Windows += htg_loads
@@ -836,7 +837,7 @@ module HVACSizing
       cnt45 = (get_mj_azimuth(skylight.azimuth) / 45.0).round.to_i
       inclination_angle = UnitConversions.convert(Math.atan(roof.pitch / 12.0), 'rad', 'deg')
 
-      skylight_ufactor, skylight_shgc = Constructions.get_ufactor_shgc_adjusted_by_storms(skylight.storm_type, skylight.ufactor, skylight.shgc)
+      skylight_ufactor, skylight_shgc = Constructions.get_ufactor_shgc_adjusted_by_storms(runner, skylight.storm_type, skylight.ufactor, skylight.shgc)
 
       # Calculate U-effective by including curb/shaft impacts
       u_eff_skylight = skylight_ufactor

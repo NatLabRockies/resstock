@@ -1803,13 +1803,13 @@ If a storm window is specified, additional information is entered in ``StormWind
   ============================  ========  ======  ===========  ========  =======  ========================================================
 
   .. [#] GlassType choices are "clear" or "low-e".
-         The ``UFactor`` and ``SHGC`` of the window will be adjusted depending on the ``GlassType``, based on correlations derived using `data reported by PNNL <https://labhomes.pnnl.gov/documents/PNNL_24444_Thermal_and_Optical_Properties_Low-E_Storm_Windows_Panels.pdf>`_.
+         The ``UFactor`` and ``SHGC`` of the window will be adjusted depending on the ``GlassType``, based on correlations derived using `data reported by PNNL <https://www.pnnl.gov/main/publications/external/technical_reports/PNNL-24444.pdf>`_.
+         Note that the correlations may not be accurate for base windows with U-factors below 0.3 due to extrapolation.
 
          \- **clear storm windows**: U-factor = U-factor of base window - (0.6435 * U-factor of base window - 0.1533); SHGC = 0.9 * SHGC of base window
 
          \- **low-e storm windows**: U-factor = U-factor of base window - (0.766 * U-factor of base window - 0.1532); SHGC = 0.8 * SHGC of base window
 
-         Note that a storm window is not allowed for a window with U-factor lower than 0.45.
 
 .. _window_overhangs:
 
@@ -1983,13 +1983,13 @@ If a storm window is specified, additional information is entered in ``StormWind
   ============================  ========  ======  ===========  ========  =======  ========================================================
 
   .. [#] GlassType choices are "clear" or "low-e".
-         The ``UFactor`` and ``SHGC`` of the skylight will be adjusted depending on the ``GlassType``, based on correlations derived using `data reported by PNNL <https://labhomes.pnnl.gov/documents/PNNL_24444_Thermal_and_Optical_Properties_Low-E_Storm_Windows_Panels.pdf>`_.
+         The ``UFactor`` and ``SHGC`` of the skylight will be adjusted depending on the ``GlassType``, based on correlations derived using `data reported by PNNL <https://www.pnnl.gov/main/publications/external/technical_reports/PNNL-24444.pdf>`_.
+         Note that the correlations may not be accurate for base windows with U-factors below 0.3 due to extrapolation.
 
          \- **clear storm windows**: U-factor = U-factor of base window - (0.6435 * U-factor of base window - 0.1533); SHGC = 0.9 * SHGC of base window
 
          \- **low-e storm windows**: U-factor = U-factor of base window - (0.766 * U-factor of base window - 0.1532); SHGC = 0.8 * SHGC of base window
 
-         Note that a storm window is not allowed for a skylight with U-factor lower than 0.45.
 
 .. _skylight_curb:
 

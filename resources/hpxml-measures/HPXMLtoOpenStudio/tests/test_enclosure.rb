@@ -578,6 +578,22 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
     args_hash = {}
     args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
     hpxml, hpxml_bldg = _create_hpxml('base.xml')
+
+    hpxml_bldg.windows.each do |window|
+      window.storm_type = HPXML::WindowGlassTypeLowE
+    end
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    model, hpxml, hpxml_bldg = _test_measure(args_hash)
+
+    # Check window properties
+    hpxml_bldg.windows.each do |window|
+      os_window = model.getSubSurfaces.find { |w| w.name.to_s == window.id }
+      os_simple_glazing = os_window.construction.get.to_LayeredConstruction.get.getLayer(0).to_SimpleGlazing.get
+
+      assert_equal(0.352, os_simple_glazing.solarHeatGainCoefficient)
+      assert_in_epsilon(0.2351, UnitConversions.convert(os_simple_glazing.uFactor, 'W/(m^2*K)', 'Btu/(hr*ft^2*F)'), 0.001)
+    end
+
     hpxml_bldg.windows.each do |window|
       window.ufactor = 0.6
       window.storm_type = HPXML::WindowGlassTypeLowE
