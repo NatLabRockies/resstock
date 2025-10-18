@@ -3,12 +3,10 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-import dash
 import polars as pl  # type: ignore
-from dash import dcc, html
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
-
+import time
 from ..run_context import RunContext
 
 logger = logging.getLogger(__name__)
@@ -16,19 +14,28 @@ logger = logging.getLogger(__name__)
 
 def register_run_info_callbacks(app, ctx: RunContext) -> None:
     @app.callback(
-        Output("run-info", "children"),
+        Output("run-info-message", "children"),
+        Output("run-info-s3", "children"),
+        Output("selected-upgrades", "options"),
+        Output("selected-upgrades", "value"),
+        Output("run-info-num-points", "children"),
         Input("run-folder", "value"),
+        State("selected-upgrades", "value"),
     )
-    def _update_run_info(run_folder: str):
+    def _update_run_info(run_folder: str, current_selection: list[int] | None):
+        current_selection = current_selection or []
+        if not run_folder:
+            return "", "—", [], [], "—"
+
         snapshot: dict[str, Any] | None = ctx.load_snapshot(run_folder)
         if not snapshot:
-            return html.Div("RUN INFO NOT AVAILABLE", className="text-center")
+            return "RUN INFO NOT AVAILABLE", "—", [], [], "—"
 
         orchestrator = ctx.get_orchestrator(run_folder)
         if orchestrator is None:
-            return html.Div("Run folder does not have orchestrator. Cannot give run info.")
+            return "Run folder does not have orchestrator. Cannot give run info.", "—", [], [], "—"
 
-        baseline_df = orchestrator.processor.combined_df.filter(pl.col("upgrade") == 0)
+        baseline_df = orchestrator.inp_mgr.load_data(selected_upgrades=[0])
         num_data_points = baseline_df.select(pl.len()).collect().item()
         upgrades = snapshot.get("upgrades", [])
         non_baseline_upgrades = [upgrade for upgrade in upgrades if upgrade != 0]
@@ -37,12 +44,14 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
         baseline_token = None
         if 0 in upgrades:
             baseline_token = f"{'0(Base)':<10}"
-
+        start_time = time.time()
         for upgrade in non_baseline_upgrades:
-            upgrade_df = orchestrator.processor.combined_df.filter(pl.col("upgrade") == upgrade)
+            upgrade_df = orchestrator.inp_mgr.load_data(selected_upgrades=[upgrade])
             num_applicable = upgrade_df.filter(pl.col("applicability")).select(pl.len()).collect().item()
             token = f"{upgrade}({num_applicable / num_data_points * 100:.1f}%)"
             upgrade_tokens.append(f"{token:<10}")
+            print(f"Computed applicability for upgrade {upgrade} in {time.time() - start_time:.2f} seconds")
+            start_time = time.time()
 
         checklist_options = []
         if baseline_token is not None:
@@ -51,53 +60,18 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
             {"label": token, "value": upg} for token, upg in zip(upgrade_tokens, non_baseline_upgrades)
         )
 
-        checklist = dcc.Checklist(
-            id="selected-upgrades",
-            options=checklist_options,
-            value=[option["value"] for option in checklist_options],
-            inline=True,
-            inputStyle={"marginRight": "2px"},
-            labelStyle={
-                "display": "inline-block",
-                "width": "12ch",
-                "fontFamily": "ui-monospace",
-                "whiteSpace": "pre",
-                "marginRight": "8px",
-                "verticalAlign": "top",
-            },
-            style={"display": "inline-block"},
-            persistence=True,
-            persistence_type="local",
-            persisted_props=["value"],
-        )
+        selected_values = [option["value"] for option in checklist_options]
+        valid_values = {option["value"] for option in checklist_options}
+        persisted_selection = [val for val in current_selection if val in valid_values]
+        if persisted_selection:
+            selected_values = persisted_selection
 
-        upgrade_children: list[Any] = [
-            html.Span("Upgrades (applied %): ", className="fw-bold me-1"),
-            checklist,
-        ]
-
-        return html.Div(
-            [
-                html.Small("Run Info", className="d-block fw-bold mb-1"),
-                html.Div(
-                    [html.Span("S3: ", className="fw-bold"), html.Span(snapshot.get("s3_results_dir", "N/A"))],
-                    style={"fontSize": "0.75rem", "wordBreak": "break-all"},
-                ),
-                html.Div(
-                    upgrade_children,
-                    style={
-                        "fontSize": "0.75rem",
-                        "maxWidth": "480px",
-                        "whiteSpace": "normal",
-                        "wordWrap": "break-word",
-                        "lineHeight": "1.1rem",
-                    },
-                ),
-                html.Div(
-                    [html.Span("Number of data points: ", className="fw-bold"), html.Span(num_data_points)],
-                    style={"fontSize": "0.75rem"},
-                ),
-            ]
+        return (
+            "",
+            snapshot.get("s3_results_dir", "N/A"),
+            checklist_options,
+            selected_values,
+            num_data_points,
         )
 
     @app.callback(

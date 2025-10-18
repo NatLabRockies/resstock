@@ -156,7 +156,7 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
         fig = go.Figure()
 
         if not dynamic_mode:
-            path_seg, name = plot_spec.get_path_and_name()
+            path_seg, name = plot_spec.get_path_and_name(selected_upgrades=selected_upgrades)
             base_dir = Path(workflow.output_dir).expanduser().resolve() / "plots" / str(run_folder_val)
             fig_path = base_dir / path_seg / "figure_json" / f"{name}.json"
             parquet_path = base_dir / path_seg / "data" / f"{name}.parquet"

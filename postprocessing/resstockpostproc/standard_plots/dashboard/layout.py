@@ -41,7 +41,7 @@ def build_header_section() -> dbc.Row:
         [
             dbc.Col(html.H2("ResStock Dashboard"), width="auto"),
             dbc.Col(build_run_folder_control(), md=3),
-            dbc.Col(html.Div(id="run-info"), width="auto"),
+            dbc.Col(build_run_info_section(), width="auto"),
             dbc.Col(
                 html.Div(
                     [
@@ -66,6 +66,68 @@ def build_header_section() -> dbc.Row:
         ],
         align="center",
         className="my-3",
+    )
+
+
+def build_run_info_section() -> html.Div:
+    """Render the run info placeholder content."""
+    checklist = dcc.Checklist(
+        id="selected-upgrades",
+        options=[],
+        value=[],
+        inline=True,
+        inputStyle={"marginRight": "2px"},
+        labelStyle={
+            "display": "inline-block",
+            "width": "12ch",
+            "fontFamily": "ui-monospace",
+            "whiteSpace": "pre",
+            "marginRight": "8px",
+            "verticalAlign": "top",
+        },
+        style={"display": "inline-block"},
+        persistence=True,
+        persistence_type="local",
+        persisted_props=["value"],
+    )
+
+    return html.Div(
+        [
+            html.Small("Run Info", className="d-block fw-bold mb-1"),
+            html.Div(
+                id="run-info-message",
+                className="text-center text-muted",
+                style={"fontSize": "0.75rem"},
+            ),
+            html.Div(
+                [
+                    html.Div(
+                        [html.Span("S3: ", className="fw-bold"), html.Span("—", id="run-info-s3")],
+                        style={"fontSize": "0.75rem", "wordBreak": "break-all"},
+                    ),
+                    html.Div(
+                        [
+                            html.Span("Upgrades (applied %): ", className="fw-bold me-1"),
+                            checklist,
+                        ],
+                        style={
+                            "fontSize": "0.75rem",
+                            "maxWidth": "480px",
+                            "whiteSpace": "normal",
+                            "wordWrap": "break-word",
+                            "lineHeight": "1.1rem",
+                        },
+                        id="run-info-upgrades",
+                    ),
+                    html.Div(
+                        [html.Span("Number of data points: ", className="fw-bold"), html.Span("—", id="run-info-num-points")],
+                        style={"fontSize": "0.75rem"},
+                    ),
+                ],
+                id="run-info-details",
+            ),
+        ],
+        id="run-info",
     )
 
 

@@ -6,6 +6,7 @@ from typing import Literal
 
 import polars as pl
 from plotly.graph_objects import Figure
+from filelock import FileLock
 
 from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
 
@@ -54,14 +55,10 @@ class OutputManager:
 
     def save_plot(self, fig: Figure, path_seg: Path, df: pl.DataFrame, file_name: str) -> None:
         """Save a plot to the output directory with automatic retry."""
-        max_retries = 3
-        delay_seconds = 3
-        # Might collide with generate_plots flow parallelly writing this
-        # So retry a few times if it fails
-        for attempt in range(max_retries):
-            try:
-                output_dir = self.get_output_dir(path_seg)
-                # Write files to their respective directories
+        output_dir = self.get_output_dir(path_seg)
+        file_lock = FileLock(str(output_dir / f"{file_name}.lock"), timeout=15)
+        try:
+            with file_lock:
                 if "html" in self.output_types:
                     self.write_html(fig, output_dir, file_name)
                 if "svg" in self.output_types:
@@ -72,25 +69,8 @@ class OutputManager:
                     self.write_json(fig, output_dir, file_name)
                 if "csv" in self.output_types:
                     self.write_csv(df, output_dir, file_name)
-                break
-            except Exception as e:
-                if attempt < max_retries - 1:
-                    time.sleep(delay_seconds)
-                else:
-                    raise e
-        """Save a plot to the output directory."""
-        output_dir = self.get_output_dir(path_seg)
-        # Write files to their respective directories
-        if "html" in self.output_types:
-            self.write_html(fig, output_dir, file_name)
-        if "svg" in self.output_types:
-            self.write_svg(fig, output_dir, file_name)
-        if "parquet" in self.output_types:
-            self.write_parquet(df, output_dir, file_name)
-        if "json" in self.output_types:
-            self.write_json(fig, output_dir, file_name)
-        if "csv" in self.output_types:
-            self.write_csv(df, output_dir, file_name)
+        except TimeoutError:
+            print(f"Could not acquire lock to save {file_name}. Skipping save.")
 
     def write_html(self, fig: Figure, output_dir: Path, file_name: str) -> None:
         start_time = time.time()

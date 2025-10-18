@@ -99,15 +99,21 @@ class PlotSpec(BaseModel):
         """Return True if the plot spec is valid."""
         return self.get_error() == ""
 
-    def get_path_and_name(self) -> tuple[Path, str]:
-        """Return path sub-segments derived from the definition."""
+    def get_path_and_name(self, selected_upgrades: list[int] | None = None) -> tuple[Path, str]:
+        """selected_upgrades is passed by the dynamic dashboard when only including
+        a subset of upgrades than that is defined in the workflow yaml file.
+        """
         if self.building_inclusion == BuildingInclusion.applied_only:
-            if self.upgrade:
-                path_segment = Path(f"Included Buildings = Applied in {self.upgrade}")
-            else:
-                path_segment = Path("Included Buildings = Applied in respective upgrades")
+            path_segment = Path(f"Included Buildings = Applied only")
         else:
             path_segment = Path("Included Buildings = All")
+        if self.upgrade is None:
+            if selected_upgrades:
+                path_segment /= f"Upgrade = {','.join(map(str, sorted(selected_upgrades)))}"
+            else:
+                path_segment /= f"Upgrade = All"
+        else:
+            path_segment /= f"Upgrade = {self.upgrade}"
         path_segment /= f"Vacancy = {self.vacancy_inclusion.value}"
         path_segment /= f"Quantity Type = {self.quantity_type.value}"
         path_segment /= f"Aggregation Type = {self.aggregation_type.value}"
@@ -117,5 +123,5 @@ class PlotSpec(BaseModel):
         else:
             path_segment /= "Grouped By = No grouping"
         path_segment /= f"Quantity Group = {self.quantity_group_name}"
-        name = "all_stacked" if isinstance(self.quantity, QuantityGroup) else f"{self.quantity}"
+        name = "all_together" if isinstance(self.quantity, QuantityGroup) else f"{self.quantity}"
         return path_segment, name
