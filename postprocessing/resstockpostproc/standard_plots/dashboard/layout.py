@@ -28,7 +28,7 @@ def build_layout(ctx: RunContext) -> dbc.Container:
             dcc.Store(id="df-parquet", storage_type="memory"),
             dcc.Store(id="df-csv", storage_type="memory"),
             # Persist group-by selection in local storage to avoid hydration races
-            dcc.Store(id="group-by-store", storage_type="local"),
+            # dcc.Store(id="group-by-store", storage_type="local"),
             html.Div(id="download-dummy", style={"display": "none"}),
         ],
         fluid=True,

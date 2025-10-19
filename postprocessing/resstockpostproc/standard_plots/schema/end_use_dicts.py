@@ -35,46 +35,46 @@ column2pattern = {
     for fuel in EnduseFuelToPattern
 }
 
-
+unit_separator = '.'
 column2color.update(
     {
-        f"out.bills.{fuel}.usd": fuel_colors.get(fuel, "#3A4246")
+        f"out.bills.{fuel}{unit_separator}usd": fuel_colors.get(fuel, "#3A4246")
         for fuel in ["electricity", "natural_gas", "propane", "fuel_oil"]
     }
 )
 column2color.update(
     {
-        f"out.{fuel}.total.energy_consumption.kwh": fuel_colors.get(fuel, "#3A4246")
+        f"out.{fuel}.total.energy_consumption{unit_separator}kwh": fuel_colors.get(fuel, "#3A4246")
         for fuel in ["electricity", "natural_gas", "propane", "fuel_oil"]
     }
 )
 column2color.update(
     {
-        f"out.unmet_hours.{heat_cool.lower()}.hour": EnduseGroupToColor.get(heat_cool, "#3A4246")
+        f"out.unmet_hours.{heat_cool.lower()}{unit_separator}hour": EnduseGroupToColor.get(heat_cool, "#3A4246")
         for heat_cool in ["Heating", "Cooling"]
     }
 )
 column2color.update(
     {
-        f"out.load.{load_type.lower()}.energy_delivered.kbtu": EnduseGroupToColor.get(load_type, "#3A4246")
+        f"out.load.{load_type.lower()}.energy_delivered{unit_separator}kbtu": EnduseGroupToColor.get(load_type, "#3A4246")
         for load_type in ["Heating", "Cooling", "Hot Water"]
     }
 )
 column2color.update(
     {
-        f"out.electricity.{summer_winter.lower()}.peak.kw": summer_winter_color.get(summer_winter, "#3A4246")
+        f"out.electricity.{summer_winter.lower()}.peak{unit_separator}kw": summer_winter_color.get(summer_winter, "#3A4246")
         for summer_winter in ["summer", "winter"]
     }
 )
 column2color.update(
     {
-        f"out.load.{load_type.lower()}.peak.kbtu_hr": EnduseGroupToColor.get(load_type, "#3A4246")
+        f"out.load.{load_type.lower()}.peak{unit_separator}kbtu_hr": EnduseGroupToColor.get(load_type, "#3A4246")
         for load_type in ["Heating", "Cooling"]
     }
 )
 column2color.update(
     {
-        f"out.emissions.{fuel}.lrmer_mid_case_25.co2e_kg": fuel_colors.get(fuel, "#3A4246")
+        f"out.emissions.{fuel}.lrmer_mid_case_25{unit_separator}co2e_kg": fuel_colors.get(fuel, "#3A4246")
         for fuel in ["electricity", "natural_gas", "propane", "fuel_oil"]
     }
 )
@@ -82,131 +82,131 @@ column2color.update(
 
 EnduseGroupToEnduses = {
     "Generation, Electricity": [
-        "out.electricity.pv.energy_consumption.kwh",
-        "out.electricity.generator.energy_consumption.kwh",
-        "out.electricity.battery.energy_consumption.kwh",
+        f"out.electricity.pv.energy_consumption{unit_separator}kwh",
+        f"out.electricity.generator.energy_consumption{unit_separator}kwh",
+        f"out.electricity.battery.energy_consumption{unit_separator}kwh",
     ],
     "Electric Vehicle Charging, Electricity": [
-        "out.electricity.ev_charging.energy_consumption.kwh",
+        f"out.electricity.ev_charging.energy_consumption{unit_separator}kwh",
     ],
     "Hot Water, Electricity": [
-        "out.electricity.hot_water.energy_consumption.kwh",
+        f"out.electricity.hot_water.energy_consumption{unit_separator}kwh",
     ],
     "Hot Water, Natural Gas": [
-        "out.natural_gas.hot_water.energy_consumption.kwh",
+        f"out.natural_gas.hot_water.energy_consumption{unit_separator}kwh",
     ],
     "Hot Water, Fuel Oil": [
-        "out.fuel_oil.hot_water.energy_consumption.kwh",
+        f"out.fuel_oil.hot_water.energy_consumption{unit_separator}kwh",
     ],
     "Hot Water, Propane": [
-        "out.propane.hot_water.energy_consumption.kwh",
+        f"out.propane.hot_water.energy_consumption{unit_separator}kwh",
     ],
     "Heating Heat Pump Backup, Electricity": [
-        "out.electricity.heating_hp_bkup.energy_consumption.kwh",
-        "out.electricity.heating_hp_bkup_fa.energy_consumption.kwh",
+        f"out.electricity.heating_hp_bkup.energy_consumption{unit_separator}kwh",
+        f"out.electricity.heating_hp_bkup_fa.energy_consumption{unit_separator}kwh",
     ],
     "Heating Heat Pump Backup, Natural Gas": [
-        "out.natural_gas.heating_hp_bkup.energy_consumption.kwh",
+        f"out.natural_gas.heating_hp_bkup.energy_consumption{unit_separator}kwh",
     ],
     "Heating Heat Pump Backup, Fuel Oil": [
-        "out.fuel_oil.heating_hp_bkup.energy_consumption.kwh",
+        f"out.fuel_oil.heating_hp_bkup.energy_consumption{unit_separator}kwh",
     ],
     "Heating Heat Pump Backup, Propane": [
-        "out.propane.heating_hp_bkup.energy_consumption.kwh",
+        f"out.propane.heating_hp_bkup.energy_consumption{unit_separator}kwh",
     ],
     "Heating Fans Pumps, Electricity": [
-        "out.electricity.heating_fans_pumps.energy_consumption.kwh",
+        f"out.electricity.heating_fans_pumps.energy_consumption{unit_separator}kwh",
     ],
     "Heating, Electricity": [
-        "out.electricity.heating.energy_consumption.kwh",
+        f"out.electricity.heating.energy_consumption{unit_separator}kwh",
     ],
     "Heating, Natural Gas": [
-        "out.natural_gas.heating.energy_consumption.kwh",
+        f"out.natural_gas.heating.energy_consumption{unit_separator}kwh",
     ],
     "Heating, Fuel Oil": [
-        "out.fuel_oil.heating.energy_consumption.kwh",
+        f"out.fuel_oil.heating.energy_consumption{unit_separator}kwh",
     ],
     "Heating, Propane": [
-        "out.propane.heating.energy_consumption.kwh",
+        f"out.propane.heating.energy_consumption{unit_separator}kwh",
     ],
     "Cooling Fans Pumps, Electricity": [
-        "out.electricity.cooling_fans_pumps.energy_consumption.kwh",
+        f"out.electricity.cooling_fans_pumps.energy_consumption{unit_separator}kwh",
     ],
     "Cooling, Electricity": [
-        "out.electricity.cooling.energy_consumption.kwh",
+        f"out.electricity.cooling.energy_consumption{unit_separator}kwh",
     ],
     "Lighting, Electricity": [
-        "out.electricity.lighting_interior.energy_consumption.kwh",
-        "out.electricity.lighting_exterior.energy_consumption.kwh",
-        "out.electricity.lighting_garage.energy_consumption.kwh",
+        f"out.electricity.lighting_interior.energy_consumption{unit_separator}kwh",
+        f"out.electricity.lighting_exterior.energy_consumption{unit_separator}kwh",
+        f"out.electricity.lighting_garage.energy_consumption{unit_separator}kwh",
     ],
     "Lighting, Natural Gas": [
-        "out.natural_gas.lighting.energy_consumption.kwh",
+        f"out.natural_gas.lighting.energy_consumption{unit_separator}kwh",
     ],
     "Lighting, Propane": [
-        "out.propane.lighting.energy_consumption.kwh",
+        f"out.propane.lighting.energy_consumption{unit_separator}kwh",
     ],
     "Lighting, Fuel Oil": [
-        "out.fuel_oil.lighting.energy_consumption.kwh",
+        f"out.fuel_oil.lighting.energy_consumption{unit_separator}kwh",
     ],
     "Vent Fan, Electricity": [
-        "out.electricity.mechanical_ventilation.energy_consumption.kwh",
-        "out.electricity.ceiling_fan.energy_consumption.kwh",
-        "out.electricity.whole_house_fan.energy_consumption.kwh",
+        f"out.electricity.mechanical_ventilation.energy_consumption{unit_separator}kwh",
+        f"out.electricity.ceiling_fan.energy_consumption{unit_separator}kwh",
+        f"out.electricity.whole_house_fan.energy_consumption{unit_separator}kwh",
     ],
     "Miscellaneous, Electricity": [
-        "out.electricity.plug_loads.energy_consumption.kwh",
-        "out.electricity.pool_pump.energy_consumption.kwh",
-        "out.electricity.pool_heater.energy_consumption.kwh",
-        "out.electricity.mech_vent_preheat.energy_consumption.kwh",
-        "out.electricity.permanent_spa_pump.energy_consumption.kwh",
-        "out.electricity.permanent_spa_heat.energy_consumption.kwh",
-        "out.electricity.well_pump.energy_consumption.kwh",
-        "out.electricity.dehumidifier.energy_consumption.kwh",
-        "out.electricity.hot_water_solar_th.energy_consumption.kwh",
-        "out.electricity.mech_vent_precool.energy_consumption.kwh",
-        "out.electricity.television.energy_consumption.kwh",
-        "out.electricity.mech_vent.energy_consumption.kwh",
+        f"out.electricity.plug_loads.energy_consumption{unit_separator}kwh",
+        f"out.electricity.pool_pump.energy_consumption{unit_separator}kwh",
+        f"out.electricity.pool_heater.energy_consumption{unit_separator}kwh",
+        f"out.electricity.mech_vent_preheat.energy_consumption{unit_separator}kwh",
+        f"out.electricity.permanent_spa_pump.energy_consumption{unit_separator}kwh",
+        f"out.electricity.permanent_spa_heat.energy_consumption{unit_separator}kwh",
+        f"out.electricity.well_pump.energy_consumption{unit_separator}kwh",
+        f"out.electricity.dehumidifier.energy_consumption{unit_separator}kwh",
+        f"out.electricity.hot_water_solar_th.energy_consumption{unit_separator}kwh",
+        f"out.electricity.mech_vent_precool.energy_consumption{unit_separator}kwh",
+        f"out.electricity.television.energy_consumption{unit_separator}kwh",
+        f"out.electricity.mech_vent.energy_consumption{unit_separator}kwh",
     ],
     "Miscellaneous, Natural Gas": [
-        "out.natural_gas.fireplace.energy_consumption.kwh",
-        "out.natural_gas.grill.energy_consumption.kwh",
-        "out.natural_gas.permanent_spa_heat.energy_consumption.kwh",
-        "out.natural_gas.pool_heater.energy_consumption.kwh",
-        "out.natural_gas.mech_vent_preheat.energy_consumption.kwh",
-        "out.natural_gas.generator.energy_consumption.kwh",
+        f"out.natural_gas.fireplace.energy_consumption{unit_separator}kwh",
+        f"out.natural_gas.grill.energy_consumption{unit_separator}kwh",
+        f"out.natural_gas.permanent_spa_heat.energy_consumption{unit_separator}kwh",
+        f"out.natural_gas.pool_heater.energy_consumption{unit_separator}kwh",
+        f"out.natural_gas.mech_vent_preheat.energy_consumption{unit_separator}kwh",
+        f"out.natural_gas.generator.energy_consumption{unit_separator}kwh",
     ],
     "Miscellaneous, Fuel Oil": [
-        "out.fuel_oil.fireplace.energy_consumption.kwh",
-        "out.fuel_oil.grill.energy_consumption.kwh",
-        "out.fuel_oil.mech_vent_preheating.energy_consumption.kwh",
-        "out.fuel_oil.generator.energy_consumption.kwh",
+        f"out.fuel_oil.fireplace.energy_consumption{unit_separator}kwh",
+        f"out.fuel_oil.grill.energy_consumption{unit_separator}kwh",
+        f"out.fuel_oil.mech_vent_preheating.energy_consumption{unit_separator}kwh",
+        f"out.fuel_oil.generator.energy_consumption{unit_separator}kwh",
     ],
     "Miscellaneous, Propane": [
-        "out.propane.fireplace.energy_consumption.kwh",
-        "out.propane.grill.energy_consumption.kwh",
-        "out.propane.mech_vent_preheating.energy_consumption.kwh",
-        "out.propane.generator.energy_consumption.kwh",
+        f"out.propane.fireplace.energy_consumption{unit_separator}kwh",
+        f"out.propane.grill.energy_consumption{unit_separator}kwh",
+        f"out.propane.mech_vent_preheating.energy_consumption{unit_separator}kwh",
+        f"out.propane.generator.energy_consumption{unit_separator}kwh",
     ],
     "Appliances, Electricity": [
-        "out.electricity.clothes_dryer.energy_consumption.kwh",
-        "out.electricity.clothes_washer.energy_consumption.kwh",
-        "out.electricity.dishwasher.energy_consumption.kwh",
-        "out.electricity.freezer.energy_consumption.kwh",
-        "out.electricity.refrigerator.energy_consumption.kwh",
-        "out.electricity.range_oven.energy_consumption.kwh",
-        "out.electricity.hot_water_recirc_p.energy_consumption.kwh",
+        f"out.electricity.clothes_dryer.energy_consumption{unit_separator}kwh",
+        f"out.electricity.clothes_washer.energy_consumption{unit_separator}kwh",
+        f"out.electricity.dishwasher.energy_consumption{unit_separator}kwh",
+        f"out.electricity.freezer.energy_consumption{unit_separator}kwh",
+        f"out.electricity.refrigerator.energy_consumption{unit_separator}kwh",
+        f"out.electricity.range_oven.energy_consumption{unit_separator}kwh",
+        f"out.electricity.hot_water_recirc_p.energy_consumption{unit_separator}kwh",
     ],
     "Appliances, Natural Gas": [
-        "out.natural_gas.clothes_dryer.energy_consumption.kwh",
-        "out.natural_gas.range_oven.energy_consumption.kwh",
+        f"out.natural_gas.clothes_dryer.energy_consumption{unit_separator}kwh",
+        f"out.natural_gas.range_oven.energy_consumption{unit_separator}kwh",
     ],
     "Appliances, Fuel Oil": [
-        "out.fuel_oil.clothes_dryer.energy_consumption.kwh",
-        "out.fuel_oil.range_oven.energy_consumption.kwh",
+        f"out.fuel_oil.clothes_dryer.energy_consumption{unit_separator}kwh",
+        f"out.fuel_oil.range_oven.energy_consumption{unit_separator}kwh",
     ],
     "Appliances, Propane": [
-        "out.propane.clothes_dryer.energy_consumption.kwh",
-        "out.propane.range_oven.energy_consumption.kwh",
+        f"out.propane.clothes_dryer.energy_consumption{unit_separator}kwh",
+        f"out.propane.range_oven.energy_consumption{unit_separator}kwh",
     ],
 }

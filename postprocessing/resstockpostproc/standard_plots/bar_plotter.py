@@ -16,7 +16,22 @@ from typing import Literal
 class BarPlotter(BasePlotter):
     def create_plot(self, data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
         """Create a plot based on the plot spec."""
-        if isinstance(plot_spec.quantity, QuantityGroup):
+        if plot_spec.quantity_type == QuantityType.prevalence:
+            upgrades = data["upgrade_name"].unique(maintain_order=True).to_list()
+            upgrade_to_use = upgrades[-1]  # Use only the last upgrade scenario
+            data = data.filter(pl.col("upgrade_name") == upgrade_to_use)
+            return self.create_bar_plot(
+                data=data,
+                quantity_column="prevalence",
+                first_category_column=plot_spec.quantity_group_name,
+                second_category_column=plot_spec.group_by,
+                second_category_title=self.format_label(plot_spec.group_by) if plot_spec.group_by else "",
+                quantity_title=self.get_quantity_title(plot_spec),
+                first_category_title="",
+                orientation="h",
+                title_text=f"Prevalence in Upgrade Scenario: {upgrade_to_use}",
+            )
+        elif isinstance(plot_spec.quantity, QuantityGroup):
             if plot_spec.group_by:  # show as stacked bar plot
                 return self.create_bar_plot(
                     data=data,
@@ -49,21 +64,6 @@ class BarPlotter(BasePlotter):
                     first_category_title="Upgrade Scenario",
                     orientation="h",
                 )
-        elif plot_spec.quantity_type == QuantityType.prevalence:
-            upgrades = data["upgrade_name"].unique(maintain_order=True).to_list()
-            upgrade_to_use = upgrades[-1]  # Use only the last upgrade scenario
-            data = data.filter(pl.col("upgrade_name") == upgrade_to_use)
-            return self.create_bar_plot(
-                data=data,
-                quantity_column="prevalence",
-                first_category_column=plot_spec.quantity,
-                second_category_column=plot_spec.group_by,
-                second_category_title=self.format_label(plot_spec.group_by) if plot_spec.group_by else "",
-                quantity_title=self.get_quantity_title(plot_spec),
-                first_category_title=plot_spec.quantity,
-                orientation="h",
-                title_text=f"Prevalence in Upgrade Scenario: {upgrade_to_use}",
-            )
 
         # For simple bars, the quantity is the x-axis
         return self.create_bar_plot(

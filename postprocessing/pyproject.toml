@@ -21,6 +21,7 @@ dependencies = [
     "dash-extensions>=2.0.4",
     "dash[diskcache]>=3.0.4",
     "diskcache>=5.6.3",
+    "filelock>=3.19.1",
     "fsspec",
     "geopandas",
     "gunicorn>=23.0.0",

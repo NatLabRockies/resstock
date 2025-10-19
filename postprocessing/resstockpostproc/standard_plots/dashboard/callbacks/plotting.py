@@ -17,6 +17,7 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 from plotly.graph_objects import Figure
 
+from resstockpostproc.standard_plots.schema.workflow_schema import QuantityType
 from resstockpostproc.standard_plots.schema.plot_spec import AggregationType, PlotSpec, VizType
 
 from ..run_context import RunContext
@@ -36,13 +37,13 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
         Output("invalid-spec-modal", "is_open"),
         Output("invalid-spec-msg", "children"),
         Input("generate-btn", "n_clicks"),
-        Input("building-inclusion", "value"),
+        State("building-inclusion", "value"),
         Input("vacancy-inclusion", "value"),
-        Input("quantity-type", "value"),
-        Input("aggregation-type", "value"),
-        Input("viz-type", "value"),
-        Input("group-by", "value"),
-        Input("quantity-group", "value"),
+        State("quantity-type", "value"),
+        State("aggregation-type", "value"),
+        State("viz-type", "value"),
+        State("group-by", "value"),
+        State("quantity-group", "value"),
         Input("quantity", "value"),
         Input("fig-width", "value"),
         Input("fig-height", "value"),
@@ -53,8 +54,9 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
         Input("facet-vertical", "value"),
         Input("facet-wrap-width", "value"),
         Input("dynamic-toggle", "value"),
-        Input("run-folder", "value"),
-        Input("selected-upgrades", "value"),
+        State("run-folder", "value"),
+        State("selected-upgrades", "value"),
+        prevent_initial_call=True,
     )
     def _generate_figure(  # noqa: PLR0913
         _: int | None,
@@ -78,8 +80,12 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
         run_folder_val: str,
         selected_upgrades: list[int],
     ):
+        # find out what triggered this
+        triggered = dash.callback_context.triggered
+        print(f"Figure gen triggered by: {triggered}")
         plot_spec = build_plot_spec(
             ctx,
+            run_folder_val,
             building_incl,
             vacancy_incl,
             comp_type,
@@ -242,6 +248,7 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
     @app.callback(
         Output("plot-graph", "config"),
         Input("fig-editable", "value"),
+        prevent_initial_call=True,
     )
     def _update_graph_config(editable_vals: list[str]):
         base_cfg = {
@@ -257,6 +264,42 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
         if "editable" in editable_vals:
             base_cfg["editable"] = True
         return base_cfg
+
+    @app.callback(
+        Output("facet-title-orientation-div", "style"),
+        Input("plot-graph", "figure"),
+        prevent_initial_call=True,
+    )
+    def _toggle_facet_toggle_visibility(fig_dict: dict[str, Any]):
+        if not fig_dict:
+            raise PreventUpdate
+        layout = fig_dict.get("layout", {})
+        has_facet = any(key.startswith("xaxis") and key != "xaxis" for key in layout)
+        return {} if has_facet else {"display": "none"}
+
+    @app.callback(
+        Output("facet-wrap-width-div", "style"),
+        Input("plot-graph", "figure"),
+        prevent_initial_call=True,
+    )
+    def _toggle_facet_wrap_width_visibility(fig_dict: dict[str, Any]):
+        if not fig_dict:
+            raise PreventUpdate
+        layout = fig_dict.get("layout", {})
+        has_facet = any(key.startswith("xaxis") and key != "xaxis" for key in layout)
+        return {} if has_facet else {"display": "none"}
+
+    @app.callback(
+        Output("facet-adjustment-box", "style"),
+        Input("plot-graph", "figure"),
+        prevent_initial_call=True,
+    )
+    def _toggle_facet_adjustment_visibility(fig_dict: dict[str, Any]):
+        if not fig_dict:
+            raise PreventUpdate
+        layout = fig_dict.get("layout", {})
+        has_facet = any(key.startswith("xaxis") and key != "xaxis" for key in layout)
+        return {} if has_facet else {"display": "none"}
 
     @app.callback(
         Output("download-pdf", "data"),

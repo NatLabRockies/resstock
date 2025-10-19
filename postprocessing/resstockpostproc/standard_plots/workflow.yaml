@@ -2,7 +2,7 @@
 
 s3_results_dir: s3://resstock-core/resstock_ci/sdr_upgrades_tmy3/pub_annual/
 output_dir: sdr_plots/
-run_name: sdr_plots_ci
+run_name: sdr_plots_2
 upgrades: [0, 1, 2] # corresponds to results_up00.csv, results_up01.csv, results_up02.csv
 upgrade_names:
   - "Baseline"

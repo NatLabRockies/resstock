@@ -59,6 +59,7 @@ class PlotOrchestrator:
         # Setup the data processor
         start_time = time.time()
         self.inp_mgr = InputManager(self.workflow)
+        self.inp_mgr.download_data()
         combined_df = self.inp_mgr.load_data()
         self.processor = DataProcessor(combined_df)
         self.data_loading_time = time.time() - start_time

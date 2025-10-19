@@ -193,24 +193,24 @@ class DataProcessor:
             DataFrame prepared for plotting with aggregated (mean) values
         """
 
-        quantities = self._get_quantities(plot_spec)
-
-        combined_df = self._fill_missing_quantities(self.combined_df, quantities)
-        combined_df = self._convert_quantity_type(quantities, plot_spec.quantity_type, combined_df)
-        combined_df = self._process_upgrades_inclusion(plot_spec, selected_upgrades, combined_df)
+        combined_df = self._process_upgrades_inclusion(plot_spec, selected_upgrades, self.combined_df)
         combined_df = self._process_building_inclusion(plot_spec, combined_df)
         combined_df = self._process_vacancy_inclusion(plot_spec, combined_df)
+        if plot_spec.quantity_type == QuantityType.prevalence:
+            return self.prepare_data_for_prevalence_plot(
+                combined_df=combined_df,
+                quantity_group_name=plot_spec.quantity_group_name,
+                quantity=plot_spec.quantity,
+                group_by=plot_spec.group_by,
+            )
+        quantities = self._get_quantities(plot_spec)
+        combined_df = self._fill_missing_quantities(combined_df, quantities)
+        combined_df = self._convert_quantity_type(quantities, plot_spec.quantity_type, combined_df)
 
         if plot_spec.quantity_type in [QuantityType.savings, QuantityType.percent_savings]:
             # baseline should not be included when plotting savings
             combined_df = combined_df.filter(pl.col(UPGRADE_COL) != 0)
-        if plot_spec.quantity_type == QuantityType.prevalence:
-            if len(quantities) != 1:
-                raise ValueError("Prevalence plots require a single categorical quantity.")
-            return self.prepare_data_for_prevalence_plot(
-                combined_df, quantities[0], plot_spec.group_by,
-            )
-        elif plot_spec.visualization_type == VizType.box:
+        if plot_spec.visualization_type == VizType.box:
             if not isinstance(plot_spec.quantity, str):
                 combined_df = combined_df.unpivot(
                     quantities,
@@ -510,7 +510,8 @@ class DataProcessor:
     def prepare_data_for_prevalence_plot(
         self,
         combined_df: pl.LazyFrame,
-        quantity: str,
+        quantity: str | QuantityGroup,
+        quantity_group_name: str,
         group_by: str | None,
     ) -> pl.DataFrame:
         """
@@ -527,18 +528,22 @@ class DataProcessor:
         grouping_cols = [UPGRADE_COL, UPGRADE_NAME_COL]
         if group_by:
             grouping_cols.append(group_by)
-        
         all_groups_df = combined_df.select(pl.col(grouping_cols)).unique()
-        all_cats_df = combined_df.select(pl.col(quantity)).unique().rename({quantity: quantity})
+        all_cats_df = combined_df.select(pl.col(quantity_group_name)).unique()
         full_df = all_groups_df.join(all_cats_df, how="cross")
-        count_df = combined_df.group_by([*grouping_cols, quantity]).agg(pl.count().alias("model_count"))
-        count_df = full_df.join(count_df, on=[*grouping_cols, quantity], how="left").fill_null(0)
+        count_df = combined_df.group_by([*grouping_cols, quantity_group_name]).agg(pl.count().alias("model_count"))
+        count_df = full_df.join(count_df, on=[*grouping_cols, quantity_group_name], how="left").fill_null(0)
         group_total_df = combined_df.group_by(grouping_cols).agg(pl.count().alias("total_count"))
         count_df = count_df.join(group_total_df, on=grouping_cols)
         count_df = count_df.with_columns(
             (pl.col("model_count") / pl.col("total_count") * 100).round(2).alias("prevalence")
         ).drop("total_count")
-        return  human_sort(count_df, [*grouping_cols, quantity]).collect()
+        if isinstance(quantity, str):
+            count_df = count_df.filter(pl.col(quantity_group_name) == quantity)
+        else:
+            valid_cats = set(quantity.constituents)
+            count_df = count_df.filter(pl.col(quantity_group_name).is_in(valid_cats))
+        return  human_sort(count_df, [*grouping_cols, quantity_group_name]).collect()
 
 
     def prepare_data_for_bar_plot(

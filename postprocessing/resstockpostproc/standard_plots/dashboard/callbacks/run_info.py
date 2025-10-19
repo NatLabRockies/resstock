@@ -21,6 +21,7 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
         Output("run-info-num-points", "children"),
         Input("run-folder", "value"),
         State("selected-upgrades", "value"),
+        prevent_initial_call=True,
     )
     def _update_run_info(run_folder: str, current_selection: list[int] | None):
         current_selection = current_selection or []
@@ -75,104 +76,12 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
         )
 
     @app.callback(
-        Output("group-by", "options"),
-        Output("group-by", "value"),
-        Input("run-folder", "value"),
-        State("group-by", "value"),
-        State("group-by-store", "data"),
-        prevent_initial_call=True,
-    )
-    def _update_group_by_options(run_folder: str, current_val: str | None, persisted_val: str | None):
-        orchestrator = ctx.get_orchestrator(run_folder)
-        if orchestrator is None:
-            raise PreventUpdate
-
-        workflow_group_by: tuple[str, ...] = orchestrator.workflow.group_by
-
-        small_chars: list[str] = []
-        geo_columns: list[str] = []
-        try:
-            base_df: pl.LazyFrame = orchestrator.processor.combined_df.filter(pl.col("upgrade") == 0)
-            schema_names = base_df.collect_schema().names()
-            in_cols = [col for col in schema_names if col.startswith("in.")]
-            if in_cols:
-                unique_df = base_df.select([pl.col(col).n_unique().alias(col) for col in in_cols]).collect()
-                unique_counts = dict(zip(in_cols, unique_df.row(0)))
-                small_chars = sorted([col for col, count in unique_counts.items() if 1 < count <= 20])
-            geo_columns = [col for col in ("in.state", "in.county") if col in schema_names]
-        except Exception as exc:  # noqa: BLE001
-            logger.warning("Failed to compute additional group-by characteristics: %s", exc)
-
-        options: list[dict[str, Any]] = [
-            {"label": "None", "value": "__none__"},
-            {"label": "— Workflow group-by —", "value": "__sep_wf__", "disabled": True},
-            *[{"label": col, "value": col} for col in workflow_group_by],
-        ]
-
-        if geo_columns:
-            options.extend(
-                [
-                    {"label": "— Geography —", "value": "__sep_geo__", "disabled": True},
-                    *[
-                        {"label": col, "value": col}
-                        for col in geo_columns
-                        if col not in workflow_group_by
-                    ],
-                ]
-            )
-
-        if small_chars:
-            options.extend(
-                [
-                    {"label": "— Additional characteristics —", "value": "__sep_extra__", "disabled": True},
-                    *[{"label": col, "value": col} for col in small_chars if col not in workflow_group_by],
-                ]
-            )
-
-        valid_values = {option["value"] for option in options if not option.get("disabled")}
-
-        # Prefer the dropdown's current value if valid; otherwise try the
-        # persisted store; otherwise fall back to "__none__".
-        if current_val in valid_values:
-            new_val = current_val
-        elif persisted_val in valid_values:
-            new_val = persisted_val
-        else:
-            new_val = "__none__"
-
-        logger.info("Updating group by options: %s", [option["label"] for option in options])
-        return options, new_val
-
-    # Mirror the dropdown selection into a local-storage store for robust persistence
-    @app.callback(
-        Output("group-by-store", "data"),
-        Input("group-by", "value"),
-        prevent_initial_call=True,
-    )
-    def _persist_group_by_selection(val: str | None):
-        return val
-
-    # Apply persisted store value back to dropdown when it becomes available
-    # MultiplexerTransform allows shared outputs across callbacks.
-    @app.callback(
-        Output("group-by", "value"),
-        Input("group-by-store", "data"),
-        State("group-by", "options"),
-    )
-    def _apply_persisted_group_by(val: str | None, options: list[dict[str, Any]] | None):
-        if not options or val is None:
-            raise PreventUpdate
-        valid_values = {opt["value"] for opt in options if not opt.get("disabled")}
-        if val in valid_values:
-            return val
-        raise PreventUpdate
-
-    @app.callback(
         Output("building-inclusion", "options"),
         Output("building-inclusion", "value"),
-        Input("run-folder", "value"),
+        State("run-folder", "value"),
         Input("selected-upgrades", "value"),
         State("building-inclusion", "value"),
+        prevent_initial_call=True,
     )
     def _update_upgrade_inclusion_dd(run_folder: str, selected_upgrades: list[int], current_val: str):
         orchestrator = ctx.get_orchestrator(run_folder)

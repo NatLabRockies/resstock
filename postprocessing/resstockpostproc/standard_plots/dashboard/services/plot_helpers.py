@@ -22,6 +22,7 @@ from ..run_context import RunContext
 
 def build_plot_spec(
     ctx: RunContext,
+    run_folder: str,
     building_incl: str,
     vacancy_incl: str,
     quantity_type: str,
@@ -38,17 +39,20 @@ def build_plot_spec(
     group_by = group_by_val if group_by_val != "__none__" else None
 
     quantity: str | QuantityGroup
-    if qtype_enum == QuantityType.prevalence:
-        quantity = quantity_val
-    elif quantity_val == "__group_stacked__":
-        quantity = ctx.quantity_groups[qgroup_name]
+    if quantity_val == "__group_stacked__":
+        if quantity_type == QuantityType.prevalence:
+            all_categories = ctx.list_quantity_categories(run_folder, qgroup_name)
+            quantity = QuantityGroup(
+                name=qgroup_name,
+                constituents=tuple(all_categories),
+                sum=None,
+            )
+        else:
+            quantity = ctx.quantity_groups[qgroup_name]
     else:
         quantity = quantity_val
 
     quantity_group_name = qgroup_name
-    if qtype_enum == QuantityType.prevalence:
-        quantity_group_name = quantity_val
-
     if building_incl == "__all__":
         upg_incl_enum = BuildingInclusion.all
         upgrade_num = None

@@ -74,8 +74,6 @@ class PlotSpec(BaseModel):
             return error
         if self.aggregation_type == AggregationType.total and self.quantity_type == QuantityType.percent_savings:
             return "Percent savings can only be aggregated as weighted average"
-        if self.quantity_type == QuantityType.prevalence and not isinstance(self.quantity, str):
-            return "Prevalence plots require selecting a single categorical column."
         if self.visualization_type == VizType.box and not isinstance(self.quantity, str) and self.group_by:
             return "Box plot can only be generated from stacked quantities when group_by is None."
         if self.visualization_type == VizType.heatmap and not isinstance(self.quantity, QuantityGroup):
