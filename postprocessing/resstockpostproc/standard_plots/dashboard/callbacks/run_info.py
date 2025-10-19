@@ -91,7 +91,7 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
         if orchestrator is None:
             raise PreventUpdate
         quantity_type = QuantityType(quantity_type_val)
-
+        selected_upgrades = sorted(selected_upgrades)
         options: list[dict[str, Any]] = []
         if quantity_type != QuantityType.prevalence:
             options = [

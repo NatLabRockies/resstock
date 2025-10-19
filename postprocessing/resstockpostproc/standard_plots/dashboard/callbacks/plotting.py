@@ -195,13 +195,8 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
             orchestrator.theme.update_upgrade_palette(
                 tuple(selected_upgrades) if selected_upgrades is not None else None
             )
-            if plot_spec.visualization_type == VizType.choropleth:
-                fig = plotter.create_plot(
-                    df,
-                    plot_spec,
-                )
-            else:
-                fig = plotter.create_plot(df, plot_spec)
+
+            fig = plotter.create_plot(df, plot_spec)
             print(f"Figure generated in {time.time() - start_time:.1f} seconds.")
 
         fig.layout.title.subtitle.text = ""

@@ -221,7 +221,7 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
                 return [], None
             options = [{"label": col, "value": col} for col in categories]
             valid_values = {opt["value"] for opt in options}
-            default_value = current_val if current_val in categories else categories[0]
+            default_value = current_val if current_val in categories + ['__group_stacked__'] else categories[0]
             options.append({"label": "ALL - stacked", "value": "__group_stacked__"})
             return options, default_value
 
