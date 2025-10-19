@@ -98,8 +98,8 @@ class ChoroplethPlotter(BasePlotter):
         data: pl.DataFrame,
         plot_spec: PlotSpec,
         *,
-        show_labels: bool = True,
-        show_boundaries: bool = True,
+        show_labels: bool = False,
+        show_boundaries: bool = False,
     ) -> go.Figure:
         """Create a choropleth map for the provided data."""
         if plot_spec.group_by is None:

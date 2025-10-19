@@ -152,8 +152,6 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         # persisted store; otherwise fall back to "__none__".
         if current_val in valid_values:
             new_val = current_val
-        elif persisted_val in valid_values:
-            new_val = persisted_val
         else:
             new_val = "__none__"
 
@@ -167,13 +165,15 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         State("quantity-type", "value"),
         State("quantity-group", "value"),
         State("run-folder", "value"),
+        State("selected-upgrades", "value"),
         prevent_initial_call=True,
     )
-    def _update_quantity_group_dd(group_by_val: str, quantity_type_val: str, current_val: str, run_folder_val: str):
+    def _update_quantity_group_dd(group_by_val: str, quantity_type_val: str, current_val: str, run_folder_val: str, selected_upgrades: list[int]):
         print(f"update quantity group triggered by: {dash.callback_context.triggered}")
         qtype = QuantityType(quantity_type_val)
         if qtype == QuantityType.prevalence:
-            categorical_cols = ctx.list_categorical_quantities(run_folder_val)
+            upgrade = sorted(selected_upgrades)[-1] if selected_upgrades else 0
+            categorical_cols = ctx.list_categorical_quantities(run_folder_val, upgrade)
             if not categorical_cols:
                 return [], None
             options = [{"label": col, "value": col} for col in categorical_cols]
@@ -192,6 +192,7 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         State("group-by", "value"),
         State("quantity-type", "value"),
         State("run-folder", "value"),
+        State("selected-upgrades", "value"),
         State("quantity", "value"),
         prevent_initial_call=True,
     )
@@ -201,6 +202,7 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         group_by_val: str,
         quantity_type_val: str,
         run_folder_val: str,
+        selected_upgrades: list[int],
         current_val: str | None,
     ):
         if not qgroup_name:
@@ -209,7 +211,8 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         qtype = QuantityType(quantity_type_val)
         viz_type = VizType(viz_type_val)
         if qtype == QuantityType.prevalence:
-            categories = ctx.list_quantity_categories(run_folder_val, qgroup_name)
+            upgrade = sorted(selected_upgrades)[-1] if selected_upgrades else 0
+            categories = ctx.list_quantity_categories(run_folder_val, upgrade, qgroup_name)
             if not categories:
                 return [], None
             options = [{"label": col, "value": col} for col in categories]
@@ -234,28 +237,3 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         valid_values = {opt["value"] for opt in options}
         default_value = current_val if current_val in valid_values else options[0]["value"]
         return options, default_value
-
-    # Mirror the dropdown selection into a local-storage store for robust persistence
-    # @app.callback(
-    #     Output("group-by-store", "data"),
-    #     Input("group-by", "value"),
-    #     prevent_initial_call=True,
-    # )
-    # def _persist_group_by_selection(val: str | None):
-    #     return val
-
-    # # Apply persisted store value back to dropdown when it becomes available
-    # # MultiplexerTransform allows shared outputs across callbacks.
-    # @app.callback(
-    #     Output("group-by", "value"),
-    #     Input("group-by-store", "data"),
-    #     State("group-by", "options"),
-    #     prevent_initial_call=True,
-    # )
-    # def _apply_persisted_group_by(val: str | None, options: list[dict[str, Any]] | None):
-    #     if not options or val is None:
-    #         raise PreventUpdate
-    #     valid_values = {opt["value"] for opt in options if not opt.get("disabled")}
-    #     if val in valid_values:
-    #         return val
-    #     raise PreventUpdate

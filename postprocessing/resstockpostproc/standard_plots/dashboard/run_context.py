@@ -22,7 +22,7 @@ class RunContext:
     plots_root_folder: str | None = None
     _orchestrators: dict[str, PlotOrchestrator] = field(default_factory=dict)
     _categorical_columns: dict[str, list[str]] = field(default_factory=dict)
-    _quantity_categories: dict[tuple[str, str], list[str]] = field(default_factory=dict)
+    _quantity_categories: dict[tuple[str, int, str], list[str]] = field(default_factory=dict)
 
     @classmethod
     def from_environment(cls, workflow_yaml: Path, plots_root_folder: str | None = None) -> "RunContext":
@@ -83,7 +83,7 @@ class RunContext:
         self._orchestrators[run_folder] = PlotOrchestrator(workflow, overwrite=False)
         return self._orchestrators[run_folder]
 
-    def list_categorical_quantities(self, run_folder: str) -> list[str]:
+    def list_categorical_quantities(self, run_folder: str, upgrade: int) -> list[str]:
         """Return cached list of categorical columns suitable for prevalence plots."""
         if run_folder in self._categorical_columns:
             return self._categorical_columns[run_folder]
@@ -92,8 +92,8 @@ class RunContext:
         if orchestrator is None:
             return []
 
-        lf = orchestrator.processor.combined_df
-        schema = lf.collect_schema()
+        data = orchestrator.inp_mgr.load_data([upgrade])
+        schema = data.collect_schema()
 
         def _is_numeric(dtype: pl.DataType) -> bool:
             return (
@@ -115,7 +115,7 @@ class RunContext:
             for name, dtype in schema.items()
             if name not in excluded_columns
             and not _is_numeric(dtype)
-            and dtype != pl.Boolean
+            # and dtype != pl.Boolean
         ]
 
         if not candidate_cols:
@@ -123,7 +123,7 @@ class RunContext:
             return []
 
         uniques = (
-            lf.select([pl.col(col).n_unique().alias(col) for col in candidate_cols])
+            data.select([pl.col(col).n_unique().alias(col) for col in candidate_cols])
             .collect()
             .row(0)
         )
@@ -138,20 +138,20 @@ class RunContext:
         self._categorical_columns[run_folder] = categorical_cols
         return categorical_cols
 
-    def list_quantity_categories(self, run_folder: str, column: str) -> list[str]:
+    def list_quantity_categories(self, run_folder: str, upgrade: int, column: str) -> list[str]:
         """Return cached list of category values for the requested column."""
-        cache_key = (run_folder, column)
-        if cache_key in self._quantity_categories:
+        cache_key = (run_folder, upgrade, column)
+        if cache_key in self._quantity_categories and self._quantity_categories[cache_key]:
             return self._quantity_categories[cache_key]
 
         orchestrator = self.get_orchestrator(run_folder)
         if orchestrator is None:
             return []
 
-        lf = orchestrator.processor.combined_df
+        data = orchestrator.inp_mgr.load_data([upgrade])
         try:
             categories_df = (
-                lf.select(pl.col(column))
+                data.select(pl.col(column))
                 .drop_nulls()
                 .unique(maintain_order=True)
                 .collect()

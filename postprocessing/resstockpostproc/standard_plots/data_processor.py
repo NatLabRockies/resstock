@@ -193,19 +193,24 @@ class DataProcessor:
             DataFrame prepared for plotting with aggregated (mean) values
         """
 
-        combined_df = self._process_upgrades_inclusion(plot_spec, selected_upgrades, self.combined_df)
-        combined_df = self._process_building_inclusion(plot_spec, combined_df)
-        combined_df = self._process_vacancy_inclusion(plot_spec, combined_df)
+
         if plot_spec.quantity_type == QuantityType.prevalence:
+            combined_df = self._process_upgrades_inclusion(plot_spec, selected_upgrades, self.combined_df)
+            combined_df = self._process_building_inclusion(plot_spec, combined_df)
+            combined_df = self._process_vacancy_inclusion(plot_spec, combined_df)
             return self.prepare_data_for_prevalence_plot(
                 combined_df=combined_df,
                 quantity_group_name=plot_spec.quantity_group_name,
                 quantity=plot_spec.quantity,
                 group_by=plot_spec.group_by,
             )
+
         quantities = self._get_quantities(plot_spec)
-        combined_df = self._fill_missing_quantities(combined_df, quantities)
+        combined_df = self._fill_missing_quantities(self.combined_df, quantities)
         combined_df = self._convert_quantity_type(quantities, plot_spec.quantity_type, combined_df)
+        combined_df = self._process_upgrades_inclusion(plot_spec, selected_upgrades, combined_df)
+        combined_df = self._process_building_inclusion(plot_spec, combined_df)
+        combined_df = self._process_vacancy_inclusion(plot_spec, combined_df)
 
         if plot_spec.quantity_type in [QuantityType.savings, QuantityType.percent_savings]:
             # baseline should not be included when plotting savings

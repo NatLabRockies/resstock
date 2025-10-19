@@ -23,6 +23,7 @@ from ..run_context import RunContext
 def build_plot_spec(
     ctx: RunContext,
     run_folder: str,
+    selected_upgrades: list[int],
     building_incl: str,
     vacancy_incl: str,
     quantity_type: str,
@@ -41,7 +42,8 @@ def build_plot_spec(
     quantity: str | QuantityGroup
     if quantity_val == "__group_stacked__":
         if quantity_type == QuantityType.prevalence:
-            all_categories = ctx.list_quantity_categories(run_folder, qgroup_name)
+            upgrade = sorted(selected_upgrades)[-1] if selected_upgrades else 0
+            all_categories = ctx.list_quantity_categories(run_folder, upgrade, qgroup_name)
             quantity = QuantityGroup(
                 name=qgroup_name,
                 constituents=tuple(all_categories),
