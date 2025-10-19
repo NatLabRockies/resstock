@@ -80,28 +80,30 @@ class HistogramPlotter(BasePlotter):
         )
 
         # ------------------------------------------------------------------
-        # 2. Prepare facet grid
+        # 2. Prepare facet grid (rows = facets, columns = upgrades)
         # ------------------------------------------------------------------
         upgrades = df["upgrade_name"].unique(maintain_order=True).to_list()
-        facets = df[facet_column].unique(maintain_order=True).to_list() if facet_column else [None]
+        facet_values = df[facet_column].unique(maintain_order=True).to_list() if facet_column else [None]
 
-        n_rows, n_cols = len(upgrades), len(facets)
+        n_rows, n_cols = len(facet_values), len(upgrades)
+        h_spacing = 0.1 * (1 / max(n_cols, 1))
+        v_spacing = 0.1 * (1 / max(n_rows, 1))
         fig = make_subplots(
             rows=n_rows,
             cols=n_cols,
             shared_yaxes="all",
             shared_xaxes="all",
-            row_titles=upgrades,
-            column_titles=[str(f) for f in facets] if facet_column else None,
-            horizontal_spacing=(0.1 * (1 / n_cols)),
-            vertical_spacing=0.1 * (1 / n_rows),
+            row_titles=[str(f) for f in facet_values] if facet_column else None,
+            column_titles=[str(u) for u in upgrades],
+            horizontal_spacing=h_spacing,
+            vertical_spacing=v_spacing,
         )
 
         # ------------------------------------------------------------------
         # 3. Add one Bar trace per upgrade *and* facet
         # ------------------------------------------------------------------
-        for r, upgrade in enumerate(upgrades, start=1):
-            for c, facet_val in enumerate(facets, start=1):
+        for r, facet_val in enumerate(facet_values, start=1):
+            for c, upgrade in enumerate(upgrades, start=1):
                 mask = pl.col("upgrade_name") == upgrade
                 if facet_column:
                     mask &= pl.col(facet_column) == facet_val
@@ -116,7 +118,7 @@ class HistogramPlotter(BasePlotter):
                     width=sub["_bar_width"].to_list(),
                     name=upgrade,
                     marker_color=self.theme.upgrade_palette.get(upgrade),
-                    showlegend=(c == 1),  # one legend entry per upgrade
+                    showlegend=(r == 1),  # one legend entry per upgrade
                     legendgroup=upgrade,
                     customdata=list(zip(sub["bin_left"].to_list(), sub["bin_right"].to_list())),  # type: ignore[arg-type]
                     hovertemplate="%{customdata[0]:.1f} to %{customdata[1]:.1f}<br>Count: %{y}<extra></extra>",
