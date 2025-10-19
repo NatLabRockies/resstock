@@ -83,8 +83,6 @@ class PlotSpec(BaseModel):
         if self.visualization_type == VizType.choropleth:
             if self.aggregation_type == AggregationType.distribution:
                 return "Choropleth cannot be generated for distribution aggregation."
-            if self.group_by not in {"in.state", "in.county"}:
-                return "Choropleth plots require group_by to be either 'in.state' or 'in.county'."
             if isinstance(self.quantity, QuantityGroup):
                 return "Choropleth plots require a single quantity column."
         if self.upgrade == 0 and self.building_inclusion == BuildingInclusion.applied_only:

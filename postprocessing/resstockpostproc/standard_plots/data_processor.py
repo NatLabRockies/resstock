@@ -6,6 +6,8 @@ Handles transformation and processing of simulation result data using Polars
 
 import logging
 import math
+from collections.abc import Sequence
+from typing import Literal
 
 import numpy as np
 import polars as pl
@@ -192,31 +194,31 @@ class DataProcessor:
         Returns:
             DataFrame prepared for plotting with aggregated (mean) values
         """
-
-
-        if plot_spec.quantity_type == QuantityType.prevalence:
-            combined_df = self._process_upgrades_inclusion(plot_spec, selected_upgrades, self.combined_df)
-            combined_df = self._process_building_inclusion(plot_spec, combined_df)
-            combined_df = self._process_vacancy_inclusion(plot_spec, combined_df)
-            return self.prepare_data_for_prevalence_plot(
-                combined_df=combined_df,
-                quantity_group_name=plot_spec.quantity_group_name,
-                quantity=plot_spec.quantity,
-                group_by=plot_spec.group_by,
-            )
-
+        combined_df = self.combined_df
+        grouping_cols = self._get_grouping_cols(plot_spec) 
         quantities = self._get_quantities(plot_spec)
-        combined_df = self._fill_missing_quantities(self.combined_df, quantities)
-        combined_df = self._convert_quantity_type(quantities, plot_spec.quantity_type, combined_df)
+        if plot_spec.quantity_type != QuantityType.prevalence:
+            combined_df = self._fill_missing_quantities(combined_df, quantities)
+            combined_df = self._convert_quantity_type(quantities, plot_spec.quantity_type, combined_df)
+        
         combined_df = self._process_upgrades_inclusion(plot_spec, selected_upgrades, combined_df)
         combined_df = self._process_building_inclusion(plot_spec, combined_df)
         combined_df = self._process_vacancy_inclusion(plot_spec, combined_df)
 
+        if plot_spec.quantity_type == QuantityType.prevalence:
+            return self.prepare_data_for_prevalence_plot(
+                combined_df=combined_df,
+                quantity_group_name=plot_spec.quantity_group_name,
+                quantity=plot_spec.quantity,
+                grouping_cols=grouping_cols,
+            )
+    
         if plot_spec.quantity_type in [QuantityType.savings, QuantityType.percent_savings]:
-            # baseline should not be included when plotting savings
             combined_df = combined_df.filter(pl.col(UPGRADE_COL) != 0)
+
         if plot_spec.visualization_type == VizType.box:
-            if not isinstance(plot_spec.quantity, str):
+            if isinstance(plot_spec.quantity, QuantityGroup):
+                # Stack all constituent quantities into a single 'End Use' column
                 combined_df = combined_df.unpivot(
                     quantities,
                     index=[UPGRADE_COL, UPGRADE_NAME_COL, BLDG_ID_COL],
@@ -224,25 +226,31 @@ class DataProcessor:
                     value_name="value (kWh)",
                 )
                 quantity = "value (kWh)"
-                group_by: str | None = "End Use"
+                box_grouping_cols = grouping_cols + ["End Use"]
             else:
                 quantity = plot_spec.quantity
-                group_by = plot_spec.group_by
-            plot_data = self.prepare_data_for_box_plot(combined_df, quantity, group_by)
+                box_grouping_cols = grouping_cols.copy()
+            plot_data = self.prepare_data_for_box_plot(combined_df, quantity, box_grouping_cols)
         elif plot_spec.visualization_type in (VizType.bar, VizType.heatmap, VizType.choropleth):
             plot_data = self.prepare_data_for_bar_plot(
-                combined_df, quantities, plot_spec.group_by, plot_spec.aggregation_type, plot_spec.quantity_type
+                combined_df, quantities, grouping_cols, plot_spec.aggregation_type, plot_spec.quantity_type
             )
         elif plot_spec.visualization_type == VizType.hist:
             assert isinstance(plot_spec.quantity, str)  # noqa: S101 Use of `assert` detected
-            plot_data = self.prepare_data_for_histogram_plot(combined_df, plot_spec.quantity, plot_spec.group_by)
+            plot_data = self.prepare_data_for_histogram_plot(combined_df, plot_spec.quantity, grouping_cols)
         else:
             raise ValueError(f"Unsupported visualization type: {plot_spec.visualization_type}")
 
-        if plot_spec.group_by:
-            plot_data = human_sort(plot_data.lazy(), plot_spec.group_by).collect()
-
+        plot_data = human_sort(plot_data.lazy(), grouping_cols).collect()
         return plot_data
+
+    def _get_grouping_cols(self, plot_spec):
+        grouping_cols = [UPGRADE_COL, UPGRADE_NAME_COL]
+        if plot_spec.visualization_type == VizType.choropleth:
+            grouping_cols.append("in.state")
+        if plot_spec.group_by:
+            grouping_cols.append(plot_spec.group_by)
+        return grouping_cols
 
     def _process_vacancy_inclusion(self, plot_spec, combined_df):
         if plot_spec.vacancy_inclusion == VacancyInclusion.occupied_only:
@@ -287,7 +295,7 @@ class DataProcessor:
         self,
         combined_df: pl.LazyFrame,
         quantity: str,
-        group_by: str | None = None,
+        grouping_cols: list[str],
     ) -> pl.DataFrame:
         """
         Build a 102-bin histogram of `quantity` per (upgrade, upgrade_name[, group_by]).
@@ -337,15 +345,13 @@ class DataProcessor:
         lf_binned = combined_df.with_columns(bin_expr)
 
         # ---------- 3. Aggregate real counts ----------
-        group_keys = [UPGRADE_COL, UPGRADE_NAME_COL, group_by, "bin"] if group_by else [UPGRADE_COL, UPGRADE_NAME_COL, "bin"]
+        group_keys = [*grouping_cols, "bin"]
         counts = lf_binned.group_by(group_keys, maintain_order=True).agg(pl.count().alias("count"))
 
         # ---------- 4. Build full grid ----------
         full_bins = pl.Series("bin", [-1, *list(range(100)), 100], dtype=pl.Int32)
 
-        groups = combined_df.select(UPGRADE_COL, UPGRADE_NAME_COL, *(group_by,) if group_by else ()).unique(
-            maintain_order=True
-        )
+        groups = combined_df.select(grouping_cols).unique(maintain_order=True)
 
         grid = groups.lazy().join(pl.DataFrame({"bin": full_bins}).lazy(), how="cross", maintain_order='left')
 
@@ -372,9 +378,7 @@ class DataProcessor:
             )
             .with_columns(((pl.col("bin_left") + pl.col("bin_right")) / 2).alias("bin_center"))
             .select(
-                UPGRADE_COL,
-                UPGRADE_NAME_COL,
-                *(group_by,) if group_by else (),
+                *grouping_cols,
                 "bin",
                 "bin_left",
                 "bin_right",
@@ -389,17 +393,14 @@ class DataProcessor:
         self,
         combined_df: pl.LazyFrame,
         quantity: str,
-        group_by: str | None = None,
+        grouping_cols: list[str],
         *,
         include_kde: bool = True,
         kde_points: int = 100,
     ) -> pl.DataFrame:
 
         # ─── 1. keys ──────────────────────────────────────────────────────────────
-        gcols = [UPGRADE_COL, UPGRADE_NAME_COL]
-        if group_by:
-            gcols.append(group_by)
-        max_items_per_group = max(combined_df.group_by(gcols).agg(pl.len()).collect()['len'].to_list())
+        max_items_per_group = max(combined_df.group_by(grouping_cols).agg(pl.len()).collect()['len'].to_list())
         if max_items_per_group < 30000:
             cutoff = 0.01  # Upto 30K datapoints, show 1% outliers
         elif max_items_per_group < 100000:
@@ -408,7 +409,7 @@ class DataProcessor:
             cutoff = 0.0001  # very large groups, use 0.01% outliers
         lazy = (
             combined_df.fill_null(0)
-            .group_by(gcols, maintain_order=True)
+            .group_by(grouping_cols, maintain_order=True)
             .agg(
                 pl.col(quantity).alias("vals"),
                 pl.col(BLDG_ID_COL).alias("bldg_ids"),
@@ -517,7 +518,7 @@ class DataProcessor:
         combined_df: pl.LazyFrame,
         quantity: str | QuantityGroup,
         quantity_group_name: str,
-        group_by: str | None,
+        grouping_cols: list[str],
     ) -> pl.DataFrame:
         """
         Prepare data for prevalence plotting by grouping and counting
@@ -530,9 +531,6 @@ class DataProcessor:
         Returns:
             DataFrame prepared for prevalence plotting
         """
-        grouping_cols = [UPGRADE_COL, UPGRADE_NAME_COL]
-        if group_by:
-            grouping_cols.append(group_by)
         combined_df = combined_df.with_columns(pl.col(quantity_group_name).cast(pl.String))
         all_groups_df = combined_df.select(pl.col(grouping_cols)).unique()
         all_cats_df = combined_df.select(pl.col(quantity_group_name)).unique()
@@ -556,7 +554,7 @@ class DataProcessor:
         self,
         combined_df: pl.LazyFrame,
         quantities: list[str],
-        group_by: str | None,
+        grouping_cols: Sequence[str],
         aggregation_type: AggregationType,
         quantity_type: QuantityType,
     ) -> pl.DataFrame:
@@ -566,17 +564,15 @@ class DataProcessor:
         Args:
             combined_df: Combined DataFrame containing all data
             quantities: List of quantities to plot
-            group_by: Column to group by
+            grouping_cols: Columns to group by
             aggregation_type: Whether to calculate average or sum
             quantity_type: Whether to calculate absolute or savings
 
         Returns:
             DataFrame prepared for plotting with all requested quantities
         """
-
-        grouping_cols = [UPGRADE_COL, UPGRADE_NAME_COL]
-        if group_by:
-            grouping_cols.append(group_by)
+        # Preserve order while removing potential duplicates
+        grouping_cols = list(dict.fromkeys(grouping_cols))
         columns_to_select = grouping_cols + quantities + ["model_count"]
 
         if quantity_type == QuantityType.model_count:

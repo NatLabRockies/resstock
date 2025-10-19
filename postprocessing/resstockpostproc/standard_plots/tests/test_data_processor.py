@@ -224,6 +224,20 @@ def test_prepare_basic(
     df = processor.prepare_data_for_plot(spec)
     assert isinstance(df, pl.DataFrame)
 
+    if viz_type == VizType.choropleth:
+        assert "in.state" in df.columns
+        assert df["in.state"].is_not_null().all()
+        assert "model_count" in df.columns
+        assert "upgrade_name" in df.columns
+        if spec.group_by:
+            assert spec.group_by in df.columns
+        key_cols = ["upgrade", "in.state"]
+        if spec.group_by and spec.group_by != "in.state":
+            key_cols.append(spec.group_by)
+        assert df.select(key_cols).unique().height == df.height
+        assert df.height > 0
+        return
+
     if quantity_type in [QuantityType.percent_savings, QuantityType.savings] or (
         building_inclusion == BuildingInclusion.applied_only
     ):

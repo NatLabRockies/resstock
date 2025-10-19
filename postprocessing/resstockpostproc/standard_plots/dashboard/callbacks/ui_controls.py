@@ -97,11 +97,6 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
     )
     def _update_group_by_options(viz_type_val: str,
                                  run_folder: str, current_val: str | None):
-        if viz_type_val == "choropleth":
-            valid_options = ['in.state', 'in.county']
-            new_val = current_val if current_val in valid_options else valid_options[0]
-            return valid_options, new_val
-
         orchestrator = ctx.get_orchestrator(run_folder)
         if orchestrator is None:
             raise PreventUpdate

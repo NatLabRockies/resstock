@@ -9,7 +9,7 @@ import csv
 import math
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import polars as pl
 import plotly.colors as pc
@@ -98,19 +98,33 @@ class ChoroplethPlotter(BasePlotter):
         data: pl.DataFrame,
         plot_spec: PlotSpec,
         *,
+        resolution: Literal["state", "county"] = "state",
         show_labels: bool = False,
         show_boundaries: bool = False,
     ) -> go.Figure:
         """Create a choropleth map for the provided data."""
-        if plot_spec.group_by is None:
-            raise ValueError("Choropleth plots require a group_by column.")
         if isinstance(plot_spec.quantity, QuantityGroup):  # defensive guard; should already be prevented
             raise ValueError("Choropleth plots require a single quantity column.")
 
-        quantity_col = str(plot_spec.quantity)
-        group_col = plot_spec.group_by
+        location_col = "in.state" if resolution == "state" else "in.county"
+        quantity_col = str(plot_spec.quantity_group_name)
+        required_cols = {location_col, quantity_col, "upgrade_name", "model_count"}
+        if plot_spec.group_by:
+            required_cols.add(plot_spec.group_by)
 
-        df = data.filter(pl.col(group_col).is_not_null() & pl.col(quantity_col).is_not_null())
+        missing_cols = [col for col in required_cols if col not in data.columns]
+        if missing_cols:
+            missing = ", ".join(sorted(missing_cols))
+            raise ValueError(f"Choropleth data is missing required columns: {missing}")
+
+        filters = [
+            pl.col(location_col).is_not_null(),
+            pl.col(quantity_col).is_not_null(),
+        ]
+        if plot_spec.group_by:
+            filters.append(pl.col(plot_spec.group_by).is_not_null())
+
+        df = data.filter(pl.all_horizontal(filters))
         if df.is_empty():
             fig = go.Figure()
             self.theme.apply_layout(fig)
@@ -139,96 +153,138 @@ class ChoroplethPlotter(BasePlotter):
 
         upgrades = df["upgrade_name"].unique(maintain_order=True).to_list()
         n_cols = max(1, len(upgrades))
+
+        facet_column = plot_spec.group_by
+        facet_values = (
+            df[facet_column].unique(maintain_order=True).to_list() if facet_column else [None]
+        )
+        n_rows = max(1, len(facet_values))
+
+        column_titles = (
+            [
+                self.format_label(str(upgrade)) if upgrade is not None else ""
+                for upgrade in upgrades
+            ]
+            if upgrades
+            else None
+        )
+        row_titles = None
+        if facet_column:
+            row_titles = [
+                self.format_label(str(value)) if value is not None else ""
+                for value in facet_values
+            ]
+
         fig = make_subplots(
-            rows=1,
+            rows=n_rows,
             cols=n_cols,
-            specs=[[{"type": "choropleth"} for _ in range(n_cols)]],
-            subplot_titles=[self.format_label(str(up)) for up in upgrades] if upgrades else (),
+            specs=[[{"type": "choropleth"} for _ in range(n_cols)] for _ in range(n_rows)],
+            column_titles=column_titles,
+            row_titles=row_titles,
+            vertical_spacing=0.02,
+            horizontal_spacing=0.02,
         )
 
-        level = "state" if group_col == "in.state" else "county"
-        geojson = self._load_county_geojson() if level == "county" else None
-        county_extent_added = [False] * n_cols if level == "county" else []
+        geojson = self._load_county_geojson() if resolution == "county" else None
+        county_extent_added: set[tuple[int, int]] = set()
 
-        for idx, upgrade_name in enumerate(upgrades):
-            subset = df.filter(pl.col("upgrade_name") == upgrade_name)
-            if subset.is_empty():
+        for row_idx, facet_value in enumerate(facet_values, start=1):
+            facet_df = (
+                df if facet_column is None else df.filter(pl.col(facet_column) == facet_value)
+            )
+            if facet_df.is_empty():
                 continue
 
-            locations, labels = self._extract_locations(subset[group_col].to_list(), level)
-            values = subset[quantity_col].to_list()
-            model_counts = subset["model_count"].to_list()
-            text_values = (
-                self._build_text_labels(level, values, plot_spec, quantity_title)
-                if show_labels
-                else None
-            )
+            for col_idx, upgrade_name in enumerate(upgrades, start=1):
+                subset = facet_df.filter(pl.col("upgrade_name") == upgrade_name)
+                if subset.is_empty():
+                    continue
 
-            default_line_width = 1.4 if level == "state" else 0.6
-            subtle_line_width = max(default_line_width * 0.2, 0.2)
-            marker_line_width = default_line_width if show_boundaries else subtle_line_width
-            marker_line_color = "rgba(0,0,0,0.85)" if show_boundaries else "rgba(0,0,0,0.25)"
+                locations, labels = self._extract_locations(
+                    subset[location_col].to_list(), resolution
+                )
+                values = subset[quantity_col].to_list()
+                model_counts = subset["model_count"].to_list()
+                text_values = (
+                    self._build_text_labels(resolution, values, plot_spec, quantity_title)
+                    if show_labels
+                    else None
+                )
 
-            trace = go.Choropleth(
-                locations=locations,
-                z=values,
-                locationmode="USA-states" if level == "state" else None,
-                geojson=geojson,
-                featureidkey="id" if level == "county" else None,
-                coloraxis="coloraxis",
-                marker_line_width=marker_line_width,
-                marker_line_color=marker_line_color,
-                customdata=list(zip(labels, model_counts)),
-                hovertemplate=self._build_hovertemplate(quantity_title),
-            )
-            if text_values:
-                trace.update(
-                    text=text_values,
+                default_line_width = 1.4 if resolution == "state" else 0.6
+                subtle_line_width = max(default_line_width * 0.2, 0.2)
+                marker_line_width = default_line_width if show_boundaries else subtle_line_width
+                marker_line_color = (
+                    "rgba(0,0,0,0.85)" if show_boundaries else "rgba(0,0,0,0.25)"
+                )
+
+                trace = go.Choropleth(
+                    locations=locations,
+                    z=values,
+                    locationmode="USA-states" if resolution == "state" else None,
+                    geojson=geojson,
+                    featureidkey="id" if resolution == "county" else None,
+                    coloraxis="coloraxis",
+                    marker_line_width=marker_line_width,
+                    marker_line_color=marker_line_color,
+                    customdata=list(zip(labels, model_counts)),
                     hovertemplate=self._build_hovertemplate(quantity_title),
                 )
-            fig.add_trace(trace, row=1, col=idx + 1)
-            if level == "county" and not county_extent_added[idx]:
-                fig.add_trace(self._build_county_extent_trace(), row=1, col=idx + 1)
-                county_extent_added[idx] = True
+                if text_values:
+                    trace.update(text=text_values)
+                fig.add_trace(trace, row=row_idx, col=col_idx)
 
-            if text_values:
-                label_positions = self._state_label_positions()
-                latitudes: list[float] = []
-                longitudes: list[float] = []
-                texts: list[str] = []
-                for loc, text in zip(locations, text_values):
-                    coords = label_positions.get(loc)
-                    if not coords or not text:
-                        continue
-                    latitudes.append(coords[0])
-                    longitudes.append(coords[1])
-                    texts.append(text)
-                if latitudes:
-                    scatter = go.Scattergeo(
-                        lat=latitudes,
-                        lon=longitudes,
-                        text=texts,
-                        mode="text",
-                        textfont={"color": "rgba(0,0,0,0.75)", "size": 12},
-                        showlegend=False,
-                    )
-                    fig.add_trace(scatter, row=1, col=idx + 1)
+                if resolution == "county" and (row_idx, col_idx) not in county_extent_added:
+                    fig.add_trace(self._build_county_extent_trace(), row=row_idx, col=col_idx)
+                    county_extent_added.add((row_idx, col_idx))
 
-            geo_kwargs: dict[str, Any] = {
-                "scope": "usa",
-                "showcountries": False,
-                "showsubunits": False,
-                "showlakes": False,
-                "showframe": False,
-                "showcoastlines": False,
-                "bgcolor": "rgba(0,0,0,0)",
-                "projection": {"type": "albers usa"},
-            }
-            geo_kwargs["fitbounds"] = "locations"
+                if text_values:
+                    label_positions = self._state_label_positions()
+                    latitudes: list[float] = []
+                    longitudes: list[float] = []
+                    texts: list[str] = []
+                    for loc, text in zip(locations, text_values):
+                        coords = label_positions.get(loc)
+                        if not coords or not text:
+                            continue
+                        latitudes.append(coords[0])
+                        longitudes.append(coords[1])
+                        texts.append(text)
+                    if latitudes:
+                        scatter = go.Scattergeo(
+                            lat=latitudes,
+                            lon=longitudes,
+                            text=texts,
+                            mode="text",
+                            textfont={"color": "rgba(0,0,0,0.75)", "size": 12},
+                            showlegend=False,
+                        )
+                        fig.add_trace(scatter, row=row_idx, col=col_idx)
 
-            fig.update_geos(row=1, col=idx + 1, **geo_kwargs)
+        geo_kwargs: dict[str, Any] = {
+            "scope": "usa",
+            "showcountries": False,
+            "showsubunits": False,
+            "showlakes": False,
+            "showframe": False,
+            "showcoastlines": False,
+            "bgcolor": "rgba(0,0,0,0)",
+            "projection": {"type": "albers usa"},
+            "center": {"lat": 38.0, "lon": -96.5},
+        }
 
-        colorbar: dict[str, Any] = {"title": quantity_title}
+        for row_idx in range(1, n_rows + 1):
+            for col_idx in range(1, n_cols + 1):
+                fig.update_geos(row=row_idx, col=col_idx, **geo_kwargs)
+
+        colorbar: dict[str, Any] = {
+            "title": {"text": quantity_title},
+            "x": 1.02,
+            "y": 0.5,
+            "yanchor": "middle",
+            "len": 0.9,
+            "thickness": 18,
+        }
         if tickvals and ticktext:
             colorbar.update({"tickmode": "array", "tickvals": tickvals, "ticktext": ticktext})
 
@@ -241,13 +297,33 @@ class ChoroplethPlotter(BasePlotter):
             }
         )
         self.theme.apply_layout(fig)
-        preferred_height = 620 if level == "county" else 540
+        base_height = 620 if resolution == "county" else 540
+        preferred_height = base_height * n_rows
         current_height = fig.layout.height or 0
         if current_height < preferred_height:
             # Ensure the geographic viewport is tall enough so the map is not vertically clipped.
             fig.update_layout(height=preferred_height)
         self._stretch_geo_height(fig)
-        fig.update_layout(margin={"l": 10, "r": 70, "t": 90, "b": 40})
+
+        fig.update_layout(
+            margin={"l": 100 if facet_column else 40, "r": 100, "t": 60, "b": 40},
+            width=max(900, n_cols * 420),
+        )
+
+        # Shift row-title annotations slightly left so they don't collide with the maps,
+        # and ensure column titles sit above their respective facets.
+        if row_titles:
+            row_title_set = {title for title in row_titles if title}
+            for annotation in fig.layout.annotations:
+                if annotation.text in row_title_set:
+                    annotation.update(x=-0.015, xref="paper", xanchor="right")
+
+        if column_titles:
+            column_title_set = {title for title in column_titles if title}
+            for annotation in fig.layout.annotations:
+                if annotation.text in column_title_set:
+                    annotation.update(y=1.04, yref="paper", yanchor="bottom")
+
         return fig
 
     @classmethod
@@ -465,13 +541,13 @@ class ChoroplethPlotter(BasePlotter):
 
     def _build_text_labels(
         self,
-        level: str,
+        resolution: str,
         values: list[float],
         plot_spec: PlotSpec,
         quantity_title: str,
     ) -> list[str] | None:
         """Provide inline labels for state-level maps."""
-        if level != "state":
+        if resolution != "state":
             return None
 
         qtype = plot_spec.quantity_type
@@ -491,9 +567,9 @@ class ChoroplethPlotter(BasePlotter):
         return labels
 
     @classmethod
-    def _extract_locations(cls, raw_values: list[Any], level: str) -> tuple[list[str], list[str]]:
+    def _extract_locations(cls, raw_values: list[Any], resolution: str) -> tuple[list[str], list[str]]:
         """Return location ids and human readable labels for the requested level."""
-        if level == "state":
+        if resolution == "state":
             locations = [str(val).upper() for val in raw_values]
             labels = [
                 f"{_STATE_ABBR_TO_NAME.get(loc, loc)} ({loc})"
