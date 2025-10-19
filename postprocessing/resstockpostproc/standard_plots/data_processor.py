@@ -533,6 +533,7 @@ class DataProcessor:
         grouping_cols = [UPGRADE_COL, UPGRADE_NAME_COL]
         if group_by:
             grouping_cols.append(group_by)
+        combined_df = combined_df.with_columns(pl.col(quantity_group_name).cast(pl.String))
         all_groups_df = combined_df.select(pl.col(grouping_cols)).unique()
         all_cats_df = combined_df.select(pl.col(quantity_group_name)).unique()
         full_df = all_groups_df.join(all_cats_df, how="cross")
@@ -544,10 +545,10 @@ class DataProcessor:
             (pl.col("model_count") / pl.col("total_count") * 100).round(2).alias("prevalence")
         ).drop("total_count")
         if isinstance(quantity, str):
-            count_df = count_df.filter(pl.col(quantity_group_name) == quantity)
+            count_df = count_df.filter(pl.col(quantity_group_name).str.to_lowercase() == quantity.lower())
         else:
-            valid_cats = set(quantity.constituents)
-            count_df = count_df.filter(pl.col(quantity_group_name).is_in(valid_cats))
+            valid_cats = set([cat.lower() for cat in quantity.constituents])
+            count_df = count_df.filter(pl.col(quantity_group_name).str.to_lowercase().is_in(valid_cats))
         return  human_sort(count_df, [*grouping_cols, quantity_group_name]).collect()
 
 

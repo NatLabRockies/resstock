@@ -20,10 +20,31 @@ from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 from ..run_context import RunContext
 
 
+def get_inclusion(building_inclusion_str: str) -> BuildingInclusion:
+    """Convert building inclusion string from UI to enum."""
+    if building_inclusion_str == "__all__":
+        return BuildingInclusion.all
+    elif building_inclusion_str == "applied_all":
+        return BuildingInclusion.applied_only
+    elif building_inclusion_str.startswith("applied_"):
+        return BuildingInclusion.applied_only
+    else:
+        return BuildingInclusion.all
+
+def get_upgrade_number(building_inclusion_str: str) -> int | None:
+    """Extract upgrade number from building inclusion string from UI."""
+    if building_inclusion_str == "__all__":
+        return None
+    elif building_inclusion_str == "applied_all":
+        return None
+    elif building_inclusion_str.startswith("applied_"):
+        return int(building_inclusion_str.split("_")[1])
+    else:
+        return int(building_inclusion_str)
+
 def build_plot_spec(
     ctx: RunContext,
     run_folder: str,
-    selected_upgrades: list[int],
     building_incl: str,
     vacancy_incl: str,
     quantity_type: str,
@@ -39,11 +60,15 @@ def build_plot_spec(
     qtype_enum = QuantityType(quantity_type)
     group_by = group_by_val if group_by_val != "__none__" else None
 
+    quantity_group_name = qgroup_name
+    upg_incl_enum = get_inclusion(building_incl)
+    upgrade_num = get_upgrade_number(building_incl)
+    
     quantity: str | QuantityGroup
     if quantity_val == "__group_stacked__":
         if quantity_type == QuantityType.prevalence:
-            upgrade = sorted(selected_upgrades)[-1] if selected_upgrades else 0
-            all_categories = ctx.list_quantity_categories(run_folder, upgrade, qgroup_name)
+            assert upgrade_num is not None, "Upgrade number must be specified for prevalence plots"
+            all_categories = ctx.list_quantity_categories(run_folder, upgrade_num, qgroup_name)
             quantity = QuantityGroup(
                 name=qgroup_name,
                 constituents=tuple(all_categories),
@@ -53,20 +78,6 @@ def build_plot_spec(
             quantity = ctx.quantity_groups[qgroup_name]
     else:
         quantity = quantity_val
-
-    quantity_group_name = qgroup_name
-    if building_incl == "__all__":
-        upg_incl_enum = BuildingInclusion.all
-        upgrade_num = None
-    elif building_incl == "applied_all":
-        upg_incl_enum = BuildingInclusion.applied_only
-        upgrade_num = None
-    elif building_incl.startswith("applied_"):
-        upg_incl_enum = BuildingInclusion.applied_only
-        upgrade_num = int(building_incl.split("_")[1])
-    else:
-        upg_incl_enum = BuildingInclusion.all
-        upgrade_num = int(building_incl)
 
     return PlotSpec(
         building_inclusion=upg_incl_enum,

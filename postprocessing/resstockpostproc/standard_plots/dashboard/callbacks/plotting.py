@@ -82,7 +82,6 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
         plot_spec = build_plot_spec(
             ctx,
             run_folder_val,
-            selected_upgrades,
             building_incl,
             vacancy_incl,
             comp_type,

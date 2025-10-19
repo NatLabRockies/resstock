@@ -8,6 +8,7 @@ from resstockpostproc.standard_plots.schema.plot_spec import AggregationType, Pl
 
 from ..run_context import RunContext
 from ..layout import _get_default_quantity_group
+from ..services.plot_helpers import get_upgrade_number
 import logging
 import polars as pl
 
@@ -18,23 +19,24 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
 
     @app.callback(
         Output("quantity-type", "value"),
-        Input("building-inclusion", "value"),
+        Input("selected-upgrades", "value"),
         State("quantity-type", "value"),
         prevent_initial_call=True,
     )
-    def _update_quantity_type_dd(bldg_inclusion, current_value: str | None):
-        # dummy callback to join trigger dependencies from building-inclusion
+    def _update_quantity_type_dd(selected_upgrades, current_value: str | None):
+        # dummy callback to join trigger dependencies from selected-upgrades
         # to quantity-type so that rest of the chain works correctly
         return current_value
 
     @app.callback(
         Output("aggregation-type", "options"),
         Output("aggregation-type", "value"),
-        Input("quantity-type", "value"),
+        Input("building-inclusion", "value"),  # needed to chain the dependency
+        State("quantity-type", "value"),
         State("aggregation-type", "value"),
         prevent_initial_call=True,
     )
-    def _update_aggregation_type_dd(quantity_type_val: str, current_val: str):
+    def _update_aggregation_type_dd(building_inclusion_val: str, quantity_type_val: str, current_val: str):
         try:
             qtype = QuantityType(quantity_type_val)
         except ValueError:
@@ -165,14 +167,15 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         State("quantity-type", "value"),
         State("quantity-group", "value"),
         State("run-folder", "value"),
-        State("selected-upgrades", "value"),
+        State("building-inclusion", "value"),
         prevent_initial_call=True,
     )
-    def _update_quantity_group_dd(group_by_val: str, quantity_type_val: str, current_val: str, run_folder_val: str, selected_upgrades: list[int]):
+    def _update_quantity_group_dd(group_by_val: str, quantity_type_val: str, current_val: str, run_folder_val: str, building_inclusion: str):
         print(f"update quantity group triggered by: {dash.callback_context.triggered}")
         qtype = QuantityType(quantity_type_val)
         if qtype == QuantityType.prevalence:
-            upgrade = sorted(selected_upgrades)[-1] if selected_upgrades else 0
+            upgrade = get_upgrade_number(building_inclusion)
+            assert upgrade is not None, "Upgrade number must be specified for prevalence plots"
             categorical_cols = ctx.list_categorical_quantities(run_folder_val, upgrade)
             if not categorical_cols:
                 return [], None
@@ -192,7 +195,7 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         State("group-by", "value"),
         State("quantity-type", "value"),
         State("run-folder", "value"),
-        State("selected-upgrades", "value"),
+        State("building-inclusion", "value"),
         State("quantity", "value"),
         prevent_initial_call=True,
     )
@@ -202,7 +205,7 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         group_by_val: str,
         quantity_type_val: str,
         run_folder_val: str,
-        selected_upgrades: list[int],
+        building_inclusion: str,
         current_val: str | None,
     ):
         if not qgroup_name:
@@ -211,7 +214,8 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         qtype = QuantityType(quantity_type_val)
         viz_type = VizType(viz_type_val)
         if qtype == QuantityType.prevalence:
-            upgrade = sorted(selected_upgrades)[-1] if selected_upgrades else 0
+            upgrade = get_upgrade_number(building_inclusion)
+            assert upgrade is not None, "Upgrade number must be specified for prevalence plots"
             categories = ctx.list_quantity_categories(run_folder_val, upgrade, qgroup_name)
             if not categories:
                 return [], None

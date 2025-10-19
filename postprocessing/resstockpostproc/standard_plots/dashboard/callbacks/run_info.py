@@ -8,6 +8,7 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import time
 from ..run_context import RunContext
+from resstockpostproc.standard_plots.schema.workflow_schema import QuantityType
 
 logger = logging.getLogger(__name__)
 
@@ -79,19 +80,29 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
         Output("building-inclusion", "options"),
         Output("building-inclusion", "value"),
         State("run-folder", "value"),
-        Input("selected-upgrades", "value"),
+        State("selected-upgrades", "value"),
+        Input("quantity-type", "value"),
         State("building-inclusion", "value"),
         prevent_initial_call=True,
     )
-    def _update_upgrade_inclusion_dd(run_folder: str, selected_upgrades: list[int], current_val: str):
+    def _update_upgrade_inclusion_dd(run_folder: str, selected_upgrades: list[int],
+                                     quantity_type_val: str, current_val: str):
         orchestrator = ctx.get_orchestrator(run_folder)
         if orchestrator is None:
             raise PreventUpdate
+        quantity_type = QuantityType(quantity_type_val)
 
-        options: list[dict[str, Any]] = [
-            {"label": "All", "value": "__all__"},
-            {"label": "Applied in respective upgrades", "value": "applied_all"},
-        ]
+        options: list[dict[str, Any]] = []
+        if quantity_type != QuantityType.prevalence:
+            options = [
+                {"label": "All", "value": "__all__"},
+                {"label": "Applied in respective upgrades", "value": "applied_all"},
+            ]
+
+        options.extend(
+            {"label": f"Upgrade {upgrade}" if upgrade != 0 else "Baseline", "value": str(upgrade)}
+            for upgrade in selected_upgrades
+        )
         options.extend(
             {"label": f"Applied in Upgrade {upgrade}", "value": f"applied_{upgrade}"}
             for upgrade in selected_upgrades
@@ -99,7 +110,7 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
         )
 
         valid_values = {option["value"] for option in options}
-        new_val = current_val if current_val in valid_values else "__all__"
+        new_val = current_val if str(current_val) in valid_values else options[0]['value']
         return options, new_val
 
     @app.callback(

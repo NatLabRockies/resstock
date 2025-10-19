@@ -21,7 +21,7 @@ class RunContext:
     quantity_groups: dict[str, QuantityGroup]
     plots_root_folder: str | None = None
     _orchestrators: dict[str, PlotOrchestrator] = field(default_factory=dict)
-    _categorical_columns: dict[str, list[str]] = field(default_factory=dict)
+    _categorical_columns: dict[tuple[str, int], list[str]] = field(default_factory=dict)
     _quantity_categories: dict[tuple[str, int, str], list[str]] = field(default_factory=dict)
 
     @classmethod
@@ -85,8 +85,8 @@ class RunContext:
 
     def list_categorical_quantities(self, run_folder: str, upgrade: int) -> list[str]:
         """Return cached list of categorical columns suitable for prevalence plots."""
-        if run_folder in self._categorical_columns:
-            return self._categorical_columns[run_folder]
+        if (run_folder, upgrade) in self._categorical_columns:
+            return self._categorical_columns[(run_folder, upgrade)]
 
         orchestrator = self.get_orchestrator(run_folder)
         if orchestrator is None:
@@ -119,7 +119,7 @@ class RunContext:
         ]
 
         if not candidate_cols:
-            self._categorical_columns[run_folder] = []
+            self._categorical_columns[(run_folder, upgrade)] = []
             return []
 
         uniques = (
@@ -135,7 +135,7 @@ class RunContext:
         ]
         categorical_cols.sort()
 
-        self._categorical_columns[run_folder] = categorical_cols
+        self._categorical_columns[(run_folder, upgrade)] = categorical_cols
         return categorical_cols
 
     def list_quantity_categories(self, run_folder: str, upgrade: int, column: str) -> list[str]:
@@ -160,6 +160,6 @@ class RunContext:
         except Exception:
             categories = []
 
-        categories = [cat for cat in categories if cat is not None][:100]
+        categories = [str(cat) for cat in categories if cat is not None][:100]
         self._quantity_categories[cache_key] = categories
         return categories
