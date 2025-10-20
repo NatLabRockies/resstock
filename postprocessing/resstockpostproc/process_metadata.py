@@ -246,9 +246,20 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
     adj_income = pl.when(pl.col(income_col) <= 0).then(pl.lit(1)).otherwise(pl.col(income_col)).alias(income_col)
 
     # Calculate burden only when income is not null and positive
+    # Subtract out the EV portion of the utility bill, otherwise this skews the
+    # energy burden values for all EV-owning households.
+    # Removing transportation aligns with the DOE definition
+    # https://www.energy.gov/scep/low-income-energy-affordability-data-lead-tool
+    dol_per_kwh = "in.utility_bill_electricity_marginal_rates"
+    ev_kwh = "out.electricity.ev_charging.energy_consumption..kwh"
     burden = (
         pl.when(adj_income.is_not_null())
-        .then(pl.col("out.utility_bills.total_bill..usd") / adj_income * 100)
+        .then(
+            (
+            pl.col("out.utility_bills.total_bill..usd") -
+            ((pl.col(dol_per_kwh).cast(pl.Float64))*pl.col(ev_kwh))
+            )
+            / adj_income * 100)
         .otherwise(None)
         .alias("out.energy_burden..percentage")
     )
@@ -262,7 +273,6 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
     all_cols = df.collect_schema().names()
     out_cols = [col for col in all_cols if 'out.' in col and not (
         "out.params" in col or
-        "out.hot_water" in col or
         "out.panel" in col or
         "out.capacity" in col or
         "out.unmet_hours.ev" in col
@@ -356,6 +366,7 @@ def col_name_to_savings(col_name: str) -> str:
         '.peak_': '.peak_savings_',
         '.energy_burden': '.energy_burden_savings',
         '.unmet_hours': '.unmet_hours_reduction',
+        'out.hot_water': 'out.hot_water_savings',
         '.load.cooling.peak': '.load.cooling.peak_savings',
         '.load.heating.peak': '.load.heating.peak_savings',
         '.energy_delivered': '.energy_delivered_savings',
