@@ -103,14 +103,21 @@ class ChoroplethPlotter(BasePlotter):
         show_boundaries: bool = False,
     ) -> go.Figure:
         """Create a choropleth map for the provided data."""
-        if isinstance(plot_spec.quantity, QuantityGroup):  # defensive guard; should already be prevented
-            raise ValueError("Choropleth plots require a single quantity column.")
 
         location_col = "in.state" if resolution == "state" else "in.county"
-        quantity_col = str(plot_spec.quantity_group_name)
-        required_cols = {location_col, quantity_col, "upgrade_name", "model_count"}
-        if plot_spec.group_by:
-            required_cols.add(plot_spec.group_by)
+        if plot_spec.quantity_type == QuantityType.prevalence:
+            if not plot_spec.quantity_group_name:
+                raise ValueError("Prevalence choropleth plots require quantity_group_name to be set.")
+            value_col = "prevalence"
+            first_category_col = plot_spec.quantity_group_name
+        else:
+            value_col = str(plot_spec.quantity)
+            first_category_col = "upgrade_name"
+        second_category_col = plot_spec.group_by
+
+        required_cols = {location_col, value_col, first_category_col, "model_count"}
+        if second_category_col:
+            required_cols.add(second_category_col)
 
         missing_cols = [col for col in required_cols if col not in data.columns]
         if missing_cols:
@@ -119,10 +126,10 @@ class ChoroplethPlotter(BasePlotter):
 
         filters = [
             pl.col(location_col).is_not_null(),
-            pl.col(quantity_col).is_not_null(),
+            pl.col(value_col).is_not_null(),
         ]
-        if plot_spec.group_by:
-            filters.append(pl.col(plot_spec.group_by).is_not_null())
+        if second_category_col:
+            filters.append(pl.col(second_category_col).is_not_null())
 
         df = data.filter(pl.all_horizontal(filters))
         if df.is_empty():
@@ -138,8 +145,44 @@ class ChoroplethPlotter(BasePlotter):
             )
             return fig
 
-        z_min, z_max = df.select(
-            pl.min(quantity_col).alias("min"), pl.max(quantity_col).alias("max")
+        if plot_spec.quantity_type == QuantityType.prevalence and "upgrade_name" in df.columns:
+            # Align with prevalence bar plots by showing the final upgrade scenario only.
+            upgrades = df["upgrade_name"].unique(maintain_order=True).to_list()
+            if upgrades:
+                df = df.filter(pl.col("upgrade_name") == upgrades[-1])
+
+        quantity_title = self.get_quantity_title(plot_spec)
+
+        return self._create_plot(
+            data=df,
+            value_column=value_col,
+            value_title=quantity_title,
+            quantity_type=plot_spec.quantity_type,
+            location_column=location_col,
+            resolution=resolution,
+            first_category_column=first_category_col,
+            second_category_column=second_category_col,
+            show_labels=show_labels,
+            show_boundaries=show_boundaries,
+        )
+
+    def _create_plot(
+        self,
+        *,
+        data: pl.DataFrame,
+        value_column: str,
+        value_title: str,
+        quantity_type: QuantityType,
+        location_column: str,
+        resolution: Literal["state", "county"],
+        first_category_column: str,
+        second_category_column: str | None = None,
+        show_labels: bool = False,
+        show_boundaries: bool = False,
+    ) -> go.Figure:
+        """Internal helper that builds the choropleth grid for arbitrary categories."""
+        z_min, z_max = data.select(
+            pl.min(value_column).alias("min"), pl.max(value_column).alias("max")
         ).row(0)
         data_min = float(z_min)
         data_max = float(z_max)
@@ -147,32 +190,32 @@ class ChoroplethPlotter(BasePlotter):
         colorscale, cmin, cmax, tickvals, ticktext = self._choose_colorscale(
             data_min,
             data_max,
-            plot_spec,
+            quantity_type,
         )
-        quantity_title = self.get_quantity_title(plot_spec)
 
-        upgrades = df["upgrade_name"].unique(maintain_order=True).to_list()
-        n_cols = max(1, len(upgrades))
+        first_values = data[first_category_column].unique(maintain_order=True).to_list()
+        n_cols = max(1, len(first_values))
 
-        facet_column = plot_spec.group_by
-        facet_values = (
-            df[facet_column].unique(maintain_order=True).to_list() if facet_column else [None]
+        second_values = (
+            data[second_category_column].unique(maintain_order=True).to_list()
+            if second_category_column
+            else [None]
         )
-        n_rows = max(1, len(facet_values))
+        n_rows = max(1, len(second_values))
 
         column_titles = (
             [
-                self.format_label(str(upgrade)) if upgrade is not None else ""
-                for upgrade in upgrades
+                self.format_label(str(val)) if val is not None else ""
+                for val in first_values
             ]
-            if upgrades
+            if first_values
             else None
         )
         row_titles = None
-        if facet_column:
+        if second_category_column:
             row_titles = [
                 self.format_label(str(value)) if value is not None else ""
-                for value in facet_values
+                for value in second_values
             ]
 
         fig = make_subplots(
@@ -188,25 +231,27 @@ class ChoroplethPlotter(BasePlotter):
         geojson = self._load_county_geojson() if resolution == "county" else None
         county_extent_added: set[tuple[int, int]] = set()
 
-        for row_idx, facet_value in enumerate(facet_values, start=1):
+        for row_idx, second_val in enumerate(second_values, start=1):
             facet_df = (
-                df if facet_column is None else df.filter(pl.col(facet_column) == facet_value)
+                data
+                if second_category_column is None
+                else data.filter(pl.col(second_category_column) == second_val)
             )
             if facet_df.is_empty():
                 continue
 
-            for col_idx, upgrade_name in enumerate(upgrades, start=1):
-                subset = facet_df.filter(pl.col("upgrade_name") == upgrade_name)
+            for col_idx, first_val in enumerate(first_values, start=1):
+                subset = facet_df.filter(pl.col(first_category_column) == first_val)
                 if subset.is_empty():
                     continue
 
                 locations, labels = self._extract_locations(
-                    subset[location_col].to_list(), resolution
+                    subset[location_column].to_list(), resolution
                 )
-                values = subset[quantity_col].to_list()
+                values = subset[value_column].to_list()
                 model_counts = subset["model_count"].to_list()
                 text_values = (
-                    self._build_text_labels(resolution, values, plot_spec, quantity_title)
+                    self._build_text_labels(resolution, values, quantity_type, value_title)
                     if show_labels
                     else None
                 )
@@ -228,7 +273,7 @@ class ChoroplethPlotter(BasePlotter):
                     marker_line_width=marker_line_width,
                     marker_line_color=marker_line_color,
                     customdata=list(zip(labels, model_counts)),
-                    hovertemplate=self._build_hovertemplate(quantity_title),
+                    hovertemplate=self._build_hovertemplate(value_title),
                 )
                 if text_values:
                     trace.update(text=text_values)
@@ -263,10 +308,10 @@ class ChoroplethPlotter(BasePlotter):
 
         geo_kwargs: dict[str, Any] = {
             "scope": "usa",
-            "showcountries": False,
-            "showsubunits": False,
-            "showlakes": False,
-            "showframe": False,
+            "showcountries": True,
+            "showsubunits": True,
+            "showlakes": True,
+            "showframe": True,
             "showcoastlines": False,
             "bgcolor": "rgba(0,0,0,0)",
             "projection": {"type": "albers usa"},
@@ -278,7 +323,7 @@ class ChoroplethPlotter(BasePlotter):
                 fig.update_geos(row=row_idx, col=col_idx, **geo_kwargs)
 
         colorbar: dict[str, Any] = {
-            "title": {"text": quantity_title},
+            "title": {"text": value_title},
             "x": 1.02,
             "y": 0.5,
             "yanchor": "middle",
@@ -306,12 +351,10 @@ class ChoroplethPlotter(BasePlotter):
         self._stretch_geo_height(fig)
 
         fig.update_layout(
-            margin={"l": 100 if facet_column else 40, "r": 100, "t": 60, "b": 40},
+            margin={"l": 150 if second_category_column else 40, "r": 100, "t": 60, "b": 40},
             width=max(900, n_cols * 420),
         )
 
-        # Shift row-title annotations slightly left so they don't collide with the maps,
-        # and ensure column titles sit above their respective facets.
         if row_titles:
             row_title_set = {title for title in row_titles if title}
             for annotation in fig.layout.annotations:
@@ -331,10 +374,10 @@ class ChoroplethPlotter(BasePlotter):
         cls,
         z_min: float,
         z_max: float,
-        plot_spec: PlotSpec,
+        quantity_type: QuantityType,
     ) -> tuple[list[list[float | str]], float, float, list[float], list[str]]:
         """Select colorscale, range, and tick labels for the colorbar."""
-        suffix = "%" if plot_spec.quantity_type == QuantityType.percent_savings else ""
+        suffix = "%" if quantity_type == QuantityType.percent_savings else ""
         has_neg = z_min < 0
         has_pos = z_max > 0
 
@@ -543,20 +586,19 @@ class ChoroplethPlotter(BasePlotter):
         self,
         resolution: str,
         values: list[float],
-        plot_spec: PlotSpec,
+        quantity_type: QuantityType,
         quantity_title: str,
     ) -> list[str] | None:
         """Provide inline labels for state-level maps."""
         if resolution != "state":
             return None
 
-        qtype = plot_spec.quantity_type
         labels: list[str] = []
         for value in values:
             if value is None:
                 labels.append("")
                 continue
-            if qtype == QuantityType.percent_savings or "Percent" in quantity_title:
+            if quantity_type == QuantityType.percent_savings or "Percent" in quantity_title:
                 labels.append(f"{value:.1f}%")
             elif abs(value) >= 1_000_000:
                 labels.append(f"{value/1_000_000:.1f}M")

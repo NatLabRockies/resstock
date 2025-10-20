@@ -532,13 +532,11 @@ class DataProcessor:
             DataFrame prepared for prevalence plotting
         """
         combined_df = combined_df.with_columns(pl.col(quantity_group_name).cast(pl.String))
-        all_groups_df = combined_df.select(pl.col(grouping_cols)).unique()
-        all_cats_df = combined_df.select(pl.col(quantity_group_name)).unique()
-        full_df = all_groups_df.join(all_cats_df, how="cross")
+        full_df = self._get_full_cross_product_df(combined_df,[*grouping_cols[1:], quantity_group_name])
         count_df = combined_df.group_by([*grouping_cols, quantity_group_name]).agg(pl.count().alias("model_count"))
-        count_df = full_df.join(count_df, on=[*grouping_cols, quantity_group_name], how="left").fill_null(0)
+        count_df = full_df.join(count_df, on=[*grouping_cols[1:], quantity_group_name], how="left").fill_null(0)
         group_total_df = combined_df.group_by(grouping_cols).agg(pl.count().alias("total_count"))
-        count_df = count_df.join(group_total_df, on=grouping_cols)
+        count_df = count_df.join(group_total_df, on=grouping_cols, how="left").fill_null(1e-9)  # Avoid 0/0
         count_df = count_df.with_columns(
             (pl.col("model_count") / pl.col("total_count") * 100).round(2).alias("prevalence")
         ).drop("total_count")
@@ -548,6 +546,13 @@ class DataProcessor:
             valid_cats = set([cat.lower() for cat in quantity.constituents])
             count_df = count_df.filter(pl.col(quantity_group_name).str.to_lowercase().is_in(valid_cats))
         return  human_sort(count_df, [*grouping_cols, quantity_group_name]).collect()
+
+    def _get_full_cross_product_df(self, combined_df, cols):
+        unique_dfs = [combined_df.select(pl.col(col)).unique() for col in cols]
+        full_df = unique_dfs[0]
+        for next_df in unique_dfs[1:]:
+            full_df = full_df.join(next_df, how="cross")
+        return full_df
 
 
     def prepare_data_for_bar_plot(

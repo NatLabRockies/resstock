@@ -83,8 +83,6 @@ class PlotSpec(BaseModel):
         if self.visualization_type == VizType.choropleth:
             if self.aggregation_type == AggregationType.distribution:
                 return "Choropleth cannot be generated for distribution aggregation."
-            if isinstance(self.quantity, QuantityGroup):
-                return "Choropleth plots require a single quantity column."
         if self.upgrade == 0 and self.building_inclusion == BuildingInclusion.applied_only:
             return "Baseline can't be passed as an upgrade to plot when building_inclusion is applied_only."
         if self.upgrade == 0 and self.quantity_type in [QuantityType.percent_savings, QuantityType.savings]:
