@@ -195,7 +195,7 @@ class DataProcessor:
             DataFrame prepared for plotting with aggregated (mean) values
         """
         combined_df = self.combined_df
-        grouping_cols = self._get_grouping_cols(plot_spec) 
+        grouping_cols = self._get_grouping_cols(plot_spec)
         quantities = self._get_quantities(plot_spec)
         if plot_spec.quantity_type != QuantityType.prevalence:
             combined_df = self._fill_missing_quantities(combined_df, quantities)

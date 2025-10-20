@@ -63,7 +63,8 @@
         "absolute",
         "savings",
         "percent_savings",
-        "model_count"
+        "model_count",
+        "prevalence"
       ],
       "title": "QuantityType",
       "type": "string"
