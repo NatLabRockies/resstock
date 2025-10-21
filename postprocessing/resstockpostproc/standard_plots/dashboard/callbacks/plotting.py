@@ -21,7 +21,12 @@ from resstockpostproc.standard_plots.schema.workflow_schema import QuantityType
 from resstockpostproc.standard_plots.schema.plot_spec import AggregationType, PlotSpec, VizType
 
 from ..run_context import RunContext
-from ..services.plot_helpers import apply_facet_orientation, build_error_dataframe_and_figure, build_plot_spec
+from ..services.plot_helpers import (
+    apply_facet_orientation,
+    build_error_dataframe_and_figure,
+    build_plot_spec,
+    prepare_plot_dataframe,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -188,7 +193,12 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
                 return df, fig, False
             start_time = time.time()
             print("Preparing data for plot...")
-            df = orchestrator.processor.prepare_data_for_plot(plot_spec, selected_upgrades=selected_upgrades)
+            df = prepare_plot_dataframe(
+                ctx,
+                run_folder_val,
+                plot_spec,
+                selected_upgrades=selected_upgrades,
+            )
             print(f"Data prepared in {time.time() - start_time:.1f} seconds. Generating data ...")
             plotter = orchestrator.get_plotter(plot_spec.visualization_type)
             start_time = time.time()

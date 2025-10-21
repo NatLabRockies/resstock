@@ -106,7 +106,7 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         small_chars: list[str] = []
         geo_columns: list[str] = []
         try:
-            base_df: pl.LazyFrame = orchestrator.processor.combined_df.filter(pl.col("upgrade") == 0)
+            base_df: pl.LazyFrame = orchestrator.combined_df.filter(pl.col("upgrade") == 0)
             schema_names = base_df.collect_schema().names()
             in_cols = [col for col in schema_names if col.startswith("in.")]
             if in_cols:

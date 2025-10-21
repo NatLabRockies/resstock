@@ -1,8 +1,7 @@
-"""Tests for DataProcessor.prepare_data_for_plot
+"""Tests for functional data processor helpers.
 
-These tests run fully in-memory: we monkeypatch the private load_data method so
-that no file-system access is required. Small Polars DataFrames are used that
-cover the core filter / aggregation logic.
+These tests run fully in-memory using small Polars DataFrames that cover the core
+filter / aggregation logic.
 """
 
 from __future__ import annotations
@@ -11,7 +10,9 @@ import polars as pl
 import pytest
 
 from resstockpostproc.standard_plots.choropleth_plotter import ChoroplethPlotter
-from resstockpostproc.standard_plots.data_processor import DataProcessor
+from resstockpostproc.standard_plots.data_processor import (
+    prepare_data_for_plot,
+)
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.schema.workflow_schema import (
     QuantityType,
@@ -112,11 +113,31 @@ def combined_df() -> pl.LazyFrame:
     return combined.lazy()
 
 
-@pytest.fixture
-def processor(monkeypatch: pytest.MonkeyPatch, combined_df: pl.LazyFrame) -> DataProcessor:
-    """Return a DataProcessor whose data has been monkey-patched with the fixture."""
+def prepare_data(
+    df: pl.LazyFrame,
+    spec: PlotSpec,
+    *,
+    selected_upgrades: list[int] | None = None,
+    enduse_group_mapping: dict[str, list[str]] | None = None,
+) -> pl.DataFrame:
+    """Thin wrapper around prepare_data_for_plot for clearer tests."""
+    return prepare_data_for_plot(
+        df,
+        spec,
+        selected_upgrades=selected_upgrades,
+        enduse_group_mapping=enduse_group_mapping,
+    )
 
-    return DataProcessor(combined_df)
+
+def _quantities_for_spec(spec: PlotSpec) -> list[str]:
+    if isinstance(spec.quantity, str):
+        return [spec.quantity]
+    if isinstance(spec.quantity, QuantityGroup):
+        result = list(spec.quantity.constituents)
+        if spec.quantity.sum:
+            result.append(spec.quantity.sum)
+        return result
+    return []
 
 
 # -----------------------------------------------------------------------------
@@ -197,7 +218,7 @@ def _build_base_spec(**kwargs) -> PlotSpec:  # type: ignore[return-value]
     ],
 )
 def test_prepare_basic(
-    processor: DataProcessor,
+    combined_df: pl.LazyFrame,
     building_inclusion: BuildingInclusion,
     vacancy_inclusion: VacancyInclusion,
     aggregation_type: AggregationType,
@@ -220,7 +241,7 @@ def test_prepare_basic(
     )
     if not spec.is_valid():
         pytest.skip(f"Invalid spec: {spec.get_error()}")
-    df = processor.prepare_data_for_plot(spec)
+    df = prepare_data(combined_df, spec)
     assert isinstance(df, pl.DataFrame)
 
     if viz_type == VizType.choropleth:
@@ -241,7 +262,7 @@ def test_prepare_basic(
         building_inclusion == BuildingInclusion.applied_only
     ):
         expected_rows = (expected_rows * 2) // 3  # No baseline
-    quantities = DataProcessor._get_quantities(spec)
+    quantities = _quantities_for_spec(spec)
     if isinstance(quantity, QuantityGroup) and viz_type == VizType.box:
         for col in quantities:
             assert len(df.filter(pl.col("End Use") == col)) == expected_rows
@@ -255,11 +276,11 @@ def test_prepare_basic(
             assert col in df.columns
 
 
-def test_vacancy_filter(processor: DataProcessor):
+def test_vacancy_filter(combined_df: pl.LazyFrame):
     """vacancy_inclusion=occupied_only should drop rows with Vacant status."""
 
     spec = _build_base_spec(vacancy_inclusion=VacancyInclusion.occupied_only)
-    df = processor.prepare_data_for_plot(spec)
+    df = prepare_data(combined_df, spec)
 
     # After filtering for occupied_only, resulting frame should have 3 rows (one per upgrade-fuel combo)
     assert df.height == 3
@@ -267,18 +288,18 @@ def test_vacancy_filter(processor: DataProcessor):
     assert "in.vacancy_status" not in df.columns
 
 
-def test_upgrade_applied_only(processor: DataProcessor):
+def test_upgrade_applied_only(combined_df: pl.LazyFrame):
     """building_inclusion=applied_only removes rows where applicability==False."""
 
     spec = _build_base_spec(building_inclusion=BuildingInclusion.applied_only, group_by="in.heating_fuel")
-    df = processor.prepare_data_for_plot(spec)
+    df = prepare_data(combined_df, spec)
 
     # After removing non-applicable rows, Gas should remain for each upgrade (1, 2)
     # Baseline should be gone since we haven't picked an upgrade
     assert (df["in.heating_fuel"] == "Gas").sum() == 2
 
 
-def test_specific_upgrade_filter(processor: DataProcessor):
+def test_specific_upgrade_filter(combined_df: pl.LazyFrame):
     """Setting plot_spec.upgrade filters to baseline + that upgrade.
 
     For savings/percent_savings, baseline rows are removed after computations.
@@ -290,21 +311,21 @@ def test_specific_upgrade_filter(processor: DataProcessor):
         quantity_type=QuantityType.absolute,
         upgrade=1,
     )
-    df_abs = processor.prepare_data_for_plot(spec)
+    df_abs = prepare_data(combined_df, spec)
     assert set(df_abs["upgrade"].to_list()) == {0, 1}
 
     # Savings: baseline excluded
     spec.quantity_type = QuantityType.savings
-    df_sav = processor.prepare_data_for_plot(spec)
+    df_sav = prepare_data(combined_df, spec)
     assert set(df_sav["upgrade"].to_list()) == {1}
 
     # Percent savings: baseline excluded
     spec.quantity_type = QuantityType.percent_savings
-    df_pct = processor.prepare_data_for_plot(spec)
+    df_pct = prepare_data(combined_df, spec)
     assert set(df_pct["upgrade"].to_list()) == {1}
 
 
-def test_specific_upgrade_with_applied_only(processor: DataProcessor):
+def test_specific_upgrade_with_applied_only(combined_df: pl.LazyFrame):
     """Applied-only with a specific upgrade includes only applicable buildings, plus baseline for those buildings."""
     spec = _build_base_spec(
         visualization_type=VizType.bar,
@@ -314,7 +335,7 @@ def test_specific_upgrade_with_applied_only(processor: DataProcessor):
         building_inclusion=BuildingInclusion.applied_only,
         group_by="bldg_id",
     )
-    df = processor.prepare_data_for_plot(spec)
+    df = prepare_data(combined_df, spec)
 
     # Only baseline (0) and upgrade 1 should be present
     assert set(df["upgrade"].to_list()) <= {0, 1}
@@ -332,32 +353,32 @@ def test_specific_upgrade_with_applied_only(processor: DataProcessor):
     assert up1_ids == {2, 3, 4}
 
 
-def test_selected_upgrades_filters_including_baseline(processor: DataProcessor):
+def test_selected_upgrades_filters_including_baseline(combined_df: pl.LazyFrame):
     """selected_upgrades keeps baseline plus listed upgrades for absolute quantities."""
     spec = _build_base_spec(
         visualization_type=VizType.bar,
         aggregation_type=AggregationType.total,
         quantity_type=QuantityType.absolute,
     )
-    df = processor.prepare_data_for_plot(spec, selected_upgrades=[2])
+    df = prepare_data(combined_df, spec, selected_upgrades=[2])
     assert set(df["upgrade"].to_list()) == {0, 2}
 
 
-def test_selected_upgrades_with_percent_savings(processor: DataProcessor):
+def test_selected_upgrades_with_percent_savings(combined_df: pl.LazyFrame):
     """For percent_savings, baseline is used for calc but excluded from results."""
     spec = _build_base_spec(
         visualization_type=VizType.bar,
         aggregation_type=AggregationType.average,
         quantity_type=QuantityType.percent_savings,
     )
-    df = processor.prepare_data_for_plot(spec, selected_upgrades=[1, 2])
+    df = prepare_data(combined_df, spec, selected_upgrades=[1, 2])
     assert set(df["upgrade"].to_list()) == {1, 2}
 
 
-def test_histogram_is_degenerate_all_equal(processor: DataProcessor):
+def test_histogram_is_degenerate_all_equal(combined_df: pl.LazyFrame):
     """Histogram degenerate case: all values equal -> all counts in bin 0 per group."""
     # Create a constant column used for histogram; ensures q1==q99==min==max
-    processor.combined_df = processor.combined_df.with_columns(pl.lit(7.0).alias("toy_deg"))
+    df_source = combined_df.with_columns(pl.lit(7.0).alias("toy_deg"))
     spec = _build_base_spec(
         visualization_type=VizType.hist,
         quantity_type=QuantityType.absolute,
@@ -365,7 +386,7 @@ def test_histogram_is_degenerate_all_equal(processor: DataProcessor):
         quantity="toy_deg",
         group_by=None,
     )
-    df = processor.prepare_data_for_plot(spec)
+    df = prepare_data(df_source, spec)
 
     # For each upgrade group, only bin 0 should have non-zero count; totals equal rows per upgrade
     for up in [0, 1, 2]:
@@ -399,7 +420,6 @@ def test_histogram_q1_equals_q99_non_degenerate():
         }
     ).lazy()
 
-    dp = DataProcessor(df)
     spec = _build_base_spec(
         visualization_type=VizType.hist,
         quantity_type=QuantityType.absolute,
@@ -407,7 +427,7 @@ def test_histogram_q1_equals_q99_non_degenerate():
         quantity="toy_q",
         group_by=None,
     )
-    hist = dp.prepare_data_for_plot(spec)
+    hist = prepare_data(df, spec)
 
     # For each upgrade group: n-1 entries in bin -1 (zeros) and 1 in bin 99 (max value)
     for up in [0, 1]:
@@ -419,7 +439,7 @@ def test_histogram_q1_equals_q99_non_degenerate():
         assert int(count_99) == 1
 
 
-def test_model_count_per_upgrade(processor: DataProcessor):
+def test_model_count_per_upgrade(combined_df: pl.LazyFrame):
     """model_count returns number of models per (upgrade, upgrade_name)."""
     spec = _build_base_spec(
         visualization_type=VizType.bar,
@@ -428,7 +448,7 @@ def test_model_count_per_upgrade(processor: DataProcessor):
         quantity="elec_kwh",
         group_by=None,
     )
-    df = processor.prepare_data_for_plot(spec)
+    df = prepare_data(combined_df, spec)
 
     # Expect 3 rows (baseline + 2 upgrades), each with 4 models in our fixture
     assert set(df["upgrade"].to_list()) == {0, 1, 2}
@@ -437,7 +457,7 @@ def test_model_count_per_upgrade(processor: DataProcessor):
         assert row["model_count"] == 4
 
 
-def test_model_count_grouped_by_fuel(processor: DataProcessor):
+def test_model_count_grouped_by_fuel(combined_df: pl.LazyFrame):
     """model_count grouped by fuel yields correct counts per upgrade."""
     spec = _build_base_spec(
         visualization_type=VizType.bar,
@@ -446,7 +466,7 @@ def test_model_count_grouped_by_fuel(processor: DataProcessor):
         quantity="elec_kwh",
         group_by="in.heating_fuel",
     )
-    df = processor.prepare_data_for_plot(spec)
+    df = prepare_data(combined_df, spec)
 
     # For each upgrade, we have 2 Electric and 2 Gas buildings in the fixture
     for up in [0, 1, 2]:
@@ -459,7 +479,7 @@ def test_model_count_grouped_by_fuel(processor: DataProcessor):
     "aggregation_type",
     [AggregationType.average, AggregationType.total],
 )
-def test_quantity_group_mean_aggregation(processor: DataProcessor, aggregation_type: AggregationType):
+def test_quantity_group_mean_aggregation(combined_df: pl.LazyFrame, aggregation_type: AggregationType):
     """Quantity group aggregation returns expected columns & values."""
 
     qgroup = QuantityGroup(
@@ -475,7 +495,7 @@ def test_quantity_group_mean_aggregation(processor: DataProcessor, aggregation_t
         group_by="in.heating_fuel",
         quantity_group_name="energy",
     )
-    df = processor.prepare_data_for_plot(spec)
+    df = prepare_data(combined_df, spec)
 
     # Expected output columns:
     expected_cols = {
@@ -504,7 +524,7 @@ def test_normalize_county_code():
     "aggregation_type",
     [AggregationType.average, AggregationType.total],
 )
-def test_savings_calculation(processor: DataProcessor, aggregation_type: AggregationType):
+def test_savings_calculation(combined_df: pl.LazyFrame, aggregation_type: AggregationType):
     """Absolute savings should equal (baseline - upgrade) for applicable buildings."""
 
     spec = _build_base_spec(
@@ -513,7 +533,7 @@ def test_savings_calculation(processor: DataProcessor, aggregation_type: Aggrega
         quantity_type=QuantityType.savings,
         aggregation_type=aggregation_type,  # test both average and total
     )
-    df = processor.prepare_data_for_plot(spec)
+    df = prepare_data(combined_df, spec)
 
     multiplier = 1 if aggregation_type == AggregationType.average else 10
 
@@ -526,7 +546,7 @@ def test_savings_calculation(processor: DataProcessor, aggregation_type: Aggrega
     assert saving_na == pytest.approx(0.0)
 
 
-def test_percent_savings_calculation(processor: DataProcessor):
+def test_percent_savings_calculation(combined_df: pl.LazyFrame):
     """percent_savings should equal 100 * upgraded / baseline per current implementation."""
 
     spec = _build_base_spec(
@@ -536,7 +556,7 @@ def test_percent_savings_calculation(processor: DataProcessor):
         aggregation_type=AggregationType.average,
         quantity="gas_kwh",
     )
-    df = processor.prepare_data_for_plot(spec)
+    df = prepare_data(combined_df, spec)
 
     # elec_kwh_base = [100.0, 20.0, 110.0, 0.0]
     # gas_kwh_base = [0.0, 80.0, 0.0, 75.0]
@@ -560,7 +580,7 @@ def test_percent_savings_calculation(processor: DataProcessor):
         aggregation_type=AggregationType.average,
         quantity="elec_kwh",
     )
-    df = processor.prepare_data_for_plot(spec)
+    df = prepare_data(combined_df, spec)
     # Building 4, Upgrade 2: baseline 0 kWh -> 10 kWh. % savings = 100 * (10-0)/(1e-6) = -1e9 (per current impl)
     # Using 1e-6 as the "small number" to avoid division by zero
     pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4)).select("median").item()
@@ -573,17 +593,17 @@ def test_percent_savings_calculation(processor: DataProcessor):
         aggregation_type=AggregationType.average,
         quantity="elec_kwh",
     )
-    df = processor.prepare_data_for_plot(spec)
+    df = prepare_data(combined_df, spec)
     pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4)).select("elec_kwh").item()
     assert pct == pytest.approx(-1e9)
 
-    processor.combined_df = processor.combined_df.with_columns(
+    modified_df = combined_df.with_columns(
         pl.when((pl.col("bldg_id") == 4) & (pl.col("upgrade") == 0))
         .then(pl.lit(0.001))
         .otherwise(pl.col("elec_kwh"))
         .alias("elec_kwh")
     )
-    df = processor.prepare_data_for_plot(spec)
+    df = prepare_data(modified_df, spec)
     pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4)).select("elec_kwh").item()
     assert pct == pytest.approx(-999900)
 
@@ -591,7 +611,7 @@ def test_percent_savings_calculation(processor: DataProcessor):
     "quantity",
     ["elec_kwh", "gas_kwh", "total_kwh"],
 )
-def test_integrity(processor: DataProcessor, quantity: str):
+def test_integrity(combined_df: pl.LazyFrame, quantity: str):
     spec = _build_base_spec(
         visualization_type=VizType.bar,
         group_by=None,
@@ -599,12 +619,12 @@ def test_integrity(processor: DataProcessor, quantity: str):
         aggregation_type=AggregationType.average,
         quantity=quantity,
     )
-    avg_percent_savings_df = processor.prepare_data_for_plot(spec)
+    avg_percent_savings_df = prepare_data(combined_df, spec)
     spec.quantity_type = QuantityType.savings
     spec.aggregation_type = AggregationType.total
-    savings_df = processor.prepare_data_for_plot(spec)
+    savings_df = prepare_data(combined_df, spec)
     spec.quantity_type = QuantityType.absolute
-    absolute_df = processor.prepare_data_for_plot(spec)
+    absolute_df = prepare_data(combined_df, spec)
     absolute_df = absolute_df.filter(pl.col("upgrade") == 0).select(pl.col(quantity).alias("baseline_value"))  # % savings calculated in reference to baseline
     all_df = avg_percent_savings_df.join(savings_df, on="upgrade", suffix="_savings").join(absolute_df, how='cross')
     all_df = all_df.with_columns((100 * pl.col(f"{quantity}_savings") / pl.col("baseline_value")).alias("calc_percent_savings"))
@@ -615,7 +635,7 @@ def test_missing_quantities_are_filled(combined_df: pl.LazyFrame, caplog: pytest
     """Request a quantity group SUM column that isn't present to trigger fill.
 
     We use a QuantityGroup whose `sum` field (a synthetic group name) is not in
-    the dataset columns. This forces DataProcessor.prepare_data_for_plot to call
+    the dataset columns. This forces prepare_data_for_plot to call
     the helper that fills missing quantities, which should create the grouped
     SUM column by combining its constituents. We don't call the helper directly.
     """
@@ -629,8 +649,6 @@ def test_missing_quantities_are_filled(combined_df: pl.LazyFrame, caplog: pytest
         "Defined But All Missing": ["does_not_exist_1", "does_not_exist_2"],
         "Defined But Partially Missing": ["elec_kwh", "does_not_exist_2"],
     }
-
-    dp = DataProcessor(combined_df, enduse_group_mapping=mapping)
 
     # Create a group with constituents that exist in the fixture, and a sum
     qgroup = QuantityGroup(name="energy", constituents=("elec_kwh", "gas_kwh"), sum="My Group")
@@ -646,7 +664,7 @@ def test_missing_quantities_are_filled(combined_df: pl.LazyFrame, caplog: pytest
 
     caplog.set_level("WARNING")
     caplog.clear()
-    df = dp.prepare_data_for_plot(spec)
+    df = prepare_data(combined_df, spec, enduse_group_mapping=mapping)
 
     # The group sum column should now exist because it was filled.
     assert "My Group" in df.columns
@@ -661,7 +679,7 @@ def test_missing_quantities_are_filled(combined_df: pl.LazyFrame, caplog: pytest
     # Now request a defined group whose constituents are missing -> should be zero-filled
     spec.quantity = QuantityGroup(name="energy", constituents=("elec_kwh", "gas_kwh"), sum="Defined But All Missing")
     caplog.clear()
-    df2 = dp.prepare_data_for_plot(spec)
+    df2 = prepare_data(combined_df, spec, enduse_group_mapping=mapping)
     assert "Defined But All Missing" in df2.columns
     assert (df2["Defined But All Missing"] == 0).all()
     assert any(
@@ -672,7 +690,7 @@ def test_missing_quantities_are_filled(combined_df: pl.LazyFrame, caplog: pytest
     # Now request a defined group whose some constituents are missing -> should sum existing ones
     spec.quantity = QuantityGroup(name="energy", constituents=("elec_kwh", "gas_kwh"), sum="Defined But Partially Missing")
     caplog.clear()
-    df2 = dp.prepare_data_for_plot(spec)
+    df2 = prepare_data(combined_df, spec, enduse_group_mapping=mapping)
     assert "Defined But Partially Missing" in df2.columns
     assert ((df2["Defined But Partially Missing"] - df2["elec_kwh"]).abs() < 1e-9).all()
     # No warning expected here because at least one constituent exists and is used
@@ -684,7 +702,7 @@ def test_missing_quantities_are_filled(combined_df: pl.LazyFrame, caplog: pytest
     # Finally request a completely undefined group -> also zero-filled
     spec.quantity = QuantityGroup(name="energy", constituents=("elec_kwh", "gas_kwh"), sum="Truly Missing")
     caplog.clear()
-    df3 = dp.prepare_data_for_plot(spec)
+    df3 = prepare_data(combined_df, spec, enduse_group_mapping=mapping)
     assert "Truly Missing" in df3.columns
     assert (df3["Truly Missing"] == 0).all()
     assert any(
@@ -693,7 +711,7 @@ def test_missing_quantities_are_filled(combined_df: pl.LazyFrame, caplog: pytest
     )
 
 
-def test_prepare_data_for_prevalence_single_quantity(processor: DataProcessor):
+def test_prepare_data_for_prevalence_single_quantity(combined_df: pl.LazyFrame):
     """Prevalence plots should report percentage shares per category."""
     spec = PlotSpec(
         building_inclusion=BuildingInclusion.all,
@@ -707,7 +725,7 @@ def test_prepare_data_for_prevalence_single_quantity(processor: DataProcessor):
         upgrade=2,
     )
 
-    df = processor.prepare_data_for_plot(spec)
+    df = prepare_data(combined_df, spec)
     assert df.shape[0] == 2  # two heating fuel categories
     assert set(df["in.heating_fuel"].to_list()) == {"Electric"}
     assert df['upgrade_name'].to_list() == ["baseline", "Upgrade2"]
@@ -716,7 +734,7 @@ def test_prepare_data_for_prevalence_single_quantity(processor: DataProcessor):
     assert prevalence_map["Electric"] == pytest.approx(50.0)
     assert model_counts["Electric"] == 2
 
-def test_prepare_data_for_prevalence_multi_quantities(processor: DataProcessor):
+def test_prepare_data_for_prevalence_multi_quantities(combined_df: pl.LazyFrame):
     """Prevalence plots should report percentage shares per category."""
     spec = PlotSpec(
         building_inclusion=BuildingInclusion.all,
@@ -734,7 +752,7 @@ def test_prepare_data_for_prevalence_multi_quantities(processor: DataProcessor):
         upgrade=2,
     )
 
-    df = processor.prepare_data_for_plot(spec)
+    df = prepare_data(combined_df, spec)
     assert df.shape[0] == 4  # two heating fuel categories per upgrade
     assert set(df["in.heating_fuel"].to_list()) == {"Electric", "Gas"}
     assert set(df['upgrade_name'].to_list()) == {"baseline", "Upgrade2"}

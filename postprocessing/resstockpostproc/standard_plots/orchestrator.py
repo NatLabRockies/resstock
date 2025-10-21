@@ -9,13 +9,14 @@ from itertools import product
 from typing import Literal
 from uuid import UUID
 
+
 from prefect.artifacts import create_progress_artifact, update_progress_artifact
 from prefect.runtime import flow_run
 
 from resstockpostproc.standard_plots.bar_plotter import BarPlotter
 from resstockpostproc.standard_plots.box_plotter import BoxPlotter
 from resstockpostproc.standard_plots.choropleth_plotter import ChoroplethPlotter
-from resstockpostproc.standard_plots.data_processor import DataProcessor
+from resstockpostproc.standard_plots.data_processor import prepare_data_for_plot
 from resstockpostproc.standard_plots.heatmap_plotter import HeatmapPlotter
 from resstockpostproc.standard_plots.histogram_plotter import HistogramPlotter
 from resstockpostproc.standard_plots.input_manager import InputManager
@@ -60,8 +61,7 @@ class PlotOrchestrator:
         start_time = time.time()
         self.inp_mgr = InputManager(self.workflow)
         self.inp_mgr.download_data()
-        combined_df = self.inp_mgr.load_data()
-        self.processor = DataProcessor(combined_df)
+        self.combined_df = self.inp_mgr.load_data()
         self.data_loading_time = time.time() - start_time
         self.out_mgr = OutputManager(self.workflow, output_types=output_types, overwrite=overwrite)
         self.theme = ThemeManager(self.workflow)
@@ -131,7 +131,7 @@ class PlotOrchestrator:
             print(f"Generating {total_plots} plots")
         for plots_generated, plot_spec in enumerate(plots_to_gen, 1):
             start_time = time.time()
-            df = self.processor.prepare_data_for_plot(plot_spec)
+            df = prepare_data_for_plot(self.combined_df, plot_spec)
             self.data_preparing_time += time.time() - start_time
             path_seg, name = plot_spec.get_path_and_name()
             plotter = self.get_plotter(plot_spec.visualization_type)
