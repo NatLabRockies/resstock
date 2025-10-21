@@ -694,7 +694,7 @@ def test_missing_quantities_are_filled(combined_df: pl.LazyFrame, caplog: pytest
     )
 
 
-def test_prepare_data_for_prevalence(processor: DataProcessor):
+def test_prepare_data_for_prevalence_single_quantity(processor: DataProcessor):
     """Prevalence plots should report percentage shares per category."""
     spec = PlotSpec(
         building_inclusion=BuildingInclusion.all,
@@ -703,15 +703,42 @@ def test_prepare_data_for_prevalence(processor: DataProcessor):
         aggregation_type=AggregationType.total,
         visualization_type=VizType.bar,
         group_by=None,
-        quantity="in.heating_fuel",
+        quantity="Electric",
         quantity_group_name="in.heating_fuel",
         upgrade=2,
     )
 
     df = processor.prepare_data_for_plot(spec)
     assert df.shape[0] == 2  # two heating fuel categories
-    assert set(df["in.heating_fuel"].to_list()) == {"Electric", "Gas"}
+    assert set(df["in.heating_fuel"].to_list()) == {"Electric"}
+    assert df['upgrade_name'].to_list() == ["baseline", "Upgrade2"]
+    prevalence_map = dict(zip(df["in.heating_fuel"].to_list(), df["prevalence"].to_list()))
+    model_counts = dict(zip(df["in.heating_fuel"].to_list(), df["model_count"].to_list()))
+    assert prevalence_map["Electric"] == pytest.approx(50.0)
+    assert model_counts["Electric"] == 2
 
+def test_prepare_data_for_prevalence_multi_quantities(processor: DataProcessor):
+    """Prevalence plots should report percentage shares per category."""
+    spec = PlotSpec(
+        building_inclusion=BuildingInclusion.all,
+        vacancy_inclusion=VacancyInclusion.all,
+        quantity_type=QuantityType.prevalence,
+        aggregation_type=AggregationType.total,
+        visualization_type=VizType.bar,
+        group_by=None,
+        quantity=QuantityGroup(
+            constituents=("Electric", "Gas"),
+            name="in.heating_fuel",
+            sum=None
+        ),
+        quantity_group_name="in.heating_fuel",
+        upgrade=2,
+    )
+
+    df = processor.prepare_data_for_plot(spec)
+    assert df.shape[0] == 4  # two heating fuel categories per upgrade
+    assert set(df["in.heating_fuel"].to_list()) == {"Electric", "Gas"}
+    assert set(df['upgrade_name'].to_list()) == {"baseline", "Upgrade2"}
     prevalence_map = dict(zip(df["in.heating_fuel"].to_list(), df["prevalence"].to_list()))
     model_counts = dict(zip(df["in.heating_fuel"].to_list(), df["model_count"].to_list()))
 
