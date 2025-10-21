@@ -53,10 +53,10 @@ def process_simulation_outputs(
     df = upgrade_raw_df
     df = set_baseline_applicability(df) if is_baseline else df
     df = add_missing_cols_from_baseline_to_upgrade(df, base_raw_df) if not is_baseline else df
-    df = replace_missing_buildings_with_baseline(df, base_raw_df, upgrade_num) if not is_baseline else df
+    df = remove_failed_baseline_buildings(df, baseline_failed_bldgs)
+    df = remove_na_or_failed_buildings(df)
+    df = replace_missing_buildings_with_baseline(df, base_raw_df) if not is_baseline else df
     df = downselect_and_rename_cols(df, col_maps)  # Per sdr_column_definitions.csv
-    df = remove_failed_buildings(df) if is_baseline else df
-    df = remove_failed_baseline_buildings_and_replace_missing_with_baseline(df, baseline_failed_bldgs) if not is_baseline else df
     df = add_income_and_burden(df)
     df = add_county_column(df)
     df = add_puma_column(df)
@@ -97,8 +97,16 @@ def set_baseline_applicability(df: pl.LazyFrame) -> pl.LazyFrame:
     return df
 
 
-def remove_failed_buildings(df: pl.LazyFrame) -> pl.LazyFrame:
-    print('Removing failed buildings')
+def remove_failed_baseline_buildings(df: pl.LazyFrame, baseline_failed_bldgs: set[int],) -> pl.LazyFrame:
+    print('Removing buildings that failed in the baseline')
+    df = df.filter(
+        ~pl.col("building_id").is_in(baseline_failed_bldgs)
+    )
+    return df
+
+
+def remove_na_or_failed_buildings(df: pl.LazyFrame) -> pl.LazyFrame:
+    print('Removing buildings that failed in this upgrade or where the upgrade was not applicable')
     df = df.filter(pl.col("completed_status") == "Success")
     return df
 
@@ -106,34 +114,12 @@ def remove_failed_buildings(df: pl.LazyFrame) -> pl.LazyFrame:
 def get_failed_building_list(df: pl.LazyFrame, ) -> list[int]:
     print('Getting failed building list')
     failed_bldgs = (
-        df.filter(pl.col("completed_status") == "Fail")
+        df.filter(pl.col("completed_status") != "Success")
         .select(pl.col("building_id"))
         .collect()["building_id"]
         .to_list()
     )
     return failed_bldgs
-
-
-def remove_failed_baseline_buildings_and_replace_missing_with_baseline(
-        df: pl.LazyFrame, failed_bldgs: set[int]) -> pl.LazyFrame:
-    print('Removing failed buildings')
-    df = df.filter(
-        (~pl.col("bldg_id").is_in(failed_bldgs)) & (pl.col("completed_status") == "Success")
-    )
-    failed_bldgs = (
-        df.filter(
-            (pl.col("completed_status") == "Fail") & (~pl.col("bldg_id").is_in(failed_bldgs))
-        )
-        .select(pl.col("bldg_id"))
-        .collect()["bldg_id"]
-        .to_list()
-    )
-    if failed_bldgs:
-        print(
-            f"Replacing {len(failed_bldgs)} buildings that failed "
-            f"with results from baseline: {failed_bldgs}"
-        )
-    return df
 
 
 def add_upgrade_id_col(df: pl.LazyFrame, upgrade_id: int) -> pl.LazyFrame:
@@ -155,12 +141,14 @@ def add_missing_cols_from_baseline_to_upgrade(upgrade_df: pl.LazyFrame, baseline
     return upgrade_df
 
 
-def replace_missing_buildings_with_baseline(upgrade_df: pl.LazyFrame, baseline_df: pl.LazyFrame, upgrade_id: int) -> pl.LazyFrame:
+def replace_missing_buildings_with_baseline(upgrade_df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame:
     print('Replacing buildings missing from the upgrade with baseline data')
     # All buildings present in the upgrade_df are there because the upgrade was applicable to them
     upgrade_df = upgrade_df.with_columns(pl.lit(True).alias("applicability"))
     upgrade_name_df = upgrade_df.select(pl.col("apply_upgrade.upgrade_name").first())
-    missing_bldgs_df = baseline_df.join(
+    # Keep only successful buildings from the baseline
+    baseline_successful_df = baseline_df.filter(pl.col("completed_status") == "Success")
+    missing_bldgs_df = baseline_successful_df.join(
         upgrade_df,
         on="building_id",
         how="anti",  # Keep rows from 'base' with no match in 'upgrade'
@@ -172,6 +160,10 @@ def replace_missing_buildings_with_baseline(upgrade_df: pl.LazyFrame, baseline_d
     ).drop("apply_upgrade.upgrade_name")
     missing_bldgs_df = missing_bldgs_df.join(upgrade_name_df, how="cross")
     upgrade_df = pl.concat([upgrade_df, missing_bldgs_df], how="diagonal_relaxed")
+    base_ids = set(baseline_successful_df.select('building_id').collect().to_series().to_list())
+    up_ids = set(upgrade_df.select('building_id').collect().to_series().to_list())
+    assert base_ids == up_ids, f"{len(base_ids)} buildings in baseline, {len(up_ids)} in upgrade"
+    print(f"{len(base_ids)} buildings in baseline, {len(up_ids)} in upgrade")
     return upgrade_df
 
 
