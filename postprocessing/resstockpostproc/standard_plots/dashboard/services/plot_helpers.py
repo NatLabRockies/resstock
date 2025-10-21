@@ -7,7 +7,7 @@ import plotly.graph_objects as go  # type: ignore
 import polars as pl  # type: ignore
 from plotly.graph_objects import Figure
 
-from resstockpostproc.standard_plots.data_processor import prepare_data_for_plot
+from resstockpostproc.standard_plots.data_processing.data_processor import prepare_data_for_plot
 from resstockpostproc.standard_plots.schema.plot_spec import (
     AggregationType,
     BuildingInclusion,

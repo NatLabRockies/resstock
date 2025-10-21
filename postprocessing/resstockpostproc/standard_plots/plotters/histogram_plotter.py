@@ -6,7 +6,8 @@ from plotly.subplots import make_subplots
 
 __all__ = ["create_plot"]
 
-from resstockpostproc.standard_plots import plot_utils, theme
+from resstockpostproc.standard_plots.plotters import plot_utils
+from resstockpostproc.standard_plots import theme
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 

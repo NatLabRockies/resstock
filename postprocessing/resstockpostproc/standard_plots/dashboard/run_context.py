@@ -7,7 +7,7 @@ from typing import Any
 
 import polars as pl  # type: ignore
 
-from resstockpostproc.standard_plots.input_manager import download_data, load_data
+from resstockpostproc.standard_plots.io_managers.input_manager import download_data, load_data
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
 
 

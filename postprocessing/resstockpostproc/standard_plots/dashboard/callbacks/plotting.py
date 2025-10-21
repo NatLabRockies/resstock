@@ -27,7 +27,7 @@ from ..services.plot_helpers import (
     build_plot_spec,
     prepare_plot_dataframe,
 )
-from ...orchestrator import get_plotting_function
+from ...all_plots_generator import get_plotting_function
 
 logger = logging.getLogger(__name__)
 

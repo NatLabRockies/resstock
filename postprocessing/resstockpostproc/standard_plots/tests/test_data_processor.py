@@ -9,8 +9,8 @@ from __future__ import annotations
 import polars as pl
 import pytest
 
-import resstockpostproc.standard_plots.choropleth_plotter as choropleth_plotter
-from resstockpostproc.standard_plots.data_processor import (
+import resstockpostproc.standard_plots.plotters.choropleth_plotter as choropleth_plotter
+from resstockpostproc.standard_plots.data_processing.data_processor import (
     prepare_data_for_plot,
 )
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec

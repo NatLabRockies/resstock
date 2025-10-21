@@ -9,7 +9,8 @@ from typing import Literal
 import polars as pl
 import plotly.graph_objects as go
 
-from resstockpostproc.standard_plots import plot_utils, theme
+from resstockpostproc.standard_plots.plotters import plot_utils
+from resstockpostproc.standard_plots import theme
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, QuantityType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 

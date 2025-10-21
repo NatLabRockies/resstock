@@ -9,9 +9,9 @@ from pathlib import Path
 import dash_bootstrap_components as dbc  # type: ignore
 from dash_extensions.enrich import DashProxy, MultiplexerTransform  # type: ignore
 
-from .callbacks import register_callbacks
-from .layout import build_layout
-from .run_context import RunContext
+from resstockpostproc.standard_plots.dashboard.callbacks import register_callbacks
+from resstockpostproc.standard_plots.dashboard.layout import build_layout
+from resstockpostproc.standard_plots.dashboard.run_context import RunContext
 
 logger = logging.getLogger(__name__)
 

@@ -12,16 +12,13 @@ from uuid import UUID
 from prefect.artifacts import create_progress_artifact, update_progress_artifact
 from prefect.runtime import flow_run
 
-from resstockpostproc.standard_plots import (
-    bar_plotter,
-    box_plotter,
-    choropleth_plotter,
-    heatmap_plotter,
+from resstockpostproc.standard_plots.plotters import bar_plotter, box_plotter, choropleth_plotter, heatmap_plotter
+from resstockpostproc.standard_plots.plotters import (
     histogram_plotter,
 )
-from resstockpostproc.standard_plots.data_processor import prepare_data_for_plot
-from resstockpostproc.standard_plots.input_manager import download_data, load_data
-from resstockpostproc.standard_plots.output_manager import (
+from resstockpostproc.standard_plots.data_processing.data_processor import prepare_data_for_plot
+from resstockpostproc.standard_plots.io_managers.input_manager import download_data, load_data
+from resstockpostproc.standard_plots.io_managers.output_manager import (
     get_plot_base_dir,
     save_plot,
     write_workflow_snapshot,

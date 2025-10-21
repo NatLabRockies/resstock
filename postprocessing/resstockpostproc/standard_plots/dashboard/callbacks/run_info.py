@@ -8,7 +8,7 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import time
 from ..run_context import RunContext
-from resstockpostproc.standard_plots.input_manager import load_data
+from resstockpostproc.standard_plots.io_managers.input_manager import load_data
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityType
 
 logger = logging.getLogger(__name__)

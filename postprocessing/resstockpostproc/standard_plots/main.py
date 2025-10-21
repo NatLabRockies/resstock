@@ -12,7 +12,7 @@ from pathlib import Path
 
 # Import dependencies that might be needed
 # Import our components
-from resstockpostproc.standard_plots.orchestrator import generate_all_plots
+from resstockpostproc.standard_plots.all_plots_generator import generate_all_plots
 from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
 
 
