@@ -148,7 +148,6 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
             raise PreventUpdate
 
         run_workflow = ctx.get_workflow(run_folder_val)
-        input_manager = ctx.get_input_manager(run_folder_val)
         loaded_from_file = False
 
         if selected_upgrades is not None and run_workflow is not None:
@@ -186,7 +185,7 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
                 dynamic_mode = True
 
         if dynamic_mode:
-            if input_manager is None:
+            if run_workflow is None:
                 warning = f"{run_folder_val} folder does not have workflow_snapshot.json.\nCannot dynamically generate plots."
                 user_warning = (
                     "This old run cannot be viewed in the new dashboard\nPlease view it in the old dashboard or re-run the flow."

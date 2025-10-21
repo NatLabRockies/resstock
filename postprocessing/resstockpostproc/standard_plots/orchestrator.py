@@ -18,7 +18,7 @@ from resstockpostproc.standard_plots.choropleth_plotter import ChoroplethPlotter
 from resstockpostproc.standard_plots.data_processor import prepare_data_for_plot
 from resstockpostproc.standard_plots.heatmap_plotter import HeatmapPlotter
 from resstockpostproc.standard_plots.histogram_plotter import HistogramPlotter
-from resstockpostproc.standard_plots.input_manager import InputManager
+from resstockpostproc.standard_plots.input_manager import download_data, load_data
 from resstockpostproc.standard_plots.output_manager import OutputManager
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, VizType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
@@ -41,9 +41,8 @@ def generate_all_plots(
     workflow = _coerce_workflow(config)
 
     start_time = time.time()
-    inp_mgr = InputManager(workflow)
-    inp_mgr.download_data()
-    combined_df = inp_mgr.load_data()
+    download_data(workflow)
+    combined_df = load_data(workflow)
     data_loading_time = time.time() - start_time
 
     out_mgr = OutputManager(workflow, output_types=list(output_types), overwrite=overwrite)

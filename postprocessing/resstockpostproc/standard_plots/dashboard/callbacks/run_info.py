@@ -8,6 +8,7 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import time
 from ..run_context import RunContext
+from resstockpostproc.standard_plots.input_manager import load_data
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityType
 
 logger = logging.getLogger(__name__)
@@ -33,11 +34,11 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
         if not snapshot:
             return "RUN INFO NOT AVAILABLE", "—", [], [], "—"
 
-        input_manager = ctx.get_input_manager(run_folder)
-        if input_manager is None:
+        workflow_for_run = ctx.ensure_data_ready(run_folder)
+        if workflow_for_run is None:
             return "Run folder does not have workflow snapshot. Cannot give run info.", "—", [], [], "—"
 
-        baseline_df = input_manager.load_data(selected_upgrades=[0])
+        baseline_df = load_data(workflow_for_run, selected_upgrades=[0])
         num_data_points = baseline_df.select(pl.len()).collect().item()
         upgrades = snapshot.get("upgrades", [])
         non_baseline_upgrades = [upgrade for upgrade in upgrades if upgrade != 0]
@@ -48,7 +49,7 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
             baseline_token = f"{'0(Base)':<10}"
         start_time = time.time()
         for upgrade in non_baseline_upgrades:
-            upgrade_df = input_manager.load_data(selected_upgrades=[upgrade])
+            upgrade_df = load_data(workflow_for_run, selected_upgrades=[upgrade])
             num_applicable = upgrade_df.filter(pl.col("applicability")).select(pl.len()).collect().item()
             token = f"{upgrade}({num_applicable / num_data_points * 100:.1f}%)"
             upgrade_tokens.append(f"{token:<10}")

@@ -7,7 +7,7 @@ from typing import Any
 
 import polars as pl  # type: ignore
 
-from resstockpostproc.standard_plots.input_manager import InputManager
+from resstockpostproc.standard_plots.input_manager import download_data, load_data
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
 
 
@@ -20,11 +20,11 @@ class RunContext:
     plots_dir: Path
     quantity_groups: dict[str, QuantityGroup]
     plots_root_folder: str | None = None
-    _input_managers: dict[str, InputManager] = field(default_factory=dict)
     _workflows: dict[str, WorkflowConfig] = field(default_factory=dict)
     _combined_frames: dict[str, pl.LazyFrame] = field(default_factory=dict)
     _categorical_columns: dict[tuple[str, int], list[str]] = field(default_factory=dict)
     _quantity_categories: dict[tuple[str, int, str], list[str]] = field(default_factory=dict)
+    _downloaded_runs: set[str] = field(default_factory=set)
 
     @classmethod
     def from_environment(cls, workflow_yaml: Path, plots_root_folder: str | None = None) -> "RunContext":
@@ -62,11 +62,9 @@ class RunContext:
         with snapshot_path.open() as fh:
             return json.load(fh)
 
-    def get_input_manager(self, run_folder: str) -> InputManager | None:
-        """Return a cached InputManager instance for the run folder."""
-        if run_folder in self._input_managers:
-            return self._input_managers[run_folder]
-
+    def _get_workflow(self, run_folder: str) -> WorkflowConfig | None:
+        if run_folder in self._workflows:
+            return self._workflows[run_folder]
         snapshot = self.load_snapshot(run_folder)
         if snapshot is None:
             return None
@@ -82,28 +80,36 @@ class RunContext:
             workflow.set_output_dir(self.plots_root_folder)
             workflow.set_storage_backend("minio")
 
-        input_manager = InputManager(workflow)
-        input_manager.download_data()
-        self._input_managers[run_folder] = input_manager
         self._workflows[run_folder] = workflow
-        return input_manager
+        return workflow
+
+    def _ensure_data_ready(self, run_folder: str) -> WorkflowConfig | None:
+        workflow = self._get_workflow(run_folder)
+        if workflow is None:
+            return None
+        if run_folder not in self._downloaded_runs:
+            download_data(workflow)
+            self._downloaded_runs.add(run_folder)
+        return workflow
+
+    def ensure_data_ready(self, run_folder: str) -> WorkflowConfig | None:
+        """Ensure the workflow is prepared and data downloaded for the run."""
+        return self._ensure_data_ready(run_folder)
 
     def get_workflow(self, run_folder: str) -> WorkflowConfig | None:
         """Return the WorkflowConfig associated with a run folder."""
-        if run_folder not in self._workflows:
-            self.get_input_manager(run_folder)
-        return self._workflows.get(run_folder)
+        return self._get_workflow(run_folder)
 
     def get_combined_frame(self, run_folder: str) -> pl.LazyFrame | None:
         """Return cached combined LazyFrame for the run folder."""
         if run_folder in self._combined_frames:
             return self._combined_frames[run_folder]
 
-        input_manager = self.get_input_manager(run_folder)
-        if input_manager is None:
+        workflow = self._ensure_data_ready(run_folder)
+        if workflow is None:
             return None
 
-        combined_df = input_manager.load_data()
+        combined_df = load_data(workflow)
         self._combined_frames[run_folder] = combined_df
         return combined_df
 
@@ -112,11 +118,11 @@ class RunContext:
         if (run_folder, upgrade) in self._categorical_columns:
             return self._categorical_columns[(run_folder, upgrade)]
 
-        input_manager = self.get_input_manager(run_folder)
-        if input_manager is None:
+        workflow = self._ensure_data_ready(run_folder)
+        if workflow is None:
             return []
 
-        data = input_manager.load_data([upgrade])
+        data = load_data(workflow, [upgrade])
         schema = data.collect_schema()
 
         def _is_numeric(dtype: pl.DataType) -> bool:
@@ -168,11 +174,11 @@ class RunContext:
         if cache_key in self._quantity_categories and self._quantity_categories[cache_key]:
             return self._quantity_categories[cache_key]
 
-        input_manager = self.get_input_manager(run_folder)
-        if input_manager is None:
+        workflow = self._ensure_data_ready(run_folder)
+        if workflow is None:
             return []
 
-        data = input_manager.load_data([upgrade])
+        data = load_data(workflow, [upgrade])
         try:
             categories_df = (
                 data.select(pl.col(column))
