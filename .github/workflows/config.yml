@@ -784,12 +784,12 @@ jobs:
       - name: Generate some plots (FAIL FAST)
         working-directory: postprocessing
         run: |
-          uv run python resstockpostproc/standard_plots/generate_plots.py --quantity_group="Unmet Hours"
+          uv run python resstockpostproc/standard_plots/main.py --quantity_group="Unmet Hours"
 
       - name: Generate rest of the plots
         working-directory: postprocessing
         run: |
-          uv run python resstockpostproc/standard_plots/generate_plots.py
+          uv run python resstockpostproc/standard_plots/main.py
       - name: Upload plots
         uses: actions/upload-artifact@v4
         with:
