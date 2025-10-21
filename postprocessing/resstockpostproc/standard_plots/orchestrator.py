@@ -19,7 +19,11 @@ from resstockpostproc.standard_plots.data_processor import prepare_data_for_plot
 from resstockpostproc.standard_plots.heatmap_plotter import HeatmapPlotter
 from resstockpostproc.standard_plots.histogram_plotter import HistogramPlotter
 from resstockpostproc.standard_plots.input_manager import download_data, load_data
-from resstockpostproc.standard_plots.output_manager import OutputManager
+from resstockpostproc.standard_plots.output_manager import (
+    get_plot_base_dir,
+    save_plot,
+    write_workflow_snapshot,
+)
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, VizType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
 
@@ -45,7 +49,10 @@ def generate_all_plots(
     combined_df = load_data(workflow)
     data_loading_time = time.time() - start_time
 
-    out_mgr = OutputManager(workflow, output_types=list(output_types), overwrite=overwrite)
+    base_dir = get_plot_base_dir(workflow)
+    base_dir.mkdir(parents=True, exist_ok=True)
+    write_workflow_snapshot(workflow, base_dir)
+    output_types_list = list(output_types) if output_types else None
 
     progress_artifact_id: UUID | None = None
     if flow_run.id:
@@ -84,7 +91,15 @@ def generate_all_plots(
         figure_creation_time += time.time() - start_time
 
         start_time = time.time()
-        out_mgr.save_plot(fig, path_seg, df, name)
+        save_plot(
+            base_dir=base_dir,
+            path_seg=path_seg,
+            file_name=name,
+            fig=fig,
+            df=df,
+            output_types=output_types_list,
+            overwrite=overwrite,
+        )
         saving_time += time.time() - start_time
 
         print(f"{plots_generated:,}/{total_plots:,}: Saved plot for {path_seg}/{name}")
@@ -101,7 +116,6 @@ def generate_all_plots(
             data_preparing_time=data_preparing_time,
             figure_creation_time=figure_creation_time,
             saving_time=saving_time,
-            output_manager=out_mgr,
         )
 
 
@@ -126,14 +140,12 @@ def _print_time_spent(
     data_preparing_time: float,
     figure_creation_time: float,
     saving_time: float,
-    output_manager: OutputManager,
 ) -> None:
     """Print timing information for a generation run."""
     print(f"Time spent loading data: {data_loading_time:.2f} seconds")
     print(f"Time spent preparing data: {data_preparing_time:.2f} seconds")
     print(f"Time spent creating figures: {figure_creation_time:.2f} seconds")
     print(f"Time spent saving plots: {saving_time:.2f} seconds")
-    output_manager.print_time_spent()
 
 
 def _coerce_workflow(config: str | dict | WorkflowConfig) -> WorkflowConfig:
