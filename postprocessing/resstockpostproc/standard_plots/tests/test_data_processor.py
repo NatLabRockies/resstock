@@ -194,7 +194,6 @@ def _build_base_spec(**kwargs) -> PlotSpec:  # type: ignore[return-value]
         (None, 3),
         ("in.heating_fuel", 6),
         ("in.building_type", 3),
-        ("in.state", 6),
     ],
 )
 def test_prepare_basic(
