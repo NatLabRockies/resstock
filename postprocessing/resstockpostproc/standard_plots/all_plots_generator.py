@@ -75,7 +75,11 @@ def generate_all_plots(
 
     for plots_generated, plot_spec in enumerate(plot_specs, 1):
         start_time = time.time()
-        df = prepare_data_for_plot(combined_df, plot_spec)
+        try:
+            df = prepare_data_for_plot(combined_df, plot_spec)
+        except Exception as exc:
+            print(f"Error preparing data for plot {plot_spec}: {exc}")
+            raise
         data_preparing_time += time.time() - start_time
 
         path_seg, name = plot_spec.get_path_and_name()
