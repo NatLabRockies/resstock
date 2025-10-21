@@ -1,48 +1,30 @@
-"""Theme management for Plotly plots.
-Centralizes style configuration so all plotters share a consistent look & feel.
-"""
+"""Functional helpers for plot styling."""
+
+from __future__ import annotations
+
+import itertools as it
+from typing import Sequence
 
 import plotly.graph_objects as go
-import itertools as it
 
 from resstockpostproc.standard_plots.schema.end_use_dicts import column2color, column2pattern
-from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
 
-nrel_color_series = [  # from https://www.nrel.gov/comm-standards/web/typography
-    [  # blue series
-        "#0B5E90",
-        "#0079C2",
-        "#00A3E4",
-        "#5DD2FF",
-    ],
-    [  # orange series
-        "#A16911",
-        "#EE9521",
-        "#FFC423",
-        "#FFD200",
-    ],
-    [  # green series
-        "#3D6321",
-        "#7DA544",
-        "#9ECE42",
-        "#C1EE86",
-    ],
-    # [  # gray series
-    #     "#4B545A",
-    #     "#626D72",
-    #     "#D1D5D8",
-    #     "#DEE2E5",
-    # ],
-    [  # black series
-        "#000000",
-        "#212121",
-        "#282D30",
-        "#3A4246",
-    ],
+DEFAULT_TEMPLATE = "plotly_white"
+DEFAULT_FONT_FAMILY = "Arial"
+DEFAULT_FONT_SIZE = 12
+DEFAULT_FIG_WIDTH = 1000
+DEFAULT_FIG_HEIGHT = 600
+DEFAULT_FACET_WIDTH = 200
+DEFAULT_FACET_TITLE_WIDTH = 15
+
+nrel_color_series = [
+    ["#0B5E90", "#0079C2", "#00A3E4", "#5DD2FF"],
+    ["#A16911", "#EE9521", "#FFC423", "#FFD200"],
+    ["#3D6321", "#7DA544", "#9ECE42", "#C1EE86"],
+    ["#000000", "#212121", "#282D30", "#3A4246"],
 ]
 
-# from: https://www.nrel.gov/docs/libraries/comm-standards/nrel-rgb-guidelines-042525.pdf?sfvrsn=3447a02_2
-qualitative_series = [
+QUALITATIVE_SERIES = [
     "#0079C2",
     "#7DA544",
     "#EE9521",
@@ -56,56 +38,48 @@ qualitative_series = [
     "#A32F1C",
 ]
 
-fuel_colors = {
-    "electricity": nrel_color_series[1][1],  # EE9521 orange
-    "natural gas": nrel_color_series[0][2],  # 0079C2 blue
-    "propane": nrel_color_series[2][0],  # A16911  # brown
-    "fuel oil": nrel_color_series[3][0],  # 626D72 gray
+FUEL_COLORS = {
+    "electricity": nrel_color_series[1][1],
+    "natural gas": nrel_color_series[0][2],
+    "propane": nrel_color_series[2][0],
+    "fuel oil": nrel_color_series[3][0],
 }
+
+END_USE_TO_COLOR = column2color
+END_USE_TO_PATTERN = column2pattern
+
+
+def build_upgrade_palette(upgrade_names: Sequence[str]) -> dict[str, str]:
+    """Return a mapping from upgrade name to color."""
+    unique_names = list(dict.fromkeys(upgrade_names))
+    if not unique_names:
+        return {}
+    if len(unique_names) > len(QUALITATIVE_SERIES):
+        palette = {unique_names[0]: QUALITATIVE_SERIES[0]}
+        for name in unique_names[1:]:
+            palette[name] = QUALITATIVE_SERIES[1]
+        return palette
+    return dict(zip(unique_names, QUALITATIVE_SERIES))
+
+
+def apply_layout(fig: go.Figure, *, width: int | None = None, height: int | None = None) -> go.Figure:
+    """Apply the common layout updates to *fig* and return the figure."""
+    fig.update_layout(
+        template=DEFAULT_TEMPLATE,
+        font={"family": DEFAULT_FONT_FAMILY, "size": DEFAULT_FONT_SIZE},
+        margin={"l": 50, "r": 150, "t": 80, "b": 50},
+        plot_bgcolor="white",
+        width=width or DEFAULT_FIG_WIDTH,
+        height=height or DEFAULT_FIG_HEIGHT,
+        hoverlabel_namelength=-1,
+    )
+    return fig
 
 
 def get_fuel_color(fuel: str) -> str:
-    return fuel_colors.get(fuel.lower(), "#3A4246")
+    return FUEL_COLORS.get(fuel.lower(), "#3A4246")
 
 
-class ThemeManager:
-    """Holds reusable Plotly layout & palette configuration."""
-
-    def __init__(self, workflow: WorkflowConfig):
-        # Base template - can be changed via config
-        self.template: str = "plotly_white"
-        # Color palette used across plots
-        self.primary_color_sequence = qualitative_series
-        self.end_use_to_color = column2color
-        self.end_use_to_pattern = column2pattern
-        self.fig_width: int = 1000
-        self.facet_width: int = 200
-        self.fig_height: int = 600
-        self.facet_title_width = 15
-        self.workflow = workflow
-        self.update_upgrade_palette(workflow.upgrades)
-
-    def update_upgrade_palette(self, upgrades: tuple[int, ...] | None = None) -> None:
-        upgrades = upgrades or self.workflow.upgrades
-        color_list = qualitative_series
-        workflow_upgrade2name = dict(zip(self.workflow.upgrades, self.workflow.upgrade_names))
-        upgrade2name = {upgrade: workflow_upgrade2name[int(upgrade)] for upgrade in upgrades}
-        if len(upgrades) > len(color_list):
-            self.upgrade_palette = {upgrade2name[upgrades[0]]: color_list[0]}
-            for i, upgrade in enumerate(upgrades[1:]):
-                self.upgrade_palette[upgrade2name[upgrade]] = color_list[1]
-        else:
-            self.upgrade_palette = dict(zip(upgrade2name.values(), color_list))
-
-    def apply_layout(self, fig: go.Figure) -> go.Figure:
-        """Apply the theme's common layout to *fig* and return it for chaining."""
-        fig.update_layout(
-            template=self.template,
-            font={"family": "Arial", "size": 12},
-            margin={"l": 50, "r": 150, "t": 80, "b": 50},
-            plot_bgcolor="white",
-            width=self.fig_width,
-            height=self.fig_height,
-            hoverlabel_namelength=-1,  # show full hover labels
-        )
-        return fig
+def cycling_colors() -> it.cycle:
+    """Return a reusable color cycle."""
+    return it.cycle(QUALITATIVE_SERIES)

@@ -27,6 +27,7 @@ from ..services.plot_helpers import (
     build_plot_spec,
     prepare_plot_dataframe,
 )
+from ...orchestrator import get_plotter
 
 logger = logging.getLogger(__name__)
 
@@ -146,11 +147,12 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
         if not run_folder_val:
             raise PreventUpdate
 
-        orchestrator = ctx.get_orchestrator(run_folder_val)
+        run_workflow = ctx.get_workflow(run_folder_val)
+        input_manager = ctx.get_input_manager(run_folder_val)
         loaded_from_file = False
 
-        if orchestrator is not None and selected_upgrades is not None:
-            if sorted(selected_upgrades) != sorted(orchestrator.workflow.upgrades):
+        if selected_upgrades is not None and run_workflow is not None:
+            if sorted(selected_upgrades) != sorted(run_workflow.upgrades):
                 dynamic_mode = True
             else:
                 selected_upgrades = None
@@ -158,9 +160,10 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
         df = pl.DataFrame()
         fig = go.Figure()
 
-        if not dynamic_mode:
+        workflow_for_paths = run_workflow or workflow
+        if not dynamic_mode and workflow_for_paths is not None:
             path_seg, name = plot_spec.get_path_and_name(selected_upgrades=selected_upgrades)
-            base_dir = Path(workflow.output_dir).expanduser().resolve() / "plots" / str(run_folder_val)
+            base_dir = Path(workflow_for_paths.output_dir).expanduser().resolve() / "plots" / str(run_folder_val)
             fig_path = base_dir / path_seg / "figure_json" / f"{name}.json"
             parquet_path = base_dir / path_seg / "data" / f"{name}.parquet"
             if fig_path.exists() and parquet_path.exists():
@@ -183,7 +186,7 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
                 dynamic_mode = True
 
         if dynamic_mode:
-            if orchestrator is None:
+            if input_manager is None:
                 warning = f"{run_folder_val} folder does not have workflow_snapshot.json.\nCannot dynamically generate plots."
                 user_warning = (
                     "This old run cannot be viewed in the new dashboard\nPlease view it in the old dashboard or re-run the flow."
@@ -200,12 +203,8 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
                 selected_upgrades=selected_upgrades,
             )
             print(f"Data prepared in {time.time() - start_time:.1f} seconds. Generating data ...")
-            plotter = orchestrator.get_plotter(plot_spec.visualization_type)
+            plotter = get_plotter(plot_spec.visualization_type)
             start_time = time.time()
-            orchestrator.theme.update_upgrade_palette(
-                tuple(selected_upgrades) if selected_upgrades is not None else None
-            )
-
             fig = plotter.create_plot(df, plot_spec)
             print(f"Figure generated in {time.time() - start_time:.1f} seconds.")
 

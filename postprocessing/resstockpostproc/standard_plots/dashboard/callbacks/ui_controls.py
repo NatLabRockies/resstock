@@ -97,16 +97,19 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
     )
     def _update_group_by_options(viz_type_val: str,
                                  run_folder: str, current_val: str | None):
-        orchestrator = ctx.get_orchestrator(run_folder)
-        if orchestrator is None:
+        run_workflow = ctx.get_workflow(run_folder)
+        if run_workflow is None:
             raise PreventUpdate
 
-        workflow_group_by: tuple[str, ...] = orchestrator.workflow.group_by
+        workflow_group_by: tuple[str, ...] = run_workflow.group_by
 
         small_chars: list[str] = []
         geo_columns: list[str] = []
         try:
-            base_df: pl.LazyFrame = orchestrator.combined_df.filter(pl.col("upgrade") == 0)
+            combined_df = ctx.get_combined_frame(run_folder)
+            if combined_df is None:
+                raise PreventUpdate
+            base_df: pl.LazyFrame = combined_df.filter(pl.col("upgrade") == 0)
             schema_names = base_df.collect_schema().names()
             in_cols = [col for col in schema_names if col.startswith("in.")]
             if in_cols:

@@ -15,6 +15,7 @@ import polars as pl
 from plotly.subplots import make_subplots
 
 from resstockpostproc.standard_plots.base_plotter import BasePlotter
+from resstockpostproc.standard_plots import theme
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 
@@ -201,7 +202,7 @@ class HeatmapPlotter(BasePlotter):
                     text="<br>".join(
                         textwrap.wrap(
                             a.text.strip() if a.text else "",
-                            width=self.theme.facet_title_width,
+                            width=theme.DEFAULT_FACET_TITLE_WIDTH,
                             break_long_words=False,
                         )
                     )
@@ -249,5 +250,6 @@ class HeatmapPlotter(BasePlotter):
         # Set empty axis titles
         fig.update_xaxes(title_text="")
         fig.update_yaxes(title_text="", type="category", tickmode="array", tickvals=constituent_cols)
+        theme.apply_layout(fig)
         fig.update_layout(height=900)
         return fig

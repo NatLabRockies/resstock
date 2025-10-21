@@ -9,6 +9,7 @@ import plotly.graph_objects as go
 import polars as pl
 
 from resstockpostproc.standard_plots.base_plotter import BasePlotter
+from resstockpostproc.standard_plots import theme
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 
 
@@ -82,6 +83,7 @@ class BoxPlotter(BasePlotter):
         fig = go.Figure()
 
         first_cats = list(reversed(data[first_category_column].unique(maintain_order=True).to_list()))  # preserve order
+        upgrade_palette = theme.build_upgrade_palette(first_cats)
         firstcat2pos = {cat: i for i, cat in enumerate(first_cats)}
 
         # ------------------------------------------------------------------
@@ -146,7 +148,7 @@ class BoxPlotter(BasePlotter):
                     lowerfence=list(reversed(fdata["lower_whisker"].to_list())),
                     upperfence=list(reversed(fdata["upper_whisker"].to_list())),
                     mean=list(reversed(fdata["mean"].to_list())),
-                    marker_color=self.theme.upgrade_palette.get(category),
+                    marker_color=upgrade_palette.get(category),
                     marker_size=2,  # Make outlier point size small
                     marker_opacity=0.8,  # Make outlier points partially transparent
                     orientation="h",
@@ -208,5 +210,5 @@ class BoxPlotter(BasePlotter):
             tick0=min_val,
             range=[min_val, max_val],
         )
-        self.theme.apply_layout(fig)
+        theme.apply_layout(fig)
         return fig

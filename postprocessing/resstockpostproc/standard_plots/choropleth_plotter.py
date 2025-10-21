@@ -22,6 +22,7 @@ except Exception:  # noqa: BLE001 - keep plotter functional without shapely
     shape = None
 
 from resstockpostproc.standard_plots.base_plotter import BasePlotter
+from resstockpostproc.standard_plots import theme
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, QuantityType
 
@@ -134,7 +135,7 @@ class ChoroplethPlotter(BasePlotter):
         df = data.filter(pl.all_horizontal(filters))
         if df.is_empty():
             fig = go.Figure()
-            self.theme.apply_layout(fig)
+            theme.apply_layout(fig)
             fig.add_annotation(
                 text="No data available for choropleth plot",
                 x=0.5,
@@ -341,7 +342,7 @@ class ChoroplethPlotter(BasePlotter):
                 "colorbar": colorbar,
             }
         )
-        self.theme.apply_layout(fig)
+        theme.apply_layout(fig)
         base_height = 620 if resolution == "county" else 540
         preferred_height = base_height * n_rows
         current_height = fig.layout.height or 0

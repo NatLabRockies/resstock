@@ -1,25 +1,19 @@
 """Common abstract base class for all plotters.
 
-Provides shared helpers (theme access, column guards, etc.) so concrete plotters do not have to duplicate boilerplate.
+Provides shared helpers (column guards, etc.) so concrete plotters do not have to duplicate boilerplate.
 """
 
 from abc import ABC
 
 import polars as pl
 from plotly.graph_objects import Figure
-
-from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, QuantityType, QuantityGroup
-from resstockpostproc.standard_plots.theme import ThemeManager
 from typing import overload
+
+from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, QuantityGroup, QuantityType
 
 
 class BasePlotter(ABC):
     """Abstract base plotter - every concrete plotter inherits this."""
-
-    def __init__(self, theme: ThemeManager):
-        # Centralized style/theme manager
-        self.theme = theme
-
     # ------------------------------------------------------------------
     # Shared helpers
     # ------------------------------------------------------------------

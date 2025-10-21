@@ -7,20 +7,22 @@ from typing import Any
 
 import polars as pl  # type: ignore
 
-from resstockpostproc.standard_plots.orchestrator import PlotOrchestrator
+from resstockpostproc.standard_plots.input_manager import InputManager
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
 
 
 @dataclass
 class RunContext:
-    """Holds workflow configuration and orchestrator cache for the dashboard."""
+    """Holds workflow configuration and caches for the dashboard."""
 
     workflow_yaml: Path
     workflow: WorkflowConfig
     plots_dir: Path
     quantity_groups: dict[str, QuantityGroup]
     plots_root_folder: str | None = None
-    _orchestrators: dict[str, PlotOrchestrator] = field(default_factory=dict)
+    _input_managers: dict[str, InputManager] = field(default_factory=dict)
+    _workflows: dict[str, WorkflowConfig] = field(default_factory=dict)
+    _combined_frames: dict[str, pl.LazyFrame] = field(default_factory=dict)
     _categorical_columns: dict[tuple[str, int], list[str]] = field(default_factory=dict)
     _quantity_categories: dict[tuple[str, int, str], list[str]] = field(default_factory=dict)
 
@@ -60,10 +62,10 @@ class RunContext:
         with snapshot_path.open() as fh:
             return json.load(fh)
 
-    def get_orchestrator(self, run_folder: str) -> PlotOrchestrator | None:
-        """Return a cached PlotOrchestrator instance for the run folder."""
-        if run_folder in self._orchestrators:
-            return self._orchestrators[run_folder]
+    def get_input_manager(self, run_folder: str) -> InputManager | None:
+        """Return a cached InputManager instance for the run folder."""
+        if run_folder in self._input_managers:
+            return self._input_managers[run_folder]
 
         snapshot = self.load_snapshot(run_folder)
         if snapshot is None:
@@ -80,19 +82,41 @@ class RunContext:
             workflow.set_output_dir(self.plots_root_folder)
             workflow.set_storage_backend("minio")
 
-        self._orchestrators[run_folder] = PlotOrchestrator(workflow, overwrite=False)
-        return self._orchestrators[run_folder]
+        input_manager = InputManager(workflow)
+        input_manager.download_data()
+        self._input_managers[run_folder] = input_manager
+        self._workflows[run_folder] = workflow
+        return input_manager
+
+    def get_workflow(self, run_folder: str) -> WorkflowConfig | None:
+        """Return the WorkflowConfig associated with a run folder."""
+        if run_folder not in self._workflows:
+            self.get_input_manager(run_folder)
+        return self._workflows.get(run_folder)
+
+    def get_combined_frame(self, run_folder: str) -> pl.LazyFrame | None:
+        """Return cached combined LazyFrame for the run folder."""
+        if run_folder in self._combined_frames:
+            return self._combined_frames[run_folder]
+
+        input_manager = self.get_input_manager(run_folder)
+        if input_manager is None:
+            return None
+
+        combined_df = input_manager.load_data()
+        self._combined_frames[run_folder] = combined_df
+        return combined_df
 
     def list_categorical_quantities(self, run_folder: str, upgrade: int) -> list[str]:
         """Return cached list of categorical columns suitable for prevalence plots."""
         if (run_folder, upgrade) in self._categorical_columns:
             return self._categorical_columns[(run_folder, upgrade)]
 
-        orchestrator = self.get_orchestrator(run_folder)
-        if orchestrator is None:
+        input_manager = self.get_input_manager(run_folder)
+        if input_manager is None:
             return []
 
-        data = orchestrator.inp_mgr.load_data([upgrade])
+        data = input_manager.load_data([upgrade])
         schema = data.collect_schema()
 
         def _is_numeric(dtype: pl.DataType) -> bool:
@@ -144,11 +168,11 @@ class RunContext:
         if cache_key in self._quantity_categories and self._quantity_categories[cache_key]:
             return self._quantity_categories[cache_key]
 
-        orchestrator = self.get_orchestrator(run_folder)
-        if orchestrator is None:
+        input_manager = self.get_input_manager(run_folder)
+        if input_manager is None:
             return []
 
-        data = orchestrator.inp_mgr.load_data([upgrade])
+        data = input_manager.load_data([upgrade])
         try:
             categories_df = (
                 data.select(pl.col(column))

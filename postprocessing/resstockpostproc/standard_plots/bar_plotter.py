@@ -4,10 +4,11 @@ Plotting module for standard plots
 Handles creation of plots using Plotly with consistent styling
 """
 
-import plotly.graph_objects as go
 import polars as pl
+import plotly.graph_objects as go
 
 from resstockpostproc.standard_plots.base_plotter import BasePlotter
+from resstockpostproc.standard_plots import theme
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, QuantityType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 from typing import Literal
@@ -99,6 +100,19 @@ class BarPlotter(BasePlotter):
         segments correspond to those columns, using the order given in the
         list (last item plotted first so it ends up on top).
         """
+        upgrade_palette: dict[str, str] = {}
+        if "upgrade_name" in data.columns:
+            upgrade_palette.update(
+                theme.build_upgrade_palette(
+                    data["upgrade_name"].unique(maintain_order=True).to_list()
+                )
+            )
+        if first_category_column in data.columns:
+            upgrade_palette.update(
+                theme.build_upgrade_palette(
+                    data[first_category_column].unique(maintain_order=True).to_list()
+                )
+            )
         # ------------------------------------------------------------------ #
         # NORMALISE INPUT                                                    #
         # ------------------------------------------------------------------ #
@@ -122,16 +136,16 @@ class BarPlotter(BasePlotter):
                     x_data = list(reversed(data[qcol]))
                     y_data = list(reversed(data[first_category_column]))
                     xtitle, ytitle = quantity_title, first_category_title
-                    colors = [self.theme.upgrade_palette.get(y, "#626D72") for y in y_data]
+                    colors = [upgrade_palette.get(y, "#626D72") for y in y_data]
                 else:
                     x_data = list(reversed(data[first_category_column]))
                     y_data = list(reversed(data[qcol]))
                     xtitle, ytitle = first_category_title, quantity_title
-                    colors = [self.theme.upgrade_palette.get(x, "#626D72") for x in x_data]
+                    colors = [upgrade_palette.get(x, "#626D72") for x in x_data]
 
                 if len(quantity_cols) > 1:
-                    marker_pattern_shape = self.theme.end_use_to_pattern.get(qcol, None)
-                    marker_color: list[str | None] | str | None = self.theme.end_use_to_color.get(qcol, None)
+                    marker_pattern_shape = theme.END_USE_TO_PATTERN.get(qcol, None)
+                    marker_color: list[str | None] | str | None = theme.END_USE_TO_COLOR.get(qcol, None)
                 else:
                     marker_color = colors
                     marker_pattern_shape = ""
@@ -160,10 +174,10 @@ class BarPlotter(BasePlotter):
                 for idx, group_name in enumerate(unique_groups):
                     group_data = data.filter(pl.col(first_category_column) == group_name)
                     if len(quantity_cols) > 1:
-                        marker_pattern_shape = self.theme.end_use_to_pattern.get(qcol, None)
-                        marker_color = self.theme.end_use_to_color.get(qcol, None)
+                        marker_pattern_shape = theme.END_USE_TO_PATTERN.get(qcol, None)
+                        marker_color = theme.END_USE_TO_COLOR.get(qcol, None)
                     else:
-                        marker_color = self.theme.upgrade_palette.get(group_name, None)
+                        marker_color = upgrade_palette.get(group_name, None)
                         marker_pattern_shape = ""
 
                     if orientation == "h":  # reverse for visual top-to-bottom
@@ -217,13 +231,13 @@ class BarPlotter(BasePlotter):
                 barmode="relative" if is_stacked else "group",  # <-- key change
                 xaxis_title=xtitle,
                 yaxis_title=ytitle,
-                template=self.theme.template,
+                template=theme.DEFAULT_TEMPLATE,
             ),
         )
         fig.update_yaxes(title_text="", type="category", tickmode="array", tickvals=ytickvals)
         if orientation == "h":
             fig.update_layout(legend_traceorder="reversed")
-        self.theme.apply_layout(fig)
+        theme.apply_layout(fig)
         if legend_title:
             fig.update_layout(legend_title_text=legend_title, legend={"xanchor": "left", "x": 1.12})
 

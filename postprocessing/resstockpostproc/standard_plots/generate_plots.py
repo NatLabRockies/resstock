@@ -12,7 +12,7 @@ from pathlib import Path
 
 # Import dependencies that might be needed
 # Import our components
-from resstockpostproc.standard_plots.orchestrator import PlotOrchestrator
+from resstockpostproc.standard_plots.orchestrator import generate_all_plots
 from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
 
 
@@ -94,11 +94,13 @@ def main():
         if missing:
             print(f"Warning: The following quantity groups were not found and will be ignored: {', '.join(missing)}")
 
-    # Create the orchestrator and generate plots
-    orchestrator = PlotOrchestrator(workflow, output_types=output_types, overwrite=args.overwrite)
-    orchestrator.generate_all_plots(max_plots_to_gen=args.max_plots)
-    orchestrator.print_time_spent()
-    orchestrator.out_mgr.print_time_spent()
+    generate_all_plots(
+        workflow,
+        output_types=output_types,
+        overwrite=args.overwrite,
+        max_plots_to_gen=args.max_plots,
+        print_stats=True,
+    )
     return 0
 
 

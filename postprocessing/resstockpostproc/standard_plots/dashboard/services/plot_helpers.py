@@ -101,20 +101,9 @@ def prepare_plot_dataframe(
     selected_upgrades: list[int] | None = None,
 ) -> pl.DataFrame:
     """Return processed plot data for the dashboard."""
-    orchestrator = ctx.get_orchestrator(run_folder)
-    if orchestrator is None:
+    combined_df = ctx.get_combined_frame(run_folder)
+    if combined_df is None:
         raise ValueError(f"Run folder {run_folder} does not have a workflow snapshot.")
-
-    load_selection: list[int] | None
-    if selected_upgrades:
-        load_selection = sorted({0, *selected_upgrades})
-    else:
-        load_selection = None
-
-    if load_selection is None and hasattr(orchestrator, "combined_df"):
-        combined_df = orchestrator.combined_df
-    else:
-        combined_df = orchestrator.inp_mgr.load_data(load_selection)
 
     return prepare_data_for_plot(
         combined_df,

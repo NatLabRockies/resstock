@@ -380,12 +380,9 @@ def run_orchestrator(
     workflow: WorkflowConfig,
     output_types: list[Literal["csv", "html", "json", "parquet", "svg"]],
 ):
-    from resstockpostproc.standard_plots.orchestrator import PlotOrchestrator  # noqa: PLC0415
+    from resstockpostproc.standard_plots.orchestrator import generate_all_plots  # noqa: PLC0415
 
-    orchestrator = PlotOrchestrator(workflow.model_dump(), output_types=output_types)
-    orchestrator.generate_all_plots()
-    orchestrator.print_time_spent()
-    orchestrator.out_mgr.print_time_spent()
+    generate_all_plots(workflow.model_dump(), output_types=output_types, print_stats=True)
 
 
 if __name__ == "__main__":

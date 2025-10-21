@@ -5,6 +5,7 @@ import polars as pl
 from plotly.subplots import make_subplots
 
 from resstockpostproc.standard_plots.base_plotter import BasePlotter
+from resstockpostproc.standard_plots import theme
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 
@@ -83,6 +84,7 @@ class HistogramPlotter(BasePlotter):
         # 2. Prepare facet grid (rows = facets, columns = upgrades)
         # ------------------------------------------------------------------
         upgrades = df["upgrade_name"].unique(maintain_order=True).to_list()
+        upgrade_palette = theme.build_upgrade_palette(upgrades)
         facet_values = df[facet_column].unique(maintain_order=True).to_list() if facet_column else [None]
 
         n_rows, n_cols = len(facet_values), len(upgrades)
@@ -117,7 +119,7 @@ class HistogramPlotter(BasePlotter):
                     y=sub["count"].to_list(),
                     width=sub["_bar_width"].to_list(),
                     name=upgrade,
-                    marker_color=self.theme.upgrade_palette.get(upgrade),
+                    marker_color=upgrade_palette.get(upgrade),
                     showlegend=(r == 1),  # one legend entry per upgrade
                     legendgroup=upgrade,
                     customdata=list(zip(sub["bin_left"].to_list(), sub["bin_right"].to_list())),  # type: ignore[arg-type]
@@ -142,11 +144,11 @@ class HistogramPlotter(BasePlotter):
             barmode="group",
             bargap=0,
             bargroupgap=0,
-            template=self.theme.template,
+            template=theme.DEFAULT_TEMPLATE,
             legend_title_text="Upgrade",
         )
         # Apply theme before axis tweaks (so theme rules don't overwrite them)
-        self.theme.apply_layout(fig)
+        theme.apply_layout(fig)
 
         # ── 4 b.  Axis styling & titles ─────────────────────────────────────
         # grid on all y-axes
@@ -168,7 +170,7 @@ class HistogramPlotter(BasePlotter):
                 fig.update_xaxes(title_text="", row=r, col=c)
         # ── 4c.  Facet annotation wrapping & overall width ─────────────────
         if facet_column:
-            wrap = self.theme.facet_title_width
+            wrap = theme.DEFAULT_FACET_TITLE_WIDTH
             fig.for_each_annotation(
                 lambda a: a.update(
                     text="<br>".join(
@@ -193,5 +195,5 @@ class HistogramPlotter(BasePlotter):
             name="xtitle",
         )
         #  Adjust figure width
-        fig.update_layout(width=max(1000, min(1920, n_cols * self.theme.facet_width)), margin={"b": 100})
+        fig.update_layout(width=max(1000, min(1920, n_cols * theme.DEFAULT_FACET_WIDTH)), margin={"b": 100})
         return fig

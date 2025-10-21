@@ -33,11 +33,11 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
         if not snapshot:
             return "RUN INFO NOT AVAILABLE", "—", [], [], "—"
 
-        orchestrator = ctx.get_orchestrator(run_folder)
-        if orchestrator is None:
-            return "Run folder does not have orchestrator. Cannot give run info.", "—", [], [], "—"
+        input_manager = ctx.get_input_manager(run_folder)
+        if input_manager is None:
+            return "Run folder does not have workflow snapshot. Cannot give run info.", "—", [], [], "—"
 
-        baseline_df = orchestrator.inp_mgr.load_data(selected_upgrades=[0])
+        baseline_df = input_manager.load_data(selected_upgrades=[0])
         num_data_points = baseline_df.select(pl.len()).collect().item()
         upgrades = snapshot.get("upgrades", [])
         non_baseline_upgrades = [upgrade for upgrade in upgrades if upgrade != 0]
@@ -48,7 +48,7 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
             baseline_token = f"{'0(Base)':<10}"
         start_time = time.time()
         for upgrade in non_baseline_upgrades:
-            upgrade_df = orchestrator.inp_mgr.load_data(selected_upgrades=[upgrade])
+            upgrade_df = input_manager.load_data(selected_upgrades=[upgrade])
             num_applicable = upgrade_df.filter(pl.col("applicability")).select(pl.len()).collect().item()
             token = f"{upgrade}({num_applicable / num_data_points * 100:.1f}%)"
             upgrade_tokens.append(f"{token:<10}")
@@ -87,8 +87,8 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
     )
     def _update_upgrade_inclusion_dd(run_folder: str, selected_upgrades: list[int],
                                      quantity_type_val: str, current_val: str):
-        orchestrator = ctx.get_orchestrator(run_folder)
-        if orchestrator is None:
+        run_workflow = ctx.get_workflow(run_folder)
+        if run_workflow is None:
             raise PreventUpdate
         quantity_type = QuantityType(quantity_type_val)
         selected_upgrades = sorted(selected_upgrades)
