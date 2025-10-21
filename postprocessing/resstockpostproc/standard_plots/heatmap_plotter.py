@@ -1,11 +1,8 @@
 """
-Heatmap Plotting module for standard plots
------------------------------------------
-Creates heatmap style visualizations using Plotly while adhering to the common
-ResStock post-processing theme. Designed to work in a very similar fashion to
-`BarPlotter.create_stacked_bar_plot` so downstream code can swap plotter
-classes with minimal changes.
+Heatmap plotting helpers for standard plots.
 """
+
+from __future__ import annotations
 
 import textwrap
 
@@ -14,64 +11,39 @@ import plotly.graph_objects as go
 import polars as pl
 from plotly.subplots import make_subplots
 
-from resstockpostproc.standard_plots.base_plotter import BasePlotter
-from resstockpostproc.standard_plots import theme
+__all__ = ["create_plot"]
+
+from resstockpostproc.standard_plots import plot_utils, theme
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 
-__all__ = ["HeatmapPlotter"]
+
+def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
+    """Create and return a heatmap figure based on *plot_spec*."""
+    if not isinstance(plot_spec.quantity, QuantityGroup):
+        raise ValueError("Heatmaps require a QuantityGroup as the quantity definition.")
+
+    constituent_cols: tuple[str, ...] = plot_spec.quantity.constituents
+    facet_col: str | None = plot_spec.group_by if plot_spec.group_by else None
+
+    return _create_heatmap_plot(
+        data=data,
+        constituent_cols=list(constituent_cols),
+        x_column="upgrade_name",
+        facet_column=facet_col,
+    )
 
 
-class HeatmapPlotter(BasePlotter):
-    """Generates heatmap plots with consistent styling.
-
-    A heatmap is useful when we want to show *multiple* quantities (rows) for
-    one or more categories (columns). Each cell encodes the magnitude by
-    color. This implementation expects the data to already contain columns
-    corresponding to the desired quantities (e.g., end-uses) as well as a
-    *group_by* column that will become the X-axis categories (defaults to
-    ``upgrade_name``).
-
-    If *plot_spec.group_by* is supplied, then that column will be used for the
-    X-axis. The quantities come from *plot_spec.quantity*. When quantity is
-    a :class:`QuantityGroup` the ``constituents`` list defines the rows and the
-    optional ``sum`` key is ignored.
-    """
-
-    # ------------------------------------------------------------------
-    # Public helpers mirroring BarPlotter API
-    # ------------------------------------------------------------------
-    def create_plot(self, data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
-        """Create and return a heatmap figure based on *plot_spec*."""
-        if not isinstance(plot_spec.quantity, QuantityGroup):
-            raise ValueError("Heat-maps require a QuantityGroup (list of columns) as the quantity definition")
-
-        constituent_cols: tuple[str, ...] = plot_spec.quantity.constituents
-        # If group_by is supplied, treat it as a faceting column so that each
-        # group appears as a separate heatmap. The X-axis remains upgrade_name.
-        facet_col: str | None = plot_spec.group_by if plot_spec.group_by else None
-
-        return self.create_heatmap_plot(
-            data=data,
-            constituent_cols=list(constituent_cols),
-            x_column="upgrade_name",
-            facet_column=facet_col,
-        )
-
-    # ------------------------------------------------------------------
-    # Core implementation
-    # ------------------------------------------------------------------
-    def create_heatmap_plot(
-        self,
-        *,
-        data: pl.DataFrame,
-        constituent_cols: list[str],
-        x_column: str = "upgrade_name",
-        facet_column: str | None = None,
-    ) -> go.Figure:
+def _create_heatmap_plot(
+    *,
+    data: pl.DataFrame,
+    constituent_cols: list[str],
+    x_column: str = "upgrade_name",
+    facet_column: str | None = None,
+) -> go.Figure:
         # Ensure required columns exist and sort by facet if requested so that
         # upgrades appear in the same order across facets.
-        data = self._ensure_columns_exist(data, constituent_cols)
+        data = plot_utils.ensure_columns_exist(data, constituent_cols)
 
         # --------------------------------------------------------
         # When faceting we need global z-min/max so compute before
@@ -164,7 +136,7 @@ class HeatmapPlotter(BasePlotter):
                 shared_xaxes="all",
                 x_title="",
                 horizontal_spacing=0.01,
-                subplot_titles=[self.format_label(str(val)) for val in facets],
+                subplot_titles=[plot_utils.format_label(str(val)) for val in facets],
             )
 
             # Add one heatmap per facet.

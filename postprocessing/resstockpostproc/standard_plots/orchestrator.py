@@ -12,12 +12,14 @@ from uuid import UUID
 from prefect.artifacts import create_progress_artifact, update_progress_artifact
 from prefect.runtime import flow_run
 
-from resstockpostproc.standard_plots.bar_plotter import BarPlotter
-from resstockpostproc.standard_plots.box_plotter import BoxPlotter
-from resstockpostproc.standard_plots.choropleth_plotter import ChoroplethPlotter
+from resstockpostproc.standard_plots import (
+    bar_plotter,
+    box_plotter,
+    choropleth_plotter,
+    heatmap_plotter,
+    histogram_plotter,
+)
 from resstockpostproc.standard_plots.data_processor import prepare_data_for_plot
-from resstockpostproc.standard_plots.heatmap_plotter import HeatmapPlotter
-from resstockpostproc.standard_plots.histogram_plotter import HistogramPlotter
 from resstockpostproc.standard_plots.input_manager import download_data, load_data
 from resstockpostproc.standard_plots.output_manager import (
     get_plot_base_dir,
@@ -29,7 +31,7 @@ from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 
 __all__ = [
     "generate_all_plots",
-    "get_plotter",
+    "get_plotting_function",
 ]
 
 
@@ -80,11 +82,11 @@ def generate_all_plots(
         data_preparing_time += time.time() - start_time
 
         path_seg, name = plot_spec.get_path_and_name()
-        plotter = get_plotter(plot_spec.visualization_type)
+        plotting_function = get_plotting_function(plot_spec.visualization_type)
 
         start_time = time.time()
         try:
-            fig = plotter.create_plot(df, plot_spec)
+            fig = plotting_function(df, plot_spec)
         except Exception as exc:  # noqa: BLE001
             print(f"Error creating plot for {plot_spec}: {exc}")
             raise
@@ -119,18 +121,18 @@ def generate_all_plots(
         )
 
 
-def get_plotter(viz: VizType):
-    """Return a plotter instance for the given visualization type."""
+def get_plotting_function(viz: VizType):
+    """Return a plotting function for the given visualization type."""
     if viz == VizType.bar:
-        return BarPlotter()
+        return bar_plotter.create_plot
     if viz == VizType.box:
-        return BoxPlotter()
+        return box_plotter.create_plot
     if viz == VizType.heatmap:
-        return HeatmapPlotter()
+        return heatmap_plotter.create_plot
     if viz == VizType.hist:
-        return HistogramPlotter()
+        return histogram_plotter.create_plot
     if viz == VizType.choropleth:
-        return ChoroplethPlotter()
+        return choropleth_plotter.create_plot
     raise ValueError(f"Unsupported visualization type: {viz}")
 
 

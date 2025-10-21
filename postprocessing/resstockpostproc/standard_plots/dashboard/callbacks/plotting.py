@@ -27,7 +27,7 @@ from ..services.plot_helpers import (
     build_plot_spec,
     prepare_plot_dataframe,
 )
-from ...orchestrator import get_plotter
+from ...orchestrator import get_plotting_function
 
 logger = logging.getLogger(__name__)
 
@@ -202,9 +202,9 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
                 selected_upgrades=selected_upgrades,
             )
             print(f"Data prepared in {time.time() - start_time:.1f} seconds. Generating data ...")
-            plotter = get_plotter(plot_spec.visualization_type)
+            plotting_fn = get_plotting_function(plot_spec.visualization_type)
             start_time = time.time()
-            fig = plotter.create_plot(df, plot_spec)
+            fig = plotting_fn(df, plot_spec)
             print(f"Figure generated in {time.time() - start_time:.1f} seconds.")
 
         fig.layout.title.subtitle.text = ""

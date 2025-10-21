@@ -4,36 +4,33 @@ import plotly.graph_objects as go
 import polars as pl
 from plotly.subplots import make_subplots
 
-from resstockpostproc.standard_plots.base_plotter import BasePlotter
-from resstockpostproc.standard_plots import theme
+__all__ = ["create_plot"]
+
+from resstockpostproc.standard_plots import plot_utils, theme
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 
-__all__ = ["HistogramPlotter"]
+
+def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
+    """Create and return a histogram figure based on *plot_spec*."""
+    if isinstance(plot_spec.quantity, QuantityGroup):
+        raise ValueError("Histogram plots require a single quantity, not a QuantityGroup.")
+
+    facet_col: str | None = plot_spec.group_by if plot_spec.group_by else None
+    assert isinstance(plot_spec.quantity, str)
+    return _create_histogram_plot(
+        data=data,
+        name=plot_utils.get_quantity_title(plot_spec),
+        facet_column=facet_col,
+    )
 
 
-class HistogramPlotter(BasePlotter):
-    def create_plot(self, data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
-        """Create and return a histogram figure based on *plot_spec*."""
-        # Histograms currently support *single* quantity only.
-        if isinstance(plot_spec.quantity, QuantityGroup):
-            raise ValueError("Histogram plots require a single quantity - not a stacked QuantityGroup")
-
-        facet_col: str | None = plot_spec.group_by if plot_spec.group_by else None
-        assert isinstance(plot_spec.quantity, str)  # noqa: S101 Use of `assert` detected
-        return self.create_histogram_plot(
-            data=data,
-            name=self.get_quantity_title(plot_spec),
-            facet_column=facet_col,
-        )
-
-    def create_histogram_plot(
-        self,
-        *,
-        data: pl.DataFrame,
-        name: str,
-        facet_column: str | None = None,
-    ) -> go.Figure:
+def _create_histogram_plot(
+    *,
+    data: pl.DataFrame,
+    name: str,
+    facet_column: str | None = None,
+) -> go.Figure:
         """
         Visualise an explicit frequency table with a bar chart.
 

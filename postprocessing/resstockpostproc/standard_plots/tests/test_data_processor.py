@@ -9,7 +9,7 @@ from __future__ import annotations
 import polars as pl
 import pytest
 
-from resstockpostproc.standard_plots.choropleth_plotter import ChoroplethPlotter
+import resstockpostproc.standard_plots.choropleth_plotter as choropleth_plotter
 from resstockpostproc.standard_plots.data_processor import (
     prepare_data_for_plot,
 )
@@ -514,10 +514,10 @@ def test_quantity_group_mean_aggregation(combined_df: pl.LazyFrame, aggregation_
 
 def test_normalize_county_code():
     """GIS-style codes should convert to 5-digit county FIPS strings."""
-    assert ChoroplethPlotter._normalize_county_code("G3600050") == "36005"
-    assert ChoroplethPlotter._normalize_county_code("G0100010") == "01001"
-    assert ChoroplethPlotter._normalize_county_code("36005") == "36005"
-    assert ChoroplethPlotter._normalize_county_code("123") == "00123"
+    assert choropleth_plotter._normalize_county_code("G3600050") == "36005"
+    assert choropleth_plotter._normalize_county_code("G0100010") == "01001"
+    assert choropleth_plotter._normalize_county_code("36005") == "36005"
+    assert choropleth_plotter._normalize_county_code("123") == "00123"
 
 
 @pytest.mark.parametrize(
