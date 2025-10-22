@@ -239,9 +239,10 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
     @app.callback(
         Output("plot-graph", "config"),
         Input("fig-editable", "value"),
+        Input("plot-graph", "figure"),
         prevent_initial_call=True,
     )
-    def _update_graph_config(editable_vals: list[str]):
+    def _update_graph_config(editable_vals: list[str], fig_val):
         base_cfg = {
             "autosizable": True,
             "responsive": True,
@@ -252,8 +253,21 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
             ],
             "toImageButtonOptions": {"format": "svg"},
         }
-        if "editable" in editable_vals:
+        if editable_vals and "editable" in editable_vals:
             base_cfg["editable"] = True
+            base_cfg["edits"] = {
+                "annotationPosition": True,
+                "annotationText": True,
+                "axisTitleText": True,
+                "legendPosition": True,
+                "legendText": True,
+                "shapePosition": True,
+                "titleText": True,
+            }
+        else:
+            base_cfg.pop("edits", None)
+            base_cfg.pop("editable", None)
+
         return base_cfg
 
     @app.callback(

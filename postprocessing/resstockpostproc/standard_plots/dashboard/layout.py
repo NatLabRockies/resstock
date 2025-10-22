@@ -205,6 +205,7 @@ def build_figure_loading_wrapper() -> dcc.Loading:
                     ["toImage"],
                     ["zoom2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d"],
                 ],
+                 "toImageButtonOptions": {"format": "svg"},
             },
         ),
         type="cube",

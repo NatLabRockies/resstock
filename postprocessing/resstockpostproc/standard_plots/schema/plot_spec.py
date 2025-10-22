@@ -101,21 +101,9 @@ class PlotSpec(BaseModel):
         """selected_upgrades is passed by the dynamic dashboard when only including
         a subset of upgrades than that is defined in the workflow yaml file.
         """
-        if self.building_inclusion == BuildingInclusion.applied_only:
-            path_segment = Path(f"Included Buildings = Applied only")
-        else:
-            path_segment = Path("Included Buildings = All")
-        if self.upgrade is None:
-            if selected_upgrades:
-                path_segment /= f"Upgrade = {','.join(map(str, sorted(selected_upgrades)))}"
-            else:
-                path_segment /= f"Upgrade = All"
-        else:
-            path_segment /= f"Upgrade = {self.upgrade}"
+        path_segment = Path(self._get_included_building_str(selected_upgrades))
         path_segment /= f"Vacancy = {self.vacancy_inclusion.value}"
-        path_segment /= f"Quantity Type = {self.quantity_type.value}"
-        path_segment /= f"Aggregation Type = {self.aggregation_type.value}"
-        path_segment /= f"Visualization Type = {self.visualization_type.value}"
+        path_segment /= self._get_viz_type_str(self.quantity_type, self.aggregation_type, self.visualization_type)
         if self.group_by:
             path_segment /= f"Grouped By = {self.group_by}"
         else:
@@ -123,3 +111,24 @@ class PlotSpec(BaseModel):
         path_segment /= f"Quantity Group = {self.quantity_group_name}"
         name = "all_together" if isinstance(self.quantity, QuantityGroup) else f"{self.quantity}"
         return path_segment, name
+
+    def _get_included_building_str(self, selected_upgrades: list[int] | None = None):
+        selected = sorted(selected_upgrades or [])
+        selected_str = ",".join(map(str, selected))
+        has_selected = bool(selected)
+
+        if self.building_inclusion == BuildingInclusion.applied_only:
+            if self.upgrade:
+                return f"Included Buildings = Applied in Upgrade {self.upgrade}"
+            if has_selected:
+                return f"Included Buildings = Applied in {selected_str}"
+            return "Included Buildings = Applied in respective upgrades"
+
+        if self.upgrade:
+            return f"Included Buildings = Upgrade {self.upgrade}"
+        if has_selected:
+            return f"Included Buildings = Upgrade {selected_str}"
+        return "Included Buildings = All Upgrades"
+
+    def _get_viz_type_str(self, quantity_type: QuantityType, aggregation_type: AggregationType, viz_type: VizType) -> str:
+        return f"Plot Type = {quantity_type.value}_{aggregation_type.value}_{viz_type.value}"

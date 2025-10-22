@@ -102,13 +102,6 @@ def _create_bar_plot(
                 data["upgrade_name"].unique(maintain_order=True).to_list()
             )
         )
-    if first_category_column in data.columns:
-        upgrade_palette.update(
-            theme.build_upgrade_palette(
-                data[first_category_column].unique(maintain_order=True).to_list()
-            )
-        )
-
     is_stacked = not (isinstance(quantity_column, str) or second_category_column is None)
     quantity_cols = (
         [quantity_column] if isinstance(quantity_column, str) else list(quantity_column)

@@ -102,10 +102,20 @@ def _write_html(fig: Figure, output_dir: Path, file_name: str, overwrite: bool) 
         include_mathjax="cdn",
         config={
             "editable": True,
+            "edits": {
+                "annotationPosition": True,
+                "annotationText": True,
+                "axisTitleText": True,
+                "legendPosition": True,
+                "legendText": True,
+                "shapePosition": True,
+                "titleText": True,
+            },
             "autosizable": True,
             "responsive": True,
             "displaylogo": False,
             "modeBarButtons": [["toImage"], ["zoom2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d"]],
+             "toImageButtonOptions": {"format": "svg"},
         },
     )
 

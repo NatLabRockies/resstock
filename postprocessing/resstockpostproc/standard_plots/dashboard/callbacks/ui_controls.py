@@ -230,11 +230,13 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         if qg.sum:
             options.append({"label": qg.sum, "value": qg.sum})
 
-        if viz_type in [VizType.bar] or (viz_type == VizType.box and group_by_val in (None, "__none__")):
-            options.append({"label": "ALL - stacked", "value": "__group_stacked__"})
+        # if viz_type in [VizType.bar] or (viz_type == VizType.box and group_by_val in (None, "__none__")):
+        #     options.append({"label": "ALL - stacked", "value": "__group_stacked__"})
 
         if viz_type in [VizType.heatmap]:
             options = [{"label": "ALL - stacked", "value": "__group_stacked__"}]
+        else:
+            options.append({"label": "ALL - stacked", "value": "__group_stacked__"})
 
         valid_values = {opt["value"] for opt in options}
         default_value = current_val if current_val in valid_values else options[0]["value"]
