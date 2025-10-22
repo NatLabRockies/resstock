@@ -235,12 +235,20 @@
       "description": "Selection logic for",
       "title": "Selection Logic"
     },
-    "quantities": {
+    "numerical_quantities": {
       "description": "List of quantity groups to generate plots for",
       "items": {
         "$ref": "#/$defs/QuantityGroup"
       },
-      "title": "Quantities",
+      "title": "Numerical Quantities",
+      "type": "array"
+    },
+    "categorical_quantities": {
+      "description": "List of quantity groups to generate prevalance plots for",
+      "items": {
+        "$ref": "#/$defs/QuantityGroup"
+      },
+      "title": "Categorical Quantities",
       "type": "array"
     },
     "group_by": {
@@ -308,7 +316,8 @@
     "run_name",
     "upgrades",
     "upgrade_names",
-    "quantities",
+    "numerical_quantities",
+    "categorical_quantities",
     "group_by",
     "visualization_types",
     "quantity_types",

@@ -74,6 +74,16 @@ def generate_all_plots(
         plot_specs = plot_specs[:total_plots]
 
     for plots_generated, plot_spec in enumerate(plot_specs, 1):
+        path_seg, name = plot_spec.get_path_and_name()
+        plotting_function = get_plotting_function(plot_spec.visualization_type)
+        print(f"{plots_generated:,}/{total_plots:,}: Generating plot for {path_seg}/{name}")
+        if progress_artifact_id:
+            update_progress_artifact(
+                artifact_id=progress_artifact_id,
+                description=f"Percentage of plots generated: {plots_generated:,}/{total_plots:,}",
+                progress=plots_generated / total_plots * 100,
+            )
+
         start_time = time.time()
         try:
             df = prepare_data_for_plot(combined_df, plot_spec)
@@ -81,9 +91,9 @@ def generate_all_plots(
             print(f"Error preparing data for plot {plot_spec}: {exc}")
             raise
         data_preparing_time += time.time() - start_time
-
-        path_seg, name = plot_spec.get_path_and_name()
-        plotting_function = get_plotting_function(plot_spec.visualization_type)
+        if len(df) == 0:
+            print(f"{plots_generated:,}/{total_plots:,}: No data for plot {plot_spec}, skipping")
+            continue
 
         start_time = time.time()
         try:
@@ -104,14 +114,6 @@ def generate_all_plots(
             overwrite=overwrite,
         )
         saving_time += time.time() - start_time
-
-        print(f"{plots_generated:,}/{total_plots:,}: Saved plot for {path_seg}/{name}")
-        if progress_artifact_id:
-            update_progress_artifact(
-                artifact_id=progress_artifact_id,
-                description=f"Percentage of plots generated: {plots_generated:,}/{total_plots:,}",
-                progress=plots_generated / total_plots * 100,
-            )
 
     if print_stats:
         _print_time_spent(
@@ -170,7 +172,6 @@ def _build_plot_specs(workflow: WorkflowConfig) -> Sequence[PlotSpec]:
         workflow.vacancy_inclusion,
         workflow.visualization_types,
         [None, *workflow.group_by],
-        workflow.quantities,
         workflow.aggregation_types,
         upgrades,
     ):
@@ -179,27 +180,27 @@ def _build_plot_specs(workflow: WorkflowConfig) -> Sequence[PlotSpec]:
         vacancy_inclusion = combination[2]
         visualization_type = combination[3]
         group_by = combination[4]
-        quantity_group: QuantityGroup = combination[5].model_copy()
-        aggregation_type = combination[6]
-        upgrade = combination[7]
+        aggregation_type = combination[5]
+        upgrade = combination[6]
+        workflow_quantities = workflow.categorical_quantities if quantity_type == "prevalence" else workflow.numerical_quantities
+        for quantity_group in workflow_quantities:
+            quantities: list[str | QuantityGroup] = []
+            quantities.extend(quantity_group.constituents)
+            if quantity_group.sum:
+                quantities.append(quantity_group.sum)
 
-        quantities: list[str | QuantityGroup] = []
-        quantities.extend(quantity_group.constituents)
-        if quantity_group.sum:
-            quantities.append(quantity_group.sum)
-
-        for quantity in quantities:
-            plot_spec = PlotSpec(
-                quantity_type=quantity_type,
-                building_inclusion=building_inclusion,
-                vacancy_inclusion=vacancy_inclusion,
-                visualization_type=visualization_type,
-                aggregation_type=aggregation_type,
-                group_by=group_by,
-                quantity=quantity,
-                quantity_group_name=quantity_group.name,
-                upgrade=upgrade,
-            )
-            if plot_spec.is_valid():
-                specs.append(plot_spec)
+            for quantity in [*quantities, quantity_group]:
+                plot_spec = PlotSpec(
+                    quantity_type=quantity_type,
+                    building_inclusion=building_inclusion,
+                    vacancy_inclusion=vacancy_inclusion,
+                    visualization_type=visualization_type,
+                    aggregation_type=aggregation_type,
+                    group_by=group_by,
+                    quantity=quantity,
+                    quantity_group_name=quantity_group.name,
+                    upgrade=upgrade,
+                )
+                if plot_spec.is_valid():
+                    specs.append(plot_spec)
     return specs

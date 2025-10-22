@@ -145,7 +145,8 @@ class WorkflowConfig(NoExtraSettings):
     selection_logic: SelectionLogic | list[SelectionLogic] | list[str] | None = Field(
         None, description="Selection logic for"
     )
-    quantities: tuple[QuantityGroup, ...] = Field(description="List of quantity groups to generate plots for")
+    numerical_quantities: tuple[QuantityGroup, ...] = Field(description="List of quantity groups to generate plots for")
+    categorical_quantities: tuple[QuantityGroup, ...] = Field(description="List of quantity groups to generate prevalance plots for")
     group_by: tuple[str, ...] = Field(description="List of grouping columns")
     visualization_types: tuple[VizType, ...] = Field(description="List of visualization types to generate")
     quantity_types: tuple[QuantityType, ...] = Field(description="List of quantity types to generate")
@@ -216,11 +217,11 @@ class WorkflowConfig(NoExtraSettings):
         dynamic dashboard to generate plots for all quantities together for diagnostic
         purposes."""
         # Add an "Everything" quantity group if it doesn't exist already
-        if not any(q.name == "Everything" for q in self.quantities):
-            everything = QuantityGroup.combine_quantity_groups(list(self.quantities), "Everything")
+        if not any(q.name == "Everything" for q in self.numerical_quantities):
+            everything = QuantityGroup.combine_quantity_groups(list(self.numerical_quantities), "Everything")
             resolved_quantities = QuantityGroup.resolve_quantities(everything.constituents)
             object.__setattr__(everything, "constituents", resolved_quantities)
-            object.__setattr__(self, "quantities", [*self.quantities, everything])
+            object.__setattr__(self, "quantities", [*self.numerical_quantities, everything])
 
 
 default_config_path = str(Path(__file__).resolve().parents[1] / "workflow.yaml")

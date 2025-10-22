@@ -1,14 +1,14 @@
 # yaml-language-server: $schema=./schema/workflow_schema.json
 
-s3_results_dir: s3://resstock-core/resstock_ci/sdr_upgrades_tmy3/pub_annual/
+s3_results_dir: s3://res-sdr/testing-sdr-fy25/sdr_2025_1_550k_sept3/pub_annual
 output_dir: sdr_plots/
-run_name: sdr_plots_2
+run_name: rajeee_full_run2
 upgrades: [0, 1, 2] # corresponds to results_up00.csv, results_up01.csv, results_up02.csv
 upgrade_names:
   - "Baseline"
   - "Upgrade 1"
   - "Upgrade 2"
-quantities:
+numerical_quantities:
   - name: Fuel Totals
     constituents:
       - out.electricity.total.energy_consumption.kwh
@@ -176,6 +176,24 @@ quantities:
       - out.panel.breaker_space.headroom.count
       - out.panel.breaker_space.occupied.count
     sum: in.electric_panel_breaker_space_total_count
+
+categorical_quantities:
+  - name: out.panel.constraint.overall.2023_nec_existing_dwelling_load_based
+    constituents:
+      - No Constraint
+      - Space Constraint Only
+      - Capacity Constraint Only
+      - Capacity and Space Constraint
+
+  - name: out.panel.constraint.capacity.2023_nec_existing_dwelling_load_based
+    constituents:
+      - "True"
+      - "False"
+
+  - name: out.panel.constraint.breaker_space
+    constituents:
+      - "True"
+      - "False"
 
 visualization_types:
   - histogram

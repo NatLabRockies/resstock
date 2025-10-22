@@ -37,7 +37,7 @@ class RunContext:
             workflow.set_storage_backend("minio")
 
         plots_dir = Path(workflow.output_dir).expanduser().resolve() / "plots"
-        quantity_groups = {group.name: group for group in workflow.quantities}
+        quantity_groups = {group.name: group for group in workflow.numerical_quantities}
 
         return cls(
             workflow_yaml=workflow_yaml,

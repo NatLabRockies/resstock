@@ -4,6 +4,8 @@ The aim is to pass **one** object of this class (``PlotSpec``) through the
 entire pipeline - data processing, figure creation, and output saving.
 """
 
+from __future__ import annotations
+
 from pathlib import Path
 
 from pydantic import BaseModel, Field, field_validator
@@ -87,6 +89,8 @@ class PlotSpec(BaseModel):
             return "Baseline can't be passed as an upgrade to plot when building_inclusion is applied_only."
         if self.upgrade == 0 and self.quantity_type in [QuantityType.percent_savings, QuantityType.savings]:
             return "Baseline can't be used for savings comparison."
+        if self.upgrade is None and self.quantity_type in QuantityType.prevalence:
+            return "Prevalence plots must specify a single upgrade."
         return ""
 
     def is_valid(self) -> bool:
