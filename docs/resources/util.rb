@@ -35,8 +35,8 @@ def get_arg_order(buildreshpxmlarguments_xml, resstockarguments_xml)
 end
 
 # These are column headers in both TDG's "Argument" table and TRG's "The ResStock argument definitions set" table.
-def get_arguments_cols()
-  return ['Name', 'Required', 'Units', 'Type', 'Choices', 'Description']
+def get_properties_cols()
+  return ['Name', 'Units', 'Description']
 end
 
 # Get csv data for options_lookup.tsv and options_saturations.csv.

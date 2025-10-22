@@ -100,7 +100,7 @@ def get_comment_rows(tsv_file_name)
   csv_data.map { |row| row['Option Name'] }.each do |comment|
     next unless comment.to_s.start_with?('#')
 
-    comment_names << comment.gsub('#', '').gsub('"', '').split(':')[0].strip
+    comment_names << comment.gsub('#', '').gsub('"', '').split(':')[1].strip
   end
   return comment_names
 end
