@@ -217,14 +217,10 @@ source_report.each do |row|
       # When the option is found
       next unless lookup_row[2] == 'ResStockArguments'
 
-      # If option specifies arguments, insert arguments according to the order of r_arguments
-      r_arguments.each do |_argument|
-        # Look for each argument in r_arguments
-        lookup_row[3..-1].each do |argument_value|
-          arg, value = argument_value.split('=')
+      lookup_row[3..-1].each do |argument_value|
+        arg, value = argument_value.split('=')
 
-          lookup[option][arg] = value
-        end
+        lookup[option][arg] = value
       end
     end
   end
