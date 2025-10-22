@@ -53,31 +53,8 @@ arg_order = get_arg_order(buildreshpxmlarguments_xml, resstockarguments_xml)
 source_report_cols = ['Description', 'Created by', 'Source', 'Assumption']
 properties_cols = get_properties_cols()
 
-properties = {}
-options = {}
-
-Dir["#{File.dirname(__FILE__)}/../../../../resources/hpxml-measures/BuildResidentialHPXML/resources/options/*.tsv"].each do |tsv_filepath|
-  tsv_filename = File.basename(tsv_filepath)
-  arg_name = File.basename(tsv_filename, File.extname(tsv_filename))
-
-  property_names = get_property_names(tsv_filename).to_a.map { |n| "#{arg_name}_#{n.downcase.gsub(' ', '_').gsub('-', '_')}" }
-  property_units = get_property_units(tsv_filename).to_a
-  comment_rows = get_comment_rows(tsv_filename).to_a
-
-  properties[arg_name] = {}
-  property_names.zip(property_units, comment_rows).each do |property_name, property_unit, comment_row|
-    properties[arg_name][property_name] = { 'property_unit' => property_unit, 'comment_row' => comment_row }
-  end
-
-  options[arg_name] = {}
-  option_names = get_option_names(tsv_filename)
-  option_names.each do |option_name|
-    args = {}
-    get_option_properties(args, tsv_filename, option_name)
-
-    options[arg_name][option_name] = args.transform_keys(&:to_s)
-  end
-end
+properties = get_properties(resources_dir)
+options = get_options(resources_dir)
 
 f = File.open(File.join(File.dirname(__FILE__), 'characteristics.rst'), 'w')
 f.puts('.. _housing_characteristics:')
@@ -213,9 +190,7 @@ source_report.each do |row|
     lookup_csv_data.each do |lookup_row|
       next if lookup_row[0] != parameter
       next if lookup_row[1] != option
-
-      # When the option is found
-      next unless lookup_row[2] == 'ResStockArguments'
+      next if lookup_row[2] != 'ResStockArguments'
 
       lookup_row[3..-1].each do |argument_value|
         arg, value = argument_value.split('=')

@@ -10,7 +10,7 @@ def get_measure_xml(filepath)
   parse_xml.xpath('//measure/arguments/argument').each do |argument|
     name = argument.at_xpath('name').text
     measure_xml[name] = {}
-    ['type', 'required', 'units', 'choices', 'description'].each do |property|
+    ['units', 'description'].each do |property|
       if property != 'choices'
         element = argument.at_xpath(property)
         value = !element.nil? ? element.text : ''
@@ -46,4 +46,40 @@ def get_lookup_and_saturations_csv_data(resources_dir)
   lookup_csv_data = CSV.open(lookup_file, col_sep: "\t").each.to_a
   option_sat_csv_data = CSV.open(option_sat_file, quote_char: '"', col_sep: ',').each.to_a
   return lookup_csv_data, option_sat_csv_data
+end
+
+def get_properties(resources_dir)
+  properties = {}
+  Dir["#{resources_dir}/hpxml-measures/BuildResidentialHPXML/resources/options/*.tsv"].each do |tsv_filepath|
+    tsv_filename = File.basename(tsv_filepath)
+    arg_name = File.basename(tsv_filename, File.extname(tsv_filename))
+
+    property_names = get_property_names(tsv_filename).to_a.map { |n| "#{arg_name}_#{n.downcase.gsub(' ', '_').gsub('-', '_')}" }
+    property_units = get_property_units(tsv_filename).to_a
+    comment_rows = get_comment_rows(tsv_filename).to_a
+
+    properties[arg_name] = {}
+    property_names.zip(property_units, comment_rows).each do |property_name, property_unit, comment_row|
+      properties[arg_name][property_name] = { 'property_unit' => property_unit, 'comment_row' => comment_row }
+    end
+  end
+  return properties
+end
+
+def get_options(resources_dir)
+  options = {}
+  Dir["#{resources_dir}/hpxml-measures/BuildResidentialHPXML/resources/options/*.tsv"].each do |tsv_filepath|
+    tsv_filename = File.basename(tsv_filepath)
+    arg_name = File.basename(tsv_filename, File.extname(tsv_filename))
+
+    options[arg_name] = {}
+    option_names = get_option_names(tsv_filename)
+    option_names.each do |option_name|
+      args = {}
+      get_option_properties(args, tsv_filename, option_name)
+
+      options[arg_name][option_name] = args.transform_keys(&:to_s)
+    end
+  end
+  return options
 end
