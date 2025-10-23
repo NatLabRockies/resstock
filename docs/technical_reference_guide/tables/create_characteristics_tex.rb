@@ -5,7 +5,6 @@ resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../../r
 require 'fileutils'
 require_relative '../../resources/util'
 require_relative File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/resources/options')
-require 'openstudio'
 
 filepath = File.read(File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/measure.xml'))
 buildreshpxmlarguments_xml = get_measure_xml(filepath)
@@ -186,6 +185,11 @@ parameters.each do |parameter|
         lookup[option][arg] = value
       end
     end
+  end
+
+  max_options = 4
+  if lookup.keys.size > max_options
+    puts "Warning: #{parameter} options #{lookup.keys.size} / #{max_options}"
   end
 
   row = '\begin{customLongTable}{ |p{5cm}'

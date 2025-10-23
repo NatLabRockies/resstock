@@ -4,7 +4,6 @@ resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../../.
 
 require_relative '../../../resources/util'
 require_relative File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/resources/options')
-require 'openstudio'
 
 class String
   def to_underscore_case
