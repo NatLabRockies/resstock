@@ -214,7 +214,7 @@ parameters.each do |parameter|
 
   row = '{Option name'
   lookup.keys.each do |option_name|
-    row += " & #{option_name}"
+    row += " & #{option_name}".gsub('^2', '\textsuperscript{2}').gsub('%', '\\%').gsub('<', '\textless') # Door Area, Partial Space Conditioning
   end
   f.puts("#{row}}")
 
@@ -251,9 +251,13 @@ parameters.each do |parameter|
         f.puts(row)
       end
     else
-      row = "``#{r_argument}``"
+      row = "\\texttt{#{r_argument}}".gsub('_', '\_')
       lookup.keys.each do |option|
         row += " & #{lookup[option][r_argument]}"
+      end
+      row += ' \\\\'
+      if r_argument != r_arguments[-1]
+        row += ' \\hline'
       end
       f.puts(row)
     end

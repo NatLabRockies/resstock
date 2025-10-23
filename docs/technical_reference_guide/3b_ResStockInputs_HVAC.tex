@@ -44,7 +44,7 @@ The Heating Fuel characteristic options are Electricity, Natural Gas, Propane, F
 
 See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Heating Fuel}
+\input{tables/properties/Heating Fuel}
 
 \input{tables/options/Heating Fuel}
 
@@ -160,7 +160,7 @@ The \texttt{heat\_pump\_sizing\_methodology} is always ACCA (Air Conditioning Co
 The \texttt{heat\_pump\_backup\_use\_existing\_system} and \texttt{heat\_pump\_sizing\_is\_duct\_limited} arguments are applicable for heat pump upgrades only.
 They are not used in baseline models.
 
-\input{tables/arguments/HVAC Heating Efficiency}
+\input{tables/properties/HVAC Heating Efficiency}
 
 For heat pump options and arguments that vary across the heat pump options, see Table \ref{table:hc_opt_hvac_heating_efficiency_-_heat_pump}. The \texttt{heating\_system\_type} argument is none, \texttt{heating\_system\_heating\_efficiency} is 0 and not used. The \texttt{heat\_pump\_backup\_type} is set to integrated. The \texttt{heating\_system\_pilot\_light} argument is not specified.
 The \texttt{heat\_pump\_heating\_capacity}, \texttt{heat\_pump\_heating\_autosizing\_limit}, \texttt{heat\_pump\_heating\_capacity\_fraction\_17\_f}, \texttt{heat\_pump\_compressor\_lockout\_temp}, \texttt{heat\_pump\_backup\_heating\_lockout\_temp}, \texttt{heat\_pump\_crankcase\_heater\_watts}, \texttt{heat\_pump\_pan\_heater\_watts}, and \texttt{heat\_pump\_pan\_heater\_control\_type\_watts} are set to ``auto.''
@@ -227,7 +227,7 @@ There are two options in the baseline: ``None'' and ``40\% Oversized.'' Only the
 \texttt{heat\_pump\_backup\_heating\_autosizing\_factor}, and
 \texttt{heating\_system\_2\_heating\_autosizing\_factor} ResStock arguments. All are left blank for the ``None'' option and are not used. For argument definitions see Table \ref{table:hc_arg_def_hvac_heating_autosizing_factor}.
 
-\input{tables/arguments/HVAC Heating Autosizing Factor}
+\input{tables/properties/HVAC Heating Autosizing Factor}
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made. The capability is not used.
@@ -287,7 +287,7 @@ The options for the secondary heating fuel are the fuels used in the secondary H
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hvac_secondary_heating_fuel}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{heating systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/HVAC Secondary Heating Fuel}
+\input{tables/properties/HVAC Secondary Heating Fuel}
 
 \paragraph{Distribution Assumption(s)}
 
@@ -320,7 +320,7 @@ The options of the HVAC Secondary Heating Efficiency are the secondary heating s
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hvac_secondary_heating_efficiency}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/HVAC Secondary Heating Efficiency}
+\input{tables/properties/HVAC Secondary Heating Efficiency}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -354,7 +354,7 @@ The options are the fraction of the load served for the secondary heating system
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hvac_secondary_heating_partial_space_conditioning}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/HVAC Secondary Heating Partial Space Conditioning}
+\input{tables/properties/HVAC Secondary Heating Partial Space Conditioning}
 
 \paragraph{Distribution Assumption(s)}
 
@@ -452,7 +452,7 @@ Additionally, \texttt{cooling\_system\_is\_ducted} is set to false since ducts a
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hvac_cooling_efficiency}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooling-systems}{Cooling Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/HVAC Cooling Efficiency}
+\input{tables/properties/HVAC Cooling Efficiency}
 
 \paragraph{Distribution Assumption(s)}
 None
@@ -482,7 +482,7 @@ Six different levels of percent of floor area cooled are provided, plus an optio
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hvac_cooling_partial_space_conditioning}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooling-systems}{Cooling-Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/HVAC Cooling Partial Space Conditioning}
+\input{tables/properties/HVAC Cooling Partial Space Conditioning}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -515,7 +515,7 @@ Since this input file is not currently used, all homes are set to an option of `
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hvac_cooling_autosizing_factor}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooling-systems}{Cooling Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/HVAC Cooling Autosizing Factor}
+\input{tables/properties/HVAC Cooling Autosizing Factor}
 
 \paragraph{Distribution Assumption(s)}
 HVAC sizing follows ACCA Manual J and Manual S. There is no additional oversizing or undersizing the capacity and airflow of the HVAC system. 
@@ -703,7 +703,7 @@ Required but unused heating arguments:
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hvac_shared_efficiencies}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#boiler-shared}{Boiler-Shared} or \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump}{Mini-Split Heat Pumps} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/HVAC Shared Efficiencies}
+\input{tables/properties/HVAC Shared Efficiencies}
 
 \paragraph{Distribution Assumption(s)}
 
@@ -744,7 +744,7 @@ The options for the housing unit heating setpoint range between 55\degree F and 
 
 \input{tables/options/Heating Setpoint}
 
-\input{tables/arguments/Heating Setpoint}
+\input{tables/properties/Heating Setpoint}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -799,7 +799,7 @@ The options for Heating Setpoint Offset Magnitude are 0F, 3F, 6F, and 12F (Table
 
 \input{tables/options/Heating Setpoint Offset Magnitude}
 
-\input{tables/arguments/Heating Setpoint Offset Magnitude}
+\input{tables/properties/Heating Setpoint Offset Magnitude}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -828,7 +828,7 @@ The options are a combination of day and night offset periods (Table \ref{table:
 
 \input{tables/options/Heating Setpoint Offset Period}
 
-\input{tables/arguments/Heating Setpoint Offset Period}
+\input{tables/properties/Heating Setpoint Offset Period}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -857,7 +857,7 @@ The options for the Cooling Setpoint characteristic range between 60\degree F an
 
 \input{tables/options/Cooling Setpoint}
 
-\input{tables/arguments/Cooling Setpoint}
+\input{tables/properties/Cooling Setpoint}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -909,7 +909,7 @@ The options of the Cooling Setpoint Offset Magnitude characteristic are 0\degree
 
 \input{tables/options/Cooling Setpoint Offset Magnitude}
 
-\input{tables/arguments/Cooling Setpoint Offset Magnitude}
+\input{tables/properties/Cooling Setpoint Offset Magnitude}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -937,7 +937,7 @@ The options combine day and night offset periods (Table \ref{table:hc_opt_coolin
 
 \input{tables/options/Cooling Setpoint Offset Period}
 
-\input{tables/arguments/Cooling Setpoint Offset Period}
+\input{tables/properties/Cooling Setpoint Offset Period}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1014,7 +1014,7 @@ ResStock uses 13 combinations of insulation and air leakage from ducts (Table \r
 
 For the argument definitions, see Table \ref{table:hc_arg_def_duct_leakage_and_insulation}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-distribution}{Air Distribution} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Duct Leakage and Insulation}
+\input{tables/properties/Duct Leakage and Insulation}
 
 \paragraph{Distribution Assumption(s)}
 Ducts entirely in conditioned spaces will not have any leakage to outside. Ducts with R-4/R-8 insulation were previously assigned to Geometry Foundation Type = Ambient or Slab. They now correspond to those with Duct Location = Garage, Unvented Attic, or Vented Attic. 
@@ -1050,7 +1050,7 @@ The duct location is a direct mapping of spaces from the hierarchical assignment
 
 For the argument definitions, see Table \ref{table:hc_arg_def_duct_location}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-air-distribtuion}{Air Distribution} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Duct Location}
+\input{tables/properties/Duct Location}
 
 \paragraph{Distribution Assumption(s)}
 Based on default duct location assignment in OpenStudio-HPXML: the first present space type in the order of: basement---conditioned, basement---unconditioned, crawlspace---conditioned, crawlspace---vented, crawlspace---unvented, attic---vented, attic---unvented, garage, or living space. 
@@ -1079,7 +1079,7 @@ Number of days in a year the cooling system is unavailable.
 \paragraph{Options}
 The options of Cooling Unavailable Days characteristic are a number of days the cooling system is unavailable. The characteristic sets the \texttt{schedules\_space\_cooling\_unavailable\_days} argument. The argument definition can be found in Table \ref{table:hc_arg_def_cooling_unavailable_days}.
 
-\input{tables/arguments/Cooling Unavailable Days}
+\input{tables/properties/Cooling Unavailable Days}
 
 The options range between 0 days (Never) to the whole year (year round). The Void option is for impossible combinations that are not sampled. 
 
@@ -1107,7 +1107,7 @@ Number of days in a year the heating system is unavailable.
 \paragraph{Options}
 The options of Heating Unavailable Days characteristic are a number of days the cooling system is unavailable. The characteristic sets the \texttt{schedules\_space\_heating\_unavailable\_days} argument. The argument definition can be found in Table \ref{table:hc_arg_def_heating_unavailable_days}.
 
-\input{tables/arguments/Heating Unavailable Days}
+\input{tables/properties/Heating Unavailable Days}
 
 The options range between 0 days (Never) to the whole year (year round). The Void option is for impossible combinations that are not sampled. 
 
@@ -1157,7 +1157,7 @@ Single-speed ASHP actual airflow rates for faulted systems. This input file is c
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hvac_system_single_speed_ashp_airflow}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump}{Air-to-Air Heat Pump} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/HVAC System Single Speed ASHP Airflow}
+\input{tables/properties/HVAC System Single Speed ASHP Airflow}
 
 \paragraph{Distribution Assumption(s)}
 None
@@ -1187,7 +1187,7 @@ Seven different options are available for faulted ASHP charges, but none are cur
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hvac_system_single_speed_ashp_charge}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump}{Air-to-Air Heat Pumps} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/HVAC System Single Speed ASHP Charge}
+\input{tables/properties/HVAC System Single Speed ASHP Charge}
 
 \subsubsection{HVAC System Single-Speed AC Airflow}
 
@@ -1213,7 +1213,7 @@ Twelve options are given for real airflow, but none are currently in use (Table 
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hvac_system_single_speed_ac_airflow}. See the OpenStudio-HPXML \href{-https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner}{Central Air Conditioner} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/HVAC System Single Speed AC Airflow}
+\input{tables/properties/HVAC System Single Speed AC Airflow}
 
 \paragraph{Distribution Assumption(s)}
 None
@@ -1244,7 +1244,7 @@ Seven different options are available for faulted AC charges, but none are curre
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hvac_system_single_speed_ac_charge}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-air-distribution}{Air Distribution} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/HVAC System Single Speed AC Charge}
+\input{tables/properties/HVAC System Single Speed AC Charge}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -1337,7 +1337,7 @@ In the baseline, no homes are assigned mechanical ventilation, so only the optio
 
 For the argument definitions, see Table \ref{table:hc_arg_def_mechanical_ventilation}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-[https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-mechanical-ventilation-fans]}{Mechanical Ventilation Fans} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-local-ventilation-fans}{Local Ventilation Fans} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Mechanical Ventilation}
+\input{tables/properties/Mechanical Ventilation}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -1360,7 +1360,7 @@ All homes are currently set to the same natural ventilation option.
 
 For the argument definitions, see Table \ref{table:hc_arg_def_natural_ventilation}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#natural-ventilation}{Natural Ventilation} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Natural Ventilation}
+\input{tables/properties/Natural Ventilation}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -1389,7 +1389,7 @@ The start hours are spread out over all 24 hours of the day (Table \ref{table:hc
 
 For the argument definitions, see Table \ref{table:hc_arg_def_bathroom_spot_vent_hour}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-local-ventilation-fans}{Local Ventilation Fans} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Bathroom Spot Vent Hour}
+\input{tables/properties/Bathroom Spot Vent Hour}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -1415,7 +1415,7 @@ Start hours are spread across all hours of the day (Table \ref{table:hc_opt_rang
 
 For the argument definitions, see Table \ref{table:hc_arg_def_range_spot_vent_hour}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-local-ventilation-fans}{Local Ventilation} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Range Spot Vent Hour}
+\input{tables/properties/Range Spot Vent Hour}
 
 \paragraph{Distribution Assumption(s)}
 None.

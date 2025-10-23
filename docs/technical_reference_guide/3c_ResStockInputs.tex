@@ -142,7 +142,7 @@ The options are spaces where the water heater can be located (Table \ref{table:h
 
 For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_location}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Water Heater Location}
+\input{tables/properties/Water Heater Location}
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
@@ -273,7 +273,7 @@ The options for solar water heaters in ResStock are a combination of orientation
 
 For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_efficiency} on storage, tankless, and solar water heaters. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Water Heater Efficiency}
+\input{tables/properties/Water Heater Efficiency}
 
 \paragraph{Distribution Assumptions}\label{assumption-83}
 \begin{itemize}
@@ -329,7 +329,7 @@ For the ResStock baseline baseline, all Hot Water Distribution is assumed to be 
 
 For retrofit upgrades, other options are available and can be defined using the following arguments. For the argument definitions, see Table \ref{table:hc_arg_def_hot_water_distribution}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-hot-water-distribution}{Hot Water Distribution} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Hot Water Distribution}
+\input{tables/properties/Hot Water Distribution}
 
 \paragraph{Distribution Assumptions}
 No assumptions are made.
@@ -364,7 +364,7 @@ The Hot Water Fixtures options are usage bins ranging from ``50\% Usage'' to ``2
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hot_water_fixtures}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-fixtures}{Water Fixtures} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Hot Water Fixtures}
+\input{tables/properties/Hot Water Fixtures}
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
@@ -440,7 +440,7 @@ ResStock differentiates primary refrigerators based on their efficiency level. I
 For the argument definitions, see \ref{table:hc_arg_def_refrigerator}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
-\input{tables/arguments/Refrigerator}
+\input{tables/properties/Refrigerator}
 
 \paragraph{Distribution Assumption(s)}
 The current year is assumed to be 2022. Currently, each year has its own distribution and then we average out the distributions to get the distribution for the age bins. The Energy Factor for all years are weighted equally when calculating the average distribution for the age bins. ENERGY STAR distributions from 2009 dependent on Geometry Building Type RECS, Federal Poverty Level, and Tenure are used to calculate efficiency distribution in RECS2020. ENERGY STAR Refrigerators are assumed to be 10\% more efficient than standard. Due to the low sample count, the following coarsening rules are incorporated.
@@ -483,7 +483,7 @@ The refrigerator usage level is set based on the usage level characteristic. It 
 For the argument definitions, see Table \ref{table:hc_arg_def_refrigerator_usage_level}. %See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
-\input{tables/arguments/Refrigerator Usage Level}
+\input{tables/properties/Refrigerator Usage Level}
 
 \paragraph{Distribution Assumption(s)}
 None
@@ -522,7 +522,7 @@ The usage multiplier varies by state and is set to account for the presence of t
 For the argument definitions, see \ref{table:hc_arg_def_misc_extra_refrigerator}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
-\input{tables/arguments/Misc Extra Refrigerator}
+\input{tables/properties/Misc Extra Refrigerator}
 
 \paragraph{Distribution Assumption(s)}
 The current year is assumed to be 2022. 
@@ -578,7 +578,7 @@ The usage multiplier varies by state and is set to account for the presence of e
 For the argument definitions, see Table \ref{table:hc_arg_def_misc_freezer}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-freezers}{OpenStudio-HPXML Freezers} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
-\input{tables/arguments/Misc Freezer}
+\input{tables/properties/Misc Freezer}
 
 \paragraph{Distribution Assumption(s)}
 The national average EF is 12 based on the 2014 Building America house simulation protocols.
@@ -689,7 +689,7 @@ The cooking range usage level is set based on the usage level characteristic (Se
 For the argument definitions, see Table \ref{table:hc_arg_def_cooking_range_usage_level}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
-\input{tables/arguments/Cooking Range Usage Level}
+\input{tables/properties/Cooking Range Usage Level}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -731,7 +731,7 @@ The ResStock baseline has two dishwasher options, one at 270 rated kWh and one a
 For the argument definitions, see Table \ref{table:hc_arg_def_dishwasher}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-dishwasher}{Dishwasher} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
-\input{tables/arguments/Dishwasher}
+\input{tables/properties/Dishwasher}
 
 \paragraph{Distribution Assumption(s)}
 The 2020 RECS survey does not contain ENERGY STAR rating of dishwashers. ENERGY STAR efficiency distributions with Geometry Building Type, Census Division RECS, Federal Poverty Level, and Tenure as dependencies are imported from RECS 2009.
@@ -774,7 +774,7 @@ The dishwasher usage level is set based on the usage level characteristic; see S
 For the argument definitions, see Table \ref{table:hc_arg_def_dishwasher_usage_level}. 
 
 %arguments table
-\input{tables/arguments/Dishwasher Usage Level}
+\input{tables/properties/Dishwasher Usage Level}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -817,7 +817,7 @@ ResStock has two clothes washer options in baseline, along with a ``None'' optio
 For the argument definitions, see Table \ref{table:hc_arg_def_clothes_washer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-clothes-washer}{Clothes Washer} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
-\input{tables/arguments/Clothes Washer}
+\input{tables/properties/Clothes Washer}
 
 \paragraph{Distribution Assumption(s)}
 The 2020 RECS survey does not contain ENERGY STAR rating of clothes washers. ENERGY STAR efficiency distributions with Geometry Building Type, Federal Poverty Level, and Tenure as dependencies are imported from RECS 2009. Due to low sample count, the input file is constructed by downscaling a housing unit sub-input file with a household sub-input file. The sub-input files have the following dependencies:
@@ -913,7 +913,7 @@ The clothes washer usage level is set based on the usage level (Section \ref{usa
 For the argument definitions, see Table \ref{table:hc_arg_def_clothes_washer_usage_level}. 
 
 %arguments table
-\input{tables/arguments/Clothes Washer Usage Level}
+\input{tables/properties/Clothes Washer Usage Level}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -957,7 +957,7 @@ The ResStock baseline includes three dryer options: an electric dryer, a natural
 For the argument definitions, see Table \ref{table:hc_arg_def_clothes_dryer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-clothes-dryer}{Clothes Dryer} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
-\input{tables/arguments/Clothes Dryer}
+\input{tables/properties/Clothes Dryer}
 
 \paragraph{Distribution Assumption(s)}
 Clothes dryer option is ``None'' if the clothes washer is not present.
@@ -1010,7 +1010,7 @@ The clothes dryer usage level is set based on the usage level (Section \ref{usag
 For the argument definitions, see Table \ref{table:hc_arg_def_clothes_dryer_usage_level}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
-\input{tables/arguments/Clothes Dryer Usage Level}
+\input{tables/properties/Clothes Dryer Usage Level}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -1042,7 +1042,7 @@ ResStock has three options for the ceiling fan characteristic: a standard effici
 For the argument definitions, see Table \ref{table:hc_arg_def_ceiling_fan}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-ceiling-fans}{Ceiling Fans} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
-\input{tables/arguments/Ceiling Fan}
+\input{tables/properties/Ceiling Fan}
 
 \paragraph{Distribution Assumption(s)}
 If the unit is vacant, there is no ceiling fan energy.
@@ -1078,7 +1078,7 @@ The options for the Misc Pool characteristic are ``Has Pool'' and ``None.'' The 
 
 For the argument definitions, see Table \ref{table:hc_arg_def_misc_pool}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-pools}{Pools} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Misc Pool}
+\input{tables/properties/Misc Pool}
 
 \paragraph{Distribution Assumption(s)}
 The only valid option for multifamily homes is None, because the pool is most likely to be part of the common load and not associated with a specific unit. 
@@ -1124,7 +1124,7 @@ The ``Other Fuel'' option is assigned the same arguments as ``None,'' and will r
 
 For the argument definitions, see Table \ref{table:hc_arg_def_misc_pool_heater}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#pool-heater}{Pool Heater} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Misc Pool Heater}
+\input{tables/properties/Misc Pool Heater}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1149,7 +1149,7 @@ The options for Misc Pool Pump are None and 1.0 horsepower (HP) Pump. If there i
 
 For the argument definitions, see Table \ref{table:hc_arg_def_misc_pool_pump}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#pool-pump}{ Pool Pump} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Misc Pool Pump}
+\input{tables/properties/Misc Pool Pump}
 
 \paragraph{Distribution Assumption(s)}
 None
@@ -1187,7 +1187,7 @@ The ``Other Fuel'' option is assigned the same arguments as ``None,'' and will r
 
 For the argument definitions, see Table \ref{table:hc_arg_def_misc_hot_tub_spa}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-permanent-spas}{Permanent Spas} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Misc Hot Tub Spa}
+\input{tables/properties/Misc Hot Tub Spa}
 
 \paragraph{Distribution Assumption(s)}
 Due to the low sample count, the input file is constructed by downscaling a housing unit sub-input file with a household sub-input file. The sub-input files have the following dependencies: 
@@ -1246,7 +1246,7 @@ The \texttt{misc\_plug\_loads\_well\_pump\_usage\_multiplier} argument is 1.0 fo
 
 For the argument definitions, see Table \ref{table:hc_arg_def_misc_well_pump}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-misc-loads}{Misc Loads} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Misc Well Pump}
+\input{tables/properties/Misc Well Pump}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1278,7 +1278,7 @@ The \texttt{misc\_fuel\_loads\_fireplace\_fuel\_type} argument is set to natural
 
 For the argument definitions, see Table \ref{table:hc_arg_def_misc_gas_fireplace}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hvac-heating-fireplaces}{Fireplace} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Misc Gas Fireplace}
+\input{tables/properties/Misc Gas Fireplace}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -1301,7 +1301,7 @@ The options for Misc Gas Grill are ``Gas Grill'' if the housing unit has a gas g
 
 For the argument definitions, see Table \ref{table:hc_arg_def_misc_gas_grill}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-fuel-loads}{Fuel Loads} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Misc Gas Grill}
+\input{tables/properties/Misc Gas Grill}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -1352,7 +1352,7 @@ The options for PV orientation are the cardinal and subcardinal directions and `
 
 For the argument definitions, see Table \ref{table:hc_arg_def_pv_orientation}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/PV Orientation}
+\input{tables/properties/PV Orientation}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1382,7 +1382,7 @@ The following arguments are set to auto: \texttt{pv\_system\_module\_type}, \tex
 
 For the argument definitions, see Table \ref{table:hc_arg_def_pv_system_size}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/PV System Size}
+\input{tables/properties/PV System Size}
 
 \paragraph{Distribution Assumption(s)}
 Installations of unknown mount type are assumed to be rooftop. States without data are backfilled with aggregates at the Census Region. ``East South Central'' assumed the same distribution as ``West South Central.''
@@ -1409,7 +1409,7 @@ Not applicable.
 \paragraph{Options}
 Currently only the option ``None'' is defined in the ResStock baseline. This option is nullified by setting the \texttt{battery\_present} to 0. Other options are available for use in an upgrade measure, and the argument table shows how the options can be defined (Table \ref{table:hc_arg_def_battery}). The characteristic assigns the \texttt{battery\_location}, \texttt{battery\_power}, \texttt{battery\_capacity}, and \texttt{battery\_round\_trip\_efficiency} ResStock arguments.
 
-\input{tables/arguments/Battery}
+\input{tables/properties/Battery}
 
 \paragraph{Distribution Assumption(s)}
 Not applicable.
@@ -1427,7 +1427,7 @@ Not applicable.
 \paragraph{Options}
 Currently only the option ``None'' is defined in the ResStock baseline. This option is nullified by setting the \texttt{dehumidifier\_efficiency} to 0. Other options are available for use in an upgrade measure, and the argument table shows how the options can be defined (Table \ref{table:hc_arg_def_dehumidifier}). The characteristic sets the \texttt{dehumidifier\_type}, \texttt{dehumidifier\_efficiency\_type}, \texttt{dehumidifier\_efficiency}, \texttt{dehumidifier\_capacity}, \texttt{dehumidifier\_rh\_setpoint}, and \texttt{dehumidifier\_fraction\_dehumidification\_load\_served} ResStock arguments.
 
-\input{tables/arguments/Dehumidifier}
+\input{tables/properties/Dehumidifier}
 
 \paragraph{Distribution Assumption(s)}
 Not applicable
@@ -1499,7 +1499,7 @@ Option name & Interior argument & Exterior argument & Garage argument\\
 
 For the argument definitions, see Table \ref{table:hc_arg_def_lighting}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Lighting}
+\input{tables/properties/Lighting}
 
 \paragraph{Distribution Assumption(s)}\label{assumption-67}
 
@@ -1534,7 +1534,7 @@ ResStock has two options for Misc Gas Lighting (Table \ref{table:hc_opt_misc_gas
 
 For the argument definitions, see Table \ref{table:hc_arg_def_misc_gas_lighting}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-fuel-loads}{Misc Fuel Loads} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Misc Gas Lighting}
+\input{tables/properties/Misc Gas Lighting}
 
 \paragraph{Distribution Assumption(s)}
 None. 
@@ -1565,7 +1565,7 @@ None.
 \paragraph{Options}
 All buildings are assigned the option \textit{100\% Usage}, which sets the ResStock argument \textit{lighting\_interior\_usage\_multiplier} to 1 (the OpenStudio-HPXML default) (Table \ref{table:hc_arg_def_lighting_interior_use}).
 
-\input{tables/arguments/Lighting Interior Use}
+\input{tables/properties/Lighting Interior Use}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1589,7 +1589,7 @@ All buildings are assigned the option \textit{100\% Usage}, which sets the ResSt
 
 For the argument definitions, see Table \ref{table:hc_arg_def_lighting_other_use}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for the available HPXML schema elements, default values, and constraints. 
 
-\input{tables/arguments/Lighting Other Use}
+\input{tables/properties/Lighting Other Use}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1641,7 +1641,7 @@ ResStock provides a range of percentages for plug load usage that are multiplier
 
 For the argument definitions, see Table \ref{table:hc_arg_def_plug_loads}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Plug Loads}
+\input{tables/properties/Plug Loads}
 
 \paragraph{Distribution Assumption(s)}
 
@@ -1671,7 +1671,7 @@ Three different levels of plug load diversity are added on top of the regional m
 
 For the argument definitions, see Table \ref{table:hc_arg_def_plug_load_diversity}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/Plug Load Diversity}
+\input{tables/properties/Plug Load Diversity}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -1744,7 +1744,7 @@ No direct conditional dependencies.
 \paragraph{Options}
 The options for Electric Vehicle Battery characteristic is a set of electric vehicle types and battery range in miles. These options do not specifiy if the unit has a vehicle, but rather the preference of the vehicle type and battery range if the household owned an electric vehicle. Every unit is assigned one of these options so that the vehicle type and battery range does not need to be sampled during an electric vehicle upgrade. The housing units at which an electric vehicle is modeled are specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_battery\_usable\_capacity}, \texttt{vehicle\_fuel\_economy\_units}, \texttt{vehicle\_fuel\_economy\_combined}, \texttt{ev\_average\_mph}, and \texttt{ev\_efficiency\_percent\_increase} ResStock arguments. The argument definitions are found in Table \ref{table:hc_arg_def_electric_vehicle_battery}.
 
-\input{tables/arguments/Electric Vehicle Battery}
+\input{tables/properties/Electric Vehicle Battery}
 
 % TODO: add ev_efficiency_percent_increase and vehicle_fuel_economy_units
 
@@ -1776,7 +1776,7 @@ U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 \paragraph{Options}
 The options for the Electric Vehicle Charge At Home characteristic is a set of percentages that determine how much of the electric vehicle's energy shows up on the residential meter vs charging at work or at public chargers. Every unit in the baseline is assigned one of these options so that the home charging fraction does not need to be sampled during an electric vehicle upgrade. The units with an electric vehicle are specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_fraction\_charged\_home} ResStock argument. The argument definition is found in Table \ref{table:hc_arg_def_electric_vehicle_charge_at_home}.
 
-\input{tables/arguments/Electric Vehicle Charge At Home}
+\input{tables/properties/Electric Vehicle Charge At Home}
 
 The options and their ResStock arguments values can be found in Table \ref{table:hc_opt_electric_vehicle_charge_at_home}.
 
@@ -1805,7 +1805,7 @@ U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 \paragraph{Options}
 The options for the Electric Vehicle Charger characteristic describe the type of charger used by an electric vehicle owner at home. The characteristic sets the \texttt{ev\_charger\_present}, \texttt{ev\_charger\_power}, and \texttt{ev\_charger\_location} ResStock arguments. The argument definition is found in Table \ref{table:hc_arg_def_electric_vehicle_charger}. If \texttt{ev\_charger\_present} is set to "true", then the other arguments are required otherwise the power and location arguments will not be used. In the baseline stock the \texttt{ev\_charger\_location} argument is set to "auto", meaning it takes the default OpenStudio-HPXML value (see OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#hpxml-electric-vehicle-chargers}{Electric Vehicle Charger}).
 
-\input{tables/arguments/Electric Vehicle Charger}
+\input{tables/properties/Electric Vehicle Charger}
 
 The options and their ResStock arguments values can be found in Table \ref{table:hc_opt_electric_vehicle_charger}. The Void option will not be sampled but indicates when an impossible combination of dependencies are listed.
 
@@ -1834,7 +1834,7 @@ No direct conditional dependencies.
 \paragraph{Options}
 The options for Electric Vehicle Miles Traveled characteristic are a set of miles traveled by the electric vehicle. These options do not specifiy if the unit has a vehicle, but rather the amount of miles the EV travels if the dwelling unit has an electric vehicle. Every unit is assigned one of these options so that the vehicle miles traveled does not need to be sampled during an electric vehicle upgrade. The units with an electric vehicle is specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_miles\_driven\_per\_year} ResStock argument. The argument definition is found in Table \ref{table:hc_arg_def_electric_vehicle_miles_traveled}.
 
-\input{tables/arguments/Electric Vehicle Miles Traveled}
+\input{tables/properties/Electric Vehicle Miles Traveled}
 
 The options and their ResStock arguments values can be found in Table \ref{table:hc_opt_electric_vehicle_miles_traveled}. The options range between 1,000 miles and 22,500 miles.
 
@@ -2309,7 +2309,7 @@ The number of occupants living in the housing unit.
 \paragraph{Options}
 The Occupants options range from 0 to 10+ for the the ResStock baseline baseline (Table \ref{table:hc_arg_def_occupants}). This characteristic assigns value to \texttt{geometry\_unit\_num\_occupants} accordingly, with \texttt{geometry\_unit\_num\_occupants}=11 for Occupants=10+. Occupants=0 corresponds to vacant units. \texttt{general\_water\_use\_usage\_multiplier} is auto-calculated from occupants.
 
-\input{tables/arguments/Occupants}
+\input{tables/properties/Occupants}
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
@@ -2358,7 +2358,7 @@ The Vacancy Status options are either Occupied or Vacant. The options assign the
 
 The argument definition of the arguments set in the Vacancy Status characteristic can be found in Table \ref{table:hc_arg_def_vacancy_status}.
 
-\input{tables/arguments/Vacancy Status}
+\input{tables/properties/Vacancy Status}
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
