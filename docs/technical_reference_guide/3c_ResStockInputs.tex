@@ -210,8 +210,10 @@ The efficiency and type of the water heater by heating fuel.
 \end{itemize}
 
 \paragraph{Options}
-Water Heater Efficiency options define the technical details of the standalone water heaters and solar thermal water heaters with storage backup, from fuel type to the presence of flue (Table \ref{table:hc_opt_water_heater_efficiency_-_water_heater}). 
+Water Heater Efficiency options define the technical details of the standalone water heaters and solar thermal water heaters with storage backup, from fuel type to the presence of flue (Table \ref{table:hc_opt_water_heater_efficiency}). 
 The following arguments are constant across the non-solar standalone water heater options. The arguments for solar water heater options are available further down. 
+
+\input{tables/options/Water Heater Efficiency}
 
 \begin{itemize}
     \item \texttt{water\_heater\_backup\_heating\_capacity}: auto
@@ -240,8 +242,6 @@ The following arguments are constant across the non-solar standalone water heate
 
 For all water heaters the \texttt{water\_heater\_efficiency\_type} UniformEnergyFactor is used.
 
-\input{tables/options/Water Heater Efficiency - water_heater}
-
 Solar thermal water heaters are characterized by \texttt{solar\_thermal\_system\_type=hot water}. The following arguments are constant across the solar water heater options:
 
 \begin{itemize}
@@ -267,9 +267,7 @@ Solar thermal water heaters are characterized by \texttt{solar\_thermal\_system\
   \item \texttt{solar\_thermal\_solar\_fraction}: 0
 \end{itemize}
 
-The options for solar water heaters in ResStock are a combination of orientation and backup fuel, Table \ref{table:hc_opt_water_heater_efficiency_-_solar_thermal}. 
-
-\input{tables/options/Water Heater Efficiency - solar_thermal}
+The options for solar water heaters in ResStock are a combination of orientation and backup fuel. 
 
 For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_efficiency} on storage, tankless, and solar water heaters. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
 

@@ -1,0 +1,312 @@
+\begin{customLongTable}{ |p{5cm}|p{2.25cm}|p{2.25cm}|p{2.25cm}|p{2.25cm}| }
+{HVAC Heating Efficiency options and properties that vary for each option} {table:hc_opt_hvac_heating_efficiency}
+{Option name & ASHP, SEER 10, 6.8 HSPF & ASHP, SEER 13, 7.7 HSPF & ASHP, SEER 15, 8.5 HSPF & Electric Baseboard, 100\% Efficiency}
+\texttt{hvac\_heating\_system\_type} & none & none & none & ElectricResistance \\ \hline
+\texttt{hvac\_heating\_system\_heating\_efficiency} &  &  &  & 1.0 \\ \hline
+\texttt{hvac\_heating\_system\_pilot\_light} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_capacity\_capacity} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_capacity\_autosizing\_factor} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_capacity\_autosizing\_limit} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_heating\_load\_served\_fraction} & 1.0 & 1.0 & 1.0 & 1.0 \\ \hline
+\texttt{hvac\_heat\_pump\_type} & air-to-air & air-to-air & air-to-air & none \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_efficiency\_type} & SEER & SEER & SEER &  \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_efficiency} & 10.0 & 13.0 & 15.0 &  \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_compressor\_type} & single stage & single stage & single stage &  \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_efficiency\_type} & HSPF & HSPF & HSPF &  \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_efficiency} & 6.8 & 7.7 & 8.5 &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_capacity\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_outdoor\_temperatures} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_min\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_nom\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_max\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_min\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_nom\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_max\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_outdoor\_temperatures} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_min\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_nom\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_max\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_min\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_nom\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_max\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_capacity} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_methodology} & ACCA & ACCA & ACCA & ACCA \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_factor} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_limit} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_load\_served\_fraction} & 1.0 & 1.0 & 1.0 & 1.0 \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_load\_served\_fraction} & 1.0 & 1.0 & 1.0 & 1.0 \\ \hline
+\texttt{hvac\_heat\_pump\_temperatures\_compressor\_lockout} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_temperatures\_backup\_lockout} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_type} & integrated & integrated & integrated & none \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_fuel} & electricity & electricity & electricity &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_heating\_efficiency} & 1.0 & 1.0 & 1.0 &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_capacity} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_methodology} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_factor} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_limit} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_configuration} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_borefield\_configuration} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_loop\_flow} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_count} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_length} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_spacing} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_diameter} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_grout\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_pipe\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_pipe\_diameter} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_pipe\_shank\_spacing} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_temperature\_capacitance\_multiplier} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_hvac\_on\_off\_thermostat\_deadband\_temperature} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_heat\_pump\_backup\_capacity\_increment} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_ground\_to\_air\_heat\_pump\_model\_type} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_hvac\_allow\_increased\_fixed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_shared\_system} & None & None & None & None \\ \hline
+\hline
+Option name & Electric Boiler, 100\% AFUE & Electric Furnace, 100\% AFUE & Electric Wall Furnace, 100\% AFUE & Fuel Boiler, 76\% AFUE \\ \hline
+\texttt{hvac\_heating\_system\_type} & Boiler & Furnace & WallFurnace & Boiler \\ \hline
+\texttt{hvac\_heating\_system\_heating\_efficiency} & 1.0 & 1.0 & 1.0 & 0.76 \\ \hline
+\texttt{hvac\_heating\_system\_pilot\_light} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_capacity\_capacity} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_capacity\_autosizing\_factor} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_capacity\_autosizing\_limit} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_heating\_load\_served\_fraction} & 1.0 & 1.0 & 1.0 & 1.0 \\ \hline
+\texttt{hvac\_heat\_pump\_type} & none & none & none & none \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_efficiency\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_efficiency} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_compressor\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_efficiency\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_efficiency} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_capacity\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_outdoor\_temperatures} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_min\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_nom\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_max\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_min\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_nom\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_max\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_outdoor\_temperatures} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_min\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_nom\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_max\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_min\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_nom\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_max\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_capacity} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_methodology} & ACCA & ACCA & ACCA & ACCA \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_factor} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_limit} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_load\_served\_fraction} & 1.0 & 1.0 & 1.0 & 1.0 \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_load\_served\_fraction} & 1.0 & 1.0 & 1.0 & 1.0 \\ \hline
+\texttt{hvac\_heat\_pump\_temperatures\_compressor\_lockout} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_temperatures\_backup\_lockout} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_type} & none & none & none & none \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_fuel} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_heating\_efficiency} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_capacity} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_methodology} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_factor} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_limit} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_configuration} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_borefield\_configuration} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_loop\_flow} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_count} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_length} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_spacing} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_diameter} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_grout\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_pipe\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_pipe\_diameter} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_pipe\_shank\_spacing} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_temperature\_capacitance\_multiplier} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_hvac\_on\_off\_thermostat\_deadband\_temperature} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_heat\_pump\_backup\_capacity\_increment} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_ground\_to\_air\_heat\_pump\_model\_type} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_hvac\_allow\_increased\_fixed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_shared\_system} & None & None & None & None \\ \hline
+\hline
+Option name & Fuel Boiler, 80\% AFUE & Fuel Boiler, 90\% AFUE & Fuel Furnace, 60\% AFUE & Fuel Furnace, 76\% AFUE \\ \hline
+\texttt{hvac\_heating\_system\_type} & Boiler & Boiler & Furnace & Furnace \\ \hline
+\texttt{hvac\_heating\_system\_heating\_efficiency} & 0.8 & 0.9 & 0.6 & 0.76 \\ \hline
+\texttt{hvac\_heating\_system\_pilot\_light} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_capacity\_capacity} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_capacity\_autosizing\_factor} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_capacity\_autosizing\_limit} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_heating\_load\_served\_fraction} & 1.0 & 1.0 & 1.0 & 1.0 \\ \hline
+\texttt{hvac\_heat\_pump\_type} & none & none & none & none \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_efficiency\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_efficiency} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_compressor\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_efficiency\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_efficiency} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_capacity\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_outdoor\_temperatures} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_min\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_nom\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_max\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_min\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_nom\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_max\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_outdoor\_temperatures} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_min\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_nom\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_max\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_min\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_nom\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_max\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_capacity} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_methodology} & ACCA & ACCA & ACCA & ACCA \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_factor} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_limit} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_load\_served\_fraction} & 1.0 & 1.0 & 1.0 & 1.0 \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_load\_served\_fraction} & 1.0 & 1.0 & 1.0 & 1.0 \\ \hline
+\texttt{hvac\_heat\_pump\_temperatures\_compressor\_lockout} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_temperatures\_backup\_lockout} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_type} & none & none & none & none \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_fuel} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_heating\_efficiency} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_capacity} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_methodology} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_factor} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_limit} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_configuration} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_borefield\_configuration} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_loop\_flow} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_count} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_length} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_spacing} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_diameter} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_grout\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_pipe\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_pipe\_diameter} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_pipe\_shank\_spacing} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_temperature\_capacitance\_multiplier} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_hvac\_on\_off\_thermostat\_deadband\_temperature} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_heat\_pump\_backup\_capacity\_increment} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_ground\_to\_air\_heat\_pump\_model\_type} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_hvac\_allow\_increased\_fixed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_shared\_system} & None & None & None & None \\ \hline
+\hline
+Option name & Fuel Furnace, 80\% AFUE & Fuel Furnace, 92.5\% AFUE & Fuel Wall/Floor Furnace, 60\% AFUE & Fuel Wall/Floor Furnace, 68\% AFUE \\ \hline
+\texttt{hvac\_heating\_system\_type} & Furnace & Furnace & WallFurnace & WallFurnace \\ \hline
+\texttt{hvac\_heating\_system\_heating\_efficiency} & 0.8 & 0.925 & 0.6 & 0.68 \\ \hline
+\texttt{hvac\_heating\_system\_pilot\_light} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_capacity\_capacity} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_capacity\_autosizing\_factor} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_capacity\_autosizing\_limit} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_heating\_load\_served\_fraction} & 1.0 & 1.0 & 1.0 & 1.0 \\ \hline
+\texttt{hvac\_heat\_pump\_type} & none & none & none & none \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_efficiency\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_efficiency} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_compressor\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_efficiency\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_efficiency} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_capacity\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_outdoor\_temperatures} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_min\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_nom\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_max\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_min\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_nom\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_max\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_outdoor\_temperatures} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_min\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_nom\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_max\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_min\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_nom\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_max\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_capacity} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_methodology} & ACCA & ACCA & ACCA & ACCA \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_factor} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_limit} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_load\_served\_fraction} & 1.0 & 1.0 & 1.0 & 1.0 \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_load\_served\_fraction} & 1.0 & 1.0 & 1.0 & 1.0 \\ \hline
+\texttt{hvac\_heat\_pump\_temperatures\_compressor\_lockout} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_temperatures\_backup\_lockout} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_type} & none & none & none & none \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_fuel} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_heating\_efficiency} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_capacity} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_methodology} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_factor} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_limit} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_configuration} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_borefield\_configuration} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_loop\_flow} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_count} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_length} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_spacing} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_diameter} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_grout\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_pipe\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_pipe\_diameter} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_pipe\_shank\_spacing} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_temperature\_capacitance\_multiplier} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_hvac\_on\_off\_thermostat\_deadband\_temperature} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_heat\_pump\_backup\_capacity\_increment} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_ground\_to\_air\_heat\_pump\_model\_type} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_hvac\_allow\_increased\_fixed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_shared\_system} & None & None & None & None \\ \hline
+\hline
+Option name & MSHP, SEER2 14.5, 7.7 HSPF2 & MSHP, SEER2 29, 12.3 HSPF2 & None & Shared Heating \\ \hline
+\texttt{hvac\_heating\_system\_type} & none & none & none &  \\ \hline
+\texttt{hvac\_heating\_system\_heating\_efficiency} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_pilot\_light} &  &  &  &  \\
+\texttt{hvac\_heating\_system\_capacity\_capacity} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_capacity\_autosizing\_factor} &  &  &  &  \\ \hline
+\texttt{hvac\_heating\_system\_capacity\_autosizing\_limit} &  &  &  &  \\
+\texttt{hvac\_heating\_system\_heating\_load\_served\_fraction} & 1.0 & 1.0 & 1.0 &  \\
+\texttt{hvac\_heat\_pump\_type} & mini-split & mini-split & none &  \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_efficiency\_type} & SEER2 & SEER2 &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_efficiency} & 14.5 & 29.0 &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_compressor\_type} & variable speed & variable speed &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_efficiency\_type} & HSPF2 & HSPF2 &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_efficiency} & 7.7 & 12.3 &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_capacity\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_outdoor\_temperatures} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_min\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_nom\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_max\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_min\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_nom\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_max\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_outdoor\_temperatures} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_min\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_nom\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_max\_speed\_capacities} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_min\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_nom\_speed\_cops} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_max\_speed\_cops} &  &  &  &  \\
+\texttt{hvac\_heat\_pump\_capacity\_capacity} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_methodology} & ACCA & ACCA & ACCA &  \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_factor} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_limit} &  &  &  &  \\
+\texttt{hvac\_heat\_pump\_heating\_load\_served\_fraction} & 1.0 & 1.0 & 1.0 &  \\
+\texttt{hvac\_heat\_pump\_cooling\_load\_served\_fraction} & 1.0 & 1.0 & 1.0 &  \\
+\texttt{hvac\_heat\_pump\_temperatures\_compressor\_lockout} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_temperatures\_backup\_lockout} &  &  &  &  \\
+\texttt{hvac\_heat\_pump\_backup\_type} & integrated & integrated & none &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_fuel} & electricity & electricity &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_heating\_efficiency} & 1.0 & 1.0 &  &  \\
+\texttt{hvac\_heat\_pump\_backup\_capacity\_capacity} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_methodology} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_factor} &  &  &  &  \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_limit} &  &  &  &  \\
+\texttt{hvac\_geothermal\_loop\_configuration} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_borefield\_configuration} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_loop\_flow} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_count} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_length} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_spacing} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_boreholes\_diameter} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_grout\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_pipe\_type} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_pipe\_diameter} &  &  &  &  \\ \hline
+\texttt{hvac\_geothermal\_loop\_pipe\_shank\_spacing} &  &  &  &  \\
+\texttt{advanced\_feature\_temperature\_capacitance\_multiplier} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_hvac\_on\_off\_thermostat\_deadband\_temperature} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_heat\_pump\_backup\_capacity\_increment} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_ground\_to\_air\_heat\_pump\_model\_type} &  &  &  &  \\ \hline
+\texttt{advanced\_feature\_hvac\_allow\_increased\_fixed\_capacities} &  &  &  &  \\
+\texttt{hvac\_heating\_shared\_system} & None & None & None &  \\
+\end{customLongTable}
