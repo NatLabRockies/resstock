@@ -11,6 +11,8 @@ For each parameter, the following (if applicable) are reported based on the cont
 - **Source**
 - **Assumption**
 
+For each parameter an **Options** table is populated based on the contents of the `options_lookup.tsv <https://github.com/NREL/resstock/blob/develop/resources/options_lookup.tsv>`_, `options_saturations.csv <https://github.com/NREL/resstock/blob/develop/project_national/resources/options_saturations.csv>`_, and `BuildResidentialHPXML/resources/options/*.tsv <https://github.com/NREL/resstock/blob/develop/resources/hpxml-measures/BuildResidentialHPXML/resources/options>`_ files.
+
 For each parameter a **Properties** table is populated (if applicable) based on the contents of `BuildResidentialHPXML/resources/options/*.tsv <https://github.com/NREL/resstock/blob/develop/resources/hpxml-measures/BuildResidentialHPXML/resources/options>`_ files, each containing the following columns:
 
 - **Name** [#]_
@@ -18,8 +20,6 @@ For each parameter a **Properties** table is populated (if applicable) based on 
 - **Description**
 
 .. [#] Each **Name** entry is an argument that is assigned using defined options from the `options_lookup.tsv <https://github.com/NREL/resstock/blob/develop/resources/options_lookup.tsv>`_.
-
-For each parameter an **Options** table is populated based on the contents of the `options_lookup.tsv <https://github.com/NREL/resstock/blob/develop/resources/options_lookup.tsv>`_, `options_saturations.csv <https://github.com/NREL/resstock/blob/develop/project_national/resources/options_saturations.csv>`_, and `BuildResidentialHPXML/resources/options/*.tsv <https://github.com/NREL/resstock/blob/develop/resources/hpxml-measures/BuildResidentialHPXML/resources/options>`_ files.
 
 .. _ahs_region:
 
@@ -106,6 +106,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 15%
      - 6.9%
      - 7.8%
+
 .. _aiannh_area:
 
 AIANNH Area
@@ -151,6 +152,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Stock saturation
      - 98%
      - 1.6%
+
 .. _ashrae_iecc_climate_zone_2004:
 
 ASHRAE IECC Climate Zone 2004
@@ -175,20 +177,6 @@ Source
 
 - \Climate zone data are from ASHRAE 169 2006, IECC 2012, and M.C. Baechler 2015.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``site_iecc_zone``
-     - 
-     - IECC zone of the home address.
 
 Options
 *******
@@ -254,6 +242,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 7
      - 7
      - 8
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``site_iecc_zone``
+     - 
+     - IECC zone of the home address.
 .. _ashrae_iecc_climate_zone_2004___sub_cz_split:
 
 ASHRAE IECC Climate Zone 2004 - Sub-CZ Split
@@ -335,6 +337,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.18%
      - 0.11%
      - 0.052%
+
 .. _area_median_income:
 
 Area Median Income
@@ -384,6 +387,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 9.5%
      - 24%
      - 12%
+
 .. _bathroom_spot_vent_hour:
 
 Bathroom Spot Vent Hour
@@ -404,20 +408,6 @@ Source
 
 - \Same as occupancy schedule from Wilson et al. 'Building America House Simulation Protocols' 2014
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``bathroom_fans_start_hour``
-     - 
-     - The hour of the day when the bathroom fans run.
 
 Options
 *******
@@ -504,6 +494,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 21
      - 22
      - 23
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``bathroom_fans_start_hour``
+     - 
+     - The hour of the day when the bathroom fans run.
 .. _battery:
 
 Battery
@@ -524,32 +528,6 @@ Source
 
 - \n/a
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``battery_nominal_capacity``
-     - kWh
-     - The battery's nominal (total) capacity.
-   * - ``battery_usable_capacity``
-     - kWh
-     - The battery's usable capacity.
-   * - ``battery_location``
-     - 
-     - The location of the battery.
-   * - ``battery_rated_power_output``
-     - W
-     - The battery's power output under non-peak conditions.
-   * - ``battery_round_trip_efficiency``
-     - frac
-     - The round trip efficiency.
 
 Options
 *******
@@ -573,22 +551,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 10.0
      - 20.0
-   * - ``battery_usable_capacity``
-     - 
-     - 
-     - 
-   * - ``battery_location``
-     - 
-     - 
-     - 
-   * - ``battery_rated_power_output``
-     - 
-     - 
-     - 
-   * - ``battery_round_trip_efficiency``
-     - 
-     - 
-     - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``battery_nominal_capacity``
+     - kWh
+     - The battery's nominal (total) capacity.
 .. _bedrooms:
 
 Bedrooms
@@ -620,23 +596,6 @@ Assumption
 - \Limit 0-499 sqft dwelling units to only 1 or 2 bedrooms. The geometry measure has a limit of (ffa-120)/70 >= bedrooms.
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_unit_num_bedrooms_number``
-     - 
-     - Number of bedrooms.
-   * - ``geometry_unit_num_bathrooms_number``
-     - 
-     - Number of bathrooms.
-
 Options
 *******
 
@@ -665,12 +624,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 3
      - 4
      - 5
-   * - ``geometry_unit_num_bathrooms_number``
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_unit_num_bedrooms_number``
      - 
-     - 
-     - 
-     - 
-     - 
+     - Number of bedrooms.
 .. _building_america_climate_zone:
 
 Building America Climate Zone
@@ -724,6 +691,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 30%
      - 0.052%
      - 1.1%
+
 .. _cec_climate_zone:
 
 CEC Climate Zone
@@ -807,6 +775,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.24%
      - 0.24%
      - 90%
+
 .. _ceiling_fan:
 
 Ceiling Fan
@@ -834,29 +803,6 @@ Assumption
 - \If the unit is vacant there is no ceiling fan energy
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``ceiling_fans_label_energy_use``
-     - W
-     - The average energy use of the ceiling fan(s), as found on the label.
-   * - ``ceiling_fans_efficiency``
-     - cfm/W
-     - The efficiency rating of the ceiling fan(s) at medium speed. Only used if Label Energy Use not provided.
-   * - ``ceiling_fans_count``
-     - #
-     - Total number of ceiling fans.
-   * - ``ceiling_fans_cooling_setpoint_temperature_offset``
-     - F
-     - The cooling setpoint temperature offset during months when the ceiling fans are operating.
-
 Options
 *******
 
@@ -879,18 +825,27 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 45.0
      - 
-   * - ``ceiling_fans_efficiency``
-     - 
-     - 
-     - 
    * - ``ceiling_fans_count``
      - 0
      - 
      - 0
-   * - ``ceiling_fans_cooling_setpoint_temperature_offset``
-     - 
-     - 
-     - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``ceiling_fans_label_energy_use``
+     - W
+     - The average energy use of the ceiling fan(s), as found on the label.
+   * - ``ceiling_fans_count``
+     - #
+     - Total number of ceiling fans.
 .. _census_division:
 
 Census Division
@@ -944,6 +899,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 20%
      - 6.9%
      - 12%
+
 .. _census_division_recs:
 
 Census Division RECS
@@ -1001,6 +957,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 20%
      - 6.9%
      - 12%
+
 .. _census_region:
 
 Census Region
@@ -1044,6 +1001,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 18%
      - 38%
      - 22%
+
 .. _city:
 
 City
@@ -3307,6 +3265,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.012%
      - 0.019%
      - 0.021%
+
 .. _clothes_dryer:
 
 Clothes Dryer
@@ -3372,35 +3331,6 @@ Assumption
 - \In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Heating Fuel','Clothes Washer Presence'], ['Tenure', 'Federal Poverty Level']).
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``appliance_clothes_dryer_efficiency_type``
-     - 
-     - The efficiency type of the clothes dryer.
-   * - ``appliance_clothes_dryer_efficiency``
-     - lb/kWh
-     - The efficiency from the EnergyGuide label.
-   * - ``appliance_clothes_dryer_fuel_type``
-     - 
-     - Type of fuel used by the clothes dryer.
-   * - ``appliance_clothes_dryer_drying_method``
-     - 
-     - The method of drying used by the clothes dryer.
-   * - ``appliance_clothes_dryer_usage_multiplier``
-     - 
-     - Multiplier on the clothes dryer energy usage that can reflect, e.g., high/low usage occupants.
-   * - ``appliance_clothes_dryer_location``
-     - 
-     - The space type where the clothes dryer is located.
-
 Options
 *******
 
@@ -3428,37 +3358,48 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - CombinedEnergyFactor
      - 
      - CombinedEnergyFactor
-     -
+     - 
    * - ``appliance_clothes_dryer_efficiency``
      - 3.73
      - 3.3
      - 
      - 3.3
-     -
+     - 
    * - ``appliance_clothes_dryer_fuel_type``
      - electricity
      - natural gas
      - 
      - propane
-     -
+     - 
    * - ``appliance_clothes_dryer_drying_method``
      - conventional
      - conventional
      - 
      - conventional
-     -
-   * - ``appliance_clothes_dryer_usage_multiplier``
      - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``appliance_clothes_dryer_efficiency_type``
      - 
+     - The efficiency type of the clothes dryer.
+   * - ``appliance_clothes_dryer_efficiency``
+     - lb/kWh
+     - The efficiency from the EnergyGuide label.
+   * - ``appliance_clothes_dryer_fuel_type``
      - 
+     - Type of fuel used by the clothes dryer.
+   * - ``appliance_clothes_dryer_drying_method``
      - 
-     -
-   * - ``appliance_clothes_dryer_location``
-     - 
-     - 
-     - 
-     - 
-     -
+     - The method of drying used by the clothes dryer.
 .. _clothes_dryer_usage_level:
 
 Clothes Dryer Usage Level
@@ -3486,20 +3427,6 @@ Assumption
 - \Engineering judgement
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``clothes_dryer_usage_multiplier``
-     - 
-     - Multiplier on the clothes dryer energy usage that can reflect, e.g., high/low usage occupants.
-
 Options
 *******
 
@@ -3522,6 +3449,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.8
      - 1.0
      - 1.2
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``clothes_dryer_usage_multiplier``
+     - 
+     - Multiplier on the clothes dryer energy usage that can reflect, e.g., high/low usage occupants.
 .. _clothes_washer:
 
 Clothes Washer
@@ -3573,6 +3514,67 @@ Assumption
 - \In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Clothes Washer Presence', 'Vintage'], ['Tenure', 'Federal Poverty Level']).
 
 
+Options
+*******
+
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Clothes Washer** characteristic.
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+   :widths: auto
+
+   * - Option name
+     - EnergyStar
+     - None
+     - Standard
+     - Void
+   * - Stock saturation
+     - 34%
+     - 16%
+     - 50%
+     - 0%
+   * - ``appliance_clothes_washer_efficiency_type``
+     - IntegratedModifiedEnergyFactor
+     - 
+     - IntegratedModifiedEnergyFactor
+     - 
+   * - ``appliance_clothes_washer_efficiency``
+     - 1.63
+     - 
+     - 1.21
+     - 
+   * - ``appliance_clothes_washer_rated_annual_consumption``
+     - 260
+     - 
+     - 380
+     - 
+   * - ``appliance_clothes_washer_label_electric_rate``
+     - 0.12
+     - 
+     - 0.12
+     - 
+   * - ``appliance_clothes_washer_label_gas_rate``
+     - 1.09
+     - 
+     - 1.09
+     - 
+   * - ``appliance_clothes_washer_label_annual_gas_cost``
+     - 18
+     - 
+     - 27
+     - 
+   * - ``appliance_clothes_washer_label_usage``
+     - 6
+     - 
+     - 6
+     - 
+   * - ``appliance_clothes_washer_capacity``
+     - 3.5
+     - 
+     - 3.2
+     - 
+
 Properties
 **********
 
@@ -3607,83 +3609,6 @@ Properties
    * - ``appliance_clothes_washer_capacity``
      - ft3
      - Volume of the washer drum. Obtained from the EnergyStar website or the manufacturer's literature.
-   * - ``appliance_clothes_washer_usage_multiplier``
-     - 
-     - Multiplier on the clothes washer energy and hot water usage that can reflect, e.g., high/low usage occupants.
-   * - ``appliance_clothes_washer_location``
-     - 
-     - The space type where the clothes washer is located.
-
-Options
-*******
-
-From ``project_national`` the list of options, option stock saturation, and option properties for the **Clothes Washer** characteristic.
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-   :widths: auto
-
-   * - Option name
-     - EnergyStar
-     - None
-     - Standard
-     - Void
-   * - Stock saturation
-     - 34%
-     - 16%
-     - 50%
-     - 0%
-   * - ``appliance_clothes_washer_efficiency_type``
-     - IntegratedModifiedEnergyFactor
-     - 
-     - IntegratedModifiedEnergyFactor
-     -
-   * - ``appliance_clothes_washer_efficiency``
-     - 1.63
-     - 
-     - 1.21
-     -
-   * - ``appliance_clothes_washer_rated_annual_consumption``
-     - 260
-     - 
-     - 380
-     -
-   * - ``appliance_clothes_washer_label_electric_rate``
-     - 0.12
-     - 
-     - 0.12
-     -
-   * - ``appliance_clothes_washer_label_gas_rate``
-     - 1.09
-     - 
-     - 1.09
-     -
-   * - ``appliance_clothes_washer_label_annual_gas_cost``
-     - 18
-     - 
-     - 27
-     -
-   * - ``appliance_clothes_washer_label_usage``
-     - 6
-     - 
-     - 6
-     -
-   * - ``appliance_clothes_washer_capacity``
-     - 3.5
-     - 
-     - 3.2
-     -
-   * - ``appliance_clothes_washer_usage_multiplier``
-     - 
-     - 
-     - 
-     -
-   * - ``appliance_clothes_washer_location``
-     - 
-     - 
-     - 
-     -
 .. _clothes_washer_presence:
 
 Clothes Washer Presence
@@ -3769,6 +3694,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 16%
      - 84%
      - 0%
+
 .. _clothes_washer_usage_level:
 
 Clothes Washer Usage Level
@@ -3796,20 +3722,6 @@ Assumption
 - \Engineering judgement
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``clothes_washer_usage_multiplier``
-     - 
-     - Multiplier on the clothes washer energy usage that can reflect, e.g., high/low usage occupants.
-
 Options
 *******
 
@@ -3832,6 +3744,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.8
      - 1.0
      - 1.2
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``clothes_washer_usage_multiplier``
+     - 
+     - Multiplier on the clothes washer energy usage that can reflect, e.g., high/low usage occupants.
 .. _cooking_range:
 
 Cooking Range
@@ -3903,32 +3829,6 @@ Assumption
 - \In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Heating Fuel', 'Vintage'], ['Tenure', 'Federal Poverty Level']).
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``appliance_cooking_range_oven_fuel_type``
-     - 
-     - Type of fuel used by the cooking range/oven
-   * - ``appliance_cooking_range_oven_is_induction``
-     - 
-     - Whether the electric cooking range is induction.
-   * - ``appliance_cooking_range_oven_is_convection``
-     - 
-     - Whether the oven is convection
-   * - ``appliance_cooking_range_oven_usage_multiplier``
-     - 
-     - Multiplier on the cooking range/oven energy usage that can reflect, e.g., high/low usage occupants.
-   * - ``appliance_cooking_range_oven_location``
-     - 
-     - The space type where the cooking range/oven is located.
-
 Options
 *******
 
@@ -3959,35 +3859,41 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - natural gas
      - 
      - propane
-     -
+     - 
    * - ``appliance_cooking_range_oven_is_induction``
      - true
      - false
      - 
      - 
      - 
-     -
+     - 
    * - ``appliance_cooking_range_oven_is_convection``
      - false
      - false
      - false
      - 
      - false
-     -
-   * - ``appliance_cooking_range_oven_usage_multiplier``
      - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``appliance_cooking_range_oven_fuel_type``
      - 
+     - Type of fuel used by the cooking range/oven
+   * - ``appliance_cooking_range_oven_is_induction``
      - 
+     - Whether the electric cooking range is induction.
+   * - ``appliance_cooking_range_oven_is_convection``
      - 
-     - 
-     -
-   * - ``appliance_cooking_range_oven_location``
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
+     - Whether the oven is convection
 .. _cooking_range_usage_level:
 
 Cooking Range Usage Level
@@ -4015,20 +3921,6 @@ Assumption
 - \Engineering judgement
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``cooking_range_oven_usage_multiplier``
-     - 
-     - Multiplier on the cooking range/oven energy usage that can reflect, e.g., high/low usage occupants.
-
 Options
 *******
 
@@ -4051,6 +3943,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.8
      - 1.0
      - 1.2
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``cooking_range_oven_usage_multiplier``
+     - 
+     - Multiplier on the cooking range/oven energy usage that can reflect, e.g., high/low usage occupants.
 .. _cooling_setpoint:
 
 Cooling Setpoint
@@ -4079,26 +3985,6 @@ Assumption
 
 - \Cooling setpoint arguments need to be assigned. A cooling setpoint of None corresponds to 95 F, but is not used by OpenStudio-HPXML. No cooling energy is expected.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_control_cooling_season_period``
-     - 
-     - Enter a date range like 'Jun 1 - Oct 31'. Defaults to year-round cooling availability.
-   * - ``hvac_control_cooling_weekday_setpoint_temp``
-     - deg-F
-     - Specify the weekday cooling setpoint temperature.
-   * - ``hvac_control_cooling_weekend_setpoint_temp``
-     - deg-F
-     - Specify the weekend cooling setpoint temperature.
 
 Options
 *******
@@ -4175,6 +4061,26 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 78
      - 80
      - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_control_cooling_season_period``
+     - 
+     - Enter a date range like 'Jun 1 - Oct 31'. Defaults to year-round cooling availability.
+   * - ``hvac_control_cooling_weekday_setpoint_temp``
+     - deg-F
+     - Specify the weekday cooling setpoint temperature.
+   * - ``hvac_control_cooling_weekend_setpoint_temp``
+     - deg-F
+     - Specify the weekend cooling setpoint temperature.
 .. _cooling_setpoint_has_offset:
 
 Cooling Setpoint Has Offset
@@ -4218,6 +4124,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Stock saturation
      - 64%
      - 36%
+
 .. _cooling_setpoint_offset_magnitude:
 
 Cooling Setpoint Offset Magnitude
@@ -4244,23 +4151,6 @@ Assumption
 
 - \For dependency conditions with low samples, the following lumpings are used in progressive order until there are enough samples: 1) lumping buildings into Single-Family and Multi-Family only,  2) lumping buildings into Single-Family and Multi-Family only and lumping nearby climate zones within  A/B regions and separately 7AK and 8AK 3) lumping all building types together and lumping climate zones within A/B and separately 7AK and 8AK regions
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_control_cooling_weekday_setpoint_offset_magnitude``
-     - deg-F
-     - Specify the weekday cooling offset magnitude.
-   * - ``hvac_control_cooling_weekend_setpoint_offset_magnitude``
-     - deg-F
-     - Specify the weekend cooling offset magnitude.
 
 Options
 *******
@@ -4292,6 +4182,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 2
      - 5
      - 9
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_control_cooling_weekday_setpoint_offset_magnitude``
+     - deg-F
+     - Specify the weekday cooling offset magnitude.
+   * - ``hvac_control_cooling_weekend_setpoint_offset_magnitude``
+     - deg-F
+     - Specify the weekend cooling offset magnitude.
 .. _cooling_setpoint_offset_period:
 
 Cooling Setpoint Offset Period
@@ -4318,23 +4225,6 @@ Assumption
 
 - \For dependency conditions with low samples, the following lumpings are used in progressive order until there are enough samples: 1) lumping buildings into Single-Family and Multi-Family only,  2) lumping buildings into Single-Family and Multi-Family only and lumping nearby climate zones within  A/B regions and separately 7AK and 8AK 3) lumping all building types together and lumping climate zones within A/B regions and separately 7AK and 8AK
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_control_cooling_weekday_setpoint_schedule``
-     - 
-     - Specify the 24-hour comma-separated weekday cooling schedule of 0s and 1s.
-   * - ``hvac_control_cooling_weekend_setpoint_schedule``
-     - 
-     - Specify the 24-hour comma-separated weekend cooling schedule of 0s and 1s.
 
 Options
 *******
@@ -4574,6 +4464,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
      - 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
      - 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_control_cooling_weekday_setpoint_schedule``
+     - 
+     - Specify the 24-hour comma-separated weekday cooling schedule of 0s and 1s.
+   * - ``hvac_control_cooling_weekend_setpoint_schedule``
+     - 
+     - Specify the 24-hour comma-separated weekend cooling schedule of 0s and 1s.
 .. _cooling_unavailable_days:
 
 Cooling Unavailable Days
@@ -4594,20 +4501,6 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``schedules_space_cooling_unavailable_days``
-     - 
-     - Number of days space cooling equipment is unavailable.
 
 Options
 *******
@@ -4649,6 +4542,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0
      - 365
      - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``schedules_space_cooling_unavailable_days``
+     - 
+     - Number of days space cooling equipment is unavailable.
 .. _corridor:
 
 Corridor
@@ -4669,20 +4576,6 @@ Source
 
 - \Engineering Judgment
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_corridor_position``
-     - 
-     - The position of the corridor. Only applies to single-family attached and apartment units. Exterior corridors are shaded, but not enclosed. Interior corridors are enclosed and conditioned.
 
 Options
 *******
@@ -4712,6 +4605,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Single Exterior Front
      - Double Exterior
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_corridor_position``
+     - 
+     - The position of the corridor. Only applies to single-family attached and apartment units. Exterior corridors are shaded, but not enclosed. Interior corridors are enclosed and conditioned.
 .. _county:
 
 County
@@ -4734,23 +4641,6 @@ Source
 
 - \Unit counts are from the American Community Survey 5-yr 2016.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``location_zip_code``
-     - 
-     - Zip code of the home address. Either this or the EnergyPlus Weather (EPW) File Path input below must be provided.
-   * - ``location_epw_path``
-     - 
-     - Path to the EPW file. Either this or the Zip Code input above must be provided.
 
 Options
 *******
@@ -17334,6 +17224,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ../../../weather/G5600410.epw
      - ../../../weather/G5600430.epw
      - ../../../weather/G5600450.epw
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``location_zip_code``
+     - 
+     - Zip code of the home address. Either this or the EnergyPlus Weather (EPW) File Path input below must be provided.
+   * - ``location_epw_path``
+     - 
+     - Path to the EPW file. Either this or the Zip Code input above must be provided.
 .. _county_metro_status:
 
 County Metro Status
@@ -17375,6 +17282,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Stock saturation
      - 83%
      - 17%
+
 .. _county_and_puma:
 
 County and PUMA
@@ -26500,6 +26408,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.0065%
      - 0.0028%
      - 0.0026%
+
 .. _custom_state:
 
 Custom State
@@ -26531,6 +26440,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Stock saturation
      - 0.23%
      - 1e+02%
+
 .. _dehumidifier:
 
 Dehumidifier
@@ -26552,32 +26462,6 @@ Source
 - \Not applicable (dehumidifiers are not explicitly modeled separate from plug loads)
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``appliance_dehumidifier_type``
-     - 
-     - The type of dehumidifier.
-   * - ``appliance_dehumidifier_efficiency_type``
-     - 
-     - The efficiency type of the dehumidifier.
-   * - ``appliance_dehumidifier_efficiency``
-     - liters/kWh
-     - The rated efficiency of the dehumidifier.
-   * - ``appliance_dehumidifier_capacity``
-     - pints/day
-     - The capacity (water removal rate) of the dehumidifier.
-   * - ``appliance_dehumidifier_setpoint_relative_humidity``
-     - frac
-     - The relative humidity setpoint.
-
 Options
 *******
 
@@ -26592,16 +26476,22 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
    * - Stock saturation
      - 100%
-   * - ``appliance_dehumidifier_type``
-     - 
-   * - ``appliance_dehumidifier_efficiency_type``
-     - 
-   * - ``appliance_dehumidifier_efficiency``
-     - 
-   * - ``appliance_dehumidifier_capacity``
-     - 
    * - ``appliance_dehumidifier_setpoint_relative_humidity``
      - 0.5
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``appliance_dehumidifier_setpoint_relative_humidity``
+     - frac
+     - The relative humidity setpoint.
 .. _dishwasher:
 
 Dishwasher
@@ -26649,6 +26539,62 @@ Assumption
   - \[10] Census Division RECS to Census Region
 
 
+Options
+*******
+
+From ``project_national`` the list of options, option stock saturation, and option properties for the **Dishwasher** characteristic.
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+   :widths: auto
+
+   * - Option name
+     - EnergyStar
+     - None
+     - Standard
+     - Void
+   * - Stock saturation
+     - 30%
+     - 28%
+     - 42%
+     - 0%
+   * - ``appliance_dishwasher_efficiency_type``
+     - RatedAnnualkWh
+     - 
+     - RatedAnnualkWh
+     - 
+   * - ``appliance_dishwasher_efficiency``
+     - 270.0
+     - 
+     - 307.0
+     - 
+   * - ``appliance_dishwasher_label_electric_rate``
+     - 0.12
+     - 
+     - 0.12
+     - 
+   * - ``appliance_dishwasher_label_gas_rate``
+     - 1.09
+     - 
+     - 1.09
+     - 
+   * - ``appliance_dishwasher_label_annual_gas_cost``
+     - 22.23
+     - 
+     - 22.32
+     - 
+   * - ``appliance_dishwasher_label_usage``
+     - 4
+     - 
+     - 4
+     - 
+   * - ``appliance_dishwasher_place_setting_capacity``
+     - 12
+     - 
+     - 12
+     - 
+
 Properties
 **********
 
@@ -26680,78 +26626,6 @@ Properties
    * - ``appliance_dishwasher_place_setting_capacity``
      - #
      - The number of place settings for the unit. Data obtained from manufacturer's literature.
-   * - ``appliance_dishwasher_usage_multiplier``
-     - 
-     - Multiplier on the dishwasher energy usage that can reflect, e.g., high/low usage occupants.
-   * - ``appliance_dishwasher_location``
-     - 
-     - The space type where the dishwasher is located.
-
-Options
-*******
-
-From ``project_national`` the list of options, option stock saturation, and option properties for the **Dishwasher** characteristic.
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-   :widths: auto
-
-   * - Option name
-     - EnergyStar
-     - None
-     - Standard
-     - Void
-   * - Stock saturation
-     - 30%
-     - 28%
-     - 42%
-     - 0%
-   * - ``appliance_dishwasher_efficiency_type``
-     - RatedAnnualkWh
-     - 
-     - RatedAnnualkWh
-     -
-   * - ``appliance_dishwasher_efficiency``
-     - 270.0
-     - 
-     - 307.0
-     -
-   * - ``appliance_dishwasher_label_electric_rate``
-     - 0.12
-     - 
-     - 0.12
-     -
-   * - ``appliance_dishwasher_label_gas_rate``
-     - 1.09
-     - 
-     - 1.09
-     -
-   * - ``appliance_dishwasher_label_annual_gas_cost``
-     - 22.23
-     - 
-     - 22.32
-     -
-   * - ``appliance_dishwasher_label_usage``
-     - 4
-     - 
-     - 4
-     -
-   * - ``appliance_dishwasher_place_setting_capacity``
-     - 12
-     - 
-     - 12
-     -
-   * - ``appliance_dishwasher_usage_multiplier``
-     - 
-     - 
-     - 
-     -
-   * - ``appliance_dishwasher_location``
-     - 
-     - 
-     - 
-     -
 .. _dishwasher_usage_level:
 
 Dishwasher Usage Level
@@ -26779,20 +26653,6 @@ Assumption
 - \Engineering judgement
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``dishwasher_usage_multiplier``
-     - 
-     - Multiplier on the dishwasher energy usage that can reflect, e.g., high/low usage occupants.
-
 Options
 *******
 
@@ -26815,6 +26675,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.8
      - 1.0
      - 1.2
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``dishwasher_usage_multiplier``
+     - 
+     - Multiplier on the dishwasher energy usage that can reflect, e.g., high/low usage occupants.
 .. _door_area:
 
 Door Area
@@ -26836,20 +26710,6 @@ Source
 - \Engineering Judgement
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_door_area``
-     - ft2
-     - The area of the opaque door(s). Any door glazing (e.g., sliding glass doors) should be captured as window area.
-
 Options
 *******
 
@@ -26866,6 +26726,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 100%
    * - ``geometry_door_area``
      - 20
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_door_area``
+     - ft2
+     - The area of the opaque door(s). Any door glazing (e.g., sliding glass doors) should be captured as window area.
 .. _doors:
 
 Doors
@@ -26887,20 +26761,6 @@ Source
 - \Engineering Judgement
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``enclosure_door_r_value``
-     - F-ft2-hr/Btu
-     - R-value of the opaque door(s).
-
 Options
 *******
 
@@ -26917,6 +26777,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 100%
    * - ``enclosure_door_r_value``
      - 5.0
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``enclosure_door_r_value``
+     - F-ft2-hr/Btu
+     - R-value of the opaque door(s).
 .. _duct_leakage_and_insulation:
 
 Duct Leakage and Insulation
@@ -26945,32 +26819,6 @@ Assumption
 
 - \Ducts entirely in conditioned spaces will not have any leakage to outside. Ducts with R-4/R-8 insulation were previously assigned to Geometry Foundation Type = Ambient or Slab. They now correspond to those with Duct Location = Garage, Unvented Attic, or Vented Attic.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_ducts_leakage_units``
-     - 
-     - The units for the duct leakage.
-   * - ``hvac_ducts_leakage_to_outside_value``
-     - 
-     - The leakage to outside value.
-   * - ``hvac_ducts_supply_insulation_r_value``
-     - F-ft2-hr/Btu
-     - The nominal insulation r-value of the supply ducts excluding air films. Use 0 for uninsulated ducts.
-   * - ``hvac_ducts_return_insulation_r_value``
-     - F-ft2-hr/Btu
-     - The nominal insulation r-value of the return ducts excluding air films. Use 0 for uninsulated ducts.
-   * - ``hvac_ducts_supply_leakage_fraction``
-     - frac
-     - The fraction of duct leakage associated with the supply ducts; the remainder is associated with the return ducts.
 
 Options
 *******
@@ -27072,21 +26920,29 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 8
      - 0
      - 0
-   * - ``hvac_ducts_supply_leakage_fraction``
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_ducts_leakage_units``
      - 
+     - The units for the duct leakage.
+   * - ``hvac_ducts_leakage_to_outside_value``
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
+     - The leakage to outside value.
+   * - ``hvac_ducts_supply_insulation_r_value``
+     - F-ft2-hr/Btu
+     - The nominal insulation r-value of the supply ducts excluding air films. Use 0 for uninsulated ducts.
+   * - ``hvac_ducts_return_insulation_r_value``
+     - F-ft2-hr/Btu
+     - The nominal insulation r-value of the return ducts excluding air films. Use 0 for uninsulated ducts.
 .. _duct_location:
 
 Duct Location
@@ -27113,29 +26969,6 @@ Assumption
 
 - \Based on default duct location assignment in OpenStudio-HPXML: the first present space type in the order of: basement - conditioned, basement - unconditioned, crawlspace - conditioned, crawlspace - vented, crawlspace - unvented, attic - vented, attic - unvented, garage, or living space
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_ducts_supply_location_location``
-     - 
-     - The primary location of the supply ducts.
-   * - ``hvac_ducts_supply_location_location_fraction``
-     - frac
-     - The fraction of supply ducts in this location. The remainder are assumed to be in conditioned space.
-   * - ``hvac_ducts_return_location_location``
-     - 
-     - The primary location of the return ducts.
-   * - ``hvac_ducts_return_location_location_fraction``
-     - frac
-     - The fraction of return ducts in this location. The remainder are assumed to be in conditioned space.
 
 Options
 *******
@@ -27171,14 +27004,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - conditioned space
      - conditioned space
      - basement
-   * - ``hvac_ducts_supply_location_location_fraction``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
    * - ``hvac_ducts_return_location_location``
      - attic
      - crawlspace
@@ -27187,14 +27012,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - conditioned space
      - conditioned space
      - basement
-   * - ``hvac_ducts_return_location_location_fraction``
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_ducts_supply_location_location``
      - 
+     - The primary location of the supply ducts.
+   * - ``hvac_ducts_return_location_location``
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
+     - The primary location of the return ducts.
 .. _eaves:
 
 Eaves
@@ -27216,38 +27050,6 @@ Source
 - \Wilson et al. 'Building America House Simulation Protocols' 2014
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_eaves_depth``
-     - ft
-     - The depth of the eaves extending from the roof.
-   * - ``enclosure_overhangs_front_depth``
-     - ft
-     - The depth of overhangs for windows for the front facade.
-   * - ``enclosure_overhangs_back_depth``
-     - ft
-     - The depth of overhangs for windows for the back facade.
-   * - ``enclosure_overhangs_left_depth``
-     - ft
-     - The depth of overhangs for windows for the left facade.
-   * - ``enclosure_overhangs_right_depth``
-     - ft
-     - The depth of overhangs for windows for the right facade.
-   * - ``enclosure_overhangs_distance_to_top_of_window``
-     - ft
-     - Average distance between the overhangs and the top of the windows.
-   * - ``enclosure_overhangs_distance_to_bottom_of_window``
-     - ft
-     - Average distance between the overhangs and the bottom of the windows.
-
 Options
 *******
 
@@ -27264,18 +27066,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 100%
    * - ``geometry_eaves_depth``
      - 2
-   * - ``enclosure_overhangs_front_depth``
-     - 
-   * - ``enclosure_overhangs_back_depth``
-     - 
-   * - ``enclosure_overhangs_left_depth``
-     - 
-   * - ``enclosure_overhangs_right_depth``
-     - 
-   * - ``enclosure_overhangs_distance_to_top_of_window``
-     - 
-   * - ``enclosure_overhangs_distance_to_bottom_of_window``
-     - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_eaves_depth``
+     - ft
+     - The depth of the eaves extending from the roof.
 .. _electric_vehicle_battery:
 
 Electric Vehicle Battery
@@ -27306,41 +27110,6 @@ Assumption
 
 - \If the household does not have an Electric Vehicle, the options represent the household preference.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``electric_vehicle_type``
-     - 
-     - The type of vehicle.
-   * - ``electric_vehicle_nominal_battery_capacity``
-     - kWh
-     - The nominal capacity of the electric vehicle battery.
-   * - ``electric_vehicle_usable_battery_capacity``
-     - kWh
-     - The usable capacity of the electric vehicle battery.
-   * - ``electric_vehicle_fuel_economy_units``
-     - 
-     - The combined fuel economy units of the vehicle.
-   * - ``electric_vehicle_fuel_economy_combined``
-     - 
-     - The combined fuel economy of the vehicle.
-   * - ``electric_vehicle_miles_driven_per_year``
-     - miles/yr
-     - Number of miles driven per year with the vehicle.
-   * - ``misc_electric_vehicle_charging_annual_energy_use``
-     - kWh/yr
-     - The annual energy consumption of the EV charging.
-   * - ``misc_electric_vehicle_charging_usage_multiplier``
-     - 
-     - Multiplier on the energy usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -27379,15 +27148,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - BatteryElectricVehicle
      - BatteryElectricVehicle
      - BatteryElectricVehicle
-   * - ``electric_vehicle_nominal_battery_capacity``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
    * - ``electric_vehicle_usable_battery_capacity``
      - 40.168
      - 63.433
@@ -27433,15 +27193,35 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0
      - 0
      - 0
-   * - ``misc_electric_vehicle_charging_usage_multiplier``
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``electric_vehicle_type``
      - 
+     - The type of vehicle.
+   * - ``electric_vehicle_usable_battery_capacity``
+     - kWh
+     - The usable capacity of the electric vehicle battery.
+   * - ``electric_vehicle_fuel_economy_units``
      - 
+     - The combined fuel economy units of the vehicle.
+   * - ``electric_vehicle_fuel_economy_combined``
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
+     - The combined fuel economy of the vehicle.
+   * - ``electric_vehicle_miles_driven_per_year``
+     - miles/yr
+     - Number of miles driven per year with the vehicle.
+   * - ``misc_electric_vehicle_charging_annual_energy_use``
+     - kWh/yr
+     - The annual energy consumption of the EV charging.
 .. _electric_vehicle_charge_at_home:
 
 Electric Vehicle Charge At Home
@@ -27468,20 +27248,6 @@ Assumption
 
 - \Due to low sample count, the tsv is constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The two sub-tsvs have the following dependencies: tsv1 dependency=['Geometry Building Type RECS'], tsv2 dependency=['Federal Poverty Level'], In combining tsv1 and tsv2, the conditional relationships are ignored across ('Geometry Building Type RECS' and 'Federal Poverty Level').
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``ev_fraction_charged_home``
-     - 
-     - The fraction of charging energy provided by the at-home charger to the electric vehicle.
 
 Options
 *******
@@ -27514,6 +27280,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.70
      - 0.90
      - 1.00
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``ev_fraction_charged_home``
+     - 
+     - The fraction of charging energy provided by the at-home charger to the electric vehicle.
 .. _electric_vehicle_charger:
 
 Electric Vehicle Charger
@@ -27551,26 +27331,6 @@ Assumption
   - \[5] Federal Poverty Level is combined into 400%+ and <400% bins
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``electric_vehicle_charger_level``
-     - 
-     - The charging level of the EV charger.
-   * - ``electric_vehicle_charger_power``
-     - W
-     - The rated power output of the EV charger.
-   * - ``electric_vehicle_charger_fraction_charged_at_home``
-     - frac
-     - The fraction of charging energy provided by the at-home charger to the vehicle.
-
 Options
 *******
 
@@ -27595,17 +27355,37 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1
      - 2
      - 
-     -
+     - 
    * - ``electric_vehicle_charger_power``
      - 1600
      - 5690
      - 
-     -
+     - 
    * - ``electric_vehicle_charger_fraction_charged_at_home``
      - 1.0
      - 1.0
      - 
-     -
+     - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``electric_vehicle_charger_level``
+     - 
+     - The charging level of the EV charger.
+   * - ``electric_vehicle_charger_power``
+     - W
+     - The rated power output of the EV charger.
+   * - ``electric_vehicle_charger_fraction_charged_at_home``
+     - frac
+     - The fraction of charging energy provided by the at-home charger to the vehicle.
 .. _electric_vehicle_miles_traveled:
 
 Electric Vehicle Miles Traveled
@@ -27626,20 +27406,6 @@ Source
 
 - \the 2022 U.S. Federal Highway Administration National Household Travel Survey (NHTS) microdata.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``vehicle_miles_driven_per_year``
-     - miles
-     - The annual miles the vehicle is driven.
 
 Options
 *******
@@ -27687,6 +27453,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 17000
      - 19000
      - 22500
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``vehicle_miles_driven_per_year``
+     - miles
+     - The annual miles the vehicle is driven.
 .. _electric_vehicle_outlet_access:
 
 Electric Vehicle Outlet Access
@@ -27746,6 +27526,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 44%
      - 56%
      - 0%
+
 .. _electric_vehicle_ownership:
 
 Electric Vehicle Ownership
@@ -27807,6 +27588,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 99%
      - 1.4%
      - 0%
+
 .. _energystar_climate_zone_2023:
 
 Energystar Climate Zone 2023
@@ -27858,6 +27640,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 23%
      - 15%
      - 0%
+
 .. _federal_poverty_level:
 
 Federal Poverty Level
@@ -27911,6 +27694,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 12%
      - 37%
      - 12%
+
 .. _generation_and_emissions_assessment_region:
 
 Generation And Emissions Assessment Region
@@ -27982,6 +27766,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 3.8%
      - 1.9%
      - 3%
+
 .. _geometry_attic_type:
 
 Geometry Attic Type
@@ -28010,26 +27795,6 @@ Assumption
 
 - \1-story Single-Family building types cannot have Finished Attic/Cathedral Ceiling because that attic type is modeled as a new story and 1-story does not a second story. 4+story Single-Family and mobile homes are an impossible combination.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_attic_type_attic_type``
-     - 
-     - The type of attic. Conditioned attics are not allowed for apartment units.
-   * - ``geometry_attic_type_roof_type``
-     - 
-     - The type of roof.
-   * - ``geometry_roof_pitch``
-     - 
-     - The roof pitch of the attic. Ignored if the building has a flat roof.
 
 Options
 *******
@@ -28066,6 +27831,26 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 6:12
      - 6:12
      - 6:12
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_attic_type_attic_type``
+     - 
+     - The type of attic. Conditioned attics are not allowed for apartment units.
+   * - ``geometry_attic_type_roof_type``
+     - 
+     - The type of roof.
+   * - ``geometry_roof_pitch``
+     - 
+     - The roof pitch of the attic. Ignored if the building has a flat roof.
 .. _geometry_building_horizontal_location_mf:
 
 Geometry Building Horizontal Location MF
@@ -28092,20 +27877,6 @@ Assumption
 
 - \All values are calculated assuming the building has double-loaded corridors (with some exceptions like 3 units in single-story building).
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_unit_horizontal_location``
-     - 
-     - The horizontal location of the unit when viewing the front of the building. This is required for single-family attached and apartment units.
 
 Options
 *******
@@ -28135,6 +27906,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - None
      - Right
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_unit_horizontal_location``
+     - 
+     - The horizontal location of the unit when viewing the front of the building. This is required for single-family attached and apartment units.
 .. _geometry_building_horizontal_location_sfa:
 
 Geometry Building Horizontal Location SFA
@@ -28155,20 +27940,6 @@ Source
 
 - \Calculated directly from other distributions
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_unit_horizontal_location``
-     - 
-     - The horizontal location of the unit when viewing the front of the building. This is required for single-family attached and apartment units.
 
 Options
 *******
@@ -28195,6 +27966,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Middle
      - Right
      - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_unit_horizontal_location``
+     - 
+     - The horizontal location of the unit when viewing the front of the building. This is required for single-family attached and apartment units.
 .. _geometry_building_level_mf:
 
 Geometry Building Level MF
@@ -28222,20 +28007,6 @@ Assumption
 - \Calculated using the number of stories, where buildings >=2 stories have Top and Bottom probabilities = 1/Geometry Stories, and Middle probabilities = 1 - 2/Geometry stories
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_unit_level``
-     - 
-     - The level of the unit. This is required for apartment units.
-
 Options
 *******
 
@@ -28261,6 +28032,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Middle
      - 
      - Top
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_unit_level``
+     - 
+     - The level of the unit. This is required for apartment units.
 .. _geometry_building_number_units_mf:
 
 Geometry Building Number Units MF
@@ -28291,20 +28076,6 @@ Assumption
 
 - \Data was sampled from the following bins of Geometry Stories: 1, 2, 3, 4-7, 8+
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_building_num_units``
-     - #
-     - The number of units in the building.
 
 Options
 *******
@@ -28403,6 +28174,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 183
      - 326
      - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_building_num_units``
+     - #
+     - The number of units in the building.
 .. _geometry_building_number_units_sfa:
 
 Geometry Building Number Units SFA
@@ -28423,20 +28208,6 @@ Source
 
 - \U.S. EIA 2009 Residential Energy Consumption Survey (RECS) microdata.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_building_num_units``
-     - #
-     - The number of units in the building.
 
 Options
 *******
@@ -28514,6 +28285,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 60
      - 90
      - 144
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_building_num_units``
+     - #
+     - The number of units in the building.
 .. _geometry_building_type_acs:
 
 Geometry Building Type ACS
@@ -28565,6 +28350,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 6.2%
      - 5.9%
      - 61%
+
 .. _geometry_building_type_height:
 
 Geometry Building Type Height
@@ -28612,6 +28398,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 2.1%
      - 5.9%
      - 61%
+
 .. _geometry_building_type_recs:
 
 Geometry Building Type RECS
@@ -28632,26 +28419,6 @@ Source
 
 - \2019-5yrs Public Use Microdata Samples (PUMS). IPUMS USA, University of Minnesota, www.ipums.org.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_unit_aspect_ratio``
-     - Frac
-     - The ratio of front/back wall length to left/right wall length for the unit, excluding any protruding garage wall area.
-   * - ``geometry_ceiling_height_height``
-     - ft
-     - Average distance from the floor to the ceiling.
-   * - ``geometry_facility_type``
-     - 
-     - The facility type of the dwelling unit.
 
 Options
 *******
@@ -28693,6 +28460,26 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - apartment unit
      - single-family attached
      - single-family detached
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_unit_aspect_ratio``
+     - Frac
+     - The ratio of front/back wall length to left/right wall length for the unit, excluding any protruding garage wall area.
+   * - ``geometry_ceiling_height_height``
+     - ft
+     - Average distance from the floor to the ceiling.
+   * - ``geometry_facility_type``
+     - 
+     - The facility type of the dwelling unit.
 .. _geometry_floor_area:
 
 Geometry Floor Area
@@ -28725,20 +28512,6 @@ Assumption
 
 - \tsv4 : 'Census Division', 'PUMA Metro Status', 'Income RECS2020', 'Tenure'. For each sub-tsv, rows with <10 samples are replaced with coarsening dependency Census Region, followed by National.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_unit_cfa_bin``
-     - 
-     - E.g., '2000-2499'.
 
 Options
 *******
@@ -28780,6 +28553,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 2500-2999
      - 3000-3999
      - 4000+
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_unit_cfa_bin``
+     - 
+     - E.g., '2000-2499'.
 .. _geometry_floor_area_bin:
 
 Geometry Floor Area Bin
@@ -28823,6 +28610,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 32%
      - 13%
      - 3%
+
 .. _geometry_foundation_type:
 
 Geometry Foundation Type
@@ -28859,29 +28647,6 @@ Assumption
 
 - \For Single-Family Detached, if no foundation type specified, then sample has Ambient foundation.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_foundation_type_type``
-     - 
-     - The foundation type of the building. Garages are assumed to be over slab-on-grade.
-   * - ``geometry_foundation_type_height``
-     - ft
-     - The height of the foundation.
-   * - ``geometry_foundation_type_height_above_grade``
-     - ft
-     - The height of the foundation that is above-grade.
-   * - ``geometry_foundation_type_rim_joist_height``
-     - in
-     - The height of the rim joists.
 
 Options
 *******
@@ -28935,6 +28700,29 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 9.25
      - 9.25
      - 9.25
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_foundation_type_type``
+     - 
+     - The foundation type of the building. Garages are assumed to be over slab-on-grade.
+   * - ``geometry_foundation_type_height``
+     - ft
+     - The height of the foundation.
+   * - ``geometry_foundation_type_height_above_grade``
+     - ft
+     - The height of the foundation that is above-grade.
+   * - ``geometry_foundation_type_rim_joist_height``
+     - in
+     - The height of the rim joists.
 .. _geometry_garage:
 
 Geometry Garage
@@ -28980,29 +28768,6 @@ Assumption
 - \2. Vintage ACS is progressively grouped into: pre-1960, 1960-1999, and 2000+.
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_garage_type_width``
-     - ft
-     - The width of the garage.
-   * - ``geometry_garage_type_depth``
-     - ft
-     - The depth of the garage.
-   * - ``geometry_garage_type_position``
-     - 
-     - The side of the home that that garage is attached to (when viewed from the front).
-   * - ``geometry_garage_type_protrusion``
-     - frac
-     - The fraction of the garage depth that is protruding from the conditioned space.
-
 Options
 *******
 
@@ -29043,6 +28808,29 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.5
      - 0.5
      - 0.0
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_garage_type_width``
+     - ft
+     - The width of the garage.
+   * - ``geometry_garage_type_depth``
+     - ft
+     - The depth of the garage.
+   * - ``geometry_garage_type_position``
+     - 
+     - The side of the home that that garage is attached to (when viewed from the front).
+   * - ``geometry_garage_type_protrusion``
+     - frac
+     - The fraction of the garage depth that is protruding from the conditioned space.
 .. _geometry_space_combination:
 
 Geometry Space Combination
@@ -29348,6 +29136,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.27%
      - 4.4%
      - 0%
+
 .. _geometry_stories:
 
 Geometry Stories
@@ -29382,20 +29171,6 @@ Assumption
 
 - \Vintage ACS rows for the 2010s are copied from the 2000-09 rows.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_num_floors_above_grade``
-     - #
-     - The number of floors above grade (in the unit if single-family detached or single-family attached, and in the building if apartment unit). Conditioned attics are included.
 
 Options
 *******
@@ -29464,6 +29239,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 20
      - 21
      - 35
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_num_floors_above_grade``
+     - #
+     - The number of floors above grade (in the unit if single-family detached or single-family attached, and in the building if apartment unit). Conditioned attics are included.
 .. _geometry_stories_low_rise:
 
 Geometry Stories Low Rise
@@ -29505,6 +29294,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 33%
      - 7.7%
      - 5.7%
+
 .. _geometry_story_bin:
 
 Geometry Story Bin
@@ -29542,6 +29332,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Stock saturation
      - 98%
      - 2.1%
+
 .. _geometry_wall_exterior_finish:
 
 Geometry Wall Exterior Finish
@@ -29572,32 +29363,6 @@ Assumption
 
 - \Steel and wood frame walls must have an exterior finish
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``enclosure_wall_siding_type``
-     - 
-     - The type of wall siding.
-   * - ``enclosure_wall_siding_color``
-     - 
-     - The color of the walls.
-   * - ``enclosure_wall_siding_solar_absorptance``
-     - 
-     - The solar absorptance of the outermost wall material.
-   * - ``enclosure_wall_siding_emittance``
-     - 
-     - The emittance of the outermost wall material.
-   * - ``enclosure_wall_siding_r_value``
-     - F-ft2-hr/Btu
-     - The R-value of the siding.
 
 Options
 *******
@@ -29657,30 +29422,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - medium dark
      - light
      - medium dark
-   * - ``enclosure_wall_siding_solar_absorptance``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``enclosure_wall_siding_emittance``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
    * - ``enclosure_wall_siding_r_value``
      - 0.6
      - 0.7
@@ -29693,6 +29434,26 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.2
      - 0.6
      - 1.4
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``enclosure_wall_siding_type``
+     - 
+     - The type of wall siding.
+   * - ``enclosure_wall_siding_color``
+     - 
+     - The color of the walls.
+   * - ``enclosure_wall_siding_r_value``
+     - F-ft2-hr/Btu
+     - The R-value of the siding.
 .. _geometry_wall_type:
 
 Geometry Wall Type
@@ -29742,6 +29503,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 3.6%
      - 72%
      - 0%
+
 .. _ground_thermal_conductivity:
 
 Ground Thermal Conductivity
@@ -29775,29 +29537,6 @@ Assumption
 - \Samples less than 0.5 Btu/hr-ft-F are assigned a value of 0.5 Btu/hr-ft-F. Samples greater than 2.6 Btu/hr-ft-F are assigned a value of 2.6 Btu/hr-ft-F.
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``location_soil_type_soil_type``
-     - 
-     - The soil type.
-   * - ``location_soil_type_moisture_type``
-     - 
-     - The soil moisture type.
-   * - ``location_soil_type_conductivity``
-     - Btu/hr-ft-F
-     - The soil thermal conductivity.
-   * - ``location_soil_type_diffusivity``
-     - ft2/hr
-     - The soil thermal diffusivity.
-
 Options
 *******
 
@@ -29826,24 +29565,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 2.3%
      - 0.23%
      - 0.16%
-   * - ``location_soil_type_soil_type``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``location_soil_type_moisture_type``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
    * - ``location_soil_type_conductivity``
      - 0.5
      - 0.8
@@ -29853,15 +29574,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 2.0
      - 2.3
      - 2.6
-   * - ``location_soil_type_diffusivity``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``location_soil_type_conductivity``
+     - Btu/hr-ft-F
+     - The soil thermal conductivity.
 .. _hvac_cooling_autosizing_factor:
 
 HVAC Cooling Autosizing Factor
@@ -29889,23 +29615,6 @@ Assumption
 - \HVAC sizing follows ACCA Manual J and Manual S. There is no additional oversizing or undersizing the airflow and capacity of the HVAC system.
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``cooling_system_cooling_autosizing_factor``
-     - 
-     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
-   * - ``heat_pump_cooling_autosizing_factor``
-     - 
-     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
-
 Options
 *******
 
@@ -29928,6 +29637,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - ``heat_pump_cooling_autosizing_factor``
      - 
      - 1.0
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``cooling_system_cooling_autosizing_factor``
+     - 
+     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+   * - ``heat_pump_cooling_autosizing_factor``
+     - 
+     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
 .. _hvac_cooling_efficiency:
 
 HVAC Cooling Efficiency
@@ -29956,62 +29682,6 @@ Assumption
 
 - \Check the assumptions on the source tsv files.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_cooling_system_type``
-     - 
-     - The type of system.
-   * - ``hvac_cooling_system_cooling_efficiency_type``
-     - 
-     - The cooling efficiency type. Central ACs and Mini-Split ACs use SEER2 or EER2; Room ACs and Packaged Terminal ACs use CEER or EER.
-   * - ``hvac_cooling_system_cooling_efficiency``
-     - 
-     - The rated cooling efficiency.
-   * - ``hvac_cooling_system_cooling_compressor_type``
-     - 
-     - The compressor type of the cooling system. Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_capacity_type``
-     - 
-     - Type of capacity values when providing detailed performance data. Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_outdoor_temperatures``
-     - F
-     - List of outdoor temperatures when providing detailed performance data. Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_min_speed_capacities``
-     - Btu/hr or Frac
-     - Minimum speed capacities when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_nom_speed_capacities``
-     - Btu/hr or Frac
-     - Nominal speed capacities when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_max_speed_capacities``
-     - Btu/hr or Frac
-     - Maximum speed capacities when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_min_speed_cops``
-     - W/W
-     - Minimum speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_nom_speed_cops``
-     - W/W
-     - Nominal speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_max_speed_cops``
-     - W/W
-     - Maximum speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_capacity_capacity``
-     - Btu/hr
-     - The output capacity.
-   * - ``hvac_cooling_system_capacity_autosizing_factor``
-     - mult
-     - A capacity scaling factor that can be applied to the autosizing methodology.
-   * - ``hvac_cooling_system_capacity_autosizing_limit``
-     - Btu/hr
-     - A maximum capacity limit that can be applied to the autosizing methodology.
 
 Options
 *******
@@ -30061,7 +29731,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - room air conditioner
      - room air conditioner
      - room air conditioner
-     -
+     - 
    * - ``hvac_cooling_system_cooling_efficiency_type``
      - SEER
      - SEER
@@ -30074,7 +29744,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - CEER
      - CEER
      - CEER
-     -
+     - 
    * - ``hvac_cooling_system_cooling_efficiency``
      - 8.0
      - 10.0
@@ -30087,7 +29757,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 9.7
      - 10.6
      - 11.8
-     -
+     - 
    * - ``hvac_cooling_system_cooling_compressor_type``
      - single stage
      - single stage
@@ -30100,150 +29770,30 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_capacity_type``
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_outdoor_temperatures``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_min_speed_capacities``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_nom_speed_capacities``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_max_speed_capacities``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_min_speed_cops``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_nom_speed_cops``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_max_speed_cops``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``hvac_cooling_system_capacity_capacity``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``hvac_cooling_system_capacity_autosizing_factor``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``hvac_cooling_system_capacity_autosizing_limit``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_cooling_system_type``
+     - 
+     - The type of system.
+   * - ``hvac_cooling_system_cooling_efficiency_type``
+     - 
+     - The cooling efficiency type. Central ACs and Mini-Split ACs use SEER2 or EER2; Room ACs and Packaged Terminal ACs use CEER or EER.
+   * - ``hvac_cooling_system_cooling_efficiency``
+     - 
+     - The rated cooling efficiency.
+   * - ``hvac_cooling_system_cooling_compressor_type``
+     - 
+     - The compressor type of the cooling system. Applies to Central ACs and Mini-Split ACs.
 .. _hvac_cooling_partial_space_conditioning:
 
 HVAC Cooling Partial Space Conditioning
@@ -30278,20 +29828,6 @@ Assumption
 
 - \tsv3 : 'HVAC Cooling Type', 'Geometry Building Type RECS'
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_cooling_system_cooling_load_served_fraction``
-     - 
-     - Fraction of load served by the HVAC system.
 
 Options
 *******
@@ -30329,7 +29865,21 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.8
      - 1.0
      - 0.0
-     -
+     - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_cooling_system_cooling_load_served_fraction``
+     - 
+     - Fraction of load served by the HVAC system.
 .. _hvac_cooling_type:
 
 HVAC Cooling Type
@@ -30397,6 +29947,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.97%
      - 11%
      - 20%
+
 .. _hvac_has_ducts:
 
 HVAC Has Ducts
@@ -30450,6 +30001,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 24%
      - 76%
      - 0%
+
 .. _hvac_has_shared_system:
 
 HVAC Has Shared System
@@ -30507,6 +30059,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 7.2%
      - 89%
      - 0%
+
 .. _hvac_has_zonal_electric_heating:
 
 HVAC Has Zonal Electric Heating
@@ -30544,6 +30097,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Stock saturation
      - 6.3%
      - 94%
+
 .. _hvac_heating_autosizing_factor:
 
 HVAC Heating Autosizing Factor
@@ -30570,29 +30124,6 @@ Assumption
 
 - \HVAC sizing follows ACCA Manual J and Manual S. There is no additional oversizing or undersizing the airflow and capacity of the HVAC system.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``heating_system_heating_autosizing_factor``
-     - 
-     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
-   * - ``heating_system_2_heating_autosizing_factor``
-     - 
-     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
-   * - ``heat_pump_heating_autosizing_factor``
-     - 
-     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
-   * - ``heat_pump_backup_heating_autosizing_factor``
-     - 
-     - The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.
 
 Options
 *******
@@ -30622,6 +30153,29 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - ``heat_pump_backup_heating_autosizing_factor``
      - 
      - 1.0
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``heating_system_heating_autosizing_factor``
+     - 
+     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+   * - ``heating_system_2_heating_autosizing_factor``
+     - 
+     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+   * - ``heat_pump_heating_autosizing_factor``
+     - 
+     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+   * - ``heat_pump_backup_heating_autosizing_factor``
+     - 
+     - The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.
 .. _hvac_heating_efficiency:
 
 HVAC Heating Efficiency
@@ -30676,197 +30230,6 @@ Assumption
 
 - \For Alaska, all heat pumps (including geothermal) are assumed to be non-ducted air source heat pumps.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_heating_system_type``
-     - 
-     - The type of system.
-   * - ``hvac_heating_system_heating_efficiency``
-     - Frac
-     - The rated heating efficiency.
-   * - ``hvac_heating_system_pilot_light``
-     - Btu/hr
-     - The fuel usage of the pilot light. Applies to Furnaces, Boilers, Stoves, and Fireplaces with non-electric fuel.
-   * - ``hvac_heating_system_capacity_capacity``
-     - Btu/hr
-     - The output capacity.
-   * - ``hvac_heating_system_capacity_autosizing_factor``
-     - mult
-     - A capacity scaling factor that can be applied to the autosizing methodology.
-   * - ``hvac_heating_system_capacity_autosizing_limit``
-     - Btu/hr
-     - A maximum capacity limit that can be applied to the autosizing methodology.
-   * - ``hvac_heating_system_heating_load_served_fraction``
-     - 
-     - Fraction of load served by the HVAC system.
-   * - ``hvac_heat_pump_type``
-     - 
-     - The type of system.
-   * - ``hvac_heat_pump_cooling_efficiency_type``
-     - 
-     - The cooling efficiency type. Central HPs and Mini-Split HPs use SEER2 or SEER; Geothermal HPs, Packaged Terminal HPs, and Room HPs use EER.
-   * - ``hvac_heat_pump_cooling_efficiency``
-     - 
-     - The rated cooling efficiency.
-   * - ``hvac_heat_pump_cooling_compressor_type``
-     - 
-     - The compressor type of the cooling system. Applies to Central HPs, Mini-Split HPs, and Geothermal HPs.
-   * - ``hvac_heat_pump_heating_efficiency_type``
-     - 
-     - The heating efficiency type. Central HPs and Mini-Split HPs use HSPF2 or HSPF; Goethermal HPs, Packaged Terminal HPs, and Room HPs use COP.
-   * - ``hvac_heat_pump_heating_efficiency``
-     - 
-     - The rated heating efficiency.
-   * - ``hvac_heat_pump_detailed_performance_data_capacity_type``
-     - 
-     - Type of capacity values when providing detailed performance data. Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_heating_outdoor_temperatures``
-     - F
-     - List of outdoor temperatures when providing heating detailed performance data. Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_heating_min_speed_capacities``
-     - Btu/hr or Frac
-     - Minimum speed capacities when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_heating_nom_speed_capacities``
-     - Btu/hr or Frac
-     - Nominal speed capacities when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_heating_max_speed_capacities``
-     - Btu/hr or Frac
-     - Maximum speed capacities when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_heating_min_speed_cops``
-     - W/W
-     - Minimum speed COPs when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_heating_nom_speed_cops``
-     - W/W
-     - Nominal speed COPs when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_heating_max_speed_cops``
-     - W/W
-     - Maximum speed COPs when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_outdoor_temperatures``
-     - F
-     - List of outdoor temperatures when providing cooling detailed performance data. Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_min_speed_capacities``
-     - Btu/hr or Frac
-     - Minimum speed capacities when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_nom_speed_capacities``
-     - Btu/hr or Frac
-     - Nominal speed capacities when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_max_speed_capacities``
-     - Btu/hr or Frac
-     - Maximum speed capacities when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_min_speed_cops``
-     - W/W
-     - Minimum speed COPs when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_nom_speed_cops``
-     - W/W
-     - Nominal speed COPs when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_max_speed_cops``
-     - W/W
-     - Maximum speed COPs when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_capacity_capacity``
-     - Btu/hr
-     - The output capacity.
-   * - ``hvac_heat_pump_capacity_autosizing_methodology``
-     - 
-     - Logic for autosized heat pumps.
-   * - ``hvac_heat_pump_capacity_autosizing_factor``
-     - mult
-     - A capacity scaling factor that can be applied to the autosizing methodology.
-   * - ``hvac_heat_pump_capacity_autosizing_limit``
-     - Btu/hr
-     - A maximum capacity limit that can be applied to the autosizing methodology.
-   * - ``hvac_heat_pump_heating_load_served_fraction``
-     - 
-     - Fraction of load served by the HVAC system.
-   * - ``hvac_heat_pump_cooling_load_served_fraction``
-     - 
-     - Fraction of load served by the HVAC system.
-   * - ``hvac_heat_pump_temperatures_compressor_lockout``
-     - F
-     - The temperature below which the heat pump compressor is disabled. Applies to all heat pump types other than Geothermal HPs.
-   * - ``hvac_heat_pump_temperatures_backup_lockout``
-     - F
-     - The temperature above which the heat pump backup is disabled.
-   * - ``hvac_heat_pump_backup_type``
-     - 
-     - The backup type. Use 'integrated' to represent e.g. built-in electric strip heat or dual-fuel integrated furnace. Use 'separate' to represent e.g. electric baseboard or boiler (based on Heating System 2).
-   * - ``hvac_heat_pump_backup_fuel``
-     - 
-     - The fuel type of the integrated backup.
-   * - ``hvac_heat_pump_backup_heating_efficiency``
-     - Frac
-     - The rated heating efficiency of the integrated backup.
-   * - ``hvac_heat_pump_backup_capacity_capacity``
-     - Btu/hr
-     - The output capacity.
-   * - ``hvac_heat_pump_backup_capacity_autosizing_methodology``
-     - 
-     - Logic for autosized heat pump backup.
-   * - ``hvac_heat_pump_backup_capacity_autosizing_factor``
-     - mult
-     - A capacity scaling factor that can be applied to the autosizing methodology.
-   * - ``hvac_heat_pump_backup_capacity_autosizing_limit``
-     - Btu/hr
-     - A maximum capacity limit that can be applied to the autosizing methodology.
-   * - ``hvac_geothermal_loop_configuration``
-     - 
-     - Configuration of the geothermal loop for ground-to-air heat pumps.
-   * - ``hvac_geothermal_loop_borefield_configuration``
-     - 
-     - Borefield configuration of the geothermal loop.
-   * - ``hvac_geothermal_loop_loop_flow``
-     - gpm
-     - Water flow rate through the geothermal loop.
-   * - ``hvac_geothermal_loop_boreholes_count``
-     - #
-     - Number of boreholes.
-   * - ``hvac_geothermal_loop_boreholes_length``
-     - ft
-     - Average length of each vertical borehole.
-   * - ``hvac_geothermal_loop_boreholes_spacing``
-     - ft
-     - Distance between boreholes.
-   * - ``hvac_geothermal_loop_boreholes_diameter``
-     - in
-     - Diameter of each borehole.
-   * - ``hvac_geothermal_loop_grout_type``
-     - 
-     - Type of grout.
-   * - ``hvac_geothermal_loop_pipe_type``
-     - 
-     - Type of pipe.
-   * - ``hvac_geothermal_loop_pipe_diameter``
-     - 
-     - Diameter of the pipe.
-   * - ``hvac_geothermal_loop_pipe_shank_spacing``
-     - in
-     - Center-to-center distance between two branches of a vertical U-tube.
-   * - ``advanced_feature_temperature_capacitance_multiplier``
-     - 
-     - Multiplier on air heat capacitance. Affects the transient calculation of indoor air temperatures. Values greater than 1.0 have the effect of smoothing or damping the rate of change in the indoor air temperature from timestep to timestep.
-   * - ``advanced_feature_hvac_on_off_thermostat_deadband_temperature``
-     - F
-     - Temperature difference between cut-in and cut-out temperature for HVAC operation. Requires 1-minute timesteps.
-   * - ``advanced_feature_heat_pump_backup_capacity_increment``
-     - Btu/hr
-     - Capacity increment of multi-stage heat pump backup systems.
-   * - ``advanced_feature_ground_to_air_heat_pump_model_type``
-     - 
-     - Ground-to-air heat pump system model type.
-   * - ``advanced_feature_hvac_allow_increased_fixed_capacities``
-     - 
-     - If true, the larger of user-specified fixed capacity and design load will be used (to reduce potential for unmet loads); otherwise user-specified fixed capacity is used.
-   * - ``hvac_heating_shared_system``
-     - 
-     - The type of shared system.
 
 Options
 *******
@@ -30942,8 +30305,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - none
      - none
      - none
-     -
-     -
+     - 
+     - 
    * - ``hvac_heating_system_heating_efficiency``
      - 
      - 
@@ -30964,96 +30327,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
-     -
-     -
-   * - ``hvac_heating_system_pilot_light``
      - 
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heating_system_capacity_capacity``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heating_system_capacity_autosizing_factor``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heating_system_capacity_autosizing_limit``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
    * - ``hvac_heating_system_heating_load_served_fraction``
      - 1.0
      - 1.0
@@ -31074,8 +30349,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1.0
      - 1.0
      - 1.0
-     -
-     -
+     - 
+     - 
    * - ``hvac_heat_pump_type``
      - air-to-air
      - air-to-air
@@ -31096,8 +30371,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - mini-split
      - mini-split
      - none
-     -
-     -
+     - 
+     - 
    * - ``hvac_heat_pump_cooling_efficiency_type``
      - SEER
      - SEER
@@ -31118,8 +30393,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - SEER2
      - SEER2
      - 
-     -
-     -
+     - 
+     - 
    * - ``hvac_heat_pump_cooling_efficiency``
      - 10.0
      - 13.0
@@ -31140,8 +30415,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 14.5
      - 29.0
      - 
-     -
-     -
+     - 
+     - 
    * - ``hvac_heat_pump_cooling_compressor_type``
      - single stage
      - single stage
@@ -31162,8 +30437,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - variable speed
      - variable speed
      - 
-     -
-     -
+     - 
+     - 
    * - ``hvac_heat_pump_heating_efficiency_type``
      - HSPF
      - HSPF
@@ -31184,8 +30459,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - HSPF2
      - HSPF2
      - 
-     -
-     -
+     - 
+     - 
    * - ``hvac_heat_pump_heating_efficiency``
      - 6.8
      - 7.7
@@ -31206,360 +30481,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 7.7
      - 12.3
      - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_capacity_type``
      - 
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_heating_outdoor_temperatures``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_heating_min_speed_capacities``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_heating_nom_speed_capacities``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_heating_max_speed_capacities``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_heating_min_speed_cops``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_heating_nom_speed_cops``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_heating_max_speed_cops``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_outdoor_temperatures``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_min_speed_capacities``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_nom_speed_capacities``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_max_speed_capacities``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_min_speed_cops``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_nom_speed_cops``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_max_speed_cops``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_capacity_capacity``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
    * - ``hvac_heat_pump_capacity_autosizing_methodology``
      - ACCA
      - ACCA
@@ -31580,52 +30503,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ACCA
      - ACCA
      - ACCA
-     -
-     -
-   * - ``hvac_heat_pump_capacity_autosizing_factor``
      - 
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_capacity_autosizing_limit``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
    * - ``hvac_heat_pump_heating_load_served_fraction``
      - 1.0
      - 1.0
@@ -31646,8 +30525,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1.0
      - 1.0
      - 1.0
-     -
-     -
+     - 
+     - 
    * - ``hvac_heat_pump_cooling_load_served_fraction``
      - 1.0
      - 1.0
@@ -31668,52 +30547,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1.0
      - 1.0
      - 1.0
-     -
-     -
-   * - ``hvac_heat_pump_temperatures_compressor_lockout``
      - 
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_temperatures_backup_lockout``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
    * - ``hvac_heat_pump_backup_type``
      - integrated
      - integrated
@@ -31734,8 +30569,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - integrated
      - integrated
      - none
-     -
-     -
+     - 
+     - 
    * - ``hvac_heat_pump_backup_fuel``
      - electricity
      - electricity
@@ -31756,8 +30591,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - electricity
      - electricity
      - 
-     -
-     -
+     - 
+     - 
    * - ``hvac_heat_pump_backup_heating_efficiency``
      - 1.0
      - 1.0
@@ -31778,448 +30613,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1.0
      - 1.0
      - 
-     -
-     -
-   * - ``hvac_heat_pump_backup_capacity_capacity``
      - 
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_backup_capacity_autosizing_methodology``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_backup_capacity_autosizing_factor``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_backup_capacity_autosizing_limit``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_configuration``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_borefield_configuration``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_loop_flow``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_boreholes_count``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_boreholes_length``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_boreholes_spacing``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_boreholes_diameter``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_grout_type``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_pipe_type``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_pipe_diameter``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_pipe_shank_spacing``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``advanced_feature_temperature_capacitance_multiplier``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``advanced_feature_hvac_on_off_thermostat_deadband_temperature``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``advanced_feature_heat_pump_backup_capacity_increment``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``advanced_feature_ground_to_air_heat_pump_model_type``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``advanced_feature_hvac_allow_increased_fixed_capacities``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-     -
    * - ``hvac_heating_shared_system``
      - None
      - None
@@ -32242,6 +30637,65 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - 
      - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_heating_system_type``
+     - 
+     - The type of system.
+   * - ``hvac_heating_system_heating_efficiency``
+     - Frac
+     - The rated heating efficiency.
+   * - ``hvac_heating_system_heating_load_served_fraction``
+     - 
+     - Fraction of load served by the HVAC system.
+   * - ``hvac_heat_pump_type``
+     - 
+     - The type of system.
+   * - ``hvac_heat_pump_cooling_efficiency_type``
+     - 
+     - The cooling efficiency type. Central HPs and Mini-Split HPs use SEER2 or SEER; Geothermal HPs, Packaged Terminal HPs, and Room HPs use EER.
+   * - ``hvac_heat_pump_cooling_efficiency``
+     - 
+     - The rated cooling efficiency.
+   * - ``hvac_heat_pump_cooling_compressor_type``
+     - 
+     - The compressor type of the cooling system. Applies to Central HPs, Mini-Split HPs, and Geothermal HPs.
+   * - ``hvac_heat_pump_heating_efficiency_type``
+     - 
+     - The heating efficiency type. Central HPs and Mini-Split HPs use HSPF2 or HSPF; Goethermal HPs, Packaged Terminal HPs, and Room HPs use COP.
+   * - ``hvac_heat_pump_heating_efficiency``
+     - 
+     - The rated heating efficiency.
+   * - ``hvac_heat_pump_capacity_autosizing_methodology``
+     - 
+     - Logic for autosized heat pumps.
+   * - ``hvac_heat_pump_heating_load_served_fraction``
+     - 
+     - Fraction of load served by the HVAC system.
+   * - ``hvac_heat_pump_cooling_load_served_fraction``
+     - 
+     - Fraction of load served by the HVAC system.
+   * - ``hvac_heat_pump_backup_type``
+     - 
+     - The backup type. Use 'integrated' to represent e.g. built-in electric strip heat or dual-fuel integrated furnace. Use 'separate' to represent e.g. electric baseboard or boiler (based on Heating System 2).
+   * - ``hvac_heat_pump_backup_fuel``
+     - 
+     - The fuel type of the integrated backup.
+   * - ``hvac_heat_pump_backup_heating_efficiency``
+     - Frac
+     - The rated heating efficiency of the integrated backup.
+   * - ``hvac_heating_shared_system``
+     - 
+     - The type of shared system.
 .. _hvac_heating_type:
 
 HVAC Heating Type
@@ -32297,6 +30751,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.97%
      - 24%
      - 1.1%
+
 .. _hvac_heating_type_and_fuel:
 
 HVAC Heating Type And Fuel
@@ -32380,6 +30835,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.75%
      - 0.16%
      - 0.00039%
+
 .. _hvac_secondary_heating_efficiency:
 
 HVAC Secondary Heating Efficiency
@@ -32412,35 +30868,6 @@ Assumption
 
 - \For Alaska, fireplace and stoves are not modeled.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_heating_system_2_type``
-     - 
-     - The type of system.
-   * - ``hvac_heating_system_2_heating_efficiency``
-     - Frac
-     - The rated heating efficiency.
-   * - ``hvac_heating_system_2_pilot_light``
-     - Btu/hr
-     - The fuel usage of the pilot light. Applies to Furnaces, Boilers, Stoves, and Fireplaces with non-electric fuel.
-   * - ``hvac_heating_system_2_capacity_capacity``
-     - Btu/hr
-     - The output capacity.
-   * - ``hvac_heating_system_2_capacity_autosizing_factor``
-     - mult
-     - A capacity scaling factor that can be applied to the autosizing methodology.
-   * - ``hvac_heating_system_2_capacity_autosizing_limit``
-     - Btu/hr
-     - A maximum capacity limit that can be applied to the autosizing methodology.
 
 Options
 *******
@@ -32484,7 +30911,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Furnace
      - none
      - none
-     -
+     - 
    * - ``hvac_heating_system_2_heating_efficiency``
      - 0.76
      - 0.8
@@ -32495,51 +30922,24 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.925
      - 
      - 
-     -
-   * - ``hvac_heating_system_2_pilot_light``
      - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_heating_system_2_type``
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``hvac_heating_system_2_capacity_capacity``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``hvac_heating_system_2_capacity_autosizing_factor``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``hvac_heating_system_2_capacity_autosizing_limit``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
+     - The type of system.
+   * - ``hvac_heating_system_2_heating_efficiency``
+     - Frac
+     - The rated heating efficiency.
 .. _hvac_secondary_heating_fuel:
 
 HVAC Secondary Heating Fuel
@@ -32572,20 +30972,6 @@ Assumption
 
 - \A unit without a primary heating system (heating fuel is None) cannot have a secondary heating system (secondary heating fuel is None).
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_heating_system_2_fuel_type``
-     - 
-     - The type of fuel.
 
 Options
 *******
@@ -32621,6 +31007,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - wood
      - propane
      - wood
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_heating_system_2_fuel_type``
+     - 
+     - The type of fuel.
 .. _hvac_secondary_heating_partial_space_conditioning:
 
 HVAC Secondary Heating Partial Space Conditioning
@@ -32649,20 +31049,6 @@ Assumption
 
 - \For Alaska, the fraction of the load served by the secondary heating system is calculated as the ratio of annual energy used by secondary fuel and annual energy used by secondary and primary fuel.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_heating_system_2_heating_load_served_fraction``
-     - 
-     - Fraction of load served by the HVAC system.
 
 Options
 *******
@@ -32697,7 +31083,21 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.3
      - 0.4
      - 0.5
-     -
+     - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_heating_system_2_heating_load_served_fraction``
+     - 
+     - Fraction of load served by the HVAC system.
 .. _hvac_secondary_heating_type:
 
 HVAC Secondary Heating Type
@@ -32749,6 +31149,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.002%
      - 0.037%
      - 1e+02%
+
 .. _hvac_shared_efficiencies:
 
 HVAC Shared Efficiencies
@@ -32780,242 +31181,6 @@ Assumption
 - \Assume all Cooling Only shared systems are fan coils in each dwelling unit served by a central chiller.
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_heating_system_type``
-     - 
-     - The type of system.
-   * - ``hvac_heating_system_heating_efficiency``
-     - Frac
-     - The rated heating efficiency.
-   * - ``hvac_heating_system_pilot_light``
-     - Btu/hr
-     - The fuel usage of the pilot light. Applies to Furnaces, Boilers, Stoves, and Fireplaces with non-electric fuel.
-   * - ``hvac_heating_system_capacity_capacity``
-     - Btu/hr
-     - The output capacity.
-   * - ``hvac_heating_system_capacity_autosizing_factor``
-     - mult
-     - A capacity scaling factor that can be applied to the autosizing methodology.
-   * - ``hvac_heating_system_capacity_autosizing_limit``
-     - Btu/hr
-     - A maximum capacity limit that can be applied to the autosizing methodology.
-   * - ``hvac_heating_system_heating_load_served_fraction``
-     - 
-     - Fraction of load served by the HVAC system.
-   * - ``hvac_cooling_system_type``
-     - 
-     - The type of system.
-   * - ``hvac_cooling_system_cooling_efficiency_type``
-     - 
-     - The cooling efficiency type. Central ACs and Mini-Split ACs use SEER2 or EER2; Room ACs and Packaged Terminal ACs use CEER or EER.
-   * - ``hvac_cooling_system_cooling_efficiency``
-     - 
-     - The rated cooling efficiency.
-   * - ``hvac_cooling_system_cooling_compressor_type``
-     - 
-     - The compressor type of the cooling system. Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_capacity_type``
-     - 
-     - Type of capacity values when providing detailed performance data. Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_outdoor_temperatures``
-     - F
-     - List of outdoor temperatures when providing detailed performance data. Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_min_speed_capacities``
-     - Btu/hr or Frac
-     - Minimum speed capacities when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_nom_speed_capacities``
-     - Btu/hr or Frac
-     - Nominal speed capacities when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_max_speed_capacities``
-     - Btu/hr or Frac
-     - Maximum speed capacities when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_min_speed_cops``
-     - W/W
-     - Minimum speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_nom_speed_cops``
-     - W/W
-     - Nominal speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_max_speed_cops``
-     - W/W
-     - Maximum speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.
-   * - ``hvac_cooling_system_capacity_capacity``
-     - Btu/hr
-     - The output capacity.
-   * - ``hvac_cooling_system_capacity_autosizing_factor``
-     - mult
-     - A capacity scaling factor that can be applied to the autosizing methodology.
-   * - ``hvac_cooling_system_capacity_autosizing_limit``
-     - Btu/hr
-     - A maximum capacity limit that can be applied to the autosizing methodology.
-   * - ``hvac_heat_pump_type``
-     - 
-     - The type of system.
-   * - ``hvac_heat_pump_cooling_efficiency_type``
-     - 
-     - The cooling efficiency type. Central HPs and Mini-Split HPs use SEER2 or SEER; Geothermal HPs, Packaged Terminal HPs, and Room HPs use EER.
-   * - ``hvac_heat_pump_cooling_efficiency``
-     - 
-     - The rated cooling efficiency.
-   * - ``hvac_heat_pump_cooling_compressor_type``
-     - 
-     - The compressor type of the cooling system. Applies to Central HPs, Mini-Split HPs, and Geothermal HPs.
-   * - ``hvac_heat_pump_heating_efficiency_type``
-     - 
-     - The heating efficiency type. Central HPs and Mini-Split HPs use HSPF2 or HSPF; Goethermal HPs, Packaged Terminal HPs, and Room HPs use COP.
-   * - ``hvac_heat_pump_heating_efficiency``
-     - 
-     - The rated heating efficiency.
-   * - ``hvac_heat_pump_detailed_performance_data_capacity_type``
-     - 
-     - Type of capacity values when providing detailed performance data. Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_heating_outdoor_temperatures``
-     - F
-     - List of outdoor temperatures when providing heating detailed performance data. Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_heating_min_speed_capacities``
-     - Btu/hr or Frac
-     - Minimum speed capacities when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_heating_nom_speed_capacities``
-     - Btu/hr or Frac
-     - Nominal speed capacities when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_heating_max_speed_capacities``
-     - Btu/hr or Frac
-     - Maximum speed capacities when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_heating_min_speed_cops``
-     - W/W
-     - Minimum speed COPs when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_heating_nom_speed_cops``
-     - W/W
-     - Nominal speed COPs when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_heating_max_speed_cops``
-     - W/W
-     - Maximum speed COPs when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_outdoor_temperatures``
-     - F
-     - List of outdoor temperatures when providing cooling detailed performance data. Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_min_speed_capacities``
-     - Btu/hr or Frac
-     - Minimum speed capacities when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_nom_speed_capacities``
-     - Btu/hr or Frac
-     - Nominal speed capacities when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_max_speed_capacities``
-     - Btu/hr or Frac
-     - Maximum speed capacities when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_min_speed_cops``
-     - W/W
-     - Minimum speed COPs when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_nom_speed_cops``
-     - W/W
-     - Nominal speed COPs when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_max_speed_cops``
-     - W/W
-     - Maximum speed COPs when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.
-   * - ``hvac_heat_pump_capacity_capacity``
-     - Btu/hr
-     - The output capacity.
-   * - ``hvac_heat_pump_capacity_autosizing_methodology``
-     - 
-     - Logic for autosized heat pumps.
-   * - ``hvac_heat_pump_capacity_autosizing_factor``
-     - mult
-     - A capacity scaling factor that can be applied to the autosizing methodology.
-   * - ``hvac_heat_pump_capacity_autosizing_limit``
-     - Btu/hr
-     - A maximum capacity limit that can be applied to the autosizing methodology.
-   * - ``hvac_heat_pump_heating_load_served_fraction``
-     - 
-     - Fraction of load served by the HVAC system.
-   * - ``hvac_heat_pump_cooling_load_served_fraction``
-     - 
-     - Fraction of load served by the HVAC system.
-   * - ``hvac_heat_pump_temperatures_compressor_lockout``
-     - F
-     - The temperature below which the heat pump compressor is disabled. Applies to all heat pump types other than Geothermal HPs.
-   * - ``hvac_heat_pump_temperatures_backup_lockout``
-     - F
-     - The temperature above which the heat pump backup is disabled.
-   * - ``hvac_heat_pump_backup_type``
-     - 
-     - The backup type. Use 'integrated' to represent e.g. built-in electric strip heat or dual-fuel integrated furnace. Use 'separate' to represent e.g. electric baseboard or boiler (based on Heating System 2).
-   * - ``hvac_heat_pump_backup_fuel``
-     - 
-     - The fuel type of the integrated backup.
-   * - ``hvac_heat_pump_backup_heating_efficiency``
-     - Frac
-     - The rated heating efficiency of the integrated backup.
-   * - ``hvac_heat_pump_backup_capacity_capacity``
-     - Btu/hr
-     - The output capacity.
-   * - ``hvac_heat_pump_backup_capacity_autosizing_methodology``
-     - 
-     - Logic for autosized heat pump backup.
-   * - ``hvac_heat_pump_backup_capacity_autosizing_factor``
-     - mult
-     - A capacity scaling factor that can be applied to the autosizing methodology.
-   * - ``hvac_heat_pump_backup_capacity_autosizing_limit``
-     - Btu/hr
-     - A maximum capacity limit that can be applied to the autosizing methodology.
-   * - ``hvac_geothermal_loop_configuration``
-     - 
-     - Configuration of the geothermal loop for ground-to-air heat pumps.
-   * - ``hvac_geothermal_loop_borefield_configuration``
-     - 
-     - Borefield configuration of the geothermal loop.
-   * - ``hvac_geothermal_loop_loop_flow``
-     - gpm
-     - Water flow rate through the geothermal loop.
-   * - ``hvac_geothermal_loop_boreholes_count``
-     - #
-     - Number of boreholes.
-   * - ``hvac_geothermal_loop_boreholes_length``
-     - ft
-     - Average length of each vertical borehole.
-   * - ``hvac_geothermal_loop_boreholes_spacing``
-     - ft
-     - Distance between boreholes.
-   * - ``hvac_geothermal_loop_boreholes_diameter``
-     - in
-     - Diameter of each borehole.
-   * - ``hvac_geothermal_loop_grout_type``
-     - 
-     - Type of grout.
-   * - ``hvac_geothermal_loop_pipe_type``
-     - 
-     - Type of pipe.
-   * - ``hvac_geothermal_loop_pipe_diameter``
-     - 
-     - Diameter of the pipe.
-   * - ``hvac_geothermal_loop_pipe_shank_spacing``
-     - in
-     - Center-to-center distance between two branches of a vertical U-tube.
-   * - ``advanced_feature_temperature_capacitance_multiplier``
-     - 
-     - Multiplier on air heat capacitance. Affects the transient calculation of indoor air temperatures. Values greater than 1.0 have the effect of smoothing or damping the rate of change in the indoor air temperature from timestep to timestep.
-   * - ``advanced_feature_hvac_on_off_thermostat_deadband_temperature``
-     - F
-     - Temperature difference between cut-in and cut-out temperature for HVAC operation. Requires 1-minute timesteps.
-   * - ``advanced_feature_heat_pump_backup_capacity_increment``
-     - Btu/hr
-     - Capacity increment of multi-stage heat pump backup systems.
-   * - ``advanced_feature_ground_to_air_heat_pump_model_type``
-     - 
-     - Ground-to-air heat pump system model type.
-   * - ``advanced_feature_hvac_allow_increased_fixed_capacities``
-     - 
-     - If true, the larger of user-specified fixed capacity and design load will be used (to reduce potential for unmet loads); otherwise user-specified fixed capacity is used.
-   * - ``hvac_heating_shared_system``
-     - 
-     - The type of shared system.
-
 Options
 *******
 
@@ -33045,595 +31210,99 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - ``hvac_heating_system_type``
      - Boiler
      - Boiler
-     -
+     - 
      - Boiler
      - Boiler
-     -
-     -
+     - 
+     - 
    * - ``hvac_heating_system_heating_efficiency``
      - 1.0
      - 0.78
-     -
+     - 
      - 1.0
      - 0.78
-     -
-     -
-   * - ``hvac_heating_system_pilot_light``
      - 
      - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heating_system_capacity_capacity``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heating_system_capacity_autosizing_factor``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heating_system_capacity_autosizing_limit``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
    * - ``hvac_heating_system_heating_load_served_fraction``
      - 1.0
      - 1.0
-     -
+     - 
      - 1.0
      - 1.0
-     -
-     -
+     - 
+     - 
    * - ``hvac_cooling_system_type``
-     -
-     -
+     - 
+     - 
      - mini-split
      - mini-split
      - mini-split
-     -
-     -
+     - 
+     - 
    * - ``hvac_cooling_system_cooling_efficiency_type``
-     -
-     -
+     - 
+     - 
      - SEER2
      - SEER2
      - SEER2
-     -
-     -
+     - 
+     - 
    * - ``hvac_cooling_system_cooling_efficiency``
-     -
-     -
+     - 
+     - 
      - 14.5
      - 14.5
      - 14.5
-     -
-     -
+     - 
+     - 
    * - ``hvac_cooling_system_cooling_compressor_type``
-     -
-     -
+     - 
+     - 
      - variable speed
      - variable speed
      - variable speed
-     -
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_capacity_type``
-     -
-     -
      - 
      - 
-     - 
-     -
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_outdoor_temperatures``
-     -
-     -
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_min_speed_capacities``
-     -
-     -
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_nom_speed_capacities``
-     -
-     -
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_max_speed_capacities``
-     -
-     -
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_min_speed_cops``
-     -
-     -
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_nom_speed_cops``
-     -
-     -
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_cooling_system_detailed_performance_data_cooling_max_speed_cops``
-     -
-     -
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_cooling_system_capacity_capacity``
-     -
-     -
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_cooling_system_capacity_autosizing_factor``
-     -
-     -
-     - 
-     - 
-     - 
-     -
-     -
-   * - ``hvac_cooling_system_capacity_autosizing_limit``
-     -
-     -
-     - 
-     - 
-     - 
-     -
-     -
    * - ``hvac_heat_pump_type``
      - none
      - none
-     -
+     - 
      - none
      - none
-     -
-     -
-   * - ``hvac_heat_pump_cooling_efficiency_type``
      - 
      - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_cooling_efficiency``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_cooling_compressor_type``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_heating_efficiency_type``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_heating_efficiency``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_capacity_type``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_heating_outdoor_temperatures``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_heating_min_speed_capacities``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_heating_nom_speed_capacities``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_heating_max_speed_capacities``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_heating_min_speed_cops``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_heating_nom_speed_cops``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_heating_max_speed_cops``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_outdoor_temperatures``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_min_speed_capacities``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_nom_speed_capacities``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_max_speed_capacities``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_min_speed_cops``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_nom_speed_cops``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_detailed_performance_data_cooling_max_speed_cops``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_capacity_capacity``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
    * - ``hvac_heat_pump_capacity_autosizing_methodology``
      - ACCA
      - ACCA
-     -
+     - 
      - ACCA
      - ACCA
-     -
-     -
-   * - ``hvac_heat_pump_capacity_autosizing_factor``
      - 
      - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_capacity_autosizing_limit``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
    * - ``hvac_heat_pump_heating_load_served_fraction``
      - 1.0
      - 1.0
-     -
+     - 
      - 1.0
      - 1.0
-     -
-     -
+     - 
+     - 
    * - ``hvac_heat_pump_cooling_load_served_fraction``
      - 1.0
      - 1.0
-     -
+     - 
      - 1.0
      - 1.0
-     -
-     -
-   * - ``hvac_heat_pump_temperatures_compressor_lockout``
      - 
      - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_temperatures_backup_lockout``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
    * - ``hvac_heat_pump_backup_type``
      - none
      - none
-     -
+     - 
      - none
      - none
-     -
-     -
-   * - ``hvac_heat_pump_backup_fuel``
      - 
      - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_backup_heating_efficiency``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_backup_capacity_capacity``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_backup_capacity_autosizing_methodology``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_backup_capacity_autosizing_factor``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_heat_pump_backup_capacity_autosizing_limit``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_configuration``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_borefield_configuration``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_loop_flow``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_boreholes_count``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_boreholes_length``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_boreholes_spacing``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_boreholes_diameter``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_grout_type``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_pipe_type``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_pipe_diameter``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``hvac_geothermal_loop_pipe_shank_spacing``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``advanced_feature_temperature_capacitance_multiplier``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``advanced_feature_hvac_on_off_thermostat_deadband_temperature``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``advanced_feature_heat_pump_backup_capacity_increment``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``advanced_feature_ground_to_air_heat_pump_model_type``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
-   * - ``advanced_feature_hvac_allow_increased_fixed_capacities``
-     - 
-     - 
-     -
-     - 
-     - 
-     -
-     -
    * - ``hvac_heating_shared_system``
      - Baseboard
      - Baseboard
@@ -33642,6 +31311,56 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - FanCoil
      - 
      - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_heating_system_type``
+     - 
+     - The type of system.
+   * - ``hvac_heating_system_heating_efficiency``
+     - Frac
+     - The rated heating efficiency.
+   * - ``hvac_heating_system_heating_load_served_fraction``
+     - 
+     - Fraction of load served by the HVAC system.
+   * - ``hvac_cooling_system_type``
+     - 
+     - The type of system.
+   * - ``hvac_cooling_system_cooling_efficiency_type``
+     - 
+     - The cooling efficiency type. Central ACs and Mini-Split ACs use SEER2 or EER2; Room ACs and Packaged Terminal ACs use CEER or EER.
+   * - ``hvac_cooling_system_cooling_efficiency``
+     - 
+     - The rated cooling efficiency.
+   * - ``hvac_cooling_system_cooling_compressor_type``
+     - 
+     - The compressor type of the cooling system. Applies to Central ACs and Mini-Split ACs.
+   * - ``hvac_heat_pump_type``
+     - 
+     - The type of system.
+   * - ``hvac_heat_pump_capacity_autosizing_methodology``
+     - 
+     - Logic for autosized heat pumps.
+   * - ``hvac_heat_pump_heating_load_served_fraction``
+     - 
+     - Fraction of load served by the HVAC system.
+   * - ``hvac_heat_pump_cooling_load_served_fraction``
+     - 
+     - Fraction of load served by the HVAC system.
+   * - ``hvac_heat_pump_backup_type``
+     - 
+     - The backup type. Use 'integrated' to represent e.g. built-in electric strip heat or dual-fuel integrated furnace. Use 'separate' to represent e.g. electric baseboard or boiler (based on Heating System 2).
+   * - ``hvac_heating_shared_system``
+     - 
+     - The type of shared system.
 .. _hvac_system_is_faulted:
 
 HVAC System Is Faulted
@@ -33679,6 +31398,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Stock saturation
      - 100%
      - 0%
+
 .. _hvac_system_is_scaled:
 
 HVAC System Is Scaled
@@ -33716,6 +31436,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Stock saturation
      - 100%
      - 0%
+
 .. _hvac_system_single_speed_ac_airflow:
 
 HVAC System Single Speed AC Airflow
@@ -33736,23 +31457,6 @@ Source
 
 - \Winkler et al. 'Impact of installation faults in air conditioners and heat pumps in single-family homes on US energy usage' 2020
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``cooling_system_rated_cfm_per_ton``
-     - cfm/ton
-     - The rated cfm per ton of the cooling system.
-   * - ``cooling_system_actual_cfm_per_ton``
-     - cfm/ton
-     - The actual cfm per ton of the cooling system.
 
 Options
 *******
@@ -33820,6 +31524,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 650.6
      - 700.2
      - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``cooling_system_rated_cfm_per_ton``
+     - cfm/ton
+     - The rated cfm per ton of the cooling system.
+   * - ``cooling_system_actual_cfm_per_ton``
+     - cfm/ton
+     - The actual cfm per ton of the cooling system.
 .. _hvac_system_single_speed_ac_charge:
 
 HVAC System Single Speed AC Charge
@@ -33840,20 +31561,6 @@ Source
 
 - \Winkler et al. 'Impact of installation faults in air conditioners and heat pumps in single-family homes on US energy usage' 2020
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``cooling_system_frac_manufacturer_charge``
-     - Frac
-     - The fraction of manufacturer recommended charge of the cooling system.
 
 Options
 *******
@@ -33892,6 +31599,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1.266
      - 1.405
      - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``cooling_system_frac_manufacturer_charge``
+     - Frac
+     - The fraction of manufacturer recommended charge of the cooling system.
 .. _hvac_system_single_speed_ashp_airflow:
 
 HVAC System Single Speed ASHP Airflow
@@ -33912,23 +31633,6 @@ Source
 
 - \Winkler et al. 'Impact of installation faults in air conditioners and heat pumps in single-family homes on US energy usage' 2020
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``heat_pump_rated_cfm_per_ton``
-     - cfm/ton
-     - The rated cfm per ton of the heat pump.
-   * - ``heat_pump_actual_cfm_per_ton``
-     - cfm/ton
-     - The actual cfm per ton of the heat pump.
 
 Options
 *******
@@ -33996,6 +31700,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 650.6
      - 700.2
      - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``heat_pump_rated_cfm_per_ton``
+     - cfm/ton
+     - The rated cfm per ton of the heat pump.
+   * - ``heat_pump_actual_cfm_per_ton``
+     - cfm/ton
+     - The actual cfm per ton of the heat pump.
 .. _hvac_system_single_speed_ashp_charge:
 
 HVAC System Single Speed ASHP Charge
@@ -34016,20 +31737,6 @@ Source
 
 - \Winkler et al. 'Impact of installation faults in air conditioners and heat pumps in single-family homes on US energy usage' 2020
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``heat_pump_frac_manufacturer_charge``
-     - Frac
-     - The fraction of manufacturer recommended charge of the heat pump.
 
 Options
 *******
@@ -34068,6 +31775,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1.266
      - 1.405
      - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``heat_pump_frac_manufacturer_charge``
+     - Frac
+     - The fraction of manufacturer recommended charge of the heat pump.
 .. _has_pv:
 
 Has PV
@@ -34113,6 +31834,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Stock saturation
      - 99%
      - 1%
+
 .. _heating_fuel:
 
 Heating Fuel
@@ -34150,20 +31872,6 @@ Assumption
 - \For Alaska, when heating uses more than one fuels, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10% of total energy use across all fuels) is considered secondary (heating) fuel - except in case of electric heating, which is always assumed as primary. Rest of the fuels are ignored.
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_heating_system_fuel_type``
-     - 
-     - The type of fuel.
-
 Options
 *******
 
@@ -34198,6 +31906,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - wood
      - propane
      - wood
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_heating_system_fuel_type``
+     - 
+     - The type of fuel.
 .. _heating_setpoint:
 
 Heating Setpoint
@@ -34228,26 +31950,6 @@ Assumption
 
 - \For vacant units (for which Tenure = 'Not Available'), the heating setpoint is set to 55F
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_control_heating_season_period``
-     - 
-     - Enter a date range like 'Nov 1 - Jun 30'. Defaults to year-round heating availability.
-   * - ``hvac_control_heating_weekday_setpoint_temp``
-     - deg-F
-     - Specify the weekday heating setpoint temperature.
-   * - ``hvac_control_heating_weekend_setpoint_temp``
-     - deg-F
-     - Specify the weekend heating setpoint temperature.
 
 Options
 *******
@@ -34324,6 +32026,26 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 76
      - 78
      - 80
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_control_heating_season_period``
+     - 
+     - Enter a date range like 'Nov 1 - Jun 30'. Defaults to year-round heating availability.
+   * - ``hvac_control_heating_weekday_setpoint_temp``
+     - deg-F
+     - Specify the weekday heating setpoint temperature.
+   * - ``hvac_control_heating_weekend_setpoint_temp``
+     - deg-F
+     - Specify the weekend heating setpoint temperature.
 .. _heating_setpoint_has_offset:
 
 Heating Setpoint Has Offset
@@ -34367,6 +32089,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Stock saturation
      - 56%
      - 44%
+
 .. _heating_setpoint_offset_magnitude:
 
 Heating Setpoint Offset Magnitude
@@ -34393,23 +32116,6 @@ Assumption
 
 - \For dependency conditions with low samples, the following lumpings are used in progressive order until there are enough samples: 1) lumping buildings into Single-Family and Multi-Family only,  2) lumping buildings into Single-Family and Multi-Family only and lumping nearby climate zones within  A/B regions and separately 7AK and 8AK 3) lumping all building types together and lumping climate zones within A/B regions and separately 7AK and 8AK
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_control_heating_weekday_setpoint_offset_magnitude``
-     - deg-F
-     - Specify the weekday heating offset magnitude.
-   * - ``hvac_control_heating_weekend_setpoint_offset_magnitude``
-     - deg-F
-     - Specify the weekend heating offset magnitude.
 
 Options
 *******
@@ -34441,6 +32147,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 3
      - 6
      - 12
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_control_heating_weekday_setpoint_offset_magnitude``
+     - deg-F
+     - Specify the weekday heating offset magnitude.
+   * - ``hvac_control_heating_weekend_setpoint_offset_magnitude``
+     - deg-F
+     - Specify the weekend heating offset magnitude.
 .. _heating_setpoint_offset_period:
 
 Heating Setpoint Offset Period
@@ -34467,23 +32190,6 @@ Assumption
 
 - \For dependency conditions with low samples, the following lumpings are used in progressive order until there are enough samples: 1) lumping buildings into Single-Family and Multi-Family only,  2) lumping buildings into Single-Family and Multi-Family only and lumping nearby climate zones within  A/B regions and separately 7AK and 8AK 3) lumping all building types together and lumping climate zones within A/B regions and separately 7AK and 8AK
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``hvac_control_heating_weekday_setpoint_schedule``
-     - 
-     - Specify the 24-hour comma-separated weekday heating schedule of 0s and 1s.
-   * - ``hvac_control_heating_weekend_setpoint_schedule``
-     - 
-     - Specify the 24-hour comma-separated weekend heating schedule of 0s and 1s.
 
 Options
 *******
@@ -34635,6 +32341,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
      - 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
      - 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``hvac_control_heating_weekday_setpoint_schedule``
+     - 
+     - Specify the 24-hour comma-separated weekday heating schedule of 0s and 1s.
+   * - ``hvac_control_heating_weekend_setpoint_schedule``
+     - 
+     - Specify the 24-hour comma-separated weekend heating schedule of 0s and 1s.
 .. _heating_unavailable_days:
 
 Heating Unavailable Days
@@ -34671,20 +32394,6 @@ Assumption
 
 - \5. The Cooling Unavailable Days dependency is removed.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``schedules_space_heating_unavailable_days``
-     - 
-     - Number of days space heating equipment is unavailable.
 
 Options
 *******
@@ -34723,6 +32432,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 90
      - 0
      - 365
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``schedules_space_heating_unavailable_days``
+     - 
+     - Number of days space heating equipment is unavailable.
 .. _holiday_lighting:
 
 Holiday Lighting
@@ -34758,6 +32481,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - No Exterior Use
    * - Stock saturation
      - 100%
+
 .. _hot_water_distribution:
 
 Hot Water Distribution
@@ -34779,56 +32503,6 @@ Source
 - \Engineering Judgement
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``dhw_distribution_pipe_insulation_nominal_r_value``
-     - F-ft2-hr/Btu
-     - Nominal R-value of the pipe insulation.
-   * - ``dhw_distribution_system_type``
-     - 
-     - The type of hot water distribution system.
-   * - ``dhw_distribution_standard_piping_length``
-     - ft
-     - If the system type is Standard, the length of hot water piping from the hot water heater to the farthest hot water fixture, measured longitudinally from plans, assuming the hot water piping does not run diagonally, plus 10 feet of piping for each floor level, plus 5 feet of piping for unconditioned basements (if any).
-   * - ``dhw_distribution_recirculation_control_type``
-     - 
-     - If the system type is Recirculation, the type of hot water recirculation control, if any.
-   * - ``dhw_distribution_recirculation_piping_loop_length``
-     - ft
-     - If the system type is Recirculation, the recirculation loop length including both supply and return sides, measured longitudinally from plans, assuming the hot water piping does not run diagonally, plus 20 feet of piping for each floor level greater than one plus 10 feet of piping for unconditioned basements.
-   * - ``dhw_distribution_recirculation_branch_piping_length``
-     - ft
-     - If the system type is Recirculation, the length of the branch hot water piping from the recirculation loop to the farthest hot water fixture from the recirculation loop, measured longitudinally from plans, assuming the branch hot water piping does not run diagonally.
-   * - ``dhw_distribution_recirculation_pump_power``
-     - W
-     - If the system type is Recirculation, the recirculation pump power.
-   * - ``dhw_fixtures_low_flow_showers``
-     - 
-     - Whether the shower fixtures are low flow (<= 2.0 gpm).
-   * - ``dhw_fixtures_low_flow_sinks``
-     - 
-     - Whether the sink fixtures are low flow (<= 2.0 gpm).
-   * - ``dhw_fixtures_usage_multiplier``
-     - 
-     - Multiplier on the hot water usage that can reflect, e.g., high/low usage occupants.
-   * - ``dhw_drain_water_heat_recovery_efficiency``
-     - 
-     - The efficiency of the DWHR according to CSA 55.1.
-   * - ``dhw_drain_water_heat_recovery_facilities_connected``
-     - 
-     - Use 'one' if there are All Showers and only one of them is connected to the DWHR. Use 'all' if there is one shower and it's connected to the DWHR or there are two or more showers connected to the DWHR.
-   * - ``dhw_drain_water_heat_recovery_equal_flow``
-     - 
-     - True if the DWHR supplies pre-heated water to both the fixture cold water piping and the hot water heater potable supply piping. False if the DWHR only supply pre-heated water to the hot water heater potable supply piping.
-
 Options
 *******
 
@@ -34847,28 +32521,33 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0
    * - ``dhw_distribution_system_type``
      - Standard
-   * - ``dhw_distribution_standard_piping_length``
-     - 
-   * - ``dhw_distribution_recirculation_control_type``
-     - 
-   * - ``dhw_distribution_recirculation_piping_loop_length``
-     - 
-   * - ``dhw_distribution_recirculation_branch_piping_length``
-     - 
-   * - ``dhw_distribution_recirculation_pump_power``
-     - 
    * - ``dhw_fixtures_low_flow_showers``
      - false
    * - ``dhw_fixtures_low_flow_sinks``
      - false
-   * - ``dhw_fixtures_usage_multiplier``
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``dhw_distribution_pipe_insulation_nominal_r_value``
+     - F-ft2-hr/Btu
+     - Nominal R-value of the pipe insulation.
+   * - ``dhw_distribution_system_type``
      - 
-   * - ``dhw_drain_water_heat_recovery_efficiency``
+     - The type of hot water distribution system.
+   * - ``dhw_fixtures_low_flow_showers``
      - 
-   * - ``dhw_drain_water_heat_recovery_facilities_connected``
+     - Whether the shower fixtures are low flow (<= 2.0 gpm).
+   * - ``dhw_fixtures_low_flow_sinks``
      - 
-   * - ``dhw_drain_water_heat_recovery_equal_flow``
-     - 
+     - Whether the sink fixtures are low flow (<= 2.0 gpm).
 .. _hot_water_fixtures:
 
 Hot Water Fixtures
@@ -34895,20 +32574,6 @@ Assumption
 
 - \Low, Medium, and High usage is assigned based on the lower 25th percent, middle 50th percent, and upper 25th percent.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``water_fixtures_usage_multiplier``
-     - 
-     - Multiplier on the hot water usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -34971,6 +32636,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1.8
      - 1.9
      - 2.0
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``water_fixtures_usage_multiplier``
+     - 
+     - Multiplier on the hot water usage that can reflect, e.g., high/low usage occupants.
 .. _household_has_tribal_persons:
 
 Household Has Tribal Persons
@@ -35016,6 +32695,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 87%
      - 12%
      - 0.9%
+
 .. _iso_rto_region:
 
 ISO RTO Region
@@ -35069,6 +32749,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 6.1%
      - 20%
      - 4.6%
+
 .. _income:
 
 Income
@@ -35148,6 +32829,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1.8%
      - 6.9%
      - 12%
+
 .. _income_recs2015:
 
 Income RECS2015
@@ -35205,6 +32887,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 4.7%
      - 14%
      - 12%
+
 .. _income_recs2020:
 
 Income RECS2020
@@ -35258,6 +32941,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 13%
      - 13%
      - 12%
+
 .. _infiltration:
 
 Infiltration
@@ -35301,29 +32985,6 @@ Assumption
 - \For Alaska, Infiltration ACH50 values are calculated based on CFM50 from blower door test and estimated volume of the home.
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``enclosure_air_leakage_leakiness_description``
-     - 
-     - Qualitative description of infiltration.
-   * - ``enclosure_air_leakage_units``
-     - 
-     - The unit of measure for the air leakage if providing a numeric air leakage value.
-   * - ``enclosure_air_leakage_house_pressure``
-     - Pa
-     - The house pressure relative to outside if providing a numeric air leakage value. Required when units are ACH or CFM.
-   * - ``enclosure_air_leakage_value``
-     - 
-     - Numeric air leakage value. For EffectiveLeakageArea, the value is in sq. in.
-
 Options
 *******
 
@@ -35366,22 +33027,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 6.1%
      - 5.7%
      - 3.2%
-   * - ``enclosure_air_leakage_leakiness_description``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
    * - ``enclosure_air_leakage_units``
      - ACH
      - ACH
@@ -35430,6 +33075,26 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 30.0
      - 40.0
      - 50.0
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``enclosure_air_leakage_units``
+     - 
+     - The unit of measure for the air leakage if providing a numeric air leakage value.
+   * - ``enclosure_air_leakage_house_pressure``
+     - Pa
+     - The house pressure relative to outside if providing a numeric air leakage value. Required when units are ACH or CFM.
+   * - ``enclosure_air_leakage_value``
+     - 
+     - Numeric air leakage value. For EffectiveLeakageArea, the value is in sq. in.
 .. _insulation_ceiling:
 
 Insulation Ceiling
@@ -35456,23 +33121,6 @@ Assumption
 
 - \CRAK is a copy of CR02
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``enclosure_ceiling_assembly_r_value``
-     - F-ft2-hr/Btu
-     - Assembly R-value for the ceiling.
-   * - ``ceiling_insulation_r``
-     - h-ft^2-R/Btu
-     - Nominal R-value for the ceiling (attic floor).
 
 Options
 *******
@@ -35520,6 +33168,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 30
      - 38
      - 49
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``enclosure_ceiling_assembly_r_value``
+     - F-ft2-hr/Btu
+     - Assembly R-value for the ceiling.
+   * - ``ceiling_insulation_r``
+     - h-ft^2-R/Btu
+     - Nominal R-value for the ceiling (attic floor).
 .. _insulation_floor:
 
 Insulation Floor
@@ -35540,29 +33205,6 @@ Assumption
 
 - \CRAK is a copy of CR02
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``enclosure_floor_over_foundation_type``
-     - 
-     - The type of floor.
-   * - ``enclosure_floor_over_foundation_assembly_r_value``
-     - F-ft2-hr/Btu
-     - Assembly R-value for the floor.
-   * - ``enclosure_floor_over_garage_type``
-     - 
-     - The type of floor.
-   * - ``enclosure_floor_over_garage_assembly_r_value``
-     - F-ft2-hr/Btu
-     - Assembly R-value for the floor.
 
 Options
 *******
@@ -35610,6 +33252,29 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 17.8
      - 22.6
      - 30.3
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``enclosure_floor_over_foundation_type``
+     - 
+     - The type of floor.
+   * - ``enclosure_floor_over_foundation_assembly_r_value``
+     - F-ft2-hr/Btu
+     - Assembly R-value for the floor.
+   * - ``enclosure_floor_over_garage_type``
+     - 
+     - The type of floor.
+   * - ``enclosure_floor_over_garage_assembly_r_value``
+     - F-ft2-hr/Btu
+     - Assembly R-value for the floor.
 .. _insulation_foundation_wall:
 
 Insulation Foundation Wall
@@ -35630,38 +33295,6 @@ Assumption
 
 - \CRAK is a copy of CR02
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``enclosure_foundation_wall_type``
-     - 
-     - The material type of the foundation wall.
-   * - ``enclosure_foundation_wall_thickness``
-     - in
-     - The thickness of the foundation wall.
-   * - ``enclosure_foundation_wall_insulation_nominal_r_value``
-     - F-ft2-hr/Btu
-     - Nominal R-value for the foundation wall insulation.
-   * - ``enclosure_foundation_wall_insulation_location``
-     - 
-     - Whether the insulation is on the interior or exterior of the foundation wall.
-   * - ``enclosure_foundation_wall_insulation_distance_to_top``
-     - ft
-     - The distance from the top of the foundation wall to the top of the foundation wall insulation.
-   * - ``enclosure_foundation_wall_insulation_distance_to_bottom``
-     - ft
-     - The distance from the top of the foundation wall to the bottom of the foundation wall insulation.
-   * - ``enclosure_foundation_wall_assembly_r_value``
-     - F-ft2-hr/Btu
-     - Assembly R-value for the foundation walls. If provided, overrides the other foundation wall insulation inputs.
 
 Options
 *******
@@ -35691,42 +33324,29 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - solid concrete
      - solid concrete
      - solid concrete
-   * - ``enclosure_foundation_wall_thickness``
-     - 
-     - 
-     - 
-     - 
-     - 
    * - ``enclosure_foundation_wall_insulation_nominal_r_value``
      - 0.0
      - 0.0
      - 5.0
      - 10.0
      - 15.0
-   * - ``enclosure_foundation_wall_insulation_location``
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``enclosure_foundation_wall_type``
      - 
-     - 
-     - 
-     - 
-     - 
-   * - ``enclosure_foundation_wall_insulation_distance_to_top``
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``enclosure_foundation_wall_insulation_distance_to_bottom``
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``enclosure_foundation_wall_assembly_r_value``
-     - 
-     - 
-     - 
-     - 
-     - 
+     - The material type of the foundation wall.
+   * - ``enclosure_foundation_wall_insulation_nominal_r_value``
+     - F-ft2-hr/Btu
+     - Nominal R-value for the foundation wall insulation.
 .. _insulation_rim_joist:
 
 Insulation Rim Joist
@@ -35753,20 +33373,6 @@ Assumption
 
 - \Rim joist insulation is the same value as the foundation wall insulation.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``enclosure_rim_joist_assembly_r_value``
-     - F-ft2-hr/Btu
-     - Assembly R-value for the rim joist excluding any siding.
 
 Options
 *******
@@ -35796,6 +33402,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 7.5
      - 12.5
      - 17.5
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``enclosure_rim_joist_assembly_r_value``
+     - F-ft2-hr/Btu
+     - Assembly R-value for the rim joist excluding any siding.
 .. _insulation_roof:
 
 Insulation Roof
@@ -35818,23 +33438,6 @@ Source
 
 - \NEEA Residential Building Stock Assessment, 2012
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``enclosure_roof_unconditioned_assembly_r_value``
-     - F-ft2-hr/Btu
-     - Assembly R-value for the roof if above an unconditioned attic.
-   * - ``enclosure_roof_conditioned_assembly_r_value``
-     - F-ft2-hr/Btu
-     - Assembly R-value for the roof if above conditioned space.
 
 Options
 *******
@@ -35882,6 +33485,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 29.7
      - 36.5
      - 47.0
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``enclosure_roof_unconditioned_assembly_r_value``
+     - F-ft2-hr/Btu
+     - Assembly R-value for the roof if above an unconditioned attic.
+   * - ``enclosure_roof_conditioned_assembly_r_value``
+     - F-ft2-hr/Btu
+     - Assembly R-value for the roof if above conditioned space.
 .. _insulation_slab:
 
 Insulation Slab
@@ -35912,38 +33532,6 @@ Assumption
 
 - \CRAK is a copy of CR02
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``enclosure_slab_under_slab_insulation_nominal_r_value``
-     - F-ft2-hr/Btu
-     - Nominal R-value of the vertical slab perimeter insulation.
-   * - ``enclosure_slab_under_slab_insulation_width``
-     - ft
-     - Depth from grade to bottom of vertical slab perimeter insulation.
-   * - ``enclosure_slab_perimeter_insulation_nominal_r_value``
-     - F-ft2-hr/Btu
-     - Nominal R-value of the horizontal under slab insulation.
-   * - ``enclosure_slab_perimeter_insulation_depth``
-     - ft
-     - Width from slab edge inward of horizontal under-slab insulation. Use 999 to specify that the under slab insulation spans the entire slab.
-   * - ``enclosure_slab_thickness``
-     - in
-     - The thickness of the slab. Zero can be entered if there is a dirt floor instead of a slab.
-   * - ``enclosure_slab_carpet_fraction``
-     - frac
-     - Fraction of the slab floor area that is carpeted.
-   * - ``enclosure_slab_carpet_r_value``
-     - F-ft2-hr/Btu
-     - R-value of the slab carpet.
 
 Options
 *******
@@ -36009,33 +33597,29 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 2
      - 2
      - 0
-   * - ``enclosure_slab_thickness``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``enclosure_slab_carpet_fraction``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``enclosure_slab_carpet_r_value``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``enclosure_slab_under_slab_insulation_nominal_r_value``
+     - F-ft2-hr/Btu
+     - Nominal R-value of the vertical slab perimeter insulation.
+   * - ``enclosure_slab_under_slab_insulation_width``
+     - ft
+     - Depth from grade to bottom of vertical slab perimeter insulation.
+   * - ``enclosure_slab_perimeter_insulation_nominal_r_value``
+     - F-ft2-hr/Btu
+     - Nominal R-value of the horizontal under slab insulation.
+   * - ``enclosure_slab_perimeter_insulation_depth``
+     - ft
+     - Width from slab edge inward of horizontal under-slab insulation. Use 999 to specify that the under slab insulation spans the entire slab.
 .. _insulation_wall:
 
 Insulation Wall
@@ -36066,26 +33650,6 @@ Assumption
 
 - \Updated per new wall type from Lightbox, all wall type-specific distributions follow that of `Wood Frame` (`WoodStud`)
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``enclosure_wall_type``
-     - 
-     - The type of wall.
-   * - ``enclosure_wall_assembly_r_value``
-     - F-ft2-hr/Btu
-     - Assembly R-value for the wall excluding any siding and/or continuous insulation.
-   * - ``enclosure_wall_continuous_insulation_r_value``
-     - F-ft2-hr/Btu
-     - The R-value for the wall continuous insulation.
 
 Options
 *******
@@ -36147,7 +33711,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - StructuralBrick
      - StructuralBrick
      - StructuralBrick
-     -
+     - 
    * - ``enclosure_wall_assembly_r_value``
      - 3.4
      - 8.7
@@ -36164,7 +33728,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 13.3
      - 15.9
      - 18.3
-     -
+     - 
    * - ``enclosure_wall_continuous_insulation_r_value``
      - 0.0
      - 0.0
@@ -36181,7 +33745,27 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.0
      - 0.0
      - 0.0
-     -
+     - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``enclosure_wall_type``
+     - 
+     - The type of wall.
+   * - ``enclosure_wall_assembly_r_value``
+     - F-ft2-hr/Btu
+     - Assembly R-value for the wall excluding any siding and/or continuous insulation.
+   * - ``enclosure_wall_continuous_insulation_r_value``
+     - F-ft2-hr/Btu
+     - The R-value for the wall continuous insulation.
 .. _interior_shading:
 
 Interior Shading
@@ -36203,26 +33787,6 @@ Source
 - \ANSI/RESNET/ICC 301 Standard
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``enclosure_window_interior_shading_type``
-     - 
-     - The type of window interior shading.
-   * - ``enclosure_window_interior_shading_summer_coefficient``
-     - frac
-     - Interior shading coefficient for the summer season. 1.0 indicates no reduction in solar gain, 0.85 indicates 15% reduction, etc.
-   * - ``enclosure_window_interior_shading_winter_coefficient``
-     - frac
-     - Interior shading coefficient for the winter season. 1.0 indicates no reduction in solar gain, 0.85 indicates 15% reduction, etc.
-
 Options
 *******
 
@@ -36239,10 +33803,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 100%
    * - ``enclosure_window_interior_shading_type``
      - light curtains
-   * - ``enclosure_window_interior_shading_summer_coefficient``
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``enclosure_window_interior_shading_type``
      - 
-   * - ``enclosure_window_interior_shading_winter_coefficient``
-     - 
+     - The type of window interior shading.
 .. _lighting:
 
 Lighting
@@ -36278,53 +33852,6 @@ Assumption
 - \All: 100%. Then the sum of three types of lighting options is normalized to 100%
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``lighting_interior_fraction_cfl``
-     - frac
-     - Fraction of all interior lamps that are compact fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_interior_fraction_lfl``
-     - frac
-     - Fraction of all interior lamps that are linear fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_interior_fraction_led``
-     - frac
-     - Fraction of all interior lamps that are light emitting diodes. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_interior_usage_multiplier``
-     - 
-     - Multiplier on the interior lighting energy usage that can reflect, e.g., high/low usage occupants.
-   * - ``lighting_exterior_fraction_cfl``
-     - frac
-     - Fraction of all exterior lamps that are compact fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_exterior_fraction_lfl``
-     - frac
-     - Fraction of all exterior lamps that are linear fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_exterior_fraction_led``
-     - frac
-     - Fraction of all exterior lamps that are light emitting diodes. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_exterior_usage_multiplier``
-     - 
-     - Multiplier on the exterior lighting energy usage that can reflect, e.g., high/low usage occupants.
-   * - ``lighting_garage_fraction_cfl``
-     - frac
-     - Fraction of all garage lamps that are compact fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_garage_fraction_lfl``
-     - frac
-     - Fraction of all garage lamps that are linear fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_garage_fraction_led``
-     - frac
-     - Fraction of all garage lamps that are light emitting diodes. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
-   * - ``lighting_garage_usage_multiplier``
-     - 
-     - Multiplier on the garage lighting energy usage that can reflect, e.g., high/low usage occupants.
-
 Options
 *******
 
@@ -36355,10 +33882,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.0
      - 0.0
      - 1.0
-   * - ``lighting_interior_usage_multiplier``
-     - 
-     - 
-     - 
    * - ``lighting_exterior_fraction_cfl``
      - 1.0
      - 0.0
@@ -36371,10 +33894,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.0
      - 0.0
      - 1.0
-   * - ``lighting_exterior_usage_multiplier``
-     - 
-     - 
-     - 
    * - ``lighting_garage_fraction_cfl``
      - 1.0
      - 0.0
@@ -36387,10 +33906,44 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.0
      - 0.0
      - 1.0
-   * - ``lighting_garage_usage_multiplier``
-     - 
-     - 
-     - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``lighting_interior_fraction_cfl``
+     - frac
+     - Fraction of all interior lamps that are compact fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
+   * - ``lighting_interior_fraction_lfl``
+     - frac
+     - Fraction of all interior lamps that are linear fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
+   * - ``lighting_interior_fraction_led``
+     - frac
+     - Fraction of all interior lamps that are light emitting diodes. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
+   * - ``lighting_exterior_fraction_cfl``
+     - frac
+     - Fraction of all exterior lamps that are compact fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
+   * - ``lighting_exterior_fraction_lfl``
+     - frac
+     - Fraction of all exterior lamps that are linear fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
+   * - ``lighting_exterior_fraction_led``
+     - frac
+     - Fraction of all exterior lamps that are light emitting diodes. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
+   * - ``lighting_garage_fraction_cfl``
+     - frac
+     - Fraction of all garage lamps that are compact fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
+   * - ``lighting_garage_fraction_lfl``
+     - frac
+     - Fraction of all garage lamps that are linear fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
+   * - ``lighting_garage_fraction_led``
+     - frac
+     - Fraction of all garage lamps that are light emitting diodes. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent.
 .. _lighting_interior_use:
 
 Lighting Interior Use
@@ -36412,20 +33965,6 @@ Source
 - \n/a
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``interior_lighting_usage_multiplier``
-     - 
-     - Multiplier on the lighting energy usage (interior) that can reflect, e.g., high/low usage occupants.
-
 Options
 *******
 
@@ -36442,6 +33981,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 100%
    * - ``interior_lighting_usage_multiplier``
      - 1.0
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``interior_lighting_usage_multiplier``
+     - 
+     - Multiplier on the lighting energy usage (interior) that can reflect, e.g., high/low usage occupants.
 .. _lighting_other_use:
 
 Lighting Other Use
@@ -36463,23 +34016,6 @@ Source
 - \n/a
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``exterior_lighting_usage_multiplier``
-     - 
-     - Multiplier on the lighting energy usage (exterior) that can reflect, e.g., high/low usage occupants.
-   * - ``garage_lighting_usage_multiplier``
-     - 
-     - Multiplier on the lighting energy usage (garage) that can reflect, e.g., high/low usage occupants.
-
 Options
 *******
 
@@ -36498,6 +34034,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1.0
    * - ``garage_lighting_usage_multiplier``
      - 1.0
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``exterior_lighting_usage_multiplier``
+     - 
+     - Multiplier on the lighting energy usage (exterior) that can reflect, e.g., high/low usage occupants.
+   * - ``garage_lighting_usage_multiplier``
+     - 
+     - Multiplier on the lighting energy usage (garage) that can reflect, e.g., high/low usage occupants.
 .. _location_region:
 
 Location Region
@@ -36559,6 +34112,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 10%
      - 0.23%
      - 0.4%
+
 .. _mechanical_ventilation:
 
 Mechanical Ventilation
@@ -36580,71 +34134,6 @@ Source
 - \Engineering Judgement
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``ventilation_mechanical_fan_type``
-     - 
-     - The type of the mechanical ventilation.
-   * - ``ventilation_mechanical_sensible_recovery_efficiency``
-     - frac
-     - The sensible recovery efficiency for heating mode. Applies to HRVs and ERVs only.
-   * - ``ventilation_mechanical_total_recovery_efficiency``
-     - frac
-     - The total recovery efficiency. Applies to ERVs only.
-   * - ``ventilation_mechanical_flow_rate``
-     - cfm
-     - The flow rate of the mechanical ventilation.
-   * - ``ventilation_mechanical_fan_power``
-     - W
-     - The fan power of the mechanical ventilation.
-   * - ``ventilation_mechanical_hours_in_operation``
-     - hrs/day
-     - The hours in operation of the mechanical ventilation.
-   * - ``ventilation_kitchen_flow_rate``
-     - cfm
-     - The flow rate for each kitchen fan.
-   * - ``ventilation_kitchen_hours_in_operation``
-     - hrs/day
-     - The hours per day of operation for each kitchen fan.
-   * - ``ventilation_kitchen_fan_power``
-     - W
-     - The fan power for each kitchen fan.
-   * - ``ventilation_kitchen_start_hour``
-     - hr
-     - The start hour for each kitchen fan.
-   * - ``ventilation_kitchen_count``
-     - 
-     - The number of kitchen fans in the home.
-   * - ``ventilation_bathroom_flow_rate``
-     - cfm
-     - The flow rate for each bathroom fan.
-   * - ``ventilation_bathroom_hours_in_operation``
-     - hrs/day
-     - The hours per day of operation for each bathroom fan.
-   * - ``ventilation_bathroom_fan_power``
-     - W
-     - The fan power for each bathroom fan.
-   * - ``ventilation_bathroom_start_hour``
-     - hr
-     - The start hour for each bathroom fan.
-   * - ``ventilation_bathroom_count``
-     - 
-     - The number of bathroom fans in the home.
-   * - ``ventilation_whole_house_fan_rated_flow_rate``
-     - cfm
-     - The rated flow rate of the whole house fan.
-   * - ``ventilation_whole_house_fan_power``
-     - W
-     - The fan power of the whole house fan.
-
 Options
 *******
 
@@ -36659,42 +34148,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
    * - Stock saturation
      - 100%
-   * - ``ventilation_mechanical_fan_type``
-     - 
-   * - ``ventilation_mechanical_sensible_recovery_efficiency``
-     - 
-   * - ``ventilation_mechanical_total_recovery_efficiency``
-     - 
-   * - ``ventilation_mechanical_flow_rate``
-     - 
-   * - ``ventilation_mechanical_fan_power``
-     - 
-   * - ``ventilation_mechanical_hours_in_operation``
-     - 
-   * - ``ventilation_kitchen_flow_rate``
-     - 
-   * - ``ventilation_kitchen_hours_in_operation``
-     - 
-   * - ``ventilation_kitchen_fan_power``
-     - 
-   * - ``ventilation_kitchen_start_hour``
-     - 
-   * - ``ventilation_kitchen_count``
-     - 
-   * - ``ventilation_bathroom_flow_rate``
-     - 
-   * - ``ventilation_bathroom_hours_in_operation``
-     - 
-   * - ``ventilation_bathroom_fan_power``
-     - 
-   * - ``ventilation_bathroom_start_hour``
-     - 
-   * - ``ventilation_bathroom_count``
-     - 
-   * - ``ventilation_whole_house_fan_rated_flow_rate``
-     - 
-   * - ``ventilation_whole_house_fan_power``
-     - 
+
 .. _metropolitan_and_micropolitan_statistical_area:
 
 Metropolitan and Micropolitan Statistical Area
@@ -38572,6 +36026,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.067%
      - 0.028%
      - 0.0046%
+
 .. _misc_extra_refrigerator:
 
 Misc Extra Refrigerator
@@ -38645,26 +36100,6 @@ Assumption
 - \In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across ('Heating Fuel', ['Tenure', 'Federal Poverty Level']).
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``appliance_extra_refrigerator_rated_annual_consumption``
-     - kWh/yr
-     - The EnergyGuide rated annual energy consumption for the extra refrigerator.
-   * - ``appliance_extra_refrigerator_usage_multiplier``
-     - 
-     - Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/low usage occupants.
-   * - ``appliance_extra_refrigerator_location``
-     - 
-     - The space type where the extra refrigerator is located.
-
 Options
 *******
 
@@ -38704,27 +36139,21 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 384
      - 348
      - 
-     -
-   * - ``appliance_extra_refrigerator_usage_multiplier``
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``appliance_extra_refrigerator_location``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``appliance_extra_refrigerator_rated_annual_consumption``
+     - kWh/yr
+     - The EnergyGuide rated annual energy consumption for the extra refrigerator.
 .. _misc_freezer:
 
 Misc Freezer
@@ -38770,26 +36199,6 @@ Assumption
   - \[8] Census Region to National
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``appliance_freezer_rated_annual_consumption``
-     - kWh/yr
-     - The EnergyGuide rated annual energy consumption for the freezer.
-   * - ``appliance_freezer_usage_multiplier``
-     - 
-     - Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants.
-   * - ``appliance_freezer_location``
-     - 
-     - The space type where the freezer is located.
-
 Options
 *******
 
@@ -38811,15 +36220,21 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - ``appliance_freezer_rated_annual_consumption``
      - 935
      - 
-     -
-   * - ``appliance_freezer_usage_multiplier``
      - 
-     - 
-     -
-   * - ``appliance_freezer_location``
-     - 
-     - 
-     -
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``appliance_freezer_rated_annual_consumption``
+     - kWh/yr
+     - The EnergyGuide rated annual energy consumption for the freezer.
 .. _misc_gas_fireplace:
 
 Misc Gas Fireplace
@@ -38840,26 +36255,6 @@ Source
 
 - \Wilson et al. 'Building America House Simulation Protocols' 2014, national average fraction used for saturation
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``misc_fireplace_fuel_type``
-     - 
-     - The fuel type of the grill.
-   * - ``misc_fireplace_annual_energy_use``
-     - therm/yr
-     - The annual energy consumption of the grill.
-   * - ``misc_fireplace_usage_multiplier``
-     - 
-     - Multiplier on the energy usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -38883,9 +36278,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - ``misc_fireplace_annual_energy_use``
      - 
      - 0
-   * - ``misc_fireplace_usage_multiplier``
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``misc_fireplace_fuel_type``
      - 
-     - 
+     - The fuel type of the grill.
+   * - ``misc_fireplace_annual_energy_use``
+     - therm/yr
+     - The annual energy consumption of the grill.
 .. _misc_gas_grill:
 
 Misc Gas Grill
@@ -38906,26 +36315,6 @@ Source
 
 - \Wilson et al. 'Building America House Simulation Protocols' 2014, national average fraction used for saturation
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``misc_grill_fuel_type``
-     - 
-     - The fuel type of the grill.
-   * - ``misc_grill_annual_energy_use``
-     - therm/yr
-     - The annual energy consumption of the grill.
-   * - ``misc_grill_usage_multiplier``
-     - 
-     - Multiplier on the energy usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -38949,9 +36338,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - ``misc_grill_annual_energy_use``
      - 
      - 0
-   * - ``misc_grill_usage_multiplier``
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``misc_grill_fuel_type``
      - 
-     - 
+     - The fuel type of the grill.
+   * - ``misc_grill_annual_energy_use``
+     - therm/yr
+     - The annual energy consumption of the grill.
 .. _misc_gas_lighting:
 
 Misc Gas Lighting
@@ -38972,26 +36375,6 @@ Source
 
 - \Wilson et al. 'Building America House Simulation Protocols' 2014, national average fraction used for saturation
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``misc_gas_lighting_fuel_type``
-     - 
-     - The fuel type of the misc lighting.
-   * - ``misc_gas_lighting_annual_energy_use``
-     - therm/yr
-     - The annual energy consumption of the misc lighting.
-   * - ``misc_gas_lighting_usage_multiplier``
-     - 
-     - Multiplier on the energy usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -39015,9 +36398,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - ``misc_gas_lighting_annual_energy_use``
      - 
      - 0
-   * - ``misc_gas_lighting_usage_multiplier``
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``misc_gas_lighting_fuel_type``
      - 
-     - 
+     - The fuel type of the misc lighting.
+   * - ``misc_gas_lighting_annual_energy_use``
+     - therm/yr
+     - The annual energy consumption of the misc lighting.
 .. _misc_hot_tub_spa:
 
 Misc Hot Tub Spa
@@ -39083,35 +36480,6 @@ Assumption
 - \In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across ('Heating Fuel', ['Tenure', 'Federal Poverty Level']).
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``misc_permanent_spa_pump_annual_energy_use``
-     - kWh/yr
-     - The annual energy consumption of the spa.
-   * - ``misc_permanent_spa_pump_usage_multiplier``
-     - 
-     - Multiplier on the spa pump energy usage that can reflect, e.g., high/low usage occupants.
-   * - ``misc_permanent_spa_heater_type``
-     - 
-     - The type of spa heater.
-   * - ``misc_permanent_spa_heater_annual_electricity_use``
-     - kWh/yr
-     - The annual electricity consumption of the spa heater.
-   * - ``misc_permanent_spa_heater_annual_natural_gas_use``
-     - kWh/yr
-     - The annual natural gas consumption of the spa heater.
-   * - ``misc_permanent_spa_heater_usage_multiplier``
-     - 
-     - Multiplier on the spa heater energy usage that can reflect, e.g., high/low usage occupants.
-
 Options
 *******
 
@@ -39139,37 +36507,48 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 0
      - 0
-     -
-   * - ``misc_permanent_spa_pump_usage_multiplier``
      - 
-     - 
-     - 
-     - 
-     -
    * - ``misc_permanent_spa_heater_type``
      - electric resistance
      - gas fired
      - 
      - 
-     -
+     - 
    * - ``misc_permanent_spa_heater_annual_electricity_use``
      - 
      - 
      - 0
      - 0
-     -
+     - 
    * - ``misc_permanent_spa_heater_annual_natural_gas_use``
      - 
      - 
      - 0
      - 0
-     -
-   * - ``misc_permanent_spa_heater_usage_multiplier``
      - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``misc_permanent_spa_pump_annual_energy_use``
+     - kWh/yr
+     - The annual energy consumption of the spa.
+   * - ``misc_permanent_spa_heater_type``
      - 
-     - 
-     - 
-     -
+     - The type of spa heater.
+   * - ``misc_permanent_spa_heater_annual_electricity_use``
+     - kWh/yr
+     - The annual electricity consumption of the spa heater.
+   * - ``misc_permanent_spa_heater_annual_natural_gas_use``
+     - kWh/yr
+     - The annual natural gas consumption of the spa heater.
 .. _misc_pool:
 
 Misc Pool
@@ -39219,20 +36598,6 @@ Assumption
   - \[11] Census Region to National
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``misc_has_pool``
-     - 
-     - Whether a pool is present.
-
 Options
 *******
 
@@ -39255,6 +36620,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - true
      - false
      - false
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``misc_has_pool``
+     - 
+     - Whether a pool is present.
 .. _misc_pool_heater:
 
 Misc Pool Heater
@@ -39284,35 +36663,6 @@ Assumption
 - \Within electric pool heaters, proportion of heat pump electric pool heating vs. non-heat pump electric pool heating was derived from RASS 2019.
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``misc_pool_pump_annual_energy_use``
-     - kWh/yr
-     - The annual energy consumption of the pool pump.
-   * - ``misc_pool_pump_usage_multiplier``
-     - 
-     - Multiplier on the pool pump energy usage that can reflect, e.g., high/low usage occupants.
-   * - ``misc_pool_heater_type``
-     - 
-     - The type of pool heater.
-   * - ``misc_pool_heater_annual_electricity_use``
-     - kWh/yr
-     - The annual electricity consumption of the pool heater.
-   * - ``misc_pool_heater_annual_natural_gas_use``
-     - kWh/yr
-     - The annual natural gas consumption of the pool heater.
-   * - ``misc_pool_heater_usage_multiplier``
-     - 
-     - Multiplier on the pool heater energy usage that can reflect, e.g., high/low usage occupants.
-
 Options
 *******
 
@@ -39335,42 +36685,26 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1%
      - 98%
      - 0.65%
-   * - ``misc_pool_pump_annual_energy_use``
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``misc_pool_pump_usage_multiplier``
-     - 
-     - 
-     - 
-     - 
-     - 
    * - ``misc_pool_heater_type``
      - heat pump
      - electric resistance
      - gas fired
      - none
      - none
-   * - ``misc_pool_heater_annual_electricity_use``
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``misc_pool_heater_type``
      - 
-     - 
-     - 
-     - 
-     - 
-   * - ``misc_pool_heater_annual_natural_gas_use``
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``misc_pool_heater_usage_multiplier``
-     - 
-     - 
-     - 
-     - 
-     - 
+     - The type of pool heater.
 .. _misc_pool_pump:
 
 Misc Pool Pump
@@ -39392,20 +36726,6 @@ Source
 - \Wilson et al. 'Building America House Simulation Protocols' 2014, national average fraction used for saturation
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``pool_pump_usage_multiplier``
-     - 
-     - Multiplier on the pool pump energy usage that can reflect, e.g., high/low usage occupants.
-
 Options
 *******
 
@@ -39425,6 +36745,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - ``pool_pump_usage_multiplier``
      - 
      - 1.0
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``pool_pump_usage_multiplier``
+     - 
+     - Multiplier on the pool pump energy usage that can reflect, e.g., high/low usage occupants.
 .. _misc_well_pump:
 
 Misc Well Pump
@@ -39458,23 +36792,6 @@ Assumption
 - \AHS has data for buildings up to 7 stories tall. Buildings with 8 or more stories are assumed not to have a well pump.
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``misc_well_pump_annual_energy_use``
-     - kWh/yr
-     - The annual energy consumption of the well pump.
-   * - ``misc_well_pump_usage_multiplier``
-     - 
-     - Multiplier on the energy usage that can reflect, e.g., high/low usage occupants.
-
 Options
 *******
 
@@ -39494,9 +36811,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - ``misc_well_pump_annual_energy_use``
      - 0
      - 
-   * - ``misc_well_pump_usage_multiplier``
-     - 
-     - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``misc_well_pump_annual_energy_use``
+     - kWh/yr
+     - The annual energy consumption of the well pump.
 .. _natural_ventilation:
 
 Natural Ventilation
@@ -39518,23 +36846,6 @@ Source
 - \Wilson et al. 'Building America House Simulation Protocols' 2014
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``enclosure_window_natural_ventilation_fraction_operable``
-     - frac
-     - Total window area for operable windows divided by total window area. The total open window area for natural ventilation is calculated using A) the operable fraction, B) the assumption that only some of the area of operable windows can be open, and C) the assumption that only some of that openable area is actually opened by occupants whenever outdoor conditions are favorable.
-   * - ``enclosure_window_natural_ventilation_availability``
-     - days/week
-     - How many days per week windows can be opened by occupants.
-
 Options
 *******
 
@@ -39551,8 +36862,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 100%
    * - ``enclosure_window_natural_ventilation_fraction_operable``
      - 0.67
-   * - ``enclosure_window_natural_ventilation_availability``
-     - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``enclosure_window_natural_ventilation_fraction_operable``
+     - frac
+     - Total window area for operable windows divided by total window area. The total open window area for natural ventilation is calculated using A) the operable fraction, B) the assumption that only some of the area of operable windows can be open, and C) the assumption that only some of that openable area is actually opened by occupants whenever outdoor conditions are favorable.
 .. _neighbors:
 
 Neighbors
@@ -39575,41 +36898,6 @@ Source
 
 - \Engineering Judgement for others
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_neighbor_buildings_left_distance``
-     - ft
-     - The distance between the unit and the neighboring building to the left (not including eaves).
-   * - ``geometry_neighbor_buildings_right_distance``
-     - ft
-     - The distance between the unit and the neighboring building to the right (not including eaves).
-   * - ``geometry_neighbor_buildings_back_distance``
-     - ft
-     - The distance between the unit and the neighboring building to the back (not including eaves).
-   * - ``geometry_neighbor_buildings_front_distance``
-     - ft
-     - The distance between the unit and the neighboring building to the front (not including eaves).
-   * - ``geometry_neighbor_buildings_left_height``
-     - ft
-     - The height of the neighboring building to the left.
-   * - ``geometry_neighbor_buildings_right_height``
-     - ft
-     - The height of the neighboring building to the right.
-   * - ``geometry_neighbor_buildings_back_height``
-     - ft
-     - The height of the neighboring building to the back.
-   * - ``geometry_neighbor_buildings_front_height``
-     - ft
-     - The height of the neighboring building to the front.
 
 Options
 *******
@@ -39653,54 +36941,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 12
      - 27
      - 
-   * - ``geometry_neighbor_buildings_back_distance``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``geometry_neighbor_buildings_front_distance``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``geometry_neighbor_buildings_left_height``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``geometry_neighbor_buildings_right_height``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``geometry_neighbor_buildings_back_height``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``geometry_neighbor_buildings_front_height``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_neighbor_buildings_left_distance``
+     - ft
+     - The distance between the unit and the neighboring building to the left (not including eaves).
+   * - ``geometry_neighbor_buildings_right_distance``
+     - ft
+     - The distance between the unit and the neighboring building to the right (not including eaves).
 .. _occupants:
 
 Occupants
@@ -39727,20 +36984,6 @@ Assumption
 
 - \Option=10+ has a (weighted) representative value of 11. In ACS, Income, Tenure, and Occupants are reported for occupied units only. Because we assume vacant units share the same Income and Tenure distributions as occupied units, by extension, we assume this Occupants distribution applies to all units regardless of Vacancy Status. Where sample counts are less than 10 (6243 / 18000 rows), the Census Region average distribution has been inserted first (2593), followed by national average distribution (2678), followed by national + 'MF'/'SF' average distribution (252), followed by national + 'MF'/'SF' + 'Metro'/'Non-metro' average distribution (315)followed by national + 'MF'/'SF' + 'Metro'/'Non-metro' + Vacancy Status average distribution (657).
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_unit_num_occupants_number``
-     - 
-     - Number of occupants.
 
 Options
 *******
@@ -39788,6 +37031,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 8
      - 9
      - 11
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_unit_num_occupants_number``
+     - 
+     - Number of occupants.
 .. _orientation:
 
 Orientation
@@ -39808,20 +37065,6 @@ Source
 
 - \OpenStreetMap data queried by Radiant Labs.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_unit_direction_azimuth``
-     - deg
-     - The unit's front as measured clockwise from north (e.g., North=0, East=90, South=180, West=270).
 
 Options
 *******
@@ -39860,6 +37103,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 180
      - 315
      - 135
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_unit_direction_azimuth``
+     - deg
+     - The unit's front as measured clockwise from north (e.g., North=0, East=90, South=180, West=270).
 .. _puma:
 
 PUMA
@@ -44597,6 +41854,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.045%
      - 0.038%
      - 0.04%
+
 .. _puma_metro_status:
 
 PUMA Metro Status
@@ -44642,6 +41900,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 64%
      - 13%
      - 23%
+
 .. _pv_orientation:
 
 PV Orientation
@@ -44668,23 +41927,6 @@ Assumption
 
 - \PV orientation mapped based on azimuth angle of primary array (180 deg is South-facing).
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``pv_system_direction_array_azimuth``
-     - deg
-     - The azimuth of the PV system array. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270).
-   * - ``pv_system_direction_array_tilt``
-     - deg
-     - The tilt of the PV system array. Defaults to roof pitch.
 
 Options
 *******
@@ -44726,16 +41968,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 135
      - 225
      - 270
-   * - ``pv_system_direction_array_tilt``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``pv_system_direction_array_azimuth``
+     - deg
+     - The azimuth of the PV system array. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270).
 .. _pv_system_size:
 
 PV System Size
@@ -44764,44 +42010,6 @@ Assumption
 
 - \PV is not modeled in AK and HI. The Option=None is set so that an error is thrown if PV is modeled as an argument will be missing.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``pv_system_maximum_power_output``
-     - W
-     - Peak power for the PV system.
-   * - ``pv_system_module_type``
-     - 
-     - The type of PV module.
-   * - ``pv_system_system_losses_fraction``
-     - frac
-     - The total PV system losses including soiling, shading, snow, degradation, etc.
-   * - ``pv_system_inverter_efficiency``
-     - frac
-     - Efficiency of the PV system inverter.
-   * - ``pv_system_2_maximum_power_output``
-     - W
-     - Peak power for the PV system.
-   * - ``pv_system_2_module_type``
-     - 
-     - The type of PV module.
-   * - ``pv_system_2_system_losses_fraction``
-     - frac
-     - The total PV system losses including soiling, shading, snow, degradation, etc.
-   * - ``pv_system_2_direction_array_azimuth``
-     - deg
-     - The azimuth of the PV system array. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270).
-   * - ``pv_system_2_direction_array_tilt``
-     - deg
-     - The tilt of the PV system array. Defaults to roof pitch.
 
 Options
 *******
@@ -44840,60 +42048,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 11000
      - 13000
      - 
-   * - ``pv_system_module_type``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``pv_system_system_losses_fraction``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``pv_system_inverter_efficiency``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``pv_system_2_maximum_power_output``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``pv_system_2_module_type``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``pv_system_2_system_losses_fraction``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
    * - ``pv_system_2_direction_array_azimuth``
      - 180
      - 180
@@ -44902,16 +42056,24 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 180
      - 180
      - 180
-     -
-   * - ``pv_system_2_direction_array_tilt``
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``pv_system_maximum_power_output``
+     - W
+     - Peak power for the PV system.
+   * - ``pv_system_2_direction_array_azimuth``
+     - deg
+     - The azimuth of the PV system array. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270).
 .. _plug_load_diversity:
 
 Plug Load Diversity
@@ -44933,35 +42095,6 @@ Source
 - \Engineering Judgement, Calibration
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``misc_television_annual_energy_use``
-     - kWh/yr
-     - The annual energy consumption of the televisions.
-   * - ``misc_television_usage_multiplier``
-     - 
-     - Multiplier on the energy usage that can reflect, e.g., high/low usage occupants.
-   * - ``misc_plug_loads_annual_energy_use``
-     - kWh/yr
-     - The annual energy consumption of the plug loads.
-   * - ``misc_plug_loads_usage_multiplier``
-     - 
-     - Multiplier on the energy usage that can reflect, e.g., high/low usage occupants.
-   * - ``misc_plug_loads_sensible_fraction``
-     - frac
-     - Fraction of internal gains that are sensible.
-   * - ``misc_plug_loads_latent_fraction``
-     - frac
-     - Fraction of internal gains that are latent.
-
 Options
 *******
 
@@ -44980,30 +42113,31 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 25%
      - 50%
      - 25%
-   * - ``misc_television_annual_energy_use``
-     - 
-     - 
-     - 
    * - ``misc_television_usage_multiplier``
      - 0.5
      - 
      - 2.0
-   * - ``misc_plug_loads_annual_energy_use``
-     - 
-     - 
-     - 
    * - ``misc_plug_loads_usage_multiplier``
      - 0.5
      - 
      - 2.0
-   * - ``misc_plug_loads_sensible_fraction``
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``misc_television_usage_multiplier``
      - 
+     - Multiplier on the energy usage that can reflect, e.g., high/low usage occupants.
+   * - ``misc_plug_loads_usage_multiplier``
      - 
-     - 
-   * - ``misc_plug_loads_latent_fraction``
-     - 
-     - 
-     - 
+     - Multiplier on the energy usage that can reflect, e.g., high/low usage occupants.
 .. _plug_loads:
 
 Plug Loads
@@ -45030,23 +42164,6 @@ Assumption
 
 - \Multipliers are based on ratio of the ResStock MELS regression equations and the MELS modeled in RECS.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``misc_plug_loads_television_usage_multiplier``
-     - 
-     - Multiplier on the television energy usage that can reflect, e.g., high/low usage occupants.
-   * - ``misc_plug_loads_other_usage_multiplier``
-     - 
-     - Multiplier on the other energy usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -45186,6 +42303,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1.4
      - 1.44
      - 1.66
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``misc_plug_loads_television_usage_multiplier``
+     - 
+     - Multiplier on the television energy usage that can reflect, e.g., high/low usage occupants.
+   * - ``misc_plug_loads_other_usage_multiplier``
+     - 
+     - Multiplier on the other energy usage that can reflect, e.g., high/low usage occupants.
 .. _reeds_balancing_area:
 
 REEDS Balancing Area
@@ -45493,6 +42627,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.35%
      - 0.54%
      - 0.63%
+
 .. _radiant_barrier:
 
 Radiant Barrier
@@ -45516,20 +42651,6 @@ Source
 - \all homes are assumed to not have attic radiant barriers installed.
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``enclosure_radiant_barrier_location``
-     - 
-     - The location of the radiant barrier in the attic.
-
 Options
 *******
 
@@ -45552,6 +42673,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - Attic roof only
      - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``enclosure_radiant_barrier_location``
+     - 
+     - The location of the radiant barrier in the attic.
 .. _range_spot_vent_hour:
 
 Range Spot Vent Hour
@@ -45572,20 +42707,6 @@ Source
 
 - \derived from national average cooking range schedule in Wilson et al. 'Building America House Simulation Protocols' 2014
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``kitchen_fans_start_hour``
-     - 
-     - The hour of the day when the kitchen fans run.
 
 Options
 *******
@@ -45672,6 +42793,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 21
      - 22
      - 23
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``kitchen_fans_start_hour``
+     - 
+     - The hour of the day when the kitchen fans run.
 .. _refrigerator:
 
 Refrigerator
@@ -45725,26 +42860,6 @@ Assumption
   - \[11] Census Region to National
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``appliance_refrigerator_rated_annual_consumption``
-     - kWh/yr
-     - The EnergyGuide rated annual energy consumption for the refrigerator.
-   * - ``appliance_refrigerator_usage_multiplier``
-     - 
-     - Multiplier on the refrigerator energy usage that can reflect, e.g., high/low usage occupants.
-   * - ``appliance_refrigerator_location``
-     - 
-     - The space type where the refrigerator is located.
-
 Options
 *******
 
@@ -45784,27 +42899,21 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 384
      - 348
      - 
-     -
-   * - ``appliance_refrigerator_usage_multiplier``
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``appliance_refrigerator_location``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``appliance_refrigerator_rated_annual_consumption``
+     - kWh/yr
+     - The EnergyGuide rated annual energy consumption for the refrigerator.
 .. _refrigerator_usage_level:
 
 Refrigerator Usage Level
@@ -45832,20 +42941,6 @@ Assumption
 - \Engineering judgement
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``refrigerator_usage_multiplier``
-     - 
-     - Multiplier on the refrigerator energy usage that can reflect, e.g., high/low usage occupants.
-
 Options
 *******
 
@@ -45868,6 +42963,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.95
      - 1.0
      - 1.05
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``refrigerator_usage_multiplier``
+     - 
+     - Multiplier on the refrigerator energy usage that can reflect, e.g., high/low usage occupants.
 .. _roof_material:
 
 Roof Material
@@ -45900,29 +43009,6 @@ Assumption
 
 - \Census Division RECS is coarsened to Census Region.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``enclosure_roof_material_type``
-     - 
-     - The type of roof material.
-   * - ``enclosure_roof_material_color``
-     - 
-     - The color of the roof.
-   * - ``enclosure_roof_material_solar_absorptance``
-     - 
-     - The solar absorptance of the outermost roof material.
-   * - ``enclosure_roof_material_emittance``
-     - 
-     - The emittance of the outermost roof material.
 
 Options
 *******
@@ -45966,22 +43052,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - medium
      - medium
      - medium
-   * - ``enclosure_roof_material_solar_absorptance``
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``enclosure_roof_material_type``
      - 
+     - The type of roof material.
+   * - ``enclosure_roof_material_color``
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``enclosure_roof_material_emittance``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
+     - The color of the roof.
 .. _state:
 
 State
@@ -46004,23 +43091,6 @@ Source
 
 - \Unit counts are from the American Community Survey 5-yr 2016.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``extra_refrigerator_usage_multiplier``
-     - 
-     - Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/low usage occupants.
-   * - ``freezer_usage_multiplier``
-     - 
-     - Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -46240,6 +43310,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1.20
      - 1.15
      - 1.32
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``extra_refrigerator_usage_multiplier``
+     - 
+     - Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/low usage occupants.
+   * - ``freezer_usage_multiplier``
+     - 
+     - Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants.
 .. _state_metro_median_income:
 
 State Metro Median Income
@@ -46289,6 +43376,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 9.5%
      - 27%
      - 12%
+
 .. _tenure:
 
 Tenure
@@ -46334,6 +43422,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 12%
      - 56%
      - 32%
+
 .. _usage_level:
 
 Usage Level
@@ -46375,6 +43464,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 50%
      - 25%
      - 0%
+
 .. _vacancy_status:
 
 Vacancy Status
@@ -46402,20 +43492,6 @@ Assumption
 - \Where sample counts are less than 10 (434 / 11680 rows), the State average distribution has been inserted. 'Mobile Home' does not exist in DC and is replaced by 'Single-Family Detached'.
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``schedules_vacancy_periods``
-     - 
-     - Specifies the vacancy periods. Enter a date like "Dec 15 - Jan 15". Optionally, can enter hour of the day like "Dec 15 2 - Jan 15 20" (start hour can be 0 through 23 and end hour can be 1 through 24). If multiple periods, use a comma-separated list.
-
 Options
 *******
 
@@ -46435,6 +43511,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - ``schedules_vacancy_periods``
      - 
      - Jan 1 - Dec 31
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``schedules_vacancy_periods``
+     - 
+     - Specifies the vacancy periods. Enter a date like "Dec 15 - Jan 15". Optionally, can enter hour of the day like "Dec 15 2 - Jan 15 20" (start hour can be 0 through 23 and end hour can be 1 through 24). If multiple periods, use a comma-separated list.
 .. _vintage:
 
 Vintage
@@ -46461,20 +43551,6 @@ Assumption
 
 - \Where sample counts are less than 10 (812 / 21024 rows), the State average distribution has been inserted. 'Mobile Home' does not exist in DC and is replaced by 'Single-Family Detached'.
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``vintage``
-     - 
-     - The building vintage, used for informational purposes only.
 
 Options
 *******
@@ -46516,6 +43592,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1990s
      - 2000s
      - 2010s
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``vintage``
+     - 
+     - The building vintage, used for informational purposes only.
 .. _vintage_acs:
 
 Vintage ACS
@@ -46561,6 +43651,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 27%
      - 14%
      - 5.1%
+
 .. _water_heater_efficiency:
 
 Water Heater Efficiency
@@ -46605,71 +43696,6 @@ Assumption
 
   - \[2] State: Census Region[3] State: National
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``dhw_water_heater_type``
-     - 
-     - The type of water heater.
-   * - ``dhw_water_heater_fuel_type``
-     - 
-     - The fuel type of the water heater.
-   * - ``dhw_water_heater_efficiency_type``
-     - 
-     - The efficiency type of the water heater. Does not apply to space-heating boilers.
-   * - ``dhw_water_heater_efficiency``
-     - 
-     - EnergyGuide Label rated Uniform Energy Factor (UEF) or Energy Factor (EF).
-   * - ``dhw_water_heater_tank_volume``
-     - gal
-     - The nominal volume of the water heater storage tank.
-   * - ``dhw_water_heater_recovery_efficiency``
-     - frac
-     - Ratio of energy delivered to water heater to the energy content of the fuel consumed by the water heater. Only used for non-electric storage water heaters.
-   * - ``dhw_water_heater_usage_bin``
-     - 
-     - EnergyGuide label usage bin (based on First Hour Rating).
-   * - ``dhw_water_heater_temperature``
-     - F
-     - The setpoint temperature of water heater.
-   * - ``dhw_solar_thermal_collector_loop_type``
-     - 
-     - The loop type of the solar thermal system.
-   * - ``dhw_solar_thermal_collector_type``
-     - 
-     - The type of collector.
-   * - ``dhw_solar_thermal_collector_area``
-     - 
-     - The surface area for the collector.
-   * - ``dhw_solar_thermal_collector_rated_optical_efficiency``
-     - 
-     - FRTA (y-intercept) from the Directory of SRCC OG-100 Certified Solar Collector Ratings.
-   * - ``dhw_solar_thermal_collector_rated_thermal_losses``
-     - 
-     - FRUL (slope) from the Directory of SRCC OG-100 Certified Solar Collector Ratings
-   * - ``dhw_solar_thermal_storage_volume``
-     - 
-     - Hot water storage volume.
-   * - ``dhw_solar_thermal_solar_fraction``
-     - 
-     - Portion of total conventional hot water heating load (delivered energy plus tank standby losses). Can be obtained from Directory of SRCC OG-300 Solar Water Heating System Ratings or NREL's System Advisor Model or equivalent.
-   * - ``dhw_solar_thermal_direction_collector_azimuth``
-     - deg
-     - The azimuth of the solar thermal system collectors. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270).
-   * - ``dhw_solar_thermal_direction_collector_tilt``
-     - deg
-     - The tilt of the solar thermal system collectors. Defaults to roof pitch.
-   * - ``dhw_water_heater_jacket_rvalue``
-     - h-ft^2-R/Btu
-     - The jacket R-value of the storage water heater.
 
 Options
 *******
@@ -46819,98 +43845,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.6
      - 0.92
      - 0.6
-   * - ``dhw_water_heater_tank_volume``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``dhw_water_heater_recovery_efficiency``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``dhw_water_heater_usage_bin``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-   * - ``dhw_water_heater_temperature``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
    * - ``dhw_solar_thermal_collector_loop_type``
      - 
      - 
@@ -47049,29 +43983,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 60
      - 60
      - 
-   * - ``dhw_solar_thermal_solar_fraction``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
    * - ``dhw_solar_thermal_direction_collector_azimuth``
      - 180
      - 180
@@ -47095,29 +44006,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 180
      - 270
      - 180
-   * - ``dhw_solar_thermal_direction_collector_tilt``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
    * - ``dhw_water_heater_jacket_rvalue``
      - 0
      - 0
@@ -47141,6 +44029,53 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0
      - 6.2
      - 0
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``dhw_water_heater_type``
+     - 
+     - The type of water heater.
+   * - ``dhw_water_heater_fuel_type``
+     - 
+     - The fuel type of the water heater.
+   * - ``dhw_water_heater_efficiency_type``
+     - 
+     - The efficiency type of the water heater. Does not apply to space-heating boilers.
+   * - ``dhw_water_heater_efficiency``
+     - 
+     - EnergyGuide Label rated Uniform Energy Factor (UEF) or Energy Factor (EF).
+   * - ``dhw_solar_thermal_collector_loop_type``
+     - 
+     - The loop type of the solar thermal system.
+   * - ``dhw_solar_thermal_collector_type``
+     - 
+     - The type of collector.
+   * - ``dhw_solar_thermal_collector_area``
+     - 
+     - The surface area for the collector.
+   * - ``dhw_solar_thermal_collector_rated_optical_efficiency``
+     - 
+     - FRTA (y-intercept) from the Directory of SRCC OG-100 Certified Solar Collector Ratings.
+   * - ``dhw_solar_thermal_collector_rated_thermal_losses``
+     - 
+     - FRUL (slope) from the Directory of SRCC OG-100 Certified Solar Collector Ratings
+   * - ``dhw_solar_thermal_storage_volume``
+     - 
+     - Hot water storage volume.
+   * - ``dhw_solar_thermal_direction_collector_azimuth``
+     - deg
+     - The azimuth of the solar thermal system collectors. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270).
+   * - ``dhw_water_heater_jacket_rvalue``
+     - h-ft^2-R/Btu
+     - The jacket R-value of the storage water heater.
 .. _water_heater_fuel:
 
 Water Heater Fuel
@@ -47214,6 +44149,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 3.9%
      - 0.16%
      - 0.076%
+
 .. _water_heater_in_unit:
 
 Water Heater In Unit
@@ -47269,6 +44205,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Stock saturation
      - 14%
      - 86%
+
 .. _water_heater_location:
 
 Water Heater Location
@@ -47318,20 +44255,6 @@ Assumption
 - \9. 7 + IECC Climate Zone lumped into: 1-2-3, 4-8.
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``dhw_water_heater_location_location``
-     - 
-     - The location of the water heater.
-
 Options
 *******
 
@@ -47369,6 +44292,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - conditioned space
      - other exterior
      - basement
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``dhw_water_heater_location_location``
+     - 
+     - The location of the water heater.
 .. _window_areas:
 
 Window Areas
@@ -47403,23 +44340,6 @@ Assumption
 
 - \SFD, SFA, and Mobile Homes are represented by the SFD window area distribution
 
-
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``geometry_window_areas_or_wwrs``
-     - ft2 or frac
-     - The amount of window area on the unit's front/back/left/right facades. Use a comma-separated list like '0.2, 0.2, 0.1, 0.1' to specify Window-to-Wall Ratios (WWR) or '108, 108, 72, 72' to specify absolute areas. If a facade is adiabatic, the value will be ignored.
-   * - ``geometry_skylight_areas``
-     - ft2
-     - The amount of skylight area on the unit's front/back/left/right roofs. Use a comma-separated list like '50, 0, 0, 0'.
 
 Options
 *******
@@ -47459,6 +44379,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0, 0, 0, 0
      - 0, 0, 0, 0
      - 0, 0, 0, 0
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``geometry_window_areas_or_wwrs``
+     - ft2 or frac
+     - The amount of window area on the unit's front/back/left/right facades. Use a comma-separated list like '0.2, 0.2, 0.1, 0.1' to specify Window-to-Wall Ratios (WWR) or '108, 108, 72, 72' to specify absolute areas. If a facade is adiabatic, the value will be ignored.
+   * - ``geometry_skylight_areas``
+     - ft2
+     - The amount of skylight area on the unit's front/back/left/right roofs. Use a comma-separated list like '50, 0, 0, 0'.
 .. _windows:
 
 Windows
@@ -47520,44 +44457,6 @@ Assumption
 - \Due to lack of performance data Double-pane, Low-E, Non-Metal, Air, M-gain, Exterior Clear Storm windows are modeled as Double-pane, Clear, Non-Metal, Air, Exterior Clear Storm windows
 
 
-Properties
-**********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Units
-     - Description
-   * - ``enclosure_window_u_factor``
-     - Btu/hr-ft2-F
-     - Full-assembly NFRC U-factor.
-   * - ``enclosure_window_shgc``
-     - 
-     - Full-assembly NFRC solar heat gain coefficient.
-   * - ``enclosure_window_exterior_shading_type``
-     - 
-     - The type of window exterior shading.
-   * - ``enclosure_window_exterior_shading_summer_coefficient``
-     - frac
-     - Exterior shading coefficient for the summer season. 1.0 indicates no reduction in solar gain, 0.85 indicates 15% reduction, etc.
-   * - ``enclosure_window_exterior_shading_winter_coefficient``
-     - frac
-     - Exterior shading coefficient for the winter season. 1.0 indicates no reduction in solar gain, 0.85 indicates 15% reduction, etc.
-   * - ``enclosure_window_insect_screens_location``
-     - 
-     - Whether the screen is on the interior or exterior of the glass.
-   * - ``enclosure_window_storm_glass_type``
-     - 
-     - Type of storm window glass.
-   * - ``enclosure_skylight_u_factor``
-     - Btu/hr-ft2-F
-     - Full-assembly NFRC U-factor.
-   * - ``enclosure_skylight_shgc``
-     - 
-     - Full-assembly NFRC solar heat gain coefficient.
-
 Options
 *******
 
@@ -47603,7 +44502,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.84
      - 0.84
      - 0.29
-     -
+     - 
    * - ``enclosure_window_shgc``
      - 0.67
      - 0.67
@@ -47615,7 +44514,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.63
      - 0.63
      - 0.26
-     -
+     - 
    * - ``enclosure_window_exterior_shading_type``
      - none
      - none
@@ -47627,43 +44526,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - none
      - none
      - none
-     -
-   * - ``enclosure_window_exterior_shading_summer_coefficient``
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``enclosure_window_exterior_shading_winter_coefficient``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
-   * - ``enclosure_window_insect_screens_location``
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     -
    * - ``enclosure_window_storm_glass_type``
      - 
      - clear
@@ -47675,7 +44538,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - clear
      - 
-     -
+     - 
    * - ``enclosure_skylight_u_factor``
      - 1.13
      - 1.13
@@ -47687,7 +44550,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1.13
      - 1.13
      - 1.13
-     -
+     - 
    * - ``enclosure_skylight_shgc``
      - 0.78
      - 0.78
@@ -47699,4 +44562,33 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.78
      - 0.78
      - 0.78
-     -
+     - 
+
+Properties
+**********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Units
+     - Description
+   * - ``enclosure_window_u_factor``
+     - Btu/hr-ft2-F
+     - Full-assembly NFRC U-factor.
+   * - ``enclosure_window_shgc``
+     - 
+     - Full-assembly NFRC solar heat gain coefficient.
+   * - ``enclosure_window_exterior_shading_type``
+     - 
+     - The type of window exterior shading.
+   * - ``enclosure_window_storm_glass_type``
+     - 
+     - Type of storm window glass.
+   * - ``enclosure_skylight_u_factor``
+     - Btu/hr-ft2-F
+     - Full-assembly NFRC U-factor.
+   * - ``enclosure_skylight_shgc``
+     - 
+     - Full-assembly NFRC solar heat gain coefficient.

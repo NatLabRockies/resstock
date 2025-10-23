@@ -49,11 +49,12 @@ filepath = File.read(File.join(resources_dir, '../measures/ResStockArguments/mea
 resstockarguments_xml = get_measure_xml(filepath)
 
 arg_order = get_arg_order(buildreshpxmlarguments_xml, resstockarguments_xml)
-source_report_cols = ['Description', 'Created by', 'Source', 'Assumption']
 properties_cols = get_properties_cols()
 
 properties = get_properties(resources_dir)
 options = get_options(resources_dir)
+
+# properties['appliance_cooking_range_oven'].delete('appliance_cooking_range_oven_usage_multiplier')
 
 f = File.open(File.join(File.dirname(__FILE__), 'characteristics.rst'), 'w')
 f.puts('.. _housing_characteristics:')
@@ -64,12 +65,19 @@ f.puts
 f.puts('Each parameter sampled by the national project is listed alphabetically as its own subsection below.')
 f.puts('For each parameter, the following (if applicable) are reported based on the contents of the `source_report.csv <https://github.com/NREL/resstock/blob/develop/project_national/resources/source_report.csv>`_:')
 f.puts
+
+source_report_cols = ['Description', 'Created by', 'Source', 'Assumption']
 source_report_cols.each do |source_report_col|
   f.puts("- **#{source_report_col}**")
 end
 f.puts
+
+f.puts('For each parameter an **Options** table is populated based on the contents of the `options_lookup.tsv <https://github.com/NREL/resstock/blob/develop/resources/options_lookup.tsv>`_, `options_saturations.csv <https://github.com/NREL/resstock/blob/develop/project_national/resources/options_saturations.csv>`_, and `BuildResidentialHPXML/resources/options/*.tsv <https://github.com/NREL/resstock/blob/develop/resources/hpxml-measures/BuildResidentialHPXML/resources/options>`_ files.')
+f.puts
+
 f.puts('For each parameter a **Properties** table is populated (if applicable) based on the contents of `BuildResidentialHPXML/resources/options/*.tsv <https://github.com/NREL/resstock/blob/develop/resources/hpxml-measures/BuildResidentialHPXML/resources/options>`_ files, each containing the following columns:')
 f.puts
+
 properties_cols.each do |properties_col|
   if ['Name'].include?(properties_col)
     f.puts("- **#{properties_col}** [#]_")
@@ -77,10 +85,9 @@ properties_cols.each do |properties_col|
     f.puts("- **#{properties_col}**")
   end
 end
+
 f.puts
 f.puts('.. [#] Each **Name** entry is an argument that is assigned using defined options from the `options_lookup.tsv <https://github.com/NREL/resstock/blob/develop/resources/options_lookup.tsv>`_.')
-f.puts
-f.puts('For each parameter an **Options** table is populated based on the contents of the `options_lookup.tsv <https://github.com/NREL/resstock/blob/develop/resources/options_lookup.tsv>`_, `options_saturations.csv <https://github.com/NREL/resstock/blob/develop/project_national/resources/options_saturations.csv>`_, and `BuildResidentialHPXML/resources/options/*.tsv <https://github.com/NREL/resstock/blob/develop/resources/hpxml-measures/BuildResidentialHPXML/resources/options>`_ files.')
 f.puts
 
 lookup_csv_data, option_sat_csv_data = get_lookup_and_saturations_csv_data(resources_dir)
@@ -103,7 +110,6 @@ source_report.each do |row|
     write_subsection(f, row, subsection_name, '*', delim)
   end
 
-  # Properties
   r_arguments = []
   lookup_csv_data.each do |lookup_row|
     next if lookup_row[0] != parameter
@@ -114,39 +120,8 @@ source_report.each do |row|
       r_arguments << argument if !r_arguments.include?(argument)
     end
   end
-  if r_arguments.any?
 
-    name = 'Properties'
-    f.puts(name)
-    f.puts('*' * name.size)
-    f.puts
-    f.puts('.. list-table::')
-    f.puts('   :header-rows: 1')
-    f.puts('   :stub-columns: 1')
-    f.puts
-    properties_cols.each_with_index do |properties_col, i|
-      line = "     - #{properties_col}"
-      line = "   * - #{properties_col}" if i == 0
-      f.puts(line)
-    end
-
-    r_arguments = r_arguments.sort_by &arg_order.method(:index)
-
-    r_arguments.each do |r_argument|
-      if properties.keys.include?(r_argument)
-        properties[r_argument].each do |property_name, property_unit_comment|
-          f.puts("   * - ``#{property_name}``")
-          f.puts("     - #{property_unit_comment['property_unit']}")
-          f.puts("     - #{property_unit_comment['comment_row']}")
-        end
-      else
-        f.puts("   * - ``#{r_argument}``")
-        f.puts("     - #{resstockarguments_xml[r_argument]['units']}")
-        f.puts("     - #{resstockarguments_xml[r_argument]['description']}")
-      end
-    end
-    f.puts
-  end
+  r_arguments = r_arguments.sort_by &arg_order.method(:index)
 
   # Options
   name = 'Options'
@@ -209,10 +184,11 @@ source_report.each do |row|
     f.puts("     - #{lookup[option]['sat']}")
   end
 
+  args = {}
   r_arguments.each do |r_argument|
     if properties.keys.include?(r_argument)
       properties[r_argument].keys.each do |arg|
-        f.puts("   * - ``#{arg}``")
+        args[arg] = []
 
         lookup.keys.each do |option|
           option_name = lookup[option][r_argument]
@@ -221,18 +197,63 @@ source_report.each do |row|
             options[r_argument][option_name].each do |arg2, value|
               next if arg != arg2
 
-              f.puts("     - #{value}")
+              args[arg] << value
             end
           else
-            f.puts('     -')
+            args[arg] << nil
           end
         end
       end
     else
-      f.puts("   * - ``#{r_argument}``")
+      args[r_argument] = []
       lookup.keys.each do |option|
-        f.puts("     - #{lookup[option][r_argument]}")
+        args[r_argument] << lookup[option][r_argument]
       end
+    end
+  end
+
+  args.delete_if { |_k, v| v.all?(&:nil?) }
+
+  args.each do |property, values|
+    next if values.all?(&:nil?)
+
+    f.puts("   * - ``#{property}``")
+    values.each do |value|
+      f.puts("     - #{value}")
+    end
+  end
+  f.puts
+
+  # Properties
+  next unless not args.empty?
+
+  name = 'Properties'
+  f.puts(name)
+  f.puts('*' * name.size)
+  f.puts
+  f.puts('.. list-table::')
+  f.puts('   :header-rows: 1')
+  f.puts('   :stub-columns: 1')
+  f.puts
+  properties_cols.each_with_index do |properties_col, i|
+    line = "     - #{properties_col}"
+    line = "   * - #{properties_col}" if i == 0
+    f.puts(line)
+  end
+
+  r_arguments.each do |r_argument|
+    if properties.keys.include?(r_argument)
+      properties[r_argument].each do |property_name, property_unit_comment|
+        next unless args.keys.include?(property_name)
+
+        f.puts("   * - ``#{property_name}``")
+        f.puts("     - #{property_unit_comment['property_unit']}")
+        f.puts("     - #{property_unit_comment['comment_row']}")
+      end
+    else
+      f.puts("   * - ``#{r_argument}``")
+      f.puts("     - #{resstockarguments_xml[r_argument]['units']}")
+      f.puts("     - #{resstockarguments_xml[r_argument]['description']}")
     end
   end
 end
