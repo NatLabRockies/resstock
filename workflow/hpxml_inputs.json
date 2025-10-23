@@ -366,14 +366,14 @@
     "heating_system_fraction_heat_load_served": 1.0,
     "cooling_system_type": "central air conditioner",
     "cooling_system_cooling_capacity": 38300,
-    "cooling_system_cooling_efficiency": 10,
-    "cooling_system_cooling_efficiency_type": "SEER",
+    "cooling_system_cooling_efficiency": 9.5,
+    "cooling_system_cooling_efficiency_type": "SEER2",
     "cooling_system_fraction_cool_load_served": 1,
     "hvac_blower_fan_watts_per_cfm": 0.5
   },
   "tests/HERS_HVAC/HVAC1b.xml": {
     "parent_hpxml": "tests/HERS_HVAC/HVAC1a.xml",
-    "cooling_system_cooling_efficiency": 13
+    "cooling_system_cooling_efficiency": 12.4
   },
   "tests/HERS_HVAC/HVAC2a.xml": {
     "parent_hpxml": "tests/HERS_HVAC/HVAC1a.xml",
@@ -396,15 +396,15 @@
     "heat_pump_backup_heating_efficiency": 1.0,
     "heat_pump_fraction_heat_load_served": 1.0,
     "heat_pump_fraction_cool_load_served": 1.0,
-    "heat_pump_heating_efficiency_type": "HSPF",
-    "heat_pump_heating_efficiency": 6.8,
-    "heat_pump_cooling_efficiency_type": "SEER",
-    "heat_pump_cooling_efficiency": 10
+    "heat_pump_heating_efficiency_type": "HSPF2",
+    "heat_pump_heating_efficiency": 5.8,
+    "heat_pump_cooling_efficiency_type": "SEER2",
+    "heat_pump_cooling_efficiency": 9.5
   },
   "tests/HERS_HVAC/HVAC2d.xml": {
     "parent_hpxml": "tests/HERS_HVAC/HVAC2c.xml",
-    "heat_pump_heating_efficiency": 9.85,
-    "heat_pump_cooling_efficiency": 13
+    "heat_pump_heating_efficiency": 8.4,
+    "heat_pump_cooling_efficiency": 12.4
   },
   "tests/HERS_HVAC/HVAC2e.xml": {
     "parent_hpxml": "tests/HERS_HVAC/HVAC2a.xml",
@@ -424,8 +424,8 @@
     "heating_system_fraction_heat_load_served": 1.0,
     "cooling_system_type": "central air conditioner",
     "cooling_system_cooling_capacity": 38400,
-    "cooling_system_cooling_efficiency": 10,
-    "cooling_system_cooling_efficiency_type": "SEER",
+    "cooling_system_cooling_efficiency": 9.5,
+    "cooling_system_cooling_efficiency_type": "SEER2",
     "cooling_system_fraction_cool_load_served": 1,
     "hvac_blower_fan_watts_per_cfm": 0.5,
     "ducts_supply_insulation_r": 0,
@@ -462,8 +462,8 @@
     "heating_system_fraction_heat_load_served": 1.0,
     "cooling_system_type": "central air conditioner",
     "cooling_system_cooling_capacity": 38400,
-    "cooling_system_cooling_efficiency": 10,
-    "cooling_system_cooling_efficiency_type": "SEER",
+    "cooling_system_cooling_efficiency": 9.5,
+    "cooling_system_cooling_efficiency_type": "SEER2",
     "cooling_system_fraction_cool_load_served": 1,
     "hvac_blower_fan_watts_per_cfm": 0.5,
     "ducts_supply_insulation_r": 0,
@@ -510,8 +510,8 @@
     "heating_system_heating_efficiency": 0.78,
     "heating_system_fraction_heat_load_served": 1.0,
     "cooling_system_type": "central air conditioner",
-    "cooling_system_cooling_efficiency": 13,
-    "cooling_system_cooling_efficiency_type": "SEER",
+    "cooling_system_cooling_efficiency": 12.4,
+    "cooling_system_cooling_efficiency_type": "SEER2",
     "cooling_system_fraction_cool_load_served": 1,
     "water_heater_type": "storage water heater",
     "water_heater_fuel_type": "natural gas",
