@@ -51,7 +51,6 @@ max_options_total = 56
 source_report = CSV.read(File.join(File.dirname(__FILE__), '../../../project_national/resources/source_report.csv'), headers: true)
 parameters = source_report.collect { |row| row['Parameter'] }
 parameters.each do |parameter|
-
   r_arguments = []
   lookup_csv_data.each do |lookup_row|
     next if lookup_row[0] != parameter
@@ -163,6 +162,8 @@ parameters.each do |parameter|
           row << "#{option_name}".gsub('^2', '\textsuperscript{2}').gsub('%', '\\%').gsub('<', '\textless') # Door Area, Partial Space Conditioning
         end
         f.puts("{#{row.join(' & ')}}")
+        f.puts('\\endhead')
+        f.puts('\\hline')
       else
         f.puts('\\hline')
         row = ['Option name']
