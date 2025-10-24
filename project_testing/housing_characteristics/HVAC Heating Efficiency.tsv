@@ -1,143 +1,143 @@
-Dependency=Heating Fuel	Dependency=HVAC Has Shared System	Dependency=HVAC Heating Type	Option=ASHP, SEER 10, 6.8 HSPF	Option=ASHP, SEER 13, 7.7 HSPF	Option=ASHP, SEER 15, 8.5 HSPF	Option=Electric Baseboard, 100% Efficiency	Option=Electric Boiler, 100% AFUE	Option=Electric Furnace, 100% AFUE	Option=Electric Wall Furnace, 100% AFUE	Option=Fuel Boiler, 76% AFUE	Option=Fuel Boiler, 80% AFUE	Option=Fuel Boiler, 90% AFUE	Option=Fuel Furnace, 60% AFUE	Option=Fuel Furnace, 76% AFUE	Option=Fuel Furnace, 80% AFUE	Option=Fuel Furnace, 92.5% AFUE	Option=Fuel Wall/Floor Furnace, 60% AFUE	Option=Fuel Wall/Floor Furnace, 68% AFUE	Option=MSHP, SEER2 14.5, 7.7 HSPF2	Option=MSHP, SEER2 29, 12.3 HSPF2	Option=None	Option=Shared Heating	Option=Void	sampling_probability
-Electricity	Cooling Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Electricity	Heating Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Electricity	Heating and Cooling	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Electricity	None	Ducted Heat Pump	0.333333	0.333333	0.333333	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0357143
-Electricity	Cooling Only	Ducted Heating	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.00231481
-Electricity	Heating Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0115741
-Electricity	Heating and Cooling	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00231481
-Electricity	None	Ducted Heating	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0195106
-Electricity	Cooling Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Electricity	Heating Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Electricity	Heating and Cooling	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Electricity	None	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.5	0.5	0	0	0	0.0357143
-Electricity	Cooling Only	Non-Ducted Heating	0	0	0	0.333333	0.333333	0	0.333333	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.00231481
-Electricity	Heating Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0115741
-Electricity	Heating and Cooling	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00231481
-Electricity	None	Non-Ducted Heating	0	0	0	0.333333	0.333333	0	0.333333	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0195106
-Electricity	Cooling Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Electricity	Heating Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Electricity	Heating and Cooling	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Electricity	None	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Fuel Oil	Cooling Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Fuel Oil	Heating Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Fuel Oil	Heating and Cooling	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Fuel Oil	None	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Fuel Oil	Cooling Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0.00462963
-Fuel Oil	Heating Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
-Fuel Oil	Heating and Cooling	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
-Fuel Oil	None	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0.0390212
-Fuel Oil	Cooling Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Fuel Oil	Heating Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Fuel Oil	Heating and Cooling	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Fuel Oil	None	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Fuel Oil	Cooling Only	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0.00462963
-Fuel Oil	Heating Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
-Fuel Oil	Heating and Cooling	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
-Fuel Oil	None	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0.0390212
-Fuel Oil	Cooling Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Fuel Oil	Heating Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Fuel Oil	Heating and Cooling	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Fuel Oil	None	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Natural Gas	Cooling Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Natural Gas	Heating Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Natural Gas	Heating and Cooling	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Natural Gas	None	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Natural Gas	Cooling Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0.00462963
-Natural Gas	Heating Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
-Natural Gas	Heating and Cooling	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
-Natural Gas	None	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0.0390212
-Natural Gas	Cooling Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Natural Gas	Heating Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Natural Gas	Heating and Cooling	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Natural Gas	None	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Natural Gas	Cooling Only	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0.00462963
-Natural Gas	Heating Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
-Natural Gas	Heating and Cooling	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
-Natural Gas	None	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0.0390212
-Natural Gas	Cooling Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Natural Gas	Heating Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Natural Gas	Heating and Cooling	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Natural Gas	None	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	Cooling Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	Heating Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	Heating and Cooling	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	None	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	Cooling Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	Heating Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	Heating and Cooling	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	None	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	Cooling Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	Heating Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	Heating and Cooling	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	None	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	Cooling Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	Heating Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	Heating and Cooling	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	None	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	Cooling Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0.0185185
-None	Heating Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	Heating and Cooling	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-None	None	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0.124339
-Other Fuel	Cooling Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Other Fuel	Heating Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Other Fuel	Heating and Cooling	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Other Fuel	None	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Other Fuel	Cooling Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0.00462963
-Other Fuel	Heating Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
-Other Fuel	Heating and Cooling	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
-Other Fuel	None	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0.0390212
-Other Fuel	Cooling Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Other Fuel	Heating Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Other Fuel	Heating and Cooling	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Other Fuel	None	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Other Fuel	Cooling Only	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0.00462963
-Other Fuel	Heating Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
-Other Fuel	Heating and Cooling	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
-Other Fuel	None	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0.0390212
-Other Fuel	Cooling Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Other Fuel	Heating Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Other Fuel	Heating and Cooling	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Other Fuel	None	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Propane	Cooling Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Propane	Heating Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Propane	Heating and Cooling	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Propane	None	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Propane	Cooling Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0.00462963
-Propane	Heating Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
-Propane	Heating and Cooling	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
-Propane	None	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0.0390212
-Propane	Cooling Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Propane	Heating Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Propane	Heating and Cooling	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Propane	None	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Propane	Cooling Only	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0.00462963
-Propane	Heating Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
-Propane	Heating and Cooling	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
-Propane	None	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0.0390212
-Propane	Cooling Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Propane	Heating Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Propane	Heating and Cooling	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Propane	None	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Wood	Cooling Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Wood	Heating Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Wood	Heating and Cooling	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Wood	None	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Wood	Cooling Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0.00462963
-Wood	Heating Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
-Wood	Heating and Cooling	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
-Wood	None	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0.0390212
-Wood	Cooling Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Wood	Heating Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Wood	Heating and Cooling	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Wood	None	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Wood	Cooling Only	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0.00462963
-Wood	Heating Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
-Wood	Heating and Cooling	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
-Wood	None	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0.0390212
-Wood	Cooling Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Wood	Heating Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Wood	Heating and Cooling	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-Wood	None	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Dependency=Heating Fuel	Dependency=HVAC Has Shared System	Dependency=HVAC Heating Type	Option=ASHP, SEER2 9.5, 5.8 HSPF2	Option=ASHP, SEER2 12.4, 6.6 HSPF2	Option=ASHP, SEER2 14.3, 7.4 HSPF2	Option=Electric Baseboard, 100% Efficiency	Option=Electric Boiler, 100% AFUE	Option=Electric Furnace, 100% AFUE	Option=Electric Wall Furnace, 100% AFUE	Option=Fuel Boiler, 76% AFUE	Option=Fuel Boiler, 80% AFUE	Option=Fuel Boiler, 90% AFUE	Option=Fuel Furnace, 60% AFUE	Option=Fuel Furnace, 76% AFUE	Option=Fuel Furnace, 80% AFUE	Option=Fuel Furnace, 92.5% AFUE	Option=Fuel Wall/Floor Furnace, 60% AFUE	Option=Fuel Wall/Floor Furnace, 68% AFUE	Option=MSHP, SEER2 14.5, 7.7 HSPF2	Option=None	Option=Shared Heating	Option=Void	sampling_probability
+Electricity	Cooling Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Electricity	Heating Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Electricity	Heating and Cooling	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Electricity	None	Ducted Heat Pump	0.333333	0.333333	0.333333	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0357143
+Electricity	Cooling Only	Ducted Heating	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.00231481
+Electricity	Heating Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0115741
+Electricity	Heating and Cooling	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00231481
+Electricity	None	Ducted Heating	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0195106
+Electricity	Cooling Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Electricity	Heating Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Electricity	Heating and Cooling	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Electricity	None	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0.0357143
+Electricity	Cooling Only	Non-Ducted Heating	0	0	0	0.333333	0.333333	0	0.333333	0	0	0	0	0	0	0	0	0	0	0	0	0	0.00231481
+Electricity	Heating Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0115741
+Electricity	Heating and Cooling	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00231481
+Electricity	None	Non-Ducted Heating	0	0	0	0.333333	0.333333	0	0.333333	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0195106
+Electricity	Cooling Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Electricity	Heating Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Electricity	Heating and Cooling	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Electricity	None	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Fuel Oil	Cooling Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Fuel Oil	Heating Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Fuel Oil	Heating and Cooling	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Fuel Oil	None	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Fuel Oil	Cooling Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0.00462963
+Fuel Oil	Heating Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
+Fuel Oil	Heating and Cooling	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
+Fuel Oil	None	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0.0390212
+Fuel Oil	Cooling Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Fuel Oil	Heating Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Fuel Oil	Heating and Cooling	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Fuel Oil	None	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Fuel Oil	Cooling Only	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0.00462963
+Fuel Oil	Heating Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
+Fuel Oil	Heating and Cooling	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
+Fuel Oil	None	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0.0390212
+Fuel Oil	Cooling Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Fuel Oil	Heating Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Fuel Oil	Heating and Cooling	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Fuel Oil	None	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Natural Gas	Cooling Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Natural Gas	Heating Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Natural Gas	Heating and Cooling	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Natural Gas	None	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Natural Gas	Cooling Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0.00462963
+Natural Gas	Heating Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
+Natural Gas	Heating and Cooling	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
+Natural Gas	None	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0.0390212
+Natural Gas	Cooling Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Natural Gas	Heating Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Natural Gas	Heating and Cooling	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Natural Gas	None	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Natural Gas	Cooling Only	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0.00462963
+Natural Gas	Heating Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
+Natural Gas	Heating and Cooling	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
+Natural Gas	None	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0.0390212
+Natural Gas	Cooling Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Natural Gas	Heating Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Natural Gas	Heating and Cooling	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Natural Gas	None	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	Cooling Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	Heating Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	Heating and Cooling	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	None	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	Cooling Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	Heating Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	Heating and Cooling	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	None	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	Cooling Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	Heating Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	Heating and Cooling	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	None	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	Cooling Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	Heating Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	Heating and Cooling	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	None	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	Cooling Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0.0185185
+None	Heating Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	Heating and Cooling	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+None	None	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0.124339
+Other Fuel	Cooling Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Other Fuel	Heating Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Other Fuel	Heating and Cooling	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Other Fuel	None	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Other Fuel	Cooling Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0.00462963
+Other Fuel	Heating Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
+Other Fuel	Heating and Cooling	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
+Other Fuel	None	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0.0390212
+Other Fuel	Cooling Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Other Fuel	Heating Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Other Fuel	Heating and Cooling	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Other Fuel	None	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Other Fuel	Cooling Only	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0.00462963
+Other Fuel	Heating Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
+Other Fuel	Heating and Cooling	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
+Other Fuel	None	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0.0390212
+Other Fuel	Cooling Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Other Fuel	Heating Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Other Fuel	Heating and Cooling	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Other Fuel	None	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Propane	Cooling Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Propane	Heating Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Propane	Heating and Cooling	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Propane	None	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Propane	Cooling Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0.00462963
+Propane	Heating Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
+Propane	Heating and Cooling	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
+Propane	None	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0.0390212
+Propane	Cooling Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Propane	Heating Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Propane	Heating and Cooling	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Propane	None	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Propane	Cooling Only	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0.00462963
+Propane	Heating Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
+Propane	Heating and Cooling	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
+Propane	None	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0.0390212
+Propane	Cooling Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Propane	Heating Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Propane	Heating and Cooling	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Propane	None	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Wood	Cooling Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Wood	Heating Only	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Wood	Heating and Cooling	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Wood	None	Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Wood	Cooling Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0.00462963
+Wood	Heating Only	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
+Wood	Heating and Cooling	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
+Wood	None	Ducted Heating	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0.0390212
+Wood	Cooling Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Wood	Heating Only	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Wood	Heating and Cooling	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Wood	None	Non-Ducted Heat Pump	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Wood	Cooling Only	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0.00462963
+Wood	Heating Only	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.0231481
+Wood	Heating and Cooling	Non-Ducted Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00462963
+Wood	None	Non-Ducted Heating	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0.0390212
+Wood	Cooling Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Wood	Heating Only	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Wood	Heating and Cooling	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+Wood	None	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
 # Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence and efficiency of the primary heating system in the dwelling unit.
