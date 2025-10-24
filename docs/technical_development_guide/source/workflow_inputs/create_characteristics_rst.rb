@@ -158,7 +158,7 @@ source_report.each do |row|
     lookup[option]['sat'] = sat_percent
 
     # Check if there are arguments
-    next unless !r_arguments.empty?
+    next if r_arguments.empty?
 
     # If there are arguments, go through options lookup to find the option
     lookup_csv_data.each do |lookup_row|

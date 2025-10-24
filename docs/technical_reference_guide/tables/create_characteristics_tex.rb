@@ -45,9 +45,11 @@ options_folder = File.join(File.dirname(__FILE__), 'options')
 FileUtils.rm_rf(Dir.glob("#{properties_folder}/*"))
 FileUtils.rm_rf(Dir.glob("#{options_folder}/*"))
 
+max_options_per_table = 3
+max_options_total = 30
+
 source_report = CSV.read(File.join(File.dirname(__FILE__), '../../../project_national/resources/source_report.csv'), headers: true)
 parameters = source_report.collect { |row| row['Parameter'] }
-
 parameters.each do |parameter|
   r_arguments = []
   lookup_csv_data.each do |lookup_row|
@@ -61,9 +63,6 @@ parameters.each do |parameter|
   end
 
   r_arguments = r_arguments.sort_by &arg_order.method(:index)
-
-  # Options
-  f = File.open(File.join(options_folder, "#{parameter}.tex"), 'w')
 
   # Options and stock saturation
   lookup = {}
@@ -88,7 +87,7 @@ parameters.each do |parameter|
     lookup[option]['sat'] = "#{sat_percent}".gsub('%', '\\%')
 
     # Check if there are arguments
-    next unless !r_arguments.empty?
+    next if r_arguments.empty?
 
     # If there are arguments, go through options lookup to find the option
     lookup_csv_data.each do |lookup_row|
@@ -104,111 +103,115 @@ parameters.each do |parameter|
     end
   end
 
-  max_options = 4
-  if lookup.keys.size > max_options
-    puts "Warning: #{parameter} options #{lookup.keys.size} / #{max_options}"
-  end
-
-  option_sets = lookup.keys.each_slice(max_options).to_a
-  option_sets.each_with_index do |lookup_keys, i|
-    if i == 0
-      row = '\begin{customLongTable}{ |p{5cm}'
-
-      lookup_keys.each do |_option_name|
-        row += '|p{2.25cm}'
-      end
-
-      f.puts("#{row}| }")
-
-      caption = "{#{parameter} options and properties that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}"
-      f.puts(caption)
-
-      row = '{Option name'
-      lookup_keys.each do |option_name|
-        row += " & #{option_name}".gsub('^2', '\textsuperscript{2}').gsub('%', '\\%').gsub('<', '\textless') # Door Area, Partial Space Conditioning
-      end
-      f.puts("#{row}}")
-    else
-      f.puts('\\hline')
-      row = ['Option name']
-      lookup_keys.each do |option_name|
-        row << "#{option_name}".gsub('^2', '\textsuperscript{2}').gsub('%', '\\%').gsub('<', '\textless') # Door Area, Partial Space Conditioning
-      end
-
-      if (row.size < max_options + 1) && (i > 0)
-        pad = max_options + 1 - row.size
-        (1..pad).each do |_p|
-          row << ''
-        end
-      end
-
-      row = "#{row.join(' & ')} \\\\ \\hline"
-      f.puts(row)
+  if lookup.keys.size > max_options_total
+    puts "Error: #{parameter} options #{lookup.keys.size} greater than max allowed of #{max_options_total}; skipping"
+  else
+    if lookup.keys.size > max_options_per_table
+      puts "Warning: #{parameter} options #{lookup.keys.size} greater than max per table of #{max_options_per_table}; extending the table vertically"
     end
 
-    if saturation_inclusions.include?(parameter)
-      row = 'Stock saturation'
-      lookup_keys.each do |option|
-        row += " & #{lookup[option]['sat']}"
-      end
-      f.puts("#{row} \\\\ \\hline")
-    end
+    # Options
+    f = File.open(File.join(options_folder, "#{parameter}.tex"), 'w')
 
-    r_arguments.each do |r_argument|
-      if properties.keys.include?(r_argument)
-        properties[r_argument].keys.each do |arg|
-          row = ["\\texttt{#{arg}}".gsub('_', '\_')]
+    option_sets = lookup.keys.each_slice(max_options_per_table).to_a
+    option_sets.each_with_index do |lookup_keys, i|
+      args = {}
+      r_arguments.each do |r_argument|
+        if properties.keys.include?(r_argument)
+          properties[r_argument].keys.each do |arg|
+            args[arg] = []
 
-          lookup_keys.each do |option|
-            option_name = lookup[option][r_argument]
+            lookup_keys.each do |option|
+              option_name = lookup[option][r_argument]
 
-            if not option_name.nil?
-              options[r_argument][option_name].each do |arg2, value|
-                next if arg != arg2
+              if not option_name.nil?
+                options[r_argument][option_name].each do |arg2, value|
+                  next if arg != arg2
 
-                row << value
+                  args[arg] << value
+                end
+              else
+                args[arg] << nil
               end
-            else
-              row << ''
             end
           end
-
-          if (row.size < max_options + 1) && (i > 0)
-            pad = max_options + 1 - row.size
-            (1..pad).each do |_p|
-              row << ''
-            end
+        else
+          args[r_argument] = []
+          lookup.keys.each do |option|
+            args[r_argument] << lookup[option][r_argument]
           end
-
-          row = "#{row.join(' & ')} \\\\"
-          if (arg != properties[r_argument].keys[-1]) || (i != option_sets.size - 1)
-            row += ' \\hline'
-          end
-          f.puts(row)
         end
+      end
+
+      args.delete_if { |_k, v| v.all?(&:nil?) }
+
+      if i == 0
+        row = '\begin{customLongTable}{ |p{5cm}'
+
+        lookup_keys.each do |_option_name|
+          row += '|p{3cm}'
+        end
+
+        f.puts("#{row}| }")
+
+        caption = "{#{parameter} options and properties that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}"
+        f.puts(caption)
+
+        row = ['Option name']
+        lookup_keys.each do |option_name|
+          row << "#{option_name}".gsub('^2', '\textsuperscript{2}').gsub('%', '\\%').gsub('<', '\textless') # Door Area, Partial Space Conditioning
+        end
+        f.puts("{#{row.join(' & ')}}")
       else
-        row = ["\\texttt{#{r_argument}}".gsub('_', '\_')]
-        lookup_keys.each do |option|
-          row << "#{lookup[option][r_argument]}"
+        f.puts('\\hline')
+        row = ['Option name']
+        lookup_keys.each do |option_name|
+          row << "#{option_name}".gsub('^2', '\textsuperscript{2}').gsub('%', '\\%').gsub('<', '\textless') # Door Area, Partial Space Conditioning
         end
 
-        if (row.size < max_options + 1) && (i > 0)
-          pad = max_options + 1 - row.size
+        if (row.size < max_options_per_table + 1) && (i > 0)
+          pad = max_options_per_table + 1 - row.size
+          (1..pad).each do |_p|
+            row << ''
+          end
+        end
+
+        row = "#{row.join(' & ')} \\\\ \\hline"
+        f.puts(row)
+      end
+
+      if saturation_inclusions.include?(parameter)
+        row = 'Stock saturation'
+        lookup_keys.each do |option|
+          row += " & #{lookup[option]['sat']}"
+        end
+        f.puts("#{row} \\\\ \\hline")
+      end
+
+      args.each do |property, values|
+        next if values.all?(&:nil?)
+
+        row = ["\\texttt{#{property}}".gsub('_', '\_')]
+        row += values
+
+        if (row.size < max_options_per_table + 1) && (i > 0)
+          pad = max_options_per_table + 1 - row.size
           (1..pad).each do |_p|
             row << ''
           end
         end
 
         row = "#{row.join(' & ')} \\\\"
-        if (r_argument != r_arguments[-1]) || (i != option_sets.size - 1)
+        if (property != args.keys[-1]) || (i != option_sets.size - 1)
           row += ' \\hline'
         end
         f.puts(row)
       end
-    end
-  end
+    end # end option_sets.each_with_index do |lookup_keys, i|
 
-  f.puts('\end{customLongTable}')
+    f.puts('\end{customLongTable}')
+
+  end
 
   # Properties
   next unless r_arguments.any?
