@@ -46,7 +46,7 @@ FileUtils.rm_rf(Dir.glob("#{properties_folder}/*"))
 FileUtils.rm_rf(Dir.glob("#{options_folder}/*"))
 
 max_options_per_table = 3
-max_options_total = 34
+max_options_total = 56
 
 source_report = CSV.read(File.join(File.dirname(__FILE__), '../../../project_national/resources/source_report.csv'), headers: true)
 parameters = source_report.collect { |row| row['Parameter'] }
