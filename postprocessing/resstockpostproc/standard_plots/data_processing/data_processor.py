@@ -85,8 +85,9 @@ def prepare_data_for_plot(
     working_df = _process_vacancy_inclusion(plot_spec, working_df)
 
     if plot_spec.quantity_type == QuantityType.prevalence:
+        assert plot_spec.upgrade is not None, "Prevalence plots require a specific upgrade to be selected."  # noqa: S101 Use of `assert` detected
         return prepare_data_for_prevalence_plot(
-            combined_df=working_df,
+            combined_df=working_df.filter(pl.col(UPGRADE_COL) == plot_spec.upgrade),
             quantity=plot_spec.quantity,
             quantity_group_name=plot_spec.quantity_group_name,
             grouping_cols=grouping_cols,

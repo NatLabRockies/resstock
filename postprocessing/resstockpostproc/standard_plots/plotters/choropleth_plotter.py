@@ -93,21 +93,32 @@ def create_plot(
     """Create a choropleth map for the provided data."""
 
     location_col = "in.state" if resolution == "state" else "in.county"
+    second_category_col = plot_spec.group_by
+    title_text: str | None = None
+
     if plot_spec.quantity_type == QuantityType.prevalence:
         if not plot_spec.quantity_group_name:
             raise ValueError("Prevalence choropleth plots require quantity_group_name to be set.")
         value_col = "prevalence"
         first_category_col = plot_spec.quantity_group_name
+        processed = data
+    elif isinstance(plot_spec.quantity, QuantityGroup):
+        processed, value_col, first_category_col, title_text = _prepare_quantity_group_dataframe(
+            data,
+            plot_spec,
+            location_column=location_col,
+            second_category_column=second_category_col,
+        )
     else:
         value_col = str(plot_spec.quantity)
         first_category_col = "upgrade_name"
-    second_category_col = plot_spec.group_by
+        processed = data
 
     required_cols = {location_col, value_col, first_category_col, "model_count"}
     if second_category_col:
         required_cols.add(second_category_col)
 
-    missing_cols = [col for col in required_cols if col not in data.columns]
+    missing_cols = [col for col in required_cols if col not in processed.columns]
     if missing_cols:
         missing = ", ".join(sorted(missing_cols))
         raise ValueError(f"Choropleth data is missing required columns: {missing}")
@@ -120,7 +131,7 @@ def create_plot(
     if second_category_col:
         filters.append(pl.col(second_category_col).is_not_null())
 
-    filtered = data.filter(filters)
+    filtered = processed.filter(filters)
     if filtered.is_empty():
         raise ValueError("No data remaining after filtering null locations/values for choropleth plot.")
 
@@ -139,6 +150,7 @@ def create_plot(
         plot_spec.quantity_type,
         value_title,
         resolution,
+        title_text=title_text,
         show_labels=show_labels,
         show_boundaries=show_boundaries,
     )
@@ -155,6 +167,7 @@ def _create_plot(
     value_title: str,
     resolution: Literal["state", "county"],
     *,
+    title_text: str | None = None,
     show_labels: bool,
     show_boundaries: bool,
 ) -> go.Figure:
@@ -322,8 +335,16 @@ def _create_plot(
         fig.update_layout(height=preferred_height)
     _stretch_geo_height(fig)
 
+    top_margin = 60 + (120 if title_text else 20)
+    left_margin = 40
+    if second_category_column and row_titles:
+        max_chars = max((len(title) for title in row_titles if title), default=0)
+        left_margin = max(160, min(260, 90 + max_chars * 6))
+    elif second_category_column:
+        left_margin = 160
+
     fig.update_layout(
-        margin={"l": 150 if second_category_column else 40, "r": 100, "t": 60, "b": 40},
+        margin={"l": left_margin, "r": 100, "t": top_margin, "b": 40},
         width=max(900, n_cols * 420),
     )
 
@@ -331,15 +352,85 @@ def _create_plot(
         row_title_set = {title for title in row_titles if title}
         for annotation in fig.layout.annotations:
             if annotation.text in row_title_set:
-                annotation.update(x=-0.015, xref="paper", xanchor="right")
+                annotation.update(x=0.0, xref="paper", xanchor="right")
 
-    if column_titles:
-        column_title_set = {title for title in column_titles if title}
-        for annotation in fig.layout.annotations:
-            if annotation.text in column_title_set:
-                annotation.update(y=1.04, yref="paper", yanchor="bottom")
+    if title_text:
+        fig.update_layout(
+            title={
+                "text": title_text,
+                "y": 0.94,
+                "yanchor": "top",
+                "x": 0.0,
+                "xanchor": "left",
+            }
+        )
 
     return fig
+
+
+def _prepare_quantity_group_dataframe(
+    data: pl.DataFrame,
+    plot_spec: PlotSpec,
+    *,
+    location_column: str,
+    second_category_column: str | None,
+) -> tuple[pl.DataFrame, str, str, str | None]:
+    """Return long-form choropleth data for QuantityGroup quantities."""
+    if not isinstance(plot_spec.quantity, QuantityGroup):
+        raise ValueError("QuantityGroup preparation requires QuantityGroup quantity definition.")
+
+    quantities: list[str] = list(plot_spec.quantity.constituents)
+    if plot_spec.quantity.sum:
+        quantities.append(plot_spec.quantity.sum)
+    if not quantities:
+        raise ValueError("QuantityGroup must include at least one constituent column.")
+
+    ensured = plot_utils.ensure_columns_exist(data, quantities)
+
+    title_text: str | None = None
+    filtered = ensured
+
+    if plot_spec.upgrade is not None:
+        if "upgrade" not in filtered.columns:
+            raise ValueError("Choropleth data is missing 'upgrade' column required for filtering.")
+        filtered = filtered.filter(pl.col("upgrade") == plot_spec.upgrade)
+        if filtered.is_empty():
+            raise ValueError(f"No data available for upgrade {plot_spec.upgrade} when building choropleth plot.")
+    else:
+        if "upgrade_name" not in filtered.columns:
+            raise ValueError("Choropleth data is missing 'upgrade_name' column required to infer upgrade.")
+        upgrade_names = filtered["upgrade_name"].unique(maintain_order=True).to_list()
+        if not upgrade_names:
+            raise ValueError("No upgrades available to infer default upgrade for choropleth plot.")
+        fallback_upgrade = upgrade_names[-1]
+        filtered = filtered.filter(pl.col("upgrade_name") == fallback_upgrade)
+        if filtered.is_empty():
+            raise ValueError(
+                f"No data available after selecting inferred upgrade '{fallback_upgrade}' for choropleth plot."
+            )
+        title_text = f"Defaulting to upgrade scenario: {fallback_upgrade}"
+
+    index_cols = [location_column, "model_count"]
+    if second_category_column:
+        index_cols.append(second_category_column)
+    missing_index = [col for col in index_cols if col not in filtered.columns]
+    if missing_index:
+        missing = ", ".join(sorted(missing_index))
+        raise ValueError(f"Choropleth data is missing required index columns: {missing}")
+
+    long_df = filtered.unpivot(
+        quantities,
+        index=index_cols,
+        variable_name="_quantity_metric",
+        value_name="_quantity_value",
+    )
+    prepared = long_df.rename(
+        {
+            "_quantity_metric": "__quantity_metric__",
+            "_quantity_value": "__quantity_value__",
+        }
+    )
+    return prepared, "__quantity_value__", "__quantity_metric__", title_text
 
 
 def _choose_colorscale(
@@ -349,79 +440,79 @@ def _choose_colorscale(
 ) -> tuple[list[list[float | str]], float, float, list[float], list[str]]:
     """Select colorscale, range, and tick labels for the colorbar."""
     suffix = "%" if quantity_type == QuantityType.percent_savings else ""
-    has_neg = z_min < 0
-    has_pos = z_max > 0
-
-    if has_neg and has_pos:
-        cmin, cmax = z_min, z_max
-        colorscale = _build_diverging_colorscale(cmin, cmax)
-    elif has_neg:
-        cmin, cmax = z_min, 0.0
-        colorscale = _build_negative_colorscale()
-    elif has_pos:
-        cmin, cmax = 0.0, z_max
-        colorscale = _build_positive_colorscale()
-    else:
-        cmin, cmax = -1.0, 1.0
-        colorscale = _build_diverging_colorscale(cmin, cmax)
+    cmin, cmax = z_min, z_max
 
     if math.isclose(cmax, cmin, rel_tol=1e-12, abs_tol=1e-12):
         delta = abs(cmin) if not math.isclose(cmin, 0.0, abs_tol=1e-12) else 1.0
-        if has_neg and has_pos:
-            cmin -= delta * 0.05
-            cmax += delta * 0.05
-        elif has_neg:
-            cmin -= delta * 0.05
-        else:
-            cmax += delta * 0.05
+        cmin -= delta * 0.05
+        cmax += delta * 0.05
+
+    max_abs = max(abs(cmin), abs(cmax))
+    if math.isclose(max_abs, 0.0, abs_tol=1e-12):
+        max_abs = 1.0
+
+    colorscale = _build_balanced_colorscale(cmin, cmax, max_abs)
 
     tickvals, ticktext = _build_colorbar_ticks(z_min, z_max, cmin, cmax, suffix=suffix)
     return colorscale, cmin, cmax, tickvals, ticktext
 
 
-def _build_positive_colorscale(palette: list[str] | None = None) -> list[list[float | str]]:
-    positive_colors = palette or ["#DBEAFE", "#93C5FD", "#3B82F6", "#1D4ED8"]
-    count = len(positive_colors)
-    colorscale: list[list[float | str]] = [[0.0, "#FFFFFF"]]
-    for idx, color in enumerate(positive_colors, start=1):
-        position = idx / count
-        colorscale.append([position, color])
-    return colorscale
+NEGATIVE_COLOR = "#812E36"
+POSITIVE_COLOR = "#7DA544"
+NEUTRAL_COLOR = "#FFFFFF"
 
 
-def _build_negative_colorscale(palette: list[str] | None = None) -> list[list[float | str]]:
-    negative_colors = palette or ["#7F1D1D", "#B91C1C", "#EF4444", "#FECACA"]
-    count = len(negative_colors)
+def _build_balanced_colorscale(cmin: float, cmax: float, max_abs: float) -> list[list[float | str]]:
+    if cmax <= cmin:
+        return [[0.0, NEUTRAL_COLOR], [1.0, NEUTRAL_COLOR]]
+
+    anchors: list[tuple[float, str]] = []
+    anchors.append((cmin, _color_for_value(cmin, max_abs)))
+    if cmin < 0 < cmax:
+        anchors.append((0.0, NEUTRAL_COLOR))
+    anchors.append((cmax, _color_for_value(cmax, max_abs)))
+
+    unique: dict[float, str] = {}
+    for value, color in anchors:
+        clamped_value = min(max(value, cmin), cmax)
+        unique[clamped_value] = color
+
+    denom = cmax - cmin
     colorscale: list[list[float | str]] = []
-    for idx, color in enumerate(negative_colors):
-        position = idx / count
-        colorscale.append([position, color])
-    colorscale.append([1.0, "#FFFFFF"])
+    for value in sorted(unique.keys()):
+        position = (value - cmin) / denom
+        colorscale.append([position, unique[value]])
+
+    if colorscale:
+        colorscale[0][0] = 0.0
+        colorscale[-1][0] = 1.0
     return colorscale
 
 
-def _build_diverging_colorscale(
-    cmin: float,
-    cmax: float,
-    neg_palette: list[str] | None = None,
-    pos_palette: list[str] | None = None,
-) -> list[list[float | str]]:
-    if cmin >= 0 or cmax <= 0:
-        raise ValueError("Diverging colorscale requires a range spanning zero.")
+def _color_for_value(value: float, max_abs: float) -> str:
+    if math.isclose(max_abs, 0.0, abs_tol=1e-12):
+        return NEUTRAL_COLOR
+    value = max(-max_abs, min(max_abs, value))
+    if value >= 0:
+        ratio = value / max_abs
+        return _lerp_color(NEUTRAL_COLOR, POSITIVE_COLOR, ratio)
+    ratio = (value + max_abs) / max_abs
+    return _lerp_color(NEGATIVE_COLOR, NEUTRAL_COLOR, ratio)
 
-    zero_pos = (0.0 - cmin) / (cmax - cmin)
-    neg_colors = neg_palette or ["#7F1D1D", "#B91C1C", "#EF4444", "#FECACA"]
-    pos_colors = pos_palette or ["#DBEAFE", "#93C5FD", "#3B82F6", "#1D4ED8"]
 
-    neg_scale = [[idx / max(1, len(neg_colors) - 1) * zero_pos, color] for idx, color in enumerate(neg_colors)]
-    pos_scale = [
-        [zero_pos + (idx / max(1, len(pos_colors) - 1)) * (1 - zero_pos), color]
-        for idx, color in enumerate(pos_colors)
-    ]
+def _lerp_color(color_a: str, color_b: str, t: float) -> str:
+    t = min(max(t, 0.0), 1.0)
+    r1, g1, b1 = _hex_to_rgb(color_a)
+    r2, g2, b2 = _hex_to_rgb(color_b)
+    r = int(round(r1 + (r2 - r1) * t))
+    g = int(round(g1 + (g2 - g1) * t))
+    b = int(round(b1 + (b2 - b1) * t))
+    return f"#{r:02X}{g:02X}{b:02X}"
 
-    colorscale = neg_scale + pos_scale
-    colorscale.sort(key=lambda entry: entry[0])
-    return colorscale
+
+def _hex_to_rgb(color: str) -> tuple[int, int, int]:
+    color = color.lstrip("#")
+    return tuple(int(color[i : i + 2], 16) for i in (0, 2, 4))
 
 
 def _build_colorbar_ticks(
@@ -432,12 +523,9 @@ def _build_colorbar_ticks(
     *,
     suffix: str = "",
 ) -> tuple[list[float], list[str]]:
-    tick_candidates = {cmin, cmax}
-    tick_candidates.update({z_min, z_max})
-    tick_candidates.update(value for value in (0.0,) if cmin <= value <= cmax)
-    sorted_ticks = sorted(tick_candidates)
-    ticktexts = [_format_colorbar_tick(val, suffix=suffix) for val in sorted_ticks]
-    return sorted_ticks, ticktexts
+    ticks = [cmin, cmax] if not math.isclose(cmin, cmax, rel_tol=1e-12, abs_tol=1e-12) else [cmin]
+    ticktexts = [_format_colorbar_tick(val, suffix=suffix) for val in ticks]
+    return ticks, ticktexts
 
 
 def _build_county_extent_trace() -> go.Scattergeo:

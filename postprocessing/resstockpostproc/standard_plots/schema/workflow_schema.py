@@ -174,7 +174,7 @@ class WorkflowConfig(NoExtraSettings):
         object.__setattr__(self, "upgrade_names", upgrade_names)
 
     def set_quantities(self, quantities: tuple[QuantityGroup, ...]):
-        object.__setattr__(self, "quantities", quantities)
+        object.__setattr__(self, "numerical_quantities", quantities)
 
     @classmethod
     def from_yaml(cls, yaml_path: str) -> WorkflowConfig:

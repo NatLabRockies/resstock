@@ -124,7 +124,9 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
 
         df = df.drop([col for col in df.columns if df[col].dtype == pl.List])
         csv_str = df.write_csv(file=None)
-        fig.update_layout(width=fig_w, height=fig_h)
+        fig.update_layout(width=fig_w, height=fig_h,
+                          xaxis={'automargin': True},
+                          yaxis={'automargin': True},)
         buffer = io.BytesIO()
         df.write_parquet(buffer)
         parquet_b64 = base64.b64encode(buffer.getvalue()).decode("ascii")

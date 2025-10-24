@@ -34,6 +34,7 @@ class PlotSpec(BaseModel):
     quantity: str | QuantityGroup = Field(..., description="Column(s) to visualise.")
     quantity_group_name: str = Field(..., description="Name of the quantity group - used when quantity is part of group")
     upgrade: int | None = Field(default=None, description="Upgrade to visualise. Can be None for all.")
+    title: str | None = Field(default=None, description="Optional custom title for the plot.")
 
     @field_validator("quantity")
     @classmethod

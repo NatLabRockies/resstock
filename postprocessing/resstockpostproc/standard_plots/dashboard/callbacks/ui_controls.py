@@ -95,8 +95,11 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         State("group-by", "value"),
         prevent_initial_call=True,
     )
-    def _update_group_by_options(viz_type_val: str,
-                                 run_folder: str, current_val: str | None):
+    def _update_group_by_options(
+        viz_type_val: str,
+        run_folder: str,
+        current_val: str | None,
+    ):
         run_workflow = ctx.get_workflow(run_folder)
         if run_workflow is None:
             raise PreventUpdate
@@ -115,8 +118,7 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
             if in_cols:
                 unique_df = base_df.select([pl.col(col).n_unique().alias(col) for col in in_cols]).collect()
                 unique_counts = dict(zip(in_cols, unique_df.row(0)))
-                small_chars = sorted([col for col, count in unique_counts.items() if 1 < count <= 20])
-            geo_columns = [col for col in ("in.state", "in.county") if col in schema_names]
+                small_chars = sorted([col for col, count in unique_counts.items() if 1 <= count <= 100])
         except Exception as exc:  # noqa: BLE001
             logger.warning("Failed to compute additional group-by characteristics: %s", exc)
 
@@ -125,26 +127,18 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
             {"label": "— Workflow group-by —", "value": "__sep_wf__", "disabled": True},
             *[{"label": col, "value": col} for col in workflow_group_by],
         ]
+        options.append({"label": "applicability", "value": "applicability"})
 
-        if geo_columns:
-            options.extend(
-                [
-                    {"label": "— Geography —", "value": "__sep_geo__", "disabled": True},
-                    *[
-                        {"label": col, "value": col}
-                        for col in geo_columns
-                        if col not in workflow_group_by
-                    ],
-                ]
-            )
+        viz_type = VizType(viz_type_val)
+        if viz_type == VizType.choropleth and "in.state" in small_chars:
+            small_chars.remove("in.state")
 
-        if small_chars:
-            options.extend(
-                [
-                    {"label": "— Additional characteristics —", "value": "__sep_extra__", "disabled": True},
-                    *[{"label": col, "value": col} for col in small_chars if col not in workflow_group_by],
-                ]
-            )
+        options.extend(
+            [
+                {"label": "— Additional characteristics —", "value": "__sep_extra__", "disabled": True},
+                *[{"label": col, "value": col} for col in small_chars if col not in workflow_group_by],
+            ]
+        )
 
         valid_values = {option["value"] for option in options if not option.get("disabled")}
 

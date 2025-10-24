@@ -137,7 +137,6 @@ class RunContext:
             "upgrade_name",
             "bldg_id",
             "weight",
-            "applicability",
         }
 
         candidate_cols = [
@@ -161,7 +160,7 @@ class RunContext:
         categorical_cols = [
             col
             for col, count in zip(candidate_cols, uniques)
-            if isinstance(count, (int, float)) and 1 < count <= 100
+            if isinstance(count, (int, float)) and 1 <= count <= 100
         ]
         categorical_cols.sort()
 

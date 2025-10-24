@@ -99,10 +99,13 @@ numerical_quantities:
       - out.bills.fuel_oil.usd
       - out.bills.propane.usd
     sum: out.bills.all_fuels.usd
-  - name: Unmet Hours
+  - name: Unmet HVAC Hours
     constituents:
       - out.unmet_hours.cooling.hour
       - out.unmet_hours.heating.hour
+  - name: Unmet EV Driving Hours
+    constituents:
+      - out.unmet_hours.ev_driving.hour
   - name: Emissions
     constituents:
       - out.emissions.electricity.lrmer_mid_case_25.co2e_kg

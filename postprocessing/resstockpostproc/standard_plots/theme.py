@@ -67,7 +67,7 @@ def apply_layout(fig: go.Figure, *, width: int | None = None, height: int | None
     fig.update_layout(
         template=DEFAULT_TEMPLATE,
         font={"family": DEFAULT_FONT_FAMILY, "size": DEFAULT_FONT_SIZE},
-        margin={"l": 50, "r": 150, "t": 80, "b": 50},
+        margin={"l": 80, "r": 150, "t": 80, "b": 50},
         plot_bgcolor="white",
         width=width or DEFAULT_FIG_WIDTH,
         height=height or DEFAULT_FIG_HEIGHT,
