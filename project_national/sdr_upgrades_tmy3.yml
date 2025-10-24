@@ -629,13 +629,13 @@ upgrades:
           - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
 
       # MSHP (not applicable because of package_apply_logic)
-      # - option: HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+      # - option: HVAC Heating Efficiency|MSHP, SEER2 13.7, 7.4 HSPF2  # FIXME, eff too low, not available in AHRI
       #   apply_logic:
-      #     - HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+      #     - HVAC Heating Efficiency|MSHP, SEER2 13.7, 7.4 HSPF2
 
-      # - option: HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+      # - option: HVAC Heating Efficiency|MSHP, SEER2 29, 12.3 HSPF2
       #   apply_logic:
-      #     - HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+      #     - HVAC Heating Efficiency|MSHP, SEER2 29, 12.3 HSPF2
 
       ## 1.2 Categories with efficiency change:
       # min. eff fuel boilers
@@ -683,7 +683,7 @@ upgrades:
           - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
 
       # ASHP
-      - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2
+      - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.4 HSPF2
         apply_logic:
           - or:
             - HVAC Heating Efficiency|ASHP, SEER2 9.5, 5.8 HSPF2

@@ -1,4 +1,4 @@
-Dependency=Custom State	Dependency=Heating Fuel	Dependency=HVAC Has Shared System	Dependency=HVAC Heating Type	Dependency=Vintage	Option=ASHP, SEER2 9.5, 5.8 HSPF2	Option=ASHP, SEER2 12.4, 6.6 HSPF2	Option=ASHP, SEER2 14.3, 7.4 HSPF2	Option=Electric Baseboard, 100% Efficiency	Option=Electric Boiler, 100% AFUE	Option=Electric Furnace, 100% AFUE	Option=Electric Wall Furnace, 100% AFUE	Option=Fuel Boiler, 76% AFUE	Option=Fuel Boiler, 80% AFUE	Option=Fuel Boiler, 90% AFUE	Option=Fuel Furnace, 60% AFUE	Option=Fuel Furnace, 76% AFUE	Option=Fuel Furnace, 80% AFUE	Option=Fuel Furnace, 92.5% AFUE	Option=Fuel Wall/Floor Furnace, 60% AFUE	Option=Fuel Wall/Floor Furnace, 68% AFUE	Option=MSHP, SEER2 14.5, 7.7 HSPF2	Option=MSHP, SEER2 29, 12.3 HSPF2	Option=None	Option=Shared Heating	Option=Void	source_count	source_weight	sampling_probability
+Dependency=Custom State	Dependency=Heating Fuel	Dependency=HVAC Has Shared System	Dependency=HVAC Heating Type	Dependency=Vintage	Option=ASHP, SEER2 9.5, 5.8 HSPF2	Option=ASHP, SEER2 12.4, 6.6 HSPF2	Option=ASHP, SEER2 14.3, 7.4 HSPF2	Option=Electric Baseboard, 100% Efficiency	Option=Electric Boiler, 100% AFUE	Option=Electric Furnace, 100% AFUE	Option=Electric Wall Furnace, 100% AFUE	Option=Fuel Boiler, 76% AFUE	Option=Fuel Boiler, 80% AFUE	Option=Fuel Boiler, 90% AFUE	Option=Fuel Furnace, 60% AFUE	Option=Fuel Furnace, 76% AFUE	Option=Fuel Furnace, 80% AFUE	Option=Fuel Furnace, 92.5% AFUE	Option=Fuel Wall/Floor Furnace, 60% AFUE	Option=Fuel Wall/Floor Furnace, 68% AFUE	Option=MSHP, SEER2 13.7, 7.4 HSPF2	Option=MSHP, SEER2 29, 12.3 HSPF2	Option=None	Option=Shared Heating	Option=Void	source_count	source_weight	sampling_probability
 Others	Electricity	Cooling Only	Ducted Heat Pump	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	104	98235.5	0
 Others	Electricity	Cooling Only	Ducted Heat Pump	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	103	424488	0
 Others	Electricity	Cooling Only	Ducted Heat Pump	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	163	579589	0
@@ -98,15 +98,15 @@ Others	Electricity	Heating and Cooling	Non-Ducted Heat Pump	1990s	0	0	0	0	0	0	0	
 Others	Electricity	Heating and Cooling	Non-Ducted Heat Pump	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	1	0	0
 Others	Electricity	Heating and Cooling	Non-Ducted Heat Pump	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	1	7118.35	0
 Others	Electricity	Heating and Cooling	Non-Ducted Heat Pump	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
-Others	Electricity	None	Non-Ducted Heat Pump	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	26	23817.5	0.000669324
-Others	Electricity	None	Non-Ducted Heat Pump	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	13	46000.6	0.000835717
-Others	Electricity	None	Non-Ducted Heat Pump	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	12	40827.5	0.000940864
-Others	Electricity	None	Non-Ducted Heat Pump	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	21	76754.5	0.00162655
-Others	Electricity	None	Non-Ducted Heat Pump	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	19	72458.7	0.00160335
-Others	Electricity	None	Non-Ducted Heat Pump	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	16	52741.8	0.00102126
-Others	Electricity	None	Non-Ducted Heat Pump	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	10	29517.2	0.000823264
-Others	Electricity	None	Non-Ducted Heat Pump	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	23	70977.2	0.000896491
-Others	Electricity	None	Non-Ducted Heat Pump	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	26	61549.9	0.00131262
+Others	Electricity	None	Non-Ducted Heat Pump	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.986301	0.0136991	0	0	0	26	23817.5	0.000669324
+Others	Electricity	None	Non-Ducted Heat Pump	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.986558	0.0134421	0	0	0	13	46000.6	0.000835717
+Others	Electricity	None	Non-Ducted Heat Pump	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.988678	0.0113218	0	0	0	12	40827.5	0.000940864
+Others	Electricity	None	Non-Ducted Heat Pump	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.988477	0.0115226	0	0	0	21	76754.5	0.00162655
+Others	Electricity	None	Non-Ducted Heat Pump	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.987093	0.0129069	0	0	0	19	72458.7	0.00160335
+Others	Electricity	None	Non-Ducted Heat Pump	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.989705	0.0102948	0	0	0	16	52741.8	0.00102126
+Others	Electricity	None	Non-Ducted Heat Pump	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.988895	0.0111048	0	0	0	10	29517.2	0.000823264
+Others	Electricity	None	Non-Ducted Heat Pump	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.985886	0.014114	0	0	0	23	70977.2	0.000896491
+Others	Electricity	None	Non-Ducted Heat Pump	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.986301	0.0136991	0	0	0	26	61549.9	0.00131262
 Others	Electricity	Cooling Only	Non-Ducted Heating	1940s	0	0	0	0.860727	0.0247042	0	0.114569	0	0	0	0	0	0	0	0	0	0	0	0	0	0	147	189365	3.16151e-05
 Others	Electricity	Cooling Only	Non-Ducted Heating	1950s	0	0	0	0.859852	0.0275371	0	0.11261	0	0	0	0	0	0	0	0	0	0	0	0	0	0	86	352589	1.82598e-05
 Others	Electricity	Cooling Only	Non-Ducted Heating	1960s	0	0	0	0.839912	0.00727882	0	0.152809	0	0	0	0	0	0	0	0	0	0	0	0	0	0	128	515620	0.00012021

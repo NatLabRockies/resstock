@@ -1060,7 +1060,8 @@ Level,Parameter,Option,Saturation
 4,HVAC Heating Efficiency,"Fuel Furnace, 92.5% AFUE",0.0545635
 4,HVAC Heating Efficiency,"Fuel Wall/Floor Furnace, 60% AFUE",0.0436508
 4,HVAC Heating Efficiency,"Fuel Wall/Floor Furnace, 68% AFUE",0.0436508
-4,HVAC Heating Efficiency,"MSHP, SEER2 14.5, 7.7 HSPF2",0.0357143
+4,HVAC Heating Efficiency,"MSHP, SEER2 13.7, 7.4 HSPF2",0.0178572
+4,HVAC Heating Efficiency,"MSHP, SEER2 29, 12.3 HSPF2",0.0178572
 4,HVAC Heating Efficiency,None,0.142857
 4,HVAC Heating Efficiency,Shared Heating,0.305556
 4,HVAC Heating Efficiency,Void,0

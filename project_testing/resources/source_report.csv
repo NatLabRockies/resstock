@@ -62,7 +62,7 @@ HVAC Cooling Type,6.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence and ty
 HVAC Has Ducts,3.0,4.0,sources\recs\recs2020\tsv_maker.py,The presence of ducts in the dwelling unit.
 HVAC Has Shared System,5.0,3.0,sources\recs\recs2020\tsv_maker.py,The presence of an HVAC system shared between multiple dwelling units.
 HVAC Heating Autosizing Factor,2.0,1.0,manually created,The heating airflow and capacity scaling factor applied to the auto-sizing methodology (not used in project_national).
-HVAC Heating Efficiency,20.0,3.0,sources\recs\recs2020\tsv_maker.py,The presence and efficiency of the primary heating system in the dwelling unit.
+HVAC Heating Efficiency,21.0,3.0,sources\recs\recs2020\tsv_maker.py,The presence and efficiency of the primary heating system in the dwelling unit.
 HVAC Heating Type,5.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence and type of the primary heating system in the dwelling unit.
 HVAC Heating Type And Fuel,25.0,2.0,sources\recs\recs2020\tsv_maker.py,"The presence, type, and fuel of primary heating system."
 HVAC Secondary Heating Efficiency,10.0,3.0,sources\aris\tsv_maker.py,The efficiency and type of the heating system.

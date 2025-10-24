@@ -12950,8 +12950,8 @@ Level,Parameter,Option,Saturation
 9,HVAC Heating Efficiency,"Fuel Furnace, 92.5% AFUE",0.153316
 9,HVAC Heating Efficiency,"Fuel Wall/Floor Furnace, 60% AFUE",0.0318915
 9,HVAC Heating Efficiency,"Fuel Wall/Floor Furnace, 68% AFUE",0.0282638
-9,HVAC Heating Efficiency,"MSHP, SEER2 14.5, 7.7 HSPF2",0.00973486
-9,HVAC Heating Efficiency,"MSHP, SEER2 29, 12.3 HSPF2",1.49106e-05
+9,HVAC Heating Efficiency,"MSHP, SEER2 13.7, 7.4 HSPF2",0.00961408
+9,HVAC Heating Efficiency,"MSHP, SEER2 29, 12.3 HSPF2",0.000135693
 9,HVAC Heating Efficiency,None,0.0113431
 9,HVAC Heating Efficiency,Shared Heating,0.096292
 9,HVAC Heating Efficiency,Void,0
@@ -13018,7 +13018,7 @@ Level,Parameter,Option,Saturation
 10,HVAC Heating Type And Fuel,Electricity Electric Boiler,0.00205743
 10,HVAC Heating Type And Fuel,Electricity Electric Furnace,0.113316
 10,HVAC Heating Type And Fuel,Electricity Electric Wall Furnace,0.011071
-10,HVAC Heating Type And Fuel,Electricity MSHP,0.00973486
+10,HVAC Heating Type And Fuel,Electricity MSHP,0.00974977
 10,HVAC Heating Type And Fuel,Electricity Shared Heating,0.0412921
 10,HVAC Heating Type And Fuel,Fuel Oil Fuel Boiler,0.0123633
 10,HVAC Heating Type And Fuel,Fuel Oil Fuel Furnace,0.0282486

@@ -305,9 +305,9 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 2B	Mobile Home	No	Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	15	95522.5	0.000220166
 2B	Mobile Home	No	Ducted Heating	Owner	0	0	0	0.206794	0.0724739	0.178067	0.254725	0.192892	0	0.0950484	0	0	11	70939.6	0.000502979
 2B	Mobile Home	No	Ducted Heating	Renter	0	0.0229749	0.0200529	0.0178112	0.0146103	0.0694145	0.285957	0.137576	0.202094	0.0790504	0.112269	0.0381898	48	24582.9	0.000153588
-2B	Mobile Home	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	24	13270.2	1.04983e-05
+2B	Mobile Home	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	24	13270.2	1.04982e-05
 2B	Mobile Home	No	Non-Ducted Heat Pump	Owner	0	0.0469553	0	0.103153	0.0361516	0.250412	0.165785	0.269041	0.0387671	0.0897347	0	0	20	13270.2	2.14875e-05
-2B	Mobile Home	No	Non-Ducted Heat Pump	Renter	0	0.0229749	0.0200529	0.0178112	0.0146103	0.0694145	0.285957	0.137576	0.202094	0.0790504	0.112269	0.0381898	48	0	6.39724e-06
+2B	Mobile Home	No	Non-Ducted Heat Pump	Renter	0	0.0229749	0.0200529	0.0178112	0.0146103	0.0694145	0.285957	0.137576	0.202094	0.0790504	0.112269	0.0381898	48	0	6.39723e-06
 2B	Mobile Home	No	Non-Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	15	0	2.91186e-05
 2B	Mobile Home	No	Non-Ducted Heating	Owner	0	0	0	0.206794	0.0724739	0.178067	0.254725	0.192892	0	0.0950484	0	0	11	0	6.61366e-05
 2B	Mobile Home	No	Non-Ducted Heating	Renter	0	0.0229749	0.0200529	0.0178112	0.0146103	0.0694145	0.285957	0.137576	0.202094	0.0790504	0.112269	0.0381898	48	0	2.05328e-05
@@ -336,7 +336,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 2B	Multi-Family with 2 - 4 Units	No	Ducted Heating	Owner	0	0.0154282	0.0137767	0.0848584	0.0590591	0.229462	0.228801	0.169351	0.115608	0.0320618	0.0338522	0.0177416	960	0	4.04985e-05
 2B	Multi-Family with 2 - 4 Units	No	Ducted Heating	Renter	0	0	0	0	0.0891747	0.225923	0.176456	0.196593	0.131326	0.180527	0	0	10	69740.6	0.000324251
 2B	Multi-Family with 2 - 4 Units	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	11	0	1.23312e-06
-2B	Multi-Family with 2 - 4 Units	No	Non-Ducted Heat Pump	Owner	0	0.0154282	0.0137767	0.0848584	0.0590591	0.229462	0.228801	0.169351	0.115608	0.0320618	0.0338522	0.0177416	960	0	7.85532e-07
+2B	Multi-Family with 2 - 4 Units	No	Non-Ducted Heat Pump	Owner	0	0.0154282	0.0137767	0.0848584	0.0590591	0.229462	0.228801	0.169351	0.115608	0.0320618	0.0338522	0.0177416	960	0	7.85531e-07
 2B	Multi-Family with 2 - 4 Units	No	Non-Ducted Heat Pump	Renter	0	0	0	0	0.0891747	0.225923	0.176456	0.196593	0.131326	0.180527	0	0	10	0	6.22241e-06
 2B	Multi-Family with 2 - 4 Units	No	Non-Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	11	0	2.7842e-05
 2B	Multi-Family with 2 - 4 Units	No	Non-Ducted Heating	Owner	0	0.0154282	0.0137767	0.0848584	0.0590591	0.229462	0.228801	0.169351	0.115608	0.0320618	0.0338522	0.0177416	960	0	1.65482e-05
@@ -367,7 +367,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 2B	Multi-Family with 5+ Units	No	Ducted Heating	Renter	0	0	0	0	0	0	0.170836	0.206306	0.378952	0.191537	0.0523688	0	15	143006	0.00106194
 2B	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	13	6574.56	7.3376e-06
 2B	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Owner	0	0.0154282	0.0137767	0.0848584	0.0590591	0.229462	0.228801	0.169351	0.115608	0.0320618	0.0338522	0.0177416	960	0	2.92004e-06
-2B	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Renter	0	0.0850385	0	0.0694231	0.0644965	0	0.201842	0.0677657	0.258319	0.0750717	0.0819256	0.096118	13	6574.56	3.83664e-05
+2B	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Renter	0	0.0850385	0	0.0694231	0.0644965	0	0.201842	0.0677657	0.258319	0.0750717	0.0819256	0.096118	13	6574.56	3.83663e-05
 2B	Multi-Family with 5+ Units	No	Non-Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	16	0	8.91304e-05
 2B	Multi-Family with 5+ Units	No	Non-Ducted Heating	Owner	0	0.0154282	0.0137767	0.0848584	0.0590591	0.229462	0.228801	0.169351	0.115608	0.0320618	0.0338522	0.0177416	960	0	3.54997e-05
 2B	Multi-Family with 5+ Units	No	Non-Ducted Heating	Renter	0	0	0	0	0	0	0.170836	0.206306	0.378952	0.191537	0.0523688	0	15	0	0.000474289
@@ -396,7 +396,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 2B	Single-Family Attached	No	Ducted Heating	Owner	0	0	0	0	0.0606996	0.113569	0.157339	0.295359	0.201299	0.113868	0.0578662	0	17	38222.9	0.00026638
 2B	Single-Family Attached	No	Ducted Heating	Renter	0	0	0	0	0.0962951	0	0.326595	0.197831	0.171646	0.0585558	0.090086	0.0589907	12	24351.9	0.000151815
 2B	Single-Family Attached	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	11	0	2.15139e-06
-2B	Single-Family Attached	No	Non-Ducted Heat Pump	Owner	0	0	0	0	0.0419001	0.110549	0.191829	0.272324	0.229363	0.0786018	0.075433	0	25	0	8.44011e-06
+2B	Single-Family Attached	No	Non-Ducted Heat Pump	Owner	0	0	0	0	0.0419001	0.110549	0.191829	0.272324	0.229363	0.0786018	0.075433	0	25	0	8.4401e-06
 2B	Single-Family Attached	No	Non-Ducted Heat Pump	Renter	0	0	0	0	0.0962951	0	0.326595	0.197831	0.171646	0.0585558	0.090086	0.0589907	12	0	5.76222e-06
 2B	Single-Family Attached	No	Non-Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	26	6317.08	6.51468e-06
 2B	Single-Family Attached	No	Non-Ducted Heating	Owner	0	0	0	0	0.0606996	0.113569	0.157339	0.295359	0.201299	0.113868	0.0578662	0	17	3391.44	2.11507e-05
@@ -817,7 +817,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 3C	Multi-Family with 5+ Units	No	Ducted Heating	Renter	0	0.164737	0	0.158055	0.0416671	0.150631	0.153194	0.143287	0.146948	0	0.0414801	0	20	195494	0.00181688
 3C	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	25	0	9.42221e-06
 3C	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Owner	0	0.0657847	0.0327646	0.170085	0.0421775	0.340592	0.202457	0.0728482	0.0437815	0.00632291	0.0134883	0.00969907	174	0	1.1133e-05
-3C	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Renter	0	0.15172	0	0.145566	0.0383745	0.138728	0.179291	0.131964	0.176155	0	0.0382023	0	22	0	9.39546e-05
+3C	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Renter	0	0.15172	0	0.145566	0.0383745	0.138728	0.179291	0.131964	0.176155	0	0.0382023	0	22	0	9.39545e-05
 3C	Multi-Family with 5+ Units	No	Non-Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	21	90725.6	0.000174295
 3C	Multi-Family with 5+ Units	No	Non-Ducted Heating	Owner	0	0.0657847	0.0327646	0.170085	0.0421775	0.340592	0.202457	0.0728482	0.0437815	0.00632291	0.0134883	0.00969907	174	0	0.000200424
 3C	Multi-Family with 5+ Units	No	Non-Ducted Heating	Renter	0	0.164737	0	0.158055	0.0416671	0.150631	0.153194	0.143287	0.146948	0	0.0414801	0	20	90725.6	0.00165175
@@ -965,7 +965,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 4A	Multi-Family with 5+ Units	No	Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	441	2.15326e+06	0.00204078
 4A	Multi-Family with 5+ Units	No	Ducted Heating	Owner	0	0	0	0.0784544	0.0358187	0.189404	0.275664	0.232341	0.126609	0.0451713	0.0143705	0.00216755	99	393436	0.00193684
 4A	Multi-Family with 5+ Units	No	Ducted Heating	Renter	0	0.0820812	0.0145187	0.0745915	0.0196474	0.14079	0.229235	0.239067	0.13927	0.0245056	0.0202237	0.0160689	342	1.75983e+06	0.0130537
-4A	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	120	133787	7.67627e-05
+4A	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	120	133787	7.67626e-05
 4A	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Owner	0	0	0	0.0681351	0	0.0806343	0.159787	0.574462	0.0592403	0.0577417	0	0	18	32866.3	7.57582e-05
 4A	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Renter	0	0.0160807	0	0.0256562	0.0562918	0.169679	0.292276	0.254704	0.152989	0.0197087	0.0105069	0.00210747	102	100920	0.000453697
 4A	Multi-Family with 5+ Units	No	Non-Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	441	1.66843e+06	0.00186474
@@ -1687,7 +1687,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 6A	Multi-Family with 2 - 4 Units	No	Ducted Heating	Renter	0	0.00315968	0	0.0821902	0.0719414	0.301054	0.346369	0.0619238	0.0511144	0.041552	0	0.0406956	67	208426	0.00180167
 6A	Multi-Family with 2 - 4 Units	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	74	0	2.25786e-06
 6A	Multi-Family with 2 - 4 Units	No	Non-Ducted Heat Pump	Owner	0	0	0.0231044	0.0492235	0	0.290853	0.4343	0.202519	0	0	0	0	16	0	1.8549e-06
-6A	Multi-Family with 2 - 4 Units	No	Non-Ducted Heat Pump	Renter	0	0.00315968	0	0.0821902	0.0719414	0.301054	0.346369	0.0619238	0.0511144	0.041552	0	0.0406956	67	0	9.58692e-06
+6A	Multi-Family with 2 - 4 Units	No	Non-Ducted Heat Pump	Renter	0	0.00315968	0	0.0821902	0.0719414	0.301054	0.346369	0.0619238	0.0511144	0.041552	0	0.0406956	67	0	9.58691e-06
 6A	Multi-Family with 2 - 4 Units	No	Non-Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	74	196543	0.000343964
 6A	Multi-Family with 2 - 4 Units	No	Non-Ducted Heating	Owner	0	0	0.0231044	0.0492235	0	0.290853	0.4343	0.202519	0	0	0	0	16	21677.7	0.000284095
 6A	Multi-Family with 2 - 4 Units	No	Non-Ducted Heating	Renter	0	0.00315968	0	0.0821902	0.0719414	0.301054	0.346369	0.0619238	0.0511144	0.041552	0	0.0406956	67	174865	0.00136622
@@ -1836,7 +1836,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 6B	Multi-Family with 2 - 4 Units	No	Ducted Heating	Owner	0	0.0225672	0.014262	0.069241	0.0891735	0.283494	0.311752	0.158076	0.0477752	0	0	0.00365907	325	4472.51	2.46007e-05
 6B	Multi-Family with 2 - 4 Units	No	Ducted Heating	Renter	0	0	0	0.0848735	0.0783632	0.310396	0.136057	0.278887	0.0914611	0	0.0199626	0	27	36895.8	0.000221705
 6B	Multi-Family with 2 - 4 Units	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	10	0	2.2432e-07
-6B	Multi-Family with 2 - 4 Units	No	Non-Ducted Heat Pump	Owner	0	0.0225672	0.014262	0.069241	0.0891735	0.283494	0.311752	0.158076	0.0477752	0	0	0.00365907	325	0	8.37809e-08
+6B	Multi-Family with 2 - 4 Units	No	Non-Ducted Heat Pump	Owner	0	0.0225672	0.014262	0.069241	0.0891735	0.283494	0.311752	0.158076	0.0477752	0	0	0.00365907	325	0	8.37808e-08
 6B	Multi-Family with 2 - 4 Units	No	Non-Ducted Heat Pump	Renter	0	0	0	0.0848735	0.0783632	0.310396	0.136057	0.278887	0.0914611	0	0.0199626	0	27	0	8.76147e-07
 6B	Multi-Family with 2 - 4 Units	No	Non-Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	10	6392.05	4.58358e-05
 6B	Multi-Family with 2 - 4 Units	No	Non-Ducted Heating	Owner	0	0.0225672	0.014262	0.069241	0.0891735	0.283494	0.311752	0.158076	0.0477752	0	0	0.00365907	325	0	1.75991e-05
@@ -1865,7 +1865,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 6B	Multi-Family with 5+ Units	No	Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	18	50564.9	0.000128946
 6B	Multi-Family with 5+ Units	No	Ducted Heating	Owner	0	0.0225672	0.014262	0.069241	0.0891735	0.283494	0.311752	0.158076	0.0477752	0	0	0.00365907	325	0	1.93586e-05
 6B	Multi-Family with 5+ Units	No	Ducted Heating	Renter	0	0	0	0.0803036	0.0343668	0.482076	0.0636601	0.138348	0.16519	0	0.0360549	0	17	50564.9	0.000276803
-6B	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	19	0	6.54122e-07
+6B	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	19	0	6.54121e-07
 6B	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Owner	0	0.0225672	0.014262	0.069241	0.0891735	0.283494	0.311752	0.158076	0.0477752	0	0	0.00365907	325	0	1.04681e-07
 6B	Multi-Family with 5+ Units	No	Non-Ducted Heat Pump	Renter	0	0	0	0.0758379	0.0324556	0.455268	0.0601199	0.186265	0.156004	0	0.0340499	0	18	0	1.90904e-06
 6B	Multi-Family with 5+ Units	No	Non-Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	18	17651.1	8.52487e-05
@@ -1895,7 +1895,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 6B	Single-Family Attached	No	Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	28	46983.7	4.71465e-05
 6B	Single-Family Attached	No	Ducted Heating	Owner	0	0.0555642	0	0.0277098	0.0362214	0.223966	0.191434	0.399431	0.0656731	0	0	0	16	27358	0.000129732
 6B	Single-Family Attached	No	Ducted Heating	Renter	0	0.0339041	0.112886	0.108541	0.11191	0.430811	0.201948	0	0	0	0	0	12	19625.7	0.000106785
-6B	Single-Family Attached	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	29	0	8.06685e-07
+6B	Single-Family Attached	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	29	0	8.06684e-07
 6B	Single-Family Attached	No	Non-Ducted Heat Pump	Owner	0	0.0555642	0	0.0277098	0.0362214	0.223966	0.191434	0.399431	0.0656731	0	0	0	16	0	2.27252e-06
 6B	Single-Family Attached	No	Non-Ducted Heat Pump	Renter	0	0.0322921	0.107519	0.103381	0.106589	0.410328	0.239892	0	0	0	0	0	13	0	1.86505e-06
 6B	Single-Family Attached	No	Non-Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	28	1424.34	5.71822e-06
@@ -2345,7 +2345,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 7B	Single-Family Attached	No	Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	382	821.043	2.54284e-05
 7B	Single-Family Attached	No	Ducted Heating	Owner	0	0.0230822	0.0145875	0.0708212	0.0912085	0.289964	0.296046	0.161683	0.0488655	0	0	0.00374257	323	0	2.19878e-05
 7B	Single-Family Attached	No	Ducted Heating	Renter	0	0.00534756	0.0438406	0.0903512	0.0339057	0.382843	0.284178	0.0638344	0.0680596	0	0	0.0276402	59	821.043	1.21515e-05
-7B	Single-Family Attached	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	382	0	4.80002e-07
+7B	Single-Family Attached	No	Non-Ducted Heat Pump	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	382	0	4.80001e-07
 7B	Single-Family Attached	No	Non-Ducted Heat Pump	Owner	0	0.0230822	0.0145875	0.0708212	0.0912085	0.289964	0.296046	0.161683	0.0488655	0	0	0.00374257	323	0	4.50612e-07
 7B	Single-Family Attached	No	Non-Ducted Heat Pump	Renter	0	0.00534756	0.0438406	0.0903512	0.0339057	0.382843	0.284178	0.0638344	0.0680596	0	0	0.0276402	59	0	2.68896e-07
 7B	Single-Family Attached	No	Non-Ducted Heating	Not Available	1	0	0	0	0	0	0	0	0	0	0	0	382	0	3.7957e-06
