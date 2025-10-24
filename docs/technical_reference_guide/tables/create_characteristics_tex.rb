@@ -51,6 +51,7 @@ max_options_total = 34
 source_report = CSV.read(File.join(File.dirname(__FILE__), '../../../project_national/resources/source_report.csv'), headers: true)
 parameters = source_report.collect { |row| row['Parameter'] }
 parameters.each do |parameter|
+
   r_arguments = []
   lookup_csv_data.each do |lookup_row|
     next if lookup_row[0] != parameter
@@ -137,7 +138,7 @@ parameters.each do |parameter|
           end
         else
           args[r_argument] = []
-          lookup.keys.each do |option|
+          lookup_keys.each do |option|
             args[r_argument] << lookup[option][r_argument]
           end
         end
