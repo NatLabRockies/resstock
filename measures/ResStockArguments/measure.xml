@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>35f6262b-c7c0-42a5-bbfb-383d8d956e47</version_id>
-  <version_modified>2025-10-25T04:05:35Z</version_modified>
+  <version_id>8bd6c18d-debc-4619-98c8-11a602afd932</version_id>
+  <version_modified>2025-10-24T03:39:12Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
