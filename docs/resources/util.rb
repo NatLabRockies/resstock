@@ -54,13 +54,15 @@ def get_properties(resources_dir)
     tsv_filename = File.basename(tsv_filepath)
     arg_name = File.basename(tsv_filename, File.extname(tsv_filename))
 
-    property_names = get_property_names(tsv_filename).to_a.map { |n| "#{arg_name}_#{n.downcase.gsub(' ', '_').gsub('-', '_')}" }
-    property_units = get_property_units(tsv_filename).to_a
-    comment_rows = get_comment_rows(tsv_filename).to_a
+    property_names = get_property_names(tsv_filename)
+    property_units = get_property_units(tsv_filename)
+    property_descriptions = get_property_descriptions(tsv_filename)
 
     properties[arg_name] = {}
-    property_names.zip(property_units, comment_rows).each do |property_name, property_unit, comment_row|
-      properties[arg_name][property_name] = { 'property_unit' => property_unit, 'comment_row' => comment_row }
+    property_names.each_with_index do |property_name, i|
+      property_description = property_descriptions[property_name]
+      property_name = "#{arg_name}_#{property_name.downcase.gsub(' ', '_').gsub('-', '_')}"
+      properties[arg_name][property_name] = { 'property_unit' => property_units[i], 'description' => property_description }
     end
   end
   return properties

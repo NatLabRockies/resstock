@@ -1,7 +1,7 @@
 Dependency=HVAC Heating Efficiency	Dependency=HVAC System Is Scaled	Option=None	Option=40% Oversized	sampling_probability
-ASHP, SEER 10, 6.8 HSPF	Yes	1	0	0
-ASHP, SEER 13, 7.7 HSPF	Yes	1	0	0
-ASHP, SEER 15, 8.5 HSPF	Yes	1	0	0
+ASHP, SEER2 9.5, 5.8 HSPF2	Yes	1	0	0
+ASHP, SEER2 12.4, 6.6 HSPF2	Yes	1	0	0
+ASHP, SEER2 14.3, 7.4 HSPF2	Yes	1	0	0
 Electric Baseboard, 100% Efficiency	Yes	1	0	0
 Electric Boiler, 100% AFUE	Yes	1	0	0
 Electric Furnace, 100% AFUE	Yes	1	0	0
@@ -15,14 +15,14 @@ Fuel Furnace, 80% AFUE	Yes	0	1	0
 Fuel Furnace, 92.5% AFUE	Yes	0	1	0
 Fuel Wall/Floor Furnace, 60% AFUE	Yes	1	0	0
 Fuel Wall/Floor Furnace, 68% AFUE	Yes	1	0	0
-MSHP, SEER2 14.5, 7.7 HSPF2	Yes	1	0	0
+MSHP, SEER2 13.7, 7.4 HSPF2	Yes	1	0	0
 MSHP, SEER2 29, 12.3 HSPF2	Yes	1	0	0
 None	Yes	1	0	0
 Shared Heating	Yes	1	0	0
 Void	Yes	1	0	0
-ASHP, SEER 10, 6.8 HSPF	No	1	0	0.0113708
-ASHP, SEER 13, 7.7 HSPF	No	1	0	0.0698861
-ASHP, SEER 15, 8.5 HSPF	No	1	0	0.0724697
+ASHP, SEER2 9.5, 5.8 HSPF2	No	1	0	0.0123962
+ASHP, SEER2 12.4, 6.6 HSPF2	No	1	0	0.08872
+ASHP, SEER2 14.3, 7.4 HSPF2	No	1	0	0.0526104
 Electric Baseboard, 100% Efficiency	No	1	0	0.062826
 Electric Boiler, 100% AFUE	No	1	0	0.00205743
 Electric Furnace, 100% AFUE	No	1	0	0.113316
@@ -36,8 +36,8 @@ Fuel Furnace, 80% AFUE	No	1	0	0.247114
 Fuel Furnace, 92.5% AFUE	No	1	0	0.153316
 Fuel Wall/Floor Furnace, 60% AFUE	No	1	0	0.0318915
 Fuel Wall/Floor Furnace, 68% AFUE	No	1	0	0.0282638
-MSHP, SEER2 14.5, 7.7 HSPF2	No	1	0	0.00873868
-MSHP, SEER2 29, 12.3 HSPF2	No	1	0	0.0010111
+MSHP, SEER2 13.7, 7.4 HSPF2	No	1	0	0.00961408
+MSHP, SEER2 29, 12.3 HSPF2	No	1	0	0.000135693
 None	No	1	0	0.0113431
 Shared Heating	No	1	0	0.096292
 Void	No	1	0	0

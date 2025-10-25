@@ -1,4 +1,4 @@
-Option Name	Efficiency	Facilities Connected	Equal Flow
+Option Name	Efficiency [frac]	Facilities Connected	Equal Flow
 None			
 "25% Efficient, Preheats Hot Only, All Showers"	0.25	all	FALSE
 "25% Efficient, Preheats Hot Only, 1 Shower"	0.25	one	FALSE

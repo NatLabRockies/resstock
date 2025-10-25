@@ -243,12 +243,12 @@ source_report.each do |row|
 
   r_arguments.each do |r_argument|
     if properties.keys.include?(r_argument)
-      properties[r_argument].each do |property_name, property_unit_comment|
+      properties[r_argument].each do |property_name, property_unit_description|
         next unless args.keys.include?(property_name)
 
         f.puts("   * - ``#{property_name}``")
-        f.puts("     - #{property_unit_comment['property_unit']}")
-        f.puts("     - #{property_unit_comment['comment_row']}")
+        f.puts("     - #{property_unit_description['property_unit']}")
+        f.puts("     - #{property_unit_description['description']}")
       end
     else
       f.puts("   * - ``#{r_argument}``")

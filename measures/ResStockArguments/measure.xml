@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>f3cda952-7f30-4819-876c-76448046f90d</version_id>
-  <version_modified>2025-10-06T19:01:31Z</version_modified>
+  <version_id>3131bf37-5ed2-4730-9dae-aab8de09d4d4</version_id>
+  <version_modified>2025-10-25T15:47:36Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -3964,31 +3964,23 @@
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>Central AC, SEER 13.0</default_value>
+      <default_value>Central AC, SEER2 13.4</default_value>
       <choices>
         <choice>
           <value>None</value>
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 8.0</value>
-          <display_name>Central AC, SEER 8.0</display_name>
+          <value>Central AC, SEER2 7.6</value>
+          <display_name>Central AC, SEER2 7.6</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 10.0</value>
-          <display_name>Central AC, SEER 10.0</display_name>
+          <value>Central AC, SEER2 9.5</value>
+          <display_name>Central AC, SEER2 9.5</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 13.0</value>
-          <display_name>Central AC, SEER 13.0</display_name>
-        </choice>
-        <choice>
-          <value>Central AC, SEER 14.0</value>
-          <display_name>Central AC, SEER 14.0</display_name>
-        </choice>
-        <choice>
-          <value>Central AC, SEER 15.0</value>
-          <display_name>Central AC, SEER 15.0</display_name>
+          <value>Central AC, SEER2 12.4</value>
+          <display_name>Central AC, SEER2 12.4</display_name>
         </choice>
         <choice>
           <value>Central AC, SEER2 13.4</value>
@@ -4117,6 +4109,10 @@
         <choice>
           <value>Room AC, CEER 10.6</value>
           <display_name>Room AC, CEER 10.6</display_name>
+        </choice>
+        <choice>
+          <value>Room AC, CEER 11.0</value>
+          <display_name>Room AC, CEER 11.0</display_name>
         </choice>
         <choice>
           <value>Room AC, CEER 11.8</value>
@@ -4396,36 +4392,32 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 8.0, HSPF 6.0</value>
-          <display_name>Central HP, SEER 8.0, HSPF 6.0</display_name>
+          <value>Central HP, SEER2 7.6, HSPF2 5.1</value>
+          <display_name>Central HP, SEER2 7.6, HSPF2 5.1</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 10.0, HSPF 6.8</value>
-          <display_name>Central HP, SEER 10.0, HSPF 6.8</display_name>
+          <value>Central HP, SEER2 9.5, HSPF2 5.8</value>
+          <display_name>Central HP, SEER2 9.5, HSPF2 5.8</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 13.0, HSPF 7.7</value>
-          <display_name>Central HP, SEER 13.0, HSPF 7.7</display_name>
-        </choice>
-        <choice>
-          <value>Central HP, SEER 14.0, HSPF 8.2</value>
-          <display_name>Central HP, SEER 14.0, HSPF 8.2</display_name>
-        </choice>
-        <choice>
-          <value>Central HP, SEER 15.0, HSPF 8.5</value>
-          <display_name>Central HP, SEER 15.0, HSPF 8.5</display_name>
+          <value>Central HP, SEER2 12.4, HSPF2 6.6</value>
+          <display_name>Central HP, SEER2 12.4, HSPF2 6.6</display_name>
         </choice>
         <choice>
           <value>Central HP, SEER2 13.4, HSPF2 7.0</value>
           <display_name>Central HP, SEER2 13.4, HSPF2 7.0</display_name>
         </choice>
         <choice>
+          <value>Central HP, SEER2 13.8, HSPF2 7.2</value>
+          <display_name>Central HP, SEER2 13.8, HSPF2 7.2</display_name>
+        </choice>
+        <choice>
           <value>Central HP, SEER2 14.0, HSPF2 7.3</value>
           <display_name>Central HP, SEER2 14.0, HSPF2 7.3</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER2 14.3, HSPF2 7.5</value>
-          <display_name>Central HP, SEER2 14.3, HSPF2 7.5</display_name>
+          <value>Central HP, SEER2 14.3, HSPF2 7.4</value>
+          <display_name>Central HP, SEER2 14.3, HSPF2 7.4</display_name>
         </choice>
         <choice>
           <value>Central HP, SEER2 15.0, HSPF2 7.6</value>
@@ -4458,6 +4450,10 @@
         <choice>
           <value>Central HP, SEER2 22.0, HSPF2 9.5</value>
           <display_name>Central HP, SEER2 22.0, HSPF2 9.5</display_name>
+        </choice>
+        <choice>
+          <value>Ductless Mini-Split HP, SEER2 13.7, HSPF2 7.4</value>
+          <display_name>Ductless Mini-Split HP, SEER2 13.7, HSPF2 7.4</display_name>
         </choice>
         <choice>
           <value>Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7</value>
@@ -4584,8 +4580,8 @@
           <display_name>Packaged Terminal HP, EER 13.2, COP 3.9</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Central HP, SEER 13.0, HSPF 9.85</value>
-          <display_name>Detailed Example: Central HP, SEER 13.0, HSPF 9.85</display_name>
+          <value>Detailed Example: Central HP, SEER2 12.4, HSPF2 8.4</value>
+          <display_name>Detailed Example: Central HP, SEER2 12.4, HSPF2 8.4</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance</value>
@@ -12990,7 +12986,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>814D6C05</checksum>
+      <checksum>27CDDCC7</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -13019,7 +13015,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F73778DA</checksum>
+      <checksum>0ECC832A</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>

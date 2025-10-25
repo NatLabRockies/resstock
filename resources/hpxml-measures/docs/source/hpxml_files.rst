@@ -82,7 +82,7 @@ Here is an example of some of the inputs used by the measure:
    "hvac_ducts": "4 CFM25 per 100ft2, Uninsulated",
    "hvac_heating_system": "Central Furnace, 92% AFUE",
    "hvac_heating_system_fuel": "Natural Gas",
-   "hvac_cooling_system": "Central AC, SEER 13",
+   "hvac_cooling_system": "Central AC, SEER2 13.4",
    "hvac_control_cooling_weekday_setpoint": "78",
    "hvac_control_cooling_weekend_setpoint": "78",
    "hvac_control_heating_weekday_setpoint": "68",

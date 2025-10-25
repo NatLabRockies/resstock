@@ -23,7 +23,7 @@
         "geometry_door_area": "20",
         "hvac_heating_system": "None",
         "hvac_cooling_system": "None",
-        "hvac_heat_pump": "Central HP, SEER 13.0, HSPF 7.7",
+        "hvac_heat_pump": "Central HP, SEER2 12.4, HSPF2 6.6",
         "hvac_heat_pump_capacity": "5.0 tons",
         "hvac_heat_pump_backup": "Integrated, Electricity, 100% Efficiency",
         "hvac_heat_pump_backup_capacity": "100 kBtu/hr",

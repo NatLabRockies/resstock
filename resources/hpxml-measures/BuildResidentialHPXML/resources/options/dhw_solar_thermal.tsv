@@ -1,4 +1,4 @@
-Option Name	Collector Loop Type	Collector Type	Collector Area	Collector Rated Optical Efficiency	Collector Rated Thermal Losses	Storage Volume	Solar Fraction
+Option Name	Collector Loop Type	Collector Type	Collector Area [ft2]	Collector Rated Optical Efficiency [frac]	Collector Rated Thermal Losses [Btu/hr-ft2-F]	Storage Volume [gal]	Solar Fraction [frac]
 None							
 "Indirect, Flat Plate, 40 sqft"	liquid indirect	single glazing black	40	0.77	0.793	60	
 "Indirect, Flat Plate, 64 sqft"	liquid indirect	single glazing black	64	0.77	0.793	96	

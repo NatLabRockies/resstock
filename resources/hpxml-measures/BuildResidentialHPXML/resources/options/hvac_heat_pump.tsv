@@ -1,13 +1,12 @@
 Option Name	Type	Cooling Efficiency Type	Cooling Efficiency	Cooling Compressor Type	Heating Efficiency Type	Heating Efficiency	Detailed Performance Data Capacity Type	Detailed Performance Data Heating Outdoor Temperatures [F]	Detailed Performance Data Heating Min Speed Capacities [Btu/hr or Frac]	Detailed Performance Data Heating Nom Speed Capacities [Btu/hr or Frac]	Detailed Performance Data Heating Max Speed Capacities [Btu/hr or Frac]	Detailed Performance Data Heating Min Speed COPs [W/W]	Detailed Performance Data Heating Nom Speed COPs [W/W]	Detailed Performance Data Heating Max Speed COPs [W/W]	Detailed Performance Data Cooling Outdoor Temperatures [F]	Detailed Performance Data Cooling Min Speed Capacities [Btu/hr or Frac]	Detailed Performance Data Cooling Nom Speed Capacities [Btu/hr or Frac]	Detailed Performance Data Cooling Max Speed Capacities [Btu/hr or Frac]	Detailed Performance Data Cooling Min Speed COPs [W/W]	Detailed Performance Data Cooling Nom Speed COPs [W/W]	Detailed Performance Data Cooling Max Speed COPs [W/W]
 None	none																				
-"Central HP, SEER 8.0, HSPF 6.0"	air-to-air	SEER	8	single stage	HSPF	6															
-"Central HP, SEER 10.0, HSPF 6.8"	air-to-air	SEER	10	single stage	HSPF	6.8															
-"Central HP, SEER 13.0, HSPF 7.7"	air-to-air	SEER	13	single stage	HSPF	7.7															
-"Central HP, SEER 14.0, HSPF 8.2"	air-to-air	SEER	14	single stage	HSPF	8.2															
-"Central HP, SEER 15.0, HSPF 8.5"	air-to-air	SEER	15	single stage	HSPF	8.5															
+"Central HP, SEER2 7.6, HSPF2 5.1"	air-to-air	SEER2	7.6	single stage	HSPF2	5.1															
+"Central HP, SEER2 9.5, HSPF2 5.8"	air-to-air	SEER2	9.5	single stage	HSPF2	5.8															
+"Central HP, SEER2 12.4, HSPF2 6.6"	air-to-air	SEER2	12.4	single stage	HSPF2	6.6															
 "Central HP, SEER2 13.4, HSPF2 7.0"	air-to-air	SEER2	13.4	single stage	HSPF2	7															
+"Central HP, SEER2 13.8, HSPF2 7.2"	air-to-air	SEER2	13.8	single stage	HSPF2	7.2															
 "Central HP, SEER2 14.0, HSPF2 7.3"	air-to-air	SEER2	14	single stage	HSPF2	7.3															
-"Central HP, SEER2 14.3, HSPF2 7.5"	air-to-air	SEER2	14.3	single stage	HSPF2	7.5															
+"Central HP, SEER2 14.3, HSPF2 7.4"	air-to-air	SEER2	14.3	single stage	HSPF2	7.4															
 "Central HP, SEER2 15.0, HSPF2 7.6"	air-to-air	SEER2	15	single stage	HSPF2	7.6															
 "Central HP, SEER2 16.0, HSPF2 7.9"	air-to-air	SEER2	16	single stage	HSPF2	7.9															
 "Central HP, SEER2 17.0, HSPF2 8.2"	air-to-air	SEER2	17	two stage	HSPF2	8.2															
@@ -16,6 +15,7 @@ None	none
 "Central HP, SEER2 20.0, HSPF2 9.0"	air-to-air	SEER2	20	variable speed	HSPF2	9															
 "Central HP, SEER2 21.0, HSPF2 9.2"	air-to-air	SEER2	21	variable speed	HSPF2	9.2															
 "Central HP, SEER2 22.0, HSPF2 9.5"	air-to-air	SEER2	22	variable speed	HSPF2	9.5															
+"Ductless Mini-Split HP, SEER2 13.7, HSPF2 7.4"	mini-split	SEER2	13.7	variable speed	HSPF2	7.4															
 "Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7"	mini-split	SEER2	14.5	variable speed	HSPF2	7.7															
 "Ductless Mini-Split HP, SEER2 16.0, HSPF2 8.1"	mini-split	SEER2	16	variable speed	HSPF2	8.1															
 "Ductless Mini-Split HP, SEER2 17.0, HSPF2 8.5"	mini-split	SEER2	17	variable speed	HSPF2	8.5															
@@ -47,7 +47,7 @@ None	none
 "Packaged Terminal HP, EER 10.7, COP 3.3"	packaged terminal heat pump	EER	10.7		COP	3.3															
 "Packaged Terminal HP, EER 11.9, COP 3.6"	packaged terminal heat pump	EER	11.9		COP	3.6															
 "Packaged Terminal HP, EER 13.2, COP 3.9"	packaged terminal heat pump	EER	13.2		COP	3.9															
-"Detailed Example: Central HP, SEER 13.0, HSPF 9.85"	air-to-air	SEER	13	single stage	HSPF	9.85															
+"Detailed Example: Central HP, SEER2 12.4, HSPF2 8.4"	air-to-air	SEER2	12.4	single stage	HSPF2	8.4															
 "Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance"	air-to-air	SEER2	13.4	single stage	HSPF2	7	Absolute capacities	"47.0, 17.0"		"36000, 23000"			"2.9, 1.8"		"95.0, 82.0"		"36000, 39000"			"3.8, 3.9"	
 "Detailed Example: Central HP, SEER2 17.1, HSPF2 7.9, Absolute Detailed Performance"	air-to-air	SEER2	17.1	two stage	HSPF2	7.9	Absolute capacities	"47.0, 17.0, 5.0"	"24500, 14200, 9900"	"36000, 21600"		"3.9, 3.0, 2.2"	"3.1, 2.3"		"95.0, 82.0"	"24000, 29000"	"36000, 39000"		"4.1, 5.4"	"3.6, 4.8"	
 "Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Absolute Detailed Performance"	air-to-air	SEER	17.5	variable speed	HSPF	9.5	Absolute capacities	"47.0, 17.0, 5.0"	"9900, 3600, 1100"	"35800, 24600"	"35800, 24600, 19700"	"4.68, 1.57, 0.47"	"3.4, 2.58"	"3.4, 2.58, 2.63"	"95.0, 82.0"	"11900, 13400"	36000	"36000, 40500"	"4.47, 6.33"	2.64	"2.64, 3.46"

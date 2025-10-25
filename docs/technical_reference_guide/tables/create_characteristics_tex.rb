@@ -226,10 +226,10 @@ parameters.each do |parameter|
 
   r_arguments.each do |r_argument|
     if properties.keys.include?(r_argument)
-      properties[r_argument].each do |property_name, property_unit_comment|
+      properties[r_argument].each do |property_name, property_unit_description|
         name = "\\texttt{#{property_name}}".gsub('_', '\_')
-        units = property_unit_comment['property_unit'].gsub('$', '\$').gsub('#', '\#').gsub('^2', '\textsuperscript{2}').gsub('^3', '\textsuperscript{3}')
-        description = property_unit_comment['comment_row'].gsub('%', '\\%').gsub('_', '\_').gsub('&', '\\\&')
+        units = property_unit_description['property_unit'].gsub('$', '\$').gsub('#', '\#').gsub('^2', '\textsuperscript{2}').gsub('^3', '\textsuperscript{3}')
+        description = property_unit_description['description'].gsub('%', '\\%').gsub('_', '\_').gsub('&', '\\\&')
         row = "#{name} & #{units} & #{description}  \\\\"
         if property_name != properties[r_argument].keys[-1]
           row += ' \\hline'

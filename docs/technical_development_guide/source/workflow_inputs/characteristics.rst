@@ -26609,7 +26609,7 @@ Properties
      - 
      - The efficiency type of the dishwasher.
    * - ``appliance_dishwasher_efficiency``
-     - 
+     - kWh/yr or #
      - The efficiency from the EnergyGuide label.
    * - ``appliance_dishwasher_label_electric_rate``
      - $/kWh
@@ -29694,23 +29694,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
    :widths: auto
 
    * - Option name
-     - AC, SEER 8
-     - AC, SEER 10
-     - AC, SEER 13
-     - AC, SEER 15
+     - AC, SEER2 7.6
+     - AC, SEER2 9.5
+     - AC, SEER2 12.4
+     - AC, SEER2 14.3
      - Ducted Heat Pump
      - Non-Ducted Heat Pump
      - None
      - Room AC, CEER 8.4
      - Room AC, CEER 9.7
      - Room AC, CEER 10.6
-     - Room AC, CEER 11.8
+     - Room AC, CEER 11.9
      - Shared Cooling
    * - Stock saturation
      - 0.9%
      - 6%
-     - 29%
-     - 13%
+     - 30%
+     - 12%
      - 15%
      - 0.97%
      - 11%
@@ -29733,10 +29733,10 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - room air conditioner
      - 
    * - ``hvac_cooling_system_cooling_efficiency_type``
-     - SEER
-     - SEER
-     - SEER
-     - SEER
+     - SEER2
+     - SEER2
+     - SEER2
+     - SEER2
      - 
      - 
      - 
@@ -29746,17 +29746,17 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - CEER
      - 
    * - ``hvac_cooling_system_cooling_efficiency``
-     - 8.0
-     - 10.0
-     - 13.0
-     - 15.0
+     - 9.5
+     - 9.5
+     - 12.4
+     - 14.3
      - 
      - 
      - 
      - 8.4
      - 9.7
      - 10.6
-     - 11.8
+     - 11.9
      - 
    * - ``hvac_cooling_system_cooling_compressor_type``
      - single stage
@@ -30242,9 +30242,9 @@ From ``project_national`` the list of options, option stock saturation, and opti
    :widths: auto
 
    * - Option name
-     - ASHP, SEER 10, 6.8 HSPF
-     - ASHP, SEER 13, 7.7 HSPF
-     - ASHP, SEER 15, 8.5 HSPF
+     - ASHP, SEER2 9.5, 5.8 HSPF2
+     - ASHP, SEER2 12.4, 6.6 HSPF2
+     - ASHP, SEER2 14.3, 7.4 HSPF2
      - Electric Baseboard, 100% Efficiency
      - Electric Boiler, 100% AFUE
      - Electric Furnace, 100% AFUE
@@ -30258,15 +30258,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Fuel Furnace, 92.5% AFUE
      - Fuel Wall/Floor Furnace, 60% AFUE
      - Fuel Wall/Floor Furnace, 68% AFUE
-     - MSHP, SEER2 14.5, 7.7 HSPF2
+     - MSHP, SEER2 13.7, 7.4 HSPF2
      - MSHP, SEER2 29, 12.3 HSPF2
      - None
      - Shared Heating
      - Void
    * - Stock saturation
-     - 1.1%
-     - 7%
-     - 7.2%
+     - 1.2%
+     - 8.9%
+     - 5.3%
      - 6.3%
      - 0.21%
      - 11%
@@ -30280,8 +30280,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 15%
      - 3.2%
      - 2.8%
-     - 0.87%
-     - 0.1%
+     - 0.96%
+     - 0.014%
      - 1.1%
      - 9.6%
      - 0%
@@ -30374,9 +30374,9 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
    * - ``hvac_heat_pump_cooling_efficiency_type``
-     - SEER
-     - SEER
-     - SEER
+     - SEER2
+     - SEER2
+     - SEER2
      - 
      - 
      - 
@@ -30396,9 +30396,9 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
    * - ``hvac_heat_pump_cooling_efficiency``
-     - 10.0
-     - 13.0
-     - 15.0
+     - 9.5
+     - 12.4
+     - 14.3
      - 
      - 
      - 
@@ -30412,7 +30412,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
-     - 14.5
+     - 13.7
      - 29.0
      - 
      - 
@@ -30440,9 +30440,9 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
    * - ``hvac_heat_pump_heating_efficiency_type``
-     - HSPF
-     - HSPF
-     - HSPF
+     - HSPF2
+     - HSPF2
+     - HSPF2
      - 
      - 
      - 
@@ -30462,9 +30462,9 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
    * - ``hvac_heat_pump_heating_efficiency``
-     - 6.8
-     - 7.7
-     - 8.5
+     - 5.8
+     - 6.6
+     - 7.4
      - 
      - 
      - 
@@ -30478,7 +30478,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
-     - 7.7
+     - 7.4
      - 12.3
      - 
      - 
@@ -33610,16 +33610,16 @@ Properties
      - Description
    * - ``enclosure_slab_under_slab_insulation_nominal_r_value``
      - F-ft2-hr/Btu
-     - Nominal R-value of the vertical slab perimeter insulation.
+     - Nominal R-value of the horizontal under slab insulation.
    * - ``enclosure_slab_under_slab_insulation_width``
      - ft
-     - Depth from grade to bottom of vertical slab perimeter insulation.
+     - Width from slab edge inward of horizontal under-slab insulation. Use 999 to specify that the under slab insulation spans the entire slab.
    * - ``enclosure_slab_perimeter_insulation_nominal_r_value``
      - F-ft2-hr/Btu
-     - Nominal R-value of the horizontal under slab insulation.
+     - Nominal R-value of the vertical slab perimeter insulation.
    * - ``enclosure_slab_perimeter_insulation_depth``
      - ft
-     - Width from slab edge inward of horizontal under-slab insulation. Use 999 to specify that the under slab insulation spans the entire slab.
+     - Depth from grade to bottom of vertical slab perimeter insulation.
 .. _insulation_wall:
 
 Insulation Wall
@@ -44050,7 +44050,7 @@ Properties
      - 
      - The efficiency type of the water heater. Does not apply to space-heating boilers.
    * - ``dhw_water_heater_efficiency``
-     - 
+     - frac
      - EnergyGuide Label rated Uniform Energy Factor (UEF) or Energy Factor (EF).
    * - ``dhw_solar_thermal_collector_loop_type``
      - 
@@ -44059,16 +44059,16 @@ Properties
      - 
      - The type of collector.
    * - ``dhw_solar_thermal_collector_area``
-     - 
+     - ft2
      - The surface area for the collector.
    * - ``dhw_solar_thermal_collector_rated_optical_efficiency``
-     - 
+     - frac
      - FRTA (y-intercept) from the Directory of SRCC OG-100 Certified Solar Collector Ratings.
    * - ``dhw_solar_thermal_collector_rated_thermal_losses``
-     - 
+     - Btu/hr-ft2-F
      - FRUL (slope) from the Directory of SRCC OG-100 Certified Solar Collector Ratings
    * - ``dhw_solar_thermal_storage_volume``
-     - 
+     - gal
      - Hot water storage volume.
    * - ``dhw_solar_thermal_direction_collector_azimuth``
      - deg
