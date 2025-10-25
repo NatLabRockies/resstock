@@ -23,7 +23,7 @@
         "hvac_heating_system": "Electric Resistance",
         "hvac_heating_system_fuel": "Electricity",
         "hvac_heating_system_capacity": "100 kBtu/hr",
-        "hvac_cooling_system": "Central AC, SEER 13.0",
+        "hvac_cooling_system": "Central AC, SEER2 12.4",
         "hvac_cooling_system_capacity": "5.0 tons",
         "hvac_heat_pump": "None",
         "hvac_ducts": "0% Leakage, Uninsulated",
