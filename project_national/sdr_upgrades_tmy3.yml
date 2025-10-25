@@ -629,13 +629,13 @@ upgrades:
           - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
 
       # MSHP (not applicable because of package_apply_logic)
-      # - option: HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+      # - option: HVAC Heating Efficiency|MSHP, SEER2 13.7, 7.4 HSPF2  # FIXME, eff too low, not available in AHRI
       #   apply_logic:
-      #     - HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+      #     - HVAC Heating Efficiency|MSHP, SEER2 13.7, 7.4 HSPF2
 
-      # - option: HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+      # - option: HVAC Heating Efficiency|MSHP, SEER2 29, 12.3 HSPF2
       #   apply_logic:
-      #     - HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+      #     - HVAC Heating Efficiency|MSHP, SEER2 29, 12.3 HSPF2
 
       ## 1.2 Categories with efficiency change:
       # min. eff fuel boilers
@@ -683,12 +683,12 @@ upgrades:
           - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
 
       # ASHP
-      - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2
+      - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.4 HSPF2
         apply_logic:
           - or:
-            - HVAC Heating Efficiency|ASHP, SEER 10, 6.8 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 13, 7.7 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 15, 8.5 HSPF #14.3 SEER2 == 15 SEER1, ducted
+            - HVAC Heating Efficiency|ASHP, SEER2 9.5, 5.8 HSPF2
+            - HVAC Heating Efficiency|ASHP, SEER2 12.4, 6.6 HSPF2
+            - HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.4 HSPF2
 
       ### [2] Cooling Efficiencies
       ## 2.1 Replace like with like
@@ -729,9 +729,9 @@ upgrades:
               - State|NV
               - State|NM
           - or:
-            - HVAC Cooling Efficiency|AC, SEER 8
-            - HVAC Cooling Efficiency|AC, SEER 10
-            - HVAC Cooling Efficiency|AC, SEER 13
+            - HVAC Cooling Efficiency|AC, SEER2 7.6
+            - HVAC Cooling Efficiency|AC, SEER2 9.5
+            - HVAC Cooling Efficiency|AC, SEER2 12.4
 
       # All other states — SEER2 13.4
       - option: HVAC Cooling Efficiency|AC, SEER2 13.4
@@ -760,13 +760,13 @@ upgrades:
               - State|NV
               - State|NM
           - or:
-            - HVAC Cooling Efficiency|AC, SEER 8
-            - HVAC Cooling Efficiency|AC, SEER 10
-            - HVAC Cooling Efficiency|AC, SEER 13
+            - HVAC Cooling Efficiency|AC, SEER2 7.6
+            - HVAC Cooling Efficiency|AC, SEER2 9.5
+            - HVAC Cooling Efficiency|AC, SEER2 12.4
 
-      - option: HVAC Cooling Efficiency|AC, SEER 15
+      - option: HVAC Cooling Efficiency|AC, SEER2 14.3
         apply_logic:
-          - HVAC Cooling Efficiency|AC, SEER 15
+          - HVAC Cooling Efficiency|AC, SEER2 14.3
 
       # Room (window) AC
       - option: HVAC Cooling Efficiency|Room AC, CEER 11.0

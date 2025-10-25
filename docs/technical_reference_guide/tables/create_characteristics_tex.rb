@@ -235,7 +235,7 @@ parameters.each do |parameter|
   changing_args.each do |changing_arg|
     if changing_arg.end_with?('setpoint_schedule') # increase column widths for XXX Setpoint Offset Period
       row += '|p{4.5cm}'
-    elsif options.keys.include?('ASHP, SEER 10, 6.2 HSPF') # decrease column widths for HVAC Heating Efficiency - heat_pump
+    elsif options.keys.include?('ASHP, SEER2 9.5, 5.8 HSPF2') # decrease column widths for HVAC Heating Efficiency - heat_pump
       row += '|p{2.25cm}'
     else
       row += '|p{2.75cm}'

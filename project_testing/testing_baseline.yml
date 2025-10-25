@@ -103,6 +103,7 @@ workflow_generator:
 
     # Outputs to include
     simulation_output_report:
+      include_annual_emission_end_uses: true
       timeseries_frequency: hourly
       include_annual_emission_end_uses: true
       include_timeseries_total_consumptions: true

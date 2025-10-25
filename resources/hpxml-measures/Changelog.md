@@ -4,6 +4,7 @@ __New Features__
 - Updates to HPXML v4.2.
 - Heat pump updates:
   - Updates default heating capacities at 17F per RESNET HERS Addendum 82 and NEEP database.
+  - Updates supplemental heating energy use during defrost based on RESNET HERS Addendum 82.
   - Updates shared pump power for ground-source heat pumps on a shared recirculation loop to cycle with heating/cooling load rather than operate continuously per RESNET HERS Addendum 94.
 - Allows optional `UsageMultiplier` for electric vehicles described using `Vehicles`.
 - Water heater improvements:

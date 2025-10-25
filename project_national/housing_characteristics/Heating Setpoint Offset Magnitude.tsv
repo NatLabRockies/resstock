@@ -19,8 +19,8 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 1A	Single-Family Attached	Yes	Yes	0	0.599361	0.217245	0.183394	46	1275.11	4.30022e-05
 1A	Single-Family Detached	No	Yes	1	0	0	0	54	18450	0.000400472
 1A	Single-Family Detached	Yes	Yes	0	0.599361	0.217245	0.183394	46	25252.4	0.000171947
-2A	Mobile Home	No	No	1	0	0	0	54	645207	0.00636149
-2A	Mobile Home	Yes	No	0	0.761982	0.194838	0.04318	33	353778	0.00348812
+2A	Mobile Home	No	No	1	0	0	0	54	645207	0.0063615
+2A	Mobile Home	Yes	No	0	0.761982	0.194838	0.04318	33	353778	0.00348813
 2A	Multi-Family with 2 - 4 Units	No	No	1	0	0	0	47	497501	0.00471894
 2A	Multi-Family with 2 - 4 Units	Yes	No	0	0.712428	0.203005	0.0845663	15	173839	0.00164892
 2A	Multi-Family with 5+ Units	No	No	1	0	0	0	104	1.52018e+06	0.0142326
@@ -43,7 +43,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 2B	Mobile Home	Yes	No	0	0.666182	0.246058	0.0877601	146	57273.3	0.000493912
 2B	Multi-Family with 2 - 4 Units	No	No	1	0	0	0	11	101192	0.000664345
 2B	Multi-Family with 2 - 4 Units	Yes	No	0	0.450067	0.384547	0.165386	17	30417.4	0.000199696
-2B	Multi-Family with 5+ Units	No	No	1	0	0	0	25	205482	0.00183951
+2B	Multi-Family with 5+ Units	No	No	1	0	0	0	25	205482	0.00183952
 2B	Multi-Family with 5+ Units	Yes	No	0	0.47307	0.407622	0.119308	14	125347	0.00112213
 2B	Single-Family Attached	No	No	1	0	0	0	25	66439.1	0.000603035
 2B	Single-Family Attached	Yes	No	0	0.55442	0.314072	0.131509	14	37199	0.000337638
@@ -73,7 +73,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 3A	Mobile Home	Yes	Yes	0	0.380768	0.327662	0.29157	13	89192.8	0.000909076
 3A	Multi-Family with 2 - 4 Units	No	Yes	1	0	0	0	24	55843.8	0.000286443
 3A	Multi-Family with 2 - 4 Units	Yes	Yes	0	0.539822	0.1404	0.319778	22	49851.1	0.000255704
-3A	Multi-Family with 5+ Units	No	Yes	1	0	0	0	17	187149	0.000773265
+3A	Multi-Family with 5+ Units	No	Yes	1	0	0	0	17	187149	0.000773264
 3A	Multi-Family with 5+ Units	Yes	Yes	0	0.529252	0.127628	0.34312	17	207403	0.000856953
 3A	Single-Family Attached	No	Yes	1	0	0	0	49	35357	0.000119474
 3A	Single-Family Attached	Yes	Yes	0	0.346366	0.275877	0.377756	39	0	0.00010103
@@ -93,7 +93,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 3B	Mobile Home	Yes	Yes	0	0.322728	0.349717	0.327554	21	19438.9	0.000168572
 3B	Multi-Family with 2 - 4 Units	No	Yes	1	0	0	0	14	68628.1	0.000308282
 3B	Multi-Family with 2 - 4 Units	Yes	Yes	0	0.561534	0.177501	0.260965	35	83088.9	0.00037324
-3B	Multi-Family with 5+ Units	No	Yes	1	0	0	0	14	127787	0.000569902
+3B	Multi-Family with 5+ Units	No	Yes	1	0	0	0	14	127787	0.000569901
 3B	Multi-Family with 5+ Units	Yes	Yes	0	0.587111	0.18073	0.232158	30	441534	0.00196913
 3B	Single-Family Attached	No	Yes	1	0	0	0	21	31479.4	0.000213196
 3B	Single-Family Attached	Yes	Yes	0	0.322728	0.349717	0.327554	21	46022.5	0.00031169
@@ -160,7 +160,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 4B	Single-Family Detached	No	Yes	1	0	0	0	19	0	0.000207929
 4B	Single-Family Detached	Yes	Yes	0	0.374037	0.340886	0.285077	17	0	0
 4C	Mobile Home	No	No	1	0	0	0	10	61020.2	0.000434502
-4C	Mobile Home	Yes	No	0	0.422552	0.339714	0.237733	22	130190	0.000927034
+4C	Mobile Home	Yes	No	0	0.422552	0.339714	0.237733	22	130190	0.000927035
 4C	Multi-Family with 2 - 4 Units	No	No	1	0	0	0	25	24490.4	0.000760977
 4C	Multi-Family with 2 - 4 Units	Yes	No	0	0.357069	0.328367	0.314565	20	5915.25	0.000613906
 4C	Multi-Family with 5+ Units	No	No	1	0	0	0	22	176370	0.00224288
@@ -177,7 +177,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 4C	Multi-Family with 5+ Units	Yes	Yes	0	0.51331	0.309068	0.177621	35	285516	0.000880901
 4C	Single-Family Attached	No	Yes	1	0	0	0	28	17688.6	8.02521e-05
 4C	Single-Family Attached	Yes	Yes	0	0.427029	0.382659	0.190312	40	27652.7	0.000125458
-4C	Single-Family Detached	No	Yes	1	0	0	0	18	109615	0.000805955
+4C	Single-Family Detached	No	Yes	1	0	0	0	18	109615	0.000805954
 4C	Single-Family Detached	Yes	Yes	0	0.3526	0.43834	0.20906	25	147167	0.00108206
 5A	Mobile Home	No	No	1	0	0	0	64	476244	0.00467258
 5A	Mobile Home	Yes	No	0	0.521654	0.350292	0.128054	34	242469	0.00237894
@@ -198,7 +198,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 5A	Single-Family Attached	No	Yes	1	0	0	0	13	58544.4	0.000501405
 5A	Single-Family Attached	Yes	Yes	0	0.446175	0.312887	0.240938	38	14581.5	0.000124883
 5A	Single-Family Detached	No	Yes	1	0	0	0	42	297415	0.00229102
-5A	Single-Family Detached	Yes	Yes	0	0.474729	0.305313	0.219958	31	155051	0.00119438
+5A	Single-Family Detached	Yes	Yes	0	0.474729	0.305313	0.219958	31	155051	0.00119437
 5B	Mobile Home	No	No	1	0	0	0	26	125183	0.00122837
 5B	Mobile Home	Yes	No	0	0.381924	0.279856	0.33822	31	130789	0.00128339
 5B	Multi-Family with 2 - 4 Units	No	No	1	0	0	0	54	92107.9	0.000971778
@@ -208,14 +208,14 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 5B	Single-Family Attached	No	No	1	0	0	0	34	135840	0.000952469
 5B	Single-Family Attached	Yes	No	0	0.466166	0.334446	0.199388	37	126979	0.000890341
 5B	Single-Family Detached	No	No	1	0	0	0	251	1.22096e+06	0.00875045
-5B	Single-Family Detached	Yes	No	0	0.498021	0.384426	0.117553	439	2.05351e+06	0.0147173
+5B	Single-Family Detached	Yes	No	0	0.498021	0.384426	0.117553	439	2.05351e+06	0.0147172
 5B	Mobile Home	No	Yes	1	0	0	0	18	18945.2	0.000127858
-5B	Mobile Home	Yes	Yes	0	0.374037	0.340886	0.285077	17	17388.5	0.000146872
+5B	Mobile Home	Yes	Yes	0	0.374037	0.340886	0.285077	17	17388.5	0.000146871
 5B	Multi-Family with 2 - 4 Units	No	Yes	1	0	0	0	17	24292.9	0.000110993
 5B	Multi-Family with 2 - 4 Units	Yes	Yes	0	0.623927	0.197189	0.178885	21	14510.2	0.000148258
 5B	Multi-Family with 5+ Units	No	Yes	1	0	0	0	13	103854	0.000308986
 5B	Multi-Family with 5+ Units	Yes	Yes	0	0.654383	0.18593	0.159686	18	156661	0.000466099
-5B	Single-Family Attached	No	Yes	1	0	0	0	18	6000.88	7.55904e-05
+5B	Single-Family Attached	No	Yes	1	0	0	0	18	6000.88	7.55903e-05
 5B	Single-Family Attached	Yes	Yes	0	0.374037	0.340886	0.285077	17	4854.43	8.68312e-05
 5B	Single-Family Detached	No	Yes	1	0	0	0	11	45545.1	0.000628083
 5B	Single-Family Detached	Yes	Yes	0	0.335332	0.469988	0.194681	13	58731	0.000809922
@@ -234,7 +234,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 6A	Multi-Family with 2 - 4 Units	No	Yes	1	0	0	0	10	70837.4	0.000192981
 6A	Multi-Family with 2 - 4 Units	Yes	Yes	0	0.578208	0.296609	0.125182	21	46680.7	0.000127171
 6A	Multi-Family with 5+ Units	No	Yes	1	0	0	0	24	140604	0.000561377
-6A	Multi-Family with 5+ Units	Yes	Yes	0	0.709324	0.186505	0.104171	15	101006	0.000403275
+6A	Multi-Family with 5+ Units	Yes	Yes	0	0.709324	0.186505	0.104171	15	101006	0.000403274
 6A	Single-Family Attached	No	Yes	1	0	0	0	26	4586.06	5.36829e-05
 6A	Single-Family Attached	Yes	Yes	0	0.324651	0.587982	0.087367	15	1956.31	3.32944e-05
 6A	Single-Family Detached	No	Yes	1	0	0	0	22	90413.1	0.000512871
@@ -254,7 +254,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 6B	Multi-Family with 2 - 4 Units	No	Yes	1	0	0	0	11	6644.02	4.77547e-05
 6B	Multi-Family with 2 - 4 Units	Yes	Yes	0	0.535777	0.349533	0.11469	20	13044	3.48714e-05
 6B	Multi-Family with 5+ Units	No	Yes	1	0	0	0	11	25648.7	9.71703e-05
-6B	Multi-Family with 5+ Units	Yes	Yes	0	0.535777	0.349533	0.11469	20	10536.8	3.99187e-05
+6B	Multi-Family with 5+ Units	Yes	Yes	0	0.535777	0.349533	0.11469	20	10536.8	3.99186e-05
 6B	Single-Family Attached	No	Yes	1	0	0	0	12	3840.76	1.77047e-05
 6B	Single-Family Attached	Yes	Yes	0	0.625621	0.129288	0.245091	13	2682.67	1.62554e-05
 6B	Single-Family Detached	No	Yes	1	0	0	0	12	19738	0.000221864
@@ -278,7 +278,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 7A	Single-Family Attached	No	Yes	1	0	0	0	11	2470.83	7.23427e-06
 7A	Single-Family Attached	Yes	Yes	0	0.425852	0.499873	0.074275	20	0	5.18162e-06
 7A	Single-Family Detached	No	Yes	1	0	0	0	11	12028.5	0.000105342
-7A	Single-Family Detached	Yes	Yes	0	0.425852	0.499873	0.074275	20	10385.3	9.09518e-05
+7A	Single-Family Detached	Yes	Yes	0	0.425852	0.499873	0.074275	20	10385.3	9.09517e-05
 7AK	Mobile Home	No	No	1	0	0	0	99	6603.57	5.1383e-05
 7AK	Mobile Home	Yes	No	0	0.599159	0.30787	0.092971	104	3957.93	3.0797e-05
 7AK	Multi-Family with 2 - 4 Units	No	No	1	0	0	0	13	14364	0.000174191
