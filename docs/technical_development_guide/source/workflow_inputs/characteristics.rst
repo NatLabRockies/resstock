@@ -30072,7 +30072,7 @@ Arguments
      - true
      - 
      - Choice
-     - None; Central AC, SEER 8.0; Central AC, SEER 10.0; Central AC, SEER 13.0; Central AC, SEER 14.0; Central AC, SEER 15.0; Central AC, SEER2 13.4; Central AC, SEER2 13.8; Central AC, SEER2 14.0; Central AC, SEER2 14.3; Central AC, SEER2 15.0; Central AC, SEER2 16.0; Central AC, SEER2 17.0; Central AC, SEER2 18.0; Central AC, SEER2 19.0; Central AC, SEER2 20.0; Central AC, SEER2 21.0; Central AC, SEER2 22.0; Central AC, SEER2 23.0; Central AC, SEER2 24.0; Central AC, SEER2 25.0; Ductless Mini-Split AC, SEER2 14.5; Ductless Mini-Split AC, SEER2 16.0; Ductless Mini-Split AC, SEER2 17.0; Ductless Mini-Split AC, SEER2 18.0; Ductless Mini-Split AC, SEER2 19.0; Ductless Mini-Split AC, SEER2 20.0; Ductless Mini-Split AC, SEER2 21.0; Ductless Mini-Split AC, SEER2 22.0; Ductless Mini-Split AC, SEER2 23.0; Ductless Mini-Split AC, SEER2 24.0; Ductless Mini-Split AC, SEER2 25.0; Ductless Mini-Split AC, SEER2 26.0; Ductless Mini-Split AC, SEER2 27.0; Ductless Mini-Split AC, SEER2 28.0; Room AC, CEER 8.4; Room AC, CEER 9.7; Room AC, CEER 10.6; Room AC, CEER 11.8; Room AC, CEER 13.1; Packaged Terminal AC, EER 8.5; Packaged Terminal AC, EER 9.8; Packaged Terminal AC, EER 10.7; Packaged Terminal AC, EER 11.9; Packaged Terminal AC, EER 13.2; Evaporative Cooler; Detailed Example: Central AC, SEER2 13.4, Absolute Detailed Performance; Detailed Example: Central AC, SEER2 17.1, Absolute Detailed Performance; Detailed Example: Central AC, SEER 17.5, Absolute Detailed Performance; Detailed Example: Central AC, SEER 17.5, Normalized Detailed Performance; Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Absolute Detailed Performance; Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Normalized Detailed Performance
+     - None; Central AC, SEER2 7.6; Central AC, SEER2 9.5; Central AC, SEER2 12.4; Central AC, SEER2 13.4; Central AC, SEER2 13.8; Central AC, SEER2 14.0; Central AC, SEER2 14.3; Central AC, SEER2 15.0; Central AC, SEER2 16.0; Central AC, SEER2 17.0; Central AC, SEER2 18.0; Central AC, SEER2 19.0; Central AC, SEER2 20.0; Central AC, SEER2 21.0; Central AC, SEER2 22.0; Central AC, SEER2 23.0; Central AC, SEER2 24.0; Central AC, SEER2 25.0; Ductless Mini-Split AC, SEER2 14.5; Ductless Mini-Split AC, SEER2 16.0; Ductless Mini-Split AC, SEER2 17.0; Ductless Mini-Split AC, SEER2 18.0; Ductless Mini-Split AC, SEER2 19.0; Ductless Mini-Split AC, SEER2 20.0; Ductless Mini-Split AC, SEER2 21.0; Ductless Mini-Split AC, SEER2 22.0; Ductless Mini-Split AC, SEER2 23.0; Ductless Mini-Split AC, SEER2 24.0; Ductless Mini-Split AC, SEER2 25.0; Ductless Mini-Split AC, SEER2 26.0; Ductless Mini-Split AC, SEER2 27.0; Ductless Mini-Split AC, SEER2 28.0; Room AC, CEER 8.4; Room AC, CEER 9.7; Room AC, CEER 10.6; Room AC, CEER 11.0; Room AC, CEER 11.8; Room AC, CEER 13.1; Packaged Terminal AC, EER 8.5; Packaged Terminal AC, EER 9.8; Packaged Terminal AC, EER 10.7; Packaged Terminal AC, EER 11.9; Packaged Terminal AC, EER 13.2; Evaporative Cooler; Detailed Example: Central AC, SEER2 13.4, Absolute Detailed Performance; Detailed Example: Central AC, SEER2 17.1, Absolute Detailed Performance; Detailed Example: Central AC, SEER 17.5, Absolute Detailed Performance; Detailed Example: Central AC, SEER 17.5, Normalized Detailed Performance; Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Absolute Detailed Performance; Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Normalized Detailed Performance
      - The type and efficiency of the cooling system. Use 'None' if there is no cooling system or if there is a heat pump serving a cooling load.
    * - ``hvac_cooling_system_capacity``
      - false
@@ -30108,11 +30108,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``hvac_cooling_system_capacity_capacity``
      - ``hvac_cooling_system_capacity_autosizing_factor``
      - ``hvac_cooling_system_capacity_autosizing_limit``
-   * - AC, SEER 8
+   * - AC, SEER2 7.6
      - 0.9%
      - central air conditioner
-     - SEER
-     - 8.0
+     - SEER2
+     - 9.5
      - single stage
      - 
      - 
@@ -30125,11 +30125,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
-   * - AC, SEER 10
+   * - AC, SEER2 9.5
      - 6%
      - central air conditioner
-     - SEER
-     - 10.0
+     - SEER2
+     - 9.5
      - single stage
      - 
      - 
@@ -30142,11 +30142,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
-   * - AC, SEER 13
-     - 29%
+   * - AC, SEER2 12.4
+     - 30%
      - central air conditioner
-     - SEER
-     - 13.0
+     - SEER2
+     - 12.4
      - single stage
      - 
      - 
@@ -30159,11 +30159,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
-   * - AC, SEER 15
-     - 13%
+   * - AC, SEER2 14.3
+     - 12%
      - central air conditioner
-     - SEER
-     - 15.0
+     - SEER2
+     - 14.3
      - single stage
      - 
      - 
@@ -30278,11 +30278,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
-   * - Room AC, CEER 11.8
+   * - Room AC, CEER 11.9
      - 7.4%
      - room air conditioner
      - CEER
-     - 11.8
+     - 11.9
      - 
      - 
      - 
@@ -30801,7 +30801,7 @@ Arguments
      - true
      - 
      - Choice
-     - None; Central HP, SEER 8.0, HSPF 6.0; Central HP, SEER 10.0, HSPF 6.8; Central HP, SEER 13.0, HSPF 7.7; Central HP, SEER 14.0, HSPF 8.2; Central HP, SEER 15.0, HSPF 8.5; Central HP, SEER2 13.4, HSPF2 7.0; Central HP, SEER2 14.0, HSPF2 7.3; Central HP, SEER2 14.3, HSPF2 7.5; Central HP, SEER2 15.0, HSPF2 7.6; Central HP, SEER2 16.0, HSPF2 7.9; Central HP, SEER2 17.0, HSPF2 8.2; Central HP, SEER2 18.0, HSPF2 8.5; Central HP, SEER2 19.0, HSPF2 8.7; Central HP, SEER2 20.0, HSPF2 9.0; Central HP, SEER2 21.0, HSPF2 9.2; Central HP, SEER2 22.0, HSPF2 9.5; Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7; Ductless Mini-Split HP, SEER2 16.0, HSPF2 8.1; Ductless Mini-Split HP, SEER2 17.0, HSPF2 8.5; Ductless Mini-Split HP, SEER2 18.0, HSPF2 8.8; Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0; Ductless Mini-Split HP, SEER2 20.0, HSPF2 9.4; Ductless Mini-Split HP, SEER2 21.0, HSPF2 9.7; Ductless Mini-Split HP, SEER2 22.0, HSPF2 10.1; Ductless Mini-Split HP, SEER2 23.0, HSPF2 10.4; Ductless Mini-Split HP, SEER2 24.0, HSPF2 10.7; Ductless Mini-Split HP, SEER2 25.0, HSPF2 11.0; Ductless Mini-Split HP, SEER2 26.0, HSPF2 11.4; Ductless Mini-Split HP, SEER2 27.0, HSPF2 11.7; Ductless Mini-Split HP, SEER2 28.0, HSPF2 12.0; Ductless Mini-Split HP, SEER2 29.0, HSPF2 12.3; Ductless Mini-Split HP, SEER2 30.0, HSPF2 12.7; Ductless Mini-Split HP, SEER2 32.0, HSPF2 13.3; Geothermal HP, EER 16.6, COP 3.6; Geothermal HP, EER 18.6, COP 3.8; Geothermal HP, EER 20.5, COP 4.0; Geothermal HP, EER 30.9, COP 4.4; Room HP, CEER 8.4, COP 2.7; Room HP, CEER 9.7, COP 3.0; Room HP, CEER 10.6, COP 3.3; Room HP, CEER 11.8, COP 3.6; Room HP, CEER 13.1, COP 3.9; Packaged Terminal HP, EER 8.5, COP 2.7; Packaged Terminal HP, EER 9.8, COP 3.0; Packaged Terminal HP, EER 10.7, COP 3.3; Packaged Terminal HP, EER 11.9, COP 3.6; Packaged Terminal HP, EER 13.2, COP 3.9; Detailed Example: Central HP, SEER 13.0, HSPF 9.85; Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance; Detailed Example: Central HP, SEER2 17.1, HSPF2 7.9, Absolute Detailed Performance; Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Absolute Detailed Performance; Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Normalized Detailed Performance; Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Absolute Detailed Performance; Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance
+     - None; Central HP, SEER2 7.6, HSPF2 5.1; Central HP, SEER2 9.5, HSPF2 5.8; Central HP, SEER2 12.4, HSPF2 6.6; Central HP, SEER2 13.4, HSPF2 7.0; Central HP, SEER2 13.8, HSPF2 7.2; Central HP, SEER2 14.0, HSPF2 7.3; Central HP, SEER2 14.3, HSPF2 7.4; Central HP, SEER2 15.0, HSPF2 7.6; Central HP, SEER2 16.0, HSPF2 7.9; Central HP, SEER2 17.0, HSPF2 8.2; Central HP, SEER2 18.0, HSPF2 8.5; Central HP, SEER2 19.0, HSPF2 8.7; Central HP, SEER2 20.0, HSPF2 9.0; Central HP, SEER2 21.0, HSPF2 9.2; Central HP, SEER2 22.0, HSPF2 9.5; Ductless Mini-Split HP, SEER2 13.7, HSPF2 7.4; Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7; Ductless Mini-Split HP, SEER2 16.0, HSPF2 8.1; Ductless Mini-Split HP, SEER2 17.0, HSPF2 8.5; Ductless Mini-Split HP, SEER2 18.0, HSPF2 8.8; Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0; Ductless Mini-Split HP, SEER2 20.0, HSPF2 9.4; Ductless Mini-Split HP, SEER2 21.0, HSPF2 9.7; Ductless Mini-Split HP, SEER2 22.0, HSPF2 10.1; Ductless Mini-Split HP, SEER2 23.0, HSPF2 10.4; Ductless Mini-Split HP, SEER2 24.0, HSPF2 10.7; Ductless Mini-Split HP, SEER2 25.0, HSPF2 11.0; Ductless Mini-Split HP, SEER2 26.0, HSPF2 11.4; Ductless Mini-Split HP, SEER2 27.0, HSPF2 11.7; Ductless Mini-Split HP, SEER2 28.0, HSPF2 12.0; Ductless Mini-Split HP, SEER2 29.0, HSPF2 12.3; Ductless Mini-Split HP, SEER2 30.0, HSPF2 12.7; Ductless Mini-Split HP, SEER2 32.0, HSPF2 13.3; Geothermal HP, EER 16.6, COP 3.6; Geothermal HP, EER 18.6, COP 3.8; Geothermal HP, EER 20.5, COP 4.0; Geothermal HP, EER 30.9, COP 4.4; Room HP, CEER 8.4, COP 2.7; Room HP, CEER 9.7, COP 3.0; Room HP, CEER 10.6, COP 3.3; Room HP, CEER 11.8, COP 3.6; Room HP, CEER 13.1, COP 3.9; Packaged Terminal HP, EER 8.5, COP 2.7; Packaged Terminal HP, EER 9.8, COP 3.0; Packaged Terminal HP, EER 10.7, COP 3.3; Packaged Terminal HP, EER 11.9, COP 3.6; Packaged Terminal HP, EER 13.2, COP 3.9; Detailed Example: Central HP, SEER2 12.4, HSPF2 8.4; Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance; Detailed Example: Central HP, SEER2 17.1, HSPF2 7.9, Absolute Detailed Performance; Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Absolute Detailed Performance; Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Normalized Detailed Performance; Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Absolute Detailed Performance; Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance
      - The type and efficiency of the heat pump.
    * - ``hvac_heat_pump_capacity``
      - false
@@ -30930,8 +30930,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``advanced_feature_ground_to_air_heat_pump_model_type``
      - ``advanced_feature_hvac_allow_increased_fixed_capacities``
      - ``hvac_heating_shared_system``
-   * - ASHP, SEER 10, 6.8 HSPF
-     - 1.1%
+   * - ASHP, SEER2 9.5, 5.8 HSPF2
+     - 1.2%
      - none
      - 
      - 
@@ -30940,11 +30940,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 1.0
      - air-to-air
-     - SEER
-     - 10.0
+     - SEER2
+     - 9.5
      - single stage
-     - HSPF
-     - 6.8
+     - HSPF2
+     - 5.8
      - 
      - 
      - 
@@ -30992,8 +30992,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
-   * - ASHP, SEER 13, 7.7 HSPF
-     - 7%
+   * - ASHP, SEER2 12.4, 6.6 HSPF2
+     - 8.9%
      - none
      - 
      - 
@@ -31002,11 +31002,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 1.0
      - air-to-air
-     - SEER
-     - 13.0
+     - SEER2
+     - 12.4
      - single stage
-     - HSPF
-     - 7.7
+     - HSPF2
+     - 6.6
      - 
      - 
      - 
@@ -31054,8 +31054,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
-   * - ASHP, SEER 15, 8.5 HSPF
-     - 7.2%
+   * - ASHP, SEER2 14.3, 7.4 HSPF2
+     - 5.3%
      - none
      - 
      - 
@@ -31064,11 +31064,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 1.0
      - air-to-air
-     - SEER
-     - 15.0
+     - SEER2
+     - 14.3
      - single stage
-     - HSPF
-     - 8.5
+     - HSPF2
+     - 7.4
      - 
      - 
      - 
@@ -31922,8 +31922,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
-   * - MSHP, SEER2 14.5, 7.7 HSPF2
-     - 0.87%
+   * - MSHP, SEER2 13.7, 7.4 HSPF2
+     - 0.96%
      - none
      - 
      - 
@@ -31933,10 +31933,10 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 1.0
      - mini-split
      - SEER2
-     - 14.5
+     - 13.7
      - variable speed
      - HSPF2
-     - 7.7
+     - 7.4
      - 
      - 
      - 
@@ -31985,7 +31985,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - None
    * - MSHP, SEER2 29, 12.3 HSPF2
-     - 0.1%
+     - 0.014%
      - none
      - 
      - 
@@ -32814,7 +32814,7 @@ Arguments
      - true
      - 
      - Choice
-     - None; Central AC, SEER 8.0; Central AC, SEER 10.0; Central AC, SEER 13.0; Central AC, SEER 14.0; Central AC, SEER 15.0; Central AC, SEER2 13.4; Central AC, SEER2 13.8; Central AC, SEER2 14.0; Central AC, SEER2 14.3; Central AC, SEER2 15.0; Central AC, SEER2 16.0; Central AC, SEER2 17.0; Central AC, SEER2 18.0; Central AC, SEER2 19.0; Central AC, SEER2 20.0; Central AC, SEER2 21.0; Central AC, SEER2 22.0; Central AC, SEER2 23.0; Central AC, SEER2 24.0; Central AC, SEER2 25.0; Ductless Mini-Split AC, SEER2 14.5; Ductless Mini-Split AC, SEER2 16.0; Ductless Mini-Split AC, SEER2 17.0; Ductless Mini-Split AC, SEER2 18.0; Ductless Mini-Split AC, SEER2 19.0; Ductless Mini-Split AC, SEER2 20.0; Ductless Mini-Split AC, SEER2 21.0; Ductless Mini-Split AC, SEER2 22.0; Ductless Mini-Split AC, SEER2 23.0; Ductless Mini-Split AC, SEER2 24.0; Ductless Mini-Split AC, SEER2 25.0; Ductless Mini-Split AC, SEER2 26.0; Ductless Mini-Split AC, SEER2 27.0; Ductless Mini-Split AC, SEER2 28.0; Room AC, CEER 8.4; Room AC, CEER 9.7; Room AC, CEER 10.6; Room AC, CEER 11.8; Room AC, CEER 13.1; Packaged Terminal AC, EER 8.5; Packaged Terminal AC, EER 9.8; Packaged Terminal AC, EER 10.7; Packaged Terminal AC, EER 11.9; Packaged Terminal AC, EER 13.2; Evaporative Cooler; Detailed Example: Central AC, SEER2 13.4, Absolute Detailed Performance; Detailed Example: Central AC, SEER2 17.1, Absolute Detailed Performance; Detailed Example: Central AC, SEER 17.5, Absolute Detailed Performance; Detailed Example: Central AC, SEER 17.5, Normalized Detailed Performance; Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Absolute Detailed Performance; Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Normalized Detailed Performance
+     - None; Central AC, SEER2 7.6; Central AC, SEER2 9.5; Central AC, SEER2 12.4; Central AC, SEER2 13.4; Central AC, SEER2 13.8; Central AC, SEER2 14.0; Central AC, SEER2 14.3; Central AC, SEER2 15.0; Central AC, SEER2 16.0; Central AC, SEER2 17.0; Central AC, SEER2 18.0; Central AC, SEER2 19.0; Central AC, SEER2 20.0; Central AC, SEER2 21.0; Central AC, SEER2 22.0; Central AC, SEER2 23.0; Central AC, SEER2 24.0; Central AC, SEER2 25.0; Ductless Mini-Split AC, SEER2 14.5; Ductless Mini-Split AC, SEER2 16.0; Ductless Mini-Split AC, SEER2 17.0; Ductless Mini-Split AC, SEER2 18.0; Ductless Mini-Split AC, SEER2 19.0; Ductless Mini-Split AC, SEER2 20.0; Ductless Mini-Split AC, SEER2 21.0; Ductless Mini-Split AC, SEER2 22.0; Ductless Mini-Split AC, SEER2 23.0; Ductless Mini-Split AC, SEER2 24.0; Ductless Mini-Split AC, SEER2 25.0; Ductless Mini-Split AC, SEER2 26.0; Ductless Mini-Split AC, SEER2 27.0; Ductless Mini-Split AC, SEER2 28.0; Room AC, CEER 8.4; Room AC, CEER 9.7; Room AC, CEER 10.6; Room AC, CEER 11.0; Room AC, CEER 11.8; Room AC, CEER 13.1; Packaged Terminal AC, EER 8.5; Packaged Terminal AC, EER 9.8; Packaged Terminal AC, EER 10.7; Packaged Terminal AC, EER 11.9; Packaged Terminal AC, EER 13.2; Evaporative Cooler; Detailed Example: Central AC, SEER2 13.4, Absolute Detailed Performance; Detailed Example: Central AC, SEER2 17.1, Absolute Detailed Performance; Detailed Example: Central AC, SEER 17.5, Absolute Detailed Performance; Detailed Example: Central AC, SEER 17.5, Normalized Detailed Performance; Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Absolute Detailed Performance; Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Normalized Detailed Performance
      - The type and efficiency of the cooling system. Use 'None' if there is no cooling system or if there is a heat pump serving a cooling load.
    * - ``hvac_cooling_system_capacity``
      - false
@@ -32826,7 +32826,7 @@ Arguments
      - true
      - 
      - Choice
-     - None; Central HP, SEER 8.0, HSPF 6.0; Central HP, SEER 10.0, HSPF 6.8; Central HP, SEER 13.0, HSPF 7.7; Central HP, SEER 14.0, HSPF 8.2; Central HP, SEER 15.0, HSPF 8.5; Central HP, SEER2 13.4, HSPF2 7.0; Central HP, SEER2 14.0, HSPF2 7.3; Central HP, SEER2 14.3, HSPF2 7.5; Central HP, SEER2 15.0, HSPF2 7.6; Central HP, SEER2 16.0, HSPF2 7.9; Central HP, SEER2 17.0, HSPF2 8.2; Central HP, SEER2 18.0, HSPF2 8.5; Central HP, SEER2 19.0, HSPF2 8.7; Central HP, SEER2 20.0, HSPF2 9.0; Central HP, SEER2 21.0, HSPF2 9.2; Central HP, SEER2 22.0, HSPF2 9.5; Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7; Ductless Mini-Split HP, SEER2 16.0, HSPF2 8.1; Ductless Mini-Split HP, SEER2 17.0, HSPF2 8.5; Ductless Mini-Split HP, SEER2 18.0, HSPF2 8.8; Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0; Ductless Mini-Split HP, SEER2 20.0, HSPF2 9.4; Ductless Mini-Split HP, SEER2 21.0, HSPF2 9.7; Ductless Mini-Split HP, SEER2 22.0, HSPF2 10.1; Ductless Mini-Split HP, SEER2 23.0, HSPF2 10.4; Ductless Mini-Split HP, SEER2 24.0, HSPF2 10.7; Ductless Mini-Split HP, SEER2 25.0, HSPF2 11.0; Ductless Mini-Split HP, SEER2 26.0, HSPF2 11.4; Ductless Mini-Split HP, SEER2 27.0, HSPF2 11.7; Ductless Mini-Split HP, SEER2 28.0, HSPF2 12.0; Ductless Mini-Split HP, SEER2 29.0, HSPF2 12.3; Ductless Mini-Split HP, SEER2 30.0, HSPF2 12.7; Ductless Mini-Split HP, SEER2 32.0, HSPF2 13.3; Geothermal HP, EER 16.6, COP 3.6; Geothermal HP, EER 18.6, COP 3.8; Geothermal HP, EER 20.5, COP 4.0; Geothermal HP, EER 30.9, COP 4.4; Room HP, CEER 8.4, COP 2.7; Room HP, CEER 9.7, COP 3.0; Room HP, CEER 10.6, COP 3.3; Room HP, CEER 11.8, COP 3.6; Room HP, CEER 13.1, COP 3.9; Packaged Terminal HP, EER 8.5, COP 2.7; Packaged Terminal HP, EER 9.8, COP 3.0; Packaged Terminal HP, EER 10.7, COP 3.3; Packaged Terminal HP, EER 11.9, COP 3.6; Packaged Terminal HP, EER 13.2, COP 3.9; Detailed Example: Central HP, SEER 13.0, HSPF 9.85; Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance; Detailed Example: Central HP, SEER2 17.1, HSPF2 7.9, Absolute Detailed Performance; Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Absolute Detailed Performance; Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Normalized Detailed Performance; Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Absolute Detailed Performance; Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance
+     - None; Central HP, SEER2 7.6, HSPF2 5.1; Central HP, SEER2 9.5, HSPF2 5.8; Central HP, SEER2 12.4, HSPF2 6.6; Central HP, SEER2 13.4, HSPF2 7.0; Central HP, SEER2 13.8, HSPF2 7.2; Central HP, SEER2 14.0, HSPF2 7.3; Central HP, SEER2 14.3, HSPF2 7.4; Central HP, SEER2 15.0, HSPF2 7.6; Central HP, SEER2 16.0, HSPF2 7.9; Central HP, SEER2 17.0, HSPF2 8.2; Central HP, SEER2 18.0, HSPF2 8.5; Central HP, SEER2 19.0, HSPF2 8.7; Central HP, SEER2 20.0, HSPF2 9.0; Central HP, SEER2 21.0, HSPF2 9.2; Central HP, SEER2 22.0, HSPF2 9.5; Ductless Mini-Split HP, SEER2 13.7, HSPF2 7.4; Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7; Ductless Mini-Split HP, SEER2 16.0, HSPF2 8.1; Ductless Mini-Split HP, SEER2 17.0, HSPF2 8.5; Ductless Mini-Split HP, SEER2 18.0, HSPF2 8.8; Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0; Ductless Mini-Split HP, SEER2 20.0, HSPF2 9.4; Ductless Mini-Split HP, SEER2 21.0, HSPF2 9.7; Ductless Mini-Split HP, SEER2 22.0, HSPF2 10.1; Ductless Mini-Split HP, SEER2 23.0, HSPF2 10.4; Ductless Mini-Split HP, SEER2 24.0, HSPF2 10.7; Ductless Mini-Split HP, SEER2 25.0, HSPF2 11.0; Ductless Mini-Split HP, SEER2 26.0, HSPF2 11.4; Ductless Mini-Split HP, SEER2 27.0, HSPF2 11.7; Ductless Mini-Split HP, SEER2 28.0, HSPF2 12.0; Ductless Mini-Split HP, SEER2 29.0, HSPF2 12.3; Ductless Mini-Split HP, SEER2 30.0, HSPF2 12.7; Ductless Mini-Split HP, SEER2 32.0, HSPF2 13.3; Geothermal HP, EER 16.6, COP 3.6; Geothermal HP, EER 18.6, COP 3.8; Geothermal HP, EER 20.5, COP 4.0; Geothermal HP, EER 30.9, COP 4.4; Room HP, CEER 8.4, COP 2.7; Room HP, CEER 9.7, COP 3.0; Room HP, CEER 10.6, COP 3.3; Room HP, CEER 11.8, COP 3.6; Room HP, CEER 13.1, COP 3.9; Packaged Terminal HP, EER 8.5, COP 2.7; Packaged Terminal HP, EER 9.8, COP 3.0; Packaged Terminal HP, EER 10.7, COP 3.3; Packaged Terminal HP, EER 11.9, COP 3.6; Packaged Terminal HP, EER 13.2, COP 3.9; Detailed Example: Central HP, SEER2 12.4, HSPF2 8.4; Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance; Detailed Example: Central HP, SEER2 17.1, HSPF2 7.9, Absolute Detailed Performance; Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Absolute Detailed Performance; Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Normalized Detailed Performance; Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Absolute Detailed Performance; Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance
      - The type and efficiency of the heat pump.
    * - ``hvac_heat_pump_capacity``
      - false
