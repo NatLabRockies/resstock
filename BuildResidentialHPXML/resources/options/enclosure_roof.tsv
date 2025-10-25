@@ -1,0 +1,16 @@
+Option Name	Unconditioned Assembly R-Value [F-ft2-hr/Btu]	Conditioned Assembly R-Value [F-ft2-hr/Btu]
+Uninsulated	2.3	3.7
+R-7	8.9	10.2
+R-13	13.9	14.3
+R-19	19.9	21.2
+R-30	29.4	29.7
+R-38	36.4	36.5
+R-49	45.6	47
+IECC U-0.035	28.57	28.57
+IECC U-0.030	33.33	33.33
+IECC U-0.026	38.46	38.46
+IECC U-0.024	41.67	41.67
+"Detailed Example: Uninsulated, 0.5 in plywood, 0.25 in asphalt shingle"	1.99	
+		
+# Unconditioned Assembly R-Value: Assembly R-value for the roof if above an unconditioned attic.		
+# Conditioned Assembly R-Value: Assembly R-value for the roof if above conditioned space.		

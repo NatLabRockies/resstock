@@ -1,0 +1,8 @@
+Option Name	Annual Energy Use [kWh/yr]	Usage Multiplier
+None	0	
+Typical Efficiency		
+High Efficiency		0.67
+Detailed Example: 475 kWh/yr	475	
+		
+# Annual Energy Use: The annual energy consumption of the well pump.		
+"# Usage Multiplier: Multiplier on the energy usage that can reflect, e.g., high/low usage occupants."		

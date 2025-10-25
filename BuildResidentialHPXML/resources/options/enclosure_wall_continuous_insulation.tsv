@@ -1,0 +1,15 @@
+Option Name	R-Value [F-ft2-hr/Btu]
+Uninsulated	0
+R-5	5
+R-6	6
+R-7	7
+R-10	10
+R-12	12
+R-14	14
+R-15	15
+R-18	18
+R-20	20
+R-21	21
+Detailed Example: R-7.2	7.2
+	
+# R-Value: The R-value for the wall continuous insulation.	

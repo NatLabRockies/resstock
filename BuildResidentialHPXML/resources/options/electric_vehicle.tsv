@@ -1,0 +1,100 @@
+Option Name	Type	Nominal Battery Capacity [kWh]	Usable Battery Capacity [kWh]	Fuel Economy Units	Fuel Economy Combined	Miles Driven Per Year [miles/yr]
+None	None					
+"Compact, 200 Mile Range, 1000 miles/yr"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	1000
+"Compact, 200 Mile Range, 3000 miles/yr"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	3000
+"Compact, 200 Mile Range, 5000 miles/yr"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	5000
+"Compact, 200 Mile Range, 7000 miles/yr"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	7000
+"Compact, 200 Mile Range, 9000 miles/yr"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	9000
+"Compact, 200 Mile Range, 11000 miles/yr"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	11000
+"Compact, 200 Mile Range, 13000 miles/yr"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	13000
+"Compact, 200 Mile Range, 15000 miles/yr"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	15000
+"Compact, 200 Mile Range, 17000 miles/yr"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	17000
+"Compact, 200 Mile Range, 19000 miles/yr"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	19000
+"Compact, 200 Mile Range, 22500 miles/yr"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	22500
+"Compact, 300 Mile Range, 1000 miles/yr"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	1000
+"Compact, 300 Mile Range, 3000 miles/yr"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	3000
+"Compact, 300 Mile Range, 5000 miles/yr"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	5000
+"Compact, 300 Mile Range, 7000 miles/yr"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	7000
+"Compact, 300 Mile Range, 9000 miles/yr"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	9000
+"Compact, 300 Mile Range, 11000 miles/yr"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	11000
+"Compact, 300 Mile Range, 13000 miles/yr"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	13000
+"Compact, 300 Mile Range, 15000 miles/yr"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	15000
+"Compact, 300 Mile Range, 17000 miles/yr"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	17000
+"Compact, 300 Mile Range, 19000 miles/yr"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	19000
+"Compact, 300 Mile Range, 22500 miles/yr"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	22500
+"Midsize, 200 Mile Range, 1000 miles/yr"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	1000
+"Midsize, 200 Mile Range, 3000 miles/yr"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	3000
+"Midsize, 200 Mile Range, 5000 miles/yr"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	5000
+"Midsize, 200 Mile Range, 7000 miles/yr"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	7000
+"Midsize, 200 Mile Range, 9000 miles/yr"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	9000
+"Midsize, 200 Mile Range, 11000 miles/yr"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	11000
+"Midsize, 200 Mile Range, 13000 miles/yr"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	13000
+"Midsize, 200 Mile Range, 15000 miles/yr"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	15000
+"Midsize, 200 Mile Range, 17000 miles/yr"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	17000
+"Midsize, 200 Mile Range, 19000 miles/yr"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	19000
+"Midsize, 200 Mile Range, 22500 miles/yr"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	22500
+"Midsize, 300 Mile Range, 1000 miles/yr"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	1000
+"Midsize, 300 Mile Range, 3000 miles/yr"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	3000
+"Midsize, 300 Mile Range, 5000 miles/yr"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	5000
+"Midsize, 300 Mile Range, 7000 miles/yr"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	7000
+"Midsize, 300 Mile Range, 9000 miles/yr"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	9000
+"Midsize, 300 Mile Range, 11000 miles/yr"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	11000
+"Midsize, 300 Mile Range, 13000 miles/yr"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	13000
+"Midsize, 300 Mile Range, 15000 miles/yr"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	15000
+"Midsize, 300 Mile Range, 17000 miles/yr"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	17000
+"Midsize, 300 Mile Range, 19000 miles/yr"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	19000
+"Midsize, 300 Mile Range, 22500 miles/yr"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	22500
+"Pickup, 200 Mile Range, 1000 miles/yr"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	1000
+"Pickup, 200 Mile Range, 3000 miles/yr"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	3000
+"Pickup, 200 Mile Range, 5000 miles/yr"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	5000
+"Pickup, 200 Mile Range, 7000 miles/yr"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	7000
+"Pickup, 200 Mile Range, 9000 miles/yr"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	9000
+"Pickup, 200 Mile Range, 11000 miles/yr"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	11000
+"Pickup, 200 Mile Range, 13000 miles/yr"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	13000
+"Pickup, 200 Mile Range, 15000 miles/yr"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	15000
+"Pickup, 200 Mile Range, 17000 miles/yr"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	17000
+"Pickup, 200 Mile Range, 19000 miles/yr"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	19000
+"Pickup, 200 Mile Range, 22500 miles/yr"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	22500
+"Pickup, 300 Mile Range, 1000 miles/yr"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	1000
+"Pickup, 300 Mile Range, 3000 miles/yr"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	3000
+"Pickup, 300 Mile Range, 5000 miles/yr"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	5000
+"Pickup, 300 Mile Range, 7000 miles/yr"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	7000
+"Pickup, 300 Mile Range, 9000 miles/yr"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	9000
+"Pickup, 300 Mile Range, 11000 miles/yr"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	11000
+"Pickup, 300 Mile Range, 13000 miles/yr"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	13000
+"Pickup, 300 Mile Range, 15000 miles/yr"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	15000
+"Pickup, 300 Mile Range, 17000 miles/yr"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	17000
+"Pickup, 300 Mile Range, 19000 miles/yr"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	19000
+"Pickup, 300 Mile Range, 22500 miles/yr"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	22500
+"SUV, 200 Mile Range, 1000 miles/yr"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	1000
+"SUV, 200 Mile Range, 3000 miles/yr"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	3000
+"SUV, 200 Mile Range, 5000 miles/yr"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	5000
+"SUV, 200 Mile Range, 7000 miles/yr"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	7000
+"SUV, 200 Mile Range, 9000 miles/yr"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	9000
+"SUV, 200 Mile Range, 11000 miles/yr"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	11000
+"SUV, 200 Mile Range, 13000 miles/yr"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	13000
+"SUV, 200 Mile Range, 15000 miles/yr"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	15000
+"SUV, 200 Mile Range, 17000 miles/yr"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	17000
+"SUV, 200 Mile Range, 19000 miles/yr"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	19000
+"SUV, 200 Mile Range, 22500 miles/yr"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	22500
+"SUV, 300 Mile Range, 1000 miles/yr"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	1000
+"SUV, 300 Mile Range, 3000 miles/yr"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	3000
+"SUV, 300 Mile Range, 5000 miles/yr"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	5000
+"SUV, 300 Mile Range, 7000 miles/yr"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	7000
+"SUV, 300 Mile Range, 9000 miles/yr"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	9000
+"SUV, 300 Mile Range, 11000 miles/yr"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	11000
+"SUV, 300 Mile Range, 13000 miles/yr"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	13000
+"SUV, 300 Mile Range, 15000 miles/yr"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	15000
+"SUV, 300 Mile Range, 17000 miles/yr"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	17000
+"SUV, 300 Mile Range, 19000 miles/yr"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	19000
+"SUV, 300 Mile Range, 22500 miles/yr"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	22500
+"Detailed Example: 100 kWh battery, 0.25 kWh/mile"	BatteryElectricVehicle	100	80	kWh/mile	0.25	
+"Detailed Example: 100 kWh battery, 4.0 miles/kWh"	BatteryElectricVehicle	100	80	mile/kWh	4	
+"Detailed Example: 100 kWh battery, 135.0 mpge"	BatteryElectricVehicle	100	80	mpge	135	
+						
+# Type: The type of vehicle.						
+# Nominal Battery Capacity: The nominal capacity of the electric vehicle battery.						
+# Usable Battery Capacity: The usable capacity of the electric vehicle battery.						
+# Fuel Economy Units: The combined fuel economy units of the vehicle.						
+# Fuel Economy Combined: The combined fuel economy of the vehicle.						
+# Miles Driven Per Year: Number of miles driven per year with the vehicle.						

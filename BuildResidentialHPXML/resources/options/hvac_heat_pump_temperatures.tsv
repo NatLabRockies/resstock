@@ -1,0 +1,23 @@
+Option Name	Compressor Lockout [F]	Backup Lockout [F]
+Default		
+-20F Min Compressor Temp	-20	
+-15F Min Compressor Temp	-15	
+-10F Min Compressor Temp	-10	
+-5F Min Compressor Temp	-5	
+0F Min Compressor Temp	0	
+5F Min Compressor Temp	5	
+10F Min Compressor Temp	10	
+15F Min Compressor Temp	15	
+20F Min Compressor Temp	20	
+25F Min Compressor Temp	25	
+30F Min Compressor Temp	30	
+35F Min Compressor Temp	35	
+40F Min Compressor Temp	40	
+"30F Min Compressor Temp, 30F Max HP Backup Temp"	30	30
+"35F Min Compressor Temp, 35F Max HP Backup Temp"	35	35
+"40F Min Compressor Temp, 40F Max HP Backup Temp"	40	40
+"Detailed Example: 5F Min Compressor Temp, 35F Max HP Backup Temp"	5	35
+"Detailed Example: 25F Min Compressor Temp, 45F Max HP Backup Temp"	25	45
+		
+# Compressor Lockout: The temperature below which the heat pump compressor is disabled. Applies to all heat pump types other than Geothermal HPs.		
+# Backup Lockout: The temperature above which the heat pump backup is disabled.		
