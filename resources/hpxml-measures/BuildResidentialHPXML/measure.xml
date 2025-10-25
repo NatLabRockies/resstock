@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_hpxml</name>
   <uid>a13a8983-2b01-4930-8af2-42030b6e4233</uid>
-  <version_id>56894f5c-4cb8-4876-abff-a53f78d98132</version_id>
-  <version_modified>2025-10-17T16:14:00Z</version_modified>
+  <version_id>c29a8cff-9394-41bf-84f9-61fbc4c734f6</version_id>
+  <version_modified>2025-10-24T19:27:20Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>BuildResidentialHPXML</class_name>
   <display_name>HPXML Builder</display_name>
@@ -4046,31 +4046,23 @@
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>Central AC, SEER 13.0</default_value>
+      <default_value>Central AC, SEER2 13.4</default_value>
       <choices>
         <choice>
           <value>None</value>
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 8.0</value>
-          <display_name>Central AC, SEER 8.0</display_name>
+          <value>Central AC, SEER2 7.6</value>
+          <display_name>Central AC, SEER2 7.6</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 10.0</value>
-          <display_name>Central AC, SEER 10.0</display_name>
+          <value>Central AC, SEER2 9.5</value>
+          <display_name>Central AC, SEER2 9.5</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 13.0</value>
-          <display_name>Central AC, SEER 13.0</display_name>
-        </choice>
-        <choice>
-          <value>Central AC, SEER 14.0</value>
-          <display_name>Central AC, SEER 14.0</display_name>
-        </choice>
-        <choice>
-          <value>Central AC, SEER 15.0</value>
-          <display_name>Central AC, SEER 15.0</display_name>
+          <value>Central AC, SEER2 12.4</value>
+          <display_name>Central AC, SEER2 12.4</display_name>
         </choice>
         <choice>
           <value>Central AC, SEER2 13.4</value>
@@ -4482,36 +4474,32 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 8.0, HSPF 6.0</value>
-          <display_name>Central HP, SEER 8.0, HSPF 6.0</display_name>
+          <value>Central HP, SEER2 7.6, HSPF2 5.1</value>
+          <display_name>Central HP, SEER2 7.6, HSPF2 5.1</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 10.0, HSPF 6.8</value>
-          <display_name>Central HP, SEER 10.0, HSPF 6.8</display_name>
+          <value>Central HP, SEER2 9.5, HSPF2 5.8</value>
+          <display_name>Central HP, SEER2 9.5, HSPF2 5.8</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 13.0, HSPF 7.7</value>
-          <display_name>Central HP, SEER 13.0, HSPF 7.7</display_name>
-        </choice>
-        <choice>
-          <value>Central HP, SEER 14.0, HSPF 8.2</value>
-          <display_name>Central HP, SEER 14.0, HSPF 8.2</display_name>
-        </choice>
-        <choice>
-          <value>Central HP, SEER 15.0, HSPF 8.5</value>
-          <display_name>Central HP, SEER 15.0, HSPF 8.5</display_name>
+          <value>Central HP, SEER2 12.4, HSPF2 6.6</value>
+          <display_name>Central HP, SEER2 12.4, HSPF2 6.6</display_name>
         </choice>
         <choice>
           <value>Central HP, SEER2 13.4, HSPF2 7.0</value>
           <display_name>Central HP, SEER2 13.4, HSPF2 7.0</display_name>
         </choice>
         <choice>
+          <value>Central HP, SEER2 13.8, HSPF2 7.2</value>
+          <display_name>Central HP, SEER2 13.8, HSPF2 7.2</display_name>
+        </choice>
+        <choice>
           <value>Central HP, SEER2 14.0, HSPF2 7.3</value>
           <display_name>Central HP, SEER2 14.0, HSPF2 7.3</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER2 14.3, HSPF2 7.5</value>
-          <display_name>Central HP, SEER2 14.3, HSPF2 7.5</display_name>
+          <value>Central HP, SEER2 14.3, HSPF2 7.4</value>
+          <display_name>Central HP, SEER2 14.3, HSPF2 7.4</display_name>
         </choice>
         <choice>
           <value>Central HP, SEER2 15.0, HSPF2 7.6</value>
@@ -4544,6 +4532,10 @@
         <choice>
           <value>Central HP, SEER2 22.0, HSPF2 9.5</value>
           <display_name>Central HP, SEER2 22.0, HSPF2 9.5</display_name>
+        </choice>
+        <choice>
+          <value>Ductless Mini-Split HP, SEER2 13.7, HSPF2 7.4</value>
+          <display_name>Ductless Mini-Split HP, SEER2 13.7, HSPF2 7.4</display_name>
         </choice>
         <choice>
           <value>Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7</value>
@@ -4670,8 +4662,8 @@
           <display_name>Packaged Terminal HP, EER 13.2, COP 3.9</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Central HP, SEER 13.0, HSPF 9.85</value>
-          <display_name>Detailed Example: Central HP, SEER 13.0, HSPF 9.85</display_name>
+          <value>Detailed Example: Central HP, SEER2 12.4, HSPF2 8.4</value>
+          <display_name>Detailed Example: Central HP, SEER2 12.4, HSPF2 8.4</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance</value>
@@ -11294,7 +11286,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>6A68CBD4</checksum>
+      <checksum>CF501F34</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -11311,7 +11303,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>924C897D</checksum>
+      <checksum>FC31DE1D</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
@@ -11371,7 +11363,7 @@
       <filename>options/appliance_dishwasher.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>2A5B09DE</checksum>
+      <checksum>64A16371</checksum>
     </file>
     <file>
       <filename>options/appliance_extra_refrigerator.tsv</filename>
@@ -11413,7 +11405,7 @@
       <filename>options/dhw_drain_water_heat_recovery.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>31E8956C</checksum>
+      <checksum>F2459D05</checksum>
     </file>
     <file>
       <filename>options/dhw_fixtures.tsv</filename>
@@ -11425,7 +11417,7 @@
       <filename>options/dhw_solar_thermal.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F21D4CA6</checksum>
+      <checksum>7A694CAB</checksum>
     </file>
     <file>
       <filename>options/dhw_solar_thermal_direction.tsv</filename>
@@ -11437,7 +11429,7 @@
       <filename>options/dhw_water_heater.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>C7D188D6</checksum>
+      <checksum>6E991462</checksum>
     </file>
     <file>
       <filename>options/dhw_water_heater_location.tsv</filename>
@@ -11665,7 +11657,7 @@
       <filename>options/hvac_cooling_system.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E3754E06</checksum>
+      <checksum>A4197E7D</checksum>
     </file>
     <file>
       <filename>options/hvac_cooling_system_capacity.tsv</filename>
@@ -11707,7 +11699,7 @@
       <filename>options/hvac_heat_pump.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>5C1F49B1</checksum>
+      <checksum>0E4E22AC</checksum>
     </file>
     <file>
       <filename>options/hvac_heat_pump_backup.tsv</filename>
@@ -11941,13 +11933,13 @@
       <filename>options.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>3EBAC9AC</checksum>
+      <checksum>BE8713E0</checksum>
     </file>
     <file>
       <filename>test_build_residential_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>7EDB5509</checksum>
+      <checksum>DCEF70E6</checksum>
     </file>
   </files>
 </measure>

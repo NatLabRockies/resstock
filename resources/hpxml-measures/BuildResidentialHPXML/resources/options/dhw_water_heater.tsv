@@ -1,4 +1,4 @@
-Option Name	Type	Fuel Type	Efficiency Type	Efficiency	Tank Volume [gal]	Recovery Efficiency [frac]	Usage Bin	Temperature [F]
+Option Name	Type	Fuel Type	Efficiency Type	Efficiency [frac]	Tank Volume [gal]	Recovery Efficiency [frac]	Usage Bin	Temperature [F]
 None	none							
 "Electricity, Tank, UEF 0.90"	storage water heater	electricity	UniformEnergyFactor	0.9				
 "Electricity, Tank, UEF 0.92"	storage water heater	electricity	UniformEnergyFactor	0.92				

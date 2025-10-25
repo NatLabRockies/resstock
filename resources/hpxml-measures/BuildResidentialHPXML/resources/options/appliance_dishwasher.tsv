@@ -1,4 +1,4 @@
-Option Name	Efficiency Type	Efficiency	Label Electric Rate [$/kWh]	Label Gas Rate [$/therm]	Label Annual Gas Cost [$]	Label Usage [cyc/wk]	Place Setting Capacity [#]	Usage Multiplier	Location
+Option Name	Efficiency Type	Efficiency [kWh/yr or #]	Label Electric Rate [$/kWh]	Label Gas Rate [$/therm]	Label Annual Gas Cost [$]	Label Usage [cyc/wk]	Place Setting Capacity [#]	Usage Multiplier	Location
 None									
 "Federal Minimum, Standard, 50% Usage"	RatedAnnualkWh	307	0.12	1.09	22.32	4	12	0.5	
 "Federal Minimum, Standard, 75% Usage"	RatedAnnualkWh	307	0.12	1.09	22.32	4	12	0.75	

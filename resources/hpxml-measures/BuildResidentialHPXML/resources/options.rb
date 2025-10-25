@@ -3,10 +3,10 @@
 # Returns the list of option names specified in the given TSV resource file.
 #
 # @param tsv_file_name [String] Name of the TSV resource file
-# @return [OpenStudio::StringVector] List of option names
+# @return [Array<string>] List of option names
 def get_option_names(tsv_file_name)
   csv_data = get_csv_data_for_tsv_file(tsv_file_name)
-  option_names = OpenStudio::StringVector.new
+  option_names = []
   csv_data.map { |row| row['Option Name'] }.each do |option_name|
     next if option_name.nil? || option_name.empty? || option_name.start_with?('#')
 
@@ -18,10 +18,10 @@ end
 # Returns the list of property names specified in the given TSV resource file.
 #
 # @param tsv_file_name [String] Name of the TSV resource file
-# @return [OpenStudio::StringVector] List of property names
+# @return [Array<string>] List of property names
 def get_property_names(tsv_file_name)
   csv_data = get_csv_data_for_tsv_file(tsv_file_name)
-  property_names = OpenStudio::StringVector.new
+  property_names = []
   csv_data.headers.each do |header|
     next if header == 'Option Name'
 
@@ -36,10 +36,10 @@ end
 # Returns the list of property units specified in the given TSV resource file.
 #
 # @param tsv_file_name [String] Name of the TSV resource file
-# @return [OpenStudio::StringVector] List of property units, in the same order as the property names
+# @return [Array<string>] List of property units, in the same order as the property names
 def get_property_units(tsv_file_name)
   csv_data = get_csv_data_for_tsv_file(tsv_file_name)
-  property_units = OpenStudio::StringVector.new
+  property_units = []
   csv_data.headers.each do |header|
     next if header == 'Option Name'
 
@@ -90,19 +90,22 @@ def get_option_properties(args, tsv_file_name, option_name)
   fail "Unexpected error: Could not look up #{option_name} in #{tsv_file_name}."
 end
 
-# Returns the comments in the given TSV resource file.
+# Returns the property descriptions in the given TSV resource file.
 #
 # @param tsv_file_name [String] Name of the TSV resource file
-# @return [OpenStudio::StringVector] List of comments
-def get_comment_rows(tsv_file_name)
+# @return [Hash<string, string>] Map of property name => description
+def get_property_descriptions(tsv_file_name)
   csv_data = get_csv_data_for_tsv_file(tsv_file_name)
-  comment_names = OpenStudio::StringVector.new
+  property_descriptions = {}
   csv_data.map { |row| row['Option Name'] }.each do |comment|
     next unless comment.to_s.start_with?('#')
 
-    comment_names << comment.gsub('#', '').gsub('"', '').split(':')[0].strip
+    comment = comment.gsub('#', '').gsub('"', '')
+    property_name = comment.split(':')[0].strip
+    property_description = comment.split(':')[1].strip
+    property_descriptions[property_name] = property_description
   end
-  return comment_names
+  return property_descriptions
 end
 
 # Reads the data (or retrieves the cached data) from the given TSV resource file.

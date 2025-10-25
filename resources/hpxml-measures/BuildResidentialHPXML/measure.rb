@@ -373,7 +373,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('hvac_cooling_system', choices[:hvac_cooling_system], true)
     arg.setDisplayName('HVAC: Cooling System')
     arg.setDescription("The type and efficiency of the cooling system. Use 'None' if there is no cooling system or if there is a heat pump serving a cooling load.")
-    arg.setDefaultValue('Central AC, SEER 13.0')
+    arg.setDefaultValue('Central AC, SEER2 13.4')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('hvac_cooling_system_capacity', choices[:hvac_cooling_system_capacity], false)

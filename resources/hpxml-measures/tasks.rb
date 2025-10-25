@@ -2328,6 +2328,16 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
       hpxml_bldg.cooling_systems[0].cooling_efficiency_ceer = nil
       hpxml_bldg.cooling_systems[0].cooling_efficiency_eer = 8.5
     end
+    if ['base-hvac-central-ac-only-1-speed-seer.xml'].include? hpxml_file
+      hpxml_bldg.cooling_systems[0].cooling_efficiency_seer2 = nil
+      hpxml_bldg.cooling_systems[0].cooling_efficiency_seer = 13.0
+    end
+    if ['base-hvac-air-to-air-heat-pump-1-speed-seer-hspf.xml'].include? hpxml_file
+      hpxml_bldg.heat_pumps[0].cooling_efficiency_seer2 = nil
+      hpxml_bldg.heat_pumps[0].cooling_efficiency_seer = 13.0
+      hpxml_bldg.heat_pumps[0].heating_efficiency_hspf2 = nil
+      hpxml_bldg.heat_pumps[0].heating_efficiency_hspf = 7.7
+    end
 
     # ------------------ #
     # HPXML WaterHeating #

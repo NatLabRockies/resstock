@@ -33,7 +33,7 @@
         "hvac_heating_system": "Central Furnace, 92% AFUE",
         "hvac_heating_system_capacity": "40 kBtu/hr",
         "hvac_heating_system_fuel": "Natural Gas",
-        "hvac_cooling_system": "Central AC, SEER 13.0",
+        "hvac_cooling_system": "Central AC, SEER2 13.4",
         "hvac_cooling_system_capacity": "2.0 tons",
         "hvac_control_cooling_weekday_setpoint": "78",
         "hvac_control_cooling_weekend_setpoint": "78",

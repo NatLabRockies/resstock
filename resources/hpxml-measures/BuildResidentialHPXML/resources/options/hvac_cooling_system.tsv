@@ -1,10 +1,8 @@
 Option Name	Type	Cooling Efficiency Type	Cooling Efficiency	Cooling Compressor Type	Detailed Performance Data Capacity Type	Detailed Performance Data Cooling Outdoor Temperatures [F]	Detailed Performance Data Cooling Min Speed Capacities [Btu/hr or Frac]	Detailed Performance Data Cooling Nom Speed Capacities [Btu/hr or Frac]	Detailed Performance Data Cooling Max Speed Capacities [Btu/hr or Frac]	Detailed Performance Data Cooling Min Speed COPs [W/W]	Detailed Performance Data Cooling Nom Speed COPs [W/W]	Detailed Performance Data Cooling Max Speed COPs [W/W]
 None	none											
-"Central AC, SEER 8.0"	central air conditioner	SEER	8	single stage								
-"Central AC, SEER 10.0"	central air conditioner	SEER	10	single stage								
-"Central AC, SEER 13.0"	central air conditioner	SEER	13	single stage								
-"Central AC, SEER 14.0"	central air conditioner	SEER	14	single stage								
-"Central AC, SEER 15.0"	central air conditioner	SEER	15	single stage								
+"Central AC, SEER2 7.6"	central air conditioner	SEER2	7.6	single stage								
+"Central AC, SEER2 9.5"	central air conditioner	SEER2	9.5	single stage								
+"Central AC, SEER2 12.4"	central air conditioner	SEER2	12.4	single stage								
 "Central AC, SEER2 13.4"	central air conditioner	SEER2	13.4	single stage								
 "Central AC, SEER2 13.8"	central air conditioner	SEER2	13.8	single stage								
 "Central AC, SEER2 14.0"	central air conditioner	SEER2	14	single stage								

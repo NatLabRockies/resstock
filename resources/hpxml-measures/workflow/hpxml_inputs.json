@@ -176,12 +176,12 @@
     "hvac_heating_system": "Central Furnace, 78% AFUE",
     "hvac_heating_system_fuel": "Natural Gas",
     "hvac_heating_system_heating_load_served": "100%",
-    "hvac_cooling_system": "Central AC, SEER 10.0",
+    "hvac_cooling_system": "Central AC, SEER2 9.5",
     "hvac_cooling_system_cooling_load_served": "100%"
   },
   "tests/HERS_HVAC/HVAC1b.xml": {
     "parent_hpxml": "tests/HERS_HVAC/HVAC1a.xml",
-    "hvac_cooling_system": "Central AC, SEER 13.0"
+    "hvac_cooling_system": "Central AC, SEER2 12.4"
   },
   "tests/HERS_HVAC/HVAC2a.xml": {
     "parent_hpxml": "tests/HERS_HVAC/HVAC1a.xml",
@@ -195,7 +195,7 @@
     "parent_hpxml": "tests/HERS_HVAC/HVAC2a.xml",
     "hvac_heating_system": "None",
     "hvac_cooling_system": "None",
-    "hvac_heat_pump": "Central HP, SEER 10.0, HSPF 6.8",
+    "hvac_heat_pump": "Central HP, SEER2 9.5, HSPF2 5.8",
     "hvac_heat_pump_backup": "Integrated, Electricity, 100% Efficiency",
     "hvac_heat_pump_backup_capacity": "10 kW",
     "hvac_heat_pump_heating_load_served": "100%",
@@ -203,7 +203,7 @@
   },
   "tests/HERS_HVAC/HVAC2d.xml": {
     "parent_hpxml": "tests/HERS_HVAC/HVAC2c.xml",
-    "hvac_heat_pump": "Detailed Example: Central HP, SEER 13.0, HSPF 9.85"
+    "hvac_heat_pump": "Detailed Example: Central HP, SEER2 12.4, HSPF2 8.4"
   },
   "tests/HERS_HVAC/HVAC2e.xml": {
     "parent_hpxml": "tests/HERS_HVAC/HVAC2a.xml",
@@ -219,7 +219,7 @@
     "hvac_heating_system_fuel": "Natural Gas",
     "hvac_heating_system": "Central Furnace, 78% AFUE",
     "hvac_heating_system_heating_load_served": "100%",
-    "hvac_cooling_system": "Central AC, SEER 10.0",
+    "hvac_cooling_system": "Central AC, SEER2 9.5",
     "hvac_cooling_system_cooling_load_served": "100%",
     "hvac_ducts": "0 CFM25 per 100ft2, Uninsulated",
     "hvac_ducts_supply_location": "Conditioned Space",
@@ -243,7 +243,7 @@
     "hvac_heating_system_fuel": "Natural Gas",
     "hvac_heating_system": "Central Furnace, 78% AFUE",
     "hvac_heating_system_heating_load_served": "100%",
-    "hvac_cooling_system": "Central AC, SEER 10.0",
+    "hvac_cooling_system": "Central AC, SEER2 9.5",
     "hvac_cooling_system_cooling_load_served": "100%",
     "hvac_ducts": "0 CFM25 per 100ft2, Uninsulated",
     "hvac_ducts_supply_location": "Conditioned Space",
@@ -279,7 +279,7 @@
     "hvac_heating_system_fuel": "Natural Gas",
     "hvac_heating_system": "Central Furnace, 78% AFUE",
     "hvac_heating_system_heating_load_served": "100%",
-    "hvac_cooling_system": "Central AC, SEER 13.0",
+    "hvac_cooling_system": "Central AC, SEER2 12.4",
     "hvac_cooling_system_cooling_load_served": "100%",
     "dhw_water_heater": "Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78",
     "dhw_water_heater_location": "Conditioned Space",
@@ -1392,8 +1392,7 @@
     "advanced_feature_2": "Heat Pump Backup Staging, 5 kW"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-1-speed-seer-hspf.xml": {
-    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml",
-    "hvac_heat_pump": "Central HP, SEER 13.0, HSPF 7.7"
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-2-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml",
@@ -1548,8 +1547,7 @@
     "hvac_cooling_system_capacity": "Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit"
   },
   "sample_files/base-hvac-central-ac-only-1-speed-seer.xml": {
-    "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
-    "hvac_cooling_system": "Central AC, SEER 13.0"
+    "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml"
   },
   "sample_files/base-hvac-central-ac-only-2-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
