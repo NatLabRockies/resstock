@@ -219,7 +219,6 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
         vertical = bool(facet_orientation and "vertical" in facet_orientation)
         wrap_val = wrap_width if wrap_width and wrap_width > 0 else None
         apply_facet_orientation(fig, vertical=vertical, wrap_width=wrap_val)
-
         fig.update_layout(width=fig_w, height=fig_h, showlegend=show_legend, legend=legend_cfg)
         return df, fig, loaded_from_file
 

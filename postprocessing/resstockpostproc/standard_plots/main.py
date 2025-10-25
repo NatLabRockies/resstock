@@ -13,6 +13,7 @@ from pathlib import Path
 # Import dependencies that might be needed
 # Import our components
 from resstockpostproc.standard_plots.all_plots_generator import generate_all_plots
+from resstockpostproc.standard_plots.highlights_generator import generate_highlights
 from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
 
 
@@ -54,6 +55,11 @@ def main():
         type=int,
         help="Maximum number of plots to generate",
     )
+    parser.add_argument(
+        "--highlights_only",
+        action="store_true",
+        help="Generate highlights and exit without producing the full plot set.",
+    )
     args = parser.parse_args()
     config_path = args.config
 
@@ -93,6 +99,13 @@ def main():
         missing = selected_set - {q.name for q in filtered_qs}
         if missing:
             print(f"Warning: The following quantity groups were not found and will be ignored: {', '.join(missing)}")
+
+    generate_highlights(
+        workflow,
+        overwrite=args.overwrite,
+    )
+    if args.highlights_only:
+        return 0
 
     generate_all_plots(
         workflow,

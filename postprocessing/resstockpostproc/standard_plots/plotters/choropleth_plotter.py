@@ -5,6 +5,8 @@ from __future__ import annotations
 import csv
 import json
 import math
+import string
+import textwrap
 from pathlib import Path
 from typing import Any, Literal
 
@@ -140,7 +142,7 @@ def create_plot(
         if filtered.is_empty():
             raise ValueError("No non-zero model counts available for prevalence choropleth plot.")
 
-    value_title = plot_utils.get_quantity_title(plot_spec)
+    value_title = plot_utils.get_quantity_unit(plot_spec.quantity, plot_spec.quantity_type)
     fig = _create_plot(
         filtered,
         location_col,
@@ -173,7 +175,7 @@ def _create_plot(
 ) -> go.Figure:
     quantity_min = float(data[value_column].min())
     quantity_max = float(data[value_column].max())
-    colorscale, cmin, cmax, tickvals, ticktext = _choose_colorscale(
+    colorscale, tickvals, ticktext = _choose_colorscale(
         quantity_min,
         quantity_max,
         quantity_type,
@@ -189,20 +191,21 @@ def _create_plot(
     )
     n_rows = max(1, len(second_values))
 
-    column_titles = (
-        [
+    column_titles = None
+    if first_values:
+        raw_column_titles = [
             plot_utils.format_label(str(val)) if val is not None else ""
             for val in first_values
         ]
-        if first_values
-        else None
-    )
+        column_titles = _prepare_facet_titles(raw_column_titles)
+
     row_titles = None
     if second_category_column:
-        row_titles = [
+        raw_row_titles = [
             plot_utils.format_label(str(value)) if value is not None else ""
             for value in second_values
         ]
+        row_titles = _prepare_facet_titles(raw_row_titles)
 
     fig = make_subplots(
         rows=n_rows,
@@ -310,11 +313,11 @@ def _create_plot(
 
     colorbar: dict[str, Any] = {
         "title": {"text": value_title},
-        "x": 1.02,
+        "x": 1.01,
         "y": 0.5,
         "yanchor": "middle",
-        "len": 0.9,
-        "thickness": 18,
+        "len": 0.05 + 0.6 * 1 / n_rows,
+        "thickness": 10,
     }
     if tickvals and ticktext:
         colorbar.update({"tickmode": "array", "tickvals": tickvals, "ticktext": ticktext})
@@ -322,8 +325,8 @@ def _create_plot(
     fig.update_layout(
         coloraxis={
             "colorscale": colorscale,
-            "cmin": cmin,
-            "cmax": cmax,
+            "cmin": quantity_min,
+            "cmax": quantity_max,
             "colorbar": colorbar,
         }
     )
@@ -336,7 +339,8 @@ def _create_plot(
     _stretch_geo_height(fig)
 
     top_margin = 60 + (120 if title_text else 20)
-    left_margin = 40
+    left_margin = 0
+    right_margin = 50
     if second_category_column and row_titles:
         max_chars = max((len(title) for title in row_titles if title), default=0)
         left_margin = max(160, min(260, 90 + max_chars * 6))
@@ -344,8 +348,8 @@ def _create_plot(
         left_margin = 160
 
     fig.update_layout(
-        margin={"l": left_margin, "r": 100, "t": top_margin, "b": 40},
-        width=max(900, n_cols * 420),
+        margin={"l": left_margin, "r": right_margin, "t": top_margin, "b": 40},
+        width=min(theme.DEFAULT_FIG_WIDTH, n_cols * 300 + left_margin + right_margin),
     )
 
     if row_titles:
@@ -434,27 +438,20 @@ def _prepare_quantity_group_dataframe(
 
 
 def _choose_colorscale(
-    z_min: float,
-    z_max: float,
+    min_val: float,
+    max_val: float,
     quantity_type: QuantityType,
-) -> tuple[list[list[float | str]], float, float, list[float], list[str]]:
+) -> tuple[list[list[float | str]], list[float], list[str]]:
     """Select colorscale, range, and tick labels for the colorbar."""
     suffix = "%" if quantity_type == QuantityType.percent_savings else ""
-    cmin, cmax = z_min, z_max
-
-    if math.isclose(cmax, cmin, rel_tol=1e-12, abs_tol=1e-12):
-        delta = abs(cmin) if not math.isclose(cmin, 0.0, abs_tol=1e-12) else 1.0
-        cmin -= delta * 0.05
-        cmax += delta * 0.05
-
-    max_abs = max(abs(cmin), abs(cmax))
+    max_abs = max(abs(min_val), abs(max_val))
     if math.isclose(max_abs, 0.0, abs_tol=1e-12):
         max_abs = 1.0
 
-    colorscale = _build_balanced_colorscale(cmin, cmax, max_abs)
+    colorscale = _build_colorscale(min_val, max_val, max_abs)
 
-    tickvals, ticktext = _build_colorbar_ticks(z_min, z_max, cmin, cmax, suffix=suffix)
-    return colorscale, cmin, cmax, tickvals, ticktext
+    tickvals, ticktext = _build_colorbar_ticks(min_val, max_val, suffix=suffix)
+    return colorscale, tickvals, ticktext
 
 
 NEGATIVE_COLOR = "#812E36"
@@ -462,30 +459,16 @@ POSITIVE_COLOR = "#7DA544"
 NEUTRAL_COLOR = "#FFFFFF"
 
 
-def _build_balanced_colorscale(cmin: float, cmax: float, max_abs: float) -> list[list[float | str]]:
-    if cmax <= cmin:
-        return [[0.0, NEUTRAL_COLOR], [1.0, NEUTRAL_COLOR]]
+def _build_colorscale(min_val: float, max_val: float, max_abs: float) -> list[list[float | str]]:
+    if math.isclose(min_val, max_val, rel_tol=1e-12, abs_tol=1e-12):
+        color = _color_for_value(min_val, max_abs)
+        return [[0.0, color], [1.0, color]]
 
-    anchors: list[tuple[float, str]] = []
-    anchors.append((cmin, _color_for_value(cmin, max_abs)))
-    if cmin < 0 < cmax:
-        anchors.append((0.0, NEUTRAL_COLOR))
-    anchors.append((cmax, _color_for_value(cmax, max_abs)))
-
-    unique: dict[float, str] = {}
-    for value, color in anchors:
-        clamped_value = min(max(value, cmin), cmax)
-        unique[clamped_value] = color
-
-    denom = cmax - cmin
     colorscale: list[list[float | str]] = []
-    for value in sorted(unique.keys()):
-        position = (value - cmin) / denom
-        colorscale.append([position, unique[value]])
-
-    if colorscale:
-        colorscale[0][0] = 0.0
-        colorscale[-1][0] = 1.0
+    colorscale.append([0.0, _color_for_value(min_val, max_abs)])
+    if min_val < 0 < max_val:
+        colorscale.append([0.5, NEUTRAL_COLOR])
+    colorscale.append([1.0, _color_for_value(max_val, max_abs)])
     return colorscale
 
 
@@ -516,16 +499,86 @@ def _hex_to_rgb(color: str) -> tuple[int, int, int]:
 
 
 def _build_colorbar_ticks(
-    z_min: float,
-    z_max: float,
-    cmin: float,
-    cmax: float,
+    min_val: float,
+    max_val: float,
     *,
     suffix: str = "",
 ) -> tuple[list[float], list[str]]:
-    ticks = [cmin, cmax] if not math.isclose(cmin, cmax, rel_tol=1e-12, abs_tol=1e-12) else [cmin]
+    ticks = [min_val, max_val] if not math.isclose(min_val, max_val, rel_tol=1e-12, abs_tol=1e-12) else [min_val]
     ticktexts = [_format_colorbar_tick(val, suffix=suffix) for val in ticks]
     return ticks, ticktexts
+
+
+def _prepare_facet_titles(titles: list[str]) -> list[str]:
+    """Return facet titles with shared affixes stripped and wrapped for readability."""
+    simplified = _strip_common_affixes(titles)
+    return [_wrap_title(title) if title else title for title in simplified]
+
+
+def _strip_common_affixes(titles: list[str]) -> list[str]:
+    """Remove shared prefix and suffix tokens from the provided titles."""
+    result = list(titles)
+    indices = [idx for idx, title in enumerate(titles) if title]
+    if len(indices) <= 1:
+        return result
+
+    token_lists = [titles[idx].split() for idx in indices]
+    prefix_len = _common_prefix_length(token_lists)
+    trimmed_tokens = [tokens[prefix_len:] for tokens in token_lists]
+
+    suffix_len = _common_suffix_length(trimmed_tokens)
+
+    for list_idx, title_idx in enumerate(indices):
+        tokens = trimmed_tokens[list_idx]
+        if suffix_len:
+            tokens = tokens[: len(tokens) - suffix_len]
+        result[title_idx] = " ".join(tokens).strip()
+    return result
+
+
+def _common_prefix_length(token_lists: list[list[str]]) -> int:
+    if not token_lists:
+        return 0
+    prefix_len = 0
+    while True:
+        candidate = prefix_len + 1
+        if any(len(tokens) <= candidate for tokens in token_lists):
+            break
+        keys = {_token_key(tokens[prefix_len]) for tokens in token_lists}
+        if len(keys) == 1:
+            prefix_len = candidate
+        else:
+            break
+    return prefix_len
+
+
+def _common_suffix_length(token_lists: list[list[str]]) -> int:
+    if not token_lists:
+        return 0
+    suffix_len = 0
+    while True:
+        candidate = suffix_len + 1
+        if any(len(tokens) <= candidate for tokens in token_lists):
+            break
+        keys = {_token_key(tokens[-candidate]) for tokens in token_lists}
+        if len(keys) == 1:
+            suffix_len = candidate
+        else:
+            break
+    return suffix_len
+
+
+def _token_key(token: str) -> str:
+    stripped = token.strip(string.punctuation)
+    return stripped.lower() if stripped else token.lower()
+
+
+def _wrap_title(title: str, width: int = 28) -> str:
+    plain = title.strip()
+    if not plain:
+        return plain
+    lines = textwrap.wrap(plain, width=width, break_long_words=False, break_on_hyphens=False)
+    return "<br>".join(lines) if len(lines) > 1 else plain
 
 
 def _build_county_extent_trace() -> go.Scattergeo:

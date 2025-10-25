@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import time
 from itertools import product
+from pathlib import Path
 from typing import Literal, Sequence
 from uuid import UUID
 
@@ -25,6 +26,7 @@ from resstockpostproc.standard_plots.io_managers.output_manager import (
 )
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, VizType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
+from resstockpostproc.standard_plots.utils import load_workflow_config
 
 __all__ = [
     "generate_all_plots",
@@ -41,7 +43,7 @@ def generate_all_plots(
     print_stats: bool = False,
 ) -> None:
     """Generate all plots defined by the supplied workflow configuration."""
-    workflow = _coerce_workflow(config)
+    workflow = load_workflow_config(config)
 
     start_time = time.time()
     download_data(workflow)
@@ -75,6 +77,7 @@ def generate_all_plots(
 
     for plots_generated, plot_spec in enumerate(plot_specs, 1):
         path_seg, name = plot_spec.get_path_and_name()
+        path_seg = Path("All combinations") / path_seg
         plotting_function = get_plotting_function(plot_spec.visualization_type)
         print(f"{plots_generated:,}/{total_plots:,}: Generating plot for {path_seg}/{name}")
         if progress_artifact_id:
@@ -151,16 +154,6 @@ def _print_time_spent(
     print(f"Time spent preparing data: {data_preparing_time:.2f} seconds")
     print(f"Time spent creating figures: {figure_creation_time:.2f} seconds")
     print(f"Time spent saving plots: {saving_time:.2f} seconds")
-
-
-def _coerce_workflow(config: str | dict | WorkflowConfig) -> WorkflowConfig:
-    if isinstance(config, WorkflowConfig):
-        return config
-    if isinstance(config, str):
-        return WorkflowConfig.from_yaml(config)
-    if isinstance(config, dict):
-        return WorkflowConfig(**config)
-    raise ValueError(f"Unsupported type for config: {type(config)}")
 
 
 def _build_plot_specs(workflow: WorkflowConfig) -> Sequence[PlotSpec]:

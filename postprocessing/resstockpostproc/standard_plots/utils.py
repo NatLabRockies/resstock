@@ -1,7 +1,38 @@
-import polars as pl
 import math
+from pathlib import Path
 from collections.abc import Sequence
+from typing import Any
+
+import polars as pl
+import yaml
 from resstockpostproc.standard_plots.schema.custom_sort import custom_sorts, keep_last_keys
+from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
+
+
+def load_workflow_config(config: str | dict | WorkflowConfig) -> WorkflowConfig:
+    """Normalize various workflow configuration inputs to a WorkflowConfig."""
+    if isinstance(config, WorkflowConfig):
+        return config
+    if isinstance(config, str):
+        return WorkflowConfig.from_yaml(config)
+    if isinstance(config, dict):
+        return WorkflowConfig(**config)
+    raise ValueError(f"Unsupported type for workflow config: {type(config)}")
+
+
+def load_highlight_config(highlights_config: str | Path | dict | None) -> dict[str, Any]:
+    """Normalize highlight configuration input into a dictionary."""
+    if highlights_config is None:
+        config_path = Path(__file__).with_name("highlights.yaml")
+        data = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+        return data or {}
+    if isinstance(highlights_config, (str, Path)):
+        config_path = Path(highlights_config)
+        data = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+        return data or {}
+    if isinstance(highlights_config, dict):
+        return highlights_config
+    raise ValueError(f"Unsupported highlight config type: {type(highlights_config)}")
 
 
 def human_sort(df: pl.LazyFrame, cols: str | Sequence[str]) -> pl.LazyFrame:

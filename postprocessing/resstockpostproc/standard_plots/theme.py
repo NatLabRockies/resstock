@@ -12,8 +12,8 @@ from resstockpostproc.standard_plots.schema.end_use_dicts import column2color, c
 DEFAULT_TEMPLATE = "plotly_white"
 DEFAULT_FONT_FAMILY = "Arial"
 DEFAULT_FONT_SIZE = 12
-DEFAULT_FIG_WIDTH = 1000
-DEFAULT_FIG_HEIGHT = 600
+DEFAULT_FIG_WIDTH = 816  # 8.5 inches at 96 dpi
+DEFAULT_FIG_HEIGHT = 500
 DEFAULT_FACET_WIDTH = 200
 DEFAULT_FACET_TITLE_WIDTH = 15
 
@@ -67,7 +67,7 @@ def apply_layout(fig: go.Figure, *, width: int | None = None, height: int | None
     fig.update_layout(
         template=DEFAULT_TEMPLATE,
         font={"family": DEFAULT_FONT_FAMILY, "size": DEFAULT_FONT_SIZE},
-        margin={"l": 80, "r": 150, "t": 80, "b": 50},
+        margin={"l": 80, "r": 80, "t": 80, "b": 50},
         plot_bgcolor="white",
         width=width or DEFAULT_FIG_WIDTH,
         height=height or DEFAULT_FIG_HEIGHT,

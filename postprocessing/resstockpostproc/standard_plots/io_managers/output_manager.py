@@ -21,6 +21,11 @@ __all__ = [
     "write_workflow_snapshot",
     "save_plot",
     "get_file_path",
+    "write_html_file",
+    "write_svg_file",
+    "write_parquet_file",
+    "write_json_file",
+    "write_csv_file",
 ]
 
 
@@ -59,15 +64,20 @@ def save_plot(
     try:
         with file_lock:
             if "html" in types:
-                _write_html(fig, output_dir, file_name, overwrite)
+                html_path = output_dir / "html" / f"{file_name}.html"
+                write_html_file(fig, html_path, overwrite)
             if "svg" in types:
-                _write_svg(fig, output_dir, file_name, overwrite)
+                svg_path = output_dir / "svg" / f"{file_name}.svg"
+                write_svg_file(fig, svg_path, overwrite)
             if "parquet" in types:
-                _write_parquet(df, output_dir, file_name, overwrite)
+                parquet_path = output_dir / "data" / f"{file_name}.parquet"
+                write_parquet_file(df, parquet_path, overwrite)
             if "json" in types:
-                _write_json(fig, output_dir, file_name, overwrite)
+                json_path = output_dir / "figure_json" / f"{file_name}.json"
+                write_json_file(fig, json_path, overwrite)
             if "csv" in types:
-                _write_csv(df, output_dir, file_name, overwrite)
+                csv_path = output_dir / "data" / f"{file_name}.csv"
+                write_csv_file(df, csv_path, overwrite)
     except TimeoutError:
         print(f"Could not acquire lock to save {file_name}. Skipping save.")
 
@@ -90,10 +100,8 @@ def get_file_path(
 # ---------------------------------------------------------------------------
 # Internal helpers
 # ---------------------------------------------------------------------------
-def _write_html(fig: Figure, output_dir: Path, file_name: str, overwrite: bool) -> None:
-    html_dir = output_dir / "html"
-    html_dir.mkdir(exist_ok=True)
-    file_path = html_dir / f"{file_name}.html"
+def write_html_file(fig: Figure, file_path: Path, overwrite: bool) -> None:
+    file_path.parent.mkdir(parents=True, exist_ok=True)
     if not overwrite and file_path.exists():
         return
     fig.write_html(
@@ -120,37 +128,29 @@ def _write_html(fig: Figure, output_dir: Path, file_name: str, overwrite: bool) 
     )
 
 
-def _write_svg(fig: Figure, output_dir: Path, file_name: str, overwrite: bool) -> None:
-    svg_dir = output_dir / "svg"
-    svg_dir.mkdir(exist_ok=True)
-    file_path = svg_dir / f"{file_name}.svg"
+def write_svg_file(fig: Figure, file_path: Path, overwrite: bool) -> None:
+    file_path.parent.mkdir(parents=True, exist_ok=True)
     if not overwrite and file_path.exists():
         return
     fig.write_image(file_path)
 
 
-def _write_parquet(df: pl.DataFrame, output_dir: Path, file_name: str, overwrite: bool) -> None:
-    data_dir = output_dir / "data"
-    data_dir.mkdir(parents=True, exist_ok=True)
-    file_path = data_dir / f"{file_name}.parquet"
+def write_parquet_file(df: pl.DataFrame, file_path: Path, overwrite: bool) -> None:
+    file_path.parent.mkdir(parents=True, exist_ok=True)
     if not overwrite and file_path.exists():
         return
     df.write_parquet(file_path)
 
 
-def _write_json(fig: Figure, output_dir: Path, file_name: str, overwrite: bool) -> None:
-    fig_dir = output_dir / "figure_json"
-    fig_dir.mkdir(exist_ok=True)
-    file_path = fig_dir / f"{file_name}.json"
+def write_json_file(fig: Figure, file_path: Path, overwrite: bool) -> None:
+    file_path.parent.mkdir(parents=True, exist_ok=True)
     if not overwrite and file_path.exists():
         return
     fig.write_json(file_path)
 
 
-def _write_csv(df: pl.DataFrame, output_dir: Path, file_name: str, overwrite: bool) -> None:
-    data_dir = output_dir / "data"
-    data_dir.mkdir(parents=True, exist_ok=True)
-    file_path = data_dir / f"{file_name}.csv"
+def write_csv_file(df: pl.DataFrame, file_path: Path, overwrite: bool) -> None:
+    file_path.parent.mkdir(parents=True, exist_ok=True)
     if not overwrite and file_path.exists():
         return
     df.write_csv(file_path)

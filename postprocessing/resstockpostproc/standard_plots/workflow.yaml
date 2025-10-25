@@ -15,7 +15,6 @@ numerical_quantities:
       - out.natural_gas.total.energy_consumption.kwh
       - out.propane.total.energy_consumption.kwh
       - out.fuel_oil.total.energy_consumption.kwh
-      - Generation, Electricity
     sum: out.site_energy.total.energy_consumption.kwh
   - name: All Fuels End Uses
     constituents:
@@ -181,6 +180,11 @@ numerical_quantities:
     sum: in.electric_panel_breaker_space_total_count
 
 categorical_quantities:
+  - name: applicability
+    constituents:
+      - "True"
+      - "False"
+
   - name: out.panel.constraint.overall.2023_nec_existing_dwelling_load_based
     constituents:
       - No Constraint

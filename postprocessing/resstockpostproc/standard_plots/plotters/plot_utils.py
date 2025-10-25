@@ -35,14 +35,6 @@ def ensure_columns_exist(df: pl.DataFrame, cols: list[str]) -> pl.DataFrame:
     return df
 
 
-def get_quantity_unit(quantity: str | QuantityGroup) -> str:
-    """Return the unit suffix for the given quantity."""
-    if isinstance(quantity, QuantityGroup):
-        constituents = QuantityGroup.resolve_quantities(quantity.constituents)
-        return constituents[0].split(".")[-1]
-    return quantity.split(".")[-1]
-
-
 def get_quantity_name(quantity: str | QuantityGroup) -> str:
     """Return a formatted quantity name appropriate for labelling."""
     if isinstance(quantity, QuantityGroup):
@@ -52,21 +44,39 @@ def get_quantity_name(quantity: str | QuantityGroup) -> str:
     return format_label(quantity)
 
 
+def get_quantity_unit(quantity: str | QuantityGroup, quantity_type: QuantityType | None = None) -> str:
+    """Return the unit suffix for the given quantity and type."""
+    if quantity_type == QuantityType.model_count:
+        return ""
+    elif quantity_type == QuantityType.prevalence:
+        return " (%)"
+    elif quantity_type == QuantityType.percent_savings:
+        return ""
+    
+    if isinstance(quantity, QuantityGroup):
+        constituents = QuantityGroup.resolve_quantities(quantity.constituents)
+        unit = constituents[0].split(".")[-1]
+    else:
+        unit = quantity.split(".")[-1]
+    
+    return f" ({unit})" if unit else ""
+
+
+def get_quantity_type_suffix(quantity_type: QuantityType) -> str:
+    """Return the type suffix for the given quantity type."""
+    if quantity_type == QuantityType.prevalence:
+        return " Prevalence"
+    elif quantity_type == QuantityType.percent_savings:
+        return " Percentage Savings"
+    elif quantity_type == QuantityType.savings:
+        return " Savings"
+    else:
+        return ""
+
+
 def get_quantity_title(plot_spec: PlotSpec) -> str:
     """Return the y-axis title for the given plot specification."""
-    type_suffix = ""
-    unit_suffix = ""
-    if plot_spec.quantity_type == QuantityType.model_count:
-        unit_suffix = ""
-    elif plot_spec.quantity_type == QuantityType.prevalence:
-        type_suffix = " Prevalence"
-        unit_suffix = " (%)"
-    elif plot_spec.quantity_type == QuantityType.percent_savings:
-        type_suffix = " Percentage Savings"
-    elif plot_spec.quantity_type == QuantityType.savings:
-        type_suffix = " Savings"
-        unit_suffix = f" ({get_quantity_unit(plot_spec.quantity)})"
-    else:
-        unit_suffix = f" ({get_quantity_unit(plot_spec.quantity)})"
     name = get_quantity_name(plot_spec.quantity)
+    type_suffix = get_quantity_type_suffix(plot_spec.quantity_type)
+    unit_suffix = get_quantity_unit(plot_spec.quantity, plot_spec.quantity_type)
     return f"{name}{type_suffix}{unit_suffix}"
