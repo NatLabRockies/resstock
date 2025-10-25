@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>7af94cd0-fbcb-4e96-b28c-ab16e2302183</version_id>
-  <version_modified>2025-09-05T21:15:41Z</version_modified>
+  <version_id>8bd6c18d-debc-4619-98c8-11a602afd932</version_id>
+  <version_modified>2025-10-24T03:39:12Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -7938,13 +7938,13 @@
       <filename>electrical_panel/electrical_panel_rated_capacity__multi_family.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>49D707DF</checksum>
+      <checksum>D9EFFE53</checksum>
     </file>
     <file>
       <filename>electrical_panel/electrical_panel_rated_capacity__single_family_electric_heating.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>AAC795D7</checksum>
+      <checksum>2ACA8671</checksum>
     </file>
     <file>
       <filename>electrical_panel/electrical_panel_rated_capacity__single_family_nonelectric_heating.csv</filename>
