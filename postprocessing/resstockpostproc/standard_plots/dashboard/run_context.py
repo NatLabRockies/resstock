@@ -133,9 +133,7 @@ class RunContext:
         }
 
         candidate_cols = [
-            name
-            for name, dtype in schema.items()
-            if name not in excluded_columns and not dtype.is_numeric()
+            name for name, dtype in schema.items() if name not in excluded_columns and not dtype.is_numeric()
         ]
 
         if not candidate_cols:

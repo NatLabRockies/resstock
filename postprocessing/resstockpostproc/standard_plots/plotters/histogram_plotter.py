@@ -250,7 +250,7 @@ def _create_histogram_plot(
     x_min = q1 - 2 * core_w  # left-tail bar starts here
     x_max = q99 + 2 * core_w  # right-tail bar ends here
     max_val = df["count_pct"].max() or 0.0
-    y_max = float(max_val) if isinstance(max_val, (float, int)) else 0.0
+    y_max = float(max_val) if isinstance(max_val, float| int) else 0.0
     y_max = y_max if y_max > 0 else 1.0
 
     fig.update_xaxes(range=[x_min, x_max])
@@ -258,7 +258,7 @@ def _create_histogram_plot(
 
     # No gaps between grouped bars
     fig.update_layout(
-        barmode="group",   
+        barmode="group",
         bargap=0,
         bargroupgap=0,
         template=theme.DEFAULT_TEMPLATE,
