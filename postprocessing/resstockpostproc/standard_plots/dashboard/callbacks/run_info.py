@@ -60,10 +60,10 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
         if baseline_token is not None:
             checklist_options.append({"label": baseline_token, "value": 0, "disabled": True})
         checklist_options.extend(
-            {"label": token, "value": upg} for token, upg in zip(upgrade_tokens, non_baseline_upgrades)
+            {"label": token, "value": int(upg)} for token, upg in zip(upgrade_tokens, non_baseline_upgrades)
         )
 
-        selected_values = [option["value"] for option in checklist_options]
+        selected_values: list[int] = [int(upg) for upg in upgrades]
         valid_values = {option["value"] for option in checklist_options}
         persisted_selection = [val for val in current_selection if val in valid_values]
         if persisted_selection:

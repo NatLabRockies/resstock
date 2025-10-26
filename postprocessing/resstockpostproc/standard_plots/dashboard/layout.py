@@ -258,7 +258,7 @@ def make_slider(
         max=max_val,
         step=step,
         value=value,
-        marks=marks,
+        marks=marks,  # type: ignore[arg-type]
         persistence=True,
         persistence_type="local",
         persisted_props=["value"],
@@ -577,10 +577,8 @@ def _build_alert_modal() -> dbc.Modal:
     )
 
 
-def _get_default_quantity_group(quantity_group_options: list[str]) -> str | None:
+def _get_default_quantity_group(quantity_group_options: list[str]) -> str:
     """Determine the default quantity group selection."""
-    if not quantity_group_options:
-        return None
     if "Bills" in quantity_group_options:
         return "Bills"
     return quantity_group_options[0]

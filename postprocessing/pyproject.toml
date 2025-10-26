@@ -91,3 +91,7 @@ analytics_enabled = false
 enable_orchestration_telemetry = false
 [tool.prefect.logging]
 level = "INFO"
+
+[tool.mypy]
+files = "resstockpostproc/standard_plots"
+follow_imports = "silent"

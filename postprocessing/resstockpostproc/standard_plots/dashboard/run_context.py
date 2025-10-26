@@ -125,9 +125,6 @@ class RunContext:
         data = load_data(workflow, [upgrade])
         schema = data.collect_schema()
 
-        def _is_numeric(dtype: pl.DataType) -> bool:
-            return dtype.is_numeric() if hasattr(dtype, "is_numeric") else pl.datatypes.is_numeric_dtype(dtype)
-
         excluded_columns = {
             "upgrade",
             "upgrade_name",
@@ -138,8 +135,7 @@ class RunContext:
         candidate_cols = [
             name
             for name, dtype in schema.items()
-            if name not in excluded_columns and not _is_numeric(dtype)
-            # and dtype != pl.Boolean
+            if name not in excluded_columns and not dtype.is_numeric()
         ]
 
         if not candidate_cols:

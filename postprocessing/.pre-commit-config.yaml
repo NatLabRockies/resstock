@@ -40,14 +40,15 @@ repos:
     hooks:
       - id: mypy
         name: mypy
-        entry: uv run --directory=postprocessing -m mypy
+        entry: uv run --directory=postprocessing/ -m mypy
         language: system
         types: [python]
+        always_run: true
         args:
           [
             "--config-file=pyproject.toml",
             "--python-version=3.11",
-            "postprocessing/resstockpostproc/standard_plots/",
+            "resstockpostproc/standard_plots/",
           ]
         pass_filenames: false
   - repo: https://github.com/astral-sh/ruff-pre-commit

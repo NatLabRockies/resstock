@@ -166,8 +166,8 @@ def _create_plot(
     show_labels: bool,
     show_boundaries: bool,
 ) -> go.Figure:
-    quantity_min = float(data[value_column].min())
-    quantity_max = float(data[value_column].max())
+    quantity_min = float(data[value_column].min())  # type: ignore[arg-type]
+    quantity_max = float(data[value_column].max())  # type: ignore[arg-type]
     colorscale, tickvals, ticktext = _choose_colorscale(
         quantity_min,
         quantity_max,
@@ -468,7 +468,7 @@ def _lerp_color(color_a: str, color_b: str, t: float) -> str:
 
 def _hex_to_rgb(color: str) -> tuple[int, int, int]:
     color = color.lstrip("#")
-    return tuple(int(color[i : i + 2], 16) for i in (0, 2, 4))
+    return (int(color[0:2], 16), int(color[2:4], 16), int(color[4:6], 16))
 
 
 def _build_colorbar_ticks(

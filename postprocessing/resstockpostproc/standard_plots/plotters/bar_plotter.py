@@ -122,7 +122,7 @@ def _create_bar_plot(
 
             if len(quantity_cols) > 1:
                 marker_pattern_shape = theme.END_USE_TO_PATTERN.get(qcol, None)
-                marker_color: list[str | None] | str | None = theme.END_USE_TO_COLOR.get(qcol, None)
+                marker_color: list[str | None] | list[str] | str | None = theme.END_USE_TO_COLOR.get(qcol, None)
             else:
                 marker_color = colors
                 marker_pattern_shape = ""

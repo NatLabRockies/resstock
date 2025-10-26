@@ -184,7 +184,7 @@ def _build_base_specs(
         if not upgrades:
             upgrades = [None]
     elif highlight["quantity_type"] == QuantityType.prevalence:
-        upgrades: Sequence[int | None] = list(workflow.upgrades)
+        upgrades = list(workflow.upgrades)
     else:
         upgrades = [None]
 

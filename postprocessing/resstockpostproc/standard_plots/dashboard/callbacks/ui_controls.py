@@ -198,6 +198,7 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         print(f"update quantity triggered by: {dash.callback_context.triggered}")
         qtype = QuantityType(quantity_type_val)
         viz_type = VizType(viz_type_val)
+        options: list[dict[str, str]] = []
         if qtype == QuantityType.prevalence:
             upgrade = get_upgrade_number(building_inclusion)
             assert upgrade is not None, "Upgrade number must be specified for prevalence plots"
@@ -211,14 +212,9 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
             return options, default_value
 
         qg = ctx.quantity_groups[qgroup_name]
-
-        options: list[dict[str, Any]] = []
         options.extend({"label": c, "value": c} for c in qg.constituents)
         if qg.sum:
             options.append({"label": qg.sum, "value": qg.sum})
-
-        # if viz_type in [VizType.bar] or (viz_type == VizType.box and group_by_val in (None, "__none__")):
-        #     options.append({"label": "ALL - stacked", "value": "__group_stacked__"})
 
         if viz_type in [VizType.heatmap]:
             options = [{"label": "ALL - stacked", "value": "__group_stacked__"}]
