@@ -31,7 +31,6 @@ GEM
     simplecov_json_formatter (0.1.4)
 
 PLATFORMS
-  arm64-darwin-24
   x64-mingw-ucrt
 
 DEPENDENCIES
