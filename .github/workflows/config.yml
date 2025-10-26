@@ -774,7 +774,12 @@ jobs:
         working-directory: postprocessing
         run: |
           uv venv
+          uv pip install pre-commit
           uv pip install -e . --group dev
+      - name: Run pre-commit checks
+        working-directory: postprocessing
+        run: |
+          uv run pre-commit run --all-files --show-diff-on-failure
 
       - name: Run standard plots tests
         working-directory: postprocessing
@@ -796,4 +801,3 @@ jobs:
           name: plots
           path: postprocessing/resstockpostproc/standard_plots/sdr_plots/plots/sdr_plots_ci
           if-no-files-found: error
-
