@@ -86,8 +86,9 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
         State("building-inclusion", "value"),
         prevent_initial_call=True,
     )
-    def _update_upgrade_inclusion_dd(run_folder: str, selected_upgrades: list[int],
-                                     quantity_type_val: str, current_val: str):
+    def _update_upgrade_inclusion_dd(
+        run_folder: str, selected_upgrades: list[int], quantity_type_val: str, current_val: str
+    ):
         run_workflow = ctx.get_workflow(run_folder)
         if run_workflow is None:
             raise PreventUpdate
@@ -111,7 +112,7 @@ def register_run_info_callbacks(app, ctx: RunContext) -> None:
         )
 
         valid_values = {option["value"] for option in options}
-        new_val = current_val if str(current_val) in valid_values else options[0]['value']
+        new_val = current_val if str(current_val) in valid_values else options[0]["value"]
         return options, new_val
 
     @app.callback(

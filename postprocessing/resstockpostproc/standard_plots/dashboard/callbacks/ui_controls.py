@@ -14,6 +14,7 @@ import polars as pl
 
 logger = logging.getLogger(__name__)
 
+
 def register_ui_control_callbacks(app, ctx: RunContext) -> None:
     quantity_groups = list(ctx.quantity_groups.keys())
 
@@ -23,7 +24,7 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         State("quantity-type", "value"),
         prevent_initial_call=True,
     )
-    def _update_quantity_type_dd(selected_upgrades, current_value: str | None):
+    def _update_quantity_type_dd(_, current_value: str | None):
         # dummy callback to join trigger dependencies from selected-upgrades
         # to quantity-type so that rest of the chain works correctly
         return current_value
@@ -36,7 +37,7 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         State("aggregation-type", "value"),
         prevent_initial_call=True,
     )
-    def _update_aggregation_type_dd(building_inclusion_val: str, quantity_type_val: str, current_val: str):
+    def _update_aggregation_type_dd(_: str, quantity_type_val: str, current_val: str):
         try:
             qtype = QuantityType(quantity_type_val)
         except ValueError:
@@ -90,7 +91,7 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
     @app.callback(
         Output("group-by", "options"),
         Output("group-by", "value"),
-        Input('viz-type', 'value'),
+        Input("viz-type", "value"),
         State("run-folder", "value"),
         State("group-by", "value"),
         prevent_initial_call=True,
@@ -107,7 +108,6 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         workflow_group_by: tuple[str, ...] = run_workflow.group_by
 
         small_chars: list[str] = []
-        geo_columns: list[str] = []
         try:
             combined_df = ctx.get_combined_frame(run_folder)
             if combined_df is None:
@@ -119,7 +119,7 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
                 unique_df = base_df.select([pl.col(col).n_unique().alias(col) for col in in_cols]).collect()
                 unique_counts = dict(zip(in_cols, unique_df.row(0)))
                 small_chars = sorted([col for col, count in unique_counts.items() if 1 <= count <= 100])
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             logger.warning("Failed to compute additional group-by characteristics: %s", exc)
 
         options: list[dict[str, Any]] = [
@@ -141,14 +141,7 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         )
 
         valid_values = {option["value"] for option in options if not option.get("disabled")}
-
-        # Prefer the dropdown's current value if valid; otherwise try the
-        # persisted store; otherwise fall back to "__none__".
-        if current_val in valid_values:
-            new_val = current_val
-        else:
-            new_val = "__none__"
-
+        new_val = current_val if current_val in valid_values else "__none__"
         logger.info("Updating group by options: %s", [option["label"] for option in options])
         return options, new_val
 
@@ -162,7 +155,9 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         State("building-inclusion", "value"),
         prevent_initial_call=True,
     )
-    def _update_quantity_group_dd(group_by_val: str, quantity_type_val: str, current_val: str, run_folder_val: str, building_inclusion: str):
+    def _update_quantity_group_dd(
+        _: str, quantity_type_val: str, current_val: str, run_folder_val: str, building_inclusion: str
+    ):
         print(f"update quantity group triggered by: {dash.callback_context.triggered}")
         qtype = QuantityType(quantity_type_val)
         if qtype == QuantityType.prevalence:
@@ -184,7 +179,6 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
         Output("quantity", "value"),
         Input("quantity-group", "value"),
         State("viz-type", "value"),
-        State("group-by", "value"),
         State("quantity-type", "value"),
         State("run-folder", "value"),
         State("building-inclusion", "value"),
@@ -194,7 +188,6 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
     def _update_quantity_dd(
         qgroup_name: str,
         viz_type_val: str,
-        group_by_val: str,
         quantity_type_val: str,
         run_folder_val: str,
         building_inclusion: str,
@@ -202,7 +195,7 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
     ):
         if not qgroup_name:
             raise PreventUpdate
-        print(f"update quantity trigged by: {dash.callback_context.triggered}")
+        print(f"update quantity triggered by: {dash.callback_context.triggered}")
         qtype = QuantityType(quantity_type_val)
         viz_type = VizType(viz_type_val)
         if qtype == QuantityType.prevalence:
@@ -213,7 +206,7 @@ def register_ui_control_callbacks(app, ctx: RunContext) -> None:
                 return [], None
             options = [{"label": col, "value": col} for col in categories]
             valid_values = {opt["value"] for opt in options}
-            default_value = current_val if current_val in categories + ['__group_stacked__'] else categories[0]
+            default_value = current_val if current_val in categories + ["__group_stacked__"] else categories[0]
             options.append({"label": "ALL - stacked", "value": "__group_stacked__"})
             return options, default_value
 

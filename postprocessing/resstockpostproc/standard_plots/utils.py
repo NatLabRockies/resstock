@@ -26,7 +26,7 @@ def load_highlight_config(highlights_config: str | Path | dict | None) -> dict[s
         config_path = Path(__file__).with_name("highlights.yaml")
         data = yaml.safe_load(config_path.read_text(encoding="utf-8"))
         return data or {}
-    if isinstance(highlights_config, (str, Path)):
+    if isinstance(highlights_config, str | Path):
         config_path = Path(highlights_config)
         data = yaml.safe_load(config_path.read_text(encoding="utf-8"))
         return data or {}

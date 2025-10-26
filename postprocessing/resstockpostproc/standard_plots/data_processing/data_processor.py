@@ -34,6 +34,7 @@ APPLICABILITY_COL = "applicability"
 VACANCY_STATUS_COL = "in.vacancy_status"
 WEIGHT_COL = "weight"
 
+
 def _safe_nonzero(expr: pl.Expr) -> pl.Expr:
     """Return an expression guaranteed to be at least MIN_BASELINE in magnitude.
 
@@ -42,11 +43,7 @@ def _safe_nonzero(expr: pl.Expr) -> pl.Expr:
     """
     return (
         pl.when(expr.abs() < MIN_BASELINE)
-        .then(
-            pl.when(expr.sign() == 0)
-            .then(MIN_BASELINE)
-            .otherwise(expr.sign() * MIN_BASELINE)
-        )
+        .then(pl.when(expr.sign() == 0).then(MIN_BASELINE).otherwise(expr.sign() * MIN_BASELINE))
         .otherwise(expr)
     )
 
@@ -85,7 +82,7 @@ def prepare_data_for_plot(
     working_df = _process_vacancy_inclusion(plot_spec, working_df)
 
     if plot_spec.quantity_type == QuantityType.prevalence:
-        assert plot_spec.upgrade is not None, "Prevalence plots require a specific upgrade to be selected."  # noqa: S101 Use of `assert` detected
+        assert plot_spec.upgrade is not None, "Prevalence plots require a specific upgrade to be selected."
         return prepare_data_for_prevalence_plot(
             combined_df=working_df.filter(pl.col(UPGRADE_COL) == plot_spec.upgrade),
             quantity=plot_spec.quantity,
@@ -107,7 +104,7 @@ def prepare_data_for_plot(
             quantity_col = "value (kWh)"
             box_grouping_cols = [*grouping_cols, "End Use"]
         else:
-            assert isinstance(plot_spec.quantity, str)  # noqa: S101 Use of `assert` detected
+            assert isinstance(plot_spec.quantity, str)
             quantity_col = plot_spec.quantity
             box_grouping_cols = [*grouping_cols]
         plot_data = prepare_data_for_box_plot(working_df, quantity_col, box_grouping_cols)
@@ -120,7 +117,7 @@ def prepare_data_for_plot(
             plot_spec.quantity_type,
         )
     elif plot_spec.visualization_type == VizType.hist:
-        assert isinstance(plot_spec.quantity, str)  # noqa: S101 Use of `assert` detected
+        assert isinstance(plot_spec.quantity, str)
         plot_data = prepare_data_for_histogram_plot(working_df, plot_spec.quantity, grouping_cols)
     else:
         raise ValueError(f"Unsupported visualization type: {plot_spec.visualization_type}")
@@ -147,9 +144,7 @@ def _fill_missing_quantities(
     not_found_cols = missing_cols - defined_cols
 
     # Map each defined quantity to its available constituents in the current dataframe
-    avail_map: dict[str, list[str]] = {
-        q: [c for c in mapping[q] if c in current_cols] for q in defined_cols
-    }
+    avail_map: dict[str, list[str]] = {q: [c for c in mapping[q] if c in current_cols] for q in defined_cols}
     defined_all_missing = {q for q, cols in avail_map.items() if not cols}
     defined_partial_missing = {q for q, cols in avail_map.items() if cols and len(cols) < len(mapping[q])}
     defined_not_missing = {q for q, cols in avail_map.items() if len(cols) == len(mapping[q])}
@@ -223,9 +218,7 @@ def _attach_baseline(
         raise ValueError(f"'{join_key}' column not found in data - cannot compute savings per building.")
     baseline_cols = [join_key, *quantities]
     baseline_df = (
-        lf.filter(pl.col(UPGRADE_COL) == 0)
-        .select(baseline_cols)
-        .rename({q: f"baseline_{q}" for q in quantities})
+        lf.filter(pl.col(UPGRADE_COL) == 0).select(baseline_cols).rename({q: f"baseline_{q}" for q in quantities})
     )
     return lf.join(baseline_df, on=join_key, how="left", validate="m:1", maintain_order="left")
 
@@ -238,10 +231,7 @@ def _compute_savings(lf: pl.LazyFrame, quantities: list[str]) -> pl.LazyFrame:
 
 def _compute_percent_savings(lf: pl.LazyFrame, quantities: list[str]) -> pl.LazyFrame:
     """Convert savings columns into percent savings using safe non-zero baseline as denominator."""
-    pct_exprs = [
-        (100 * pl.col(q) / _safe_nonzero(pl.col(f"baseline_{q}"))).alias(q)
-        for q in quantities
-    ]
+    pct_exprs = [(100 * pl.col(q) / _safe_nonzero(pl.col(f"baseline_{q}"))).alias(q) for q in quantities]
     return lf.with_columns(pct_exprs)
 
 
@@ -312,8 +302,7 @@ def prepare_data_for_histogram_plot(
 
     # ---------- 1. Percentile and absolute bounds (single pass) ----------
     q1, q99, minimum, maximum = (
-        combined_df
-        .select(
+        combined_df.select(
             pl.col(quantity).quantile(0.01, "midpoint").alias("q1"),
             pl.col(quantity).quantile(0.99, "midpoint").alias("q99"),
             pl.col(quantity).min().alias("minimum"),
@@ -358,14 +347,11 @@ def prepare_data_for_histogram_plot(
     totals = counts.group_by(grouping_cols, maintain_order=True).agg(pl.col("count").sum().alias("_total_count"))
 
     # ---------- 3b. Per-group summary statistics ----------
-    stats = (
-        combined_df.group_by(grouping_cols, maintain_order=True)
-        .agg(
-            pl.col(quantity).min().alias("value_min"),
-            pl.col(quantity).max().alias("value_max"),
-            pl.col(quantity).mean().alias("value_mean"),
-            pl.col(quantity).median().alias("value_median"),
-        )
+    stats = combined_df.group_by(grouping_cols, maintain_order=True).agg(
+        pl.col(quantity).min().alias("value_min"),
+        pl.col(quantity).max().alias("value_max"),
+        pl.col(quantity).mean().alias("value_mean"),
+        pl.col(quantity).median().alias("value_median"),
     )
 
     # ---------- 4. Build full grid ----------
@@ -386,14 +372,14 @@ def prepare_data_for_histogram_plot(
             # left edge
             pl.when(pl.col("bin") == -1)
             .then(minimum)
-            .when(pl.col("bin") == 100)  # noqa: PLR2004
+            .when(pl.col("bin") == 100)
             .then(q99)
             .otherwise(q1 + pl.col("bin") * bin_width)
             .alias("bin_left"),
             # right edge
             pl.when(pl.col("bin") == -1)
             .then(q1)
-            .when(pl.col("bin") == 100)  # noqa: PLR2004
+            .when(pl.col("bin") == 100)
             .then(maximum)
             .otherwise(q1 + (pl.col("bin") + 1) * bin_width)
             .alias("bin_right"),
@@ -434,9 +420,7 @@ def prepare_data_for_box_plot(
 ) -> pl.DataFrame:
     """Compute box-and-whisker statistics (and optional KDE) for grouped values."""
 
-    max_items_per_group = max(
-        combined_df.group_by(grouping_cols).agg(pl.len()).collect()["len"].to_list()
-    )
+    max_items_per_group = max(combined_df.group_by(grouping_cols).agg(pl.len()).collect()["len"].to_list())
     if max_items_per_group < 30000:
         cutoff = 0.01  # Upto 30K datapoints, show 1% outliers
     elif max_items_per_group < 100000:
@@ -493,9 +477,7 @@ def prepare_data_for_box_plot(
             pl.struct(["vals", "bldg_ids", "lower_cutoff", "upper_cutoff"])
             .map_elements(
                 lambda s: [
-                    b
-                    for v, b in zip(s["vals"], s["bldg_ids"])
-                    if (v < s["lower_cutoff"]) or (v > s["upper_cutoff"])
+                    b for v, b in zip(s["vals"], s["bldg_ids"]) if (v < s["lower_cutoff"]) or (v > s["upper_cutoff"])
                 ],
                 return_dtype=pl.List(pl.Int32),
             )
@@ -513,14 +495,14 @@ def prepare_data_for_box_plot(
             lower_cutoff = df["lower_cutoff"][i]
             upper_cutoff = df["upper_cutoff"][i]
 
-            if len(arr) < 2 or np.isclose(arr.max(), arr.min()):  # noqa: PLR2004
+            if len(arr) < 2 or np.isclose(arr.max(), arr.min()):
                 # degenerate group
                 xs = np.array([arr.min()])
                 ys = np.array([1.0])
             else:
                 # Filter data between fences for KDE calculation
                 filtered_arr = arr[(arr > lower_cutoff) & (arr < upper_cutoff)]
-                if len(filtered_arr) < 2:  # noqa: PLR2004
+                if len(filtered_arr) < 2:
                     # If not enough points after filtering, use a single point
                     xs = np.array([np.mean(filtered_arr) if len(filtered_arr) > 0 else arr.mean()])
                     ys = np.array([1.0])

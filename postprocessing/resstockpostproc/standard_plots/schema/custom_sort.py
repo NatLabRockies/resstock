@@ -85,10 +85,4 @@ custom_sorts: dict[str, list[str]] = {
         "Triple, Low-E, Non-metal, Air, L-Gain",
     ],
 }
-keep_last_keys = [
-    "None",
-    "No",
-    "Never",
-    "Not Available",
-    "No Constraint"
-]
+keep_last_keys = ["None", "No", "Never", "Not Available", "No Constraint"]

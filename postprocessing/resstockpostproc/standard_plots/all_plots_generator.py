@@ -7,7 +7,8 @@ from __future__ import annotations
 import time
 from itertools import product
 from pathlib import Path
-from typing import Literal, Sequence
+from typing import Literal
+from collections.abc import Sequence
 from uuid import UUID
 
 from prefect.artifacts import create_progress_artifact, update_progress_artifact
@@ -102,7 +103,7 @@ def generate_all_plots(
         start_time = time.time()
         try:
             fig = plotting_function(df, plot_spec)
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             print(f"Error creating plot for {plot_spec}: {exc}")
             raise
         figure_creation_time += time.time() - start_time
@@ -178,7 +179,9 @@ def _build_plot_specs(workflow: WorkflowConfig) -> Sequence[PlotSpec]:
         group_by = combination[4]
         aggregation_type = combination[5]
         upgrade = combination[6]
-        workflow_quantities = workflow.categorical_quantities if quantity_type == "prevalence" else workflow.numerical_quantities
+        workflow_quantities = (
+            workflow.categorical_quantities if quantity_type == "prevalence" else workflow.numerical_quantities
+        )
         for quantity_group in workflow_quantities:
             quantities: list[str | QuantityGroup] = []
             quantities.extend(quantity_group.constituents)

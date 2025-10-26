@@ -9,9 +9,8 @@ import string
 import textwrap
 from pathlib import Path
 from typing import Any, Literal
-
+from functools import cache
 import polars as pl
-import plotly.colors as pc
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
@@ -76,12 +75,6 @@ _STATE_ABBR_TO_NAME = {
     "WY": "Wyoming",
     "PR": "Puerto Rico",
 }
-
-_STATE_NAME_TO_ABBR = {name: abbr for abbr, name in _STATE_ABBR_TO_NAME.items()}
-
-_COUNTY_GEOJSON: dict[str, Any] | None = None
-_COUNTY_LABEL_MAP: dict[str, str] | None = None
-_STATE_LABEL_CACHE: dict[str, tuple[float, float]] | None = None
 
 
 def create_plot(
@@ -185,26 +178,18 @@ def _create_plot(
     n_cols = max(1, len(first_values))
 
     second_values = (
-        data[second_category_column].unique(maintain_order=True).to_list()
-        if second_category_column
-        else [None]
+        data[second_category_column].unique(maintain_order=True).to_list() if second_category_column else [None]
     )
     n_rows = max(1, len(second_values))
 
     column_titles = None
     if first_values:
-        raw_column_titles = [
-            plot_utils.format_label(str(val)) if val is not None else ""
-            for val in first_values
-        ]
+        raw_column_titles = [plot_utils.format_label(str(val)) if val is not None else "" for val in first_values]
         column_titles = _prepare_facet_titles(raw_column_titles)
 
     row_titles = None
     if second_category_column:
-        raw_row_titles = [
-            plot_utils.format_label(str(value)) if value is not None else ""
-            for value in second_values
-        ]
+        raw_row_titles = [plot_utils.format_label(str(value)) if value is not None else "" for value in second_values]
         row_titles = _prepare_facet_titles(raw_row_titles)
 
     fig = make_subplots(
@@ -221,11 +206,7 @@ def _create_plot(
     county_extent_added: set[tuple[int, int]] = set()
 
     for row_idx, second_val in enumerate(second_values, start=1):
-        facet_df = (
-            data
-            if second_category_column is None
-            else data.filter(pl.col(second_category_column) == second_val)
-        )
+        facet_df = data if second_category_column is None else data.filter(pl.col(second_category_column) == second_val)
         if facet_df.is_empty():
             continue
 
@@ -234,23 +215,15 @@ def _create_plot(
             if subset.is_empty():
                 continue
 
-            locations, labels = _extract_locations(
-                subset[location_column].to_list(), resolution
-            )
+            locations, labels = _extract_locations(subset[location_column].to_list(), resolution)
             values = subset[value_column].to_list()
             model_counts = subset["model_count"].to_list()
-            text_values = (
-                _build_text_labels(resolution, values, quantity_type, value_title)
-                if show_labels
-                else None
-            )
+            text_values = _build_text_labels(resolution, values, quantity_type, value_title) if show_labels else None
 
             default_line_width = 1.4 if resolution == "state" else 0.6
             subtle_line_width = max(default_line_width * 0.2, 0.2)
             marker_line_width = default_line_width if show_boundaries else subtle_line_width
-            marker_line_color = (
-                "rgba(0,0,0,0.85)" if show_boundaries else "rgba(0,0,0,0.25)"
-            )
+            marker_line_color = "rgba(0,0,0,0.85)" if show_boundaries else "rgba(0,0,0,0.25)"
 
             trace = go.Choropleth(
                 locations=locations,
@@ -487,9 +460,9 @@ def _lerp_color(color_a: str, color_b: str, t: float) -> str:
     t = min(max(t, 0.0), 1.0)
     r1, g1, b1 = _hex_to_rgb(color_a)
     r2, g2, b2 = _hex_to_rgb(color_b)
-    r = int(round(r1 + (r2 - r1) * t))
-    g = int(round(g1 + (g2 - g1) * t))
-    b = int(round(b1 + (b2 - b1) * t))
+    r = round(r1 + (r2 - r1) * t)
+    g = round(g1 + (g2 - g1) * t)
+    b = round(b1 + (b2 - b1) * t)
     return f"#{r:02X}{g:02X}{b:02X}"
 
 
@@ -615,10 +588,7 @@ def _format_colorbar_tick(value: float, *, suffix: str = "") -> str:
 
 def _build_hovertemplate(quantity_title: str) -> str:
     return (
-        "%{customdata[0]}<br>"
-        f"{quantity_title}: %{{z:,.2f}}<br>"
-        "Number of models: %{customdata[1]:,}"
-        "<extra></extra>"
+        f"%{{customdata[0]}}<br>{quantity_title}: %{{z:,.2f}}<br>Number of models: %{{customdata[1]:,}}<extra></extra>"
     )
 
 
@@ -639,9 +609,9 @@ def _stretch_geo_height(fig: go.Figure, padding: float = 0.02) -> None:
             continue
         y_vals = domain.get("y")
         if (
-            isinstance(y_vals, (list, tuple))
+            isinstance(y_vals, list | tuple)
             and len(y_vals) == 2
-            and all(isinstance(val, (int, float)) for val in y_vals)
+            and all(isinstance(val, int | float) for val in y_vals)
         ):
             y_domains.add((float(y_vals[0]), float(y_vals[1])))
     if len(y_domains) != 1:
@@ -681,9 +651,9 @@ def _build_text_labels(
         if quantity_type == QuantityType.percent_savings or "Percent" in quantity_title:
             labels.append(f"{value:.1f}%")
         elif abs(value) >= 1_000_000:
-            labels.append(f"{value/1_000_000:.1f}M")
+            labels.append(f"{value / 1_000_000:.1f}M")
         elif abs(value) >= 1_000:
-            labels.append(f"{value/1_000:.1f}K")
+            labels.append(f"{value / 1_000:.1f}K")
         else:
             labels.append(f"{value:.1f}")
     return labels
@@ -692,10 +662,7 @@ def _build_text_labels(
 def _extract_locations(raw_values: list[Any], resolution: str) -> tuple[list[str], list[str]]:
     if resolution == "state":
         locations = [str(val).upper() for val in raw_values]
-        labels = [
-            f"{_STATE_ABBR_TO_NAME.get(loc, loc)} ({loc})"
-            for loc in locations
-        ]
+        labels = [f"{_STATE_ABBR_TO_NAME.get(loc, loc)} ({loc})" for loc in locations]
         return locations, labels
 
     fips_codes, labels = [], []
@@ -727,19 +694,14 @@ def _normalize_county_code(code: str) -> str:
     return code.zfill(5)
 
 
+@cache
 def _load_county_geojson() -> dict[str, Any]:
-    global _COUNTY_GEOJSON
-    if _COUNTY_GEOJSON is None:
-        geojson_path = _resources_dir() / "counties-geojson.json"
-        _COUNTY_GEOJSON = json.loads(geojson_path.read_text(encoding="utf-8"))
-    return _COUNTY_GEOJSON
+    geojson_path = _resources_dir() / "counties-geojson.json"
+    return json.loads(geojson_path.read_text(encoding="utf-8"))
 
 
+@cache
 def _load_county_labels() -> dict[str, str]:
-    global _COUNTY_LABEL_MAP
-    if _COUNTY_LABEL_MAP is not None:
-        return _COUNTY_LABEL_MAP
-
     label_map: dict[str, str] = {}
     with (_resources_dir() / "county_labels.csv").open("r", encoding="utf-8") as fh:
         reader = csv.DictReader(fh)
@@ -748,7 +710,6 @@ def _load_county_labels() -> dict[str, str]:
             label = row.get("label", "").strip()
             if code:
                 label_map[code] = label
-    _COUNTY_LABEL_MAP = label_map
     return label_map
 
 
@@ -756,15 +717,8 @@ def _resources_dir() -> Path:
     return Path(__file__).resolve().parent / "resources"
 
 
+@cache
 def _state_label_positions() -> dict[str, tuple[float, float]]:
-    global _STATE_LABEL_CACHE
-    if _STATE_LABEL_CACHE is not None:
-        return _STATE_LABEL_CACHE
-
     label_file = _resources_dir() / "state_label_positions.json"
     positions = json.loads(label_file.read_text(encoding="utf-8"))
-    cache: dict[str, tuple[float, float]] = {
-        key: (float(value[0]), float(value[1])) for key, value in positions.items()
-    }
-    _STATE_LABEL_CACHE = cache
-    return cache
+    return {key: (float(value[0]), float(value[1])) for key, value in positions.items()}

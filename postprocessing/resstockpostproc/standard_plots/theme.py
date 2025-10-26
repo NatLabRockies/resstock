@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import itertools as it
-from typing import Sequence
+from collections.abc import Sequence
 
 import plotly.graph_objects as go
 

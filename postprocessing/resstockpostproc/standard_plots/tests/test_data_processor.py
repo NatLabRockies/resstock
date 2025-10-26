@@ -9,7 +9,7 @@ from __future__ import annotations
 import polars as pl
 import pytest
 
-import resstockpostproc.standard_plots.plotters.choropleth_plotter as choropleth_plotter
+from resstockpostproc.standard_plots.plotters import choropleth_plotter
 from resstockpostproc.standard_plots.data_processing.data_processor import (
     prepare_data_for_plot,
 )
@@ -21,7 +21,6 @@ from resstockpostproc.standard_plots.schema.workflow_schema import (
     VacancyInclusion,
     AggregationType,
     VizType,
-    WorkflowConfig,
 )
 
 # -----------------------------------------------------------------------------
@@ -207,7 +206,7 @@ def _build_base_spec(**kwargs) -> PlotSpec:  # type: ignore[return-value]
     [
         ("elec_kwh"),
         (QuantityGroup(name="energy", constituents=("elec_kwh", "gas_kwh"), sum="total_kwh")),
-    ]
+    ],
 )
 @pytest.mark.parametrize(
     ("group_by", "expected_rows"),
@@ -269,7 +268,7 @@ def test_prepare_basic(
     elif isinstance(quantity, str) and viz_type == VizType.box:
         assert len(df) == expected_rows
     elif isinstance(quantity, str) and viz_type == VizType.hist:
-        assert len(df) == expected_rows * 102 # 100 bins and 2 overflow/underflow per upgrade-group
+        assert len(df) == expected_rows * 102  # 100 bins and 2 overflow/underflow per upgrade-group
     else:
         assert df.height == expected_rows
         for col in quantities:
@@ -316,8 +315,8 @@ def test_specific_upgrade_filter(combined_df: pl.LazyFrame):
 
     # Savings: baseline excluded
     spec.quantity_type = QuantityType.savings
-    df_sav = prepare_data(combined_df, spec)
-    assert set(df_sav["upgrade"].to_list()) == {1}
+    df_savings = prepare_data(combined_df, spec)
+    assert set(df_savings["upgrade"].to_list()) == {1}
 
     # Percent savings: baseline excluded
     spec.quantity_type = QuantityType.percent_savings
@@ -343,12 +342,8 @@ def test_specific_upgrade_with_applied_only(combined_df: pl.LazyFrame):
 
     # For upgrade 1 in the fixture, bldg_id 1 is not applicable. Applied-only should
     # exclude bldg_id 1 for both upgrade 1 and its corresponding baseline row.
-    baseline_ids = set(
-        df.filter(pl.col("upgrade") == 0)["bldg_id"].to_list()
-    )
-    up1_ids = set(
-        df.filter(pl.col("upgrade") == 1)["bldg_id"].to_list()
-    )
+    baseline_ids = set(df.filter(pl.col("upgrade") == 0)["bldg_id"].to_list())
+    up1_ids = set(df.filter(pl.col("upgrade") == 1)["bldg_id"].to_list())
     assert baseline_ids == {2, 3, 4}
     assert up1_ids == {2, 3, 4}
 
@@ -616,6 +611,7 @@ def test_percent_savings_calculation(combined_df: pl.LazyFrame):
     pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4)).select("elec_kwh").item()
     assert pct == pytest.approx(-999900)
 
+
 @pytest.mark.parametrize(
     "quantity",
     ["elec_kwh", "gas_kwh", "total_kwh"],
@@ -634,10 +630,14 @@ def test_integrity(combined_df: pl.LazyFrame, quantity: str):
     savings_df = prepare_data(combined_df, spec)
     spec.quantity_type = QuantityType.absolute
     absolute_df = prepare_data(combined_df, spec)
-    absolute_df = absolute_df.filter(pl.col("upgrade") == 0).select(pl.col(quantity).alias("baseline_value"))  # % savings calculated in reference to baseline
-    all_df = avg_percent_savings_df.join(savings_df, on="upgrade", suffix="_savings").join(absolute_df, how='cross')
-    all_df = all_df.with_columns((100 * pl.col(f"{quantity}_savings") / pl.col("baseline_value")).alias("calc_percent_savings"))
-    assert (all_df[quantity] == all_df['calc_percent_savings']).all()
+    absolute_df = absolute_df.filter(pl.col("upgrade") == 0).select(
+        pl.col(quantity).alias("baseline_value")
+    )  # % savings calculated in reference to baseline
+    all_df = avg_percent_savings_df.join(savings_df, on="upgrade", suffix="_savings").join(absolute_df, how="cross")
+    all_df = all_df.with_columns(
+        (100 * pl.col(f"{quantity}_savings") / pl.col("baseline_value")).alias("calc_percent_savings")
+    )
+    assert (all_df[quantity] == all_df["calc_percent_savings"]).all()
 
 
 def test_missing_quantities_are_filled(combined_df: pl.LazyFrame, caplog: pytest.LogCaptureFixture):
@@ -679,9 +679,7 @@ def test_missing_quantities_are_filled(combined_df: pl.LazyFrame, caplog: pytest
     assert "My Group" in df.columns
 
     # And it should equal elec_kwh + gas_kwh (total aggregation with weights).
-    assert (
-        (df["My Group"] - df["elec_kwh"] - df["gas_kwh"]).abs() < 1e-9
-    ).all()
+    assert ((df["My Group"] - df["elec_kwh"] - df["gas_kwh"]).abs() < 1e-9).all()
     # No warnings expected for successful summation
     assert not caplog.records
 
@@ -691,21 +689,19 @@ def test_missing_quantities_are_filled(combined_df: pl.LazyFrame, caplog: pytest
     df2 = prepare_data(combined_df, spec, enduse_group_mapping=mapping)
     assert "Defined But All Missing" in df2.columns
     assert (df2["Defined But All Missing"] == 0).all()
-    assert any(
-        "defined but none of the constituent are available" in rec.getMessage()
-        for rec in caplog.records
-    )
+    assert any("defined but none of the constituent are available" in rec.getMessage() for rec in caplog.records)
 
     # Now request a defined group whose some constituents are missing -> should sum existing ones
-    spec.quantity = QuantityGroup(name="energy", constituents=("elec_kwh", "gas_kwh"), sum="Defined But Partially Missing")
+    spec.quantity = QuantityGroup(
+        name="energy", constituents=("elec_kwh", "gas_kwh"), sum="Defined But Partially Missing"
+    )
     caplog.clear()
     df2 = prepare_data(combined_df, spec, enduse_group_mapping=mapping)
     assert "Defined But Partially Missing" in df2.columns
     assert ((df2["Defined But Partially Missing"] - df2["elec_kwh"]).abs() < 1e-9).all()
     # No warning expected here because at least one constituent exists and is used
     assert any(
-        "is defined but only some of the constituent are available" in rec.getMessage()
-        for rec in caplog.records
+        "is defined but only some of the constituent are available" in rec.getMessage() for rec in caplog.records
     )
 
     # Finally request a completely undefined group -> also zero-filled
@@ -714,10 +710,7 @@ def test_missing_quantities_are_filled(combined_df: pl.LazyFrame, caplog: pytest
     df3 = prepare_data(combined_df, spec, enduse_group_mapping=mapping)
     assert "Truly Missing" in df3.columns
     assert (df3["Truly Missing"] == 0).all()
-    assert any(
-        "is not available and is not a defined group" in rec.getMessage()
-        for rec in caplog.records
-    )
+    assert any("is not available and is not a defined group" in rec.getMessage() for rec in caplog.records)
 
 
 def test_prepare_data_for_prevalence_single_quantity(combined_df: pl.LazyFrame):
@@ -737,11 +730,12 @@ def test_prepare_data_for_prevalence_single_quantity(combined_df: pl.LazyFrame):
     df = prepare_data(combined_df, spec)
     assert df.shape[0] == 1
     assert set(df["in.heating_fuel"].to_list()) == {"Electric"}
-    assert df['upgrade_name'].to_list() == ["Upgrade2"]
+    assert df["upgrade_name"].to_list() == ["Upgrade2"]
     prevalence_map = dict(zip(df["in.heating_fuel"].to_list(), df["prevalence"].to_list()))
     model_counts = dict(zip(df["in.heating_fuel"].to_list(), df["model_count"].to_list()))
     assert prevalence_map["Electric"] == pytest.approx(50.0)
     assert model_counts["Electric"] == 2
+
 
 def test_prepare_data_for_prevalence_multi_quantities(combined_df: pl.LazyFrame):
     """Prevalence plots should report percentage shares per category."""
@@ -752,11 +746,7 @@ def test_prepare_data_for_prevalence_multi_quantities(combined_df: pl.LazyFrame)
         aggregation_type=AggregationType.total,
         visualization_type=VizType.bar,
         group_by=None,
-        quantity=QuantityGroup(
-            constituents=("Electric", "Gas"),
-            name="in.heating_fuel",
-            sum=None
-        ),
+        quantity=QuantityGroup(constituents=("Electric", "Gas"), name="in.heating_fuel", sum=None),
         quantity_group_name="in.heating_fuel",
         upgrade=2,
     )
@@ -764,7 +754,7 @@ def test_prepare_data_for_prevalence_multi_quantities(combined_df: pl.LazyFrame)
     df = prepare_data(combined_df, spec)
     assert df.shape[0] == 2
     assert set(df["in.heating_fuel"].to_list()) == {"Electric", "Gas"}
-    assert set(df['upgrade_name'].to_list()) == {"Upgrade2"}
+    assert set(df["upgrade_name"].to_list()) == {"Upgrade2"}
     prevalence_map = dict(zip(df["in.heating_fuel"].to_list(), df["prevalence"].to_list()))
     model_counts = dict(zip(df["in.heating_fuel"].to_list(), df["model_count"].to_list()))
 

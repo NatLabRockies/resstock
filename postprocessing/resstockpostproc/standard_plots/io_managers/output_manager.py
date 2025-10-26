@@ -6,7 +6,8 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Iterable, Literal, Sequence
+from typing import Literal
+from collections.abc import Sequence
 
 import polars as pl
 from filelock import FileLock
@@ -17,16 +18,16 @@ from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfi
 DEFAULT_OUTPUT_TYPES = ["json", "parquet", "html"]
 
 __all__ = [
-    "get_plot_base_dir",
-    "write_workflow_snapshot",
-    "save_plot",
     "get_file_path",
-    "write_html_file",
-    "write_svg_file",
-    "write_parquet_file",
-    "write_json_file",
-    "write_csv_file",
+    "get_plot_base_dir",
     "remove_lock_files",
+    "save_plot",
+    "write_csv_file",
+    "write_html_file",
+    "write_json_file",
+    "write_parquet_file",
+    "write_svg_file",
+    "write_workflow_snapshot",
 ]
 
 
@@ -124,7 +125,7 @@ def write_html_file(fig: Figure, file_path: Path, overwrite: bool) -> None:
             "responsive": True,
             "displaylogo": False,
             "modeBarButtons": [["toImage"], ["zoom2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d"]],
-             "toImageButtonOptions": {"format": "svg"},
+            "toImageButtonOptions": {"format": "svg"},
         },
     )
 
@@ -178,5 +179,5 @@ def remove_lock_files(output_dir: str | Path) -> None:
             lock_file.unlink(missing_ok=True)
         except FileNotFoundError:
             continue
-        except OSError as exc:  # noqa: PERF203
+        except OSError as exc:
             print(f"Unable to delete lock file {lock_file}: {exc}")

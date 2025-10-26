@@ -146,7 +146,9 @@ class WorkflowConfig(NoExtraSettings):
         None, description="Selection logic for"
     )
     numerical_quantities: tuple[QuantityGroup, ...] = Field(description="List of quantity groups to generate plots for")
-    categorical_quantities: tuple[QuantityGroup, ...] = Field(description="List of quantity groups to generate prevalance plots for")
+    categorical_quantities: tuple[QuantityGroup, ...] = Field(
+        description="List of quantity groups to generate prevalance plots for"
+    )
     group_by: tuple[str, ...] = Field(description="List of grouping columns")
     visualization_types: tuple[VizType, ...] = Field(description="List of visualization types to generate")
     quantity_types: tuple[QuantityType, ...] = Field(description="List of quantity types to generate")

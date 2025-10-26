@@ -16,6 +16,7 @@ from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 
 __all__ = ["create_plot"]
 
+
 def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     """Create a bar-style plot based on the plot specification."""
     if plot_spec.quantity_type == QuantityType.prevalence:
@@ -97,15 +98,9 @@ def _create_bar_plot(
     """
     upgrade_palette: dict[str, str] = {}
     if "upgrade_name" in data.columns:
-        upgrade_palette.update(
-            theme.build_upgrade_palette(
-                data["upgrade_name"].unique(maintain_order=True).to_list()
-            )
-        )
+        upgrade_palette.update(theme.build_upgrade_palette(data["upgrade_name"].unique(maintain_order=True).to_list()))
     is_stacked = not (isinstance(quantity_column, str) or second_category_column is None)
-    quantity_cols = (
-        [quantity_column] if isinstance(quantity_column, str) else list(quantity_column)
-    )
+    quantity_cols = [quantity_column] if isinstance(quantity_column, str) else list(quantity_column)
     traces: list[go.Bar] = []
     xtitle: str | None = ""
     ytitle: str | None = ""
@@ -156,7 +151,7 @@ def _create_bar_plot(
                     marker_pattern_shape = theme.END_USE_TO_PATTERN.get(qcol, None)
                     marker_color = theme.END_USE_TO_COLOR.get(qcol, None)
                 else:
-                    marker_color = upgrade_palette.get(group_name, None)
+                    marker_color = upgrade_palette.get(group_name)
                     marker_pattern_shape = ""
 
                 if orientation == "h":
@@ -194,9 +189,7 @@ def _create_bar_plot(
                 )
                 ytickvals = yvals
         xtitle, ytitle = (
-            (quantity_title, second_category_title)
-            if orientation == "h"
-            else (second_category_title, quantity_title)
+            (quantity_title, second_category_title) if orientation == "h" else (second_category_title, quantity_title)
         )
 
     fig = go.Figure(

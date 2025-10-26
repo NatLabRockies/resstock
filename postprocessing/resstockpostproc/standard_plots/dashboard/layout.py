@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Any, Sequence
+from typing import Any
+from collections.abc import Sequence
 
 import dash_bootstrap_components as dbc  # type: ignore
 from dash import dcc, html
@@ -120,7 +121,10 @@ def build_run_info_section() -> html.Div:
                         id="run-info-upgrades",
                     ),
                     html.Div(
-                        [html.Span("Number of data points: ", className="fw-bold"), html.Span("—", id="run-info-num-points")],
+                        [
+                            html.Span("Number of data points: ", className="fw-bold"),
+                            html.Span("—", id="run-info-num-points"),
+                        ],
                         style={"fontSize": "0.75rem"},
                     ),
                 ],
@@ -205,7 +209,7 @@ def build_figure_loading_wrapper() -> dcc.Loading:
                     ["toImage"],
                     ["zoom2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d"],
                 ],
-                 "toImageButtonOptions": {"format": "svg"},
+                "toImageButtonOptions": {"format": "svg"},
             },
         ),
         type="cube",
@@ -240,8 +244,8 @@ def make_dropdown(
 def make_slider(
     slider_id: str,
     *,
-    min: int | float,
-    max: int | float,
+    min_val: int | float,
+    max_val: int | float,
     step: int | float,
     value: int | float,
     marks: dict[int | float, str] | None = None,
@@ -250,8 +254,8 @@ def make_slider(
     """Create a slider with persistence defaults."""
     return dcc.Slider(
         id=slider_id,
-        min=min,
-        max=max,
+        min=min_val,
+        max=max_val,
         step=step,
         value=value,
         marks=marks,
@@ -449,8 +453,8 @@ def build_figure_adjustment_section() -> html.Div:
                 "Width (px)",
                 make_slider(
                     "fig-width",
-                    min=400,
-                    max=2500,
+                    min_val=400,
+                    max_val=2500,
                     step=100,
                     value=1000,
                     marks={i: str(i) for i in range(400, 2501, 400)},
@@ -460,8 +464,8 @@ def build_figure_adjustment_section() -> html.Div:
                 "Height (px)",
                 make_slider(
                     "fig-height",
-                    min=300,
-                    max=1800,
+                    min_val=300,
+                    max_val=1800,
                     step=50,
                     value=700,
                     marks={i: str(i) for i in range(300, 1801, 300)},
@@ -513,8 +517,8 @@ def build_facet_adjustment_section() -> html.Div:
                     "Text wrap width",
                     make_slider(
                         "facet-wrap-width",
-                        min=5,
-                        max=80,
+                        min_val=5,
+                        max_val=80,
                         step=5,
                         value=20,
                         marks={i: str(i) for i in range(5, 81, 5)},

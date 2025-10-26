@@ -165,13 +165,13 @@ numerical_quantities:
       - out.panel.breaker_space.range_oven.count
       - out.panel.breaker_space.well_pump.count
     sum: out.panel.space_count.total_space_count.count
-  
+
   - name: Panel Capacity
     constituents:
       - out.panel.load.headroom_capacity.2023_nec_existing_dwelling_load_based.a
       - out.panel.load.occupied_capacity.2023_nec_existing_dwelling_load_based.a
     sum: in.electric_panel_service_rating
-  
+
   - name: Panel Breaker Space
     constituents:
       - out.panel.breaker_space.headroom.count

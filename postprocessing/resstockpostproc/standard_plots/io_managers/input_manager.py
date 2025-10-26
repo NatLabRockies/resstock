@@ -10,7 +10,7 @@ import pathlib
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import Iterable
+from collections.abc import Iterable
 
 import boto3
 import polars as pl
@@ -43,9 +43,7 @@ def load_data(workflow: WorkflowConfig, selected_upgrades: list[int] | None = No
     else:
         fs = s3fs.S3FileSystem(anon=True, client_kwargs={"endpoint_url": minio_endpoint})
         all_files = [
-            f
-            for f in fs.find(workflow.s3_results_dir.removeprefix("s3://"), withdirs=False)
-            if f.endswith(".parquet")
+            f for f in fs.find(workflow.s3_results_dir.removeprefix("s3://"), withdirs=False) if f.endswith(".parquet")
         ]
 
     upgrade_to_file = _filter_upgrade_files(workflow, all_files, selected_upgrades)
@@ -149,7 +147,7 @@ def _download_file(bucket: str, key: str, local_file: str, max_retries: int = 3)
             s3_client.download_file(Bucket=bucket, Key=key, Filename=local_file)
             logger.info("Downloaded %s to %s", key, local_file)
             return local_file
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             if attempt == max_retries - 1:
                 logger.error("Failed to download %s after %d attempts: %s", key, max_retries, exc)
                 raise
@@ -182,9 +180,6 @@ def _download_data(workflow: WorkflowConfig, missing_upgrades: list[int]) -> Non
     os.makedirs(local_results_dir, exist_ok=True)
 
     with ThreadPoolExecutor(max_workers=4) as executor:
-        futures = [
-            executor.submit(_download_file, bucket, key, local, max_retries=3)
-            for key, local in missing_files
-        ]
+        futures = [executor.submit(_download_file, bucket, key, local, max_retries=3) for key, local in missing_files]
         for future in as_completed(futures):
             future.result()

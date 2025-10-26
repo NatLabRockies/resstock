@@ -51,6 +51,11 @@ ignore = [
     "PD901", # df for variable assignment
     "PGH003", # Use specific rule codes when ignoring type issues instead of type: ignore
     "I001", # isort
+    "TID252", # relative imports are used in the dashboard to keep things simple
+    "BLE001", # blind excepts are sometimes acceptable to make the dashboard robust
+    "PLR2004", # magic value comparison okay for now - consider changing later
+    "S101", # assert statements acceptable
+    "RUF005", # my_list + [item] is fine; don't need [*my_list, item]
 ]
 
 [lint.flake8-tidy-imports]

@@ -17,8 +17,7 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 from plotly.graph_objects import Figure
 
-from resstockpostproc.standard_plots.schema.workflow_schema import QuantityType
-from resstockpostproc.standard_plots.schema.plot_spec import AggregationType, PlotSpec, VizType
+from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 
 from ..run_context import RunContext
 from ..services.plot_helpers import (
@@ -62,7 +61,7 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
         State("selected-upgrades", "value"),
         prevent_initial_call=True,
     )
-    def _generate_figure(  # noqa: PLR0913
+    def _generate_figure(
         _: int | None,
         building_incl: str,
         vacancy_incl: str,
@@ -124,9 +123,7 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
 
         df = df.drop([col for col in df.columns if df[col].dtype == pl.List])
         csv_str = df.write_csv(file=None)
-        fig.update_layout(width=fig_w, height=fig_h,
-                          xaxis={'automargin': True},
-                          yaxis={'automargin': True},)
+        fig.update_layout(width=fig_w, height=fig_h, xaxis={"automargin": True}, yaxis={"automargin": True})
         buffer = io.BytesIO()
         df.write_parquet(buffer)
         parquet_b64 = base64.b64encode(buffer.getvalue()).decode("ascii")
@@ -188,10 +185,10 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
 
         if dynamic_mode:
             if run_workflow is None:
-                warning = f"{run_folder_val} folder does not have workflow_snapshot.json.\nCannot dynamically generate plots."
-                user_warning = (
-                    "This old run cannot be viewed in the new dashboard\nPlease view it in the old dashboard or re-run the flow."
+                warning = (
+                    f"{run_folder_val} folder does not have workflow_snapshot.json.\nCannot dynamically generate plots."
                 )
+                user_warning = "This old run cannot be viewed in the new dashboard\nPlease view it in the old dashboard"
                 logger.warning(warning)
                 df, fig = build_error_dataframe_and_figure(user_warning)
                 return df, fig, False
@@ -243,7 +240,7 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
         Input("plot-graph", "figure"),
         prevent_initial_call=True,
     )
-    def _update_graph_config(editable_vals: list[str], fig_val):
+    def _update_graph_config(editable_vals: list[str], _):
         base_cfg = {
             "autosizable": True,
             "responsive": True,

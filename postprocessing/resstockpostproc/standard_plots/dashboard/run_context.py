@@ -27,7 +27,7 @@ class RunContext:
     _downloaded_runs: set[str] = field(default_factory=set)
 
     @classmethod
-    def from_environment(cls, workflow_yaml: Path, plots_root_folder: str | None = None) -> "RunContext":
+    def from_environment(cls, workflow_yaml: Path, plots_root_folder: str | None = None) -> RunContext:
         """Construct the context by loading the base workflow and applying overrides."""
         workflow = WorkflowConfig.from_yaml(str(workflow_yaml))
         workflow.add_everything_group()
@@ -126,11 +126,7 @@ class RunContext:
         schema = data.collect_schema()
 
         def _is_numeric(dtype: pl.DataType) -> bool:
-            return (
-                dtype.is_numeric()
-                if hasattr(dtype, "is_numeric")
-                else pl.datatypes.is_numeric_dtype(dtype)
-            )
+            return dtype.is_numeric() if hasattr(dtype, "is_numeric") else pl.datatypes.is_numeric_dtype(dtype)
 
         excluded_columns = {
             "upgrade",
@@ -142,8 +138,7 @@ class RunContext:
         candidate_cols = [
             name
             for name, dtype in schema.items()
-            if name not in excluded_columns
-            and not _is_numeric(dtype)
+            if name not in excluded_columns and not _is_numeric(dtype)
             # and dtype != pl.Boolean
         ]
 
@@ -151,16 +146,10 @@ class RunContext:
             self._categorical_columns[(run_folder, upgrade)] = []
             return []
 
-        uniques = (
-            data.select([pl.col(col).n_unique().alias(col) for col in candidate_cols])
-            .collect()
-            .row(0)
-        )
+        uniques = data.select([pl.col(col).n_unique().alias(col) for col in candidate_cols]).collect().row(0)
 
         categorical_cols = [
-            col
-            for col, count in zip(candidate_cols, uniques)
-            if isinstance(count, (int, float)) and 1 <= count <= 100
+            col for col, count in zip(candidate_cols, uniques) if isinstance(count, int | float) and 1 <= count <= 100
         ]
         categorical_cols.sort()
 
@@ -170,7 +159,7 @@ class RunContext:
     def list_quantity_categories(self, run_folder: str, upgrade: int, column: str) -> list[str]:
         """Return cached list of category values for the requested column."""
         cache_key = (run_folder, upgrade, column)
-        if cache_key in self._quantity_categories and self._quantity_categories[cache_key]:
+        if self._quantity_categories.get(cache_key):
             return self._quantity_categories[cache_key]
 
         workflow = self._ensure_data_ready(run_folder)
@@ -179,12 +168,7 @@ class RunContext:
 
         data = load_data(workflow, [upgrade])
         try:
-            categories_df = (
-                data.select(pl.col(column))
-                .drop_nulls()
-                .unique(maintain_order=True)
-                .collect()
-            )
+            categories_df = data.select(pl.col(column)).drop_nulls().unique(maintain_order=True).collect()
             categories = categories_df[column].to_list()
         except Exception:
             categories = []

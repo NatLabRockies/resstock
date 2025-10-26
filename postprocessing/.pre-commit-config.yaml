@@ -1,4 +1,4 @@
-files: ^postprocessing/
+files: ^postprocessing/resstockpostproc/standard_plots/
 repos:
   - repo: https://github.com/crate-ci/typos
     rev: v1.34.0
@@ -47,7 +47,7 @@ repos:
           [
             "--config-file=pyproject.toml",
             "--python-version=3.11",
-            "resstockpostproc/",
+            "postprocessing/resstockpostproc/standard_plots/",
           ]
         pass_filenames: false
   - repo: https://github.com/astral-sh/ruff-pre-commit

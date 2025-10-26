@@ -9,13 +9,11 @@ from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, QuantityG
 
 
 @overload
-def format_label(label: None) -> None:
-    ...
+def format_label(label: None) -> None: ...
 
 
 @overload
-def format_label(label: str) -> str:
-    ...
+def format_label(label: str) -> str: ...
 
 
 def format_label(label: str | None) -> str | None:
@@ -52,13 +50,13 @@ def get_quantity_unit(quantity: str | QuantityGroup, quantity_type: QuantityType
         return " (%)"
     elif quantity_type == QuantityType.percent_savings:
         return ""
-    
+
     if isinstance(quantity, QuantityGroup):
         constituents = QuantityGroup.resolve_quantities(quantity.constituents)
         unit = constituents[0].split(".")[-1]
     else:
         unit = quantity.split(".")[-1]
-    
+
     return f" ({unit})" if unit else ""
 
 

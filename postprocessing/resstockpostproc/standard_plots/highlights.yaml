@@ -1,5 +1,5 @@
 Highlights:
-# Applicability
+  # Applicability
   - title: Upgrade Applicability
     building_inclusion: all
     vacancy_inclusion: all
@@ -8,7 +8,7 @@ Highlights:
     visualization_type: choropleth
     quantity_group_name: applicability
 
-# Panels
+  # Panels
   - title: Panel Constraints Overview (All Buildings)
     building_inclusion: all
     vacancy_inclusion: all
@@ -25,7 +25,7 @@ Highlights:
     visualization_type: choropleth
     quantity_group_name: out.panel.constraint.overall.2023_nec_existing_dwelling_load_based
 
-# Fuel Totals
+  # Fuel Totals
   - title: Stock Energy Impact Overview by Enduse
     building_inclusion: all
     vacancy_inclusion: all
@@ -106,7 +106,7 @@ Highlights:
     visualization_type: histogram
     quantity_group_name: Fuel Totals
 
-# Bills
+  # Bills
   - title: Average Bills Savings by Enduse
     building_inclusion: all
     vacancy_inclusion: all

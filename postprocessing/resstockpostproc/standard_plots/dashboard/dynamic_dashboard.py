@@ -43,10 +43,9 @@ def run_dashboard(port: int = 8051) -> None:
         print(f"Running dashboard on port {port}")
         app = get_app()
         app.run(debug=True, port=port, host="0.0.0.0")  # noqa: S104
-    except Exception:  # noqa: BLE001
+    except Exception:
         logger.error("Failed to run dashboard", exc_info=True)
 
 
 if __name__ == "__main__":
     run_dashboard()
-

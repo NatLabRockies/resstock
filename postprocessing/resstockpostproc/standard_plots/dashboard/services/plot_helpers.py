@@ -25,23 +25,21 @@ def get_inclusion(building_inclusion_str: str) -> BuildingInclusion:
     """Convert building inclusion string from UI to enum."""
     if building_inclusion_str == "__all__":
         return BuildingInclusion.all
-    elif building_inclusion_str == "applied_all":
-        return BuildingInclusion.applied_only
-    elif building_inclusion_str.startswith("applied_"):
+    elif building_inclusion_str == "applied_all" or building_inclusion_str.startswith("applied_"):
         return BuildingInclusion.applied_only
     else:
         return BuildingInclusion.all
 
+
 def get_upgrade_number(building_inclusion_str: str) -> int | None:
     """Extract upgrade number from building inclusion string from UI."""
-    if building_inclusion_str == "__all__":
-        return None
-    elif building_inclusion_str == "applied_all":
+    if building_inclusion_str in ["__all__", "applied_all"]:
         return None
     elif building_inclusion_str.startswith("applied_"):
         return int(building_inclusion_str.split("_")[1])
     else:
         return int(building_inclusion_str)
+
 
 def build_plot_spec(
     ctx: RunContext,
@@ -64,7 +62,7 @@ def build_plot_spec(
     quantity_group_name = qgroup_name
     upg_incl_enum = get_inclusion(building_incl)
     upgrade_num = get_upgrade_number(building_incl)
-    
+
     quantity: str | QuantityGroup
     if quantity_val == "__group_stacked__":
         if quantity_type == QuantityType.prevalence:

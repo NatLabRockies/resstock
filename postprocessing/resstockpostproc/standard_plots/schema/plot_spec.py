@@ -32,7 +32,9 @@ class PlotSpec(BaseModel):
     visualization_type: VizType = Field(..., alias="visualization_type")
     group_by: str | None = Field(default=None, description="Column to facet/group by.")
     quantity: str | QuantityGroup = Field(..., description="Column(s) to visualise.")
-    quantity_group_name: str = Field(..., description="Name of the quantity group - used when quantity is part of group")
+    quantity_group_name: str = Field(
+        ..., description="Name of the quantity group - used when quantity is part of group"
+    )
     upgrade: int | None = Field(default=None, description="Upgrade to visualise. Can be None for all.")
     title: str | None = Field(default=None, description="Optional custom title for the plot.")
 
@@ -83,9 +85,8 @@ class PlotSpec(BaseModel):
             return "Heatmap can only be generated from stacked quantities"
         if self.visualization_type == VizType.hist and isinstance(self.quantity, QuantityGroup):
             return "Histogram cannot be generated from stacked quantities"
-        if self.visualization_type == VizType.choropleth:
-            if self.aggregation_type == AggregationType.distribution:
-                return "Choropleth cannot be generated for distribution aggregation."
+        if self.visualization_type == VizType.choropleth and self.aggregation_type == AggregationType.distribution:
+            return "Choropleth cannot be generated for distribution aggregation."
         if self.upgrade == 0 and self.building_inclusion == BuildingInclusion.applied_only:
             return "Baseline can't be passed as an upgrade to plot when building_inclusion is applied_only."
         if self.upgrade == 0 and self.quantity_type in [QuantityType.percent_savings, QuantityType.savings]:
@@ -131,5 +132,7 @@ class PlotSpec(BaseModel):
             return f"Included Buildings = Upgrade {selected_str}"
         return "Included Buildings = All Upgrades"
 
-    def _get_viz_type_str(self, quantity_type: QuantityType, aggregation_type: AggregationType, viz_type: VizType) -> str:
+    def _get_viz_type_str(
+        self, quantity_type: QuantityType, aggregation_type: AggregationType, viz_type: VizType
+    ) -> str:
         return f"Plot Type = {quantity_type.value}_{aggregation_type.value}_{viz_type.value}"

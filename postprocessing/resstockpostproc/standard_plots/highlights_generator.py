@@ -6,7 +6,8 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import Any, Iterable, Literal, Sequence
+from typing import Any, Literal
+from collections.abc import Iterable, Sequence
 
 from plotly.graph_objects import Figure
 
@@ -73,7 +74,7 @@ def generate_highlights(
 
         try:
             df = prepare_data_for_plot(combined_df, spec)
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             print(f"Error preparing data for highlight {spec_title}: {exc}")
             raise
 
@@ -84,7 +85,7 @@ def generate_highlights(
         plotting_function = get_plotting_function(spec.visualization_type)
         try:
             fig = plotting_function(df, spec)
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             print(f"Error creating highlight figure '{spec_title}': {exc}")
             raise
 
@@ -132,7 +133,7 @@ def _coerce_entry(raw_entry: dict[str, Any]) -> dict[str, Any]:
             "quantity_group_name": raw_entry["quantity_group_name"],
             "group_by": raw_entry.get("group_by"),
         }
-    except KeyError as exc:  # noqa: PERF203
+    except KeyError as exc:
         missing = exc.args[0]
         raise ValueError(f"Missing required key '{missing}' in highlight entry: {raw_entry}") from exc
 
@@ -153,9 +154,7 @@ def _get_highlight_specs(
     highlights: Sequence[dict[str, Any]],
     workflow: WorkflowConfig,
 ) -> list[PlotSpec]:
-    quantity_map = {
-        group.name: group for group in (*workflow.numerical_quantities, *workflow.categorical_quantities)
-    }
+    quantity_map = {group.name: group for group in (*workflow.numerical_quantities, *workflow.categorical_quantities)}
     upgrade_lookup = dict(zip(workflow.upgrades, workflow.upgrade_names))
 
     base_specs: list[PlotSpec] = []
@@ -324,6 +323,7 @@ def _resolve_group_directory(spec: PlotSpec) -> Path | None:
         return None
     return Path(_format_group_folder(spec.group_by))
 
+
 def _resolve_distribution_directory(spec: PlotSpec) -> Path | None:
     if spec.aggregation_type != AggregationType.distribution:
         return None
@@ -332,6 +332,7 @@ def _resolve_distribution_directory(spec: PlotSpec) -> Path | None:
     if spec.quantity_group_name in BILL_DISTRIBUTION_GROUPS:
         return Path("bill_savings_distributions")
     return None
+
 
 def _save_highlight(
     *,

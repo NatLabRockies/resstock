@@ -35,7 +35,7 @@ column2pattern = {
     for fuel in EnduseFuelToPattern
 }
 
-unit_separator = '.'
+unit_separator = "."
 column2color.update(
     {
         f"out.bills.{fuel}{unit_separator}usd": fuel_colors.get(fuel, "#3A4246")
@@ -56,13 +56,17 @@ column2color.update(
 )
 column2color.update(
     {
-        f"out.load.{load_type.lower()}.energy_delivered{unit_separator}kbtu": EnduseGroupToColor.get(load_type, "#3A4246")
+        f"out.load.{load_type.lower()}.energy_delivered{unit_separator}kbtu": EnduseGroupToColor.get(
+            load_type, "#3A4246"
+        )
         for load_type in ["Heating", "Cooling", "Hot Water"]
     }
 )
 column2color.update(
     {
-        f"out.electricity.{summer_winter.lower()}.peak{unit_separator}kw": summer_winter_color.get(summer_winter, "#3A4246")
+        f"out.electricity.{summer_winter.lower()}.peak{unit_separator}kw": summer_winter_color.get(
+            summer_winter, "#3A4246"
+        )
         for summer_winter in ["summer", "winter"]
     }
 )
