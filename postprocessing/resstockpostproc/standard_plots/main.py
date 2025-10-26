@@ -84,7 +84,7 @@ def main():
     # Load workflow configuration so we can optionally filter quantity groups
     workflow = WorkflowConfig.from_yaml(config_path)
 
-    # Apply quantity group filter if provided
+    filtered_qs = None
     if args.quantity_group:
         selected_set = set(args.quantity_group)
         print(f"Selected quantity groups: {selected_set}")
@@ -95,7 +95,6 @@ def main():
                 f"Available quantity groups: {', '.join(q.name for q in workflow.numerical_quantities)}"
             )
             sys.exit(1)
-        workflow.set_quantities(filtered_qs)
         missing = selected_set - {q.name for q in filtered_qs}
         if missing:
             print(f"Warning: The following quantity groups were not found and will be ignored: {', '.join(missing)}")
@@ -106,6 +105,9 @@ def main():
     )
     if args.highlights_only:
         return 0
+
+    if filtered_qs:
+        workflow.set_quantities(filtered_qs)
 
     generate_all_plots(
         workflow,

@@ -23,6 +23,7 @@ from resstockpostproc.standard_plots.io_managers.output_manager import (
     get_plot_base_dir,
     save_plot,
     write_workflow_snapshot,
+    remove_lock_files,
 )
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, VizType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
@@ -125,6 +126,8 @@ def generate_all_plots(
             figure_creation_time=figure_creation_time,
             saving_time=saving_time,
         )
+
+    remove_lock_files(workflow.output_dir)
 
 
 def get_plotting_function(viz: VizType):

@@ -26,6 +26,7 @@ __all__ = [
     "write_parquet_file",
     "write_json_file",
     "write_csv_file",
+    "remove_lock_files",
 ]
 
 
@@ -164,3 +165,18 @@ def _file_type_subdir(file_type: str) -> str:
         "json": "figure_json",
         "csv": "data",
     }[file_type]
+
+
+def remove_lock_files(output_dir: str | Path) -> None:
+    """Delete any leftover file locks within the provided output directory tree."""
+    base_path = Path(output_dir).expanduser()
+    if not base_path.exists():
+        return
+
+    for lock_file in base_path.rglob("*.lock"):
+        try:
+            lock_file.unlink(missing_ok=True)
+        except FileNotFoundError:
+            continue
+        except OSError as exc:  # noqa: PERF203
+            print(f"Unable to delete lock file {lock_file}: {exc}")

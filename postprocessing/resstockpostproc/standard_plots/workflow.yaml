@@ -1,13 +1,12 @@
 # yaml-language-server: $schema=./schema/workflow_schema.json
 
-s3_results_dir: s3://res-sdr/testing-sdr-fy25/sdr_2025_1_550k_sept3/pub_annual
+s3_results_dir: s3://resstock-core/resstock_ci/sdr_upgrades_tmy3/pub_annual/
 output_dir: sdr_plots/
-run_name: rajeee_full_run2
-upgrades: [0, 1, 2] # corresponds to results_up00.csv, results_up01.csv, results_up02.csv
+run_name: sdr_develop
+upgrades: [0, 1] # corresponds to results_up00.csv, results_up01.csv, results_up02.csv
 upgrade_names:
   - "Baseline"
   - "Upgrade 1"
-  - "Upgrade 2"
 numerical_quantities:
   - name: Fuel Totals
     constituents:

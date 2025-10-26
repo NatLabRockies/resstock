@@ -133,7 +133,7 @@ def _create_histogram_plot(
                     xref = f"x{axis_suffix}"
                     yref = f"y{axis_suffix}"
                     arrow_offset = 22
-                    tail_arrow_offset = 48
+                    tail_arrow_offset = 52
                     shared_annot_kwargs = {
                         "xref": xref,
                         "yref": yref,
