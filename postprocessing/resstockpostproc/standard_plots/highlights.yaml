@@ -1,0 +1,164 @@
+Highlights:
+# Applicability
+  - title: Upgrade Applicability
+    building_inclusion: all
+    vacancy_inclusion: all
+    quantity_type: prevalence
+    aggregation_type: total
+    visualization_type: choropleth
+    quantity_group_name: applicability
+
+# Panels
+  - title: Panel Constraints Overview (All Buildings)
+    building_inclusion: all
+    vacancy_inclusion: all
+    quantity_type: prevalence
+    aggregation_type: total
+    visualization_type: choropleth
+    quantity_group_name: out.panel.constraint.overall.2023_nec_existing_dwelling_load_based
+
+  - title: Panel Constraints Overview (Applied Only)
+    building_inclusion: applied_only
+    vacancy_inclusion: all
+    quantity_type: prevalence
+    aggregation_type: total
+    visualization_type: choropleth
+    quantity_group_name: out.panel.constraint.overall.2023_nec_existing_dwelling_load_based
+
+# Fuel Totals
+  - title: Stock Energy Impact Overview by Enduse
+    building_inclusion: all
+    vacancy_inclusion: all
+    quantity_type: absolute
+    aggregation_type: total
+    visualization_type: bar
+    quantity_group_name: All Fuels End Uses
+
+  - title: Average Energy Savings by Enduse
+    building_inclusion: all
+    vacancy_inclusion: all
+    quantity_type: savings
+    aggregation_type: average
+    visualization_type: bar
+    quantity_group_name: All Fuels End Uses
+
+  - title: Stock Energy Impact Overview by Fuels
+    building_inclusion: all
+    vacancy_inclusion: all
+    quantity_type: absolute
+    aggregation_type: total
+    visualization_type: bar
+    quantity_group_name: Fuel Totals
+
+  - title: Average Energy Savings by Fuels
+    building_inclusion: all
+    vacancy_inclusion: all
+    quantity_type: savings
+    aggregation_type: average
+    visualization_type: bar
+    quantity_group_name: Fuel Totals
+
+  - title: Average Energy Percent Savings by Fuels
+    building_inclusion: all
+    vacancy_inclusion: all
+    quantity_type: percent_savings
+    aggregation_type: average
+    visualization_type: bar
+    quantity_group_name: Fuel Totals
+
+  - title: Average Energy Savings by State (All Buildings)
+    building_inclusion: all
+    vacancy_inclusion: all
+    quantity_type: savings
+    aggregation_type: average
+    visualization_type: choropleth
+    quantity_group_name: Fuel Totals
+
+  - title: Average Energy Savings by State (Applied Only)
+    building_inclusion: applied_only
+    vacancy_inclusion: all
+    quantity_type: savings
+    aggregation_type: average
+    visualization_type: choropleth
+    quantity_group_name: Fuel Totals
+
+  - title: Average Energy Savings distribution (Applied Only)
+    building_inclusion: applied_only
+    vacancy_inclusion: all
+    quantity_type: savings
+    aggregation_type: distribution
+    visualization_type: histogram
+    quantity_group_name: Fuel Totals
+
+  - title: Average Energy Percent Savings by State (Applied Only)
+    building_inclusion: applied_only
+    vacancy_inclusion: all
+    quantity_type: percent_savings
+    aggregation_type: average
+    visualization_type: choropleth
+    quantity_group_name: Fuel Totals
+
+  - title: Average Energy Percent Savings distribution (Applied Only)
+    building_inclusion: applied_only
+    vacancy_inclusion: all
+    quantity_type: percent_savings
+    aggregation_type: distribution
+    visualization_type: histogram
+    quantity_group_name: Fuel Totals
+
+# Bills
+  - title: Average Bills Savings by Enduse
+    building_inclusion: all
+    vacancy_inclusion: all
+    quantity_type: savings
+    aggregation_type: average
+    visualization_type: bar
+    quantity_group_name: Bills
+
+  - title: Average Bills Savings by State (All Buildings)
+    building_inclusion: all
+    vacancy_inclusion: all
+    quantity_type: savings
+    aggregation_type: average
+    visualization_type: choropleth
+    quantity_group_name: Bills
+
+  - title: Average Bills Savings by State (Applied Only)
+    building_inclusion: applied_only
+    vacancy_inclusion: all
+    quantity_type: savings
+    aggregation_type: average
+    visualization_type: choropleth
+    quantity_group_name: Bills
+
+  - title: Average Bills Savings distribution (Applied Only)
+    building_inclusion: applied_only
+    vacancy_inclusion: all
+    quantity_type: savings
+    aggregation_type: distribution
+    visualization_type: histogram
+    quantity_group_name: Bills
+
+  - title: Average Bills Percent Savings by State (All Buildings)
+    building_inclusion: all
+    vacancy_inclusion: all
+    quantity_type: percent_savings
+    aggregation_type: average
+    visualization_type: choropleth
+    quantity_group_name: Bills
+
+  - title: Average Bills Savings by State (Applied Only)
+    building_inclusion: applied_only
+    vacancy_inclusion: all
+    quantity_type: percent_savings
+    aggregation_type: average
+    visualization_type: choropleth
+    quantity_group_name: Bills
+
+  - title: Average Bills Percent Savings distribution (Applied Only)
+    building_inclusion: applied_only
+    vacancy_inclusion: all
+    quantity_type: percent_savings
+    aggregation_type: distribution
+    visualization_type: histogram
+    quantity_group_name: Bills
