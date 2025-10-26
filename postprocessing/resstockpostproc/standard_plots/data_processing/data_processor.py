@@ -355,6 +355,18 @@ def prepare_data_for_histogram_plot(
     # ---------- 3. Aggregate real counts ----------
     group_keys = [*grouping_cols, "bin"]
     counts = lf_binned.group_by(group_keys, maintain_order=True).agg(pl.count().alias("count"))
+    totals = counts.group_by(grouping_cols, maintain_order=True).agg(pl.col("count").sum().alias("_total_count"))
+
+    # ---------- 3b. Per-group summary statistics ----------
+    stats = (
+        combined_df.group_by(grouping_cols, maintain_order=True)
+        .agg(
+            pl.col(quantity).min().alias("value_min"),
+            pl.col(quantity).max().alias("value_max"),
+            pl.col(quantity).mean().alias("value_mean"),
+            pl.col(quantity).median().alias("value_median"),
+        )
+    )
 
     # ---------- 4. Build full grid ----------
     full_bins = pl.Series("bin", [-1, *list(range(100)), 100], dtype=pl.Int32)
@@ -367,6 +379,8 @@ def prepare_data_for_histogram_plot(
     hist_full = (
         grid.join(counts.lazy(), on=group_keys, how="left", maintain_order="left")
         .with_columns(pl.col("count").fill_null(0).cast(pl.UInt32))
+        .join(totals.lazy(), on=grouping_cols, how="left", maintain_order="left")
+        .with_columns(pl.col("_total_count").fill_null(0).alias("_total_count"))
         # ---------- 6. Bin boundaries ----------
         .with_columns(
             # left edge
@@ -384,13 +398,25 @@ def prepare_data_for_histogram_plot(
             .otherwise(q1 + (pl.col("bin") + 1) * bin_width)
             .alias("bin_right"),
         )
+        .join(stats.lazy(), on=grouping_cols, how="left", maintain_order="left")
         .with_columns(((pl.col("bin_left") + pl.col("bin_right")) / 2).alias("bin_center"))
+        .with_columns(
+            pl.when(pl.col("_total_count") > 0)
+            .then(pl.col("count").cast(pl.Float64) / pl.col("_total_count") * 100.0)
+            .otherwise(0.0)
+            .alias("count_pct")
+        )
         .select(
             *grouping_cols,
             "bin",
             "bin_left",
             "bin_right",
             "count",
+            "count_pct",
+            "value_min",
+            "value_max",
+            "value_mean",
+            "value_median",
         )
         .collect()
     )

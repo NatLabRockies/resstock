@@ -1,3 +1,4 @@
+import math
 import textwrap
 
 import plotly.graph_objects as go
@@ -114,17 +115,126 @@ def _create_histogram_plot(
 
                 fig.add_bar(
                     x=sub["_bin_center"].to_list(),
-                    y=sub["count"].to_list(),
+                    y=sub["count_pct"].to_list(),
                     width=sub["_bar_width"].to_list(),
                     name=upgrade,
                     marker_color=upgrade_palette.get(upgrade),
                     showlegend=(r == 1),  # one legend entry per upgrade
                     legendgroup=upgrade,
                     customdata=list(zip(sub["bin_left"].to_list(), sub["bin_right"].to_list())),  # type: ignore[arg-type]
-                    hovertemplate="%{customdata[0]:.1f} to %{customdata[1]:.1f}<br>Count: %{y}<extra></extra>",
+                    hovertemplate="%{customdata[0]:.1f} to %{customdata[1]:.1f}<br>%{y:.1f}%<extra></extra>",
                     row=r,
                     col=c,
                 )
+
+                if n_rows == 1:
+                    subplot_index = (r - 1) * n_cols + c
+                    axis_suffix = "" if subplot_index == 1 else str(subplot_index)
+                    xref = f"x{axis_suffix}"
+                    yref = f"y{axis_suffix}"
+                    arrow_offset = 22
+                    tail_arrow_offset = 48
+                    shared_annot_kwargs = {
+                        "xref": xref,
+                        "yref": yref,
+                        "showarrow": True,
+                        "arrowhead": 2,
+                        "arrowsize": 1,
+                        "arrowwidth": 1,
+                        "arrowcolor": "rgba(58,71,80,0.8)",
+                        "ax": 0,
+                        "bgcolor": "rgba(255,255,255,0.85)",
+                        "bordercolor": "rgba(58,71,80,0.3)",
+                        "borderwidth": 1,
+                        "font": {"size": 12},
+                    }
+
+                    def _add_annotation_if_valid(*, text: str, x: float, y: float, **kwargs) -> None:
+                        if not math.isfinite(x) or not math.isfinite(y):
+                            return
+                        arrow_len = kwargs.pop("ay", arrow_offset)
+                        fig.add_annotation(x=x, y=y, text=text, ay=arrow_len, **shared_annot_kwargs, **kwargs)
+
+                    def _format_range(left: float, right: float) -> str:
+                        def _format_single(val: float) -> str:
+                            text = f"{val:.1f}"
+                            # Use non-breaking hyphen so Plotly doesn't wrap after the minus sign.
+                            return text.replace("-", "&#8209;")
+
+                        return f"{_format_single(left)}&nbsp;to&nbsp;{_format_single(right)}"
+
+                    def _tail_annotation_text(label: str, left: float, right: float) -> str:
+                        return f"{label}<br>Bin<br>{_format_range(left, right)}"
+
+                    underflow = sub.filter(pl.col("bin") == -1)
+                    if not underflow.is_empty() and underflow["count"][0] > 0:
+                        uf_left = float(underflow["bin_left"][0])
+                        uf_right = float(underflow["bin_right"][0])
+                        uf_text = _tail_annotation_text("Underflow", uf_left, uf_right)
+                        _add_annotation_if_valid(
+                            text=uf_text,
+                            x=float(underflow["_bin_center"][0]),
+                            y=0.0,
+                            align="center",
+                            xanchor="center",
+                            ay=tail_arrow_offset,
+                        )
+
+                    overflow = sub.filter(pl.col("bin") == 100)
+                    if not overflow.is_empty() and overflow["count"][0] > 0:
+                        of_left = float(overflow["bin_left"][0])
+                        of_right = float(overflow["bin_right"][0])
+                        of_text = _tail_annotation_text("Overflow", of_left, of_right)
+                        _add_annotation_if_valid(
+                            text=of_text,
+                            x=float(overflow["_bin_center"][0]),
+                            y=0.0,
+                            align="center",
+                            xanchor="center",
+                            ay=tail_arrow_offset,
+                        )
+
+                    mean_value = float(sub["value_mean"][0]) if "value_mean" in sub.columns else float("nan")
+                    median_value = float(sub["value_median"][0]) if "value_median" in sub.columns else float("nan")
+                    if math.isfinite(mean_value) and math.isfinite(median_value):
+                        if mean_value >= median_value:
+                            mean_align = {"align": "left", "xanchor": "left", "xshift": 10}
+                            median_align = {"align": "right", "xanchor": "right", "xshift": -10}
+                        else:
+                            mean_align = {"align": "right", "xanchor": "right", "xshift": -10}
+                            median_align = {"align": "left", "xanchor": "left", "xshift": 10}
+
+                        _add_annotation_if_valid(
+                            text=f"Mean {mean_value:.1f}",
+                            x=mean_value,
+                            y=0.0,
+                            **mean_align,
+                        )
+                        _add_annotation_if_valid(
+                            text=f"Median {median_value:.1f}",
+                            x=median_value,
+                            y=0.0,
+                            **median_align,
+                        )
+                    else:
+                        if math.isfinite(mean_value):
+                            _add_annotation_if_valid(
+                                text=f"Mean {mean_value:.1f}",
+                                x=mean_value,
+                                y=0.0,
+                                align="left",
+                                xanchor="left",
+                                xshift=10,
+                            )
+                        if math.isfinite(median_value):
+                            _add_annotation_if_valid(
+                                text=f"Median {median_value:.1f}",
+                                x=median_value,
+                                y=0.0,
+                                align="right",
+                                xanchor="right",
+                                xshift=-10,
+                            )
 
         # ------------------------------------------------------------------
         # 4. Layout & styling
@@ -132,7 +242,8 @@ def _create_histogram_plot(
         # No gaps between grouped bars
         x_min = q1 - 2 * core_w  # left-tail bar starts here
         x_max = q99 + 2 * core_w  # right-tail bar ends here
-        y_max = df["count"].max()
+        y_max = float(df["count_pct"].max()) if df.height > 0 else 0.0
+        y_max = y_max if y_max > 0 else 1.0
 
         fig.update_xaxes(range=[x_min, x_max])
         fig.update_yaxes(range=[0, y_max])
@@ -157,8 +268,9 @@ def _create_histogram_plot(
         fig.update_yaxes(range=[0, y_max])
 
         # Put Y-axis title and ticks only on the left column
+        y_axis_title = "Percentage of models in bin" if n_rows == 1 else "%"
         for r in range(1, n_rows + 1):
-            fig.update_yaxes(title_text="Number of models in bin", row=r, col=1)
+            fig.update_yaxes(title_text=y_axis_title, ticksuffix="%", row=r, col=1)
             for c in range(2, n_cols + 1):
                 fig.update_yaxes(title_text="", showticklabels=False, row=r, col=c)
 
@@ -180,12 +292,13 @@ def _create_histogram_plot(
                     )
                 )
             )
+        x_title_y = -0.14 if n_rows == 1 else -0.07
         fig.add_annotation(
             text=name,
             xref="paper",
             yref="paper",
             x=0.5,
-            y=-0.07,  # center at bottom
+            y=x_title_y,  # center at bottom
             xanchor="center",
             yanchor="top",
             showarrow=False,
@@ -193,5 +306,6 @@ def _create_histogram_plot(
             name="xtitle",
         )
         #  Adjust figure width
-        fig.update_layout(width=max(1000, min(1920, n_cols * theme.DEFAULT_FACET_WIDTH)), margin={"b": 100})
+        bottom_margin = 165 if n_rows == 1 else 100
+        fig.update_layout(width=max(1000, min(1920, n_cols * theme.DEFAULT_FACET_WIDTH)), margin={"b": bottom_margin})
         return fig

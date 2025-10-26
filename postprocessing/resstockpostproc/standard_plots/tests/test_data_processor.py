@@ -396,6 +396,10 @@ def test_histogram_is_degenerate_all_equal(combined_df: pl.LazyFrame):
         assert set(nonzero_bins) == {0}
         # Our fixture has 4 rows per upgrade
         assert total == 4
+        pct_total = grp["count_pct"].sum()
+        pct_bin0 = grp.filter(pl.col("bin") == 0)["count_pct"].sum()
+        assert pct_total == pytest.approx(100.0)
+        assert pct_bin0 == pytest.approx(100.0)
 
 
 def test_histogram_q1_equals_q99_non_degenerate():
@@ -437,6 +441,11 @@ def test_histogram_q1_equals_q99_non_degenerate():
         # Assert expected counts
         assert int(count_m1) == n - 1
         assert int(count_99) == 1
+        pct_m1 = grp.filter(pl.col("bin") == -1)["count_pct"].sum()
+        pct_99 = grp.filter(pl.col("bin") == 99)["count_pct"].sum()
+        assert grp["count_pct"].sum() == pytest.approx(100.0)
+        assert pct_m1 == pytest.approx(100.0 * (n - 1) / n)
+        assert pct_99 == pytest.approx(100.0 / n)
 
 
 def test_model_count_per_upgrade(combined_df: pl.LazyFrame):
@@ -726,9 +735,9 @@ def test_prepare_data_for_prevalence_single_quantity(combined_df: pl.LazyFrame):
     )
 
     df = prepare_data(combined_df, spec)
-    assert df.shape[0] == 2  # two heating fuel categories
+    assert df.shape[0] == 1
     assert set(df["in.heating_fuel"].to_list()) == {"Electric"}
-    assert df['upgrade_name'].to_list() == ["baseline", "Upgrade2"]
+    assert df['upgrade_name'].to_list() == ["Upgrade2"]
     prevalence_map = dict(zip(df["in.heating_fuel"].to_list(), df["prevalence"].to_list()))
     model_counts = dict(zip(df["in.heating_fuel"].to_list(), df["model_count"].to_list()))
     assert prevalence_map["Electric"] == pytest.approx(50.0)
@@ -753,9 +762,9 @@ def test_prepare_data_for_prevalence_multi_quantities(combined_df: pl.LazyFrame)
     )
 
     df = prepare_data(combined_df, spec)
-    assert df.shape[0] == 4  # two heating fuel categories per upgrade
+    assert df.shape[0] == 2
     assert set(df["in.heating_fuel"].to_list()) == {"Electric", "Gas"}
-    assert set(df['upgrade_name'].to_list()) == {"baseline", "Upgrade2"}
+    assert set(df['upgrade_name'].to_list()) == {"Upgrade2"}
     prevalence_map = dict(zip(df["in.heating_fuel"].to_list(), df["prevalence"].to_list()))
     model_counts = dict(zip(df["in.heating_fuel"].to_list(), df["model_count"].to_list()))
 
