@@ -784,7 +784,7 @@ jobs:
       - name: Generate some plots (FAIL FAST)
         working-directory: postprocessing
         run: |
-          uv run python resstockpostproc/standard_plots/main.py --quantity_group="Unmet Hours"
+          uv run python resstockpostproc/standard_plots/main.py --quantity_group="Unmet HVAC Hours"
 
       - name: Generate rest of the plots
         working-directory: postprocessing
