@@ -62,7 +62,8 @@ def export_metadata_and_annual_results(raw_results_dir: str,
             baseline_df,
             upgrade_id,
             upgrade_renamer,
-            upgrade_foo_col_schema
+            upgrade_foo_col_schema,
+            skip_if_cached # Add some argument here to skip if cached files already exist
         )
     cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, bs_pub_df)
     base_cols = set(sorted(bs_pub_df.collect_schema().names()))
@@ -84,7 +85,8 @@ def export_metadata_and_annual_results(raw_results_dir: str,
             upgrade_df,
             upgrade_id,
             upgrade_renamer,
-            upgrade_foo_col_schema
+            upgrade_foo_col_schema,
+            skip_if_cached # Add some argument here to skip if cached files already exist
         )
         cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, up_df)
         up_cols = set(sorted(up_df.collect_schema().names()))
@@ -92,12 +94,26 @@ def export_metadata_and_annual_results(raw_results_dir: str,
             raise ValueError(f"Column set in baseline and upgrade don't match")
     upgrade_ids.sort()
 
+    # Create the allocated weights table and cache that
+    # Have 2 versions of this function:
+    # a pre-sampling version that just adds a simple 2 column file with ID and fixed weight
+    # and a post-sampling version with all the jazz.
+    create_allocated_weights()
+
+    def create_allocated_weights():
+        # Read the baseline simulation outputs file from S3 cached_simulation_outputs
+
+        # Do more stuff
+
+        # Cache the allocated weights file to S3
+
     # Define the geographic partitions to export
     geo_exports = [
     {
         'geo_top_dir': 'national',
         'partition_cols': {},
-        'data_types': ['full'],  # TODO add basic
+        'aggregation_levels': ['national'],  # TODO add this to define aggregation levels (or not)
+        'data_types': ['full'],
         'file_types': [ 'csv', 'parquet'],
     },
     {
@@ -105,10 +121,49 @@ def export_metadata_and_annual_results(raw_results_dir: str,
         'partition_cols': {
             'in.state': 'state'
         },
-        'data_types': ['full'],  # TODO add basic
+        'data_types': ['full'],
         'file_types': ['csv', 'parquet'],
     }
     ]
+
+
+    # This is an example from ComStock SDR
+    # geo_exports = [
+    # {'geo_top_dir': 'national',
+    #     'partition_cols': {},
+    #     'aggregation_levels': ['national'],
+    #     'data_types': ['detailed', 'full', 'basic'],
+    #     'file_types': ['csv', 'parquet'],
+    # },
+    # {'geo_top_dir': 'by_state_and_county',
+    #     'partition_cols': {
+    #         "in.state": 'state',
+    #         "in.county": 'county',
+    #     },
+    #     'aggregation_levels': [None, "in.county"],  # The only one by at full resolution (no agg)
+    #     'data_types': ['full', 'basic'],
+    #     'file_types': ['csv', 'parquet'],
+    # },
+    # {
+    #     'geo_top_dir': 'by_state',
+    #     'partition_cols': {
+    #         "in.state": 'state'
+    #     },
+    #     'aggregation_levels': ["in.state"],
+    #     'data_types': ['full', 'basic'],
+    #     'file_types': ['csv', 'parquet'],
+    # },
+    # {'geo_top_dir': 'by_state_and_puma',
+    #     'partition_cols': {
+    #         "in.state": 'state',
+    #         "in.puma": 'puma',
+    #     },
+    #     'aggregation_levels': ["in.puma"],
+    #     'data_types': ['full', 'basic'],
+    #     'file_types': ['csv', 'parquet'],
+    # },
+
+
 
     for upgrade_id in upgrade_ids:
         export_metadata_and_annual_results_for_upgrade(

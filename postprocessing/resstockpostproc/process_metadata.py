@@ -75,10 +75,10 @@ def process_simulation_outputs(
         df = add_saving_cols(df, base_pub_df)
 
     df = add_intensity_cols(df)
-    df = add_weighted_cols(df)
+    df = add_weighted_cols(df) # TODO Move this
     df = add_missing_upgrade_cols(df, upgrade_col_schema)
     df = adjust_col_dtypes(df)
-    df = downselect_and_order_pub_cols(df, col_maps)  # Per sdr_column_definitions.csv
+    df = downselect_and_order_pub_cols(df, col_maps)  # Per sdr_column_definitions.csv  # TODO Move this
     df = df.sort("bldg_id")
     return df
 
@@ -609,6 +609,18 @@ def downselect_and_order_pub_cols(lf: pl.LazyFrame, col_maps: Sequence[dict]):
     return lf.select(available_cols)
 
 
+def create_weighted_aggregate_output(output_dir, sim_outputs, alloc_wts):
+    # TODO see this function in comstock.py
+    # Sum the allocated weights to the desired geography
+
+    # Join the simulation outputs to the summed allocated weights
+
+    # Create the weighted columns
+
+    # Return the weighted, aggregated, simulation oputputs
+
+
+
 def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_exports):
     """
     Subdivides the annual results by geography and writes to OEDI.
@@ -636,6 +648,10 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
         f'Cannot load upgrade data from {parquet_file}, call process_upgrade_simulation_outputs() first.')
     up_df = pl.read_parquet(parquet_file, storage_options=output_dir['storage_options'] )
 
+    # Read the cached allocated weights
+    alloc_weights = pl.read_parquet(cached_wts_path)
+
+
     # Export each geo export level
     for ge in geo_exports:
         geo_top_dir = ge['geo_top_dir']
@@ -660,9 +676,16 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
                     output_dir['fs'].mkdirs(f'{full_geo_dir}/{data_type}/{file_type}', exist_ok=True)
 
         # Export by various geographies
+        # TODO look at this code in ComStock
         if partition_cols:
+            wtd_agg_outs = create_weighted_aggregate_output(
+                                            up_df,
+                                            alloc_weights,
+                                            agg_lvl_list # What geographic level(s) to aggregate to
+                                            )
             for by_col, by_dir_name  in partition_cols.items():
                 for by_val, geo_df in up_df.group_by(by_col):
+
                     by_val = by_val[0]
                     geo_levels = [f'{by_dir_name}={by_val}']
                     geo_prefixes = [by_val]
