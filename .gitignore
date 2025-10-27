@@ -32,6 +32,7 @@ buildstockbatch_crash_details.log
 # Development environment and system files
 .vscode/
 .DS_Store
+*.pyc
 **/.ipynb_checkpoints/*
 **/.bsq_cache/
 
