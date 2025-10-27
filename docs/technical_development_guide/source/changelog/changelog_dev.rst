@@ -8,6 +8,21 @@ Development Changelog
 
     .. change::
         :tags: feature, hvac
+        :pullreq: 1516
+
+        **Date**: 2025-10-24
+
+        Title:
+        Clean up baseline HVAC options
+
+        Description:
+        Continuing from PR 1503, cleaned up baseline HVAC options by switching to use SEER2 for CAC and SEER2/HSPF2 for ASHP. 
+        Some HVAC option efficiencies were modified to better align with OS-HPXML default relationships.
+
+        Assignees: Lixi Liu, Scott Horowitz
+
+    .. change::
+        :tags: feature, hvac
         :pullreq: 1503
 
         **Date**: 2025-10-07
