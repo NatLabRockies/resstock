@@ -9648,7 +9648,6 @@ Ground Thermal Conductivity	2.6	ResStockArguments	location_soil_type=2.6 Btu/hr-
 HVAC Cooling Autosizing Factor	40% Oversized	ResStockArguments	cooling_system_cooling_autosizing_factor=1.4	heat_pump_cooling_autosizing_factor=1.0
 HVAC Cooling Autosizing Factor	None
 HVAC Cooling Efficiency	AC, SEER2 12.4	ResStockArguments	hvac_cooling_system=Central AC, SEER2 12.4	hvac_cooling_system_capacity=Autosize
-HVAC Cooling Efficiency	AC, SEER2 13.3	ResStockArguments	hvac_cooling_system=Central AC, SEER2 13.4	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	AC, SEER2 13.4	ResStockArguments	hvac_cooling_system=Central AC, SEER2 13.4	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	AC, SEER2 14.3	ResStockArguments	hvac_cooling_system=Central AC, SEER2 14.3	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	AC, SEER2 7.6	ResStockArguments	hvac_cooling_system=Central AC, SEER2 9.5	hvac_cooling_system_capacity=Autosize
