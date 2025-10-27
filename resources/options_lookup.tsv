@@ -9650,7 +9650,7 @@ HVAC Cooling Autosizing Factor	None
 HVAC Cooling Efficiency	AC, SEER2 12.4	ResStockArguments	hvac_cooling_system=Central AC, SEER2 12.4	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	AC, SEER2 13.4	ResStockArguments	hvac_cooling_system=Central AC, SEER2 13.4	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	AC, SEER2 14.3	ResStockArguments	hvac_cooling_system=Central AC, SEER2 14.3	hvac_cooling_system_capacity=Autosize
-HVAC Cooling Efficiency	AC, SEER2 7.6	ResStockArguments	hvac_cooling_system=Central AC, SEER2 9.5	hvac_cooling_system_capacity=Autosize
+HVAC Cooling Efficiency	AC, SEER2 7.6	ResStockArguments	hvac_cooling_system=Central AC, SEER2 7.6	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	AC, SEER2 9.5	ResStockArguments	hvac_cooling_system=Central AC, SEER2 9.5	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	Ducted Heat Pump	ResStockArguments	hvac_cooling_system=None	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	Evaporative Cooler	ResStockArguments	hvac_cooling_system=Evaporative Cooler	hvac_cooling_system_capacity=Autosize
