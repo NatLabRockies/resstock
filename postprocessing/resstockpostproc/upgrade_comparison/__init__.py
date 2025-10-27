@@ -1,1 +1,1 @@
-# Standard Plots package
+# Upgrade Comparison Plots package

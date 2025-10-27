@@ -1,5 +1,5 @@
 """
-Heatmap plotting helpers for standard plots.
+Heatmap plotting helpers for upgrade comparison plots.
 """
 
 from __future__ import annotations

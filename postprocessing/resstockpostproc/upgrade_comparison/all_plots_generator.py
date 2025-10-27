@@ -1,5 +1,5 @@
 """
-Functional orchestration utilities for generating standard plots.
+Functional orchestration utilities for generating upgrade comparison plots.
 """
 
 from __future__ import annotations

@@ -1,5 +1,5 @@
 """
-Box plotting helpers for standard plots.
+Box plotting helpers for upgrade comparison plots.
 """
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-"""Choropleth plotting helpers for standard plots."""
+"""Choropleth plotting helpers for upgrade comparison plots."""
 
 from __future__ import annotations
 

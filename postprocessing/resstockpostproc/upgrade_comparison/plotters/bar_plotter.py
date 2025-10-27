@@ -1,5 +1,5 @@
 """
-Bar plotting helpers for standard plots.
+Bar plotting helpers for upgrade comparison plots.
 """
 
 from __future__ import annotations

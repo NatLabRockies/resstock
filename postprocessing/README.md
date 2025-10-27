@@ -16,14 +16,18 @@ To install the package, we recommend using `uv` for Python package management.
 
    (More info: https://docs.astral.sh/uv/getting-started/installation/)
 
-2. Create a new virtual environment and install dependencies:
+2. Create a new virtual environment and install dependencies using the following command:
    (If it fails the first time, try running `uv sync` again)
 
    ```bash
    uv sync
    ```
 
+# Usage
+
+
 3. Run the scripts as desired
    ```bash
    uv run resstockpostproc/get_failures.py <csv_path> --verbose
    ```
+

@@ -1,5 +1,5 @@
 """
-Data processing utilities for standard plots
+Data processing utilities for upgrade comparison plots
 --------------------------------------------
 Provides transformation and aggregation helpers for simulation result data using Polars.
 """
