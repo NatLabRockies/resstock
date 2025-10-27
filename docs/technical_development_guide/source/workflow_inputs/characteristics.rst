@@ -29746,7 +29746,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - CEER
      - 
    * - ``hvac_cooling_system_cooling_efficiency``
-     - 9.5
+     - 7.6
      - 9.5
      - 12.4
      - 14.3
