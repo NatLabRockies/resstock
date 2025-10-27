@@ -784,20 +784,20 @@ jobs:
       - name: Run standard plots tests
         working-directory: postprocessing
         run: |
-          uv run pytest resstockpostproc/standard_plots/tests -q
+          uv run pytest resstockpostproc/upgrade_comparison/tests -q
 
       - name: Generate some plots (FAIL FAST)
         working-directory: postprocessing
         run: |
-          uv run python resstockpostproc/standard_plots/main.py --quantity_group="Unmet HVAC Hours"
+          uv run python resstockpostproc/upgrade_comparison/main.py --quantity_group="Unmet HVAC Hours"
 
       - name: Generate rest of the plots
         working-directory: postprocessing
         run: |
-          uv run python resstockpostproc/standard_plots/main.py
+          uv run python resstockpostproc/upgrade_comparison/main.py
       - name: Upload plots
         uses: actions/upload-artifact@v4
         with:
           name: plots
-          path: postprocessing/resstockpostproc/standard_plots/sdr_plots/plots/sdr_plots_ci
+          path: postprocessing/resstockpostproc/upgrade_comparison/sdr_plots/plots/sdr_plots_ci
           if-no-files-found: error

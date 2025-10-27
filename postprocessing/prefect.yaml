@@ -23,7 +23,7 @@ deployments:
     tags: []
     concurrency_limit: null
     description: null
-    entrypoint: resstockpostproc/standard_plots/schema/workflow_schema.py:generate_plots
+    entrypoint: resstockpostproc/upgrade_comparison/schema/workflow_schema.py:generate_plots
     parameters: {}
     work_pool:
       name: docker-pool
@@ -37,7 +37,7 @@ deployments:
     tags: []
     concurrency_limit: null
     description: null
-    entrypoint: resstockpostproc/standard_plots/schema/workflow_schema.py:generate_plots_full_schema
+    entrypoint: resstockpostproc/upgrade_comparison/schema/workflow_schema.py:generate_plots_full_schema
     parameters: {}
     work_pool:
       name: docker-pool

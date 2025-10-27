@@ -23,11 +23,16 @@ To install the package, we recommend using `uv` for Python package management.
    uv sync
    ```
 
+3. (Recommended) Install the shared `pre-commit` hooks so formatting, spelling, and lint checks run automatically before each commit. This is a must if you are going to contribute code:
+
+   ```bash
+   uv run --group dev pre-commit install
+   ```
+
 # Usage
 
 
-3. Run the scripts as desired
+4. Run the scripts as desired
    ```bash
    uv run resstockpostproc/get_failures.py <csv_path> --verbose
    ```
-

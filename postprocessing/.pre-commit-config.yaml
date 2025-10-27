@@ -1,4 +1,4 @@
-files: ^postprocessing/resstockpostproc/standard_plots/
+files: ^postprocessing/resstockpostproc/upgrade_comparison/
 repos:
   - repo: https://github.com/crate-ci/typos
     rev: v1.34.0
@@ -24,7 +24,7 @@ repos:
       - id: debug-statements
       - id: detect-private-key
       - id: end-of-file-fixer
-        exclude: postprocessing/resstockpostproc/standard_plots/schema/workflow_schema.json # Exclude the generated schema
+        exclude: postprocessing/resstockpostproc/upgrade_comparison/schema/workflow_schema.json # Exclude the generated schema
       - id: fix-byte-order-marker
       - id: mixed-line-ending
       # - id: name-tests-test
@@ -48,7 +48,7 @@ repos:
           [
             "--config-file=pyproject.toml",
             "--python-version=3.11",
-            "resstockpostproc/standard_plots/",
+            "resstockpostproc/upgrade_comparison/",
           ]
         pass_filenames: false
   - repo: https://github.com/astral-sh/ruff-pre-commit
@@ -64,7 +64,7 @@ repos:
       - id: pydantic-schema
         name: Generate JSON Schema from models
         language: system
-        entry: uv --directory=postprocessing run -v resstockpostproc/standard_plots/schema/generate_workflow_schema.py
+        entry: uv --directory=postprocessing run -v resstockpostproc/upgrade_comparison/schema/generate_workflow_schema.py
         # Only run when model files change; adjust to match your package path.
-        files: postprocessing/resstockpostproc/standard_plots/schema/workflow_schema.py
+        files: postprocessing/resstockpostproc/upgrade_comparison/schema/workflow_schema.py
         pass_filenames: false

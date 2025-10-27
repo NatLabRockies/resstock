@@ -1,7 +1,8 @@
 import base64
 import io
 import os
-from functools import lru_cache
+from contextlib import suppress
+from functools import cache
 from pathlib import Path
 from typing import Any
 
@@ -11,6 +12,7 @@ import polars as pl
 from dash import ALL, dcc, html
 from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import DashProxy, MultiplexerTransform  # type: ignore[import-untyped]
+from resstockpostproc.upgrade_comparison.schema.workflow_schema import WorkflowConfig
 
 external_script = ["https://tailwindcss.com/", {"src": "https://cdn.tailwindcss.com"}]
 transforms = [MultiplexerTransform()]
@@ -23,11 +25,36 @@ app = DashProxy(
 )
 
 cur_dir = Path(__file__).parent
-ROOT_FOLDER = os.environ["PLOTS_ROOT_FOLDER"] if "PLOTS_ROOT_FOLDER" in os.environ else str(cur_dir.parent / "sdr_plots/plots")
-root_path = str(ROOT_FOLDER)
 
 
-@lru_cache(maxsize=None)
+def _resolve_default_root_folder() -> Path:
+    """
+    Determine the plots directory based on workflow.yaml configuration.
+    Falls back to the legacy sdr_plots/plots path if resolution fails.
+    """
+    env_override = os.environ.get("PLOTS_ROOT_FOLDER")
+    if env_override:
+        candidate = Path(env_override).expanduser()
+    else:
+        workflow_path = cur_dir.parent / "workflow.yaml"
+        try:
+            workflow = WorkflowConfig.from_yaml(str(workflow_path))
+        except Exception:
+            candidate = cur_dir.parent / "sdr_plots"
+        else:
+            candidate = Path(workflow.output_dir)
+
+    candidate = candidate.expanduser()
+    if candidate.name != "plots":
+        candidate = candidate / "plots"
+
+    return candidate.resolve()
+
+
+ROOT_FOLDER = _resolve_default_root_folder()
+
+
+@cache
 def contains_html(path: str) -> bool:
     """
     Check whether the provided directory (recursively) contains at least one HTML file.
@@ -98,9 +125,7 @@ def resolve_related_parquet_path(html_path: str) -> str | None:
     return None
 
 
-def get_selection_row(
-    options: list[tuple[str, str]], index: int, initial_value: str, row_key: str
-) -> dbc.Row:
+def get_selection_row(options: list[tuple[str, str]], index: int, initial_value: str, row_key: str) -> dbc.Row:
     dash_options = []
     for value, label in options:
         display = label.removesuffix(".html")
@@ -111,7 +136,7 @@ def get_selection_row(
             dbc.Col(
                 dcc.RadioItems(
                     id={"type": "radio-selection", "index": index, "row_key": row_key},
-                    options=dash_options,
+                    options=dash_options,  # type: ignore[arg-type]
                     value=initial_value,
                     labelStyle={"display": "inline-block", "marginRight": "10px"},
                 ),
@@ -177,11 +202,9 @@ def extract_selection_map(current_children: list[Any], selection: list[str]) -> 
     row_keys: list[str] = []
 
     for child in current_children or []:
-        row_id: dict[str, Any] | None = None
-        if isinstance(child, dict):
-            row_id = child.get("props", {}).get("id")
-        else:
-            row_id = getattr(child, "id", None)
+        row_id: dict[str, Any] | None = (
+            child.get("props", {}).get("id") if isinstance(child, dict) else getattr(child, "id", None)
+        )
         if isinstance(row_id, dict):
             row_key = row_id.get("row_key")
             if isinstance(row_key, str):
@@ -243,10 +266,8 @@ app.layout = dbc.Container(
     dash.dependencies.Output("dropdown-container", "children"), [dash.dependencies.Input("root-path", "value")]
 )
 def update_dropdowns(root_path: str) -> list[dbc.Row]:
-    try:
+    with suppress(AttributeError):
         contains_html.cache_clear()
-    except AttributeError:
-        pass
     rows, _ = build_selection_rows(root_path, {})
     return rows
 
