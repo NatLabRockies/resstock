@@ -30112,7 +30112,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.9%
      - central air conditioner
      - SEER2
-     - 9.5
+     - 7.6
      - single stage
      - 
      - 
