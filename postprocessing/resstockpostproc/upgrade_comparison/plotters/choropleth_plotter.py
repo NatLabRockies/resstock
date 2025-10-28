@@ -149,7 +149,6 @@ def create_plot(
         show_labels=show_labels,
         show_boundaries=show_boundaries,
     )
-    fig.show(renderer="browser")
     return fig
 
 
