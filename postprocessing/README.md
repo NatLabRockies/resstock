@@ -11,7 +11,11 @@ To install the package, we recommend using `uv` for Python package management.
 1. Install `uv` if you don't have it already:
 
    ```bash
+   # Mac
    wget -qO- https://astral.sh/uv/install.sh | sh
+
+   # Windows Powershell
+   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
    ```
 
    (More info: https://docs.astral.sh/uv/getting-started/installation/)
@@ -20,12 +24,14 @@ To install the package, we recommend using `uv` for Python package management.
    (If it fails the first time, try running `uv sync` again)
 
    ```bash
+   cd path/to/postprocessing
    uv sync
    ```
 
 3. (Recommended) Install the shared `pre-commit` hooks so formatting, spelling, and lint checks run automatically before each commit. This is a must if you are going to contribute code:
 
    ```bash
+   cd path/to/postprocessing
    uv run --group dev pre-commit install
    ```
 
@@ -34,5 +40,6 @@ To install the package, we recommend using `uv` for Python package management.
 
 4. Run the scripts as desired
    ```bash
+   cd path/to/postprocessing
    uv run resstockpostproc/get_failures.py <csv_path> --verbose
    ```
