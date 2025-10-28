@@ -756,7 +756,7 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
       # Install Google Chrome/Chromium and expose its path
       - uses: browser-actions/setup-chrome@v2
