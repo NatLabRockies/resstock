@@ -149,6 +149,7 @@ def create_plot(
         show_labels=show_labels,
         show_boundaries=show_boundaries,
     )
+    fig.show(renderer="browser")
     return fig
 
 
@@ -289,7 +290,7 @@ def _create_plot(
         "x": 1.01,
         "y": 0.5,
         "yanchor": "middle",
-        "len": 0.05 + 0.6 * 1 / n_rows,
+        "len": 0.05 + 0.8 * 1 / n_rows,
         "thickness": 10,
     }
     if tickvals and ticktext:
@@ -304,14 +305,12 @@ def _create_plot(
         }
     )
     theme.apply_layout(fig)
-    base_height = 620 if resolution == "county" else 540
-    preferred_height = base_height * n_rows
-    current_height = fig.layout.height or 0
-    if current_height < preferred_height:
-        fig.update_layout(height=preferred_height)
+    top_margin = 60 + (120 if title_text else 20)
+    base_height = 100 + top_margin
+    preferred_height = base_height + 80 * n_rows
+    fig.update_layout(height=preferred_height)
     _stretch_geo_height(fig)
 
-    top_margin = 60 + (120 if title_text else 20)
     left_margin = 0
     right_margin = 50
     if second_category_column and row_titles:
@@ -328,8 +327,8 @@ def _create_plot(
     if row_titles:
         row_title_set = {title for title in row_titles if title}
         for annotation in fig.layout.annotations:
-            if annotation.text in row_title_set:
-                annotation.update(x=0.0, xref="paper", xanchor="right")
+            if annotation.text in row_title_set and annotation.textangle == 90:
+                annotation.update(x=0.0, xref="paper", xanchor="right", textangle=0)
 
     if title_text:
         fig.update_layout(
