@@ -95,12 +95,12 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "raw_results_dir",
-        default="Users/radhikar/Documents/buildstock2025/resstock/postprocessing/resstockpostproc/standard_plots/sdr_plots/s3_data/res-sdr/testing-sdr-fy25/ghp_envelope_0807_30k/raw_results",
+        default="Users/radhikar/Documents/buildstock2025/resstock/postprocessing/resstockpostproc/upgrade_comparison/sdr_plots/s3_data/res-sdr/testing-sdr-fy25/ghp_envelope_0807_30k/raw_results",
         help="Directory containing raw BuildStock results",
     )
     parser.add_argument(
         "output_dir",
-        default="Users/radhikar/Documents/buildstock2025/resstock/postprocessing/resstockpostproc/standard_plots/sdr_plots/s3_data/res-sdr/testing-sdr-fy25/ghp_envelope_0807_30k/annual_results",
+        default="Users/radhikar/Documents/buildstock2025/resstock/postprocessing/resstockpostproc/upgrade_comparison/sdr_plots/s3_data/res-sdr/testing-sdr-fy25/ghp_envelope_0807_30k/annual_results",
         help="Directory to write transformed results",
     )
     args = parser.parse_args()

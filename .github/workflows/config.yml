@@ -39,7 +39,7 @@ jobs:
           (sed -u 1q ; sort -k1 -k2) < resources/options_lookup.tsv > sorted_options_lookup.tsv
           mv sorted_options_lookup.tsv resources/options_lookup.tsv # Sort on first two columns
 
-      - name: Upload formatted options_lookup 
+      - name: Upload formatted options_lookup
         uses: actions/upload-artifact@v4
         with:
           name: options_lookup
@@ -78,7 +78,7 @@ jobs:
         with:
           path: resources
           name: options_lookup
-      
+
       - name: Run integrity checks for all projects
         run: |
           bundle exec rake unit_tests:project_integrity_checks
@@ -223,7 +223,7 @@ jobs:
       - name: Install gems
         run: |
           rm -f Gemfile.lock && bundle install
-      
+
       - name: Install python
         shell: bash
         run: |
@@ -249,7 +249,7 @@ jobs:
           name: precomputed_buildstocks
 
       - name: Run run_analysis.rb
-        run: |          
+        run: |
           bundle exec rake workflow:analysis_tests
 
       - name: Upload run_analysis.rb results
@@ -267,7 +267,7 @@ jobs:
     steps:
       - name: Checkout base branch
         if: github.event_name == 'pull_request'
-        uses: actions/checkout@v4        
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.base.sha }}
 
@@ -314,7 +314,7 @@ jobs:
         run: |
           gunzip -v project_national/national_baseline/results_csvs/*.csv.gz
           gunzip -v project_testing/testing_baseline/results_csvs/*.csv.gz
-          
+
           tar -xvf project_national/national_baseline/simulation_output/*.tar.gz -C project_national/national_baseline/simulation_output --wildcards '*results_timeseries.csv' --wildcards '*.xml' --wildcards '*data_point_out.json' --wildcards '*.osw'
           tar -xvf project_testing/testing_baseline/simulation_output/*.tar.gz -C project_testing/testing_baseline/simulation_output --wildcards '*results_timeseries.csv' --wildcards '*.xml' --wildcards '*data_point_out.json' --wildcards '*.osw' --wildcards '*in.osm' --wildcards '*in.idf'
 
@@ -373,7 +373,7 @@ jobs:
           name: precomputed_buildstocks
 
       - name: Commit the integration tests results
-        shell: bash        
+        shell: bash
         run: |
           branch_name="${{ github.head_ref || github.ref_name }}"
           git pull --no-tags --depth=1 origin $branch_name
@@ -401,19 +401,19 @@ jobs:
 
       - name: Compare samples and results
         if: github.event_name == 'pull_request'
-        run: |          
+        run: |
           pip install numpy
           pip install pandas
           pip install plotly
           pip install kaleido
-          
+
           # baseline annual
           mkdir -p test/base_results/comparisons/baseline/annual
           python test/compare.py -a samples -b base_results/baseline/annual -f samples -e test/base_results/comparisons/baseline/annual # base_samples.csv, feature_samples.csv
           python test/compare.py -a results -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
           python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
           python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
-          
+
           # baseline timeseries
           mkdir test/base_results/comparisons/baseline/timeseries
           python test/compare.py -a timeseries -b base_results/baseline/timeseries -f baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
@@ -541,7 +541,7 @@ jobs:
             project_national/resources/sdr_option_application_detailed_report.txt
             project_national/resources/sdr_option_application_report.csv
           retention-days: 90
-          if-no-files-found: error          
+          if-no-files-found: error
 
       - name: Test for zero applicable_to values
         run: |
@@ -634,7 +634,7 @@ jobs:
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
-  
+
       # Only replace existing files and tables in s3 and Athena for develop branch to prevent
       # every branch/PR from fighting over the same s3 files and Athena tables.
       # Each branch/PR will still be able to create local output files and commit them to the
@@ -725,16 +725,16 @@ jobs:
 
       - name: Compare samples and results
         if: github.event_name == 'pull_request'
-        run: |          
+        run: |
           pip install numpy
           pip install pandas
           pip install plotly
           pip install kaleido
-          
+
           # results_characteristics.csv
           python test/base_results/upgrades/create_results_characteristics.py -f base_results/upgrades/sdr_annual/combined/results.csv
           python test/base_results/upgrades/create_results_characteristics.py -f test/base_results/upgrades/sdr_annual/combined/results.csv
-          
+
           # upgrades annual
           mkdir -p test/base_results/sdr_comparisons/upgrades/sdr_annual
           python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/upgrades/sdr_annual/combined -f test/base_results/upgrades/sdr_annual/combined -e test/base_results/sdr_comparisons/upgrades/sdr_annual # *.html
@@ -745,4 +745,70 @@ jobs:
         with:
           name: sdr_comparisons
           path: test/base_results/sdr_comparisons
+          if-no-files-found: error
+
+  standard-plots-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Install Google Chrome/Chromium and expose its path
+      - uses: browser-actions/setup-chrome@v2
+        id: chrome
+        with:
+          chrome-version: stable
+          install-dependencies: true   # Linux-only: pulls needed libs
+
+      # Make Kaleido see Chrome (important on all OSes)
+      - name: Set BROWSER_PATH
+        run: echo "BROWSER_PATH=${{ steps.chrome.outputs.chrome-path }}" >> $GITHUB_ENV
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.1.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+          role-duration-seconds: 1200
+          role-session-name: MySession
+
+      - name: Install postprocessing dependencies
+        working-directory: postprocessing
+        run: |
+          uv venv
+          uv pip install pre-commit
+          uv pip install -e . --group dev
+      - name: Run pre-commit checks
+        working-directory: postprocessing
+        run: |
+          uv run pre-commit run --all-files --show-diff-on-failure
+
+      - name: Run standard plots tests
+        working-directory: postprocessing
+        run: |
+          uv run pytest resstockpostproc/upgrade_comparison/tests -q
+
+      - name: Generate some plots (FAIL FAST)
+        working-directory: postprocessing
+        run: |
+          uv run python resstockpostproc/upgrade_comparison/main.py --quantity_group="Unmet HVAC Hours"
+
+      - name: Generate rest of the plots
+        working-directory: postprocessing
+        run: |
+          uv run python resstockpostproc/upgrade_comparison/main.py
+      - name: Upload plots
+        uses: actions/upload-artifact@v4
+        with:
+          name: plots
+          path: postprocessing/resstockpostproc/upgrade_comparison/sdr_plots/plots/sdr_plots_ci
           if-no-files-found: error

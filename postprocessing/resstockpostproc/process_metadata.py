@@ -1,7 +1,12 @@
 import polars as pl
 import pathlib
+from collections.abc import Sequence
+
 import geopandas as gpd
-from typing import Sequence
+import polars as pl
+
+from resstockpostproc.utils import fix_all_fuels_emissions, fix_site_energy_total, get_col_maps
+
 
 from resstockpostproc.utils import (
     fix_site_energy_total,
@@ -156,6 +161,7 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
     )
 
     return df.with_columns([adj_income, burden])
+
 
 
 def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame:
