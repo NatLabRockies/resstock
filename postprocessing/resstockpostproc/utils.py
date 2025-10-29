@@ -5,7 +5,6 @@ from collections import defaultdict
 import re
 import pathlib
 import logging
-import pathlib
 import boto3
 import s3fs
 import gzip

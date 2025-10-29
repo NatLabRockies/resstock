@@ -619,6 +619,7 @@ def create_weighted_aggregate_output(output_dir, sim_outputs, alloc_wts):
 
     # Return the weighted, aggregated, simulation oputputs
 
+    return None
 
 
 def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_exports):
