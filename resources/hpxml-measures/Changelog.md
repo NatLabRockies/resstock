@@ -2,6 +2,9 @@
 
 __New Features__
 - Updates to HPXML v4.2.
+- BuildResidentialHPXML measure:
+  - **Breaking change**: New, simpler, easier to use option-based arguments (rather than detailed property arguments).
+  - Automatically adjusts garage dimensions for dwelling units with small footprints to avoid errors.
 - Heat pump updates:
   - Updates default heating capacities at 17F per RESNET HERS Addendum 82 and NEEP database.
   - Updates supplemental heating energy use during defrost based on RESNET HERS Addendum 82.
@@ -17,8 +20,6 @@ __New Features__
   - Allow `PVSystem/AttachedToInverter` to be omitted (unless there are multiple `Inverter` elements).
   - Allow multiple inverters with different efficiencies and use a weighted-average efficiency in the model (previously threw an error)
 - For storm windows, removes minimum base window U-factor limit and throws a warning instead if the base window U-factor is below 0.3.
-- BuildResidentialHPXML measure:
-  - Automatically adjusts garage dimensions for dwelling units with small footprints to avoid errors.
 
 __Bugfixes__
 - Fixes ground-source heat pump plant loop fluid type (workaround for OpenStudio bug).

@@ -7,6 +7,22 @@ Development Changelog
     :released: pending
 
     .. change::
+        :tags: workflow, options, hpxml
+        :pullreq: 1460
+
+        **Date**: 2025-10-28
+
+        Title:
+        Move BuildResidentialHPXML measure to option-based arguments
+
+        Description:
+        Refactors ResStock to use the new BuildResidentialHPXML measure, which now has ~100 options instead of ~600 detailed
+        properties as arguments. Also moves much of the ResStock special sauce around configuring the HPXML models into the
+        ResStockArgumentsPostHPXML measure. The options_lookup.tsv file is now significantly simpler.
+
+        Assignees: Scott Horowitz
+
+    .. change::
         :tags: feature, hvac
         :pullreq: 1516
 
@@ -16,7 +32,7 @@ Development Changelog
         Clean up baseline HVAC options
 
         Description:
-        Continuing from PR 1503, cleaned up baseline HVAC options by switching to use SEER2 for CAC and SEER2/HSPF2 for ASHP. 
+        Continuing from PR 1503, cleaned up baseline HVAC options by switching to use SEER2 for CAC and SEER2/HSPF2 for ASHP.
         Some HVAC option efficiencies were modified to better align with OS-HPXML default relationships.
 
         Assignees: Lixi Liu, Scott Horowitz
