@@ -127,7 +127,7 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
       - name: Install uv
         uses: astral-sh/setup-uv@v6
@@ -198,7 +198,7 @@ jobs:
         shell: bash
         run: |
           branch_name="${{ github.head_ref || github.ref_name }}"
-          git pull --no-tags --depth=1 origin $branch_name
+          git pull --ff-only --no-tags --depth=3 origin $branch_name
           git add docs
           git status
           if [[ $(git diff --cached --exit-code) ]]; then
@@ -287,7 +287,7 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
       - name: Download and Install OpenStudio
         run: |
@@ -376,7 +376,7 @@ jobs:
         shell: bash
         run: |
           branch_name="${{ github.head_ref || github.ref_name }}"
-          git pull --no-tags --depth=1 origin $branch_name
+          git pull --ff-only --no-tags --depth=3 origin $branch_name
           cp -r samples/buildstock*.csv test/base_results/baseline/annual
           cp -r baseline/annual/results*.csv test/base_results/baseline/annual
           cp -r baseline/timeseries/*.csv test/base_results/baseline/timeseries
@@ -576,7 +576,7 @@ jobs:
         shell: bash
         run: |
           branch_name="${{ github.head_ref || github.ref_name }}"
-          git pull --no-tags --depth=1 origin $branch_name
+          git pull --ff-only --no-tags --depth=3 origin $branch_name
           git add project_national/resources
           git status
           if [[ $(git diff --cached --exit-code) ]]; then
@@ -599,7 +599,7 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4.1.0
@@ -699,7 +699,7 @@ jobs:
         run: |
           branch_name="${{ github.head_ref || github.ref_name }}"
           git checkout resources/options_lookup.tsv
-          git pull --no-tags --depth=1 origin $branch_name
+          git pull --ff-only --no-tags --depth=3 origin $branch_name
           cp -r project_national/sdr_upgrades_tmy3/results_csvs_pub/* test/base_results/upgrades/sdr_annual
           git add test/base_results/upgrades/sdr_annual
           git status
@@ -750,16 +750,19 @@ jobs:
   standard-plots-tests:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
-      - uses: actions/setup-python@v5
+      - name: Setup python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
       # Install Google Chrome/Chromium and expose its path
-      - uses: browser-actions/setup-chrome@v2
+      - name: Setup chrome
+        uses: browser-actions/setup-chrome@v2
         id: chrome
         with:
           chrome-version: stable
@@ -787,6 +790,7 @@ jobs:
           uv venv
           uv pip install pre-commit
           uv pip install -e . --group dev
+
       - name: Run pre-commit checks
         working-directory: postprocessing
         run: |
@@ -806,6 +810,7 @@ jobs:
         working-directory: postprocessing
         run: |
           uv run python resstockpostproc/upgrade_comparison/main.py
+
       - name: Upload plots
         uses: actions/upload-artifact@v4
         with:

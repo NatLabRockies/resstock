@@ -8166,12 +8166,12 @@ module Defaults
       end
     end
     if htg_ap.qm17full.nil?
+      # Default maximum capacity maintenance
       case heating_system.compressor_type
       when HPXML::HVACCompressorTypeSingleStage, HPXML::HVACCompressorTypeTwoStage
-        htg_ap.qm17full = 0.59 # Approximately based on Cutler curves
+        htg_ap.qm17full = 0.626 # Per RESNET HERS Addendum 82
       when HPXML::HVACCompressorTypeVariableSpeed
-        # Default maximum capacity maintenance based on NEEP data for all var speed heat pump types, if not provided
-        htg_ap.qm17full = (0.0329 * HVAC.calc_hspf_from_hspf2(heating_system) + 0.3996).round(4)
+        htg_ap.qm17full = 0.69 # NEEP database
       end
     end
 

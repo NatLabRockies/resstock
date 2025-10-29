@@ -845,6 +845,9 @@ module HVAC
 
     # Pump
     pump_w = get_pump_power_watts(heat_pump)
+    if heat_pump.is_shared_system
+      pump_w += heat_pump.shared_loop_watts / heat_pump.number_of_units_served.to_f
+    end
     pump_w = [pump_w, 1.0].max # prevent error if zero
     pump = Model.add_pump_variable_speed(
       model,
@@ -882,24 +885,6 @@ module HVAC
     add_pump_power_ems_program(model, pump, air_loop_unitary, heat_pump)
     if (heat_pump.compressor_type == HPXML::HVACCompressorTypeVariableSpeed) && (hpxml_header.ground_to_air_heat_pump_model_type == HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeExperimental)
       add_ghp_pump_mass_flow_rate_ems_program(model, pump, control_zone, htg_coil, clg_coil)
-    end
-
-    if heat_pump.is_shared_system
-      # Shared pump power per ANSI/RESNET/ICC 301-2022 Section 4.4.5.1 (pump runs 8760)
-      design_level = heat_pump.shared_loop_watts / heat_pump.number_of_units_served.to_f
-
-      equip = Model.add_electric_equipment(
-        model,
-        name: Constants::ObjectTypeGSHPSharedPump,
-        end_use: Constants::ObjectTypeGSHPSharedPump,
-        space: control_zone.spaces[0], # no heat gain, so assign the equipment to an arbitrary space
-        design_level: design_level,
-        frac_radiant: 0,
-        frac_latent: 0,
-        frac_lost: 1,
-        schedule: model.alwaysOnDiscreteSchedule
-      )
-      equip.additionalProperties.setFeature('HPXML_ID', heat_pump.id) # Used by reporting measure
     end
 
     # Air Loop
@@ -4835,23 +4820,23 @@ module HVAC
     program.addLine('Set F_defrost = 0.134 - (0.003 * ((T_out * 1.8) + 32))')
     program.addLine('Set F_defrost = @Min F_defrost 0.08')
     program.addLine('Set F_defrost = @Max F_defrost 0')
-    program.addLine("Set #{frost_cap_multiplier_act.name} = 1.0 - 1.8 * F_defrost")
-    program.addLine("Set #{frost_pow_multiplier_act.name} = 1.0 - 0.3 * F_defrost")
+    program.addLine("Set #{frost_cap_multiplier_act.name} = 1.0 - (1.8 * F_defrost)")
+    program.addLine("Set #{frost_pow_multiplier_act.name} = 1.0 - (0.3 * F_defrost)")
     program.addLine("If T_out <= #{max_oat_defrost}")
-    program.addLine('  Set fraction_compressor_htg = 1.0 - F_defrost')
-    # Steady state compressor runtime fraction including heating cycle and defrost cycle
-    program.addLine("  Set fraction_compressor_ss = #{htg_coil_rtf_sensor.name} * #{frost_cap_multiplier_act.name} / fraction_compressor_htg")
-    program.addLine('  Set fraction_defrost = F_defrost * (@Max 1.0 fraction_compressor_ss)')
-    program.addLine("  If #{htg_coil_rtf_sensor.name} > 0")
-    program.addLine("    Set q_dot_defrost = (fraction_compressor_htg * (#{htg_coil_htg_rate_sensor.name} / #{frost_cap_multiplier_act.name}) - #{htg_coil_htg_rate_sensor.name}) / #{unit_multiplier} / fraction_defrost")
+    program.addLine('  Set F_compressor = 1.0 - F_defrost')
+    program.addLine("  Set fraction_defrost = F_defrost * #{htg_coil_rtf_sensor.name}") # Defrost fraction with RTF
+    program.addLine("  If #{htg_coil_rtf_sensor.name} > 0") # Heating rate from sensors has RTF applied already, use F_compressor
+    program.addLine("    Set q_dot_defrost = ((F_compressor * (#{htg_coil_htg_rate_sensor.name} / #{frost_cap_multiplier_act.name}) - #{htg_coil_htg_rate_sensor.name}) / fraction_defrost) / #{unit_multiplier}")
+    program.addLine("    Set reduced_cap = (((#{htg_coil_htg_rate_sensor.name} / #{frost_cap_multiplier_act.name}) - #{htg_coil_htg_rate_sensor.name}) / fraction_defrost) / #{unit_multiplier}")
     program.addLine('  Else')
     program.addLine('    Set q_dot_defrost = 0.0')
+    program.addLine('    Set reduced_cap = 0.0')
     program.addLine('  EndIf')
     program.addLine("  Set supp_capacity = #{supp_sys_capacity}")
     program.addLine("  Set supp_efficiency = #{supp_sys_efficiency}")
-    program.addLine('  Set supp_delivered_htg = @Min q_dot_defrost supp_capacity')
+    program.addLine('  Set supp_delivered_htg = @Min reduced_cap supp_capacity')
     program.addLine('  If supp_efficiency > 0.0')
-    program.addLine('    Set supp_design_level = supp_delivered_htg / supp_efficiency') # Assume perfect tempering
+    program.addLine('    Set supp_design_level = (supp_delivered_htg / supp_efficiency)') # Assume perfect tempering
     program.addLine('  Else')
     program.addLine('    Set supp_design_level = 0.0')
     program.addLine('  EndIf')

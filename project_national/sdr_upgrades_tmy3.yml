@@ -37,7 +37,7 @@ kestrel:
 # Timeout to avoid whole-job failures from long-running models
 max_minutes_per_sim: 5
 
-# Post proccessing and Amazon Web Services
+# Post processing and Amazon Web Services
 postprocessing:
   # Post simulation partitioning
   keep_individual_timeseries: true
@@ -334,20 +334,6 @@ references:
     apply_logic:
       - HVAC Has Ducts|Yes
 
-  remove_high_rise_shared: &remove_high_rise_shared
-    - not: Heating Fuel|Wood
-    - not: Heating Fuel|Other Fuel
-    - not: Heating Fuel|None
-    - not:
-      - or:
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Cooling Only
-      - and:
-        - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
-
   remove_nonducted_high_rise_shared: &remove_nonducted_high_rise_shared
     - HVAC Has Ducts|Yes
     - not: Heating Fuel|Wood
@@ -383,11 +369,6 @@ references:
       - or:
         - Ground Thermal Conductivity|0.5
         - Ground Thermal Conductivity|0.8
-
-  yes_and_no_has_ducts_apply_logic: &yes_and_no_has_ducts_apply_logic
-    - or:
-      - HVAC Has Ducts|Yes
-      - HVAC Has Ducts|No
 
   hpwh_apply_logic: &hpwh_apply_logic
     # remove dwelling units that have hpwh or solar thermal water heater
@@ -470,22 +451,6 @@ references:
     option: Water Heater Efficiency|High Efficiency Natural Gas Tankless, Condensing
 
   ### -- Anchors dependent on other anchors -- ###
-  cooling_setpoint_no_offset: &cooling_setpoint_no_offset
-      option: Cooling Setpoint Has Offset|No
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  cooling_setpoint_offset_magnitude_0: &cooling_setpoint_offset_magnitude_0
-      option: Cooling Setpoint Offset Magnitude|0F
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  cooling_setpoint_offset_period_none: &cooling_setpoint_offset_period_none
-      option: Cooling Setpoint Offset Period|None
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  ducted_ashp_seer_20_11_hspf_cchp_electric_backup: &ducted_ashp_seer_20_11_hspf_cchp_electric_backup
-      option: HVAC Heating Efficiency|ASHP, SEER 20, 11 HSPF, CCHP, Max Load
-      apply_logic: *ducted_ashp_apply_logic
-
   dual_speed_ducted_ghp: &dual_speed_ducted_ghp
       option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0
       apply_logic: *ducted_ashp_apply_logic
@@ -493,22 +458,6 @@ references:
   heat_pump_cooling_efficiency_ducted: &heat_pump_cooling_efficiency_ducted
       option: HVAC Cooling Efficiency|Ducted Heat Pump
       apply_logic: *ducted_ashp_apply_logic
-
-  heating_setpoint_no_offset: &heating_setpoint_no_offset
-      option: Heating Setpoint Has Offset|No
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  heating_setpoint_offset_magnitude_0: &heating_setpoint_offset_magnitude_0
-      option: Heating Setpoint Offset Magnitude|0F
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  heating_setpoint_offset_period_none: &heating_setpoint_offset_period_none
-      option: Heating Setpoint Offset Period|None
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  partial_conditioning_100_percent: &partial_conditioning_100_percent
-      option: HVAC Cooling Partial Space Conditioning|100% Conditioned
-      apply_logic: *yes_and_no_has_ducts_apply_logic
 
   fossil_fuel_or_electricity: &fossil_fuel_or_electricity
     - not: Heating Fuel|Wood
@@ -634,23 +583,16 @@ upgrades:
           - Heating Fuel|Propane
           - or:
             - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
       - option: HVAC Heating Efficiency|Fuel Furnace, 88% AFUE
         apply_logic:
           - Heating Fuel|Fuel Oil
           - or:
             - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
 
   - upgrade_name: Minimum Efficiency Furnaces and Air Conditioners Circa 2025
     package_apply_logic:
@@ -687,13 +629,13 @@ upgrades:
           - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
 
       # MSHP (not applicable because of package_apply_logic)
-      # - option: HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+      # - option: HVAC Heating Efficiency|MSHP, SEER2 13.7, 7.4 HSPF2  # FIXME, eff too low, not available in AHRI
       #   apply_logic:
-      #     - HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+      #     - HVAC Heating Efficiency|MSHP, SEER2 13.7, 7.4 HSPF2
 
-      # - option: HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+      # - option: HVAC Heating Efficiency|MSHP, SEER2 29, 12.3 HSPF2
       #   apply_logic:
-      #     - HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+      #     - HVAC Heating Efficiency|MSHP, SEER2 29, 12.3 HSPF2
 
       ## 1.2 Categories with efficiency change:
       # min. eff fuel boilers
@@ -725,8 +667,6 @@ upgrades:
             - Heating Fuel|Propane
           - or:
             - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
 
@@ -735,8 +675,6 @@ upgrades:
           - Heating Fuel|Fuel Oil
           - or:
             - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
 
@@ -745,17 +683,12 @@ upgrades:
           - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
 
       # ASHP
-      - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2
+      - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.4 HSPF2
         apply_logic:
           - or:
-            - HVAC Heating Efficiency|ASHP, SEER 10, 6.2 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 10.3, 7.0 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 11.5, 7.5 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 13, 7.7 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 13, 8.0 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 14, 8.2 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 14.3, 8.5 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 15, 8.5 HSPF #14.3 SEER2 == 15 SEER1, ducted
+            - HVAC Heating Efficiency|ASHP, SEER2 9.5, 5.8 HSPF2
+            - HVAC Heating Efficiency|ASHP, SEER2 12.4, 6.6 HSPF2
+            - HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.4 HSPF2
 
       ### [2] Cooling Efficiencies
       ## 2.1 Replace like with like
@@ -769,7 +702,7 @@ upgrades:
       #     - HVAC Cooling Efficiency|Non-Ducted Heat Pump
 
       ## 2.2 Categories with efficiency change
-      # Central AC — SEER 14.3 for southern states only
+      # Central AC — SEER2 14.3 for southern states only
       - option: HVAC Cooling Efficiency|AC, SEER2 14.3
         apply_logic:
           - and:
@@ -796,11 +729,11 @@ upgrades:
               - State|NV
               - State|NM
           - or:
-            - HVAC Cooling Efficiency|AC, SEER 8
-            - HVAC Cooling Efficiency|AC, SEER 10
-            - HVAC Cooling Efficiency|AC, SEER 13
+            - HVAC Cooling Efficiency|AC, SEER2 7.6
+            - HVAC Cooling Efficiency|AC, SEER2 9.5
+            - HVAC Cooling Efficiency|AC, SEER2 12.4
 
-      # All other states — SEER 13.4
+      # All other states — SEER2 13.4
       - option: HVAC Cooling Efficiency|AC, SEER2 13.4
         apply_logic:
           - not:
@@ -827,28 +760,27 @@ upgrades:
               - State|NV
               - State|NM
           - or:
-            - HVAC Cooling Efficiency|AC, SEER 8
-            - HVAC Cooling Efficiency|AC, SEER 10
-            - HVAC Cooling Efficiency|AC, SEER 13
+            - HVAC Cooling Efficiency|AC, SEER2 7.6
+            - HVAC Cooling Efficiency|AC, SEER2 9.5
+            - HVAC Cooling Efficiency|AC, SEER2 12.4
 
-      - option: HVAC Cooling Efficiency|AC, SEER 15
+      - option: HVAC Cooling Efficiency|AC, SEER2 14.3
         apply_logic:
-          - HVAC Cooling Efficiency|AC, SEER 15
+          - HVAC Cooling Efficiency|AC, SEER2 14.3
 
       # Room (window) AC
-      - option: HVAC Cooling Efficiency|Room AC, EER 12.0 #CEER 11.0; EER 12.0 single package
+      - option: HVAC Cooling Efficiency|Room AC, CEER 11.0
         apply_logic:
           - or:
-            - HVAC Cooling Efficiency|Room AC, EER 8.5
-            - HVAC Cooling Efficiency|Room AC, EER 9.8
-            - HVAC Cooling Efficiency|Room AC, EER 10.7
-            - HVAC Cooling Efficiency|Room AC, EER 12.0
+            - HVAC Cooling Efficiency|Room AC, CEER 8.4
+            - HVAC Cooling Efficiency|Room AC, CEER 9.7
+            - HVAC Cooling Efficiency|Room AC, CEER 10.6
 
   ### -- HVAC: Air Source Heat Pumps -- ###
   - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump Circa 2025
     package_apply_logic: *fossil_fuel_or_electricity
     options:
-      - option: HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate
+      - option: HVAC Heating Efficiency|ASHP, SEER2 18, 8.5 HSPF2, Typical Cold Climate
         apply_logic: *typical_cold_climate_logic
 
       - option: HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted
@@ -875,7 +807,7 @@ upgrades:
   - upgrade_name: Dual Fuel Heat Pump System
     package_apply_logic: *fossil_fuel_or_electricity
     options:
-      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.2, 7.8 HSPF2, Integrated Backup, 95.0% AFUE NG, 35F switchover
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15, 7.6 HSPF2, Integrated Backup, 95.0% AFUE NG, 35F switchover
         apply_logic: *dual_fuel_system_cold_climate
 
       - option: HVAC Cooling Efficiency|Ducted Heat Pump
@@ -884,7 +816,7 @@ upgrades:
       - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
         apply_logic: *dual_fuel_system_cold_climate
 
-      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.2, 7.8 HSPF2, Integrated Backup, 92.5% AFUE NG, 35F switchover
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15, 7.6 HSPF2, Integrated Backup, 92.5% AFUE NG, 35F switchover
         apply_logic: *dual_fuel_system_warm_climate
 
       - option: HVAC Cooling Efficiency|Ducted Heat Pump

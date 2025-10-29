@@ -684,12 +684,13 @@ module Geometry
 
   # Adds any HPXML Windows to the OpenStudio model.
   #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @return [nil]
-  def self.apply_windows(model, spaces, hpxml_bldg, hpxml_header)
+  def self.apply_windows(runner, model, spaces, hpxml_bldg, hpxml_header)
     # We already stored @fraction_of_windows_operable, so lets remove the
     # fraction_operable properties from windows and re-collapse the enclosure
     # so as to prevent potentially modeling multiple identical windows in E+,
@@ -718,7 +719,7 @@ module Geometry
       window_length = window.area / window_height
       z_origin = foundation_top
 
-      ufactor, shgc = Constructions.get_ufactor_shgc_adjusted_by_storms(window.storm_type, window.ufactor, window.shgc)
+      ufactor, shgc = Constructions.get_ufactor_shgc_adjusted_by_storms(runner, window.storm_type, window.ufactor, window.shgc)
 
       if window.is_exterior
 
@@ -841,12 +842,13 @@ module Geometry
 
   # Adds any HPXML Skylights to the OpenStudio model.
   #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @return [nil]
-  def self.apply_skylights(model, spaces, hpxml_bldg, hpxml_header)
+  def self.apply_skylights(runner, model, spaces, hpxml_bldg, hpxml_header)
     default_azimuths = Defaults.get_azimuths(hpxml_bldg)
     walls_top = hpxml_bldg.building_construction.additional_properties.walls_height_above_grade
 
@@ -863,7 +865,7 @@ module Geometry
       length = skylight.area / width
       z_origin = walls_top + 0.5 * Math.sin(Math.atan(tilt)) * width
 
-      ufactor, shgc = Constructions.get_ufactor_shgc_adjusted_by_storms(skylight.storm_type, skylight.ufactor, skylight.shgc)
+      ufactor, shgc = Constructions.get_ufactor_shgc_adjusted_by_storms(runner, skylight.storm_type, skylight.ufactor, skylight.shgc)
 
       if not skylight.curb_area.nil?
         # Create parent surface that includes curb heat transfer

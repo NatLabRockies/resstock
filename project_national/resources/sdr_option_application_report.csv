@@ -18,24 +18,24 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,10,"HVAC Heating Efficiency|Fuel Furnace, 80% AFUE",138349,25.2
 3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,11,"HVAC Heating Efficiency|Fuel Furnace, 83% AFUE",13232,2.4
 3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,12,"HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE",84091,15.3
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,13,"HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2",87173,15.8
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,13,"HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.4 HSPF2",87173,15.8
 3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,14,HVAC Cooling Efficiency|Ducted Heat Pump,87173,15.8
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,15,"HVAC Cooling Efficiency|AC, SEER2 14.3",100330,18.2
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,16,"HVAC Cooling Efficiency|AC, SEER2 13.4",93436,17.0
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,17,"HVAC Cooling Efficiency|AC, SEER 15",72170,13.1
-3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,18,"HVAC Cooling Efficiency|Room AC, EER 12.0",34444,6.3
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,15,"HVAC Cooling Efficiency|AC, SEER2 14.3",103277,18.8
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,16,"HVAC Cooling Efficiency|AC, SEER2 13.4",96109,17.5
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,17,"HVAC Cooling Efficiency|AC, SEER2 14.3",66550,12.1
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,18,"HVAC Cooling Efficiency|Room AC, CEER 11.0",21536,3.9
 3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,-1,All,413635,75.2
-4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,1,"HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate",413635,75.2
+4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,1,"HVAC Heating Efficiency|ASHP, SEER2 18, 8.5 HSPF2, Typical Cold Climate",413635,75.2
 4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,2,HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted,413635,75.2
 4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,3,HVAC Cooling Efficiency|Ducted Heat Pump,413635,75.2
 4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,4,HVAC Cooling Partial Space Conditioning|100% Conditioned,413635,75.2
 4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,5,Heating Fuel|Electricity,249405,45.3
 4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,6,HVAC Heating Type And Fuel|Electricity ASHP,326462,59.4
 4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,-1,All,413635,75.2
-5,Dual Fuel Heat Pump System,1,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.2, 7.8 HSPF2, Integrated Backup, 95.0% AFUE NG, 35F switchover",97954,17.8
+5,Dual Fuel Heat Pump System,1,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15, 7.6 HSPF2, Integrated Backup, 95.0% AFUE NG, 35F switchover",97954,17.8
 5,Dual Fuel Heat Pump System,2,HVAC Cooling Efficiency|Ducted Heat Pump,97954,17.8
 5,Dual Fuel Heat Pump System,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,97954,17.8
-5,Dual Fuel Heat Pump System,4,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.2, 7.8 HSPF2, Integrated Backup, 92.5% AFUE NG, 35F switchover",147536,26.8
+5,Dual Fuel Heat Pump System,4,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER2 15, 7.6 HSPF2, Integrated Backup, 92.5% AFUE NG, 35F switchover",147536,26.8
 5,Dual Fuel Heat Pump System,5,HVAC Cooling Efficiency|Ducted Heat Pump,147536,26.8
 5,Dual Fuel Heat Pump System,6,HVAC Cooling Partial Space Conditioning|100% Conditioned,147536,26.8
 5,Dual Fuel Heat Pump System,-1,All,245490,44.6
