@@ -1,0 +1,21 @@
+Option Name	Type	Thickness [in]	Insulation Nominal R-Value [F-ft2-hr/Btu]	Insulation Location	Insulation Distance To Top [ft]	Insulation Distance To Bottom [ft]	Assembly R-Value [F-ft2-hr/Btu]
+"Solid Concrete, Uninsulated"	solid concrete		0				
+"Solid Concrete, Half Wall, R-5"	solid concrete		5			4	
+"Solid Concrete, Half Wall, R-10"	solid concrete		10			4	
+"Solid Concrete, Half Wall, R-15"	solid concrete		15			4	
+"Solid Concrete, Half Wall, R-20"	solid concrete		20			4	
+"Solid Concrete, Whole Wall, R-5"	solid concrete		5				
+"Solid Concrete, Whole Wall, R-10"	solid concrete		10				
+"Solid Concrete, Whole Wall, R-10.2, Interior"	solid concrete		10.2	interior			
+"Solid Concrete, Whole Wall, R-15"	solid concrete		15				
+"Solid Concrete, Whole Wall, R-20"	solid concrete		20				
+"Solid Concrete, Assembly R-10.69"	solid concrete						10.69
+"Concrete Block Foam Core, Whole Wall, R-18.9"	concrete block foam core		18.9				
+							
+# Type: The material type of the foundation wall.							
+# Thickness: The thickness of the foundation wall.							
+# Insulation Nominal R-Value: Nominal R-value for the foundation wall insulation.							
+# Insulation Location: Whether the insulation is on the interior or exterior of the foundation wall.							
+# Insulation Distance To Top: The distance from the top of the foundation wall to the top of the foundation wall insulation.							
+# Insulation Distance To Bottom: The distance from the top of the foundation wall to the bottom of the foundation wall insulation.							
+"# Assembly R-Value: Assembly R-value for the foundation walls. If provided, overrides the other foundation wall insulation inputs."							

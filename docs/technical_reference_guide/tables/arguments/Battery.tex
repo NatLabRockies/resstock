@@ -1,10 +1,5 @@
 \begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
 {The ResStock argument definitions set in the Battery characteristic} {table:hc_arg_def_battery}
 {Name & Required & Units & Type & Choices & Description}
-\texttt{battery\_present} & true &  & Boolean & true, false & Whether there is a lithium ion battery present.  \\ \hline
-\texttt{battery\_location} & false &  & Choice & auto, conditioned space, basement - conditioned, basement - unconditioned, crawlspace, crawlspace - vented, crawlspace - unvented, crawlspace - conditioned, attic, attic - vented, attic - unvented, garage, outside & The space type for the lithium ion battery location.   \\ \hline
-\texttt{battery\_power} & false & W & Double & auto & The rated power output of the lithium ion battery.   \\ \hline
-\texttt{battery\_capacity} & false & kWh & Double & auto & The nominal capacity of the lithium ion battery.   \\ \hline
-\texttt{battery\_usable\_capacity} & false & kWh & Double & auto & The usable capacity of the lithium ion battery.   \\ \hline
-\texttt{battery\_round\_trip\_efficiency} & false & Frac & Double & auto & The round trip efficiency of the lithium ion battery.   \\
+\texttt{battery} & false &  & Choice & None; 5.0 kWh; 7.5 kWh; 10.0 kWh; 12.5 kWh; 15.0 kWh; 17.5 kWh; 20.0 kWh; Detailed Example: 20.0 kWh, 6 kW, Garage; Detailed Example: 20.0 kWh, 6 kW, Outside; Detailed Example: 20.0 kWh, 6 kW, Outside, 80\% Efficiency & The size and type of battery storage.  \\
 \end{customLongTable}

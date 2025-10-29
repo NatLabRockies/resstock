@@ -376,7 +376,6 @@ class TestRunAnalysis < Minitest::Test
       next if message.include?('Building ID:')
 
       # Expected warnings
-      next if _expected_warning_message(message, 'The model contains existing objects and is being reset.')
       next if _expected_warning_message(message, 'HVAC setpoints have been automatically adjusted to prevent periods where the heating setpoint is greater than the cooling setpoint.')
       next if _expected_warning_message(message, 'It is not possible to eliminate all HVAC energy use (e.g. crankcase/defrost energy) in EnergyPlus during an unavailable period.')
       next if _expected_warning_message(message, 'It is not possible to eliminate all DHW energy use (e.g. water heater parasitics) in EnergyPlus during an unavailable period.')
@@ -391,7 +390,7 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, "Foundation type of 'AboveApartment' cannot have a non-zero height. Assuming height is zero.")
       next if _expected_warning_message(message, 'Could not find state average propane rate based on')
       next if _expected_warning_message(message, 'Could not find state average fuel oil rate based on')
-      next if _expected_warning_message(message, "Specified incompatible corridor; setting corridor position to 'Single Exterior (Front)'.")
+      next if _expected_warning_message(message, "Specified incompatible corridor; setting corridor position to 'Single Exterior Front'.")
       next if _expected_warning_message(message, 'DistanceToTopOfWindow is greater than 12 feet; this may indicate incorrect units. [context: /HPXML/Building/BuildingDetails/Enclosure/Windows/Window/Overhangs[number(Depth) > 0]')
       next if _expected_warning_message(message, 'Not calculating emissions because an electricity filepath for at least one emissions scenario could not be located.') # these are AK/HI samples
       next if _expected_warning_message(message, 'Could not find State=AK') # these are AK samples
@@ -416,6 +415,7 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, 'Unknown column found in schedule file: pre_peak_period')
       next if _expected_warning_message(message, "Could not find row='peak_period' in unavailable_periods.csv")
       next if _expected_warning_message(message, "Could not find row='pre_peak_period' in unavailable_periods.csv")
+      next if _expected_warning_message(message, 'Electric vehicle specified with no charger provided; home EV charging will not be modeled.')
 
       # For the EV minutes warning try replacing the number of minutes as a string rather than a number.
       new_message = message.gsub(/\(([^)]+)\)/) { |match| $1.match?(/^\d+(\.\d+)?$/) ? '(<number of minutes>)' : match }

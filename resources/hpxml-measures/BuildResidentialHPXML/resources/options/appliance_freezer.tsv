@@ -1,0 +1,30 @@
+Option Name	Rated Annual Consumption [kWh/yr]	Usage Multiplier	Location
+None			
+"935 kWh/yr, 90% Usage"	935	0.9	
+"935 kWh/yr, 100% Usage"	935		
+"935 kWh/yr, 110% Usage"	935	1.1	
+"712 kWh/yr, 90% Usage"	712	0.9	
+"712 kWh/yr, 100% Usage"	712		
+"712 kWh/yr, 110% Usage"	712	1.1	
+"641 kWh/yr, 90% Usage"	641	0.9	
+"641 kWh/yr, 100% Usage"	641		
+"641 kWh/yr, 110% Usage"	641	1.1	
+"568 kWh/yr, 90% Usage"	568	0.9	
+"568 kWh/yr, 100% Usage"	568		
+"568 kWh/yr, 110% Usage"	568	1.1	
+"417 kWh/yr, 90% Usage"	417	0.9	
+"417 kWh/yr, 100% Usage"	417		
+"417 kWh/yr, 110% Usage"	417	1.1	
+"375 kWh/yr, 90% Usage"	375	0.9	
+"375 kWh/yr, 100% Usage"	375		
+"375 kWh/yr, 110% Usage"	375	1.1	
+"354 kWh/yr, 90% Usage"	354	0.9	
+"354 kWh/yr, 100% Usage"	354		
+"354 kWh/yr, 110% Usage"	354	1.1	
+"Detailed Example: 712 kWh/yr, Conditioned Basement"	712		basement - conditioned
+"Detailed Example: 712 kWh/yr, Unconditioned Basement"	712		basement - unconditioned
+"Detailed Example: 712 kWh/yr, Garage"	712		garage
+			
+# Rated Annual Consumption: The EnergyGuide rated annual energy consumption for the freezer.			
+"# Usage Multiplier: Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants."			
+# Location: The space type where the freezer is located.			

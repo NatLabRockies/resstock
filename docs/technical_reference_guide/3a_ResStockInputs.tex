@@ -132,13 +132,9 @@ The U.S.~County where the sample is located.
 \paragraph{Options}
 The County characteristic options are structured using the State name and County name. An example of the option corresponding to Denver County in Colorado would be ``CO, Denver County''. The ResStock arguments \texttt{simulation\_control\_daylight\_saving\_enabled}, \texttt{site\_zip\_code}, \texttt{site\_time\_zone\_utc\_offset}, and \texttt{weather\_station\_epw\_filepath} are not constant across all the County options.
 
-The \texttt{simulation\_control\_daylight\_saving\_enabled} argument is set to ``true'' except in Arizona where all the counties are set to ``false.''
+The \texttt{location\_zip\_code} argument is assigned by using a single zip code for the entire county.
 
-The \texttt{site\_zip\_code} argument is assigned by using a single zip code for the entire county.
-
-The \texttt{site\_time\_zone\_utc\_offset} argument is assigned using the population centroid of each county. As time zones cut through counties, some units will have the wrong time zone. Since the population centroid is used, the bounding error for units being in the wrong counties is 50\%.
-
-The \texttt{weather\_station\_epw\_filepath} argument is ``../../../weather/<County GISJOIN>.epw'' where <County GISJOIN> is the NHGIS GISJOIN value for the county. The NHGISJOIN for a county always starts with the letter ``G'' followed by the state's two-digit FIPS, a ``0,'' and then the County 3-digit FIPS code. An example of this argument assignment for the option ``CO, Denver County'' is \texttt{weather\_station\_epw\_filepath}=../../../weather/G0800310.epw.
+The \texttt{location\_epw\_filepath} argument is ``../../../weather/<County GISJOIN>.epw'' where <County GISJOIN> is the NHGIS GISJOIN value for the county. The NHGISJOIN for a county always starts with the letter ``G'' followed by the state's two-digit FIPS, a ``0,'' and then the County 3-digit FIPS code. An example of this argument assignment for the option ``CO, Denver County'' is \texttt{location\_epw\_filepath}=../../../weather/G0800310.epw.
 
 \input{tables/arguments/County}
 
@@ -170,10 +166,6 @@ The Public Use Microdata Area (PUMA) from 2010 U.S.~Census that the sample is lo
 \end{itemize}
 \paragraph{Options}
 The options for PUMAs are structured by their state abbreviation and the PUMA code from the GISJOIN code. The GISJOIN values are found in the 2010 TIGER/LINE Basis file on the \href{https://usa.ipums.org/usa/volii/boundaries.shtml}{IPUMS GIS Boundary Files}  website. An example is G01002100, which represents state FIPS code AL, and 02100 is the AL, Elmore, Autauga, Montgomery -Outer- and Lowndes Counties PUMA.
-
-There are three ResStock arguments set with the PUMA options: \texttt{site\_elevation}, \texttt{site\_latitude}, and \texttt{site\_longitude}. All three of these arguments are set to ``auto'' and use the default \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-site}{OpenStudio-HPXML Building Site} values.
-
-\input{tables/arguments/PUMA}
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made.
@@ -256,10 +248,6 @@ The City where the sample is located.
 
 \paragraph{Options}
 The options are structured as the State abbreviation of the city, a comma, and the name of the city. An example is ``AR, Jonesboro,'' which corresponds to Jonesboro, Arkansas.
-
-The ResStock argument \texttt{site\_city} is assigned in the City characteristic. The argument is set to ``auto,'' which is the OpenStudio-HPXML default value; see the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-site}{Building Site} section of the documentation for the default values.
-
-\input{tables/arguments/City}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}

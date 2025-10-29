@@ -1,17 +1,6 @@
 \begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
 {The ResStock argument definitions set in the Eaves characteristic} {table:hc_arg_def_eaves}
 {Name & Required & Units & Type & Choices & Description}
-\texttt{geometry\_eaves\_depth} & true & ft & Double &  & The eaves depth of the roof.  \\ \hline
-\texttt{overhangs\_front\_depth} & true & ft & Double &  & The depth of overhangs for windows for the front facade.  \\ \hline
-\texttt{overhangs\_front\_distance\_to\_top\_of\_window} & true & ft & Double &  & The overhangs distance to the top of window for the front facade.  \\ \hline
-\texttt{overhangs\_front\_distance\_to\_bottom\_of\_window} & true & ft & Double &  & The overhangs distance to the bottom of window for the front facade.  \\ \hline
-\texttt{overhangs\_back\_depth} & true & ft & Double &  & The depth of overhangs for windows for the back facade.  \\ \hline
-\texttt{overhangs\_back\_distance\_to\_top\_of\_window} & true & ft & Double &  & The overhangs distance to the top of window for the back facade.  \\ \hline
-\texttt{overhangs\_back\_distance\_to\_bottom\_of\_window} & true & ft & Double &  & The overhangs distance to the bottom of window for the back facade.  \\ \hline
-\texttt{overhangs\_left\_depth} & true & ft & Double &  & The depth of overhangs for windows for the left facade.  \\ \hline
-\texttt{overhangs\_left\_distance\_to\_top\_of\_window} & true & ft & Double &  & The overhangs distance to the top of window for the left facade.  \\ \hline
-\texttt{overhangs\_left\_distance\_to\_bottom\_of\_window} & true & ft & Double &  & The overhangs distance to the bottom of window for the left facade.  \\ \hline
-\texttt{overhangs\_right\_depth} & true & ft & Double &  & The depth of overhangs for windows for the right facade.  \\ \hline
-\texttt{overhangs\_right\_distance\_to\_top\_of\_window} & true & ft & Double &  & The overhangs distance to the top of window for the right facade.  \\ \hline
-\texttt{overhangs\_right\_distance\_to\_bottom\_of\_window} & true & ft & Double &  & The overhangs distance to the bottom of window for the right facade.  \\
+\texttt{geometry\_eaves} & false &  & Choice & None; 1 ft; 2 ft; 3 ft; 4 ft; 5 ft & The type of eaves extending from the roof.  \\ \hline
+\texttt{enclosure\_overhangs} & false &  & Choice & None; 1ft, All Windows; 2ft, All Windows; 3ft, All Windows; 4ft, All Windows; 5ft, All Windows; 10ft, All Windows; 1ft, Front Windows; 2ft, Front Windows; 3ft, Front Windows; 4ft, Front Windows; 5ft, Front Windows; 10ft, Front Windows; 1ft, Back Windows; 2ft, Back Windows; 3ft, Back Windows; 4ft, Back Windows; 5ft, Back Windows; 10ft, Back Windows; 1ft, Left Windows; 2ft, Left Windows; 3ft, Left Windows; 4ft, Left Windows; 5ft, Left Windows; 10ft, Left Windows; 1ft, Right Windows; 2ft, Right Windows; 3ft, Right Windows; 4ft, Right Windows; 5ft, Right Windows; 10ft, Right Windows; Detailed Example: 1.5ft, Back/Left/Right Windows, 2ft Offset, 4ft Window Height; Detailed Example: 2.5ft, Front Windows, 1ft Offset, 5ft Window Height & The type of window overhangs.  \\
 \end{customLongTable}

@@ -1,0 +1,62 @@
+Option Name	Interior Fraction CFL [frac]	Interior Fraction LFL [frac]	Interior Fraction LED [frac]	Interior Usage Multiplier	Exterior Fraction CFL [frac]	Exterior Fraction LFL [frac]	Exterior Fraction LED [frac]	Exterior Usage Multiplier	Garage Fraction CFL [frac]	Garage Fraction LFL [frac]	Garage Fraction LED [frac]	Garage Usage Multiplier
+None												
+"100% Incandescent, 50% Usage"	0	0	0	0.5	0	0	0	0.5	0	0	0	0.5
+"100% Incandescent, 75% Usage"	0	0	0	0.75	0	0	0	0.75	0	0	0	0.75
+"100% Incandescent, 100% Usage"	0	0	0		0	0	0		0	0	0	
+"100% Incandescent, 150% Usage"	0	0	0	1.5	0	0	0	1.5	0	0	0	1.5
+"100% Incandescent, 200% Usage"	0	0	0	2	0	0	0	2	0	0	0	2
+"25% LED, 50% Usage"	0	0	0.25	0.5	0	0	0.25	0.5	0	0	0.25	0.5
+"25% LED, 75% Usage"	0	0	0.25	0.75	0	0	0.25	0.75	0	0	0.25	0.75
+"25% LED, 100% Usage"	0	0	0.25		0	0	0.25		0	0	0.25	
+"25% LED, 150% Usage"	0	0	0.25	1.5	0	0	0.25	1.5	0	0	0.25	1.5
+"25% LED, 200% Usage"	0	0	0.25	2	0	0	0.25	2	0	0	0.25	2
+"50% LED, 50% Usage"	0	0	0.5	0.5	0	0	0.5	0.5	0	0	0.5	0.5
+"50% LED, 75% Usage"	0	0	0.5	0.75	0	0	0.5	0.75	0	0	0.5	0.75
+"50% LED, 100% Usage"	0	0	0.5		0	0	0.5		0	0	0.5	
+"50% LED, 150% Usage"	0	0	0.5	1.5	0	0	0.5	1.5	0	0	0.5	1.5
+"50% LED, 200% Usage"	0	0	0.5	2	0	0	0.5	2	0	0	0.5	2
+"75% LED, 50% Usage"	0	0	0.75	0.5	0	0	0.75	0.5	0	0	0.75	0.5
+"75% LED, 75% Usage"	0	0	0.75	0.75	0	0	0.75	0.75	0	0	0.75	0.75
+"75% LED, 100% Usage"	0	0	0.75		0	0	0.75		0	0	0.75	
+"75% LED, 150% Usage"	0	0	0.75	1.5	0	0	0.75	1.5	0	0	0.75	1.5
+"75% LED, 200% Usage"	0	0	0.75	2	0	0	0.75	2	0	0	0.75	2
+"100% LED, 50% Usage"	0	0	1	0.5	0	0	1	0.5	0	0	1	0.5
+"100% LED, 75% Usage"	0	0	1	0.75	0	0	1	0.75	0	0	1	0.75
+"100% LED, 100% Usage"	0	0	1		0	0	1		0	0	1	
+"100% LED, 150% Usage"	0	0	1	1.5	0	0	1	1.5	0	0	1	1.5
+"100% LED, 200% Usage"	0	0	1	2	0	0	1	2	0	0	1	2
+"25% CFL, 50% Usage"	0.25	0	0	0.5	0.25	0	0	0.5	0.25	0	0	0.5
+"25% CFL, 75% Usage"	0.25	0	0	0.75	0.25	0	0	0.75	0.25	0	0	0.75
+"25% CFL, 100% Usage"	0.25	0	0		0.25	0	0		0.25	0	0	
+"25% CFL, 150% Usage"	0.25	0	0	1.5	0.25	0	0	1.5	0.25	0	0	1.5
+"25% CFL, 200% Usage"	0.25	0	0	2	0.25	0	0	2	0.25	0	0	2
+"50% CFL, 50% Usage"	0.5	0	0	0.5	0.5	0	0	0.5	0.5	0	0	0.5
+"50% CFL, 75% Usage"	0.5	0	0	0.75	0.5	0	0	0.75	0.5	0	0	0.75
+"50% CFL, 100% Usage"	0.5	0	0		0.5	0	0		0.5	0	0	
+"50% CFL, 150% Usage"	0.5	0	0	1.5	0.5	0	0	1.5	0.5	0	0	1.5
+"50% CFL, 200% Usage"	0.5	0	0	2	0.5	0	0	2	0.5	0	0	2
+"75% CFL, 50% Usage"	0.75	0	0	0.5	0.75	0	0	0.5	0.75	0	0	0.5
+"75% CFL, 75% Usage"	0.75	0	0	0.75	0.75	0	0	0.75	0.75	0	0	0.75
+"75% CFL, 100% Usage"	0.75	0	0		0.75	0	0		0.75	0	0	
+"75% CFL, 150% Usage"	0.75	0	0	1.5	0.75	0	0	1.5	0.75	0	0	1.5
+"75% CFL, 200% Usage"	0.75	0	0	2	0.75	0	0	2	0.75	0	0	2
+"100% CFL, 50% Usage"	1	0	0	0.5	1	0	0	0.5	1	0	0	0.5
+"100% CFL, 75% Usage"	1	0	0	0.75	1	0	0	0.75	1	0	0	0.75
+"100% CFL, 100% Usage"	1	0	0		1	0	0		1	0	0	
+"100% CFL, 150% Usage"	1	0	0	1.5	1	0	0	1.5	1	0	0	1.5
+"100% CFL, 200% Usage"	1	0	0	2	1	0	0	2	1	0	0	2
+Detailed Example: 10% CFL	0.1	0	0		0.1	0	0		0.1	0	0	
+"Detailed Example: 40% CFL, 10% LFL, 25% LED"	0.4	0.1	0.25		0.4	0.1	0.25		0.4	0.1	0.25	
+												
+"# Interior Fraction CFL: Fraction of all interior lamps that are compact fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent."												
+"# Interior Fraction LFL: Fraction of all interior lamps that are linear fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent."												
+"# Interior Fraction LED: Fraction of all interior lamps that are light emitting diodes. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent."												
+"# Interior Usage Multiplier: Multiplier on the interior lighting energy usage that can reflect, e.g., high/low usage occupants."												
+"# Exterior Fraction CFL: Fraction of all exterior lamps that are compact fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent."												
+"# Exterior Fraction LFL: Fraction of all exterior lamps that are linear fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent."												
+"# Exterior Fraction LED: Fraction of all exterior lamps that are light emitting diodes. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent."												
+"# Exterior Usage Multiplier: Multiplier on the exterior lighting energy usage that can reflect, e.g., high/low usage occupants."												
+"# Garage Fraction CFL: Fraction of all garage lamps that are compact fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent."												
+"# Garage Fraction LFL: Fraction of all garage lamps that are linear fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent."												
+"# Garage Fraction LED: Fraction of all garage lamps that are light emitting diodes. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent."												
+"# Garage Usage Multiplier: Multiplier on the garage lighting energy usage that can reflect, e.g., high/low usage occupants."												

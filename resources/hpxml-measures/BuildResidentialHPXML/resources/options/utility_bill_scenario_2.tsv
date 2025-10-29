@@ -1,0 +1,29 @@
+Option Name	Name	Electricity File Path	Electricity Fixed Charge [$/month]	Electricity Marginal Rate [$/kWh]	Natural Gas Fixed Charge [$/month]	Natural Gas Marginal Rate [$/therm]	Propane Marginal Rate [$/gallon]	Fuel Oil Marginal Rate [$/gallon]	Coal Marginal Rate [$/kBtu]	Wood Marginal Rate [$/kBtu]	Wood Pellets Marginal Rate [$/kBtu]	PV Compensation Type	PV Net Metering Annual Excess Sellback Rate Type	PV Net Metering Annual Excess Sellback Rate [$/kWh]	PV Feed-in Tariff Rate [$/kWh]	PV Monthly Grid Connection Fee Units	PV Monthly Grid Connection Fee
+None																	
+Default (EIA Average Rates)	Default																
+"Detailed Example: $0.12/kWh, $1.1/therm, $12/month"	Custom		12	0.12	12	1.1											
+Detailed Example: Sample Tiered Rate	Tiered	../../ReportUtilityBills/resources/detailed_rates/Sample Tiered Rate.json															
+Detailed Example: Sample Time-of-Use Rate	TOU	../../ReportUtilityBills/resources/detailed_rates/Sample Time-of-Use Rate High Peak.json															
+Detailed Example: Sample Tiered and Time-of-Use Rate	Tiered and TOU	../../ReportUtilityBills/resources/detailed_rates/Sample Tiered Time-of-Use Rate.json															
+Detailed Example: Sample Real-Time Pricing	Real-Time Pricing	../../ReportUtilityBills/resources/detailed_rates/Sample Real-Time Pricing Rate.json															
+Detailed Example: Net Metering w/ Wholesale Excess Rate	Net Metering w/ Wholesale Excess Rate		10	0.12	11	1.1						NetMetering	User-Specified	0.035		$/kW	2.5
+Detailed Example: Net Metering w/ Retail Excess Rate	Net Metering w/ Retail Excess Rate		10	0.12	11	1.1						NetMetering	Retail Electricity Cost			$/kW	2.5
+Detailed Example: Feed-in Tariff	Feed-In Tariff		10	0.12	11	1.1						FeedInTariff	Retail Electricity Cost		0.13	$	7.5
+																	
+# Name: Name of utility bill calculation scenario.																	
+# Electricity File Path: Electricity tariff file specified as an absolute/relative path to a file with utility rate structure information. Tariff file must be formatted to OpenEI API version 7.																	
+# Electricity Fixed Charge: Electricity monthly fixed charge.																	
+# Electricity Marginal Rate: Electricity marginal rate.																	
+# Natural Gas Fixed Charge: Natural gas monthly fixed charge.																	
+# Natural Gas Marginal Rate: Natural gas marginal rate.																	
+# Propane Marginal Rate: Propane marginal rate.																	
+# Fuel Oil Marginal Rate: Fuel oil marginal rate.																	
+# Coal Marginal Rate: Coal marginal rate.																	
+# Wood Marginal Rate: Wood marginal rate.																	
+# Wood Pellets Marginal Rate: Wood pellets marginal rate.																	
+# PV Compensation Type: Choose between net-metering and feed-in tariffs.																	
+"# PV Net Metering Annual Excess Sellback Rate Type: When annual PV production exceeds the annual building electricity consumption, this rate, which is often significantly below the retail rate, determines the value of the excess electricity sold back to the utility. This may happen to offset gas consumption, for example. Choose between the retail electricity cost and a user-specified value."																	
+# PV Net Metering Annual Excess Sellback Rate: The rate if the rate type is user-specified.																	
+# PV Feed-in Tariff Rate: The feed-in tariff rate.																	
+# PV Monthly Grid Connection Fee Units: The monthly grid connection fee units if there's PV. Choose between $ and $/kW.																	
+# PV Monthly Grid Connection Fee: The monthly grid connection fee if there's PV.																	

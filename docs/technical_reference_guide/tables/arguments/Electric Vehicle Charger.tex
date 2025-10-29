@@ -1,7 +1,5 @@
 \begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
 {The ResStock argument definitions set in the Electric Vehicle Charger characteristic} {table:hc_arg_def_electric_vehicle_charger}
 {Name & Required & Units & Type & Choices & Description}
-\texttt{ev\_charger\_present} & false &  & Boolean & auto, true, false & Whether there is an electric vehicle charger present.  \\ \hline
-\texttt{ev\_charger\_level} & false &  & Choice & auto, 1, 2, 3 & The charging level of the EV charger.   \\ \hline
-\texttt{ev\_charger\_power} & false & W & Double & auto & The rated power output of the EV charger.   \\
+\texttt{electric\_vehicle\_charger} & false &  & Choice & None; Level 1, 10\% Charging at Home; Level 1, 30\% Charging at Home; Level 1, 50\% Charging at Home; Level 1, 70\% Charging at Home; Level 1, 90\% Charging at Home; Level 1, 100\% Charging at Home; Level 2, 10\% Charging at Home; Level 2, 30\% Charging at Home; Level 2, 50\% Charging at Home; Level 2, 70\% Charging at Home; Level 2, 90\% Charging at Home; Level 2, 100\% Charging at Home; Detailed Example: Level 2, 7000 W, 75\% Charging at Home & The type and usage of electric vehicle charger.  \\
 \end{customLongTable}

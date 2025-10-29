@@ -47,18 +47,3 @@ def get_lookup_and_saturations_csv_data(resources_dir)
   option_sat_csv_data = CSV.open(option_sat_file, quote_char: '"', col_sep: ',').each.to_a
   return lookup_csv_data, option_sat_csv_data
 end
-
-# Refine resstockarguments_xml
-def refine_resstockarguments_xml(resstockarguments_xml, buildreshpxmlarguments_xml, name, properties)
-  # Get required and type from BuildResidentialHPXML
-  ['required', 'type'].each do |property|
-    resstockarguments_xml[name][property] = buildreshpxmlarguments_xml[name][property] if buildreshpxmlarguments_xml.keys.include?(name)
-  end
-
-  # Add "auto" to Choices for optional String/Double/Integer
-  extra_args_with_auto = ['year_built', 'geometry_unit_num_occupants', 'geometry_unit_cfa', 'heat_pump_backup_heating_efficiency'] # these are special because ResStockArguments provides the default instead of OS-HPXML
-  if (properties['description'].include?('OS-HPXML default') && ['String', 'Double', 'Integer'].include?(properties['type'])) ||
-     extra_args_with_auto.include?(name)
-    resstockarguments_xml[name]['choices'].unshift('auto')
-  end
-end

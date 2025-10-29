@@ -1,8 +1,6 @@
 \begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
 {The ResStock argument definitions set in the County characteristic} {table:hc_arg_def_county}
 {Name & Required & Units & Type & Choices & Description}
-\texttt{simulation\_control\_daylight\_saving\_enabled} & false &  & Boolean & auto, true, false & Whether to use daylight saving.   \\ \hline
-\texttt{site\_zip\_code} & false &  & String &  & Zip code of the home address. Either this or the Weather Station: EnergyPlus Weather (EPW) Filepath input below must be provided.  \\ \hline
-\texttt{site\_time\_zone\_utc\_offset} & false & hr & Double & auto & Time zone UTC offset of the home address. Must be between -12 and 14.   \\ \hline
-\texttt{weather\_station\_epw\_filepath} & false &  & String &  & Path of the EPW file. Either this or the Site: Zip Code input above must be provided.  \\
+\texttt{location\_zip\_code} & false &  & String &  & Zip code of the home address. Either this or the EnergyPlus Weather (EPW) File Path input below must be provided.  \\ \hline
+\texttt{location\_epw\_path} & false &  & String &  & Path to the EPW file. Either this or the Zip Code input above must be provided.  \\
 \end{customLongTable}

@@ -858,15 +858,10 @@ Constructed using U.S. EIA 2020 RECS microdata.
 \end{itemize}
 
 \paragraph{Options}
-This characteristic determines whether there is a clothes washer present in the housing unit. The characteristic sets the \texttt{clothes\_washer\_present} ResStock argument (Table \ref{table:hc_opt_clothes_washer_presence}).
+This characteristic determines whether there is a clothes washer present in the housing unit (Table \ref{table:hc_opt_clothes_washer_presence}).
 
 %options table
 \input{tables/options/Clothes Washer Presence}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_clothes_washer_presence}.
-
-%arguments table
-\input{tables/arguments/Clothes Washer Presence}
 
 \paragraph{Distribution Assumption(s)}
 Due to the low sample count, the input file is constructed by downscaling a housing unit sub-input file with a household sub-input file. The sub-input files have the following dependencies. Housing unit sub-input file: dependencies = Geometry Building Type RECS, State, Heating Fuel, and Vintage, with the following coarsening order:
@@ -1557,10 +1552,6 @@ The \textit{No Exterior Use} option is assigned to all buildings in ResStock (Ta
 
 \input{tables/options/Holiday Lighting}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_holiday_lighting}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#exterior-holiday-lighting}{Exterior Holiday Lighting} documentation for the available HPXML schema elements, default values, and constraints. 
-
-\input{tables/arguments/Holiday Lighting}
-
 \paragraph{Distribution Assumption(s)}
 None. 
 
@@ -1718,11 +1709,9 @@ The dwelling unit owns an electric vehicle.
 \end{itemize}
 
 \paragraph{Options}
-The options for Electric Vehicle Ownership characteristic determine if other arguments for the EV are used. The characteristic sets the \texttt{vehicle\_type} ResStock argument. The argument definition is found in Table \ref{table:hc_arg_def_electric_vehicle_ownership}.
+The options for Electric Vehicle Ownership characteristic determine if other arguments for the EV are used.
 
-\input{tables/arguments/Electric Vehicle Ownership}
-
-The options and their ResStock arguments values can be found in Table \ref{table:hc_opt_electric_vehicle_ownership}. The Void option is used for impossible dependency conditions and is not sampled.
+The options can be found in Table \ref{table:hc_opt_electric_vehicle_ownership}. The Void option is used for impossible dependency conditions and is not sampled.
 
 \input{tables/options/Electric Vehicle Ownership}
 

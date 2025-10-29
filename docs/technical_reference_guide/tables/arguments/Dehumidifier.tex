@@ -1,10 +1,6 @@
 \begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
 {The ResStock argument definitions set in the Dehumidifier characteristic} {table:hc_arg_def_dehumidifier}
 {Name & Required & Units & Type & Choices & Description}
-\texttt{dehumidifier\_type} & true &  & Choice & none, portable, whole-home & The type of dehumidifier.  \\ \hline
-\texttt{dehumidifier\_efficiency\_type} & true &  & Choice & EnergyFactor, IntegratedEnergyFactor & The efficiency type of dehumidifier.  \\ \hline
-\texttt{dehumidifier\_efficiency} & true & liters/kWh & Double &  & The efficiency of the dehumidifier.  \\ \hline
-\texttt{dehumidifier\_capacity} & true & pint/day & Double &  & The capacity (water removal rate) of the dehumidifier.  \\ \hline
-\texttt{dehumidifier\_rh\_setpoint} & true & Frac & Double &  & The relative humidity setpoint of the dehumidifier.  \\ \hline
-\texttt{dehumidifier\_fraction\_dehumidification\_load\_served} & true & Frac & Double &  & The dehumidification load served fraction of the dehumidifier.  \\
+\texttt{appliance\_dehumidifier} & false &  & Choice & None; Portable, 15 pints/day; Portable, 20 pints/day; Portable, 30 pints/day; Portable, 40 pints/day; Whole-Home, 60 pints/day; Whole-Home, 75 pints/day; Whole-Home, 95 pints/day; Whole-Home, 125 pints/day; Detailed Example: Portable, 40 pints/day, EF 1.8; Detailed Example: Whole-Home, 60 pints/day, EF 2.3; Detailed Example: Portable, 40 pints/day, IEF 1.4 & The type of dehumidifier.  \\ \hline
+\texttt{appliance\_dehumidifier\_setpoint} & false &  & Choice & 40\% RH; 45\% RH; 50\% RH; 55\% RH; 60\% RH; 65\% RH & The dehumidifier's relative humidity (RH) setpoint.  \\
 \end{customLongTable}

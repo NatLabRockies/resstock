@@ -1,19 +1,16 @@
 # frozen_string_literal: true
 
+resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../../resources'))
+
 require 'fileutils'
 require_relative '../../resources/util'
-
-resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../../resources'))
+require_relative File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/resources/options')
 
 filepath = File.read(File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/measure.xml'))
 buildreshpxmlarguments_xml = get_measure_xml(filepath)
 
 filepath = File.read(File.join(resources_dir, '../measures/ResStockArguments/measure.xml'))
 resstockarguments_xml = get_measure_xml(filepath)
-
-resstockarguments_xml.each do |name, properties|
-  refine_resstockarguments_xml(resstockarguments_xml, buildreshpxmlarguments_xml, name, properties)
-end
 
 arg_order = get_arg_order(buildreshpxmlarguments_xml, resstockarguments_xml)
 arguments_cols = get_arguments_cols()
@@ -55,6 +52,8 @@ parameters << 'HVAC Heating Efficiency - heat_pump'
 # Accommodate special "storage and tankless" and "solar" options
 parameters << 'Water Heater Efficiency - water_heater'
 parameters << 'Water Heater Efficiency - solar_thermal'
+
+arg_map = {}
 
 parameters.each do |parameter|
   parameter_name = parameter
@@ -100,7 +99,7 @@ parameters.each do |parameter|
       required = resstockarguments_xml[r_argument]['required']
       units = resstockarguments_xml[r_argument]['units'].gsub('$', '\$').gsub('#', '\#').gsub('^2', '\textsuperscript{2}').gsub('^3', '\textsuperscript{3}')
       type = resstockarguments_xml[r_argument]['type']
-      choices = resstockarguments_xml[r_argument]['choices'].join(', ')
+      choices = resstockarguments_xml[r_argument]['choices'].join('; ').gsub('%', '\\%').gsub('&', '\\\&')
       description = resstockarguments_xml[r_argument]['description'].gsub('%', '\\%').gsub('_', '\_').gsub('&', '\\\&')
       desc_exclusions.each do |desc_exclusion|
         ix = description.index(desc_exclusion)
@@ -123,6 +122,7 @@ parameters.each do |parameter|
 
   f = File.open(File.join(options_folder, "#{parameter}.tex"), 'w')
 
+  # Options and stock saturation
   options = {}
   option_sat_csv_data.each do |param_option_row|
     # If the parameter does not match next
@@ -172,8 +172,7 @@ parameters.each do |parameter|
     lookup_csv_data.each do |lookup_row|
       next if lookup_row[0] != parameter_name
       next if lookup_row[1] != option
-
-      next unless lookup_row[2] == 'ResStockArguments'
+      next if lookup_row[2] != 'ResStockArguments'
 
       # If option specifies arguments, insert arguments according to the order of r_arguments
       r_arguments.each do |argument|
@@ -181,12 +180,24 @@ parameters.each do |parameter|
         lookup_row[3..-1].each do |argument_value|
           arg, value = argument_value.split('=')
 
-          if parameter == 'HVAC Shared Efficiencies'
-            next if arg.include?('cooling_system_')
-          end
+          tsv_filename = "#{arg}.tsv"
+          tsv_filepath = File.join(resources_dir, "hpxml-measures/BuildResidentialHPXML/resources/options/#{tsv_filename}")
+          if File.exist?(tsv_filepath)
+            args = {}
+            get_option_properties(args, tsv_filename, value)
 
-          if argument == arg
-            options[option][arg] = value
+            arg_map[arg] = args.keys
+            args.keys.each do |arg_key|
+              if parameter == 'HVAC Shared Efficiencies'
+                next if arg_key.to_s.include?('cooling_system_')
+              end
+
+              options[option][arg_key.to_s] = args[arg_key]
+            end
+          else
+            if argument == arg
+              options[option][arg] = value
+            end
           end
         end
       end
@@ -195,12 +206,20 @@ parameters.each do |parameter|
 
   changing_args = []
   r_arguments.each do |r_argument|
-    vals = []
-    options.keys.each do |option|
-      vals << options[option][r_argument]
+    if arg_map.keys.include?(r_argument)
+      arguments = arg_map[r_argument]
+    else
+      arguments = [r_argument]
     end
-    if (vals.uniq.size != 1) || (vals.size == 1)
-      changing_args << r_argument
+
+    arguments.each do |r_arg|
+      vals = []
+      options.keys.each do |option|
+        vals << options[option][r_arg.to_s]
+      end
+      if (vals.uniq.size != 1) || (vals.size == 1)
+        changing_args << r_arg.to_s
+      end
     end
   end
 
@@ -223,17 +242,18 @@ parameters.each do |parameter|
     end
   end
   f.puts("#{row}| }")
+  caption = "{#{parameter_name}"
   if parameter.include?('heating_system')
-    f.puts("{#{parameter_name} non-heat pump heating system options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
+    caption += ' non-heat pump heating system'
   elsif parameter.include?('heat_pump')
-    f.puts("{#{parameter_name} heat pump options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
+    caption += ' heat pump'
   elsif parameter.include?('water_heater')
-    f.puts("{#{parameter_name} storage and tankless options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
+    caption += ' storage and tankless'
   elsif parameter.include?('solar_thermal')
-    f.puts("{#{parameter_name} solar thermal options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
-  else
-    f.puts("{#{parameter_name} options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
+    caption += ' solar thermal'
   end
+  caption += " options and properties that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}"
+  f.puts(caption)
 
   row = '{Option name'
   if saturation_inclusions.include?(parameter_name)
@@ -250,7 +270,7 @@ parameters.each do |parameter|
       row += " & #{options[option]['sat']}"
     end
     changing_args.each_with_index do |changing_arg, _i|
-      row += " & #{options[option][changing_arg]}"
+      row += " & #{options[option][changing_arg]}".gsub('%', '\\%')
     end
     row = "#{row} \\\\"
     if i < options.keys.size - 1
