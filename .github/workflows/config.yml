@@ -747,6 +747,26 @@ jobs:
           path: test/base_results/sdr_comparisons
           if-no-files-found: error
 
+  data-dictionary:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          
+      - name: Generate data dictionay
+        run: |
+          python postprocessing/resstockpostproc/data_dict.py
+      - name: Generate enumeration dictionay
+        run: |
+          python postprocessing/resstockpostproc/enum_dict.py
+
   standard-plots-tests:
     runs-on: ubuntu-22.04
     steps:
