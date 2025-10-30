@@ -759,12 +759,12 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Generate data and enumeration dictionay
+        run: |
+          pip install pandas
           
-      - name: Generate data dictionay
-        run: |
           python postprocessing/resstockpostproc/data_dict.py
-      - name: Generate enumeration dictionay
-        run: |
           python postprocessing/resstockpostproc/enum_dict.py
 
   standard-plots-tests:
