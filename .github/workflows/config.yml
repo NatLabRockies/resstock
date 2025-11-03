@@ -714,3 +714,22 @@ jobs:
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
+  data-dictionary:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate data and enumeration dictionay
+        run: |
+          pip install pandas
+          
+          python postprocessing/resstockpostproc/data_dict.py
+          python postprocessing/resstockpostproc/enum_dict.py
