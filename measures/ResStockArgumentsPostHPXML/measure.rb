@@ -83,6 +83,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     args = convert_args(arguments(model), args)
     @args = args
 
+    # Load Existing HPXML
+    hpxml_path = File.expand_path('../existing.xml') # this is the defaulted hpxml
+    hpxml = HPXML.new(hpxml_path: hpxml_path)
+    existing_hpxml_bldg = hpxml.buildings[0]
+
     @hpxml_path = args[:hpxml_path]
     @hpxml_path = File.expand_path(@hpxml_path) unless (Pathname.new @hpxml_path).absolute?
     raise "'#{@hpxml_path}' does not exist or is not an .xml file." unless File.exist?(@hpxml_path) && @hpxml_path.downcase.end_with?('.xml')
@@ -383,6 +388,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       end
 
       # HVAC systems
+
+      set_existing_system_as_heat_pump_backup(runner, args, hpxml_bldg, existing_hpxml_bldg)
+
       hpxml_bldg.heating_systems.each do |heating_system|
         if heating_system.primary_system
           heating_system.heating_capacity = args[:heating_system_heating_capacity] unless args[:heating_system_heating_capacity].nil?
@@ -404,9 +412,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
             end
           end
         else
-          heating_system.heating_system_type = args[:heating_system_2_type] unless args[:heating_system_2_type].nil?
-          heating_system.heating_system_fuel = args[:heating_system_2_fuel] unless args[:heating_system_2_fuel].nil?
-          heating_system.heating_system_efficiency_percent = args[:heating_system_2_heating_efficiency] unless args[:heating_system_2_heating_efficiency].nil?
+          # heating_system.heating_system_type = args[:heating_system_2_type] unless args[:heating_system_2_type].nil?
+          # heating_system.heating_system_fuel = args[:heating_system_2_fuel] unless args[:heating_system_2_fuel].nil?
+          # heating_system.heating_system_efficiency_percent = args[:heating_system_2_heating_efficiency] unless args[:heating_system_2_heating_efficiency].nil?
           heating_system.heating_capacity = args[:heating_system_2_heating_capacity] unless args[:heating_system_2_heating_capacity].nil?
           heating_system.heating_autosizing_factor = args[:heating_system_2_heating_autosizing_factor] unless args[:heating_system_2_heating_autosizing_factor].nil?
           heating_system.heating_autosizing_limit = args[:heating_system_2_heating_autosizing_limit] unless args[:heating_system_2_heating_autosizing_limit].nil?
@@ -441,13 +449,13 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         heat_pump.heating_capacity = args[:heat_pump_heating_capacity] unless args[:heat_pump_heating_capacity].nil?
         heat_pump.heating_autosizing_factor = args[:heat_pump_heating_autosizing_factor] unless args[:heat_pump_heating_autosizing_factor].nil?
         heat_pump.heating_autosizing_limit = args[:heat_pump_heating_autosizing_limit] unless args[:heat_pump_heating_autosizing_limit].nil?
-        heat_pump.fraction_heat_load_served = args[:heat_pump_fraction_heat_load_served] unless args[:heat_pump_fraction_heat_load_served].nil?
+        # heat_pump.fraction_heat_load_served = args[:heat_pump_fraction_heat_load_served] unless args[:heat_pump_fraction_heat_load_served].nil?
         heat_pump.cooling_capacity = args[:heat_pump_cooling_capacity] unless args[:heat_pump_cooling_capacity].nil?
         heat_pump.cooling_autosizing_factor = args[:heat_pump_cooling_autosizing_factor] unless args[:heat_pump_cooling_autosizing_factor].nil?
         heat_pump.cooling_autosizing_limit = args[:heat_pump_cooling_autosizing_limit] unless args[:heat_pump_cooling_autosizing_limit].nil?
-        heat_pump.backup_type = args[:heat_pump_backup_type] unless args[:heat_pump_backup_type].nil?
-        heat_pump.backup_heating_fuel = args[:heat_pump_backup_fuel] unless args[:heat_pump_backup_fuel].nil?
-        heat_pump.backup_heating_efficiency_percent = args[:heat_pump_backup_heating_efficiency] unless args[:heat_pump_backup_heating_efficiency].nil?
+        # heat_pump.backup_type = args[:heat_pump_backup_type] unless args[:heat_pump_backup_type].nil?
+        # heat_pump.backup_heating_fuel = args[:heat_pump_backup_fuel] unless args[:heat_pump_backup_fuel].nil?
+        # heat_pump.backup_heating_efficiency_percent = args[:heat_pump_backup_heating_efficiency] unless args[:heat_pump_backup_heating_efficiency].nil?
         heat_pump.backup_heating_capacity = args[:heat_pump_backup_heating_capacity] unless args[:heat_pump_backup_heating_capacity].nil?
         heat_pump.backup_heating_autosizing_factor = args[:heat_pump_backup_heating_autosizing_factor] unless args[:heat_pump_backup_heating_autosizing_factor].nil?
         heat_pump.backup_heating_autosizing_limit = args[:heat_pump_backup_heating_autosizing_limit] unless args[:heat_pump_backup_heating_autosizing_limit].nil?
@@ -550,6 +558,121 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     XMLHelper.write_file(hpxml_doc, @hpxml_path)
 
     return true
+  end
+
+  def get_detailed_hvac_arguments(args)
+    # Returns a hash of detailed option properties (from the option TSV) for the given HVAC systems
+    hvac_args = {}
+    [:hvac_heating_system,
+     :hvac_heating_system_2,
+     :hvac_cooling_system,
+     :hvac_heat_pump].each do |parameter_name|
+      tsv_filename = "#{parameter_name}.tsv"
+      get_option_properties(hvac_args, tsv_filename, args[parameter_name])
+    end
+    return hvac_args
+  end
+
+  def set_existing_system_as_heat_pump_backup(runner, args, hpxml_bldg, existing_hpxml_bldg)
+    # Retain Existing Heating System as Heat Pump Backup
+    if args[:hvac_heat_pump_backup_use_existing_system]
+      hvac_args = get_detailed_hvac_arguments(args)
+
+      # Only set the backup if the heat pump is applied and there is an existing heating system
+      heat_pump_type = hvac_args[:hvac_heat_pump_type]
+
+      if not heat_pump_type.nil?
+        heating_system = get_heating_system(existing_hpxml_bldg)
+        heat_pump = hpxml_bldg.heat_pumps[-1]
+
+        if not heating_system.nil?
+          heat_pump_is_ducted = hvac_args[:hvac_heat_pump_is_ducted]
+          heat_pump_backup_type = get_heat_pump_backup_type(heating_system.distribution_system, heat_pump_type, heat_pump_is_ducted)
+
+          # Integrated; heat pump's distribution system and blower fan power applies to the backup heating
+          # e.g., ducted heat pump (e.g., ashp, gshp, ducted minisplit) with ducted (e.g., furnace) backup
+          if heat_pump_backup_type == HPXML::HeatPumpBackupTypeIntegrated
+
+            # Likely only fuel-fired furnace as integrated backup
+            if heating_system.heating_system_fuel != HPXML::FuelTypeElectricity
+              heat_pump.backup_heating_fuel = heating_system.heating_system_fuel
+              heat_pump.backup_heating_efficiency_afue = heating_system.heating_efficiency_afue
+              heat_pump.backup_heating_efficiency_percent = heating_system.heating_efficiency_percent
+              heat_pump.backup_heating_capacity = heating_system.heating_capacity
+              heat_pump.backup_heating_autosizing_factor = heating_system.heating_autosizing_factor
+              heat_pump.backup_type = heat_pump_backup_type
+
+              runner.registerInfo("Found '#{heating_system.heating_system_type}' heating system type; setting it as 'heat_pump_backup_type=#{heat_pump_backup_type}'.")
+            else # Likely would not have electric furnace as integrated backup
+              runner.registerInfo("Found '#{heating_system.heating_system_type}' heating system type with '#{heating_system.heating_system_fuel}' fuel type; not setting it as integrated backup.")
+            end
+
+          # Separate; backup system has its own distribution system
+          # e.g., ductless heat pump (e.g., ductless minisplit) with ducted (e.g., furnace) or ductless (e.g., boiler) backup
+          # e.g., ducted heat pump (e.g., ashp, gshp) with ductless (e.g., boiler) backup
+          elsif heat_pump_backup_type == HPXML::HeatPumpBackupTypeSeparate
+
+            hpxml_bldg.heating_systems.add(**heating_system.to_h)
+
+            if heating_system.distribution_system
+              hpxml_bldg.hvac_distributions.add(**heating_system.distribution_system.to_h)
+              hvac_distribution = hpxml_bldg.hvac_distributions[-1]
+
+              heating_system.distribution_system.duct_leakage_measurements.each do |duct_leakage_measurement|
+                hvac_distribution.duct_leakage_measurements.add(**duct_leakage_measurement.to_h)
+              end
+
+              heating_system.distribution_system.ducts.each do |duct|
+                hvac_distribution.ducts.add(**duct.to_h)
+              end
+            end
+
+            heating_system = hpxml_bldg.heating_systems[-1]
+            heating_system.id = "HeatingSystem#{hpxml_bldg.heating_systems.size}"
+            heating_system.primary_system = nil
+            heating_system.fraction_heat_load_served = nil
+
+            if not hvac_distribution.nil?
+              hvac_distribution.id = "HVACDistribution#{hpxml_bldg.hvac_distributions.size}"
+              heating_system.distribution_system_idref = hvac_distribution.id
+            end
+
+            heat_pump.fraction_heat_load_served = 1.0 # It's possible this was < 1.0 due to adjustment for secondary heating system
+            heat_pump.backup_heating_fuel = nil
+            heat_pump.backup_heating_efficiency_afue = nil
+            heat_pump.backup_heating_efficiency_percent = nil
+            heat_pump.backup_heating_capacity = nil
+            heat_pump.backup_heating_autosizing_factor = nil
+            heat_pump.backup_type = heat_pump_backup_type
+            heat_pump.backup_system_idref = heating_system.id
+
+            runner.registerInfo("Found '#{heating_system.heating_system_type}' heating system type; setting it as 'heat_pump_backup_type=#{heat_pump_backup_type}'.")
+          end
+        elsif heating_system.nil?
+          heat_pump.backup_type = heat_pump_backup_type
+          heat_pump.backup_heating_fuel = HPXML::FuelTypeElectricity
+          heat_pump.backup_heating_efficiency_percent = 1
+
+          runner.registerWarning('Either a primary heating system was not found, or it was found but is a shared system; not setting it as heat pump backup.')
+        end
+      end
+    end
+  end
+
+  def get_heating_system(hpxml_bldg)
+    return hpxml_bldg.heating_systems.find { |h| h.primary_system && !h.is_shared_system }
+  end
+
+  def get_heat_pump_backup_type(heating_distribution_system, heat_pump_type, heat_pump_is_ducted)
+    ducted_backup = (!heating_distribution_system.nil? && heating_distribution_system.distribution_system_type == HPXML::HVACDistributionTypeAir)
+    if ducted_backup
+      if ([HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpGroundToAir].include?(heat_pump_type) ||
+         ([HPXML::HVACTypeHeatPumpMiniSplit].include?(heat_pump_type) && heat_pump_is_ducted))
+        return HPXML::HeatPumpBackupTypeIntegrated
+      end
+    end
+
+    return HPXML::HeatPumpBackupTypeSeparate
   end
 
   # Determines if HVAC flexibility modifications should be skipped

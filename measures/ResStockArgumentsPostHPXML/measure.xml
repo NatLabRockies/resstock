@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>1ca66de9-2daa-45c8-a7de-cacabe74032c</version_id>
-  <version_modified>2025-10-06T19:01:39Z</version_modified>
+  <version_id>4102d702-bd3d-4d03-bc27-94975d5bfb2c</version_id>
+  <version_modified>2025-11-03T19:02:06Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -4009,31 +4009,23 @@
       <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>Central AC, SEER 13.0</default_value>
+      <default_value>Central AC, SEER2 13.4</default_value>
       <choices>
         <choice>
           <value>None</value>
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 8.0</value>
-          <display_name>Central AC, SEER 8.0</display_name>
+          <value>Central AC, SEER2 7.6</value>
+          <display_name>Central AC, SEER2 7.6</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 10.0</value>
-          <display_name>Central AC, SEER 10.0</display_name>
+          <value>Central AC, SEER2 9.5</value>
+          <display_name>Central AC, SEER2 9.5</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 13.0</value>
-          <display_name>Central AC, SEER 13.0</display_name>
-        </choice>
-        <choice>
-          <value>Central AC, SEER 14.0</value>
-          <display_name>Central AC, SEER 14.0</display_name>
-        </choice>
-        <choice>
-          <value>Central AC, SEER 15.0</value>
-          <display_name>Central AC, SEER 15.0</display_name>
+          <value>Central AC, SEER2 12.4</value>
+          <display_name>Central AC, SEER2 12.4</display_name>
         </choice>
         <choice>
           <value>Central AC, SEER2 13.4</value>
@@ -4164,8 +4156,12 @@
           <display_name>Room AC, CEER 10.6</display_name>
         </choice>
         <choice>
-          <value>Room AC, CEER 11.8</value>
-          <display_name>Room AC, CEER 11.8</display_name>
+          <value>Room AC, CEER 11.0</value>
+          <display_name>Room AC, CEER 11.0</display_name>
+        </choice>
+        <choice>
+          <value>Room AC, CEER 11.9</value>
+          <display_name>Room AC, CEER 11.9</display_name>
         </choice>
         <choice>
           <value>Room AC, CEER 13.1</value>
@@ -4444,36 +4440,32 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 8.0, HSPF 6.0</value>
-          <display_name>Central HP, SEER 8.0, HSPF 6.0</display_name>
+          <value>Central HP, SEER2 7.6, HSPF2 5.1</value>
+          <display_name>Central HP, SEER2 7.6, HSPF2 5.1</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 10.0, HSPF 6.8</value>
-          <display_name>Central HP, SEER 10.0, HSPF 6.8</display_name>
+          <value>Central HP, SEER2 9.5, HSPF2 5.8</value>
+          <display_name>Central HP, SEER2 9.5, HSPF2 5.8</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 13.0, HSPF 7.7</value>
-          <display_name>Central HP, SEER 13.0, HSPF 7.7</display_name>
-        </choice>
-        <choice>
-          <value>Central HP, SEER 14.0, HSPF 8.2</value>
-          <display_name>Central HP, SEER 14.0, HSPF 8.2</display_name>
-        </choice>
-        <choice>
-          <value>Central HP, SEER 15.0, HSPF 8.5</value>
-          <display_name>Central HP, SEER 15.0, HSPF 8.5</display_name>
+          <value>Central HP, SEER2 12.4, HSPF2 6.6</value>
+          <display_name>Central HP, SEER2 12.4, HSPF2 6.6</display_name>
         </choice>
         <choice>
           <value>Central HP, SEER2 13.4, HSPF2 7.0</value>
           <display_name>Central HP, SEER2 13.4, HSPF2 7.0</display_name>
         </choice>
         <choice>
+          <value>Central HP, SEER2 13.8, HSPF2 7.2</value>
+          <display_name>Central HP, SEER2 13.8, HSPF2 7.2</display_name>
+        </choice>
+        <choice>
           <value>Central HP, SEER2 14.0, HSPF2 7.3</value>
           <display_name>Central HP, SEER2 14.0, HSPF2 7.3</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER2 14.3, HSPF2 7.5</value>
-          <display_name>Central HP, SEER2 14.3, HSPF2 7.5</display_name>
+          <value>Central HP, SEER2 14.3, HSPF2 7.4</value>
+          <display_name>Central HP, SEER2 14.3, HSPF2 7.4</display_name>
         </choice>
         <choice>
           <value>Central HP, SEER2 15.0, HSPF2 7.6</value>
@@ -4506,6 +4498,10 @@
         <choice>
           <value>Central HP, SEER2 22.0, HSPF2 9.5</value>
           <display_name>Central HP, SEER2 22.0, HSPF2 9.5</display_name>
+        </choice>
+        <choice>
+          <value>Ductless Mini-Split HP, SEER2 13.7, HSPF2 7.4</value>
+          <display_name>Ductless Mini-Split HP, SEER2 13.7, HSPF2 7.4</display_name>
         </choice>
         <choice>
           <value>Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7</value>
@@ -4632,8 +4628,8 @@
           <display_name>Packaged Terminal HP, EER 13.2, COP 3.9</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Central HP, SEER 13.0, HSPF 9.85</value>
-          <display_name>Detailed Example: Central HP, SEER 13.0, HSPF 9.85</display_name>
+          <value>Detailed Example: Central HP, SEER2 12.4, HSPF2 8.4</value>
+          <display_name>Detailed Example: Central HP, SEER2 12.4, HSPF2 8.4</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance</value>
@@ -11816,97 +11812,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heating_system_2_type</name>
-      <display_name>HVAC: Heating System 2 Type</display_name>
-      <description>The type of the second heating system.</description>
-      <type>Choice</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>Furnace</value>
-          <display_name>Furnace</display_name>
-        </choice>
-        <choice>
-          <value>WallFurnace</value>
-          <display_name>WallFurnace</display_name>
-        </choice>
-        <choice>
-          <value>FloorFurnace</value>
-          <display_name>FloorFurnace</display_name>
-        </choice>
-        <choice>
-          <value>Boiler</value>
-          <display_name>Boiler</display_name>
-        </choice>
-        <choice>
-          <value>ElectricResistance</value>
-          <display_name>ElectricResistance</display_name>
-        </choice>
-        <choice>
-          <value>Stove</value>
-          <display_name>Stove</display_name>
-        </choice>
-        <choice>
-          <value>SpaceHeater</value>
-          <display_name>SpaceHeater</display_name>
-        </choice>
-        <choice>
-          <value>Fireplace</value>
-          <display_name>Fireplace</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>heating_system_2_fuel</name>
-      <display_name>HVAC: Heating System 2 Fuel Type</display_name>
-      <description>The fuel type of the second heating system.</description>
-      <type>Choice</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>electricity</value>
-          <display_name>electricity</display_name>
-        </choice>
-        <choice>
-          <value>natural gas</value>
-          <display_name>natural gas</display_name>
-        </choice>
-        <choice>
-          <value>fuel oil</value>
-          <display_name>fuel oil</display_name>
-        </choice>
-        <choice>
-          <value>propane</value>
-          <display_name>propane</display_name>
-        </choice>
-        <choice>
-          <value>wood</value>
-          <display_name>wood</display_name>
-        </choice>
-        <choice>
-          <value>wood pellets</value>
-          <display_name>wood pellets</display_name>
-        </choice>
-        <choice>
-          <value>coal</value>
-          <display_name>coal</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>heating_system_2_heating_efficiency</name>
-      <display_name>HVAC: Heating System 2 Rated AFUE or Percent</display_name>
-      <description>The rated heating efficiency value of the second heating system.</description>
-      <type>Double</type>
-      <units>Frac</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heating_system_2_heating_capacity</name>
       <display_name>HVAC: Heating System 2 Heating Capacity</display_name>
       <description>The output heating capacity of the second heating system.</description>
@@ -12042,15 +11947,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heat_pump_fraction_heat_load_served</name>
-      <display_name>HVAC: Heat Pump Fraction Heat Load Served</display_name>
-      <description>The heating load served by the heat pump.</description>
-      <type>Double</type>
-      <units>Frac</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heat_pump_backup_heating_capacity</name>
       <display_name>HVAC: Heat Pump Backup Heating Capacity</display_name>
       <description>The backup output heating capacity of the heat pump.</description>
@@ -12105,59 +12001,42 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heat_pump_backup_type</name>
-      <display_name>HVAC: Heat Pump Backup Type</display_name>
-      <description>The backup type of the heat pump.</description>
-      <type>Choice</type>
+      <name>hvac_heat_pump_backup_use_existing_system</name>
+      <display_name>HVAC: Heat Pump Backup Use Existing System</display_name>
+      <description>Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system. This argument is only applicable for heat pump upgrades.</description>
+      <type>Boolean</type>
       <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
       <choices>
         <choice>
-          <value>integrated</value>
-          <display_name>integrated</display_name>
+          <value>true</value>
+          <display_name>true</display_name>
         </choice>
         <choice>
-          <value>separate</value>
-          <display_name>separate</display_name>
+          <value>false</value>
+          <display_name>false</display_name>
         </choice>
       </choices>
     </argument>
     <argument>
-      <name>heat_pump_backup_fuel</name>
-      <display_name>HVAC: Heat Pump Backup Fuel Type</display_name>
-      <description>The backup fuel type of the heat pump.</description>
-      <type>Choice</type>
+      <name>hvac_heat_pump_sizing_is_duct_limited</name>
+      <display_name>HVAC: Heat Pump Sizing Is Duct Limited</display_name>
+      <description>Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.</description>
+      <type>Boolean</type>
       <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
       <choices>
         <choice>
-          <value>electricity</value>
-          <display_name>electricity</display_name>
+          <value>true</value>
+          <display_name>true</display_name>
         </choice>
         <choice>
-          <value>natural gas</value>
-          <display_name>natural gas</display_name>
-        </choice>
-        <choice>
-          <value>fuel oil</value>
-          <display_name>fuel oil</display_name>
-        </choice>
-        <choice>
-          <value>propane</value>
-          <display_name>propane</display_name>
+          <value>false</value>
+          <display_name>false</display_name>
         </choice>
       </choices>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_heating_efficiency</name>
-      <display_name>HVAC: Heat Pump Backup Rated Efficiency</display_name>
-      <description>The backup rated efficiency value of the heat pump.</description>
-      <type>Double</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>hvac_blower_fan_watts_per_cfm</name>
@@ -13215,7 +13094,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>717E70E6</checksum>
+      <checksum>B50FF4F0</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

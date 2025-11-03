@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>2c5ae6e0-eb09-47d7-bbe7-ea3fbfc2fa28</version_id>
-  <version_modified>2025-10-29T16:31:12Z</version_modified>
+  <version_id>88884556-f4be-46c9-b1f4-1fca2ea1813f</version_id>
+  <version_modified>2025-11-03T19:02:04Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -11679,95 +11679,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heating_system_2_type</name>
-      <display_name>HVAC: Heating System 2 Type</display_name>
-      <description>The type of the second heating system.</description>
-      <type>Choice</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>Furnace</value>
-          <display_name>Furnace</display_name>
-        </choice>
-        <choice>
-          <value>WallFurnace</value>
-          <display_name>WallFurnace</display_name>
-        </choice>
-        <choice>
-          <value>FloorFurnace</value>
-          <display_name>FloorFurnace</display_name>
-        </choice>
-        <choice>
-          <value>Boiler</value>
-          <display_name>Boiler</display_name>
-        </choice>
-        <choice>
-          <value>ElectricResistance</value>
-          <display_name>ElectricResistance</display_name>
-        </choice>
-        <choice>
-          <value>Stove</value>
-          <display_name>Stove</display_name>
-        </choice>
-        <choice>
-          <value>SpaceHeater</value>
-          <display_name>SpaceHeater</display_name>
-        </choice>
-        <choice>
-          <value>Fireplace</value>
-          <display_name>Fireplace</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>heating_system_2_fuel</name>
-      <display_name>HVAC: Heating System 2 Fuel Type</display_name>
-      <description>The fuel type of the second heating system.</description>
-      <type>Choice</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>electricity</value>
-          <display_name>electricity</display_name>
-        </choice>
-        <choice>
-          <value>natural gas</value>
-          <display_name>natural gas</display_name>
-        </choice>
-        <choice>
-          <value>fuel oil</value>
-          <display_name>fuel oil</display_name>
-        </choice>
-        <choice>
-          <value>propane</value>
-          <display_name>propane</display_name>
-        </choice>
-        <choice>
-          <value>wood</value>
-          <display_name>wood</display_name>
-        </choice>
-        <choice>
-          <value>wood pellets</value>
-          <display_name>wood pellets</display_name>
-        </choice>
-        <choice>
-          <value>coal</value>
-          <display_name>coal</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>heating_system_2_heating_efficiency</name>
-      <display_name>HVAC: Heating System 2 Rated AFUE or Percent</display_name>
-      <description>The rated heating efficiency value of the second heating system.</description>
-      <type>Double</type>
-      <units>Frac</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heating_system_2_heating_capacity</name>
       <display_name>HVAC: Heating System 2 Heating Capacity</display_name>
       <description>The output heating capacity of the second heating system.</description>
@@ -11899,15 +11810,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heat_pump_fraction_heat_load_served</name>
-      <display_name>HVAC: Heat Pump Fraction Heat Load Served</display_name>
-      <description>The heating load served by the heat pump.</description>
-      <type>Double</type>
-      <units>Frac</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heat_pump_backup_heating_capacity</name>
       <display_name>HVAC: Heat Pump Backup Heating Capacity</display_name>
       <description>The backup output heating capacity of the heat pump.</description>
@@ -11961,56 +11863,40 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heat_pump_backup_type</name>
-      <display_name>HVAC: Heat Pump Backup Type</display_name>
-      <description>The backup type of the heat pump.</description>
-      <type>Choice</type>
+      <name>hvac_heat_pump_backup_use_existing_system</name>
+      <display_name>HVAC: Heat Pump Backup Use Existing System</display_name>
+      <description>Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system. This argument is only applicable for heat pump upgrades.</description>
+      <type>Boolean</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
       <choices>
         <choice>
-          <value>integrated</value>
-          <display_name>integrated</display_name>
+          <value>true</value>
+          <display_name>true</display_name>
         </choice>
         <choice>
-          <value>separate</value>
-          <display_name>separate</display_name>
+          <value>false</value>
+          <display_name>false</display_name>
         </choice>
       </choices>
     </argument>
     <argument>
-      <name>heat_pump_backup_fuel</name>
-      <display_name>HVAC: Heat Pump Backup Fuel Type</display_name>
-      <description>The backup fuel type of the heat pump.</description>
-      <type>Choice</type>
+      <name>hvac_heat_pump_sizing_is_duct_limited</name>
+      <display_name>HVAC: Heat Pump Sizing Is Duct Limited</display_name>
+      <description>Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.</description>
+      <type>Boolean</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
       <choices>
         <choice>
-          <value>electricity</value>
-          <display_name>electricity</display_name>
+          <value>true</value>
+          <display_name>true</display_name>
         </choice>
         <choice>
-          <value>natural gas</value>
-          <display_name>natural gas</display_name>
-        </choice>
-        <choice>
-          <value>fuel oil</value>
-          <display_name>fuel oil</display_name>
-        </choice>
-        <choice>
-          <value>propane</value>
-          <display_name>propane</display_name>
+          <value>false</value>
+          <display_name>false</display_name>
         </choice>
       </choices>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_heating_efficiency</name>
-      <display_name>HVAC: Heat Pump Backup Rated Efficiency</display_name>
-      <description>The backup rated efficiency value of the heat pump.</description>
-      <type>Double</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>hvac_blower_fan_watts_per_cfm</name>
@@ -12986,7 +12872,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>2AC4F601</checksum>
+      <checksum>0AD40A31</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -13003,7 +12889,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>F1DCADC5</checksum>
+      <checksum>458E4366</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
