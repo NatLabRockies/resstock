@@ -1,0 +1,8 @@
+\begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
+{The ResStock argument definitions set in the Mechanical Ventilation characteristic} {table:hc_arg_def_mechanical_ventilation}
+{Name & Required & Units & Type & Choices & Description}
+\texttt{ventilation\_mechanical} & false &  & Choice & None; Exhaust Only; Supply Only; Balanced; CFIS; HRV, 55\%; HRV, 60\%; HRV, 65\%; HRV, 70\%; HRV, 75\%; HRV, 80\%; HRV, 85\%; ERV, 55\%; ERV, 60\%; ERV, 65\%; ERV, 70\%; ERV, 75\%; ERV, 80\%; ERV, 85\% & The type of mechanical ventilation system used for whole building ventilation.  \\ \hline
+\texttt{ventilation\_kitchen} & false &  & Choice & None; Default; 100 cfm, 1 hr/day; 100 cfm, 2 hrs/day; 200 cfm, 1 hr/day; 200 cfm, 2 hrs/day; 300 cfm, 1 hr/day; 300 cfm, 2 hrs/day; Detailed Example: 100 cfm, 1.5 hrs/day @ 6pm, 30 W & The type of kitchen exhaust fan used for local ventilation.  \\ \hline
+\texttt{ventilation\_bathroom} & false &  & Choice & None; Default; 50 cfm/bathroom, 1 hr/day; 50 cfm/bathroom, 2 hrs/day; 80 cfm/bathroom, 1 hr/day; 80 cfm/bathroom, 2 hrs/day; 100 cfm/bathroom, 1 hr/day; 100 cfm/bathroom, 2 hrs/day; Detailed Example: 50 cfm/bathroom, 1.5 hrs/day @ 7am, 15 W & The type of bathroom exhaust fans used for local ventilation.  \\ \hline
+\texttt{ventilation\_whole\_house\_fan} & false &  & Choice & None; 1000 cfm; 1500 cfm; 2000 cfm; 2500 cfm; 3000 cfm; 3500 cfm; 4000 cfm; 4500 cfm; 5000 cfm; 5500 cfm; 6000 cfm; Detailed Example: 4500 cfm, 300 W & The type of whole house fans used for seasonal cooling load reduction.  \\
+\end{customLongTable}

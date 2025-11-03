@@ -178,17 +178,6 @@ Generates HVAC capacities, design temperatures, and design loads.
 
 <br/>
 
-**Generate Annual Output: Electric Panel Summary**
-
-Generates electric panel breaker spaces and loads.
-
-- **Name:** ``include_annual_panel_summary``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
 **Generate Annual Output: Resilience**
 
 Generates annual resilience outputs.
@@ -462,17 +451,6 @@ Optionally generates timeseries EnergyPlus output meters. If multiple output met
 If not provided, defaults to 'results_annual.csv' (or 'results_annual.json' or 'results_annual.msgpack').
 
 - **Name:** ``annual_output_file_name``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel Output File Name**
-
-If not provided, defaults to 'results_panel.csv' (or 'results_panel.json' or 'results_panel.msgpack').
-
-- **Name:** ``electric_panel_output_file_name``
 - **Type:** ``String``
 
 - **Required:** ``false``

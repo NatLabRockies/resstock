@@ -1,0 +1,30 @@
+Option Name	Type	Summer Coefficient [frac]	Winter Coefficient [frac]
+None	none		
+"Curtains, Light"	light curtains		
+"Curtains, Medium"	medium curtains		
+"Curtains, Dark"	dark curtains		
+"Shades, Light"	light shades		
+"Shades, Medium"	medium shades		
+"Shades, Dark"	dark shades		
+"Blinds, Light"	light blinds		
+"Blinds, Medium"	medium blinds		
+"Blinds, Dark"	dark blinds		
+"Summer 0.5, Winter 0.5"		0.5	0.5
+"Summer 0.5, Winter 0.6"		0.5	0.6
+"Summer 0.5, Winter 0.7"		0.5	0.7
+"Summer 0.5, Winter 0.8"		0.5	0.8
+"Summer 0.5, Winter 0.9"		0.5	0.9
+"Summer 0.6, Winter 0.6"		0.6	0.6
+"Summer 0.6, Winter 0.7"		0.6	0.7
+"Summer 0.6, Winter 0.8"		0.6	0.8
+"Summer 0.6, Winter 0.9"		0.6	0.9
+"Summer 0.7, Winter 0.7"		0.7	0.7
+"Summer 0.7, Winter 0.8"		0.7	0.8
+"Summer 0.7, Winter 0.9"		0.7	0.9
+"Summer 0.8, Winter 0.8"		0.8	0.8
+"Summer 0.8, Winter 0.9"		0.8	0.9
+"Summer 0.9, Winter 0.9"		0.9	0.9
+			
+# Type: The type of window interior shading.			
+"# Summer Coefficient: Interior shading coefficient for the summer season. 1.0 indicates no reduction in solar gain, 0.85 indicates 15% reduction, etc."			
+"# Winter Coefficient: Interior shading coefficient for the winter season. 1.0 indicates no reduction in solar gain, 0.85 indicates 15% reduction, etc."			

@@ -1,0 +1,6 @@
+\begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
+{The ResStock argument definitions set in the Window Areas characteristic} {table:hc_arg_def_window_areas}
+{Name & Required & Units & Type & Choices & Description}
+\texttt{geometry\_window\_areas\_or\_wwrs} & false & ft2 or frac & String &  & The amount of window area on the unit's front/back/left/right facades. Use a comma-separated list like '0.2, 0.2, 0.1, 0.1' to specify Window-to-Wall Ratios (WWR) or '108, 108, 72, 72' to specify absolute areas. If a facade is adiabatic, the value will be ignored.  \\ \hline
+\texttt{geometry\_skylight\_areas} & false & ft2 & String &  & The amount of skylight area on the unit's front/back/left/right roofs. Use a comma-separated list like '50, 0, 0, 0'.  \\
+\end{customLongTable}

@@ -1,0 +1,51 @@
+Option Name	Type	Color	Solar Absorptance	Emittance
+"Asphalt/Fiberglass Shingles, Dark"	asphalt or fiberglass shingles	dark		
+"Asphalt/Fiberglass Shingles, Medium Dark"	asphalt or fiberglass shingles	medium dark		
+"Asphalt/Fiberglass Shingles, Medium"	asphalt or fiberglass shingles	medium		
+"Asphalt/Fiberglass Shingles, Light"	asphalt or fiberglass shingles	light		
+"Asphalt/Fiberglass Shingles, Reflective"	asphalt or fiberglass shingles	reflective		
+"Tile/Slate, Dark"	slate or tile shingles	dark		
+"Tile/Slate, Medium Dark"	slate or tile shingles	medium dark		
+"Tile/Slate, Medium"	slate or tile shingles	medium		
+"Tile/Slate, Light"	slate or tile shingles	light		
+"Tile/Slate, Reflective"	slate or tile shingles	reflective		
+"Metal, Dark"	metal surfacing	dark		
+"Metal, Medium Dark"	metal surfacing	medium dark		
+"Metal, Medium"	metal surfacing	medium		
+"Metal, Light"	metal surfacing	light		
+"Metal, Reflective"	metal surfacing	reflective		
+"Wood Shingles/Shakes, Dark"	wood shingles or shakes	dark		
+"Wood Shingles/Shakes, Medium Dark"	wood shingles or shakes	medium dark		
+"Wood Shingles/Shakes, Medium"	wood shingles or shakes	medium		
+"Wood Shingles/Shakes, Light"	wood shingles or shakes	light		
+"Wood Shingles/Shakes, Reflective"	wood shingles or shakes	reflective		
+"Shingles, Dark"	shingles	dark		
+"Shingles, Medium Dark"	shingles	medium dark		
+"Shingles, Medium"	shingles	medium		
+"Shingles, Light"	shingles	light		
+"Shingles, Reflective"	shingles	reflective		
+"Synthetic Sheeting, Dark"	plastic/rubber/synthetic sheeting	dark		
+"Synthetic Sheeting, Medium Dark"	plastic/rubber/synthetic sheeting	medium dark		
+"Synthetic Sheeting, Medium"	plastic/rubber/synthetic sheeting	medium		
+"Synthetic Sheeting, Light"	plastic/rubber/synthetic sheeting	light		
+"Synthetic Sheeting, Reflective"	plastic/rubber/synthetic sheeting	reflective		
+"EPS Sheathing, Dark"	expanded polystyrene sheathing	dark		
+"EPS Sheathing, Medium Dark"	expanded polystyrene sheathing	medium dark		
+"EPS Sheathing, Medium"	expanded polystyrene sheathing	medium		
+"EPS Sheathing, Light"	expanded polystyrene sheathing	light		
+"EPS Sheathing, Reflective"	expanded polystyrene sheathing	reflective		
+"Concrete, Dark"	concrete	dark		
+"Concrete, Medium Dark"	concrete	medium dark		
+"Concrete, Medium"	concrete	medium		
+"Concrete, Light"	concrete	light		
+"Concrete, Reflective"	concrete	reflective		
+Cool Roof	cool roof	reflective		
+Detailed Example: 0.2 Solar Absorptance			0.2	0.9
+Detailed Example: 0.4 Solar Absorptance			0.4	0.9
+Detailed Example: 0.6 Solar Absorptance			0.6	0.9
+Detailed Example: 0.75 Solar Absorptance			0.75	0.9
+				
+# Type: The type of roof material.				
+# Color: The color of the roof.				
+# Solar Absorptance: The solar absorptance of the outermost roof material.				
+# Emittance: The emittance of the outermost roof material.				

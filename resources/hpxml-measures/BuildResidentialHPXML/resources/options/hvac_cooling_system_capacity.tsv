@@ -1,0 +1,53 @@
+Option Name	Capacity [Btu/hr]	Autosizing Factor [mult]	Autosizing Limit [Btu/hr]
+Autosize			
+0.5 tons	6000		
+0.75 tons	9000		
+1.0 tons	12000		
+1.5 tons	18000		
+2.0 tons	24000		
+2.5 tons	30000		
+3.0 tons	36000		
+3.5 tons	42000		
+4.0 tons	48000		
+4.5 tons	54000		
+5.0 tons	60000		
+5.5 tons	66000		
+6.0 tons	72000		
+6.5 tons	78000		
+7.0 tons	84000		
+7.5 tons	90000		
+8.0 tons	96000		
+8.5 tons	102000		
+9.0 tons	108000		
+9.5 tons	114000		
+10.0 tons	120000		
+"Detailed Example: Autosize, 140% Multiplier"		1.4	
+"Detailed Example: Autosize, 170% Multiplier"		1.7	
+"Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit"		1.7	36000
+			
+# Capacity: The output capacity.			
+# Autosizing Factor: A capacity scaling factor that can be applied to the autosizing methodology.			
+# Autosizing Limit: A maximum capacity limit that can be applied to the autosizing methodology.			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		600	
+		600	
+		600	

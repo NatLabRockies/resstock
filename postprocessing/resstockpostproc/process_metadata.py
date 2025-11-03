@@ -1,7 +1,12 @@
 import polars as pl
 import pathlib
+from collections.abc import Sequence
+
 import geopandas as gpd
-from typing import Sequence
+import polars as pl
+
+from resstockpostproc.utils import fix_all_fuels_emissions, fix_site_energy_total, get_col_maps
+
 
 from resstockpostproc.utils import (
     fix_site_energy_total,
@@ -42,6 +47,7 @@ def publish_baseline_annual_results(base_raw_df: pl.LazyFrame) -> pl.LazyFrame:
     base_df = add_panel_contraint_cols(base_df)
     base_df = add_upgrade_columns(base_df)
     base_df = reorder_columns(base_df, col_maps, is_baseline=True)
+    base_df = base_df.sort("bldg_id")
     return base_df
 
 
@@ -109,10 +115,10 @@ def publish_upgrade_annual_results(
     upgrade_cols = upgrade_df.collect_schema().names()
     missing_bldgs_df = missing_bldgs_df.join(upgrade_name_df, how="cross")
     upgrade_df = pl.concat([upgrade_df, missing_bldgs_df], how="diagonal_relaxed")
-    upgrade_df = upgrade_df.sort("bldg_id")
     upgrade_df = add_saving_cols(upgrade_df, base_pub_df)
     upgrade_df = add_panel_contraint_cols(upgrade_df)
     upgrade_df = reorder_columns(upgrade_df, col_maps, is_baseline=False)
+    upgrade_df = upgrade_df.sort("bldg_id")
     return upgrade_df
 
 
@@ -155,6 +161,7 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
     )
 
     return df.with_columns([adj_income, burden])
+
 
 
 def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame:

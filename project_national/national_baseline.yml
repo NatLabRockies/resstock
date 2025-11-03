@@ -1,6 +1,6 @@
 schema_version: '0.4'
-os_version: 3.9.0
-os_sha: c77fbb9569
+os_version: 3.10.0
+os_sha: 86d7e215a1
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
 output_directory: national_baseline
@@ -77,6 +77,7 @@ workflow_generator:
 
     # Outputs to include
     simulation_output_report:
+      include_annual_emission_end_uses: true
       timeseries_frequency: hourly
       include_timeseries_total_consumptions: true
       include_timeseries_fuel_consumptions: true

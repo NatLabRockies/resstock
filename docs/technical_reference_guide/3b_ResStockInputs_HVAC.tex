@@ -40,39 +40,13 @@ The fuel used for primary heating of the housing unit.
 \end{itemize}
 
 \paragraph{Options}
-The Heating Fuel characteristic options are Electricity, Natural Gas, Propane, Fuel Oil, None, Other Fuel, and Wood. Other Fuel is currently modeled as wood energy. However, although ResStock simulates wood energy consumption for heating, current datasets do not publish data on heating with wood. The characteristic sets the \texttt{heating\_system\_fuel} ResStock argument (Table \ref{table:hc_opt_hf}). The argument definition for the \texttt{heating\_system\_fuel} argument is in Table \ref{table:hc_arg_def_hf}.
+The Heating Fuel characteristic options are Electricity, Natural Gas, Propane, Fuel Oil, None, Other Fuel, and Wood. Other Fuel is currently modeled as wood energy. However, although ResStock simulates wood energy consumption for heating, current datasets do not publish data on heating with wood. The characteristic sets the \texttt{heating\_system\_fuel} ResStock argument (Table \ref{table:hc_opt_heating_fuel}). The argument definition for the \texttt{heating\_system\_fuel} argument is in Table \ref{table:hc_arg_def_heating_fuel}.
 
 See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{2.4cm}|p{5cm}| }
-\caption{The ResStock argument definitions set in the Heating Fuel characteristic} \label{table:hc_arg_def_hf} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{heating\_system\_fuel} & true & & Choice & electricity, natural
-gas, fuel oil, propane, wood, wood pellets, coal & The fuel type of the
-heating system. Ignored for ElectricResistance. \\
-\end{longtable}
+\input{tables/arguments/Heating Fuel}
 
-\begin{longtable}[]{ |p{4.cm}|p{4cm}| }
-\caption{Heating Fuel options and arguments that vary for each option} \label{table:hc_opt_hf} \\
-\toprule\noalign{}
-Option name & \texttt{heating\_system\_fuel} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Electricity & electricity \\
-Fuel Oil & fuel oil \\
-Natural Gas & natural gas \\
-None & natural gas \\
-Other Fuel & wood \\
-Propane & propane \\
-Wood & wood \\
-\end{longtable}
+\input{tables/options/Heating Fuel}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -83,7 +57,6 @@ Wood & wood \\
     \item For Alaska, when heating uses more than one fuel, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10\% of total energy use across all fuels) is considered secondary (heating) fuel---except in case of electric heating, which is always assumed as primary. The rest of the fuels are ignored.
 \end{itemize}
  
-
 \subsubsection{HVAC Heating Type}
 \paragraph{Description}
 The presence and type of the primary heating system in the housing unit.
@@ -154,17 +127,29 @@ The presence and efficiency of the primary heating system in the housing unit. T
 \end{itemize}
 
 \paragraph{Options}
-The options of the HVAC Heating Efficiency characteristic assigns the heating system type and efficiency of the heating system. The system types are ducted ASHPs, electric baseboard, electric boiler, electric furnace, electric wall furnace, fuel boiler, fuel furnace, fuel wall/floor furnace, MSHPs, none, and shared heating. The Shared Systems option does not specify any arguments. Shared Systems designate heating systems that serve multiple housing units in a multifamily building, and they have their own characteristics that set the arguments; see Section \ref{sec:shared_systems}. The HVAC Heating Efficiency characteristic sets the arguments listed in the argument definition table (Table \ref{table:hc_arg_def_ht_eff}). See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating System} documentation for the available HPXML schema elements, default values, and constraints.
+The options of the HVAC Heating Efficiency characteristic assigns the heating system type and efficiency of the heating system. The system types are ducted ASHPs, electric baseboard, electric boiler, electric furnace, electric wall furnace, fuel boiler, fuel furnace, fuel wall/floor furnace, MSHPs, none, and shared heating. The Shared Systems option does not specify any arguments. Shared Systems designate heating systems that serve multiple housing units in a multifamily building, and they have their own characteristics that set the arguments; see Section \ref{sec:shared_systems}. The HVAC Heating Efficiency characteristic sets the arguments listed in the argument definition table (Table \ref{table:hc_arg_def_hvac_heating_efficiency}). See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating System} documentation for the available HPXML schema elements, default values, and constraints.
 
 The following arguments are always set to ``auto'' for all systems:
 \begin{itemize}
-    \item \texttt{heating\_system\_heating\_capacity} \item\texttt{heating\_system\_heating\_autosizing\_limit}
-    \item \texttt{heat\_pump\_heating\_capacity} \item\texttt{heat\_pump\_heating\_autosizing\_limit} 
-    \item \texttt{heat\_pump\_cooling\_capacity} \item \texttt{heat\_pump\_cooling\_autosizing\_limit} \item \texttt{heat\_pump\_backup\_heating\_autosizing\_limit}
-    \item \texttt{heat\_pump\_backup\_heating\_capacity} \item \texttt{heat\_pump\_backup\_sizing\_methodology} \item \texttt{geothermal\_loop\_borefield\_configuration}
+    \item \texttt{heating\_system\_heating\_capacity}
+    \item \texttt{heating\_system\_heating\_autosizing\_limit}
+    \item \texttt{heat\_pump\_heating\_capacity}
+    \item \texttt{heat\_pump\_heating\_autosizing\_limit} 
+    \item \texttt{heat\_pump\_cooling\_capacity}
+    \item \texttt{heat\_pump\_cooling\_autosizing\_limit}
+    \item \texttt{heat\_pump\_backup\_heating\_autosizing\_limit}
+    \item \texttt{heat\_pump\_backup\_heating\_capacity}
+    \item \texttt{heat\_pump\_backup\_sizing\_methodology}
+    \item \texttt{geothermal\_loop\_borefield\_configuration}
     \item \texttt{geothermal\_loop\_loop\_flow}
-    \item \texttt{geothermal\_loop\_boreholes\_count} \item \texttt{geothermal\_loop\_boreholes\_length} \item \texttt{geothermal\_loop\_boreholes\_spacing} \item \texttt{geothermal\_loop\_boreholes\_diameter} \item \texttt{geothermal\_loop\_grout\_type} \item \texttt{geothermal\_loop\_pipe\_type}
-    \item \texttt{geothermal\_loop\_pipe\_diameter} and \item \texttt{heating\_system\_has\_flue\_or\_chimney}. 
+    \item \texttt{geothermal\_loop\_boreholes\_count}
+    \item \texttt{geothermal\_loop\_boreholes\_length}
+    \item \texttt{geothermal\_loop\_boreholes\_spacing}
+    \item \texttt{geothermal\_loop\_boreholes\_diameter}
+    \item \texttt{geothermal\_loop\_grout\_type}
+    \item \texttt{geothermal\_loop\_pipe\_type}
+    \item \texttt{geothermal\_loop\_pipe\_diameter} and
+    \item \texttt{heating\_system\_has\_flue\_or\_chimney}. 
 \end{itemize}
 
 The \texttt{heating\_system\_fraction\_heat\_load\_served}, \texttt{heat\_pump\_fraction\_heat\_load\_served}, \texttt{heat\_pump\_fraction\_cool\_load\_served}, and \texttt{heat\_pump\_backup\_heating\_efficiency} arguments are always set to 1 for all systems. 
@@ -487,8 +472,6 @@ Presence of electric baseboard heating.
     \item This characteristic is a direct mapping from the HVAC Heating Efficiency characteristic.
 \end{itemize}
 
-
-
 \paragraph{Direct Conditional Dependencies}
 \begin{itemize}
     \item HVAC Heating Efficiency.
@@ -519,34 +502,12 @@ The heating capacity and airflow scaling factor applied to the auto-sizing metho
 There are two options in the baseline: ``None'' and ``40\% Oversized.'' Only the ``None'' option is used. HVAC sizing follows ACCA Manual J and Manual S. There is no additional oversizing or undersizing the capacity and airflow of the HVAC system. This capability is not currently being used in ResStock. The characteristic assigns the \texttt{heating\_system\_heating\_autosizing\_factor}, 
 \texttt{heat\_pump\_heating\_autosizing\_factor}, 
 \texttt{heat\_pump\_backup\_heating\_autosizing\_factor}, and
-\texttt{heating\_system\_2\_heating\_autosizing\_factor} ResStock arguments. All are left blank for the ``None'' option and are not used. For argument definitions see Table \ref{table:hc_arg_def_ht_auto_size}.
+\texttt{heating\_system\_2\_heating\_autosizing\_factor} ResStock arguments. All are left blank for the ``None'' option and are not used. For argument definitions see Table \ref{table:hc_arg_def_hvac_heating_autosizing_factor}.
 
-\begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{2.4cm}|p{5cm}| }
-{The ResStock argument definitions set in the HVAC Heating Autosizing Factor characteristic} {table:hc_arg_def_ht_auto_size} 
-{Name & Required & Units & Type & Choices & Description} \hline
-\texttt{heating\_system\_heating\_autosizing\_factor} & false & & Double
-& & The capacity scaling factor applied to the auto-sizing methodology.
-If not provided, 1.0 is used. \\
-\hline
-\texttt{heat\_pump\_heating\_autosizing\_factor} & false & & Double & &
-The capacity scaling factor applied to the auto-sizing methodology. If
-not provided, 1.0 is used. \\
-\hline
-\texttt{heat\_pump\_backup\_heating\_autosizing\_factor} & false & &
-Double & & The capacity scaling factor applied to the auto-sizing
-methodology if Backup Type is
-\textquotesingle integrated\textquotesingle. If not provided, 1.0 is
-used. If Backup Type is \textquotesingle separate\textquotesingle, use
-Heating System 2: Heating Autosizing Factor. \\
-\hline
-\texttt{heating\_system\_2\_heating\_autosizing\_factor} & false & &
-Double & & The capacity scaling factor applied to the auto-sizing
-methodology. If not provided, 1.0 is used. \\
-\end{customLongTable}
+\input{tables/arguments/HVAC Heating Autosizing Factor}
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made. The capability is not used.
-
 
 \subsection{Secondary Heating}
 \subsubsection{Modeling Approach}
@@ -597,40 +558,13 @@ Secondary Heating Fuel for the housing unit.
     \item Vintage
 \end{itemize}
 \paragraph{Options}
-The options for the secondary heating fuel are the fuels used in the secondary HVAC system (Table \ref{table:hc_opt_hvac_sec_heat_fuel}).
+The options for the secondary heating fuel are the fuels used in the secondary HVAC system (Table \ref{table:hc_opt_hvac_secondary_heating_fuel}).
 
-\begin{longtable}[]{ |p{3cm}|p{3cm}| } \caption{HVAC Secondary Heating Fuel options and arguments that vary for each option} \label{table:hc_opt_hvac_sec_heat_fuel} \\  
+\input{tables/options/HVAC Secondary Heating Fuel}
 
-\toprule\noalign{}
-Option name & \texttt{heating\_system\_2\_fuel} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Electricity & electricity \\
-Fuel Oil & fuel oil \\
-Natural Gas & natural gas \\
-None & electricity \\
-Other Fuel & wood \\
-Propane & propane \\
-Wood & wood \\
-\end{longtable}
+For the argument definitions, see Table \ref{table:hc_arg_def_hvac_secondary_heating_fuel}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{heating systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_hvac_sec_heat_fuel}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{heating systems} documentation for the available HPXML schema elements, default values, and constraints.
-
-
-\begin{longtable}[]{|p{3.5cm}|p{1.1cm}|p{1.5cm}|p{3.3cm}|p{3.3cm}|} \caption{The ResStock argument definitions set in the HVAC Secondary Heating Fuel characteristic} \label{table:hc_arg_def_hvac_sec_heat_fuel} \\
-
-\toprule\noalign{}
-Name & Required & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{heating\_system\_2\_fuel} & true & Choice & electricity,
-natural gas, fuel oil, propane, wood, wood pellets, coal & The fuel type
-of the second heating system. Ignored for ElectricResistance. \\
-\end{longtable}
+\input{tables/arguments/HVAC Secondary Heating Fuel}
 
 \paragraph{Distribution Assumption(s)}
 
@@ -640,7 +574,6 @@ of the second heating system. Ignored for ElectricResistance. \\
     \item For Alaska, when heating uses more than one fuel, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10\% of total energy use across all fuels) is considered secondary (heating) fuel---except in case of electric heating, which is always assumed as primary (i.e., secondary heating fuel cannot be electricity). The rest of the fuels are ignored.
 \end{itemize}
  
-
 \subsubsection{HVAC Secondary Heating Efficiency}
 \paragraph{Description}
 The efficiency of the secondary heating system.
@@ -658,48 +591,13 @@ The efficiency of the secondary heating system.
 \end{itemize}
 
 \paragraph{Options}
-The options of the HVAC Secondary Heating Efficiency are the secondary heating system efficiency (Table \ref{table:hc_opt_hvac_sec_eff}). The Shared Heating option is used for Shared Heating. The ``None'' option is used for systems without secondary heating systems. The characteristic sets the following ResStock arguments to ``auto'': \texttt{heating\_system\_2\_heating\_capacity}, \texttt{heating\_system\_2\_heating\_autosizing\_limit}, and \texttt{heating\_system\_2\_has\_flue\_or\_chimney}.
+The options of the HVAC Secondary Heating Efficiency are the secondary heating system efficiency (Table \ref{table:hc_opt_hvac_secondary_heating_efficiency}). The Shared Heating option is used for Shared Heating. The ``None'' option is used for systems without secondary heating systems. The characteristic sets the following ResStock arguments to ``auto'': \texttt{heating\_system\_2\_heating\_capacity}, \texttt{heating\_system\_2\_heating\_autosizing\_limit}, and \texttt{heating\_system\_2\_has\_flue\_or\_chimney}.
 
-\begin{customLongTable}{|p{3cm}|p{3cm}|p{3cm}|}{HVAC Secondary Heating Efficiency options and arguments that vary for each option} {table:hc_opt_hvac_sec_eff}
-{Option name & \texttt{heating\_system\_2\_type} &
-\texttt{heating\_system\_2\_heating\_efficiency}}  
-Fuel Boiler, 76\% AFUE & Boiler & 0.76 \\
-Fuel Boiler, 80\% AFUE & Boiler & 0.8 \\
-Fuel Boiler, 90\% AFUE & Boiler & 0.90 \\
-Fuel Furnace, 60\% AFUE & Furnace & 0.6 \\
-Fuel Furnace, 76\% AFUE & Furnace & 0.76\\
-Fuel Furnace, 80\% AFUE & Furnace & 0.8 \\
-Fuel Furnace, 92.5\% AFUE & Furnace & 0.925\\
-None & none & 0 \\
-Shared Heating & none & 0 \\
-\end{customLongTable}
+\input{tables/options/HVAC Secondary Heating Efficiency}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_hvac_sec_eff}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_hvac_secondary_heating_efficiency}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|}\caption{The ResStock argument definitions set in the HVAC Secondary Heating Efficiency characteristic} \label{table:hc_arg_def_hvac_sec_eff} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{heating\_system\_2\_type} & true & & Choice & None, Furnace,
-WallFurnace, FloorFurnace, Boiler, ElectricResistance, Stove,
-SpaceHeater, Fireplace & The type of the second heating system. If a heat pump is specified and the backup type is 'separate', this heating system represents 'separate' backup heating. For ducted heat pumps where the backup heating system is a 'Furnace', the backup would typically be characterized as 'integrated' in that the furnace and heat pump share the same distribution system and blower fan; a 'Furnace' as 'separate' backup to a ducted heat pump is not supported. \\
-\hline
-\texttt{heating\_system\_2\_heating\_efficiency} & true & Frac & Double
-& & The rated heating efficiency value of the second heating system. \\
-\hline
-\texttt{heating\_system\_2\_heating\_capacity} & false & Btu/hr & Double
-& & The output heating capacity of the second heating system. \\
-\hline
-\texttt{heating\_system\_2\_heating\_autosizing\_limit} & false & Btu/hr
-& Double & & The maximum capacity limit applied to the auto-sizing
-methodology. If not provided, no limit is used. \\
-\hline
-\texttt{heating\_system\_2\_has\_flue\_or\_chimney} & true & & String &
-& Whether the second heating system has a flue or chimney. \\
-\end{longtable}
+\input{tables/arguments/HVAC Secondary Heating Efficiency}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -727,25 +625,11 @@ The fraction of heating load served by secondary heating system. The remainder i
 \end{itemize}
 
 \paragraph{Options}
-The options are the fraction of the load served for the secondary heating system (Table \ref{table:hc_opt_hvac_sec_par}). The characteristic sets the \texttt{heating\_system\_2\_fraction\_heat\_load\_served} ResStock argument.
+The options are the fraction of the load served for the secondary heating system (Table \ref{table:hc_opt_hvac_secondary_heating_partial_space_conditioning}). The characteristic sets the \texttt{heating\_system\_2\_fraction\_heat\_load\_served} ResStock argument.
 
-\begin{longtable}[]{|p{1.5cm}|p{5cm}|} \caption{HVAC Secondary Heating Partial Space Conditioning options and arguments that vary for each option} \label{table:hc_opt_hvac_sec_par} \\
-\toprule\noalign{}
-Option name &
-\texttt{heating\_system\_2\_fraction\_heat\_load\_served} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-0\% & 0 \\
-10\% & 0.1 \\
-20\% & 0.2 \\
-30\% & 0.3 \\
-40\% & 0.4 \\
-49\% & 0.49 \\
-\end{longtable}
+\input{tables/options/HVAC Secondary Heating Partial Space Conditioning}
 
-For the argument definitions, see Table \ref{table:arg_def_hvac_sec_par}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_hvac_secondary_heating_partial_space_conditioning}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{|p{4cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.3cm}|}\caption{The ResStock argument definitions set in the HVAC Secondary Heating Partial Space Conditioning characteristic} \label{table:arg_def_hvac_sec_par} \\
 \toprule\noalign{}
@@ -767,7 +651,6 @@ pump. \\
     \item For Alaska, the fraction of the load served by the secondary heating system is calculated as the ratio of annual energy used by secondary fuel and annual energy used by secondary and primary fuel.
 \end{itemize}
  
-
 \subsection{Cooling}
 \subsubsection{Modeling Approach}
 ResStock models various cooling equipment such as central air conditioners, room air conditioners, and heat pumps. Evaporative (swamp) coolers are an option as a cooling type but are not currently modeled. In ResStock, the cooling system is assigned after the heating system, so that if the heating system is a heat pump, the cooling system is also set to a heat pump. Central air conditioners are ducted systems; room air conditioners are equipment that often are in a window or mounted on the wall. Both room air conditioners and central air conditioners sometimes cool only a fraction of the floor area (more common with room air conditioners). This is represented by assigning a fraction of the cooling load to the cooling system. Heat pumps are assumed to serve the 100\% of the cooling load. ResStock also varies the efficiency of the cooling system to represent newer, more efficient systems along with older, less efficient systems.
@@ -837,12 +720,11 @@ undercounting of non-ducted heat pumps.
 \end{itemize}
 
 \paragraph{Options}
-ResStock includes four options for central air conditioners and four options for room air conditioners (Table \ref{table:hc_opt_hvac_cool_eff}). If a building has a heat pump, it is assumed that the heat pump is serving both the heating and cooling load. Buildings with heat pumps assigned in the HVAC Heating input files are flagged, but no ResStock arguments are passed to those building based on this file. Similarly, homes with a shared cooling system for the building are flagged, but the ResStock arguments for that system are assigned in the HVAC Shared Systems Efficiencies characteristic. 
+ResStock includes four options for central air conditioners and four options for room air conditioners (Table \ref{table:hc_opt_hvac_cooling_efficiency}). If a building has a heat pump, it is assumed that the heat pump is serving both the heating and cooling load. Buildings with heat pumps assigned in the HVAC Heating input files are flagged, but no ResStock arguments are passed to those building based on this file. Similarly, homes with a shared cooling system for the building are flagged, but the ResStock arguments for that system are assigned in the HVAC Shared Systems Efficiencies characteristic. 
 
 Across options with ResStock arguments, many are the same and set to \textit{auto}:
 \begin{itemize}
-    \item \texttt{cooling\_system\_cooling\_compressor\_type} 
-    \item \texttt{cooling\_system\_cooling\_sensible\_heat\_fraction}
+    \item \texttt{cooling\_system\_compressor\_type} 
     \item \texttt{cooling\_system\_cooling\_capacity} 
     \item \texttt{cooling\_system\_cooling\_autosizing\_limit} 
     \item \texttt{cooling\_system\_crankcase\_heater\_watts}
@@ -854,88 +736,12 @@ Across options with ResStock arguments, many are the same and set to \textit{aut
 
 Additionally, \texttt{cooling\_system\_is\_ducted} is set to false since ducts are defined in separate input files, and mini-split heat pumps will not be assigned ducts.
 
-\begin{customLongTable}{|p{3.5cm}|p{3.3cm}|p{4cm}|p{3.3cm}|}{HVAC Cooling Efficiency options and arguments that vary for each option} {table:hc_opt_hvac_cool_eff}
-{Option name & \texttt{cooling\_system\_type} &
-\texttt{cooling\_system\_cooling\_efficiency\_type} &
-\texttt{cooling\_system\_cooling\_efficiency}} \hline
-AC, SEER 8 & central air conditioner & SEER & 8 \\
-AC, SEER 10 & central air conditioner & SEER & 10 \\
-AC, SEER 13 & central air conditioner & SEER & 13 \\
-AC, SEER 15 & central air conditioner & SEER & 15  \\
-Ducted Heat Pump & none & SEER & 0  \\
-Non-Ducted Heat Pump & none & SEER & 0  \\
-None & none & SEER & 0  \\
-Room AC, EER 8.5 & room air conditioner & EER & 8.5  \\
-Room AC, EER 9.8 & room air conditioner & EER & 9.8 \\
-Room AC, EER 10.7 & room air conditioner & EER & 10.7  \\
-Room AC, EER 12.0 & room air conditioner & EER & 12 \\
-Shared Cooling & & &    \\
-\end{customLongTable}
+\input{tables/options/HVAC Cooling Efficiency}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_hvac_cool_eff}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooling-systems}{Cooling Systems} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_hvac_cooling_efficiency}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooling-systems}{Cooling Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{customLongTable}{|p{3.2cm}|p{1.3cm}|p{1.1cm}|p{1.1cm}|p{2.5cm}|p{4.cm}|} {The ResStock argument definitions set in the HVAC Cooling Efficiency characteristic} {table:hc_arg_def_hvac_cool_eff}
-{Name & Required & Units & Type & Choices & Description} 
-\texttt{cooling\_system\_type} & true & & Choice & none, central air
-conditioner, room air conditioner, evaporative cooler, mini-split,
-packaged terminal air conditioner & The type of cooling system. Use
-\textquotesingle none\textquotesingle{} if there is no cooling system or
-if there is a heat pump serving a cooling load. \\
-\hline
-\texttt{cooling\_system\_cooling\_efficiency\_type} & true & & Choice &
-SEER, SEER2, EER, CEER & The efficiency type of the cooling system.
-System types central air conditioner and mini-split use SEER or SEER2.
-System types room air conditioner and packaged terminal air conditioner
-use EER or CEER. Ignored for system type evaporative cooler. \\
-\hline
-\texttt{cooling\_system\_cooling\_efficiency} & true & & Double & & The
-rated efficiency value of the cooling system. Ignored for evaporative
-cooler. \\
-\hline
-\texttt{cooling\_system\_cooling\_compressor\_type} & false & & Choice &
-auto, single stage, two stage, variable speed & The compressor type of
-the cooling system. Only applies to central air conditioner and
-mini-split. \\
-\hline
-\texttt{cooling\_system\_cooling\_sensible\_heat\_fraction} & false &
-Frac & Double & auto & The sensible heat fraction of the cooling system.
-Ignored for evaporative cooler.  \\
-\hline
-\texttt{cooling\_system\_cooling\_autosizing\_limit} & false & Btu/hr &
-Double & & The maximum capacity limit applied to the auto-sizing
-methodology. If not provided, no limit is used. \\
-\hline
-\texttt{cooling\_system\_is\_ducted} & false & & Boolean & auto, true,
-false & Whether the cooling system is ducted or not. Only used for
-mini-split and evaporative cooler. It's assumed that
-central air conditioner is ducted, and room air conditioner and packaged
-terminal air conditioner are not ducted. \\
-\hline
-\texttt{cooling\_system\_crankcase\_heater\_watts} & false & W & Double
-& auto & Cooling system crankcase heater power consumption in watts.
-Applies only to central air conditioner, room air conditioner, packaged
-terminal air conditioner and mini-split.  \\
-\hline
-\texttt{cooling\_system\_integrated\_heating\_system\_fuel} & false & &
-Choice & auto, electricity, natural gas, fuel oil, propane, wood, wood
-pellets, coal & The fuel type of the heating system integrated into
-cooling system. Only used for packaged terminal air conditioner and room
-air conditioner. \\
-\hline
-\texttt{cooling\_system\_integrated\_heating\_system\_efficiency\_percent}
-& false & Frac & Double & & The rated heating efficiency value of the
-heating system integrated into cooling system. Only used for packaged
-terminal air conditioner and room air conditioner. \\
-\hline
-\texttt{cooling\_system\_integrated\_heating\_system\_capacity} & false
-& Btu/hr & Double & & The output heating capacity of the heating system
-integrated into cooling system. \\
-\hline
-\texttt{cooling\_system\_integrated\_heating\_system\_fraction\_heat\_load\_served}
-& false & Frac & Double & & The heating load served by the heating
-system integrated into cooling system. Only used for packaged terminal
-air conditioner and room air conditioner. \\
-\end{customLongTable}
+\input{tables/arguments/HVAC Cooling Efficiency}
+
 \paragraph{Distribution Assumption(s)}
 None
 
@@ -958,37 +764,14 @@ The fraction of cooling load served by the cooling system. This is approximately
 \end{itemize}
 
 \paragraph{Options}
-Six different levels of percent of floor area cooled are provided, plus an option for homes that have no cooling (Table \ref{table:hc_opt_hvac_cool_par}).
+Six different levels of percent of floor area cooled are provided, plus an option for homes that have no cooling (Table \ref{table:hc_opt_hvac_cooling_partial_space_conditioning}).
 
-\begin{longtable}[]{|p{3.5cm}|p{3.3cm}|}\caption{HVAC Cooling Partial Space Conditioning options and arguments that vary for each option} \label{table:hc_opt_hvac_cool_par} \\
-\toprule\noalign{}
-Option name &
-\texttt{cooling\_system\_fraction\_cool\_load\_served} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\textless10\% Conditioned & 0.1 \\
-20\% Conditioned & 0.2 \\
-40\% Conditioned & 0.4 \\
-60\% Conditioned & 0.6 \\
-80\% Conditioned & 0.8 \\
-100\% Conditioned & 1 \\
-None & 0 \\
-\end{longtable}
+\input{tables/options/HVAC Cooling Partial Space Conditioning}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_hvac_cool_par}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooling-systems}{Cooling-Systems} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_hvac_cooling_partial_space_conditioning}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooling-systems}{Cooling-Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} \caption{The ResStock argument definitions set in the HVAC Cooling Partial Conditioning characteristic} \label{table:hc_arg_def_hvac_cool_par}\\
-\toprule\noalign{}
-Name & Required & Units & Type & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{cooling\_system\_fraction\_cool\_load\_served} & true & Frac &
-Double &  The cooling load served by the cooling system. \\
-\end{longtable}
+\input{tables/arguments/HVAC Cooling Partial Space Conditioning}
+
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
     \item Central AC systems need to serve at least 60\% of the floor area.
@@ -1001,7 +784,6 @@ Double &  The cooling load served by the cooling system. \\
     \end{itemize}
 \end{itemize}
  
-
 \subsubsection{HVAC Cooling Autosizing Factor}
 \paragraph{Description}
 The cooling capacity and airflow scaling factor applied to the auto-sizing methodology. Not currently used in baseline. 
@@ -1019,23 +801,10 @@ The cooling capacity and airflow scaling factor applied to the auto-sizing metho
 \paragraph{Options}
 Since this input file is not currently used, all homes are set to an option of ``None.''
 
-For the argument definitions, see Table \ref{table:hc_arg_def_hvac_cool_auto}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooling-systems}{Cooling Systems} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_hvac_cooling_autosizing_factor}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooling-systems}{Cooling Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{|p{4cm}|p{2cm}|p{2cm}|p{4cm}|} \caption{The ResStock argument definitions set in the HVAC Cooling Autosizing Factor characteristic} \label{table:hc_arg_def_hvac_cool_auto}\\
-\toprule\noalign{}
-Name & Required & Type &  Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{cooling\_system\_cooling\_autosizing\_factor} & false &  Double
-&  The capacity scaling factor applied to the auto-sizing methodology.
-If not provided, 1.0 is used. \\
-\hline
-\texttt{heat\_pump\_cooling\_autosizing\_factor} & false &  Double & 
-The capacity scaling factor applied to the auto-sizing methodology. If
-not provided, 1.0 is used. \\
-\end{longtable}
+\input{tables/arguments/HVAC Cooling Autosizing Factor}
+
 \paragraph{Distribution Assumption(s)}
 HVAC sizing follows ACCA Manual J and Manual S. There is no additional oversizing or undersizing the capacity and airflow of the HVAC system. 
 
@@ -1089,7 +858,6 @@ Homes can be assigned to have shared cooling, shared heating, shared both heatin
     \item Non-Ducted Heat Pump option (a non-shared system) assigned for both heating and cooling.
 \end{itemize}
  
-
 \subsubsection{HVAC Shared Efficiencies}
 
 \paragraph{Description}
@@ -1106,11 +874,11 @@ The efficiency of a shared HVAC system.
     \item HVAC Has Shared System
 \end{itemize}
 \paragraph{Options}
-For homes with shared systems, ResStock models one option for Cooling-Only shared systems (Fan Coil, Cooling Only); two options for heating-only shared systems (Boiler Baseboards Heating Only, Electricity; and Boiler Baseboards Heating Only, Fuel); and two options for homes that have both heating and cooling shared (Fan Coil Heating and Cooling, Electricity; Fan Coil Heating and Cooling, Fuel). 89\% of homes have no shared system.  
+For homes with shared systems, ResStock models one option for Cooling-Only shared systems (Fan Coil Cooling Only); two options for heating-only shared systems (Boiler Baseboards Heating Only, Electricity; and Boiler Baseboards Heating Only, Fuel); and two options for homes that have both heating and cooling shared (Fan Coil Heating and Cooling, Electricity; Fan Coil Heating and Cooling, Fuel). 89\% of homes have no shared system.  
 
 %%%%%%%%%%%%%%Cooling only
 
-For homes that have only a cooling shared system (and in-unit heating or no heating), this in nominally labeled as Fan Coil, Cooling only. However, ResStock currently approximates this as a mini-split heat pump instead of modeling a Fan Coil. The ResStock arguments for the placeholder are:
+For homes that have only a cooling shared system (and in-unit heating or no heating), this is nominally labeled as Fan Coil Cooling only. However, ResStock currently approximates this as a mini-split heat pump instead of modeling a Fan Coil. The ResStock arguments for the placeholder are:
 \begin{itemize}
     \item \texttt{cooling\_system\_type}: mini-split
     \item \texttt{cooling\_system\_cooling\_efficiency\_type}: SEER
@@ -1120,7 +888,6 @@ For homes that have only a cooling shared system (and in-unit heating or no heat
     \item \texttt{cooling\_system\_cooling\_efficiency\_type}: auto
     \item \texttt{cooling\_system\_is\_ducted}: false
 \end{itemize}
-
 
 %%%%%%%%%Heating Only
 
@@ -1165,24 +932,6 @@ Additionally, the shared heating system doesn't use an air-source or geothermal 
     \item \texttt{geothermal\_loop\_pipe\_diameter}: auto.
 
 \end{itemize}
-
-\begin{longtable}[]{|p{3.5cm}|p{4cm}|p{3.5cm}|} 
-\caption{The ResStock argument definitions set in the HVAC Shared Efficiencies characteristic for Shared Heating} \label{table:hc_arg_def_hvac_shared_eff_heat}\\
-\toprule\noalign{}
-Option name & \texttt{heating\_system\_type} &
-\texttt{heating\_system\_heating\_efficiency} 
- \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Boiler Baseboards Heating Only, Electricity & Shared Boiler w/
-Baseboard & 1   \\ 
-\hline
-Boiler Baseboards Heating Only, Fuel & Shared Boiler w/
-Baseboard & 0.78 \\
-\end{longtable}
-
 
 %%%%%Cooling and Heating
 
@@ -1238,197 +987,12 @@ Required but unused heating arguments:
     \item \texttt{geothermal\_loop\_pipe\_diameter}: auto.
 \end{itemize}
 
-\begin{longtable}[]{|p{3cm}|p{3cm}|p{3cm}|p{4cm}|} 
-\caption{The ResStock argument definitions set in the HVAC Shared Efficiencies characteristic for Shared Heating and Cooling} \label{table:hc_arg_def_hvac_shared_eff_both}\\
-\toprule\noalign{}
-Option name & Stock saturation & \texttt{heating\_system\_type} &
-\texttt{heating\_system\_heating\_efficiency} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Fan Coil Heating and Cooling, Electricity & 1.3\% & Shared Boiler w/
-Ductless Fan Coil & 1 \\
-\hline
-Fan Coil Heating and Cooling, Fuel & 1.1\% & Shared Boiler w/ Ductless
-Fan Coil & 0.78  \\
-\end{longtable}
+\input{tables/options/HVAC Shared Efficiencies}
 
+For the argument definitions, see Table \ref{table:hc_arg_def_hvac_shared_efficiencies}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#boiler-shared}{Boiler-Shared} or \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump}{Mini-Split Heat Pumps} documentation for the available HPXML schema elements, default values, and constraints.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_hvac_shared_eff}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#boiler-shared}{Boiler-Shared} or \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump}{Mini-Split Heat Pumps} documentation for the available HPXML schema elements, default values, and constraints.
+\input{tables/arguments/HVAC Shared Efficiencies}
 
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} {The ResStock argument definitions set in the HVAC Shared Efficiencies characteristic} {table:hc_arg_def_hvac_shared_eff}
-{Name & Required & Units & Type & Choices & Description} 
-\texttt{heating\_system\_type} & true & & Choice & none, Furnace,
-WallFurnace, FloorFurnace, Boiler, ElectricResistance, Stove,
-SpaceHeater, Fireplace, Shared Boiler w/ Baseboard, Shared Boiler w/
-Ductless Fan Coil & The type of heating system. Use
-\textquotesingle none\textquotesingle{} if there is no heating system or
-if there is a heat pump serving a heating load. \\
-\hline
-\texttt{heating\_system\_heating\_efficiency} & true & Frac & Double & &
-The rated heating efficiency value of the heating system. \\
-\hline
-\texttt{heating\_system\_heating\_capacity} & false & Btu/hr & Double &
-& The output heating capacity of the heating system.  \\
-\hline
-\texttt{heating\_system\_heating\_autosizing\_limit} & false & Btu/hr &
-Double & & The maximum capacity limit applied to the auto-sizing
-methodology. If not provided, no limit is used. \\
-\hline
-\texttt{heating\_system\_fraction\_heat\_load\_served} & true & Frac &
-Double & & The heating load served by the heating system. \\
-\hline
-\texttt{cooling\_system\_type} & true & & Choice & none, central air
-conditioner, room air conditioner, evaporative cooler, mini-split,
-packaged terminal air conditioner & The type of cooling system. Use
-\textquotesingle none\textquotesingle{} if there is no cooling system or
-if there is a heat pump serving a cooling load. \\
-\hline
-\texttt{cooling\_system\_cooling\_efficiency\_type} & true & & Choice &
-SEER, SEER2, EER, CEER & The efficiency type of the cooling system.
-System types central air conditioner and mini-split use SEER or SEER2.
-System types room air conditioner and packaged terminal air conditioner
-use EER or CEER. Ignored for system type evaporative cooler. \\
-\hline
-\texttt{cooling\_system\_cooling\_efficiency} & true & & Double & & The
-rated efficiency value of the cooling system. Ignored for evaporative
-cooler. \\
-\hline
-\texttt{cooling\_system\_cooling\_capacity} & false & Btu/hr & Double &
-& The output cooling capacity of the cooling system.  \\
-\hline
-\texttt{cooling\_system\_cooling\_autosizing\_limit} & false & Btu/hr &
-Double & & The maximum capacity limit applied to the auto-sizing
-methodology. If not provided, no limit is used. \\
-\hline
-\texttt{cooling\_system\_is\_ducted} & false & & Boolean & auto, true,
-false & Whether the cooling system is ducted or not. Only used for
-mini-split and evaporative cooler. It's assumed that
-central air conditioner is ducted, and room air conditioner and packaged
-terminal air conditioner are not ducted. \\
-\hline
-\texttt{heat\_pump\_type} & true & & Choice & none, air-to-air,
-mini-split, ground-to-air, packaged terminal heat pump, room air
-conditioner with reverse cycle & The type of heat pump. Use
-\textquotesingle none\textquotesingle{} if there is no heat pump. \\
-\hline
-\texttt{heat\_pump\_heating\_efficiency\_type} & true & & Choice & HSPF,
-HSPF2, COP & The heating efficiency type of heat pump. System types
-air-to-air and mini-split use HSPF or HSPF2. System types ground-to-air,
-packaged terminal heat pump, and room air conditioner with reverse cycle
-use COP. \\
-\hline
-\texttt{heat\_pump\_heating\_efficiency} & true & & Double & & The rated
-heating efficiency value of the heat pump. \\
-\hline
-\texttt{heat\_pump\_cooling\_efficiency\_type} & true & & Choice & SEER,
-SEER2, EER, CEER & The cooling efficiency type of heat pump. System
-types air-to-air and mini-split use SEER or SEER2. System types
-ground-to-air, packaged terminal heat pump and room air conditioner with
-reverse cycle use EER. \\
-\hline
-\texttt{heat\_pump\_cooling\_efficiency} & true & & Double & & The rated
-cooling efficiency value of the heat pump. \\
-\hline
-\texttt{heat\_pump\_heating\_capacity} & false & Btu/hr & Double & & The
-output heating capacity of the heat pump.  \\
-\hline
-\texttt{heat\_pump\_heating\_autosizing\_limit} & false & Btu/hr &
-Double & & The maximum capacity limit applied to the auto-sizing
-methodology. If not provided, no limit is used. \\
-\hline
-\texttt{heat\_pump\_cooling\_capacity} & false & Btu/hr & Double & & The
-output cooling capacity of the heat pump.  \\
-\hline
-\texttt{heat\_pump\_cooling\_autosizing\_limit} & false & Btu/hr &
-Double & & The maximum capacity limit applied to the auto-sizing
-methodology. If not provided, no limit is used. \\
-\hline
-\texttt{heat\_pump\_fraction\_heat\_load\_served} & true & Frac & Double
-& & The heating load served by the heat pump. \\
-\hline
-\texttt{heat\_pump\_fraction\_cool\_load\_served} & true & Frac & Double
-& & The cooling load served by the heat pump. \\
-\hline
-\texttt{heat\_pump\_backup\_type} & true & & Choice & none, integrated,
-separate & The backup type of the heat pump. If
-\textquotesingle integrated\textquotesingle, represents, e.g., built-in
-electric strip heat or dual-fuel integrated furnace. If
-\textquotesingle separate\textquotesingle, represents, e.g., electric
-baseboard or boiler based on the Heating System 2 specified below. Use
-\textquotesingle none\textquotesingle{} if there is no backup
-heating. \\
-\hline
-\texttt{heat\_pump\_backup\_heating\_autosizing\_limit} & false & Btu/hr
-& Double & & The maximum capacity limit applied to the auto-sizing
-methodology if Backup Type is
-\textquotesingle integrated\textquotesingle. If not provided, no limit
-is used. If Backup Type is \textquotesingle separate\textquotesingle,
-use Heating System 2: Heating Autosizing Limit. \\
-\hline
-\texttt{heat\_pump\_backup\_fuel} & true & & Choice & electricity,
-natural gas, fuel oil, propane & The backup fuel type of the heat pump.
-Only applies if Backup Type is
-\textquotesingle integrated\textquotesingle. \\
-\hline
-\texttt{heat\_pump\_backup\_heating\_efficiency} & true & & Double & &
-The backup rated efficiency value of the heat pump. Percent for
-electricity fuel type. AFUE otherwise. Only applies if Backup Type is
-\textquotesingle integrated\textquotesingle. \\
-\hline
-\texttt{heat\_pump\_backup\_heating\_capacity} & false & Btu/hr & Double
-& & The backup output heating capacity of the heat pump. Only applies if Backup Type is
-\textquotesingle integrated\textquotesingle. \\
-\hline
-\texttt{heat\_pump\_sizing\_methodology} & false & & Choice & auto,
-ACCA, HERS, MaxLoad & The auto-sizing methodology to use when the heat
-pump capacity is not provided.\\
-\hline
-\texttt{heat\_pump\_backup\_sizing\_methodology} & false & & Choice &
-auto, emergency, supplemental & The auto-sizing methodology to use when
-the heat pump backup capacity is not provided.  \\
-\hline
-\texttt{geothermal\_loop\_configuration} & false & & Choice & auto,
-none, vertical & Configuration of the geothermal loop. Only applies to
-ground-to-air heat pump type.\\
-\hline
-\texttt{geothermal\_loop\_borefield\_configuration} & false & & Choice &
-auto, rectangle, open rectangle, C, L, U, lopsided U & Borefield
-configuration of the geothermal loop. Only applies to ground-to-air heat
-pump type. \\
-\hline
-\texttt{geothermal\_loop\_loop\_flow} & false & gpm & Double & & Water
-flow rate through the geothermal loop. Only applies to ground-to-air
-heat pump type. \\
-\hline
-\texttt{geothermal\_loop\_boreholes\_count} & false & \# & Integer & &
-Number of boreholes. Only applies to ground-to-air heat pump type.\\
-\texttt{geothermal\_loop\_boreholes\_length} & false & ft & Double & &
-Average length of each borehole (vertical). Only applies to
-ground-to-air heat pump type.\\
-\hline
-\texttt{geothermal\_loop\_boreholes\_spacing} & false & ft & Double &
-auto & Distance between bores. Only applies to ground-to-air heat pump
-type. \\
-\hline
-\texttt{geothermal\_loop\_boreholes\_diameter} & false & in & Double &
-auto & Diameter of bores. Only applies to ground-to-air heat pump type.\\
-\texttt{geothermal\_loop\_grout\_type} & false & & Choice & auto,
-standard, thermally enhanced & Grout type of the geothermal loop. Only
-applies to ground-to-air heat pump type. \\
-\hline
-\texttt{geothermal\_loop\_pipe\_type} & false & & Choice & auto,
-standard, thermally enhanced & Pipe type of the geothermal loop. Only
-applies to ground-to-air heat pump type.  \\
-\hline
-\texttt{geothermal\_loop\_pipe\_diameter} & false & in & Choice & auto,
-3/4" pipe, 1" pipe, 1-1/4" pipe & Pipe diameter of the geothermal loop.
-Only applies to ground-to-air heat pump type.  \\
-\hline
-\texttt{heating\_system\_has\_flue\_or\_chimney} & true & & String & &
-Whether the heating system has a flue or chimney. \\
-\end{customLongTable}
 \paragraph{Distribution Assumption(s)}
 
 \begin{itemize}
@@ -1437,7 +1001,6 @@ Whether the heating system has a flue or chimney. \\
     \item Assume all Cooling Only shared systems are fan coils in each housing unit served by a central chiller.
 \end{itemize}
  
-
 \subsection{Setpoints} \label{sec:setpoints}
 \subsubsection{Setpoints Modeling Approach}
 There are a set of characteristics that assign heating and cooling setpoint schedules in ResStock. The characteristics assign the setpoint, whether there is a setpoint offset, the magnitude of the setpoint offset, and the offset period. The heating and cooling setpoints determine the temperature past which heating and cooling systems run to condition the home. They can vary over time as occupants change their thermostat settings, often choosing different settings overnight or when they are away from home. The setpoint offset specifies whether there is a change in the setpoint at any point during the day. An example would be a heating setback where the heating setpoint temperature is decreased during the day when no one is home. The offset magnitude is the number of degrees of the offset. The offset period determines what hours of the day the offset applies. 
@@ -1465,51 +1028,11 @@ Base heating setpoint (prior to any offset applied).
 \end{itemize}
 
 \paragraph{Options}
-The options for the housing unit heating setpoint range between 55\degree F and 80\degree F (Table \ref{table:hc_opt_ht_stp}). All setpoints that are assigned 55\degree F are vacant units. The heating setpoint characteristic sets the \texttt{hvac\_control\_heating\_season\_period}, \texttt{hvac\_control\_heating\_weekday\_setpoint\_temp}, \texttt{hvac\_control\_heating\_weekend\_setpoint\_temp}, and \texttt{use\_auto\_heating\_season} arguments. Argument definitions are in Table \ref{table:hc_arg_def_ht_stp}. The \texttt{hvac\_control\_heating\_season\_period} is always set to ``auto,'' and the \texttt{use\_auto\_heating\_season} argument is always set to ``false,'' meaning the heating system will run as needed year-round. The heating set points are the same for weekdays and weekends.
+The options for the housing unit heating setpoint range between 55\degree F and 80\degree F (Table \ref{table:hc_opt_heating_setpoint}). All setpoints that are assigned 55\degree F are vacant units. The heating setpoint characteristic sets the \texttt{hvac\_control\_heating\_season\_period}, \texttt{hvac\_control\_heating\_weekday\_setpoint\_temp}, \texttt{hvac\_control\_heating\_weekend\_setpoint\_temp}, and \texttt{use\_auto\_heating\_season} arguments. Argument definitions are in Table \ref{table:hc_arg_def_heating_setpoint}. The \texttt{hvac\_control\_heating\_season\_period} is always set to ``auto,'' and the \texttt{use\_auto\_heating\_season} argument is always set to ``false,'' meaning the heating system will run as needed year-round. The heating set points are the same for weekdays and weekends.
 
-\begin{longtable}[]{ |p{4.cm}|p{4cm}|p{4cm}| }
-\caption{Heating Setpoint options and arguments that vary for each option} \label{table:hc_opt_ht_stp} \\  
-\toprule\noalign{}
-Option name &
-\texttt{hvac\_control\_heating\_weekday\_setpoint\_temp} &
-\texttt{hvac\_control\_heating\_weekend\_setpoint\_temp} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-55F & 55 & 55 \\
-60F & 60 & 60 \\
-62F & 62 & 62 \\
-65F & 65 & 65 \\
-67F & 67 & 67 \\
-68F & 68 & 68 \\
-70F & 70 & 70 \\
-72F & 72 & 72 \\
-75F & 75 & 75 \\
-76F & 76 & 76 \\
-78F & 78 & 78 \\
-80F & 80 & 80 \\
-\end{longtable}
+\input{tables/options/Heating Setpoint}
 
-\begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-{The ResStock argument definitions set in the Heating Setpoint characteristic} {table:hc_arg_def_ht_stp} 
-{Name & Required & Units & Type & Choices & Description} 
-\texttt{hvac\_control\_heating\_season\_period} & false & & String &
-auto & Enter a date like \textquotesingle Nov 1 - Jun
-30\textquotesingle.  Can also provide
-\textquotesingle BuildingAmerica\textquotesingle{} to use automatic
-seasons from the Building America House Simulation Protocols. \\
-\hline
-\texttt{hvac\_control\_heating\_weekday\_setpoint\_temp} & true & deg-F
-& Double & & Specify the weekday heating setpoint temperature. \\
-\hline
-\texttt{hvac\_control\_heating\_weekend\_setpoint\_temp} & true & deg-F
-& Double & & Specify the weekend heating setpoint temperature. \\
-\hline
-\texttt{use\_auto\_heating\_season} & true & & Boolean & true, false &
-Specifies whether to automatically define the heating season based on
-the weather file. \\
-\end{customLongTable}
+\input{tables/arguments/Heating Setpoint}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1517,7 +1040,6 @@ the weather file. \\
     \item Heating type dependency is always lumped into Heat pump/Non-heat pumps.
     \item For vacant units (for which Tenure = ‘Not Available’), the heating setpoint is set to 55\degree F.
 \end{itemize}
-
 
 \subsubsection{Heating Setpoint Has Offset}
 \paragraph{Description}
@@ -1561,40 +1083,11 @@ The magnitude of the heating setpoint offset.
 \end{itemize}
 
 \paragraph{Options}
-The options for Heating Setpoint Offset Magnitude are 0F, 3F, 6F, and 12F (Table \ref{table:hc_opt_ht_stp_mag}). The options are the \degree F that the heating setpoint is decreased if a heating setpoint offset is selected. The heating offset magnitude is the same for weekdays and weekends. The Heating Setpoint Offset Magnitude characteristic sets the \texttt{hvac\_control\_heating\_weekday\_setpoint\_offset\_magnitude} and \texttt{hvac\_control\_heating\_weekend\_setpoint\_offset\_magnitude} arguments. Argument definitions are in Table \ref{table:hc_arg_def_ht_stp_mag}.
+The options for Heating Setpoint Offset Magnitude are 0F, 3F, 6F, and 12F (Table \ref{table:hc_opt_heating_setpoint_offset_magnitude}). The options are the \degree F that the heating setpoint is decreased if a heating setpoint offset is selected. The heating offset magnitude is the same for weekdays and weekends. The Heating Setpoint Offset Magnitude characteristic sets the \texttt{hvac\_control\_heating\_weekday\_setpoint\_offset\_magnitude} and \texttt{hvac\_control\_heating\_weekend\_setpoint\_offset\_magnitude} arguments. Argument definitions are in Table \ref{table:hc_arg_def_heating_setpoint_offset_magnitude}.
 
-\begin{longtable}[]{ |p{4.cm}|p{4cm}|p{4cm}| }
-\caption{Heating Setpoint Offset Magnitude options and arguments that vary for each option} \label{table:hc_opt_ht_stp_mag} \\  
-\toprule\noalign{}
-Option name &
-\texttt{hvac\_control\_heating\_weekday\_setpoint\_offset\_magnitude} &
-\texttt{hvac\_control\_heating\_weekend\_setpoint\_offset\_magnitude} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-0F & 0 & 0 \\
-3F & 3 & 3 \\
-6F & 6 & 6 \\
-12F & 12 & 12 \\
-\end{longtable}
+\input{tables/options/Heating Setpoint Offset Magnitude}
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-\caption{The ResStock argument definitions set in the Heating Setpoint Offset Magnitude characteristic} \label{table:hc_arg_def_ht_stp_mag} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{hvac\_control\_heating\_weekday\_setpoint\_offset\_magnitude} &
-true & deg-F & Double & & Specify the weekday heating offset
-magnitude. \\
-\hline
-\texttt{hvac\_control\_heating\_weekend\_setpoint\_offset\_magnitude} &
-true & deg-F & Double & & Specify the weekend heating offset
-magnitude. \\
-\end{longtable}
+\input{tables/arguments/Heating Setpoint Offset Magnitude}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1619,133 +1112,11 @@ The time period(s) for the housing unit's heating setpoint offset.
 \end{itemize}
 
 \paragraph{Options}
-The options are a combination of day and night offset periods (Table \ref{table:hc_opt_ht_stp_per}). The default for the day is from 9 AM to 5 PM and for the night is 10 PM to 7 AM. The options then shift these periods randomly up to 5 hours in either direction. The shifting of the periods is mainly to avoid the synchronization of HVAC systems across the housing stock from all turning on and off at the same time. The characteristic sets the \texttt{hvac\_control\_heating\_weekday\_setpoint\_schedule} and \texttt{hvac\_control\_heating\_weekend\_setpoint\_schedule} ResStock arguments. The values for the arguments are 24-hour arrays for when the setback occurs (a value of -1) and when the setback does not occur (a value of 0). The argument definitions are in Table \ref{table:hc_arg_def_ht_stp_per}.
+The options are a combination of day and night offset periods (Table \ref{table:hc_opt_heating_setpoint_offset_period}). The default for the day is from 9 AM to 5 PM and for the night is 10 PM to 7 AM. The options then shift these periods randomly up to 5 hours in either direction. The shifting of the periods is mainly to avoid the synchronization of HVAC systems across the housing stock from all turning on and off at the same time. The characteristic sets the \texttt{hvac\_control\_heating\_weekday\_setpoint\_schedule} and \texttt{hvac\_control\_heating\_weekend\_setpoint\_schedule} ResStock arguments. The values for the arguments are 24-hour arrays for when the setback occurs (a value of -1) and when the setback does not occur (a value of 0). The argument definitions are in Table \ref{table:hc_arg_def_heating_setpoint_offset_period}.
 
-\begin{customLongTable}{ |p{4.cm}|p{6cm}|p{6cm}| }
-{Heating Setpoint Offset Period options and arguments that vary for each option.} {table:hc_opt_ht_stp_per} 
-{Option name &
-\texttt{hvac\_control\_heating\_weekday\_setpoint\_schedule} &
-\texttt{hvac\_control\_heating\_weekend\_setpoint\_schedule}} 
-Day & 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1,
--1, 0, 0, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day -1h & 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1,
--1, 0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day -2h & 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1,
-0, 0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day -3h & 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day -4h & 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day -5h & 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day +1h & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1,
--1, -1, 0, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day +2h & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1,
--1, -1, -1, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day +3h & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1,
--1, -1, -1, -1, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day +4h & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1,
--1, -1, -1, -1, -1, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day +5h & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1,
--1, -1, -1, -1, -1, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day and Night &
--1, -1, -1, -1, -1, -1, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, -1, -1 &
--1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1 \\ \hline
-Day and Night -1h &
--1, -1, -1, -1, -1, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, -1, -1, -1 &
--1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1 \\ \hline
-Day and Night -2h &
--1, -1, -1, -1, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, -1, -1, -1, -1 &
--1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1 \\ \hline
-Day and Night -3h &
--1, -1, -1, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1 &
--1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1 \\ \hline
-Day and Night -4h &
--1, -1, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1 &
--1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1 \\ \hline
-Day and Night -5h &
--1, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1 &
--1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1 \\ \hline
-Day and Night +1h &
--1, -1, -1, -1, -1, -1, -1, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, -1 &
--1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1 \\ \hline
-Day and Night +2h &
--1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0 &
--1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day and Night +3h &
-0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0 &
-0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day and Night +4h &
-0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0 &
-0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day and Night +5h &
-0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0 &
-0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Night & -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, -1, -1 & -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1 \\ \hline
-Night -1h & -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, -1, -1, -1 & -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1 \\ \hline
-Night -2h & -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, -1, -1, -1, -1 & -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1 \\ \hline
-Night -3h & -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, -1, -1, -1, -1, -1 & -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1 \\ \hline
-Night -4h & -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, -1, -1, -1, -1, -1, -1 & -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1 \\ \hline
-Night -5h & -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
--1, -1, -1, -1, -1, -1, -1 & -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, -1, -1, -1, -1, -1, -1, -1 \\ \hline
-Night +1h & -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, -1 & -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1 \\ \hline
-Night +2h & -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0 & -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Night +3h & 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0 & 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Night +4h & 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Night +5h & 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1,
--1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-None & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0 \\
-\end{customLongTable}
+\input{tables/options/Heating Setpoint Offset Period}
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-\caption{The ResStock argument definitions set in the Heating Setpoint Offset Period characteristic} \label{table:hc_arg_def_ht_stp_per} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{hvac\_control\_heating\_weekday\_setpoint\_schedule} & true & &
-String & & Specify the 24-hour comma-separated weekday heating schedule
-of 0s and 1s. \\
-\hline
-\texttt{hvac\_control\_heating\_weekend\_setpoint\_schedule} & true & &
-String & & Specify the 24-hour comma-separated weekend heating schedule
-of 0s and 1s. \\
-\end{longtable}
+\input{tables/arguments/Heating Setpoint Offset Period}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1770,50 +1141,11 @@ Baseline cooling setpoint (prior to any offset applied).
 \end{itemize}
 
 \paragraph{Options}
-The options for the Cooling Setpoint characteristic range between 60\degree F and 80\degree F (Table \ref{table:hc_opt_cl_stp}). The Cooling Setpoint characteristic sets the \texttt{hvac\_control\_cooling\_season\_period}, \texttt{hvac\_control\_cooling\_weekday\_setpoint\_temp}, \texttt{hvac\_control\_cooling\_weekend\_setpoint\_temp}, and \texttt{use\_auto\_cooling\_season} ResStock arguments. The \texttt{hvac\_control\_cooling\_season\_period} argument is always set to ``auto.'' The \texttt{use\_auto\_cooling\_season} argument is always set to ``false.'' These arguments allow the cooling system to run all year as needed. Argument definitions are in Table \ref{table:hc_arg_def_cl_stp}.
+The options for the Cooling Setpoint characteristic range between 60\degree F and 80\degree F (Table \ref{table:hc_opt_cooling_setpoint}). The Cooling Setpoint characteristic sets the \texttt{hvac\_control\_cooling\_season\_period}, \texttt{hvac\_control\_cooling\_weekday\_setpoint\_temp}, \texttt{hvac\_control\_cooling\_weekend\_setpoint\_temp}, and \texttt{use\_auto\_cooling\_season} ResStock arguments. The \texttt{hvac\_control\_cooling\_season\_period} argument is always set to ``auto.'' The \texttt{use\_auto\_cooling\_season} argument is always set to ``false.'' These arguments allow the cooling system to run all year as needed. Argument definitions are in Table \ref{table:hc_arg_def_cooling_setpoint}.
 
-\begin{customLongTable}{ |p{4.cm}|p{4cm}|p{4cm}| }
-{Cooling Setpoint options and arguments that vary for each option} {table:hc_opt_cl_stp} 
-{Option name &
-\texttt{hvac\_control\_cooling\_weekday\_setpoint\_temp} &
-\texttt{hvac\_control\_cooling\_weekend\_setpoint\_temp}} 
-60F & 60 & 60 \\
-62F & 62 & 62 \\
-65F & 65 & 65 \\
-67F & 67 & 67 \\
-68F & 68 & 68 \\
-70F & 70 & 70 \\
-72F & 72 & 72 \\
-75F & 75 & 75 \\
-76F & 76 & 76 \\
-78F & 78 & 78 \\
-80F & 80 & 80 \\
-\end{customLongTable}
+\input{tables/options/Cooling Setpoint}
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-\caption{The ResStock argument definitions set in the Cooling Setpoint characteristic} \label{table:hc_arg_def_cl_stp} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{hvac\_control\_cooling\_season\_period} & false & & String &
-auto & Enter a date like \textquotesingle Jun 1 - Oct
-31\textquotesingle.  Can also provide
-\textquotesingle BuildingAmerica\textquotesingle{} to use automatic
-seasons from the Building America House Simulation Protocols. \\
-\hline
-\texttt{hvac\_control\_cooling\_weekday\_setpoint\_temp} & true & deg-F
-& Double & & Specify the weekday cooling setpoint temperature. \\
-\hline
-\texttt{hvac\_control\_cooling\_weekend\_setpoint\_temp} & true & deg-F
-& Double & & Specify the weekend cooling setpoint temperature. \\
-\hline
-\texttt{use\_auto\_cooling\_season} & true & & Boolean & true, false &
-Specifies whether to automatically define the cooling season based on
-the weather file. \\
-\end{longtable}
+\input{tables/arguments/Cooling Setpoint}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1860,41 +1192,12 @@ The magnitude of cooling setpoint offset.
 \end{itemize}
 
 \paragraph{Options}
-The options of the Cooling Setpoint Offset Magnitude characteristic are 0\degree F, 2\degree F, 5\degree F, and 9\degree F (Table \ref{table:hc_opt_cl_stp_mag}). The characteristic set the \texttt{hvac\_control\_cooling\_weekday\_setpoint\_offset\_magnitude} and
-\texttt{hvac\_control\_cooling\_weekend\_setpoint\_offset\_magnitude} ResStock arguments. A zero degree offset corresponds to the setpoint not having an offset. Argument definitions are in Table \ref{table:hc_arg_def_cl_stp_mag}. 
+The options of the Cooling Setpoint Offset Magnitude characteristic are 0\degree F, 2\degree F, 5\degree F, and 9\degree F (Table \ref{table:hc_opt_cooling_setpoint_offset_magnitude}). The characteristic set the \texttt{hvac\_control\_cooling\_weekday\_setpoint\_offset\_magnitude} and
+\texttt{hvac\_control\_cooling\_weekend\_setpoint\_offset\_magnitude} ResStock arguments. A zero degree offset corresponds to the setpoint not having an offset. Argument definitions are in Table \ref{table:hc_arg_def_cooling_setpoint_offset_period}. 
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-\caption{The ResStock argument definitions set in the Cooling Setpoint Offset Magnitude characteristic} \label{table:hc_arg_def_cl_stp_mag} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{hvac\_control\_cooling\_weekday\_setpoint\_offset\_magnitude} &
-true & deg-F & Double & & Specify the weekday cooling offset
-magnitude. \\
-\hline
-\texttt{hvac\_control\_cooling\_weekend\_setpoint\_offset\_magnitude} &
-true & deg-F & Double & & Specify the weekend cooling offset
-magnitude. \\
-\end{longtable}
+\input{tables/options/Cooling Setpoint Offset Magnitude}
 
-\begin{longtable}[]{ |p{4.cm}|p{4cm}|p{4cm}| }
-\caption{Cooling Setpoint Offset Magnitude options and arguments that vary for each option} \label{table:hc_opt_cl_stp_mag} \\  
-\toprule\noalign{}
-Option name &
-\texttt{hvac\_control\_cooling\_weekday\_setpoint\_offset\_magnitude} &
-\texttt{hvac\_control\_cooling\_weekend\_setpoint\_offset\_magnitude} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-0F & 0 & 0 \\
-2F & 2 & 2 \\
-5F & 5 & 5 \\
-9F & 9 & 9 \\
-\end{longtable}
+\input{tables/arguments/Cooling Setpoint Offset Magnitude}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1918,199 +1221,11 @@ The time period(s) for the housing unit's heating setpoint offset.
 \end{itemize}
 
 \paragraph{Options}
-The options combine day and night offset periods (Table \ref{table:hc_opt_cl_stp_per}). The default for the day is from 9 AM to 5 PM and for the night is 10 PM to 7 AM. The options then shift these periods randomly up to 5 hours in either direction. The shifting of the periods is mainly to avoid the synchronization of HVAC systems all turning on and off simultaneously. The characteristic set the \texttt{hvac\_control\_cooling\_weekday\_setpoint\_schedule} and \texttt{hvac\_control\_cooling\_weekdend\_setpoint\_schedule} ResStock arguments. The values for the arguments are hourly arrays for when the setup occurs (a value of 1), a setback (a value of -1), and when the setup or setback does not occur (a value of 0). The argument definitions are in Table \ref{table:hc_arg_def_cl_per}.
+The options combine day and night offset periods (Table \ref{table:hc_opt_cooling_setpoint_offset_period}). The default for the day is from 9 AM to 5 PM and for the night is 10 PM to 7 AM. The options then shift these periods randomly up to 5 hours in either direction. The shifting of the periods is mainly to avoid the synchronization of HVAC systems all turning on and off simultaneously. The characteristic set the \texttt{hvac\_control\_cooling\_weekday\_setpoint\_schedule} and \texttt{hvac\_control\_cooling\_weekdend\_setpoint\_schedule} ResStock arguments. The values for the arguments are hourly arrays for when the setup occurs (a value of 1), a setback (a value of -1), and when the setup or setback does not occur (a value of 0). The argument definitions are in Table \ref{table:hc_arg_def_cooling_setpoint_offset_period}.
 
-\begin{customLongTable}{ |p{4.cm}|p{6cm}|p{6cm}| }
-{Cooling Setpoint Offset Period options and arguments that vary for each option} {table:hc_opt_cl_stp_per} 
-{Option name &
-\texttt{hvac\_control\_cooling\_weekday\_setpoint\_schedule} &
-\texttt{hvac\_control\_cooling\_weekend\_setpoint\_schedule}} 
-Day and Night Setup &
-1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1,1, 1, 0, 0, 0, 0, 0, 1, 1 &
-1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 \\ \hline
-Day and Night Setup -1h &
-1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1 &
-1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1 \\ \hline
-Day and Night Setup -2h &
-1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1 &
-1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 \\ \hline
-Day and Night Setup -3h &
-1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 &
-1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 \\ \hline
-Day and Night Setup -4h &
-1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 &
-1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 \\ \hline
-Day and Night Setup -5h &
-1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1 &
-1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1 \\ \hline
-Day and Night Setup +1h &
-1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1 &
-1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 \\ \hline
-Day and Night Setup +2h &
-1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 &
-1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day and Night Setup +3h &
-0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 &
-0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day and Night Setup +4h &
-0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0 &
-0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day and Night Setup +5h &
-0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 &
-0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day Setup & 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-0, 0, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day Setup -1h & 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day Setup -2h & 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day Setup -3h & 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day Setup -4h & 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day Setup -5h & 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day Setup +1h & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1,
-1, 1, 0, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day Setup +2h & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
-1, 1, 1, 0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day Setup +3h & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1,
-1, 1, 1, 1, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day Setup +4h & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
-1, 1, 1, 1, 1, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day Setup +5h & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
-1, 1, 1, 1, 1, 1, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day Setup and Night Setback &
--1, -1, -1, -1, -1, -1, -1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, -1, -1 &
--1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1 \\ \hline
-Day Setup and Night Setback -1h &
--1, -1, -1, -1, -1, -1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, -1, -1, -1 &
--1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1 \\ \hline
-Day Setup and Night Setback -2h &
--1, -1, -1, -1, -1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, -1, -1, -1, -1 &
--1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1 \\ \hline
-Day Setup and Night Setback -3h &
--1, -1, -1, -1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1 &
--1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1 \\ \hline
-Day Setup and Night Setback -4h &
--1, -1, -1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1 &
--1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1 \\ \hline
-Day Setup and Night Setback -5h &
--1, -1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1 &
--1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1 \\ \hline
-Day Setup and Night Setback +1h &
--1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, -1 &
--1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1 \\ \hline
-Day Setup and Night Setback +2h &
--1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 &
--1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day Setup and Night Setback +3h &
-0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 &
-0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day Setup and Night Setback +4h &
-0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0 &
-0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Day Setup and Night Setback +5h &
-0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 &
-0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Night Setback & -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, -1, -1 & -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1 \\ \hline
-Night Setback -1h & -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1 & -1, -1, -1, -1, -1, -1, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1 \\ \hline
-Night Setback -2h & -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1 & -1, -1, -1, -1, -1, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1 \\ \hline
-Night Setback -3h & -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1 & -1, -1, -1, -1, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1 \\ \hline
-Night Setback -4h & -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, -1, -1, -1, -1, -1, -1 & -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1 \\ \hline
-Night Setback -5h & -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, -1, -1, -1, -1, -1, -1, -1 & -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1 \\ \hline
-Night Setback +1h & -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1 & -1, -1, -1, -1, -1, -1, -1, -1, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1 \\ \hline
-Night Setback +2h & -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 & -1, -1, -1, -1, -1, -1, -1, -1, -1,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Night Setback +3h & 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 & 0, -1, -1, -1, -1, -1, -1, -1, -1,
--1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Night Setback +4h & 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, -1, -1, -1, -1, -1, -1, -1,
--1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Night Setback +5h & 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, 0, -1, -1, -1, -1, -1, -1,
--1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Night Setup & 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 1, 1 & 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 1, 1 \\ \hline
-Night Setup -1h & 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 1, 1, 1 & 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 1, 1, 1 \\ \hline
-Night Setup -2h & 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 1, 1, 1, 1 & 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 1, 1, 1, 1 \\ \hline
-Night Setup -3h & 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 1, 1, 1, 1, 1 & 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 1, 1, 1, 1, 1 \\ \hline
-Night Setup -4h & 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 1, 1, 1, 1, 1, 1 & 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 1, 1, 1, 1, 1, 1 \\ \hline
-Night Setup -5h & 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 1, 1, 1, 1, 1, 1, 1 & 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 1, 1, 1, 1, 1, 1, 1 \\ \hline
-Night Setup +1h & 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 1 & 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 1 \\ \hline
-Night Setup +2h & 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 & 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Night Setup +3h & 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 & 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Night Setup +4h & 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-Night Setup +5h & 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 & 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0 \\ \hline
-None & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0 & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0 \\
-\end{customLongTable}
+\input{tables/options/Cooling Setpoint Offset Period}
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-\caption{The ResStock argument definitions set in the Cooling Setpoint Offset Period characteristic} \label{table:hc_arg_def_cl_per} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{hvac\_control\_cooling\_weekday\_setpoint\_schedule} & true & &
-String & & Specify the 24-hour comma-separated weekday cooling schedule
-of 0s and 1s. \\
-\hline
-\texttt{hvac\_control\_cooling\_weekend\_setpoint\_schedule} & true & &
-String & & Specify the 24-hour comma-separated weekend cooling schedule
-of 0s and 1s. \\
-\end{longtable}
+\input{tables/arguments/Cooling Setpoint Offset Period}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -2134,7 +1249,6 @@ ResStock has three inputs that control specify the primary ductwork arguments in
 
 The presence of ducts in the housing unit.
 
-
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
 \item The sample counts and sample weights are constructed using RECS 2020 microdata.
@@ -2148,24 +1262,9 @@ The presence of ducts in the housing unit.
     \item HVAC Secondary Heating Type.
 \end{itemize}
 
-
 \paragraph{Options}
-Two options are available for this input characteristic: yes or no. The presence of ductwork is dependent upon the heating and cooling systems. Both duct options set the \texttt{hvac\_blower\_fan\_watts\_per\_cfm} argument to auto.
+Two options are available for this input characteristic: yes or no. The presence of ductwork is dependent upon the heating and cooling systems.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_hvac_has_duct}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-distribution}{Air Distribution} documentation for the available HPXML schema elements, default values, and constraints.
-
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|}\caption{The ResStock argument definitions set in the HVAC Has Ducts characteristic} \label{table:hc_arg_def_hvac_has_duct} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{hvac\_blower\_fan\_watts\_per\_cfm} & false & W/CFM & Double &
-auto & The blower fan efficiency at maximum fan speed. Applies only to
-split (not packaged) systems (i.e., applies to ducted systems as well as
-ductless mini-split systems). \\
-\end{longtable}
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
     \item Ducted Heat Pump HVAC type assumed to have ducts.
@@ -2174,7 +1273,6 @@ ductless mini-split systems). \\
     \item None of the shared system options currently modeled (in HVAC Shared Efficiencies) are ducted, therefore where there are discrepancies between HVAC Heating Type, HVAC Cooling Type, and HVAC Has Shared System, HVAC Has Shared System takes precedence (e.g., Central AC + Ducted Heating + Shared Heating and Cooling = No (Ducts)). (This is a temporary fix and will change when ducted shared system options are introduced.)
 \end{itemize}
  
-
 \subsubsection{Duct Leakage and Insulation}
 
 \paragraph{Description}
@@ -2191,7 +1289,7 @@ distribution: Lucas and Cole (\href{https://www.pnnl.gov/main/publications/exter
     \item Vintage.
 \end{itemize}
 \paragraph{Options}
-ResStock uses 13 combinations of insulation and air leakage from ducts (Table \ref{table:hc_opt_duct_leak}). The following ResStock arguments are constant across all options:
+ResStock uses 13 combinations of insulation and air leakage from ducts (Table \ref{table:hc_opt_duct_leakage_and_insulation}). The following ResStock arguments are constant across all options:
 \begin{itemize}
     \item \texttt{ducts\_leakage\_units}: percent
     \item \texttt{ducts\_supply\_buried\_insulation\_level}: auto
@@ -2200,80 +1298,11 @@ ResStock uses 13 combinations of insulation and air leakage from ducts (Table \r
     \item \texttt{ducts\_return\_fraction\_rectangular}: auto.
 \end{itemize}
 
-\begin{customLongTable}{|p{4.3cm}|p{2cm}|p{2.5cm}|p{2cm}|p{2.5cm}|}{Duct Leakage and Insulation options and arguments that vary for each option}{table:hc_opt_duct_leak} 
-{Option name & 
-\texttt{ducts\_supply\_leakage\_to\_outside\_value} &
-\texttt{ducts\_supply\_insulation\_r} & \texttt{ducts\_return\_leakage\_to\_outside\_value} &
-\texttt{ducts\_return\_insulation\_r}} 
-0\% Leakage to Outside, Uninsulated & 0 & 0 & 0 & 0   \\ \hline
-10\% Leakage to Outside, R-4 & 0.067 & 4 
-& 0.033 & 4\\ \hline
-10\% Leakage to Outside, R-6 & 0.067 & 6  & 0.033 & 6  \\ \hline
-10\% Leakage to Outside, R-8 & 0.067 & 8 
-& 0.033 & 8   \\ \hline
-10\% Leakage to Outside, Uninsulated & 0.067 & 0 &
-0.033 & 0 \\ \hline
-20\% Leakage to Outside, R-4 & 0.133 & 4 
-& 0.067 & 4   \\ \hline
-20\% Leakage to Outside, R-6 & 0.133 & 6 
-& 0.067 & 6  \\ \hline
-20\% Leakage to Outside, R-8 & 0.133 & 8 
-& 0.067 & 8 \\\hline
-20\% Leakage to Outside, Uninsulated & 0.133 & 0  & 0.067 & 0  \\ \hline
-30\% Leakage to Outside, R-4 & 0.200 & 4  &
-0.100 & 4  \\ \hline
-30\% Leakage to Outside, R-6 & 0.200 & 6& 0.100 & 6   \\ \hline
-30\% Leakage to Outside, R-8 & 0.200 & 8 
-& 0.100 & 8  \\ \hline
-30\% Leakage to Outside, Uninsulated & 0.200 & 0  & 0.100 & 0   \\ \hline
-None & 0 & 0  & 0 & 0 \\
-\end{customLongTable}
+\input{tables/options/Duct Leakage and Insulation}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_duct_leak}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-distribution}{Air Distribution} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_duct_leakage_and_insulation}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-distribution}{Air Distribution} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{2cm}|p{4.3cm}|} {The ResStock argument definitions set in the Duct Leakage and Insulation characteristic} {table:hc_arg_def_duct_leak}
-{Name & Required & Units & Type & Choices & Description} 
-\texttt{ducts\_leakage\_units} & true & & Choice & CFM25, CFM50, Percent
-& The leakage units of the ducts. \\
-\hline
-\texttt{ducts\_supply\_leakage\_to\_outside\_value} & true & & Double &
-& The leakage value to outside for the supply ducts. \\
-\hline
-\texttt{ducts\_supply\_insulation\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double
-& & The nominal insulation r-value of the supply ducts excluding air
-films. Use 0 for uninsulated ducts. \\
-\hline
-\texttt{ducts\_supply\_buried\_insulation\_level} & false & & Choice &
-auto, not buried, partially buried, fully buried, deeply buried &
-Whether the supply ducts are buried in, e.g., attic loose-fill
-insulation. Partially buried ducts have insulation that does not cover
-the top of the ducts. Fully buried ducts have insulation that just
-covers the top of the ducts. Deeply buried ducts have insulation that
-continues above the top of the ducts. \\
-\hline
-\texttt{ducts\_supply\_fraction\_rectangular} & false & frac & Double &
-auto & The fraction of supply ducts that are rectangular (as opposed to
-round); this affects the duct effective R-value used for modeling. \\
-\hline
-\texttt{ducts\_return\_leakage\_to\_outside\_value} & true & & Double &
-& The leakage value to outside for the return ducts. \\
-\hline
-\texttt{ducts\_return\_insulation\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double
-& & The nominal insulation r-value of the return ducts excluding air
-films. Use 0 for uninsulated ducts. \\
-\hline
-\texttt{ducts\_return\_buried\_insulation\_level} & false & & Choice &
-auto, not buried, partially buried, fully buried, deeply buried &
-Whether the return ducts are buried in, e.g., attic loose-fill
-insulation. Partially buried ducts have insulation that does not cover
-the top of the ducts. Fully buried ducts have insulation that just
-covers the top of the ducts. Deeply buried ducts have insulation that
-continues above the top of the ducts. \\
-\hline
-\texttt{ducts\_return\_fraction\_rectangular} & false & frac & Double &
-auto & The fraction of return ducts that are rectangular (as opposed to
-round); this affects the duct effective R-value used for modeling. \\
-\end{customLongTable}
+\input{tables/arguments/Duct Leakage and Insulation}
 
 \paragraph{Distribution Assumption(s)}
 Ducts entirely in conditioned spaces will not have any leakage to outside. Ducts with R-4/R-8 insulation were previously assigned to Geometry Foundation Type = Ambient or Slab. They now correspond to those with Duct Location = Garage, Unvented Attic, or Vented Attic. 
@@ -2290,7 +1319,6 @@ Primary location of duct system. As described earlier, a fraction of the ducts w
 OpenStudio-HPXML v1.6.0 and Building America House Simulation Protocols (\cite{Wilson2014}). 
 \end{itemize}
 
-
 \paragraph{Direct Conditional Dependencies}
 \begin{itemize}
     \item Geometry Space Combination
@@ -2298,7 +1326,7 @@ OpenStudio-HPXML v1.6.0 and Building America House Simulation Protocols (\cite{W
 \end{itemize}
 
 \paragraph{Options}
-The duct location is a direct mapping of spaces from the hierarchical assignment in OpenStudio-HPXML. This is done to expose the duct location as an output in ResStock. The spaces available for the ducts are in Table \ref{table:hc_opt_duct_loc}. The ``None'' option is used for ducts that are located completely in the conditioned space. For all options of Duct Location, the following arguments are the same: 
+The duct location is a direct mapping of spaces from the hierarchical assignment in OpenStudio-HPXML. This is done to expose the duct location as an output in ResStock. The spaces available for the ducts are in Table \ref{table:hc_opt_duct_location}. The ``None'' option is used for ducts that are located completely in the conditioned space. For all options of Duct Location, the following arguments are the same: 
 \begin{itemize}
     \item \texttt{ducts\_supply\_surface\_area}: auto
     \item \texttt{ducts\_supply\_surface\_area\_fraction}: auto
@@ -2306,69 +1334,12 @@ The duct location is a direct mapping of spaces from the hierarchical assignment
     \item \texttt{ducts\_return\_surface\_area\_fraction}: auto.
 \end{itemize}
 
-\begin{longtable}[]{|p{3cm}|p{3.75cm}|p{3.75cm}|p{2.5cm}|}\caption{Duct Location options and arguments that vary for each option} \label{table:hc_opt_duct_loc} \\
-\toprule\noalign{}
-Option name & \texttt{ducts\_supply\_location} &
-\texttt{ducts\_return\_location}  &\texttt{ducts\_number\_of\_return\_registers}
- \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Attic & attic &  attic & auto \\
-Crawlspace & crawlspace &  crawlspace & auto\\
-Garage & garage &  garage & auto\\
-Heated Basement & basement---conditioned & basement---conditioned& auto\\
-Living Space & conditioned space & conditioned
-space  & auto\\
-Unheated Basement & basement---unconditioned &
-basement---unconditioned & auto \\
-None & conditioned space & conditioned space & 0 \\
+\input{tables/options/Duct Location}
 
-\end{longtable}
+For the argument definitions, see Table \ref{table:hc_arg_def_duct_location}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-air-distribtuion}{Air Distribution} documentation for the available HPXML schema elements, default values, and constraints.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_duct_loc}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-air-distribtuion}{Air Distribution} documentation for the available HPXML schema elements, default values, and constraints.
+\input{tables/arguments/Duct Location}
 
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|}{The ResStock argument definitions set in the Duct Location characteristic} {table:hc_arg_def_duct_loc}
-{Name & Required & Units & Type & Choices & Description} 
-\texttt{ducts\_supply\_location} & false & & Choice & auto, conditioned
-space, basement---conditioned, basement---unconditioned, crawlspace,
-crawlspace---vented, crawlspace---unvented, crawlspace---conditioned,
-attic, attic---vented, attic---unvented, garage, exterior wall, under
-slab, roof deck, outside, other housing unit, other heated space, other
-multifamily buffer space, other non-freezing space, manufactured home
-belly & The location of the supply ducts.  \\
-\hline
-\texttt{ducts\_supply\_surface\_area} & false & ft\textsuperscript{2} & Double & auto
-& The supply ducts surface area in the given location.\\
-\hline
-\texttt{ducts\_supply\_surface\_area\_fraction} & false & frac & Double
-& auto & The fraction of supply ducts surface area in the given
-location. Only used if Surface Area is not provided. If the fraction is
-less than 1, the remaining duct area is assumed to be in conditioned
-space.  \\
-\hline
-\texttt{ducts\_return\_location} & false & & Choice & auto, conditioned
-space, basement---conditioned, basement---unconditioned, crawlspace,
-crawlspace---vented, crawlspace---unvented, crawlspace---conditioned,
-attic, attic---vented, attic---unvented, garage, exterior wall, under
-slab, roof deck, outside, other housing unit, other heated space, other
-multifamily buffer space, other non-freezing space, manufactured home
-belly & The location of the return ducts.  \\
-\hline
-\texttt{ducts\_return\_surface\_area} & false & ft\textsuperscript{2} & Double & auto
-& The return ducts surface area in the given location.  \\
-\hline
-\texttt{ducts\_return\_surface\_area\_fraction} & false & frac & Double
-& auto & The fraction of return ducts surface area in the given
-location. Only used if Surface Area is not provided. If the fraction is
-less than 1, the remaining duct area is assumed to be in conditioned
-space. \\
-\hline
-\texttt{ducts\_number\_of\_return\_registers} & false & \# & Integer &
-auto & The number of return registers of the ducts. Only used to
-calculate default return duct surface area. \\
-\end{customLongTable}
 \paragraph{Distribution Assumption(s)}
 Based on default duct location assignment in OpenStudio-HPXML: the first present space type in the order of: basement---conditioned, basement---unconditioned, crawlspace---conditioned, crawlspace---vented, crawlspace---unvented, attic---vented, attic---unvented, garage, or living space. 
 
@@ -2396,42 +1367,14 @@ Number of days in a year the cooling system is unavailable.
 \paragraph{Options}
 The options of Cooling Unavailable Days characteristic are a number of days the cooling system is unavailable. The characteristic sets the \texttt{schedules\_space\_cooling\_unavailable\_days} argument. The argument definition can be found in Table \ref{table:hc_arg_def_cooling_unavailable_days}.
 
-\begin{longtable}[]{|p{4.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{4.3cm}|} \caption{The ResStock argument definitions set in the Cooling Unavailable Days characteristic} \label{table:hc_arg_def_cooling_unavailable_days}\\
-\toprule\noalign{}
-Name & Required & Units & Type &  Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{schedules\_space\_cooling\_unavailable\_days} & false &  &
-Integer &  Number of days space cooling equipment is unavailable. \\
-\end{longtable}
+\input{tables/arguments/Cooling Unavailable Days}
 
 The options range between 0 days (Never) to the whole year (year round). The Void option is for impossible combinations that are not sampled. 
 
-\begin{longtable}[]{|p{3.5cm}|p{9.cm}|}\caption{Cooling Unavailable Days options and arguments that vary for each option} \label{table:hc_opt_cooling_unavailable_days} \\
-\toprule\noalign{}
-Option name &
-\texttt{schedules\_space\_cooling\_unavailable\_days} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Never & 0 \\
-1 day  & 1 \\
-3 days & 3 \\
-1 week & 7 \\
-2 weeks & 14 \\
-1 month & 30 \\
-3 months & 90 \\
-Year round & 365 \\
-Void & \\
-\end{longtable}
-
+\input{tables/options/Cooling Unavailable Days}
 
 \paragraph{Distribution Assumption(s)}
 None
-
 
 \subsubsection{Heating Unavailable Days}
 \paragraph{Description}
@@ -2452,37 +1395,11 @@ Number of days in a year the heating system is unavailable.
 \paragraph{Options}
 The options of Heating Unavailable Days characteristic are a number of days the cooling system is unavailable. The characteristic sets the \texttt{schedules\_space\_heating\_unavailable\_days} argument. The argument definition can be found in Table \ref{table:hc_arg_def_heating_unavailable_days}.
 
-\begin{longtable}[]{|p{4.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{4.3cm}|} \caption{The ResStock argument definitions set in the Heating Unavailable Days characteristic} \label{table:hc_arg_def_heating_unavailable_days}\\
-\toprule\noalign{}
-Name & Required & Units & Type &  Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{schedules\_space\_heating\_unavailable\_days} & false &  &
-Integer &  Number of days space heating equipment is unavailable. \\
-\end{longtable}
+\input{tables/arguments/Heating Unavailable Days}
 
 The options range between 0 days (Never) to the whole year (year round). The Void option is for impossible combinations that are not sampled. 
 
-\begin{longtable}[]{|p{3.5cm}|p{9.cm}|}\caption{Heating Unavailable Days options and arguments that vary for each option} \label{table:hc_opt_heating_unavailable_days} \\
-\toprule\noalign{}
-Option name &
-\texttt{schedules\_space\_heating\_unavailable\_days} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Never & 0 \\
-1 day  & 1 \\
-3 days & 3 \\
-1 week & 7 \\
-2 weeks & 14 \\
-1 month & 30 \\
-3 months & 90 \\
-Year round & 365 \\
-Void & \\
-\end{longtable}
+\input{tables/options/Heating Unavailable Days}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -2522,46 +1439,14 @@ Single-speed ASHP actual airflow rates for faulted systems. This input file is c
     \item HVAC System is Faulted.
 \end{itemize}
 \paragraph{Options}
- Thirteen options are available in ResStock, but currently none are used, and all homes as set to ``None'' (Table \ref{table:hc_opt_hvac_single_speed}). The \texttt{cooling\_system\_rated\_cfm\_per\_ton} for all 13 options is 400.0. 
+ Thirteen options are available in ResStock, but currently none are used, and all homes as set to ``None'' (Table \ref{table:hc_opt_hvac_system_single_speed_ashp_airflow}). The \texttt{cooling\_system\_rated\_cfm\_per\_ton} for all 13 options is 400.0. 
 
-\begin{longtable}[]{|p{3.5cm}|p{8.cm}|}\caption{HVAC System Single-Speed ASHP Airflow options and arguments that vary for each option} \label{table:hc_opt_hvac_single_speed} \\
-\toprule\noalign{}
-Option name &
-\texttt{cooling\_system\_actual\_cfm\_per\_ton} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-154.8 cfm/ton  & 154.8 \\
-204.4 cfm/ton & 204.4 \\
-254.0 cfm/ton & 254.0 \\
-303.5 cfm/ton & 303.5 \\
-353.1 cfm/ton & 353.1 \\
-402.7 cfm/ton & 402.7 \\
-452.3 cfm/ton & 452.3 \\
-501.9 cfm/ton & 501.9 \\
-551.5 cfm/ton & 551.5 \\
-601.0 cfm/ton & 601.0 \\
-650.6 cfm/ton & 650.6 \\
-700.2 cfm/ton & 700.2 \\
-None & \\
-\end{longtable}
+\input{tables/options/HVAC System Single Speed ASHP Airflow}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_hvac_single_speed}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump}{Air-to-Air Heat Pump} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_hvac_system_single_speed_ashp_airflow}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump}{Air-to-Air Heat Pump} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{|p{4.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{4.3cm}|} \caption{The ResStock argument definitions set in the HVAC System Single-Speed ASHP characteristic} \label{table:hc_arg_def_hvac_single_speed}\\
-\toprule\noalign{}
-Name & Required & Units & Type &  Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{cooling\_system\_rated\_cfm\_per\_ton} & false & cfm/ton &
-Double &  The rated cfm per ton of the cooling system. \\
-\hline
-\texttt{cooling\_system\_actual\_cfm\_per\_ton} & false & cfm/ton &
-Double &  The actual cfm per ton of the cooling system. \\
-\end{longtable}
+\input{tables/arguments/HVAC System Single Speed ASHP Airflow}
+
 \paragraph{Distribution Assumption(s)}
 None
 
@@ -2584,36 +1469,13 @@ ASHP deviation between design/installed charge. Not currently used because of la
 \end{itemize}
 
 \paragraph{Options}
-Seven different options are available for faulted ASHP charges, but none are currently in use (Table \ref{table:hc_opt_ss_hp_charge}).
+Seven different options are available for faulted ASHP charges, but none are currently in use (Table \ref{table:hc_opt_hvac_system_single_speed_ashp_charge}).
 
-\begin{longtable}[]{|p{3.5cm}|p{8cm}|}\caption{HVAC System Single-Speed ASHP options and arguments that vary for each option} \label{table:hc_opt_ss_hp_charge} \\
-\toprule\noalign{}
-Option name &
-\texttt{heat\_pump\_frac\_manufacturer\_charge} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-0.570 Charge Frac & 0.570 \\
-0.709 Charge Frac & 0.709 \\
-0.848 Charge Frac & 0.848 \\
-0.988 Charge Frac & 0.988 \\
-1.127 Charge Frac & 1.127 \\
-1.266 Charge Frac & 1.266 \\
-1.405 Charge Frac & 1.405 \\
-None & \\
-\end{longtable}
-For the argument definitions, see Table \ref{table:hc_arg_def_ss_hp_charge}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump}{Air-to-Air Heat Pumps} documentation for the available HPXML schema elements, default values, and constraints.
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.5cm}|}\caption{The ResStock argument definitions set in the HVAC Secondary Heating characteristic} \label{table:hc_arg_def_ss_hp_charge}\\
-\toprule\noalign{}
-Name & Required & Units & Type &  Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{heat\_pump\_frac\_manufacturer\_charge} & false & Frac & Double
-& The fraction of manufacturer recommended charge of the heat pump. \\
-\end{longtable}
+\input{tables/options/HVAC System Single Speed ASHP Charge}
+
+For the argument definitions, see Table \ref{table:hc_arg_def_hvac_system_single_speed_ashp_charge}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump}{Air-to-Air Heat Pumps} documentation for the available HPXML schema elements, default values, and constraints.
+
+\input{tables/arguments/HVAC System Single Speed ASHP Charge}
 
 \subsubsection{HVAC System Single-Speed AC Airflow}
 
@@ -2633,47 +1495,14 @@ Single-speed central and room air conditioner actual air flow rates for faulted 
 \end{itemize}
 
 \paragraph{Options}
-Twelve options are given for real airflow, but none are currently in use (Table \ref{table:hc_opt_hvac_ss_ac_airflow}). The \texttt{heat\_pump\_rated\_cfm\_per\_ton} argument is set to 400 for all options.
+Twelve options are given for real airflow, but none are currently in use (Table \ref{table:hc_opt_hvac_system_single_speed_ac_airflow}). The \texttt{heat\_pump\_rated\_cfm\_per\_ton} argument is set to 400 for all options.
 
-\begin{longtable}[]{|p{3.5cm}|p{6cm}|}\caption{HVAC System Single-Speed AC Airflow options and arguments that vary for each option} \label{table:hc_opt_hvac_ss_ac_airflow} \\
-\toprule\noalign{}
-Option name &
+\input{tables/options/HVAC System Single Speed AC Airflow}
 
-\texttt{heat\_pump\_actual\_cfm\_per\_ton} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-154.8 cfm/ton & 154.8 \\
-204.4 cfm/ton & 204.4 \\
-254.0 cfm/ton & 254.0 \\
-303.5 cfm/ton & 303.5 \\
-353.1 cfm/ton & 353.1 \\
-402.7 cfm/ton & 402.7 \\
-452.3 cfm/ton & 452.3 \\
-501.9 cfm/ton & 501.9 \\
-551.5 cfm/ton & 551.5 \\
-601.0 cfm/ton & 601.0 \\
-650.6 cfm/ton & 650.6 \\
-700.2 cfm/ton & 700.2 \\
-None & 100\% \\
-\end{longtable}
+For the argument definitions, see Table \ref{table:hc_arg_def_hvac_system_single_speed_ac_airflow}. See the OpenStudio-HPXML \href{-https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner}{Central Air Conditioner} documentation for the available HPXML schema elements, default values, and constraints.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_hvac_ss_ac_airflow}. See the OpenStudio-HPXML \href{-https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner}{Central Air Conditioner} documentation for the available HPXML schema elements, default values, and constraints.
+\input{tables/arguments/HVAC System Single Speed AC Airflow}
 
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.5cm}|} \caption{The ResStock argument definitions set in the HVAC System Single-Speed AC Airflow characteristic} \label{table:hc_arg_def_hvac_ss_ac_airflow}\\
-\toprule\noalign{}
-Name & Required & Units & Type s & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{heat\_pump\_rated\_cfm\_per\_ton} & false & cfm/ton & Double & 
-The rated cfm per ton of the heat pump. \\
-\hline
-\texttt{heat\_pump\_actual\_cfm\_per\_ton} & false & cfm/ton & Double 
-& The actual cfm per ton of the heat pump. \\
-\end{longtable}
 \paragraph{Distribution Assumption(s)}
 None
 
@@ -2697,46 +1526,19 @@ Central and room air conditioner deviation between design/installed charge.
 \end{itemize}
 
 \paragraph{Options}
-Seven different options are available for faulted AC charges, but none are currently in use (Table \ref{table:hc_opt_ss_ac_charge}). 
+Seven different options are available for faulted AC charges, but none are currently in use (Table \ref{table:hc_opt_hvac_system_single_speed_ac_charge}). 
 
-\begin{longtable}[]{|p{3.5cm}|p{6cm}|}\caption{HVAC System Single-Speed AC Charge options and arguments that vary for each option} \label{table:hc_opt_ss_ac_charge} \\
-\toprule\noalign{}
-Option name &
-\texttt{cooling\_system\_frac\_manufacturer\_charge} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-0.570 Charge Frac & 0.570 \\
-0.709 Charge Frac & 0.709 \\
-0.848 Charge Frac & 0.848 \\
-0.988 Charge Frac & 0.988 \\
-1.127 Charge Frac & 1.127 \\
-1.266 Charge Frac & 1.266 \\
-1.405 Charge Frac & 1.405 \\
-None & \\
-\end{longtable}
+\input{tables/options/HVAC System Single Speed AC Charge}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_hvac_ss_ac_charge}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-air-distribution}{Air Distribution} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_hvac_system_single_speed_ac_charge}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-air-distribution}{Air Distribution} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.3cm}|} \caption{The ResStock argument definitions set in the HVAC System Single-Speed AC Charge} \label{table:hc_arg_def_hvac_ss_ac_charge}\\
-\toprule\noalign{}
-Name & Required & Units & Type & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{cooling\_system\_frac\_manufacturer\_charge} & false & Frac &
-Double & The fraction of manufacturer recommended charge of the
-cooling system. \\
-\end{longtable}
-\paragraph{Distribution Assumption(s)}
-None.
-
+\input{tables/arguments/HVAC System Single Speed AC Charge}
 
 \paragraph{Distribution Assumption(s)}
 None.
 
+\paragraph{Distribution Assumption(s)}
+None.
 
 \subsubsection{HVAC System is Scaled}
 
@@ -2821,115 +1623,10 @@ In the baseline, no homes are assigned mechanical ventilation, so only the optio
     \item \texttt{whole\_house\_fan\_power}: 0.
 \end{itemize}
 
+For the argument definitions, see Table \ref{table:hc_arg_def_mechanical_ventilation}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-[https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-mechanical-ventilation-fans]}{Mechanical Ventilation Fans} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-local-ventilation-fans}{Local Ventilation Fans} documentation for the available HPXML schema elements, default values, and constraints.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_mech_vent}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-[https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-mechanical-ventilation-fans]}{Mechanical Ventilation Fans} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-local-ventilation-fans}{Local Ventilation Fans} documentation for the available HPXML schema elements, default values, and constraints.
+\input{tables/arguments/Mechanical Ventilation}
 
-
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} {The ResStock argument definitions set in the Mechanical Ventilation characteristic} {table:hc_arg_def_mech_vent}
-{Name & Required & Units & Type & Choices & Description} 
-\texttt{mech\_vent\_fan\_type} & true & & Choice & none, exhaust only,
-supply only, energy recovery ventilator, heat recovery ventilator,
-balanced, central fan integrated supply & The type of the mechanical
-ventilation. Use \textquotesingle none\textquotesingle{} if there is no
-mechanical ventilation system. \\
-\hline
-\texttt{mech\_vent\_flow\_rate} & false & CFM & Double & auto & The flow
-rate of the mechanical ventilation.  \\
-\hline
-\texttt{mech\_vent\_hours\_in\_operation} & false & hrs/day & Double &
-auto & The hours in operation of the mechanical ventilation. \\
-\hline
-\texttt{mech\_vent\_recovery\_efficiency\_type} & true & & Choice &
-Unadjusted, Adjusted & The total recovery efficiency type of the
-mechanical ventilation. \\
-\hline
-\texttt{mech\_vent\_total\_recovery\_efficiency} & true & Frac & Double
-& & The Unadjusted or Adjusted total recovery efficiency of the
-mechanical ventilation. Applies to energy recovery ventilator. \\
-\hline
-\texttt{mech\_vent\_sensible\_recovery\_efficiency} & true & Frac &
-Double & & The Unadjusted or Adjusted sensible recovery efficiency of
-the mechanical ventilation. Applies to energy recovery ventilator and
-heat recovery ventilator. \\
-\hline
-\texttt{mech\_vent\_fan\_power} & false & W & Double & auto & The fan
-power of the mechanical ventilation.  \\
-\hline
-\texttt{mech\_vent\_num\_units\_served} & true & \# & Integer & & Number
-of housing units served by the mechanical ventilation system. Must be 1
-if single-family detached. Used to apportion flow rate and fan power to
-the unit. \\
-\hline
-\texttt{mech\_vent\_shared\_frac\_recirculation} & false & Frac & Double
-& & Fraction of the total supply air that is recirculated, with the
-remainder assumed to be outdoor air. The value must be 0 for exhaust
-only systems. Required for a shared mechanical ventilation system. \\
-\hline
-\texttt{mech\_vent\_shared\_preheating\_fuel} & false & & Choice & auto,
-electricity, natural gas, fuel oil, propane, wood, wood pellets, coal &
-Fuel type of the preconditioning heating equipment. Only used for a
-shared mechanical ventilation system. If not provided, assumes no
-preheating. \\
-\hline
-\texttt{mech\_vent\_shared\_preheating\_efficiency} & false & COP &
-Double & & Efficiency of the preconditioning heating equipment. Only
-used for a shared mechanical ventilation system. If not provided,
-assumes no preheating. \\
-\hline
-\texttt{mech\_vent\_shared\_preheating\_fraction\_heat\_load\_served} &
-false & Frac & Double & & Fraction of heating load introduced by the
-shared ventilation system that is met by the preconditioning heating
-equipment. If not provided, assumes no preheating. \\
-\hline
-\texttt{mech\_vent\_shared\_precooling\_fuel} & false & & Choice & auto,
-electricity & Fuel type of the preconditioning cooling equipment. Only
-used for a shared mechanical ventilation system. If not provided,
-assumes no precooling. \\
-\hline
-\texttt{mech\_vent\_shared\_precooling\_efficiency} & false & COP &
-Double & & Efficiency of the preconditioning cooling equipment. Only
-used for a shared mechanical ventilation system. If not provided,
-assumes no precooling. \\
-\hline
-\texttt{mech\_vent\_shared\_precooling\_fraction\_cool\_load\_served} &
-false & Frac & Double & & Fraction of cooling load introduced by the
-shared ventilation system that is met by the preconditioning cooling
-equipment. If not provided, assumes no precooling. \\
-\hline
-\texttt{mech\_vent\_2\_fan\_type} & true & & Choice & none, exhaust
-only, supply only, energy recovery ventilator, heat recovery ventilator,
-balanced & The type of the second mechanical ventilation. Use
-\textquotesingle none\textquotesingle{} if there is no second mechanical
-ventilation system. \\
-\hline
-\texttt{mech\_vent\_2\_flow\_rate} & true & CFM & Double & & The flow
-rate of the second mechanical ventilation. \\
-\hline
-\texttt{mech\_vent\_2\_hours\_in\_operation} & true & hrs/day & Double &
-& The hours in operation of the second mechanical ventilation. \\
-\hline
-\texttt{mech\_vent\_2\_recovery\_efficiency\_type} & true & & Choice &
-Unadjusted, Adjusted & The total recovery efficiency type of the second
-mechanical ventilation. \\
-\hline
-\texttt{mech\_vent\_2\_total\_recovery\_efficiency} & true & Frac &
-Double & & The Unadjusted or Adjusted total recovery efficiency of the
-second mechanical ventilation. Applies to energy recovery ventilator. \\
-\hline
-\texttt{mech\_vent\_2\_sensible\_recovery\_efficiency} & true & Frac &
-Double & & The Unadjusted or Adjusted sensible recovery efficiency of
-the second mechanical ventilation. Applies to energy recovery ventilator
-and heat recovery ventilator. \\
-\hline
-\texttt{mech\_vent\_2\_fan\_power} & true & W & Double & & The fan power
-of the second mechanical ventilation. \\
-\hline
-\texttt{whole\_house\_fan\_present} & true & & Boolean & true, false &
-Whether there is a whole house fan. \\
-\hline
-\texttt{whole\_house\_fan\_flow\_rate} & false & CFM & Double & auto &
-The flow rate of the whole house fan.  \\
-\end{customLongTable}
 \paragraph{Distribution Assumption(s)}
 None.
 
@@ -2946,28 +1643,13 @@ None.
 
 \paragraph{Options}
 All homes are currently set to the same natural ventilation option. 
-\begin{longtable}[]{|p{5cm}|p{6cm}|}\caption{Natural Ventilation options and arguments that vary for each option} \label{table:hc_opt_hvac_sec_ht} \\
-\toprule\noalign{}
-Option name & \texttt{window\_fraction\_operable} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Cooling Season, 7 days/wk & 0.67 \\
-\end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_nat_vent}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#natural-ventilation}{Natural Ventilation} documentation for the available HPXML schema elements, default values, and constraints.
+\input{tables/options/Natural Ventilation}
 
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} \caption{The ResStock argument definitions set in the Natural Ventilation characteristic} \label{table:hc_arg_def_nat_vent}\\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{window\_fraction\_operable} & false & Frac & Double & auto &
-Fraction of windows that are operable. \\
-\end{longtable}
+For the argument definitions, see Table \ref{table:hc_arg_def_natural_ventilation}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#natural-ventilation}{Natural Ventilation} documentation for the available HPXML schema elements, default values, and constraints.
+
+\input{tables/arguments/Natural Ventilation}
+
 \paragraph{Distribution Assumption(s)}
 None.
 
@@ -2983,65 +1665,19 @@ Same as occupancy schedule from the Building America House Simulation Protocols 
 None.
 
 \paragraph{Options}
-The start hours are spread out over all 24 hours of the day (Table \ref{table:hc_opt_bath_vent}). The following ResStock arguments are constant across all options:
+The start hours are spread out over all 24 hours of the day (Table \ref{table:hc_opt_bathroom_spot_vent_hour}). The following ResStock arguments are constant across all options:
 \begin{itemize}
     \item \texttt{bathroom\_fans\_quantity}: auto
     \item \texttt{bathroom\_fans\_flow\_rate}: auto
     \item \texttt{bathroom\_fans\_hours\_in\_operation}: auto
     \item \texttt{bathroom\_fans\_power}: auto.
 \end{itemize}
-\begin{customLongTable}{|p{3.5cm}|p{6cm}|}{Bathroom Spot Vent Hour options and arguments that vary for each option} {table:hc_opt_bath_vent}
-{Option name & \texttt{bathroom\_fans\_start\_hour}} 
-Hour0 & 0 \\
-Hour1 & 1 \\
-Hour2 & 2 \\
-Hour3 &  3 \\
-Hour4 & 4 \\
-Hour5 & 5 \\
-Hour6 &  6 \\
-Hour7 &  7 \\
-Hour8 & 8 \\
-Hour9 &  9 \\
-Hour10 & 10 \\
-Hour11 & 11 \\
-Hour12 & 12 \\
-Hour13 & 13 \\
-Hour14 & 14 \\
-Hour15 & 15 \\
-Hour16 & 16 \\
-Hour17 & 17 \\
-Hour18 & 18 \\
-Hour19 & 19 \\
-Hour20 & 20 \\
-Hour21 & 21 \\
-Hour22 & 22 \\
-Hour23 & 23 \\
-\end{customLongTable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_bath_vent}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-local-ventilation-fans}{Local Ventilation Fans} documentation for the available HPXML schema elements, default values, and constraints.
+\input{tables/options/Bathroom Spot Vent Hour}
 
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} \caption{The ResStock argument definitions set in the Bathroom Spot Vent Hour characteristic} \label{table:hc_arg_def_bath_vent}\\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{bathroom\_fans\_quantity} & false & \# & Integer & auto & The
-quantity of the bathroom fans.  \\
-\hline
-\texttt{bathroom\_fans\_flow\_rate} & false & CFM & Double & auto & The
-flow rate of the bathroom fans.  \\
-\hline
-\texttt{bathroom\_fans\_hours\_in\_operation} & false & hrs/day & Double
-& auto & The hours in operation of the bathroom fans.  \\
-\hline
-\texttt{bathroom\_fans\_power} & false & W & Double & auto & The fan
-power of the bathroom fans. \\
-\hline
-\texttt{bathroom\_fans\_start\_hour} & false & hr & Integer & auto & The
-start hour of the bathroom fans.  \\
-\end{longtable}
+For the argument definitions, see Table \ref{table:hc_arg_def_bathroom_spot_vent_hour}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-local-ventilation-fans}{Local Ventilation Fans} documentation for the available HPXML schema elements, default values, and constraints.
+
+\input{tables/arguments/Bathroom Spot Vent Hour}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -3055,7 +1691,7 @@ Derived from national average cooking range schedule in Building America House S
 \paragraph{Direct Conditional Dependencies}
 None.
 \paragraph{Options}
-Start hours are spread across all hours of the day (Table \ref{table:hc_opt_range_vent}). Across the options the following ResStock arguments are constant: 
+Start hours are spread across all hours of the day (Table \ref{table:hc_opt_range_spot_vent_hour}). Across the options the following ResStock arguments are constant: 
 \begin{itemize}
     \item \texttt{kitchen\_fans\_quantity}: auto
     \item \texttt{kitchen\_fans\_flow\_rate}: auto
@@ -3063,59 +1699,11 @@ Start hours are spread across all hours of the day (Table \ref{table:hc_opt_rang
     \item \texttt{kitchen\_fans\_power}: auto.
 \end{itemize}
 
-\begin{longtable}[]{|p{3.5cm}|p{6cm}|}\caption{Range Spot Vent Hour options and arguments that vary for each option} \label{table:hc_opt_range_vent} \\
-\toprule\noalign{}
-Option name &  \texttt{kitchen\_fans\_start\_hour} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Hour0 & 0 \\
-Hour1 &  1 \\
-Hour2 & 2 \\
-Hour3 &  3 \\
-Hour4 &  4 \\
-Hour5 & 5 \\
-Hour6 &  6 \\
-Hour7 & 7 \\
-Hour8 & 8 \\
-Hour9 &  9 \\
-Hour10 & 10 \\
-Hour11 & 11 \\
-Hour12 & 12 \\
-Hour13 &  13 \\
-Hour14 & 14 \\
-Hour15 & 15 \\
-Hour16 & 16 \\
-Hour17 &  17 \\
-Hour18 & 18 \\
-Hour19 & 19 \\
-Hour20 & 20 \\
-Hour21 & 21 \\
-Hour22 & 22 \\
-Hour23 &  23 \\
-\end{longtable}
+\input{tables/options/Range Spot Vent Hour}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_range_fan}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-local-ventilation-fans}{Local Ventilation} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_range_spot_vent_hour}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-local-ventilation-fans}{Local Ventilation} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} \caption{The ResStock argument definitions set in the Range Spot Vent Hour characteristic} \label{table:hc_arg_def_range_fan}\\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{kitchen\_fans\_quantity} & false & \# & Integer & auto & The
-quantity of the kitchen fans.  \\ \hline
-\texttt{kitchen\_fans\_flow\_rate} & false & CFM & Double & auto & The
-flow rate of the kitchen fan.  \\ \hline
-\texttt{kitchen\_fans\_hours\_in\_operation} & false & hrs/day & Double
-& auto &  Hours per day of operation.\\ \hline
-\texttt{kitchen\_fans\_power} & false & W & Double & auto & The fan
-power of the kitchen fan. \\ \hline
-\texttt{kitchen\_fans\_start\_hour} & false & hr & Integer & auto & The
-start hour of the kitchen fan.  \\
-\end{longtable}
+\input{tables/arguments/Range Spot Vent Hour}
 
 \paragraph{Distribution Assumption(s)}
 None.
