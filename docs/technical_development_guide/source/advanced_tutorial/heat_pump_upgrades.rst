@@ -96,7 +96,7 @@ For example:
 Retain the Existing Primary Heating System as Backup
 ****************************************************
 
-Set ``heat_pump_backup_use_existing_system=true`` for ``HVAC Heating Efficiency`` options in the lookup to retain the primary (existing) heating system as backup to the heat pump.
+Set ``hvac_heat_pump_backup_use_existing_system=true`` for ``HVAC Heating Efficiency`` options in the lookup to retain the primary (existing) heating system as backup to the heat pump.
 In this case, all properties of the existing primary system are retained as properties of the heat pump backup heating system.
 The following properties of the existing heating system are retained:
 
@@ -111,7 +111,7 @@ For example:
 
   - upgrade_name: ASHP
     options:
-      - option: HVAC Heating Efficiency|ASHP, SEER 22, 10 HSPF
+      - option: HVAC Heating Efficiency|ASHP, SEER2 18, 8.5 HSPF2, Use Existing System
         apply_logic:
           - HVAC Has Ducts|Yes
         costs:
@@ -119,7 +119,6 @@ For example:
             multiplier: Size, Heating System Primary (kBtu/h)
         lifetime: 30
       - option: HVAC Cooling Efficiency|Ducted Heat Pump
-      - option: Heat Pump Backup|Use Existing System
 
 For this scenario, the type of the backup is automatically determined based on information in the table below:
 
