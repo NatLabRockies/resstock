@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>1ca66de9-2daa-45c8-a7de-cacabe74032c</version_id>
-  <version_modified>2025-10-06T19:01:39Z</version_modified>
+  <version_id>6212729f-e166-4bcd-9918-a2a3fb771f00</version_id>
+  <version_modified>2025-11-03T20:49:02Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -4009,31 +4009,23 @@
       <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>Central AC, SEER 13.0</default_value>
+      <default_value>Central AC, SEER2 13.4</default_value>
       <choices>
         <choice>
           <value>None</value>
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 8.0</value>
-          <display_name>Central AC, SEER 8.0</display_name>
+          <value>Central AC, SEER2 7.6</value>
+          <display_name>Central AC, SEER2 7.6</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 10.0</value>
-          <display_name>Central AC, SEER 10.0</display_name>
+          <value>Central AC, SEER2 9.5</value>
+          <display_name>Central AC, SEER2 9.5</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 13.0</value>
-          <display_name>Central AC, SEER 13.0</display_name>
-        </choice>
-        <choice>
-          <value>Central AC, SEER 14.0</value>
-          <display_name>Central AC, SEER 14.0</display_name>
-        </choice>
-        <choice>
-          <value>Central AC, SEER 15.0</value>
-          <display_name>Central AC, SEER 15.0</display_name>
+          <value>Central AC, SEER2 12.4</value>
+          <display_name>Central AC, SEER2 12.4</display_name>
         </choice>
         <choice>
           <value>Central AC, SEER2 13.4</value>
@@ -4164,8 +4156,12 @@
           <display_name>Room AC, CEER 10.6</display_name>
         </choice>
         <choice>
-          <value>Room AC, CEER 11.8</value>
-          <display_name>Room AC, CEER 11.8</display_name>
+          <value>Room AC, CEER 11.0</value>
+          <display_name>Room AC, CEER 11.0</display_name>
+        </choice>
+        <choice>
+          <value>Room AC, CEER 11.9</value>
+          <display_name>Room AC, CEER 11.9</display_name>
         </choice>
         <choice>
           <value>Room AC, CEER 13.1</value>
@@ -4444,36 +4440,32 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 8.0, HSPF 6.0</value>
-          <display_name>Central HP, SEER 8.0, HSPF 6.0</display_name>
+          <value>Central HP, SEER2 7.6, HSPF2 5.1</value>
+          <display_name>Central HP, SEER2 7.6, HSPF2 5.1</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 10.0, HSPF 6.8</value>
-          <display_name>Central HP, SEER 10.0, HSPF 6.8</display_name>
+          <value>Central HP, SEER2 9.5, HSPF2 5.8</value>
+          <display_name>Central HP, SEER2 9.5, HSPF2 5.8</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 13.0, HSPF 7.7</value>
-          <display_name>Central HP, SEER 13.0, HSPF 7.7</display_name>
-        </choice>
-        <choice>
-          <value>Central HP, SEER 14.0, HSPF 8.2</value>
-          <display_name>Central HP, SEER 14.0, HSPF 8.2</display_name>
-        </choice>
-        <choice>
-          <value>Central HP, SEER 15.0, HSPF 8.5</value>
-          <display_name>Central HP, SEER 15.0, HSPF 8.5</display_name>
+          <value>Central HP, SEER2 12.4, HSPF2 6.6</value>
+          <display_name>Central HP, SEER2 12.4, HSPF2 6.6</display_name>
         </choice>
         <choice>
           <value>Central HP, SEER2 13.4, HSPF2 7.0</value>
           <display_name>Central HP, SEER2 13.4, HSPF2 7.0</display_name>
         </choice>
         <choice>
+          <value>Central HP, SEER2 13.8, HSPF2 7.2</value>
+          <display_name>Central HP, SEER2 13.8, HSPF2 7.2</display_name>
+        </choice>
+        <choice>
           <value>Central HP, SEER2 14.0, HSPF2 7.3</value>
           <display_name>Central HP, SEER2 14.0, HSPF2 7.3</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER2 14.3, HSPF2 7.5</value>
-          <display_name>Central HP, SEER2 14.3, HSPF2 7.5</display_name>
+          <value>Central HP, SEER2 14.3, HSPF2 7.4</value>
+          <display_name>Central HP, SEER2 14.3, HSPF2 7.4</display_name>
         </choice>
         <choice>
           <value>Central HP, SEER2 15.0, HSPF2 7.6</value>
@@ -4506,6 +4498,10 @@
         <choice>
           <value>Central HP, SEER2 22.0, HSPF2 9.5</value>
           <display_name>Central HP, SEER2 22.0, HSPF2 9.5</display_name>
+        </choice>
+        <choice>
+          <value>Ductless Mini-Split HP, SEER2 13.7, HSPF2 7.4</value>
+          <display_name>Ductless Mini-Split HP, SEER2 13.7, HSPF2 7.4</display_name>
         </choice>
         <choice>
           <value>Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7</value>
@@ -4632,8 +4628,8 @@
           <display_name>Packaged Terminal HP, EER 13.2, COP 3.9</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Central HP, SEER 13.0, HSPF 9.85</value>
-          <display_name>Detailed Example: Central HP, SEER 13.0, HSPF 9.85</display_name>
+          <value>Detailed Example: Central HP, SEER2 12.4, HSPF2 8.4</value>
+          <display_name>Detailed Example: Central HP, SEER2 12.4, HSPF2 8.4</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance</value>
@@ -13215,7 +13211,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>717E70E6</checksum>
+      <checksum>79010303</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

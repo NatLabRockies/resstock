@@ -494,8 +494,12 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     # Apply defaults
     @hpxml.buildings.each do |hpxml_bldg|
+      # Write out the hpxml (must be before validation)
+      hpxml_doc = @hpxml.to_doc()
+      XMLHelper.write_file(hpxml_doc, @hpxml_path)
+
       # Always check for invalid HPXML file before applying defaults
-      if not validate_hpxml(runner, @hpxml, @hpxml.to_doc(), @hpxml_path)
+      if not validate_hpxml(runner, @hpxml, hpxml_doc, @hpxml_path)
         return false
       end
 
@@ -540,8 +544,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       write_schedule(modified_ev_schedule, hpxml_bldg, index, output_csv_path)
     end
 
-    # Validate final HPXML
+    # Write out the hpxml (must be before validation)
     hpxml_doc = @hpxml.to_doc()
+    XMLHelper.write_file(hpxml_doc, @hpxml_path)
+
+    # Validate final HPXML
     if not validate_hpxml(runner, @hpxml, hpxml_doc, @hpxml_path)
       return false
     end
@@ -1041,7 +1048,10 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       errors += hpxml_bldg.check_for_errors()
     end
     if errors.size > 0
-      fail "ERROR: Invalid HPXML object produced.\n#{errors}"
+      errors.each do |error|
+        runner.registerError("#{hpxml_path}: #{error}")
+      end
+      return false
     end
 
     is_valid = true
