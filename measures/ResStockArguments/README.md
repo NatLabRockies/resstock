@@ -2014,45 +2014,6 @@ The actual cfm per ton of the heating system.
 
 <br/>
 
-**HVAC: Heating System 2 Type**
-
-The type of the second heating system.
-
-- **Name:** ``heating_system_2_type``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `Furnace`, `WallFurnace`, `FloorFurnace`, `Boiler`, `ElectricResistance`, `Stove`, `SpaceHeater`, `Fireplace`
-
-<br/>
-
-**HVAC: Heating System 2 Fuel Type**
-
-The fuel type of the second heating system.
-
-- **Name:** ``heating_system_2_fuel``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`, `coal`
-
-<br/>
-
-**HVAC: Heating System 2 Rated AFUE or Percent**
-
-The rated heating efficiency value of the second heating system.
-
-- **Name:** ``heating_system_2_heating_efficiency``
-- **Type:** ``Double``
-
-- **Units:** ``Frac``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heating System 2 Heating Capacity**
 
 The output heating capacity of the second heating system.
@@ -2240,19 +2201,6 @@ The maximum capacity limit applied to the auto-sizing methodology. If not provid
 
 <br/>
 
-**HVAC: Heat Pump Fraction Heat Load Served**
-
-The heating load served by the heat pump.
-
-- **Name:** ``heat_pump_fraction_heat_load_served``
-- **Type:** ``Double``
-
-- **Units:** ``Frac``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heat Pump Backup Heating Capacity**
 
 The backup output heating capacity of the heat pump.
@@ -2329,38 +2277,12 @@ The fraction of manufacturer recommended charge of the heat pump.
 
 <br/>
 
-**HVAC: Heat Pump Backup Type**
+**HVAC: Heat Pump Backup Use Existing System**
 
-The backup type of the heat pump.
+Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system. This argument is only applicable for heat pump upgrades.
 
-- **Name:** ``heat_pump_backup_type``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `integrated`, `separate`
-
-<br/>
-
-**HVAC: Heat Pump Backup Fuel Type**
-
-The backup fuel type of the heat pump.
-
-- **Name:** ``heat_pump_backup_fuel``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`
-
-<br/>
-
-**HVAC: Heat Pump Backup Rated Efficiency**
-
-The backup rated efficiency value of the heat pump.
-
-- **Name:** ``heat_pump_backup_heating_efficiency``
-- **Type:** ``Double``
+- **Name:** ``hvac_heat_pump_backup_use_existing_system``
+- **Type:** ``Boolean``
 
 - **Required:** ``false``
 
