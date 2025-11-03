@@ -485,7 +485,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
       # DHW systems
       hpxml_bldg.water_heating_systems.each do |water_heater|
-        water_heater.jacket_r_value = args[:dhw_water_heater_jacket_rvalue] if args[:dhw_water_heater_jacket_rvalue].to_f > 0
+        water_heater.jacket_r_value = args[:dhw_water_heater_jacket_rvalue] unless args[:dhw_water_heater_jacket_rvalue].to_f == 0
       end
 
       # Electric Panel

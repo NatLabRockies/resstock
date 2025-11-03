@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>6212729f-e166-4bcd-9918-a2a3fb771f00</version_id>
-  <version_modified>2025-11-03T20:49:02Z</version_modified>
+  <version_id>c49b587c-15d7-490e-8c4a-5c2eb9ca3443</version_id>
+  <version_modified>2025-11-03T21:21:21Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -13211,7 +13211,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>79010303</checksum>
+      <checksum>568B5EC3</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -13301,13 +13301,25 @@
       <filename>test_resstock_arguments_post_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>9BB397E4</checksum>
+      <checksum>B579F1E7</checksum>
+    </file>
+    <file>
+      <filename>test_schema_error.osw</filename>
+      <filetype>osw</filetype>
+      <usage_type>test</usage_type>
+      <checksum>6B7305B8</checksum>
+    </file>
+    <file>
+      <filename>test_schematron_error.osw</filename>
+      <filetype>osw</filetype>
+      <usage_type>test</usage_type>
+      <checksum>6DB1454B</checksum>
     </file>
     <file>
       <filename>test_template.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>868B10BD</checksum>
+      <checksum>F7033159</checksum>
     </file>
   </files>
 </measure>
