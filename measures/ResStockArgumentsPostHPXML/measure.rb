@@ -426,7 +426,13 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
           end
         elsif [HPXML::HVACTypeRoomAirConditioner].include? cooling_system.cooling_system_type
           n_beds = hpxml_bldg.building_construction.number_of_bedrooms
-          cooling_system.cooling_capacity = n_beds * 12000.0
+          if n_beds <= 1
+            cooling_system.cooling_capacity = 8000.0
+          elsif n_beds >= 2 && n_beds <= 5
+            cooling_system.cooling_capacity = 16000.0
+          else # n_beds > 5
+            cooling_system.cooling_capacity = 24000.0
+          end
           cooling_system.fraction_cool_load_served = 1.0
         end
         # Detailed performance
