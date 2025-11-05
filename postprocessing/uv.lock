@@ -218,6 +218,29 @@ wheels = [
 ]
 
 [[package]]
+name = "buildstock-query"
+version = "0.2.0"
+source = { git = "https://github.com/NREL/buildstock-query.git?rev=sqlalchemy_2#13000bd76c569294d41021f98b68ffa616cc75fc" }
+dependencies = [
+    { name = "filelock" },
+    { name = "inquirerpy" },
+    { name = "pandas" },
+    { name = "pandas-stubs" },
+    { name = "polars" },
+    { name = "pyarrow" },
+    { name = "pyathena" },
+    { name = "pydantic" },
+    { name = "pyyaml" },
+    { name = "requests" },
+    { name = "sqlalchemy" },
+    { name = "sqlalchemy2-stubs" },
+    { name = "sqlglot" },
+    { name = "tabulate" },
+    { name = "toml" },
+    { name = "types-pyyaml" },
+]
+
+[[package]]
 name = "cachelib"
 version = "0.13.0"
 source = { registry = "https://pypi.org/simple" }
@@ -840,6 +863,19 @@ wheels = [
 ]
 
 [[package]]
+name = "inquirerpy"
+version = "0.3.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pfzy" },
+    { name = "prompt-toolkit" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/64/73/7570847b9da026e07053da3bbe2ac7ea6cde6bb2cbd3c7a5a950fa0ae40b/InquirerPy-0.3.4.tar.gz", hash = "sha256:89d2ada0111f337483cb41ae31073108b2ec1e618a49d7110b0d7ade89fc197e", size = 44431, upload-time = "2022-06-27T23:11:20.598Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ce/ff/3b59672c47c6284e8005b42e84ceba13864aa0f39f067c973d1af02f5d91/InquirerPy-0.3.4-py3-none-any.whl", hash = "sha256:c65fdfbac1fa00e3ee4fb10679f4d3ed7a012abf4833910e63c295827fe2a7d4", size = 67677, upload-time = "2022-06-27T23:11:17.723Z" },
+]
+
+[[package]]
 name = "ipykernel"
 version = "6.30.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1426,6 +1462,15 @@ wheels = [
 ]
 
 [[package]]
+name = "pfzy"
+version = "0.3.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d9/5a/32b50c077c86bfccc7bed4881c5a2b823518f5450a30e639db5d3711952e/pfzy-0.3.4.tar.gz", hash = "sha256:717ea765dd10b63618e7298b2d98efd819e0b30cd5905c9707223dceeb94b3f1", size = 8396, upload-time = "2022-01-28T02:26:17.946Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/8c/d7/8ff98376b1acc4503253b685ea09981697385ce344d4e3935c2af49e044d/pfzy-0.3.4-py3-none-any.whl", hash = "sha256:5f50d5b2b3207fa72e7ec0ef08372ef652685470974a107d0d4999fc5a903a96", size = 8537, upload-time = "2022-01-28T02:26:16.047Z" },
+]
+
+[[package]]
 name = "platformdirs"
 version = "4.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1466,6 +1511,18 @@ wheels = [
 ]
 
 [[package]]
+name = "polars"
+version = "1.35.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "polars-runtime-32" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9b/5b/3caad788d93304026cbf0ab4c37f8402058b64a2f153b9c62f8b30f5d2ee/polars-1.35.1.tar.gz", hash = "sha256:06548e6d554580151d6ca7452d74bceeec4640b5b9261836889b8e68cfd7a62e", size = 694881, upload-time = "2025-10-30T12:12:52.294Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9f/4c/21a227b722534404241c2a76beceb7463469d50c775a227fc5c209eb8adc/polars-1.35.1-py3-none-any.whl", hash = "sha256:c29a933f28aa330d96a633adbd79aa5e6a6247a802a720eead9933f4613bdbf4", size = 783598, upload-time = "2025-10-30T12:11:54.668Z" },
+]
+
+[[package]]
 name = "polars-lts-cpu"
 version = "1.33.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1477,6 +1534,20 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/54/31/0474c14dce2c0507bea40069daafb848980ba7c351ad991908e51ac895fb/polars_lts_cpu-1.33.1-cp39-abi3-manylinux_2_24_aarch64.whl", hash = "sha256:64574c784380b37167b3db3a7cfdb9839cd308e89b8818859d2ffb34a9c896b2", size = 36685020, upload-time = "2025-09-09T08:37:15.597Z" },
     { url = "https://files.pythonhosted.org/packages/d4/0a/5ebba9b145388ffbbd09fa84ac3cd7d336b922e34256b1417abf0a1c2fb9/polars_lts_cpu-1.33.1-cp39-abi3-win_amd64.whl", hash = "sha256:6b849e0e1485acb8ac39bf13356d280ea7c924c2b41cd548ea6e4d102d70be77", size = 39191650, upload-time = "2025-09-09T08:37:19.541Z" },
     { url = "https://files.pythonhosted.org/packages/ce/ad/bf3db68d30ac798ca31c80624709a0c03aa890e2e20e5ca987d7e55fcfc2/polars_lts_cpu-1.33.1-cp39-abi3-win_arm64.whl", hash = "sha256:c99ab56b059cee6bcabe9fb89e97f5813be1012a2251bf77f76e15c2d1cba934", size = 35445244, upload-time = "2025-09-09T08:37:22.97Z" },
+]
+
+[[package]]
+name = "polars-runtime-32"
+version = "1.35.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/df/3e/19c252e8eb4096300c1a36ec3e50a27e5fa9a1ccaf32d3927793c16abaee/polars_runtime_32-1.35.1.tar.gz", hash = "sha256:f6b4ec9cd58b31c87af1b8c110c9c986d82345f1d50d7f7595b5d447a19dc365", size = 2696218, upload-time = "2025-10-30T12:12:53.479Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/08/2c/da339459805a26105e9d9c2f07e43ca5b8baeee55acd5457e6881487a79a/polars_runtime_32-1.35.1-cp39-abi3-macosx_10_12_x86_64.whl", hash = "sha256:6f051a42f6ae2f26e3bc2cf1f170f2120602976e2a3ffb6cfba742eecc7cc620", size = 40525100, upload-time = "2025-10-30T12:11:58.098Z" },
+    { url = "https://files.pythonhosted.org/packages/27/70/a0733568b3533481924d2ce68b279ab3d7334e5fa6ed259f671f650b7c5e/polars_runtime_32-1.35.1-cp39-abi3-macosx_11_0_arm64.whl", hash = "sha256:c2232f9cf05ba59efc72d940b86c033d41fd2d70bf2742e8115ed7112a766aa9", size = 36701908, upload-time = "2025-10-30T12:12:02.166Z" },
+    { url = "https://files.pythonhosted.org/packages/46/54/6c09137bef9da72fd891ba58c2962cc7c6c5cad4649c0e668d6b344a9d7b/polars_runtime_32-1.35.1-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:42f9837348557fd674477ea40a6ac8a7e839674f6dd0a199df24be91b026024c", size = 41317692, upload-time = "2025-10-30T12:12:04.928Z" },
+    { url = "https://files.pythonhosted.org/packages/22/55/81c5b266a947c339edd7fbaa9e1d9614012d02418453f48b76cc177d3dd9/polars_runtime_32-1.35.1-cp39-abi3-manylinux_2_24_aarch64.whl", hash = "sha256:c873aeb36fed182d5ebc35ca17c7eb193fe83ae2ea551ee8523ec34776731390", size = 37853058, upload-time = "2025-10-30T12:12:08.342Z" },
+    { url = "https://files.pythonhosted.org/packages/6c/58/be8b034d559eac515f52408fd6537be9bea095bc0388946a4e38910d3d50/polars_runtime_32-1.35.1-cp39-abi3-win_amd64.whl", hash = "sha256:35cde9453ca7032933f0e58e9ed4388f5a1e415dd0db2dd1e442c81d815e630c", size = 41289554, upload-time = "2025-10-30T12:12:11.104Z" },
+    { url = "https://files.pythonhosted.org/packages/f4/7f/e0111b9e2a1169ea82cde3ded9c92683e93c26dfccd72aee727996a1ac5b/polars_runtime_32-1.35.1-cp39-abi3-win_arm64.whl", hash = "sha256:fd77757a6c9eb9865c4bfb7b07e22225207c6b7da382bd0b9bd47732f637105d", size = 36958878, upload-time = "2025-10-30T12:12:15.206Z" },
 ]
 
 [[package]]
@@ -1626,6 +1697,22 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/33/27/1a93a25c92717f6aa0fca06eb4700860577d016cd3ae51aad0e0488ac899/pyarrow-21.0.0-cp312-cp312-musllinux_1_2_aarch64.whl", hash = "sha256:58c30a1729f82d201627c173d91bd431db88ea74dcaa3885855bc6203e433b82", size = 43367883, upload-time = "2025-07-18T00:55:53.069Z" },
     { url = "https://files.pythonhosted.org/packages/05/d9/4d09d919f35d599bc05c6950095e358c3e15148ead26292dfca1fb659b0c/pyarrow-21.0.0-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:072116f65604b822a7f22945a7a6e581cfa28e3454fdcc6939d4ff6090126623", size = 45133802, upload-time = "2025-07-18T00:55:57.714Z" },
     { url = "https://files.pythonhosted.org/packages/71/30/f3795b6e192c3ab881325ffe172e526499eb3780e306a15103a2764916a2/pyarrow-21.0.0-cp312-cp312-win_amd64.whl", hash = "sha256:cf56ec8b0a5c8c9d7021d6fd754e688104f9ebebf1bf4449613c9531f5346a18", size = 26203175, upload-time = "2025-07-18T00:56:01.364Z" },
+]
+
+[[package]]
+name = "pyathena"
+version = "3.19.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "boto3" },
+    { name = "botocore" },
+    { name = "fsspec" },
+    { name = "python-dateutil" },
+    { name = "tenacity" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/6f/e1/07727f2307710bcce2dff9c8b5fc8c34e3e2243beacb128f23daa3d5489a/pyathena-3.19.0.tar.gz", hash = "sha256:38c2318da40d855805e835fc370bcb9af0447999e880eaf3bb78345b71a61353", size = 87499, upload-time = "2025-10-18T05:27:52.148Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/83/6c/9dd386f8d1dac5cc9169cd40b34ce0cdc053166615bd5d3ff291d60a0852/pyathena-3.19.0-py3-none-any.whl", hash = "sha256:9a7f5e0a3b3e8483590ea1ebe65a5671ab7d4fadc75b05f285d02f392e053cf0", size = 113395, upload-time = "2025-10-18T05:27:50.333Z" },
 ]
 
 [[package]]
@@ -1958,6 +2045,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "boto3", extra = ["crt"] },
+    { name = "buildstock-query" },
     { name = "connectorx" },
     { name = "dash", extra = ["diskcache"] },
     { name = "dash-bootstrap-components" },
@@ -1974,6 +2062,7 @@ dependencies = [
     { name = "polars-lts-cpu" },
     { name = "prefect" },
     { name = "pyarrow" },
+    { name = "pyathena" },
     { name = "pydantic" },
     { name = "pyyaml" },
     { name = "s3fs" },
@@ -2006,6 +2095,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "boto3", extras = ["crt"], specifier = ">=1.39.4" },
+    { name = "buildstock-query", git = "https://github.com/NREL/buildstock-query.git?rev=sqlalchemy_2" },
     { name = "connectorx", specifier = ">=0.4.3" },
     { name = "dash", extras = ["diskcache"], specifier = ">=3.0.4" },
     { name = "dash-bootstrap-components", specifier = ">=2.0.3" },
@@ -2022,6 +2112,7 @@ requires-dist = [
     { name = "polars-lts-cpu" },
     { name = "prefect", specifier = ">=3.4.5" },
     { name = "pyarrow" },
+    { name = "pyathena", specifier = ">=3.19.0" },
     { name = "pydantic", specifier = ">=2.11.5" },
     { name = "pyyaml" },
     { name = "s3fs" },
@@ -2307,6 +2398,27 @@ asyncio = [
 ]
 
 [[package]]
+name = "sqlalchemy2-stubs"
+version = "0.0.2a38"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/94/df/be9e0062f649fd2e9b9b73a98c250f520fa10beaebddb8948dffad23c3b6/sqlalchemy2-stubs-0.0.2a38.tar.gz", hash = "sha256:861d722abeb12f13eacd775a9f09379b11a5a9076f469ccd4099961b95800f9e", size = 123950, upload-time = "2023-12-30T12:15:29.27Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ee/ea/6eff437d0a26c894da2982429ed2c148ecaf0526349ddc8cda1e7151c171/sqlalchemy2_stubs-0.0.2a38-py3-none-any.whl", hash = "sha256:b62aa46943807287550e2033dafe07564b33b6a815fbaa3c144e396f9cc53bcb", size = 191786, upload-time = "2023-12-30T12:15:27.882Z" },
+]
+
+[[package]]
+name = "sqlglot"
+version = "27.29.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d1/50/766692a83468adb1bde9e09ea524a01719912f6bc4fdb47ec18368320f6e/sqlglot-27.29.0.tar.gz", hash = "sha256:2270899694663acef94fa93497971837e6fadd712f4a98b32aee1e980bc82722", size = 5503507, upload-time = "2025-10-29T13:50:24.594Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9b/70/20c1912bc0bfebf516d59d618209443b136c58a7cff141afa7cf30969988/sqlglot-27.29.0-py3-none-any.whl", hash = "sha256:9a5ea8ac61826a7763de10cad45a35f0aa9bfcf7b96ee74afb2314de9089e1cb", size = 526060, upload-time = "2025-10-29T13:50:22.061Z" },
+]
+
+[[package]]
 name = "stack-data"
 version = "0.6.3"
 source = { registry = "https://pypi.org/simple" }
@@ -2331,6 +2443,24 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/15/b9/cc3017f9a9c9b6e27c5106cc10cc7904653c3eec0729793aec10479dd669/starlette-0.47.3.tar.gz", hash = "sha256:6bc94f839cc176c4858894f1f8908f0ab79dfec1a6b8402f6da9be26ebea52e9", size = 2584144, upload-time = "2025-08-24T13:36:42.122Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ce/fd/901cfa59aaa5b30a99e16876f11abe38b59a1a2c51ffb3d7142bb6089069/starlette-0.47.3-py3-none-any.whl", hash = "sha256:89c0778ca62a76b826101e7c709e70680a1699ca7da6b44d38eb0a7e61fe4b51", size = 72991, upload-time = "2025-08-24T13:36:40.887Z" },
+]
+
+[[package]]
+name = "tabulate"
+version = "0.9.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ec/fe/802052aecb21e3797b8f7902564ab6ea0d60ff8ca23952079064155d1ae1/tabulate-0.9.0.tar.gz", hash = "sha256:0095b12bf5966de529c0feb1fa08671671b3368eec77d7ef7ab114be2c068b3c", size = 81090, upload-time = "2022-10-06T17:21:48.54Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/40/44/4a5f08c96eb108af5cb50b41f76142f0afa346dfa99d5296fe7202a11854/tabulate-0.9.0-py3-none-any.whl", hash = "sha256:024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f", size = 35252, upload-time = "2022-10-06T17:21:44.262Z" },
+]
+
+[[package]]
+name = "tenacity"
+version = "9.1.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/0a/d4/2b0cd0fe285e14b36db076e78c93766ff1d529d70408bd1d2a5a84f1d929/tenacity-9.1.2.tar.gz", hash = "sha256:1169d376c297e7de388d18b4481760d478b0e99a777cad3a9c86e556f4b697cb", size = 48036, upload-time = "2025-04-02T08:25:09.966Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e5/30/643397144bfbfec6f6ef821f36f33e57d35946c44a2352d3c9f0ae847619/tenacity-9.1.2-py3-none-any.whl", hash = "sha256:f77bf36710d8b73a50b2dd155c97b870017ad21afe6ab300326b0371b3b05138", size = 28248, upload-time = "2025-04-02T08:25:07.678Z" },
 ]
 
 [[package]]

@@ -1,0 +1,51 @@
+# Baseline Validation Workflow Configuration
+# ===========================================
+# This file defines the configuration for baseline validation plots
+
+# BuildStock Data Source
+# ----------------------
+workgroup: rescore
+
+data_sources:
+  - db_name: buildstock_sdr
+    table_name: resstock_2024_amy2018_release_2
+    name: resstock_2024
+    db_schema: resstock_oedi_vu
+  - db_name: buildstock_sdr
+    table_name: resstock_amy2018_r1_2025
+    name: resstock_2025
+    db_schema: resstock_oedi_new
+
+
+
+# Reference Data Configuration
+# ----------------------------
+reference_data:
+  truth_data_year: 2018
+  eia_mapping_version: 1
+
+# Plot Specifications
+# -------------------
+plots:
+  # Types of validation plots to generate
+  plot_types:
+    - eia              # Compare against EIA data
+    - load_duration    # Load duration curves
+    - timeseries       # Timeseries comparisons
+
+  # Geographic aggregation levels
+  aggregation_levels:
+    - state
+    - eiaid
+
+  # Output file formats
+  output_formats:
+    - html
+    - svg
+    - parquet
+
+# Output Configuration
+# --------------------
+output:
+  output_dir: ~/Documents/baseline_validation_outputs
+  run_name: baseline_val

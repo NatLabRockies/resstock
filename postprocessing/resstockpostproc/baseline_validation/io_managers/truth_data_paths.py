@@ -1,0 +1,5 @@
+EIA_MONTHLY_ELECTRICITY = "s3://resstock-core/truth_data/v01/EIA/eia_processed/electricity_monthly_sales.csv"
+EIA_MONTHLY_NATURAL_GAS = "s3://resstock-core/truth_data/v01/EIA/eia_processed/natural_gas_monthly_sales.csv"
+EIA_ANNUAL_ELECTRICITY = "s3://resstock-core/truth_data/v01/EIA/eia_processed/electricity_annual_sales.csv"
+LRD_2018 = "s3://resstock-core/truth_data/v01/LRD_data/2018_processed_res_lrd_all.csv"
+RECS_2020 = "s3://resstock-core/truth_data/v01/RECS/recs_processed/recs_2020_all_consumption.csv"
