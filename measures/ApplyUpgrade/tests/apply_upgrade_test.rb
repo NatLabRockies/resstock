@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'openstudio'
+require_relative '../../../resources/buildstock'
 require_relative '../../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/minitest_helper'
 require_relative '../../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/hpxml'
 require_relative '../measure.rb'
@@ -110,29 +111,29 @@ class ApplyUpgradeTest < Minitest::Test
     puts 'Retaining existing heating system:'
     expected_values = {}
 
-    expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(false, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values)
+    expected_values['hvac_heat_pump_backup'] = nil
+    _test_heat_pump_backup(false, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values, 'Fuel Furnace, 92.5% AFUE')
 
     expected_values = {
       'heat_pump_backup_fuel' => HPXML::FuelTypeNaturalGas,
-      'heat_pump_backup_heating_efficiency' => 0.92,
+      'heat_pump_backup_heating_efficiency' => 0.925,
       'heat_pump_backup_heating_capacity' => 100000.0,
       'heat_pump_backup_heating_autosizing_factor' => 1.0
     }
 
-    expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeIntegrated
-    _test_heat_pump_backup(true, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values)
+    expected_values['hvac_heat_pump_backup'] = 'Integrated, Electricity, 100% Efficiency'
+    _test_heat_pump_backup(true, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values, 'Fuel Furnace, 92.5% AFUE')
 
     expected_values = {
-      'heating_system_2_type' => HPXML::HVACTypeFurnace,
+      'hvac_heat_pump_heating_load_served' => '100%',
+      'hvac_heating_system_2' => 'Central Furnace, 92.5% AFUE',
       'heating_system_2_fuel' => HPXML::FuelTypeNaturalGas,
-      'heating_system_2_heating_efficiency' => 0.92,
       'heating_system_2_heating_capacity' => 100000.0,
       'heating_system_2_heating_autosizing_factor' => 1.0
     }
 
-    expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(true, 'Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0', expected_values)
+    expected_values['hvac_heat_pump_backup'] = 'Separate Heating System'
+    _test_heat_pump_backup(true, 'Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0', expected_values, 'Fuel Furnace, 92.5% AFUE')
 
     puts 'Duct restriction:'
     expected_values = {
@@ -453,25 +454,31 @@ class ApplyUpgradeTest < Minitest::Test
     end
   end
 
-  def _test_heat_pump_backup(heat_pump_backup_use_existing_system, hvac_heat_pump, expected_values)
+  def _test_heat_pump_backup(heat_pump_backup_use_existing_system, hvac_heat_pump, expected_values, option_name)
     this_dir = File.dirname(__FILE__)
     hpxml_path = File.join(this_dir, '../../UpgradeCosts/tests/in.xml')
     hpxml = HPXML.new(hpxml_path: hpxml_path)
 
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
-    measures = { 'ResStockArguments' => [{ 'hvac_heat_pump_backup_use_existing_system' => heat_pump_backup_use_existing_system,
+    measures = { 'BuildResidentialHPXML' => [{}],
+                 'ResStockArguments' => [{ 'hvac_heat_pump_backup_use_existing_system' => heat_pump_backup_use_existing_system,
                                            'hvac_heat_pump' => hvac_heat_pump }],
                  'ResStockArgumentsPostHPXML' => [{}] }
-    if hvac_heat_pump.include?('Central HP') || hvac_heat_pump.include?('Ducted')
-      measures['ResStockArguments'][0]['hvac_ducts'] = '0% Leakage, Uninsulated'
-    elsif hvac_heat_pump.include?('Mini-Split')
-      measures['ResStockArguments'][0]['hvac_ducts'] = nil
-    else
-      fail 'Unhandled heat pump.'
-    end
+    # if hvac_heat_pump.include?('Central HP') || hvac_heat_pump.include?('Ducted')
+    # measures['ResStockArguments'][0]['hvac_ducts'] = '0% Leakage, Uninsulated'
+    # elsif hvac_heat_pump.include?('Mini-Split')
+    # measures['ResStockArguments'][0]['hvac_ducts'] = nil
+    # else
+    # fail 'Unhandled heat pump.'
+    # end
 
     # Create instance of the measure
     measure = ApplyUpgrade.new
+
+    resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../../resources'))
+    lookup_file = File.join(resources_dir, 'options_lookup.tsv')
+    lookup_csv_data = CSV.open(lookup_file, col_sep: "\t").each.to_a
+    values = { 'hvac_heating_efficiency' => option_name }
 
     hpxml.buildings.each do |hpxml_bldg|
       heating_system = measure.get_heating_system(hpxml_bldg)
@@ -483,8 +490,8 @@ class ApplyUpgradeTest < Minitest::Test
 
       puts "\thvac_heat_pump='#{hvac_heat_pump}'..."
 
-      measure.set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg)
-      actual_values = measures['ResStockArgumentsPostHPXML'][0]
+      measure.set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg, values, lookup_csv_data, lookup_file)
+      actual_values = measures['BuildResidentialHPXML'][0].merge(measures['ResStockArgumentsPostHPXML'][0])
 
       expected_values.each do |str, val|
         if val.nil?

@@ -318,19 +318,19 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     # arg.setDescription('The type of the second heating system.')
     # args << arg
 
-    # heating_system_fuel_choices = OpenStudio::StringVector.new
-    # heating_system_fuel_choices << HPXML::FuelTypeElectricity
-    # heating_system_fuel_choices << HPXML::FuelTypeNaturalGas
-    # heating_system_fuel_choices << HPXML::FuelTypeOil
-    # heating_system_fuel_choices << HPXML::FuelTypePropane
-    # heating_system_fuel_choices << HPXML::FuelTypeWoodCord
-    # heating_system_fuel_choices << HPXML::FuelTypeWoodPellets
-    # heating_system_fuel_choices << HPXML::FuelTypeCoal
+    heating_system_fuel_choices = OpenStudio::StringVector.new
+    heating_system_fuel_choices << HPXML::FuelTypeElectricity
+    heating_system_fuel_choices << HPXML::FuelTypeNaturalGas
+    heating_system_fuel_choices << HPXML::FuelTypeOil
+    heating_system_fuel_choices << HPXML::FuelTypePropane
+    heating_system_fuel_choices << HPXML::FuelTypeWoodCord
+    heating_system_fuel_choices << HPXML::FuelTypeWoodPellets
+    heating_system_fuel_choices << HPXML::FuelTypeCoal
 
-    # arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heating_system_2_fuel', heating_system_fuel_choices, false)
-    # arg.setDisplayName('HVAC: Heating System 2 Fuel Type')
-    # arg.setDescription('The fuel type of the second heating system.')
-    # args << arg
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heating_system_2_fuel', heating_system_fuel_choices, false)
+    arg.setDisplayName('HVAC: Heating System 2 Fuel Type')
+    arg.setDescription('The fuel type of the second heating system.')
+    args << arg
 
     # arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_2_heating_efficiency', false)
     # arg.setDisplayName('HVAC: Heating System 2 Rated AFUE or Percent')
@@ -474,21 +474,21 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     # arg.setDescription('The backup type of the heat pump.')
     # args << arg
 
-    # heat_pump_backup_fuel_choices = OpenStudio::StringVector.new
-    # heat_pump_backup_fuel_choices << HPXML::FuelTypeElectricity
-    # heat_pump_backup_fuel_choices << HPXML::FuelTypeNaturalGas
-    # heat_pump_backup_fuel_choices << HPXML::FuelTypeOil
-    # heat_pump_backup_fuel_choices << HPXML::FuelTypePropane
+    heat_pump_backup_fuel_choices = OpenStudio::StringVector.new
+    heat_pump_backup_fuel_choices << HPXML::FuelTypeElectricity
+    heat_pump_backup_fuel_choices << HPXML::FuelTypeNaturalGas
+    heat_pump_backup_fuel_choices << HPXML::FuelTypeOil
+    heat_pump_backup_fuel_choices << HPXML::FuelTypePropane
 
-    # arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heat_pump_backup_fuel', heat_pump_backup_fuel_choices, false)
-    # arg.setDisplayName('HVAC: Heat Pump Backup Fuel Type')
-    # arg.setDescription('The backup fuel type of the heat pump.')
-    # args << arg
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heat_pump_backup_fuel', heat_pump_backup_fuel_choices, false)
+    arg.setDisplayName('HVAC: Heat Pump Backup Fuel Type')
+    arg.setDescription('The backup fuel type of the heat pump.')
+    args << arg
 
-    # arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_efficiency', false)
-    # arg.setDisplayName('HVAC: Heat Pump Backup Rated Efficiency')
-    # arg.setDescription('The backup rated efficiency value of the heat pump.')
-    # args << arg
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_efficiency', false)
+    arg.setDisplayName('HVAC: Heat Pump Backup Rated Efficiency')
+    arg.setDescription('The backup rated efficiency value of the heat pump.')
+    args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('hvac_heat_pump_backup_use_existing_system', false)
     arg.setDisplayName('HVAC: Heat Pump Backup Use Existing System')

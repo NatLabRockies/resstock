@@ -2014,6 +2014,19 @@ The actual cfm per ton of the heating system.
 
 <br/>
 
+**HVAC: Heating System 2 Fuel Type**
+
+The fuel type of the second heating system.
+
+- **Name:** ``heating_system_2_fuel``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`, `coal`
+
+<br/>
+
 **HVAC: Heating System 2 Heating Capacity**
 
 The output heating capacity of the second heating system.
@@ -2272,6 +2285,30 @@ The fraction of manufacturer recommended charge of the heat pump.
 - **Type:** ``Double``
 
 - **Units:** ``Frac``
+
+- **Required:** ``false``
+
+<br/>
+
+**HVAC: Heat Pump Backup Fuel Type**
+
+The backup fuel type of the heat pump.
+
+- **Name:** ``heat_pump_backup_fuel``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`
+
+<br/>
+
+**HVAC: Heat Pump Backup Rated Efficiency**
+
+The backup rated efficiency value of the heat pump.
+
+- **Name:** ``heat_pump_backup_heating_efficiency``
+- **Type:** ``Double``
 
 - **Required:** ``false``
 

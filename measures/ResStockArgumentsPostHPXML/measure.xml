@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>adec4f69-d09e-459d-8f1e-b021bd3f85e8</version_id>
-  <version_modified>2025-11-05T04:19:51Z</version_modified>
+  <version_id>a054a4cd-c92f-4939-a57f-df70476002e6</version_id>
+  <version_modified>2025-11-05T06:06:27Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -11812,6 +11812,45 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>heating_system_2_fuel</name>
+      <display_name>HVAC: Heating System 2 Fuel Type</display_name>
+      <description>The fuel type of the second heating system.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>electricity</value>
+          <display_name>electricity</display_name>
+        </choice>
+        <choice>
+          <value>natural gas</value>
+          <display_name>natural gas</display_name>
+        </choice>
+        <choice>
+          <value>fuel oil</value>
+          <display_name>fuel oil</display_name>
+        </choice>
+        <choice>
+          <value>propane</value>
+          <display_name>propane</display_name>
+        </choice>
+        <choice>
+          <value>wood</value>
+          <display_name>wood</display_name>
+        </choice>
+        <choice>
+          <value>wood pellets</value>
+          <display_name>wood pellets</display_name>
+        </choice>
+        <choice>
+          <value>coal</value>
+          <display_name>coal</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
       <name>heating_system_2_heating_capacity</name>
       <display_name>HVAC: Heating System 2 Heating Capacity</display_name>
       <description>The output heating capacity of the second heating system.</description>
@@ -11997,6 +12036,42 @@
       <description>The fraction of manufacturer recommended charge of the heat pump.</description>
       <type>Double</type>
       <units>Frac</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heat_pump_backup_fuel</name>
+      <display_name>HVAC: Heat Pump Backup Fuel Type</display_name>
+      <description>The backup fuel type of the heat pump.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>electricity</value>
+          <display_name>electricity</display_name>
+        </choice>
+        <choice>
+          <value>natural gas</value>
+          <display_name>natural gas</display_name>
+        </choice>
+        <choice>
+          <value>fuel oil</value>
+          <display_name>fuel oil</display_name>
+        </choice>
+        <choice>
+          <value>propane</value>
+          <display_name>propane</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>heat_pump_backup_heating_efficiency</name>
+      <display_name>HVAC: Heat Pump Backup Rated Efficiency</display_name>
+      <description>The backup rated efficiency value of the heat pump.</description>
+      <type>Double</type>
+      <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -13075,7 +13150,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>014CE5D5</checksum>
+      <checksum>F4C8BF04</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

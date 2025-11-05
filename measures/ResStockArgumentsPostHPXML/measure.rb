@@ -405,7 +405,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
           end
         else
           # heating_system.heating_system_type = args[:heating_system_2_type] unless args[:heating_system_2_type].nil?
-          # heating_system.heating_system_fuel = args[:heating_system_2_fuel] unless args[:heating_system_2_fuel].nil?
+          heating_system.heating_system_fuel = args[:heating_system_2_fuel] unless args[:heating_system_2_fuel].nil?
           # heating_system.heating_system_efficiency_percent = args[:heating_system_2_heating_efficiency] unless args[:heating_system_2_heating_efficiency].nil?
           heating_system.heating_capacity = args[:heating_system_2_heating_capacity] unless args[:heating_system_2_heating_capacity].nil?
           heating_system.heating_autosizing_factor = args[:heating_system_2_heating_autosizing_factor] unless args[:heating_system_2_heating_autosizing_factor].nil?
@@ -446,8 +446,14 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         heat_pump.cooling_autosizing_factor = args[:heat_pump_cooling_autosizing_factor] unless args[:heat_pump_cooling_autosizing_factor].nil?
         heat_pump.cooling_autosizing_limit = args[:heat_pump_cooling_autosizing_limit] unless args[:heat_pump_cooling_autosizing_limit].nil?
         # heat_pump.backup_type = args[:heat_pump_backup_type] unless args[:heat_pump_backup_type].nil?
-        # heat_pump.backup_heating_fuel = args[:heat_pump_backup_fuel] unless args[:heat_pump_backup_fuel].nil?
-        # heat_pump.backup_heating_efficiency_percent = args[:heat_pump_backup_heating_efficiency] unless args[:heat_pump_backup_heating_efficiency].nil?
+        heat_pump.backup_heating_fuel = args[:heat_pump_backup_fuel] unless args[:heat_pump_backup_fuel].nil?
+        if heat_pump.backup_heating_fuel == HPXML::FuelTypeElectricity
+          heat_pump.backup_heating_efficiency_percent = args[:heat_pump_backup_heating_efficiency] unless args[:heat_pump_backup_heating_efficiency].nil?
+          heat_pump.backup_heating_efficiency_afue = nil
+        else
+          heat_pump.backup_heating_efficiency_percent = nil
+          heat_pump.backup_heating_efficiency_afue = args[:heat_pump_backup_heating_efficiency] unless args[:heat_pump_backup_heating_efficiency].nil?
+        end
         heat_pump.backup_heating_capacity = args[:heat_pump_backup_heating_capacity] unless args[:heat_pump_backup_heating_capacity].nil?
         heat_pump.backup_heating_autosizing_factor = args[:heat_pump_backup_heating_autosizing_factor] unless args[:heat_pump_backup_heating_autosizing_factor].nil?
         heat_pump.backup_heating_autosizing_limit = args[:heat_pump_backup_heating_autosizing_limit] unless args[:heat_pump_backup_heating_autosizing_limit].nil?
