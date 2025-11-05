@@ -15,17 +15,17 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  OPENSTUDIO_VER: 3.10.0
-  OPENSTUDIO_SHA: 86d7e215a1
-  OPENSTUDIO_PLATFORM: Ubuntu-22.04-x86_64
+  OPENSTUDIO_VER: 3.11.0-alpha
+  OPENSTUDIO_SHA: a34aa43d46
+  OPENSTUDIO_PLATFORM: Ubuntu-24.04-x86_64
   OPENSTUDIO_EXT: deb
-  OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.10.0
+  OPENSTUDIO_URL: https://openstudio-ci-builds.s3-us-west-2.amazonaws.com/PR-5517
   BUILDSTOCK_BATCH_BRANCH: develop
   BUILDSTOCK_QUERY_BRANCH: main
 
 jobs:
   format-files:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -47,7 +47,7 @@ jobs:
           if-no-files-found: error
 
   unit-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [format-files]
     container:
       image: docker://nrel/openstudio:3.10.0
@@ -117,7 +117,7 @@ jobs:
           if-no-files-found: error
 
   postprocessing-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -144,7 +144,7 @@ jobs:
           uv run pytest tests
 
   build-documentation:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: format-files
     steps:
       - name: Checkout feature branch
@@ -210,7 +210,7 @@ jobs:
           fi
 
   analysis-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [unit-tests]
     container:
       image: docker://nrel/openstudio:3.10.0
@@ -262,7 +262,7 @@ jobs:
           if-no-files-found: error
 
   integration-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [unit-tests]
     steps:
       - name: Checkout base branch
@@ -427,7 +427,7 @@ jobs:
           if-no-files-found: error
 
   compare-tools:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [analysis-tests, integration-tests]
     steps:
       - name: Checkout feature branch
@@ -455,7 +455,7 @@ jobs:
           ruby test/test_analysis_tools.rb
 
   sdr-options-analysis:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [unit-tests]
     container:
       image: docker://nrel/openstudio:3.10.0
@@ -588,7 +588,7 @@ jobs:
           fi
 
   sdr-integration-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [sdr-options-analysis]
     steps:
       - name: Checkout feature branch
@@ -748,7 +748,7 @@ jobs:
           if-no-files-found: error
 
   standard-plots-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
