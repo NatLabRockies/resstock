@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>af7c6ee3-17cb-4cc6-ab1a-aa8618022ad3</version_id>
-  <version_modified>2025-11-04T00:10:28Z</version_modified>
+  <version_id>18a98fb7-ec6b-484a-bb41-2c0843ba82c6</version_id>
+  <version_modified>2025-11-05T04:09:31Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -13211,7 +13211,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>568B5EC3</checksum>
+      <checksum>6A2995CD</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -13295,7 +13295,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>0ECC832A</checksum>
+      <checksum>2BEFE447</checksum>
     </file>
     <file>
       <filename>test_hvac_load_flexibility.rb</filename>
