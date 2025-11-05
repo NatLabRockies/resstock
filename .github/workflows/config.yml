@@ -263,7 +263,7 @@ jobs:
 
   integration-tests:
     runs-on: ubuntu-24.04
-    needs: [unit-tests]
+    # needs: [unit-tests]
     steps:
       - name: Checkout base branch
         if: github.event_name == 'pull_request'
