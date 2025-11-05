@@ -65,8 +65,10 @@ if ARGV[0].to_sym == :update_measures
   # Without this, the ResStockArguments measure has no differences and so OpenStudio
   # would skip updating it.
   measure_rb_path = File.join(File.dirname(__FILE__), 'resources/hpxml-measures/BuildResidentialHPXML/measure.rb')
-  measure_txt_path = File.join(File.dirname(__FILE__), 'measures/ResStockArguments/resources/measure.txt')
-  File.write(measure_txt_path, Digest::MD5.file(measure_rb_path).hexdigest)
+  ['ResStockArguments', 'ResStockArgumentsPostHPXML'].each do |resstock_measure_name|
+    measure_txt_path = File.join(File.dirname(__FILE__), "measures/#{resstock_measure_name}/resources/measure.txt")
+    File.write(measure_txt_path, Digest::MD5.file(measure_rb_path).hexdigest)
+  end
 
   # Update measures XMLs
   puts 'Updating measure.xmls...'

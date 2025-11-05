@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>17359a13-081a-44e1-9261-216e26d711be</version_id>
-  <version_modified>2025-11-03T22:24:55Z</version_modified>
+  <version_id>adec4f69-d09e-459d-8f1e-b021bd3f85e8</version_id>
+  <version_modified>2025-11-05T04:19:51Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -13075,7 +13075,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>5591ABFF</checksum>
+      <checksum>014CE5D5</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -13156,6 +13156,12 @@
       <checksum>EB5BB41B</checksum>
     </file>
     <file>
+      <filename>measure.txt</filename>
+      <filetype>txt</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>2BEFE447</checksum>
+    </file>
+    <file>
       <filename>test_hvac_load_flexibility.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
@@ -13165,13 +13171,25 @@
       <filename>test_resstock_arguments_post_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>9BB397E4</checksum>
+      <checksum>B579F1E7</checksum>
+    </file>
+    <file>
+      <filename>test_schema_error.osw</filename>
+      <filetype>osw</filetype>
+      <usage_type>test</usage_type>
+      <checksum>6B7305B8</checksum>
+    </file>
+    <file>
+      <filename>test_schematron_error.osw</filename>
+      <filetype>osw</filetype>
+      <usage_type>test</usage_type>
+      <checksum>6DB1454B</checksum>
     </file>
     <file>
       <filename>test_template.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>868B10BD</checksum>
+      <checksum>F7033159</checksum>
     </file>
   </files>
 </measure>

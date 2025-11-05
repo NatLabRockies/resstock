@@ -35,7 +35,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
       # remove BuildResidentialScheduleFile from the steps if existing_schedule is false
       osw_hash['steps'].reject! { |step| step['measure_dir_name'] == 'BuildResidentialScheduleFile' } unless params[:existing_schedule]
 
-      _run_osw(osw_hash)
+      _run_osw(osw_hash, expect_success: true)
       schedule = _get_schedule(curdir)
       _verify_peak_period(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule)
       _verify_hvac_schedule(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule)
@@ -66,7 +66,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
       puts "Testing #{params[:name]}"
       osw_hash = create_osw_hash(osw_hash_orig, params[:dst_enabled])
 
-      _run_osw(osw_hash)
+      _run_osw(osw_hash, expect_success: true)
       schedule = _get_schedule(curdir)
       _verify_peak_period(dst_enabled: params[:dst_enabled], peak_type: 'shed', schedule: schedule)
       _verify_ev_schedule(dst_enabled: params[:dst_enabled], peak_type: 'shed', schedule: schedule)
@@ -93,7 +93,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
       osw_hash = create_osw_hash(osw_hash_orig, params[:dst_enabled])
 
       # Run the osw
-      _run_osw(osw_hash)
+      _run_osw(osw_hash, expect_success: true)
       schedule = _get_schedule(curdir)
 
       # Verify a shift with HVAC and shed with EV
@@ -105,9 +105,35 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     end
   end
 
+  def test_hpxml_schema_error_checking
+    puts 'Testing HPXML Schema Error-Checking'
+
+    curdir = File.dirname(__FILE__)
+    osw_hash = JSON.parse(File.read(File.join(curdir, 'test_schema_error.osw')))
+    errors = _run_osw(osw_hash, expect_success: false)
+
+    assert_equal(1, errors.size)
+    assert(errors[0].include? "Element 'JacketRValue': [facet 'minInclusive'] The value '-5.0' is less than the minimum value allowed ('0')")
+
+    FileUtils.rm_rf(File.join(curdir, 'run'))
+  end
+
+  def test_hpxml_schematron_error_checking
+    puts 'Testing HPXML Schematron Error-Checking'
+
+    curdir = File.dirname(__FILE__)
+    osw_hash = JSON.parse(File.read(File.join(curdir, 'test_schematron_error.osw')))
+    errors = _run_osw(osw_hash, expect_success: false)
+
+    assert_equal(1, errors.size)
+    assert(errors[0].include? 'HeatingAutosizingFactor should be greater than 0')
+
+    FileUtils.rm_rf(File.join(curdir, 'run'))
+  end
+
   private
 
-  def _run_osw(osw_hash)
+  def _run_osw(osw_hash, expect_success:)
     model = OpenStudio::Model::Model.new
     measures = {}
     measures_dirs = osw_hash['measure_paths'].map { |path| File.join(File.dirname(__FILE__), path) }
@@ -117,13 +143,19 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
 
     success = apply_measures(measures_dirs, measures, runner, model)
+
     runner.result.stepWarnings.each do |s|
       puts "Warning: #{s}"
     end
+    errors = []
     runner.result.stepErrors.each do |s|
       puts "Error: #{s}"
+      errors << s
     end
-    assert(success)
+
+    assert_equal(expect_success, success)
+
+    return errors
   end
 
   def _get_schedule(dir)
