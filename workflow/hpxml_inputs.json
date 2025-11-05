@@ -947,6 +947,9 @@
     "parent_hpxml": "sample_files/base.xml",
     "dhw_water_heater": "Electricity, Heat Pump, UEF 3.50"
   },
+  "sample_files/base-dhw-tank-heat-pump-confined-space.xml": {
+    "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml"
+  },
   "sample_files/base-dhw-tank-heat-pump-capacities.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml"
   },

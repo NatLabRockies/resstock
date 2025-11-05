@@ -976,6 +976,22 @@ module Waterheater
 
     cop = water_heating_system.additional_properties.cop
 
+    # Adjust COP based on RESNET HERS Addendum 77
+    if not water_heating_system.hpwh_containment_volume.nil?
+      if not water_heating_system.hpwh_confined_space_without_mitigation
+        if water_heating_system.hpwh_containment_volume < 1000.0
+          runner.registerWarning("HPWH COP adjustment based on HPWHContainmentVolume will not be applied to #{water_heating_system.id} because HPWHInConfinedSpaceWithoutMitigation is not 'true'.")
+        end
+      else
+        # FUTURE: apply for 120V HPWH and other system types that the correction may not be accurate for
+        if water_heating_system.hpwh_containment_volume < 450.0 && (water_heating_system.backup_heating_capacity == 0.0)
+          runner.registerWarning("Heat pump water heater: #{water_heating_system.id} has no backup electric resistance element, COP adjustment for confined space may not be accurate when the containment space volume is below 450 cubic feet.")
+        end
+        rv = [water_heating_system.hpwh_containment_volume / 1500.0, 1.0].min
+        cop = (cop - 0.92) * (1 - (1.009 * Math.exp(-5.492 * rv))) + 0.92
+      end
+    end
+
     coil = OpenStudio::Model::CoilWaterHeatingAirToWaterHeatPumpWrapped.new(model)
     coil.setName("#{obj_name} coil")
     coil.setRatedHeatingCapacity(cap)

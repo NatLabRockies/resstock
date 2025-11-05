@@ -33,12 +33,7 @@ module ElectricPanel
       end
     end
 
-    breaker_spaces_values = BreakerSpacesValues.new
-    calculate_breaker_spaces(electric_panel, breaker_spaces_values)
-
-    electric_panel.breaker_spaces_total = breaker_spaces_values.BreakerSpaces_Total
-    electric_panel.breaker_spaces_occupied = breaker_spaces_values.BreakerSpaces_Occupied
-    electric_panel.breaker_spaces_headroom = breaker_spaces_values.BreakerSpaces_HeadRoom
+    calculate_breaker_spaces(electric_panel)
   end
 
   # Get the component attached to the given service feeder.
@@ -186,22 +181,26 @@ module ElectricPanel
     end
   end
 
-  # Calculate the number of panel breaker spaces corresponding to total, occupied, and headroom.
+  # Calculate the number of panel breaker spaces corresponding to rated total spaces, occupied spaces, and headroom spaces.
   #
   # @param electric_panel [HPXML::ElectricPanel] Object that defines a single electric panel
-  # @param [Array<HPXML::ServiceFeeder>] List of service feeder objects
   # @return [nil]
-  def self.calculate_breaker_spaces(electric_panel, service_feeders)
-    occupied = electric_panel.branch_circuits.map { |branch_circuit| branch_circuit.occupied_spaces }.sum(0.0)
+  def self.calculate_breaker_spaces(electric_panel)
+    occupied_spaces = electric_panel.occupied_spaces
+
     if not electric_panel.rated_total_spaces.nil?
-      total = electric_panel.rated_total_spaces
+      rated_total_spaces = electric_panel.rated_total_spaces
     else
-      total = occupied + electric_panel.headroom_spaces
+      rated_total_spaces = occupied_spaces + electric_panel.headroom_spaces # headroom_spaces is either specified or 3
+
+      electric_panel.rated_total_spaces = rated_total_spaces
+      electric_panel.rated_total_spaces_isdefaulted = true
     end
 
-    service_feeders.BreakerSpaces_Total = total
-    service_feeders.BreakerSpaces_Occupied = occupied
-    service_feeders.BreakerSpaces_HeadRoom = total - occupied
+    if electric_panel.headroom_spaces.nil? # only nil if rated_total_spaces is specified
+      electric_panel.headroom_spaces = rated_total_spaces - occupied_spaces
+      electric_panel.headroom_spaces_isdefaulted = true
+    end
   end
 end
 
@@ -214,20 +213,6 @@ class LoadValues
 
   def initialize
     LOAD_ATTRS.each do |attr|
-      send("#{attr}=", 0.0)
-    end
-  end
-end
-
-# Object with breaker spaces
-class BreakerSpacesValues
-  BREAKERSPACE_ATTRS = [:BreakerSpaces_Occupied,
-                        :BreakerSpaces_Total,
-                        :BreakerSpaces_HeadRoom]
-  attr_accessor(*BREAKERSPACE_ATTRS)
-
-  def initialize
-    BREAKERSPACE_ATTRS.each do |attr|
       send("#{attr}=", 0.0)
     end
   end

@@ -2,7 +2,6 @@
 
 require_relative '../resources/minitest_helper'
 require 'openstudio'
-require 'openstudio/measure/ShowRunnerOutput'
 require 'fileutils'
 require_relative '../measure.rb'
 require 'csv'
@@ -266,6 +265,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'missing-elements' => ['Expected 1 element(s) for xpath: NumberofConditionedFloors [context: /HPXML/Building/BuildingDetails/BuildingSummary/BuildingConstruction, id: "MyBuilding"]',
                                                    'Expected 1 element(s) for xpath: ConditionedFloorArea [context: /HPXML/Building/BuildingDetails/BuildingSummary/BuildingConstruction, id: "MyBuilding"]'],
                             'missing-epw-filepath-and-zipcode' => ['Expected 1 or more element(s) for xpath: Address/ZipCode | ../BuildingDetails/ClimateandRiskZones/WeatherStation/extension/EPWFilePath'],
+                            'missing-hpwh-containment-volume' => ['Expected 1 element(s) for xpath: HPWHContainmentVolume [context: /HPXML/Building/BuildingDetails/Systems/WaterHeating/WaterHeatingSystem/extension[HPWHInConfinedSpaceWithoutMitigation="true"], id: "WaterHeatingSystem1"]'],
                             'missing-inverter-idref' => ['Expected 1 element(s) for xpath: AttachedToInverter [context: /HPXML/Building/BuildingDetails/Systems/Photovoltaics/PVSystem[count(../Inverter) > 1], id: "PVSystem1"]',
                                                          'Expected 1 element(s) for xpath: AttachedToInverter [context: /HPXML/Building/BuildingDetails/Systems/Photovoltaics/PVSystem[count(../Inverter) > 1], id: "PVSystem2"]'],
                             'missing-skylight-floor' => ['Expected 1 element(s) for xpath: ../../AttachedToFloor'],
@@ -276,6 +276,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'negative-autosizing-factors' => ['CoolingAutosizingFactor should be greater than 0.0',
                                                               'HeatingAutosizingFactor should be greater than 0.0',
                                                               'BackupHeatingAutosizingFactor should be greater than 0.0'],
+                            'negative-hpwh-containment-volume' => ['Expected HPWHContainmentVolume to be greater than 0.'],
                             'panel-negative-headroom-breaker-spaces' => ["Element 'HeadroomSpaces': [facet 'minInclusive'] The value '-1' is less than the minimum value allowed ('0')."],
                             'panel-zero-total-breaker-spaces' => ["Element 'RatedTotalSpaces': [facet 'minExclusive'] The value '0' must be greater than '0'."],
                             'panel-without-required-system' => ['Expected 1 or more element(s) for xpath: AttachedToComponent [context: /HPXML/Building/BuildingDetails/Systems/ElectricPanels/ElectricPanel/ServiceFeeders/ServiceFeeder, id: "ServiceFeeder1"]'],
@@ -838,6 +839,9 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'missing-epw-filepath-and-zipcode'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.climate_and_risk_zones.weather_station_epw_filepath = nil
+      when 'missing-hpwh-containment-volume'
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-confined-space.xml')
+        hpxml_bldg.water_heating_systems[0].hpwh_containment_volume = nil
       when 'missing-inverter-idref'
         hpxml, hpxml_bldg = _create_hpxml('base-pv.xml')
         hpxml_bldg.inverters.add(id: 'Inverter1')
@@ -866,6 +870,9 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml_bldg.heat_pumps[0].heating_autosizing_factor = -0.5
         hpxml_bldg.heat_pumps[0].cooling_autosizing_factor = -1.2
         hpxml_bldg.heat_pumps[0].backup_heating_autosizing_factor = -0.1
+      when 'negative-hpwh-containment-volume'
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-confined-space.xml')
+        hpxml_bldg.water_heating_systems[0].hpwh_containment_volume = -10.0
       when 'panel-negative-headroom-breaker-spaces'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.electric_panels.add(id: 'ElectricPanel1',
@@ -1028,6 +1035,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                               'hvac-setpoints-low' => ['Heating setpoint should typically be greater than or equal to 58 deg-F.',
                                                        'Cooling setpoint should typically be greater than or equal to 68 deg-F.'],
                               'integrated-heating-efficiency-low' => ['Percent efficiency should typically be greater than or equal to 0.5.'],
+                              'large-hpwh-containment-volume' => ['HPWHContainmentVolume should typically be less than 1500 cuft when the HPWH is in confined space'],
                               'lighting-groups-missing' => ['No interior lighting specified, the model will not include interior lighting energy use.',
                                                             'No exterior lighting specified, the model will not include exterior lighting energy use.',
                                                             'No garage lighting specified, the model will not include garage lighting energy use.'],
@@ -1170,6 +1178,9 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'integrated-heating-efficiency-low'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-ptac-with-heating-electricity.xml')
         hpxml_bldg.cooling_systems[0].integrated_heating_system_efficiency_percent = 0.4
+      when 'large-hpwh-containment-volume'
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-confined-space.xml')
+        hpxml_bldg.water_heating_systems[0].hpwh_containment_volume = 2000.0
       when 'lighting-groups-missing'
         hpxml, hpxml_bldg = _create_hpxml('base-enclosure-garage.xml')
         hpxml_bldg.lighting_groups.reverse_each do |lg|
@@ -1924,6 +1935,8 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                               'duct-lto-percent-uncond-space' => ['Very high sum of supply + return duct leakage to the outside; double-check inputs.'],
                               'floor-or-ceiling1' => ["Floor 'Floor1' has FloorOrCeiling=floor but it should be ceiling. The input will be overridden."],
                               'floor-or-ceiling2' => ["Floor 'Floor1' has FloorOrCeiling=ceiling but it should be floor. The input will be overridden."],
+                              'hpwh-confined-space-without-mitigation-false' => ["HPWH COP adjustment based on HPWHContainmentVolume will not be applied to WaterHeatingSystem1 because HPWHInConfinedSpaceWithoutMitigation is not 'true'."],
+                              'hpwh-small-containment-volume-without-backup-element' => ['Heat pump water heater: WaterHeatingSystem1 has no backup electric resistance element, COP adjustment for confined space may not be accurate when the containment space volume is below 450 cubic feet.'],
                               'hvac-gshp-bore-depth-autosized-high' => ['Reached a maximum of 10 boreholes; setting bore depth to the maximum (500 ft).'],
                               'hvac-seasons' => ['It is not possible to eliminate all HVAC energy use (e.g. crankcase/defrost energy) in EnergyPlus outside of an HVAC season.'],
                               'hvac-setpoint-adjustments' => ['HVAC setpoints have been automatically adjusted to prevent periods where the heating setpoint is greater than the cooling setpoint.'],
@@ -2091,6 +2104,13 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'floor-or-ceiling2'
         hpxml, hpxml_bldg = _create_hpxml('base-foundation-unvented-crawlspace.xml')
         hpxml_bldg.floors[0].floor_or_ceiling = HPXML::FloorOrCeilingCeiling
+      when 'hpwh-confined-space-without-mitigation-false'
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-confined-space.xml')
+        hpxml_bldg.water_heating_systems[0].hpwh_confined_space_without_mitigation = false
+      when 'hpwh-small-containment-volume-without-backup-element'
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-confined-space.xml')
+        hpxml_bldg.water_heating_systems[0].backup_heating_capacity = 0.0
+        hpxml_bldg.water_heating_systems[0].hpwh_containment_volume = 250.0
       when 'hvac-gshp-bore-depth-autosized-high'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.site.ground_conductivity = 0.07
@@ -2271,7 +2291,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       end
     elsif error_or_warning == 'warning'
       # show the output
-      show_output(result) unless result.value.valueName == 'Success'
+      result.showOutput() unless result.value.valueName == 'Success'
 
       assert_equal('Success', result.value.valueName)
 
