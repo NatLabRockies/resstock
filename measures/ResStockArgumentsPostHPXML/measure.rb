@@ -424,6 +424,10 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
           if (not args[:cooling_system_frac_manufacturer_charge].nil?)
             cooling_system.charge_defect_ratio = args[:cooling_system_frac_manufacturer_charge] - 1.0
           end
+        elsif [HPXML::HVACTypeRoomAirConditioner].include? cooling_system.cooling_system_type
+          n_beds = hpxml_bldg.building_construction.number_of_bedrooms
+          cooling_system.cooling_capacity = n_beds * 12000.0
+          cooling_system.fraction_cool_load_served = 1.0
         end
         # Detailed performance
         set_hvac_detailed_performance_data('cooling',
