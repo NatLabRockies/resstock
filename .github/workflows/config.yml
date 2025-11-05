@@ -19,7 +19,7 @@ env:
   OPENSTUDIO_SHA: a34aa43d46
   OPENSTUDIO_PLATFORM: Ubuntu-24.04-x86_64
   OPENSTUDIO_EXT: deb
-  OPENSTUDIO_URL: https://openstudio-ci-builds.s3-us-west-2.amazonaws.com/PR-5517
+  OPENSTUDIO_URL: http://openstudio-ci-builds.s3-us-west-2.amazonaws.com/PR-5517
   BUILDSTOCK_BATCH_BRANCH: develop
   BUILDSTOCK_QUERY_BRANCH: main
 
