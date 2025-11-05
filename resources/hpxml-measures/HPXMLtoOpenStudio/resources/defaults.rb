@@ -3347,6 +3347,11 @@ module Defaults
           water_heating_system.operating_mode_isdefaulted = true
         end
 
+        if water_heating_system.hpwh_confined_space_without_mitigation.nil?
+          water_heating_system.hpwh_confined_space_without_mitigation = false
+          water_heating_system.hpwh_confined_space_without_mitigation_isdefaulted = true
+        end
+
       end
       next unless water_heating_system.location.nil?
 

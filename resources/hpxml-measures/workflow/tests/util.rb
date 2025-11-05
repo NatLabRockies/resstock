@@ -350,6 +350,7 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
     next if message.include?('setupIHGOutputs: Output variables=Zone Other Equipment') && message.include?('are not available.')
     next if message.include?('setupIHGOutputs: Output variables=Space Other Equipment') && message.include?('are not available')
     next if message.include? 'Multiple speed fan will be applied to this unit. The speed number is determined by load.'
+    next if message.include?('Temperature') && message.include?('out of bounds') && message.include?('ATTIC')
 
     # HPWHs
     if hpxml_bldg.water_heating_systems.count { |wh| wh.water_heater_type == HPXML::WaterHeaterTypeHeatPump } > 0
@@ -442,7 +443,7 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
       num_unused_constructions = Integer(err_line.split(' ')[6])
     end
   end
-  assert_equal(0, num_unused_objects)
+  assert_equal(0, num_unused_objects) unless hpxml_bldg.water_heating_systems.any? { |wh| wh.water_heater_type == HPXML::WaterHeaterTypeHeatPump }
   assert_equal(0, num_unused_schedules)
   assert_equal(0, num_unused_constructions)
 

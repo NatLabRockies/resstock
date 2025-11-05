@@ -8614,32 +8614,34 @@ class HPXML < Object
 
   # Object for /HPXML/Building/BuildingDetails/Systems/WaterHeating/WaterHeatingSystem.
   class WaterHeatingSystem < BaseElement
-    ATTRS = [:id,                        # [String] SystemIdentifier/@id
-             :fuel_type,                 # [String] FuelType (HPXML::FuelTypeXXX)
-             :water_heater_type,         # [String] WaterHeaterType (HPXML::WaterHeaterTypeXXX)
-             :location,                  # [String] Location (HPXML::LocationXXX)
-             :year_installed,            # [Integer] YearInstalled
-             :is_shared_system,          # [Boolean] IsSharedSystem
-             :performance_adjustment,    # [Double] PerformanceAdjustment (frac)
-             :third_party_certification, # [String] ThirdPartyCertification
-             :tank_volume,               # [Double] TankVolume (gal)
-             :fraction_dhw_load_served,  # [Double] FractionDHWLoadServed (frac)
-             :heating_capacity,          # [Double] HeatingCapacity (Btu/hr)
-             :backup_heating_capacity,   # [Double] BackupHeatingCapacity (Btu/hr)
-             :energy_factor,             # [Double] EnergyFactor (frac)
-             :uniform_energy_factor,     # [Double] UniformEnergyFactor (frac)
-             :operating_mode,            # [String] HPWHOperatingMode (HPXML::WaterHeaterOperatingModeXXX)
-             :first_hour_rating,         # [Double] FirstHourRating (gal/hr)
-             :usage_bin,                 # [String] UsageBin (HPXML::WaterHeaterUsageBinXXX)
-             :recovery_efficiency,       # [Double] RecoveryEfficiency (frac)
-             :jacket_r_value,            # [Double] WaterHeaterInsulation/Jacket/JacketRValue (F-ft2-hr/Btu)
-             :standby_loss_units,        # [String] StandbyLoss/Units (HPXML::UnitsXXX)
-             :standby_loss_value,        # [Double] StandbyLoss/Value
-             :temperature,               # [Double] HotWaterTemperature (F)
-             :uses_desuperheater,        # [Boolean] UsesDesuperheater
-             :related_hvac_idref,        # [String] RelatedHVACSystem/@idref
-             :tank_model_type,           # [String] extension/TankModelType (HPXML::WaterHeaterTankModelTypeXXX)
-             :number_of_bedrooms_served] # [Integer] extension/NumberofBedroomsServed
+    ATTRS = [:id,                                     # [String] SystemIdentifier/@id
+             :fuel_type,                              # [String] FuelType (HPXML::FuelTypeXXX)
+             :water_heater_type,                      # [String] WaterHeaterType (HPXML::WaterHeaterTypeXXX)
+             :location,                               # [String] Location (HPXML::LocationXXX)
+             :year_installed,                         # [Integer] YearInstalled
+             :is_shared_system,                       # [Boolean] IsSharedSystem
+             :performance_adjustment,                 # [Double] PerformanceAdjustment (frac)
+             :third_party_certification,              # [String] ThirdPartyCertification
+             :tank_volume,                            # [Double] TankVolume (gal)
+             :fraction_dhw_load_served,               # [Double] FractionDHWLoadServed (frac)
+             :heating_capacity,                       # [Double] HeatingCapacity (Btu/hr)
+             :backup_heating_capacity,                # [Double] BackupHeatingCapacity (Btu/hr)
+             :energy_factor,                          # [Double] EnergyFactor (frac)
+             :uniform_energy_factor,                  # [Double] UniformEnergyFactor (frac)
+             :operating_mode,                         # [String] HPWHOperatingMode (HPXML::WaterHeaterOperatingModeXXX)
+             :first_hour_rating,                      # [Double] FirstHourRating (gal/hr)
+             :usage_bin,                              # [String] UsageBin (HPXML::WaterHeaterUsageBinXXX)
+             :recovery_efficiency,                    # [Double] RecoveryEfficiency (frac)
+             :jacket_r_value,                         # [Double] WaterHeaterInsulation/Jacket/JacketRValue (F-ft2-hr/Btu)
+             :standby_loss_units,                     # [String] StandbyLoss/Units (HPXML::UnitsXXX)
+             :standby_loss_value,                     # [Double] StandbyLoss/Value
+             :temperature,                            # [Double] HotWaterTemperature (F)
+             :uses_desuperheater,                     # [Boolean] UsesDesuperheater
+             :related_hvac_idref,                     # [String] RelatedHVACSystem/@idref
+             :tank_model_type,                        # [String] extension/TankModelType (HPXML::WaterHeaterTankModelTypeXXX)
+             :number_of_bedrooms_served,              # [Integer] extension/NumberofBedroomsServed
+             :hpwh_confined_space_without_mitigation, # [Boolean] extension/HPWHInConfinedSpaceWithoutMitigation
+             :hpwh_containment_volume]                # [Double] extension/HPWHContainmentVolume
     attr_accessor(*ATTRS)
 
     # Returns any branch circuits that the component may be attached to.
@@ -8746,10 +8748,12 @@ class HPXML < Object
         related_hvac_idref_el = XMLHelper.add_element(water_heating_system, 'RelatedHVACSystem')
         XMLHelper.add_attribute(related_hvac_idref_el, 'idref', @related_hvac_idref)
       end
-      if (not @tank_model_type.nil?) || (not @number_of_bedrooms_served.nil?)
+      if (not @tank_model_type.nil?) || (not @number_of_bedrooms_served.nil?) || (not @hpwh_confined_space_without_mitigation.nil?) || (not @hpwh_containment_volume.nil?)
         extension = XMLHelper.create_elements_as_needed(water_heating_system, ['extension'])
         XMLHelper.add_element(extension, 'TankModelType', @tank_model_type, :string, @tank_model_type_isdefaulted) unless @tank_model_type.nil?
         XMLHelper.add_element(extension, 'NumberofBedroomsServed', @number_of_bedrooms_served, :integer, @number_of_bedrooms_served_isdefaulted) unless @number_of_bedrooms_served.nil?
+        XMLHelper.add_element(extension, 'HPWHInConfinedSpaceWithoutMitigation', @hpwh_confined_space_without_mitigation, :boolean, @hpwh_confined_space_without_mitigation_isdefaulted) unless @hpwh_confined_space_without_mitigation.nil?
+        XMLHelper.add_element(extension, 'HPWHContainmentVolume', @hpwh_containment_volume, :float, @hpwh_containment_volume_isdefaulted) unless @hpwh_containment_volume.nil?
       end
     end
 
@@ -8786,6 +8790,8 @@ class HPXML < Object
       @related_hvac_idref = HPXML::get_idref(XMLHelper.get_element(water_heating_system, 'RelatedHVACSystem'))
       @tank_model_type = XMLHelper.get_value(water_heating_system, 'extension/TankModelType', :string)
       @number_of_bedrooms_served = XMLHelper.get_value(water_heating_system, 'extension/NumberofBedroomsServed', :integer)
+      @hpwh_confined_space_without_mitigation = XMLHelper.get_value(water_heating_system, 'extension/HPWHInConfinedSpaceWithoutMitigation', :boolean)
+      @hpwh_containment_volume = XMLHelper.get_value(water_heating_system, 'extension/HPWHContainmentVolume', :float)
     end
   end
 
@@ -9693,10 +9699,7 @@ class HPXML < Object
              :capacity_types,          # [Array<String>] extension/Outputs/Capacity/Type
              :capacity_total_watts,    # [Array<Double>] extension/Outputs/Capacity/TotalWatts
              :capacity_total_amps,     # [Array<Double>] extension/Outputs/Capacity/TotalAmps
-             :capacity_headroom_amps,  # [Array<Double>] extension/Outputs/Capacity/HeadroomAmps
-             :breaker_spaces_total,    # [Integer] extension/Outputs/BreakerSpaces/Total
-             :breaker_spaces_occupied, # [Double] extension/Outputs/BreakerSpaces/Occupied
-             :breaker_spaces_headroom] # [Double] extension/Outputs/BreakerSpaces/Headroom
+             :capacity_headroom_amps]  # [Array<Double>] extension/Outputs/Capacity/HeadroomAmps
     attr_reader(*CLASS_ATTRS)
     attr_accessor(*ATTRS)
 
@@ -9705,14 +9708,21 @@ class HPXML < Object
     # @return [Array<HPXML::ElectricPanel>] The list of attached electric panels
     def sub_panels
       list = []
-      @parent_object.electric_panels.each do |electric_panel|
-        next unless @id == electric_panel.id
-
-        electric_panel.branch_circuits.each do |branch_circuit|
-          list << branch_circuit.electric_panel
-        end
+      branch_circuits.each do |branch_circuit|
+        list << branch_circuit.electric_panel
       end
       return list
+    end
+
+    # Calculate the sum of OccupiedSpaces across BranchCircuits.
+    #
+    # @return [Double] Total occupied spaces
+    def occupied_spaces
+      occupied_spaces = 0.0
+      branch_circuits.each do |branch_circuit|
+        occupied_spaces += branch_circuit.occupied_spaces
+      end
+      return occupied_spaces
     end
 
     # Deletes the current object from the array.
@@ -9762,14 +9772,6 @@ class HPXML < Object
           XMLHelper.add_element(capacity, 'HeadroomAmps', capacity_headroom_amp, :float)
         end
       end
-      if not @breaker_spaces_total.nil?
-        outputs = XMLHelper.create_elements_as_needed(electric_panel, ['extension', 'Outputs'])
-        XMLHelper.add_attribute(outputs, 'dataSource', 'software')
-        breaker_spaces = XMLHelper.add_element(outputs, 'BreakerSpaces')
-        XMLHelper.add_element(breaker_spaces, 'Total', @breaker_spaces_total, :integer)
-        XMLHelper.add_element(breaker_spaces, 'Occupied', @breaker_spaces_occupied, :float)
-        XMLHelper.add_element(breaker_spaces, 'Headroom', @breaker_spaces_headroom, :float)
-      end
     end
 
     # Populates the HPXML object(s) from the XML document.
@@ -9790,9 +9792,6 @@ class HPXML < Object
       @capacity_total_watts = XMLHelper.get_values(electric_panel, 'extension/Outputs/Capacity/TotalWatts', :float)
       @capacity_total_amps = XMLHelper.get_values(electric_panel, 'extension/Outputs/Capacity/TotalAmps', :float)
       @capacity_headroom_amps = XMLHelper.get_values(electric_panel, 'extension/Outputs/Capacity/HeadroomAmps', :float)
-      @breaker_spaces_total = XMLHelper.get_value(electric_panel, 'extension/Outputs/BreakerSpaces/Total', :integer)
-      @breaker_spaces_occupied = XMLHelper.get_value(electric_panel, 'extension/Outputs/BreakerSpaces/Occupied', :float)
-      @breaker_spaces_headroom = XMLHelper.get_value(electric_panel, 'extension/Outputs/BreakerSpaces/Headroom', :float)
     end
   end
 

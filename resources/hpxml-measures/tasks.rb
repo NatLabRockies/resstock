@@ -2391,6 +2391,9 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
     elsif ['base-dhw-tank-gas-fhr.xml'].include? hpxml_file
       hpxml_bldg.water_heating_systems[0].first_hour_rating = 56.0
       hpxml_bldg.water_heating_systems[0].usage_bin = nil
+    elsif ['base-dhw-tank-heat-pump-confined-space.xml'].include? hpxml_file
+      hpxml_bldg.water_heating_systems[0].hpwh_confined_space_without_mitigation = true
+      hpxml_bldg.water_heating_systems[0].hpwh_containment_volume = 453
     elsif ['base-dhw-tankless-electric-outside.xml'].include? hpxml_file
       hpxml_bldg.water_heating_systems[0].performance_adjustment = 0.92
     elsif ['base-dhw-multiple.xml'].include? hpxml_file

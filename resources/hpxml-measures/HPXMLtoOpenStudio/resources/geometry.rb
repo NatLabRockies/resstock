@@ -102,9 +102,8 @@ module Geometry
       else
         # Open cavity
         constr_sets = [
-          GenericConstructionSet.new(10.0, 0.5, nil, mat_roofing), # w/R-10 rigid
-          GenericConstructionSet.new(0.0, 0.5, nil, mat_roofing),  # Standard
-          GenericConstructionSet.new(0.0, 0.0, nil, mat_roofing),  # Fallback
+          GenericConstructionSet.new(10.0, 0.75, nil, mat_roofing), # w/R-10 rigid
+          GenericConstructionSet.new(0.0, 0.75, nil, mat_roofing),  # Standard
         ]
         match, constr_set, layer_r = Constructions.pick_generic_construction_set(assembly_r, constr_sets, inside_film, outside_film)
 

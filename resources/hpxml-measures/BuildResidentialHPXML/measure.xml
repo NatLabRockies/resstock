@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_hpxml</name>
   <uid>a13a8983-2b01-4930-8af2-42030b6e4233</uid>
-  <version_id>46c5d478-3f31-4d74-9c17-8dae30cd5427</version_id>
-  <version_modified>2025-10-25T15:42:45Z</version_modified>
+  <version_id>3b4021b0-2f2d-41dc-aa59-7b56d7a0987f</version_id>
+  <version_modified>2025-11-03T19:07:48Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>BuildResidentialHPXML</class_name>
   <display_name>HPXML Builder</display_name>
@@ -11711,7 +11711,7 @@
       <filename>options/hvac_heat_pump_backup_capacity.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>6361F7F7</checksum>
+      <checksum>7165B0A8</checksum>
     </file>
     <file>
       <filename>options/hvac_heat_pump_capacity.tsv</filename>

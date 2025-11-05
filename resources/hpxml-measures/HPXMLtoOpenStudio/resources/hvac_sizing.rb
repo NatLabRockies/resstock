@@ -3409,11 +3409,22 @@ module HVACSizing
       cooling_month = 6 # July
     end
 
-    rtf_DesignMon_Heat = [0.25, (71.0 - weather.data.MonthlyAvgDrybulbs[heating_month]) / mj.htd].max
-    rtf_DesignMon_Cool = [0.25, (weather.data.MonthlyAvgDrybulbs[cooling_month] - 76.0) / mj.ctd].max
+    # Runtime fraction average in heating/cooling months, assumed
+    if mj.htd > 0
+      rtf_design_mon_heat = (mj.heat_setpoint - weather.data.MonthlyAvgDrybulbs[heating_month]) / mj.htd
+    else
+      rtf_design_mon_heat = 0
+    end
+    if mj.ctd > 0
+      rtf_design_mon_cool = (weather.data.MonthlyAvgDrybulbs[cooling_month] - mj.cool_setpoint) / mj.ctd
+    else
+      rtf_design_mon_cool = 0
+    end
+    rtf_design_mon_heat = [[rtf_design_mon_heat, 0.25].max, 1.0].min
+    rtf_design_mon_cool = [[rtf_design_mon_cool, 0.25].max, 1.0].min
 
-    nom_length_heat = (1.0 - 1.0 / clg_ap.heat_rated_cops[0]) * (r_value_bore + r_value_ground * rtf_DesignMon_Heat) / (weather.data.DeepGroundAnnualTemp - (2.0 * clg_ap.design_hw - clg_ap.design_delta_t) / 2.0) * UnitConversions.convert(1.0, 'ton', 'Btu/hr')
-    nom_length_cool = (1.0 + 1.0 / clg_ap.cool_rated_cops[0]) * (r_value_bore + r_value_ground * rtf_DesignMon_Cool) / ((2.0 * clg_ap.design_chw + clg_ap.design_delta_t) / 2.0 - weather.data.DeepGroundAnnualTemp) * UnitConversions.convert(1.0, 'ton', 'Btu/hr')
+    nom_length_heat = (1.0 - 1.0 / clg_ap.heat_rated_cops[0]) * (r_value_bore + r_value_ground * rtf_design_mon_heat) / (weather.data.DeepGroundAnnualTemp - (2.0 * clg_ap.design_hw - clg_ap.design_delta_t) / 2.0) * UnitConversions.convert(1.0, 'ton', 'Btu/hr')
+    nom_length_cool = (1.0 + 1.0 / clg_ap.cool_rated_cops[0]) * (r_value_bore + r_value_ground * rtf_design_mon_cool) / ((2.0 * clg_ap.design_chw + clg_ap.design_delta_t) / 2.0 - weather.data.DeepGroundAnnualTemp) * UnitConversions.convert(1.0, 'ton', 'Btu/hr')
 
     return nom_length_heat, nom_length_cool
   end

@@ -2,7 +2,6 @@
 
 require_relative '../resources/minitest_helper'
 require 'openstudio'
-require 'openstudio/measure/ShowRunnerOutput'
 require 'fileutils'
 require_relative '../measure.rb'
 require_relative '../resources/util.rb'
@@ -1784,7 +1783,7 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
       XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
       _model, _test_hpxml, test_hpxml_bldg = _test_measure(args_hash)
       assert_equal(3, test_hpxml_bldg.geothermal_loops[0].num_bore_holes)
-      assert_in_delta(194.0, test_hpxml_bldg.geothermal_loops[0].bore_length, 1.0)
+      assert_in_delta(190.0, test_hpxml_bldg.geothermal_loops[0].bore_length, 1.0)
 
       # Bore depth greater than the max -> increase number of boreholes
       hpxml, hpxml_bldg = _create_hpxml(ghp_filename)
@@ -1792,7 +1791,7 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
       XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
       _model, _test_hpxml, test_hpxml_bldg = _test_measure(args_hash)
       assert_equal(5, test_hpxml_bldg.geothermal_loops[0].num_bore_holes)
-      assert_in_delta(442.0, test_hpxml_bldg.geothermal_loops[0].bore_length, 1.0)
+      assert_in_delta(431.0, test_hpxml_bldg.geothermal_loops[0].bore_length, 1.0)
 
       # Bore depth greater than the max -> increase number of boreholes until the max, set depth to the max, and issue warning
       hpxml, hpxml_bldg = _create_hpxml(ghp_filename)
@@ -1928,7 +1927,7 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
     result = runner.result
 
     # show the output
-    show_output(result) unless result.value.valueName == 'Success'
+    result.showOutput() unless result.value.valueName == 'Success'
 
     # assert that it ran correctly
     assert_equal('Success', result.value.valueName)
