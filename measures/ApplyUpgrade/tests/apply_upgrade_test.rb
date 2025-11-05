@@ -48,14 +48,14 @@ class ApplyUpgradeTest < Minitest::Test
     puts 'Retaining existing heating system:'
     expected_values = {}
 
-    expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(false, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values)
+    expected_values['hvac_heat_pump_backup'] = nil
+    _test_heat_pump_backup(false, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values, nil)
 
-    expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(true, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values)
+    expected_values['hvac_heat_pump_backup'] = nil
+    _test_heat_pump_backup(true, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values, nil)
 
-    expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(true, 'Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0', expected_values)
+    expected_values['hvac_heat_pump_backup'] = nil
+    _test_heat_pump_backup(true, 'Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0', expected_values, nil)
 
     puts 'Duct restriction:'
     expected_values = {
@@ -206,22 +206,22 @@ class ApplyUpgradeTest < Minitest::Test
     puts 'Retaining existing heating system:'
     expected_values = {}
 
-    expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(false, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values)
+    expected_values['hvac_heat_pump_backup'] = nil
+    _test_heat_pump_backup(false, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values, nil)
 
     expected_values = {
-      'heating_system_2_type' => HPXML::HVACTypeBoiler,
+      'hvac_heat_pump_heating_load_served' => '100%',
+      'hvac_heating_system_2' => 'Boiler, 90% AFUE',
       'heating_system_2_fuel' => HPXML::FuelTypeNaturalGas,
-      'heating_system_2_heating_efficiency' => 0.92,
       'heating_system_2_heating_capacity' => 100000.0,
       'heating_system_2_heating_autosizing_factor' => 1.0
     }
 
-    expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(true, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values)
+    expected_values['hvac_heat_pump_backup'] = 'Separate Heating System'
+    _test_heat_pump_backup(true, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values, 'Fuel Boiler, 90% AFUE')
 
-    expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(true, 'Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0', expected_values)
+    expected_values['hvac_heat_pump_backup'] = 'Separate Heating System'
+    _test_heat_pump_backup(true, 'Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0', expected_values, 'Fuel Boiler, 90% AFUE')
 
     puts 'Duct restriction:'
     expected_values = {
@@ -294,22 +294,22 @@ class ApplyUpgradeTest < Minitest::Test
     puts 'Retaining existing heating system:'
     expected_values = {}
 
-    expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(false, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values)
+    expected_values['hvac_heat_pump_backup'] = nil
+    _test_heat_pump_backup(false, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values, 'Electric Baseboard, 100% Efficiency')
 
     expected_values = {
-      'heating_system_2_type' => HPXML::HVACTypeElectricResistance,
+      'hvac_heat_pump_heating_load_served' => '100%',
+      'hvac_heating_system_2' => 'Electric Resistance',
       'heating_system_2_fuel' => HPXML::FuelTypeElectricity,
-      'heating_system_2_heating_efficiency' => 1.0,
       'heating_system_2_heating_capacity' => 100000.0,
       'heating_system_2_heating_autosizing_factor' => 1.0
     }
 
-    expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(true, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values)
+    expected_values['hvac_heat_pump_backup'] = 'Separate Heating System'
+    _test_heat_pump_backup(true, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values, 'Electric Baseboard, 100% Efficiency')
 
-    expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(true, 'Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0', expected_values)
+    expected_values['hvac_heat_pump_backup'] = 'Separate Heating System'
+    _test_heat_pump_backup(true, 'Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0', expected_values, 'Electric Baseboard, 100% Efficiency')
 
     puts 'Duct restriction:'
     expected_values = {
@@ -483,6 +483,7 @@ class ApplyUpgradeTest < Minitest::Test
     hpxml.buildings.each do |hpxml_bldg|
       heating_system = measure.get_heating_system(hpxml_bldg)
       if heating_system.nil?
+        assert(expected_values.keys.include?('hvac_heat_pump_backup'))
         assert_nil(expected_values['hvac_heat_pump_backup'])
         puts "\thpxml.heating_systems.size=#{hpxml_bldg.heating_systems.size}..."
         return

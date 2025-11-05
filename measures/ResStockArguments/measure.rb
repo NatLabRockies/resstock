@@ -303,21 +303,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setUnits('cfm/ton')
     args << arg
 
-    # heating_system_2_type_choices = OpenStudio::StringVector.new
-    # heating_system_2_type_choices << HPXML::HVACTypeFurnace
-    # heating_system_2_type_choices << HPXML::HVACTypeWallFurnace
-    # heating_system_2_type_choices << HPXML::HVACTypeFloorFurnace
-    # heating_system_2_type_choices << HPXML::HVACTypeBoiler
-    # heating_system_2_type_choices << HPXML::HVACTypeElectricResistance
-    # heating_system_2_type_choices << HPXML::HVACTypeStove
-    # heating_system_2_type_choices << HPXML::HVACTypeSpaceHeater
-    # heating_system_2_type_choices << HPXML::HVACTypeFireplace
-
-    # arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heating_system_2_type', heating_system_2_type_choices, false)
-    # arg.setDisplayName('HVAC: Heating System 2 Type')
-    # arg.setDescription('The type of the second heating system.')
-    # args << arg
-
     heating_system_fuel_choices = OpenStudio::StringVector.new
     heating_system_fuel_choices << HPXML::FuelTypeElectricity
     heating_system_fuel_choices << HPXML::FuelTypeNaturalGas
@@ -331,12 +316,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDisplayName('HVAC: Heating System 2 Fuel Type')
     arg.setDescription('The fuel type of the second heating system.')
     args << arg
-
-    # arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_2_heating_efficiency', false)
-    # arg.setDisplayName('HVAC: Heating System 2 Rated AFUE or Percent')
-    # arg.setUnits('Frac')
-    # arg.setDescription('The rated heating efficiency value of the second heating system.')
-    # args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_2_heating_capacity', false)
     arg.setDisplayName('HVAC: Heating System 2 Heating Capacity')
@@ -424,12 +403,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setUnits('Btu/hr')
     args << arg
 
-    # arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_fraction_heat_load_served', false)
-    # arg.setDisplayName('HVAC: Heat Pump Fraction Heat Load Served')
-    # arg.setDescription('The heating load served by the heat pump.')
-    # arg.setUnits('Frac')
-    # args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_capacity', false)
     arg.setDisplayName('HVAC: Heat Pump Backup Heating Capacity')
     arg.setDescription('The backup output heating capacity of the heat pump.')
@@ -464,15 +437,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The fraction of manufacturer recommended charge of the heat pump.')
     arg.setUnits('Frac')
     args << arg
-
-    # heat_pump_backup_type_choices = OpenStudio::StringVector.new
-    # heat_pump_backup_type_choices << HPXML::HeatPumpBackupTypeIntegrated
-    # heat_pump_backup_type_choices << HPXML::HeatPumpBackupTypeSeparate
-
-    # arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heat_pump_backup_type', heat_pump_backup_type_choices, false)
-    # arg.setDisplayName('HVAC: Heat Pump Backup Type')
-    # arg.setDescription('The backup type of the heat pump.')
-    # args << arg
 
     heat_pump_backup_fuel_choices = OpenStudio::StringVector.new
     heat_pump_backup_fuel_choices << HPXML::FuelTypeElectricity

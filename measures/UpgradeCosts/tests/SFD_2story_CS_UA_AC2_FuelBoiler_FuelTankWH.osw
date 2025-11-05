@@ -20,7 +20,7 @@
         "geometry_neighbor_buildings": "Left/Right at 10ft",
         "geometry_window_areas_or_wwrs": "0.12, 0.12, 0.12, 0.12",
         "geometry_door_area": "20",
-        "hvac_heating_system": "Boiler, 92% AFUE",
+        "hvac_heating_system": "Boiler, 90% AFUE",
         "hvac_heating_system_fuel": "Natural Gas",
         "hvac_heating_system_capacity": "100 kBtu/hr",
         "hvac_cooling_system": "Central AC, SEER2 14.3",
