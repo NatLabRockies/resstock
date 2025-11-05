@@ -464,13 +464,6 @@ class ApplyUpgradeTest < Minitest::Test
                  'ResStockArguments' => [{ 'hvac_heat_pump_backup_use_existing_system' => heat_pump_backup_use_existing_system,
                                            'hvac_heat_pump' => hvac_heat_pump }],
                  'ResStockArgumentsPostHPXML' => [{}] }
-    # if hvac_heat_pump.include?('Central HP') || hvac_heat_pump.include?('Ducted')
-    # measures['ResStockArguments'][0]['hvac_ducts'] = '0% Leakage, Uninsulated'
-    # elsif hvac_heat_pump.include?('Mini-Split')
-    # measures['ResStockArguments'][0]['hvac_ducts'] = nil
-    # else
-    # fail 'Unhandled heat pump.'
-    # end
 
     # Create instance of the measure
     measure = ApplyUpgrade.new
@@ -511,8 +504,7 @@ class ApplyUpgradeTest < Minitest::Test
 
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     measures = { 'ResStockArguments' => [{ 'hvac_heat_pump_sizing_is_duct_limited' => heat_pump_sizing_is_duct_limited,
-                                           'hvac_heat_pump' => 'Central HP, SEER2 12.4, HSPF2 6.6',
-                                           'hvac_ducts' => '0% Leakage, Uninsulated' }],
+                                           'hvac_heat_pump' => 'Central HP, SEER2 12.4, HSPF2 6.6' }],
                  'ResStockArgumentsPostHPXML' => [{}] }
 
     # Create instance of the measure
