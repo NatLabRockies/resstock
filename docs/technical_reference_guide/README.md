@@ -33,7 +33,7 @@ docker run --rm -it -v $(pwd):/workspace mfisherman/texlive-full /bin/bash
 docker run --rm -it -v %CD%:/data mfisherman/texlive-full
 ```
 
-4. The container should start running immediately. Once in the container, your CLI looks something like this: `19603f1794b0:/data#`, with `19603f1794b0` likely being different. Go to the workspace folder where the Technical Reference Guide directory is located. (For Windows, the current directory contents have been mounted to the data folder.)
+4. The container should start running immediately. Once in the container, your CLI looks something like this: `19603f1794b0:/data#`, with `19603f1794b0` likely being different. For Mac, go to the workspace folder where the Technical Reference Guide directory is located. For Windows, the current directory contents have been mounted to the data folder.
 
 ```
 cd ../workspace
