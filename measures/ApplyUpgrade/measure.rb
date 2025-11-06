@@ -227,6 +227,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
     measures = {}
     upgrade_args_hash = nil
+    existing_options_measure_args = {}
     resstock_arguments_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new) # we want only ResStockArguments registered argument values
     if apply_package_upgrade
       # Obtain measures and arguments to be called
@@ -299,7 +300,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
           existing_option_name = values[OpenStudio::toUnderscoreCase(parameter_name)]
 
           options_measure_args, _errors = get_measure_args_from_option_names(lookup_csv_data, [existing_option_name], parameter_name, lookup_file, runner)
-          options_measure_args[existing_option_name].each do |measure_subdir2, args_hash|
+          existing_options_measure_args[parameter_name] = options_measure_args[existing_option_name]
+          existing_options_measure_args[parameter_name].each do |measure_subdir2, args_hash|
             next if measure_subdir != measure_subdir2
 
             # Append any new arguments
@@ -351,7 +353,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
       # HVAC
       set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
-      set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg)
+      set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg, existing_options_measure_args['HVAC Heating Efficiency']['ResStockArguments']['hvac_heating_system'])
       baseline_max_airflow_cfm = set_autosizing_limits(runner, measures, hpxml_bldg)
 
       # Specify measures to run
@@ -534,7 +536,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     return args
   end
 
-  def set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg)
+  def set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg, hvac_heating_system)
     # Retain Existing Heating System as Heat Pump Backup
     if measures['ResStockArguments'][0]['hvac_heat_pump_backup_use_existing_system'].to_s.downcase == 'true'
       args = get_detailed_hvac_arguments(measures)
@@ -543,7 +545,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       heat_pump_type = args[:hvac_heat_pump_type]
       if not heat_pump_type.nil?
         heating_system = get_heating_system(hpxml_bldg)
-        if not heating_system.nil?
+
+        if hvac_heating_system != 'None'
           heat_pump_is_ducted = args[:hvac_heat_pump_is_ducted]
           heat_pump_backup_type = get_heat_pump_backup_type(heating_system.distribution_system, heat_pump_type, heat_pump_is_ducted)
           heat_pump_backup_values = get_heat_pump_backup_values(heating_system)
@@ -560,7 +563,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
             # Likely only fuel-fired furnace as integrated backup
             if heat_pump_backup_fuel != HPXML::FuelTypeElectricity
-              measures['ResStockArgumentsPostHPXML'][0]['heat_pump_backup_type'] = heat_pump_backup_type
+              measures['BuildResidentialHPXML'][0]['hvac_heat_pump_backup'] = 'Integrated, Electricity, 100% Efficiency' # Intentionally set the default which is then re-set in ResStockArgumentsPostHPXML
+
               measures['ResStockArgumentsPostHPXML'][0]['heat_pump_backup_fuel'] = heat_pump_backup_fuel
               measures['ResStockArgumentsPostHPXML'][0]['heat_pump_backup_heating_efficiency'] = heat_pump_backup_heating_efficiency
               measures['ResStockArgumentsPostHPXML'][0]['heat_pump_backup_heating_capacity'] = heat_pump_backup_heating_capacity
@@ -575,27 +579,21 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
           # e.g., ductless heat pump (e.g., ductless minisplit) with ducted (e.g., furnace) or ductless (e.g., boiler) backup
           # e.g., ducted heat pump (e.g., ashp, gshp) with ductless (e.g., boiler) backup
           elsif heat_pump_backup_type == HPXML::HeatPumpBackupTypeSeparate
-            # It's possible this was < 1.0 due to adjustment for secondary heating system
-            measures['ResStockArgumentsPostHPXML'][0]['heat_pump_fraction_heat_load_served'] = 1.0
+            measures['BuildResidentialHPXML'][0]['hvac_heat_pump_heating_load_served'] = '100%' # It's possible this was < 1.0 due to adjustment for secondary heating system
+            measures['BuildResidentialHPXML'][0]['hvac_heat_pump_backup'] = 'Separate Heating System'
+            measures['BuildResidentialHPXML'][0]['hvac_heating_system_2'] = hvac_heating_system
 
-            measures['ResStockArgumentsPostHPXML'][0]['heat_pump_backup_type'] = heat_pump_backup_type
-            measures['ResStockArgumentsPostHPXML'][0]['heating_system_2_type'] = heating_system_type
             measures['ResStockArgumentsPostHPXML'][0]['heating_system_2_fuel'] = heat_pump_backup_fuel
-            measures['ResStockArgumentsPostHPXML'][0]['heating_system_2_heating_efficiency'] = heat_pump_backup_heating_efficiency
             measures['ResStockArgumentsPostHPXML'][0]['heating_system_2_heating_capacity'] = heat_pump_backup_heating_capacity
             measures['ResStockArgumentsPostHPXML'][0]['heating_system_2_heating_autosizing_factor'] = heat_pump_backup_heating_autosizing_factor
-
-            # Hard set these to default values in case the lookup set them to "auto"
-            measures['ResStockArgumentsPostHPXML'][0]['heat_pump_backup_fuel'] = HPXML::FuelTypeElectricity
-            measures['ResStockArgumentsPostHPXML'][0]['heat_pump_backup_heating_efficiency'] = 1
 
             runner.registerInfo("Found '#{heating_system_type}' heating system type; setting it as 'heat_pump_backup_type=#{heat_pump_backup_type}'.")
           end
         elsif heating_system.nil?
-          # Hard set these to default values in case the lookup set them to "auto"
-          measures['ResStockArgumentsPostHPXML'][0]['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeIntegrated
-          measures['ResStockArgumentsPostHPXML'][0]['heat_pump_backup_fuel'] = HPXML::FuelTypeElectricity
-          measures['ResStockArgumentsPostHPXML'][0]['heat_pump_backup_heating_efficiency'] = 1
+          # Set heat pump backup type to default in case the lookup had set it to separate
+          if measures['ResStockArguments'][0]['hvac_heat_pump_backup'] == 'Separate Heating System'
+            measures['BuildResidentialHPXML'][0]['hvac_heat_pump_backup'] = 'Integrated, Electricity, 100% Efficiency'
+          end
 
           runner.registerWarning('Either a primary heating system was not found, or it was found but is a shared system; not setting it as heat pump backup.')
         end
