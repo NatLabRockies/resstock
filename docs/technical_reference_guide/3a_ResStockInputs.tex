@@ -130,11 +130,11 @@ The U.S.~County where the sample is located.
 \end{itemize}
 
 \paragraph{Options}
-The County characteristic options are structured using the State name and County name. An example of the option corresponding to Denver County in Colorado would be ``CO, Denver County''. Each option sets the following properties.
+The County characteristic options are structured using the State name and County name. An example of the option corresponding to Denver County in Colorado would be ``CO, Denver County''. Option properties are shown in Table \ref{table:hc_arg_def_county}.
 
-The \texttt{location\_zip\_code} property is assigned by using a single zip code for the entire county.
+For each county, a single zip code is assigned.
 
-The \texttt{location\_epw\_filepath} property is ``../../../weather/<County GISJOIN>.epw'' where <County GISJOIN> is the NHGIS GISJOIN value for the county. The NHGISJOIN for a county always starts with the letter ``G'' followed by the state's two-digit FIPS, a ``0,'' and then the County 3-digit FIPS code. An example of this property assignment for the option ``CO, Denver County'' is \texttt{location\_epw\_filepath}=../../../weather/G0800310.epw.
+EnergyPlus weather files are assigned as ``../../../weather/<County GISJOIN>.epw'' where <County GISJOIN> is the NHGIS GISJOIN value for the county. The NHGISJOIN for a county always starts with the letter ``G'' followed by the state's two-digit FIPS, a ``0,'' and then the County 3-digit FIPS code. An example of this property assignment for the option ``CO, Denver County'' is ``../../../weather/G0800310.epw''.
 
 \input{tables/properties/County}
 
@@ -378,7 +378,7 @@ There are no direct conditional dependencies.
 \paragraph{Options}
 A set of counties defines each climate and moisture zone. Climate zones range from 1--8 and moisture zones are indicated by A, B, and C.
 
-The ASHRAE IECC Climate Zone 2004 sets the following properties. The \texttt{site\_iecc\_zone} property matches the climate zone with the exception of climate zones 7 and 8 in Alaska. ResStock departs from the climate zone definitions by using 7AK and 8AK instead of 7 and 8 from the standards.
+The ASHRAE IECC Climate Zone 2004 sets the following properties. The IECC climate zone property matches the climate zone with the exception of climate zones 7 and 8 in Alaska. ResStock departs from the climate zone definitions by using 7AK and 8AK instead of 7 and 8 from the standards.
 
 \input{tables/properties/ASHRAE IECC Climate Zone 2004}
 
