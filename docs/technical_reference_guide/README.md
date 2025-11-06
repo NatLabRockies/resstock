@@ -23,14 +23,14 @@ cd <RESSTOCK_DIR>/docs/technical_reference_guide
 docker pull mfisherman/texlive-full
 ```
 
-3. Run the container and mount the current directory contents in the workspace directory of the container. Use /bin/bash as the default shell. (For Windows, use ```docker run --rm -it -v "%CD%":/data mfisherman/texlive-full:latest```.)
+3. Run the container and mount the current directory contents in the workspace directory of the container. Use /bin/bash as the default shell.
 
 ```
 # Mac
 docker run --rm -it -v $(pwd):/workspace mfisherman/texlive-full /bin/bash
 
 # Windows
-docker run --rm -it -v %cd%:/workspace mfisherman/texlive-full /bin/bash
+docker run --rm -it -v %CD%:/data mfisherman/texlive-full
 ```
 
 4. The container should start running immediately. Once in the container, your CLI looks something like this: `19603f1794b0:/data#`, with `19603f1794b0` likely being different. Go to the workspace folder where the Technical Reference Guide directory is located. (For Windows, the current directory contents have been mounted to the data folder.)

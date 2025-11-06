@@ -1,6 +1,6 @@
 \chapter{Housing Characteristics and Inputs} \label{sec:resstock_inputs}
 
-In this section, we overview each of the input housing characteristics for ResStock in detail including ResStock options, associated ResStock arguments, and the details of each of those arguments. In ResStock, each input characteristic gets its own input file. The full set of housing characteristic input files is available in the main \href{https://github.com/NREL/resstock/releases/tag/2025_Release_1}{ResStock GitHub repository} in the project national folder.  We discuss each of these input files as well as the general theory for how different systems and components are modeled. Within each section we also provide the national-level stock saturation of each option within a characteristic. These top-level saturations collapse much of the detail and nuance in ResStock's probability distributions, but the saturations serve to give a sense of how common different options are, generally, in the United States.
+In this section, we overview each of the input housing characteristics for ResStock in detail including ResStock options, associated ResStock arguments, and the details of each of those arguments. In ResStock, each input characteristic gets its own input file. The full set of housing characteristic input files is available in the main \href{https://github.com/NREL/resstock/releases/tag/2025_Release_1}{ResStock GitHub repository} in the project national folder. We discuss each of these input files as well as the general theory for how different systems and components are modeled. Within each section we also provide the national-level stock saturation of each option within a characteristic. These top-level saturations collapse much of the detail and nuance in ResStock's probability distributions, but the saturations serve to give a sense of how common different options are, generally, in the United States.
 
 We organize this discussion by the major types of inputs: Geography, Geometry, Envelope, HVAC, Water Heating, Appliances, Lighting, Plug Loads, and Household characteristics. For each of these major sections, we discuss ResStock's approach to these input types, highlighting where it might vary from OS-HPXML. In the argument tables, a selection of ``auto'' means that the value is being calculated or defaulted in OS-HPXML. Additionally, we discuss weather inputs to ResStock, which is specified separately from the main input files.
 
@@ -816,33 +816,7 @@ The number of stories in the building in which the housing unit is located.
 \paragraph{Options}
 The options for Geometry stories are a set of integers between 1 and 35; see Table \ref{table:hc_opt_geometry_stories}. The stories of a building refer to the number of floors above grade. The number of stories does not include basements but would include finished attics. The \texttt{geometry\_num\_floors\_above\_grade} argument definition is in Table \ref{table:hc_arg_def_geometry_stories}.
 
-\begin{longtable}[]{|p{3cm}|p{3cm}|p{3cm}|} \caption{Geometry Stories options and arguments that vary for each option} \label{table:hc_opt_geom_stories} \\
-\toprule\noalign{}
-Option name & Stock saturation &
-\texttt{geometry\_num\_floors\_above\_grade} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-1 & 49\% & 1 \\
-2 & 37\% & 2 \\
-3 & 8\% & 3 \\
-4 & 2\% & 4 \\
-5 & 0.79\% & 5 \\
-6 & 0.7\% & 6 \\
-7 & 0.16\% & 7 \\
-8 & 0.16\% & 8 \\
-9 & 0.13\% & 9 \\
-10 & 0.17\% & 10 \\
-11 & 0.09\% & 11 \\
-12 & 0.19\% & 12 \\
-13 & 0.12\% & 13 \\
-14 & 0.11\% & 14 \\
-15 & 0.12\% & 15 \\
-20 & 0.21\% & 20 \\
-21 & 0.66\% & 21 \\
-35 & 0.11\% & 35 \\
-\end{longtable}
+\input{tables/options/Geometry Stories}
 
 For the argument definitions, see Table \ref{table:hc_arg_def_geometry_stories}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
 
@@ -942,43 +916,7 @@ The number of housing units in the multifamily building.
 \paragraph{Options}
 The options for the Geometry Building Level MF characteristic are a set of integers between 2 and 326; see Table \ref{table:hc_opt_geometry_building_number_units_mf}. The ``None'' option is used for all building types other than multifamily. The options set the \texttt{geometry\_building\_num\_units} ResStock argument; see Table \ref{table:hc_arg_def_geometry_building_number_units_mf}.
 
-\begin{longtable}[]{|p{3.cm}|p{4cm}|p{4cm}} \caption{Geometry Building Level Number of Units MF options and arguments that vary for each option} \label{table:hc_opt_geom_build_units_mf} \\
-\toprule\noalign{}
-Option name & Stock saturation &
-\texttt{geometry\_building\_num\_units} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-2 & 3.6\% & 2 \\
-3 & 1.4\% & 3 \\
-4 & 3\% & 4 \\
-5 & 0.54\% & 5 \\
-6 & 1.5\% & 6 \\
-7 & 0.26\% & 7 \\
-8 & 2.3\% & 8 \\
-9 & 0.15\% & 9 \\
-10 & 0.95\% & 10 \\
-11 & 0.098\% & 11 \\
-12 & 1.9\% & 12 \\
-13 & 0.15\% & 13 \\
-14 & 0.18\% & 14 \\
-15 & 0.27\% & 15 \\
-16 & 0.61\% & 16 \\
-17 & 0.023\% & 17 \\
-18 & 0.22\% & 18 \\
-19 & 0.016\% & 19 \\
-20 & 0.75\% & 20 \\
-24 & 0.96\% & 24 \\
-30 & 0.81\% & 30 \\
-36 & 0.48\% & 36 \\
-43 & 0.67\% & 43 \\
-67 & 2.7\% & 67 \\
-116 & 1.2\% & 116 \\
-183 & 0.62\% & 183 \\
-326 & 1\% & 326 \\
-None & 74\% & \\
-\end{longtable}
+\input{tables/options/Geometry Building Number Units MF}
 
 For the argument definitions, see Table~\ref{table:hc_arg_def_geometry_building_number_units_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#whole-sfa-mf-buildings}{Whole-SFA-MF-Buildings} documentation for the available HPXML schema elements, default values, and constraints.
 
@@ -2312,92 +2250,10 @@ ResStock currently assumes 2 ft eaves (which are modeled as overhangs) for all b
     \item \texttt{overhangs\_right\_distance\_to\_bottom\_of\_window} = 4
 \end{itemize}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_overhang}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-overhangs}{Overhangs} documentation for the available HPXML schema elements, default values, and constraints.
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{5.3cm}|} {The ResStock argument definitions set in the Overhangs characteristic} {table:hc_arg_def_overhang}
-{Name & Required & Units & Type & Description}
-\texttt{overhangs\_front\_depth} & true & ft & Double &  The depth of
-overhangs for windows for the front facade. \\
-\hline
-\texttt{overhangs\_front\_distance\_to\_top\_of\_window} & true & ft &
-Double &  The overhangs distance to the top of window for the front
-facade. \\
-\hline
-\texttt{overhangs\_front\_distance\_to\_bottom\_of\_window} & true & ft
-& Double &  The overhangs distance to the bottom of window for the
-front facade. \\
-\hline
-\texttt{overhangs\_back\_depth} & true & ft & Double & The depth of
-overhangs for windows for the back facade. \\
-\hline
-\texttt{overhangs\_back\_distance\_to\_top\_of\_window} & true & ft &
-Double &  The overhangs distance to the top of window for the back
-facade. \\
-\hline
-\texttt{overhangs\_back\_distance\_to\_bottom\_of\_window} & true & ft &
-Double &  The overhangs distance to the bottom of window for the back
-facade. \\
-\hline
-\texttt{overhangs\_left\_depth} & true & ft & Double &  The depth of
-overhangs for windows for the left facade. \\
-\hline
-\texttt{overhangs\_left\_distance\_to\_top\_of\_window} & true & ft &
-Double &  The overhangs distance to the top of window for the left
-facade. \\
-\hline
-\texttt{overhangs\_left\_distance\_to\_bottom\_of\_window} & true & ft &
-Double & The overhangs distance to the bottom of window for the left
-facade. \\
-\hline
-\texttt{overhangs\_right\_depth} & true & ft & Double &  The depth of
-overhangs for windows for the right facade. \\
-\hline
-\texttt{overhangs\_right\_distance\_to\_top\_of\_window} & true & ft &
-Double &  The overhangs distance to the top of window for the right
-facade. \\
-\hline
-\texttt{overhangs\_right\_distance\_to\_bottom\_of\_window} & true & ft
-& Double &  The overhangs distance to the bottom of window for the
-right facade. \\
-\end{customLongTable}
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-\item
-  All homes are assumed to not have window overhangs (roof eaves are defined separately).
-\end{itemize}
-%%%%%%%%%%
+For the argument definitions, see Table \ref{table:hc_arg_def_eaves}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-overhangs}{Overhangs} documentation for the available HPXML schema elements, default values, and constraints.
 
-\subsubsection{Eaves}\label{eaves}
-\paragraph{Description}
-Depth of roof eaves.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
+\input{tables/arguments/Eaves}
 
-\item
-  Building America House Simulation Protocols(\cite{Wilson2014}).
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
-
-None.
-
-\paragraph{Option(s)}
-
-All buildings receive the same value of 2 feet for \texttt{geometry\_eaves\_depth}.
-
-
-For the argument definitions, see Table \ref{table:hc_arg_def_eaves}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-enclosure}{Enclosure} documentation for the available HPXML schema elements, default values, and constraints.
-\begin{longtable}[]{|p{4.5cm}|p{1.1cm}|p{1.cm}|p{1.1cm}|p{1.1cm}|p{4.5cm}|} \caption{The ResStock argument definitions set in the Eaves characteristic} \label{table:hc_arg_def_eaves} \\
-
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{geometry\_eaves\_depth} & true & ft & Double & & The eaves depth
-of the roof. \\
-\end{longtable}
-% Template starting-place header swap: %{}
 \paragraph{Distribution Assumption(s)}
 None.
 

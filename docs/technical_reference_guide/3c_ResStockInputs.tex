@@ -267,34 +267,12 @@ Solar thermal water heaters are characterized by \texttt{solar\_thermal\_system\
   \item \texttt{solar\_thermal\_solar\_fraction}: 0
 \end{itemize}
 
-The options for solar water heaters in ResStock distinguishes by orientation and backup fuel as shown in Table \ref{table:hc_opt_solar_water_heater_eff}. The tilt of the collector is set to roof pitch for all options. The azimuth of the collector varies by option, with East (90\degree), South (180\degree), West (270\degree), and North (0\degree) orientations available.
- All solar water heaters are modeled as two-tank systems, where the backup has its own storage separately from the primary tank. While this may be the common configuration for fuel backup systems, it is less common for electric backup systems, which often use a single tank with integrated solar and electric heating elements. To model a typical solar water heater with a single tank that has backup heating elements, the secondary tank is given a R-6.2 jacket to reduce the standby loss of the secondary tank. R-6.2 is the highest R-value allowable without causing OS-HPXML validation error.
+The options for solar water heaters in ResStock distinguishes by orientation and backup fuel as shown in Table \ref{table:hc_opt_water_heater_efficiency_-_solar_thermal}. The tilt of the collector is set to roof pitch for all options. The azimuth of the collector varies by option, with East (90\degree), South (180\degree), West (270\degree), and North (0\degree) orientations available.
+All solar water heaters are modeled as two-tank systems, where the backup has its own storage separately from the primary tank. While this may be the common configuration for fuel backup systems, it is less common for electric backup systems, which often use a single tank with integrated solar and electric heating elements. To model a typical solar water heater with a single tank that has backup heating elements, the secondary tank is given a R-6.2 jacket to reduce the standby loss of the secondary tank. R-6.2 is the highest R-value allowable without causing OS-HPXML validation error.
 
-\begin{customLongTable}{|p{3cm}|p{1.85cm}|p{1.85cm}|p{1.5cm}|p{1.95cm}|p{1.95cm}|p{1.5cm}|}{Water Heater Efficiency options and arguments that vary for each option of solar water heaters.}{table:hc_opt_solar_water_heater_eff} 
-  {Option name &
-  \texttt{solar\_thermal\_collector\_azimuth} &
-  \texttt{solar\_thermal\_collector\_tilt} &
-  \texttt{water\_heater\_fuel\_type} &
-  \texttt{water\_heater\_efficiency\_type} &
-  \texttt{water\_heater\_recovery\_efficiency} &
-  \texttt{water\_heater\_jacket\_rvalue}}
-  Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup &
-  90 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\ \hline
-  Solar Thermal, 40 sqft, North, Roof Pitch, Electric Standard Backup &
-  0 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\ \hline
-  Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup &
-  180 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\ \hline
-  Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup &
-  180 & roofpitch & fuel oil & 0.62 & 0.78 & 0 \\ \hline
-  Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup &
-  180 & roofpitch & natural gas & 0.59 & 0.76 & 0 \\ \hline
-  Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup &
-  180 & roofpitch & propane & 0.59 & 0.76 & 0 \\ \hline
-  Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup &
-  270 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\
-  \end{customLongTable}
+\input{tables/options/Water Heater Efficiency - solar_thermal}
 
-For the full argument definitions, see Table \ref{table:hc_arg_def_water_heater_eff} on storage and tankless water heaters and Table \ref{table:hc_arg_def_solar_hot_water} on solar water heaters. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_efficiency} on storage, tankless, and solar water heaters. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
 
 \input{tables/arguments/Water Heater Efficiency}
 
@@ -1141,45 +1119,13 @@ The heating fuel of the pool heater if there is a pool.
 
 There are five options for pool heaters: Electricity, Electric Heat Pump, Natural Gas, None, and Other Fuel. The Electricity option defines a traditional electric resistance pool heater, whereas the Electric Heat Pump option uses heat pump technology for heating the pool. The “Other Fuel” pool heater option currently is currently not modeled in ResStock. The ResStock arguments assigned for each of these options is given in Table \ref{table:hc_opt_misc_pool_heater}.
 
-\begin{customLongTable}{ |p{2.5cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}| }
-{Pool Heater options and arguments that vary for each option} {table:opt_def_pool_heat} 
-{Option name & \texttt{pool\_heater\_type} &
-\texttt{pool\_heater\_annual\_kwh} &
-\texttt{pool\_heater\_annual\_therm} &
-\texttt{pool\_heater\_usage\_multiplier}} 
-Electricity & electric resistance & auto & 0 & 1.0 \\
-Electric Heat Pump & heat pump & auto & 0 & 1.0 \\
-Natural Gas & gas fired & 0 & auto & 1.0 \\
-None & none & 0 & 0 & 0 \\
-Other Fuel & none & 0 & 0 & 0 \\
-\end{customLongTable}
+\input{tables/options/Misc Pool Heater}
 
 The ``Other Fuel'' option is assigned the same arguments as ``None,'' and will result in no energy consumption.
 
 For the argument definitions, see Table \ref{table:hc_arg_def_misc_pool_heater}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#pool-heater}{Pool Heater} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
-\caption{The ResStock argument definitions set in the Pool Heater characteristic} \label{table:hc_arg_def_pool_heat} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{pool\_heater\_type} & true & & Choice & none, electric
-resistance, gas fired, heat pump & The type of pool heater. Use
-\textquotesingle none\textquotesingle{} if there is no pool heater. \\
-\hline
-\texttt{pool\_heater\_annual\_kwh} & false & kWh/yr & Double & auto &
-The annual energy consumption of the electric pool heater. \\
-\hline
-\texttt{pool\_heater\_annual\_therm} & false & therm/yr & Double & auto
-& The annual energy consumption of the gas fired pool heater. \\
-\hline
-\texttt{pool\_heater\_usage\_multiplier} & false & & Double & auto &
-Multiplier on the pool heater energy usage that can reflect, e.g.,
-high/low usage occupants.  \\
-\end{longtable}
+\input{tables/arguments/Misc Pool Heater}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1768,17 +1714,7 @@ The options for Electric Vehicle Ownership characteristic determine if other arg
 
 The options can be found in Table \ref{table:hc_opt_electric_vehicle_ownership}. The Void option is used for impossible dependency conditions and is not sampled.
 
-\begin{longtable}[]{ |p{5cm}|p{5.5cm}| } \caption{Electric Vehicle Ownership options and arguments that vary for each option} \label{table:hc_opt_ev_ownership}  \\
-  \toprule\noalign{}
-  Option name & \texttt{vehicle\_type} \\
-  \midrule\noalign{}
-  \endhead
-  \bottomrule\noalign{}
-  \endlastfoot
-  No &   \\
-  Void &  \\
-  Yes &  BatteryElectricVehicle \\
-\end{longtable}
+\input{tables/options/Electric Vehicle Ownership}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1817,22 +1753,7 @@ The options and their ResStock argument values can be found in Table \ref{table:
 
 Then, for each electric vehicle type, we draw from Argonne National Laboratory's Autonomie20\footnote{Autonomie is the source of TEMPO's inputs about electric vehicle characteristics for both current day and future scenarios} vehicle powertrain simulation model for the electric vehicle energy consumption (\texttt{vehicle\_fuel\_economy\_combined}) and battery capacity (\texttt{vehicle\_battery\_usable\_capacity}). The units for the combined fuel economy (\texttt{vehicle\_fuel\_economy\_units}) are always kWh/mile. The average driving speed is sourced from the 2017 NHTS which summarizes U.S. travel behavior (\cite{NHTS2017}). We assume that the average speed of electric vehicles is the same as the average speed of all vehicles. A scaling factor is applied to increase the efficiency of electric vehicles (\texttt{ev\_efficiency\_percent\_increase}). This value is 0.0 for the ResStock baseline meaning that the efficiency is equal to \texttt{vehicle\_fuel\_economy\_combined}, but it is exposed so that scenarios of EV efficiency improvements can be modeled.
 
-\begin{longtable}[]{ |p{3.75cm}|p{2.25cm}|p{2.25cm}|p{2.25cm}|p{2.25cm}|p{2.25cm}|} \caption{Electric Vehicle Battery options and arguments that vary for each option} \label{table:hc_opt_ev_battery}  \\
-  \toprule\noalign{}
-  Option name & \texttt{vehicle\_battery\_usable\_capacity} & \texttt{vehicle\_fuel\_economy\_combined} & \texttt{ev\_average\_mph} & \texttt{vehicle\_fuel\_economy\_units} & \texttt{ev\_efficiency\_percent\_increase} \\
-  \midrule\noalign{}
-  \endhead
-  \bottomrule\noalign{}
-  \endlastfoot
-  Compact, Battery Electric Vehicle, 200 mile range &  40.168 & 0.209901 & 22 & kWh/mile & 0.0 \\
-  Compact, Battery Electric Vehicle, 300 mile range &  63.433 & 0.220020 & 22 & kWh/mile & 0.0 \\
-  Midsize, Battery Electric Vehicle, 200 mile range &  41.978 & 0.219174 & 22 & kWh/mile & 0.0 \\
-  Midsize, Battery Electric Vehicle, 300 mile range &  65.441 & 0.229449 & 22 & kWh/mile & 0.0 \\
-  Pickup, Battery Electric Vehicle, 200 mile range  &  67.738 & 0.357648 & 22 & kWh/mile & 0.0 \\
-  Pickup, Battery Electric Vehicle, 300 mile range  & 105.946 & 0.373794 & 22 & kWh/mile & 0.0 \\
-  SUV, Battery Electric Vehicle, 200 mile range     &  53.503 & 0.267513 & 22 & kWh/mile & 0.0 \\
-  SUV, Battery Electric Vehicle, 300 mile range     &  83.680 & 0.278934 & 22 & kWh/mile & 0.0 \\
-\end{longtable}
+\input{tables/options/Electric Vehicle Battery}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -2091,7 +2012,7 @@ The breaker space calculation is broken out into two parts. First the total rate
   hot water & 120 & auto & 120V heat pump water heater. Assumes dedicated circuit. The default power rating is auto sized. The number of breaker space = round\_up(power rating [W] / 240V / 15A). \\ \hline
   hot water & 240 &	auto & 240V heat pump water heater. The default power rating is auto sized. The number of breaker space = 2 * round\_up(power rating [W] / 240V / 50A). \\ \hline
   heating & 240 & auto & The default power rating is auto sized and includes auxiliary devices such as air handler and hydronic pump. The number of breaker space depends on the HVAC configuration, but generally = 2 * round\_up(power rating [W] / 240V / 50A). \\ \hline
-  cooling	& 240 &	auto & The default power rating is auto sized and includes auxiliary devices such as air handler and hydronic pump. The number of breaker space depends on the HVAC configuration, but generally = 2 * round\_up(power rating [W] / 240V / 50A). \\ \hline
+  cooling	& 240 &	auto & The default power rating is auto sized and includes auxiliary devices such as air handler and hydronic pump. The number of breaker space depends on the HVAC configuration, but generally = 2 * round\_up(power rating [W] / 240V / 50A). \\ \hline  
   mechanical ventilation & 120 & 1	&  \\ \hline
   other	& 120 &	1	& Only assumes 1 garage door opener if a garage is present and does not account for other permanent appliances (e.g. garbage disposal). \\
 \end{customLongTable}
@@ -2153,7 +2074,7 @@ Similar to FPL, Area Median Income in ResStock is household income standardized 
 State Metro Median Income (SMMI) is a variant of Area Median Income. As the name suggests, SMMI standardizes the household income based on 2019 Income Limits set at the state level while differentiating between metropolitan and non-metropolitan areas. This metric is created primarily for the integration of socio-demographically differentiated time-use schedules from the American Time Use Survey, which tags respondents by state and metro status.
 
 \subsection{Energy Burden}\label{resstock_input_energy_burden}
-Energy burden can be calculated using the energy bills and income information from ResStock simulation summary results. Energy burden is defined as the percent of household income spent on energy bills. A household spending 6\% or more of their income on energy is generally regarded as highly energy burdened and 10\% or more as severely burdened (\cite{drehobl2020_energy_burden}).  For this calculation, the income bins can be converted to representative income values using a series of lookup tables derived from the ACS data. The lookup tables tabulate the weighted median income over the cross sections of income bin, occupants, FPL, tenure, building type, and different geographic resolutions, starting with the intersection of PUMA and county. The income bin gets converted to a numerical value for each housing sample by matching the mapping characteristics in the lookup table. The conversion starts with the highest geographic resolution lookup and moves to the next highest resolution if the lookup value is missing until all housing samples are converted.
+Energy burden can be calculated using the energy bills and income information from ResStock simulation summary results. Energy burden is defined as the percent of household income spent on energy bills. A household spending 6\% or more of their income on energy is generally regarded as highly energy burdened and 10\% or more as severely burdened (\cite{drehobl2020_energy_burden}). For this calculation, the income bins can be converted to representative income values using a series of lookup tables derived from the ACS data. The lookup tables tabulate the weighted median income over the cross sections of income bin, occupants, FPL, tenure, building type, and different geographic resolutions, starting with the intersection of PUMA and county. The income bin gets converted to a numerical value for each housing sample by matching the mapping characteristics in the lookup table. The conversion starts with the highest geographic resolution lookup and moves to the next highest resolution if the lookup value is missing until all housing samples are converted.
 
 \subsection{Vacant Units}\label{vacant_units}
 ResStock models just over 12\% of housing units as vacant nationally, reflecting the data in PUMS 2019. In PUMS, a housing unit is considered vacant if it is not occupied at the time of the survey. This includes housing units being prepared for rent or sale, units rented or sold but not yet occupied, or units for seasonal, occasional, or migratory use. The portion of housing units that are vacant is dependent on the building type and PUMA (i.e., location). While the vacancy saturation includes samples that are only vacant part time, ResStock models all vacant units as vacant for an entire calendar year. 
