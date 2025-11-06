@@ -155,7 +155,7 @@ parameters.each do |parameter|
 
         f.puts("#{row}| }")
 
-        caption = "{#{parameter} options and properties that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}"
+        caption = "{#{parameter} options and properties} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}"
         f.puts(caption)
 
         row = ['Option name']
