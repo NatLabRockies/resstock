@@ -30857,6 +30857,12 @@ Arguments
      - Choice
      - None; Baseboard; FanCoil
      - The type of shared system.
+   * - ``hvac_heat_pump_backup_use_existing_system``
+     - false
+     - 
+     - Boolean
+     - true; false
+     - Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system. This argument is only applicable for heat pump upgrades.
 
 Options
 *******
@@ -30930,6 +30936,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``advanced_feature_ground_to_air_heat_pump_model_type``
      - ``advanced_feature_hvac_allow_increased_fixed_capacities``
      - ``hvac_heating_shared_system``
+     - ``hvac_heat_pump_backup_use_existing_system``
    * - ASHP, SEER2 9.5, 5.8 HSPF2
      - 1.2%
      - none
@@ -30992,6 +30999,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - ASHP, SEER2 12.4, 6.6 HSPF2
      - 8.9%
      - none
@@ -31054,6 +31062,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - ASHP, SEER2 14.3, 7.4 HSPF2
      - 5.3%
      - none
@@ -31116,6 +31125,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - Electric Baseboard, 100% Efficiency
      - 6.3%
      - ElectricResistance
@@ -31178,6 +31188,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - Electric Boiler, 100% AFUE
      - 0.21%
      - Boiler
@@ -31240,6 +31251,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - Electric Furnace, 100% AFUE
      - 11%
      - Furnace
@@ -31302,6 +31314,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - Electric Wall Furnace, 100% AFUE
      - 1.1%
      - WallFurnace
@@ -31364,6 +31377,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - Fuel Boiler, 76% AFUE
      - 0.89%
      - Boiler
@@ -31426,6 +31440,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - Fuel Boiler, 80% AFUE
      - 3.3%
      - Boiler
@@ -31488,6 +31503,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - Fuel Boiler, 90% AFUE
      - 0.49%
      - Boiler
@@ -31550,6 +31566,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - Fuel Furnace, 60% AFUE
      - 0.49%
      - Furnace
@@ -31612,6 +31629,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - Fuel Furnace, 76% AFUE
      - 2.8%
      - Furnace
@@ -31674,6 +31692,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - Fuel Furnace, 80% AFUE
      - 25%
      - Furnace
@@ -31736,6 +31755,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - Fuel Furnace, 92.5% AFUE
      - 15%
      - Furnace
@@ -31798,6 +31818,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - Fuel Wall/Floor Furnace, 60% AFUE
      - 3.2%
      - WallFurnace
@@ -31860,6 +31881,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - Fuel Wall/Floor Furnace, 68% AFUE
      - 2.8%
      - WallFurnace
@@ -31922,6 +31944,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - MSHP, SEER2 13.7, 7.4 HSPF2
      - 0.96%
      - none
@@ -31984,6 +32007,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - MSHP, SEER2 29, 12.3 HSPF2
      - 0.014%
      - none
@@ -32046,6 +32070,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - None
      - 1.1%
      - none
@@ -32108,6 +32133,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - None
+     - 
    * - Shared Heating
      - 9.6%
      - 
@@ -32170,8 +32196,10 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
+     - 
    * - Void
      - 0%
+     - 
      - 
      - 
      - 
