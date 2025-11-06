@@ -103,6 +103,7 @@ parameters.each do |parameter|
     end
   end
 
+  m_args = []
   if lookup.keys.size > max_options_total
     puts "Error: #{parameter} options #{lookup.keys.size} greater than max allowed of #{max_options_total}; skipping"
   else
@@ -209,6 +210,10 @@ parameters.each do |parameter|
         end
         f.puts(row)
       end
+
+      args.keys.each do |k|
+        m_args << k.to_s unless m_args.include?(k)
+      end
     end # end option_sets.each_with_index do |lookup_keys, i|
 
     f.puts('\end{customLongTable}')
@@ -223,28 +228,29 @@ parameters.each do |parameter|
   f.puts('\begin{customLongTable}{ |p{5cm}|p{3cm}|p{7cm}| }')
   f.puts("{The ResStock properties set in the #{parameter} characteristic} {table:hc_arg_def_#{parameter.downcase.gsub(' ', '_')}}")
   f.puts("{#{properties_cols.join(' & ')}}")
-
+  rows = []
   r_arguments.each do |r_argument|
     if properties.keys.include?(r_argument)
       properties[r_argument].each do |property_name, property_unit_description|
+        next unless m_args.include?(property_name)
+
         name = "\\texttt{#{property_name}}".gsub('_', '\_')
         units = property_unit_description['property_unit'].gsub('$', '\$').gsub('#', '\#').gsub('^2', '\textsuperscript{2}').gsub('^3', '\textsuperscript{3}')
         description = property_unit_description['description'].gsub('%', '\\%').gsub('_', '\_').gsub('&', '\\\&')
-        row = "#{name} & #{units} & #{description}  \\\\"
-        if property_name != properties[r_argument].keys[-1]
-          row += ' \\hline'
-        end
-        f.puts(row)
+        rows << "#{name} & #{units} & #{description}"
       end
     else
       name = "\\texttt{#{r_argument}}".gsub('_', '\_')
       units = resstockarguments_xml[r_argument]['units'].gsub('$', '\$').gsub('#', '\#').gsub('^2', '\textsuperscript{2}').gsub('^3', '\textsuperscript{3}')
       description = resstockarguments_xml[r_argument]['description'].gsub('%', '\\%').gsub('_', '\_').gsub('&', '\\\&')
-      row = "#{name} & #{units} & #{description}  \\\\"
-      if r_argument != r_arguments[-1]
-        row += ' \\hline'
-      end
-      f.puts(row)
+      rows << "#{name} & #{units} & #{description}"
+    end
+  end
+  rows.each do |row|
+    if row != rows[-1]
+      f.puts("#{row} \\\\ \\hline")
+    else
+      f.puts("#{row} \\\\")
     end
   end
   f.puts('\end{customLongTable}')

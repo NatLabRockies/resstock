@@ -1,79 +1,17 @@
 \begin{customLongTable}{ |p{5cm}|p{3cm}|p{7cm}| }
 {The ResStock properties set in the HVAC Shared Efficiencies characteristic} {table:hc_arg_def_hvac_shared_efficiencies}
 {Name & Units & Description}
-\texttt{hvac\_heating\_system\_type} &  & The type of system.  \\ \hline
-\texttt{hvac\_heating\_system\_heating\_efficiency} & Frac & The rated heating efficiency.  \\ \hline
-\texttt{hvac\_heating\_system\_pilot\_light} & Btu/hr & The fuel usage of the pilot light. Applies to Furnaces, Boilers, Stoves, and Fireplaces with non-electric fuel.  \\
-\texttt{hvac\_heating\_system\_capacity\_capacity} & Btu/hr & The output capacity.  \\ \hline
-\texttt{hvac\_heating\_system\_capacity\_autosizing\_factor} & mult & A capacity scaling factor that can be applied to the autosizing methodology.  \\ \hline
-\texttt{hvac\_heating\_system\_capacity\_autosizing\_limit} & Btu/hr & A maximum capacity limit that can be applied to the autosizing methodology.  \\
-\texttt{hvac\_heating\_system\_heating\_load\_served\_fraction} &  & Fraction of load served by the HVAC system.  \\
-\texttt{hvac\_cooling\_system\_type} &  & The type of system.  \\ \hline
-\texttt{hvac\_cooling\_system\_cooling\_efficiency\_type} &  & The cooling efficiency type. Central ACs and Mini-Split ACs use SEER2 or EER2; Room ACs and Packaged Terminal ACs use CEER or EER.  \\ \hline
-\texttt{hvac\_cooling\_system\_cooling\_efficiency} &  & The rated cooling efficiency.  \\ \hline
-\texttt{hvac\_cooling\_system\_cooling\_compressor\_type} &  & The compressor type of the cooling system. Applies to Central ACs and Mini-Split ACs.  \\ \hline
-\texttt{hvac\_cooling\_system\_detailed\_performance\_data\_capacity\_type} &  & Type of capacity values when providing detailed performance data. Applies to Central ACs and Mini-Split ACs.  \\ \hline
-\texttt{hvac\_cooling\_system\_detailed\_performance\_data\_cooling\_outdoor\_temperatures} & F & List of outdoor temperatures when providing detailed performance data. Applies to Central ACs and Mini-Split ACs.  \\ \hline
-\texttt{hvac\_cooling\_system\_detailed\_performance\_data\_cooling\_min\_speed\_capacities} & Btu/hr or Frac & Minimum speed capacities when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.  \\ \hline
-\texttt{hvac\_cooling\_system\_detailed\_performance\_data\_cooling\_nom\_speed\_capacities} & Btu/hr or Frac & Nominal speed capacities when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.  \\ \hline
-\texttt{hvac\_cooling\_system\_detailed\_performance\_data\_cooling\_max\_speed\_capacities} & Btu/hr or Frac & Maximum speed capacities when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.  \\ \hline
-\texttt{hvac\_cooling\_system\_detailed\_performance\_data\_cooling\_min\_speed\_cops} & W/W & Minimum speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.  \\ \hline
-\texttt{hvac\_cooling\_system\_detailed\_performance\_data\_cooling\_nom\_speed\_cops} & W/W & Nominal speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.  \\ \hline
-\texttt{hvac\_cooling\_system\_detailed\_performance\_data\_cooling\_max\_speed\_cops} & W/W & Maximum speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.  \\
-\texttt{hvac\_cooling\_system\_capacity\_capacity} & Btu/hr & The output capacity.  \\ \hline
-\texttt{hvac\_cooling\_system\_capacity\_autosizing\_factor} & mult & A capacity scaling factor that can be applied to the autosizing methodology.  \\ \hline
-\texttt{hvac\_cooling\_system\_capacity\_autosizing\_limit} & Btu/hr & A maximum capacity limit that can be applied to the autosizing methodology.  \\
-\texttt{hvac\_heat\_pump\_type} &  & The type of system.  \\ \hline
-\texttt{hvac\_heat\_pump\_cooling\_efficiency\_type} &  & The cooling efficiency type. Central HPs and Mini-Split HPs use SEER2 or SEER; Geothermal HPs, Packaged Terminal HPs, and Room HPs use EER.  \\ \hline
-\texttt{hvac\_heat\_pump\_cooling\_efficiency} &  & The rated cooling efficiency.  \\ \hline
-\texttt{hvac\_heat\_pump\_cooling\_compressor\_type} &  & The compressor type of the cooling system. Applies to Central HPs, Mini-Split HPs, and Geothermal HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_heating\_efficiency\_type} &  & The heating efficiency type. Central HPs and Mini-Split HPs use HSPF2 or HSPF; Goethermal HPs, Packaged Terminal HPs, and Room HPs use COP.  \\ \hline
-\texttt{hvac\_heat\_pump\_heating\_efficiency} &  & The rated heating efficiency.  \\ \hline
-\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_capacity\_type} &  & Type of capacity values when providing detailed performance data. Applies to Central HPs and Mini-Split HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_outdoor\_temperatures} & F & List of outdoor temperatures when providing heating detailed performance data. Applies to Central HPs and Mini-Split HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_min\_speed\_capacities} & Btu/hr or Frac & Minimum speed capacities when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_nom\_speed\_capacities} & Btu/hr or Frac & Nominal speed capacities when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_max\_speed\_capacities} & Btu/hr or Frac & Maximum speed capacities when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_min\_speed\_cops} & W/W & Minimum speed COPs when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_nom\_speed\_cops} & W/W & Nominal speed COPs when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_heating\_max\_speed\_cops} & W/W & Maximum speed COPs when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_outdoor\_temperatures} & F & List of outdoor temperatures when providing cooling detailed performance data. Applies to Central HPs and Mini-Split HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_min\_speed\_capacities} & Btu/hr or Frac & Minimum speed capacities when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_nom\_speed\_capacities} & Btu/hr or Frac & Nominal speed capacities when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_max\_speed\_capacities} & Btu/hr or Frac & Maximum speed capacities when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_min\_speed\_cops} & W/W & Minimum speed COPs when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_nom\_speed\_cops} & W/W & Nominal speed COPs when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_detailed\_performance\_data\_cooling\_max\_speed\_cops} & W/W & Maximum speed COPs when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.  \\
-\texttt{hvac\_heat\_pump\_capacity\_capacity} & Btu/hr & The output capacity.  \\ \hline
-\texttt{hvac\_heat\_pump\_capacity\_autosizing\_methodology} &  & Logic for autosized heat pumps.  \\ \hline
-\texttt{hvac\_heat\_pump\_capacity\_autosizing\_factor} & mult & A capacity scaling factor that can be applied to the autosizing methodology.  \\ \hline
-\texttt{hvac\_heat\_pump\_capacity\_autosizing\_limit} & Btu/hr & A maximum capacity limit that can be applied to the autosizing methodology.  \\
-\texttt{hvac\_heat\_pump\_heating\_load\_served\_fraction} &  & Fraction of load served by the HVAC system.  \\
-\texttt{hvac\_heat\_pump\_cooling\_load\_served\_fraction} &  & Fraction of load served by the HVAC system.  \\
-\texttt{hvac\_heat\_pump\_temperatures\_compressor\_lockout} & F & The temperature below which the heat pump compressor is disabled. Applies to all heat pump types other than Geothermal HPs.  \\ \hline
-\texttt{hvac\_heat\_pump\_temperatures\_backup\_lockout} & F & The temperature above which the heat pump backup is disabled.  \\
-\texttt{hvac\_heat\_pump\_backup\_type} &  & The backup type. Use 'integrated' to represent e.g. built-in electric strip heat or dual-fuel integrated furnace. Use 'separate' to represent e.g. electric baseboard or boiler (based on Heating System 2).  \\ \hline
-\texttt{hvac\_heat\_pump\_backup\_fuel} &  & The fuel type of the integrated backup.  \\ \hline
-\texttt{hvac\_heat\_pump\_backup\_heating\_efficiency} & Frac & The rated heating efficiency of the integrated backup.  \\
-\texttt{hvac\_heat\_pump\_backup\_capacity\_capacity} & Btu/hr & The output capacity.  \\ \hline
-\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_methodology} &  & Logic for autosized heat pump backup.  \\ \hline
-\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_factor} & mult & A capacity scaling factor that can be applied to the autosizing methodology.  \\ \hline
-\texttt{hvac\_heat\_pump\_backup\_capacity\_autosizing\_limit} & Btu/hr & A maximum capacity limit that can be applied to the autosizing methodology.  \\
-\texttt{hvac\_geothermal\_loop\_configuration} &  & Configuration of the geothermal loop for ground-to-air heat pumps.  \\ \hline
-\texttt{hvac\_geothermal\_loop\_borefield\_configuration} &  & Borefield configuration of the geothermal loop.  \\ \hline
-\texttt{hvac\_geothermal\_loop\_loop\_flow} & gpm & Water flow rate through the geothermal loop.  \\ \hline
-\texttt{hvac\_geothermal\_loop\_boreholes\_count} & \# & Number of boreholes.  \\ \hline
-\texttt{hvac\_geothermal\_loop\_boreholes\_length} & ft & Average length of each vertical borehole.  \\ \hline
-\texttt{hvac\_geothermal\_loop\_boreholes\_spacing} & ft & Distance between boreholes.  \\ \hline
-\texttt{hvac\_geothermal\_loop\_boreholes\_diameter} & in & Diameter of each borehole.  \\ \hline
-\texttt{hvac\_geothermal\_loop\_grout\_type} &  & Type of grout.  \\ \hline
-\texttt{hvac\_geothermal\_loop\_pipe\_type} &  & Type of pipe.  \\ \hline
-\texttt{hvac\_geothermal\_loop\_pipe\_diameter} &  & Diameter of the pipe.  \\ \hline
-\texttt{hvac\_geothermal\_loop\_pipe\_shank\_spacing} & in & Center-to-center distance between two branches of a vertical U-tube.  \\
-\texttt{advanced\_feature\_temperature\_capacitance\_multiplier} &  & Multiplier on air heat capacitance. Affects the transient calculation of indoor air temperatures. Values greater than 1.0 have the effect of smoothing or damping the rate of change in the indoor air temperature from timestep to timestep.  \\ \hline
-\texttt{advanced\_feature\_hvac\_on\_off\_thermostat\_deadband\_temperature} & F & Temperature difference between cut-in and cut-out temperature for HVAC operation. Requires 1-minute timesteps.  \\ \hline
-\texttt{advanced\_feature\_heat\_pump\_backup\_capacity\_increment} & Btu/hr & Capacity increment of multi-stage heat pump backup systems.  \\ \hline
-\texttt{advanced\_feature\_ground\_to\_air\_heat\_pump\_model\_type} &  & Ground-to-air heat pump system model type.  \\ \hline
-\texttt{advanced\_feature\_hvac\_allow\_increased\_fixed\_capacities} &  & If true, the larger of user-specified fixed capacity and design load will be used (to reduce potential for unmet loads); otherwise user-specified fixed capacity is used.  \\
-\texttt{hvac\_heating\_shared\_system} &  & The type of shared system.  \\
+\texttt{hvac\_heating\_system\_type} &  & The type of system. \\ \hline
+\texttt{hvac\_heating\_system\_heating\_efficiency} & Frac & The rated heating efficiency. \\ \hline
+\texttt{hvac\_heating\_system\_heating\_load\_served\_fraction} &  & Fraction of load served by the HVAC system. \\ \hline
+\texttt{hvac\_cooling\_system\_type} &  & The type of system. \\ \hline
+\texttt{hvac\_cooling\_system\_cooling\_efficiency\_type} &  & The cooling efficiency type. Central ACs and Mini-Split ACs use SEER2 or EER2; Room ACs and Packaged Terminal ACs use CEER or EER. \\ \hline
+\texttt{hvac\_cooling\_system\_cooling\_efficiency} &  & The rated cooling efficiency. \\ \hline
+\texttt{hvac\_cooling\_system\_cooling\_compressor\_type} &  & The compressor type of the cooling system. Applies to Central ACs and Mini-Split ACs. \\ \hline
+\texttt{hvac\_heat\_pump\_type} &  & The type of system. \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_methodology} &  & Logic for autosized heat pumps. \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_load\_served\_fraction} &  & Fraction of load served by the HVAC system. \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_load\_served\_fraction} &  & Fraction of load served by the HVAC system. \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_type} &  & The backup type. Use 'integrated' to represent e.g. built-in electric strip heat or dual-fuel integrated furnace. Use 'separate' to represent e.g. electric baseboard or boiler (based on Heating System 2). \\ \hline
+\texttt{hvac\_heating\_shared\_system} &  & The type of shared system. \\
 \end{customLongTable}

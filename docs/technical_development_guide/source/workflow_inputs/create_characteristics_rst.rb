@@ -54,8 +54,6 @@ properties_cols = get_properties_cols()
 properties = get_properties(resources_dir)
 options = get_options(resources_dir)
 
-# properties['appliance_cooking_range_oven'].delete('appliance_cooking_range_oven_usage_multiplier')
-
 f = File.open(File.join(File.dirname(__FILE__), 'characteristics.rst'), 'w')
 f.puts('.. _housing_characteristics:')
 f.puts
