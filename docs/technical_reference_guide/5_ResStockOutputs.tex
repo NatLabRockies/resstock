@@ -396,9 +396,9 @@ out.schedules\_vacancy & 0,1 & Vacancy unavailable period. \\
 \end{customLongTable}
 
 \section{Electrical Panels} \label{sec:output_panels}
-For electrical panel, occupied capacity and breaker spaces are tabulated by end use. The total occupied capacity and spaces are calculated as well as their headroom, or the amount of capacity or space left unused.  In public ResStock datasets, these fields are prefixed with ``out.electric\_panel`` and described in \ref{tab:panels}. 
-For capacity, the total occupied load (W) can be calculated using different methods and will be labeled accordingly. In the public datasets, results are available for the 2023 load-based (NEC 220.83) method only for existing dwellings. See Section \ref{sec:input_panels} for the method description. The occupied capacity (A) is converted from occupied load (W) by dividing by 240V, the panel voltage, and then subtracted from the input field ``in.electrical\_panel\_service\_rating``'' (A) to get the headroom capacity (A). 
-The headroom capacity is used to determine capacity constraint – the panel is considered capacity-constrained if headroom is negative and unconstrained otherwise. This outcome is useful to account for any additional costs needed to resolve the constraint, such as through an electrical panel or service upgrade, or by using lower power appliances as an alternative. 
+For electrical panel, occupied capacity and breaker spaces are tabulated by end use. The total occupied capacity and spaces are calculated as well as their headroom, or the amount of capacity or space left unused.  In public ResStock datasets, these fields are prefixed with ``out.electric\_panel`` and described in \ref{tab:panels}.
+For capacity, the total occupied load (W) can be calculated using different methods and will be labeled accordingly. In the public datasets, results are available for the 2023 load-based (NEC 220.83) method only for existing dwellings. See Section \ref{sec:input_panels} for the method description. The occupied capacity (A) is converted from occupied load (W) by dividing by 240V, the panel voltage, and then subtracted from the input field ``in.electrical\_panel\_service\_rating``'' (A) to get the headroom capacity (A).
+The headroom capacity is used to determine capacity constraint – the panel is considered capacity-constrained if headroom is negative and unconstrained otherwise. This outcome is useful to account for any additional costs needed to resolve the constraint, such as through an electrical panel or service upgrade, or by using lower power appliances as an alternative.
 Users are encouraged to calculate the capacity constraint on their own to reflect their desired margin of error.
 
 For breaker space, total rated count is labeled as an input metric in table \ref{table:hc_output_fields}. This is actually derived from the breaker space headroom, which is probabilistically assigned based on the panel ampacity rating and other housing characteristics, and a tabulation of electrical equipment in the baseline home. In the upgrade simulations, the total breaker space count is carried over from the baseline simulation and the headroom count is recalculated according to the content of the upgrade package. See Section \ref{sec:input_panels} for details.
@@ -407,11 +407,11 @@ Breaker space headroom is used to calculate the space constraint, which exists w
 
 All results should be interpreted with uncertainty in mind, even if they look reasonable. The prediction of the panel service rating and headroom space do not account for all electrical and connected loads in the model. As a result, the capacity headroom can be negative for a model in the baseline, although it is uncommon.
 This can be interpreted as the house already being constrained prior to any upgrade and is consistent with anecdotal observations that some houses do trip their breakers often, an indication of a capacity shortfall.
-On the otherhand, the breaker space headroom in the baseline can never be negative because our modeling approach prevents this by sampling a non-negative headroom count directly. This is also consistent with the physical constraint of breaker space. 
+On the otherhand, the breaker space headroom in the baseline can never be negative because our modeling approach prevents this by sampling a non-negative headroom count directly. This is also consistent with the physical constraint of breaker space.
 
 \begin{customLongTable}{ |p{6cm}|p{1.5cm}|p{7.5cm}| }
-        {ResStock electrical panel output field names, units, and descriptions} {tab:panels} 
-        {\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}} 
+        {ResStock electrical panel output field names, units, and descriptions} {tab:panels}
+        {\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}}
                 out.panel.load.total\_load.<method>.w & W & Total service feeder load calculated per selected NEC method \\ \hline
                 out.panel.load.occupied\_capacity.<method>.a & A & Total capacity occupied on the panel, calculated as total load (W) divided by panel voltage (240V) \\ \hline
                 out.panel.load.headroom\_capacity.<method>.a & A & Available capacity on the panel, calculated as panel service rating (A) minus total occupied capacity (A) \\ \hline
@@ -445,7 +445,7 @@ On the otherhand, the breaker space headroom in the baseline can never be negati
                 out.panel.breaker\_space.well\_pump.count & count & Sum of well pump occupied spaces \\ \hline
                 out.panel.breaker\_space.ev\_charging.count & count & Sum of electric vehicle charging occupied spaces \\ \hline
                 out.panel.breaker\_space.other.count & count & Sum of other electric load occupied spaces \\ \hline
-                
+
                 out.panel.constraint.capacity.<method> & bool & Whether electric panel is capacity-constrained per the given method, defined as when out.panel.load.headroom\_capacity.<method>.a < 0 \\ \hline
                 out.panel.constraint.breaker\_space & bool & Whether electric panel is space-constrained, defined as when out.panel.breaker\_space.headroom.count < 0 \\ \hline
                 out.panel.constraint.overall.<method> & categorical & Summarize overall electric panel constraint per the given method as "no constraint", "space constrained only", "capacity constrained only", or "capacity and space constrained" \\ \hline
