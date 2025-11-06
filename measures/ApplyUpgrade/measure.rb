@@ -227,6 +227,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
     measures = {}
     upgrade_args_hash = nil
+    existing_options_measure_args = {}
     resstock_arguments_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new) # we want only ResStockArguments registered argument values
     if apply_package_upgrade
       # Obtain measures and arguments to be called
@@ -299,7 +300,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
           existing_option_name = values[OpenStudio::toUnderscoreCase(parameter_name)]
 
           options_measure_args, _errors = get_measure_args_from_option_names(lookup_csv_data, [existing_option_name], parameter_name, lookup_file, runner)
-          options_measure_args[existing_option_name].each do |measure_subdir2, args_hash|
+          existing_options_measure_args[parameter_name] = options_measure_args[existing_option_name]
+          existing_options_measure_args[parameter_name].each do |measure_subdir2, args_hash|
             next if measure_subdir != measure_subdir2
 
             # Append any new arguments
@@ -351,7 +353,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
       # HVAC
       set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
-      set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg, values, lookup_csv_data, lookup_file)
+      set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg, existing_options_measure_args['HVAC Heating Efficiency']['ResStockArguments']['hvac_heating_system'])
       baseline_max_airflow_cfm = set_autosizing_limits(runner, measures, hpxml_bldg)
 
       # Specify measures to run
@@ -534,7 +536,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     return args
   end
 
-  def set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg, values, lookup_csv_data, lookup_file)
+  def set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg, hvac_heating_system)
     # Retain Existing Heating System as Heat Pump Backup
     if measures['ResStockArguments'][0]['hvac_heat_pump_backup_use_existing_system'].to_s.downcase == 'true'
       args = get_detailed_hvac_arguments(measures)
@@ -543,13 +545,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       heat_pump_type = args[:hvac_heat_pump_type]
       if not heat_pump_type.nil?
         heating_system = get_heating_system(hpxml_bldg)
-
-        parameter_name = 'HVAC Heating Efficiency'
-        option_name = values[OpenStudio::toUnderscoreCase(parameter_name)]
-        options_measure_args, _errors = get_measure_args_from_option_names(lookup_csv_data, [option_name], parameter_name, lookup_file, runner)
-        resstock_arguments = options_measure_args[option_name]['ResStockArguments']
-
-        hvac_heating_system = resstock_arguments['hvac_heating_system']
 
         if hvac_heating_system != 'None'
           heat_pump_is_ducted = args[:hvac_heat_pump_is_ducted]
