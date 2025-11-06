@@ -455,7 +455,6 @@ class ApplyUpgradeTest < Minitest::Test
     end
   end
 
-  # def _test_heat_pump_backup(heat_pump_backup_use_existing_system, hvac_heat_pump, expected_values, option_name)
   def _test_heat_pump_backup(heat_pump_backup_use_existing_system, hvac_heat_pump, expected_values, hvac_heating_system)
     this_dir = File.dirname(__FILE__)
     hpxml_path = File.join(this_dir, '../../UpgradeCosts/tests/in.xml')
