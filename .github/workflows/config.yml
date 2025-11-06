@@ -806,10 +806,11 @@ jobs:
         run: |
           uv run python resstockpostproc/upgrade_comparison/main.py --quantity_group="Unmet HVAC Hours"
 
-      - name: Generate rest of the plots
-        working-directory: postprocessing
-        run: |
-          uv run python resstockpostproc/upgrade_comparison/main.py
+      # Takes 4 hours+ in CI - skip until more efficient method is found.
+      # - name: Generate rest of the plots
+      #   working-directory: postprocessing
+      #   run: |
+      #     uv run python resstockpostproc/upgrade_comparison/main.py
 
       - name: Upload plots
         uses: actions/upload-artifact@v4

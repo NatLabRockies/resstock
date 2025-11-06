@@ -404,9 +404,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
             end
           end
         else
-          heating_system.heating_system_type = args[:heating_system_2_type] unless args[:heating_system_2_type].nil?
-          heating_system.heating_system_fuel = args[:heating_system_2_fuel] unless args[:heating_system_2_fuel].nil?
-          heating_system.heating_system_efficiency_percent = args[:heating_system_2_heating_efficiency] unless args[:heating_system_2_heating_efficiency].nil?
+          heating_system.heating_system_fuel = args[:heating_system_2_fuel] unless args[:heating_system_2_fuel].nil? # To support hvac_heat_pump_backup_use_existing_system
           heating_system.heating_capacity = args[:heating_system_2_heating_capacity] unless args[:heating_system_2_heating_capacity].nil?
           heating_system.heating_autosizing_factor = args[:heating_system_2_heating_autosizing_factor] unless args[:heating_system_2_heating_autosizing_factor].nil?
           heating_system.heating_autosizing_limit = args[:heating_system_2_heating_autosizing_limit] unless args[:heating_system_2_heating_autosizing_limit].nil?
@@ -441,13 +439,17 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         heat_pump.heating_capacity = args[:heat_pump_heating_capacity] unless args[:heat_pump_heating_capacity].nil?
         heat_pump.heating_autosizing_factor = args[:heat_pump_heating_autosizing_factor] unless args[:heat_pump_heating_autosizing_factor].nil?
         heat_pump.heating_autosizing_limit = args[:heat_pump_heating_autosizing_limit] unless args[:heat_pump_heating_autosizing_limit].nil?
-        heat_pump.fraction_heat_load_served = args[:heat_pump_fraction_heat_load_served] unless args[:heat_pump_fraction_heat_load_served].nil?
         heat_pump.cooling_capacity = args[:heat_pump_cooling_capacity] unless args[:heat_pump_cooling_capacity].nil?
         heat_pump.cooling_autosizing_factor = args[:heat_pump_cooling_autosizing_factor] unless args[:heat_pump_cooling_autosizing_factor].nil?
         heat_pump.cooling_autosizing_limit = args[:heat_pump_cooling_autosizing_limit] unless args[:heat_pump_cooling_autosizing_limit].nil?
-        heat_pump.backup_type = args[:heat_pump_backup_type] unless args[:heat_pump_backup_type].nil?
-        heat_pump.backup_heating_fuel = args[:heat_pump_backup_fuel] unless args[:heat_pump_backup_fuel].nil?
-        heat_pump.backup_heating_efficiency_percent = args[:heat_pump_backup_heating_efficiency] unless args[:heat_pump_backup_heating_efficiency].nil?
+        heat_pump.backup_heating_fuel = args[:heat_pump_backup_fuel] unless args[:heat_pump_backup_fuel].nil? # To support hvac_heat_pump_backup_use_existing_system
+        if heat_pump.backup_heating_fuel == HPXML::FuelTypeElectricity
+          heat_pump.backup_heating_efficiency_percent = args[:heat_pump_backup_heating_efficiency] unless args[:heat_pump_backup_heating_efficiency].nil? # To support hvac_heat_pump_backup_use_existing_system
+          heat_pump.backup_heating_efficiency_afue = nil
+        else
+          heat_pump.backup_heating_efficiency_percent = nil
+          heat_pump.backup_heating_efficiency_afue = args[:heat_pump_backup_heating_efficiency] unless args[:heat_pump_backup_heating_efficiency].nil? # To support hvac_heat_pump_backup_use_existing_system
+        end
         heat_pump.backup_heating_capacity = args[:heat_pump_backup_heating_capacity] unless args[:heat_pump_backup_heating_capacity].nil?
         heat_pump.backup_heating_autosizing_factor = args[:heat_pump_backup_heating_autosizing_factor] unless args[:heat_pump_backup_heating_autosizing_factor].nil?
         heat_pump.backup_heating_autosizing_limit = args[:heat_pump_backup_heating_autosizing_limit] unless args[:heat_pump_backup_heating_autosizing_limit].nil?
@@ -485,7 +487,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
       # DHW systems
       hpxml_bldg.water_heating_systems.each do |water_heater|
-        water_heater.jacket_r_value = args[:dhw_water_heater_jacket_rvalue] if args[:dhw_water_heater_jacket_rvalue].to_f > 0
+        water_heater.jacket_r_value = args[:dhw_water_heater_jacket_rvalue] unless args[:dhw_water_heater_jacket_rvalue].to_f == 0
       end
 
       # Electric Panel
@@ -494,8 +496,12 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     # Apply defaults
     @hpxml.buildings.each do |hpxml_bldg|
+      # Write out the hpxml (must be before validation)
+      hpxml_doc = @hpxml.to_doc()
+      XMLHelper.write_file(hpxml_doc, @hpxml_path)
+
       # Always check for invalid HPXML file before applying defaults
-      if not validate_hpxml(runner, @hpxml, @hpxml.to_doc(), @hpxml_path)
+      if not validate_hpxml(runner, @hpxml, hpxml_doc, @hpxml_path)
         return false
       end
 
@@ -540,8 +546,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       write_schedule(modified_ev_schedule, hpxml_bldg, index, output_csv_path)
     end
 
-    # Validate final HPXML
+    # Write out the hpxml (must be before validation)
     hpxml_doc = @hpxml.to_doc()
+    XMLHelper.write_file(hpxml_doc, @hpxml_path)
+
+    # Validate final HPXML
     if not validate_hpxml(runner, @hpxml, hpxml_doc, @hpxml_path)
       return false
     end
@@ -1041,7 +1050,10 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       errors += hpxml_bldg.check_for_errors()
     end
     if errors.size > 0
-      fail "ERROR: Invalid HPXML object produced.\n#{errors}"
+      errors.each do |error|
+        runner.registerError("#{hpxml_path}: #{error}")
+      end
+      return false
     end
 
     is_valid = true

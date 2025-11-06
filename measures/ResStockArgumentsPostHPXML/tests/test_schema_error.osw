@@ -7,6 +7,7 @@
     {
       "arguments": {
         "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/test.xml",
+        "location_epw_path": "USA_CO_Denver.Intl.AP.725650_TMY3.epw",
         "geometry_unit_type": "Single-Family Detached, 1 Story",
         "geometry_unit_conditioned_floor_area": "4500.0",
         "geometry_unit_aspect_ratio": "1.8",
@@ -34,34 +35,14 @@
       "measure_dir_name": "BuildResidentialHPXML"
     },
     {
-      "arguments": {
-        "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/test.xml",
-        "output_csv_path": "stochastic.csv",
-        "hpxml_output_path": "measures/ResStockArgumentsPostHPXML/tests/run/test.xml"
-      },
-      "measure_dir_name": "BuildResidentialScheduleFile"
-    },
-    {
       "measure_dir_name": "ResStockArgumentsPostHPXML",
       "arguments": {
           "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/test.xml",
-          "hvac_flex_peak_offset": 2,
-          "hvac_flex_pre_peak_duration_hours": 2,
-          "hvac_flex_pre_peak_offset": 3,
-          "flex_random_shift_minutes": 0,
-          "ev_flex_enabled": true,
           "building_id": "1",
           "geometry_unit_cfa_bin": "4000+",
-          "vintage": "1960s"
+          "vintage": "1960s",
+          "dhw_water_heater_jacket_rvalue": "-5"
       }
-    },
-    {
-      "arguments": {
-        "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/test.xml",
-        "output_dir": "measures/ResStockArgumentsPostHPXML/tests/run",
-        "debug": "true"
-      },
-      "measure_dir_name": "HPXMLtoOpenStudio"
     }
   ]
 }
