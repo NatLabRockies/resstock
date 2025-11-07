@@ -75,7 +75,7 @@ The presence and type of the primary heating system in the housing unit.
 \end{itemize}
 
 \paragraph{Options}
-The options for the HVAC Heating Type characteristic are shown in Table \ref{table:hc_opt_hvac_heating_type}. No ResStock properties are assigned based upon these options; instead the HVAC Heating Type informs other HVAC inputs (such as HVAC Heating Efficiency) that do have related ResStock properties.
+The options for the HVAC Heating Type characteristic are shown in Table \ref{table:hc_opt_hvac_heating_type}. No modeling properties are assigned based upon these options; instead the HVAC Heating Type informs other HVAC inputs (such as HVAC Heating Efficiency) that do have related modeling properties.
 
 \input{tables/options/HVAC Heating Type}
 
@@ -103,7 +103,7 @@ The presence, type, and fuel of primary heating system.
 \end{itemize}
 
 \paragraph{Options}
-The options are a combination of the specific heating systems in HVAC Heating Efficiency characteristic and the Heating Fuel characteristic. The dependency combinations are directly mapped to the options in this characteristic. There are no ResStock properties assigned directly from this input.
+The options are a combination of the specific heating systems in HVAC Heating Efficiency characteristic and the Heating Fuel characteristic. The dependency combinations are directly mapped to the options in this characteristic. There are no modeling properties assigned directly from this input.
 
 \paragraph{Distribution Assumption(s)}
 No assumptions were made.
@@ -167,7 +167,7 @@ Presence of electric baseboard heating.
 \end{itemize}
 
 \paragraph{Options}
-The options for the HVAC Heating Efficiency are ``Yes'' and ``No.'' The system that is assigned the ``Yes'' option is electric baseboard. All other systems are assigned the ``No'' option. No ResStock properties are directly assigned from this input file.
+The options for the HVAC Heating Efficiency are ``Yes'' and ``No.'' The system that is assigned the ``Yes'' option is electric baseboard. All other systems are assigned the ``No'' option. No modeling properties are directly assigned from this input file.
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made. The characteristic options are a direct map from the HVAC Heating Efficiency characteristic.
@@ -223,7 +223,7 @@ The efficiency and type of the secondary heating system.
     \item Vintage.
 \end{itemize}
 \paragraph{Options}
-The options for HVAC Secondary Heating Type are shown in Table \ref{table:hc_opt_hvac_secondary_heating_type}. Only homes in Alaska have secondary heating, so most housing units receive a ``None'' assignment. No ResStock properties are assigned from this input file.
+The options for HVAC Secondary Heating Type are shown in Table \ref{table:hc_opt_hvac_secondary_heating_type}. Only homes in Alaska have secondary heating, so most housing units receive a ``None'' assignment. No modeling properties are assigned from this input file.
 
 \input{tables/options/HVAC Secondary Heating Type}
 
@@ -364,7 +364,7 @@ The presence and type of primary cooling system in the housing unit.
 \end{itemize}
 
 \paragraph{Options}
-The options for cooling system types are shown in Table \ref{table:hc_opt_hvac_cooling_type}. The options do not assign any ResStock properties but are used as dependencies in other characteristics.
+The options for cooling system types are shown in Table \ref{table:hc_opt_hvac_cooling_type}. The options do not assign any modeling properties but are used as dependencies in other characteristics.
 
 \input{tables/options/HVAC Cooling Type}
 
@@ -403,7 +403,7 @@ undercounting of non-ducted heat pumps.
 \end{itemize}
 
 \paragraph{Options}
-ResStock options for cooling systems are shown in Table \ref{table:hc_opt_hvac_cooling_efficiency}. If a building has a heat pump, it is assumed that the heat pump is serving both the heating and cooling load. Buildings with heat pumps assigned in the HVAC Heating characteristic are flagged, but no ResStock properties are assigned to those building based on this characteristic. Similarly, homes with a shared cooling system for the building are flagged, but the ResStock properties for that system are assigned in the HVAC Shared Systems Efficiencies characteristic.
+ResStock options for cooling systems are shown in Table \ref{table:hc_opt_hvac_cooling_efficiency}. If a building has a heat pump, it is assumed that the heat pump is serving both the heating and cooling load. Buildings with heat pumps assigned in the HVAC Heating characteristic are flagged, but no modeling properties are assigned to those building based on this characteristic. Similarly, homes with a shared cooling system for the building are flagged, but the modeling properties for that system are assigned in the HVAC Shared Systems Efficiencies characteristic.
 
 \input{tables/options/HVAC Cooling Efficiency}
 
@@ -509,7 +509,7 @@ The presence of an HVAC system shared by multiple housing units.
 \end{itemize}
 
 \paragraph{Options}
-Homes can be assigned to have shared cooling, shared heating, shared both heating and cooling, or no shared systems. No ResStock properties are assigned based on this characteristic, but these options are used as dependencies in other ResStock characteristics, such as HVAC Shared Efficiencies, where properties are assigned.
+Homes can be assigned to have shared cooling, shared heating, shared both heating and cooling, or no shared systems. No modeling properties are assigned based on this characteristic, but these options are used as dependencies in other ResStock characteristics, such as HVAC Shared Efficiencies, where properties are assigned.
 
 \paragraph{Distribution Assumption(s)}
 
@@ -626,7 +626,7 @@ Presence of a heating setpoint offset.
 \end{itemize}
 
 \paragraph{Options}
-The options are either ``Yes'' or ``No.'' The options do not assign any ResStock properties.
+The options are either ``Yes'' or ``No.'' The options do not assign any modeling properties.
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1113,7 +1113,7 @@ This is currently a capability that is not used. ResStock assumes no oversizing 
 \paragraph{Direct Conditional Dependencies}
 None.
 \paragraph{Options}
-All buildings assigned an option of ``No'' with no associated ResStock properties.
+All buildings assigned an option of ``No'' with no associated modeling properties.
 \paragraph{Distribution Assumption(s)}
 None.
 
@@ -1126,7 +1126,7 @@ N/A.
 \paragraph{Direct Conditional Dependencies}
 None.
 \paragraph{Options}
-All homes currently set to ``No'' with no associated ResStock properties.
+All homes currently set to ``No'' with no associated modeling properties.
 \paragraph{Distribution Assumption(s)}
 None.
 

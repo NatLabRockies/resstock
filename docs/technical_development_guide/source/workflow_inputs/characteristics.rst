@@ -27184,15 +27184,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 11000
      - 11000
      - 11000
-   * - ``misc_electric_vehicle_charging_annual_energy_use``
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
-     - 0
 
 Properties
 **********
@@ -27219,9 +27210,6 @@ Properties
    * - ``electric_vehicle_miles_driven_per_year``
      - miles/yr
      - Number of miles driven per year with the vehicle.
-   * - ``misc_electric_vehicle_charging_annual_energy_use``
-     - kWh/yr
-     - The annual energy consumption of the EV charging.
 .. _electric_vehicle_charge_at_home:
 
 Electric Vehicle Charge At Home
@@ -42051,15 +42039,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 11000
      - 13000
      - 
-   * - ``pv_system_2_direction_array_azimuth``
-     - 180
-     - 180
-     - 180
-     - 180
-     - 180
-     - 180
-     - 180
-     - 
 
 Properties
 **********
@@ -42074,9 +42053,6 @@ Properties
    * - ``pv_system_maximum_power_output``
      - W
      - Peak power for the PV system.
-   * - ``pv_system_2_direction_array_azimuth``
-     - deg
-     - The azimuth of the PV system array. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270).
 .. _plug_load_diversity:
 
 Plug Load Diversity
@@ -44375,13 +44351,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.15, 0.15, 0.15, 0.15
      - 0.18, 0.18, 0.18, 0.18
      - 0.30, 0.30, 0.30, 0.30
-   * - ``geometry_skylight_areas``
-     - 0, 0, 0, 0
-     - 0, 0, 0, 0
-     - 0, 0, 0, 0
-     - 0, 0, 0, 0
-     - 0, 0, 0, 0
-     - 0, 0, 0, 0
 
 Properties
 **********
@@ -44396,9 +44365,6 @@ Properties
    * - ``geometry_window_areas_or_wwrs``
      - ft2 or frac
      - The amount of window area on the unit's front/back/left/right facades. Use a comma-separated list like '0.2, 0.2, 0.1, 0.1' to specify Window-to-Wall Ratios (WWR) or '108, 108, 72, 72' to specify absolute areas. If a facade is adiabatic, the value will be ignored.
-   * - ``geometry_skylight_areas``
-     - ft2
-     - The amount of skylight area on the unit's front/back/left/right roofs. Use a comma-separated list like '50, 0, 0, 0'.
 .. _windows:
 
 Windows
@@ -44542,30 +44508,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - clear
      - 
      - 
-   * - ``enclosure_skylight_u_factor``
-     - 1.13
-     - 1.13
-     - 1.13
-     - 1.13
-     - 1.13
-     - 1.13
-     - 1.13
-     - 1.13
-     - 1.13
-     - 1.13
-     - 
-   * - ``enclosure_skylight_shgc``
-     - 0.78
-     - 0.78
-     - 0.78
-     - 0.78
-     - 0.78
-     - 0.78
-     - 0.78
-     - 0.78
-     - 0.78
-     - 0.78
-     - 
 
 Properties
 **********
@@ -44589,9 +44531,3 @@ Properties
    * - ``enclosure_window_storm_glass_type``
      - 
      - Type of storm window glass.
-   * - ``enclosure_skylight_u_factor``
-     - Btu/hr-ft2-F
-     - Full-assembly NFRC U-factor.
-   * - ``enclosure_skylight_shgc``
-     - 
-     - Full-assembly NFRC solar heat gain coefficient.

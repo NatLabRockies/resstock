@@ -4,7 +4,7 @@ resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../../r
 
 require 'fileutils'
 require_relative '../../resources/util'
-require_relative File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/resources/options')
+require File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/resources/options')
 
 filepath = File.read(File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/measure.xml'))
 buildreshpxmlarguments_xml = get_measure_xml(filepath)
