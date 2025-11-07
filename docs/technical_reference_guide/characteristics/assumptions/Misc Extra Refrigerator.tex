@@ -4,26 +4,26 @@
 \item EnergyStar distributions from 2009 dependent on [Geometry Building Type RECS,Federal Poverty Level,Tenure] is used to calculate efficiency distribution in RECS2020.EnergyStar Refrigerators assumed to be 10\% more efficient than standard.Due to low sample count, the tsv is constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The sub-tsvs have the following dependencies:
 \item Dwelling unit sub-tsv : deps=['Geometry Building Type RECS', 'State', 'Vintage'] with the following fallback coarsening order
   \begin{itemize}
-  \item [1] State coarsened to Census Division RECS with AK/HI separate
-  \item [2] Geometry Building Type RECS coarsened to SF/MF/MH
-  \item [3] Geometry Building Type RECS coarsened to SF and MH/MF
-  \item [4] Vintage with Vintage ACS
-  \item [5] Vintage with combined 1960s
-  \item [6] Vintage with combined 1960s and post 200ss
-  \item [7] Census Division RECS with AK/HI separate coarsened to Census Division RECS
-  \item [8] Census Division RECS to Census Region
-  \item [9] Census Region to National
+  \item State coarsened to Census Division RECS with AK/HI separate
+  \item Geometry Building Type RECS coarsened to SF/MF/MH
+  \item Geometry Building Type RECS coarsened to SF and MH/MF
+  \item Vintage with Vintage ACS
+  \item Vintage with combined 1960s
+  \item Vintage with combined 1960s and post 200ss
+  \item Census Division RECS with AK/HI separate coarsened to Census Division RECS
+  \item Census Division RECS to Census Region
+  \item Census Region to National
   \end{itemize}
 \item Household sub-tsv : deps=['Geometry Building Type RECS', 'State' 'Tenure', 'Federal Poverty Level'] with the following fallback coarsening order
   \begin{itemize}
-  \item [1] State coarsened to Census Division RECS with AK/HI separate
-  \item [2] Geometry Building Type RECS coarsened to SF/MF/MH
-  \item [3] Geometry Building Type RECS coarsened to SF and MH/MF
-  \item [4] Federal Poverty Level coarsened every 100 percent
-  \item [5] Federal Poverty Level coarsened every 200 percent
-  \item [6] Census Division RECS with AK/HI separate coarsened to Census Division RECS
-  \item [7] Census Division RECS to Census Region
-  \item [8] Census Region to National
+  \item State coarsened to Census Division RECS with AK/HI separate
+  \item Geometry Building Type RECS coarsened to SF/MF/MH
+  \item Geometry Building Type RECS coarsened to SF and MH/MF
+  \item Federal Poverty Level coarsened every 100 percent
+  \item Federal Poverty Level coarsened every 200 percent
+  \item Census Division RECS with AK/HI separate coarsened to Census Division RECS
+  \item Census Division RECS to Census Region
+  \item Census Region to National
   \end{itemize}
 \item In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across ('Heating Fuel', ['Tenure', 'Federal Poverty Level']).
 \end{itemize}

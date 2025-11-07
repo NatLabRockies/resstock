@@ -20,7 +20,7 @@ def write_subsection(folder, parameter, field, _name)
       if not items[i - 1].start_with?(/\[\d+\]/)
         f.puts('  \begin{itemize}')
       end
-      f.puts("  \\item #{item}")
+      f.puts("  \\item #{item.gsub(/\[\d+\]/, '').strip}")
       if (i == items.size - 1) || (not items[i + 1].start_with?(/\[\d+\]/))
         f.puts('  \end{itemize}')
       end

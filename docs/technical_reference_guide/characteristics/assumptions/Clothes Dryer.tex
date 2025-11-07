@@ -2,25 +2,25 @@
 \item Clothes dryer option is None if clothes washer not presentDue to low sample count, the tsv is constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The sub-tsvs have the following dependencies:
 \item Dwelling unit sub-tsv :deps=['Geometry Building Type RECS', 'State', 'Heating Fuel', 'Clothes Washer Presence'] with the following fallback coarsening order
   \begin{itemize}
-  \item [1] State coarsened to Census Division RECS without AK, HI
-  \item [2] Heating Fuel coarsened to Other Fuel, Wood and Propane combined
-  \item [3] Heating Fuel coarsened to Fuel Oil, Other Fuel, Wood and Propane combined
-  \item [4] Geometry Building Type RECS coarsened to SF/MF/MH
-  \item [5] Geometry Building Type RECS coarsened to SF and MH/MF
-  \item [6] State coarsened to Census Division RECS
-  \item [7] State coarsened to Census Region
-  \item [8] State coarsened to National
+  \item State coarsened to Census Division RECS without AK, HI
+  \item Heating Fuel coarsened to Other Fuel, Wood and Propane combined
+  \item Heating Fuel coarsened to Fuel Oil, Other Fuel, Wood and Propane combined
+  \item Geometry Building Type RECS coarsened to SF/MF/MH
+  \item Geometry Building Type RECS coarsened to SF and MH/MF
+  \item State coarsened to Census Division RECS
+  \item State coarsened to Census Region
+  \item State coarsened to National
   \end{itemize}
 \item Household sub-tsv : deps=['Geometry Building Type RECS', 'Tenure', 'Federal Poverty Level'] with the following fallback coarsening order
   \begin{itemize}
-  \item [1] State coarsened to Census Division RECS without AK, HI
-  \item [2] Geometry Building Type RECS coarsened to SF/MF/MH
-  \item [3] Geometry Building Type RECS coarsened to SF and MH/MF
-  \item [4] Federal Poverty Level coarsened every 100 percent
-  \item [5] Federal Poverty Level coarsened every 200 percent
-  \item [6] State coarsened to Census Division RECS
-  \item [7] State coarsened to Census Region
-  \item [8] State coarsened to National
+  \item State coarsened to Census Division RECS without AK, HI
+  \item Geometry Building Type RECS coarsened to SF/MF/MH
+  \item Geometry Building Type RECS coarsened to SF and MH/MF
+  \item Federal Poverty Level coarsened every 100 percent
+  \item Federal Poverty Level coarsened every 200 percent
+  \item State coarsened to Census Division RECS
+  \item State coarsened to Census Region
+  \item State coarsened to National
   \end{itemize}
 \item In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Heating Fuel','Clothes Washer Presence'], ['Tenure', 'Federal Poverty Level']).
 \end{itemize}

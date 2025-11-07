@@ -5,8 +5,8 @@
 \item Due to low sample count, the tsv is constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The sub-tsvs have the following dependencies:
 \item Dwelling unit sub-tsv : deps=['Geometry Building Type RECS', 'Vintage ACS', 'Electric Vehicle Charger'] with the following fallback coarsening order
   \begin{itemize}
-  \item [1] Vintage ACS to the National distribution
-  \item [2] Combining Geometry Building Type RECS together into SFD+MF+SFA and MF 2-4+MF 5+ bins
+  \item Vintage ACS to the National distribution
+  \item Combining Geometry Building Type RECS together into SFD+MF+SFA and MF 2-4+MF 5+ bins
   \end{itemize}
 \item Household sub-tsv : deps=['Geometry Building Type RECS', 'State' 'Tenure', 'Federal Poverty Level'] In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Vintage ACS', 'Electric Vehicle Charger'], ['Tenure', 'Federal Poverty Level']).
 \end{itemize}
