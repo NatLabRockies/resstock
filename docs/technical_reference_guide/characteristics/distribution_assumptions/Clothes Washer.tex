@@ -1,0 +1,19 @@
+\begin{itemize}
+\item The 2020 recs survey does not contain EnergyStar rating of clothes washers.Energystar efficiency distributions with [Geometry Building Type,Federal Poverty Level, Tenure] as dependencies are imported from RECS 2009Due to low sample count, the tsv is constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The sub-tsvs have the following dependencies:
+\item Dwelling unit sub-tsv : deps=['Geometry Building Type RECS', 'State','Clothes Washer Presence', 'Vintage'] with the following fallback coarsening order
+  \begin{itemize}
+  \item [1] Geometry Building Type RECS coarsened to SF/MF/MH
+  \item [2] Geometry Building Type RECS coarsened to SF and MH/MF
+  \item [3] Vintage coarsened to every 20 years before 2000 and every 10 years subsequently
+  \item [4] Vintage homes built before 1960 coarsened to pre1960
+  \item [5] Vintage homes built after 2000 coarsened to 2000-20
+  \end{itemize}
+\item Household sub-tsv : deps=['Geometry Building Type RECS', 'State' 'Tenure', 'Federal Poverty Level'] with the following fallback coarsening order
+  \begin{itemize}
+  \item [1] Geometry Building Type RECS coarsened to SF/MF/MH
+  \item [2] Geometry Building Type RECS coarsened to SF and MH/MF
+  \item [3] Federal Poverty Level coarsened every 100 percent
+  \item [4] Federal Poverty Level coarsened every 200 percent
+  \end{itemize}
+\item In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Clothes Washer Presence', 'Vintage'], ['Tenure', 'Federal Poverty Level']).
+\end{itemize}

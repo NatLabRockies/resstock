@@ -34,7 +34,12 @@ def get_arg_order(buildreshpxmlarguments_xml, resstockarguments_xml)
   return arg_order
 end
 
-# These are column headers in both TDG's "Argument" table and TRG's "The ResStock argument definitions set" table.
+# These are column headers in project_national/resources/source_report.csv file.
+def get_source_report_cols()
+  return ['Description', 'Created by', 'Source', 'Assumption']
+end
+
+# These are column headers in both technical and reference guide's "Properties" table.
 def get_properties_cols()
   return ['Name', 'Units', 'Description']
 end

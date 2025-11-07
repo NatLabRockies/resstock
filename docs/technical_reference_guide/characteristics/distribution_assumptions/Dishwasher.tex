@@ -1,0 +1,15 @@
+\begin{itemize}
+\item The 2020 recs survey does not contain EnergyStar rating of dishwashers.Energystar efficiency distributions with [Geometry Building Type,Census Division RECS,Federal Poverty Level, Tenure] as dependencies are imported from RECS 2009Due to low sample count, the tsv is constructed with the followingfallback coarsening order
+  \begin{itemize}
+  \item [1] State coarsened to Census Division RECS with AK/HI separate
+  \item [2] Geometry Building Type RECS coarsened to SF/MF/MH
+  \item [3] Geometry Building Type RECS coarsened to SF and MH/MF
+  \item [4] Federal Poverty Level coarsened every 100 percent
+  \item [5] Federal Poverty Level coarsened every 200 percent
+  \item [6] Vintage coarsened to every 20 years before 2000 and every 10 years subsequently
+  \item [7] Vintage homes built before 1960 coarsened to pre1960
+  \item [8] Vintage homes built after 2000 coarsened to 2000-20
+  \item [9] Census Division RECS with AK/HI separate coarsened to Census Division RECS
+  \item [10] Census Division RECS to Census Region
+  \end{itemize}
+\end{itemize}

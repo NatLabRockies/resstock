@@ -1,0 +1,7 @@
+\begin{itemize}
+\item In ACS, Heating Fuel is reported for occupied units only. By excluding Vacancy Status as a dependency, we assume vacant units share the same Heating Fuel distribution as occupied units. Where sample counts are less than 10, the State average distribution has been inserted. Prior to insertion, the following adjustments have been made to the state distribution so all rows have sample count > 10: 1. Where sample counts < 10 (which consists of Mobile Home and Single-Family Attached only), the Vintage ACS distribution is used instead of Vintage: [CT, DE, ID, MD, ME, MT, ND, NE, NH, NV, RI, SD, UT, VT, WY]
+\item 2. Remaining Mobile Homes < 10 are replaced by Single-Family Detached + Mobile Homes combined: [DE, RI, SD, VT, WY, and all DC].
+\item For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+\item For Alaska, all wood is modeled as cord wood.
+\item For Alaska, when heating uses more than one fuels, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10\% of total energy use across all fuels) is considered secondary (heating) fuel - except in case of electric heating, which is always assumed as primary. Rest of the fuels are ignored.
+\end{itemize}

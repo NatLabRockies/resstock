@@ -1,0 +1,14 @@
+\begin{itemize}
+\item After conversations with EIA, other fuel is a combination of units with no-water heater, biomass, coal, or district steam systems.
+\item Due to low sample sizes, fallback rules applied with lumping of:
+  \begin{itemize}
+  \item [1] Geometry building SF: Mobile, Single family attached, Single family detached
+  \item [2] Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units
+  \item [3] State: Census Division RECS
+  \item [4] State: Census Region
+  \item [5] State: National
+  \end{itemize}
+\item For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+\item For Alaska, wood and coal heating is modeled as other fuel.
+\item For Alaska, when a building uses more than one fuel for water heating, the fuel with highest consumption is considered the water heater fuel. Rest of the fuels are ignored.
+\end{itemize}
