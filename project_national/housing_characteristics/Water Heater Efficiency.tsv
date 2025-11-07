@@ -368,4 +368,5 @@ WY	Wood	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	20	0	2.00988e-09
 # Assumption: Other Fuel water heater energy is modeled as coal
 # Assumption: Due to low sample sizes, fallback rules applied with lumping of:
 # Assumption: [1] State: Census Division RECS
-# Assumption: [2] State: Census Region[3] State: National
+# Assumption: [2] State: Census Region
+# Assumption: [3] State: National

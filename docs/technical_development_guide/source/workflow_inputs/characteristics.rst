@@ -43673,7 +43673,9 @@ Assumption
 
   - \[1] State: Census Division RECS
 
-  - \[2] State: Census Region[3] State: National
+  - \[2] State: Census Region
+
+  - \[3] State: National
 
 
 Options

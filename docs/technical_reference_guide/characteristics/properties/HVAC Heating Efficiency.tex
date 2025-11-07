@@ -1,0 +1,21 @@
+\begin{customLongTable}{ |p{5cm}|p{3cm}|p{7cm}| }
+{The ResStock properties set in the HVAC Heating Efficiency characteristic} {table:hc_arg_def_hvac_heating_efficiency}
+{Name & Units & Description}
+\texttt{hvac\_heating\_system\_type} &  & The type of system. \\ \hline
+\texttt{hvac\_heating\_system\_heating\_efficiency} & Frac & The rated heating efficiency. \\ \hline
+\texttt{hvac\_heating\_system\_heating\_load\_served\_fraction} &  & Fraction of load served by the HVAC system. \\ \hline
+\texttt{hvac\_heat\_pump\_type} &  & The type of system. \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_efficiency\_type} &  & The cooling efficiency type. Central HPs and Mini-Split HPs use SEER2 or SEER; Geothermal HPs, Packaged Terminal HPs, and Room HPs use EER. \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_efficiency} &  & The rated cooling efficiency. \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_compressor\_type} &  & The compressor type of the cooling system. Applies to Central HPs, Mini-Split HPs, and Geothermal HPs. \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_efficiency\_type} &  & The heating efficiency type. Central HPs and Mini-Split HPs use HSPF2 or HSPF; Goethermal HPs, Packaged Terminal HPs, and Room HPs use COP. \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_efficiency} &  & The rated heating efficiency. \\ \hline
+\texttt{hvac\_heat\_pump\_capacity\_autosizing\_methodology} &  & Logic for autosized heat pumps. \\ \hline
+\texttt{hvac\_heat\_pump\_heating\_load\_served\_fraction} &  & Fraction of load served by the HVAC system. \\ \hline
+\texttt{hvac\_heat\_pump\_cooling\_load\_served\_fraction} &  & Fraction of load served by the HVAC system. \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_type} &  & The backup type. Use 'integrated' to represent e.g. built-in electric strip heat or dual-fuel integrated furnace. Use 'separate' to represent e.g. electric baseboard or boiler (based on Heating System 2). \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_fuel} &  & The fuel type of the integrated backup. \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_heating\_efficiency} & Frac & The rated heating efficiency of the integrated backup. \\ \hline
+\texttt{hvac\_heating\_shared\_system} &  & The type of shared system. \\ \hline
+\texttt{hvac\_heat\_pump\_backup\_use\_existing\_system} &  & Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated', heat\_pump\_backup\_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating\_system\_2\_xxx arguments are assigned values based on the existing heating system. This argument is only applicable for heat pump upgrades. \\
+\end{customLongTable}

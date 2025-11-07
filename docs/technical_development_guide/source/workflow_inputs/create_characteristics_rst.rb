@@ -64,7 +64,7 @@ f.puts('Each parameter sampled by the national project is listed alphabetically 
 f.puts('For each parameter, the following (if applicable) are reported based on the contents of the `source_report.csv <https://github.com/NREL/resstock/blob/develop/project_national/resources/source_report.csv>`_:')
 f.puts
 
-source_report_cols = ['Description', 'Created by', 'Source', 'Assumption']
+source_report_cols = get_source_report_cols()
 source_report_cols.each do |source_report_col|
   f.puts("- **#{source_report_col}**")
 end
