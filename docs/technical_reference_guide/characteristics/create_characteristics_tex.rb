@@ -31,6 +31,23 @@ def write_subsection(folder, parameter, field, _name)
   f.puts('\end{itemize}')
 end
 
+@subsections_name_map = { 'description' => 'Description',
+                          'sources' => 'Distribution Sources',
+                          'dependencies' => 'Direct Conditional Dependencies',
+                          'options' => 'Options',
+                          'properties' => 'Properties',
+                          'assumptions' => 'Distribution Assumptions' }
+
+def create_parent_characteristics_file(parameter)
+  return # Comment this out, and re-run script, if you want to remove manually added text
+  f = File.open(File.join(File.dirname(__FILE__), "#{parameter}.tex"), 'w')
+  @subsections_name_map.each do |folder, subsection|
+    f.puts("\\paragraph{#{subsection}}")
+    f.puts("\\input{characteristics/#{folder}/#{parameter}}")
+    f.puts
+  end
+end
+
 filepath = File.read(File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/measure.xml'))
 buildreshpxmlarguments_xml = get_measure_xml(filepath)
 
@@ -69,9 +86,9 @@ saturation_inclusions = ['Orientation',
 properties_folder = File.join(File.dirname(__FILE__), 'properties')
 options_folder = File.join(File.dirname(__FILE__), 'options')
 description_folder = File.join(File.dirname(__FILE__), 'description')
-distribution_sources_folder = File.join(File.dirname(__FILE__), 'distribution_sources')
-direct_conditional_dependencies_folder = File.join(File.dirname(__FILE__), 'direct_conditional_dependencies')
-distribution_assumptions_folder = File.join(File.dirname(__FILE__), 'distribution_assumptions')
+distribution_sources_folder = File.join(File.dirname(__FILE__), 'sources')
+direct_conditional_dependencies_folder = File.join(File.dirname(__FILE__), 'dependencies')
+distribution_assumptions_folder = File.join(File.dirname(__FILE__), 'assumptions')
 
 FileUtils.rm_rf(Dir.glob("#{properties_folder}/*"))
 FileUtils.rm_rf(Dir.glob("#{options_folder}/*"))
@@ -83,26 +100,28 @@ source_report = CSV.read(File.join(File.dirname(__FILE__), '../../../project_nat
 source_report.each do |row|
   parameter = row['Parameter']
 
+  create_parent_characteristics_file(parameter)
+
   source_report_cols.each do |subsection_name|
     next if subsection_name == 'Created by'
 
     if subsection_name == 'Description'
       f = File.open(File.join(description_folder, "#{parameter}.tex"), 'w')
-      # f.puts('\paragraph{Description}')
+      # f.puts("\paragraph{#{subsections_name_map['description']}}")
       f.puts(row['Description'])
     elsif subsection_name == 'Source'
       break if row['Source'].nil?
 
-      write_subsection(distribution_sources_folder, parameter, row['Source'], 'Distribution Sources')
+      write_subsection(distribution_sources_folder, parameter, row['Source'], @subsections_name_map['sources'])
     elsif subsection_name == 'Assumption'
       break if row['Assumption'].nil?
 
-      write_subsection(distribution_assumptions_folder, parameter, row['Assumption'], 'Distribution Assumptions')
+      write_subsection(distribution_assumptions_folder, parameter, row['Assumption'], @subsections_name_map['assumptions'])
     end
   end
 
   tsvfile = TsvFile.new(File.join(characteristics_dir, parameter + '.tsv'), nil)
-  write_subsection(direct_conditional_dependencies_folder, parameter, tsvfile.dependency_cols.keys.join(';'), 'Direct Conditional Dependencies')
+  write_subsection(direct_conditional_dependencies_folder, parameter, tsvfile.dependency_cols.keys.join(';'), @subsections_name_map['dependencies'])
 
   r_arguments = []
   lookup_csv_data.each do |lookup_row|
