@@ -33103,6 +33103,11 @@ Properties
 Insulation Ceiling
 ------------------
 
+Description
+***********
+
+This characteristic in ResStock specifies the insulation level of the ceiling on the top floor of the home in housing units with vented or unvented attics.
+
 Source
 ******
 
@@ -33193,6 +33198,11 @@ Properties
 Insulation Floor
 ----------------
 
+Description
+***********
+
+Sets the insulation levels of the home's floor for all foundation types except for slab-on-grade.
+
 Source
 ******
 
@@ -33282,6 +33292,11 @@ Properties
 
 Insulation Foundation Wall
 --------------------------
+
+Description
+***********
+
+Specifies the insulation level of foundation types with foundation walls (i.e., crawlspaces and basements).
 
 Source
 ******
