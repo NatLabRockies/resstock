@@ -14,7 +14,7 @@ def write_subsection(folder, parameter, field, name)
   if field.nil? || field.empty? || (field == 'n/a')
     if ['Distribution Assumptions', 'Direct Conditional Dependencies'].include?(name)
       f.puts('None.')
-    elsif name == 'Distribution Sources'
+    elsif name == 'Distribution Data Sources'
       f.puts('Not applicable.')
     end
     return
@@ -41,7 +41,7 @@ def write_subsection(folder, parameter, field, name)
 end
 
 @subsections_name_map = { 'description' => 'Description',
-                          'sources' => 'Distribution Sources',
+                          'sources' => 'Distribution Data Sources',
                           'dependencies' => 'Direct Conditional Dependencies',
                           'options' => 'Options',
                           'properties' => 'Properties',
@@ -116,7 +116,10 @@ source_report.each do |row|
 
     if subsection_name == 'Description'
       f = File.open(File.join(description_folder, "#{parameter}.tex"), 'w')
-      f.puts(row['Description'])
+      desc = row['Description']
+      break if desc.nil?
+      desc = desc.gsub('U.S. ', 'U.S.~')
+      f.puts(desc)
     elsif subsection_name == 'Source'
       write_subsection(distribution_sources_folder, parameter, row['Source'], @subsections_name_map['sources'])
     elsif subsection_name == 'Assumption'
