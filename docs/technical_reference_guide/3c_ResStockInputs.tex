@@ -187,62 +187,6 @@ Property definitions are shown in Table \ref{table:hc_arg_def_water_heater_locat
 \end{itemize}
 
 \subsubsection{Water Heater Efficiency}\label{water_heater_efficiency}
-\paragraph{Description}
-The efficiency and type of water heater.
-
-\paragraph{Distribution Sources}
-\begin{itemize}
-\item
-  U.S. EIA 2020 RECS microdata.
-\item
-  Heat pump water heaters: 2016-17 RBSA II for WA and OR; Butzbaugh
-  et al. (\href{https://www.osti.gov/biblio/1433775}{2017}). \textit{US HPWH Market Transformation: Where
-  We've Been and Where to Go Next} for remainder of
-  regions.
-\item
-  Penetration of HPWH for Maine (6.71\%) calculated based on total
-  number of HPWH units (from AWHI Stakeholder Meeting 12/08/2022) and total
-  housing units (from \url{https://www.census.gov/quickfacts/ME}).
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-\item State
-\item Water Heater Fuel
-\end{itemize}
-
-\paragraph{Options}
-Water Heater Efficiency options shown in Table \ref{table:hc_opt_water_heater_efficiency} define the technical details of the standalone water heaters and solar thermal water heaters with storage backup. The options for solar water heaters in ResStock are a combination of orientation and backup fuel.
-
-\input{tables/options/Water Heater Efficiency}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_water_heater_efficiency}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for additional information.
-
-\input{tables/properties/Water Heater Efficiency}
-
-\paragraph{Distribution Assumptions}\label{assumption-83}
-\begin{itemize}
-\item
-  Water heater blanket is used as a proxy for premium storage tank water
-  heaters.
-\item
-  Heat Pump Water Heaters are added in manually as they are not in the
-  survey; all have default efficiency: Electric Heat Pump, 50 gal, 3.45 UEF.
-\item
-  Solar thermal water heaters: backup is informed by secondary water heater fuel type; electric backup is assumed if no secondary water heating. All collectors are assumed 40 sqft, roof pitch; collector orientation diversity is based on rooftop solar PV orientation for those with electric backup; for fuel backup, it is assumed south-facing.
-\item
-  Due to low sample sizes, fallback rules are applied, with lumping of:
-
-  \begin{itemize}
-  \item
-    State: Census Division RECS
-  \item
-    State: Census Region
-    \item
-    State: National
-  \end{itemize}
-\end{itemize}
-
 \input{characteristics/Water Heater Efficiency}
 
 % ##################
