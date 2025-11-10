@@ -11,17 +11,17 @@ require_relative File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/
 def write_subsection(folder, parameter, field, name)
   f = File.open(File.join(folder, "#{parameter}.tex"), 'w')
 
-  items = field.split(';').map(&:strip)
-  if items.empty?
-    if name == 'Distribution Assumptions'
-      f.puts('No assumptions are made.')
-    elsif name == 'Direct Conditional Dependencies'
-      f.puts('No dependencies.')
+  if field.nil? || field.empty? || (field == 'n/a')
+    if ['Distribution Assumptions', 'Direct Conditional Dependencies'].include?(name)
+      f.puts('None.')
+    elsif name == 'Distribution Sources'
+      f.puts('Not applicable.')
     end
     return
   end
 
   f.puts('\begin{itemize}')
+  items = field.split(';').map(&:strip)
   items.each_with_index do |item, i|
     item = item.gsub('%', '\\%')
 
@@ -118,12 +118,8 @@ source_report.each do |row|
       f = File.open(File.join(description_folder, "#{parameter}.tex"), 'w')
       f.puts(row['Description'])
     elsif subsection_name == 'Source'
-      break if row['Source'].nil?
-
       write_subsection(distribution_sources_folder, parameter, row['Source'], @subsections_name_map['sources'])
     elsif subsection_name == 'Assumption'
-      break if row['Assumption'].nil?
-
       write_subsection(distribution_assumptions_folder, parameter, row['Assumption'], @subsections_name_map['assumptions'])
     end
   end
