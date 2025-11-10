@@ -23,7 +23,17 @@ def write_subsection(folder, parameter, field, name)
   f.puts('\begin{itemize}')
   items = field.split(';').map(&:strip)
   items.each_with_index do |item, i|
-    item = item.gsub('%', '\\%')
+    item = item.gsub('%', '\\%').gsub('U.S. ', 'U.S.~').gsub('&', '\\\&')
+    m = item.match(/https?:\/\/[\S]+/)
+    if m
+      if m[0].end_with?('.')
+        item = item.gsub(m[0], "\\href{#{m[0].chop}}{#{m[0].chop.gsub('_', '\_')}}.")
+      elsif m[0].end_with?(')')
+        item = item.gsub(m[0], "\\href{#{m[0].chop}}{#{m[0].chop.gsub('_', '\_')}})")
+      else
+        item = item.gsub(m[0], "\\href{#{m[0]}}{#{m[0].chop.gsub('_', '\_')}}")
+      end
+    end
 
     if item.start_with?(/\[\d+\]/)
       if not items[i - 1].start_with?(/\[\d+\]/)
@@ -121,7 +131,7 @@ source_report.each do |row|
       desc = row['Description']
       break if desc.nil?
 
-      desc = desc.gsub('U.S. ', 'U.S.~')
+      desc = desc.gsub('U.S. ', 'U.S.~').gsub('_', '\_')
       f.puts(desc)
     elsif subsection_name == 'Source'
       write_subsection(distribution_sources_folder, parameter, row['Source'], @subsections_name_map['sources'])
