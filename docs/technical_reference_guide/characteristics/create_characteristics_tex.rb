@@ -51,7 +51,9 @@ def create_parent_characteristics_file(parameter)
   return # Comment this out, and re-run script, if you want to remove manually added text
   f = File.open(File.join(File.dirname(__FILE__), "#{parameter}.tex"), 'w')
   @subsections_name_map.each do |folder, subsection|
-    f.puts("\\paragraph{#{subsection}}")
+    if subsection != 'Properties'
+      f.puts("\\paragraph{#{subsection}}")
+    end
     f.puts("\\input{characteristics/#{folder}/#{parameter}}")
     f.puts
   end
@@ -118,6 +120,7 @@ source_report.each do |row|
       f = File.open(File.join(description_folder, "#{parameter}.tex"), 'w')
       desc = row['Description']
       break if desc.nil?
+
       desc = desc.gsub('U.S. ', 'U.S.~')
       f.puts(desc)
     elsif subsection_name == 'Source'
