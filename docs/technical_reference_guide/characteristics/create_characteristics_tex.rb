@@ -8,11 +8,20 @@ require_relative '../../resources/util'
 require_relative File.join(resources_dir, 'buildstock')
 require_relative File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/resources/options')
 
-def write_subsection(folder, parameter, field, _name)
+def write_subsection(folder, parameter, field, name)
   f = File.open(File.join(folder, "#{parameter}.tex"), 'w')
-  # f.puts("\\paragraph{#{name}}")
-  f.puts('\begin{itemize}')
+
   items = field.split(';').map(&:strip)
+  if items.empty?
+    if name == 'Distribution Assumptions'
+      f.puts('No assumptions are made.')
+    elsif name == 'Direct Conditional Dependencies'
+      f.puts('No dependencies.')
+    end
+    return
+  end
+
+  f.puts('\begin{itemize}')
   items.each_with_index do |item, i|
     item = item.gsub('%', '\\%')
 
@@ -107,7 +116,6 @@ source_report.each do |row|
 
     if subsection_name == 'Description'
       f = File.open(File.join(description_folder, "#{parameter}.tex"), 'w')
-      # f.puts("\paragraph{#{subsections_name_map['description']}}")
       f.puts(row['Description'])
     elsif subsection_name == 'Source'
       break if row['Source'].nil?
