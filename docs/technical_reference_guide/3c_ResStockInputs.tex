@@ -46,7 +46,9 @@ The water heater fuel type.
 \end{itemize}
 
 \paragraph{Options}
-Water Heater Fuel has options of Electricity, Fuel Oil, Natural Gas, Solar Thermal, Wood, and Other Fuel. The characteristic does not set any ResStock arguments. Instead, it is a direct dependency for Water Heater Efficiency, where the heating fuel is assigned individually for each water heater option. Through this dependency, any changes to the distribution of water heater fuels will cascade to influence the water heater types. After conversations with EIA the Other Fuel water heater is typically composed of respondents saying they either do not have a water heater, coal, biomass, or district steam systems. ResStock models the energy associated with Other Fuel water heaters as coal energy consumption.
+Water Heater Fuel has options shown in Table \ref{table:hc_opt_water_heater_fuel}. The characteristic does not set any modeling properties. Instead, it is a direct dependency for Water Heater Efficiency, where the heating fuel is assigned individually for each water heater option. Through this dependency, any changes to the distribution of water heater fuels will cascade to influence the water heater types. After conversations with EIA the Other Fuel water heater is typically composed of respondents saying they either do not have a water heater, coal, biomass, or district steam systems. ResStock models the energy associated with Other Fuel water heaters as coal energy consumption.
+
+\input{tables/options/Water Heater Fuel}
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
@@ -96,7 +98,7 @@ Presence of an individual water heater in the housing unit that solely serves th
 \end{itemize}
 
 \paragraph{Options}
-In the ResStock baseline, all housing units have access to hot water and use energy for water heating. This characteristic has no ResStock arguments. Instead, it is used to separate water heating energy between in-unit versus shared designations. As a direct dependency to Water Heater Location, it ensures water heaters not in-unit are located appropriately and have no interaction with in-unit end-use loads.
+In the ResStock baseline, all housing units have access to hot water and use energy for water heating. This characteristic has no modeling properties. Instead, it is used to separate water heating energy between in-unit versus shared designations. As a direct dependency to Water Heater Location, it ensures water heaters not in-unit are located appropriately and have no interaction with in-unit end-use loads.
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
@@ -136,11 +138,11 @@ Location of the water heater.
 \end{itemize}
 
 \paragraph{Options}
-The options are spaces where the water heater can be located (Table \ref{table:hc_opt_water_heater_location}). The Conditioned Mechanical Room option is only used for multifamily units with shared water heating. This option assigns the \texttt{water\_heater\_location} ResStock argument.
+The options shown in Table \ref{table:hc_opt_water_heater_location} are spaces where the water heater can be located. The Conditioned Mechanical Room option is only used for multifamily units with shared water heating.
 
 \input{tables/options/Water Heater Location}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_location}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_water_heater_location}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} documentation for additional information.
 
 \input{tables/properties/Water Heater Location}
 
@@ -186,7 +188,7 @@ For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_locat
 
 \subsubsection{Water Heater Efficiency}\label{water_heater_efficiency}
 \paragraph{Description}
-The efficiency and type of the water heater by heating fuel.
+The efficiency and type of water heater.
 
 \paragraph{Distribution Sources}
 \begin{itemize}
@@ -210,66 +212,11 @@ The efficiency and type of the water heater by heating fuel.
 \end{itemize}
 
 \paragraph{Options}
-Water Heater Efficiency options define the technical details of the standalone water heaters and solar thermal water heaters with storage backup, from fuel type to the presence of flue (Table \ref{table:hc_opt_water_heater_efficiency}).
-The following arguments are constant across the non-solar standalone water heater options. The arguments for solar water heater options are available further down.
+Water Heater Efficiency options shown in Table \ref{table:hc_opt_water_heater_efficiency} define the technical details of the standalone water heaters and solar thermal water heaters with storage backup. The options for solar water heaters in ResStock are a combination of orientation and backup fuel.
 
 \input{tables/options/Water Heater Efficiency}
 
-\begin{itemize}
-    \item \texttt{water\_heater\_backup\_heating\_capacity}: auto
-    \item \texttt{water\_heater\_has\_flue\_or\_chimney}: auto
-    \item \texttt{water\_heater\_heating\_capacity}: auto
-    \item \texttt{water\_heater\_num\_bedrooms\_served}: auto
-    \item \texttt{water\_heater\_operating\_mode}: auto
-    \item \texttt{water\_heater\_setpoint\_temperature}: 125
-    \item \texttt{water\_heater\_recovery\_efficiency}: auto
-    \item \texttt{water\_heater\_standby\_loss}: 0
-    \item \texttt{water\_heater\_jacket\_rvalue}: 0
-    \item \texttt{water\_heater\_tank\_model\_type}: auto
-    \item \texttt{water\_heater\_usage\_bin}: auto
-    \item \texttt{water\_heater\_uses\_desuperheater}: auto
-    \item \texttt{solar\_thermal\_system\_type}: none
-    \item \texttt{solar\_thermal\_collector\_area}: 40
-    \item \texttt{solar\_thermal\_collector\_loop\_type}: liquid indirect
-    \item \texttt{solar\_thermal\_collector\_type}: single glazing black
-    \item \texttt{solar\_thermal\_collector\_azimuth}: 0
-    \item \texttt{solar\_thermal\_collector\_tilt}: 0
-    \item \texttt{solar\_thermal\_collector\_rated\_optical\_efficiency}: 0.77
-    \item \texttt{solar\_thermal\_collector\_rated\_thermal\_losses}: 0.793
-    \item \texttt{solar\_thermal\_storage\_volume}: auto
-    \item \texttt{solar\_thermal\_solar\_fraction}: 0
-\end{itemize}
-
-For all water heaters the \texttt{water\_heater\_efficiency\_type} UniformEnergyFactor is used.
-
-Solar thermal water heaters are characterized by \texttt{solar\_thermal\_system\_type=hot water}. The following arguments are constant across the solar water heater options:
-
-\begin{itemize}
-  \item \texttt{water\_heater\_type}: storage water heater
-  \item \texttt{water\_heater\_backup\_heating\_capacity}: auto
-  \item \texttt{water\_heater\_has\_flue\_or\_chimney}: auto
-  \item \texttt{water\_heater\_heating\_capacity}: auto
-  \item \texttt{water\_heater\_num\_bedrooms\_served}: auto
-  \item \texttt{water\_heater\_operating\_mode}: auto
-  \item \texttt{water\_heater\_setpoint\_temperature}: 125
-  \item \texttt{water\_heater\_standby\_loss}: 0
-  \item \texttt{water\_heater\_tank\_model\_type}: auto
-  \item \texttt{water\_heater\_tank\_volume}: auto
-  \item \texttt{water\_heater\_usage\_bin}: auto
-  \item \texttt{water\_heater\_uses\_desuperheater}: auto
-  \item \texttt{solar\_thermal\_system\_type}: hot water
-  \item \texttt{solar\_thermal\_collector\_area}: 40
-  \item \texttt{solar\_thermal\_collector\_loop\_type}: liquid indirect
-  \item \texttt{solar\_thermal\_collector\_type}: single glazing black
-  \item \texttt{solar\_thermal\_collector\_rated\_optical\_efficiency}: 0.77
-  \item \texttt{solar\_thermal\_collector\_rated\_thermal\_losses}: 0.793
-  \item \texttt{solar\_thermal\_storage\_volume}: auto
-  \item \texttt{solar\_thermal\_solar\_fraction}: 0
-\end{itemize}
-
-The options for solar water heaters in ResStock are a combination of orientation and backup fuel.
-
-For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_efficiency} on storage, tankless, and solar water heaters. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_water_heater_efficiency}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for additional information.
 
 \input{tables/properties/Water Heater Efficiency}
 
@@ -316,17 +263,11 @@ Hot water piping material and insulation level.
 No dependencies.
 
 \paragraph{Options}
+ResStock models all homes using a single hot water distribution option as shown in Table \ref{table:hc_opt_hot_water_distribution}.
 
-For the ResStock baseline baseline, all Hot Water Distribution is assumed to be ``Uninsulated, trunk and branch, copper pipes.'' This option specifies the following ResStock arguments.
-\begin{itemize}
-    \item \texttt{hot\_water\_distribution\_system\_type} = standard
-    \item \texttt{hot\_water\_distribution\_recirc\_control\_type} = no control
-    \item \texttt{dwhr\_facilities\_connected} = none
-    \item \texttt{dwhr\_equal\_flow} = true
-    \item \texttt{dwhr\_efficiency} = 0.0.
-\end{itemize}
+\input{tables/options/Hot Water Distribution}
 
-For retrofit upgrades, other options are available and can be defined using the following arguments. For the argument definitions, see Table \ref{table:hc_arg_def_hot_water_distribution}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-hot-water-distribution}{Hot Water Distribution} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_hot_water_distribution}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-hot-water-distribution}{Hot Water Distribution} documentation for additional information.
 
 \input{tables/properties/Hot Water Distribution}
 
@@ -358,10 +299,11 @@ Hot water fixture usage and flow levels.
 \end{itemize}
 
 \paragraph{Options}
-The Hot Water Fixtures options are usage bins ranging from ``50\% Usage'' to ``200\% Usage'' at 10\% increments. For the ResStock baseline, the options are log-normally distributed between 40\% and 200\%, with the peak at 80\%. All options have both \texttt{water\_fixtures\_shower\_low\_flow} and
-\texttt{water\_fixtures\_sink\_low\_flow} set to false. \texttt{water\_fixtures\_usage\_multiplier} is set according to their option names.
+The Hot Water Fixtures options are shown in Table \ref{table:hc_opt_hot_water_fixtures}.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_hot_water_fixtures}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-fixtures}{Water Fixtures} documentation for the available HPXML schema elements, default values, and constraints.
+\input{tables/options/Hot Water Fixtures}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_hot_water_fixtures}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-fixtures}{Water Fixtures} documentation for additional information.
 
 \input{tables/properties/Hot Water Fixtures}
 
@@ -371,7 +313,7 @@ For the argument definitions, see Table \ref{table:hc_arg_def_hot_water_fixtures
   A log-normal distribution was shown to match the distribution of annual
   energy consumption.
 \item
-  The data shows appoximately a log-normal distribution. From the data, the average multiplier is 0.8 and the
+  The data shows approximately a log-normal distribution. From the data, the average multiplier is 0.8 and the
   standard deviation is 0.2. The average multiplier was mean-shifted from 0.8 to 1 average usage.
 \item
   Low, Medium, and High usage is assigned based on the lower 25th
@@ -405,7 +347,9 @@ Engineering judgment and calibration.
 None.
 
 \paragraph{Options}
-The options are low, medium, and high. The distribution values are 25\% for low, 50\% for medium, and 25\% for high. These options do not assign ResStock arguments.
+The options are shown in Table \ref{table:hc_opt_usage_level}. The distribution values are 25\% for low, 50\% for medium, and 25\% for high. These options do not assign modeling properties.
+
+\input{tables/options/Usage Level}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -431,14 +375,12 @@ Constructed using U.S. EIA 2020 RECS microdata. Age of refrigerator converted to
     \item Vintage.
 \end{itemize}
 \paragraph{Options}
-ResStock differentiates primary refrigerators based on their efficiency level. In the baseline stock, there are seven discrete efficiency levels ranging from EF 6.7 to EF 21.9, as well as a ``None'' option for housing units that do not have a refrigerator.  The Refrigerator characteristic sets the \texttt{refrigerator\_present}, \texttt{refrigerator\_location}, and \texttt{refrigerator\_rated\_annual\_kwh} arguments (Table \ref{table:hc_opt_refrigerator}). The \texttt{refrigerator\_location} argument is set to auto.
+ResStock options shown in Table \ref{table:hc_opt_refrigerator} differentiate primary refrigerators based on their efficiency level. A ``None'' option is used for housing units that do not have a refrigerator.
 
-%options table
 \input{tables/options/Refrigerator}
 
-For the argument definitions, see \ref{table:hc_arg_def_refrigerator}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_refrigerator}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{Refrigerators} documentation for additional information.
 
-%arguments table
 \input{tables/properties/Refrigerator}
 
 \paragraph{Distribution Assumption(s)}
@@ -474,14 +416,12 @@ Not applicable---direct translation of the \ref{usage_level} Usage input file.
 \end{itemize}
 
 \paragraph{Options}
-The refrigerator usage level is set based on the usage level characteristic. It is 95\% Usage when the usage level is Low, 100\% Usage when the usage level is Medium, and 105\% Usage when the usage level is High. The characteristic sets the \texttt{refrigerator\_usage\_multiplier} argument (Table \ref{table:hc_opt_refrigerator_usage_level}).
+The refrigerator usage level options shown in Table \ref{table:hc_opt_refrigerator_usage_level} are assigned based on the usage level characteristic (Section \ref{usage_level}).
 
-%options table
 \input{tables/options/Refrigerator Usage Level}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_refrigerator_usage_level}. %See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_refrigerator_usage_level}. %See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{Refrigerators} documentation for additional information.
 
-%arguments table
 \input{tables/properties/Refrigerator Usage Level}
 
 \paragraph{Distribution Assumption(s)}
@@ -509,19 +449,17 @@ Constructed using U.S. EIA 2020 RECS microdata.
 \end{itemize}
 
 \paragraph{Options}
-Extra refrigerators are specified using the same Energy Factor (EF) and annual rated kWh options as primary refrigerators.  The characteristic set the \texttt{extra\_refrigerator\_present}, \texttt{extra\_refrigerator\_location}, \texttt{extra\_refrigerator\_rated\_annual\_kwh}, and \texttt{extra\_refrigerator\_usage\_multiplier} ResStock arguments (Table \ref{table:hc_opt_misc_extra_refrigerator}).
-If an extra refrigerator is present, the location is always set to auto.
-The usage multiplier varies by state and is set to account for the presence of teriary refrigerators and beyond, see Table \ref{table:hc_opt_state}.
+Extra refrigerator options shown in Table \ref{table:hc_opt_misc_extra_refrigerator} are specified using the same Energy Factor (EF) and annual rated kWh options as primary refrigerators.
 
-%options table
 \input{tables/options/Misc Extra Refrigerator}
 
-\input{tables/options/State}
+Property definitions are shown in Table \ref{table:hc_arg_def_misc_extra_refrigerator}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{Refrigerators} documentation for additional information.
 
-For the argument definitions, see \ref{table:hc_arg_def_misc_extra_refrigerator}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
-
-%arguments table
 \input{tables/properties/Misc Extra Refrigerator}
+
+The usage multiplier varies by state and is set to account for the presence of tertiary refrigerators and beyond, see Table \ref{table:hc_opt_state}.
+
+\input{tables/options/State}
 
 \paragraph{Distribution Assumption(s)}
 The current year is assumed to be 2022.
@@ -569,15 +507,15 @@ Constructed using U.S. EIA 2020 RECS microdata.
 \end{itemize}
 
 \paragraph{Options}
-The Misc Freezer option in baseline has an EF of 12, intended to represent the national average. The characteristic sets the \texttt{freezer\_present}, \texttt{freezer\_location}, \texttt{freezer\_rated\_annual\_kwh}, and \texttt{freezer\_usage\_multiplier} ResStock arguments (Table \ref{table:hc_opt_misc_freezer}).
-The usage multiplier varies by state and is set to account for the presence of extra freezers, see Table \ref{table:hc_opt_state}.
+The Misc Freezer option shown in Table \ref{table:hc_opt_misc_freezer} represents the national average.
 
 \input{tables/options/Misc Freezer}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_misc_freezer}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-freezers}{OpenStudio-HPXML Freezers} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_misc_freezer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-freezers}{Freezers} documentation for additional information.
 
-%arguments table
 \input{tables/properties/Misc Freezer}
+
+The usage multiplier varies by state and is set to account for the presence of extra freezers, see Table \ref{table:hc_opt_state}.
 
 \paragraph{Distribution Assumption(s)}
 The national average EF is 12 based on the 2014 Building America house simulation protocols.
@@ -600,7 +538,7 @@ ResStock models all cooking units as ranges with an integrated (non-convection) 
 
 ResStock also models the use of a range hood for cooking. However, the range hood operation does not use the cooking schedule. Instead, the range operates for one hour every day with a starting hour sampled by the Range Spot Vent Hour characteristic distribution; see Section \ref{range_spot_vent_hour}.
 
-The next sections describe the building stock distributions for cooking, their assumptions, data sources, and argument assignment.
+The next sections describe the building stock distributions for cooking, their assumptions, data sources, and property assignment.
 
 \subsubsection{Cooking Range}
 \paragraph{Description}
@@ -623,13 +561,12 @@ Constructed using U.S. EIA 2020 RECS microdata.
 \end{itemize}
 
 \paragraph{Options}
-ResStock baseline has four cooking range options, which include electric induction, electric resistance, natural gas, and propane, as well as a ``none'' option. The characteristic assigns the \texttt{cooking\_range\_oven\_present},  \texttt{cooking\_range\_oven\_location}, \texttt{cooking\_range\_oven\_fuel\_type}, \texttt{cooking\_range\_oven\_is\_induction},
- \texttt{cooking\_range\_oven\_is\_convection} ResStock arguments (Table \ref{table:hc_opt_cooking_range}). The \texttt{cooking\_range\_oven\_is\_convection} and \texttt{cooking\_range\_oven\_location} is always set to auto.
+ResStock options are shown in Table \ref{table:hc_opt_cooking_range}.
 
 %options table
 \input{tables/options/Cooking Range}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_cooking_range}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooking-range-oven}{Cooking Range/Oven} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_cooking_range}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooking-range-oven}{Cooking Range/Oven} documentation for additional information.
 
 %properties table
 \input{tables/properties/Cooking Range}
@@ -680,14 +617,12 @@ Not applicable---direct translation of the Usage Level input file; see Section \
 \end{itemize}
 
 \paragraph{Options}
-The cooking range usage level is set based on the usage level characteristic (Section \ref{usage_level}). It is 80\% Usage when the usage level is Low, 100\% Usage when the usage level is Medium, and 120\% Usage when the usage level is High. The characteristic sets the \texttt{cooking\_range\_oven\_usage\_multiplier} ResStock argument.
+The cooking range usage level options shown in Table \ref{table:hc_opt_cooking_range_usage_level} are assigned based on the usage level characteristic (Section \ref{usage_level}).
 
-%options table
 \input{tables/options/Cooking Range Usage Level}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_cooking_range_usage_level}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_cooking_range_usage_level}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooking-range-oven}{Cooking Range/Oven} documentation for additional information.
 
-%arguments table
 \input{tables/properties/Cooking Range Usage Level}
 
 \paragraph{Distribution Assumption(s)}
@@ -701,7 +636,7 @@ The number of cycles is used to calculate the annual energy and hot water use fo
 
 The energy estimate is multiplied with a stochastically generated appliance schedule to produce the dishwasher end-use load profile. Similarly, the total hot water use is paired with a stochastic schedule to produce an appliance hot water draw schedule for the water heater. The appliance schedule and the hot water draw schedule line up in terms of the event onset, which comes from ATUS, but not the duration or magnitude, which are sampled from data from the RBSA survey (\cite{RBSA}). See Section \ref{occupancy_model} for details on schedule generation. The hot water energy for dishwasher is attributed to the hot water end use rather than the appliance.
 
-The following subsections describe the characteristics, distributions, data sources, and arguments assigned for the dishwasher.
+The following subsections describe the characteristics, distributions, data sources, and properties assigned for the dishwasher.
 
 \subsubsection{Dishwasher}
 \paragraph{Description}
@@ -722,14 +657,12 @@ The presence and rated efficiency of the dishwasher.
 \end{itemize}
 
 \paragraph{Options}
-The ResStock baseline has two dishwasher options, one at 270 rated kWh and one at 307 rated kWh, along with a ``None'' option.\footnote{ResStock currently does not account for hand washing of dishes in hot water in cases where no dishwasher is present.} Both dishwasher options have arguments of true for \texttt{dishwasher\_present}, auto for \texttt{dishwasher\_location}, RatedAnnualkWh for \texttt{dishwasher\_efficiency\_type}, 0.12 for \texttt{dishwasher\_label\_electric\_rate}, 1.09 for \texttt{dishwasher\_label\_gas\_rate}, 4 for \texttt{dishwasher\_label\_usage}, and 12 for \texttt{dishasher\_place\_setting\_capacity}; see Table \ref{table:hc_opt_dishwasher}.
+The ResStock options are shown in Table \ref{table:hc_opt_dishwasher}. The ``None'' option is used for homes without a dishwasher.\footnote{ResStock currently does not account for hand washing of dishes in hot water in cases where no dishwasher is present.}
 
-%options table
 \input{tables/options/Dishwasher}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_dishwasher}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-dishwasher}{Dishwasher} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_dishwasher}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-dishwasher}{Dishwasher} documentation for additional information.
 
-%arguments table
 \input{tables/properties/Dishwasher}
 
 \paragraph{Distribution Assumption(s)}
@@ -765,14 +698,12 @@ Not applicable---direct translation of  Usage Level; see Section \ref{usage_leve
 \end{itemize}
 
 \paragraph{Options}
-The dishwasher usage level is set based on the usage level characteristic; see Section \ref{usage_level}. It is 80\% Usage when the usage level is Low, 100\% Usage when the usage level is Medium, and 120\% Usage when the usage level is High. The characteristic sets the \texttt{dishwasher\_usage\_multiplier} ResStock argument (Table \ref{table:hc_opt_dishwasher_usage_level}).
+The dishwasher usage level options shown in Table \ref{table:hc_opt_dishwasher_usage_level} are assigned based on the usage level characteristic (Section \ref{usage_level}).
 
-%options table
 \input{tables/options/Dishwasher Usage Level}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_dishwasher_usage_level}.
+Property definitions are shown in Table \ref{table:hc_arg_def_dishwasher_usage_level}.
 
-%arguments table
 \input{tables/properties/Dishwasher Usage Level}
 
 \paragraph{Distribution Assumption(s)}
@@ -787,7 +718,7 @@ The number of cycles is used to calculate the annual energy and hot water use fo
 
 The energy estimate is multiplied with a stochastically generated laundry schedule to produce the clothes washer end-use load profile. Similarly, the total hot water use is paired with a stochastic schedule to produce an appliance hot water draw schedule for the water heater. The appliance schedule and the hot water draw schedule line up in terms of the event onset, which comes from ATUS, but not the duration or magnitude, which are sampled from data from the RBSA survey (\cite{RBSA}). See Section \ref{occupancy_model} for details on schedule generation. The hot water energy for clothes washer is attributed to the hot water end use rather than the appliance.
 
-The following subsections describe the characteristics, the distributions, assumptions, data sources, options, and argument assignments for clothes washers.
+The following subsections describe the characteristics, the distributions, assumptions, data sources, options, and property assignments for clothes washers.
 
 \subsubsection{Clothes Washer}
 \paragraph{Description}
@@ -808,14 +739,12 @@ Constructed using U.S. EIA 2020 RECS microdata.
 \end{itemize}
 
 \paragraph{Options}
-ResStock has two clothes washer options in baseline, along with a ``None'' option. Both clothes washer options have a \texttt{clothes\_washer\_location} of \textit{auto}, a \texttt{clothes\_washer\_efficiency\_type} of \textit{IntegratedModifiedEnergyFactor}, a \texttt{clothes\_washer\_label\_electric\_rate} of 0.12, a \texttt{clothes\_washer\_gas\_rate} of 1.09, and a \texttt{clothes\_washer\_label\_usage} of 6. The arguments that differ between the two options are shown in Table \ref{table:hc_opt_clothes_washer}.
+ResStock options are shown in Table \ref{table:hc_opt_clothes_washer}.
 
-%options
 \input{tables/options/Clothes Washer}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_clothes_washer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-clothes-washer}{Clothes Washer} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_clothes_washer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-clothes-washer}{Clothes Washer} documentation for additional information.
 
-%arguments table
 \input{tables/properties/Clothes Washer}
 
 \paragraph{Distribution Assumption(s)}
@@ -857,10 +786,7 @@ Constructed using U.S. EIA 2020 RECS microdata.
 \end{itemize}
 
 \paragraph{Options}
-This characteristic determines whether there is a clothes washer present in the housing unit (Table \ref{table:hc_opt_clothes_washer_presence}).
-
-%options table
-\input{tables/options/Clothes Washer Presence}
+The options ``None'' and ``Yes'' determine whether there is a clothes washer present in the housing unit.
 
 \paragraph{Distribution Assumption(s)}
 Due to the low sample count, the input file is constructed by downscaling a housing unit sub-input file with a household sub-input file. The sub-input files have the following dependencies. Housing unit sub-input file: dependencies = Geometry Building Type RECS, State, Heating Fuel, and Vintage, with the following coarsening order:
@@ -904,14 +830,12 @@ Not applicable.
 \end{itemize}
 
 \paragraph{Options}
-The clothes washer usage level is set based on the usage level (Section \ref{usage_level}) characteristic. It is 80\% Usage when the usage level is Low, 100\% Usage when the usage level is Medium, and 120\% Usage when the usage level is High. The characteristic sets the \texttt{clothes\_washer\_usage\_multiplier} ResStock argument (Table \ref{table:hc_opt_clothes_washer_usage_level}).
+The clothes washer usage level options shown in Table \ref{table:hc_opt_clothes_washer_usage_level} are assigned based on the usage level characteristic (Section \ref{usage_level}).
 
-%options table
 \input{tables/options/Clothes Washer Usage Level}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_clothes_washer_usage_level}.
+Property definitions are shown in Table \ref{table:hc_arg_def_clothes_washer_usage_level}.
 
-%arguments table
 \input{tables/properties/Clothes Washer Usage Level}
 
 \paragraph{Distribution Assumption(s)}
@@ -948,14 +872,12 @@ Constructed using U.S. EIA 2020 RECS microdata.
 \end{itemize}
 
 \paragraph{Options}
-The ResStock baseline includes three dryer options: an electric dryer, a natural gas dryer, and a propane dryer. There is also a ``None'' option. Certain arguments are common across all three dryer options: auto for \texttt{clothes\_dryer\_location}, CombinedEnergyFactor for \texttt{clothes\_dryer\_efficiency\_type}, and auto for \texttt{clothes\_dryer\_drying\_method}. The arguments that differ across options are shown in Table \ref{table:hc_opt_clothes_dryer}.
+The ResStock options are shown in Table \ref{table:hc_opt_clothes_dryer}.
 
-%options table
 \input{tables/options/Clothes Dryer}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_clothes_dryer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-clothes-dryer}{Clothes Dryer} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_clothes_dryer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-clothes-dryer}{Clothes Dryer} documentation for additional information.
 
-%arguments table
 \input{tables/properties/Clothes Dryer}
 
 \paragraph{Distribution Assumption(s)}
@@ -1001,14 +923,12 @@ Not applicable---direct mapping of usage level (Section \ref{usage_level}).
 \end{itemize}
 
 \paragraph{Options}
-The clothes dryer usage level is set based on the usage level (Section \ref{usage_level}) characteristic. It is 80\% Usage when the usage level is Low, 100\% Usage when the usage level is Medium, and 120\% Usage when the usage level is High. The characteristic assigns the \texttt{clothes\_dryer\_usage\_multiplier} ResStock argument (Table \ref{table:hc_opt_clothes_dryer_usage_level}).
+The clothes dryer usage level options shown in Table \ref{table:hc_opt_clothes_dryer_usage_level} are assigned based on the usage level characteristic (Section \ref{usage_level}).
 
-%options table
 \input{tables/options/Clothes Dryer Usage Level}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_clothes_dryer_usage_level}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_clothes_dryer_usage_level}.
 
-%arguments table
 \input{tables/properties/Clothes Dryer Usage Level}
 
 \paragraph{Distribution Assumption(s)}
@@ -1018,7 +938,7 @@ None.
 \subsubsection{Modeling Approach}
 ResStock models all ceiling fan options as a single fan operating at medium speed periodically throughout the year. The efficiency of the fans is specified at this speed and used to calculate the annual ceiling fan energy per the Energy Rating Rated Home in ANSI/RESNET/ICC 301-2019 (\cite{ansi_resnet_301_2019}). The annual energy is multiplied with a stochastically generated detailed schedule to produce the ceiling fan end-use load profile. The ceiling fan schedule is created as a submetered reference schedule from RBSAM prorated by a separate occupancy schedule based on ATUS. See Section \ref{occupancy_model} for details on schedule generation. In the characteristic distribution, while ResStock distinguishes between the options ``None'' (no ceiling fan) and ``Standard Efficiency, No Usage,'' both options lead to zero energy consumption.
 
-Ceiling fans are characterized in a single housing characteristic. The distribution, data sources, assumptions, and argument assignment are discussed in the next subsection.
+Ceiling fans are characterized in a single housing characteristic. The distribution, data sources, assumptions, and property assignment are discussed in the next subsection.
 
 \subsubsection{Ceiling Fan}
 \paragraph{Description}
@@ -1033,14 +953,12 @@ Building America House Simulation Protocols (\cite{Wilson2014}); national averag
 \end{itemize}
 
 \paragraph{Options}
-ResStock has three options for the ceiling fan characteristic: a standard efficiency ceiling fan, a standard efficiency ceiling fan that is not used, and ``None.'' For the standard efficiency ceiling fan that is not used, as well as the ``None'' option, the \texttt{ceiling\_fan\_present} argument is set to false and the \texttt{ceiling\_fan\_quantity} is set to 0. The \texttt{ceiling\_fan\_cooling\_setpoint\_offset} argument is 0 for all options. The remaining arguments set by ResStock are shown in Table \ref{table:hc_opt_ceiling_fan}.
+ResStock options for ceiling fans are shown in Table \ref{table:hc_opt_ceiling_fan}. The ``No usage`` option indicates a ceiling fan is present but not used.
 
-%options table
 \input{tables/options/Ceiling Fan}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_ceiling_fan}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-ceiling-fans}{Ceiling Fans} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_ceiling_fan}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-ceiling-fans}{Ceiling Fans} documentation for additional information.
 
-%arguments table
 \input{tables/properties/Ceiling Fan}
 
 \paragraph{Distribution Assumption(s)}
@@ -1052,7 +970,7 @@ ResStock models pools and hot tubs/spas that are connected to the home's electri
 
 In OpenStudio-HPXML, pool and hot tub/spa heater options are electric resistance, gas-fired, and heat pump. Therefore, heaters for pools or spas using ``Other Fuel'' do not have any modeled energy consumption. Heat pump heaters are assumed to be five times more efficient than electric resistance. The use of pool cover or heating setpoint is approximated using a usage multiplier.
 
-The building stock characterization distributions, data sources, assumptions, and argument assignment of pools and hot tubs are discussed in the next subsections.
+The building stock characterization distributions, data sources, assumptions, and property assignment of pools and hot tubs are discussed in the next subsections.
 
 \subsubsection{Misc Pool}
 \paragraph{Description}
@@ -1071,13 +989,7 @@ Constructed using U.S. EIA 2020 RECS microdata.
 \end{itemize}
 
 \paragraph{Options}
-The options for the Misc Pool characteristic are ``Has Pool'' and ``None.'' The characteristic assigns the \texttt{pool\_present} ResStock argument (Table \ref{table:hc_opt_misc_pool}).
-
-\input{tables/options/Misc Pool}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_misc_pool}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-pools}{Pools} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/properties/Misc Pool}
+The options for Misc Pool are ``Has Pool'' and ``None''.
 
 \paragraph{Distribution Assumption(s)}
 The only valid option for multifamily homes is None, because the pool is most likely to be part of the common load and not associated with a specific unit.
@@ -1114,14 +1026,11 @@ The heating fuel of the pool heater if there is a pool.
 \end{itemize}
 
 \paragraph{Options}
-
-There are five options for pool heaters: Electricity, Electric Heat Pump, Natural Gas, None, and Other Fuel. The Electricity option defines a traditional electric resistance pool heater, whereas the Electric Heat Pump option uses heat pump technology for heating the pool. The “Other Fuel” pool heater option currently is currently not modeled in ResStock. The ResStock arguments assigned for each of these options is given in Table \ref{table:hc_opt_misc_pool_heater}.
+Options for pool heaters are shown in Table \ref{table:hc_opt_misc_pool_heater}. The electric heat pump option uses heat pump technology for heating the pool while the standard electric option defines a traditional electric resistance pool heater. The “Other Fuel” option is currently not modeled in ResStock and will result in no energy consumption.
 
 \input{tables/options/Misc Pool Heater}
 
-The ``Other Fuel'' option is assigned the same arguments as ``None,'' and will result in no energy consumption.
-
-For the argument definitions, see Table \ref{table:hc_arg_def_misc_pool_heater}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#pool-heater}{Pool Heater} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_misc_pool_heater}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#pool-heater}{Pool Heater} documentation for additional information.
 
 \input{tables/properties/Misc Pool Heater}
 
@@ -1142,11 +1051,11 @@ Building America House Simulation Protocols (\cite{Wilson2014});  national avera
 \end{itemize}
 
 \paragraph{Options}
-The options for Misc Pool Pump are None and 1.0 horsepower (HP) Pump. If there is a pool, then the 1.0 HP Pump option is assigned. The characteristic assigns the \texttt{pool\_pump\_annual\_kwh} and \texttt{pool\_pump\_usage\_multiplier} ResStock arguments, Table \ref{table:hc_opt_misc_pool_pump}.
+The options for Misc Pool Pump are shown in Table \ref{table:hc_opt_misc_pool_pump}. The pool pump option will always be assigned when a home has a pool.
 
 \input{tables/options/Misc Pool Pump}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_misc_pool_pump}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#pool-pump}{ Pool Pump} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_misc_pool_pump}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#pool-pump}{ Pool Pump} documentation for additional information.
 
 \input{tables/properties/Misc Pool Pump}
 
@@ -1170,21 +1079,11 @@ Constructed using U.S. EIA 2020 RECS microdata.
 \end{itemize}
 
 \paragraph{Options}
-The options for the Misc Hot tub Spa characteristic are the heating fuel of the hot tub heater: Electricity, Natural gas, and Other Fuel. The None option is used when the housing unit does not have a hot tub. The characteristic assigns the \texttt{permanent\_spa\_present} \texttt{permanent\_spa\_heater\_type}, \texttt{permanent\_spa\_pump\_usage\_multiplier}, \texttt{permanent\_spa\_heater\_usage\_multiplier}, \texttt{permanent\_spa\_pump\_annual\_kwh}, \texttt{permanent\_spa\_heater\_annual\_kwh}, and \texttt{permanent\_spa\_heater\_annual\_therm} ResStock arguments. The following arguments are set for the options:
-
-\begin{itemize}
-    \item \texttt{permanent\_spa\_pump\_usage\_multiplier} is 1.0 for "Electricity" and "Natural Gas" and 0 for everything else.
-    \item \texttt{permanent\_spa\_heater\_usage\_multiplier} is 1.0 for "Electricity" and "Natural Gas" and 0 for everything else.
-    \item \texttt{permanent\_spa\_pump\_annual\_kwh} is auto for "Electricity" and "Natural Gas" and 0 for everything else.
-    \item \texttt{permanent\_spa\_heater\_annual\_kwh} is auto for "Electricity" and 0 for everything else.
-    \item \texttt{permanent\_spa\_heater\_annual\_therm} is auto for "Natural Gas" and 0 for everything else.
-\end{itemize}
-
-The ``Other Fuel'' option is assigned the same arguments as ``None,'' and will result in no energy consumption. The other arguments that vary across the arguments are in Table \ref{table:hc_opt_misc_hot_tub_spa}.
+Options for the Misc Hot tub Spa characteristic are shown in Table \ref{table:hc_opt_misc_hot_tub_spa}. The None option is used when the housing unit does not have a hot tub. The “Other Fuel” option is currently not modeled in ResStock and will result in no energy consumption.
 
 \input{tables/options/Misc Hot Tub Spa}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_misc_hot_tub_spa}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-permanent-spas}{Permanent Spas} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_misc_hot_tub_spa}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-permanent-spas}{Permanent Spas} documentation for additional information.
 
 \input{tables/properties/Misc Hot Tub Spa}
 
@@ -1237,15 +1136,7 @@ Presence of well pump according to the use of well for domestic water source.
 \end{itemize}
 
 \paragraph{Options}
-The options for the Misc Well Pump characteristic are Typical Efficiency if there is a well pump and None if there is no well pump. The characteristic sets the \texttt{misc\_plug\_loads\_well\_pump\_present}, \texttt{misc\_plug\_loads\_well\_pump\_usage\_multiplier}, \texttt{misc\_plug\_loads\_well\_pump\_2\_usage\_multiplier}, and \texttt{misc\_plug\_loads\_well\_pump\_annual\_kwh} ResStock arguments (Table \ref{table:hc_opt_misc_well_pump}).
-
-The \texttt{misc\_plug\_loads\_well\_pump\_usage\_multiplier} argument is 1.0 for ``Typical Efficiency'' and 0 for ``None.'' The \texttt{misc\_plug\_loads\_well\_pump\_2\_usage\_multiplier} argument is 1.0 for ``Typical Efficiency'' and 0 for ``None.''
-
-\input{tables/options/Misc Well Pump}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_misc_well_pump}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-misc-loads}{Misc Loads} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/properties/Misc Well Pump}
+Options for the Misc Well Pump characteristic are ``Typical Efficiency'' and ``None''.
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1269,15 +1160,7 @@ Building America House Simulation Protocols (\cite{Wilson2014}); national averag
 None.
 
 \paragraph{Options}
-The options for the Misc Gas Fireplace characteristic are either ``Gas Fireplace'' if the housing unit has a gas fireplace or ``None'' if there is no gas fireplace in the unit. The characteristic assigns the \texttt{misc\_fuel\_loads\_fireplace\_present}, \texttt{misc\_fuel\_loads\_fireplace\_frac\_sensible}, \texttt{misc\_fuel\_loads\_fireplace\_frac\_latent}, \texttt{misc\_fuel\_loads\_fireplace\_annual\_therm}, and \texttt{misc\_fuel\_loads\_fireplace\_usage\_multiplier} ResStock arguments (Table \ref{table:hc_opt_misc_gas_fireplace}).
-
-The \texttt{misc\_fuel\_loads\_fireplace\_fuel\_type} argument is set to natural gas. The \texttt{misc\_fuel\_loads\_fireplace\_frac\_sensible} and \texttt{misc\_fuel\_loads\_fireplace\_frac\_latent} arguments are set to auto.
-
-\input{tables/options/Misc Gas Fireplace}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_misc_gas_fireplace}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hvac-heating-fireplaces}{Fireplace} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/properties/Misc Gas Fireplace}
+Options for the Misc Gas Fireplace characteristic are ``Gas Fireplace'' and ``None''.
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -1294,13 +1177,7 @@ None.
 
 \paragraph{Options}
 
-The options for Misc Gas Grill are ``Gas Grill'' if the housing unit has a gas grill or ``None'' if the housing unit does not have a gas grill. The characteristic sets the \texttt{misc\_fuel\_loads\_grill\_present}, \texttt{misc\_fuel\_loads\_grill\_fuel\_type}, \texttt{misc\_fuel\_loads\_grill\_annual\_therm}, and \texttt{misc\_fuel\_loads\_grill\_usage\_multiplier} ResStock arguments (Table \ref{table:hc_opt_misc_gas_grill}). The \texttt{misc\_fuel\_loads\_grill\_fuel\_type} is always set to natural gas.
-
-\input{tables/options/Misc Gas Grill}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_misc_gas_grill}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-fuel-loads}{Fuel Loads} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/properties/Misc Gas Grill}
+Options for Misc Gas Grill are ``Gas Grill'' and ``None''.
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -1345,11 +1222,11 @@ Constructed using LBNL's 2020 Tracking the Sun report \citep{LBNLTTS2019}.
     \item Has PV.
 \end{itemize}
 \paragraph{Options}
-The options for PV orientation are the cardinal and subcardinal directions and ``None'' for housing units that do not have PV systems. The characteristic sets the \texttt{pv\_system\_array\_azimuth} and \texttt{pv\_system\_2\_array\_azimuth} arguments (Table \ref{table:hc_opt_pv_orientation}). The \texttt{pv\_system\_2\_array\_azimuth} argument is always set to 0.
+The options for PV orientation are the cardinal and subcardinal directions as shown in Table \ref{table:hc_opt_pv_orientation}. The ``None'' option is used for housing units that do not have PV systems.
 
 \input{tables/options/PV Orientation}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_pv_orientation}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_pv_orientation}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for additional information.
 
 \input{tables/properties/PV Orientation}
 
@@ -1373,13 +1250,11 @@ Constructed using LBNL's 2020 Tracking the Sun report \citep{LBNLTTS2019}.
 \end{itemize}
 
 \paragraph{Options}
-The options for the PV System Size characteristic are a set of PV system sizes ranging from 1--13 kWDC. The characteristic assigns the \texttt{pv\_system\_present}, \texttt{pv\_system\_module\_type}, \texttt{pv\_system\_location}, \texttt{pv\_system\_tracking}, \texttt{pv\_system\_array\_tilt}, \texttt{pv\_system\_max\_power\_output}, \texttt{pv\_system\_inverter\_efficiency}, \texttt{pv\_system\_system\_losses\_fraction}, \texttt{pv\_system\_2\_present}, \texttt{pv\_system\_2\_module\_type}, \texttt{pv\_system\_2\_location}, \texttt{pv\_system\_2\_tracking}, \texttt{pv\_system\_2\_array\_tilt}, and \texttt{pv\_system\_2\_max\_power\_output} ResStock arguments (Table \ref{table:hc_opt_pv_system_size}).
-
-The following arguments are set to auto: \texttt{pv\_system\_module\_type}, \texttt{pv\_system\_tracking}, \texttt{pv\_system\_max\_power\_output}, \texttt{pv\_system\_inverter\_efficiency}, \texttt{pv\_system\_system\_losses\_fraction}, \texttt{pv\_system\_2\_module\_type}, \texttt{pv\_system\_2\_tracking}, and \texttt{pv\_system\_2\_max\_power\_output}. The \texttt{pv\_system\_location} and \texttt{pv\_system\_2\_location} are set to roof. \texttt{pv\_system\_array\_tilt} and \texttt{pv\_system\_2\_array\_tilt} are always set to roofpitch. \texttt{pv\_system\_2\_present} is always false. \texttt{pv\_system\_2\_max\_power\_output} is always 0.
+The options for the PV System Size characteristic are shown in Table \ref{table:hc_opt_pv_system_size}.
 
 \input{tables/options/PV System Size}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_pv_system_size}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_pv_system_size}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for additional information.
 
 \input{tables/properties/PV System Size}
 
@@ -1406,7 +1281,11 @@ Not applicable.
 Not applicable.
 
 \paragraph{Options}
-Currently only the option ``None'' is defined in the ResStock baseline. This option is nullified by setting the \texttt{battery\_present} to 0. Other options are available for use in an upgrade measure, and the argument table shows how the options can be defined (Table \ref{table:hc_arg_def_battery}). The characteristic assigns the \texttt{battery\_location}, \texttt{battery\_power}, \texttt{battery\_capacity}, and \texttt{battery\_round\_trip\_efficiency} ResStock arguments.
+Battery options are shown in Table \ref{table:hc_opt_battery}. Currently only the ``None'' option is used. Other options are available for use in an upgrade.
+
+\input{tables/options/Battery}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_battery}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-batteries}{Batteries} documentation for additional information.
 
 \input{tables/properties/Battery}
 
@@ -1424,9 +1303,7 @@ Not applicable.
 Not applicable.
 
 \paragraph{Options}
-Currently only the option ``None'' is defined in the ResStock baseline. This option is nullified by setting the \texttt{dehumidifier\_efficiency} to 0. Other options are available for use in an upgrade measure, and the argument table shows how the options can be defined (Table \ref{table:hc_arg_def_dehumidifier}). The characteristic sets the \texttt{dehumidifier\_type}, \texttt{dehumidifier\_efficiency\_type}, \texttt{dehumidifier\_efficiency}, \texttt{dehumidifier\_capacity}, \texttt{dehumidifier\_rh\_setpoint}, and \texttt{dehumidifier\_fraction\_dehumidification\_load\_served} ResStock arguments.
-
-\input{tables/properties/Dehumidifier}
+Currently only the option ``None'' is used in ResStock.
 
 \paragraph{Distribution Assumption(s)}
 Not applicable
@@ -1435,7 +1312,7 @@ Not applicable
 Lighting in ResStock covers interior lighting within the housing unit, and for single-family homes, attached garage and exterior lighting that is metered at the home. Multifamily common space, parking garage, and exterior lighting are excluded from ResStock.
 
 \subsection{Modeling Approach}
-Five ResStock input files provide the options and arguments for lighting, but only two are currently in use:
+Five ResStock input files provide the options and properties for lighting, but only two are currently in use:
 \begin{itemize}
     \item{Lighting}---Electric lighting: interior, exterior, and garage
     \item{Misc Gas Lighting}---Exterior natural gas lighting
@@ -1469,34 +1346,11 @@ Specifies the type of lighting technology used in the housing unit.
 \end{itemize}
 
 \paragraph{Options}\label{options-108}
-In ResStock there are three options available for lighting: \textit{100\% CFL}, \textit{100\% LED}, and \textit{100\% Incandescent}. The assumption in ResStock is that all lighting within a home is of the same technology, both interior and exterior. Across all three options, the argument \textit{lighting\_present = true}. Each ResStock option specifies the corresponding ResStock arguments for interior, exterior, and garage of the building. All non-specified arguments in the table below for other technologies are set to zero. In OpenStudio-HPXML, all lighting that is not specified as one of the set technologies (e.g., CFL or LED) is assumed to be incandescent, so the \textit{100\% Incandescent} option has all technology options set to 0 (i.e., there is no explicit incandescent option in OpenStudio-HPXML).
+ResStock options are shown in Table \ref{table:hc_opt_lighting}. The assumption in ResStock is that all lighting (interior, exterior, and garage) is of the same technology.
 
-\begin{longtable}[]{|p{2.8cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
-\caption{Lighting options and arguments that vary for each option}\\
-%\begin{longtable}[]{@{}llllllllllll@{}}
-\toprule\noalign{}
-Option name & Interior argument & Exterior argument & Garage argument\\
-%\texttt{lighting\_interior\_fraction\_cfl} &
-%\texttt{lighting\_interior\_fraction\_lfl} &
-%\texttt{lighting\_interior\_fraction\_led} &
-%\texttt{lighting\_exterior\_fraction\_cfl} &
-%\texttt{lighting\_exterior\_fraction\_lfl} &
-%\texttt{lighting\_exterior\_fraction\_led} &
-%\texttt{lighting\_garage\_fraction\_cfl} &
-%\texttt{lighting\_garage\_fraction\_lfl} &
-%\texttt{lighting\_garage\_fraction\_led} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-100\% CFL & \textit{lighting\_interior\_fraction\_cfl} = 1 &\textit{lighting\_exterior\_fraction\_cfl} = 1 & \textit{lighting\_garage\_fraction\_cfl} = 1  \\
-\hline
-100\% Incandescent & all arguments = 0 & all arguments = 0  & all arguments = 0  \\
-\hline
-100\% LED & \textit{lighting\_interior\_fraction\_led} = 1 &\textit{lighting\_exterior\_fraction\_led} = 1 & \textit{lighting\_garage\_fraction\_led} = 1 \\
-\end{longtable}
+\input{tables/options/Lighting}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_lighting}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_lighting}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for additional information.
 
 \input{tables/properties/Lighting}
 
@@ -1510,7 +1364,7 @@ For the argument definitions, see Table \ref{table:hc_arg_def_lighting}. See the
   CFl, and 100\% LED lamp type options.
 \item
 Qualitative portion of inside light bulbs in 2020 RECS microdata is
-mapped to quantative percentage as:
+mapped to quantitative percentage as:
 None: 0\%; Some: 20\%; About half: 50\%; Most: 80\%; All: 100\%.
 Then the sum of three types of lighting options is normalized to 100\%.
 \end{itemize}
@@ -1527,13 +1381,7 @@ Presence of exterior natural gas lighting.
 \paragraph{Direct Conditional Dependencies}
 None.
 \paragraph{Options}
-ResStock has two options for Misc Gas Lighting (Table \ref{table:hc_opt_misc_gas_lighting}): \textit{None} or \textit{Gas Lighting}. For both of these options, the \textit{misc\_fuel\_loads\_lighting\_fuel\_type} ResStock argument is set to \textit{natural gas}.
-
-\input{tables/options/Misc Gas Lighting}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_misc_gas_lighting}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-fuel-loads}{Misc Fuel Loads} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/properties/Misc Gas Lighting}
+ResStock options for Misc Gas Lighting are ``Gas Lighting'' and ``None''.
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -1547,9 +1395,7 @@ Not applicable.
 \paragraph{Direct Conditional Dependencies}
 None.
 \paragraph{Options}
-The \textit{No Exterior Use} option is assigned to all buildings in ResStock (Table \ref{table:hc_opt_holiday_lighting}).
-
-\input{tables/options/Holiday Lighting}
+The ``No Exterior Use'' option is assigned to all buildings in ResStock.
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -1562,9 +1408,7 @@ Not applicable.
 \paragraph{Direct Conditional Dependencies}
 None.
 \paragraph{Options}
-All buildings are assigned the option \textit{100\% Usage}, which sets the ResStock argument \textit{lighting\_interior\_usage\_multiplier} to 1 (the OpenStudio-HPXML default) (Table \ref{table:hc_arg_def_lighting_interior_use}).
-
-\input{tables/properties/Lighting Interior Use}
+All buildings are assigned the option ``100% Usage''.
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1584,11 +1428,7 @@ Not applicable.
 None.
 
 \paragraph{Options}
-All buildings are assigned the option \textit{100\% Usage}, which sets the ResStock arguments \textit{lighting\_exterior\_usage\_multiplier} and \textit{lighting\_garage\_usage\_multiplier}  to 1 (the OS-HPXML default).
-
-For the argument definitions, see Table \ref{table:hc_arg_def_lighting_other_use}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/properties/Lighting Other Use}
+All buildings are assigned the option ``100% Usage''.
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1627,18 +1467,11 @@ Plug load usage level as a percentage of the national average.
 
 \paragraph{Options}
 
-ResStock provides a range of percentages for plug load usage that are multipliers compared to national average plug load energy use (Table \ref{table:hc_opt_plug_loads}). Several ResStock arguments are constant across all options:
-\begin{itemize}
-    \item \texttt{misc\_plug\_loads\_television\_present} = true
-    \item \texttt{misc\_plug\_loads\_television\_annual\_kwh} = auto
-    \item \texttt{misc\_plug\_loads\_other\_annual\_kwh} = auto
-    \item \texttt{misc\_plug\_loads\_other\_frac\_sensible} = 0.93
-    \item \texttt{misc\_plug\_loads\_other\_frac\_latent} = 0.021.
-\end{itemize}
+ResStock options shown in Table \ref{table:hc_opt_plug_loads} provide a range of percentages for plug load usage that are multipliers compared to national average plug load energy use.
 
 \input{tables/options/Plug Loads}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_plug_loads}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_plug_loads}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for additional information.
 
 \input{tables/properties/Plug Loads}
 
@@ -1664,11 +1497,11 @@ Plug load diversity multiplier intended to add additional variation in plug load
     \item Usage Level.
 \end{itemize}
 \paragraph{Option(s)}
-Three different levels of plug load diversity are added on top of the regional multipliers from the Plug Loads input file (Table \ref{table:hc_opt_plug_load_diversity}).
+Plug load diversity options shown in Table \ref{table:hc_opt_plug_load_diversity} are added on top of the regional multipliers from the Plug Loads characteristic.
 
 \input{tables/options/Plug Load Diversity}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_plug_load_diversity}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for the available HPXML schema elements, default values, and constraints.
+Property definitions are shown in Table \ref{table:hc_arg_def_plug_load_diversity}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for additional information.
 
 \input{tables/properties/Plug Load Diversity}
 
@@ -1708,11 +1541,7 @@ The dwelling unit owns an electric vehicle.
 \end{itemize}
 
 \paragraph{Options}
-The options for Electric Vehicle Ownership characteristic determine if other arguments for the EV are used.
-
-The options can be found in Table \ref{table:hc_opt_electric_vehicle_ownership}. The Void option is used for impossible dependency conditions and is not sampled.
-
-\input{tables/options/Electric Vehicle Ownership}
+The options ``No'' and ``Yes'' for Electric Vehicle Ownership characteristic determine if other EV properties are assigned.
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1724,7 +1553,7 @@ The options can be found in Table \ref{table:hc_opt_electric_vehicle_ownership}.
     \item Building type is consolidated into two bins 1) single-family and 2) multi-family and mobile home
   \end{enumerate}
   \item PUMA level battery EV saturation is calculated using a weighted average of the County level Experian data and ResStock unit counts for each County and PUMA.
-  \item The RECS 2020 satuations for each segment in a given PUMA are scaled to match the Experian PUMA weighted averaged battery EV saturation using the segment unit counts from PUMS 2019-5yrs survey.
+  \item The RECS 2020 saturations for each segment in a given PUMA are scaled to match the Experian PUMA weighted averaged battery EV saturation using the segment unit counts from PUMS 2019-5yrs survey.
 \end{itemize}
 
 \subsubsection{Electric Vehicle Battery}
@@ -1741,17 +1570,18 @@ The type of electric vehicle and battery range in miles.
 No direct conditional dependencies.
 
 \paragraph{Options}
-The options for Electric Vehicle Battery characteristic is a set of electric vehicle types and battery range in miles. These options do not specifiy if the unit has a vehicle, but rather the preference of the vehicle type and battery range if the household owned an electric vehicle. Every unit is assigned one of these options so that the vehicle type and battery range does not need to be sampled during an electric vehicle upgrade. The housing units at which an electric vehicle is modeled are specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_battery\_usable\_capacity}, \texttt{vehicle\_fuel\_economy\_units}, \texttt{vehicle\_fuel\_economy\_combined}, \texttt{ev\_average\_mph}, and \texttt{ev\_efficiency\_percent\_increase} ResStock arguments. The argument definitions are found in Table \ref{table:hc_arg_def_electric_vehicle_battery}.
+The options shown in Table \ref{table:hc_opt_electric_vehicle_battery} for the Electric Vehicle Battery characteristic determine the electric vehicle type and battery range in miles. These options do not specify if the unit has a vehicle, but rather the preference of the vehicle type and battery range if the household owned an electric vehicle. Every unit is assigned one of these options so that the vehicle type and battery range does not need to be sampled during an electric vehicle upgrade. The housing units at which an electric vehicle is modeled are specified by the Electric Vehicle Ownership characteristic.
+
+\input{tables/options/Electric Vehicle Battery}
+
+The Experian dataset is used to characterize the distribution of electric vehicles and associated battery sizes in the vehicle stock. We used the latest available data for the year 2023, which ensures that our analysis is based on the most current information regarding the electric vehicle battery stock. Although the vehicle data included information on internal combustion engine vehicles in addition to the battery electric vehicles, we filtered the dataset to focus exclusively on personal light-duty battery electric vehicles. In the dataset, there are four different categories of light-duty vehicles, including (a) Compact, (b) Midsize, (c) Sport Utility Vehicle (SUV), and (d) Pickup truck. Additionally, the dataset includes information on two total mileage ranges for the battery: (a) 200-mile range and (b) 300-mile range.
+
+Then, for each electric vehicle type, we draw from Argonne National Laboratory's Autonomie20\footnote{Autonomie is the source of TEMPO's inputs about electric vehicle characteristics for both current day and future scenarios} vehicle powertrain simulation model for the electric vehicle energy consumption. The average driving speed is sourced from the 2017 NHTS which summarizes U.S. travel behavior (\cite{NHTS2017}). We assume that the average speed of electric vehicles is the same as the average speed of all vehicles.
+
+Property definitions are shown in Table \ref{table:hc_arg_def_electric_vehicle_battery}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles}{Vehicles} documentation for additional information.
 
 \input{tables/properties/Electric Vehicle Battery}
 
-% TODO: add ev_efficiency_percent_increase and vehicle_fuel_economy_units
-
-The options and their ResStock argument values can be found in Table \ref{table:hc_opt_electric_vehicle_battery}. The Experian dataset is used to characterize the distribution of electric vehicles and associated battery sizes in the vehicle stock. We used the latest available data for the year 2023, which ensures that our analysis is based on the most current information regarding the electric vehicle battery stock. Although the vehicle data included information on internal combustion engine vehicles in addition to the battery electric vehicles, we filtered the dataset to focus exclusively on personal light-duty battery electric vehicles. In the dataset, there are four different categories of light-duty vehicles, including (a) Compact, (b) Midsize, (c) Sport Utility Vehicle (SUV), and (d) Pickup truck. Additionally, the dataset includes information on two total mileage ranges for the battery: (a) 200-mile range and (b) 300-mile range.
-
-Then, for each electric vehicle type, we draw from Argonne National Laboratory's Autonomie20\footnote{Autonomie is the source of TEMPO's inputs about electric vehicle characteristics for both current day and future scenarios} vehicle powertrain simulation model for the electric vehicle energy consumption (\texttt{vehicle\_fuel\_economy\_combined}) and battery capacity (\texttt{vehicle\_battery\_usable\_capacity}). The units for the combined fuel economy (\texttt{vehicle\_fuel\_economy\_units}) are always kWh/mile. The average driving speed is sourced from the 2017 NHTS which summarizes U.S. travel behavior (\cite{NHTS2017}). We assume that the average speed of electric vehicles is the same as the average speed of all vehicles. A scaling factor is applied to increase the efficiency of electric vehicles (\texttt{ev\_efficiency\_percent\_increase}). This value is 0.0 for the ResStock baseline meaning that the efficiency is equal to \texttt{vehicle\_fuel\_economy\_combined}, but it is exposed so that scenarios of EV efficiency improvements can be modeled.
-
-\input{tables/options/Electric Vehicle Battery}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1773,13 +1603,13 @@ U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 \end{itemize}
 
 \paragraph{Options}
-The options for the Electric Vehicle Charge At Home characteristic is a set of percentages that determine how much of the electric vehicle's energy shows up on the residential meter vs charging at work or at public chargers. Every unit in the baseline is assigned one of these options so that the home charging fraction does not need to be sampled during an electric vehicle upgrade. The units with an electric vehicle are specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_fraction\_charged\_home} ResStock argument. The argument definition is found in Table \ref{table:hc_arg_def_electric_vehicle_charge_at_home}.
-
-\input{tables/properties/Electric Vehicle Charge At Home}
-
-The options and their ResStock arguments values can be found in Table \ref{table:hc_opt_electric_vehicle_charge_at_home}.
+The options shown in Table \ref{table:hc_opt_electric_vehicle_charge_at_home} for the Electric Vehicle Charge At Home characteristic determine how much of the electric vehicle's energy shows up on the residential meter vs charging at work or at public chargers. Every unit in the baseline is assigned one of these options so that the home charging fraction does not need to be sampled during an electric vehicle upgrade. The units with an electric vehicle are specified by the Electric Vehicle Ownership characteristic.
 
 \input{tables/options/Electric Vehicle Charge At Home}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_electric_vehicle_charge_at_home}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles}{Vehicles} documentation for additional information.
+
+\input{tables/properties/Electric Vehicle Charge At Home}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -1802,13 +1632,13 @@ U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 \end{itemize}
 
 \paragraph{Options}
-The options for the Electric Vehicle Charger characteristic describe the type of charger used by an electric vehicle owner at home. The characteristic sets the \texttt{ev\_charger\_present}, \texttt{ev\_charger\_power}, and \texttt{ev\_charger\_location} ResStock arguments. The argument definition is found in Table \ref{table:hc_arg_def_electric_vehicle_charger}. If \texttt{ev\_charger\_present} is set to "true", then the other arguments are required otherwise the power and location arguments will not be used. In the baseline stock the \texttt{ev\_charger\_location} argument is set to "auto", meaning it takes the default OpenStudio-HPXML value (see OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#hpxml-electric-vehicle-chargers}{Electric Vehicle Charger}).
-
-\input{tables/properties/Electric Vehicle Charger}
-
-The options and their ResStock arguments values can be found in Table \ref{table:hc_opt_electric_vehicle_charger}. The Void option will not be sampled but indicates when an impossible combination of dependencies are listed.
+The options shown in Table \ref{table:hc_opt_electric_vehicle_charger} for the Electric Vehicle Charger characteristic describe the type of charger used by an electric vehicle owner at home.
 
 \input{tables/options/Electric Vehicle Charger}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_electric_vehicle_charger}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers}{Electric Vehicle Charger} documentation for additional information.
+
+\input{tables/properties/Electric Vehicle Charger}
 
 \paragraph{Distribution Assumption(s)}
 Dwelling units with an electric vehicle need to have at least a Level 1 charger. Due to low sample sizes, coarsening of the dependencies are applied in the following order.
@@ -1831,13 +1661,13 @@ The 2022 U.S. Federal Highway Administration National Household Travel Survey (N
 No direct conditional dependencies.
 
 \paragraph{Options}
-The options for Electric Vehicle Miles Traveled characteristic are a set of miles traveled by the electric vehicle. These options do not specifiy if the unit has a vehicle, but rather the amount of miles the EV travels if the dwelling unit has an electric vehicle. Every unit is assigned one of these options so that the vehicle miles traveled does not need to be sampled during an electric vehicle upgrade. The units with an electric vehicle is specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_miles\_driven\_per\_year} ResStock argument. The argument definition is found in Table \ref{table:hc_arg_def_electric_vehicle_miles_traveled}.
-
-\input{tables/properties/Electric Vehicle Miles Traveled}
-
-The options and their ResStock arguments values can be found in Table \ref{table:hc_opt_electric_vehicle_miles_traveled}. The options range between 1,000 miles and 22,500 miles.
+The options shown in Table \ref{table:hc_opt_electric_vehicle_miles_traveled} for Electric Vehicle Miles Traveled characteristic specify  miles traveled per year by the electric vehicle. These options do not specify if the unit has a vehicle, but rather the amount of miles the EV travels if the dwelling unit has an electric vehicle. Every unit is assigned one of these options so that the vehicle miles traveled does not need to be sampled during an electric vehicle upgrade. The units with an electric vehicle is specified by the Electric Vehicle Ownership characteristic.
 
 \input{tables/options/Electric Vehicle Miles Traveled}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_electric_vehicle_miles_traveled}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles}{Vehicles} documentation for additional information.
+
+\input{tables/properties/Electric Vehicle Miles Traveled}
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made.
@@ -1855,11 +1685,11 @@ U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
   \item Federal Poverty Level
   \item Geometry Building Type RECS
   \item Tenure
-  \item Vinteage ACS
+  \item Vintage ACS
 \end{itemize}
 
 \paragraph{Options}
-The options for Electric Vehicle Outlet Access characteristic indicate whether the unit has charging within 20 ft of the vehicle parking. This characteristic does not assign any ResStock arguments. The options are Yes, No, and Void. The Void option is assigned to impossible dependency combinations.
+The options for Electric Vehicle Outlet Access characteristic indicate whether the unit has charging within 20 ft of the vehicle parking. This characteristic does not assign any modeling properties. The options are ``Yes'' and ``No''.
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -2106,7 +1936,9 @@ Income of the household occupying the housing unit.
 \end{itemize}
 
 \paragraph{Options}
-The Income options are a set of income bins ranging from 10,000 to 199,999. The two end bins are <10,000 and 200,000+. This characteristic has no ResStock arguments. Instead, it is used to construct other income characteristics and influences the distribution of housing characteristics as an indirect dependency.
+The Income options are shown in Table \ref{table:hc_opt_income}. This characteristic has no modeling properties. Instead, it is used to construct other income characteristics and influences the distribution of housing characteristics as an indirect dependency.
+
+\input{tables/options/Income}
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
@@ -2146,7 +1978,7 @@ Consumption Survey.
 \end{itemize}
 
 \paragraph{Options}
-The Income RECS2015 option are bins mapped from the Income characteristic to align with the RECS 2015 income bins. The characteristic does not set any ResStock arguments.
+The Income RECS2015 option are bins mapped from the Income characteristic to align with the RECS 2015 income bins. The characteristic does not set any modeling properties.
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
@@ -2172,7 +2004,7 @@ Consumption Survey.
 \end{itemize}
 
 \paragraph{Options}
-The Income RECS2020 options are bins mapped from the Income characteristic to align with the RECS 2020 income bins. The characteristic does not set any ResStock arguments.
+The Income RECS2020 options are bins mapped from the Income characteristic to align with the RECS 2020 income bins. The characteristic does not set any modeling properties.
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
@@ -2199,7 +2031,9 @@ Income as a percent of the federal poverty line of the household occupying the h
 \end{itemize}
 
 \paragraph{Options}
-The Federal Poverty Level options are the following bins: \%0--100\%, 100\%--150\%, 150\%--200\%, 200\%--300\%, 300\%--400\%, and 400\%+. The Not Available option is for vacant units. The Federal Poverty Level options do not set any ResStock arguments.
+The Federal Poverty Level options are shown in Table \ref{table:hc_opt_federal_poverty_level}. The Not Available option is for vacant units. The Federal Poverty Level options do not set any modeling properties.
+
+\input{tables/options/Federal Poverty Level}
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
@@ -2232,7 +2066,9 @@ Income as a percent of area median income of the household occupying the housing
 \end{itemize}
 
 \paragraph{Options}
-The Area Median Income options are the following bins: 0\%--30\%, 30\%--60\%, 60\%--80\%, 80\%--100\%, 100\%--120\%, 120\%--150\%, and 150+\%. The Not Available option is for vacant units. The Area Median Income options do not set any ResStock arguments.
+The Area Median Income options are shown in Table \ref{table:hc_opt_area_median_income}. The Not Available option is for vacant units. The Area Median Income options do not set any modeling properties.
+
+\input{tables/options/Area Median Income}
 
 \paragraph{Distribution Assumptions}
 \begin{enumerate}
@@ -2273,7 +2109,9 @@ differentiated by metro and nonmetro regions of the state.
 \end{itemize}
 
 \paragraph{Options}
-The State Metro Median Income options are the following bins: 0\%--30\%, 30\%--60\%, 60\%--80\%, 80\%--100\%, 100\%--120\%, 120\%--150\%, and 150+\%. The Not Available option is for vacant units. The State Metro Median Income options do not set any ResStock arguments.
+The State Metro Median Income options are shown in Table \ref{table:hc_opt_state_metro_median_income}. The Not Available option is for vacant units. The State Metro Median Income options do not set any modeling properties.
+
+\input{tables/options/State Metro Median Income}
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
@@ -2306,7 +2144,11 @@ The number of occupants living in the housing unit.
 \end{itemize}
 
 \paragraph{Options}
-The Occupants options range from 0 to 10+ for the the ResStock baseline baseline (Table \ref{table:hc_arg_def_occupants}). This characteristic assigns value to \texttt{geometry\_unit\_num\_occupants} accordingly, with \texttt{geometry\_unit\_num\_occupants}=11 for Occupants=10+. Occupants=0 corresponds to vacant units. \texttt{general\_water\_use\_usage\_multiplier} is auto-calculated from occupants.
+The Occupants options are shown in Table \ref{table:hc_opt_occupants}.
+
+\input{tables/options/Occupants}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_occupants}.
 
 \input{tables/properties/Occupants}
 
@@ -2351,13 +2193,7 @@ The vacancy status (occupied or vacant) of the housing unit.
 \end{itemize}
 
 \paragraph{Options}
-The Vacancy Status options are either Occupied or Vacant. The options assign the vacancy periods through the  \texttt{schedules\_vacancy\_periods} ResStock argument (Table \ref{table:hc_opt_vacancy_status}). Vacant units are assumed to be vacant for the full calendar year.
-
-\input{tables/options/Vacancy Status}
-
-The argument definition of the arguments set in the Vacancy Status characteristic can be found in Table \ref{table:hc_arg_def_vacancy_status}.
-
-\input{tables/properties/Vacancy Status}
+The Vacancy Status options are either ``Occupied'' or ``Vacant''. Vacant units are assumed to be vacant for the full calendar year.
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
@@ -2387,7 +2223,7 @@ unit.
 \end{itemize}
 
 \paragraph{Options}
-The Tenure options are Owner, Renter, and Not Available. The not applicable option is for vacant units.
+The Tenure options are ``Owner'', ``Renter'', and ``Not Available''. The ``Not Available'' option is for vacant units.
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
@@ -2421,7 +2257,7 @@ in the household.
 \end{itemize}
 
 \paragraph{Options}
-The Household Has Tribal Persons options are Yes, No, and Not Available. The Not Available option is for Vacant Units.
+The Household Has Tribal Persons options are ``Yes'', ``No'', and ``Not Available''. The Not Available option is for Vacant Units.
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}

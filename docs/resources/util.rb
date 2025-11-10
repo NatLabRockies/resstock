@@ -47,7 +47,7 @@ end
 # Get csv data for options_lookup.tsv and options_saturations.csv.
 def get_lookup_and_saturations_csv_data(resources_dir)
   lookup_file = File.join(resources_dir, 'options_lookup.tsv')
-  option_sat_file = File.join('project_national', 'resources', 'options_saturations.csv')
+  option_sat_file = File.join(File.dirname(__FILE__), '..', '..', 'project_national', 'resources', 'options_saturations.csv')
   lookup_csv_data = CSV.open(lookup_file, col_sep: "\t").each.to_a
   option_sat_csv_data = CSV.open(option_sat_file, quote_char: '"', col_sep: ',').each.to_a
   return lookup_csv_data, option_sat_csv_data
