@@ -25,166 +25,13 @@ A solar hot water heater is a system that uses the sun to heat water. Typically 
 ResStock does not model building-level shared water heaters. Instead, ResStock models shared water heaters as equivalent in-unit style water heaters located in a heated common space outside the unit. This is due to ResStock’s current approach of modeling multifamily as singular housing units rather than as buildings consisting of multiple units, which limits the modeling of any shared systems. The out-of-unit location ensures that these water heaters do not generate tank losses that a housing unit's HVAC system must address. However, this proxy modeling approach does not account for the differences in piping and tank losses from central water heaters. In addition to systems shared by multiple units, ResStock does not model combination systems that provide other services such as space conditioning in addition to hot water.
 
 \subsubsection{Water Heater Fuel}\label{water_heater_fuel}
-\paragraph{Description}
-The water heater fuel type.
-
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  U.S. EIA 2020 RECS microdata
-\item
-  Alaska-specific distribution is based on Alaska Retrofit Information
-  System (2008 to 2022), maintained by Alaska Housing Finance
-  Corporation.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Building Type RECS
-    \item Heating Fuel
-    \item State
-\end{itemize}
-
-\paragraph{Options}
-Water Heater Fuel has options shown in Table \ref{table:hc_opt_water_heater_fuel}. The characteristic does not set any modeling properties. Instead, it is a direct dependency for Water Heater Efficiency, where the heating fuel is assigned individually for each water heater option. Through this dependency, any changes to the distribution of water heater fuels will cascade to influence the water heater types. After conversations with EIA the Other Fuel water heater is typically composed of respondents saying they either do not have a water heater, coal, biomass, or district steam systems. ResStock models the energy associated with Other Fuel water heaters as coal energy consumption.
-
-\input{tables/options/Water Heater Fuel}
-
-\paragraph{Distribution Assumptions}
-\begin{itemize}
-\item
-  Due to low sample sizes, fallback rules are applied, with lumping of:
-
-  \begin{itemize}
-  \item
-    State: Census Division RECS
-  \item
-    Geometry building SF: Mobile, Single-family attached, Single-family detached
-  \item
-    Geometry building MF: Multifamily with 2--4 Units,
-    Multifamily with 5+ Units
-  \item
-    State: Census Region
-\item
-State: National
-  \end{itemize}
-\item
-  For Alaska, we are using a field in ARIS that lumps multifamily 2--4
-  units and multifamily 5+ units buildings together. Data from the
-  American Community Survey are used to distribute between these two
-  building types.
-\item
-  For Alaska, wood and coal heating is modeled as other fuel.
-\item
-  For Alaska, when a building uses more than one fuel for water heating,
-  the fuel with highest consumption is considered the water heater fuel and used to meet all loads.
-\end{itemize}
+\input{characteristics/Water Heater Fuel}
 
 \subsubsection{Water Heater In Unit}\label{water_heater_in_unit}
-\paragraph{Description}
-Presence of an individual water heater in the housing unit that solely serves the specific housing unit.
-
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  U.S. EIA 2020 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Building Type RECS
-    \item State
-    \item Vintage ACS
-\end{itemize}
-
-\paragraph{Options}
-In the ResStock baseline, all housing units have access to hot water and use energy for water heating. This characteristic has no modeling properties. Instead, it is used to separate water heating energy between in-unit versus shared designations. As a direct dependency to Water Heater Location, it ensures water heaters not in-unit are located appropriately and have no interaction with in-unit end-use loads.
-
-\paragraph{Distribution Assumptions}
-\begin{itemize}
-\item
-  All water heaters for Single-Family Detached and Mobile Homes are in-unit (not shared).
-\item
-  Single-Family Attached assumes the distribution from RECS 2009 because RECS 2020 does not have this breakdown.
-\item
-  Due to low sample sizes, fallback rules are applied, with lumping of:
-
-  \begin{itemize}
-  \item
-    State: Census Division RECS
-  \item
-    Vintage ACS: Combining Vintage pre-1960s and post-2000
-  \item
-    State: Census Region.
-  \end{itemize}
-\end{itemize}
+\input{characteristics/Water Heater In Unit}
 
 \subsubsection{Water Heater Location}\label{water_heater_location}
-\paragraph{Description}
-Location of the water heater.
-
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  U.S. EIA 2020 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item ASHRAE IECC Climate Zone 2004
-    \item Geometry Space Combination
-    \item Vintage ACS
-    \item Water Heater In Unit.
-\end{itemize}
-
-\paragraph{Options}
-The options shown in Table \ref{table:hc_opt_water_heater_location} are spaces where the water heater can be located. The Conditioned Mechanical Room option is only used for multifamily units with shared water heating.
-
-\input{tables/options/Water Heater Location}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_water_heater_location}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} documentation for additional information.
-
-\input{tables/properties/Water Heater Location}
-
-\paragraph{Distribution Assumptions}
-\begin{itemize}
-\item
-  H2OMAIN = other is equally distributed among attic and crawlspace.
-\item
-  H2OMAIN does not apply to multifamily, therefore Water heater
-  location for multifamily with in-unit water heater is taken after the
-  combined distribution of other building types.
-\item
-  Out-of-unit water heater is assumed to be in Conditioned Mechanical
-  Room. Per expert judgment, water heaters cannot be outside or in
-  vented spaces for IECC Climate Zones 4-8 due to pipe-freezing risk.
-\item
-  Where samples \textless{} 10, data are aggregated in the following
-  order:
-  \begin{itemize}
-\item
-  Building Type lumped into single-family, multifamily, and mobile
-  home.
-\item
-  1 + Foundation Type combined.
-\item
-2 + Attic Type combined
-\item
-  3 + Garage combined.
-\item
-  Single/Multifamily + Foundation combined + Attic combined +
-  Garage combined.
-\item
-  5 + pre-1960 combined.
-\item
-  5 + pre-1960 combined/post-2020 combined.
-\item
-  7 + IECC Climate Zone lumped into: 1-2+3A, 3B-3C, 4, 5, 6, 7 except
-  AK, 7AK-8AK.
-\item
-  7 + IECC Climate Zone lumped into: 1-2-3, 4-8.
-\end{itemize}
-\end{itemize}
+\input{characteristics/Water Heater Location}
 
 \subsubsection{Water Heater Efficiency}\label{water_heater_efficiency}
 \input{characteristics/Water Heater Efficiency}
@@ -194,31 +41,8 @@ Property definitions are shown in Table \ref{table:hc_arg_def_water_heater_locat
 ResStock follows the OpenStudio-HPXML default assumptions when modeling hot water distribution, see the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-hot-water-distribution}{Hot Water Distribution} documentation. Pipes are not explicitly modeled for any distribution systems, and correlations are instead used for determining the amount of hot water waste and heat gains in the living space depending on  the hot water distribution system type and insulation. For a recirculation distribution system, the pipe length is calculated differently and additional inputs (e.g., power rating, control type) are used to specify the recirculation pump and pipe loop length. While recirculation options are available, all housing units in the baseline are assumed to have uninsulated trunk and branch hot water distribution system with copper pipes and without recirculation or drain water heat recovery. The inputs are captured in a single housing characteristic Hot Water Distribution.
 
 \subsubsection{Hot Water Distribution}\label{hot_water_distribution}
-\paragraph{Description}
-Hot water piping material and insulation level.
+\input{characteristics/Hot Water Distribution}
 
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  Engineering judgment.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-No dependencies.
-
-\paragraph{Options}
-ResStock models all homes using a single hot water distribution option as shown in Table \ref{table:hc_opt_hot_water_distribution}.
-
-\input{tables/options/Hot Water Distribution}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_hot_water_distribution}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-hot-water-distribution}{Hot Water Distribution} documentation for additional information.
-
-\input{tables/properties/Hot Water Distribution}
-
-\paragraph{Distribution Assumptions}
-No assumptions are made.
-
-% ##################
 \subsection{Hot Water Fixtures}
 Following the OpenStudio-HPXML default assumption, ResStock models hot water fixtures as 60\% faucets and 40\% showers and baths, operating at a mixed water temperature of 105\degree F for all housing units. None of the fixtures are assumed to be low-flow. However, low-flow options are available as upgrades.
 
@@ -227,45 +51,8 @@ Following the OpenStudio-HPXML default assumption, ResStock models hot water fix
 The fraction of low-flow fixtures adjusts the demand to account for fixture efficiency. The demand is also multiplied by a fixture usage multiplier to add diversity. The hot water fixture usage multiplier is given by a log-normal distribution of values ranging from 40\% to 200\% (with mean at 80\%\footnote{The 80\% average multiplier resulted in a lower than expected water usage and is addressed in a later version of ResStock.}) derived from the field data of 1,700 residential electric resistance water heaters in a demand management program in the U.S. Northeast census division.
 
 \subsubsection{Hot Water Fixtures}\label{hot_water_fixtures}
-\paragraph{Description}
-Hot water fixture usage and flow levels.
+\input{characteristics/Hot Water Fixtures}
 
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  Field data from a demand management program with 1,700 residential
-  electric resistance water heaters in the Northeast U.S. census division.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-\item Usage Level.
-\end{itemize}
-
-\paragraph{Options}
-The Hot Water Fixtures options are shown in Table \ref{table:hc_opt_hot_water_fixtures}.
-
-\input{tables/options/Hot Water Fixtures}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_hot_water_fixtures}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-fixtures}{Water Fixtures} documentation for additional information.
-
-\input{tables/properties/Hot Water Fixtures}
-
-\paragraph{Distribution Assumptions}
-\begin{itemize}
-\item
-  A log-normal distribution was shown to match the distribution of annual
-  energy consumption.
-\item
-  The data shows approximately a log-normal distribution. From the data, the average multiplier is 0.8 and the
-  standard deviation is 0.2. The average multiplier was mean-shifted from 0.8 to 1 average usage.
-\item
-  Low, Medium, and High usage is assigned based on the lower 25th
-  percent, middle 50th percent, and upper 25th percent.
-\end{itemize}
-
-
-% ##################
 \subsection{Hot Water Appliances}
 For dishwashers and clothes washers, their daily demand for hot water (in gallons per day) is calculated according to ANSI/RESNET/ICC 301 standard. The standard uses the rated values from the product EnergyGuide label and the number of bedrooms to estimate the number of annual cycles, and thus, annual energy and hot water uses. The energy and hot water uses are further adjusted for the number of occupants in a home and multiplied by an appliance usage multiplier to add diversity, representing high-usage or low-usage occupants. These usage multipliers are given by a simple, manually created distribution of values ranging from 80\% to 120\%, with mean centered at 100\%. The energy to heat the water and distribution losses are attributed to the water heater.
 
@@ -279,24 +66,8 @@ ResStock models the diversity of appliance usage in a couple of ways. The first 
 
 The second way is through the number and timing of appliance events throughout the year, which is dealt with in the stochastic schedule generator. See Section \ref{occupancy_model} for more information about when and how long the events occur for different schedules.
 
-
 \subsubsection{Usage Level}
-\paragraph{Description}
-Usage of major appliances relative to the national average.
-
-\paragraph{Distribution Data Source(s)}
-Engineering judgment and calibration.
-
-\paragraph{Direct Conditional Dependencies}
-None.
-
-\paragraph{Options}
-The options are shown in Table \ref{table:hc_opt_usage_level}. The distribution values are 25\% for low, 50\% for medium, and 25\% for high. These options do not assign modeling properties.
-
-\input{tables/options/Usage Level}
-
-\paragraph{Distribution Assumption(s)}
-None.
+\input{characteristics/Usage Level}
 
 \subsection{Refrigeration}
 \subsubsection{Modeling Approach}
@@ -306,175 +77,16 @@ To account for additional refrigeration, correction factors derived using the co
 The timeseries schedules are handled by OpenStudio-HPXML. Currently, there are weekday and weekend schedules, and monthly multipliers.
 
 \subsubsection{Refrigerator}
-\paragraph{Description}
-The presence and rated efficiency of the primary refrigerator.
-\paragraph{Distribution Data Source(s)}
-Constructed using U.S. EIA 2020 RECS microdata. Age of refrigerator converted to efficiency levels using ENERGY STAR shipment-weighted efficiencies by year data from Home Energy Saver.\footnote{For more information, see http://hes-documentation.lbl.gov/.}
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Federal Poverty Level
-    \item Geometry Building Type RECS
-    \item State
-    \item Tenure
-    \item Vintage.
-\end{itemize}
-\paragraph{Options}
-ResStock options shown in Table \ref{table:hc_opt_refrigerator} differentiate primary refrigerators based on their efficiency level. A ``None'' option is used for housing units that do not have a refrigerator.
-
-\input{tables/options/Refrigerator}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_refrigerator}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{Refrigerators} documentation for additional information.
-
-\input{tables/properties/Refrigerator}
-
-\paragraph{Distribution Assumption(s)}
-The current year is assumed to be 2022. Currently, each year has its own distribution and then we average out the distributions to get the distribution for the age bins. The Energy Factor for all years are weighted equally when calculating the average distribution for the age bins. ENERGY STAR distributions from 2009 dependent on Geometry Building Type RECS, Federal Poverty Level, and Tenure are used to calculate efficiency distribution in RECS2020. ENERGY STAR Refrigerators are assumed to be 10\% more efficient than standard. Due to the low sample count, the following coarsening rules are incorporated.
-\begin{enumerate}
-    \item  State coarsened to Census Division RECS, with AK/HI separate.
-    \item Geometry Building Type RECS coarsened to SF/MF/MH
-    \item Geometry Building Type RECS coarsened to SF and MH/MF
-    \item  Vintage with Vintage ACS
-    \item Vintage with combined 1960s
-    \item Vintage with combined 1960s and post 2000s
-    \item  Federal Poverty Level coarsened every 100\%
-    \item  Federal Poverty Level coarsened every 200\%
-    \item Census Division RECS with AK/HI separate coarsened to Census Division RECS
-    \item  Census Division RECS to Census Region
-    \item Census Region to National.
-\end{enumerate}
+\input{characteristics/Refrigerator}
 
 \subsubsection{Refrigerator Usage Level}
-\paragraph{Description}
-Refrigerator energy usage level multiplier.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item
-
-Not applicable---direct translation of the \ref{usage_level} Usage input file.
-\end{itemize}
-
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Usage Level.
-\end{itemize}
-
-\paragraph{Options}
-The refrigerator usage level options shown in Table \ref{table:hc_opt_refrigerator_usage_level} are assigned based on the usage level characteristic (Section \ref{usage_level}).
-
-\input{tables/options/Refrigerator Usage Level}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_refrigerator_usage_level}. %See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{Refrigerators} documentation for additional information.
-
-\input{tables/properties/Refrigerator Usage Level}
-
-\paragraph{Distribution Assumption(s)}
-None
+\input{characteristics/Refrigerator Usage Level}
 
 \subsubsection{Misc Extra Refrigerator}
-\paragraph{Description}
-The presence and rated efficiency of the secondary refrigerator.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item
-
-Constructed using U.S. EIA 2020 RECS microdata.
-\item Age of refrigerator converted to efficiency levels using ENERGY STAR shipment-weighted efficiencies by year data from Home Energy Saver.\footnote{For more information, see http://hes-documentation.lbl.gov/.} %Check the comments in: HES-Refrigerator\_Age\_vs\_Efficiency.tsv
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Federal Poverty Level
-    \item Geometry Building Type RECS
-    \item State
-    \item Tenure
-    \item Vintage.
-\end{itemize}
-
-\paragraph{Options}
-Extra refrigerator options shown in Table \ref{table:hc_opt_misc_extra_refrigerator} are specified using the same Energy Factor (EF) and annual rated kWh options as primary refrigerators.
-
-\input{tables/options/Misc Extra Refrigerator}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_misc_extra_refrigerator}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{Refrigerators} documentation for additional information.
-
-\input{tables/properties/Misc Extra Refrigerator}
-
-The usage multiplier varies by state and is set to account for the presence of tertiary refrigerators and beyond, see Table \ref{table:hc_opt_state}.
-
-\input{tables/options/State}
-
-\paragraph{Distribution Assumption(s)}
-The current year is assumed to be 2022.
-Currently, each year has its own distribution and then we average out the distributions to get the distribution for the age bins. EF for all years are weighted equally when calculating the average distribution for the age bins. ENERGY STAR distributions from 2009 dependent on Geometry Building Type RECS, Federal Poverty Level, and Tenure are used to calculate efficiency distribution in RECS 2020. ENERGY STAR refrigerators assumed to be 10\% more efficient than standard. Due to the low sample count, the input file is constructed by downscaling a housing unit sub-input file with a household sub-input file. The sub-input files have the following dependencies: housing unit sub-input file: dependencies = Geometry Building Type RECS, State, and Vintage, with the following fallback coarsening order:
-\begin{enumerate}
-    \item  State coarsened to Census Division RECS with AK/HI separate
-    \item Geometry Building Type RECS coarsened to SF/MF/MH
-\item Geometry Building Type RECS coarsened to SF and MH/MF
-\item Vintage with Vintage ACS
-\item Vintage with combined 1960s
-\item Vintage with combined 1960s and post 2000s
-\item Census Division RECS with AK/HI separate coarsened to Census Division RECS
-\item Census Division RECS to Census Region.
-\end{enumerate}
-Census Region to National Assumption: Household sub-input file : dependencies = Geometry Building Type RECS, State, Tenure, and Federal Poverty Level, with the following fallback coarsening order:
-\begin{enumerate}
-\item State coarsened to Census Division RECS with AK/HI separate
-\item Geometry Building Type RECS coarsened to SF/MF/MH
-\item  Geometry Building Type RECS coarsened to SF and MH/MF
-\item  Federal Poverty Level coarsened every 100\%
-\item  Federal Poverty Level coarsened every 200\%
-\item Census Division RECS with AK/HI separate coarsened to Census Division RECS
-\item Census Division RECS to Census Region
-\item Census Region to National.
-
-\end{enumerate}
-In combining the housing unit sub-input file and household sub-input file, the conditional relationships are ignored across (Heating Fuel, [Tenure, Federal Poverty Level]).
+\input{characteristics/Misc Extra Refrigerator}
 
 \subsubsection{Misc Freezer}
-\paragraph{Description}
-The presence and rated efficiency of a standalone freezer.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item
-
-Constructed using U.S. EIA 2020 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Federal Poverty Level
-    \item Geometry Building Type RECS
-    \item State
-    \item Tenure.
-\end{itemize}
-
-\paragraph{Options}
-The Misc Freezer option shown in Table \ref{table:hc_opt_misc_freezer} represents the national average.
-
-\input{tables/options/Misc Freezer}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_misc_freezer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-freezers}{Freezers} documentation for additional information.
-
-\input{tables/properties/Misc Freezer}
-
-The usage multiplier varies by state and is set to account for the presence of extra freezers, see Table \ref{table:hc_opt_state}.
-
-\paragraph{Distribution Assumption(s)}
-The national average EF is 12 based on the 2014 Building America house simulation protocols.
-
-Due to the low sample count, the input file is constructed with the following coarsening order.
-\begin{enumerate}
-    \item  State coarsened to Census Division RECS with AK/HI separate
-    \item  Geometry Building Type RECS coarsened to SF/MF/MH
-    \item Geometry Building Type RECS coarsened to SF and MH/MF
-    \item  Federal Poverty Level coarsened every 100\%
-    \item  Federal Poverty Level coarsened every 200\%
-    \item Census Division RECS with AK/HI separate coarsened to Census Division RECS
-    \item  Census Division RECS to Census Region
-    \item Census Region to National.
-\end{enumerate}
+\input{characteristics/Misc Freezer}
 
 \subsection{Cooking}
 \subsubsection{Modeling Approach}
@@ -485,92 +97,10 @@ ResStock also models the use of a range hood for cooking. However, the range hoo
 The next sections describe the building stock distributions for cooking, their assumptions, data sources, and property assignment.
 
 \subsubsection{Cooking Range}
-\paragraph{Description}
-Presence and fuel type of the cooking range.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item
-
-Constructed using U.S. EIA 2020 RECS microdata.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Federal Poverty Level
-    \item Geometry Building Type RECS
-    \item Heating Fuel
-    \item State
-    \item Tenure
-    \item Vintage.
-\end{itemize}
-
-\paragraph{Options}
-ResStock options are shown in Table \ref{table:hc_opt_cooking_range}.
-
-%options table
-\input{tables/options/Cooking Range}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_cooking_range}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooking-range-oven}{Cooking Range/Oven} documentation for additional information.
-
-%properties table
-\input{tables/properties/Cooking Range}
-
-\paragraph{Distribution Assumption(s)}
-For Dual Fuel Range, the distribution is split equally between Electric and Natural Gas.
-
-Due to low sample count, the input file is constructed by downscaling a housing unit sub-input file with a household sub-input file. The sub-input files have the following dependencies:
-housing unit sub-input file: deps = `Geometry Building Type RECS', `State', `Heating Fuel', and `Vintage,' with the following fallback coarsening order:
-\begin{enumerate}
-    \item  State coarsened to Census Division RECS with AK/HI separate
-    \item Heating Fuel coarsened to Other Fuel, Wood and Propane combined
-    \item Heating Fuel coarsened to Fuel Oil, Other Fuel, Wood and Propane combined
-    \item Geometry Building Type RECS coarsened to SF/MF/MH
-    \item  Geometry Building Type RECS coarsened to SF and MH/MF
-    \item  Vintage coarsened to every 20 years before 2000 and every 10 years subsequently
-    \item Vintage homes built before 1960 coarsened to pre-1960
-    \item Vintage homes built after 2000 coarsened to 2000-20
-    \item Census Division RECS with AK/HI separate coarsened to Census Division RECS
-    \item Census Division RECS to Census Region
-    \item Census Region to National.
-\end{enumerate}
-Household sub-input file : deps = `Geometry Building Type RECS', `State' `Tenure', `Federal Poverty Level,' with the following fallback coarsening order
-\begin{enumerate}
-\item   State coarsened to Census Division RECS with AK/HI separate
-\item  Geometry Building Type RECS coarsened to SF/MF/MH
-\item  Geometry Building Type RECS coarsened to SF and MH/MF
-\item  Federal Poverty Level coarsened every 100\%
-\item Federal Poverty Level coarsened every 200\%
-\item Census Division RECS with AK/HI separate coarsened to Census Division RECS
-\item Census Division RECS to Census Region
-\item Census Region to National.
-\end{enumerate}
-In combining the housing unit sub-input file and household sub-input file, the conditional relationships are ignored across `Heating Fuel' and `Vintage', as well as for `Tenure' and `Federal Poverty Level'.
+\input{characteristics/Cooking Range}
 
 \subsubsection{Cooking Range Usage Level}\label{cooking_range_usage_level}
-\paragraph{Description}
-Cooking range energy usage level multiplier.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item
-Not applicable---direct translation of the Usage Level input file; see Section \ref{usage_level}.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Usage Level.
-\end{itemize}
-
-\paragraph{Options}
-The cooking range usage level options shown in Table \ref{table:hc_opt_cooking_range_usage_level} are assigned based on the usage level characteristic (Section \ref{usage_level}).
-
-\input{tables/options/Cooking Range Usage Level}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_cooking_range_usage_level}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooking-range-oven}{Cooking Range/Oven} documentation for additional information.
-
-\input{tables/properties/Cooking Range Usage Level}
-
-\paragraph{Distribution Assumption(s)}
-None.
+\input{characteristics/Cooking Range Usage Level}
 
 \subsection{Dishwasher}
 \subsubsection{Modeling Approach}
@@ -583,75 +113,10 @@ The energy estimate is multiplied with a stochastically generated appliance sche
 The following subsections describe the characteristics, distributions, data sources, and properties assigned for the dishwasher.
 
 \subsubsection{Dishwasher}
-\paragraph{Description}
-The presence and rated efficiency of the dishwasher.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item Constructed using U.S. EIA 2020 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Federal Poverty Level
-    \item Geometry Building Type RECS
-    \item State
-    \item Tenure
-    \item Vintage.
-\end{itemize}
-
-\paragraph{Options}
-The ResStock options are shown in Table \ref{table:hc_opt_dishwasher}. The ``None'' option is used for homes without a dishwasher.\footnote{ResStock currently does not account for hand washing of dishes in hot water in cases where no dishwasher is present.}
-
-\input{tables/options/Dishwasher}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_dishwasher}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-dishwasher}{Dishwasher} documentation for additional information.
-
-\input{tables/properties/Dishwasher}
-
-\paragraph{Distribution Assumption(s)}
-The 2020 RECS survey does not contain ENERGY STAR rating of dishwashers. ENERGY STAR efficiency distributions with Geometry Building Type, Census Division RECS, Federal Poverty Level, and Tenure as dependencies are imported from RECS 2009.
-
-Due to the low sample count, the input file is constructed with the following coarsening order:
-\begin{enumerate}
-    \item State coarsened to Census Division RECS with AK/HI separate
-    \item Geometry Building Type RECS coarsened to SF/MF/MH
-    \item  Geometry Building Type RECS coarsened to SF and MH/MF
-    \item Federal Poverty Level coarsened every 100\%
-    \item Federal Poverty Level coarsened every 200\%
-    \item Vintage coarsened to every 20 years before 2000 and every 10 years subsequently
-    \item  Vintage homes built before 1960 coarsened to pre-1960
-    \item  Vintage homes built after 2000 coarsened to 2000--20
-    \item  Census Division RECS with AK/HI separate coarsened to Census Division RECS
-    \item Census Division RECS to Census Region.
-\end{enumerate}
+\input{characteristics/Dishwasher}
 
 \subsubsection{Dishwasher Usage Level}\label{dishwasher_usage_level}
-\paragraph{Description}
-Dishwasher energy usage level multiplier.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item
-Not applicable---direct translation of  Usage Level; see Section \ref{usage_level}.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Usage Level.
-\end{itemize}
-
-\paragraph{Options}
-The dishwasher usage level options shown in Table \ref{table:hc_opt_dishwasher_usage_level} are assigned based on the usage level characteristic (Section \ref{usage_level}).
-
-\input{tables/options/Dishwasher Usage Level}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_dishwasher_usage_level}.
-
-\input{tables/properties/Dishwasher Usage Level}
-
-\paragraph{Distribution Assumption(s)}
-None.
+\input{characteristics/Dishwasher Usage Level}
 
 \subsection{Clothes Washer}
 \subsubsection{Modeling Approach}
@@ -665,128 +130,13 @@ The energy estimate is multiplied with a stochastically generated laundry schedu
 The following subsections describe the characteristics, the distributions, assumptions, data sources, options, and property assignments for clothes washers.
 
 \subsubsection{Clothes Washer}
-\paragraph{Description}
-Presence and rated efficiency of the clothes washer.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item
-Constructed using U.S. EIA 2020 RECS microdata.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Clothes Washer Presence
-    \item Federal Poverty Level
-    \item Geometry Building Type RECS
-    \item Tenure
-    \item Vintage.
-\end{itemize}
-
-\paragraph{Options}
-ResStock options are shown in Table \ref{table:hc_opt_clothes_washer}.
-
-\input{tables/options/Clothes Washer}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_clothes_washer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-clothes-washer}{Clothes Washer} documentation for additional information.
-
-\input{tables/properties/Clothes Washer}
-
-\paragraph{Distribution Assumption(s)}
-The 2020 RECS survey does not contain ENERGY STAR rating of clothes washers. ENERGY STAR efficiency distributions with Geometry Building Type, Federal Poverty Level, and Tenure as dependencies are imported from RECS 2009. Due to low sample count, the input file is constructed by downscaling a housing unit sub-input file with a household sub-input file. The sub-input files have the following dependencies:
-housing unit sub-input file: dependencies = Geometry Building Type RECS, State, Clothes Washer Presence, and Vintage, with the following coarsening order:
-\begin{enumerate}
-    \item  Geometry Building Type RECS coarsened to SF/MF/MH
-    \item Geometry Building Type RECS coarsened to SF and MH/MF
-    \item Vintage coarsened to every 20 years before 2000 and every 10 years subsequently
-    \item Vintage homes built before 1960 coarsened to pre-1960
-    \item Vintage homes built after 2000 coarsened to 2000--20.
-\end{enumerate}
-Household sub-input file: dependencies = Geometry Building Type RECS, State, Tenure, and Federal Poverty Level, with the following coarsening order:
-\begin{enumerate}
-    \item Geometry Building Type RECS coarsened to SF/MF/MH
-    \item Geometry Building Type RECS coarsened to SF and MH/MF
-    \item Federal Poverty Level coarsened every 100\%
-    \item Federal Poverty Level coarsened every 200\%.
-\end{enumerate}
-In combining the housing unit sub-input file and household sub-input file, the conditional relationships are ignored across Clothes Washer Presence and Vintage, as well as for Tenure and Federal Poverty Level.
+\input{characteristics/Clothes Washer}
 
 \subsubsection{Clothes Washer Presence}\label{clothes_washer_presence}
-\paragraph{Description}
-The presence of a clothes washer in the housing unit.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item
-Constructed using U.S. EIA 2020 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Federal Poverty Level
-    \item Geometry Building Type RECS
-    \item State
-    \item Tenure
-    \item Vintage.
-\end{itemize}
-
-\paragraph{Options}
-The options ``None'' and ``Yes'' determine whether there is a clothes washer present in the housing unit.
-
-\paragraph{Distribution Assumption(s)}
-Due to the low sample count, the input file is constructed by downscaling a housing unit sub-input file with a household sub-input file. The sub-input files have the following dependencies. Housing unit sub-input file: dependencies = Geometry Building Type RECS, State, Heating Fuel, and Vintage, with the following coarsening order:
-\begin{enumerate}
-    \item State coarsened to Census Division RECS with AK/HI separate
-    \item  Geometry Building Type RECS coarsened to SF/MF/MH
-    \item  Geometry Building Type RECS coarsened to SF and MH/MF
-    \item  Vintage coarsened to every 20 years before 2000 and every 10 years subsequently
-    \item Vintage homes built before 1960 coarsened to pre-1960
-    \item  Vintage homes built after 2000 coarsened to 2000--20
-    \item Census Division RECS with AK/HI separate coarsened to Census Division RECS
-    \item Census Division RECS to Census Region
-    \item Census Region to National.
-\end{enumerate}
-
-Household sub-input file: dependencies = Geometry Building Type RECS, State, Tenure, and Federal Poverty Level, with the following coarsening order:
-
-\begin{enumerate}
-    \item State coarsened to Census Division RECS with AK/HI separate
-    \item  Geometry Building Type RECS coarsened to SF/MF/MH
-    \item  Geometry Building Type RECS coarsened to SF and MH/MF
-    \item  Federal Poverty Level coarsened every 100\%
-    \item Federal Poverty Level coarsened every 200\%
-    \item  Census Division RECS with AK/HI separate coarsened to Census Division RECS
-    \item Census Division RECS to Census Region
-    \item Census Region to National.
-\end{enumerate}
-
-In combining the housing unit sub-input file and household sub-input file, the conditional relationships are ignored across Geometry Building Type RECS and Vintage, as well as for Tenure and Federal Poverty Level.
+\input{characteristics/Clothes Washer Presence}
 
 \subsubsection{Clothes Washer Usage Level}\label{clothes_washer_usage_level}
-\paragraph{Description}
-Clothes washer energy usage level multiplier.
-
-\paragraph{Distribution Data Source(s)}
-Not applicable.
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Usage Level.
-\end{itemize}
-
-\paragraph{Options}
-The clothes washer usage level options shown in Table \ref{table:hc_opt_clothes_washer_usage_level} are assigned based on the usage level characteristic (Section \ref{usage_level}).
-
-\input{tables/options/Clothes Washer Usage Level}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_clothes_washer_usage_level}.
-
-\input{tables/properties/Clothes Washer Usage Level}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-\item
-Engineering judgment.
-\end{itemize}
+\input{characteristics/Clothes Washer Usage Level}
 
 \subsection{Clothes Dryer}
 \subsubsection{Modeling Approach}
@@ -799,84 +149,10 @@ The schedule of the clothes dryer usage is based on the American Time Use Survey
 ResStock provides distributions for what housing units have a clothes dryer, the fuel of the dryer, and clothes dryer energy multiplier in the “Clothes Dryer” and “Clothes Dryer Usage Level” characteristics.
 
 \subsubsection{Clothes Dryer}\label{clothes_dryer}
-\paragraph{Description}
-The presence, rated efficiency, and fuel type of the clothes dryer in a housing unit.
-
-\paragraph{Distribution Data Source(s)}
-Constructed using U.S. EIA 2020 RECS microdata.
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Clothes Washer Presence
-    \item Federal Poverty Level
-    \item Geometry Building Type RECS
-    \item Heating Fuel
-    \item State
-    \item Tenure.
-\end{itemize}
-
-\paragraph{Options}
-The ResStock options are shown in Table \ref{table:hc_opt_clothes_dryer}.
-
-\input{tables/options/Clothes Dryer}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_clothes_dryer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-clothes-dryer}{Clothes Dryer} documentation for additional information.
-
-\input{tables/properties/Clothes Dryer}
-
-\paragraph{Distribution Assumption(s)}
-Clothes dryer option is ``None'' if the clothes washer is not present.
-
-Due to the low sample count, the input file is constructed by downscaling a housing unit sub-input file with a household sub-input file. The sub-input files have the following dependencies:
-housing unit sub-input file: dependencies = Geometry Building Type RECS, State, Heating Fuel, and Clothes Washer Presence, with the following fallback coarsening order:
-\begin{enumerate}
-    \item State coarsened to Census Division RECS without AK, HI
-    \item  Heating Fuel coarsened to Other Fuel, Wood and Propane combined
-    \item Heating Fuel coarsened to Fuel Oil, Other Fuel, Wood and Propane combined
-    \item Geometry Building Type RECS coarsened to SF/MF/MH
-    \item  Geometry Building Type RECS coarsened to SF and MH/MF
-    \item  State coarsened to Census Division RECS
-    \item State coarsened to Census Region
-    \item State coarsened to National.
-\end{enumerate}
-
-Household sub-input file: dependencies = Geometry Building Type RECS, Tenure, and Federal Poverty Level, with the following fallback coarsening order:
-\begin{enumerate}
-\item  State coarsened to Census Division RECS without AK, HI
-\item  Geometry Building Type RECS coarsened to SF/MF/MH
-\item  Geometry Building Type RECS coarsened to SF and MH/MF
-\item  Federal Poverty Level coarsened every 100\%
-\item Federal Poverty Level coarsened every 200\%
-\item  State coarsened to Census Division RECS
-\item State coarsened to Census Region
-\item State coarsened to National.
-\end{enumerate}
-
-In combining the housing unit sub-input file and household sub-input file, the conditional relationships are ignored across Heating Fuel and Clothes Washer Presence, as well as across Tenure and Federal Poverty Level.
+\input{characteristics/Clothes Dryer}
 
 \subsubsection{Clothes Dryer Usage Level}
-\paragraph{Description}
-Clothes dryer energy usage level multiplier.
-
-\paragraph{Distribution Data Source(s)}
-Not applicable---direct mapping of usage level (Section \ref{usage_level}).
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Usage Level.
-\end{itemize}
-
-\paragraph{Options}
-The clothes dryer usage level options shown in Table \ref{table:hc_opt_clothes_dryer_usage_level} are assigned based on the usage level characteristic (Section \ref{usage_level}).
-
-\input{tables/options/Clothes Dryer Usage Level}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_clothes_dryer_usage_level}.
-
-\input{tables/properties/Clothes Dryer Usage Level}
-
-\paragraph{Distribution Assumption(s)}
-None.
+\input{characteristics/Clothes Dryer Usage Level}
 
 \subsection{Ceiling Fan}
 \subsubsection{Modeling Approach}
@@ -885,28 +161,7 @@ ResStock models all ceiling fan options as a single fan operating at medium spee
 Ceiling fans are characterized in a single housing characteristic. The distribution, data sources, assumptions, and property assignment are discussed in the next subsection.
 
 \subsubsection{Ceiling Fan}
-\paragraph{Description}
-Presence and efficiency of ceiling fans.
-
-\paragraph{Distribution Data Source(s)}
-Building America House Simulation Protocols (\cite{Wilson2014}); national average used as saturation.
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Vacancy Status.
-\end{itemize}
-
-\paragraph{Options}
-ResStock options for ceiling fans are shown in Table \ref{table:hc_opt_ceiling_fan}. The ``No usage`` option indicates a ceiling fan is present but not used.
-
-\input{tables/options/Ceiling Fan}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_ceiling_fan}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-ceiling-fans}{Ceiling Fans} documentation for additional information.
-
-\input{tables/properties/Ceiling Fan}
-
-\paragraph{Distribution Assumption(s)}
-If the unit is vacant, there is no ceiling fan energy.
+\input{characteristics/Ceiling Fan}
 
 \subsection{Pool and Hot Tub}
 \subsubsection{Modeling Approach}
@@ -917,214 +172,33 @@ In OpenStudio-HPXML, pool and hot tub/spa heater options are electric resistance
 The building stock characterization distributions, data sources, assumptions, and property assignment of pools and hot tubs are discussed in the next subsections.
 
 \subsubsection{Misc Pool}
-\paragraph{Description}
-The presence of a pool.
-
-\paragraph{Distribution Data Source(s)}
-Constructed using U.S. EIA 2020 RECS microdata.
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Federal Poverty Level
-    \item Geometry Building Type RECS
-    \item State
-    \item Tenure
-    \item Vintage.
-\end{itemize}
-
-\paragraph{Options}
-The options for Misc Pool are ``Has Pool'' and ``None''.
-
-\paragraph{Distribution Assumption(s)}
-The only valid option for multifamily homes is None, because the pool is most likely to be part of the common load and not associated with a specific unit.
-
-Due to the low sample count, the input file is constructed with the following fallback coarsening order:
-\begin{enumerate}
-    \item State coarsened to Census Division RECS with AK/HI separate
-    \item  Geometry Building Type RECS coarsened to SF/MF/MH
-    \item  Geometry Building Type RECS coarsened to SF and MH/MF
-    \item  Federal Poverty Level coarsened every 100\%
-    \item Federal Poverty Level coarsened every 200\%
-    \item Vintage coarsened to every 20 years before 2000 and every 10 years subsequently
-    \item  Vintage homes built before 1960 coarsened to pre-1960
-    \item Vintage homes built after 2000 coarsened to 2000--20
-    \item Census Division RECS with AK/HI separate coarsened to Census Division RECS
-    \item Census Division RECS to Census Region
-    \item Census Region to National.
-\end{enumerate}
+\input{characteristics/Misc Pool}
 
 \subsubsection{Misc Pool Heater}
-\paragraph{Description}
-The heating fuel of the pool heater if there is a pool.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Constructed using U.S. EIA 2020 RECS microdata.
-    \item Constructed using the California Energy Commission 2019 Residential Appliance Saturation Study (RASS) microdata
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Heating Fuel
-    \item Misc Pool.
-\end{itemize}
-
-\paragraph{Options}
-Options for pool heaters are shown in Table \ref{table:hc_opt_misc_pool_heater}. The electric heat pump option uses heat pump technology for heating the pool while the standard electric option defines a traditional electric resistance pool heater. The “Other Fuel” option is currently not modeled in ResStock and will result in no energy consumption.
-
-\input{tables/options/Misc Pool Heater}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_misc_pool_heater}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#pool-heater}{Pool Heater} documentation for additional information.
-
-\input{tables/properties/Misc Pool Heater}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item Within electric pool heaters, proportion of heat pump electric pool heating vs. non-heat pump electric pool heating was derived from RASS 2019.
-\end{itemize}
+\input{characteristics/Misc Pool Heater}
 
 \subsubsection{Misc Pool Pump}
-\paragraph{Description}
-Presence and size of pool pump.
-\paragraph{Distribution Data Source(s)}
-Building America House Simulation Protocols (\cite{Wilson2014});  national average fraction used for saturation.
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Misc Pool.
-\end{itemize}
-
-\paragraph{Options}
-The options for Misc Pool Pump are shown in Table \ref{table:hc_opt_misc_pool_pump}. The pool pump option will always be assigned when a home has a pool.
-
-\input{tables/options/Misc Pool Pump}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_misc_pool_pump}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#pool-pump}{ Pool Pump} documentation for additional information.
-
-\input{tables/properties/Misc Pool Pump}
-
-\paragraph{Distribution Assumption(s)}
-None
+\input{characteristics/Misc Pool Pump}
 
 \subsubsection{Misc Hot Tub Spa}
-\paragraph{Description}
-The presence and heating fuel of a hot tub/spa at the housing unit.
-
-\paragraph{Distribution Data Source(s)}
-Constructed using U.S. EIA 2020 RECS microdata.
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Federal Poverty Level
-    \item Geometry Building Type RECS
-    \item Heating Fuel
-    \item State
-    \item Tenure.
-\end{itemize}
-
-\paragraph{Options}
-Options for the Misc Hot tub Spa characteristic are shown in Table \ref{table:hc_opt_misc_hot_tub_spa}. The None option is used when the housing unit does not have a hot tub. The “Other Fuel” option is currently not modeled in ResStock and will result in no energy consumption.
-
-\input{tables/options/Misc Hot Tub Spa}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_misc_hot_tub_spa}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-permanent-spas}{Permanent Spas} documentation for additional information.
-
-\input{tables/properties/Misc Hot Tub Spa}
-
-\paragraph{Distribution Assumption(s)}
-Due to the low sample count, the input file is constructed by downscaling a housing unit sub-input file with a household sub-input file. The sub-input files have the following dependencies:
-
-housing unit sub-input file  dependencies = Geometry Building Type RECS, State, and Heating Fuel, with the following fallback coarsening order:
-\begin{enumerate}
-    \item State coarsened to Census Division RECS with AK/HI separate
-    \item  Heating Fuel coarsened to Other Fuel, Wood and Propane combined
-    \item Heating Fuel coarsened to Fuel Oil, Other Fuel, Wood and Propane combined
-    \item Geometry Building Type RECS coarsened to SF/MF/MH
-    \item  Geometry Building Type RECS coarsened to SF and MH/MF
-    \item  Census Division RECS with AK/HI separate coarsened to Census Division RECS
-    \item Census Division RECS to Census Region
-    \item Census Region to National.
-\end{enumerate}
-Household sub-input file: dependencies = Geometry Building Type RECS, State, Tenure, and Federal Poverty Level, with the following fallback coarsening order:
-\begin{enumerate}
-    \item State coarsened to Census Division RECS with AK/HI separate
-    \item  Geometry Building Type RECS coarsened to SF/MF/MH
-    \item  Geometry Building Type RECS coarsened to SF and MH/MF
-    \item  Federal Poverty Level coarsened every 100\%
-    \item Federal Poverty Level coarsened every 200\%
-    \item Census Division RECS with AK/HI separate coarsened to Census Division RECS
-    \item Census Division RECS to Census Region
-    \item Census Region to National.
-\end{enumerate}
-In combining the housing unit sub-input file and household sub-input file, the conditional relationships are ignored across Heating Fuel, as well as across Tenure and Federal Poverty Level.
+\input{characteristics/Misc Hot Tub Spa}
 
 \subsection{Well Pump}
 \subsubsection{Modeling Approach}
 Well pumps are used to extract potable water from a well. The 2017-2019 American Housing Surveys ({\cite{AHS}}) estimated that 11\% of US homes have a well pump, and that data is used to construct the characteristic distribution, which has a dependency to Census Division, PUMA Metro Status, and Geometry Building Type Height. Well pumps are also more common outside the metro areas than in metro areas, particularly within a principal city. A well pump in ResStock is modeled as a type of plug load that does not provide any latent or sensible heat to the housing units. The annual energy for well pumping is estimated based on conditioned floor area and number of bedrooms converted from occupants using an equation from 2014 Building America House Simulation Protocols (BAHSP) (\cite{Wilson2014}) and can be adjusted by a usage multiplier. The annual energy is then multiplied by a default simple schedule to produce the end-use load profile.
 
 \subsubsection{Misc Well Pump}
-\paragraph{Description}
-Presence of well pump according to the use of well for domestic water source.
-
-\paragraph{Distribution Data Source(s)}
-
-\begin{itemize}
-    \item 2017 and 2019 American Housing Survey (AHS) microdata.
-    \item Core Based Statistical Area (CBSA) data based on the Feb 2013 CBSA delineation file.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Census Division
-    \item PUMA Metro Status
-    \item Geometry Building Type Height
-\end{itemize}
-
-\paragraph{Options}
-Options for the Misc Well Pump characteristic are ``Typical Efficiency'' and ``None''.
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-	\item All well pumps are assumed to have typical efficiency.
-	\item Where the number of samples < 10, the Census Division is aggregated up to Census Region.
-	\item AHS has data for buildings up to 7 stories tall. Buildings with 8 or more stories are assumed not to have a well pump.
-\end{itemize}
+\input{characteristics/Misc Well Pump}
 
 \subsection{Miscellaneous Gas Uses}
 \subsubsection{Modeling Approach}
 ResStock models miscellaneous gas loads including fireplaces, grills, and lighting. ResStock randomly assigns these gas appliances to housing units based on saturation estimated by \citet{Wilson2014}.  Gas grill and gas lighting are assumed to be outdoor and therefore do not generate internal gains for the housing unit. For each gas appliance, the annual energy is estimated based on conditioned floor area and number of bedrooms converted from occupants using an equation from \citet{bahsp_2010} and can be adjusted by a usage multiplier. The annual energy is then multiplied by a default simple schedule to produce the end-use load profile. The gas lighting characteristic distribution is in Section \ref{misc_gas_lighting}.
 
 \subsubsection{Misc Gas Fireplace}
-\paragraph{Description}
-Presence of a gas fireplace.
-
-\paragraph{Distribution Data Source(s)}
-Building America House Simulation Protocols (\cite{Wilson2014}); national average fraction used for saturation.
-
-\paragraph{Direct Conditional Dependencies}
-None.
-
-\paragraph{Options}
-Options for the Misc Gas Fireplace characteristic are ``Gas Fireplace'' and ``None''.
-
-\paragraph{Distribution Assumption(s)}
-None.
+\input{characteristics/Misc Gas Fireplace}
 
 \subsubsection{Misc Gas Grill}
-\paragraph{Description}
-Presence of a gas grill.
-
-\paragraph{Distribution Data Source(s)}
-Building America House Simulation Protocols (\cite{Wilson2014}); national average fraction used for saturation.
-
-\paragraph{Direct Conditional Dependencies}
-None.
-
-\paragraph{Options}
-
-Options for Misc Gas Grill are ``Gas Grill'' and ``None''.
-
-\paragraph{Distribution Assumption(s)}
-None.
+\input{characteristics/Misc Gas Grill}
 
 \subsection{PV}
 \subsubsection{Modeling Approach}
@@ -1133,78 +207,13 @@ ResStock models residential photovoltaic (PV) solar panels based on data from La
 The PV modeling capability and default inputs are primarily adopted from NREL's \href{https://pvwatts.nrel.gov/index.php}{PVWatts model}. ResStock calculates the energy production based on the solar irradiation information in the weather file and the characteristics of the PV array. In the ResStock baseline, all PV systems are modeled as roof-mounted, fixed-axis standard modules tilted at roof pitch with a 14\% overall derate factor and a 96\% inverter efficiency. The derate factor encompasses loss from soiling, shading, wiring, mismatch, degradation, and more according to the PVWatts documentation (\cite{pvwatts_doc}).
 
 \subsubsection{Has PV} \label{sec:has_pv}
-\paragraph{Description}
-Presence of a rooftop photovoltaic system.
-
-\paragraph{Distribution Data Source(s)}
-Constructed using ACS population and data from \href{https://www.nrel.gov/analysis/dgen/}{dGen} on PV installation that combines LBNL's 2020 Tracking the Sun (\cite{LBNLTTS2019}) and Wood Mackenzie's 2020 Q4 PV report (\cite{WoodsMackenzie2020}; prepared on Jun 22, 2021). The PV penetration in Hawaii is from \href{https://www.eia.gov/electricity/data/eia861/}{EIA form 861}.
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item County
-    \item Geometry Building Type RECS
-    \item Vacancy Status.
-\end{itemize}
-
-\paragraph{Options}
-The options for Has PV are ``Yes'' if the housing unit has a rooftop PV system and ``No'' if the housing unit does not have a rooftop PV system.
-
-\paragraph{Distribution Assumption(s)}
-Imposed an upper bound of 14 kWDC, which contains 95\% of all installations. Counties with source\_count <10 are backfilled with aggregates at the state level. Distribution based on all installations is applied only to occupied single-family detached homes; actual distribution for single-family detached homes may be higher. PV is not modeled in AK. No data have been identified.
-
-For Hawaii, EIA Form 861 reports the number of residential utility customers with rooftop PV in $Net_Metering_2023.xlsx$ worksheet and the total number of residnetial utility customers in $Sales_Ult_Cust_2023.xlsx$. Taking the ratio of these two gives us the fraction of homes with rooftop PV. We place the additional constraint that all of these rooftop PV customers are in single-family detached homes. Because Hawaii is composed of multiple islands, the four electric utilities in Hawaii (and which report to EIA Form 861) approximately align with the county boundaries with Hawaii, Honolulu, and Kauai having one county for one electric utility, and both Maui and Kalawao mapping to the same electric utility, so we we develop distinct PV saturation rates for each county in Hawaii (note Kalawao has population 81 people and is located on the island of Maui).
+\input{characteristics/Has PV}
 
 \subsubsection{PV Orientation}  \label{sec:pv_orientation}
-\paragraph{Description}
-The orientation of the PV system.
-
-\paragraph{Distribution Data Source(s)}
-Constructed using LBNL's 2020 Tracking the Sun report \citep{LBNLTTS2019}.
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Has PV.
-\end{itemize}
-\paragraph{Options}
-The options for PV orientation are the cardinal and subcardinal directions as shown in Table \ref{table:hc_opt_pv_orientation}. The ``None'' option is used for housing units that do not have PV systems.
-
-\input{tables/options/PV Orientation}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_pv_orientation}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for additional information.
-
-\input{tables/properties/PV Orientation}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item PV orientation mapped based on the azimuth angle of the primary array (180\degree~is south-facing).
-    \item The orientation is not aligned with the roof deck's normal directions from the Orientation characteristic (Section \ref{sec:orientation}).
-\end{itemize}
+\input{characteristics/PV Orientation}
 
 \subsubsection{PV System Size} \label{sec:pv_system_size}
-\paragraph{Description}
-The size of the PV system.
-
-\paragraph{Distribution Data Source(s)}
-Constructed using LBNL's 2020 Tracking the Sun report \citep{LBNLTTS2019}.
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Has PV
-    \item State.
-\end{itemize}
-
-\paragraph{Options}
-The options for the PV System Size characteristic are shown in Table \ref{table:hc_opt_pv_system_size}.
-
-\input{tables/options/PV System Size}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_pv_system_size}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for additional information.
-
-\input{tables/properties/PV System Size}
-
-\paragraph{Distribution Assumption(s)}
-Installations of unknown mount type are assumed to be rooftop. States without data are backfilled with aggregates at the Census Region. ``East South Central'' assumed the same distribution as ``West South Central.''
-PV is not modeled in AK. The Option=None is set so that an error is thrown if PV is modeled as an argument.
+\input{characteristics/PV System Size}
 
 \subsection{Additional Capabilities}
 This section describes the additional modeling capabilities in OpenStudio-HPXML/ResStock that are not yet fully deployed in the ResStock baseline. These include batteries and dehumidifiers. These loads at present are not available in the baseline but can be modeled as upgrade measures. This is because their characteristic distribution is not yet fully characterized but is instead set to 100\% None.
@@ -1215,42 +224,10 @@ Batteries in ResStock use a standalone Lithium-ion battery model whose performan
 A dehumidifier is a device used to maintain a reasonable relative humidity in the home. ResStock models a dehumidifier as a portable device located in the conditioned space of the home. Other inputs to this model include capacity, rated efficiency, and relative humidity setpoint. The dehumidifier model is not intended to handle, e.g., a wet basement or crawlspace where there is significant moisture from the ground.
 
 \subsubsection{Battery}
-\paragraph{Description}
-Presence, size, location, and efficiency of an on-site battery.
-
-\paragraph{Distribution Data Source(s)}
-Not applicable.
-
-\paragraph{Direct Conditional Dependencies}
-Not applicable.
-
-\paragraph{Options}
-Battery options are shown in Table \ref{table:hc_opt_battery}. Currently only the ``None'' option is used. Other options are available for use in an upgrade.
-
-\input{tables/options/Battery}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_battery}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-batteries}{Batteries} documentation for additional information.
-
-\input{tables/properties/Battery}
-
-\paragraph{Distribution Assumption(s)}
-Not applicable.
+\input{characteristics/Battery}
 
 \subsubsection{Dehumidifier}
-\paragraph{Description}
-Presence, water removal rate, and humidity setpoint of the dehumidifier.
-
-\paragraph{Distribution Data Source(s)}
-Not applicable.
-
-\paragraph{Direct Conditional Dependencies}
-Not applicable.
-
-\paragraph{Options}
-Currently only the option ``None'' is used in ResStock.
-
-\paragraph{Distribution Assumption(s)}
-Not applicable
+\input{characteristics/Dehumidifier}
 
 \section{Lighting}
 Lighting in ResStock covers interior lighting within the housing unit, and for single-family homes, attached garage and exterior lighting that is metered at the home. Multifamily common space, parking garage, and exterior lighting are excluded from ResStock.
@@ -1271,115 +248,19 @@ Separately, outside these input files, ResStock provides schedules for lighting 
 
 \subsection{Lighting Characteristics}
 \subsubsection{Lighting}\label{lighting}
-
-\paragraph{Description}
-Specifies the type of lighting technology used in the housing unit.
-
-\paragraph{Distribution Data Source(s)}\label{source-107}
-
-\begin{itemize}
-
-\item
-  U.S. EIA 2020 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item{State}
-    \item{Geometry Building Type RECS}.
-\end{itemize}
-
-\paragraph{Options}\label{options-108}
-ResStock options are shown in Table \ref{table:hc_opt_lighting}. The assumption in ResStock is that all lighting (interior, exterior, and garage) is of the same technology.
-
-\input{tables/options/Lighting}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_lighting}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for additional information.
-
-\input{tables/properties/Lighting}
-
-\paragraph{Distribution Assumption(s)}\label{assumption-67}
-
-\begin{itemize}
-
-\item
-  Qualitative lamp type fractions in each household surveyed are
-  distributed to three options representing 100\% incandescent, 100\%
-  CFl, and 100\% LED lamp type options.
-\item
-Qualitative portion of inside light bulbs in 2020 RECS microdata is
-mapped to quantitative percentage as:
-None: 0\%; Some: 20\%; About half: 50\%; Most: 80\%; All: 100\%.
-Then the sum of three types of lighting options is normalized to 100\%.
-\end{itemize}
+\input{characteristics/Lighting}
 
 \subsubsection{Miscellaneous Gas Lighting}\label{misc_gas_lighting}
-\paragraph{Description}
-Presence of exterior natural gas lighting.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
- Building America House Simulation Protocols (\cite{Wilson2014}); national average fraction used for saturation.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-None.
-\paragraph{Options}
-ResStock options for Misc Gas Lighting are ``Gas Lighting'' and ``None''.
-
-\paragraph{Distribution Assumption(s)}
-None.
+\input{characteristics/Misc Gas Lighting}
 
 \subsubsection{Holiday Lighting}\label{holiday_lighting}
-
-\paragraph{Description}
-Holiday lighting presence and use. Not currently used in ResStock.
-\paragraph{Distribution Data Source(s)}
-Not applicable.
-\paragraph{Direct Conditional Dependencies}
-None.
-\paragraph{Options}
-The ``No Exterior Use'' option is assigned to all buildings in ResStock.
-
-\paragraph{Distribution Assumption(s)}
-None.
+\input{characteristics/Holiday Lighting}
 
 \subsubsection{Lighting Interior Use}\label{lighting_interior_use}
-\paragraph{Description}
-Interior lighting usage relative to the national average. Sampled for buildings, but no longer used for ResStock models. Instead, lighting use schedules are controlled by the ResStock schedule generator.
-\paragraph{Distribution Data Source(s)}
-Not applicable.
-\paragraph{Direct Conditional Dependencies}
-None.
-\paragraph{Options}
-All buildings are assigned the option ``100% Usage''.
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
- \item
-  This parameter for adding diversity to lighting usage patterns is not
-  currently used.
-\end{itemize}
+\input{characteristics/Lighting Interior Use}
 
 \subsubsection{Lighting Other Use}\label{lighting_other_use}
-\paragraph{Description}
-Exterior and garage lighting usage relative to the national average. Sampled for buildings, but no longer used for ResStock models. Instead, lighting use schedules are controlled by the ResStock schedule generator.
-
-\paragraph{Distribution Data Source(s)}
-Not applicable.
-
-\paragraph{Direct Conditional Dependencies}
-None.
-
-\paragraph{Options}
-All buildings are assigned the option ``100% Usage''.
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
- \item
-  This parameter for adding diversity to lighting usage patterns is not
-  currently used.
-\end{itemize}
+\input{characteristics/Lighting Other Use}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1389,68 +270,10 @@ All buildings are assigned the option ``100% Usage''.
 In ResStock, plug loads capture electric loads in the home that are not explicitly modeled on their own. Examples of plug loads includes things like microwaves, garbage disposals, toasters, fish tanks, cell phones, televisions, and portable humidifiers. Most of these items are not modeled explicitly under the plug loads modeling in ResStock, but instead are captured through a regression equation from RECS applied to ResStock homes, with some additional variability inserted on top to mimic the real-world variation and diversity that exist within these loads. These regressions form the usage multipliers that are applied to the default OpenStudio-HPXML calculations for plug loads. Based on ANSI/RESNET/ICC 301-2019, the plug load calculation estimates TV load based on the number of bedrooms converted from occupants and other load based on conditioned floor area. Two input files control plug loads in ResStock: Plug Loads and Plug Load Diversity.
 
 \subsubsection{Plug Loads}\label{plug_loads}
-
-
-\paragraph{Description}
-
-Plug load usage level as a percentage of the national average.
-
-\paragraph{Distribution Data Source(s)}
-
-\begin{itemize}
-
-\item
-  U.S. EIA 2015 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Census Division RECS
-    \item Geometry Building Type RECS.
-\end{itemize}
-
-\paragraph{Options}
-
-ResStock options shown in Table \ref{table:hc_opt_plug_loads} provide a range of percentages for plug load usage that are multipliers compared to national average plug load energy use.
-
-\input{tables/options/Plug Loads}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_plug_loads}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for additional information.
-
-\input{tables/properties/Plug Loads}
-
-\paragraph{Distribution Assumption(s)}
-
-\begin{itemize}
-
-\item
-  Multipliers are based on ratio of the ResStock miscellaneous electric loads (MELS) regression equations and the MELS modeled in RECS.
-\end{itemize}
+\input{characteristics/Plug Loads}
 
 \subsubsection{Plug Load Diversity}\label{plug_load_diversity}
-\paragraph{Description}
-Plug load diversity multiplier intended to add additional variation in plug load profiles across all simulations.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
-  Engineering judgment, calibration.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Usage Level.
-\end{itemize}
-\paragraph{Option(s)}
-Plug load diversity options shown in Table \ref{table:hc_opt_plug_load_diversity} are added on top of the regional multipliers from the Plug Loads characteristic.
-
-\input{tables/options/Plug Load Diversity}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_plug_load_diversity}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for additional information.
-
-\input{tables/properties/Plug Load Diversity}
-
-\paragraph{Distribution Assumption(s)}
-None.
+\input{characteristics/Plug Load Diversity}
 
 
 
@@ -1466,187 +289,22 @@ The electric vehicle (EV) capabilities in ResStock were largely created under a 
 
 \subsection{Electric Vehicle Characteristics}
 \subsubsection{Electric Vehicle Ownership}
-\paragraph{Description}
-The dwelling unit owns an electric vehicle.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-  \item EV Registration Data from Experian 2023.
-  \item 2019-5yrs Public Use Microdata Samples (PUMS). IPUMS USA, University of Minnesota, www.ipums.org.
-  \item U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
-
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-  \item Federal Poverty Level
-  \item Geometry Building Type RECS
-  \item PUMA
-  \item Tenure
-\end{itemize}
-
-\paragraph{Options}
-The options ``No'' and ``Yes'' for Electric Vehicle Ownership characteristic determine if other EV properties are assigned.
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-  \item Due to low sample sizes, coarsening rules applied in the following order.
-  \begin{enumerate}
-    \item Federal Poverty Level lumped every 100\%
-    \item Federal Poverty Level lumped every 200\%
-    \item Building type is consolidated into three bins 1) single-family, 2) multi-family, and 3) mobile home
-    \item Building type is consolidated into two bins 1) single-family and 2) multi-family and mobile home
-  \end{enumerate}
-  \item PUMA level battery EV saturation is calculated using a weighted average of the County level Experian data and ResStock unit counts for each County and PUMA.
-  \item The RECS 2020 saturations for each segment in a given PUMA are scaled to match the Experian PUMA weighted averaged battery EV saturation using the segment unit counts from PUMS 2019-5yrs survey.
-\end{itemize}
+\input{characteristics/Electric Vehicle Ownership}
 
 \subsubsection{Electric Vehicle Battery}
-\paragraph{Description}
-The type of electric vehicle and battery range in miles.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-  \item The 2023 Vehicle Stock Projection Data from NREL's TEMPO model
-  \item EV Registration Data from Experian 2023
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-No direct conditional dependencies.
-
-\paragraph{Options}
-The options shown in Table \ref{table:hc_opt_electric_vehicle_battery} for the Electric Vehicle Battery characteristic determine the electric vehicle type and battery range in miles. These options do not specify if the unit has a vehicle, but rather the preference of the vehicle type and battery range if the household owned an electric vehicle. Every unit is assigned one of these options so that the vehicle type and battery range does not need to be sampled during an electric vehicle upgrade. The housing units at which an electric vehicle is modeled are specified by the Electric Vehicle Ownership characteristic.
-
-\input{tables/options/Electric Vehicle Battery}
-
-The Experian dataset is used to characterize the distribution of electric vehicles and associated battery sizes in the vehicle stock. We used the latest available data for the year 2023, which ensures that our analysis is based on the most current information regarding the electric vehicle battery stock. Although the vehicle data included information on internal combustion engine vehicles in addition to the battery electric vehicles, we filtered the dataset to focus exclusively on personal light-duty battery electric vehicles. In the dataset, there are four different categories of light-duty vehicles, including (a) Compact, (b) Midsize, (c) Sport Utility Vehicle (SUV), and (d) Pickup truck. Additionally, the dataset includes information on two total mileage ranges for the battery: (a) 200-mile range and (b) 300-mile range.
-
-Then, for each electric vehicle type, we draw from Argonne National Laboratory's Autonomie20\footnote{Autonomie is the source of TEMPO's inputs about electric vehicle characteristics for both current day and future scenarios} vehicle powertrain simulation model for the electric vehicle energy consumption. The average driving speed is sourced from the 2017 NHTS which summarizes U.S. travel behavior (\cite{NHTS2017}). We assume that the average speed of electric vehicles is the same as the average speed of all vehicles.
-
-Property definitions are shown in Table \ref{table:hc_arg_def_electric_vehicle_battery}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles}{Vehicles} documentation for additional information.
-
-\input{tables/properties/Electric Vehicle Battery}
-
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-  \item Vehicle stock data starts with the Experian registration data and then is projected by TEMPO to 2023.
-  \item If the household does not have an electric vehicle, the options represent the household preference.
-\end{itemize}
+\input{characteristics/Electric Vehicle Battery}
 
 \subsubsection{Electric Vehicle Charge At Home}
-\paragraph{Description}
-The percentage a household would or does charge their electric vehicle at home.
-
-\paragraph{Distribution Data Source(s)}
-U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-  \item Federal Poverty Level
-  \item Geometry Building Type RECS
-\end{itemize}
-
-\paragraph{Options}
-The options shown in Table \ref{table:hc_opt_electric_vehicle_charge_at_home} for the Electric Vehicle Charge At Home characteristic determine how much of the electric vehicle's energy shows up on the residential meter vs charging at work or at public chargers. Every unit in the baseline is assigned one of these options so that the home charging fraction does not need to be sampled during an electric vehicle upgrade. The units with an electric vehicle are specified by the Electric Vehicle Ownership characteristic.
-
-\input{tables/options/Electric Vehicle Charge At Home}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_electric_vehicle_charge_at_home}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles}{Vehicles} documentation for additional information.
-
-\input{tables/properties/Electric Vehicle Charge At Home}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-  \item Due to a low sample count, the distributions are constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The two sub-tsvs have the following dependencies: tsv1 dependency=['Geometry Building Type RECS'], tsv2 dependency=['Federal Poverty Level'], In combining tsv1 and tsv2, the conditional relationships are ignored across ('Geometry Building Type RECS' and 'Federal Poverty Level').
-\end{itemize}
+\input{characteristics/Electric Vehicle Charge At Home}
 
 \subsubsection{Electric Vehicle Charger}
-\paragraph{Description}
-Presence and type of electric vehicle charger used at the dwelling unit.
-
-\paragraph{Distribution Data Source(s)}
-U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-  \item Electrical Vehicle Ownership
-  \item Federal Poverty Level
-  \item Geometry Building Type RECS
-  \item Tenure
-\end{itemize}
-
-\paragraph{Options}
-The options shown in Table \ref{table:hc_opt_electric_vehicle_charger} for the Electric Vehicle Charger characteristic describe the type of charger used by an electric vehicle owner at home.
-
-\input{tables/options/Electric Vehicle Charger}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_electric_vehicle_charger}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers}{Electric Vehicle Charger} documentation for additional information.
-
-\input{tables/properties/Electric Vehicle Charger}
-
-\paragraph{Distribution Assumption(s)}
-Dwelling units with an electric vehicle need to have at least a Level 1 charger. Due to low sample sizes, coarsening of the dependencies are applied in the following order.
-\begin{enumerate}
-  \item Federal Poverty Level lumped every 100\%
-  \item Federal Poverty Level lumped every 200\%
-  \item Building type is consolidated into three bins 1) single-family detached and 2) multi-family with 5+ units, and 3) mobile homes, multi-family 2-4 units, and single-family attached
-  \item Building type is consolidated into two bins 1) single-family detached and 2) all other building types
-  \item Federal Poverty Level is combined into 400\%+ and <400\% bins
-\end{enumerate}
+\input{characteristics/Electric Vehicle Charger}
 
 \subsubsection{Electric Vehicle Miles Traveled}
-\paragraph{Description}
-The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.
-
-\paragraph{Distribution Data Source(s)}
-The 2022 U.S. Federal Highway Administration National Household Travel Survey (NHTS) microdata.
-
-\paragraph{Direct Conditional Dependencies}
-No direct conditional dependencies.
-
-\paragraph{Options}
-The options shown in Table \ref{table:hc_opt_electric_vehicle_miles_traveled} for Electric Vehicle Miles Traveled characteristic specify  miles traveled per year by the electric vehicle. These options do not specify if the unit has a vehicle, but rather the amount of miles the EV travels if the dwelling unit has an electric vehicle. Every unit is assigned one of these options so that the vehicle miles traveled does not need to be sampled during an electric vehicle upgrade. The units with an electric vehicle is specified by the Electric Vehicle Ownership characteristic.
-
-\input{tables/options/Electric Vehicle Miles Traveled}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_electric_vehicle_miles_traveled}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles}{Vehicles} documentation for additional information.
-
-\input{tables/properties/Electric Vehicle Miles Traveled}
-
-\paragraph{Distribution Assumption(s)}
-No assumptions are made.
+\input{characteristics/Electric Vehicle Miles Traveled}
 
 \subsubsection{Electric Vehicle Outlet Access}
-\paragraph{Description}
-The unit has an outlet within 20 feet of vehicle parking.
-
-\paragraph{Distribution Data Source(s)}
-U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-  \item Electric Vehicle Charger
-  \item Federal Poverty Level
-  \item Geometry Building Type RECS
-  \item Tenure
-  \item Vintage ACS
-\end{itemize}
-
-\paragraph{Options}
-The options for Electric Vehicle Outlet Access characteristic indicate whether the unit has charging within 20 ft of the vehicle parking. This characteristic does not assign any modeling properties. The options are ``Yes'' and ``No''.
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-  \item RECS 2020 has Multi-Family 5+ units marked as Not Applicable. These units are replaced by data from the No Place Like Home Study (https://www.nrel.gov/docs/fy22osti/81065.pdf) Table 1 Scenario 2. Multi-Family 5+ units owners is assumed for 12\% units having electrical access. This fraction is based on the average of mid-capacity apartment and high-capacity apartment. Multi-Family 5+ units owners is assumed for 28\% units having electrical access.
-  \item Units reported to have a Level 1 or Level 2 charger in the field EVCHRGTYPE are assumed to have outlet access.
-  \item Level 1 chargers without outlet access are units with EVs, but report no outlet access within 20 ft of vehicle parking.
-  \item Due to low sample count, the tsv is constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The sub-tsvs have the following dependencies:
-  \begin{itemize}
-    \item Dwelling unit sub-tsv : deps=['Geometry Building Type RECS', 'Vintage ACS', 'Electric Vehicle Charger'] with the following fallback coarsening order: 1) Vintage ACS to the National distribution and 2) combining Geometry Building Type RECS together into two bins a) single-family detached, mobile homes, and single family attached and b) multi-family with 2 - 4 units and multi-family with 5+ units
-    \item Household sub-tsv : deps=['Geometry Building Type RECS', 'State' 'Tenure', 'Federal Poverty Level']
-    \item In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Vintage ACS', 'Electric Vehicle Charger'], ['Tenure', 'Federal Poverty Level']).
-  \end{itemize}
-\end{itemize}
+\input{characteristics/Electric Vehicle Outlet Access}
 
 \subsection{Electric Vehicle Charging and Discharging Schedules}
 Charging and discharging schedules provide the time periods when the EV can charge or discharge energy. The charging and discharging schedules are connected to the stochastic occupancy model (based on American Time Use Survey data) in OpenStudio-HPXML. Each unit with an EV has an occupant assigned as the sole driver. The schedule generator takes EV vehicle miles traveled and the average speed to calculate the total hours driven per year. The total hours driven per year is used as an input to the EV schedule generator and produces the charging and discharging schedule, while the battery model takes care of the actual power draw during the charging and discharging period. Figure \ref{fig:ev_discharge} shows an example of a generated discharging schedule. This schedule shows that during an “away period” for the occupant, the vehicle is discharged immediately after the occupant leaves and just before they arrive back home, proportional to the length of the away period. The charging schedule is similarly based on occupancy, where the baseline behavior assumes the vehicle is plugged in when the occupant arrives home, and remains plugged in for the full occupied period.
@@ -1862,353 +520,33 @@ Occupants is the household size or the number of residents living together in a 
 The details of each household characteristics are found in the next section.
 
 \subsubsection{Income}\label{income}
-\paragraph{Description}
-Income of the household occupying the housing unit.
-
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  2019 5-year PUMS from the University of Minnesota.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Building Type RECS
-    \item PUMA
-    \item Tenure
-    \item Vintage ACS.
-\end{itemize}
-
-\paragraph{Options}
-The Income options are shown in Table \ref{table:hc_opt_income}. This characteristic has no modeling properties. Instead, it is used to construct other income characteristics and influences the distribution of housing characteristics as an indirect dependency.
-
-\input{tables/options/Income}
-
-\paragraph{Distribution Assumptions}
-\begin{itemize}
-\item
-  In ACS, Income and Tenure are reported for occupied units only.
-  Because we assume vacant units share the same Tenure distribution as
-  occupied units, by extension, we assume this Income distribution
-  applies to all units regardless of Vacancy Status. For reference,
-  57445 / 140160 rows have sampling\_probability \textgreater= 1/550,000.\footnote{550,000 is the typical sample size for ResStock, indicating that these rows are likely to get sampled.}
-  Of those rows, 2961 (5\%) were replaced due to low samples in the
-  following process: Where sample counts are less than 10 (79145 /
-  140160 relevant rows), the Census Division by PUMA Metro Status
-  average distribution has been inserted first (76864), followed by
-  Census Division by
-  `Metro'/`Non-metro'
-  average distribution (1187), followed by Census Region by PUMA Metro
-  Status average distribution (282), followed by Census Region by
-  `Metro'/`Non-metro'
-  average distribution (112).
-\end{itemize}
+\input{characteristics/Income}
 
 \subsubsection{Income RECS2015}\label{income_recs2015}
-\paragraph{Description}
-Income of the household occupying the housing unit that are aligned
-with the 2015 U.S. Energy Information Administration Residential Energy
-Consumption Survey.
-
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  2019 5-year PUMS from the University of Minnesota.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Income.
-\end{itemize}
-
-\paragraph{Options}
-The Income RECS2015 option are bins mapped from the Income characteristic to align with the RECS 2015 income bins. The characteristic does not set any modeling properties.
-
-\paragraph{Distribution Assumptions}
-\begin{itemize}
-\item
-  The income in 2019 USD are consolidated to align with those of RECS 2015 without inflation adjustment.
-\end{itemize}
+\input{characteristics/Income RECS2015}
 
 \subsubsection{Income RECS2020}\label{income_recs2020}
-\paragraph{Description}
-Income of the household occupying the housing unit that are aligned
-with the 2020 U.S. Energy Information Administration Residential Energy
-Consumption Survey.
-
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  2019 5-year PUMS from the University of Minnesota.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Income.
-\end{itemize}
-
-\paragraph{Options}
-The Income RECS2020 options are bins mapped from the Income characteristic to align with the RECS 2020 income bins. The characteristic does not set any modeling properties.
-
-\paragraph{Distribution Assumptions}
-\begin{itemize}
-\item
-  The income in 2019 USD are consolidated to align with those of RECS 2020 without inflation adjustment.
-\end{itemize}
+\input{characteristics/Income RECS2020}
 
 \subsubsection{Federal Poverty Level}\label{federal_poverty_level}
-\paragraph{Description}
-Income as a percent of the federal poverty line of the household occupying the housing unit.
-
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  Income from 2019 5-year PUMS from the University of Minnesota.
-\item
-  2019 federal poverty guidelines from \href{https://aspe.hhs.gov/topics/poverty-economic-mobility/poverty-guidelines/prior-hhs-poverty-guidelines-federal-register-references/2019-poverty-guidelines}{Office of the Assistant Secretary for Planning and Evaluation within the U.S. Department of Health and Human Services}.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Income
-    \item Occupants.
-\end{itemize}
-
-\paragraph{Options}
-The Federal Poverty Level options are shown in Table \ref{table:hc_opt_federal_poverty_level}. The Not Available option is for vacant units. The Federal Poverty Level options do not set any modeling properties.
-
-\input{tables/options/Federal Poverty Level}
-
-\paragraph{Distribution Assumptions}
-\begin{itemize}
-\item
-  Percent Federal Poverty Level is calculated using annual household income
-  in 2019 USD (continuous, not binned) from 2019 5-year PUMS data and 2019
-  Federal Poverty Lines for contiguous U.S., where the FPL threshold for
-  1-occupant household is \$12,490 and \$4,420 for every additional person
-  in the household.
-\end{itemize}
+\input{characteristics/Federal Poverty Level}
 
 \subsubsection{Area Median Income}\label{area_median_income}
-\paragraph{Description}
-Income as a percent of area median income of the household occupying the housing unit.
-
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  Income from 2019 5-year PUMS from the University of Minnesota.
-\item
-  Area Median Income definitions based on \href{https://www.huduser.gov/portal/datasets/il.html#data_2019}{2019 Income Limits from HUD}.
-
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Income
-    \item Occupants
-    \item PUMA.
-\end{itemize}
-
-\paragraph{Options}
-The Area Median Income options are shown in Table \ref{table:hc_opt_area_median_income}. The Not Available option is for vacant units. The Area Median Income options do not set any modeling properties.
-
-\input{tables/options/Area Median Income}
-
-\paragraph{Distribution Assumptions}
-\begin{enumerate}
-\item
-    Percent Area Median Income is calculated using annual household income in
-  2019 USD (continuous, not binned) from 2019 5-year PUMS data and 2019
-  income limits from HUD. These limits adjust for household size AND
-  local housing costs (i.e., fair market rents). Income limits reported at
-  county subdivisions are consolidated to County using a \href{https://mcdc.missouri.edu/applications/geocorr2014.html}{crosswalk}
-  generated from Missouri Census Data Center's geocorr
-  (2014), which has 2010 ACS housing unit count.
-\item
-    For the 478 counties
-    available in PUMS (60\%), the county-level income limits are used. For
-    all others (40\%), PUMA-level income limits are used, which are
-    converted from county-level using 2010 ACS housing unit count.
-\end{enumerate}
+\input{characteristics/Area Median Income}
 
 \subsubsection{State Metro Median Income}\label{state_metro_median_income}
-\paragraph{Description}
-State Metro Median Income of the household occupying the housing unit.
-This is different from State Median Income in that the Income Limits are
-differentiated by metro and nonmetro regions of the state.
-
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  Income from 2019 5-year PUMS from the University of Minnesota.
-\item
-  Income Limits derived from 2019 5-year PUMS from the University of Minnesota and 2019 median income by state and metro/nonmetro area from HUD.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Area Median Income
-    \item County Metro Status
-    \item State.
-\end{itemize}
-
-\paragraph{Options}
-The State Metro Median Income options are shown in Table \ref{table:hc_opt_state_metro_median_income}. The Not Available option is for vacant units. The State Metro Median Income options do not set any modeling properties.
-
-\input{tables/options/State Metro Median Income}
-
-\paragraph{Distribution Assumptions}
-\begin{itemize}
-\item
-  Percent State Metro Median Income is calculated using annual household
-  income in 2019 USD (continuous, not binned) from 2019 5-year PUMS data
-  and 2019 median income by state and metro/nonmetro area from HUD. A
-  County Metro Status-differentiated Income Limits table is derived from
-  the median income table by adjusting for household size, which is consistent with the method of generating state income limits by HUD.
-\end{itemize}
+\input{characteristics/State Metro Median Income}
 
 \subsubsection{Occupants}\label{occupants}
-\paragraph{Description}
-The number of occupants living in the housing unit.
-
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  2019 5-year PUMS from the University of Minnesota.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Bedrooms
-    \item Census Division
-    \item Geometry Building Type RECS
-    \item Income RECS2015
-    \item PUMA Metro Status
-    \item Tenure.
-\end{itemize}
-
-\paragraph{Options}
-The Occupants options are shown in Table \ref{table:hc_opt_occupants}.
-
-\input{tables/options/Occupants}
-
-Property definitions are shown in Table \ref{table:hc_arg_def_occupants}.
-
-\input{tables/properties/Occupants}
-
-\paragraph{Distribution Assumptions}
-\begin{itemize}
-\item
-  Option=10+ has a (weighted) representative value of 11. In ACS,
-  Income, Tenure, and Occupants are reported for occupied units only.
-  Because we assume vacant units share the same Income and Tenure
-  distributions as occupied units, by extension, we assume this
-  Occupants distribution applies to all units regardless of Vacancy
-  Status. Where sample counts are less than 10 (6,243 / 18,000 rows), the
-  Census Region average distribution has been inserted first (2,593),
-  followed by national average distribution (2,678), followed by national
-  +
- `MF'/`SF'
-  average distribution (252), followed by national +
-  `MF'/`SF'
-  +
-  `Metro'/`Non-metro'
-  average distribution (315), followed by national +
-  `MF'/`SF'
-  +
-  `Metro'/`Non-metro'
-  + Vacancy Status average distribution (657).
-\end{itemize}
+\input{characteristics/Occupants}
 
 \subsubsection{Vacancy Status}\label{vacancy_status}
-\paragraph{Description}
-The vacancy status (occupied or vacant) of the housing unit.
-
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  2019 5-year PUMS from the University of Minnesota.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Building Type RECS
-    \item PUMA.
-\end{itemize}
-
-\paragraph{Options}
-The Vacancy Status options are either ``Occupied'' or ``Vacant''. Vacant units are assumed to be vacant for the full calendar year.
-
-\paragraph{Distribution Assumptions}
-\begin{itemize}
-\item
-  Where sample counts are less than 10 (434 / 11,680 rows), the State
-  average distribution has been inserted. `Mobile
-  Home' does not exist in D.C. and is replaced by
-  `Single-Family Detached.'
-\end{itemize}
+\input{characteristics/Vacancy Status}
 
 \subsubsection{Tenure}\label{tenure}
-\paragraph{Description}
-The tenancy (owner or renter) of the household occupying the housing
-unit.
+\input{characteristics/Tenure}
 
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  2019 5-year PUMS from the University of Minnesota.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Building Type RECS
-    \item PUMA
-    \item Vacancy Status.
-\end{itemize}
-
-\paragraph{Options}
-The Tenure options are ``Owner'', ``Renter'', and ``Not Available''. The ``Not Available'' option is for vacant units.
-
-\paragraph{Distribution Assumptions}
-\begin{itemize}
-\item
-  In ACS, Tenure is reported for occupied units only. By excluding
-  Vacancy Status as a dependency, we assume vacant units share the same
-  Tenure distribution as occupied units. Where sample counts are less
-  than 10 (464 / 11,680 rows), the Census Division by PUMA Metro Status
-  average distribution has been inserted. `Mobile
-  Home' does not exist in D.C. and is replaced by
-  `Single-Family Detached.'
-\end{itemize}
-
-\subsubsection{Household Has Tribal
-Persons}\label{household_has_tribal_persons}
-\paragraph{Description}
-The household occupying the housing unit has at least one Tribal person
-in the household.
-
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  2019 5-year PUMS from the University of Minnesota.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Federal Poverty Level
-    \item Geometry Building Type RECS
-    \item PUMA.
-\end{itemize}
-
-\paragraph{Options}
-The Household Has Tribal Persons options are ``Yes'', ``No'', and ``Not Available''. The Not Available option is for Vacant Units.
-
-\paragraph{Distribution Assumptions}
-\begin{itemize}
-\item
-  2,188 / 2,336 PUMA has \textless10 samples and are falling back to state
--level aggregated values. D.C. Mobile Homes do not exist and are replaced
-  with Single-Family Detached.
-\end{itemize}
+\subsubsection{Household Has Tribal Persons}\label{household_has_tribal_persons}
+\input{characteristics/Household Has Tribal Persons}
 
 % ##################
