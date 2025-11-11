@@ -258,6 +258,6 @@ Single-Family Detached, Vented Crawlspace, Vented Attic, 2 Car Garage	Yes	0	1	0	
 Single-Family Detached, Vented Crawlspace, Vented Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	0.00249661
 Single-Family Detached, Vented Crawlspace, Vented Attic, No Garage	Yes	0	1	0	0	0	0	0	0.0372584
 # Created by: sources\other\tsv_maker.py
-# Description: Location of Duct System
+# Description: Primary location of the duct system.
 # Source: OpenStudio-HPXML v1.6.0 and Wilson et al., 'Building America House Simulation Protocols', 2014
 # Assumption: Based on default duct location assignment in OpenStudio-HPXML: the first present space type in the order of: basement - conditioned, basement - unconditioned, crawlspace - conditioned, crawlspace - vented, crawlspace - unvented, attic - vented, attic - unvented, garage, or living space

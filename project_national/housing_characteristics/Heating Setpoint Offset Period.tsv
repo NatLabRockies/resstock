@@ -340,6 +340,6 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 8AK	Single-Family Detached	No	Yes	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	20	862.757	2.64924e-06
 8AK	Single-Family Detached	Yes	Yes	0.0238084	0.0238084	0.0238084	0.0238084	0.0238084	0.0238084	0.0238084	0.0238084	0.0238084	0.0238084	0.0238084	0	0	0	0	0	0	0	0	0	0	0	0.0671007	0.0671007	0.0671007	0.0671007	0.0671007	0.0671007	0.0671007	0.0671007	0.0671007	0.0671007	0.0671007	0	4	0	0
 # Created by: sources\recs\recs2020\tsv_maker.py
-# Description: The period and offset for the dwelling unit's heating setpoint. Default for the day is from 9am to 5pm and for the night is 10pm to 7am.
+# Description: The time period(s) for the housing unit's heating setpoint offset.
 # Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 # Assumption: For dependency conditions with low samples, the following lumpings are used in progressive order until there are enough samples: 1) lumping buildings into Single-Family and Multi-Family only,  2) lumping buildings into Single-Family and Multi-Family only and lumping nearby climate zones within  A/B regions and separately 7AK and 8AK 3) lumping all building types together and lumping climate zones within A/B regions and separately 7AK and 8AK

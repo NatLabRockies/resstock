@@ -816,5 +816,5 @@ Not Available	Metropolitan	WY	0	0	0	0	0	0	0	1	0	0	7.57248e-05
 80-100%	Non-Metropolitan	WY	0	0	0	0.83706	0.16294	0	0	0	1431	26875	0.000134818
 Not Available	Non-Metropolitan	WY	0	0	0	0	0	0	0	1	1793	46749	0.00026201
 # Created by: sources\pums\pums2019_5yrs\tsv_maker.py
-# Description: State Metro median income of the household occupying the dwelling unit.             This is different from State Median Income in that the Income Limits are differentiated by Metro and             Nonmetro portions of the state.
+# Description: State Metro median income of the household occupying the dwelling unit. This is different from State Median Income in that the Income Limits are differentiated by Metro and Nonmetro portions of the state.
 # Source: % State Metro Median Income is calculated using annual household income in 2019USD (continuous, not binned) from 2019-5yrs PUMS data and 2019 state median income (SMI) by metro/nonmetro area from HUD. A County Metro Status-differentiated Income Limits table is derived from the SMI by adjusting for household size only, which is consistent with how HUD's published State Income Limits table is generated.

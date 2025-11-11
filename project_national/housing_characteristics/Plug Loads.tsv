@@ -50,6 +50,6 @@ West South Central	Multi-Family with 5+ Units	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
 West South Central	Single-Family Attached	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	27	343496	0.00282032
 West South Central	Single-Family Detached	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	426	9.3137e+06	0.0765195
 # Created by: sources\recs\recs2015\tsv_maker.py
-# Description: Plug load usage level which is varied by Census Division RECS and Building Type RECS.
+# Description: Plug load usage level as a percentage of the national average.
 # Source: Constructed using U.S. EIA 2015 Residential Energy Consumption Survey (RECS) microdata.
 # Assumption: Multipliers are based on ratio of the ResStock MELS regression equations and the MELS modeled in RECS.

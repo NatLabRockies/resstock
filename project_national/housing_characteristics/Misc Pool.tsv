@@ -48197,7 +48197,8 @@ Not Available	Single-Family Detached	WY	Renter	<1940	0	0	1	18	1724.67	0
 # Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence of a pool at the dwelling unit.
 # Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
-# Assumption: The only valid option for multi-family homes is Nonesince the pool is most likely to be jointly ownedDue to low sample count, the tsv is constructed with the followingfallback coarsening order
+# Assumption: The only valid option for multi-family homes is None since the pool is most likely to be jointly owned
+# Assumption: Due to low sample count, the tsv is constructed with the following fallback coarsening order
 # Assumption: [1] State coarsened to Census Division RECS with AK/HI separate
 # Assumption: [2] Geometry Building Type RECS coarsened to SF/MF/MH
 # Assumption: [3] Geometry Building Type RECS coarsened to SF and MH/MF
