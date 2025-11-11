@@ -28808,7 +28808,9 @@ West South Central	Single-Family Detached	4000+	Vented Crawlspace	4+	<1940	0.075
 # Assumption: Single-family detached units that are 0-1499 square feet and 3+ stories cannot have a garage.
 # Assumption: The geometry stories distributions are all the same except for 0-1499 square feet and 3 stories.
 # Assumption: Single-family detached units that are 1500-2499 square feet can not have a 3 car garage.
-# Assumption: Single-family detached units that are 2500-3999 square feet and a heated basement can not have a 3 car garage. Due to low sample sizes, 1. Crawl, basements, and slab are lumped.
-# Assumption: 2. Story levels are lumped together.
-# Assumption: 2. Census Division RECS is grouped into Census Region.
-# Assumption: 2. Vintage ACS is progressively grouped into: pre-1960, 1960-1999, and 2000+.
+# Assumption: Single-family detached units that are 2500-3999 square feet and a heated basement can not have a 3 car garage.
+# Assumption: Due to low sample sizes,
+# Assumption: [1] Crawl, basements, and slab are lumped.
+# Assumption: [2] Story levels are lumped together.
+# Assumption: [3] Census Division RECS is grouped into Census Region.
+# Assumption: [4] Vintage ACS is progressively grouped into: pre-1960, 1960-1999, and 2000+.

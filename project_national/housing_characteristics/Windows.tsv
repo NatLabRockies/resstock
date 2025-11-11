@@ -10719,7 +10719,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Federal Poverty Level	Depend
 # Assumption: Due to low sample sizes, the following adjustments are made:
 # Assumption: [1] Vintage data are grouped into: 1) <1960, 2) 1960-79, 3) 1980-99, 4) 2000s, 5) 2010s.
 # Assumption: [2] Building Type data are grouped into: 1) Single-Family Detached, Single-Family Attached, and Mobile homes and 2) Multi-Family 2-4 units and Multi-Family 5+ units.
-# Assumption: [3] Climate zones are grouped into: 1) 1A, 2A, 2B; 2) 3A, 3B, 3C, 4B; 3) 4A, 4C; 4) 5A, 5B; 5) 6A, 6B; and 6) 7A, 7B 7AK, 8AK.
+# Assumption: [3] Climate zones are grouped into: 1) 1A, 2A, 2B, 2) 3A, 3B, 3C, 4B, 3) 4A, 4C, 4) 5A, 5B, 5) 6A, 6B, and 6) 7A, 7B 7AK, 8AK.
 # Assumption: [4] Federal Poverty Levels are progressively grouped together until all bins are combined.
 # Assumption: [5] Tenure options are progressively grouped together until all bins are combined.
 # Assumption: Storm window saturations are based on D&R International, Ltd. 'Residential Windows and Window Coverings: A Detailed View of the Installed Base and User Behavior' 2013. https://www.energy.gov/sites/prod/files/2013/11/f5/residential_windows_coverings.pdf. Cut the % storm windows by factor of 55% because only 55% of storms are installed year round

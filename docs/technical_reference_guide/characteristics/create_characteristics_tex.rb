@@ -33,6 +33,8 @@ def write_subsection(folder, parameter, field, name)
       else
         item = item.gsub(m[0], "\\href{#{m[0]}}{#{m[0].chop.gsub('_', '\_')}}")
       end
+    else
+      item = item.gsub('_', '\_')
     end
 
     if item.start_with?(/\[\d+\]/)

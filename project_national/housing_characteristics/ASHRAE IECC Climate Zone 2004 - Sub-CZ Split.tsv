@@ -3142,7 +3142,7 @@ WY, Uinta County	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	2652	8768	6.54059e-05
 WY, Washakie County	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	1902	3811	2.84286e-05
 WY, Weston County	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	2244	3498	2.60937e-05
 # Created by: sources\spatial\tsv_maker.py
-# Description: Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located. Climate zone where climate zone 2A is split between counties in TX, LA and FL, GA, AL, and MSClimate zone where climate zone 1A is split between counties in FL and HI
+# Description: Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located. Climate zone where climate zone 2A is split between counties in TX, LA and FL, GA, AL, and MS. Climate zone where climate zone 1A is split between counties in FL and HI.
 # Source: Spatial definitions are from the U.S. Census Bureau as of July 1, 2015.
 # Source: Unit counts are from the American Community Survey 5-yr 2016.
 # Source: Climate zone data are from ASHRAE 169 2006, IECC 2012, and M.C. Baechler 2015.

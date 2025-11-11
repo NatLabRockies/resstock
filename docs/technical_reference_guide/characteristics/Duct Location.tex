@@ -1,5 +1,6 @@
 \paragraph{Description}
 \input{characteristics/description/Duct Location}
+As described earlier, a fraction of the ducts will also be assumed to be in conditioned space for homes with multiple stories.
 
 \paragraph{Distribution Data Sources}
 \input{characteristics/sources/Duct Location}
@@ -8,10 +9,13 @@
 \input{characteristics/dependencies/Duct Location}
 
 \paragraph{Options}
-\input{characteristics/options/Duct Location}
+The duct location is a direct mapping of spaces from the hierarchical assignment in OpenStudio-HPXML. This is done to expose the duct location as an output in ResStock. The spaces available for the ducts are shown in Table \ref{table:hc_opt_duct_location}. The ``None'' option is used for ducts that are located completely in the conditioned space.
 
-\input{characteristics/properties/Duct Location}
+\input{tables/options/Duct Location}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_duct_location}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-air-distribtuion}{Air Distribution} documentation for additional information.
+
+\input{tables/properties/Duct Location}
 
 \paragraph{Distribution Assumptions}
 \input{characteristics/assumptions/Duct Location}
-

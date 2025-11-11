@@ -8,10 +8,13 @@
 \input{characteristics/dependencies/Heating Setpoint Offset Period}
 
 \paragraph{Options}
-\input{characteristics/options/Heating Setpoint Offset Period}
+The options shown in Table \ref{table:hc_opt_heating_setpoint_offset_period} are a combination of day and night offset periods. The default for the day is from 9 AM to 5 PM and for the night is 10 PM to 7 AM. The options then shift these periods randomly up to 5 hours in either direction. The shifting of the periods is mainly to avoid the synchronization of HVAC systems across the housing stock from all turning on and off at the same time. The property values are 24-hour arrays for when the setback occurs (a value of -1) and when the setback does not occur (a value of 0).
 
-\input{characteristics/properties/Heating Setpoint Offset Period}
+\input{tables/options/Heating Setpoint Offset Period}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_heating_setpoint_offset_period}.
+
+\input{tables/properties/Heating Setpoint Offset Period}
 
 \paragraph{Distribution Assumptions}
 \input{characteristics/assumptions/Heating Setpoint Offset Period}
-

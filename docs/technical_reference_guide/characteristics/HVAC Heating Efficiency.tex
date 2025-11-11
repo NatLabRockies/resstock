@@ -1,5 +1,6 @@
 \paragraph{Description}
 \input{characteristics/description/HVAC Heating Efficiency}
+This is the main input that determines the modeled heating system.
 
 \paragraph{Distribution Data Sources}
 \input{characteristics/sources/HVAC Heating Efficiency}
@@ -8,10 +9,13 @@
 \input{characteristics/dependencies/HVAC Heating Efficiency}
 
 \paragraph{Options}
-\input{characteristics/options/HVAC Heating Efficiency}
+The options of the HVAC Heating Efficiency characteristic are shown in Table \ref{table:hc_opt_hvac_heating_efficiency} and assign the heating system type and efficiency. The system types are ducted ASHPs, electric baseboard, electric boiler, electric furnace, electric wall furnace, fuel boiler, fuel furnace, fuel wall/floor furnace, MSHPs, none, and shared heating. The Shared Heating option does not specify any properties. Shared Heating designates heating systems that serve multiple housing units in a multifamily building, and they have their own characteristics that set the properties; see Section \ref{sec:shared_systems}.
 
-\input{characteristics/properties/HVAC Heating Efficiency}
+\input{tables/options/HVAC Heating Efficiency}
+
+Property definitions are shown in Table (Table \ref{table:hc_arg_def_hvac_heating_efficiency}). See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating System} documentation for additional information.
+
+\input{tables/properties/HVAC Heating Efficiency}
 
 \paragraph{Distribution Assumptions}
 \input{characteristics/assumptions/HVAC Heating Efficiency}
-

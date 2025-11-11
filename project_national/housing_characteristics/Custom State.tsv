@@ -51,4 +51,4 @@ WI	0	1	1	1	0.019765
 WV	0	1	1	1	0.00659973
 WY	0	1	1	1	0.00199908
 # Created by: sources\aris\tsv_maker.py
-# Description: A custom selection of states to be able to have more fine tuned probability distributionin states where we have more data
+# Description: A custom selection of states to be able to have more fine tuned probability distributionin states where we have more data.

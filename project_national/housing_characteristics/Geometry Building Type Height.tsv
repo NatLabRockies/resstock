@@ -90,5 +90,5 @@ Single-Family Detached	20	0	0	0	0	0	0	1	0	0	0
 Single-Family Detached	21	0	0	0	0	0	0	1	0	0	0
 Single-Family Detached	35	0	0	0	0	0	0	1	0	0	0
 # Created by: sources\recs\recs2009\tsv_maker.py
-# Description: The 2009 U.S. Energy Information Administration Residential Energy Consumption Survey  building type with multi-family buildings split out by low-rise, mid-rise, and high-rise.
+# Description: The 2009 U.S. Energy Information Administration Residential Energy Consumption Survey building type with multi-family buildings split out by low-rise, mid-rise, and high-rise.
 # Source: Calculated directly from other distributions
