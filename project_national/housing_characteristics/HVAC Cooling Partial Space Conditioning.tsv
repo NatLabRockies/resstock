@@ -2281,7 +2281,8 @@ Dependency=ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	Dependency=Geometry Buil
 8AK	Single-Family Detached	4000+	Room AC	0.0797069	0.834182	0.056768	0.0235487	0	0.00579399	0	0	0.0526599	12.5946	0
 # Created by: sources\recs\recs2009\tsv_maker.py
 # Description: The fraction of the finished floor area that the cooling system provides cooling.
-# Source: Constructed using U.S. EIA 2009 Residential Energy Consumption Survey (RECS) microdata.Hawaii constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+# Source: Constructed using U.S. EIA 2020 RECS microdata in Hawaii.
+# Source: Constructed using U.S. EIA 2009 RECS microdata in all locations except Hawaii.
 # Assumption: Central AC systems need to serve at least 60 percent of the floor area.
-# Assumption: Heat pumps serve 100 percent of the floor area because the system serves 100 percent of the heated floor area, except for in Hawaii
+# Assumption: Heat pumps serve 100% of the floor area in all locations except Hawaii because the system serves 100% of the heated floor area. Partial cooling is common in cooling dominated climate.
 # Assumption: Due to low sample count, the tsv is constructed by downscaling a core sub-tsv with 3 sub-tsvs of different dependencies. The sub-tsvs have the following dependencies: tsv1 : 'HVAC Cooling Type', 'ASHRAE IECC Climate Zone 2004'; tsv2 : 'HVAC Cooling Type', 'Geometry Floor Area Bin'; tsv3 : 'HVAC Cooling Type', 'Geometry Building Type RECS';
