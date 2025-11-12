@@ -1,4 +1,4 @@
-%  File: nrel.cls v2.0.2, April 2022
+%  File: nrel.cls v4.0.1, October 2025
 % This class file provides basic functionality for producing
 % PDFs that meet NREL's style and formatting requirements.
 
@@ -8,7 +8,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{nrel}
 \typeout{ }
-\typeout{NREL.cls -- v2.0.5, March 2024}
+\typeout{NREL.cls -- ResStock 2025 Release 1, October 2025}
 \typeout{Formats documents according to the NREL style guide}
 \typeout{ }
 
@@ -60,7 +60,7 @@
 }
 % NREL is assumed to be true by default
 % unless switched off by EERE flag
-\ifthenelse{\boolean{IsNREL}}{ 
+\ifthenelse{\boolean{IsNREL}}{
 	\def\NREL@class{report}
 	\typeout{Using NREL report RAAW}
 }{}
@@ -147,21 +147,21 @@
 \RequirePackage[]{titlesec}
 \RequirePackage[title,titletoc]{appendix}
 %% ----------------------------
-%% References section 
+%% References section
 %% ----------------------------
-% For formatting the bibliography. See guidance 
+% For formatting the bibliography. See guidance
 \RequirePackage[babel]{csquotes}
 \usepackage[authordate,
             backend=biber,
 			natbib,
 			bibencoding=inputenc,
 			sorting=nyt,
-			doi=true, 
+			doi=true,
 			maxbibnames=10,
-			giveninits=true, 
+			giveninits=true,
 			maxcitenames=3,
             ]{biblatex-chicago}
-% change the name of the bib 
+% change the name of the bib
 % (see http://tex.stackexchange.com/questions/82993/how-to-change-the-name-of-document-elements-like-figure-contents-bibliogr)
 \DefineBibliographyStrings{american}{%
   bibliography = {References},
@@ -176,13 +176,13 @@
 	% \titleformat{\chapter}{\fontsize{18pt}{0pt}\bfseries\selectfont}
 	% \vspace*{12pt}
 	}
-% see NREL formatting guidelines at 
+% see NREL formatting guidelines at
 % https://communications_resources.nrel.gov/style_guide/references
 % technical reports
 \DeclareBibliographyAlias{techreport}{book}
 % make one type of publication look like another
 % map unknown bibliography entry types to the misc type
-\DeclareBibliographyAlias{*}{misc} 
+\DeclareBibliographyAlias{*}{misc}
 % make sure URLs in the bibliography are shown in roman fonts
 \urlstyle{same}
 
@@ -192,8 +192,8 @@
 % NREL default is ragged right.
 % Load ragged2e so \justifying and environment justify are available.
 % Redefines \centering, \raggedleft, and \raggedright, and environments center
-% flushleft and flushright to use versions made by ragged2e. 
-% Sets default alignment to ragged right. 
+% flushleft and flushright to use versions made by ragged2e.
+% Sets default alignment to ragged right.
 % To override, use the command \justifying or the environment justify.
 \RequirePackage[newcommands,document]{ragged2e}
 
@@ -210,15 +210,15 @@
 \RequirePackage[nottoc, notlot, notlof]{tocbibind}
 
 % add Figure before # and a period after
-\renewcommand{\cftfigfont}{\fontfamily{phv} Figure }
-\renewcommand{\cfttabfont}{\fontfamily{phv} Table }
+\renewcommand{\cftfigfont}{\fontfamily{phv}\selectfont Figure }
+\renewcommand{\cfttabfont}{\fontfamily{phv}\selectfont Table }
 \renewcommand{\cftfigaftersnum}{.}
 \renewcommand{\cfttabaftersnum}{.}
 
 % title font
-\renewcommand{\cfttoctitlefont}{\color{nrelblue} \raggedright  \fontsize{18}{6}\sffamily\bfseries}
-\renewcommand{\cftloftitlefont}{\color{nrelblue} \raggedright  \fontsize{18}{6}\sffamily\bfseries}
-\renewcommand{\cftlottitlefont}{\color{nrelblue} \raggedright  \fontsize{18}{6}\sffamily\bfseries}
+\renewcommand{\cfttoctitlefont}{\color{nrelblue} \raggedright  \fontsize{18}{21}\sffamily\bfseries}
+\renewcommand{\cftloftitlefont}{\color{nrelblue} \raggedright  \fontsize{18}{21}\sffamily\bfseries}
+\renewcommand{\cftlottitlefont}{\color{nrelblue} \raggedright  \fontsize{18}{21}\sffamily\bfseries}
 \renewcommand{\cftchapfont}{ \fontsize{10pt}{10pt}\sffamily\bfseries}
 \renewcommand{\cftsecfont}{ \fontsize{11pt}{11pt}}
 \renewcommand{\cftsubsecfont}{ \fontsize{11pt}{11pt}}
@@ -258,10 +258,10 @@
 	\vspace*{-20\p@}%
 	{\color{nrelblue} \parindent \z@ \raggedright \normalfont \interlinepenalty\@M
 	\ifnum \c@secnumdepth >\m@ne
-		\fontfamily{phv} \fontsize{18}{6}\fontseries{b}\selectfont
+		\fontfamily{phv} \fontsize{18}{21}\fontseries{b}\selectfont
 		\thechapter \hspace*{1em}#1
 		\else
-		\fontfamily{phv} \fontsize{18}{6}\fontseries{b}\selectfont #1
+		\fontfamily{phv} \fontsize{18}{21}\fontseries{b}\selectfont #1
 	\fi
 	\par\nobreak
 	% \vspace*{0pt}
@@ -374,9 +374,9 @@
 
 % deal with the appendix
 \renewcommand\appendix{\par
-	\setcounter{chapter}{0} 
+	\setcounter{chapter}{0}
 	\setcounter{section}{0}
-	\setcounter{footnote}{0} 
+	\setcounter{footnote}{0}
 	% counters should reset each chapter
 	\counterwithin{figure}{chapter}
 	\counterwithin{table}{chapter}
@@ -386,17 +386,17 @@
 
 \ifthenelse{\boolean{IssingleAppendix}}{ % true
 	\AtBeginEnvironment{appendices}{
-		\titleformat{\chapter}{\fontfamily{phv}\fontsize{18}{0}\selectfont\bfseries}{\textcolor{nrelblue}
+		\titleformat{\chapter}{\fontfamily{phv}\fontsize{18}{21}\selectfont\bfseries}{\textcolor{nrelblue}
 		{Appendix}}{11pt}{\textcolor{nrelblue}}
 		\titlespacing*{\chapter}{0pt}{-20pt}{0pt}
-		} %<--------- Use this if only one appendix	
+		} %<--------- Use this if only one appendix
 	\newcommand{\appchapter}[1]{
 	\chapter*{Appendix\hspace{11pt} #1}
     \addcontentsline{toc}{chapter}{{#1}}}
 	}
 	{% False
 	\AtBeginEnvironment{appendices}{
-		\titleformat{\chapter}{\fontfamily{phv}\fontsize{18}{0}\selectfont\bfseries}{\textcolor{nrelblue}
+		\titleformat{\chapter}{\fontfamily{phv}\fontsize{18}{21}\selectfont\bfseries}{\textcolor{nrelblue}
   		{Appendix \thechapter.}}{11pt}{\textcolor{nrelblue}}
 		\titlespacing*{\chapter}{0pt}{-20pt}{-6pt}
 		  } %<--------- Use this if more than one appendix
@@ -405,8 +405,8 @@
 	}
 
 
-% check that the default san-serif font is sort-of-arial				
-% (required for tables)					
+% check that the default san-serif font is sort-of-arial
+% (required for tables)
 % \renewcommand{\sfdefault}{phv} % Arial
 % Indenting and spacing between paragraphs
 \setlength{\parindent}{0pt}
@@ -443,32 +443,32 @@
 % % Add .pdf links
 % \ifthenelse{\boolean{blacklinks}}{% True
 % 	\RequirePackage[
-% 		final, 
-% 		pdfa, 
-% 		linktocpage, 
-% 		colorlinks, 
-% 		linktoc=all, 
-% 		linkcolor=black, 
-% 		citecolor=black, 
-% 		menucolor=black, 
-% 		urlcolor=black, 
-% 		pdfborder={0 0 0}, 
-% 		unicode, 
+% 		final,
+% 		pdfa,
+% 		linktocpage,
+% 		colorlinks,
+% 		linktoc=all,
+% 		linkcolor=black,
+% 		citecolor=black,
+% 		menucolor=black,
+% 		urlcolor=black,
+% 		pdfborder={0 0 0},
+% 		unicode,
 % 		pdflang={en-US}
 % 	]{hyperref}
 % }{% False
 % 	\RequirePackage[
-% 		final, 
-% 		pdfa, 
-% 		linktocpage, 
-% 		colorlinks, 
-% 		linktoc=all, 
-% 		linkcolor=black, 
-% 		citecolor=nrelblue, 
-% 		menucolor=black, 
-% 		urlcolor=nrelblue, 
+% 		final,
+% 		pdfa,
+% 		linktocpage,
+% 		colorlinks,
+% 		linktoc=all,
+% 		linkcolor=black,
+% 		citecolor=nrelblue,
+% 		menucolor=black,
+% 		urlcolor=nrelblue,
 % 		pdfborder={0 0 0},
-% 		unicode, 
+% 		unicode,
 % 		pdflang={en-US}
 % 	]{hyperref}
 % }
@@ -528,7 +528,7 @@
 	% \renewcommand{\headrulewidth}{0.5pt}
 	% \renewcommand{\headrule}{\hbox to\headwidth{%
 	% 		\color{nrelblue}\leaders\hrule height \headrulewidth\hfill}}
-	
+
 	% \renewcommand{\footrulewidth}{0.5pt}
 	% \renewcommand{\footrule}{\hbox to\headwidth{%
 	% 		\color{nrelblue}\leaders\hrule height \headrulewidth\hfill}}
@@ -536,9 +536,9 @@
 % \pagestyle{nrel}
 }
 
-\appto\frontmatter{\pagestyle{nrel}}                                       
-\appto\mainmatter{\pagestyle{nrel}}                                        
-\appto\backmatter{\pagestyle{empty}}   
+\appto\frontmatter{\pagestyle{nrel}}
+\appto\mainmatter{\pagestyle{nrel}}
+\appto\backmatter{\pagestyle{empty}}
 
 % note that the first page of a chapter uses "plain", so we need to redefine that to match the "nrel" page style.
 % \let\ps@plain\ps@nrel
@@ -564,16 +564,16 @@
 \makeatletter
 \typeout{\cleanlist}
 \hypersetup{
-	final, 
-	linktocpage, 
-	colorlinks=false, 
-	linktoc=all, 
-	linkcolor=black, 
-	citecolor=nrelblue, 
-	menucolor=black, 
-	urlcolor=nrelblue, 
+	final,
+	linktocpage,
+	colorlinks=false,
+	linktoc=all,
+	linkcolor=black,
+	citecolor=nrelblue,
+	menucolor=black,
+	urlcolor=nrelblue,
 	pdfborder={0 0 0},
-	unicode, 
+	unicode,
 	pdflang={en-US},
 	pdftitle=\@title,
 	pdfauthor={Nicholas Hamilton},
@@ -586,20 +586,22 @@
 
 %% format of make title (title, authors, affils)
 \makeatletter
-	\renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
-	\null
-	\vskip 2em%
-	\begin{flushright}
-		\righthyphenmin=62 % prevents hyphens in title page
-		\fontfamily{phv}
-		\textbf{\huge{\@title}}
-		\vskip 1.5em%
-		\large{\@author}
-		\vskip 1em%
-	\end{flushright}
-	\egroup
-	}
+\renewcommand{\maketitle}{%
+  \begingroup\setlength{\parindent}{0pt}%
+  \null
+  \vspace{2em}%
+  \begin{flushright}%
+    \righthyphenmin=62 % prevents hyphens in title page
+    \fontfamily{phv}\selectfont
+    {\huge\bfseries \@title\par}%
+    \vspace{1.5em}%
+    {\large \@author\par}%
+    \vspace{1em}%
+  \end{flushright}%
+  \endgroup
+}%
 \makeatother
+
 
 
 %#TODO add ifthenelse statement to change from NREL cover page to EERE cover page
@@ -611,27 +613,27 @@
 	% hard-coded formatting for title page
 	% * no changes needed *
 	% -------------------------------------
-	\thispagestyle{empty}		
+	\thispagestyle{empty}
 	\centering
 	% \vspace*{-8em}
 	% \includegraphics[width=\textwidth]{header}\\
 	\vspace*{4em}
 	\begin{flushright}
 		\begin{minipage}{0.7\textwidth}
-			\maketitle			
+			\maketitle
 		\end{minipage}
-		\\	
+		\\
 		\vfill
 		\begin{minipage}[b]{0.75\textwidth}
 			\begin{minipage}[b]{0.7\textwidth}
 				This is a temporary cover page.
 				A final cover page will be generated by comms with current style and formatting.\\
 				\vspace{2ex}
-				\textbf{v2.0.5, March 2024}
+				\textbf{ResStock 2025 Release 1, October 2025}
 			\end{minipage}
 		\end{minipage}
 	\end{flushright}
-	\raggedright	
+	\raggedright
 % 	\clearpage
 }
 

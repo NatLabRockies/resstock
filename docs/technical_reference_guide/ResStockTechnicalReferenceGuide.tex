@@ -7,6 +7,7 @@
 \usepackage{caption}
 \usepackage{hyperref}
 \usepackage{makecell}
+\usepackage{biblatex}
 
 \newenvironment{customLongTable}[4]{ % #1 is format, #2 is caption, #3 is label, #4 is header row
     \begin{longtable}{#1}
@@ -36,9 +37,9 @@
 
 \author{Janet Reyna}
 \author{Anthony Fontanini}
+\author{Andrew Parker}
 \author{Elaina Present}
 \author{Lixi Liu}
-
 \author{Rajendra Adhikari}
 \author{Carlo Bianchi}
 \author{Jes Brossman}
@@ -51,6 +52,7 @@
 \author{Noel Merket}
 \author{Nathan Moore}
 \author{Prateek Munankarmi}
+\author{Sinoun Phoung}
 \author{Joseph Robertson}
 \author{Noah Sandoval}
 \author{Andrew Speake}
@@ -87,7 +89,7 @@ The ResStock model and its published datasets are foundational for a wide range 
 
 \section*{Impact}
 
-The ResStock data viewer for the public data has to date been accessed by accounts from 5,724 unique email addresses across 1,907 domain names that mainly support consultants, utilities, city, county, and local governments, state offices, DOE, and other federal offices. It is estimated that the datasets that ResStock produces are used by utilities that serve over 38\% of the U.S.~population (126 million people), 5 regional energy efficiency offices, 12 state energy offices, and 3 public utility commissions. In fiscal year 2024, the combined ResStock and ComStock datasets had 18.4 million unique data file downloads from the Open Energy Dataset Initiative (OEDI), including datasets derived from End-Use Load Profiles (EULP) (82\% of all OEDI downloads), as of July 31, 2024.
+In 2024-25, The ResStock Data Viewer for the public data was accessed across all 50 U.S. states, by more than 2,000 unique users who queried the data on average 16 times per user. The queries mainly support consultants, utilities, city, county, and local governments, state offices, DOE, and other federal offices. It is estimated that the datasets that ResStock produces are used by utilities that deliver over half of all US electric sales. The combined ResStock and ComStock datasets contributed to over \$2 billion dollars worth of industry project revenue. Cumulatively, the datasets have been downloaded over 45 million times, making it the most downloaded dataset across the Open Energy Data Initiative's (OEDI) 2,976 datasets.
 
 %% Add citation statistics
 
@@ -108,12 +110,24 @@ A portion of this research was performed using computational resources sponsored
 \vspace{1cm}
 
 \begin{center}
-\begin{tabular}{ |c || c c c c|}
+\begin{tabular}{ |c || c c|}
 \hline
- Technical Reference Documentation & Standard Data Release & ResStock & BuildStock Batch  & OpenStudio-HPXML \\ \hline \hline
-Active Development & \href{https://resstock.nrel.gov/datasets}{To be determined} & \href{https://github.com/NREL/resstock}{develop} &  \href{https://github.com/NREL/buildstockbatch} {develop} & \href{https://github.com/NREL/OpenStudio-HPXML}{master} \\\hline
- v1.0.0, January 2025 & \href{https://resstock.nrel.gov/datasets}{2024.2} & \href{https://github.com/NREL/resstock/tree/v3.3.0}{v3.3.0} &  \href{https://github.com/NREL/buildstockbatch/tree/v2023.10.0} {v2023.10.0} & \href{https://github.com/NREL/OpenStudio-HPXML/tree/v1.8.1}{v1.8.0} \\\hline
+    Technical Reference Documentation & Standard Data Release & ResStock \\ \hline \hline
+Draft, ResStock 2025 Release 1, October 2025 & \href{https://resstock.nrel.gov/datasets}{2025 Release 1} &
+\href{https://github.com/NREL/resstock/releases/tag/2025_Release_1}{\texttt{sdr\_2025\_Release\_1}} \\\hline
+v3.3.0, July 2025 & \href{https://resstock.nrel.gov/datasets}{2024.2} &
+\href{https://github.com/NREL/resstock/tree/v3.3.0}{v3.3.0} \\\hline
+\end{tabular}
+\end{center}
 
+\begin{center}
+\begin{tabular}{ |c || c c|}
+\hline
+    Technical Reference Documentation & BuildStock Batch  & OpenStudio-HPXML \\ \hline \hline
+Draft, ResStock 2025 Release 1, October 2025 & \href{https://github.com/NREL/buildstockbatch/releases/tag/ResStock_SDR_2025_Release_1}{ResStock SDR 2025 Release 1} &
+\href{https://github.com/NREL/OpenStudio-HPXML/releases/tag/v1.10.0}{v1.10.0} \\\hline
+v3.3.0, July 2025 & \href{https://github.com/NREL/buildstockbatch/tree/v2023.10.0}{v2023.10.0} &
+\href{https://github.com/NREL/OpenStudio-HPXML/tree/v1.8.1}{v1.8.1} \\\hline
 \end{tabular}
 \end{center}
 
@@ -164,6 +178,7 @@ Active Development & \href{https://resstock.nrel.gov/datasets}{To be determined}
 \acro {NHTS}{National Household Travel Survey}
 \acro {NREL}{National Renewable Energy Laboratory}
 \acro {OEDI}{Open Energy Dataset Initiative}
+\acro {PADD}{Petroleum Administration for Defense District}
 \acro {PUMA}{Public Use Microdata Area}
 \acro {PUMS}{Public Use Microdata Samples}
 \acro {PV}{photovoltaic}
@@ -176,6 +191,7 @@ Active Development & \href{https://resstock.nrel.gov/datasets}{To be determined}
 \acro {SUV}{sport utility vehicle}
 \acro {TEMPO}{Transportation Energy \& Mobility Pathway Options Model}
 \acro {TMY}{Typical Meteorological Year}
+\acro {URDB}{Utility Rate Database}
 \acro {WWR}{window-to-wall ratio}
 
 \end{acronym}
