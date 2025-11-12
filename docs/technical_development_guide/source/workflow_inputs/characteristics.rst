@@ -29804,7 +29804,9 @@ Created by
 Source
 ******
 
-- \U.S. EIA 2009 Residential Energy Consumption Survey (RECS) microdata.Hawaii constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+- \U.S. EIA 2020 RECS microdata in Hawaii.
+
+- \U.S. EIA 2009 RECS microdata in all locations except Hawaii.
 
 
 Assumption
@@ -29812,7 +29814,7 @@ Assumption
 
 - \Central AC systems need to serve at least 60 percent of the floor area.
 
-- \Heat pumps serve 100 percent of the floor area because the system serves 100 percent of the heated floor area, except for in Hawaii
+- \Heat pumps serve 100% of the floor area in all locations except Hawaii because the system serves 100% of the heated floor area. Partial cooling is common in cooling dominated climate.
 
 - \Due to low sample count, the tsv is constructed by downscaling a core sub-tsv with 3 sub-tsvs of different dependencies. The sub-tsvs have the following dependencies: tsv1 : 'HVAC Cooling Type', 'ASHRAE IECC Climate Zone 2004'
 
@@ -31820,9 +31822,11 @@ Source
 Assumption
 **********
 
-- \Imposed an upperbound of 14 kWDC, which contains 95pct of all installations. Counties with source_count<10 are backfilled with aggregates at the State level. Distribution based on all installations is applied only to occupied SFD, actual distribution for SFD may be higher.
+- \Imposed an upperbound of 14 kWDC, which contains 95% of all installations. Counties with source_count <10 are backfilled with aggregates at the state level. Distribution based on all installations is applied only to occupied single-family detached  homes, actual distribution for single-family detached homes may be higher.
 
-- \PV is not modeled in AK and HI. No data has been identified.
+- \PV is not modeled in AK. No data has been identified.
+
+- \For Hawaii, EIA Form 861 reports the number of residential utility customers with rooftop PV in the Net Metering 2023 worksheet and the total number of residential utility customers in Sales Ult Cust 2023 worksheet. Taking the ratio of these two gives us the fraction of homes with rooftop PV. We place the additional constraint that all of these rooftop PV customers are in single-family detached homes. Because Hawaii is composed of multiple islands, the four electric utilities in Hawaii (and which report to EIA Form 861) approximately align with the county boundaries with Hawaii, Honolulu, and Kauai having one county for one electric utility, and both Maui and Kalawao mapping to the same electric utility, so we we develop distinct PV saturation rates for each county in Hawaii (note Kalawao has population 81 people and is located on the island of Maui).
 
 
 Options
@@ -33878,15 +33882,9 @@ Source
 Assumption
 **********
 
-- \Qualitative portion of inside light bulbs is mapped to quantitative percentage as: None: 0%
+- \Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options.
 
-- \Some: 20%
-
-- \About half: 50%
-
-- \Most: 80%
-
-- \All: 100%. Then the sum of three types of lighting options is normalized to 100%
+- \Qualitative portion of inside light bulbs is mapped to quantitative percentage as: None: 0%, Some: 20%, About half: 50%, Most: 80%, All: 100%. Then the sum of three types of lighting options is normalized to 100%
 
 
 Options
@@ -36699,7 +36697,7 @@ Source
 Assumption
 **********
 
-- \Within electric pool heaters, proportion of heat pump electric pool heating vs. non-heat pump electric pool heating was derived from RASS 2019.
+- \Electric heat pump pool heater is not present in RECS 2020, so state-level RASS 2019 is used to split all pool heaters tagged 'Electricity' by RECS 2020 into either electric resistance (still labeled 'Electricity') and 'Electric Heat Pump'. Due to the low prevalence of diverse heating fuels in California, all homes with non-electric heating (including None heating) receive the same split, and electric space heated homes have their own distinct split.
 
 
 Options
