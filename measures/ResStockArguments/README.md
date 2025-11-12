@@ -2325,6 +2325,28 @@ Whether the heat pump uses the existing heating system as backup. If true and ba
 
 <br/>
 
+**HVAC: Heat Pump Sizing Is Duct Limited**
+
+Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.
+
+- **Name:** ``hvac_heat_pump_sizing_is_duct_limited``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**baseline_max_airflow_cfm**
+
+TODO.
+
+- **Name:** ``baseline_max_airflow_cfm``
+- **Type:** ``Double``
+
+- **Required:** ``false``
+
+<br/>
+
 **HVAC: Blower Fan Efficiency**
 
 The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems)..
