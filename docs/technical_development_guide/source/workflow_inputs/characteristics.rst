@@ -264,7 +264,7 @@ ASHRAE IECC Climate Zone 2004 - Sub-CZ Split
 Description
 ***********
 
-Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located. Climate zone where climate zone 2A is split between counties in TX, LA and FL, GA, AL, and MSClimate zone where climate zone 1A is split between counties in FL and HI
+Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located. Climate zone where climate zone 2A is split between counties in TX, LA and FL, GA, AL, and MS. Climate zone where climate zone 1A is split between counties in FL and HI.
 
 Created by
 **********
@@ -346,7 +346,7 @@ Area Median Income
 Description
 ***********
 
-Area median income of the household occupying the dwelling unit.
+Income as a percent of area median income of the household occupying the housing unit.
 
 Created by
 **********
@@ -396,7 +396,7 @@ Bathroom Spot Vent Hour
 Description
 ***********
 
-Bathroom spot ventilation daily start hour
+Bathroom spot ventilation daily start hour.
 
 Created by
 **********
@@ -516,7 +516,7 @@ Battery
 Description
 ***********
 
-The size of an onsite battery (not modeled in project_national).
+Presence, size, location, and efficiency of an on-site battery.
 
 Created by
 **********
@@ -784,7 +784,7 @@ Ceiling Fan
 Description
 ***********
 
-Presence and energy usage of ceiling fans at medium speed
+Presence and efficiency of ceiling fans.
 
 Created by
 **********
@@ -4207,7 +4207,7 @@ Cooling Setpoint Offset Period
 Description
 ***********
 
-The period and offset for the dwelling unit's cooling setpoint. Default for the day is from 9am to 5pm and for the night is 10pm to 7am.
+The time period(s) for the housing unit's cooling setpoint offset.
 
 Created by
 **********
@@ -26417,7 +26417,7 @@ Custom State
 Description
 ***********
 
-A custom selection of states to be able to have more fine tuned probability distributionin states where we have more data
+A custom selection of states to be able to have more fine tuned probability distribution in states where we have more data.
 
 Created by
 **********
@@ -26697,7 +26697,7 @@ Door Area
 Description
 ***********
 
-Area of exterior doors
+Area of opaque exterior doors.
 
 Created by
 **********
@@ -26799,7 +26799,7 @@ Duct Leakage and Insulation
 Description
 ***********
 
-Duct insulation and leakage to outside from the portion of ducts in unconditioned spaces
+Duct insulation and leakage to outside from the portion of ducts in unconditioned spaces.
 
 Created by
 **********
@@ -26951,7 +26951,7 @@ Duct Location
 Description
 ***********
 
-Location of Duct System
+Primary location of the duct system.
 
 Created by
 **********
@@ -27290,7 +27290,7 @@ Electric Vehicle Charger
 Description
 ***********
 
-Type of electric vehicle charger used at the dwelling unit
+Presence and type of electric vehicle charger used at the dwelling unit.
 
 Created by
 **********
@@ -27382,7 +27382,7 @@ Electric Vehicle Miles Traveled
 Description
 ***********
 
-The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.; Because EVs drive less miles/year than ICE (https://www.sciencedirect.com/science/article/pii/S254243512300404X?via%3Dihub#abs0015), the max value is capped at 22,500 miles/yr and the distribution is shifted to reduce the mean.
+The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.
 
 Created by
 **********
@@ -27637,7 +27637,7 @@ Federal Poverty Level
 Description
 ***********
 
-Federal poverty level of the household occupying the dwelling unit.
+Income as a percent of the federal poverty line of the household occupying the housing unit.
 
 Created by
 **********
@@ -28347,7 +28347,7 @@ Geometry Building Type Height
 Description
 ***********
 
-The 2009 U.S. Energy Information Administration Residential Energy Consumption Survey  building type with multi-family buildings split out by low-rise, mid-rise, and high-rise.
+The 2009 U.S. Energy Information Administration Residential Energy Consumption Survey building type with multi-family buildings split out by low-rise, mid-rise, and high-rise.
 
 Created by
 **********
@@ -28747,13 +28747,17 @@ Assumption
 
 - \Single-family detached units that are 1500-2499 square feet can not have a 3 car garage.
 
-- \Single-family detached units that are 2500-3999 square feet and a heated basement can not have a 3 car garage. Due to low sample sizes, 1. Crawl, basements, and slab are lumped.
+- \Single-family detached units that are 2500-3999 square feet and a heated basement can not have a 3 car garage.
 
-- \2. Story levels are lumped together.
+- \Due to low sample sizes,
 
-- \2. Census Division RECS is grouped into Census Region.
+  - \[1] Crawl, basements, and slab are lumped.
 
-- \2. Vintage ACS is progressively grouped into: pre-1960, 1960-1999, and 2000+.
+  - \[2] Story levels are lumped together.
+
+  - \[3] Census Division RECS is grouped into Census Region.
+
+  - \[4] Vintage ACS is progressively grouped into: pre-1960, 1960-1999, and 2000+.
 
 
 Options
@@ -28827,7 +28831,7 @@ Geometry Space Combination
 Description
 ***********
 
-Valid combinations of building type, building level mf, attic, foundation, and garage
+Valid combinations of building type, MF building level, attic type, foundation type, and garage.
 
 Created by
 **********
@@ -30068,7 +30072,7 @@ HVAC Has Zonal Electric Heating
 Description
 ***********
 
-Presence of electric baseboard heating
+Presence of electric baseboard heating.
 
 Created by
 **********
@@ -30847,7 +30851,7 @@ HVAC Secondary Heating Efficiency
 Description
 ***********
 
-The efficiency and type of the heating system.
+The efficiency of the secondary heating system.
 
 Created by
 **********
@@ -30951,7 +30955,7 @@ HVAC Secondary Heating Fuel
 Description
 ***********
 
-Secondary Heating Fuel for the dwelling unit
+The fuel type of the secondary heating system.
 
 Created by
 **********
@@ -31032,7 +31036,7 @@ HVAC Secondary Heating Partial Space Conditioning
 Description
 ***********
 
-The fraction of heating load served by secondary heating system
+The fraction of heating load served by secondary heating system.
 
 Created by
 **********
@@ -31109,7 +31113,7 @@ HVAC Secondary Heating Type
 Description
 ***********
 
-The efficiency and type of the heating system.
+The efficiency and type of the secondary heating system.
 
 Created by
 **********
@@ -32175,7 +32179,7 @@ Heating Setpoint Offset Period
 Description
 ***********
 
-The period and offset for the dwelling unit's heating setpoint. Default for the day is from 9am to 5pm and for the night is 10pm to 7am.
+The time period(s) for the housing unit's heating setpoint offset.
 
 Created by
 **********
@@ -32369,7 +32373,7 @@ Heating Unavailable Days
 Description
 ***********
 
-Number of days in a year the heating system is unavailable
+Number of days in a year the heating system is unavailable.
 
 Created by
 **********
@@ -32457,7 +32461,7 @@ Holiday Lighting
 Description
 ***********
 
-Use of holiday lighting (not currently modeled separately from other exterior lighting).
+Holiday lighting presence and use.
 
 Created by
 **********
@@ -33108,6 +33112,11 @@ Description
 
 This characteristic in ResStock specifies the insulation level of the ceiling on the top floor of the home in housing units with vented or unvented attics.
 
+Created by
+**********
+
+manually created
+
 Source
 ******
 
@@ -33203,6 +33212,11 @@ Description
 
 Sets the insulation levels of the home's floor for all foundation types except for slab-on-grade.
 
+Created by
+**********
+
+manually created
+
 Source
 ******
 
@@ -33297,6 +33311,11 @@ Description
 ***********
 
 Specifies the insulation level of foundation types with foundation walls (i.e., crawlspaces and basements).
+
+Created by
+**********
+
+manually created
 
 Source
 ******
@@ -33528,7 +33547,7 @@ Insulation Slab
 Description
 ***********
 
-Slab insulation level.
+Defines the insulation level for all slab-on-grade foundation types.
 
 Created by
 **********
@@ -33843,7 +33862,7 @@ Lighting
 Description
 ***********
 
-Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options.
+Specifies the type of lighting technology used in the housing unit.
 
 Created by
 **********
@@ -36065,7 +36084,7 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-- \Age of refrigerator converted to efficiency levels using ENERGYSTAR shipment-weighted efficiencies by year data from Home Energy Score: http://hes-documentation.lbl.gov/. Check the comments in: HES-Refrigerator_Age_vs_Efficiency.tsv
+- \Age of refrigerator converted to efficiency levels using ENERGY STAR shipment-weighted efficiencies by year data from Home Energy Saver: http://hes-documentation.lbl.gov/.
 
 
 Assumption
@@ -36591,7 +36610,9 @@ Source
 Assumption
 **********
 
-- \The only valid option for multi-family homes is Nonesince the pool is most likely to be jointly ownedDue to low sample count, the tsv is constructed with the followingfallback coarsening order
+- \The only valid option for multi-family homes is None since the pool is most likely to be jointly owned
+
+- \Due to low sample count, the tsv is constructed with the following fallback coarsening order
 
   - \[1] State coarsened to Census Division RECS with AK/HI separate
 
@@ -42152,7 +42173,7 @@ Plug Loads
 Description
 ***********
 
-Plug load usage level which is varied by Census Division RECS and Building Type RECS.
+Plug load usage level as a percentage of the national average.
 
 Created by
 **********
@@ -42833,7 +42854,7 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-- \Age of refrigerator converted to efficiency levels using ENERGYSTAR shipment-weighted efficiencies by year data from Home Energy Score: http://hes-documentation.lbl.gov/. Check the comments in: HES-Refrigerator_Age_vs_Efficiency.tsv
+- \Age of refrigerator converted to efficiency levels using ENERGY STAR shipment-weighted efficiencies by year data from Home Energy Saver: http://hes-documentation.lbl.gov/.
 
 
 Assumption
@@ -43341,7 +43362,7 @@ State Metro Median Income
 Description
 ***********
 
-State Metro median income of the household occupying the dwelling unit.             This is different from State Median Income in that the Income Limits are differentiated by Metro and             Nonmetro portions of the state.
+State Metro median income of the household occupying the dwelling unit. This is different from State Median Income in that the Income Limits are differentiated by Metro and Nonmetro portions of the state.
 
 Created by
 **********
@@ -44222,7 +44243,7 @@ Water Heater Location
 Description
 ***********
 
-location of water heater.
+Location of the water heater.
 
 Created by
 **********
@@ -44246,21 +44267,23 @@ Assumption
 
 - \Where samples < 10, data is aggregated in the following order:
 
-- \1. Building Type lumped into single-family, multi-family, and mobile home.
+  - \[1] Building Type lumped into single-family, multi-family, and mobile home.
 
-- \2. 1 + Foundation Type combined. 3. 2 + Attic Type combined
+  - \[2] 1 + Foundation Type combined.
 
-- \4. 3 + Garage combined.
+  - \[3] 2 + Attic Type combined
 
-- \5. Single-/Multi-Family + Foundation combined + Attic combined + Garage combined.
+  - \[4] 3 + Garage combined.
 
-- \6. 5 + pre-1960 combined.
+  - \[5] Single-/Multi-Family + Foundation combined + Attic combined + Garage combined.
 
-- \7. 5 + pre-1960 combined / post-2020 combined.
+  - \[6] 5 + pre-1960 combined.
 
-- \8. 7 + IECC Climate Zone lumped into: 1-2+3A, 3B-3C, 4, 5, 6, 7 except AK, 7AK-8AK.
+  - \[7] 5 + pre-1960 combined / post-2020 combined.
 
-- \9. 7 + IECC Climate Zone lumped into: 1-2-3, 4-8.
+  - \[8] 7 + IECC Climate Zone lumped into: 1-2+3A, 3B-3C, 4, 5, 6, 7 except AK, 7AK-8AK.
+
+  - \[9] 7 + IECC Climate Zone lumped into: 1-2-3, 4-8.
 
 
 Options
@@ -44432,17 +44455,7 @@ Assumption
 
   - \[2] Building Type data are grouped into: 1) Single-Family Detached, Single-Family Attached, and Mobile homes and 2) Multi-Family 2-4 units and Multi-Family 5+ units.
 
-  - \[3] Climate zones are grouped into: 1) 1A, 2A, 2B
-
-- \2) 3A, 3B, 3C, 4B
-
-- \3) 4A, 4C
-
-- \4) 5A, 5B
-
-- \5) 6A, 6B
-
-- \and 6) 7A, 7B 7AK, 8AK.
+  - \[3] Climate zones are grouped into: 1) 1A, 2A, 2B, 2) 3A, 3B, 3C, 4B, 3) 4A, 4C, 4) 5A, 5B, 5) 6A, 6B, and 6) 7A, 7B 7AK, 8AK.
 
   - \[4] Federal Poverty Levels are progressively grouped together until all bins are combined.
 
