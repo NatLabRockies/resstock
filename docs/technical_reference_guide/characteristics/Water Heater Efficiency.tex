@@ -8,7 +8,8 @@
 \input{characteristics/dependencies/Water Heater Efficiency}
 
 \paragraph{Options}
-Water Heater Efficiency options shown in Table \ref{table:hc_opt_water_heater_efficiency} define the technical details of the standalone water heaters and solar thermal water heaters with storage backup. The options for solar water heaters in ResStock are a combination of orientation and backup fuel.
+Water Heater Efficiency options shown in Table \ref{table:hc_opt_water_heater_efficiency} define the technical details of the standalone water heaters and solar thermal water heaters with storage backup. The options for solar water heaters in ResStock distinguishes by orientation and backup fuel. The tilt of the collector is set to roof pitch for all options. The azimuth of the collector varies by option, with East (90\degree), South (180\degree), West (270\degree), and North (0\degree) orientations available.
+All solar water heaters are modeled as two-tank systems, where the backup has its own storage separately from the primary tank. While this may be the common configuration for fuel backup systems, it is less common for electric backup systems, which often use a single tank with integrated solar and electric heating elements. To model a typical solar water heater with a single tank that has backup heating elements, the secondary tank is given a R-6.2 jacket to reduce the standby loss of the secondary tank. R-6.2 is the highest R-value allowable without causing OS-HPXML validation error.
 
 \input{characteristics/options/Water Heater Efficiency}
 
