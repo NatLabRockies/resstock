@@ -87,8 +87,18 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     @hpxml_path = File.expand_path(@hpxml_path) unless (Pathname.new @hpxml_path).absolute?
     raise "'#{@hpxml_path}' does not exist or is not an .xml file." unless File.exist?(@hpxml_path) && @hpxml_path.downcase.end_with?('.xml')
 
+runner.result.stepValues.each do |step_value|
+# puts step_value.to_s
+end
+puts get_value_from_runner(runner.result, 'measure_name')
+# puts runner.result.to_s
+# puts runner.getPastStepValuesForName('measure_name')
+
     # Load HPXML
     @hpxml = HPXML.new(hpxml_path: @hpxml_path)
+    if @hpxml_path.end_with?('upgraded.xml')
+      @hpxml_existing = HPXML.new(hpxml_path: @hpxml_path.gsub('upgraded', 'existing'))
+    end
 
     # Weather
     epw_path = Location.get_epw_path(@hpxml.buildings[0], @hpxml_path)
@@ -267,7 +277,12 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       register_value(runner, unavailable_output_name, date_range)
     end
 
-    @hpxml.buildings.each do |hpxml_bldg|
+    @hpxml.buildings.each_with_index do |hpxml_bldg, unit_number|
+      # Existing Building
+      if not @hpxml_existing.nil?
+        hpxml_bldg_existing = @hpxml_existing.buildings[unit_number]
+      end
+
       # Site
       if not args[:site_iecc_zone].nil?
         hpxml_bldg.climate_and_risk_zones.climate_zone_ieccs.add(zone: args[:site_iecc_zone],
@@ -491,7 +506,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       end
 
       # Electric Panel
-      set_electric_panel(runner, hpxml_bldg, args)
+      set_electric_panel(runner, hpxml_bldg_existing, hpxml_bldg, args)
     end
 
     # Apply defaults
@@ -703,20 +718,20 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     return schedule_file
   end
 
-  def set_electric_panel(runner, hpxml_bldg, args)
+  def set_electric_panel(runner, hpxml_bldg_existing, hpxml_bldg, args)
     # Assign miscellaneous permanently connected appliance loads
-    panel_sampler = ElectricalPanelSampler.new(runner, hpxml_bldg, args)
 
-    cap_value = args[:electric_panel_service_max_current_rating]
-    headroom_spaces = args[:electric_panel_breaker_spaces_headroom]
-    total_spaces = args[:electric_panel_breaker_spaces_rated_total]
-    if cap_value.nil?
+    if hpxml_bldg_existing.nil? # this is nil when hpxml_bldg is the existing building
+      panel_sampler = ElectricalPanelSampler.new(runner, hpxml_bldg, args)
       cap_bin, cap_value = panel_sampler.assign_rated_capacity()
-      register_value(runner, 'electric_panel_service_max_current_rating_bin', cap_bin)
-
       headroom_spaces = panel_sampler.assign_breaker_space_headroom(cap_bin)
+
+      register_value(runner, 'electric_panel_service_max_current_rating_bin', cap_bin)
+      register_value(runner, 'electric_panel_service_max_current_rating', cap_value)
+    else
+      cap_value = hpxml_bldg_existing.electric_panels[0].max_current_rating
+      total_spaces = hpxml_bldg_existing.electric_panels[0].breaker_spaces_total
     end
-    register_value(runner, 'electric_panel_service_max_current_rating', cap_value)
 
     n_beds = hpxml_bldg.building_construction.number_of_bedrooms
 

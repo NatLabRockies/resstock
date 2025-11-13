@@ -341,6 +341,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     set_battery(measures, hpxml)
 
     new_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
+
     hpxml.buildings.each_with_index do |hpxml_bldg, unit_number|
       if unit_number > 0
         measures['BuildResidentialHPXML'][0]['existing_hpxml_path'] = hpxml_path
@@ -384,6 +385,10 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     measures['ResStockArgumentsPostHPXML'][0]['hpxml_path'] = hpxml_path
     measures['ResStockArgumentsPostHPXML'][0]['building_id'] = values['building_id']
     measures_hash = { 'ResStockArgumentsPostHPXML' => measures['ResStockArgumentsPostHPXML'] }
+    
+    register_value(new_runner, 'measure_name', 'ApplyUpgrade')
+puts get_value_from_runner(new_runner, 'measure_name')
+    
     if not apply_measures(measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
       register_logs(runner, new_runner)
       return false
@@ -504,10 +509,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     end
   end
 
-  def set_electric_panel(measures, hpxml_bldg, upgrade_args_hash)
-    measures['ResStockArgumentsPostHPXML'][0]['electric_panel_service_max_current_rating'] = hpxml_bldg.electric_panels[0].max_current_rating
-    measures['ResStockArgumentsPostHPXML'][0]['electric_panel_breaker_spaces_rated_total'] = hpxml_bldg.electric_panels[0].breaker_spaces_total
-
+  def set_electric_panel(measures, _hpxml_bldg, upgrade_args_hash)
     panel_system_additions = get_panel_system_additions(upgrade_args_hash)
     measures['ResStockArgumentsPostHPXML'][0].update(panel_system_additions)
   end

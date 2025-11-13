@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>cec6ab81-6df0-4daf-88f9-49eafc2baeec</version_id>
-  <version_modified>2025-11-05T17:49:10Z</version_modified>
+  <version_id>dfb426c4-e80d-47b6-87ce-7509a3b5415d</version_id>
+  <version_modified>2025-11-13T21:30:45Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -12480,33 +12480,6 @@
       </choices>
     </argument>
     <argument>
-      <name>electric_panel_service_max_current_rating</name>
-      <display_name>Electric Panel: Service Max Current Rating</display_name>
-      <description>The service max current rating of the electric panel.</description>
-      <type>Double</type>
-      <units>A</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>electric_panel_breaker_spaces_headroom</name>
-      <display_name>Electric Panel: Breaker Spaces Headroom</display_name>
-      <description>The unoccupied number of breaker spaces on the electric panel.</description>
-      <type>Integer</type>
-      <units>#</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>electric_panel_breaker_spaces_rated_total</name>
-      <display_name>Electric Panel: Breaker Spaces Rated Total</display_name>
-      <description>The rated total number of breaker spaces on the electric panel.</description>
-      <type>Integer</type>
-      <units>#</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>electric_panel_load_heating_system_new_load</name>
       <display_name>Electric Panel: Heating System New Load</display_name>
       <description>Whether the heating system is a new panel load addition to an existing service panel.</description>
@@ -13150,7 +13123,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>FE764330</checksum>
+      <checksum>7B4C2612</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

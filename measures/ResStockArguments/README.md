@@ -2771,45 +2771,6 @@ Whether a pool is present.
 
 <br/>
 
-**Electric Panel: Service Max Current Rating**
-
-The service max current rating of the electric panel.
-
-- **Name:** ``electric_panel_service_max_current_rating``
-- **Type:** ``Double``
-
-- **Units:** ``A``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Breaker Spaces Headroom**
-
-The unoccupied number of breaker spaces on the electric panel.
-
-- **Name:** ``electric_panel_breaker_spaces_headroom``
-- **Type:** ``Integer``
-
-- **Units:** ``#``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Breaker Spaces Rated Total**
-
-The rated total number of breaker spaces on the electric panel.
-
-- **Name:** ``electric_panel_breaker_spaces_rated_total``
-- **Type:** ``Integer``
-
-- **Units:** ``#``
-
-- **Required:** ``false``
-
-<br/>
-
 **Electric Panel: Heating System New Load**
 
 Whether the heating system is a new panel load addition to an existing service panel.

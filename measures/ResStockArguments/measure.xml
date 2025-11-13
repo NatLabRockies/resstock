@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>acb92e35-5575-4414-aefb-73efd9ff9833</version_id>
-  <version_modified>2025-11-05T17:49:07Z</version_modified>
+  <version_id>f6782441-31e2-4ddf-bc3c-19d22add6174</version_id>
+  <version_modified>2025-11-13T21:30:44Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -12315,33 +12315,6 @@
       </choices>
     </argument>
     <argument>
-      <name>electric_panel_service_max_current_rating</name>
-      <display_name>Electric Panel: Service Max Current Rating</display_name>
-      <description>The service max current rating of the electric panel.</description>
-      <type>Double</type>
-      <units>A</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>electric_panel_breaker_spaces_headroom</name>
-      <display_name>Electric Panel: Breaker Spaces Headroom</display_name>
-      <description>The unoccupied number of breaker spaces on the electric panel.</description>
-      <type>Integer</type>
-      <units>#</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>electric_panel_breaker_spaces_rated_total</name>
-      <display_name>Electric Panel: Breaker Spaces Rated Total</display_name>
-      <description>The rated total number of breaker spaces on the electric panel.</description>
-      <type>Integer</type>
-      <units>#</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>electric_panel_load_heating_system_new_load</name>
       <display_name>Electric Panel: Heating System New Load</display_name>
       <description>Whether the heating system is a new panel load addition to an existing service panel.</description>
@@ -12926,7 +12899,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>142844D6</checksum>
+      <checksum>635930A4</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12943,7 +12916,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>FD56B63D</checksum>
+      <checksum>16080C90</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>

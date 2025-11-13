@@ -685,24 +685,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Whether a pool is present.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('electric_panel_service_max_current_rating', false)
-    arg.setDisplayName('Electric Panel: Service Max Current Rating')
-    arg.setDescription('The service max current rating of the electric panel.')
-    arg.setUnits('A')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('electric_panel_breaker_spaces_headroom', false)
-    arg.setDisplayName('Electric Panel: Breaker Spaces Headroom')
-    arg.setDescription('The unoccupied number of breaker spaces on the electric panel.')
-    arg.setUnits('#')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('electric_panel_breaker_spaces_rated_total', false)
-    arg.setDisplayName('Electric Panel: Breaker Spaces Rated Total')
-    arg.setDescription('The rated total number of breaker spaces on the electric panel.')
-    arg.setUnits('#')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_heating_system_new_load', false)
     arg.setDisplayName('Electric Panel: Heating System New Load')
     arg.setDescription('Whether the heating system is a new panel load addition to an existing service panel.')
