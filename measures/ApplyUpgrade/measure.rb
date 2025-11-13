@@ -341,7 +341,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     set_battery(measures, hpxml)
 
     new_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
-
     hpxml.buildings.each_with_index do |hpxml_bldg, unit_number|
       if unit_number > 0
         measures['BuildResidentialHPXML'][0]['existing_hpxml_path'] = hpxml_path
