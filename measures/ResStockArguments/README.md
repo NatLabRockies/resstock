@@ -2336,12 +2336,14 @@ Whether the (ducted) heat pump has an upper limit for autosized heating/cooling 
 
 <br/>
 
-**baseline_max_airflow_cfm**
+**HVAC: Baseline Maximum Airflow Rate**
 
-TODO.
+The maximum airflow rate for the baseline home. Applies only when using Heat Pump Sizing Is Duct Limited.
 
 - **Name:** ``baseline_max_airflow_cfm``
 - **Type:** ``Double``
+
+- **Units:** ``CFM``
 
 - **Required:** ``false``
 

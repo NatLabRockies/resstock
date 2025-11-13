@@ -465,8 +465,9 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('baseline_max_airflow_cfm', false)
-    arg.setDisplayName('baseline_max_airflow_cfm')
-    arg.setDescription('TODO.')
+    arg.setDisplayName('HVAC: Baseline Maximum Airflow Rate')
+    arg.setDescription('The maximum airflow rate for the baseline home. Applies only when using Heat Pump Sizing Is Duct Limited.')
+    arg.setUnits('CFM')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('hvac_blower_fan_watts_per_cfm', false)
