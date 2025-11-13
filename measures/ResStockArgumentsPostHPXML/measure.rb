@@ -87,13 +87,6 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     @hpxml_path = File.expand_path(@hpxml_path) unless (Pathname.new @hpxml_path).absolute?
     raise "'#{@hpxml_path}' does not exist or is not an .xml file." unless File.exist?(@hpxml_path) && @hpxml_path.downcase.end_with?('.xml')
 
-runner.result.stepValues.each do |step_value|
-# puts step_value.to_s
-end
-puts get_value_from_runner(runner.result, 'measure_name')
-# puts runner.result.to_s
-# puts runner.getPastStepValuesForName('measure_name')
-
     # Load HPXML
     @hpxml = HPXML.new(hpxml_path: @hpxml_path)
     if @hpxml_path.end_with?('upgraded.xml')

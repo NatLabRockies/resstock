@@ -385,10 +385,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     measures['ResStockArgumentsPostHPXML'][0]['hpxml_path'] = hpxml_path
     measures['ResStockArgumentsPostHPXML'][0]['building_id'] = values['building_id']
     measures_hash = { 'ResStockArgumentsPostHPXML' => measures['ResStockArgumentsPostHPXML'] }
-    
-    register_value(new_runner, 'measure_name', 'ApplyUpgrade')
-puts get_value_from_runner(new_runner, 'measure_name')
-    
     if not apply_measures(measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
       register_logs(runner, new_runner)
       return false
