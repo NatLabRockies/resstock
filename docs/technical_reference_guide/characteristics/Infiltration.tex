@@ -1,8 +1,19 @@
 \paragraph{Description}
-\input{characteristics/description/Infiltration}
+% \input{characteristics/description/Infiltration}
+Total infiltration to the dwelling unit.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Infiltration}
+% \input{characteristics/sources/Infiltration}
+\begin{itemize}
+
+\item
+  Distributions are based on the cumulative distribution functions from
+  the \href{http://resdb.lbl.gov/}{Residential Diagnostics Database (ResDB)}.
+\item
+  Alaska-specific distribution is based on Alaska Retrofit Information
+  System (2008 to 2022), maintained by Alaska Housing Finance
+  Corporation.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Infiltration}
@@ -17,4 +28,28 @@ Property definitions are shown in Table \ref{table:hc_arg_def_infiltration}. See
 \input{tables/properties/Infiltration}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Infiltration}
+% \input{characteristics/assumptions/Infiltration}
+\begin{itemize}
+
+\item
+  All ACH50 are based on Single-Family Detached blower door tests.
+\item
+  Climate zones that are copied: 2A to 1A, 6A to 7A, and 6B to 7B.
+\item
+  Vintage bins that are copied: 2000s to 2010s, 1950s to 1940s, 1950s to
+  \textless1940s.
+\item
+  Homes are assumed to not be Weatherization Assistance Program
+  qualified and not ENERGY STAR certified.
+\item
+  Climate zones 7AK and 8AK are averages of 6A and 6B.
+\item ResStock models multi-family and SFA units with the unit total air leakage type. The unit total air leakage assume that some of the sampled ACH50 value goes to neighboring units. The model infiltration value to the exterior is a smaller infiltration value that what is sampled and is adjusted by the ratio of exterior envelope surface area to total envelope surface area. The modeled infiltration to the exterior is reported in the results.
+\item
+  For Alaska, we are using a field in ARIS that lumps multifamily 2--4
+  units and multifamily 5+ units buildings together. Data from the
+  American Community Survey are used to distribute proportionally between these two
+  building types.
+\item
+  For Alaska, Infiltration ACH50 values are calculated based on CFM50
+  from blower door test and estimated volume of the home.
+\end{itemize}

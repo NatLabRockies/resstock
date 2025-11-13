@@ -1,8 +1,12 @@
 \paragraph{Description}
-\input{characteristics/description/Vintage}
+% \input{characteristics/description/Vintage}
+Time period in which the building was originally constructed.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Vintage}
+% \input{characteristics/sources/Vintage}
+\begin{itemize}
+    \item 2019 5-year PUMS from the University of Minnesota.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Vintage}
@@ -17,4 +21,8 @@ Property definitions are shown in Table \ref{table:hc_arg_def_vintage}.
 \input{tables/properties/Vintage}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Vintage}
+% \input{characteristics/assumptions/Vintage}
+\begin{itemize}
+    \item Where sample counts are less than 10 (812 / 21024 rows), the State average distribution has been inserted.
+    \item ``Mobile Home'' does not exist in the PUMS DC sample and is replaced by ``Single-Family Detached.''
+\end{itemize}

@@ -1,8 +1,15 @@
 \paragraph{Description}
-\input{characteristics/description/Ground Thermal Conductivity}
+% \input{characteristics/description/Ground Thermal Conductivity}
+The thermal conductivity (in Btu/hr-ft-F) of the ground used in
+foundation and geothermal heat pump heat transfer calculations.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Ground Thermal Conductivity}
+% \input{characteristics/sources/Ground Thermal Conductivity}
+\begin{itemize}
+
+\item
+  Data from the Southern Methodist University Geothermal Laboratory. The data are from the Thermal Conductivity Observation in Content Model Format dataset. The data are available at \url{https://www.smu.edu/dedman/academics/departments/earth-sciences/research/geothermallab/datamaps/ngds-project}.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Ground Thermal Conductivity}
@@ -17,4 +24,20 @@ Property definitions are shown in Table \ref{table:hc_arg_def_ground_thermal_con
 \input{tables/properties/Ground Thermal Conductivity}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Ground Thermal Conductivity}
+% \input{characteristics/assumptions/Ground Thermal Conductivity}
+\begin{itemize}
+\item
+  The data obtained are from surveyed oil and gas well data.
+\item
+  The latitudes and longitudes were assigned to counties and the data were
+  joined to the ResStock spatial lookup tables. In this process, 1,482 of
+  59,332 samples did not have a FIPS match or did not have data and were
+  dropped.
+\item
+  Due to limited data in climate zone 1A, data were pulled from samples
+  in 1A plus Florida 2A.
+\item
+  Samples less than 0.5 Btu/hr-ft-F are assigned a value of 0.5
+  Btu/hr-ft-F. Samples greater than 2.6 Btu/hr-ft-F are assigned a value
+  of 2.6 Btu/hr-ft-F.
+\end{itemize}

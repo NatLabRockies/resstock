@@ -1,8 +1,14 @@
 \paragraph{Description}
-\input{characteristics/description/Window Areas}
+% \input{characteristics/description/Window Areas}
+Window-to-wall ratios for the front, back, left, and right walls.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Window Areas}
+% \input{characteristics/sources/Window Areas}
+\begin{itemize}
+
+\item
+  2016--17 Residential Building Stock Assessment (RBSA) II microdata.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Window Areas}
@@ -17,4 +23,20 @@ Property definitions are shown in Table \ref{table:hc_arg_def_window_areas}. See
 \input{tables/properties/Window Areas}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Window Areas}
+% \input{characteristics/assumptions/Window Areas}
+\begin{itemize}
+
+\item
+  The window-to-wall ratios (WWR) are exponential weibull distributed
+\item
+  Multifamily with 2--4 Units distributions are independent of Geometry
+  Stories
+\item
+  Multifamily with 5+ Units distributions are grouped by 1--3 stories,
+  4--7 stories, and 8+ stories
+\item
+  High-rise Multifamily buildings (8+ stories) have a 30\% WWR
+\item
+  SFD, SFA, and Mobile Homes are represented by the SFD window area
+  distribution.
+\end{itemize}

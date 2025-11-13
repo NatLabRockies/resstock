@@ -1,8 +1,12 @@
 \paragraph{Description}
-\input{characteristics/description/Geometry Stories}
+% \input{characteristics/description/Geometry Stories}
+The number of stories in the building in which the housing unit is located.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Geometry Stories}
+% \input{characteristics/sources/Geometry Stories}
+\begin{itemize}
+    \item U.S.~EIA 2009 RECS microdata.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Geometry Stories}
@@ -17,4 +21,11 @@ Property definitions are shown in Table \ref{table:hc_arg_def_geometry_stories}.
 \input{tables/properties/Geometry Stories}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Geometry Stories}
+% \input{characteristics/assumptions/Geometry Stories}
+\begin{itemize}
+    \item All mobile homes are 1 story.
+    \item Single-Family Detached and Single-Family Attached use the STORIES field in RECS, whereas Multifamily with 5+ units uses the NUMFLRS field.
+    \item Building types 2 Unit and 3 or 4 Unit use the stories distribution of Multifamily 5 to 9 Unit (capped at 4 stories) because RECS does not report stories or floors for multifamily with 2-4 units.
+    \item The dependency on floor area bins is removed for multifamily with 5+ units.
+    \item Vintage ACS rows for the 2010s are copied from the 2000-09 rows.
+\end{itemize}

@@ -1,9 +1,20 @@
 \paragraph{Description}
-\input{characteristics/description/Insulation Wall}
-Provides the main R-value for the walls of the home. This is in addition to the R-values provided by the exterior wall cladding.
+% \input{characteristics/description/Insulation Wall}
+Wall construction type and insulation level. Provides the main R-value for the walls of the home. This is in addition to the R-values provided by the exterior wall cladding.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Insulation Wall}
+% \input{characteristics/sources/Insulation Wall}
+\begin{itemize}
+
+\item
+  \textit{Single-Family Heating and Cooling Requirements: Assumptions, Methods, and Summary Results} (\cite{Ritschard1992}).
+\item
+
+  \textit{Data Collection-Data Characterization Summary} from the NorthernSTAR Building America Partnership (\cite{Nettleton2012}), as described in
+  Roberts et al., \textit{Assessment of the U.S.~Department of
+  Energy's Home Energy Score Tool} (2012),
+  and Merket et al., \textit{Building America Field Data Repository} webinar (2014).
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Insulation Wall}
@@ -18,4 +29,10 @@ Property definitions are shown in Table \ref{table:hc_arg_def_insulation_wall}. 
 \input{tables/properties/Insulation Wall}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Insulation Wall}
+% \input{characteristics/assumptions/Insulation Wall}
+\begin{itemize}
+
+\item
+  Updated per new wall type from Lightbox, all wall type-specific
+  distributions follow that of {Wood Frame} ({WoodStud}).
+\end{itemize}

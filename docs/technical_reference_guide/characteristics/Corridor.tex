@@ -1,11 +1,15 @@
 \paragraph{Description}
-\input{characteristics/description/Corridor}
+% \input{characteristics/description/Corridor}
+Type of corridor attached to multifamily units.
 
 \paragraph{Modeling Approach}
 Single-family attached and multifamily buildings can have corridors, which are passageways between units. Interior corridors are enclosed and assumed to be conditioned, which are modeled by adiabatic walls being created for the wall of the unit that is adjacent to the corridor. Exterior corridors provide shading, but are not enclosed. The way this is modeled is to add a shading object to the front and/or the back of the unit. ResStock only allows multifamily units to have a double-loaded interior corridor. ResStock does not model energy use (e.g., lighting, plug load, or HVAC) associated with corridors; it only models their impact on the multifamily housing units.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Corridor}
+% \input{characteristics/sources/Corridor}
+\begin{itemize}
+    \item Engineering judgment.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Corridor}
@@ -20,4 +24,8 @@ Property definitions are shown in Table~\ref{table:hc_arg_def_corridor}. See the
 \input{tables/properties/Corridor}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Corridor}
+% \input{characteristics/assumptions/Corridor}
+\begin{itemize}
+    \item Single-Family Attached units do not have corridors.
+    \item All Multifamily units have a double-loaded interior corridor with a width of 10 ft.
+\end{itemize}

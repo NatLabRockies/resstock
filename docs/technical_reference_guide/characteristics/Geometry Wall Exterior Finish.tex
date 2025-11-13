@@ -1,9 +1,14 @@
 \paragraph{Description}
-\input{characteristics/description/Geometry Wall Exterior Finish}
-This is the main characteristic that provides the thermal properties for the exterior cladding of a wall.
+% \input{characteristics/description/Geometry Wall Exterior Finish}
+Wall siding material and color. This is the main input file that provides the thermal property arguments for the exterior cladding of a wall.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Geometry Wall Exterior Finish}
+% \input{characteristics/sources/Geometry Wall Exterior Finish}
+\begin{itemize}
+
+\item
+  HIFLD Parcel data.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Geometry Wall Exterior Finish}
@@ -18,4 +23,15 @@ Property definitions are shown in Table \ref{table:hc_arg_def_geometry_wall_exte
 \input{tables/properties/Geometry Wall Exterior Finish}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Geometry Wall Exterior Finish}
+% \input{characteristics/assumptions/Geometry Wall Exterior Finish}
+\begin{itemize}
+\item
+  Rows where sample size \textless{} 10 are replaced with aggregated
+  values down-scaled from dep=\textquotesingle State\textquotesingle{}
+  to dep=\textquotesingle Census Division RECS\textquotesingle{}
+\item
+  Brick wall types are assumed to not have an additional brick exterior
+  finish
+\item
+  Steel and wood frame walls must have an exterior finish.
+\end{itemize}

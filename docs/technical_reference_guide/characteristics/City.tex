@@ -1,8 +1,20 @@
 \paragraph{Description}
-\input{characteristics/description/City}
+% \input{characteristics/description/City}
+The City where the sample is located.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/City}
+% \input{characteristics/sources/City}
+\begin{itemize}
+
+\item
+  Spatial definitions are from the U.S.~Census Bureau as of July 1,
+  2015.
+\item
+  Cities are defined by Census blocks by their Census Place in the 2010
+  Census.
+\item
+  Unit counts are from the American Community Survey 5-year 2016.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/City}
@@ -11,4 +23,20 @@
 The options are structured as the State abbreviation of the city, a comma, and the name of the city. An example is ``AR, Jonesboro,'' which corresponds to Jonesboro, Arkansas.
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/City}
+% \input{characteristics/assumptions/City}
+\begin{itemize}
+\item
+  2020 Decennial Redistricting data were used to map tract-level unit
+  counts to census blocks.
+\item
+  1,099 cities are tagged in ResStock, but there are over 29,000 Places
+  in the Census data.
+\item
+  The threshold for including a Census Place in the City characteristic is 15,000 housing units.
+\item
+  The value ``In Another Census Place'' designates the fraction of housing units in a Census Place with fewer total housing units than the threshold.
+\item
+  The value ``Not in a Census Place''
+  designates the fraction of housing units not in a Census Place
+  according to the 2010 Census.
+\end{itemize}

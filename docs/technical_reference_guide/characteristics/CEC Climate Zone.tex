@@ -1,6 +1,6 @@
 \paragraph{Description}
-\input{characteristics/description/CEC Climate Zone}
-See Figure \ref{fig:cec_cz} for a map of the CEC building climate zones.
+% \input{characteristics/description/CEC Climate Zone}
+The CEC Climate Zone where the sample is located. See Figure \ref{fig:cec_cz} for a map of the CEC building climate zones.
 
 \begin{figure}
     \centering
@@ -10,7 +10,12 @@ See Figure \ref{fig:cec_cz} for a map of the CEC building climate zones.
 \end{figure}
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/CEC Climate Zone}
+% \input{characteristics/sources/CEC Climate Zone}
+\begin{itemize}
+    \item Spatial definitions are from the U.S.~Census Bureau as of July 1, 2015.
+    \item Zip code definitions are from the end of Q2 2020.
+    \item The climate zone to zip codes in California are from the CEC website.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/CEC Climate Zone}
@@ -19,4 +24,9 @@ See Figure \ref{fig:cec_cz} for a map of the CEC building climate zones.
 The options range from 1--16 in California. For other states, the option is set to None.
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/CEC Climate Zone}
+% \input{characteristics/assumptions/CEC Climate Zone}
+\begin{itemize}
+    \item CEC Climate zones are defined by zip codes.
+    \item The dependency selected is County and PUMA as zip codes are not modeled in ResStock.
+    \item The mapping between Census Tracts and zip codes is approximate and some discrepancies may exist.
+\end{itemize}

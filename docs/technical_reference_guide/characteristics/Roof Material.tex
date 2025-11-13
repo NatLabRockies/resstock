@@ -1,8 +1,14 @@
 \paragraph{Description}
-\input{characteristics/description/Roof Material}
+% \input{characteristics/description/Roof Material}
+Roof material and color.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Roof Material}
+% \input{characteristics/sources/Roof Material}
+\begin{itemize}
+
+\item
+  U.S.~EIA 2020 RECS microdata.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Roof Material}
@@ -17,4 +23,18 @@ Property definitions are shown in Table \ref{table:hc_arg_def_roof_material}. Se
 \input{tables/properties/Roof Material}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Roof Material}
+% \input{characteristics/assumptions/Roof Material}
+\begin{itemize}
+
+\item
+  Multifamily with 5+ Units is assigned `Asphalt
+  Shingles, Medium' only.
+\item
+  Due to low samples, Vintage ACS is progressively grouped into:
+  pre-1960, 1960--1999, and 2000+.
+\item
+  Geometry Building Type RECS is progressively grouped into:
+  Single-Family (including Mobile Home), and Multifamily.
+\item
+  Census Division RECS is coarsened to Census Region.
+\end{itemize}

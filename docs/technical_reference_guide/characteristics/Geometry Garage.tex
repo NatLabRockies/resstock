@@ -1,8 +1,12 @@
 \paragraph{Description}
-\input{characteristics/description/Geometry Garage}
+% \input{characteristics/description/Geometry Garage}
+The presence and size of an attached garage.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Geometry Garage}
+% \input{characteristics/sources/Geometry Garage}
+\begin{itemize}
+    \item U.S.~EIA 2020 RECS microdata.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Geometry Garage}
@@ -17,6 +21,22 @@ Property definitions are shown in Table \ref{table:hc_arg_def_geometry_garage}.
 \input{tables/properties/Geometry Garage}
 
 \paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/Geometry Garage}
 Most of the assumptions below are not from the survey data, but are constraints of the geometry modeling in OpenStudio and are set to avoid errors.
 
-\input{characteristics/assumptions/Geometry Garage}
+\begin{itemize}
+    \item Only Single-Family Detached homes are assigned a probability for attached garage.
+    \item No garage for ambient (i.e., pier \& beam) foundation type.
+    \item Due to modeling constraints restricting that garage cannot be larger or deeper than livable space: Single-family detached units that are 0--1499 square feet can only have a maximum of a 1-car garage.
+    \item Single-family detached units that are 0--1499 square feet and 3+ stories cannot have a garage.
+    \item The geometry stories distributions are all the same except for 0--1499 square feet and 3 stories.
+    \item Single-family detached units that are 1500--2499 square feet cannot have a 3-car garage.
+    \item Single-family detached units that are 2500--3999 square feet and a heated basement cannot have a 3-car garage.
+    \item Due to low sample sizes, the following sets of dependencies are progressively lumped together.
+    \begin{itemize}
+    \item [1] Crawl, basements, and slab are lumped.
+    \item [2] Story levels are lumped together.
+    \item [3] Census Division RECS is grouped into Census Region.
+    \item [4] Vintage ACS is grouped into: pre-1960, 1960-1999, and 2000+.
+    \end{itemize}
+\end{itemize}

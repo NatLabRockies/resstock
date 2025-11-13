@@ -1,8 +1,14 @@
 \paragraph{Description}
-\input{characteristics/description/Geometry Wall Type}
+% \input{characteristics/description/Geometry Wall Type}
+The wall material used for thermal mass calculations of exterior walls.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Geometry Wall Type}
+% \input{characteristics/sources/Geometry Wall Type}
+\begin{itemize}
+
+\item
+  HIFLD Parcel data.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Geometry Wall Type}
@@ -13,5 +19,11 @@ ResStock models different wall types as shown in Table \ref{table:hc_opt_geometr
 \input{tables/options/Geometry Wall Type}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Geometry Wall Type}
+% \input{characteristics/assumptions/Geometry Wall Type}
+\begin{itemize}
 
+\item
+  Rows where sample size \textless{} 10 are replaced with aggregated
+  values down-scaled from dep=\textquotesingle State\textquotesingle{}
+  to dep=\textquotesingle Census Division RECS\textquotesingle{}.
+\end{itemize}
