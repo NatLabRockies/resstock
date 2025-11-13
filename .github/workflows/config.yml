@@ -700,6 +700,7 @@ jobs:
           branch_name="${{ github.head_ref || github.ref_name }}"
           git checkout resources/options_lookup.tsv
           git pull --ff-only --no-tags --depth=3 origin $branch_name
+          rm -rf test/base_results/upgrades/sdr_annual
           cp -r project_national/sdr_upgrades_amy2018/results_csvs_pub/* test/base_results/upgrades/sdr_annual
           git add test/base_results/upgrades/sdr_annual
           git status
