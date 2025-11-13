@@ -264,7 +264,7 @@ ASHRAE IECC Climate Zone 2004 - Sub-CZ Split
 Description
 ***********
 
-Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located. Climate zone where climate zone 2A is split between counties in TX, LA and FL, GA, AL, and MS. Climate zone where climate zone 1A is split between counties in FL and HI.
+Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located. Climate zone where climate zone 2A is split between counties in TX, LA and FL, GA, AL, and MSClimate zone where climate zone 1A is split between counties in FL and HI
 
 Created by
 **********
@@ -346,7 +346,7 @@ Area Median Income
 Description
 ***********
 
-Income as a percent of area median income of the household occupying the housing unit.
+Area median income of the household occupying the dwelling unit.
 
 Created by
 **********
@@ -396,7 +396,7 @@ Bathroom Spot Vent Hour
 Description
 ***********
 
-Bathroom spot ventilation daily start hour.
+Bathroom spot ventilation daily start hour
 
 Created by
 **********
@@ -516,7 +516,7 @@ Battery
 Description
 ***********
 
-Presence, size, location, and efficiency of an on-site battery.
+The size of an onsite battery (not modeled in project_national).
 
 Created by
 **********
@@ -784,7 +784,7 @@ Ceiling Fan
 Description
 ***********
 
-Presence and efficiency of ceiling fans.
+Presence and energy usage of ceiling fans at medium speed
 
 Created by
 **********
@@ -4207,7 +4207,7 @@ Cooling Setpoint Offset Period
 Description
 ***********
 
-The time period(s) for the housing unit's cooling setpoint offset.
+The period and offset for the dwelling unit's cooling setpoint. Default for the day is from 9am to 5pm and for the night is 10pm to 7am.
 
 Created by
 **********
@@ -26417,7 +26417,7 @@ Custom State
 Description
 ***********
 
-A custom selection of states to be able to have more fine tuned probability distribution in states where we have more data.
+A custom selection of states to be able to have more fine tuned probability distributionin states where we have more data
 
 Created by
 **********
@@ -26697,7 +26697,7 @@ Door Area
 Description
 ***********
 
-Area of opaque exterior doors.
+Area of exterior doors
 
 Created by
 **********
@@ -26799,7 +26799,7 @@ Duct Leakage and Insulation
 Description
 ***********
 
-Duct insulation and leakage to outside from the portion of ducts in unconditioned spaces.
+Duct insulation and leakage to outside from the portion of ducts in unconditioned spaces
 
 Created by
 **********
@@ -26951,7 +26951,7 @@ Duct Location
 Description
 ***********
 
-Primary location of the duct system.
+Location of Duct System
 
 Created by
 **********
@@ -27290,7 +27290,7 @@ Electric Vehicle Charger
 Description
 ***********
 
-Presence and type of electric vehicle charger used at the dwelling unit.
+Type of electric vehicle charger used at the dwelling unit
 
 Created by
 **********
@@ -27382,7 +27382,7 @@ Electric Vehicle Miles Traveled
 Description
 ***********
 
-The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.
+The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.; Because EVs drive less miles/year than ICE (https://www.sciencedirect.com/science/article/pii/S254243512300404X?via%3Dihub#abs0015), the max value is capped at 22,500 miles/yr and the distribution is shifted to reduce the mean.
 
 Created by
 **********
@@ -27637,7 +27637,7 @@ Federal Poverty Level
 Description
 ***********
 
-Income as a percent of the federal poverty line of the household occupying the housing unit.
+Federal poverty level of the household occupying the dwelling unit.
 
 Created by
 **********
@@ -28347,7 +28347,7 @@ Geometry Building Type Height
 Description
 ***********
 
-The 2009 U.S. Energy Information Administration Residential Energy Consumption Survey building type with multi-family buildings split out by low-rise, mid-rise, and high-rise.
+The 2009 U.S. Energy Information Administration Residential Energy Consumption Survey  building type with multi-family buildings split out by low-rise, mid-rise, and high-rise.
 
 Created by
 **********
@@ -28747,17 +28747,13 @@ Assumption
 
 - \Single-family detached units that are 1500-2499 square feet can not have a 3 car garage.
 
-- \Single-family detached units that are 2500-3999 square feet and a heated basement can not have a 3 car garage.
+- \Single-family detached units that are 2500-3999 square feet and a heated basement can not have a 3 car garage. Due to low sample sizes, 1. Crawl, basements, and slab are lumped.
 
-- \Due to low sample sizes,
+- \2. Story levels are lumped together.
 
-  - \[1] Crawl, basements, and slab are lumped.
+- \2. Census Division RECS is grouped into Census Region.
 
-  - \[2] Story levels are lumped together.
-
-  - \[3] Census Division RECS is grouped into Census Region.
-
-  - \[4] Vintage ACS is progressively grouped into: pre-1960, 1960-1999, and 2000+.
+- \2. Vintage ACS is progressively grouped into: pre-1960, 1960-1999, and 2000+.
 
 
 Options
@@ -28831,7 +28827,7 @@ Geometry Space Combination
 Description
 ***********
 
-Valid combinations of building type, MF building level, attic type, foundation type, and garage.
+Valid combinations of building type, building level mf, attic, foundation, and garage
 
 Created by
 **********
@@ -29804,9 +29800,7 @@ Created by
 Source
 ******
 
-- \U.S. EIA 2020 RECS microdata in Hawaii.
-
-- \U.S. EIA 2009 RECS microdata in all locations except Hawaii.
+- \U.S. EIA 2009 Residential Energy Consumption Survey (RECS) microdata.Hawaii constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
 
 Assumption
@@ -29814,7 +29808,7 @@ Assumption
 
 - \Central AC systems need to serve at least 60 percent of the floor area.
 
-- \Heat pumps serve 100% of the floor area in all locations except Hawaii because the system serves 100% of the heated floor area. Partial cooling is common in cooling dominated climate.
+- \Heat pumps serve 100 percent of the floor area because the system serves 100 percent of the heated floor area, except for in Hawaii
 
 - \Due to low sample count, the tsv is constructed by downscaling a core sub-tsv with 3 sub-tsvs of different dependencies. The sub-tsvs have the following dependencies: tsv1 : 'HVAC Cooling Type', 'ASHRAE IECC Climate Zone 2004'
 
@@ -30022,19 +30016,7 @@ Assumption
 
 - \Due to low sample sizes, the fallback rules are applied in following order
 
-  - \[1] Vintage: Vintage ACS 20 year bin
-
-  - \[2] HVAC Cooling Type: Lump 1) Central AC and Ducted Heat Pump and 2) Non-Ducted Heat Pump and None
-
-  - \[3] HVAC Heating Type: Lump 1) Ducted Heating and Ducted Heat Pump and 2) Non-Ducted Heat Pump and None
-
-  - \[4] HVAC Cooling Type: Lump 1) Central AC and Ducted Heat Pump and 2) Non-Ducted Heat Pump, Non-Ducted Heating, and None
-
-  - \[5] HVAC Heating Type: Lump 1) Ducted Heating and Ducted Heat Pump and 2) Non-Ducted Heat Pump, None, and Room AC
-
-  - \[6] Vintage: Vintage pre 1960s and post 2000
-
-  - \[7] Vintage: All vintages
+  - \[1] Vintage: Vintage ACS 20 year bin[2] HVAC Cooling Type: Lump 1) Central AC and Ducted Heat Pump and 2) Non-Ducted Heat Pump and None[3] HVAC Heating Type: Lump 1) Ducted Heating and Ducted Heat Pump and 2) Non-Ducted Heat Pump and None[4] HVAC Cooling Type: Lump 1) Central AC and Ducted Heat Pump and 2) Non-Ducted Heat Pump, Non-Ducted Heating, and None[5] HVAC Heating Type: Lump 1) Ducted Heating and Ducted Heat Pump and 2) Non-Ducted Heat Pump, None, and Room AC[6] Vintage: Vintage pre 1960s and post 2000[7] Vintage: All vintages
 
 - \Evaporative or Swamp Cooler Cooling Type assigned Void option
 
@@ -30074,7 +30056,7 @@ HVAC Has Zonal Electric Heating
 Description
 ***********
 
-Presence of electric baseboard heating.
+Presence of electric baseboard heating
 
 Created by
 **********
@@ -30853,7 +30835,7 @@ HVAC Secondary Heating Efficiency
 Description
 ***********
 
-The efficiency of the secondary heating system.
+The efficiency and type of the heating system.
 
 Created by
 **********
@@ -30957,7 +30939,7 @@ HVAC Secondary Heating Fuel
 Description
 ***********
 
-The fuel type of the secondary heating system.
+Secondary Heating Fuel for the dwelling unit
 
 Created by
 **********
@@ -31038,7 +31020,7 @@ HVAC Secondary Heating Partial Space Conditioning
 Description
 ***********
 
-The fraction of heating load served by secondary heating system.
+The fraction of heating load served by secondary heating system
 
 Created by
 **********
@@ -31115,7 +31097,7 @@ HVAC Secondary Heating Type
 Description
 ***********
 
-The efficiency and type of the secondary heating system.
+The efficiency and type of the heating system.
 
 Created by
 **********
@@ -31822,11 +31804,9 @@ Source
 Assumption
 **********
 
-- \Imposed an upperbound of 14 kWDC, which contains 95% of all installations. Counties with source_count <10 are backfilled with aggregates at the state level. Distribution based on all installations is applied only to occupied single-family detached  homes, actual distribution for single-family detached homes may be higher.
+- \Imposed an upperbound of 14 kWDC, which contains 95pct of all installations. Counties with source_count<10 are backfilled with aggregates at the State level. Distribution based on all installations is applied only to occupied SFD, actual distribution for SFD may be higher.
 
-- \PV is not modeled in AK. No data has been identified.
-
-- \For Hawaii, EIA Form 861 reports the number of residential utility customers with rooftop PV in the Net Metering 2023 worksheet and the total number of residential utility customers in Sales Ult Cust 2023 worksheet. Taking the ratio of these two gives us the fraction of homes with rooftop PV. We place the additional constraint that all of these rooftop PV customers are in single-family detached homes. Because Hawaii is composed of multiple islands, the four electric utilities in Hawaii (and which report to EIA Form 861) approximately align with the county boundaries with Hawaii, Honolulu, and Kauai having one county for one electric utility, and both Maui and Kalawao mapping to the same electric utility, so we we develop distinct PV saturation rates for each county in Hawaii (note Kalawao has population 81 people and is located on the island of Maui).
+- \PV is not modeled in AK and HI. No data has been identified.
 
 
 Options
@@ -32183,7 +32163,7 @@ Heating Setpoint Offset Period
 Description
 ***********
 
-The time period(s) for the housing unit's heating setpoint offset.
+The period and offset for the dwelling unit's heating setpoint. Default for the day is from 9am to 5pm and for the night is 10pm to 7am.
 
 Created by
 **********
@@ -32377,7 +32357,7 @@ Heating Unavailable Days
 Description
 ***********
 
-Number of days in a year the heating system is unavailable.
+Number of days in a year the heating system is unavailable
 
 Created by
 **********
@@ -32465,7 +32445,7 @@ Holiday Lighting
 Description
 ***********
 
-Holiday lighting presence and use.
+Use of holiday lighting (not currently modeled separately from other exterior lighting).
 
 Created by
 **********
@@ -33111,16 +33091,6 @@ Properties
 Insulation Ceiling
 ------------------
 
-Description
-***********
-
-This characteristic in ResStock specifies the insulation level of the ceiling on the top floor of the home in housing units with vented or unvented attics.
-
-Created by
-**********
-
-manually created
-
 Source
 ******
 
@@ -33211,16 +33181,6 @@ Properties
 Insulation Floor
 ----------------
 
-Description
-***********
-
-Sets the insulation levels of the home's floor for all foundation types except for slab-on-grade.
-
-Created by
-**********
-
-manually created
-
 Source
 ******
 
@@ -33310,16 +33270,6 @@ Properties
 
 Insulation Foundation Wall
 --------------------------
-
-Description
-***********
-
-Specifies the insulation level of foundation types with foundation walls (i.e., crawlspaces and basements).
-
-Created by
-**********
-
-manually created
 
 Source
 ******
@@ -33551,7 +33501,7 @@ Insulation Slab
 Description
 ***********
 
-Defines the insulation level for all slab-on-grade foundation types.
+Slab insulation level.
 
 Created by
 **********
@@ -33866,7 +33816,7 @@ Lighting
 Description
 ***********
 
-Specifies the type of lighting technology used in the housing unit.
+Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options.
 
 Created by
 **********
@@ -33882,9 +33832,15 @@ Source
 Assumption
 **********
 
-- \Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options.
+- \Qualitative portion of inside light bulbs is mapped to quantitative percentage as: None: 0%
 
-- \Qualitative portion of inside light bulbs is mapped to quantitative percentage as: None: 0%, Some: 20%, About half: 50%, Most: 80%, All: 100%. Then the sum of three types of lighting options is normalized to 100%
+- \Some: 20%
+
+- \About half: 50%
+
+- \Most: 80%
+
+- \All: 100%. Then the sum of three types of lighting options is normalized to 100%
 
 
 Options
@@ -36082,7 +36038,7 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-- \Age of refrigerator converted to efficiency levels using ENERGY STAR shipment-weighted efficiencies by year data from Home Energy Saver: http://hes-documentation.lbl.gov/.
+- \Age of refrigerator converted to efficiency levels using ENERGYSTAR shipment-weighted efficiencies by year data from Home Energy Score: http://hes-documentation.lbl.gov/. Check the comments in: HES-Refrigerator_Age_vs_Efficiency.tsv
 
 
 Assumption
@@ -36608,9 +36564,7 @@ Source
 Assumption
 **********
 
-- \The only valid option for multi-family homes is None since the pool is most likely to be jointly owned
-
-- \Due to low sample count, the tsv is constructed with the following fallback coarsening order
+- \The only valid option for multi-family homes is Nonesince the pool is most likely to be jointly ownedDue to low sample count, the tsv is constructed with the followingfallback coarsening order
 
   - \[1] State coarsened to Census Division RECS with AK/HI separate
 
@@ -36697,7 +36651,7 @@ Source
 Assumption
 **********
 
-- \Electric heat pump pool heater is not present in RECS 2020, so state-level RASS 2019 is used to split all pool heaters tagged 'Electricity' by RECS 2020 into either electric resistance (still labeled 'Electricity') and 'Electric Heat Pump'. Due to the low prevalence of diverse heating fuels in California, all homes with non-electric heating (including None heating) receive the same split, and electric space heated homes have their own distinct split.
+- \Within electric pool heaters, proportion of heat pump electric pool heating vs. non-heat pump electric pool heating was derived from RASS 2019.
 
 
 Options
@@ -42171,7 +42125,7 @@ Plug Loads
 Description
 ***********
 
-Plug load usage level as a percentage of the national average.
+Plug load usage level which is varied by Census Division RECS and Building Type RECS.
 
 Created by
 **********
@@ -42852,7 +42806,7 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-- \Age of refrigerator converted to efficiency levels using ENERGY STAR shipment-weighted efficiencies by year data from Home Energy Saver: http://hes-documentation.lbl.gov/.
+- \Age of refrigerator converted to efficiency levels using ENERGYSTAR shipment-weighted efficiencies by year data from Home Energy Score: http://hes-documentation.lbl.gov/. Check the comments in: HES-Refrigerator_Age_vs_Efficiency.tsv
 
 
 Assumption
@@ -43360,7 +43314,7 @@ State Metro Median Income
 Description
 ***********
 
-State Metro median income of the household occupying the dwelling unit. This is different from State Median Income in that the Income Limits are differentiated by Metro and Nonmetro portions of the state.
+State Metro median income of the household occupying the dwelling unit.             This is different from State Median Income in that the Income Limits are differentiated by Metro and             Nonmetro portions of the state.
 
 Created by
 **********
@@ -43719,9 +43673,7 @@ Assumption
 
   - \[1] State: Census Division RECS
 
-  - \[2] State: Census Region
-
-  - \[3] State: National
+  - \[2] State: Census Region[3] State: National
 
 
 Options
@@ -44241,7 +44193,7 @@ Water Heater Location
 Description
 ***********
 
-Location of the water heater.
+location of water heater.
 
 Created by
 **********
@@ -44265,23 +44217,21 @@ Assumption
 
 - \Where samples < 10, data is aggregated in the following order:
 
-  - \[1] Building Type lumped into single-family, multi-family, and mobile home.
+- \1. Building Type lumped into single-family, multi-family, and mobile home.
 
-  - \[2] 1 + Foundation Type combined.
+- \2. 1 + Foundation Type combined. 3. 2 + Attic Type combined
 
-  - \[3] 2 + Attic Type combined
+- \4. 3 + Garage combined.
 
-  - \[4] 3 + Garage combined.
+- \5. Single-/Multi-Family + Foundation combined + Attic combined + Garage combined.
 
-  - \[5] Single-/Multi-Family + Foundation combined + Attic combined + Garage combined.
+- \6. 5 + pre-1960 combined.
 
-  - \[6] 5 + pre-1960 combined.
+- \7. 5 + pre-1960 combined / post-2020 combined.
 
-  - \[7] 5 + pre-1960 combined / post-2020 combined.
+- \8. 7 + IECC Climate Zone lumped into: 1-2+3A, 3B-3C, 4, 5, 6, 7 except AK, 7AK-8AK.
 
-  - \[8] 7 + IECC Climate Zone lumped into: 1-2+3A, 3B-3C, 4, 5, 6, 7 except AK, 7AK-8AK.
-
-  - \[9] 7 + IECC Climate Zone lumped into: 1-2-3, 4-8.
+- \9. 7 + IECC Climate Zone lumped into: 1-2-3, 4-8.
 
 
 Options
@@ -44453,7 +44403,17 @@ Assumption
 
   - \[2] Building Type data are grouped into: 1) Single-Family Detached, Single-Family Attached, and Mobile homes and 2) Multi-Family 2-4 units and Multi-Family 5+ units.
 
-  - \[3] Climate zones are grouped into: 1) 1A, 2A, 2B, 2) 3A, 3B, 3C, 4B, 3) 4A, 4C, 4) 5A, 5B, 5) 6A, 6B, and 6) 7A, 7B 7AK, 8AK.
+  - \[3] Climate zones are grouped into: 1) 1A, 2A, 2B
+
+- \2) 3A, 3B, 3C, 4B
+
+- \3) 4A, 4C
+
+- \4) 5A, 5B
+
+- \5) 6A, 6B
+
+- \and 6) 7A, 7B 7AK, 8AK.
 
   - \[4] Federal Poverty Levels are progressively grouped together until all bins are combined.
 
