@@ -17,4 +17,4 @@ Wood	None	0	0	0	1	0	393	2.10314e+06	0.0180041
 # Description: The heating fuel of the pool heater if there is a pool.
 # Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 # Source: Constructed using the California Energy Commission 2019 Residential Appliance Saturation Study (RASS) microdata.
-# Assumption: Electric heat pump pool heater is not present in RECS 2020, so state-level RASS 2019 is used to split all pool heaters tagged 'Electricity' by RECS 2020 into either electric resistance (still labeled 'Electricity') and 'Electric Heat Pump'. Due to the low prevalence of diverse heating fuels in California, all homes with non-electric heating (including None heating) receive the same split, and electric space heated homes have their own distinct split.
+# Assumption: Within electric pool heaters, proportion of heat pump electric pool heating vs. non-heat pump electric pool heating was derived from RASS 2019.

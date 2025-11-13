@@ -63,7 +63,7 @@ Crawlspace	1990s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0209805
 Crawlspace	2000s	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0.0164123
 Crawlspace	2010s	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0.00560095
 # Created by: sources\other\tsv_maker.py
-# Description: Duct insulation and leakage to outside from the portion of ducts in unconditioned spaces.
+# Description: Duct insulation and leakage to outside from the portion of ducts in unconditioned spaces
 # Source: Duct insulation as a function of location: IECC 2009
 # Source: Leakage distribution: Lucas and Cole, 'Impacts of the 2009 IECC for Residential Buildings at State Level', 2009
 # Assumption: Ducts entirely in conditioned spaces will not have any leakage to outside. Ducts with R-4/R-8 insulation were previously assigned to Geometry Foundation Type = Ambient or Slab. They now correspond to those with Duct Location = Garage, Unvented Attic, or Vented Attic.

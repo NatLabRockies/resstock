@@ -210,7 +210,7 @@ Yes	Not Available	Single-Family Detached	Not Available	0.535169	0.464831	0	0	221
 Yes	Not Available	Single-Family Detached	Owner	0	0	0	1	222	1.40506e+06	0
 Yes	Not Available	Single-Family Detached	Renter	0	0	0	1	33	53930.5	0
 # Created by: sources\recs\recs2020\tsv_maker.py
-# Description: Presence and type of electric vehicle charger used at the dwelling unit.
+# Description: Type of electric vehicle charger used at the dwelling unit
 # Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 # Assumption: Dwelling units with an electric vehicle need to have at least a Level 1 charger.Due to low sample sizes, fallback rules applied with lumping of:
 # Assumption: [1] Federal Poverty Level lumped every 100%

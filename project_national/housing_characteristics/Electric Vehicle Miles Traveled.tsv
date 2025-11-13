@@ -2,4 +2,5 @@ Option=1000	Option=3000	Option=5000	Option=7000	Option=9000	Option=11000	Option=
 0.1068	0.1113	0.1291	0.1284	0.1238	0.1116	0.0927	0.0754	0.059	0.0461	0.0157	2.18e+08	1
 # Created by: manually created
 # Description: The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.
+# Description: Because EVs drive less miles/year than ICE (https://www.sciencedirect.com/science/article/pii/S254243512300404X?via%3Dihub#abs0015), the max value is capped at 22,500 miles/yr and the distribution is shifted to reduce the mean.
 # Source: Constructed using the 2022 U.S. Federal Highway Administration National Household Travel Survey (NHTS) microdata.

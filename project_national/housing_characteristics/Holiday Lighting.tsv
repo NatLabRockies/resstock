@@ -1,5 +1,5 @@
 Option=No Exterior Use	sampling_probability
 1	1
 # Created by: sources\other\tsv_maker.py
-# Description: Holiday lighting presence and use.
+# Description: Use of holiday lighting (not currently modeled separately from other exterior lighting).
 # Source: n/a

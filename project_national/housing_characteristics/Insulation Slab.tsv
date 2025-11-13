@@ -3240,7 +3240,7 @@ CRHI	1990s	Single-Family Detached	Unheated Basement	1	0	0	0	0	0	0	0	0
 CRHI	2000s	Single-Family Detached	Unheated Basement	1	0	0	0	0	0	0	0	1.65236e-06
 CRHI	2010s	Single-Family Detached	Unheated Basement	1	0	0	0	0	0	0	0	4.62002e-07
 # Created by: manually created
-# Description: Defines the insulation level for all slab-on-grade foundation types.
+# Description: Slab insulation level.
 # Source: Derived from Home Innovation Research Labs 1982-2007 Data
 # Source: (pre-1980) Engineering judgment
 # Assumptions: CRHI is a copy of CR09

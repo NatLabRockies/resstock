@@ -3239,8 +3239,6 @@ CRHI	1980s	Single-Family Detached	Vented Crawlspace	0	0.573529	0	0.426471	0	2.18
 CRHI	1990s	Single-Family Detached	Vented Crawlspace	0	0.10101	0.535354	0.363636	0	1.99707e-05
 CRHI	2000s	Single-Family Detached	Vented Crawlspace	0	0.104167	0.53125	0.364583	0	1.98492e-05
 CRHI	2010s	Single-Family Detached	Vented Crawlspace	0	0.104167	0.53125	0.364583	0	5.06477e-06
-# Created by: manually created
-# Description: Sets the insulation levels of the home's floor for all foundation types except for slab-on-grade.
 # Source: Derived from Home Innovation Research Labs 1982-2007 Data
 # Source: (pre-1980) Engineering judgment
 # Assumptions: CRHI is a copy of CR09

@@ -280,7 +280,7 @@ Year round	400%+	Single-Family Detached	0	0	0.00969803	0	0	0.0162158	0.603756	0.
 Never	Not Available	Single-Family Detached	0.00282289	0.001677	0.00320101	0.00205647	0.00444786	0.00139516	0.983039	0.00136026	11808	7.3316e+07	0.0618404
 Year round	Not Available	Single-Family Detached	0.000289047	0.0130889	0.00349215	0	0.000289047	0.118048	0.50057	0.364223	45	216706	0.000182786
 # Created by: sources\recs\recs2020\tsv_maker.py
-# Description: Number of days in a year the heating system is unavailable.
+# Description: Number of days in a year the heating system is unavailable
 # Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 # Assumption: Where samples are less than 10, the data is aggregated in the following order until there are no rows with less than 10 samples:
 # Assumption: 1. The Federal Poverty Level dependency is aggregated every 100%

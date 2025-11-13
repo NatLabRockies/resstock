@@ -2,5 +2,5 @@ Dependency=Has PV	Option=None	Option=10 kWh	Option=20 kWh	sampling_probability
 Yes	1	0	0	0.0102146
 No	1	0	0	0.989785
 # Created by: manually created
-# Description: Presence, size, location, and efficiency of an on-site battery.
+# Description: The size of an onsite battery (not modeled in project_national).
 # Source: n/a

@@ -1920,7 +1920,7 @@ Vented Attic	Top	Single-Family Detached	Vented Crawlspace	2 Car	0	0	0	0	0	0	0	0	
 Vented Attic	Top	Single-Family Detached	Vented Crawlspace	3 Car	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	1	1	0
 Vented Attic	Top	Single-Family Detached	Vented Crawlspace	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	1	1	0
 # Created by: sources\recs\recs2020\tsv_maker.py
-# Description: Valid combinations of building type, MF building level, attic type, foundation type, and garage.
+# Description: Valid combinations of building type, building level mf, attic, foundation, and garage
 # Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 # Assumption: For building level mf, only multi-family (MF) can have top, middle, or bottom units,
 # Assumption: For foundation, mobile home (MH) has ambient only, MF cannot have ambient or heated basement, single-family attached cannot have ambient.

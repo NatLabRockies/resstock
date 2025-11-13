@@ -255,7 +255,6 @@ Multi-Family with 5+ Units	WY	0.241316	0.304873	0.453811	15	31094	0.000185946
 Single-Family Attached	WY	0.192099	0.2677	0.5402	15	12592.2	9.54217e-05
 Single-Family Detached	WY	0.213603	0.216664	0.569733	138	155633	0.00131152
 # Created by: sources\recs\recs2020\tsv_maker.py
-# Description: Specifies the type of lighting technology used in the housing unit.
+# Description: Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options.
 # Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
-# Assumption: Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options.
-# Assumption: Qualitative portion of inside light bulbs is mapped to quantitative percentage as: None: 0%, Some: 20%, About half: 50%, Most: 80%, All: 100%. Then the sum of three types of lighting options is normalized to 100%
+# Assumption: Qualitative portion of inside light bulbs is mapped to quantitative percentage as: None: 0%; Some: 20%; About half: 50%; Most: 80%; All: 100%. Then the sum of three types of lighting options is normalized to 100%
