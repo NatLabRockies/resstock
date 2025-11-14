@@ -150,15 +150,16 @@ source_report.each do |row|
 
     next if option == 'Void'
 
-    lookup[option] = {}
-
     sat_percent = Float(param_option_row[3]) * 100.0
+    next if sat_percent == 0.0
+
     if Integer(sat_percent.truncate()) == 100
       sat_percent = '%.3g%%' % [sat_percent]
     else
       sat_percent = '%.2g%%' % [sat_percent]
     end
 
+    lookup[option] = {}
     lookup[option]['sat'] = "#{sat_percent}".gsub('%', '\\%')
 
     # Check if there are arguments
