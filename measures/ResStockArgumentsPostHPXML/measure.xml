@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>cec6ab81-6df0-4daf-88f9-49eafc2baeec</version_id>
-  <version_modified>2025-11-05T17:49:10Z</version_modified>
+  <version_id>3c106f72-fd07-46cf-b3da-b485d6dbd77c</version_id>
+  <version_modified>2025-11-12T23:43:39Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -12095,6 +12095,34 @@
       </choices>
     </argument>
     <argument>
+      <name>hvac_heat_pump_sizing_is_duct_limited</name>
+      <display_name>HVAC: Heat Pump Sizing Is Duct Limited</display_name>
+      <description>Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.</description>
+      <type>Boolean</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>baseline_max_airflow_cfm</name>
+      <display_name>baseline_max_airflow_cfm</display_name>
+      <description>TODO.</description>
+      <type>Double</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>hvac_blower_fan_watts_per_cfm</name>
       <display_name>HVAC: Blower Fan Efficiency</display_name>
       <description>The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems)..</description>
@@ -13150,7 +13178,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>FE764330</checksum>
+      <checksum>01E06A56</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -13175,6 +13203,12 @@
       <filetype>json</filetype>
       <usage_type>resource</usage_type>
       <checksum>055326E7</checksum>
+    </file>
+    <file>
+      <filename>duct_limited.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>DB6D2CBF</checksum>
     </file>
     <file>
       <filename>electrical_panel/electrical_panel_breaker_space.csv</filename>
