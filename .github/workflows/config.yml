@@ -158,7 +158,7 @@ jobs:
         run: |
           export DEBIAN_FRONTEND=noninteractive
           sudo apt update
-          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
+          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme python3-pip
 
       - name: Download formatted options_lookup
         uses: actions/download-artifact@v4
