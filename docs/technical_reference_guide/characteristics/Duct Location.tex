@@ -1,9 +1,14 @@
 \paragraph{Description}
-\input{characteristics/description/Duct Location}
-As described earlier, a fraction of the ducts will also be assumed to be in conditioned space for homes with multiple stories.
+% \input{characteristics/description/Duct Location}
+Primary location of duct system. As described earlier, a fraction of the ducts will also be assumed to be in conditioned space for homes with multiple stories.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Duct Location}
+% \input{characteristics/sources/Duct Location}
+\begin{itemize}
+\item 
+
+OpenStudio-HPXML v1.6.0 and Building America House Simulation Protocols (\cite{Wilson2014}). 
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Duct Location}
@@ -18,4 +23,5 @@ Property definitions are shown in Table \ref{table:hc_arg_def_duct_location}. Se
 \input{tables/properties/Duct Location}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Duct Location}
+% \input{characteristics/assumptions/Duct Location}
+Based on default duct location assignment in OpenStudio-HPXML: the first present space type in the order of: basement---conditioned, basement---unconditioned, crawlspace---conditioned, crawlspace---vented, crawlspace---unvented, attic---vented, attic---unvented, garage, or living space. 

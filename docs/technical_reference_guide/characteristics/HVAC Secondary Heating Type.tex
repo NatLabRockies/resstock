@@ -1,8 +1,12 @@
 \paragraph{Description}
-\input{characteristics/description/HVAC Secondary Heating Type}
+% \input{characteristics/description/HVAC Secondary Heating Type}
+The efficiency and type of the secondary heating system.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/HVAC Secondary Heating Type}
+% \input{characteristics/sources/HVAC Secondary Heating Type}
+\begin{itemize}
+\item Alaska-specific distribution is based on Alaska Retrofit Information System (2008 to 2022), maintained by the Alaska Housing Finance Corporation. Not implemented in baseline for other states.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/HVAC Secondary Heating Type}
@@ -13,4 +17,10 @@ The options for HVAC Secondary Heating Type are shown in Table \ref{table:hc_opt
 \input{tables/options/HVAC Secondary Heating Type}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/HVAC Secondary Heating Type}
+% \input{characteristics/assumptions/HVAC Secondary Heating Type}
+\begin{itemize}
+    \item For Alaska, we are using a field in ARIS that lumps multifamily 2--4 units and multifamily 5+ units buildings together. Data from the American Community Survey are used to distribute between these two building types.
+    \item Ducted heating or heat pump cannot have ducted secondary heating.
+    \item For Alaska, all heat pumps are assumed to be non-ducted mini-splits. 
+    \item For Alaska, electricity cannot be a secondary heating fuel, therefore no secondary heating type. 
+\end{itemize}

@@ -1,8 +1,12 @@
 \paragraph{Description}
-\input{characteristics/description/Heating Setpoint Offset Magnitude}
+% \input{characteristics/description/Heating Setpoint Offset Magnitude}
+The magnitude of the heating setpoint offset.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Heating Setpoint Offset Magnitude}
+% \input{characteristics/sources/Heating Setpoint Offset Magnitude}
+\begin{itemize}
+    \item Constructed using U.S.~EIA 2020 RECS microdata.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Heating Setpoint Offset Magnitude}
@@ -17,4 +21,7 @@ Property definitions are shown in Table \ref{table:hc_arg_def_heating_setpoint_o
 \input{tables/properties/Heating Setpoint Offset Magnitude}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Heating Setpoint Offset Magnitude}
+% \input{characteristics/assumptions/Heating Setpoint Offset Magnitude}
+\begin{itemize}
+    \item For dependency conditions with low samples, the following dependency values are lumped together in progressive order until there are enough samples: (1) lump buildings into Single-Family and Multifamily only, (2) lump buildings into Single-Family and Multifamily only, and lump nearby climate zones within A/B regions and separately 7AK and 8AK, and (3) lump all building types together and lump climate zones within A/B regions and separately 7AK and 8AK.
+\end{itemize}
