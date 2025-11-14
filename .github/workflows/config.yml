@@ -146,8 +146,6 @@ jobs:
   build-documentation:
     runs-on: ubuntu-22.04
     needs: [format-files]
-    container:
-      image: docker://nrel/openstudio:3.10.0
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -158,7 +156,7 @@ jobs:
         run: |
           export DEBIAN_FRONTEND=noninteractive
           sudo apt update
-          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme python3-pip
+          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
 
       - name: Download formatted options_lookup
         uses: actions/download-artifact@v4
