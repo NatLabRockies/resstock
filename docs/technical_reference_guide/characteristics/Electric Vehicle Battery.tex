@@ -1,8 +1,13 @@
 \paragraph{Description}
-\input{characteristics/description/Electric Vehicle Battery}
+% \input{characteristics/description/Electric Vehicle Battery}
+The type of electric vehicle and battery range in miles.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Electric Vehicle Battery}
+% \input{characteristics/sources/Electric Vehicle Battery}
+\begin{itemize}
+  \item The 2023 Vehicle Stock Projection Data from NREL's TEMPO model
+  \item EV Registration Data from Experian 2023
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Electric Vehicle Battery}
@@ -21,4 +26,8 @@ Property definitions are shown in Table \ref{table:hc_arg_def_electric_vehicle_b
 \input{tables/properties/Electric Vehicle Battery}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Electric Vehicle Battery}
+% \input{characteristics/assumptions/Electric Vehicle Battery}
+\begin{itemize}
+  \item Vehicle stock data starts with the Experian registration data and then is projected by TEMPO to 2023.
+  \item If the household does not have an electric vehicle, the options represent the household preference.
+\end{itemize}

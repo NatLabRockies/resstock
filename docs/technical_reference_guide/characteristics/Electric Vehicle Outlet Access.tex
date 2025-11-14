@@ -1,8 +1,10 @@
 \paragraph{Description}
-\input{characteristics/description/Electric Vehicle Outlet Access}
+% \input{characteristics/description/Electric Vehicle Outlet Access}
+The unit has an outlet within 20 feet of vehicle parking.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Electric Vehicle Outlet Access}
+% \input{characteristics/sources/Electric Vehicle Outlet Access}
+U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Electric Vehicle Outlet Access}
@@ -11,4 +13,15 @@
 The options for Electric Vehicle Outlet Access characteristic indicate whether the unit has charging within 20 ft of the vehicle parking. This characteristic does not assign any modeling properties. The options are ``Yes'' and ``No''.
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Electric Vehicle Outlet Access}
+% \input{characteristics/assumptions/Electric Vehicle Outlet Access}
+\begin{itemize}
+  \item RECS 2020 has Multi-Family 5+ units marked as Not Applicable. These units are replaced by data from the No Place Like Home Study (https://www.nrel.gov/docs/fy22osti/81065.pdf) Table 1 Scenario 2. Multi-Family 5+ units owners is assumed for 12\% units having electrical access. This fraction is based on the average of mid-capacity apartment and high-capacity apartment. Multi-Family 5+ units owners is assumed for 28\% units having electrical access.
+  \item Units reported to have a Level 1 or Level 2 charger in the field EVCHRGTYPE are assumed to have outlet access.
+  \item Level 1 chargers without outlet access are units with EVs, but report no outlet access within 20 ft of vehicle parking.
+  \item Due to low sample count, the tsv is constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The sub-tsvs have the following dependencies:
+  \begin{itemize}
+    \item Dwelling unit sub-tsv : deps=['Geometry Building Type RECS', 'Vintage ACS', 'Electric Vehicle Charger'] with the following fallback coarsening order: 1) Vintage ACS to the National distribution and 2) combining Geometry Building Type RECS together into two bins a) single-family detached, mobile homes, and single family attached and b) multi-family with 2 - 4 units and multi-family with 5+ units
+    \item Household sub-tsv : deps=['Geometry Building Type RECS', 'State' 'Tenure', 'Federal Poverty Level'] 
+    \item In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Vintage ACS', 'Electric Vehicle Charger'], ['Tenure', 'Federal Poverty Level']).
+  \end{itemize}
+\end{itemize}

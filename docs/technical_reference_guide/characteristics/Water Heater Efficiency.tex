@@ -1,8 +1,22 @@
 \paragraph{Description}
-\input{characteristics/description/Water Heater Efficiency}
+% \input{characteristics/description/Water Heater Efficiency}
+The efficiency and type of the water heater by heating fuel.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Water Heater Efficiency}
+% \input{characteristics/sources/Water Heater Efficiency}
+\begin{itemize}
+\item
+  U.S. EIA 2020 RECS microdata.
+\item
+  Heat pump water heaters: 2016-17 RBSA II for WA and OR; Butzbaugh
+  et al. (\href{https://www.osti.gov/biblio/1433775}{2017}). \textit{US HPWH Market Transformation: Where
+  We've Been and Where to Go Next} for remainder of
+  regions.
+\item
+  Penetration of HPWH for Maine (6.71\%) calculated based on total
+  number of HPWH units (from AWHI Stakeholder Meeting 12/08/2022) and total
+  housing units (from \url{https://www.census.gov/quickfacts/ME}).
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Water Heater Efficiency}
@@ -18,4 +32,25 @@ Property definitions are shown in Table \ref{table:hc_arg_def_water_heater_effic
 \input{characteristics/properties/Water Heater Efficiency}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Water Heater Efficiency}
+% \input{characteristics/assumptions/Water Heater Efficiency}
+\begin{itemize}
+\item
+  Water heater blanket is used as a proxy for premium storage tank water
+  heaters.
+\item
+  Heat Pump Water Heaters are added in manually as they are not in the
+  survey; all have default efficiency: Electric Heat Pump, 50 gal, 3.45 UEF.
+\item
+  Solar thermal water heaters: backup is informed by secondary water heater fuel type; electric backup is assumed if no secondary water heating. All collectors are assumed 40 sqft, roof pitch; collector orientation diversity is based on rooftop solar PV orientation for those with electric backup; for fuel backup, it is assumed south-facing.
+\item
+  Due to low sample sizes, fallback rules are applied, with lumping of:
+  
+  \begin{itemize}
+  \item
+    State: Census Division RECS
+  \item
+    State: Census Region
+    \item
+    State: National
+  \end{itemize}
+\end{itemize}

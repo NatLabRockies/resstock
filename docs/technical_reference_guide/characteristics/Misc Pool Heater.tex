@@ -1,8 +1,13 @@
 \paragraph{Description}
-\input{characteristics/description/Misc Pool Heater}
+% \input{characteristics/description/Misc Pool Heater}
+The heating fuel of the pool heater if there is a pool.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Misc Pool Heater}
+% \input{characteristics/sources/Misc Pool Heater}
+\begin{itemize}
+    \item Constructed using U.S. EIA 2020 RECS microdata.
+    \item Constructed using the California Energy Commission 2019 Residential Appliance Saturation Study (RASS) microdata.
+\end{itemize} 
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Misc Pool Heater}
@@ -17,4 +22,7 @@ Property definitions are shown in Table \ref{table:hc_arg_def_misc_pool_heater}.
 \input{tables/properties/Misc Pool Heater}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Misc Pool Heater}
+% \input{characteristics/assumptions/Misc Pool Heater}
+\begin{itemize}
+    \item Electric heat pump pool heater is not present in RECS 2020, so state-level RASS 2019 is used to split all pool heaters tagged "Electricity" by RECS 2020 into either electric resistance (still labeled "Electricity") and "Electric Heat Pump". Due to the low prevalence of diverse heating fuels in California, all homes with non-electric heating (including None heating) receive the same split, and electric space heated homes have their own distinct split.
+\end{itemize}

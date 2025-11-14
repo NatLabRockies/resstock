@@ -1,8 +1,10 @@
 \paragraph{Description}
-\input{characteristics/description/Electric Vehicle Charge At Home}
+% \input{characteristics/description/Electric Vehicle Charge At Home}
+The percentage a household would or does charge their electric vehicle at home.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Electric Vehicle Charge At Home}
+% \input{characteristics/sources/Electric Vehicle Charge At Home}
+U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Electric Vehicle Charge At Home}
@@ -17,4 +19,7 @@ Property definitions are shown in Table \ref{table:hc_arg_def_electric_vehicle_c
 \input{tables/properties/Electric Vehicle Charge At Home}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Electric Vehicle Charge At Home}
+% \input{characteristics/assumptions/Electric Vehicle Charge At Home}
+\begin{itemize}
+  \item Due to a low sample count, the distributions are constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The two sub-tsvs have the following dependencies: tsv1 dependency=['Geometry Building Type RECS'], tsv2 dependency=['Federal Poverty Level'], In combining tsv1 and tsv2, the conditional relationships are ignored across ('Geometry Building Type RECS' and 'Federal Poverty Level').
+\end{itemize}

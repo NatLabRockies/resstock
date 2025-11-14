@@ -1,8 +1,13 @@
 \paragraph{Description}
-\input{characteristics/description/Clothes Washer}
+% \input{characteristics/description/Clothes Washer}
+Presence and rated efficiency of the clothes washer.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Clothes Washer}
+% \input{characteristics/sources/Clothes Washer}
+\begin{itemize}
+\item 
+Constructed using U.S. EIA 2020 RECS microdata.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Clothes Washer}
@@ -17,4 +22,21 @@ Property definitions are shown in Table \ref{table:hc_arg_def_clothes_washer}. S
 \input{tables/properties/Clothes Washer}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Clothes Washer}
+% \input{characteristics/assumptions/Clothes Washer}
+The 2020 RECS survey does not contain ENERGY STAR rating of clothes washers. ENERGY STAR efficiency distributions with Geometry Building Type, Federal Poverty Level, and Tenure as dependencies are imported from RECS 2009. Due to low sample count, the input file is constructed by downscaling a housing unit sub-input file with a household sub-input file. The sub-input files have the following dependencies:
+housing unit sub-input file: dependencies = Geometry Building Type RECS, State, Clothes Washer Presence, and Vintage, with the following coarsening order:
+\begin{enumerate}
+    \item  Geometry Building Type RECS coarsened to SF/MF/MH
+    \item Geometry Building Type RECS coarsened to SF and MH/MF
+    \item Vintage coarsened to every 20 years before 2000 and every 10 years subsequently
+    \item Vintage homes built before 1960 coarsened to pre-1960
+    \item Vintage homes built after 2000 coarsened to 2000--20.
+\end{enumerate}
+Household sub-input file: dependencies = Geometry Building Type RECS, State, Tenure, and Federal Poverty Level, with the following coarsening order:
+\begin{enumerate}
+    \item Geometry Building Type RECS coarsened to SF/MF/MH
+    \item Geometry Building Type RECS coarsened to SF and MH/MF
+    \item Federal Poverty Level coarsened every 100\%
+    \item Federal Poverty Level coarsened every 200\%.
+\end{enumerate}
+In combining the housing unit sub-input file and household sub-input file, the conditional relationships are ignored across Clothes Washer Presence and Vintage, as well as for Tenure and Federal Poverty Level.

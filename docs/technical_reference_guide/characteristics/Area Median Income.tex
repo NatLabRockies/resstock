@@ -1,8 +1,16 @@
 \paragraph{Description}
-\input{characteristics/description/Area Median Income}
+% \input{characteristics/description/Area Median Income}
+Income as a percent of area median income of the household occupying the housing unit.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Area Median Income}
+% \input{characteristics/sources/Area Median Income}
+\begin{itemize}
+\item 
+  Income from 2019 5-year PUMS from the University of Minnesota.
+\item 
+  Area Median Income definitions based on \href{https://www.huduser.gov/portal/datasets/il.html#data_2019}{2019 Income Limits from HUD}.
+  
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Area Median Income}
@@ -13,4 +21,19 @@ The Area Median Income options are shown in Table \ref{table:hc_opt_area_median_
 \input{tables/options/Area Median Income}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Area Median Income}
+% \input{characteristics/assumptions/Area Median Income}
+\begin{enumerate}
+\item
+    Percent Area Median Income is calculated using annual household income in
+  2019 USD (continuous, not binned) from 2019 5-year PUMS data and 2019
+  income limits from HUD. These limits adjust for household size AND
+  local housing costs (i.e., fair market rents). Income limits reported at
+  county subdivisions are consolidated to County using a \href{https://mcdc.missouri.edu/applications/geocorr2014.html}{crosswalk}
+  generated from Missouri Census Data Center's geocorr
+  (2014), which has 2010 ACS housing unit count.
+\item 
+    For the 478 counties
+    available in PUMS (60\%), the county-level income limits are used. For
+    all others (40\%), PUMA-level income limits are used, which are
+    converted from county-level using 2010 ACS housing unit count.
+\end{enumerate}

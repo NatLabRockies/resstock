@@ -1,8 +1,10 @@
 \paragraph{Description}
-\input{characteristics/description/Electric Vehicle Charger}
+% \input{characteristics/description/Electric Vehicle Charger}
+Presence and type of electric vehicle charger used at the dwelling unit.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Electric Vehicle Charger}
+% \input{characteristics/sources/Electric Vehicle Charger}
+U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Electric Vehicle Charger}
@@ -17,4 +19,12 @@ Property definitions are shown in Table \ref{table:hc_arg_def_electric_vehicle_c
 \input{tables/properties/Electric Vehicle Charger}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Electric Vehicle Charger}
+% \input{characteristics/assumptions/Electric Vehicle Charger}
+Dwelling units with an electric vehicle need to have at least a Level 1 charger. Due to low sample sizes, coarsening of the dependencies are applied in the following order.
+\begin{enumerate}
+  \item Federal Poverty Level lumped every 100\%
+  \item Federal Poverty Level lumped every 200\%
+  \item Building type is consolidated into three bins 1) single-family detached and 2) multi-family with 5+ units, and 3) mobile homes, multi-family 2-4 units, and single-family attached
+  \item Building type is consolidated into two bins 1) single-family detached and 2) all other building types
+  \item Federal Poverty Level is combined into 400\%+ and <400\% bins
+\end{enumerate}

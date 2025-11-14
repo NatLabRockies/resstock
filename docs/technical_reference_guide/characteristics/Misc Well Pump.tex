@@ -1,8 +1,13 @@
 \paragraph{Description}
-\input{characteristics/description/Misc Well Pump}
+% \input{characteristics/description/Misc Well Pump}
+Presence of well pump according to the use of well for domestic water source.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/Misc Well Pump}
+% \input{characteristics/sources/Misc Well Pump}
+\begin{itemize}
+    \item 2017 and 2019 American Housing Survey (AHS) microdata.
+    \item Core Based Statistical Area (CBSA) data based on the Feb 2013 CBSA delineation file.
+\end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/Misc Well Pump}
@@ -11,4 +16,9 @@
 Options for the Misc Well Pump characteristic are ``Typical Efficiency'' and ``None''.
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/Misc Well Pump}
+% \input{characteristics/assumptions/Misc Well Pump}
+\begin{itemize}
+	\item All well pumps are assumed to have typical efficiency.
+	\item Where the number of samples < 10, the Census Division is aggregated up to Census Region.
+	\item AHS has data for buildings up to 7 stories tall. Buildings with 8 or more stories are assumed not to have a well pump.
+\end{itemize}

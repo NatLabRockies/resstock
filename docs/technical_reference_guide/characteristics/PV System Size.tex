@@ -1,8 +1,10 @@
 \paragraph{Description}
-\input{characteristics/description/PV System Size}
+% \input{characteristics/description/PV System Size}
+The size of the PV system.
 
 \paragraph{Distribution Data Sources}
-\input{characteristics/sources/PV System Size}
+% \input{characteristics/sources/PV System Size}
+Constructed using LBNL's 2020 Tracking the Sun report \citep{LBNLTTS2019}.
 
 \paragraph{Direct Conditional Dependencies}
 \input{characteristics/dependencies/PV System Size}
@@ -17,4 +19,6 @@ Property definitions are shown in Table \ref{table:hc_arg_def_pv_system_size}. S
 \input{tables/properties/PV System Size}
 
 \paragraph{Distribution Assumptions}
-\input{characteristics/assumptions/PV System Size}
+% \input{characteristics/assumptions/PV System Size}
+Installations of unknown mount type are assumed to be rooftop. States without data are backfilled with aggregates at the Census Region. ``East South Central'' assumed the same distribution as ``West South Central.''
+PV is not modeled in AK. The Option=None is set so that an error is thrown if PV is modeled as an argument.
