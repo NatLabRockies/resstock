@@ -9659,9 +9659,9 @@ HVAC Cooling Efficiency	None	ResStockArguments	hvac_cooling_system=None	hvac_coo
 HVAC Cooling Efficiency	Room AC, CEER 10.6	ResStockArguments	hvac_cooling_system=Room AC, CEER 10.6	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	Room AC, CEER 11.0	ResStockArguments	hvac_cooling_system=Room AC, CEER 11.0	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	Room AC, CEER 11.9	ResStockArguments	hvac_cooling_system=Room AC, CEER 11.9	hvac_cooling_system_capacity=Autosize
+HVAC Cooling Efficiency	Room AC, CEER 16.0	ResStockArguments	hvac_cooling_system=Room AC, CEER 16.0	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	Room AC, CEER 8.4	ResStockArguments	hvac_cooling_system=Room AC, CEER 8.4	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	Room AC, CEER 9.7	ResStockArguments	hvac_cooling_system=Room AC, CEER 9.7	hvac_cooling_system_capacity=Autosize
-HVAC Cooling Efficiency	Room AC, CEER 16.0	ResStockArguments	hvac_cooling_system=Room AC, CEER 16.0	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	Shared Cooling
 HVAC Cooling Partial Space Conditioning	100% Conditioned	ResStockArguments	hvac_cooling_system_cooling_load_served=100%
 HVAC Cooling Partial Space Conditioning	20% Conditioned	ResStockArguments	hvac_cooling_system_cooling_load_served=20%
