@@ -15,7 +15,7 @@ The type of electric vehicle and battery range in miles.
 \paragraph{Options}
 The options shown in Table \ref{table:hc_opt_electric_vehicle_battery} for the Electric Vehicle Battery characteristic determine the electric vehicle type and battery range in miles. These options do not specify if the unit has a vehicle, but rather the preference of the vehicle type and battery range if the household owned an electric vehicle. Every unit is assigned one of these options so that the vehicle type and battery range does not need to be sampled during an electric vehicle upgrade. The housing units at which an electric vehicle is modeled are specified by the Electric Vehicle Ownership characteristic.
 
-\input{tables/options/Electric Vehicle Battery}
+\input{characteristics/options/Electric Vehicle Battery}
 
 The Experian dataset is used to characterize the distribution of electric vehicles and associated battery sizes in the vehicle stock. We used the latest available data for the year 2023, which ensures that our analysis is based on the most current information regarding the electric vehicle battery stock. Although the vehicle data included information on internal combustion engine vehicles in addition to the battery electric vehicles, we filtered the dataset to focus exclusively on personal light-duty battery electric vehicles. In the dataset, there are four different categories of light-duty vehicles, including (a) Compact, (b) Midsize, (c) Sport Utility Vehicle (SUV), and (d) Pickup truck. Additionally, the dataset includes information on two total mileage ranges for the battery: (a) 200-mile range and (b) 300-mile range.
 
@@ -23,7 +23,7 @@ Then, for each electric vehicle type, we draw from Argonne National Laboratory's
 
 Property definitions are shown in Table \ref{table:hc_arg_def_electric_vehicle_battery}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles}{Vehicles} documentation for additional information.
 
-\input{tables/properties/Electric Vehicle Battery}
+\input{characteristics/properties/Electric Vehicle Battery}
 
 \paragraph{Distribution Assumptions}
 % \input{characteristics/assumptions/Electric Vehicle Battery}
