@@ -91,7 +91,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     # Load HPXML
     @hpxml = HPXML.new(hpxml_path: @hpxml_path)
     if @hpxml_path.end_with?('upgraded.xml')
-      @hpxml_existing = HPXML.new(hpxml_path: @hpxml_path.gsub('upgraded', 'existing'))
+      @hpxml_existing = HPXML.new(hpxml_path: @hpxml_path.gsub('upgraded.xml', 'existing.xml'))
     end
 
     # Weather
@@ -396,7 +396,6 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         if heating_system.primary_system
           heating_system.heating_capacity = args[:heating_system_heating_capacity] unless args[:heating_system_heating_capacity].nil?
           heating_system.heating_autosizing_factor = args[:heating_system_heating_autosizing_factor] unless args[:heating_system_heating_autosizing_factor].nil?
-          heating_system.heating_autosizing_limit = args[:heating_system_heating_autosizing_limit] unless args[:heating_system_heating_autosizing_limit].nil?
           # Faults
           if [HPXML::HVACTypeFurnace].include? heating_system.heating_system_type
             if (not heating_system.distribution_system.nil?) && (not args[:heating_system_rated_cfm_per_ton].nil?) && (not args[:heating_system_actual_cfm_per_ton].nil?)
@@ -416,13 +415,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
           heating_system.heating_system_fuel = args[:heating_system_2_fuel] unless args[:heating_system_2_fuel].nil? # To support hvac_heat_pump_backup_use_existing_system
           heating_system.heating_capacity = args[:heating_system_2_heating_capacity] unless args[:heating_system_2_heating_capacity].nil?
           heating_system.heating_autosizing_factor = args[:heating_system_2_heating_autosizing_factor] unless args[:heating_system_2_heating_autosizing_factor].nil?
-          heating_system.heating_autosizing_limit = args[:heating_system_2_heating_autosizing_limit] unless args[:heating_system_2_heating_autosizing_limit].nil?
         end
       end
       hpxml_bldg.cooling_systems.each do |cooling_system|
         cooling_system.cooling_capacity = args[:cooling_system_cooling_capacity] unless args[:cooling_system_cooling_capacity].nil?
         cooling_system.cooling_autosizing_factor = args[:cooling_system_cooling_autosizing_factor] unless args[:cooling_system_cooling_autosizing_factor].nil?
-        cooling_system.cooling_autosizing_limit = args[:cooling_system_cooling_autosizing_limit] unless args[:cooling_system_cooling_autosizing_limit].nil?
         # Faults
         if [HPXML::HVACTypeCentralAirConditioner, HPXML::HVACTypeMiniSplitAirConditioner].include? cooling_system.cooling_system_type
           if (not cooling_system.distribution_system.nil?) && (not args[:cooling_system_rated_cfm_per_ton].nil?) && (not args[:cooling_system_actual_cfm_per_ton].nil?)
@@ -447,10 +444,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       hpxml_bldg.heat_pumps.each do |heat_pump|
         heat_pump.heating_capacity = args[:heat_pump_heating_capacity] unless args[:heat_pump_heating_capacity].nil?
         heat_pump.heating_autosizing_factor = args[:heat_pump_heating_autosizing_factor] unless args[:heat_pump_heating_autosizing_factor].nil?
-        heat_pump.heating_autosizing_limit = args[:heat_pump_heating_autosizing_limit] unless args[:heat_pump_heating_autosizing_limit].nil?
         heat_pump.cooling_capacity = args[:heat_pump_cooling_capacity] unless args[:heat_pump_cooling_capacity].nil?
         heat_pump.cooling_autosizing_factor = args[:heat_pump_cooling_autosizing_factor] unless args[:heat_pump_cooling_autosizing_factor].nil?
-        heat_pump.cooling_autosizing_limit = args[:heat_pump_cooling_autosizing_limit] unless args[:heat_pump_cooling_autosizing_limit].nil?
         heat_pump.backup_heating_fuel = args[:heat_pump_backup_fuel] unless args[:heat_pump_backup_fuel].nil? # To support hvac_heat_pump_backup_use_existing_system
         if heat_pump.backup_heating_fuel == HPXML::FuelTypeElectricity
           heat_pump.backup_heating_efficiency_percent = args[:heat_pump_backup_heating_efficiency] unless args[:heat_pump_backup_heating_efficiency].nil? # To support hvac_heat_pump_backup_use_existing_system
@@ -461,7 +456,6 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         end
         heat_pump.backup_heating_capacity = args[:heat_pump_backup_heating_capacity] unless args[:heat_pump_backup_heating_capacity].nil?
         heat_pump.backup_heating_autosizing_factor = args[:heat_pump_backup_heating_autosizing_factor] unless args[:heat_pump_backup_heating_autosizing_factor].nil?
-        heat_pump.backup_heating_autosizing_limit = args[:heat_pump_backup_heating_autosizing_limit] unless args[:heat_pump_backup_heating_autosizing_limit].nil?
         # Faults
         if [HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpMiniSplit, HPXML::HVACTypeHeatPumpPTHP, HPXML::HVACTypeHeatPumpRoom].include? heat_pump.heat_pump_type
           if (not heat_pump.distribution_system.nil?) && (not args[:heat_pump_rated_cfm_per_ton].nil?) && (not args[:heat_pump_actual_cfm_per_ton].nil?)
@@ -504,7 +498,12 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     end
 
     # Apply defaults
-    @hpxml.buildings.each do |hpxml_bldg|
+    @hpxml.buildings.each_with_index do |hpxml_bldg, unit_number|
+      # Existing Building
+      if not @hpxml_existing.nil?
+        hpxml_bldg_existing = @hpxml_existing.buildings[unit_number]
+      end
+
       # Write out the hpxml (must be before validation)
       hpxml_doc = @hpxml.to_doc()
       XMLHelper.write_file(hpxml_doc, @hpxml_path)
@@ -525,9 +524,13 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       schedules_file = SchedulesFile.new(schedules_paths: schedules_filepaths,
                                          year: @hpxml.header.sim_calendar_year,
                                          output_path: nil)
+
+      # Sizing is duct limited
+      baseline_max_airflow_cfm, _ = set_autosizing_limits(runner, hpxml_bldg_existing, hpxml_bldg, args) # before defaults so that capacity reflects the autosized limit
+
       Defaults.apply(runner, @hpxml, hpxml_bldg, weather, schedules_file: schedules_file)
 
-      set_adjusted_fan_efficiency(runner, args, hpxml_bldg) # sizing is duct limited
+      set_adjusted_fan_efficiency(runner, args, hpxml_bldg, baseline_max_airflow_cfm) # after defaults so that we have airflow cfm
 
       # Register additional values
       register_value(runner, 'unit_height_above_grade', hpxml_bldg.building_construction.unit_height_above_grade)

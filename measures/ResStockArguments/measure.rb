@@ -285,12 +285,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_heating_autosizing_limit', false)
-    arg.setDisplayName('HVAC: Heating System Heating Autosizing Limit')
-    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
-    arg.setUnits('Btu/hr')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_rated_cfm_per_ton', false)
     arg.setDisplayName('HVAC: Heating System Rated CFM Per Ton')
     arg.setDescription('The rated cfm per ton of the heating system.')
@@ -328,12 +322,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_2_heating_autosizing_limit', false)
-    arg.setDisplayName('HVAC: Heating System 2 Heating Autosizing Limit')
-    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
-    arg.setUnits('Btu/hr')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_cooling_capacity', false)
     arg.setDisplayName('HVAC: Cooling System Cooling Capacity')
     arg.setDescription('The output cooling capacity of the cooling system.')
@@ -343,12 +331,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_cooling_autosizing_factor', false)
     arg.setDisplayName('HVAC: Cooling System Cooling Autosizing Factor')
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_cooling_autosizing_limit', false)
-    arg.setDisplayName('HVAC: Cooling System Cooling Autosizing Limit')
-    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
-    arg.setUnits('Btu/hr')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_rated_cfm_per_ton', false)
@@ -380,12 +362,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_heating_autosizing_limit', false)
-    arg.setDisplayName('HVAC: Heat Pump Heating Autosizing Limit')
-    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
-    arg.setUnits('Btu/hr')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_cooling_capacity', false)
     arg.setDisplayName('HVAC: Heat Pump Cooling Capacity')
     arg.setDescription('The output cooling capacity of the heat pump.')
@@ -397,12 +373,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_cooling_autosizing_limit', false)
-    arg.setDisplayName('HVAC: Heat Pump Cooling Autosizing Limit')
-    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
-    arg.setUnits('Btu/hr')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_capacity', false)
     arg.setDisplayName('HVAC: Heat Pump Backup Heating Capacity')
     arg.setDescription('The backup output heating capacity of the heat pump.')
@@ -412,12 +382,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_autosizing_factor', false)
     arg.setDisplayName('HVAC: Heat Pump Backup Heating Autosizing Factor')
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_autosizing_limit', false)
-    arg.setDisplayName('HVAC: Heat Pump Backup Heating Autosizing Limit')
-    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology if Backup Type is integrated.')
-    arg.setUnits('Btu/hr')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_rated_cfm_per_ton', false)
@@ -462,12 +426,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('hvac_heat_pump_sizing_is_duct_limited', false)
     arg.setDisplayName('HVAC: Heat Pump Sizing Is Duct Limited')
     arg.setDescription('Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('baseline_max_airflow_cfm', false)
-    arg.setDisplayName('HVAC: Baseline Maximum Airflow Rate')
-    arg.setDescription('The maximum airflow rate for the baseline home. Applies only when using Heat Pump Sizing Is Duct Limited.')
-    arg.setUnits('CFM')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('hvac_blower_fan_watts_per_cfm', false)

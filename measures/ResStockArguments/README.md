@@ -1975,19 +1975,6 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 
 <br/>
 
-**HVAC: Heating System Heating Autosizing Limit**
-
-The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-
-- **Name:** ``heating_system_heating_autosizing_limit``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heating System Rated CFM Per Ton**
 
 The rated cfm per ton of the heating system.
@@ -2051,19 +2038,6 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 
 <br/>
 
-**HVAC: Heating System 2 Heating Autosizing Limit**
-
-The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-
-- **Name:** ``heating_system_2_heating_autosizing_limit``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Cooling System Cooling Capacity**
 
 The output cooling capacity of the cooling system.
@@ -2083,19 +2057,6 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 
 - **Name:** ``cooling_system_cooling_autosizing_factor``
 - **Type:** ``Double``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Cooling System Cooling Autosizing Limit**
-
-The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-
-- **Name:** ``cooling_system_cooling_autosizing_limit``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
 
 - **Required:** ``false``
 
@@ -2164,19 +2125,6 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 
 <br/>
 
-**HVAC: Heat Pump Heating Autosizing Limit**
-
-The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-
-- **Name:** ``heat_pump_heating_autosizing_limit``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heat Pump Cooling Capacity**
 
 The output cooling capacity of the heat pump.
@@ -2201,19 +2149,6 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 
 <br/>
 
-**HVAC: Heat Pump Cooling Autosizing Limit**
-
-The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-
-- **Name:** ``heat_pump_cooling_autosizing_limit``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heat Pump Backup Heating Capacity**
 
 The backup output heating capacity of the heat pump.
@@ -2233,19 +2168,6 @@ The capacity scaling factor applied to the auto-sizing methodology if Backup Typ
 
 - **Name:** ``heat_pump_backup_heating_autosizing_factor``
 - **Type:** ``Double``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Heat Pump Backup Heating Autosizing Limit**
-
-The maximum capacity limit applied to the auto-sizing methodology if Backup Type is integrated.
-
-- **Name:** ``heat_pump_backup_heating_autosizing_limit``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
 
 - **Required:** ``false``
 
@@ -2331,19 +2253,6 @@ Whether the (ducted) heat pump has an upper limit for autosized heating/cooling 
 
 - **Name:** ``hvac_heat_pump_sizing_is_duct_limited``
 - **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Baseline Maximum Airflow Rate**
-
-The maximum airflow rate for the baseline home. Applies only when using Heat Pump Sizing Is Duct Limited.
-
-- **Name:** ``baseline_max_airflow_cfm``
-- **Type:** ``Double``
-
-- **Units:** ``CFM``
 
 - **Required:** ``false``
 

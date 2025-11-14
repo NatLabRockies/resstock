@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>6e15bc2b-5397-4b85-b259-28cc21ff34ee</version_id>
-  <version_modified>2025-11-14T20:34:44Z</version_modified>
+  <version_id>7d8fd8ba-c3b6-460a-9d66-5a6ea1824c38</version_id>
+  <version_modified>2025-11-14T22:01:08Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -11652,15 +11652,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heating_system_heating_autosizing_limit</name>
-      <display_name>HVAC: Heating System Heating Autosizing Limit</display_name>
-      <description>The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heating_system_rated_cfm_per_ton</name>
       <display_name>HVAC: Heating System Rated CFM Per Ton</display_name>
       <description>The rated cfm per ton of the heating system.</description>
@@ -11734,15 +11725,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heating_system_2_heating_autosizing_limit</name>
-      <display_name>HVAC: Heating System 2 Heating Autosizing Limit</display_name>
-      <description>The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>cooling_system_cooling_capacity</name>
       <display_name>HVAC: Cooling System Cooling Capacity</display_name>
       <description>The output cooling capacity of the cooling system.</description>
@@ -11756,15 +11738,6 @@
       <display_name>HVAC: Cooling System Cooling Autosizing Factor</display_name>
       <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
       <type>Double</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>cooling_system_cooling_autosizing_limit</name>
-      <display_name>HVAC: Cooling System Cooling Autosizing Limit</display_name>
-      <description>The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -11813,15 +11786,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heat_pump_heating_autosizing_limit</name>
-      <display_name>HVAC: Heat Pump Heating Autosizing Limit</display_name>
-      <description>The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heat_pump_cooling_capacity</name>
       <display_name>HVAC: Heat Pump Cooling Capacity</display_name>
       <description>The output cooling capacity of the heat pump.</description>
@@ -11839,15 +11803,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heat_pump_cooling_autosizing_limit</name>
-      <display_name>HVAC: Heat Pump Cooling Autosizing Limit</display_name>
-      <description>The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heat_pump_backup_heating_capacity</name>
       <display_name>HVAC: Heat Pump Backup Heating Capacity</display_name>
       <description>The backup output heating capacity of the heat pump.</description>
@@ -11861,15 +11816,6 @@
       <display_name>HVAC: Heat Pump Backup Heating Autosizing Factor</display_name>
       <description>The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.</description>
       <type>Double</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_heating_autosizing_limit</name>
-      <display_name>HVAC: Heat Pump Backup Heating Autosizing Limit</display_name>
-      <description>The maximum capacity limit applied to the auto-sizing methodology if Backup Type is integrated.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -11969,15 +11915,6 @@
           <display_name>false</display_name>
         </choice>
       </choices>
-    </argument>
-    <argument>
-      <name>baseline_max_airflow_cfm</name>
-      <display_name>HVAC: Baseline Maximum Airflow Rate</display_name>
-      <description>The maximum airflow rate for the baseline home. Applies only when using Heat Pump Sizing Is Duct Limited.</description>
-      <type>Double</type>
-      <units>CFM</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>hvac_blower_fan_watts_per_cfm</name>
@@ -12926,7 +12863,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>A89A968D</checksum>
+      <checksum>AB6F6AE2</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12943,7 +12880,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>C2BFC70C</checksum>
+      <checksum>1ABDAB9D</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>

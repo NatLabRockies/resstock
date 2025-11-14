@@ -499,15 +499,14 @@ class ApplyUpgradeTest < Minitest::Test
     hpxml = HPXML.new(hpxml_path: hpxml_path)
 
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
-    measures = { 'ResStockArguments' => [{ 'hvac_heat_pump_sizing_is_duct_limited' => heat_pump_sizing_is_duct_limited,
-                                           'hvac_heat_pump' => 'Central HP, SEER2 12.4, HSPF2 6.6' }],
-                 'ResStockArgumentsPostHPXML' => [{}] }
 
+    args = { :hvac_heat_pump_sizing_is_duct_limited => heat_pump_sizing_is_duct_limited }
     hpxml.buildings.each do |hpxml_bldg|
-      set_autosizing_limits(runner, measures, hpxml_bldg)
+      baseline_max_airflow_cfm, autosizing_limit = set_autosizing_limits(runner, hpxml_bldg, hpxml_bldg, args)
 
-      actual_values = measures['ResStockArgumentsPostHPXML'][0]
-      baseline_max_airflow_cfm = actual_values['baseline_max_airflow_cfm']
+      actual_values = { 'baseline_max_airflow_cfm' => baseline_max_airflow_cfm,
+                        'heat_pump_heating_autosizing_limit' => autosizing_limit,
+                        'heat_pump_cooling_autosizing_limit' => autosizing_limit }
 
       puts "\tbaseline_max_airflow_cfm='#{baseline_max_airflow_cfm}', upgrade_max_airflow_cfm='#{upgrade_max_airflow_cfm}', fan_watts_per_cfm='#{fan_watts_per_cfm}'..."
 

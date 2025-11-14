@@ -355,7 +355,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       # HVAC
       set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
       set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg, existing_options_measure_args['HVAC Heating Efficiency']['ResStockArguments']['hvac_heating_system'])
-      set_autosizing_limits(runner, measures, hpxml_bldg) # sizing is duct limited
 
       # Specify measures to run
       measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }

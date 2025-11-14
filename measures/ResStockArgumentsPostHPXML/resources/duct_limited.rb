@@ -1,54 +1,63 @@
 # frozen_string_literal: true
 
-def set_autosizing_limits(runner, measures, hpxml_bldg)
+def set_autosizing_limits(runner, hpxml_bldg_existing, hpxml_bldg, args)
   # Use Autosizing Limits and Maintain Duct System Curve (Part 1)
   # Set the autosizing limit based on the baseline airflow.
-  if measures['ResStockArguments'][0]['hvac_heat_pump_sizing_is_duct_limited'].to_s.downcase == 'true'
-    duct_restriction_values = get_duct_restriction_values(hpxml_bldg)
+  if args[:hvac_heat_pump_sizing_is_duct_limited]
+    duct_restriction_values = get_duct_restriction_values(hpxml_bldg_existing)
     baseline_max_airflow_cfm = duct_restriction_values['max_airflow_cfm']
     autosizing_limit = duct_restriction_values['autosizing_limit']
 
     # Only limit HVAC system types with ducted air distribution.
     if not autosizing_limit.nil?
-      args = get_detailed_hvac_arguments(measures)
 
       # Heating system
-      heating_system_type = args[:hvac_heating_system_type]
-      if [HPXML::HVACTypeFurnace].include?(heating_system_type)
-        measures['ResStockArgumentsPostHPXML'][0]['heating_system_heating_autosizing_limit'] = autosizing_limit
+      hpxml_bldg.heating_systems.each do |heating_system|
+        next unless heating_system.primary_system
+
+        next unless [HPXML::HVACTypeFurnace].include? heating_system.heating_system_type
+
+        heating_system.heating_autosizing_limit = autosizing_limit
+
         runner.registerInfo("The capacity of the upgraded heating system is limited to 'heating_system_heating_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
       end
 
       # Cooling system
-      cooling_system_type = args[:hvac_cooling_system_type]
-      cooling_system_is_ducted = args[:hvac_cooling_system_is_ducted]
-      if ([HPXML::HVACTypeCentralAirConditioner].include?(cooling_system_type) ||
-         ([HPXML::HVACTypeMiniSplitAirConditioner].include?(cooling_system_type) && cooling_system_is_ducted))
-        measures['ResStockArgumentsPostHPXML'][0]['cooling_system_cooling_autosizing_limit'] = autosizing_limit
+      hpxml_bldg.cooling_systems.each do |cooling_system|
+        next unless ([HPXML::HVACTypeCentralAirConditioner].include?(cooling_system.cooling_system_type) ||
+          ([HPXML::HVACTypeMiniSplitAirConditioner].include?(cooling_system.cooling_system_type) && !cooling_system.distribution_system.ducts.empty?))
+
+        cooling_system.cooling_autosizing_limit = autosizing_limit
+
         runner.registerInfo("The capacity of the upgraded cooling system is limited to 'cooling_system_cooling_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
       end
 
       # Heat pump
-      heat_pump_type = args[:hvac_heat_pump_type]
-      heat_pump_is_ducted = args[:hvac_heat_pump_is_ducted]
-      if ([HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpGroundToAir].include?(heat_pump_type) ||
-         ([HPXML::HVACTypeHeatPumpMiniSplit].include?(heat_pump_type) && heat_pump_is_ducted))
-        measures['ResStockArgumentsPostHPXML'][0]['heat_pump_heating_autosizing_limit'] = autosizing_limit
-        measures['ResStockArgumentsPostHPXML'][0]['heat_pump_cooling_autosizing_limit'] = autosizing_limit
-        # We intentionally do not limit the heat pump backup heating autosized value.
+      hpxml_bldg.heat_pumps.each do |heat_pump|
+        next unless ([HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpGroundToAir].include?(heat_pump.heat_pump_type) ||
+           ([HPXML::HVACTypeHeatPumpMiniSplit].include?(heat_pump.heat_pump_type) && !heat_pump.distribution_system.ducts.empty?))
+
+        heat_pump.heating_autosizing_limit = autosizing_limit
+        heat_pump.cooling_autosizing_limit = autosizing_limit
+
         runner.registerInfo("The heating capacity of the upgraded heat pump is limited to 'heat_pump_heating_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
         runner.registerInfo("The cooling capacity of the upgraded heat pump is limited to 'heat_pump_cooling_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
       end
+      # We intentionally do not limit the heat pump backup heating autosized value.
 
       # Heating system 2
-      heating_system_2_type = args[:hvac_heating_system_2_type]
-      if [HPXML::HVACTypeFurnace].include?(heating_system_2_type)
-        measures['ResStockArgumentsPostHPXML'][0]['heating_system_2_heating_autosizing_limit'] = autosizing_limit
+      hpxml_bldg.heating_systems.each do |heating_system|
+        next unless not heating_system.primary_system
+
+        next unless [HPXML::HVACTypeFurnace].include?(heating_system.heating_system_type)
+
+        heating_system.heating_autosizing_limit = autosizing_limit
+
         runner.registerInfo("The capacity of the upgraded second heating system is limited to 'heating_system_2_heating_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
       end
     end
 
-    measures['ResStockArgumentsPostHPXML'][0]['baseline_max_airflow_cfm'] = baseline_max_airflow_cfm
+    return baseline_max_airflow_cfm, autosizing_limit
   end
   return
 end
@@ -121,13 +130,13 @@ def get_duct_restriction_values(hpxml_bldg)
   return duct_restriction_values
 end
 
-def set_adjusted_fan_efficiency(runner, args, hpxml_bldg)
+def set_adjusted_fan_efficiency(runner, args, hpxml_bldg, baseline_max_airflow_cfm)
   # Use Autosizing Limits and Maintain Duct System Curve (Part 2)
   # - Get the upgrade airflow cfm.
   # - Use it along with the baseline airflow cfm and upgrade blower fan W/cfm.
   # - Set the adjustment to the upgrade blower fan W/cfm.
 
-  baseline_max_airflow_cfm = args[:baseline_max_airflow_cfm]
+  # baseline_max_airflow_cfm = args[:baseline_max_airflow_cfm]
   if args[:hvac_heat_pump_sizing_is_duct_limited]
     duct_restriction_values = get_duct_restriction_values(hpxml_bldg)
     upgrade_max_airflow_cfm = duct_restriction_values['max_airflow_cfm']
