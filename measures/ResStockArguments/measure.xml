@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>f6782441-31e2-4ddf-bc3c-19d22add6174</version_id>
-  <version_modified>2025-11-13T21:30:44Z</version_modified>
+  <version_id>6e15bc2b-5397-4b85-b259-28cc21ff34ee</version_id>
+  <version_modified>2025-11-14T20:34:44Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -11953,6 +11953,33 @@
       </choices>
     </argument>
     <argument>
+      <name>hvac_heat_pump_sizing_is_duct_limited</name>
+      <display_name>HVAC: Heat Pump Sizing Is Duct Limited</display_name>
+      <description>Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>baseline_max_airflow_cfm</name>
+      <display_name>HVAC: Baseline Maximum Airflow Rate</display_name>
+      <description>The maximum airflow rate for the baseline home. Applies only when using Heat Pump Sizing Is Duct Limited.</description>
+      <type>Double</type>
+      <units>CFM</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>hvac_blower_fan_watts_per_cfm</name>
       <display_name>HVAC: Blower Fan Efficiency</display_name>
       <description>The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems)..</description>
@@ -12899,7 +12926,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>635930A4</checksum>
+      <checksum>A89A968D</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12916,7 +12943,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>16080C90</checksum>
+      <checksum>C2BFC70C</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>

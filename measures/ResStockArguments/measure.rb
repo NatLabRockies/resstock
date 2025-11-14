@@ -462,6 +462,13 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('hvac_heat_pump_sizing_is_duct_limited', false)
     arg.setDisplayName('HVAC: Heat Pump Sizing Is Duct Limited')
     arg.setDescription('Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('baseline_max_airflow_cfm', false)
+    arg.setDisplayName('HVAC: Baseline Maximum Airflow Rate')
+    arg.setDescription('The maximum airflow rate for the baseline home. Applies only when using Heat Pump Sizing Is Duct Limited.')
+    arg.setUnits('CFM')
+    args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('hvac_blower_fan_watts_per_cfm', false)
     arg.setDisplayName('HVAC: Blower Fan Efficiency')

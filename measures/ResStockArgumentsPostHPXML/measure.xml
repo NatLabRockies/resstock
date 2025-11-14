@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>dfb426c4-e80d-47b6-87ce-7509a3b5415d</version_id>
-  <version_modified>2025-11-13T21:30:45Z</version_modified>
+  <version_id>32fb939a-93dc-4c0e-9010-5113423b4142</version_id>
+  <version_modified>2025-11-14T20:34:46Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -12095,6 +12095,34 @@
       </choices>
     </argument>
     <argument>
+      <name>hvac_heat_pump_sizing_is_duct_limited</name>
+      <display_name>HVAC: Heat Pump Sizing Is Duct Limited</display_name>
+      <description>Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.</description>
+      <type>Boolean</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>baseline_max_airflow_cfm</name>
+      <display_name>HVAC: Baseline Maximum Airflow Rate</display_name>
+      <description>The maximum airflow rate for the baseline home. Applies only when using Heat Pump Sizing Is Duct Limited.</description>
+      <type>Double</type>
+      <units>CFM</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>hvac_blower_fan_watts_per_cfm</name>
       <display_name>HVAC: Blower Fan Efficiency</display_name>
       <description>The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems)..</description>
@@ -13123,7 +13151,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>7B4C2612</checksum>
+      <checksum>015D43C2</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -13148,6 +13176,12 @@
       <filetype>json</filetype>
       <usage_type>resource</usage_type>
       <checksum>055326E7</checksum>
+    </file>
+    <file>
+      <filename>duct_limited.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>DB6D2CBF</checksum>
     </file>
     <file>
       <filename>electrical_panel/electrical_panel_breaker_space.csv</filename>
