@@ -215,7 +215,7 @@ class ApplyUpgradeTest < Minitest::Test
       'heating_system_2_heating_capacity' => 100000.0,
       'heating_system_2_heating_autosizing_factor' => 1.0
     }
-    puts osw_hash
+
     expected_values['hvac_heat_pump_backup'] = 'Separate Heating System'
     _test_heat_pump_backup(true, 'Central HP, SEER2 12.4, HSPF2 6.6', expected_values, osw_hash['steps'][0]['arguments']['hvac_heating_system'])
 
@@ -503,18 +503,16 @@ class ApplyUpgradeTest < Minitest::Test
                                            'hvac_heat_pump' => 'Central HP, SEER2 12.4, HSPF2 6.6' }],
                  'ResStockArgumentsPostHPXML' => [{}] }
 
-    # Create instance of the measure
-    measure = ApplyUpgrade.new
-
     hpxml.buildings.each do |hpxml_bldg|
-      baseline_max_airflow_cfm = measure.set_autosizing_limits(runner, measures, hpxml_bldg)
+      set_autosizing_limits(runner, measures, hpxml_bldg)
+
       actual_values = measures['ResStockArgumentsPostHPXML'][0]
-      actual_values['baseline_max_airflow_cfm'] = baseline_max_airflow_cfm
+      baseline_max_airflow_cfm = actual_values['baseline_max_airflow_cfm']
 
       puts "\tbaseline_max_airflow_cfm='#{baseline_max_airflow_cfm}', upgrade_max_airflow_cfm='#{upgrade_max_airflow_cfm}', fan_watts_per_cfm='#{fan_watts_per_cfm}'..."
 
       if not baseline_max_airflow_cfm.nil?
-        adjusted_fan_watts_per_cfm = measure.get_adjusted_fan_watts_per_cfm(baseline_max_airflow_cfm, upgrade_max_airflow_cfm, fan_watts_per_cfm)
+        adjusted_fan_watts_per_cfm = get_adjusted_fan_watts_per_cfm(baseline_max_airflow_cfm, upgrade_max_airflow_cfm, fan_watts_per_cfm)
         actual_values['adjusted_fan_watts_per_cfm'] = adjusted_fan_watts_per_cfm
       end
 
@@ -526,5 +524,18 @@ class ApplyUpgradeTest < Minitest::Test
         end
       end
     end
+  end
+
+  def get_detailed_hvac_arguments(measures)
+    # Returns a hash of detailed option properties (from the option TSV) for the given HVAC systems
+    args = {}
+    ['hvac_heating_system',
+     'hvac_heating_system_2',
+     'hvac_cooling_system',
+     'hvac_heat_pump'].each do |parameter_name|
+      tsv_filename = "#{parameter_name}.tsv"
+      get_option_properties(args, tsv_filename, measures['ResStockArguments'][0][parameter_name])
+    end
+    return args
   end
 end

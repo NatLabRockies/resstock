@@ -3,7 +3,8 @@
 # see the URL below for information on how to write OpenStudio measures
 # http://nrel.github.io/OpenStudio-user-documentation/reference/measure_writing_guide/
 
-# Load required dependencies for HVAC flexibility processing
+# Load required dependencies
+require_relative 'resources/duct_limited'
 require_relative 'resources/hvac_flexibility/detailed_schedule_generator'
 require_relative 'resources/hvac_flexibility/setpoint_modifier'
 require_relative 'resources/ev_flexibility/ev_schedule_modifier'
@@ -517,6 +518,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                                          year: @hpxml.header.sim_calendar_year,
                                          output_path: nil)
       Defaults.apply(runner, @hpxml, hpxml_bldg, weather, schedules_file: schedules_file)
+
+      set_adjusted_fan_efficiency(runner, args, hpxml_bldg) # sizing is duct limited
 
       # Register additional values
       register_value(runner, 'unit_height_above_grade', hpxml_bldg.building_construction.unit_height_above_grade)
