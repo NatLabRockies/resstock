@@ -87,25 +87,6 @@ source_report_cols = get_source_report_cols()
 
 lookup_csv_data, option_sat_csv_data = get_lookup_and_saturations_csv_data(resources_dir)
 
-saturation_inclusions = ['Orientation',
-                         'Geometry Stories',
-                         'Geometry Story Bin',
-                         'Geometry Building Type Height',
-                         'Geometry Building Number Units MF',
-                         'Geometry Building Number Units SFA',
-                         'Geometry Building Level MF',
-                         'Geometry Building Horizontal Location MF',
-                         'Geometry Building Horizontal Location SFA',
-                         'Neighbors',
-                         'Corridor',
-                         'Geometry Building Type ACS',
-                         'Geometry Building Type RECS',
-                         'Vintage',
-                         'Vintage ACS',
-                         'Insulation Rim Joist',
-                         'Misc Gas Lighting',
-                         'HVAC Shared Efficiencies'] # include "Stock saturation" column for options tables
-
 properties_folder = File.join(File.dirname(__FILE__), 'properties')
 options_folder = File.join(File.dirname(__FILE__), 'options')
 description_folder = File.join(File.dirname(__FILE__), 'description')
@@ -277,13 +258,12 @@ source_report.each do |row|
         f.puts(row)
       end
 
-      if saturation_inclusions.include?(parameter)
-        row = 'Stock saturation'
-        lookup_keys.each do |option|
-          row += " & #{lookup[option]['sat']}"
-        end
-        f.puts("#{row} \\\\ \\hline")
+      # Include "Stock saturation" column for options tables
+      row = 'Stock saturation'
+      lookup_keys.each do |option|
+        row += " & #{lookup[option]['sat']}"
       end
+      f.puts("#{row} \\\\ \\hline")
 
       args.each do |property, values|
         next if values.all?(&:nil?)
