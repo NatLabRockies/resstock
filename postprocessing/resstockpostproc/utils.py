@@ -1,19 +1,28 @@
-import polars as pl
-from typing import List
-import polars.selectors as cs
-from collections import defaultdict
-import re
-import pathlib
-import logging
 import boto3
-import s3fs
-import gzip
-import tarfile
-from io import BytesIO
+from collections import defaultdict
 from fsspec import register_implementation
 from fsspec.core import url_to_fs
+from fsspec.spec import AbstractFileSystem
+import gzip
+from io import BytesIO
+import logging
+import pathlib
+import polars as pl
+import polars.selectors as cs
+import re
+import s3fs
+import tarfile
+from typing import Optional, TypedDict
 
 logger = logging.getLogger(__name__)
+
+
+class FsspecOutputDir(TypedDict):
+    """Type definition for output directory dict returned by setup_fsspec_filesystem."""
+
+    fs: AbstractFileSystem
+    fs_path: pathlib.Path | str
+    storage_options: Optional[dict[str, str]]
 
 def remove_all_empty_cols(df: pl.DataFrame):
     """
@@ -81,18 +90,19 @@ def get_col_maps():
     col_def_df = pl.read_csv(resources_path / "publication" / "sdr_column_definitions.csv", infer_schema_length=0)
     col_map_df = col_def_df.filter(
                     pl.col("Published Annual Name").is_not_null()
-        ).select(
-                pl.col('Column Type').alias('column_type'),
-                pl.col('Import From Raw').alias('import_from_raw'),
-                pl.col('Publish In Full').alias('publish_in_full'),
-                pl.col("Annual Name").alias('column_name'),
-                pl.col("Published Annual Name").alias('published_name'),
-                pl.col("ResStock To Published Annual Unit Conversion Factor").alias("conversion_factor")
-            )
+                ).select(
+                    pl.col('Column Type').alias('column_type'),
+                    pl.col('Import From Raw').alias('import_from_raw'),
+                    pl.col('Publish In Full').alias('publish_in_full'),
+                    pl.col("Annual Name").alias('column_name'),
+                    pl.col("Published Annual Name").alias('published_name'),
+                    pl.col("ResStock To Published Annual Unit Conversion Factor").alias("conversion_factor")
+                )
     col_maps = col_map_df.to_dicts()
     return col_maps
 
-def setup_fsspec_filesystem(output_dir, aws_profile_name):
+
+def setup_fsspec_filesystem(output_dir: str, aws_profile_name=None) -> FsspecOutputDir:
     """
     Creates fsspec filesystem to handle local or S3 output locations
     """
@@ -123,7 +133,7 @@ def setup_fsspec_filesystem(output_dir, aws_profile_name):
             "aws_region": "us-west-2",
         }
         if credentials.token:
-            output_dir['storage_options']["aws_session_token"] = credentials.token
+            output_dir['storage_options']['aws_session_token'] = credentials.token
     else:
         output_dir['storage_options'] = None
 
@@ -207,7 +217,6 @@ def write_polars_csv_to_s3_or_local(data: pl.DataFrame, out_fs, out_path):
 
 
 def conversion_factor(from_unit, to_unit):
-
     # Constants for unit conversion
     # Created using OpenStudio unit conversion library
     unit_conversions = {
@@ -242,5 +251,6 @@ def conversion_factor(from_unit, to_unit):
     if conv_string in unit_conversions:
         return unit_conversions[conv_string]
     else:
-        raise KeyError(f'Conversion from {from_unit} to {to_unit} \
-        not defined in unit_conversions, add it there.')
+        raise KeyError(
+            f"Conversion from {from_unit} to {to_unit} not defined in unit_conversions, add it there."
+        )
