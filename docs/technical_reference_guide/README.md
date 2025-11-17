@@ -7,7 +7,7 @@ The `characteristics` folder contains several `.tex` files and an `.rb` script f
 
 The `characteristics` folder also contains several `.tex` files that are not automatically generated (located at the top of the `characteristics` folder). They are directly referenced by the reference guide tex files (e.g., `3a_ResStockInputs.tex`). Their contents reference the automatically generated files noted above, and contain optional manually added text.
 
-Note that currently the "Description", "Distribution Data Sources", and "Distribution Assumption" subsections are not populated based on their automatically generated `.tex` files.
+Note that currently the "Description", "Distribution Data Sources", and "Distribution Assumption" subsections are not populated based on their automatically generated `.tex` files. The "Direct Conditional Dependencies" and "Options" subsections are populated based on their automatically generated `.tex` files.
 
 ## GitHub Actions
 In the `.github/workflows/config.yml` file, the `Build technical reference guide` step of the `build-documentation` job compiles the project into the `ResStockTechnicalReferenceGuide.pdf` file.
