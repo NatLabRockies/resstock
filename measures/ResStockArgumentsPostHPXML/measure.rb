@@ -530,10 +530,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                                          output_path: nil)
 
       # Sizing is duct limited
-      baseline_max_airflow_cfm, _ = set_autosizing_limits(runner, hpxml_bldg_existing, hpxml_bldg, args) # before defaults so that capacity reflects the autosized limit
+      baseline_max_airflow_cfm = set_autosizing_limits(runner, hpxml_bldg_existing, hpxml_bldg, args) # before defaults so that capacity reflects the autosized limit
 
       Defaults.apply(runner, @hpxml, hpxml_bldg, weather, schedules_file: schedules_file)
 
+      # Sizing is duct limited
       set_adjusted_fan_efficiency(runner, args, hpxml_bldg, baseline_max_airflow_cfm) # after defaults so that we have airflow cfm
 
       # Register additional values

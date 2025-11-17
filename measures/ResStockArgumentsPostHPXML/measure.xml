@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>7acf8282-9b99-4cbd-829d-5ea465d91c17</version_id>
-  <version_modified>2025-11-17T17:27:47Z</version_modified>
+  <version_id>89ceb0a1-fc87-4959-a3c8-0b1f774ce86b</version_id>
+  <version_modified>2025-11-17T17:38:28Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -13088,7 +13088,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>32FADAFD</checksum>
+      <checksum>2F7F183A</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -13118,7 +13118,7 @@
       <filename>duct_limited.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>8ABAC155</checksum>
+      <checksum>094C4E1A</checksum>
     </file>
     <file>
       <filename>electrical_panel/electrical_panel_breaker_space.csv</filename>

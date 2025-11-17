@@ -513,16 +513,21 @@ class ApplyUpgradeTest < Minitest::Test
     this_dir = File.dirname(__FILE__)
     hpxml_path = File.join(this_dir, '../../UpgradeCosts/tests/in.xml')
     hpxml_existing = HPXML.new(hpxml_path: hpxml_path)
+    hpxml = HPXML.new
+    hpxml.buildings.add(building_id: 'MyBuilding')
+    hpxml_bldg = hpxml.buildings[-1]
+
+    _add_ducted_heat_pump(hpxml_bldg)
 
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     args = { :hvac_heat_pump_sizing_is_duct_limited => heat_pump_sizing_is_duct_limited }
 
     hpxml_existing.buildings.each do |hpxml_bldg_existing|
-      baseline_max_airflow_cfm, autosizing_limit = set_autosizing_limits(runner, hpxml_bldg_existing, hpxml_bldg_existing, args)
+      baseline_max_airflow_cfm = set_autosizing_limits(runner, hpxml_bldg_existing, hpxml_bldg, args)
 
       actual_values = { 'baseline_max_airflow_cfm' => baseline_max_airflow_cfm,
-                        'heat_pump_heating_autosizing_limit' => autosizing_limit,
-                        'heat_pump_cooling_autosizing_limit' => autosizing_limit }
+                        'heat_pump_heating_autosizing_limit' => hpxml_bldg.heat_pumps[0].heating_autosizing_limit,
+                        'heat_pump_cooling_autosizing_limit' => hpxml_bldg.heat_pumps[0].cooling_autosizing_limit }
 
       puts "\tbaseline_max_airflow_cfm='#{baseline_max_airflow_cfm}', upgrade_max_airflow_cfm='#{upgrade_max_airflow_cfm}', fan_watts_per_cfm='#{fan_watts_per_cfm}'..."
 

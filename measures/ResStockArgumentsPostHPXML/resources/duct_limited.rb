@@ -57,7 +57,7 @@ def set_autosizing_limits(runner, hpxml_bldg_existing, hpxml_bldg, args)
       end
     end
 
-    return baseline_max_airflow_cfm, autosizing_limit
+    return baseline_max_airflow_cfm
   end
   return
 end
