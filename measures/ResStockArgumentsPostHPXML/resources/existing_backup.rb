@@ -76,10 +76,6 @@ def set_existing_system_as_heat_pump_backup(runner, hpxml_bldg_existing, hpxml_b
           runner.registerInfo("Found '#{heating_system.heating_system_type}' heating system type; setting it as 'heat_pump_backup_type=#{heat_pump_backup_type}'.")
         end
       else
-        heat_pump.backup_type = heat_pump_backup_type
-        heat_pump.backup_heating_fuel = HPXML::FuelTypeElectricity
-        heat_pump.backup_heating_efficiency_percent = 1
-
         runner.registerWarning('Either a primary heating system was not found, or it was found but is a shared system; not setting it as heat pump backup.')
       end
     end

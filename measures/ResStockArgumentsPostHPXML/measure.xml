@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>89ceb0a1-fc87-4959-a3c8-0b1f774ce86b</version_id>
-  <version_modified>2025-11-17T17:38:28Z</version_modified>
+  <version_id>97a9c58d-7372-410a-8c16-13928ac01dd8</version_id>
+  <version_modified>2025-11-17T20:28:19Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -13160,7 +13160,7 @@
       <filename>existing_backup.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>8F3D7937</checksum>
+      <checksum>76FFA9A5</checksum>
     </file>
     <file>
       <filename>hvac_flexibility/detailed_schedule_generator.rb</filename>
