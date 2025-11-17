@@ -5,10 +5,34 @@ from typing import Literal
 import polars as pl
 
 from resstockpostproc.baseline_validation.utils import NUM2MONTH
+from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec
+from resstockpostproc.baseline_validation.io_managers import get_eia_data as eia_data
+from resstockpostproc.baseline_validation.io_managers import get_resstock_data as res_data
+from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 
 AggregationBy = Literal["state", "eiaid"]
 
-
+def get_plot_data(
+        plot_spec: PlotSpec,
+) -> pl.DataFrame:
+    """Get the data for plotting based on the plot specification."""
+    groups = []
+    if plot_spec.truth_source == "eia":
+        assert plot_spec.aggregation_level in ['state', 'eiaid'], "EIA data only supports 'state' or 'eiaid' aggregation levels."
+        by = "state" if plot_spec.aggregation_level == "state" else "eiaid"
+        if plot_spec.resolution == "monthly":
+            source_data = eia_data.get_monthly_all(year=workflow.reference_year, by=by)
+            resstock_data = res_data.get_monthly_all(by=by)
+            groups = [by, "month"]
+        else:
+            source_data = eia_data.get_annual_all(year=workflow.reference_year, by=by)
+            resstock_data = res_data.get_annual_all(by=by)
+            groups = [by]
+    else:
+        raise NotImplementedError(f"Truth source {plot_spec.truth_source} not implemented.")
+    merged = resstock_data.join(source_data, on=groups, how="outer", suffix="_eia")
+    return merged.fill_null(0)
+    
 def scale_to_eia_customers(
     buildstock_df: pl.DataFrame,
     eia_df: pl.DataFrame,

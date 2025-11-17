@@ -6,27 +6,28 @@ from typing import Literal
 import plotly.graph_objects as go
 import polars as pl
 
+from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, FileType
 from resstockpostproc.baseline_validation.utils import ensure_directory
+from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 
 
 def save_figure(
     fig: go.Figure,
-    output_dir: Path,
-    filename: str,
-    formats: tuple[Literal["html", "svg", "json"], ...] = ("html", "svg"),
+    plot_spec: PlotSpec,
+    formats: list[FileType] = [FileType.html, FileType.svg, FileType.pdf],
 ) -> None:
     """Save a Plotly figure in multiple formats."""
+    
     for fmt in formats:
-        format_dir = ensure_directory(output_dir / fmt)
-        filepath = format_dir / f"{filename}.{fmt}"
-
-        if fmt == "html":
-            fig.write_html(str(filepath), include_plotlyjs="cdn")
-        elif fmt == "svg":
-            fig.write_image(str(filepath))
-        elif fmt == "json":
-            fig.write_json(str(filepath))
-
+        output_dir = workflow.output.output_dir / workflow.output.run_name / f"{plot_spec.truth_source} plots ({fmt})"
+        path_seg, title = plot_spec.get_file_path_and_name()
+        filepath = output_dir / path_seg 
+        ensure_directory(filepath)
+        fullpath = filepath / f"{title}.{fmt.value}"
+        if fmt == FileType.html:
+            fig.write_html(fullpath, include_plotlyjs="cdn")
+        else:
+            fig.write_image(fullpath)
         print(f"Saved: {filepath}")
 
 

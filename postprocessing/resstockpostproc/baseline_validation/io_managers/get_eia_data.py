@@ -10,11 +10,11 @@ import polars as pl
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
 from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
 from . import truth_data_paths as s3_paths
-from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
+from collections.abc import Sequence
 from typing import Literal
 from resstockpostproc.baseline_validation.utils import KBTU2KWH
-local_data_dir = Path(f"{workflow.output.output_dir}/{workflow.output.run_name}/data")
+local_data_dir = Path(f"{workflow.output.output_dir}/data")
 
 
 def get_annual_all(
@@ -36,6 +36,8 @@ def get_monthly_all(
     final_df = monthly_elec_df.join(monthly_gas_df, on=[by, "month"], how="outer")
     return final_df
 
+def get_available_aggregation_levels() -> Sequence[Literal['state', 'eiaid']]:
+    return ("state", "eiaid")
 
 def _get_eia_annual_electricity(year: int = 2018,
                                by: Literal['state', 'eiaid'] = "state") -> pl.DataFrame:

@@ -7,7 +7,7 @@ from buildstock_query import BuildStockQuery
 from typing import Literal, Sequence
 from resstockpostproc.baseline_validation.utils import get_buildstock_query
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
-
+from resstockpostproc.baseline_validation.schema.plot_spec import Quantity
 
 
 def get_timeseries(
@@ -19,13 +19,11 @@ def get_timeseries(
     bsq = get_buildstock_query(
             workgroup=workflow.workgroup,
             config=data_source,
-            truth_data_year=workflow.reference_data.truth_data_year,
-            eia_mapping_version=workflow.reference_data.eia_mapping_version,
+            truth_data_year=workflow.reference_year,
             skip_reports=True,
         )
     db_cols = get_db_column_names(data_source.db_schema)
-    enduses = {db_cols.ELECTRICITY_TOTAL: 'electricity_kwh',
-           db_cols.NATURAL_GAS_TOTAL: 'natural_gas_kwh'}
+    enduses = get_enduse_map(db_cols)
     if by == "eiaid":
         if not restrict_list:
             raise ValueError("Monthly aggregation for all utilities is not yet supported. Provide restrict_list.")
@@ -71,8 +69,7 @@ def get_monthly(
     """Aggregate monthly data from timeseries."""
     ts_data = get_timeseries(data_source, by, restrict_list)
     db_cols = get_db_column_names(data_source.db_schema)
-    enduses = {db_cols.ELECTRICITY_TOTAL: 'electricity_kwh',
-               db_cols.NATURAL_GAS_TOTAL: 'natural_gas_kwh'}
+    enduses = get_enduse_map(db_cols)
     ts_data = ts_data.with_columns(pl.col(db_cols.TIMESTAMP).dt.month().alias("month"))
     ts_data = ts_data.with_columns(pl.col("month").replace_strict(NUM2MONTH, default=None))
     group_cols = [by, "month"]
@@ -106,13 +103,11 @@ def get_annual(
     bsq = get_buildstock_query(
             workgroup=workflow.workgroup,
             config=data_source,
-            truth_data_year=workflow.reference_data.truth_data_year,
-            eia_mapping_version=workflow.reference_data.eia_mapping_version,
+            truth_data_year=workflow.reference_year,
             skip_reports=True,
         )
     db_cols = get_db_column_names(data_source.db_schema)
-    enduses = {db_cols.ELECTRICITY_TOTAL: 'electricity_kwh',
-               db_cols.NATURAL_GAS_TOTAL: 'natural_gas_kwh'}
+    enduses = get_enduse_map(db_cols)
     if by == "eiaid":
         result_pd = bsq.utility.aggregate_annual_by_eiaid(enduses=tuple(enduses.keys()))
         resstock_sales = pl.from_pandas(result_pd)
@@ -125,6 +120,12 @@ def get_annual(
 
     return resstock_sales
 
+def get_enduse_map(db_cols):
+    enduses = {db_cols.ELECTRICITY_TOTAL: f"restock_{Quantity.ELECTRICITY_TOTAL}",
+               db_cols.NATURAL_GAS_TOTAL: f"restock_{Quantity.NATURAL_GAS_TOTAL}"}
+               
+    return enduses
+
 
 def get_customer_counts_all(
     by: Literal['state', 'eiaid'] = "state",
@@ -133,8 +134,7 @@ def get_customer_counts_all(
     for data_source in workflow.data_sources:
         bsq = get_buildstock_query(
             data_source,
-            truth_data_year=workflow.reference_data.truth_data_year,
-            eia_mapping_version=workflow.reference_data.eia_mapping_version,
+            truth_data_year=workflow.reference_year,
             skip_reports=True,
         )
         df = get_customer_counts(bsq, by)

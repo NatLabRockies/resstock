@@ -5,6 +5,11 @@ import polars as pl
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
+from resstockpostproc.baseline_validation.schema.plot_spec import (
+    PlotSpec,
+    Quantity,
+    QuantityType,
+)
 from resstockpostproc.baseline_validation.theme import (
     apply_theme,
     BUILDSTOCK_COLOR,
@@ -138,6 +143,100 @@ def _prepare_monthly(
     return df, runs, _run_colors(runs)
 
 
+def _split_annual_data(
+    merged: pl.DataFrame,
+    by: str,
+) -> tuple[pl.DataFrame, pl.DataFrame]:
+    if by not in merged.columns:
+        raise ValueError(f"Input data missing grouping column '{by}' for EIA plotting")
+
+    include_cols = [by]
+    seen = {by}
+    rename_map: dict[str, str] = {}
+
+    for col in merged.columns:
+        if col in seen or col.startswith("eia_") or col == "month":
+            continue
+
+        new_name: str | None = None
+        if col.endswith("_restock_electricity"):
+            run = col[: -len("_restock_electricity")]
+            new_name = f"{run}_electricity_kwh"
+        elif col.endswith("_restock_natural_gas"):
+            run = col[: -len("_restock_natural_gas")]
+            new_name = f"{run}_natural_gas_kwh"
+        elif col.endswith("_electricity_kwh") or col.endswith("_natural_gas_kwh"):
+            new_name = col
+
+        if new_name:
+            include_cols.append(col)
+            seen.add(col)
+            if new_name != col:
+                rename_map[col] = new_name
+
+    if len(include_cols) == 1:
+        raise ValueError("No BuildStock energy columns found in merged dataset for EIA plotting")
+
+    buildstock = merged.select(include_cols).rename(rename_map)
+
+    eia_cols = [by]
+    for col in ("eia_electricity_kwh", "eia_natural_gas_kwh"):
+        if col not in merged.columns:
+            raise ValueError(f"Merged data missing required EIA column '{col}'")
+        eia_cols.append(col)
+    eia_df = merged.select(eia_cols)
+
+    return buildstock, eia_df
+
+
+def _split_monthly_data(
+    merged: pl.DataFrame,
+    by: str,
+) -> tuple[pl.DataFrame, pl.DataFrame]:
+    required = {by, "month"}
+    missing = required - set(merged.columns)
+    if missing:
+        raise ValueError(f"Input data missing required columns for monthly plotting: {', '.join(sorted(missing))}")
+
+    include_cols = [by, "month"]
+    seen = set(include_cols)
+    rename_map: dict[str, str] = {}
+
+    for col in merged.columns:
+        if col in seen or col.startswith("eia_"):
+            continue
+
+        new_name: str | None = None
+        if col.endswith("_restock_electricity"):
+            run = col[: -len("_restock_electricity")]
+            new_name = f"{run}_electricity_kwh"
+        elif col.endswith("_restock_natural_gas"):
+            run = col[: -len("_restock_natural_gas")]
+            new_name = f"{run}_natural_gas_kwh"
+        elif col.endswith("_electricity_kwh") or col.endswith("_natural_gas_kwh"):
+            new_name = col
+
+        if new_name:
+            include_cols.append(col)
+            seen.add(col)
+            if new_name != col:
+                rename_map[col] = new_name
+
+    if len(include_cols) == 2:
+        raise ValueError("No BuildStock monthly energy columns found for EIA plotting")
+
+    buildstock = merged.select(include_cols).rename(rename_map)
+
+    eia_cols = [by, "month"]
+    for col in ("eia_electricity_kwh", "eia_natural_gas_kwh"):
+        if col not in merged.columns:
+            raise ValueError(f"Merged data missing required EIA column '{col}'")
+        eia_cols.append(col)
+    eia_df = merged.select(eia_cols)
+
+    return buildstock, eia_df
+
+
 # ---------------------------------------------------------------------------
 # annual plot helpers
 # ---------------------------------------------------------------------------
@@ -266,6 +365,7 @@ def _finalize_annual(
     title: str,
     left_range: list[float] | None = None,
     right_range: list[float] | None = None,
+    categories: list[str] | None = None,
 ) -> go.Figure:
     fig.update_layout(
         barmode="group",
@@ -274,11 +374,45 @@ def _finalize_annual(
     if left_range:
         fig.update_xaxes(range=left_range, row=1, col=1)
 
+    fig.update_yaxes(automargin=True, ticklabelposition="outside", row=1, col=1)
+
     fig.update_xaxes(title_text=right_title, row=1, col=2)
     if right_range:
         fig.update_xaxes(range=right_range, row=1, col=2)
 
-    return apply_theme(fig, title=title, height=800, width=600)
+    fig.update_yaxes(automargin=True, ticklabelposition="outside", row=1, col=2)
+
+    fig = apply_theme(
+        fig,
+        title=title,
+        height=820,
+        width=650,
+        margin=dict(l=140, r=80, t=80, b=60),
+    )
+
+    if categories:
+        fig.update_yaxes(
+            categoryorder="array",
+            categoryarray=categories,
+            tickmode="array",
+            tickvals=categories,
+            ticktext=categories,
+            automargin=True,
+            row=1,
+            col=1,
+        )
+        fig.update_yaxes(
+            categoryorder="array",
+            categoryarray=categories,
+            tickmode="array",
+            tickvals=categories,
+            ticktext=categories,
+            automargin=True,
+            row=1,
+            col=2,
+        )
+
+    return fig
 
 
 # ---------------------------------------------------------------------------
@@ -299,7 +433,7 @@ def _plot_monthly_generic(
     order_df = (
         df.group_by(by)
         .agg(pl.col(eia_fuel_col).sum().alias("_total"))
-        .sort("_total", descending=False)
+        .sort("_total", descending=True)
     )
     entities = order_df[by].to_list()
 
@@ -413,51 +547,146 @@ def _plot_monthly_generic(
         title=f"Monthly {title_prefix} by {by.title()}",
         height=1100,
         width=1950,
-        legend=dict(orientation="v", x=0.02, y=0.02, xanchor="left", yanchor="bottom"),
+        legend=dict(orientation="v", x=0.92, y=0.02, xanchor="left", yanchor="bottom"),
         margin=dict(l=45, r=20, t=60, b=55),
     )
+    return fig
 
-    # toggle shared vs auto
-    if axis_names:
-        shared_updates = {}
-        for name in axis_names:
-            if shared_range:
-                shared_updates[f"{name}.range"] = shared_range
-                shared_updates[f"{name}.autorange"] = False
-            else:
-                shared_updates[f"{name}.range"] = None
-                shared_updates[f"{name}.autorange"] = True
 
-        auto_updates = {}
-        for name in axis_names:
-            rng = individual_ranges.get(name)
-            if rng:
-                auto_updates[f"{name}.range"] = rng
-                auto_updates[f"{name}.autorange"] = False
-            else:
-                auto_updates[f"{name}.range"] = None
-                auto_updates[f"{name}.autorange"] = True
+def _plot_monthly_percent_difference(
+    buildstock_monthly: pl.DataFrame,
+    eia_monthly: pl.DataFrame,
+    by: str,
+    fuel: str,
+    use_shared_axis: bool,
+) -> go.Figure:
+    df, runs, colors = _prepare_monthly(buildstock_monthly, eia_monthly, by)
 
-        fig.update_layout(
-            updatemenus=[
-                dict(
-                    type="buttons",
-                    direction="left",
-                    showactive=True,
-                    active=0 if use_shared_axis else 1,
-                    buttons=[
-                        dict(label="Shared Axis", method="relayout", args=[shared_updates]),
-                        dict(label="Auto Axis", method="relayout", args=[auto_updates]),
-                    ],
-                    x=0.5,
-                    xanchor="center",
-                    y=1.06,
-                    yanchor="bottom",
-                    pad=dict(t=0, r=10),
-                )
-            ]
+    eia_col = f"eia_{fuel}_kwh"
+    if eia_col not in df.columns:
+        raise ValueError(f"EIA data missing '{eia_col}' column needed for percent difference plotting")
+
+    pct_exprs = []
+    pct_cols: list[str] = []
+    for r in runs:
+        base_col = f"{r}_{fuel}_kwh"
+        if base_col not in df.columns:
+            continue
+        pct_col = f"{base_col}_pct"
+        pct_cols.append(pct_col)
+        pct_exprs.append(
+            pl.when(pl.col(eia_col) == 0)
+            .then(None)
+            .otherwise((pl.col(base_col) - pl.col(eia_col)) / pl.col(eia_col) * 100)
+            .alias(pct_col)
         )
 
+    if not pct_cols:
+        raise ValueError("No BuildStock monthly energy columns available to compute percent differences")
+
+    df = df.with_columns(pct_exprs)
+
+    order_df = (
+        df.group_by(by)
+        .agg(pl.col(eia_col).sum().alias("_total"))
+        .sort("_total", descending=False)
+    )
+    entities = order_df[by].to_list()
+
+    global_min, global_max = None, None
+    for col in pct_cols:
+        clean = [v for v in df[col].to_list() if isinstance(v, (int, float))]
+        if not clean:
+            continue
+        cmin, cmax = min(clean), max(clean)
+        global_min = cmin if global_min is None else min(global_min, cmin)
+        global_max = cmax if global_max is None else max(global_max, cmax)
+
+    shared_range = _percent_axis_range(global_min, global_max)
+
+    subplot_titles = [entities[i] if i < len(entities) else "" for i in range(MONTH_MAX)]
+    fig = make_subplots(
+        rows=MONTH_ROWS,
+        cols=MONTH_COLS,
+        subplot_titles=subplot_titles,
+        horizontal_spacing=0.015,
+        vertical_spacing=0.03,
+    )
+
+    visible_entities = entities[:MONTH_MAX]
+    for idx, entity in enumerate(visible_entities, start=1):
+        row = (idx - 1) // MONTH_COLS + 1
+        col = (idx - 1) % MONTH_COLS + 1
+
+        entity_df = df.filter(pl.col(by) == entity).sort("_month_order")
+        months = entity_df["_month_label"].to_list()
+
+        entity_min, entity_max = None, None
+        for i, r in enumerate(runs):
+            pct_col = f"{r}_{fuel}_kwh_pct"
+            if pct_col not in entity_df.columns:
+                continue
+            pct_values = entity_df[pct_col].to_list()
+            fig.add_bar(
+                x=pct_values,
+                y=months,
+                orientation="h",
+                name=r,
+                legendgroup=r,
+                legendrank=i + 1,
+                marker=dict(color=colors[r]),
+                hovertemplate="%{y}<br>" + f"{r}: " + "%{x:,.1f}%<extra></extra>",
+                showlegend=(idx == 1),
+                row=row,
+                col=col,
+            )
+            clean = [v for v in pct_values if isinstance(v, (int, float))]
+            if clean:
+                cmin, cmax = min(clean), max(clean)
+                entity_min = cmin if entity_min is None else min(entity_min, cmin)
+                entity_max = cmax if entity_max is None else max(entity_max, cmax)
+
+        fig.update_yaxes(
+            categoryorder="array",
+            categoryarray=months,
+            autorange="reversed",
+            tickfont=dict(size=8),
+            automargin=True,
+            row=row,
+            col=col,
+        )
+
+        entity_range = _percent_axis_range(entity_min, entity_max)
+        fig.update_xaxes(
+            tickfont=dict(size=8),
+            automargin=True,
+            showticklabels=True,
+            title_text="% Difference vs EIA" if row == MONTH_ROWS else "",
+            row=row,
+            col=col,
+            range=(shared_range if (use_shared_axis and shared_range) else entity_range),
+        )
+
+    for idx in range(len(visible_entities) + 1, MONTH_MAX + 1):
+        row = (idx - 1) // MONTH_COLS + 1
+        col = (idx - 1) % MONTH_COLS + 1
+        fig.update_xaxes(visible=False, row=row, col=col)
+        fig.update_yaxes(visible=False, row=row, col=col)
+
+    fig.update_layout(
+        barmode="group",
+        showlegend=True,
+    )
+
+    fuel_title = "Electricity" if fuel == "electricity" else "Natural Gas"
+    fig = apply_theme(
+        fig,
+        title=f"Monthly {fuel_title} % Difference vs EIA by {by.title()}",
+        height=1100,
+        width=1950,
+        legend=dict(orientation="v", x=0.92, y=0.02, xanchor="left", yanchor="bottom"),
+        margin=dict(l=45, r=20, t=60, b=55),
+    )
     return fig
 
 
@@ -531,6 +760,7 @@ def plot_annual_sales_comparison(
         "Electricity Sales (kWh)",
         "Natural Gas Sales (kWh)",
         f"Annual Sales Comparison by {by.title()}",
+        categories=entities,
     )
 
 
@@ -560,6 +790,7 @@ def plot_annual_sales_comparison_electricity(
         "% Difference vs EIA",
         f"Annual Electricity Sales vs EIA by {by.title()}",
         right_range=_percent_axis_range(pct_min, pct_max),
+        categories=entities,
     )
 
 
@@ -589,6 +820,7 @@ def plot_annual_sales_comparison_natural_gas(
         "% Difference vs EIA",
         f"Annual Natural Gas Sales vs EIA by {by.title()}",
         right_range=_percent_axis_range(pct_min, pct_max),
+        categories=entities,
     )
 
 
@@ -632,6 +864,7 @@ def plot_annual_sales_comparison_percent_diff(
         f"Annual % Difference vs EIA by {by.title()}",
         left_range=_percent_axis_range(e_min, e_max),
         right_range=_percent_axis_range(g_min, g_max),
+        categories=entities,
     )
 
 
@@ -664,4 +897,55 @@ def plot_monthly_sales_comparison_natural_gas(
         fuel="natural_gas",
         use_shared_axis=use_shared_axis,
         title_prefix="Natural Gas Sales",
+    )
+
+
+def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
+    if plot_spec.resolution == "annual":
+        buildstock, eia_df = _split_annual_data(data, plot_spec.aggregation_level)
+
+        if plot_spec.quantity_type == QuantityType.stock_energy:
+            match plot_spec.quantity:
+                case None:
+                    return plot_annual_sales_comparison(buildstock, eia_df, by=plot_spec.aggregation_level)
+                case Quantity.ELECTRICITY_TOTAL:
+                    return plot_annual_sales_comparison_electricity(buildstock, eia_df, by=plot_spec.aggregation_level)
+                case Quantity.NATURAL_GAS_TOTAL:
+                    return plot_annual_sales_comparison_natural_gas(buildstock, eia_df, by=plot_spec.aggregation_level)
+        elif plot_spec.quantity_type == QuantityType.percent_difference and plot_spec.quantity is None:
+            return plot_annual_sales_comparison_percent_diff(buildstock, eia_df, by=plot_spec.aggregation_level)
+    elif plot_spec.resolution == "monthly":
+        buildstock, eia_df = _split_monthly_data(data, plot_spec.aggregation_level)
+        fuel: str
+        if plot_spec.quantity == Quantity.ELECTRICITY_TOTAL:
+            fuel = "electricity"
+        elif plot_spec.quantity == Quantity.NATURAL_GAS_TOTAL:
+            fuel = "natural_gas"
+        else:
+            raise NotImplementedError(
+                "Monthly EIA plotting requires quantity to be electricity or natural_gas"
+            )
+
+        if plot_spec.quantity_type == QuantityType.stock_energy:
+            if fuel == "electricity":
+                return plot_monthly_sales_comparison_electricity(
+                    buildstock, eia_df, by=plot_spec.aggregation_level
+                )
+            if fuel == "natural_gas":
+                return plot_monthly_sales_comparison_natural_gas(
+                    buildstock, eia_df, by=plot_spec.aggregation_level
+                )
+        elif plot_spec.quantity_type == QuantityType.percent_difference:
+            return _plot_monthly_percent_difference(
+                buildstock,
+                eia_df,
+                by=plot_spec.aggregation_level,
+                fuel=fuel,
+                use_shared_axis=True,
+            )
+
+    qty = plot_spec.quantity.value if plot_spec.quantity else "all"
+    raise NotImplementedError(
+        f"EIA plot for resolution='{plot_spec.resolution}', "
+        f"quantity_type='{plot_spec.quantity_type.value}', and quantity='{qty}' is not supported"
     )

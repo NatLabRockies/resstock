@@ -17,28 +17,15 @@ data_sources:
     db_schema: resstock_oedi_new
 
 
-
-# Reference Data Configuration
-# ----------------------------
-reference_data:
-  truth_data_year: 2018
-  eia_mapping_version: 1
-
-# Plot Specifications
-# -------------------
+reference_year: 2018
 plots:
-  # Types of validation plots to generate
   plot_types:
-    - eia              # Compare against EIA data
-    - load_duration    # Load duration curves
-    - timeseries       # Timeseries comparisons
+    - eia
 
-  # Geographic aggregation levels
   aggregation_levels:
     - state
     - eiaid
 
-  # Output file formats
   output_formats:
     - html
     - svg

@@ -174,7 +174,6 @@ def get_buildstock_query(
     workgroup: str,
     config: DataSourceConfig,
     truth_data_year: int = 2018,
-    eia_mapping_version: int = 3,
     skip_reports: bool = True,
 ) -> BuildStockQuery:
     """Create and configure a BuildStockQuery instance."""
@@ -185,7 +184,5 @@ def get_buildstock_query(
         skip_reports=skip_reports,
         db_schema=config.db_schema
     )
-
-    bsq.utility.eia_mapping_version = eia_mapping_version
     bsq.utility.eia_mapping_year = truth_data_year
     return bsq

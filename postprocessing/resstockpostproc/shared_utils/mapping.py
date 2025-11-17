@@ -15,7 +15,7 @@ NUM2MONTH = {
     11: "NOV",
     12: "DEC",
 }
-STATE2ABBR: Dict[str, str] = {
+STATE2ABBR: dict[str, str] = {
     "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR",
     "California": "CA", "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE",
     "Florida": "FL", "Georgia": "GA", "Hawaii": "HI", "Idaho": "ID",

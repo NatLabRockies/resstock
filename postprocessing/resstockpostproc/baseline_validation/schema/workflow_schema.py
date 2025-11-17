@@ -11,15 +11,9 @@ from pathlib import Path
 from typing import Literal
 
 import yaml
-from pydantic import BaseModel, Field, field_validator
+from pydantic import Field, field_validator
 
-
-class NoExtraModel(BaseModel):
-    """Base model that forbids extra fields and is frozen."""
-
-    class Config:
-        extra = "forbid"
-        frozen = True
+from resstockpostproc.baseline_validation.schema.plot_spec import NoExtraModel
 
 
 class PlotType(str, Enum):
@@ -55,13 +49,6 @@ class DataSourceConfig(NoExtraModel):
     db_schema: str = Field(description="Database schema", default='resstock_oedi_new')
 
 
-class ReferenceDataConfig(NoExtraModel):
-    """Configuration for reference data sources (EIA, etc.)."""
-
-    truth_data_year: int = Field(default=2018, description="Year of reference data to compare against")
-    eia_mapping_version: int = Field(default=1, description="EIA mapping version to use")
-
-
 class PlotSpecification(NoExtraModel):
     """Specification for which plots to generate."""
 
@@ -95,8 +82,8 @@ class OutputConfig(NoExtraModel):
 class WorkflowConfig(NoExtraModel):
     workgroup: str = Field(description="Athena workgroup")
     data_sources: list[DataSourceConfig] = Field(description="BuildStock data source configuration")
-    reference_data: ReferenceDataConfig = Field(
-        default_factory=ReferenceDataConfig, description="Reference data configuration"
+    reference_year: int = Field(
+        default=2018, description="Year of reference data to compare against"
     )
     plots: PlotSpecification = Field(default_factory=PlotSpecification, description="Plot specifications")
     output: OutputConfig = Field(description="Output configuration")
