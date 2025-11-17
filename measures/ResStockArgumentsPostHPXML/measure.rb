@@ -5,6 +5,7 @@
 
 # Load required dependencies
 require_relative 'resources/duct_limited'
+require_relative 'resources/existing_backup'
 require_relative 'resources/hvac_flexibility/detailed_schedule_generator'
 require_relative 'resources/hvac_flexibility/setpoint_modifier'
 require_relative 'resources/ev_flexibility/ev_schedule_modifier'
@@ -495,6 +496,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
       # Electric Panel
       set_electric_panel(runner, hpxml_bldg_existing, hpxml_bldg, args)
+
+      # Use existing system as heat pump backup
+      set_existing_system_as_heat_pump_backup(runner, hpxml_bldg_existing, hpxml_bldg, args)
     end
 
     # Apply defaults

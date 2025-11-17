@@ -7,7 +7,8 @@ require 'openstudio'
 require_relative 'resources/constants'
 require_relative '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
 require_relative '../../resources/hpxml-measures/BuildResidentialHPXML/resources/options'
-require_relative '../ResStockArgumentsPostHPXML/resources/duct_limited'
+# require_relative '../ResStockArgumentsPostHPXML/resources/duct_limited'
+# require_relative '../ResStockArgumentsPostHPXML/resources/existing_backup'
 
 # start the measure
 class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
@@ -354,7 +355,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
       # HVAC
       set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
-      set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg, existing_options_measure_args['HVAC Heating Efficiency']['ResStockArguments']['hvac_heating_system'])
+      # set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg, existing_options_measure_args['HVAC Heating Efficiency']['ResStockArguments']['hvac_heating_system'])
 
       # Specify measures to run
       measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }
@@ -530,7 +531,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     end
     return args
   end
-
+=begin
   def set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg, hvac_heating_system)
     # Retain Existing Heating System as Heat Pump Backup
     if measures['ResStockArguments'][0]['hvac_heat_pump_backup_use_existing_system'].to_s.downcase == 'true'
@@ -631,7 +632,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     }
     return values
   end
-
+=end
   def get_hvac_system_upgrades(hpxml_bldg, args_hash)
     hvac_system_upgrades = []
     args_hash.keys.each do |arg|

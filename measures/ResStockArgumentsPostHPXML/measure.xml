@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>a67367b5-a9e6-4320-ac66-2c8ef1305bb6</version_id>
-  <version_modified>2025-11-14T22:06:37Z</version_modified>
+  <version_id>7acf8282-9b99-4cbd-829d-5ea465d91c17</version_id>
+  <version_modified>2025-11-17T17:27:47Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -13088,7 +13088,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>CB4E4821</checksum>
+      <checksum>32FADAFD</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -13118,7 +13118,7 @@
       <filename>duct_limited.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>EB77373F</checksum>
+      <checksum>8ABAC155</checksum>
     </file>
     <file>
       <filename>electrical_panel/electrical_panel_breaker_space.csv</filename>
@@ -13155,6 +13155,12 @@
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
       <checksum>632986B4</checksum>
+    </file>
+    <file>
+      <filename>existing_backup.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>8F3D7937</checksum>
     </file>
     <file>
       <filename>hvac_flexibility/detailed_schedule_generator.rb</filename>

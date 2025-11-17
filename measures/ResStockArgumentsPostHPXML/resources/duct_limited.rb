@@ -135,8 +135,6 @@ def set_adjusted_fan_efficiency(runner, args, hpxml_bldg, baseline_max_airflow_c
   # - Get the upgrade airflow cfm.
   # - Use it along with the baseline airflow cfm and upgrade blower fan W/cfm.
   # - Set the adjustment to the upgrade blower fan W/cfm.
-
-  # baseline_max_airflow_cfm = args[:baseline_max_airflow_cfm]
   if args[:hvac_heat_pump_sizing_is_duct_limited]
     duct_restriction_values = get_duct_restriction_values(hpxml_bldg)
     upgrade_max_airflow_cfm = duct_restriction_values['max_airflow_cfm']
