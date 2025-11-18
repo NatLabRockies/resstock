@@ -770,7 +770,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     else
       garage_door_power = 0
     end
-    puts "args[:electric_panel_load_other_power_rating] #{args[:electric_panel_load_other_power_rating]}"
+
     electric_panel_load_other_power_rating = args[:electric_panel_load_other_power_rating].to_f
     electric_panel_load_other_power_rating += microwave_power
     electric_panel_load_other_power_rating += garbage_disposal_power
@@ -786,7 +786,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     branch_circuits = electric_panel.branch_circuits
     service_feeders = electric_panel.service_feeders
 
-    get_panel_new_loads(args, hpxml_bldg_existing, hpxml_bldg)
+    # Assign new load arguments
+    get_panel_new_loads(args, hpxml_bldg_existing, hpxml_bldg, electric_panel_load_other_power_rating)
 
     hpxml_bldg.heating_systems.each do |heating_system|
       next if heating_system.is_shared_system
@@ -957,20 +958,18 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                           is_new_load: args[:electric_panel_load_misc_plug_loads_vehicle_new_load],
                           component_idrefs: [ev_charger.id])
     end
-    puts "args[:electric_panel_load_other_new_load] #{args[:electric_panel_load_other_new_load]}"
-    if !electric_panel_load_other_power_rating.nil? || !args[:electric_panel_load_other_new_load].nil?
-      branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
-                          occupied_spaces: 1,
-                          component_idrefs: [])
-      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
-                          type: HPXML::ElectricPanelLoadTypeOther,
-                          power: electric_panel_load_other_power_rating,
-                          is_new_load: args[:electric_panel_load_other_new_load],
-                          component_idrefs: [])
-    end
+
+    branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
+                        occupied_spaces: 1,
+                        component_idrefs: [])
+    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                        type: HPXML::ElectricPanelLoadTypeOther,
+                        power: electric_panel_load_other_power_rating,
+                        is_new_load: args[:electric_panel_load_other_new_load],
+                        component_idrefs: [])
   end
 
-  def get_panel_new_loads(args, hpxml_bldg_existing, hpxml_bldg)
+  def get_panel_new_loads(args, hpxml_bldg_existing, hpxml_bldg, electric_panel_load_other_power_rating)
     return if hpxml_bldg_existing.nil?
 
     # Try 1: compare existence of old electric systems to new electric systems
@@ -998,9 +997,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     args[:electric_panel_load_electric_pool_heater_new_load] = (hpxml_bldg_existing.pools.count { |pl| [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(pl.heater_type) } == 0) && (hpxml_bldg.pools.count { |pl| [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(pl.heater_type) } > 0)
     args[:electric_panel_load_permanent_spa_pump_new_load] = (hpxml_bldg_existing.permanent_spas.size == 0) && (hpxml_bldg.permanent_spas.size > 0)
     args[:electric_panel_load_electric_permanent_spa_heater_new_load] = (hpxml_bldg_existing.permanent_spas.count { |ps| [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(ps.heater_type) } == 0) && (hpxml_bldg.permanent_spas.count { |ps| [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(ps.heater_type) } > 0)
-    args[:electric_panel_load_other_new_load] = false # FIXME?
+    args[:electric_panel_load_other_new_load] = (electric_panel_load_other_power_rating > hpxml_bldg_existing.electric_panels[0].service_feeders.select { |sf| sf.type == HPXML::ElectricPanelLoadTypeOther }.map { |sf| sf.power }.sum)
 
-    # Try 2: compare old service feeders to new service feeders
+    # Try 2: compare old service feeders to new service feeders; would need to come after defaults are applied?
     # panel_existing = hpxml_bldg_existing.electric_panels[0]
     # panel = hpxml_bldg.electric_panels[0]
     # TODO
