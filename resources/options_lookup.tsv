@@ -9203,18 +9203,18 @@ Duct Location	Heated Basement	ResStockArguments	hvac_ducts_supply_location=Basem
 Duct Location	Living Space	ResStockArguments	hvac_ducts_supply_location=Conditioned Space	hvac_ducts_return_location=Conditioned Space
 Duct Location	None	ResStockArguments	hvac_ducts_supply_location=Conditioned Space	hvac_ducts_return_location=Conditioned Space
 Duct Location	Unheated Basement	ResStockArguments	hvac_ducts_supply_location=Basement	hvac_ducts_return_location=Basement
-Eaves	1 ft	ResStockArguments	geometry_eaves=1 ft	enclosure_overhangs=None
-Eaves	2 ft	ResStockArguments	geometry_eaves=2 ft	enclosure_overhangs=None
-Eaves	3 ft	ResStockArguments	geometry_eaves=3 ft	enclosure_overhangs=None
-Eaves	None	ResStockArguments	geometry_eaves=None	enclosure_overhangs=None
-Electric Vehicle Battery	Compact, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=Compact, 200 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
-Electric Vehicle Battery	Compact, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=Compact, 300 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
-Electric Vehicle Battery	Midsize, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=Midsize, 200 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
-Electric Vehicle Battery	Midsize, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=Midsize, 300 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
-Electric Vehicle Battery	Pickup, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=Pickup, 200 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
-Electric Vehicle Battery	Pickup, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=Pickup, 300 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
-Electric Vehicle Battery	SUV, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=SUV, 200 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
-Electric Vehicle Battery	SUV, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=SUV, 300 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
+Eaves	1 ft	ResStockArguments	geometry_eaves=1 ft
+Eaves	2 ft	ResStockArguments	geometry_eaves=2 ft
+Eaves	3 ft	ResStockArguments	geometry_eaves=3 ft
+Eaves	None	ResStockArguments	geometry_eaves=None
+Electric Vehicle Battery	Compact, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=Compact, 200 Mile Range, 11000 miles/yr
+Electric Vehicle Battery	Compact, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=Compact, 300 Mile Range, 11000 miles/yr
+Electric Vehicle Battery	Midsize, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=Midsize, 200 Mile Range, 11000 miles/yr
+Electric Vehicle Battery	Midsize, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=Midsize, 300 Mile Range, 11000 miles/yr
+Electric Vehicle Battery	Pickup, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=Pickup, 200 Mile Range, 11000 miles/yr
+Electric Vehicle Battery	Pickup, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=Pickup, 300 Mile Range, 11000 miles/yr
+Electric Vehicle Battery	SUV, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=SUV, 200 Mile Range, 11000 miles/yr
+Electric Vehicle Battery	SUV, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=SUV, 300 Mile Range, 11000 miles/yr
 Electric Vehicle Charge At Home	0-19%	ResStockArguments	ev_fraction_charged_home=0.10
 Electric Vehicle Charge At Home	100%	ResStockArguments	ev_fraction_charged_home=1.00
 Electric Vehicle Charge At Home	20-39%	ResStockArguments	ev_fraction_charged_home=0.30
@@ -9923,10 +9923,10 @@ Heating Unavailable Days	Never	ResStockArguments	schedules_space_heating_unavail
 Heating Unavailable Days	Year round	ResStockArguments	schedules_space_heating_unavailable_days=365
 Holiday Lighting	No Exterior Use
 Holiday Lighting	None
-Hot Water Distribution	Insulated	ResStockArguments	dhw_distribution=Insulated, Standard	dhw_drain_water_heat_recovery=None	dhw_fixtures=Standard, 100% Usage
-Hot Water Distribution	Insulated, Demand	ResStockArguments	dhw_distribution=Insulated, Recirc, Presence Sensor Demand Control	dhw_drain_water_heat_recovery=None	dhw_fixtures=Standard, 100% Usage
-Hot Water Distribution	Insulated, Timer	ResStockArguments	dhw_distribution=Insulated, Recirc, Timer Control	dhw_drain_water_heat_recovery=None	dhw_fixtures=Standard, 100% Usage
-Hot Water Distribution	Uninsulated	ResStockArguments	dhw_distribution=Uninsulated, Standard	dhw_drain_water_heat_recovery=None	dhw_fixtures=Standard, 100% Usage
+Hot Water Distribution	Insulated	ResStockArguments	dhw_distribution=Insulated, Standard	dhw_fixtures=Standard, 100% Usage	dhw_drain_water_heat_recovery=None
+Hot Water Distribution	Insulated, Demand	ResStockArguments	dhw_distribution=Insulated, Recirc, Presence Sensor Demand Control	dhw_fixtures=Standard, 100% Usage	dhw_drain_water_heat_recovery=None
+Hot Water Distribution	Insulated, Timer	ResStockArguments	dhw_distribution=Insulated, Recirc, Timer Control	dhw_fixtures=Standard, 100% Usage	dhw_drain_water_heat_recovery=None
+Hot Water Distribution	Uninsulated	ResStockArguments	dhw_distribution=Uninsulated, Standard	dhw_fixtures=Standard, 100% Usage	dhw_drain_water_heat_recovery=None
 Hot Water Fixtures	100% Usage	ResStockArguments	water_fixtures_usage_multiplier=1.0
 Hot Water Fixtures	110% Usage	ResStockArguments	water_fixtures_usage_multiplier=1.1
 Hot Water Fixtures	120% Usage	ResStockArguments	water_fixtures_usage_multiplier=1.2
@@ -13457,13 +13457,13 @@ PV Orientation	South	ResStockArguments	pv_system_direction=Roof Pitch, South
 PV Orientation	Southeast	ResStockArguments	pv_system_direction=Roof Pitch, Southeast
 PV Orientation	Southwest	ResStockArguments	pv_system_direction=Roof Pitch, Southwest
 PV Orientation	West	ResStockArguments	pv_system_direction=Roof Pitch, West
-PV System Size	1.0 kWDC	ResStockArguments	pv_system=1.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
-PV System Size	11.0 kWDC	ResStockArguments	pv_system=11.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
-PV System Size	13.0 kWDC	ResStockArguments	pv_system=13.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
-PV System Size	3.0 kWDC	ResStockArguments	pv_system=3.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
-PV System Size	5.0 kWDC	ResStockArguments	pv_system=5.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
-PV System Size	7.0 kWDC	ResStockArguments	pv_system=7.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
-PV System Size	9.0 kWDC	ResStockArguments	pv_system=9.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
+PV System Size	1.0 kWDC	ResStockArguments	pv_system=1.0 kW
+PV System Size	11.0 kWDC	ResStockArguments	pv_system=11.0 kW
+PV System Size	13.0 kWDC	ResStockArguments	pv_system=13.0 kW
+PV System Size	3.0 kWDC	ResStockArguments	pv_system=3.0 kW
+PV System Size	5.0 kWDC	ResStockArguments	pv_system=5.0 kW
+PV System Size	7.0 kWDC	ResStockArguments	pv_system=7.0 kW
+PV System Size	9.0 kWDC	ResStockArguments	pv_system=9.0 kW
 PV System Size	None	ResStockArguments	pv_system=None
 Plug Load Diversity	100%	ResStockArguments	misc_plug_loads=100% Usage	misc_television=100% Usage
 Plug Load Diversity	150%	ResStockArguments	misc_plug_loads=150% Usage	misc_television=150% Usage
@@ -13812,37 +13812,37 @@ Water Heater Location	Heated Basement	ResStockArguments	dhw_water_heater_locatio
 Water Heater Location	Living Space	ResStockArguments	dhw_water_heater_location=Conditioned Space
 Water Heater Location	Outside	ResStockArguments	dhw_water_heater_location=Outside
 Water Heater Location	Unheated Basement	ResStockArguments	dhw_water_heater_location=Basement
-Window Areas	F10 B30 L10 R10	ResStockArguments	geometry_window_areas_or_wwrs=0.1, 0.3, 0.1, 0.1	geometry_skylight_areas=0, 0, 0, 0
-Window Areas	F12 B12 L12 R12	ResStockArguments	geometry_window_areas_or_wwrs=0.12, 0.12, 0.12, 0.12	geometry_skylight_areas=0, 0, 0, 0
-Window Areas	F15 B15 L0 R0	ResStockArguments	geometry_window_areas_or_wwrs=0.15, 0.15, 0, 0	geometry_skylight_areas=0, 0, 0, 0
-Window Areas	F15 B15 L15 R15	ResStockArguments	geometry_window_areas_or_wwrs=0.15, 0.15, 0.15, 0.15	geometry_skylight_areas=0, 0, 0, 0
-Window Areas	F18 B18 L18 R18	ResStockArguments	geometry_window_areas_or_wwrs=0.18, 0.18, 0.18, 0.18	geometry_skylight_areas=0, 0, 0, 0
-Window Areas	F30 B30 L30 R30	ResStockArguments	geometry_window_areas_or_wwrs=0.30, 0.30, 0.30, 0.30	geometry_skylight_areas=0, 0, 0, 0
-Window Areas	F6 B6 L6 R6	ResStockArguments	geometry_window_areas_or_wwrs=0.06, 0.06, 0.06, 0.06	geometry_skylight_areas=0, 0, 0, 0
-Window Areas	F9 B9 L9 R9	ResStockArguments	geometry_window_areas_or_wwrs=0.09, 0.09, 0.09, 0.09	geometry_skylight_areas=0, 0, 0, 0
-Window Areas	None	ResStockArguments	geometry_window_areas_or_wwrs=0, 0, 0, 0	geometry_skylight_areas=0, 0, 0, 0
-Windows	Double, Clear, Metal, Air	ResStockArguments	enclosure_window=Double, Clear, Metal, Air	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Double, Clear, Metal, Air, Exterior Clear Storm	ResStockArguments	enclosure_window=Double, Clear, Metal, Air	enclosure_window_storm=Clear	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Double, Clear, Metal, Exterior Low-E Storm	ResStockArguments	enclosure_window=Double, Clear, Metal, Air	enclosure_window_storm=Low-E	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Double, Clear, Non-metal, Air	ResStockArguments	enclosure_window=Double, Clear, Non-Metal, Air	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Double, Clear, Non-metal, Air, Exterior Clear Storm	ResStockArguments	enclosure_window=Double, Clear, Non-Metal, Air	enclosure_window_storm=Clear	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Double, Clear, Non-metal, Exterior Low-E Storm	ResStockArguments	enclosure_window=Double, Clear, Non-Metal, Air	enclosure_window_storm=Low-E	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Double, Clear, Thermal-Break, Air	ResStockArguments	enclosure_window=Double, Clear, Thermal-Break, Air	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Double, Low-E, H-Gain	ResStockArguments	enclosure_window=Double, Low-E, Insulated, Gas, High Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Double, Low-E, L-Gain	ResStockArguments	enclosure_window=Double, Low-E, Insulated, Gas, Low Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Double, Low-E, Non-metal, Air, L-Gain	ResStockArguments	enclosure_window=Double, Low-E, Non-Metal, Air, Low Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Double, Low-E, Non-metal, Air, M-Gain	ResStockArguments	enclosure_window=Double, Low-E, Non-Metal, Air, Med Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	EnergyStar, North-Central	ResStockArguments	enclosure_window=EnergyStar, North-Central	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	EnergyStar, Northern	ResStockArguments	enclosure_window=EnergyStar, Northern	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	EnergyStar, South-Central	ResStockArguments	enclosure_window=EnergyStar, South-Central	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	EnergyStar, Southern	ResStockArguments	enclosure_window=EnergyStar, Southern	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Single, Clear, Metal	ResStockArguments	enclosure_window=Single, Clear, Metal	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Single, Clear, Metal, Exterior Clear Storm	ResStockArguments	enclosure_window=Single, Clear, Metal	enclosure_window_storm=Clear	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Single, Clear, Metal, Exterior Low-E Storm	ResStockArguments	enclosure_window=Single, Clear, Metal	enclosure_window_storm=Low-E	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Single, Clear, Non-metal	ResStockArguments	enclosure_window=Single, Clear, Non-Metal	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Single, Clear, Non-metal, Exterior Clear Storm	ResStockArguments	enclosure_window=Single, Clear, Non-Metal	enclosure_window_storm=Clear	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Single, Clear, Non-metal, Exterior Low-E Storm	ResStockArguments	enclosure_window=Single, Clear, Non-Metal	enclosure_window_storm=Low-E	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Triple, Low-E, Insulated, Argon, H-Gain	ResStockArguments	enclosure_window=Triple, Low-E, Insulated, Gas, High Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Triple, Low-E, Insulated, Argon, L-Gain	ResStockArguments	enclosure_window=Triple, Low-E, Insulated, Gas, Low Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Triple, Low-E, Non-metal, Air, L-Gain	ResStockArguments	enclosure_window=Triple, Low-E, Non-Metal, Air, Low Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
+Window Areas	F10 B30 L10 R10	ResStockArguments	geometry_window_areas_or_wwrs=0.1, 0.3, 0.1, 0.1
+Window Areas	F12 B12 L12 R12	ResStockArguments	geometry_window_areas_or_wwrs=0.12, 0.12, 0.12, 0.12
+Window Areas	F15 B15 L0 R0	ResStockArguments	geometry_window_areas_or_wwrs=0.15, 0.15, 0, 0
+Window Areas	F15 B15 L15 R15	ResStockArguments	geometry_window_areas_or_wwrs=0.15, 0.15, 0.15, 0.15
+Window Areas	F18 B18 L18 R18	ResStockArguments	geometry_window_areas_or_wwrs=0.18, 0.18, 0.18, 0.18
+Window Areas	F30 B30 L30 R30	ResStockArguments	geometry_window_areas_or_wwrs=0.30, 0.30, 0.30, 0.30
+Window Areas	F6 B6 L6 R6	ResStockArguments	geometry_window_areas_or_wwrs=0.06, 0.06, 0.06, 0.06
+Window Areas	F9 B9 L9 R9	ResStockArguments	geometry_window_areas_or_wwrs=0.09, 0.09, 0.09, 0.09
+Window Areas	None	ResStockArguments	geometry_window_areas_or_wwrs=0, 0, 0, 0
+Windows	Double, Clear, Metal, Air	ResStockArguments	enclosure_window=Double, Clear, Metal, Air	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Double, Clear, Metal, Air, Exterior Clear Storm	ResStockArguments	enclosure_window=Double, Clear, Metal, Air	enclosure_window_storm=Clear	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Double, Clear, Metal, Exterior Low-E Storm	ResStockArguments	enclosure_window=Double, Clear, Metal, Air	enclosure_window_storm=Low-E	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Double, Clear, Non-metal, Air	ResStockArguments	enclosure_window=Double, Clear, Non-Metal, Air	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Double, Clear, Non-metal, Air, Exterior Clear Storm	ResStockArguments	enclosure_window=Double, Clear, Non-Metal, Air	enclosure_window_storm=Clear	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Double, Clear, Non-metal, Exterior Low-E Storm	ResStockArguments	enclosure_window=Double, Clear, Non-Metal, Air	enclosure_window_storm=Low-E	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Double, Clear, Thermal-Break, Air	ResStockArguments	enclosure_window=Double, Clear, Thermal-Break, Air	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Double, Low-E, H-Gain	ResStockArguments	enclosure_window=Double, Low-E, Insulated, Gas, High Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Double, Low-E, L-Gain	ResStockArguments	enclosure_window=Double, Low-E, Insulated, Gas, Low Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Double, Low-E, Non-metal, Air, L-Gain	ResStockArguments	enclosure_window=Double, Low-E, Non-Metal, Air, Low Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Double, Low-E, Non-metal, Air, M-Gain	ResStockArguments	enclosure_window=Double, Low-E, Non-Metal, Air, Med Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	EnergyStar, North-Central	ResStockArguments	enclosure_window=EnergyStar, North-Central	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	EnergyStar, Northern	ResStockArguments	enclosure_window=EnergyStar, Northern	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	EnergyStar, South-Central	ResStockArguments	enclosure_window=EnergyStar, South-Central	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	EnergyStar, Southern	ResStockArguments	enclosure_window=EnergyStar, Southern	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Single, Clear, Metal	ResStockArguments	enclosure_window=Single, Clear, Metal	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Single, Clear, Metal, Exterior Clear Storm	ResStockArguments	enclosure_window=Single, Clear, Metal	enclosure_window_storm=Clear	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Single, Clear, Metal, Exterior Low-E Storm	ResStockArguments	enclosure_window=Single, Clear, Metal	enclosure_window_storm=Low-E	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Single, Clear, Non-metal	ResStockArguments	enclosure_window=Single, Clear, Non-Metal	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Single, Clear, Non-metal, Exterior Clear Storm	ResStockArguments	enclosure_window=Single, Clear, Non-Metal	enclosure_window_storm=Clear	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Single, Clear, Non-metal, Exterior Low-E Storm	ResStockArguments	enclosure_window=Single, Clear, Non-Metal	enclosure_window_storm=Low-E	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Triple, Low-E, Insulated, Argon, H-Gain	ResStockArguments	enclosure_window=Triple, Low-E, Insulated, Gas, High Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Triple, Low-E, Insulated, Argon, L-Gain	ResStockArguments	enclosure_window=Triple, Low-E, Insulated, Gas, Low Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
+Windows	Triple, Low-E, Non-metal, Air, L-Gain	ResStockArguments	enclosure_window=Triple, Low-E, Non-Metal, Air, Low Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None
 Windows	Void

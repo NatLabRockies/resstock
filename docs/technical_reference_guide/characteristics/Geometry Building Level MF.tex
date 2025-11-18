@@ -1,0 +1,27 @@
+\paragraph{Description}
+% \input{characteristics/description/Geometry Building Level MF}
+Location of the multifamily (MF) unit vertically within the building (bottom, middle, top).
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/Geometry Building Level MF}
+\begin{itemize}
+    \item Calculated directly from the Geometry Building Type RECS and Geometry Stories characteristics.
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/Geometry Building Level MF}
+
+\paragraph{Options}
+The options for the Geometry Building Level MF characteristic are shown in Table \ref{table:hc_opt_geometry_building_level_mf}. The None option is used for all building types other than MF.
+
+\input{characteristics/options/Geometry Building Level MF}
+
+Property definitions are shown in Table~\ref{table:hc_arg_def_geometry_building_level_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for additional information.
+
+\input{characteristics/properties/Geometry Building Level MF}
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/Geometry Building Level MF}
+\begin{itemize}
+    \item Calculated using the number of stories, where buildings greater than or equal to 2 stories have Top and Bottom probabilities = 1/Geometry Stories, and Middle probabilities = 1--2/Geometry stories.
+\end{itemize}

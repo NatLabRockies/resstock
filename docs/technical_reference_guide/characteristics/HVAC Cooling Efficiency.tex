@@ -1,0 +1,30 @@
+\paragraph{Description}
+% \input{characteristics/description/HVAC Cooling Efficiency}
+The presence and efficiency of primary cooling system in the housing unit. In the assumptions heat pumps (both ducted and non ducted) are assumed to 
+serve for both heating and cooling. In the RECS2020 survey that cooling and heating technologies are based on, it was recently discoved that some samples reported None for heating, but heat pump for cooling
+(especialy non-ducted heat pumps). This is especially prevalent in hot climates with low cooling saturation. In ResStock, those samples with None heating and non ducted heat pump cooling in the survey
+are currently not being counted as having heat pumps. This is a known issue that will be addressed in a future release. In Hawaii, where this issue is most prevalent, the Room AC saturation has been increased to account for the 
+undercounting of non-ducted heat pumps. 
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/HVAC Cooling Efficiency}
+\begin{itemize}
+    \item The sample counts and sample weights are constructed using U.S.~EIA 2020 RECS microdata 
+    \item Efficiency data based on ENERGY STAR shipment and Home Energy Saver data combined with age of equipment data from RECS 2020.
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/HVAC Cooling Efficiency}
+
+\paragraph{Options}
+ResStock options for cooling systems are shown in Table \ref{table:hc_opt_hvac_cooling_efficiency}. If a building has a heat pump, it is assumed that the heat pump is serving both the heating and cooling load. Buildings with heat pumps assigned in the HVAC Heating characteristic are flagged, but no modeling properties are assigned to those building based on this characteristic. Similarly, homes with a shared cooling system for the building are flagged, but the modeling properties for that system are assigned in the HVAC Shared Systems Efficiencies characteristic.
+
+\input{characteristics/options/HVAC Cooling Efficiency}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_hvac_cooling_efficiency}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooling-systems}{Cooling Systems} documentation for additional information.
+
+\input{characteristics/properties/HVAC Cooling Efficiency}
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/HVAC Cooling Efficiency}
+None
