@@ -10,7 +10,7 @@ def get_measure_xml(filepath)
   parse_xml.xpath('//measure/arguments/argument').each do |argument|
     name = argument.at_xpath('name').text
     measure_xml[name] = {}
-    ['type', 'required', 'units', 'choices', 'description'].each do |property|
+    ['units', 'description'].each do |property|
       if property != 'choices'
         element = argument.at_xpath(property)
         value = !element.nil? ? element.text : ''
@@ -34,16 +34,59 @@ def get_arg_order(buildreshpxmlarguments_xml, resstockarguments_xml)
   return arg_order
 end
 
-# These are column headers in both TDG's "Argument" table and TRG's "The ResStock argument definitions set" table.
-def get_arguments_cols()
-  return ['Name', 'Required', 'Units', 'Type', 'Choices', 'Description']
+# These are column headers in project_national/resources/source_report.csv file.
+def get_source_report_cols()
+  return ['Description', 'Created by', 'Source', 'Assumption']
+end
+
+# These are column headers in both technical and reference guide's "Properties" table.
+def get_properties_cols()
+  return ['Name', 'Units', 'Description']
 end
 
 # Get csv data for options_lookup.tsv and options_saturations.csv.
 def get_lookup_and_saturations_csv_data(resources_dir)
   lookup_file = File.join(resources_dir, 'options_lookup.tsv')
-  option_sat_file = File.join('project_national', 'resources', 'options_saturations.csv')
+  option_sat_file = File.join(File.dirname(__FILE__), '..', '..', 'project_national', 'resources', 'options_saturations.csv')
   lookup_csv_data = CSV.open(lookup_file, col_sep: "\t").each.to_a
   option_sat_csv_data = CSV.open(option_sat_file, quote_char: '"', col_sep: ',').each.to_a
   return lookup_csv_data, option_sat_csv_data
+end
+
+def get_properties(resources_dir)
+  properties = {}
+  Dir["#{resources_dir}/hpxml-measures/BuildResidentialHPXML/resources/options/*.tsv"].each do |tsv_filepath|
+    tsv_filename = File.basename(tsv_filepath)
+    arg_name = File.basename(tsv_filename, File.extname(tsv_filename))
+
+    property_names = get_property_names(tsv_filename)
+    property_units = get_property_units(tsv_filename)
+    property_descriptions = get_property_descriptions(tsv_filename)
+
+    properties[arg_name] = {}
+    property_names.each_with_index do |property_name, i|
+      property_description = property_descriptions[property_name]
+      property_name = "#{arg_name}_#{property_name.downcase.gsub(' ', '_').gsub('-', '_')}"
+      properties[arg_name][property_name] = { 'property_unit' => property_units[i], 'description' => property_description }
+    end
+  end
+  return properties
+end
+
+def get_options(resources_dir)
+  options = {}
+  Dir["#{resources_dir}/hpxml-measures/BuildResidentialHPXML/resources/options/*.tsv"].each do |tsv_filepath|
+    tsv_filename = File.basename(tsv_filepath)
+    arg_name = File.basename(tsv_filename, File.extname(tsv_filename))
+
+    options[arg_name] = {}
+    option_names = get_option_names(tsv_filename)
+    option_names.each do |option_name|
+      args = {}
+      get_option_properties(args, tsv_filename, option_name)
+
+      options[arg_name][option_name] = args.transform_keys(&:to_s)
+    end
+  end
+  return options
 end

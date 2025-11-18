@@ -3,7 +3,7 @@
 resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../../../resources'))
 
 require_relative '../../../resources/util'
-require_relative File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/resources/options')
+require File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/resources/options')
 
 class String
   def to_underscore_case
@@ -49,8 +49,10 @@ filepath = File.read(File.join(resources_dir, '../measures/ResStockArguments/mea
 resstockarguments_xml = get_measure_xml(filepath)
 
 arg_order = get_arg_order(buildreshpxmlarguments_xml, resstockarguments_xml)
-source_report_cols = ['Description', 'Created by', 'Source', 'Assumption']
-arguments_cols = get_arguments_cols()
+properties_cols = get_properties_cols()
+
+properties = get_properties(resources_dir)
+options = get_options(resources_dir)
 
 f = File.open(File.join(File.dirname(__FILE__), 'characteristics.rst'), 'w')
 f.puts('.. _housing_characteristics:')
@@ -61,30 +63,32 @@ f.puts
 f.puts('Each parameter sampled by the national project is listed alphabetically as its own subsection below.')
 f.puts('For each parameter, the following (if applicable) are reported based on the contents of the `source_report.csv <https://github.com/NREL/resstock/blob/develop/project_national/resources/source_report.csv>`_:')
 f.puts
+
+source_report_cols = get_source_report_cols()
 source_report_cols.each do |source_report_col|
   f.puts("- **#{source_report_col}**")
 end
 f.puts
-f.puts('For each parameter an **Arguments** table is populated (if applicable) based on the contents of `ResStockArguments <https://github.com/NREL/resstock/blob/develop/measures/ResStockArguments>`_ and `BuildResidentialHPXML <https://github.com/NREL/resstock/blob/develop/resources/hpxml-measures/BuildResidentialHPXML>`_ measure.xml files, each containing the following columns:')
-f.puts
-arguments_cols.each do |arguments_col|
-  if ['Name', 'Required', 'Type'].include?(arguments_col)
-    f.puts("- **#{arguments_col}** [#]_")
-  else
-    f.puts("- **#{arguments_col}**")
-  end
-end
-f.puts
-f.puts('.. [#] Each **Name** entry is an argument that is assigned using defined options from the `options_lookup.tsv <https://github.com/NREL/resstock/blob/develop/resources/options_lookup.tsv>`_.')
-f.puts('.. [#] May be "true" or "false".')
-f.puts('.. [#] May be "String", "Double", "Integer", "Boolean", or "Choice".')
-f.puts
+
 f.puts('For each parameter an **Options** table is populated based on the contents of the `options_lookup.tsv <https://github.com/NREL/resstock/blob/develop/resources/options_lookup.tsv>`_, `options_saturations.csv <https://github.com/NREL/resstock/blob/develop/project_national/resources/options_saturations.csv>`_, and `BuildResidentialHPXML/resources/options/*.tsv <https://github.com/NREL/resstock/blob/develop/resources/hpxml-measures/BuildResidentialHPXML/resources/options>`_ files.')
 f.puts
 
-lookup_csv_data, option_sat_csv_data = get_lookup_and_saturations_csv_data(resources_dir)
+f.puts('For each parameter a **Properties** table is populated (if applicable) based on the contents of `BuildResidentialHPXML/resources/options/*.tsv <https://github.com/NREL/resstock/blob/develop/resources/hpxml-measures/BuildResidentialHPXML/resources/options>`_ files, each containing the following columns:')
+f.puts
 
-arg_map = {}
+properties_cols.each do |properties_col|
+  if ['Name'].include?(properties_col)
+    f.puts("- **#{properties_col}** [#]_")
+  else
+    f.puts("- **#{properties_col}**")
+  end
+end
+
+f.puts
+f.puts('.. [#] Each **Name** entry is an argument that is assigned using defined options from the `options_lookup.tsv <https://github.com/NREL/resstock/blob/develop/resources/options_lookup.tsv>`_.')
+f.puts
+
+lookup_csv_data, option_sat_csv_data = get_lookup_and_saturations_csv_data(resources_dir)
 
 source_report = CSV.read(File.join(File.dirname(__FILE__), '../../../../project_national/resources/source_report.csv'), headers: true)
 source_report.each do |row|
@@ -100,12 +104,10 @@ source_report.each do |row|
   f.puts
 
   source_report_cols.each do |subsection_name|
-    # delim = nil
     delim = ';' if ['Source', 'Assumption'].include?(subsection_name)
     write_subsection(f, row, subsection_name, '*', delim)
   end
 
-  # Arguments
   r_arguments = []
   lookup_csv_data.each do |lookup_row|
     next if lookup_row[0] != parameter
@@ -116,39 +118,8 @@ source_report.each do |row|
       r_arguments << argument if !r_arguments.include?(argument)
     end
   end
-  if r_arguments.any?
 
-    name = 'Arguments'
-    f.puts(name)
-    f.puts('*' * name.size)
-    f.puts
-    f.puts('.. list-table::')
-    f.puts('   :header-rows: 1')
-    f.puts('   :stub-columns: 1')
-    f.puts
-    arguments_cols.each_with_index do |arguments_col, i|
-      line = "     - #{arguments_col}"
-      line = "   * - #{arguments_col}" if i == 0
-      f.puts(line)
-    end
-
-    r_arguments = r_arguments.sort_by &arg_order.method(:index)
-
-    r_arguments.each do |r_argument|
-      f.puts("   * - ``#{r_argument}``")
-      f.puts("     - #{resstockarguments_xml[r_argument]['required']}")
-      f.puts("     - #{resstockarguments_xml[r_argument]['units']}")
-      f.puts("     - #{resstockarguments_xml[r_argument]['type']}")
-      choices = resstockarguments_xml[r_argument]['choices']
-      if choices.empty?
-        f.puts('     -')
-      else
-        f.puts("     - #{choices.join('; ')}")
-      end
-      f.puts("     - #{resstockarguments_xml[r_argument]['description']}")
-    end
-    f.puts
-  end
+  r_arguments = r_arguments.sort_by &arg_order.method(:index)
 
   # Options
   name = 'Options'
@@ -163,10 +134,9 @@ source_report.each do |row|
   f.puts('   :widths: auto')
   f.puts
   f.puts('   * - Option name')
-  f.puts('     - Stock saturation')
 
   # Options and stock saturation
-  options = {}
+  lookup = {}
   option_sat_csv_data.each do |param_option_row|
     # If the parameter does not match next
     next if param_option_row[1] != parameter
@@ -174,9 +144,7 @@ source_report.each do |row|
     # Insert the options and the stock saturation
     option = param_option_row[2]
 
-    if not options.keys.include?(option)
-      options[option] = {}
-    end
+    lookup[option] = {}
 
     sat_percent = Float(param_option_row[3]) * 100.0
     if Integer(sat_percent.truncate()) == 100
@@ -185,66 +153,105 @@ source_report.each do |row|
       sat_percent = '%.2g%%' % [sat_percent]
     end
 
-    options[option]['sat'] = sat_percent
+    lookup[option]['sat'] = sat_percent
 
     # Check if there are arguments
-    next unless !r_arguments.empty?
+    next if r_arguments.empty?
 
     # If there are arguments, go through options lookup to find the option
     lookup_csv_data.each do |lookup_row|
       next if lookup_row[0] != parameter
       next if lookup_row[1] != option
+      next if lookup_row[2] != 'ResStockArguments'
 
-      # When the option is found
-      next unless lookup_row[2] == 'ResStockArguments'
+      lookup_row[3..-1].each do |argument_value|
+        arg, value = argument_value.split('=')
 
-      # If option specifies arguments, insert arguments according to the order of r_arguments
-      r_arguments.each do |argument|
-        # Look for each argument in r_arguments
-        lookup_row[3..-1].each do |argument_value|
-          arg, value = argument_value.split('=')
+        lookup[option][arg] = value
+      end
+    end
+  end
 
-          tsv_filename = "#{arg}.tsv"
-          tsv_filepath = File.join(resources_dir, "hpxml-measures/BuildResidentialHPXML/resources/options/#{tsv_filename}")
-          if File.exist?(tsv_filepath)
-            args = {}
-            get_option_properties(args, tsv_filename, value)
+  lookup.keys.each do |option_name|
+    f.puts("     - #{option_name}")
+  end
 
-            arg_map[arg] = args.keys
-            args.keys.each do |arg_key|
-              options[option][arg_key.to_s] = args[arg_key]
+  f.puts('   * - Stock saturation')
+
+  lookup.keys.each do |option|
+    f.puts("     - #{lookup[option]['sat']}")
+  end
+
+  args = {}
+  r_arguments.each do |r_argument|
+    if properties.keys.include?(r_argument)
+      properties[r_argument].keys.each do |arg|
+        args[arg] = []
+
+        lookup.keys.each do |option|
+          option_name = lookup[option][r_argument]
+
+          if not option_name.nil?
+            options[r_argument][option_name].each do |arg2, value|
+              next if arg != arg2
+
+              args[arg] << value
             end
           else
-            if argument == arg
-              options[option][arg] = value
-            end
+            args[arg] << nil
           end
         end
       end
+    else
+      args[r_argument] = []
+      lookup.keys.each do |option|
+        args[r_argument] << lookup[option][r_argument]
+      end
     end
+  end
+
+  args.delete_if { |_k, v| v.all?(&:nil?) }
+
+  args.each do |property, values|
+    next if values.all?(&:nil?)
+
+    f.puts("   * - ``#{property}``")
+    values.each do |value|
+      f.puts("     - #{value}")
+    end
+  end
+  f.puts
+
+  # Properties
+  next unless not args.empty?
+
+  name = 'Properties'
+  f.puts(name)
+  f.puts('*' * name.size)
+  f.puts
+  f.puts('.. list-table::')
+  f.puts('   :header-rows: 1')
+  f.puts('   :stub-columns: 1')
+  f.puts
+  properties_cols.each_with_index do |properties_col, i|
+    line = "     - #{properties_col}"
+    line = "   * - #{properties_col}" if i == 0
+    f.puts(line)
   end
 
   r_arguments.each do |r_argument|
-    if arg_map.keys.include?(r_argument)
-      arg_map[r_argument].each do |arg|
-        f.puts("     - ``#{arg}``")
+    if properties.keys.include?(r_argument)
+      properties[r_argument].each do |property_name, property_unit_description|
+        next unless args.keys.include?(property_name)
+
+        f.puts("   * - ``#{property_name}``")
+        f.puts("     - #{property_unit_description['property_unit']}")
+        f.puts("     - #{property_unit_description['description']}")
       end
     else
-      f.puts("     - ``#{r_argument}``")
-    end
-  end
-
-  options.each do |option_name, properties|
-    f.puts("   * - #{option_name}")
-    f.puts("     - #{properties['sat']}")
-    r_arguments.each do |r_argument|
-      if arg_map.keys.include?(r_argument)
-        arg_map[r_argument].each do |arg|
-          f.puts("     - #{options[option_name][arg.to_s]}")
-        end
-      else
-        f.puts("     - #{options[option_name][r_argument]}")
-      end
+      f.puts("   * - ``#{r_argument}``")
+      f.puts("     - #{resstockarguments_xml[r_argument]['units']}")
+      f.puts("     - #{resstockarguments_xml[r_argument]['description']}")
     end
   end
 end
