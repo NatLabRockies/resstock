@@ -7,8 +7,6 @@ require 'openstudio'
 require_relative 'resources/constants'
 require_relative '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
 require_relative '../../resources/hpxml-measures/BuildResidentialHPXML/resources/options'
-# require_relative '../ResStockArgumentsPostHPXML/resources/duct_limited'
-# require_relative '../ResStockArgumentsPostHPXML/resources/existing_backup'
 
 # start the measure
 class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
