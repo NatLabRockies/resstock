@@ -354,7 +354,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       set_electric_panel(measures, hpxml_bldg, upgrade_args_hash)
 
       # HVAC
-      set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
+      # set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
 
       # Specify measures to run
       measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }

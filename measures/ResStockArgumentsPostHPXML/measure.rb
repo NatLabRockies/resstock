@@ -494,6 +494,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         water_heater.jacket_r_value = args[:dhw_water_heater_jacket_rvalue] unless args[:dhw_water_heater_jacket_rvalue].to_f == 0
       end
 
+      # HVAC
+      set_hvac_systems(runner, hpxml_bldg_existing, hpxml_bldg, args)
+
       # Electric Panel
       set_electric_panel(runner, hpxml_bldg_existing, hpxml_bldg, args)
 
@@ -533,6 +536,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       baseline_max_airflow_cfm = set_autosizing_limits(runner, hpxml_bldg_existing, hpxml_bldg, args) # before defaults so that capacity reflects the autosized limit
 
       Defaults.apply(runner, @hpxml, hpxml_bldg, weather, schedules_file: schedules_file)
+
+      # HVAC
+      # set_hvac_systems(runner, hpxml_bldg_existing, hpxml_bldg, args)
 
       # Sizing is duct limited
       set_adjusted_fan_efficiency(runner, args, hpxml_bldg, baseline_max_airflow_cfm) # after defaults so that we have airflow cfm
@@ -720,6 +726,43 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       schedule_file = File.join(File.dirname(@hpxml_path), schedule_file)
     end
     return schedule_file
+  end
+
+  def set_hvac_systems(_runner, hpxml_bldg_existing, hpxml_bldg, _args)
+    return if hpxml_bldg_existing.nil?
+
+    heating_system_existing = hpxml_bldg_existing.heating_systems.find { |hs| hs.primary_system }
+    heating_system = hpxml_bldg.heating_systems.find { |hs| hs.primary_system }
+
+    if !heating_system_existing.nil? && !heating_system.nil?
+
+      # hse_clone = heating_system_existing.clone
+      # hs_clone = heating_system.clone
+
+      # [hse_clone, hs_clone].each do |obj|
+      # obj.to_h.keys.each do |attr|
+      # if attr.end_with?('_isdefaulted') ||
+      # (['id', 'location', 'distribution_system_idref', 'heating_capacity', 'heating_autosizing_factor', 'heating_design_airflow_cfm', 'fan_watts_per_cfm'].include?(attr.to_s))
+      # obj.send("#{attr}=", nil)
+      # end
+      # end
+      # end
+
+      same = true
+      [:heating_system_type, :heating_system_fuel, :heating_efficiency_afue, :heating_efficiency_percent, :fraction_heat_load_served].each do |attr|
+        if heating_system_existing.to_h[attr] != heating_system.to_h[attr]
+          same = false
+          break
+        end
+      end
+
+      if same
+        heating_system.heating_capacity = heating_system_existing.heating_capacity
+        heating_system.heating_autosizing_factor = heating_system_existing.heating_autosizing_factor
+      end
+    end
+
+    # TODO
   end
 
   def set_electric_panel(runner, hpxml_bldg_existing, hpxml_bldg, args)
