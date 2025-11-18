@@ -770,7 +770,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     else
       garage_door_power = 0
     end
-
+    puts "args[:electric_panel_load_other_power_rating] #{args[:electric_panel_load_other_power_rating]}"
     electric_panel_load_other_power_rating = args[:electric_panel_load_other_power_rating].to_f
     electric_panel_load_other_power_rating += microwave_power
     electric_panel_load_other_power_rating += garbage_disposal_power
@@ -785,6 +785,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     electric_panel = hpxml_bldg.electric_panels[0]
     branch_circuits = electric_panel.branch_circuits
     service_feeders = electric_panel.service_feeders
+
+    get_panel_new_loads(args, hpxml_bldg_existing, hpxml_bldg)
 
     hpxml_bldg.heating_systems.each do |heating_system|
       next if heating_system.is_shared_system
@@ -955,7 +957,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                           is_new_load: args[:electric_panel_load_misc_plug_loads_vehicle_new_load],
                           component_idrefs: [ev_charger.id])
     end
-
+    puts "args[:electric_panel_load_other_new_load] #{args[:electric_panel_load_other_new_load]}"
     if !electric_panel_load_other_power_rating.nil? || !args[:electric_panel_load_other_new_load].nil?
       branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
                           occupied_spaces: 1,
@@ -966,6 +968,42 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                           is_new_load: args[:electric_panel_load_other_new_load],
                           component_idrefs: [])
     end
+  end
+
+  def get_panel_new_loads(args, hpxml_bldg_existing, hpxml_bldg)
+    return if hpxml_bldg_existing.nil?
+
+    # Try 1: compare existence of old electric systems to new electric systems
+    heating_electric = (hpxml_bldg_existing.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && hs.primary_system && (hs.fraction_heat_load_served > 0) && !hs.is_shared_system } > 0) ||
+                       (hpxml_bldg_existing.heat_pumps.count { |hp| (hp.heat_pump_fuel == HPXML::FuelTypeElectricity) && (hp.fraction_heat_load_served > 0) && !hp.is_shared_system } > 0)
+
+    cooling_electric = (hpxml_bldg_existing.cooling_systems.count { |cs| (cs.cooling_system_fuel == HPXML::FuelTypeElectricity) && (cs.fraction_cool_load_served > 0) && !cs.is_shared_system } > 0) ||
+                       (hpxml_bldg_existing.heat_pumps.count { |hp| (hp.heat_pump_fuel == HPXML::FuelTypeElectricity) && (hp.fraction_cool_load_served > 0) && !hp.is_shared_system } > 0)
+
+    args[:electric_panel_load_heating_system_new_load] = !heating_electric && (hpxml_bldg.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && hs.primary_system && (hs.fraction_heat_load_served > 0) && !hs.is_shared_system } > 0)
+    args[:electric_panel_load_cooling_system_new_load] = !cooling_electric && (hpxml_bldg.cooling_systems.count { |cs| (cs.cooling_system_fuel == HPXML::FuelTypeElectricity) && (cs.fraction_cool_load_served > 0) && !cs.is_shared_system } > 0)
+    args[:electric_panel_load_heat_pump_new_load] = !(heating_electric && cooling_electric) && (hpxml_bldg.heat_pumps.count { |hp| (hp.heat_pump_fuel == HPXML::FuelTypeElectricity) && !hp.is_shared_system } > 0)
+    args[:electric_panel_load_heating_system_2_new_load] = (hpxml_bldg_existing.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && (hs.fraction_heat_load_served > 0) && !hs.primary_system } == 0) && (hpxml_bldg.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && (hs.fraction_heat_load_served > 0) && !hs.primary_system } > 0)
+    args[:electric_panel_load_mech_vent_fan_new_load] = (hpxml_bldg_existing.ventilation_fans.size { |vf| vf.used_for_whole_building_ventilation } == 0) && (hpxml_bldg.ventilation_fans.count { |vf| vf.used_for_whole_building_ventilation } > 0)
+    args[:electric_panel_load_whole_house_fan_new_load] = (hpxml_bldg_existing.ventilation_fans.size { |vf| vf.used_for_seasonal_cooling_load_reduction } == 0) && (hpxml_bldg.ventilation_fans.count { |vf| vf.used_for_seasonal_cooling_load_reduction } > 0)
+    args[:electric_panel_load_kitchen_fans_new_load] = (hpxml_bldg_existing.ventilation_fans.size { |vf| vf.fan_location == HPXML::LocationKitchen } == 0) && (hpxml_bldg.ventilation_fans.count { |vf| vf.fan_location == HPXML::LocationKitchen } > 0)
+    args[:electric_panel_load_bathroom_fans_new_load] = (hpxml_bldg_existing.ventilation_fans.size { |vf| vf.fan_location == HPXML::LocationBath } == 0) && (hpxml_bldg.ventilation_fans.count { |vf| vf.fan_location == HPXML::LocationBath } > 0)
+    args[:electric_panel_load_electric_water_heater_new_load] = (hpxml_bldg_existing.water_heating_systems.count { |whs| whs.fuel_type == HPXML::FuelTypeElectricity } == 0) && (hpxml_bldg.water_heating_systems.count { |whs| whs.fuel_type == HPXML::FuelTypeElectricity } > 0)
+    args[:electric_panel_load_electric_clothes_dryer_new_load] = (hpxml_bldg_existing.clothes_dryers.count { |cd| cd.fuel_type == HPXML::FuelTypeElectricity } == 0) && (hpxml_bldg.clothes_dryers.count { |cd| cd.fuel_type == HPXML::FuelTypeElectricity } > 0)
+    args[:electric_panel_load_dishwasher_new_load] = (hpxml_bldg_existing.dishwashers.size == 0) && (hpxml_bldg.dishwashers.size > 0)
+    args[:electric_panel_load_electric_cooking_range_new_load] = (hpxml_bldg_existing.cooking_ranges.count { |cr| cr.fuel_type == HPXML::FuelTypeElectricity } == 0) && (hpxml_bldg.cooking_ranges.count { |cr| cr.fuel_type == HPXML::FuelTypeElectricity } > 0)
+    args[:electric_panel_load_misc_plug_loads_well_pump_new_load] = (hpxml_bldg_existing.plug_loads.count { |pl| pl.plug_load_type == HPXML::PlugLoadTypeWellPump } == 0) && (hpxml_bldg.plug_loads.count { |pl| pl.plug_load_type == HPXML::PlugLoadTypeWellPump } > 0)
+    args[:electric_panel_load_misc_plug_loads_vehicle_new_load] = (hpxml_bldg_existing.plug_loads.count { |pl| pl.plug_load_type == HPXML::PlugLoadTypeElectricVehicleCharging } == 0) && (hpxml_bldg.plug_loads.count { |pl| pl.plug_load_type == HPXML::PlugLoadTypeElectricVehicleCharging } > 0)
+    args[:electric_panel_load_pool_pump_new_load] = (hpxml_bldg_existing.pools.size == 0) && (hpxml_bldg.pools.size > 0)
+    args[:electric_panel_load_electric_pool_heater_new_load] = (hpxml_bldg_existing.pools.count { |pl| [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(pl.heater_type) } == 0) && (hpxml_bldg.pools.count { |pl| [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(pl.heater_type) } > 0)
+    args[:electric_panel_load_permanent_spa_pump_new_load] = (hpxml_bldg_existing.permanent_spas.size == 0) && (hpxml_bldg.permanent_spas.size > 0)
+    args[:electric_panel_load_electric_permanent_spa_heater_new_load] = (hpxml_bldg_existing.permanent_spas.count { |ps| [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(ps.heater_type) } == 0) && (hpxml_bldg.permanent_spas.count { |ps| [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(ps.heater_type) } > 0)
+    args[:electric_panel_load_other_new_load] = false # FIXME?
+
+    # Try 2: compare old service feeders to new service feeders
+    # panel_existing = hpxml_bldg_existing.electric_panels[0]
+    # panel = hpxml_bldg.electric_panels[0]
+    # TODO
   end
 
   def get_heating_and_cooling_seasons(weather)
