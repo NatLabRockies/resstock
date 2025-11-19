@@ -462,44 +462,7 @@ references:
     - not: Heating Fuel|Wood
     - not: Heating Fuel|Other Fuel
     - not: Heating Fuel|None
-
-  room_ac_apply_logic: &room_ac_apply_logic
-  # TODO - don't think the option and apply logic stuff is written correctly
-    option:
-    apply_logic:
-    - and:
-      - HVAC Cooling Type|None #apply only to dwelling units that have no air conditioning
-      - HVAC Cooling Partial Space Conditioning|None #apply to dwelling units that are 0% conditioned
-    - or:
-        - not:
-          - or:
-            - HVAC Cooling Type|Central AC
-            - HVAC Cooling Type|Ducted Heat Pump
-            - HVAC Cooling Type|Evaporative or Swamp Cooler
-            - HVAC Cooling Type|Non-ducted Heat Pump
-            - HVAC Cooling Type|Room AC
-        - not:
-          - or:
-            - HVAC Cooling Partial Space Conditioning|<10% Conditioned
-            - HVAC Cooling Partial Space Conditioning|20% Conditioned
-            - HVAC Cooling Partial Space Conditioning|40% Conditioned
-            - HVAC Cooling Partial Space Conditioning|60% Conditioned
-            - HVAC Cooling Partial Space Conditioning|80% Conditioned
-            - HVAC Cooling Partial Space Conditioning|100% Conditioned
-        - and: #make the dwelling unit 20% partially conditioned if it is over 4000 ft2
-          - HVAC Cooling Partial Space Conditioning|20% Conditioned
-          - or:
-            - Geometry Floor Area Bin|4000+
-        - and: #make the dwelling unit 40% partially conditioned if it is between 1500 and 4000 ft2
-          - HVAC Cooling Partial Space Conditioning|40% Conditioned
-          - or:
-            - Geometry Floor Area Bin|2500-3999
-            - Geometry Floor Area Bin|1500-2499
-        - and: #make the dwelling unit 60% partially conditioned if it is less than 1500 ft2
-          - HVAC Cooling Partial Space Conditioning|60% Conditioned
-          - or:
-            - Geometry Floor Area Bin|0-1499
-  
+    
   cchp_apply_logic: &typical_cold_climate_logic
     - HVAC Has Ducts|Yes # apply to homes with ducts who have non-shared HVAC or shared HVAC with room for a condenser
     - or:
@@ -595,9 +558,82 @@ references:
       - Misc Pool Heater|Natural Gas
       - Misc Hot Tub Spa|Natural Gas
 
+  room_ac_ceer_16_20%_conditioned_apply_logic: &room_ac_ceer_16_20%_conditioned_apply_logic
+  # TODO: need to add in HVAC Cooling Efficiency|Room AC, CEER 16.0 somewhere
+    option: HVAC Cooling Partial Space Conditioning|20% Conditioned
+    apply_logic:
+    - or:
+      - HVAC Cooling Type|None
+    - or:
+      - HVAC Cooling Partial Space Conditioning|None
+    - or:
+      - Geometry Floor Area Bin|4000+
+  
+  room_ac_ceer_16_40%_conditioned_apply_logic: &room_ac_ceer_16_40%_conditioned_apply_logic
+     # TODO: need to add in HVAC Cooling Efficiency|Room AC, CEER 16.0 somewhere
+    option: HVAC Cooling Partial Space Conditioning|40% Conditioned
+    apply_logic:
+    - or:
+      - HVAC Cooling Type|None
+    - or:
+      - HVAC Cooling Partial Space Conditioning|None
+    - or:
+      - Geometry Floor Area Bin|2500-3999
+      - Geometry Floor Area Bin|1500-2499
+
+  room_ac_ceer_16_60%_conditioned_apply_logic: &room_ac_ceer_16_60%_conditioned_apply_logic
+     # TODO: need to add in HVAC Cooling Efficiency|Room AC, CEER 16.0 somewhere
+    option: HVAC Cooling Partial Space Conditioning|60% Conditioned
+    apply_logic:
+    - or:
+      - HVAC Cooling Type|None
+    - or:
+      - HVAC Cooling Partial Space Conditioning|None
+    - or:
+      - Geometry Floor Area Bin|0-1499
+  
+  room_ac_ceer_16_2026_reference_case_apply_logic: &room_ac_ceer_16_2026_reference_case_apply_logic
+    option: HVAC Cooling Efficiency|Room AC, CEER 16.0
+    apply_logic:
+    - or:
+      - HVAC Cooling Efficiency|Room AC, CEER 8.4
+      - HVAC Cooling Efficiency|Room AC, CEER 9.7
+      - HVAC Cooling Efficiency|Room AC, CEER 10.6
+      - HVAC Cooling Efficiency|Room AC, CEER 11.0
+      - HVAC Cooling Efficiency|Room AC, CEER 11.9
+  
+  natural_gas_boiler_84%_2026_reference_case_apply_logic: &natural_gas_boiler_84%_2026_reference_case_apply_logic
+    option: HVAC Heating Efficiency|Fuel Boiler, 84% AFUE
+    apply_logic:
+    - or:
+      - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+      - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+      - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+    - or:
+      - Heating Fuel|Natural Gas
+  
+  fuel_oil_boiler_86%_2026_reference_case_apply_logic: &fuel_oil_boiler_86%_2026_reference_case_apply_logic
+    option: HVAC Heating Efficiency|Fuel Boiler, 86% AFUE
+    apply_logic:
+    - or:
+      - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+      - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+      - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+    - or:
+      - Heating Fuel|Fuel Oil
+
+  natural_gas_wall_furnace_75%_2026_reference_case_apply_logic: &natural_gas_wall_furnace_75%_2026_reference_case_apply_logic
+    option: HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 75% AFUE
+    apply_logic:
+    - or:
+      - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE
+      - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
+    - or:
+      - Heating Fuel|Natural Gas
+
 ### Standard Data Release - Residential -- ###
 upgrades:
-  ### -- HVAC: Furnaces -- ###
+  ### -- HVAC: Furnaces, Boilers, and Reference Cases -- ###
   - upgrade_name: Natural Gas Furnace 95% AFUE for All Dwellings with Ducts
     package_apply_logic: *remove_heating_shared_other_wood
     options:
@@ -630,46 +666,7 @@ upgrades:
             - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
 
-  - upgrade_name: Reference Non-ducted Space Heating and Air Conditioning Circa 2026
-    package_apply_logic:
-      and:
-        - *fossil_fuel_or_electricity #do we need this if specifically call out heating fuels below?
-    options:
-    # Natural gas boilers, 84% AFUE
-      - option: HVAC Heating Efficiency|Fuel Boiler, 84% AFUE
-        apply_logic:
-        -  Heating Fuel|Natural Gas
-        - or:
-          - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
-          - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
-          - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-    # Fuel oil boilers, 86% AFUE
-      - option: HVAC Heating Efficiency|Fuel Boiler, 86% AFUE
-        apply_logic:
-        - Heating Fuel|Fuel Oil
-        - or:
-          - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
-          - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
-          - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-    # Room AC, CEER 16.0
-      - option: HVAC Cooling Efficiency|Room AC, CEER 16.0
-        apply_logic:
-        - or:
-          - HVAC Cooling Efficiency|Room AC, CEER 8.4
-          - HVAC Cooling Efficiency|Room AC, CEER 9.7
-          - HVAC Cooling Efficiency|Room AC, CEER 10.6
-          - HVAC Cooling Efficiency|Room AC, CEER 11.0
-          - HVAC Cooling Efficiency|Room AC, CEER 11.9
-    # Wall/Floor furnace, 75% AFUE
-      - option: HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 75% AFUE
-        apply_logic:
-        - Heating Fuel|Natural Gas
-        - or:
-          - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE
-          - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE 
-
   - upgrade_name: Minimum Efficiency Furnaces and Air Conditioners Circa 2025
-  # TODO - remove like for like or "nograde" options
     package_apply_logic:
       and:
         - *fossil_fuel_or_electricity
@@ -782,13 +779,13 @@ upgrades:
             - HVAC Cooling Efficiency|AC, SEER2 9.5
             - HVAC Cooling Efficiency|AC, SEER2 12.4
 
-      # Room (window) AC
-      - option: HVAC Cooling Efficiency|Room AC, CEER 11.0
-        apply_logic:
-          - or:
-            - HVAC Cooling Efficiency|Room AC, CEER 8.4
-            - HVAC Cooling Efficiency|Room AC, CEER 9.7
-            - HVAC Cooling Efficiency|Room AC, CEER 10.6
+  - upgrade_name: Reference Non-ducted Space Heating and Air Conditioning Circa 2026
+    package_apply_logic:
+      and:
+      - *natural_gas_boiler_84%_2026_reference_case_apply_logic
+      - *fuel_oil_boiler_86%_2026_reference_case_apply_logic
+      - *natural_gas_wall_furnace_75%_2026_reference_case_apply_logic
+      - *room_ac_ceer_16_2026_reference_case_apply_logic
 
   ### -- HVAC: Air Source Heat Pumps -- ###
   - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump Circa 2025
@@ -798,31 +795,6 @@ upgrades:
         apply_logic: *typical_cold_climate_logic
 
       - option: HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted
-        apply_logic: *typical_cold_climate_logic
-
-      - option: HVAC Cooling Efficiency|Ducted Heat Pump
-        apply_logic: *typical_cold_climate_logic
-
-      - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
-        apply_logic: *typical_cold_climate_logic
-
-      - option: Heating Fuel|Electricity
-        apply_logic:
-            and:
-              - *typical_cold_climate_logic
-              - not: Heating Fuel|Electricity
-
-      - option: HVAC Heating Type And Fuel|Electricity ASHP
-        apply_logic:
-            and:
-              - *typical_cold_climate_logic
-              - not: HVAC Heating Type And Fuel|Electricity ASHP
-
-  - upgrade_name: Air Source Heat Pump SEER2 14.3, HSPF2 7.5
-  # TODO - add duct sizing limitation
-    package_apply_logic: *fossil_fuel_or_electricity
-    options:
-      - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2
         apply_logic: *typical_cold_climate_logic
 
       - option: HVAC Cooling Efficiency|Ducted Heat Pump
@@ -864,9 +836,38 @@ upgrades:
       - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
         apply_logic: *dual_fuel_system_warm_climate
 
+  - upgrade_name: Air Source Heat Pump SEER2 14.3, HSPF2 7.5
+  # TODO - add duct sizing limitation
+    package_apply_logic: *fossil_fuel_or_electricity
+    options:
+      - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic: *typical_cold_climate_logic
+
+      - option: Heating Fuel|Electricity
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: Heating Fuel|Electricity
+              
+      - option: HVAC Heating Type And Fuel|Electricity ASHP
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: HVAC Heating Type And Fuel|Electricity ASHP
+
   ### -- HVAC: Room AC -- ###
   - upgrade_name: Room AC
-    package_apply_logic: *room_ac_apply_logic
+    package_apply_logic:
+    - and:
+        - *room_ac_ceer_16_20%_conditioned_apply_logic
+        - *room_ac_ceer_16_40%_conditioned_apply_logic
+        - *room_ac_ceer_16_60%_conditioned_apply_logic
     options:
       - option: HVAC Cooling Efficiency|Room AC, CEER 16.0
       
