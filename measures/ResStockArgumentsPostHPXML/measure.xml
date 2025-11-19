@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>2ea34d5c-dcfa-41a3-ae83-4fc1c6ff1ba1</version_id>
-  <version_modified>2025-11-19T22:10:12Z</version_modified>
+  <version_id>37a7272c-3167-460e-8f95-34257db9cce9</version_id>
+  <version_modified>2025-11-19T23:24:54Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -11857,6 +11857,15 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>heat_pump_backup_heating_autosizing_factor</name>
+      <display_name>HVAC: Heat Pump Backup Heating Autosizing Factor</display_name>
+      <description>The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.</description>
+      <type>Double</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>heat_pump_rated_cfm_per_ton</name>
       <display_name>HVAC: Heat Pump Rated CFM Per Ton</display_name>
       <description>The rated cfm per ton of the heat pump.</description>
@@ -12941,7 +12950,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>BD497DBA</checksum>
+      <checksum>81DDDBE5</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -12966,12 +12975,6 @@
       <filetype>json</filetype>
       <usage_type>resource</usage_type>
       <checksum>055326E7</checksum>
-    </file>
-    <file>
-      <filename>duct_limited.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>094C4E1A</checksum>
     </file>
     <file>
       <filename>electrical_panel/electrical_panel_breaker_space.csv</filename>
@@ -13008,12 +13011,6 @@
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
       <checksum>632986B4</checksum>
-    </file>
-    <file>
-      <filename>existing_backup.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>76FFA9A5</checksum>
     </file>
     <file>
       <filename>hvac_flexibility/detailed_schedule_generator.rb</filename>
