@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>d56593e0-4dcd-42f4-adec-7ba12fe189e3</version_id>
-  <version_modified>2025-11-19T18:01:56Z</version_modified>
+  <version_id>129d876c-7474-4326-9f81-51614433c368</version_id>
+  <version_modified>2025-11-19T18:35:03Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -11767,6 +11767,15 @@
       </choices>
     </argument>
     <argument>
+      <name>heating_system_heating_autosizing_factor</name>
+      <display_name>HVAC: Heating System Heating Autosizing Factor</display_name>
+      <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
+      <type>Double</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>heating_system_rated_cfm_per_ton</name>
       <display_name>HVAC: Heating System Rated CFM Per Ton</display_name>
       <description>The rated cfm per ton of the heating system.</description>
@@ -11781,6 +11790,24 @@
       <description>The actual cfm per ton of the heating system.</description>
       <type>Double</type>
       <units>cfm/ton</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heating_system_2_heating_autosizing_factor</name>
+      <display_name>HVAC: Heating System 2 Heating Autosizing Factor</display_name>
+      <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
+      <type>Double</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>cooling_system_cooling_autosizing_factor</name>
+      <display_name>HVAC: Cooling System Cooling Autosizing Factor</display_name>
+      <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
+      <type>Double</type>
+      <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -11808,6 +11835,24 @@
       <description>The fraction of manufacturer recommended charge of the cooling system.</description>
       <type>Double</type>
       <units>Frac</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heat_pump_heating_autosizing_factor</name>
+      <display_name>HVAC: Heat Pump Heating Autosizing Factor</display_name>
+      <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
+      <type>Double</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heat_pump_cooling_autosizing_factor</name>
+      <display_name>HVAC: Heat Pump Cooling Autosizing Factor</display_name>
+      <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
+      <type>Double</type>
+      <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -12896,7 +12941,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>2125E5B1</checksum>
+      <checksum>3D1B9785</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

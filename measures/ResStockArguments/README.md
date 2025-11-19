@@ -1951,6 +1951,17 @@ The type of shared system.
 
 <br/>
 
+**HVAC: Heating System Heating Autosizing Factor**
+
+The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+
+- **Name:** ``heating_system_heating_autosizing_factor``
+- **Type:** ``Double``
+
+- **Required:** ``false``
+
+<br/>
+
 **HVAC: Heating System Rated CFM Per Ton**
 
 The rated cfm per ton of the heating system.
@@ -1972,6 +1983,28 @@ The actual cfm per ton of the heating system.
 - **Type:** ``Double``
 
 - **Units:** ``cfm/ton``
+
+- **Required:** ``false``
+
+<br/>
+
+**HVAC: Heating System 2 Heating Autosizing Factor**
+
+The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+
+- **Name:** ``heating_system_2_heating_autosizing_factor``
+- **Type:** ``Double``
+
+- **Required:** ``false``
+
+<br/>
+
+**HVAC: Cooling System Cooling Autosizing Factor**
+
+The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+
+- **Name:** ``cooling_system_cooling_autosizing_factor``
+- **Type:** ``Double``
 
 - **Required:** ``false``
 
@@ -2011,6 +2044,28 @@ The fraction of manufacturer recommended charge of the cooling system.
 - **Type:** ``Double``
 
 - **Units:** ``Frac``
+
+- **Required:** ``false``
+
+<br/>
+
+**HVAC: Heat Pump Heating Autosizing Factor**
+
+The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+
+- **Name:** ``heat_pump_heating_autosizing_factor``
+- **Type:** ``Double``
+
+- **Required:** ``false``
+
+<br/>
+
+**HVAC: Heat Pump Cooling Autosizing Factor**
+
+The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+
+- **Name:** ``heat_pump_cooling_autosizing_factor``
+- **Type:** ``Double``
 
 - **Required:** ``false``
 

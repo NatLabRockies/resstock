@@ -394,25 +394,29 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
       # HVAC systems
       hpxml_bldg.heating_systems.each do |heating_system|
-        next unless heating_system.primary_system
-
-        # Faults
-        if [HPXML::HVACTypeFurnace].include? heating_system.heating_system_type
-          if (not heating_system.distribution_system.nil?) && (not args[:heating_system_rated_cfm_per_ton].nil?) && (not args[:heating_system_actual_cfm_per_ton].nil?)
-            heating_system.airflow_defect_ratio = (args[:heating_system_actual_cfm_per_ton] - args[:heating_system_rated_cfm_per_ton]) / args[:heating_system_rated_cfm_per_ton]
+        if heating_system.primary_system
+          heating_system.heating_autosizing_factor = args[:heating_system_heating_autosizing_factor] unless args[:heating_system_heating_autosizing_factor].nil?
+          # Faults
+          if [HPXML::HVACTypeFurnace].include? heating_system.heating_system_type
+            if (not heating_system.distribution_system.nil?) && (not args[:heating_system_rated_cfm_per_ton].nil?) && (not args[:heating_system_actual_cfm_per_ton].nil?)
+              heating_system.airflow_defect_ratio = (args[:heating_system_actual_cfm_per_ton] - args[:heating_system_rated_cfm_per_ton]) / args[:heating_system_rated_cfm_per_ton]
+            end
           end
-        end
-        # Shared system
-        next unless ['Baseboard', 'FanCoil'].include? args[:hvac_heating_shared_system]
-
-        heating_system.is_shared_system = true
-        heating_system.number_of_units_served = hpxml_bldg.building_construction.number_of_units_in_building
-        if args[:hvac_heating_shared_system] == 'FanCoil'
-          heating_system.distribution_system.distribution_system_type = HPXML::HVACDistributionTypeAir
-          heating_system.distribution_system.air_type = HPXML::AirTypeFanCoil
+          # Shared system
+          if ['Baseboard', 'FanCoil'].include? args[:hvac_heating_shared_system]
+            heating_system.is_shared_system = true
+            heating_system.number_of_units_served = hpxml_bldg.building_construction.number_of_units_in_building
+            if args[:hvac_heating_shared_system] == 'FanCoil'
+              heating_system.distribution_system.distribution_system_type = HPXML::HVACDistributionTypeAir
+              heating_system.distribution_system.air_type = HPXML::AirTypeFanCoil
+            end
+          end
+        else
+          heating_system.heating_autosizing_factor = args[:heating_system_2_heating_autosizing_factor] unless args[:heating_system_2_heating_autosizing_factor].nil?
         end
       end
       hpxml_bldg.cooling_systems.each do |cooling_system|
+        cooling_system.cooling_autosizing_factor = args[:cooling_system_cooling_autosizing_factor] unless args[:cooling_system_cooling_autosizing_factor].nil?
         # Faults
         if [HPXML::HVACTypeCentralAirConditioner, HPXML::HVACTypeMiniSplitAirConditioner].include? cooling_system.cooling_system_type
           if (not cooling_system.distribution_system.nil?) && (not args[:cooling_system_rated_cfm_per_ton].nil?) && (not args[:cooling_system_actual_cfm_per_ton].nil?)
@@ -435,6 +439,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                                            cooling_system.compressor_type)
       end
       hpxml_bldg.heat_pumps.each do |heat_pump|
+        heat_pump.heating_autosizing_factor = args[:heat_pump_heating_autosizing_factor] unless args[:heat_pump_heating_autosizing_factor].nil?
+        heat_pump.cooling_autosizing_factor = args[:heat_pump_cooling_autosizing_factor] unless args[:heat_pump_cooling_autosizing_factor].nil?
+        heat_pump.backup_heating_autosizing_factor = args[:heat_pump_backup_heating_autosizing_factor] unless args[:heat_pump_backup_heating_autosizing_factor].nil?
         # Faults
         if [HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpMiniSplit, HPXML::HVACTypeHeatPumpPTHP, HPXML::HVACTypeHeatPumpRoom].include? heat_pump.heat_pump_type
           if (not heat_pump.distribution_system.nil?) && (not args[:heat_pump_rated_cfm_per_ton].nil?) && (not args[:heat_pump_actual_cfm_per_ton].nil?)

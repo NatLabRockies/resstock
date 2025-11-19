@@ -274,6 +274,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The type of shared system.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_heating_autosizing_factor', false)
+    arg.setDisplayName('HVAC: Heating System Heating Autosizing Factor')
+    arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_rated_cfm_per_ton', false)
     arg.setDisplayName('HVAC: Heating System Rated CFM Per Ton')
     arg.setDescription('The rated cfm per ton of the heating system.')
@@ -286,14 +291,15 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setUnits('cfm/ton')
     args << arg
 
-    heating_system_fuel_choices = OpenStudio::StringVector.new
-    heating_system_fuel_choices << HPXML::FuelTypeElectricity
-    heating_system_fuel_choices << HPXML::FuelTypeNaturalGas
-    heating_system_fuel_choices << HPXML::FuelTypeOil
-    heating_system_fuel_choices << HPXML::FuelTypePropane
-    heating_system_fuel_choices << HPXML::FuelTypeWoodCord
-    heating_system_fuel_choices << HPXML::FuelTypeWoodPellets
-    heating_system_fuel_choices << HPXML::FuelTypeCoal
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_2_heating_autosizing_factor', false)
+    arg.setDisplayName('HVAC: Heating System 2 Heating Autosizing Factor')
+    arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_cooling_autosizing_factor', false)
+    arg.setDisplayName('HVAC: Cooling System Cooling Autosizing Factor')
+    arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
+    args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_rated_cfm_per_ton', false)
     arg.setDisplayName('HVAC: Cooling System Rated CFM Per Ton')
@@ -313,6 +319,16 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setUnits('Frac')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_heating_autosizing_factor', false)
+    arg.setDisplayName('HVAC: Heat Pump Heating Autosizing Factor')
+    arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_cooling_autosizing_factor', false)
+    arg.setDisplayName('HVAC: Heat Pump Cooling Autosizing Factor')
+    arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_rated_cfm_per_ton', false)
     arg.setDisplayName('HVAC: Heat Pump Rated CFM Per Ton')
     arg.setDescription('The rated cfm per ton of the heat pump.')
@@ -330,12 +346,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The fraction of manufacturer recommended charge of the heat pump.')
     arg.setUnits('Frac')
     args << arg
-
-    heat_pump_backup_fuel_choices = OpenStudio::StringVector.new
-    heat_pump_backup_fuel_choices << HPXML::FuelTypeElectricity
-    heat_pump_backup_fuel_choices << HPXML::FuelTypeNaturalGas
-    heat_pump_backup_fuel_choices << HPXML::FuelTypeOil
-    heat_pump_backup_fuel_choices << HPXML::FuelTypePropane
 
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('hvac_heat_pump_backup_use_existing_system', false)
     arg.setDisplayName('HVAC: Heat Pump Backup Use Existing System')
