@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>97a9c58d-7372-410a-8c16-13928ac01dd8</version_id>
-  <version_modified>2025-11-17T20:28:19Z</version_modified>
+  <version_id>0ade9e34-b83a-417f-a912-14713e3185df</version_id>
+  <version_modified>2025-11-19T23:16:47Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -11803,45 +11803,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heating_system_2_fuel</name>
-      <display_name>HVAC: Heating System 2 Fuel Type</display_name>
-      <description>The fuel type of the second heating system.</description>
-      <type>Choice</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>electricity</value>
-          <display_name>electricity</display_name>
-        </choice>
-        <choice>
-          <value>natural gas</value>
-          <display_name>natural gas</display_name>
-        </choice>
-        <choice>
-          <value>fuel oil</value>
-          <display_name>fuel oil</display_name>
-        </choice>
-        <choice>
-          <value>propane</value>
-          <display_name>propane</display_name>
-        </choice>
-        <choice>
-          <value>wood</value>
-          <display_name>wood</display_name>
-        </choice>
-        <choice>
-          <value>wood pellets</value>
-          <display_name>wood pellets</display_name>
-        </choice>
-        <choice>
-          <value>coal</value>
-          <display_name>coal</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
       <name>heating_system_2_heating_capacity</name>
       <display_name>HVAC: Heating System 2 Heating Capacity</display_name>
       <description>The output heating capacity of the second heating system.</description>
@@ -11986,42 +11947,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heat_pump_backup_fuel</name>
-      <display_name>HVAC: Heat Pump Backup Fuel Type</display_name>
-      <description>The backup fuel type of the heat pump.</description>
-      <type>Choice</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>electricity</value>
-          <display_name>electricity</display_name>
-        </choice>
-        <choice>
-          <value>natural gas</value>
-          <display_name>natural gas</display_name>
-        </choice>
-        <choice>
-          <value>fuel oil</value>
-          <display_name>fuel oil</display_name>
-        </choice>
-        <choice>
-          <value>propane</value>
-          <display_name>propane</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_heating_efficiency</name>
-      <display_name>HVAC: Heat Pump Backup Rated Efficiency</display_name>
-      <description>The backup rated efficiency value of the heat pump.</description>
-      <type>Double</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>hvac_heat_pump_backup_use_existing_system</name>
       <display_name>HVAC: Heat Pump Backup Use Existing System</display_name>
       <description>Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system. This argument is only applicable for heat pump upgrades.</description>
@@ -12058,15 +11983,6 @@
           <display_name>false</display_name>
         </choice>
       </choices>
-    </argument>
-    <argument>
-      <name>hvac_blower_fan_watts_per_cfm</name>
-      <display_name>HVAC: Blower Fan Efficiency</display_name>
-      <description>The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems)..</description>
-      <type>Double</type>
-      <units>W/CFM</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>hvac_perf_data_heating_outdoor_temperatures</name>
@@ -13088,7 +13004,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>2F7F183A</checksum>
+      <checksum>A2A94FF5</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -13113,12 +13029,6 @@
       <filetype>json</filetype>
       <usage_type>resource</usage_type>
       <checksum>055326E7</checksum>
-    </file>
-    <file>
-      <filename>duct_limited.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>094C4E1A</checksum>
     </file>
     <file>
       <filename>electrical_panel/electrical_panel_breaker_space.csv</filename>
@@ -13155,12 +13065,6 @@
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
       <checksum>632986B4</checksum>
-    </file>
-    <file>
-      <filename>existing_backup.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>76FFA9A5</checksum>
     </file>
     <file>
       <filename>hvac_flexibility/detailed_schedule_generator.rb</filename>

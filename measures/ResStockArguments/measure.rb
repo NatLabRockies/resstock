@@ -297,20 +297,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setUnits('cfm/ton')
     args << arg
 
-    heating_system_fuel_choices = OpenStudio::StringVector.new
-    heating_system_fuel_choices << HPXML::FuelTypeElectricity
-    heating_system_fuel_choices << HPXML::FuelTypeNaturalGas
-    heating_system_fuel_choices << HPXML::FuelTypeOil
-    heating_system_fuel_choices << HPXML::FuelTypePropane
-    heating_system_fuel_choices << HPXML::FuelTypeWoodCord
-    heating_system_fuel_choices << HPXML::FuelTypeWoodPellets
-    heating_system_fuel_choices << HPXML::FuelTypeCoal
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heating_system_2_fuel', heating_system_fuel_choices, false)
-    arg.setDisplayName('HVAC: Heating System 2 Fuel Type')
-    arg.setDescription('The fuel type of the second heating system.')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_2_heating_capacity', false)
     arg.setDisplayName('HVAC: Heating System 2 Heating Capacity')
     arg.setDescription('The output heating capacity of the second heating system.')
@@ -402,22 +388,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setUnits('Frac')
     args << arg
 
-    heat_pump_backup_fuel_choices = OpenStudio::StringVector.new
-    heat_pump_backup_fuel_choices << HPXML::FuelTypeElectricity
-    heat_pump_backup_fuel_choices << HPXML::FuelTypeNaturalGas
-    heat_pump_backup_fuel_choices << HPXML::FuelTypeOil
-    heat_pump_backup_fuel_choices << HPXML::FuelTypePropane
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heat_pump_backup_fuel', heat_pump_backup_fuel_choices, false)
-    arg.setDisplayName('HVAC: Heat Pump Backup Fuel Type')
-    arg.setDescription('The backup fuel type of the heat pump.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_efficiency', false)
-    arg.setDisplayName('HVAC: Heat Pump Backup Rated Efficiency')
-    arg.setDescription('The backup rated efficiency value of the heat pump.')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('hvac_heat_pump_backup_use_existing_system', false)
     arg.setDisplayName('HVAC: Heat Pump Backup Use Existing System')
     arg.setDescription("Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is '#{HPXML::HeatPumpBackupTypeIntegrated}', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is '#{HPXML::HeatPumpBackupTypeSeparate}', heating_system_2_xxx arguments are assigned values based on the existing heating system. This argument is only applicable for heat pump upgrades.")
@@ -426,12 +396,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('hvac_heat_pump_sizing_is_duct_limited', false)
     arg.setDisplayName('HVAC: Heat Pump Sizing Is Duct Limited')
     arg.setDescription('Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('hvac_blower_fan_watts_per_cfm', false)
-    arg.setDisplayName('HVAC: Blower Fan Efficiency')
-    arg.setDescription('The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems)..')
-    arg.setUnits('W/CFM')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('hvac_perf_data_heating_outdoor_temperatures', false)
