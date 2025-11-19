@@ -145,7 +145,7 @@ jobs:
 
   build-documentation:
     runs-on: ubuntu-24.04
-    needs: format-files
+    needs: [format-files]
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -173,10 +173,10 @@ jobs:
           pip install changelog
           make html SPHINXOPTS="-W --keep-going -n"
 
-      - name: Technical reference guide tables
+      - name: Technical reference guide sections
         run: |
           sudo gem install oga
-          ruby docs/technical_reference_guide/tables/create_characteristics_tex.rb
+          ruby docs/technical_reference_guide/characteristics/create_characteristics_tex.rb
 
       - name: Build technical reference guide
         uses: dante-ev/latex-action@2023-A
@@ -528,7 +528,7 @@ jobs:
       - name: Generate minimal buildstock and other files
         run: |
           cd project_national/resources
-          python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_tmy3.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --output_prefix sdr_
+          python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_amy2018.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --output_prefix sdr_
           rm national_550ksamples.csv
           rm national_550ksamples.csv.gz
 
@@ -650,11 +650,11 @@ jobs:
             EXTRA_ARGS="--replace_existing"
           else
             echo "Not on develop branch, removing AWS config from YAML"
-            python .github/scripts/remove_aws_from_yaml.py project_national/sdr_upgrades_tmy3.yml
+            python .github/scripts/remove_aws_from_yaml.py project_national/sdr_upgrades_amy2018.yml
           fi
 
           # Run buildstockbatch and tee output to a log file
-          buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml 2>&1 | tee buildstock_local.log
+          buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_amy2018.yml 2>&1 | tee buildstock_local.log
 
           # Check the log for schema mismatch warnings and fail if any are present
           SCHEMA_MISMATCH_PATTERN='^Missing columns in output data|^Extra columns in output data'
@@ -666,28 +666,28 @@ jobs:
 
       - name: Unzip results
         run: |
-          gunzip -v project_national/sdr_upgrades_tmy3/results_csvs_pub/*.csv.gz
-          gunzip -v project_national/sdr_upgrades_tmy3/results_csvs/*.csv.gz
+          gunzip -v project_national/sdr_upgrades_amy2018/results_csvs_pub/*.csv.gz
+          gunzip -v project_national/sdr_upgrades_amy2018/results_csvs/*.csv.gz
 
       - name: Upload buildstockbatch results - published
         uses: actions/upload-artifact@v4
         with:
           name: buildstockbatch_results_sdr_published_csvs
-          path: project_national/sdr_upgrades_tmy3/results_csvs_pub
+          path: project_national/sdr_upgrades_amy2018/results_csvs_pub
           if-no-files-found: error
 
       - name: Upload buildstockbatch results - raw
         uses: actions/upload-artifact@v4
         with:
           name: buildstockbatch_results_sdr_raw_csvs
-          path: project_national/sdr_upgrades_tmy3/results_csvs
+          path: project_national/sdr_upgrades_amy2018/results_csvs
           if-no-files-found: error
 
       - name: Check for failed simulations
         run: |
           echo "Checking for failed simulations in results files..."
           FAILED=false
-          for csv_file in project_national/sdr_upgrades_tmy3/results_csvs/*.csv; do
+          for csv_file in project_national/sdr_upgrades_amy2018/results_csvs/*.csv; do
             python -m resstockpostproc.get_failures "$csv_file" --verbose --exit-code || FAILED=true
           done
           if [ "$FAILED" = true ]; then
@@ -700,7 +700,8 @@ jobs:
           branch_name="${{ github.head_ref || github.ref_name }}"
           git checkout resources/options_lookup.tsv
           git pull --ff-only --no-tags --depth=3 origin $branch_name
-          cp -r project_national/sdr_upgrades_tmy3/results_csvs_pub/* test/base_results/upgrades/sdr_annual
+          rm -rf test/base_results/upgrades/sdr_annual/*
+          cp -r project_national/sdr_upgrades_amy2018/results_csvs_pub/* test/base_results/upgrades/sdr_annual
           git add test/base_results/upgrades/sdr_annual
           git status
           if [[ $(git diff --cached --exit-code) ]]; then

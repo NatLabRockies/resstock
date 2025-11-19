@@ -1,8 +1,8 @@
 \chapter{Housing Characteristics and Inputs} \label{sec:resstock_inputs}
 
-In this section, we overview each of the input housing characteristics for ResStock in detail including ResStock options, associated ResStock arguments, and the details of each of those arguments. In ResStock, each input characteristic gets its own input file. The full set of housing characteristic input files is available in the main \href{https://github.com/NREL/resstock/tree/v3.3.0/project_national}{ResStock GitHub repository}.  We discuss each of these input files as well as the general theory for how different systems and components are modeled. Within each section we also provide the national-level stock saturation of each option within a characteristic. These top-level saturations collapse much of the detail and nuance in ResStock's probability distributions, but the saturations serve to give a sense of how common different options are, generally, in the United States.
+In this section, we overview each of the input housing characteristics for ResStock in detail including options and associated properties. In ResStock, each input characteristic gets its own input file. The full set of housing characteristic input files is available in the main \href{https://github.com/NREL/resstock/releases/tag/2025_Release_1}{ResStock GitHub repository} in the project national folder. We discuss each of these input files as well as the general theory for how different systems and components are modeled. Within each section we also provide the national-level stock saturation of each option within a characteristic. These top-level saturations collapse much of the detail and nuance in ResStock's probability distributions, but the saturations serve to give a sense of how common different options are, generally, in the United States.
 
-We organize this discussion by the major types of inputs: Geography, Geometry, Envelope, HVAC, Water Heating, Appliances, Lighting, Plug Loads, and Household characteristics. For each of these major sections, we discuss ResStock's approach to these input types, highlighting where it might vary from OS-HPXML. In the argument tables, a selection of ``auto'' means that the value is being calculated or defaulted in OS-HPXML. Additionally, we discuss weather inputs to ResStock, which is specified separately from the main input files.
+We organize this discussion by the major types of inputs: Geography, Geometry, Envelope, HVAC, Water Heating, Appliances, Lighting, Plug Loads, and Household characteristics. For each of these major sections, we discuss ResStock's approach to these input types, highlighting where it might vary from OS-HPXML. Additionally, we discuss weather inputs to ResStock, which is specified separately from the main input files.
 
 \section{Geography}
 ResStock provides a wide range of geographic inputs and outputs. These fields allow for detailed input probability distributions for the U.S.~residential building stock characterization. These geography fields are also useful for aggregating and analyzing ResStock outputs.
@@ -35,315 +35,38 @@ This section contains ResStock characteristics based on the U.S.~Census geograph
     \item PUMA Metro Status.
 \end{itemize}
 
-
 \subsubsection{Census Region}
-\paragraph{Description}
-The U.S.~Census Region where the sample is located. The regions are a collection of U.S.~Census Divisions.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item
-  Spatial definitions are from the U.S.~Census Bureau as of July 1,
-  2015.
-\item
-  Unit counts are from the American Community Survey 5-year 2016.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-\item Census Division.
-\end{itemize}
-
-\paragraph{Options}
-The options are the four U.S.~Census Regions: Midwest, Northeast, South, and West.
-
-\paragraph{Distribution Assumption(s)}
-No assumptions are made.
+\input{characteristics/Census Region}
 
 \subsubsection{Census Division}
-\paragraph{Description}
-The U.S.~Census Division where the sample is located. The regions are a collection of U.S.~states.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item
-  Spatial definitions are from the U.S.~Census Bureau as of July 1,
-  2015.
-\item
-  Unit counts are from the American Community Survey 5-year 2016.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-\item State.
-\end{itemize}
-
-\paragraph{Options}
-The option are the U.S.~Census divisions: East North Central, East South Central, Middle Atlantic, Mountain, New England, Pacific, South Atlantic, West North Central, and West South Central.
-
-\paragraph{Distribution Assumption(s)}
-No assumptions are made.
+\input{characteristics/Census Division}
 
 \subsubsection{State}
-\paragraph{Description}
-The U.S.~state where the sample is located. In ResStock, States are defined by a collection of Counties.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item
-  Spatial definitions are from the U.S.~Census Bureau as of July 1,
-  2015.
-\item
-  Unit counts are from the American Community Survey 5-year 2016.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-\item County.
-\end{itemize}
-
-\paragraph{Options}
-The options for each State are the collection of postal abbreviations (e.g., AL, AK, AR). Each option sets the \texttt{site\_state\_code}, \texttt{extra\_refrigerator\_usage\_multiplier}, and \texttt{freezer\_usage\_multiplier} arguments. The \texttt{site\_state\_code} argument choices are also the State abbreviations. An example option and argument assignment for Alabama is as follows: the option name is AL and \texttt{site\_state\_code}=AL. The rest of the States follow this structure.
-
-\input{tables/arguments/State}
-
-\paragraph{Distribution Assumption(s)}
-No assumptions are made.
-
+\input{characteristics/State}
 
 \subsubsection{County}
-\paragraph{Description}
-The U.S.~County where the sample is located.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item
-  Spatial definitions are from the U.S.~Census Bureau as of July 1,
-  2015.
-\item
-  Unit counts are from the American Community Survey 5-year 2016.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item County and PUMA.
-\end{itemize}
-
-\paragraph{Options}
-The County characteristic options are structured using the State name and County name. An example of the option corresponding to Denver County in Colorado would be ``CO, Denver County''. The ResStock arguments \texttt{simulation\_control\_daylight\_saving\_enabled}, \texttt{site\_zip\_code}, \texttt{site\_time\_zone\_utc\_offset}, and \texttt{weather\_station\_epw\_filepath} are not constant across all the County options.
-
-The \texttt{location\_zip\_code} argument is assigned by using a single zip code for the entire county.
-
-The \texttt{location\_epw\_filepath} argument is ``../../../weather/<County GISJOIN>.epw'' where <County GISJOIN> is the NHGIS GISJOIN value for the county. The NHGISJOIN for a county always starts with the letter ``G'' followed by the state's two-digit FIPS, a ``0,'' and then the County 3-digit FIPS code. An example of this argument assignment for the option ``CO, Denver County'' is \texttt{location\_epw\_filepath}=../../../weather/G0800310.epw.
-
-\input{tables/arguments/County}
-
-\paragraph{Distribution Assumption(s)}
-No assumptions are made.
+\input{characteristics/County}
 
 \subsubsection{Public Use Microdata Area}
-\paragraph{Description}
-The Public Use Microdata Area (PUMA) from 2010 U.S.~Census that the sample is located. PUMAs are a collection of census tracts that do not cross state boundaries. They contain no fewer than 100,000 people and typically represent no more than 200,000 people. PUMAs are smaller in land area when located near large cities compared to rural areas. PUMAs typically do not follow County boundaries. A map of the 2010 PUMAs can be seen in Figure \ref{fig:2010_puma_boundaries}.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{images/2010-PUMAs.png}
-    \caption{2010 Public Use Microdata Area boundaries}
-    \label{fig:2010_puma_boundaries}
-\end{figure}
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item
-  Spatial definitions are from the U.S.~Census Bureau as of July 1,
-  2015.
-\item
-  Unit counts are from the American Community Survey 5-year 2016.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item County and PUMA.
-\end{itemize}
-\paragraph{Options}
-The options for PUMAs are structured by their state abbreviation and the PUMA code from the GISJOIN code. The GISJOIN values are found in the 2010 TIGER/LINE Basis file on the \href{https://usa.ipums.org/usa/volii/boundaries.shtml}{IPUMS GIS Boundary Files}  website. An example is G01002100, which represents state FIPS code AL, and 02100 is the AL, Elmore, Autauga, Montgomery -Outer- and Lowndes Counties PUMA.
-
-\paragraph{Distribution Assumption(s)}
-No assumptions are made.
+\input{characteristics/PUMA}
 
 \subsubsection{County and PUMA}
-\paragraph{Description}
-The GISJOIN identifier for the County and the PUMA where the sample is located. Since Counties and PUMAs are both a collection of census tracts, often a PUMA is in multiple counties. This characteristic describes the combination of County and PUMA where the sample is located.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
-  Spatial definitions are from the U.S.~Census Bureau as of July 1,
-  2015.
-\item
-  Unit counts are from the American Community Survey 5-year 2016.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item ASHRAE IECC Climate Zone 2004.
-\end{itemize}
-\paragraph{Options}
-The options for County and PUMA are a combination of the NHGIS GISJOIN Code for the County and the PUMA separated by a comma. An example option is ``G0100010, G01002100''---G0100010 is the County GISJOIN for Autauga County, AL, and G01002100 is the PUMA GISJOIN for the AL, Elmore, Autauga, Montgomery -Outer- and Lowndes Counties PUMA.
-
-\paragraph{Distribution Assumption(s)}
-No assumptions are made.
+\input{characteristics/County and PUMA}
 
 \subsubsection{Metropolitan and Micropolitan Statistical Area}
-\paragraph{Description}
-The U.S.~Metropolitan Statistical Area (MSA) or Micropolitan Statistical Area (MicroSA) where sample is located. The U.S.~Census defines a set of counties as Core-Based Statistical Areas (CBSAs). These CBSAs are either assigned a MicroSA or combined into a larger MSA. According to the U.S.~Census, each metropolitan statistical area must have at least one urban area of 50,000 or more inhabitants. According to the U.S.~Census, each MicroSA must have at least one urban area of at least 10,000 but less than 50,000 population.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
-  Spatial definitions are from the U.S.~Census Bureau as of July 1,
-  2015.
-\item
-  Unit counts are from the American Community Survey 5-year 2016.
-\item
-  County-MSA crosswalk comes from the Quarterly Census of Employment and
-  Wages NAICS-based data between 2013 and 2022 by the U.S.~Bureau of Labor
-  Statistics
-  (\url{https://www.bls.gov/cew/classifications/areas/county-msa-csa-crosswalk.htm}).
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item County.
-\end{itemize}
-
-\paragraph{Options}
-Options of the Metropolitan and Micropolitan Statistical Area characteristic are structured by having the name of the MSA or MicroSA, a comma, the State abbreviation, and either ``MSA'' or ``MicroSA.'' An example is ``Albany-Schenectady-Troy, NY MSA,'' which corresponds to the Albany-Schenectady-Troy MSA in New York State.
-
-\paragraph{Distribution Assumption(s)}
-No assumptions are made.
+\input{characteristics/Metropolitan and Micropolitan Statistical Area}
 
 \subsubsection{City}
-\paragraph{Description}
-The City where the sample is located.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
-  Spatial definitions are from the U.S.~Census Bureau as of July 1,
-  2015.
-\item
-  Cities are defined by Census blocks by their Census Place in the 2010
-  Census.
-\item
-  Unit counts are from the American Community Survey 5-year 2016.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item County and PUMA.
-\end{itemize}
-
-\paragraph{Options}
-The options are structured as the State abbreviation of the city, a comma, and the name of the city. An example is ``AR, Jonesboro,'' which corresponds to Jonesboro, Arkansas.
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-\item
-  2020 Decennial Redistricting data were used to map tract-level unit
-  counts to census blocks.
-\item
-  1,099 cities are tagged in ResStock, but there are over 29,000 Places
-  in the Census data.
-\item
-  The threshold for including a Census Place in the City characteristic is 15,000 housing units.
-\item
-  The value ``In Another Census Place'' designates the fraction of housing units in a Census Place with fewer total housing units than the threshold.
-\item
-  The value ``Not in a Census Place''
-  designates the fraction of housing units not in a Census Place
-  according to the 2010 Census.
-\end{itemize}
-
+\input{characteristics/City}
 
 \subsubsection{AIANNH Area}
-\paragraph{Description}
-American Indian/Alaska Native/Native Hawaiian (AIANNH) Area where the sample is located. See Figure \ref{fig:aiannh_map} for a map of AIANNH areas in the contiguous United States.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{images/aiannh_48b.jpg}
-    \caption{AIANNH area map. The image is created by \href{https://proximityone.com/aiannh.htm}{ProximityOne} and excludes Alaska and Hawaii.}
-    \label{fig:aiannh_map}
-\end{figure}
-
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item 2010 Census Tract to American Indian Area (AIA) Relationship File provides the percent housing units in the census tract that belong to AIA.
-    \item Spatial definitions are from the U.S.~Census Bureau as of July 1, 2015.
-    \item Unit counts are from the American Community Survey 5-year 2016.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item County and PUMA.
-\end{itemize}
-
-\paragraph{Options}
-The options are either ``Yes'' or ``No,'' indicating if the housing unit is in an AIANNH area.
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item The 2010 Census Tracts are mapped to 2015 County and PUMA by adjusting for known geographic changes (e.g., renaming of Shannon County to Oglala Lakota County, SD) However, Tract=G3600530940103 (Oneida city, Madison County, NY) could not be mapped to County and PUMA and was removed. The tract contains only 11 units for AIA.
-\end{itemize}
+\input{characteristics/AIANNH Area}
 
 \subsubsection{County Metro Status}
-\paragraph{Description}
-The Metro Status of the county where the sample is located and is based on MSA and MicroSA.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Spatial definitions are from the U.S.~Census Bureau as of July 1, 2015.
-    \item Unit counts are from the American Community Survey 5-year 2016.
-    \item County-MSA crosswalk comes from the Quarterly Census of Employment and Wages NAICS-based data between 2013 and 2022 by the  \href{https://www.bls.gov/cew/classifications/areas/county-msa-csa-crosswalk.htm}{U.S.~Bureau of Labor Statistics}.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Metropolitan and Micropolitan Statistical Area.
-\end{itemize}
-
-\paragraph{Options}
-The options are either ``Metropolitan'' or ``Non-Metropolitan.''
-
-\paragraph{Distribution Assumption(s)}
-No assumptions are made.
-
+\input{characteristics/County Metro Status}
 
 \subsubsection{PUMA Metro Status}
-\paragraph{Description}
-The PUMA metropolitan status where the housing unit is located.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item 2019 5-year PUMS from the University of Minnesota.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item PUMA.
-\end{itemize}
-
-\paragraph{Options}
-The options are either (1) In metro area, not/partially in principal city, (2) In metro area, principal city, or (3) Not/partially in metro area.
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item The PUMA Metro Status, derived from ACS IPUMS METRO codes, indicates whether the household resided within a metropolitan area and, for households in metropolitan areas, whether the household resided within or outside of a central/principal city. Each PUMA has a unique METRO status in ACS and therefore has a unique PUMA Metro Status. IPUMS derives METRO codes for samples not directly identified based on available geographic information and whether the associated county group or PUMA lies wholly or only partially within metropolitan areas or principal cities.
-\end{itemize}
+\input{characteristics/PUMA Metro Status}
 
 \subsection{Climate Zones}
 This section of ResStock characteristics is a set of climate zone definitions. There are five input files to ResStock that specify climate zones:
@@ -354,152 +77,21 @@ This section of ResStock characteristics is a set of climate zone definitions. T
     \item California Energy Commission (CEC) Climate Zones
     \item ENERGY STAR\textsuperscript{\textregistered} Climate Zone 2023.
 \end{itemize}
+
 \subsubsection{ASHRAE IECC Climate Zone 2004} \label{sec:ashrae_2004_tsv}
-\paragraph{Description}
-Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 where the sample is located. See Figure \ref{fig:ashrae_169_2004_cz} for a map of the climate zones.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{images/ashrae_iecc_cz_map_2004.jpg}
-    \caption{The 2004 ASHRAE 169 and IECC 2012 climate zone map}
-    \label{fig:ashrae_169_2004_cz}
-\end{figure}
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Spatial definitions are from the U.S.~Census Bureau as of July 1, 2015.
-    \item Unit counts are from the American Community Survey 5-year 2016.
-    \item Climate zone data are from ASHRAE 169 2004, IECC 2012, and \href{https://www.energy.gov/sites/prod/files/2015/10/f27/ba_climate_region_guide_7.3.pdf}{M.C. Baechler 2015}.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-There are no direct conditional dependencies.
-
-\paragraph{Options}
-A set of counties defines each climate and moisture zone. Climate zones range from 1--8 and moisture zones are indicated by A, B, and C.
-
-The ASHRAE IECC Climate Zone 2004 sets the \texttt{site\_type} and \texttt{site\_iecc\_zone} arguments. The \texttt{site\_type} is always set to ``auto.'' The \texttt{site\_iecc\_zone} argument matches the climate zone with the exception of climate zones 7 and 8 in Alaska. ResStock departs from the climate zone definitions by using 7AK and 8AK instead of 7 and 8 from the standards.
-
-\input{tables/arguments/ASHRAE IECC Climate Zone 2004}
-
-\paragraph{Distribution Assumption(s)}
-No assumptions are made.
+\input{characteristics/ASHRAE IECC Climate Zone 2004}
 
 \subsubsection{ASHRAE IECC Climate Zone 2004 -- Sub-CZ Split}
-\paragraph{Description}
-The climate zone, according to ASHRAE 169 in 2004 and IECC in 2012, where the sample is located. Climate zone where climate zone 2A is split between counties in (1) TX and LA, and (2) FL, GA, AL, and MS. Climate zone where climate zone 1A is split between counties in (1) HI, and (2) FL. See Figure \ref{fig:ashrae_169_2004_cz} for the climate zones and the climate zone 2A counties that are split between the states mentioned previously.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Spatial definitions are from the U.S.~Census Bureau as of July 1, 2015.
-    \item Unit counts are from the American Community Survey 5-year 2016.
-    \item Climate zone data are from ASHRAE 169 2004, IECC 2012, and \href{https://www.energy.gov/sites/prod/files/2015/10/f27/ba_climate_region_guide_7.3.pdf}{M.C. Baechler 2015}.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item County.
-\end{itemize}
-
-\paragraph{Options}
-A set of counties defines each climate and moisture zone. Climate zones range from 1--8 and moisture zones are indicated by A, B, and C. Climate zone 2A is split between options ``2A---FL, GA, AL, MS'' and ``2A---TX, LA.''
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item This characteristic is used to better represent HVAC types in the 2A climate zone.
-    \item This characteristic is used to better represent partial conditioning in the 1A climate zone.
-\end{itemize}
+\input{characteristics/ASHRAE IECC Climate Zone 2004 - Sub-CZ Split}
 
 \subsubsection{Building America Climate Zones}
-\paragraph{Description}
-The Building America Climate Zone where the sample is located. See Figure \ref{fig:building_america_cz} for a map of the climate zones.\footnote{The Subarctic climate zone is not shown and is only found in Alaska.}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{images/building_america_cz.png}
-    \caption{Building America Climate Zone map}
-    \label{fig:building_america_cz}
-\end{figure}
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Unit counts are from the American Community Survey 5-year 2016.
-    \item Spatial definitions are from U.S.~Census 2010.
-    \item Climate zone data are from ASHRAE 169 2004, IECC 2012, and \href{https://www.energy.gov/sites/prod/files/2015/10/f27/ba_climate_region_guide_7.3.pdf}{M.C. Baechler 2015}.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item County.
-\end{itemize}
-
-\paragraph{Options}
-The options for the Building America Climate Zone characteristic are the same as the climate zones: Cold, Hot-Dry, Hot-Humid, Marine, Mixed-Dry, Mixed-Humid, Subarctic, and Very Cold.
-
-\paragraph{Distribution Assumption(s)}
-No assumptions are made.
+\input{characteristics/Building America Climate Zone}
 
 \subsubsection{California Energy Commission Climate Zones}
-\paragraph{Description}
-The CEC Climate Zone where the sample is located. See Figure \ref{fig:cec_cz} for a map of the CEC building climate zones.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{images/CEC_Building_Climate_Zones.pdf}
-    \caption{California Energy Commission \href{https://cecgis-caenergy.opendata.arcgis.com/documents/CAEnergy::building-climate-zones/explore}{Building Climate Zone map}}
-    \label{fig:cec_cz}
-\end{figure}
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Spatial definitions are from the U.S.~Census Bureau as of July 1, 2015.
-    \item Zip code definitions are from the end of Q2 2020.
-    \item The climate zone to zip codes in California are from the CEC website.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item County and PUMA.
-\end{itemize}
-
-\paragraph{Options}
-The options range from 1--16 in California. For other states, the option is set to None.
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item CEC Climate zones are defined by zip codes.
-    \item The dependency selected is County and PUMA as zip codes are not modeled in ResStock.
-    \item The mapping between Census Tracts and zip codes is approximate and some discrepancies may exist.
-\end{itemize}
+\input{characteristics/CEC Climate Zone}
 
 \subsubsection{ENERGY STAR Climate Zone 2023}
-\paragraph{Description}
-Climate zones for windows, doors, and skylights per ENERGY STAR guidelines as of 2023. See Figure \ref{fig:energy_star_cz} for a map of the climate zones.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{images/ENERGY_STAR_Climate_Zone_Map.pdf}    \caption{\href{https://www.energystar.gov/sites/default/files/asset/document/Promotional_Map.pdf}{ENERGY STAR V7 climate zone} map}
-    \label{fig:energy_star_cz}
-\end{figure}
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Area definition approximated based on published map retrieved in May 2023 from the \href{https://www.energystar.gov/products/residential_windows_doors_and_skylights/key_product_criteria}{ENERGY STAR windows, doors, and skylights key product criteria} website.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item CEC Climate Zone
-    \item County.
-\end{itemize}
-
-\paragraph{Options}
-The options for the ENERGY STAR Climate Zone 2023 characteristic are the same as climate zones: North-Central, Northern, South-Central, and Southern.
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item ENERGY STAR Climate Zones assigned based on CEC Climate Zone for California and based on County everywhere else.
-\end{itemize}
+\input{characteristics/Energystar Climate Zone 2023}
 
 \subsection{Grid and Emissions Geographies}
 
@@ -512,93 +104,13 @@ In ResStock there are three input files describing geographies relevant to the e
 \end{itemize}
 
 \subsubsection{ReEDS Balancing Area}
-\paragraph{Description}
-The Regional Energy Deployment System Model (ReEDS) balancing area where the sample is located. See Figure \ref{fig:reeds_ba_map} to see a map of the balancing areas.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{images/reeds_ba_map.png}
-    \caption{ReEDS balancing area map}
-    \label{fig:reeds_ba_map}
-\end{figure}
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Spatial definitions are from the U.S.~Census Bureau as of July 1, 2015.
-    \item Unit counts are from the American Community Survey 5-year 2016.
-    \item Regional Energy Deployment System (ReEDS) Model Documentation: Version 2019 (\cite{Brown2019})
-
-
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item County.
-\end{itemize}
-\paragraph{Options}
-The options for the ReEDS Balancing Area characteristic is a set of integers 1-134 based on Figure \ref{fig:reeds_ba_map}. Alaska and Hawaii do not have a ReEDS balancing area and are labeled with the None option.
-\paragraph{Distribution Assumption(s)}
-No assumptions are made.
+\input{characteristics/REEDS Balancing Area}
 
 \subsubsection{Generation and Emissions Assessment (GEA) Region}
-\paragraph{Description}
-The 2023 and later Cambium generation and carbon emissions assessment region where the sample is located. See Figure \ref{fig:cambium_gea_map} for a map of these regions.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{images/Cambium_GEA_map_2023.png}
-    \caption{ Map of the \href{https://www.nrel.gov/analysis/cambium.html}{Cambium} 2023 Generation and Emission Assessment Regions}
-    \label{fig:cambium_gea_map}
-\end{figure}
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Cambium Documentation: Version 2024 (\cite{Gagnon2025}).
-
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item County.
-\end{itemize}
-
-\paragraph{Options}
-The options follow the Cambium GEA region names: CAISO, ERCOT, FRCC, ISONE, MISO Central, MISO North, MISO South, None, Northern Grid East, Northern Grid South, Northern Grid West, NYISO, PJM East, PJM West, SERTP, SPP North, SPP South, West Connect North, and West Connect South. The None option is set for Alaska and Hawaii as these states are not modeled in Cambium.
-
-\paragraph{Distribution Assumption(s)}
-No assumptions are made.
+\input{characteristics/Generation and Emissions Assessment Region}
 
 \subsubsection{ISO RTO Region}
-\paragraph{Description}
-The independent system operator (ISO) or regional transmission organization (RTO) region where the sample is located.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Spatial definitions are from the U.S.~Census Bureau as of July 1, 2015.
-    \item Unit counts are from the American Community Survey 5-year 2016.
-    \item ISO and RTO regions are from EIA Form 861, 2018.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item County
-\end{itemize}
-
-\paragraph{Options}
-The options are a list of options that represent ISOs and RTOs:
-\begin{itemize}
-    \item Pennsylvania New Jersey Maryland Interconnection (PJM)
-    \item Midcontinent Independent System Operator (MISO)
-    \item Electric Reliability Council of Texas (ERCOT)
-    \item California ISO (CAISO)
-    \item New York ISO (NYISO)
-    \item Southwest Power Pool (SPP)
-    \item ISO New England (NEISO).
-\end{itemize}
-If the county is not in any of these regions, the option is listed as the None option.
-
-\paragraph{Distribution Assumption(s)}
-No assumptions were made.
+\input{characteristics/ISO RTO Region}
 
 \subsection{Other Geographies}
 
@@ -611,97 +123,16 @@ In this section, we cover other miscellaneous geographies in ResStock. This incl
 \end{itemize}
 
 \subsubsection{Census Division RECS}
-\paragraph{Description}
-Census Division as used in RECS 2015 where the sample is located.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Spatial definitions are from the U.S.~Census Bureau as of July 1, 2015.
-    \item Unit counts are from the American Community Survey 5-year 2016.
-    \item U.S.~EIA 2015 RECS codebook.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item State.
-\end{itemize}
-
-\paragraph{Options}
-The options match the names of the Census divisions except for RECS 2015 splits the Mountain Census Division into North (CO, ID, MT, UT, WY) and South (AZ, NM, NV).
-
-\paragraph{Distribution Assumption(s)}
-No assumptions were made.
+\input{characteristics/Census Division RECS}
 
 \subsubsection{Custom State}
-\paragraph{Description}
-A custom selection of states to be able to have more fine-tuned probability distribution in states where we have more data.
-
-\paragraph{Distribution Data Source(s)}
-No data sources were used.
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item State.
-\end{itemize}
-\paragraph{Options}
-The options for the Custom State characteristic are ``AK'' and ``Others.'' The characteristic was added during the calibration of Alaska to integrate the Alaska Retrofit Information System data.
-
-\paragraph{Distribution Assumption(s)}
-No assumptions were made.
+\input{characteristics/Custom State}
 
 \subsubsection{Location Region}
-\paragraph{Description}
-A custom ResStock region constructed of EIA RECS 2009 reportable domains where the sample is located. See Figure \ref{fig:location_region_map} for a map of these regions.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{images/custom_region_map.png}
-    \caption{ Map of the custom regions in ResStock. Alaska and Hawaii are their own custom regions.}
-    \label{fig:location_region_map}
-\end{figure}
-
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Spatial definitions are from the U.S.~Census Bureau as of July 1, 2015.
-    \item Unit counts are from the American Community Survey 5-year 2016.
-    \item U.S.~EIA 2009 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item State.
-\end{itemize}
-
-\paragraph{Options}
-A list of custom regions (CRs) that range from CR02--CR11. These numbered CRs are the historical options of the contiguous United States. When Alaska and Hawaii were added, CRAK and CRHI options were added, respectively.
-
-\paragraph{Distribution Assumption(s)}
-No assumptions are made.
+\input{characteristics/Location Region}
 
 \subsubsection{American Housing Survey Region}
-\paragraph{Description}
-The American Housing Survey region where the sample is located.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Spatial definitions are from the U.S.~Census Bureau as of July 1, 2015.
-    \item Unit counts are from the American Community Survey 5-year 2016.
-    \item Core Based Statistical Area (CBSA) data based on the Feb 2013 CBSA delineation file.
-    \item 2013 American Housing Survey microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item County.
-\end{itemize}
-
-\paragraph{Options}
-Using the American Housing Survey microdata, 15 of the largest core-based statistical areas (CBSAs) were separated from their census divisions. This process resulted in 15 CBSA geographies and 9 Census Division Geographies that do not include the list of largest CBSAs. The list of options are: CBSA Atlanta-Sandy Springs-Roswell, GA; CBSA Boston-Cambridge-Newton, MA-NH; CBSA Chicago-Naperville-Elgin, IL-IN-WI; CBSA Dallas-Fort Worth-Arlington, TX; CBSA Detroit-Warren-Dearborn, MI; CBSA Houston-The Woodlands-Sugar Land, TX; CBSA Los Angeles-Long Beach-Anaheim, CA; CBSA Miami-Fort Lauderdale-West Palm Beach, FL; CBSA New York-Newark-Jersey City, NY-NJ-PA; CBSA Philadelphia-Camden-Wilmington, PA-NJ-DE-MD; CBSA Phoenix-Mesa-Scottsdale, AZ; CBSA Riverside-San Bernardino-Ontario, CA; CBSA San Francisco-Oakland-Hayward, CA; CBSA Seattle-Tacoma-Bellevue, WA
-CBSA Washington-Arlington-Alexandria, DC-VA-MD-WV; Non-CBSA East North Central; Non-CBSA East South Central; Non-CBSA Middle Atlantic; Non-CBSA Mountain; Non-CBSA New England; Non-CBSA Pacific; Non-CBSA South Atlantic; Non-CBSA West North Central; and Non-CBSA West South Central.
-
-\paragraph{Distribution Assumption(s)}
-No assumptions were made.
+\input{characteristics/AHS Region}
 
 \subsection{Weather Data}
 Weather data are closely related to the specification of geography inputs, since weather varies by location. In ResStock, weather data are not specified in the Housing Characteristics input data like most things, but are specified as their own set of input files. In ResStock, weather files are specified at the county level, although sometimes adjacent counties share the same weather files.
@@ -732,10 +163,10 @@ In addition to the 8,760 timeseries of weather variables in the timeseries energ
       Field          & Layer & Application                                                                           \\
       \midrule
       %accessibility & tagged & generates the document structure and tagging \\
-      LOCATION &     OS-HPXML &                  OpenStudio-HPXML uses the stated latitude, longitude, and elevation in the EPW header. At the moment, this does not control much in the simulation, but could be important for controlling solar water heating (not currently in ResStock). \\
+      LOCATION &     OS-HPXML &                  OS-HPXML uses the stated latitude, longitude, and elevation in the EPW header. \\
       DESIGN CONDITIONS  & OS-HPXML                      & The design conditions of the EPW header are used in sizing HVAC equipment according to ACCA Manual J and system selection according to ACCA Manual S.\\
       GROUND TEMPERATURES  & N/A                      & Unused by ResStock. Instead OS-HPXML uses an analytical method to convert weather station temperatures to ground temperatures \citep{Xing2014}. \\
-      HOLIDAYS/DAYLIGHT SAVINGS  & ResStock                      & ResStock does not run daylight savings, so the ``No'' is passed through ResStock to OS-HPXML. \\
+      HOLIDAYS/DAYLIGHT SAVINGS  & N/A                           & Unused by ResStock. Instead OS-HPXML models daylight savings in all states other than Arizona and Hawaii. \\
       \bottomrule
     \end{tabular}
   \end{table}
@@ -775,325 +206,40 @@ There are 12 input files controlling building siting in ResStock:
 \end{itemize}
 
 \subsubsection{Orientation} \label{sec:orientation}
-\paragraph{Description}
-Orientation of the front of the housing unit as it faces the street. The front door is assumed to face the street.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item OpenStreetMap data queried by Radiant Labs.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-No direct conditional dependencies.
-
-\paragraph{Options}
-The options for the Orientation characteristic are east, west, northeast, southwest, north, south, northwest, and southeast. The options set the \texttt{geometry\_unit\_orientation} ResStock argument; see Table \ref{table:hc_opt_orientation}. The argument definition can be found in Table \ref{table:hc_arg_def_orientation}.
-
-\input{tables/options/Orientation}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_orientation}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-site}{Building Site} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Orientation}
-
-\paragraph{Distribution Assumption(s)}
-No assumptions were made. The distribution was taken directly from the Radiant Labs query.
+\input{characteristics/Orientation}
 
 \subsubsection{Geometry Stories}
-\paragraph{Description}
-The number of stories in the building in which the housing unit is located.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item U.S.~EIA 2009 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Building Type ACS
-    \item Geometry Floor Area Bin.
-\end{itemize}
-
-\paragraph{Options}
-The options for Geometry stories are a set of integers between 1 and 35; see Table \ref{table:hc_opt_geometry_stories}. The stories of a building refer to the number of floors above grade. The number of stories does not include basements but would include finished attics. The \texttt{geometry\_num\_floors\_above\_grade} argument definition is in Table \ref{table:hc_arg_def_geometry_stories}.
-
-\input{tables/options/Geometry Stories}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_geometry_stories}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Geometry Stories}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item All mobile homes are 1 story.
-    \item Single-Family Detached and Single-Family Attached use the STORIES field in RECS, whereas Multifamily with 5+ units uses the NUMFLRS field.
-    \item Building types 2 Unit and 3 or 4 Unit use the stories distribution of Multifamily 5 to 9 Unit (capped at 4 stories) because RECS does not report stories or floors for multifamily with 2-4 units.
-    \item The dependency on floor area bins is removed for multifamily with 5+ units.
-    \item Vintage ACS rows for the 2010s are copied from the 2000-09 rows.
-\end{itemize}
+\input{characteristics/Geometry Stories}
 
 \subsubsection{Geometry Story Bin}
-\paragraph{Description}
-Tags the building in which the housing unit is located as having more than 8 stories or less than 8 stories.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item U.S.~EIA 2009 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Stories.
-\end{itemize}
-
-\paragraph{Options}
-The options are either <8 stories or 8+ stories. This characteristic is an aggregation of the Geometry stories characteristic to identify units in high-rise buildings. No arguments are assigned based on this housing characteristic, but it is used as a dependency for other input files.
-
-\input{tables/options/Geometry Story Bin}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item The probability values are a direct mapping of the Geometry Stories characteristic.
-\end{itemize}
+\input{characteristics/Geometry Story Bin}
 
 \subsubsection{Geometry Building Type Height}
-\paragraph{Description}
-The 2009 U.S.~EIA RECS building type with multifamily buildings split out by low-rise, mid-rise, and high-rise.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item The assignment of building type and height are assigned based on the building type and the number of stories.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Building Type RECS
-    \item Geometry Stories.
-\end{itemize}
-
-\paragraph{Options}
-The options break up the Geometry Building Type RECS multi-family 5+ unit buildings into low-rise (1--3 stories), mid-rise (4--7 stories), and high-rise (8+ stories). No arguments are directly assigned based on the options in this input file.
-
-\input{tables/options/Geometry Building Type Height}
-
-\paragraph{Distribution Assumption(s)}
-No assumptions are made.
+\input{characteristics/Geometry Building Type Height}
 
 \subsubsection{Geometry Stories Low Rise}
-\paragraph{Description}
-Number of building stories for low-rise buildings.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item The assignment of building type and height are assigned based on the number of stories.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Stories.
-\end{itemize}
-
-\paragraph{Options}
-The options are a categorization of the Geometry Stories characteristic for low-rise buildings (1 story, 2 stories, 3 stories, 4+ stories).
-
-\paragraph{Distribution Assumption(s)}
-None.
+\input{characteristics/Geometry Stories Low Rise}
 
 \subsubsection{Geometry Building Number Units MF}
-\paragraph{Description}
-The number of housing units in the multifamily building.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item U.S.~EIA 2009 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Building Type ACS
-    \item Geometry Stories.
-\end{itemize}
-
-\paragraph{Options}
-The options for the Geometry Building Level MF characteristic are a set of integers between 2 and 326; see Table \ref{table:hc_opt_geometry_building_number_units_mf}. The ``None'' option is used for all building types other than multifamily. The options set the \texttt{geometry\_building\_num\_units} ResStock argument; see Table \ref{table:hc_arg_def_geometry_building_number_units_mf}.
-
-\input{tables/options/Geometry Building Number Units MF}
-
-For the argument definitions, see Table~\ref{table:hc_arg_def_geometry_building_number_units_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#whole-sfa-mf-buildings}{Whole-SFA-MF-Buildings} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Geometry Building Number Units MF}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item Uses NUMAPTS (number of apartments) field in EIA RECS 2009
-    \item EIA RECS 2009 does not report NUMAPTS for Multifamily 2--4 units, so assumptions are made based on the number of stories
-    \item Data were sampled from the following bins of Geometry Stories: 1, 2, 3, 4-7, 8+.
-\end{itemize}
+\input{characteristics/Geometry Building Number Units MF}
 
 \subsubsection{Geometry Building Number Units SFA}
-
-\paragraph{Description}
-The number of housing units in the single-family attached (SFA) building.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item U.S.~EIA 2009 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Building Type ACS.
-\end{itemize}
-
-\paragraph{Options}
-The options for the Geometry Building Level SFA characteristic are a set of integers between 2 and 144; see Table \ref{table:hc_opt_geometry_building_number_units_sfa}. The ``None'' option is used for all building types other than SFA.
-
-\input{tables/options/Geometry Building Number Units SFA}
-
-For the argument definitions, see Table~\ref{table:hc_arg_def_geometry_building_number_units_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#whole-sfa-mf-buildings}{Whole-SFA-MF-Buildings} documentation for the available HPXML schema elements, default values, and constraints.
-
-\paragraph{Distribution Assumption(s)}
-No assumptions were made.
+\input{characteristics/Geometry Building Number Units SFA}
 
 \subsubsection{Geometry Building Level MF}
-
-\paragraph{Description}
-Location of the multifamily (MF) unit vertically within the building (bottom, middle, top).
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Calculated directly from the Geometry Building Type RECS and Geometry Stories characteristics.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Building Type RECS
-    \item Geometry Stories.
-\end{itemize}
-
-\paragraph{Options}
-The options for the Geometry Building Level MF characteristic are Bottom, Middle, None, and Top; see Table \ref{table:hc_opt_geometry_building_level_mf}. The None option is used for all building types other than MF. The characteristic sets the \texttt{geometry\_unit\_level} ResStock argument; see Table \ref{table:hc_arg_def_geometry_building_level_mf}.
-
-\input{tables/options/Geometry Building Level MF}
-
-For the argument definitions, see Table~\ref{table:hc_arg_def_geometry_building_level_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Geometry Building Level MF}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item Calculated using the number of stories, where buildings greater than or equal to 2 stories have Top and Bottom probabilities = 1/Geometry Stories, and Middle probabilities = 1--2/Geometry stories.
-\end{itemize}
+\input{characteristics/Geometry Building Level MF}
 
 \subsubsection{Geometry Building Horizontal Location MF}
-\paragraph{Description}
-Location of the multifamily unit horizontally within the building (left, middle, right).
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Calculated directly from the Geometry Number of Units MF and Geometry Stories characteristics.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Number of Units MF
-    \item Geometry Stories.
-\end{itemize}
-
-\paragraph{Options}
-The options of the Geometry Building Horizontal Location MF characteristic are None, Left, Middle, Right, and Not Applicable. The characteristic sets the \texttt{geometry\_unit\_horizontal\_location} ResStock argument; see Table \ref{table:hc_opt_geometry_building_horizontal_location_mf}. The ``Not Applicable'' option is used for a pair of number of units and stories that cannot be sampled. For example, a 9-story, 2-unit multifamily building is unlikely to exist in reality and cannot be modeled in ResStock. ResStock does not model units in buildings with more stories than units. All building types other than multifamily receive the ``None'' option. For the argument definitions, see Table \ref{table:hc_arg_def_geometry_building_horizontal_location_mf}.
-
-\input{tables/options/Geometry Building Horizontal Location MF}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_geometry_building_horizontal_location_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Geometry Building Horizontal Location MF}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item All probabilities are calculated assuming the building has double-loaded corridors (with some exceptions like 3 units in a single-story building).
-\end{itemize}
+\input{characteristics/Geometry Building Horizontal Location MF}
 
 \subsubsection{Geometry Building Horizontal Location SFA}
-\paragraph{Description}
-Location of the SFA unit horizontally within the building (left, middle, right).
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Calculated directly from the Geometry Number of Units SFA and Geometry Stories characteristics.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Number of Units SFA
-    \item Geometry Stories.
-\end{itemize}
-
-\paragraph{Options}
-The options of the Geometry Building Horizontal Location SFA characteristic are None, Left, Middle, and Right. The characteristic sets the \texttt{geometry\_unit\_horizontal\_location} ResStock argument; see Table \ref{table:hc_opt_geometry_building_horizontal_location_sfa}. All non-single-family-attached building types receive the ``None'' option. For the argument definitions, see Table \ref{table:hc_arg_def_geometry_building_horizontal_location_mf}.
-
-\input{tables/options/Geometry Building Horizontal Location SFA}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_geometry_building_horizontal_location_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item All probabilities are calculated from the direct conditional dependencies.
-\end{itemize}
+\input{characteristics/Geometry Building Horizontal Location SFA}
 
 \subsubsection{Neighbors}
-\paragraph{Description}
-Presence and distance between the housing unit and the nearest neighbors to the left and right.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item OpenStreetMap data queried by Radiant Labs for Multifamily and Single-Family Attached
-    \item Engineering judgment for others.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Building Type RECS.
-\end{itemize}
-\paragraph{Options}
-The options for Neighbors are Left/Right at 15 ft, 2, 4, 7, 12, 27, and None. The option values correspond to distances in feet to the nearest neighbor on the left and right sides of the building. The options set ResStock arguments corresponding to the distance and height a shading object. The \texttt{neighbor\_front\_height}, \texttt{neighbor\_back\_height}, \texttt{neighbor\_left\_height} and \texttt{neighbor\_right\_height} arguments are all set to ``auto,'' which sets the shading object height to the total height of the housing unit. The other arguments assign the distance from the housing unit. The \texttt{neighbor\_front\_distance} and \texttt{neighbor\_back\_distance} arguments are set to 0 (meaning there are no neighbors to the front and back of the unit). The left and right distances are set by Table \ref{table:hc_opt_neighbors}. The None option sets distances to 0 (meaning there are no neighbors). The argument definitions can be seen in Table \ref{table:hc_arg_def_neighbors}.
-
-\input{tables/options/Neighbors}
-
-For the argument definitions, see Table~\ref{table:hc_arg_def_neighbors}. See the OpenStudio-HPXML documentation section \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-neighbor-buildings}{Neighbor Buildings} for the available elements, default values, and constraints.
-
-\input{tables/arguments/Neighbors}
-
-\paragraph{Distribution Assumption(s)}
-None
+\input{characteristics/Neighbors}
 
 \subsubsection{Corridor}
-\paragraph{Description}
-Type of corridor attached to multifamily units.
-
-\paragraph{Modeling Approach}
-Single-family attached and multifamily buildings can have corridors, which are passageways between units. Interior corridors are enclosed and assumed to be conditioned, which are modeled by adiabatic walls being created for the wall of the unit that is adjacent to the corridor. Exterior corridors provide shading, but are not enclosed. The way this is modeled is to add a shading object to the front and/or the back of the unit. ResStock only allows multifamily units to have a double-loaded interior corridor. ResStock does not model energy use (e.g., lighting, plug load, or HVAC) associated with corridors; it only models their impact on the multifamily housing units.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Engineering judgment.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Building Type RECS.
-\end{itemize}
-\paragraph{Options}
-For Mobile Homes, Single-Family Detached, and Single-Family Attached building types the option assigned is ``Not Applicable.'' Multifamily units all have a ``Double-Loaded Interior'' corridor with a width of 10 feet. The Corridor characteristic assigns the \texttt{geometry\_corridor\_position} and the \texttt{geometry\_corridor\_width} arguments. For the options and arguments set for each option, see Table \ref{table:hc_opt_corridor}. For the argument definitions, see Table \ref{table:hc_arg_def_corridor}.
-
-\input{tables/options/Corridor}
-
-For the argument definitions, see Table~\ref{table:hc_arg_def_corridor}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#dwelling-units}{Dwelling Units} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Corridor}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item Single-Family Attached units do not have corridors.
-    \item All Multifamily units have a double-loaded interior corridor with a width of 10 ft.
-\end{itemize}
+\input{characteristics/Corridor}
 
 \subsection{Building Type}
 This section discusses the ResStock input files that control tagging and model differentiation of building type.  These building types control a lot of assumptions and treatment of variables in the OpenStudio-HPXML workflow. An example is that the plug load energy is based on a regression equation, and the equation coefficients are different between the building types.
@@ -1106,51 +252,10 @@ There are two input files controlling building type assignment in ResStock:
 \end{itemize}
 
 \subsubsection{Geometry Building Type ACS}
-\paragraph{Description}
-The building type classification according to the U.S.~Census American Community Survey.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item 2019 5-year PUMS from the University of Minnesota.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item PUMA.
-\end{itemize}
-\paragraph{Options}
-ACS considers nine building types, which are tagged in ResStock based on PUMA. No arguments are directly assigned based on this input characteristic.
-
-\input{tables/options/Geometry Building Type ACS}
-
-\paragraph{Distribution Assumption(s)}
-None.
+\input{characteristics/Geometry Building Type ACS}
 
 \subsubsection{Geometry Building Type RECS}
-\paragraph{Description}
-The building type classification according to the U.S.~EIA RECS.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item 2019 5-year PUMS from the University of Minnesota.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Building Type ACS.
-\end{itemize}
-
-\paragraph{Options}
-The EIA RECS building types are direct aggregations of the ACS building types. Multifamily units are grouped into 2--4 unit buildings and 5+ unit buildings. The options set the \texttt{geometry\_unit\_type}, \texttt{geometry\_unit\_aspect\_ratio}, and \texttt{geometry\_average\_ceiling\_height} ResStock arguments; see Table \ref{table:hc_opt_geometry_building_type_recs}. The \texttt{geometry\_average\_ceiling\_height} is always set to 8 ft. The argument definitions are in Table \ref{table:hc_arg_def_geometry_building_type_recs}.
-
-\input{tables/options/Geometry Building Type RECS}
-
-For the argument definitions, see Table~\ref{table:hc_arg_def_geometry_building_type_recs}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Geometry Building Type RECS}
-
-\paragraph{Distribution Assumption(s)}
-None.
+\input{characteristics/Geometry Building Type RECS}
 
 \subsection{Construction Year}
 ResStock captures the change in energy codes over time by relying on survey data (mainly from ACS and EIA RECS) to inform how housing units have adopted energy code vintages and retrofits over time. The approach used in ResStock is to assign a decadal bin when the building was constructed. The decadal bins range from pre-1940s to the 2010s. The Vintage and Vintage ACS characteristics are then used as dependencies to assign probabilities for each Vintage bin. For example, wall insulation being dependent on vintage allows the wall insulation R-value mean to increase over time.
@@ -1163,59 +268,10 @@ There are two input files controlling building type assignment in ResStock:
 \end{itemize}
 
 \subsubsection{Vintage}
-\paragraph{Description}
-Time period in which the building was originally constructed.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item 2019 5-year PUMS from the University of Minnesota.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Building Type ACS
-    \item PUMA.
-\end{itemize}
-
-\paragraph{Options}
-The options are decade bins for when the building was constructed: <1940, 1940s, 1950s, 1960s, 1970s, 1980s, 1990s, 2000s, 2010s. The options set the \texttt{year\_built} and \texttt{vintage} ResStock arguments. The \texttt{year\_built} argument is always set to ``auto.'' The \texttt{vintage} argument is set to the same value as the option name; see Table \ref{table:hc_opt_vintage}.
-
-\input{tables/options/Vintage}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_vintage}.
-
-\input{tables/arguments/Vintage}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item Where sample counts are less than 10 (812 / 21024 rows), the State average distribution has been inserted.
-    \item ``Mobile Home'' does not exist in the PUMS DC sample and is replaced by ``Single-Family Detached.''
-\end{itemize}
+\input{characteristics/Vintage}
 
 \subsubsection{Vintage ACS}
-
-\paragraph{Description}
-Time period in which the housing unit was constructed as defined by the U.S.~Census American Community Survey.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item 2019 5-year PUMS from the University of Minnesota.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Vintage.
-\end{itemize}
-
-\paragraph{Options}
-The options for Vintage ACS are the same vintage bins as ACS, Table \ref{table:hc_opt_vintage_acs}. They are roughly 20-year bins. No arguments are set based on this input file.
-
-\input{tables/options/Vintage ACS}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item The Vintage ACS options are directly mapped from the Vintage characteristic options.
-\end{itemize}
+\input{characteristics/Vintage ACS}
 
 \subsection{Housing Unit Geometry}
 
@@ -1232,254 +288,32 @@ There are seven input files controlling housing unit geometry in ResStock:
 \end{itemize}
 
 \subsubsection{Geometry Floor Area}
-\paragraph{Description}
-The conditioned floor area of the housing unit using bins from 2017--2019 American Housing Survey.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item 2017 and 2019 American Housing Survey microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Census Division
-    \item Geometry Building Type RECS
-    \item Income RECS2020
-    \item PUMA Metro Status
-    \item Tenure.
-\end{itemize}
-
-\paragraph{Options}
-The options of Geometry Floor Area characteristic are the American Housing Survey floor area bins. The options set the \texttt{geometry\_unit\_cfa}, \texttt{geometry\_unit\_cfa\_bin}, and the \texttt{geometry\_garage\_protrusion} ResStock arguments; see Table \ref{table:hc_opt_geometry_floor_area}. The \texttt{geometry\_unit\_cfa} argument is always set to ``auto.'' The \texttt{geometry\_garage\_protrusion} argument is always set to 0.5. Because in the ResStockArguments measure ``auto'' is used for the \texttt{geometry\_unit\_cfa} argument, a representative conditioned floor area is assigned using the \texttt{geometry\_unit\_cfa\_bin} argument. The values of the conditioned floor area bin are taken from the 2017 and 2019 American Housing Surveys and split out by housing type. The housing types are single-family detached, single-family attached, apartment, and manufactured homes. Currently, the same conditioned floor area values are used for single-family detached and manufactured homes. For the ResStock argument definition see Table \ref{table:hc_arg_def_geometry_floor_area}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} section of the documentation. The floor area is used many places in the OpenStudio-HPXML model workflow.
-
-\input{tables/options/Geometry Floor Area}
-
-\input{tables/arguments/Geometry Floor Area}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-\item
-  Due to low sample count, the characteristic distributions are constructed by downscaling a core
-  input file with 4 sub-input files of different dependencies.
-\item Sub-input file 1 has dependencies: \textquotesingle Census
-  Division\textquotesingle, \textquotesingle PUMA Metro
-  Status\textquotesingle, \textquotesingle Geometry Building Type
-  RECS\textquotesingle, \textquotesingle Income
-  RECS2020\textquotesingle{}
-\item
-  Sub-input file 2 has dependencies: \textquotesingle Census Division\textquotesingle,
-  \textquotesingle PUMA Metro Status\textquotesingle,
-  \textquotesingle Geometry Building Type RECS\textquotesingle,
-  \textquotesingle Tenure\textquotesingle{}
-\item
-  Sub-input file 3 has dependencies: \textquotesingle Census Division\textquotesingle,
-  \textquotesingle PUMA Metro Status\textquotesingle,
-  \textquotesingle Geometry Building Type RECS\textquotesingle,
-  \textquotesingle Vintage ACS\textquotesingle{}
-\item
-  Sub-input file 4 has dependencies: \textquotesingle Census Division\textquotesingle,
-  \textquotesingle PUMA Metro Status\textquotesingle,
-  \textquotesingle Income RECS2020\textquotesingle,
-  \textquotesingle Tenure\textquotesingle.
-\item For each sub-input file, rows with
-  \textless10 samples are replaced with coarsening dependency Census
-  Region, followed by the national distribution.
-\end{itemize}
+\input{characteristics/Geometry Floor Area}
 
 \subsubsection{Geometry Floor Area Bin}
-\paragraph{Description}
-The finished floor area of the housing unit using bins.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Directly assigned from the Geometry Floor Area characteristic.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Floor Area.
-\end{itemize}
-
-\paragraph{Options}
-The options of the Geometry Floor Area Bin characteristic are 0--1499, 1500--2499, 2500--3999, and 4000+. These floor area bins options are a coarser representation than the Geometry Floor Area characteristic. The Geometry Floor Area Bin Characteristic is often used as a dependency for other characteristics.
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item The options are directly assigned from the Geometry Floor area characteristic.
-\end{itemize}
+\input{characteristics/Geometry Floor Area Bin}
 
 \subsection{Space Geometry}
 \label{space_geometry}
 
 \subsubsection{Bedrooms}
-
-\paragraph{Description}
-The number of bedrooms in the housing unit.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item 2017 and 2019 American Housing Survey microdata.
-    \item Building type categorization based on U.S.~EIA 2009 RECS.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Building Type RECS
-    \item Geometry Floor Area.
-\end{itemize}
-
-\paragraph{Options}
-The Bedrooms characteristic set the \texttt{geometry\_unit\_num\_bedrooms} and the \texttt{geometry\_unit\_num\_bathrooms} ResStock arguments. The options for bedrooms are integers from 1 to 5; see Table \ref{table:hc_opt_bedrooms}. The \texttt{geometry\_unit\_num\_bathrooms} argument is always set to ``auto.'' For the argument definitions, see Table \ref{table:hc_arg_def_bedrooms}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} section of the documentation. The number of bedrooms is used many places in the OpenStudio-HPXML model workflow.
-
-\input{tables/options/Bedrooms}
-
-\input{tables/arguments/Bedrooms}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item More than 5 bedrooms are labeled as 5 bedrooms and 0 bedrooms are labeled as 1 bedroom.
-    \item Limit 0--499 ft\textsuperscript{2} housing units to only 1 or 2 bedrooms. The geometry measure has a limit of (ffa-120)/70 >= bedrooms.
-\end{itemize}
+\input{characteristics/Bedrooms}
 
 \subsubsection{Geometry Attic Type}
-\paragraph{Description}
-The housing unit attic type.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item U.S.~EIA 2020 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Census Division RECS
-    \item Geometry Building Type RECS
-    \item Geometry Stories Low Rise
-    \item Vintage ACS.
-\end{itemize}
-
-\paragraph{Options}
-The options for Geometry Attic Type are Finished Attic or Cathedral Ceilings, Unvented Attic, Vented Attic. The None option is used for multifamily and mobile homes. The options in the Geometry Attic Type characteristic set the \texttt{geometry\_attic\_type}, \texttt{geometry\_roof\_type}, and \texttt{geometry\_roof\_pitch} ResStock arguments; see Table \ref{table:hc_opt_geometry_attic_type}. The \texttt{geometry\_roof\_type} is always set to ``gable.'' The \texttt{geometry\_roof\_pitch} is always set to 6:12. For ResStock argument definitions, see Table \ref{table:hc_arg_def_geometry_attic_type}. See OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-attics}{Attics} section of the documentation for elements, constraints, and default values.
-
-\input{tables/options/Geometry Attic Type}
-
-\input{tables/arguments/Geometry Attic Type}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item Multifamily building types and Mobile Homes have Flat Roof (None) only.
-    \item 1-story Single-Family building types cannot have Finished Attic/Cathedral Ceiling because that attic type is modeled as a new story, and 1-story does not have a second story.
-    \item 4+story Single-family and mobile homes are an impossible combination. The None option is assigned but not sampled.
-\end{itemize}
+\input{characteristics/Geometry Attic Type}
 
 \subsubsection{Geometry Foundation Type} \label{geometry_foundation_type}
-\paragraph{Description}
-The type of foundation.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item The sample counts and sample weights are constructed using U.S.~EIA 2009 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item ASHRAE IECC Climate Zone 2004
-    \item Geometry Building Type RECS
-    \item Vintage ACS.
-\end{itemize}
-
-\paragraph{Options}
-The options of the Geometry Foundation type characteristic are Ambient, Heated Basement, Slab, Unheated Basement, Unvented Crawlspace, and Vented Crawlspace. The options set the \texttt{geometry\_foundation\_type}, \texttt{geometry\_foundation\_height}, \texttt{geometry\_foundation\_height\_above\_grade}, and \texttt{geometry\_rim\_joist\_height} ResStock arguments; see Table \ref{table:hc_opt_geometry_foundation_type}. For ResStock argument definitions, see Table \ref{table:hc_arg_def_geometry_foundation_type}. Another name for Ambient foundations is pier and beam.
-
-\input{tables/options/Geometry Foundation Type}
-
-\input{tables/arguments/Geometry Foundation Type}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-    \item All mobile homes have Ambient foundations.
-    \item Multifamily buildings cannot have Ambient or Heated Basements foundations.
-    \item Single-family attached buildings cannot have Ambient foundations.
-    \item All foundation types are used across all housing types  except for mobile homes, which have constrained options.
-    \item Because we need to assume a foundation type for ground-floor MF units, we use the lumped SFD+SFA distributions for MF2--4 and MF5+ building foundations. (RECS data for households in MF2--4 unit buildings are not useful since we do not know which floor the unit is on. RECS does not include foundation responses for households in MF5+ unit buildings.)
-    \item For SFD and SFA, if no foundation type is specified, then the sample has Ambient foundation.
-\end{itemize}
+\input{characteristics/Geometry Foundation Type}
 
 \subsubsection{Geometry Garage}
-\paragraph{Description}
-The presence and size of an attached garage.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item U.S.~EIA 2020 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Census Division RECS
-    \item Geometry Building Type RECS
-    \item Geometry Floor Area Bin
-    \item Geometry Foundation Type
-    \item Geometry Stories Low Rise.
-\end{itemize}
-
-\paragraph{Options}
-The options for the Geometry Garage characteristic are 1 Car, 2 Car, 3 Car, and None. The options set the \texttt{geometry\_garage\_width}, \texttt{geometry\_garage\_depth}, and \texttt{geometry\_garage\_position} ResStock arguments; see Table \ref{table:hc_opt_geometry_garage}. The \texttt{geometry\_garage\_depth} argument is always set to 24 ft. The \texttt{geometry\_garage\_position} argument is always set to ``Right.'' ResStock argument definitions can be seen in Table \ref{table:hc_arg_def_geometry_garage}.
-
-\input{tables/options/Geometry Garage}
-
-\input{tables/arguments/Geometry Garage}
-
-\paragraph{Distribution Assumption(s)}
-Most of the assumptions below are not from the survey data, but are constraints of the geometry modeling in OpenStudio and are set to avoid errors.
-
-\begin{itemize}
-    \item Only Single-Family Detached homes are assigned a probability for attached garage.
-    \item No garage for ambient (i.e., pier \& beam) foundation type.
-    \item Due to modeling constraints restricting that garage cannot be larger or deeper than livable space: Single-family detached units that are 0--1499 square feet can only have a maximum of a 1-car garage.
-    \item Single-family detached units that are 0--1499 square feet and 3+ stories cannot have a garage.
-    \item The geometry stories distributions are all the same except for 0--1499 square feet and 3 stories.
-    \item Single-family detached units that are 1500--2499 square feet cannot have a 3-car garage.
-    \item Single-family detached units that are 2500--3999 square feet and a heated basement cannot have a 3-car garage.
-    \item Due to low sample sizes, the following sets of dependencies are progressively lumped together.
-    \begin{itemize}
-    \item [1] Crawl, basements, and slab are lumped.
-    \item [2] Story levels are lumped together.
-    \item [3] Census Division RECS is grouped into Census Region.
-    \item [4] Vintage ACS is grouped into: pre-1960, 1960-1999, and 2000+.
-    \end{itemize}
-\end{itemize}
+\input{characteristics/Geometry Garage}
 
 \subsubsection{Geometry Space Combination}
-\paragraph{Description}
-Valid combinations of building type, building level mf, attic, foundation, and garage.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item U.S.~EIA 2020 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item Geometry Attic Type
-    \item Geometry Building Level MF
-    \item Geometry Building Type RECS
-    \item Geometry Foundation Type
-    \item Geometry Garage.
-\end{itemize}
-
-\paragraph{Options}
-The options are a direct mapping of Geometry Building Type, Geometry Building Level MF, Geometry Foundation Type, Geometry Attic Type, and Geometry Garage.
-
-\paragraph{Distribution Assumption(s)}
-No assumptions are made. The options of the dependencies are directly mapped into options of this characteristic.
-
-
+\input{characteristics/Geometry Space Combination}
 
 \section{Envelope}
 
 The envelope components of ResStock inputs interface closely with the Geometry inputs, but focus more on the materials and thermal properties of the envelope. In this section, we discuss the various input files that control the modeled envelope in ResStock by envelope component.
-
 
 \subsection{Walls}
 
@@ -1493,116 +327,14 @@ There are three major input files to ResStock that control the wall properties:
 Collectively, they specify the material choices and R-value of the housing unit walls.
 
 \subsubsection{Geometry Wall Type}\label{geometry_wall_type}
-\paragraph{Description}
-The wall material used for thermal mass calculations of exterior walls.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
-  HIFLD Parcel data.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item Geometry Building Type RECS
-    \item Geometry Story Bin
-    \item State
-    \item Vintage ACS.
-\end{itemize}
-\paragraph{Option(s)}
-ResStock models four different wall types: Brick, Concrete, Steel Frame, and Wood Frame. This is the interior structure of the wall, not the exterior cladding. This input file does not have any ResStock arguments, but other input files that influence the thermal properties of the model are dependent on Geometry Wall Type.
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-
-\item
-  Rows where sample size \textless{} 10 are replaced with aggregated
-  values down-scaled from dep=\textquotesingle State\textquotesingle{}
-  to dep=\textquotesingle Census Division RECS\textquotesingle{}.
-\end{itemize}
-%%%%%%%%%
+\input{characteristics/Geometry Wall Type}
 
 \subsubsection{Geometry Wall Exterior Finish}\label{geometry_wall_exterior_finish}
-\paragraph{Description}
-Wall siding material and color. This is the main input file that provides the thermal property arguments for the exterior cladding of a wall.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
-  HIFLD Parcel data.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item Geometry Wall Type
-    \item State
-    \item Vintage ACS.
-\end{itemize}
-\paragraph{Option(s)}
-ResStock uses 11 options (see Table \ref{table:hc_opt_geometry_wall_exterior_finish}) for the exterior finish of the walls---correlated with the Geometry Wall Type via the input dependencies. A portion of the wall R-value is attributable to this exterior finish.
-
-\input{tables/options/Geometry Wall Exterior Finish}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_geometry_wall_exterior_finish}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-walls}{Walls} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Geometry Wall Exterior Finish}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-\item
-  Rows where sample size \textless{} 10 are replaced with aggregated
-  values down-scaled from dep=\textquotesingle State\textquotesingle{}
-  to dep=\textquotesingle Census Division RECS\textquotesingle{}
-\item
-  Brick wall types are assumed to not have an additional brick exterior
-  finish
-\item
-  Steel and wood frame walls must have an exterior finish.
-\end{itemize}
-%%%%%%%%%
+\input{characteristics/Geometry Wall Exterior Finish}
 
 \subsubsection{Insulation Wall}\label{insulation_wall}
-\paragraph{Description}
-Wall construction type and insulation level. Provides the main R-value for the walls of the home. This is in addition to the R-values provided by the exterior wall cladding.
+\input{characteristics/Insulation Wall}
 
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
-  \textit{Single-Family Heating and Cooling Requirements: Assumptions, Methods, and Summary Results} (\cite{Ritschard1992}).
-\item
-
-  \textit{Data Collection-Data Characterization Summary} from the NorthernSTAR Building America Partnership (\cite{Nettleton2012}), as described in
-  Roberts et al., \textit{Assessment of the U.S.~Department of
-  Energy's Home Energy Score Tool} (2012),
-  and Merket et al., \textit{Building America Field Data Repository} webinar (2014).
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item Location Region
-    \item Geometry Wall Type
-    \item Vintage.
-\end{itemize}
-\paragraph{Option(s)}
-ResStock models 15 different Insulation Wall levels; see Table \ref{table:hc_opt_insulation_wall}. These are based upon the Geometry Wall Type defined, but provide a distribution of insulation levels for each of those options.
-
-\input{tables/options/Insulation Wall}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_insulation_wall}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-walls}{Walls} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Insulation Wall}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-
-\item
-  Updated per new wall type from Lightbox, all wall type-specific
-  distributions follow that of {Wood Frame} ({WoodStud}).
-\end{itemize}
-%%%%%%%%
 \subsection{Roof and Ceiling}
 
 There are three input files describing thermal properties of the roof and/or ceilings of housing units:
@@ -1616,153 +348,18 @@ Additionally, there is an input for defining Radiant Barriers in homes with atti
 
 A major assumption in ResStock is that multifamily buildings and mobile homes do not have attics (see Section \ref{space_geometry}), so their insulation is assigned in Insulation Ceiling, while for other building types it is assigned in the Insulation Roof housing characteristic.
 
-
 \subsubsection{Insulation Roof}\label{insulation_roof}
-\paragraph{Description}
-Finished roof insulation level. Insulation levels for unfinished attics covered separately.
+\input{characteristics/Insulation Roof}
 
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item
-      Derived from Home Innovation Research Labs 1982--2007 Data
-    \item
-      NEEA Residential Building Stock Assessment, 2012.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item Geometry Attic Type.
-\end{itemize}
-\paragraph{Option(s)}
-Insulation roof options correspond to the amount of insulation at the roof deck and if the roof is finished; see Table \ref{table:hc_opt_insulation_roof}. A finished roof is a cathedralized construction of the roof. An unfinished roof corresponds to the roof deck being open to the attic.
-
-\input{tables/options/Insulation Roof}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_insulation_roof}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-roofs}{Roofs} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Insulation Roof}
-
-\paragraph{Distribution Assumption(s)}
-None
-%%%%%%%%%%%%
 \subsubsection{Radiant Barrier}\label{radiant_barrier}
-\paragraph{Description}
+\input{characteristics/Radiant Barrier}
 
-Presence of radiant barrier in the attic (not currently used in
-ResStock).
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
-  Not applicable
-\item
-  All homes are assumed to not have attic radiant barriers installed.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item Geometry Building Type RECS.
-\end{itemize}
-\paragraph{Option(s)}
-Three options for radiant barriers are available in ResStock: ``Yes,'' ``No,'' and ``None''; see Table \ref{table:hc_opt_radiant_barrier}. ``No'' is assigned to homes with attics but without radiant barriers, while ``None'' is assigned to homes without attics. No homes in ResStock currently have the ``Yes'' option assigned.
-
-\input{tables/options/Radiant Barrier}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_radiant_barrier}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-roofs}{Roofs} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Radiant Barrier}
-
-\paragraph{Distribution Assumption(s)}
-None
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Roof Material}\label{roof_material}
-\paragraph{Description}
-Roof material and color.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
-  U.S.~EIA 2020 RECS microdata.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item Census Division RECS
-    \item Geometry Building Type RECS
-    \item Vintage ACS.
-\end{itemize}
-\paragraph{Option(s)}
-Seven roof material options are used in the ResStock baseline; see Table \ref{table:hc_opt_roof_material}. These correspond to options available within OpenStudio-HPXML and have thermal properties associated with each within OpenStudio-HPXML, but this is not specified at the ResStock level.
-
-\input{tables/options/Roof Material}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_roof_material}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-roof}{Roof} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Roof Material}
-
-\paragraph{Distribution Assumption(s)}
-
-\begin{itemize}
-
-\item
-  Multifamily with 5+ Units is assigned `Asphalt
-  Shingles, Medium' only.
-\item
-  Due to low samples, Vintage ACS is progressively grouped into:
-  pre-1960, 1960--1999, and 2000+.
-\item
-  Geometry Building Type RECS is progressively grouped into:
-  Single-Family (including Mobile Home), and Multifamily.
-\item
-  Census Division RECS is coarsened to Census Region.
-\end{itemize}
+\input{characteristics/Roof Material}
 
 \subsubsection{Insulation Ceiling}\label{insulation_ceiling}
-\paragraph{Description}
-This characteristic in ResStock specifies the insulation level of the ceiling on the top floor of the home in housing units with vented or unvented attics.
+\input{characteristics/Insulation Ceiling}
 
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
-  NEEA Residential Building Stock Assessment, 2012.
-\item
-  \textit{Data Collection-Data Characterization Summary} from the NorthernSTAR Building America Partnership (\cite{Nettleton2012}), as described in
-  Roberts et al., \textit{Assessment of the U.S.~Department of
-  Energy's Home Energy Score Tool} (2012)
-  and Merket et al., \textit{Building America Field Data
-  Repository} webinar, 2014.
-\item
-  Derived from Home Innovation Research Labs 1982-2007 Data.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item Geometry Attic Type
-    \item Location Region
-    \item Vintage.
-\end{itemize}
-\paragraph{Option(s)}
-The options are levels of ceiling insulation by R-value; see Table \ref{table:hc_opt_insulation_ceiling}. Uninsulated indicates that the housing unit could have ceiling insulation, but doesn't, whereas ``None'' indicates the housing unit cannot have ceiling insulation because it does not have an unfinished attic.
-
-\input{tables/options/Insulation Ceiling}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_insulation_ceiling}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-attics}{Attics} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Insulation Ceiling}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-
-\item
-  Vented Attic has the same distribution as Unvented Attic
-\item
-  CRHI is a copy of CR09
-\item
-  CRAK is a copy of CR02.
-\end{itemize}
-
-%%%%%%%%%%
 \subsection{Foundation}
 Five input files specify insulation and heat transfer parameters with the ground:
 \begin{itemize}
@@ -1776,219 +373,19 @@ Five input files specify insulation and heat transfer parameters with the ground
 The inputs starting with ``Insulation'' specify insulation levels that vary depending upon Geometry Foundation Type (Section \ref{geometry_foundation_type}).
 %%%%%%%%%%%%%%%
 \subsubsection{Insulation Floor}\label{insulation_floor}
-\paragraph{Description}
-Sets the insulation levels of all foundation types except for slab-on-grade.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
+\input{characteristics/Insulation Floor}
 
-\item
-  Derived from Home Innovation Research Labs 1982--2007 Data
-\item
-  Pre-1980 uses engineering judgment.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item Location Region
-    \item Vintage
-    \item Geometry Building Type RECS
-    \item Geometry Foundation Type.
-\end{itemize}
-\paragraph{Option(s)}
-ResStock has three different levels of floor insulation, plus a None option that is assigned to buildings with an illegible foundation type for the Insulation Floor characteristic; see Table \ref{table:hc_opt_insulation_floor}. All options set the \texttt{floor\_type} to \texttt{WoodFrame}.
-
-\input{tables/options/Insulation Floor}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_insulation_floor}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-floors}{Floors} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Insulation Floor}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-
-\item
-  CRHI is a copy of CR09
-\item
-  CRAK is a copy of CR02.
-\end{itemize}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Insulation Slab}\label{insulation_slab}
-\paragraph{Description}
-Defines the insulation level for all slab-on-grade foundation types.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-\item
-  Derived from Home Innovation Research Labs 1982--2007 Data
-\item
-  Pre-1980 uses engineering judgment.
-\end{itemize}
+\input{characteristics/Insulation Slab}
 
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item Location Region
-    \item Vintage
-    \item Geometry Building Type RECS
-    \item Geometry Foundation Type.
-\end{itemize}
-\paragraph{Option(s)}
-ResStock uses eight different options for Insulation Slab, plus a ``None'' flag for homes without a slab-on-grade foundation; see Table \ref{table:hc_opt_insulation_slab}. The options specify both the R-value as well as the location of the slab insulation. The ResStock arguments \texttt{slab\_thickness},\texttt{slab\_carpet\_fraction}, and
-\texttt{slab\_carpet\_r} are constant across all the options and are all set to auto. The ResStock arguments \texttt{slab\_under\_insulation\_width}, \texttt{slab\_exterior\_horizontal\_insulation\_width}, and \texttt{lab\_exterior\_horizontal\_insulation\_depth\_below\_grade} are constant and set to 0.
-
-\input{tables/options/Insulation Slab}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_insulation_slab}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-slabs}{
-Slabs} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Insulation Slab}
-
-\paragraph{Distribution Assumption(s)}
-
-\begin{itemize}
-
-\item
-  CRHI is a copy of CR09
-\item
-  CRAK is a copy of CR02.
-\end{itemize}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Insulation Foundation Wall}\label{insulation_foundation_wall}
-\paragraph{Description}
-Specifies the insulation level of foundation types with foundation walls (i.e., crawlspaces and basements).
+\input{characteristics/Insulation Foundation Wall}
 
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
-  Derived from Home Innovation Research Labs 1982--2007 Data
-\item
-  Pre-1980 uses engineering judgment.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item Location Region
-    \item Vintage
-    \item Geometry Building Type RECS
-    \item Geometry Foundation Type.
-\end{itemize}
-\paragraph{Option(s)}
-ResStock provides four different options for Insulation Foundation Wall, plus a ``None'' flag for homes without foundation walls (Table \ref{table:hc_opt_insulation_foundation_wall}). Several ResStock arguments are constant across all options:
-\texttt{foundation\_wall\_thickness} and \texttt{foundation\_wall\_assembly\_r} are always set to \textit{auto}, \texttt{foundation\_wall\_insulation\_location} is always \textit{exterior}, and \texttt{foundation\_wall\_insulation\_distance\_to\_top}  is 0.
-
-\input{tables/options/Insulation Foundation Wall}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_insulation_foundation_wall}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-foundation-walls}{Foundation Walls} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Insulation Foundation Wall}
-
-\paragraph{Distribution Assumption(s)}
-
-\begin{itemize}
-
-\item
-  CRHI is a copy of CR09
-\item
-  CRAK is a copy of CR02.
-\end{itemize}
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Insulation Rim Joist}\label{insulation_rim_joist}
-\paragraph{Description}
-Insulation level for rim joists. Set the same as the insulation level for the foundation wall.
+\input{characteristics/Insulation Rim Joist}
 
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
-  Engineering judgment.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item Insulation Foundation Wall.
-\end{itemize}
-
-\paragraph{Option(s)}
-ResStock uses four different levels of rim-joist insulation as well as a ``None'' flag for homes without rim joists. These options map directly to the foundation wall insulation levels. The ResStock argument for
-\texttt{rim\_joist\_assembly\_r} is always set to \textit{auto}, and
-\texttt{rim\_joist\_continuous\_interior\_r} and
-\texttt{rim\_joist\_assembly\_interior\_r} are both set to 0 for all options.
-
-\input{tables/options/Insulation Rim Joist}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_insulation_rim_joist}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-rim-joists}{Rim Joists} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Insulation Rim Joist}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-
-\item
-  Rim joist insulation is the same value as the foundation wall
-  insulation.
-\end{itemize}
-
-\subsubsection{Ground Thermal
-Conductivity}\label{ground_thermal_conductivity}
-\paragraph{Description}
-The thermal conductivity (in Btu/hr-ft-F) of the ground used in
-foundation and geothermal heat pump heat transfer calculations.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
-  Data from the Southern Methodist University Geothermal Laboratory. The data are from the Thermal Conductivity Observation in Content Model Format dataset. The data are available at \url{https://www.smu.edu/dedman/academics/departments/earth-sciences/research/geothermallab/datamaps/ngds-project}.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-    \item ASHRAE IECC Climate Zone 2004.
-\end{itemize}
-
-\paragraph{Option(s)}
-
-ResStock uses 8 options for Thermal Ground Conductivity, which is expressed in BTU/hr-ft-F (Table \ref{table:hc_opt_ground_thermal_conductivity}). The ResStock arguments associated with each option vary only in the \texttt{site\_ground\_conductivity} parameter. The other two arguments, \texttt{site\_soil\_and\_moisture\_type} and
-\texttt{site\_ground\_diffusivity}, both receive \texttt{auto} assignment, regardless of the ResStock option.
-
-\input{tables/options/Ground Thermal Conductivity}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_ground_thermal_conductivity}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-site}{Site} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Ground Thermal Conductivity}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-\item
-  The data obtained are from surveyed oil and gas well data.
-\item
-  The latitudes and longitudes were assigned to counties and the data were
-  joined to the ResStock spatial lookup tables. In this process, 1,482 of
-  59,332 samples did not have a FIPS match or did not have data and were
-  dropped.
-\item
-  Due to limited data in climate zone 1A, data were pulled from samples
-  in 1A plus Florida 2A.
-\item
-  Samples less than 0.5 Btu/hr-ft-F are assigned a value of 0.5
-  Btu/hr-ft-F. Samples greater than 2.6 Btu/hr-ft-F are assigned a value
-  of 2.6 Btu/hr-ft-F.
-\end{itemize}
-
-
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Ground Thermal Conductivity}\label{ground_thermal_conductivity}
+\input{characteristics/Ground Thermal Conductivity}
 
 \subsection{Doors and Windows}
 In ResStock, two input files control door specification in ResStock:
@@ -2006,349 +403,29 @@ Two similar input files specify windows:
 Discussed also in this section are building features that might impact shading in windows. All three of these inputs are either not used or have constant values for the entire stock:
 \begin{itemize}
     \item Interior Shading
-    \item Eaves
-    \item Overhangs.
+    \item Eaves.
 \end{itemize}
+
 \subsubsection{Door Area}\label{door_area}
-\paragraph{Description}
-Area of exterior doors. All ResStock models currently receive the same option.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
+\input{characteristics/Door Area}
 
-\item
-  Engineering judgment.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item None.
-\end{itemize}
-\paragraph{Option(s)}
-All ResStock housing units currently receive an option of 20 ft\textsuperscript{2} for the exterior area of doors; see Table \ref{table:hc_opt_door_area}.
-
-\input{tables/options/Door Area}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_door_area}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-doors}{Doors} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Door Area}
-
-\paragraph{Distribution Assumption(s)}
-None
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Doors}\label{doors}
-\paragraph{Description}
-Exterior door material and properties.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
+\input{characteristics/Doors}
 
-\item
-  Engineering judgment.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item None
-\end{itemize}
-\paragraph{Option(s)}
-All homes in ResStock receive Fiberglass doors with an R-value of 5 (Table \ref{table:hc_opt_doors}).
-
-\input{tables/options/Doors}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_doors}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-doors}{Doors} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Doors}
-
-\paragraph{Distribution Assumption(s)}
-None.
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Windows}\label{windows}
-\paragraph{Description}
-Construction type and efficiency levels of windows.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
+\input{characteristics/Windows}
 
-\item
-  U.S.~EIA 2020 RECS microdata.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item ASHRAE IECC Climate Zone 2004
-    \item Federal Poverty Level
-    \item Geometry Building Type RECS
-    \item Tenure
-    \item Vintage ACS.
-\end{itemize}
-
-\paragraph{Option(s)}
-ResStock uses 10 window options in the baseline, with variation across number of panes, low-emissivity coating, and frame material. Across all Window options, multiple ResStock arguments are constant (Table \ref{table:hc_opt_windows}). \texttt{window\_natvent\_availability},
-\texttt{window\_exterior\_shading\_winter},
-\texttt{window\_exterior\_shading\_summer},
-\texttt{window\_shading\_summer\_season}, and
-\texttt{skylight\_storm\_type} are all set to \textit{auto}. Furthermore, two skylight window parameters are constant:
-\texttt{skylight\_ufactor} is always set to 0.37
-and \texttt{skylight\_shgc} is always 0.3.
-
-\input{tables/options/Windows}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_windows}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-windows}{Windows} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Windows}
-
-\paragraph{Distribution Assumption(s)}
-
-\begin{itemize}
-
-\item
-  All Triple-Pane options assumed to be low-e.
-\item
-  Only breaking out clear and low-e windows for the Double, Non-Metal
-  frame type.
-\item
-  Source of low-e distribution is based on engineering judgment,
-  informed by high-level sales trends observed in Ducker Worldwide
-  studies of the U.S.~market for windows, doors and skylights.
-\item
-  Due to low sample sizes, the following adjustments are made:
-
-  \begin{itemize}
-
-  \item
-    Vintage data are grouped into: (1) \textless1960, (2) 1960--79,
-    (3) 1980--99, (4) 2000s, (5) 2010s.
-  \item
-    Building Type data are grouped into: (1) Single-Family
-    Detached, Single-Family Attached, and Mobile homes, and (2)
-    Multifamily 2--4 units and Multifamily 5+ units.
-  \item
-    Climate zones are grouped into:
-    \begin{itemize}
-        \item 1A, 2A, 2B
-
-\item 3A, 3B, 3C, 4B
-\item 4A, 4C
-\item 5A, 5B
-\item6A, 6B and
-\item 7A, 7B 7AK, 8AK.
-  \end{itemize}
-  \end{itemize}
-
-  \begin{itemize}
-
-  \item
-    Federal Poverty Levels are progressively grouped together
-    until all bins are combined.
-  \item
-    Tenure options are progressively grouped together until all
-    bins are combined.
-  \end{itemize}
-\item
-  Storm window saturations are based on D\&R International, Ltd. \href{https://www.energy.gov/sites/prod/files/2013/11/f5/residential_windows_coverings.pdf}{2013}.
- \textit{Residential Windows and Window Coverings: A Detailed
-  View of the Installed Base and User Behavior}. Cut the \% storm windows by factor of 55\% because only 55\% of storms
-  are installed year-round.
-\item
-  Due to lack of performance data, Triple-Pane windows with storms are
-  modeled without the storm windows.
-\item
-  Due to lack of performance data, Double-Pane, Low-E, Non-Metal, Air,
-  M-gain, and Exterior Clear Storm windows are modeled as Double-Pane,
-  Clear, Non-Metal, Air, Exterior Clear Storm windows.
-\end{itemize}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Window Areas}\label{window_areas}
-\paragraph{Description}
-Window-to-wall ratios for the front, back, left, and right walls.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
+\input{characteristics/Window Areas}
 
-\item
-  2016--17 Residential Building Stock Assessment (RBSA) II microdata.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item Geometry Building Type Height.
-\end{itemize}
-\paragraph{Option(s)}
-ResStock arguments use window-to-wall ratios to specify the window area instead of defining absolute window areas. Therefore, the following wall area constants are all set to zero in ResStock:
-\begin{itemize}
-    \item  \texttt{window\_area\_front} = 0
-    \item \texttt{window\_area\_back} = 0
-    \item \texttt{window\_area\_left} = 0
-    \item \texttt{window\_area\_right} = 0
-    \item \texttt{skylight\_area\_front} = 0
-    \item \texttt{skylight\_area\_back} = 0
-    \item \texttt{skylight\_area\_left} = 0
-    \item \texttt{skylight\_area\_right} = 0.
-
-\end{itemize}
-
-ResStock has six different levels of window-to-wall ratios between 0.06 and 0.3 (Table \ref{table:hc_opt_window_areas}). Window-to-wall ratios are assumed constant on all sides of the home.
-
-Additionally, the \texttt{window\_aspect\_ratio} is set to 1.333 for all ResStock options.
-
-\input{tables/options/Window Areas}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_window_areas}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-windows}{Windows} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Window Areas}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-
-\item
-  The window-to-wall ratios (WWR) are exponential weibull distributed
-\item
-  Multifamily with 2--4 Units distributions are independent of Geometry
-  Stories
-\item
-  Multifamily with 5+ Units distributions are grouped by 1--3 stories,
-  4--7 stories, and 8+ stories
-\item
-  High-rise Multifamily buildings (8+ stories) have a 30\% WWR
-\item
-  SFD, SFA, and Mobile Homes are represented by the SFD window area
-  distribution.
-\end{itemize}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Eaves}\label{eaves}
-\paragraph{Description}
-Depth of roof eaves.
+\input{characteristics/Eaves}
 
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-    \item Building America House Simulation Protocols (\cite{Wilson2014}).
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-None.
-
-\paragraph{Option(s)}
-ResStock currently assumes 2 ft eaves (which are modeled as overhangs) for all buildings. Therefore, all models receive the following ResStock arguments:
-\begin{itemize}
-    \item \texttt{geometry\_eaves\_depth} = 2
-    \item \texttt{overhangs\_front\_depth} = 0
-    \item \texttt{overhangs\_front\_distance\_to\_top\_of\_window} = 0
-    \item \texttt{overhangs\_front\_distance\_to\_bottom\_of\_window} = 4
-    \item \texttt{overhangs\_back\_depth} = 0
-    \item \texttt{overhangs\_back\_distance\_to\_top\_of\_window} = 0
-    \item \texttt{overhangs\_back\_distance\_to\_bottom\_of\_window} = 4
-    \item \texttt{overhangs\_left\_depth} = 0
-    \item \texttt{overhangs\_left\_distance\_to\_top\_of\_window} = 0
-    \item \texttt{overhangs\_left\_distance\_to\_bottom\_of\_window} = 4
-    \item \texttt{overhangs\_right\_depth} = 0
-    \item \texttt{overhangs\_right\_distance\_to\_top\_of\_window} = 0
-    \item \texttt{overhangs\_right\_distance\_to\_bottom\_of\_window} = 4
-\end{itemize}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_eaves}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-overhangs}{Overhangs} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Eaves}
-
-\paragraph{Distribution Assumption(s)}
-None.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Interior Shading}\label{interior_shading}
-\paragraph{Description}
-Amount of window shading in the summer and winter.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
+\input{characteristics/Interior Shading}
 
-\item
-  ANSI/RESNET/ICC 301 Standard.
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item None.
-\end{itemize}
-\paragraph{Option(s)}
-All models in ResStock receive the same shading option (Table \ref{table:hc_opt_interior_shading}).
-
-\input{tables/options/Interior Shading}
-
-For the argument definitions, see Table \ref{table:hc_arg_def_interior_shading}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-windows}{Windows} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Interior Shading}
-
-\paragraph{Distribution Assumption(s)}
-None.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Infiltration}
 Infiltration is air leakage between the envelope and the outdoor environment. In the U.S.~residential sector, it is the leading driver of heating and cooling loads (compared to, for example, heat transfer through other parts of the envelope). In ResStock, infiltration is controlled by a single input file that provides a whole-home infiltration rate.
+
 \subsubsection{Infiltration}\label{infiltration}
-\paragraph{Description}
-Total infiltration to the dwelling unit.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
-  Distributions are based on the cumulative distribution functions from
-  the \href{http://resdb.lbl.gov/}{Residential Diagnostics Database (ResDB)}.
-\item
-  Alaska-specific distribution is based on Alaska Retrofit Information
-  System (2008 to 2022), maintained by Alaska Housing Finance
-  Corporation.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-
-\begin{itemize}
-    \item ASHRAE IECC Climate Zone 2004
-    \item Geometry Floor Area
-    \item Vintage.
-\end{itemize}
-\paragraph{Option(s)}
-All infiltration options in ResStock are provided in air changes per hour (ACH) at 50 Pascals, as calculated by a blower door test. The characteristic sets the \texttt{air\_leakage\_leakiness\_description}, \texttt{air\_leakage\_units}, \texttt{air\_leakage\_house\_pressure}, \texttt{air\_leakage\_value}, \texttt{air\_leakage\_type}, and \texttt{site\_shielding\_of\_home} ResStock arguments. For the argument definitions, see Table \ref{table:hc_arg_def_infiltration}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html##hpxml-air-infiltration}{Air Infiltration} documentation for the available HPXML schema elements, default values, and constraints.
-
-\input{tables/arguments/Infiltration}
-
-The options of the Infiltration characteristic range between 1 ACH 50 to 50 ACH 50 and set the \texttt{air\_leakage\_value} ResStock argument, Table \ref{table:hc_opt_infiltration}.
-
-Below is a list of arguments and their values that are constant across all the options.
-\begin{itemize}
-	\item \texttt{air\_leakage\_leakiness\_description} = auto
-	\item \texttt{air\_leakage\_units} = ACH
-	\item \texttt{air\_leakage\_house\_pressure} = 50
-	\item \texttt{air\_leakage\_type} = unit total
-	\item \texttt{site\_shielding\_of\_home} = normal
-\end{itemize}
-
-\input{tables/options/Infiltration}
-
-\paragraph{Distribution Assumption(s)}
-
-\begin{itemize}
-
-\item
-  All ACH50 are based on Single-Family Detached blower door tests.
-\item
-  Climate zones that are copied: 2A to 1A, 6A to 7A, and 6B to 7B.
-\item
-  Vintage bins that are copied: 2000s to 2010s, 1950s to 1940s, 1950s to
-  \textless1940s.
-\item
-  Homes are assumed to not be Weatherization Assistance Program
-  qualified and not ENERGY STAR certified.
-\item
-  Climate zones 7AK and 8AK are averages of 6A and 6B.
-\item ResStock models multi-family and SFA units with the unit total air leakage type. The unit total air leakage assume that some of the sampled ACH50 value goes to neighboring units. The model infiltration value to the exterior is a smaller infiltration value that what is sampled and is adjusted by the ratio of exterior envelope surface area to total envelope surface area. The modeled infiltration to the exterior is reported in the results.
-\item
-  For Alaska, we are using a field in ARIS that lumps multifamily 2--4
-  units and multifamily 5+ units buildings together. Data from the
-  American Community Survey are used to distribute proportionally between these two
-  building types.
-\item
-  For Alaska, Infiltration ACH50 values are calculated based on CFM50
-  from blower door test and estimated volume of the home.
-\end{itemize}
+\input{characteristics/Infiltration}

@@ -3,7 +3,8 @@
 # see the URL below for information on how to write OpenStudio measures
 # http://nrel.github.io/OpenStudio-user-documentation/reference/measure_writing_guide/
 
-# Load required dependencies for HVAC flexibility processing
+# Load required dependencies
+require_relative 'resources/duct_limited'
 require_relative 'resources/hvac_flexibility/detailed_schedule_generator'
 require_relative 'resources/hvac_flexibility/setpoint_modifier'
 require_relative 'resources/ev_flexibility/ev_schedule_modifier'
@@ -405,9 +406,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
             end
           end
         else
-          heating_system.heating_system_type = args[:heating_system_2_type] unless args[:heating_system_2_type].nil?
-          heating_system.heating_system_fuel = args[:heating_system_2_fuel] unless args[:heating_system_2_fuel].nil?
-          heating_system.heating_system_efficiency_percent = args[:heating_system_2_heating_efficiency] unless args[:heating_system_2_heating_efficiency].nil?
+          heating_system.heating_system_fuel = args[:heating_system_2_fuel] unless args[:heating_system_2_fuel].nil? # To support hvac_heat_pump_backup_use_existing_system
           heating_system.heating_capacity = args[:heating_system_2_heating_capacity] unless args[:heating_system_2_heating_capacity].nil?
           heating_system.heating_autosizing_factor = args[:heating_system_2_heating_autosizing_factor] unless args[:heating_system_2_heating_autosizing_factor].nil?
           heating_system.heating_autosizing_limit = args[:heating_system_2_heating_autosizing_limit] unless args[:heating_system_2_heating_autosizing_limit].nil?
@@ -442,13 +441,17 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         heat_pump.heating_capacity = args[:heat_pump_heating_capacity] unless args[:heat_pump_heating_capacity].nil?
         heat_pump.heating_autosizing_factor = args[:heat_pump_heating_autosizing_factor] unless args[:heat_pump_heating_autosizing_factor].nil?
         heat_pump.heating_autosizing_limit = args[:heat_pump_heating_autosizing_limit] unless args[:heat_pump_heating_autosizing_limit].nil?
-        heat_pump.fraction_heat_load_served = args[:heat_pump_fraction_heat_load_served] unless args[:heat_pump_fraction_heat_load_served].nil?
         heat_pump.cooling_capacity = args[:heat_pump_cooling_capacity] unless args[:heat_pump_cooling_capacity].nil?
         heat_pump.cooling_autosizing_factor = args[:heat_pump_cooling_autosizing_factor] unless args[:heat_pump_cooling_autosizing_factor].nil?
         heat_pump.cooling_autosizing_limit = args[:heat_pump_cooling_autosizing_limit] unless args[:heat_pump_cooling_autosizing_limit].nil?
-        heat_pump.backup_type = args[:heat_pump_backup_type] unless args[:heat_pump_backup_type].nil?
-        heat_pump.backup_heating_fuel = args[:heat_pump_backup_fuel] unless args[:heat_pump_backup_fuel].nil?
-        heat_pump.backup_heating_efficiency_percent = args[:heat_pump_backup_heating_efficiency] unless args[:heat_pump_backup_heating_efficiency].nil?
+        heat_pump.backup_heating_fuel = args[:heat_pump_backup_fuel] unless args[:heat_pump_backup_fuel].nil? # To support hvac_heat_pump_backup_use_existing_system
+        if heat_pump.backup_heating_fuel == HPXML::FuelTypeElectricity
+          heat_pump.backup_heating_efficiency_percent = args[:heat_pump_backup_heating_efficiency] unless args[:heat_pump_backup_heating_efficiency].nil? # To support hvac_heat_pump_backup_use_existing_system
+          heat_pump.backup_heating_efficiency_afue = nil
+        else
+          heat_pump.backup_heating_efficiency_percent = nil
+          heat_pump.backup_heating_efficiency_afue = args[:heat_pump_backup_heating_efficiency] unless args[:heat_pump_backup_heating_efficiency].nil? # To support hvac_heat_pump_backup_use_existing_system
+        end
         heat_pump.backup_heating_capacity = args[:heat_pump_backup_heating_capacity] unless args[:heat_pump_backup_heating_capacity].nil?
         heat_pump.backup_heating_autosizing_factor = args[:heat_pump_backup_heating_autosizing_factor] unless args[:heat_pump_backup_heating_autosizing_factor].nil?
         heat_pump.backup_heating_autosizing_limit = args[:heat_pump_backup_heating_autosizing_limit] unless args[:heat_pump_backup_heating_autosizing_limit].nil?
@@ -516,6 +519,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                                          year: @hpxml.header.sim_calendar_year,
                                          output_path: nil)
       Defaults.apply(runner, @hpxml, hpxml_bldg, weather, schedules_file: schedules_file)
+
+      set_adjusted_fan_efficiency(runner, args, hpxml_bldg) # sizing is duct limited
 
       # Register additional values
       register_value(runner, 'unit_height_above_grade', hpxml_bldg.building_construction.unit_height_above_grade)

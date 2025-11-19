@@ -1,0 +1,34 @@
+\paragraph{Description}
+% \input{characteristics/description/Insulation Slab}
+Defines the insulation level for all slab-on-grade foundation types.
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/Insulation Slab}
+\begin{itemize}
+\item
+  Derived from Home Innovation Research Labs 1982--2007 Data
+\item
+  Pre-1980 uses engineering judgment.
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/Insulation Slab}
+
+\paragraph{Options}
+ResStock has multiple levels of slab insulation, plus a ``None'' flag for homes without a slab-on-grade foundation; see Table \ref{table:hc_opt_insulation_slab}. The options specify both the R-value as well as the location of the slab insulation.
+
+\input{characteristics/options/Insulation Slab}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_insulation_slab}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-slabs}{Slabs} documentation for additional information.
+
+\input{characteristics/properties/Insulation Slab}
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/Insulation Slab}
+\begin{itemize}
+
+\item
+  CRHI is a copy of CR09
+\item
+  CRAK is a copy of CR02.
+\end{itemize}
