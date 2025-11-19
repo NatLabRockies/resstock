@@ -329,6 +329,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_autosizing_factor', false)
+    arg.setDisplayName('HVAC: Heat Pump Backup Heating Autosizing Factor')
+    arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_rated_cfm_per_ton', false)
     arg.setDisplayName('HVAC: Heat Pump Rated CFM Per Ton')
     arg.setDescription('The rated cfm per ton of the heat pump.')

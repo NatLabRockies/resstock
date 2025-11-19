@@ -2071,6 +2071,17 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 
 <br/>
 
+**HVAC: Heat Pump Backup Heating Autosizing Factor**
+
+The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.
+
+- **Name:** ``heat_pump_backup_heating_autosizing_factor``
+- **Type:** ``Double``
+
+- **Required:** ``false``
+
+<br/>
+
 **HVAC: Heat Pump Rated CFM Per Ton**
 
 The rated cfm per ton of the heat pump.
