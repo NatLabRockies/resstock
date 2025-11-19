@@ -480,7 +480,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       end
 
       # HVAC
-      set_hvac_systems(runner, hpxml_bldg_existing, hpxml_bldg, args)
+      set_hvac_systems(hpxml_bldg_existing, hpxml_bldg)
 
       # Electric Panel
       set_electric_panel(runner, hpxml_bldg_existing, hpxml_bldg, args)
@@ -523,7 +523,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       Defaults.apply(runner, @hpxml, hpxml_bldg, weather, schedules_file: schedules_file)
 
       # HVAC
-      # set_hvac_systems(runner, hpxml_bldg_existing, hpxml_bldg, args)
+      # set_hvac_systems(hpxml_bldg_existing, hpxml_bldg)
 
       # Sizing is duct limited
       set_adjusted_fan_efficiency(runner, args, hpxml_bldg, baseline_max_airflow_cfm) # after defaults so that we have airflow cfm
@@ -713,34 +713,34 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     return schedule_file
   end
 
-  def set_hvac_systems(_runner, hpxml_bldg_existing, hpxml_bldg, _args)
+  def self.set_hvac_systems(hpxml_bldg_existing, hpxml_bldg)
     return if hpxml_bldg_existing.nil?
 
     heating_system_existing = hpxml_bldg_existing.heating_systems.find { |hs| hs.primary_system }
     heating_system = hpxml_bldg.heating_systems.find { |hs| hs.primary_system }
 
     if !heating_system_existing.nil? && !heating_system.nil?
-      if (heating_system_existing.to_h[:heating_system_type] == heating_system.to_h[:heating_system_type]) &&
-         (heating_system_existing.to_h[:heating_system_fuel] == heating_system.to_h[:heating_system_fuel]) &&
-         ((heating_system_existing.to_h[:heating_efficiency_afue] == heating_system.to_h[:heating_efficiency_afue]) ||
-         (heating_system_existing.to_h[:heating_efficiency_percent] == heating_system.to_h[:heating_efficiency_percent])) &&
-         (heating_system_existing.to_h[:fraction_heat_load_served] == heating_system.to_h[:fraction_heat_load_served])
+      if (heating_system_existing.heating_system_type == heating_system.heating_system_type) &&
+         (heating_system_existing.heating_system_fuel == heating_system.heating_system_fuel) &&
+         (heating_system_existing.heating_efficiency_afue == heating_system.heating_efficiency_afue) &&
+         (heating_system_existing.heating_efficiency_percent == heating_system.heating_efficiency_percent) &&
+         (heating_system_existing.fraction_heat_load_served == heating_system.fraction_heat_load_served)
         heating_system.heating_capacity = heating_system_existing.heating_capacity
         heating_system.heating_autosizing_factor = heating_system_existing.heating_autosizing_factor
       end
     end
 
     heating_system_2_existing = hpxml_bldg_existing.heating_systems.find { |hs| !hs.primary_system }
-    heating_2_system = hpxml_bldg.heating_systems.find { |hs| !hs.primary_system }
+    heating_system_2 = hpxml_bldg.heating_systems.find { |hs| !hs.primary_system }
 
-    if !heating_system_2_existing.nil? && !heating_2_system.nil?
-      if (heating_system_2_existing.to_h[:heating_system_type] == heating_2_system.to_h[:heating_system_type]) &&
-         (heating_system_2_existing.to_h[:heating_system_fuel] == heating_2_system.to_h[:heating_system_fuel]) &&
-         ((heating_system_2_existing.to_h[:heating_efficiency_afue] == heating_2_system.to_h[:heating_efficiency_afue]) ||
-         (heating_system_2_existing.to_h[:heating_efficiency_percent] == heating_2_system.to_h[:heating_efficiency_percent])) &&
-         (heating_system_2_existing.to_h[:fraction_heat_load_served] == heating_2_system.to_h[:fraction_heat_load_served])
-        heating_2_system.heating_capacity = heating_system_2_existing.heating_capacity
-        heating_2_system.heating_autosizing_factor = heating_system_2_existing.heating_autosizing_factor
+    if !heating_system_2_existing.nil? && !heating_system_2.nil?
+      if (heating_system_2_existing.heating_system_type == heating_system_2.heating_system_type) &&
+         (heating_system_2_existing.heating_system_fuel == heating_system_2.heating_system_fuel) &&
+         (heating_system_2_existing.heating_efficiency_afue == heating_system_2.heating_efficiency_afue) &&
+         (heating_system_2_existing.heating_efficiency_percent == heating_system_2.heating_efficiency_percent) &&
+         (heating_system_2_existing.fraction_heat_load_served == heating_system_2.fraction_heat_load_served)
+        heating_system_2.heating_capacity = heating_system_2_existing.heating_capacity
+        heating_system_2.heating_autosizing_factor = heating_system_2_existing.heating_autosizing_factor
       end
     end
 
@@ -748,15 +748,16 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     cooling_system = hpxml_bldg.cooling_systems.find { |cs| cs.primary_system }
 
     if !cooling_system_existing.nil? && !cooling_system.nil?
-      if (cooling_system_existing.to_h[:cooling_system_type] == cooling_system.to_h[:cooling_system_type]) &&
-         (cooling_system_existing.to_h[:cooling_system_fuel] == cooling_system.to_h[:cooling_system_fuel]) &&
-         (cooling_system_existing.to_h[:compressor_type] == cooling_system.to_h[:compressor_type]) &&
-         ((cooling_system_existing.to_h[:cooling_efficiency_seer] == cooling_system.to_h[:cooling_efficiency_seer]) ||
-         (cooling_system_existing.to_h[:cooling_efficiency_seer2] == cooling_system.to_h[:cooling_efficiency_seer2]) ||
-         (cooling_system_existing.to_h[:cooling_efficiency_eer] == cooling_system.to_h[:cooling_efficiency_eer]) ||
-         (cooling_system_existing.to_h[:cooling_efficiency_eer2] == cooling_system.to_h[:cooling_efficiency_eer2]) ||
-         (cooling_system_existing.to_h[:cooling_efficiency_ceer] == cooling_system.to_h[:cooling_efficiency_ceer])) &&
-         (cooling_system_existing.to_h[:fraction_cool_load_served] == cooling_system.to_h[:fraction_cool_load_served])
+      if (cooling_system_existing.cooling_system_type == cooling_system.cooling_system_type) &&
+         (cooling_system_existing.cooling_system_fuel == cooling_system.cooling_system_fuel) &&
+         (cooling_system_existing.compressor_type == cooling_system.compressor_type) &&
+         (cooling_system_existing.cooling_efficiency_seer == cooling_system.cooling_efficiency_seer) &&
+         (cooling_system_existing.cooling_efficiency_seer2 == cooling_system.cooling_efficiency_seer2) &&
+         (cooling_system_existing.cooling_efficiency_eer == cooling_system.cooling_efficiency_eer) &&
+         (cooling_system_existing.cooling_efficiency_eer2 == cooling_system.cooling_efficiency_eer2) &&
+         (cooling_system_existing.cooling_efficiency_ceer == cooling_system.cooling_efficiency_ceer) &&
+         (cooling_system_existing.cooling_efficiency_kw_per_ton == cooling_system.cooling_efficiency_kw_per_ton) &&
+         (cooling_system_existing.fraction_cool_load_served == cooling_system.fraction_cool_load_served)
         cooling_system.cooling_capacity = cooling_system_existing.cooling_capacity
         cooling_system.cooling_autosizing_factor = cooling_system_existing.cooling_autosizing_factor
       end
@@ -766,19 +767,19 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     heat_pump = hpxml_bldg.heat_pumps.find { |hp| hp.primary_heating_system && hp.primary_cooling_system }
 
     if !heat_pump_existing.nil? && !heat_pump.nil?
-      if (heat_pump_existing.to_h[:heat_pump_type] == heat_pump.to_h[:heat_pump_type]) &&
-         (heat_pump_existing.to_h[:heat_pump_fuel] == heat_pump.to_h[:heat_pump_fuel]) &&
-         (heat_pump_existing.to_h[:compressor_type] == heat_pump.to_h[:compressor_type]) &&
-         ((heat_pump_existing.to_h[:heating_efficiency_hspf] == heat_pump.to_h[:heating_efficiency_hspf]) ||
-         (heat_pump_existing.to_h[:heating_efficiency_hspf2] == heat_pump.to_h[:heating_efficiency_hspf2]) ||
-         (heat_pump_existing.to_h[:heating_efficiency_cop] == heat_pump.to_h[:heating_efficiency_cop])) &&
-         ((heat_pump_existing.to_h[:cooling_efficiency_seer] == heat_pump.to_h[:cooling_efficiency_seer]) ||
-         (heat_pump_existing.to_h[:cooling_efficiency_seer2] == heat_pump.to_h[:cooling_efficiency_seer2]) ||
-         (heat_pump_existing.to_h[:cooling_efficiency_eer] == heat_pump.to_h[:cooling_efficiency_eer]) ||
-         (heat_pump_existing.to_h[:cooling_efficiency_eer2] == heat_pump.to_h[:cooling_efficiency_eer2]) ||
-         (heat_pump_existing.to_h[:cooling_efficiency_ceer] == heat_pump.to_h[:cooling_efficiency_ceer])) &&
-         (heat_pump_existing.to_h[:fraction_heat_load_served] == heat_pump.to_h[:fraction_cool_load_served]) &&
-         (heat_pump_existing.to_h[:fraction_cool_load_served] == heat_pump.to_h[:fraction_cool_load_served])
+      if (heat_pump_existing.heat_pump_type == heat_pump.heat_pump_type) &&
+         (heat_pump_existing.heat_pump_fuel == heat_pump.heat_pump_fuel) &&
+         (heat_pump_existing.compressor_type == heat_pump.compressor_type) &&
+         (heat_pump_existing.heating_efficiency_hspf == heat_pump.heating_efficiency_hspf) &&
+         (heat_pump_existing.heating_efficiency_hspf2 == heat_pump.heating_efficiency_hspf2) &&
+         (heat_pump_existing.heating_efficiency_cop == heat_pump.heating_efficiency_cop) &&
+         (heat_pump_existing.cooling_efficiency_seer == heat_pump.cooling_efficiency_seer) &&
+         (heat_pump_existing.cooling_efficiency_seer2 == heat_pump.cooling_efficiency_seer2) &&
+         (heat_pump_existing.cooling_efficiency_eer == heat_pump.cooling_efficiency_eer) &&
+         (heat_pump_existing.cooling_efficiency_eer2 == heat_pump.cooling_efficiency_eer2) &&
+         (heat_pump_existing.cooling_efficiency_ceer == heat_pump.cooling_efficiency_ceer) &&
+         (heat_pump_existing.fraction_heat_load_served == heat_pump.fraction_cool_load_served) &&
+         (heat_pump_existing.fraction_cool_load_served == heat_pump.fraction_cool_load_served)
         heat_pump.heating_capacity = heat_pump_existing.heating_capacity
         heat_pump.cooling_capacity = heat_pump_existing.cooling_capacity
         heat_pump.backup_heating_capacity = heat_pump_existing.backup_heating_capacity
