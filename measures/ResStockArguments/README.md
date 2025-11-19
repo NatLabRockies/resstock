@@ -1951,30 +1951,6 @@ The type of shared system.
 
 <br/>
 
-**HVAC: Heating System Heating Capacity**
-
-The output heating capacity of the heating system.
-
-- **Name:** ``heating_system_heating_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Heating System Heating Autosizing Factor**
-
-The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
-
-- **Name:** ``heating_system_heating_autosizing_factor``
-- **Type:** ``Double``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heating System Rated CFM Per Ton**
 
 The rated cfm per ton of the heating system.
@@ -1996,67 +1972,6 @@ The actual cfm per ton of the heating system.
 - **Type:** ``Double``
 
 - **Units:** ``cfm/ton``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Heating System 2 Fuel Type**
-
-The fuel type of the second heating system.
-
-- **Name:** ``heating_system_2_fuel``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`, `coal`
-
-<br/>
-
-**HVAC: Heating System 2 Heating Capacity**
-
-The output heating capacity of the second heating system.
-
-- **Name:** ``heating_system_2_heating_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Heating System 2 Heating Autosizing Factor**
-
-The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
-
-- **Name:** ``heating_system_2_heating_autosizing_factor``
-- **Type:** ``Double``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Cooling System Cooling Capacity**
-
-The output cooling capacity of the cooling system.
-
-- **Name:** ``cooling_system_cooling_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Cooling System Cooling Autosizing Factor**
-
-The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
-
-- **Name:** ``cooling_system_cooling_autosizing_factor``
-- **Type:** ``Double``
 
 - **Required:** ``false``
 
@@ -2101,78 +2016,6 @@ The fraction of manufacturer recommended charge of the cooling system.
 
 <br/>
 
-**HVAC: Heat Pump Heating Capacity**
-
-The output heating capacity of the heat pump.
-
-- **Name:** ``heat_pump_heating_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Heat Pump Heating Autosizing Factor**
-
-The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
-
-- **Name:** ``heat_pump_heating_autosizing_factor``
-- **Type:** ``Double``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Heat Pump Cooling Capacity**
-
-The output cooling capacity of the heat pump.
-
-- **Name:** ``heat_pump_cooling_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Heat Pump Cooling Autosizing Factor**
-
-The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
-
-- **Name:** ``heat_pump_cooling_autosizing_factor``
-- **Type:** ``Double``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Heat Pump Backup Heating Capacity**
-
-The backup output heating capacity of the heat pump.
-
-- **Name:** ``heat_pump_backup_heating_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Heat Pump Backup Heating Autosizing Factor**
-
-The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.
-
-- **Name:** ``heat_pump_backup_heating_autosizing_factor``
-- **Type:** ``Double``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heat Pump Rated CFM Per Ton**
 
 The rated cfm per ton of the heat pump.
@@ -2212,30 +2055,6 @@ The fraction of manufacturer recommended charge of the heat pump.
 
 <br/>
 
-**HVAC: Heat Pump Backup Fuel Type**
-
-The backup fuel type of the heat pump.
-
-- **Name:** ``heat_pump_backup_fuel``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`
-
-<br/>
-
-**HVAC: Heat Pump Backup Rated Efficiency**
-
-The backup rated efficiency value of the heat pump.
-
-- **Name:** ``heat_pump_backup_heating_efficiency``
-- **Type:** ``Double``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heat Pump Backup Use Existing System**
 
 Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system. This argument is only applicable for heat pump upgrades.
@@ -2253,19 +2072,6 @@ Whether the (ducted) heat pump has an upper limit for autosized heating/cooling 
 
 - **Name:** ``hvac_heat_pump_sizing_is_duct_limited``
 - **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Blower Fan Efficiency**
-
-The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems)..
-
-- **Name:** ``hvac_blower_fan_watts_per_cfm``
-- **Type:** ``Double``
-
-- **Units:** ``W/CFM``
 
 - **Required:** ``false``
 

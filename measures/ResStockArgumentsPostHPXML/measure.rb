@@ -394,33 +394,25 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
       # HVAC systems
       hpxml_bldg.heating_systems.each do |heating_system|
-        if heating_system.primary_system
-          heating_system.heating_capacity = args[:heating_system_heating_capacity] unless args[:heating_system_heating_capacity].nil?
-          heating_system.heating_autosizing_factor = args[:heating_system_heating_autosizing_factor] unless args[:heating_system_heating_autosizing_factor].nil?
-          # Faults
-          if [HPXML::HVACTypeFurnace].include? heating_system.heating_system_type
-            if (not heating_system.distribution_system.nil?) && (not args[:heating_system_rated_cfm_per_ton].nil?) && (not args[:heating_system_actual_cfm_per_ton].nil?)
-              heating_system.airflow_defect_ratio = (args[:heating_system_actual_cfm_per_ton] - args[:heating_system_rated_cfm_per_ton]) / args[:heating_system_rated_cfm_per_ton]
-            end
+        next unless heating_system.primary_system
+
+        # Faults
+        if [HPXML::HVACTypeFurnace].include? heating_system.heating_system_type
+          if (not heating_system.distribution_system.nil?) && (not args[:heating_system_rated_cfm_per_ton].nil?) && (not args[:heating_system_actual_cfm_per_ton].nil?)
+            heating_system.airflow_defect_ratio = (args[:heating_system_actual_cfm_per_ton] - args[:heating_system_rated_cfm_per_ton]) / args[:heating_system_rated_cfm_per_ton]
           end
-          # Shared system
-          if ['Baseboard', 'FanCoil'].include? args[:hvac_heating_shared_system]
-            heating_system.is_shared_system = true
-            heating_system.number_of_units_served = hpxml_bldg.building_construction.number_of_units_in_building
-            if args[:hvac_heating_shared_system] == 'FanCoil'
-              heating_system.distribution_system.distribution_system_type = HPXML::HVACDistributionTypeAir
-              heating_system.distribution_system.air_type = HPXML::AirTypeFanCoil
-            end
-          end
-        else
-          heating_system.heating_system_fuel = args[:heating_system_2_fuel] unless args[:heating_system_2_fuel].nil? # To support hvac_heat_pump_backup_use_existing_system
-          heating_system.heating_capacity = args[:heating_system_2_heating_capacity] unless args[:heating_system_2_heating_capacity].nil?
-          heating_system.heating_autosizing_factor = args[:heating_system_2_heating_autosizing_factor] unless args[:heating_system_2_heating_autosizing_factor].nil?
+        end
+        # Shared system
+        next unless ['Baseboard', 'FanCoil'].include? args[:hvac_heating_shared_system]
+
+        heating_system.is_shared_system = true
+        heating_system.number_of_units_served = hpxml_bldg.building_construction.number_of_units_in_building
+        if args[:hvac_heating_shared_system] == 'FanCoil'
+          heating_system.distribution_system.distribution_system_type = HPXML::HVACDistributionTypeAir
+          heating_system.distribution_system.air_type = HPXML::AirTypeFanCoil
         end
       end
       hpxml_bldg.cooling_systems.each do |cooling_system|
-        cooling_system.cooling_capacity = args[:cooling_system_cooling_capacity] unless args[:cooling_system_cooling_capacity].nil?
-        cooling_system.cooling_autosizing_factor = args[:cooling_system_cooling_autosizing_factor] unless args[:cooling_system_cooling_autosizing_factor].nil?
         # Faults
         if [HPXML::HVACTypeCentralAirConditioner, HPXML::HVACTypeMiniSplitAirConditioner].include? cooling_system.cooling_system_type
           if (not cooling_system.distribution_system.nil?) && (not args[:cooling_system_rated_cfm_per_ton].nil?) && (not args[:cooling_system_actual_cfm_per_ton].nil?)
@@ -443,20 +435,6 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                                            cooling_system.compressor_type)
       end
       hpxml_bldg.heat_pumps.each do |heat_pump|
-        heat_pump.heating_capacity = args[:heat_pump_heating_capacity] unless args[:heat_pump_heating_capacity].nil?
-        heat_pump.heating_autosizing_factor = args[:heat_pump_heating_autosizing_factor] unless args[:heat_pump_heating_autosizing_factor].nil?
-        heat_pump.cooling_capacity = args[:heat_pump_cooling_capacity] unless args[:heat_pump_cooling_capacity].nil?
-        heat_pump.cooling_autosizing_factor = args[:heat_pump_cooling_autosizing_factor] unless args[:heat_pump_cooling_autosizing_factor].nil?
-        heat_pump.backup_heating_fuel = args[:heat_pump_backup_fuel] unless args[:heat_pump_backup_fuel].nil? # To support hvac_heat_pump_backup_use_existing_system
-        if heat_pump.backup_heating_fuel == HPXML::FuelTypeElectricity
-          heat_pump.backup_heating_efficiency_percent = args[:heat_pump_backup_heating_efficiency] unless args[:heat_pump_backup_heating_efficiency].nil? # To support hvac_heat_pump_backup_use_existing_system
-          heat_pump.backup_heating_efficiency_afue = nil
-        else
-          heat_pump.backup_heating_efficiency_percent = nil
-          heat_pump.backup_heating_efficiency_afue = args[:heat_pump_backup_heating_efficiency] unless args[:heat_pump_backup_heating_efficiency].nil? # To support hvac_heat_pump_backup_use_existing_system
-        end
-        heat_pump.backup_heating_capacity = args[:heat_pump_backup_heating_capacity] unless args[:heat_pump_backup_heating_capacity].nil?
-        heat_pump.backup_heating_autosizing_factor = args[:heat_pump_backup_heating_autosizing_factor] unless args[:heat_pump_backup_heating_autosizing_factor].nil?
         # Faults
         if [HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpMiniSplit, HPXML::HVACTypeHeatPumpPTHP, HPXML::HVACTypeHeatPumpRoom].include? heat_pump.heat_pump_type
           if (not heat_pump.distribution_system.nil?) && (not args[:heat_pump_rated_cfm_per_ton].nil?) && (not args[:heat_pump_actual_cfm_per_ton].nil?)
@@ -735,34 +713,73 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     heating_system = hpxml_bldg.heating_systems.find { |hs| hs.primary_system }
 
     if !heating_system_existing.nil? && !heating_system.nil?
-
-      # hse_clone = heating_system_existing.clone
-      # hs_clone = heating_system.clone
-
-      # [hse_clone, hs_clone].each do |obj|
-      # obj.to_h.keys.each do |attr|
-      # if attr.end_with?('_isdefaulted') ||
-      # (['id', 'location', 'distribution_system_idref', 'heating_capacity', 'heating_autosizing_factor', 'heating_design_airflow_cfm', 'fan_watts_per_cfm'].include?(attr.to_s))
-      # obj.send("#{attr}=", nil)
-      # end
-      # end
-      # end
-
-      same = true
-      [:heating_system_type, :heating_system_fuel, :heating_efficiency_afue, :heating_efficiency_percent, :fraction_heat_load_served].each do |attr|
-        if heating_system_existing.to_h[attr] != heating_system.to_h[attr]
-          same = false
-          break
-        end
-      end
-
-      if same
+      if (heating_system_existing.to_h[:heating_system_type] == heating_system.to_h[:heating_system_type]) &&
+         (heating_system_existing.to_h[:heating_system_fuel] == heating_system.to_h[:heating_system_fuel]) &&
+         ((heating_system_existing.to_h[:heating_efficiency_afue] == heating_system.to_h[:heating_efficiency_afue]) ||
+         (heating_system_existing.to_h[:heating_efficiency_percent] == heating_system.to_h[:heating_efficiency_percent])) &&
+         (heating_system_existing.to_h[:fraction_heat_load_served] == heating_system.to_h[:fraction_heat_load_served])
         heating_system.heating_capacity = heating_system_existing.heating_capacity
         heating_system.heating_autosizing_factor = heating_system_existing.heating_autosizing_factor
       end
     end
 
-    # TODO
+    heating_system_2_existing = hpxml_bldg_existing.heating_systems.find { |hs| !hs.primary_system }
+    heating_2_system = hpxml_bldg.heating_systems.find { |hs| !hs.primary_system }
+
+    if !heating_system_2_existing.nil? && !heating_2_system.nil?
+      if (heating_system_2_existing.to_h[:heating_system_type] == heating_2_system.to_h[:heating_system_type]) &&
+         (heating_system_2_existing.to_h[:heating_system_fuel] == heating_2_system.to_h[:heating_system_fuel]) &&
+         ((heating_system_2_existing.to_h[:heating_efficiency_afue] == heating_2_system.to_h[:heating_efficiency_afue]) ||
+         (heating_system_2_existing.to_h[:heating_efficiency_percent] == heating_2_system.to_h[:heating_efficiency_percent])) &&
+         (heating_system_2_existing.to_h[:fraction_heat_load_served] == heating_2_system.to_h[:fraction_heat_load_served])
+        heating_2_system.heating_capacity = heating_system_2_existing.heating_capacity
+        heating_2_system.heating_autosizing_factor = heating_system_2_existing.heating_autosizing_factor
+      end
+    end
+
+    cooling_system_existing = hpxml_bldg_existing.cooling_systems.find { |cs| cs.primary_system }
+    cooling_system = hpxml_bldg.cooling_systems.find { |cs| cs.primary_system }
+
+    if !cooling_system_existing.nil? && !cooling_system.nil?
+      if (cooling_system_existing.to_h[:cooling_system_type] == cooling_system.to_h[:cooling_system_type]) &&
+         (cooling_system_existing.to_h[:cooling_system_fuel] == cooling_system.to_h[:cooling_system_fuel]) &&
+         (cooling_system_existing.to_h[:compressor_type] == cooling_system.to_h[:compressor_type]) &&
+         ((cooling_system_existing.to_h[:cooling_efficiency_seer] == cooling_system.to_h[:cooling_efficiency_seer]) ||
+         (cooling_system_existing.to_h[:cooling_efficiency_seer2] == cooling_system.to_h[:cooling_efficiency_seer2]) ||
+         (cooling_system_existing.to_h[:cooling_efficiency_eer] == cooling_system.to_h[:cooling_efficiency_eer]) ||
+         (cooling_system_existing.to_h[:cooling_efficiency_eer2] == cooling_system.to_h[:cooling_efficiency_eer2]) ||
+         (cooling_system_existing.to_h[:cooling_efficiency_ceer] == cooling_system.to_h[:cooling_efficiency_ceer])) &&
+         (cooling_system_existing.to_h[:fraction_cool_load_served] == cooling_system.to_h[:fraction_cool_load_served])
+        cooling_system.cooling_capacity = cooling_system_existing.cooling_capacity
+        cooling_system.cooling_autosizing_factor = cooling_system_existing.cooling_autosizing_factor
+      end
+    end
+
+    heat_pump_existing = hpxml_bldg_existing.heat_pumps.find { |hp| hp.primary_heating_system && hp.primary_cooling_system }
+    heat_pump = hpxml_bldg.heat_pumps.find { |hp| hp.primary_heating_system && hp.primary_cooling_system }
+
+    if !heat_pump_existing.nil? && !heat_pump.nil?
+      if (heat_pump_existing.to_h[:heat_pump_type] == heat_pump.to_h[:heat_pump_type]) &&
+         (heat_pump_existing.to_h[:heat_pump_fuel] == heat_pump.to_h[:heat_pump_fuel]) &&
+         (heat_pump_existing.to_h[:compressor_type] == heat_pump.to_h[:compressor_type]) &&
+         ((heat_pump_existing.to_h[:heating_efficiency_hspf] == heat_pump.to_h[:heating_efficiency_hspf]) ||
+         (heat_pump_existing.to_h[:heating_efficiency_hspf2] == heat_pump.to_h[:heating_efficiency_hspf2]) ||
+         (heat_pump_existing.to_h[:heating_efficiency_cop] == heat_pump.to_h[:heating_efficiency_cop])) &&
+         ((heat_pump_existing.to_h[:cooling_efficiency_seer] == heat_pump.to_h[:cooling_efficiency_seer]) ||
+         (heat_pump_existing.to_h[:cooling_efficiency_seer2] == heat_pump.to_h[:cooling_efficiency_seer2]) ||
+         (heat_pump_existing.to_h[:cooling_efficiency_eer] == heat_pump.to_h[:cooling_efficiency_eer]) ||
+         (heat_pump_existing.to_h[:cooling_efficiency_eer2] == heat_pump.to_h[:cooling_efficiency_eer2]) ||
+         (heat_pump_existing.to_h[:cooling_efficiency_ceer] == heat_pump.to_h[:cooling_efficiency_ceer])) &&
+         (heat_pump_existing.to_h[:fraction_heat_load_served] == heat_pump.to_h[:fraction_cool_load_served]) &&
+         (heat_pump_existing.to_h[:fraction_cool_load_served] == heat_pump.to_h[:fraction_cool_load_served])
+        heat_pump.heating_capacity = heat_pump_existing.heating_capacity
+        heat_pump.cooling_capacity = heat_pump_existing.cooling_capacity
+        heat_pump.backup_heating_capacity = heat_pump_existing.backup_heating_capacity
+        heat_pump.heating_autosizing_factor = heat_pump_existing.heating_autosizing_factor
+        heat_pump.cooling_autosizing_factor = heat_pump_existing.cooling_autosizing_factor
+        heat_pump.backup_heating_autosizing_factor = heat_pump_existing.backup_heating_autosizing_factor
+      end
+    end
   end
 
   def set_electric_panel(runner, hpxml_bldg_existing, hpxml_bldg, args)

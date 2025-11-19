@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>8a675798-f439-4296-a102-f98ee8db250f</version_id>
-  <version_modified>2025-11-18T22:56:39Z</version_modified>
+  <version_id>d56593e0-4dcd-42f4-adec-7ba12fe189e3</version_id>
+  <version_modified>2025-11-19T18:01:56Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -11767,24 +11767,6 @@
       </choices>
     </argument>
     <argument>
-      <name>heating_system_heating_capacity</name>
-      <display_name>HVAC: Heating System Heating Capacity</display_name>
-      <description>The output heating capacity of the heating system.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heating_system_heating_autosizing_factor</name>
-      <display_name>HVAC: Heating System Heating Autosizing Factor</display_name>
-      <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
-      <type>Double</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heating_system_rated_cfm_per_ton</name>
       <display_name>HVAC: Heating System Rated CFM Per Ton</display_name>
       <description>The rated cfm per ton of the heating system.</description>
@@ -11799,81 +11781,6 @@
       <description>The actual cfm per ton of the heating system.</description>
       <type>Double</type>
       <units>cfm/ton</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heating_system_2_fuel</name>
-      <display_name>HVAC: Heating System 2 Fuel Type</display_name>
-      <description>The fuel type of the second heating system.</description>
-      <type>Choice</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>electricity</value>
-          <display_name>electricity</display_name>
-        </choice>
-        <choice>
-          <value>natural gas</value>
-          <display_name>natural gas</display_name>
-        </choice>
-        <choice>
-          <value>fuel oil</value>
-          <display_name>fuel oil</display_name>
-        </choice>
-        <choice>
-          <value>propane</value>
-          <display_name>propane</display_name>
-        </choice>
-        <choice>
-          <value>wood</value>
-          <display_name>wood</display_name>
-        </choice>
-        <choice>
-          <value>wood pellets</value>
-          <display_name>wood pellets</display_name>
-        </choice>
-        <choice>
-          <value>coal</value>
-          <display_name>coal</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>heating_system_2_heating_capacity</name>
-      <display_name>HVAC: Heating System 2 Heating Capacity</display_name>
-      <description>The output heating capacity of the second heating system.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heating_system_2_heating_autosizing_factor</name>
-      <display_name>HVAC: Heating System 2 Heating Autosizing Factor</display_name>
-      <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
-      <type>Double</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>cooling_system_cooling_capacity</name>
-      <display_name>HVAC: Cooling System Cooling Capacity</display_name>
-      <description>The output cooling capacity of the cooling system.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>cooling_system_cooling_autosizing_factor</name>
-      <display_name>HVAC: Cooling System Cooling Autosizing Factor</display_name>
-      <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
-      <type>Double</type>
-      <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -11905,60 +11812,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heat_pump_heating_capacity</name>
-      <display_name>HVAC: Heat Pump Heating Capacity</display_name>
-      <description>The output heating capacity of the heat pump.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heat_pump_heating_autosizing_factor</name>
-      <display_name>HVAC: Heat Pump Heating Autosizing Factor</display_name>
-      <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
-      <type>Double</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heat_pump_cooling_capacity</name>
-      <display_name>HVAC: Heat Pump Cooling Capacity</display_name>
-      <description>The output cooling capacity of the heat pump.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heat_pump_cooling_autosizing_factor</name>
-      <display_name>HVAC: Heat Pump Cooling Autosizing Factor</display_name>
-      <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
-      <type>Double</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_heating_capacity</name>
-      <display_name>HVAC: Heat Pump Backup Heating Capacity</display_name>
-      <description>The backup output heating capacity of the heat pump.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_heating_autosizing_factor</name>
-      <display_name>HVAC: Heat Pump Backup Heating Autosizing Factor</display_name>
-      <description>The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.</description>
-      <type>Double</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heat_pump_rated_cfm_per_ton</name>
       <display_name>HVAC: Heat Pump Rated CFM Per Ton</display_name>
       <description>The rated cfm per ton of the heat pump.</description>
@@ -11982,42 +11835,6 @@
       <description>The fraction of manufacturer recommended charge of the heat pump.</description>
       <type>Double</type>
       <units>Frac</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_fuel</name>
-      <display_name>HVAC: Heat Pump Backup Fuel Type</display_name>
-      <description>The backup fuel type of the heat pump.</description>
-      <type>Choice</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>electricity</value>
-          <display_name>electricity</display_name>
-        </choice>
-        <choice>
-          <value>natural gas</value>
-          <display_name>natural gas</display_name>
-        </choice>
-        <choice>
-          <value>fuel oil</value>
-          <display_name>fuel oil</display_name>
-        </choice>
-        <choice>
-          <value>propane</value>
-          <display_name>propane</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_heating_efficiency</name>
-      <display_name>HVAC: Heat Pump Backup Rated Efficiency</display_name>
-      <description>The backup rated efficiency value of the heat pump.</description>
-      <type>Double</type>
-      <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -12058,15 +11875,6 @@
           <display_name>false</display_name>
         </choice>
       </choices>
-    </argument>
-    <argument>
-      <name>hvac_blower_fan_watts_per_cfm</name>
-      <display_name>HVAC: Blower Fan Efficiency</display_name>
-      <description>The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems)..</description>
-      <type>Double</type>
-      <units>W/CFM</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>hvac_perf_data_heating_outdoor_temperatures</name>
@@ -13088,7 +12896,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>39905B40</checksum>
+      <checksum>2125E5B1</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
