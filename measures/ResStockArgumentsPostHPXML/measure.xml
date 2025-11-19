@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <measure>
   <schema_version>3.1</schema_version>
-  <error>Failed to query information from measure 'ResStockArgumentsPostHPXML' from 'C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb': SWIG director method error. NoMethodError: undefined method `setRequired' for #&lt;OpenStudio::Measure::OSArgument:0x000001451041bd50 @__swigtype__="_p_openstudio__measure__OSArgument"&gt;
+  <error>Failed to query information from measure 'ResStockArgumentsPostHPXML' from 'C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb': SWIG director method error. NoMethodError: undefined method `setRequired' for #&lt;OpenStudio::Measure::OSArgument:0x00000217a6cece98 @__swigtype__="_p_openstudio__measure__OSArgument"&gt;
 
 Traceback (most recent call last):
-C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb:64:in `block in arguments'
+C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb:40:in `block in arguments'
 C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb:39:in `each'
 C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb:39:in `arguments'
 </error>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>48518b34-e75f-4bb7-914c-5c7a17171f18</version_id>
-  <version_modified>2025-11-19T22:24:10Z</version_modified>
+  <version_id>98d72af7-be0b-40c4-9f3f-f379e8e48486</version_id>
+  <version_modified>2025-11-19T22:32:45Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -12972,7 +12972,7 @@ C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb:39:in `arg
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>CDDCB96E</checksum>
+      <checksum>99E6F31A</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

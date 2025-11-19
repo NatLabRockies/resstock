@@ -16,10 +16,10 @@ concurrency:
 
 env:
   OPENSTUDIO_VER: 3.11.0-alpha
-  OPENSTUDIO_SHA: a34aa43d46
+  OPENSTUDIO_SHA: c7f13ad615
   OPENSTUDIO_PLATFORM: Ubuntu-24.04-x86_64
   OPENSTUDIO_EXT: deb
-  OPENSTUDIO_URL: http://openstudio-ci-builds.s3-us-west-2.amazonaws.com/PR-5517
+  OPENSTUDIO_URL: http://openstudio-ci-builds.s3-us-west-2.amazonaws.com/develop
   BUILDSTOCK_BATCH_BRANCH: develop
   BUILDSTOCK_QUERY_BRANCH: main
 
@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [format-files]
     container:
-      image: docker://nrel/openstudio:3.10.0
+      image: docker://nrel/openstudio:develop
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -213,7 +213,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [unit-tests]
     container:
-      image: docker://nrel/openstudio:3.10.0
+      image: docker://nrel/openstudio:develop
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -263,7 +263,7 @@ jobs:
 
   integration-tests:
     runs-on: ubuntu-24.04
-    # needs: [unit-tests]
+    needs: [unit-tests]
     steps:
       - name: Checkout base branch
         if: github.event_name == 'pull_request'
@@ -458,7 +458,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [unit-tests]
     container:
-      image: docker://nrel/openstudio:3.10.0
+      image: docker://nrel/openstudio:develop
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
