@@ -38,7 +38,6 @@
 # insert your copyright here
 
 require 'openstudio'
-require 'openstudio/measure/ShowRunnerOutput'
 require 'minitest/autorun'
 require_relative '../measure.rb'
 require 'fileutils'
@@ -77,7 +76,7 @@ class SetSpaceInfiltrationPerExteriorAreaTest < Minitest::Test
     result = runner.result
 
     # show the output
-    show_output(result)
+    result.showOutput()
 
     # assert that it ran correctly
     assert_equal('Fail', result.value.valueName)
@@ -122,7 +121,7 @@ class SetSpaceInfiltrationPerExteriorAreaTest < Minitest::Test
     result = runner.result
 
     # show the output
-    show_output(result)
+    result.showOutput()
 
     # assert that it ran correctly
     assert_equal('Success', result.value.valueName)
