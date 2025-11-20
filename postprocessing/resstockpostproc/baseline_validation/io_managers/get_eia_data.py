@@ -18,23 +18,64 @@ local_data_dir = Path(f"{workflow.output.output_dir}/data")
 
 
 def get_annual_all(
-    year: int = 2018,
+    years: list[int] | None = None,
     by: Literal['state', 'eiaid'] = "state") -> pl.DataFrame:
-    annual_elec_df = _get_eia_annual_electricity(year=year, by=by)
-    monthly_gas_df = _get_eia_monthly_gas(year=year, by=by)
-    annual_monthly_gas_df = monthly_gas_df.group_by(by).agg(pl.col("eia_natural_gas_kwh").sum(),
-                                                            pl.col("eia_natural_gas_customers").sum())
-    final_df = annual_elec_df.join(annual_monthly_gas_df, on=by, how="outer")
-    return final_df
+    """Get annual EIA data for multiple years, with columns suffixed by year."""
+    if years is None:
+        years = workflow.reference_years.get("eia", [2018])
+    
+    dfs = []
+    for year in years:
+        annual_elec_df = _get_eia_annual_electricity(year=year, by=by)
+        monthly_gas_df = _get_eia_monthly_gas(year=year, by=by)
+        annual_monthly_gas_df = monthly_gas_df.group_by(by).agg(
+            pl.col("eia_natural_gas_kwh").sum(),
+            pl.col("eia_natural_gas_customers").sum()
+        )
+        year_df = annual_elec_df.join(annual_monthly_gas_df, on=by, how="outer", coalesce=True)
+        
+        # Suffix all eia columns with the year
+        rename_map = {
+            col: f"{col}_{year}" for col in year_df.columns if col.startswith("eia_") and col != by
+        }
+        year_df = year_df.rename(rename_map)
+        dfs.append(year_df)
+    
+    # Join all years together
+    result = dfs[0]
+    for df in dfs[1:]:
+        result = result.join(df, on=by, how="outer", coalesce=True)
+    
+    return result
 
 
 def get_monthly_all(
-    year: int = 2018,
+    years: list[int] | None = None,
     by: Literal['state', 'eiaid'] = "state") -> pl.DataFrame:
-    monthly_elec_df = _get_eia_monthly_electricity(year=year, by=by)
-    monthly_gas_df = _get_eia_monthly_gas(year=year, by=by)
-    final_df = monthly_elec_df.join(monthly_gas_df, on=[by, "month"], how="outer")
-    return final_df
+    """Get monthly EIA data for multiple years, with columns suffixed by year."""
+    if years is None:
+        years = workflow.reference_years.get("eia", [2018])
+    
+    dfs = []
+    for year in years:
+        monthly_elec_df = _get_eia_monthly_electricity(year=year, by=by)
+        monthly_gas_df = _get_eia_monthly_gas(year=year, by=by)
+        year_df = monthly_elec_df.join(monthly_gas_df, on=[by, "month"], how="outer", coalesce=True)
+        
+        # Suffix all eia columns with the year
+        rename_map = {
+            col: f"{col}_{year}" for col in year_df.columns 
+            if col.startswith("eia_") and col not in [by, "month"]
+        }
+        year_df = year_df.rename(rename_map)
+        dfs.append(year_df)
+    
+    # Join all years together
+    result = dfs[0]
+    for df in dfs[1:]:
+        result = result.join(df, on=[by, "month"], how="outer", coalesce=True)
+    
+    return result
 
 def get_available_aggregation_levels() -> Sequence[Literal['state', 'eiaid']]:
     return ("state", "eiaid")

@@ -27,7 +27,13 @@ def save_figure(
         if fmt == FileType.html:
             fig.write_html(fullpath, include_plotlyjs="cdn")
         else:
-            fig.write_image(fullpath)
+            # For PDF/SVG, use larger scale and ensure proper dimensions
+            # Get dimensions from figure layout, or use defaults
+            width = fig.layout.width if fig.layout.width else 1950
+            height = fig.layout.height if fig.layout.height else 1100
+            
+            # Use scale=2 for better quality and proper sizing
+            fig.write_image(fullpath, width=width, height=height, scale=2)
         print(f"Saved: {filepath}")
 
 

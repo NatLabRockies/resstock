@@ -17,10 +17,16 @@ data_sources:
     db_schema: resstock_oedi_new
 
 
-reference_year: 2018
+reference_years:
+  eia:
+    - 2018
+    - 2020
+  recs:
+    - 2020
+
 plots:
   plot_types:
-    - eia
+    - recs
 
   aggregation_levels:
     - state

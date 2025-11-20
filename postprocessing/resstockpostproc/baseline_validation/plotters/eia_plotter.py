@@ -5,23 +5,20 @@ import polars as pl
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
+from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
-    Quantity,
     QuantityType,
 )
-from resstockpostproc.baseline_validation.theme import (
-    apply_theme,
-    BUILDSTOCK_COLOR,
-)
-from resstockpostproc.shared_utils.colors import QUALITATIVE_SERIES
+from resstockpostproc.baseline_validation.theme import apply_theme
+from resstockpostproc.shared_utils.colors import QUALITATIVE_SERIES, REF_QUALITATIVE_SERIES
+from resstockpostproc.baseline_validation.plotters import base_plotter
 
 # ---------------------------------------------------------------------------
 # constants
 # ---------------------------------------------------------------------------
-EIA_COLOR = QUALITATIVE_SERIES[0]
-_RUN_PALETTE = QUALITATIVE_SERIES[1:] or QUALITATIVE_SERIES
-
+EIA_COLORS = REF_QUALITATIVE_SERIES
+_RUN_PALETTE = QUALITATIVE_SERIES
 MONTH_ROWS = 5
 MONTH_COLS = 11
 MONTH_MAX = MONTH_ROWS * MONTH_COLS
@@ -69,7 +66,11 @@ def _prepare_annual(
     by: str,
 ) -> tuple[pl.DataFrame, list[str], dict[str, str]]:
     # check basic columns
-    _require_columns(eia_annual, {by, "eia_electricity_kwh", "eia_natural_gas_kwh"}, "EIA annual")
+    # Find all EIA columns (with year suffixes)
+    eia_cols = [col for col in eia_annual.columns if col.startswith("eia_") and col != by]
+    if not eia_cols:
+        raise ValueError("No EIA columns found in annual data")
+    _require_columns(eia_annual, {by} | set(eia_cols), "EIA annual")
     _require_columns(buildstock_annual, {by}, "BuildStock annual")
 
     runs = _run_names(buildstock_annual)
@@ -85,7 +86,8 @@ def _prepare_annual(
                 keep.append(pl.col(col))
 
     bs = buildstock_annual.select(keep)
-    eia = eia_annual.select(by, "eia_electricity_kwh", "eia_natural_gas_kwh")
+    # Select by column and all EIA columns
+    eia = eia_annual.select([by] + eia_cols)
     df = eia.join(bs, on=by, how="inner")
     if df.is_empty():
         raise ValueError(f"No overlap on '{by}' between EIA and BuildStock annual")
@@ -114,7 +116,11 @@ def _prepare_monthly(
 ) -> tuple[pl.DataFrame, list[str], dict[str, str]]:
     needed = {by, "month"}
     _require_columns(buildstock_monthly, needed, "BuildStock monthly")
-    _require_columns(eia_monthly, needed | {"eia_electricity_kwh", "eia_natural_gas_kwh"}, "EIA monthly")
+    # Find all EIA columns (with year suffixes)
+    eia_cols = [col for col in eia_monthly.columns if col.startswith("eia_") and col not in {by, "month"}]
+    if not eia_cols:
+        raise ValueError("No EIA columns found in monthly data")
+    _require_columns(eia_monthly, needed | set(eia_cols), "EIA monthly")
 
     runs = _run_names(buildstock_monthly)
     if not runs:
@@ -129,7 +135,8 @@ def _prepare_monthly(
                 bs_cols.append(pl.col(col))
 
     bs = buildstock_monthly.select(bs_cols)
-    eia = eia_monthly.select(by, "month", "eia_electricity_kwh", "eia_natural_gas_kwh")
+    # Select by, month, and all EIA columns
+    eia = eia_monthly.select([by, "month"] + eia_cols)
     df = eia.join(bs, on=[by, "month"], how="inner").drop_nulls(["month"])
     if df.is_empty():
         raise ValueError(f"No monthly overlap for '{by}'")
@@ -165,7 +172,7 @@ def _split_annual_data(
         elif col.endswith("_restock_natural_gas"):
             run = col[: -len("_restock_natural_gas")]
             new_name = f"{run}_natural_gas_kwh"
-        elif col.endswith("_electricity_kwh") or col.endswith("_natural_gas_kwh"):
+        elif col.endswith(("_electricity_kwh", "_natural_gas_kwh")):
             new_name = col
 
         if new_name:
@@ -179,11 +186,15 @@ def _split_annual_data(
 
     buildstock = merged.select(include_cols).rename(rename_map)
 
+    # Collect all EIA columns (including year suffixes like eia_electricity_kwh_2018)
     eia_cols = [by]
-    for col in ("eia_electricity_kwh", "eia_natural_gas_kwh"):
-        if col not in merged.columns:
-            raise ValueError(f"Merged data missing required EIA column '{col}'")
-        eia_cols.append(col)
+    for col in merged.columns:
+        if col.startswith("eia_") and ("electricity" in col or "natural_gas" in col) and col != by:
+            eia_cols.append(col)
+    
+    if len(eia_cols) == 1:  # Only 'by' column found
+        raise ValueError("No EIA energy columns found in merged dataset")
+    
     eia_df = merged.select(eia_cols)
 
     return buildstock, eia_df
@@ -213,7 +224,7 @@ def _split_monthly_data(
         elif col.endswith("_restock_natural_gas"):
             run = col[: -len("_restock_natural_gas")]
             new_name = f"{run}_natural_gas_kwh"
-        elif col.endswith("_electricity_kwh") or col.endswith("_natural_gas_kwh"):
+        elif col.endswith(("_electricity_kwh", "_natural_gas_kwh")):
             new_name = col
 
         if new_name:
@@ -227,11 +238,15 @@ def _split_monthly_data(
 
     buildstock = merged.select(include_cols).rename(rename_map)
 
+    # Collect all EIA columns (including year suffixes like eia_electricity_kwh_2018)
     eia_cols = [by, "month"]
-    for col in ("eia_electricity_kwh", "eia_natural_gas_kwh"):
-        if col not in merged.columns:
-            raise ValueError(f"Merged data missing required EIA column '{col}'")
-        eia_cols.append(col)
+    for col in merged.columns:
+        if col.startswith("eia_") and ("electricity" in col or "natural_gas" in col) and col not in {by, "month"}:
+            eia_cols.append(col)
+    
+    if len(eia_cols) == 2:  # Only 'by' and 'month' columns found
+        raise ValueError("No EIA energy columns found in merged dataset")
+    
     eia_df = merged.select(eia_cols)
 
     return buildstock, eia_df
@@ -240,499 +255,16 @@ def _split_monthly_data(
 # ---------------------------------------------------------------------------
 # annual plot helpers
 # ---------------------------------------------------------------------------
-def _add_annual_consumption_panel(
-    fig: go.Figure,
-    df: pl.DataFrame,
-    entities: list[str],
-    runs: list[str],
-    colors: dict[str, str],
-    fuel: str,
-    row: int,
-    col: int,
-    showlegend: bool,
-) -> None:
-    eia_col = f"eia_{fuel}_kwh"
-    if eia_col not in df.columns:
-        return
-    # runs
-    for i, r in enumerate(reversed(runs)):
-        colname = f"{r}_{fuel}_kwh"
-        if colname not in df.columns:
-            continue
-        fig.add_bar(
-            x=df[colname].to_list(),
-            y=entities,
-            orientation="h",
-            name=r,
-            legendgroup=r,
-            legendrank=100 - i,
-            marker=dict(color=colors[r]),
-            hovertemplate="%{y}<br>" + f"{r}: " + "%{x:,.0f} kWh<extra></extra>",
-            showlegend=showlegend,
-            row=row,
-            col=col,
-        )
-    fig.add_bar(
-        x=df[eia_col].to_list(),
-        y=entities,
-        orientation="h",
-        name="EIA",
-        legendgroup="EIA",
-        legendrank=0,
-        marker=dict(color=EIA_COLOR),
-        hovertemplate="%{y}<br>EIA: %{x:,.0f} kWh<extra></extra>",
-        showlegend=showlegend,
-        row=row,
-        col=col,
-    )
-
-
-def _add_annual_percent_panel(
-    fig: go.Figure,
-    df: pl.DataFrame,
-    entities: list[str],
-    runs: list[str],
-    colors: dict[str, str],
-    fuel: str,
-    row: int,
-    col: int,
-    showlegend: bool,
-) -> tuple[float | None, float | None]:
-    eia_col = f"eia_{fuel}_kwh"
-    if eia_col not in df.columns:
-        return None, None
-
-    min_v, max_v = None, None
-    for i, r in enumerate(reversed(runs)):
-        run_col = f"{r}_{fuel}_kwh"
-        if run_col not in df.columns:
-            continue
-
-        pct = df.select(
-            pl.when(pl.col(eia_col) == 0)
-            .then(None)
-            .otherwise((pl.col(run_col) - pl.col(eia_col)) / pl.col(eia_col) * 100)
-            .alias("pct")
-        )["pct"].to_list()
-
-        fig.add_bar(
-            x=pct,
-            y=entities,
-            orientation="h",
-            name=r,
-            legendgroup=r,
-            legendrank=100 - i,
-            marker=dict(color=colors[r]),
-            hovertemplate="%{y}<br>" + f"{r}: " + "%{x:,.1f}%<extra></extra>",
-            showlegend=showlegend,
-            row=row,
-            col=col,
-        )
-
-        clean = [v for v in pct if isinstance(v, (int, float))]
-        if clean:
-            rmin, rmax = min(clean), max(clean)
-            min_v = rmin if min_v is None else min(min_v, rmin)
-            max_v = rmax if max_v is None else max(max_v, rmax)
-
-    return min_v, max_v
-
-
-def _percent_axis_range(min_v: float | None, max_v: float | None) -> list[float] | None:
-    vals = [v for v in (min_v, max_v) if isinstance(v, (int, float))]
-    if not vals:
-        return None
-
-    lo = min_v if isinstance(min_v, (int, float)) else min(vals)
-    hi = max_v if isinstance(max_v, (int, float)) else max(vals)
-
-    if lo >= 0:
-        pad = max(hi * 0.1, 1)
-        return [0, hi + pad]
-    if hi <= 0:
-        pad = max(abs(lo) * 0.1, 1)
-        return [lo - pad, 0]
-
-    span = max(abs(lo), abs(hi))
-    pad = max(span * 0.1, 1)
-    return [-span - pad, span + pad]
-
-
-def _finalize_annual(
-    fig: go.Figure,
-    left_title: str,
-    right_title: str,
-    title: str,
-    left_range: list[float] | None = None,
-    right_range: list[float] | None = None,
-    categories: list[str] | None = None,
-) -> go.Figure:
-    fig.update_layout(
-        barmode="group",
-    )
-    fig.update_xaxes(title_text=left_title, row=1, col=1)
-    if left_range:
-        fig.update_xaxes(range=left_range, row=1, col=1)
-
-    fig.update_yaxes(automargin=True, ticklabelposition="outside", row=1, col=1)
-
-    fig.update_xaxes(title_text=right_title, row=1, col=2)
-    if right_range:
-        fig.update_xaxes(range=right_range, row=1, col=2)
-
-    fig.update_yaxes(automargin=True, ticklabelposition="outside", row=1, col=2)
-
-    fig = apply_theme(
-        fig,
-        title=title,
-        height=820,
-        width=650,
-        margin=dict(l=140, r=80, t=80, b=60),
-    )
-
-    if categories:
-        fig.update_yaxes(
-            categoryorder="array",
-            categoryarray=categories,
-            tickmode="array",
-            tickvals=categories,
-            ticktext=categories,
-            automargin=True,
-            row=1,
-            col=1,
-        )
-        fig.update_yaxes(
-            categoryorder="array",
-            categoryarray=categories,
-            tickmode="array",
-            tickvals=categories,
-            ticktext=categories,
-            automargin=True,
-            row=1,
-            col=2,
-        )
-
-    return fig
-
-
-# ---------------------------------------------------------------------------
-# monthly plot helper
-# ---------------------------------------------------------------------------
-def _plot_monthly_generic(
-    buildstock_monthly: pl.DataFrame,
-    eia_monthly: pl.DataFrame,
-    by: str,
-    fuel: str,
-    use_shared_axis: bool,
-    title_prefix: str,
-) -> go.Figure:
-    df, runs, colors = _prepare_monthly(buildstock_monthly, eia_monthly, by)
-
-    # order entities by total EIA for this fuel
-    eia_fuel_col = f"eia_{fuel}_kwh"
-    order_df = (
-        df.group_by(by)
-        .agg(pl.col(eia_fuel_col).sum().alias("_total"))
-        .sort("_total", descending=True)
-    )
-    entities = order_df[by].to_list()
-
-    # compute per-entity max for axis
-    run_cols = [f"{r}_{fuel}_kwh" for r in runs if f"{r}_{fuel}_kwh" in df.columns]
-    df = df.with_columns(
-        pl.max_horizontal(pl.col(run_cols + [eia_fuel_col])).alias("_entity_max")
-    )
-    global_max = df["_entity_max"].max()
-    shared_range = [0, global_max * 1.05] if isinstance(global_max, (int, float)) else None
-
-    # make grid
-    subplot_titles = [entities[i] if i < len(entities) else "" for i in range(MONTH_MAX)]
-    fig = make_subplots(
-        rows=MONTH_ROWS,
-        cols=MONTH_COLS,
-        subplot_titles=subplot_titles,
-        horizontal_spacing=0.015,
-        vertical_spacing=0.03,
-    )
-
-    axis_names = []
-    individual_ranges: dict[str, list[float] | None] = {}
-
-    visible_entities = entities[:MONTH_MAX]
-    for idx, entity in enumerate(visible_entities, start=1):
-        row = (idx - 1) // MONTH_COLS + 1
-        col = (idx - 1) % MONTH_COLS + 1
-        axis_name = "xaxis" if idx == 1 else f"xaxis{idx}"
-        axis_names.append(axis_name)
-
-        entity_df = df.filter(pl.col(by) == entity).sort("_month_order")
-        months = entity_df["_month_label"].to_list()
-
-        # runs
-        for i, r in enumerate(runs):
-            colname = f"{r}_{fuel}_kwh"
-            if colname not in entity_df.columns:
-                continue
-            fig.add_bar(
-                x=entity_df[colname].to_list(),
-                y=months,
-                orientation="h",
-                name=r,
-                legendgroup=r,
-                legendrank=i + 1,
-                marker=dict(color=colors[r]),
-                hovertemplate="%{y}<br>" + f"{r}: " + "%{x:,.0f} kWh<extra></extra>",
-                showlegend=(idx == 1),
-                row=row,
-                col=col,
-            )
-
-        # eia
-        fig.add_bar(
-            x=entity_df[eia_fuel_col].to_list(),
-            y=months,
-            orientation="h",
-            name="EIA",
-            legendgroup="EIA",
-            legendrank=0,
-            marker=dict(color=EIA_COLOR),
-            hovertemplate="%{y}<br>EIA: %{x:,.0f} kWh<extra></extra>",
-            showlegend=(idx == 1),
-            row=row,
-            col=col,
-        )
-
-        # y-axis per panel
-        fig.update_yaxes(
-            categoryorder="array",
-            categoryarray=months,
-            autorange="reversed",
-            tickfont=dict(size=8),
-            automargin=True,
-            row=row,
-            col=col,
-        )
-
-        entity_max = entity_df["_entity_max"].max()
-        per_range = [0, entity_max * 1.05] if isinstance(entity_max, (int, float)) else None
-        individual_ranges[axis_name] = per_range
-
-        fig.update_xaxes(
-            tickfont=dict(size=8),
-            automargin=True,
-            showticklabels=True,
-            title_text=f"{title_prefix} (kWh)" if row == MONTH_ROWS else "",
-            row=row,
-            col=col,
-            range=(shared_range if (use_shared_axis and shared_range) else per_range),
-        )
-
-    # fill empty panels
-    for idx in range(len(visible_entities) + 1, MONTH_MAX + 1):
-        row = (idx - 1) // MONTH_COLS + 1
-        col = (idx - 1) % MONTH_COLS + 1
-        axis_name = "xaxis" if idx == 1 else f"xaxis{idx}"
-        axis_names.append(axis_name)
-        individual_ranges[axis_name] = None
-        fig.update_xaxes(visible=False, row=row, col=col)
-        fig.update_yaxes(visible=False, row=row, col=col)
-
-    # layout + toggle
-    fig.update_layout(
-        barmode="group",
-        showlegend=True,
-    )
-    fig = apply_theme(
-        fig,
-        title=f"Monthly {title_prefix} by {by.title()}",
-        height=1100,
-        width=1950,
-        legend=dict(orientation="v", x=0.92, y=0.02, xanchor="left", yanchor="bottom"),
-        margin=dict(l=45, r=20, t=60, b=55),
-    )
-    return fig
-
-
-def _plot_monthly_percent_difference(
-    buildstock_monthly: pl.DataFrame,
-    eia_monthly: pl.DataFrame,
-    by: str,
-    fuel: str,
-    use_shared_axis: bool,
-) -> go.Figure:
-    df, runs, colors = _prepare_monthly(buildstock_monthly, eia_monthly, by)
-
-    eia_col = f"eia_{fuel}_kwh"
-    if eia_col not in df.columns:
-        raise ValueError(f"EIA data missing '{eia_col}' column needed for percent difference plotting")
-
-    pct_exprs = []
-    pct_cols: list[str] = []
-    for r in runs:
-        base_col = f"{r}_{fuel}_kwh"
-        if base_col not in df.columns:
-            continue
-        pct_col = f"{base_col}_pct"
-        pct_cols.append(pct_col)
-        pct_exprs.append(
-            pl.when(pl.col(eia_col) == 0)
-            .then(None)
-            .otherwise((pl.col(base_col) - pl.col(eia_col)) / pl.col(eia_col) * 100)
-            .alias(pct_col)
-        )
-
-    if not pct_cols:
-        raise ValueError("No BuildStock monthly energy columns available to compute percent differences")
-
-    df = df.with_columns(pct_exprs)
-
-    order_df = (
-        df.group_by(by)
-        .agg(pl.col(eia_col).sum().alias("_total"))
-        .sort("_total", descending=False)
-    )
-    entities = order_df[by].to_list()
-
-    global_min, global_max = None, None
-    for col in pct_cols:
-        clean = [v for v in df[col].to_list() if isinstance(v, (int, float))]
-        if not clean:
-            continue
-        cmin, cmax = min(clean), max(clean)
-        global_min = cmin if global_min is None else min(global_min, cmin)
-        global_max = cmax if global_max is None else max(global_max, cmax)
-
-    shared_range = _percent_axis_range(global_min, global_max)
-
-    subplot_titles = [entities[i] if i < len(entities) else "" for i in range(MONTH_MAX)]
-    fig = make_subplots(
-        rows=MONTH_ROWS,
-        cols=MONTH_COLS,
-        subplot_titles=subplot_titles,
-        horizontal_spacing=0.015,
-        vertical_spacing=0.03,
-    )
-
-    visible_entities = entities[:MONTH_MAX]
-    for idx, entity in enumerate(visible_entities, start=1):
-        row = (idx - 1) // MONTH_COLS + 1
-        col = (idx - 1) % MONTH_COLS + 1
-
-        entity_df = df.filter(pl.col(by) == entity).sort("_month_order")
-        months = entity_df["_month_label"].to_list()
-
-        entity_min, entity_max = None, None
-        for i, r in enumerate(runs):
-            pct_col = f"{r}_{fuel}_kwh_pct"
-            if pct_col not in entity_df.columns:
-                continue
-            pct_values = entity_df[pct_col].to_list()
-            fig.add_bar(
-                x=pct_values,
-                y=months,
-                orientation="h",
-                name=r,
-                legendgroup=r,
-                legendrank=i + 1,
-                marker=dict(color=colors[r]),
-                hovertemplate="%{y}<br>" + f"{r}: " + "%{x:,.1f}%<extra></extra>",
-                showlegend=(idx == 1),
-                row=row,
-                col=col,
-            )
-            clean = [v for v in pct_values if isinstance(v, (int, float))]
-            if clean:
-                cmin, cmax = min(clean), max(clean)
-                entity_min = cmin if entity_min is None else min(entity_min, cmin)
-                entity_max = cmax if entity_max is None else max(entity_max, cmax)
-
-        fig.update_yaxes(
-            categoryorder="array",
-            categoryarray=months,
-            autorange="reversed",
-            tickfont=dict(size=8),
-            automargin=True,
-            row=row,
-            col=col,
-        )
-
-        entity_range = _percent_axis_range(entity_min, entity_max)
-        fig.update_xaxes(
-            tickfont=dict(size=8),
-            automargin=True,
-            showticklabels=True,
-            title_text="% Difference vs EIA" if row == MONTH_ROWS else "",
-            row=row,
-            col=col,
-            range=(shared_range if (use_shared_axis and shared_range) else entity_range),
-        )
-
-    for idx in range(len(visible_entities) + 1, MONTH_MAX + 1):
-        row = (idx - 1) // MONTH_COLS + 1
-        col = (idx - 1) % MONTH_COLS + 1
-        fig.update_xaxes(visible=False, row=row, col=col)
-        fig.update_yaxes(visible=False, row=row, col=col)
-
-    fig.update_layout(
-        barmode="group",
-        showlegend=True,
-    )
-
-    fuel_title = "Electricity" if fuel == "electricity" else "Natural Gas"
-    fig = apply_theme(
-        fig,
-        title=f"Monthly {fuel_title} % Difference vs EIA by {by.title()}",
-        height=1100,
-        width=1950,
-        legend=dict(orientation="v", x=0.92, y=0.02, xanchor="left", yanchor="bottom"),
-        margin=dict(l=45, r=20, t=60, b=55),
-    )
-    return fig
-
-
-# ---------------------------------------------------------------------------
-# public API (unchanged signatures)
-# ---------------------------------------------------------------------------
-def plot_state_comparison_scatter(
-    buildstock_df: pl.DataFrame,
-    eia_df: pl.DataFrame,
-    value_col: str,
-    title: str | None = None,
-) -> go.Figure:
-    comparison = buildstock_df.join(eia_df.select(["state", value_col]), on="state", suffix="_eia")
-    bs_col = value_col
-    eia_col = f"{value_col}_eia"
-
-    fig = go.Figure()
-    fig.add_scatter(
-        x=comparison[eia_col].to_list(),
-        y=comparison[bs_col].to_list(),
-        mode="markers+text",
-        marker=dict(size=10, color=BUILDSTOCK_COLOR, line=dict(width=1, color="white")),
-        text=comparison["state"].to_list(),
-        textposition="top center",
-        textfont=dict(size=8),
-        name="States",
-    )
-
-    max_val = max(comparison[eia_col].max() or 0, comparison[bs_col].max() or 0)
-    min_val = min(comparison[eia_col].min() or 0, comparison[bs_col].min() or 0)
-
-    fig.add_scatter(
-        x=[min_val, max_val],
-        y=[min_val, max_val],
-        mode="lines",
-        line=dict(color="gray", width=2, dash="dash"),
-        name="1:1 Line",
-        showlegend=True,
-    )
-
-    return apply_theme(
-        fig,
-        title=title or f"BuildStock vs EIA: {value_col}",
-        xaxis_title=f"EIA {value_col}",
-        yaxis_title=f"BuildStock {value_col}",
-    )
+def _get_eia_cols_and_labels(df: pl.DataFrame, fuel: str) -> tuple[list[str], list[str], list[str]]:
+    cols = [col for col in df.columns if col.startswith(f"eia_{fuel}_kwh")]
+    labels = []
+    colors = []
+    for i, col in enumerate(cols):
+        parts = col.split("_")
+        year_suffix = f" {parts[-1]}" if parts[-1].isdigit() else ""
+        labels.append(f"EIA{year_suffix}")
+        colors.append(EIA_COLORS[i % len(EIA_COLORS)])
+    return cols, labels, colors
 
 
 def plot_annual_sales_comparison(
@@ -741,7 +273,10 @@ def plot_annual_sales_comparison(
     by: str = "state",
 ) -> go.Figure:
     df, runs, colors = _prepare_annual(buildstock_annual, eia_annual, by)
-    df = df.sort("eia_electricity_kwh", descending=False)
+    # Find first EIA electricity column for sorting
+    eia_elec_cols = [col for col in df.columns if col.startswith("eia_electricity_kwh")]
+    if eia_elec_cols:
+        df = df.sort(eia_elec_cols[0], descending=False)
     entities = df[by].to_list()
 
     fig = make_subplots(
@@ -752,10 +287,36 @@ def plot_annual_sales_comparison(
         horizontal_spacing=0.12,
     )
 
-    _add_annual_consumption_panel(fig, df, entities, runs, colors, "electricity", 1, 1, True)
-    _add_annual_consumption_panel(fig, df, entities, runs, colors, "natural_gas", 1, 2, False)
+    # Electricity panel
+    eia_cols, eia_labels, eia_colors = _get_eia_cols_and_labels(df, "electricity")
+    bs_cols = [f"{r}_electricity_kwh" for r in runs]
+    bs_labels = runs
+    bs_colors = [colors[r] for r in runs]
+    
+    # Combine all columns, labels, and colors (EIA first, then BuildStock)
+    all_cols = eia_cols + bs_cols
+    all_labels = eia_labels + bs_labels
+    all_colors = eia_colors + bs_colors
+    
+    base_plotter._add_bar_plot(
+        fig, df, by, all_cols, all_labels, all_colors, 1, 1, True, "kWh"
+    )
 
-    return _finalize_annual(
+    # Natural Gas panel
+    eia_cols, eia_labels, eia_colors = _get_eia_cols_and_labels(df, "natural_gas")
+    bs_cols = [f"{r}_natural_gas_kwh" for r in runs]
+    bs_labels = runs
+    bs_colors = [colors[r] for r in runs]
+    
+    all_cols = eia_cols + bs_cols
+    all_labels = eia_labels + bs_labels
+    all_colors = eia_colors + bs_colors
+
+    base_plotter._add_bar_plot(
+        fig, df, by, all_cols, all_labels, all_colors, 1, 2, False, "kWh"
+    )
+
+    return base_plotter.finalize_annual_plot(
         fig,
         "Electricity Sales (kWh)",
         "Natural Gas Sales (kWh)",
@@ -770,7 +331,10 @@ def plot_annual_sales_comparison_electricity(
     by: str = "state",
 ) -> go.Figure:
     df, runs, colors = _prepare_annual(buildstock_annual, eia_annual, by)
-    df = df.sort("eia_electricity_kwh", descending=False)
+    # Find first EIA electricity column for sorting
+    eia_elec_cols = [col for col in df.columns if col.startswith("eia_electricity_kwh")]
+    if eia_elec_cols:
+        df = df.sort(eia_elec_cols[0], descending=False)
     entities = df[by].to_list()
 
     fig = make_subplots(
@@ -781,15 +345,53 @@ def plot_annual_sales_comparison_electricity(
         horizontal_spacing=0.12,
     )
 
-    _add_annual_consumption_panel(fig, df, entities, runs, colors, "electricity", 1, 1, True)
-    pct_min, pct_max = _add_annual_percent_panel(fig, df, entities, runs, colors, "electricity", 1, 2, False)
+    # Left panel: Electricity sales
+    eia_cols, eia_labels, eia_colors = _get_eia_cols_and_labels(df, "electricity")
+    bs_cols = [f"{r}_electricity_kwh" for r in runs]
+    bs_labels = runs
+    bs_colors = [colors[r] for r in runs]
+    
+    all_cols = eia_cols + bs_cols
+    all_labels = eia_labels + bs_labels
+    all_colors = eia_colors + bs_colors
 
-    return _finalize_annual(
+    base_plotter._add_bar_plot(
+        fig, df, by, all_cols, all_labels, all_colors, 1, 1, True, "kWh"
+    )
+    
+    # Right panel: Percent difference
+    pct_min, pct_max = None, None
+    if eia_cols:
+        eia_col = eia_cols[0]
+        pct_cols = []
+        for col in bs_cols:
+            pct_col = f"{col}_pct"
+            df = df.with_columns(
+                pl.when(pl.col(eia_col) == 0)
+                .then(None)
+                .otherwise((pl.col(col) - pl.col(eia_col)) / pl.col(eia_col) * 100)
+                .alias(pct_col)
+            )
+            pct_cols.append(pct_col)
+        
+        base_plotter._add_bar_plot(
+            fig, df, by, pct_cols, bs_labels, bs_colors, 1, 2, False, "%"
+        )
+        
+        # Calculate min/max for axis range
+        for pct_col in pct_cols:
+            clean = [v for v in df[pct_col].to_list() if isinstance(v, (int, float))]
+            if clean:
+                rmin, rmax = min(clean), max(clean)
+                pct_min = rmin if pct_min is None else min(pct_min, rmin)
+                pct_max = rmax if pct_max is None else max(pct_max, rmax)
+
+    return base_plotter.finalize_annual_plot(
         fig,
         "Electricity Sales (kWh)",
         "% Difference vs EIA",
         f"Annual Electricity Sales vs EIA by {by.title()}",
-        right_range=_percent_axis_range(pct_min, pct_max),
+        right_range=base_plotter.percent_axis_range(pct_min, pct_max),
         categories=entities,
     )
 
@@ -800,7 +402,10 @@ def plot_annual_sales_comparison_natural_gas(
     by: str = "state",
 ) -> go.Figure:
     df, runs, colors = _prepare_annual(buildstock_annual, eia_annual, by)
-    df = df.sort("eia_natural_gas_kwh", descending=False)
+    # Find first EIA natural gas column for sorting
+    eia_gas_cols = [col for col in df.columns if col.startswith("eia_natural_gas_kwh")]
+    if eia_gas_cols:
+        df = df.sort(eia_gas_cols[0], descending=False)
     entities = df[by].to_list()
 
     fig = make_subplots(
@@ -811,15 +416,53 @@ def plot_annual_sales_comparison_natural_gas(
         horizontal_spacing=0.12,
     )
 
-    _add_annual_consumption_panel(fig, df, entities, runs, colors, "natural_gas", 1, 1, True)
-    pct_min, pct_max = _add_annual_percent_panel(fig, df, entities, runs, colors, "natural_gas", 1, 2, False)
+    # Left panel: Natural gas sales
+    eia_cols, eia_labels, eia_colors = _get_eia_cols_and_labels(df, "natural_gas")
+    bs_cols = [f"{r}_natural_gas_kwh" for r in runs]
+    bs_labels = runs
+    bs_colors = [colors[r] for r in runs]
+    
+    all_cols = eia_cols + bs_cols
+    all_labels = eia_labels + bs_labels
+    all_colors = eia_colors + bs_colors
 
-    return _finalize_annual(
+    base_plotter._add_bar_plot(
+        fig, df, by, all_cols, all_labels, all_colors, 1, 1, True, "kWh"
+    )
+    
+    # Right panel: Percent difference
+    pct_min, pct_max = None, None
+    if eia_cols:
+        eia_col = eia_cols[0]
+        pct_cols = []
+        for col in bs_cols:
+            pct_col = f"{col}_pct"
+            df = df.with_columns(
+                pl.when(pl.col(eia_col) == 0)
+                .then(None)
+                .otherwise((pl.col(col) - pl.col(eia_col)) / pl.col(eia_col) * 100)
+                .alias(pct_col)
+            )
+            pct_cols.append(pct_col)
+        
+        base_plotter._add_bar_plot(
+            fig, df, by, pct_cols, bs_labels, bs_colors, 1, 2, False, "%"
+        )
+        
+        # Calculate min/max for axis range
+        for pct_col in pct_cols:
+            clean = [v for v in df[pct_col].to_list() if isinstance(v, (int, float))]
+            if clean:
+                rmin, rmax = min(clean), max(clean)
+                pct_min = rmin if pct_min is None else min(pct_min, rmin)
+                pct_max = rmax if pct_max is None else max(pct_max, rmax)
+
+    return base_plotter.finalize_annual_plot(
         fig,
         "Natural Gas Sales (kWh)",
         "% Difference vs EIA",
         f"Annual Natural Gas Sales vs EIA by {by.title()}",
-        right_range=_percent_axis_range(pct_min, pct_max),
+        right_range=base_plotter.percent_axis_range(pct_min, pct_max),
         categories=entities,
     )
 
@@ -831,15 +474,19 @@ def plot_annual_sales_comparison_percent_diff(
 ) -> go.Figure:
     df, runs, colors = _prepare_annual(buildstock_annual, eia_annual, by)
 
+    # Find first EIA electricity column for percent diff sorting
+    eia_elec_cols = [col for col in df.columns if col.startswith("eia_electricity_kwh")]
+    
     # sort by first run electricity pct diff if possible
     first_run = next((r for r in runs if f"{r}_electricity_kwh" in df.columns), None)
-    if first_run:
+    if first_run and eia_elec_cols:
+        eia_elec_col = eia_elec_cols[0]
         df = df.with_columns(
-            pl.when(pl.col("eia_electricity_kwh") == 0)
+            pl.when(pl.col(eia_elec_col) == 0)
             .then(None)
             .otherwise(
-                (pl.col(f"{first_run}_electricity_kwh") - pl.col("eia_electricity_kwh"))
-                / pl.col("eia_electricity_kwh")
+                (pl.col(f"{first_run}_electricity_kwh") - pl.col(eia_elec_col))
+                / pl.col(eia_elec_col)
                 * 100
             )
             .alias("_sort")
@@ -854,16 +501,75 @@ def plot_annual_sales_comparison_percent_diff(
         horizontal_spacing=0.12,
     )
 
-    e_min, e_max = _add_annual_percent_panel(fig, df, entities, runs, colors, "electricity", 1, 1, True)
-    g_min, g_max = _add_annual_percent_panel(fig, df, entities, runs, colors, "natural_gas", 1, 2, False)
+    # Electricity percent difference
+    e_min, e_max = None, None
+    eia_cols, _, _ = _get_eia_cols_and_labels(df, "electricity")
+    bs_cols = [f"{r}_electricity_kwh" for r in runs]
+    bs_labels = runs
+    bs_colors = [colors[r] for r in runs]
+    
+    if eia_cols:
+        eia_col = eia_cols[0]
+        pct_cols = []
+        for col in bs_cols:
+            pct_col = f"{col}_pct"
+            df = df.with_columns(
+                pl.when(pl.col(eia_col) == 0)
+                .then(None)
+                .otherwise((pl.col(col) - pl.col(eia_col)) / pl.col(eia_col) * 100)
+                .alias(pct_col)
+            )
+            pct_cols.append(pct_col)
+        
+        base_plotter._add_bar_plot(
+            fig, df, by, pct_cols, bs_labels, bs_colors, 1, 1, True, "%"
+        )
+        
+        for pct_col in pct_cols:
+            clean = [v for v in df[pct_col].to_list() if isinstance(v, (int, float))]
+            if clean:
+                rmin, rmax = min(clean), max(clean)
+                e_min = rmin if e_min is None else min(e_min, rmin)
+                e_max = rmax if e_max is None else max(e_max, rmax)
 
-    return _finalize_annual(
+    # Natural gas percent difference
+    g_min, g_max = None, None
+    eia_cols, _, _ = _get_eia_cols_and_labels(df, "natural_gas")
+    bs_cols = [f"{r}_natural_gas_kwh" for r in runs]
+    bs_labels = runs
+    bs_colors = [colors[r] for r in runs]
+    
+    if eia_cols:
+        eia_col = eia_cols[0]
+        pct_cols = []
+        for col in bs_cols:
+            pct_col = f"{col}_pct"
+            df = df.with_columns(
+                pl.when(pl.col(eia_col) == 0)
+                .then(None)
+                .otherwise((pl.col(col) - pl.col(eia_col)) / pl.col(eia_col) * 100)
+                .alias(pct_col)
+            )
+            pct_cols.append(pct_col)
+        
+        base_plotter._add_bar_plot(
+            fig, df, by, pct_cols, bs_labels, bs_colors, 1, 2, False, "%"
+        )
+        
+        for pct_col in pct_cols:
+            clean = [v for v in df[pct_col].to_list() if isinstance(v, (int, float))]
+            if clean:
+                rmin, rmax = min(clean), max(clean)
+                g_min = rmin if g_min is None else min(g_min, rmin)
+                g_max = rmax if g_max is None else max(g_max, rmax)
+
+    return base_plotter.finalize_annual_plot(
         fig,
         "% Difference vs EIA",
         "% Difference vs EIA",
         f"Annual % Difference vs EIA by {by.title()}",
-        left_range=_percent_axis_range(e_min, e_max),
-        right_range=_percent_axis_range(g_min, g_max),
+        left_range=base_plotter.percent_axis_range(e_min, e_max),
+        right_range=base_plotter.percent_axis_range(g_min, g_max),
         categories=entities,
     )
 
@@ -874,14 +580,95 @@ def plot_monthly_sales_comparison_electricity(
     by: str = "state",
     use_shared_axis: bool = True,
 ) -> go.Figure:
-    return _plot_monthly_generic(
-        buildstock_monthly,
-        eia_monthly,
-        by=by,
-        fuel="electricity",
-        use_shared_axis=use_shared_axis,
-        title_prefix="Electricity Sales",
+    df, runs, colors = _prepare_monthly(buildstock_monthly, eia_monthly, by)
+    eia_cols, eia_labels, eia_colors = _get_eia_cols_and_labels(df, "electricity")
+    bs_cols = [f"{r}_electricity_kwh" for r in runs]
+    bs_labels = runs
+    bs_colors = [colors[r] for r in runs]
+
+    # Combine all columns, labels, and colors
+    all_cols = eia_cols + bs_cols
+    all_labels = eia_labels + bs_labels
+    all_colors = eia_colors + bs_colors
+
+    # Order entities by first EIA column if available
+    ref_col = eia_cols[0] if eia_cols else bs_cols[0]
+    order_df = (
+        df.group_by(by)
+        .agg(pl.col(ref_col).sum().alias("_total"))
+        .sort("_total", descending=True)
     )
+    entities = order_df[by].to_list()
+
+    # Compute axis ranges
+    df = df.with_columns(
+        pl.max_horizontal(pl.col(all_cols)).alias("_entity_max")
+    )
+    global_max = df["_entity_max"].max()
+    shared_range = [0, global_max * 1.05] if isinstance(global_max, (int, float)) else None
+
+    # Create subplot grid
+    subplot_titles = [entities[i] if i < len(entities) else "" for i in range(MONTH_MAX)]
+    fig = make_subplots(
+        rows=MONTH_ROWS,
+        cols=MONTH_COLS,
+        subplot_titles=subplot_titles,
+        horizontal_spacing=0.015,
+        vertical_spacing=0.08,
+    )
+
+    visible_entities = entities[:MONTH_MAX]
+    for idx, entity in enumerate(visible_entities, start=1):
+        row = (idx - 1) // MONTH_COLS + 1
+        col = (idx - 1) % MONTH_COLS + 1
+
+        entity_df = df.filter(pl.col(by) == entity).sort("_month_order")
+        
+        base_plotter._add_monthly_line_chart(
+            fig, entity_df, "_month_label", all_cols, all_labels, all_colors,
+            row, col, (idx == 1), "kWh"
+        )
+
+        # Configure axes
+        months = entity_df["_month_label"].to_list()
+        fig.update_xaxes(
+            categoryorder="array",
+            categoryarray=months,
+            tickfont={"size": 8},
+            automargin=True,
+            showticklabels=True,
+            row=row,
+            col=col,
+        )
+        
+        entity_max = entity_df["_entity_max"].max()
+        per_range = [0, entity_max * 1.05] if isinstance(entity_max, (int, float)) else None
+        fig.update_yaxes(
+            title_text="Electricity Sales (kWh)" if col == 1 else "",
+            range=(shared_range if (use_shared_axis and shared_range) else per_range),
+            tickfont={"size": 8},
+            automargin=True,
+            row=row,
+            col=col,
+        )
+
+    # Fill empty panels
+    for idx in range(len(visible_entities) + 1, MONTH_MAX + 1):
+        row = (idx - 1) // MONTH_COLS + 1
+        col = (idx - 1) % MONTH_COLS + 1
+        fig.update_xaxes(visible=False, row=row, col=col)
+        fig.update_yaxes(visible=False, row=row, col=col)
+
+    fig.update_layout(showlegend=True)
+    fig = apply_theme(
+        fig,
+        title=f"Monthly Electricity Sales by {by.title()}",
+        height=1100,
+        width=1950,
+        legend={"orientation": "v", "x": 0.92, "y": 0.02, "xanchor": "left", "yanchor": "bottom"},
+        margin={"l": 45, "r": 20, "t": 60, "b": 55},
+    )
+    return fig
 
 
 def plot_monthly_sales_comparison_natural_gas(
@@ -890,14 +677,95 @@ def plot_monthly_sales_comparison_natural_gas(
     by: str = "state",
     use_shared_axis: bool = True,
 ) -> go.Figure:
-    return _plot_monthly_generic(
-        buildstock_monthly,
-        eia_monthly,
-        by=by,
-        fuel="natural_gas",
-        use_shared_axis=use_shared_axis,
-        title_prefix="Natural Gas Sales",
+    df, runs, colors = _prepare_monthly(buildstock_monthly, eia_monthly, by)
+    eia_cols, eia_labels, eia_colors = _get_eia_cols_and_labels(df, "natural_gas")
+    bs_cols = [f"{r}_natural_gas_kwh" for r in runs]
+    bs_labels = runs
+    bs_colors = [colors[r] for r in runs]
+
+    # Combine all columns, labels, and colors
+    all_cols = eia_cols + bs_cols
+    all_labels = eia_labels + bs_labels
+    all_colors = eia_colors + bs_colors
+
+    # Order entities by first EIA column if available
+    ref_col = eia_cols[0] if eia_cols else bs_cols[0]
+    order_df = (
+        df.group_by(by)
+        .agg(pl.col(ref_col).sum().alias("_total"))
+        .sort("_total", descending=True)
     )
+    entities = order_df[by].to_list()
+
+    # Compute axis ranges
+    df = df.with_columns(
+        pl.max_horizontal(pl.col(all_cols)).alias("_entity_max")
+    )
+    global_max = df["_entity_max"].max()
+    shared_range = [0, global_max * 1.05] if isinstance(global_max, (int, float)) else None
+
+    # Create subplot grid
+    subplot_titles = [entities[i] if i < len(entities) else "" for i in range(MONTH_MAX)]
+    fig = make_subplots(
+        rows=MONTH_ROWS,
+        cols=MONTH_COLS,
+        subplot_titles=subplot_titles,
+        horizontal_spacing=0.015,
+        vertical_spacing=0.08,
+    )
+
+    visible_entities = entities[:MONTH_MAX]
+    for idx, entity in enumerate(visible_entities, start=1):
+        row = (idx - 1) // MONTH_COLS + 1
+        col = (idx - 1) % MONTH_COLS + 1
+
+        entity_df = df.filter(pl.col(by) == entity).sort("_month_order")
+        
+        base_plotter._add_monthly_line_chart(
+            fig, entity_df, "_month_label", all_cols, all_labels, all_colors,
+            row, col, (idx == 1), "kWh"
+        )
+
+        # Configure axes
+        months = entity_df["_month_label"].to_list()
+        fig.update_xaxes(
+            categoryorder="array",
+            categoryarray=months,
+            tickfont={"size": 8},
+            automargin=True,
+            showticklabels=True,
+            row=row,
+            col=col,
+        )
+        
+        entity_max = entity_df["_entity_max"].max()
+        per_range = [0, entity_max * 1.05] if isinstance(entity_max, (int, float)) else None
+        fig.update_yaxes(
+            title_text="Natural Gas Sales (kWh)" if col == 1 else "",
+            range=(shared_range if (use_shared_axis and shared_range) else per_range),
+            tickfont={"size": 8},
+            automargin=True,
+            row=row,
+            col=col,
+        )
+
+    # Fill empty panels
+    for idx in range(len(visible_entities) + 1, MONTH_MAX + 1):
+        row = (idx - 1) // MONTH_COLS + 1
+        col = (idx - 1) % MONTH_COLS + 1
+        fig.update_xaxes(visible=False, row=row, col=col)
+        fig.update_yaxes(visible=False, row=row, col=col)
+
+    fig.update_layout(showlegend=True)
+    fig = apply_theme(
+        fig,
+        title=f"Monthly Natural Gas Sales by {by.title()}",
+        height=1100,
+        width=1950,
+        legend={"orientation": "v", "x": 0.92, "y": 0.02, "xanchor": "left", "yanchor": "bottom"},
+        margin={"l": 45, "r": 20, "t": 60, "b": 55},
+    )
+    return fig
 
 
 def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
@@ -908,18 +776,18 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
             match plot_spec.quantity:
                 case None:
                     return plot_annual_sales_comparison(buildstock, eia_df, by=plot_spec.aggregation_level)
-                case Quantity.ELECTRICITY_TOTAL:
+                case DataCol.ELECTRICITY_TOTAL:
                     return plot_annual_sales_comparison_electricity(buildstock, eia_df, by=plot_spec.aggregation_level)
-                case Quantity.NATURAL_GAS_TOTAL:
+                case DataCol.NATURAL_GAS_TOTAL:
                     return plot_annual_sales_comparison_natural_gas(buildstock, eia_df, by=plot_spec.aggregation_level)
         elif plot_spec.quantity_type == QuantityType.percent_difference and plot_spec.quantity is None:
             return plot_annual_sales_comparison_percent_diff(buildstock, eia_df, by=plot_spec.aggregation_level)
     elif plot_spec.resolution == "monthly":
         buildstock, eia_df = _split_monthly_data(data, plot_spec.aggregation_level)
         fuel: str
-        if plot_spec.quantity == Quantity.ELECTRICITY_TOTAL:
+        if plot_spec.quantity == DataCol.ELECTRICITY_TOTAL:
             fuel = "electricity"
-        elif plot_spec.quantity == Quantity.NATURAL_GAS_TOTAL:
+        elif plot_spec.quantity == DataCol.NATURAL_GAS_TOTAL:
             fuel = "natural_gas"
         else:
             raise NotImplementedError(
@@ -936,13 +804,119 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                     buildstock, eia_df, by=plot_spec.aggregation_level
                 )
         elif plot_spec.quantity_type == QuantityType.percent_difference:
-            return _plot_monthly_percent_difference(
-                buildstock,
-                eia_df,
-                by=plot_spec.aggregation_level,
-                fuel=fuel,
-                use_shared_axis=True,
+            df, runs, colors = _prepare_monthly(buildstock, eia_df, plot_spec.aggregation_level)
+            eia_cols, _, _ = _get_eia_cols_and_labels(df, fuel)
+            bs_cols = [f"{r}_{fuel}_kwh" for r in runs]
+            bs_labels = runs
+            bs_colors = [colors[r] for r in runs]
+            
+            if not eia_cols:
+                raise ValueError(f"No EIA {fuel} columns found")
+
+            eia_col = eia_cols[0]
+            
+            # Compute percent difference columns
+            pct_cols = []
+            for col in bs_cols:
+                pct_col = f"{col}_pct"
+                df = df.with_columns(
+                    pl.when(pl.col(eia_col) == 0)
+                    .then(None)
+                    .otherwise((pl.col(col) - pl.col(eia_col)) / pl.col(eia_col) * 100)
+                    .alias(pct_col)
+                )
+                pct_cols.append(pct_col)
+
+            # Order entities
+            order_df = (
+                df.group_by(plot_spec.aggregation_level)
+                .agg(pl.col(eia_col).sum().alias("_total"))
+                .sort("_total", descending=False)
             )
+            entities = order_df[plot_spec.aggregation_level].to_list()
+
+            # Calculate global min/max for axis range
+            global_min, global_max = None, None
+            for col in pct_cols:
+                clean = [v for v in df[col].to_list() if isinstance(v, (int, float))]
+                if not clean:
+                    continue
+                cmin, cmax = min(clean), max(clean)
+                global_min = cmin if global_min is None else min(global_min, cmin)
+                global_max = cmax if global_max is None else max(global_max, cmax)
+
+            shared_range = base_plotter.percent_axis_range(global_min, global_max)
+
+            # Create subplot grid
+            subplot_titles = [entities[i] if i < len(entities) else "" for i in range(MONTH_MAX)]
+            fig = make_subplots(
+                rows=MONTH_ROWS,
+                cols=MONTH_COLS,
+                subplot_titles=subplot_titles,
+                horizontal_spacing=0.015,
+                vertical_spacing=0.08,
+            )
+
+            visible_entities = entities[:MONTH_MAX]
+            for idx, entity in enumerate(visible_entities, start=1):
+                row = (idx - 1) // MONTH_COLS + 1
+                col = (idx - 1) % MONTH_COLS + 1
+
+                entity_df = df.filter(pl.col(plot_spec.aggregation_level) == entity).sort("_month_order")
+                
+                base_plotter._add_monthly_line_chart(
+                    fig, entity_df, "_month_label", pct_cols, bs_labels, bs_colors,
+                    row, col, (idx == 1), "%"
+                )
+
+                # Configure axes
+                months = entity_df["_month_label"].to_list()
+                fig.update_xaxes(
+                    categoryorder="array",
+                    categoryarray=months,
+                    tickfont={"size": 8},
+                    automargin=True,
+                    row=row,
+                    col=col,
+                )
+                
+                # Calculate entity-specific range
+                entity_min, entity_max = None, None
+                for pct_col in pct_cols:
+                    clean = [v for v in entity_df[pct_col].to_list() if isinstance(v, (int, float))]
+                    if clean:
+                        cmin, cmax = min(clean), max(clean)
+                        entity_min = cmin if entity_min is None else min(entity_min, cmin)
+                        entity_max = cmax if entity_max is None else max(entity_max, cmax)
+                
+                entity_range = base_plotter.percent_axis_range(entity_min, entity_max)
+                fig.update_yaxes(
+                    tickfont={"size": 8},
+                    automargin=True,
+                    showticklabels=True,
+                    title_text="% Difference" if col == 1 else "",
+                    row=row,
+                    col=col,
+                    range=(shared_range if (True and shared_range) else entity_range),
+                )
+
+            # Fill empty panels
+            for idx in range(len(visible_entities) + 1, MONTH_MAX + 1):
+                row = (idx - 1) // MONTH_COLS + 1
+                col = (idx - 1) % MONTH_COLS + 1
+                fig.update_xaxes(visible=False, row=row, col=col)
+                fig.update_yaxes(visible=False, row=row, col=col)
+
+            fig.update_layout(showlegend=True)
+            fig = apply_theme(
+                fig,
+                title=f"Monthly {fuel.replace('_', ' ').title()} % Difference by {plot_spec.aggregation_level.title()}",
+                height=1100,
+                width=1950,
+                legend={"orientation": "v", "x": 0.92, "y": 0.02, "xanchor": "left", "yanchor": "bottom"},
+                margin={"l": 45, "r": 20, "t": 60, "b": 55},
+            )
+            return fig
 
     qty = plot_spec.quantity.value if plot_spec.quantity else "all"
     raise NotImplementedError(

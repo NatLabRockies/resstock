@@ -14,6 +14,7 @@ import yaml
 from pydantic import Field, field_validator
 
 from resstockpostproc.baseline_validation.schema.plot_spec import NoExtraModel
+from resstockpostproc.shared_utils.db_column_names import DBSchema
 
 
 class PlotType(str, Enum):
@@ -21,6 +22,7 @@ class PlotType(str, Enum):
 
     eia = "eia"
     lrd = "load_duration"
+    recs = "recs"
     timeseries = "timeseries"
 
 
@@ -46,7 +48,7 @@ class DataSourceConfig(NoExtraModel):
     name: str = Field(description="Name for this data source")
     db_name: str = Field(description="Athena database name")
     table_name: str = Field(description="Athena table name")
-    db_schema: str = Field(description="Database schema", default='resstock_oedi_new')
+    db_schema: DBSchema = Field(description="Database schema", default=DBSchema.OEDI_NEW)
 
 
 class PlotSpecification(NoExtraModel):
@@ -82,8 +84,9 @@ class OutputConfig(NoExtraModel):
 class WorkflowConfig(NoExtraModel):
     workgroup: str = Field(description="Athena workgroup")
     data_sources: list[DataSourceConfig] = Field(description="BuildStock data source configuration")
-    reference_year: int = Field(
-        default=2018, description="Year of reference data to compare against"
+    reference_years: dict[str, list[int]] = Field(
+        default={"eia": [2018], "recs": [2020]},
+        description="Reference years per data source (e.g., {'eia': [2018, 2024], 'recs': [2020]})"
     )
     plots: PlotSpecification = Field(default_factory=PlotSpecification, description="Plot specifications")
     output: OutputConfig = Field(description="Output configuration")

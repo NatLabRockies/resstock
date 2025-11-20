@@ -7,10 +7,11 @@ from pathlib import Path
 import polars as pl
 
 from resstockpostproc.baseline_validation.data_processing.recs_mapping import add_enduse_columns
+from resstockpostproc.baseline_validation.data_processing.recs_mapping import add_characteristic_columns
 from resstockpostproc.baseline_validation.utils import KBTU2KWH
 from resstockpostproc.shared_utils.mapping import STATE2ABBR
 from resstockpostproc.baseline_validation.io_managers import truth_data_paths as s3_paths
-
+from resstockpostproc.shared_utils.db_column_names import DataCol
 
 DATA_ROOT = Path(__file__).parent / "data"
 RAW_DIR = DATA_ROOT / "recs_raw"
@@ -23,13 +24,13 @@ MONTHLY_CONSUMPTION_FILENAME = "recs_2020_monthly_consumption.csv"
 
 # Monthly consumption data URLs from EIA
 MONTHLY_DATA_URLS = {
-    "Electricity Total": "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/CE8.1.M.2020.TotalSiteElectricityConsumption.xlsx",
-    "Electricity Space Heating": "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/CE8.2.M.2020.TotalSpaceHeatingElectricityConsumption.xlsx",
-    "Electricity Space Cooling": "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/CE8.3.M.2020.TotalSpaceCoolingElectricityConsumption.xlsx",
-    "Electricity Water Heating": "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/CE8.4.M.2020.TotalWaterHeatingElectricityConsumption.xlsx",
-    "Natural Gas Total": "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/CE8.11.M.2020.TotalSiteNaturalGasConsumption.xlsx",
-    "Natural Gas Space Heating": "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/CE8.12.M.2020.TotalSpaceHeatingNaturalGasConsumption.xlsx",
-    "Natural Gas Water Heating": "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/CE8.13.M.2020.TotalWaterHeatingNaturalGasConsumption.xlsx",
+    DataCol.ELECTRICITY_TOTAL: "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/CE8.1.M.2020.TotalSiteElectricityConsumption.xlsx",
+    DataCol.ELECTRICITY_SPACE_HEATING: "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/CE8.2.M.2020.TotalSpaceHeatingElectricityConsumption.xlsx",
+    DataCol.ELECTRICITY_SPACE_COOLING: "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/CE8.3.M.2020.TotalSpaceCoolingElectricityConsumption.xlsx",
+    DataCol.ELECTRICITY_WATER_HEATING: "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/CE8.4.M.2020.TotalWaterHeatingElectricityConsumption.xlsx",
+    DataCol.NATURAL_GAS_TOTAL: "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/CE8.11.M.2020.TotalSiteNaturalGasConsumption.xlsx",
+    DataCol.NATURAL_GAS_SPACE_HEATING: "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/CE8.12.M.2020.TotalSpaceHeatingNaturalGasConsumption.xlsx",
+    DataCol.NATURAL_GAS_WATER_HEATING: "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/CE8.13.M.2020.TotalWaterHeatingNaturalGasConsumption.xlsx",
 }
 
 
@@ -128,10 +129,10 @@ def get_monthly_data() -> pl.DataFrame:
             print(f"Downloaded {filename}")
 
         data_df = _extract_monthly_data_from_excel(filepath)
-        data_df = data_df.rename({"value": enduse,
-                                  "rse": f"{enduse} RSE",
-                                  "customers": f"{enduse} Customers",
-                                  "resolution": f"{enduse} Resolution"})
+        data_df = data_df.rename({"value": f"recs_2020_{enduse}_value",
+                                  "rse": f"recs_2020_{enduse}_rse",
+                                  "customers": f"recs_2020_{enduse}_customers",
+                                  "resolution": f"recs_2020_{enduse}_resolution"})
         all_records.append(data_df)
         print(f"Processed {len(data_df)} records from {filename}")
 
@@ -142,9 +143,10 @@ def process_microdata() -> pl.DataFrame:
     """Process the raw microdata file."""
     raw_filepath = _download_raw_microdata()
     df = pl.read_csv(raw_filepath, infer_schema_length=None)
-    df_with_enduse = add_enduse_columns(df, "RECS")
+    df_with_enduse = add_enduse_columns(df)
+    df_with_characteristics = add_characteristic_columns(df_with_enduse)
     microdata_filepath = PROCESSED_DIR / MICRODATA_FILENAME
-    df_with_enduse.write_csv(microdata_filepath)
+    df_with_characteristics.write_csv(microdata_filepath)
     print(f"Saved processed microdata to {microdata_filepath}")
     return df_with_enduse
 

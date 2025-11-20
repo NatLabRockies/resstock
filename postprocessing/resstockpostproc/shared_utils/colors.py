@@ -1,8 +1,6 @@
 QUALITATIVE_SERIES = [
     "#0079C2",
     "#7DA544",
-    "#EE9521",
-    "#6D1496",
     "#812E36",
     "#626D72",
     "#00A4E4",
@@ -10,6 +8,10 @@ QUALITATIVE_SERIES = [
     "#FFC423",
     "#B365D1",
     "#A32F1C",
+]
+REF_QUALITATIVE_SERIES = [
+    "#A16911",
+    "#5D1A70",
 ]
 nrel_color_series = [
     ["#0B5E90", "#0079C2", "#00A3E4", "#5DD2FF"],

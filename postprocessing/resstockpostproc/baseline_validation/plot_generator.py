@@ -8,6 +8,7 @@ from pathlib import Path
 import sys
 import polars as pl
 from itertools import product
+from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.io_managers.get_lrd_data import get_lrd_data
 import resstockpostproc.shared_utils.db_column_names as db_cols
 from resstockpostproc.baseline_validation.io_managers import get_resstock_data as res_data
@@ -15,24 +16,23 @@ from resstockpostproc.baseline_validation.io_managers import get_eia_data as eia
 from resstockpostproc.baseline_validation.schema.workflow_schema import PlotType, workflow
 from resstockpostproc.baseline_validation.utils import get_buildstock_query
 from resstockpostproc.baseline_validation.io_managers.output_manager import save_dataframe, save_figure
-from resstockpostproc.baseline_validation.plotters import eia_plotter, lrd_plotter, timeseries_plotter
+from resstockpostproc.baseline_validation.plotters import eia_plotter, lrd_plotter, timeseries_plotter, recs_plotter
 from resstockpostproc.baseline_validation.schema.workflow_schema import PlotType, WorkflowConfig
-from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, Quantity, FileType, QuantityType, TruthSource
+from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, FileType, QuantityType, TruthSource
 from resstockpostproc.baseline_validation.utils import ensure_directory
 from resstockpostproc.baseline_validation.data_processing.data_processor import get_plot_data
 
 def generate_eia_plots() -> None:
     """Generate EIA validation plots."""
     print("Generating EIA validation plots...")
-    quantities = [None, Quantity.ELECTRICITY_TOTAL, Quantity.NATURAL_GAS_TOTAL]
+    quantities = [None, DataCol.ELECTRICITY_TOTAL, DataCol.NATURAL_GAS_TOTAL]
     agg_levels = ['state'] # eia_data.get_available_aggregation_levels()
     quantity_types = [QuantityType.percent_difference, QuantityType.stock_energy]
     resolutions = ('monthly', 'annual')
 
-    quantities = [None]
     agg_levels = ["state"]
     quantity_types = [QuantityType.stock_energy]
-    resolutions = ("annual",) 
+    resolutions = ("annual",)
     for quantity, agg_level, quantity_type, resolution in product(quantities, agg_levels, quantity_types, resolutions):
         print(f"  Processing {agg_level} level...")
         if resolution != "monthly" and quantity_type == QuantityType.percent_difference and quantity is not None:
@@ -53,20 +53,54 @@ def generate_eia_plots() -> None:
         plot_func = get_plotting_function(plot_spec.truth_source)
         fig = plot_func(data, plot_spec)
         save_figure(fig, plot_spec)
-        
-
-       
-        # fig1 = eia_plotter.plot_annual_sales_comparison(resstock_annual, eia_annual, by=agg_level)
-        # fig2 = eia_plotter.plot_annual_sales_comparison_electricity(resstock_annual, eia_annual, by=agg_level)
-        # fig3 = eia_plotter.plot_annual_sales_comparison_natural_gas(resstock_annual, eia_annual, by=agg_level)
-        # fig4 = eia_plotter.plot_annual_sales_comparison_percent_diff(resstock_annual, eia_annual, by=agg_level)
-        # fig5 = eia_plotter.plot_monthly_sales_comparison_electricity(resstock_monthly, eia_monthly, by=agg_level)
-        # fig6 = eia_plotter.plot_monthly_sales_comparison_natural_gas(resstock_monthly, eia_monthly, by=agg_level)
-        # for i, fig in enumerate([fig1, fig2, fig3, fig4, fig5, fig6]):
-        #     fig.write_html(output_dir / f"eia/{agg_level.value}/comparison_{i}.html")  # Temporary save to ensure directory exists
 
     print("EIA plots complete!")
 
+def generate_recs_plots() -> None:
+    """Generate RECS validation plots."""
+    print("Generating RECS validation plots...")
+    quantities = [None,
+                  DataCol.NATURAL_GAS_WATER_HEATING,
+                  DataCol.NATURAL_GAS_TOTAL,
+                  DataCol.NATURAL_GAS_SPACE_HEATING,
+                  DataCol.ELECTRICITY_TOTAL,
+                  DataCol.ELECTRICITY_SPACE_HEATING,
+                  DataCol.ELECTRICITY_SPACE_COOLING,
+                  DataCol.ELECTRICITY_WATER_HEATING,
+                  ]
+    agg_levels = ['state'] # eia_data.get_available_aggregation_levels()
+    quantity_types = [QuantityType.percent_difference, QuantityType.stock_energy]
+    resolutions = ('monthly', 'annual')
+
+    # quantities = [DBCol.ELECTRICITY_TOTAL]
+    agg_levels = ["state"]
+    quantity_types = [QuantityType.stock_energy]
+    resolutions = ("monthly",)
+    for quantity, agg_level, quantity_type, resolution in product(quantities, agg_levels, quantity_types, resolutions):
+        print(f"  Processing {agg_level} level...")
+        if resolution != "monthly" and quantity_type == QuantityType.percent_difference and quantity is not None:
+            continue  # Percent difference plot is done with both together
+        if resolution == "monthly" and quantity is None:
+            continue  # Monthly plots require a specific quantity
+        plot_spec = PlotSpec(
+            truth_source=TruthSource.recs,
+            resolution=resolution,
+            aggregation_level=agg_level,
+            quantity=quantity,
+            focus_on=None,
+            quantity_type=quantity_type,
+            visualization_type="bar",
+            
+        )
+        #data = get_plot_data(plot_spec)
+        # data.write_parquet(Path("debug.parquet"))
+        data = pl.read_parquet(Path("debug.parquet"))
+        plot_func = get_plotting_function(plot_spec.truth_source)
+        fig = plot_func(data, plot_spec)
+        fig.show(renderer="browser")
+        # save_figure(fig, plot_spec)
+
+    print("EIA plots complete!")
 
 # def generate_lrd_plots(
 #     workflow: WorkflowConfig,
@@ -161,7 +195,7 @@ def get_plotting_function(truth_source: TruthSource):
         case TruthSource.lrd:
             raise ValueError("LRD plotting function is not yet implemented.")
         case TruthSource.recs:
-            raise ValueError("RECS plotting function is not yet implemented.")
+            return recs_plotter.create_plot
         case _:
             raise ValueError(f"Unsupported truth source: {truth_source}")
 
@@ -178,6 +212,8 @@ def generate_all_plots(
     print(f"Generating baseline validation plots.")
     print(f"Plot types: {[pt.value for pt in plot_types]}")
 
+    if PlotType.recs in plot_types:
+        generate_recs_plots()
     if PlotType.eia in plot_types:
         generate_eia_plots()
 
@@ -222,7 +258,7 @@ def main() -> int:
             "timeseries (timeseries analysis), all (all plot types). "
             "Defaults to all plot types specified in config if not provided."
         ),
-        default=['eia']
+        default=["recs"]
     )
 
     args = parser.parse_args()

@@ -14,11 +14,11 @@ CATEGORICAL_COLORS = [
 ]
 
 DEFAULT_LAYOUT = dict(
-    font=dict(family="Arial, sans-serif", size=12, color="#333"),
+    font=dict(family="Arial, sans-serif", size=14, color="#333"),
     plot_bgcolor="white",
     paper_bgcolor="white",
     hovermode="closest",
-    hoverlabel=dict(bgcolor="white", font_size=12, font_family="Arial"),
+    hoverlabel=dict(bgcolor="white", font_size=14, font_family="Arial"),
     margin=dict(l=80, r=40, t=80, b=80),
     autosize=True,
 )
