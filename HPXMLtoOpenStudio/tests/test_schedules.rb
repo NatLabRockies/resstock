@@ -52,7 +52,7 @@ class HPXMLtoOpenStudioSchedulesTest < Minitest::Test
 
     schedule_constants = 13
     schedule_rulesets = 16
-    schedule_fixed_intervals = 1
+    schedule_fixed_intervals = 0
     schedule_files = 0
 
     assert_equal(schedule_constants, model.getScheduleConstants.size)
@@ -82,7 +82,7 @@ class HPXMLtoOpenStudioSchedulesTest < Minitest::Test
 
     schedule_constants = 12
     schedule_rulesets = 20
-    schedule_fixed_intervals = 1
+    schedule_fixed_intervals = 0
     schedule_files = 0
 
     assert_equal(schedule_constants, model.getScheduleConstants.size)

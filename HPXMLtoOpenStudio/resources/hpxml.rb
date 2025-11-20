@@ -70,8 +70,6 @@ class HPXML < Object
   AtticWallTypeGable = 'gable'
   AtticWallTypeKneeWall = 'knee wall'
   BatteryTypeLithiumIon = 'Li-ion'
-  BatteryLifetimeModelNone = 'None'
-  BatteryLifetimeModelKandlerSmith = 'KandlerSmith'
   BlindsClosed = 'closed'
   BlindsOpen = 'open'
   BlindsHalfOpen = 'half open'
@@ -936,7 +934,7 @@ class HPXML < Object
              :co2index_calculation_versions,               # [Array<String>] SoftwareInfo/extension/CO2IndexCalculation/Version
              :energystar_calculation_versions,             # [Array<String>] SoftwareInfo/extension/EnergyStarCalculation/Version
              :iecc_eri_calculation_versions,               # [Array<String>] SoftwareInfo/extension/IECCERICalculation/Version
-             :zerh_calculation_versions,                   # [Array<String>] SoftwareInfo/extension/ZERHCalculation/Version
+             :denh_calculation_versions,                   # [Array<String>] SoftwareInfo/extension/DENHCalculation/Version
              :timestep,                                    # [Integer] SoftwareInfo/extension/SimulationControl/Timestep (minutes)
              :sim_begin_month,                             # [Integer] SoftwareInfo/extension/SimulationControl/BeginMonth
              :sim_begin_day,                               # [Integer] SoftwareInfo/extension/SimulationControl/BeginDayOfMonth
@@ -1000,7 +998,7 @@ class HPXML < Object
         'CO2IndexCalculation' => @co2index_calculation_versions,
         'EnergyStarCalculation' => @energystar_calculation_versions,
         'IECCERICalculation' => @iecc_eri_calculation_versions,
-        'ZERHCalculation' => @zerh_calculation_versions }.each do |element_name, calculation_versions|
+        'DENHCalculation' => @denh_calculation_versions }.each do |element_name, calculation_versions|
         calculation_versions = [] if calculation_versions.nil?
         if not calculation_versions.empty?
           extension = XMLHelper.create_elements_as_needed(software_info, ['extension'])
@@ -1057,7 +1055,7 @@ class HPXML < Object
       @co2index_calculation_versions = XMLHelper.get_values(hpxml, 'SoftwareInfo/extension/CO2IndexCalculation/Version', :string)
       @iecc_eri_calculation_versions = XMLHelper.get_values(hpxml, 'SoftwareInfo/extension/IECCERICalculation/Version', :string)
       @energystar_calculation_versions = XMLHelper.get_values(hpxml, 'SoftwareInfo/extension/EnergyStarCalculation/Version', :string)
-      @zerh_calculation_versions = XMLHelper.get_values(hpxml, 'SoftwareInfo/extension/ZERHCalculation/Version', :string)
+      @denh_calculation_versions = XMLHelper.get_values(hpxml, 'SoftwareInfo/extension/DENHCalculation/Version', :string)
       @timestep = XMLHelper.get_value(hpxml, 'SoftwareInfo/extension/SimulationControl/Timestep', :integer)
       @sim_begin_month = XMLHelper.get_value(hpxml, 'SoftwareInfo/extension/SimulationControl/BeginMonth', :integer)
       @sim_begin_day = XMLHelper.get_value(hpxml, 'SoftwareInfo/extension/SimulationControl/BeginDayOfMonth', :integer)
@@ -9523,7 +9521,6 @@ class HPXML < Object
              :usable_capacity_kwh,    # [Double] VehicleType/BatteryElectricVehicle/Battery/UsableCapacity[Units="kWh"]/Value (kWh)
              :usable_capacity_ah,     # [Double] VehicleType/BatteryElectricVehicle/Battery/UsableCapacity[Units="Ah"]/Value (Ah)
              :nominal_voltage,        # [Double] VehicleType/BatteryElectricVehicle/Battery/NominalVoltage (V)
-             :lifetime_model,         # [String] VehicleType/BatteryElectricVehicle/Battery/extension/LifetimeModel (HPXML::BatteryLifetimeModelXXX)
              :ev_usage_multiplier,    # [Double] VehicleType/BatteryElectricVehicle/extension/UsageMultiplier
              :ev_weekday_fractions,   # [String] VehicleType/BatteryElectricVehicle/extension/WeekdayScheduleFractions
              :ev_weekend_fractions,   # [String] VehicleType/BatteryElectricVehicle/extension/WeekendScheduleFractions
@@ -9560,7 +9557,7 @@ class HPXML < Object
       vehicle_type = XMLHelper.add_element(vehicle_type_element, @vehicle_type)
 
       if [HPXML::VehicleTypeBEV, HPXML::VehicleTypePHEV, HPXML::VehicleTypeHybrid].include? @vehicle_type
-        if (not @battery_type.nil?) || (not @nominal_capacity_kwh.nil?) || (not @nominal_capacity_ah.nil?) || (not @usable_capacity_kwh.nil?) || (not @usable_capacity_ah.nil?) || (not @nominal_voltage.nil?) || (not @lifetime_model.nil?)
+        if (not @battery_type.nil?) || (not @nominal_capacity_kwh.nil?) || (not @nominal_capacity_ah.nil?) || (not @usable_capacity_kwh.nil?) || (not @usable_capacity_ah.nil?) || (not @nominal_voltage.nil?)
           battery = XMLHelper.add_element(vehicle_type, 'Battery')
           XMLHelper.add_element(battery, 'BatteryType', @battery_type, :string, @battery_type_isdefaulted) unless @battery_type.nil?
           if not @nominal_capacity_kwh.nil?
@@ -9584,7 +9581,6 @@ class HPXML < Object
             XMLHelper.add_element(usable_capacity, 'Value', @usable_capacity_ah, :float, @usable_capacity_ah_isdefaulted)
           end
           XMLHelper.add_element(battery, 'NominalVoltage', @nominal_voltage, :float, @nominal_voltage_isdefaulted) unless @nominal_voltage.nil?
-          XMLHelper.add_extension(battery, 'LifetimeModel', @lifetime_model, :string, @lifetime_model_isdefaulted) unless @lifetime_model.nil?
         end
       end
 
@@ -9637,7 +9633,6 @@ class HPXML < Object
         @nominal_voltage = XMLHelper.get_value(vehicle, "#{battery_prefix}/NominalVoltage", :float)
         @fraction_charged_home = XMLHelper.get_value(vehicle, "VehicleType/#{@vehicle_type}/FractionChargedLocation[Location='#{HPXML::ElectricVehicleChargingLocationHome}']/Percentage", :float)
         @ev_charger_idref = HPXML::get_idref(XMLHelper.get_element(vehicle, "VehicleType/#{@vehicle_type}/ConnectedCharger"))
-        @lifetime_model = XMLHelper.get_value(vehicle, "#{battery_prefix}/extension/LifetimeModel", :string)
         @ev_usage_multiplier = XMLHelper.get_value(vehicle, "VehicleType/#{@vehicle_type}/extension/UsageMultiplier", :float)
         @ev_weekday_fractions = XMLHelper.get_value(vehicle, "VehicleType/#{@vehicle_type}/extension/WeekdayScheduleFractions", :string)
         @ev_weekend_fractions = XMLHelper.get_value(vehicle, "VehicleType/#{@vehicle_type}/extension/WeekendScheduleFractions", :string)
@@ -10104,7 +10099,6 @@ class HPXML < Object
              :rated_power_output,        # [Double] RatedPowerOutput (W)
              :nominal_voltage,           # [Double] NominalVoltage (V)
              :round_trip_efficiency,     # [Double] RoundTripEfficiency (frac)
-             :lifetime_model,            # [String] extension/LifetimeModel (HPXML::BatteryLifetimeModelXXX)
              :number_of_bedrooms_served] # [Integer] extension/NumberofBedroomsServed
     attr_accessor(*ATTRS)
 
@@ -10160,7 +10154,6 @@ class HPXML < Object
       XMLHelper.add_element(battery, 'RatedPowerOutput', @rated_power_output, :float, @rated_power_output_isdefaulted) unless @rated_power_output.nil?
       XMLHelper.add_element(battery, 'NominalVoltage', @nominal_voltage, :float, @nominal_voltage_isdefaulted) unless @nominal_voltage.nil?
       XMLHelper.add_element(battery, 'RoundTripEfficiency', @round_trip_efficiency, :float, @round_trip_efficiency_isdefaulted) unless @round_trip_efficiency.nil?
-      XMLHelper.add_extension(battery, 'LifetimeModel', @lifetime_model, :string, @lifetime_model_isdefaulted) unless @lifetime_model.nil?
       XMLHelper.add_extension(battery, 'NumberofBedroomsServed', @number_of_bedrooms_served, :integer) unless @number_of_bedrooms_served.nil?
     end
 
@@ -10182,7 +10175,6 @@ class HPXML < Object
       @rated_power_output = XMLHelper.get_value(battery, 'RatedPowerOutput', :float)
       @nominal_voltage = XMLHelper.get_value(battery, 'NominalVoltage', :float)
       @round_trip_efficiency = XMLHelper.get_value(battery, 'RoundTripEFficiency', :float)
-      @lifetime_model = XMLHelper.get_value(battery, 'extension/LifetimeModel', :string)
       @number_of_bedrooms_served = XMLHelper.get_value(battery, 'extension/NumberofBedroomsServed', :integer)
     end
   end

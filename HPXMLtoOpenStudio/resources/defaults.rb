@@ -4096,10 +4096,6 @@ module Defaults
   # @param default_values [Hash] map of home battery or vehicle battery properties to default values
   # @return [nil]
   def self.apply_battery(battery, default_values)
-    # if battery.lifetime_model.nil?
-    #   battery.lifetime_model = default_values[:lifetime_model]
-    #   battery.lifetime_model_isdefaulted = true
-    # end
     if battery.nominal_voltage.nil?
       battery.nominal_voltage = default_values[:nominal_voltage] # V
       battery.nominal_voltage_isdefaulted = true
@@ -7383,7 +7379,7 @@ module Defaults
     return breaker_spaces
   end
 
-  # Get default location, lifetime model, nominal capacity/voltage, round trip efficiency, and usable fraction for a battery.
+  # Get default values for a battery.
   #
   # @param has_garage [Boolean] Whether the dwelling unit has a garage
   # @return [Hash] Map of battery properties to default values
@@ -7394,20 +7390,17 @@ module Defaults
       location = HPXML::LocationOutside
     end
     return { location: location,
-             lifetime_model: HPXML::BatteryLifetimeModelNone,
              nominal_capacity_kwh: 10.0,
              nominal_voltage: 50.0,
              round_trip_efficiency: 0.925, # Based on Tesla Powerwall round trip efficiency (new)
              usable_fraction: 0.9 } # Fraction of usable capacity to nominal capacity
   end
 
-  # Get default lifetime model, miles/year, hours/week, nominal capacity/voltage, round trip efficiency, fraction charged at home,
-  # and usable fraction for an electric vehicle and its battery.
+  # Get default values for an electric vehicle and its battery.
   #
   # @return [Hash] map of EV properties to default values
   def self.get_electric_vehicle_values()
     return { battery_type: HPXML::BatteryTypeLithiumIon,
-             lifetime_model: HPXML::BatteryLifetimeModelNone,
              miles_per_year: 11000,
              hours_per_week: 9.6,
              nominal_capacity_kwh: 63,
