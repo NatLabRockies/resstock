@@ -962,8 +962,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
   def get_panel_new_loads(args, hpxml_bldg_existing, hpxml_bldg, electric_panel_load_other_power_rating)
     return if hpxml_bldg_existing.nil?
 
+    # Primary HVAC
     # Heating and cooling is a bit different than the other load types. For example, if a heat pump
-    # replaces an electric furnace/AC, we wouldn't want to just assign new_load as true based on not
+    # replaces a (gas or electric) furnace + AC, we wouldn't want to just assign new_load as true based on not
     # having a heat pump in the existing building. Another example might be an electric furnace that
     # replaces a heat pump -- we wouldn't want to call the electric furnace a new load just because
     # it didn't have one in the existing building.
@@ -975,8 +976,17 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     args[:electric_panel_load_heating_system_new_load] = !existing_heating_electric && (hpxml_bldg.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && hs.primary_system && (hs.fraction_heat_load_served > 0) && !hs.is_shared_system } > 0)
     args[:electric_panel_load_cooling_system_new_load] = !existing_cooling_electric && (hpxml_bldg.cooling_systems.count { |cs| (cs.cooling_system_fuel == HPXML::FuelTypeElectricity) && (cs.fraction_cool_load_served > 0) && !cs.is_shared_system } > 0)
-    args[:electric_panel_load_heat_pump_new_load] = !(existing_heating_electric && existing_cooling_electric) && (hpxml_bldg.heat_pumps.count { |hp| (hp.heat_pump_fuel == HPXML::FuelTypeElectricity) && !hp.is_shared_system } > 0)
+    args[:electric_panel_load_heat_pump_new_load] = !existing_heating_electric && !existing_cooling_electric && (hpxml_bldg.heat_pumps.count { |hp| (hp.heat_pump_fuel == HPXML::FuelTypeElectricity) && !hp.is_shared_system } > 0)
+
+    # Secondary HVAC
+    # Assign new_load as true if secondary heating system not in the existing building but in the upgraded building.
+    # Fraction heat load served is nil if the heating system is a separate heat pump backup system.
+    # If an existing primary electric heating system (e.g., baseboards) becomes separate backup to an upgraded
+    # heat pump, the backup is the new load and not the heat pump.
     args[:electric_panel_load_heating_system_2_new_load] = (hpxml_bldg_existing.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && (hs.fraction_heat_load_served.nil? || (hs.fraction_heat_load_served > 0)) && !hs.primary_system } == 0) && (hpxml_bldg.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && (hs.fraction_heat_load_served.nil? || (hs.fraction_heat_load_served > 0)) && !hs.primary_system } > 0)
+
+    # Non-HVAC
+    # Simply assign new_load as true if not in the existing building but in the upgraded building.
     args[:electric_panel_load_mech_vent_fan_new_load] = (hpxml_bldg_existing.ventilation_fans.size { |vf| vf.used_for_whole_building_ventilation } == 0) && (hpxml_bldg.ventilation_fans.count { |vf| vf.used_for_whole_building_ventilation } > 0)
     args[:electric_panel_load_whole_house_fan_new_load] = (hpxml_bldg_existing.ventilation_fans.size { |vf| vf.used_for_seasonal_cooling_load_reduction } == 0) && (hpxml_bldg.ventilation_fans.count { |vf| vf.used_for_seasonal_cooling_load_reduction } > 0)
     args[:electric_panel_load_kitchen_fans_new_load] = (hpxml_bldg_existing.ventilation_fans.size { |vf| vf.fan_location == HPXML::LocationKitchen } == 0) && (hpxml_bldg.ventilation_fans.count { |vf| vf.fan_location == HPXML::LocationKitchen } > 0)
