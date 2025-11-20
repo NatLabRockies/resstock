@@ -958,19 +958,24 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                         component_idrefs: [])
   end
 
+  # Compare existence of old electric systems to new electric systems
   def get_panel_new_loads(args, hpxml_bldg_existing, hpxml_bldg, electric_panel_load_other_power_rating)
     return if hpxml_bldg_existing.nil?
 
-    # Try 1: compare existence of old electric systems to new electric systems
-    heating_electric = (hpxml_bldg_existing.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && hs.primary_system && (hs.fraction_heat_load_served > 0) && !hs.is_shared_system } > 0) ||
-                       (hpxml_bldg_existing.heat_pumps.count { |hp| (hp.heat_pump_fuel == HPXML::FuelTypeElectricity) && (hp.fraction_heat_load_served > 0) && !hp.is_shared_system } > 0)
+    # Heating and cooling is a bit different than the other load types. For example, if a heat pump
+    # replaces an electric furnace/AC, we wouldn't want to just assign new_load as true based on not
+    # having a heat pump in the existing building. Another example might be an electric furnace that
+    # replaces a heat pump -- we wouldn't want to call the electric furnace a new load just because
+    # it didn't have one in the existing building.
+    existing_heating_electric = (hpxml_bldg_existing.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && hs.primary_system && (hs.fraction_heat_load_served > 0) && !hs.is_shared_system } > 0) ||
+                                (hpxml_bldg_existing.heat_pumps.count { |hp| (hp.heat_pump_fuel == HPXML::FuelTypeElectricity) && (hp.fraction_heat_load_served > 0) && !hp.is_shared_system } > 0)
 
-    cooling_electric = (hpxml_bldg_existing.cooling_systems.count { |cs| (cs.cooling_system_fuel == HPXML::FuelTypeElectricity) && (cs.fraction_cool_load_served > 0) && !cs.is_shared_system } > 0) ||
-                       (hpxml_bldg_existing.heat_pumps.count { |hp| (hp.heat_pump_fuel == HPXML::FuelTypeElectricity) && (hp.fraction_cool_load_served > 0) && !hp.is_shared_system } > 0)
+    existing_cooling_electric = (hpxml_bldg_existing.cooling_systems.count { |cs| (cs.cooling_system_fuel == HPXML::FuelTypeElectricity) && (cs.fraction_cool_load_served > 0) && !cs.is_shared_system } > 0) ||
+                                (hpxml_bldg_existing.heat_pumps.count { |hp| (hp.heat_pump_fuel == HPXML::FuelTypeElectricity) && (hp.fraction_cool_load_served > 0) && !hp.is_shared_system } > 0)
 
-    args[:electric_panel_load_heating_system_new_load] = !heating_electric && (hpxml_bldg.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && hs.primary_system && (hs.fraction_heat_load_served > 0) && !hs.is_shared_system } > 0)
-    args[:electric_panel_load_cooling_system_new_load] = !cooling_electric && (hpxml_bldg.cooling_systems.count { |cs| (cs.cooling_system_fuel == HPXML::FuelTypeElectricity) && (cs.fraction_cool_load_served > 0) && !cs.is_shared_system } > 0)
-    args[:electric_panel_load_heat_pump_new_load] = !(heating_electric && cooling_electric) && (hpxml_bldg.heat_pumps.count { |hp| (hp.heat_pump_fuel == HPXML::FuelTypeElectricity) && !hp.is_shared_system } > 0)
+    args[:electric_panel_load_heating_system_new_load] = !existing_heating_electric && (hpxml_bldg.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && hs.primary_system && (hs.fraction_heat_load_served > 0) && !hs.is_shared_system } > 0)
+    args[:electric_panel_load_cooling_system_new_load] = !existing_cooling_electric && (hpxml_bldg.cooling_systems.count { |cs| (cs.cooling_system_fuel == HPXML::FuelTypeElectricity) && (cs.fraction_cool_load_served > 0) && !cs.is_shared_system } > 0)
+    args[:electric_panel_load_heat_pump_new_load] = !(existing_heating_electric && existing_cooling_electric) && (hpxml_bldg.heat_pumps.count { |hp| (hp.heat_pump_fuel == HPXML::FuelTypeElectricity) && !hp.is_shared_system } > 0)
     args[:electric_panel_load_heating_system_2_new_load] = (hpxml_bldg_existing.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && (hs.fraction_heat_load_served > 0) && !hs.primary_system } == 0) && (hpxml_bldg.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && (hs.fraction_heat_load_served > 0) && !hs.primary_system } > 0)
     args[:electric_panel_load_mech_vent_fan_new_load] = (hpxml_bldg_existing.ventilation_fans.size { |vf| vf.used_for_whole_building_ventilation } == 0) && (hpxml_bldg.ventilation_fans.count { |vf| vf.used_for_whole_building_ventilation } > 0)
     args[:electric_panel_load_whole_house_fan_new_load] = (hpxml_bldg_existing.ventilation_fans.size { |vf| vf.used_for_seasonal_cooling_load_reduction } == 0) && (hpxml_bldg.ventilation_fans.count { |vf| vf.used_for_seasonal_cooling_load_reduction } > 0)
@@ -987,11 +992,6 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     args[:electric_panel_load_permanent_spa_pump_new_load] = (hpxml_bldg_existing.permanent_spas.size == 0) && (hpxml_bldg.permanent_spas.size > 0)
     args[:electric_panel_load_electric_permanent_spa_heater_new_load] = (hpxml_bldg_existing.permanent_spas.count { |ps| [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(ps.heater_type) } == 0) && (hpxml_bldg.permanent_spas.count { |ps| [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(ps.heater_type) } > 0)
     args[:electric_panel_load_other_new_load] = (electric_panel_load_other_power_rating > hpxml_bldg_existing.electric_panels[0].service_feeders.select { |sf| sf.type == HPXML::ElectricPanelLoadTypeOther }.map { |sf| sf.power }.sum)
-
-    # Try 2: compare old service feeders to new service feeders; would need to come after defaults are applied?
-    # panel_existing = hpxml_bldg_existing.electric_panels[0]
-    # panel = hpxml_bldg.electric_panels[0]
-    # TODO
   end
 
   def get_heating_and_cooling_seasons(weather)
