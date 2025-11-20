@@ -145,7 +145,7 @@ jobs:
 
   build-documentation:
     runs-on: ubuntu-22.04
-    needs: format-files
+    needs: [format-files]
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -173,10 +173,10 @@ jobs:
           pip install changelog
           make html SPHINXOPTS="-W --keep-going -n"
 
-      - name: Technical reference guide tables
+      - name: Technical reference guide sections
         run: |
           sudo gem install oga
-          ruby docs/technical_reference_guide/tables/create_characteristics_tex.rb
+          ruby docs/technical_reference_guide/characteristics/create_characteristics_tex.rb
 
       - name: Build technical reference guide
         uses: dante-ev/latex-action@2023-A

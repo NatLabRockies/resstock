@@ -1,0 +1,53 @@
+\paragraph{Description}
+% \input{characteristics/description/Water Heater Fuel}
+The water heater fuel type.
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/Water Heater Fuel}
+\begin{itemize}
+\item
+  U.S. EIA 2020 RECS microdata
+\item
+  Alaska-specific distribution is based on Alaska Retrofit Information
+  System (2008 to 2022), maintained by Alaska Housing Finance
+  Corporation.
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/Water Heater Fuel}
+
+\paragraph{Options}
+Water Heater Fuel has options shown in Table \ref{table:hc_opt_water_heater_fuel}. The characteristic does not set any modeling properties. Instead, it is a direct dependency for Water Heater Efficiency, where the heating fuel is assigned individually for each water heater option. Through this dependency, any changes to the distribution of water heater fuels will cascade to influence the water heater types. After conversations with EIA the Other Fuel water heater is typically composed of respondents saying they either do not have a water heater, coal, biomass, or district steam systems. ResStock models the energy associated with Other Fuel water heaters as coal energy consumption.
+
+\input{characteristics/options/Water Heater Fuel}
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/Water Heater Fuel}
+\begin{itemize}
+\item
+  Due to low sample sizes, fallback rules are applied, with lumping of:
+  
+  \begin{itemize}
+  \item
+    State: Census Division RECS
+  \item
+    Geometry building SF: Mobile, Single-family attached, Single-family detached
+  \item
+    Geometry building MF: Multifamily with 2--4 Units,
+    Multifamily with 5+ Units
+  \item
+    State: Census Region
+\item 
+State: National
+  \end{itemize}
+\item
+  For Alaska, we are using a field in ARIS that lumps multifamily 2--4
+  units and multifamily 5+ units buildings together. Data from the
+  American Community Survey are used to distribute between these two
+  building types.
+\item
+  For Alaska, wood and coal heating is modeled as other fuel.
+\item
+  For Alaska, when a building uses more than one fuel for water heating,
+  the fuel with highest consumption is considered the water heater fuel and used to meet all loads.
+\end{itemize}
