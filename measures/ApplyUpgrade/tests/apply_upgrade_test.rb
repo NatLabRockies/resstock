@@ -3,9 +3,8 @@
 require 'openstudio'
 require_relative '../../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/minitest_helper'
 require_relative '../../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/hpxml'
-require_relative '../measure.rb'
-require_relative '../../ResStockArgumentsPostHPXML/resources/duct_limited'
-require_relative '../../ResStockArgumentsPostHPXML/resources/existing_backup'
+require_relative '../measure'
+require_relative '../../ResStockArgumentsPostHPXML/measure'
 
 class ApplyUpgradeTest < Minitest::Test
   def test_SFD_1story_FB_UA_GRG_MSHP_FuelTanklessWH
@@ -475,10 +474,13 @@ class ApplyUpgradeTest < Minitest::Test
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     args = { :hvac_heat_pump_backup_use_existing_system => heat_pump_backup_use_existing_system }
 
+    # Create instance of the measure
+    measure = ResStockArgumentsPostHPXML.new
+
     hpxml_existing.buildings.each do |hpxml_bldg_existing|
       puts "\thvac_heat_pump='#{hvac_heat_pump}'..."
 
-      set_existing_system_as_heat_pump_backup(runner, hpxml_bldg_existing, hpxml_bldg, args)
+      measure.set_existing_system_as_heat_pump_backup(runner, hpxml_bldg_existing, hpxml_bldg, args)
 
       if expected_values['heat_pump_backup_type'].nil?
         assert_nil(hpxml_bldg.heat_pumps[0].backup_type)
@@ -522,8 +524,11 @@ class ApplyUpgradeTest < Minitest::Test
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     args = { :hvac_heat_pump_sizing_is_duct_limited => heat_pump_sizing_is_duct_limited }
 
+    # Create instance of the measure
+    measure = ResStockArgumentsPostHPXML.new
+
     hpxml_existing.buildings.each do |hpxml_bldg_existing|
-      baseline_max_airflow_cfm = set_autosizing_limits(runner, hpxml_bldg_existing, hpxml_bldg, args)
+      baseline_max_airflow_cfm = measure.set_autosizing_limits(runner, hpxml_bldg_existing, hpxml_bldg, args)
 
       actual_values = { 'baseline_max_airflow_cfm' => baseline_max_airflow_cfm,
                         'heat_pump_heating_autosizing_limit' => hpxml_bldg.heat_pumps[0].heating_autosizing_limit,
@@ -532,7 +537,7 @@ class ApplyUpgradeTest < Minitest::Test
       puts "\tbaseline_max_airflow_cfm='#{baseline_max_airflow_cfm}', upgrade_max_airflow_cfm='#{upgrade_max_airflow_cfm}', fan_watts_per_cfm='#{fan_watts_per_cfm}'..."
 
       if not baseline_max_airflow_cfm.nil?
-        adjusted_fan_watts_per_cfm = get_adjusted_fan_watts_per_cfm(baseline_max_airflow_cfm, upgrade_max_airflow_cfm, fan_watts_per_cfm)
+        adjusted_fan_watts_per_cfm = measure.get_adjusted_fan_watts_per_cfm(baseline_max_airflow_cfm, upgrade_max_airflow_cfm, fan_watts_per_cfm)
         actual_values['adjusted_fan_watts_per_cfm'] = adjusted_fan_watts_per_cfm
       end
 

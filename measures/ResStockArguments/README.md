@@ -2001,19 +2001,6 @@ The actual cfm per ton of the heating system.
 
 <br/>
 
-**HVAC: Heating System 2 Fuel Type**
-
-The fuel type of the second heating system.
-
-- **Name:** ``heating_system_2_fuel``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`, `coal`
-
-<br/>
-
 **HVAC: Heating System 2 Heating Capacity**
 
 The output heating capacity of the second heating system.
@@ -2212,30 +2199,6 @@ The fraction of manufacturer recommended charge of the heat pump.
 
 <br/>
 
-**HVAC: Heat Pump Backup Fuel Type**
-
-The backup fuel type of the heat pump.
-
-- **Name:** ``heat_pump_backup_fuel``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`
-
-<br/>
-
-**HVAC: Heat Pump Backup Rated Efficiency**
-
-The backup rated efficiency value of the heat pump.
-
-- **Name:** ``heat_pump_backup_heating_efficiency``
-- **Type:** ``Double``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heat Pump Backup Use Existing System**
 
 Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system. This argument is only applicable for heat pump upgrades.
@@ -2253,19 +2216,6 @@ Whether the (ducted) heat pump has an upper limit for autosized heating/cooling 
 
 - **Name:** ``hvac_heat_pump_sizing_is_duct_limited``
 - **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Blower Fan Efficiency**
-
-The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems)..
-
-- **Name:** ``hvac_blower_fan_watts_per_cfm``
-- **Type:** ``Double``
-
-- **Units:** ``W/CFM``
 
 - **Required:** ``false``
 
