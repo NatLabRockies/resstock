@@ -713,8 +713,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     if !heating_system_existing.nil? && !heating_system.nil?
       if (heating_system_existing.heating_system_type == heating_system.heating_system_type) &&
          (heating_system_existing.heating_system_fuel == heating_system.heating_system_fuel) &&
-         (heating_system_existing.heating_efficiency_afue == heating_system.heating_efficiency_afue) &&
-         (heating_system_existing.heating_efficiency_percent == heating_system.heating_efficiency_percent) &&
+         ((!heating_system_existing.heating_efficiency_afue.nil? && !heating_system.heating_efficiency_afue.nil? && (heating_system_existing.heating_efficiency_afue == heating_system.heating_efficiency_afue)) ||
+          (!heating_system_existing.heating_efficiency_percent.nil? && !heating_system.heating_efficiency_percent.nil? && (heating_system_existing.heating_efficiency_percent == heating_system.heating_efficiency_percent))) &&
          (heating_system_existing.fraction_heat_load_served == heating_system.fraction_heat_load_served)
         heating_system.heating_capacity = heating_system_existing.heating_capacity
         heating_system.heating_autosizing_factor = heating_system_existing.heating_autosizing_factor
@@ -727,8 +727,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     if !heating_system_2_existing.nil? && !heating_system_2.nil?
       if (heating_system_2_existing.heating_system_type == heating_system_2.heating_system_type) &&
          (heating_system_2_existing.heating_system_fuel == heating_system_2.heating_system_fuel) &&
-         (heating_system_2_existing.heating_efficiency_afue == heating_system_2.heating_efficiency_afue) &&
-         (heating_system_2_existing.heating_efficiency_percent == heating_system_2.heating_efficiency_percent) &&
+         ((!heating_system_2_existing.heating_efficiency_afue.nil? && !heating_system_2.heating_efficiency_afue.nil? && (heating_system_2_existing.heating_efficiency_afue == heating_system_2.heating_efficiency_afue)) ||
+          (!heating_system_2_existing.heating_efficiency_percent.nil? && !heating_system_2.heating_efficiency_percent.nil? && (heating_system_2_existing.heating_efficiency_percent == heating_system_2.heating_efficiency_percent))) &&
          (heating_system_2_existing.fraction_heat_load_served == heating_system_2.fraction_heat_load_served)
         heating_system_2.heating_capacity = heating_system_2_existing.heating_capacity
         heating_system_2.heating_autosizing_factor = heating_system_2_existing.heating_autosizing_factor
@@ -742,12 +742,12 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       if (cooling_system_existing.cooling_system_type == cooling_system.cooling_system_type) &&
          (cooling_system_existing.cooling_system_fuel == cooling_system.cooling_system_fuel) &&
          (cooling_system_existing.compressor_type == cooling_system.compressor_type) &&
-         (cooling_system_existing.cooling_efficiency_seer == cooling_system.cooling_efficiency_seer) &&
-         (cooling_system_existing.cooling_efficiency_seer2 == cooling_system.cooling_efficiency_seer2) &&
-         (cooling_system_existing.cooling_efficiency_eer == cooling_system.cooling_efficiency_eer) &&
-         (cooling_system_existing.cooling_efficiency_eer2 == cooling_system.cooling_efficiency_eer2) &&
-         (cooling_system_existing.cooling_efficiency_ceer == cooling_system.cooling_efficiency_ceer) &&
-         (cooling_system_existing.cooling_efficiency_kw_per_ton == cooling_system.cooling_efficiency_kw_per_ton) &&
+         ((!cooling_system_existing.cooling_efficiency_seer.nil? && !cooling_system.cooling_efficiency_seer.nil? && (cooling_system_existing.cooling_efficiency_seer == cooling_system.cooling_efficiency_seer)) ||
+          (!cooling_system_existing.cooling_efficiency_seer2.nil? && !cooling_system.cooling_efficiency_seer2.nil? && (cooling_system_existing.cooling_efficiency_seer2 == cooling_system.cooling_efficiency_seer2)) ||
+          (!cooling_system_existing.cooling_efficiency_eer.nil? && !cooling_system.cooling_efficiency_eer.nil? && (cooling_system_existing.cooling_efficiency_eer == cooling_system.cooling_efficiency_eer)) ||
+          (!cooling_system_existing.cooling_efficiency_eer2.nil? && !cooling_system.cooling_efficiency_eer2.nil? && (cooling_system_existing.cooling_efficiency_eer2 == cooling_system.cooling_efficiency_eer2)) ||
+          (!cooling_system_existing.cooling_efficiency_ceer.nil? && !cooling_system.cooling_efficiency_ceer.nil? && (cooling_system_existing.cooling_efficiency_ceer == cooling_system.cooling_efficiency_ceer)) ||
+          (!cooling_system_existing.cooling_efficiency_kw_per_ton.nil? && !cooling_system.cooling_efficiency_kw_per_ton.nil? && (cooling_system_existing.cooling_efficiency_kw_per_ton == cooling_system.cooling_efficiency_kw_per_ton))) &&
          (cooling_system_existing.fraction_cool_load_served == cooling_system.fraction_cool_load_served)
         cooling_system.cooling_capacity = cooling_system_existing.cooling_capacity
         cooling_system.cooling_autosizing_factor = cooling_system_existing.cooling_autosizing_factor
@@ -761,14 +761,14 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       if (heat_pump_existing.heat_pump_type == heat_pump.heat_pump_type) &&
          (heat_pump_existing.heat_pump_fuel == heat_pump.heat_pump_fuel) &&
          (heat_pump_existing.compressor_type == heat_pump.compressor_type) &&
-         (heat_pump_existing.heating_efficiency_hspf == heat_pump.heating_efficiency_hspf) &&
-         (heat_pump_existing.heating_efficiency_hspf2 == heat_pump.heating_efficiency_hspf2) &&
-         (heat_pump_existing.heating_efficiency_cop == heat_pump.heating_efficiency_cop) &&
-         (heat_pump_existing.cooling_efficiency_seer == heat_pump.cooling_efficiency_seer) &&
-         (heat_pump_existing.cooling_efficiency_seer2 == heat_pump.cooling_efficiency_seer2) &&
-         (heat_pump_existing.cooling_efficiency_eer == heat_pump.cooling_efficiency_eer) &&
-         (heat_pump_existing.cooling_efficiency_eer2 == heat_pump.cooling_efficiency_eer2) &&
-         (heat_pump_existing.cooling_efficiency_ceer == heat_pump.cooling_efficiency_ceer) &&
+         ((!heat_pump_existing.heating_efficiency_hspf && !heat_pump.heating_efficiency_hspf && (heat_pump_existing.heating_efficiency_hspf == heat_pump.heating_efficiency_hspf)) ||
+          (!heat_pump_existing.heating_efficiency_hspf2 && !heat_pump.heating_efficiency_hspf2 && (heat_pump_existing.heating_efficiency_hspf2 == heat_pump.heating_efficiency_hspf2)) ||
+          (!heat_pump_existing.heating_efficiency_cop && !heat_pump.heating_efficiency_cop && (heat_pump_existing.heating_efficiency_cop == heat_pump.heating_efficiency_cop))) &&
+         ((!heat_pump_existing.cooling_efficiency_seer && !heat_pump.cooling_efficiency_seer && (heat_pump_existing.cooling_efficiency_seer == heat_pump.cooling_efficiency_seer)) ||
+          (!heat_pump_existing.cooling_efficiency_seer2 && !heat_pump.cooling_efficiency_seer2 && (heat_pump_existing.cooling_efficiency_seer2 == heat_pump.cooling_efficiency_seer2)) ||
+          (!heat_pump_existing.cooling_efficiency_eer && !heat_pump.cooling_efficiency_eer && (heat_pump_existing.cooling_efficiency_eer == heat_pump.cooling_efficiency_eer)) ||
+          (!heat_pump_existing.cooling_efficiency_eer2 && !heat_pump.cooling_efficiency_eer2 && (heat_pump_existing.cooling_efficiency_eer2 == heat_pump.cooling_efficiency_eer2)) ||
+          (!heat_pump_existing.cooling_efficiency_ceer && !heat_pump.cooling_efficiency_ceer && (heat_pump_existing.cooling_efficiency_ceer == heat_pump.cooling_efficiency_ceer))) &&
          (heat_pump_existing.fraction_heat_load_served == heat_pump.fraction_cool_load_served) &&
          (heat_pump_existing.fraction_cool_load_served == heat_pump.fraction_cool_load_served)
         heat_pump.heating_capacity = heat_pump_existing.heating_capacity
