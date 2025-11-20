@@ -483,11 +483,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         water_heater.jacket_r_value = args[:dhw_water_heater_jacket_rvalue] unless args[:dhw_water_heater_jacket_rvalue].to_f == 0
       end
 
-      # Electric Panel
-      set_electric_panel(runner, hpxml_bldg_existing, hpxml_bldg, args)
-
       # Use existing system as heat pump backup
       set_existing_system_as_heat_pump_backup(runner, hpxml_bldg_existing, hpxml_bldg, args)
+
+      # Electric Panel
+      set_electric_panel(runner, hpxml_bldg_existing, hpxml_bldg, args)
     end
 
     # Apply defaults
@@ -976,7 +976,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     args[:electric_panel_load_heating_system_new_load] = !existing_heating_electric && (hpxml_bldg.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && hs.primary_system && (hs.fraction_heat_load_served > 0) && !hs.is_shared_system } > 0)
     args[:electric_panel_load_cooling_system_new_load] = !existing_cooling_electric && (hpxml_bldg.cooling_systems.count { |cs| (cs.cooling_system_fuel == HPXML::FuelTypeElectricity) && (cs.fraction_cool_load_served > 0) && !cs.is_shared_system } > 0)
     args[:electric_panel_load_heat_pump_new_load] = !(existing_heating_electric && existing_cooling_electric) && (hpxml_bldg.heat_pumps.count { |hp| (hp.heat_pump_fuel == HPXML::FuelTypeElectricity) && !hp.is_shared_system } > 0)
-    args[:electric_panel_load_heating_system_2_new_load] = (hpxml_bldg_existing.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && (hs.fraction_heat_load_served > 0) && !hs.primary_system } == 0) && (hpxml_bldg.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && (hs.fraction_heat_load_served > 0) && !hs.primary_system } > 0)
+    args[:electric_panel_load_heating_system_2_new_load] = (hpxml_bldg_existing.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && (hs.fraction_heat_load_served.nil? || (hs.fraction_heat_load_served > 0)) && !hs.primary_system } == 0) && (hpxml_bldg.heating_systems.count { |hs| (hs.heating_system_fuel == HPXML::FuelTypeElectricity) && (hs.fraction_heat_load_served.nil? || (hs.fraction_heat_load_served > 0)) && !hs.primary_system } > 0)
     args[:electric_panel_load_mech_vent_fan_new_load] = (hpxml_bldg_existing.ventilation_fans.size { |vf| vf.used_for_whole_building_ventilation } == 0) && (hpxml_bldg.ventilation_fans.count { |vf| vf.used_for_whole_building_ventilation } > 0)
     args[:electric_panel_load_whole_house_fan_new_load] = (hpxml_bldg_existing.ventilation_fans.size { |vf| vf.used_for_seasonal_cooling_load_reduction } == 0) && (hpxml_bldg.ventilation_fans.count { |vf| vf.used_for_seasonal_cooling_load_reduction } > 0)
     args[:electric_panel_load_kitchen_fans_new_load] = (hpxml_bldg_existing.ventilation_fans.size { |vf| vf.fan_location == HPXML::LocationKitchen } == 0) && (hpxml_bldg.ventilation_fans.count { |vf| vf.fan_location == HPXML::LocationKitchen } > 0)
