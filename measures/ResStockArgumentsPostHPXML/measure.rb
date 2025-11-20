@@ -1088,7 +1088,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     return is_valid
   end
 
-  def self.set_existing_system_as_heat_pump_backup(runner, hpxml_bldg_existing, hpxml_bldg, args)
+  def set_existing_system_as_heat_pump_backup(runner, hpxml_bldg_existing, hpxml_bldg, args)
     # Retain Existing Heating System as Heat Pump Backup
     if args[:hvac_heat_pump_backup_use_existing_system]
 
@@ -1170,15 +1170,15 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     end
   end
 
-  def self.get_heating_system(hpxml_bldg)
+  def get_heating_system(hpxml_bldg)
     return hpxml_bldg.heating_systems.find { |h| h.primary_system && !h.is_shared_system }
   end
 
-  def self.get_heat_pump(hpxml_bldg)
+  def get_heat_pump(hpxml_bldg)
     return hpxml_bldg.heat_pumps.find { |h| h.primary_heating_system && h.primary_cooling_system && !h.is_shared_system }
   end
 
-  def self.get_heat_pump_backup_type(heating_distribution_system, heat_pump_type, heat_pump_is_ducted)
+  def get_heat_pump_backup_type(heating_distribution_system, heat_pump_type, heat_pump_is_ducted)
     ducted_backup = (!heating_distribution_system.nil? && heating_distribution_system.distribution_system_type == HPXML::HVACDistributionTypeAir)
     if ducted_backup
       if ([HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpGroundToAir].include?(heat_pump_type) ||
@@ -1190,7 +1190,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     return HPXML::HeatPumpBackupTypeSeparate
   end
 
-  def self.set_autosizing_limits(runner, hpxml_bldg_existing, hpxml_bldg, args)
+  def set_autosizing_limits(runner, hpxml_bldg_existing, hpxml_bldg, args)
     # Use Autosizing Limits and Maintain Duct System Curve (Part 1)
     # Set the autosizing limit based on the baseline airflow.
     if args[:hvac_heat_pump_sizing_is_duct_limited]
@@ -1252,7 +1252,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     return
   end
 
-  def self.get_air_distribution_airflows(hpxml_bldg)
+  def get_air_distribution_airflows(hpxml_bldg)
     # Assume at most one ducted system with a single heating and/or cooling system.
     # We divide airflow by fraction of load served to account for partial conditioning adjustments.
 
@@ -1301,7 +1301,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     return air_distribution_airflows
   end
 
-  def self.get_duct_restriction_values(hpxml_bldg)
+  def get_duct_restriction_values(hpxml_bldg)
     duct_restriction_values = {
       'max_airflow_cfm' => nil,
       'autosizing_limit' => nil
@@ -1356,7 +1356,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     return fan_watts_per_cfm
   end
 
-  def self.get_adjusted_fan_watts_per_cfm(baseline_max_airflow_cfm, upgrade_max_airflow_cfm, fan_watts_per_cfm)
+  def get_adjusted_fan_watts_per_cfm(baseline_max_airflow_cfm, upgrade_max_airflow_cfm, fan_watts_per_cfm)
     # Adjust the blower fan efficiency based on baseline/upgrade maximum airflow cfm values.
     # FIXME: Source?
 
