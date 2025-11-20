@@ -59,14 +59,14 @@ def generate_eia_plots() -> None:
 def generate_recs_plots() -> None:
     """Generate RECS validation plots."""
     print("Generating RECS validation plots...")
-    quantities = [None,
+    quantities = [
+                  DataCol.ELECTRICITY_WATER_HEATING,
                   DataCol.NATURAL_GAS_WATER_HEATING,
                   DataCol.NATURAL_GAS_TOTAL,
                   DataCol.NATURAL_GAS_SPACE_HEATING,
                   DataCol.ELECTRICITY_TOTAL,
                   DataCol.ELECTRICITY_SPACE_HEATING,
                   DataCol.ELECTRICITY_SPACE_COOLING,
-                  DataCol.ELECTRICITY_WATER_HEATING,
                   ]
     agg_levels = ['state'] # eia_data.get_available_aggregation_levels()
     quantity_types = [QuantityType.percent_difference, QuantityType.stock_energy]
@@ -75,7 +75,7 @@ def generate_recs_plots() -> None:
     # quantities = [DBCol.ELECTRICITY_TOTAL]
     agg_levels = ["state"]
     quantity_types = [QuantityType.stock_energy]
-    resolutions = ("monthly",)
+    resolutions = ("annual", "monthly")
     for quantity, agg_level, quantity_type, resolution in product(quantities, agg_levels, quantity_types, resolutions):
         print(f"  Processing {agg_level} level...")
         if resolution != "monthly" and quantity_type == QuantityType.percent_difference and quantity is not None:
@@ -92,9 +92,9 @@ def generate_recs_plots() -> None:
             visualization_type="bar",
             
         )
-        #data = get_plot_data(plot_spec)
-        # data.write_parquet(Path("debug.parquet"))
-        data = pl.read_parquet(Path("debug.parquet"))
+        data = get_plot_data(plot_spec)
+        data.write_parquet(Path("debug.parquet"))
+        # data = pl.read_parquet(Path("debug.parquet"))
         plot_func = get_plotting_function(plot_spec.truth_source)
         fig = plot_func(data, plot_spec)
         fig.show(renderer="browser")

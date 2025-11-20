@@ -75,44 +75,77 @@ def _require_columns(df: pl.DataFrame, cols: set[str], label: str) -> None:
         raise ValueError(f"{label} missing columns: {', '.join(sorted(missing))}")
 
 
-def _prepare_annual(
-    buildstock_annual: pl.DataFrame,
-    recs_annual: pl.DataFrame,
-    by: str,
-) -> tuple[pl.DataFrame, list[str], dict[str, str]]:
-    # check basic columns
-    # Find all RECS columns (starting with recs_)
-    recs_cols = [col for col in recs_annual.columns if col.startswith("recs_") and col != by]
-    if not recs_cols:
-        raise ValueError("No RECS columns found in annual data")
-    _require_columns(recs_annual, {by} | set(recs_cols), "RECS annual")
-    _require_columns(buildstock_annual, {by}, "BuildStock annual")
-
-    runs = _run_names(buildstock_annual)
-    if not runs:
-        raise ValueError("No run columns (*_electricity_kwh / *_natural_gas_kwh) found in BuildStock annual")
-
-    # keep only useful columns
-    keep = [pl.col(by)]
-    for r in runs:
-        for fuel in ("electricity", "natural_gas"):
-            col = f"{r}_{fuel}_kwh"
-            if col in buildstock_annual.columns:
-                keep.append(pl.col(col))
-
-    bs = buildstock_annual.select(keep)
-    # Select by column and all RECS columns
-    recs = recs_annual.select([by] + recs_cols)
-    df = recs.join(bs, on=by, how="inner")
-    if df.is_empty():
-        raise ValueError(f"No overlap on '{by}' between RECS and BuildStock annual")
-
-    return df, runs, _run_colors(runs)
-
-
 # ---------------------------------------------------------------------------
 # annual plot helpers
 # ---------------------------------------------------------------------------
+def _add_annual_bar_with_rse(
+    fig: go.Figure,
+    df: pl.DataFrame,
+    x_col: str,
+    value_col: str,
+    rse_col: str,
+    label: str,
+    color: str,
+    row: int,
+    col: int,
+    showlegend: bool,
+    y_unit: str = "kWh",
+) -> None:
+    """
+    Add a bar plot using RSE (Relative Standard Error) to show uncertainty as error bars.
+    
+    Args:
+        fig: Plotly figure object
+        df: DataFrame containing the data (should have single annual value per entity)
+        x_col: Column name for x-axis (the entity/state)
+        value_col: Column name for the value
+        rse_col: Column name for RSE (as a percentage)
+        label: Label for the bar trace
+        color: Color for the bar
+        row: Subplot row position
+        col: Subplot column position
+        showlegend: Whether to show legend
+        y_unit: Unit label for y-axis
+    """
+    # For annual data, we expect one row per entity (state)
+    # The x is the entity name, y value is the single annual value
+    x_value = df[x_col].to_list()[0] if len(df) > 0 else None
+    y_value = df[value_col].to_list()[0] if len(df) > 0 else None
+    rse_value = df[rse_col].to_list()[0] if rse_col in df.columns and len(df) > 0 else 0
+    
+    if x_value is None or y_value is None:
+        return
+    
+    # Calculate error bar using RSE
+    # RSE is relative standard error as a percentage
+    # For 95% confidence interval, multiply by 1.96
+    if rse_value is not None and rse_value > 0:
+        error_value = y_value * (rse_value / 100.0) * 1.96
+    else:
+        error_value = 0
+    
+    # Add the bar with error bar
+    fig.add_bar(
+        x=[x_value],
+        y=[y_value],
+        name=label,
+        legendgroup=label,
+        marker={"color": color},
+        error_y={
+            "type": "data",
+            "array": [error_value],
+            "visible": True,
+            "color": "black",
+            "thickness": 1.5,
+            "width": 4,
+        },
+        hovertemplate="%{x}<br>" + f"{label}: " + "%{y:,.0f} " + y_unit + "<br>RSE: " + f"{rse_value:.1f}%<extra></extra>",
+        showlegend=showlegend,
+        row=row,
+        col=col,
+    )
+
+
 def _get_recs_cols_and_labels(df: pl.DataFrame, quantity: str) -> tuple[list[str], list[str], list[str]]:
     # RECS columns are expected to be like "RECS out.electricity.total.energy_consumption Value"
     # We look for columns starting with "RECS " and ending with " Value", containing the quantity
@@ -124,311 +157,6 @@ def _get_recs_cols_and_labels(df: pl.DataFrame, quantity: str) -> tuple[list[str
         labels.append("RECS 2020")
         colors.append(RECS_COLORS[i % len(RECS_COLORS)])
     return cols, labels, colors
-
-
-def plot_annual_sales_comparison(
-    buildstock_annual: pl.DataFrame,
-    recs_annual: pl.DataFrame,
-    by: str = "state",
-) -> go.Figure:
-    df, runs, colors = _prepare_annual(buildstock_annual, recs_annual, by)
-    # Find first RECS electricity column for sorting
-    recs_elec_cols = [col for col in df.columns if col.startswith("recs_electricity")]
-    if recs_elec_cols:
-        df = df.sort(recs_elec_cols[0], descending=False)
-    entities = df[by].to_list()
-
-    fig = make_subplots(
-        rows=1,
-        cols=2,
-        subplot_titles=["Electricity Sales", "Natural Gas Sales"],
-        shared_yaxes=True,
-        horizontal_spacing=0.12,
-    )
-
-    # Electricity panel
-    recs_cols, recs_labels, recs_colors = _get_recs_cols_and_labels(df, "electricity")
-    bs_cols = [f"{r}_electricity_kwh" for r in runs]
-    bs_labels = runs
-    bs_colors = [colors[r] for r in runs]
-    
-    # Combine all columns, labels, and colors (RECS first, then BuildStock)
-    all_cols = recs_cols + bs_cols
-    all_labels = recs_labels + bs_labels
-    all_colors = recs_colors + bs_colors
-    
-    base_plotter._add_bar_plot(
-        fig, df, by, all_cols, all_labels, all_colors, 1, 1, True, "kWh"
-    )
-
-    # Natural Gas panel
-    recs_cols, recs_labels, recs_colors = _get_recs_cols_and_labels(df, "natural_gas")
-    bs_cols = [f"{r}_natural_gas_kwh" for r in runs]
-    bs_labels = runs
-    bs_colors = [colors[r] for r in runs]
-    
-    all_cols = recs_cols + bs_cols
-    all_labels = recs_labels + bs_labels
-    all_colors = recs_colors + bs_colors
-
-    base_plotter._add_bar_plot(
-        fig, df, by, all_cols, all_labels, all_colors, 1, 2, False, "kWh"
-    )
-
-    return base_plotter.finalize_annual_plot(
-        fig,
-        "Electricity Sales (kWh)",
-        "Natural Gas Sales (kWh)",
-        f"Annual Sales Comparison by {by.title()}",
-        categories=entities,
-    )
-
-
-def plot_annual_sales_comparison_electricity(
-    buildstock_annual: pl.DataFrame,
-    recs_annual: pl.DataFrame,
-    by: str = "state",
-) -> go.Figure:
-    df, runs, colors = _prepare_annual(buildstock_annual, recs_annual, by)
-    recs_elec_cols = [col for col in df.columns if col.startswith("recs_electricity")]
-    if recs_elec_cols:
-        df = df.sort(recs_elec_cols[0], descending=False)
-    entities = df[by].to_list()
-
-    fig = make_subplots(
-        rows=1,
-        cols=2,
-        subplot_titles=["Electricity Sales", "Electricity: % Difference vs RECS"],
-        shared_yaxes=True,
-        horizontal_spacing=0.12,
-    )
-
-    # Left panel: Electricity sales
-    recs_cols, recs_labels, recs_colors = _get_recs_cols_and_labels(df, "electricity")
-    bs_cols = [f"{r}_electricity_kwh" for r in runs]
-    bs_labels = runs
-    bs_colors = [colors[r] for r in runs]
-    
-    all_cols = recs_cols + bs_cols
-    all_labels = recs_labels + bs_labels
-    all_colors = recs_colors + bs_colors
-
-    base_plotter._add_bar_plot(
-        fig, df, by, all_cols, all_labels, all_colors, 1, 1, True, "kWh"
-    )
-    
-    # Right panel: Percent difference
-    pct_min, pct_max = None, None
-    if recs_cols:
-        recs_col = recs_cols[0]
-        pct_cols = []
-        for col in bs_cols:
-            pct_col = f"{col}_pct"
-            df = df.with_columns(
-                pl.when(pl.col(recs_col) == 0)
-                .then(None)
-                .otherwise((pl.col(col) - pl.col(recs_col)) / pl.col(recs_col) * 100)
-                .alias(pct_col)
-            )
-            pct_cols.append(pct_col)
-        
-        base_plotter._add_bar_plot(
-            fig, df, by, pct_cols, bs_labels, bs_colors, 1, 2, False, "%"
-        )
-        
-        # Calculate min/max for axis range
-        for pct_col in pct_cols:
-            clean = [v for v in df[pct_col].to_list() if isinstance(v, (int, float))]
-            if clean:
-                rmin, rmax = min(clean), max(clean)
-                pct_min = rmin if pct_min is None else min(pct_min, rmin)
-                pct_max = rmax if pct_max is None else max(pct_max, rmax)
-
-    return base_plotter.finalize_annual_plot(
-        fig,
-        "Electricity Sales (kWh)",
-        "% Difference vs RECS",
-        f"Annual Electricity Sales vs RECS by {by.title()}",
-        right_range=base_plotter.percent_axis_range(pct_min, pct_max),
-        categories=entities,
-    )
-
-
-def plot_annual_sales_comparison_natural_gas(
-    buildstock_annual: pl.DataFrame,
-    recs_annual: pl.DataFrame,
-    by: str = "state",
-) -> go.Figure:
-    df, runs, colors = _prepare_annual(buildstock_annual, recs_annual, by)
-    recs_gas_cols = [col for col in df.columns if col.startswith("recs_natural_gas")]
-    if recs_gas_cols:
-        df = df.sort(recs_gas_cols[0], descending=False)
-    entities = df[by].to_list()
-
-    fig = make_subplots(
-        rows=1,
-        cols=2,
-        subplot_titles=["Natural Gas Sales", "Natural Gas: % Difference vs RECS"],
-        shared_yaxes=True,
-        horizontal_spacing=0.12,
-    )
-
-    # Left panel: Natural gas sales
-    recs_cols, recs_labels, recs_colors = _get_recs_cols_and_labels(df, "natural_gas")
-    bs_cols = [f"{r}_natural_gas_kwh" for r in runs]
-    bs_labels = runs
-    bs_colors = [colors[r] for r in runs]
-    
-    all_cols = recs_cols + bs_cols
-    all_labels = recs_labels + bs_labels
-    all_colors = recs_colors + bs_colors
-
-    base_plotter._add_bar_plot(
-        fig, df, by, all_cols, all_labels, all_colors, 1, 1, True, "kWh"
-    )
-    
-    # Right panel: Percent difference
-    pct_min, pct_max = None, None
-    if recs_cols:
-        recs_col = recs_cols[0]
-        pct_cols = []
-        for col in bs_cols:
-            pct_col = f"{col}_pct"
-            df = df.with_columns(
-                pl.when(pl.col(recs_col) == 0)
-                .then(None)
-                .otherwise((pl.col(col) - pl.col(recs_col)) / pl.col(recs_col) * 100)
-                .alias(pct_col)
-            )
-            pct_cols.append(pct_col)
-        
-        base_plotter._add_bar_plot(
-            fig, df, by, pct_cols, bs_labels, bs_colors, 1, 2, False, "%"
-        )
-        
-        # Calculate min/max for axis range
-        for pct_col in pct_cols:
-            clean = [v for v in df[pct_col].to_list() if isinstance(v, (int, float))]
-            if clean:
-                rmin, rmax = min(clean), max(clean)
-                pct_min = rmin if pct_min is None else min(pct_min, rmin)
-                pct_max = rmax if pct_max is None else max(pct_max, rmax)
-
-    return base_plotter.finalize_annual_plot(
-        fig,
-        "Natural Gas Sales (kWh)",
-        "% Difference vs RECS",
-        f"Annual Natural Gas Sales vs RECS by {by.title()}",
-        right_range=base_plotter.percent_axis_range(pct_min, pct_max),
-        categories=entities,
-    )
-
-
-def plot_annual_sales_comparison_percent_diff(
-    buildstock_annual: pl.DataFrame,
-    recs_annual: pl.DataFrame,
-    by: str = "state",
-) -> go.Figure:
-    df, runs, colors = _prepare_annual(buildstock_annual, recs_annual, by)
-
-    # Find first RECS electricity column for percent diff sorting
-    recs_elec_cols = [col for col in df.columns if col.startswith("recs_electricity")]
-    
-    # sort by first run electricity pct diff if possible
-    first_run = next((r for r in runs if f"{r}_electricity_kwh" in df.columns), None)
-    if first_run and recs_elec_cols:
-        recs_elec_col = recs_elec_cols[0]
-        df = df.with_columns(
-            pl.when(pl.col(recs_elec_col) == 0)
-            .then(None)
-            .otherwise(
-                (pl.col(f"{first_run}_electricity_kwh") - pl.col(recs_elec_col))
-                / pl.col(recs_elec_col)
-                * 100
-            )
-            .alias("_sort")
-        ).sort("_sort", descending=False)
-    entities = df[by].to_list()
-
-    fig = make_subplots(
-        rows=1,
-        cols=2,
-        subplot_titles=["Electricity", "Natural Gas"],
-        shared_yaxes=True,
-        horizontal_spacing=0.12,
-    )
-
-    # Electricity percent difference
-    e_min, e_max = None, None
-    recs_cols, _, _ = _get_recs_cols_and_labels(df, "electricity")
-    bs_cols = [f"{r}_electricity_kwh" for r in runs]
-    bs_labels = runs
-    bs_colors = [colors[r] for r in runs]
-    
-    if recs_cols:
-        recs_col = recs_cols[0]
-        pct_cols = []
-        for col in bs_cols:
-            pct_col = f"{col}_pct"
-            df = df.with_columns(
-                pl.when(pl.col(recs_col) == 0)
-                .then(None)
-                .otherwise((pl.col(col) - pl.col(recs_col)) / pl.col(recs_col) * 100)
-                .alias(pct_col)
-            )
-            pct_cols.append(pct_col)
-        
-        base_plotter._add_bar_plot(
-            fig, df, by, pct_cols, bs_labels, bs_colors, 1, 1, True, "%"
-        )
-        
-        for pct_col in pct_cols:
-            clean = [v for v in df[pct_col].to_list() if isinstance(v, (int, float))]
-            if clean:
-                rmin, rmax = min(clean), max(clean)
-                e_min = rmin if e_min is None else min(e_min, rmin)
-                e_max = rmax if e_max is None else max(e_max, rmax)
-
-    # Natural gas percent difference
-    g_min, g_max = None, None
-    recs_cols, _, _ = _get_recs_cols_and_labels(df, "natural_gas")
-    bs_cols = [f"{r}_natural_gas_kwh" for r in runs]
-    bs_labels = runs
-    bs_colors = [colors[r] for r in runs]
-    
-    if recs_cols:
-        recs_col = recs_cols[0]
-        pct_cols = []
-        for col in bs_cols:
-            pct_col = f"{col}_pct"
-            df = df.with_columns(
-                pl.when(pl.col(recs_col) == 0)
-                .then(None)
-                .otherwise((pl.col(col) - pl.col(recs_col)) / pl.col(recs_col) * 100)
-                .alias(pct_col)
-            )
-            pct_cols.append(pct_col)
-        
-        base_plotter._add_bar_plot(
-            fig, df, by, pct_cols, bs_labels, bs_colors, 1, 2, False, "%"
-        )
-        
-        for pct_col in pct_cols:
-            clean = [v for v in df[pct_col].to_list() if isinstance(v, (int, float))]
-            if clean:
-                rmin, rmax = min(clean), max(clean)
-                g_min = rmin if g_min is None else min(g_min, rmin)
-                g_max = rmax if g_max is None else max(g_max, rmax)
-
-    return base_plotter.finalize_annual_plot(
-        fig,
-        "% Difference vs RECS",
-        "% Difference vs RECS",
-        f"Annual % Difference vs RECS by {by.title()}",
-        left_range=base_plotter.percent_axis_range(e_min, e_max),
-        right_range=base_plotter.percent_axis_range(g_min, g_max),
-        categories=entities,
-    )
 
 
 # ---------------------------------------------------------------------------
@@ -539,7 +267,22 @@ def _add_monthly_band_with_rse(
             upper_bounds.append(y + error)
             lower_bounds.append(max(0, y - error))  # Don't go below 0
     
-    # Add the band (filled area)
+    # Add the center line first (for legend order)
+    fig.add_scatter(
+        x=x_values,
+        y=y_values,
+        mode="lines+markers",
+        name=label,
+        legendgroup=label,
+        marker={"color": color, "size": 3},
+        line={"color": color, "width": 1.5},
+        hovertemplate="%{x}<br>" + f"{label}: " + "%{y:,.0f} " + y_unit + "<extra></extra>",
+        showlegend=showlegend,
+        row=row,
+        col=col,
+    )
+    
+    # Add the RSE band (filled area between upper and lower bounds)
     fig.add_scatter(
         x=x_values + x_values[::-1],
         y=upper_bounds + lower_bounds[::-1],
@@ -555,17 +298,18 @@ def _add_monthly_band_with_rse(
         col=col,
     )
     
-    # Add the center line
+    # Add filled area from x-axis to lower bound (more opaque than RSE band)
     fig.add_scatter(
-        x=x_values,
-        y=y_values,
-        mode="lines+markers",
-        name=label,
-        legendgroup=label,
-        marker={"color": color, "size": 3},
-        line={"color": color, "width": 1.5},
-        hovertemplate="%{x}<br>" + f"{label}: " + "%{y:,.0f} " + y_unit + "<extra></extra>",
+        x=x_values + x_values[::-1],
+        y=lower_bounds + [0] * len(lower_bounds),
+        fill="toself",
+        fillcolor=color,
+        opacity=0.5,
+        line={"color": "rgba(255,255,255,0)"},
         showlegend=showlegend,
+        name="RECS 2020 (95% CI lower bound)",
+        legendgroup="RECS_lower_bound",
+        hoverinfo="skip",
         row=row,
         col=col,
     )
@@ -671,12 +415,13 @@ def plot_monthly_sales(
         else:
             upper_bound_cols.append(value_col)
     
-    # Compute max including upper bounds of bands
+    # Calculate max for axis ranges
+    padding = 1.25
     df = data.with_columns(
         pl.max_horizontal(pl.col(upper_bound_cols + resstock_cols)).alias("_entity_max")
     )
     global_max = df["_entity_max"].max()
-    shared_range = [0, global_max * 1.05] if isinstance(global_max, (int, float)) else None
+    shared_range = [0, global_max * padding] if isinstance(global_max, (int, float)) else None
     
     # Create figure with all possible subplots
     subplot_titles = []
@@ -752,9 +497,9 @@ def plot_monthly_sales(
             row=row + 1,
             col=col + 1,
         )
-        
+        # Calculate per-entity range using monthly max
         entity_max = entity_df["_entity_max"].max()
-        per_range = [0, entity_max * 1.05] if isinstance(entity_max, (int, float)) else None
+        per_range = [0, entity_max * padding] if isinstance(entity_max, (int, float)) else None
         
         # Show y-axis label for first non-None plot in each row (always)
         is_first_in_row = col == 0 or (col > 0 and GEOGRAPHIC_STATE_LAYOUT[row][col - 1] is None)
@@ -810,18 +555,288 @@ def plot_monthly_sales(
     return fig
 
 
+def plot_annual_sales(
+    data: pl.DataFrame,
+    by: str,
+    quantity: str,
+    title: str,
+    y_label: str,
+    use_shared_axis: bool = True,
+) -> go.Figure:
+    """
+    Generic annual sales plotting function with geographic layout and size-proportional subplots.
+    Uses bar charts with one value per state, and error bars for RECS RSE.
+    
+    Args:
+        data: DataFrame with all columns (both reference and resstock)
+        by: Grouping column (e.g., 'state')
+        quantity: Quantity to plot (e.g., 'electricity', 'natural_gas')
+        title: Plot title
+        y_label: Y-axis label
+        use_shared_axis: Whether to use shared y-axis scaling
+    """
+    # Filter columns based on quantity
+    quantity_cols = [
+        col for col in data.columns
+        if quantity in col and col.endswith("_value")
+    ]
+    if not quantity_cols:
+        raise ValueError(f"No columns found containing '{quantity}'")
+    
+    # Separate reference and resstock columns
+    ref_cols = [col for col in quantity_cols if not col.startswith("resstock_")]
+    resstock_cols = [col for col in quantity_cols if col.startswith("resstock_")]
+    
+    # Check which RECS columns have RSE
+    ref_cols_with_rse = []
+    ref_rse_cols = []
+    ref_labels = []
+    for col in ref_cols:
+        rse_col = col.replace("_value", "_rse")
+        if rse_col in data.columns:
+            ref_cols_with_rse.append(col)
+            ref_rse_cols.append(rse_col)
+            ref_labels.append("RECS 2020 (estimate)")
+        else:
+            ref_cols_with_rse.append(col)
+            ref_rse_cols.append(None)
+            ref_labels.append("RECS 2020")
+    
+    ref_colors = [RECS_COLORS[i % len(RECS_COLORS)] for i in range(len(ref_cols))]
+    
+    # Get run names and colors for resstock columns
+    resstock_labels = [col.replace("resstock_", "").replace(f"_{quantity}_kwh", "") for col in resstock_cols]
+    resstock_colors = [_RUN_PALETTE[i % len(_RUN_PALETTE)] for i in range(len(resstock_labels))]
+    
+    # Order entities geographically based on their position in the layout
+    all_entities = data[by].unique().sort().to_list()
+    
+    # Build a dict mapping state to (row, col) for sorting
+    state_positions = {}
+    for row_idx, row in enumerate(GEOGRAPHIC_STATE_LAYOUT):
+        for col_idx, state in enumerate(row):
+            if state is not None:
+                state_positions[state] = (row_idx, col_idx)
+    
+    # Sort states by their geographic position (row, col)
+    entities = sorted(
+        [state for state in all_entities if state in state_positions],
+        key=lambda s: state_positions[s]
+    )
+    
+    # Add any states not in the geographic layout at the end
+    for state in all_entities:
+        if state not in entities:
+            entities.append(state)
+    
+    # Compute axis ranges - account for RSE error bars
+    # Calculate upper bounds for RECS columns with RSE (without 1.96 multiplier, that's applied in _add_annual_bar_with_rse)
+    upper_bound_cols = []
+    for value_col, rse_col in zip(ref_cols_with_rse, ref_rse_cols):
+        if rse_col is not None and rse_col in data.columns:
+            upper_col = f"{value_col}_upper"
+            df = data.with_columns(
+                (pl.col(value_col) + pl.col(value_col) * pl.col(rse_col) / 100.0).alias(upper_col)
+            )
+            upper_bound_cols.append(upper_col)
+            data = df
+        else:
+            upper_bound_cols.append(value_col)
+    
+    # Compute max including upper bounds of error bars
+    df = data.with_columns(
+        pl.max_horizontal(pl.col(quantity_cols)).alias("_entity_max")
+    )
+    global_max = df["_entity_max"].max()
+    shared_range = [0, global_max * 1.25] if isinstance(global_max, (int, float)) else None
+    
+    # Create figure with all possible subplots
+    subplot_titles = []
+    for row in range(GRID_ROWS):
+        for col in range(GRID_COLS):
+            if (
+                row < len(GEOGRAPHIC_STATE_LAYOUT)
+                and col < len(GEOGRAPHIC_STATE_LAYOUT[row])
+                and GEOGRAPHIC_STATE_LAYOUT[row][col] is not None
+            ):
+                subplot_titles.append(GEOGRAPHIC_STATE_LAYOUT[row][col])
+            else:
+                subplot_titles.append("")
+    
+    fig = make_subplots(
+        rows=GRID_ROWS,
+        cols=GRID_COLS,
+        subplot_titles=subplot_titles,
+        shared_yaxes=use_shared_axis,
+        horizontal_spacing=0.02,
+        vertical_spacing=0.1,
+    )
+
+    # Add traces for each state
+    for entity in entities:
+        if entity not in state_positions:
+            continue
+            
+        row, col = state_positions[entity]
+        entity_df = df.filter(pl.col(by) == entity)
+        
+        if entity_df.is_empty():
+            continue
+        
+        # Add ResStock bars first (so RECS appears last in legend)
+        for i, col_name in enumerate(resstock_cols):
+            x_value = entity_df[by].to_list()[0] if len(entity_df) > 0 else None
+            y_value = entity_df[col_name].to_list()[0] if len(entity_df) > 0 else None
+            if x_value is not None and y_value is not None:
+                fig.add_bar(
+                    x=[x_value],
+                    y=[y_value],
+                    name=resstock_labels[i],
+                    legendgroup=resstock_labels[i],
+                    marker={"color": resstock_colors[i]},
+                    hovertemplate="%{x}<br>" + f"{resstock_labels[i]}: " + "%{y:,.0f} kWh<extra></extra>",
+                    showlegend=(entity == entities[0]),
+                    row=row + 1,
+                    col=col + 1,
+                )
+        
+        # Add RECS bars (with RSE error bars) last (so they appear last in legend)
+        for i, (value_col, rse_col) in enumerate(zip(ref_cols_with_rse, ref_rse_cols)):
+            if rse_col is not None and rse_col in entity_df.columns:
+                _add_annual_bar_with_rse(
+                    fig, entity_df, by, value_col, rse_col,
+                    ref_labels[i], ref_colors[i],
+                    row + 1, col + 1, (entity == entities[0]), "kWh"
+                )
+            else:
+                # If no RSE, plot as regular bar without error
+                x_value = entity_df[by].to_list()[0] if len(entity_df) > 0 else None
+                y_value = entity_df[value_col].to_list()[0] if len(entity_df) > 0 else None
+                if x_value is not None and y_value is not None:
+                    fig.add_bar(
+                        x=[x_value],
+                        y=[y_value],
+                        name=ref_labels[i],
+                        legendgroup=ref_labels[i],
+                        marker={"color": ref_colors[i]},
+                        hovertemplate="%{x}<br>" + f"{ref_labels[i]}: " + "%{y:,.0f} kWh<extra></extra>",
+                        showlegend=(entity == entities[0]),
+                        row=row + 1,
+                        col=col + 1,
+                    )
+        
+        # Configure axes
+        entity_max = entity_df["_entity_max"].max()
+        per_range = [0, entity_max * 1.05] if isinstance(entity_max, (int, float)) else None
+        
+        # Show y-axis label for first non-None plot in each row
+        is_first_in_row = col == 0 or (col > 0 and GEOGRAPHIC_STATE_LAYOUT[row][col - 1] is None)
+        
+        # Show ticklabels based on use_shared_axis
+        show_ticks = not use_shared_axis or is_first_in_row
+        
+        fig.update_yaxes(
+            title_text="kWh" if is_first_in_row else "",
+            title_font={"size": 12},
+            range=(shared_range if (use_shared_axis and shared_range) else per_range),
+            tickfont={"size": 12},
+            automargin=True,
+            showticklabels=show_ticks,
+            row=row + 1,
+            col=col + 1,
+        )
+        
+        # X-axis: hide the state name since it's in the subplot title
+        fig.update_xaxes(
+            showticklabels=False,
+            tickfont={"size": 12},
+            automargin=True,
+            row=row + 1,
+            col=col + 1,
+        )
+        
+    # Hide axes for empty subplots
+    for row in range(GRID_ROWS):
+        for col in range(GRID_COLS):
+            # Check if this position has a state
+            has_state = (
+                row < len(GEOGRAPHIC_STATE_LAYOUT) and
+                col < len(GEOGRAPHIC_STATE_LAYOUT[row]) and
+                GEOGRAPHIC_STATE_LAYOUT[row][col] is not None
+            )
+            if not has_state:
+                fig.update_xaxes(visible=False, row=row + 1, col=col + 1)
+                fig.update_yaxes(visible=False, row=row + 1, col=col + 1)
+
+    fig.update_layout(
+        showlegend=True,
+        barmode="group",
+    )
+
+    fig = apply_theme(
+        fig,
+        title=title,
+        height=1080 * 0.8,
+        width=1920 * 0.8,
+        font={"size": 14},
+        legend={
+            "orientation": "v",
+            "x": 0.99,
+            "y": 0.01,
+            "xanchor": "right",
+            "yanchor": "bottom",
+            "font": {"size": 14},
+            "bgcolor": "rgba(255, 255, 255, 0.8)",
+        },
+        margin={"l": 60, "r": 60, "t": 100, "b": 60},
+    )
+    return fig
+
+
 def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     if plot_spec.resolution == "annual":
-        if plot_spec.quantity_type == QuantityType.stock_energy:
-            match plot_spec.quantity:
-                case None:
-                    return plot_annual_sales_comparison(data, data, by=plot_spec.aggregation_level)
-                case DataCol.ELECTRICITY_TOTAL:
-                    return plot_annual_sales_comparison_electricity(data, data, by=plot_spec.aggregation_level)
-                case DataCol.NATURAL_GAS_TOTAL:
-                    return plot_annual_sales_comparison_natural_gas(data, data, by=plot_spec.aggregation_level)
-        elif plot_spec.quantity_type == QuantityType.percent_difference and plot_spec.quantity is None:
-            return plot_annual_sales_comparison_percent_diff(data, data, by=plot_spec.aggregation_level)
+        if plot_spec.quantity is None:
+            raise ValueError("Annual plotting requires a quantity to be specified")
+        
+        quantity = plot_spec.quantity.value
+        
+        # Handle percent difference by computing it first
+        if plot_spec.quantity_type == QuantityType.percent_difference:
+            # Filter columns based on quantity
+            quantity_cols = [
+                col for col in data.columns
+                if quantity in col and col not in {plot_spec.aggregation_level}
+            ]
+            
+            # Compute percent difference (reuse monthly function, works for annual too)
+            data, pct_cols = _compute_monthly_percent_diff(data, quantity_cols)
+            
+            # Create a temporary dataframe with only percent columns for plotting
+            keep_cols = [plot_spec.aggregation_level] + pct_cols
+            plot_data = data.select(keep_cols)
+            
+            # Rename percent columns to remove _pct suffix for plotting
+            rename_map = {col: col.replace("_pct", "") for col in pct_cols}
+            plot_data = plot_data.rename(rename_map)
+            
+            return plot_annual_sales(
+                plot_data,
+                by=plot_spec.aggregation_level,
+                quantity=quantity,
+                title=f"Annual {quantity} % Difference by {plot_spec.aggregation_level.title()}",
+                y_label="% Difference",
+                use_shared_axis=True,
+            )
+        else:
+            # Stock energy case
+            return plot_annual_sales(
+                data,
+                by=plot_spec.aggregation_level,
+                quantity=quantity,
+                title=f"Annual {quantity} by {plot_spec.aggregation_level.title()}",
+                y_label="kWh",
+                use_shared_axis=True,
+            )
     
     elif plot_spec.resolution == "monthly":
         if plot_spec.quantity is None:

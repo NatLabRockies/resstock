@@ -16,8 +16,8 @@ def add_enduse_columns(df: pl.DataFrame) -> pl.DataFrame:
             )
         else:
             new_columns.append(
-                pl.col(recs_column["column_name"]) *
-                pl.lit(recs_column["factor"]).alias(output_col)
+                (pl.col(recs_column["column_name"]) *
+                pl.lit(recs_column["factor"])).alias(output_col)
             )
     return df.with_columns(new_columns)
 

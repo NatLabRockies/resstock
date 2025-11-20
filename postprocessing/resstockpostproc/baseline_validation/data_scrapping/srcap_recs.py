@@ -148,7 +148,7 @@ def process_microdata() -> pl.DataFrame:
     microdata_filepath = PROCESSED_DIR / MICRODATA_FILENAME
     df_with_characteristics.write_csv(microdata_filepath)
     print(f"Saved processed microdata to {microdata_filepath}")
-    return df_with_enduse
+    return df_with_characteristics
 
 
 def main():

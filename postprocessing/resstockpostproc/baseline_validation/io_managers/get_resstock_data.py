@@ -90,7 +90,7 @@ def get_annual_all(
     for data_source in workflow.data_sources:
         df = get_annual(data_source, by, occupied_only=occupied_only)
         df = df.rename({col: f"{data_source.name}_{col}" for col in df.columns if col != by})
-        final_df = df if final_df is None else final_df.join(df, on=[by], how="outer")
+        final_df = df if final_df is None else final_df.join(df, on=[by], how="outer", coalesce=True)
     assert final_df is not None
     return final_df
 
@@ -105,32 +105,41 @@ def get_annual(
             config=data_source,
             skip_reports=True,
         )
+    if by == "eiaid":
+       return _get_annual_by_eiaid(bsq, data_source, occupied_only)
+    return _get_annual_by_char(bsq, by, data_source, occupied_only)
+
+
+def _get_annual_by_char(bsq, by: str, data_source: DataSourceConfig, occupied_only: bool) -> pl.DataFrame:
     char_cols = get_db_characteristics_colnames(data_source.db_schema)
     enduses = _get_db_enduses(data_source.db_schema)
-    if by == "eiaid":
-       return _get_annual_by_eiaid(bsq, char_cols, enduses, occupied_only)
-    return _get_annual_by_state(bsq, char_cols, enduses, occupied_only)
-
-
-def _get_annual_by_state(bsq, char_cols, enduses, occupied_only):
-    result_pd = bsq.query(enduses=tuple(enduses.keys()),
-                              group_by=[char_cols.STATE, char_cols.VACANCY])
-    if occupied_only:
-        result_pd = result_pd[result_pd[char_cols.VACANCY].str.lower() == "occupied"]
-    resstock_sales = pl.from_pandas(result_pd).rename(enduses).group_by("state").sum()
+    result_pd = bsq.query(enduses=enduses,
+                          group_by=[by, char_cols.VACANCY])
     bsq.save_cache()
-    return resstock_sales
+    df = pl.from_pandas(result_pd)
+    char_cols = get_db_characteristics_colnames(data_source.db_schema)
+    enduses = _get_db_enduses(data_source.db_schema)
+    if occupied_only:
+        col = _resolve_characteristic_column_name(result_pd, char_cols.VACANCY)
+        df = df.filter(pl.col(col).str.to_lowercase() == "occupied")
+    df, enduse_datacols = _transform_columns(df, data_source.db_schema)
+    group_cols = [by]
+    agg_exprs = [pl.col(e).sum().alias(e) for e in enduse_datacols]
+    return df.group_by(group_cols).agg(agg_exprs)
 
 
-def _get_annual_by_eiaid(bsq, char_col: DBCharCol, enduses, occupied_only):
+def _get_annual_by_eiaid(bsq, data_source, occupied_only):
+    char_cols = get_db_characteristics_colnames(data_source.db_schema)
+    enduses = _get_db_enduses(data_source.db_schema)
+    enduses = _get_db_enduses(data_source.db_schema)
     result_pd = bsq.utility.aggregate_annual_by_eiaid(
-            enduses=tuple(enduses.keys()),
-            group_by=(char_col.VACANCY,)
+            enduses=enduses,
+            group_by=(char_cols.VACANCY,)
         )
     resstock_sales = pl.from_pandas(result_pd)
     resstock_sales = resstock_sales.with_columns(pl.col("eiaid").cast(pl.Int64))
     if occupied_only:
-        col = _resolve_characteristic_column_name(resstock_sales, char_col.VACANCY)
+        col = _resolve_characteristic_column_name(resstock_sales, char_cols.VACANCY)
         resstock_sales = resstock_sales.filter(pl.col(col).str.to_lowercase() == "occupied")
     resstock_sales = resstock_sales.rename(enduses).group_by("eiaid").sum()
     bsq.save_cache()

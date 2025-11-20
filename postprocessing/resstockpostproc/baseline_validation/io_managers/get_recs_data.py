@@ -11,7 +11,8 @@ from resstockpostproc.shared_utils.mapping import NUM2MONTH
 from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
 from . import truth_data_paths as s3_paths
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
-from resstockpostproc.baseline_validation.schema.recs_chars_mapping import RECS_CHARS_MAPPING
+from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
+from resstockpostproc.baseline_validation.data_processing.recs_rse import calculate_rse
 from collections.abc import Sequence
 from typing import Literal
 from resstockpostproc.baseline_validation.utils import KBTU2KWH
@@ -24,15 +25,59 @@ def get_annual_all(
     if year != 2020:
         raise ValueError("RECS data is only available for the year 2020.")
     mdf =  get_df_from_s3(s3_paths.RECS_2020_microdata, local_data_dir)
-    enduse_cols = tuple(RECS_CHARS_MAPPING.keys())
+    enduse_cols = tuple(RECS_ENDUSE_MAP.keys())
+    
     if by:
+        # Calculate value columns
         result_df = mdf.group_by(by).agg(
-            *(pl.col(col).sum().alias(col) for col in enduse_cols)
+            *((pl.col(col)*pl.col("NWEIGHT")).sum().alias(f"recs_2020_{col}_value") for col in enduse_cols)
         )
+        
+        # Calculate RSE columns by group
+        # Convert to pandas for RSE calculation
+        mdf_pd = mdf.to_pandas()
+        rse_results = []
+        
+        for group_value in mdf.select(by).unique().to_series():
+            group_data = mdf_pd[mdf_pd[by] == group_value]
+            rse_row = {by: group_value}
+            
+            for col in enduse_cols:
+                try:
+                    rse = calculate_rse(group_data, col, stat_type="total")
+                    rse_row[f"recs_2020_{col}_rse"] = rse
+                except Exception:
+                    # If RSE calculation fails, set to None
+                    rse_row[f"recs_2020_{col}_rse"] = None
+            
+            rse_results.append(rse_row)
+        
+        # Convert RSE results to polars and join with value results
+        rse_df = pl.DataFrame(rse_results)
+        result_df = result_df.join(rse_df, on=by, how="left")
     else:
+        # Calculate value columns
         result_df = mdf.select(
-            *(pl.col(col).sum().alias(col) for col in enduse_cols)
+            *((pl.col(col)*pl.col("NWEIGHT")).sum().alias(f"recs_2020_{col}_value") for col in enduse_cols)
         )
+        
+        # Calculate RSE columns
+        # Convert to pandas for RSE calculation
+        mdf_pd = mdf.to_pandas()
+        rse_dict = {}
+        
+        for col in enduse_cols:
+            try:
+                rse = calculate_rse(mdf_pd, col, stat_type="total")
+                rse_dict[f"recs_2020_{col}_rse"] = [rse]
+            except Exception:
+                # If RSE calculation fails, set to None
+                rse_dict[f"recs_2020_{col}_rse"] = [None]
+        
+        # Add RSE columns to result
+        rse_df = pl.DataFrame(rse_dict)
+        result_df = pl.concat([result_df, rse_df], how="horizontal")
+    
     return result_df
 
 
