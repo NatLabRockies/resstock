@@ -558,7 +558,7 @@ references:
       - Misc Pool Heater|Natural Gas
       - Misc Hot Tub Spa|Natural Gas
 
-  room_ac_ceer_16_20%_conditioned_apply_logic: &room_ac_ceer_16_20%_conditioned_apply_logic
+  room_ac_ceer_16_20_percent_conditioned_apply_logic: &room_ac_ceer_16_20_percent_conditioned_apply_logic
   # TODO: need to add in HVAC Cooling Efficiency|Room AC, CEER 16.0 somewhere
     option: HVAC Cooling Partial Space Conditioning|20% Conditioned
     apply_logic:
@@ -569,7 +569,7 @@ references:
     - or:
       - Geometry Floor Area Bin|4000+
   
-  room_ac_ceer_16_40%_conditioned_apply_logic: &room_ac_ceer_16_40%_conditioned_apply_logic
+  room_ac_ceer_16_40_percent_conditioned_apply_logic: &room_ac_ceer_16_40_percent_conditioned_apply_logic
      # TODO: need to add in HVAC Cooling Efficiency|Room AC, CEER 16.0 somewhere
     option: HVAC Cooling Partial Space Conditioning|40% Conditioned
     apply_logic:
@@ -581,7 +581,7 @@ references:
       - Geometry Floor Area Bin|2500-3999
       - Geometry Floor Area Bin|1500-2499
 
-  room_ac_ceer_16_60%_conditioned_apply_logic: &room_ac_ceer_16_60%_conditioned_apply_logic
+  room_ac_ceer_16_60_percent_conditioned_apply_logic: &room_ac_ceer_16_60_percent_conditioned_apply_logic
      # TODO: need to add in HVAC Cooling Efficiency|Room AC, CEER 16.0 somewhere
     option: HVAC Cooling Partial Space Conditioning|60% Conditioned
     apply_logic:
@@ -602,7 +602,7 @@ references:
       - HVAC Cooling Efficiency|Room AC, CEER 11.0
       - HVAC Cooling Efficiency|Room AC, CEER 11.9
   
-  natural_gas_boiler_84%_2026_reference_case_apply_logic: &natural_gas_boiler_84%_2026_reference_case_apply_logic
+  natural_gas_boiler_84_percent_2026_reference_case_apply_logic: &natural_gas_boiler_84_percent_2026_reference_case_apply_logic
     option: HVAC Heating Efficiency|Fuel Boiler, 84% AFUE
     apply_logic:
     - or:
@@ -612,7 +612,7 @@ references:
     - or:
       - Heating Fuel|Natural Gas
   
-  fuel_oil_boiler_86%_2026_reference_case_apply_logic: &fuel_oil_boiler_86%_2026_reference_case_apply_logic
+  fuel_oil_boiler_86_percent_2026_reference_case_apply_logic: &fuel_oil_boiler_86_percent_2026_reference_case_apply_logic
     option: HVAC Heating Efficiency|Fuel Boiler, 86% AFUE
     apply_logic:
     - or:
@@ -622,7 +622,7 @@ references:
     - or:
       - Heating Fuel|Fuel Oil
 
-  natural_gas_wall_furnace_75%_2026_reference_case_apply_logic: &natural_gas_wall_furnace_75%_2026_reference_case_apply_logic
+  natural_gas_wall_furnace_75_percent_2026_reference_case_apply_logic: &natural_gas_wall_furnace_75_percent_2026_reference_case_apply_logic
     option: HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 75% AFUE
     apply_logic:
     - or:
@@ -782,9 +782,9 @@ upgrades:
   - upgrade_name: Reference Non-ducted Space Heating and Air Conditioning Circa 2026
     package_apply_logic:
       and:
-      - *natural_gas_boiler_84%_2026_reference_case_apply_logic
-      - *fuel_oil_boiler_86%_2026_reference_case_apply_logic
-      - *natural_gas_wall_furnace_75%_2026_reference_case_apply_logic
+      - *natural_gas_boiler_84_percent_2026_reference_case_apply_logic
+      - *fuel_oil_boiler_86_percent_2026_reference_case_apply_logic
+      - *natural_gas_wall_furnace_75_percent_2026_reference_case_apply_logic
       - *room_ac_ceer_16_2026_reference_case_apply_logic
 
   ### -- HVAC: Air Source Heat Pumps -- ###
@@ -865,9 +865,9 @@ upgrades:
   - upgrade_name: Room AC
     package_apply_logic:
     - and:
-        - *room_ac_ceer_16_20%_conditioned_apply_logic
-        - *room_ac_ceer_16_40%_conditioned_apply_logic
-        - *room_ac_ceer_16_60%_conditioned_apply_logic
+        - *room_ac_ceer_16_20_percent_conditioned_apply_logic
+        - *room_ac_ceer_16_40_percent_conditioned_apply_logic
+        - *room_ac_ceer_16_60_percent_conditioned_apply_logic
     options:
       - option: HVAC Cooling Efficiency|Room AC, CEER 16.0
       
