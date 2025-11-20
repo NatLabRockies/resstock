@@ -3,7 +3,6 @@
 require 'openstudio'
 require_relative '../../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/minitest_helper'
 require_relative '../../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/hpxml'
-require_relative '../measure'
 require_relative '../../ResStockArgumentsPostHPXML/measure'
 
 class ApplyUpgradeTest < Minitest::Test
@@ -479,9 +478,12 @@ class ApplyUpgradeTest < Minitest::Test
                                 primary_cooling_system: true)
     end
 
+    # Create instance of the measure
+    measure = ResStockArgumentsPostHPXML.new
+
     hpxml_existing.buildings.each do |hpxml_bldg_existing|
       # Check for correct capacity and autosizing factor values
-      ResStockArgumentsPostHPXML.set_hvac_systems(hpxml_bldg_existing, hpxml_bldg)
+      measure.set_hvac_systems(hpxml_bldg_existing, hpxml_bldg)
 
       actual_values = {}
       if hpxml_bldg.heating_systems.count { |hs| hs.primary_system } > 0

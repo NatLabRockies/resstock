@@ -704,7 +704,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     return schedule_file
   end
 
-  def self.set_hvac_systems(hpxml_bldg_existing, hpxml_bldg)
+  def set_hvac_systems(hpxml_bldg_existing, hpxml_bldg)
     return if hpxml_bldg_existing.nil?
 
     heating_system_existing = hpxml_bldg_existing.heating_systems.find { |hs| hs.primary_system }
