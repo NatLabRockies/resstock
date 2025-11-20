@@ -2912,9 +2912,7 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
     # HPXML Battery #
     # ------------- #
 
-    if ['base-pv-battery-lifetime-model.xml'].include? hpxml_file
-      hpxml_bldg.batteries[0].lifetime_model = HPXML::BatteryLifetimeModelKandlerSmith
-    elsif ['base-pv-battery-ah.xml'].include? hpxml_file
+    if ['base-pv-battery-ah.xml'].include? hpxml_file
       default_values = Defaults.get_battery_values(false)
       hpxml_bldg.batteries[0].nominal_capacity_ah = Battery.get_Ah_from_kWh(hpxml_bldg.batteries[0].nominal_capacity_kwh,
                                                                             default_values[:nominal_voltage])
