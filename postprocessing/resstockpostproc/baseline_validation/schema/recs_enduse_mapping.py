@@ -218,3 +218,9 @@ RECS_ENDUSE_MAP: dict[DataCol, RECSField | tuple[RECSField, ...]] = {
     },
 }
 
+
+if __name__ == "__main__":
+    electricity_enduses = [
+        col.value for col in DataCol if col.value.startswith("electricity")
+    ]
+    print(f"List of RECS end-use mappings ({len(electricity_enduses)}):")

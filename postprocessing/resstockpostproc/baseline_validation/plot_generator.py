@@ -21,6 +21,7 @@ from resstockpostproc.baseline_validation.schema.workflow_schema import PlotType
 from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, FileType, QuantityType, TruthSource
 from resstockpostproc.baseline_validation.utils import ensure_directory
 from resstockpostproc.baseline_validation.data_processing.data_processor import get_plot_data
+from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 
 def generate_eia_plots() -> None:
     """Generate EIA validation plots."""
@@ -59,12 +60,11 @@ def generate_eia_plots() -> None:
 def generate_recs_plots() -> None:
     """Generate RECS validation plots."""
     print("Generating RECS validation plots...")
-    quantities = [
+    monthly_quantities = [DataCol.ELECTRICITY_TOTAL,
                   DataCol.ELECTRICITY_WATER_HEATING,
                   DataCol.NATURAL_GAS_WATER_HEATING,
                   DataCol.NATURAL_GAS_TOTAL,
                   DataCol.NATURAL_GAS_SPACE_HEATING,
-                  DataCol.ELECTRICITY_TOTAL,
                   DataCol.ELECTRICITY_SPACE_HEATING,
                   DataCol.ELECTRICITY_SPACE_COOLING,
                   ]
@@ -73,15 +73,16 @@ def generate_recs_plots() -> None:
     resolutions = ('monthly', 'annual')
 
     # quantities = [DBCol.ELECTRICITY_TOTAL]
+    quantities = monthly_quantities
+    quantities.extend(q for q in RECS_ENDUSE_MAP if q not in monthly_quantities)
+    # quantities = [DataCol.ELECTRICITY_EV_CHARGING]
     agg_levels = ["state"]
-    quantity_types = [QuantityType.stock_energy]
+    quantity_types = [QuantityType.stock_energy, QuantityType.per_unit_energy,
+                      QuantityType.per_unit_energy_distribution]
     resolutions = ("annual", "monthly")
-    for quantity, agg_level, quantity_type, resolution in product(quantities, agg_levels, quantity_types, resolutions):
-        print(f"  Processing {agg_level} level...")
-        if resolution != "monthly" and quantity_type == QuantityType.percent_difference and quantity is not None:
-            continue  # Percent difference plot is done with both together
-        if resolution == "monthly" and quantity is None:
-            continue  # Monthly plots require a specific quantity
+    for quantity, agg_level, resolution, quantity_type in product(quantities, agg_levels, resolutions, quantity_types):
+        if resolution == "monthly" and quantity_type == QuantityType.per_unit_energy_distribution:
+            continue
         plot_spec = PlotSpec(
             truth_source=TruthSource.recs,
             resolution=resolution,
@@ -93,14 +94,14 @@ def generate_recs_plots() -> None:
             
         )
         data = get_plot_data(plot_spec)
-        data.write_parquet(Path("debug.parquet"))
+        # data.write_parquet(Path("debug.parquet"))
         # data = pl.read_parquet(Path("debug.parquet"))
         plot_func = get_plotting_function(plot_spec.truth_source)
         fig = plot_func(data, plot_spec)
         fig.show(renderer="browser")
         # save_figure(fig, plot_spec)
 
-    print("EIA plots complete!")
+    print("RECS plots complete!")
 
 # def generate_lrd_plots(
 #     workflow: WorkflowConfig,

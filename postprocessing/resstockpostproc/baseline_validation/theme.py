@@ -24,7 +24,7 @@ DEFAULT_LAYOUT = dict(
 )
 
 DEFAULT_XAXIS = dict(
-    showgrid=True,
+    showgrid=False,
     gridcolor="#E1E1E1",
     gridwidth=1,
     zeroline=True,
@@ -37,7 +37,7 @@ DEFAULT_XAXIS = dict(
 )
 
 DEFAULT_YAXIS = dict(
-    showgrid=True,
+    showgrid=False,
     gridcolor="#E1E1E1",
     gridwidth=1,
     zeroline=True,

@@ -61,49 +61,94 @@ def _download_raw_microdata() -> Path:
 
 def _process_recs_monthly_excel_sheet(filepath: Path, sheet_name: str) -> pl.DataFrame:
     df = pl.read_excel(filepath, sheet_name=sheet_name, has_header=False)
+    
+    # Find key row indices
+    all_homes_idx = None
+    census_region_idx = None
     state_row_idx = None
+    
     for i in range(df.height):
         first_col = df[i, 0]
-        if first_col is not None and str(first_col).strip() == "States":
-            state_row_idx = i + 1  # Data starts in the next row
-            break
-    if state_row_idx is None:
-        raise ValueError(f"Could not find 'States' header in {sheet_name}")
-
-    state_data = []
+        if first_col is not None:
+            first_col_str = str(first_col).strip()
+            if first_col_str == "All homes":
+                all_homes_idx = i
+            elif first_col_str == "Census region and division":
+                census_region_idx = i + 1  # Data starts in the next row
+            elif first_col_str == "States":
+                state_row_idx = i + 1  # Data starts in the next row
+                break
+    
+    if all_homes_idx is None or census_region_idx is None or state_row_idx is None:
+        raise ValueError(f"Could not find required headers in {sheet_name}")
+    
+    def get_float(recs_data):
+        if recs_data == "*":
+            return 0.0
+        try:
+            return float(recs_data)
+        except ValueError:
+            return None
+    
+    all_data = []
+    
+    # Extract "All homes" (US Total)
+    i = all_homes_idx
+    geography_name = "US Total"
+    customers = get_float(df[i, 1]) if df.width > 1 else None
+    monthly_values = [get_float(df[i, j]) for j in range(3, min(15, df.width))]
+    for month_idx, value in enumerate(monthly_values):
+        all_data.append({
+            "geography": geography_name,
+            "month": month_idx + 1,
+            "value": value,
+            "customers": customers,
+            "resolution": 0.1
+        })
+    
+    # Extract Census regions/divisions
+    for i in range(census_region_idx, state_row_idx - 1):
+        first_col = df[i, 0]
+        if first_col is None or str(first_col).strip() in ["", "nan", "None"]:
+            continue
+        geography_name = str(first_col).strip()
+        customers = get_float(df[i, 1]) if df.width > 1 else None
+        monthly_values = [get_float(df[i, j]) for j in range(3, min(15, df.width))]
+        for month_idx, value in enumerate(monthly_values):
+            all_data.append({
+                "geography": geography_name,
+                "month": month_idx + 1,
+                "value": value,
+                "customers": customers,
+                "resolution": 0.1
+            })
+    
+    # Extract States
     rows_processed = 0
     for i in range(state_row_idx, df.height):
         first_col = df[i, 0]
         if first_col is None or str(first_col).strip() in ["", "nan", "None"]:
             continue
         state_name = str(first_col).strip()
-        customers = float(df[i, 1]) if df.width > 1 else None
-        def get_float(recs_data):
-            if recs_data == "*":
-                return 0.0
-            try:
-                return float(recs_data)
-            except ValueError:
-                return None
+        customers = get_float(df[i, 1]) if df.width > 1 else None
         monthly_values = [get_float(df[i, j]) for j in range(3, min(15, df.width))]
         state_abbrev = STATE2ABBR.get(state_name, state_name)
         for month_idx, value in enumerate(monthly_values):
-            state_data.append(
-                {
-                    "state": state_abbrev,
-                    "month": month_idx + 1,
-                    "value": value,
-                    "customers": customers,
-                    "resolution": 0.1
-                }
-            )
+            all_data.append({
+                "geography": state_abbrev,
+                "month": month_idx + 1,
+                "value": value,
+                "customers": customers,
+                "resolution": 0.1
+            })
         rows_processed += 1
         if rows_processed >= 51:
             break
-    else:
+    
+    if rows_processed < 51:
         raise ValueError(f"Warning: Expected 51 states but found {rows_processed} in {sheet_name}")
 
-    return pl.DataFrame(state_data)
+    return pl.DataFrame(all_data)
 
 
 def _extract_monthly_data_from_excel(filepath: Path) -> pl.DataFrame:
@@ -112,8 +157,8 @@ def _extract_monthly_data_from_excel(filepath: Path) -> pl.DataFrame:
                                      pl.col("resolution") * 1e9 * KBTU2KWH,
                                      pl.col("customers") * 1e6)
     rse_df = _process_recs_monthly_excel_sheet(filepath, "rse")
-    rse_df = rse_df.select(["state", "month", "value"]).rename({"value": "rse"})
-    monthly_df = value_df.join(rse_df, on=["state", "month"], how="left")
+    rse_df = rse_df.select(["geography", "month", "value"]).rename({"value": "rse"})
+    monthly_df = value_df.join(rse_df, on=["geography", "month"], how="left")
     return monthly_df
         
 

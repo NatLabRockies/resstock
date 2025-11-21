@@ -1,6 +1,8 @@
 import polars as pl
+import pandas as pd
 
 from resstockpostproc.baseline_validation.data_processing.data_processor import scale_to_eia_customers
+from .utils import add_us_total
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow, DataSourceConfig
 from resstockpostproc.shared_utils.db_column_names import get_db_enduse_colnames_map, get_db_characteristics_colnames
 from buildstock_query import BuildStockQuery
@@ -15,10 +17,16 @@ def get_monthly_all(
     by: Literal['state', 'eiaid'] = "state",
     restrict_list: Sequence[str] | None = None,
     occupied_only: bool = False,
+    aggregation: Literal["sum", "avg"] = "sum"
 ) -> pl.DataFrame:
     final_df = None
     for data_source in workflow.data_sources:
         df = get_monthly(data_source, by, restrict_list, occupied_only)
+        if aggregation == "avg":
+            value_cols = [col for col in df.columns if col.endswith("_value")]
+            df = df.with_columns([
+                (pl.col(col) / pl.col("units_count")).alias(col) for col in value_cols
+            ])
         df = df.rename({col: f"{data_source.name}_{col}" for col in df.columns if col not in {by, "month"}})
         final_df = df if final_df is None else final_df.join(df, on=[by, "month"], how="outer", coalesce=True)
     assert final_df is not None
@@ -68,27 +76,26 @@ def get_monthly(
     if occupied_only:
         col = _resolve_characteristic_column_name(result, db_char_col.VACANCY)
         result = result.filter(pl.col(col).str.to_lowercase() == "occupied")
-    result, enduse_datacols = _transform_columns(result, data_source.db_schema)
+    result = _transform_columns(result, data_source.db_schema)
     ts_data = result.with_columns(pl.col(db_char_col.TIMESTAMP).dt.month().alias("month"))
     ts_data = ts_data.with_columns(pl.col("month").replace_strict(NUM2MONTH, default=None))
-    group_cols = [by, "month"]
-    agg_exprs = [pl.col(e).sum().alias(e) for e in enduse_datacols]
-
-    if "sample_count" in ts_data.columns:
-        agg_exprs.append(pl.col("sample_count").first().alias("sample_count"))
-    if "units_count" in ts_data.columns:
-        agg_exprs.append(pl.col("units_count").first().alias("units_count"))
-
-    return ts_data.group_by(group_cols).agg(agg_exprs)
+    result = add_us_total(ts_data, by=by, group_cols=["month"])
+    return result
 
 
 def get_annual_all(
     by: Literal['state', 'eiaid'] = "state",
     occupied_only: bool = False,
+    aggregation: Literal["sum", "avg"] = "sum"
 ) -> pl.DataFrame:
     final_df = None
     for data_source in workflow.data_sources:
         df = get_annual(data_source, by, occupied_only=occupied_only)
+        if aggregation == "avg":
+            value_cols = [col for col in df.columns if col.endswith("_value")]
+            df = df.with_columns([
+                (pl.col(col) / pl.col("units_count")).alias(col) for col in value_cols
+            ])
         df = df.rename({col: f"{data_source.name}_{col}" for col in df.columns if col != by})
         final_df = df if final_df is None else final_df.join(df, on=[by], how="outer", coalesce=True)
     assert final_df is not None
@@ -110,22 +117,32 @@ def get_annual(
     return _get_annual_by_char(bsq, by, data_source, occupied_only)
 
 
-def _get_annual_by_char(bsq, by: str, data_source: DataSourceConfig, occupied_only: bool) -> pl.DataFrame:
+def _get_annual_by_char(bsq: BuildStockQuery, by: str, data_source: DataSourceConfig, occupied_only: bool) -> pl.DataFrame:
     char_cols = get_db_characteristics_colnames(data_source.db_schema)
     enduses = _get_db_enduses(data_source.db_schema)
     result_pd = bsq.query(enduses=enduses,
+                          get_nonzero_count=True,
+                          get_quartiles=True,
                           group_by=[by, char_cols.VACANCY])
+    result_us_total = bsq.query(enduses=enduses,
+                                get_nonzero_count=True,
+                                get_quartiles=True,
+                                group_by=[char_cols.VACANCY])
     bsq.save_cache()
-    df = pl.from_pandas(result_pd)
+    result_us_total["state"] = "US Total"
+    result_us_total = result_us_total[result_pd.columns]
+    result_df = pd.concat([result_pd, result_us_total], ignore_index=True)
+    
+    df = pl.from_pandas(result_df)
+    us_df = pl.from_pandas(result_us_total)
     char_cols = get_db_characteristics_colnames(data_source.db_schema)
     enduses = _get_db_enduses(data_source.db_schema)
     if occupied_only:
-        col = _resolve_characteristic_column_name(result_pd, char_cols.VACANCY)
+        col = _resolve_characteristic_column_name(df, char_cols.VACANCY)
         df = df.filter(pl.col(col).str.to_lowercase() == "occupied")
-    df, enduse_datacols = _transform_columns(df, data_source.db_schema)
-    group_cols = [by]
-    agg_exprs = [pl.col(e).sum().alias(e) for e in enduse_datacols]
-    return df.group_by(group_cols).agg(agg_exprs)
+        us_df = us_df.filter(pl.col(col).str.to_lowercase() == "occupied")
+    df = _transform_columns(df, data_source.db_schema)
+    return df
 
 
 def _get_annual_by_eiaid(bsq, data_source, occupied_only):
@@ -192,31 +209,84 @@ def _get_db_enduses(db_schema: DBSchema) -> tuple[str, ...]:
     return tuple(enduses)
 
 
-def _transform_columns(df: pl.DataFrame, db_schema: DBSchema) -> tuple[pl.DataFrame, Sequence[str]]:
+def _transform_columns(df: pl.DataFrame, db_schema: DBSchema) -> pl.DataFrame:
     db_enduse_colmap = get_db_enduse_colnames_map(db_schema)
     new_cols_expr = []
     new_cols = []
     to_drop_cols = []
     for new_name, db_name in db_enduse_colmap.items():
-        df_new_name = new_name + "_value"
+        value_col_name = new_name + "_value"
+        customers_col_name = new_name + "_customers"
+        quartiles_col_name = new_name + "_quartiles"
+        
         if isinstance(db_name, tuple):
             new_cols_expr.append(
-                pl.sum_horizontal([pl.col(col) for col in db_name]).alias(df_new_name)
+                pl.sum_horizontal([pl.col(col) for col in db_name]).alias(value_col_name)
             )
+            # Check if nonzero_units_count columns exist
+            nonzero_cols = [col + "__nonzero_units_count" for col in db_name]
+            if all(ncol in df.columns for ncol in nonzero_cols):
+                new_cols_expr.append(
+                    pl.max_horizontal([pl.col(ncol) for ncol in nonzero_cols]).alias(customers_col_name)
+                )
+            else:
+                new_cols_expr.append(
+                    pl.lit(0).alias(customers_col_name)
+                )
+            # For quartiles with tuple db_name, sum the quartiles (inaccurate but for now)
+            # Check if quartiles columns exist
+            quartiles_cols = [col + "__upgrade__quartiles" for col in db_name]
+            if all(qcol in df.columns for qcol in quartiles_cols):
+                # Parse string arrays, sum them, and convert back to string
+                new_cols_expr.append(
+                    (pl.lit("[") + pl.sum_horizontal([
+                        pl.col(qcol).str.strip_chars("[]").str.split(", ").list.eval(pl.element().cast(pl.Float64))
+                        for qcol in quartiles_cols
+                    ]).list.eval(pl.element().cast(pl.Utf8)).list.join(", ") + pl.lit("]")).alias(quartiles_col_name)
+                )
             to_drop_cols.extend(db_name)
         elif db_name is not None:
             new_cols_expr.append(
-                pl.col(db_name).alias(df_new_name)
+                pl.col(db_name).alias(value_col_name)
             )
+            # Check if nonzero_units_count column exists
+            nonzero_col = db_name + "__nonzero_units_count"
+            if nonzero_col in df.columns:
+                new_cols_expr.append(
+                    pl.col(nonzero_col).alias(customers_col_name)
+                )
+            else:
+                new_cols_expr.append(
+                    pl.lit(0).alias(customers_col_name)
+                )
+            # For single db_name, directly rename quartiles column if it exists
+            quartiles_db_col = db_name + "__upgrade__quartiles"
+            if quartiles_db_col in df.columns:
+                new_cols_expr.append(
+                    pl.col(quartiles_db_col).alias(quartiles_col_name)
+                )
             to_drop_cols.append(db_name)
         else:
             new_cols_expr.append(
-                pl.lit(0).alias(df_new_name)
+                pl.lit(0).alias(value_col_name)
             )
-        new_cols.append(df_new_name)
+            new_cols_expr.append(
+                pl.lit(0).alias(customers_col_name)
+            )
+        new_cols.append(value_col_name)
+        new_cols.append(customers_col_name)
+        # Add quartiles column to new_cols if it exists
+        if isinstance(db_name, tuple):
+            quartiles_cols = [col + "__upgrade__quartiles" for col in db_name]
+            if all(qcol in df.columns for qcol in quartiles_cols):
+                new_cols.append(quartiles_col_name)
+        elif db_name is not None:
+            quartiles_db_col = db_name + "__upgrade__quartiles"
+            if quartiles_db_col in df.columns:
+                new_cols.append(quartiles_col_name)
     df = df.with_columns(new_cols_expr)
     df = df.drop(to_drop_cols)
-    return df, new_cols
+    return df
 
 
 def _resolve_characteristic_column_name(df: pl.DataFrame, column_name: str) -> str:

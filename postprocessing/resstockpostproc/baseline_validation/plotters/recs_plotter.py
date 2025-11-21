@@ -146,6 +146,130 @@ def _add_annual_bar_with_rse(
     )
 
 
+def _add_annual_box_with_quartiles(
+    fig: go.Figure,
+    df: pl.DataFrame,
+    x_col: str,
+    quartiles_col: str,
+    label: str,
+    color: str,
+    row: int,
+    col: int,
+    showlegend: bool,
+    y_unit: str = "kWh",
+    mean_col: str = None,
+) -> None:
+    """
+    Add a box plot using pre-calculated quartiles.
+    
+    Args:
+        fig: Plotly figure object
+        df: DataFrame containing the data (should have single annual value per entity)
+        x_col: Column name for x-axis (the entity/state) - not used, kept for signature compatibility
+        quartiles_col: Column name for the quartiles column (string array format)
+        label: Label for the box trace
+        color: Color for the box
+        row: Subplot row position
+        col: Subplot column position
+        showlegend: Whether to show legend
+        y_unit: Unit label for y-axis
+        mean_col: Optional column name for the mean value
+    """
+    # For annual data, we expect one row per entity (state)
+    quartiles_str = df[quartiles_col].to_list()[0] if quartiles_col in df.columns and len(df) > 0 else None
+    
+    if quartiles_str is None:
+        return
+    
+    # Parse quartiles string: '[0.0, 0.0, 0.0, 7.02, 81.77, 81.77, 97.34, 109.02, 109.02]'
+    try:
+        import ast
+        quartiles = ast.literal_eval(quartiles_str)
+        if len(quartiles) != 9:
+            return
+        
+        # Quartiles represent: [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
+        min_val, q02, q10, q25, median, q75, q90, q98, max_val = quartiles
+        min_val = q02
+        # max_val = q98
+        
+        # Get mean value if available
+        mean_val = None
+        if mean_col and mean_col in df.columns:
+            mean_val = df[mean_col].to_list()[0] if len(df) > 0 else None
+        
+        # Add box plot using custom box specifications
+        # Use label as x value so boxes are grouped properly but span the subplot
+        fig.add_box(
+            x=[label],
+            q1=[q25],
+            median=[median],
+            q3=[q75],
+            lowerfence=[min_val],
+            upperfence=[max_val],
+            name=label,
+            legendgroup=label,
+            marker={"color": color},
+            line={"color": color},
+            fillcolor=color,
+            width=0.6,  # Make boxes wider to fill more space
+            hovertemplate=(
+                f"{label}<br>"
+                f"Min: %{{lowerfence:,.1f}} {y_unit}<br>"
+                f"Q1: %{{q1:,.1f}} {y_unit}<br>"
+                f"Median: %{{median:,.1f}} {y_unit}<br>"
+                f"Mean: {mean_val:,.1f} {y_unit}<br>" if mean_val is not None else "" +
+                f"Q3: %{{q3:,.1f}} {y_unit}<br>"
+                f"Max: %{{upperfence:,.1f}} {y_unit}<extra></extra>"
+            ),
+            showlegend=showlegend,
+            row=row,
+            col=col,
+        )
+        
+        # Add scatter point for mean if available
+        if mean_val is not None:
+            fig.add_scatter(
+                x=[label],
+                y=[mean_val],
+                mode="markers",
+                marker=dict(
+                    symbol="diamond",
+                    size=3,
+                    color="yellow",
+                ),
+                name="Mean",
+                legendgroup="mean_marker",
+                showlegend=False,
+                hovertemplate=f"{label}<br>Mean: {mean_val:,.1f} {y_unit}<extra></extra>",
+                row=row,
+                col=col,
+            )
+        
+        # Add scatter point for median (to make it more visible)
+        fig.add_scatter(
+            x=[label],
+            y=[median],
+            mode="markers",
+            marker=dict(
+                symbol="line-ew",
+                size=12,
+                color=color,
+                line=dict(color="white", width=1),
+            ),
+            name="Median",
+            legendgroup="median_marker",
+            showlegend=False,
+            hovertemplate=f"{label}<br>Median: {median:,.1f} {y_unit}<extra></extra>",
+            row=row,
+            col=col,
+        )
+    except Exception as e:
+        # If parsing fails, skip this box plot
+        print(f"Failed to parse quartiles for {label}: {e}")
+        return
+
+
 def _get_recs_cols_and_labels(df: pl.DataFrame, quantity: str) -> tuple[list[str], list[str], list[str]]:
     # RECS columns are expected to be like "RECS out.electricity.total.energy_consumption Value"
     # We look for columns starting with "RECS " and ending with " Value", containing the quantity
@@ -173,7 +297,8 @@ GEOGRAPHIC_STATE_LAYOUT = [
     ["CA", "UT", "CO", "NE", "MO", "KY", "WV", "VA", "MD", "CT", "RI"],
     [None, "AZ", "NM", "KS", "AR", "TN", "NC", "SC", "DC", "DE", None],
     [None, None, None, "OK", "LA", "MS", "AL", "GA", None, None, None],
-    ["AK", "HI", None, "TX", None, None, None, "FL", None, None, None],
+    ["AK", "HI", None, "TX", None, "US Total", None, "FL", None, None, None],
+    [None, None, None, None, None, None, None, None, None, None, None],  # Extra row for US Total to grow downward
 ]
 
 GRID_ROWS = len(GEOGRAPHIC_STATE_LAYOUT)
@@ -322,6 +447,7 @@ def plot_monthly_sales(
     title: str,
     y_label: str,
     use_shared_axis: bool = True,
+    suffix: str = "_value",
 ) -> go.Figure:
     """
     Generic monthly sales plotting function with geographic layout and size-proportional subplots.
@@ -333,6 +459,7 @@ def plot_monthly_sales(
         title: Plot title
         y_label: Y-axis label
         use_shared_axis: Whether to use shared y-axis scaling
+        suffix: Column suffix to use (e.g., '_value' or '_customers')
     """
     # Add month columns if not present
     if "_month_order" not in data.columns:
@@ -347,7 +474,7 @@ def plot_monthly_sales(
     # Filter columns based on quantity
     quantity_cols = [
         col for col in data.columns
-        if quantity in col and col.endswith("_value")
+        if quantity in col and col.endswith(suffix)
     ]
     if not quantity_cols:
         raise ValueError(f"No columns found containing '{quantity}'")
@@ -362,7 +489,7 @@ def plot_monthly_sales(
     ref_labels = []
     ref_labels_band = []
     for col in ref_cols:
-        rse_col = col.replace("_value", "_rse")
+        rse_col = col.replace(suffix, "_rse")
         if rse_col in data.columns:
             ref_cols_with_rse.append(col)
             ref_rse_cols.append(rse_col)
@@ -420,7 +547,8 @@ def plot_monthly_sales(
     df = data.with_columns(
         pl.max_horizontal(pl.col(upper_bound_cols + resstock_cols)).alias("_entity_max")
     )
-    global_max = df["_entity_max"].max()
+    # For shared range, exclude US Total
+    global_max = df.filter(pl.col(by) != "US Total")["_entity_max"].max()
     shared_range = [0, global_max * padding] if isinstance(global_max, (int, float)) else None
     
     # Create figure with all possible subplots
@@ -440,7 +568,7 @@ def plot_monthly_sales(
         rows=GRID_ROWS,
         cols=GRID_COLS,
         subplot_titles=subplot_titles,
-        shared_yaxes=use_shared_axis,
+        shared_yaxes=False,  # Don't share y-axes so US Total can be independent
         horizontal_spacing=0.02,
         vertical_spacing=0.1,
     )
@@ -494,6 +622,7 @@ def plot_monthly_sales(
             tickfont={"size": 12},
             automargin=True,
             showticklabels=True,
+            showgrid=False,
             row=row + 1,
             col=col + 1,
         )
@@ -504,21 +633,72 @@ def plot_monthly_sales(
         # Show y-axis label for first non-None plot in each row (always)
         is_first_in_row = col == 0 or (col > 0 and GEOGRAPHIC_STATE_LAYOUT[row][col - 1] is None)
         
+        # US Total always uses its own scale and shows ticks
+        is_us_total = (entity == "US Total")
+        
         # Show ticklabels based on use_shared_axis
         # If use_shared_axis is False, show ticks on all subplots
         # If use_shared_axis is True, show ticks only on first in row or after empty subplot
-        show_ticks = not use_shared_axis or is_first_in_row
+        # US Total always shows ticks
+        show_ticks = is_us_total or not use_shared_axis or is_first_in_row
         
         fig.update_yaxes(
-            title_text="kWh" if is_first_in_row else "",
+            title_text="kWh" if is_first_in_row or is_us_total else "",
             title_font={"size": 12},
-            range=(shared_range if (use_shared_axis and shared_range) else per_range),
+            range=(per_range if is_us_total else (shared_range if use_shared_axis else per_range)),
             tickfont={"size": 12},
             automargin=True,
             showticklabels=show_ticks,
+            showgrid=False,
+            showline=show_ticks,
             row=row + 1,
             col=col + 1,
         )
+        
+        # Make US Total subplot 1.5x larger (both width and height) by adjusting domain
+        if is_us_total:
+            # Get the current domain for this subplot
+            axis_num = row * GRID_COLS + col + 1
+            xaxis_key = f"xaxis{axis_num}" if axis_num > 1 else "xaxis"
+            yaxis_key = f"yaxis{axis_num}" if axis_num > 1 else "yaxis"
+            
+            # Get current domain
+            x_domain = fig.layout[xaxis_key].domain
+            y_domain = fig.layout[yaxis_key].domain
+            
+            # Calculate center and new width (1.5x)
+            x_center = (x_domain[0] + x_domain[1]) / 2
+            x_width = (x_domain[1] - x_domain[0]) * 1.5
+            
+            # For height, grow downward - keep top fixed, extend bottom
+            y_top = y_domain[1]
+            y_height = (y_domain[1] - y_domain[0]) * 1.8
+            y_bottom = y_top - y_height
+            
+            # Set new domain (allow extending beyond current row)
+            fig.update_xaxes(
+                domain=[max(0, x_center - x_width / 2), min(1, x_center + x_width / 2)],
+                row=row + 1,
+                col=col + 1,
+            )
+            fig.update_yaxes(
+                domain=[y_bottom, y_top],  # Don't constrain with max(0, ...) to allow full extension
+                row=row + 1,
+                col=col + 1,
+            )
+            
+            # Add border around US Total subplot
+            fig.add_shape(
+                type="rect",
+                xref="paper",
+                yref="paper",
+                x0=max(0, x_center - x_width / 2),
+                y0=y_bottom,
+                x1=min(1, x_center + x_width / 2),
+                y1=y_top,
+                line=dict(color="black", width=2),
+                layer="below",
+            )
         
     # Hide axes for empty subplots
     for row in range(GRID_ROWS):
@@ -533,18 +713,22 @@ def plot_monthly_sales(
                 fig.update_xaxes(visible=False, row=row + 1, col=col + 1)
                 fig.update_yaxes(visible=False, row=row + 1, col=col + 1)
 
-    fig.update_layout(showlegend=True)
+    fig.update_layout(
+        showlegend=True,
+        xaxis=dict(showgrid=False),
+        yaxis=dict(showgrid=False),
+    )
 
     fig = apply_theme(
         fig,
-        title=title,
+        title=f"{title}<br>(Boats Plot)",
         height=1080 * 0.8,
-        width=1920 * 0.8,
+        width=1920 * 0.7,
         font={"size": 14},
         legend={
             "orientation": "v",
             "x": 0.99,
-            "y": 0.01,
+            "y": 0.11,
             "xanchor": "right",
             "yanchor": "bottom",
             "font": {"size": 14},
@@ -562,10 +746,12 @@ def plot_annual_sales(
     title: str,
     y_label: str,
     use_shared_axis: bool = True,
+    suffix: str = "_value",
+    quantity_type: QuantityType = QuantityType.stock_energy,
 ) -> go.Figure:
     """
     Generic annual sales plotting function with geographic layout and size-proportional subplots.
-    Uses bar charts with one value per state, and error bars for RECS RSE.
+    Uses bar charts with one value per state (or box plots for distributions), and error bars for RECS RSE.
     
     Args:
         data: DataFrame with all columns (both reference and resstock)
@@ -574,11 +760,15 @@ def plot_annual_sales(
         title: Plot title
         y_label: Y-axis label
         use_shared_axis: Whether to use shared y-axis scaling
+        suffix: Column suffix to use (e.g., '_value', '_customers', or '_quartiles')
+        quantity_type: Type of quantity being plotted
     """
+    is_box_plot = (quantity_type == QuantityType.per_unit_energy_distribution)
+    
     # Filter columns based on quantity
     quantity_cols = [
         col for col in data.columns
-        if quantity in col and col.endswith("_value")
+        if quantity in col and col.endswith(suffix)
     ]
     if not quantity_cols:
         raise ValueError(f"No columns found containing '{quantity}'")
@@ -592,7 +782,7 @@ def plot_annual_sales(
     ref_rse_cols = []
     ref_labels = []
     for col in ref_cols:
-        rse_col = col.replace("_value", "_rse")
+        rse_col = col.replace(suffix, "_rse")
         if rse_col in data.columns:
             ref_cols_with_rse.append(col)
             ref_rse_cols.append(rse_col)
@@ -629,25 +819,44 @@ def plot_annual_sales(
         if state not in entities:
             entities.append(state)
     
-    # Compute axis ranges - account for RSE error bars
-    # Calculate upper bounds for RECS columns with RSE (without 1.96 multiplier, that's applied in _add_annual_bar_with_rse)
-    upper_bound_cols = []
-    for value_col, rse_col in zip(ref_cols_with_rse, ref_rse_cols):
-        if rse_col is not None and rse_col in data.columns:
-            upper_col = f"{value_col}_upper"
-            df = data.with_columns(
-                (pl.col(value_col) + pl.col(value_col) * pl.col(rse_col) / 100.0).alias(upper_col)
+    # Compute axis ranges - account for RSE error bars or quartiles
+    if is_box_plot:
+        # For box plots, parse quartiles to get max values
+        max_vals = []
+        for col in quantity_cols:
+            # Parse the quartiles string to get the max value (last element)
+            try:
+                import ast
+                quartile_vals = data[col].map_elements(lambda x: ast.literal_eval(x)[-1] if x else 0, return_dtype=pl.Float64)
+                max_vals.append(quartile_vals.alias(f"{col}_max"))
+            except Exception:
+                pass
+        if max_vals:
+            df = data.with_columns(max_vals)
+            df = df.with_columns(
+                pl.max_horizontal([pl.col(f"{col}_max") for col in quantity_cols]).alias("_entity_max")
             )
-            upper_bound_cols.append(upper_col)
-            data = df
         else:
-            upper_bound_cols.append(value_col)
-    
-    # Compute max including upper bounds of error bars
-    df = data.with_columns(
-        pl.max_horizontal(pl.col(quantity_cols)).alias("_entity_max")
-    )
-    global_max = df["_entity_max"].max()
+            df = data.with_columns(pl.lit(100.0).alias("_entity_max"))
+    else:
+        # Calculate upper bounds for RECS columns with RSE (without 1.96 multiplier, that's applied in _add_annual_bar_with_rse)
+        upper_bound_cols = []
+        for value_col, rse_col in zip(ref_cols_with_rse, ref_rse_cols):
+            if rse_col is not None and rse_col in data.columns:
+                upper_col = f"{value_col}_upper"
+                df = data.with_columns(
+                    (pl.col(value_col) + pl.col(value_col) * pl.col(rse_col) / 100.0).alias(upper_col)
+                )
+                upper_bound_cols.append(upper_col)
+                data = df
+            else:
+                upper_bound_cols.append(value_col)
+        
+        # Compute max including upper bounds of error bars (exclude US Total)
+        df = data.with_columns(
+            pl.max_horizontal(pl.col(quantity_cols)).alias("_entity_max")
+        )
+    global_max = df.filter(pl.col(by) != "US Total")["_entity_max"].max()
     shared_range = [0, global_max * 1.25] if isinstance(global_max, (int, float)) else None
     
     # Create figure with all possible subplots
@@ -667,7 +876,7 @@ def plot_annual_sales(
         rows=GRID_ROWS,
         cols=GRID_COLS,
         subplot_titles=subplot_titles,
-        shared_yaxes=use_shared_axis,
+        shared_yaxes=False,  # Don't share y-axes so US Total can be independent
         horizontal_spacing=0.02,
         vertical_spacing=0.1,
     )
@@ -683,47 +892,69 @@ def plot_annual_sales(
         if entity_df.is_empty():
             continue
         
-        # Add ResStock bars first (so RECS appears last in legend)
-        for i, col_name in enumerate(resstock_cols):
-            x_value = entity_df[by].to_list()[0] if len(entity_df) > 0 else None
-            y_value = entity_df[col_name].to_list()[0] if len(entity_df) > 0 else None
-            if x_value is not None and y_value is not None:
-                fig.add_bar(
-                    x=[x_value],
-                    y=[y_value],
-                    name=resstock_labels[i],
-                    legendgroup=resstock_labels[i],
-                    marker={"color": resstock_colors[i]},
-                    hovertemplate="%{x}<br>" + f"{resstock_labels[i]}: " + "%{y:,.0f} kWh<extra></extra>",
-                    showlegend=(entity == entities[0]),
-                    row=row + 1,
-                    col=col + 1,
+        # Choose between bar plots and box plots based on quantity type
+        if is_box_plot:
+            # Add ResStock box plots first (so RECS appears last in legend)
+            for i, col_name in enumerate(resstock_cols):
+                mean_col_name = col_name.replace("_quartiles", "_value")
+                _add_annual_box_with_quartiles(
+                    fig, entity_df, by, col_name,
+                    resstock_labels[i], resstock_colors[i],
+                    row + 1, col + 1, (entity == entities[0]), y_label,
+                    mean_col=mean_col_name
                 )
-        
-        # Add RECS bars (with RSE error bars) last (so they appear last in legend)
-        for i, (value_col, rse_col) in enumerate(zip(ref_cols_with_rse, ref_rse_cols)):
-            if rse_col is not None and rse_col in entity_df.columns:
-                _add_annual_bar_with_rse(
-                    fig, entity_df, by, value_col, rse_col,
+            
+            # Add RECS box plots last (so they appear last in legend)
+            for i, value_col in enumerate(ref_cols_with_rse):
+                mean_col_name = value_col.replace("_quartiles", "_value")
+                _add_annual_box_with_quartiles(
+                    fig, entity_df, by, value_col,
                     ref_labels[i], ref_colors[i],
-                    row + 1, col + 1, (entity == entities[0]), "kWh"
+                    row + 1, col + 1, (entity == entities[0]), y_label,
+                    mean_col=mean_col_name
                 )
-            else:
-                # If no RSE, plot as regular bar without error
+        else:
+            # Add ResStock bars first (so RECS appears last in legend)
+            for i, col_name in enumerate(resstock_cols):
                 x_value = entity_df[by].to_list()[0] if len(entity_df) > 0 else None
-                y_value = entity_df[value_col].to_list()[0] if len(entity_df) > 0 else None
+                y_value = entity_df[col_name].to_list()[0] if len(entity_df) > 0 else None
                 if x_value is not None and y_value is not None:
                     fig.add_bar(
                         x=[x_value],
                         y=[y_value],
-                        name=ref_labels[i],
-                        legendgroup=ref_labels[i],
-                        marker={"color": ref_colors[i]},
-                        hovertemplate="%{x}<br>" + f"{ref_labels[i]}: " + "%{y:,.0f} kWh<extra></extra>",
+                        name=resstock_labels[i],
+                        legendgroup=resstock_labels[i],
+                        marker={"color": resstock_colors[i]},
+                        hovertemplate="%{x}<br>" + f"{resstock_labels[i]}: " + "%{y:,.0f} kWh<extra></extra>",
                         showlegend=(entity == entities[0]),
                         row=row + 1,
                         col=col + 1,
                     )
+            
+            # Add RECS bars (with RSE error bars) last (so they appear last in legend)
+            for i, (value_col, rse_col) in enumerate(zip(ref_cols_with_rse, ref_rse_cols)):
+                if rse_col is not None and rse_col in entity_df.columns:
+                    _add_annual_bar_with_rse(
+                        fig, entity_df, by, value_col, rse_col,
+                        ref_labels[i], ref_colors[i],
+                        row + 1, col + 1, (entity == entities[0]), "kWh"
+                    )
+                else:
+                    # If no RSE, plot as regular bar without error
+                    x_value = entity_df[by].to_list()[0] if len(entity_df) > 0 else None
+                    y_value = entity_df[value_col].to_list()[0] if len(entity_df) > 0 else None
+                    if x_value is not None and y_value is not None:
+                        fig.add_bar(
+                            x=[x_value],
+                            y=[y_value],
+                            name=ref_labels[i],
+                            legendgroup=ref_labels[i],
+                            marker={"color": ref_colors[i]},
+                            hovertemplate="%{x}<br>" + f"{ref_labels[i]}: " + "%{y:,.0f} kWh<extra></extra>",
+                            showlegend=(entity == entities[0]),
+                            row=row + 1,
+                            col=col + 1,
+                        )
         
         # Configure axes
         entity_max = entity_df["_entity_max"].max()
@@ -732,16 +963,22 @@ def plot_annual_sales(
         # Show y-axis label for first non-None plot in each row
         is_first_in_row = col == 0 or (col > 0 and GEOGRAPHIC_STATE_LAYOUT[row][col - 1] is None)
         
+        # US Total always uses its own scale and shows ticks
+        is_us_total = (entity == "US Total")
+        
         # Show ticklabels based on use_shared_axis
-        show_ticks = not use_shared_axis or is_first_in_row
+        # US Total always shows ticks
+        show_ticks = is_us_total or not use_shared_axis or is_first_in_row
         
         fig.update_yaxes(
-            title_text="kWh" if is_first_in_row else "",
+            title_text=y_label if is_first_in_row or is_us_total else "",
             title_font={"size": 12},
-            range=(shared_range if (use_shared_axis and shared_range) else per_range),
+            range=(per_range if is_us_total else (shared_range if use_shared_axis else per_range)),
             tickfont={"size": 12},
             automargin=True,
             showticklabels=show_ticks,
+            showgrid=False,
+            showline=show_ticks,
             row=row + 1,
             col=col + 1,
         )
@@ -751,10 +988,56 @@ def plot_annual_sales(
             showticklabels=False,
             tickfont={"size": 12},
             automargin=True,
+            showgrid=False,
             row=row + 1,
             col=col + 1,
         )
         
+        # Make US Total subplot 1.5x larger (both width and height) by adjusting domain
+        if is_us_total:
+            # Get the current domain for this subplot
+            axis_num = row * GRID_COLS + col + 1
+            xaxis_key = f"xaxis{axis_num}" if axis_num > 1 else "xaxis"
+            yaxis_key = f"yaxis{axis_num}" if axis_num > 1 else "yaxis"
+            
+            # Get current domain
+            x_domain = fig.layout[xaxis_key].domain
+            y_domain = fig.layout[yaxis_key].domain
+            
+            # Calculate center and new width (1.5x)
+            x_center = (x_domain[0] + x_domain[1]) / 2
+            x_width = (x_domain[1] - x_domain[0]) * 1.5
+            
+            # For height, grow downward - keep top fixed, extend bottom
+            y_top = y_domain[1]
+            y_height = (y_domain[1] - y_domain[0]) * 1.8
+            y_bottom = y_top - y_height
+            
+            # Set new domain (allow extending beyond current row)
+            fig.update_xaxes(
+                domain=[max(0, x_center - x_width / 2), min(1, x_center + x_width / 2)],
+                row=row + 1,
+                col=col + 1,
+            )
+            fig.update_yaxes(
+                domain=[y_bottom, y_top],  # Don't constrain with max(0, ...) to allow full extension
+                row=row + 1,
+                col=col + 1,
+            )
+            
+            # Add border around US Total subplot
+            fig.add_shape(
+                type="rect",
+                xref="paper",
+                yref="paper",
+                x0=max(0, x_center - x_width / 2),
+                y0=y_bottom,
+                x1=min(1, x_center + x_width / 2),
+                y1=y_top,
+                line=dict(color="black", width=2),
+                layer="below",
+            )
+    
     # Hide axes for empty subplots
     for row in range(GRID_ROWS):
         for col in range(GRID_COLS):
@@ -768,21 +1051,30 @@ def plot_annual_sales(
                 fig.update_xaxes(visible=False, row=row + 1, col=col + 1)
                 fig.update_yaxes(visible=False, row=row + 1, col=col + 1)
 
-    fig.update_layout(
-        showlegend=True,
-        barmode="group",
-    )
+    layout_kwargs: dict[str, Any] = {"showlegend": True}
+    if is_box_plot:
+        layout_kwargs["boxmode"] = "group"
+    else:
+        layout_kwargs["barmode"] = "group"
+    
+    fig.update_layout(**layout_kwargs)
 
+    # Add suffix to title for box plots
+    if is_box_plot:
+        title_with_suffix = f"{title}<br>(Ships Plot)"
+    else:
+        title_with_suffix = title
+    
     fig = apply_theme(
         fig,
-        title=title,
+        title=title_with_suffix,
         height=1080 * 0.8,
-        width=1920 * 0.8,
+        width=1920 * 0.7,
         font={"size": 14},
         legend={
             "orientation": "v",
             "x": 0.99,
-            "y": 0.01,
+            "y": 0.11,
             "xanchor": "right",
             "yanchor": "bottom",
             "font": {"size": 14},
@@ -794,6 +1086,14 @@ def plot_annual_sales(
 
 
 def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
+    # Determine suffix based on quantity_type
+    if plot_spec.quantity_type == QuantityType.number_of_customers:
+        suffix = "_customers"
+    elif plot_spec.quantity_type == QuantityType.per_unit_energy_distribution:
+        suffix = "_quartiles"
+    else:
+        suffix = "_value"
+    
     if plot_spec.resolution == "annual":
         if plot_spec.quantity is None:
             raise ValueError("Annual plotting requires a quantity to be specified")
@@ -826,16 +1126,32 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                 title=f"Annual {quantity} % Difference by {plot_spec.aggregation_level.title()}",
                 y_label="% Difference",
                 use_shared_axis=True,
+                suffix=suffix,
             )
         else:
-            # Stock energy case
+            # Stock energy, number of customers, or per unit energy distribution case
+            if plot_spec.quantity_type == QuantityType.number_of_customers:
+                title = f"Annual {quantity} customers by {plot_spec.aggregation_level.title()}"
+                y_label = "count"
+            elif plot_spec.quantity_type == QuantityType.per_unit_energy_distribution:
+                title = f"Annual {quantity} distribution by {plot_spec.aggregation_level.title()}"
+                y_label = "kWh"
+            elif plot_spec.quantity_type == QuantityType.per_unit_energy:
+                title = f"Annual {quantity} per dwelling unit energy by {plot_spec.aggregation_level.title()}"
+                y_label = "kWh/unit"
+            else:
+                title = f"Annual {quantity} by {plot_spec.aggregation_level.title()}"
+                y_label = "kWh"
+            
             return plot_annual_sales(
                 data,
                 by=plot_spec.aggregation_level,
                 quantity=quantity,
-                title=f"Annual {quantity} by {plot_spec.aggregation_level.title()}",
-                y_label="kWh",
+                title=title,
+                y_label=y_label,
                 use_shared_axis=True,
+                suffix=suffix,
+                quantity_type=plot_spec.quantity_type,
             )
     
     elif plot_spec.resolution == "monthly":
@@ -870,16 +1186,28 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                 title=f"Monthly {quantity} % Difference by {plot_spec.aggregation_level.title()}",
                 y_label="kWh",
                 use_shared_axis=True,
+                suffix=suffix,
             )
         else:
-            # Stock energy case
+            # Stock energy or number of customers case
+            if plot_spec.quantity_type == QuantityType.number_of_customers:
+                title = f"Monthly {quantity} customers by {plot_spec.aggregation_level.title()}"
+                y_label = "count"
+            elif plot_spec.quantity_type == QuantityType.per_unit_energy:
+                title = f"Monthly {quantity} per dwelling unit energy by {plot_spec.aggregation_level.title()}"
+                y_label = "kWh/unit"
+            else:
+                title = f"Monthly {quantity} by {plot_spec.aggregation_level.title()}"
+                y_label = "kWh"
+            
             return plot_monthly_sales(
                 data,
                 by=plot_spec.aggregation_level,
                 quantity=quantity,
-                title=f"Monthly {quantity} by {plot_spec.aggregation_level.title()}",
-                y_label="kWh",
+                title=title,
+                y_label=y_label,
                 use_shared_axis=True,
+                suffix=suffix,
             )
 
     qty = plot_spec.quantity.value if plot_spec.quantity else "all"

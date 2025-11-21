@@ -22,6 +22,7 @@ class NoExtraModel(BaseModel):
 class QuantityType(StrEnum):
     stock_energy = "stock energy"
     per_unit_energy = "per unit energy"
+    per_unit_energy_distribution = "per unit energy distribution"
     percent_difference = "percent differences"
     mixed = "mixed"
     number_of_customers = "number of customers"

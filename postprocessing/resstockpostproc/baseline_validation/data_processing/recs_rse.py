@@ -22,14 +22,14 @@ def calculate_rse(df, variable_col, stat_type="total"):
         variable_col: Column name for the variable to analyze
         stat_type: One of 'total', 'average', 'min', 'max', 'q1', 'q2', 'median', 'q3'
     """
-    valid_stats = ["total", "average", "min", "max", "q1", "q2", "median", "q3"]
+    valid_stats = ["total", "avg", "min", "max", "q1", "q2", "median", "q3"]
     if stat_type not in valid_stats:
         raise ValueError(f"stat_type must be one of {valid_stats}")
 
     def compute_stat(data, weights, stat):
         if stat == "total":
             return (data * weights).sum()
-        elif stat == "average":
+        elif stat == "avg":
             return (data * weights).sum() / weights.sum()
         elif stat == "min":
             mask = weights > 0
