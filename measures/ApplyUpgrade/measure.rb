@@ -505,7 +505,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
   def set_electric_panel(measures, hpxml_bldg, upgrade_args_hash)
     measures['ResStockArgumentsPostHPXML'][0]['electric_panel_service_max_current_rating'] = hpxml_bldg.electric_panels[0].max_current_rating
-    measures['ResStockArgumentsPostHPXML'][0]['electric_panel_breaker_spaces_rated_total'] = hpxml_bldg.electric_panels[0].breaker_spaces_total
+    measures['ResStockArgumentsPostHPXML'][0]['electric_panel_breaker_spaces_rated_total'] = hpxml_bldg.electric_panels[0].rated_total_spaces
 
     panel_system_additions = get_panel_system_additions(upgrade_args_hash)
     measures['ResStockArgumentsPostHPXML'][0].update(panel_system_additions)
