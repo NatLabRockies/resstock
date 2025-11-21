@@ -17,7 +17,7 @@ concurrency:
 env:
   OPENSTUDIO_VER: 3.11.0-alpha
   OPENSTUDIO_SHA: c7f13ad615
-  OPENSTUDIO_VER_TO_SHA: %2B
+  OPENSTUDIO_VER_TO_SHA: "%2B"
   OPENSTUDIO_PLATFORM: Ubuntu-24.04-x86_64
   OPENSTUDIO_EXT: deb
   OPENSTUDIO_URL: https://openstudio-ci-builds.s3-us-west-2.amazonaws.com/develop
