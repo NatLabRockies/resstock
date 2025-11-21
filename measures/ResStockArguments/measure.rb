@@ -614,106 +614,10 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Whether a pool is present.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_heating_system_new_load', false)
-    arg.setDisplayName('Electric Panel: Heating System New Load')
-    arg.setDescription('Whether the heating system is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_cooling_system_new_load', false)
-    arg.setDisplayName('Electric Panel: Cooling System New Load')
-    arg.setDescription('Whether the cooling system is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_heat_pump_new_load', false)
-    arg.setDisplayName('Electric Panel: Heat Pump New Load')
-    arg.setDescription('Whether the heat pump is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_heating_system_2_new_load', false)
-    arg.setDisplayName('Electric Panel: Heating System 2 New Load')
-    arg.setDescription('Whether the second heating system is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_mech_vent_fan_new_load', false)
-    arg.setDisplayName('Electric Panel: Mechanical Ventilation New Load')
-    arg.setDescription('Whether the mechanical ventilation is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_whole_house_fan_new_load', false)
-    arg.setDisplayName('Electric Panel: Whole House Fan New Load')
-    arg.setDescription('Whether the whole house fan is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_kitchen_fans_new_load', false)
-    arg.setDisplayName('Electric Panel: Kitchen Fans New Load')
-    arg.setDescription('Whether the kitchen fans is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_bathroom_fans_new_load', false)
-    arg.setDisplayName('Electric Panel: Bathroom Fans New Load')
-    arg.setDescription('Whether the bathroom fans is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_electric_water_heater_new_load', false)
-    arg.setDisplayName('Electric Panel: Electric Water Heater New Load')
-    arg.setDescription('Whether the water heater is a new panel load addition to an existing service panel. Only applies to electric water heater.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_electric_clothes_dryer_new_load', false)
-    arg.setDisplayName('Electric Panel: Electric Clothes Dryer New Load')
-    arg.setDescription('Whether the clothes dryer is a new panel load addition to an existing service panel. Only applies to electric clothes dryer.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_dishwasher_new_load', false)
-    arg.setDisplayName('Electric Panel: Dishwasher New Load')
-    arg.setDescription('Whether the dishwasher is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_electric_cooking_range_new_load', false)
-    arg.setDisplayName('Electric Panel: Electric Cooking Range/Oven New Load')
-    arg.setDescription('Whether the cooking range is a new panel load addition to an existing service panel. Only applies to electric cooking range/oven.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_misc_plug_loads_well_pump_new_load', false)
-    arg.setDisplayName('Electric Panel: Misc Plug Loads Well Pump New Load')
-    arg.setDescription('Whether the well pump is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_misc_plug_loads_vehicle_new_load', false)
-    arg.setDisplayName('Electric Panel: Misc Plug Loads Vehicle New Load')
-    arg.setDescription('Whether the electric vehicle is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_pool_pump_new_load', false)
-    arg.setDisplayName('Electric Panel: Pool Pump New Load')
-    arg.setDescription('Whether the panel load pool pump is an addition.')
-    arg.setDescription('Whether the pool pump is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_electric_pool_heater_new_load', false)
-    arg.setDisplayName('Electric Panel: Electric Pool Heater New Load')
-    arg.setDescription('Whether the pool heater is a new panel load addition to an existing service panel. Only applies to electric pool heater.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_permanent_spa_pump_new_load', false)
-    arg.setDisplayName('Electric Panel: Permanent Spa Pump New Load')
-    arg.setDescription('Whether the spa pump is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_electric_permanent_spa_heater_new_load', false)
-    arg.setDisplayName('Electric Panel: Electric Permanent Spa Heater New Load')
-    arg.setDescription('Whether the spa heater is a new panel load addition to an existing service panel. Only applies to electric permanent spa heater.')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('electric_panel_load_other_power_rating', false)
     arg.setDisplayName('Electric Panel: Other Power Rating')
     arg.setDescription('Specifies the panel load other power rating. This represents the total of all other electric loads that are fastened in place, permanently connected, or located on a specific circuit. For example, garbage disposal, built-in microwave.')
     arg.setUnits('W')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_other_new_load', false)
-    arg.setDisplayName('Electric Panel: Other New Load')
-    arg.setDescription('Whether the other load is a new panel load addition to an existing service panel.')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('emissions_scenario_names', false)
