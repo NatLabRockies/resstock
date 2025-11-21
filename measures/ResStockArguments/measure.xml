@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>df8e9bf4-bd18-488c-acf3-b5eaf7e3e63d</version_id>
-  <version_modified>2025-11-20T18:45:07Z</version_modified>
+  <version_id>654dd563-f59c-4234-a828-c8fe7208c812</version_id>
+  <version_modified>2025-11-21T17:08:02Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -12144,330 +12144,6 @@
       </choices>
     </argument>
     <argument>
-      <name>electric_panel_load_heating_system_new_load</name>
-      <display_name>Electric Panel: Heating System New Load</display_name>
-      <description>Whether the heating system is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_cooling_system_new_load</name>
-      <display_name>Electric Panel: Cooling System New Load</display_name>
-      <description>Whether the cooling system is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_heat_pump_new_load</name>
-      <display_name>Electric Panel: Heat Pump New Load</display_name>
-      <description>Whether the heat pump is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_heating_system_2_new_load</name>
-      <display_name>Electric Panel: Heating System 2 New Load</display_name>
-      <description>Whether the second heating system is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_mech_vent_fan_new_load</name>
-      <display_name>Electric Panel: Mechanical Ventilation New Load</display_name>
-      <description>Whether the mechanical ventilation is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_whole_house_fan_new_load</name>
-      <display_name>Electric Panel: Whole House Fan New Load</display_name>
-      <description>Whether the whole house fan is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_kitchen_fans_new_load</name>
-      <display_name>Electric Panel: Kitchen Fans New Load</display_name>
-      <description>Whether the kitchen fans is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_bathroom_fans_new_load</name>
-      <display_name>Electric Panel: Bathroom Fans New Load</display_name>
-      <description>Whether the bathroom fans is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_electric_water_heater_new_load</name>
-      <display_name>Electric Panel: Electric Water Heater New Load</display_name>
-      <description>Whether the water heater is a new panel load addition to an existing service panel. Only applies to electric water heater.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_electric_clothes_dryer_new_load</name>
-      <display_name>Electric Panel: Electric Clothes Dryer New Load</display_name>
-      <description>Whether the clothes dryer is a new panel load addition to an existing service panel. Only applies to electric clothes dryer.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_dishwasher_new_load</name>
-      <display_name>Electric Panel: Dishwasher New Load</display_name>
-      <description>Whether the dishwasher is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_electric_cooking_range_new_load</name>
-      <display_name>Electric Panel: Electric Cooking Range/Oven New Load</display_name>
-      <description>Whether the cooking range is a new panel load addition to an existing service panel. Only applies to electric cooking range/oven.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_misc_plug_loads_well_pump_new_load</name>
-      <display_name>Electric Panel: Misc Plug Loads Well Pump New Load</display_name>
-      <description>Whether the well pump is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_misc_plug_loads_vehicle_new_load</name>
-      <display_name>Electric Panel: Misc Plug Loads Vehicle New Load</display_name>
-      <description>Whether the electric vehicle is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_pool_pump_new_load</name>
-      <display_name>Electric Panel: Pool Pump New Load</display_name>
-      <description>Whether the pool pump is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_electric_pool_heater_new_load</name>
-      <display_name>Electric Panel: Electric Pool Heater New Load</display_name>
-      <description>Whether the pool heater is a new panel load addition to an existing service panel. Only applies to electric pool heater.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_permanent_spa_pump_new_load</name>
-      <display_name>Electric Panel: Permanent Spa Pump New Load</display_name>
-      <description>Whether the spa pump is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_electric_permanent_spa_heater_new_load</name>
-      <display_name>Electric Panel: Electric Permanent Spa Heater New Load</display_name>
-      <description>Whether the spa heater is a new panel load addition to an existing service panel. Only applies to electric permanent spa heater.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
       <name>electric_panel_load_other_power_rating</name>
       <display_name>Electric Panel: Other Power Rating</display_name>
       <description>Specifies the panel load other power rating. This represents the total of all other electric loads that are fastened in place, permanently connected, or located on a specific circuit. For example, garbage disposal, built-in microwave.</description>
@@ -12475,24 +12151,6 @@
       <units>W</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>electric_panel_load_other_new_load</name>
-      <display_name>Electric Panel: Other New Load</display_name>
-      <description>Whether the other load is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
     </argument>
     <argument>
       <name>emissions_scenario_names</name>
@@ -12728,7 +12386,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>0FBDE96E</checksum>
+      <checksum>51BC1B37</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12745,7 +12403,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>7336505F</checksum>
+      <checksum>2119C091</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>

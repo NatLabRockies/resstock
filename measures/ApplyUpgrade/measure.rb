@@ -226,7 +226,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     end
 
     measures = {}
-    upgrade_args_hash = nil
     existing_options_measure_args = {}
     resstock_arguments_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new) # we want only ResStockArguments registered argument values
     if apply_package_upgrade
@@ -290,9 +289,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
         measures['ResStockArgumentsPostHPXML'] = [{}]
       end
 
-      # Save the hash of applicable upgrade measure arguments
-      upgrade_args_hash = measures['ResStockArguments'][0].clone
-
       # Add measure arguments from existing building if needed
       parameters = get_parameters_ordered_from_options_lookup_tsv(lookup_csv_data, characteristics_dir)
       measures.keys.each do |measure_subdir|
@@ -349,7 +345,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       set_resstock_arguments(measures, resstock_arguments_runner)
       set_building_construction(measures, hpxml_bldg)
       set_dehumidifier(measures, hpxml_bldg)
-      set_electric_panel(measures, hpxml_bldg, upgrade_args_hash)
 
       # Specify measures to run
       measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }
@@ -497,11 +492,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     end
   end
 
-  def set_electric_panel(measures, _hpxml_bldg, upgrade_args_hash)
-    panel_system_additions = get_panel_system_additions(upgrade_args_hash)
-    measures['ResStockArgumentsPostHPXML'][0].update(panel_system_additions)
-  end
-
   def get_detailed_hvac_arguments(measures)
     # Returns a hash of detailed option properties (from the option TSV) for the given HVAC systems
     args = {}
@@ -513,52 +503,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       get_option_properties(args, tsv_filename, measures['ResStockArguments'][0][parameter_name])
     end
     return args
-  end
-
-  def get_panel_system_additions(args_hash)
-    panel_system_additions = {}
-    args_hash.each do |arg_name, _value|
-      if arg_name == 'hvac_heating_system'
-        panel_system_additions['electric_panel_load_heating_system_new_load'] = true
-      elsif arg_name == 'hvac_cooling_system'
-        panel_system_additions['electric_panel_load_cooling_system_new_load'] = true
-      elsif arg_name == 'hvac_heat_pump'
-        panel_system_additions['electric_panel_load_heat_pump_new_load'] = true
-      elsif arg_name == 'hvac_heating_system_2'
-        panel_system_additions['electric_panel_load_heating_system_2_new_load'] = true
-      elsif arg_name == 'ventilation_mechanical'
-        panel_system_additions['electric_panel_load_mech_vent_fan_new_load'] = true
-      elsif arg_name == 'ventilation_whole_house_fan'
-        panel_system_additions['electric_panel_load_whole_house_fan_new_load'] = true
-      elsif arg_name == 'ventilation_kitchen'
-        panel_system_additions['electric_panel_load_kitchen_fans_new_load'] = true
-      elsif arg_name == 'ventilation_bathroom'
-        panel_system_additions['electric_panel_load_bathroom_fans_new_load'] = true
-      elsif arg_name == 'dhw_water_heater'
-        panel_system_additions['electric_panel_load_electric_water_heater_new_load'] = true
-      elsif arg_name == 'appliance_clothes_dryer'
-        panel_system_additions['electric_panel_load_electric_clothes_dryer_new_load'] = true
-      elsif arg_name == 'appliance_dishwasher'
-        panel_system_additions['electric_panel_load_dishwasher_new_load'] = true
-      elsif arg_name == 'appliance_cooking_range_oven'
-        panel_system_additions['electric_panel_load_electric_cooking_range_new_load'] = true
-      elsif arg_name == 'misc_well_pump'
-        panel_system_additions['electric_panel_load_misc_plug_loads_well_pump_new_load'] = true
-      elsif arg_name == 'misc_electric_vehicle_charging'
-        panel_system_additions['electric_panel_load_misc_plug_loads_vehicle_new_load'] = true
-      elsif arg_name == 'misc_pool'
-        # FIXME: Need to check for pump and/or heater
-        panel_system_additions['electric_panel_load_pool_pump_new_load'] = true
-        panel_system_additions['electric_panel_load_electric_pool_heater_new_load'] = true
-      elsif arg_name == 'misc_permanent_spa'
-        # FIXME: Need to check for pump and/or heater
-        panel_system_additions['electric_panel_load_permanent_spa_pump_new_load'] = true
-        panel_system_additions['electric_panel_load_electric_permanent_spa_heater_new_load'] = true
-        # else
-        # panel_system_additions['electric_panel_load_other_addition'] = true
-      end
-    end
-    return panel_system_additions
   end
 end
 
