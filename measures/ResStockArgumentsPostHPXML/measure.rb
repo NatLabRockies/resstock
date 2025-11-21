@@ -749,7 +749,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     if !cooling_system_existing.nil? && !cooling_system.nil?
       if (cooling_system_existing.cooling_system_type == cooling_system.cooling_system_type) &&
          (cooling_system_existing.cooling_system_fuel == cooling_system.cooling_system_fuel) &&
-         (cooling_system_existing.compressor_type == cooling_system.compressor_type) &&
+         (cooling_system_existing.compressor_type.nil? || cooling_system.compressor_type.nil? || (cooling_system_existing.compressor_type == cooling_system.compressor_type)) &&
          ((!cooling_system_existing.cooling_efficiency_seer.nil? && !cooling_system.cooling_efficiency_seer.nil? && (cooling_system_existing.cooling_efficiency_seer == cooling_system.cooling_efficiency_seer)) ||
           (!cooling_system_existing.cooling_efficiency_seer2.nil? && !cooling_system.cooling_efficiency_seer2.nil? && (cooling_system_existing.cooling_efficiency_seer2 == cooling_system.cooling_efficiency_seer2)) ||
           (!cooling_system_existing.cooling_efficiency_eer.nil? && !cooling_system.cooling_efficiency_eer.nil? && (cooling_system_existing.cooling_efficiency_eer == cooling_system.cooling_efficiency_eer)) ||
@@ -768,15 +768,15 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     if !heat_pump_existing.nil? && !heat_pump.nil?
       if (heat_pump_existing.heat_pump_type == heat_pump.heat_pump_type) &&
          (heat_pump_existing.heat_pump_fuel == heat_pump.heat_pump_fuel) &&
-         (heat_pump_existing.compressor_type == heat_pump.compressor_type) &&
-         ((!heat_pump_existing.heating_efficiency_hspf && !heat_pump.heating_efficiency_hspf && (heat_pump_existing.heating_efficiency_hspf == heat_pump.heating_efficiency_hspf)) ||
-          (!heat_pump_existing.heating_efficiency_hspf2 && !heat_pump.heating_efficiency_hspf2 && (heat_pump_existing.heating_efficiency_hspf2 == heat_pump.heating_efficiency_hspf2)) ||
-          (!heat_pump_existing.heating_efficiency_cop && !heat_pump.heating_efficiency_cop && (heat_pump_existing.heating_efficiency_cop == heat_pump.heating_efficiency_cop))) &&
-         ((!heat_pump_existing.cooling_efficiency_seer && !heat_pump.cooling_efficiency_seer && (heat_pump_existing.cooling_efficiency_seer == heat_pump.cooling_efficiency_seer)) ||
-          (!heat_pump_existing.cooling_efficiency_seer2 && !heat_pump.cooling_efficiency_seer2 && (heat_pump_existing.cooling_efficiency_seer2 == heat_pump.cooling_efficiency_seer2)) ||
-          (!heat_pump_existing.cooling_efficiency_eer && !heat_pump.cooling_efficiency_eer && (heat_pump_existing.cooling_efficiency_eer == heat_pump.cooling_efficiency_eer)) ||
-          (!heat_pump_existing.cooling_efficiency_eer2 && !heat_pump.cooling_efficiency_eer2 && (heat_pump_existing.cooling_efficiency_eer2 == heat_pump.cooling_efficiency_eer2)) ||
-          (!heat_pump_existing.cooling_efficiency_ceer && !heat_pump.cooling_efficiency_ceer && (heat_pump_existing.cooling_efficiency_ceer == heat_pump.cooling_efficiency_ceer))) &&
+         (heat_pump_existing.compressor_type.nil? || heat_pump.compressor_type.nil? || (heat_pump_existing.compressor_type == heat_pump.compressor_type)) &&
+         ((!heat_pump_existing.heating_efficiency_hspf.nil? && !heat_pump.heating_efficiency_hspf.nil? && (heat_pump_existing.heating_efficiency_hspf == heat_pump.heating_efficiency_hspf)) ||
+          (!heat_pump_existing.heating_efficiency_hspf2.nil? && !heat_pump.heating_efficiency_hspf2.nil? && (heat_pump_existing.heating_efficiency_hspf2 == heat_pump.heating_efficiency_hspf2)) ||
+          (!heat_pump_existing.heating_efficiency_cop.nil? && !heat_pump.heating_efficiency_cop.nil? && (heat_pump_existing.heating_efficiency_cop == heat_pump.heating_efficiency_cop))) &&
+         ((!heat_pump_existing.cooling_efficiency_seer.nil? && !heat_pump.cooling_efficiency_seer.nil? && (heat_pump_existing.cooling_efficiency_seer == heat_pump.cooling_efficiency_seer)) ||
+          (!heat_pump_existing.cooling_efficiency_seer2.nil? && !heat_pump.cooling_efficiency_seer2.nil? && (heat_pump_existing.cooling_efficiency_seer2 == heat_pump.cooling_efficiency_seer2)) ||
+          (!heat_pump_existing.cooling_efficiency_eer.nil? && !heat_pump.cooling_efficiency_eer.nil? && (heat_pump_existing.cooling_efficiency_eer == heat_pump.cooling_efficiency_eer)) ||
+          (!heat_pump_existing.cooling_efficiency_eer2.nil? && !heat_pump.cooling_efficiency_eer2.nil? && (heat_pump_existing.cooling_efficiency_eer2 == heat_pump.cooling_efficiency_eer2)) ||
+          (!heat_pump_existing.cooling_efficiency_ceer.nil? && !heat_pump.cooling_efficiency_ceer.nil? && (heat_pump_existing.cooling_efficiency_ceer == heat_pump.cooling_efficiency_ceer))) &&
          (heat_pump_existing.fraction_heat_load_served == heat_pump.fraction_cool_load_served) &&
          (heat_pump_existing.fraction_cool_load_served == heat_pump.fraction_cool_load_served)
         heat_pump.heating_capacity = heat_pump_existing.heating_capacity
