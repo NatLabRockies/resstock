@@ -14,7 +14,7 @@ from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 def save_figure(
     fig: go.Figure,
     plot_spec: PlotSpec,
-    formats: list[FileType] = [FileType.html, FileType.svg, FileType.pdf],
+    formats: list[FileType] = [FileType.html],
 ) -> None:
     """Save a Plotly figure in multiple formats."""
     

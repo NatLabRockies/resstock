@@ -78,8 +78,10 @@ def generate_recs_plots() -> None:
     # quantities = [DataCol.ELECTRICITY_EV_CHARGING]
     agg_levels = ["state"]
     quantity_types = [QuantityType.stock_energy, QuantityType.per_unit_energy,
-                      QuantityType.per_unit_energy_distribution]
+                      QuantityType.per_unit_energy_distribution, QuantityType.number_of_customers]
+    quantity_types = [QuantityType.number_of_customers]
     resolutions = ("annual", "monthly")
+    quantities = [q for q in quantities if 'fuel_oil' in q or 'natural_gas' in q]
     for quantity, agg_level, resolution, quantity_type in product(quantities, agg_levels, resolutions, quantity_types):
         if resolution == "monthly" and quantity_type == QuantityType.per_unit_energy_distribution:
             continue
@@ -99,7 +101,7 @@ def generate_recs_plots() -> None:
         plot_func = get_plotting_function(plot_spec.truth_source)
         fig = plot_func(data, plot_spec)
         fig.show(renderer="browser")
-        # save_figure(fig, plot_spec)
+        save_figure(fig, plot_spec)
 
     print("RECS plots complete!")
 
