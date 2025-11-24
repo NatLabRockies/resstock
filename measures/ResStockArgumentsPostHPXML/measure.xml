@@ -1,13 +1,6 @@
 <?xml version="1.0"?>
 <measure>
   <schema_version>3.1</schema_version>
-  <error>Failed to query information from measure 'ResStockArgumentsPostHPXML' from 'C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb': SWIG director method error. NoMethodError: undefined method `setRequired' for #&lt;OpenStudio::Measure::OSArgument:0x000001e056bbecd8 @__swigtype__="_p_openstudio__measure__OSArgument"&gt;
-
-Traceback (most recent call last):
-C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb:39:in `block in arguments'
-C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb:38:in `each'
-C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb:38:in `arguments'
-</error>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
   <version_id>bcd79f1d-2864-414f-811f-4a7862841109</version_id>
