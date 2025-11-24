@@ -478,8 +478,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         water_heater.jacket_r_value = args[:dhw_water_heater_jacket_rvalue] unless args[:dhw_water_heater_jacket_rvalue].to_f == 0
       end
 
-      # HVAC
-      set_hvac_systems(hpxml_bldg_existing, hpxml_bldg)
+      # HVAC systems
+      # This is intentionally called before defaults are applied so that performance datapoints are populated correctly.
+      set_hvac_systems(runner, @hpxml, weather, hpxml_bldg_existing, hpxml_bldg)
 
       # Use existing system as heat pump backup
       set_existing_system_as_heat_pump_backup(runner, hpxml_bldg_existing, hpxml_bldg, args)
@@ -520,9 +521,6 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       baseline_max_airflow_cfm = set_autosizing_limits(runner, hpxml_bldg_existing, hpxml_bldg, args) # before defaults so that capacity reflects the autosized limit
 
       Defaults.apply(runner, @hpxml, hpxml_bldg, weather, schedules_file: schedules_file)
-
-      # HVAC
-      # set_hvac_systems(hpxml_bldg_existing, hpxml_bldg)
 
       # Sizing is duct limited
       set_adjusted_fan_efficiency(runner, args, hpxml_bldg, baseline_max_airflow_cfm) # after defaults so that we have airflow cfm
@@ -712,20 +710,41 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     return schedule_file
   end
 
-  def set_hvac_systems(hpxml_bldg_existing, hpxml_bldg)
+  # Retain HVAC capacities and autosizing factors for HVAC system(s) if the upgrade is not related to the HVAC system(s).
+  # We determine whether the upgrade is HVAC -related by comparing system(s) in the existing HPXML to system(s) in the (defaulted) upgraded HPXML.
+  def set_hvac_systems(runner, hpxml, weather, hpxml_bldg_existing, hpxml_bldg)
     return if hpxml_bldg_existing.nil?
+
+    # Default upgraded system(s) so that we can compare more properties against the existing HPXML.
+    Defaults.apply_hvac(runner, hpxml_bldg, weather, true, nil, hpxml.header)
 
     heating_system_existing = hpxml_bldg_existing.heating_systems.find { |hs| hs.primary_system }
     heating_system = hpxml_bldg.heating_systems.find { |hs| hs.primary_system }
 
     if !heating_system_existing.nil? && !heating_system.nil?
-      if (heating_system_existing.heating_system_type == heating_system.heating_system_type) &&
+      if (heating_system_existing.is_shared_system == heating_system.is_shared_system) &&
+         (heating_system_existing.number_of_units_served == heating_system.number_of_units_served) &&
+         (heating_system_existing.heating_system_type == heating_system.heating_system_type) &&
+         (heating_system_existing.pilot_light == heating_system.pilot_light) &&
+         (heating_system_existing.pilot_light_btuh == heating_system.pilot_light_btuh) &&
+         (heating_system_existing.electric_resistance_distribution == heating_system.electric_resistance_distribution) &&
          (heating_system_existing.heating_system_fuel == heating_system.heating_system_fuel) &&
-         ((!heating_system_existing.heating_efficiency_afue.nil? && !heating_system.heating_efficiency_afue.nil? && (heating_system_existing.heating_efficiency_afue == heating_system.heating_efficiency_afue)) ||
-          (!heating_system_existing.heating_efficiency_percent.nil? && !heating_system.heating_efficiency_percent.nil? && (heating_system_existing.heating_efficiency_percent == heating_system.heating_efficiency_percent))) &&
-         (heating_system_existing.fraction_heat_load_served == heating_system.fraction_heat_load_served)
+         (heating_system_existing.heating_efficiency_afue == heating_system.heating_efficiency_afue) &&
+         (heating_system_existing.heating_efficiency_percent == heating_system.heating_efficiency_percent) &&
+         (heating_system_existing.fraction_heat_load_served == heating_system.fraction_heat_load_served) &&
+         (heating_system_existing.electric_auxiliary_energy == heating_system.electric_auxiliary_energy) &&
+         (heating_system_existing.shared_loop_watts == heating_system.shared_loop_watts) &&
+         (heating_system_existing.shared_loop_motor_efficiency == heating_system.shared_loop_motor_efficiency) &&
+         (heating_system_existing.fan_coil_watts == heating_system.fan_coil_watts) &&
+         (heating_system_existing.fan_watts_per_cfm == heating_system.fan_watts_per_cfm) &&
+         (heating_system_existing.fan_watts == heating_system.fan_watts) &&
+         (heating_system_existing.airflow_defect_ratio == heating_system.airflow_defect_ratio)
+
         heating_system.heating_capacity = heating_system_existing.heating_capacity
+        heating_system.heating_capacity_isdefaulted = false
+
         heating_system.heating_autosizing_factor = heating_system_existing.heating_autosizing_factor
+        heating_system.heating_autosizing_factor_isdefaulted = false
       end
     end
 
@@ -733,13 +752,29 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     heating_system_2 = hpxml_bldg.heating_systems.find { |hs| !hs.primary_system }
 
     if !heating_system_2_existing.nil? && !heating_system_2.nil?
-      if (heating_system_2_existing.heating_system_type == heating_system_2.heating_system_type) &&
+      if (heating_system_2_existing.is_shared_system == heating_system_2.is_shared_system) &&
+         (heating_system_2_existing.number_of_units_served == heating_system_2.number_of_units_served) &&
+         (heating_system_2_existing.heating_system_type == heating_system_2.heating_system_type) &&
+         (heating_system_2_existing.pilot_light == heating_system_2.pilot_light) &&
+         (heating_system_2_existing.pilot_light_btuh == heating_system_2.pilot_light_btuh) &&
+         (heating_system_2_existing.electric_resistance_distribution == heating_system_2.electric_resistance_distribution) &&
          (heating_system_2_existing.heating_system_fuel == heating_system_2.heating_system_fuel) &&
-         ((!heating_system_2_existing.heating_efficiency_afue.nil? && !heating_system_2.heating_efficiency_afue.nil? && (heating_system_2_existing.heating_efficiency_afue == heating_system_2.heating_efficiency_afue)) ||
-          (!heating_system_2_existing.heating_efficiency_percent.nil? && !heating_system_2.heating_efficiency_percent.nil? && (heating_system_2_existing.heating_efficiency_percent == heating_system_2.heating_efficiency_percent))) &&
-         (heating_system_2_existing.fraction_heat_load_served == heating_system_2.fraction_heat_load_served)
+         (heating_system_2_existing.heating_efficiency_afue == heating_system_2.heating_efficiency_afue) &&
+         (heating_system_2_existing.heating_efficiency_percent == heating_system_2.heating_efficiency_percent) &&
+         (heating_system_2_existing.fraction_heat_load_served == heating_system_2.fraction_heat_load_served) &&
+         (heating_system_2_existing.electric_auxiliary_energy == heating_system_2.electric_auxiliary_energy) &&
+         (heating_system_2_existing.shared_loop_watts == heating_system_2.shared_loop_watts) &&
+         (heating_system_2_existing.shared_loop_motor_efficiency == heating_system_2.shared_loop_motor_efficiency) &&
+         (heating_system_2_existing.fan_coil_watts == heating_system_2.fan_coil_watts) &&
+         (heating_system_2_existing.fan_watts_per_cfm == heating_system_2.fan_watts_per_cfm) &&
+         (heating_system_2_existing.fan_watts == heating_system_2.fan_watts) &&
+         (heating_system_2_existing.airflow_defect_ratio == heating_system_2.airflow_defect_ratio)
+
         heating_system_2.heating_capacity = heating_system_2_existing.heating_capacity
+        heating_system_2.heating_capacity_isdefaulted = false
+
         heating_system_2.heating_autosizing_factor = heating_system_2_existing.heating_autosizing_factor
+        heating_system_2.heating_autosizing_factor_isdefaulted = false
       end
     end
 
@@ -747,18 +782,38 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     cooling_system = hpxml_bldg.cooling_systems.find { |cs| cs.primary_system }
 
     if !cooling_system_existing.nil? && !cooling_system.nil?
-      if (cooling_system_existing.cooling_system_type == cooling_system.cooling_system_type) &&
+      if (cooling_system_existing.is_shared_system == cooling_system.is_shared_system) &&
+         (cooling_system_existing.number_of_units_served == cooling_system.number_of_units_served) &&
+         (cooling_system_existing.cooling_system_type == cooling_system.cooling_system_type) &&
          (cooling_system_existing.cooling_system_fuel == cooling_system.cooling_system_fuel) &&
-         (cooling_system_existing.compressor_type.nil? || cooling_system.compressor_type.nil? || (cooling_system_existing.compressor_type == cooling_system.compressor_type)) &&
-         ((!cooling_system_existing.cooling_efficiency_seer.nil? && !cooling_system.cooling_efficiency_seer.nil? && (cooling_system_existing.cooling_efficiency_seer == cooling_system.cooling_efficiency_seer)) ||
-          (!cooling_system_existing.cooling_efficiency_seer2.nil? && !cooling_system.cooling_efficiency_seer2.nil? && (cooling_system_existing.cooling_efficiency_seer2 == cooling_system.cooling_efficiency_seer2)) ||
-          (!cooling_system_existing.cooling_efficiency_eer.nil? && !cooling_system.cooling_efficiency_eer.nil? && (cooling_system_existing.cooling_efficiency_eer == cooling_system.cooling_efficiency_eer)) ||
-          (!cooling_system_existing.cooling_efficiency_eer2.nil? && !cooling_system.cooling_efficiency_eer2.nil? && (cooling_system_existing.cooling_efficiency_eer2 == cooling_system.cooling_efficiency_eer2)) ||
-          (!cooling_system_existing.cooling_efficiency_ceer.nil? && !cooling_system.cooling_efficiency_ceer.nil? && (cooling_system_existing.cooling_efficiency_ceer == cooling_system.cooling_efficiency_ceer)) ||
-          (!cooling_system_existing.cooling_efficiency_kw_per_ton.nil? && !cooling_system.cooling_efficiency_kw_per_ton.nil? && (cooling_system_existing.cooling_efficiency_kw_per_ton == cooling_system.cooling_efficiency_kw_per_ton))) &&
-         (cooling_system_existing.fraction_cool_load_served == cooling_system.fraction_cool_load_served)
+         (cooling_system_existing.compressor_type == cooling_system.compressor_type) &&
+         (cooling_system_existing.fraction_cool_load_served == cooling_system.fraction_cool_load_served) &&
+         (cooling_system_existing.cooling_efficiency_seer == cooling_system.cooling_efficiency_seer) &&
+         (cooling_system_existing.cooling_efficiency_seer2 == cooling_system.cooling_efficiency_seer2) &&
+         (cooling_system_existing.cooling_efficiency_eer == cooling_system.cooling_efficiency_eer) &&
+         (cooling_system_existing.cooling_efficiency_eer2 == cooling_system.cooling_efficiency_eer2) &&
+         (cooling_system_existing.cooling_efficiency_ceer == cooling_system.cooling_efficiency_ceer) &&
+         (cooling_system_existing.cooling_efficiency_kw_per_ton == cooling_system.cooling_efficiency_kw_per_ton) &&
+         (cooling_system_existing.integrated_heating_system_fuel == cooling_system.integrated_heating_system_fuel) &&
+         (cooling_system_existing.integrated_heating_system_efficiency_percent == cooling_system.integrated_heating_system_efficiency_percent) &&
+         (cooling_system_existing.integrated_heating_system_fraction_heat_load_served == cooling_system.integrated_heating_system_fraction_heat_load_served) &&
+         (cooling_system_existing.airflow_defect_ratio == cooling_system.airflow_defect_ratio) &&
+         (cooling_system_existing.charge_defect_ratio == cooling_system.charge_defect_ratio) &&
+         (cooling_system_existing.fan_motor_type == cooling_system.fan_motor_type) &&
+         (cooling_system_existing.fan_watts_per_cfm == cooling_system.fan_watts_per_cfm) &&
+         (cooling_system_existing.shared_loop_watts == cooling_system.shared_loop_watts) &&
+         (cooling_system_existing.shared_loop_motor_efficiency == cooling_system.shared_loop_motor_efficiency) &&
+         (cooling_system_existing.fan_coil_watts == cooling_system.fan_coil_watts) &&
+         (cooling_system_existing.crankcase_heater_watts == cooling_system.crankcase_heater_watts)
+
         cooling_system.cooling_capacity = cooling_system_existing.cooling_capacity
+        cooling_system.cooling_capacity_isdefaulted = false
+
         cooling_system.cooling_autosizing_factor = cooling_system_existing.cooling_autosizing_factor
+        cooling_system.cooling_autosizing_factor_isdefaulted = false
+
+        cooling_system.integrated_heating_system_capacity = cooling_system_existing.integrated_heating_system_capacity
+        cooling_system.integrated_heating_system_capacity_isdefaulted = false
       end
     end
 
@@ -766,25 +821,61 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     heat_pump = hpxml_bldg.heat_pumps.find { |hp| hp.primary_heating_system && hp.primary_cooling_system }
 
     if !heat_pump_existing.nil? && !heat_pump.nil?
-      if (heat_pump_existing.heat_pump_type == heat_pump.heat_pump_type) &&
+      if (heat_pump_existing.is_shared_system == heat_pump.is_shared_system) &&
+         (heat_pump_existing.number_of_units_served == heat_pump.number_of_units_served) &&
+         (heat_pump_existing.heat_pump_type == heat_pump.heat_pump_type) &&
          (heat_pump_existing.heat_pump_fuel == heat_pump.heat_pump_fuel) &&
-         (heat_pump_existing.compressor_type.nil? || heat_pump.compressor_type.nil? || (heat_pump_existing.compressor_type == heat_pump.compressor_type)) &&
-         ((!heat_pump_existing.heating_efficiency_hspf.nil? && !heat_pump.heating_efficiency_hspf.nil? && (heat_pump_existing.heating_efficiency_hspf == heat_pump.heating_efficiency_hspf)) ||
-          (!heat_pump_existing.heating_efficiency_hspf2.nil? && !heat_pump.heating_efficiency_hspf2.nil? && (heat_pump_existing.heating_efficiency_hspf2 == heat_pump.heating_efficiency_hspf2)) ||
-          (!heat_pump_existing.heating_efficiency_cop.nil? && !heat_pump.heating_efficiency_cop.nil? && (heat_pump_existing.heating_efficiency_cop == heat_pump.heating_efficiency_cop))) &&
-         ((!heat_pump_existing.cooling_efficiency_seer.nil? && !heat_pump.cooling_efficiency_seer.nil? && (heat_pump_existing.cooling_efficiency_seer == heat_pump.cooling_efficiency_seer)) ||
-          (!heat_pump_existing.cooling_efficiency_seer2.nil? && !heat_pump.cooling_efficiency_seer2.nil? && (heat_pump_existing.cooling_efficiency_seer2 == heat_pump.cooling_efficiency_seer2)) ||
-          (!heat_pump_existing.cooling_efficiency_eer.nil? && !heat_pump.cooling_efficiency_eer.nil? && (heat_pump_existing.cooling_efficiency_eer == heat_pump.cooling_efficiency_eer)) ||
-          (!heat_pump_existing.cooling_efficiency_eer2.nil? && !heat_pump.cooling_efficiency_eer2.nil? && (heat_pump_existing.cooling_efficiency_eer2 == heat_pump.cooling_efficiency_eer2)) ||
-          (!heat_pump_existing.cooling_efficiency_ceer.nil? && !heat_pump.cooling_efficiency_ceer.nil? && (heat_pump_existing.cooling_efficiency_ceer == heat_pump.cooling_efficiency_ceer))) &&
-         (heat_pump_existing.fraction_heat_load_served == heat_pump.fraction_cool_load_served) &&
-         (heat_pump_existing.fraction_cool_load_served == heat_pump.fraction_cool_load_served)
+         (heat_pump_existing.compressor_type == heat_pump.compressor_type) &&
+         (heat_pump_existing.compressor_lockout_temp == heat_pump.compressor_lockout_temp) &&
+         (heat_pump_existing.backup_type == heat_pump.backup_type) &&
+         (heat_pump_existing.backup_heating_fuel == heat_pump.backup_heating_fuel) &&
+         (heat_pump_existing.backup_heating_efficiency_percent == heat_pump.backup_heating_efficiency_percent) &&
+         (heat_pump_existing.backup_heating_efficiency_afue == heat_pump.backup_heating_efficiency_afue) &&
+         (heat_pump_existing.backup_heating_switchover_temp == heat_pump.backup_heating_switchover_temp) &&
+         (heat_pump_existing.backup_heating_lockout_temp == heat_pump.backup_heating_lockout_temp) &&
+         (heat_pump_existing.fraction_heat_load_served == heat_pump.fraction_heat_load_served) &&
+         (heat_pump_existing.fraction_cool_load_served == heat_pump.fraction_cool_load_served) &&
+         (heat_pump_existing.cooling_efficiency_seer == heat_pump.cooling_efficiency_seer) &&
+         (heat_pump_existing.cooling_efficiency_seer2 == heat_pump.cooling_efficiency_seer2) &&
+         (heat_pump_existing.cooling_efficiency_eer == heat_pump.cooling_efficiency_eer) &&
+         (heat_pump_existing.cooling_efficiency_eer2 == heat_pump.cooling_efficiency_eer2) &&
+         (heat_pump_existing.cooling_efficiency_ceer == heat_pump.cooling_efficiency_ceer) &&
+         (heat_pump_existing.heating_efficiency_hspf == heat_pump.heating_efficiency_hspf) &&
+         (heat_pump_existing.heating_efficiency_hspf2 == heat_pump.heating_efficiency_hspf2) &&
+         (heat_pump_existing.heating_efficiency_cop == heat_pump.heating_efficiency_cop) &&
+         (heat_pump_existing.airflow_defect_ratio == heat_pump.airflow_defect_ratio) &&
+         (heat_pump_existing.charge_defect_ratio == heat_pump.charge_defect_ratio) &&
+         (heat_pump_existing.fan_motor_type == heat_pump.fan_motor_type) &&
+         (heat_pump_existing.fan_watts_per_cfm == heat_pump.fan_watts_per_cfm) &&
+         (heat_pump_existing.pump_watts_per_ton == heat_pump.pump_watts_per_ton) &&
+         (heat_pump_existing.shared_loop_watts == heat_pump.shared_loop_watts) &&
+         (heat_pump_existing.shared_loop_motor_efficiency == heat_pump.shared_loop_motor_efficiency) &&
+         (heat_pump_existing.pan_heater_watts == heat_pump.pan_heater_watts) &&
+         (heat_pump_existing.pan_heater_control_type == heat_pump.pan_heater_control_type) &&
+         (heat_pump_existing.backup_heating_active_during_defrost == heat_pump.backup_heating_active_during_defrost) &&
+         (heat_pump_existing.heating_capacity_fraction_17F == heat_pump.heating_capacity_fraction_17F) &&
+         (heat_pump_existing.equipment_type == heat_pump.equipment_type)
+
         heat_pump.heating_capacity = heat_pump_existing.heating_capacity
+        heat_pump.heating_capacity_isdefaulted = false
+
+        heat_pump.heating_capacity_17F = heat_pump_existing.heating_capacity_17F
+        heat_pump.heating_capacity_17F_isdefaulted = false
+
         heat_pump.cooling_capacity = heat_pump_existing.cooling_capacity
+        heat_pump.cooling_capacity_isdefaulted = false
+
         heat_pump.backup_heating_capacity = heat_pump_existing.backup_heating_capacity
+        heat_pump.backup_heating_capacity_isdefaulted = false
+
         heat_pump.heating_autosizing_factor = heat_pump_existing.heating_autosizing_factor
+        heat_pump.heating_autosizing_factor_isdefaulted = false
+
         heat_pump.cooling_autosizing_factor = heat_pump_existing.cooling_autosizing_factor
+        heat_pump.cooling_autosizing_factor_isdefaulted = false
+
         heat_pump.backup_heating_autosizing_factor = heat_pump_existing.backup_heating_autosizing_factor
+        heat_pump.backup_heating_autosizing_factor_isdefaulted = false
       end
     end
   end
