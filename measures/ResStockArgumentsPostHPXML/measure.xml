@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <measure>
   <schema_version>3.1</schema_version>
-  <error>Failed to query information from measure 'ResStockArgumentsPostHPXML' from 'C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb': SWIG director method error. NoMethodError: undefined method `setRequired' for #&lt;OpenStudio::Measure::OSArgument:0x0000011aa83dbbe8 @__swigtype__="_p_openstudio__measure__OSArgument"&gt;
+  <error>Failed to query information from measure 'ResStockArgumentsPostHPXML' from 'C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb': SWIG director method error. NoMethodError: undefined method `setRequired' for #&lt;OpenStudio::Measure::OSArgument:0x000001e056bbecd8 @__swigtype__="_p_openstudio__measure__OSArgument"&gt;
 
 Traceback (most recent call last):
 C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb:39:in `block in arguments'
@@ -10,8 +10,8 @@ C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb:38:in `arg
 </error>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>6b6c463d-4e99-4b74-9851-e94509734ad8</version_id>
-  <version_modified>2025-11-24T16:46:14Z</version_modified>
+  <version_id>bcd79f1d-2864-414f-811f-4a7862841109</version_id>
+  <version_modified>2025-11-24T17:39:18Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -12460,7 +12460,7 @@ C:/OpenStudio/resstock/measures/ResStockArgumentsPostHPXML/measure.rb:38:in `arg
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>5E48123C</checksum>
+      <checksum>08BC9529</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

@@ -700,7 +700,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       register_value(runner, 'electric_panel_service_max_current_rating', cap_value)
     else
       cap_value = hpxml_bldg_existing.electric_panels[0].max_current_rating
-      total_spaces = hpxml_bldg_existing.electric_panels[0].breaker_spaces_total
+      total_spaces = hpxml_bldg_existing.electric_panels[0].rated_total_spaces
     end
 
     n_beds = hpxml_bldg.building_construction.number_of_bedrooms
