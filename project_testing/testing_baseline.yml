@@ -1,6 +1,6 @@
 schema_version: '0.4'
-os_version: 3.9.0
-os_sha: c77fbb9569
+os_version: 3.10.0
+os_sha: 86d7e215a1
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_testing # Relative to buildstock_directory
 output_directory: testing_baseline
@@ -56,7 +56,7 @@ workflow_generator:
   type: residential_hpxml
   version: 2025.04.29
   args:
-    # Annual simulation and timestep  
+    # Annual simulation and timestep
     build_existing_model:
       simulation_control_timestep: 60
       simulation_control_run_period_begin_month: 1
@@ -65,12 +65,12 @@ workflow_generator:
       simulation_control_run_period_end_day_of_month: 31
       simulation_control_run_period_calendar_year: 2007
       add_component_loads: true
-    
+
     # Emissions scenarios
     emissions:
       - scenario_name: LRMER_MidCase_15
         type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_MidCase_15
+        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_15
         gas_value: 147.3
         propane_value: 177.8
         oil_value: 195.9
@@ -103,6 +103,7 @@ workflow_generator:
 
     # Outputs to include
     simulation_output_report:
+      include_annual_emission_end_uses: true
       timeseries_frequency: hourly
       include_timeseries_total_consumptions: true
       include_timeseries_fuel_consumptions: true
@@ -130,7 +131,7 @@ workflow_generator:
     # Other reporting measures to run
     reporting_measures:
       - measure_dir_name: QOIReport
-      - measure_dir_name: ServerDirectoryCleanup # tack this on so we can save some disk space (when using debug: true)
+      - measure_dir_name: ServerDirectoryCleanup # include an additional ServerDirectoryCleanup to remove all the extra files that debug: true wrote (i.e., save disk space)
         arguments:
           retain_in_osm: true
           retain_eplusout_err: true
@@ -138,4 +139,4 @@ workflow_generator:
           retain_eplusout_rdd: true
           retain_eplustbl_htm: true
 
-    debug: true
+    debug: true # passed into HPXMLtoOpenStudio, UpgradeCosts, and first instance of ServerDirectoryCleanup

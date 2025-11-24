@@ -1,0 +1,237 @@
+# yaml-language-server: $schema=./schema/workflow_schema.json
+
+s3_results_dir: s3://resstock-core/resstock_ci/sdr_upgrades_tmy3/pub_annual/
+#s3_results_dir: "s3://res-sdr/testing-sdr-fy25/sdr_2025_1_550k_sept3/pub_annual"
+output_dir: sdr_plots
+run_name: sdr_plots_ci
+upgrades: [0, 1] # corresponds to results_up00.csv, results_up01.csv, results_up02.csv
+upgrade_names:
+  - "Baseline"
+  - "Upgrade 1"
+numerical_quantities:
+  - name: Fuel Totals
+    constituents:
+      - out.electricity.total.energy_consumption.kwh
+      - out.natural_gas.total.energy_consumption.kwh
+      - out.propane.total.energy_consumption.kwh
+      - out.fuel_oil.total.energy_consumption.kwh
+    sum: out.site_energy.total.energy_consumption.kwh
+  - name: All Fuels End Uses
+    constituents:
+      - Electric Vehicle Charging, Electricity
+      - Hot Water, Propane
+      - Hot Water, Fuel Oil
+      - Hot Water, Natural Gas
+      - Hot Water, Electricity
+      - Heating Heat Pump Backup, Propane
+      - Heating Heat Pump Backup, Fuel Oil
+      - Heating Heat Pump Backup, Natural Gas
+      - Heating Heat Pump Backup, Electricity
+      - Heating Fans Pumps, Electricity
+      - Heating, Propane
+      - Heating, Fuel Oil
+      - Heating, Natural Gas
+      - Heating, Electricity
+      - Cooling Fans Pumps, Electricity
+      - Cooling, Electricity
+      - Lighting, Propane
+      - Lighting, Fuel Oil
+      - Lighting, Natural Gas
+      - Lighting, Electricity
+      - Vent Fan, Electricity
+      - Miscellaneous, Propane
+      - Miscellaneous, Fuel Oil
+      - Miscellaneous, Natural Gas
+      - Miscellaneous, Electricity
+      - Appliances, Propane
+      - Appliances, Fuel Oil
+      - Appliances, Natural Gas
+      - Appliances, Electricity
+      - Generation, Electricity
+    sum: out.site_energy.total.energy_consumption.kwh
+  - name: Electricity End Uses
+    constituents:
+      - Electric Vehicle Charging, Electricity
+      - Hot Water, Electricity
+      - Heating Heat Pump Backup, Electricity
+      - Heating Fans Pumps, Electricity
+      - Heating, Electricity
+      - Cooling Fans Pumps, Electricity
+      - Cooling, Electricity
+      - Lighting, Electricity
+      - Vent Fan, Electricity
+      - Miscellaneous, Electricity
+      - Appliances, Electricity
+      - Generation, Electricity
+    sum: out.electricity.total.energy_consumption.kwh
+  - name: Natural Gas End Uses
+    constituents:
+      - Hot Water, Natural Gas
+      - Heating Heat Pump Backup, Natural Gas
+      - Heating, Natural Gas
+      - Lighting, Natural Gas
+      - Miscellaneous, Natural Gas
+      - Appliances, Natural Gas
+    sum: out.natural_gas.total.energy_consumption.kwh
+  - name: Propane End Uses
+    constituents:
+      - Hot Water, Propane
+      - Heating Heat Pump Backup, Propane
+      - Heating, Propane
+      - Lighting, Propane
+      - Miscellaneous, Propane
+      - Appliances, Propane
+    sum: out.propane.total.energy_consumption.kwh
+  - name: Fuel Oil End Uses
+    constituents:
+      - Hot Water, Fuel Oil
+      - Heating Heat Pump Backup, Fuel Oil
+      - Heating, Fuel Oil
+      - Lighting, Fuel Oil
+      - Miscellaneous, Fuel Oil
+      - Appliances, Fuel Oil
+    sum: out.fuel_oil.total.energy_consumption.kwh
+  - name: Bills
+    constituents:
+      - out.bills.electricity.usd
+      - out.bills.natural_gas.usd
+      - out.bills.fuel_oil.usd
+      - out.bills.propane.usd
+    sum: out.bills.all_fuels.usd
+  - name: Unmet HVAC Hours
+    constituents:
+      - out.unmet_hours.cooling.hour
+      - out.unmet_hours.heating.hour
+  - name: Unmet EV Driving Hours
+    constituents:
+      - out.unmet_hours.ev_driving.hour
+  - name: Emissions
+    constituents:
+      - out.emissions.electricity.lrmer_mid_case_25.co2e_kg
+      - out.emissions.natural_gas.lrmer_mid_case_25.co2e_kg
+      - out.emissions.propane.lrmer_mid_case_25.co2e_kg
+      - out.emissions.fuel_oil.lrmer_mid_case_25.co2e_kg
+    sum: out.emissions.all_fuels.lrmer_mid_case_25.co2e_kg
+  - name: Hot Water Usage
+    constituents:
+      - out.hot_water.clothes_washer.gal
+      - out.hot_water.dishwasher.gal
+      - out.hot_water.distribution_waste.gal
+      - out.hot_water.fixtures.gal
+  - name: Energy Delivered
+    constituents:
+      - out.load.cooling.energy_delivered.kbtu
+      - out.load.heating.energy_delivered.kbtu
+      - out.load.hot_water.energy_delivered.kbtu
+  - name: Peak Power
+    constituents:
+      - out.electricity.summer.peak.kw
+      - out.electricity.winter.peak.kw
+  - name: Peak Load
+    constituents:
+      - out.load.cooling.peak.kbtu_hr
+      - out.load.heating.peak.kbtu_hr
+  - name: Panel load
+    constituents:
+      - out.panel.load.clothes_dryer.w
+      - out.panel.load.cooling.w
+      - out.panel.load.dishwasher.w
+      - out.panel.load.ev_charging.w
+      - out.panel.load.heating.w
+      - out.panel.load.hot_water.w
+      - out.panel.load.mech_vent.w
+      - out.panel.load.other.w
+      - out.panel.load.permanent_spa_heat.w
+      - out.panel.load.permanent_spa_pump.w
+      - out.panel.load.pool_heater.w
+      - out.panel.load.pool_pump.w
+      - out.panel.load.range_oven.w
+      - out.panel.load.well_pump.w
+    sum: out.panel.load.total_load.2023_nec_existing_dwelling_load_based.w
+
+  - name: Panel Space Count
+    constituents:
+      - out.panel.breaker_space.clothes_dryer.count
+      - out.panel.breaker_space.cooling.count
+      - out.panel.breaker_space.dishwasher.count
+      - out.panel.breaker_space.ev_charging.count
+      - out.panel.breaker_space.heating.count
+      - out.panel.breaker_space.hot_water.count
+      - out.panel.breaker_space.mech_vent.count
+      - out.panel.breaker_space.other.count
+      - out.panel.breaker_space.permanent_spa_heat.count
+      - out.panel.breaker_space.permanent_spa_pump.count
+      - out.panel.breaker_space.pool_heater.count
+      - out.panel.breaker_space.pool_pump.count
+      - out.panel.breaker_space.range_oven.count
+      - out.panel.breaker_space.well_pump.count
+    sum: out.panel.space_count.total_space_count.count
+
+  - name: Panel Capacity
+    constituents:
+      - out.panel.load.headroom_capacity.2023_nec_existing_dwelling_load_based.a
+      - out.panel.load.occupied_capacity.2023_nec_existing_dwelling_load_based.a
+    sum: in.electric_panel_service_rating
+
+  - name: Panel Breaker Space
+    constituents:
+      - out.panel.breaker_space.headroom.count
+      - out.panel.breaker_space.occupied.count
+    sum: in.electric_panel_breaker_space_total_count
+
+categorical_quantities:
+  - name: applicability
+    constituents:
+      - "True"
+      - "False"
+
+  - name: out.panel.constraint.overall.2023_nec_existing_dwelling_load_based
+    constituents:
+      - No Constraint
+      - Space Constraint Only
+      - Capacity Constraint Only
+      - Capacity and Space Constraint
+
+  - name: out.panel.constraint.capacity.2023_nec_existing_dwelling_load_based
+    constituents:
+      - "True"
+      - "False"
+
+  - name: out.panel.constraint.breaker_space
+    constituents:
+      - "True"
+      - "False"
+
+visualization_types:
+  - histogram
+  - bar
+  - box
+  - heatmap
+  - choropleth
+
+group_by:
+  - in.census_division
+  - in.vintage
+  - in.geometry_building_type_recs
+  - in.heating_fuel
+  - in.vacancy_status
+
+quantity_types:
+  - absolute
+  - savings
+  - percent_savings
+  - model_count
+  - prevalence
+
+aggregation_types:
+  - total
+  - average
+  - distribution
+
+building_inclusion:
+  - all
+  - applied_only
+
+vacancy_inclusion:
+  - all
+  - occupied_only

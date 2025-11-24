@@ -1,0 +1,12 @@
+{
+  "version": "0.2",
+  "dictionaryDefinitions": [
+    {
+      "name": "workspace",
+      "path": "./.spelling.dic",
+      "addWords": true
+    }
+  ],
+  "dictionaries": ["workspace"],
+  "useGitignore": true
+}

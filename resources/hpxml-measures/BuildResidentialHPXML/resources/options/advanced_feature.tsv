@@ -1,0 +1,19 @@
+Option Name	Temperature Capacitance Multiplier	HVAC On-Off Thermostat Deadband Temperature [F]	Heat Pump Backup Capacity Increment [Btu/hr]	Ground-to-Air Heat Pump Model Type	HVAC Allow Increased Fixed Capacities
+None					
+"Temperature Capacitance Multiplier, 1"	1				
+"Temperature Capacitance Multiplier, 4"	4				
+"Temperature Capacitance Multiplier, 10"	10				
+"Temperature Capacitance Multiplier, 15"	15				
+"On/Off Thermostat Deadband, 1F"		1			
+"On/Off Thermostat Deadband, 2F"		2			
+"On/Off Thermostat Deadband, 3F"		3			
+"Heat Pump Backup Staging, 5 kW"			17060.71		
+"Heat Pump Backup Staging, 10 kW"			34121.42		
+Experimental Ground-to-Air Heat Pump Model				experimental	
+HVAC Allow Increased Fixed Capacities					TRUE
+					
+# Temperature Capacitance Multiplier: Multiplier on air heat capacitance. Affects the transient calculation of indoor air temperatures. Values greater than 1.0 have the effect of smoothing or damping the rate of change in the indoor air temperature from timestep to timestep.					
+# HVAC On-Off Thermostat Deadband Temperature: Temperature difference between cut-in and cut-out temperature for HVAC operation. Requires 1-minute timesteps.					
+# Heat Pump Backup Capacity Increment: Capacity increment of multi-stage heat pump backup systems.					
+# Ground-to-Air Heat Pump Model Type: Ground-to-air heat pump system model type.					
+"# HVAC Allow Increased Fixed Capacities: If true, the larger of user-specified fixed capacity and design load will be used (to reduce potential for unmet loads); otherwise user-specified fixed capacity is used."					

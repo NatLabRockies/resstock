@@ -9,33 +9,29 @@ module ElectricPanel
   # @param electric_panel [HPXML::ElectricPanel] Object that defines a single electric panel
   # @return [nil]
   def self.calculate(hpxml_header, hpxml_bldg, electric_panel)
-    capacity_types = []
-    capacity_total_watts = []
-    capacity_total_amps = []
-    capacity_headroom_amps = []
+    electric_panel.capacity_types = []
+    electric_panel.capacity_total_watts = []
+    electric_panel.capacity_total_amps = []
+    electric_panel.capacity_headroom_amps = []
     hpxml_header.service_feeders_load_calculation_types.each do |service_feeders_load_calculation_type|
-      if service_feeders_load_calculation_type.include?('Load-Based')
+      if service_feeders_load_calculation_type == HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingLoadBased
         load_based_capacity_values = LoadValues.new
         calculate_load_based(hpxml_bldg, electric_panel, load_based_capacity_values, service_feeders_load_calculation_type)
 
-        capacity_types << service_feeders_load_calculation_type
-        capacity_total_watts << load_based_capacity_values.Load_CapacityW.round(1)
-        capacity_total_amps << load_based_capacity_values.Load_CapacityA.round(1)
-        capacity_headroom_amps << load_based_capacity_values.Load_HeadRoomA.round(1)
-      elsif service_feeders_load_calculation_type.include?('Meter-Based')
+        electric_panel.capacity_types << service_feeders_load_calculation_type
+        electric_panel.capacity_total_watts << load_based_capacity_values.Load_CapacityW.round(1)
+        electric_panel.capacity_total_amps << load_based_capacity_values.Load_CapacityA.round(1)
+        electric_panel.capacity_headroom_amps << load_based_capacity_values.Load_HeadRoomA.round(1)
+      elsif service_feeders_load_calculation_type == HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingMeterBased
         meter_based_capacity_values = LoadValues.new
         calculate_meter_based(hpxml_bldg, electric_panel, meter_based_capacity_values, service_feeders_load_calculation_type)
 
-        capacity_types << service_feeders_load_calculation_type
-        capacity_total_watts << meter_based_capacity_values.Load_CapacityW.round(1)
-        capacity_total_amps << meter_based_capacity_values.Load_CapacityA.round(1)
-        capacity_headroom_amps << meter_based_capacity_values.Load_HeadRoomA.round(1)
+        electric_panel.capacity_types << service_feeders_load_calculation_type
+        electric_panel.capacity_total_watts << meter_based_capacity_values.Load_CapacityW.round(1)
+        electric_panel.capacity_total_amps << meter_based_capacity_values.Load_CapacityA.round(1)
+        electric_panel.capacity_headroom_amps << meter_based_capacity_values.Load_HeadRoomA.round(1)
       end
     end
-    electric_panel.capacity_types = capacity_types
-    electric_panel.capacity_total_watts = capacity_total_watts
-    electric_panel.capacity_total_amps = capacity_total_amps
-    electric_panel.capacity_headroom_amps = capacity_headroom_amps
 
     breaker_spaces_values = BreakerSpacesValues.new
     calculate_breaker_spaces(electric_panel, breaker_spaces_values)
@@ -45,36 +41,22 @@ module ElectricPanel
     electric_panel.breaker_spaces_headroom = breaker_spaces_values.BreakerSpaces_HeadRoom
   end
 
-  # Get the heating system attached to the given service feeder.
+  # Get the component attached to the given service feeder.
   #
-  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param components [Array<HPXML::XXX>] List of HPXML objects
   # @param [HPXML::ServiceFeeder] Object that defines a single electric panel service feeder
-  # @return [HPXML::HeatingSystem] The heating system referenced by the panel load
-  def self.get_panel_load_heating_system(hpxml_bldg, service_feeder)
-    hpxml_bldg.heating_systems.each do |heating_system|
-      next if !service_feeder.component_idrefs.include?(heating_system.id)
+  # @return [HPXML::XXX] The component referenced by the service_feeder
+  def self.get_service_feeder_component(components, service_feeder)
+    components.each do |component|
+      next if !service_feeder.component_idrefs.include?(component.id)
 
-      return heating_system
-    end
-    return
-  end
-
-  # Get the heat pump attached to the given service feeder.
-  #
-  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
-  # @param [HPXML::ServiceFeeder] Object that defines a single electric panel service feeder
-  # @return [HPXML::HeatPump] The heat pump referenced by the panel load
-  def self.get_panel_load_heat_pump(hpxml_bldg, service_feeder)
-    hpxml_bldg.heat_pumps.each do |heat_pump|
-      next if !service_feeder.component_idrefs.include?(heat_pump.id)
-
-      return heat_pump
+      return component
     end
     return
   end
 
   # Gets the electric panel's heating load.
-  # The returned heating load depends on several factors:
+  # The returned heating load depends on the following factors:
   # - whether the backup heating system can operate simultaneous with the primary heating system (if it can, we sum; if it can't, we take the max)
   # - whether we are tabulating all heating loads, only existing heating loads, or only new heating loads
   #
@@ -82,37 +64,37 @@ module ElectricPanel
   # @param electric_panel [HPXML::ElectricPanel] Object that defines a single electric panel
   # @param addition [nil or Boolean] Whether we are getting all, existing, or new heating loads
   # @return [Double] The electric panel's heating load (W)
-  def self.get_panel_load_heating(hpxml_bldg, electric_panel, addition: nil)
+  def self.get_service_feeder_heating(hpxml_bldg, electric_panel, addition: nil)
     htg = 0.0
     electric_panel.service_feeders.each do |service_feeder|
       next if service_feeder.type != HPXML::ElectricPanelLoadTypeHeating
 
-      heating_system = get_panel_load_heating_system(hpxml_bldg, service_feeder)
+      heating_system = get_service_feeder_component(hpxml_bldg.heating_systems, service_feeder)
       if !heating_system.nil?
         heating_system_watts = service_feeder.power
         primary_heat_pump_watts = 0
         if !heating_system.primary_heat_pump.nil?
-          primary_heat_pump_watts = electric_panel.service_feeders.find { |pl| pl.component_idrefs.include?(heating_system.primary_heat_pump.id) }.power
+          primary_heat_pump_watts = electric_panel.service_feeders.find { |sf| sf.component_idrefs.include?(heating_system.primary_heat_pump.id) }.power
         end
 
         if addition.nil? ||
            (addition && service_feeder.is_new_load) ||
            (!addition && !service_feeder.is_new_load)
           if (primary_heat_pump_watts == 0) ||
-             (!heating_system.primary_heat_pump.nil? && heating_system.primary_heat_pump.simultaneous_backup) ||
+             (!heating_system.primary_heat_pump.nil? && heating_system.primary_heat_pump.overlapping_compressor_and_backup_operation) ||
              (!heating_system.primary_heat_pump.nil? && heating_system_watts >= primary_heat_pump_watts)
             htg += heating_system_watts
           end
         end
       end
 
-      heat_pump = get_panel_load_heat_pump(hpxml_bldg, service_feeder)
+      heat_pump = get_service_feeder_component(hpxml_bldg.heat_pumps, service_feeder)
       next unless !heat_pump.nil?
 
       heat_pump_watts = service_feeder.power
       backup_system_watts = 0
       if !heat_pump.backup_system.nil?
-        backup_system_watts = electric_panel.service_feeders.find { |pl| pl.component_idrefs.include?(heat_pump.backup_system.id) }.power
+        backup_system_watts = electric_panel.service_feeders.find { |sf| sf.component_idrefs.include?(heat_pump.backup_system.id) }.power
       end
 
       next unless addition.nil? ||
@@ -120,7 +102,7 @@ module ElectricPanel
                   (!addition && !service_feeder.is_new_load)
 
       next unless (backup_system_watts == 0) ||
-                  (!heat_pump.backup_system.nil? && heat_pump.simultaneous_backup) ||
+                  (!heat_pump.backup_system.nil? && heat_pump.overlapping_compressor_and_backup_operation) ||
                   (!heat_pump.backup_system.nil? && heat_pump_watts >= backup_system_watts)
 
       htg += heat_pump_watts
@@ -137,17 +119,17 @@ module ElectricPanel
   # @return [nil]
   def self.calculate_load_based(hpxml_bldg, electric_panel, service_feeders, service_feeders_load_calculation_type)
     if service_feeders_load_calculation_type == HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingLoadBased
-      htg_existing = get_panel_load_heating(hpxml_bldg, electric_panel, addition: false)
-      htg_new = get_panel_load_heating(hpxml_bldg, electric_panel, addition: true)
-      clg_existing = electric_panel.service_feeders.select { |panel_load| panel_load.type == HPXML::ElectricPanelLoadTypeCooling && !panel_load.is_new_load }.map { |pl| pl.power }.sum(0.0)
-      clg_new = electric_panel.service_feeders.select { |panel_load| panel_load.type == HPXML::ElectricPanelLoadTypeCooling && panel_load.is_new_load }.map { |pl| pl.power }.sum(0.0)
+      htg_existing = get_service_feeder_heating(hpxml_bldg, electric_panel, addition: false)
+      htg_new = get_service_feeder_heating(hpxml_bldg, electric_panel, addition: true)
+      clg_existing = electric_panel.service_feeders.select { |sf| sf.type == HPXML::ElectricPanelLoadTypeCooling && !sf.is_new_load }.map { |sf| sf.power }.sum(0.0)
+      clg_new = electric_panel.service_feeders.select { |sf| sf.type == HPXML::ElectricPanelLoadTypeCooling && sf.is_new_load }.map { |sf| sf.power }.sum(0.0)
 
       hvac_load = [htg_existing + htg_new, clg_existing + clg_new].max
       other_load = 0.0
-      electric_panel.service_feeders.each do |panel_load|
-        next if panel_load.type == HPXML::ElectricPanelLoadTypeHeating || panel_load.type == HPXML::ElectricPanelLoadTypeCooling
+      electric_panel.service_feeders.each do |service_feeder|
+        next if service_feeder.type == HPXML::ElectricPanelLoadTypeHeating || service_feeder.type == HPXML::ElectricPanelLoadTypeCooling
 
-        other_load += panel_load.power
+        other_load += service_feeder.power
       end
 
       if htg_new + clg_new == 0 # not adding new HVAC
@@ -185,8 +167,8 @@ module ElectricPanel
   # @return [Array<Double, Double, Double>] The capacity (W), the capacity (A), and headroom (A)
   def self.calculate_meter_based(hpxml_bldg, electric_panel, service_feeders, service_feeders_load_calculation_type)
     if service_feeders_load_calculation_type == HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingMeterBased
-      htg_new = get_panel_load_heating(hpxml_bldg, electric_panel, addition: true)
-      clg_new = electric_panel.service_feeders.select { |service_feeder| service_feeder.type == HPXML::ElectricPanelLoadTypeCooling && service_feeder.is_new_load }.map { |pl| pl.power }.sum(0.0)
+      htg_new = get_service_feeder_heating(hpxml_bldg, electric_panel, addition: true)
+      clg_new = electric_panel.service_feeders.select { |sf| sf.type == HPXML::ElectricPanelLoadTypeCooling && sf.is_new_load }.map { |sf| sf.power }.sum(0.0)
 
       new_loads = [htg_new, clg_new].max
       electric_panel.service_feeders.each do |service_feeder|
@@ -195,8 +177,8 @@ module ElectricPanel
         new_loads += service_feeder.power if service_feeder.is_new_load
       end
 
-      extension_properties = hpxml_bldg.header.extension_properties
-      peak_elec = extension_properties['PeakElectricity'].to_f
+      peak_elec = hpxml_bldg.header.electric_panel_baseline_peak_power.to_f
+      fail 'Expected ElectricPanelBaselinePeakPower to be greater than 0.' if peak_elec == 0 # EPvalidator.sch should prevent this
 
       service_feeders.Load_CapacityW = new_loads + 1.25 * peak_elec
       service_feeders.Load_CapacityA = service_feeders.Load_CapacityW / Float(electric_panel.voltage)
@@ -211,7 +193,7 @@ module ElectricPanel
   # @return [nil]
   def self.calculate_breaker_spaces(electric_panel, service_feeders)
     occupied = electric_panel.branch_circuits.map { |branch_circuit| branch_circuit.occupied_spaces }.sum(0.0)
-    if !electric_panel.rated_total_spaces.nil?
+    if not electric_panel.rated_total_spaces.nil?
       total = electric_panel.rated_total_spaces
     else
       total = occupied + electric_panel.headroom_spaces

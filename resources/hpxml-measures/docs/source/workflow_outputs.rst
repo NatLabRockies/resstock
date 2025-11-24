@@ -68,12 +68,11 @@ The ``in.xml`` output file will include autosized HVAC capacities as well as som
         <Units>SEER</Units>
         <Value>13.0</Value>
       </AnnualCoolingEfficiency>
-      <SensibleHeatFraction dataSource='software'>0.73</SensibleHeatFraction>
       <extension>
         <AirflowDefectRatio dataSource='software'>0.0</AirflowDefectRatio>
         <ChargeDefectRatio dataSource='software'>0.0</ChargeDefectRatio>
         <FanPowerWattsPerCFM dataSource='software'>0.375</FanPowerWattsPerCFM>
-        <CoolingAirflowCFM dataSource='software'>781.0</CoolingAirflowCFM>
+        <CoolingDesignAirflowCFM dataSource='software'>781.0</CoolingDesignAirflowCFM>
       </extension>
     </CoolingSystem>
   </HVACPlant>
@@ -246,6 +245,9 @@ Non-zero end uses from :ref:`annualenduses` will be included.
 
 Annual Emissions
 ~~~~~~~~~~~~~~~~
+
+When no emissions scenarios are specified, emissions outputs will not be reported.
+See :ref:`hpxml_emissions_scenarios` for more information about specifying emissions scenarios.
 
 Results for each emissions scenario defined in the HPXML file are listed as shown below.
 
@@ -630,6 +632,9 @@ Timeseries Outputs
 ------------------
 
 OpenStudio-HPXML can optionally generate a timeseries output file.
+
+**Note**: This output file is only available when timeseries outputs are requested.
+
 The timeseries output file is called ``results_timeseries.csv`` (or ``.json`` or ``.msgpack``) and located in the run directory.
 If multiple timeseries frequencies are requested (e.g., hourly and daily), the timeseries output filenames will include the frequency (e.g., ``run/results_timeseries_daily.csv``).
 
@@ -673,6 +678,11 @@ Utility Bill Outputs
 --------------------
 
 OpenStudio-HPXML can optionally generate utility bill output files (annual, monthly, or both).
+
+**Note**: These output files are only available when utility bill scenarios are specified.
+When no utility bill scenarios are specified, utility bill output files are not generated.
+See :ref:`hpxml_utility_bill_scenarios` for more information about specifying utility bill scenarios.
+
 The annual utility bills output file is called ``results_bills.csv`` (or ``.json`` or ``.msgpack``) and located in the run directory.
 The monthly utility bills output file is called ``results_bills_monthly.csv`` (or ``.json`` or ``.msgpack``) and located in the run directory.
 
@@ -719,14 +729,20 @@ Monthly results for each utility bill scenario defined in the HPXML file are lis
 Electric Panel Outputs
 ----------------------
 
-OpenStudio-HPXML can optionally generate an electric panels output file.
+OpenStudio-HPXML can optionally generate an electric panel output file.
+
+**Note**: This output file is only available when electric panel load calculation outputs are requested.
+When no load calculation types are specified, the electric panels output file is not generated.
+See :ref:`hpxml_electric_panel_calculations` for more information about specifying electric panel load calculation types.
+
 The electric panels output file is called ``results_panel.csv`` (or ``.json`` or ``.msgpack``) and located in the run directory.
 Panel breaker spaces and loads can also be found in the ``in.xml`` file.
 
 Breaker Spaces
 ~~~~~~~~~~~~~~
 
-Individual panel load occupied breaker spaces, as well as summarized totals, are available as listed below.
+Electric panel breaker space counts are available as listed below.
+End use categories (e.g., Heating, Cooling, Hot Water) report occupied spaces for dedicated circuits except for Other which reports otherwise uncategorized or shared circuits.
 
   ================================================================================  ====================
   Type                                                                              Notes
@@ -747,7 +763,7 @@ Individual panel load occupied breaker spaces, as well as summarized totals, are
   Electric Panel Breaker Spaces: Other Count                                        Sum of other occupied spaces
   Electric Panel Breaker Spaces: Total Count                                        Total rated number of spaces on the panel
   Electric Panel Breaker Spaces: Occupied Count                                     Total number of occupied spaces on the panel
-  Electric Panel Breaker Spaces: Headroom Count                                     Total rated spaces minus occupied spaces
+  Electric Panel Breaker Spaces: Headroom Count                                     Total Count minus Occupied Count
   ================================================================================  ====================
 
 .. note::
@@ -758,26 +774,26 @@ Individual panel load occupied breaker spaces, as well as summarized totals, are
 Loads
 ~~~~~
 
-Individual panel loads, as well as calculated loads for each calculation type (see :ref:`hpxml_electric_panel_calculations`), are available as listed below.
+Electric panel loads, as well as calculated total loads and capacities for each calculation type (see :ref:`hpxml_electric_panel_calculations`), are available as listed below.
 
   ================================================================================  ====================
   Type                                                                              Notes
   ================================================================================  ====================
-  Electric Panel Load: Heating (W)                                                  Sum of heating system and heat pump heating demand loads
-  Electric Panel Load: Cooling (W)                                                  Sum of cooling system and heat pump cooling demand loads
-  Electric Panel Load: Hot Water (W)                                                Sum of water heating system demand loads
-  Electric Panel Load: Clothes Dryer (W)                                            Sum of clothes dryer demand loads
-  Electric Panel Load: Dishwasher (W)                                               Sum of dishwasher demand loads
-  Electric Panel Load: Range/Oven (W)                                               Sum of range/oven demand loads
-  Electric Panel Load: Mech Vent (W)                                                Sum of mechanical ventilation demand loads
-  Electric Panel Load: Permanent Spa Heater (W)                                     Sum of permanent spa heater demand loads
-  Electric Panel Load: Permanent Spa Pump (W)                                       Sum of permanent spa pump demand loads
-  Electric Panel Load: Pool Heater (W)                                              Sum of pool heater demand loads
-  Electric Panel Load: Pool Pump (W)                                                Sum of pool pump demand loads
-  Electric Panel Load: Well Pump (W)                                                Sum of well pump demand loads
-  Electric Panel Load: Electric Vehicle Charging (W)                                Sum of electric vehicle charging demand loads
-  Electric Panel Load: Other (W)                                                    Sum of other demand loads
-  Electric Panel Load: <Type>: Total Load (W)                                       Calculated NEC demand load capacity
+  Electric Panel Load: Heating (W)                                                  Sum of heating system and heat pump heating loads
+  Electric Panel Load: Cooling (W)                                                  Sum of cooling system and heat pump cooling loads
+  Electric Panel Load: Hot Water (W)                                                Sum of water heating system loads
+  Electric Panel Load: Clothes Dryer (W)                                            Sum of clothes dryer loads
+  Electric Panel Load: Dishwasher (W)                                               Sum of dishwasher loads
+  Electric Panel Load: Range/Oven (W)                                               Sum of range/oven loads
+  Electric Panel Load: Mech Vent (W)                                                Sum of mechanical ventilation loads
+  Electric Panel Load: Permanent Spa Heater (W)                                     Sum of permanent spa heater loads
+  Electric Panel Load: Permanent Spa Pump (W)                                       Sum of permanent spa pump loads
+  Electric Panel Load: Pool Heater (W)                                              Sum of pool heater loads
+  Electric Panel Load: Pool Pump (W)                                                Sum of pool pump loads
+  Electric Panel Load: Well Pump (W)                                                Sum of well pump loads
+  Electric Panel Load: Electric Vehicle Charging (W)                                Sum of electric vehicle charging loads
+  Electric Panel Load: Other (W)                                                    Sum of other loads
+  Electric Panel Load: <Type>: Total Load (W)                                       Calculated NEC total load capacity
   Electric Panel Load: <Type>: Total Capacity (A)                                   Total Load (W) divided by panel voltage
   Electric Panel Load: <Type>: Headroom Capacity (A)                                Panel max current rating (A) minus Total Capacity (A)
   ================================================================================  ====================

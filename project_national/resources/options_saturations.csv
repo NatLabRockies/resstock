@@ -69,7 +69,7 @@ Level,Parameter,Option,Saturation
 0,HVAC System Is Scaled,Yes,0
 0,Holiday Lighting,No Exterior Use,1
 0,Hot Water Distribution,Uninsulated,1
-0,Interior Shading,"Summer = 0.7, Winter = 0.85",1
+0,Interior Shading,Light Curtains,1
 0,Lighting Interior Use,100% Usage,1
 0,Lighting Other Use,100% Usage,1
 0,Mechanical Ventilation,None,1
@@ -88,7 +88,6 @@ Level,Parameter,Option,Saturation
 0,Orientation,South,0.18484
 0,Orientation,Northwest,0.077049
 0,Orientation,Southeast,0.077049
-0,Overhangs,None,1
 0,Range Spot Vent Hour,Hour0,0.007
 0,Range Spot Vent Hour,Hour1,0.007
 0,Range Spot Vent Hour,Hour2,0.004
@@ -11378,6 +11377,25 @@ Level,Parameter,Option,Saturation
 3,Energystar Climate Zone 2023,South-Central,0.228425
 3,Energystar Climate Zone 2023,Southern,0.153194
 3,Energystar Climate Zone 2023,Void,0
+3,Generation And Emissions Assessment Region,CAISO,0.103463
+3,Generation And Emissions Assessment Region,ERCOT,0.0676725
+3,Generation And Emissions Assessment Region,FRCC,0.0645126
+3,Generation And Emissions Assessment Region,ISONE,0.0482471
+3,Generation And Emissions Assessment Region,MISO Central,0.0762976
+3,Generation And Emissions Assessment Region,MISO North,0.0504599
+3,Generation And Emissions Assessment Region,MISO South,0.0333944
+3,Generation And Emissions Assessment Region,None,0.00626205
+3,Generation And Emissions Assessment Region,Northern Grid East,0.00946627
+3,Generation And Emissions Assessment Region,Northern Grid South,0.0169077
+3,Generation And Emissions Assessment Region,Northern Grid West,0.0348595
+3,Generation And Emissions Assessment Region,NYISO,0.0611059
+3,Generation And Emissions Assessment Region,PJM East,0.173659
+3,Generation And Emissions Assessment Region,PJM West,0.0304482
+3,Generation And Emissions Assessment Region,SERTP,0.12679
+3,Generation And Emissions Assessment Region,SPP North,0.00944459
+3,Generation And Emissions Assessment Region,SPP South,0.0384438
+3,Generation And Emissions Assessment Region,West Connect North,0.0187105
+3,Generation And Emissions Assessment Region,West Connect South,0.0298551
 3,ISO RTO Region,CAISO,0.0684827
 3,ISO RTO Region,ERCOT,0.0691888
 3,ISO RTO Region,MISO,0.156392
@@ -12504,27 +12522,6 @@ Level,Parameter,Option,Saturation
 3,PUMA Metro Status,Not/partially in metro area,0.226881
 4,County Metro Status,Metropolitan,0.833251
 4,County Metro Status,Non-Metropolitan,0.166749
-4,Generation And Emissions Assessment Region,AZNMc,0.0363015
-4,Generation And Emissions Assessment Region,CAMXc,0.103463
-4,Generation And Emissions Assessment Region,ERCTc,0.0676725
-4,Generation And Emissions Assessment Region,FRCCc,0.0645126
-4,Generation And Emissions Assessment Region,MROEc,0.00967153
-4,Generation And Emissions Assessment Region,MROWc,0.0426677
-4,Generation And Emissions Assessment Region,NEWEc,0.0482471
-4,Generation And Emissions Assessment Region,None,0.00626205
-4,Generation And Emissions Assessment Region,NWPPc,0.0546463
-4,Generation And Emissions Assessment Region,NYSTc,0.0611059
-4,Generation And Emissions Assessment Region,RFCEc,0.0817027
-4,Generation And Emissions Assessment Region,RFCMc,0.0328487
-4,Generation And Emissions Assessment Region,RFCWc,0.117273
-4,Generation And Emissions Assessment Region,RMPAc,0.0192409
-4,Generation And Emissions Assessment Region,SPNOc,0.0177981
-4,Generation And Emissions Assessment Region,SPSOc,0.0206457
-4,Generation And Emissions Assessment Region,SRMVc,0.0333944
-4,Generation And Emissions Assessment Region,SRMWc,0.0231876
-4,Generation And Emissions Assessment Region,SRSOc,0.0512508
-4,Generation And Emissions Assessment Region,SRTVc,0.0371743
-4,Generation And Emissions Assessment Region,SRVCc,0.0709341
 4,Census Division RECS,East North Central,0.152791
 4,Census Division RECS,East South Central,0.0621322
 4,Census Division RECS,Middle Atlantic,0.129575
@@ -12771,9 +12768,7 @@ Level,Parameter,Option,Saturation
 6,Water Heater In Unit,Yes,0.856723
 7,Battery,None,1
 7,Battery,10 kWh,0
-7,Battery,"20 kWh, Outside",0
-7,Battery,"20 kWh, Garage",0
-7,Battery,"20 kWh, 80% Round Trip Efficiency",0
+7,Battery,20 kWh,0
 7,PV Orientation,East,0.00161683
 7,PV Orientation,None,0.989785
 7,PV Orientation,North,0.000170797
@@ -12820,9 +12815,7 @@ Level,Parameter,Option,Saturation
 7,HVAC Secondary Heating Type,Ducted Heating,1.95013e-05
 7,HVAC Secondary Heating Type,Non-Ducted Heating,0.000367707
 7,HVAC Secondary Heating Type,None,0.999613
-7,Water Heater Efficiency,"Electric Heat Pump, 50 gal, 3.45 UEF",0.0031028
-7,Water Heater Efficiency,"Electric Heat Pump, 66 gal, 3.35 UEF",0
-7,Water Heater Efficiency,"Electric Heat Pump, 80 gal, 3.45 UEF",0
+7,Water Heater Efficiency,"Electric Heat Pump, 3.5 UEF",0.0031028
 7,Water Heater Efficiency,Electric Premium,0.0989463
 7,Water Heater Efficiency,Electric Standard,0.362258
 7,Water Heater Efficiency,Electric Tankless,0.020497
@@ -12909,8 +12902,8 @@ Level,Parameter,Option,Saturation
 8,HVAC Secondary Heating Partial Space Conditioning,10%,4.55981e-05
 8,HVAC Secondary Heating Partial Space Conditioning,20%,8.20741e-05
 8,HVAC Secondary Heating Partial Space Conditioning,30%,0.000136533
-8,HVAC Secondary Heating Partial Space Conditioning,40%,6.10411e-05
-8,HVAC Secondary Heating Partial Space Conditioning,49%,6.02766e-05
+8,HVAC Secondary Heating Partial Space Conditioning,40%,6.68006e-05
+8,HVAC Secondary Heating Partial Space Conditioning,50%,5.45173e-05
 8,HVAC Secondary Heating Partial Space Conditioning,Void,0
 8,Insulation Rim Joist,None,0.481809
 8,Insulation Rim Joist,Uninsulated,0.473216
@@ -12926,24 +12919,24 @@ Level,Parameter,Option,Saturation
 9,Geometry Floor Area,2500-2999,0.0654083
 9,Geometry Floor Area,3000-3999,0.0610651
 9,Geometry Floor Area,4000+,0.0302508
-9,HVAC Cooling Efficiency,"AC, SEER 8",0.00895125
-9,HVAC Cooling Efficiency,"AC, SEER 10",0.0599723
-9,HVAC Cooling Efficiency,"AC, SEER 13",0.289571
-9,HVAC Cooling Efficiency,"AC, SEER 15",0.133521
+9,HVAC Cooling Efficiency,"AC, SEER2 7.6",0.00895125
+9,HVAC Cooling Efficiency,"AC, SEER2 9.5",0.0604395
+9,HVAC Cooling Efficiency,"AC, SEER2 12.4",0.299524
+9,HVAC Cooling Efficiency,"AC, SEER2 14.3",0.1231
 9,HVAC Cooling Efficiency,Ducted Heat Pump,0.153727
 9,HVAC Cooling Efficiency,Non-Ducted Heat Pump,0.00974977
 9,HVAC Cooling Efficiency,None,0.105864
-9,HVAC Cooling Efficiency,"Room AC, EER 8.5",0.00427306
-9,HVAC Cooling Efficiency,"Room AC, EER 9.8",0.025774
-9,HVAC Cooling Efficiency,"Room AC, EER 10.7",0.096399
-9,HVAC Cooling Efficiency,"Room AC, EER 12.0",0.0739384
+9,HVAC Cooling Efficiency,"Room AC, CEER 8.4",0.00427306
+9,HVAC Cooling Efficiency,"Room AC, CEER 9.7",0.025774
+9,HVAC Cooling Efficiency,"Room AC, CEER 10.6",0.096399
+9,HVAC Cooling Efficiency,"Room AC, CEER 11.9",0.0739384
 9,HVAC Cooling Efficiency,Shared Cooling,0.03826
 9,HVAC Has Ducts,No,0.235373
 9,HVAC Has Ducts,Yes,0.764627
 9,HVAC Has Ducts,Void,0
-9,HVAC Heating Efficiency,"ASHP, SEER 10, 6.2 HSPF",0.00718034
-9,HVAC Heating Efficiency,"ASHP, SEER 13, 7.7 HSPF",0.0740766
-9,HVAC Heating Efficiency,"ASHP, SEER 15, 8.5 HSPF",0.0724697
+9,HVAC Heating Efficiency,"ASHP, SEER2 9.5, 5.8 HSPF2",0.0123962
+9,HVAC Heating Efficiency,"ASHP, SEER2 12.4, 6.6 HSPF2",0.0887201
+9,HVAC Heating Efficiency,"ASHP, SEER2 14.3, 7.4 HSPF2",0.0526104
 9,HVAC Heating Efficiency,"Electric Baseboard, 100% Efficiency",0.062826
 9,HVAC Heating Efficiency,"Electric Boiler, 100% AFUE",0.00205743
 9,HVAC Heating Efficiency,"Electric Furnace, 100% AFUE",0.113316
@@ -12957,8 +12950,8 @@ Level,Parameter,Option,Saturation
 9,HVAC Heating Efficiency,"Fuel Furnace, 92.5% AFUE",0.153316
 9,HVAC Heating Efficiency,"Fuel Wall/Floor Furnace, 60% AFUE",0.0318915
 9,HVAC Heating Efficiency,"Fuel Wall/Floor Furnace, 68% AFUE",0.0282638
-9,HVAC Heating Efficiency,"MSHP, SEER 14.5, 8.2 HSPF",0.00959704
-9,HVAC Heating Efficiency,"MSHP, SEER 29.3, 14 HSPF",0.000152729
+9,HVAC Heating Efficiency,"MSHP, SEER2 13.7, 7.4 HSPF2",0.00961408
+9,HVAC Heating Efficiency,"MSHP, SEER2 29, 12.3 HSPF2",0.000135693
 9,HVAC Heating Efficiency,None,0.0113431
 9,HVAC Heating Efficiency,Shared Heating,0.096292
 9,HVAC Heating Efficiency,Void,0
@@ -13241,9 +13234,9 @@ Level,Parameter,Option,Saturation
 13,Cooling Unavailable Days,Never,0.948744
 13,Cooling Unavailable Days,Year round,0.00232387
 13,Cooling Unavailable Days,Void,0
-13,Dishwasher,290 Rated kWh,0.303722
-13,Dishwasher,318 Rated kWh,0.419347
+13,Dishwasher,EnergyStar,0.303722
 13,Dishwasher,None,0.276931
+13,Dishwasher,Standard,0.419347
 13,Dishwasher,Void,0
 13,Electric Vehicle Charge At Home,0-19%,0.130877
 13,Electric Vehicle Charge At Home,20-39%,0.014261
@@ -13513,11 +13506,11 @@ Level,Parameter,Option,Saturation
 14,Insulation Wall,"Wood Stud, R-11",0.225545
 14,Insulation Wall,"Wood Stud, R-15",0.0471472
 14,Insulation Wall,"Wood Stud, R-19",0.10473
-14,Insulation Wall,"CMU, 6-in Hollow, Uninsulated",0.014177
-14,Insulation Wall,"CMU, 6-in Hollow, R-7",0.00401396
-14,Insulation Wall,"CMU, 6-in Hollow, R-11",0.00904369
-14,Insulation Wall,"CMU, 6-in Hollow, R-15",0.00165918
-14,Insulation Wall,"CMU, 6-in Hollow, R-19",0.00434392
+14,Insulation Wall,"CMU, 6-in, Uninsulated",0.014177
+14,Insulation Wall,"CMU, 6-in, R-7",0.00401396
+14,Insulation Wall,"CMU, 6-in, R-11",0.00904369
+14,Insulation Wall,"CMU, 6-in, R-15",0.00165918
+14,Insulation Wall,"CMU, 6-in, R-19",0.00434392
 14,Insulation Wall,"Brick, 12-in, 3-wythe, Uninsulated",0.0991602
 14,Insulation Wall,"Brick, 12-in, 3-wythe, R-7",0.0257565
 14,Insulation Wall,"Brick, 12-in, 3-wythe, R-11",0.0547341

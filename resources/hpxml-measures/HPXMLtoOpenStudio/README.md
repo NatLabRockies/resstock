@@ -57,6 +57,17 @@ The name of the file w/ HVAC design loads and capacities. If not provided, defau
 
 <br/>
 
+**Electric Panel Output File Name**
+
+The name of the file w/ electric panel outputs. If not provided, defaults to 'results_panel.csv' (or '.json' or '.msgpack').
+
+- **Name:** ``electric_panel_output_file_name``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
 **Design Load Details Output File Name**
 
 The name of the file w/ additional HVAC design load details. If not provided, defaults to 'results_design_load_details.csv' (or '.json' or '.msgpack').
