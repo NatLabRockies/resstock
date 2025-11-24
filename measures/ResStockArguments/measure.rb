@@ -285,12 +285,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_heating_autosizing_limit', false)
-    arg.setDisplayName('HVAC: Heating System Heating Autosizing Limit')
-    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
-    arg.setUnits('Btu/hr')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_rated_cfm_per_ton', false)
     arg.setDisplayName('HVAC: Heating System Rated CFM Per Ton')
     arg.setDescription('The rated cfm per ton of the heating system.')
@@ -301,20 +295,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDisplayName('HVAC: Heating System Actual CFM Per Ton')
     arg.setDescription('The actual cfm per ton of the heating system.')
     arg.setUnits('cfm/ton')
-    args << arg
-
-    heating_system_fuel_choices = OpenStudio::StringVector.new
-    heating_system_fuel_choices << HPXML::FuelTypeElectricity
-    heating_system_fuel_choices << HPXML::FuelTypeNaturalGas
-    heating_system_fuel_choices << HPXML::FuelTypeOil
-    heating_system_fuel_choices << HPXML::FuelTypePropane
-    heating_system_fuel_choices << HPXML::FuelTypeWoodCord
-    heating_system_fuel_choices << HPXML::FuelTypeWoodPellets
-    heating_system_fuel_choices << HPXML::FuelTypeCoal
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heating_system_2_fuel', heating_system_fuel_choices, false)
-    arg.setDisplayName('HVAC: Heating System 2 Fuel Type')
-    arg.setDescription('The fuel type of the second heating system.')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_2_heating_capacity', false)
@@ -328,12 +308,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_2_heating_autosizing_limit', false)
-    arg.setDisplayName('HVAC: Heating System 2 Heating Autosizing Limit')
-    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
-    arg.setUnits('Btu/hr')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_cooling_capacity', false)
     arg.setDisplayName('HVAC: Cooling System Cooling Capacity')
     arg.setDescription('The output cooling capacity of the cooling system.')
@@ -343,12 +317,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_cooling_autosizing_factor', false)
     arg.setDisplayName('HVAC: Cooling System Cooling Autosizing Factor')
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_cooling_autosizing_limit', false)
-    arg.setDisplayName('HVAC: Cooling System Cooling Autosizing Limit')
-    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
-    arg.setUnits('Btu/hr')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_rated_cfm_per_ton', false)
@@ -380,12 +348,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_heating_autosizing_limit', false)
-    arg.setDisplayName('HVAC: Heat Pump Heating Autosizing Limit')
-    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
-    arg.setUnits('Btu/hr')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_cooling_capacity', false)
     arg.setDisplayName('HVAC: Heat Pump Cooling Capacity')
     arg.setDescription('The output cooling capacity of the heat pump.')
@@ -397,12 +359,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_cooling_autosizing_limit', false)
-    arg.setDisplayName('HVAC: Heat Pump Cooling Autosizing Limit')
-    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
-    arg.setUnits('Btu/hr')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_capacity', false)
     arg.setDisplayName('HVAC: Heat Pump Backup Heating Capacity')
     arg.setDescription('The backup output heating capacity of the heat pump.')
@@ -412,12 +368,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_autosizing_factor', false)
     arg.setDisplayName('HVAC: Heat Pump Backup Heating Autosizing Factor')
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_autosizing_limit', false)
-    arg.setDisplayName('HVAC: Heat Pump Backup Heating Autosizing Limit')
-    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology if Backup Type is integrated.')
-    arg.setUnits('Btu/hr')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_rated_cfm_per_ton', false)
@@ -438,22 +388,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setUnits('Frac')
     args << arg
 
-    heat_pump_backup_fuel_choices = OpenStudio::StringVector.new
-    heat_pump_backup_fuel_choices << HPXML::FuelTypeElectricity
-    heat_pump_backup_fuel_choices << HPXML::FuelTypeNaturalGas
-    heat_pump_backup_fuel_choices << HPXML::FuelTypeOil
-    heat_pump_backup_fuel_choices << HPXML::FuelTypePropane
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heat_pump_backup_fuel', heat_pump_backup_fuel_choices, false)
-    arg.setDisplayName('HVAC: Heat Pump Backup Fuel Type')
-    arg.setDescription('The backup fuel type of the heat pump.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_efficiency', false)
-    arg.setDisplayName('HVAC: Heat Pump Backup Rated Efficiency')
-    arg.setDescription('The backup rated efficiency value of the heat pump.')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('hvac_heat_pump_backup_use_existing_system', false)
     arg.setDisplayName('HVAC: Heat Pump Backup Use Existing System')
     arg.setDescription("Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is '#{HPXML::HeatPumpBackupTypeIntegrated}', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is '#{HPXML::HeatPumpBackupTypeSeparate}', heating_system_2_xxx arguments are assigned values based on the existing heating system. This argument is only applicable for heat pump upgrades.")
@@ -462,18 +396,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('hvac_heat_pump_sizing_is_duct_limited', false)
     arg.setDisplayName('HVAC: Heat Pump Sizing Is Duct Limited')
     arg.setDescription('Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('baseline_max_airflow_cfm', false)
-    arg.setDisplayName('HVAC: Baseline Maximum Airflow Rate')
-    arg.setDescription('The maximum airflow rate for the baseline home. Applies only when using Heat Pump Sizing Is Duct Limited.')
-    arg.setUnits('CFM')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('hvac_blower_fan_watts_per_cfm', false)
-    arg.setDisplayName('HVAC: Blower Fan Efficiency')
-    arg.setDescription('The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems)..')
-    arg.setUnits('W/CFM')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('hvac_perf_data_heating_outdoor_temperatures', false)
@@ -692,124 +614,10 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Whether a pool is present.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('electric_panel_service_max_current_rating', false)
-    arg.setDisplayName('Electric Panel: Service Max Current Rating')
-    arg.setDescription('The service max current rating of the electric panel.')
-    arg.setUnits('A')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('electric_panel_breaker_spaces_headroom', false)
-    arg.setDisplayName('Electric Panel: Breaker Spaces Headroom')
-    arg.setDescription('The unoccupied number of breaker spaces on the electric panel.')
-    arg.setUnits('#')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('electric_panel_breaker_spaces_rated_total', false)
-    arg.setDisplayName('Electric Panel: Breaker Spaces Rated Total')
-    arg.setDescription('The rated total number of breaker spaces on the electric panel.')
-    arg.setUnits('#')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_heating_system_new_load', false)
-    arg.setDisplayName('Electric Panel: Heating System New Load')
-    arg.setDescription('Whether the heating system is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_cooling_system_new_load', false)
-    arg.setDisplayName('Electric Panel: Cooling System New Load')
-    arg.setDescription('Whether the cooling system is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_heat_pump_new_load', false)
-    arg.setDisplayName('Electric Panel: Heat Pump New Load')
-    arg.setDescription('Whether the heat pump is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_heating_system_2_new_load', false)
-    arg.setDisplayName('Electric Panel: Heating System 2 New Load')
-    arg.setDescription('Whether the second heating system is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_mech_vent_fan_new_load', false)
-    arg.setDisplayName('Electric Panel: Mechanical Ventilation New Load')
-    arg.setDescription('Whether the mechanical ventilation is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_whole_house_fan_new_load', false)
-    arg.setDisplayName('Electric Panel: Whole House Fan New Load')
-    arg.setDescription('Whether the whole house fan is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_kitchen_fans_new_load', false)
-    arg.setDisplayName('Electric Panel: Kitchen Fans New Load')
-    arg.setDescription('Whether the kitchen fans is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_bathroom_fans_new_load', false)
-    arg.setDisplayName('Electric Panel: Bathroom Fans New Load')
-    arg.setDescription('Whether the bathroom fans is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_electric_water_heater_new_load', false)
-    arg.setDisplayName('Electric Panel: Electric Water Heater New Load')
-    arg.setDescription('Whether the water heater is a new panel load addition to an existing service panel. Only applies to electric water heater.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_electric_clothes_dryer_new_load', false)
-    arg.setDisplayName('Electric Panel: Electric Clothes Dryer New Load')
-    arg.setDescription('Whether the clothes dryer is a new panel load addition to an existing service panel. Only applies to electric clothes dryer.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_dishwasher_new_load', false)
-    arg.setDisplayName('Electric Panel: Dishwasher New Load')
-    arg.setDescription('Whether the dishwasher is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_electric_cooking_range_new_load', false)
-    arg.setDisplayName('Electric Panel: Electric Cooking Range/Oven New Load')
-    arg.setDescription('Whether the cooking range is a new panel load addition to an existing service panel. Only applies to electric cooking range/oven.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_misc_plug_loads_well_pump_new_load', false)
-    arg.setDisplayName('Electric Panel: Misc Plug Loads Well Pump New Load')
-    arg.setDescription('Whether the well pump is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_misc_plug_loads_vehicle_new_load', false)
-    arg.setDisplayName('Electric Panel: Misc Plug Loads Vehicle New Load')
-    arg.setDescription('Whether the electric vehicle is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_pool_pump_new_load', false)
-    arg.setDisplayName('Electric Panel: Pool Pump New Load')
-    arg.setDescription('Whether the panel load pool pump is an addition.')
-    arg.setDescription('Whether the pool pump is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_electric_pool_heater_new_load', false)
-    arg.setDisplayName('Electric Panel: Electric Pool Heater New Load')
-    arg.setDescription('Whether the pool heater is a new panel load addition to an existing service panel. Only applies to electric pool heater.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_permanent_spa_pump_new_load', false)
-    arg.setDisplayName('Electric Panel: Permanent Spa Pump New Load')
-    arg.setDescription('Whether the spa pump is a new panel load addition to an existing service panel.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_electric_permanent_spa_heater_new_load', false)
-    arg.setDisplayName('Electric Panel: Electric Permanent Spa Heater New Load')
-    arg.setDescription('Whether the spa heater is a new panel load addition to an existing service panel. Only applies to electric permanent spa heater.')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('electric_panel_load_other_power_rating', false)
     arg.setDisplayName('Electric Panel: Other Power Rating')
     arg.setDescription('Specifies the panel load other power rating. This represents the total of all other electric loads that are fastened in place, permanently connected, or located on a specific circuit. For example, garbage disposal, built-in microwave.')
     arg.setUnits('W')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_other_new_load', false)
-    arg.setDisplayName('Electric Panel: Other New Load')
-    arg.setDescription('Whether the other load is a new panel load addition to an existing service panel.')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('emissions_scenario_names', false)

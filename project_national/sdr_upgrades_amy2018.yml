@@ -803,6 +803,60 @@ upgrades:
               - *typical_cold_climate_logic
               - not: HVAC Heating Type And Fuel|Electricity ASHP
 
+  - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited
+    package_apply_logic: *fossil_fuel_or_electricity
+    options:
+      - option: HVAC Heating Efficiency|ASHP, SEER2 18, 8.5 HSPF2, Typical Cold Climate, Sizing is Duct Limited
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic: *typical_cold_climate_logic
+
+      - option: Heating Fuel|Electricity
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: Heating Fuel|Electricity
+
+      - option: HVAC Heating Type And Fuel|Electricity ASHP
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: HVAC Heating Type And Fuel|Electricity ASHP
+
+  - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing
+    package_apply_logic: *fossil_fuel_or_electricity
+    options:
+      - option: HVAC Heating Efficiency|ASHP, SEER2 18, 8.5 HSPF2, Typical Cold Climate, Use Existing System as Backup
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic: *typical_cold_climate_logic
+
+      - option: Heating Fuel|Electricity
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: Heating Fuel|Electricity
+
+      - option: HVAC Heating Type And Fuel|Electricity ASHP
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: HVAC Heating Type And Fuel|Electricity ASHP
+
   - upgrade_name: Dual Fuel Heat Pump System
     package_apply_logic: *fossil_fuel_or_electricity
     options:
