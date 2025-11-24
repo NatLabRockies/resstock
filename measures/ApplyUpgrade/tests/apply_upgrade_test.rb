@@ -30,6 +30,7 @@ class ApplyUpgradeTest < Minitest::Test
     }
     _test_retaining_hvac_system_values('Windows', expected_values)
 
+    expected_values['heating_system_heating_autosizing_factor'] = 1.0
     expected_values['heat_pump_heating_capacity'] = nil
     expected_values['heat_pump_cooling_capacity'] = nil
     expected_values['heat_pump_backup_heating_capacity'] = nil
@@ -38,6 +39,8 @@ class ApplyUpgradeTest < Minitest::Test
     expected_values['heat_pump_backup_heating_autosizing_factor'] = nil
     _test_retaining_hvac_system_values('Primary Heating System', expected_values)
 
+    expected_values['heating_system_heating_autosizing_factor'] = nil
+    expected_values['heating_system_2_heating_autosizing_factor'] = 1.0
     expected_values['heat_pump_heating_capacity'] = 60000.0
     expected_values['heat_pump_cooling_capacity'] = 60000.0
     expected_values['heat_pump_backup_heating_capacity'] = 100000.0
@@ -46,6 +49,8 @@ class ApplyUpgradeTest < Minitest::Test
     expected_values['heat_pump_backup_heating_autosizing_factor'] = 1.0
     _test_retaining_hvac_system_values('Secondary Heating System', expected_values)
 
+    expected_values['cooling_system_cooling_autosizing_factor'] = 1.0
+    expected_values['heating_system_2_heating_autosizing_factor'] = nil
     expected_values['heat_pump_heating_capacity'] = nil
     expected_values['heat_pump_cooling_capacity'] = nil
     expected_values['heat_pump_backup_heating_capacity'] = nil
@@ -54,6 +59,9 @@ class ApplyUpgradeTest < Minitest::Test
     expected_values['heat_pump_backup_heating_autosizing_factor'] = nil
     _test_retaining_hvac_system_values('Cooling System', expected_values)
 
+    expected_values['cooling_system_cooling_autosizing_factor'] = nil
+    expected_values['heat_pump_heating_autosizing_factor'] = 1.0
+    expected_values['heat_pump_cooling_autosizing_factor'] = 1.0
     _test_retaining_hvac_system_values('Heat Pump', expected_values)
 
     puts 'Retaining existing heating system:'
@@ -106,23 +114,22 @@ class ApplyUpgradeTest < Minitest::Test
     _test_retaining_hvac_system_values('Windows', expected_values)
 
     expected_values['heating_system_heating_capacity'] = nil
-    expected_values['heating_system_heating_autosizing_factor'] = nil
     _test_retaining_hvac_system_values('Primary Heating System', expected_values)
 
     expected_values['heating_system_heating_capacity'] = 100000.0
-    expected_values['heating_system_heating_autosizing_factor'] = 1.0
     expected_values['heating_system_2_heating_capacity'] = nil
-    expected_values['heating_system_2_heating_autosizing_factor'] = nil
+    # expected_values['heating_system_2_heating_autosizing_factor'] = 1.0
     _test_retaining_hvac_system_values('Secondary Heating System', expected_values)
 
     expected_values['heating_system_2_heating_capacity'] = 20000.0
-    expected_values['heating_system_2_heating_autosizing_factor'] = 1.0
     expected_values['cooling_system_cooling_capacity'] = nil
-    expected_values['cooling_system_cooling_autosizing_factor'] = nil
     _test_retaining_hvac_system_values('Cooling System', expected_values)
 
     expected_values['heating_system_heating_capacity'] = nil
     expected_values['heating_system_heating_autosizing_factor'] = nil
+    expected_values['cooling_system_cooling_autosizing_factor'] = nil
+    expected_values['heat_pump_heating_autosizing_factor'] = 1.0
+    expected_values['heat_pump_cooling_autosizing_factor'] = 1.0
     _test_retaining_hvac_system_values('Heat Pump', expected_values)
 
     puts 'Retaining existing heating system:'
@@ -208,19 +215,21 @@ class ApplyUpgradeTest < Minitest::Test
     _test_retaining_hvac_system_values('Windows', expected_values)
 
     expected_values['heating_system_heating_capacity'] = nil
-    expected_values['heating_system_heating_autosizing_factor'] = nil
     _test_retaining_hvac_system_values('Primary Heating System', expected_values)
 
     expected_values['heating_system_heating_capacity'] = 100000.0
-    expected_values['heating_system_heating_autosizing_factor'] = 1.0
+    expected_values['heating_system_2_heating_autosizing_factor'] = 1.0
     _test_retaining_hvac_system_values('Secondary Heating System', expected_values)
 
+    expected_values['heating_system_2_heating_autosizing_factor'] = nil
     expected_values['cooling_system_cooling_capacity'] = nil
-    expected_values['cooling_system_cooling_autosizing_factor'] = nil
     _test_retaining_hvac_system_values('Cooling System', expected_values)
 
     expected_values['heating_system_heating_capacity'] = nil
     expected_values['heating_system_heating_autosizing_factor'] = nil
+    expected_values['cooling_system_cooling_autosizing_factor'] = nil
+    expected_values['heat_pump_heating_autosizing_factor'] = 1.0
+    expected_values['heat_pump_cooling_autosizing_factor'] = 1.0
     _test_retaining_hvac_system_values('Heat Pump', expected_values)
 
     puts 'Retaining existing heating system:'
@@ -299,19 +308,21 @@ class ApplyUpgradeTest < Minitest::Test
     _test_retaining_hvac_system_values('Windows', expected_values)
 
     expected_values['heating_system_heating_capacity'] = nil
-    expected_values['heating_system_heating_autosizing_factor'] = nil
     _test_retaining_hvac_system_values('Primary Heating System', expected_values)
 
     expected_values['heating_system_heating_capacity'] = 100000.0
-    expected_values['heating_system_heating_autosizing_factor'] = 1.0
+    expected_values['heating_system_2_heating_autosizing_factor'] = 1.0
     _test_retaining_hvac_system_values('Secondary Heating System', expected_values)
 
+    expected_values['heating_system_2_heating_autosizing_factor'] = nil
     expected_values['cooling_system_cooling_capacity'] = nil
-    expected_values['cooling_system_cooling_autosizing_factor'] = nil
     _test_retaining_hvac_system_values('Cooling System', expected_values)
 
     expected_values['heating_system_heating_capacity'] = nil
     expected_values['heating_system_heating_autosizing_factor'] = nil
+    expected_values['cooling_system_cooling_autosizing_factor'] = nil
+    expected_values['heat_pump_heating_autosizing_factor'] = 1.0
+    expected_values['heat_pump_cooling_autosizing_factor'] = 1.0
     _test_retaining_hvac_system_values('Heat Pump', expected_values)
 
     puts 'Retaining existing heating system:'
@@ -422,11 +433,15 @@ class ApplyUpgradeTest < Minitest::Test
     hpxml_bldg_existing.heat_pumps.each do |heat_pump|
       hpxml_bldg.heat_pumps.add(**heat_pump.to_h)
       hpxml_bldg.heat_pumps[-1].heating_capacity = nil
+      hpxml_bldg.heat_pumps[-1].heating_capacity_17F = nil
       hpxml_bldg.heat_pumps[-1].cooling_capacity = nil
       hpxml_bldg.heat_pumps[-1].backup_heating_capacity = nil
       hpxml_bldg.heat_pumps[-1].heating_autosizing_factor = nil
       hpxml_bldg.heat_pumps[-1].cooling_autosizing_factor = nil
       hpxml_bldg.heat_pumps[-1].backup_heating_autosizing_factor = nil
+    end
+    hpxml_bldg_existing.hvac_distributions.each do |hvac_distribution|
+      hpxml_bldg.hvac_distributions.add(**hvac_distribution.to_h)
     end
 
     if upgrade == 'Windows'
@@ -474,16 +489,21 @@ class ApplyUpgradeTest < Minitest::Test
                                 cooling_efficiency_seer2: 12.4,
                                 heating_efficiency_hspf2: 6.6,
                                 compressor_type: HPXML::HVACCompressorTypeSingleStage,
+                                fraction_heat_load_served: 1.0,
                                 primary_heating_system: true,
                                 primary_cooling_system: true)
     end
+
+    runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
+    epw_path = Location.get_epw_path(hpxml_existing.buildings[0], hpxml_path)
+    weather = WeatherFile.new(epw_path: epw_path, runner: nil)
 
     # Create instance of the measure
     measure = ResStockArgumentsPostHPXML.new
 
     hpxml_existing.buildings.each do |hpxml_bldg_existing|
       # Check for correct capacity and autosizing factor values
-      measure.set_hvac_systems(hpxml_bldg_existing, hpxml_bldg)
+      measure.set_hvac_systems(runner, hpxml, weather, hpxml_bldg_existing, hpxml_bldg)
 
       actual_values = {}
       if hpxml_bldg.heating_systems.count { |hs| hs.primary_system } > 0
