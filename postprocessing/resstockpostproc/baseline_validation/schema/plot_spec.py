@@ -1,6 +1,6 @@
 """Pydantic model that fully describes how a single plot should be produced.
 
-The aim is to pass **one** object of this class (``PlotSpec``) through the
+The aim is to pass **one** object of this class through the
 entire pipeline - data processing, figure creation, and output saving.
 """
 
@@ -19,13 +19,24 @@ class NoExtraModel(BaseModel):
         extra = "forbid"
         frozen = True
 
-class QuantityType(StrEnum):
-    stock_energy = "stock energy"
-    per_unit_energy = "per unit energy"
-    per_unit_energy_distribution = "per unit energy distribution"
-    percent_difference = "percent differences"
-    mixed = "mixed"
-    number_of_customers = "number of customers"
+class AggregationType(StrEnum):
+    stock_total = "stock total"
+    per_unit = "per unit"
+    per_unit_distribution = "per unit distribution"
+    per_user = "per user"
+    monthly_per_user = "monthly per user"
+    per_user_distribution = "per user distribution"
+    percent_users = "percent users"
+
+
+class ViewType(StrEnum):
+    """
+    Whether the plot should focus on the values or the % difference between
+    reference and ResStock.
+    """
+    diff_view = "diff"
+    value_view = "value"
+
 
 class FileType(StrEnum):
     html = "html"
@@ -50,9 +61,9 @@ class QuantityGroup(NoExtraModel):
     sum: str | None = Field(None, description="Column name for the sum quantity")
 
 
-class PlotSpec(BaseModel):
+class PlotSpec(NoExtraModel):
     truth_source: TruthSource = Field(..., description="Optional truth source for comparison plots.")
-    quantity_type: QuantityType = Field(..., description="stock / per_unit etc")
+    aggregation_type: AggregationType = Field(..., description="stock / per_unit etc")
     quantity: DataCol | None = Field(..., description="Column(s) to visualise.")
     resolution: Literal["monthly", "annual"] = Field(..., description="monthly / annual")
     visualization_type: Literal["bar", "choropleth"] = Field(..., alias="visualization_type")
@@ -61,16 +72,17 @@ class PlotSpec(BaseModel):
     )
     aggregation_level: str = Field(..., description="Eg. state, eiaid")
     focus_on: str | None = Field(default=None, description="Specific category to focus on. Example: CA")
+    view: ViewType = Field(..., description="diff / value")
 
     def get_quantity_name(self) -> str:
         if self.quantity is None:
-            return f"fuel {self.quantity_type.value}"
+            return f"fuel {self.aggregation_type.value}"
         else:
-            return f"{self.quantity.value} {self.quantity_type.value}"
+            return f"{self.quantity.value} {self.aggregation_type.value}"
 
     def _get_title_prefix(self) -> str:
         qlabel = self.get_quantity_name()
-        if self.quantity_type != QuantityType.number_of_customers:
+        if self.aggregation_type != AggregationType.percent_users:
             title_prefix = f"{self.truth_source} {self.resolution} {qlabel} comparison"
         else:
             title_prefix = f"{self.truth_source} customer count comparison"

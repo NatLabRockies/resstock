@@ -8,8 +8,10 @@ from plotly.subplots import make_subplots
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
-    QuantityType,
+    AggregationType,
+    ViewType,
 )
+from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 from resstockpostproc.shared_utils.colors import QUALITATIVE_SERIES, REF_QUALITATIVE_SERIES
 from resstockpostproc.baseline_validation.plotters import base_plotter
 from resstockpostproc.baseline_validation.theme import apply_theme
@@ -286,7 +288,12 @@ def _get_recs_cols_and_labels(df: pl.DataFrame, quantity: str) -> tuple[list[str
 # ---------------------------------------------------------------------------
 # monthly plot helpers
 # ---------------------------------------------------------------------------
-
+CENSUS_LAYOUT = [
+    ["Pacific", "Mountain North", "West North Central", "East North Central", "Middle Atlantic", "New England"],
+    [None, "Mountain South", "West South Central", "East South Central", "South Atlantic", None],
+    [None, None, "US Total", None, None, None],
+    [None, None, None, None, None, None],
+]
 # Geographic layout for states - list of lists
 # Each inner list is a row, position in that list determines the column
 # None represents an empty cell in the grid
@@ -325,7 +332,7 @@ def _compute_monthly_percent_diff(
         raise ValueError("No reference column found for percent difference calculation")
     
     # Find resstock columns
-    resstock_cols = [col for col in quantity_cols if col.startswith("resstock_")]
+    resstock_cols = [col for col in quantity_cols if col.startswith("resstock_") and col.endswith("_value")]
     
     pct_cols = []
     for col in resstock_cols:
@@ -739,6 +746,184 @@ def plot_monthly_sales(
     return fig
 
 
+def plot_all_enduses(
+    data: pl.DataFrame,
+    by: str,  # noqa: ARG001 - kept for consistency, currently aggregates across all values
+    title: str,
+    suffix: str = "_value",  # noqa: ARG001 - not used with new format but kept for compatibility
+) -> go.Figure:
+    """
+    Create horizontal grouped bar plots organized by fuel source categories.
+    Shows: Fuel Totals, Electricity End uses, Natural Gas End uses, Propane End uses, Fuel Oil End uses.
+    Each subplot shows bars for each end-use within that category, grouped by state.
+    
+    Args:
+        data: DataFrame with standardized tall format (source, quantity_type, quantity, value columns)
+        by: Grouping column (e.g., 'state')
+        title: Plot title
+        suffix: Column suffix (unused in new format but kept for compatibility)
+    """
+    # Categorize end-uses by fuel source
+
+    enduse_groups_2_position = {
+        "Fuel Totals": (1, 1),
+        "Natural Gas End uses": (2, 1),
+        "Propane End uses": (2, 2),
+        "Fuel Oil End uses": (3, 1),
+        "Electricity End uses": (1, 2),
+    }
+    
+    def _filter_quantitities(df: pl.DataFrame, quantity_group: str) -> pl.DataFrame:
+        match quantity_group:
+            case "Fuel Totals":
+                return df.filter(pl.col("quantity").str.ends_with("_total"))
+            case "Electricity End uses":
+                return df.filter(
+                    pl.col("quantity").str.starts_with("electricity_") & ~pl.col("quantity").str.ends_with("_total")
+                )
+            case "Natural Gas End uses":
+                return df.filter(
+                    pl.col("quantity").str.starts_with("natural_gas_") & ~pl.col("quantity").str.ends_with("_total")
+                )
+            case "Propane End uses":
+                return df.filter(
+                    pl.col("quantity").str.starts_with("propane_") & ~pl.col("quantity").str.ends_with("_total")
+                )
+            case "Fuel Oil End uses":
+                return df.filter(
+                    pl.col("quantity").str.starts_with("fuel_oil_") & ~pl.col("quantity").str.ends_with("_total")
+                )
+            case _:
+                return df.filter(pl.lit(False))
+
+    left_enduse_counts = [len(_filter_quantitities(data, group)) for group, position in enduse_groups_2_position.items()
+                          if position[0] == 1]
+
+    total_left_enduses = sum(left_enduse_counts)
+    row_heights = [count / total_left_enduses if total_left_enduses > 0 else 0.25 for count in left_enduse_counts]
+    
+    specs = []
+    for i in range(4):
+        if i == 0:
+            specs.append([{"type": "bar"}, {"type": "bar", "rowspan": 4}])
+        else:
+            specs.append([{"type": "bar"}, None])
+    
+    subplot_titles = list(enduse_groups_2_position.keys())
+    
+    fig = make_subplots(
+        rows=4,
+        cols=2,
+        subplot_titles=subplot_titles,
+        specs=specs,
+        column_widths=[0.25, 0.75],  # Left narrower, right wider
+        row_heights=row_heights,  # Proportional to number of end-uses
+        horizontal_spacing=0.15,
+        vertical_spacing=0.05,  # Reduced spacing between rows
+        shared_yaxes=False,
+    )
+    
+    # Get unique sources and create color mapping
+    unique_sources = value_data["source"].unique(maintain_order=True).to_list()
+    source_colors = {}
+    source_labels = {}
+    
+    for i, source in enumerate(unique_sources):
+        if source == "recs_2020":
+            source_colors[source] = RECS_COLORS[0]
+            source_labels[source] = "RECS 2020"
+        else:
+            # ResStock sources
+            source_colors[source] = _RUN_PALETTE[i % len(_RUN_PALETTE)]
+            # Convert source name like "resstock_2025" to "ResStock 2025"
+            if source.startswith("resstock_"):
+                label = source.replace("resstock_", "ResStock ")
+            else:
+                label = source
+            source_labels[source] = label
+    
+    legend_shown = set()
+    
+    # Process left column categories
+    for row_idx, (category_name, enduses) in enumerate(categories, start=1):
+        if not enduses:
+            continue
+            
+        # Filter data for this category's enduses
+        category_data = value_data.filter(pl.col("quantity").is_in(enduses))
+        
+        if category_data.is_empty():
+            continue
+        
+        # Aggregate by enduse and source across all states
+        aggregated = category_data.group_by(["quantity", "source"]).agg(
+            pl.col("value").cast(pl.Float64).sum().alias("total_value")
+        )
+        
+        # Pivot to get sources as columns
+        pivoted = aggregated.pivot(
+            index="quantity", 
+            columns="source", 
+            values="total_value"
+        ).fill_null(0)
+        
+        # Prepare columns for plotting
+        plot_cols = []
+        plot_labels = []
+        plot_colors = []
+        
+        for source in unique_sources:
+            if source in pivoted.columns:
+                plot_cols.append(source)
+                plot_labels.append(source_labels[source])
+                plot_colors.append(source_colors[source])
+        
+        # Only show legend for first subplot
+        show_legend = row_idx == 1 and len(legend_shown) == 0
+        if show_legend:
+            legend_shown.update(plot_labels)
+        
+        # Use base_plotter function
+        base_plotter._add_bar_plot(
+            fig=fig, df=pivoted, categories_list="quantity", quantity_columns=plot_cols,
+            column_labels=plot_labels, column_colors=plot_colors,
+            row=row_idx, col=1, showlegend=show_legend, 
+        )
+    
+    # Update axes for all left column subplots
+    for row_idx in range(1, 5):
+        fig.update_xaxes(title_text="kWh", showgrid=True, row=row_idx, col=1)
+        fig.update_yaxes(showticklabels=True, categoryorder="total ascending", row=row_idx, col=1)
+    
+    # Update axes for right column (large subplot)
+    fig.update_xaxes(title_text="kWh", showgrid=True, row=1, col=2)
+    fig.update_yaxes(showticklabels=True, categoryorder="total ascending", row=1, col=2)
+    
+    fig.update_layout(
+        barmode="group",
+        showlegend=True,
+    )
+    
+    fig = apply_theme(
+        fig,
+        title=title,
+        height=1080 * 0.8,
+        width=1920 * 0.7,
+        font={"size": 11},
+        legend={
+            "orientation": "h",
+            "x": 0.5,
+            "y": -0.02,
+            "xanchor": "center",
+            "yanchor": "top",
+            "font": {"size": 12},
+        },
+        margin={"l": 200, "r": 40, "t": 80, "b": 60},
+    )
+    
+    return fig
+
+
 def plot_annual_sales(
     data: pl.DataFrame,
     by: str,
@@ -747,7 +932,7 @@ def plot_annual_sales(
     y_label: str,
     use_shared_axis: bool = True,
     suffix: str = "_value",
-    quantity_type: QuantityType = QuantityType.stock_energy,
+    quantity_type: AggregationType = AggregationType.stock_total,
 ) -> go.Figure:
     """
     Generic annual sales plotting function with geographic layout and size-proportional subplots.
@@ -763,7 +948,7 @@ def plot_annual_sales(
         suffix: Column suffix to use (e.g., '_value', '_customers', or '_quartiles')
         quantity_type: Type of quantity being plotted
     """
-    is_box_plot = (quantity_type == QuantityType.per_unit_energy_distribution)
+    is_box_plot = (quantity_type == AggregationType.per_unit_distribution)
     
     # Filter columns based on quantity
     quantity_cols = [
@@ -1087,21 +1272,27 @@ def plot_annual_sales(
 
 def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     # Determine suffix based on quantity_type
-    if plot_spec.quantity_type == QuantityType.number_of_customers:
+    if plot_spec.aggregation_type == AggregationType.percent_users:
         suffix = "_customers"
-    elif plot_spec.quantity_type == QuantityType.per_unit_energy_distribution:
+    elif plot_spec.aggregation_type == AggregationType.per_unit_distribution:
         suffix = "_quartiles"
     else:
         suffix = "_value"
     
     if plot_spec.resolution == "annual":
         if plot_spec.quantity is None:
-            raise ValueError("Annual plotting requires a quantity to be specified")
+            # Create horizontal grouped bar plot by fuel source
+            return plot_all_enduses(
+                data,
+                by=plot_spec.aggregation_level,
+                title=f"Annual Energy Consumption by Fuel Source and {plot_spec.aggregation_level.title()}",
+                suffix=suffix,
+            )
         
         quantity = plot_spec.quantity.value
         
         # Handle percent difference by computing it first
-        if plot_spec.quantity_type == QuantityType.percent_difference:
+        if plot_spec.view == ViewType.diff_view:
             # Filter columns based on quantity
             quantity_cols = [
                 col for col in data.columns
@@ -1130,13 +1321,13 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
             )
         else:
             # Stock energy, number of customers, or per unit energy distribution case
-            if plot_spec.quantity_type == QuantityType.number_of_customers:
+            if plot_spec.aggregation_type == AggregationType.percent_users:
                 title = f"Annual {quantity} customers by {plot_spec.aggregation_level.title()}"
                 y_label = "count"
-            elif plot_spec.quantity_type == QuantityType.per_unit_energy_distribution:
+            elif plot_spec.aggregation_type == AggregationType.per_unit_distribution:
                 title = f"Annual {quantity} distribution by {plot_spec.aggregation_level.title()}"
                 y_label = "kWh"
-            elif plot_spec.quantity_type == QuantityType.per_unit_energy:
+            elif plot_spec.aggregation_type == AggregationType.per_unit:
                 title = f"Annual {quantity} per dwelling unit energy by {plot_spec.aggregation_level.title()}"
                 y_label = "kWh/unit"
             else:
@@ -1151,7 +1342,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                 y_label=y_label,
                 use_shared_axis=True,
                 suffix=suffix,
-                quantity_type=plot_spec.quantity_type,
+                quantity_type=plot_spec.aggregation_type,
             )
     
     elif plot_spec.resolution == "monthly":
@@ -1161,7 +1352,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
         quantity = plot_spec.quantity.value
         
         # Handle percent difference by computing it first
-        if plot_spec.quantity_type == QuantityType.percent_difference:
+        if plot_spec.view == ViewType.diff_view:
             # Filter columns based on quantity
             quantity_cols = [
                 col for col in data.columns
@@ -1190,10 +1381,10 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
             )
         else:
             # Stock energy or number of customers case
-            if plot_spec.quantity_type == QuantityType.number_of_customers:
+            if plot_spec.aggregation_type == AggregationType.percent_users:
                 title = f"Monthly {quantity} customers by {plot_spec.aggregation_level.title()}"
                 y_label = "count"
-            elif plot_spec.quantity_type == QuantityType.per_unit_energy:
+            elif plot_spec.aggregation_type == AggregationType.per_unit:
                 title = f"Monthly {quantity} per dwelling unit energy by {plot_spec.aggregation_level.title()}"
                 y_label = "kWh/unit"
             else:
@@ -1213,5 +1404,5 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     qty = plot_spec.quantity.value if plot_spec.quantity else "all"
     raise NotImplementedError(
         f"RECS plot for resolution='{plot_spec.resolution}', "
-        f"quantity_type='{plot_spec.quantity_type.value}', and quantity='{qty}' is not supported"
+        f"quantity_type='{plot_spec.aggregation_type.value}', and quantity='{qty}' is not supported"
     )

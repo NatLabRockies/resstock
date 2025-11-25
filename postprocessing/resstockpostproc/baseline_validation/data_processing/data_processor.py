@@ -10,7 +10,9 @@ from resstockpostproc.baseline_validation.io_managers import get_eia_data
 from resstockpostproc.baseline_validation.io_managers import get_recs_data
 from resstockpostproc.baseline_validation.io_managers import get_resstock_data
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
-from resstockpostproc.baseline_validation.schema.plot_spec import QuantityType
+from resstockpostproc.baseline_validation.schema.plot_spec import AggregationType
+from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
+from resstockpostproc.shared_utils.db_column_names import DataCol
 
 from . import recs_mapping
 
@@ -21,11 +23,12 @@ def get_plot_data(
     plot_spec: PlotSpec,
 ) -> pl.DataFrame:
     """Get the data for plotting based on the plot specification."""
-    if plot_spec.quantity_type in [
-        QuantityType.per_unit_energy,
-        QuantityType.per_unit_energy_distribution
-    ]:
-        aggregation = "avg"
+    if plot_spec.aggregation_type in [AggregationType.per_unit,
+                                    AggregationType.per_unit_distribution]:
+        aggregation = "per_unit_avg"
+    elif plot_spec.aggregation_type in [AggregationType.per_user,
+                                     AggregationType.per_user_distribution]:
+        aggregation = "per_user_avg"
     else:
         aggregation = "sum"
 
@@ -33,6 +36,7 @@ def get_plot_data(
                           plot_spec.aggregation_level,
                           plot_spec.resolution,
                           aggregation=aggregation)
+    df = _keep_relevant_columns(df, plot_spec)
     return df
 
 
@@ -41,7 +45,7 @@ def _get_plot_data(
         truth_source,
         aggregation_level,
         resolution,
-        aggregation: Literal["sum", "avg"] = "sum"
+        aggregation: Literal["sum", "per_unit_avg", "per_user_avg"] = "sum"
 ) -> pl.DataFrame:
     groups = []
     if truth_source == "eia":
@@ -71,9 +75,48 @@ def _get_plot_data(
         # resstock_data = recs_mapping.add_characteristic_columns(resstock_data)
     else:
         raise NotImplementedError(f"Truth source {truth_source} not implemented.")
-    merged = source_data.join(resstock_data, on=groups, how="outer", coalesce=True)
-    return merged.fill_null(0)
-    
+    merged = pl.concat([source_data, resstock_data], how="diagonal_relaxed").fill_null(0)
+    df = _pivot_enduse_columns(merged, groups)
+    return df
+
+
+def _pivot_enduse_columns(df: pl.DataFrame, groups: list) -> pl.DataFrame:
+    """Pivot enduse columns to have unified column names."""
+    index_cols = groups + ["units_count", "sample_count", "source", "quantity_type"]
+    df = df.unpivot(
+        index=index_cols,
+        variable_name="quantity",
+        value_name="value"
+    )
+    return df
+
+def _keep_relevant_columns(
+    df: pl.DataFrame,
+    plot_spec: PlotSpec,
+) -> pl.DataFrame:
+    """Keep only the relevant columns for the given plot specification."""
+    all_output_columns = [col for col in df.columns if col.endswith(("_value", "_customers", "_quartiles"))]
+    if plot_spec.quantity is not None:
+        drop_columns = [col for col in all_output_columns if plot_spec.quantity.value not in col]
+        df = df.drop(drop_columns)
+        return df
+    if plot_spec.truth_source == "eia":
+        relevant_quatities = [
+            DataCol.ELECTRICITY_TOTAL,
+            DataCol.NATURAL_GAS_TOTAL,
+        ]
+    elif plot_spec.truth_source == "recs":
+        relevant_quatities = list(RECS_ENDUSE_MAP.keys())
+    else:
+        raise NotImplementedError(f"Truth source {plot_spec.truth_source} not implemented.")
+    to_drop_columns = []
+    for col in all_output_columns:
+        if not any(q.value in col for q in relevant_quatities):
+            to_drop_columns.append(col)
+    df = df.drop(to_drop_columns)
+    return df
+
+
 def scale_to_eia_customers(
     buildstock_df: pl.DataFrame,
     eia_df: pl.DataFrame,

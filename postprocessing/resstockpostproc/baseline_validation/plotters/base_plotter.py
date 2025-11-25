@@ -14,7 +14,7 @@ MONTH_MAX = MONTH_ROWS * MONTH_COLS
 def _add_bar_plot(
     fig: go.Figure,
     df: pl.DataFrame,
-    group_by: str,
+    category_column: str,
     quantity_columns: list[str],
     column_labels: list[str],
     column_colors: list[str],
@@ -29,7 +29,7 @@ def _add_bar_plot(
     Args:
         fig: Plotly figure object
         df: DataFrame containing the data
-        group_by: Column name to group by (shown on y-axis)
+        categories: Column name for categories (shown on y-axis)
         quantity_columns: List of column names to plot
         column_labels: List of labels for each column
         column_colors: List of colors for each column
@@ -38,7 +38,7 @@ def _add_bar_plot(
         showlegend: Whether to show legend for this panel
         x_unit: Unit label for x-axis (default: "kWh")
     """
-    categories = df[group_by].to_list()
+    categories_list = df[category_column].to_list()
     
     # Plot columns in reverse order to match legend order
     for i, col_name in enumerate(reversed(quantity_columns)):
@@ -55,7 +55,7 @@ def _add_bar_plot(
         
         fig.add_bar(
             x=df[col_name].to_list(),
-            y=categories,
+            y=categories_list,
             orientation="h",
             name=label,
             legendgroup=label,

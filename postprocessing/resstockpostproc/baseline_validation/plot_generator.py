@@ -8,6 +8,7 @@ from pathlib import Path
 import sys
 import polars as pl
 from itertools import product
+from plotly.graph_objects import Figure
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.io_managers.get_lrd_data import get_lrd_data
 import resstockpostproc.shared_utils.db_column_names as db_cols
@@ -18,7 +19,7 @@ from resstockpostproc.baseline_validation.utils import get_buildstock_query
 from resstockpostproc.baseline_validation.io_managers.output_manager import save_dataframe, save_figure
 from resstockpostproc.baseline_validation.plotters import eia_plotter, lrd_plotter, timeseries_plotter, recs_plotter
 from resstockpostproc.baseline_validation.schema.workflow_schema import PlotType, WorkflowConfig
-from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, FileType, QuantityType, TruthSource
+from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, FileType, AggregationType, TruthSource, ViewType
 from resstockpostproc.baseline_validation.utils import ensure_directory
 from resstockpostproc.baseline_validation.data_processing.data_processor import get_plot_data
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
@@ -28,15 +29,15 @@ def generate_eia_plots() -> None:
     print("Generating EIA validation plots...")
     quantities = [None, DataCol.ELECTRICITY_TOTAL, DataCol.NATURAL_GAS_TOTAL]
     agg_levels = ['state'] # eia_data.get_available_aggregation_levels()
-    quantity_types = [QuantityType.percent_difference, QuantityType.stock_energy]
+    quantity_types = [AggregationType.percent_difference, AggregationType.stock_total]
     resolutions = ('monthly', 'annual')
 
     agg_levels = ["state"]
-    quantity_types = [QuantityType.stock_energy]
+    quantity_types = [AggregationType.stock_total]
     resolutions = ("annual",)
     for quantity, agg_level, quantity_type, resolution in product(quantities, agg_levels, quantity_types, resolutions):
         print(f"  Processing {agg_level} level...")
-        if resolution != "monthly" and quantity_type == QuantityType.percent_difference and quantity is not None:
+        if resolution != "monthly" and quantity_type == AggregationType.percent_difference and quantity is not None:
             continue  # Percent difference plot is done with both together
         if resolution == "monthly" and quantity is None:
             continue  # Monthly plots require a specific quantity
@@ -46,7 +47,7 @@ def generate_eia_plots() -> None:
             aggregation_level=agg_level,
             quantity=quantity,
             focus_on=None,
-            quantity_type=quantity_type,
+            aggregation_type=quantity_type,
             visualization_type="bar",
             
         )
@@ -69,7 +70,7 @@ def generate_recs_plots() -> None:
                   DataCol.ELECTRICITY_SPACE_COOLING,
                   ]
     agg_levels = ['state'] # eia_data.get_available_aggregation_levels()
-    quantity_types = [QuantityType.percent_difference, QuantityType.stock_energy]
+    agg_types = [AggregationType.stock_total]
     resolutions = ('monthly', 'annual')
 
     # quantities = [DBCol.ELECTRICITY_TOTAL]
@@ -77,13 +78,16 @@ def generate_recs_plots() -> None:
     quantities.extend(q for q in RECS_ENDUSE_MAP if q not in monthly_quantities)
     # quantities = [DataCol.ELECTRICITY_EV_CHARGING]
     agg_levels = ["state"]
-    quantity_types = [QuantityType.stock_energy, QuantityType.per_unit_energy,
-                      QuantityType.per_unit_energy_distribution, QuantityType.number_of_customers]
-    quantity_types = [QuantityType.number_of_customers]
-    resolutions = ("annual", "monthly")
-    quantities = [q for q in quantities if 'fuel_oil' in q or 'natural_gas' in q]
-    for quantity, agg_level, resolution, quantity_type in product(quantities, agg_levels, resolutions, quantity_types):
-        if resolution == "monthly" and quantity_type == QuantityType.per_unit_energy_distribution:
+    agg_types = [AggregationType.stock_total, AggregationType.per_unit_distribution,
+                      AggregationType.per_unit, AggregationType.percent_users,
+                      AggregationType.monthly_per_user, AggregationType.per_user_distribution,
+                      AggregationType.per_user
+                      ]
+    agg_types = [AggregationType.stock_total]
+    resolutions = ("annual",)
+    quantities = [None]
+    for quantity, agg_level, resolution, agg_type in product(quantities, agg_levels, resolutions, agg_types):
+        if resolution == "monthly" and agg_type == AggregationType.per_unit_distribution:
             continue
         plot_spec = PlotSpec(
             truth_source=TruthSource.recs,
@@ -91,17 +95,23 @@ def generate_recs_plots() -> None:
             aggregation_level=agg_level,
             quantity=quantity,
             focus_on=None,
-            quantity_type=quantity_type,
+            aggregation_type=agg_type,
             visualization_type="bar",
-            
+            view=ViewType.value_view
         )
-        data = get_plot_data(plot_spec)
-        # data.write_parquet(Path("debug.parquet"))
-        # data = pl.read_parquet(Path("debug.parquet"))
-        plot_func = get_plotting_function(plot_spec.truth_source)
-        fig = plot_func(data, plot_spec)
-        fig.show(renderer="browser")
-        save_figure(fig, plot_spec)
+        _show_figure(plot_spec)
+
+def _show_figure(plot_spec: PlotSpec) -> None:
+    """Generate and show a plot based on the plot specification."""
+    fig = _create_plot(plot_spec)
+    fig.show(renderer="browser")
+
+def _create_plot(plot_spec: PlotSpec) -> Figure:
+    """Create a plot based on the plot specification."""
+    data = get_plot_data(plot_spec)
+    plot_func = get_plotting_function(plot_spec.truth_source)
+    fig = plot_func(data, plot_spec)
+    return fig
 
     print("RECS plots complete!")
 

@@ -8,7 +8,7 @@ from plotly.subplots import make_subplots
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
-    QuantityType,
+    AggregationType,
 )
 from resstockpostproc.baseline_validation.theme import apply_theme
 from resstockpostproc.shared_utils.colors import QUALITATIVE_SERIES, REF_QUALITATIVE_SERIES
@@ -772,7 +772,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     if plot_spec.resolution == "annual":
         buildstock, eia_df = _split_annual_data(data, plot_spec.aggregation_level)
 
-        if plot_spec.quantity_type == QuantityType.stock_energy:
+        if plot_spec.aggregation_type == AggregationType.stock_total:
             match plot_spec.quantity:
                 case None:
                     return plot_annual_sales_comparison(buildstock, eia_df, by=plot_spec.aggregation_level)
@@ -780,7 +780,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                     return plot_annual_sales_comparison_electricity(buildstock, eia_df, by=plot_spec.aggregation_level)
                 case DataCol.NATURAL_GAS_TOTAL:
                     return plot_annual_sales_comparison_natural_gas(buildstock, eia_df, by=plot_spec.aggregation_level)
-        elif plot_spec.quantity_type == QuantityType.percent_difference and plot_spec.quantity is None:
+        elif plot_spec.aggregation_type == AggregationType.percent_difference and plot_spec.quantity is None:
             return plot_annual_sales_comparison_percent_diff(buildstock, eia_df, by=plot_spec.aggregation_level)
     elif plot_spec.resolution == "monthly":
         buildstock, eia_df = _split_monthly_data(data, plot_spec.aggregation_level)
@@ -794,7 +794,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                 "Monthly EIA plotting requires quantity to be electricity or natural_gas"
             )
 
-        if plot_spec.quantity_type == QuantityType.stock_energy:
+        if plot_spec.aggregation_type == AggregationType.stock_total:
             if fuel == "electricity":
                 return plot_monthly_sales_comparison_electricity(
                     buildstock, eia_df, by=plot_spec.aggregation_level
@@ -803,7 +803,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                 return plot_monthly_sales_comparison_natural_gas(
                     buildstock, eia_df, by=plot_spec.aggregation_level
                 )
-        elif plot_spec.quantity_type == QuantityType.percent_difference:
+        elif plot_spec.aggregation_type == AggregationType.percent_difference:
             df, runs, colors = _prepare_monthly(buildstock, eia_df, plot_spec.aggregation_level)
             eia_cols, _, _ = _get_eia_cols_and_labels(df, fuel)
             bs_cols = [f"{r}_{fuel}_kwh" for r in runs]
@@ -921,5 +921,5 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     qty = plot_spec.quantity.value if plot_spec.quantity else "all"
     raise NotImplementedError(
         f"EIA plot for resolution='{plot_spec.resolution}', "
-        f"quantity_type='{plot_spec.quantity_type.value}', and quantity='{qty}' is not supported"
+        f"quantity_type='{plot_spec.aggregation_type.value}', and quantity='{qty}' is not supported"
     )

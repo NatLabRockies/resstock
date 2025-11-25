@@ -62,6 +62,7 @@ class DataCol(StrEnum):
     CENSUS_DIVISION = "census_division"
     BLDG_AMERICA_CLIMATE_ZONE = "building_america_climate_zone"
     EV_OWNERSHIP = "electric_vehicle_ownership"
+    UNITS_COUNT = "units_count"
     TIMESTAMP = "timestamp"
 
 
