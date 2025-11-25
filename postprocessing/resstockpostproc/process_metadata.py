@@ -367,7 +367,8 @@ def col_name_to_savings(col_name: str) -> str:
         '.emissions.': '.emissions_reduction.',
         'panel_load_total_load': 'panel_load_total_load_savings',
         'panel_load_occupied_capacity': 'panel_load_occupied_capacity_savings',
-        'panel_breaker_space_occupied': 'panel_breaker_space_occupied_savings'
+        'panel_breaker_space_occupied': 'panel_breaker_space_occupied_savings',
+        "component_load": "component_load_savings"
     }
     for bef, aft in svg_renames.items():
         converted_col_name = converted_col_name.replace(bef, aft)
