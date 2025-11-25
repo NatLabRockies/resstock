@@ -21,7 +21,7 @@ from resstockpostproc.baseline_validation.plotters import eia_plotter, lrd_plott
 from resstockpostproc.baseline_validation.schema.workflow_schema import PlotType, WorkflowConfig
 from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, FileType, AggregationType, TruthSource, ViewType
 from resstockpostproc.baseline_validation.utils import ensure_directory
-from resstockpostproc.baseline_validation.data_processing.data_processor import get_plot_data
+from .resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 
 def generate_eia_plots() -> None:

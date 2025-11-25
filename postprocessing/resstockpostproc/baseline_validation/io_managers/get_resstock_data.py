@@ -1,8 +1,8 @@
 import polars as pl
 import pandas as pd
-
+from collections.abc import Sequence
+from typing import Literal
 from resstockpostproc.baseline_validation.io_managers.utils import _stack_quantity_types
-from resstockpostproc.baseline_validation.data_processing.data_processor import scale_to_eia_customers
 from .utils import add_us_total
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow, DataSourceConfig
 from resstockpostproc.shared_utils.db_column_names import get_db_enduse_colnames_map, get_db_characteristics_colnames
@@ -11,7 +11,7 @@ from resstockpostproc.baseline_validation.schema.workflow_schema import DBSchema
 from resstockpostproc.baseline_validation.utils import get_buildstock_query
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
 from resstockpostproc.shared_utils.db_column_names import DataCol, DBCharCol
-from typing import Literal, Sequence
+
 
 
 def get_monthly_all(

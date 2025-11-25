@@ -3,7 +3,7 @@
 import polars as pl
 import pytest
 
-from resstockpostproc.baseline_validation.data_processing.data_processor import (
+from .resstockpostproc.baseline_validation.data_processing.gather_data import (
     scale_to_eia_customers,
 )
 from resstockpostproc.baseline_validation.plotters import eia_plotter
