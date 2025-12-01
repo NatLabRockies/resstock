@@ -4,7 +4,7 @@ Script to take in raw BuildStockBatch results_csvs / parquet and convert them to
 
 Example usage:
 uv run resstockpostproc/process_bsb_results.py /path/to/bsb_raw_results /path/to/output_dir
-uv run resstockpostproc/process_bsb_results.py "C:/Scratch/ResStock/efforts/full_550k_run" "C:/Scratch/ResStock/efforts/full_550k_run_output"
+uv run resstockpostproc/process_bsb_results.py "C:/Users/pwhite2/Documents/sdr_2025_final_run_data/AMY2012" "C:/Users/pwhite2/Documents/sdr_2025_final_run_data/AMY2012_output"
 uv run resstockpostproc/process_bsb_results.py "C:/Scratch/ResStock/efforts/full_550k_run" "s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/resstock_amy2018_release_1"
 
 
