@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>83aa7863-de64-487d-a4f2-d2aeefa00377</version_id>
-  <version_modified>2025-11-20T20:38:46Z</version_modified>
+  <version_id>f078a71c-b68d-4530-a6ed-0e28578b12f6</version_id>
+  <version_modified>2025-12-01T16:33:08Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -852,20 +852,16 @@
           <display_name>Belly and Wing, No Skirt</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Basement, Unconditioned, 7.25 ft Height, 8 in Above-Grade, 9 in Rim Joists</value>
-          <display_name>Detailed Example: Basement, Unconditioned, 7.25 ft Height, 8 in Above-Grade, 9 in Rim Joists</display_name>
-        </choice>
-        <choice>
-          <value>Detailed Example: Basement, Conditioned, 7.25 ft Height, 8 in Above-Grade, 9 in Rim Joists</value>
-          <display_name>Detailed Example: Basement, Conditioned, 7.25 ft Height, 8 in Above-Grade, 9 in Rim Joists</display_name>
-        </choice>
-        <choice>
-          <value>Detailed Example: Basement, Conditioned, 5 ft Height</value>
-          <display_name>Detailed Example: Basement, Conditioned, 5 ft Height</display_name>
-        </choice>
-        <choice>
           <value>Detailed Example: Crawlspace, Vented, Above-Grade</value>
           <display_name>Detailed Example: Crawlspace, Vented, Above-Grade</display_name>
+        </choice>
+        <choice>
+          <value>ASHRAE 140 Tests: Basement, Conditioned</value>
+          <display_name>ASHRAE 140 Tests: Basement, Conditioned</display_name>
+        </choice>
+        <choice>
+          <value>ASHRAE 140 Tests: Basement, Unconditioned</value>
+          <display_name>ASHRAE 140 Tests: Basement, Unconditioned</display_name>
         </choice>
       </choices>
     </argument>
@@ -1257,16 +1253,16 @@
           <display_name>Wood Frame, IECC U-0.028</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor</value>
-          <display_name>Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor</display_name>
+          <value>HERS DSE Tests: Wood Frame, R-11</value>
+          <display_name>HERS DSE Tests: Wood Frame, R-11</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor</value>
-          <display_name>Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor</display_name>
+          <value>ASHRAE 140 Tests: Wood Frame, Uninsulated</value>
+          <display_name>ASHRAE 140 Tests: Wood Frame, Uninsulated</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor</value>
-          <display_name>Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor</display_name>
+          <value>ASHRAE 140 Tests: Wood Frame, R-11</value>
+          <display_name>ASHRAE 140 Tests: Wood Frame, R-11</display_name>
         </choice>
       </choices>
     </argument>
@@ -1330,18 +1326,6 @@
         <choice>
           <value>Wood Frame, IECC U-0.033</value>
           <display_name>Wood Frame, IECC U-0.033</display_name>
-        </choice>
-        <choice>
-          <value>Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor</value>
-          <display_name>Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor</display_name>
-        </choice>
-        <choice>
-          <value>Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor</value>
-          <display_name>Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor</display_name>
-        </choice>
-        <choice>
-          <value>Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor</value>
-          <display_name>Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor</display_name>
         </choice>
       </choices>
     </argument>
@@ -1458,12 +1442,12 @@
           <display_name>Exterior, R-20</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Uninsulated, Fiberboard Sheathing, Hardboard Siding</value>
-          <display_name>Detailed Example: Uninsulated, Fiberboard Sheathing, Hardboard Siding</display_name>
+          <value>ASHRAE 140 Tests: Uninsulated</value>
+          <display_name>ASHRAE 140 Tests: Uninsulated</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: R-11, Fiberboard Sheathing, Hardboard Siding</value>
-          <display_name>Detailed Example: R-11, Fiberboard Sheathing, Hardboard Siding</display_name>
+          <value>ASHRAE 140 Tests: R-11</value>
+          <display_name>ASHRAE 140 Tests: R-11</display_name>
         </choice>
       </choices>
     </argument>
@@ -1568,25 +1552,48 @@
           <value>Whole Slab, R-40</value>
           <display_name>Whole Slab, R-40</display_name>
         </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>enclosure_carpet</name>
+      <display_name>Enclosure: Carpet</display_name>
+      <description>The amount of carpet. Applies to floors/slabs adjacent to conditioned space. The R-value of the carpet will be ignored if a floor option with an IECC U-factor is selected.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>80% Carpet</default_value>
+      <choices>
         <choice>
-          <value>Detailed Example: Uninsulated, No Carpet</value>
-          <display_name>Detailed Example: Uninsulated, No Carpet</display_name>
+          <value>None</value>
+          <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Uninsulated, 100% R-2.08 Carpet</value>
-          <display_name>Detailed Example: Uninsulated, 100% R-2.08 Carpet</display_name>
+          <value>20% Carpet</value>
+          <display_name>20% Carpet</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Uninsulated, 100% R-2.50 Carpet</value>
-          <display_name>Detailed Example: Uninsulated, 100% R-2.50 Carpet</display_name>
+          <value>40% Carpet</value>
+          <display_name>40% Carpet</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Perimeter, 2ft, R-5, 100% R-2.08 Carpet</value>
-          <display_name>Detailed Example: Perimeter, 2ft, R-5, 100% R-2.08 Carpet</display_name>
+          <value>60% Carpet</value>
+          <display_name>60% Carpet</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Whole Slab, R-5, 100% R-2.5 Carpet</value>
-          <display_name>Detailed Example: Whole Slab, R-5, 100% R-2.5 Carpet</display_name>
+          <value>80% Carpet</value>
+          <display_name>80% Carpet</display_name>
+        </choice>
+        <choice>
+          <value>100% Carpet</value>
+          <display_name>100% Carpet</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: 100% Carpet, R-2.5</value>
+          <display_name>Detailed Example: 100% Carpet, R-2.5</display_name>
+        </choice>
+        <choice>
+          <value>ASHRAE 140 Tests</value>
+          <display_name>ASHRAE 140 Tests</display_name>
         </choice>
       </choices>
     </argument>
@@ -1648,16 +1655,16 @@
           <display_name>IECC U-0.024</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: R-11, 2x6, 24 in o.c., 10% Framing</value>
-          <display_name>Detailed Example: R-11, 2x6, 24 in o.c., 10% Framing</display_name>
+          <value>ASHRAE 140 Tests: R-11</value>
+          <display_name>ASHRAE 140 Tests: R-11</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: R-19, 2x6, 24 in o.c., 10% Framing</value>
-          <display_name>Detailed Example: R-19, 2x6, 24 in o.c., 10% Framing</display_name>
+          <value>ASHRAE 140 Tests: R-19</value>
+          <display_name>ASHRAE 140 Tests: R-19</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: R-19 + R-38, 2x6, 24 in o.c., 10% Framing</value>
-          <display_name>Detailed Example: R-19 + R-38, 2x6, 24 in o.c., 10% Framing</display_name>
+          <value>ASHRAE 140 Tests: R-19 + R-38</value>
+          <display_name>ASHRAE 140 Tests: R-19 + R-38</display_name>
         </choice>
       </choices>
     </argument>
@@ -1715,8 +1722,8 @@
           <display_name>IECC U-0.024</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Uninsulated, 0.5 in plywood, 0.25 in asphalt shingle</value>
-          <display_name>Detailed Example: Uninsulated, 0.5 in plywood, 0.25 in asphalt shingle</display_name>
+          <value>ASHRAE 140 Tests: Uninsulated</value>
+          <display_name>ASHRAE 140 Tests: Uninsulated</display_name>
         </choice>
       </choices>
     </argument>
@@ -1894,20 +1901,16 @@
           <display_name>Cool Roof</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: 0.2 Solar Absorptance</value>
-          <display_name>Detailed Example: 0.2 Solar Absorptance</display_name>
+          <value>ASHRAE 140 Tests: Low Solar Absorptance</value>
+          <display_name>ASHRAE 140 Tests: Low Solar Absorptance</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: 0.4 Solar Absorptance</value>
-          <display_name>Detailed Example: 0.4 Solar Absorptance</display_name>
+          <value>ASHRAE 140 Tests: Typical Solar Absorptance</value>
+          <display_name>ASHRAE 140 Tests: Typical Solar Absorptance</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: 0.6 Solar Absorptance</value>
-          <display_name>Detailed Example: 0.6 Solar Absorptance</display_name>
-        </choice>
-        <choice>
-          <value>Detailed Example: 0.75 Solar Absorptance</value>
-          <display_name>Detailed Example: 0.75 Solar Absorptance</display_name>
+          <value>HERS Reference</value>
+          <display_name>HERS Reference</display_name>
         </choice>
       </choices>
     </argument>
@@ -2140,16 +2143,16 @@
           <display_name>Wood Stud, IECC U-0.045</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Wood Stud, Uninsulated, 2x4, 16 in o.c., 25% Framing</value>
-          <display_name>Detailed Example: Wood Stud, Uninsulated, 2x4, 16 in o.c., 25% Framing</display_name>
+          <value>ASHRAE 140 Tests: Wood Stud, Uninsulated</value>
+          <display_name>ASHRAE 140 Tests: Wood Stud, Uninsulated</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Wood Stud, R-11, 2x4, 16 in o.c., 25% Framing</value>
-          <display_name>Detailed Example: Wood Stud, R-11, 2x4, 16 in o.c., 25% Framing</display_name>
+          <value>ASHRAE 140 Tests: Wood Stud, R-11</value>
+          <display_name>ASHRAE 140 Tests: Wood Stud, R-11</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Wood Stud, R-18, 2x6, 24 in o.c., 25% Framing</value>
-          <display_name>Detailed Example: Wood Stud, R-18, 2x6, 24 in o.c., 25% Framing</display_name>
+          <value>ASHRAE 140 Tests: Wood Stud, R-18</value>
+          <display_name>ASHRAE 140 Tests: Wood Stud, R-18</display_name>
         </choice>
       </choices>
     </argument>
@@ -2207,8 +2210,8 @@
           <display_name>R-21</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: R-7.2</value>
-          <display_name>Detailed Example: R-7.2</display_name>
+          <value>ASHRAE 140 Tests: R-7.2</value>
+          <display_name>ASHRAE 140 Tests: R-7.2</display_name>
         </choice>
       </choices>
     </argument>
@@ -2426,20 +2429,16 @@
           <display_name>Masonite, Reflective</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: 0.2 Solar Absorptance</value>
-          <display_name>Detailed Example: 0.2 Solar Absorptance</display_name>
+          <value>ASHRAE 140 Tests: Low Solar Absorptance</value>
+          <display_name>ASHRAE 140 Tests: Low Solar Absorptance</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: 0.4 Solar Absorptance</value>
-          <display_name>Detailed Example: 0.4 Solar Absorptance</display_name>
+          <value>ASHRAE 140 Tests: Typical Solar Absorptance</value>
+          <display_name>ASHRAE 140 Tests: Typical Solar Absorptance</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: 0.6 Solar Absorptance</value>
-          <display_name>Detailed Example: 0.6 Solar Absorptance</display_name>
-        </choice>
-        <choice>
-          <value>Detailed Example: 0.75 Solar Absorptance</value>
-          <display_name>Detailed Example: 0.75 Solar Absorptance</display_name>
+          <value>HERS Reference</value>
+          <display_name>HERS Reference</display_name>
         </choice>
       </choices>
     </argument>
@@ -2629,12 +2628,12 @@
           <display_name>EnergyStar, Southern</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Single, Clear, Aluminum w/ Thermal Break</value>
-          <display_name>Detailed Example: Single, Clear, Aluminum w/ Thermal Break</display_name>
+          <value>ASHRAE 140 Tests: Single, Clear</value>
+          <display_name>ASHRAE 140 Tests: Single, Clear</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Double, Low-E, Wood, Argon, Insulated Spacer</value>
-          <display_name>Detailed Example: Double, Low-E, Wood, Argon, Insulated Spacer</display_name>
+          <value>ASHRAE 140 Tests: Double, Low-E</value>
+          <display_name>ASHRAE 140 Tests: Double, Low-E</display_name>
         </choice>
       </choices>
     </argument>
@@ -3055,8 +3054,8 @@
           <display_name>Detailed Example: 1.5ft, Back/Left/Right Windows, 2ft Offset, 4ft Window Height</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: 2.5ft, Front Windows, 1ft Offset, 5ft Window Height</value>
-          <display_name>Detailed Example: 2.5ft, Front Windows, 1ft Offset, 5ft Window Height</display_name>
+          <value>ASHRAE 140 Tests: 2.5ft, Front Windows</value>
+          <display_name>ASHRAE 140 Tests: 2.5ft, Front Windows</display_name>
         </choice>
       </choices>
     </argument>
@@ -3225,12 +3224,12 @@
           <display_name>IECC U-0.30</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Solid Wood, R-3.04</value>
-          <display_name>Detailed Example: Solid Wood, R-3.04</display_name>
-        </choice>
-        <choice>
           <value>Detailed Example: Insulated Fiberglass/Steel, R-4.4</value>
           <display_name>Detailed Example: Insulated Fiberglass/Steel, R-4.4</display_name>
+        </choice>
+        <choice>
+          <value>ASHRAE 140 Tests: Solid Wood</value>
+          <display_name>ASHRAE 140 Tests: Solid Wood</display_name>
         </choice>
       </choices>
     </argument>
@@ -3396,6 +3395,10 @@
           <display_name>1.5 nACH</display_name>
         </choice>
         <choice>
+          <value>HERS Reference</value>
+          <display_name>HERS Reference</display_name>
+        </choice>
+        <choice>
           <value>Detailed Example: 3.57 ACH50</value>
           <display_name>Detailed Example: 3.57 ACH50</display_name>
         </choice>
@@ -3414,10 +3417,6 @@
         <choice>
           <value>Detailed Example: 72 nCFM</value>
           <display_name>Detailed Example: 72 nCFM</display_name>
-        </choice>
-        <choice>
-          <value>Detailed Example: 79.8 sq. in. ELA</value>
-          <display_name>Detailed Example: 79.8 sq. in. ELA</display_name>
         </choice>
         <choice>
           <value>Detailed Example: 123 sq. in. ELA</value>
@@ -4580,10 +4579,6 @@
           <display_name>Packaged Terminal HP, EER 13.2, COP 3.9</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Central HP, SEER2 12.4, HSPF2 8.4</value>
-          <display_name>Detailed Example: Central HP, SEER2 12.4, HSPF2 8.4</display_name>
-        </choice>
-        <choice>
           <value>Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance</value>
           <display_name>Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance</display_name>
         </choice>
@@ -4606,6 +4601,10 @@
         <choice>
           <value>Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance</value>
           <display_name>Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance</display_name>
+        </choice>
+        <choice>
+          <value>HERS HVAC Tests: Central HP, SEER2 12.4, HSPF2 8.4</value>
+          <display_name>HERS HVAC Tests: Central HP, SEER2 12.4, HSPF2 8.4</display_name>
         </choice>
       </choices>
     </argument>
@@ -6134,12 +6133,12 @@
           <display_name>Detailed Example: 5 CFM50 per 100ft2 (75% Supply), R-4</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: 250 CFM25, R-6</value>
-          <display_name>Detailed Example: 250 CFM25, R-6</display_name>
-        </choice>
-        <choice>
           <value>Detailed Example: 400 CFM50 (75% Supply), R-6</value>
           <display_name>Detailed Example: 400 CFM50 (75% Supply), R-6</display_name>
+        </choice>
+        <choice>
+          <value>HERS DSE Tests: 250 CFM25, R-6</value>
+          <display_name>HERS DSE Tests: 250 CFM25, R-6</display_name>
         </choice>
       </choices>
     </argument>
@@ -6679,20 +6678,20 @@
           <display_name>Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78</value>
-          <display_name>Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78</display_name>
-        </choice>
-        <choice>
-          <value>Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78</value>
-          <display_name>Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78</display_name>
-        </choice>
-        <choice>
-          <value>Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76</value>
-          <display_name>Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76</display_name>
+          <value>Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59</value>
+          <display_name>Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Natural Gas, Tankless, EF 0.95</value>
           <display_name>Detailed Example: Natural Gas, Tankless, EF 0.95</display_name>
+        </choice>
+        <choice>
+          <value>HERS Hot Water Tests: Natural Gas, Tank, 40 gal, EF 0.56</value>
+          <display_name>HERS Hot Water Tests: Natural Gas, Tank, 40 gal, EF 0.56</display_name>
+        </choice>
+        <choice>
+          <value>HERS Hot Water Tests: Natural Gas, Tank, 40 gal, EF 0.62</value>
+          <display_name>HERS Hot Water Tests: Natural Gas, Tank, 40 gal, EF 0.62</display_name>
         </choice>
       </choices>
     </argument>
@@ -6797,12 +6796,12 @@
           <display_name>Insulated, Recirc, Manual Demand Control</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Insulated, Recirc, Uncontrolled, 156.9ft Loop, 10ft Branch, 50 W</value>
-          <display_name>Detailed Example: Insulated, Recirc, Uncontrolled, 156.9ft Loop, 10ft Branch, 50 W</display_name>
+          <value>HERS Hot Water Tests: Insulated, Recirc, Uncontrolled</value>
+          <display_name>HERS Hot Water Tests: Insulated, Recirc, Uncontrolled</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Insulated, Recirc, Manual Demand Control, 156.9ft Loop, 10ft Branch, 50 W</value>
-          <display_name>Detailed Example: Insulated, Recirc, Manual Demand Control, 156.9ft Loop, 10ft Branch, 50 W</display_name>
+          <value>HERS Hot Water Tests: Insulated, Recirc, Manual Demand Control</value>
+          <display_name>HERS Hot Water Tests: Insulated, Recirc, Manual Demand Control</display_name>
         </choice>
       </choices>
     </argument>
@@ -6967,8 +6966,8 @@
           <display_name>55% Efficient, Preheats Hot and Cold, 1 Shower</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: 54% Efficient, Preheats Hot and Cold, All Showers</value>
-          <display_name>Detailed Example: 54% Efficient, Preheats Hot and Cold, All Showers</display_name>
+          <value>HERS Hot Water Tests: 54% Efficient, Preheats Hot and Cold, All Showers</value>
+          <display_name>HERS Hot Water Tests: 54% Efficient, Preheats Hot and Cold, All Showers</display_name>
         </choice>
       </choices>
     </argument>
@@ -8709,8 +8708,8 @@
           <display_name>CEE Tier II, 2018, 200% Usage</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: ERI Reference 2006</value>
-          <display_name>Detailed Example: ERI Reference 2006</display_name>
+          <value>HERS Reference</value>
+          <display_name>HERS Reference</display_name>
         </choice>
         <choice>
           <value>Detailed Example: MEF 1.65</value>
@@ -8864,12 +8863,12 @@
           <display_name>Propane, Standard, 200% Usage</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Electricity, ERI Reference 2006</value>
-          <display_name>Detailed Example: Electricity, ERI Reference 2006</display_name>
+          <value>HERS Reference: Electricity</value>
+          <display_name>HERS Reference: Electricity</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Natural Gas, ERI Reference 2006</value>
-          <display_name>Detailed Example: Natural Gas, ERI Reference 2006</display_name>
+          <value>HERS Reference: Natural Gas</value>
+          <display_name>HERS Reference: Natural Gas</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Electricity, EF 4.29</value>
@@ -8963,8 +8962,8 @@
           <display_name>EnergyStar, Compact, 200% Usage</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: ERI Reference 2006</value>
-          <display_name>Detailed Example: ERI Reference 2006</display_name>
+          <value>HERS Reference</value>
+          <display_name>HERS Reference</display_name>
         </choice>
         <choice>
           <value>Detailed Example: EF 0.7, Compact</value>
@@ -9130,16 +9129,16 @@
           <display_name>348 kWh/yr, 110% Usage</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: ERI Reference 2006, 2-Bedroom Home</value>
-          <display_name>Detailed Example: ERI Reference 2006, 2-Bedroom Home</display_name>
+          <value>HERS Reference: 2-Bedroom Home</value>
+          <display_name>HERS Reference: 2-Bedroom Home</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: ERI Reference 2006, 3-Bedroom Home</value>
-          <display_name>Detailed Example: ERI Reference 2006, 3-Bedroom Home</display_name>
+          <value>HERS Reference: 3-Bedroom Home</value>
+          <display_name>HERS Reference: 3-Bedroom Home</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: ERI Reference 2006, 4-Bedroom Home</value>
-          <display_name>Detailed Example: ERI Reference 2006, 4-Bedroom Home</display_name>
+          <value>HERS Reference: 4-Bedroom Home</value>
+          <display_name>HERS Reference: 4-Bedroom Home</display_name>
         </choice>
         <choice>
           <value>Detailed Example: 650 kWh/yr, Conditioned Basement</value>
@@ -9900,8 +9899,8 @@
           <display_name>100% CFL, 200% Usage</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: 10% CFL</value>
-          <display_name>Detailed Example: 10% CFL</display_name>
+          <value>HERS Reference</value>
+          <display_name>HERS Reference</display_name>
         </choice>
         <choice>
           <value>Detailed Example: 40% CFL, 10% LFL, 25% LED</value>
@@ -10189,12 +10188,12 @@
           <display_name>400% Usage</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: 2457 kWh/yr, 85.5% Sensible, 4.5% Latent</value>
-          <display_name>Detailed Example: 2457 kWh/yr, 85.5% Sensible, 4.5% Latent</display_name>
+          <value>Detailed Example: 2457 kWh/yr</value>
+          <display_name>Detailed Example: 2457 kWh/yr</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: 7302 kWh/yr, 82.2% Sensible, 17.8% Latent</value>
-          <display_name>Detailed Example: 7302 kWh/yr, 82.2% Sensible, 17.8% Latent</display_name>
+          <value>ASHRAE 140 Tests</value>
+          <display_name>ASHRAE 140 Tests</display_name>
         </choice>
       </choices>
     </argument>
@@ -12440,7 +12439,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>CFE58417</checksum>
+      <checksum>4477A38A</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12469,7 +12468,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>2BEFE447</checksum>
+      <checksum>AB4BE5C2</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>
