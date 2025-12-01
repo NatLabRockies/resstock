@@ -33229,11 +33229,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - WoodFrame
      - WoodFrame
    * - ``enclosure_floor_over_foundation_assembly_r_value``
-     - 5.3
-     - 5.3
-     - 17.8
-     - 22.6
-     - 30.3
+     - 3.7
+     - 3.7
+     - 16.2
+     - 21.0
+     - 28.7
    * - ``enclosure_floor_over_garage_type``
      - WoodFrame
      - WoodFrame
@@ -33241,11 +33241,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - WoodFrame
      - WoodFrame
    * - ``enclosure_floor_over_garage_assembly_r_value``
-     - 5.3
-     - 5.3
-     - 17.8
-     - 22.6
-     - 30.3
+     - 3.7
+     - 3.7
+     - 16.2
+     - 21.0
+     - 28.7
 
 Properties
 **********
@@ -33262,13 +33262,13 @@ Properties
      - The type of floor.
    * - ``enclosure_floor_over_foundation_assembly_r_value``
      - F-ft2-hr/Btu
-     - Assembly R-value for the floor.
+     - Assembly R-value for the floor excluding any carpet.
    * - ``enclosure_floor_over_garage_type``
      - 
      - The type of floor.
    * - ``enclosure_floor_over_garage_assembly_r_value``
      - F-ft2-hr/Btu
-     - Assembly R-value for the floor.
+     - Assembly R-value for the floor excluding any carpet.
 .. _insulation_foundation_wall:
 
 Insulation Foundation Wall
