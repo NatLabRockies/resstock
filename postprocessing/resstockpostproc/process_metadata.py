@@ -711,3 +711,16 @@ def get_file_path(output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type,
     file_path = f'{geo_level_dir}/{file_name}'
 
     return file_path
+
+
+def cache_simulation_outputs_file(output_dir, sim_out_cache_dir: pathlib.Path, upgrade_id: int, df: pl.LazyFrame):
+    file_name = f"cached_simulation_outputs_upgrade{upgrade_id}.parquet"
+    upgrade_cache_dir = pathlib.Path(f"{sim_out_cache_dir}/upgrade={upgrade_id}")
+    file_path = upgrade_cache_dir / file_name
+    if isinstance(output_dir['fs'], s3fs.S3FileSystem):
+        file_path = f's3://{file_path.as_posix()}'
+    else:
+        upgrade_cache_dir.mkdir(parents=True, exist_ok=True)
+    with output_dir['fs'].open(str(file_path), "wb") as f:
+        df.sink_parquet(f)
+    print(f"Cached simulation outputs for upgrade {upgrade_id} to {file_path}")
