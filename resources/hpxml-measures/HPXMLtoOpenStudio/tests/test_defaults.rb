@@ -16,6 +16,8 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     @tmp_hpxml_path = File.join(@sample_files_path, 'tmp.xml')
     @tmp_output_path = File.join(@sample_files_path, 'tmp_output')
     FileUtils.mkdir_p(@tmp_output_path)
+    @schema_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', 'resources', 'hpxml_schema', 'HPXML.xsd'))
+    @schematron_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', 'resources', 'hpxml_schematron', 'EPvalidator.sch'))
 
     @args_hash = {}
     @args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
@@ -5143,9 +5145,17 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     # assert that it ran correctly
     assert_equal('Success', result.value.valueName)
 
-    hpxml = HPXML.new(hpxml_path: File.join(@tmp_output_path, 'in.xml'))
+    hpxml_defaults_path = File.join(@tmp_output_path, 'in.xml')
+    hpxml = HPXML.new(hpxml_path: hpxml_defaults_path, schema_validator: @schema_validator, schematron_validator: @schematron_validator)
+    if not hpxml.errors.empty?
+      puts 'ERRORS:'
+      hpxml.errors.each do |error|
+        puts error
+      end
+      flunk "Validation error(s) in #{hpxml_defaults_path}."
+    end
 
-    File.delete(File.join(@tmp_output_path, 'in.xml'))
+    File.delete(hpxml_defaults_path)
 
     return hpxml, hpxml.buildings[0]
   end

@@ -80,7 +80,6 @@
               <UnitofMeasure>ACH</UnitofMeasure>
               <AirLeakage>3.0</AirLeakage>
             </BuildingAirLeakage>
-            <InfiltrationVolume>7200.0</InfiltrationVolume>
           </AirInfiltrationMeasurement>
         </AirInfiltration>
         <Attics>
@@ -110,11 +109,7 @@
             <Area>196.0</Area>
             <Azimuth>0</Azimuth>
             <Siding>wood siding</Siding>
-            <SolarAbsorptance>0.7</SolarAbsorptance>
-            <Emittance>0.92</Emittance>
-            <InteriorFinish>
-              <Type>gypsum board</Type>
-            </InteriorFinish>
+            <Color>medium</Color>
             <Insulation>
               <SystemIdentifier id='Wall1Insulation'/>
               <AssemblyEffectiveRValue>22.7</AssemblyEffectiveRValue>
@@ -129,11 +124,6 @@
             </WallType>
             <Area>293.9</Area>
             <Azimuth>90</Azimuth>
-            <SolarAbsorptance>0.7</SolarAbsorptance>
-            <Emittance>0.92</Emittance>
-            <InteriorFinish>
-              <Type>gypsum board</Type>
-            </InteriorFinish>
             <Insulation>
               <SystemIdentifier id='Wall2Insulation'/>
               <AssemblyEffectiveRValue>4.0</AssemblyEffectiveRValue>
@@ -149,11 +139,7 @@
             <Area>196.0</Area>
             <Azimuth>180</Azimuth>
             <Siding>wood siding</Siding>
-            <SolarAbsorptance>0.7</SolarAbsorptance>
-            <Emittance>0.92</Emittance>
-            <InteriorFinish>
-              <Type>gypsum board</Type>
-            </InteriorFinish>
+            <Color>medium</Color>
             <Insulation>
               <SystemIdentifier id='Wall3Insulation'/>
               <AssemblyEffectiveRValue>22.7</AssemblyEffectiveRValue>
@@ -169,11 +155,7 @@
             <Area>293.9</Area>
             <Azimuth>270</Azimuth>
             <Siding>wood siding</Siding>
-            <SolarAbsorptance>0.7</SolarAbsorptance>
-            <Emittance>0.92</Emittance>
-            <InteriorFinish>
-              <Type>gypsum board</Type>
-            </InteriorFinish>
+            <Color>medium</Color>
             <Insulation>
               <SystemIdentifier id='Wall4Insulation'/>
               <AssemblyEffectiveRValue>22.7</AssemblyEffectiveRValue>
@@ -204,9 +186,6 @@
               <WoodFrame/>
             </FloorType>
             <Area>900.0</Area>
-            <InteriorFinish>
-              <Type>gypsum board</Type>
-            </InteriorFinish>
             <Insulation>
               <SystemIdentifier id='Floor2Insulation'/>
               <AssemblyEffectiveRValue>2.1</AssemblyEffectiveRValue>

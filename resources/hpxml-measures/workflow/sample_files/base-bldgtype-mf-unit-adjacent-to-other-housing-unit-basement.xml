@@ -72,7 +72,6 @@
               <UnitofMeasure>ACH</UnitofMeasure>
               <AirLeakage>3.0</AirLeakage>
             </BuildingAirLeakage>
-            <InfiltrationVolume>7200.0</InfiltrationVolume>
           </AirInfiltrationMeasurement>
         </AirInfiltration>
         <Attics>
@@ -106,8 +105,7 @@
             <InteriorAdjacentTo>basement - unconditioned</InteriorAdjacentTo>
             <Area>66.1</Area>
             <Siding>wood siding</Siding>
-            <SolarAbsorptance>0.7</SolarAbsorptance>
-            <Emittance>0.92</Emittance>
+            <Color>medium</Color>
             <Insulation>
               <SystemIdentifier id='RimJoist1Insulation'/>
               <AssemblyEffectiveRValue>13.9</AssemblyEffectiveRValue>
@@ -118,8 +116,6 @@
             <ExteriorAdjacentTo>other housing unit</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - unconditioned</InteriorAdjacentTo>
             <Area>28.3</Area>
-            <SolarAbsorptance>0.7</SolarAbsorptance>
-            <Emittance>0.92</Emittance>
             <Insulation>
               <SystemIdentifier id='RimJoist2Insulation'/>
               <AssemblyEffectiveRValue>4.0</AssemblyEffectiveRValue>
@@ -136,11 +132,7 @@
             </WallType>
             <Area>685.9</Area>
             <Siding>wood siding</Siding>
-            <SolarAbsorptance>0.7</SolarAbsorptance>
-            <Emittance>0.92</Emittance>
-            <InteriorFinish>
-              <Type>gypsum board</Type>
-            </InteriorFinish>
+            <Color>medium</Color>
             <Insulation>
               <SystemIdentifier id='Wall1Insulation'/>
               <AssemblyEffectiveRValue>22.7</AssemblyEffectiveRValue>
@@ -154,11 +146,6 @@
               <WoodStud/>
             </WallType>
             <Area>293.9</Area>
-            <SolarAbsorptance>0.7</SolarAbsorptance>
-            <Emittance>0.92</Emittance>
-            <InteriorFinish>
-              <Type>gypsum board</Type>
-            </InteriorFinish>
             <Insulation>
               <SystemIdentifier id='Wall2Insulation'/>
               <AssemblyEffectiveRValue>4.0</AssemblyEffectiveRValue>
@@ -174,9 +161,6 @@
             <Height>8.0</Height>
             <Area>685.9</Area>
             <DepthBelowGrade>7.0</DepthBelowGrade>
-            <InteriorFinish>
-              <Type>none</Type>
-            </InteriorFinish>
             <Insulation>
               <SystemIdentifier id='FoundationWall1Insulation'/>
               <Layer>
@@ -197,9 +181,6 @@
             <Height>8.0</Height>
             <Area>293.9</Area>
             <DepthBelowGrade>7.0</DepthBelowGrade>
-            <InteriorFinish>
-              <Type>none</Type>
-            </InteriorFinish>
             <Insulation>
               <SystemIdentifier id='FoundationWall2Insulation'/>
               <Layer>
@@ -237,9 +218,6 @@
               <WoodFrame/>
             </FloorType>
             <Area>900.0</Area>
-            <InteriorFinish>
-              <Type>gypsum board</Type>
-            </InteriorFinish>
             <Insulation>
               <SystemIdentifier id='Floor2Insulation'/>
               <AssemblyEffectiveRValue>2.1</AssemblyEffectiveRValue>
@@ -266,10 +244,6 @@
                 <InsulationWidth>0.0</InsulationWidth>
               </Layer>
             </UnderSlabInsulation>
-            <extension>
-              <CarpetFraction>0.0</CarpetFraction>
-              <CarpetRValue>0.0</CarpetRValue>
-            </extension>
           </Slab>
         </Slabs>
         <Windows>

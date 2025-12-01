@@ -84,7 +84,7 @@
             <RadiantBarrierGrade>1</RadiantBarrierGrade>
             <Insulation>
               <SystemIdentifier id='Roof1Insulation'/>
-              <AssemblyEffectiveRValue>2.3</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>1.99</AssemblyEffectiveRValue>
             </Insulation>
           </Roof>
           <Roof>
@@ -112,7 +112,7 @@
             <RadiantBarrierGrade>1</RadiantBarrierGrade>
             <Insulation>
               <SystemIdentifier id='Roof3Insulation'/>
-              <AssemblyEffectiveRValue>2.3</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>1.99</AssemblyEffectiveRValue>
             </Insulation>
           </Roof>
           <Roof>

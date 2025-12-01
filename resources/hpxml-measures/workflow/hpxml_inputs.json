@@ -13,19 +13,20 @@
     "geometry_attic_type": "Attic, Vented, Gable",
     "geometry_roof_pitch": "4:12",
     "geometry_eaves": "None",
-    "enclosure_floor_over_foundation": "Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor",
-    "enclosure_ceiling": "Detailed Example: R-19, 2x6, 24 in o.c., 10% Framing",
-    "enclosure_roof_material": "Detailed Example: 0.6 Solar Absorptance",
-    "enclosure_roof": "Detailed Example: Uninsulated, 0.5 in plywood, 0.25 in asphalt shingle",
+    "enclosure_floor_over_foundation": "ASHRAE 140 Tests: Wood Frame, R-11",
+    "enclosure_carpet": "ASHRAE 140 Tests",
+    "enclosure_ceiling": "ASHRAE 140 Tests: R-19",
+    "enclosure_roof_material": "ASHRAE 140 Tests: Typical Solar Absorptance",
+    "enclosure_roof": "ASHRAE 140 Tests: Uninsulated",
     "enclosure_radiant_barrier": "None",
-    "enclosure_wall": "Detailed Example: Wood Stud, R-11, 2x4, 16 in o.c., 25% Framing",
-    "enclosure_wall_siding": "Detailed Example: 0.6 Solar Absorptance",
+    "enclosure_wall": "ASHRAE 140 Tests: Wood Stud, R-11",
+    "enclosure_wall_siding": "ASHRAE 140 Tests: Typical Solar Absorptance",
     "geometry_window_areas_or_wwrs": "90, 90, 45, 45",
     "enclosure_window_natural_ventilation": "None",
-    "enclosure_window": "Detailed Example: Single, Clear, Aluminum w/ Thermal Break",
+    "enclosure_window": "ASHRAE 140 Tests: Single, Clear",
     "enclosure_window_interior_shading": "None",
     "geometry_door_area": "40",
-    "enclosure_door": "Detailed Example: Solid Wood, R-3.04",
+    "enclosure_door": "ASHRAE 140 Tests: Solid Wood",
     "enclosure_air_leakage": "0.67 nACH",
     "hvac_heating_system": "None",
     "hvac_cooling_system": "None",
@@ -46,7 +47,7 @@
     "appliance_freezer": "None",
     "appliance_cooking_range_oven": "None",
     "appliance_dehumidifier": "None",
-    "misc_plug_loads": "Detailed Example: 7302 kWh/yr, 82.2% Sensible, 17.8% Latent",
+    "misc_plug_loads": "ASHRAE 140 Tests",
     "misc_television": "None",
     "utility_bill_scenario": "None",
     "combine_like_surfaces": "false"
@@ -57,13 +58,13 @@
   },
   "tests/ASHRAE_Standard_140/L120AC.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AC.xml",
-    "enclosure_ceiling": "Detailed Example: R-19 + R-38, 2x6, 24 in o.c., 10% Framing",
-    "enclosure_wall": "Detailed Example: Wood Stud, R-18, 2x6, 24 in o.c., 25% Framing",
-    "enclosure_wall_continuous_insulation": "Detailed Example: R-7.2"
+    "enclosure_ceiling": "ASHRAE 140 Tests: R-19 + R-38",
+    "enclosure_wall": "ASHRAE 140 Tests: Wood Stud, R-18",
+    "enclosure_wall_continuous_insulation": "ASHRAE 140 Tests: R-7.2"
   },
   "tests/ASHRAE_Standard_140/L130AC.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AC.xml",
-    "enclosure_window": "Detailed Example: Double, Low-E, Wood, Argon, Insulated Spacer"
+    "enclosure_window": "ASHRAE 140 Tests: Double, Low-E"
   },
   "tests/ASHRAE_Standard_140/L140AC.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AC.xml",
@@ -75,7 +76,7 @@
   },
   "tests/ASHRAE_Standard_140/L155AC.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L150AC.xml",
-    "enclosure_overhangs": "Detailed Example: 2.5ft, Front Windows, 1ft Offset, 5ft Window Height"
+    "enclosure_overhangs": "ASHRAE 140 Tests: 2.5ft, Front Windows"
   },
   "tests/ASHRAE_Standard_140/L160AC.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AC.xml",
@@ -87,39 +88,37 @@
   },
   "tests/ASHRAE_Standard_140/L200AC.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AC.xml",
-    "enclosure_floor_over_foundation": "Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor",
-    "enclosure_ceiling": "Detailed Example: R-11, 2x6, 24 in o.c., 10% Framing",
-    "enclosure_wall": "Detailed Example: Wood Stud, Uninsulated, 2x4, 16 in o.c., 25% Framing",
+    "enclosure_floor_over_foundation": "ASHRAE 140 Tests: Wood Frame, Uninsulated",
+    "enclosure_ceiling": "ASHRAE 140 Tests: R-11",
+    "enclosure_wall": "ASHRAE 140 Tests: Wood Stud, Uninsulated",
     "enclosure_air_leakage": "1.5 nACH"
   },
   "tests/ASHRAE_Standard_140/L202AC.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L200AC.xml",
-    "enclosure_roof_material": "Detailed Example: 0.2 Solar Absorptance",
-    "enclosure_wall_siding": "Detailed Example: 0.2 Solar Absorptance"
+    "enclosure_roof_material": "ASHRAE 140 Tests: Low Solar Absorptance",
+    "enclosure_wall_siding": "ASHRAE 140 Tests: Low Solar Absorptance"
   },
   "tests/ASHRAE_Standard_140/L302XC.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AC.xml",
-    "geometry_foundation_type": "Slab-on-Grade",
-    "enclosure_slab": "Detailed Example: Uninsulated, 100% R-2.08 Carpet"
+    "geometry_foundation_type": "Slab-on-Grade"
   },
   "tests/ASHRAE_Standard_140/L304XC.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L302XC.xml",
-    "enclosure_slab": "Detailed Example: Perimeter, 2ft, R-5, 100% R-2.08 Carpet"
+    "enclosure_slab": "Perimeter, 2ft, R-5"
   },
   "tests/ASHRAE_Standard_140/L322XC.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AC.xml",
     "geometry_unit_conditioned_floor_area": "3078",
-    "geometry_foundation_type": "Detailed Example: Basement, Conditioned, 7.25 ft Height, 8 in Above-Grade, 9 in Rim Joists",
+    "geometry_foundation_type": "ASHRAE 140 Tests: Basement, Conditioned",
     "enclosure_foundation_wall": "Solid Concrete, Uninsulated",
-    "enclosure_slab": "Detailed Example: Uninsulated, No Carpet",
-    "enclosure_rim_joist": "Detailed Example: Uninsulated, Fiberboard Sheathing, Hardboard Siding",
+    "enclosure_carpet": "None",
+    "enclosure_rim_joist": "ASHRAE 140 Tests: Uninsulated",
     "enclosure_air_leakage": "0.335 nACH"
   },
   "tests/ASHRAE_Standard_140/L324XC.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L322XC.xml",
     "enclosure_foundation_wall": "Solid Concrete, Whole Wall, R-10.2, Interior",
-    "enclosure_slab": "Detailed Example: Uninsulated, No Carpet",
-    "enclosure_rim_joist": "Detailed Example: R-11, Fiberboard Sheathing, Hardboard Siding"
+    "enclosure_rim_joist": "ASHRAE 140 Tests: R-11"
   },
   "tests/ASHRAE_Standard_140/L100AL.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AC.xml",
@@ -131,13 +130,13 @@
   },
   "tests/ASHRAE_Standard_140/L120AL.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AL.xml",
-    "enclosure_ceiling": "Detailed Example: R-19 + R-38, 2x6, 24 in o.c., 10% Framing",
-    "enclosure_wall": "Detailed Example: Wood Stud, R-18, 2x6, 24 in o.c., 25% Framing",
-    "enclosure_wall_continuous_insulation": "Detailed Example: R-7.2"
+    "enclosure_ceiling": "ASHRAE 140 Tests: R-19 + R-38",
+    "enclosure_wall": "ASHRAE 140 Tests: Wood Stud, R-18",
+    "enclosure_wall_continuous_insulation": "ASHRAE 140 Tests: R-7.2"
   },
   "tests/ASHRAE_Standard_140/L130AL.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AL.xml",
-    "enclosure_window": "Detailed Example: Double, Low-E, Wood, Argon, Insulated Spacer"
+    "enclosure_window": "ASHRAE 140 Tests: Double, Low-E"
   },
   "tests/ASHRAE_Standard_140/L140AL.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AL.xml",
@@ -149,7 +148,7 @@
   },
   "tests/ASHRAE_Standard_140/L155AL.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L150AL.xml",
-    "enclosure_overhangs": "Detailed Example: 2.5ft, Front Windows, 1ft Offset, 5ft Window Height"
+    "enclosure_overhangs": "ASHRAE 140 Tests: 2.5ft, Front Windows"
   },
   "tests/ASHRAE_Standard_140/L160AL.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AL.xml",
@@ -161,15 +160,15 @@
   },
   "tests/ASHRAE_Standard_140/L200AL.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AL.xml",
-    "enclosure_floor_over_foundation": "Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor",
-    "enclosure_ceiling": "Detailed Example: R-11, 2x6, 24 in o.c., 10% Framing",
-    "enclosure_wall": "Detailed Example: Wood Stud, Uninsulated, 2x4, 16 in o.c., 25% Framing",
+    "enclosure_floor_over_foundation": "ASHRAE 140 Tests: Wood Frame, Uninsulated",
+    "enclosure_ceiling": "ASHRAE 140 Tests: R-11",
+    "enclosure_wall": "ASHRAE 140 Tests: Wood Stud, Uninsulated",
     "enclosure_air_leakage": "1.5 nACH"
   },
   "tests/ASHRAE_Standard_140/L202AL.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L200AL.xml",
-    "enclosure_roof_material": "Detailed Example: 0.2 Solar Absorptance",
-    "enclosure_wall_siding": "Detailed Example: 0.2 Solar Absorptance"
+    "enclosure_roof_material": "ASHRAE 140 Tests: Low Solar Absorptance",
+    "enclosure_wall_siding": "ASHRAE 140 Tests: Low Solar Absorptance"
   },
   "tests/HERS_HVAC/HVAC1a.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AL.xml",
@@ -203,7 +202,7 @@
   },
   "tests/HERS_HVAC/HVAC2d.xml": {
     "parent_hpxml": "tests/HERS_HVAC/HVAC2c.xml",
-    "hvac_heat_pump": "Detailed Example: Central HP, SEER2 12.4, HSPF2 8.4"
+    "hvac_heat_pump": "HERS HVAC Tests: Central HP, SEER2 12.4, HSPF2 8.4"
   },
   "tests/HERS_HVAC/HVAC2e.xml": {
     "parent_hpxml": "tests/HERS_HVAC/HVAC2a.xml",
@@ -212,10 +211,10 @@
   },
   "tests/HERS_DSE/HVAC3a.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L322XC.xml",
-    "geometry_foundation_type": "Detailed Example: Basement, Unconditioned, 7.25 ft Height, 8 in Above-Grade, 9 in Rim Joists",
+    "geometry_foundation_type": "ASHRAE 140 Tests: Basement, Unconditioned",
     "geometry_unit_conditioned_floor_area": "1539",
     "enclosure_air_leakage": "0.67 nACH",
-    "enclosure_floor_over_foundation": "Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor",
+    "enclosure_floor_over_foundation": "HERS DSE Tests: Wood Frame, R-11",
     "hvac_heating_system_fuel": "Natural Gas",
     "hvac_heating_system": "Central Furnace, 78% AFUE",
     "hvac_heating_system_heating_load_served": "100%",
@@ -236,7 +235,7 @@
   },
   "tests/HERS_DSE/HVAC3d.xml": {
     "parent_hpxml": "tests/HERS_DSE/HVAC3c.xml",
-    "hvac_ducts": "Detailed Example: 250 CFM25, R-6"
+    "hvac_ducts": "HERS DSE Tests: 250 CFM25, R-6"
   },
   "tests/HERS_DSE/HVAC3e.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AL.xml",
@@ -260,16 +259,16 @@
   },
   "tests/HERS_DSE/HVAC3h.xml": {
     "parent_hpxml": "tests/HERS_DSE/HVAC3g.xml",
-    "hvac_ducts": "Detailed Example: 250 CFM25, R-6"
+    "hvac_ducts": "HERS DSE Tests: 250 CFM25, R-6"
   },
   "tests/HERS_Hot_Water/L100AD-HW-01.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AC.xml",
     "geometry_unit_num_occupants": "Default",
-    "enclosure_air_leakage": "Detailed Example: 79.8 sq. in. ELA",
+    "enclosure_air_leakage": "HERS Reference",
     "location_epw_path": "USA_MN_Duluth.Intl.AP.727450_TMY3.epw",
     "geometry_unit_num_bedrooms": "2",
-    "enclosure_roof_material": "Detailed Example: 0.75 Solar Absorptance",
-    "enclosure_wall_siding": "Detailed Example: 0.75 Solar Absorptance",
+    "enclosure_roof_material": "HERS Reference",
+    "enclosure_wall_siding": "HERS Reference",
     "enclosure_wall": "Wood Stud, IECC U-0.057",
     "enclosure_floor_over_foundation": "Wood Frame, IECC U-0.033",
     "enclosure_ceiling": "IECC U-0.026",
@@ -281,25 +280,25 @@
     "hvac_heating_system_heating_load_served": "100%",
     "hvac_cooling_system": "Central AC, SEER2 12.4",
     "hvac_cooling_system_cooling_load_served": "100%",
-    "dhw_water_heater": "Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78",
+    "dhw_water_heater": "HERS Hot Water Tests: Natural Gas, Tank, 40 gal, EF 0.56",
     "dhw_water_heater_location": "Conditioned Space",
-    "appliance_clothes_washer": "Detailed Example: ERI Reference 2006",
-    "appliance_clothes_dryer": "Detailed Example: Electricity, ERI Reference 2006",
-    "appliance_dishwasher": "Detailed Example: ERI Reference 2006",
-    "appliance_refrigerator": "Detailed Example: ERI Reference 2006, 2-Bedroom Home",
+    "appliance_clothes_washer": "HERS Reference",
+    "appliance_clothes_dryer": "HERS Reference: Electricity",
+    "appliance_dishwasher": "HERS Reference",
+    "appliance_refrigerator": "HERS Reference: 2-Bedroom Home",
     "appliance_cooking_range_oven": "Electricity, Standard, Non-Convection, 100% Usage",
-    "lighting": "Detailed Example: 10% CFL",
+    "lighting": "HERS Reference",
     "misc_plug_loads": "100% Usage",
     "misc_television": "100% Usage"
   },
   "tests/HERS_Hot_Water/L100AD-HW-02.xml": {
     "parent_hpxml": "tests/HERS_Hot_Water/L100AD-HW-01.xml",
-    "appliance_refrigerator": "Detailed Example: ERI Reference 2006, 4-Bedroom Home",
+    "appliance_refrigerator": "HERS Reference: 4-Bedroom Home",
     "geometry_unit_num_bedrooms": "4"
   },
   "tests/HERS_Hot_Water/L100AD-HW-03.xml": {
     "parent_hpxml": "tests/HERS_Hot_Water/L100AD-HW-01.xml",
-    "dhw_water_heater": "Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78"
+    "dhw_water_heater": "HERS Hot Water Tests: Natural Gas, Tank, 40 gal, EF 0.62"
   },
   "tests/HERS_Hot_Water/L100AD-HW-04.xml": {
     "parent_hpxml": "tests/HERS_Hot_Water/L100AD-HW-02.xml",
@@ -307,15 +306,15 @@
   },
   "tests/HERS_Hot_Water/L100AD-HW-05.xml": {
     "parent_hpxml": "tests/HERS_Hot_Water/L100AD-HW-02.xml",
-    "dhw_distribution": "Detailed Example: Insulated, Recirc, Uncontrolled, 156.9ft Loop, 10ft Branch, 50 W"
+    "dhw_distribution": "HERS Hot Water Tests: Insulated, Recirc, Uncontrolled"
   },
   "tests/HERS_Hot_Water/L100AD-HW-06.xml": {
     "parent_hpxml": "tests/HERS_Hot_Water/L100AD-HW-05.xml",
-    "dhw_distribution": "Detailed Example: Insulated, Recirc, Manual Demand Control, 156.9ft Loop, 10ft Branch, 50 W"
+    "dhw_distribution": "HERS Hot Water Tests: Insulated, Recirc, Manual Demand Control"
   },
   "tests/HERS_Hot_Water/L100AD-HW-07.xml": {
     "parent_hpxml": "tests/HERS_Hot_Water/L100AD-HW-02.xml",
-    "dhw_drain_water_heat_recovery": "Detailed Example: 54% Efficient, Preheats Hot and Cold, All Showers"
+    "dhw_drain_water_heat_recovery": "HERS Hot Water Tests: 54% Efficient, Preheats Hot and Cold, All Showers"
   },
   "tests/HERS_Hot_Water/L100AM-HW-01.xml": {
     "parent_hpxml": "tests/HERS_Hot_Water/L100AD-HW-01.xml",
@@ -365,11 +364,12 @@
     "geometry_attic_type": "Attic, Unvented, Gable",
     "geometry_roof_pitch": "6:12",
     "geometry_eaves": "None",
-    "enclosure_slab": "Detailed Example: Uninsulated, No Carpet",
+    "enclosure_slab": "Uninsulated",
+    "enclosure_carpet": "None",
     "enclosure_foundation_wall": "Solid Concrete, Whole Wall, R-10",
     "enclosure_rim_joist": "Exterior, R-10",
     "enclosure_ceiling": "R-38",
-    "enclosure_roof_material": "Asphalt/Fiberglass Shingles, Medium",
+    "enclosure_roof_material": "Asphalt/Fiberglass Shingles, Light",
     "enclosure_roof": "Uninsulated",
     "enclosure_radiant_barrier": "None",
     "enclosure_wall": "Wood Stud, R-13",
@@ -622,6 +622,7 @@
     "geometry_attic_type": "Below Apartment",
     "geometry_window_areas_or_wwrs": "0.18, 0.18, 0.18, 0.18",
     "geometry_door_area": "20",
+    "enclosure_carpet": "80% Carpet",
     "hvac_heating_system_capacity": "10 kBtu/hr",
     "hvac_cooling_system_capacity": "1.0 tons",
     "hvac_ducts": "0 CFM25 per 100ft2, Uninsulated",
@@ -934,7 +935,7 @@
   },
   "sample_files/base-dhw-tank-gas-ef.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-gas.xml",
-    "dhw_water_heater": "Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76"
+    "dhw_water_heater": "Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59"
   },
   "sample_files/base-dhw-tank-gas-fhr.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-gas.xml"
@@ -1060,7 +1061,8 @@
     "parent_hpxml": "sample_files/base-enclosure-2stories.xml",
     "geometry_unit_conditioned_floor_area": "3250",
     "geometry_garage_type": "2 Car, Right, Fully Inset",
-    "enclosure_floor_over_garage": "Wood Frame, R-38"
+    "enclosure_floor_over_garage": "Wood Frame, R-38",
+    "enclosure_carpet": "80% Carpet"
   },
   "sample_files/base-enclosure-beds-1.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -1226,7 +1228,8 @@
     "hvac_ducts_return_location": "Attic",
     "geometry_unit_conditioned_floor_area": "1350",
     "geometry_foundation_type": "Ambient",
-    "enclosure_floor_over_foundation": "Wood Frame, R-15"
+    "enclosure_floor_over_foundation": "Wood Frame, R-15",
+    "enclosure_carpet": "80% Carpet"
   },
   "sample_files/base-foundation-basement-garage.xml": {
     "parent_hpxml": "sample_files/base.xml"
@@ -1251,11 +1254,13 @@
   },
   "sample_files/base-foundation-conditioned-basement-slab-insulation.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "enclosure_slab": "Under Slab, 4ft, R-10"
+    "enclosure_slab": "Under Slab, 4ft, R-10",
+    "enclosure_carpet": "80% Carpet"
   },
   "sample_files/base-foundation-conditioned-basement-slab-insulation-full.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "enclosure_slab": "Whole Slab, R-10"
+    "enclosure_slab": "Whole Slab, R-10",
+    "enclosure_carpet": "80% Carpet"
   },
   "sample_files/base-foundation-conditioned-basement-wall-insulation.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -1266,6 +1271,7 @@
     "geometry_unit_conditioned_floor_area": "1350",
     "geometry_foundation_type": "Crawlspace, Conditioned",
     "enclosure_floor_over_foundation": "Wood Frame, R-15",
+    "enclosure_carpet": "80% Carpet",
     "hvac_ducts": "0 CFM25 per 100ft2, R-4",
     "hvac_ducts_supply_location": "Crawlspace",
     "hvac_ducts_return_location": "Crawlspace",
@@ -1275,13 +1281,15 @@
     "parent_hpxml": "sample_files/base.xml",
     "geometry_unit_conditioned_floor_area": "1350",
     "geometry_foundation_type": "Slab-on-Grade",
-    "enclosure_slab": "Detailed Example: Whole Slab, R-5, 100% R-2.5 Carpet",
+    "enclosure_slab": "Whole Slab, R-5",
+    "enclosure_carpet": "Detailed Example: 100% Carpet, R-2.5",
     "hvac_ducts_supply_location": "Under Slab",
     "hvac_ducts_return_location": "Under Slab"
   },
   "sample_files/base-foundation-slab-exterior-horizontal-insulation.xml": {
     "parent_hpxml": "sample_files/base-foundation-slab.xml",
-    "enclosure_slab": "Perimeter, 2ft, R-5"
+    "enclosure_slab": "Perimeter, 2ft, R-5",
+    "enclosure_carpet": "80% Carpet"
   },
   "sample_files/base-foundation-multiple.xml": {
     "parent_hpxml": "sample_files/base-foundation-unconditioned-basement.xml"
@@ -1291,6 +1299,7 @@
     "geometry_unit_conditioned_floor_area": "1350",
     "geometry_foundation_type": "Basement, Unconditioned",
     "enclosure_floor_over_foundation": "Wood Frame, R-15",
+    "enclosure_carpet": "80% Carpet",
     "enclosure_foundation_wall": "Solid Concrete, Uninsulated",
     "hvac_ducts_supply_location": "Basement",
     "hvac_ducts_return_location": "Basement",
@@ -1319,6 +1328,7 @@
     "geometry_unit_conditioned_floor_area": "1350",
     "geometry_foundation_type": "Crawlspace, Unvented",
     "enclosure_floor_over_foundation": "Wood Frame, R-15",
+    "enclosure_carpet": "80% Carpet",
     "hvac_ducts_supply_location": "Crawlspace",
     "hvac_ducts_return_location": "Crawlspace",
     "dhw_water_heater_location": "Crawlspace"
@@ -1328,6 +1338,7 @@
     "geometry_unit_conditioned_floor_area": "1350",
     "geometry_foundation_type": "Crawlspace, Vented",
     "enclosure_floor_over_foundation": "Wood Frame, R-15",
+    "enclosure_carpet": "80% Carpet",
     "hvac_ducts_supply_location": "Crawlspace",
     "hvac_ducts_return_location": "Crawlspace",
     "dhw_water_heater_location": "Crawlspace"
@@ -1341,7 +1352,7 @@
   },
   "sample_files/base-foundation-walkout-basement.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "geometry_foundation_type": "Detailed Example: Basement, Conditioned, 5 ft Height"
+    "geometry_foundation_type": "Basement, Conditioned, Half Above-Grade"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -2325,7 +2336,7 @@
     "electric_vehicle_charger": "None",
     "appliance_extra_refrigerator": "748 kWh/yr, 100% Usage",
     "appliance_freezer": "354 kWh/yr, 100% Usage",
-    "misc_plug_loads": "Detailed Example: 2457 kWh/yr, 85.5% Sensible, 4.5% Latent",
+    "misc_plug_loads": "Detailed Example: 2457 kWh/yr",
     "misc_television": "Detailed Example: 620 kWh/yr",
     "misc_well_pump": "Detailed Example: 475 kWh/yr",
     "misc_electric_vehicle_charging": "Detailed Example: 1500 kWh/yr",
@@ -2387,6 +2398,7 @@
     "geometry_unit_conditioned_floor_area": "1200",
     "geometry_unit_aspect_ratio": "0.75",
     "enclosure_floor_over_foundation": "Wood Frame, R-19",
+    "enclosure_carpet": "80% Carpet",
     "enclosure_air_leakage": "Detailed Example: 0.375 nACH",
     "geometry_window_areas_or_wwrs": "0.18, 0.18, 0.18, 0.18",
     "geometry_door_area": "20",

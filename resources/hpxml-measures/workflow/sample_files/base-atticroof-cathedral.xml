@@ -70,7 +70,6 @@
               <UnitofMeasure>ACH</UnitofMeasure>
               <AirLeakage>3.0</AirLeakage>
             </BuildingAirLeakage>
-            <InfiltrationVolume>32400.0</InfiltrationVolume>
           </AirInfiltrationMeasurement>
         </AirInfiltration>
         <Attics>
@@ -101,11 +100,7 @@
             <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
             <Area>1509.3</Area>
             <RoofType>asphalt or fiberglass shingles</RoofType>
-            <SolarAbsorptance>0.7</SolarAbsorptance>
-            <Emittance>0.92</Emittance>
-            <InteriorFinish>
-              <Type>gypsum board</Type>
-            </InteriorFinish>
+            <RoofColor>light</RoofColor>
             <Pitch>6.0</Pitch>
             <Insulation>
               <SystemIdentifier id='Roof1Insulation'/>
@@ -120,8 +115,7 @@
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
             <Area>115.6</Area>
             <Siding>wood siding</Siding>
-            <SolarAbsorptance>0.7</SolarAbsorptance>
-            <Emittance>0.92</Emittance>
+            <Color>medium</Color>
             <Insulation>
               <SystemIdentifier id='RimJoist1Insulation'/>
               <AssemblyEffectiveRValue>13.9</AssemblyEffectiveRValue>
@@ -138,11 +132,7 @@
             </WallType>
             <Area>1425.0</Area>
             <Siding>wood siding</Siding>
-            <SolarAbsorptance>0.7</SolarAbsorptance>
-            <Emittance>0.92</Emittance>
-            <InteriorFinish>
-              <Type>gypsum board</Type>
-            </InteriorFinish>
+            <Color>medium</Color>
             <Insulation>
               <SystemIdentifier id='Wall1Insulation'/>
               <AssemblyEffectiveRValue>22.7</AssemblyEffectiveRValue>
@@ -158,9 +148,6 @@
             <Height>8.0</Height>
             <Area>1200.0</Area>
             <DepthBelowGrade>7.0</DepthBelowGrade>
-            <InteriorFinish>
-              <Type>gypsum board</Type>
-            </InteriorFinish>
             <Insulation>
               <SystemIdentifier id='FoundationWall1Insulation'/>
               <Layer>

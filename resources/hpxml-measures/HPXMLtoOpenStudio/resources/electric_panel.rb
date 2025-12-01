@@ -4,11 +4,12 @@
 module ElectricPanel
   # Calculates load-based capacity and breaker spaces for an electric panel.
   #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param electric_panel [HPXML::ElectricPanel] Object that defines a single electric panel
   # @return [nil]
-  def self.calculate(hpxml_header, hpxml_bldg, electric_panel)
+  def self.calculate(runner, hpxml_header, hpxml_bldg, electric_panel)
     electric_panel.capacity_types = []
     electric_panel.capacity_total_watts = []
     electric_panel.capacity_total_amps = []
@@ -33,7 +34,7 @@ module ElectricPanel
       end
     end
 
-    calculate_breaker_spaces(electric_panel)
+    calculate_breaker_spaces(runner, electric_panel)
   end
 
   # Get the component attached to the given service feeder.
@@ -183,9 +184,10 @@ module ElectricPanel
 
   # Calculate the number of panel breaker spaces corresponding to rated total spaces, occupied spaces, and headroom spaces.
   #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param electric_panel [HPXML::ElectricPanel] Object that defines a single electric panel
   # @return [nil]
-  def self.calculate_breaker_spaces(electric_panel)
+  def self.calculate_breaker_spaces(runner, electric_panel)
     occupied_spaces = electric_panel.occupied_spaces
 
     if not electric_panel.rated_total_spaces.nil?
@@ -198,7 +200,14 @@ module ElectricPanel
     end
 
     if electric_panel.headroom_spaces.nil? # only nil if rated_total_spaces is specified
-      electric_panel.headroom_spaces = rated_total_spaces - occupied_spaces
+      headroom_spaces = rated_total_spaces - occupied_spaces
+      if headroom_spaces < 0
+        runner.registerWarning("The sum of OccupiedSpaces (#{occupied_spaces}) exceeds RatedTotalSpaces (#{rated_total_spaces}); increasing RatedTotalSpaces by #{headroom_spaces.abs} and setting HeadroomSpaces=0.")
+        electric_panel.rated_total_spaces -= headroom_spaces
+        electric_panel.rated_total_spaces_isdefaulted = true
+        headroom_spaces = 0
+      end
+      electric_panel.headroom_spaces = headroom_spaces
       electric_panel.headroom_spaces_isdefaulted = true
     end
   end

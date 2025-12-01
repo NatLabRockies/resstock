@@ -50,10 +50,9 @@ None	none	medium			0
 "Masonite, Medium Dark"	masonite siding	medium dark			0.2
 "Masonite, Light"	masonite siding	light			0.2
 "Masonite, Reflective"	masonite siding	reflective			0.2
-Detailed Example: 0.2 Solar Absorptance			0.2	0.9	0.67
-Detailed Example: 0.4 Solar Absorptance			0.4	0.9	0.67
-Detailed Example: 0.6 Solar Absorptance			0.6	0.9	0.67
-Detailed Example: 0.75 Solar Absorptance			0.75	0.9	0.67
+ASHRAE 140 Tests: Low Solar Absorptance			0.2	0.9	0.67
+ASHRAE 140 Tests: Typical Solar Absorptance			0.6	0.9	0.67
+HERS Reference			0.75	0.9	0.67
 					
 # Type: The type of wall siding.					
 # Color: The color of the walls.					

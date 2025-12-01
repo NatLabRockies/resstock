@@ -13,6 +13,8 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
     @root_path = File.absolute_path(File.join(File.dirname(__FILE__), '..', '..'))
     @sample_files_path = File.join(@root_path, 'workflow', 'sample_files')
     @tmp_hpxml_path = File.join(@sample_files_path, 'tmp.xml')
+    @schema_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', 'resources', 'hpxml_schema', 'HPXML.xsd'))
+    @schematron_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', 'resources', 'hpxml_schematron', 'EPvalidator.sch'))
   end
 
   def teardown
@@ -976,9 +978,9 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
             if i < 3
               surfaces[-1].ufactor += 0.01 * i
             elsif i < 6
-              surfaces[-1].interior_shading_factor_summer -= 0.02 * i
+              surfaces[-1].interior_shading_factor_summer = 1.0 - 0.02 * i
             else
-              surfaces[-1].interior_shading_factor_winter -= 0.01 * i
+              surfaces[-1].interior_shading_factor_winter = 1.0 - 0.01 * i
               if surf_class == HPXML::Window
                 surfaces[-1].fraction_operable = 1.0 - surfaces[-1].fraction_operable
               end
@@ -1268,9 +1270,17 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
     # assert that it ran correctly
     assert_equal('Success', result.value.valueName)
 
-    hpxml = HPXML.new(hpxml_path: File.join(File.dirname(__FILE__), 'in.xml'))
+    hpxml_defaults_path = File.join(File.dirname(__FILE__), 'in.xml')
+    hpxml = HPXML.new(hpxml_path: hpxml_defaults_path, schema_validator: @schema_validator, schematron_validator: @schematron_validator)
+    if not hpxml.errors.empty?
+      puts 'ERRORS:'
+      hpxml.errors.each do |error|
+        puts error
+      end
+      flunk "Validation error(s) in #{hpxml_defaults_path}."
+    end
 
-    File.delete(File.join(File.dirname(__FILE__), 'in.xml'))
+    File.delete(hpxml_defaults_path)
 
     return model, hpxml, hpxml.buildings[0]
   end
