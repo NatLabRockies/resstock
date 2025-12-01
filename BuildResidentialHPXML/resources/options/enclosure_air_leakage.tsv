@@ -37,12 +37,12 @@ Very Leaky	very leaky
 0.67 nACH		ACHnatural		0.67
 1.0 nACH		ACHnatural		1
 1.5 nACH		ACHnatural		1.5
+HERS Reference		SLA		0.00036
 Detailed Example: 3.57 ACH50		ACH	50	3.57
 Detailed Example: 12.16 ACH50		ACH	50	12.16
 Detailed Example: 2.8 ACH45		ACH	45	2.8
 Detailed Example: 0.375 nACH		ACHnatural		0.375
 Detailed Example: 72 nCFM		CFMnatural		72
-Detailed Example: 79.8 sq. in. ELA		EffectiveLeakageArea		79.8
 Detailed Example: 123 sq. in. ELA		EffectiveLeakageArea		123
 Detailed Example: 1080 CFM50		CFM	50	1080
 Detailed Example: 1010 CFM45		CFM	45	1010

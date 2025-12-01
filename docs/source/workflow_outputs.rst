@@ -761,15 +761,10 @@ End use categories (e.g., Heating, Cooling, Hot Water) report occupied spaces fo
   Electric Panel Breaker Spaces: Well Pump Count                                    Sum of well pump occupied spaces
   Electric Panel Breaker Spaces: Electric Vehicle Charging Count                    Sum of electric vehicle charging occupied spaces
   Electric Panel Breaker Spaces: Other Count                                        Sum of other occupied spaces
-  Electric Panel Breaker Spaces: Total Count                                        Total rated number of spaces on the panel
+  Electric Panel Breaker Spaces: Total Count                                        Total number of spaces on the panel
   Electric Panel Breaker Spaces: Occupied Count                                     Total number of occupied spaces on the panel
-  Electric Panel Breaker Spaces: Headroom Count                                     Total Count minus Occupied Count
+  Electric Panel Breaker Spaces: Headroom Count                                     Total number of available (unoccupied) spaces on the panel
   ================================================================================  ====================
-
-.. note::
-
-  Headroom is calculated as the panel's total rated breaker spaces minus occupied breaker spaces.
-  A positive value indicates panel availability whereas a negative value indicates panel constraint.
 
 Loads
 ~~~~~
@@ -793,9 +788,9 @@ Electric panel loads, as well as calculated total loads and capacities for each 
   Electric Panel Load: Well Pump (W)                                                Sum of well pump loads
   Electric Panel Load: Electric Vehicle Charging (W)                                Sum of electric vehicle charging loads
   Electric Panel Load: Other (W)                                                    Sum of other loads
-  Electric Panel Load: <Type>: Total Load (W)                                       Calculated NEC total load capacity
-  Electric Panel Load: <Type>: Total Capacity (A)                                   Total Load (W) divided by panel voltage
-  Electric Panel Load: <Type>: Headroom Capacity (A)                                Panel max current rating (A) minus Total Capacity (A)
+  Electric Panel Load: <Type>: Total Load (W)                                       Calculated NEC total load
+  Electric Panel Load: <Type>: Total Capacity (A)                                   Total panel capacity
+  Electric Panel Load: <Type>: Headroom Capacity (A)                                Available panel capacity
   ================================================================================  ====================
 
 .. note::

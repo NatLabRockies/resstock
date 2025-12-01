@@ -11,8 +11,8 @@ Option Name	Pipe Insulation Nominal R-Value [F-ft2-hr/Btu]	System Type	Standard 
 "Insulated, Recirc, Temperature Control"	3	Recirculation		temperature			
 "Insulated, Recirc, Presence Sensor Demand Control"	3	Recirculation		presence sensor demand control			
 "Insulated, Recirc, Manual Demand Control"	3	Recirculation		manual demand control			
-"Detailed Example: Insulated, Recirc, Uncontrolled, 156.9ft Loop, 10ft Branch, 50 W"	3	Recirculation		no control		10	50
-"Detailed Example: Insulated, Recirc, Manual Demand Control, 156.9ft Loop, 10ft Branch, 50 W"	3	Recirculation		manual demand control		10	50
+"HERS Hot Water Tests: Insulated, Recirc, Uncontrolled"	3	Recirculation		no control		10	50
+"HERS Hot Water Tests: Insulated, Recirc, Manual Demand Control"	3	Recirculation		manual demand control		10	50
 							
 # Pipe Insulation Nominal R-Value: Nominal R-value of the pipe insulation.							
 # System Type: The type of hot water distribution system.							

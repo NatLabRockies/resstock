@@ -13,7 +13,7 @@ IECC U-0.40	2.5
 IECC U-0.35	2.86
 IECC U-0.32	3.13
 IECC U-0.30	3.33
-"Detailed Example: Solid Wood, R-3.04"	3.04
 "Detailed Example: Insulated Fiberglass/Steel, R-4.4"	4.4
+ASHRAE 140 Tests: Solid Wood	3.04
 	
 # R-Value: R-value of the opaque door(s).	

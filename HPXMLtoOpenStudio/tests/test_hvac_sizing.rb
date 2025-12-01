@@ -16,6 +16,8 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
     @tmp_hpxml_path = File.join(@sample_files_path, 'tmp.xml')
     @results_dir = File.join(@test_files_path, 'test_results')
     FileUtils.mkdir_p @results_dir
+    @schema_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', 'resources', 'hpxml_schema', 'HPXML.xsd'))
+    @schematron_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', 'resources', 'hpxml_schematron', 'EPvalidator.sch'))
   end
 
   def teardown
@@ -1677,7 +1679,7 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
   end
 
   def test_foundation_wall_non_integer_values
-    tol = 0.01 # 1%
+    tol = 0.02 # 2%
 
     # Test wall insulation covering most of above and below-grade portions of wall
     fwall = HPXML::FoundationWall.new(nil)
@@ -1936,9 +1938,17 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
       assert_equal(expect_num_warnings, runner.result.stepWarnings.size)
     end
 
-    hpxml = HPXML.new(hpxml_path: File.join(File.dirname(__FILE__), 'in.xml'))
+    hpxml_defaults_path = File.join(File.dirname(__FILE__), 'in.xml')
+    hpxml = HPXML.new(hpxml_path: hpxml_defaults_path, schema_validator: @schema_validator, schematron_validator: @schematron_validator)
+    if not hpxml.errors.empty?
+      puts 'ERRORS:'
+      hpxml.errors.each do |error|
+        puts error
+      end
+      flunk "Validation error(s) in #{hpxml_defaults_path}."
+    end
 
-    File.delete(File.join(File.dirname(__FILE__), 'in.xml'))
+    File.delete(hpxml_defaults_path)
 
     return model, hpxml, hpxml.buildings[0]
   end

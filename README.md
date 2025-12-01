@@ -55,6 +55,7 @@ OpenStudio-HPXML is used by a number of software products or organizations, incl
 - [Home Energy Score](https://www.homeenergyscore.gov)
 - [ICF](https://www.icf.com/work/utilities/sightline-utility-customer-programs)
 - [OptiMiser](https://optimiserenergy.com)
+- [Pearl](https://pearlscore.com)
 - [Radiant Labs](https://www.radiantlabs.co)
 - [ResStock](https://resstock.nrel.gov/)
 - [URBANopt](https://www.nrel.gov/buildings/urbanopt.html)

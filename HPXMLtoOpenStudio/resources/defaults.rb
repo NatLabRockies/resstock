@@ -3966,7 +3966,7 @@ module Defaults
         electric_panel.headroom_spaces_isdefaulted = true
       end
 
-      ElectricPanel.calculate(hpxml_header, hpxml_bldg, electric_panel)
+      ElectricPanel.calculate(runner, hpxml_header, hpxml_bldg, electric_panel)
     end
   end
 

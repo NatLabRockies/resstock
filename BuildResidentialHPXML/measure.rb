@@ -244,6 +244,12 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue('Uninsulated')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('enclosure_carpet', choices[:enclosure_carpet], false)
+    arg.setDisplayName('Enclosure: Carpet')
+    arg.setDescription('The amount of carpet. Applies to floors/slabs adjacent to conditioned space. The R-value of the carpet will be ignored if a floor option with an IECC U-factor is selected.')
+    arg.setDefaultValue('80% Carpet')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('enclosure_ceiling', choices[:enclosure_ceiling], true)
     arg.setDisplayName('Enclosure: Ceiling')
     arg.setDescription('The type and insulation level of the ceiling (attic floor).')
@@ -1591,6 +1597,9 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     if args[:enclosure_air_leakage_value]
       if args[:enclosure_air_leakage_units] == HPXML::UnitsELA
         effective_leakage_area = args[:enclosure_air_leakage_value]
+      elsif args[:enclosure_air_leakage_units] == HPXML::UnitsSLA
+        # FUTURE: Translate directly to HPXML when https://github.com/hpxmlwg/hpxml/issues/454 is available
+        effective_leakage_area = UnitConversions.convert(args[:enclosure_air_leakage_value] * args[:geometry_unit_conditioned_floor_area], 'ft^2', 'in^2').round(1)
       else
         unit_of_measure = args[:enclosure_air_leakage_units]
         air_leakage = args[:enclosure_air_leakage_value]
@@ -1606,14 +1615,12 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
         air_leakage_type = HPXML::InfiltrationTypeUnitExterior
       end
     end
-    infiltration_volume = hpxml_bldg.building_construction.conditioned_building_volume
 
     hpxml_bldg.air_infiltration_measurements.add(id: "AirInfiltrationMeasurement#{hpxml_bldg.air_infiltration_measurements.size + 1}",
                                                  house_pressure: house_pressure,
                                                  unit_of_measure: unit_of_measure,
                                                  air_leakage: air_leakage,
                                                  effective_leakage_area: effective_leakage_area,
-                                                 infiltration_volume: infiltration_volume,
                                                  infiltration_type: air_leakage_type,
                                                  leakiness_description: leakiness_description)
   end
@@ -1714,6 +1721,16 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
         insulation_assembly_r_value = (args[:enclosure_rim_joist_assembly_r_value] + args[:enclosure_wall_siding_r_value]).round(2)
       end
 
+      if exterior_adjacent_to == HPXML::LocationOutside
+        color = args[:enclosure_wall_siding_color]
+        solar_absorptance = args[:enclosure_wall_siding_solar_absorptance]
+        emittance = args[:enclosure_wall_siding_emittance]
+      else
+        color = nil
+        solar_absorptance = nil
+        emittance = nil
+      end
+
       azimuth = Geometry.get_surface_azimuth(surface, args[:geometry_unit_direction_azimuth])
 
       hpxml_bldg.rim_joists.add(id: "RimJoist#{hpxml_bldg.rim_joists.size + 1}",
@@ -1722,9 +1739,9 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                                 azimuth: azimuth,
                                 area: UnitConversions.convert(surface.grossArea, 'm^2', 'ft^2'),
                                 siding: siding,
-                                color: args[:enclosure_wall_siding_color],
-                                solar_absorptance: args[:enclosure_wall_siding_solar_absorptance],
-                                emittance: args[:enclosure_wall_siding_emittance],
+                                color: color,
+                                solar_absorptance: solar_absorptance,
+                                emittance: emittance,
                                 insulation_assembly_r_value: insulation_assembly_r_value)
       @surface_ids[surface.name.to_s] = hpxml_bldg.rim_joists[-1].id
     end
@@ -1781,6 +1798,16 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
         end
       end
 
+      if exterior_adjacent_to == HPXML::LocationOutside
+        color = args[:enclosure_wall_siding_color]
+        solar_absorptance = args[:enclosure_wall_siding_solar_absorptance]
+        emittance = args[:enclosure_wall_siding_emittance]
+      else
+        color = nil
+        solar_absorptance = nil
+        emittance = nil
+      end
+
       azimuth = Geometry.get_surface_azimuth(surface, args[:geometry_unit_direction_azimuth])
 
       hpxml_bldg.walls.add(id: "Wall#{hpxml_bldg.walls.size + 1}",
@@ -1790,9 +1817,9 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                            wall_type: wall_type,
                            attic_wall_type: attic_wall_type,
                            siding: siding,
-                           color: args[:enclosure_wall_siding_color],
-                           solar_absorptance: args[:enclosure_wall_siding_solar_absorptance],
-                           emittance: args[:enclosure_wall_siding_emittance],
+                           color: color,
+                           solar_absorptance: solar_absorptance,
+                           emittance: emittance,
                            area: UnitConversions.convert(surface.grossArea, 'm^2', 'ft^2'))
       @surface_ids[surface.name.to_s] = hpxml_bldg.walls[-1].id
 
@@ -1953,20 +1980,30 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
       end
       @surface_ids[surface.name.to_s] = hpxml_bldg.floors[-1].id
 
+      carpet_r = args[:enclosure_carpet_fraction] * args[:enclosure_carpet_r_value]
+
       if hpxml_bldg.floors[-1].is_thermal_boundary
         case exterior_adjacent_to
         when HPXML::LocationAtticUnvented, HPXML::LocationAtticVented
           hpxml_bldg.floors[-1].insulation_assembly_r_value = args[:enclosure_ceiling_assembly_r_value]
         when HPXML::LocationGarage
-          hpxml_bldg.floors[-1].insulation_assembly_r_value = args[:enclosure_floor_over_garage_assembly_r_value]
+          if args[:enclosure_floor_over_garage].include? 'IECC U-'
+            hpxml_bldg.floors[-1].insulation_assembly_r_value = args[:enclosure_floor_over_garage_assembly_r_value]
+          else
+            hpxml_bldg.floors[-1].insulation_assembly_r_value = (args[:enclosure_floor_over_garage_assembly_r_value] + carpet_r).round(2)
+          end
           hpxml_bldg.floors[-1].floor_type = args[:enclosure_floor_over_garage_type]
         else
-          hpxml_bldg.floors[-1].insulation_assembly_r_value = args[:enclosure_floor_over_foundation_assembly_r_value]
+          if args[:enclosure_floor_over_foundation].include? 'IECC U-'
+            hpxml_bldg.floors[-1].insulation_assembly_r_value = args[:enclosure_floor_over_foundation_assembly_r_value]
+          else
+            hpxml_bldg.floors[-1].insulation_assembly_r_value = (args[:enclosure_floor_over_foundation_assembly_r_value] + carpet_r).round(2)
+          end
           hpxml_bldg.floors[-1].floor_type = args[:enclosure_floor_over_foundation_type]
         end
       else
         if floor_or_ceiling == HPXML::FloorOrCeilingFloor
-          hpxml_bldg.floors[-1].insulation_assembly_r_value = 5.3 # Matches uninsulated option in enclosure_floor_over_foundation.tsv
+          hpxml_bldg.floors[-1].insulation_assembly_r_value = (3.7 + carpet_r).round(2) # Matches uninsulated option in enclosure_floor_over_foundation.tsv
         else
           hpxml_bldg.floors[-1].insulation_assembly_r_value = 2.1 # Matches uninsulated option in enclosure_ceiling.tsv
         end
@@ -2027,17 +2064,19 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                            exterior_horizontal_insulation_depth_below_grade: args[:enclosure_slab_exterior_horizontal_insulation_depth_below_grade],
                            under_slab_insulation_width: under_slab_insulation_width,
                            under_slab_insulation_r_value: args[:enclosure_slab_under_slab_insulation_nominal_r_value],
-                           under_slab_insulation_spans_entire_slab: under_slab_insulation_spans_entire_slab,
-                           carpet_fraction: args[:enclosure_slab_carpet_fraction],
-                           carpet_r_value: args[:enclosure_slab_carpet_r_value])
+                           under_slab_insulation_spans_entire_slab: under_slab_insulation_spans_entire_slab)
       @surface_ids[surface.name.to_s] = hpxml_bldg.slabs[-1].id
+
+      if [HPXML::LocationConditionedSpace, HPXML::LocationBasementConditioned].include? interior_adjacent_to
+        hpxml_bldg.slabs[-1].carpet_fraction = args[:enclosure_carpet_fraction]
+        hpxml_bldg.slabs[-1].carpet_r_value = args[:enclosure_carpet_r_value]
+      end
 
       next unless interior_adjacent_to == HPXML::LocationCrawlspaceConditioned
 
-      # Increase Conditioned Building Volume & Infiltration Volume
+      # Increase Conditioned Building Volume
       conditioned_crawlspace_volume = hpxml_bldg.slabs[-1].area * args[:geometry_foundation_type_height]
       hpxml_bldg.building_construction.conditioned_building_volume += conditioned_crawlspace_volume
-      hpxml_bldg.air_infiltration_measurements[0].infiltration_volume += conditioned_crawlspace_volume
     end
   end
 
@@ -2293,10 +2332,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
 
     heating_system_type = args[:hvac_heating_system_type]
 
-    if [HPXML::HVACTypeElectricResistance].include? heating_system_type
-      args[:hvac_heating_system_fuel_type] = HPXML::FuelTypeElectricity
-    end
-
     if [HPXML::HVACTypeFurnace,
         HPXML::HVACTypeWallFurnace,
         HPXML::HVACTypeFloorFurnace].include?(heating_system_type) || heating_system_type.include?(HPXML::HVACTypeBoiler)
@@ -2308,11 +2343,8 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
       heating_efficiency_percent = args[:hvac_heating_system_heating_efficiency]
     end
 
-    if args[:hvac_heating_system_fuel_type] != HPXML::FuelTypeElectricity
-      pilot_light_btuh = args[:hvac_heating_system_pilot_light].to_f
-      if pilot_light_btuh > 0
-        pilot_light = true
-      end
+    if not args[:hvac_heating_system_pilot_light].nil?
+      pilot_light = (args[:hvac_heating_system_pilot_light].to_f > 0)
     end
 
     hpxml_bldg.heating_systems.add(id: "HeatingSystem#{hpxml_bldg.heating_systems.size + 1}",
@@ -2325,7 +2357,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                                    heating_efficiency_afue: heating_efficiency_afue,
                                    heating_efficiency_percent: heating_efficiency_percent,
                                    pilot_light: pilot_light,
-                                   pilot_light_btuh: pilot_light_btuh,
+                                   pilot_light_btuh: args[:hvac_heating_system_pilot_light],
                                    primary_system: true)
   end
 
@@ -2363,10 +2395,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                                    primary_system: true)
 
     # Detailed performance data
-    if not [HPXML::HVACTypeCentralAirConditioner, HPXML::HVACTypeMiniSplitAirConditioner].include? args[:hvac_cooling_system_type]
-      return
-    end
-
     if not args[:hvac_cooling_system_detailed_performance_data_cooling_outdoor_temperatures].nil?
       cooling_system_detailed_performance_data_points = args[:hvac_cooling_system_detailed_performance_data_cooling_outdoor_temperatures].to_s.split(',').map(&:strip).zip(
         args[:hvac_cooling_system_detailed_performance_data_cooling_min_speed_capacities].to_s.split(',').map(&:strip),
@@ -2448,13 +2476,11 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
       backup_system_idref = "HeatingSystem#{hpxml_bldg.heating_systems.size + 1}"
     end
 
-    if backup_heating_fuel != HPXML::FuelTypeElectricity
-      if (not args[:hvac_heat_pump_temperatures_compressor_lockout].nil?) && (not args[:hvac_heat_pump_temperatures_backup_lockout].nil?) && args[:hvac_heat_pump_temperatures_compressor_lockout] == args[:hvac_heat_pump_temperatures_backup_lockout]
-        # Translate to HPXML as switchover temperature instead
-        backup_heating_switchover_temp = args[:hvac_heat_pump_temperatures_compressor_lockout]
-        args[:hvac_heat_pump_temperatures_compressor_lockout] = nil
-        args[:hvac_heat_pump_temperatures_backup_lockout] = nil
-      end
+    if (not args[:hvac_heat_pump_temperatures_compressor_lockout].nil?) && (not args[:hvac_heat_pump_temperatures_backup_lockout].nil?) && args[:hvac_heat_pump_temperatures_compressor_lockout] == args[:hvac_heat_pump_temperatures_backup_lockout]
+      # Translate to HPXML as switchover temperature instead
+      backup_heating_switchover_temp = args[:hvac_heat_pump_temperatures_compressor_lockout]
+      args[:hvac_heat_pump_temperatures_compressor_lockout] = nil
+      args[:hvac_heat_pump_temperatures_backup_lockout] = nil
     end
 
     case args[:hvac_heat_pump_heating_efficiency_type]
@@ -2512,10 +2538,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                               primary_cooling_system: args[:hvac_heat_pump_cooling_load_served_fraction] > 0)
 
     # Detailed performance data
-    if not [HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpMiniSplit].include? args[:hvac_heat_pump_type]
-      return
-    end
-
     if (not args[:hvac_heat_pump_detailed_performance_data_heating_outdoor_temperatures].nil?) && (args[:hvac_heat_pump_heating_load_served_fraction] > 0)
       heating_detailed_performance_data_points = args[:hvac_heat_pump_detailed_performance_data_heating_outdoor_temperatures].to_s.split(',').map(&:strip).zip(
         args[:hvac_heat_pump_detailed_performance_data_heating_min_speed_capacities].to_s.split(',').map(&:strip),
@@ -2630,16 +2652,9 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     return if hpxml_bldg.heat_pumps.count { |hp| hp.heat_pump_type == HPXML::HVACTypeHeatPumpGroundToAir } == 0
     return if args[:hvac_geothermal_loop] == 'Default'
 
-    if not args[:hvac_geothermal_loop_pipe_diameter].nil?
-      case args[:hvac_geothermal_loop_pipe_diameter]
-      when '3/4" pipe'
-        pipe_diameter = 0.75
-      when '1" pipe'
-        pipe_diameter = 1.0
-      when '1-1/4" pipe'
-        pipe_diameter = 1.25
-      end
-    end
+    pipe_diameter = { '3/4" pipe' => 0.75,
+                      '1" pipe' => 1.0,
+                      '1-1/4" pipe' => 1.25 }[args[:hvac_geothermal_loop_pipe_diameter]]
 
     hpxml_bldg.geothermal_loops.add(id: "GeothermalLoop#{hpxml_bldg.geothermal_loops.size + 1}",
                                     loop_configuration: args[:hvac_geothermal_loop_configuration],
@@ -2668,10 +2683,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
 
     heating_system_type = args[:hvac_heating_system_2_type]
 
-    if args[:hvac_heating_system_2_fuel_type] == HPXML::HVACTypeElectricResistance
-      args[:hvac_heating_system_2_fuel_type] = HPXML::FuelTypeElectricity
-    end
-
     if [HPXML::HVACTypeFurnace, HPXML::HVACTypeWallFurnace, HPXML::HVACTypeFloorFurnace].include?(heating_system_type) || heating_system_type.include?(HPXML::HVACTypeBoiler)
       heating_efficiency_afue = args[:hvac_heating_system_2_heating_efficiency]
     elsif [HPXML::HVACTypeElectricResistance, HPXML::HVACTypeStove, HPXML::HVACTypeSpaceHeater, HPXML::HVACTypeFireplace].include?(heating_system_type)
@@ -2686,11 +2697,8 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
       fraction_heat_load_served = args[:hvac_heating_system_2_heating_load_served_fraction]
     end
 
-    if args[:hvac_heating_system_2_fuel_type] != HPXML::FuelTypeElectricity
-      pilot_light_btuh = args[:hvac_heating_system_2_pilot_light].to_f
-      if pilot_light_btuh > 0
-        pilot_light = true
-      end
+    if not args[:hvac_heating_system_2_pilot_light].nil?
+      pilot_light = (args[:hvac_heating_system_2_pilot_light].to_f > 0)
     end
 
     hpxml_bldg.heating_systems.add(id: "HeatingSystem#{hpxml_bldg.heating_systems.size + 1}",
@@ -2703,7 +2711,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                                    heating_efficiency_afue: heating_efficiency_afue,
                                    heating_efficiency_percent: heating_efficiency_percent,
                                    pilot_light: pilot_light,
-                                   pilot_light_btuh: pilot_light_btuh)
+                                   pilot_light_btuh: args[:hvac_heating_system_2_pilot_light])
   end
 
   # Sets the HPXML HVAC distribution properties.
@@ -2799,11 +2807,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     supply_leakage_fraction = 0.5 if supply_leakage_fraction.nil?
     supply_leakage_value = (leakage_value * supply_leakage_fraction).round(3)
     return_leakage_value = (leakage_value * (1.0 - supply_leakage_fraction)).round(3)
-
-    if hvac_distribution.hvac_systems.any? { |hvac| hvac.is_a?(HPXML::CoolingSystem) && hvac.cooling_system_type == HPXML::HVACTypeEvaporativeCooler }
-      # Evaporative cooler, set no return duct leakage
-      return_leakage_value = 0.0
-    end
 
     hvac_distribution.duct_leakage_measurements.add(duct_type: HPXML::DuctTypeSupply,
                                                     duct_leakage_units: leakage_units,
@@ -3026,13 +3029,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
 
       distribution_system_idref = nil
 
-      case args[:ventilation_mechanical_fan_type]
-      when HPXML::MechVentTypeERV
-        total_recovery_efficiency = args[:ventilation_mechanical_total_recovery_efficiency]
-        sensible_recovery_efficiency = args[:ventilation_mechanical_sensible_recovery_efficiency]
-      when HPXML::MechVentTypeHRV
-        sensible_recovery_efficiency = args[:ventilation_mechanical_sensible_recovery_efficiency]
-      when HPXML::MechVentTypeCFIS
+      if args[:ventilation_mechanical_fan_type] == HPXML::MechVentTypeCFIS
         hpxml_bldg.hvac_distributions.each do |hvac_distribution|
           next unless hvac_distribution.distribution_system_type == HPXML::HVACDistributionTypeAir
           next if hvac_distribution.air_type != HPXML::AirTypeRegularVelocity
@@ -3064,8 +3061,8 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                                       rated_flow_rate: args[:ventilation_mechanical_flow_rate],
                                       hours_in_operation: args[:ventilation_mechanical_hours_in_operation],
                                       used_for_whole_building_ventilation: true,
-                                      total_recovery_efficiency: total_recovery_efficiency,
-                                      sensible_recovery_efficiency: sensible_recovery_efficiency,
+                                      total_recovery_efficiency: args[:ventilation_mechanical_total_recovery_efficiency],
+                                      sensible_recovery_efficiency: args[:ventilation_mechanical_sensible_recovery_efficiency],
                                       fan_power: args[:ventilation_mechanical_fan_power],
                                       distribution_system_idref: distribution_system_idref)
     end
@@ -3108,53 +3105,33 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   def set_water_heating_systems(hpxml_bldg, args)
     return if args[:dhw_water_heater] == 'None'
 
-    water_heater_type = args[:dhw_water_heater_type]
-    if water_heater_type == HPXML::WaterHeaterTypeHeatPump
-      args[:dhw_water_heater_fuel_type] = HPXML::FuelTypeElectricity
-    end
-
     location = get_location('water heater', args[:dhw_water_heater_location_location], hpxml_bldg.foundations[-1].foundation_type, hpxml_bldg.attics[-1].attic_type)
 
-    if not [HPXML::WaterHeaterTypeCombiStorage, HPXML::WaterHeaterTypeCombiTankless].include? water_heater_type
+    if not [HPXML::WaterHeaterTypeCombiStorage, HPXML::WaterHeaterTypeCombiTankless].include? args[:dhw_water_heater_type]
       case args[:dhw_water_heater_efficiency_type]
       when 'EnergyFactor'
         energy_factor = args[:dhw_water_heater_efficiency]
       when 'UniformEnergyFactor'
         uniform_energy_factor = args[:dhw_water_heater_efficiency]
-        if water_heater_type != HPXML::WaterHeaterTypeTankless
-          usage_bin = args[:dhw_water_heater_usage_bin]
-        end
       end
     end
 
-    if (args[:dhw_water_heater_fuel_type] != HPXML::FuelTypeElectricity) && (water_heater_type == HPXML::WaterHeaterTypeStorage)
-      recovery_efficiency = args[:dhw_water_heater_recovery_efficiency]
-    end
-
-    if [HPXML::WaterHeaterTypeTankless, HPXML::WaterHeaterTypeCombiTankless].include? water_heater_type
-      args[:dhw_water_heater_tank_volume] = nil
-    end
-
-    if [HPXML::WaterHeaterTypeTankless].include? water_heater_type
-      recovery_efficiency = nil
-    elsif [HPXML::WaterHeaterTypeCombiTankless, HPXML::WaterHeaterTypeCombiStorage].include? water_heater_type
-      args[:dhw_water_heater_fuel_type] = nil
-      energy_factor = nil
+    if [HPXML::WaterHeaterTypeCombiTankless, HPXML::WaterHeaterTypeCombiStorage].include? args[:dhw_water_heater_type]
       if hpxml_bldg.heating_systems.size > 0
         related_hvac_idref = hpxml_bldg.heating_systems[0].id
       end
     end
 
     hpxml_bldg.water_heating_systems.add(id: "WaterHeatingSystem#{hpxml_bldg.water_heating_systems.size + 1}",
-                                         water_heater_type: water_heater_type,
+                                         water_heater_type: args[:dhw_water_heater_type],
                                          fuel_type: args[:dhw_water_heater_fuel_type],
                                          location: location,
                                          tank_volume: args[:dhw_water_heater_tank_volume],
                                          fraction_dhw_load_served: 1.0,
                                          energy_factor: energy_factor,
                                          uniform_energy_factor: uniform_energy_factor,
-                                         usage_bin: usage_bin,
-                                         recovery_efficiency: recovery_efficiency,
+                                         usage_bin: args[:dhw_water_heater_usage_bin],
+                                         recovery_efficiency: args[:dhw_water_heater_recovery_efficiency],
                                          related_hvac_idref: related_hvac_idref,
                                          temperature: args[:dhw_water_heater_temperature])
   end
@@ -3167,30 +3144,17 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   def set_hot_water_distribution(hpxml_bldg, args)
     return if args[:dhw_water_heater] == 'None'
 
-    dwhr_facilities_connected = args[:dhw_drain_water_heat_recovery_facilities_connected]
-    dwhr_equal_flow = args[:dhw_drain_water_heat_recovery_equal_flow]
-    dwhr_efficiency = args[:dhw_drain_water_heat_recovery_efficiency]
-
-    if args[:dhw_distribution_system_type] == HPXML::DHWDistTypeStandard
-      standard_piping_length = args[:dhw_distribution_standard_piping_length]
-    else
-      recirculation_control_type = args[:dhw_distribution_recirculation_control_type]
-      recirculation_piping_loop_length = args[:dhw_distribution_recirculation_piping_loop_length]
-      recirculation_branch_piping_length = args[:dhw_distribution_recirculation_branch_piping_length]
-      recirculation_pump_power = args[:dhw_distribution_recirculation_pump_power]
-    end
-
     hpxml_bldg.hot_water_distributions.add(id: "HotWaterDistribution#{hpxml_bldg.hot_water_distributions.size + 1}",
                                            system_type: args[:dhw_distribution_system_type],
-                                           standard_piping_length: standard_piping_length,
-                                           recirculation_control_type: recirculation_control_type,
-                                           recirculation_piping_loop_length: recirculation_piping_loop_length,
-                                           recirculation_branch_piping_length: recirculation_branch_piping_length,
-                                           recirculation_pump_power: recirculation_pump_power,
+                                           standard_piping_length: args[:dhw_distribution_standard_piping_length],
+                                           recirculation_control_type: args[:dhw_distribution_recirculation_control_type],
+                                           recirculation_piping_loop_length: args[:dhw_distribution_recirculation_piping_loop_length],
+                                           recirculation_branch_piping_length: args[:dhw_distribution_recirculation_branch_piping_length],
+                                           recirculation_pump_power: args[:dhw_distribution_recirculation_pump_power],
                                            pipe_r_value: args[:dhw_distribution_pipe_insulation_nominal_r_value],
-                                           dwhr_facilities_connected: dwhr_facilities_connected,
-                                           dwhr_equal_flow: dwhr_equal_flow,
-                                           dwhr_efficiency: dwhr_efficiency)
+                                           dwhr_facilities_connected: args[:dhw_drain_water_heat_recovery_facilities_connected],
+                                           dwhr_equal_flow: args[:dhw_drain_water_heat_recovery_equal_flow],
+                                           dwhr_efficiency: args[:dhw_drain_water_heat_recovery_efficiency])
   end
 
   # Sets the HPXML water fixtures properties.
@@ -3220,35 +3184,27 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   def set_solar_thermal(hpxml_bldg, args)
     return if args[:dhw_solar_thermal] == 'None'
 
-    if args[:dhw_solar_thermal_solar_fraction].to_f > 0
-      solar_fraction = args[:dhw_solar_thermal_solar_fraction]
-    else
-      collector_area = args[:dhw_solar_thermal_collector_area]
-      collector_loop_type = args[:dhw_solar_thermal_collector_loop_type]
-      collector_type = args[:dhw_solar_thermal_collector_type]
-      collector_azimuth = args[:dhw_solar_thermal_direction_collector_azimuth]
-      collector_tilt = Geometry.get_absolute_tilt(tilt: args[:dhw_solar_thermal_direction_collector_tilt], roof_pitch: args[:geometry_roof_pitch])
-      collector_rated_optical_efficiency = args[:dhw_solar_thermal_collector_rated_optical_efficiency]
-      collector_rated_thermal_losses = args[:dhw_solar_thermal_collector_rated_thermal_losses]
-      storage_volume = args[:dhw_solar_thermal_storage_volume]
-    end
-
     if hpxml_bldg.water_heating_systems.size == 0
       fail 'Solar thermal system specified but no water heater found.'
     end
 
+    if args[:dhw_solar_thermal_solar_fraction].nil?
+      collector_azimuth = args[:dhw_solar_thermal_direction_collector_azimuth]
+      collector_tilt = Geometry.get_absolute_tilt(tilt: args[:dhw_solar_thermal_direction_collector_tilt], roof_pitch: args[:geometry_roof_pitch])
+    end
+
     hpxml_bldg.solar_thermal_systems.add(id: "SolarThermalSystem#{hpxml_bldg.solar_thermal_systems.size + 1}",
                                          system_type: HPXML::SolarThermalSystemTypeHotWater,
-                                         collector_area: collector_area,
-                                         collector_loop_type: collector_loop_type,
-                                         collector_type: collector_type,
+                                         collector_area: args[:dhw_solar_thermal_collector_area],
+                                         collector_loop_type: args[:dhw_solar_thermal_collector_loop_type],
+                                         collector_type: args[:dhw_solar_thermal_collector_type],
                                          collector_azimuth: collector_azimuth,
                                          collector_tilt: collector_tilt,
-                                         collector_rated_optical_efficiency: collector_rated_optical_efficiency,
-                                         collector_rated_thermal_losses: collector_rated_thermal_losses,
-                                         storage_volume: storage_volume,
+                                         collector_rated_optical_efficiency: args[:dhw_solar_thermal_collector_rated_optical_efficiency],
+                                         collector_rated_thermal_losses: args[:dhw_solar_thermal_collector_rated_thermal_losses],
+                                         storage_volume: args[:dhw_solar_thermal_storage_volume],
                                          water_heating_system_idref: hpxml_bldg.water_heating_systems[0].id,
-                                         solar_fraction: solar_fraction)
+                                         solar_fraction: args[:dhw_solar_thermal_solar_fraction])
   end
 
   # Sets the HPXML PV systems properties.

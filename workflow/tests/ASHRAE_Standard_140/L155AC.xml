@@ -52,7 +52,6 @@
               <UnitofMeasure>ACHnatural</UnitofMeasure>
               <AirLeakage>0.67</AirLeakage>
             </BuildingAirLeakage>
-            <InfiltrationVolume>12312.0</InfiltrationVolume>
           </AirInfiltrationMeasurement>
         </AirInfiltration>
         <Attics>

@@ -40,10 +40,10 @@ Space-Heating Boiler w/ Tankless Coil	space-heating boiler with tankless coil
 "Detailed Example: Electricity, Tank, UEF 0.94, 135F"	storage water heater	electricity	UniformEnergyFactor	0.94				135
 "Detailed Example: Electricity, Tankless, EF 0.96"	instantaneous water heater	electricity	EnergyFactor	0.96				
 "Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1"	heat pump water heater	electricity	EnergyFactor	3.1	80			
-"Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78"	storage water heater	natural gas	EnergyFactor	0.56	40	0.78		
-"Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78"	storage water heater	natural gas	EnergyFactor	0.62	40	0.78		
-"Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76"	storage water heater	natural gas	EnergyFactor	0.59	50	0.76		
+"Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59"	storage water heater	natural gas	EnergyFactor	0.59	50			
 "Detailed Example: Natural Gas, Tankless, EF 0.95"	instantaneous water heater	natural gas	EnergyFactor	0.95				
+"HERS Hot Water Tests: Natural Gas, Tank, 40 gal, EF 0.56"	storage water heater	natural gas	EnergyFactor	0.56	40	0.78		
+"HERS Hot Water Tests: Natural Gas, Tank, 40 gal, EF 0.62"	storage water heater	natural gas	EnergyFactor	0.62	40	0.78		
 								
 # Type: The type of water heater.								
 # Fuel Type: The fuel type of the water heater.								
