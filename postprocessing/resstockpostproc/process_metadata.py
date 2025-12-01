@@ -191,6 +191,7 @@ def downselect_and_rename_cols(df: pl.LazyFrame, col_maps: Sequence[dict]) -> pl
     transformed_cols.extend([pl.col(col).alias(col) for col in upgrade_cols])
     return df.select(transformed_cols)
 
+
 def get_upgrade_rename_dict(raw_results_dir):
     file_path = pathlib.Path(raw_results_dir["fs_path"]) / "rename_upgrades.json"
     if not raw_results_dir["fs"].exists(file_path):
@@ -198,6 +199,7 @@ def get_upgrade_rename_dict(raw_results_dir):
     with raw_results_dir['fs'].open(file_path, "r") as f:
         upgrade_renamer = json.load(f)
     return upgrade_renamer
+
 
 def rename_upgrades(df: pl.LazyFrame, upgrade_renamer: dict) -> pl.LazyFrame:
     """
@@ -222,7 +224,7 @@ def rename_upgrades(df: pl.LazyFrame, upgrade_renamer: dict) -> pl.LazyFrame:
     # Check that each upgrade name is present in the upgrade renamer dict
     up_names = df.select(pl.col("in.upgrade_name")).unique().collect().to_series().to_list()
     for up_name in up_names:
-        if not up_name in upgrade_renamer:
+        if up_name not in upgrade_renamer:
             raise ValueError(f"No upgrade rename supplied for: {up_name}")
 
     df = df.with_columns((pl.col("in.upgrade_name").replace(upgrade_renamer)).alias("in.upgrade_name"))
@@ -233,7 +235,6 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
     df = assign_representative_income(df)
     income_col = "in.representative_income"
 
-    new_cols = []
     # Reassign negative or zero dollar income to 1 dollar
     adj_income = pl.when(pl.col(income_col) <= 0).then(pl.lit(1)).otherwise(pl.col(income_col)).alias(income_col)
 
@@ -260,7 +261,7 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
 
 
 def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame:
-    print(f"Adding savings columns")
+    print("Adding savings columns")
     savings_cols = []
     all_cols = df.collect_schema().names()
     out_cols = [col for col in all_cols if 'out.' in col and not (
@@ -473,6 +474,7 @@ def add_puma_column(df: pl.LazyFrame):
     df = df.with_columns([pl.col("in.puma").replace(puma_map).alias("in.puma")])
     return df
 
+
 def get_upgrade_columns(lf: pl.LazyFrame) -> list:
     upgrade_cols = [c for c in lf.collect_schema().names() if c.startswith("upgrade_costs.") and c.endswith("_name")]
     if not upgrade_cols:
@@ -596,12 +598,12 @@ def downselect_and_order_pub_cols(lf: pl.LazyFrame, col_maps: Sequence[dict]):
     all_defined_cols = [col_map["published_name"] for col_map in col_maps if "yes" in col_map["publish_in_full"]]
     extra_cols = all_df_cols - set(all_defined_cols)
     if extra_cols:
-        print(f"Extra columns in output data not defined in publication column definition:")
+        print("Extra columns in output data not defined in publication column definition:")
         for c in sorted(extra_cols):
             print(f"Extra column: {c}")
     missing_cols = [col for col in set(all_defined_cols) - all_df_cols if not col.startswith("upgrade.")]
     if missing_cols:
-        print(f"Missing columns in output data that are defined in publication column definition:")
+        print("Missing columns in output data that are defined in publication column definition:")
         for c in sorted(missing_cols):
             if 'out.component_load' in c:  # TODO ANDREW WUZ HERE remove this - temporarily suppressing known missing cols
                 continue
@@ -687,6 +689,7 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
                     print(f"Writing {file_path}")
                     input_args = (up_df, output_dir, file_type, file_path)
                     write_geo_data(input_args)
+
 
 def get_file_path(output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, data_type, upgrade_id):
     """
