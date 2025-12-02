@@ -37,10 +37,11 @@ def get_plot_data(
                           plot_spec.resolution,
                           aggregation=aggregation)
     df = _keep_relevant_columns(df, plot_spec)
+    df = _add_95ci_bounds(df)
     return df
 
 
-@cache
+#@cache
 def _get_plot_data(
         truth_source,
         aggregation_level,
@@ -75,10 +76,28 @@ def _get_plot_data(
         # resstock_data = recs_mapping.add_characteristic_columns(resstock_data)
     else:
         raise NotImplementedError(f"Truth source {truth_source} not implemented.")
-    merged = pl.concat([source_data, resstock_data], how="diagonal_relaxed").fill_null(0)
-    df = _pivot_enduse_columns(merged, groups)
-    return df
+    df = pl.concat([source_data, resstock_data], how="diagonal_relaxed")
+    val_columns = [col for col in df.columns if col.endswith(("_value", "_percent_users"))]
+    ref_cols = [col for col in df["source"].unique() if truth_source in col]
+    final_df = _add_percent_difference(df, join_columns=groups, value_columns=val_columns, ref_column="source",
+                                       ref_val=ref_cols[0])
+    final_df = final_df.rename({"sample_count": "model_count"})
+    return final_df
 
+
+def _add_percent_difference(df: pl.DataFrame, join_columns: list[str], value_columns: list[str], ref_column: str, ref_val: str) -> pl.DataFrame:
+    ref_df = df.filter(pl.col(ref_column) == ref_val).select(join_columns + value_columns)
+    full_df = df.join(ref_df, on=join_columns, suffix="_ref")
+    result = full_df.with_columns(
+        pl.when(pl.col(ref_column) != ref_val)
+        .then((pl.col(f"{value_column}") - pl.col(f"{value_column}_ref")) / pl.col(f"{value_column}_ref") * 100)
+        .otherwise(None)
+        .alias(f"{value_column}_percent_difference")
+        for value_column in value_columns
+    )
+    # Drop the reference columns
+    ref_columns_to_drop = [f"{value_column}_ref" for value_column in value_columns]
+    return result.drop(ref_columns_to_drop)
 
 def _pivot_enduse_columns(df: pl.DataFrame, groups: list) -> pl.DataFrame:
     """Pivot enduse columns to have unified column names."""
@@ -95,7 +114,10 @@ def _keep_relevant_columns(
     plot_spec: PlotSpec,
 ) -> pl.DataFrame:
     """Keep only the relevant columns for the given plot specification."""
-    all_output_columns = [col for col in df.columns if col.endswith(("_value", "_customers", "_quartiles"))]
+    all_output_columns = [
+        col for col in df.columns if col.endswith(("_value", "_percent_users", "_quartiles", "_percent_difference",
+                                                    "_resoluition", "_rse"))
+    ]
     if plot_spec.quantity is not None:
         drop_columns = [col for col in all_output_columns if plot_spec.quantity.value not in col]
         df = df.drop(drop_columns)
@@ -116,6 +138,25 @@ def _keep_relevant_columns(
     df = df.drop(to_drop_columns)
     return df
 
+
+def _add_95ci_bounds(
+    df: pl.DataFrame,
+) -> pl.DataFrame:
+    """Add RSE-based upper and lower 95% confidence intervals to the DataFrame."""
+    rse_columns = [col for col in df.columns if col.endswith("_rse")]
+    for rse_col in rse_columns:
+        base_col = rse_col.removesuffix("_rse")
+        upper_col = rse_col.replace("_rse", "_upper_bound")
+        lower_col = rse_col.replace("_rse", "_lower_bound")
+        df = df.with_columns(
+            (
+                pl.col(base_col) + (pl.col(base_col) * pl.col(rse_col).fill_null(0).abs() / 100.0 * 1.96)
+            ).alias(upper_col),
+            (
+                pl.col(base_col) - (pl.col(base_col) * pl.col(rse_col).fill_null(0).abs() / 100.0 * 1.96)
+            ).alias(lower_col),
+        )
+    return df
 
 def scale_to_eia_customers(
     buildstock_df: pl.DataFrame,

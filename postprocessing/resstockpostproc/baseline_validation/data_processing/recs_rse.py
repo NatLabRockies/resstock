@@ -20,9 +20,9 @@ def calculate_rse(df, variable_col, stat_type="total"):
     Args:
         df: DataFrame with RECS data
         variable_col: Column name for the variable to analyze
-        stat_type: One of 'total', 'average', 'min', 'max', 'q1', 'q2', 'median', 'q3'
+        stat_type: One of 'total', 'avg', 'percent', 'min', 'max', 'q1', 'q2', 'median', 'q3'
     """
-    valid_stats = ["total", "avg", "min", "max", "q1", "q2", "median", "q3"]
+    valid_stats = ["total", "avg", "percent", "min", "max", "q1", "q2", "median", "q3"]
     if stat_type not in valid_stats:
         raise ValueError(f"stat_type must be one of {valid_stats}")
 
@@ -31,6 +31,10 @@ def calculate_rse(df, variable_col, stat_type="total"):
             return (data * weights).sum()
         elif stat == "avg":
             return (data * weights).sum() / weights.sum()
+        elif stat == "percent":
+            # Percent/proportion: weighted mean of binary indicator (data > 0)
+            binary_indicator = (data > 0).astype(int)
+            return (binary_indicator * weights).sum() / weights.sum()
         elif stat == "min":
             mask = weights > 0
             return data[mask].min()

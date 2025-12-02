@@ -466,7 +466,7 @@ def plot_monthly_sales(
         title: Plot title
         y_label: Y-axis label
         use_shared_axis: Whether to use shared y-axis scaling
-        suffix: Column suffix to use (e.g., '_value' or '_customers')
+        suffix: Column suffix to use (e.g., '_value' or '_percent_users')
     """
     # Add month columns if not present
     if "_month_order" not in data.columns:
@@ -945,7 +945,7 @@ def plot_annual_sales(
         title: Plot title
         y_label: Y-axis label
         use_shared_axis: Whether to use shared y-axis scaling
-        suffix: Column suffix to use (e.g., '_value', '_customers', or '_quartiles')
+        suffix: Column suffix to use (e.g., '_value', '_percent_users', or '_quartiles')
         quantity_type: Type of quantity being plotted
     """
     is_box_plot = (quantity_type == AggregationType.per_unit_distribution)
@@ -1273,7 +1273,7 @@ def plot_annual_sales(
 def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     # Determine suffix based on quantity_type
     if plot_spec.aggregation_type == AggregationType.percent_users:
-        suffix = "_customers"
+        suffix = "_percent_users"
     elif plot_spec.aggregation_type == AggregationType.per_unit_distribution:
         suffix = "_quartiles"
     else:

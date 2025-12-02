@@ -27,6 +27,7 @@ class AggregationType(StrEnum):
     monthly_per_user = "monthly per user"
     per_user_distribution = "per user distribution"
     percent_users = "percent users"
+    customers = "customers"
 
 
 class ViewType(StrEnum):
@@ -53,23 +54,12 @@ class TruthSource(StrEnum):
     recs = "recs"
 
 
-class QuantityGroup(NoExtraModel):
-    """Definition of a quantity group with constituents and sum"""
-
-    name: str = Field(description="Name of the quantity group")
-    constituents: tuple[DataCol, ...] = Field(description="List of constituent columns")
-    sum: str | None = Field(None, description="Column name for the sum quantity")
-
-
 class PlotSpec(NoExtraModel):
     truth_source: TruthSource = Field(..., description="Optional truth source for comparison plots.")
     aggregation_type: AggregationType = Field(..., description="stock / per_unit etc")
     quantity: DataCol | None = Field(..., description="Column(s) to visualise.")
     resolution: Literal["monthly", "annual"] = Field(..., description="monthly / annual")
     visualization_type: Literal["bar", "choropleth"] = Field(..., alias="visualization_type")
-    shared_axis_range: bool = Field(
-        default=False, description="Whether to use shared axis range across subplots."
-    )
     aggregation_level: str = Field(..., description="Eg. state, eiaid")
     focus_on: str | None = Field(default=None, description="Specific category to focus on. Example: CA")
     view: ViewType = Field(..., description="diff / value")

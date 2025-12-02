@@ -15,9 +15,10 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 from resstockpostproc.upgrade_comparison.plotters import plot_utils
-from resstockpostproc.upgrade_comparison import theme
+from resstockpostproc.shared_utils.generic_plotters import theme
 from resstockpostproc.upgrade_comparison.schema.plot_spec import PlotSpec
 from resstockpostproc.upgrade_comparison.schema.workflow_schema import QuantityGroup, QuantityType
+from resstockpostproc.upgrade_comparison.schema.workflow_schema import WorkflowConfig
 
 __all__ = ["create_plot"]
 
@@ -84,6 +85,7 @@ def create_plot(
     resolution: Literal["state", "county"] = "state",
     show_labels: bool = False,
     show_boundaries: bool = False,
+    workflow: WorkflowConfig,
 ) -> go.Figure:
     """Create a choropleth map for the provided data."""
 

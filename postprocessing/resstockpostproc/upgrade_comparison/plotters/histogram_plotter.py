@@ -8,12 +8,13 @@ from plotly.subplots import make_subplots
 __all__ = ["create_plot"]
 
 from resstockpostproc.upgrade_comparison.plotters import plot_utils
-from resstockpostproc.upgrade_comparison import theme
+from resstockpostproc.shared_utils.generic_plotters import theme
 from resstockpostproc.upgrade_comparison.schema.plot_spec import PlotSpec
 from resstockpostproc.upgrade_comparison.schema.workflow_schema import QuantityGroup
+from resstockpostproc.upgrade_comparison.schema.workflow_schema import WorkflowConfig
 
 
-def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
+def create_plot(data: pl.DataFrame, plot_spec: PlotSpec, workflow: WorkflowConfig) -> go.Figure:
     """Create and return a histogram figure based on *plot_spec*."""
     if isinstance(plot_spec.quantity, QuantityGroup):
         raise ValueError("Histogram plots require a single quantity, not a QuantityGroup.")
@@ -83,7 +84,7 @@ def _create_histogram_plot(
     # 2. Prepare facet grid (rows = facets, columns = upgrades)
     # ------------------------------------------------------------------
     upgrades = df["upgrade_name"].unique(maintain_order=True).to_list()
-    upgrade_palette = theme.build_upgrade_palette(upgrades)
+    upgrade_palette = theme.build_color_palette(upgrades)
     facet_values = df[facet_column].unique(maintain_order=True).to_list() if facet_column else [None]
 
     n_rows, n_cols = len(facet_values), len(upgrades)

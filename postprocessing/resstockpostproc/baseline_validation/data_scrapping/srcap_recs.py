@@ -174,10 +174,9 @@ def get_monthly_data() -> pl.DataFrame:
             print(f"Downloaded {filename}")
 
         data_df = _extract_monthly_data_from_excel(filepath)
-        data_df = data_df.rename({"value": f"recs_2020_{enduse}_value",
-                                  "rse": f"recs_2020_{enduse}_rse",
-                                  "customers": f"recs_2020_{enduse}_customers",
-                                  "resolution": f"recs_2020_{enduse}_resolution"})
+        data_df = data_df.rename({"value": f"{enduse}_value",
+                                  "rse": f"{enduse}_value_rse",
+                                  "resolution": f"{enduse}_value_resolution"})
         all_records.append(data_df)
         print(f"Processed {len(data_df)} records from {filename}")
 

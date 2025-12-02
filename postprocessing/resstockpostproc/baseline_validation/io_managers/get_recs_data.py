@@ -9,14 +9,12 @@ import polars as pl
 import numpy as np
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
 from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
+from .utils import add_us_total
 from . import truth_data_paths as s3_paths
-from .utils import add_us_total, _stack_quantity_types
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 from resstockpostproc.baseline_validation.data_processing.recs_rse import calculate_rse
-from collections.abc import Sequence
 from typing import Literal
-from resstockpostproc.baseline_validation.utils import KBTU2KWH
 local_data_dir = Path(f"{workflow.output.output_dir}/data")
 
 
@@ -85,29 +83,38 @@ def get_annual_all(
         if aggregation == "sum":
             # Stock energy: weighted sum
             result_df = mdf.group_by(by).agg(
+                pl.len().alias("sample_count"),
+                pl.col("NWEIGHT").sum().alias("units_count"),
                 *((pl.col(col)*pl.col("NWEIGHT")).sum().alias(f"{col}_value") 
                   for col in enduse_cols),
-                *(((pl.col(col) > 0).cast(pl.Int64)*pl.col("NWEIGHT")).sum().alias(f"{col}_customers") 
+                *((((pl.col(col) > 0).cast(pl.Int64)*pl.col("NWEIGHT")).sum() / 
+                   pl.col("NWEIGHT").sum() * 100).alias(f"{col}_percent_users") 
                   for col in enduse_cols)
             )
         elif aggregation == "per_unit_avg":
             # Per-unit energy: weighted mean (sum of weighted values / sum of all weights)
             result_df = mdf.group_by(by).agg(
+                pl.len().alias("sample_count"),
+                pl.col("NWEIGHT").sum().alias("units_count"),
                 *(((pl.col(col)*pl.col("NWEIGHT")).sum() / 
                    pl.col("NWEIGHT").sum())
                   .alias(f"{col}_value") 
                   for col in enduse_cols),
-                *(((pl.col(col) > 0).cast(pl.Int64)*pl.col("NWEIGHT")).sum().alias(f"{col}_customers") 
+                *((((pl.col(col) > 0).cast(pl.Int64)*pl.col("NWEIGHT")).sum() / 
+                   pl.col("NWEIGHT").sum() * 100).alias(f"{col}_percent_users") 
                   for col in enduse_cols)
             )
         else:  # aggregation == "per_user_avg"
             # Per-user energy: weighted mean (sum of weighted values / sum of weights for non-zero values only)
             result_df = mdf.group_by(by).agg(
+                pl.len().alias("sample_count"),
+                pl.col("NWEIGHT").sum().alias("units_count"),
                 *(((pl.col(col)*pl.col("NWEIGHT")).sum() / 
                    ((pl.col(col) > 0).cast(pl.Int64)*pl.col("NWEIGHT")).sum())
                   .alias(f"{col}_value") 
                   for col in enduse_cols),
-                *(((pl.col(col) > 0).cast(pl.Int64)*pl.col("NWEIGHT")).sum().alias(f"{col}_customers") 
+                *((((pl.col(col) > 0).cast(pl.Int64)*pl.col("NWEIGHT")).sum() / 
+                   pl.col("NWEIGHT").sum() * 100).alias(f"{col}_percent_users") 
                   for col in enduse_cols)
             )
         
@@ -116,6 +123,7 @@ def get_annual_all(
         mdf_pd = mdf.to_pandas()
         rse_results = []
         quartile_results = []
+        nonzero_quartile_results = []
         
         # Determine RSE stat type based on aggregation
         rse_stat_type = "total" if aggregation == "sum" else "avg"
@@ -124,14 +132,34 @@ def get_annual_all(
             group_data = mdf_pd[mdf_pd[by] == group_value]
             rse_row = {by: group_value}
             quartile_row = {by: group_value}
+            nonzero_quartile_row = {by: group_value}
+            
+            # Calculate units_count_rse (RSE of the sum of weights)
+            # Create a constant column of 1s to calculate RSE of weight sum
+            try:
+                # For units_count RSE, we treat it as a "total" of a constant (1) variable
+                group_data_temp = group_data.copy()
+                group_data_temp["_constant_"] = 1
+                units_count_rse = calculate_rse(group_data_temp, "_constant_", stat_type="total")
+                rse_row["units_count_rse"] = units_count_rse
+            except Exception:
+                rse_row["units_count_rse"] = None
             
             for col in enduse_cols:
                 try:
                     rse = calculate_rse(group_data, col, stat_type=rse_stat_type)
-                    rse_row[f"{col}_rse"] = rse
+                    rse_row[f"{col}_value_rse"] = rse
                 except Exception:
                     # If RSE calculation fails, set to None
-                    rse_row[f"{col}_rse"] = None
+                    rse_row[f"{col}_value_rse"] = None
+                
+                # Calculate RSE for percent_users (binary indicator: col > 0)
+                try:
+                    # For percent_users, we calculate RSE of the proportion/mean of the binary indicator
+                    rse_percent_users = calculate_rse(group_data, col, stat_type="percent")
+                    rse_row[f"{col}_percent_users_rse"] = rse_percent_users
+                except Exception:
+                    rse_row[f"{col}_percent_users_rse"] = None
                 
                 # Calculate quartiles for the column
                 try:
@@ -141,36 +169,65 @@ def get_annual_all(
                         # Calculate weighted quartiles
                         quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
                         quartiles = _calculate_weighted_quantiles(data_values, weights, quantiles)
-                        quartile_row[f"{col}_quartiles"] = str(quartiles.tolist())
+                        quartile_row[f"{col}_value_quartiles"] = str(quartiles.tolist())
                     else:
-                        quartile_row[f"{col}_quartiles"] = str([0.0] * 9)
+                        quartile_row[f"{col}_value_quartiles"] = str([0.0] * 9)
                 except Exception:
-                    quartile_row[f"{col}_quartiles"] = str([0.0] * 9)
+                    quartile_row[f"{col}_value_quartiles"] = str([0.0] * 9)
+                
+                # Calculate nonzero quartiles for the column (exclude zeros)
+                try:
+                    data_values = group_data[col].values
+                    weights = group_data["NWEIGHT"].values
+                    non_zero_mask = data_values > 0
+                    data_values_nonzero = data_values[non_zero_mask]
+                    weights_nonzero = weights[non_zero_mask]
+                    if len(data_values_nonzero) > 0:
+                        # Calculate weighted quartiles for non-zero values
+                        quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
+                        nonzero_quartiles = _calculate_weighted_quantiles(
+                            data_values_nonzero, weights_nonzero, quantiles
+                        )
+                        nonzero_quartile_row[f"{col}_value_nonzero_quartiles"] = str(nonzero_quartiles.tolist())
+                    else:
+                        nonzero_quartile_row[f"{col}_value_nonzero_quartiles"] = str([0.0] * 9)
+                except Exception:
+                    nonzero_quartile_row[f"{col}_value_nonzero_quartiles"] = str([0.0] * 9)
             
             rse_results.append(rse_row)
             quartile_results.append(quartile_row)
+            nonzero_quartile_results.append(nonzero_quartile_row)
         
         # Convert RSE and quartile results to polars and join with value results
         rse_df = pl.DataFrame(rse_results)
         quartile_df = pl.DataFrame(quartile_results)
+        nonzero_quartile_df = pl.DataFrame(nonzero_quartile_results)
         result_df = result_df.join(rse_df, on=by, how="left")
         result_df = result_df.join(quartile_df, on=by, how="left")
+        result_df = result_df.join(nonzero_quartile_df, on=by, how="left")
         
         # Add US Total values
         if aggregation == "sum":
-            # For sum: add US Total by summing all states
-            result_df = add_us_total(result_df, by=by, group_cols=None)
+            # For sum: add US Total by summing all states (excluding sample_count and units_count_rse)
+            result_df = add_us_total(
+                result_df, by=by, group_cols=None, exclude_cols=["sample_count", "units_count_rse"]
+            )
         elif aggregation == "per_unit_avg":
             # For per_unit_avg: calculate US Total from full microdata (can't sum averages)
             us_total_values = {}
             us_total_values[by] = "US Total"
+            us_total_values["sample_count"] = len(mdf)
+            us_total_values["units_count"] = mdf["NWEIGHT"].sum()
             for col in enduse_cols:
                 # Calculate weighted mean from full microdata (all units)
                 weighted_sum = (mdf[col] * mdf["NWEIGHT"]).sum()
                 weight_sum = (mdf["NWEIGHT"]).sum()
                 avg_value = weighted_sum / weight_sum if weight_sum > 0 else 0
                 us_total_values[f"{col}_value"] = avg_value
-                us_total_values[f"{col}_customers"] = ((mdf[col] > 0).cast(pl.Int64) * mdf["NWEIGHT"]).sum()
+                nonzero_weight_sum = ((mdf[col] > 0).cast(pl.Int64) * mdf["NWEIGHT"]).sum()
+                us_total_values[f"{col}_percent_users"] = (
+                    (nonzero_weight_sum / weight_sum * 100) if weight_sum > 0 else 0
+                )
             
             # Add US Total row to result_df
             us_total_df = pl.DataFrame([us_total_values])
@@ -179,28 +236,52 @@ def get_annual_all(
             # For per_user_avg: calculate US Total from full microdata (only non-zero values)
             us_total_values = {}
             us_total_values[by] = "US Total"
+            us_total_values["sample_count"] = len(mdf)
+            us_total_values["units_count"] = mdf["NWEIGHT"].sum()
             for col in enduse_cols:
                 # Calculate weighted mean from full microdata (non-zero values only)
                 weighted_sum = (mdf[col] * mdf["NWEIGHT"]).sum()
                 customer_weight_sum = ((mdf[col] > 0).cast(pl.Int64) * mdf["NWEIGHT"]).sum()
+                total_weight_sum = mdf["NWEIGHT"].sum()
                 avg_value = weighted_sum / customer_weight_sum if customer_weight_sum > 0 else 0
                 us_total_values[f"{col}_value"] = avg_value
-                us_total_values[f"{col}_customers"] = customer_weight_sum
+                us_total_values[f"{col}_percent_users"] = (
+                    customer_weight_sum / total_weight_sum * 100 if total_weight_sum > 0 else 0
+                )
             
             # Add US Total row to result_df
             us_total_df = pl.DataFrame([us_total_values])
             result_df = pl.concat([result_df, us_total_df], how="diagonal_relaxed")
         
-        # Calculate RSE and quartiles for US Total from full microdata (must be done AFTER add_us_total to avoid overwriting)
+        # Calculate RSE and quartiles for US Total from full microdata
+        # (must be done AFTER add_us_total to avoid overwriting)
         us_total_rse_dict = {}
         us_total_quartile_dict = {}
+        us_total_nonzero_quartile_dict = {}
+        
+        # Calculate units_count_rse for US Total
+        try:
+            mdf_pd_temp = mdf_pd.copy()
+            mdf_pd_temp["_constant_"] = 1
+            units_count_rse = calculate_rse(mdf_pd_temp, "_constant_", stat_type="total")
+            us_total_rse_dict["units_count_rse"] = units_count_rse
+        except Exception:
+            us_total_rse_dict["units_count_rse"] = None
+        
         for col in enduse_cols:
             try:
                 rse = calculate_rse(mdf_pd, col, stat_type=rse_stat_type)
-                us_total_rse_dict[f"{col}_rse"] = rse
+                us_total_rse_dict[f"{col}_value_rse"] = rse
             except Exception:
                 # If RSE calculation fails, set to None
-                us_total_rse_dict[f"{col}_rse"] = None
+                us_total_rse_dict[f"{col}_value_rse"] = None
+            
+            # Calculate RSE for percent_users
+            try:
+                rse_percent_users = calculate_rse(mdf_pd, col, stat_type="percent")
+                us_total_rse_dict[f"{col}_percent_users_rse"] = rse_percent_users
+            except Exception:
+                us_total_rse_dict[f"{col}_percent_users_rse"] = None
             
             # Calculate quartiles for US Total
             try:
@@ -209,11 +290,31 @@ def get_annual_all(
                 if len(data_values) > 0:
                     quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
                     quartiles = _calculate_weighted_quantiles(data_values, weights, quantiles)
-                    us_total_quartile_dict[f"{col}_quartiles"] = str(quartiles.tolist())
+                    us_total_quartile_dict[f"{col}_value_quartiles"] = str(quartiles.tolist())
                 else:
-                    us_total_quartile_dict[f"{col}_quartiles"] = str([0.0] * 9)
+                    us_total_quartile_dict[f"{col}_value_quartiles"] = str([0.0] * 9)
             except Exception:
-                us_total_quartile_dict[f"{col}_quartiles"] = str([0.0] * 9)
+                us_total_quartile_dict[f"{col}_value_quartiles"] = str([0.0] * 9)
+            
+            # Calculate nonzero quartiles for US Total
+            try:
+                data_values = mdf_pd[col].values
+                weights = mdf_pd["NWEIGHT"].values
+                non_zero_mask = data_values > 0
+                data_values_nonzero = data_values[non_zero_mask]
+                weights_nonzero = weights[non_zero_mask]
+                if len(data_values_nonzero) > 0:
+                    quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
+                    nonzero_quartiles = _calculate_weighted_quantiles(
+                        data_values_nonzero, weights_nonzero, quantiles
+                    )
+                    us_total_nonzero_quartile_dict[f"{col}_value_nonzero_quartiles"] = str(
+                        nonzero_quartiles.tolist()
+                    )
+                else:
+                    us_total_nonzero_quartile_dict[f"{col}_value_nonzero_quartiles"] = str([0.0] * 9)
+            except Exception:
+                us_total_nonzero_quartile_dict[f"{col}_value_nonzero_quartiles"] = str([0.0] * 9)
         
         # Update the US Total row with correct RSE and quartile values
         for col, rse_value in us_total_rse_dict.items():
@@ -230,16 +331,27 @@ def get_annual_all(
                 .otherwise(pl.col(col))
                 .alias(col)
             )
+        for col, nonzero_quartile_value in us_total_nonzero_quartile_dict.items():
+            result_df = result_df.with_columns(
+                pl.when(pl.col(by) == "US Total")
+                .then(pl.lit(nonzero_quartile_value))
+                .otherwise(pl.col(col))
+                .alias(col)
+            )
     else:
         # Calculate value columns based on aggregation type
         if aggregation == "sum":
             # Stock energy: weighted sum
             result_df = mdf.select(
+                pl.len().alias("sample_count"),
+                pl.col("NWEIGHT").sum().alias("units_count"),
                 *((pl.col(col)*pl.col("NWEIGHT")).sum().alias(f"{col}_value") for col in enduse_cols)
             )
         elif aggregation == "per_unit_avg":
             # Per-unit energy: weighted mean (sum of weighted values / sum of all weights)
             result_df = mdf.select(
+                pl.len().alias("sample_count"),
+                pl.col("NWEIGHT").sum().alias("units_count"),
                 *(((pl.col(col)*pl.col("NWEIGHT")).sum() / 
                    pl.col("NWEIGHT").sum())
                   .alias(f"{col}_value") 
@@ -248,6 +360,8 @@ def get_annual_all(
         else:  # aggregation == "per_user_avg"
             # Per-user energy: weighted mean (sum of weighted values / sum of weights for non-zero values only)
             result_df = mdf.select(
+                pl.len().alias("sample_count"),
+                pl.col("NWEIGHT").sum().alias("units_count"),
                 *(((pl.col(col)*pl.col("NWEIGHT")).sum() / 
                    ((pl.col(col) > 0).cast(pl.Int64)*pl.col("NWEIGHT")).sum())
                   .alias(f"{col}_value") 
@@ -259,46 +373,79 @@ def get_annual_all(
         mdf_pd = mdf.to_pandas()
         rse_dict = {}
         quartile_dict = {}
+        nonzero_quartile_dict = {}
         
         # Determine RSE stat type based on aggregation
         rse_stat_type = "total" if aggregation == "sum" else "mean"
         
+        # Calculate units_count_rse
+        try:
+            mdf_pd_temp = mdf_pd.copy()
+            mdf_pd_temp["_constant_"] = 1
+            units_count_rse = calculate_rse(mdf_pd_temp, "_constant_", stat_type="total")
+            rse_dict["units_count_rse"] = [units_count_rse]
+        except Exception:
+            rse_dict["units_count_rse"] = [None]
+        
         for col in enduse_cols:
             try:
                 rse = calculate_rse(mdf_pd, col, stat_type=rse_stat_type)
-                rse_dict[f"{col}_rse"] = [rse]
+                rse_dict[f"{col}_value_rse"] = [rse]
             except Exception:
                 # If RSE calculation fails, set to None
-                rse_dict[f"{col}_rse"] = [None]
+                rse_dict[f"{col}_value_rse"] = [None]
             
-            # Calculate quartiles
+            # Calculate RSE for percent_users
+            try:
+                rse_percent_users = calculate_rse(mdf_pd, col, stat_type="percent")
+                rse_dict[f"{col}_percent_users_rse"] = [rse_percent_users]
+            except Exception:
+                rse_dict[f"{col}_percent_users_rse"] = [None]
+            
+            # Calculate quartiles (including all values)
             try:
                 data_values = mdf_pd[col].values
                 weights = mdf_pd["NWEIGHT"].values
-                non_zero_mask = data_values > 0
-                data_values = data_values[non_zero_mask]
-                weights = weights[non_zero_mask]
                 
                 if len(data_values) > 0:
                     quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
                     quartiles = _calculate_weighted_quantiles(data_values, weights, quantiles)
-                    quartile_dict[f"{col}_quartiles"] = [str(quartiles.tolist())]
+                    quartile_dict[f"{col}_value_quartiles"] = [str(quartiles.tolist())]
                 else:
-                    quartile_dict[f"{col}_quartiles"] = [str([0.0] * 9)]
+                    quartile_dict[f"{col}_value_quartiles"] = [str([0.0] * 9)]
             except Exception:
-                quartile_dict[f"{col}_quartiles"] = [str([0.0] * 9)]
+                quartile_dict[f"{col}_value_quartiles"] = [str([0.0] * 9)]
+            
+            # Calculate nonzero quartiles (exclude zeros)
+            try:
+                data_values = mdf_pd[col].values
+                weights = mdf_pd["NWEIGHT"].values
+                non_zero_mask = data_values > 0
+                data_values_nonzero = data_values[non_zero_mask]
+                weights_nonzero = weights[non_zero_mask]
+                
+                if len(data_values_nonzero) > 0:
+                    quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
+                    nonzero_quartiles = _calculate_weighted_quantiles(
+                        data_values_nonzero, weights_nonzero, quantiles
+                    )
+                    nonzero_quartile_dict[f"{col}_value_nonzero_quartiles"] = [str(nonzero_quartiles.tolist())]
+                else:
+                    nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = [str([0.0] * 9)]
+            except Exception:
+                nonzero_quartile_dict[f"{col}_value_nonzero_quartiles"] = [str([0.0] * 9)]
         
         # Add RSE and quartile columns to result
         rse_df = pl.DataFrame(rse_dict)
         quartile_df = pl.DataFrame(quartile_dict)
-        result_df = pl.concat([result_df, rse_df, quartile_df], how="horizontal")
+        nonzero_quartile_df = pl.DataFrame(nonzero_quartile_dict)
+        result_df = pl.concat([result_df, rse_df, quartile_df, nonzero_quartile_df], how="horizontal")
     
     # Note: US Total is only added when grouped by a column (e.g., state)
     # For ungrouped data, the result is already the US total
     result_df = result_df.with_columns(
         pl.lit("recs_2020").alias("source")
     )
-    result_df = _stack_quantity_types(result_df, result_df.columns)
     return result_df
 
 
@@ -355,13 +502,13 @@ def get_monthly_all(
         value_cols = [col for col in monthly_df.columns if col.endswith("_value")]
         avg_exprs = []
         for val_col in value_cols:
-            # Find corresponding customer column
-            customer_col = val_col.replace("_value", "_customers")
-            if customer_col in monthly_df.columns:
-                # Divide value by customers, handle division by zero
+            # Find corresponding percent_users column
+            percent_users_col = val_col.replace("_value", "_percent_users")
+            if percent_users_col in monthly_df.columns:
+                # Divide value by percent_users (convert from percentage to fraction first)
                 avg_exprs.append(
-                    pl.when(pl.col(customer_col) > 0)
-                    .then(pl.col(val_col) / pl.col(customer_col))
+                    pl.when(pl.col(percent_users_col) > 0)
+                    .then(pl.col(val_col) / (pl.col(percent_users_col) / 100))
                     .otherwise(0)
                     .alias(val_col)
                 )
@@ -372,8 +519,4 @@ def get_monthly_all(
     monthly_df = monthly_df.with_columns(
         pl.lit("recs_2020").alias("source")
     )
-    monthly_df = _stack_quantity_types(monthly_df, monthly_df.columns)
     return monthly_df
-
-def get_available_aggregation_levels() -> Sequence[str]:
-    return tuple(RECS_CHARS_MAPPING.keys())

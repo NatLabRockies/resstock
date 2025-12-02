@@ -17,6 +17,7 @@ data_sources:
     db_schema: resstock_oedi_new
 
 
+
 reference_years:
   eia:
     - 2018

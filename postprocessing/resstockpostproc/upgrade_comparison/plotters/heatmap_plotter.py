@@ -14,12 +14,13 @@ from plotly.subplots import make_subplots
 __all__ = ["create_plot"]
 
 from resstockpostproc.upgrade_comparison.plotters import plot_utils
-from resstockpostproc.upgrade_comparison import theme
+from resstockpostproc.shared_utils.generic_plotters import theme
 from resstockpostproc.upgrade_comparison.schema.plot_spec import PlotSpec
 from resstockpostproc.upgrade_comparison.schema.workflow_schema import QuantityGroup
+from resstockpostproc.upgrade_comparison.schema.workflow_schema import WorkflowConfig
 
 
-def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
+def create_plot(data: pl.DataFrame, plot_spec: PlotSpec, workflow: WorkflowConfig) -> go.Figure:
     """Create and return a heatmap figure based on *plot_spec*."""
     if not isinstance(plot_spec.quantity, QuantityGroup):
         raise ValueError("Heatmaps require a QuantityGroup as the quantity definition.")
