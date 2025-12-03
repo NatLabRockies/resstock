@@ -240,7 +240,9 @@ def add_panel_contraint_cols(df: pl.LazyFrame, baseline_df: Optional[pl.LazyFram
             pl.lit("No Constraint"),
         ).alias(out_overall_col)
 
-    new_df = df_with_baseline.with_columns(ind_constraints).drop(renamed_space_col)
+    new_df = df_with_baseline.with_columns(ind_constraints)
+    if baseline_df is not None:
+        new_df = new_df.drop(renamed_space_col)
     if overall_constraint is not None:
         new_df = new_df.with_columns(overall_constraint)  # needs to be sequential
 
