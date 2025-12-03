@@ -28,7 +28,7 @@ def get_failed_bldgs(metadata_df: pl.LazyFrame) -> set[int]:
 def process_simulation_outputs(
     baseline_failed_bldgs: set[int],
     base_raw_df: pl.LazyFrame,
-    base_pub_df: pl.LazyFrame,
+    base_proc_df: pl.LazyFrame,
     upgrade_raw_df: pl.LazyFrame,
     upgrade_num: int,
     upgrade_renamer: dict[str, str],
@@ -39,7 +39,7 @@ def process_simulation_outputs(
 
     Args:
         baseline_failed_bldgs: Set of failed building IDs in baseline.
-        base_pub_df: LazyFrame containing baseline results already passed through process_baseline_simulation_outputs.
+        base_proc_df: LazyFrame containing baseline results already passed through process_baseline_simulation_outputs.
         upgrade_raw_df: LazyFrame containing upgrade results from raw BuildStockBatch results.
         upgrade_num: Integer representing the upgrade number.
     Returns:
@@ -49,18 +49,17 @@ def process_simulation_outputs(
     is_baseline = (upgrade_num == 0)
     col_maps = get_col_maps()
 
-    # TODO move no-op functionality for baseline vs. upgrade inside functions, add is_baseline as argument
     df = upgrade_raw_df
-    df = set_baseline_applicability(df) if is_baseline else df
-    df = add_missing_cols_from_baseline_to_upgrade(df, base_raw_df) if not is_baseline else df
+    df = set_baseline_applicability(df, is_baseline)
+    df = add_missing_cols_from_baseline_to_upgrade(df, base_raw_df, is_baseline)
     df = remove_failed_baseline_buildings(df, baseline_failed_bldgs)
     df = remove_na_or_failed_buildings(df)
-    df = replace_missing_buildings_with_baseline(df, base_raw_df) if not is_baseline else df
+    df = replace_missing_buildings_with_baseline(df, base_raw_df, is_baseline)
     df = downselect_and_rename_cols(df, col_maps)  # Per sdr_column_definitions.csv
     df = add_income_and_burden(df)
     df = add_county_column(df)
     df = add_puma_column(df)
-    df = add_baseline_upgrade_name_col(df) if is_baseline else df
+    df = add_baseline_upgrade_name_col(df, is_baseline)
     df = add_upgrade_id_col(df, upgrade_num)
     df = rename_upgrades(df, upgrade_renamer)
     df = fix_site_energy_total(df)
@@ -72,7 +71,7 @@ def process_simulation_outputs(
     if is_baseline:
         df = add_saving_cols(df, df)  # Intentionally calculate savings = baseline - baseline = 0
     else:
-        df = add_saving_cols(df, base_pub_df)
+        df = add_saving_cols(df, base_proc_df)
 
     df = add_intensity_cols(df)
     df = add_weighted_cols(df)
@@ -83,7 +82,7 @@ def process_simulation_outputs(
     return df
 
 
-def get_upgrade_foo_col_schema(upgrade_files: list, files_dir) -> dict:
+def get_schema_superset(upgrade_files: list, files_dir) -> dict:
     upgrade_col_schema = {}
     for upgrade_file in upgrade_files:
         upgrade_df = pl.scan_parquet(upgrade_file, storage_options=files_dir['storage_options'])
@@ -91,7 +90,10 @@ def get_upgrade_foo_col_schema(upgrade_files: list, files_dir) -> dict:
     return upgrade_col_schema
 
 
-def set_baseline_applicability(df: pl.LazyFrame) -> pl.LazyFrame:
+def set_baseline_applicability(df: pl.LazyFrame, is_baseline: bool) -> pl.LazyFrame:
+    if not is_baseline:
+        # Non-baseline upgrades already have an applicability column
+        return df
     print('Setting applicability to True for all baseline buildings')
     df = df.with_columns(pl.lit(True).alias("applicability"))
     return df
@@ -127,12 +129,19 @@ def add_upgrade_id_col(df: pl.LazyFrame, upgrade_id: int) -> pl.LazyFrame:
     return df
 
 
-def add_baseline_upgrade_name_col(df: pl.LazyFrame) -> pl.LazyFrame:
+def add_baseline_upgrade_name_col(df: pl.LazyFrame, is_baseline: bool) -> pl.LazyFrame:
+    if not is_baseline:
+        # Upgrades already have an upgrade name column
+        return df
     df = df.with_columns([pl.lit("Baseline").alias("in.upgrade_name")])
     return df
 
 
-def add_missing_cols_from_baseline_to_upgrade(upgrade_df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame:
+def add_missing_cols_from_baseline_to_upgrade(upgrade_df: pl.LazyFrame, baseline_df: pl.LazyFrame,
+        is_baseline: bool) -> pl.LazyFrame:
+    if is_baseline:
+        # Baseline already has all the columns, no need to add
+        return upgrade_df
     print('Adding missing columns from baseline to upgrade')
     base_cols = baseline_df.collect_schema().names()
     upgrade_cols = upgrade_df.collect_schema().names()
@@ -141,7 +150,11 @@ def add_missing_cols_from_baseline_to_upgrade(upgrade_df: pl.LazyFrame, baseline
     return upgrade_df
 
 
-def replace_missing_buildings_with_baseline(upgrade_df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame:
+def replace_missing_buildings_with_baseline(upgrade_df: pl.LazyFrame, baseline_df: pl.LazyFrame,
+        is_baseline: bool) -> pl.LazyFrame:
+    if is_baseline:
+        # Baseline determines the full set of buildings, will never be missing any by definition
+        return upgrade_df
     print('Replacing buildings missing from the upgrade with baseline data')
     # All buildings present in the upgrade_df are there because the upgrade was applicable to them
     upgrade_df = upgrade_df.with_columns(pl.lit(True).alias("applicability"))
@@ -293,8 +306,6 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
         saving_col = (pl.col(f"baseline_{col}") - pl.col(col)).alias(new_col)
         savings_cols.append(saving_col)
     df = df_with_baseline.with_columns(savings_cols).drop([f"baseline_{col}" for col in out_cols])
-
-    all_cols = df.collect_schema().names() # TODO remove
 
     return df
 
@@ -605,8 +616,6 @@ def downselect_and_order_pub_cols(lf: pl.LazyFrame, col_maps: Sequence[dict]):
     if missing_cols:
         print("Missing columns in output data that are defined in publication column definition:")
         for c in sorted(missing_cols):
-            if 'out.component_load' in c:  # TODO ANDREW WUZ HERE remove this - temporarily suppressing known missing cols
-                continue
             print(f"Missing column: {c}")
     available_cols = [col for col in all_defined_cols if col in all_df_cols]
     return lf.select(available_cols)

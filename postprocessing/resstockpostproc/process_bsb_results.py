@@ -15,7 +15,7 @@ import re
 import polars as pl
 from pathlib import Path
 from resstockpostproc.process_metadata import (
-    get_upgrade_foo_col_schema,
+    get_schema_superset,
     get_upgrade_rename_dict,
     get_failed_building_list,
     process_simulation_outputs,
@@ -42,35 +42,35 @@ def export_metadata_and_annual_results(raw_results_dir: str,
 
     # Information used across upgrades
     upgrade_renamer = get_upgrade_rename_dict(raw_results_dir)
-    upgrade_foo_col_schema = get_upgrade_foo_col_schema(result_files, raw_results_dir)
+    col_schema = get_schema_superset(result_files, raw_results_dir)
     sim_out_cache_dir = Path(f"{output_dir['fs_path']}/cached_simulation_outputs")
 
     # Process and cache the simulation outputs, starting with the baseline
     baseline_df = pl.scan_parquet(baseline_file, storage_options=raw_results_dir['storage_options'])
     failed_bldgs = get_failed_building_list(baseline_df)
-    bs_pub_df = None
+    processed_baseline_df = None
     for upgrade_id in upgrade_ids:
         upgrade_file = f'{raw_results_dir["fs_path"]}/upgrades/upgrade={upgrade_id}/results_up{upgrade_id:02d}.parquet'
         if upgrade_id == 0:
             upgrade_file = f'{raw_results_dir["fs_path"]}/baseline/results_up{upgrade_id:02d}.parquet'
 
         print(f"Processing upgrade file: {upgrade_file}, upgrade number: {upgrade_id} {'*'*100}")
-        upgrade_df = pl.scan_parquet(upgrade_file, storage_options=raw_results_dir['storage_options'])
-        up_df = process_simulation_outputs(
+        raw_upgrade_df = pl.scan_parquet(upgrade_file, storage_options=raw_results_dir['storage_options'])
+        processed_upgrade_df = process_simulation_outputs(
             failed_bldgs,
             baseline_df,
-            bs_pub_df,
-            upgrade_df,
+            processed_baseline_df,
+            raw_upgrade_df,
             upgrade_id,
             upgrade_renamer,
-            upgrade_foo_col_schema
+            col_schema
         )
-        cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, up_df)
-        up_cols = set(sorted(up_df.collect_schema().names()))
+        cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, processed_upgrade_df)
+        up_cols = set(sorted(processed_upgrade_df.collect_schema().names()))
 
         if upgrade_id == 0:
-            bs_pub_df = up_df
-            base_cols = set(sorted(bs_pub_df.collect_schema().names()))
+            processed_baseline_df = processed_upgrade_df
+            base_cols = set(sorted(processed_baseline_df.collect_schema().names()))
 
         if not base_cols == up_cols:
             raise ValueError("Column set in baseline and upgrade don't match")
