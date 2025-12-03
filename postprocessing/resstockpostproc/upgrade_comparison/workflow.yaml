@@ -177,7 +177,7 @@ numerical_quantities:
     constituents:
       - out.panel.breaker_space.headroom.count
       - out.panel.breaker_space.occupied.count
-    sum: in.electric_panel_breaker_space_total_count
+    sum: out.panel.breaker_space.total.count
 
 categorical_quantities:
   - name: applicability

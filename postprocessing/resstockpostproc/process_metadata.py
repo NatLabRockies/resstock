@@ -1,6 +1,7 @@
 import polars as pl
 import pathlib
 from collections.abc import Sequence
+from typing import Optional
 
 import geopandas as gpd
 import polars as pl
@@ -116,7 +117,7 @@ def publish_upgrade_annual_results(
     missing_bldgs_df = missing_bldgs_df.join(upgrade_name_df, how="cross")
     upgrade_df = pl.concat([upgrade_df, missing_bldgs_df], how="diagonal_relaxed")
     upgrade_df = add_saving_cols(upgrade_df, base_pub_df)
-    upgrade_df = add_panel_contraint_cols(upgrade_df)
+    upgrade_df = add_panel_contraint_cols(upgrade_df, baseline_df=base_pub_df)
     upgrade_df = reorder_columns(upgrade_df, col_maps, is_baseline=False)
     upgrade_df = upgrade_df.sort("bldg_id")
     return upgrade_df
@@ -198,14 +199,31 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
     return df_with_baseline.with_columns(savings_cols).drop([f"baseline_{col}" for col in out_cols])
 
 
-def add_panel_contraint_cols(df: pl.LazyFrame) -> pl.LazyFrame:
+def add_panel_contraint_cols(df: pl.LazyFrame, baseline_df: Optional[pl.LazyFrame]=None) -> pl.LazyFrame:
     all_cols = df.collect_schema().names()
     amp_prefix = "out.panel.load.headroom_capacity."
     amp_cols = [col for col in all_cols if amp_prefix in col]
-    space_col = "out.panel.breaker_space.headroom.count"
+
+    if baseline_df is None:
+        df_with_baseline = df
+        hdrm_space_col = "out.panel.breaker_space.headroom.count"
+
+    else:
+        # Because the headroom space is adjusted to 0 if negative and total space is recalculated in the upgrade xml,
+        # headroom for constraint determination = baseline_rated_space_col - upgrade_occ_space_col
+
+        space_col = "out.panel.breaker_space.total.count" # baseline
+        renamed_space_col = "baseline_out.panel.breaker_space.total.count"
+        occ_space_col = "out.panel.breaker_space.occupied.count" # upgrade
+
+        baseline_df_with_renamed = baseline_df.select(
+            [pl.col(space_col).alias(renamed_space_col), "bldg_id"]
+        )
+        df_with_baseline = df.join(baseline_df_with_renamed, on="bldg_id", how="left")
+        hdrm_space_col = pl.col(renamed_space_col) - pl.col(occ_space_col)
 
     out_space_col = "out.panel.constraint.breaker_space"
-    space_constraint = pl.when(pl.col(space_col) < 0).then(True).otherwise(False).alias(out_space_col)
+    space_constraint = pl.when(pl.col(hdrm_space_col) < 0).then(True).otherwise(False).alias(out_space_col)
     ind_constraints = [space_constraint]
     overall_constraint = None
     for amp_col in amp_cols:
@@ -222,7 +240,7 @@ def add_panel_contraint_cols(df: pl.LazyFrame) -> pl.LazyFrame:
             pl.lit("No Constraint"),
         ).alias(out_overall_col)
 
-    new_df = df.with_columns(ind_constraints)
+    new_df = df_with_baseline.with_columns(ind_constraints).drop(renamed_space_col)
     if overall_constraint is not None:
         new_df = new_df.with_columns(overall_constraint)  # needs to be sequential
 

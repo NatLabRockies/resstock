@@ -89,7 +89,7 @@ column2color["out.panel.load.headroom_capacity.2023_nec_existing_dwelling_load_b
 column2color["in.electric_panel_service_rating"] = "#626D72"
 column2color["out.panel.breaker_space.occupied.count"] = "#0079C2"
 column2color["out.panel.breaker_space.headroom.count"] = "#7DA544"
-column2color["in.electric_panel_breaker_space_total_count"] = "#626D72"
+column2color["out.panel.breaker_space.total.count"] = "#626D72"
 
 EnduseGroupToEnduses = {
     "Generation, Electricity": [
