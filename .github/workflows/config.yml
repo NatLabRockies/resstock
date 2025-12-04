@@ -51,7 +51,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [format-files]
     container:
-      image: docker://nrel/openstudio:develop
+      image: docker://nrel/openstudio:3.11.0-rc1
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -214,7 +214,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [unit-tests]
     container:
-      image: docker://nrel/openstudio:develop
+      image: docker://nrel/openstudio:3.11.0-rc1
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -460,7 +460,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [unit-tests]
     container:
-      image: docker://nrel/openstudio:develop
+      image: docker://nrel/openstudio:3.11.0-rc1
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
