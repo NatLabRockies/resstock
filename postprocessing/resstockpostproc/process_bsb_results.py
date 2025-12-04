@@ -63,16 +63,24 @@ def process_results(raw_results_dir: str, output_dir: str) -> None:
 
 
 def read_file(file: Path) -> pl.LazyFrame:
+    read_csv = False
     match file.suffix:
         case ".parquet":
             return pl.scan_parquet(file)
         case ".csv":
-            return pl.scan_csv(file)
+            read_csv = True
         case ".gz":
             assert file.stem.endswith(".csv"), f"gz file is not a csv: {file}"
-            return pl.scan_csv(file)
+            read_csv = True
         case _:
             raise ValueError(f"Unsupported file type: {file}")
+        
+    if read_csv:
+        cols = pl.read_csv(file, n_rows=0).columns
+        metadata_cols = [col for col in cols if col.startswith("build_existing_model")]
+        schema_overrides = {k: pl.String for k in metadata_cols}
+        return pl.scan_csv(file, schema_overrides=schema_overrides)
+
 
 
 def write_file(df: pl.LazyFrame, output_path: Path, upgrade: int):
