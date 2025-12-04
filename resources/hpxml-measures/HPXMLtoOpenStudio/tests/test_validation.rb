@@ -18,19 +18,14 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
     @schematron_path = File.join(@root_path, 'HPXMLtoOpenStudio', 'resources', 'hpxml_schematron', 'EPvalidator.sch')
     @schematron_validator = XMLValidator.get_xml_validator(@schematron_path)
 
-    @tmp_hpxml_path = File.join(@sample_files_path, 'tmp.xml')
+    @tmp_hpxml_path = File.join(File.dirname(__FILE__), 'tmp.xml')
     @tmp_csv_path = File.join(@sample_files_path, 'tmp.csv')
-    @tmp_output_path = File.join(@sample_files_path, 'tmp_output')
-    FileUtils.mkdir_p(@tmp_output_path)
 
     @default_schedules_csv_data = Defaults.get_schedules_csv_data()
   end
 
   def teardown
-    File.delete(@tmp_hpxml_path) if File.exist? @tmp_hpxml_path
-    File.delete(@tmp_csv_path) if File.exist? @tmp_csv_path
-    FileUtils.rm_rf(@tmp_output_path)
-    cleanup_results_files
+    cleanup_output_files([@tmp_hpxml_path, @tmp_csv_path])
   end
 
   def test_validation_of_schematron_doc
@@ -2273,7 +2268,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
     args_hash = {}
     args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
     args_hash['debug'] = true
-    args_hash['output_dir'] = File.absolute_path(@tmp_output_path)
+    args_hash['output_dir'] = File.dirname(__FILE__)
     args_hash['building_id'] = building_id unless building_id.nil?
     arguments = measure.arguments(model)
     argument_map = OpenStudio::Measure.convertOSArgumentVectorToMap(arguments)
