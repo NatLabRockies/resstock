@@ -204,10 +204,10 @@ def add_panel_contraint_cols(df: pl.LazyFrame, baseline_df: Optional[pl.LazyFram
     amp_prefix = "out.panel.load.headroom_capacity."
     amp_cols = [col for col in all_cols if amp_prefix in col]
 
+    out_space_col = "out.panel.constraint.breaker_space"
     if baseline_df is None:
         df_with_baseline = df
-        hdrm_space_col = "out.panel.breaker_space.headroom.count"
-
+        hdrm_space_col_expr = pl.col("out.panel.breaker_space.headroom.count")
     else:
         # Because the headroom space is adjusted to 0 if negative and total space is recalculated in the upgrade xml,
         # headroom for constraint determination = baseline_rated_space_col - upgrade_occ_space_col
@@ -220,10 +220,10 @@ def add_panel_contraint_cols(df: pl.LazyFrame, baseline_df: Optional[pl.LazyFram
             [pl.col(space_col).alias(renamed_space_col), "bldg_id"]
         )
         df_with_baseline = df.join(baseline_df_with_renamed, on="bldg_id", how="left")
-        hdrm_space_col = pl.col(renamed_space_col) - pl.col(occ_space_col)
+        hdrm_space_col_expr = pl.col(renamed_space_col) - pl.col(occ_space_col)
+    
+    space_constraint = pl.when(hdrm_space_col_expr < 0).then(True).otherwise(False).alias(out_space_col)
 
-    out_space_col = "out.panel.constraint.breaker_space"
-    space_constraint = pl.when(pl.col(hdrm_space_col) < 0).then(True).otherwise(False).alias(out_space_col)
     ind_constraints = [space_constraint]
     overall_constraint = None
     for amp_col in amp_cols:
