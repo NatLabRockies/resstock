@@ -10,7 +10,7 @@ require_relative 'util.rb'
 
 class HPXMLtoOpenStudioWeatherTest < Minitest::Test
   def teardown
-    cleanup_results_files
+    cleanup_output_files()
   end
 
   def weather_dir

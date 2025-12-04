@@ -211,6 +211,29 @@ module ElectricPanel
       electric_panel.headroom_spaces_isdefaulted = true
     end
   end
+
+  # Returns the list of all possible electric panel load types
+  #
+  # @return [Array<String>] List of load types
+  def self.all_panel_load_types
+    return [HPXML::ElectricPanelLoadTypeHeating,
+            HPXML::ElectricPanelLoadTypeCooling,
+            HPXML::ElectricPanelLoadTypeWaterHeater,
+            HPXML::ElectricPanelLoadTypeClothesDryer,
+            HPXML::ElectricPanelLoadTypeDishwasher,
+            HPXML::ElectricPanelLoadTypeRangeOven,
+            HPXML::ElectricPanelLoadTypeMechVent,
+            HPXML::ElectricPanelLoadTypePermanentSpaHeater,
+            HPXML::ElectricPanelLoadTypePermanentSpaPump,
+            HPXML::ElectricPanelLoadTypePoolHeater,
+            HPXML::ElectricPanelLoadTypePoolPump,
+            HPXML::ElectricPanelLoadTypeWellPump,
+            HPXML::ElectricPanelLoadTypeElectricVehicleCharging,
+            HPXML::ElectricPanelLoadTypeLighting,
+            HPXML::ElectricPanelLoadTypeKitchen,
+            HPXML::ElectricPanelLoadTypeLaundry,
+            HPXML::ElectricPanelLoadTypeOther]
+  end
 end
 
 # Object with calculated load

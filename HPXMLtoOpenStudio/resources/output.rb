@@ -17,12 +17,12 @@ module Outputs
   # @param add_component_loads [Boolean] Whether to calculate component loads (since it incurs a runtime speed penalty)
   # @return [nil]
   def self.apply_ems_programs(model, hpxml_osm_map, hpxml_header, add_component_loads)
-    season_day_nums = Outputs.apply_unmet_hours_ems_program(model, hpxml_osm_map, hpxml_header)
-    loads_data = Outputs.apply_total_loads_ems_program(model, hpxml_osm_map, hpxml_header)
+    season_day_nums = apply_unmet_hours_ems_program(model, hpxml_osm_map, hpxml_header)
+    loads_data = apply_total_loads_ems_program(model, hpxml_osm_map, hpxml_header)
     if add_component_loads
-      Outputs.apply_component_loads_ems_program(model, hpxml_osm_map, loads_data, season_day_nums)
+      apply_component_loads_ems_program(model, hpxml_osm_map, loads_data, season_day_nums)
     end
-    Outputs.apply_total_airflows_ems_program(model, hpxml_osm_map)
+    apply_total_airflows_ems_program(model, hpxml_osm_map)
   end
 
   # Creates an EMS program that calculates heating and cooling unmet hours (number
@@ -986,200 +986,103 @@ module Outputs
   # These capacities will be reported in the annual output file.
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
-  # @return [Array<Double, Double, Double>] Total heating capacity, total cooling capacity, total heat pump backup capacity (Btu/hr)
+  # @return [Hash] Map of :htg/:clg/:htg_backup => total capacity (Btu/hr)
   def self.get_total_hvac_capacities(hpxml_bldg)
-    htg_cap, clg_cap, hp_backup_cap = 0.0, 0.0, 0.0
+    capacities = { htg: 0.0, clg: 0.0, htg_backup: 0.0 }
     unit_multiplier = hpxml_bldg.building_construction.number_of_units
     hpxml_bldg.hvac_systems.each do |hvac_system|
       if hvac_system.is_a? HPXML::HeatingSystem
         next if hvac_system.is_heat_pump_backup_system
 
-        htg_cap += hvac_system.heating_capacity.to_f * unit_multiplier
+        capacities[:htg] += hvac_system.heating_capacity.to_f * unit_multiplier
       elsif hvac_system.is_a? HPXML::CoolingSystem
-        clg_cap += hvac_system.cooling_capacity.to_f * unit_multiplier
+        capacities[:clg] += hvac_system.cooling_capacity.to_f * unit_multiplier
         if hvac_system.has_integrated_heating
-          htg_cap += hvac_system.integrated_heating_system_capacity.to_f * unit_multiplier
+          capacities[:htg] += hvac_system.integrated_heating_system_capacity.to_f * unit_multiplier
         end
       elsif hvac_system.is_a? HPXML::HeatPump
-        htg_cap += hvac_system.heating_capacity.to_f * unit_multiplier
-        clg_cap += hvac_system.cooling_capacity.to_f * unit_multiplier
+        capacities[:htg] += hvac_system.heating_capacity.to_f * unit_multiplier
+        capacities[:clg] += hvac_system.cooling_capacity.to_f * unit_multiplier
         if hvac_system.backup_type == HPXML::HeatPumpBackupTypeIntegrated
-          hp_backup_cap += hvac_system.backup_heating_capacity.to_f * unit_multiplier
+          capacities[:htg_backup] += hvac_system.backup_heating_capacity.to_f * unit_multiplier
         elsif hvac_system.backup_type == HPXML::HeatPumpBackupTypeSeparate
-          hp_backup_cap += hvac_system.backup_system.heating_capacity.to_f * unit_multiplier
+          capacities[:htg_backup] += hvac_system.backup_system.heating_capacity.to_f * unit_multiplier
         end
       end
     end
-    return htg_cap, clg_cap, hp_backup_cap
+    return capacities
   end
 
   # Calculates total panel loads (across all service feeders for a given service feeder load type) for a given HPXML Building.
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
-  # @return [Array<Double * 14>] Total panel load for each service feeder load type (W)
+  # @return [Hash] Map of HPXML::ElectricPanelLoadTypeXXX => total panel load (W)
   def self.get_total_panel_loads(hpxml_bldg)
-    htg, clg, hw, cd, dw, ov, vf, sh, sp, ph, pp, wp, ev, oth = 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+    panel_loads = ElectricPanel.all_panel_load_types.map { |lt| [lt, 0.0] }.to_h
     unit_multiplier = hpxml_bldg.building_construction.number_of_units
     hpxml_bldg.electric_panels.each do |electric_panel|
-      htg += ElectricPanel.get_service_feeder_heating(hpxml_bldg, electric_panel) * unit_multiplier
+      panel_loads[HPXML::ElectricPanelLoadTypeHeating] += ElectricPanel.get_service_feeder_heating(hpxml_bldg, electric_panel) * unit_multiplier
       electric_panel.service_feeders.each do |service_feeder|
-        if service_feeder.type == HPXML::ElectricPanelLoadTypeCooling
-          clg += service_feeder.power * unit_multiplier
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeWaterHeater
-          hw += service_feeder.power * unit_multiplier
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeClothesDryer
-          cd += service_feeder.power * unit_multiplier
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeDishwasher
-          dw += service_feeder.power * unit_multiplier
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeRangeOven
-          ov += service_feeder.power * unit_multiplier
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeMechVent
-          vf += service_feeder.power * unit_multiplier
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypePermanentSpaHeater
-          sh += service_feeder.power * unit_multiplier
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypePermanentSpaPump
-          sp += service_feeder.power * unit_multiplier
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypePoolHeater
-          ph += service_feeder.power * unit_multiplier
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypePoolPump
-          pp += service_feeder.power * unit_multiplier
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeWellPump
-          wp += service_feeder.power * unit_multiplier
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeElectricVehicleCharging
-          ev += service_feeder.power * unit_multiplier
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeLighting ||
-              service_feeder.type == HPXML::ElectricPanelLoadTypeKitchen ||
-              service_feeder.type == HPXML::ElectricPanelLoadTypeLaundry ||
-              service_feeder.type == HPXML::ElectricPanelLoadTypeOther
-          oth += service_feeder.power * unit_multiplier
+        if [HPXML::ElectricPanelLoadTypeLighting, HPXML::ElectricPanelLoadTypeKitchen,
+            HPXML::ElectricPanelLoadTypeLaundry, HPXML::ElectricPanelLoadTypeOther].include? service_feeder.type
+          panel_loads[HPXML::ElectricPanelLoadTypeOther] += service_feeder.power * unit_multiplier
+        elsif service_feeder.type != HPXML::ElectricPanelLoadTypeHeating
+          panel_loads[service_feeder.type] += service_feeder.power * unit_multiplier
         end
       end
     end
-    return htg, clg, hw, cd, dw, ov, vf, sh, sp, ph, pp, wp, ev, oth
+    return panel_loads
   end
 
   # Calculates total breaker spaces (across all service feeders for a given service feeder load type) for a given HPXML Building.
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
-  # @return [Array<Double * 14>] Total breaker spaces for each service feeder load type (W)
+  # @return [Hash] Map of HPXML::ElectricPanelLoadTypeXXX => total breaker spaces
   def self.get_total_breaker_spaces(hpxml_bldg)
-    htg, clg, hw, cd, dw, ov, vf, sh, sp, ph, pp, wp, ev, oth = 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+    breaker_spaces = ElectricPanel.all_panel_load_types.map { |lt| [lt, 0.0] }.to_h
     unit_multiplier = hpxml_bldg.building_construction.number_of_units
     hpxml_bldg.electric_panels.each do |electric_panel|
       electric_panel.service_feeders.each do |service_feeder|
-        if service_feeder.type == HPXML::ElectricPanelLoadTypeHeating
-          service_feeder.components.each do |component|
-            component.branch_circuits.each do |branch_circuit|
-              htg += branch_circuit.occupied_spaces * unit_multiplier
-            end
-          end
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeCooling
-          service_feeder.components.each do |component|
+        service_feeder.components.each do |component|
+          if service_feeder.type == HPXML::ElectricPanelLoadTypeCooling
             # So we don't double-count, e.g., heat pump breaker spaces since it is shared across two service feeder types
             next unless component.service_feeders.select { |sf| sf.type == HPXML::ElectricPanelLoadTypeHeating }.empty?
-
-            component.branch_circuits.each do |branch_circuit|
-              clg += branch_circuit.occupied_spaces * unit_multiplier
-            end
           end
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeWaterHeater
-          service_feeder.components.each do |component|
-            component.branch_circuits.each do |branch_circuit|
-              hw += branch_circuit.occupied_spaces * unit_multiplier
-            end
-          end
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeClothesDryer
-          service_feeder.components.each do |component|
-            component.branch_circuits.each do |branch_circuit|
-              cd += branch_circuit.occupied_spaces * unit_multiplier
-            end
-          end
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeDishwasher
-          service_feeder.components.each do |component|
-            component.branch_circuits.each do |branch_circuit|
-              dw += branch_circuit.occupied_spaces * unit_multiplier
-            end
-          end
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeRangeOven
-          service_feeder.components.each do |component|
-            component.branch_circuits.each do |branch_circuit|
-              ov += branch_circuit.occupied_spaces * unit_multiplier
-            end
-          end
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeMechVent
-          service_feeder.components.each do |component|
-            component.branch_circuits.each do |branch_circuit|
-              vf += branch_circuit.occupied_spaces * unit_multiplier
-            end
-          end
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypePermanentSpaHeater
-          service_feeder.components.each do |component|
-            component.heater_branch_circuits.each do |branch_circuit|
-              sh += branch_circuit.occupied_spaces * unit_multiplier
-            end
-          end
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypePermanentSpaPump
-          service_feeder.components.each do |component|
-            component.pump_branch_circuits.each do |branch_circuit|
-              sp += branch_circuit.occupied_spaces * unit_multiplier
-            end
-          end
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypePoolHeater
-          service_feeder.components.each do |component|
-            component.heater_branch_circuits.each do |branch_circuit|
-              ph += branch_circuit.occupied_spaces * unit_multiplier
-            end
-          end
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypePoolPump
-          service_feeder.components.each do |component|
-            component.pump_branch_circuits.each do |branch_circuit|
-              pp += branch_circuit.occupied_spaces * unit_multiplier
-            end
-          end
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeWellPump
-          service_feeder.components.each do |component|
-            component.branch_circuits.each do |branch_circuit|
-              wp += branch_circuit.occupied_spaces * unit_multiplier
-            end
-          end
-        elsif service_feeder.type == HPXML::ElectricPanelLoadTypeElectricVehicleCharging
-          service_feeder.components.each do |component|
-            component.branch_circuits.each do |branch_circuit|
-              ev += branch_circuit.occupied_spaces * unit_multiplier
-            end
+          component.branch_circuits.each do |branch_circuit|
+            breaker_spaces[service_feeder.type] += branch_circuit.occupied_spaces * unit_multiplier
           end
         end
       end
       electric_panel.branch_circuits.each do |branch_circuit|
         if branch_circuit.components.empty?
-          oth += branch_circuit.occupied_spaces * unit_multiplier
+          breaker_spaces[HPXML::ElectricPanelLoadTypeOther] += branch_circuit.occupied_spaces * unit_multiplier
         end
       end
     end
-    return htg, clg, hw, cd, dw, ov, vf, sh, sp, ph, pp, wp, ev, oth
+    return breaker_spaces
   end
 
   # Calculates total HVAC airflow rates (across all HVAC systems) for a given HPXML Building.
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
-  # @return [Array<Double, Double>] Total heating airflow rate, total cooling airflow rate (cfm)
+  # @return [Hash] Map of :htg/:clg => total airflow rate (cfm)
   def self.get_total_hvac_airflows(hpxml_bldg)
-    htg_cfm, clg_cfm = 0.0, 0.0
+    cfms = { htg: 0.0, clg: 0.0 }
     unit_multiplier = hpxml_bldg.building_construction.number_of_units
     hpxml_bldg.hvac_systems.each do |hvac_system|
       if hvac_system.is_a? HPXML::HeatingSystem
-        htg_cfm += hvac_system.heating_design_airflow_cfm.to_f * unit_multiplier
+        cfms[:htg] += hvac_system.heating_design_airflow_cfm.to_f * unit_multiplier
       elsif hvac_system.is_a? HPXML::CoolingSystem
-        clg_cfm += hvac_system.cooling_design_airflow_cfm.to_f * unit_multiplier
+        cfms[:clg] += hvac_system.cooling_design_airflow_cfm.to_f * unit_multiplier
         if hvac_system.has_integrated_heating
-          htg_cfm += hvac_system.integrated_heating_system_airflow_cfm.to_f * unit_multiplier
+          cfms[:htg] += hvac_system.integrated_heating_system_airflow_cfm.to_f * unit_multiplier
         end
       elsif hvac_system.is_a? HPXML::HeatPump
-        htg_cfm += hvac_system.heating_design_airflow_cfm.to_f * unit_multiplier
-        clg_cfm += hvac_system.cooling_design_airflow_cfm.to_f * unit_multiplier
+        cfms[:htg] += hvac_system.heating_design_airflow_cfm.to_f * unit_multiplier
+        cfms[:clg] += hvac_system.cooling_design_airflow_cfm.to_f * unit_multiplier
       end
     end
-    return htg_cfm, clg_cfm
+    return cfms
   end
 
   # Appends HVAC sizing results to the provided array for use in writing output files.
@@ -1191,9 +1094,10 @@ module Outputs
     line_break = nil
 
     # Summary HVAC capacities
-    results_out << ['HVAC Capacity: Heating (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_hvac_capacities(hpxml_bldg)[0] }.sum(0.0).round(1)]
-    results_out << ['HVAC Capacity: Cooling (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_hvac_capacities(hpxml_bldg)[1] }.sum(0.0).round(1)]
-    results_out << ['HVAC Capacity: Heat Pump Backup (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_hvac_capacities(hpxml_bldg)[2] }.sum(0.0).round(1)]
+    all_hvac_capacities = hpxml_bldgs.map { |hpxml_bldg| get_total_hvac_capacities(hpxml_bldg) }
+    results_out << ['HVAC Capacity: Heating (Btu/h)', all_hvac_capacities.sum { |h| h[:htg] }.round(1)]
+    results_out << ['HVAC Capacity: Cooling (Btu/h)', all_hvac_capacities.sum { |h| h[:clg] }.round(1)]
+    results_out << ['HVAC Capacity: Heat Pump Backup (Btu/h)', all_hvac_capacities.sum { |h| h[:htg_backup] }.round(1)]
 
     # HVAC design temperatures
     results_out << [line_break]
@@ -1340,20 +1244,21 @@ module Outputs
     line_break = nil
 
     # Summary breaker spaces
-    results_out << ['Electric Panel Breaker Spaces: Heating Count', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_breaker_spaces(hpxml_bldg)[0] }.sum(0)]
-    results_out << ['Electric Panel Breaker Spaces: Cooling Count', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_breaker_spaces(hpxml_bldg)[1] }.sum(0)]
-    results_out << ['Electric Panel Breaker Spaces: Hot Water Count', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_breaker_spaces(hpxml_bldg)[2] }.sum(0)]
-    results_out << ['Electric Panel Breaker Spaces: Clothes Dryer Count', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_breaker_spaces(hpxml_bldg)[3] }.sum(0)]
-    results_out << ['Electric Panel Breaker Spaces: Dishwasher Count', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_breaker_spaces(hpxml_bldg)[4] }.sum(0)]
-    results_out << ['Electric Panel Breaker Spaces: Range/Oven Count', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_breaker_spaces(hpxml_bldg)[5] }.sum(0)]
-    results_out << ['Electric Panel Breaker Spaces: Mech Vent Count', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_breaker_spaces(hpxml_bldg)[6] }.sum(0)]
-    results_out << ['Electric Panel Breaker Spaces: Permanent Spa Heater Count', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_breaker_spaces(hpxml_bldg)[7] }.sum(0)]
-    results_out << ['Electric Panel Breaker Spaces: Permanent Spa Pump Count', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_breaker_spaces(hpxml_bldg)[8] }.sum(0)]
-    results_out << ['Electric Panel Breaker Spaces: Pool Heater Count', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_breaker_spaces(hpxml_bldg)[9] }.sum(0)]
-    results_out << ['Electric Panel Breaker Spaces: Pool Pump Count', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_breaker_spaces(hpxml_bldg)[10] }.sum(0)]
-    results_out << ['Electric Panel Breaker Spaces: Well Pump Count', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_breaker_spaces(hpxml_bldg)[11] }.sum(0)]
-    results_out << ['Electric Panel Breaker Spaces: Electric Vehicle Charging Count', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_breaker_spaces(hpxml_bldg)[12] }.sum(0)]
-    results_out << ['Electric Panel Breaker Spaces: Other Count', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_breaker_spaces(hpxml_bldg)[13] }.sum(0)]
+    all_breaker_spaces = hpxml_bldgs.map { |hpxml_bldg| get_total_breaker_spaces(hpxml_bldg) }
+    results_out << ['Electric Panel Breaker Spaces: Heating Count', all_breaker_spaces.sum { |h| h[HPXML::ElectricPanelLoadTypeHeating] }]
+    results_out << ['Electric Panel Breaker Spaces: Cooling Count', all_breaker_spaces.sum { |h| h[HPXML::ElectricPanelLoadTypeCooling] }]
+    results_out << ['Electric Panel Breaker Spaces: Hot Water Count', all_breaker_spaces.sum { |h| h[HPXML::ElectricPanelLoadTypeWaterHeater] }]
+    results_out << ['Electric Panel Breaker Spaces: Clothes Dryer Count', all_breaker_spaces.sum { |h| h[HPXML::ElectricPanelLoadTypeClothesDryer] }]
+    results_out << ['Electric Panel Breaker Spaces: Dishwasher Count', all_breaker_spaces.sum { |h| h[HPXML::ElectricPanelLoadTypeDishwasher] }]
+    results_out << ['Electric Panel Breaker Spaces: Range/Oven Count', all_breaker_spaces.sum { |h| h[HPXML::ElectricPanelLoadTypeRangeOven] }]
+    results_out << ['Electric Panel Breaker Spaces: Mech Vent Count', all_breaker_spaces.sum { |h| h[HPXML::ElectricPanelLoadTypeMechVent] }]
+    results_out << ['Electric Panel Breaker Spaces: Permanent Spa Heater Count', all_breaker_spaces.sum { |h| h[HPXML::ElectricPanelLoadTypePermanentSpaHeater] }]
+    results_out << ['Electric Panel Breaker Spaces: Permanent Spa Pump Count', all_breaker_spaces.sum { |h| h[HPXML::ElectricPanelLoadTypePermanentSpaPump] }]
+    results_out << ['Electric Panel Breaker Spaces: Pool Heater Count', all_breaker_spaces.sum { |h| h[HPXML::ElectricPanelLoadTypePoolHeater] }]
+    results_out << ['Electric Panel Breaker Spaces: Pool Pump Count', all_breaker_spaces.sum { |h| h[HPXML::ElectricPanelLoadTypePoolPump] }]
+    results_out << ['Electric Panel Breaker Spaces: Well Pump Count', all_breaker_spaces.sum { |h| h[HPXML::ElectricPanelLoadTypeWellPump] }]
+    results_out << ['Electric Panel Breaker Spaces: Electric Vehicle Charging Count', all_breaker_spaces.sum { |h| h[HPXML::ElectricPanelLoadTypeElectricVehicleCharging] }]
+    results_out << ['Electric Panel Breaker Spaces: Other Count', all_breaker_spaces.sum { |h| h[HPXML::ElectricPanelLoadTypeOther] }]
 
     # Total breaker spaces
     results_out << [line_break]
@@ -1362,21 +1267,22 @@ module Outputs
     results_out << ['Electric Panel Breaker Spaces: Headroom Count', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.electric_panels.map { |electric_panel| electric_panel.headroom_spaces }.sum(0.0) * hpxml_bldg.building_construction.number_of_units }.sum(0.0)]
 
     # Summary panel loads
+    all_panel_loads = hpxml_bldgs.map { |hpxml_bldg| get_total_panel_loads(hpxml_bldg) }
     results_out << [line_break]
-    results_out << ['Electric Panel Load: Heating (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[0] }.sum(0.0).round(1)]
-    results_out << ['Electric Panel Load: Cooling (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[1] }.sum(0.0).round(1)]
-    results_out << ['Electric Panel Load: Hot Water (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[2] }.sum(0.0).round(1)]
-    results_out << ['Electric Panel Load: Clothes Dryer (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[3] }.sum(0.0).round(1)]
-    results_out << ['Electric Panel Load: Dishwasher (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[4] }.sum(0.0).round(1)]
-    results_out << ['Electric Panel Load: Range/Oven (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[5] }.sum(0.0).round(1)]
-    results_out << ['Electric Panel Load: Mech Vent (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[6] }.sum(0.0).round(1)]
-    results_out << ['Electric Panel Load: Permanent Spa Heater (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[7] }.sum(0.0).round(1)]
-    results_out << ['Electric Panel Load: Permanent Spa Pump (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[8] }.sum(0.0).round(1)]
-    results_out << ['Electric Panel Load: Pool Heater (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[9] }.sum(0.0).round(1)]
-    results_out << ['Electric Panel Load: Pool Pump (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[10] }.sum(0.0).round(1)]
-    results_out << ['Electric Panel Load: Well Pump (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[11] }.sum(0.0).round(1)]
-    results_out << ['Electric Panel Load: Electric Vehicle Charging (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[12] }.sum(0.0).round(1)]
-    results_out << ['Electric Panel Load: Other (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[13] }.sum(0.0).round(1)]
+    results_out << ['Electric Panel Load: Heating (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypeHeating] }.round(1)]
+    results_out << ['Electric Panel Load: Cooling (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypeCooling] }.round(1)]
+    results_out << ['Electric Panel Load: Hot Water (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypeWaterHeater] }.round(1)]
+    results_out << ['Electric Panel Load: Clothes Dryer (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypeClothesDryer] }.round(1)]
+    results_out << ['Electric Panel Load: Dishwasher (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypeDishwasher] }.round(1)]
+    results_out << ['Electric Panel Load: Range/Oven (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypeRangeOven] }.round(1)]
+    results_out << ['Electric Panel Load: Mech Vent (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypeMechVent] }.round(1)]
+    results_out << ['Electric Panel Load: Permanent Spa Heater (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypePermanentSpaHeater] }.round(1)]
+    results_out << ['Electric Panel Load: Permanent Spa Pump (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypePermanentSpaPump] }.round(1)]
+    results_out << ['Electric Panel Load: Pool Heater (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypePoolHeater] }.round(1)]
+    results_out << ['Electric Panel Load: Pool Pump (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypePoolPump] }.round(1)]
+    results_out << ['Electric Panel Load: Well Pump (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypeWellPump] }.round(1)]
+    results_out << ['Electric Panel Load: Electric Vehicle Charging (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypeElectricVehicleCharging] }.round(1)]
+    results_out << ['Electric Panel Load: Other (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypeOther] }.round(1)]
 
     # Load calculations
     hpxml_header.service_feeders_load_calculation_types.each do |service_feeders_load_calculation_type|
