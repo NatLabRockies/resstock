@@ -1048,7 +1048,16 @@ module Outputs
             # So we don't double-count, e.g., heat pump breaker spaces since it is shared across two service feeder types
             next unless component.service_feeders.select { |sf| sf.type == HPXML::ElectricPanelLoadTypeHeating }.empty?
           end
-          component.branch_circuits.each do |branch_circuit|
+          if [HPXML::ElectricPanelLoadTypePoolHeater,
+              HPXML::ElectricPanelLoadTypePermanentSpaHeater].include? service_feeder.type
+            branch_circuits = component.heater_branch_circuits
+          elsif [HPXML::ElectricPanelLoadTypePoolPump,
+                 HPXML::ElectricPanelLoadTypePermanentSpaPump].include? service_feeder.type
+            branch_circuits = component.pump_branch_circuits
+          else
+            branch_circuits = component.branch_circuits
+          end
+          branch_circuits.each do |branch_circuit|
             breaker_spaces[service_feeder.type] += branch_circuit.occupied_spaces * unit_multiplier
           end
         end

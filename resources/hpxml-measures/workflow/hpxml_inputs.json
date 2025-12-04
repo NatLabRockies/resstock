@@ -2161,6 +2161,10 @@
     "location_epw_path": "USA_OR_Portland.Intl.AP.726980_TMY3.epw",
     "hvac_heating_system_capacity": "25 kBtu/hr"
   },
+  "sample_files/base-location-TMYx.xml": {
+    "parent_hpxml": "sample_files/base.xml",
+    "location_epw_path": "USA_CO_Boulder.Muni.AP.720533_TMYx.2009-2023.epw"
+  },
   "sample_files/base-location-zipcode.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "location_zip_code": "80019",

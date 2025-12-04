@@ -924,6 +924,22 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
                         power: 1650,
                         is_new_load: true,
                         component_idrefs: [hpxml_bldg.plug_loads[-1].id])
+    hpxml_bldg.pools.add(id: "Pool#{hpxml_bldg.pools.size + 1}",
+                         type: HPXML::TypeUnknown,
+                         pump_id: "Pool#{hpxml_bldg.pools.size + 1}Pump",
+                         pump_type: HPXML::TypeUnknown,
+                         heater_id: "Pool#{hpxml_bldg.pools.size + 1}Heater",
+                         heater_type: HPXML::HeaterTypeHeatPump)
+    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                        type: HPXML::ElectricPanelLoadTypePoolPump,
+                        power: 1491,
+                        is_new_load: true,
+                        component_idrefs: [hpxml_bldg.pools[-1].pump_id])
+    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                        type: HPXML::ElectricPanelLoadTypePoolHeater,
+                        power: 5100,
+                        is_new_load: true,
+                        component_idrefs: [hpxml_bldg.pools[-1].heater_id])
     XMLHelper.write_file(hpxml.to_doc(), @tmp_hpxml_path)
 
     args_hash['hpxml_path'] = @tmp_hpxml_path
@@ -932,15 +948,15 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     electric_panel_path = File.absolute_path(File.join(File.dirname(__FILE__), 'results_panel.json'))
     json = JSON.parse(File.read(electric_panel_path))
 
-    assert_equal(23, json['Electric Panel Breaker Spaces']['Total Count'])
-    assert_equal(23, json['Electric Panel Breaker Spaces']['Occupied Count'])
+    assert_equal(27, json['Electric Panel Breaker Spaces']['Total Count'])
+    assert_equal(27, json['Electric Panel Breaker Spaces']['Occupied Count'])
     assert_equal(0, json['Electric Panel Breaker Spaces']['Headroom Count'])
-    assert_equal(34827.2, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Total Load (W)'])
-    assert_equal(145.1, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Total Capacity (A)'])
-    assert_in_epsilon(100.0 - 145.1, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Headroom Capacity (A)'], 0.01)
-    assert_equal(46477.0, json['Electric Panel Load']['2023 Existing Dwelling Meter-Based: Total Load (W)'])
-    assert_equal(193.7, json['Electric Panel Load']['2023 Existing Dwelling Meter-Based: Total Capacity (A)'])
-    assert_in_epsilon(100.0 - 193.7, json['Electric Panel Load']['2023 Existing Dwelling Meter-Based: Headroom Capacity (A)'], 0.01)
+    assert_equal(37463.6, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Total Load (W)'])
+    assert_equal(156.1, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Total Capacity (A)'])
+    assert_in_epsilon(100.0 - 156.1, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Headroom Capacity (A)'], 0.01)
+    assert_equal(53068.0, json['Electric Panel Load']['2023 Existing Dwelling Meter-Based: Total Load (W)'])
+    assert_equal(221.1, json['Electric Panel Load']['2023 Existing Dwelling Meter-Based: Total Capacity (A)'])
+    assert_in_epsilon(100.0 - 221.1, json['Electric Panel Load']['2023 Existing Dwelling Meter-Based: Headroom Capacity (A)'], 0.01)
   end
 
   private
