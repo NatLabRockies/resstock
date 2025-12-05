@@ -31,7 +31,8 @@ command_list = [
   :update_resources,
   :integrity_check_national,
   :integrity_check_testing,
-  :download_weather
+  :download_weather,
+  :unit_tests
 ]
 
 def display_usage(command_list)
@@ -109,4 +110,35 @@ end
 
 if ARGV[0].to_sym == :download_weather
   download_epws
+end
+
+if ARGV[0].to_sym == :unit_tests
+  tests_rbs = []
+  (Dir['project_*/tests/*.rb'] + Dir['test/test_integrity_checks.rb'] + Dir['measures/*/tests/*.rb']).each do |test_rb|
+    tests_rbs << test_rb
+  end
+
+  # Run tests in random order; we don't want them to only
+  # work when run in a specific order
+  tests_rbs.shuffle!
+
+  # Ensure we run all tests even if there are failures
+  failed_tests = []
+  tests_rbs.each do |test_rb|
+    success = system("#{OpenStudio.getOpenStudioCLI} #{test_rb}")
+    failed_tests << test_rb unless success
+  end
+
+  puts
+  puts
+
+  if not failed_tests.empty?
+    puts 'The following tests FAILED:'
+    failed_tests.each do |failed_test|
+      puts "- #{failed_test}"
+    end
+    exit! 1
+  end
+
+  puts 'All tests passed.'
 end

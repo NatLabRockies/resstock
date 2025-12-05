@@ -80,23 +80,9 @@ jobs:
           sudo apt install -y ./$OS_DEBFILE
           rm ./$OS_DEBFILE
 
-      - name: Run integrity checks for all projects
+      - name: Run unit tests
         run: |
-          openstudio project_national/tests/test.rb
-          openstudio project_testing/tests/test.rb
-
-      - name: Run all integrity check unit tests
-        run: |
-          openstudio test/test_integrity_checks.rb
-
-      - name: Run all measure tests
-        run: |
-          openstudio measures/ApplyUpgrade/tests/apply_upgrade_test.rb
-          openstudio measures/QOIReport/tests/qoi_report_test.rb
-          openstudio measures/ResStockArguments/tests/resstock_arguments_test.rb
-          openstudio measures/ResStockArgumentsPostHPXML/tests/test_hvac_load_flexibility.rb
-          openstudio measures/ResStockArgumentsPostHPXML/tests/test_resstock_arguments_post_hpxml.rb
-          openstudio measures/UpgradeCosts/tests/upgrade_costs_test.rb
+          openstudio tasks.rb unit_tests
 
       - name: Generate precomputed buildstocks
         run: |
@@ -217,10 +203,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
-
-      - name: Install gems
-        run: |
-          rm -f Gemfile.lock && bundle install
 
       - name: Install python
         shell: bash
@@ -466,10 +448,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
-
-      - name: Install gems
-        run: |
-          rm -f Gemfile.lock && bundle install
 
       - name: Install python
         shell: bash
