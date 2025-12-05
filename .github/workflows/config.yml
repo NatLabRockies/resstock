@@ -17,7 +17,7 @@ concurrency:
 env:
   OPENSTUDIO_VER: 3.10.0
   OPENSTUDIO_SHA: 86d7e215a1
-  OPENSTUDIO_PLATFORM: Ubuntu-22.04-x86_64
+  OPENSTUDIO_PLATFORM: Ubuntu-24.04-x86_64
   OPENSTUDIO_EXT: deb
   OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.10.0
   BUILDSTOCK_BATCH_BRANCH: develop
@@ -25,7 +25,7 @@ env:
 
 jobs:
   format-files:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -47,19 +47,13 @@ jobs:
           if-no-files-found: error
 
   unit-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [format-files]
-    container:
-      image: docker://nrel/openstudio:3.10.0
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
-
-      - name: Install gems
-        run: |
-          rm -f Gemfile.lock && bundle install
 
       - name: Install python
         shell: bash
@@ -79,17 +73,30 @@ jobs:
           path: resources
           name: options_lookup
 
+      - name: Download and Install OpenStudio
+        run: |
+          export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
+          sudo apt install -y ./$OS_DEBFILE
+          rm ./$OS_DEBFILE
+
       - name: Run integrity checks for all projects
         run: |
-          bundle exec rake unit_tests:project_integrity_checks
+          openstudio project_national/tests/test.rb
+          openstudio project_testing/tests/test.rb
 
       - name: Run all integrity check unit tests
         run: |
-          bundle exec rake unit_tests:integrity_check_tests
+          openstudio test/test_integrity_checks.rb
 
       - name: Run all measure tests
         run: |
-          bundle exec rake unit_tests:measure_tests
+          openstudio measures/ApplyUpgrade/tests/apply_upgrade_test.rb
+          openstudio measures/QOIReport/tests/qoi_report_test.rb
+          openstudio measures/ResStockArguments/tests/resstock_arguments_test.rb
+          openstudio measures/ResStockArgumentsPostHPXML/tests/test_hvac_load_flexibility.rb
+          openstudio measures/ResStockArgumentsPostHPXML/tests/test_resstock_arguments_post_hpxml.rb
+          openstudio measures/UpgradeCosts/tests/upgrade_costs_test.rb
 
       - name: Generate precomputed buildstocks
         run: |
@@ -109,15 +116,8 @@ jobs:
           path: resources/buildstock.csv
           if-no-files-found: error
 
-      - name: Store code coverage
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage
-          path: coverage
-          if-no-files-found: error
-
   postprocessing-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -144,7 +144,7 @@ jobs:
           uv run pytest tests
 
   build-documentation:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [format-files]
     steps:
       - name: Checkout feature branch
@@ -210,10 +210,8 @@ jobs:
           fi
 
   analysis-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [unit-tests]
-    container:
-      image: docker://nrel/openstudio:3.10.0
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -248,9 +246,16 @@ jobs:
           path: test/tests_yml_files
           name: precomputed_buildstocks
 
+      - name: Download and Install OpenStudio
+        run: |
+          export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
+          sudo apt install -y ./$OS_DEBFILE
+          rm ./$OS_DEBFILE
+
       - name: Run run_analysis.rb
         run: |
-          bundle exec rake workflow:analysis_tests
+          openstudio test/test_run_analysis.rb
 
       - name: Upload run_analysis.rb results
         uses: actions/upload-artifact@v4
@@ -262,7 +267,7 @@ jobs:
           if-no-files-found: error
 
   integration-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [unit-tests]
     steps:
       - name: Checkout base branch
@@ -294,8 +299,7 @@ jobs:
           export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
           wget -q $OPENSTUDIO_URL/$OS_DEBFILE
           sudo apt install -y ./$OS_DEBFILE
-          openstudio openstudio_version
-          which openstudio
+          rm ./$OS_DEBFILE
 
       - name: Clone and install buildstockbatch repository
         run: |
@@ -427,7 +431,7 @@ jobs:
           if-no-files-found: error
 
   compare-tools:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [analysis-tests, integration-tests]
     steps:
       - name: Checkout feature branch
@@ -455,10 +459,8 @@ jobs:
           ruby test/test_analysis_tools.rb
 
   sdr-options-analysis:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [unit-tests]
-    container:
-      image: docker://nrel/openstudio:3.10.0
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -485,6 +487,13 @@ jobs:
       - name: Install buildstock_query
         run: |
           python3 -m pip install git+https://github.com/NREL/buildstock-query.git@$BUILDSTOCK_QUERY_BRANCH
+
+      - name: Download and Install OpenStudio
+        run: |
+          export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
+          sudo apt install -y ./$OS_DEBFILE
+          rm ./$OS_DEBFILE
 
       - name: Generate 550K Sample
         run: |
@@ -588,7 +597,7 @@ jobs:
           fi
 
   sdr-integration-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [sdr-options-analysis]
     steps:
       - name: Checkout feature branch
@@ -618,8 +627,7 @@ jobs:
           export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
           wget -q $OPENSTUDIO_URL/$OS_DEBFILE
           sudo apt install -y ./$OS_DEBFILE
-          openstudio openstudio_version
-          which openstudio
+          rm ./$OS_DEBFILE
 
       - name: Download formatted options_lookup
         uses: actions/download-artifact@v4
@@ -749,7 +757,7 @@ jobs:
           if-no-files-found: error
 
   standard-plots-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
