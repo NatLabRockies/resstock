@@ -101,13 +101,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     package_apply_logic.setDescription("Logic that specifies if the entire package upgrade (all options) will apply based on the existing building's options. Specify one or more parameter|option as found in resources\\options_lookup.tsv. When multiple are included, they must be separated by '||' for OR and '&&' for AND, and using parentheses as appropriate. Prefix an option with '!' for not.")
     args << package_apply_logic
 
-    # Make integer arg to run measure [1 is run, 0 is no run]
-    run_measure = OpenStudio::Measure::OSArgument::makeIntegerArgument('run_measure', true)
-    run_measure.setDisplayName('Run Measure')
-    run_measure.setDescription('integer argument to run measure [1 is run, 0 is no run]')
-    run_measure.setDefaultValue(1)
-    args << run_measure
-
     return args
   end
 
@@ -118,13 +111,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     # use the built-in error checking
     if !runner.validateUserArguments(arguments(model), user_arguments)
       return false
-    end
-
-    # Return N/A if not selected to run
-    run_measure = runner.getIntegerArgumentValue('run_measure', user_arguments)
-    if run_measure == 0
-      runner.registerAsNotApplicable("Run Measure set to #{run_measure}.")
-      return true
     end
 
     # Assign the user inputs to variables
