@@ -7,7 +7,7 @@ require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_m
 module Version
   ResStock_Version = '2025_R1' # Version of ResStock
   BuildStockBatch_Version = '2023.10.0' # Minimum required version of BuildStockBatch
-  WorkflowGenerator_Version = '2025.04.29' # Version of buildstockbatch workflow generator
+  WorkflowGenerator_Version = '2025.12.03' # Version of buildstockbatch workflow generator
 
   def self.check_buildstockbatch_version
     if ENV.keys.include?('BUILDSTOCKBATCH_VERSION') # buildstockbatch is installed
