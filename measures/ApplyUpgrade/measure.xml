@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>apply_upgrade</name>
   <uid>33f1654c-f734-43d1-b35d-9d2856e41b5a</uid>
-  <version_id>9983959c-2566-4d53-8ea6-7d8a2912f522</version_id>
-  <version_modified>2025-11-24T23:01:33Z</version_modified>
+  <version_id>eb99dc15-e5bd-496e-b298-ed6404ea61e7</version_id>
+  <version_modified>2025-12-08T20:28:22Z</version_modified>
   <xml_checksum>9339BE01</xml_checksum>
   <class_name>ApplyUpgrade</class_name>
   <display_name>Apply Upgrade</display_name>
@@ -24936,15 +24936,6 @@
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
-    <argument>
-      <name>run_measure</name>
-      <display_name>Run Measure</display_name>
-      <description>integer argument to run measure [1 is run, 0 is no run]</description>
-      <type>Integer</type>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>1</default_value>
-    </argument>
   </arguments>
   <outputs />
   <provenances />
@@ -25008,7 +24999,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>601CF1E9</checksum>
+      <checksum>09C8827F</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -25025,7 +25016,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>C4533E09</checksum>
+      <checksum>EC0CDF66</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
