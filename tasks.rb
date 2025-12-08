@@ -113,10 +113,7 @@ if ARGV[0].to_sym == :download_weather
 end
 
 if ARGV[0].to_sym == :unit_tests
-  tests_rbs = []
-  (Dir['project_*/tests/*.rb'] + Dir['test/test_integrity_checks.rb'] + Dir['measures/*/tests/*.rb']).each do |test_rb|
-    tests_rbs << test_rb
-  end
+  tests_rbs = Dir['project_*/tests/*.rb'] + Dir['test/test_integrity_checks.rb'] + Dir['measures/*/tests/*.rb']
 
   # Run tests in random order; we don't want them to only
   # work when run in a specific order
