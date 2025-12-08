@@ -1,7 +1,7 @@
 Increasing Upgrade Options
 ==========================
 
-To allow more options per upgrade, increase the value returned by the following method defined in ``measures/ApplyUpgrade/resources/constants.rb``:
+To allow more options per upgrade or costs per option, increase the relevant constants assigned in ``measures/ApplyUpgrade/resources/constants.rb``:
 
 .. code::
 
