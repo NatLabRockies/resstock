@@ -331,6 +331,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       set_resstock_arguments(measures, resstock_arguments_runner)
       set_building_construction(measures, hpxml_bldg)
       set_dehumidifier(measures, hpxml_bldg)
+      get_hvac_systems(measures, existing_options_measure_args)
 
       # Specify measures to run
       measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }
@@ -489,6 +490,28 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       get_option_properties(args, tsv_filename, measures['ResStockArguments'][0][parameter_name])
     end
     return args
+  end
+
+  def get_hvac_systems(measures, existing_options_measure_args)
+    # Record the existing HVAC system(s) so that downstream we can determine whether
+    # to retain capacities and autosizing factors.
+    #
+    # This information is on runner but not new_runner; so recording these are necessary.
+    existing_options_measure_args.each do |_parameter_name, measure_args|
+      next if measure_args.empty?
+
+      measure_args['ResStockArguments'].each do |arg, value|
+        if arg == 'hvac_heating_system'
+          measures['ResStockArgumentsPostHPXML'][0]['hvac_heating_system_existing'] = value
+        elsif arg == 'hvac_cooling_system'
+          measures['ResStockArgumentsPostHPXML'][0]['hvac_cooling_system_existing'] = value
+        elsif arg == 'hvac_heat_pump'
+          measures['ResStockArgumentsPostHPXML'][0]['hvac_heat_pump_existing'] = value
+        elsif arg == 'hvac_heating_system_2'
+          measures['ResStockArgumentsPostHPXML'][0]['hvac_heating_system_2_existing'] = value
+        end
+      end
+    end
   end
 end
 

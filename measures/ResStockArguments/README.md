@@ -1938,6 +1938,17 @@ Specify the 24-hour comma-separated weekend cooling schedule of 0s and 1s.
 
 <br/>
 
+**HVAC: Existing Heating System**
+
+The type and efficiency of the existing heating system.
+
+- **Name:** ``hvac_heating_system_existing``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
 **HVAC: Heating Shared System Type**
 
 The type of shared system.
@@ -1999,6 +2010,17 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 
 <br/>
 
+**HVAC: Existing Cooling System**
+
+The type and efficiency of the existing cooling system.
+
+- **Name:** ``hvac_cooling_system_existing``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
 **HVAC: Cooling System Cooling Autosizing Factor**
 
 The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
@@ -2044,6 +2066,17 @@ The fraction of manufacturer recommended charge of the cooling system.
 - **Type:** ``Double``
 
 - **Units:** ``Frac``
+
+- **Required:** ``false``
+
+<br/>
+
+**HVAC: Existing Heat Pump**
+
+The type and efficiency of the existing heat pump.
+
+- **Name:** ``hvac_heat_pump_existing``
+- **Type:** ``String``
 
 - **Required:** ``false``
 
@@ -2291,6 +2324,17 @@ Nominal speed efficiency COP values of cooling detailed performance data if avai
 Maximum speed efficiency COP values of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to variable speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.
 
 - **Name:** ``hvac_perf_data_cooling_max_speed_cops``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
+**HVAC: Existing Heating System 2**
+
+The type and efficiency of the existing second heating system.
+
+- **Name:** ``hvac_heating_system_2_existing``
 - **Type:** ``String``
 
 - **Required:** ``false``

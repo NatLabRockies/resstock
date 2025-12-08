@@ -264,6 +264,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue('0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeStringArgument('hvac_heating_system_existing', false)
+    arg.setDisplayName('HVAC: Existing Heating System')
+    arg.setDescription('The type and efficiency of the existing heating system.')
+    args << arg
+
     hvac_heating_shared_system_choices = OpenStudio::StringVector.new
     hvac_heating_shared_system_choices << 'None'
     hvac_heating_shared_system_choices << 'Baseboard'
@@ -296,6 +301,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeStringArgument('hvac_cooling_system_existing', false)
+    arg.setDisplayName('HVAC: Existing Cooling System')
+    arg.setDescription('The type and efficiency of the existing cooling system.')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_cooling_autosizing_factor', false)
     arg.setDisplayName('HVAC: Cooling System Cooling Autosizing Factor')
     arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
@@ -317,6 +327,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDisplayName('HVAC: Cooling System Fraction of Manufacturer Recommended Charge')
     arg.setDescription('The fraction of manufacturer recommended charge of the cooling system.')
     arg.setUnits('Frac')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeStringArgument('hvac_heat_pump_existing', false)
+    arg.setDisplayName('HVAC: Existing Heat Pump')
+    arg.setDescription('The type and efficiency of the existing heat pump.')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_heating_autosizing_factor', false)
@@ -444,6 +459,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDisplayName('HVAC Detailed Performance Data: Cooling Maximum Speed COPs')
     arg.setDescription('Maximum speed efficiency COP values of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to variable speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.')
     arg.setUnits('W/W')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeStringArgument('hvac_heating_system_2_existing', false)
+    arg.setDisplayName('HVAC: Existing Heating System 2')
+    arg.setDescription('The type and efficiency of the existing second heating system.')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('hvac_flex_peak_offset', false)
