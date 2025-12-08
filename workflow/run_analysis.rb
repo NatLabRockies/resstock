@@ -326,8 +326,7 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
 
     if upgrade_name != 'Baseline'
       apply_upgrade_measure = { 'measure_dir_name' => 'ApplyUpgrade',
-                                'arguments' => { 'run_measure' => 1,
-                                                 'project_directory': project_directory } }
+                                'arguments' => { 'project_directory': project_directory } }
       measure_d = cfg['upgrades'].find { |u| u['upgrade_name'].gsub(/[^0-9A-Za-z]/, '') == upgrade_name }
       apply_upgrade_measure['arguments']['upgrade_name'] = measure_d['upgrade_name']
       measure_d['options'].each_with_index do |option, opt_num|
