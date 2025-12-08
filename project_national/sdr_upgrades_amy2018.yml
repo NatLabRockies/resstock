@@ -60,7 +60,7 @@ postprocessing:
 workflow_generator:
   # ResStock HPXML workflow generator
   type: residential_hpxml
-  version: 2025.04.29
+  version: 2025.12.03
 
   args:
     # Annual simulation and timestep
