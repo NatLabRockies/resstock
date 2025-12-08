@@ -6,6 +6,7 @@ require_relative '../resources/buildstock'
 require_relative '../test/analysis'
 require 'open3'
 require 'openstudio'
+require 'json'
 
 class TestRunAnalysis < Minitest::Test
   def before_setup

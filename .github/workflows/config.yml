@@ -50,17 +50,11 @@ jobs:
   unit-tests:
     runs-on: ubuntu-24.04
     needs: [format-files]
-    container:
-      image: docker://nrel/openstudio:3.11.0-rc1
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
-
-      - name: Install gems
-        run: |
-          rm -f Gemfile.lock && bundle install
 
       - name: Install python
         shell: bash
@@ -80,17 +74,16 @@ jobs:
           path: resources
           name: options_lookup
 
-      - name: Run integrity checks for all projects
+      - name: Download and Install OpenStudio
         run: |
-          bundle exec rake unit_tests:project_integrity_checks
+          export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
+          sudo apt install -y ./$OS_DEBFILE
+          rm ./$OS_DEBFILE
 
-      - name: Run all integrity check unit tests
+      - name: Run unit tests
         run: |
-          bundle exec rake unit_tests:integrity_check_tests
-
-      - name: Run all measure tests
-        run: |
-          bundle exec rake unit_tests:measure_tests
+          openstudio tasks.rb unit_tests
 
       - name: Generate precomputed buildstocks
         run: |
@@ -108,13 +101,6 @@ jobs:
         with:
           name: feature_samples
           path: resources/buildstock.csv
-          if-no-files-found: error
-
-      - name: Store code coverage
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage
-          path: coverage
           if-no-files-found: error
 
   postprocessing-tests:
@@ -213,17 +199,11 @@ jobs:
   analysis-tests:
     runs-on: ubuntu-24.04
     needs: [unit-tests]
-    container:
-      image: docker://nrel/openstudio:3.11.0-rc1
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
-
-      - name: Install gems
-        run: |
-          rm -f Gemfile.lock && bundle install
 
       - name: Install python
         shell: bash
@@ -249,9 +229,16 @@ jobs:
           path: test/tests_yml_files
           name: precomputed_buildstocks
 
+      - name: Download and Install OpenStudio
+        run: |
+          export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
+          sudo apt install -y ./$OS_DEBFILE
+          rm ./$OS_DEBFILE
+
       - name: Run run_analysis.rb
         run: |
-          bundle exec rake workflow:analysis_tests
+          openstudio test/test_run_analysis.rb
 
       - name: Upload run_analysis.rb results
         uses: actions/upload-artifact@v4
@@ -296,8 +283,7 @@ jobs:
           export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
           wget -q $OPENSTUDIO_URL/$OS_DEBFILE_URL
           sudo apt install -y ./$OS_DEBFILE
-          openstudio openstudio_version
-          which openstudio
+          rm ./$OS_DEBFILE
 
       - name: Clone and install buildstockbatch repository
         run: |
@@ -459,17 +445,11 @@ jobs:
   sdr-options-analysis:
     runs-on: ubuntu-24.04
     needs: [unit-tests]
-    container:
-      image: docker://nrel/openstudio:3.11.0-rc1
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
-
-      - name: Install gems
-        run: |
-          rm -f Gemfile.lock && bundle install
 
       - name: Install python
         shell: bash
@@ -487,6 +467,13 @@ jobs:
       - name: Install buildstock_query
         run: |
           python3 -m pip install git+https://github.com/NREL/buildstock-query.git@$BUILDSTOCK_QUERY_BRANCH
+
+      - name: Download and Install OpenStudio
+        run: |
+          export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
+          sudo apt install -y ./$OS_DEBFILE
+          rm ./$OS_DEBFILE
 
       - name: Generate 550K Sample
         run: |
@@ -621,8 +608,7 @@ jobs:
           export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
           wget -q $OPENSTUDIO_URL/$OS_DEBFILE_URL
           sudo apt install -y ./$OS_DEBFILE
-          openstudio openstudio_version
-          which openstudio
+          rm ./$OS_DEBFILE
 
       - name: Download formatted options_lookup
         uses: actions/download-artifact@v4
