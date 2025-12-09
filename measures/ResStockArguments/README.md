@@ -1938,6 +1938,17 @@ Specify the 24-hour comma-separated weekend cooling schedule of 0s and 1s.
 
 <br/>
 
+**HVAC: Existing Heating System**
+
+The type and efficiency of the existing heating system.
+
+- **Name:** ``hvac_heating_system_existing``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
 **HVAC: Heating Shared System Type**
 
 The type of shared system.
@@ -1948,19 +1959,6 @@ The type of shared system.
 - **Required:** ``false``
 
 - **Choices:** `None`, `Baseboard`, `FanCoil`
-
-<br/>
-
-**HVAC: Heating System Heating Capacity**
-
-The output heating capacity of the heating system.
-
-- **Name:** ``heating_system_heating_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
 
 <br/>
 
@@ -2001,19 +1999,6 @@ The actual cfm per ton of the heating system.
 
 <br/>
 
-**HVAC: Heating System 2 Heating Capacity**
-
-The output heating capacity of the second heating system.
-
-- **Name:** ``heating_system_2_heating_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heating System 2 Heating Autosizing Factor**
 
 The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
@@ -2025,14 +2010,12 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 
 <br/>
 
-**HVAC: Cooling System Cooling Capacity**
+**HVAC: Existing Cooling System**
 
-The output cooling capacity of the cooling system.
+The type and efficiency of the existing cooling system.
 
-- **Name:** ``cooling_system_cooling_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
+- **Name:** ``hvac_cooling_system_existing``
+- **Type:** ``String``
 
 - **Required:** ``false``
 
@@ -2088,14 +2071,12 @@ The fraction of manufacturer recommended charge of the cooling system.
 
 <br/>
 
-**HVAC: Heat Pump Heating Capacity**
+**HVAC: Existing Heat Pump**
 
-The output heating capacity of the heat pump.
+The type and efficiency of the existing heat pump.
 
-- **Name:** ``heat_pump_heating_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
+- **Name:** ``hvac_heat_pump_existing``
+- **Type:** ``String``
 
 - **Required:** ``false``
 
@@ -2112,38 +2093,12 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 
 <br/>
 
-**HVAC: Heat Pump Cooling Capacity**
-
-The output cooling capacity of the heat pump.
-
-- **Name:** ``heat_pump_cooling_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heat Pump Cooling Autosizing Factor**
 
 The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
 
 - **Name:** ``heat_pump_cooling_autosizing_factor``
 - **Type:** ``Double``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Heat Pump Backup Heating Capacity**
-
-The backup output heating capacity of the heat pump.
-
-- **Name:** ``heat_pump_backup_heating_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
 
 - **Required:** ``false``
 
@@ -2369,6 +2324,17 @@ Nominal speed efficiency COP values of cooling detailed performance data if avai
 Maximum speed efficiency COP values of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to variable speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.
 
 - **Name:** ``hvac_perf_data_cooling_max_speed_cops``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
+**HVAC: Existing Heating System 2**
+
+The type and efficiency of the existing second heating system.
+
+- **Name:** ``hvac_heating_system_2_existing``
 - **Type:** ``String``
 
 - **Required:** ``false``

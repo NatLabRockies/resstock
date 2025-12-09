@@ -212,7 +212,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     end
 
     measures = {}
-    upgrade_args_hash = nil
     existing_options_measure_args = {}
     resstock_arguments_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new) # we want only ResStockArguments registered argument values
     if apply_package_upgrade
@@ -276,9 +275,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
         measures['ResStockArgumentsPostHPXML'] = [{}]
       end
 
-      # Save the hash of applicable upgrade measure arguments
-      upgrade_args_hash = measures['ResStockArguments'][0].clone
-
       # Add measure arguments from existing building if needed
       parameters = get_parameters_ordered_from_options_lookup_tsv(lookup_csv_data, characteristics_dir)
       measures.keys.each do |measure_subdir|
@@ -335,9 +331,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       set_resstock_arguments(measures, resstock_arguments_runner)
       set_building_construction(measures, hpxml_bldg)
       set_dehumidifier(measures, hpxml_bldg)
-
-      # HVAC
-      set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
+      get_hvac_systems(measures, existing_options_measure_args)
 
       # Specify measures to run
       measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }
@@ -485,17 +479,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     end
   end
 
-  def set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
-    # Retain (calculated) HVAC capacities if upgrade is not HVAC system related
-    # Do not retain HVAC autosizing factors and defect ratios if upgrade is HVAC system related
-    hvac_system_upgrades = get_hvac_system_upgrades(hpxml_bldg, upgrade_args_hash)
-    values = get_hvac_system_values(hpxml_bldg, hvac_system_upgrades)
-
-    values.each do |arg, value|
-      measures['ResStockArgumentsPostHPXML'][0][arg] = value
-    end
-  end
-
   def get_detailed_hvac_arguments(measures)
     # Returns a hash of detailed option properties (from the option TSV) for the given HVAC systems
     args = {}
@@ -509,96 +492,26 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     return args
   end
 
-  def get_hvac_system_upgrades(hpxml_bldg, args_hash)
-    hvac_system_upgrades = []
-    args_hash.keys.each do |arg|
-      # Detect whether we are upgrading the heating system
-      if arg == 'hvac_heating_system'
-        hpxml_bldg.heating_systems.each do |heating_system|
-          next unless heating_system.primary_system
+  def get_hvac_systems(measures, existing_options_measure_args)
+    # Record the existing HVAC system(s) so that downstream we can determine whether
+    # to retain capacities and autosizing factors.
+    #
+    # This information is on runner but not new_runner; so recording these are necessary.
+    existing_options_measure_args.each do |_parameter_name, measure_args|
+      next if measure_args.empty?
 
-          hvac_system_upgrades << heating_system.id
+      measure_args['ResStockArguments'].each do |arg, value|
+        if arg == 'hvac_heating_system'
+          measures['ResStockArgumentsPostHPXML'][0]['hvac_heating_system_existing'] = value
+        elsif arg == 'hvac_cooling_system'
+          measures['ResStockArgumentsPostHPXML'][0]['hvac_cooling_system_existing'] = value
+        elsif arg == 'hvac_heat_pump'
+          measures['ResStockArgumentsPostHPXML'][0]['hvac_heat_pump_existing'] = value
+        elsif arg == 'hvac_heating_system_2'
+          measures['ResStockArgumentsPostHPXML'][0]['hvac_heating_system_2_existing'] = value
         end
       end
-
-      # Detect whether we are upgrading the secondary heating system
-      if arg == 'hvac_heating_system_2'
-        hpxml_bldg.heating_systems.each do |heating_system|
-          next if heating_system.primary_system
-
-          hvac_system_upgrades << heating_system.id
-        end
-      end
-
-      # Detect whether we are upgrading the cooling system
-      if arg == 'hvac_cooling_system'
-        hpxml_bldg.cooling_systems.each do |cooling_system|
-          hvac_system_upgrades << cooling_system.id
-        end
-      end
-
-      # Detect whether we are upgrading the heat pump
-      next if arg != 'hvac_heat_pump'
-
-      hpxml_bldg.heat_pumps.each do |heat_pump|
-        hvac_system_upgrades << heat_pump.id
-      end
     end
-
-    return hvac_system_upgrades
-  end
-
-  def get_hvac_system_values(hpxml_bldg, hvac_system_upgrades)
-    values = {
-      'heating_system_heating_capacity' => nil,
-      'heating_system_2_heating_capacity' => nil,
-      'cooling_system_cooling_capacity' => nil,
-      'heat_pump_heating_capacity' => nil,
-      'heat_pump_cooling_capacity' => nil,
-      'heat_pump_backup_heating_capacity' => nil,
-      'heating_system_heating_autosizing_factor' => nil,
-      'heating_system_2_heating_autosizing_factor' => nil,
-      'cooling_system_cooling_autosizing_factor' => nil,
-      'heat_pump_heating_autosizing_factor' => nil,
-      'heat_pump_cooling_autosizing_factor' => nil,
-      'heat_pump_backup_heating_autosizing_factor' => nil
-    }
-
-    hpxml_bldg.heating_systems.each do |heating_system|
-      next unless heating_system.primary_system
-      next if hvac_system_upgrades.include?(heating_system.id)
-
-      values['heating_system_heating_capacity'] = heating_system.heating_capacity
-      values['heating_system_heating_autosizing_factor'] = heating_system.heating_autosizing_factor
-    end
-
-    hpxml_bldg.heating_systems.each do |heating_system|
-      next if heating_system.primary_system
-      next if hvac_system_upgrades.include?(heating_system.id)
-
-      values['heating_system_2_heating_capacity'] = heating_system.heating_capacity
-      values['heating_system_2_heating_autosizing_factor'] = heating_system.heating_autosizing_factor
-    end
-
-    hpxml_bldg.cooling_systems.each do |cooling_system|
-      next if hvac_system_upgrades.include?(cooling_system.id)
-
-      values['cooling_system_cooling_capacity'] = cooling_system.cooling_capacity
-      values['cooling_system_cooling_autosizing_factor'] = cooling_system.cooling_autosizing_factor
-    end
-
-    hpxml_bldg.heat_pumps.each do |heat_pump|
-      next if hvac_system_upgrades.include?(heat_pump.id)
-
-      values['heat_pump_heating_capacity'] = heat_pump.heating_capacity
-      values['heat_pump_cooling_capacity'] = heat_pump.cooling_capacity
-      values['heat_pump_backup_heating_capacity'] = heat_pump.backup_heating_capacity
-      values['heat_pump_heating_autosizing_factor'] = heat_pump.heating_autosizing_factor
-      values['heat_pump_cooling_autosizing_factor'] = heat_pump.cooling_autosizing_factor
-      values['heat_pump_backup_heating_autosizing_factor'] = heat_pump.backup_heating_autosizing_factor
-    end
-
-    return values
   end
 end
 

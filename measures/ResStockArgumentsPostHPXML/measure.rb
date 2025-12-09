@@ -393,7 +393,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       # HVAC systems
       hpxml_bldg.heating_systems.each do |heating_system|
         if heating_system.primary_system
-          heating_system.heating_capacity = args[:heating_system_heating_capacity] unless args[:heating_system_heating_capacity].nil?
+
           heating_system.heating_autosizing_factor = args[:heating_system_heating_autosizing_factor] unless args[:heating_system_heating_autosizing_factor].nil?
           # Faults
           if [HPXML::HVACTypeFurnace].include? heating_system.heating_system_type
@@ -411,12 +411,10 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
             end
           end
         else
-          heating_system.heating_capacity = args[:heating_system_2_heating_capacity] unless args[:heating_system_2_heating_capacity].nil?
           heating_system.heating_autosizing_factor = args[:heating_system_2_heating_autosizing_factor] unless args[:heating_system_2_heating_autosizing_factor].nil?
         end
       end
       hpxml_bldg.cooling_systems.each do |cooling_system|
-        cooling_system.cooling_capacity = args[:cooling_system_cooling_capacity] unless args[:cooling_system_cooling_capacity].nil?
         cooling_system.cooling_autosizing_factor = args[:cooling_system_cooling_autosizing_factor] unless args[:cooling_system_cooling_autosizing_factor].nil?
         # Faults
         if [HPXML::HVACTypeCentralAirConditioner, HPXML::HVACTypeMiniSplitAirConditioner].include? cooling_system.cooling_system_type
@@ -440,11 +438,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                                            cooling_system.compressor_type)
       end
       hpxml_bldg.heat_pumps.each do |heat_pump|
-        heat_pump.heating_capacity = args[:heat_pump_heating_capacity] unless args[:heat_pump_heating_capacity].nil?
         heat_pump.heating_autosizing_factor = args[:heat_pump_heating_autosizing_factor] unless args[:heat_pump_heating_autosizing_factor].nil?
-        heat_pump.cooling_capacity = args[:heat_pump_cooling_capacity] unless args[:heat_pump_cooling_capacity].nil?
         heat_pump.cooling_autosizing_factor = args[:heat_pump_cooling_autosizing_factor] unless args[:heat_pump_cooling_autosizing_factor].nil?
-        heat_pump.backup_heating_capacity = args[:heat_pump_backup_heating_capacity] unless args[:heat_pump_backup_heating_capacity].nil?
         heat_pump.backup_heating_autosizing_factor = args[:heat_pump_backup_heating_autosizing_factor] unless args[:heat_pump_backup_heating_autosizing_factor].nil?
         # Faults
         if [HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpMiniSplit, HPXML::HVACTypeHeatPumpPTHP, HPXML::HVACTypeHeatPumpRoom].include? heat_pump.heat_pump_type
@@ -482,6 +477,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       hpxml_bldg.water_heating_systems.each do |water_heater|
         water_heater.jacket_r_value = args[:dhw_water_heater_jacket_rvalue] unless args[:dhw_water_heater_jacket_rvalue].to_f == 0
       end
+
+      # HVAC systems
+      retain_existing_hvac_capacities_and_autosizing_factors(args, hpxml_bldg_existing, hpxml_bldg)
 
       # Use existing system as heat pump backup
       set_existing_system_as_heat_pump_backup(runner, hpxml_bldg_existing, hpxml_bldg, args)
@@ -709,6 +707,57 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       schedule_file = File.join(File.dirname(@hpxml_path), schedule_file)
     end
     return schedule_file
+  end
+
+  # Retain HVAC capacities and autosizing factors for HVAC system(s) if the upgrade is not related to the HVAC system(s).
+  def retain_existing_hvac_capacities_and_autosizing_factors(args, hpxml_bldg_existing, hpxml_bldg)
+    return if hpxml_bldg_existing.nil?
+
+    heating_system_existing = hpxml_bldg_existing.heating_systems.find { |hs| hs.primary_system }
+    heating_system = hpxml_bldg.heating_systems.find { |hs| hs.primary_system }
+
+    if !heating_system_existing.nil? && !heating_system.nil?
+      if !args[:hvac_heating_system_existing].nil? && !args[:hvac_heating_system].nil? && (args[:hvac_heating_system_existing] == args[:hvac_heating_system])
+        heating_system.heating_capacity = heating_system_existing.heating_capacity
+        heating_system.heating_autosizing_factor = heating_system_existing.heating_autosizing_factor
+      end
+    end
+
+    heating_system_2_existing = hpxml_bldg_existing.heating_systems.find { |hs| !hs.primary_system }
+    heating_system_2 = hpxml_bldg.heating_systems.find { |hs| !hs.primary_system }
+
+    if !heating_system_2_existing.nil? && !heating_system_2.nil?
+      if !args[:hvac_heating_system_2_existing].nil? && !args[:hvac_heating_system_2].nil? && (args[:hvac_heating_system_2_existing] == args[:hvac_heating_system_2])
+        heating_system_2.heating_capacity = heating_system_2_existing.heating_capacity
+        heating_system_2.heating_autosizing_factor = heating_system_2_existing.heating_autosizing_factor
+      end
+    end
+
+    cooling_system_existing = hpxml_bldg_existing.cooling_systems.find { |cs| cs.primary_system }
+    cooling_system = hpxml_bldg.cooling_systems.find { |cs| cs.primary_system }
+
+    if !cooling_system_existing.nil? && !cooling_system.nil?
+      if !args[:hvac_cooling_system_existing].nil? && !args[:hvac_cooling_system].nil? && (args[:hvac_cooling_system_existing] == args[:hvac_cooling_system])
+        cooling_system.cooling_capacity = cooling_system_existing.cooling_capacity
+        cooling_system.cooling_autosizing_factor = cooling_system_existing.cooling_autosizing_factor
+        cooling_system.integrated_heating_system_capacity = cooling_system_existing.integrated_heating_system_capacity
+      end
+    end
+
+    heat_pump_existing = hpxml_bldg_existing.heat_pumps.find { |hp| hp.primary_heating_system && hp.primary_cooling_system }
+    heat_pump = hpxml_bldg.heat_pumps.find { |hp| hp.primary_heating_system && hp.primary_cooling_system }
+
+    if !heat_pump_existing.nil? && !heat_pump.nil?
+      if !args[:hvac_heat_pump_existing].nil? && !args[:hvac_heat_pump].nil? && (args[:hvac_heat_pump_existing] == args[:hvac_heat_pump])
+        heat_pump.heating_capacity = heat_pump_existing.heating_capacity
+        heat_pump.heating_capacity_17F = heat_pump_existing.heating_capacity_17F
+        heat_pump.cooling_capacity = heat_pump_existing.cooling_capacity
+        heat_pump.backup_heating_capacity = heat_pump_existing.backup_heating_capacity
+        heat_pump.heating_autosizing_factor = heat_pump_existing.heating_autosizing_factor
+        heat_pump.cooling_autosizing_factor = heat_pump_existing.cooling_autosizing_factor
+        heat_pump.backup_heating_autosizing_factor = heat_pump_existing.backup_heating_autosizing_factor
+      end
+    end
   end
 
   def set_electric_panel(runner, hpxml_bldg_existing, hpxml_bldg, args)
