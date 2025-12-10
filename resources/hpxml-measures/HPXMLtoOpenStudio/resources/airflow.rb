@@ -210,7 +210,7 @@ module Airflow
     cfa = hpxml_bldg.building_construction.conditioned_floor_area
     measurement = get_infiltration_measurement_of_interest(hpxml_bldg)
 
-    default_infil_height, default_infil_volume = Defaults.get_infiltration_height_and_volume(hpxml_bldg)
+    default_infil_height, default_infil_volume = Defaults.get_infiltration_height_and_volume(hpxml_bldg, nil)
     infil_volume = measurement.infiltration_volume
     infil_volume = default_infil_volume if infil_volume.nil?
     infil_height = measurement.infiltration_height

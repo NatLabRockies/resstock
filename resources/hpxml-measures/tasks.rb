@@ -73,17 +73,41 @@ def create_hpxmls
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
 
     num_apply_measures = 1
-    if hpxml_path.include?('base-bldgtype-mf-whole-building.xml') || hpxml_path.include?('base-bldgtype-mf-whole-building-detailed-electric-panel.xml')
+    if hpxml_path.include?('whole-building-common-spaces')
+      num_apply_measures = 8
+    elsif hpxml_path.include?('whole-building')
       num_apply_measures = 6
+    elsif hpxml_path.include?('multiple-buildings')
+      num_apply_measures = 2
     end
 
     for i in 1..num_apply_measures
       build_residential_hpxml = measures['BuildResidentialHPXML'][0]
-      if hpxml_path.include?('base-bldgtype-mf-whole-building.xml') || hpxml_path.include?('base-bldgtype-mf-whole-building-detailed-electric-panel.xml')
+      if hpxml_path.include?('whole-building-common-spaces')
+        suffix = "_#{i}" if i > 1
+        build_residential_hpxml['schedules_paths'] = (i >= 7 ? nil : "../../HPXMLtoOpenStudio/resources/schedule_files/#{stochastic_sched_basename}-mf-unit#{suffix}.csv")
+        build_residential_hpxml['geometry_foundation_type'] = (i <= 2 ? 'Basement, Unconditioned' : 'Above Apartment')
+        build_residential_hpxml['geometry_attic_type'] = (i >= 7 ? 'Attic, Vented, Gable' : 'Below Apartment')
+        build_residential_hpxml['geometry_unit_num_bedrooms'] = (i >= 7 ? '0' : '3')
+        build_residential_hpxml['geometry_unit_num_bathrooms'] = (i >= 7 ? '1' : '2')
+        # Partially conditioned basement + one unconditioned hallway each floor + unconditioned attic
+        build_residential_hpxml['hvac_heating_system'] = ([1, 4, 6].include?(i) ? 'Electric Resistance' : 'None')
+        build_residential_hpxml['hvac_cooling_system'] = ([1, 4, 6].include?(i) ? 'Room AC, CEER 8.4' : 'None')
+      elsif hpxml_path.include?('whole-building')
         suffix = "_#{i}" if i > 1
         build_residential_hpxml['schedules_paths'] = "../../HPXMLtoOpenStudio/resources/schedule_files/#{stochastic_sched_basename}-mf-unit#{suffix}.csv"
         build_residential_hpxml['geometry_foundation_type'] = (i <= 2 ? 'Basement, Unconditioned' : 'Above Apartment')
         build_residential_hpxml['geometry_attic_type'] = (i >= 5 ? 'Attic, Vented, Gable' : 'Below Apartment')
+        if hpxml_path.include?('inter-unit-heat-transfer')
+          # one unconditioned hallway + conditioned unit each floor
+          build_residential_hpxml['hvac_heating_system'] = ([1, 3, 5].include?(i) ? 'Electric Resistance' : 'None')
+          build_residential_hpxml['hvac_cooling_system'] = ([1, 3, 5].include?(i) ? 'Room AC, CEER 8.4' : 'None')
+        end
+      elsif hpxml_path.include?('multiple-buildings')
+        suffix = "_#{i}" if i > 1
+        if i > 1
+          build_residential_hpxml['enclosure_window'] = 'Triple, Low-E, Insulated, Gas, High Gain'
+        end
       end
 
       # Re-generate stochastic schedule CSV?
@@ -407,6 +431,42 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
   elsif ['base-schedules-detailed-occupancy-stochastic-no-space-cooling.xml'].include? hpxml_file
     hpxml.header.unavailable_periods.add(column_name: 'No Space Cooling', begin_month: 6, begin_day: 15, begin_hour: 5, end_month: 7, end_day: 30, end_hour: 14)
   end
+  if ['base-misc-multiple-buildings.xml'].include? hpxml_file
+    hpxml.header.whole_sfa_or_mf_building_sim = false
+    hpxml.buildings[1].building_id = "#{hpxml.buildings[0].building_id}_AlternativeDesign"
+    # Set sameas attribute for everything that is unchanged between
+    # the two buildings (i.e., everything but windows)
+    hpxml.buildings[1].air_infiltration_measurements[0].sameas_id = hpxml.buildings[0].air_infiltration_measurements[0].id
+    hpxml.buildings[1].attics[0].sameas_id = hpxml.buildings[0].attics[0].id
+    hpxml.buildings[1].foundations[0].sameas_id = hpxml.buildings[0].foundations[0].id
+    hpxml.buildings[1].surfaces.each_with_index do |surface, i|
+      surface.sameas_id = hpxml.buildings[0].surfaces[i].id
+    end
+    hpxml.buildings[1].subsurfaces.each_with_index do |subsurface, i|
+      next if subsurface.is_a? HPXML::Window # Windows are different between the two buildings
+
+      subsurface.sameas_id = hpxml.buildings[0].subsurfaces[i].id
+    end
+    hpxml.buildings[1].hvac_systems.each_with_index do |hvac_system, i|
+      hvac_system.sameas_id = hpxml.buildings[0].hvac_systems[i].id
+    end
+    hpxml.buildings[1].hvac_controls[0].sameas_id = hpxml.buildings[0].hvac_controls[0].id
+    hpxml.buildings[1].hvac_distributions[0].sameas_id = hpxml.buildings[0].hvac_distributions[0].id
+    hpxml.buildings[1].water_heating_systems[0].sameas_id = hpxml.buildings[0].water_heating_systems[0].id
+    hpxml.buildings[1].hot_water_distributions[0].sameas_id = hpxml.buildings[0].hot_water_distributions[0].id
+    hpxml.buildings[1].water_fixtures.each_with_index do |water_fixture, i|
+      water_fixture.sameas_id = hpxml.buildings[0].water_fixtures[i].id
+    end
+    hpxml.buildings[1].appliances.each_with_index do |appliance, i|
+      appliance.sameas_id = hpxml.buildings[0].appliances[i].id
+    end
+    hpxml.buildings[1].lighting_groups.each_with_index do |lighting_group, i|
+      lighting_group.sameas_id = hpxml.buildings[0].lighting_groups[i].id
+    end
+    hpxml.buildings[1].plug_loads.each_with_index do |plug_load, i|
+      plug_load.sameas_id = hpxml.buildings[0].plug_loads[i].id
+    end
+  end
 
   hpxml.buildings.each_with_index do |hpxml_bldg, hpxml_bldg_index|
     # ------------ #
@@ -531,6 +591,9 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
     end
     if hpxml_file.include? 'base-bldgtype-mf-unit'
       hpxml_bldg.building_construction.unit_height_above_grade = 10
+    elsif hpxml_file.include? 'base-bldgtype-mf-whole-building-common-spaces'
+      hpxml_bldg.building_construction.average_ceiling_height = { 1 => 8.0, 2 => 8.0, 3 => 8.0, 4 => 8.0, 5 => 8.0, 6 => 8.0, 7 => 2.0, 8 => 2.0 }[hpxml_bldg_index + 1]
+      hpxml_bldg.building_construction.unit_height_above_grade = { 1 => -7.0, 2 => -7.0, 3 => 1.0, 4 => 1.0, 5 => 9.0, 6 => 9.0, 7 => 17.0, 8 => 17.0 }[hpxml_bldg_index + 1]
     elsif hpxml_file.include? 'base-bldgtype-mf-whole-building'
       hpxml_bldg.building_construction.unit_height_above_grade = { 1 => 0.0, 2 => 0.0, 3 => 10.0, 4 => 10.0, 5 => 20.0, 6 => 20.0 }[hpxml_bldg_index + 1]
     end
@@ -3085,6 +3148,156 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
     hpxml_bldg.fuel_loads[2].weekend_fractions = '0.044, 0.023, 0.019, 0.015, 0.016, 0.018, 0.026, 0.033, 0.033, 0.032, 0.033, 0.033, 0.032, 0.032, 0.032, 0.033, 0.045, 0.057, 0.066, 0.076, 0.081, 0.086, 0.075, 0.065'
     hpxml_bldg.fuel_loads[2].monthly_multipliers = '1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0'
   end
+
+  # Logic to apply at whole building level, need to be outside hpxml_bldg loop
+  if ['base-bldgtype-mf-whole-building-common-spaces.xml'].include? hpxml_file
+    # basement floor, building0: conditioned, building1: unconditioned
+    for i in 0..1
+      hpxml.buildings[i].foundation_walls.each do |fnd_wall|
+        fnd_wall.interior_adjacent_to = HPXML::LocationBasementConditioned
+      end
+      hpxml.buildings[i].rim_joists.each do |rim_joist|
+        rim_joist.interior_adjacent_to = HPXML::LocationBasementConditioned
+      end
+      hpxml.buildings[i].slabs.each do |slab|
+        slab.interior_adjacent_to = HPXML::LocationBasementConditioned
+      end
+      # Specify floors with full description, specify ceiling with sameas attributes
+      hpxml.buildings[i].floors.reverse.each do |floor|
+        floor.delete
+      end
+      hpxml.buildings[i].walls.reverse.each do |wall|
+        wall.delete
+      end
+    end
+    hpxml.buildings[0].building_id = 'ConditionedBasement'
+    hpxml.buildings[1].building_id = 'UnconditionedBasement'
+    hpxml.buildings[0].foundation_walls[1].exterior_adjacent_to = HPXML::LocationOtherMultifamilyBufferSpace
+    hpxml.buildings[1].foundation_walls[-1].delete
+    hpxml.buildings[1].foundation_walls.add(id: "FoundationWall#{hpxml.buildings[1].foundation_walls.size + 1}_2", sameas_id: hpxml.buildings[0].foundation_walls[1].id)
+    hpxml.buildings[0].rim_joists[1].exterior_adjacent_to = HPXML::LocationOtherMultifamilyBufferSpace
+    hpxml.buildings[1].rim_joists[-1].delete
+    hpxml.buildings[1].rim_joists.add(id: "RimJoist#{hpxml.buildings[1].rim_joists.size + 1}_2", sameas_id: hpxml.buildings[0].rim_joists[1].id)
+    # Add two ceilings
+    hpxml.buildings[0].floors.add(id: "Floor#{hpxml.buildings[0].floors.size + 1}_1", sameas_id: hpxml.buildings[2].floors[0].id)
+    hpxml.buildings[1].floors.add(id: "Floor#{hpxml.buildings[1].floors.size + 1}_2", sameas_id: hpxml.buildings[3].floors[0].id)
+    # first floor, building2: unconditioned, building3: conditioned
+    # First floor is floor, second floor is ceiling
+    for i in 2..3
+      # Floor exterior adjacent to
+      hpxml.buildings[i].floors[0].exterior_adjacent_to = (i == 2) ? HPXML::LocationOtherHousingUnit : HPXML::LocationOtherMultifamilyBufferSpace
+      # Ceiling
+      hpxml.buildings[i].floors[-1].delete
+      hpxml.buildings[i].floors.add(id: "Floor#{hpxml.buildings[i].floors.size + 1}_#{i + 1}", sameas_id: hpxml.buildings[i + 2].floors[0].id)
+    end
+    # Interior walls
+    hpxml.buildings[2].building_id = 'F1UnconditionedHall'
+    hpxml.buildings[3].building_id = 'F1ConditionedUnit'
+    hpxml.buildings[2].walls[-1].delete
+    hpxml.buildings[2].walls.add(id: "Wall#{hpxml.buildings[2].walls.size + 1}_3", sameas_id: hpxml.buildings[3].walls[-1].id)
+    hpxml.buildings[3].walls[-1].exterior_adjacent_to = HPXML::LocationOtherMultifamilyBufferSpace
+    # second floor, building4: unconditioned, building5: conditioned
+    # First floor is floor, second floor is ceiling
+    for i in 4..5
+      # Floor exterior adjacent to
+      hpxml.buildings[i].floors[0].exterior_adjacent_to = (i == 4) ? HPXML::LocationOtherMultifamilyBufferSpace : HPXML::LocationOtherHousingUnit
+      # Ceiling
+      hpxml.buildings[i].floors[-1].delete
+      hpxml.buildings[i].floors.add(id: "Floor#{hpxml.buildings[i].floors.size + 1}_#{i + 1}", sameas_id: hpxml.buildings[i + 2].floors[0].id)
+    end
+    hpxml.buildings[4].building_id = 'F2UnconditionedHall'
+    hpxml.buildings[5].building_id = 'F2ConditionedUnit'
+    hpxml.buildings[5].walls[-1].exterior_adjacent_to = HPXML::LocationOtherMultifamilyBufferSpace
+    hpxml.buildings[4].walls[-1].delete
+    hpxml.buildings[4].walls.add(id: "Wall#{hpxml.buildings[5].walls.size + 1}_5", sameas_id: hpxml.buildings[5].walls[-1].id)
+    # attic, building6: unconditioned, building7: unconditioned
+    # First floor is floor, second floor is ceiling
+    hpxml.buildings[6].building_id = 'F3Attic1'
+    hpxml.buildings[7].building_id = 'F3Attic2'
+    for i in 6..7
+      # Attic element deleted here since the whole building element is an attic, not consistent with other Building element specification where attictype is BelowApartment
+      hpxml.buildings[i].attics[0].delete
+      hpxml.buildings[i].roofs[0].interior_adjacent_to = HPXML::LocationConditionedSpace
+      # delete first two walls on top floor, keep attic walls
+      hpxml.buildings[i].walls[0].delete
+      hpxml.buildings[i].walls[0].delete
+      hpxml.buildings[i].walls[0].id = "Wall1_#{i + 1}"
+      hpxml.buildings[i].walls[0].interior_adjacent_to = HPXML::LocationConditionedSpace
+      if i == 6
+        hpxml.buildings[i].walls[1].interior_adjacent_to = HPXML::LocationConditionedSpace
+        hpxml.buildings[i].walls[1].exterior_adjacent_to = HPXML::LocationOtherMultifamilyBufferSpace
+      else
+        hpxml.buildings[i].walls[-1].delete
+        hpxml.buildings[i].walls.add(id: "Wall#{hpxml.buildings[i].walls.size + 1}_#{i + 1}", sameas_id: hpxml.buildings[i - 1].walls[-1].id)
+      end
+      # Floor exterior adjacent to
+      hpxml.buildings[i].floors[0].exterior_adjacent_to = (i == 6) ? HPXML::LocationOtherMultifamilyBufferSpace : HPXML::LocationOtherHousingUnit
+      hpxml.buildings[i].floors[0].interior_finish_type = HPXML::InteriorFinishGypsumBoard
+      hpxml.buildings[i].floors[0].insulation_assembly_r_value = 39.3
+      hpxml.buildings[i].floors[1].delete
+      hpxml.buildings[i].water_heating_systems[0].delete
+      hpxml.buildings[i].hot_water_distributions[0].delete
+      hpxml.buildings[i].water_fixtures.reverse.each do |water_fixture|
+        water_fixture.delete
+      end
+      hpxml.buildings[i].clothes_washers[0].delete
+      hpxml.buildings[i].dishwashers[0].delete
+      hpxml.buildings[i].refrigerators[0].delete
+      hpxml.buildings[i].cooking_ranges[0].delete
+      hpxml.buildings[i].ovens[0].delete
+      hpxml.buildings[i].plug_loads.reverse.each do |plug_load|
+        plug_load.kwh_per_year = 0.0
+      end
+    end
+  end
+
+  # Logic to apply at whole building level, need to be outside hpxml_bldg loop
+  if ['base-bldgtype-mf-whole-building-inter-unit-heat-transfer.xml'].include? hpxml_file
+    hpxml.buildings[0].building_id = 'UnitWithUnonditionedBasement'
+    hpxml.buildings[1].building_id = 'HallWithUnconditionedBasement'
+    hpxml.buildings[0].foundation_walls[1].exterior_adjacent_to = HPXML::LocationOtherMultifamilyBufferSpace
+    hpxml.buildings[1].foundation_walls[-1].delete
+    hpxml.buildings[1].foundation_walls.add(id: "FoundationWall#{hpxml.buildings[1].foundation_walls.size + 1}_2", sameas_id: hpxml.buildings[0].foundation_walls[1].id)
+    hpxml.buildings[0].walls[1].exterior_adjacent_to = HPXML::LocationOtherMultifamilyBufferSpace
+    hpxml.buildings[1].walls[1].delete
+    hpxml.buildings[1].walls.add(id: "Wall#{hpxml.buildings[1].walls.size + 1}_2", sameas_id: hpxml.buildings[0].walls[1].id)
+    hpxml.buildings[0].rim_joists[1].exterior_adjacent_to = HPXML::LocationOtherMultifamilyBufferSpace
+    hpxml.buildings[1].rim_joists[-1].delete
+    hpxml.buildings[1].rim_joists.add(id: "RimJoist#{hpxml.buildings[1].rim_joists.size + 1}_2", sameas_id: hpxml.buildings[0].rim_joists[1].id)
+    # Add two ceilings
+    hpxml.buildings[0].floors.add(id: "Floor#{hpxml.buildings[0].floors.size + 1}_1", sameas_id: hpxml.buildings[2].floors[0].id)
+    hpxml.buildings[1].floors.add(id: "Floor#{hpxml.buildings[1].floors.size + 1}_2", sameas_id: hpxml.buildings[3].floors[0].id)
+    # first floor, building2: unconditioned, building3: conditioned
+    # First floor is floor, second floor is ceiling
+    for i in 2..3
+      # Floor exterior adjacent to
+      hpxml.buildings[i].floors[0].exterior_adjacent_to = (i == 2) ? HPXML::LocationOtherHousingUnit : HPXML::LocationOtherMultifamilyBufferSpace
+      # Ceiling
+      hpxml.buildings[i].floors[-1].delete
+      hpxml.buildings[i].floors.add(id: "Floor#{hpxml.buildings[i].floors.size + 1}_#{i + 1}", sameas_id: hpxml.buildings[i + 2].floors[0].id)
+    end
+    # Interior walls
+    hpxml.buildings[2].building_id = 'F1ConditionedUnit'
+    hpxml.buildings[3].building_id = 'F1UnconditionedHall'
+    hpxml.buildings[2].walls[-1].exterior_adjacent_to = HPXML::LocationOtherMultifamilyBufferSpace
+    hpxml.buildings[3].walls[-1].delete
+    hpxml.buildings[3].walls.add(id: "Wall#{hpxml.buildings[3].walls.size + 1}_4", sameas_id: hpxml.buildings[2].walls[-1].id)
+    # second floor, building4: conditioned with attic, building5: unconditioned with attic
+    # First floor is floor, second floor is ceiling
+    for i in 4..5
+      # Floor exterior adjacent to
+      hpxml.buildings[i].floors[0].exterior_adjacent_to = (i == 4) ? HPXML::LocationOtherHousingUnit : HPXML::LocationOtherMultifamilyBufferSpace
+    end
+    hpxml.buildings[4].building_id = 'F2ConditionedUnitWithAttic'
+    hpxml.buildings[5].building_id = 'F2UnconditionedHallWithAttic'
+    hpxml.buildings[4].walls[1].exterior_adjacent_to = HPXML::LocationOtherMultifamilyBufferSpace
+    hpxml.buildings[4].walls[3].exterior_adjacent_to = HPXML::LocationOtherMultifamilyBufferSpace # attic interior wall
+    hpxml.buildings[5].walls[3].delete
+    hpxml.buildings[5].walls[1].delete
+    hpxml.buildings[5].walls[1].id = "Wall#{hpxml.buildings[5].walls.size}_6"
+    hpxml.buildings[5].walls.add(id: "Wall#{hpxml.buildings[5].walls.size + 1}_6", sameas_id: hpxml.buildings[4].walls[1].id)
+    hpxml.buildings[5].walls.add(id: "Wall#{hpxml.buildings[5].walls.size + 1}_6", sameas_id: hpxml.buildings[4].walls[3].id)
+  end
 end
 
 def download_utility_rates
@@ -3148,7 +3361,16 @@ def download_g_functions
   exit!
 end
 
-command_list = [:update_measures, :update_hpxmls, :create_release_zips, :download_utility_rates, :download_g_functions]
+command_list = [
+  :update_measures,
+  :update_hpxmls,
+  :unit_tests,
+  :workflow_tests1,
+  :workflow_tests2,
+  :create_release_zips,
+  :download_utility_rates,
+  :download_g_functions
+]
 
 def display_usage(command_list)
   puts "Usage: openstudio #{File.basename(__FILE__)} [COMMAND]\nCommands:\n  " + command_list.join("\n  ")
@@ -3169,10 +3391,6 @@ elsif not command_list.include? ARGV[0].to_sym
 end
 
 if ARGV[0].to_sym == :update_measures
-  # Prevent NREL error regarding U: drive when not VPNed in
-  ENV['HOME'] = 'C:' if !ENV['HOME'].nil? && ENV['HOME'].start_with?('U:')
-  ENV['HOMEDRIVE'] = 'C:\\' if !ENV['HOMEDRIVE'].nil? && ENV['HOMEDRIVE'].start_with?('U:')
-
   # Apply rubocop (uses .rubocop.yml)
   commands = ["\"require 'rubocop/rake_task' \"",
               "\"require 'stringio' \"",
@@ -3194,10 +3412,6 @@ if ARGV[0].to_sym == :update_measures
 end
 
 if ARGV[0].to_sym == :update_hpxmls
-  # Prevent NREL error regarding U: drive when not VPNed in
-  ENV['HOME'] = 'C:' if !ENV['HOME'].nil? && ENV['HOME'].start_with?('U:')
-  ENV['HOMEDRIVE'] = 'C:\\' if !ENV['HOMEDRIVE'].nil? && ENV['HOMEDRIVE'].start_with?('U:')
-
   # Create sample/test HPXMLs
   t = Time.now
   create_hpxmls()
@@ -3216,6 +3430,41 @@ if ARGV[0].to_sym == :update_hpxmls
     hpxml = HPXML.new(hpxml_path: hpxml_path)
     XMLHelper.write_file(hpxml.to_doc, hpxml_path)
   end
+end
+
+if [:unit_tests, :workflow_tests1, :workflow_tests2].include? ARGV[0].to_sym
+  case ARGV[0].to_sym
+  when :unit_tests
+    tests_rbs = Dir['*/tests/*.rb'] - Dir['workflow/tests/*.rb']
+  when :workflow_tests1
+    tests_rbs = Dir['workflow/tests/test_simulations1.rb']
+  when :workflow_tests2
+    tests_rbs = Dir['workflow/tests/*.rb'] - Dir['workflow/tests/test_simulations1.rb']
+  end
+
+  # Run tests in random order; we don't want them to only
+  # work when run in a specific order
+  tests_rbs.shuffle!
+
+  # Ensure we run all tests even if there are failures
+  failed_tests = []
+  tests_rbs.each do |test_rb|
+    success = system("#{OpenStudio.getOpenStudioCLI} #{test_rb}")
+    failed_tests << test_rb unless success
+  end
+
+  puts
+  puts
+
+  if not failed_tests.empty?
+    puts 'The following tests FAILED:'
+    failed_tests.each do |failed_test|
+      puts "- #{failed_test}"
+    end
+    exit! 1
+  end
+
+  puts 'All tests passed.'
 end
 
 if ARGV[0].to_sym == :download_utility_rates

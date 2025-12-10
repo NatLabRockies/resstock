@@ -57,13 +57,13 @@ module Defaults
     apply_building_construction(hpxml.header, hpxml_bldg)
     apply_zone_spaces(hpxml_bldg)
     apply_climate_and_risk_zones(hpxml_bldg, weather, unit_num)
-    apply_attics(hpxml_bldg)
-    apply_foundations(hpxml_bldg)
+    apply_attics(hpxml_bldg, unit_num)
+    apply_foundations(hpxml_bldg, unit_num)
     apply_roofs(hpxml_bldg)
-    apply_rim_joists(hpxml_bldg)
-    apply_walls(hpxml_bldg)
-    apply_foundation_walls(hpxml_bldg)
-    apply_floors(runner, hpxml_bldg)
+    apply_rim_joists(hpxml.header, hpxml_bldg)
+    apply_walls(hpxml.header, hpxml_bldg)
+    apply_foundation_walls(hpxml.header, hpxml_bldg)
+    apply_floors(runner, hpxml.header, hpxml_bldg)
     apply_slabs(hpxml_bldg)
     apply_windows(hpxml_bldg, eri_version)
     apply_skylights(hpxml_bldg)
@@ -73,7 +73,7 @@ module Defaults
     apply_hvac(runner, hpxml_bldg, weather, convert_shared_systems, unit_num, hpxml.header)
     apply_hvac_control(hpxml_bldg, schedules_file, eri_version)
     apply_hvac_distribution(hpxml_bldg)
-    apply_infiltration(hpxml_bldg)
+    apply_infiltration(hpxml_bldg, unit_num)
     apply_hvac_location(hpxml_bldg)
     apply_ventilation_fans(hpxml_bldg, weather, eri_version)
     apply_water_heaters(hpxml_bldg, eri_version, schedules_file)
@@ -160,12 +160,12 @@ module Defaults
   # @return [nil]
   def self.add_zones_spaces_if_needed(hpxml_bldg, unit_num)
     if hpxml_bldg.conditioned_zones.empty?
-      hpxml_bldg.zones.add(id: "#{Constants::AutomaticallyAdded}Zone#{unit_num}",
+      hpxml_bldg.zones.add(id: get_id("#{Constants::AutomaticallyAdded}Zone", hpxml_bldg.conditioned_zones, unit_num),
                            zone_type: HPXML::ZoneTypeConditioned)
       hpxml_bldg.hvac_systems.each do |hvac_system|
         hvac_system.attached_to_zone_idref = hpxml_bldg.zones[-1].id
       end
-      hpxml_bldg.zones[-1].spaces.add(id: "#{Constants::AutomaticallyAdded}Space#{unit_num}",
+      hpxml_bldg.zones[-1].spaces.add(id: get_id("#{Constants::AutomaticallyAdded}Space", hpxml_bldg.conditioned_spaces, unit_num),
                                       floor_area: hpxml_bldg.building_construction.conditioned_floor_area)
       hpxml_bldg.surfaces.each do |surface|
         next unless HPXML::conditioned_locations_this_unit.include? surface.interior_adjacent_to
@@ -968,12 +968,13 @@ module Defaults
   # Assigns default values for omitted optional inputs in the HPXML::Attic objects
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param unit_num [Integer] Dwelling unit number
   # @return [nil]
-  def self.apply_attics(hpxml_bldg)
+  def self.apply_attics(hpxml_bldg, unit_num)
     if hpxml_bldg.has_location(HPXML::LocationAtticUnvented)
       unvented_attics = hpxml_bldg.attics.select { |a| a.attic_type == HPXML::AtticTypeUnvented }
       if unvented_attics.empty?
-        hpxml_bldg.attics.add(id: 'UnventedAttic',
+        hpxml_bldg.attics.add(id: get_id('UnventedAttic', hpxml_bldg.attics, unit_num),
                               attic_type: HPXML::AtticTypeUnvented)
         unvented_attics << hpxml_bldg.attics[-1]
       end
@@ -991,7 +992,7 @@ module Defaults
     if hpxml_bldg.has_location(HPXML::LocationAtticVented)
       vented_attics = hpxml_bldg.attics.select { |a| a.attic_type == HPXML::AtticTypeVented }
       if vented_attics.empty?
-        hpxml_bldg.attics.add(id: 'VentedAttic',
+        hpxml_bldg.attics.add(id: get_id('VentedAttic', hpxml_bldg.attics, unit_num),
                               attic_type: HPXML::AtticTypeVented)
         vented_attics << hpxml_bldg.attics[-1]
       end
@@ -1013,12 +1014,13 @@ module Defaults
   # Assigns default values for omitted optional inputs in the HPXML::Foundation objects
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param unit_num [Integer] Dwelling unit number
   # @return [nil]
-  def self.apply_foundations(hpxml_bldg)
+  def self.apply_foundations(hpxml_bldg, unit_num)
     if hpxml_bldg.has_location(HPXML::LocationCrawlspaceUnvented)
       unvented_crawls = hpxml_bldg.foundations.select { |f| f.foundation_type == HPXML::FoundationTypeCrawlspaceUnvented }
       if unvented_crawls.empty?
-        hpxml_bldg.foundations.add(id: 'UnventedCrawlspace',
+        hpxml_bldg.foundations.add(id: get_id('UnventedCrawlspace', hpxml_bldg.foundations, unit_num),
                                    foundation_type: HPXML::FoundationTypeCrawlspaceUnvented)
         unvented_crawls << hpxml_bldg.foundations[-1]
       end
@@ -1036,7 +1038,7 @@ module Defaults
     if hpxml_bldg.has_location(HPXML::LocationCrawlspaceConditioned)
       cond_crawls = hpxml_bldg.foundations.select { |f| f.foundation_type == HPXML::FoundationTypeCrawlspaceConditioned }
       if cond_crawls.empty?
-        hpxml_bldg.foundations.add(id: 'ConditionedCrawlspace',
+        hpxml_bldg.foundations.add(id: get_id('ConditionedCrawlspace', hpxml_bldg.foundations, unit_num),
                                    foundation_type: HPXML::FoundationTypeCrawlspaceConditioned)
         cond_crawls << hpxml_bldg.foundations[-1]
       end
@@ -1054,7 +1056,7 @@ module Defaults
     if hpxml_bldg.has_location(HPXML::LocationBasementUnconditioned)
       uncond_bsmts = hpxml_bldg.foundations.select { |f| f.foundation_type == HPXML::FoundationTypeBasementUnconditioned }
       if uncond_bsmts.empty?
-        hpxml_bldg.foundations.add(id: 'UnconditionedBasement',
+        hpxml_bldg.foundations.add(id: get_id('UnconditionedBasement', hpxml_bldg.foundations, unit_num),
                                    foundation_type: HPXML::FoundationTypeBasementUnconditioned)
         uncond_bsmts << hpxml_bldg.foundations[-1]
       end
@@ -1072,7 +1074,7 @@ module Defaults
     if hpxml_bldg.has_location(HPXML::LocationBasementConditioned)
       cond_bsmts = hpxml_bldg.foundations.select { |f| f.foundation_type == HPXML::FoundationTypeBasementConditioned }
       if cond_bsmts.empty?
-        hpxml_bldg.foundations.add(id: 'ConditionedBasement',
+        hpxml_bldg.foundations.add(id: get_id('ConditionedBasement', hpxml_bldg.foundations, unit_num),
                                    foundation_type: HPXML::FoundationTypeBasementConditioned)
         cond_bsmts << hpxml_bldg.foundations[-1]
       end
@@ -1090,7 +1092,7 @@ module Defaults
     if hpxml_bldg.has_location(HPXML::LocationCrawlspaceVented)
       vented_crawls = hpxml_bldg.foundations.select { |f| f.foundation_type == HPXML::FoundationTypeCrawlspaceVented }
       if vented_crawls.empty?
-        hpxml_bldg.foundations.add(id: 'VentedCrawlspace',
+        hpxml_bldg.foundations.add(id: get_id('VentedCrawlspace', hpxml_bldg.foundations, unit_num),
                                    foundation_type: HPXML::FoundationTypeCrawlspaceVented)
         vented_crawls << hpxml_bldg.foundations[-1]
       end
@@ -1108,7 +1110,7 @@ module Defaults
     if hpxml_bldg.has_location(HPXML::LocationManufacturedHomeUnderBelly)
       belly_and_wing_foundations = hpxml_bldg.foundations.select { |f| f.foundation_type == HPXML::FoundationTypeBellyAndWing }
       if belly_and_wing_foundations.empty?
-        hpxml_bldg.foundations.add(id: 'BellyAndWing',
+        hpxml_bldg.foundations.add(id: get_id('BellyAndWing', hpxml_bldg.foundations, unit_num),
                                    foundation_type: HPXML::FoundationTypeBellyAndWing)
         belly_and_wing_foundations << hpxml_bldg.foundations[-1]
       end
@@ -1129,10 +1131,11 @@ module Defaults
   # Note: This needs to be called after we have applied defaults for ducts.
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param unit_num [Integer] Dwelling unit number
   # @return [nil]
-  def self.apply_infiltration(hpxml_bldg)
+  def self.apply_infiltration(hpxml_bldg, unit_num)
     infil_measurement = Airflow.get_infiltration_measurement_of_interest(hpxml_bldg)
-    default_infil_height, default_infil_volume = get_infiltration_height_and_volume(hpxml_bldg)
+    default_infil_height, default_infil_volume = get_infiltration_height_and_volume(hpxml_bldg, unit_num)
     if infil_measurement.infiltration_volume.nil?
       infil_measurement.infiltration_volume = default_infil_volume
       infil_measurement.infiltration_volume_isdefaulted = true
@@ -1213,7 +1216,7 @@ module Defaults
     if infil_measurement.a_ext.nil?
       if (infil_measurement.infiltration_type == HPXML::InfiltrationTypeUnitTotal) &&
          [HPXML::ResidentialTypeApartment, HPXML::ResidentialTypeSFA].include?(hpxml_bldg.building_construction.residential_facility_type)
-        tot_cb_area, ext_cb_area = get_compartmentalization_boundary_areas(hpxml_bldg)
+        tot_cb_area, ext_cb_area = get_compartmentalization_boundary_areas(hpxml_bldg, unit_num)
         infil_measurement.a_ext = (ext_cb_area / tot_cb_area).round(5)
         infil_measurement.a_ext_isdefaulted = true
       end
@@ -1282,10 +1285,13 @@ module Defaults
 
   # Assigns default values for omitted optional inputs in the HPXML::RimJoist objects
   #
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
-  def self.apply_rim_joists(hpxml_bldg)
+  def self.apply_rim_joists(hpxml_header, hpxml_bldg)
     hpxml_bldg.rim_joists.each do |rim_joist|
+      next if hpxml_header.whole_sfa_or_mf_building_sim && rim_joist.sameas_id
+
       if rim_joist.azimuth.nil?
         rim_joist.azimuth = get_azimuth_from_orientation(rim_joist.orientation)
         rim_joist.azimuth_isdefaulted = true
@@ -1321,10 +1327,13 @@ module Defaults
 
   # Assigns default values for omitted optional inputs in the HPXML::Wall objects
   #
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
-  def self.apply_walls(hpxml_bldg)
+  def self.apply_walls(hpxml_header, hpxml_bldg)
     hpxml_bldg.walls.each do |wall|
+      next if hpxml_header.whole_sfa_or_mf_building_sim && wall.sameas_id
+
       if wall.azimuth.nil?
         wall.azimuth = get_azimuth_from_orientation(wall.orientation)
         wall.azimuth_isdefaulted = true
@@ -1384,10 +1393,13 @@ module Defaults
 
   # Assigns default values for omitted optional inputs in the HPXML::FoundationWall objects
   #
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
-  def self.apply_foundation_walls(hpxml_bldg)
+  def self.apply_foundation_walls(hpxml_header, hpxml_bldg)
     hpxml_bldg.foundation_walls.each do |foundation_wall|
+      next if hpxml_header.whole_sfa_or_mf_building_sim && foundation_wall.sameas_id
+
       if foundation_wall.type.nil?
         foundation_wall.type = HPXML::FoundationWallTypeSolidConcrete
         foundation_wall.type_isdefaulted = true
@@ -1444,10 +1456,13 @@ module Defaults
   # Assigns default values for omitted optional inputs in the HPXML::Floor objects
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
-  def self.apply_floors(runner, hpxml_bldg)
+  def self.apply_floors(runner, hpxml_header, hpxml_bldg)
     hpxml_bldg.floors.each do |floor|
+      next if hpxml_header.whole_sfa_or_mf_building_sim && floor.sameas_id
+
       if floor.floor_or_ceiling.nil?
         if floor.is_ceiling
           floor.floor_or_ceiling = HPXML::FloorOrCeilingCeiling
@@ -5739,12 +5754,13 @@ module Defaults
   # volume plus the volume of any spaces within the infiltration volume.
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param unit_num [Integer] Dwelling unit number
   # @return [Double, Double] Default infiltration height (ft) and volume (ft3)
-  def self.get_infiltration_height_and_volume(hpxml_bldg)
+  def self.get_infiltration_height_and_volume(hpxml_bldg, unit_num)
     # Make sure AverageCeilingHeight & WithinInfiltrationVolume properties have been set
     apply_building_construction(nil, hpxml_bldg)
-    apply_attics(hpxml_bldg)
-    apply_foundations(hpxml_bldg)
+    apply_attics(hpxml_bldg, unit_num)
+    apply_foundations(hpxml_bldg, unit_num)
 
     # Get base infiltration height, excluding foundations and attics
     avg_ceiling_height = hpxml_bldg.building_construction.average_ceiling_height
@@ -5812,11 +5828,12 @@ module Defaults
   # Source: ANSI/RESNET/ICC 301
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param unit_num [Integer] Dwelling unit number
   # @return [Array<Double, Double>] Total and exterior compartmentalization areas (ft2)
-  def self.get_compartmentalization_boundary_areas(hpxml_bldg)
+  def self.get_compartmentalization_boundary_areas(hpxml_bldg, unit_num)
     # Make sure WithinInfiltrationVolume properties have been set
-    apply_attics(hpxml_bldg)
-    apply_foundations(hpxml_bldg)
+    apply_attics(hpxml_bldg, unit_num)
+    apply_foundations(hpxml_bldg, unit_num)
 
     total_area = 0.0 # Total surface area that bounds the Infiltration Volume
     exterior_area = 0.0 # Same as above excluding surfaces attached to garage, other housing units, or other multifamily spaces
@@ -5997,7 +6014,7 @@ module Defaults
   # @param f_rect [Double] The fraction of duct length that is rectangular (not round)
   # @return [Double] Duct effective R-value (hr-ft2-F/Btu)
   def self.get_duct_effective_r_value(r_nominal, side, buried_level, f_rect)
-    # This methodology has been proposed by NREL for ANSI/RESNET/ICC 301-2025.
+    # This methodology has been proposed for ANSI/RESNET/ICC 301-2025.
     if buried_level == HPXML::DuctBuriedInsulationNone
       if r_nominal <= 0
         # Uninsulated ducts are set to R-1.7 based on ASHRAE HOF and the above paper.

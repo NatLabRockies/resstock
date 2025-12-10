@@ -994,7 +994,10 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
 
   def _create_hpxml(hpxml_name, test_name = nil)
     puts "Testing #{test_name}..." if !test_name.nil?
-    hpxml = HPXML.new(hpxml_path: File.join(@sample_files_path, hpxml_name))
+    if hpxml_name.include? 'base-misc-multiple-buildings.xml'
+      building_id = 'MyBuilding_AlternativeDesign'
+    end
+    hpxml = HPXML.new(hpxml_path: File.join(@sample_files_path, hpxml_name), building_id: building_id)
     if hpxml.header.service_feeders_load_calculation_types.empty?
       hpxml.header.service_feeders_load_calculation_types = [HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingLoadBased]
     end
