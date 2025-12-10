@@ -24,4 +24,7 @@ module Constants
   # Exclude these ResStockArguments from being required in options_lookup.tsv
   # These are arguments added to ResStockArguments not in BuildResidentialHPXML
   OtherExcludes = ['building_id']
+
+  # Per Jon W, the recommended airflow for most heat pumps; it's also the max cfm/ton airflow rate for typical DX equipment (per hvac_sizing.rb).
+  DuctRestrictionAssumedAirflow = 400.0
 end

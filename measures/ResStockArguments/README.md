@@ -1938,6 +1938,17 @@ Specify the 24-hour comma-separated weekend cooling schedule of 0s and 1s.
 
 <br/>
 
+**HVAC: Existing Heating System**
+
+The type and efficiency of the existing heating system.
+
+- **Name:** ``hvac_heating_system_existing``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
 **HVAC: Heating Shared System Type**
 
 The type of shared system.
@@ -1951,38 +1962,12 @@ The type of shared system.
 
 <br/>
 
-**HVAC: Heating System Heating Capacity**
-
-The output heating capacity of the heating system.
-
-- **Name:** ``heating_system_heating_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heating System Heating Autosizing Factor**
 
 The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
 
 - **Name:** ``heating_system_heating_autosizing_factor``
 - **Type:** ``Double``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Heating System Heating Autosizing Limit**
-
-The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-
-- **Name:** ``heating_system_heating_autosizing_limit``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
 
 - **Required:** ``false``
 
@@ -2014,32 +1999,6 @@ The actual cfm per ton of the heating system.
 
 <br/>
 
-**HVAC: Heating System 2 Fuel Type**
-
-The fuel type of the second heating system.
-
-- **Name:** ``heating_system_2_fuel``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`, `coal`
-
-<br/>
-
-**HVAC: Heating System 2 Heating Capacity**
-
-The output heating capacity of the second heating system.
-
-- **Name:** ``heating_system_2_heating_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heating System 2 Heating Autosizing Factor**
 
 The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
@@ -2051,27 +2010,12 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 
 <br/>
 
-**HVAC: Heating System 2 Heating Autosizing Limit**
+**HVAC: Existing Cooling System**
 
-The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
+The type and efficiency of the existing cooling system.
 
-- **Name:** ``heating_system_2_heating_autosizing_limit``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Cooling System Cooling Capacity**
-
-The output cooling capacity of the cooling system.
-
-- **Name:** ``cooling_system_cooling_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
+- **Name:** ``hvac_cooling_system_existing``
+- **Type:** ``String``
 
 - **Required:** ``false``
 
@@ -2083,19 +2027,6 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 
 - **Name:** ``cooling_system_cooling_autosizing_factor``
 - **Type:** ``Double``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Cooling System Cooling Autosizing Limit**
-
-The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-
-- **Name:** ``cooling_system_cooling_autosizing_limit``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
 
 - **Required:** ``false``
 
@@ -2140,14 +2071,12 @@ The fraction of manufacturer recommended charge of the cooling system.
 
 <br/>
 
-**HVAC: Heat Pump Heating Capacity**
+**HVAC: Existing Heat Pump**
 
-The output heating capacity of the heat pump.
+The type and efficiency of the existing heat pump.
 
-- **Name:** ``heat_pump_heating_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
+- **Name:** ``hvac_heat_pump_existing``
+- **Type:** ``String``
 
 - **Required:** ``false``
 
@@ -2164,32 +2093,6 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 
 <br/>
 
-**HVAC: Heat Pump Heating Autosizing Limit**
-
-The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-
-- **Name:** ``heat_pump_heating_autosizing_limit``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Heat Pump Cooling Capacity**
-
-The output cooling capacity of the heat pump.
-
-- **Name:** ``heat_pump_cooling_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heat Pump Cooling Autosizing Factor**
 
 The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
@@ -2201,51 +2104,12 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 
 <br/>
 
-**HVAC: Heat Pump Cooling Autosizing Limit**
-
-The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-
-- **Name:** ``heat_pump_cooling_autosizing_limit``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Heat Pump Backup Heating Capacity**
-
-The backup output heating capacity of the heat pump.
-
-- **Name:** ``heat_pump_backup_heating_capacity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heat Pump Backup Heating Autosizing Factor**
 
 The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.
 
 - **Name:** ``heat_pump_backup_heating_autosizing_factor``
 - **Type:** ``Double``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Heat Pump Backup Heating Autosizing Limit**
-
-The maximum capacity limit applied to the auto-sizing methodology if Backup Type is integrated.
-
-- **Name:** ``heat_pump_backup_heating_autosizing_limit``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr``
 
 - **Required:** ``false``
 
@@ -2290,30 +2154,6 @@ The fraction of manufacturer recommended charge of the heat pump.
 
 <br/>
 
-**HVAC: Heat Pump Backup Fuel Type**
-
-The backup fuel type of the heat pump.
-
-- **Name:** ``heat_pump_backup_fuel``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`
-
-<br/>
-
-**HVAC: Heat Pump Backup Rated Efficiency**
-
-The backup rated efficiency value of the heat pump.
-
-- **Name:** ``heat_pump_backup_heating_efficiency``
-- **Type:** ``Double``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC: Heat Pump Backup Use Existing System**
 
 Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system. This argument is only applicable for heat pump upgrades.
@@ -2331,32 +2171,6 @@ Whether the (ducted) heat pump has an upper limit for autosized heating/cooling 
 
 - **Name:** ``hvac_heat_pump_sizing_is_duct_limited``
 - **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Baseline Maximum Airflow Rate**
-
-The maximum airflow rate for the baseline home. Applies only when using Heat Pump Sizing Is Duct Limited.
-
-- **Name:** ``baseline_max_airflow_cfm``
-- **Type:** ``Double``
-
-- **Units:** ``CFM``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC: Blower Fan Efficiency**
-
-The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems)..
-
-- **Name:** ``hvac_blower_fan_watts_per_cfm``
-- **Type:** ``Double``
-
-- **Units:** ``W/CFM``
 
 - **Required:** ``false``
 
@@ -2510,6 +2324,17 @@ Nominal speed efficiency COP values of cooling detailed performance data if avai
 Maximum speed efficiency COP values of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to variable speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.
 
 - **Name:** ``hvac_perf_data_cooling_max_speed_cops``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
+**HVAC: Existing Heating System 2**
+
+The type and efficiency of the existing second heating system.
+
+- **Name:** ``hvac_heating_system_2_existing``
 - **Type:** ``String``
 
 - **Required:** ``false``
@@ -2795,243 +2620,6 @@ Whether a pool is present.
 
 <br/>
 
-**Electric Panel: Service Max Current Rating**
-
-The service max current rating of the electric panel.
-
-- **Name:** ``electric_panel_service_max_current_rating``
-- **Type:** ``Double``
-
-- **Units:** ``A``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Breaker Spaces Headroom**
-
-The unoccupied number of breaker spaces on the electric panel.
-
-- **Name:** ``electric_panel_breaker_spaces_headroom``
-- **Type:** ``Integer``
-
-- **Units:** ``#``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Breaker Spaces Rated Total**
-
-The rated total number of breaker spaces on the electric panel.
-
-- **Name:** ``electric_panel_breaker_spaces_rated_total``
-- **Type:** ``Integer``
-
-- **Units:** ``#``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Heating System New Load**
-
-Whether the heating system is a new panel load addition to an existing service panel.
-
-- **Name:** ``electric_panel_load_heating_system_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Cooling System New Load**
-
-Whether the cooling system is a new panel load addition to an existing service panel.
-
-- **Name:** ``electric_panel_load_cooling_system_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Heat Pump New Load**
-
-Whether the heat pump is a new panel load addition to an existing service panel.
-
-- **Name:** ``electric_panel_load_heat_pump_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Heating System 2 New Load**
-
-Whether the second heating system is a new panel load addition to an existing service panel.
-
-- **Name:** ``electric_panel_load_heating_system_2_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Mechanical Ventilation New Load**
-
-Whether the mechanical ventilation is a new panel load addition to an existing service panel.
-
-- **Name:** ``electric_panel_load_mech_vent_fan_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Whole House Fan New Load**
-
-Whether the whole house fan is a new panel load addition to an existing service panel.
-
-- **Name:** ``electric_panel_load_whole_house_fan_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Kitchen Fans New Load**
-
-Whether the kitchen fans is a new panel load addition to an existing service panel.
-
-- **Name:** ``electric_panel_load_kitchen_fans_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Bathroom Fans New Load**
-
-Whether the bathroom fans is a new panel load addition to an existing service panel.
-
-- **Name:** ``electric_panel_load_bathroom_fans_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Electric Water Heater New Load**
-
-Whether the water heater is a new panel load addition to an existing service panel. Only applies to electric water heater.
-
-- **Name:** ``electric_panel_load_electric_water_heater_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Electric Clothes Dryer New Load**
-
-Whether the clothes dryer is a new panel load addition to an existing service panel. Only applies to electric clothes dryer.
-
-- **Name:** ``electric_panel_load_electric_clothes_dryer_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Dishwasher New Load**
-
-Whether the dishwasher is a new panel load addition to an existing service panel.
-
-- **Name:** ``electric_panel_load_dishwasher_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Electric Cooking Range/Oven New Load**
-
-Whether the cooking range is a new panel load addition to an existing service panel. Only applies to electric cooking range/oven.
-
-- **Name:** ``electric_panel_load_electric_cooking_range_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Misc Plug Loads Well Pump New Load**
-
-Whether the well pump is a new panel load addition to an existing service panel.
-
-- **Name:** ``electric_panel_load_misc_plug_loads_well_pump_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Misc Plug Loads Vehicle New Load**
-
-Whether the electric vehicle is a new panel load addition to an existing service panel.
-
-- **Name:** ``electric_panel_load_misc_plug_loads_vehicle_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Pool Pump New Load**
-
-Whether the pool pump is a new panel load addition to an existing service panel.
-
-- **Name:** ``electric_panel_load_pool_pump_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Electric Pool Heater New Load**
-
-Whether the pool heater is a new panel load addition to an existing service panel. Only applies to electric pool heater.
-
-- **Name:** ``electric_panel_load_electric_pool_heater_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Permanent Spa Pump New Load**
-
-Whether the spa pump is a new panel load addition to an existing service panel.
-
-- **Name:** ``electric_panel_load_permanent_spa_pump_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Electric Permanent Spa Heater New Load**
-
-Whether the spa heater is a new panel load addition to an existing service panel. Only applies to electric permanent spa heater.
-
-- **Name:** ``electric_panel_load_electric_permanent_spa_heater_new_load``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
 **Electric Panel: Other Power Rating**
 
 Specifies the panel load other power rating. This represents the total of all other electric loads that are fastened in place, permanently connected, or located on a specific circuit. For example, garbage disposal, built-in microwave.
@@ -3040,17 +2628,6 @@ Specifies the panel load other power rating. This represents the total of all ot
 - **Type:** ``Double``
 
 - **Units:** ``W``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Other New Load**
-
-Whether the other load is a new panel load addition to an existing service panel.
-
-- **Name:** ``electric_panel_load_other_new_load``
-- **Type:** ``Boolean``
 
 - **Required:** ``false``
 
