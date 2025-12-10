@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>ef21dd6f-5626-411f-a01a-10f60e66755a</version_id>
-  <version_modified>2025-12-01T16:33:10Z</version_modified>
+  <version_id>d01d6259-dfb8-4118-aeeb-86ff28a5d707</version_id>
+  <version_modified>2025-12-10T20:49:58Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -11612,6 +11612,14 @@
       <default_value>0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0</default_value>
     </argument>
     <argument>
+      <name>hvac_heating_system_existing</name>
+      <display_name>HVAC: Existing Heating System</display_name>
+      <description>The type and efficiency of the existing heating system.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>hvac_heating_shared_system</name>
       <display_name>HVAC: Heating Shared System Type</display_name>
       <description>The type of shared system.</description>
@@ -11632,15 +11640,6 @@
           <display_name>FanCoil</display_name>
         </choice>
       </choices>
-    </argument>
-    <argument>
-      <name>heating_system_heating_capacity</name>
-      <display_name>HVAC: Heating System Heating Capacity</display_name>
-      <description>The output heating capacity of the heating system.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>heating_system_heating_autosizing_factor</name>
@@ -11669,15 +11668,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heating_system_2_heating_capacity</name>
-      <display_name>HVAC: Heating System 2 Heating Capacity</display_name>
-      <description>The output heating capacity of the second heating system.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heating_system_2_heating_autosizing_factor</name>
       <display_name>HVAC: Heating System 2 Heating Autosizing Factor</display_name>
       <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
@@ -11686,11 +11676,10 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>cooling_system_cooling_capacity</name>
-      <display_name>HVAC: Cooling System Cooling Capacity</display_name>
-      <description>The output cooling capacity of the cooling system.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
+      <name>hvac_cooling_system_existing</name>
+      <display_name>HVAC: Existing Cooling System</display_name>
+      <description>The type and efficiency of the existing cooling system.</description>
+      <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -11730,11 +11719,10 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heat_pump_heating_capacity</name>
-      <display_name>HVAC: Heat Pump Heating Capacity</display_name>
-      <description>The output heating capacity of the heat pump.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
+      <name>hvac_heat_pump_existing</name>
+      <display_name>HVAC: Existing Heat Pump</display_name>
+      <description>The type and efficiency of the existing heat pump.</description>
+      <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -11747,28 +11735,10 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heat_pump_cooling_capacity</name>
-      <display_name>HVAC: Heat Pump Cooling Capacity</display_name>
-      <description>The output cooling capacity of the heat pump.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heat_pump_cooling_autosizing_factor</name>
       <display_name>HVAC: Heat Pump Cooling Autosizing Factor</display_name>
       <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
       <type>Double</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_heating_capacity</name>
-      <display_name>HVAC: Heat Pump Backup Heating Capacity</display_name>
-      <description>The backup output heating capacity of the heat pump.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -11966,6 +11936,14 @@
       <description>Maximum speed efficiency COP values of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to variable speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.</description>
       <type>String</type>
       <units>W/W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_heating_system_2_existing</name>
+      <display_name>HVAC: Existing Heating System 2</display_name>
+      <description>The type and efficiency of the existing second heating system.</description>
+      <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -12452,7 +12430,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>08BC9529</checksum>
+      <checksum>9039509D</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
