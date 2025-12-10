@@ -298,5 +298,4 @@ class HPXMLtoOpenStudioWeatherTest < Minitest::Test
     assert_equal(0, runner.result.stepErrors.size)
     assert_equal(0, runner.result.stepWarnings.size)
   end
-
 end

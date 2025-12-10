@@ -692,19 +692,19 @@ class HPXMLtoOpenStudioAirflowTest < Minitest::Test
   def test_infiltration_compartmentalization_area
     # Test conditioned basement
     _hpxml, hpxml_bldg = _create_hpxml('base.xml')
-    total_area, exterior_area = Defaults.get_compartmentalization_boundary_areas(hpxml_bldg)
+    total_area, exterior_area = Defaults.get_compartmentalization_boundary_areas(hpxml_bldg, nil)
     assert_in_delta(5216, exterior_area, 1.0)
     assert_in_delta(5216, total_area, 1.0)
 
     # Test w/ conditioned basement not within infiltration volume
     hpxml_bldg.foundations[0].within_infiltration_volume = false
-    total_area, exterior_area = Defaults.get_compartmentalization_boundary_areas(hpxml_bldg)
+    total_area, exterior_area = Defaults.get_compartmentalization_boundary_areas(hpxml_bldg, nil)
     assert_in_delta(2550, exterior_area, 1.0)
     assert_in_delta(2550, total_area, 1.0)
 
     # Test adjacent garage
     _hpxml, hpxml_bldg = _create_hpxml('base-enclosure-garage.xml')
-    total_area, exterior_area = Defaults.get_compartmentalization_boundary_areas(hpxml_bldg)
+    total_area, exterior_area = Defaults.get_compartmentalization_boundary_areas(hpxml_bldg, nil)
     assert_in_delta(4976, exterior_area, 1.0)
     assert_in_delta(5216, total_area, 1.0)
 
@@ -716,7 +716,7 @@ class HPXMLtoOpenStudioAirflowTest < Minitest::Test
     hpxml_bldg.foundations.each do |foundation|
       foundation.within_infiltration_volume = true
     end
-    total_area, exterior_area = Defaults.get_compartmentalization_boundary_areas(hpxml_bldg)
+    total_area, exterior_area = Defaults.get_compartmentalization_boundary_areas(hpxml_bldg, nil)
     assert_in_delta(5000, exterior_area, 1.0)
     assert_in_delta(5000, total_area, 1.0)
 
@@ -728,13 +728,13 @@ class HPXMLtoOpenStudioAirflowTest < Minitest::Test
     hpxml_bldg.foundations.each do |foundation|
       foundation.within_infiltration_volume = false
     end
-    total_area, exterior_area = Defaults.get_compartmentalization_boundary_areas(hpxml_bldg)
+    total_area, exterior_area = Defaults.get_compartmentalization_boundary_areas(hpxml_bldg, nil)
     assert_in_delta(3900, exterior_area, 1.0)
     assert_in_delta(3900, total_area, 1.0)
 
     # Test multifamily
     _hpxml, hpxml_bldg = _create_hpxml('base-bldgtype-mf-unit.xml')
-    total_area, exterior_area = Defaults.get_compartmentalization_boundary_areas(hpxml_bldg)
+    total_area, exterior_area = Defaults.get_compartmentalization_boundary_areas(hpxml_bldg, nil)
     assert_in_delta(686, exterior_area, 1.0)
     assert_in_delta(2780, total_area, 1.0)
   end

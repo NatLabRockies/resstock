@@ -2360,6 +2360,10 @@
     "misc_plug_loads": "None",
     "misc_television": "None"
   },
+  "sample_files/base-misc-multiple-buildings.xml": {
+    "parent_hpxml": "sample_files/base.xml",
+    "whole_sfa_or_mf_building_sim": true
+  },
   "sample_files/base-misc-neighbor-shading.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "geometry_neighbor_buildings": "Detailed Example: Left/Right at 25ft, Front/Back at 80ft, 12ft Height"
@@ -2412,6 +2416,14 @@
     "hvac_heating_system": "Electric Resistance",
     "hvac_heating_system_capacity": "10 kBtu/hr",
     "appliance_clothes_dryer": "None"
+  },
+  "sample_files/base-bldgtype-mf-whole-building-inter-unit-heat-transfer.xml": {
+    "parent_hpxml": "sample_files/base-bldgtype-mf-whole-building.xml",
+    "hvac_heating_system_capacity": "25 kBtu/hr"
+  },
+  "sample_files/base-bldgtype-mf-whole-building-common-spaces.xml": {
+    "parent_hpxml": "sample_files/base-bldgtype-mf-whole-building.xml",
+    "hvac_heating_system_capacity": "25 kBtu/hr"
   },
   "sample_files/base-bldgtype-mf-whole-building-detailed-electric-panel.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-whole-building.xml"

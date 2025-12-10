@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>c0767aba-7b9b-4a66-93da-4d888fbc81b2</version_id>
-  <version_modified>2025-12-04T20:18:43Z</version_modified>
+  <version_id>19369ce4-6bb4-4a76-b2f2-cae1369a2bb2</version_id>
+  <version_modified>2025-12-08T21:00:51Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -192,13 +192,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>085C9E90</checksum>
+      <checksum>4FAA1035</checksum>
     </file>
     <file>
       <filename>airflow.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>A9DCF216</checksum>
+      <checksum>61D30A7A</checksum>
     </file>
     <file>
       <filename>battery.rb</filename>
@@ -348,7 +348,7 @@
       <filename>defaults.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>062FA540</checksum>
+      <checksum>7757EBB7</checksum>
     </file>
     <file>
       <filename>electric_panel.rb</filename>
@@ -372,7 +372,7 @@
       <filename>geometry.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>3C6A2212</checksum>
+      <checksum>33903436</checksum>
     </file>
     <file>
       <filename>hotwater_appliances.rb</filename>
@@ -384,7 +384,7 @@
       <filename>hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>5BD59BC2</checksum>
+      <checksum>5F415DEB</checksum>
     </file>
     <file>
       <filename>hpxml_schema/HPXML.xsd</filename>
@@ -402,7 +402,7 @@
       <filename>hpxml_schematron/EPvalidator.sch</filename>
       <filetype>sch</filetype>
       <usage_type>resource</usage_type>
-      <checksum>95D38222</checksum>
+      <checksum>765493D1</checksum>
     </file>
     <file>
       <filename>hpxml_schematron/iso-schematron.xsd</filename>
@@ -420,7 +420,7 @@
       <filename>hvac_sizing.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>2165BC6F</checksum>
+      <checksum>1A612353</checksum>
     </file>
     <file>
       <filename>internal_gains.rb</filename>
@@ -462,7 +462,7 @@
       <filename>minitest_helper.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>923B05E5</checksum>
+      <checksum>D6281CDD</checksum>
     </file>
     <file>
       <filename>misc_loads.rb</filename>
@@ -474,7 +474,7 @@
       <filename>model.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>22C401F6</checksum>
+      <checksum>7E742AB1</checksum>
     </file>
     <file>
       <filename>output.rb</filename>
@@ -720,7 +720,7 @@
       <filename>test_airflow.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>5F3ACAD4</checksum>
+      <checksum>B82C96CA</checksum>
     </file>
     <file>
       <filename>test_battery.rb</filename>
@@ -738,7 +738,7 @@
       <filename>test_electric_panel.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>C6C82C87</checksum>
+      <checksum>E3DF7E4B</checksum>
     </file>
     <file>
       <filename>test_enclosure.rb</filename>
@@ -810,7 +810,7 @@
       <filename>test_validation.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>48B30D2F</checksum>
+      <checksum>07790179</checksum>
     </file>
     <file>
       <filename>test_vehicle.rb</filename>
@@ -828,7 +828,7 @@
       <filename>test_weather.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>B81C4D1F</checksum>
+      <checksum>9177CC7A</checksum>
     </file>
     <file>
       <filename>util.rb</filename>
