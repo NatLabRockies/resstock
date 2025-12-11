@@ -320,6 +320,7 @@ Annual Unmet Hours
 ~~~~~~~~~~~~~~~~~~
 
 Annual unmet hours are listed below.
+If running :ref:`bldg_type_whole_mf_buildings`, values will reflect hours in which *any* dwelling unit has an unmet condition (i.e., it is not the sum of unmet hours for each dwelling unit).
 
   ============================  =====
   Type                          Notes

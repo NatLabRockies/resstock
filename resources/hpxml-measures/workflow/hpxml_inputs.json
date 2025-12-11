@@ -2428,6 +2428,9 @@
   "sample_files/base-bldgtype-mf-whole-building-detailed-electric-panel.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-whole-building.xml"
   },
+  "sample_files/base-bldgtype-mf-whole-building-vehicle-ev-charger.xml": {
+    "parent_hpxml": "sample_files/base-bldgtype-mf-whole-building.xml"
+  },
   "sample_files/base-pv.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "pv_system": "4.0 kW",

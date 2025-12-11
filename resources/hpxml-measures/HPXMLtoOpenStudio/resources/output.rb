@@ -18,6 +18,7 @@ module Outputs
   # @return [nil]
   def self.apply_ems_programs(model, hpxml_osm_map, hpxml_header, add_component_loads)
     season_day_nums = apply_unmet_hours_ems_program(model, hpxml_osm_map, hpxml_header)
+    apply_unmet_driving_hours_ems_program(model, hpxml_osm_map)
     loads_data = apply_total_loads_ems_program(model, hpxml_osm_map, hpxml_header)
     if add_component_loads
       apply_component_loads_ems_program(model, hpxml_osm_map, loads_data, season_day_nums)
@@ -170,6 +171,67 @@ module Outputs
     )
 
     return season_day_nums
+  end
+
+  # Creates an EMS program that calculates driving unmet hours (number
+  # of hours where the EV driving demand is not met).
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param hpxml_osm_map [Hash] Map of HPXML::Building objects => OpenStudio Model objects for each dwelling unit
+  # @return [nil]
+  def self.apply_unmet_driving_hours_ems_program(model, hpxml_osm_map)
+    return if hpxml_osm_map.keys.map { |hpxml_bldg| hpxml_bldg.vehicles.map { |vehicle| vehicle.vehicle_type == HPXML::VehicleTypeBEV && !vehicle.ev_charger_idref.nil? }.size }.sum == 0
+
+    # EMS program
+    driving_hrs = 'unmet_driving_hours'
+    unit_driving_hrs = 'unit_driving_unmet_hours'
+    program = Model.add_ems_program(
+      model,
+      name: 'unmet driving hours program'
+    )
+    program.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeVehicleUnmetHoursProgram)
+    program.addLine("Set #{driving_hrs} = 0")
+
+    hpxml_osm_map.each do |hpxml_bldg, unit_model|
+      vehicle = hpxml_bldg.vehicles.find { |vehicle| vehicle.vehicle_type == HPXML::VehicleTypeBEV && !vehicle.ev_charger_idref.nil? }
+      next if vehicle.nil?
+
+      ev_elcd = unit_model.getElectricLoadCenterDistributions.find { |elcd| elcd.name.to_s.include?(vehicle.id) }
+      discharge_sch_sensor = unit_model.getEnergyManagementSystemSensors.find { |s| s.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeVehicleDischargeScheduleSensor }
+
+      unit_model.getElectricLoadCenterStorageLiIonNMCBatterys.each do |elcs|
+        next unless elcs.name.to_s.include? vehicle.id
+
+        min_soc = ev_elcd.minimumStorageStateofChargeFraction
+
+        soc_sensor = Model.add_ems_sensor(
+          model,
+          name: "#{elcs.name} soc_sensor",
+          output_var_or_meter_name: 'Electric Storage Charge Fraction',
+          key_name: elcs.name.to_s
+        )
+
+        program.addLine("  If #{discharge_sch_sensor.name} > 0.0")
+        program.addLine("    If #{soc_sensor.name} <= #{min_soc}")
+        program.addLine("      Set #{unit_driving_hrs} = #{discharge_sch_sensor.name}")
+        program.addLine('    Else')
+        program.addLine("      Set #{unit_driving_hrs} = 0")
+        program.addLine('    EndIf')
+        program.addLine('  Else')
+        program.addLine("    Set #{unit_driving_hrs} = 0")
+        program.addLine('  EndIf')
+        program.addLine("  If #{unit_driving_hrs} > #{driving_hrs}") # Use max hourly value across all units
+        program.addLine("    Set #{driving_hrs} = #{unit_driving_hrs}")
+        program.addLine('  EndIf')
+      end
+    end
+
+    Model.add_ems_program_calling_manager(
+      model,
+      name: "#{program.name} calling manager",
+      calling_point: 'BeginTimestepBeforePredictor',
+      ems_programs: [program]
+    )
   end
 
   # Creates an EMS program that calculates total heating and cooling loads delivered
