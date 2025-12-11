@@ -2,8 +2,8 @@
 
 require 'openstudio'
 require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/minitest_helper'
-require_relative '../test/analysis'
 require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/unit_conversions.rb'
+require_relative '../test/analysis'
 
 class TestBuildStockBatch < Minitest::Test
   def before_setup

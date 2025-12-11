@@ -331,9 +331,9 @@ jobs:
 
       - name: Run tests
         run: |
-          sudo gem install minitest-reporters
-          sudo gem install simplecov
-          sudo gem install simplecov-html
+          # sudo gem install minitest-reporters
+          # sudo gem install simplecov
+          # sudo gem install simplecov-html
           ruby test/test_bsb_analysis.rb
 
       - name: Install software
@@ -437,9 +437,9 @@ jobs:
 
       - name: Run tests
         run: |
-          sudo gem install minitest-reporters
-          sudo gem install simplecov
-          sudo gem install simplecov-html
+          # sudo gem install minitest-reporters
+          # sudo gem install simplecov
+          # sudo gem install simplecov-html
           ruby test/test_analysis_tools.rb
 
   sdr-options-analysis:
