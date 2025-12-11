@@ -1,5 +1,8 @@
+import pathlib
+import re
+from collections import defaultdict
+
 import polars as pl
-from typing import List
 import polars.selectors as cs
 from collections import defaultdict
 import re
@@ -21,9 +24,13 @@ def remove_all_empty_cols(df: pl.DataFrame):
     Can't use LazyFrame here because the operation depends on the data.
     ',,,' catches emissions_fuel_oil_values, emissions_natural_gas_values, and emissions_propane_values.
     """
-    cols_to_keep = {'upgrade', 'applicability', 'metadata_index'}  # To keep even if 0 or empty
-    all_empty_str_cols = [col.name for col in df.select(pl.col(pl.Utf8).is_in(['', ',,,'])) if col.all() and col.name not in cols_to_keep]
-    all_zero_numeric_cols = [col.name for col in df.select(cs.numeric() == 0) if col.all() and col.name not in cols_to_keep]
+    cols_to_keep = {"upgrade", "applicability", "metadata_index"}  # To keep even if 0 or empty
+    all_empty_str_cols = [
+        col.name for col in df.select(pl.col(pl.Utf8).is_in(["", ",,,"])) if col.all() and col.name not in cols_to_keep
+    ]
+    all_zero_numeric_cols = [
+        col.name for col in df.select(cs.numeric() == 0) if col.all() and col.name not in cols_to_keep
+    ]
     all_empty_cols = all_empty_str_cols + all_zero_numeric_cols
     # drop the empty columns
     print(f"Dropping {len(all_empty_cols)} columns: {all_empty_cols}")
@@ -64,7 +71,7 @@ def fix_all_fuels_emissions(df: pl.LazyFrame):
 
     scenario2cols = defaultdict(list)
     for col in all_cols:
-        if (match := re.search(emissions_re, col)):
+        if match := re.search(emissions_re, col):
             scenario2cols[match[2]].append(col)
 
     for scenario, cols in scenario2cols.items():

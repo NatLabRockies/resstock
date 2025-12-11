@@ -5,9 +5,9 @@ require 'csv'
 require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
 
 module Version
-  ResStock_Version = '3.4.0' # Version of ResStock
+  ResStock_Version = '2025_R1' # Version of ResStock
   BuildStockBatch_Version = '2023.10.0' # Minimum required version of BuildStockBatch
-  WorkflowGenerator_Version = '2025.04.29' # Version of buildstockbatch workflow generator
+  WorkflowGenerator_Version = '2025.12.03' # Version of buildstockbatch workflow generator
 
   def self.check_buildstockbatch_version
     if ENV.keys.include?('BUILDSTOCKBATCH_VERSION') # buildstockbatch is installed
@@ -426,125 +426,5 @@ def update_args_hash(hash, key, args)
     args.each do |k, v|
       hash[key][0][k] = v
     end
-  end
-end
-
-class RunOSWs
-  require 'openstudio'
-  require 'csv'
-  require 'json'
-
-  def self.run(in_osw, parent_dir, run_output, upgrade, measures, reporting_measures, measures_only = false)
-    # Run workflow
-    cli_path = OpenStudio.getOpenStudioCLI
-    command = "\"#{cli_path}\" run"
-    command += ' -m' if measures_only
-    command += " -w \"#{in_osw}\""
-
-    system(command, [:out, :err] => File::NULL)
-    run_log = File.readlines(File.expand_path(File.join(parent_dir, 'run/run.log')))
-    run_log.each do |line|
-      next if line.include? 'Cannot find current Workflow Step'
-      next if line.include? 'WorkflowStepResult value called with undefined stepResult'
-      next if line.include? 'Appears there are no design condition fields in the EPW file'
-      next if line.include? 'No valid weather file defined in either the osm or osw.'
-      next if line.include? 'EPW file not found'
-      next if line.include? "'UseWeatherFile' is selected in YearDescription, but there are no weather file set for the model."
-      next if line.include? 'not within the expected limits' # Ignore EpwFile warnings
-      next if line.include? 'Unable to find sql file at'
-
-      # FIXME: should we investigate the following errors/warnings?
-      next if line.include? 'No construction for either surface'
-      next if line.include? 'Initial area of other surface'
-      next if line.include?('Surface') && line.include?('is adiabatic, removing all sub surfaces')
-
-      run_output += line
-    end
-
-    result_output = {}
-
-    out = File.join(parent_dir, 'out.osw')
-    out = File.expand_path(out)
-    fail "Could not find '#{out}'." unless File.exist?(out)
-
-    text = File.read(out)
-    out = JSON.parse(text)
-
-    started_at = out['started_at']
-    completed_at = out['completed_at']
-    completed_status = out['completed_status']
-    eplusout_err = out['eplusout_err']
-
-    data_point_out = File.join(parent_dir, 'run/data_point_out.json')
-
-    return started_at, completed_at, completed_status, eplusout_err, result_output, run_output if !File.exist?(data_point_out)
-
-    rows = {}
-    text = File.read(File.expand_path(data_point_out))
-    old_rows = JSON.parse(text)
-    old_rows.each do |measure, values|
-      rows[measure] = {}
-      values.each do |arg, val|
-        next if measure == 'BuildExistingModel' && arg == 'building_id'
-
-        rows[measure]["#{OpenStudio::toUnderscoreCase(measure)}.#{arg}"] = val
-      end
-    end
-
-    result_output = get_measure_results(rows, result_output, 'BuildExistingModel') if !upgrade
-    result_output = get_measure_results(rows, result_output, 'ApplyUpgrade')
-    measures.each do |measure|
-      result_output = get_measure_results(rows, result_output, measure)
-    end
-
-    result_output = get_measure_results(rows, result_output, 'ReportSimulationOutput')
-    result_output = get_measure_results(rows, result_output, 'ReportUtilityBills')
-    result_output = get_measure_results(rows, result_output, 'UpgradeCosts')
-    reporting_measures.each do |reporting_measure|
-      result_output = get_measure_results(rows, result_output, reporting_measure)
-    end
-
-    return started_at, completed_at, completed_status, eplusout_err, result_output, run_output
-  end
-
-  def self.get_measure_results(rows, result, measure)
-    if rows.keys.include?(measure)
-      result = result.merge(rows[measure])
-    end
-    return result
-  end
-
-  def self.write_summary_results(results_dir, filename, results)
-    if not File.exist?(results_dir)
-      Dir.mkdir(results_dir)
-    end
-    csv_out = File.join(results_dir, filename)
-
-    column_headers = []
-    results.each do |result|
-      result.keys.each do |col|
-        column_headers << col unless column_headers.include?(col)
-      end
-    end
-    column_headers = column_headers.sort
-
-    ['eplusout_err', 'completed_status', 'completed_at', 'started_at', 'job_id', 'building_id'].each do |col|
-      column_headers.delete(col)
-      column_headers.insert(0, col)
-    end
-
-    CSV.open(csv_out, 'wb') do |csv|
-      csv << column_headers
-      results.sort_by { |h| h['building_id'] }.each do |result|
-        csv_row = []
-        column_headers.each do |column_header|
-          csv_row << result[column_header]
-        end
-        csv << csv_row
-      end
-    end
-
-    puts "Wrote: #{csv_out}"
-    return csv_out
   end
 end

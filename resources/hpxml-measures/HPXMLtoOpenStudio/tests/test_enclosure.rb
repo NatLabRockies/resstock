@@ -18,9 +18,7 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
 
   def teardown
     File.delete(@tmp_hpxml_path) if File.exist? @tmp_hpxml_path
-    File.delete(File.join(File.dirname(__FILE__), 'in.schedules.csv')) if File.exist? File.join(File.dirname(__FILE__), 'in.schedules.csv')
-    File.delete(File.join(File.dirname(__FILE__), 'results_annual.csv')) if File.exist? File.join(File.dirname(__FILE__), 'results_annual.csv')
-    File.delete(File.join(File.dirname(__FILE__), 'results_design_load_details.csv')) if File.exist? File.join(File.dirname(__FILE__), 'results_design_load_details.csv')
+    cleanup_results_files
   end
 
   def test_roofs
@@ -580,6 +578,22 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
     args_hash = {}
     args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
     hpxml, hpxml_bldg = _create_hpxml('base.xml')
+
+    hpxml_bldg.windows.each do |window|
+      window.storm_type = HPXML::WindowGlassTypeLowE
+    end
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    model, hpxml, hpxml_bldg = _test_measure(args_hash)
+
+    # Check window properties
+    hpxml_bldg.windows.each do |window|
+      os_window = model.getSubSurfaces.find { |w| w.name.to_s == window.id }
+      os_simple_glazing = os_window.construction.get.to_LayeredConstruction.get.getLayer(0).to_SimpleGlazing.get
+
+      assert_equal(0.352, os_simple_glazing.solarHeatGainCoefficient)
+      assert_in_epsilon(0.2351, UnitConversions.convert(os_simple_glazing.uFactor, 'W/(m^2*K)', 'Btu/(hr*ft^2*F)'), 0.001)
+    end
+
     hpxml_bldg.windows.each do |window|
       window.ufactor = 0.6
       window.storm_type = HPXML::WindowGlassTypeLowE
@@ -592,7 +606,7 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
       os_window = model.getSubSurfaces.find { |w| w.name.to_s == window.id }
       os_simple_glazing = os_window.construction.get.to_LayeredConstruction.get.getLayer(0).to_SimpleGlazing.get
 
-      assert_equal(0.36, os_simple_glazing.solarHeatGainCoefficient)
+      assert_equal(0.352, os_simple_glazing.solarHeatGainCoefficient)
       assert_in_epsilon(0.2936, UnitConversions.convert(os_simple_glazing.uFactor, 'W/(m^2*K)', 'Btu/(hr*ft^2*F)'), 0.001)
     end
 
@@ -898,7 +912,6 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
                       'base-foundation-conditioned-crawlspace.xml' => 68.0, # foundation adjacent to conditioned space, IECC zone 5
                       'base-foundation-slab.xml' => 68.0, # foundation adjacent to conditioned space, IECC zone 5
                       'base-foundation-unconditioned-basement.xml' => 41.4, # foundation adjacent to unconditioned basement w/ ceiling insulation
-                      'base-foundation-unconditioned-basement-wall-insulation.xml' => 56.0, # foundation adjacent to unconditioned basement w/ wall insulation
                       'base-foundation-unvented-crawlspace.xml' => 38.6, # foundation adjacent to unvented crawlspace w/ ceiling insulation
                       'base-foundation-vented-crawlspace.xml' => 36.9, # foundation adjacent to vented crawlspace w/ ceiling insulation
                       'base-location-miami-fl.xml' => 78.0 } # foundation adjacent to conditioned space, IECC zone 1
@@ -1012,6 +1025,11 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
 
     [true, false].each do |should_collapse_surfaces|
       _hpxml, hpxml_bldg = _create_hpxml('base-enclosure-skylights.xml')
+      hpxml_bldg.windows.each do |window|
+        window.interior_shading_type = nil
+        window.interior_shading_factor_summer = 0.7
+        window.interior_shading_factor_winter = 0.85
+      end
 
       # Make sure that the presence of HPXML zones/spaces doesn't affect this
       add_zones_spaces(hpxml_bldg)

@@ -1,0 +1,63 @@
+\paragraph{Description}
+% \input{characteristics/description/Water Heater Location}
+Location of the water heater.
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/Water Heater Location}
+\begin{itemize}
+\item
+  U.S. EIA 2020 RECS microdata.
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/Water Heater Location}
+
+\paragraph{Options}
+The options shown in Table \ref{table:hc_opt_water_heater_location} are spaces where the water heater can be located. The Conditioned Mechanical Room option is only used for multifamily units with shared water heating.
+
+\input{characteristics/options/Water Heater Location}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_water_heater_location}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} documentation for additional information.
+
+\input{characteristics/properties/Water Heater Location}
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/Water Heater Location}
+\begin{itemize}
+\item
+  H2OMAIN = other is equally distributed among attic and crawlspace.
+\item
+  H2OMAIN does not apply to multifamily, therefore Water heater
+  location for multifamily with in-unit water heater is taken after the
+  combined distribution of other building types.
+\item
+  Out-of-unit water heater is assumed to be in Conditioned Mechanical
+  Room. Per expert judgment, water heaters cannot be outside or in
+  vented spaces for IECC Climate Zones 4-8 due to pipe-freezing risk.
+\item
+  Where samples \textless{} 10, data are aggregated in the following
+  order:
+  \begin{itemize}
+\item
+  Building Type lumped into single-family, multifamily, and mobile
+  home.
+\item
+  1 + Foundation Type combined. 
+\item 
+2 + Attic Type combined
+\item
+  3 + Garage combined.
+\item
+  Single/Multifamily + Foundation combined + Attic combined +
+  Garage combined.
+\item
+  5 + pre-1960 combined.
+\item
+  5 + pre-1960 combined/post-2020 combined.
+\item
+  7 + IECC Climate Zone lumped into: 1-2+3A, 3B-3C, 4, 5, 6, 7 except
+  AK, 7AK-8AK.
+\item
+  7 + IECC Climate Zone lumped into: 1-2-3, 4-8.
+\end{itemize}
+\end{itemize}

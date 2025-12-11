@@ -135,7 +135,6 @@ class BaseCompare:
 
     def visualize(self, aggregate_column=None, aggregate_function=None, display_column=None,
                   excludes=[], enum_maps={}, cols_to_ignore=[]):
-        colors = px.colors.qualitative.Dark24
 
         aggregate_columns = []
         if aggregate_column:
@@ -291,6 +290,12 @@ class BaseCompare:
                                                      showlegend=False),
                                           row=nrow, col=ncol)
                     else:
+                        n_colors = 1
+                        colors = px.colors.sample_colorscale('Viridis', [0.0])
+                        if 'color_index' in y.columns.values:
+                            n_colors = max(2, len(list(set(y['color_index']))))
+                            colors = px.colors.sample_colorscale('Viridis', [n/(n_colors - 1) for n in range(n_colors)])
+
                         color = [colors[0] for i in y[col]]
                         if 'color_index' in y.columns.values:
                             color = [colors[i] for i in y['color_index']]

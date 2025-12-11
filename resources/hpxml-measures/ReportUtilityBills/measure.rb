@@ -16,7 +16,6 @@ require_relative '../HPXMLtoOpenStudio/resources/util'
 class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
   # human readable name
   def name
-    # Measure name should be the title case of the class name.
     return 'Utility Bills Report'
   end
 
@@ -42,19 +41,19 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
     format_chs << 'json'
     format_chs << 'msgpack'
     # format_chs << 'csv_dview': # TODO: support this
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('output_format', format_chs, false)
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('output_format', format_chs, false)
     arg.setDisplayName('Output Format')
     arg.setDescription('The file format of the annual (and timeseries, if requested) outputs.')
     arg.setDefaultValue('csv')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_bills', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_bills', false)
     arg.setDisplayName('Generate Annual Utility Bills')
     arg.setDescription('Generates output file containing annual utility bills.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_monthly_bills', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_monthly_bills', false)
     arg.setDisplayName('Generate Monthly Utility Bills')
     arg.setDescription('Generates output file containing monthly utility bills.')
     arg.setDefaultValue(true)
@@ -63,29 +62,29 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
     timestamp_chs = OpenStudio::StringVector.new
     timestamp_chs << 'start'
     timestamp_chs << 'end'
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('monthly_timestamp_convention', timestamp_chs, false)
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('monthly_timestamp_convention', timestamp_chs, false)
     arg.setDisplayName('Generate Monthly Output: Timestamp Convention')
     arg.setDescription('Determines whether monthly timestamps use the start-of-period or end-of-period convention.')
     arg.setDefaultValue('start')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('annual_output_file_name', false)
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('annual_output_file_name', false)
     arg.setDisplayName('Annual Output File Name')
     arg.setDescription("If not provided, defaults to 'results_bills.csv' (or 'results_bills.json' or 'results_bills.msgpack').")
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('monthly_output_file_name', false)
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('monthly_output_file_name', false)
     arg.setDisplayName('Monthly Output File Name')
     arg.setDescription("If not provided, defaults to 'results_bills_monthly.csv' (or 'results_bills_monthly.json' or 'results_bills_monthly.msgpack').")
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('register_annual_bills', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('register_annual_bills', false)
     arg.setDisplayName('Register Annual Utility Bills')
     arg.setDescription('Registers annual utility bills with the OpenStudio runner for downstream processing.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('register_monthly_bills', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('register_monthly_bills', false)
     arg.setDisplayName('Register Monthly Utility Bills')
     arg.setDescription('Registers monthly utility bills with the OpenStudio runner for downstream processing.')
     arg.setDefaultValue(false)
@@ -149,31 +148,22 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
     return warnings.uniq
   end
 
-  # Return a vector of IdfObject's to request EnergyPlus objects needed by the run method.
+  # Adds OpenStudio model objects to requests desired outputs.
   #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param user_arguments [OpenStudio::Measure::OSArgumentMap] OpenStudio measure arguments
-  # @return [Array<OpenStudio::IdfObject>] array of OpenStudio IdfObject objects
-  def energyPlusOutputRequests(runner, user_arguments)
-    super(runner, user_arguments)
-
-    result = OpenStudio::IdfObjectVector.new
-    return result if runner.halted
-
-    model = runner.lastOpenStudioModel
-    if model.empty?
-      return result
-    end
-
-    @model = model.get
+  # @return [Boolean] Success
+  def modelOutputRequests(model, runner, user_arguments)
+    return false if runner.halted
 
     # use the built-in error checking
     if !runner.validateUserArguments(arguments(model), user_arguments)
-      return result
+      return false
     end
 
-    hpxml_defaults_path = @model.getBuilding.additionalProperties.getFeatureAsString('hpxml_defaults_path').get
-    building_id = @model.getBuilding.additionalProperties.getFeatureAsString('building_id').get
+    hpxml_defaults_path = model.getBuilding.additionalProperties.getFeatureAsString('hpxml_defaults_path').get
+    building_id = model.getBuilding.additionalProperties.getFeatureAsString('building_id').get
     hpxml = HPXML.new(hpxml_path: hpxml_defaults_path, building_id: building_id)
 
     @hpxml_header = hpxml.header
@@ -181,12 +171,12 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
     if @hpxml_header.utility_bill_scenarios.has_detailed_electric_rates
       uses_unit_multipliers = @hpxml_buildings.count { |hpxml_bldg| hpxml_bldg.building_construction.number_of_units > 1 } > 0
       if uses_unit_multipliers || (@hpxml_buildings.size > 1 && hpxml.header.whole_sfa_or_mf_building_sim)
-        return result
+        return false
       end
     end
 
     warnings = check_for_return_type_warnings()
-    return result if !warnings.empty?
+    return false if !warnings.empty?
 
     fuels = setup_fuel_outputs()
 
@@ -201,13 +191,13 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
       next unless has_fuel[get_hpxml_fuel(fuel_type)]
       next if is_production && !has_pv # we don't need to request this meter if there isn't pv
 
-      result << OpenStudio::IdfObject.load("Output:Meter,#{fuel.meter},monthly;").get
+      Model.add_output_meter(model, meter_name: fuel.meter, reporting_frequency: 'monthly')
       if fuel_type == FT::Elec && @hpxml_header.utility_bill_scenarios.has_detailed_electric_rates
-        result << OpenStudio::IdfObject.load("Output:Meter,#{fuel.meter},hourly;").get
+        Model.add_output_meter(model, meter_name: fuel.meter, reporting_frequency: 'hourly')
       end
     end
 
-    return result.uniq
+    return true
   end
 
   # Register to the runner each warning.
@@ -237,7 +227,7 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
       runner.registerError('Cannot find OpenStudio model.')
       return false
     end
-    @model = model.get
+    model = model.get
 
     # use the built-in error checking (need model)
     if !runner.validateUserArguments(arguments(model), user_arguments)
@@ -246,10 +236,10 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
 
     args = runner.getArgumentValues(arguments(model), user_arguments)
 
-    hpxml_path = @model.getBuilding.additionalProperties.getFeatureAsString('hpxml_path').get
-    hpxml_defaults_path = @model.getBuilding.additionalProperties.getFeatureAsString('hpxml_defaults_path').get
+    hpxml_path = model.getBuilding.additionalProperties.getFeatureAsString('hpxml_path').get
+    hpxml_defaults_path = model.getBuilding.additionalProperties.getFeatureAsString('hpxml_defaults_path').get
     output_dir = File.dirname(hpxml_defaults_path)
-    building_id = @model.getBuilding.additionalProperties.getFeatureAsString('building_id').get
+    building_id = model.getBuilding.additionalProperties.getFeatureAsString('building_id').get
     hpxml = HPXML.new(hpxml_path: hpxml_defaults_path, building_id: building_id)
 
     @hpxml_header = hpxml.header
@@ -421,14 +411,7 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
 
     return unless args[:register_annual_bills]
 
-    results_out.each do |name, value|
-      next if name.nil? || value.nil?
-
-      name = OpenStudio::toUnderscoreCase(name).chomp('_')
-
-      runner.registerValue(name, value)
-      runner.registerInfo("Registering #{value} for #{name}.")
-    end
+    Outputs.register_results_out_to_runner(runner, results_out)
   end
 
   # Get monthly utility bill data from the utility_bills Hash.

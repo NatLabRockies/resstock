@@ -1,0 +1,16 @@
+Option Name	Assembly R-Value [F-ft2-hr/Btu]
+Uninsulated	2.5
+"Interior, R-7"	7.8
+"Interior, R-11"	9.4
+"Interior, R-13"	10.4
+"Interior, R-15"	11.2
+"Interior, R-19"	14.5
+"Interior, R-21"	16.2
+"Exterior, R-5"	7.5
+"Exterior, R-10"	12.5
+"Exterior, R-15"	17.5
+"Exterior, R-20"	22.5
+"Detailed Example: Uninsulated, Fiberboard Sheathing, Hardboard Siding"	4.34
+"Detailed Example: R-11, Fiberboard Sheathing, Hardboard Siding"	12.47
+	
+# Assembly R-Value: Assembly R-value for the rim joist excluding any siding.	

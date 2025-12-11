@@ -1,0 +1,10 @@
+Option Name	Fraction Operable [frac]	Availability [days/week]
+None	0	
+33% Operable Windows	0.33	
+50% Operable Windows	0.5	
+67% Operable Windows	0.67	
+100% Operable Windows	1	
+"Detailed Example: 67% Operable Windows, 7 Days/Week"	0.67	7
+		
+"# Fraction Operable: Total window area for operable windows divided by total window area. The total open window area for natural ventilation is calculated using A) the operable fraction, B) the assumption that only some of the area of operable windows can be open, and C) the assumption that only some of that openable area is actually opened by occupants whenever outdoor conditions are favorable."		
+# Availability: How many days per week windows can be opened by occupants.		
