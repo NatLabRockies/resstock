@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'open3'
-require 'openstudio'
 require 'json'
+require 'openstudio'
 require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/minitest_helper'
 require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/version'
 require_relative '../resources/buildstock'
