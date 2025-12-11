@@ -475,6 +475,7 @@ upgrades:
         costs:
           - value: 1289
             multiplier: Fixed (1)
+        lifetime: 13
       - &clothes_dryer_elec_100pct_ref
         option: Clothes Dryer|Electric, Premium, 100% Usage
         apply_logic:
@@ -501,6 +502,7 @@ upgrades:
         costs:
           - value: 1289
             multiplier: Fixed (1)
+        lifetime: 13
       - &clothes_dryer_elec_120pct_ref
         option: Clothes Dryer|Electric, Premium, 120% Usage
         apply_logic:
@@ -527,6 +529,7 @@ upgrades:
         costs:
           - value: 1289
             multiplier: Fixed (1)
+        lifetime: 13
       # Lighting Upgrade (no lighting upgrade as mentioned in NREL report: https://www.nrel.gov/docs/fy18osti/68670.pdf)
       # Cooking Upgrade (no cooking upgrade as it is not mentioned in NREL report)
       # Ducts (Do nothing mentioned in Table 10 of NREL report)
