@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>223f3f88-f7aa-42cf-9884-ba93a298d253</version_id>
-  <version_modified>2025-12-16T16:55:23Z</version_modified>
+  <version_id>84e7b69a-f163-4d61-ba6d-24eea7d601a9</version_id>
+  <version_modified>2025-12-16T19:53:40Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -11469,10 +11469,10 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>unit_multiplier</name>
-      <display_name>Building Construction: Unit Multiplier</display_name>
-      <description>The number of similar dwelling units. EnergyPlus simulation results will be multiplied this value. If not provided, defaults to 1.</description>
-      <type>Integer</type>
+      <name>unit_multipliers</name>
+      <display_name>Building Construction: Unit Multipliers</display_name>
+      <description>Specifies the unit multipliers. Use a comma-separated list.</description>
+      <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -12447,7 +12447,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>78214553</checksum>
+      <checksum>4F2D0B10</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

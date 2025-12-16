@@ -315,6 +315,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       return false
     end
 
+    unit_multipliers = []
+
     # Set arguments for the BuildResidentialHPXML measure
     hpxml_path = File.expand_path('../upgraded.xml')
     measures['BuildResidentialHPXML'] = [{ 'hpxml_path' => hpxml_path }]
@@ -325,8 +327,9 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
     new_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     hpxml.buildings.each do |hpxml_bldg|
+      unit_multipliers << hpxml_bldg.building_construction.number_of_units
+
       set_resstock_arguments(measures, resstock_arguments_runner)
-      set_building_construction(measures, hpxml_bldg)
       set_dehumidifier(measures, hpxml_bldg)
       get_hvac_systems(measures, existing_options_measure_args)
 
@@ -355,6 +358,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     # Set arguments for the ResStockArgumentsPostHPXML measure
     measures['ResStockArgumentsPostHPXML'][0]['hpxml_path'] = hpxml_path
     measures['ResStockArgumentsPostHPXML'][0]['building_id'] = values['building_id']
+    measures['ResStockArgumentsPostHPXML'][0]['unit_multipliers'] = unit_multipliers.join(', ')
     measures_hash = { 'ResStockArgumentsPostHPXML' => measures['ResStockArgumentsPostHPXML'] }
     if not apply_measures(measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
       register_logs(runner, new_runner)
@@ -466,12 +470,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       next if value == ''
 
       measures['BuildResidentialHPXML'][0][step_value.name] = value
-    end
-  end
-
-  def set_building_construction(measures, hpxml_bldg)
-    if hpxml_bldg.building_construction.number_of_units > 1
-      measures['ResStockArgumentsPostHPXML'][0]['unit_multiplier'] = hpxml_bldg.building_construction.number_of_units
     end
   end
 

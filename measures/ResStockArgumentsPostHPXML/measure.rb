@@ -247,6 +247,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       register_value(runner, unavailable_output_name, date_range)
     end
 
+    # Unit Multipliers
+    unit_multipliers = args[:unit_multipliers].to_s.split(',').map(&:strip)
+
     @hpxml.buildings.each_with_index do |hpxml_bldg, unit_number|
       # Site
       if not args[:site_iecc_zone].nil?
@@ -267,8 +270,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
           # default
         end
       end
-      if not args[:unit_multiplier].nil?
-        hpxml_bldg.building_construction.number_of_units = args[:unit_multiplier]
+      if not unit_multipliers.empty?
+        hpxml_bldg.building_construction.number_of_units = unit_multipliers[unit_number]
       end
 
       # Usage Multipliers

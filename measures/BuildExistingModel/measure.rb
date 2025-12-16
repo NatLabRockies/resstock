@@ -382,11 +382,11 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
     new_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     (1..num_units_modeled).each do |unit_number|
-      set_resstock_arguments(measures, resstock_arguments_runner)
       if not unit_multipliers.empty?
         unit_multiplier = unit_multipliers[unit_number]
       end
-      set_building_construction(measures, unit_multiplier)
+
+      set_resstock_arguments(measures, resstock_arguments_runner)
       set_dehumidifier(measures, unit_multiplier)
 
       # Specify measures to run
@@ -417,6 +417,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     measures['ResStockArgumentsPostHPXML'] = [{}] if !measures.keys.include?('ResStockArgumentsPostHPXML')
     measures['ResStockArgumentsPostHPXML'][0]['hpxml_path'] = hpxml_path
     measures['ResStockArgumentsPostHPXML'][0]['building_id'] = args[:building_id]
+    measures['ResStockArgumentsPostHPXML'][0]['unit_multipliers'] = unit_multipliers.join(', ')
     measures_hash = { 'ResStockArgumentsPostHPXML' => measures['ResStockArgumentsPostHPXML'] }
     if not apply_measures(measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
       register_logs(runner, new_runner)
@@ -661,12 +662,6 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       additional_properties << "#{arg_name}=#{arg_value}"
     end
     measures['BuildResidentialHPXML'][0]['additional_properties'] = additional_properties.join('|') unless additional_properties.empty?
-  end
-
-  def set_building_construction(measures, unit_multiplier)
-    if not unit_multiplier.nil?
-      measures['ResStockArgumentsPostHPXML'][0]['unit_multiplier'] = unit_multiplier
-    end
   end
 
   def set_dehumidifier(measures, unit_multiplier)

@@ -1766,12 +1766,12 @@ The building vintage, used for informational purposes only.
 
 <br/>
 
-**Building Construction: Unit Multiplier**
+**Building Construction: Unit Multipliers**
 
-The number of similar dwelling units. EnergyPlus simulation results will be multiplied this value. If not provided, defaults to 1.
+Specifies the unit multipliers. Use a comma-separated list.
 
-- **Name:** ``unit_multiplier``
-- **Type:** ``Integer``
+- **Name:** ``unit_multipliers``
+- **Type:** ``String``
 
 - **Required:** ``false``
 

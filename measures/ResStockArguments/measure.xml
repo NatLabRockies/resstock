@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>6e04ae0e-e480-4d72-96ad-887815b429af</version_id>
-  <version_modified>2025-12-16T16:55:21Z</version_modified>
+  <version_id>64106d43-27aa-42d1-b8ec-57cf2a0f5a84</version_id>
+  <version_modified>2025-12-16T19:53:38Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -11469,10 +11469,10 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>unit_multiplier</name>
-      <display_name>Building Construction: Unit Multiplier</display_name>
-      <description>The number of similar dwelling units. EnergyPlus simulation results will be multiplied this value. If not provided, defaults to 1.</description>
-      <type>Integer</type>
+      <name>unit_multipliers</name>
+      <display_name>Building Construction: Unit Multipliers</display_name>
+      <description>Specifies the unit multipliers. Use a comma-separated list.</description>
+      <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -12434,7 +12434,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>EAFD6405</checksum>
+      <checksum>0DD0A143</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12451,7 +12451,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>3640C634</checksum>
+      <checksum>CF6A3276</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
