@@ -136,7 +136,7 @@ class ServerDirectoryCleanup < OpenStudio::Measure::ReportingMeasure
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeBoolArgument('retain_schedules_csv', true)
-    arg.setDisplayName('Retain *schedules.csv')
+    arg.setDisplayName('Retain *schedules*.csv')
     arg.setDefaultValue(true)
     args << arg
 
@@ -199,7 +199,7 @@ class ServerDirectoryCleanup < OpenStudio::Measure::ReportingMeasure
       :retain_eplustbl_htm => 'eplustbl.htm',
       :retain_stdout_energyplus => 'stdout-energyplus',
       :retain_stdout_expandobject => 'stdout-expandobject',
-      :retain_schedules_csv => '*schedules.csv'
+      :retain_schedules_csv => '*schedules*.csv'
     }
 
     # delete output files based on the map
