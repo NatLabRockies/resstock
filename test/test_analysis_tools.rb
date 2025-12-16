@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/minitest_helper'
 require 'csv'
+require 'openstudio'
+require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/minitest_helper'
 
 class TestTools < Minitest::Test
   def before_setup

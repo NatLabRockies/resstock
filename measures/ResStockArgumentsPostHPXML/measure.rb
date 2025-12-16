@@ -36,31 +36,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     full_measure_path = File.join(File.dirname(__FILE__), '..', 'ResStockArguments', 'measure.rb')
     measure_arguments = get_measure_instance(full_measure_path).arguments(model)
     measure_arguments.each do |arg|
-      # Convert to optional argument for the unit test
-      # Replace all of this if https://github.com/NREL/OpenStudio/issues/5469 is addressed
-      case arg.type.valueName.downcase
-      when 'choice'
-        new_arg = OpenStudio::Measure::OSArgument.makeChoiceArgument(arg.name, arg.choiceValues, false)
-        new_arg.setDefaultValue(arg.defaultValueAsString) if arg.hasDefaultValue
-      when 'boolean'
-        new_arg = OpenStudio::Measure::OSArgument.makeBoolArgument(arg.name, false)
-        new_arg.setDefaultValue(arg.defaultValueAsBool) if arg.hasDefaultValue
-      when 'string'
-        new_arg = OpenStudio::Measure::OSArgument.makeStringArgument(arg.name, false)
-        new_arg.setDefaultValue(arg.defaultValueAsString) if arg.hasDefaultValue
-      when 'double'
-        new_arg = OpenStudio::Measure::OSArgument.makeDoubleArgument(arg.name, false)
-        new_arg.setDefaultValue(arg.defaultValueAsDouble) if arg.hasDefaultValue
-      when 'integer'
-        new_arg = OpenStudio::Measure::OSArgument.makeIntegerArgument(arg.name, false)
-        new_arg.setDefaultValue(arg.defaultValueAsInteger) if arg.hasDefaultValue
-      else
-        fail "Unhandled argument type: #{arg.type.valueName.downcase}"
-      end
-      new_arg.setDisplayName(arg.displayName.to_s)
-      new_arg.setDescription(arg.description.to_s)
-      new_arg.setUnits(arg.units.to_s)
-      args << new_arg
+      arg.setRequired(false)
+      args << arg
     end
 
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('hpxml_path', false)
@@ -775,7 +752,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       register_value(runner, 'electric_panel_service_max_current_rating', cap_value)
     else
       cap_value = hpxml_bldg_existing.electric_panels[0].max_current_rating
-      total_spaces = hpxml_bldg_existing.electric_panels[0].breaker_spaces_total
+      total_spaces = hpxml_bldg_existing.electric_panels[0].rated_total_spaces
     end
 
     n_beds = hpxml_bldg.building_construction.number_of_bedrooms

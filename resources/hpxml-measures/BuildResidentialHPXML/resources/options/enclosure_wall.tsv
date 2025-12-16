@@ -47,9 +47,9 @@ Option Name	Type	Assembly R-Value [F-ft2-hr/Btu]
 "Wood Stud, IECC U-0.057"	WoodStud	17.54
 "Wood Stud, IECC U-0.048"	WoodStud	20.83
 "Wood Stud, IECC U-0.045"	WoodStud	22.22
-"Detailed Example: Wood Stud, Uninsulated, 2x4, 16 in o.c., 25% Framing"	WoodStud	4.17
-"Detailed Example: Wood Stud, R-11, 2x4, 16 in o.c., 25% Framing"	WoodStud	11.09
-"Detailed Example: Wood Stud, R-18, 2x6, 24 in o.c., 25% Framing"	WoodStud	15.71
+"ASHRAE 140 Tests: Wood Stud, Uninsulated"	WoodStud	4.17
+"ASHRAE 140 Tests: Wood Stud, R-11"	WoodStud	11.09
+"ASHRAE 140 Tests: Wood Stud, R-18"	WoodStud	15.71
 		
 # Type: The type of wall.		
 # Assembly R-Value: Assembly R-value for the wall excluding any siding and/or continuous insulation.		

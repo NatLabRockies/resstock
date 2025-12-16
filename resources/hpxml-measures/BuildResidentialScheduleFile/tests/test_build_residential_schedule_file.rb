@@ -2,7 +2,6 @@
 
 require_relative '../../HPXMLtoOpenStudio/resources/minitest_helper'
 require 'openstudio'
-require 'openstudio/measure/ShowRunnerOutput'
 require 'fileutils'
 require_relative '../measure.rb'
 
@@ -588,10 +587,10 @@ class BuildResidentialScheduleFileTest < Minitest::Test
 
     # assert that it ran correctly
     if expect_fail
-      show_output(result) unless result.value.valueName == 'Fail'
+      result.showOutput() unless result.value.valueName == 'Fail'
       assert_equal('Fail', result.value.valueName)
     else
-      show_output(result) unless result.value.valueName == 'Success'
+      result.showOutput() unless result.value.valueName == 'Success'
       assert_equal('Success', result.value.valueName)
     end
 

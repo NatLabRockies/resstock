@@ -825,11 +825,6 @@ module HVAC
     plant_loop.addDemandBranchForComponent(htg_coil)
     plant_loop.addDemandBranchForComponent(clg_coil)
 
-    # FIXME: Workaround for https://github.com/NREL/OpenStudio/issues/5458
-    # Set the fluid type again because plant_loop.addSupplyBranchForComponent(ground_heat_exch_vert) resets it to Water
-    # Remove the following line if the above issue is addressed
-    plant_loop.setFluidType(hp_ap.fluid_type)
-
     sizing_plant = plant_loop.sizingPlant
     sizing_plant.setLoopType('Condenser')
     sizing_plant.setDesignLoopExitTemperature(UnitConversions.convert(hp_ap.design_chw, 'F', 'C'))

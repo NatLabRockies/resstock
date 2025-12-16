@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
-# TODO
+# Object that stores material properties for opaque materials.
+# Unlike the BaseMaterial, the Material object includes a thickness and R-value.
 class Material
   # @param name [String] Material name
   # @param thick_in [Double] Thickness (in)
-  # @param mat_base [TODO] Base material object that defines k, rho, and can be overridden with values for those arguments
-  # @param k_in [TODO] Conductivity (Btu-in/h-ft2-F)
-  # @param rho [TODO] Density (lb/ft3)
-  # @param cp [TODO] Specific heat (Btu/lb-F)
-  # @param tAbs [TODO] thermal absorptance (emittance); 0.9 is EnergyPlus default
-  # @param sAbs [TODO] solar absorptance; 0.7 is EnergyPlus default
+  # @param mat_base [BaseMaterial] Optional base material object that defines k_in, rho, and cp
+  # @param k_in [Double] Conductivity (Btu-in/h-ft2-F)
+  # @param rho [Double] Density (lb/ft3)
+  # @param cp [Double] Specific heat (Btu/lb-F)
+  # @param tAbs [Double] Thermal absorptance (emittance); 0.9 is EnergyPlus default
+  # @param sAbs [Double] Solar absorptance; 0.7 is EnergyPlus default
   def initialize(name: nil, thick_in: nil, mat_base: nil, k_in: nil, rho: nil, cp: nil, tAbs: 0.9, sAbs: 0.7)
     @name = name
 
@@ -51,189 +52,142 @@ class Material
 
     # Calculate R-value
     if not rvalue.nil?
-      @rvalue = rvalue # h-ft2-F/Btu
+      @rvalue = rvalue # hr-ft2-F/Btu
     elsif (not @thick_in.nil?) && (not @k_in.nil?)
       if @k_in > 0
-        @rvalue = @thick_in / @k_in # h-ft2-F/Btu
+        @rvalue = @thick_in / @k_in # hr-ft2-F/Btu
       else
-        @rvalue = @thick_in / 10000000.0 # h-ft2-F/Btu
+        @rvalue = @thick_in / 10000000.0 # hr-ft2-F/Btu
       end
     end
   end
 
   attr_accessor :name, :thick, :thick_in, :k, :k_in, :rho, :cp, :rvalue, :tAbs, :sAbs
 
-  # TODO
+  # Creates a material associated with a closed air cavity (e.g.,
+  # inside an uninsulated wood stud wall).
   #
-  # @param thick_in [TODO] TODO
-  # @return [TODO] TODO
+  # @param thick_in [Double] Thickness (in)
+  # @return [Material] The material object
   def self.AirCavityClosed(thick_in)
     rvalue = 1.0 # hr*ft*F/Btu (Assume for all air gap configurations since there is no correction for direction of heat flow in the simulation tools)
     return new(thick_in: thick_in, k_in: thick_in / rvalue, rho: Gas.Air.rho, cp: Gas.Air.cp)
   end
 
-  # TODO
+  # Creates a material associated with a cavity between framing
+  # that is not enclosed (e.g., the floor above a crawlspace or an
+  # attic floor).
   #
-  # @param thick_in [TODO] TODO
-  # @return [TODO] TODO
+  # @param thick_in [Double] Thickness (in)
+  # @return [Material] The material object
   def self.AirCavityOpen(thick_in)
     return new(thick_in: thick_in, k_in: 10000000.0, rho: Gas.Air.rho, cp: Gas.Air.cp)
   end
 
-  # TODO
+  # Creates a material that characterizes the combined radiative
+  # and convective surface film thermal resistance.
   #
-  # @param rvalue [TODO] TODO
-  # @return [TODO] TODO
+  # @param rvalue [Double] Thermal resistance (hr-ft2-F/Btu)
+  # @return [Material] The material object
   def self.AirFilm(rvalue)
     return new(name: Constants::AirFilm, thick_in: 1.0, k_in: 1.0 / rvalue)
   end
 
-  # TODO
+  # Creates a material for the exterior air film of a surface exposed to outdoors.
   #
-  # @return [TODO] TODO
-  def self.AirFilmOutside
-    rvalue = 0.197 # hr-ft-F/Btu
+  # @param no_wind_exposure [Boolean] True if the surface experiences little to no wind
+  # @param apply_ashrae140_assumptions [Boolean] True if an ASHRAE 140 test case where we want to override our normal assumptions
+  # @return [Material] The material object
+  def self.AirFilmOutside(no_wind_exposure = false, apply_ashrae140_assumptions = false)
+    if no_wind_exposure
+      rvalue = 0.455 # hr-ft-F/Btu
+    else
+      if apply_ashrae140_assumptions
+        rvalue = 0.174 # hr-ft-F/Btu
+      else
+        rvalue_winter = 0.17 # hr-ft-F/Btu (ASHRAE 2005, F25.2, Table 1)
+        rvalue_summer = 0.25 # hr-ft-F/Btu (ASHRAE 2005, F25.2, Table 1)
+        rvalue = (rvalue_winter + rvalue_summer) / 2.0
+      end
+    end
     return self.AirFilm(rvalue)
   end
 
-  # TODO
+  # Creates a material for the interior air film of a wall (vertical) surface.
   #
-  # @return [TODO] TODO
-  def self.AirFilmOutsideASHRAE140
-    return self.AirFilm(0.174)
-  end
-
-  # TODO
-  #
-  # @return [TODO] TODO
-  def self.AirFilmVertical
+  # @return [Material] The material object
+  def self.AirFilmIndoorWall
     rvalue = 0.68 # hr-ft-F/Btu (ASHRAE 2005, F25.2, Table 1)
     return self.AirFilm(rvalue)
   end
 
-  # TODO
+  # Creates a material for the interior air film of a ceiling (horizontal) surface
+  # with neither upward now downward heat flow. Used for floors below attics, raised
+  # floors, or adiabatic floors, where heat flow can be either direction because the
+  # temperature on the other side may be either hotter or colder.
   #
-  # @return [TODO] TODO
-  def self.AirFilmVerticalASHRAE140
-    return self.AirFilm(0.685)
-  end
-
-  # TODO
-  #
-  # @return [TODO] TODO
-  def self.AirFilmFlatEnhanced
-    rvalue = 0.61 # hr-ft-F/Btu (ASHRAE 2005, F25.2, Table 1)
+  # @return [Material] The material object
+  def self.AirFilmIndoorFloorAverage
+    rvalue_down = self.AirFilmIndoorFloorDown.rvalue
+    rvalue_up = 0.61 # hr-ft-F/Btu (ASHRAE 2005, F25.2, Table 1)
+    rvalue = (rvalue_down + rvalue_up) / 2.0
     return self.AirFilm(rvalue)
   end
 
-  # TODO
+  # Creates a material for the interior air film of a floor (horizontal) surface
+  # with downward heat flow. Used for floors above foundations where heat flow will
+  # be downward because the foundation space is generally colder than conditioned space.
   #
-  # @return [TODO] TODO
-  def self.AirFilmFlatReduced
+  # @return [Material] The material object
+  def self.AirFilmIndoorFloorDown
     rvalue = 0.92 # hr-ft-F/Btu (ASHRAE 2005, F25.2, Table 1)
     return self.AirFilm(rvalue)
   end
 
-  # TODO
+  # Creates a material for the interior air film of a roof (sloped) surface.
   #
-  # @return [TODO] TODO
-  def self.AirFilmFloorAverage
-    # For floors between conditioned spaces where heat does not flow across
-    # the floor; heat transfer is only important with regards to the thermal
-    rvalue = (self.AirFilmFlatReduced.rvalue + self.AirFilmFlatEnhanced.rvalue) / 2.0 # hr-ft-F/Btu
+  # @param surface_angle [Double] The angle of the surface from horizontal (degrees)
+  # @param apply_ashrae140_assumptions [Boolean] True if an ASHRAE 140 test case where we want to override our normal assumptions
+  # @return [Material] The material object
+  def self.AirFilmIndoorRoof(surface_angle, apply_ashrae140_assumptions = false)
+    if apply_ashrae140_assumptions
+      rvalue = 0.752 # hr-ft-F/Btu
+    else
+      # Correlation functions used to interpolate between values provided
+      # in ASHRAE 2005, F25.2, Table 1 - which only provides values for
+      # 0, 45, and 90 degrees.
+      # Uses the average of upward/downward heat flow values with the assumption
+      # that the temperature above the roof can be either hotter or colder.
+      rvalue_up = 0.002 * Math::exp(0.0398 * surface_angle) + 0.608 # hr-ft-F/Btu (evaluates to 0.62 at 45 degrees, when direction of heat flow is upward)
+      rvalue_down = 0.32 * Math::exp(-0.0154 * surface_angle) + 0.6 # hr-ft-F/Btu (evaluates to 0.76 at 45 degrees, when direction of heat flow is downward)
+      rvalue = (rvalue_up + rvalue_down) / 2.0 # hr-ft-F/Btu
+    end
     return self.AirFilm(rvalue)
   end
 
-  # TODO
+  # Creates a material for the combined layer of, e.g., carpet and bare floor.
   #
-  # @return [TODO] TODO
-  def self.AirFilmFloorReduced
-    # For floors above unconditioned basement spaces, where heat will
-    # always flow down through the floor.
-    rvalue = self.AirFilmFlatReduced.rvalue # hr-ft-F/Btu
-    return self.AirFilm(rvalue)
-  end
-
-  # TODO
-  #
-  # @return [TODO] TODO
-  def self.AirFilmFloorASHRAE140
-    return self.AirFilm(0.765)
-  end
-
-  # TODO
-  #
-  # @return [TODO] TODO
-  def self.AirFilmFloorZeroWindASHRAE140
-    return self.AirFilm(0.455)
-  end
-
-  # TODO
-  #
-  # @param roof_pitch [TODO] TODO
-  # @return [TODO] TODO
-  def self.AirFilmSlopeEnhanced(roof_pitch)
-    # Correlation functions used to interpolate between values provided
-    # in ASHRAE 2005, F25.2, Table 1 - which only provides values for
-    # 0, 45, and 90 degrees. Values are for non-reflective materials of
-    # emissivity = 0.90.
-    rvalue = 0.002 * Math::exp(0.0398 * roof_pitch) + 0.608 # hr-ft-F/Btu (evaluates to film_flat_enhanced at 0 degrees, 0.62 at 45 degrees, and film_vertical at 90 degrees)
-    return self.AirFilm(rvalue)
-  end
-
-  # TODO
-  #
-  # @param roof_pitch [TODO] TODO
-  # @return [TODO] TODO
-  def self.AirFilmSlopeReduced(roof_pitch)
-    # Correlation functions used to interpolate between values provided
-    # in ASHRAE 2005, F25.2, Table 1 - which only provides values for
-    # 0, 45, and 90 degrees. Values are for non-reflective materials of
-    # emissivity = 0.90.
-    rvalue = 0.32 * Math::exp(-0.0154 * roof_pitch) + 0.6 # hr-ft-F/Btu (evaluates to film_flat_reduced at 0 degrees, 0.76 at 45 degrees, and film_vertical at 90 degrees)
-    return self.AirFilm(rvalue)
-  end
-
-  # TODO
-  #
-  # @param roof_pitch [TODO] TODO
-  # @return [TODO] TODO
-  def self.AirFilmRoof(roof_pitch)
-    rvalue = (self.AirFilmSlopeEnhanced(roof_pitch).rvalue + self.AirFilmSlopeReduced(roof_pitch).rvalue) / 2.0 # hr-ft-F/Btu
-    return self.AirFilm(rvalue)
-  end
-
-  # TODO
-  #
-  # @return [TODO] TODO
-  def self.AirFilmRoofASHRAE140
-    return self.AirFilm(0.752)
-  end
-
-  # TODO
-  #
-  # @param floorFraction [TODO] TODO
-  # @param rvalue [TODO] TODO
-  # @return [TODO] TODO
-  def self.CoveringBare(floorFraction = 0.8, rvalue = 2.08)
-    # Combined layer of, e.g., carpet and bare floor
+  # @param floorFraction [Double] Fraction of the floor that is covered (i.e., not bare)
+  # @param rvalue [Double] Thermal resistance (hr-ft2-F/Btu)
+  # @return [Material] The material object
+  def self.CoveringBare(floor_fraction = 0.8, rvalue = 2.08)
     thick_in = 0.5 # in
-    return new(name: 'floor covering', thick_in: thick_in, k_in: thick_in / (rvalue * floorFraction), rho: 3.4, cp: 0.32, tAbs: 0.9, sAbs: 0.9)
+    return new(name: 'floor covering', thick_in: thick_in, k_in: thick_in / (rvalue * floor_fraction), rho: 3.4, cp: 0.32, tAbs: 0.9, sAbs: 0.9)
   end
 
-  # TODO
+  # Creates a material for a given thickness of concrete.
   #
-  # @param thick_in [TODO] TODO
-  # @return [TODO] TODO
+  # @param thick_in [Double] Thickness of the concrete (in)
+  # @return [Material] The material object
   def self.Concrete(thick_in)
     return new(name: "concrete #{thick_in} in.", thick_in: thick_in, mat_base: BaseMaterial.Concrete, tAbs: 0.9)
   end
 
-  # TODO
+  # Creates a material for the wall exterior finish (siding) material.
   #
-  # @param type [TODO] TODO
-  # @param thick_in [TODO] TODO
-  # @return [TODO] TODO
+  # @param type [HPXML::SidingTypeXXX] Type of siding
+  # @param thick_in [Double] Thickness of the siding (in)
+  # @return [Material] The material object
   def self.ExteriorFinishMaterial(type, thick_in = nil)
     if (type == HPXML::SidingTypeNone) || (!thick_in.nil? && thick_in <= 0)
       return
@@ -272,11 +226,11 @@ class Material
     fail "Unexpected type: #{type}."
   end
 
-  # TODO
+  # Creates a material for the foundation wall.
   #
-  # @param type [TODO] TODO
-  # @param thick_in [TODO] TODO
-  # @return [TODO] TODO
+  # @param type [FoundationWallTypeXXX] Type of foundation wall
+  # @param thick_in [Double] Thickness of the siding (in)
+  # @return [Material] The material object
   def self.FoundationWallMaterial(type, thick_in)
     case type
     when HPXML::FoundationWallTypeSolidConcrete
@@ -304,11 +258,11 @@ class Material
     fail "Unexpected type: #{type}."
   end
 
-  # TODO
+  # Creates a material for the wall interior finish (e.g., gypsum board/drywall).
   #
-  # @param type [TODO] TODO
-  # @param thick_in [TODO] TODO
-  # @return [TODO] TODO
+  # @param type [HPXML::InteriorFinishXXX] Type of interior finish
+  # @param thick_in [Double] Thickness of the siding (in)
+  # @return [Material] The material object
   def self.InteriorFinishMaterial(type, thick_in = nil)
     if (type == HPXML::InteriorFinishNone) || (!thick_in.nil? && thick_in <= 0)
       return
@@ -325,58 +279,47 @@ class Material
     fail "Unexpected type: #{type}."
   end
 
-  # TODO
+  # Creates a material for the soil.
   #
-  # @param thick_in [TODO] TODO
-  # @param k_in [TODO] TODO
-  # @return [TODO] TODO
+  # @param thick_in [Double] Thickness of the soil (in)
+  # @param k_in [Double] Conductivity (Btu-in/h-ft2-F)
+  # @return [Material] The material object
   def self.Soil(thick_in, k_in)
     return new(name: "soil #{thick_in} in.", thick_in: thick_in, mat_base: BaseMaterial.Soil(k_in))
   end
 
-  # TODO
+  # Creates a material for a 2x? wood stud.
   #
-  # @param thick_in [TODO] TODO
-  # @return [TODO] TODO
-  def self.Stud2x(thick_in)
-    return new(name: "stud 2x #{thick_in} in.", thick_in: thick_in, mat_base: BaseMaterial.Wood)
+  # @param nominal_thick_in [Double] The nominal thickness of the wood stud, e.g. 4 for 2x4 (in)
+  # @return [Material] The material object
+  def self.Stud2x(nominal_thick_in)
+    actual_thick_in = { 1 => 0.75,
+                        2 => 1.5,
+                        3 => 2.5,
+                        4 => 3.5,
+                        6 => 5.5,
+                        8 => 7.25,
+                        10 => 9.25,
+                        12 => 11.25 }[nominal_thick_in]
+    fail "Unexpected stud nominal thickness: #{nominal_thick_in}." if actual_thick_in.nil?
+
+    return new(name: "stud 2x#{nominal_thick_in}", thick_in: actual_thick_in, mat_base: BaseMaterial.Wood)
   end
 
-  # TODO
+  # Creates a material for OSB sheathing.
   #
-  # @return [TODO] TODO
-  def self.Stud2x4
-    return new(name: 'stud 2x4', thick_in: 3.5, mat_base: BaseMaterial.Wood)
-  end
-
-  # TODO
-  #
-  # @return [TODO] TODO
-  def self.Stud2x6
-    return new(name: 'stud 2x6', thick_in: 5.5, mat_base: BaseMaterial.Wood)
-  end
-
-  # TODO
-  #
-  # @return [TODO] TODO
-  def self.Stud2x8
-    return new(name: 'stud 2x8', thick_in: 7.25, mat_base: BaseMaterial.Wood)
-  end
-
-  # TODO
-  #
-  # @param thick_in [TODO] TODO
-  # @return [TODO] TODO
+  # @param thick_in [Double] Thickness of the sheathing (in)
+  # @return [Material] The material object
   def self.OSBSheathing(thick_in)
     return new(name: "osb sheathing #{thick_in} in.", thick_in: thick_in, mat_base: BaseMaterial.Wood)
   end
 
-  # TODO
+  # Creates a material for a radiant batter (in an attic).
   #
-  # @param grade [TODO] TODO
-  # @param is_attic_floor [TODO] TODO
-  # @return [TODO] TODO
-  def self.RadiantBarrier(grade, is_attic_floor)
+  # @param install_grade [Integer] Installation grade (1-3)
+  # @param is_attic_floor [Boolean] True if the radiant barrier is on the attic floor (as opposed to roof of the attic)
+  # @return [Material] The material object
+  def self.RadiantBarrier(grade, is_attic_floor = false)
     # FUTURE: Merge w/ Constructions.get_gap_factor
     if grade == 1
       gap_frac = 0.0
@@ -397,11 +340,11 @@ class Material
     return new(name: 'radiant barrier', thick_in: 0.0084, k_in: 1629.6, rho: 168.6, cp: 0.22, tAbs: emittance, sAbs: 0.05)
   end
 
-  # TODO
+  # Creates a material for the roof exterior layer (e.g. shingles).
   #
-  # @param type [TODO] TODO
-  # @param thick_in [TODO] TODO
-  # @return [TODO] TODO
+  # @param type [HPXML::RoofTypeXXX] Type of roof material
+  # @param thick_in [Double] Thickness of the roof material (in)
+  # @return [Material] The material object
   def self.RoofMaterial(type, thick_in = nil)
     case type
     when HPXML::RoofTypeMetal
@@ -428,11 +371,13 @@ class Material
   end
 end
 
-# TODO
+# Object that stores base material properties for opaque materials.
+# Material objects (e.g., 2x4 wood stud) can be created that derive
+# from the base material (e.g., wood).
 class BaseMaterial
-  # @param rho [TODO] TODO
-  # @param cp [TODO] TODO
-  # @param k_in [TODO] TODO
+  # @param rho [Double] Density (lb/ft3)
+  # @param cp [Double] Specific heat (Btu/lb-F)
+  # @param k_in [Double] Conductivity (Btu-in/h-ft2-F)
   def initialize(rho:, cp:, k_in: nil)
     @rho = rho
     @cp = cp
@@ -441,149 +386,147 @@ class BaseMaterial
 
   attr_accessor :rho, :cp, :k_in
 
-  # TODO
+  # Creates a base material with properties for gypsum.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.Gypsum
     return new(rho: 50.0, cp: 0.2, k_in: 1.1112)
   end
 
-  # TODO
+  # Creates a base material with properties for wood.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.Wood
     return new(rho: 32.0, cp: 0.29, k_in: 0.8004)
   end
 
-  # TODO
+  # Creates a base material with properties for concrete.
   #
-  # @param thick_in [TODO] TODO
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.Concrete
     return new(rho: 140.0, cp: 0.2, k_in: 12.5)
   end
 
-  # TODO
+  # Creates a base material with properties for light-weight furniture.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.FurnitureLightWeight
     return new(rho: 40.0, cp: 0.29, k_in: 0.8004)
   end
 
-  # TODO
+  # Creates a base material with properties for heavy-weight furniture.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.FurnitureHeavyWeight
     return new(rho: 80.0, cp: 0.35, k_in: 1.1268)
   end
 
-  # TODO
+  # Creates a base material with properties for gypcrete.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.Gypcrete
     # http://www.maxxon.com/gyp-crete/data
     return new(rho: 100.0, cp: 0.223, k_in: 4.7424)
   end
 
-  # TODO
+  # Creates a base material with properties for rigid insulation.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.InsulationRigid
     return new(rho: 2.0, cp: 0.29, k_in: 0.204)
   end
 
-  # TODO
+  # Creates a base material with properties for densepack cellulose insulation.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.InsulationCelluloseDensepack
     return new(rho: 3.5, cp: 0.25)
   end
 
-  # TODO
+  # Creates a base material with properties for loosefill cellulose insulation.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.InsulationCelluloseLoosefill
     return new(rho: 1.5, cp: 0.25)
   end
 
-  # TODO
+  # Creates a base material with properties for densepack fiberglass insulation.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.InsulationFiberglassDensepack
     return new(rho: 2.2, cp: 0.25)
   end
 
-  # TODO
+  # Creates a base material with properties for loosefill fiberglass insulation.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.InsulationFiberglassLoosefill
     return new(rho: 0.5, cp: 0.25)
   end
 
-  # TODO
+  # Creates a base material with properties for generic densepack insulation.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.InsulationGenericDensepack
     return new(rho: (self.InsulationFiberglassDensepack.rho + self.InsulationCelluloseDensepack.rho) / 2.0, cp: 0.25)
   end
 
-  # TODO
+  # Creates a base material with properties for generic loosefill insulation.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.InsulationGenericLoosefill
     return new(rho: (self.InsulationFiberglassLoosefill.rho + self.InsulationCelluloseLoosefill.rho) / 2.0, cp: 0.25)
   end
 
-  # TODO
+  # Creates a base material with properties for soil.
   #
-  # @param thick_in [TODO] TODO
-  # @param k_in [TODO] TODO
-  # @return [TODO] TODO
+  # @param k_in [Double] Conductivity (Btu-in/h-ft2-F)
+  # @return [BaseMaterial] The base material object
   def self.Soil(k_in)
     return new(rho: 115.0, cp: 0.1, k_in: k_in)
   end
 
-  # TODO
+  # Creates a base material with properties for brick.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.Brick
     return new(rho: 110.0, cp: 0.19, k_in: 5.5)
   end
 
-  # TODO
+  # Creates a base material with properties for vinyl.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.Vinyl
     return new(rho: 11.1, cp: 0.25, k_in: 0.62)
   end
 
-  # TODO
+  # Creates a base material with properties for stucco.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.Stucco
     return new(rho: 80.0, cp: 0.21, k_in: 4.5)
   end
 
-  # TODO
+  # Creates a base material with properties for stone.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.Stone
     return new(rho: 140.0, cp: 0.2, k_in: 12.5)
   end
 
-  # TODO
+  # Creates a base material with properties for strawbale.
   #
-  # @return [TODO] TODO
+  # @return [BaseMaterial] The base material object
   def self.StrawBale
     return new(rho: 11.1652, cp: 0.2991, k_in: 0.4164)
   end
 end
 
-# TODO
+# Object that stores material properties for glazing materials.
 class GlazingMaterial
-  # @param name [TODO] TODO
-  # @param ufactor [TODO] TODO
-  # @param shgc [TODO] TODO
+  # @param name [String] Glazing material name
+  # @param ufactor [Double] Full assembly glazing U-factor (Btu/F-ft2-hr)
+  # @param shgc [Double] Full assembly glazing solar heat gain coefficient (0-1)
   def initialize(name:, ufactor:, shgc:)
     @name = name
     @ufactor = ufactor
@@ -593,51 +536,42 @@ class GlazingMaterial
   attr_accessor :name, :ufactor, :shgc
 end
 
-# TODO
+# Object that stores material properties for liquid materials.
 class Liquid
-  # @param rho [TODO] TODO
-  # @param cp [TODO] TODO
-  # @param k [TODO] TODO
-  # @param h_fg [TODO] TODO
-  # @param t_frz [TODO] TODO
+  # @param rho [Double] Density (lb/ft3)
+  # @param cp [Double] Specific heat (Btu/lb-F)
+  # @param k [Double] Thermal Conductivity (Btu/h-ft-R)
+  # @param h_fg [Double] Latent Heat of Vaporization (Btu/lb)
+  # @param t_frz [Double] Freezing Temperature (F)
   def initialize(rho: nil, cp: nil, k: nil, h_fg: nil, t_frz: nil)
-    @rho = rho          # Density (lb/ft3)
-    @cp = cp            # Specific Heat (Btu/lbm-R)
-    @k = k              # Thermal Conductivity (Btu/h-ft-R)
-    @h_fg = h_fg        # Latent Heat of Vaporization (Btu/lbm)
-    @t_frz = t_frz      # Freezing Temperature (degF)
+    @rho = rho
+    @cp = cp
+    @k = k
+    @h_fg = h_fg
+    @t_frz = t_frz
   end
 
   attr_accessor :rho, :cp, :k, :mu, :h_fg, :t_frz
 
-  # TODO
+  # Creates a liquid with properties for water at STP.
   #
-  # @return [TODO] TODO
+  # @return [Liquid] The liquid object
   def self.H2O_l
-    # From EES at STP
-    return new(rho: 62.32, cp: 0.9991, k: 0.3386, h_fg: 1055, t_frz: 32.0)
-  end
-
-  # TODO
-  #
-  # @return [TODO] TODO
-  def self.R22_l
-    # Converted from EnthDR22 f77 in ResAC (Brandemuehl)
-    return new(cp: 0.2732, h_fg: 100.5)
+    return new(rho: 62.32, cp: 0.9991, k: 0.3386, h_fg: 1055, t_frz: 32.0) # Source: EES
   end
 end
 
-# TODO
+# Object that stores material properties for gas materials.
 class Gas
-  # @param rho [TODO] TODO
-  # @param cp [TODO] TODO
-  # @param k [TODO] TODO
-  # @param m [TODO] TODO
+  # @param rho [Double] Density (lb/ft3)
+  # @param cp [Double] Specific heat (Btu/lb-F)
+  # @param k [Double] Conductivity (Btu/hr-ft-F)
+  # @param m [Double] Molecular Weight (lb/lbmol)
   def initialize(rho: nil, cp: nil, k: nil, m: nil)
-    @rho = rho # Density (lb/ft3)
-    @cp = cp   # Specific Heat (Btu/lbm-R)
-    @k = k     # Thermal Conductivity (Btu/h-ft-R)
-    @m = m     # Molecular Weight (lbm/lbmol)
+    @rho = rho
+    @cp = cp
+    @k = k
+    @m = m
     if @m
       gas_constant = 1.9858 # Gas Constant (Btu/lbmol-R)
       @r = gas_constant / m # Gas Constant (Btu/lbm-R)
@@ -648,33 +582,23 @@ class Gas
 
   attr_accessor :rho, :cp, :k, :m, :r
 
-  # TODO
+  # Creates a gas with properties for air at STP.
   #
-  # @return [TODO] TODO
+  # @return [Gas] The gas object
   def self.Air
-    # From EES at STP
-    return new(rho: 0.07518, cp: 0.2399, k: 0.01452, m: 28.97)
+    return new(rho: 0.07518, cp: 0.2399, k: 0.01452, m: 28.97) # Source: EES
   end
 
-  # TODO
+  # Creates a gas with properties for water vapor at STP.
   #
-  # @return [TODO] TODO
+  # @return [Gas] The gas object
   def self.H2O_v
-    # From EES at STP
-    return new(cp: 0.4495, m: 18.02)
+    return new(cp: 0.4495, m: 18.02) # Source: EES
   end
 
-  # TODO
+  # The molecular weight ratio of water vapor to air.
   #
-  # @return [TODO] TODO
-  def self.R22_v
-    # Converted from EnthDR22 f77 in ResAC (Brandemuehl)
-    return new(cp: 0.1697)
-  end
-
-  # TODO
-  #
-  # @return [TODO] TODO
+  # @return [Double] The ratio
   def self.PsychMassRat
     return self.H2O_v.m / self.Air.m
   end

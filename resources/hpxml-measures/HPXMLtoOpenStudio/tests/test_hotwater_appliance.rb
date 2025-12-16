@@ -2,7 +2,6 @@
 
 require_relative '../resources/minitest_helper'
 require 'openstudio'
-require 'openstudio/measure/ShowRunnerOutput'
 require 'fileutils'
 require_relative '../measure.rb'
 require_relative '../resources/util.rb'
@@ -12,10 +11,13 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
   def setup
     @root_path = File.absolute_path(File.join(File.dirname(__FILE__), '..', '..'))
     @sample_files_path = File.join(@root_path, 'workflow', 'sample_files')
+    @tmp_hpxml_path = File.join(File.dirname(__FILE__), 'tmp.xml')
+    @schema_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', 'resources', 'hpxml_schema', 'HPXML.xsd'))
+    @schematron_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', 'resources', 'hpxml_schematron', 'EPvalidator.sch'))
   end
 
   def teardown
-    cleanup_results_files
+    cleanup_output_files([@tmp_hpxml_path])
   end
 
   def get_ee_kwh(model, name)
@@ -172,8 +174,11 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
       assert_in_delta(1.0, get_oe_fractions(model, Constants::ObjectTypeGeneralWaterUseLatent)[1], 0.01)
 
       # mains temperature
-      avg_tmains = 57.58
-      assert_in_delta(avg_tmains, UnitConversions.convert(model.getSiteWaterMainsTemperature.temperatureSchedule.get.to_ScheduleInterval.get.timeSeries.averageValue, 'C', 'F'), 0.01)
+      assert_equal('Correlation', model.getSiteWaterMainsTemperature.calculationMethod)
+      assert_in_delta(10.88, model.getSiteWaterMainsTemperature.annualAverageOutdoorAirTemperature.get, 0.01)
+      assert_in_delta(23.15, model.getSiteWaterMainsTemperature.maximumDifferenceInMonthlyAverageOutdoorAirTemperatures.get, 0.01)
+      assert_in_delta(1.0, model.getSiteWaterMainsTemperature.temperatureMultiplier, 0.01)
+      assert_in_delta(0.0, model.getSiteWaterMainsTemperature.temperatureOffset, 0.01)
     end
   end
 
@@ -399,8 +404,11 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     assert_in_delta(dist_gpd, get_wu_gpd(model, Constants::ObjectTypeDistributionWaste), 0.01)
 
     # mains temperature
-    avg_tmains = 70.37
-    assert_in_delta(avg_tmains, UnitConversions.convert(model.getSiteWaterMainsTemperature.temperatureSchedule.get.to_ScheduleInterval.get.timeSeries.averageValue, 'C', 'F'), 0.01)
+    assert_equal('Correlation', model.getSiteWaterMainsTemperature.calculationMethod)
+    assert_in_delta(10.88, model.getSiteWaterMainsTemperature.annualAverageOutdoorAirTemperature.get, 0.01)
+    assert_in_delta(23.15, model.getSiteWaterMainsTemperature.maximumDifferenceInMonthlyAverageOutdoorAirTemperatures.get, 0.01)
+    assert_in_delta(0.68, model.getSiteWaterMainsTemperature.temperatureMultiplier, 0.01)
+    assert_in_delta(11.72, model.getSiteWaterMainsTemperature.temperatureOffset, 0.01)
   end
 
   def test_dhw_recirc_demand
@@ -1067,14 +1075,31 @@ class HPXMLtoOpenStudioHotWaterApplianceTest < Minitest::Test
     result = runner.result
 
     # show the output
-    show_output(result) unless result.value.valueName == 'Success'
+    result.showOutput() unless result.value.valueName == 'Success'
 
     # assert that it ran correctly
     assert_equal('Success', result.value.valueName)
 
-    hpxml = HPXML.new(hpxml_path: File.join(File.dirname(__FILE__), 'in.xml'))
+    hpxml_defaults_path = File.join(File.dirname(__FILE__), 'in.xml')
+    if args_hash['hpxml_path'] == @tmp_hpxml_path
+      # Since there is a penalty to performing schema/schematron validation, we only do it for custom models
+      # Sample files already have their in.xml's checked in the workflow tests
+      schema_validator = @schema_validator
+      schematron_validator = @schematron_validator
+    else
+      schema_validator = nil
+      schematron_validator = nil
+    end
+    hpxml = HPXML.new(hpxml_path: hpxml_defaults_path, schema_validator: schema_validator, schematron_validator: schematron_validator)
+    if not hpxml.errors.empty?
+      puts 'ERRORS:'
+      hpxml.errors.each do |error|
+        puts error
+      end
+      flunk "Validation error(s) in #{hpxml_defaults_path}."
+    end
 
-    File.delete(File.join(File.dirname(__FILE__), 'in.xml'))
+    File.delete(hpxml_defaults_path)
 
     return model, hpxml, hpxml.buildings[0]
   end

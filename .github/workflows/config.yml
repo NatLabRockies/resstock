@@ -15,11 +15,12 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  OPENSTUDIO_VER: 3.10.0
-  OPENSTUDIO_SHA: 86d7e215a1
+  OPENSTUDIO_VER: 3.11.0-rc1
+  OPENSTUDIO_SHA: dee62bf9dd
+  OPENSTUDIO_VER_TO_SHA: "+" # "+" or "%2B" depending on OPENSTUDIO_URL
   OPENSTUDIO_PLATFORM: Ubuntu-24.04-x86_64
   OPENSTUDIO_EXT: deb
-  OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.10.0
+  OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.11.0-rc1
   BUILDSTOCK_BATCH_BRANCH: develop
   BUILDSTOCK_QUERY_BRANCH: main
 
@@ -75,10 +76,20 @@ jobs:
 
       - name: Download and Install OpenStudio
         run: |
+          export OS_DEBFILE_URL="OpenStudio-$OPENSTUDIO_VER$OPENSTUDIO_VER_TO_SHA$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
           export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
-          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE_URL
           sudo apt install -y ./$OS_DEBFILE
           rm ./$OS_DEBFILE
+
+      - name: Check measures
+        shell: bash
+        run: |
+          out=$(openstudio tasks.rb update_measures 2>&1)
+          if [[ "$out" == *"RuboCop failed"* ]]; then echo "$out" && exit 1; fi
+          echo "Checking for file differences..."
+          git config --global --add safe.directory $(realpath .)
+          git diff --exit-code --ignore-cr-at-eol *.rb
 
       - name: Run unit tests
         run: |
@@ -142,7 +153,7 @@ jobs:
         run: |
           export DEBIAN_FRONTEND=noninteractive
           sudo apt update
-          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
+          sudo -E apt-get install -y wget python3-sphinx-rtd-theme
 
       - name: Download formatted options_lookup
         uses: actions/download-artifact@v4
@@ -204,18 +215,6 @@ jobs:
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
-      - name: Install python
-        shell: bash
-        run: |
-          export DEBIAN_FRONTEND=noninteractive
-          sudo apt update
-          sudo -E apt-get install -y python3-pip
-
-      - name: Install python dependencies
-        run : |
-          python3 -m pip install --progress-bar off --upgrade pip
-          pip3 install --progress-bar off pandas pyyaml
-
       - name: Download formatted options_lookup
         uses: actions/download-artifact@v4
         with:
@@ -230,8 +229,9 @@ jobs:
 
       - name: Download and Install OpenStudio
         run: |
+          export OS_DEBFILE_URL="OpenStudio-$OPENSTUDIO_VER$OPENSTUDIO_VER_TO_SHA$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
           export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
-          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE_URL
           sudo apt install -y ./$OS_DEBFILE
           rm ./$OS_DEBFILE
 
@@ -278,8 +278,9 @@ jobs:
 
       - name: Download and Install OpenStudio
         run: |
+          export OS_DEBFILE_URL="OpenStudio-$OPENSTUDIO_VER$OPENSTUDIO_VER_TO_SHA$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
           export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
-          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE_URL
           sudo apt install -y ./$OS_DEBFILE
           rm ./$OS_DEBFILE
 
@@ -329,16 +330,7 @@ jobs:
 
       - name: Run tests
         run: |
-          sudo gem install minitest-reporters
-          sudo gem install simplecov
-          sudo gem install simplecov-html
-          ruby test/test_bsb_analysis.rb
-
-      - name: Install software
-        run: |
-          export DEBIAN_FRONTEND=noninteractive
-          sudo apt update
-          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
+          openstudio test/test_bsb_analysis.rb
 
       - name: Download feature samples
         uses: actions/download-artifact@v4
@@ -433,12 +425,17 @@ jobs:
           path: run_analysis
           name: run_analysis_results_csvs
 
+      - name: Download and Install OpenStudio
+        run: |
+          export OS_DEBFILE_URL="OpenStudio-$OPENSTUDIO_VER$OPENSTUDIO_VER_TO_SHA$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
+          export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE_URL
+          sudo apt install -y ./$OS_DEBFILE
+          rm ./$OS_DEBFILE
+
       - name: Run tests
         run: |
-          sudo gem install minitest-reporters
-          sudo gem install simplecov
-          sudo gem install simplecov-html
-          ruby test/test_analysis_tools.rb
+          openstudio test/test_analysis_tools.rb
 
   sdr-options-analysis:
     runs-on: ubuntu-24.04
@@ -468,8 +465,9 @@ jobs:
 
       - name: Download and Install OpenStudio
         run: |
+          export OS_DEBFILE_URL="OpenStudio-$OPENSTUDIO_VER$OPENSTUDIO_VER_TO_SHA$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
           export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
-          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE_URL
           sudo apt install -y ./$OS_DEBFILE
           rm ./$OS_DEBFILE
 
@@ -602,8 +600,9 @@ jobs:
 
       - name: Download and Install OpenStudio
         run: |
+          export OS_DEBFILE_URL="OpenStudio-$OPENSTUDIO_VER$OPENSTUDIO_VER_TO_SHA$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
           export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
-          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE_URL
           sudo apt install -y ./$OS_DEBFILE
           rm ./$OS_DEBFILE
 

@@ -4,11 +4,12 @@
 module ElectricPanel
   # Calculates load-based capacity and breaker spaces for an electric panel.
   #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param electric_panel [HPXML::ElectricPanel] Object that defines a single electric panel
   # @return [nil]
-  def self.calculate(hpxml_header, hpxml_bldg, electric_panel)
+  def self.calculate(runner, hpxml_header, hpxml_bldg, electric_panel)
     electric_panel.capacity_types = []
     electric_panel.capacity_total_watts = []
     electric_panel.capacity_total_amps = []
@@ -33,12 +34,7 @@ module ElectricPanel
       end
     end
 
-    breaker_spaces_values = BreakerSpacesValues.new
-    calculate_breaker_spaces(electric_panel, breaker_spaces_values)
-
-    electric_panel.breaker_spaces_total = breaker_spaces_values.BreakerSpaces_Total
-    electric_panel.breaker_spaces_occupied = breaker_spaces_values.BreakerSpaces_Occupied
-    electric_panel.breaker_spaces_headroom = breaker_spaces_values.BreakerSpaces_HeadRoom
+    calculate_breaker_spaces(runner, electric_panel)
   end
 
   # Get the component attached to the given service feeder.
@@ -186,22 +182,57 @@ module ElectricPanel
     end
   end
 
-  # Calculate the number of panel breaker spaces corresponding to total, occupied, and headroom.
+  # Calculate the number of panel breaker spaces corresponding to rated total spaces, occupied spaces, and headroom spaces.
   #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param electric_panel [HPXML::ElectricPanel] Object that defines a single electric panel
-  # @param [Array<HPXML::ServiceFeeder>] List of service feeder objects
   # @return [nil]
-  def self.calculate_breaker_spaces(electric_panel, service_feeders)
-    occupied = electric_panel.branch_circuits.map { |branch_circuit| branch_circuit.occupied_spaces }.sum(0.0)
+  def self.calculate_breaker_spaces(runner, electric_panel)
+    occupied_spaces = electric_panel.occupied_spaces
+
     if not electric_panel.rated_total_spaces.nil?
-      total = electric_panel.rated_total_spaces
+      rated_total_spaces = electric_panel.rated_total_spaces
     else
-      total = occupied + electric_panel.headroom_spaces
+      rated_total_spaces = occupied_spaces + electric_panel.headroom_spaces # headroom_spaces is either specified or 3
+
+      electric_panel.rated_total_spaces = rated_total_spaces
+      electric_panel.rated_total_spaces_isdefaulted = true
     end
 
-    service_feeders.BreakerSpaces_Total = total
-    service_feeders.BreakerSpaces_Occupied = occupied
-    service_feeders.BreakerSpaces_HeadRoom = total - occupied
+    if electric_panel.headroom_spaces.nil? # only nil if rated_total_spaces is specified
+      headroom_spaces = rated_total_spaces - occupied_spaces
+      if headroom_spaces < 0
+        runner.registerWarning("The sum of OccupiedSpaces (#{occupied_spaces}) exceeds RatedTotalSpaces (#{rated_total_spaces}); increasing RatedTotalSpaces by #{headroom_spaces.abs} and setting HeadroomSpaces=0.")
+        electric_panel.rated_total_spaces -= headroom_spaces
+        electric_panel.rated_total_spaces_isdefaulted = true
+        headroom_spaces = 0
+      end
+      electric_panel.headroom_spaces = headroom_spaces
+      electric_panel.headroom_spaces_isdefaulted = true
+    end
+  end
+
+  # Returns the list of all possible electric panel load types
+  #
+  # @return [Array<String>] List of load types
+  def self.all_panel_load_types
+    return [HPXML::ElectricPanelLoadTypeHeating,
+            HPXML::ElectricPanelLoadTypeCooling,
+            HPXML::ElectricPanelLoadTypeWaterHeater,
+            HPXML::ElectricPanelLoadTypeClothesDryer,
+            HPXML::ElectricPanelLoadTypeDishwasher,
+            HPXML::ElectricPanelLoadTypeRangeOven,
+            HPXML::ElectricPanelLoadTypeMechVent,
+            HPXML::ElectricPanelLoadTypePermanentSpaHeater,
+            HPXML::ElectricPanelLoadTypePermanentSpaPump,
+            HPXML::ElectricPanelLoadTypePoolHeater,
+            HPXML::ElectricPanelLoadTypePoolPump,
+            HPXML::ElectricPanelLoadTypeWellPump,
+            HPXML::ElectricPanelLoadTypeElectricVehicleCharging,
+            HPXML::ElectricPanelLoadTypeLighting,
+            HPXML::ElectricPanelLoadTypeKitchen,
+            HPXML::ElectricPanelLoadTypeLaundry,
+            HPXML::ElectricPanelLoadTypeOther]
   end
 end
 
@@ -214,20 +245,6 @@ class LoadValues
 
   def initialize
     LOAD_ATTRS.each do |attr|
-      send("#{attr}=", 0.0)
-    end
-  end
-end
-
-# Object with breaker spaces
-class BreakerSpacesValues
-  BREAKERSPACE_ATTRS = [:BreakerSpaces_Occupied,
-                        :BreakerSpaces_Total,
-                        :BreakerSpaces_HeadRoom]
-  attr_accessor(*BREAKERSPACE_ATTRS)
-
-  def initialize
-    BREAKERSPACE_ATTRS.each do |attr|
       send("#{attr}=", 0.0)
     end
   end

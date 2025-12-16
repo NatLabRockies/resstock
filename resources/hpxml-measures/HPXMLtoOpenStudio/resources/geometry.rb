@@ -61,13 +61,9 @@ module Geometry
         radiant_barrier_grade = roof.radiant_barrier_grade
       end
       # FUTURE: Create Constructions.get_air_film(surface) method; use in measure.rb and hpxml_translator_test.rb
-      inside_film = Material.AirFilmRoof(get_roof_pitch([surfaces[0]]))
-      outside_film = Material.AirFilmOutside
+      interior_film = Material.AirFilmIndoorRoof(UnitConversions.convert(surfaces[0].tilt, 'rad', 'deg'), hpxml_header.apply_ashrae140_assumptions)
+      exterior_film = Material.AirFilmOutside(false, hpxml_header.apply_ashrae140_assumptions)
       mat_roofing = Material.RoofMaterial(roof.roof_type)
-      if hpxml_header.apply_ashrae140_assumptions
-        inside_film = Material.AirFilmRoofASHRAE140
-        outside_film = Material.AirFilmOutsideASHRAE140
-      end
       mat_int_finish = Material.InteriorFinishMaterial(roof.interior_finish_type, roof.interior_finish_thickness)
       if mat_int_finish.nil?
         fallback_mat_int_finish = nil
@@ -81,14 +77,14 @@ module Geometry
       if not mat_int_finish.nil?
         # Closed cavity
         constr_sets = [
-          WoodStudConstructionSet.new(Material.Stud2x(8.0), 0.07, 20.0, 0.75, mat_int_finish, mat_roofing),    # 2x8, 24" o.c. + R20
-          WoodStudConstructionSet.new(Material.Stud2x(8.0), 0.07, 10.0, 0.75, mat_int_finish, mat_roofing),    # 2x8, 24" o.c. + R10
-          WoodStudConstructionSet.new(Material.Stud2x(8.0), 0.07, 0.0, 0.75, mat_int_finish, mat_roofing),     # 2x8, 24" o.c.
-          WoodStudConstructionSet.new(Material.Stud2x6, 0.07, 0.0, 0.75, mat_int_finish, mat_roofing),         # 2x6, 24" o.c.
-          WoodStudConstructionSet.new(Material.Stud2x4, 0.07, 0.0, 0.5, mat_int_finish, mat_roofing),          # 2x4, 16" o.c.
-          WoodStudConstructionSet.new(Material.Stud2x4, 0.01, 0.0, 0.0, fallback_mat_int_finish, mat_roofing), # Fallback
+          WoodStudConstructionSet.new(Material.Stud2x(8), 0.07, 20.0, 0.625, mat_int_finish, mat_roofing),    # 2x8, 24" o.c. + R20
+          WoodStudConstructionSet.new(Material.Stud2x(8), 0.07, 10.0, 0.625, mat_int_finish, mat_roofing),    # 2x8, 24" o.c. + R10
+          WoodStudConstructionSet.new(Material.Stud2x(8), 0.07, 0.0, 0.625, mat_int_finish, mat_roofing),     # 2x8, 24" o.c.
+          WoodStudConstructionSet.new(Material.Stud2x(6), 0.07, 0.0, 0.625, mat_int_finish, mat_roofing), # 2x6, 24" o.c.
+          WoodStudConstructionSet.new(Material.Stud2x(4), 0.07, 0.0, 0.5, mat_int_finish, mat_roofing),          # 2x4, 16" o.c.
+          WoodStudConstructionSet.new(Material.Stud2x(4), 0.01, 0.0, 0.0, fallback_mat_int_finish, mat_roofing), # Fallback
         ]
-        match, constr_set, cavity_r = Constructions.pick_wood_stud_construction_set(assembly_r, constr_sets, inside_film, outside_film)
+        match, constr_set, cavity_r = Constructions.pick_wood_stud_construction_set(assembly_r, constr_sets, interior_film, exterior_film)
 
         Constructions.apply_closed_cavity_roof(model, surfaces, "#{roof.id} construction",
                                                cavity_r, install_grade,
@@ -97,16 +93,15 @@ module Geometry
                                                constr_set.mat_int_finish,
                                                constr_set.osb_thick_in, constr_set.rigid_r,
                                                constr_set.mat_ext_finish, has_radiant_barrier,
-                                               inside_film, outside_film, radiant_barrier_grade,
+                                               interior_film, exterior_film, radiant_barrier_grade,
                                                roof.solar_absorptance, roof.emittance)
       else
         # Open cavity
         constr_sets = [
-          GenericConstructionSet.new(10.0, 0.5, nil, mat_roofing), # w/R-10 rigid
-          GenericConstructionSet.new(0.0, 0.5, nil, mat_roofing),  # Standard
-          GenericConstructionSet.new(0.0, 0.0, nil, mat_roofing),  # Fallback
+          GenericConstructionSet.new(10.0, 0.625, nil, mat_roofing), # w/R-10 rigid
+          GenericConstructionSet.new(0.0, 0.625, nil, mat_roofing),  # Standard
         ]
-        match, constr_set, layer_r = Constructions.pick_generic_construction_set(assembly_r, constr_sets, inside_film, outside_film)
+        match, constr_set, layer_r = Constructions.pick_generic_construction_set(assembly_r, constr_sets, interior_film, exterior_film)
 
         cavity_r = 0
         cavity_ins_thick_in = 0
@@ -118,10 +113,10 @@ module Geometry
                                              framing_factor, framing_thick_in,
                                              constr_set.osb_thick_in, layer_r + constr_set.rigid_r,
                                              constr_set.mat_ext_finish, has_radiant_barrier,
-                                             inside_film, outside_film, radiant_barrier_grade,
+                                             interior_film, exterior_film, radiant_barrier_grade,
                                              roof.solar_absorptance, roof.emittance)
       end
-      Constructions.check_surface_assembly_rvalue(runner, surfaces, inside_film, outside_film, assembly_r, match)
+      Constructions.check_surface_assembly_rvalue(runner, surfaces, interior_film, exterior_film, assembly_r, match)
     end
   end
 
@@ -138,6 +133,7 @@ module Geometry
     foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     hpxml_bldg.walls.each do |wall|
+      next if wall.sameas_id && hpxml_header.whole_sfa_or_mf_building_sim
       next if wall.net_area < 1.0 # skip modeling net surface area for surfaces comprised entirely of subsurface area
 
       if wall.azimuth.nil?
@@ -171,11 +167,16 @@ module Geometry
         end
         surface.setSurfaceType(EPlus::SurfaceTypeWall)
         set_surface_interior(model, spaces, surface, wall, hpxml_bldg)
-        set_surface_exterior(model, spaces, surface, wall, hpxml_bldg)
+        set_surface_exterior(model, spaces, surface, wall, hpxml_bldg, hpxml_header)
         if wall.is_interior
           surface.setSunExposure(EPlus::SurfaceSunExposureNo)
           surface.setWindExposure(EPlus::SurfaceWindExposureNo)
         end
+        next unless hpxml_header.whole_sfa_or_mf_building_sim && wall.additional_properties.respond_to?(:adjacent_hpxml_id)
+
+        surface.additionalProperties.setFeature('adjacentHpxmlID', wall.additional_properties.adjacent_hpxml_id)
+        surface.additionalProperties.setFeature('adjacentUnitNumber', wall.additional_properties.adjacent_unit_number)
+        surface.additionalProperties.setFeature('adjacentSpaceType', wall.additional_properties.adjacent_space_type)
       end
 
       next if surfaces.empty?
@@ -187,22 +188,18 @@ module Geometry
       if has_radiant_barrier
         radiant_barrier_grade = wall.radiant_barrier_grade
       end
-      inside_film = Material.AirFilmVertical
+      interior_film = Material.AirFilmIndoorWall
       if wall.is_exterior
-        outside_film = Material.AirFilmOutside
+        exterior_film = Material.AirFilmOutside(false, hpxml_header.apply_ashrae140_assumptions)
         mat_ext_finish = Material.ExteriorFinishMaterial(wall.siding)
       else
-        outside_film = Material.AirFilmVertical
+        exterior_film = Material.AirFilmIndoorWall
         mat_ext_finish = nil
-      end
-      if hpxml_header.apply_ashrae140_assumptions
-        inside_film = Material.AirFilmVerticalASHRAE140
-        outside_film = Material.AirFilmOutsideASHRAE140
       end
       mat_int_finish = Material.InteriorFinishMaterial(wall.interior_finish_type, wall.interior_finish_thickness)
 
       Constructions.apply_wall_construction(runner, model, surfaces, wall.id, wall.wall_type, wall.insulation_assembly_r_value,
-                                            mat_int_finish, has_radiant_barrier, inside_film, outside_film,
+                                            mat_int_finish, has_radiant_barrier, interior_film, exterior_film,
                                             radiant_barrier_grade, mat_ext_finish, wall.solar_absorptance,
                                             wall.emittance)
     end
@@ -214,12 +211,15 @@ module Geometry
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @return [nil]
-  def self.apply_rim_joists(runner, model, spaces, hpxml_bldg)
+  def self.apply_rim_joists(runner, model, spaces, hpxml_bldg, hpxml_header)
     default_azimuths = Defaults.get_azimuths(hpxml_bldg)
     foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     hpxml_bldg.rim_joists.each do |rim_joist|
+      next if rim_joist.sameas_id && hpxml_header.whole_sfa_or_mf_building_sim
+
       if rim_joist.azimuth.nil?
         if rim_joist.is_exterior
           azimuths = default_azimuths # Model as four directions for average exterior incident solar
@@ -251,42 +251,47 @@ module Geometry
         end
         surface.setSurfaceType(EPlus::SurfaceTypeWall)
         set_surface_interior(model, spaces, surface, rim_joist, hpxml_bldg)
-        set_surface_exterior(model, spaces, surface, rim_joist, hpxml_bldg)
+        set_surface_exterior(model, spaces, surface, rim_joist, hpxml_bldg, hpxml_header)
         if rim_joist.is_interior
           surface.setSunExposure(EPlus::SurfaceSunExposureNo)
           surface.setWindExposure(EPlus::SurfaceWindExposureNo)
         end
+        next unless hpxml_header.whole_sfa_or_mf_building_sim && rim_joist.additional_properties.respond_to?(:adjacent_hpxml_id)
+
+        surface.additionalProperties.setFeature('adjacentHpxmlID', rim_joist.additional_properties.adjacent_hpxml_id)
+        surface.additionalProperties.setFeature('adjacentUnitNumber', rim_joist.additional_properties.adjacent_unit_number)
+        surface.additionalProperties.setFeature('adjacentSpaceType', rim_joist.additional_properties.adjacent_space_type)
       end
 
       # Apply construction
 
-      inside_film = Material.AirFilmVertical
+      interior_film = Material.AirFilmIndoorWall
       if rim_joist.is_exterior
-        outside_film = Material.AirFilmOutside
+        exterior_film = Material.AirFilmOutside
         mat_ext_finish = Material.ExteriorFinishMaterial(rim_joist.siding)
       else
-        outside_film = Material.AirFilmVertical
+        exterior_film = Material.AirFilmIndoorWall
         mat_ext_finish = nil
       end
 
       assembly_r = rim_joist.insulation_assembly_r_value
 
       constr_sets = [
-        WoodStudConstructionSet.new(Material.Stud2x(2.0), 0.17, 20.0, 2.0, nil, mat_ext_finish),  # 2x4 + R20
-        WoodStudConstructionSet.new(Material.Stud2x(2.0), 0.17, 10.0, 2.0, nil, mat_ext_finish),  # 2x4 + R10
-        WoodStudConstructionSet.new(Material.Stud2x(2.0), 0.17, 0.0, 2.0, nil, mat_ext_finish),   # 2x4
-        WoodStudConstructionSet.new(Material.Stud2x(2.0), 0.01, 0.0, 0.0, nil, mat_ext_finish),   # Fallback
+        WoodStudConstructionSet.new(Material.Stud2x(2), 0.17, 20.0, 2.0, nil, mat_ext_finish),  # 2x4 + R20
+        WoodStudConstructionSet.new(Material.Stud2x(2), 0.17, 10.0, 2.0, nil, mat_ext_finish),  # 2x4 + R10
+        WoodStudConstructionSet.new(Material.Stud2x(2), 0.17, 0.0, 2.0, nil, mat_ext_finish),   # 2x4
+        WoodStudConstructionSet.new(Material.Stud2x(2), 0.01, 0.0, 0.0, nil, mat_ext_finish),   # Fallback
       ]
-      match, constr_set, cavity_r = Constructions.pick_wood_stud_construction_set(assembly_r, constr_sets, inside_film, outside_film)
+      match, constr_set, cavity_r = Constructions.pick_wood_stud_construction_set(assembly_r, constr_sets, interior_film, exterior_film)
       install_grade = 1
 
-      Constructions.apply_rim_joist(model, surfaces, "#{rim_joist.id} construction",
-                                    cavity_r, install_grade, constr_set.framing_factor,
+      Constructions.apply_rim_joist(model, surfaces, "#{rim_joist.id} construction", cavity_r,
+                                    install_grade, constr_set.stud.thick_in, constr_set.framing_factor,
                                     constr_set.mat_int_finish, constr_set.osb_thick_in,
                                     constr_set.rigid_r, constr_set.mat_ext_finish,
-                                    inside_film, outside_film, rim_joist.solar_absorptance,
+                                    interior_film, exterior_film, rim_joist.solar_absorptance,
                                     rim_joist.emittance)
-      Constructions.check_surface_assembly_rvalue(runner, surfaces, inside_film, outside_film, assembly_r, match)
+      Constructions.check_surface_assembly_rvalue(runner, surfaces, interior_film, exterior_film, assembly_r, match)
     end
   end
 
@@ -304,6 +309,7 @@ module Geometry
     foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     hpxml_bldg.floors.each do |floor|
+      next if floor.sameas_id && hpxml_header.whole_sfa_or_mf_building_sim
       next if floor.net_area < 1.0 # skip modeling net surface area for surfaces comprised entirely of subsurface area
 
       area = floor.net_area
@@ -326,7 +332,7 @@ module Geometry
       end
       surface.additionalProperties.setFeature('Tilt', 0.0)
       set_surface_interior(model, spaces, surface, floor, hpxml_bldg)
-      set_surface_exterior(model, spaces, surface, floor, hpxml_bldg)
+      set_surface_exterior(model, spaces, surface, floor, hpxml_bldg, hpxml_header)
       surface.setName(floor.id)
       if floor.is_interior
         surface.setSunExposure(EPlus::SurfaceSunExposureNo)
@@ -336,49 +342,48 @@ module Geometry
         if floor.exterior_adjacent_to == HPXML::LocationManufacturedHomeUnderBelly
           foundation = hpxml_bldg.foundations.find { |x| x.to_location == floor.exterior_adjacent_to }
           if foundation.belly_wing_skirt_present
+            zero_wind = true
             surface.setWindExposure(EPlus::SurfaceWindExposureNo)
           end
         end
+        if floor.is_exterior && hpxml_header.apply_ashrae140_assumptions
+          zero_wind = true
+          surface.setWindExposure(EPlus::SurfaceWindExposureNo)
+        end
+      end
+      if hpxml_header.whole_sfa_or_mf_building_sim && floor.additional_properties.respond_to?(:adjacent_hpxml_id)
+        surface.additionalProperties.setFeature('adjacentHpxmlID', floor.additional_properties.adjacent_hpxml_id)
+        surface.additionalProperties.setFeature('adjacentUnitNumber', floor.additional_properties.adjacent_unit_number)
+        surface.additionalProperties.setFeature('adjacentSpaceType', floor.additional_properties.adjacent_space_type)
       end
 
       # Apply construction
 
       if floor.is_ceiling
-        if hpxml_header.apply_ashrae140_assumptions
-          # Attic floor
-          inside_film = Material.AirFilmFloorASHRAE140
-          outside_film = Material.AirFilmFloorASHRAE140
-        else
-          inside_film = Material.AirFilmFloorAverage
-          outside_film = Material.AirFilmFloorAverage
-        end
+        interior_film = Material.AirFilmIndoorFloorAverage
+        exterior_film = Material.AirFilmIndoorFloorAverage
         mat_int_finish_or_covering = Material.InteriorFinishMaterial(floor.interior_finish_type, floor.interior_finish_thickness)
         has_radiant_barrier = floor.radiant_barrier
         if has_radiant_barrier
           radiant_barrier_grade = floor.radiant_barrier_grade
         end
       else # Floor
-        if hpxml_header.apply_ashrae140_assumptions
-          # Raised floor
-          inside_film = Material.AirFilmFloorASHRAE140
-          outside_film = Material.AirFilmFloorZeroWindASHRAE140
-          surface.setWindExposure(EPlus::SurfaceWindExposureNo)
+        if floor.interior_adjacent_to == HPXML::LocationConditionedSpace
+          mat_int_finish_or_covering = Material.CoveringBare
+        elsif floor.is_exterior && hpxml_header.apply_ashrae140_assumptions
           mat_int_finish_or_covering = Material.CoveringBare(1.0)
+        end
+        if floor.is_exterior
+          interior_film = Material.AirFilmIndoorFloorAverage
+          exterior_film = Material.AirFilmOutside(zero_wind)
         else
-          inside_film = Material.AirFilmFloorReduced
-          if floor.is_exterior
-            outside_film = Material.AirFilmOutside
-          else
-            outside_film = Material.AirFilmFloorReduced
-          end
-          if floor.interior_adjacent_to == HPXML::LocationConditionedSpace
-            mat_int_finish_or_covering = Material.CoveringBare
-          end
+          interior_film = Material.AirFilmIndoorFloorDown
+          exterior_film = Material.AirFilmIndoorFloorDown
         end
       end
 
       Constructions.apply_floor_ceiling_construction(runner, model, [surface], floor.id, floor.floor_type, floor.is_ceiling, floor.insulation_assembly_r_value,
-                                                     mat_int_finish_or_covering, has_radiant_barrier, inside_film, outside_film, radiant_barrier_grade)
+                                                     mat_int_finish_or_covering, has_radiant_barrier, interior_film, exterior_film, radiant_barrier_grade)
     end
   end
 
@@ -429,7 +434,7 @@ module Geometry
             exposed_length = [apportioned_exposed_length, apportioned_total_length].min
             remaining_exposed_length -= exposed_length
 
-            kiva_foundation = apply_foundation_wall(runner, model, spaces, hpxml_bldg, fnd_wall, exposed_length, fnd_wall_length, default_azimuths)
+            kiva_foundation = apply_foundation_wall(runner, model, spaces, hpxml_bldg, hpxml_header, fnd_wall, exposed_length, fnd_wall_length, default_azimuths)
             apply_foundation_slab(model, weather, spaces, hpxml_bldg, hpxml_header, slab, -1 * fnd_wall.depth_below_grade, exposed_length, kiva_foundation, default_azimuths, schedules_file)
           end
 
@@ -446,9 +451,10 @@ module Geometry
       # The above-grade portion of these walls are modeled as EnergyPlus surfaces with standard adjacency.
       # The below-grade portion of these walls (in contact with ground) are not modeled, as Kiva does not
       # calculate heat flow between two zones through the ground.
-      int_fnd_walls = hpxml_bldg.foundation_walls.select { |fw| fw.is_interior && fw.interior_adjacent_to == foundation_type }
-      int_fnd_walls.each do |fnd_wall|
+      hpxml_bldg.foundation_walls.each do |fnd_wall|
+        next if fnd_wall.sameas_id && hpxml_header.whole_sfa_or_mf_building_sim
         next unless fnd_wall.is_interior
+        next if fnd_wall.interior_adjacent_to != foundation_type
 
         ag_height = fnd_wall.height - fnd_wall.depth_below_grade
         ag_net_area = fnd_wall.net_area * ag_height / fnd_wall.height
@@ -471,15 +477,20 @@ module Geometry
         surface.setName(fnd_wall.id)
         surface.setSurfaceType(EPlus::SurfaceTypeWall)
         set_surface_interior(model, spaces, surface, fnd_wall, hpxml_bldg)
-        set_surface_exterior(model, spaces, surface, fnd_wall, hpxml_bldg)
+        set_surface_exterior(model, spaces, surface, fnd_wall, hpxml_bldg, hpxml_header)
         surface.setSunExposure(EPlus::SurfaceSunExposureNo)
         surface.setWindExposure(EPlus::SurfaceWindExposureNo)
+        if hpxml_header.whole_sfa_or_mf_building_sim && fnd_wall.additional_properties.respond_to?(:adjacent_hpxml_id)
+          surface.additionalProperties.setFeature('adjacentHpxmlID', fnd_wall.additional_properties.adjacent_hpxml_id)
+          surface.additionalProperties.setFeature('adjacentUnitNumber', fnd_wall.additional_properties.adjacent_unit_number)
+          surface.additionalProperties.setFeature('adjacentSpaceType', fnd_wall.additional_properties.adjacent_space_type)
+        end
 
         # Apply construction
 
         wall_type = HPXML::WallTypeConcrete
-        inside_film = Material.AirFilmVertical
-        outside_film = Material.AirFilmVertical
+        interior_film = Material.AirFilmIndoorWall
+        exterior_film = Material.AirFilmIndoorWall
         assembly_r = fnd_wall.insulation_assembly_r_value
         mat_int_finish = Material.InteriorFinishMaterial(fnd_wall.interior_finish_type, fnd_wall.interior_finish_thickness)
         if assembly_r.nil?
@@ -488,12 +499,12 @@ module Geometry
           ext_r = fnd_wall.insulation_exterior_r_value
           mat_concrete = Material.Concrete(concrete_thick_in)
           mat_int_finish_rvalue = mat_int_finish.nil? ? 0.0 : mat_int_finish.rvalue
-          assembly_r = int_r + ext_r + mat_concrete.rvalue + mat_int_finish_rvalue + inside_film.rvalue + outside_film.rvalue
+          assembly_r = int_r + ext_r + mat_concrete.rvalue + mat_int_finish_rvalue + interior_film.rvalue + exterior_film.rvalue
         end
         mat_ext_finish = nil
 
         Constructions.apply_wall_construction(runner, model, [surface], fnd_wall.id, wall_type, assembly_r, mat_int_finish,
-                                              false, inside_film, outside_film, nil, mat_ext_finish, nil, nil)
+                                              false, interior_film, exterior_film, nil, mat_ext_finish, nil, nil)
       end
     end
   end
@@ -508,12 +519,13 @@ module Geometry
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param foundation_wall [HPXML::FoundationWall] The HPXML foundation wall of interest
   # @param exposed_length [Double] Length of foundation wall exposed to ambient conditions, specific to an associated HPXML Slab (ft)
   # @param fnd_wall_length [Double] The total length of the foundation wall (ft)
   # @param default_azimuths [Array<Double>] Default azimuths for the four sides of the home, used for surfaces without an orientation
   # @return [OpenStudio::Model::FoundationKiva] OpenStudio Foundation Kiva object
-  def self.apply_foundation_wall(runner, model, spaces, hpxml_bldg, foundation_wall, exposed_length, fnd_wall_length, default_azimuths)
+  def self.apply_foundation_wall(runner, model, spaces, hpxml_bldg, hpxml_header, foundation_wall, exposed_length, fnd_wall_length, default_azimuths)
     exposed_fraction = exposed_length / fnd_wall_length
     net_exposed_area = foundation_wall.net_area * exposed_fraction
     gross_exposed_area = foundation_wall.area * exposed_fraction
@@ -545,7 +557,7 @@ module Geometry
     surface.setName(foundation_wall.id)
     surface.setSurfaceType(EPlus::SurfaceTypeWall)
     set_surface_interior(model, spaces, surface, foundation_wall, hpxml_bldg)
-    set_surface_exterior(model, spaces, surface, foundation_wall, hpxml_bldg)
+    set_surface_exterior(model, spaces, surface, foundation_wall, hpxml_bldg, hpxml_header)
 
     assembly_r = foundation_wall.insulation_assembly_r_value
     mat_int_finish = Material.InteriorFinishMaterial(foundation_wall.interior_finish_type, foundation_wall.interior_finish_thickness)
@@ -553,14 +565,14 @@ module Geometry
     if not assembly_r.nil?
       ext_rigid_height = height
       ext_rigid_offset = 0.0
-      inside_film = Material.AirFilmVertical
+      interior_film = Material.AirFilmIndoorWall
 
       mat_int_finish_rvalue = mat_int_finish.nil? ? 0.0 : mat_int_finish.rvalue
-      ext_rigid_r = assembly_r - mat_wall.rvalue - mat_int_finish_rvalue - inside_film.rvalue
+      ext_rigid_r = assembly_r - mat_wall.rvalue - mat_int_finish_rvalue - interior_film.rvalue
       int_rigid_r = 0.0
       if ext_rigid_r < 0 # Try without interior finish
         mat_int_finish = nil
-        ext_rigid_r = assembly_r - mat_wall.rvalue - inside_film.rvalue
+        ext_rigid_r = assembly_r - mat_wall.rvalue - interior_film.rvalue
       end
       if (ext_rigid_r > 0) && (ext_rigid_r < 0.1)
         ext_rigid_r = 0.0 # Prevent tiny strip of insulation
@@ -588,7 +600,7 @@ module Geometry
                                         soil_k_in)
 
     if not assembly_r.nil?
-      Constructions.check_surface_assembly_rvalue(runner, [surface], inside_film, nil, assembly_r, match)
+      Constructions.check_surface_assembly_rvalue(runner, [surface], interior_film, nil, assembly_r, match)
     end
 
     return surface.adjacentFoundation.get
@@ -741,7 +753,7 @@ module Geometry
         sub_surface.setSurface(surface)
         sub_surface.setSubSurfaceType(EPlus::SubSurfaceTypeWindow)
 
-        set_subsurface_exterior(surface, spaces, model, window.wall, hpxml_bldg)
+        set_subsurface_exterior(surface, spaces, model, window.wall, hpxml_bldg, hpxml_header)
         surfaces << surface
 
         if not overhang_depth.nil?
@@ -777,13 +789,13 @@ module Geometry
         sub_surface.setSurface(surface)
         sub_surface.setSubSurfaceType(EPlus::SubSurfaceTypeDoor)
 
-        set_subsurface_exterior(surface, spaces, model, window.wall, hpxml_bldg)
+        set_subsurface_exterior(surface, spaces, model, window.wall, hpxml_bldg, hpxml_header)
         surfaces << surface
 
         # Apply construction
-        inside_film = Material.AirFilmVertical
-        outside_film = Material.AirFilmVertical
-        Constructions.apply_door(model, [sub_surface], 'Window', ufactor, inside_film, outside_film)
+        interior_film = Material.AirFilmIndoorWall
+        exterior_film = Material.AirFilmIndoorWall
+        Constructions.apply_door(model, [sub_surface], 'Window', ufactor, interior_film, exterior_film)
       end
     end
 
@@ -795,8 +807,9 @@ module Geometry
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @return [nil]
-  def self.apply_doors(model, spaces, hpxml_bldg)
+  def self.apply_doors(model, spaces, hpxml_bldg, hpxml_header)
     foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     surfaces = []
@@ -823,18 +836,18 @@ module Geometry
       sub_surface.setSurface(surface)
       sub_surface.setSubSurfaceType(EPlus::SubSurfaceTypeDoor)
 
-      set_subsurface_exterior(surface, spaces, model, door.wall, hpxml_bldg)
+      set_subsurface_exterior(surface, spaces, model, door.wall, hpxml_bldg, hpxml_header)
       surfaces << surface
 
       # Apply construction
       ufactor = 1.0 / door.r_value
-      inside_film = Material.AirFilmVertical
+      interior_film = Material.AirFilmIndoorWall
       if door.wall.is_exterior
-        outside_film = Material.AirFilmOutside
+        exterior_film = Material.AirFilmOutside
       else
-        outside_film = Material.AirFilmVertical
+        exterior_film = Material.AirFilmIndoorWall
       end
-      Constructions.apply_door(model, [sub_surface], 'Door', ufactor, inside_film, outside_film)
+      Constructions.apply_door(model, [sub_surface], 'Door', ufactor, interior_film, exterior_film)
     end
 
     Constructions.apply_adiabatic_construction(model, surfaces, 'wall')
@@ -878,7 +891,7 @@ module Geometry
         surface.additionalProperties.setFeature('Width', total_width)
 
         # Assign curb construction
-        curb_assembly_r = [skylight.curb_assembly_r_value - Material.AirFilmVertical.rvalue - Material.AirFilmOutside.rvalue, 0.1].max
+        curb_assembly_r = [skylight.curb_assembly_r_value - Material.AirFilmIndoorWall.rvalue - Material.AirFilmOutside.rvalue, 0.1].max
         curb_mat = Model.add_massless_material(
           model,
           name: 'SkylightCurbMaterial',
@@ -937,12 +950,12 @@ module Geometry
       surface.setName("surface #{skylight.id} shaft")
       surface.setSurfaceType(EPlus::SurfaceTypeWall)
       set_surface_interior(model, spaces, surface, skylight.floor, hpxml_bldg)
-      set_surface_exterior(model, spaces, surface, skylight.floor, hpxml_bldg)
+      set_surface_exterior(model, spaces, surface, skylight.floor, hpxml_bldg, hpxml_header)
       surface.setSunExposure(EPlus::SurfaceSunExposureNo)
       surface.setWindExposure(EPlus::SurfaceWindExposureNo)
 
       # Apply construction
-      shaft_assembly_r = [skylight.shaft_assembly_r_value - 2 * Material.AirFilmVertical.rvalue, 0.1].max
+      shaft_assembly_r = [skylight.shaft_assembly_r_value - 2 * Material.AirFilmIndoorWall.rvalue, 0.1].max
       shaft_mat = Model.add_massless_material(
         model,
         name: 'SkylightShaftMaterial',
@@ -1050,10 +1063,13 @@ module Geometry
   # Assigns the assumed above-grade height of the top of the dwelling unit's walls and foundation walls.
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @return [nil]
-  def self.apply_foundation_and_walls_top(hpxml_bldg)
+  def self.apply_foundation_and_walls_top(hpxml_bldg, hpxml_header)
     foundation_top = [hpxml_bldg.building_construction.unit_height_above_grade, 0].max
     hpxml_bldg.foundation_walls.each do |foundation_wall|
+      next if foundation_wall.sameas_id && hpxml_header.whole_sfa_or_mf_building_sim
+
       top = -1 * foundation_wall.depth_below_grade + foundation_wall.height
       foundation_top = top if top > foundation_top
     end
@@ -1153,21 +1169,6 @@ module Geometry
     end
 
     return new_vertices
-  end
-
-  # For an array of roof surfaces, get the maximum tilt.
-  #
-  # @param surfaces [Array<OpenStudio::Model::Surface>] array of OpenStudio::Model::Surface objects
-  # @return [Double] the maximum of surface tilts (degrees)
-  def self.get_roof_pitch(surfaces)
-    tilts = []
-    surfaces.each do |surface|
-      next if surface.surfaceType != EPlus::SurfaceTypeRoofCeiling
-      next if (surface.outsideBoundaryCondition != EPlus::BoundaryConditionOutdoors) && (surface.outsideBoundaryCondition != EPlus::BoundaryConditionAdiabatic)
-
-      tilts << surface.tilt
-    end
-    return UnitConversions.convert(tilts.max, 'rad', 'deg')
   end
 
   # Create vertices for a vertical plane based on length, height, z origin, azimuth, presence of a buffer, and any subsurface area.
@@ -1688,13 +1689,13 @@ module Geometry
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
   # @param surface [OpenStudio::Model::Surface] an OpenStudio::Model::Surface object
   # @param hpxml_surface [HPXML::Wall or HPXML::Roof or HPXML::RimJoist or HPXML::FoundationWall or HPXML::Slab] any HPXML surface
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
   def self.set_surface_interior(model, spaces, surface, hpxml_surface, hpxml_bldg)
-    interior_adjacent_to = hpxml_surface.interior_adjacent_to
-    if HPXML::conditioned_below_grade_locations.include? interior_adjacent_to
+    if HPXML::conditioned_below_grade_locations.include? hpxml_surface.interior_adjacent_to
       surface.setSpace(create_or_get_space(model, spaces, HPXML::LocationConditionedSpace, hpxml_bldg))
     else
-      surface.setSpace(create_or_get_space(model, spaces, interior_adjacent_to, hpxml_bldg))
+      surface.setSpace(create_or_get_space(model, spaces, hpxml_surface.interior_adjacent_to, hpxml_bldg))
     end
   end
 
@@ -1704,8 +1705,12 @@ module Geometry
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
   # @param surface [OpenStudio::Model::Surface] an OpenStudio::Model::Surface object
   # @param hpxml_surface [HPXML::Wall or HPXML::Roof or HPXML::RimJoist or HPXML::FoundationWall or HPXML::Slab] any HPXML surface
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @return [nil]
-  def self.set_surface_exterior(model, spaces, surface, hpxml_surface, hpxml_bldg)
+  def self.set_surface_exterior(model, spaces, surface, hpxml_surface, hpxml_bldg, hpxml_header)
+    return if hpxml_header.whole_sfa_or_mf_building_sim && hpxml_surface.additional_properties.respond_to?(:adjacent_hpxml_id)
+
     exterior_adjacent_to = hpxml_surface.exterior_adjacent_to
     is_adiabatic = hpxml_surface.is_adiabatic
     if [HPXML::LocationOutside, HPXML::LocationManufacturedHomeUnderBelly].include? exterior_adjacent_to
@@ -1733,13 +1738,14 @@ module Geometry
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param hpxml_surface [HPXML::Wall or HPXML::Roof or HPXML::RimJoist or HPXML::FoundationWall or HPXML::Slab] any HPXML surface
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @return [nil]
-  def self.set_subsurface_exterior(surface, spaces, model, hpxml_surface, hpxml_bldg)
+  def self.set_subsurface_exterior(surface, spaces, model, hpxml_surface, hpxml_bldg, hpxml_header)
     # Subsurface on foundation wall, set it to be adjacent to outdoors
     if hpxml_surface.exterior_adjacent_to == HPXML::LocationGround
       surface.setOutsideBoundaryCondition(EPlus::BoundaryConditionOutdoors)
     else
-      set_surface_exterior(model, spaces, surface, hpxml_surface, hpxml_bldg)
+      set_surface_exterior(model, spaces, surface, hpxml_surface, hpxml_bldg, hpxml_header)
     end
   end
 
@@ -1761,7 +1767,7 @@ module Geometry
       # Create E+ other side coefficient object
       otherside_coeffs = OpenStudio::Model::SurfacePropertyOtherSideCoefficients.new(model)
       otherside_coeffs.setName(exterior_adjacent_to)
-      otherside_coeffs.setCombinedConvectiveRadiativeFilmCoefficient(UnitConversions.convert(1.0 / Material.AirFilmVertical.rvalue, 'Btu/(hr*ft^2*F)', 'W/(m^2*K)'))
+      otherside_coeffs.setCombinedConvectiveRadiativeFilmCoefficient(UnitConversions.convert(1.0 / Material.AirFilmIndoorWall.rvalue, 'Btu/(hr*ft^2*F)', 'W/(m^2*K)'))
       # Schedule of space temperature, can be shared with water heater/ducts
       sch = get_space_temperature_schedule(model, exterior_adjacent_to, spaces)
       otherside_coeffs.setConstantTemperatureSchedule(sch)

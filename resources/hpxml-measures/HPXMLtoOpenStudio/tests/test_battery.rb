@@ -2,7 +2,6 @@
 
 require_relative '../resources/minitest_helper'
 require 'openstudio'
-require 'openstudio/measure/ShowRunnerOutput'
 require 'fileutils'
 require_relative '../measure.rb'
 require_relative '../resources/util.rb'
@@ -12,10 +11,13 @@ class HPXMLtoOpenStudioBatteryTest < Minitest::Test
   def setup
     @root_path = File.absolute_path(File.join(File.dirname(__FILE__), '..', '..'))
     @sample_files_path = File.join(@root_path, 'workflow', 'sample_files')
+    @tmp_hpxml_path = File.join(File.dirname(__FILE__), 'tmp.xml')
+    @schema_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', 'resources', 'hpxml_schema', 'HPXML.xsd'))
+    @schematron_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', 'resources', 'hpxml_schematron', 'EPvalidator.sch'))
   end
 
   def teardown
-    cleanup_results_files
+    cleanup_output_files([@tmp_hpxml_path])
   end
 
   def get_batteries(model, name)
@@ -57,7 +59,6 @@ class HPXMLtoOpenStudioBatteryTest < Minitest::Test
       assert(!battery.thermalZone.is_initialized)
       assert_equal(0, battery.radiativeFraction)
       assert_equal(0.925, battery.dctoDCChargingEfficiency)
-      assert_equal(HPXML::BatteryLifetimeModelNone, battery.lifetimeModel)
       assert_in_epsilon(15, battery.numberofCellsinSeries, 0.01)
       assert_in_epsilon(62, battery.numberofStringsinParallel, 0.01)
       assert_in_epsilon(0.0, battery.initialFractionalStateofCharge, 0.01)
@@ -108,7 +109,6 @@ class HPXMLtoOpenStudioBatteryTest < Minitest::Test
       assert(!battery.thermalZone.is_initialized)
       assert_equal(0, battery.radiativeFraction)
       assert_equal(0.925, battery.dctoDCChargingEfficiency)
-      assert_equal(HPXML::BatteryLifetimeModelNone, battery.lifetimeModel)
       assert_in_epsilon(15, battery.numberofCellsinSeries, 0.01)
       assert_in_epsilon(125, battery.numberofStringsinParallel, 0.01)
       assert_in_epsilon(0.0, battery.initialFractionalStateofCharge, 0.01)
@@ -153,7 +153,6 @@ class HPXMLtoOpenStudioBatteryTest < Minitest::Test
       assert(!battery.thermalZone.is_initialized)
       assert_equal(0, battery.radiativeFraction)
       assert_equal(0.925, battery.dctoDCChargingEfficiency)
-      assert_equal(HPXML::BatteryLifetimeModelNone, battery.lifetimeModel)
       assert_in_epsilon(15, battery.numberofCellsinSeries, 0.01)
       assert_in_epsilon(125, battery.numberofStringsinParallel, 0.01)
       assert_in_epsilon(0.0, battery.initialFractionalStateofCharge, 0.01)
@@ -193,7 +192,6 @@ class HPXMLtoOpenStudioBatteryTest < Minitest::Test
       assert(!battery.thermalZone.is_initialized)
       assert_equal(0, battery.radiativeFraction)
       assert_equal(0.925, battery.dctoDCChargingEfficiency)
-      assert_equal(HPXML::BatteryLifetimeModelNone, battery.lifetimeModel)
       assert_in_epsilon(15, battery.numberofCellsinSeries, 0.01)
       assert_in_epsilon(125, battery.numberofStringsinParallel, 0.01)
       assert_in_epsilon(0.0, battery.initialFractionalStateofCharge, 0.01)
@@ -233,7 +231,6 @@ class HPXMLtoOpenStudioBatteryTest < Minitest::Test
       assert(!battery.thermalZone.is_initialized)
       assert_equal(0, battery.radiativeFraction)
       assert_equal(0.925, battery.dctoDCChargingEfficiency)
-      assert_equal(HPXML::BatteryLifetimeModelNone, battery.lifetimeModel)
       assert_in_epsilon(15, battery.numberofCellsinSeries, 0.01)
       assert_in_epsilon(125, battery.numberofStringsinParallel, 0.01)
       assert_in_epsilon(0.0, battery.initialFractionalStateofCharge, 0.01)
@@ -278,7 +275,6 @@ class HPXMLtoOpenStudioBatteryTest < Minitest::Test
       assert(!battery.thermalZone.is_initialized)
       assert_equal(0, battery.radiativeFraction)
       assert_equal(0.8, battery.dctoDCChargingEfficiency)
-      assert_equal(HPXML::BatteryLifetimeModelNone, battery.lifetimeModel)
       assert_in_epsilon(15, battery.numberofCellsinSeries, 0.01)
       assert_in_epsilon(125, battery.numberofStringsinParallel, 0.01)
       assert_in_epsilon(0.0, battery.initialFractionalStateofCharge, 0.01)
@@ -304,44 +300,6 @@ class HPXMLtoOpenStudioBatteryTest < Minitest::Test
     end
   end
 
-  def test_pv_battery_lifetime_model
-    skip # Temporarily disabled
-    args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-pv-battery-lifetime-model.xml'))
-    model, _hpxml, hpxml_bldg = _test_measure(args_hash)
-
-    hpxml_bldg.batteries.each do |hpxml_battery|
-      batteries = get_batteries(model, hpxml_battery.id)
-      assert_equal(1, batteries.size)
-      battery = batteries[0]
-
-      # Check object
-      assert(!battery.thermalZone.is_initialized)
-      assert_equal(0, battery.radiativeFraction)
-      assert_equal(0.925, battery.dctoDCChargingEfficiency)
-      assert_equal(HPXML::BatteryLifetimeModelKandlerSmith, battery.lifetimeModel)
-      assert_in_epsilon(15, battery.numberofCellsinSeries, 0.01)
-      assert_in_epsilon(125, battery.numberofStringsinParallel, 0.01)
-      assert_in_epsilon(0.0, battery.initialFractionalStateofCharge, 0.01)
-      assert_in_epsilon(198.0, battery.batteryMass, 0.01)
-      assert_in_epsilon(2.25, battery.batterySurfaceArea, 0.01)
-      assert_in_epsilon(20000, calc_nom_capacity(battery), 0.01)
-
-      elcds = get_elcds(model, 'PVSystem')
-      assert_equal(1, elcds.size)
-      elcd = elcds[0]
-
-      # Check object
-      assert_equal('DirectCurrentWithInverterACStorage', elcd.electricalBussType)
-      assert_equal(0.075, elcd.minimumStorageStateofChargeFraction)
-      assert_equal(0.975, elcd.maximumStorageStateofChargeFraction)
-      assert_equal(6000.0, elcd.designStorageControlChargePower.get)
-      assert_equal(6000.0, elcd.designStorageControlDischargePower.get)
-      assert(!elcd.demandLimitSchemePurchasedElectricDemandLimit.is_initialized)
-      assert_equal('TrackFacilityElectricDemandStoreExcessOnSite', elcd.storageOperationScheme)
-    end
-  end
-
   def test_pv_battery_garage
     args_hash = {}
     args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-pv-battery-garage.xml'))
@@ -357,7 +315,6 @@ class HPXMLtoOpenStudioBatteryTest < Minitest::Test
       assert_equal(HPXML::LocationGarage, battery.thermalZone.get.name.to_s)
       assert_equal(0.9, battery.radiativeFraction)
       assert_equal(0.925, battery.dctoDCChargingEfficiency)
-      assert_equal(HPXML::BatteryLifetimeModelNone, battery.lifetimeModel)
       assert_in_epsilon(15, battery.numberofCellsinSeries, 0.01)
       assert_in_epsilon(125, battery.numberofStringsinParallel, 0.01)
       assert_in_epsilon(0.0, battery.initialFractionalStateofCharge, 0.01)
@@ -394,7 +351,6 @@ class HPXMLtoOpenStudioBatteryTest < Minitest::Test
       assert(!battery.thermalZone.is_initialized)
       assert_equal(0, battery.radiativeFraction)
       assert_equal(0.925, battery.dctoDCChargingEfficiency)
-      assert_equal(HPXML::BatteryLifetimeModelNone, battery.lifetimeModel)
       assert_in_epsilon(15, battery.numberofCellsinSeries, 0.01)
       assert_in_epsilon(125, battery.numberofStringsinParallel, 0.01)
       assert_in_epsilon(0.0, battery.initialFractionalStateofCharge, 0.01)
@@ -443,14 +399,31 @@ class HPXMLtoOpenStudioBatteryTest < Minitest::Test
     result = runner.result
 
     # show the output
-    show_output(result) unless result.value.valueName == 'Success'
+    result.showOutput() unless result.value.valueName == 'Success'
 
     # assert that it ran correctly
     assert_equal('Success', result.value.valueName)
 
-    hpxml = HPXML.new(hpxml_path: File.join(File.dirname(__FILE__), 'in.xml'))
+    hpxml_defaults_path = File.join(File.dirname(__FILE__), 'in.xml')
+    if args_hash['hpxml_path'] == @tmp_hpxml_path
+      # Since there is a penalty to performing schema/schematron validation, we only do it for custom models
+      # Sample files already have their in.xml's checked in the workflow tests
+      schema_validator = @schema_validator
+      schematron_validator = @schematron_validator
+    else
+      schema_validator = nil
+      schematron_validator = nil
+    end
+    hpxml = HPXML.new(hpxml_path: hpxml_defaults_path, schema_validator: schema_validator, schematron_validator: schematron_validator)
+    if not hpxml.errors.empty?
+      puts 'ERRORS:'
+      hpxml.errors.each do |error|
+        puts error
+      end
+      flunk "Validation error(s) in #{hpxml_defaults_path}."
+    end
 
-    File.delete(File.join(File.dirname(__FILE__), 'in.xml'))
+    File.delete(hpxml_defaults_path)
 
     return model, hpxml, hpxml.buildings[0]
   end
