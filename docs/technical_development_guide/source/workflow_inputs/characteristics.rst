@@ -30603,6 +30603,28 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
+   * - ``add_shared_system_argument``
+     - 
+     - 
+     - 
+     - 
+     - 
+     - Test Value
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
    * - ``hvac_heating_shared_system``
      - None
      - None
@@ -30681,6 +30703,9 @@ Properties
    * - ``hvac_heat_pump_backup_heating_efficiency``
      - Frac
      - The rated heating efficiency of the integrated backup.
+   * - ``add_shared_system_argument``
+     - 
+     - TODO.
    * - ``hvac_heating_shared_system``
      - 
      - The type of shared system.
