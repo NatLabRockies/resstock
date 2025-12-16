@@ -29,7 +29,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
   def arguments(model)
     args = OpenStudio::Measure::OSArgumentVector.new
 
-    measures_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../measures'))
     hpxml_measures_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../resources/hpxml-measures'))
 
     # BuildResidentialHPXML
@@ -47,13 +46,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     @build_residential_schedule_file_measure_arguments.each do |arg|
       next if Constants::BuildResidentialScheduleFileExcludes.include? arg.name
 
-      args << arg
-    end
-
-    # AddSharedSystem
-    full_measure_path = File.join(measures_dir, 'AddSharedSystem', 'measure.rb')
-    @add_shared_system_measure_arguments = get_measure_instance(full_measure_path).arguments(model)
-    @add_shared_system_measure_arguments.each do |arg|
       args << arg
     end
 
@@ -289,6 +281,12 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('hvac_heating_shared_system', hvac_heating_shared_system_choices, false)
     arg.setDisplayName('HVAC: Heating Shared System Type')
     arg.setDescription('The type of shared system.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeStringArgument('add_shared_system_argument', false)
+    arg.setDisplayName('Argument Name')
+    arg.setDescription('TODO.')
+    arg.setDefaultValue('None')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_heating_autosizing_factor', false)

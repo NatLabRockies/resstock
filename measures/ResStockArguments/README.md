@@ -1561,17 +1561,6 @@ If true, validates the HPXML output file. Set to false for faster performance. N
 
 <br/>
 
-**Argument Name**
-
-TODO.
-
-- **Name:** ``add_shared_system_argument``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
 **Building Unit ID**
 
 The building unit number (between 1 and the number of samples).
@@ -1981,6 +1970,17 @@ The type of shared system.
 - **Required:** ``false``
 
 - **Choices:** `None`, `Baseboard`, `FanCoil`
+
+<br/>
+
+**Argument Name**
+
+TODO.
+
+- **Name:** ``add_shared_system_argument``
+- **Type:** ``String``
+
+- **Required:** ``false``
 
 <br/>
 

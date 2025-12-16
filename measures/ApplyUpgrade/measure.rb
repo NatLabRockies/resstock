@@ -295,13 +295,13 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
             end
             update_args_hash(measures, measure_subdir, new_args_hash)
             update_args_hash(measures, 'ResStockArgumentsPostHPXML', new_args_hash) if measure_subdir == 'ResStockArguments'
+            update_args_hash(measures, 'AddSharedSystem', new_args_hash) if measure_subdir == 'ResStockArguments'
           end
         end
       end
 
       # Run the ResStockArguments measure
       measures['ResStockArguments'][0]['building_id'] = values['building_id']
-      add_shared_system_argument = measures['ResStockArguments'][0].delete('add_shared_system_argument')
       if not apply_measures(measures_dir, { 'ResStockArguments' => measures['ResStockArguments'] }, resstock_arguments_runner, model, true, 'OpenStudio::Measure::ModelMeasure', 'upgraded.osw')
         register_logs(runner, resstock_arguments_runner)
         return false
@@ -385,6 +385,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     in_path = File.expand_path('../home.xml')
     FileUtils.cp(hpxml_path, in_path)
 
+    # Set arguments for the HPXMLtoOpenStudio measure
     measures['HPXMLtoOpenStudio'] = [{}]
     measures['HPXMLtoOpenStudio'][0]['hpxml_path'] = in_path
     measures['HPXMLtoOpenStudio'][0]['output_dir'] = File.dirname(hpxml_path)
@@ -397,23 +398,11 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       return false
     end
 
-    if not add_shared_system_argument.nil?
-      measures['AddSharedSystem'] = [{}]
-      measures['AddSharedSystem'][0]['add_shared_system_argument'] = add_shared_system_argument
-      measures_hash = { 'AddSharedSystem' => measures['AddSharedSystem'] }
-      if not apply_measures(measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
-        register_logs(runner, new_runner)
-        return false
-      end
-
-      # Report values from AddSharedSystem
-      ['add_shared_system_argument'].each do |key_lookup|
-        new_runner.result.stepValues.each do |step_value|
-          next if step_value.name != key_lookup
-
-          register_value(runner, key_lookup, get_value_from_workflow_step_value(step_value))
-        end
-      end
+    # Set arguments for the AddSharedSystem measure
+    measures_hash = { 'AddSharedSystem' => measures['AddSharedSystem'] }
+    if not apply_measures(measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
+      register_logs(runner, new_runner)
+      return false
     end
 
     register_logs(runner, resstock_arguments_runner)
