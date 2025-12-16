@@ -356,10 +356,8 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
     # Optional whole SFA/MF building simulation
     whole_sfa_or_mf_building_sim = true
-    n_units = 1
-    if whole_sfa_or_mf_building_sim
-      n_units = Integer(measures['ResStockArguments'][0]['geometry_building_num_units'])
-    end
+    n_units = measures['ResStockArguments'][0]['geometry_building_num_units']
+    n_units = 1 if n_units.nil?
 
     num_units_modeled = 1
     max_num_units_modeled = 5
