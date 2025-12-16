@@ -121,12 +121,6 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
   bld_exist_model_args.update(sim_ctl_args)
   bld_exist_model_args.update(workflow_args['build_existing_model'])
 
-  add_component_loads = false
-  if bld_exist_model_args.keys.include?('add_component_loads')
-    add_component_loads = bld_exist_model_args['add_component_loads']
-    bld_exist_model_args.delete('add_component_loads')
-  end
-
   if workflow_args.keys.include?('emissions')
     emissions = workflow_args['emissions']
     bld_exist_model_args['emissions_scenario_names'] = emissions.collect { |s| s['scenario_name'] }.join(',')
@@ -241,6 +235,13 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     scenario_xml_dir = File.join(results_dir, 'xml', upgrade_name)
     Dir.mkdir(scenario_xml_dir)
 
+    debug = false
+    if workflow_args.keys.include?('debug')
+      debug = workflow_args['debug']
+    end
+
+    bld_exist_model_args['debug'] = debug
+
     osw = {
       'steps' => [
         {
@@ -257,11 +258,6 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
         'skip_zip_results' => true
       }
     }
-
-    debug = false
-    if workflow_args.keys.include?('debug')
-      debug = workflow_args['debug']
-    end
 
     server_dir_cleanup_args = {
       'retain_in_osm' => false,
@@ -287,16 +283,6 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     server_dir_cleanup_args.update(workflow_args['server_directory_cleanup'])
 
     osw['steps'] += [
-      {
-        'measure_dir_name' => 'HPXMLtoOpenStudio',
-        'arguments' => {
-          'hpxml_path' => '',
-          'output_dir' => '',
-          'debug' => debug,
-          'add_component_loads' => add_component_loads,
-          'skip_validation' => true
-        }
-      },
       {
         'measure_dir_name' => 'UpgradeCosts',
         'arguments' => { 'debug' => debug }
@@ -519,9 +505,7 @@ def samples_osw(results_dir, upgrade_name, workflow, building_id, job_id, folder
   FileUtils.cp(workflow, worker_dir)
   osw = File.join(worker_dir, File.basename(workflow))
 
-  output_dir = File.join(worker_dir, 'run')
-  hpxml_path = File.join(output_dir, 'home.xml')
-  change_arguments(osw, building_id, hpxml_path, output_dir)
+  change_arguments(osw, building_id)
 
   worker_folder_ = job_id
   worker_folder_ = worker_folder if keep_run_folders
@@ -575,14 +559,11 @@ def create_timestamp(time_str)
   return Time.parse(time_str).iso8601.delete('Z')
 end
 
-def change_arguments(osw, building_id, hpxml_path, output_dir)
+def change_arguments(osw, building_id)
   json = JSON.parse(File.read(osw), symbolize_names: true)
   json[:steps].each do |measure|
     if measure[:measure_dir_name] == 'BuildExistingModel'
       measure[:arguments][:building_id] = "#{building_id}"
-    elsif measure[:measure_dir_name] == 'HPXMLtoOpenStudio'
-      measure[:arguments][:hpxml_path] = hpxml_path
-      measure[:arguments][:output_dir] = output_dir
     end
   end
   File.open(osw, 'w') do |f|
