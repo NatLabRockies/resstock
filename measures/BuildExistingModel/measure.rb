@@ -238,6 +238,12 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(false)
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('whole_sfa_or_mf_building_sim', false)
+    arg.setDisplayName('Whole SFA/MF Building Simulation?')
+    arg.setDescription('Set true if creating an HPXML file to simulate a whole single-family attached or multifamily building with multiple dwelling units within. If an HPXML file already exists at the specified HPXML File Path, a new HPXML Building element describing the current dwelling unit will be appended to this HPXML file.')
+    arg.setDefaultValue(false)
+    args << arg
+
     return args
   end
 
@@ -355,7 +361,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     end
 
     # Optional whole SFA/MF building simulation
-    whole_sfa_or_mf_building_sim = true
+    whole_sfa_or_mf_building_sim = args[:whole_sfa_or_mf_building_sim]
     n_units = measures['ResStockArguments'][0]['geometry_building_num_units']
     if n_units.nil?
       whole_sfa_or_mf_building_sim = false
