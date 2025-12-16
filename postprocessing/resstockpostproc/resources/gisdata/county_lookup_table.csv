@@ -1,33 +1,4 @@
 long_name,original_FIP
-"AK, Aleutians East Borough",G0200130
-"AK, Aleutians West Census Area",G0200160
-"AK, Anchorage Municipality",G0200200
-"AK, Bethel Census Area",G0200500
-"AK, Bristol Bay Borough",G0200600
-"AK, Denali Borough",G0200680
-"AK, Dillingham Census Area",G0200700
-"AK, Fairbanks North Star Borough",G0200900
-"AK, Haines Borough",G0201000
-"AK, Hoonah-Angoon Census Area",G0201050
-"AK, Juneau City and Borough",G0201100
-"AK, Kenai Peninsula Borough",G0201220
-"AK, Ketchikan Gateway Borough",G0201300
-"AK, Kodiak Island Borough",G0201500
-"AK, Kusilvak Census Area",G0201580
-"AK, Lake and Peninsula Borough",G0201640
-"AK, Matanuska-Susitna Borough",G0201700
-"AK, Nome Census Area",G0201800
-"AK, North Slope Borough",G0201850
-"AK, Northwest Arctic Borough",G0201880
-"AK, Petersburg Borough",G0201950
-"AK, Prince of Wales-Hyder Census Area",G0201980
-"AK, Sitka City and Borough",G0202200
-"AK, Skagway Municipality",G0202300
-"AK, Southeast Fairbanks Census Area",G0202400
-"AK, Valdez-Cordova Census Area",G0202610
-"AK, Wrangell City and Borough",G0202750
-"AK, Yakutat City and Borough",G0202820
-"AK, Yukon-Koyukuk Census Area",G0202900
 "AL, Autauga County",G0100010
 "AL, Baldwin County",G0100030
 "AL, Barbour County",G0100050
@@ -545,11 +516,6 @@ long_name,original_FIP
 "GA, Wilkes County",G1303170
 "GA, Wilkinson County",G1303190
 "GA, Worth County",G1303210
-"HI, Hawaii County",G1500010
-"HI, Honolulu County",G1500030
-"HI, Kalawao County",G1500050
-"HI, Kauai County",G1500070
-"HI, Maui County",G1500090
 "ID, Ada County",G1600010
 "ID, Adams County",G1600030
 "ID, Bannock County",G1600050
