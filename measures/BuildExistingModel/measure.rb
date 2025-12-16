@@ -360,12 +360,14 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     if n_units.nil?
       whole_sfa_or_mf_building_sim = false
       n_units = 1
+    else
+      n_units = Integer(n_units)
     end
 
     num_units_modeled = 1
     max_num_units_modeled = 5
     unit_multipliers = []
-    if whole_sfa_or_mf_building_sim && n_units > 1
+    if whole_sfa_or_mf_building_sim && (n_units > 1)
       num_units_modeled = [n_units, max_num_units_modeled].min
       unit_multipliers = split_into(n_units, num_units_modeled)
     end
