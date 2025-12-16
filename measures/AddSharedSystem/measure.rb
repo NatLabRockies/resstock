@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'openstudio'
-require 'openstudio-standards'
+# require 'openstudio-standards'
 require_relative '../../resources/buildstock'
 
 # start the measure
