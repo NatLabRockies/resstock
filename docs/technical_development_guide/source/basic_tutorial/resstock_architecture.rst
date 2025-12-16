@@ -43,13 +43,12 @@ The following depicts the order in which workflow measure steps are applied:
   ===== ============================= ================== ========= ============= ==========================
   1     BuildExistingModel            Model              No        Meta measure  ResStock
   2     ApplyUpgrade                  Model              Yes [#]_  Meta measure  ResStock
-  3     HPXMLtoOpenStudio             Model              No                      OS-HPXML [#]_
-  4     UpgradeCosts                  Model              No                      ResStock
-  5     *Other Model Measures*        Model              Yes                     Any [#]_
-  6     ReportSimulationOutput        Reporting          No                      OS-HPXML
-  7     ReportUtilityBills            Reporting          No                      OS-HPXML
-  8     *Other Reporting Measures*    Reporting          Yes                     Any [#]_
-  9     ServerDirectoryCleanup        Reporting          No                      ResStock
+  3     UpgradeCosts                  Model              No                      ResStock
+  4     *Other Model Measures*        Model              Yes                     Any [#]_
+  5     ReportSimulationOutput        Reporting          No                      OS-HPXML [#]_
+  6     ReportUtilityBills            Reporting          No                      OS-HPXML
+  7     *Other Reporting Measures*    Reporting          Yes                     Any [#]_
+  8     ServerDirectoryCleanup        Reporting          No                      ResStock
   ===== ============================= ================== ========= ============= ==========================
 
  .. [#] Baseline models with no upgrades do not have the ApplyUpgrade measure applied.
@@ -66,6 +65,8 @@ The BuildExistingModel and ApplyUpgrade meta measures call the following model m
   2     BuildResidentialHPXML         Model              No                      OS-HPXML
   3     BuildResidentialScheduleFile  Model              No                      OS-HPXML
   4     ResStockArgumentsPostHPXML    Model              No                      ResStock
+  5     HPXMLtoOpenStudio             Model              No                      OS-HPXML
+  6     AddSharedSystem               Model              No                      ResStock
   ===== ============================= ================== ========= ============= ==========================
 
 .. _model-measures:
