@@ -225,6 +225,18 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Utility bill PV monthly grid connection fees. If multiple scenarios, use a comma-separated list.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('add_component_loads', false)
+    arg.setDisplayName('Add component loads?')
+    arg.setDescription('If true, adds the calculation of heating/cooling component loads (not enabled by default for faster performance).')
+    arg.setDefaultValue(false)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('debug', false)
+    arg.setDisplayName('Debug Mode?')
+    arg.setDescription('If true: 1) Writes in.osm file, 2) Generates additional log output, and 3) Creates all EnergyPlus output files.')
+    arg.setDefaultValue(false)
+    args << arg
+
     return args
   end
 
@@ -335,28 +347,25 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     # Run the ResStockArguments measure
     resstock_arguments_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new) # we want only ResStockArguments registered argument values
     measures['ResStockArguments'][0]['building_id'] = args[:building_id]
+    add_shared_system_argument = measures['ResStockArguments'][0].delete('add_shared_system_argument')
     if not apply_measures(measures_dir, { 'ResStockArguments' => measures['ResStockArguments'] }, resstock_arguments_runner, model, true, 'OpenStudio::Measure::ModelMeasure', 'existing.osw')
       register_logs(runner, resstock_arguments_runner)
       return false
     end
 
     # Optional whole SFA/MF building simulation
-    whole_sfa_or_mf_building_sim = false
-    geometry_building_num_units = 1
+    whole_sfa_or_mf_building_sim = true
+    n_units = 1
     if whole_sfa_or_mf_building_sim
-      resstock_arguments_runner.result.stepValues.each do |step_value|
-        if step_value.name == 'geometry_building_num_units'
-          geometry_building_num_units = Integer(get_value_from_workflow_step_value(step_value))
-        end
-      end
+      n_units = Integer(measures['ResStockArguments'][0]['geometry_building_num_units'])
     end
 
     num_units_modeled = 1
     max_num_units_modeled = 5
     unit_multipliers = []
-    if whole_sfa_or_mf_building_sim && geometry_building_num_units > 1
-      num_units_modeled = [geometry_building_num_units, max_num_units_modeled].min
-      unit_multipliers = split_into(geometry_building_num_units, num_units_modeled)
+    if whole_sfa_or_mf_building_sim && n_units > 1
+      num_units_modeled = [n_units, max_num_units_modeled].min
+      unit_multipliers = split_into(n_units, num_units_modeled)
     end
 
     # Set arguments for the BuildResidentialHPXML measure
@@ -369,10 +378,6 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
     new_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     (1..num_units_modeled).each do |unit_number|
-      if unit_number > 1
-        measures['BuildResidentialHPXML'][0]['existing_hpxml_path'] = hpxml_path
-      end
-
       set_resstock_arguments(measures, resstock_arguments_runner)
       if not unit_multipliers.empty?
         unit_multiplier = unit_multipliers[unit_number]
@@ -459,6 +464,44 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     # sample weight
     if bldg_data.keys.include?('sample_weight')
       register_value(runner, 'sample_weight', bldg_data['sample_weight'].to_s)
+    end
+
+    workflow_measures = []
+    runner.workflow.workflowSteps.each do |workflow_step|
+      workflow_measures << workflow_step.toJSON[:measure_dir_name]
+    end
+
+    if not workflow_measures.include?('ApplyUpgrade')
+      measures['HPXMLtoOpenStudio'] = [{}]
+      measures['HPXMLtoOpenStudio'][0]['hpxml_path'] = in_path
+      measures['HPXMLtoOpenStudio'][0]['output_dir'] = File.dirname(hpxml_path)
+      measures['HPXMLtoOpenStudio'][0]['debug'] = args[:debug]
+      measures['HPXMLtoOpenStudio'][0]['add_component_loads'] = args[:add_component_loads]
+      measures['HPXMLtoOpenStudio'][0]['skip_validation'] = true
+      measures_hash = { 'HPXMLtoOpenStudio' => measures['HPXMLtoOpenStudio'] }
+      if not apply_measures(hpxml_measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
+        register_logs(runner, new_runner)
+        return false
+      end
+
+      if not add_shared_system_argument.nil?
+        measures['AddSharedSystem'] = [{}]
+        measures['AddSharedSystem'][0]['add_shared_system_argument'] = add_shared_system_argument
+        measures_hash = { 'AddSharedSystem' => measures['AddSharedSystem'] }
+        if not apply_measures(measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
+          register_logs(runner, new_runner)
+          return false
+        end
+
+        # Report values from AddSharedSystem
+        ['add_shared_system_argument'].each do |key_lookup|
+          new_runner.result.stepValues.each do |step_value|
+            next if step_value.name != key_lookup
+
+            register_value(runner, key_lookup, get_value_from_workflow_step_value(step_value))
+          end
+        end
+      end
     end
 
     register_logs(runner, resstock_arguments_runner)
@@ -619,7 +662,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
   def set_building_construction(measures, unit_multiplier)
     if not unit_multiplier.nil?
-      measures['BuildResidentialHPXML'][0]['unit_multiplier'] = unit_multiplier
+      measures['ResStockArgumentsPostHPXML'][0]['unit_multiplier'] = unit_multiplier
     end
   end
 

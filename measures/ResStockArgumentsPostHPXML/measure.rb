@@ -271,11 +271,6 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     end
 
     @hpxml.buildings.each_with_index do |hpxml_bldg, unit_number|
-      # Existing Building
-      if not @hpxml_existing.nil?
-        hpxml_bldg_existing = @hpxml_existing.buildings[unit_number]
-      end
-
       # Site
       if not args[:site_iecc_zone].nil?
         hpxml_bldg.climate_and_risk_zones.climate_zone_ieccs.add(zone: args[:site_iecc_zone],
@@ -294,6 +289,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         else
           # default
         end
+      end
+      if not args[:unit_multiplier].nil?
+        hpxml_bldg.building_construction.number_of_units = args[:unit_multiplier]
       end
 
       # Usage Multipliers
@@ -478,14 +476,19 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         water_heater.jacket_r_value = args[:dhw_water_heater_jacket_rvalue] unless args[:dhw_water_heater_jacket_rvalue].to_f == 0
       end
 
+      # Existing Building
+      if not @hpxml_existing.nil?
+        hpxml_bldg_existing = @hpxml_existing.buildings[unit_number]
+      end
+
       # HVAC systems
-      retain_existing_hvac_capacities_and_autosizing_factors(args, hpxml_bldg_existing, hpxml_bldg)
+      retain_existing_hvac_capacities_and_autosizing_factors(hpxml_bldg_existing, hpxml_bldg, args)
 
       # Use existing system as heat pump backup
       set_existing_system_as_heat_pump_backup(runner, hpxml_bldg_existing, hpxml_bldg, args)
 
       # Electric Panel
-      set_electric_panel(runner, hpxml_bldg_existing, hpxml_bldg, args)
+      set_electric_panel(runner, hpxml_bldg_existing, hpxml_bldg, args, unit_number)
     end
 
     # Apply defaults
@@ -710,7 +713,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
   end
 
   # Retain HVAC capacities and autosizing factors for HVAC system(s) if the upgrade is not related to the HVAC system(s).
-  def retain_existing_hvac_capacities_and_autosizing_factors(args, hpxml_bldg_existing, hpxml_bldg)
+  def retain_existing_hvac_capacities_and_autosizing_factors(hpxml_bldg_existing, hpxml_bldg, args)
     return if hpxml_bldg_existing.nil?
 
     heating_system_existing = hpxml_bldg_existing.heating_systems.find { |hs| hs.primary_system }
@@ -760,7 +763,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     end
   end
 
-  def set_electric_panel(runner, hpxml_bldg_existing, hpxml_bldg, args)
+  def set_electric_panel(runner, hpxml_bldg_existing, hpxml_bldg, args, unit_number)
     # Assign miscellaneous permanently connected appliance loads
 
     if hpxml_bldg_existing.nil? # this is nil when hpxml_bldg is the existing building
@@ -815,7 +818,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     electric_panel_load_other_power_rating += garage_door_power
 
     # Assign ElectricPanels objects
-    hpxml_bldg.electric_panels.add(id: "ElectricPanel#{hpxml_bldg.electric_panels.size + 1}",
+    bldg_no = ''
+    if unit_number > 0
+      bldg_no = "_#{unit_number + 1}"
+    end
+    hpxml_bldg.electric_panels.add(id: "ElectricPanel#{hpxml_bldg.electric_panels.size + 1}#{bldg_no}",
                                    max_current_rating: cap_value,
                                    headroom_spaces: headroom_spaces,
                                    rated_total_spaces: total_spaces)
@@ -832,12 +839,12 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       next if heating_system.fraction_heat_load_served == 0
 
       if heating_system.primary_system
-        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                             type: HPXML::ElectricPanelLoadTypeHeating,
                             is_new_load: args[:electric_panel_load_heating_system_new_load],
                             component_idrefs: [heating_system.id])
       else
-        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                             type: HPXML::ElectricPanelLoadTypeHeating,
                             is_new_load: args[:electric_panel_load_heating_system_2_new_load],
                             component_idrefs: [heating_system.id])
@@ -848,7 +855,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       next if cooling_system.is_shared_system
       next if cooling_system.fraction_cool_load_served == 0
 
-      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                           type: HPXML::ElectricPanelLoadTypeCooling,
                           is_new_load: args[:electric_panel_load_cooling_system_new_load],
                           component_idrefs: [cooling_system.id])
@@ -858,14 +865,14 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       next if heat_pump.is_shared_system
 
       if heat_pump.fraction_heat_load_served != 0
-        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                             type: HPXML::ElectricPanelLoadTypeHeating,
                             is_new_load: args[:electric_panel_load_heat_pump_new_load],
                             component_idrefs: [heat_pump.id])
       end
       next unless heat_pump.fraction_cool_load_served != 0
 
-      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                           type: HPXML::ElectricPanelLoadTypeCooling,
                           is_new_load: args[:electric_panel_load_heat_pump_new_load],
                           component_idrefs: [heat_pump.id])
@@ -874,7 +881,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     hpxml_bldg.water_heating_systems.each do |water_heating_system|
       next if water_heating_system.fuel_type != HPXML::FuelTypeElectricity
 
-      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                           type: HPXML::ElectricPanelLoadTypeWaterHeater,
                           is_new_load: args[:electric_panel_load_electric_water_heater_new_load],
                           component_idrefs: [water_heating_system.id])
@@ -883,14 +890,14 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     hpxml_bldg.clothes_dryers.each do |clothes_dryer|
       next if clothes_dryer.fuel_type != HPXML::FuelTypeElectricity
 
-      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                           type: HPXML::ElectricPanelLoadTypeClothesDryer,
                           is_new_load: args[:electric_panel_load_electric_clothes_dryer_new_load],
                           component_idrefs: [clothes_dryer.id])
     end
 
     hpxml_bldg.dishwashers.each do |dishwasher|
-      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                           type: HPXML::ElectricPanelLoadTypeDishwasher,
                           is_new_load: args[:electric_panel_load_dishwasher_new_load],
                           component_idrefs: [dishwasher.id])
@@ -899,7 +906,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     hpxml_bldg.cooking_ranges.each do |cooking_range|
       next if cooking_range.fuel_type != HPXML::FuelTypeElectricity
 
-      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                           type: HPXML::ElectricPanelLoadTypeRangeOven,
                           is_new_load: args[:electric_panel_load_electric_cooking_range_new_load],
                           component_idrefs: [cooking_range.id])
@@ -907,24 +914,24 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     hpxml_bldg.ventilation_fans.each do |ventilation_fan|
       if ventilation_fan.used_for_whole_building_ventilation
-        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                             type: HPXML::ElectricPanelLoadTypeMechVent,
                             is_new_load: args[:electric_panel_load_mech_vent_fan_new_load],
                             component_idrefs: [ventilation_fan.id])
       elsif ventilation_fan.used_for_local_ventilation # Kitchen / Bathroom Fans
         if ventilation_fan.fan_location == HPXML::LocationKitchen
-          service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+          service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                               type: HPXML::ElectricPanelLoadTypeMechVent,
                               is_new_load: args[:electric_panel_load_kitchen_fans_new_load],
                               component_idrefs: [ventilation_fan.id])
         elsif ventilation_fan.fan_location == HPXML::LocationBath
-          service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+          service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                               type: HPXML::ElectricPanelLoadTypeMechVent,
                               is_new_load: args[:electric_panel_load_bathroom_fans_new_load],
                               component_idrefs: [ventilation_fan.id])
         end
       elsif ventilation_fan.used_for_seasonal_cooling_load_reduction # Whole House Fan
-        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                             type: HPXML::ElectricPanelLoadTypeMechVent,
                             is_new_load: args[:electric_panel_load_whole_house_fan_new_load],
                             component_idrefs: [ventilation_fan.id])
@@ -932,28 +939,28 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     end
 
     hpxml_bldg.permanent_spas.each do |permanent_spa|
-      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                           type: HPXML::ElectricPanelLoadTypePermanentSpaPump,
                           is_new_load: args[:electric_panel_load_permanent_spa_pump_new_load],
                           component_idrefs: [permanent_spa.pump_id])
 
       next unless [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(permanent_spa.heater_type)
 
-      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                           type: HPXML::ElectricPanelLoadTypePermanentSpaHeater,
                           is_new_load: args[:electric_panel_load_electric_permanent_spa_heater_new_load],
                           component_idrefs: [permanent_spa.heater_id])
     end
 
     hpxml_bldg.pools.each do |pool|
-      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                           type: HPXML::ElectricPanelLoadTypePoolPump,
                           is_new_load: args[:electric_panel_load_pool_pump_new_load],
                           component_idrefs: [pool.pump_id])
 
       next unless [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(pool.heater_type)
 
-      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                           type: HPXML::ElectricPanelLoadTypePoolHeater,
                           is_new_load: args[:electric_panel_load_electric_pool_heater_new_load],
                           component_idrefs: [pool.heater_id])
@@ -961,12 +968,12 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     hpxml_bldg.plug_loads.each do |plug_load|
       if plug_load.plug_load_type == HPXML::PlugLoadTypeWellPump
-        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                             type: HPXML::ElectricPanelLoadTypeWellPump,
                             is_new_load: args[:electric_panel_load_misc_plug_loads_well_pump_new_load],
                             component_idrefs: [plug_load.id])
       elsif plug_load.plug_load_type == HPXML::PlugLoadTypeElectricVehicleCharging
-        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                             type: HPXML::ElectricPanelLoadTypeElectricVehicleCharging,
                             is_new_load: args[:electric_panel_load_misc_plug_loads_vehicle_new_load],
                             component_idrefs: [plug_load.id])
@@ -985,22 +992,22 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       end
 
       if not voltage.nil?
-        branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
+        branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}#{bldg_no}",
                             voltage: voltage,
                             component_idrefs: [ev_charger.id])
       end
 
-      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                           type: HPXML::ElectricPanelLoadTypeElectricVehicleCharging,
                           power: power,
                           is_new_load: args[:electric_panel_load_misc_plug_loads_vehicle_new_load],
                           component_idrefs: [ev_charger.id])
     end
 
-    branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
+    branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}#{bldg_no}",
                         occupied_spaces: 1,
                         component_idrefs: [])
-    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}#{bldg_no}",
                         type: HPXML::ElectricPanelLoadTypeOther,
                         power: electric_panel_load_other_power_rating,
                         is_new_load: args[:electric_panel_load_other_new_load],

@@ -166,6 +166,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The building vintage, used for informational purposes only.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('unit_multiplier', false)
+    arg.setDisplayName('Building Construction: Unit Multiplier')
+    arg.setDescription('The number of similar dwelling units. EnergyPlus simulation results will be multiplied this value. If not provided, defaults to 1.')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ceiling_insulation_r', true)
     arg.setDisplayName('Enclosure: Ceiling Insulation Nominal R-value')
     arg.setUnits('h-ft^2-R/Btu')

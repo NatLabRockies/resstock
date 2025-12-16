@@ -301,6 +301,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
       # Run the ResStockArguments measure
       measures['ResStockArguments'][0]['building_id'] = values['building_id']
+      add_shared_system_argument = measures['ResStockArguments'][0].delete('add_shared_system_argument')
       if not apply_measures(measures_dir, { 'ResStockArguments' => measures['ResStockArguments'] }, resstock_arguments_runner, model, true, 'OpenStudio::Measure::ModelMeasure', 'upgraded.osw')
         register_logs(runner, resstock_arguments_runner)
         return false
@@ -323,11 +324,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     set_battery(measures, hpxml)
 
     new_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
-    hpxml.buildings.each_with_index do |hpxml_bldg, unit_number|
-      if unit_number > 0
-        measures['BuildResidentialHPXML'][0]['existing_hpxml_path'] = hpxml_path
-      end
-
+    hpxml.buildings.each do |hpxml_bldg|
       set_resstock_arguments(measures, resstock_arguments_runner)
       set_building_construction(measures, hpxml_bldg)
       set_dehumidifier(measures, hpxml_bldg)
@@ -387,6 +384,37 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     # We need upgraded.xml (and not just home.xml) for UpgradeCosts
     in_path = File.expand_path('../home.xml')
     FileUtils.cp(hpxml_path, in_path)
+
+    measures['HPXMLtoOpenStudio'] = [{}]
+    measures['HPXMLtoOpenStudio'][0]['hpxml_path'] = in_path
+    measures['HPXMLtoOpenStudio'][0]['output_dir'] = File.dirname(hpxml_path)
+    measures['HPXMLtoOpenStudio'][0]['debug'] = values['debug']
+    measures['HPXMLtoOpenStudio'][0]['add_component_loads'] = values['add_component_loads']
+    measures['HPXMLtoOpenStudio'][0]['skip_validation'] = true
+    measures_hash = { 'HPXMLtoOpenStudio' => measures['HPXMLtoOpenStudio'] }
+    if not apply_measures(hpxml_measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
+      register_logs(runner, new_runner)
+      return false
+    end
+
+    if not add_shared_system_argument.nil?
+      measures['AddSharedSystem'] = [{}]
+      measures['AddSharedSystem'][0]['add_shared_system_argument'] = add_shared_system_argument
+      measures_hash = { 'AddSharedSystem' => measures['AddSharedSystem'] }
+      if not apply_measures(measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
+        register_logs(runner, new_runner)
+        return false
+      end
+
+      # Report values from AddSharedSystem
+      ['add_shared_system_argument'].each do |key_lookup|
+        new_runner.result.stepValues.each do |step_value|
+          next if step_value.name != key_lookup
+
+          register_value(runner, key_lookup, get_value_from_workflow_step_value(step_value))
+        end
+      end
+    end
 
     register_logs(runner, resstock_arguments_runner)
     register_logs(runner, new_runner)
@@ -454,7 +482,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
   def set_building_construction(measures, hpxml_bldg)
     if hpxml_bldg.building_construction.number_of_units > 1
-      measures['BuildResidentialHPXML'][0]['unit_multiplier'] = hpxml_bldg.building_construction.number_of_units
+      measures['ResStockArgumentsPostHPXML'][0]['unit_multiplier'] = hpxml_bldg.building_construction.number_of_units
     end
   end
 

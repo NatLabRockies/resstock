@@ -1753,6 +1753,17 @@ The building vintage, used for informational purposes only.
 
 <br/>
 
+**Building Construction: Unit Multiplier**
+
+The number of similar dwelling units. EnergyPlus simulation results will be multiplied this value. If not provided, defaults to 1.
+
+- **Name:** ``unit_multiplier``
+- **Type:** ``Integer``
+
+- **Required:** ``false``
+
+<br/>
+
 **Enclosure: Ceiling Insulation Nominal R-value**
 
 Nominal R-value for the ceiling (attic floor).

@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>a6023c53-cc1b-43ef-9417-983cba0f67b5</version_id>
-  <version_modified>2025-12-08T21:48:54Z</version_modified>
+  <version_id>187259db-0095-4e65-8099-0ade4cc899e6</version_id>
+  <version_modified>2025-12-16T00:01:11Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -11470,6 +11470,14 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>unit_multiplier</name>
+      <display_name>Building Construction: Unit Multiplier</display_name>
+      <description>The number of similar dwelling units. EnergyPlus simulation results will be multiplied this value. If not provided, defaults to 1.</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>ceiling_insulation_r</name>
       <display_name>Enclosure: Ceiling Insulation Nominal R-value</display_name>
       <description>Nominal R-value for the ceiling (attic floor).</description>
@@ -12418,7 +12426,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>7D9F548E</checksum>
+      <checksum>9A86062D</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12435,7 +12443,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>B145C290</checksum>
+      <checksum>5D6BE922</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
