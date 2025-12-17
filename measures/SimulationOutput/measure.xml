@@ -1,0 +1,928 @@
+<?xml version="1.0"?>
+<measure>
+  <schema_version>3.1</schema_version>
+  <name>simulation_output</name>
+  <uid>a86974d0-41ef-4779-a76b-9b99ba7a9ca9</uid>
+  <version_id>67158bdd-b142-4b44-9098-971514ebab13</version_id>
+  <version_modified>2025-12-17T22:46:02Z</version_modified>
+  <xml_checksum>9BF1E6AC</xml_checksum>
+  <class_name>SimulationOutput</class_name>
+  <display_name>Simulation Output</display_name>
+  <description>TODO</description>
+  <modeler_description>TODO</modeler_description>
+  <arguments>
+    <argument>
+      <name>output_format</name>
+      <display_name>Output Format</display_name>
+      <description>The file format of the annual (and timeseries, if requested) outputs. If 'csv_dview' is selected, the timeseries CSV file will include header rows that facilitate opening the file in the DView application.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>csv</default_value>
+      <choices>
+        <choice>
+          <value>csv</value>
+          <display_name>csv</display_name>
+        </choice>
+        <choice>
+          <value>json</value>
+          <display_name>json</display_name>
+        </choice>
+        <choice>
+          <value>msgpack</value>
+          <display_name>msgpack</display_name>
+        </choice>
+        <choice>
+          <value>csv_dview</value>
+          <display_name>csv_dview</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_total_consumptions</name>
+      <display_name>Generate Annual Output: Total Consumptions</display_name>
+      <description>Generates annual energy consumptions for the total building.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_fuel_consumptions</name>
+      <display_name>Generate Annual Output: Fuel Consumptions</display_name>
+      <description>Generates annual energy consumptions for each fuel type.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_end_use_consumptions</name>
+      <display_name>Generate Annual Output: End Use Consumptions</display_name>
+      <description>Generates annual energy consumptions for each end use.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_system_use_consumptions</name>
+      <display_name>Generate Annual Output: System Use Consumptions</display_name>
+      <description>Generates annual energy consumptions for each end use of each HVAC and water heating system.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_emissions</name>
+      <display_name>Generate Annual Output: Emissions</display_name>
+      <description>Generates annual emissions. Requires the appropriate HPXML inputs to be specified.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_emission_fuels</name>
+      <display_name>Generate Annual Output: Emission Fuel Uses</display_name>
+      <description>Generates annual emissions for each fuel type. Requires the appropriate HPXML inputs to be specified.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_emission_end_uses</name>
+      <display_name>Generate Annual Output: Emission End Uses</display_name>
+      <description>Generates annual emissions for each end use. Requires the appropriate HPXML inputs to be specified.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_total_loads</name>
+      <display_name>Generate Annual Output: Total Loads</display_name>
+      <description>Generates annual heating, cooling, and hot water loads.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_unmet_hours</name>
+      <display_name>Generate Annual Output: Unmet Hours</display_name>
+      <description>Generates annual unmet hours for heating, cooling, and EV driving.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_peak_fuels</name>
+      <display_name>Generate Annual Output: Peak Fuels</display_name>
+      <description>Generates annual/summer/winter electricity peaks.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_peak_loads</name>
+      <display_name>Generate Annual Output: Peak Loads</display_name>
+      <description>Generates annual peak loads for heating/cooling.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_component_loads</name>
+      <display_name>Generate Annual Output: Component Loads</display_name>
+      <description>Generates annual heating and cooling loads disaggregated by component type.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_hot_water_uses</name>
+      <display_name>Generate Annual Output: Hot Water Uses</display_name>
+      <description>Generates annual hot water usages for each end use.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_hvac_summary</name>
+      <display_name>Generate Annual Output: HVAC Summary</display_name>
+      <description>Generates HVAC capacities, design temperatures, and design loads.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_resilience</name>
+      <display_name>Generate Annual Output: Resilience</display_name>
+      <description>Generates annual resilience outputs.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>timeseries_frequency</name>
+      <display_name>Timeseries Reporting Frequency</display_name>
+      <description>The frequency at which to report timeseries output data. Using 'none' will disable timeseries outputs.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>none</default_value>
+      <choices>
+        <choice>
+          <value>none</value>
+          <display_name>none</display_name>
+        </choice>
+        <choice>
+          <value>timestep</value>
+          <display_name>timestep</display_name>
+        </choice>
+        <choice>
+          <value>hourly</value>
+          <display_name>hourly</display_name>
+        </choice>
+        <choice>
+          <value>daily</value>
+          <display_name>daily</display_name>
+        </choice>
+        <choice>
+          <value>monthly</value>
+          <display_name>monthly</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_total_consumptions</name>
+      <display_name>Generate Timeseries Output: Total Consumptions</display_name>
+      <description>Generates timeseries energy consumptions for the total building.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_fuel_consumptions</name>
+      <display_name>Generate Timeseries Output: Fuel Consumptions</display_name>
+      <description>Generates timeseries energy consumptions for each fuel type.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_end_use_consumptions</name>
+      <display_name>Generate Timeseries Output: End Use Consumptions</display_name>
+      <description>Generates timeseries energy consumptions for each end use.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_system_use_consumptions</name>
+      <display_name>Generate Timeseries Output: System Use Consumptions</display_name>
+      <description>Generates timeseries energy consumptions for each end use of each HVAC and water heating system.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_emissions</name>
+      <display_name>Generate Timeseries Output: Emissions</display_name>
+      <description>Generates timeseries emissions. Requires the appropriate HPXML inputs to be specified.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_emission_fuels</name>
+      <display_name>Generate Timeseries Output: Emission Fuel Uses</display_name>
+      <description>Generates timeseries emissions for each fuel type. Requires the appropriate HPXML inputs to be specified.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_emission_end_uses</name>
+      <display_name>Generate Timeseries Output: Emission End Uses</display_name>
+      <description>Generates timeseries emissions for each end use. Requires the appropriate HPXML inputs to be specified.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_hot_water_uses</name>
+      <display_name>Generate Timeseries Output: Hot Water Uses</display_name>
+      <description>Generates timeseries hot water usages for each end use.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_total_loads</name>
+      <display_name>Generate Timeseries Output: Total Loads</display_name>
+      <description>Generates timeseries heating, cooling, and hot water loads.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_component_loads</name>
+      <display_name>Generate Timeseries Output: Component Loads</display_name>
+      <description>Generates timeseries heating and cooling loads disaggregated by component type.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_unmet_hours</name>
+      <display_name>Generate Timeseries Output: Unmet Hours</display_name>
+      <description>Generates timeseries unmet hours for heating, cooling, and EV driving.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_zone_temperatures</name>
+      <display_name>Generate Timeseries Output: Zone Temperatures</display_name>
+      <description>Generates timeseries temperatures for each thermal zone.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_zone_conditions</name>
+      <display_name>Generate Timeseries Output: Zone Conditions</display_name>
+      <description>Generates timeseries temperatures and humidities for each thermal zone.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_airflows</name>
+      <display_name>Generate Timeseries Output: Airflows</display_name>
+      <description>Generates timeseries airflows.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_weather</name>
+      <display_name>Generate Timeseries Output: Weather</display_name>
+      <description>Generates timeseries weather data.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_resilience</name>
+      <display_name>Generate Timeseries Output: Resilience</display_name>
+      <description>Generates timeseries resilience outputs.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>timeseries_timestamp_convention</name>
+      <display_name>Generate Timeseries Output: Timestamp Convention</display_name>
+      <description>Determines whether timeseries timestamps use the start-of-period or end-of-period convention. Doesn't apply if the output format is 'csv_dview'.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>start</default_value>
+      <choices>
+        <choice>
+          <value>start</value>
+          <display_name>start</display_name>
+        </choice>
+        <choice>
+          <value>end</value>
+          <display_name>end</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>timeseries_num_decimal_places</name>
+      <display_name>Generate Timeseries Output: Number of Decimal Places</display_name>
+      <description>Allows overriding the default number of decimal places for timeseries outputs.</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>add_timeseries_dst_column</name>
+      <display_name>Generate Timeseries Output: Add TimeDST Column</display_name>
+      <description>Optionally add, in addition to the default local standard Time column, a local clock TimeDST column. Requires that daylight saving time is enabled.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>add_timeseries_utc_column</name>
+      <display_name>Generate Timeseries Output: Add TimeUTC Column</display_name>
+      <description>Optionally add, in addition to the default local standard Time column, a local clock TimeUTC column. If the time zone UTC offset is not provided in the HPXML file, the time zone in the EPW header will be used.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>user_output_variables</name>
+      <display_name>Generate Timeseries Output: EnergyPlus Output Variables</display_name>
+      <description>Optionally generates timeseries EnergyPlus output variables. If multiple output variables are desired, use a comma-separated list. Do not include key values; by default all key values will be requested. Example: "Zone People Occupant Count, Zone People Total Heating Energy"</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>user_output_meters</name>
+      <display_name>Generate Timeseries Output: EnergyPlus Output Meters</display_name>
+      <description>Optionally generates timeseries EnergyPlus output meters. If multiple output meters are desired, use a comma-separated list. Example: "Electricity:Facility, HeatingCoils:EnergyTransfer"</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>annual_output_file_name</name>
+      <display_name>Annual Output File Name</display_name>
+      <description>If not provided, defaults to 'results_annual.csv' (or 'results_annual.json' or 'results_annual.msgpack').</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>timeseries_output_file_name</name>
+      <display_name>Timeseries Output File Name</display_name>
+      <description>If not provided, defaults to 'results_timeseries.csv' (or 'results_timeseries.json' or 'results_timeseries.msgpack').</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>output_format</name>
+      <display_name>Output Format</display_name>
+      <description>The file format of the annual (and timeseries, if requested) outputs.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>csv</default_value>
+      <choices>
+        <choice>
+          <value>csv</value>
+          <display_name>csv</display_name>
+        </choice>
+        <choice>
+          <value>json</value>
+          <display_name>json</display_name>
+        </choice>
+        <choice>
+          <value>msgpack</value>
+          <display_name>msgpack</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_bills</name>
+      <display_name>Generate Annual Utility Bills</display_name>
+      <description>Generates output file containing annual utility bills.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_monthly_bills</name>
+      <display_name>Generate Monthly Utility Bills</display_name>
+      <description>Generates output file containing monthly utility bills.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>monthly_timestamp_convention</name>
+      <display_name>Generate Monthly Output: Timestamp Convention</display_name>
+      <description>Determines whether monthly timestamps use the start-of-period or end-of-period convention.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>start</default_value>
+      <choices>
+        <choice>
+          <value>start</value>
+          <display_name>start</display_name>
+        </choice>
+        <choice>
+          <value>end</value>
+          <display_name>end</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>annual_output_file_name</name>
+      <display_name>Annual Output File Name</display_name>
+      <description>If not provided, defaults to 'results_bills.csv' (or 'results_bills.json' or 'results_bills.msgpack').</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>monthly_output_file_name</name>
+      <display_name>Monthly Output File Name</display_name>
+      <description>If not provided, defaults to 'results_bills_monthly.csv' (or 'results_bills_monthly.json' or 'results_bills_monthly.msgpack').</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>register_annual_bills</name>
+      <display_name>Register Annual Utility Bills</display_name>
+      <description>Registers annual utility bills with the OpenStudio runner for downstream processing.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>register_monthly_bills</name>
+      <display_name>Register Monthly Utility Bills</display_name>
+      <description>Registers monthly utility bills with the OpenStudio runner for downstream processing.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+  </arguments>
+  <outputs />
+  <provenances />
+  <tags>
+    <tag>Reporting.QAQC</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ReportingMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>3.10.0</identifier>
+        <min_compatible>3.10.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>FB7C5903</checksum>
+    </file>
+  </files>
+</measure>

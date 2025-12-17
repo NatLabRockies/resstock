@@ -3,11 +3,11 @@
   <schema_version>3.1</schema_version>
   <name>add_shared_system</name>
   <uid>8ee9fa41-2685-42dd-acb4-8ed721810134</uid>
-  <version_id>8994100c-9a06-4fcd-8706-988d3ef6f4fe</version_id>
-  <version_modified>2025-12-16T19:53:34Z</version_modified>
+  <version_id>d40b44a0-5f13-4d3f-8664-560205d85758</version_id>
+  <version_modified>2025-12-17T20:39:04Z</version_modified>
   <xml_checksum>BED8DECF</xml_checksum>
   <class_name>AddSharedSystem</class_name>
-  <display_name>AddSharedSystem</display_name>
+  <display_name>Add Shared System</display_name>
   <description>TODO</description>
   <modeler_description>TODO</modeler_description>
   <arguments>
@@ -12664,7 +12664,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>6A1A7302</checksum>
+      <checksum>132E820E</checksum>
     </file>
   </files>
 </measure>

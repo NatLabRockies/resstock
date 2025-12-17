@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# see the URL below for information on how to write OpenStudio measures
+# http://nrel.github.io/OpenStudio-user-documentation/reference/measure_writing_guide/
+
 require 'openstudio'
 # require 'openstudio-standards'
 require_relative '../../resources/buildstock'
@@ -8,8 +11,7 @@ require_relative '../../resources/buildstock'
 class AddSharedSystem < OpenStudio::Measure::ModelMeasure
   # human readable name
   def name
-    # Measure name should be the title case of the class name.
-    return 'AddSharedSystem'
+    return 'Add Shared System'
   end
 
   # human readable description
