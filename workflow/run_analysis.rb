@@ -214,18 +214,16 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     sim_out_rep_args.delete('output_meters')
   end
 
-  include_annual_bills = false
-  include_monthly_bills = false
-  register_annual_bills = true
-  register_monthly_bills = false
+  sim_out_rep_args['register_annual_bills'] = true
+  sim_out_rep_args['register_monthly_bills'] = false
   if sim_out_rep_args.keys.include?('include_annual_bills')
-    register_annual_bills = sim_out_rep_args['include_annual_bills']
-    sim_out_rep_args.delete('include_annual_bills')
+    sim_out_rep_args['register_annual_bills'] = sim_out_rep_args['include_annual_bills']
   end
   if sim_out_rep_args.keys.include?('include_monthly_bills')
-    register_monthly_bills = sim_out_rep_args['include_monthly_bills']
-    sim_out_rep_args.delete('include_monthly_bills')
+    sim_out_rep_args['register_monthly_bills'] = sim_out_rep_args['include_monthly_bills']
   end
+  sim_out_rep_args['include_annual_bills'] = false
+  sim_out_rep_args['include_monthly_bills'] = false
 
   osw_paths = {}
   upgrades.each do |upgrade_name|
@@ -251,8 +249,7 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
       ],
       'created_at' => Time.now.strftime('%Y-%m-%dT%H:%M:%S'),
       'measure_paths' => [
-        File.absolute_path(File.join(File.dirname(__FILE__), '../measures')),
-        File.absolute_path(File.join(File.dirname(__FILE__), '../resources/hpxml-measures'))
+        File.absolute_path(File.join(File.dirname(__FILE__), '../measures'))
       ],
       'run_options' => {
         'skip_zip_results' => true
@@ -293,16 +290,8 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
 
     osw['steps'] += [
       {
-        'measure_dir_name' => 'ReportSimulationOutput',
+        'measure_dir_name' => 'SimulationOutput',
         'arguments' => sim_out_rep_args
-      },
-      {
-        'measure_dir_name' => 'ReportUtilityBills',
-        'arguments' => { 'output_format' => 'csv',
-                         'include_annual_bills' => include_annual_bills,
-                         'include_monthly_bills' => include_monthly_bills,
-                         'register_annual_bills' => register_annual_bills,
-                         'register_monthly_bills' => register_monthly_bills }
       },
       {
         'measure_dir_name' => 'ServerDirectoryCleanup',
@@ -666,8 +655,7 @@ class RunOSWs
       result_output = get_measure_results(rows, result_output, measure)
     end
     result_output = get_measure_results(rows, result_output, 'UpgradeCosts')
-    result_output = get_measure_results(rows, result_output, 'ReportSimulationOutput')
-    result_output = get_measure_results(rows, result_output, 'ReportUtilityBills')
+    result_output = get_measure_results(rows, result_output, 'SimulationOutput')
     reporting_measures.each do |reporting_measure|
       result_output = get_measure_results(rows, result_output, reporting_measure)
     end
