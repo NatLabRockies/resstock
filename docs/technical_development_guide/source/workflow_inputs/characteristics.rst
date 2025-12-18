@@ -31316,14 +31316,14 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - ``hvac_heating_shared_system``
      - Baseboard
      - Baseboard
-     - None
+     - 
      - FanCoil
      - FanCoil
      - 
      - 
    * - ``hvac_cooling_shared_system``
-     - None
-     - None
+     - 
+     - 
      - FanCoil
      - FanCoil
      - FanCoil
