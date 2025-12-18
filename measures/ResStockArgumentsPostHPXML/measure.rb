@@ -380,6 +380,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
             end
           end
           # Shared system
+          # FIXME: remove this after AddSharedSystem is written
           if ['Baseboard', 'FanCoil'].include? args[:hvac_heating_shared_system]
             heating_system.is_shared_system = true
             heating_system.number_of_units_served = hpxml_bldg.building_construction.number_of_units_in_building

@@ -505,7 +505,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       end
 
       # Report values from AddSharedSystem
-      ['add_shared_system_argument'].each do |key_lookup|
+      ['shared_system_type'].each do |key_lookup|
         new_runner.result.stepValues.each do |step_value|
           next if step_value.name != key_lookup
 

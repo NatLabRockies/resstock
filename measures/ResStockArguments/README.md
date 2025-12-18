@@ -1975,7 +1975,7 @@ The type and efficiency of the existing heating system.
 
 **HVAC: Heating Shared System Type**
 
-The type of shared system.
+The type of shared heating system.
 
 - **Name:** ``hvac_heating_shared_system``
 - **Type:** ``Choice``
@@ -1983,17 +1983,6 @@ The type of shared system.
 - **Required:** ``false``
 
 - **Choices:** `None`, `Baseboard`, `FanCoil`
-
-<br/>
-
-**Argument Name**
-
-TODO.
-
-- **Name:** ``add_shared_system_argument``
-- **Type:** ``String``
-
-- **Required:** ``false``
 
 <br/>
 
@@ -2053,6 +2042,19 @@ The type and efficiency of the existing cooling system.
 - **Type:** ``String``
 
 - **Required:** ``false``
+
+<br/>
+
+**HVAC: Cooling Shared System Type**
+
+The type of shared cooling system.
+
+- **Name:** ``hvac_cooling_shared_system``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `None`, `FanCoil`
 
 <br/>
 

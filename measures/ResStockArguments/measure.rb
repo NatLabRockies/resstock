@@ -280,13 +280,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
     arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('hvac_heating_shared_system', hvac_heating_shared_system_choices, false)
     arg.setDisplayName('HVAC: Heating Shared System Type')
-    arg.setDescription('The type of shared system.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('add_shared_system_argument', false)
-    arg.setDisplayName('Argument Name')
-    arg.setDescription('TODO.')
-    arg.setDefaultValue('None')
+    arg.setDescription('The type of shared heating system.')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_heating_autosizing_factor', false)
@@ -314,6 +308,15 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('hvac_cooling_system_existing', false)
     arg.setDisplayName('HVAC: Existing Cooling System')
     arg.setDescription('The type and efficiency of the existing cooling system.')
+    args << arg
+
+    hvac_cooling_shared_system_choices = OpenStudio::StringVector.new
+    hvac_cooling_shared_system_choices << 'None'
+    hvac_cooling_shared_system_choices << 'FanCoil'
+
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('hvac_cooling_shared_system', hvac_cooling_shared_system_choices, false)
+    arg.setDisplayName('HVAC: Cooling Shared System Type')
+    arg.setDescription('The type of shared cooling system.')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_cooling_autosizing_factor', false)

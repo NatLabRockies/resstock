@@ -33,31 +33,8 @@ class AddSharedSystem < OpenStudio::Measure::ModelMeasure
     full_measure_path = File.join(File.dirname(__FILE__), '..', 'ResStockArguments', 'measure.rb')
     measure_arguments = get_measure_instance(full_measure_path).arguments(model)
     measure_arguments.each do |arg|
-      # Convert to optional argument for the unit test
-      # Replace all of this if https://github.com/NREL/OpenStudio/issues/5469 is addressed
-      case arg.type.valueName.downcase
-      when 'choice'
-        new_arg = OpenStudio::Measure::OSArgument.makeChoiceArgument(arg.name, arg.choiceValues, false)
-        new_arg.setDefaultValue(arg.defaultValueAsString) if arg.hasDefaultValue
-      when 'boolean'
-        new_arg = OpenStudio::Measure::OSArgument.makeBoolArgument(arg.name, false)
-        new_arg.setDefaultValue(arg.defaultValueAsBool) if arg.hasDefaultValue
-      when 'string'
-        new_arg = OpenStudio::Measure::OSArgument.makeStringArgument(arg.name, false)
-        new_arg.setDefaultValue(arg.defaultValueAsString) if arg.hasDefaultValue
-      when 'double'
-        new_arg = OpenStudio::Measure::OSArgument.makeDoubleArgument(arg.name, false)
-        new_arg.setDefaultValue(arg.defaultValueAsDouble) if arg.hasDefaultValue
-      when 'integer'
-        new_arg = OpenStudio::Measure::OSArgument.makeIntegerArgument(arg.name, false)
-        new_arg.setDefaultValue(arg.defaultValueAsInteger) if arg.hasDefaultValue
-      else
-        fail "Unhandled argument type: #{arg.type.valueName.downcase}"
-      end
-      new_arg.setDisplayName(arg.displayName.to_s)
-      new_arg.setDescription(arg.description.to_s)
-      new_arg.setUnits(arg.units.to_s)
-      args << new_arg
+      arg.setRequired(false)
+      args << arg
     end
 
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('hpxml_path', false)
@@ -81,9 +58,29 @@ class AddSharedSystem < OpenStudio::Measure::ModelMeasure
     args = runner.getArgumentValues(arguments(model), user_arguments)
     args = convert_args(arguments(model), args)
 
-    return true if args[:add_shared_system_argument] == 'None'
+    if args[:hvac_heating_shared_system] == 'None' && args[:hvac_cooling_shared_system] == 'None'
+      register_value(runner, 'shared_system_type', 'None')
+      return true
+    end
 
-    register_value(runner, 'add_shared_system_argument', args[:add_shared_system_argument])
+    systems = { ['Baseboard', 'None'] => 'Boiler Baseboards Heating Only',
+                ['None', 'FanCoil'] => 'Fan Coil Cooling Only',
+                ['FanCoil', 'FanCoil'] => 'Fan Coil Heating and Cooling' }
+    system = systems[[args[:hvac_heating_shared_system], args[:hvac_cooling_shared_system]]]
+    if system.nil?
+      register_value(runner, 'shared_system_type', 'Unsupported')
+      return true
+    end
+
+    if system == 'Boiler Baseboards Heating Only'
+      # method_a(model, args[:hvac_heating_system], args[:hvac_heating_system_fuel])
+    elsif system == 'Fan Coil Cooling Only'
+      # method_b(model, args[:hvac_cooling_system])
+    elsif system == 'Fan Coil Heating and Cooling'
+      # method_c(model, args[:hvac_heating_system], args[:hvac_heating_system_fuel], args[:hvac_cooling_system])
+    end
+
+    register_value(runner, 'shared_system_type', system)
 
     return true
   end

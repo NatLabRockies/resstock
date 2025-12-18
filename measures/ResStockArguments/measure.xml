@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>64106d43-27aa-42d1-b8ec-57cf2a0f5a84</version_id>
-  <version_modified>2025-12-16T19:53:38Z</version_modified>
+  <version_id>6539210f-1934-4a38-b495-0c0835da1ace</version_id>
+  <version_modified>2025-12-18T21:21:02Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -11630,7 +11630,7 @@
     <argument>
       <name>hvac_heating_shared_system</name>
       <display_name>HVAC: Heating Shared System Type</display_name>
-      <description>The type of shared system.</description>
+      <description>The type of shared heating system.</description>
       <type>Choice</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -11648,15 +11648,6 @@
           <display_name>FanCoil</display_name>
         </choice>
       </choices>
-    </argument>
-    <argument>
-      <name>add_shared_system_argument</name>
-      <display_name>Argument Name</display_name>
-      <description>TODO.</description>
-      <type>String</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <default_value>None</default_value>
     </argument>
     <argument>
       <name>heating_system_heating_autosizing_factor</name>
@@ -11699,6 +11690,24 @@
       <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_cooling_shared_system</name>
+      <display_name>HVAC: Cooling Shared System Type</display_name>
+      <description>The type of shared cooling system.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>None</value>
+          <display_name>None</display_name>
+        </choice>
+        <choice>
+          <value>FanCoil</value>
+          <display_name>FanCoil</display_name>
+        </choice>
+      </choices>
     </argument>
     <argument>
       <name>cooling_system_cooling_autosizing_factor</name>
@@ -12434,7 +12443,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>0DD0A143</checksum>
+      <checksum>E051B22B</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12451,7 +12460,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>CF6A3276</checksum>
+      <checksum>23C7E2A8</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
