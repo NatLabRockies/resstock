@@ -257,7 +257,7 @@
             <Area>151.1</Area>
             <Insulation>
               <SystemIdentifier id='Wall3InsulationSpace1'/>
-              <AssemblyEffectiveRValue>22.7</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>21.3</AssemblyEffectiveRValue>
             </Insulation>
           </Wall>
           <Wall>
@@ -271,7 +271,7 @@
             <Area>88.9</Area>
             <Insulation>
               <SystemIdentifier id='Wall3InsulationSpace2'/>
-              <AssemblyEffectiveRValue>22.7</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>21.3</AssemblyEffectiveRValue>
             </Insulation>
           </Wall>
           <Wall>

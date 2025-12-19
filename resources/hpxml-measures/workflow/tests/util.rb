@@ -27,6 +27,7 @@ end
 
 def _run_xml(xml, worker_num, apply_unit_multiplier = false, annual_results_1x = nil, monthly_results_1x = nil)
   unit_multiplier = 1
+  skip_validation = false
   if apply_unit_multiplier
     hpxml = HPXML.new(hpxml_path: xml)
     hpxml.buildings.each do |hpxml_bldg|
@@ -66,6 +67,11 @@ def _run_xml(xml, worker_num, apply_unit_multiplier = false, annual_results_1x =
     unit_multiplier = hpxml.buildings.map { |hpxml_bldg| hpxml_bldg.building_construction.number_of_units }.sum / orig_multiplier
     if unit_multiplier > 1
       hpxml.header.whole_sfa_or_mf_building_sim = true
+      if not [HPXML::ResidentialTypeApartment, HPXML::ResidentialTypeSFA].include? hpxml.buildings[0].building_construction.residential_facility_type
+        # Schematron validation prevents WholeSFAorMFBuildingSim=true for other
+        # building types, so we skip validation to allow the test to run
+        skip_validation = true
+      end
     end
     xml.gsub!('.xml', '-10x.xml')
     hpxml_doc = hpxml.to_doc()
@@ -80,7 +86,8 @@ def _run_xml(xml, worker_num, apply_unit_multiplier = false, annual_results_1x =
   # inside the ReportSimulationOutput measure.
   cli_path = OpenStudio.getOpenStudioCLI
   building_id_str = ' --building-id MyBuilding_AlternativeDesign' if xml.include? 'base-misc-multiple-buildings.xml'
-  command = "\"#{cli_path}\" \"#{File.join(File.dirname(__FILE__), '../run_simulation.rb')}\" -x \"#{xml}\" --add-component-loads -o \"#{rundir}\" --debug --monthly ALL#{building_id_str}"
+  skip_validation_str = ' --skip-validation' if skip_validation
+  command = "\"#{cli_path}\" \"#{File.join(File.dirname(__FILE__), '../run_simulation.rb')}\" -x \"#{xml}\" --add-component-loads -o \"#{rundir}\" --debug --monthly ALL#{building_id_str}#{skip_validation_str}"
   success = system(command)
 
   if unit_multiplier > 1
@@ -106,7 +113,11 @@ def _run_xml(xml, worker_num, apply_unit_multiplier = false, annual_results_1x =
   # Check outputs
   hpxml_defaults_path = File.join(rundir, 'in.xml')
   schema_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', '..', 'HPXMLtoOpenStudio', 'resources', 'hpxml_schema', 'HPXML.xsd'))
-  schematron_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', '..', 'HPXMLtoOpenStudio', 'resources', 'hpxml_schematron', 'EPvalidator.sch'))
+  if not skip_validation
+    schematron_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', '..', 'HPXMLtoOpenStudio', 'resources', 'hpxml_schematron', 'EPvalidator.sch'))
+  else
+    schematron_validator = nil
+  end
   hpxml = HPXML.new(hpxml_path: hpxml_defaults_path, schema_validator: schema_validator, schematron_validator: schematron_validator) # Validate in.xml to ensure it can be run back through OS-HPXML
   if not hpxml.errors.empty?
     puts 'ERRORS:'

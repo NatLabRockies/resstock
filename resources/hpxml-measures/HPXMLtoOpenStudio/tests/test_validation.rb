@@ -237,6 +237,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'invalid-water-heater-heating-capacity' => ['Expected HeatingCapacity to be greater than 0.'],
                             'invalid-water-heater-heating-capacity2' => ['Expected HeatingCapacity to be greater than 0.'],
                             'invalid-water-heater-stratified-tank-model' => ['Expected 0 element(s) for xpath: extension/TankModelType'],
+                            'invalid-whole-sfa-or-mf-building-sim' => ['WholeSFAorMFBuildingSimulation must be false or omitted for single-family detached/manufactured homes.'],
                             'invalid-window-height' => ['Expected DistanceToBottomOfWindow to be greater than DistanceToTopOfWindow [context: /HPXML/Building/BuildingDetails/Enclosure/Windows/Window/Overhangs[number(Depth) > 0], id: "Window2"]'],
                             'leakiness-description-missing-year-built' => ['Expected 1 element(s) for xpath: BuildingSummary/BuildingConstruction/YearBuilt'],
                             'lighting-fractions' => ['Expected sum(LightingGroup/FractionofUnitsInLocation) for Location="interior" to be less than or equal to 1 [context: /HPXML/Building/BuildingDetails/Lighting, id: "MyBuilding"]'],
@@ -788,6 +789,9 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'invalid-water-heater-stratified-tank-model'
         hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-gas.xml')
         hpxml_bldg.water_heating_systems[0].tank_model_type = HPXML::WaterHeaterTankModelTypeStratified
+      when 'invalid-whole-sfa-or-mf-building-sim'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml.header.whole_sfa_or_mf_building_sim = true
       when 'invalid-window-height'
         hpxml, hpxml_bldg = _create_hpxml('base-enclosure-overhangs.xml')
         hpxml_bldg.windows[1].overhangs_distance_to_bottom_of_window = 1.0

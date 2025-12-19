@@ -20,6 +20,7 @@
       <sch:assert role='ERROR' test='count(h:extension/h:UnavailablePeriods/h:UnavailablePeriod) &gt;= 0'>Expected 0 or more element(s) for xpath: extension/UnavailablePeriods/UnavailablePeriod</sch:assert> <!-- See [UnavailablePeriod] -->
       <sch:assert role='ERROR' test='count(h:extension/h:ElectricPanelLoadCalculations) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/ElectricPanelLoadCalculations</sch:assert> <!-- See [ElectricPanelLoadCalculations] -->
       <sch:assert role='ERROR' test='count(h:extension/h:WholeSFAorMFBuildingSimulation) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/WholeSFAorMFBuildingSimulation</sch:assert>
+      <sch:assert role='ERROR' test='h:extension/h:WholeSFAorMFBuildingSimulation[text()="true" or text()="false"] or not(h:extension/h:WholeSFAorMFBuildingSimulation)'>Expected extension/WholeSFAorMFBuildingSimulation to be 'true' or 'false'</sch:assert>
       <!-- Moved multiple inputs to allow variation across MF dwelling units; see https://github.com/NREL/OpenStudio-HPXML/pull/1478 -->
       <sch:assert role='ERROR' test='count(h:extension/h:SchedulesFilePath) = 0'>extension/SchedulesFilePath has been replaced by /HPXML/Building/BuildingDetails/BuildingSummary/extension/SchedulesFilePath</sch:assert>
       <sch:assert role='ERROR' test='count(h:extension/h:HVACSizingControl) = 0'>extension/HVACSizingControl has been replaced by /HPXML/Building/BuildingDetails/BuildingSummary/extension/HVACSizingControl</sch:assert>
@@ -476,7 +477,7 @@
     <sch:title>[BuildingConstruction]</sch:title>
     <sch:rule context='/h:HPXML/h:Building/h:BuildingDetails/h:BuildingSummary/h:BuildingConstruction'>
       <sch:assert role='ERROR' test='count(h:YearBuilt) &lt;= 1'>Expected 0 or 1 element(s) for xpath: YearBuilt</sch:assert>
-      <sch:assert role='ERROR' test='count(h:ResidentialFacilityType) = 1'>Expected 1 element(s) for xpath: ResidentialFacilityType</sch:assert> <!-- See [BuildingType=SFAorMF] -->
+      <sch:assert role='ERROR' test='count(h:ResidentialFacilityType) = 1'>Expected 1 element(s) for xpath: ResidentialFacilityType</sch:assert> <!-- See [BuildingType=SFAorMF] or [BuildingType=SFDorMH] -->
       <sch:assert role='ERROR' test='h:ResidentialFacilityType[text()="single-family detached" or text()="single-family attached" or text()="apartment unit" or text()="manufactured home"] or not(h:ResidentialFacilityType)'>Expected ResidentialFacilityType to be 'single-family detached' or 'single-family attached' or 'apartment unit' or 'manufactured home'</sch:assert>
       <sch:assert role='ERROR' test='count(h:UnitHeightAboveGrade) &lt;= 1'>Expected 0 or 1 element(s) for xpath: UnitHeightAboveGrade</sch:assert>
       <sch:assert role='ERROR' test='count(h:NumberofUnits) &lt;= 1'>Expected 0 or 1 element(s) for xpath: NumberofUnits</sch:assert>
@@ -503,6 +504,13 @@
     <sch:rule context='/h:HPXML/h:Building/h:BuildingDetails/h:BuildingSummary/h:BuildingConstruction/h:ResidentialFacilityType[text()="single-family attached" or text()="apartment unit"]'>
       <!-- Warnings -->
       <sch:report role='WARN' test='count(//h:ExteriorAdjacentTo[text()="other housing unit" or text()="other heated space" or text()="other multifamily buffer space" or text()="other non-freezing space"]) = 0'>ResidentialFacilityType is single-family attached or apartment unit, but no attached surfaces were found. This may result in erroneous results (e.g., for infiltration).</sch:report>
+    </sch:rule>
+  </sch:pattern>
+
+  <sch:pattern>
+    <sch:title>[BuildingType=SFDorMH]</sch:title>
+    <sch:rule context='/h:HPXML/h:Building/h:BuildingDetails/h:BuildingSummary/h:BuildingConstruction/h:ResidentialFacilityType[text()="single-family detached" or text()="manufactured home"]'>
+      <sch:assert role='ERROR' test='count(/h:HPXML/h:SoftwareInfo/h:extension/h:WholeSFAorMFBuildingSimulation[text()="true"]) = 0'>WholeSFAorMFBuildingSimulation must be false or omitted for single-family detached/manufactured homes.</sch:assert>
     </sch:rule>
   </sch:pattern>
 
