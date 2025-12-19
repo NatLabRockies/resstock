@@ -9,6 +9,7 @@ __New Features__
   - Updates default heating capacities at 17F per RESNET HERS Addendum 82 and NEEP database.
   - Updates supplemental heating energy use during defrost based on RESNET HERS Addendum 82.
   - Updates shared pump power for ground-source heat pumps on a shared recirculation loop to cycle with heating/cooling load rather than operate continuously per RESNET HERS Addendum 94.
+  - Allows desuperheaters to be used with the experimental ground-source heat pump model.
 - Allows optional `UsageMultiplier` for electric vehicles described using `Vehicles`.
 - Water heater improvements:
   - Improves electric water heater tank losses when using `EnergyFactor` as the metric; now consistent with how `UniformEnergyFactor` is handled.

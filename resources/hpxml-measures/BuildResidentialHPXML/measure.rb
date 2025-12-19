@@ -1659,20 +1659,21 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                            solar_absorptance: args[:enclosure_roof_material_solar_absorptance],
                            emittance: args[:enclosure_roof_material_emittance],
                            pitch: args[:geometry_roof_pitch])
-      @surface_ids[surface.name.to_s] = hpxml_bldg.roofs[-1].id
+      hpxml_roof = hpxml_bldg.roofs[-1]
+      @surface_ids[surface.name.to_s] = hpxml_roof.id
 
-      if hpxml_bldg.roofs[-1].is_thermal_boundary
-        hpxml_bldg.roofs[-1].insulation_assembly_r_value = args[:enclosure_roof_conditioned_assembly_r_value]
-      elsif hpxml_bldg.roofs[-1].interior_adjacent_to != HPXML::LocationGarage
-        hpxml_bldg.roofs[-1].insulation_assembly_r_value = args[:enclosure_roof_unconditioned_assembly_r_value]
+      if hpxml_roof.is_thermal_boundary
+        hpxml_roof.insulation_assembly_r_value = args[:enclosure_roof_conditioned_assembly_r_value]
+      elsif hpxml_roof.interior_adjacent_to != HPXML::LocationGarage
+        hpxml_roof.insulation_assembly_r_value = args[:enclosure_roof_unconditioned_assembly_r_value]
       else
-        hpxml_bldg.roofs[-1].insulation_assembly_r_value = 2.3 # Uninsulated
+        hpxml_roof.insulation_assembly_r_value = 2.3 # Uninsulated
       end
 
       next unless [HPXML::RadiantBarrierLocationAtticRoofOnly, HPXML::RadiantBarrierLocationAtticRoofAndGableWalls].include?(args[:enclosure_radiant_barrier_location].to_s)
-      next unless [HPXML::LocationAtticUnvented, HPXML::LocationAtticVented].include?(hpxml_bldg.roofs[-1].interior_adjacent_to)
+      next unless [HPXML::LocationAtticUnvented, HPXML::LocationAtticVented].include?(hpxml_roof.interior_adjacent_to)
 
-      hpxml_bldg.roofs[-1].radiant_barrier = true
+      hpxml_roof.radiant_barrier = true
     end
   end
 
@@ -1713,12 +1714,8 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
 
       if exterior_adjacent_to == HPXML::LocationOutside
         siding = args[:enclosure_wall_siding_type]
-      end
-
-      if interior_adjacent_to == exterior_adjacent_to
-        insulation_assembly_r_value = 4.0 # Uninsulated
       else
-        insulation_assembly_r_value = (args[:enclosure_rim_joist_assembly_r_value] + args[:enclosure_wall_siding_r_value]).round(2)
+        siding = nil
       end
 
       if exterior_adjacent_to == HPXML::LocationOutside
@@ -1741,9 +1738,21 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                                 siding: siding,
                                 color: color,
                                 solar_absorptance: solar_absorptance,
-                                emittance: emittance,
-                                insulation_assembly_r_value: insulation_assembly_r_value)
-      @surface_ids[surface.name.to_s] = hpxml_bldg.rim_joists[-1].id
+                                emittance: emittance)
+      hpxml_rim_joist = hpxml_bldg.rim_joists[-1]
+      @surface_ids[surface.name.to_s] = hpxml_rim_joist.id
+
+      if interior_adjacent_to != exterior_adjacent_to
+        if args[:enclosure_rim_joist].include? 'IECC U-'
+          assembly_r_value = args[:enclosure_rim_joist_assembly_r_value]
+        else
+          assembly_r_value = args[:enclosure_rim_joist_assembly_r_value]
+          assembly_r_value += args[:enclosure_wall_siding_r_value] if exterior_adjacent_to == HPXML::LocationOutside
+        end
+      else
+        assembly_r_value = 4.0 # Uninsulated
+      end
+      hpxml_rim_joist.insulation_assembly_r_value = assembly_r_value.round(2)
     end
   end
 
@@ -1790,12 +1799,12 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
         wall_type = HPXML::WallTypeWoodStud
       end
 
-      if exterior_adjacent_to == HPXML::LocationOutside && (not args[:enclosure_wall_siding_type].nil?)
-        if (attic_locations.include? interior_adjacent_to) && (args[:enclosure_wall_siding_type] == HPXML::SidingTypeNone)
-          siding = nil
-        else
-          siding = args[:enclosure_wall_siding_type]
-        end
+      if (attic_locations.include? interior_adjacent_to) && (args[:enclosure_wall_siding_type] == HPXML::SidingTypeNone)
+        siding = nil # Attic wall, don't even bother to say no siding
+      elsif exterior_adjacent_to == HPXML::LocationOutside
+        siding = args[:enclosure_wall_siding_type]
+      else
+        siding = nil
       end
 
       if exterior_adjacent_to == HPXML::LocationOutside
@@ -1821,31 +1830,27 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                            solar_absorptance: solar_absorptance,
                            emittance: emittance,
                            area: UnitConversions.convert(surface.grossArea, 'm^2', 'ft^2'))
-      @surface_ids[surface.name.to_s] = hpxml_bldg.walls[-1].id
+      hpxml_wall = hpxml_bldg.walls[-1]
+      @surface_ids[surface.name.to_s] = hpxml_wall.id
 
-      is_uncond_attic_roof_insulated = false
-      if attic_locations.include? interior_adjacent_to
-        hpxml_bldg.roofs.each do |roof|
-          next unless (roof.interior_adjacent_to == interior_adjacent_to) && (roof.insulation_assembly_r_value > 4.0)
+      is_uncond_attic_roof_insulated = (attic_locations.include?(interior_adjacent_to) && !args[:enclosure_roof].include?('Uninsulated'))
 
-          is_uncond_attic_roof_insulated = true
-        end
-      end
-
-      if hpxml_bldg.walls[-1].is_thermal_boundary || is_uncond_attic_roof_insulated # Assume wall is insulated if roof is insulated
+      if hpxml_wall.is_thermal_boundary || is_uncond_attic_roof_insulated # Assume wall is insulated if roof is insulated
         if args[:enclosure_wall].include? 'IECC U-'
-          hpxml_bldg.walls[-1].insulation_assembly_r_value = args[:enclosure_wall_assembly_r_value] # Don't add an e.g. siding R-value to the specified assembly U-factor
+          assembly_r_value = args[:enclosure_wall_assembly_r_value]
         else
-          hpxml_bldg.walls[-1].insulation_assembly_r_value = (args[:enclosure_wall_assembly_r_value] + args[:enclosure_wall_continuous_insulation_r_value] + args[:enclosure_wall_siding_r_value]).round(2)
+          assembly_r_value = args[:enclosure_wall_assembly_r_value] + args[:enclosure_wall_continuous_insulation_r_value]
+          assembly_r_value += args[:enclosure_wall_siding_r_value] if exterior_adjacent_to == HPXML::LocationOutside
         end
       else
-        hpxml_bldg.walls[-1].insulation_assembly_r_value = 4.0 # Uninsulated
+        assembly_r_value = 4.0 # Uninsulated
       end
+      hpxml_wall.insulation_assembly_r_value = assembly_r_value.round(2)
 
-      next unless hpxml_bldg.walls[-1].attic_wall_type == HPXML::AtticWallTypeGable && args[:enclosure_radiant_barrier_location].to_s == HPXML::RadiantBarrierLocationAtticRoofAndGableWalls
-      next unless [HPXML::LocationAtticUnvented, HPXML::LocationAtticVented].include?(hpxml_bldg.walls[-1].interior_adjacent_to)
+      next unless hpxml_wall.attic_wall_type == HPXML::AtticWallTypeGable && args[:enclosure_radiant_barrier_location].to_s == HPXML::RadiantBarrierLocationAtticRoofAndGableWalls
+      next unless [HPXML::LocationAtticUnvented, HPXML::LocationAtticVented].include?(hpxml_wall.interior_adjacent_to)
 
-      hpxml_bldg.walls[-1].radiant_barrier = true
+      hpxml_wall.radiant_barrier = true
     end
   end
 
@@ -1929,7 +1934,8 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                                       insulation_exterior_r_value: insulation_exterior_r_value,
                                       insulation_exterior_distance_to_top: insulation_exterior_distance_to_top,
                                       insulation_exterior_distance_to_bottom: insulation_exterior_distance_to_bottom)
-      @surface_ids[surface.name.to_s] = hpxml_bldg.foundation_walls[-1].id
+      hpxml_fnd_wall = hpxml_bldg.foundation_walls[-1]
+      @surface_ids[surface.name.to_s] = hpxml_fnd_wall.id
     end
   end
 
@@ -1971,48 +1977,50 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                             floor_type: HPXML::FloorTypeWoodFrame, # May be overridden below
                             area: UnitConversions.convert(surface.grossArea, 'm^2', 'ft^2'),
                             floor_or_ceiling: floor_or_ceiling)
-      if hpxml_bldg.floors[-1].floor_or_ceiling.nil?
-        if hpxml_bldg.floors[-1].is_floor
-          hpxml_bldg.floors[-1].floor_or_ceiling = HPXML::FloorOrCeilingFloor
-        elsif hpxml_bldg.floors[-1].is_ceiling
-          hpxml_bldg.floors[-1].floor_or_ceiling = HPXML::FloorOrCeilingCeiling
+      hpxml_floor = hpxml_bldg.floors[-1]
+      @surface_ids[surface.name.to_s] = hpxml_floor.id
+
+      if hpxml_floor.floor_or_ceiling.nil?
+        if hpxml_floor.is_floor
+          hpxml_floor.floor_or_ceiling = HPXML::FloorOrCeilingFloor
+        elsif hpxml_floor.is_ceiling
+          hpxml_floor.floor_or_ceiling = HPXML::FloorOrCeilingCeiling
         end
       end
-      @surface_ids[surface.name.to_s] = hpxml_bldg.floors[-1].id
 
       carpet_r = args[:enclosure_carpet_fraction] * args[:enclosure_carpet_r_value]
 
-      if hpxml_bldg.floors[-1].is_thermal_boundary
+      if hpxml_floor.is_thermal_boundary
         case exterior_adjacent_to
         when HPXML::LocationAtticUnvented, HPXML::LocationAtticVented
-          hpxml_bldg.floors[-1].insulation_assembly_r_value = args[:enclosure_ceiling_assembly_r_value]
+          hpxml_floor.insulation_assembly_r_value = args[:enclosure_ceiling_assembly_r_value]
         when HPXML::LocationGarage
           if args[:enclosure_floor_over_garage].include? 'IECC U-'
-            hpxml_bldg.floors[-1].insulation_assembly_r_value = args[:enclosure_floor_over_garage_assembly_r_value]
+            hpxml_floor.insulation_assembly_r_value = args[:enclosure_floor_over_garage_assembly_r_value]
           else
-            hpxml_bldg.floors[-1].insulation_assembly_r_value = (args[:enclosure_floor_over_garage_assembly_r_value] + carpet_r).round(2)
+            hpxml_floor.insulation_assembly_r_value = (args[:enclosure_floor_over_garage_assembly_r_value] + carpet_r).round(2)
           end
-          hpxml_bldg.floors[-1].floor_type = args[:enclosure_floor_over_garage_type]
+          hpxml_floor.floor_type = args[:enclosure_floor_over_garage_type]
         else
           if args[:enclosure_floor_over_foundation].include? 'IECC U-'
-            hpxml_bldg.floors[-1].insulation_assembly_r_value = args[:enclosure_floor_over_foundation_assembly_r_value]
+            hpxml_floor.insulation_assembly_r_value = args[:enclosure_floor_over_foundation_assembly_r_value]
           else
-            hpxml_bldg.floors[-1].insulation_assembly_r_value = (args[:enclosure_floor_over_foundation_assembly_r_value] + carpet_r).round(2)
+            hpxml_floor.insulation_assembly_r_value = (args[:enclosure_floor_over_foundation_assembly_r_value] + carpet_r).round(2)
           end
-          hpxml_bldg.floors[-1].floor_type = args[:enclosure_floor_over_foundation_type]
+          hpxml_floor.floor_type = args[:enclosure_floor_over_foundation_type]
         end
       else
         if floor_or_ceiling == HPXML::FloorOrCeilingFloor
-          hpxml_bldg.floors[-1].insulation_assembly_r_value = (3.7 + carpet_r).round(2) # Matches uninsulated option in enclosure_floor_over_foundation.tsv
+          hpxml_floor.insulation_assembly_r_value = (3.7 + carpet_r).round(2) # Matches uninsulated option in enclosure_floor_over_foundation.tsv
         else
-          hpxml_bldg.floors[-1].insulation_assembly_r_value = 2.1 # Matches uninsulated option in enclosure_ceiling.tsv
+          hpxml_floor.insulation_assembly_r_value = 2.1 # Matches uninsulated option in enclosure_ceiling.tsv
         end
       end
 
       next unless args[:enclosure_radiant_barrier_location].to_s == HPXML::RadiantBarrierLocationAtticFloor
-      next unless [HPXML::LocationAtticUnvented, HPXML::LocationAtticVented].include?(hpxml_bldg.floors[-1].exterior_adjacent_to) && hpxml_bldg.floors[-1].interior_adjacent_to == HPXML::LocationConditionedSpace
+      next unless [HPXML::LocationAtticUnvented, HPXML::LocationAtticVented].include?(hpxml_floor.exterior_adjacent_to) && hpxml_floor.interior_adjacent_to == HPXML::LocationConditionedSpace
 
-      hpxml_bldg.floors[-1].radiant_barrier = true
+      hpxml_floor.radiant_barrier = true
     end
   end
 
@@ -2046,10 +2054,23 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
         exposed_perimeter -= Geometry.get_unexposed_garage_perimeter(**args)
       end
 
-      if args[:enclosure_slab_under_slab_insulation_width].to_f >= 999
-        under_slab_insulation_spans_entire_slab = true
+      if interior_adjacent_to == HPXML::LocationGarage
+        perimeter_insulation_r_value = 0
+        perimeter_insulation_depth = 0
+        under_slab_insulation_width = 0
+        under_slab_insulation_r_value = 0
       else
-        under_slab_insulation_width = args[:enclosure_slab_under_slab_insulation_width]
+        perimeter_insulation_r_value = args[:enclosure_slab_perimeter_insulation_nominal_r_value]
+        perimeter_insulation_depth = args[:enclosure_slab_perimeter_insulation_depth]
+        exterior_horizontal_insulation_r_value = args[:enclosure_slab_exterior_horizontal_insulation_nominal_r_value]
+        exterior_horizontal_insulation_width = args[:enclosure_slab_exterior_horizontal_insulation_width]
+        exterior_horizontal_insulation_depth_below_grade = args[:enclosure_slab_exterior_horizontal_insulation_depth_below_grade]
+        if args[:enclosure_slab_under_slab_insulation_width].to_f >= 999
+          under_slab_insulation_spans_entire_slab = true
+        else
+          under_slab_insulation_width = args[:enclosure_slab_under_slab_insulation_width]
+        end
+        under_slab_insulation_r_value = args[:enclosure_slab_under_slab_insulation_nominal_r_value]
       end
 
       hpxml_bldg.slabs.add(id: "Slab#{hpxml_bldg.slabs.size + 1}",
@@ -2057,25 +2078,26 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                            area: UnitConversions.convert(surface.grossArea, 'm^2', 'ft^2'),
                            thickness: args[:enclosure_slab_thickness],
                            exposed_perimeter: exposed_perimeter,
-                           perimeter_insulation_r_value: args[:enclosure_slab_perimeter_insulation_nominal_r_value],
-                           perimeter_insulation_depth: args[:enclosure_slab_perimeter_insulation_depth],
-                           exterior_horizontal_insulation_r_value: args[:enclosure_slab_exterior_horizontal_insulation_nominal_r_value],
-                           exterior_horizontal_insulation_width: args[:enclosure_slab_exterior_horizontal_insulation_width],
-                           exterior_horizontal_insulation_depth_below_grade: args[:enclosure_slab_exterior_horizontal_insulation_depth_below_grade],
+                           perimeter_insulation_r_value: perimeter_insulation_r_value,
+                           perimeter_insulation_depth: perimeter_insulation_depth,
+                           exterior_horizontal_insulation_r_value: exterior_horizontal_insulation_r_value,
+                           exterior_horizontal_insulation_width: exterior_horizontal_insulation_width,
+                           exterior_horizontal_insulation_depth_below_grade: exterior_horizontal_insulation_depth_below_grade,
                            under_slab_insulation_width: under_slab_insulation_width,
-                           under_slab_insulation_r_value: args[:enclosure_slab_under_slab_insulation_nominal_r_value],
+                           under_slab_insulation_r_value: under_slab_insulation_r_value,
                            under_slab_insulation_spans_entire_slab: under_slab_insulation_spans_entire_slab)
-      @surface_ids[surface.name.to_s] = hpxml_bldg.slabs[-1].id
+      hpxml_slab = hpxml_bldg.slabs[-1]
+      @surface_ids[surface.name.to_s] = hpxml_slab.id
 
       if [HPXML::LocationConditionedSpace, HPXML::LocationBasementConditioned].include? interior_adjacent_to
-        hpxml_bldg.slabs[-1].carpet_fraction = args[:enclosure_carpet_fraction]
-        hpxml_bldg.slabs[-1].carpet_r_value = args[:enclosure_carpet_r_value]
+        hpxml_slab.carpet_fraction = args[:enclosure_carpet_fraction]
+        hpxml_slab.carpet_r_value = args[:enclosure_carpet_r_value]
       end
 
       next unless interior_adjacent_to == HPXML::LocationCrawlspaceConditioned
 
       # Increase Conditioned Building Volume
-      conditioned_crawlspace_volume = hpxml_bldg.slabs[-1].area * args[:geometry_foundation_type_height]
+      conditioned_crawlspace_volume = hpxml_slab.area * args[:geometry_foundation_type_height]
       hpxml_bldg.building_construction.conditioned_building_volume += conditioned_crawlspace_volume
     end
   end

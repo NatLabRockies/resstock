@@ -3253,10 +3253,11 @@ module Defaults
         # 10 W/ton of cooling capacity per RESNET HERS Addendum 82
         if hvac_system.is_a?(HPXML::HeatPump) && (hvac_system.fraction_cool_load_served == 0)
           # Heat pump only provides heating, use heating capacity instead
-          hvac_system.crankcase_heater_watts = 10.0 * UnitConversions.convert(hvac_system.heating_capacity, 'Btu/hr', 'ton')
+          capacity_tons = UnitConversions.convert(hvac_system.heating_capacity, 'Btu/hr', 'ton')
         else
-          hvac_system.crankcase_heater_watts = 10.0 * UnitConversions.convert(hvac_system.cooling_capacity, 'Btu/hr', 'ton')
+          capacity_tons = UnitConversions.convert(hvac_system.cooling_capacity, 'Btu/hr', 'ton')
         end
+        hvac_system.crankcase_heater_watts = (10.0 * capacity_tons).round(2)
       end
       hvac_system.crankcase_heater_watts_isdefaulted = true
     end

@@ -810,6 +810,9 @@
   "sample_files/base-dhw-desuperheater-ghp.xml": {
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-1-speed.xml"
   },
+  "sample_files/base-dhw-desuperheater-ghp-experimental.xml": {
+    "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-1-speed-experimental.xml"
+  },
   "sample_files/base-dhw-desuperheater-hpwh.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml"
   },

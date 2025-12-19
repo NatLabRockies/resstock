@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>42083ced-dd49-4039-9075-77e304007920</version_id>
-  <version_modified>2025-12-11T00:16:07Z</version_modified>
+  <version_id>799f3e5a-1596-4a41-83ab-4138d3a57bd0</version_id>
+  <version_modified>2025-12-19T06:00:32Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -348,7 +348,7 @@
       <filename>defaults.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>7757EBB7</checksum>
+      <checksum>63382BFF</checksum>
     </file>
     <file>
       <filename>electric_panel.rb</filename>
@@ -402,7 +402,7 @@
       <filename>hpxml_schematron/EPvalidator.sch</filename>
       <filetype>sch</filetype>
       <usage_type>resource</usage_type>
-      <checksum>765493D1</checksum>
+      <checksum>2C56E3B9</checksum>
     </file>
     <file>
       <filename>hpxml_schematron/iso-schematron.xsd</filename>
@@ -696,7 +696,7 @@
       <filename>waterheater.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>D373B68C</checksum>
+      <checksum>FBE1CBC7</checksum>
     </file>
     <file>
       <filename>weather.rb</filename>
@@ -810,7 +810,7 @@
       <filename>test_validation.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>07790179</checksum>
+      <checksum>A4CB2836</checksum>
     </file>
     <file>
       <filename>test_vehicle.rb</filename>
@@ -822,7 +822,7 @@
       <filename>test_water_heater.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>5C3EDE9C</checksum>
+      <checksum>EC636CDD</checksum>
     </file>
     <file>
       <filename>test_weather.rb</filename>
