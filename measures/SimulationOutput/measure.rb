@@ -161,6 +161,17 @@ class SimulationOutput < OpenStudio::Measure::ReportingMeasure
     end
 
     num_units = hpxml.buildings.collect { |hpxml_bldg| hpxml_bldg.building_construction.number_of_units }.sum
+
+    # Write/report results
+    report_runperiod_output_results(runner, new_runner, num_units)
+    report_timeseries_output_results(args, num_units)
+
+    register_logs(runner, new_runner)
+
+    return true
+  end
+
+  def report_runperiod_output_results(runner, new_runner, num_units)
     new_runner.result.stepValues.each do |step_value|
       value = get_value_from_workflow_step_value(step_value)
       variant_type = step_value.variantType
@@ -169,10 +180,30 @@ class SimulationOutput < OpenStudio::Measure::ReportingMeasure
       end
       register_value(runner, step_value.name, value)
     end
+  end
 
-    register_logs(runner, new_runner)
+  def report_timeseries_output_results(args, num_units)
+    timeseries_output_path = File.expand_path('../results_timeseries.csv')
+    n_digits = args[:timeseries_num_decimal_places]
 
-    return true
+    if File.exist?(timeseries_output_path)
+      rows = CSV.read(timeseries_output_path, headers: true)
+      File.rename(timeseries_output_path, timeseries_output_path.gsub('.csv', '_bak.csv'))
+      CSV.open(timeseries_output_path, 'wb') do |csv_out|
+        csv_out << rows.headers
+        csv_out << rows[0].fields
+        rows[1..-1].each do |row|
+          row.headers.each do |header|
+            next if ['Time', 'TimeDST', 'TimeUTC'].include?(header)
+
+            value = Float(row[header])
+            row[header] = (value / num_units).round(n_digits) # FIXME
+          end
+          csv_out << row.fields
+        end
+      end
+      File.delete(timeseries_output_path.gsub('.csv', '_bak.csv'))
+    end
   end
 end
 
