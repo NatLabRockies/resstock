@@ -68,7 +68,6 @@ These features may require shorter timesteps, allow more sophisticated simulatio
   .. [#] GroundToAirHeatPumpModelType choices are "standard" and "experimental".
   .. [#] Use "standard" for standard ground-to-air heat pump modeling.
          Use "experimental" for an improved model that better accounts for coil staging.
-         The "experimental" ground-to-air heat pump models with desuperheater are not supported yet, see :ref:`water_heater_desuperheater`.
 
 .. _hpxml_emissions_scenarios:
 
@@ -4353,8 +4352,6 @@ If the water heater uses a desuperheater, additional information is entered in `
   .. warning::
 
     A desuperheater is currently not allowed if detailed water heater setpoint schedules are used.
-
-    A desuperheater is currently not allowed if ``GroundToAirHeatPumpModelType`` is "experimental", see :ref:`hpxml_simulation_control`.
 
 HPXML Hot Water Distribution
 ****************************

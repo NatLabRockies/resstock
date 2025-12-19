@@ -179,7 +179,7 @@
             <Area>328.0</Area>
             <Insulation>
               <SystemIdentifier id='Wall3Insulation'/>
-              <AssemblyEffectiveRValue>22.7</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>21.3</AssemblyEffectiveRValue>
             </Insulation>
           </Wall>
           <Wall>
