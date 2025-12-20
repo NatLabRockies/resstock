@@ -769,7 +769,7 @@ def plot_monthly_sales_comparison_natural_gas(
 
 
 def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
-    if plot_spec.resolution == "annual":
+    if plot_spec.resolution == "year":
         buildstock, eia_df = _split_annual_data(data, plot_spec.aggregation_level)
 
         if plot_spec.aggregation_type == AggregationType.stock_total:
@@ -782,7 +782,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                     return plot_annual_sales_comparison_natural_gas(buildstock, eia_df, by=plot_spec.aggregation_level)
         elif plot_spec.aggregation_type == AggregationType.percent_difference and plot_spec.quantity is None:
             return plot_annual_sales_comparison_percent_diff(buildstock, eia_df, by=plot_spec.aggregation_level)
-    elif plot_spec.resolution == "monthly":
+    elif plot_spec.resolution == "month":
         buildstock, eia_df = _split_monthly_data(data, plot_spec.aggregation_level)
         fuel: str
         if plot_spec.quantity == DataCol.ELECTRICITY_TOTAL:

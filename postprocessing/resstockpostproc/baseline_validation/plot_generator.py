@@ -19,28 +19,22 @@ from resstockpostproc.baseline_validation.utils import get_buildstock_query
 from resstockpostproc.baseline_validation.io_managers.output_manager import save_dataframe, save_figure
 from resstockpostproc.baseline_validation.plotters import eia_plotter, lrd_plotter, timeseries_plotter, recs_plotter
 from resstockpostproc.baseline_validation.schema.workflow_schema import PlotType, WorkflowConfig
-from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, FileType, AggregationType, TruthSource, ViewType
+from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, FileType, AggregationType, TruthSource, ViewType, Resolution
 from resstockpostproc.baseline_validation.utils import ensure_directory
-from .resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data
+from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 
 def generate_eia_plots() -> None:
     """Generate EIA validation plots."""
     print("Generating EIA validation plots...")
     quantities = [None, DataCol.ELECTRICITY_TOTAL, DataCol.NATURAL_GAS_TOTAL]
-    agg_levels = ['state'] # eia_data.get_available_aggregation_levels()
-    quantity_types = [AggregationType.percent_difference, AggregationType.stock_total]
-    resolutions = ('monthly', 'annual')
+    agg_levels = ["state"] # eia_data.get_available_aggregation_levels()
+    quantity_types = [AggregationType.per_unit, AggregationType.stock_total]
+    resolutions = (Resolution.month, Resolution.year)
 
-    agg_levels = ["state"]
-    quantity_types = [AggregationType.stock_total]
-    resolutions = ("annual",)
+
     for quantity, agg_level, quantity_type, resolution in product(quantities, agg_levels, quantity_types, resolutions):
         print(f"  Processing {agg_level} level...")
-        if resolution != "monthly" and quantity_type == AggregationType.percent_difference and quantity is not None:
-            continue  # Percent difference plot is done with both together
-        if resolution == "monthly" and quantity is None:
-            continue  # Monthly plots require a specific quantity
         plot_spec = PlotSpec(
             truth_source=TruthSource.eia,
             resolution=resolution,
@@ -48,8 +42,7 @@ def generate_eia_plots() -> None:
             quantity=quantity,
             focus_on=None,
             aggregation_type=quantity_type,
-            visualization_type="bar",
-            
+            view=ViewType.value_view,
         )
         data = get_plot_data(plot_spec)
         plot_func = get_plotting_function(plot_spec.truth_source)
@@ -69,25 +62,20 @@ def generate_recs_plots() -> None:
                   DataCol.ELECTRICITY_SPACE_HEATING,
                   DataCol.ELECTRICITY_SPACE_COOLING,
                   ]
-    agg_levels = ['state'] # eia_data.get_available_aggregation_levels()
-    agg_types = [AggregationType.stock_total]
-    resolutions = ('monthly', 'annual')
-
-    # quantities = [DBCol.ELECTRICITY_TOTAL]
     quantities = monthly_quantities
     quantities.extend(q for q in RECS_ENDUSE_MAP if q not in monthly_quantities)
-    # quantities = [DataCol.ELECTRICITY_EV_CHARGING]
+    quantities = [DataCol.ELECTRICITY_TOTAL]
     agg_levels = ["state"]
     agg_types = [AggregationType.stock_total, AggregationType.per_unit_distribution,
                       AggregationType.per_unit, AggregationType.percent_users,
                       AggregationType.monthly_per_user, AggregationType.per_user_distribution,
                       AggregationType.per_user
                       ]
-    agg_types = [AggregationType.stock_total]
-    resolutions = ("annual",)
-    quantities = [None]
+    agg_types = [AggregationType.per_unit]
+    resolutions = (Resolution.year,)
+    # quantities = [None]
     for quantity, agg_level, resolution, agg_type in product(quantities, agg_levels, resolutions, agg_types):
-        if resolution == "monthly" and agg_type == AggregationType.per_unit_distribution:
+        if resolution == "month" and agg_type == AggregationType.per_unit_distribution:
             continue
         plot_spec = PlotSpec(
             truth_source=TruthSource.recs,
@@ -96,21 +84,45 @@ def generate_recs_plots() -> None:
             quantity=quantity,
             focus_on=None,
             aggregation_type=agg_type,
-            visualization_type="bar",
             view=ViewType.value_view
+        )
+        _show_figure(plot_spec)
+
+def generate_lrd_plots() -> None:
+    print("Generating LRD validation plots...")
+    agg_levels = ["eiaid"] # eia_data.get_available_aggregation_levels()
+    agg_types = [AggregationType.stock_total]
+    resolutions = ("month", "year")
+
+    quantities = [DataCol.ELECTRICITY_TOTAL]
+    agg_levels = ["eiaid"]
+    agg_types = [AggregationType.per_unit]
+    resolutions = (Resolution.year, Resolution.month, Resolution.day_of_year, Resolution.hour_of_day,
+                   Resolution.hour_of_day_summer, Resolution.hour_of_day_winter, Resolution.hour_of_year,
+                   Resolution.top_100_hours)
+    for quantity, agg_level, resolution, agg_type in product(quantities, agg_levels, resolutions, agg_types):
+        plot_spec = PlotSpec(
+            truth_source=TruthSource.lrd,
+            resolution=resolution,
+            aggregation_level=agg_level,
+            quantity=quantity,
+            focus_on=None,
+            aggregation_type=agg_type,
+            view=ViewType.value_view,
         )
         _show_figure(plot_spec)
 
 def _show_figure(plot_spec: PlotSpec) -> None:
     """Generate and show a plot based on the plot specification."""
     fig = _create_plot(plot_spec)
-    fig.show(renderer="browser")
+    #fig.show(renderer="browser")
 
 def _create_plot(plot_spec: PlotSpec) -> Figure:
     """Create a plot based on the plot specification."""
     data = get_plot_data(plot_spec)
     plot_func = get_plotting_function(plot_spec.truth_source)
-    fig = plot_func(data, plot_spec)
+    fig, title = plot_func(data, plot_spec)
+    fig.show(renderer="browser")
     return fig
 
     print("RECS plots complete!")
@@ -206,7 +218,7 @@ def get_plotting_function(truth_source: TruthSource):
         case TruthSource.eia:
             return eia_plotter.create_plot
         case TruthSource.lrd:
-            raise ValueError("LRD plotting function is not yet implemented.")
+            return lrd_plotter.create_plot
         case TruthSource.recs:
             return recs_plotter.create_plot
         case _:
@@ -221,14 +233,18 @@ def generate_all_plots(
     if plot_types is None:
         plot_types = list(workflow.plots.plot_types)
 
-
+    generate_recs_plots()
+    return
     print(f"Generating baseline validation plots.")
     print(f"Plot types: {[pt.value for pt in plot_types]}")
 
+    if PlotType.lrd in plot_types:
+        generate_lrd_plots()
     if PlotType.recs in plot_types:
         generate_recs_plots()
     if PlotType.eia in plot_types:
         generate_eia_plots()
+
 
     # if PlotType.lrd in plot_types:
     #     generate_lrd_plots(workflow, output_base, output_formats)
@@ -271,7 +287,7 @@ def main() -> int:
             "timeseries (timeseries analysis), all (all plot types). "
             "Defaults to all plot types specified in config if not provided."
         ),
-        default=["recs"]
+        default=["lrd"]
     )
 
     args = parser.parse_args()

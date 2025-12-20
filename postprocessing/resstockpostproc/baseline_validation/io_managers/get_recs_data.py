@@ -9,12 +9,14 @@ import polars as pl
 import numpy as np
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
 from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
-from .utils import add_us_total
 from . import truth_data_paths as s3_paths
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 from resstockpostproc.baseline_validation.data_processing.recs_rse import calculate_rse
+from resstockpostproc.shared_utils.caching import cached
 from typing import Literal
+
+
 local_data_dir = Path(f"{workflow.output.output_dir}/data")
 
 
@@ -69,9 +71,10 @@ def _calculate_weighted_quantiles(data: np.ndarray, weights: np.ndarray, quantil
     return result
 
 
+@cached(cache_file="recs_annual_data_cache")
 def get_annual_all(
     year: int = 2020,
-    by: str | None = None,
+    by: str | None = None,  
     aggregation: Literal["sum", "per_unit_avg", "per_user_avg"] = "sum") -> pl.DataFrame:
     if year != 2020:
         raise ValueError("RECS data is only available for the year 2020.")
@@ -208,10 +211,25 @@ def get_annual_all(
         
         # Add US Total values
         if aggregation == "sum":
-            # For sum: add US Total by summing all states (excluding sample_count and units_count_rse)
-            result_df = add_us_total(
-                result_df, by=by, group_cols=None, exclude_cols=["sample_count", "units_count_rse"]
-            )
+            # For sum: calculate US Total from full microdata
+            us_total_values = {}
+            us_total_values[by] = "US Total"
+            us_total_values["sample_count"] = len(mdf)
+            us_total_values["units_count"] = mdf["NWEIGHT"].sum()
+            for col in enduse_cols:
+                # Calculate weighted sum from full microdata
+                weighted_sum = (mdf[col] * mdf["NWEIGHT"]).sum()
+                us_total_values[f"{col}_value"] = weighted_sum
+                
+                weight_sum = mdf["NWEIGHT"].sum()
+                nonzero_weight_sum = ((mdf[col] > 0).cast(pl.Int64) * mdf["NWEIGHT"]).sum()
+                us_total_values[f"{col}_percent_users"] = (
+                    (nonzero_weight_sum / weight_sum * 100) if weight_sum > 0 else 0
+                )
+            
+            # Add US Total row to result_df
+            us_total_df = pl.DataFrame([us_total_values])
+            result_df = pl.concat([result_df, us_total_df], how="diagonal_relaxed")
         elif aggregation == "per_unit_avg":
             # For per_unit_avg: calculate US Total from full microdata (can't sum averages)
             us_total_values = {}
@@ -254,7 +272,7 @@ def get_annual_all(
             result_df = pl.concat([result_df, us_total_df], how="diagonal_relaxed")
         
         # Calculate RSE and quartiles for US Total from full microdata
-        # (must be done AFTER add_us_total to avoid overwriting)
+        # (must be done AFTER calculating US Total values to avoid overwriting)
         us_total_rse_dict = {}
         us_total_quartile_dict = {}
         us_total_nonzero_quartile_dict = {}
@@ -449,6 +467,7 @@ def get_annual_all(
     return result_df
 
 
+@cached(cache_file="recs_monthly_data_cache")
 def get_monthly_all(
     year: int = 2020,
     by: Literal["state"] = "state",
@@ -461,7 +480,6 @@ def get_monthly_all(
     
     # Rename "geography" column to "state" for backward compatibility
     monthly_df = monthly_df.rename({"geography": "state"})
-    
     # Define valid state abbreviations (50 states + DC)
     valid_states = {
         "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
@@ -480,21 +498,23 @@ def get_monthly_all(
     monthly_df = monthly_df.with_columns(
         pl.col("month").replace_strict(NUM2MONTH, default=None)
     )
-    
+    percent_users_cols = [f"{col.replace("_value", "_percent_users")}" for col in monthly_df.columns if col.endswith("_value")]
+    annual_df = get_annual_all(year=year, by=by, aggregation=aggregation)
+    monthly_df = monthly_df.join(annual_df.select([by] + percent_users_cols + ["units_count"]), on=by, how="left")
+
     # Apply aggregation transformation if needed
     if aggregation == "per_unit_avg":
         # For per-unit energy, divide value columns by units_count
         value_cols = [col for col in monthly_df.columns if col.endswith("_value")]
         avg_exprs = []
-        if "units_count" in monthly_df.columns:
-            for val_col in value_cols:
-                # Divide value by units_count, handle division by zero
-                avg_exprs.append(
-                    pl.when(pl.col("units_count") > 0)
-                    .then(pl.col(val_col) / pl.col("units_count"))
-                    .otherwise(0)
-                    .alias(val_col)
-                )
+        for val_col in value_cols:
+            # Divide value by units_count, handle division by zero
+            avg_exprs.append(
+                pl.when(pl.col("units_count") > 0)
+                .then(pl.col(val_col) / pl.col("units_count"))
+                .otherwise(0)
+                .alias(val_col)
+            )
         if avg_exprs:
             monthly_df = monthly_df.with_columns(avg_exprs)
     elif aggregation == "per_user_avg":
@@ -502,20 +522,16 @@ def get_monthly_all(
         value_cols = [col for col in monthly_df.columns if col.endswith("_value")]
         avg_exprs = []
         for val_col in value_cols:
-            # Find corresponding percent_users column
             percent_users_col = val_col.replace("_value", "_percent_users")
-            if percent_users_col in monthly_df.columns:
-                # Divide value by percent_users (convert from percentage to fraction first)
-                avg_exprs.append(
-                    pl.when(pl.col(percent_users_col) > 0)
-                    .then(pl.col(val_col) / (pl.col(percent_users_col) / 100))
-                    .otherwise(0)
-                    .alias(val_col)
-                )
+            avg_exprs.append(
+                pl.when(pl.col(percent_users_col) > 0)
+                .then(pl.col(val_col) / ( pl.col("units_count") * pl.col(percent_users_col) / 100))
+                .otherwise(0)
+                .alias(val_col)
+            )
         if avg_exprs:
             monthly_df = monthly_df.with_columns(avg_exprs)
     
-    # Data already contains US Total and Census regions from the Excel files
     monthly_df = monthly_df.with_columns(
         pl.lit("recs_2020").alias("source")
     )

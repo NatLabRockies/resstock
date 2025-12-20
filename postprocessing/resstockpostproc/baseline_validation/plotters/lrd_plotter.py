@@ -3,282 +3,127 @@ Load Duration Curve Plotter
 ---------------------------
 Functions for generating load duration curve validation plots
 """
-
 import polars as pl
 import plotly.graph_objects as go
 
-from resstockpostproc.baseline_validation.theme import apply_theme, BUILDSTOCK_COLOR, REFERENCE_COLOR
+from resstockpostproc.shared_utils.db_column_names import DataCol
+from resstockpostproc.baseline_validation.schema.plot_spec import (
+    PlotSpec,
+    Resolution,
+    ViewType
+)
+from resstockpostproc.shared_utils.generic_plotters import tilemap_plotter
+from resstockpostproc.baseline_validation.theme import apply_theme
 
+def create_plot(
+        data: pl.DataFrame,
+        plot_spec: PlotSpec
 
-def calculate_load_duration_curve(
-    timeseries_df: pl.DataFrame,
-    value_col: str,
-    group_col: str | None = None,
-) -> pl.DataFrame:
-    """
-    Calculate load duration curve from timeseries data.
+) -> tuple[go.Figure, str]:
+    """Create load duration curve plot based on the plot specification."""
 
-    Args:
-        timeseries_df: Timeseries data
-        value_col: Column containing values to sort
-        group_col: Optional grouping column (e.g., 'eiaid', 'state')
-
-    Returns:
-        DataFrame with percentile and value columns
-    """
-    if group_col:
-        # Calculate LDC for each group
-        ldc_dfs = []
-        for group in timeseries_df[group_col].unique().to_list():
-            group_data = timeseries_df.filter(pl.col(group_col) == group)
-
-            # Sort values in descending order
-            sorted_data = group_data.select(value_col).sort(value_col, descending=True)
-
-            # Calculate percentile
-            n = sorted_data.height
-            percentiles = [(i / n) * 100 for i in range(n)]
-
-            ldc = pl.DataFrame(
-                {
-                    "percentile": percentiles,
-                    value_col: sorted_data[value_col].to_list(),
-                    group_col: [group] * n,
-                }
-            )
-            ldc_dfs.append(ldc)
-
-        return pl.concat(ldc_dfs)
-    else:
-        # Single LDC
-        sorted_data = timeseries_df.select(value_col).sort(value_col, descending=True)
-        n = sorted_data.height
-        percentiles = [(i / n) * 100 for i in range(n)]
-
-        return pl.DataFrame({"percentile": percentiles, value_col: sorted_data[value_col].to_list()})
-
-
-def plot_load_duration_curve(
-    buildstock_ldc: pl.DataFrame,
-    reference_ldc: pl.DataFrame | None = None,
-    value_col: str = "kwh_per_meter",
-    title: str | None = None,
-    entity_name: str | None = None,
-) -> go.Figure:
-    """
-    Create load duration curve plot.
-
-    Args:
-        buildstock_ldc: BuildStock LDC data
-        reference_ldc: Optional reference LDC data (e.g., from LRD)
-        value_col: Column name for y-axis values
-        title: Plot title
-        entity_name: Name of entity (utility, state) for title
-
-    Returns:
-        Plotly figure
-    """
-    fig = go.Figure()
-
-    # Add BuildStock LDC
-    fig.add_trace(
-        go.Scatter(
-            x=buildstock_ldc["percentile"].to_list(),
-            y=buildstock_ldc[value_col].to_list(),
-            mode="lines",
-            name="BuildStock",
-            line=dict(color=BUILDSTOCK_COLOR, width=2),
-        )
-    )
-
-    # Add reference LDC if provided
-    if reference_ldc is not None:
-        fig.add_trace(
-            go.Scatter(
-                x=reference_ldc["percentile"].to_list(),
-                y=reference_ldc[value_col].to_list(),
-                mode="lines",
-                name="Reference (LRD)",
-                line=dict(color=REFERENCE_COLOR, width=2, dash="dash"),
-            )
-        )
-
-    # Build title
-    if title is None:
-        title = "Load Duration Curve"
-        if entity_name:
-            title = f"{title} - {entity_name}"
-
-    # Apply theme
-    fig = apply_theme(
-        fig,
-        title=title,
-        xaxis_title="Percentile (%)",
-        yaxis_title=f"{value_col.replace('_', ' ').title()}",
-    )
-
-    return fig
-
-
-def plot_multi_utility_ldc(
-    buildstock_ldc: pl.DataFrame,
-    reference_ldc: pl.DataFrame | None = None,
-    group_col: str = "eiaid",
-    value_col: str = "kwh_per_meter",
-    max_utilities: int = 10,
-) -> go.Figure:
-    """
-    Create plot comparing LDCs for multiple utilities.
-
-    Args:
-        buildstock_ldc: BuildStock LDC data with grouping column
-        reference_ldc: Optional reference LDC data
-        group_col: Column to group by (e.g., 'eiaid', 'utility_name')
-        value_col: Column name for y-axis values
-        max_utilities: Maximum number of utilities to plot
-
-    Returns:
-        Plotly figure
-    """
-    fig = go.Figure()
-
-    # Get unique entities
-    entities = buildstock_ldc[group_col].unique().to_list()[:max_utilities]
-
-    # Plot BuildStock LDC for each entity
-    for entity in entities:
-        entity_data = buildstock_ldc.filter(pl.col(group_col) == entity)
-
-        fig.add_trace(
-            go.Scatter(
-                x=entity_data["percentile"].to_list(),
-                y=entity_data[value_col].to_list(),
-                mode="lines",
-                name=f"{entity} (BuildStock)",
-                line=dict(width=2),
-            )
-        )
-
-        # Add reference data if available
-        if reference_ldc is not None:
-            ref_entity_data = reference_ldc.filter(pl.col(group_col) == entity)
-            if ref_entity_data.height > 0:
-                fig.add_trace(
-                    go.Scatter(
-                        x=ref_entity_data["percentile"].to_list(),
-                        y=ref_entity_data[value_col].to_list(),
-                        mode="lines",
-                        name=f"{entity} (Reference)",
-                        line=dict(width=2, dash="dash"),
-                    )
+    assert plot_spec.aggregation_level == "eiaid", "LRD plots only support aggregation level 'eiaid'"
+    final_df = data.clone()
+    sidebar_column = None
+    ts_xtick_vals = None
+    ts_xtick_text = None
+    timeseries_column = None
+    x_unit = ""
+    quantity_title = "kWh"
+    quantity_column = f"{plot_spec.quantity}_value"
+    match plot_spec.resolution:
+        case Resolution.year:
+            timeseries_column = None
+            ts_xtick_vals = ()
+            ts_xtick_text = ()
+            sidebar_column = f"{plot_spec.quantity}_value_percent_difference"
+            title = "Annual electricity consumption per dwelling unit"
+        case Resolution.month:
+            timeseries_column = Resolution.month
+            ts_xtick_vals = ("JAN", "DEC")
+            ts_xtick_text = ("   Jan", "Dec   ")
+            title = "Monthly electricity consumption per dwelling unit"
+        case Resolution.day_of_year:
+            timeseries_column = Resolution.day_of_year
+            ts_xtick_vals = (1, 365)
+            ts_xtick_text = ("     Jan 1", "Dec 31     ")
+            title = "Daily electricity consumption per dwelling unit"
+        case Resolution.hour_of_year | Resolution.top_100_hours:
+            if plot_spec.view in [ViewType.temp_view, ViewType.temp_count_view]:
+                temp_col = f"{DataCol.OUTDOOR_DRYBULB_TEMP}_value"
+                final_df = final_df.with_columns(
+                    (pl.col(temp_col) / 4 * 9 / 5 + 32).round(0).cast(pl.Int32)  # Convert from daily total to daily average F
                 )
-
-    # Apply theme
-    fig = apply_theme(
-        fig,
-        title="Load Duration Curves - Multiple Utilities",
-        xaxis_title="Percentile (%)",
-        yaxis_title=f"{value_col.replace('_', ' ').title()}",
-    )
-
-    return fig
-
-
-def prepare_buildstock_ldc_data(
-    timeseries_df: pl.DataFrame,
-    per_unit: bool = True,
-    group_col: str | None = None,
-) -> pl.DataFrame:
-    """
-    Prepare BuildStock timeseries data for LDC plotting.
-
-    Args:
-        timeseries_df: BuildStock timeseries data with electricity usage
-        per_unit: Whether to normalize by unit count
-        group_col: Optional grouping column
-
-    Returns:
-        DataFrame ready for LDC plotting
-    """
-    value_col = "fuel_use__electricity__total__kwh"
-
-    if per_unit and "units_count" in timeseries_df.columns:
-        # Calculate per-unit consumption
-        timeseries_df = timeseries_df.with_columns(
-            (pl.col(value_col) / pl.col("units_count")).alias("kwh_per_unit")
-        )
-        value_col = "kwh_per_unit"
-
-    # Calculate LDC
-    ldc = calculate_load_duration_curve(timeseries_df, value_col=value_col, group_col=group_col)
-
-    return ldc
-
-
-def plot_seasonal_ldc_comparison(
-    buildstock_df: pl.DataFrame,
-    reference_df: pl.DataFrame | None = None,
-    time_col: str = "time",
-    value_col: str = "kwh_per_meter",
-) -> go.Figure:
-    """
-    Create seasonal comparison of load duration curves.
-
-    Args:
-        buildstock_df: BuildStock timeseries data
-        reference_df: Optional reference timeseries data
-        time_col: Name of time column
-        value_col: Column for y-axis values
-
-    Returns:
-        Plotly figure with seasonal LDCs
-    """
-    from resstockpostproc.baseline_validation.utils import SEASON2MONTHS
-
-    fig = go.Figure()
-
-    for season, months in SEASON2MONTHS.items():
-        if season == "annual":
-            continue
-
-        # Filter to season
-        season_data = buildstock_df.filter(pl.col(time_col).dt.month().is_in(months))
-
-        # Calculate LDC
-        ldc = calculate_load_duration_curve(season_data, value_col=value_col)
-
-        # Plot
-        fig.add_trace(
-            go.Scatter(
-                x=ldc["percentile"].to_list(),
-                y=ldc[value_col].to_list(),
-                mode="lines",
-                name=f"{season.title()} (BuildStock)",
-                line=dict(width=2),
-            )
-        )
-
-        # Add reference if provided
-        if reference_df is not None:
-            ref_season_data = reference_df.filter(pl.col(time_col).dt.month().is_in(months))
-            ref_ldc = calculate_load_duration_curve(ref_season_data, value_col=value_col)
-
-            fig.add_trace(
-                go.Scatter(
-                    x=ref_ldc["percentile"].to_list(),
-                    y=ref_ldc[value_col].to_list(),
-                    mode="lines",
-                    name=f"{season.title()} (Reference)",
-                    line=dict(width=2, dash="dash"),
+                resstock_src = next(src for src in final_df["source"].unique(maintain_order=True) if "resstock" in src)
+                ref_temp = final_df.filter(pl.col("source") == resstock_src).select(
+                    "utility_name", pl.col(plot_spec.resolution), pl.col(temp_col).alias("resstock_temp")
                 )
-            )
+                final_df = final_df.join(ref_temp, on=("utility_name", plot_spec.resolution), how="left")
+                final_df = final_df.sort("source", "utility_name", "resstock_temp",
+                                        descending=[False, False, False], maintain_order=True)
+                final_df = final_df.group_by(["source", "utility_name", "resstock_temp"], maintain_order=True).agg(
+                    pl.col(f"{plot_spec.quantity}_value").mean(), pl.count().alias("temp_count")
+                )
+                final_df = final_df.sort("source", "utility_name", "resstock_temp", descending=[False, False, False])
+                x_unit = "°F"
+                timeseries_column = "resstock_temp"
+                if plot_spec.view == ViewType.temp_view:
+                    timeseries_column = "resstock_temp"
+                    title = "Load Vs outdoor drybulb temperature"
+                else:
+                    quantity_title = "count"
+                    quantity_column = "temp_count"
+                    title = "Count of number of hours vs outdoor drybulb temperature"
+            else:
+                final_df = final_df.sort("source", "utility_name", f"{plot_spec.quantity}_value",
+                                        descending=[False, False, True]).with_columns(
+                    ((pl.int_range(pl.len()) + 1).over("source", "utility_name") * 100 /
+                    (pl.len()).over("source", "utility_name")).round(3).alias("percent_time")
+                )
+                timeseries_column = "percent_time"
+                title = "Load Duration Curve of electricity consumption per dwelling unit"
+                if plot_spec.resolution == Resolution.top_100_hours:
+                    final_df = final_df.filter(pl.col("percent_time") <= 100 * 100 / 8760)
+                    max_val = final_df["percent_time"].max()
+                    ts_xtick_text = ("  0%", f"{max_val:.1f}%    ")
+                    title += " (Top 100 Hours)"
+                else:
+                    ts_xtick_text=("  0%", "100%    ")
+                    max_val = final_df["percent_time"].max()
+                min_val = final_df["percent_time"].min()
+                ts_xtick_vals=(min_val, max_val)
 
-    # Apply theme
-    fig = apply_theme(
-        fig,
-        title="Seasonal Load Duration Curves",
-        xaxis_title="Percentile (%)",
-        yaxis_title=f"{value_col.replace('_', ' ').title()}",
+        case Resolution.hour_of_day | Resolution.hour_of_day_summer | Resolution.hour_of_day_winter:
+            timeseries_column = plot_spec.resolution
+            ts_xtick_vals = (0, 23)
+            ts_xtick_text = ("     Hour 1", "Hour 24       ")
+            if plot_spec.resolution == Resolution.hour_of_day_summer:
+                title = "Average summer day hourly electricity consumption per dwelling unit"
+            elif plot_spec.resolution == Resolution.hour_of_day_winter:
+                title = "Average winter day hourly electricity consumption per dwelling unit"
+            else:
+                title = "Average daily electricity consumption per dwelling unit"
+        case _:
+            raise ValueError(f"Unsupported resolution '{plot_spec.resolution}' for LRD plot.")
+    
+
+    fig = tilemap_plotter.plot_tilemap(
+        data=final_df,
+        quantity_title=quantity_title,
+        quantity_column=quantity_column,
+        first_category_column="source",
+        first_category_title="Data Source",
+        second_category_column="utility_name",
+        second_category_title="Utility (State)",
+        show_legends=True,
+        timeseries_column=timeseries_column,
+        ts_xtick_vals=ts_xtick_vals,
+        ts_xtick_text=ts_xtick_text,
+        x_unit=x_unit,
+        title_text=title,
     )
-
-    return fig
+    fig = apply_theme(fig,
+                      title=title,
+                      height=1080 * 0.8,
+                      width=1920 * 0.7)
+    return fig, title

@@ -13,42 +13,41 @@ CATEGORICAL_COLORS = [
     "#F7DF10", "#FF79AD", "#632C94", "#4A4D4A", "#D3D3D3",
 ]
 
-DEFAULT_LAYOUT = dict(
-    font=dict(family="Arial, sans-serif", size=14, color="#333"),
-    plot_bgcolor="white",
-    paper_bgcolor="white",
-    hovermode="closest",
-    hoverlabel=dict(bgcolor="white", font_size=14, font_family="Arial"),
-    margin=dict(l=80, r=40, t=80, b=80),
-    autosize=True,
-)
+DEFAULT_LAYOUT = {
+    "font": {"family": "Arial, sans-serif", "size": 14, "color": "#333"},
+    "plot_bgcolor": "white",
+    "paper_bgcolor": "white",
+    "hovermode": "closest",
+    "hoverlabel": {"bgcolor": "white", "font_size": 14, "font_family": "Arial"},
+    "margin": {"l": 80, "r": 40, "t": 80, "b": 80},
+    "autosize": True,
+}
 
-DEFAULT_XAXIS = dict(
-    showgrid=False,
-    gridcolor="#E1E1E1",
-    gridwidth=1,
-    zeroline=True,
-    zerolinecolor="#E1E1E1",
-    zerolinewidth=1,
-    showline=True,
-    linecolor="#333",
-    linewidth=1,
-    mirror=False,
-)
+DEFAULT_XAXIS = {
+    "showgrid": False,
+    "gridcolor": "#E1E1E1",
+    "gridwidth": 1,
+    "zeroline": True,
+    "zerolinecolor": "#E1E1E1",
+    "zerolinewidth": 1,
+    "showline": True,
+    "linecolor": "#333",
+    "linewidth": 1,
+    "mirror": False,
+}
 
-DEFAULT_YAXIS = dict(
-    showgrid=False,
-    gridcolor="#E1E1E1",
-    gridwidth=1,
-    zeroline=True,
-    zerolinecolor="#E1E1E1",
-    zerolinewidth=1,
-    showline=True,
-    linecolor="#333",
-    linewidth=1,
-    mirror=False,
-)
-
+DEFAULT_YAXIS = {
+    "showgrid": False,
+    "gridcolor": "#E1E1E1",
+    "gridwidth": 1,
+    "zeroline": True,
+    "zerolinecolor": "#E1E1E1",
+    "zerolinewidth": 1,
+    "showline": True,
+    "linecolor": "#333",
+    "linewidth": 1,
+    "mirror": False,
+}
 
 def apply_theme(fig: go.Figure, title: str | None = None, **kwargs) -> go.Figure:
     """Apply consistent theme to a Plotly figure."""
@@ -56,7 +55,8 @@ def apply_theme(fig: go.Figure, title: str | None = None, **kwargs) -> go.Figure
     layout_updates.update(kwargs)
 
     if title:
-        layout_updates["title"] = dict(text=title, font=dict(size=16, color="#333"), x=0.5, xanchor="center")
+        layout_updates["title"] = {"text": title, "font": {"size": 16, "color": "#333"},
+                                   "x": 0.5, "xanchor": "center"}
 
     layout_updates["xaxis"] = {**DEFAULT_XAXIS, **layout_updates.get("xaxis", {})}
     layout_updates["yaxis"] = {**DEFAULT_YAXIS, **layout_updates.get("yaxis", {})}

@@ -30,3 +30,25 @@ STATE2ABBR: dict[str, str] = {
     "Vermont": "VT", "Virginia": "VA", "Washington": "WA", "West Virginia": "WV",
     "Wisconsin": "WI", "Wyoming": "WY", "District of Columbia": "DC",
 }
+UtilityName2ID = {
+    "AEP (OH)": 14006,  # using Ohio Power (OH)
+    # "Ameren (MO)": 19436,  # = Union Electric (MO) - doesn't have full year data
+    "Appalachian (VA)": 733,
+    "BGE (MD)": 1167,
+    "ComEd (IL)": 4110,
+    # FirstEnergy OH: 6458,
+    "OhioEd (OH)": 13998,
+    "Cleveland (OH)": 3755,
+    "ToledoEd (OH)": 18997,
+    # FirstEnergy PA: 6458,
+    "MetEd (PA)": 12390,
+    "Penelec (PA)": 14711,
+    "PP (PA)": 14716,
+    "WPP (PA)": 20387,
+
+    "PECO (PA)": 14940,
+    "PG&E (CA)": 14328,
+    "SCE (CA)": 17609,
+    "ERCOT": -1,
+}
+ID2UtilityName: dict[int, str] = {v: k for k, v in UtilityName2ID.items()}

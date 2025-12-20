@@ -5,15 +5,17 @@ from typing import Literal
 import polars as pl
 from functools import cache
 from resstockpostproc.baseline_validation.utils import NUM2MONTH
-from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec
+
+from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, Resolution
 from resstockpostproc.baseline_validation.io_managers import get_eia_data
 from resstockpostproc.baseline_validation.io_managers import get_recs_data
 from resstockpostproc.baseline_validation.io_managers import get_resstock_data
+from resstockpostproc.baseline_validation.io_managers import get_lrd_data
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.baseline_validation.schema.plot_spec import AggregationType
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 from resstockpostproc.shared_utils.db_column_names import DataCol
-
+from resstockpostproc.shared_utils.mapping import UtilityName2ID, ID2UtilityName
 from . import recs_mapping
 
 AggregationBy = Literal["state", "eiaid"]
@@ -24,10 +26,10 @@ def get_plot_data(
 ) -> pl.DataFrame:
     """Get the data for plotting based on the plot specification."""
     if plot_spec.aggregation_type in [AggregationType.per_unit,
-                                    AggregationType.per_unit_distribution]:
+                                      AggregationType.per_unit_distribution]:
         aggregation = "per_unit_avg"
     elif plot_spec.aggregation_type in [AggregationType.per_user,
-                                     AggregationType.per_user_distribution]:
+                                        AggregationType.per_user_distribution]:
         aggregation = "per_user_avg"
     else:
         aggregation = "sum"
@@ -38,6 +40,15 @@ def get_plot_data(
                           aggregation=aggregation)
     df = _keep_relevant_columns(df, plot_spec)
     df = _add_95ci_bounds(df)
+    df = df.with_columns(
+        pl.col("units_count").mean().over(plot_spec.aggregation_level).alias("avg_units_count")
+    ).sort("avg_units_count", descending=True, maintain_order=True).drop("avg_units_count")
+
+    if "eiaid" in df.columns and plot_spec.aggregation_level == "eiaid":
+        df = df.with_columns(
+            pl.col("eiaid").cast(pl.Int16)
+            .replace_strict(ID2UtilityName, default="Unknown Utility").alias("utility_name")
+        )
     return df
 
 
@@ -45,39 +56,56 @@ def get_plot_data(
 def _get_plot_data(
         truth_source,
         aggregation_level,
-        resolution,
+        resolution: Resolution,
         aggregation: Literal["sum", "per_unit_avg", "per_user_avg"] = "sum"
 ) -> pl.DataFrame:
     groups = []
     if truth_source == "eia":
         assert aggregation_level in ['state', 'eiaid'], "EIA data only supports 'state' or 'eiaid' aggregation levels."
         by = "state" if aggregation_level == "state" else "eiaid"
-        if resolution == "monthly":
+        if resolution == "month":
             source_data = get_eia_data.get_monthly_all(years=workflow.reference_years.get("eia", [2018]), by=by)
-            resstock_data = get_resstock_data.get_monthly_all(by=by, aggregation=aggregation)
+            resstock_data = get_resstock_data.get_timeseries_all(by=by, aggregation=aggregation)
             groups = [by, "month"]
         else:
+            assert resolution == "year", "EIA data only supports 'year' or 'month' resolutions."
             source_data = get_eia_data.get_annual_all(years=workflow.reference_years.get("eia", [2018]), by=by)
             resstock_data = get_resstock_data.get_annual_all(by=by, aggregation=aggregation)
             groups = [by]
     elif truth_source == "recs":
-        if resolution == "monthly":
+        if resolution == "month":
             assert aggregation_level in ["state"], "RECS data only supports 'state' aggregation level."
             source_data = get_recs_data.get_monthly_all(year=2020, by="state", aggregation=aggregation)
-            resstock_data = get_resstock_data.get_monthly_all(by="state", occupied_only=True, aggregation=aggregation)
+            resstock_data = get_resstock_data.get_timeseries_all(by="state", occupied_only=True, aggregation=aggregation)
             groups = ["state", "month"]
         else:
+            assert resolution == "year", "RECS data only supports 'year' or 'month' resolutions."
             assert aggregation_level in ["state"], "RECS data only supports 'state' aggregation level."
             by = "state"
             source_data = get_recs_data.get_annual_all(year=2020, by=by, aggregation=aggregation)
             resstock_data = get_resstock_data.get_annual_all(by=by, occupied_only=True, aggregation=aggregation)
             groups = [by]
+    elif truth_source == "lrd":
+        assert aggregation == "per_unit_avg", "LRD data only supports 'per_unit_avg' aggregation."
+        eiaidlist = tuple([str(eiaid) for eiaid in UtilityName2ID.values()])
+        source_data = get_lrd_data.get_lrd_aggregated(year=2018, resolution=resolution,
+                                                      restrict_list=eiaidlist)
+        if resolution == "year":
+            resstock_data = get_resstock_data.get_annual_all(by="eiaid", aggregation=aggregation)
+            groups = ["eiaid"]
+        else:
+            resstock_data = get_resstock_data.get_timeseries_all(by="eiaid", occupied_only=False,
+                                                                 aggregation=aggregation,
+                                                                 restrict_list=eiaidlist,
+                                                                 resolution=resolution)
+            groups = ["eiaid", resolution]
         # resstock_data = recs_mapping.add_enduse_columns(resstock_data)
         # resstock_data = recs_mapping.add_characteristic_columns(resstock_data)
     else:
         raise NotImplementedError(f"Truth source {truth_source} not implemented.")
     df = pl.concat([source_data, resstock_data], how="diagonal_relaxed")
     val_columns = [col for col in df.columns if col.endswith(("_value", "_percent_users"))]
+    val_columns += ["units_count"]
     ref_cols = [col for col in df["source"].unique() if truth_source in col]
     final_df = _add_percent_difference(df, join_columns=groups, value_columns=val_columns, ref_column="source",
                                        ref_val=ref_cols[0])
@@ -115,11 +143,15 @@ def _keep_relevant_columns(
 ) -> pl.DataFrame:
     """Keep only the relevant columns for the given plot specification."""
     all_output_columns = [
-        col for col in df.columns if col.endswith(("_value", "_percent_users", "_quartiles", "_percent_difference",
-                                                    "_resoluition", "_rse"))
+        col for col in df.columns 
+        if col.endswith(("_value", "_percent_users", "_quartiles", "_percent_difference",
+                                                    "_resoluition", "_rse")) 
+        and not col.startswith("units_count")
     ]
     if plot_spec.quantity is not None:
         drop_columns = [col for col in all_output_columns if plot_spec.quantity.value not in col]
+        if DataCol.OUTDOOR_DRYBULB_TEMP + "_value" in drop_columns:
+            drop_columns.remove(DataCol.OUTDOOR_DRYBULB_TEMP + "_value")  # Keep temperature column for LRD plots
         df = df.drop(drop_columns)
         return df
     if plot_spec.truth_source == "eia":
@@ -129,6 +161,8 @@ def _keep_relevant_columns(
         ]
     elif plot_spec.truth_source == "recs":
         relevant_quatities = list(RECS_ENDUSE_MAP.keys())
+    elif plot_spec.truth_source == "lrd":
+        relevant_quatities = [DataCol.ELECTRICITY_TOTAL, DataCol.OUTDOOR_DRYBULB_TEMP]
     else:
         raise NotImplementedError(f"Truth source {plot_spec.truth_source} not implemented.")
     to_drop_columns = []

@@ -32,24 +32,6 @@ SEASON2MONTHS: Dict[str, List[int]] = {
     "annual": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 }
 
-LRD_UTILITY2EIAID: Dict[str, int] = {
-    "AEP (OH)": 14006,
-    "Ameren (MO)": 19436,
-    "Appalachian (VA)": 733,
-    "BGE (MD)": 1167,
-    "ComEd (IL)": 4110,
-    "OhioEd (OH)": 13998,
-    "Cleveland (OH)": 3755,
-    "ToledoEd (OH)": 18997,
-    "MetEd (PA)": 12390,
-    "Penelec (PA)": 14711,
-    "PP (PA)": 14716,
-    "WPP (PA)": 20387,
-    "PECO (PA)": 14940,
-    "PG&E (CA)": 14328,
-    "SCE (CA)": 17609,
-    "ERCOT": -1,
-}
 
 CAT2COLOR: Dict[str, str] = {
     "plug_loads": "#4A4D4A",
@@ -174,7 +156,7 @@ def get_buildstock_query(
     workgroup: str,
     config: DataSourceConfig,
     truth_data_year: int = 2018,
-    skip_reports: bool = True,
+    skip_reports: bool = False,
 ) -> BuildStockQuery:
     """Create and configure a BuildStockQuery instance."""
     bsq = BuildStockQuery(

@@ -1,17 +1,14 @@
-QUALITATIVE_SERIES = [
-    "#0079C2",
-    "#7DA544",
-    "#812E36",
-    "#626D72",
-    "#00A4E4",
-    "#9ECE42",
-    "#FFC423",
-    "#B365D1",
-    "#A32F1C",
+QUALITATIVE_SERIES = [  # from light series in https://sronpersonalpages.nl/~pault/
+    "#77AADD",  # light blude
+    "#44BB99",  # mint
+    "#BBCC33",  # pear
+    "#AAAA00",  # Olive
+    "#99DDFF",  # light cyan
+    "#EEDD88",  # light yellow
 ]
 REF_QUALITATIVE_SERIES = [
-    "#A16911",
-    "#5D1A70",
+    "#EE8866",
+    "#FFAABB",
 ]
 nrel_color_series = [
     ["#0B5E90", "#0079C2", "#00A3E4", "#5DD2FF"],

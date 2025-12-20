@@ -15,6 +15,18 @@ from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS
 from resstockpostproc.shared_utils.colors import QUALITATIVE_SERIES, REF_QUALITATIVE_SERIES
 from resstockpostproc.baseline_validation.plotters import base_plotter
 from resstockpostproc.baseline_validation.theme import apply_theme
+from resstockpostproc.shared_utils.generic_plotters import tilemap_plotter
+import polars as pl
+import plotly.graph_objects as go
+
+from resstockpostproc.shared_utils.db_column_names import DataCol
+from resstockpostproc.baseline_validation.schema.plot_spec import (
+    PlotSpec,
+    Resolution,
+    ViewType
+)
+from resstockpostproc.shared_utils.generic_plotters import tilemap_plotter
+from resstockpostproc.baseline_validation.theme import apply_theme
 
 
 # ---------------------------------------------------------------------------
@@ -1270,7 +1282,7 @@ def plot_annual_sales(
     return fig
 
 
-def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
+def create_plot2(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str]:
     # Determine suffix based on quantity_type
     if plot_spec.aggregation_type == AggregationType.percent_users:
         suffix = "_percent_users"
@@ -1278,8 +1290,8 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
         suffix = "_quartiles"
     else:
         suffix = "_value"
-    
-    if plot_spec.resolution == "annual":
+    fig = go.Figure()
+    if plot_spec.resolution == "year":
         if plot_spec.quantity is None:
             # Create horizontal grouped bar plot by fuel source
             return plot_all_enduses(
@@ -1287,7 +1299,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                 by=plot_spec.aggregation_level,
                 title=f"Annual Energy Consumption by Fuel Source and {plot_spec.aggregation_level.title()}",
                 suffix=suffix,
-            )
+            ), "RECS comparison plot"
         
         quantity = plot_spec.quantity.value
         
@@ -1310,7 +1322,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
             rename_map = {col: col.replace("_pct", "") for col in pct_cols}
             plot_data = plot_data.rename(rename_map)
             
-            return plot_annual_sales(
+            fig = plot_annual_sales(
                 plot_data,
                 by=plot_spec.aggregation_level,
                 quantity=quantity,
@@ -1334,7 +1346,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                 title = f"Annual {quantity} by {plot_spec.aggregation_level.title()}"
                 y_label = "kWh"
             
-            return plot_annual_sales(
+            fig = plot_annual_sales(
                 data,
                 by=plot_spec.aggregation_level,
                 quantity=quantity,
@@ -1345,7 +1357,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                 quantity_type=plot_spec.aggregation_type,
             )
     
-    elif plot_spec.resolution == "monthly":
+    elif plot_spec.resolution == "month":
         if plot_spec.quantity is None:
             raise ValueError("Monthly plotting requires a quantity to be specified")
         
@@ -1370,7 +1382,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
             rename_map = {col: col.replace("_pct", "") for col in pct_cols}
             plot_data = plot_data.rename(rename_map)
             
-            return plot_monthly_sales(
+            fig = plot_monthly_sales(
                 plot_data,
                 by=plot_spec.aggregation_level,
                 quantity=quantity,
@@ -1391,7 +1403,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                 title = f"Monthly {quantity} by {plot_spec.aggregation_level.title()}"
                 y_label = "kWh"
             
-            return plot_monthly_sales(
+            fig = plot_monthly_sales(
                 data,
                 by=plot_spec.aggregation_level,
                 quantity=quantity,
@@ -1400,9 +1412,119 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                 use_shared_axis=True,
                 suffix=suffix,
             )
-
+    return fig, "RECS comparison plot"
     qty = plot_spec.quantity.value if plot_spec.quantity else "all"
     raise NotImplementedError(
         f"RECS plot for resolution='{plot_spec.resolution}', "
         f"quantity_type='{plot_spec.aggregation_type.value}', and quantity='{qty}' is not supported"
     )
+
+
+def create_plot(
+        data: pl.DataFrame,
+        plot_spec: PlotSpec
+
+) -> tuple[go.Figure, str]:
+    """Create load duration curve plot based on the plot specification."""
+
+    assert plot_spec.aggregation_level == "state", "RECS plots only support aggregation level 'state'"
+    final_df = data.clone()
+    sidebar_column = None
+    sidebar_title = None
+    ts_xtick_vals = None
+    ts_xtick_text = None
+    timeseries_column = None
+    rse_column = None
+    x_unit = ""
+    quantity_title = "kWh"
+    title = ""
+    sidebar_title = ""
+    match plot_spec.aggregation_type:
+        case AggregationType.stock_total:
+            quantity_title = "kWh"
+            quantity_column = f"{plot_spec.quantity}_value"
+            sidebar_column = f"{plot_spec.quantity}_value_percent_difference"
+            rse_column = f"{plot_spec.quantity}_value_rse"
+            sidebar_title = "Percent Difference (%)"
+            title = f"Annual {plot_spec.quantity} by State"
+        case AggregationType.percent_users:
+            quantity_title = "%"
+            quantity_column = f"{plot_spec.quantity}_percent_users"
+            sidebar_column = f"{plot_spec.quantity}_percent_users_percent_difference"
+            rse_column = f"{plot_spec.quantity}_percent_users_rse"
+            sidebar_title = "Percent Difference (%)"
+            title = f"Annual {plot_spec.quantity} Percent of Customers by State"
+        case AggregationType.per_unit:
+            quantity_title = "kWh/home"
+            quantity_column = f"{plot_spec.quantity}_value"
+            rse_column = f"{plot_spec.quantity}_value_rse"
+            sidebar_column = f"{plot_spec.quantity}_value_percent_difference"
+            sidebar_title = "Percent Difference (%)"
+            title = f"Annual {plot_spec.quantity} per Unit by State"
+        case AggregationType.per_user:
+            quantity_title = "kWh/user"
+            quantity_column = f"{plot_spec.quantity}_value"
+            rse_column = f"{plot_spec.quantity}_value_rse"
+            sidebar_column = f"{plot_spec.quantity}_value_percent_difference"
+            sidebar_title = "Percent Difference (%)"
+            title = f"Annual {plot_spec.quantity} per User by State"
+        case AggregationType.per_unit_distribution:
+            quantity_title = "kWh/home"
+            quantity_column = f"{plot_spec.quantity}_quartiles"
+        case AggregationType.customers:
+            quantity_title = "count"
+            quantity_column = "units_count"
+            rse_column = "units_count_rse"
+            sidebar_column = "units_count_percent_difference"
+            sidebar_title = "Percent Difference (%)"
+            title = "Number of occupied dwelling units by State"
+        case _:
+            raise ValueError(f"Unsupported aggregation type '{plot_spec.aggregation_type}' for RECS plot.")
+    
+    if plot_spec.resolution == Resolution.month:
+        timeseries_column = "month"
+        ts_xtick_vals = ("JAN", "DEC")
+        ts_xtick_text = ("   Jan", "Dec   ")
+        title = "Monthly " + title
+        sidebar_column = None
+        sidebar_title = None
+    # match plot_spec.resolution:
+    #     case Resolution.year:
+    #         timeseries_column = None
+    #         ts_xtick_vals = ()
+    #         ts_xtick_text = ()
+    #         sidebar_column = f"{plot_spec.quantity}_value_percent_difference"
+    #         sidebar_title = "Percent Difference (%)"
+    #         title = f"Annual {plot_spec.quantity} ({plot_spec.aggregation_type})"
+    #     case Resolution.month:
+    #         timeseries_column = Resolution.month
+    #         ts_xtick_vals = ("JAN", "DEC")
+    #         ts_xtick_text = ("   Jan", "Dec   ")
+    #         title = f"Monthly {plot_spec.quantity} ({plot_spec.aggregation_type})"
+    #     case _:
+    #         raise ValueError(f"Unsupported resolution '{plot_spec.resolution}' for RECS plot.")
+    
+
+    fig = tilemap_plotter.plot_tilemap(
+        data=final_df,
+        quantity_title=quantity_title,
+        quantity_column=quantity_column,
+        rse_column=rse_column,
+        first_category_column="source",
+        first_category_title="Data Source",
+        second_category_column="state",
+        second_category_title="State",
+        show_legends=True,
+        timeseries_column=timeseries_column,
+        ts_xtick_vals=ts_xtick_vals,
+        ts_xtick_text=ts_xtick_text,
+        x_unit=x_unit,
+        title_text=title,
+        sidebar_column=sidebar_column,
+        sidebar_title=sidebar_title,
+    )
+    fig = apply_theme(fig,
+                      title=title,
+                      height=1080 * 0.8,
+                      width=1920 * 0.85)
+    return fig, title

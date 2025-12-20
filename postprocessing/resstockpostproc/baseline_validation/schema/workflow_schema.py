@@ -21,7 +21,7 @@ class PlotType(str, Enum):
     """Types of validation plots to generate."""
 
     eia = "eia"
-    lrd = "load_duration"
+    lrd = "lrd"
     recs = "recs"
     timeseries = "timeseries"
 
@@ -49,6 +49,18 @@ class DataSourceConfig(NoExtraModel):
     db_name: str = Field(description="Athena database name")
     table_name: str = Field(description="Athena table name")
     db_schema: DBSchema = Field(description="Database schema", default=DBSchema.OEDI_NEW)
+    
+    def __hash__(self):
+        return hash((self.name, self.db_name, self.table_name, self.db_schema))
+    
+    def __eq__(self, other):
+        if not isinstance(other, DataSourceConfig):
+            return False
+        return (self.name == other.name and 
+                self.db_name == other.db_name and 
+                self.table_name == other.table_name and 
+                self.db_schema == other.db_schema)
+
 
 
 class PlotSpecification(NoExtraModel):

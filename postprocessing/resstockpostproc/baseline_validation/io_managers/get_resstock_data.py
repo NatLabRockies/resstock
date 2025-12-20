@@ -4,34 +4,44 @@ from collections.abc import Sequence
 from typing import Literal
 from .utils import add_us_total, add_missing_states
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow, DataSourceConfig
+from resstockpostproc.baseline_validation.schema.plot_spec import Resolution
 from resstockpostproc.shared_utils.db_column_names import get_db_enduse_colnames_map, get_db_characteristics_colnames
 from buildstock_query import BuildStockQuery
 from resstockpostproc.baseline_validation.schema.workflow_schema import DBSchema
 from resstockpostproc.baseline_validation.utils import get_buildstock_query
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
 from resstockpostproc.shared_utils.db_column_names import DataCol, DBCharCol
+from resstockpostproc.shared_utils.caching import cached
+from resstockpostproc.shared_utils.mapping import UtilityName2ID
 import sqlalchemy as sa
 
 
-def get_monthly_all(
-    by: Literal['state', 'eiaid'] = "state",
+def get_timeseries_all(
+    by: Literal["state", "eiaid"] = "state",
     restrict_list: Sequence[str] | None = None,
     occupied_only: bool = False,
-    aggregation: Literal["sum", "per_unit_avg", "per_user_avg"] = "sum"
+    aggregation: Literal["sum", "per_unit_avg", "per_user_avg"] = "sum",
+    resolution: Resolution = Resolution.month,
 ) -> pl.DataFrame:
     all_dfs = []
     for data_source in workflow.data_sources:
-        df = get_monthly(data_source, by, restrict_list, occupied_only)
+        df = get_timeseries(data_source=data_source,
+                            by=by,
+                            restrict_list=restrict_list,
+                            occupied_only=occupied_only,
+                            resolution=resolution)
+        annual_df = get_annual(data_source, by, occupied_only=occupied_only)
+        value_cols = [col for col in df.columns if col.endswith("_value")]
+        percent_users_cols = [col.replace("_value", "_percent_users") for col in value_cols]
+        percent_users_cols = [col for col in percent_users_cols if col in df.columns]
+        df = df.join(annual_df.select([by] + percent_users_cols), on=[by], how="left")
         if aggregation == "per_unit_avg":
-            value_cols = [col for col in df.columns if col.endswith("_value")]
             df = df.with_columns([
                 (pl.col(col) / pl.col("units_count")).alias(col) for col in value_cols
             ])
         elif aggregation == "per_user_avg":
-            value_cols = [col for col in df.columns if col.endswith("_value")]
-            percent_users_cols = [col.replace("_value", "_percent_users") for col in value_cols]
             df = df.with_columns([
-                (pl.col(value_col) / (pl.col(percent_users_col) / 100 * pl.col("units_count"))).alias(value_col) 
+                (pl.col(value_col) / (pl.col("units_count") * pl.col(percent_users_col) / 100)).alias(value_col) 
                 for value_col, percent_users_col in zip(value_cols, percent_users_cols)
                 if percent_users_col in df.columns
             ])
@@ -41,9 +51,10 @@ def get_monthly_all(
     return final_df
 
 
-def get_monthly(
+def get_timeseries(
     data_source: DataSourceConfig,
-    by: Literal['state', 'eiaid'] = "state",
+    resolution: Resolution = Resolution.month,
+    by: Literal["state", "eiaid"] = "state",
     restrict_list: Sequence[str] | None = None,
     occupied_only: bool = False,
 ) -> pl.DataFrame:
@@ -54,47 +65,130 @@ def get_monthly(
             skip_reports=True,
         )
     db_char_col = get_db_characteristics_colnames(data_source.db_schema)
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="timeseries")
     if by == "eiaid":
-        if not restrict_list:
-            raise ValueError("Monthly aggregation for all utilities is not yet supported. Provide restrict_list.")
-        relevant_counties = bsq.utility.get_locations_by_eiaids(restrict_list)
-        result_pd = bsq.utility.aggregate_ts_by_eiaid(
-            enduses=enduses,
-            eiaid_list=restrict_list,
-            restrict=[(db_char_col.COUNTY, relevant_counties)],
-            group_by=(db_char_col.VACANCY,),
-            timestamp_grouping_func="month"
-        )
-        bsq.save_cache()
-        result = pl.from_pandas(result_pd)
-        if "query_id" in result.columns:
-            result = result.drop("query_id")
-        if "eiaid" in result.columns:
-            result = result.with_columns(pl.col("eiaid").cast(pl.Int64))
+        assert not occupied_only, "occupied_only is not supported when by='eiaid'"
+        assert restrict_list, "restrict_list must be provided when by='eiaid'"
+        result = _get_timeseries_by_utilities(bsq, data_source, restrict_list, resolution)
     else:
-        restrict = []
-        if restrict_list:
-            restrict = [(db_char_col.STATE, restrict_list)]
-        result_pd = bsq.query(enduses=tuple(enduses), group_by=["time", db_char_col.VACANCY, by],
-                              restrict=restrict, annual_only=False,
-                              timestamp_grouping_func="month")
-        bsq.save_cache()
-        result = pl.from_pandas(result_pd)
-    if occupied_only:
-        col = _resolve_characteristic_column_name(result, db_char_col.VACANCY)
-        result = result.filter(pl.col(col).str.to_lowercase() == "occupied")
+        result = _get_timeseries_by_char(bsq, data_source, by, restrict_list,
+                                         occupied_only=occupied_only, resolution=resolution)
+
     result = _transform_columns(result, data_source.db_schema)
-    ts_data = result.with_columns(pl.col(db_char_col.TIMESTAMP).dt.month().alias("month"))
-    ts_data = ts_data.with_columns(pl.col("month").replace_strict(NUM2MONTH, default=None))
-    result = add_us_total(ts_data, by=by, group_cols=["month"])
+    if resolution == Resolution.month:
+        ts_data = result.with_columns(pl.col(db_char_col.TIMESTAMP).dt.month().alias("month"))
+        ts_data = ts_data.sort(by=[by, "month"])
+        ts_data = ts_data.with_columns(pl.col("month").replace_strict(NUM2MONTH, default=None))
+    elif resolution == Resolution.day_of_year:
+        ts_data = result.with_columns(pl.col(db_char_col.TIMESTAMP).dt.ordinal_day().alias("day_of_year"))
+        ts_data = ts_data.sort(by=[by, resolution])
+    elif resolution in {Resolution.hour_of_year, Resolution.top_100_hours}:
+        ts_data = result.with_columns(
+            ((pl.col(db_char_col.TIMESTAMP).dt.ordinal_day() - 1) * 24 + pl.col(db_char_col.TIMESTAMP).dt.hour())
+            .alias(resolution)
+        )
+        ts_data = ts_data.sort(by=[by, resolution])
+    elif resolution == Resolution.hour_of_day_summer:
+        ts_data = result.with_columns(pl.col(db_char_col.TIMESTAMP).dt.hour().alias(Resolution.hour_of_day_summer),
+                                      pl.col(db_char_col.TIMESTAMP).dt.month().alias("month"))
+        ts_data = ts_data.filter(pl.col("month").is_in([6, 7, 8]))
+        ts_data = ts_data.group_by([by, Resolution.hour_of_day_summer], maintain_order=True).agg(
+            [pl.col(col).mean().alias(col) for col in result.columns if col not in {by, db_char_col.TIMESTAMP, "month"}]
+        )
+        ts_data = ts_data.sort(by=[by, Resolution.hour_of_day_summer])
+    elif resolution == Resolution.hour_of_day_winter:
+        ts_data = result.with_columns(pl.col(db_char_col.TIMESTAMP).dt.hour().alias(Resolution.hour_of_day_winter),
+                                      pl.col(db_char_col.TIMESTAMP).dt.month().alias("month"))
+        ts_data = ts_data.filter(pl.col("month").is_in([12, 1, 2]))
+        ts_data = ts_data.group_by([by, Resolution.hour_of_day_winter], maintain_order=True).agg(
+            [pl.col(col).mean().alias(col) for col in result.columns if col not in {by, db_char_col.TIMESTAMP, "month"}]
+        )
+        ts_data = ts_data.sort(by=[by, Resolution.hour_of_day_winter])
+    else:  # hour
+        assert resolution == Resolution.hour_of_day, f"Unsupported resolution: {resolution}"
+        ts_data = result.with_columns(pl.col(db_char_col.TIMESTAMP).dt.hour().alias(Resolution.hour_of_day))
+        ts_data = ts_data.group_by([by, Resolution.hour_of_day], maintain_order=True).agg(
+            [pl.col(col).mean().alias(col) for col in result.columns if col not in {by, db_char_col.TIMESTAMP}]
+        )
+        ts_data = ts_data.sort(by=[by, Resolution.hour_of_day])
     if by == "state":
         result = add_missing_states(result)
+    return ts_data
+
+
+def _get_timeseries_by_char(bsq: BuildStockQuery, data_source: DataSourceConfig,
+                            by: str, restrict_list: Sequence[str] | None = None, 
+                            occupied_only: bool = False, resolution: str = "month"):
+    db_char_col = get_db_characteristics_colnames(data_source.db_schema)
+    enduses = _get_db_enduses(bsq, data_source.db_schema, table="timeseries")
+    restrict = [(db_char_col.VACANCY, ["Occupied"])] if occupied_only else []
+    if restrict_list:
+        restrict += [(db_char_col.STATE, restrict_list)]
+    result_df = bsq.query(enduses=tuple(enduses), group_by=["time", by],
+                              restrict=restrict, annual_only=False,
+                              timestamp_grouping_func=resolution)
+    bsq.save_cache()
+    if by == "state":
+        result_us_total = bsq.query(enduses=tuple(enduses), group_by=["time"],
+                                    restrict=restrict, annual_only=False,
+                                    timestamp_grouping_func=resolution)
+        bsq.save_cache()
+        result_us_total["state"] = "US Total"
+        result_us_total = result_us_total[result_df.columns]
+        result_df = pd.concat([result_df, result_us_total], ignore_index=True)
+    result = pl.from_pandas(result_df)
     return result
 
 
+def _get_timeseries_by_utilities(bsq: BuildStockQuery, data_source: DataSourceConfig,
+                                 eiaid_list: Sequence[str],
+                                 resolution: Resolution = Resolution.month):
+    db_char_col = get_db_characteristics_colnames(data_source.db_schema)
+    enduses = _get_db_enduses(bsq, data_source.db_schema, table="timeseries")
+    timestamp_grouping_func = _get_timestamp_grouping_func(resolution)
+    ercot_pd = bsq.query(
+            enduses=enduses,
+            restrict=[(db_char_col.STATE, ["TX"]), (db_char_col.ISO_RTO_REGION, ["ERCOT"])],
+            annual_only=False,
+            timestamp_grouping_func=timestamp_grouping_func,
+        )
+    bsq.save_cache()
+    #.with_columns(pl.lit(str(UtilityName2ID["ERCOT"])).alias("eiaid"))
+    ercot_pd["eiaid"] = str(UtilityName2ID["ERCOT"])
+
+    relevant_counties = bsq.utility.get_locations_by_eiaids(eiaid_list)
+    restrict = [(db_char_col.COUNTY, relevant_counties)]
+    result_pd = bsq.utility.aggregate_ts_by_eiaid(
+            enduses=enduses,
+            eiaid_list=eiaid_list,
+            restrict=restrict,
+            timestamp_grouping_func=timestamp_grouping_func,
+        )
+    bsq.save_cache()
+
+    result = pl.concat([pl.from_pandas(result_pd), pl.from_pandas(ercot_pd)], how="diagonal_relaxed")
+    if "query_id" in result.columns:
+        result = result.drop("query_id")
+    if "eiaid" in result.columns:
+        result = result.with_columns(pl.col("eiaid").cast(pl.Int64))
+    return result
+
+
+def _get_timestamp_grouping_func(resolution: Resolution):
+    match resolution:
+        case Resolution.hour_of_day | Resolution.hour_of_year | Resolution.hour_of_day_summer | \
+             Resolution.hour_of_day_winter | Resolution.top_100_hours:
+            timestamp_grouping_func = "hour"
+        case Resolution.day_of_year:
+            timestamp_grouping_func = "day"
+        case Resolution.month:
+            timestamp_grouping_func = "month"
+        case _:
+            raise ValueError(f"Unsupported resolution: {resolution}")
+    return timestamp_grouping_func
+
+
 def get_annual_all(
-    by: Literal['state', 'eiaid'] = "state",
+    by: Literal["state", "eiaid"] = "state",
     occupied_only: bool = False,
     aggregation: Literal["sum", "per_unit_avg", "per_user_avg"] = "sum"
 ) -> pl.DataFrame:
@@ -120,9 +214,10 @@ def get_annual_all(
     final_df = pl.concat(all_dfs, how="diagonal_relaxed")
     return final_df
 
+
 def get_annual(
     data_source: DataSourceConfig,
-    by: Literal['state', 'eiaid'] = "state",
+    by: Literal["state", "eiaid"] = "state",
     occupied_only: bool = False,
 ) -> pl.DataFrame:
     """Get annual retail sales aggregated by geography and scaled to EIA customer counts."""
@@ -132,88 +227,65 @@ def get_annual(
             skip_reports=True,
         )
     if by == "eiaid":
-       return _get_annual_by_eiaid(bsq, data_source, occupied_only)
+       assert not occupied_only, "occupied_only is not supported when by='eiaid'"
+       return _get_annual_by_eiaid(bsq, data_source)
     df = _get_annual_by_char(bsq, by, data_source, occupied_only)
     if by == "state":
         df = add_missing_states(df)
     return df
 
 
-def _get_annual_by_char(bsq: BuildStockQuery, by: str, data_source: DataSourceConfig, occupied_only: bool) -> pl.DataFrame:
+def _get_annual_by_char(bsq: BuildStockQuery, by: str,
+                        data_source: DataSourceConfig,
+                        occupied_only: bool) -> pl.DataFrame:
     char_cols = get_db_characteristics_colnames(data_source.db_schema)
     enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline")
-    result_us_total = bsq.query(enduses=enduses,
-                                get_nonzero_count=True,
-                                get_quartiles=True,
-                                group_by=[char_cols.VACANCY])
-    result_pd = bsq.query(enduses=enduses,
+    restrict = [(char_cols.VACANCY, ["Occupied"])] if occupied_only else []
+    result_df = bsq.query(enduses=enduses,
                           get_nonzero_count=True,
                           get_quartiles=True,
-                          group_by=[by, char_cols.VACANCY])
+                          group_by=[by],
+                          annual_only=True,
+                          restrict=restrict)
     bsq.save_cache()
-    result_us_total["state"] = "US Total"
-    result_us_total = result_us_total[result_pd.columns]
-    result_df = pd.concat([result_pd, result_us_total], ignore_index=True)
+    if by == "state":
+        result_us_total = bsq.query(enduses=enduses,
+                                    annual_only=True,
+                                    get_nonzero_count=True,
+                                    get_quartiles=True,
+                                    restrict=restrict,
+                                    )
+        bsq.save_cache()
+        result_us_total["state"] = "US Total"
+        result_us_total = result_us_total[result_df.columns]
+        result_df = pd.concat([result_df, result_us_total], ignore_index=True)
     
     df = pl.from_pandas(result_df)
     char_cols = get_db_characteristics_colnames(data_source.db_schema)
     enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline")
-    if occupied_only:
-        col = _resolve_characteristic_column_name(df, char_cols.VACANCY)
-        df = df.filter(pl.col(col).str.to_lowercase() == "occupied").drop(col)
     df = _transform_columns(df, data_source.db_schema)
     return df
 
 
-def _get_annual_by_eiaid(bsq, data_source, occupied_only):
-    char_cols = get_db_characteristics_colnames(data_source.db_schema)
+def _get_annual_by_eiaid(bsq, data_source):
     enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline")
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline")
+    db_char_col = get_db_characteristics_colnames(data_source.db_schema)
+    ercot_pd = bsq.query(
+            enduses=enduses,
+            restrict=[(db_char_col.STATE, ["TX"]), (db_char_col.ISO_RTO_REGION, ["ERCOT"])],
+            get_nonzero_count=True,
+        )
+    bsq.save_cache()
+    ercot_pd["eiaid"] = str(UtilityName2ID["ERCOT"])
     result_pd = bsq.utility.aggregate_annual_by_eiaid(
             enduses=enduses,
-            group_by=(char_cols.VACANCY,)
+            get_nonzero_count=True,
         )
-    resstock_sales = pl.from_pandas(result_pd)
-    resstock_sales = resstock_sales.with_columns(pl.col("eiaid").cast(pl.Int64))
-    if occupied_only:
-        col = _resolve_characteristic_column_name(resstock_sales, char_cols.VACANCY)
-        resstock_sales = resstock_sales.filter(pl.col(col).str.to_lowercase() == "occupied")
-    resstock_sales = resstock_sales.rename(enduses).group_by("eiaid").sum()
     bsq.save_cache()
-    return resstock_sales
-
-
-def get_customer_counts_all(
-    by: Literal['state', 'eiaid'] = "state",
-) -> pl.DataFrame:
-    final_df = None
-    for data_source in workflow.data_sources:
-
-        df = _get_customer_counts(data_source, by)
-        df = df.rename({col: f"{data_source.name}_{col}" for col in df.columns if col != by})
-        final_df = df if final_df is None else final_df.join(df, on=[by], how="outer")
-    assert final_df is not None
-    return final_df
-
-
-def _get_customer_counts(data_source: DataSourceConfig, by: Literal['state', 'eiaid'] = "state") -> pl.DataFrame:
-    """Get customer counts from both BuildStock and EIA data."""
-    bsq = get_buildstock_query(
-            workgroup=workflow.workgroup,
-            config=data_source,
-            skip_reports=True,
-        )
-    db_char_col = get_db_characteristics_colnames(data_source.db_schema)
-    if by == "eiaid":
-        res_counts = pl.from_pandas(
-            bsq.utility.aggregate_unit_counts_by_eiaid(group_by=(db_char_col.VACANCY,))
-            )
-        res_counts = res_counts.with_columns(pl.col("eiaid").cast(pl.Int64))
-    else:
-        res_counts = pl.from_pandas(
-            bsq.query(enduses=[], group_by=["state", db_char_col.VACANCY], get_query_only=False)
-            )
-    return res_counts
+    df = pl.concat([pl.from_pandas(ercot_pd), pl.from_pandas(result_pd)], how="diagonal_relaxed")
+    df = df.with_columns(pl.col("eiaid").cast(pl.Int64))
+    df = _transform_columns(df, data_source.db_schema)
+    return df
 
 
 def _get_db_enduses(bsq: BuildStockQuery, db_schema: DBSchema, table: str) -> tuple[str, ...]:
@@ -222,6 +294,8 @@ def _get_db_enduses(bsq: BuildStockQuery, db_schema: DBSchema, table: str) -> tu
     for new_name, dbcols in data_col_to_db_col.items():
         if dbcols is None:
             continue
+        if new_name in [DataCol.OUTDOOR_DRYBULB_TEMP] and table == "baseline":
+            continue  # temperature - only available in timeseries table
         enduse_expr = " + ".join(dbcols) if isinstance(dbcols, tuple) else dbcols
         col = bsq.get_calculated_column(column_name=new_name,
                                         column_expr=enduse_expr,
@@ -266,8 +340,6 @@ def _transform_columns(df: pl.DataFrame, db_schema: DBSchema) -> pl.DataFrame:
                 (pl.col(nonzero_col) / pl.col("units_count") * 100).alias(percent_users_col_name)
             )
             to_drop_cols.append(nonzero_col)
-        else:
-            new_cols_expr.append(pl.lit(0).alias(percent_users_col_name))
         
         # Handle quartiles column
         quartiles_db_col = new_name + "__upgrade__quartiles"

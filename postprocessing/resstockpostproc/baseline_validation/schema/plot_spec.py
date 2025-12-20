@@ -9,7 +9,7 @@ from __future__ import annotations
 from pathlib import Path
 from pydantic import BaseModel, Field
 from enum import StrEnum
-from typing import Literal
+from typing import Literal, assert_type
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
 
@@ -37,6 +37,8 @@ class ViewType(StrEnum):
     """
     diff_view = "diff"
     value_view = "value"
+    temp_view = "temp_view"
+    temp_count_view = "temp_count_view"
 
 
 class FileType(StrEnum):
@@ -54,15 +56,25 @@ class TruthSource(StrEnum):
     recs = "recs"
 
 
+class Resolution(StrEnum):
+    hour_of_day = "hour_of_day"
+    hour_of_day_summer = "hour_of_day_summer"
+    hour_of_day_winter = "hour_of_day_winter"
+    day_of_year = "day_of_year"
+    month = "month"
+    year = "year"
+    hour_of_year = "hour_of_year"
+    top_100_hours = "top_100_hours"
+
+
 class PlotSpec(NoExtraModel):
     truth_source: TruthSource = Field(..., description="Optional truth source for comparison plots.")
     aggregation_type: AggregationType = Field(..., description="stock / per_unit etc")
     quantity: DataCol | None = Field(..., description="Column(s) to visualise.")
-    resolution: Literal["monthly", "annual"] = Field(..., description="monthly / annual")
-    visualization_type: Literal["bar", "choropleth"] = Field(..., alias="visualization_type")
+    resolution: Resolution = Field(..., description="monthly / annual")
     aggregation_level: str = Field(..., description="Eg. state, eiaid")
     focus_on: str | None = Field(default=None, description="Specific category to focus on. Example: CA")
-    view: ViewType = Field(..., description="diff / value")
+    view: ViewType | None = Field(..., description="diff / value")
 
     def get_quantity_name(self) -> str:
         if self.quantity is None:

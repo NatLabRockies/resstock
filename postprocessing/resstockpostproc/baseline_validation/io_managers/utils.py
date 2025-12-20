@@ -4,6 +4,7 @@ Utility functions for data loading and processing
 
 import polars as pl
 from typing import Literal
+from resstockpostproc.shared_utils.mapping import NUM2MONTH
 
 
 def add_us_total(
@@ -71,12 +72,27 @@ def add_missing_states(df: pl.DataFrame) -> pl.DataFrame:
     
     Args:
         df: DataFrame to add All States to. Must contain a 'state' column.
+        additional_join_cols: Additional columns to join on when adding missing states.
+                              This is useful for monthly data where 'month' is also a grouping column.
+    Returns:
+        DataFrame with missing states added
     """
     too_add_states = ["AK", "HI"]
     existing_states = set(df["state"].unique().to_list())
     missing_states = set(too_add_states) - existing_states
     if not missing_states:
         return df
-    missing_df = pl.DataFrame({"state": list(missing_states)})
-    df = df.join(missing_df, on="state", how="outer", coalesce=True)
+    
+    if "month" in df.columns:
+        missing_data = []
+        for state in missing_states:
+            for month in NUM2MONTH.values():
+                missing_data.append({"state": state, "month": month})
+        missing_df = pl.DataFrame(missing_data)
+        join_cols = ["state", "month"]
+    else:
+        missing_df = pl.DataFrame({"state": list(missing_states)})
+        join_cols = ["state"]
+    
+    df = df.join(missing_df, on=join_cols, how="outer", coalesce=True)
     return df
