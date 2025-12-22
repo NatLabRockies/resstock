@@ -3,6 +3,7 @@
 # see the URL below for information on how to write OpenStudio measures
 # http://nrel.github.io/OpenStudio-user-documentation/reference/measure_writing_guide/
 
+require_relative 'resources/constants'
 require_relative '../../resources/buildstock'
 require_relative '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
 
@@ -172,17 +173,21 @@ class SimulationOutput < OpenStudio::Measure::ReportingMeasure
   end
 
   def report_runperiod_output_results(runner, new_runner, num_units)
+    n_digits = 3
+
     new_runner.result.stepValues.each do |step_value|
       value = get_value_from_workflow_step_value(step_value)
       variant_type = step_value.variantType
       if ['Double'.to_VariantType, 'Integer'.to_VariantType].include? variant_type
-        value /= num_units # FIXME: there may be some outputs where it does not make sense to divide by num_units (e.g., unmet hours which are calculated as the max across units?)
+        value = scale_output(step_value.name, value, num_units, n_digits)
       end
       register_value(runner, step_value.name, value)
     end
   end
 
   def report_timeseries_output_results(args, num_units)
+    return if num_units == 1
+
     timeseries_output_path = File.expand_path('../results_timeseries.csv')
     n_digits = args[:timeseries_num_decimal_places]
 
@@ -197,7 +202,7 @@ class SimulationOutput < OpenStudio::Measure::ReportingMeasure
             next if ['Time', 'TimeDST', 'TimeUTC'].include?(header)
 
             value = Float(row[header])
-            row[header] = (value / num_units).round(n_digits) # FIXME
+            row[header] = scale_output(header, value, num_units, n_digits)
           end
           csv_out << row.fields
         end
@@ -205,6 +210,18 @@ class SimulationOutput < OpenStudio::Measure::ReportingMeasure
       File.delete(timeseries_output_path.gsub('.csv', '_bak.csv'))
     end
   end
+
+  def scale_output(output, value, num_units, n_digits)
+    return value if num_units == 1
+
+    Constants::ReportSimulationOutputUnchangeds.each do |unchanged_output|
+      if output.start_with?(unchanged_output) || output.start_with?(OpenStudio::toUnderscoreCase(unchanged_output).chomp('_'))
+        return value.round(n_digits)
+      end
+    end
+    return (value / num_units).round(n_digits)
+  end
+  # FIXME: how to deal with output variables/meters (i.e., scale Electricity:Facility but not Zone People Occupant Count)?
 end
 
 # register the measure to be used by the application
