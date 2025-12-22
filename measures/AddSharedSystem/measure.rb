@@ -74,6 +74,17 @@ class AddSharedSystem < OpenStudio::Measure::ModelMeasure
 
     if system == 'Boiler Baseboards Heating Only'
       # method_a(model, args[:hvac_heating_system], args[:hvac_heating_system_fuel])
+
+      model.getSpaces.each do |space|
+        ee_def = OpenStudio::Model::ElectricEquipmentDefinition.new(model)
+        ee = OpenStudio::Model::ElectricEquipment.new(ee_def)
+        ee.setName("Test Object #{space.name}")
+        ee.setSpace(space)
+        ee_def.setName("Test Object #{space.name}")
+        # ee_def.setDesignLevel(1000)
+        ee.setSchedule(model.alwaysOnDiscreteSchedule)
+        ee.setEndUseSubcategory('AddSharedSystem')
+      end
     elsif system == 'Fan Coil Cooling Only'
       # method_b(model, args[:hvac_cooling_system])
     elsif system == 'Fan Coil Heating and Cooling'

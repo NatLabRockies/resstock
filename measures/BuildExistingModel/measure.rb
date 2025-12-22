@@ -371,7 +371,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     end
 
     num_units_modeled = 1
-    max_num_units_modeled = 5
+    max_num_units_modeled = 2
     unit_multipliers = []
     if whole_sfa_or_mf_building_sim && (n_units > 1)
       num_units_modeled = [n_units, max_num_units_modeled].min
