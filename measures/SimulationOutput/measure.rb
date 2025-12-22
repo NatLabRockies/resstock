@@ -563,17 +563,6 @@ class SimulationOutput < OpenStudio::Measure::ReportingMeasure
   # @param class_type [Module] The output class type
   # @return [Hash] Map of output key => array of EnergyPlus output variable/meter names
   def get_object_outputs_by_key(_model, object, class_type)
-    object_type = object.additionalProperties.getFeatureAsString('ObjectType')
-    object_type = object_type.get if object_type.is_initialized
-
-    to_ft = { EPlus::FuelTypeElectricity => FT::Elec,
-              EPlus::FuelTypeNaturalGas => FT::Gas,
-              EPlus::FuelTypeOil => FT::Oil,
-              EPlus::FuelTypePropane => FT::Propane,
-              EPlus::FuelTypeWoodCord => FT::WoodCord,
-              EPlus::FuelTypeWoodPellets => FT::WoodPellets,
-              EPlus::FuelTypeCoal => FT::Coal }
-
     if class_type == EUT
       if object.to_ElectricEquipment.is_initialized
         object = object.to_ElectricEquipment.get
