@@ -4,7 +4,7 @@
 # http://nrel.github.io/OpenStudio-user-documentation/reference/measure_writing_guide/
 
 require 'openstudio'
-# require 'openstudio-standards'
+require 'openstudio-standards'
 require_relative '../../resources/buildstock'
 
 # start the measure
