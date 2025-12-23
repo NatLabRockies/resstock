@@ -333,12 +333,23 @@ class SimulationOutput < OpenStudio::Measure::ReportingMeasure
     tol = 0.1 # 0.1%
 
     # Check sum of end use outputs match fuel outputs from meters
-    fuel_types = [FT::Elec]
+    fuel_types = [FT::Elec,
+                  FT::Gas,
+                  FT::Oil,
+                  FT::Propane,
+                  FT::WoodCord,
+                  FT::WoodPellets,
+                  FT::Coal]
     fuel_types.each do |fuel_type|
+      total_or_net = (fuel_type == FT::Elec ? TE::Net : TE::Total)
       ft = OpenStudio::toUnderscoreCase(fuel_type)
 
       sum_categories = @new_results.select { |k, _v| k.start_with?('end_use') && k.include?(ft) }.map { |_k, v| v }.sum(0.0)
-      meter_fuel_total = @new_results["fuel_use_#{ft}_total_m_btu"]
+      if total_or_net == TE::Total
+        meter_fuel_total = @new_results["fuel_use_#{ft}_total_m_btu"]
+      elsif total_or_net == TE::Net
+        meter_fuel_total = @new_results["fuel_use_#{ft}_net_m_btu"]
+      end
 
       avg_value = (sum_categories + meter_fuel_total) / 2.0
       next unless (sum_categories - meter_fuel_total).abs / avg_value > tol
