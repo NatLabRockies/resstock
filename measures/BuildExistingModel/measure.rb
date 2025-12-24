@@ -363,7 +363,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     # Optional whole SFA/MF building simulation
     whole_sfa_or_mf_building_sim = args[:whole_sfa_or_mf_building_sim]
     n_units = measures['ResStockArguments'][0]['geometry_building_num_units']
-    if n_units.nil?
+    if n_units.nil? # SFD
       whole_sfa_or_mf_building_sim = false
       n_units = 1
     else
@@ -371,10 +371,9 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     end
 
     num_units_modeled = 1
-    max_num_units_modeled = 2
     unit_multipliers = []
-    if whole_sfa_or_mf_building_sim && (n_units > 1)
-      num_units_modeled = [n_units, max_num_units_modeled].min
+    if whole_sfa_or_mf_building_sim
+      num_units_modeled = [n_units, Constants::MaxNumUnitsModeled].min
       unit_multipliers = split_into(n_units, num_units_modeled)
     end
 
@@ -384,12 +383,12 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
     set_header(runner, measures, args, whole_sfa_or_mf_building_sim, bldg_data, resources_dir)
     set_building_header(measures)
-    set_battery(measures, whole_sfa_or_mf_building_sim, num_units_modeled)
+    set_battery(measures, whole_sfa_or_mf_building_sim)
 
     new_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     (1..num_units_modeled).each do |unit_number|
       if not unit_multipliers.empty?
-        unit_multiplier = unit_multipliers[unit_number]
+        unit_multiplier = unit_multipliers[unit_number - 1]
       end
 
       set_resstock_arguments(measures, resstock_arguments_runner)
@@ -676,8 +675,8 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     end
   end
 
-  def set_battery(measures, whole_sfa_or_mf_building_sim, num_units_modeled)
-    if whole_sfa_or_mf_building_sim && num_units_modeled > 1
+  def set_battery(measures, whole_sfa_or_mf_building_sim)
+    if whole_sfa_or_mf_building_sim
       measures['BuildResidentialHPXML'][0]['battery'] = 'None' # limitation of OS-HPXML
     end
   end
