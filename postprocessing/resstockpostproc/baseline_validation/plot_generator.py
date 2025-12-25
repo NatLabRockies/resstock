@@ -64,16 +64,16 @@ def generate_recs_plots() -> None:
                   ]
     quantities = monthly_quantities
     quantities.extend(q for q in RECS_ENDUSE_MAP if q not in monthly_quantities)
-    quantities = [DataCol.ELECTRICITY_TOTAL]
-    agg_levels = ["state"]
+    quantities = [None]
+    agg_levels = [DataCol.STATE]
     agg_types = [AggregationType.stock_total, AggregationType.per_unit_distribution,
                       AggregationType.per_unit, AggregationType.percent_users,
                       AggregationType.monthly_per_user, AggregationType.per_user_distribution,
-                      AggregationType.per_user
+                      AggregationType.per_user, AggregationType.customers
                       ]
-    agg_types = [AggregationType.per_unit]
+    agg_types = [AggregationType.per_user_distribution]
     resolutions = (Resolution.year,)
-    # quantities = [None]
+    quantities = [DataCol.ELECTRICITY_TOTAL]
     for quantity, agg_level, resolution, agg_type in product(quantities, agg_levels, resolutions, agg_types):
         if resolution == "month" and agg_type == AggregationType.per_unit_distribution:
             continue
@@ -82,7 +82,7 @@ def generate_recs_plots() -> None:
             resolution=resolution,
             aggregation_level=agg_level,
             quantity=quantity,
-            focus_on=None,
+            focus_on="US Total",
             aggregation_type=agg_type,
             view=ViewType.value_view
         )
@@ -106,7 +106,7 @@ def generate_lrd_plots() -> None:
             resolution=resolution,
             aggregation_level=agg_level,
             quantity=quantity,
-            focus_on=None,
+            focus_on="US Total",
             aggregation_type=agg_type,
             view=ViewType.value_view,
         )

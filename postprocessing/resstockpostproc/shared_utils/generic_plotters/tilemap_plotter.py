@@ -5,6 +5,7 @@ from .bar_plotter import create_bar_plot
 from .monthly_plotter import create_ts_plot
 from typing import Literal
 from collections.abc import Sequence, Callable
+from resstockpostproc.shared_utils.db_column_names import DataCol
 
 # LRDUtility2EIAID = {
 #     "AEP (OH)": 14006,  # using Ohio Power (OH)
@@ -29,13 +30,13 @@ from collections.abc import Sequence, Callable
 # }
 
 LAYOUTS = {
-    "census_division": [
+    DataCol.CENSUS_DIVISION: [
         ["Pacific", "Mountain North", "West North Central", "East North Central", "Middle Atlantic", "New England"],
         [None, "Mountain South", "West South Central", "East South Central", "South Atlantic", None],
         [None, None, "US Total", None, None, None],
         [None, None, None, None, None, None],
     ],
-    "state": [
+    DataCol.STATE: [
         ["WA", "ID", "MT", "ND", "MN", "WI", "MI", "NY", "VT", "NH", "ME"],
         ["OR", "NV", "WY", "SD", "IA", "IL", "IN", "OH", "PA", "NJ", "MA"],
         ["CA", "UT", "CO", "NE", "MO", "KY", "WV", "VA", "MD", "CT", "RI"],
@@ -43,6 +44,16 @@ LAYOUTS = {
         [None, None, None, "OK", "LA", "MS", "AL", "GA", None, None, None],
         ["AK", "HI", None, "TX", None, "US Total", None, "FL", None, None, None],
         [None, None, None, None, None, None, None, None, None, None, None],  # Extra row for US Total to grow downward
+    ],
+    DataCol.VINTAGE: [
+        ["<1950", "1950s", "1960s", "1970s", "1980s", "1990s", "2000s", "2010s"],
+        [None, None, None, "US Total", None, None, None, None],
+        [None, None, None, None, None, None, None, None],
+    ],
+    DataCol.BUILDING_TYPE: [
+        ["Single-Family Detached", "Single-Family Attached", "Multi-Family with 2 - 4 Units", "Multi-Family with 5+ Units", "Mobile Home"],
+        [None, "US Total", None],
+        [None, None, None],
     ],
     "utility_name": [
         ["ComEd (IL)",  "OhioEd (OH)", "ToledoEd (OH)", "AEP (OH)", "Cleveland (OH)"],
@@ -201,7 +212,8 @@ def plot_tilemap(
     
     # Add sidebar horizontal bar plot if specified
     if sidebar_column is not None:
-        sidebar_df = data.filter(pl.col(second_category_column) != "US Total").sort(sidebar_column, descending=True)
+        # sidebar_df = data.filter(pl.col(second_category_column) != "US Total").sort(sidebar_column, descending=True)
+        sidebar_df = data.sort(sidebar_column, descending=True)
         # print(categories)
         create_bar_plot(
             data=sidebar_df,

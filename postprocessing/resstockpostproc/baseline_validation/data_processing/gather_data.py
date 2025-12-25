@@ -74,17 +74,15 @@ def _get_plot_data(
             groups = [by]
     elif truth_source == "recs":
         if resolution == "month":
-            assert aggregation_level in ["state"], "RECS data only supports 'state' aggregation level."
+            assert aggregation_level in ["state"], "RECS data only supports 'state' aggregation level for monthly."
             source_data = get_recs_data.get_monthly_all(year=2020, by="state", aggregation=aggregation)
             resstock_data = get_resstock_data.get_timeseries_all(by="state", occupied_only=True, aggregation=aggregation)
             groups = ["state", "month"]
         else:
             assert resolution == "year", "RECS data only supports 'year' or 'month' resolutions."
-            assert aggregation_level in ["state"], "RECS data only supports 'state' aggregation level."
-            by = "state"
-            source_data = get_recs_data.get_annual_all(year=2020, by=by, aggregation=aggregation)
-            resstock_data = get_resstock_data.get_annual_all(by=by, occupied_only=True, aggregation=aggregation)
-            groups = [by]
+            source_data = get_recs_data.get_annual_all(year=2020, by=aggregation_level, aggregation=aggregation)
+            resstock_data = get_resstock_data.get_annual_all(by=aggregation_level, occupied_only=True, aggregation=aggregation)
+            groups = [aggregation_level]
     elif truth_source == "lrd":
         assert aggregation == "per_unit_avg", "LRD data only supports 'per_unit_avg' aggregation."
         eiaidlist = tuple([str(eiaid) for eiaid in UtilityName2ID.values()])
@@ -100,9 +98,10 @@ def _get_plot_data(
                                                                  resolution=resolution)
             groups = ["eiaid", resolution]
         # resstock_data = recs_mapping.add_enduse_columns(resstock_data)
-        # resstock_data = recs_mapping.add_characteristic_columns(resstock_data)
+
     else:
         raise NotImplementedError(f"Truth source {truth_source} not implemented.")
+    # resstock_data = recs_mapping.add_characteristic_columns(resstock_data, data_source="ResStock")
     df = pl.concat([source_data, resstock_data], how="diagonal_relaxed")
     val_columns = [col for col in df.columns if col.endswith(("_value", "_percent_users"))]
     val_columns += ["units_count"]

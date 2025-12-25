@@ -59,7 +59,7 @@ class DataCol(StrEnum):
     VINTAGE = "vintage"
     BUILDING_TYPE = "geometry_building_type_recs"
     HEATING_FUEL = "heating_fuel"
-    CENSUS_DIVISION = "census_division"
+    CENSUS_DIVISION = "census_division_recs"
     BLDG_AMERICA_CLIMATE_ZONE = "building_america_climate_zone"
     EV_OWNERSHIP = "electric_vehicle_ownership"
     UNITS_COUNT = "units_count"

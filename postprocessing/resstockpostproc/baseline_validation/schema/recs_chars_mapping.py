@@ -19,10 +19,17 @@ RECS_CHARS_MAPPING: dict[str, VariableSpec] = {
     DataCol.VINTAGE: {
         "ResStock": {
             "column_name": "in.vintage",
-            "mapping": PartialMap({
+            "mapping": {
                 "<1940": "<1950",
-                "1940s": "<1950"
-            }),
+                "1940s": "<1950",
+                "1950s": "1950s",
+                "1960s": "1960s",
+                "1970s": "1970s",
+                "1980s": "1980s",
+                "1990s": "1990s",
+                "2000s": "2000s",
+                "2010s": "2010s",
+            },
         },
         "RECS": {
             "column_name": "YEARMADERANGE",
@@ -58,12 +65,7 @@ RECS_CHARS_MAPPING: dict[str, VariableSpec] = {
     DataCol.HEATING_FUEL: {
         "ResStock": {
             "column_name": "in.heating_fuel",
-            "mapping": {
-                "Natural Gas": "Natural Gas",
-                "Propane": "Propane",
-                "Fuel Oil": "Fuel Oil",
-                "Electricity": "Electricity",
-            }
+            "mapping": PartialMap({})
         },
         "RECS": {
             "column_name": "FUELHEAT",
@@ -77,7 +79,7 @@ RECS_CHARS_MAPPING: dict[str, VariableSpec] = {
     },
     DataCol.CENSUS_DIVISION: {
         "ResStock": {
-            "column_name": "in.census_division",
+            "column_name": "in.census_division_recs",
             "mapping": PartialMap({})
         },
         "RECS": {
@@ -98,16 +100,13 @@ RECS_CHARS_MAPPING: dict[str, VariableSpec] = {
     DataCol.EV_OWNERSHIP: {
         "ResStock": {
             "column_name": "in.electric_vehicle_ownership",
-            "mapping": {
-                "Yes": "Has EV",
-                "No": "No EV",
-            }
+            "mapping": PartialMap({})
         },
         "RECS": {
             "column_name": "ELECVEH",
             "mapping": {
-                1: "Has EV",
-                0: "No EV",
+                1: "Yes",
+                0: "No",
             }
         },
     },

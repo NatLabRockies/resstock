@@ -5,6 +5,7 @@ from typing import Literal
 from .utils import add_us_total, add_missing_states
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow, DataSourceConfig
 from resstockpostproc.baseline_validation.schema.plot_spec import Resolution
+from resstockpostproc.baseline_validation.schema.recs_chars_mapping import RECS_CHARS_MAPPING
 from resstockpostproc.shared_utils.db_column_names import get_db_enduse_colnames_map, get_db_characteristics_colnames
 from buildstock_query import BuildStockQuery
 from resstockpostproc.baseline_validation.schema.workflow_schema import DBSchema
@@ -14,6 +15,7 @@ from resstockpostproc.shared_utils.db_column_names import DataCol, DBCharCol
 from resstockpostproc.shared_utils.caching import cached
 from resstockpostproc.shared_utils.mapping import UtilityName2ID
 import sqlalchemy as sa
+from buildstock_query import MappedColumn
 
 
 def get_timeseries_all(
@@ -235,30 +237,41 @@ def get_annual(
     return df
 
 
+def _get_by_col(by: str, bsq: BuildStockQuery):
+    col_map = RECS_CHARS_MAPPING[by]["ResStock"]["mapping"]
+    col_name = RECS_CHARS_MAPPING[by]["ResStock"]["column_name"]
+    if not col_map: # if empty, just return original by col
+        return  sa.Column(col_name).label(by)
+    original_col = bsq._get_column(col_name, annual_only=True)
+    by_col = MappedColumn(bsq=bsq, name=by, mapping_dict=col_map,
+                          key=original_col)
+    return by_col
+    
+
 def _get_annual_by_char(bsq: BuildStockQuery, by: str,
                         data_source: DataSourceConfig,
                         occupied_only: bool) -> pl.DataFrame:
     char_cols = get_db_characteristics_colnames(data_source.db_schema)
     enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline")
     restrict = [(char_cols.VACANCY, ["Occupied"])] if occupied_only else []
+    by_col = _get_by_col(by, bsq)
     result_df = bsq.query(enduses=enduses,
                           get_nonzero_count=True,
                           get_quartiles=True,
-                          group_by=[by],
+                          group_by=[by_col],
                           annual_only=True,
                           restrict=restrict)
     bsq.save_cache()
-    if by == "state":
-        result_us_total = bsq.query(enduses=enduses,
-                                    annual_only=True,
-                                    get_nonzero_count=True,
-                                    get_quartiles=True,
-                                    restrict=restrict,
-                                    )
-        bsq.save_cache()
-        result_us_total["state"] = "US Total"
-        result_us_total = result_us_total[result_df.columns]
-        result_df = pd.concat([result_df, result_us_total], ignore_index=True)
+    result_us_total = bsq.query(enduses=enduses,
+                                annual_only=True,
+                                get_nonzero_count=True,
+                                get_quartiles=True,
+                                restrict=restrict,
+                                )
+    bsq.save_cache()
+    result_us_total[by] = "US Total"
+    result_us_total = result_us_total[result_df.columns]
+    result_df = pd.concat([result_df, result_us_total], ignore_index=True)
     
     df = pl.from_pandas(result_df)
     char_cols = get_db_characteristics_colnames(data_source.db_schema)

@@ -22,10 +22,12 @@ def add_enduse_columns(df: pl.DataFrame) -> pl.DataFrame:
     return df.with_columns(new_columns)
 
 
-def add_characteristic_columns(df: pl.DataFrame) -> pl.DataFrame:
+def add_characteristic_columns(df: pl.DataFrame, data_source: str) -> pl.DataFrame:
     new_columns = []
     for output_col, char_map in RECS_CHARS_MAPPING.items():
-        column_definition = char_map["RECS"]
+        column_definition = char_map[data_source]
+        if column_definition["column_name"] not in df.columns:
+            continue
         new_columns.append(
             pl.col(column_definition["column_name"]).replace_strict(
                    column_definition["mapping"],

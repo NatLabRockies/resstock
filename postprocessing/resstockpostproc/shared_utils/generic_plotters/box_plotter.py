@@ -20,6 +20,7 @@ def create_box_plot(
     row: int | None = None,
     col: int | None = None,
     show_legends: bool = True,
+    custom_range: tuple[float, float] | None = None
 ) -> go.Figure:
     """Render a box-and-violin plot from the summary produced upstream."""
     fig = fig or go.Figure()
@@ -43,8 +44,6 @@ def create_box_plot(
 
     box_thickness = 0.2 if show_kde else 0.8
     fig.update_layout(
-        yaxis={"title": second_category_title},
-        xaxis={"title": quantity_title},
         legend_traceorder="reversed",
     )
     fig.update_yaxes(
@@ -144,9 +143,14 @@ def create_box_plot(
                     col=col
                 )
 
-    min_val = data["min"].min()
-    min_val = min(0, min_val)
-    max_val = data["max"].max()
-    fig.update_xaxes(tick0=min_val, range=[min_val, max_val], row=row, col=col)
+
+    if custom_range is None:
+        min_val = data["min"].min()
+        min_val = min(0, min_val)
+        max_val = data["max"].max()
+    else:
+        min_val, max_val = custom_range
+    fig.update_xaxes(tick0=min_val, range=[min_val, max_val], row=row, col=col,
+                     title=quantity_title)
     theme.apply_layout(fig)
     return fig

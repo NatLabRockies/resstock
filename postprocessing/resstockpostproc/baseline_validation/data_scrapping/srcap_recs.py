@@ -188,7 +188,7 @@ def process_microdata() -> pl.DataFrame:
     raw_filepath = _download_raw_microdata()
     df = pl.read_csv(raw_filepath, infer_schema_length=None)
     df_with_enduse = add_enduse_columns(df)
-    df_with_characteristics = add_characteristic_columns(df_with_enduse)
+    df_with_characteristics = add_characteristic_columns(df_with_enduse, data_source="RECS")
     microdata_filepath = PROCESSED_DIR / MICRODATA_FILENAME
     df_with_characteristics.write_csv(microdata_filepath)
     print(f"Saved processed microdata to {microdata_filepath}")

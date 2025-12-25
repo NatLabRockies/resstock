@@ -71,7 +71,7 @@ def _calculate_weighted_quantiles(data: np.ndarray, weights: np.ndarray, quantil
     return result
 
 
-@cached(cache_file="recs_annual_data_cache")
+# @cached(cache_file="recs_annual_data_cache")
 def get_annual_all(
     year: int = 2020,
     by: str | None = None,  
@@ -172,11 +172,11 @@ def get_annual_all(
                         # Calculate weighted quartiles
                         quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
                         quartiles = _calculate_weighted_quantiles(data_values, weights, quantiles)
-                        quartile_row[f"{col}_value_quartiles"] = str(quartiles.tolist())
+                        quartile_row[f"{col}_quartiles"] = quartiles.tolist()
                     else:
-                        quartile_row[f"{col}_value_quartiles"] = str([0.0] * 9)
+                        quartile_row[f"{col}_quartiles"] = [0.0] * 9
                 except Exception:
-                    quartile_row[f"{col}_value_quartiles"] = str([0.0] * 9)
+                    quartile_row[f"{col}_quartiles"] = [0.0] * 9
                 
                 # Calculate nonzero quartiles for the column (exclude zeros)
                 try:
@@ -191,11 +191,11 @@ def get_annual_all(
                         nonzero_quartiles = _calculate_weighted_quantiles(
                             data_values_nonzero, weights_nonzero, quantiles
                         )
-                        nonzero_quartile_row[f"{col}_value_nonzero_quartiles"] = str(nonzero_quartiles.tolist())
+                        nonzero_quartile_row[f"{col}_nonzero_quartiles"] = nonzero_quartiles.tolist()
                     else:
-                        nonzero_quartile_row[f"{col}_value_nonzero_quartiles"] = str([0.0] * 9)
+                        nonzero_quartile_row[f"{col}_nonzero_quartiles"] = [0.0] * 9
                 except Exception:
-                    nonzero_quartile_row[f"{col}_value_nonzero_quartiles"] = str([0.0] * 9)
+                    nonzero_quartile_row[f"{col}_nonzero_quartiles"] = [0.0] * 9
             
             rse_results.append(rse_row)
             quartile_results.append(quartile_row)
@@ -308,11 +308,11 @@ def get_annual_all(
                 if len(data_values) > 0:
                     quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
                     quartiles = _calculate_weighted_quantiles(data_values, weights, quantiles)
-                    us_total_quartile_dict[f"{col}_value_quartiles"] = str(quartiles.tolist())
+                    us_total_quartile_dict[f"{col}_quartiles"] = quartiles.tolist()
                 else:
-                    us_total_quartile_dict[f"{col}_value_quartiles"] = str([0.0] * 9)
+                    us_total_quartile_dict[f"{col}_quartiles"] = [0.0] * 9
             except Exception:
-                us_total_quartile_dict[f"{col}_value_quartiles"] = str([0.0] * 9)
+                us_total_quartile_dict[f"{col}_quartiles"] = [0.0] * 9
             
             # Calculate nonzero quartiles for US Total
             try:
@@ -326,13 +326,11 @@ def get_annual_all(
                     nonzero_quartiles = _calculate_weighted_quantiles(
                         data_values_nonzero, weights_nonzero, quantiles
                     )
-                    us_total_nonzero_quartile_dict[f"{col}_value_nonzero_quartiles"] = str(
-                        nonzero_quartiles.tolist()
-                    )
+                    us_total_nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = nonzero_quartiles.tolist()
                 else:
-                    us_total_nonzero_quartile_dict[f"{col}_value_nonzero_quartiles"] = str([0.0] * 9)
+                    us_total_nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = [0.0] * 9
             except Exception:
-                us_total_nonzero_quartile_dict[f"{col}_value_nonzero_quartiles"] = str([0.0] * 9)
+                us_total_nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = [0.0] * 9
         
         # Update the US Total row with correct RSE and quartile values
         for col, rse_value in us_total_rse_dict.items():
@@ -428,11 +426,11 @@ def get_annual_all(
                 if len(data_values) > 0:
                     quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
                     quartiles = _calculate_weighted_quantiles(data_values, weights, quantiles)
-                    quartile_dict[f"{col}_value_quartiles"] = [str(quartiles.tolist())]
+                    quartile_dict[f"{col}_quartiles"] = quartiles.tolist()
                 else:
-                    quartile_dict[f"{col}_value_quartiles"] = [str([0.0] * 9)]
+                    quartile_dict[f"{col}_quartiles"] = [0.0] * 9
             except Exception:
-                quartile_dict[f"{col}_value_quartiles"] = [str([0.0] * 9)]
+                quartile_dict[f"{col}_quartiles"] = [0.0] * 9
             
             # Calculate nonzero quartiles (exclude zeros)
             try:
@@ -447,11 +445,11 @@ def get_annual_all(
                     nonzero_quartiles = _calculate_weighted_quantiles(
                         data_values_nonzero, weights_nonzero, quantiles
                     )
-                    nonzero_quartile_dict[f"{col}_value_nonzero_quartiles"] = [str(nonzero_quartiles.tolist())]
+                    nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = nonzero_quartiles.tolist()
                 else:
-                    nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = [str([0.0] * 9)]
+                    nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = [0.0] * 9
             except Exception:
-                nonzero_quartile_dict[f"{col}_value_nonzero_quartiles"] = [str([0.0] * 9)]
+                nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = [0.0] * 9
         
         # Add RSE and quartile columns to result
         rse_df = pl.DataFrame(rse_dict)
