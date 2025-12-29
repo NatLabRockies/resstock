@@ -212,11 +212,11 @@ module MiscLoads
   # @return [nil]
   def self.apply_pools_and_permanent_spas(runner, model, spaces, hpxml_bldg, hpxml_header, schedules_file)
     (hpxml_bldg.pools + hpxml_bldg.permanent_spas).each do |pool_or_spa|
-      next if pool_or_spa.type == HPXML::TypeNone
+      next if pool_or_spa.type == HPXML::TypeNotPresent
 
       apply_pool_or_permanent_spa_heater(runner, model, pool_or_spa, spaces,
                                          schedules_file, hpxml_header.unavailable_periods)
-      next if pool_or_spa.pump_type == HPXML::TypeNone
+      next if pool_or_spa.pump_type == HPXML::TypeNotPresent
 
       apply_pool_or_permanent_spa_pump(runner, model, pool_or_spa, spaces,
                                        schedules_file, hpxml_header.unavailable_periods)
@@ -233,7 +233,7 @@ module MiscLoads
   # @param unavailable_periods [HPXML::UnavailablePeriods] Object that defines periods for, e.g., power outages or vacancies
   # @return [nil]
   def self.apply_pool_or_permanent_spa_heater(runner, model, pool_or_spa, spaces, schedules_file, unavailable_periods)
-    return if pool_or_spa.heater_type == HPXML::TypeNone
+    return if pool_or_spa.heater_type == HPXML::TypeNotPresent
 
     heater_kwh = 0
     heater_therm = 0
