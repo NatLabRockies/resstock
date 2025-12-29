@@ -1595,11 +1595,10 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   # @return [nil]
   def set_air_infiltration_measurements(hpxml_bldg, args)
     if args[:enclosure_air_leakage_value]
-      if args[:enclosure_air_leakage_units] == HPXML::UnitsELA
+      if args[:enclosure_air_leakage_units] == 'EffectiveLeakageArea'
         effective_leakage_area = args[:enclosure_air_leakage_value]
-      elsif args[:enclosure_air_leakage_units] == HPXML::UnitsSLA
-        # FUTURE: Translate directly to HPXML when https://github.com/hpxmlwg/hpxml/issues/454 is available
-        effective_leakage_area = UnitConversions.convert(args[:enclosure_air_leakage_value] * args[:geometry_unit_conditioned_floor_area], 'ft^2', 'in^2').round(1)
+      elsif args[:enclosure_air_leakage_units] == 'SpecificLeakageArea'
+        specific_leakage_area = args[:enclosure_air_leakage_value]
       else
         unit_of_measure = args[:enclosure_air_leakage_units]
         air_leakage = args[:enclosure_air_leakage_value]
@@ -1621,6 +1620,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                                                  unit_of_measure: unit_of_measure,
                                                  air_leakage: air_leakage,
                                                  effective_leakage_area: effective_leakage_area,
+                                                 specific_leakage_area: specific_leakage_area,
                                                  infiltration_type: air_leakage_type,
                                                  leakiness_description: leakiness_description)
   end
@@ -1799,7 +1799,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
         wall_type = HPXML::WallTypeWoodStud
       end
 
-      if (attic_locations.include? interior_adjacent_to) && (args[:enclosure_wall_siding_type] == HPXML::SidingTypeNone)
+      if (attic_locations.include? interior_adjacent_to) && (args[:enclosure_wall_siding_type] == HPXML::SidingTypeNotPresent)
         siding = nil # Attic wall, don't even bother to say no siding
       elsif exterior_adjacent_to == HPXML::LocationOutside
         siding = args[:enclosure_wall_siding_type]

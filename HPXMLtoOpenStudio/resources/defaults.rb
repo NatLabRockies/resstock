@@ -383,7 +383,7 @@ module Defaults
 
     if hpxml_bldg.header.manualj_infiltration_method.nil?
       infil_measurement = Airflow.get_infiltration_measurement_of_interest(hpxml_bldg)
-      if (not infil_measurement.air_leakage.nil?) || (not infil_measurement.effective_leakage_area.nil?)
+      if (not infil_measurement.air_leakage.nil?) || (not infil_measurement.effective_leakage_area.nil?) || (not infil_measurement.specific_leakage_area.nil?)
         hpxml_bldg.header.manualj_infiltration_method = HPXML::ManualJInfiltrationMethodBlowerDoor
       else
         hpxml_bldg.header.manualj_infiltration_method = HPXML::ManualJInfiltrationMethodDefaultTable
@@ -1144,7 +1144,7 @@ module Defaults
       infil_measurement.infiltration_height = default_infil_height
       infil_measurement.infiltration_height_isdefaulted = true
     end
-    if (not infil_measurement.leakiness_description.nil?) && infil_measurement.air_leakage.nil? && infil_measurement.effective_leakage_area.nil?
+    if (not infil_measurement.leakiness_description.nil?) && infil_measurement.air_leakage.nil? && infil_measurement.effective_leakage_area.nil? && infil_measurement.specific_leakage_area.nil?
       cfa = hpxml_bldg.building_construction.conditioned_floor_area
       ncfl_ag = hpxml_bldg.building_construction.number_of_conditioned_floors_above_grade
       year_built = hpxml_bldg.building_construction.year_built
@@ -1270,13 +1270,13 @@ module Defaults
         if HPXML::conditioned_finished_locations.include? roof.interior_adjacent_to
           roof.interior_finish_type = HPXML::InteriorFinishGypsumBoard
         else
-          roof.interior_finish_type = HPXML::InteriorFinishNone
+          roof.interior_finish_type = HPXML::InteriorFinishNotPresent
         end
         roof.interior_finish_type_isdefaulted = true
       end
       next unless roof.interior_finish_thickness.nil?
 
-      if roof.interior_finish_type != HPXML::InteriorFinishNone
+      if roof.interior_finish_type != HPXML::InteriorFinishNotPresent
         roof.interior_finish_thickness = 0.5
         roof.interior_finish_thickness_isdefaulted = true
       end
@@ -1368,13 +1368,13 @@ module Defaults
         if HPXML::conditioned_finished_locations.include? wall.interior_adjacent_to
           wall.interior_finish_type = HPXML::InteriorFinishGypsumBoard
         else
-          wall.interior_finish_type = HPXML::InteriorFinishNone
+          wall.interior_finish_type = HPXML::InteriorFinishNotPresent
         end
         wall.interior_finish_type_isdefaulted = true
       end
       next unless wall.interior_finish_thickness.nil?
 
-      if wall.interior_finish_type != HPXML::InteriorFinishNone
+      if wall.interior_finish_type != HPXML::InteriorFinishNotPresent
         wall.interior_finish_thickness = 0.5
         wall.interior_finish_thickness_isdefaulted = true
       end
@@ -1424,7 +1424,7 @@ module Defaults
         if HPXML::conditioned_finished_locations.include? foundation_wall.interior_adjacent_to
           foundation_wall.interior_finish_type = HPXML::InteriorFinishGypsumBoard
         else
-          foundation_wall.interior_finish_type = HPXML::InteriorFinishNone
+          foundation_wall.interior_finish_type = HPXML::InteriorFinishNotPresent
         end
         foundation_wall.interior_finish_type_isdefaulted = true
       end
@@ -1446,7 +1446,7 @@ module Defaults
       end
       next unless foundation_wall.interior_finish_thickness.nil?
 
-      if foundation_wall.interior_finish_type != HPXML::InteriorFinishNone
+      if foundation_wall.interior_finish_type != HPXML::InteriorFinishNotPresent
         foundation_wall.interior_finish_thickness = 0.5
         foundation_wall.interior_finish_thickness_isdefaulted = true
       end
@@ -1488,17 +1488,17 @@ module Defaults
 
       if floor.interior_finish_type.nil?
         if floor.is_floor
-          floor.interior_finish_type = HPXML::InteriorFinishNone
+          floor.interior_finish_type = HPXML::InteriorFinishNotPresent
         elsif HPXML::conditioned_finished_locations.include? floor.interior_adjacent_to
           floor.interior_finish_type = HPXML::InteriorFinishGypsumBoard
         else
-          floor.interior_finish_type = HPXML::InteriorFinishNone
+          floor.interior_finish_type = HPXML::InteriorFinishNotPresent
         end
         floor.interior_finish_type_isdefaulted = true
       end
       next unless floor.interior_finish_thickness.nil?
 
-      if floor.interior_finish_type != HPXML::InteriorFinishNone
+      if floor.interior_finish_type != HPXML::InteriorFinishNotPresent
         floor.interior_finish_thickness = 0.5
         floor.interior_finish_thickness_isdefaulted = true
       end
@@ -1629,13 +1629,13 @@ module Defaults
       end
       if window.interior_shading_type.nil?
         if window.glass_layers == HPXML::WindowLayersGlassBlock
-          window.interior_shading_type = HPXML::InteriorShadingTypeNone
+          window.interior_shading_type = HPXML::InteriorShadingTypeNotPresent
         else
           window.interior_shading_type = HPXML::InteriorShadingTypeLightCurtains # ANSI/RESNET/ICC 301-2022
         end
         window.interior_shading_type_isdefaulted = true
       end
-      if window.interior_shading_coverage_summer.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNone
+      if window.interior_shading_coverage_summer.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNotPresent
         if blinds_types.include? window.interior_shading_type
           window.interior_shading_coverage_summer = 1.0
         else
@@ -1643,7 +1643,7 @@ module Defaults
         end
         window.interior_shading_coverage_summer_isdefaulted = true
       end
-      if window.interior_shading_coverage_winter.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNone
+      if window.interior_shading_coverage_winter.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNotPresent
         if blinds_types.include? window.interior_shading_type
           window.interior_shading_coverage_winter = 1.0
         else
@@ -1680,10 +1680,10 @@ module Defaults
       end
       if window.exterior_shading_factor_winter.nil? || window.exterior_shading_factor_summer.nil?
         if window.exterior_shading_type.nil?
-          window.exterior_shading_type = HPXML::ExteriorShadingTypeNone
+          window.exterior_shading_type = HPXML::ExteriorShadingTypeNotPresent
           window.exterior_shading_type_isdefaulted = true
         end
-        if window.exterior_shading_coverage_summer.nil? && window.exterior_shading_type != HPXML::ExteriorShadingTypeNone
+        if window.exterior_shading_coverage_summer.nil? && window.exterior_shading_type != HPXML::ExteriorShadingTypeNotPresent
           window.exterior_shading_coverage_summer = {
             HPXML::ExteriorShadingTypeExternalOverhangs => 1.0, # Assume window area fully shaded
             HPXML::ExteriorShadingTypeAwnings => 1.0, # Assume fully shaded
@@ -1696,7 +1696,7 @@ module Defaults
           }[window.exterior_shading_type]
           window.exterior_shading_coverage_summer_isdefaulted = true
         end
-        if window.exterior_shading_coverage_winter.nil? && window.exterior_shading_type != HPXML::ExteriorShadingTypeNone
+        if window.exterior_shading_coverage_winter.nil? && window.exterior_shading_type != HPXML::ExteriorShadingTypeNotPresent
           window.exterior_shading_coverage_winter = {
             HPXML::ExteriorShadingTypeExternalOverhangs => 1.0, # Assume window area fully shaded
             HPXML::ExteriorShadingTypeAwnings => 1.0, # Assume window area fully shaded
@@ -3715,7 +3715,7 @@ module Defaults
       end
 
       hpxml_bldg.permanent_spas.each do |permanent_spa|
-        next if permanent_spa.type == HPXML::TypeNone
+        next if permanent_spa.type == HPXML::TypeNotPresent
 
         if permanent_spa.pump_service_feeders.empty?
           service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
@@ -3736,7 +3736,7 @@ module Defaults
       end
 
       hpxml_bldg.pools.each do |pool|
-        next if pool.type == HPXML::TypeNone
+        next if pool.type == HPXML::TypeNotPresent
 
         if pool.pump_service_feeders.empty?
           service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
@@ -3982,7 +3982,7 @@ module Defaults
         electric_panel.headroom_spaces_isdefaulted = true
       end
 
-      ElectricPanel.calculate(runner, hpxml_header, hpxml_bldg, electric_panel)
+      ElectricPanel.calculate(hpxml_header, hpxml_bldg, electric_panel)
     end
   end
 
@@ -4608,9 +4608,9 @@ module Defaults
     unit_type = hpxml_bldg.building_construction.residential_facility_type
     cfa = hpxml_bldg.building_construction.conditioned_floor_area
     hpxml_bldg.pools.each do |pool|
-      next if pool.type == HPXML::TypeNone
+      next if pool.type == HPXML::TypeNotPresent
 
-      if pool.pump_type != HPXML::TypeNone
+      if pool.pump_type != HPXML::TypeNotPresent
         # Pump
         if pool.pump_kwh_per_year.nil?
           pool.pump_kwh_per_year = get_pool_pump_annual_energy(cfa, nbeds, n_occ, unit_type)
@@ -4635,7 +4635,7 @@ module Defaults
         end
       end
 
-      next unless pool.heater_type != HPXML::TypeNone
+      next unless pool.heater_type != HPXML::TypeNotPresent
 
       # Heater
       if pool.heater_load_value.nil?
@@ -4664,9 +4664,9 @@ module Defaults
     end
 
     hpxml_bldg.permanent_spas.each do |spa|
-      next if spa.type == HPXML::TypeNone
+      next if spa.type == HPXML::TypeNotPresent
 
-      if spa.pump_type != HPXML::TypeNone
+      if spa.pump_type != HPXML::TypeNotPresent
         # Pump
         if spa.pump_kwh_per_year.nil?
           spa.pump_kwh_per_year = get_permanent_spa_pump_annual_energy(cfa, nbeds, n_occ, unit_type)
@@ -4691,7 +4691,7 @@ module Defaults
         end
       end
 
-      next unless spa.heater_type != HPXML::TypeNone
+      next unless spa.heater_type != HPXML::TypeNotPresent
 
       # Heater
       if spa.heater_load_value.nil?
@@ -5114,7 +5114,7 @@ module Defaults
   # @param eri_version [String] Version of the ANSI/RESNET/ICC 301 Standard to use for equations/assumptions
   # @return [Array<Double, Double>] The interior summer and winter shading factors
   def self.get_window_interior_shading_factors(type, shgc, coverage_summer, coverage_winter, blinds_summer, blinds_winter, eri_version)
-    return 1.0, 1.0 if type == HPXML::InteriorShadingTypeNone
+    return 1.0, 1.0 if type == HPXML::InteriorShadingTypeNotPresent
 
     if Constants::ERIVersions.index(eri_version) >= Constants::ERIVersions.index('2022C')
       # C1/C2 coefficients derived from ASHRAE 2021 Handbook of Fundamentals Chapter 15 Table 14
@@ -5171,7 +5171,7 @@ module Defaults
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [Array<Double, Double>] The exterior summer and winter shading factors
   def self.get_window_exterior_shading_factors(window, hpxml_bldg)
-    return 1.0, 1.0 if window.exterior_shading_type == HPXML::ExteriorShadingTypeNone
+    return 1.0, 1.0 if window.exterior_shading_type == HPXML::ExteriorShadingTypeNotPresent
 
     if [HPXML::ExteriorShadingTypeExternalOverhangs,
         HPXML::ExteriorShadingTypeAwnings].include?(window.exterior_shading_type) && window.overhangs_depth.to_f > 0
@@ -6416,7 +6416,7 @@ module Defaults
     end
 
     if window.glass_layers == HPXML::WindowLayersSinglePane
-      gas_fill = 'none'
+      gas_fill = 'not present'
     else
       case window.gas_fill
       when HPXML::WindowGasAir
@@ -6436,10 +6436,10 @@ module Defaults
     # From http://hes-documentation.lbl.gov/calculation-methodology/calculation-of-energy-consumption/heating-and-cooling-calculation/building-envelope/window-skylight-construction-types
     key = [is_metal_frame, window.thermal_break, n_panes, glass_type, gas_fill]
     if type.downcase == 'window'
-      vals = { [true, false, 1, 'clear', 'none'] => [1.27, 0.75], # Single-pane, clear, aluminum frame
-               [false, nil, 1, 'clear', 'none'] => [0.89, 0.64], # Single-pane, clear, wood or vinyl frame
-               [true, false, 1, 'tinted', 'none'] => [1.27, 0.64], # Single-pane, tinted, aluminum frame
-               [false, nil, 1, 'tinted', 'none'] => [0.89, 0.54], # Single-pane, tinted, wood or vinyl frame
+      vals = { [true, false, 1, 'clear', 'not present'] => [1.27, 0.75], # Single-pane, clear, aluminum frame
+               [false, nil, 1, 'clear', 'not present'] => [0.89, 0.64], # Single-pane, clear, wood or vinyl frame
+               [true, false, 1, 'tinted', 'not present'] => [1.27, 0.64], # Single-pane, tinted, aluminum frame
+               [false, nil, 1, 'tinted', 'not present'] => [0.89, 0.54], # Single-pane, tinted, wood or vinyl frame
                [true, false, 2, 'clear', 'air'] => [0.81, 0.67], # Double-pane, clear, aluminum frame
                [true, true, 2, 'clear', 'air'] => [0.60, 0.67], # Double-pane, clear, aluminum frame w/ thermal break
                [false, nil, 2, 'clear', 'air'] => [0.51, 0.56], # Double-pane, clear, wood or vinyl frame
@@ -6455,10 +6455,10 @@ module Defaults
                [false, nil, 2, 'low_e_solar_control', 'gas'] => [0.36, 0.31], # Double-pane, solar-control low-E, argon gas fill, wood or vinyl frame
                [false, nil, 3, 'low_e_insulating', 'gas'] => [0.27, 0.31] }[key] # Triple-pane, insulating low-E, argon gas fill, wood or vinyl frame
     elsif type.downcase == 'skylight'
-      vals = { [true, false, 1, 'clear', 'none'] => [1.98, 0.75], # Single-pane, clear, aluminum frame
-               [false, nil, 1, 'clear', 'none'] => [1.47, 0.64], # Single-pane, clear, wood or vinyl frame
-               [true, false, 1, 'tinted', 'none'] => [1.98, 0.64], # Single-pane, tinted, aluminum frame
-               [false, nil, 1, 'tinted', 'none'] => [1.47, 0.54], # Single-pane, tinted, wood or vinyl frame
+      vals = { [true, false, 1, 'clear', 'not present'] => [1.98, 0.75], # Single-pane, clear, aluminum frame
+               [false, nil, 1, 'clear', 'not present'] => [1.47, 0.64], # Single-pane, clear, wood or vinyl frame
+               [true, false, 1, 'tinted', 'not present'] => [1.98, 0.64], # Single-pane, tinted, aluminum frame
+               [false, nil, 1, 'tinted', 'not present'] => [1.47, 0.54], # Single-pane, tinted, wood or vinyl frame
                [true, false, 2, 'clear', 'air'] => [1.30, 0.67], # Double-pane, clear, aluminum frame
                [true, true, 2, 'clear', 'air'] => [1.10, 0.67], # Double-pane, clear, aluminum frame w/ thermal break
                [false, nil, 2, 'clear', 'air'] => [0.84, 0.56], # Double-pane, clear, wood or vinyl frame

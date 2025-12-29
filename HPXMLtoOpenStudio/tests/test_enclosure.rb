@@ -163,7 +163,7 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
 
     # Wood siding
     rimjs_values = [{ assembly_r: 0.1, layer_names: ['wood siding', 'rim joist stud and cavity'] },
-                    { assembly_r: 5.0, layer_names: ['wood siding', 'rim joist stud and cavity'] },
+                    { assembly_r: 5.0, layer_names: ['wood siding', 'osb sheathing', 'rim joist stud and cavity'] },
                     { assembly_r: 20.0, layer_names: ['wood siding', 'rim joist rigid ins', 'osb sheathing', 'rim joist stud and cavity'] }]
 
     hpxml, hpxml_bldg = _create_hpxml('base.xml')
@@ -219,6 +219,10 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
       [{ assembly_r: 0.1, layer_names: ['rim joist stud and cavity'] },
        { assembly_r: 5.0, layer_names: ['osb sheathing', 'rim joist stud and cavity'] },
        { assembly_r: 20.0, layer_names: ['rim joist rigid ins', 'osb sheathing', 'rim joist stud and cavity'] }],
+      # Stone veneer
+      [{ assembly_r: 0.1, layer_names: ['stone veneer', 'rim joist stud and cavity'] },
+       { assembly_r: 5.0, layer_names: ['stone veneer', 'osb sheathing', 'rim joist stud and cavity'] },
+       { assembly_r: 20.0, layer_names: ['stone veneer', 'rim joist rigid ins', 'osb sheathing', 'rim joist stud and cavity'] }],
     ]
 
     hpxml, hpxml_bldg = _create_hpxml('base-enclosure-walltypes.xml')
@@ -298,9 +302,9 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
        { assembly_r: 5.0, layer_names: ['osb sheathing', 'wall layer', 'plaster'] },
        { assembly_r: 20.0, layer_names: ['wall rigid ins', 'osb sheathing', 'wall layer', 'plaster'] }],
       # Adobe wall
-      [{ assembly_r: 0.1, layer_names: ['aluminum siding', 'wall layer', 'wood'] },
-       { assembly_r: 5.0, layer_names: ['aluminum siding', 'osb sheathing', 'wall layer', 'wood'] },
-       { assembly_r: 20.0, layer_names: ['aluminum siding', 'wall rigid ins', 'osb sheathing', 'wall layer', 'wood'] }],
+      [{ assembly_r: 0.1, layer_names: ['stone veneer', 'wall layer', 'wood'] },
+       { assembly_r: 5.0, layer_names: ['stone veneer', 'osb sheathing', 'wall layer', 'wood'] },
+       { assembly_r: 20.0, layer_names: ['stone veneer', 'wall rigid ins', 'osb sheathing', 'wall layer', 'wood'] }],
     ]
 
     hpxml, hpxml_bldg = _create_hpxml('base-enclosure-walltypes.xml')
@@ -1139,7 +1143,7 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
     assert(has_radiant_barrier) unless radiant_barrier_emittance.nil?
 
     # Check interior finish solar absorptance and emittance
-    if hpxml_surface.respond_to?(:interior_finish_type) && hpxml_surface.interior_finish_type != HPXML::InteriorFinishNone && !has_radiant_barrier
+    if hpxml_surface.respond_to?(:interior_finish_type) && hpxml_surface.interior_finish_type != HPXML::InteriorFinishNotPresent && !has_radiant_barrier
       interior_layer = os_construction.getLayer(os_construction.numLayers - 1).to_OpaqueMaterial.get
       assert_equal(0.6, interior_layer.solarAbsorptance)
       assert_equal(0.9, interior_layer.thermalAbsorptance)

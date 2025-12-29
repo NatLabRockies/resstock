@@ -239,7 +239,7 @@ def apply_hpxml_modification_ashrae_140(hpxml)
   hpxml_bldg.foundation_walls.each do |fwall|
     fwall.thickness = 6.0
     if fwall.insulation_interior_r_value == 0
-      fwall.interior_finish_type = HPXML::InteriorFinishNone
+      fwall.interior_finish_type = HPXML::InteriorFinishNotPresent
     else
       fwall.interior_finish_type = HPXML::InteriorFinishGypsumBoard
       fwall.interior_finish_thickness = 0.5
@@ -1117,7 +1117,7 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
         window.exterior_shading_factor_winter = nil
       end
       # Interior shading
-      hpxml_bldg.windows[0].interior_shading_type = HPXML::InteriorShadingTypeNone
+      hpxml_bldg.windows[0].interior_shading_type = HPXML::InteriorShadingTypeNotPresent
       hpxml_bldg.windows[1].interior_shading_type = HPXML::InteriorShadingTypeOther
       hpxml_bldg.windows[2].interior_shading_type = HPXML::InteriorShadingTypeMediumCurtains
       hpxml_bldg.windows[2].interior_shading_coverage_summer = 0.5
@@ -1473,7 +1473,8 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                       [HPXML::SidingTypeStucco, HPXML::ColorMedium],
                       [HPXML::SidingTypeSyntheticStucco, HPXML::ColorMediumDark],
                       [HPXML::SidingTypeVinyl, HPXML::ColorLight],
-                      [HPXML::SidingTypeNone, HPXML::ColorMedium]]
+                      [HPXML::SidingTypeNotPresent, HPXML::ColorMedium],
+                      [HPXML::SidingTypeStone, HPXML::ColorMediumLight]]
       siding_types.each do |siding_type|
         hpxml_bldg.rim_joists.add(id: "RimJoist#{hpxml_bldg.rim_joists.size + 1}",
                                   exterior_adjacent_to: HPXML::LocationOutside,
@@ -1508,13 +1509,14 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                       [HPXML::SidingTypeStucco, HPXML::ColorLight],
                       [HPXML::SidingTypeSyntheticStucco, HPXML::ColorMedium],
                       [HPXML::SidingTypeVinyl, HPXML::ColorDark],
-                      [HPXML::SidingTypeNone, HPXML::ColorMedium]]
+                      [HPXML::SidingTypeNotPresent, HPXML::ColorMedium],
+                      [HPXML::SidingTypeStone, HPXML::ColorMediumLight]]
       int_finish_types = [[HPXML::InteriorFinishGypsumBoard, 0.5],
                           [HPXML::InteriorFinishGypsumBoard, 1.0],
                           [HPXML::InteriorFinishGypsumCompositeBoard, 0.5],
                           [HPXML::InteriorFinishPlaster, 0.5],
                           [HPXML::InteriorFinishWood, 0.5],
-                          [HPXML::InteriorFinishNone, nil]]
+                          [HPXML::InteriorFinishNotPresent, nil]]
       walls_map.each_with_index do |(wall_type, assembly_r), i|
         hpxml_bldg.walls.add(id: "Wall#{hpxml_bldg.walls.size + 1}",
                              exterior_adjacent_to: HPXML::LocationOutside,
@@ -1585,7 +1587,7 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                     [HPXML::RoofTypeMetal, HPXML::ColorReflective],
                     [HPXML::RoofTypeWoodShingles, HPXML::ColorDark],
                     [HPXML::RoofTypeShingles, HPXML::ColorMediumDark],
-                    [HPXML::RoofTypePlasticRubber, HPXML::ColorLight],
+                    [HPXML::RoofTypePlasticRubber, HPXML::ColorMediumLight],
                     [HPXML::RoofTypeEPS, HPXML::ColorMedium],
                     [HPXML::RoofTypeConcrete, HPXML::ColorLight],
                     [HPXML::RoofTypeCool, HPXML::ColorReflective]]

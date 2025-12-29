@@ -441,7 +441,7 @@ module HVACSizing
                 case roof.roof_color
                 when HPXML::ColorDark, HPXML::ColorMediumDark
                   cool_temp += 130.0 * roof.net_area
-                when HPXML::ColorMedium, HPXML::ColorLight
+                when HPXML::ColorMedium, HPXML::ColorMediumLight, HPXML::ColorLight
                   cool_temp += 120.0 * roof.net_area
                 when HPXML::ColorReflective
                   cool_temp += 95.0 * roof.net_area
@@ -450,7 +450,7 @@ module HVACSizing
                 case roof.roof_color
                 when HPXML::ColorDark, HPXML::ColorMediumDark
                   cool_temp += 110.0 * roof.net_area
-                when HPXML::ColorMedium, HPXML::ColorLight
+                when HPXML::ColorMedium, HPXML::ColorMediumLight, HPXML::ColorLight
                   cool_temp += 105.0 * roof.net_area
                 when HPXML::ColorReflective
                   cool_temp += 95.0 * roof.net_area
@@ -471,7 +471,7 @@ module HVACSizing
                 case roof.roof_color
                 when HPXML::ColorDark, HPXML::ColorMediumDark
                   cool_temp += 120.0 * roof.net_area
-                when HPXML::ColorMedium, HPXML::ColorLight
+                when HPXML::ColorMedium, HPXML::ColorMediumLight, HPXML::ColorLight
                   cool_temp += 110.0 * roof.net_area
                 when HPXML::ColorReflective
                   cool_temp += 95.0 * roof.net_area
@@ -480,7 +480,7 @@ module HVACSizing
                 case roof.roof_color
                 when HPXML::ColorDark, HPXML::ColorMediumDark
                   cool_temp += 105.0 * roof.net_area
-                when HPXML::ColorMedium, HPXML::ColorLight
+                when HPXML::ColorMedium, HPXML::ColorMediumLight, HPXML::ColorLight
                   cool_temp += 100.0 * roof.net_area
                 when HPXML::ColorReflective
                   cool_temp += 95.0 * roof.net_area
@@ -1171,7 +1171,7 @@ module HVACSizing
         if [HPXML::RoofTypeClayTile, HPXML::RoofTypeWoodShingles].include? roof.roof_type
           cltd *= 0.83
         end
-      when HPXML::ColorMedium, HPXML::ColorLight
+      when HPXML::ColorMedium, HPXML::ColorMediumLight, HPXML::ColorLight
         if [HPXML::RoofTypeClayTile].include? roof.roof_type
           cltd *= 0.65
         else
@@ -4422,7 +4422,7 @@ module HVACSizing
       wall_ufactor = 1.0 / wall.insulation_assembly_r_value
 
       if wall_type == HPXML::WallTypeWoodStud
-        if wall.siding == HPXML::SidingTypeBrick
+        if [HPXML::SidingTypeBrick, HPXML::SidingTypeStone].include? wall.siding
           if wall_ufactor <= 0.070
             table_4a_wall_group = 'K'
           elsif wall_ufactor <= 0.083
@@ -4463,7 +4463,7 @@ module HVACSizing
         end
 
       elsif wall_type == HPXML::WallTypeSteelStud
-        if wall.siding == HPXML::SidingTypeBrick
+        if [HPXML::SidingTypeBrick, HPXML::SidingTypeStone].include? wall.siding
           if wall_ufactor <= 0.090
             table_4a_wall_group = 'K'
           elsif wall_ufactor <= 0.105
@@ -4505,20 +4505,20 @@ module HVACSizing
 
       elsif wall_type == HPXML::WallTypeDoubleWoodStud
         table_4a_wall_group = 'J' # assumed since MJ8 does not include double stud constructions
-        if wall.siding == HPXML::SidingTypeBrick
+        if [HPXML::SidingTypeBrick, HPXML::SidingTypeStone].include? wall.siding
           table_4a_wall_group = 'K'
         end
 
       elsif wall_type == HPXML::WallTypeSIP
         # Manual J refers to SIPs as Structural Foam Panel (SFP)
         if wall_ufactor >= (0.072 + 0.050) / 2
-          if wall.siding == HPXML::SidingTypeBrick
+          if [HPXML::SidingTypeBrick, HPXML::SidingTypeStone].include? wall.siding
             table_4a_wall_group = 'J'
           else
             table_4a_wall_group = 'G'
           end
         elsif wall_ufactor >= 0.050
-          if wall.siding == HPXML::SidingTypeBrick
+          if [HPXML::SidingTypeBrick, HPXML::SidingTypeStone].include? wall.siding
             table_4a_wall_group = 'K'
           else
             table_4a_wall_group = 'I'
@@ -4543,7 +4543,7 @@ module HVACSizing
           table_4a_wall_group = 'E'
         end
 
-      elsif [HPXML::WallTypeBrick, HPXML::WallTypeAdobe, HPXML::WallTypeConcrete].include? wall_type
+      elsif [HPXML::WallTypeBrick, HPXML::WallTypeAdobe, HPXML::WallTypeConcrete, HPXML::WallTypeStone].include? wall_type
         # Two Courses Brick or 8 Inches Concrete
         if wall_ufactor >= (0.218 + 0.179) / 2
           table_4a_wall_group = 'G'
@@ -4571,7 +4571,7 @@ module HVACSizing
           table_4a_wall_group = 'K'
         end
 
-      elsif [HPXML::WallTypeICF, HPXML::WallTypeStrawBale, HPXML::WallTypeStone].include? wall_type
+      elsif [HPXML::WallTypeICF, HPXML::WallTypeStrawBale].include? wall_type
         table_4a_wall_group = 'K'
 
       end
@@ -4952,7 +4952,7 @@ module HVACSizing
   # @param window [HPXML::Window] The window of interest
   # @return [Double] Interior shading coefficient
   def self.get_window_interior_shading_coefficient(window)
-    return 1.0 if window.interior_shading_type == HPXML::InteriorShadingTypeNone
+    return 1.0 if window.interior_shading_type == HPXML::InteriorShadingTypeNotPresent
 
     # Look up window type
     if window.glass_layers.nil? || window.glass_type.nil?

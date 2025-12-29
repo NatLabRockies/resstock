@@ -1,7 +1,13 @@
 ## OpenStudio-HPXML v1.11.0
 
 __New Features__
-- Updates to OpenStudio 3.11/EnergyPlus 25.2/HPXML v4.2.
+- Updates to OpenStudio 3.11/EnergyPlus 25.2.
+- Updates to HPXML v5.0-rc1.
+  - **Breaking change**: HPXML namespace changed from http://hpxmlonline.com/2023/09 to http://hpxmlonline.com/2025/12.
+  - **Breaking change**: Replaces "none" with "not present" for `InteriorFinish/Type`, `Siding`, `ExteriorShading/Type`, `InteriorShading/Type`, `Pool/Type`, `PermanentSpa/Type`, `Pump/Type`, and `Heater/Type`.
+  - Allows "stone veneer" for `Wall/Siding` and `RimJoist/Siding`.
+  - Allows "medium light" for `Roof/RoofColor`, `RimJoist/Color`, and `Wall/Color`.
+  - Allows `SpecificLeakageArea` for air infiltration measurements.
 - BuildResidentialHPXML measure:
   - **Breaking change**: New, simpler, easier to use option-based arguments (rather than detailed property arguments).
   - Automatically adjusts garage dimensions for dwelling units with small footprints to avoid errors.

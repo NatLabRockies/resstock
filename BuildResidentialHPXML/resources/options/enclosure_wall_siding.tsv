@@ -1,57 +1,73 @@
 Option Name	Type	Color	Solar Absorptance	Emittance	R-Value [F-ft2-hr/Btu]
-None	none	medium			0
-"Aluminum, Dark"	aluminum siding	dark			0.6
-"Aluminum, Medium"	aluminum siding	medium			0.6
-"Aluminum, Medium Dark"	aluminum siding	medium dark			0.6
-"Aluminum, Light"	aluminum siding	light			0.6
-"Aluminum, Reflective"	aluminum siding	reflective			0.6
-"Brick, Dark"	brick veneer	dark			0.7
-"Brick, Medium"	brick veneer	medium			0.7
-"Brick, Medium Dark"	brick veneer	medium dark			0.7
-"Brick, Light"	brick veneer	light			0.7
-"Brick, Reflective"	brick veneer	reflective			0.7
-"Fiber-Cement, Dark"	fiber cement siding	dark			0.2
-"Fiber-Cement, Medium"	fiber cement siding	medium			0.2
-"Fiber-Cement, Medium Dark"	fiber cement siding	medium dark			0.2
-"Fiber-Cement, Light"	fiber cement siding	light			0.2
-"Fiber-Cement, Reflective"	fiber cement siding	reflective			0.2
-"Asbestos, Dark"	asbestos siding	dark			0.6
-"Asbestos, Medium"	asbestos siding	medium			0.6
-"Asbestos, Medium Dark"	asbestos siding	medium dark			0.6
-"Asbestos, Light"	asbestos siding	light			0.6
-"Asbestos, Reflective"	asbestos siding	reflective			0.6
-"Composition Shingle, Dark"	composite shingle siding	dark			0.6
-"Composition Shingle, Medium"	composite shingle siding	medium			0.6
-"Composition Shingle, Medium Dark"	composite shingle siding	medium dark			0.6
-"Composition Shingle, Light"	composite shingle siding	light			0.6
-"Composition Shingle, Reflective"	composite shingle siding	reflective			0.6
-"Stucco, Dark"	stucco	dark			0.2
-"Stucco, Medium"	stucco	medium			0.2
-"Stucco, Medium Dark"	stucco	medium dark			0.2
-"Stucco, Light"	stucco	light			0.2
-"Stucco, Reflective"	stucco	reflective			0.2
+None	not present	medium			0
 "Vinyl, Dark"	vinyl siding	dark			0.6
-"Vinyl, Medium"	vinyl siding	medium			0.6
 "Vinyl, Medium Dark"	vinyl siding	medium dark			0.6
+"Vinyl, Medium"	vinyl siding	medium			0.6
+"Vinyl, Medium Light"	vinyl siding	medium light			0.6
 "Vinyl, Light"	vinyl siding	light			0.6
 "Vinyl, Reflective"	vinyl siding	reflective			0.6
 "Wood, Dark"	wood siding	dark			1.4
-"Wood, Medium"	wood siding	medium			1.4
 "Wood, Medium Dark"	wood siding	medium dark			1.4
+"Wood, Medium"	wood siding	medium			1.4
+"Wood, Medium Light"	wood siding	medium light			1.4
 "Wood, Light"	wood siding	light			1.4
 "Wood, Reflective"	wood siding	reflective			1.4
+"Brick, Dark"	brick veneer	dark			0.7
+"Brick, Medium Dark"	brick veneer	medium dark			0.7
+"Brick, Medium"	brick veneer	medium			0.7
+"Brick, Medium Light"	brick veneer	medium light			0.7
+"Brick, Light"	brick veneer	light			0.7
+"Brick, Reflective"	brick veneer	reflective			0.7
+"Stucco, Dark"	stucco	dark			0.2
+"Stucco, Medium Dark"	stucco	medium dark			0.2
+"Stucco, Medium"	stucco	medium			0.2
+"Stucco, Medium Light"	stucco	medium light			0.2
+"Stucco, Light"	stucco	light			0.2
+"Stucco, Reflective"	stucco	reflective			0.2
 "Synthetic Stucco, Dark"	synthetic stucco	dark			0.2
-"Synthetic Stucco, Medium"	synthetic stucco	medium			0.2
 "Synthetic Stucco, Medium Dark"	synthetic stucco	medium dark			0.2
+"Synthetic Stucco, Medium"	synthetic stucco	medium			0.2
+"Synthetic Stucco, Medium Light"	synthetic stucco	medium light			0.2
 "Synthetic Stucco, Light"	synthetic stucco	light			0.2
 "Synthetic Stucco, Reflective"	synthetic stucco	reflective			0.2
+"Fiber-Cement, Dark"	fiber cement siding	dark			0.2
+"Fiber-Cement, Medium Dark"	fiber cement siding	medium dark			0.2
+"Fiber-Cement, Medium"	fiber cement siding	medium			0.2
+"Fiber-Cement, Medium Light"	fiber cement siding	medium light			0.2
+"Fiber-Cement, Light"	fiber cement siding	light			0.2
+"Fiber-Cement, Reflective"	fiber cement siding	reflective			0.2
+"Composition Shingle, Dark"	composite shingle siding	dark			0.6
+"Composition Shingle, Medium Dark"	composite shingle siding	medium dark			0.6
+"Composition Shingle, Medium"	composite shingle siding	medium			0.6
+"Composition Shingle, Medium Light"	composite shingle siding	medium light			0.6
+"Composition Shingle, Light"	composite shingle siding	light			0.6
+"Composition Shingle, Reflective"	composite shingle siding	reflective			0.6
+"Aluminum, Dark"	aluminum siding	dark			0.6
+"Aluminum, Medium Dark"	aluminum siding	medium dark			0.6
+"Aluminum, Medium"	aluminum siding	medium			0.6
+"Aluminum, Medium Light"	aluminum siding	medium light			0.6
+"Aluminum, Light"	aluminum siding	light			0.6
+"Aluminum, Reflective"	aluminum siding	reflective			0.6
+"Stone, Dark"	stone veneer	dark			0.7
+"Stone, Medium Dark"	stone veneer	medium dark			0.7
+"Stone, Medium"	stone veneer	medium			0.7
+"Stone, Medium Light"	stone veneer	medium light			0.7
+"Stone, Light"	stone veneer	light			0.7
+"Stone, Reflective"	stone veneer	reflective			0.7
+"Asbestos, Dark"	asbestos siding	dark			0.6
+"Asbestos, Medium Dark"	asbestos siding	medium dark			0.6
+"Asbestos, Medium"	asbestos siding	medium			0.6
+"Asbestos, Medium Light"	asbestos siding	medium light			0.6
+"Asbestos, Light"	asbestos siding	light			0.6
+"Asbestos, Reflective"	asbestos siding	reflective			0.6
 "Masonite, Dark"	masonite siding	dark			0.2
-"Masonite, Medium"	masonite siding	medium			0.2
 "Masonite, Medium Dark"	masonite siding	medium dark			0.2
+"Masonite, Medium"	masonite siding	medium			0.2
+"Masonite, Medium Light"	masonite siding	medium light			0.2
 "Masonite, Light"	masonite siding	light			0.2
 "Masonite, Reflective"	masonite siding	reflective			0.2
-ASHRAE 140 Tests: Low Solar Absorptance			0.2	0.9	0.67
-ASHRAE 140 Tests: Typical Solar Absorptance			0.6	0.9	0.67
+ASHRAE 140 Tests: Low Solar Absorptance	masonite siding		0.2	0.9	0.67
+ASHRAE 140 Tests: Typical Solar Absorptance	masonite siding		0.6	0.9	0.67
 HERS Reference			0.75	0.9	0.67
 					
 # Type: The type of wall siding.					

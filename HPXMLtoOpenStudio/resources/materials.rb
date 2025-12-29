@@ -189,7 +189,7 @@ class Material
   # @param thick_in [Double] Thickness of the siding (in)
   # @return [Material] The material object
   def self.ExteriorFinishMaterial(type, thick_in = nil)
-    if (type == HPXML::SidingTypeNone) || (!thick_in.nil? && thick_in <= 0)
+    if (type == HPXML::SidingTypeNotPresent) || (!thick_in.nil? && thick_in <= 0)
       return
     end
 
@@ -200,6 +200,9 @@ class Material
     when HPXML::SidingTypeBrick
       thick_in = 4.0 if thick_in.nil?
       return new(name: type, thick_in: thick_in, mat_base: BaseMaterial.Brick)
+    when HPXML::SidingTypeStone
+      thick_in = 1.0 if thick_in.nil?
+      return new(name: type, thick_in: thick_in, mat_base: BaseMaterial.Stone)
     when HPXML::SidingTypeCompositeShingle
       thick_in = 0.25 if thick_in.nil?
       return new(name: type, thick_in: thick_in, k_in: 1.128, rho: 70.0, cp: 0.35)
@@ -219,7 +222,7 @@ class Material
       thick_in = 0.375 if thick_in.nil?
       return new(name: type, thick_in: thick_in, mat_base: BaseMaterial.Vinyl)
     when HPXML::SidingTypeWood
-      thick_in = 1.0 if thick_in.nil?
+      thick_in = 0.75 if thick_in.nil?
       return new(name: type, thick_in: thick_in, k_in: 0.71, rho: 34.0, cp: 0.28)
     end
 
@@ -264,7 +267,7 @@ class Material
   # @param thick_in [Double] Thickness of the siding (in)
   # @return [Material] The material object
   def self.InteriorFinishMaterial(type, thick_in = nil)
-    if (type == HPXML::InteriorFinishNone) || (!thick_in.nil? && thick_in <= 0)
+    if (type == HPXML::InteriorFinishNotPresent) || (!thick_in.nil? && thick_in <= 0)
       return
     else
       thick_in = 0.5 if thick_in.nil?

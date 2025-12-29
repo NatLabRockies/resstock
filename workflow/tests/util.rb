@@ -1144,7 +1144,7 @@ def _check_unit_multiplier_results(xml, hpxml_bldg, annual_results_1x, annual_re
       abs_delta_tol = 1.0
       abs_frac_tol = 0.01
     elsif key.include?('Airflow:')
-      # Check that airflow rate difference is less than 0.2 cfm or less than 5.0%
+      # Check that airflow rate difference is less than 0.2 cfm or less than 5%
       abs_delta_tol = 0.2
       abs_frac_tol = 0.05
     elsif key.include?('Unmet Hours:')

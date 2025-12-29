@@ -132,7 +132,7 @@ class HPXMLtoOpenStudioAirflowTest < Minitest::Test
     assert_in_epsilon(UnitConversions.convert(9.75, 'ft', 'm'), program_values['z_s'].sum, 0.01)
   end
 
-  def test_infiltration_natural_ela
+  def test_infiltration_ela
     args_hash = {}
     args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-enclosure-infil-ela.xml'))
     model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
@@ -140,6 +140,19 @@ class HPXMLtoOpenStudioAirflowTest < Minitest::Test
     # Check infiltration/ventilation program
     program_values = get_ems_values(model.getEnergyManagementSystemPrograms, "#{Constants::ObjectTypeInfiltration} program")
     assert_in_epsilon(0.0904, program_values['c'].sum, 0.01)
+    assert_in_epsilon(0.0573, program_values['Cs'].sum, 0.01)
+    assert_in_epsilon(0.1446, program_values['Cw'].sum, 0.01)
+    assert_in_epsilon(UnitConversions.convert(9.75, 'ft', 'm'), program_values['z_s'].sum, 0.01)
+  end
+
+  def test_infiltration_sla
+    args_hash = {}
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-enclosure-infil-sla.xml'))
+    model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
+
+    # Check infiltration/ventilation program
+    program_values = get_ems_values(model.getEnergyManagementSystemPrograms, "#{Constants::ObjectTypeInfiltration} program")
+    assert_in_epsilon(0.0914, program_values['c'].sum, 0.01)
     assert_in_epsilon(0.0573, program_values['Cs'].sum, 0.01)
     assert_in_epsilon(0.1446, program_values['Cw'].sum, 0.01)
     assert_in_epsilon(UnitConversions.convert(9.75, 'ft', 'm'), program_values['z_s'].sum, 0.01)

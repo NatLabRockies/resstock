@@ -180,13 +180,13 @@ module Airflow
     if manualj_infiltration_method.nil? || (manualj_infiltration_method == HPXML::ManualJInfiltrationMethodBlowerDoor)
       hpxml_bldg.air_infiltration_measurements.each do |measurement|
         # Returns the infiltration measurement that has the minimum information needed for simulation
-        if measurement.air_leakage
+        if not measurement.air_leakage.nil?
           if [HPXML::UnitsACH, HPXML::UnitsCFM].include?(measurement.unit_of_measure) && !measurement.house_pressure.nil?
             return measurement
           elsif [HPXML::UnitsACHNatural, HPXML::UnitsCFMNatural].include? measurement.unit_of_measure
             return measurement
           end
-        elsif measurement.effective_leakage_area
+        elsif (not measurement.effective_leakage_area.nil?) || (not measurement.specific_leakage_area.nil?)
           return measurement
         end
       end
@@ -235,8 +235,12 @@ module Airflow
       end
       sla = get_infiltration_SLA_from_ACH(nach, infil_height, infil_avg_ceil_height, weather)
       ach50 = get_infiltration_ACH50_from_SLA(sla, infil_avg_ceil_height)
-    elsif !measurement.effective_leakage_area.nil?
-      sla = UnitConversions.convert(measurement.effective_leakage_area, 'in^2', 'ft^2') / cfa
+    elsif (not measurement.effective_leakage_area.nil?) || (not measurement.specific_leakage_area.nil?)
+      if not measurement.effective_leakage_area.nil?
+        sla = UnitConversions.convert(measurement.effective_leakage_area, 'in^2', 'ft^2') / cfa
+      else
+        sla = measurement.specific_leakage_area
+      end
       ach50 = get_infiltration_ACH50_from_SLA(sla, infil_avg_ceil_height)
       nach = get_infiltration_ACH_from_SLA(sla, infil_height, infil_avg_ceil_height, weather)
     else

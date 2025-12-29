@@ -1137,6 +1137,10 @@
     "enclosure_air_leakage": "Leaky",
     "building_year_built": "1988"
   },
+  "sample_files/base-enclosure-infil-sla.xml": {
+    "parent_hpxml": "sample_files/base.xml",
+    "enclosure_air_leakage": "Detailed Example: 0.00032 SLA"
+  },
   "sample_files/base-enclosure-orientations.xml": {
     "parent_hpxml": "sample_files/base.xml"
   },

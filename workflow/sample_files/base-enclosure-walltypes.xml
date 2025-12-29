@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<HPXML xmlns='http://hpxmlonline.com/2023/09' schemaVersion='4.2'>
+<HPXML xmlns='http://hpxmlonline.com/2025/12' schemaVersion='5.0'>
   <XMLTransactionHeaderInformation>
     <XMLType>HPXML</XMLType>
     <XMLGeneratedBy>tasks.rb</XMLGeneratedBy>
@@ -103,6 +103,7 @@
             <AttachedToRimJoist idref='RimJoist8'/>
             <AttachedToRimJoist idref='RimJoist9'/>
             <AttachedToRimJoist idref='RimJoist10'/>
+            <AttachedToRimJoist idref='RimJoist11'/>
             <AttachedToFoundationWall idref='FoundationWall1'/>
             <AttachedToSlab idref='Slab1'/>
           </Foundation>
@@ -126,7 +127,7 @@
             <SystemIdentifier id='RimJoist1'/>
             <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
-            <Area>11.0</Area>
+            <Area>10.0</Area>
             <Siding>aluminum siding</Siding>
             <Color>dark</Color>
             <Insulation>
@@ -138,7 +139,7 @@
             <SystemIdentifier id='RimJoist2'/>
             <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
-            <Area>11.0</Area>
+            <Area>10.0</Area>
             <Siding>asbestos siding</Siding>
             <Color>medium</Color>
             <Insulation>
@@ -150,7 +151,7 @@
             <SystemIdentifier id='RimJoist3'/>
             <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
-            <Area>11.0</Area>
+            <Area>10.0</Area>
             <Siding>brick veneer</Siding>
             <Color>reflective</Color>
             <Insulation>
@@ -162,7 +163,7 @@
             <SystemIdentifier id='RimJoist4'/>
             <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
-            <Area>11.0</Area>
+            <Area>10.0</Area>
             <Siding>composite shingle siding</Siding>
             <Color>dark</Color>
             <Insulation>
@@ -174,7 +175,7 @@
             <SystemIdentifier id='RimJoist5'/>
             <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
-            <Area>11.0</Area>
+            <Area>10.0</Area>
             <Siding>fiber cement siding</Siding>
             <Color>medium dark</Color>
             <Insulation>
@@ -186,7 +187,7 @@
             <SystemIdentifier id='RimJoist6'/>
             <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
-            <Area>11.0</Area>
+            <Area>10.0</Area>
             <Siding>masonite siding</Siding>
             <Color>light</Color>
             <Insulation>
@@ -198,7 +199,7 @@
             <SystemIdentifier id='RimJoist7'/>
             <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
-            <Area>11.0</Area>
+            <Area>10.0</Area>
             <Siding>stucco</Siding>
             <Color>medium</Color>
             <Insulation>
@@ -210,7 +211,7 @@
             <SystemIdentifier id='RimJoist8'/>
             <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
-            <Area>11.0</Area>
+            <Area>10.0</Area>
             <Siding>synthetic stucco</Siding>
             <Color>medium dark</Color>
             <Insulation>
@@ -222,7 +223,7 @@
             <SystemIdentifier id='RimJoist9'/>
             <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
-            <Area>11.0</Area>
+            <Area>10.0</Area>
             <Siding>vinyl siding</Siding>
             <Color>light</Color>
             <Insulation>
@@ -234,11 +235,23 @@
             <SystemIdentifier id='RimJoist10'/>
             <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
-            <Area>11.0</Area>
-            <Siding>none</Siding>
+            <Area>10.0</Area>
+            <Siding>not present</Siding>
             <Color>medium</Color>
             <Insulation>
               <SystemIdentifier id='RimJoist10Insulation'/>
+              <AssemblyEffectiveRValue>23.0</AssemblyEffectiveRValue>
+            </Insulation>
+          </RimJoist>
+          <RimJoist>
+            <SystemIdentifier id='RimJoist11'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Area>10.0</Area>
+            <Siding>stone veneer</Siding>
+            <Color>medium light</Color>
+            <Insulation>
+              <SystemIdentifier id='RimJoist11Insulation'/>
               <AssemblyEffectiveRValue>23.0</AssemblyEffectiveRValue>
             </Insulation>
           </RimJoist>
@@ -350,7 +363,7 @@
             <Siding>masonite siding</Siding>
             <Color>dark</Color>
             <InteriorFinish>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorFinish>
             <Insulation>
               <SystemIdentifier id='Wall6Insulation'/>
@@ -422,7 +435,7 @@
               <StructuralBrick/>
             </WallType>
             <Area>109.0</Area>
-            <Siding>none</Siding>
+            <Siding>not present</Siding>
             <Color>medium</Color>
             <InteriorFinish>
               <Type>plaster</Type>
@@ -441,8 +454,8 @@
               <Adobe/>
             </WallType>
             <Area>109.0</Area>
-            <Siding>aluminum siding</Siding>
-            <Color>reflective</Color>
+            <Siding>stone veneer</Siding>
+            <Color>medium light</Color>
             <InteriorFinish>
               <Type>wood</Type>
               <Thickness>0.5</Thickness>

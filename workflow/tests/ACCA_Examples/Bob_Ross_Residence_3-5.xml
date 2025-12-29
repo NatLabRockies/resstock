@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<HPXML xmlns='http://hpxmlonline.com/2023/09' schemaVersion='4.2'>
+<HPXML xmlns='http://hpxmlonline.com/2025/12' schemaVersion='5.0'>
   <XMLTransactionHeaderInformation>
     <XMLType>HPXML</XMLType>
     <XMLGeneratedBy>hand</XMLGeneratedBy>
@@ -856,7 +856,7 @@
             <SHGC>0.56</SHGC>
             <InteriorShading>
               <SystemIdentifier id='WindowPrimaryBedroomNorthInteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorShading>
             <AttachedToWall idref='WallPrimaryBedroomNorth'/>
           </Window>
@@ -870,7 +870,7 @@
             <SHGC>0.56</SHGC>
             <InteriorShading>
               <SystemIdentifier id='WindowPrimaryBathroomNorthInteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorShading>
             <AttachedToWall idref='WallPrimaryBathroomNorth'/>
           </Window>
@@ -884,7 +884,7 @@
             <SHGC>0.39</SHGC>
             <InteriorShading>
               <SystemIdentifier id='FrenchDoorFamilyRoomNorthInteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorShading>
             <AttachedToWall idref='WallFamilyRoomNorth'/>
           </Window>
@@ -898,7 +898,7 @@
             <SHGC>0.56</SHGC>
             <InteriorShading>
               <SystemIdentifier id='WindowFamilyRoomEastInteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorShading>
             <AttachedToWall idref='WallFamilyRoomEast'/>
           </Window>
@@ -912,7 +912,7 @@
             <SHGC>0.56</SHGC>
             <InteriorShading>
               <SystemIdentifier id='WindowKitchenSouthInteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorShading>
             <AttachedToWall idref='WallKitchenSouth'/>
           </Window>
@@ -926,7 +926,7 @@
             <SHGC>0.56</SHGC>
             <InteriorShading>
               <SystemIdentifier id='WindowBathroom1SouthInteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorShading>
             <AttachedToWall idref='WallBathroom1South'/>
           </Window>
@@ -940,7 +940,7 @@
             <SHGC>0.56</SHGC>
             <InteriorShading>
               <SystemIdentifier id='WindowBedroom1WestInteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorShading>
             <AttachedToWall idref='WallBedroom1West'/>
           </Window>
@@ -954,7 +954,7 @@
             <SHGC>0.56</SHGC>
             <InteriorShading>
               <SystemIdentifier id='WindowPrimaryBedroomWestInteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorShading>
             <AttachedToWall idref='WallPrimaryBedroomWest'/>
           </Window>
@@ -968,7 +968,7 @@
             <SHGC>0.56</SHGC>
             <InteriorShading>
               <SystemIdentifier id='WindowBedroom2NorthInteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorShading>
             <AttachedToWall idref='FoundationWallBedroom2North'/>
           </Window>
@@ -982,7 +982,7 @@
             <SHGC>0.56</SHGC>
             <InteriorShading>
               <SystemIdentifier id='WindowCraftNorthInteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorShading>
             <AttachedToWall idref='FoundationWallCraftNorth'/>
           </Window>
@@ -996,7 +996,7 @@
             <SHGC>0.56</SHGC>
             <InteriorShading>
               <SystemIdentifier id='WindowRecRoomSouthInteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorShading>
             <AttachedToWall idref='FoundationWallRecRoomSouth'/>
           </Window>
@@ -1010,7 +1010,7 @@
             <SHGC>0.56</SHGC>
             <InteriorShading>
               <SystemIdentifier id='WindowBedroom3SouthInteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorShading>
             <AttachedToWall idref='FoundationWallBedroom3South'/>
           </Window>
@@ -1024,7 +1024,7 @@
             <SHGC>0.56</SHGC>
             <InteriorShading>
               <SystemIdentifier id='WindowBedroom3WestInteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorShading>
             <AttachedToWall idref='FoundationWallBedroom3West'/>
           </Window>
@@ -1038,7 +1038,7 @@
             <SHGC>0.56</SHGC>
             <InteriorShading>
               <SystemIdentifier id='WindowBathroom2WestInteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorShading>
             <AttachedToWall idref='FoundationWallBathroom2West'/>
           </Window>
@@ -1052,7 +1052,7 @@
             <SHGC>0.56</SHGC>
             <InteriorShading>
               <SystemIdentifier id='WindowBedroom2WestInteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </InteriorShading>
             <AttachedToWall idref='FoundationWallBedroom2West'/>
           </Window>

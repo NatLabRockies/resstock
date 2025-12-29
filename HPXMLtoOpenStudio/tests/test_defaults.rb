@@ -969,13 +969,13 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.roofs[0].radiant_barrier = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.99, HPXML::ColorDark, 0.90, false, nil, HPXML::InteriorFinishNone, nil, 45)
+    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.99, HPXML::ColorDark, 0.90, false, nil, HPXML::InteriorFinishNotPresent, nil, 45)
 
     # Test defaults w/o RoofColor & SolarAbsorptance
     hpxml_bldg.roofs[0].solar_absorptance = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.85, HPXML::ColorMedium, 0.90, false, nil, HPXML::InteriorFinishNone, nil, 45)
+    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.85, HPXML::ColorMedium, 0.90, false, nil, HPXML::InteriorFinishNotPresent, nil, 45)
 
     # Test defaults w/ conditioned space
     hpxml, hpxml_bldg = _create_hpxml('base-atticroof-cathedral.xml')
@@ -1079,7 +1079,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.walls[1].interior_finish_thickness = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_wall_values(default_hpxml_bldg.walls[1], HPXML::SidingTypeWood, 0.5, HPXML::ColorLight, 0.90, HPXML::InteriorFinishNone, nil, nil)
+    _test_default_wall_values(default_hpxml_bldg.walls[1], HPXML::SidingTypeWood, 0.5, HPXML::ColorLight, 0.90, HPXML::InteriorFinishNotPresent, nil, nil)
   end
 
   def test_foundation_walls
@@ -1133,7 +1133,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.foundation_walls[0].type = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_foundation_wall_values(default_hpxml_bldg.foundation_walls[0], 8.0, HPXML::InteriorFinishNone, nil, 135,
+    _test_default_foundation_wall_values(default_hpxml_bldg.foundation_walls[0], 8.0, HPXML::InteriorFinishNotPresent, nil, 135,
                                          1000, 0.0, 10.0, 0.0, 10.0, HPXML::FoundationWallTypeSolidConcrete)
   end
 
@@ -1159,7 +1159,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.floors[0].interior_finish_thickness = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_floor_values(default_hpxml_bldg.floors[0], HPXML::InteriorFinishNone, nil)
+    _test_default_floor_values(default_hpxml_bldg.floors[0], HPXML::InteriorFinishNotPresent, nil)
   end
 
   def test_slabs
@@ -1376,7 +1376,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     assert_equal(0.8276, default_hpxml_bldg.windows[0].interior_shading_factor_winter)
 
     # Test defaults w/ none shading
-    hpxml_bldg.windows[0].interior_shading_type = HPXML::InteriorShadingTypeNone
+    hpxml_bldg.windows[0].interior_shading_type = HPXML::InteriorShadingTypeNotPresent
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
 
@@ -1429,14 +1429,14 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
 
-    assert_equal(HPXML::InteriorShadingTypeNone, default_hpxml_bldg.windows[0].exterior_shading_type)
+    assert_equal(HPXML::InteriorShadingTypeNotPresent, default_hpxml_bldg.windows[0].exterior_shading_type)
     assert_nil(default_hpxml_bldg.windows[0].exterior_shading_coverage_summer)
     assert_nil(default_hpxml_bldg.windows[0].exterior_shading_coverage_winter)
     assert_equal(1.0, default_hpxml_bldg.windows[0].exterior_shading_factor_summer)
     assert_equal(1.0, default_hpxml_bldg.windows[0].exterior_shading_factor_winter)
 
     # Test defaults w/ none shading
-    hpxml_bldg.windows[0].exterior_shading_type = HPXML::ExteriorShadingTypeNone
+    hpxml_bldg.windows[0].exterior_shading_type = HPXML::ExteriorShadingTypeNotPresent
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
 
