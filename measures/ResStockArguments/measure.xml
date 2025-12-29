@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>5e11dcad-e8c9-4b45-a8b9-aa9740659b50</version_id>
-  <version_modified>2025-12-19T17:41:48Z</version_modified>
+  <version_id>a6391114-05c4-4bca-9c9a-f54f9f27995d</version_id>
+  <version_modified>2025-12-29T15:36:59Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -1749,6 +1749,10 @@
           <display_name>Asphalt/Fiberglass Shingles, Medium</display_name>
         </choice>
         <choice>
+          <value>Asphalt/Fiberglass Shingles, Medium Light</value>
+          <display_name>Asphalt/Fiberglass Shingles, Medium Light</display_name>
+        </choice>
+        <choice>
           <value>Asphalt/Fiberglass Shingles, Light</value>
           <display_name>Asphalt/Fiberglass Shingles, Light</display_name>
         </choice>
@@ -1767,6 +1771,10 @@
         <choice>
           <value>Tile/Slate, Medium</value>
           <display_name>Tile/Slate, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Tile/Slate, Medium Light</value>
+          <display_name>Tile/Slate, Medium Light</display_name>
         </choice>
         <choice>
           <value>Tile/Slate, Light</value>
@@ -1789,6 +1797,10 @@
           <display_name>Metal, Medium</display_name>
         </choice>
         <choice>
+          <value>Metal, Medium Light</value>
+          <display_name>Metal, Medium Light</display_name>
+        </choice>
+        <choice>
           <value>Metal, Light</value>
           <display_name>Metal, Light</display_name>
         </choice>
@@ -1807,6 +1819,10 @@
         <choice>
           <value>Wood Shingles/Shakes, Medium</value>
           <display_name>Wood Shingles/Shakes, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Wood Shingles/Shakes, Medium Light</value>
+          <display_name>Wood Shingles/Shakes, Medium Light</display_name>
         </choice>
         <choice>
           <value>Wood Shingles/Shakes, Light</value>
@@ -1829,6 +1845,10 @@
           <display_name>Shingles, Medium</display_name>
         </choice>
         <choice>
+          <value>Shingles, Medium Light</value>
+          <display_name>Shingles, Medium Light</display_name>
+        </choice>
+        <choice>
           <value>Shingles, Light</value>
           <display_name>Shingles, Light</display_name>
         </choice>
@@ -1847,6 +1867,10 @@
         <choice>
           <value>Synthetic Sheeting, Medium</value>
           <display_name>Synthetic Sheeting, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Synthetic Sheeting, Medium Light</value>
+          <display_name>Synthetic Sheeting, Medium Light</display_name>
         </choice>
         <choice>
           <value>Synthetic Sheeting, Light</value>
@@ -1869,6 +1893,10 @@
           <display_name>EPS Sheathing, Medium</display_name>
         </choice>
         <choice>
+          <value>EPS Sheathing, Medium Light</value>
+          <display_name>EPS Sheathing, Medium Light</display_name>
+        </choice>
+        <choice>
           <value>EPS Sheathing, Light</value>
           <display_name>EPS Sheathing, Light</display_name>
         </choice>
@@ -1887,6 +1915,10 @@
         <choice>
           <value>Concrete, Medium</value>
           <display_name>Concrete, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Concrete, Medium Light</value>
+          <display_name>Concrete, Medium Light</display_name>
         </choice>
         <choice>
           <value>Concrete, Light</value>
@@ -2229,136 +2261,20 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Aluminum, Dark</value>
-          <display_name>Aluminum, Dark</display_name>
-        </choice>
-        <choice>
-          <value>Aluminum, Medium</value>
-          <display_name>Aluminum, Medium</display_name>
-        </choice>
-        <choice>
-          <value>Aluminum, Medium Dark</value>
-          <display_name>Aluminum, Medium Dark</display_name>
-        </choice>
-        <choice>
-          <value>Aluminum, Light</value>
-          <display_name>Aluminum, Light</display_name>
-        </choice>
-        <choice>
-          <value>Aluminum, Reflective</value>
-          <display_name>Aluminum, Reflective</display_name>
-        </choice>
-        <choice>
-          <value>Brick, Dark</value>
-          <display_name>Brick, Dark</display_name>
-        </choice>
-        <choice>
-          <value>Brick, Medium</value>
-          <display_name>Brick, Medium</display_name>
-        </choice>
-        <choice>
-          <value>Brick, Medium Dark</value>
-          <display_name>Brick, Medium Dark</display_name>
-        </choice>
-        <choice>
-          <value>Brick, Light</value>
-          <display_name>Brick, Light</display_name>
-        </choice>
-        <choice>
-          <value>Brick, Reflective</value>
-          <display_name>Brick, Reflective</display_name>
-        </choice>
-        <choice>
-          <value>Fiber-Cement, Dark</value>
-          <display_name>Fiber-Cement, Dark</display_name>
-        </choice>
-        <choice>
-          <value>Fiber-Cement, Medium</value>
-          <display_name>Fiber-Cement, Medium</display_name>
-        </choice>
-        <choice>
-          <value>Fiber-Cement, Medium Dark</value>
-          <display_name>Fiber-Cement, Medium Dark</display_name>
-        </choice>
-        <choice>
-          <value>Fiber-Cement, Light</value>
-          <display_name>Fiber-Cement, Light</display_name>
-        </choice>
-        <choice>
-          <value>Fiber-Cement, Reflective</value>
-          <display_name>Fiber-Cement, Reflective</display_name>
-        </choice>
-        <choice>
-          <value>Asbestos, Dark</value>
-          <display_name>Asbestos, Dark</display_name>
-        </choice>
-        <choice>
-          <value>Asbestos, Medium</value>
-          <display_name>Asbestos, Medium</display_name>
-        </choice>
-        <choice>
-          <value>Asbestos, Medium Dark</value>
-          <display_name>Asbestos, Medium Dark</display_name>
-        </choice>
-        <choice>
-          <value>Asbestos, Light</value>
-          <display_name>Asbestos, Light</display_name>
-        </choice>
-        <choice>
-          <value>Asbestos, Reflective</value>
-          <display_name>Asbestos, Reflective</display_name>
-        </choice>
-        <choice>
-          <value>Composition Shingle, Dark</value>
-          <display_name>Composition Shingle, Dark</display_name>
-        </choice>
-        <choice>
-          <value>Composition Shingle, Medium</value>
-          <display_name>Composition Shingle, Medium</display_name>
-        </choice>
-        <choice>
-          <value>Composition Shingle, Medium Dark</value>
-          <display_name>Composition Shingle, Medium Dark</display_name>
-        </choice>
-        <choice>
-          <value>Composition Shingle, Light</value>
-          <display_name>Composition Shingle, Light</display_name>
-        </choice>
-        <choice>
-          <value>Composition Shingle, Reflective</value>
-          <display_name>Composition Shingle, Reflective</display_name>
-        </choice>
-        <choice>
-          <value>Stucco, Dark</value>
-          <display_name>Stucco, Dark</display_name>
-        </choice>
-        <choice>
-          <value>Stucco, Medium</value>
-          <display_name>Stucco, Medium</display_name>
-        </choice>
-        <choice>
-          <value>Stucco, Medium Dark</value>
-          <display_name>Stucco, Medium Dark</display_name>
-        </choice>
-        <choice>
-          <value>Stucco, Light</value>
-          <display_name>Stucco, Light</display_name>
-        </choice>
-        <choice>
-          <value>Stucco, Reflective</value>
-          <display_name>Stucco, Reflective</display_name>
-        </choice>
-        <choice>
           <value>Vinyl, Dark</value>
           <display_name>Vinyl, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Vinyl, Medium Dark</value>
+          <display_name>Vinyl, Medium Dark</display_name>
         </choice>
         <choice>
           <value>Vinyl, Medium</value>
           <display_name>Vinyl, Medium</display_name>
         </choice>
         <choice>
-          <value>Vinyl, Medium Dark</value>
-          <display_name>Vinyl, Medium Dark</display_name>
+          <value>Vinyl, Medium Light</value>
+          <display_name>Vinyl, Medium Light</display_name>
         </choice>
         <choice>
           <value>Vinyl, Light</value>
@@ -2373,12 +2289,16 @@
           <display_name>Wood, Dark</display_name>
         </choice>
         <choice>
+          <value>Wood, Medium Dark</value>
+          <display_name>Wood, Medium Dark</display_name>
+        </choice>
+        <choice>
           <value>Wood, Medium</value>
           <display_name>Wood, Medium</display_name>
         </choice>
         <choice>
-          <value>Wood, Medium Dark</value>
-          <display_name>Wood, Medium Dark</display_name>
+          <value>Wood, Medium Light</value>
+          <display_name>Wood, Medium Light</display_name>
         </choice>
         <choice>
           <value>Wood, Light</value>
@@ -2389,16 +2309,68 @@
           <display_name>Wood, Reflective</display_name>
         </choice>
         <choice>
+          <value>Brick, Dark</value>
+          <display_name>Brick, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Brick, Medium Dark</value>
+          <display_name>Brick, Medium Dark</display_name>
+        </choice>
+        <choice>
+          <value>Brick, Medium</value>
+          <display_name>Brick, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Brick, Medium Light</value>
+          <display_name>Brick, Medium Light</display_name>
+        </choice>
+        <choice>
+          <value>Brick, Light</value>
+          <display_name>Brick, Light</display_name>
+        </choice>
+        <choice>
+          <value>Brick, Reflective</value>
+          <display_name>Brick, Reflective</display_name>
+        </choice>
+        <choice>
+          <value>Stucco, Dark</value>
+          <display_name>Stucco, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Stucco, Medium Dark</value>
+          <display_name>Stucco, Medium Dark</display_name>
+        </choice>
+        <choice>
+          <value>Stucco, Medium</value>
+          <display_name>Stucco, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Stucco, Medium Light</value>
+          <display_name>Stucco, Medium Light</display_name>
+        </choice>
+        <choice>
+          <value>Stucco, Light</value>
+          <display_name>Stucco, Light</display_name>
+        </choice>
+        <choice>
+          <value>Stucco, Reflective</value>
+          <display_name>Stucco, Reflective</display_name>
+        </choice>
+        <choice>
           <value>Synthetic Stucco, Dark</value>
           <display_name>Synthetic Stucco, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Synthetic Stucco, Medium Dark</value>
+          <display_name>Synthetic Stucco, Medium Dark</display_name>
         </choice>
         <choice>
           <value>Synthetic Stucco, Medium</value>
           <display_name>Synthetic Stucco, Medium</display_name>
         </choice>
         <choice>
-          <value>Synthetic Stucco, Medium Dark</value>
-          <display_name>Synthetic Stucco, Medium Dark</display_name>
+          <value>Synthetic Stucco, Medium Light</value>
+          <display_name>Synthetic Stucco, Medium Light</display_name>
         </choice>
         <choice>
           <value>Synthetic Stucco, Light</value>
@@ -2409,16 +2381,140 @@
           <display_name>Synthetic Stucco, Reflective</display_name>
         </choice>
         <choice>
+          <value>Fiber-Cement, Dark</value>
+          <display_name>Fiber-Cement, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Fiber-Cement, Medium Dark</value>
+          <display_name>Fiber-Cement, Medium Dark</display_name>
+        </choice>
+        <choice>
+          <value>Fiber-Cement, Medium</value>
+          <display_name>Fiber-Cement, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Fiber-Cement, Medium Light</value>
+          <display_name>Fiber-Cement, Medium Light</display_name>
+        </choice>
+        <choice>
+          <value>Fiber-Cement, Light</value>
+          <display_name>Fiber-Cement, Light</display_name>
+        </choice>
+        <choice>
+          <value>Fiber-Cement, Reflective</value>
+          <display_name>Fiber-Cement, Reflective</display_name>
+        </choice>
+        <choice>
+          <value>Composition Shingle, Dark</value>
+          <display_name>Composition Shingle, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Composition Shingle, Medium Dark</value>
+          <display_name>Composition Shingle, Medium Dark</display_name>
+        </choice>
+        <choice>
+          <value>Composition Shingle, Medium</value>
+          <display_name>Composition Shingle, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Composition Shingle, Medium Light</value>
+          <display_name>Composition Shingle, Medium Light</display_name>
+        </choice>
+        <choice>
+          <value>Composition Shingle, Light</value>
+          <display_name>Composition Shingle, Light</display_name>
+        </choice>
+        <choice>
+          <value>Composition Shingle, Reflective</value>
+          <display_name>Composition Shingle, Reflective</display_name>
+        </choice>
+        <choice>
+          <value>Aluminum, Dark</value>
+          <display_name>Aluminum, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Aluminum, Medium Dark</value>
+          <display_name>Aluminum, Medium Dark</display_name>
+        </choice>
+        <choice>
+          <value>Aluminum, Medium</value>
+          <display_name>Aluminum, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Aluminum, Medium Light</value>
+          <display_name>Aluminum, Medium Light</display_name>
+        </choice>
+        <choice>
+          <value>Aluminum, Light</value>
+          <display_name>Aluminum, Light</display_name>
+        </choice>
+        <choice>
+          <value>Aluminum, Reflective</value>
+          <display_name>Aluminum, Reflective</display_name>
+        </choice>
+        <choice>
+          <value>Stone, Dark</value>
+          <display_name>Stone, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Stone, Medium Dark</value>
+          <display_name>Stone, Medium Dark</display_name>
+        </choice>
+        <choice>
+          <value>Stone, Medium</value>
+          <display_name>Stone, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Stone, Medium Light</value>
+          <display_name>Stone, Medium Light</display_name>
+        </choice>
+        <choice>
+          <value>Stone, Light</value>
+          <display_name>Stone, Light</display_name>
+        </choice>
+        <choice>
+          <value>Stone, Reflective</value>
+          <display_name>Stone, Reflective</display_name>
+        </choice>
+        <choice>
+          <value>Asbestos, Dark</value>
+          <display_name>Asbestos, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Asbestos, Medium Dark</value>
+          <display_name>Asbestos, Medium Dark</display_name>
+        </choice>
+        <choice>
+          <value>Asbestos, Medium</value>
+          <display_name>Asbestos, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Asbestos, Medium Light</value>
+          <display_name>Asbestos, Medium Light</display_name>
+        </choice>
+        <choice>
+          <value>Asbestos, Light</value>
+          <display_name>Asbestos, Light</display_name>
+        </choice>
+        <choice>
+          <value>Asbestos, Reflective</value>
+          <display_name>Asbestos, Reflective</display_name>
+        </choice>
+        <choice>
           <value>Masonite, Dark</value>
           <display_name>Masonite, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Masonite, Medium Dark</value>
+          <display_name>Masonite, Medium Dark</display_name>
         </choice>
         <choice>
           <value>Masonite, Medium</value>
           <display_name>Masonite, Medium</display_name>
         </choice>
         <choice>
-          <value>Masonite, Medium Dark</value>
-          <display_name>Masonite, Medium Dark</display_name>
+          <value>Masonite, Medium Light</value>
+          <display_name>Masonite, Medium Light</display_name>
         </choice>
         <choice>
           <value>Masonite, Light</value>
@@ -3421,6 +3517,10 @@
         <choice>
           <value>Detailed Example: 123 sq. in. ELA</value>
           <display_name>Detailed Example: 123 sq. in. ELA</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: 0.00032 SLA</value>
+          <display_name>Detailed Example: 0.00032 SLA</display_name>
         </choice>
         <choice>
           <value>Detailed Example: 1080 CFM50</value>
@@ -12417,7 +12517,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>CED72AF5</checksum>
+      <checksum>5A643C81</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12446,7 +12546,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E64778E8</checksum>
+      <checksum>7CC5FFF5</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>
