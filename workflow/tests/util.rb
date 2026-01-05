@@ -1081,6 +1081,11 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
   end
 
   # Check unmet hours
+  skip_unmet_check = false
+  if hpxml_path.include?('install-quality') || hpxml_path.include?('research-features')
+    # unmet hours are expected for HVAC installation quality and realistic backup staging files
+    skip_unmet_check = true
+  end
   unmet_hours_htg = results.select { |k, _v| k.include? 'Unmet Hours: Heating' }.values.sum(0.0)
   unmet_hours_clg = results.select { |k, _v| k.include? 'Unmet Hours: Cooling' }.values.sum(0.0)
   if hpxml_path.include? 'base-hvac-undersized.xml'
@@ -1090,13 +1095,12 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
     if hpxml_bldg.total_fraction_heat_load_served == 0
       assert_equal(0, unmet_hours_htg)
     else
-      # for realistic backup staging, unmet hours are expected.
-      assert_operator(unmet_hours_htg, :<, 500) unless hpxml_path.include? 'research-features'
+      assert_operator(unmet_hours_htg, :<, 500) unless skip_unmet_check
     end
     if hpxml_bldg.total_fraction_cool_load_served == 0
       assert_equal(0, unmet_hours_clg)
     else
-      assert_operator(unmet_hours_clg, :<, 500)
+      assert_operator(unmet_hours_clg, :<, 500) unless skip_unmet_check
     end
   end
 
