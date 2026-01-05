@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>9617f420-8425-4908-8c4f-761225b3723d</version_id>
-  <version_modified>2025-12-08T21:48:56Z</version_modified>
+  <version_id>9be63119-7e86-403a-b6c6-d0ddea6f168d</version_id>
+  <version_modified>2026-01-05T22:45:19Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -271,7 +271,7 @@
       <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>2025</default_value>
+      <default_value>2026</default_value>
     </argument>
     <argument>
       <name>geometry_attached_walls</name>
@@ -12625,7 +12625,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>28AEA834</checksum>
+      <checksum>AC471247</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

@@ -1,4 +1,4 @@
-# ResStock™, Copyright (c) 2025 Alliance for Sustainable Energy, LLC. All rights reserved.
+# ResStock™, Copyright (c) 2026 Alliance for Energy Innovation, LLC. All rights reserved.
 # See top level LICENSE.txt file for license terms.
 __title__ = "ResStock Postprocessing"
 __name__ = "resstockpostproc"
@@ -8,4 +8,4 @@ __version__ = "0.1.314"  # make a specific version number to keep track of chang
 __author__ = "Rajendra Adhikari"
 __author_email__ = "rajendra.adhikari@nrel.gov"
 __license__ = "BSD-3"
-__copyright__ = "Copyright 2025 The Alliance for Sustainable Energy"
+__copyright__ = "Copyright 2026 The Alliance for Energy Innovation"

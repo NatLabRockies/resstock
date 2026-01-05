@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>a6023c53-cc1b-43ef-9417-983cba0f67b5</version_id>
-  <version_modified>2025-12-08T21:48:54Z</version_modified>
+  <version_id>7a5aa58a-4632-4620-9eb7-7ae06b300bd0</version_id>
+  <version_modified>2026-01-05T22:45:17Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -265,7 +265,7 @@
       <type>Integer</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>2025</default_value>
+      <default_value>2026</default_value>
     </argument>
     <argument>
       <name>geometry_attached_walls</name>
@@ -12435,7 +12435,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>B145C290</checksum>
+      <checksum>7F60B6F8</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
