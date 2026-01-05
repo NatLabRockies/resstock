@@ -114,7 +114,8 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'heat-pump-separate-backup-inputs' => ['Expected 0 element(s) for xpath: BackupAnnualHeatingEfficiency',
                                                                    'Expected 0 element(s) for xpath: BackupHeatingCapacity',
                                                                    'Expected 0 element(s) for xpath: extension/BackupHeatingAutosizingFactor'],
-                            'heat-pump-capacity-17f' => ['Expected HeatingCapacity17F to be less than or equal to HeatingCapacity'],
+                            'heat-pump-capacity-17f-value' => ['Expected HeatingCapacity17F to be less than or equal to HeatingCapacity'],
+                            'heat-pump-capacity-17f-presence' => ['Expected HeatingCapacity when HeatingCapacity17F is provided'],
                             'heat-pump-lockout-temperatures' => ['Expected CompressorLockoutTemperature to be less than or equal to BackupHeatingLockoutTemperature'],
                             'heat-pump-multiple-backup-systems' => ['Expected 0 or 1 element(s) for xpath: HeatPump/BackupSystem [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]'],
                             'hvac-detailed-performance-bad-odbs' => ['Expected PerformanceDataPoint/OutdoorTemperature to be 47, 17, 5, or <5',
@@ -454,9 +455,14 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml_bldg.heat_pumps[0].backup_heating_capacity = 12345
         hpxml_bldg.heat_pumps[0].backup_heating_efficiency_afue = 0.8
         hpxml_bldg.heat_pumps[0].backup_heating_autosizing_factor = 1.2
-      when 'heat-pump-capacity-17f'
+      when 'heat-pump-capacity-17f-value'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.heat_pumps[0].heating_capacity_17F = hpxml_bldg.heat_pumps[0].heating_capacity + 1000.0
+        hpxml_bldg.heat_pumps[0].heating_capacity_fraction_17F = nil
+      when 'heat-pump-capacity-17f-presence'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
+        hpxml_bldg.heat_pumps[0].heating_capacity_17F = 0.5 * hpxml_bldg.heat_pumps[0].heating_capacity
+        hpxml_bldg.heat_pumps[0].heating_capacity = nil
         hpxml_bldg.heat_pumps[0].heating_capacity_fraction_17F = nil
       when 'heat-pump-lockout-temperatures'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed-lockout-temperatures.xml')

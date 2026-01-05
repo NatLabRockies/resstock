@@ -16,7 +16,7 @@ concurrency:
 
 env:
   OS_VERSION: "3.11.0-rc2"
-  OS_SHA: 783ae58613
+  OS_SHA: d7794add90
   OS_URL: https://github.com/NREL/OpenStudio/releases/download
 
 jobs:

@@ -1,5 +1,6 @@
 Option Name	Type	Assembly R-Value [F-ft2-hr/Btu]
 "Wood Stud, Uninsulated"	WoodStud	3.4
+"Wood Stud, R-3"	WoodStud	6
 "Wood Stud, R-7"	WoodStud	8.7
 "Wood Stud, R-11"	WoodStud	10.3
 "Wood Stud, R-13"	WoodStud	11.3
