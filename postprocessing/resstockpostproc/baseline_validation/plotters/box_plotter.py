@@ -228,7 +228,15 @@ def get_custom_range(df: pl.DataFrame, quantity: str, aggregation_type: Aggregat
     if aggregation_type == AggregationType.customers:
         return 0, df["units_count"].max()
     is_dist = "distribution" in aggregation_type.name.lower()
-    col_suffix = "_value" if not is_dist else "_quartiles"
+    if aggregation_type == AggregationType.per_unit_distribution:
+        col_suffix = "_quartiles"
+    elif aggregation_type == AggregationType.per_user_distribution:
+        col_suffix = "_nonzero_quartiles"
+    elif aggregation_type == AggregationType.percent_users:
+        col_suffix = "_percent_users"
+    else:
+        col_suffix = "_value"
+
     col_suffix += "_percent_difference" if view == ViewType.diff_view else ""
     all_quantities = (
         [c for c in df.columns if c.endswith(col_suffix)]
@@ -237,9 +245,9 @@ def get_custom_range(df: pl.DataFrame, quantity: str, aggregation_type: Aggregat
     )
     all_min_val, all_max_val = float("inf"), float("-inf")
     for quantity_col in all_quantities:
-        min_val = df[quantity_col].fill_null(0).list.get(0).min() if is_dist else df[quantity_col].fill_null(0).min()
+        min_val = df[quantity_col].fill_null([0]).list.get(0).min() if is_dist else df[quantity_col].fill_null(0).min()
         min_val = min(0, min_val)
-        max_val = df[quantity_col].fill_null(0).list.get(-1).max() if is_dist else df[quantity_col].fill_null(0).max()
+        max_val = df[quantity_col].fill_null([0]).list.get(-1).max() if is_dist else df[quantity_col].fill_null(0).max()
         all_min_val = min(all_min_val, min_val)
         all_max_val = max(all_max_val, max_val)
     return all_min_val, all_max_val
@@ -284,9 +292,11 @@ def create_vertical_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
         else:
             if plot_spec.aggregation_type == AggregationType.customers:
                 quantity_col = "units_count"
+            elif plot_spec.aggregation_type == AggregationType.percent_users:
+                quantity_col = f"{quantity_col}_percent_users"
             else:
                 quantity_col = f"{quantity_col}_value"
-                quantity_col += "_percent_difference" if plot_spec.view == ViewType.diff_view else ""
+            quantity_col += "_percent_difference" if plot_spec.view == ViewType.diff_view else ""
             bar_plotter.create_bar_plot(
                 data=df_subset,
                 quantity_column=quantity_col,

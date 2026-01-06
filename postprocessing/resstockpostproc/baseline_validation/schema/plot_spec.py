@@ -24,7 +24,6 @@ class AggregationType(StrEnum):
     per_unit = "per unit"
     per_unit_distribution = "per unit distribution"
     per_user = "per user"
-    monthly_per_user = "monthly per user"
     per_user_distribution = "per user distribution"
     percent_users = "percent users"
     customers = "customers"

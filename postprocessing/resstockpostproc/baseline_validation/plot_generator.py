@@ -36,8 +36,9 @@ def generate_eia_plots() -> None:
     agg_levels = ["state"]  # eia_data.get_available_aggregation_levels()
     quantity_types = [AggregationType.per_unit, AggregationType.stock_total]
     resolutions = (Resolution.month, Resolution.year)
-    quantities = [DataCol.NATURAL_GAS_TOTAL]
+    quantities = [DataCol.ELECTRICITY_TOTAL]
     resolutions = (Resolution.year,)
+    quantity_types = (AggregationType.per_unit,)
     for quantity, agg_level, quantity_type, resolution in product(quantities, agg_levels, quantity_types, resolutions):
         print(f"  Processing {agg_level} level...")
         plot_spec = PlotSpec(
@@ -75,19 +76,18 @@ def generate_recs_plots() -> None:
         AggregationType.per_unit_distribution,
         AggregationType.per_unit,
         AggregationType.percent_users,
-        AggregationType.monthly_per_user,
         AggregationType.per_user_distribution,
         AggregationType.per_user,
         AggregationType.customers,
     ]
-    agg_types = [AggregationType.stock_total]
-    resolutions = (Resolution.year,)
-    quantities = [DataCol.ELECTRICITY_WATER_HEATING]
+    agg_types = [AggregationType.per_user]
+    resolutions = (Resolution.month,)
+    quantities = [DataCol.ELECTRICITY_TOTAL]
     for quantity, agg_level, resolution, agg_type in product(quantities, agg_levels, resolutions, agg_types):
         if resolution == "month" and agg_type == AggregationType.per_unit_distribution:
             continue
         plot_spec = PlotSpec(
-            truth_source=TruthSource.recs,
+            truth_source=TruthSource.eia,
             resolution=resolution,
             aggregation_level=agg_level,
             quantity=quantity,
@@ -297,7 +297,7 @@ def generate_all_plots(
     if plot_types is None:
         plot_types = list(workflow.plots.plot_types)
 
-    generate_eia_plots()
+    generate_recs_plots()
     return
     print(f"Generating baseline validation plots.")
     print(f"Plot types: {[pt.value for pt in plot_types]}")

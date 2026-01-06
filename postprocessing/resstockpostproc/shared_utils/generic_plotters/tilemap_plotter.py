@@ -260,7 +260,7 @@ def plot_tilemap(
             _enlarge_us_total_box(nrows, ncols, row, col, specs, fig)
 
     # Add sidebar horizontal bar plot if specified
-    if sidebar_column is not None:
+    if sidebar_column:
         # sidebar_df = data.filter(pl.col(second_category_column) != "US Total").sort(sidebar_column, descending=True)
         sidebar_df = (
             data

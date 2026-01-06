@@ -45,22 +45,24 @@ class OutputFormat(str, Enum):
 
 class DataSourceConfig(NoExtraModel):
     """Configuration for BuildStock data source."""
+
     name: str = Field(description="Name for this data source")
     db_name: str = Field(description="Athena database name")
     table_name: str = Field(description="Athena table name")
     db_schema: DBSchema = Field(description="Database schema", default=DBSchema.OEDI_NEW)
-    
+
     def __hash__(self):
         return hash((self.name, self.db_name, self.table_name, self.db_schema))
-    
+
     def __eq__(self, other):
         if not isinstance(other, DataSourceConfig):
             return False
-        return (self.name == other.name and 
-                self.db_name == other.db_name and 
-                self.table_name == other.table_name and 
-                self.db_schema == other.db_schema)
-
+        return (
+            self.name == other.name
+            and self.db_name == other.db_name
+            and self.table_name == other.table_name
+            and self.db_schema == other.db_schema
+        )
 
 
 class PlotSpecification(NoExtraModel):
@@ -95,13 +97,24 @@ class OutputConfig(NoExtraModel):
 
 class WorkflowConfig(NoExtraModel):
     workgroup: str = Field(description="Athena workgroup")
-    data_sources: list[DataSourceConfig] = Field(description="BuildStock data source configuration")
+    data_sources: list[DataSourceConfig] = Field(
+        default_factory=list,
+        description="BuildStock data source configuration (optional - leave empty for EIA-only comparisons)",
+    )
     reference_years: dict[str, list[int]] = Field(
         default={"eia": [2018], "recs": [2020]},
-        description="Reference years per data source (e.g., {'eia': [2018, 2024], 'recs': [2020]})"
+        description="Reference years per data source (e.g., {'eia': [2018, 2024], 'recs': [2020]})",
     )
     plots: PlotSpecification = Field(default_factory=PlotSpecification, description="Plot specifications")
     output: OutputConfig = Field(description="Output configuration")
+
+    @field_validator("data_sources", mode="before")
+    @classmethod
+    def convert_none_to_empty_list(cls, v):
+        """Convert None to empty list when data_sources key exists but has no items."""
+        if v is None:
+            return []
+        return v
 
     @classmethod
     def from_yaml(cls, yaml_path: str | Path) -> WorkflowConfig:
@@ -111,6 +124,7 @@ class WorkflowConfig(NoExtraModel):
 
     def get_names_of_data_sources(self) -> list[str]:
         return [ds.name for ds in self.data_sources]
+
 
 workflow_config_path = Path(__file__).parent.parent / "workflow.yaml"
 workflow = WorkflowConfig.from_yaml(workflow_config_path)

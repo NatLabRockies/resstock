@@ -26,7 +26,9 @@ def get_timeseries_all(
     occupied_only: bool = False,
     aggregation: Literal["sum", "per_unit_avg", "per_user_avg"] = "sum",
     resolution: Resolution = Resolution.month,
-) -> pl.DataFrame:
+) -> pl.DataFrame | None:
+    if not workflow.data_sources:
+        return None
     all_dfs = []
     for data_source in workflow.data_sources:
         df = get_timeseries(
@@ -259,7 +261,9 @@ def get_annual_all(
     by: Literal["state", "eiaid"] = "state",
     occupied_only: bool = False,
     aggregation: Literal["sum", "per_unit_avg", "per_user_avg"] = "sum",
-) -> pl.DataFrame:
+) -> pl.DataFrame | None:
+    if not workflow.data_sources:
+        return None
     all_dfs = []
     for data_source in workflow.data_sources:
         df = get_annual(data_source, by, occupied_only=occupied_only)

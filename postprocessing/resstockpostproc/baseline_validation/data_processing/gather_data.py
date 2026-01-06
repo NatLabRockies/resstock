@@ -113,14 +113,20 @@ def _get_plot_data(
     else:
         raise NotImplementedError(f"Truth source {truth_source} not implemented.")
     # resstock_data = recs_mapping.add_characteristic_columns(resstock_data, data_source="ResStock")
-    df = pl.concat([source_data, resstock_data], how="diagonal_relaxed")
+    if resstock_data is not None:
+        df = pl.concat([source_data, resstock_data], how="diagonal_relaxed")
+    else:
+        df = source_data
     val_columns = [col for col in df.columns if col.endswith(("_value", "_percent_users"))]
     val_columns += ["units_count"]
-    ref_cols = [col for col in df["source"].unique() if truth_source in col]
+    ref_cols = [col for col in df["source"].unique(maintain_order=True) if truth_source in col]
     final_df = _add_percent_difference(
         df, join_columns=groups, value_columns=val_columns, ref_column="source", ref_cols=ref_cols
     )
-    final_df = final_df.rename({"sample_count": "model_count"})
+    if "sample_count" in final_df.columns:
+        final_df = final_df.rename({"sample_count": "model_count"})
+    elif "model_count" not in final_df.columns:
+        final_df = final_df.with_columns(pl.lit(None).cast(pl.Int64).alias("model_count"))
     return final_df
 
 
