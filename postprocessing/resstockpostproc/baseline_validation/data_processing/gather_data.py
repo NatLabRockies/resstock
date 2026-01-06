@@ -24,79 +24,89 @@ def get_plot_data(
     plot_spec: PlotSpec,
 ) -> pl.DataFrame:
     """Get the data for plotting based on the plot specification."""
-    if plot_spec.aggregation_type in [AggregationType.per_unit,
-                                      AggregationType.per_unit_distribution]:
+    if plot_spec.aggregation_type in [AggregationType.per_unit, AggregationType.per_unit_distribution]:
         aggregation = "per_unit_avg"
-    elif plot_spec.aggregation_type in [AggregationType.per_user,
-                                        AggregationType.per_user_distribution]:
+    elif plot_spec.aggregation_type in [AggregationType.per_user, AggregationType.per_user_distribution]:
         aggregation = "per_user_avg"
     else:
         aggregation = "sum"
 
-    df = _get_plot_data(plot_spec.truth_source,
-                          plot_spec.aggregation_level,
-                          plot_spec.resolution,
-                          aggregation=aggregation)
+    df = _get_plot_data(
+        plot_spec.truth_source, plot_spec.aggregation_level, plot_spec.resolution, aggregation=aggregation
+    )
     df = _keep_relevant_columns(df, plot_spec)
     df = _add_95ci_bounds(df)
-    df = df.with_columns(
-        pl.col("units_count").mean().over(plot_spec.aggregation_level).alias("avg_units_count")
-    ).sort("avg_units_count", descending=True, maintain_order=True).drop("avg_units_count")
+    df = (
+        df.with_columns(pl.col("units_count").mean().over(plot_spec.aggregation_level).alias("avg_units_count"))
+        .sort("avg_units_count", descending=True, maintain_order=True)
+        .drop("avg_units_count")
+    )
 
     if "eiaid" in df.columns and plot_spec.aggregation_level == "eiaid":
         df = df.with_columns(
-            pl.col("eiaid").cast(pl.Int16)
-            .replace_strict(ID2UtilityName, default="Unknown Utility").alias("utility_name")
+            pl.col("eiaid")
+            .cast(pl.Int16)
+            .replace_strict(ID2UtilityName, default="Unknown Utility")
+            .alias("utility_name")
         )
     return df
 
 
-#@cache
+# @cache
 def _get_plot_data(
-        truth_source,
-        aggregation_level,
-        resolution: Resolution,
-        aggregation: Literal["sum", "per_unit_avg", "per_user_avg"] = "sum"
+    truth_source,
+    aggregation_level,
+    resolution: Resolution,
+    aggregation: Literal["sum", "per_unit_avg", "per_user_avg"] = "sum",
 ) -> pl.DataFrame:
     groups = []
     if truth_source == "eia":
-        assert aggregation_level in ['state', 'eiaid'], "EIA data only supports 'state' or 'eiaid' aggregation levels."
+        assert aggregation_level in ["state", "eiaid"], "EIA data only supports 'state' or 'eiaid' aggregation levels."
         by = "state" if aggregation_level == "state" else "eiaid"
         if resolution == "month":
-            source_data = get_eia_data.get_monthly_all(years=workflow.reference_years.get("eia", [2018]), by=by,
-                                                       aggregation=aggregation)
+            source_data = get_eia_data.get_monthly_all(
+                years=workflow.reference_years.get("eia", [2018]), by=by, aggregation=aggregation
+            )
             resstock_data = get_resstock_data.get_timeseries_all(by=by, aggregation=aggregation)
             groups = [by, "month"]
         else:
             assert resolution == "year", "EIA data only supports 'year' or 'month' resolutions."
-            source_data = get_eia_data.get_annual_all(years=workflow.reference_years.get("eia", [2018]), by=by,
-                                                      aggregation=aggregation)
+            source_data = get_eia_data.get_annual_all(
+                years=workflow.reference_years.get("eia", [2018]), by=by, aggregation=aggregation
+            )
             resstock_data = get_resstock_data.get_annual_all(by=by, aggregation=aggregation)
             groups = [by]
     elif truth_source == "recs":
         if resolution == "month":
             assert aggregation_level in ["state"], "RECS data only supports 'state' aggregation level for monthly."
             source_data = get_recs_data.get_monthly_all(year=2020, by="state", aggregation=aggregation)
-            resstock_data = get_resstock_data.get_timeseries_all(by="state", occupied_only=True, aggregation=aggregation)
+            resstock_data = get_resstock_data.get_timeseries_all(
+                by="state", occupied_only=True, aggregation=aggregation
+            )
             groups = ["state", "month"]
         else:
             assert resolution == "year", "RECS data only supports 'year' or 'month' resolutions."
             source_data = get_recs_data.get_annual_all(year=2020, by=aggregation_level, aggregation=aggregation)
-            resstock_data = get_resstock_data.get_annual_all(by=aggregation_level, occupied_only=True, aggregation=aggregation)
+            resstock_data = get_resstock_data.get_annual_all(
+                by=aggregation_level, occupied_only=True, aggregation=aggregation
+            )
             groups = [aggregation_level]
     elif truth_source == "lrd":
         assert aggregation == "per_unit_avg", "LRD data only supports 'per_unit_avg' aggregation."
         eiaidlist = tuple([str(eiaid) for eiaid in UtilityName2ID.values()])
-        source_data = get_lrd_data.get_lrd_aggregated(year=2018, resolution=resolution,
-                                                      restrict_list=eiaidlist)
+        source_data = get_lrd_data.get_lrd_aggregated(year=2018, resolution=resolution, restrict_list=eiaidlist)
         if resolution == "year":
             resstock_data = get_resstock_data.get_annual_all(by="eiaid", aggregation=aggregation)
             groups = ["eiaid"]
+        elif resolution == Resolution.hour_of_day_matrix:
+            resstock_data = get_resstock_data.get_timeseries_all(
+                by="eiaid", occupied_only=False, aggregation=aggregation, restrict_list=eiaidlist, resolution=resolution
+            )
+            groups = ["eiaid", "month", "day_type", "hour_of_day"]
         else:
-            resstock_data = get_resstock_data.get_timeseries_all(by="eiaid", occupied_only=False,
-                                                                 aggregation=aggregation,
-                                                                 restrict_list=eiaidlist,
-                                                                 resolution=resolution)
+            resstock_data = get_resstock_data.get_timeseries_all(
+                by="eiaid", occupied_only=False, aggregation=aggregation, restrict_list=eiaidlist, resolution=resolution
+            )
             groups = ["eiaid", resolution]
         # resstock_data = recs_mapping.add_enduse_columns(resstock_data)
 
@@ -107,17 +117,21 @@ def _get_plot_data(
     val_columns = [col for col in df.columns if col.endswith(("_value", "_percent_users"))]
     val_columns += ["units_count"]
     ref_cols = [col for col in df["source"].unique() if truth_source in col]
-    final_df = _add_percent_difference(df, join_columns=groups, value_columns=val_columns, ref_column="source",
-                                       ref_val=ref_cols[0])
+    final_df = _add_percent_difference(
+        df, join_columns=groups, value_columns=val_columns, ref_column="source", ref_cols=ref_cols
+    )
     final_df = final_df.rename({"sample_count": "model_count"})
     return final_df
 
 
-def _add_percent_difference(df: pl.DataFrame, join_columns: list[str], value_columns: list[str], ref_column: str, ref_val: str) -> pl.DataFrame:
+def _add_percent_difference(
+    df: pl.DataFrame, join_columns: list[str], value_columns: list[str], ref_column: str, ref_cols: list[str]
+) -> pl.DataFrame:
+    ref_val = ref_cols[0]
     ref_df = df.filter(pl.col(ref_column) == ref_val).select(join_columns + value_columns)
     full_df = df.join(ref_df, on=join_columns, suffix="_ref")
     result = full_df.with_columns(
-        pl.when(pl.col(ref_column) != ref_val)
+        pl.when(~pl.col(ref_column).is_in(ref_cols[:1]))
         .then((pl.col(f"{value_column}") - pl.col(f"{value_column}_ref")) / pl.col(f"{value_column}_ref") * 100)
         .otherwise(None)
         .alias(f"{value_column}_percent_difference")
@@ -127,15 +141,13 @@ def _add_percent_difference(df: pl.DataFrame, join_columns: list[str], value_col
     ref_columns_to_drop = [f"{value_column}_ref" for value_column in value_columns]
     return result.drop(ref_columns_to_drop)
 
+
 def _pivot_enduse_columns(df: pl.DataFrame, groups: list) -> pl.DataFrame:
     """Pivot enduse columns to have unified column names."""
     index_cols = groups + ["units_count", "sample_count", "source", "quantity_type"]
-    df = df.unpivot(
-        index=index_cols,
-        variable_name="quantity",
-        value_name="value"
-    )
+    df = df.unpivot(index=index_cols, variable_name="quantity", value_name="value")
     return df
+
 
 def _keep_relevant_columns(
     df: pl.DataFrame,
@@ -143,9 +155,9 @@ def _keep_relevant_columns(
 ) -> pl.DataFrame:
     """Keep only the relevant columns for the given plot specification."""
     all_output_columns = [
-        col for col in df.columns 
-        if col.endswith(("_value", "_percent_users", "_quartiles", "_percent_difference",
-                                                    "_resoluition", "_rse")) 
+        col
+        for col in df.columns
+        if col.endswith(("_value", "_percent_users", "_quartiles", "_percent_difference", "_resoluition", "_rse"))
         and not col.startswith("units_count")
     ]
     if plot_spec.quantity is not None:
@@ -183,14 +195,15 @@ def _add_95ci_bounds(
         upper_col = rse_col.replace("_rse", "_upper_bound")
         lower_col = rse_col.replace("_rse", "_lower_bound")
         df = df.with_columns(
-            (
-                pl.col(base_col) + (pl.col(base_col) * pl.col(rse_col).fill_null(0).abs() / 100.0 * 1.96)
-            ).alias(upper_col),
-            (
-                pl.col(base_col) - (pl.col(base_col) * pl.col(rse_col).fill_null(0).abs() / 100.0 * 1.96)
-            ).alias(lower_col),
+            (pl.col(base_col) + (pl.col(base_col) * pl.col(rse_col).fill_null(0).abs() / 100.0 * 1.96)).alias(
+                upper_col
+            ),
+            (pl.col(base_col) - (pl.col(base_col) * pl.col(rse_col).fill_null(0).abs() / 100.0 * 1.96)).alias(
+                lower_col
+            ),
         )
     return df
+
 
 def scale_to_eia_customers(
     buildstock_df: pl.DataFrame,
@@ -214,5 +227,3 @@ def scale_to_eia_customers(
     ]
 
     return scaled.with_columns(scale_exprs)
-
-

@@ -184,16 +184,16 @@ def create_plot(
     """Create load duration curve plot based on the plot specification."""
 
     final_df = data.clone()
-    sidebar_column = None
-    sidebar_title = None
+    sidebar_column: str = ""
+    sidebar_title: str = ""
     ts_xtick_vals = None
     ts_xtick_text = None
     timeseries_column = None
-    rse_column = None
+    rse_column: str | None = None
     x_unit = ""
-    quantity_title = "kWh"
+    quantity_title: str = "kWh"
+    quantity_column: str = ""
     title = ""
-    sidebar_title = ""
     match plot_spec.aggregation_type:
         case AggregationType.stock_total:
             quantity_title = "kWh"
@@ -246,8 +246,8 @@ def create_plot(
         ts_xtick_vals = ("JAN", "DEC")
         ts_xtick_text = ("   Jan", "Dec   ")
         title = "Monthly " + title
-        sidebar_column = None
-        sidebar_title = None
+        sidebar_column = ""
+        sidebar_title = ""
     # match plot_spec.resolution:
     #     case Resolution.year:
     #         timeseries_column = None
@@ -268,6 +268,14 @@ def create_plot(
         or plot_spec.quantity is None or plot_spec.aggregation_level not in [DataCol.STATE]):
         fig = create_vertical_plot(final_df, plot_spec)
     else:
+        if plot_spec.view == ViewType.diff_view:
+            quantity_title, quantity_column, sidebar_title, sidebar_column = (
+                sidebar_title,
+                sidebar_column,
+                quantity_title,
+                quantity_column,
+            )
+            quantity_title = quantity_title.replace("Percent Difference (%)", r"% diff")
         fig = tilemap_plotter.plot_tilemap(
             data=final_df,
             quantity_title=quantity_title,

@@ -16,20 +16,28 @@ from resstockpostproc.baseline_validation.utils import get_buildstock_query
 from resstockpostproc.baseline_validation.io_managers.output_manager import save_dataframe, save_figure
 from resstockpostproc.baseline_validation.plotters import eia_plotter, lrd_plotter, timeseries_plotter, recs_plotter
 from resstockpostproc.baseline_validation.schema.workflow_schema import PlotType, WorkflowConfig
-from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, FileType, AggregationType, TruthSource, ViewType, Resolution
+from resstockpostproc.baseline_validation.schema.plot_spec import (
+    PlotSpec,
+    FileType,
+    AggregationType,
+    TruthSource,
+    ViewType,
+    Resolution,
+)
 from resstockpostproc.baseline_validation.utils import ensure_directory
 from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
+
 
 def generate_eia_plots() -> None:
     """Generate EIA validation plots."""
     print("Generating EIA validation plots...")
     quantities = [None, DataCol.ELECTRICITY_TOTAL, DataCol.NATURAL_GAS_TOTAL]
-    agg_levels = ["state"] # eia_data.get_available_aggregation_levels()
+    agg_levels = ["state"]  # eia_data.get_available_aggregation_levels()
     quantity_types = [AggregationType.per_unit, AggregationType.stock_total]
     resolutions = (Resolution.month, Resolution.year)
     quantities = [DataCol.NATURAL_GAS_TOTAL]
-
+    resolutions = (Resolution.year,)
     for quantity, agg_level, quantity_type, resolution in product(quantities, agg_levels, quantity_types, resolutions):
         print(f"  Processing {agg_level} level...")
         plot_spec = PlotSpec(
@@ -39,35 +47,42 @@ def generate_eia_plots() -> None:
             quantity=quantity,
             focus_on=None,
             aggregation_type=quantity_type,
-            view=ViewType.value_view,
+            view=ViewType.diff_view,
         )
         _show_figure(plot_spec)
 
     print("EIA plots complete!")
 
+
 def generate_recs_plots() -> None:
     """Generate RECS validation plots."""
     print("Generating RECS validation plots...")
-    monthly_quantities = [DataCol.ELECTRICITY_TOTAL,
-                  DataCol.ELECTRICITY_WATER_HEATING,
-                  DataCol.NATURAL_GAS_WATER_HEATING,
-                  DataCol.NATURAL_GAS_TOTAL,
-                  DataCol.NATURAL_GAS_SPACE_HEATING,
-                  DataCol.ELECTRICITY_SPACE_HEATING,
-                  DataCol.ELECTRICITY_SPACE_COOLING,
-                  ]
+    monthly_quantities = [
+        DataCol.ELECTRICITY_TOTAL,
+        DataCol.ELECTRICITY_WATER_HEATING,
+        DataCol.NATURAL_GAS_WATER_HEATING,
+        DataCol.NATURAL_GAS_TOTAL,
+        DataCol.NATURAL_GAS_SPACE_HEATING,
+        DataCol.ELECTRICITY_SPACE_HEATING,
+        DataCol.ELECTRICITY_SPACE_COOLING,
+    ]
     quantities = monthly_quantities
     quantities.extend(q for q in RECS_ENDUSE_MAP if q not in monthly_quantities)
     quantities = [None]
-    agg_levels = [DataCol.VINTAGE]
-    agg_types = [AggregationType.stock_total, AggregationType.per_unit_distribution,
-                      AggregationType.per_unit, AggregationType.percent_users,
-                      AggregationType.monthly_per_user, AggregationType.per_user_distribution,
-                      AggregationType.per_user, AggregationType.customers
-                      ]
+    agg_levels = [DataCol.STATE]
+    agg_types = [
+        AggregationType.stock_total,
+        AggregationType.per_unit_distribution,
+        AggregationType.per_unit,
+        AggregationType.percent_users,
+        AggregationType.monthly_per_user,
+        AggregationType.per_user_distribution,
+        AggregationType.per_user,
+        AggregationType.customers,
+    ]
     agg_types = [AggregationType.stock_total]
     resolutions = (Resolution.year,)
-    quantities = [DataCol.NATURAL_GAS_WATER_HEATING]
+    quantities = [DataCol.ELECTRICITY_WATER_HEATING]
     for quantity, agg_level, resolution, agg_type in product(quantities, agg_levels, resolutions, agg_types):
         if resolution == "month" and agg_type == AggregationType.per_unit_distribution:
             continue
@@ -78,22 +93,73 @@ def generate_recs_plots() -> None:
             quantity=quantity,
             focus_on="CO",
             aggregation_type=agg_type,
-            view=ViewType.value_view
+            view=ViewType.value_view,
         )
         _show_figure(plot_spec)
 
+
+# List of utilities for hour_of_day_matrix plots (from tilemap_plotter LAYOUTS)
+LRD_UTILITIES = [
+    "ComEd (IL)",
+    "OhioEd (OH)",
+    "ToledoEd (OH)",
+    "AEP (OH)",
+    "Cleveland (OH)",
+    "MetEd (PA)",
+    "Penelec (PA)",
+    "PP (PA)",
+    "WPP (PA)",
+    "PECO (PA)",
+    "PG&E (CA)",
+    "SCE (CA)",
+    "ERCOT",
+    "Appalachian (VA)",
+    "BGE (MD)",
+]
+
+
+def _generate_hourly_matrix_plots() -> None:
+    """Generate hour_of_day_matrix plots for each utility."""
+    print("  Generating hourly matrix plots for each utility...")
+
+    for utility in LRD_UTILITIES:
+        print(f"    Processing {utility}...")
+        plot_spec = PlotSpec(
+            truth_source=TruthSource.lrd,
+            resolution=Resolution.hour_of_day_matrix,
+            aggregation_level="eiaid",
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            focus_on=utility,
+            aggregation_type=AggregationType.per_unit,
+            view=ViewType.value_view,
+        )
+        try:
+            _show_figure(plot_spec)
+        except Exception as e:
+            print(f"      Warning: Failed to generate plot for {utility}: {e}")
+
+
 def generate_lrd_plots() -> None:
+    _generate_hourly_matrix_plots()
+
     print("Generating LRD validation plots...")
-    agg_levels = ["eiaid"] # eia_data.get_available_aggregation_levels()
+    agg_levels = ["eiaid"]  # eia_data.get_available_aggregation_levels()
     agg_types = [AggregationType.stock_total]
     resolutions = ("month", "year")
 
     quantities = [DataCol.ELECTRICITY_TOTAL]
     agg_levels = ["eiaid"]
     agg_types = [AggregationType.per_unit]
-    resolutions = (Resolution.year, Resolution.month, Resolution.day_of_year, Resolution.hour_of_day,
-                   Resolution.hour_of_day_summer, Resolution.hour_of_day_winter, Resolution.hour_of_year,
-                   Resolution.top_100_hours)
+    resolutions = (
+        Resolution.year,
+        Resolution.month,
+        Resolution.day_of_year,
+        Resolution.hour_of_day,
+        Resolution.hour_of_day_summer,
+        Resolution.hour_of_day_winter,
+        Resolution.hour_of_year,
+        Resolution.top_100_hours,
+    )
     for quantity, agg_level, resolution, agg_type in product(quantities, agg_levels, resolutions, agg_types):
         plot_spec = PlotSpec(
             truth_source=TruthSource.lrd,
@@ -104,14 +170,13 @@ def generate_lrd_plots() -> None:
             aggregation_type=agg_type,
             view=ViewType.value_view,
         )
-    
-
         _show_figure(plot_spec)
 
 def _show_figure(plot_spec: PlotSpec) -> None:
     """Generate and show a plot based on the plot specification."""
     fig = _create_plot(plot_spec)
-    #fig.show(renderer="browser")
+    # fig.show(renderer="browser")
+
 
 def _create_plot(plot_spec: PlotSpec) -> Figure:
     """Create a plot based on the plot specification."""
@@ -122,6 +187,7 @@ def _create_plot(plot_spec: PlotSpec) -> Figure:
     return fig
 
     print("RECS plots complete!")
+
 
 # def generate_lrd_plots(
 #     workflow: WorkflowConfig,
@@ -208,6 +274,7 @@ def _create_plot(plot_spec: PlotSpec) -> Figure:
 
 #     print("  Timeseries plots complete!")
 
+
 def get_plotting_function(truth_source: TruthSource):
     """Return a plotting function for the given visualization type."""
     match truth_source:
@@ -220,6 +287,7 @@ def get_plotting_function(truth_source: TruthSource):
         case _:
             raise ValueError(f"Unsupported truth source: {truth_source}")
 
+
 def generate_all_plots(
     workflow: WorkflowConfig,
     output_formats: tuple = ("html", "svg", "parquet"),
@@ -229,7 +297,7 @@ def generate_all_plots(
     if plot_types is None:
         plot_types = list(workflow.plots.plot_types)
 
-    generate_lrd_plots()
+    generate_eia_plots()
     return
     print(f"Generating baseline validation plots.")
     print(f"Plot types: {[pt.value for pt in plot_types]}")
@@ -241,7 +309,6 @@ def generate_all_plots(
     if PlotType.eia in plot_types:
         generate_eia_plots()
 
-
     # if PlotType.lrd in plot_types:
     #     generate_lrd_plots(workflow, output_base, output_formats)
 
@@ -250,6 +317,7 @@ def generate_all_plots(
 
     print(f"\nAll plots generated successfully!")
     print(f"Output location: {workflow.output.output_dir / workflow.output.run_name}")
+
 
 def main() -> int:
     """Main entry point for baseline validation plot generation."""
@@ -283,7 +351,7 @@ def main() -> int:
             "timeseries (timeseries analysis), all (all plot types). "
             "Defaults to all plot types specified in config if not provided."
         ),
-        default=["lrd"]
+        default=["lrd"],
     )
 
     args = parser.parse_args()

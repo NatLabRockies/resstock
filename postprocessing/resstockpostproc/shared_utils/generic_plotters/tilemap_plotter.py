@@ -51,17 +51,58 @@ LAYOUTS = {
         [None, None, None, None, None, None, None, None],
     ],
     DataCol.BUILDING_TYPE: [
-        ["Single-Family Detached", "Single-Family Attached", "Multi-Family with 2 - 4 Units", "Multi-Family with 5+ Units", "Mobile Home"],
+        [
+            "Single-Family Detached",
+            "Single-Family Attached",
+            "Multi-Family with 2 - 4 Units",
+            "Multi-Family with 5+ Units",
+            "Mobile Home",
+        ],
         [None, "US Total", None],
         [None, None, None],
     ],
     DataCol.UTILITY_NAME: [
-        ["ComEd (IL)",  "OhioEd (OH)", "ToledoEd (OH)", "AEP (OH)", "Cleveland (OH)"],
+        ["ComEd (IL)", "OhioEd (OH)", "ToledoEd (OH)", "AEP (OH)", "Cleveland (OH)"],
         ["MetEd (PA)", "Penelec (PA)", "PP (PA)", "WPP (PA)", "PECO (PA)"],
-        ["PG&E (CA)", "SCE (CA)", "ERCOT", "Appalachian (VA)", "BGE (MD)"], # "Ameren (MO)" doesn't have full year data
+        ["PG&E (CA)", "SCE (CA)", "ERCOT", "Appalachian (VA)", "BGE (MD)"],  # "Ameren (MO)" doesn't have full year data
         # [None, None, "ERCOT", None, None],
     ],
+    # Layout for hour_of_day_matrix: 13 rows (months + All Year) x 3 columns (day types)
+    "month_daytype": [
+        ["JAN_All Days", "JAN_Weekday", "JAN_Weekend"],
+        ["FEB_All Days", "FEB_Weekday", "FEB_Weekend"],
+        ["MAR_All Days", "MAR_Weekday", "MAR_Weekend"],
+        ["APR_All Days", "APR_Weekday", "APR_Weekend"],
+        ["MAY_All Days", "MAY_Weekday", "MAY_Weekend"],
+        ["JUN_All Days", "JUN_Weekday", "JUN_Weekend"],
+        ["JUL_All Days", "JUL_Weekday", "JUL_Weekend"],
+        ["AUG_All Days", "AUG_Weekday", "AUG_Weekend"],
+        ["SEP_All Days", "SEP_Weekday", "SEP_Weekend"],
+        ["OCT_All Days", "OCT_Weekday", "OCT_Weekend"],
+        ["NOV_All Days", "NOV_Weekday", "NOV_Weekend"],
+        ["DEC_All Days", "DEC_Weekday", "DEC_Weekend"],
+        ["All Year_All Days", "All Year_Weekday", "All Year_Weekend"],
+    ],
+    # Layout for day_of_year: 15 utilities in single column (full width per row)
+    "utility_vertical": [
+        ["ComEd (IL)"],
+        ["OhioEd (OH)"],
+        ["ToledoEd (OH)"],
+        ["AEP (OH)"],
+        ["Cleveland (OH)"],
+        ["MetEd (PA)"],
+        ["Penelec (PA)"],
+        ["PP (PA)"],
+        ["WPP (PA)"],
+        ["PECO (PA)"],
+        ["PG&E (CA)"],
+        ["SCE (CA)"],
+        ["ERCOT"],
+        ["Appalachian (VA)"],
+        ["BGE (MD)"],
+    ],
 }
+
 
 def plot_tilemap(
     data: pl.DataFrame,
@@ -87,7 +128,7 @@ def plot_tilemap(
     """
     Generic annual sales plotting function with geographic layout and size-proportional subplots.
     Uses bar charts with one value per state (or box plots for distributions), and error bars for RECS RSE.
-    
+
     Args:
         data: DataFrame with all columns (both reference and resstock)
         by: Grouping column (e.g., 'state')
@@ -109,16 +150,16 @@ def plot_tilemap(
     assert isinstance(global_max, (int, float)), "Could not determine global max for tilemap plot."
     assert isinstance(global_min, (int, float)), "Could not determine global min for tilemap plot."
     custom_range = (min(0, global_min), global_max * 1.01)
-    
+
     layout = LAYOUTS[second_category_column]
     subplot_titles = []
     nrows = len(layout)
     ncols = len(layout[0])
-    
+
     # Add extra column for sidebar if needed
     if sidebar_column is not None:
         ncols += 2
-    
+
     entity_position = {}
     for row in range(nrows):
         for col in range(ncols):
@@ -129,30 +170,38 @@ def plot_tilemap(
             entity_name = layout[row][col] if col < len(layout[row]) else None
             subplot_titles.append(entity_name or "")
             entity_position[entity_name] = (row + 1, col + 1)
-    
+
     # Create column specs for sidebar spanning all rows
-    specs: list[list[dict[str, str | int | bool | float] | None]] = [[{"type": "xy"} for _ in range(ncols)] for _ in range(nrows)]
+    specs: list[list[dict[str, str | int | bool | float] | None]] = [
+        [{"type": "xy"} for _ in range(ncols)] for _ in range(nrows)
+    ]
     if sidebar_column is not None:
         for row in range(nrows):
             if row == 0:
-                specs[row][-1] = {"type": "xy", "rowspan": nrows-1}
+                specs[row][-1] = {"type": "xy", "rowspan": nrows - 1}
             else:
                 specs[row][-1] = None
-    
+
     # Set column widths: sidebar is double width
     column_widths = None
     if sidebar_column is not None:
         standard_width = 1.0 / (ncols + 1)  # +1 because sidebar takes double space
         column_widths = [standard_width] * (ncols - 1) + [standard_width * 2]
-    
+
+    # Calculate spacing dynamically to fit the number of rows/cols
+    # Max spacing is 0.1, but must be less than 1/(n-1) for n rows/cols
+    max_vertical_spacing = max(0.02, 0.3 / (nrows))
+    max_horizontal_spacing = max(0.02, 0.3 / (ncols))
+
     fig = make_subplots(
         rows=nrows,
         cols=ncols,
         subplot_titles=subplot_titles,
         specs=specs,
         shared_yaxes=False,
-        horizontal_spacing=0.02,
-        vertical_spacing=0.1,
+        shared_xaxes=ncols == 1, # Share x-axes only if single column
+        horizontal_spacing=max_horizontal_spacing,
+        vertical_spacing=max_vertical_spacing,
         column_widths=column_widths,
     )
 
@@ -163,9 +212,9 @@ def plot_tilemap(
         entity_df = data.filter(pl.col(second_category_column) == entity)
         if entity_df.is_empty():
             continue
-        
-        is_us_total = (entity == "US Total")
-        show_yticks = is_us_total or col == 1 or (col > 1 and layout[row - 1][col-2] is None)
+
+        is_us_total = entity == "US Total"
+        show_yticks = is_us_total or col == 1 or (col > 1 and layout[row - 1][col - 2] is None)
         if timeseries_column is None:
             create_bar_plot(
                 data=entity_df,
@@ -178,12 +227,12 @@ def plot_tilemap(
                 second_category_title="",
                 orientation="v",
                 title_text="",
-                show_legends=show_legends and i==0,
+                show_legends=show_legends and i == 0,
                 fig=fig,
                 row=row,
                 col=col,
                 custom_range=custom_range if entity != "US Total" else None,
-                show_ticks=show_yticks
+                show_ticks=show_yticks,
             )
         else:
             create_ts_plot(
@@ -195,7 +244,7 @@ def plot_tilemap(
                 quantity_title=quantity_title if show_yticks else "",
                 first_category_title="",
                 title_text="",
-                show_legends=show_legends and i==0,
+                show_legends=show_legends and i == 0,
                 fig=fig,
                 row=row,
                 col=col,
@@ -206,14 +255,22 @@ def plot_tilemap(
                 x_unit=x_unit,
                 fill_lower_bound=True,
             )
-        
+
         if entity == "US Total":
             _enlarge_us_total_box(nrows, ncols, row, col, specs, fig)
-    
+
     # Add sidebar horizontal bar plot if specified
     if sidebar_column is not None:
         # sidebar_df = data.filter(pl.col(second_category_column) != "US Total").sort(sidebar_column, descending=True)
-        sidebar_df = data.sort(sidebar_column, descending=True)
+        sidebar_df = (
+            data
+            .group_by(first_category_column)
+            .agg([pl.col(sidebar_column).is_null().all().alias("all_null")])
+            .filter(~pl.col("all_null"))
+            .select(first_category_column)
+            .join(data, on=first_category_column, how="inner")
+            .sort(sidebar_column, descending=True)
+        )
         # print(categories)
         create_bar_plot(
             data=sidebar_df,
@@ -229,7 +286,7 @@ def plot_tilemap(
             row=1,
             col=ncols,
         )
-    
+
     # Remove grid lines from all subplots
     fig.update_xaxes(showgrid=False)
     fig.update_yaxes(showgrid=False, zeroline=True, zerolinewidth=2, zerolinecolor="darkgray")
@@ -237,6 +294,7 @@ def plot_tilemap(
         title_text=title_text,
     )
     return fig
+
 
 def _enlarge_us_total_box(nrows, ncols, row, col, specs, fig):
     subplot_num = 0
@@ -251,45 +309,45 @@ def _enlarge_us_total_box(nrows, ncols, row, col, specs, fig):
         else:
             continue
         break
-        
+
     # Get the axis keys
     xaxis_key = f"xaxis{subplot_num}" if subplot_num > 1 else "xaxis"
     yaxis_key = f"yaxis{subplot_num}" if subplot_num > 1 else "yaxis"
-        
+
     # Get current domain
     x_domain = fig.layout[xaxis_key].domain
     y_domain = fig.layout[yaxis_key].domain
-        
+
     # Calculate center and new width (1.5x)
     x_center = (x_domain[0] + x_domain[1]) / 2
     x_width = (x_domain[1] - x_domain[0]) * 1.5
-        
+
     # For height, grow downward - keep top fixed, extend bottom
     y_top = y_domain[1]
     y_height = (y_domain[1] - y_domain[0]) * 1.8
     y_bottom = y_top - y_height
-        
+
     # Set new domain (allow extending beyond current row)
     fig.update_xaxes(
-            domain=[max(0, x_center - x_width / 2), min(1, x_center + x_width / 2)],
-            row=row,
-            col=col,
-        )
+        domain=[max(0, x_center - x_width / 2), min(1, x_center + x_width / 2)],
+        row=row,
+        col=col,
+    )
     fig.update_yaxes(
-            domain=[y_bottom, y_top],  # Don't constrain with max(0, ...) to allow full extension
-            row=row,
-            col=col,
-        )
-        
+        domain=[y_bottom, y_top],  # Don't constrain with max(0, ...) to allow full extension
+        row=row,
+        col=col,
+    )
+
     # Add border around US Total subplot
     fig.add_shape(
-            type="rect",
-            xref="paper",
-            yref="paper",
-            x0=max(0, x_center - x_width / 2),
-            y0=y_bottom,
-            x1=min(1, x_center + x_width / 2),
-            y1=y_top,
-            line={"color": "black", "width": 2},
-            layer="below",
-        )
+        type="rect",
+        xref="paper",
+        yref="paper",
+        x0=max(0, x_center - x_width / 2),
+        y0=y_bottom,
+        x1=min(1, x_center + x_width / 2),
+        y1=y_top,
+        line={"color": "black", "width": 2},
+        layer="below",
+    )
