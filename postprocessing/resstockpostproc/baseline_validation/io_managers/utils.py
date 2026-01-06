@@ -96,3 +96,20 @@ def add_missing_states(df: pl.DataFrame) -> pl.DataFrame:
     
     df = df.join(missing_df, on=join_cols, how="outer", coalesce=True)
     return df
+
+
+def apply_aggregation(aggregation, df):
+    if aggregation == "per_unit_avg":
+        value_cols = [col for col in df.columns if col.endswith("_value")]
+        df = df.with_columns([
+                (pl.col(col) / pl.col("units_count")).alias(col) for col in value_cols
+            ])
+    elif aggregation == "per_user_avg":
+        value_cols = [col for col in df.columns if col.endswith("_value")]
+        percent_users_cols = [col.replace("_value", "_percent_users") for col in value_cols]
+        df = df.with_columns([
+                (pl.col(value_col) / (pl.col(percent_users_col) / 100 * pl.col("units_count"))).alias(value_col)
+                for value_col, percent_users_col in zip(value_cols, percent_users_cols)
+                if percent_users_col in df.columns
+            ])
+    return df

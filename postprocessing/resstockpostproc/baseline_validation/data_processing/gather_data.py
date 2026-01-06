@@ -16,7 +16,6 @@ from resstockpostproc.baseline_validation.schema.plot_spec import AggregationTyp
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.mapping import UtilityName2ID, ID2UtilityName
-from . import recs_mapping
 
 AggregationBy = Literal["state", "eiaid"]
 
@@ -64,12 +63,14 @@ def _get_plot_data(
         assert aggregation_level in ['state', 'eiaid'], "EIA data only supports 'state' or 'eiaid' aggregation levels."
         by = "state" if aggregation_level == "state" else "eiaid"
         if resolution == "month":
-            source_data = get_eia_data.get_monthly_all(years=workflow.reference_years.get("eia", [2018]), by=by)
+            source_data = get_eia_data.get_monthly_all(years=workflow.reference_years.get("eia", [2018]), by=by,
+                                                       aggregation=aggregation)
             resstock_data = get_resstock_data.get_timeseries_all(by=by, aggregation=aggregation)
             groups = [by, "month"]
         else:
             assert resolution == "year", "EIA data only supports 'year' or 'month' resolutions."
-            source_data = get_eia_data.get_annual_all(years=workflow.reference_years.get("eia", [2018]), by=by)
+            source_data = get_eia_data.get_annual_all(years=workflow.reference_years.get("eia", [2018]), by=by,
+                                                      aggregation=aggregation)
             resstock_data = get_resstock_data.get_annual_all(by=by, aggregation=aggregation)
             groups = [by]
     elif truth_source == "recs":

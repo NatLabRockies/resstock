@@ -60,6 +60,7 @@ class Resolution(StrEnum):
     hour_of_day = "hour_of_day"
     hour_of_day_summer = "hour_of_day_summer"
     hour_of_day_winter = "hour_of_day_winter"
+    hour_of_day_matrix = "hour_of_day_matrix"
     day_of_year = "day_of_year"
     month = "month"
     year = "year"

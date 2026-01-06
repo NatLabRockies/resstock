@@ -84,23 +84,27 @@ def create_ts_plot(
                 row=row,
                 col=col,
             )
-            
-            # Add the lower bound filled area (from lower bound to 0) if requested
-            if fill_lower_bound:
-                fig.add_scatter(
-                    x=x_values + x_values[::-1],
-                    y=lower_vals + [0] * len(lower_vals),
-                    fill="toself",
-                    fillcolor=color,
-                    opacity=0.8,
-                    line={"color": "rgba(255,255,255,0)"},
-                    showlegend=show_legends and i == 0,
-                    name="95% CI Lower Bound",
-                    legendgroup=f"confidence_lower_bound_{rse_column}",
-                    hoverinfo="skip",
-                    row=row,
-                    col=col,
-                )
+            lower_fill_name = "95% CI Lower Bound"
+        else:
+            lower_vals = y_values
+            lower_fill_name = f"{category} filled area"
+        # Add the lower bound filled area (from lower bound to 0) if requested
+        if fill_lower_bound:
+            fig.add_scatter(
+                x=x_values + x_values[::-1],
+                y=lower_vals + [0] * len(lower_vals),
+                fill="toself",
+                fillcolor=color,
+                opacity=0.8,
+                line={"color": "rgba(255,255,255,0)"},
+                showlegend=(show_legends and i == 0),
+                name=lower_fill_name,
+                legendgroup="Lower Bound",
+                hoverinfo="skip",
+                row=row,
+                col=col,
+            )
+            fill_lower_bound = False  # Only ever fill the lower bound once for first category
         
         fig.add_scatter(
             x=x_values,

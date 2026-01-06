@@ -10,6 +10,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
     AggregationType,
     ViewType,
+    TruthSource
 )
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 from resstockpostproc.shared_utils.colors import QUALITATIVE_SERIES, REF_QUALITATIVE_SERIES
@@ -198,27 +199,29 @@ def create_plot(
             quantity_title = "kWh"
             quantity_column = f"{plot_spec.quantity}_value"
             sidebar_column = f"{plot_spec.quantity}_value_percent_difference"
-            rse_column = f"{plot_spec.quantity}_value_rse"
+            rse_column = f"{plot_spec.quantity}_value_rse" if plot_spec.truth_source == TruthSource.recs else None
             sidebar_title = "Percent Difference (%)"
-            title = f"Annual {plot_spec.quantity} by State"
+            quantity_name = plot_spec.quantity or "Enduse"
+            grouping = f"in {plot_spec.focus_on}" if plot_spec.focus_on else f"{plot_spec.aggregation_level}"
+            title = f"Annual {quantity_name} {grouping}"
         case AggregationType.percent_users:
             quantity_title = "%"
             quantity_column = f"{plot_spec.quantity}_percent_users"
             sidebar_column = f"{plot_spec.quantity}_percent_users_percent_difference"
-            rse_column = f"{plot_spec.quantity}_percent_users_rse"
+            rse_column = f"{plot_spec.quantity}_percent_users_rse" if plot_spec.truth_source == TruthSource.recs else None
             sidebar_title = "Percent Difference (%)"
             title = f"Annual {plot_spec.quantity} Percent of Customers by State"
         case AggregationType.per_unit:
             quantity_title = "kWh/home"
             quantity_column = f"{plot_spec.quantity}_value"
-            rse_column = f"{plot_spec.quantity}_value_rse"
+            rse_column = f"{plot_spec.quantity}_value_rse" if plot_spec.truth_source == TruthSource.recs else None
             sidebar_column = f"{plot_spec.quantity}_value_percent_difference"
             sidebar_title = "Percent Difference (%)"
             title = f"Annual {plot_spec.quantity} per Unit by State"
         case AggregationType.per_user:
             quantity_title = "kWh/user"
             quantity_column = f"{plot_spec.quantity}_value"
-            rse_column = f"{plot_spec.quantity}_value_rse"
+            rse_column = f"{plot_spec.quantity}_value_rse" if plot_spec.truth_source == TruthSource.recs else None
             sidebar_column = f"{plot_spec.quantity}_value_percent_difference"
             sidebar_title = "Percent Difference (%)"
             title = f"Annual {plot_spec.quantity} per User by State"
@@ -231,7 +234,7 @@ def create_plot(
         case AggregationType.customers:
             quantity_title = "count"
             quantity_column = "units_count"
-            rse_column = "units_count_rse"
+            rse_column = "units_count_rse" if plot_spec.truth_source == TruthSource.recs else None
             sidebar_column = "units_count_percent_difference"
             sidebar_title = "Percent Difference (%)"
             title = "Number of occupied dwelling units by State"

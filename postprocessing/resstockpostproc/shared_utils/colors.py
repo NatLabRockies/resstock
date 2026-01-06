@@ -1,14 +1,14 @@
 QUALITATIVE_SERIES = [  # from light series in https://sronpersonalpages.nl/~pault/
     "#77AADD",  # light blude
     "#44BB99",  # mint
-    "#BBCC33",  # pear
-    "#AAAA00",  # Olive
+    "#FFAABB",  # pink
     "#99DDFF",  # light cyan
-    "#EEDD88",  # light yellow
+    "#BBCC33",  # pear
 ]
 REF_QUALITATIVE_SERIES = [
-    "#EE8866",
-    "#FFAABB",
+    "#EE8866", # orange
+    "#AAAA00",  # Olive
+    "#EEDD88",  # light yellow
 ]
 nrel_color_series = [
     ["#0B5E90", "#0079C2", "#00A3E4", "#5DD2FF"],

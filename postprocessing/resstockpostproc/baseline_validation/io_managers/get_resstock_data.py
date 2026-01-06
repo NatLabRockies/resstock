@@ -2,6 +2,8 @@ import polars as pl
 import pandas as pd
 from collections.abc import Sequence
 from typing import Literal
+
+from resstockpostproc.baseline_validation.io_managers.utils import apply_aggregation
 from .utils import add_us_total, add_missing_states
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow, DataSourceConfig
 from resstockpostproc.baseline_validation.schema.plot_spec import Resolution
@@ -37,16 +39,7 @@ def get_timeseries_all(
         percent_users_cols = [col.replace("_value", "_percent_users") for col in value_cols]
         percent_users_cols = [col for col in percent_users_cols if col in df.columns]
         df = df.join(annual_df.select([by] + percent_users_cols), on=[by], how="left")
-        if aggregation == "per_unit_avg":
-            df = df.with_columns([
-                (pl.col(col) / pl.col("units_count")).alias(col) for col in value_cols
-            ])
-        elif aggregation == "per_user_avg":
-            df = df.with_columns([
-                (pl.col(value_col) / (pl.col("units_count") * pl.col(percent_users_col) / 100)).alias(value_col) 
-                for value_col, percent_users_col in zip(value_cols, percent_users_cols)
-                if percent_users_col in df.columns
-            ])
+        df = apply_aggregation(aggregation, df)
         df = df.with_columns(pl.lit(data_source.name).alias("source"))
         all_dfs.append(df)
     final_df = pl.concat(all_dfs, how="diagonal")
@@ -113,7 +106,7 @@ def get_timeseries(
         )
         ts_data = ts_data.sort(by=[by, Resolution.hour_of_day])
     if by == "state":
-        result = add_missing_states(result)
+        ts_data = add_missing_states(ts_data)
     return ts_data
 
 
@@ -197,25 +190,11 @@ def get_annual_all(
     all_dfs = []
     for data_source in workflow.data_sources:
         df = get_annual(data_source, by, occupied_only=occupied_only)
-        if aggregation == "per_unit_avg":
-            value_cols = [col for col in df.columns if col.endswith("_value")]
-            df = df.with_columns([
-                (pl.col(col) / pl.col("units_count")).alias(col) for col in value_cols
-            ])
-        elif aggregation == "per_user_avg":
-            value_cols = [col for col in df.columns if col.endswith("_value")]
-            percent_users_cols = [col.replace("_value", "_percent_users") for col in value_cols]
-            df = df.with_columns([
-                (pl.col(value_col) / (pl.col(percent_users_col) / 100 * pl.col("units_count"))).alias(value_col) 
-                for value_col, percent_users_col in zip(value_cols, percent_users_cols)
-                if percent_users_col in df.columns
-            ])
-        
+        df = apply_aggregation(aggregation, df)
         df = df.with_columns(pl.lit(data_source.name).alias("source"))
         all_dfs.append(df)
     final_df = pl.concat(all_dfs, how="diagonal_relaxed")
     return final_df
-
 
 def get_annual(
     data_source: DataSourceConfig,

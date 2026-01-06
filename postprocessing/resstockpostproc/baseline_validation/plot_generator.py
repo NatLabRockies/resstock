@@ -1,6 +1,3 @@
-"""Orchestrates the generation of all baseline validation plots."""
-"""Baseline Validation CLI."""
-
 import argparse
 import logging
 import sys
@@ -31,7 +28,7 @@ def generate_eia_plots() -> None:
     agg_levels = ["state"] # eia_data.get_available_aggregation_levels()
     quantity_types = [AggregationType.per_unit, AggregationType.stock_total]
     resolutions = (Resolution.month, Resolution.year)
-
+    quantities = [DataCol.NATURAL_GAS_TOTAL]
 
     for quantity, agg_level, quantity_type, resolution in product(quantities, agg_levels, quantity_types, resolutions):
         print(f"  Processing {agg_level} level...")
@@ -44,10 +41,7 @@ def generate_eia_plots() -> None:
             aggregation_type=quantity_type,
             view=ViewType.value_view,
         )
-        data = get_plot_data(plot_spec)
-        plot_func = get_plotting_function(plot_spec.truth_source)
-        fig = plot_func(data, plot_spec)
-        save_figure(fig, plot_spec)
+        _show_figure(plot_spec)
 
     print("EIA plots complete!")
 
@@ -65,15 +59,15 @@ def generate_recs_plots() -> None:
     quantities = monthly_quantities
     quantities.extend(q for q in RECS_ENDUSE_MAP if q not in monthly_quantities)
     quantities = [None]
-    agg_levels = [DataCol.STATE]
+    agg_levels = [DataCol.VINTAGE]
     agg_types = [AggregationType.stock_total, AggregationType.per_unit_distribution,
                       AggregationType.per_unit, AggregationType.percent_users,
                       AggregationType.monthly_per_user, AggregationType.per_user_distribution,
                       AggregationType.per_user, AggregationType.customers
                       ]
-    agg_types = [AggregationType.per_user_distribution]
+    agg_types = [AggregationType.stock_total]
     resolutions = (Resolution.year,)
-    quantities = [DataCol.ELECTRICITY_TOTAL]
+    quantities = [DataCol.NATURAL_GAS_WATER_HEATING]
     for quantity, agg_level, resolution, agg_type in product(quantities, agg_levels, resolutions, agg_types):
         if resolution == "month" and agg_type == AggregationType.per_unit_distribution:
             continue
@@ -82,7 +76,7 @@ def generate_recs_plots() -> None:
             resolution=resolution,
             aggregation_level=agg_level,
             quantity=quantity,
-            focus_on="US Total",
+            focus_on="CO",
             aggregation_type=agg_type,
             view=ViewType.value_view
         )
@@ -110,6 +104,8 @@ def generate_lrd_plots() -> None:
             aggregation_type=agg_type,
             view=ViewType.value_view,
         )
+    
+
         _show_figure(plot_spec)
 
 def _show_figure(plot_spec: PlotSpec) -> None:
@@ -216,7 +212,7 @@ def get_plotting_function(truth_source: TruthSource):
     """Return a plotting function for the given visualization type."""
     match truth_source:
         case TruthSource.eia:
-            return eia_plotter.create_plot
+            return recs_plotter.create_plot
         case TruthSource.lrd:
             return lrd_plotter.create_plot
         case TruthSource.recs:
@@ -233,7 +229,7 @@ def generate_all_plots(
     if plot_types is None:
         plot_types = list(workflow.plots.plot_types)
 
-    generate_recs_plots()
+    generate_lrd_plots()
     return
     print(f"Generating baseline validation plots.")
     print(f"Plot types: {[pt.value for pt in plot_types]}")

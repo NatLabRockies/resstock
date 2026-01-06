@@ -21,7 +21,6 @@ data_sources:
 reference_years:
   eia:
     - 2018
-    - 2020
   recs:
     - 2020
 

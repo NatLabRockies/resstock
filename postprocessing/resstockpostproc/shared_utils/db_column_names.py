@@ -64,6 +64,7 @@ class DataCol(StrEnum):
     EV_OWNERSHIP = "electric_vehicle_ownership"
     UNITS_COUNT = "units_count"
     OUTDOOR_DRYBULB_TEMP = "outdoor_drybulb_temp"
+    UTILITY_NAME = "utility_name"
     TIMESTAMP = "timestamp"
 
 
