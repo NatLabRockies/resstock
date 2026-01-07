@@ -4228,6 +4228,7 @@ Each heat pump water heater is entered as a ``/HPXML/Building/BuildingDetails/Sy
   ``HeatingCapacity``                                  double            Btu/hr         > 0                     No        See [#]_        Heating output capacity
   ``BackupHeatingCapacity``                            double            Btu/hr         >= 0                    No        15355 (4.5 kW)  Heating capacity of the electric resistance backup
   ``UniformEnergyFactor`` or ``EnergyFactor``          double            frac           > 1, <= 5               Yes                       EnergyGuide label rated efficiency
+  ``HPWHDucting/ExhaustAirTermination``                string                           See [#]_                No        <none>          The location where HPWH exhaust air is ducted to
   ``HPWHOperatingMode``                                string                           See [#]_                No        hybrid/auto     Operating mode [#]_
   ``UsageBin`` or ``FirstHourRating``                  string or double  str or gal/hr  See [#]_ or > 0         No        See [#]_        EnergyGuide label usage bin/first hour rating
   ``WaterHeaterInsulation/Jacket/JacketRValue``        double            F-ft2-hr/Btu   >= 0                    No        0               R-value of additional tank insulation wrap
@@ -4256,6 +4257,8 @@ Each heat pump water heater is entered as a ``/HPXML/Building/BuildingDetails/Sy
   .. [#] FractionDHWLoadServed represents only the fraction of the hot water load associated with the hot water **fixtures**.
          Additional hot water load from clothes washers/dishwashers will be automatically assigned to the appropriate water heater(s).
   .. [#] If HeatingCapacity not provided, defaults to 1706 Btu/hr (0.5 kW) multiplied by the heat pump COP.
+  .. [#] OpenStudio-HPXML currently only supports ExhaustAirTermination="outside" for heat pump water heaters located in conditioned space.
+         Any other combination of ExhaustAirTermination value and water heater location will be ignored w/ a warning.
   .. [#] HPWHOperatingMode choices are "hybrid/auto" or "heat pump only".
   .. [#] The heat pump water heater operating mode can alternatively be defined using :ref:`schedules_detailed`.
   .. [#] UsageBin choices are "very small", "low", "medium", or "high".

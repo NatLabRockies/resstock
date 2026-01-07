@@ -487,8 +487,8 @@ class HPXML < Object
   WallTypeWoodStud = 'WoodStud'
   WaterFixtureTypeFaucet = 'faucet'
   WaterFixtureTypeShowerhead = 'shower head'
-  WaterHeaterOperatingModeHybridAuto = 'hybrid/auto'
-  WaterHeaterOperatingModeHeatPumpOnly = 'heat pump only'
+  WaterHeaterHPWHOperatingModeHybridAuto = 'hybrid/auto'
+  WaterHeaterHPWHOperatingModeHeatPumpOnly = 'heat pump only'
   WaterHeaterTankModelTypeMixed = 'mixed'
   WaterHeaterTankModelTypeStratified = 'stratified'
   WaterHeaterTypeCombiStorage = 'space-heating boiler with storage tank'
@@ -8587,7 +8587,9 @@ class HPXML < Object
              :backup_heating_capacity,                # [Double] BackupHeatingCapacity (Btu/hr)
              :energy_factor,                          # [Double] EnergyFactor (frac)
              :uniform_energy_factor,                  # [Double] UniformEnergyFactor (frac)
-             :operating_mode,                         # [String] HPWHOperatingMode (HPXML::WaterHeaterOperatingModeXXX)
+             :hpwh_operating_mode,                    # [String] HPWHOperatingMode (HPXML::WaterHeaterHPWHOperatingModeXXX)
+             :hpwh_ducting_supply,                    # [String] HPWHDucting/SupplyAirSource (HPXML::LocationXXX)
+             :hpwh_ducting_exhaust,                   # [String] HPWHDucting/ExhaustAirTermination (HPXML::LocationXXX)
              :first_hour_rating,                      # [Double] FirstHourRating (gal/hr)
              :usage_bin,                              # [String] UsageBin (HPXML::WaterHeaterUsageBinXXX)
              :recovery_efficiency,                    # [Double] RecoveryEfficiency (frac)
@@ -8688,7 +8690,12 @@ class HPXML < Object
       XMLHelper.add_element(water_heating_system, 'BackupHeatingCapacity', @backup_heating_capacity, :float, @backup_heating_capacity_isdefaulted) unless @backup_heating_capacity.nil?
       XMLHelper.add_element(water_heating_system, 'EnergyFactor', @energy_factor, :float, @energy_factor_isdefaulted) unless @energy_factor.nil?
       XMLHelper.add_element(water_heating_system, 'UniformEnergyFactor', @uniform_energy_factor, :float) unless @uniform_energy_factor.nil?
-      XMLHelper.add_element(water_heating_system, 'HPWHOperatingMode', @operating_mode, :string, @operating_mode_isdefaulted) unless @operating_mode.nil?
+      XMLHelper.add_element(water_heating_system, 'HPWHOperatingMode', @hpwh_operating_mode, :string, @hpwh_operating_mode_isdefaulted) unless @hpwh_operating_mode.nil?
+      if (not @hpwh_ducting_exhaust.nil?) || (not @hpwh_ducting_supply.nil?)
+        hpwh_ducting = XMLHelper.add_element(water_heating_system, 'HPWHDucting')
+        XMLHelper.add_element(hpwh_ducting, 'SupplyAirSource', @hpwh_ducting_supply, :string, @hpwh_ducting_supply_isdefaulted) unless @hpwh_ducting_supply.nil?
+        XMLHelper.add_element(hpwh_ducting, 'ExhaustAirTermination', @hpwh_ducting_exhaust, :string, @hpwh_ducting_exhaust_isdefaulted) unless @hpwh_ducting_exhaust.nil?
+      end
       XMLHelper.add_element(water_heating_system, 'FirstHourRating', @first_hour_rating, :float) unless @first_hour_rating.nil?
       XMLHelper.add_element(water_heating_system, 'UsageBin', @usage_bin, :string, @usage_bin_isdefaulted) unless @usage_bin.nil?
       XMLHelper.add_element(water_heating_system, 'RecoveryEfficiency', @recovery_efficiency, :float, @recovery_efficiency_isdefaulted) unless @recovery_efficiency.nil?
@@ -8738,7 +8745,9 @@ class HPXML < Object
       @backup_heating_capacity = XMLHelper.get_value(water_heating_system, 'BackupHeatingCapacity', :float)
       @energy_factor = XMLHelper.get_value(water_heating_system, 'EnergyFactor', :float)
       @uniform_energy_factor = XMLHelper.get_value(water_heating_system, 'UniformEnergyFactor', :float)
-      @operating_mode = XMLHelper.get_value(water_heating_system, 'HPWHOperatingMode', :string)
+      @hpwh_operating_mode = XMLHelper.get_value(water_heating_system, 'HPWHOperatingMode', :string)
+      @hpwh_ducting_supply = XMLHelper.get_value(water_heating_system, 'HPWHDucting/SupplyAirSource', :string)
+      @hpwh_ducting_exhaust = XMLHelper.get_value(water_heating_system, 'HPWHDucting/ExhaustAirTermination', :string)
       @first_hour_rating = XMLHelper.get_value(water_heating_system, 'FirstHourRating', :float)
       @usage_bin = XMLHelper.get_value(water_heating_system, 'UsageBin', :string)
       @recovery_efficiency = XMLHelper.get_value(water_heating_system, 'RecoveryEfficiency', :float)

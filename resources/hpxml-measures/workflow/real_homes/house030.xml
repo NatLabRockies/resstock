@@ -97,7 +97,7 @@
             <RadiantBarrier>false</RadiantBarrier>
             <Insulation>
               <SystemIdentifier id='Roof1Insulation'/>
-              <AssemblyEffectiveRValue>2.1</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>2.0</AssemblyEffectiveRValue>
             </Insulation>
           </Roof>
           <Roof>

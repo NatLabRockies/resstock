@@ -1001,6 +1001,28 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
     assert_equal(hpxml_bldg.heat_pumps[0].backup_heating_capacity, hpxml_bldg.hvac_plant.hdl_total)
   end
 
+  def test_heat_pump_compressor_lockout_temperature
+    # Test that the HP capacity is reduced when the compressor lockout
+    # temperature exceeds the heating design temperature
+    args_hash = {}
+    args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
+
+    hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
+    _remove_hardsized_capacities(hpxml_bldg)
+
+    # Compressor lockout temp < heating design temp
+    hpxml_bldg.heat_pumps[0].compressor_lockout_temp = -10
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model, _hpxml, hpxml_bldg1 = _test_measure(args_hash)
+
+    # Compressor lockout temp > heating design temp
+    hpxml_bldg.heat_pumps[0].compressor_lockout_temp = 10
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model, _hpxml, hpxml_bldg2 = _test_measure(args_hash)
+
+    assert_operator(hpxml_bldg1.heat_pumps[0].heating_capacity, :>, hpxml_bldg2.heat_pumps[0].heating_capacity)
+  end
+
   def test_allow_increased_fixed_capacities
     for allow_increased_fixed_capacities in [true, false]
       # Test hard-sized capacities are increased (or not) for various equipment types

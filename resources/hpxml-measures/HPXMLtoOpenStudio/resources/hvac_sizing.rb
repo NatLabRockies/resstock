@@ -2870,6 +2870,8 @@ module HVACSizing
       end
     end
 
+    heating_load = hvac_sizings.Heat_Load
+
     if hvac_sizings.Heat_Load <= 0
 
       hvac_sizings.Heat_Capacity = 0.0
@@ -2881,7 +2883,7 @@ module HVACSizing
            HPXML::HVACTypeHeatPumpPTHP,
            HPXML::HVACTypeHeatPumpRoom].include? heating_type
 
-      calculate_heat_pump_capacities(mj, runner, hvac_sizings, weather, hvac_heating, total_cap_curve_value, hvac_system, oversize_limit, oversize_delta, hpxml_bldg, hpxml_header)
+      heating_load = calculate_heat_pump_capacities(mj, runner, hvac_sizings, weather, hvac_heating, total_cap_curve_value, hvac_system, oversize_limit, oversize_delta, hpxml_bldg, hpxml_header)
 
       hvac_sizings.Heat_Capacity_Supp = calculate_heat_pump_backup_load(mj, hvac_heating, hvac_sizings.Heat_Load_Supp, hvac_sizings.Heat_Capacity, hpxml_bldg)
       hvac_sizings.Heat_Airflow = calc_airflow_rate(:htg, hvac_heating, hvac_sizings.Heat_Capacity, hpxml_bldg)
@@ -2953,7 +2955,7 @@ module HVACSizing
     # If HERS sizing methodology, ensure HP capacity is at least equal to larger of
     # heating and sensible cooling loads.
     if is_heatpump_with_both_htg_and_clg && (hpxml_bldg.header.heat_pump_sizing_methodology == HPXML::HeatPumpSizingHERS)
-      min_capacity = [hvac_sizings.Heat_Load, hvac_sizings.Cool_Load_Sens].max
+      min_capacity = [heating_load, hvac_sizings.Cool_Load_Sens].max
       if hvac_sizings.Cool_Capacity < min_capacity
         scaling_factor = min_capacity / hvac_sizings.Cool_Capacity
         hvac_sizings.Cool_Capacity *= scaling_factor
@@ -3641,7 +3643,7 @@ module HVACSizing
   # @param oversize_limit [Double] Oversize fraction (frac)
   # @param oversize_delta [Double] Oversize delta (Btu/hr)
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
-  # @return [nil]
+  # @return [Double] Design heating load used for sizing the heat pump
   def self.calculate_heat_pump_capacities(mj, runner, hvac_sizings, weather, hvac_heating, cool_cap_adj_factor, hvac_system,
                                           oversize_limit, oversize_delta, hpxml_bldg, hpxml_header)
 
@@ -3697,6 +3699,8 @@ module HVACSizing
       hvac_sizings.Cool_Airflow = cfm_per_btuh * hvac_sizings.Cool_Capacity
       hvac_sizings.Heat_Capacity = hvac_sizings.Cool_Capacity
     end
+
+    return heating_load
   end
 
   # Retrieves a collection of ventilation information from the HPXML building.
