@@ -957,6 +957,9 @@
   "sample_files/base-dhw-tank-heat-pump-capacities.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml"
   },
+  "sample_files/base-dhw-tank-heat-pump-ducting.xml": {
+    "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml"
+  },
   "sample_files/base-dhw-tank-heat-pump-outside.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml",
     "dhw_water_heater_location": "Outside"

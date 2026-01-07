@@ -3357,10 +3357,10 @@ module Defaults
           water_heating_system.tank_volume_isdefaulted = true
         end
 
-        schedules_file_includes_water_heater_operating_mode = (schedules_file.nil? ? false : schedules_file.includes_col_name(SchedulesFile::Columns[:WaterHeaterOperatingMode].name))
-        if water_heating_system.operating_mode.nil? && !schedules_file_includes_water_heater_operating_mode
-          water_heating_system.operating_mode = HPXML::WaterHeaterOperatingModeHybridAuto
-          water_heating_system.operating_mode_isdefaulted = true
+        schedules_file_includes_water_heater_operating_mode = (schedules_file.nil? ? false : schedules_file.includes_col_name(SchedulesFile::Columns[:WaterHeaterHPWHOperatingMode].name))
+        if water_heating_system.hpwh_operating_mode.nil? && !schedules_file_includes_water_heater_operating_mode
+          water_heating_system.hpwh_operating_mode = HPXML::WaterHeaterHPWHOperatingModeHybridAuto
+          water_heating_system.hpwh_operating_mode_isdefaulted = true
         end
 
         if water_heating_system.hpwh_confined_space_without_mitigation.nil?

@@ -2430,7 +2430,7 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
       hpxml_bldg.water_heating_systems[0].backup_heating_capacity = 0
     end
     if ['base-dhw-tank-heat-pump-operating-mode-heat-pump-only.xml'].include? hpxml_file
-      hpxml_bldg.water_heating_systems[0].operating_mode = HPXML::WaterHeaterOperatingModeHeatPumpOnly
+      hpxml_bldg.water_heating_systems[0].hpwh_operating_mode = HPXML::WaterHeaterHPWHOperatingModeHeatPumpOnly
     end
     if hpxml_file.include? 'base-dhw-tank-model-type-stratified'
       hpxml_bldg.water_heating_systems[0].tank_model_type = HPXML::WaterHeaterTankModelTypeStratified
@@ -2453,6 +2453,9 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
 
         hpxml_bldg.water_heating_systems[0].related_hvac_idref = heat_pump.id
       end
+    end
+    if ['base-dhw-tank-heat-pump-ducting.xml'].include? hpxml_file
+      hpxml_bldg.water_heating_systems[0].hpwh_ducting_exhaust = HPXML::LocationOutside
     end
 
     # -------------------- #
@@ -2488,11 +2491,9 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
         hpxml_bldg.ventilation_fans[0].sensible_recovery_efficiency = nil
       end
     elsif hpxml_file.include? 'base-mechvent-cfis'
-      if not hpxml_bldg.ventilation_fans.empty? # FIXME: Temporary
-        hpxml_bldg.ventilation_fans[0].rated_flow_rate = 330.0
-        hpxml_bldg.ventilation_fans[0].hours_in_operation = 8
-        hpxml_bldg.ventilation_fans[0].fan_power = 300.0
-      end
+      hpxml_bldg.ventilation_fans[0].rated_flow_rate = 330.0
+      hpxml_bldg.ventilation_fans[0].hours_in_operation = 8
+      hpxml_bldg.ventilation_fans[0].fan_power = 300.0
     elsif ['base-hvac-ptac-cfis.xml',
            'base-hvac-pthp-cfis.xml'].include? hpxml_file
       hpxml_bldg.ventilation_fans[0].rated_flow_rate = 100.0

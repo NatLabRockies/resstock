@@ -1984,6 +1984,9 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                               'floor-or-ceiling1' => ["Floor 'Floor1' has FloorOrCeiling=floor but it should be ceiling. The input will be overridden."],
                               'floor-or-ceiling2' => ["Floor 'Floor1' has FloorOrCeiling=ceiling but it should be floor. The input will be overridden."],
                               'hpwh-confined-space-without-mitigation-false' => ["HPWH COP adjustment based on HPWHContainmentVolume will not be applied to WaterHeatingSystem1 because HPWHInConfinedSpaceWithoutMitigation is not 'true'."],
+                              'hpwh-ducting' => ['HPWH exhaust air ducted to a location other than outside is not currently supported; exhaust ducting will not be modeled.',
+                                                 'HPWH exhaust air ducting for a water heater located outside conditioned space is not currently supported; exhaust ducting will not be modeled.',
+                                                 'HPWH supply air ducted from another location is not currently supported; supply ducting will not be modeled.'],
                               'hpwh-small-containment-volume-without-backup-element' => ['Heat pump water heater: WaterHeatingSystem1 has no backup electric resistance element, COP adjustment for confined space may not be accurate when the containment space volume is below 450 cubic feet.'],
                               'hvac-gshp-bore-depth-autosized-high' => ['Reached a maximum of 10 boreholes; setting bore depth to the maximum (500 ft).'],
                               'hvac-seasons' => ['It is not possible to eliminate all HVAC energy use (e.g. crankcase/defrost energy) in EnergyPlus outside of an HVAC season.'],
@@ -2155,6 +2158,11 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'hpwh-confined-space-without-mitigation-false'
         hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-confined-space.xml')
         hpxml_bldg.water_heating_systems[0].hpwh_confined_space_without_mitigation = false
+      when 'hpwh-ducting'
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump.xml')
+        hpxml_bldg.water_heating_systems[0].location = HPXML::LocationAtticUnvented
+        hpxml_bldg.water_heating_systems[0].hpwh_ducting_supply = HPXML::LocationGarage
+        hpxml_bldg.water_heating_systems[0].hpwh_ducting_exhaust = HPXML::LocationGarage
       when 'hpwh-small-containment-volume-without-backup-element'
         hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-confined-space.xml')
         hpxml_bldg.water_heating_systems[0].backup_heating_capacity = 0.0

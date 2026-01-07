@@ -401,7 +401,7 @@ Component loads disaggregated by Heating/Cooling are listed below.
   Component Load: \*: Internal Mass (MBtu)           Heat gain/loss from internal mass (e.g., furniture, interior walls/floors) in conditioned space
   Component Load: \*: Infiltration (MBtu)            Heat gain/loss from airflow induced by stack and wind effects
   Component Load: \*: Natural Ventilation (MBtu)     Heat gain/loss from airflow through operable windows
-  Component Load: \*: Mechanical Ventilation (MBtu)  Heat gain/loss from airflow/fan energy from mechanical ventilation systems (including clothes dryer exhaust)
+  Component Load: \*: Mechanical Ventilation (MBtu)  Heat gain/loss from airflow/fan energy from mechanical ventilation systems (including any clothes dryer exhaust or HPWH ducting)
   Component Load: \*: Whole House Fan (MBtu)         Heat gain/loss from airflow due to a whole house fan
   Component Load: \*: Ducts (MBtu)                   Heat gain/loss from conduction and leakage losses through supply/return ducts outside conditioned space
   Component Load: \*: Internal Gains (MBtu)          Heat gain/loss from appliances, plug loads, water heater tank losses, etc. in the conditioned space

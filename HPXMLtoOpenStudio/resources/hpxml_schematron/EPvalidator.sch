@@ -2587,6 +2587,7 @@
       <sch:assert role='ERROR' test='number(h:EnergyFactor) &gt; 1 or not(h:EnergyFactor)'>Expected EnergyFactor to be greater than 1</sch:assert>
       <sch:assert role='ERROR' test='count(h:HPWHOperatingMode) &lt;= 1'>Expected 0 or 1 element(s) for xpath: HPWHOperatingMode</sch:assert>
       <sch:assert role='ERROR' test='h:HPWHOperatingMode[text()="hybrid/auto" or text()="heat pump only"] or not(h:HPWHOperatingMode)'>Expected HPWHOperatingMode to be 'hybrid/auto' or 'heat pump only'</sch:assert>
+      <sch:assert role='ERROR' test='count(h:HPWHDucting/h:ExhaustAirTermination) &lt;= 1'>Expected 0 or 1 element(s) for xpath: HPWHDucting/ExhaustAirTermination</sch:assert>
       <sch:assert role='ERROR' test='count(h:UsageBin) + count(h:FirstHourRating) &gt;= 0'>Expected 0 or more element(s) for xpath: UsageBin | FirstHourRating</sch:assert>
       <sch:assert role='ERROR' test='count(h:WaterHeaterInsulation/h:Jacket/h:JacketRValue) &lt;= 1'>Expected 0 or 1 element(s) for xpath: WaterHeaterInsulation/Jacket/JacketRValue</sch:assert>
       <sch:assert role='ERROR' test='count(h:HotWaterTemperature) &lt;= 1'>Expected 0 or 1 element(s) for xpath: HotWaterTemperature</sch:assert>
