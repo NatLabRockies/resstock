@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>fd719bea-8e6b-4159-bf6a-f5999ea213f9</version_id>
-  <version_modified>2025-12-29T15:37:00Z</version_modified>
+  <version_id>d70ecb43-b4d0-40a3-a6ac-ca81b7069f80</version_id>
+  <version_modified>2026-01-07T16:38:47Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -265,7 +265,7 @@
       <type>Integer</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>2025</default_value>
+      <default_value>2026</default_value>
     </argument>
     <argument>
       <name>geometry_attached_walls</name>
@@ -1985,6 +1985,10 @@
         <choice>
           <value>Wood Stud, Uninsulated</value>
           <display_name>Wood Stud, Uninsulated</display_name>
+        </choice>
+        <choice>
+          <value>Wood Stud, R-3</value>
+          <display_name>Wood Stud, R-3</display_name>
         </choice>
         <choice>
           <value>Wood Stud, R-7</value>
@@ -12614,7 +12618,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>7CC5FFF5</checksum>
+      <checksum>3D353AD9</checksum>
     </file>
     <file>
       <filename>test_hvac_load_flexibility.rb</filename>
