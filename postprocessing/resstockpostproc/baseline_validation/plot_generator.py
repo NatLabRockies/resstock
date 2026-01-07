@@ -82,12 +82,12 @@ def generate_recs_plots() -> None:
     ]
     agg_types = [AggregationType.per_user]
     resolutions = (Resolution.month,)
-    quantities = [DataCol.ELECTRICITY_TOTAL]
+    quantities = [DataCol.ELECTRICITY_SPACE_HEATING]
     for quantity, agg_level, resolution, agg_type in product(quantities, agg_levels, resolutions, agg_types):
         if resolution == "month" and agg_type == AggregationType.per_unit_distribution:
             continue
         plot_spec = PlotSpec(
-            truth_source=TruthSource.eia,
+            truth_source=TruthSource.recs,
             resolution=resolution,
             aggregation_level=agg_level,
             quantity=quantity,

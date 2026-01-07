@@ -61,8 +61,8 @@ def create_ts_plot(
         if rse_column is not None and any(rse is not None for rse in rse_values):
             upper_col = f"{rse_column.replace('_rse', '_upper_bound')}"
             lower_col = f"{rse_column.replace('_rse', '_lower_bound')}"
-            upper_vals = category_data[upper_col].to_list()
-            lower_vals = category_data[lower_col].to_list()
+            upper_vals = category_data[upper_col].fill_null(0).to_list()
+            lower_vals = category_data[lower_col].fill_null(0).to_list()
 
             # Add the confidence band (upper to lower)
             fig.add_scatter(

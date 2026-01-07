@@ -157,13 +157,13 @@ def plot_tilemap(
     ncols = len(layout[0])
 
     # Add extra column for sidebar if needed
-    if sidebar_column is not None:
+    if sidebar_column:
         ncols += 2
 
     entity_position = {}
     for row in range(nrows):
         for col in range(ncols):
-            if col == ncols - 1 and sidebar_column is not None:
+            if col == ncols - 1 and sidebar_column:
                 if row == 0:
                     subplot_titles.append(sidebar_title)
                 continue
@@ -175,7 +175,7 @@ def plot_tilemap(
     specs: list[list[dict[str, str | int | bool | float] | None]] = [
         [{"type": "xy"} for _ in range(ncols)] for _ in range(nrows)
     ]
-    if sidebar_column is not None:
+    if sidebar_column:
         for row in range(nrows):
             if row == 0:
                 specs[row][-1] = {"type": "xy", "rowspan": nrows - 1}
@@ -184,7 +184,7 @@ def plot_tilemap(
 
     # Set column widths: sidebar is double width
     column_widths = None
-    if sidebar_column is not None:
+    if sidebar_column:
         standard_width = 1.0 / (ncols + 1)  # +1 because sidebar takes double space
         column_widths = [standard_width] * (ncols - 1) + [standard_width * 2]
 
