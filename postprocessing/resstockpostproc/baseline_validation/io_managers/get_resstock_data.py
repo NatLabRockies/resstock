@@ -6,7 +6,7 @@ from typing import Literal
 from resstockpostproc.baseline_validation.io_managers.utils import apply_aggregation
 from .utils import add_us_total, add_missing_states
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow, DataSourceConfig
-from resstockpostproc.baseline_validation.schema.plot_spec import Resolution
+from resstockpostproc.baseline_validation.schema.plot_spec import Resolution, DataKey
 from resstockpostproc.baseline_validation.schema.recs_chars_mapping import RECS_CHARS_MAPPING
 from resstockpostproc.shared_utils.db_column_names import get_db_enduse_colnames_map, get_db_characteristics_colnames
 from buildstock_query import BuildStockQuery
@@ -21,14 +21,23 @@ from buildstock_query import MappedColumn
 
 
 def get_timeseries_all(
-    by: Literal["state", "eiaid"] = "state",
+    data_key: DataKey,
     restrict_list: Sequence[str] | None = None,
     occupied_only: bool = False,
-    aggregation: Literal["sum", "per_unit_avg", "per_user_avg"] = "sum",
-    resolution: Resolution = Resolution.month,
 ) -> pl.DataFrame | None:
+    """Get timeseries data for all configured data sources.
+
+    Args:
+        data_key: DataKey containing aggregation_level, resolution, aggregation_type, and coverage
+        restrict_list: Optional list of entity IDs to restrict to (e.g., eiaid list)
+        occupied_only: If True, only include occupied units (for RECS comparison)
+    """
     if not workflow.data_sources:
         return None
+
+    by: Literal["state", "eiaid"] = "state" if data_key.aggregation_level == "state" else "eiaid"
+    resolution = data_key.resolution
+
     all_dfs = []
     for data_source in workflow.data_sources:
         df = get_timeseries(
@@ -43,7 +52,7 @@ def get_timeseries_all(
         percent_users_cols = [col.replace("_value", "_percent_users") for col in value_cols]
         percent_users_cols = [col for col in percent_users_cols if col in annual_df.columns]
         df = df.join(annual_df.select([by] + percent_users_cols), on=[by], how="left")
-        df = apply_aggregation(aggregation, df)
+        df = apply_aggregation(data_key, df)
         df = df.with_columns(pl.lit(data_source.name).alias("source"))
         all_dfs.append(df)
     final_df = pl.concat(all_dfs, how="diagonal")
@@ -80,8 +89,8 @@ def get_timeseries(
         ts_data = ts_data.with_columns(pl.col("month").replace_strict(NUM2MONTH, default=None))
     elif resolution == Resolution.day_of_year:
         # Use actual date (truncated to day) instead of ordinal day number
-        ts_data = result.with_columns(pl.col(db_char_col.TIMESTAMP).dt.truncate("1d").alias("day_of_year"))
-        ts_data = ts_data.sort(by=[by, "day_of_year"])
+        ts_data = result.with_columns(pl.col(db_char_col.TIMESTAMP).dt.truncate("1d").alias("day of year"))
+        ts_data = ts_data.sort(by=[by, "day of year"])
     elif resolution in {Resolution.hour_of_year, Resolution.top_100_hours}:
         ts_data = result.with_columns(
             ((pl.col(db_char_col.TIMESTAMP).dt.ordinal_day() - 1) * 24 + pl.col(db_char_col.TIMESTAMP).dt.hour()).alias(
@@ -112,7 +121,7 @@ def get_timeseries(
     elif resolution == Resolution.hour_of_day_matrix:
         # Add hour, month, and day_type columns
         ts_data = result.with_columns(
-            pl.col(db_char_col.TIMESTAMP).dt.hour().alias("hour_of_day"),
+            pl.col(db_char_col.TIMESTAMP).dt.hour().alias("hour of day"),
             pl.col(db_char_col.TIMESTAMP).dt.month().replace_strict(NUM2MONTH, default=None).alias("month"),
             pl.when(pl.col(db_char_col.TIMESTAMP).dt.weekday() < 5)  # Mon=0..Fri=4 are weekdays
             .then(pl.lit("Weekday"))
@@ -122,27 +131,27 @@ def get_timeseries(
         value_cols = [col for col in result.columns if col not in {by, db_char_col.TIMESTAMP}]
 
         # 1. Monthly by day_type (e.g., JAN + Weekday)
-        monthly_by_daytype = ts_data.group_by([by, "month", "day_type", "hour_of_day"], maintain_order=True).agg(
+        monthly_by_daytype = ts_data.group_by([by, "month", "day_type", "hour of day"], maintain_order=True).agg(
             [pl.col(col).mean().alias(col) for col in value_cols]
         )
 
         # 2. Monthly "All Days" (aggregate across weekday/weekend)
         monthly_all_days = (
-            ts_data.group_by([by, "month", "hour_of_day"], maintain_order=True)
+            ts_data.group_by([by, "month", "hour of day"], maintain_order=True)
             .agg([pl.col(col).mean().alias(col) for col in value_cols])
             .with_columns(pl.lit("All Days").alias("day_type"))
         )
 
         # 3. "All Year" by day_type
         yearly_by_daytype = (
-            ts_data.group_by([by, "day_type", "hour_of_day"], maintain_order=True)
+            ts_data.group_by([by, "day_type", "hour of day"], maintain_order=True)
             .agg([pl.col(col).mean().alias(col) for col in value_cols])
             .with_columns(pl.lit("All Year").alias("month"))
         )
 
         # 4. "All Year" + "All Days"
         yearly_all_days = (
-            ts_data.group_by([by, "hour_of_day"], maintain_order=True)
+            ts_data.group_by([by, "hour of day"], maintain_order=True)
             .agg([pl.col(col).mean().alias(col) for col in value_cols])
             .with_columns(pl.lit("All Year").alias("month"), pl.lit("All Days").alias("day_type"))
         )
@@ -150,7 +159,7 @@ def get_timeseries(
         ts_data = pl.concat(
             [monthly_by_daytype, monthly_all_days, yearly_by_daytype, yearly_all_days], how="diagonal_relaxed"
         )
-        ts_data = ts_data.sort(by=[by, "month", "day_type", "hour_of_day"])
+        ts_data = ts_data.sort(by=[by, "month", "day_type", "hour of day"])
     else:  # hour_of_day
         assert resolution == Resolution.hour_of_day, f"Unsupported resolution: {resolution}"
         ts_data = result.with_columns(pl.col(db_char_col.TIMESTAMP).dt.hour().alias(Resolution.hour_of_day))
@@ -258,16 +267,24 @@ def _get_timestamp_grouping_func(resolution: Resolution):
 
 
 def get_annual_all(
-    by: Literal["state", "eiaid"] = "state",
+    data_key: DataKey,
     occupied_only: bool = False,
-    aggregation: Literal["sum", "per_unit_avg", "per_user_avg"] = "sum",
 ) -> pl.DataFrame | None:
+    """Get annual data for all configured data sources.
+
+    Args:
+        data_key: DataKey containing aggregation_level, aggregation_type, and coverage
+        occupied_only: If True, only include occupied units (for RECS comparison)
+    """
     if not workflow.data_sources:
         return None
+
+    by: Literal["state", "eiaid"] = "state" if data_key.aggregation_level == "state" else "eiaid"
+
     all_dfs = []
     for data_source in workflow.data_sources:
         df = get_annual(data_source, by, occupied_only=occupied_only)
-        df = apply_aggregation(aggregation, df)
+        df = apply_aggregation(data_key, df)
         df = df.with_columns(pl.lit(data_source.name).alias("source"))
         all_dfs.append(df)
     final_df = pl.concat(all_dfs, how="diagonal_relaxed")

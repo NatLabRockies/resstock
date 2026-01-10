@@ -11,6 +11,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     Resolution,
     TruthSource,
     AggregationType,
+    CoverageType,
     ViewType,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
@@ -40,7 +41,7 @@ class TestLRDPlotter:
                                 "eiaid": 4110,
                                 "month": month,
                                 "day_type": day_type,
-                                "hour_of_day": hour,
+                                "hour of day": hour,
                                 f"{DataCol.ELECTRICITY_TOTAL}_value": 1.5
                                 + 0.5 * (hour - 12) ** 2 / 144,  # Parabolic curve
                             }
@@ -78,7 +79,8 @@ class TestLRDPlotter:
             aggregation_level="eiaid",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on="ComEd (IL)",
-            aggregation_type=AggregationType.per_unit,
+            aggregation_type=AggregationType.average,
+            coverage=CoverageType.all_units,
             view=ViewType.value_view,
         )
 
@@ -97,7 +99,8 @@ class TestLRDPlotter:
             aggregation_level="eiaid",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=None,  # Missing required parameter
-            aggregation_type=AggregationType.per_unit,
+            aggregation_type=AggregationType.average,
+            coverage=CoverageType.all_units,
             view=ViewType.value_view,
         )
 
@@ -112,7 +115,8 @@ class TestLRDPlotter:
             aggregation_level="eiaid",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on="ComEd (IL)",
-            aggregation_type=AggregationType.per_unit,
+            aggregation_type=AggregationType.average,
+            coverage=CoverageType.all_units,
             view=ViewType.value_view,
         )
 
@@ -130,7 +134,8 @@ class TestLRDPlotter:
             aggregation_level="eiaid",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=None,
-            aggregation_type=AggregationType.per_unit,
+            aggregation_type=AggregationType.average,
+            coverage=CoverageType.all_units,
             view=ViewType.value_view,
         )
 
@@ -149,7 +154,8 @@ class TestLRDPlotter:
             aggregation_level="eiaid",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=None,
-            aggregation_type=AggregationType.per_unit,
+            aggregation_type=AggregationType.average,
+            coverage=CoverageType.all_units,
             view=ViewType.value_view,
         )
 
@@ -221,7 +227,7 @@ class TestDayOfYearResolution:
                             "source": source,
                             "utility_name": utility,
                             "eiaid": 4110 if utility == "ComEd (IL)" else 14328,
-                            "day_of_year": date,  # Datetime, not integer
+                            "day of year": date,  # Datetime, not integer
                             f"{DataCol.ELECTRICITY_TOTAL}_value": 20.0 + 10.0 * (1 + 0.5 * ((day - 182) / 182) ** 2),
                             "model_count": 100,
                         }
@@ -231,9 +237,9 @@ class TestDayOfYearResolution:
 
     def test_day_of_year_uses_datetime_column(self, mock_day_of_year_data):
         """Test that day_of_year column contains datetime values."""
-        assert mock_day_of_year_data["day_of_year"].dtype == pl.Datetime
+        assert mock_day_of_year_data["day of year"].dtype == pl.Datetime
         # Check first and last dates
-        dates = mock_day_of_year_data["day_of_year"].unique().sort().to_list()
+        dates = mock_day_of_year_data["day of year"].unique().sort().to_list()
         assert dates[0] == datetime(2018, 1, 1)
         assert dates[-1] == datetime(2018, 12, 31)
 
@@ -245,7 +251,8 @@ class TestDayOfYearResolution:
             aggregation_level="eiaid",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=None,
-            aggregation_type=AggregationType.per_unit,
+            aggregation_type=AggregationType.average,
+            coverage=CoverageType.all_units,
             view=ViewType.value_view,
         )
 

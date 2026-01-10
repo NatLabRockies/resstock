@@ -106,6 +106,10 @@ class WorkflowConfig(NoExtraModel):
         description="Reference years per data source (e.g., {'eia': [2018, 2024], 'recs': [2020]})",
     )
     plots: PlotSpecification = Field(default_factory=PlotSpecification, description="Plot specifications")
+    quantities: list[str] | None = Field(
+        default=None,
+        description="List of quantities to generate plots for. If None or empty, all quantities will be generated.",
+    )
     output: OutputConfig = Field(description="Output configuration")
 
     @field_validator("data_sources", mode="before")

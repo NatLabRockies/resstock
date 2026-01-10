@@ -40,6 +40,7 @@ dependencies = [
     "ruff>=0.14.4",
     "s3fs",
     "scipy>=1.16.1",
+    "xlsxwriter>=3.2.9",
 ]
 
 [project.urls]

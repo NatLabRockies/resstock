@@ -55,8 +55,8 @@ def get_lrd_aggregated(
         result_df = df.group_by(group_cols, maintain_order=True).agg(pl.col(value_col).sum().alias(value_col))
     elif resolution == Resolution.day_of_year:
         # Use actual date (truncated to day) instead of ordinal day number
-        df = df.with_columns(pl.col("time").dt.truncate("1d").alias("day_of_year"))
-        group_cols = eiaid_cols + ["day_of_year"]
+        df = df.with_columns(pl.col("time").dt.truncate("1d").alias("day of year"))
+        group_cols = eiaid_cols + ["day of year"]
         result_df = df.group_by(group_cols, maintain_order=True).agg(pl.col(value_col).sum().alias(value_col))
     elif resolution == Resolution.hour_of_day:
         df = df.with_columns(pl.col("time").dt.hour().alias(Resolution.hour_of_day))
@@ -87,7 +87,7 @@ def get_lrd_aggregated(
     elif resolution == Resolution.hour_of_day_matrix:
         # Add hour, month, and day_type columns
         df = df.with_columns(
-            pl.col("time").dt.hour().alias("hour_of_day"),
+            pl.col("time").dt.hour().alias("hour of day"),
             pl.col("time").dt.month().replace_strict(NUM2MONTH, default=None).alias("month"),
             pl.when(pl.col("time").dt.weekday() < 5)  # Mon=0..Fri=4 are weekdays
             .then(pl.lit("Weekday"))
@@ -96,27 +96,27 @@ def get_lrd_aggregated(
         )
 
         # 1. Monthly by day_type (e.g., JAN + Weekday)
-        monthly_by_daytype = df.group_by(eiaid_cols + ["month", "day_type", "hour_of_day"], maintain_order=True).agg(
+        monthly_by_daytype = df.group_by(eiaid_cols + ["month", "day_type", "hour of day"], maintain_order=True).agg(
             pl.col(value_col).mean().alias(value_col)
         )
 
         # 2. Monthly "All Days" (aggregate across weekday/weekend)
         monthly_all_days = (
-            df.group_by(eiaid_cols + ["month", "hour_of_day"], maintain_order=True)
+            df.group_by(eiaid_cols + ["month", "hour of day"], maintain_order=True)
             .agg(pl.col(value_col).mean().alias(value_col))
             .with_columns(pl.lit("All Days").alias("day_type"))
         )
 
         # 3. "All Year" by day_type
         yearly_by_daytype = (
-            df.group_by(eiaid_cols + ["day_type", "hour_of_day"], maintain_order=True)
+            df.group_by(eiaid_cols + ["day_type", "hour of day"], maintain_order=True)
             .agg(pl.col(value_col).mean().alias(value_col))
             .with_columns(pl.lit("All Year").alias("month"))
         )
 
         # 4. "All Year" + "All Days"
         yearly_all_days = (
-            df.group_by(eiaid_cols + ["hour_of_day"], maintain_order=True)
+            df.group_by(eiaid_cols + ["hour of day"], maintain_order=True)
             .agg(pl.col(value_col).mean().alias(value_col))
             .with_columns(pl.lit("All Year").alias("month"), pl.lit("All Days").alias("day_type"))
         )
@@ -124,7 +124,7 @@ def get_lrd_aggregated(
         result_df = pl.concat(
             [monthly_by_daytype, monthly_all_days, yearly_by_daytype, yearly_all_days], how="diagonal_relaxed"
         )
-        group_cols = eiaid_cols + ["month", "day_type", "hour_of_day"]
+        group_cols = eiaid_cols + ["month", "day_type", "hour of day"]
         result_df = result_df.sort(by=group_cols)
     else:
         raise ValueError(f"Unsupported resolution: {resolution}")

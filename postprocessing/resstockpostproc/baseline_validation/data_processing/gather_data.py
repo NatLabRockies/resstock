@@ -6,13 +6,20 @@ import polars as pl
 from functools import cache
 from resstockpostproc.baseline_validation.utils import NUM2MONTH
 
-from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, Resolution
+from resstockpostproc.baseline_validation.schema.plot_spec import (
+    PlotSpec,
+    DataKey,
+    Resolution,
+    ViewType,
+    TruthSource,
+    AggregationType,
+    CoverageType,
+)
 from resstockpostproc.baseline_validation.io_managers import get_eia_data
 from resstockpostproc.baseline_validation.io_managers import get_recs_data
 from resstockpostproc.baseline_validation.io_managers import get_resstock_data
 from resstockpostproc.baseline_validation.io_managers import get_lrd_data
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
-from resstockpostproc.baseline_validation.schema.plot_spec import AggregationType
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.mapping import UtilityName2ID, ID2UtilityName
@@ -23,18 +30,51 @@ AggregationBy = Literal["state", "eiaid"]
 def get_plot_data(
     plot_spec: PlotSpec,
 ) -> pl.DataFrame:
-    """Get the data for plotting based on the plot specification."""
-    if plot_spec.aggregation_type in [AggregationType.per_unit, AggregationType.per_unit_distribution]:
-        aggregation = "per_unit_avg"
-    elif plot_spec.aggregation_type in [AggregationType.per_user, AggregationType.per_user_distribution]:
-        aggregation = "per_user_avg"
-    else:
-        aggregation = "sum"
+    """Get the data for plotting based on the plot specification.
 
-    df = _get_plot_data(
-        plot_spec.truth_source, plot_spec.aggregation_level, plot_spec.resolution, aggregation=aggregation
-    )
-    df = _keep_relevant_columns(df, plot_spec)
+    This is the legacy interface that loads data and applies plot-specific operations.
+    For batch processing, prefer using get_base_data() + apply_plot_spec() separately.
+    """
+    data_key = plot_spec.get_data_key()
+    base_data = get_base_data(data_key)
+    return apply_plot_spec(base_data, plot_spec)
+
+
+def get_base_data(data_key: DataKey) -> pl.DataFrame:
+    """Load base data for a given data key (expensive operation).
+
+    This function loads the raw data that can be shared across multiple plots.
+    It should be called once per unique DataKey.
+
+    The returned DataFrame contains all quantities and is not filtered by plot_spec.
+    Use apply_plot_spec() to apply plot-specific transformations.
+
+    Args:
+        data_key: DataKey containing truth_source, aggregation_level, resolution,
+                  aggregation_type, and coverage
+    """
+    return _get_plot_data(data_key)
+
+
+def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
+    """Apply plot-specific transformations to base data (cheap operations).
+
+    This function performs only the lightweight operations that depend on plot_spec:
+    - Column filtering based on quantity
+    - Adding confidence interval bounds
+    - Sorting by units_count
+    - Adding utility names
+    - Filtering by focus_on
+    - LRD-specific resolution transforms (temperature view, load duration curve, etc.)
+
+    Args:
+        base_data: DataFrame returned by get_base_data()
+        plot_spec: The specific plot specification
+
+    Returns:
+        DataFrame ready for plotting
+    """
+    df = _keep_relevant_columns(base_data, plot_spec)
     df = _add_95ci_bounds(df)
     df = (
         df.with_columns(pl.col("units_count").mean().over(plot_spec.aggregation_level).alias("avg_units_count"))
@@ -49,64 +89,72 @@ def get_plot_data(
             .replace_strict(ID2UtilityName, default="Unknown Utility")
             .alias("utility_name")
         )
+        if plot_spec.focus_on:
+            df = df.filter(pl.col("utility_name") == plot_spec.focus_on)
+    elif plot_spec.focus_on:
+        df = df.filter(pl.col(plot_spec.aggregation_level) == plot_spec.focus_on)
+
+    # Apply LRD-specific resolution transforms
+    if plot_spec.truth_source == TruthSource.lrd:
+        df = _apply_lrd_resolution_transforms(df, plot_spec)
+
     return df
 
 
 # @cache
-def _get_plot_data(
-    truth_source,
-    aggregation_level,
-    resolution: Resolution,
-    aggregation: Literal["sum", "per_unit_avg", "per_user_avg"] = "sum",
-) -> pl.DataFrame:
+def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
+    """Internal function to load data based on DataKey.
+
+    Args:
+        data_key: DataKey containing truth_source, aggregation_level, resolution,
+                  aggregation_type, and coverage
+    """
+    truth_source = data_key.truth_source
+    aggregation_level = data_key.aggregation_level
+    resolution = data_key.resolution
+
     groups = []
-    if truth_source == "eia":
+    if truth_source == TruthSource.eia:
         assert aggregation_level in ["state", "eiaid"], "EIA data only supports 'state' or 'eiaid' aggregation levels."
         by = "state" if aggregation_level == "state" else "eiaid"
-        if resolution == "month":
+        if resolution == Resolution.month:
             source_data = get_eia_data.get_monthly_all(
-                years=workflow.reference_years.get("eia", [2018]), by=by, aggregation=aggregation
+                data_key=data_key, years=workflow.reference_years.get("eia", [2018])
             )
-            resstock_data = get_resstock_data.get_timeseries_all(by=by, aggregation=aggregation)
+            resstock_data = get_resstock_data.get_timeseries_all(data_key=data_key)
             groups = [by, "month"]
         else:
-            assert resolution == "year", "EIA data only supports 'year' or 'month' resolutions."
+            assert resolution == Resolution.year, "EIA data only supports 'year' or 'month' resolutions."
             source_data = get_eia_data.get_annual_all(
-                years=workflow.reference_years.get("eia", [2018]), by=by, aggregation=aggregation
+                data_key=data_key, years=workflow.reference_years.get("eia", [2018])
             )
-            resstock_data = get_resstock_data.get_annual_all(by=by, aggregation=aggregation)
+            resstock_data = get_resstock_data.get_annual_all(data_key=data_key)
             groups = [by]
-    elif truth_source == "recs":
-        if resolution == "month":
+    elif truth_source == TruthSource.recs:
+        if resolution == Resolution.month:
             assert aggregation_level in ["state"], "RECS data only supports 'state' aggregation level for monthly."
-            source_data = get_recs_data.get_monthly_all(year=2020, by="state", aggregation=aggregation)
-            resstock_data = get_resstock_data.get_timeseries_all(
-                by="state", occupied_only=True, aggregation=aggregation
-            )
+            source_data = get_recs_data.get_monthly_all(data_key=data_key, year=2020)
+            resstock_data = get_resstock_data.get_timeseries_all(data_key=data_key, occupied_only=True)
             groups = ["state", "month"]
         else:
-            assert resolution == "year", "RECS data only supports 'year' or 'month' resolutions."
-            source_data = get_recs_data.get_annual_all(year=2020, by=aggregation_level, aggregation=aggregation)
-            resstock_data = get_resstock_data.get_annual_all(
-                by=aggregation_level, occupied_only=True, aggregation=aggregation
-            )
+            assert resolution == Resolution.year, "RECS data only supports 'year' or 'month' resolutions."
+            source_data = get_recs_data.get_annual_all(data_key=data_key, year=2020)
+            resstock_data = get_resstock_data.get_annual_all(data_key=data_key, occupied_only=True)
             groups = [aggregation_level]
-    elif truth_source == "lrd":
-        assert aggregation == "per_unit_avg", "LRD data only supports 'per_unit_avg' aggregation."
+    elif truth_source == TruthSource.lrd:
+        assert data_key.aggregation_type == AggregationType.average and data_key.coverage == CoverageType.all_units, (
+            "LRD data only supports 'average' aggregation with 'all_units' coverage."
+        )
         eiaidlist = tuple([str(eiaid) for eiaid in UtilityName2ID.values()])
         source_data = get_lrd_data.get_lrd_aggregated(year=2018, resolution=resolution, restrict_list=eiaidlist)
-        if resolution == "year":
-            resstock_data = get_resstock_data.get_annual_all(by="eiaid", aggregation=aggregation)
+        if resolution == Resolution.year:
+            resstock_data = get_resstock_data.get_annual_all(data_key=data_key)
             groups = ["eiaid"]
         elif resolution == Resolution.hour_of_day_matrix:
-            resstock_data = get_resstock_data.get_timeseries_all(
-                by="eiaid", occupied_only=False, aggregation=aggregation, restrict_list=eiaidlist, resolution=resolution
-            )
-            groups = ["eiaid", "month", "day_type", "hour_of_day"]
+            resstock_data = get_resstock_data.get_timeseries_all(data_key=data_key, restrict_list=eiaidlist)
+            groups = ["eiaid", "month", "day_type", "hour of day"]
         else:
-            resstock_data = get_resstock_data.get_timeseries_all(
-                by="eiaid", occupied_only=False, aggregation=aggregation, restrict_list=eiaidlist, resolution=resolution
-            )
+            resstock_data = get_resstock_data.get_timeseries_all(data_key=data_key, restrict_list=eiaidlist)
             groups = ["eiaid", resolution]
         # resstock_data = recs_mapping.add_enduse_columns(resstock_data)
 
@@ -233,3 +281,97 @@ def scale_to_eia_customers(
     ]
 
     return scaled.with_columns(scale_exprs)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# LRD-specific data transforms
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+def _apply_lrd_resolution_transforms(df: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
+    """Apply LRD-specific transforms based on resolution and view.
+
+    These transforms prepare the data for specific LRD plot types:
+    - Temperature view: aggregate by temperature bins
+    - Load duration curve: sort and add percent_time column
+    - Day of year: rename column for vertical layout
+    - Hour of day matrix: create combined month_daytype column
+    """
+    match plot_spec.resolution:
+        case Resolution.hour_of_year | Resolution.top_100_hours:
+            if plot_spec.view in [ViewType.temp_view, ViewType.temp_count_view]:
+                return _prepare_temperature_view(df, plot_spec)
+            else:
+                return _prepare_load_duration_curve(df, plot_spec)
+        case Resolution.day_of_year:
+            return _prepare_day_of_year_layout(df)
+        case Resolution.hour_of_day_matrix:
+            return _prepare_hour_of_day_matrix(df)
+        case _:
+            return df
+
+
+def _prepare_temperature_view(df: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
+    """Transform hourly data for temperature-based plotting.
+
+    Converts temperature from C*4 to F, joins with ResStock reference temperature,
+    and aggregates by temperature bins.
+    """
+    from resstockpostproc.shared_utils.db_column_names import DataCol
+
+    temp_col = f"{DataCol.OUTDOOR_DRYBULB_TEMP}_value"
+
+    # Convert from C*4 to Fahrenheit
+    df = df.with_columns((pl.col(temp_col) / 4 * 9 / 5 + 32).round(0).cast(pl.Int32))
+
+    # Get ResStock source for reference temperature
+    resstock_src = next(src for src in df["source"].unique(maintain_order=True) if "resstock" in src)
+
+    # Create reference temperature from ResStock data
+    ref_temp = df.filter(pl.col("source") == resstock_src).select(
+        "utility_name", pl.col(plot_spec.resolution), pl.col(temp_col).alias("resstock_temp")
+    )
+
+    # Join reference temperature to all rows
+    df = df.join(ref_temp, on=("utility_name", plot_spec.resolution), how="left")
+
+    # Sort by temperature
+    df = df.sort("source", "utility_name", "resstock_temp", descending=[False, False, False], maintain_order=True)
+
+    # Aggregate by temperature bins
+    df = df.group_by(["source", "utility_name", "resstock_temp"], maintain_order=True).agg(
+        pl.col(f"{plot_spec.quantity}_value").mean(), pl.count().alias("temp_count")
+    )
+
+    return df.sort("source", "utility_name", "resstock_temp", descending=[False, False, False])
+
+
+def _prepare_load_duration_curve(df: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
+    """Sort by value (descending) and add percent_time column for load duration curves."""
+    quantity_col = f"{plot_spec.quantity}_value"
+
+    # Sort by value descending within each source/utility
+    df = df.sort("source", "utility_name", quantity_col, descending=[False, False, True])
+
+    # Add percent_time column (percentage of hours at or above this load)
+    df = df.with_columns(
+        ((pl.int_range(pl.len()) + 1).over("source", "utility_name") * 100 / (pl.len()).over("source", "utility_name"))
+        .round(3)
+        .alias("percent_time")
+    )
+
+    # Filter to top 100 hours if requested
+    if plot_spec.resolution == Resolution.top_100_hours:
+        df = df.filter(pl.col("percent_time") <= 100 * 100 / 8760)
+
+    return df
+
+
+def _prepare_day_of_year_layout(df: pl.DataFrame) -> pl.DataFrame:
+    """Rename utility_name to utility_vertical for vertical layout."""
+    return df.rename({"utility_name": "utility_vertical"})
+
+
+def _prepare_hour_of_day_matrix(df: pl.DataFrame) -> pl.DataFrame:
+    """Create combined month_daytype column for matrix layout."""
+    return df.with_columns((pl.col("month") + "_" + pl.col("day_type")).alias("month_daytype"))

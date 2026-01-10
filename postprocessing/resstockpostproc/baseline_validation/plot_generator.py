@@ -48,7 +48,7 @@ def generate_eia_plots() -> None:
             quantity=quantity,
             focus_on=None,
             aggregation_type=quantity_type,
-            view=ViewType.diff_view,
+            view=ViewType.value_view,
         )
         _show_figure(plot_spec)
 
@@ -70,7 +70,7 @@ def generate_recs_plots() -> None:
     quantities = monthly_quantities
     quantities.extend(q for q in RECS_ENDUSE_MAP if q not in monthly_quantities)
     quantities = [None]
-    agg_levels = [DataCol.STATE]
+    agg_levels = [DataCol.CENSUS_DIVISION]
     agg_types = [
         AggregationType.stock_total,
         AggregationType.per_unit_distribution,
@@ -80,9 +80,9 @@ def generate_recs_plots() -> None:
         AggregationType.per_user,
         AggregationType.customers,
     ]
-    agg_types = [AggregationType.per_user]
-    resolutions = (Resolution.month,)
-    quantities = [DataCol.ELECTRICITY_SPACE_HEATING]
+    agg_types = [AggregationType.per_user_distribution]
+    resolutions = (Resolution.year,)
+    quantities = [None]
     for quantity, agg_level, resolution, agg_type in product(quantities, agg_levels, resolutions, agg_types):
         if resolution == "month" and agg_type == AggregationType.per_unit_distribution:
             continue
@@ -91,7 +91,7 @@ def generate_recs_plots() -> None:
             resolution=resolution,
             aggregation_level=agg_level,
             quantity=quantity,
-            focus_on="CO",
+            focus_on="East North Central",
             aggregation_type=agg_type,
             view=ViewType.value_view,
         )
@@ -133,11 +133,8 @@ def _generate_hourly_matrix_plots() -> None:
             aggregation_type=AggregationType.per_unit,
             view=ViewType.value_view,
         )
-        try:
-            _show_figure(plot_spec)
-        except Exception as e:
-            print(f"      Warning: Failed to generate plot for {utility}: {e}")
-
+        _show_figure(plot_spec)
+\
 
 def generate_lrd_plots() -> None:
     _generate_hourly_matrix_plots()
@@ -160,13 +157,14 @@ def generate_lrd_plots() -> None:
         Resolution.hour_of_year,
         Resolution.top_100_hours,
     )
+    resolutions = (Resolution.hour_of_year,)
     for quantity, agg_level, resolution, agg_type in product(quantities, agg_levels, resolutions, agg_types):
         plot_spec = PlotSpec(
             truth_source=TruthSource.lrd,
             resolution=resolution,
             aggregation_level=agg_level,
             quantity=quantity,
-            focus_on="US Total",
+            # focus_on="US Total",
             aggregation_type=agg_type,
             view=ViewType.value_view,
         )

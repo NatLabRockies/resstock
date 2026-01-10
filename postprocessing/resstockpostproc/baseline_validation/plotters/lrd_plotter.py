@@ -38,7 +38,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
             ts_xtick_text = ("   Jan", "Dec   ")
             title = "Monthly electricity consumption per dwelling unit"
         case Resolution.day_of_year:
-            timeseries_column = "day_of_year"  # Now contains actual dates
+            timeseries_column = "day of year"  # Now contains actual dates
             ts_xtick_vals = None  # Let Plotly auto-generate date ticks
             ts_xtick_text = None
             title = "Daily electricity consumption per dwelling unit"
@@ -118,7 +118,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
             # Create combined column for tilemap layout
             final_df = final_df.with_columns((pl.col("month") + "_" + pl.col("day_type")).alias("month_daytype"))
 
-            timeseries_column = "hour_of_day"
+            timeseries_column = "hour of day"
             ts_xtick_vals = (0, 23)
             ts_xtick_text = ("     Hour 1", "Hour 24       ")
             title = f"Hourly load profile matrix for {plot_spec.focus_on}"

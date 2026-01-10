@@ -38,6 +38,48 @@ plots:
     - svg
     - parquet
 
+# Quantities to Generate
+# ----------------------
+# List of quantities to generate comparison plots for.
+# If empty or not specified, all quantities will be generated.
+# To generate plots for only a subset of quantities, list them here.
+quantities:
+  - All Enduses
+  - Number of dwelling units
+  - Electricity Total
+  - Natural Gas Total
+  - Electricity Space Cooling
+  - Electricity Space Heating
+  - Electricity Water Heating
+  - Natural Gas Space Heating
+  - Natural Gas Water Heating
+  - Electricity Plug Load
+  - Electricity Refrigerator
+  - Electricity Lighting
+  - Electricity Television
+  - Electricity Clothes Dryer
+  - Electricity Cooling Fan Pumps
+  - Electricity Heating Fans Pumps
+  - Electricity Freezer
+  - Electricity Cooking
+  - Electricity Pool Pumps
+  - Electricity Ceiling Fan
+  - Electricity Dishwasher
+  - Electricity Clothes Washer
+  - Electricity Pool Heater
+  - Electricity EV Charging
+  - Natural Gas Cooking
+  - Natural Gas Pool Heater
+  - Natural Gas Clothes Dryer
+  - Propane Total
+  - Propane Space Heating
+  - Propane Water Heating
+  - Propane Cooking
+  - Propane Clothes Dryer
+  - Fuel Oil Total
+  - Fuel Oil Space Heating
+  - Fuel Oil Water Heating
+
 # Output Configuration
 # --------------------
 output:

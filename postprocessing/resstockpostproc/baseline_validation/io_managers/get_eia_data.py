@@ -16,18 +16,25 @@ from typing import Literal
 from resstockpostproc.baseline_validation.utils import KBTU2KWH
 from resstockpostproc.shared_utils.db_column_names import DataCol, DBCharCol
 from resstockpostproc.baseline_validation.io_managers.utils import apply_aggregation, add_us_total
+from resstockpostproc.baseline_validation.schema.plot_spec import DataKey
 
 local_data_dir = Path(f"{workflow.output.output_dir}/data")
 
 
 def get_annual_all(
+    data_key: DataKey,
     years: list[int] | None = None,
-    by: Literal["state", "eiaid"] = "state",
-    aggregation: Literal["sum", "per_unit_avg", "per_user_avg"] = "sum",
 ) -> pl.DataFrame:
-    """Get annual EIA data for multiple years, with columns suffixed by year."""
+    """Get annual EIA data for multiple years, with columns suffixed by year.
+
+    Args:
+        data_key: DataKey containing aggregation_level, aggregation_type, and coverage
+        years: List of years to include. Defaults to workflow.reference_years["eia"]
+    """
     if years is None:
         years = workflow.reference_years.get("eia", [2018])
+
+    by: Literal["state", "eiaid"] = "state" if data_key.aggregation_level == "state" else "eiaid"
 
     dfs = []
     for year in years:
@@ -70,18 +77,24 @@ def get_annual_all(
             ]
         )
 
-    result = apply_aggregation(aggregation, result)
+    result = apply_aggregation(data_key, result)
     return result
 
 
 def get_monthly_all(
+    data_key: DataKey,
     years: list[int] | None = None,
-    by: Literal["state", "eiaid"] = "state",
-    aggregation: Literal["sum", "per_unit_avg", "per_user_avg"] = "sum",
 ) -> pl.DataFrame:
-    """Get monthly EIA data for multiple years, with columns suffixed by year."""
+    """Get monthly EIA data for multiple years, with columns suffixed by year.
+
+    Args:
+        data_key: DataKey containing aggregation_level, aggregation_type, and coverage
+        years: List of years to include. Defaults to workflow.reference_years["eia"]
+    """
     if years is None:
         years = workflow.reference_years.get("eia", [2018])
+
+    by: Literal["state", "eiaid"] = "state" if data_key.aggregation_level == "state" else "eiaid"
 
     dfs = []
     for year in years:
@@ -120,7 +133,7 @@ def get_monthly_all(
             .alias(f"{DataCol.NATURAL_GAS_TOTAL}_percent_users"),
         )
 
-    result = apply_aggregation(aggregation, result)
+    result = apply_aggregation(data_key, result)
     return result
 
 
