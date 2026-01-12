@@ -1,0 +1,218 @@
+# frozen_string_literal: true
+
+# see the URL below for information on how to write OpenStudio measures
+# http://nrel.github.io/OpenStudio-user-documentation/reference/measure_writing_guide/
+
+require 'openstudio'
+require 'json'
+require 'csv'
+
+# Load HPXML resources
+resources_path = File.absolute_path(File.join(File.dirname(__FILE__), '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources'))
+Dir["#{resources_path}/*.rb"].each do |resource_file|
+  next if resource_file.include? 'minitest_helper.rb'
+
+  require resource_file
+end
+
+# start the measure
+class OCHRE < OpenStudio::Measure::ModelMeasure
+  # human readable name
+  def name
+    return 'OCHRE Simulator'
+  end
+
+  # human readable description
+  def description
+    return 'Runs OCHRE (Object-oriented Controllable High-resolution Residential Energy Model) simulation as an alternative to HPXMLtoOpenStudio/EnergyPlus.'
+  end
+
+  # human readable description of modeling approach
+  def modeler_description
+    return 'This measure replaces the HPXMLtoOpenStudio + EnergyPlus workflow with OCHRE simulation. It takes an HPXML file as input, runs OCHRE via command line, and converts the outputs to match the expected format for downstream reporting measures.'
+  end
+
+  # define the arguments that the user will input
+  def arguments(model) # rubocop:disable Lint/UnusedMethodArgument
+    args = OpenStudio::Measure::OSArgumentVector.new
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('hpxml_path', true)
+    arg.setDisplayName('HPXML File Path')
+    arg.setDescription('Absolute/relative path of the HPXML file.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('output_dir', true)
+    arg.setDisplayName('Output Directory')
+    arg.setDescription('Absolute/relative path for outputs.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('time_res_minutes', false)
+    arg.setDisplayName('Time Resolution (minutes)')
+    arg.setDescription('Time resolution for OCHRE simulation in minutes.')
+    arg.setDefaultValue(60)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('duration_days', false)
+    arg.setDisplayName('Duration (days)')
+    arg.setDescription('Simulation duration in days.')
+    arg.setDefaultValue(365)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('debug', false)
+    arg.setDisplayName('Debug Mode')
+    arg.setDescription('If true, generates additional debug output.')
+    arg.setDefaultValue(false)
+    args << arg
+
+    return args
+  end
+
+  # define what happens when the measure is run
+  def run(model, runner, user_arguments)
+    super(model, runner, user_arguments)
+
+    # use the built-in error checking
+    if !runner.validateUserArguments(arguments(model), user_arguments)
+      return false
+    end
+
+    # assign the user inputs to variables
+    args = runner.getArgumentValues(arguments(model), user_arguments)
+    args = Hash[args.map { |k, v| [k.to_sym, v] }]
+
+    # Validate required inputs
+    hpxml_path = args[:hpxml_path]
+    if hpxml_path.nil? || hpxml_path.empty?
+      runner.registerError('HPXML file path is required.')
+      return false
+    end
+
+    output_dir = args[:output_dir]
+    if output_dir.nil? || output_dir.empty?
+      output_dir = '.'
+    end
+
+    # Create output directory if it doesn't exist
+    unless Dir.exist?(output_dir)
+      Dir.mkdir(output_dir)
+    end
+
+    # Get absolute paths
+    hpxml_path = File.absolute_path(hpxml_path) if File.exist?(hpxml_path)
+    output_dir = File.absolute_path(output_dir)
+
+    # Check if HPXML file exists
+    unless File.exist?(hpxml_path)
+      runner.registerError("HPXML file not found: #{hpxml_path}")
+      return false
+    end
+
+    runner.registerInfo("HPXML file: #{hpxml_path}")
+    runner.registerInfo("Output directory: #{output_dir}")
+
+    # Load HPXML to extract weather and schedule files
+    begin
+      hpxml = HPXML.new(hpxml_path: hpxml_path)
+    rescue => e
+      runner.registerError("Failed to load HPXML file: #{e.message}")
+      return false
+    end
+
+    # Extract weather file
+    weather_file = nil
+    if hpxml.buildings.size > 0
+      weather_file = hpxml.buildings[0].climate_and_risk_zones.weather_station_epw_filepath
+    end
+
+    if weather_file.nil? || weather_file.empty?
+      runner.registerWarning('Weather file path not found in HPXML.')
+    else
+      weather_file = File.expand_path(weather_file, File.dirname(hpxml_path))
+      runner.registerInfo("Found weather file in HPXML: #{weather_file}")
+    end
+
+    # Extract schedule file
+    schedule_file = nil
+    if hpxml.buildings.size > 0 && !hpxml.buildings[0].header.schedules_filepaths.nil? && !hpxml.buildings[0].header.schedules_filepaths.empty?
+      schedule_file = hpxml.buildings[0].header.schedules_filepaths[0]
+      runner.registerInfo("Found schedule file in HPXML: #{schedule_file}")
+    else
+      runner.registerWarning('Schedule file path not found in HPXML.')
+    end
+
+    # Build OCHRE command line
+    time_res_minutes = args[:time_res_minutes] || 10
+    duration_days = args[:duration_days] || 365
+
+    # Build OCHRE CLI command
+    ochre_cmd = build_ochre_command(hpxml_path, output_dir,
+                                    time_res_minutes, duration_days,
+                                    schedule_file, weather_file)
+
+    runner.registerInfo("Running OCHRE simulation: #{ochre_cmd}")
+
+    begin
+      output = `#{ochre_cmd} 2>&1`
+      exit_status = $?.exitstatus
+
+      if args[:debug]
+        runner.registerInfo("OCHRE output:\n#{output}")
+      end
+
+      if exit_status != 0
+        runner.registerError("OCHRE simulation failed with exit code #{exit_status}")
+        runner.registerError("Output:\n#{output}")
+        return false
+      end
+
+      runner.registerInfo('OCHRE simulation completed successfully')
+    rescue => e
+      runner.registerError("Failed to run OCHRE: #{e.message}")
+      return false
+    end
+
+    runner.registerFinalCondition('OCHRE simulation completed successfully')
+
+    return true
+  end
+
+  private
+
+  # Build OCHRE command to run via CLI
+  def build_ochre_command(hpxml_path, output_dir, time_res_minutes, duration_days, schedule_file, weather_file)
+    # Get directory and filename for HPXML
+    hpxml_dir = File.dirname(hpxml_path)
+    hpxml_name = File.basename(hpxml_path)
+
+    # Escape paths for shell
+    hpxml_dir_safe = hpxml_dir.gsub("'", "\\\\'")
+    hpxml_name_safe = hpxml_name.gsub("'", "\\\\'")
+    output_dir_safe = output_dir.gsub("'", "\\\\'")
+
+    # Build the ochre command
+    # Usage: ochre single [OPTIONS] INPUT_PATH
+    # INPUT_PATH is the directory containing the HPXML file
+    cmd = "/Users/radhikar/Documents/buildstock2025/OCHRE/.venv/bin/python  /Users/radhikar/Documents/buildstock2025/OCHRE/ochre/cli.py single '#{hpxml_dir_safe}'"
+    cmd += " --hpxml_file '#{hpxml_name_safe}'"
+    cmd += " --output_path '#{output_dir_safe}'"
+    cmd += " --time_res #{time_res_minutes}"
+    cmd += " --duration #{duration_days}"
+    cmd += ' --start_year 2018 --start_month 1 --start_day 1'
+    cmd += ' --verbosity=9'
+
+    if schedule_file && !schedule_file.empty?
+      schedule_file_safe = schedule_file.gsub("'", "\\\\'")
+      cmd += " --hpxml_schedule_file '#{schedule_file_safe}'"
+    end
+
+    if weather_file && !weather_file.empty?
+      weather_file_safe = weather_file.gsub("'", "\\\\'")
+      cmd += " --weather_file_or_path '#{weather_file_safe}'"
+    end
+
+    return cmd
+  end
+end
+
+# register the measure to be used by the application
+OCHRE.new.registerWithApplication

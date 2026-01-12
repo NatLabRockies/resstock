@@ -14,7 +14,7 @@ require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/util'
 
 $start_time = Time.now
 
-def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_ids, upgrade_names, keep_run_folders, samplingonly)
+def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_ids, upgrade_names, keep_run_folders, samplingonly, use_ochre = false)
   if !File.exist?(yml)
     puts "Error: YML file does not exist at '#{yml}'."
     return false
@@ -287,43 +287,62 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     }
     server_dir_cleanup_args.update(workflow_args['server_directory_cleanup'])
 
-    osw['steps'] += [
-      {
-        'measure_dir_name' => 'HPXMLtoOpenStudio',
-        'arguments' => {
-          'hpxml_path' => '',
-          'output_dir' => '',
-          'debug' => debug,
-          'add_component_loads' => add_component_loads,
-          'skip_validation' => true
+    if use_ochre
+      measures_only = true
+      osw['steps'] += [
+        {
+          'measure_dir_name' => 'OCHRE',
+          'arguments' => {
+            'hpxml_path' => '',
+            'output_dir' => '',
+            'debug' => debug
+          }
         }
-      },
-      {
-        'measure_dir_name' => 'UpgradeCosts',
-        'arguments' => { 'debug' => debug }
-      }
-    ]
+      ]
+    else
+      osw['steps'] += [
+        {
+          'measure_dir_name' => 'HPXMLtoOpenStudio',
+          'arguments' => {
+            'hpxml_path' => '',
+            'output_dir' => '',
+            'debug' => debug,
+            'add_component_loads' => add_component_loads,
+            'skip_validation' => true
+          }
+        }
+      ]
+      osw['steps'] += workflow_args['measures']
 
-    osw['steps'] += workflow_args['measures']
+      osw['steps'] += [
+        {
+          'measure_dir_name' => 'UpgradeCosts',
+          'arguments' => { 'debug' => debug }
+        }
+      ]
+      osw['steps'] += [
+        {
+          'measure_dir_name' => 'ReportSimulationOutput',
+          'arguments' => sim_out_rep_args
+        },
+        {
+          'measure_dir_name' => 'ReportUtilityBills',
+          'arguments' => { 'output_format' => 'csv',
+                          'include_annual_bills' => include_annual_bills,
+                          'include_monthly_bills' => include_monthly_bills,
+                          'register_annual_bills' => register_annual_bills,
+                          'register_monthly_bills' => register_monthly_bills }
+        },
+        {
+          'measure_dir_name' => 'ServerDirectoryCleanup',
+          'arguments' => server_dir_cleanup_args
+        }
+      ]
+    end
+    puts ("Generating OSW for upgrade: #{workflow_args}")
+    puts (workflow_args['measures'])
 
-    osw['steps'] += [
-      {
-        'measure_dir_name' => 'ReportSimulationOutput',
-        'arguments' => sim_out_rep_args
-      },
-      {
-        'measure_dir_name' => 'ReportUtilityBills',
-        'arguments' => { 'output_format' => 'csv',
-                         'include_annual_bills' => include_annual_bills,
-                         'include_monthly_bills' => include_monthly_bills,
-                         'register_annual_bills' => register_annual_bills,
-                         'register_monthly_bills' => register_monthly_bills }
-      },
-      {
-        'measure_dir_name' => 'ServerDirectoryCleanup',
-        'arguments' => server_dir_cleanup_args
-      }
-    ]
+
 
     if upgrade_name != 'Baseline'
       apply_upgrade_measure = { 'measure_dir_name' => 'ApplyUpgrade',
@@ -359,7 +378,7 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
       osw['steps'].insert(build_existing_model_idx + 1, apply_upgrade_measure)
     end
 
-    if workflow_args.keys.include?('reporting_measures')
+    if workflow_args.keys.include?('reporting_measures') && !use_ochre
       workflow_args['reporting_measures'].each do |reporting_measure|
         if !reporting_measure.keys.include?('arguments')
           reporting_measure['arguments'] = {}
@@ -582,7 +601,7 @@ def change_arguments(osw, building_id, hpxml_path, output_dir)
   json[:steps].each do |measure|
     if measure[:measure_dir_name] == 'BuildExistingModel'
       measure[:arguments][:building_id] = "#{building_id}"
-    elsif measure[:measure_dir_name] == 'HPXMLtoOpenStudio'
+    elsif measure[:measure_dir_name] == 'HPXMLtoOpenStudio' || measure[:measure_dir_name] == 'OCHRE'
       measure[:arguments][:hpxml_path] = hpxml_path
       measure[:arguments][:output_dir] = output_dir
     end
@@ -672,6 +691,11 @@ OptionParser.new do |opts|
     options[:overwrite] = true
   end
 
+  options[:use_ochre] = false
+  opts.on('--use_ochre', 'Use OCHRE measure instead of HPXMLtoOpenStudio') do |_t|
+    options[:use_ochre] = true
+  end
+
   opts.on_tail('-h', '--help', 'Display help') do
     puts opts
     exit!
@@ -692,7 +716,8 @@ else
   # Run analysis
   puts "YML: #{options[:yml]}"
   success = run_workflow(options[:yml], options[:threads], options[:measures_only], options[:debug], options[:overwrite],
-                         options[:building_ids], options[:upgrade_names], options[:keep_run_folders], options[:samplingonly])
+                         options[:building_ids], options[:upgrade_names], options[:keep_run_folders], options[:samplingonly],
+                         options[:use_ochre])
 
   puts "\nCompleted in #{get_elapsed_time(Time.now, $start_time)}." if success
 end
