@@ -32,7 +32,7 @@ OpenStudio-HPXML capabilities include:
 - Annual and timeseries outputs (energy, loads, temperatures, etc.)
 - Optional HPXML inputs with transparent defaults
 - Schematron and XSD Schema input validation
-- Can be used for [DOE HOMES program approval](https://www.energy.gov/scep/single-family-modeling-solutions-home-efficiency-rebates-program)
+- Can be used for [IRA HOMES Rebates approval](https://www.energy.gov/sites/default/files/2024-05/ira-home-rebates-single-family-software-verification_050324.pdf)
 - Can be used for [ACCA Manual J approval](https://www.acca.org/standards/approved-software)
 - Can be used for [automated calibration to utility bills](https://github.com/NREL/OpenStudio-HPXML-calibration)
 
@@ -53,6 +53,7 @@ OpenStudio-HPXML is used by a number of software products or organizations, incl
 - [Clarity Heat Pump Toolkit](https://psdconsulting.com/solutions/)
 - [Energy Rating Index (ERI)](https://github.com/NREL/OpenStudio-ERI)
 - [Home Energy Score](https://www.homeenergyscore.gov)
+- [Hot2000 (H2K)](https://github.com/canmet-energy/h2k-hpxml)
 - [ICF](https://www.icf.com/work/utilities/sightline-utility-customer-programs)
 - [OptiMiser](https://optimiserenergy.com)
 - [Pearl](https://pearlscore.com)

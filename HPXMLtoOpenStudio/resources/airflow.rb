@@ -861,7 +861,7 @@ module Airflow
     end
   end
 
-  # Issues warnings if duct leakage to outside is detected to be suspiciously high. We check here
+  # Issues warnings/errors if duct leakage to outside is detected to be suspiciously high. We check here
   # instead of in the Schematron validator in case duct locations are defaulted.
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
@@ -877,34 +877,47 @@ module Airflow
       lto_measurements = hvac_distribution.duct_leakage_measurements.select { |dlm| dlm.duct_leakage_total_or_to_outside == HPXML::DuctLeakageToOutside }
       sum_lto = lto_measurements.map { |dlm| dlm.duct_leakage_value }.sum(0.0)
 
+      issue_warning = false
+      issue_error = false
+
       if hvac_distribution.ducts.count { |d| !HPXML::conditioned_locations_this_unit.include?(d.duct_location) } == 0
-        # If ducts completely in conditioned space, issue warning if duct leakage to outside above a certain threshold (e.g., 5%)
-        issue_warning = false
+        # If ducts completely in conditioned space, issue warning/error if duct leakage to outside above a certain threshold
         case units
         when HPXML::UnitsCFM25
           issue_warning = true if sum_lto > 0.04 * cfa
+          issue_error = true if sum_lto > 0.04 * 2.5 * cfa
         when HPXML::UnitsCFM50
           issue_warning = true if sum_lto > 0.06 * cfa
+          issue_error = true if sum_lto > 0.06 * 2.5 * cfa
         when HPXML::UnitsPercent
           issue_warning = true if sum_lto > 0.05
+          issue_error = true if sum_lto > 0.05 * 2.5
         end
-        next unless issue_warning
 
-        runner.registerWarning('Ducts are entirely within conditioned space but there is moderate leakage to the outside. Leakage to the outside is typically zero or near-zero in these situations, consider revising leakage values. Leakage will be modeled as heat lost to the ambient environment.')
+        if issue_error
+          fail 'Duct leakage to outside is too high; double-check inputs.'
+        elsif issue_warning
+          runner.registerWarning('Ducts are entirely within conditioned space but there is moderate leakage to the outside. Leakage to the outside is typically zero or near-zero in these situations, consider revising leakage values. Leakage will be modeled as heat lost to the ambient environment.')
+        end
       else
-        # If ducts in unconditioned space, issue warning if duct leakage to outside above a certain threshold (e.g., 40%)
-        issue_warning = false
+        # If ducts in unconditioned space, issue warning/error if duct leakage to outside above a certain threshold
         case units
         when HPXML::UnitsCFM25
           issue_warning = true if sum_lto >= 0.32 * cfa
+          issue_error = true if sum_lto >= 0.32 * 2.5 * cfa
         when HPXML::UnitsCFM50
           issue_warning = true if sum_lto >= 0.48 * cfa
+          issue_error = true if sum_lto >= 0.48 * 2.5 * cfa
         when HPXML::UnitsPercent
           issue_warning = true if sum_lto >= 0.4
+          issue_error = true if sum_lto >= 0.4 * 2.5
         end
-        next unless issue_warning
 
-        runner.registerWarning('Very high sum of supply + return duct leakage to the outside; double-check inputs.')
+        if issue_error
+          fail 'Duct leakage to outside is too high; double-check inputs.'
+        elsif issue_warning
+          runner.registerWarning('Very high sum of supply + return duct leakage to the outside; double-check inputs.')
+        end
       end
     end
   end

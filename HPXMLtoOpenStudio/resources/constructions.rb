@@ -2,6 +2,326 @@
 
 # Collection of methods related to surface constructions.
 module Constructions
+  # Applies a roof construction to the OpenStudio surfaces.
+  #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param roof [HPXML::Roof] The HPXML surface that defines the construction
+  # @param surfaces [Array<OpenStudio::Model::Surface>] The surfaces to apply the construction to
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
+  # @return [nil]
+  def self.apply_roof(runner, model, roof, surfaces, hpxml_header)
+    has_radiant_barrier = roof.radiant_barrier
+    if has_radiant_barrier
+      radiant_barrier_grade = roof.radiant_barrier_grade
+    end
+    interior_film = Material.AirFilmIndoorRoof(UnitConversions.convert(surfaces[0].tilt, 'rad', 'deg'), hpxml_header.apply_ashrae140_assumptions)
+    exterior_film = Material.AirFilmOutside(false, hpxml_header.apply_ashrae140_assumptions)
+    if hpxml_header.apply_ashrae140_assumptions
+      mat_roof_sheath = Material.RoofMaterialAndSheathing(roof.roof_type, 0.5) # Combined roof material + OSB sheathing
+    else
+      mat_roof_sheath = Material.RoofMaterialAndSheathing(roof.roof_type) # Combined roof material + OSB sheathing
+    end
+    mat_int_finish = Material.InteriorFinishMaterial(roof.interior_finish_type, roof.interior_finish_thickness)
+    if mat_int_finish.nil?
+      fallback_mat_int_finish = nil
+    else
+      fallback_mat_int_finish = Material.InteriorFinishMaterial(mat_int_finish.name, 0.1) # Try thin material
+    end
+
+    install_grade = 1
+    assembly_r = roof.insulation_assembly_r_value
+
+    if not mat_int_finish.nil?
+      # Closed cavity
+      constr_sets = [
+        WoodStudConstructionSet.new(Material.Stud2x(8), 0.07, 20.0, 0.0, mat_int_finish, mat_roof_sheath),         # 2x8, 24" o.c. + R20
+        WoodStudConstructionSet.new(Material.Stud2x(8), 0.07, 10.0, 0.0, mat_int_finish, mat_roof_sheath),         # 2x8, 24" o.c. + R10
+        WoodStudConstructionSet.new(Material.Stud2x(8), 0.07, 0.0, 0.0, mat_int_finish, mat_roof_sheath),          # 2x8, 24" o.c.
+        WoodStudConstructionSet.new(Material.Stud2x(6), 0.07, 0.0, 0.0, mat_int_finish, mat_roof_sheath),          # 2x6, 24" o.c.
+        WoodStudConstructionSet.new(Material.Stud2x(4), 0.01, 0.0, 0.0, fallback_mat_int_finish, mat_roof_sheath), # Fallback
+      ]
+      match, constr_set, cavity_r = pick_wood_stud_construction_set(assembly_r, constr_sets, interior_film, exterior_film)
+
+      apply_closed_cavity_roof(model, surfaces, "#{roof.id} construction",
+                               cavity_r, install_grade,
+                               constr_set.stud.thick_in,
+                               true, constr_set.framing_factor,
+                               constr_set.mat_int_finish,
+                               constr_set.osb_thick_in, constr_set.rigid_r,
+                               constr_set.mat_ext_finish, has_radiant_barrier,
+                               interior_film, exterior_film, radiant_barrier_grade,
+                               roof.solar_absorptance, roof.emittance)
+    else
+      # Open cavity
+      constr_sets = [
+        GenericConstructionSet.new(10.0, 0.0, nil, mat_roof_sheath), # w/R-10 rigid
+        GenericConstructionSet.new(0.0, 0.0, nil, mat_roof_sheath),  # Standard
+      ]
+      match, constr_set, layer_r = pick_generic_construction_set(assembly_r, constr_sets, interior_film, exterior_film)
+
+      if layer_r + constr_set.rigid_r < 1.0
+        # Increase the roof material & sheathing layer to avoid creating
+        # a thin insulation layer, which can lead to CTF errors.
+        mult = (mat_roof_sheath.rvalue + layer_r + constr_set.rigid_r) / mat_roof_sheath.rvalue
+        mat_roof_sheath.thick_in *= mult
+        layer_r = 0
+        constr_set.rigid_r = 0
+      end
+
+      cavity_r = 0
+      cavity_ins_thick_in = 0
+      framing_factor = 0
+      framing_thick_in = 0
+
+      apply_open_cavity_roof(model, surfaces, "#{roof.id} construction",
+                             cavity_r, install_grade, cavity_ins_thick_in,
+                             framing_factor, framing_thick_in,
+                             constr_set.osb_thick_in, layer_r + constr_set.rigid_r,
+                             constr_set.mat_ext_finish, has_radiant_barrier,
+                             interior_film, exterior_film, radiant_barrier_grade,
+                             roof.solar_absorptance, roof.emittance)
+    end
+    check_surface_assembly_rvalue(runner, surfaces, interior_film, exterior_film, assembly_r, match)
+  end
+
+  # Applies a wall construction to the OpenStudio surfaces.
+  #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param wall [HPXML::Wall] The HPXML surface that defines the construction
+  # @param surfaces [Array<OpenStudio::Model::Surface>] The surfaces to apply the construction to
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
+  # @return [nil]
+  def self.apply_wall(runner, model, wall, surfaces, hpxml_header)
+    has_radiant_barrier = wall.radiant_barrier
+    if has_radiant_barrier
+      radiant_barrier_grade = wall.radiant_barrier_grade
+    end
+    interior_film = Material.AirFilmIndoorWall
+    if wall.is_exterior
+      exterior_film = Material.AirFilmOutside(false, hpxml_header.apply_ashrae140_assumptions)
+      mat_ext_finish = Material.ExteriorFinishMaterial(wall.siding)
+    else
+      exterior_film = Material.AirFilmIndoorWall
+      mat_ext_finish = nil
+    end
+    mat_int_finish = Material.InteriorFinishMaterial(wall.interior_finish_type, wall.interior_finish_thickness)
+
+    apply_wall_construction(runner, model, surfaces, wall.id, wall.wall_type, wall.insulation_assembly_r_value,
+                            mat_int_finish, has_radiant_barrier, interior_film, exterior_film,
+                            radiant_barrier_grade, mat_ext_finish, wall.solar_absorptance,
+                            wall.emittance)
+  end
+
+  # Applies a rim joist construction to the OpenStudio surfaces.
+  #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param rim_joist [HPXML::RimJoist] The HPXML surface that defines the construction
+  # @param surfaces [Array<OpenStudio::Model::Surface>] The surfaces to apply the construction to
+  # @return [nil]
+  def self.apply_rim_joist(runner, model, rim_joist, surfaces)
+    interior_film = Material.AirFilmIndoorWall
+    if rim_joist.is_exterior
+      exterior_film = Material.AirFilmOutside
+      mat_ext_finish = Material.ExteriorFinishMaterial(rim_joist.siding)
+    else
+      exterior_film = Material.AirFilmIndoorWall
+      mat_ext_finish = nil
+    end
+
+    assembly_r = rim_joist.insulation_assembly_r_value
+
+    constr_sets = [
+      WoodStudConstructionSet.new(Material.Stud2x(2), 0.17, 20.0, 2.0, nil, mat_ext_finish),  # 2x4 + R20
+      WoodStudConstructionSet.new(Material.Stud2x(2), 0.17, 10.0, 2.0, nil, mat_ext_finish),  # 2x4 + R10
+      WoodStudConstructionSet.new(Material.Stud2x(2), 0.17, 0.0, 2.0, nil, mat_ext_finish),   # 2x4
+      WoodStudConstructionSet.new(Material.Stud2x(2), 0.01, 0.0, 0.0, nil, mat_ext_finish),   # Fallback
+    ]
+    match, constr_set, cavity_r = pick_wood_stud_construction_set(assembly_r, constr_sets, interior_film, exterior_film)
+    install_grade = 1
+
+    apply_wood_rim_joist(model, surfaces, "#{rim_joist.id} construction", cavity_r,
+                         install_grade, constr_set.stud.thick_in, constr_set.framing_factor,
+                         constr_set.mat_int_finish, constr_set.osb_thick_in,
+                         constr_set.rigid_r, constr_set.mat_ext_finish,
+                         interior_film, exterior_film, rim_joist.solar_absorptance,
+                         rim_joist.emittance)
+    check_surface_assembly_rvalue(runner, surfaces, interior_film, exterior_film, assembly_r, match)
+  end
+
+  # Applies a floor/ceiling construction to the OpenStudio surface.
+  #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param floor [HPXML::Floor] The HPXML surface that defines the construction
+  # @param surface [OpenStudio::Model::Surface] The surface to apply the construction to
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
+  # @param zero_wind [Boolean] Whether the surface has wind exposure or not
+  # @return [nil]
+  def self.apply_floor(runner, model, floor, surface, hpxml_header, zero_wind)
+    if floor.is_ceiling
+      interior_film = Material.AirFilmIndoorFloorAverage
+      exterior_film = Material.AirFilmIndoorFloorAverage
+      mat_int_finish_or_covering = Material.InteriorFinishMaterial(floor.interior_finish_type, floor.interior_finish_thickness)
+      has_radiant_barrier = floor.radiant_barrier
+      if has_radiant_barrier
+        radiant_barrier_grade = floor.radiant_barrier_grade
+      end
+    else # Floor
+      if floor.interior_adjacent_to == HPXML::LocationConditionedSpace
+        mat_int_finish_or_covering = Material.CoveringBare
+      elsif floor.is_exterior && hpxml_header.apply_ashrae140_assumptions
+        mat_int_finish_or_covering = Material.CoveringBare(1.0)
+      end
+      if floor.is_exterior
+        interior_film = Material.AirFilmIndoorFloorAverage
+        exterior_film = Material.AirFilmOutside(zero_wind)
+      else
+        interior_film = Material.AirFilmIndoorFloorDown
+        exterior_film = Material.AirFilmIndoorFloorDown
+      end
+    end
+
+    apply_floor_ceiling_construction(runner, model, [surface], floor.id, floor.floor_type, floor.is_ceiling, floor.insulation_assembly_r_value,
+                                     mat_int_finish_or_covering, has_radiant_barrier, interior_film, exterior_film, radiant_barrier_grade)
+  end
+
+  # Applies a slab construction to the OpenStudio surface.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param floor [HPXML::Floor] The HPXML surface that defines the construction
+  # @param surface [OpenStudio::Model::Surface] The surface to apply the construction to
+  # @param kiva_foundation [OpenStudio::Model::FoundationKiva] OpenStudio Foundation Kiva object
+  # @param exposed_length [Double] Length of foundation wall exposed to ambient conditions, specific to an associated HPXML Slab (ft)
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @return [nil]
+  def self.apply_slab(model, slab, surface, kiva_foundation, exposed_length, hpxml_bldg)
+    slab_perim_r = slab.perimeter_insulation_r_value
+    slab_perim_depth = slab.perimeter_insulation_depth
+    if (slab_perim_r == 0) || (slab_perim_depth == 0)
+      slab_perim_r = 0
+      slab_perim_depth = 0
+    end
+
+    if slab.under_slab_insulation_spans_entire_slab
+      slab_whole_r = slab.under_slab_insulation_r_value
+      slab_under_r = 0
+      slab_under_width = 0
+    else
+      slab_under_r = slab.under_slab_insulation_r_value
+      slab_under_width = slab.under_slab_insulation_width
+      if (slab_under_r == 0) || (slab_under_width == 0)
+        slab_under_r = 0
+        slab_under_width = 0
+      end
+      slab_whole_r = 0
+    end
+    slab_gap_r = slab.gap_insulation_r_value
+
+    mat_carpet = nil
+    if (slab.carpet_fraction > 0) && (slab.carpet_r_value > 0)
+      mat_carpet = Material.CoveringBare(slab.carpet_fraction,
+                                         slab.carpet_r_value)
+    end
+    soil_k_in = UnitConversions.convert(hpxml_bldg.site.ground_conductivity, 'ft', 'in')
+
+    ext_horiz_r = slab.exterior_horizontal_insulation_r_value
+    ext_horiz_width = slab.exterior_horizontal_insulation_width
+    ext_horiz_depth = slab.exterior_horizontal_insulation_depth_below_grade
+
+    apply_kiva_foundation_slab(model, surface, "#{slab.id} construction",
+                               slab_under_r, slab_under_width, slab_gap_r, slab_perim_r,
+                               slab_perim_depth, slab_whole_r, slab.thickness,
+                               exposed_length, mat_carpet, soil_k_in, kiva_foundation,
+                               ext_horiz_r, ext_horiz_width, ext_horiz_depth)
+  end
+
+  # Applies a foundation wall construction to the OpenStudio surface.
+  #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param foundation_wall [HPXML::FoundationWall] The HPXML surface that defines the construction
+  # @param surface [OpenStudio::Model::Surface] The surface to apply the construction to
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @return [nil]
+  def self.apply_foundation_wall(runner, model, foundation_wall, surface, hpxml_bldg)
+    height = foundation_wall.height
+    height_ag = height - foundation_wall.depth_below_grade
+
+    assembly_r = foundation_wall.insulation_assembly_r_value
+    mat_int_finish = Material.InteriorFinishMaterial(foundation_wall.interior_finish_type, foundation_wall.interior_finish_thickness)
+    mat_wall = Material.FoundationWallMaterial(foundation_wall.type, foundation_wall.thickness)
+    if not assembly_r.nil?
+      ext_rigid_height = height
+      ext_rigid_offset = 0.0
+      interior_film = Material.AirFilmIndoorWall
+
+      mat_int_finish_rvalue = mat_int_finish.nil? ? 0.0 : mat_int_finish.rvalue
+      ext_rigid_r = assembly_r - mat_wall.rvalue - mat_int_finish_rvalue - interior_film.rvalue
+      int_rigid_r = 0.0
+      if ext_rigid_r < 0 # Try without interior finish
+        mat_int_finish = nil
+        ext_rigid_r = assembly_r - mat_wall.rvalue - interior_film.rvalue
+      end
+      if (ext_rigid_r > 0) && (ext_rigid_r < 0.1)
+        ext_rigid_r = 0.0 # Prevent tiny strip of insulation
+      end
+      if ext_rigid_r < 0
+        ext_rigid_r = 0.0
+        match = false
+      else
+        match = true
+      end
+    else
+      ext_rigid_offset = foundation_wall.insulation_exterior_distance_to_top
+      ext_rigid_height = foundation_wall.insulation_exterior_distance_to_bottom - ext_rigid_offset
+      ext_rigid_r = foundation_wall.insulation_exterior_r_value
+      int_rigid_offset = foundation_wall.insulation_interior_distance_to_top
+      int_rigid_height = foundation_wall.insulation_interior_distance_to_bottom - int_rigid_offset
+      int_rigid_r = foundation_wall.insulation_interior_r_value
+    end
+
+    soil_k_in = UnitConversions.convert(hpxml_bldg.site.ground_conductivity, 'ft', 'in')
+
+    apply_kiva_foundation_wall(model, [surface], "#{foundation_wall.id} construction",
+                               ext_rigid_offset, int_rigid_offset, ext_rigid_height, int_rigid_height,
+                               ext_rigid_r, int_rigid_r, mat_int_finish, mat_wall, height_ag,
+                               soil_k_in)
+
+    if not assembly_r.nil?
+      check_surface_assembly_rvalue(runner, [surface], interior_film, nil, assembly_r, match)
+    end
+  end
+
+  # Applies an interzonal foundation wall construction to the OpenStudio surface.
+  #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param foundation_wall [HPXML::FoundationWall] The HPXML surface that defines the construction
+  # @param surface [OpenStudio::Model::Surface] The surface to apply the construction to
+  # @return [nil]
+  def self.apply_interzonal_foundation_wall(runner, model, foundation_wall, surface)
+    wall_type = HPXML::WallTypeConcrete
+    interior_film = Material.AirFilmIndoorWall
+    exterior_film = Material.AirFilmIndoorWall
+    assembly_r = foundation_wall.insulation_assembly_r_value
+    mat_int_finish = Material.InteriorFinishMaterial(foundation_wall.interior_finish_type, foundation_wall.interior_finish_thickness)
+    if assembly_r.nil?
+      concrete_thick_in = foundation_wall.thickness
+      int_r = foundation_wall.insulation_interior_r_value
+      ext_r = foundation_wall.insulation_exterior_r_value
+      mat_concrete = Material.Concrete(concrete_thick_in)
+      mat_int_finish_rvalue = mat_int_finish.nil? ? 0.0 : mat_int_finish.rvalue
+      assembly_r = int_r + ext_r + mat_concrete.rvalue + mat_int_finish_rvalue + interior_film.rvalue + exterior_film.rvalue
+    end
+    mat_ext_finish = nil
+
+    apply_wall_construction(runner, model, [surface], foundation_wall.id, wall_type, assembly_r, mat_int_finish,
+                            false, interior_film, exterior_film, nil, mat_ext_finish, nil, nil)
+  end
+
   # TODO
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
@@ -665,9 +985,9 @@ module Constructions
   # @param solar_absorptance [TODO] TODO
   # @param emittance [TODO] TODO
   # @return [TODO] TODO
-  def self.apply_rim_joist(model, surfaces, constr_name, cavity_r, install_grade, joist_thick_in, framing_factor,
-                           mat_int_finish, osb_thick_in, rigid_r, mat_ext_finish, interior_film,
-                           exterior_film, solar_absorptance = nil, emittance = nil)
+  def self.apply_wood_rim_joist(model, surfaces, constr_name, cavity_r, install_grade, joist_thick_in, framing_factor,
+                                mat_int_finish, osb_thick_in, rigid_r, mat_ext_finish, interior_film,
+                                exterior_film, solar_absorptance = nil, emittance = nil)
 
     return if surfaces.empty?
 
@@ -732,7 +1052,7 @@ module Constructions
   # @param framing_thick_in [TODO] TODO
   # @param osb_thick_in [TODO] TODO
   # @param rigid_r [TODO] TODO
-  # @param mat_roofing [TODO] TODO
+  # @param mat_roof_sheath [TODO] TODO
   # @param has_radiant_barrier [TODO] TODO
   # @param interior_film [TODO] TODO
   # @param exterior_film [TODO] TODO
@@ -742,7 +1062,7 @@ module Constructions
   # @return [TODO] TODO
   def self.apply_open_cavity_roof(model, surfaces, constr_name, cavity_r, install_grade,
                                   cavity_ins_thick_in, framing_factor, framing_thick_in, osb_thick_in,
-                                  rigid_r, mat_roofing, has_radiant_barrier, interior_film, exterior_film,
+                                  rigid_r, mat_roof_sheath, has_radiant_barrier, interior_film, exterior_film,
                                   radiant_barrier_grade, solar_absorptance = nil, emittance = nil)
 
     return if surfaces.empty?
@@ -786,8 +1106,8 @@ module Constructions
     # Define construction
     constr = Construction.new(constr_name, path_fracs)
     constr.add_layer(exterior_film)
-    if not mat_roofing.nil?
-      constr.add_layer(mat_roofing)
+    if not mat_roof_sheath.nil?
+      constr.add_layer(mat_roof_sheath)
     end
     if not mat_rigid.nil?
       constr.add_layer(mat_rigid)
@@ -823,7 +1143,7 @@ module Constructions
   # @param mat_int_finish [TODO] TODO
   # @param osb_thick_in [TODO] TODO
   # @param rigid_r [TODO] TODO
-  # @param mat_roofing [TODO] TODO
+  # @param mat_roof_sheath [TODO] TODO
   # @param has_radiant_barrier [TODO] TODO
   # @param interior_film [TODO] TODO
   # @param exterior_film [TODO] TODO
@@ -833,7 +1153,7 @@ module Constructions
   # @return [TODO] TODO
   def self.apply_closed_cavity_roof(model, surfaces, constr_name, cavity_r, install_grade, cavity_depth,
                                     filled_cavity, framing_factor, mat_int_finish,
-                                    osb_thick_in, rigid_r, mat_roofing, has_radiant_barrier,
+                                    osb_thick_in, rigid_r, mat_roof_sheath, has_radiant_barrier,
                                     interior_film, exterior_film, radiant_barrier_grade,
                                     solar_absorptance = nil, emittance = nil)
 
@@ -875,8 +1195,8 @@ module Constructions
     # Define construction
     constr = Construction.new(constr_name, path_fracs)
     constr.add_layer(exterior_film)
-    if not mat_roofing.nil?
-      constr.add_layer(mat_roofing)
+    if not mat_roof_sheath.nil?
+      constr.add_layer(mat_roof_sheath)
     end
     if not mat_rigid.nil?
       constr.add_layer(mat_rigid)
@@ -1331,9 +1651,9 @@ module Constructions
   # @param height_above_grade [TODO] TODO
   # @param soil_k_in [TODO] TODO
   # @return [TODO] TODO
-  def self.apply_foundation_wall(model, surfaces, constr_name, ext_rigid_ins_offset, int_rigid_ins_offset,
-                                 ext_rigid_ins_height, int_rigid_ins_height, ext_rigid_r, int_rigid_r,
-                                 mat_int_finish, mat_wall, height_above_grade, soil_k_in)
+  def self.apply_kiva_foundation_wall(model, surfaces, constr_name, ext_rigid_ins_offset, int_rigid_ins_offset,
+                                      ext_rigid_ins_height, int_rigid_ins_height, ext_rigid_r, int_rigid_r,
+                                      mat_int_finish, mat_wall, height_above_grade, soil_k_in)
 
     # Create Kiva foundation
     foundation = apply_kiva_walled_foundation(model, ext_rigid_r, int_rigid_r, ext_rigid_ins_offset,
@@ -1374,10 +1694,10 @@ module Constructions
   # @param soil_k_in [TODO] TODO
   # @param foundation [TODO] TODO
   # @return [TODO] TODO
-  def self.apply_foundation_slab(model, surface, constr_name, under_r, under_width, gap_r, perimeter_r,
-                                 perimeter_depth, whole_r, concrete_thick_in, exposed_perimeter,
-                                 mat_carpet, soil_k_in, foundation, ext_horiz_r, ext_horiz_width,
-                                 ext_horiz_depth)
+  def self.apply_kiva_foundation_slab(model, surface, constr_name, under_r, under_width, gap_r, perimeter_r,
+                                      perimeter_depth, whole_r, concrete_thick_in, exposed_perimeter,
+                                      mat_carpet, soil_k_in, foundation, ext_horiz_r, ext_horiz_width,
+                                      ext_horiz_depth)
 
     return if surface.nil?
 
@@ -2479,8 +2799,8 @@ module Constructions
                                      Material.AirFilmIndoorFloorAverage, Material.AirFilmIndoorFloorAverage, nil)
     elsif type == 'roof'
       apply_open_cavity_roof(model, surfaces, 'AdiabaticRoofConstruction',
-                             0, 1, 7.25, 0.07, 7.25, 0.75, 99,
-                             Material.RoofMaterial(HPXML::RoofTypeAsphaltShingles),
+                             0, 1, 7.25, 0.07, 7.25, 0.0, 99,
+                             Material.RoofMaterialAndSheathing(HPXML::RoofTypeAsphaltShingles),
                              false, Material.AirFilmOutside,
                              Material.AirFilmIndoorRoof(UnitConversions.convert(surfaces[0].tilt, 'rad', 'deg')), nil)
     end
