@@ -1286,6 +1286,12 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'cfis-invalid-supplemental-fan4' => ["CFIS supplemental fan 'VentilationFan2' cannot have HoursInOperation specified."],
                             'dehumidifier-setpoints' => ['All dehumidifiers must have the same setpoint but multiple setpoints were specified.'],
                             'desuperheater-with-detailed-setpoints' => ["Detailed setpoints for water heating system 'WaterHeatingSystem1' is not currently supported for desuperheaters."],
+                            'duct-lto-cfm25-cond-space' => ['Duct leakage to outside is too high; double-check inputs.'],
+                            'duct-lto-cfm25-uncond-space' => ['Duct leakage to outside is too high; double-check inputs.'],
+                            'duct-lto-cfm50-cond-space' => ['Duct leakage to outside is too high; double-check inputs.'],
+                            'duct-lto-cfm50-uncond-space' => ['Duct leakage to outside is too high; double-check inputs.'],
+                            'duct-lto-percent-cond-space' => ['Duct leakage to outside is too high; double-check inputs.'],
+                            'duct-lto-percent-uncond-space' => ['Duct leakage to outside is too high; double-check inputs.'],
                             'duplicate-id' => ["Element 'SystemIdentifier', attribute 'id': 'PlugLoad1' is not a valid value of the atomic type 'xs:ID'."],
                             'emissions-duplicate-names' => ['Found multiple Emissions Scenarios with the Scenario Name='],
                             'emissions-wrong-columns' => ['Emissions File has too few columns. Cannot find column number'],
@@ -1446,6 +1452,54 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-detailed-setpoints.xml')
         hpxml_bldg.water_heating_systems[0].uses_desuperheater = true
         hpxml_bldg.water_heating_systems[0].related_hvac_idref = hpxml_bldg.cooling_systems[0].id
+      when 'duct-lto-cfm25-cond-space'
+        hpxml, hpxml_bldg = _create_hpxml('base-atticroof-conditioned.xml')
+        hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served = hpxml_bldg.building_construction.conditioned_floor_area
+        hpxml_bldg.hvac_distributions[0].duct_leakage_measurements.each do |dlm|
+          dlm.duct_leakage_units = HPXML::UnitsCFM25
+          dlm.duct_leakage_value = 250.0
+        end
+        hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
+          duct.duct_fraction_area = nil
+          duct.duct_location = nil
+        end
+      when 'duct-lto-cfm25-uncond-space'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.hvac_distributions[0].duct_leakage_measurements.each do |dlm|
+          dlm.duct_leakage_value = 2000.0
+        end
+      when 'duct-lto-cfm50-cond-space'
+        hpxml, hpxml_bldg = _create_hpxml('base-atticroof-conditioned.xml')
+        hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served = hpxml_bldg.building_construction.conditioned_floor_area
+        hpxml_bldg.hvac_distributions[0].duct_leakage_measurements.each do |dlm|
+          dlm.duct_leakage_units = HPXML::UnitsCFM50
+          dlm.duct_leakage_value = 500.0
+        end
+        hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
+          duct.duct_fraction_area = nil
+          duct.duct_location = nil
+        end
+      when 'duct-lto-cfm50-uncond-space'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-ducts-leakage-cfm50.xml')
+        hpxml_bldg.hvac_distributions[0].duct_leakage_measurements.each do |dlm|
+          dlm.duct_leakage_value = 4000.0
+        end
+      when 'duct-lto-percent-cond-space'
+        hpxml, hpxml_bldg = _create_hpxml('base-atticroof-conditioned.xml')
+        hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served = hpxml_bldg.building_construction.conditioned_floor_area
+        hpxml_bldg.hvac_distributions[0].duct_leakage_measurements.each do |dlm|
+          dlm.duct_leakage_units = HPXML::UnitsPercent
+          dlm.duct_leakage_value = 0.0875
+        end
+        hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
+          duct.duct_fraction_area = nil
+          duct.duct_location = nil
+        end
+      when 'duct-lto-percent-uncond-space'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-ducts-leakage-percent.xml')
+        hpxml_bldg.hvac_distributions[0].duct_leakage_measurements.each do |dlm|
+          dlm.duct_leakage_value = 0.625
+        end
       when 'duplicate-id'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.plug_loads[-1].id = hpxml_bldg.plug_loads[0].id
