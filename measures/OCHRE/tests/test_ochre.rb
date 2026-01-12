@@ -60,9 +60,6 @@ class OCHRETest < Minitest::Test
     measure.run(model, runner, argument_map)
     result = runner.result
 
-    # Show the output
-    show_output(result)
-
     # Assert that it failed (because file doesn't exist)
     assert_equal('Fail', result.value.valueName)
   end
@@ -91,10 +88,5 @@ class OCHRETest < Minitest::Test
     # Check the modeler description
     assert(!measure.modeler_description.empty?)
     assert(measure.modeler_description.include?('HPXMLtoOpenStudio'))
-  end
-
-  # Helper method to show runner output
-  def show_output(result)
-    show_runner_output(result)
   end
 end
