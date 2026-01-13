@@ -118,19 +118,6 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
       return false
     end
 
-    # Extract weather file
-    weather_file = nil
-    if hpxml.buildings.size > 0
-      weather_file = hpxml.buildings[0].climate_and_risk_zones.weather_station_epw_filepath
-    end
-
-    if weather_file.nil? || weather_file.empty?
-      runner.registerWarning('Weather file path not found in HPXML.')
-    else
-      weather_file = File.expand_path(weather_file, File.dirname(hpxml_path))
-      runner.registerInfo("Found weather file in HPXML: #{weather_file}")
-    end
-
     # Extract schedule file
     schedule_file = nil
     if hpxml.buildings.size > 0 && !hpxml.buildings[0].header.schedules_filepaths.nil? && !hpxml.buildings[0].header.schedules_filepaths.empty?
@@ -143,6 +130,10 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     # Build OCHRE command line
     time_res_minutes = args[:time_res_minutes] || 10
     duration_days = args[:duration_days] || 365
+
+    # get weather file path
+    hpxml_bldg = hpxml.buildings[0]
+    weather_file = Location.get_epw_path(hpxml_bldg, hpxml_path)
 
     # Build OCHRE CLI command
     ochre_cmd = build_ochre_command(hpxml_path, output_dir,
@@ -192,7 +183,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     # Build the ochre command
     # Usage: ochre single [OPTIONS] INPUT_PATH
     # INPUT_PATH is the directory containing the HPXML file
-    cmd = "/Users/radhikar/Documents/buildstock2025/OCHRE/.venv/bin/python  /Users/radhikar/Documents/buildstock2025/OCHRE/ochre/cli.py single '#{hpxml_dir_safe}'"
+    cmd = "/Users/radhikar/Documents/buildstock2025/OCHRE/.venv/bin/ochre single '#{hpxml_dir_safe}'"
     cmd += " --hpxml_file '#{hpxml_name_safe}'"
     cmd += " --output_path '#{output_dir_safe}'"
     cmd += " --time_res #{time_res_minutes}"
@@ -204,12 +195,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
       schedule_file_safe = schedule_file.gsub("'", "\\\\'")
       cmd += " --hpxml_schedule_file '#{schedule_file_safe}'"
     end
-
-    if weather_file && !weather_file.empty?
-      weather_file_safe = weather_file.gsub("'", "\\\\'")
-      cmd += " --weather_file_or_path '#{weather_file_safe}'"
-    end
-
+    cmd += " --weather_file_or_path '#{weather_file}'"
     return cmd
   end
 end

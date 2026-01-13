@@ -4,8 +4,8 @@ os_sha: c77fbb9569
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
 output_directory: national_baseline
-weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
-# weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
+# weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
+weather_files_path: /Users/radhikar/Documents/buildstock2025/resstock-develop-tree/weather # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
 
@@ -15,9 +15,9 @@ baseline:
 
 # Sampler type and number of data points per baseline or upgrade
 sampler:
-  type: residential_quota
+  type: precomputed
   args:
-    n_datapoints: 250
+    sample_file: buildstock.csv
 
 # NREL High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
@@ -54,9 +54,10 @@ sampler:
 workflow_generator:
   # ResStock HPXML workflow generator
   type: residential_hpxml
-  version: 2025.04.29
+  version: 2026.01.12
   args:
     # Annual simulation and timestep
+    use_ochre: true
     build_existing_model:
       simulation_control_timestep: 60
       simulation_control_run_period_begin_month: 1
@@ -100,4 +101,4 @@ workflow_generator:
 
     # Files to keep
     server_directory_cleanup:
-      retain_schedules_csv: false
+      retain_schedules_csv: true
