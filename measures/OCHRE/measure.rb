@@ -82,6 +82,11 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(false)
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('export_res', false)
+    arg.setDisplayName('Export Resolution (minutes)')
+    arg.setDescription('Export interval in minutes (exports results periodically to reduce memory). Recommended: 43200 (30 days) for 1-minute resolution, 86400 (60 days) for 5-minute resolution. Leave blank to disable periodic export.')
+    args << arg
+
     return args
   end
 
@@ -151,6 +156,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     start_year = args[:start_year] || 2018
     start_month = args[:start_month] || 1
     start_day = args[:start_day] || 1
+    export_res_minutes = args[:export_res]
 
     # get weather file path
     hpxml_bldg = hpxml.buildings[0]
@@ -160,7 +166,8 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     ochre_cmd = build_ochre_command(hpxml_path, output_dir,
                                     time_res_minutes, duration_days,
                                     schedule_file, weather_file,
-                                    start_year, start_month, start_day)
+                                    start_year, start_month, start_day,
+                                    export_res_minutes)
 
     runner.registerInfo("Running OCHRE simulation: #{ochre_cmd}")
 
@@ -192,7 +199,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
   private
 
   # Build OCHRE command to run via CLI
-  def build_ochre_command(hpxml_path, output_dir, time_res_minutes, duration_days, schedule_file, weather_file, start_year, start_month, start_day)
+  def build_ochre_command(hpxml_path, output_dir, time_res_minutes, duration_days, schedule_file, weather_file, start_year, start_month, start_day, export_res_minutes = nil)
     # Get directory and filename for HPXML
     hpxml_dir = File.dirname(hpxml_path)
     hpxml_name = File.basename(hpxml_path)
@@ -205,7 +212,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     # Build the ochre command
     # Usage: ochre single [OPTIONS] INPUT_PATH
     # INPUT_PATH is the directory containing the HPXML file
-    cmd = "/Users/radhikar/Documents/buildstock2025/OCHRE/.venv/bin/ochre single '#{hpxml_dir_safe}'"
+    cmd = "/Users/radhikar/Documents/buildstock2025/res_ochre/OCHRE/.venv/bin/ochre single '#{hpxml_dir_safe}'"
     cmd += " --hpxml_file '#{hpxml_name_safe}'"
     cmd += " --output_path '#{output_dir_safe}'"
     cmd += " --time_res #{time_res_minutes}"
@@ -218,6 +225,13 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
       cmd += " --hpxml_schedule_file '#{schedule_file_safe}'"
     end
     cmd += " --weather_file_or_path '#{weather_file}'"
+
+    # Add export_res if specified
+    # Convert from minutes to days for the CLI (which expects days)
+    if export_res_minutes && export_res_minutes > 0
+      cmd += " --export_res #{export_res_minutes}"
+    end
+
     return cmd
   end
 end
