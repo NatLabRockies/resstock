@@ -1036,7 +1036,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   # @param hpxml_path [String] Path to the created HPXML file
   # @return [Oga::XML::Element] Root XML element of the updated HPXML document
   def create(runner, model, args, hpxml_path)
-    weather = get_weather_if_needed(runner, args)
+    weather = get_weather_if_needed(runner, model, args)
     return false if !weather.nil? && !weather
 
     success = create_geometry_envelope(runner, model, args)
@@ -1145,27 +1145,32 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   # Returns the WeatherFile object if we determine we need it for subsequent processing.
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param args [Hash] Map of :argument_name => value
   # @return [WeatherFile] Weather object containing EPW information
-  def get_weather_if_needed(runner, args)
+  def get_weather_if_needed(runner, model, args)
+    epw_path = args[:location_epw_path]
+    if epw_path.nil?
+      # Get EPW path from zip code
+      epw_path = Defaults.lookup_weather_data_from_zipcode(args[:location_zip_code])[:station_filename]
+    end
+
+    # Error-checking
+    if not File.exist? epw_path
+      epw_path = File.join(File.expand_path(File.join(File.dirname(__FILE__), '..', 'weather')), epw_path) # a filename was entered for location_epw_path
+    end
+    if not File.exist? epw_path
+      runner.registerError("Could not find EPW file at '#{epw_path}'.")
+      return false
+    end
+
+    # Suppress log messages ("'UseWeatherFile' is selected in YearDescription, but there are no weather file set for the model.")
+    epw_file = OpenStudio::EpwFile.new(epw_path, false)
+    OpenStudio::Model::WeatherFile.setWeatherFile(model, epw_file)
+
     if (args[:hvac_control_heating_season_period].to_s == Constants::BuildingAmerica) ||
        (args[:hvac_control_cooling_season_period].to_s == Constants::BuildingAmerica) ||
        (args[:apply_defaults])
-      epw_path = args[:location_epw_path]
-      if epw_path.nil?
-        # Get EPW path from zip code
-        epw_path = Defaults.lookup_weather_data_from_zipcode(args[:location_zip_code])[:station_filename]
-      end
-
-      # Error-checking
-      if not File.exist? epw_path
-        epw_path = File.join(File.expand_path(File.join(File.dirname(__FILE__), '..', 'weather')), epw_path) # a filename was entered for location_epw_path
-      end
-      if not File.exist? epw_path
-        runner.registerError("Could not find EPW file at '#{epw_path}'.")
-        return false
-      end
-
       return WeatherFile.new(epw_path: epw_path, runner: nil)
     end
 
@@ -1257,6 +1262,13 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
 
     success = Geometry.create_windows_and_skylights(runner, model, **args)
     return false if not success
+
+    # Suppress log messages (e.g., "No construction for either surface 'Surface 1', and 'Surface 23'")
+    mat = Model.add_massless_material(model, name: 'arbitary material', rvalue: 20)
+    constr = Model.add_construction(model, name: 'arbitrary construction', layers: [mat])
+    model.getSurfaces.each do |s|
+      s.setConstruction(constr)
+    end
 
     return true
   end
@@ -1595,11 +1607,10 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   # @return [nil]
   def set_air_infiltration_measurements(hpxml_bldg, args)
     if args[:enclosure_air_leakage_value]
-      if args[:enclosure_air_leakage_units] == HPXML::UnitsELA
+      if args[:enclosure_air_leakage_units] == 'EffectiveLeakageArea'
         effective_leakage_area = args[:enclosure_air_leakage_value]
-      elsif args[:enclosure_air_leakage_units] == HPXML::UnitsSLA
-        # FUTURE: Translate directly to HPXML when https://github.com/hpxmlwg/hpxml/issues/454 is available
-        effective_leakage_area = UnitConversions.convert(args[:enclosure_air_leakage_value] * args[:geometry_unit_conditioned_floor_area], 'ft^2', 'in^2').round(1)
+      elsif args[:enclosure_air_leakage_units] == 'SpecificLeakageArea'
+        specific_leakage_area = args[:enclosure_air_leakage_value]
       else
         unit_of_measure = args[:enclosure_air_leakage_units]
         air_leakage = args[:enclosure_air_leakage_value]
@@ -1621,6 +1632,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                                                  unit_of_measure: unit_of_measure,
                                                  air_leakage: air_leakage,
                                                  effective_leakage_area: effective_leakage_area,
+                                                 specific_leakage_area: specific_leakage_area,
                                                  infiltration_type: air_leakage_type,
                                                  leakiness_description: leakiness_description)
   end
@@ -1799,7 +1811,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
         wall_type = HPXML::WallTypeWoodStud
       end
 
-      if (attic_locations.include? interior_adjacent_to) && (args[:enclosure_wall_siding_type] == HPXML::SidingTypeNone)
+      if (attic_locations.include? interior_adjacent_to) && (args[:enclosure_wall_siding_type] == HPXML::SidingTypeNotPresent)
         siding = nil # Attic wall, don't even bother to say no siding
       elsif exterior_adjacent_to == HPXML::LocationOutside
         siding = args[:enclosure_wall_siding_type]

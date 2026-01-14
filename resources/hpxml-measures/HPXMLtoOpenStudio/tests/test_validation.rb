@@ -114,7 +114,8 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'heat-pump-separate-backup-inputs' => ['Expected 0 element(s) for xpath: BackupAnnualHeatingEfficiency',
                                                                    'Expected 0 element(s) for xpath: BackupHeatingCapacity',
                                                                    'Expected 0 element(s) for xpath: extension/BackupHeatingAutosizingFactor'],
-                            'heat-pump-capacity-17f' => ['Expected HeatingCapacity17F to be less than or equal to HeatingCapacity'],
+                            'heat-pump-capacity-17f-value' => ['Expected HeatingCapacity17F to be less than or equal to HeatingCapacity'],
+                            'heat-pump-capacity-17f-presence' => ['Expected HeatingCapacity when HeatingCapacity17F is provided'],
                             'heat-pump-lockout-temperatures' => ['Expected CompressorLockoutTemperature to be less than or equal to BackupHeatingLockoutTemperature'],
                             'heat-pump-multiple-backup-systems' => ['Expected 0 or 1 element(s) for xpath: HeatPump/BackupSystem [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]'],
                             'hvac-detailed-performance-bad-odbs' => ['Expected PerformanceDataPoint/OutdoorTemperature to be 47, 17, 5, or <5',
@@ -281,7 +282,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                                               'HeatingAutosizingFactor should be greater than 0.0',
                                                               'BackupHeatingAutosizingFactor should be greater than 0.0'],
                             'negative-hpwh-containment-volume' => ['Expected HPWHContainmentVolume to be greater than 0.'],
-                            'panel-negative-headroom-breaker-spaces' => ["Element 'HeadroomSpaces': [facet 'minInclusive'] The value '-1' is less than the minimum value allowed ('0')."],
                             'panel-zero-total-breaker-spaces' => ["Element 'RatedTotalSpaces': [facet 'minExclusive'] The value '0' must be greater than '0'."],
                             'panel-without-required-system' => ['Expected 1 or more element(s) for xpath: AttachedToComponent [context: /HPXML/Building/BuildingDetails/Systems/ElectricPanels/ElectricPanel/ServiceFeeders/ServiceFeeder, id: "ServiceFeeder1"]'],
                             'panel-with-unrequired-system' => ['Expected 0 element(s) for xpath: AttachedToComponent [context: /HPXML/Building/BuildingDetails/Systems/ElectricPanels/ElectricPanel/ServiceFeeders/ServiceFeeder, id: "ServiceFeeder1"]'],
@@ -298,7 +298,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'water-heater-location' => ['A location is specified as "crawlspace - vented" but no surfaces were found adjacent to this space type.'],
                             'water-heater-location-other' => ["Expected Location to be 'conditioned space' or 'basement - unconditioned' or 'basement - conditioned' or 'attic - unvented' or 'attic - vented' or 'garage' or 'crawlspace - unvented' or 'crawlspace - vented' or 'crawlspace - conditioned' or 'other exterior' or 'other housing unit' or 'other heated space' or 'other multifamily buffer space' or 'other non-freezing space'"],
                             'water-heater-recovery-efficiency' => ['Expected RecoveryEfficiency to be greater than EnergyFactor'],
-                            'wrong-infiltration-method-blower-door' => ['Expected 1 element(s) for xpath: Enclosure/AirInfiltration/AirInfiltrationMeasurement[BuildingAirLeakage/h:AirLeakage | EffectiveLeakageArea]'],
+                            'wrong-infiltration-method-blower-door' => ['Expected 1 element(s) for xpath: Enclosure/AirInfiltration/AirInfiltrationMeasurement[BuildingAirLeakage/h:AirLeakage | EffectiveLeakageArea | SpecificLeakageArea]'],
                             'wrong-infiltration-method-default-table' => ['Expected 1 element(s) for xpath: Enclosure/AirInfiltration/AirInfiltrationMeasurement[LeakinessDescription]'] }
 
     all_expected_errors.each_with_index do |(error_case, expected_errors), i|
@@ -455,9 +455,14 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml_bldg.heat_pumps[0].backup_heating_capacity = 12345
         hpxml_bldg.heat_pumps[0].backup_heating_efficiency_afue = 0.8
         hpxml_bldg.heat_pumps[0].backup_heating_autosizing_factor = 1.2
-      when 'heat-pump-capacity-17f'
+      when 'heat-pump-capacity-17f-value'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.heat_pumps[0].heating_capacity_17F = hpxml_bldg.heat_pumps[0].heating_capacity + 1000.0
+        hpxml_bldg.heat_pumps[0].heating_capacity_fraction_17F = nil
+      when 'heat-pump-capacity-17f-presence'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
+        hpxml_bldg.heat_pumps[0].heating_capacity_17F = 0.5 * hpxml_bldg.heat_pumps[0].heating_capacity
+        hpxml_bldg.heat_pumps[0].heating_capacity = nil
         hpxml_bldg.heat_pumps[0].heating_capacity_fraction_17F = nil
       when 'heat-pump-lockout-temperatures'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed-lockout-temperatures.xml')
@@ -889,10 +894,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'negative-hpwh-containment-volume'
         hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-confined-space.xml')
         hpxml_bldg.water_heating_systems[0].hpwh_containment_volume = -10.0
-      when 'panel-negative-headroom-breaker-spaces'
-        hpxml, hpxml_bldg = _create_hpxml('base.xml')
-        hpxml_bldg.electric_panels.add(id: 'ElectricPanel1',
-                                       headroom_spaces: -1)
       when 'panel-zero-total-breaker-spaces'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.electric_panels.add(id: 'ElectricPanel1',
@@ -1285,6 +1286,12 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'cfis-invalid-supplemental-fan4' => ["CFIS supplemental fan 'VentilationFan2' cannot have HoursInOperation specified."],
                             'dehumidifier-setpoints' => ['All dehumidifiers must have the same setpoint but multiple setpoints were specified.'],
                             'desuperheater-with-detailed-setpoints' => ["Detailed setpoints for water heating system 'WaterHeatingSystem1' is not currently supported for desuperheaters."],
+                            'duct-lto-cfm25-cond-space' => ['Duct leakage to outside is too high; double-check inputs.'],
+                            'duct-lto-cfm25-uncond-space' => ['Duct leakage to outside is too high; double-check inputs.'],
+                            'duct-lto-cfm50-cond-space' => ['Duct leakage to outside is too high; double-check inputs.'],
+                            'duct-lto-cfm50-uncond-space' => ['Duct leakage to outside is too high; double-check inputs.'],
+                            'duct-lto-percent-cond-space' => ['Duct leakage to outside is too high; double-check inputs.'],
+                            'duct-lto-percent-uncond-space' => ['Duct leakage to outside is too high; double-check inputs.'],
                             'duplicate-id' => ["Element 'SystemIdentifier', attribute 'id': 'PlugLoad1' is not a valid value of the atomic type 'xs:ID'."],
                             'emissions-duplicate-names' => ['Found multiple Emissions Scenarios with the Scenario Name='],
                             'emissions-wrong-columns' => ['Emissions File has too few columns. Cannot find column number'],
@@ -1445,6 +1452,54 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-detailed-setpoints.xml')
         hpxml_bldg.water_heating_systems[0].uses_desuperheater = true
         hpxml_bldg.water_heating_systems[0].related_hvac_idref = hpxml_bldg.cooling_systems[0].id
+      when 'duct-lto-cfm25-cond-space'
+        hpxml, hpxml_bldg = _create_hpxml('base-atticroof-conditioned.xml')
+        hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served = hpxml_bldg.building_construction.conditioned_floor_area
+        hpxml_bldg.hvac_distributions[0].duct_leakage_measurements.each do |dlm|
+          dlm.duct_leakage_units = HPXML::UnitsCFM25
+          dlm.duct_leakage_value = 250.0
+        end
+        hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
+          duct.duct_fraction_area = nil
+          duct.duct_location = nil
+        end
+      when 'duct-lto-cfm25-uncond-space'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.hvac_distributions[0].duct_leakage_measurements.each do |dlm|
+          dlm.duct_leakage_value = 2000.0
+        end
+      when 'duct-lto-cfm50-cond-space'
+        hpxml, hpxml_bldg = _create_hpxml('base-atticroof-conditioned.xml')
+        hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served = hpxml_bldg.building_construction.conditioned_floor_area
+        hpxml_bldg.hvac_distributions[0].duct_leakage_measurements.each do |dlm|
+          dlm.duct_leakage_units = HPXML::UnitsCFM50
+          dlm.duct_leakage_value = 500.0
+        end
+        hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
+          duct.duct_fraction_area = nil
+          duct.duct_location = nil
+        end
+      when 'duct-lto-cfm50-uncond-space'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-ducts-leakage-cfm50.xml')
+        hpxml_bldg.hvac_distributions[0].duct_leakage_measurements.each do |dlm|
+          dlm.duct_leakage_value = 4000.0
+        end
+      when 'duct-lto-percent-cond-space'
+        hpxml, hpxml_bldg = _create_hpxml('base-atticroof-conditioned.xml')
+        hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served = hpxml_bldg.building_construction.conditioned_floor_area
+        hpxml_bldg.hvac_distributions[0].duct_leakage_measurements.each do |dlm|
+          dlm.duct_leakage_units = HPXML::UnitsPercent
+          dlm.duct_leakage_value = 0.0875
+        end
+        hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
+          duct.duct_fraction_area = nil
+          duct.duct_location = nil
+        end
+      when 'duct-lto-percent-uncond-space'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-ducts-leakage-percent.xml')
+        hpxml_bldg.hvac_distributions[0].duct_leakage_measurements.each do |dlm|
+          dlm.duct_leakage_value = 0.625
+        end
       when 'duplicate-id'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.plug_loads[-1].id = hpxml_bldg.plug_loads[0].id
@@ -1983,6 +2038,9 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                               'floor-or-ceiling1' => ["Floor 'Floor1' has FloorOrCeiling=floor but it should be ceiling. The input will be overridden."],
                               'floor-or-ceiling2' => ["Floor 'Floor1' has FloorOrCeiling=ceiling but it should be floor. The input will be overridden."],
                               'hpwh-confined-space-without-mitigation-false' => ["HPWH COP adjustment based on HPWHContainmentVolume will not be applied to WaterHeatingSystem1 because HPWHInConfinedSpaceWithoutMitigation is not 'true'."],
+                              'hpwh-ducting' => ['HPWH exhaust air ducted to a location other than outside is not currently supported; exhaust ducting will not be modeled.',
+                                                 'HPWH exhaust air ducting for a water heater located outside conditioned space is not currently supported; exhaust ducting will not be modeled.',
+                                                 'HPWH supply air ducted from another location is not currently supported; supply ducting will not be modeled.'],
                               'hpwh-small-containment-volume-without-backup-element' => ['Heat pump water heater: WaterHeatingSystem1 has no backup electric resistance element, COP adjustment for confined space may not be accurate when the containment space volume is below 450 cubic feet.'],
                               'hvac-gshp-bore-depth-autosized-high' => ['Reached a maximum of 10 boreholes; setting bore depth to the maximum (500 ft).'],
                               'hvac-seasons' => ['It is not possible to eliminate all HVAC energy use (e.g. crankcase/defrost energy) in EnergyPlus outside of an HVAC season.'],
@@ -1998,7 +2056,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                               'multiple-inverter-efficiencies' => ['Inverters with varying efficiencies found; using a single PV size weighted-average in the model.'],
                               'panel-missing-default' => ["Voltage (240) for 'dishwasher' is not specified in default_panels.csv; PowerRating will be assigned according to Voltage=120.",
                                                           "Voltage (240) for 'dishwasher' is not specified in default_panels.csv; BreakerSpaces will be recalculated using Voltage=240."],
-                              'panel-spaces-constrained' => ['The sum of OccupiedSpaces (12.0) exceeds RatedTotalSpaces (10); increasing RatedTotalSpaces by 2.0 and setting HeadroomSpaces=0.'],
                               'power-outage' => ['It is not possible to eliminate all HVAC energy use (e.g. crankcase/defrost energy) in EnergyPlus during an unavailable period.',
                                                  'It is not possible to eliminate all DHW energy use (e.g. water heater parasitics) in EnergyPlus during an unavailable period.'],
                               'schedule-file-and-weekday-weekend-multipliers' => ["Both 'occupants' schedule file and weekday fractions provided; the latter will be ignored.",
@@ -2155,6 +2212,11 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'hpwh-confined-space-without-mitigation-false'
         hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-confined-space.xml')
         hpxml_bldg.water_heating_systems[0].hpwh_confined_space_without_mitigation = false
+      when 'hpwh-ducting'
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump.xml')
+        hpxml_bldg.water_heating_systems[0].location = HPXML::LocationAtticUnvented
+        hpxml_bldg.water_heating_systems[0].hpwh_ducting_supply = HPXML::LocationGarage
+        hpxml_bldg.water_heating_systems[0].hpwh_ducting_exhaust = HPXML::LocationGarage
       when 'hpwh-small-containment-volume-without-backup-element'
         hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-confined-space.xml')
         hpxml_bldg.water_heating_systems[0].backup_heating_capacity = 0.0
@@ -2208,11 +2270,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         branch_circuits.add(id: 'NewBranchCircuit',
                             voltage: HPXML::ElectricPanelVoltage240,
                             component_idrefs: [hpxml_bldg.dishwashers[0].id])
-      when 'panel-spaces-constrained'
-        hpxml, hpxml_bldg = _create_hpxml('base-detailed-electric-panel.xml')
-        hpxml_bldg.dishwashers.add(id: 'Dishwasher')
-        hpxml_bldg.electric_panels[0].headroom_spaces = nil
-        hpxml_bldg.electric_panels[0].rated_total_spaces = 10
       when 'power-outage'
         hpxml, _hpxml_bldg = _create_hpxml('base-schedules-simple-power-outage.xml')
       when 'multistage-backup-more-than-4-stages'

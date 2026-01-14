@@ -1,7 +1,13 @@
 ## OpenStudio-HPXML v1.11.0
 
 __New Features__
-- Updates to OpenStudio 3.11/EnergyPlus 25.2/HPXML v4.2.
+- Updates to OpenStudio 3.11/EnergyPlus 25.2.
+- Updates to HPXML v5.0-rc1.
+  - **Breaking change**: HPXML namespace changed from http://hpxmlonline.com/2023/09 to http://hpxmlonline.com/2025/12.
+  - **Breaking change**: Replaces "none" with "not present" for `InteriorFinish/Type`, `Siding`, `ExteriorShading/Type`, `InteriorShading/Type`, `Pool/Type`, `PermanentSpa/Type`, `Pump/Type`, and `Heater/Type`.
+  - Allows "stone veneer" for `Wall/Siding` and `RimJoist/Siding`.
+  - Allows "medium light" for `Roof/RoofColor`, `RimJoist/Color`, and `Wall/Color`.
+  - Allows `SpecificLeakageArea` for air infiltration measurements.
 - BuildResidentialHPXML measure:
   - **Breaking change**: New, simpler, easier to use option-based arguments (rather than detailed property arguments).
   - Automatically adjusts garage dimensions for dwelling units with small footprints to avoid errors.
@@ -12,9 +18,10 @@ __New Features__
   - Allows desuperheaters to be used with the experimental ground-source heat pump model.
 - Allows optional `UsageMultiplier` for electric vehicles described using `Vehicles`.
 - Water heater improvements:
-  - Improves electric water heater tank losses when using `EnergyFactor` as the metric; now consistent with how `UniformEnergyFactor` is handled.
-  - Improves HPWH tank volume defaulting, particularly when `NumberofResidents` is provided.
+  - Allows HPWHs to have exhaust air ducted to the outside using `HPWHDucting/ExhaustAirTermination="outside"`.
   - Allows HPWH performance adjustment when installed in confined space per RESNET HERS Addendum 77. When `extension/HPWHInConfinedSpaceWithoutMitigation` is "true", `extension/HPWHContainmentVolume` is used to calculate the adjustment.
+  - Improves HPWH tank volume defaulting, particularly when `NumberofResidents` is provided.
+  - Improves electric water heater tank losses when using `EnergyFactor` as the metric; now consistent with how `UniformEnergyFactor` is handled.
 - Updated site defaults:
   - `Address/CityMunicipality`, `Address/StateCode`, `GeoLocation/Latitude`, `GeoLocation/Longitude`, and `TimeZone/UTCOffset` now default based on zip code if available.
   - `TimeZone/DSTObserved` now defaults to false if `Address/StateCode` is 'AZ' or 'HI'.
@@ -27,10 +34,15 @@ __New Features__
   - Allows modeling detailed electric vehicles.
   - Documents a workaround for modeling common spaces (conditioned or unconditioned).
   - See the [documentation](https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#whole-sfa-mf-buildings) for more information.
+- Updated default utility bill rates per EIA energy cost data for 2023.
+- Adds "Electric Panel Load: Max Current Rating (A)" output to results_panel.csv.
+- Adds error-checking for when the sum of supply/return duct leakage to outside values is too high.
+- Adds error-checking for when `HeatPump/HeatingCapacity17F` is provided but `HeatPump/HeatingCapacity` is not.
 
 __Bugfixes__
 - Fixes incorrect cooling design conditions when using TMYx weather files (OpenStudio bug).
 - Fixes ground-source heat pump plant loop fluid type (OpenStudio bug).
+- Fixes HERS sizing methodology when compressor lockout temperature is above the heating design temperature.
 - Fixes default hours driven per week for electric vehicles (8.88 -> 9.5).
 - Fixes empty TimeDST/TimeUTC columns in JSON timeseries data.
 - Fixes an EMS bug in heat pump defrost models that over-estimates defrost fractions.
@@ -39,6 +51,7 @@ __Bugfixes__
 - Fixes possible errors when small water flow rates for variable-speed experimental ground-source heat pump model.
 - Fixes possible ground-source heat pump sizing error if the heating or cooling design temperature differences are zero.
 - Fixes EMS discharge power program and assignment of default discharging schedule for detailed electric vehicles.
+- Avoids thin interior/exterior roof construction layers to help prevent attic temperature out of bounds errors.
 
 ## OpenStudio-HPXML v1.10.0
 

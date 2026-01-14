@@ -1199,7 +1199,13 @@ module Model
   # @param unit_number [Integer] index number corresponding to an HPXML Building object
   # @return [String] the new OpenStudio object name with unique unit prefix
   def self.make_variable_name(obj_name, unit_number)
-    return ems_friendly_name("unit#{unit_number + 1}_#{obj_name}")
+    new_name = ems_friendly_name("unit#{unit_number + 1}_#{obj_name}")
+
+    # Need to fix HWPH outlet node name
+    if new_name.include?('_Outlet') && new_name.include?(ems_friendly_name(Constants::ObjectTypeWaterHeater))
+      new_name.gsub!('_Outlet', ' Outlet')
+    end
+    return new_name
   end
 
   # Prefix all object names using using a provided unit number.

@@ -62,6 +62,20 @@ class Material
     end
   end
 
+  # Combines two materials into a new single material.
+  #
+  # @param mat1 [Material] The first material to combine
+  # @param mat2 [Material] The second material to combine
+  # @return [Material] The combined material object
+  def self.combine(mat1, mat2, new_name)
+    rvalue = mat2.thick_in / mat2.k_in + mat1.thick_in / mat1.k_in
+    thick_in = mat2.thick_in + mat1.thick_in
+    rho = (mat2.rho * mat2.thick_in + mat1.rho * mat1.thick_in) / thick_in
+    cp = (mat2.cp * mat2.rho * mat2.thick_in + mat1.cp * mat1.rho * mat1.thick_in) / (rho * thick_in)
+
+    return new(name: new_name, thick_in: thick_in, k_in: thick_in / rvalue, rho: rho, cp: cp)
+  end
+
   attr_accessor :name, :thick, :thick_in, :k, :k_in, :rho, :cp, :rvalue, :tAbs, :sAbs
 
   # Creates a material associated with a closed air cavity (e.g.,
@@ -189,7 +203,7 @@ class Material
   # @param thick_in [Double] Thickness of the siding (in)
   # @return [Material] The material object
   def self.ExteriorFinishMaterial(type, thick_in = nil)
-    if (type == HPXML::SidingTypeNone) || (!thick_in.nil? && thick_in <= 0)
+    if (type == HPXML::SidingTypeNotPresent) || (!thick_in.nil? && thick_in <= 0)
       return
     end
 
@@ -200,6 +214,9 @@ class Material
     when HPXML::SidingTypeBrick
       thick_in = 4.0 if thick_in.nil?
       return new(name: type, thick_in: thick_in, mat_base: BaseMaterial.Brick)
+    when HPXML::SidingTypeStone
+      thick_in = 1.0 if thick_in.nil?
+      return new(name: type, thick_in: thick_in, mat_base: BaseMaterial.Stone)
     when HPXML::SidingTypeCompositeShingle
       thick_in = 0.25 if thick_in.nil?
       return new(name: type, thick_in: thick_in, k_in: 1.128, rho: 70.0, cp: 0.35)
@@ -219,7 +236,7 @@ class Material
       thick_in = 0.375 if thick_in.nil?
       return new(name: type, thick_in: thick_in, mat_base: BaseMaterial.Vinyl)
     when HPXML::SidingTypeWood
-      thick_in = 1.0 if thick_in.nil?
+      thick_in = 0.75 if thick_in.nil?
       return new(name: type, thick_in: thick_in, k_in: 0.71, rho: 34.0, cp: 0.28)
     end
 
@@ -264,7 +281,7 @@ class Material
   # @param thick_in [Double] Thickness of the siding (in)
   # @return [Material] The material object
   def self.InteriorFinishMaterial(type, thick_in = nil)
-    if (type == HPXML::InteriorFinishNone) || (!thick_in.nil? && thick_in <= 0)
+    if (type == HPXML::InteriorFinishNotPresent) || (!thick_in.nil? && thick_in <= 0)
       return
     else
       thick_in = 0.5 if thick_in.nil?
@@ -311,7 +328,7 @@ class Material
   # @param thick_in [Double] Thickness of the sheathing (in)
   # @return [Material] The material object
   def self.OSBSheathing(thick_in)
-    return new(name: "osb sheathing #{thick_in} in.", thick_in: thick_in, mat_base: BaseMaterial.Wood)
+    return new(name: "osb #{thick_in} in.", thick_in: thick_in, mat_base: BaseMaterial.Wood)
   end
 
   # Creates a material for a radiant batter (in an attic).
@@ -340,34 +357,41 @@ class Material
     return new(name: 'radiant barrier', thick_in: 0.0084, k_in: 1629.6, rho: 168.6, cp: 0.22, tAbs: emittance, sAbs: 0.05)
   end
 
-  # Creates a material for the roof exterior layer (e.g. shingles).
+  # Creates a material for the roof exterior layers (e.g. shingles + osb sheathing).
   #
-  # @param type [HPXML::RoofTypeXXX] Type of roof material
-  # @param thick_in [Double] Thickness of the roof material (in)
+  # @param roof_type [HPXML::RoofTypeXXX] Type of roof material
+  # @param osb_thick_in [Double] Thickness of the OSB sheathing (in)
   # @return [Material] The material object
-  def self.RoofMaterial(type, thick_in = nil)
-    case type
+  def self.RoofMaterialAndSheathing(roof_type, osb_thick_in = 0.625)
+    # Note: We include OSB sheathing in the same material layer to prevent possible attic
+    # temperature out of bounds errors in E+.
+    #
+    # From https://bigladdersoftware.com/epx/docs/22-2/engineering-reference/conduction-through-the-walls.html#conduction-transfer-function-ctf-calculations-special-case-r-value-only-layers:
+    # "There are potential issues with having a resistance-only layer at either the inner or
+    # outer most layers of a construction. A little or no mass layer there could receive intense
+    # thermal radiation from internal sources or the sun causing the temperature at the inner or
+    # outer surface to achieve very high levels."
+    #
+    # In the case of an attic roof, the outer most material can see significant solar radiation.
+    mat_osb = OSBSheathing(osb_thick_in)
+    case roof_type
     when HPXML::RoofTypeMetal
-      thick_in = 0.02 if thick_in.nil?
-      return new(name: type, thick_in: thick_in, k_in: 346.9, rho: 487.0, cp: 0.11)
+      mat_roof = new(name: roof_type, thick_in: 0.02, k_in: 346.9, rho: 487.0, cp: 0.11)
     when HPXML::RoofTypeAsphaltShingles, HPXML::RoofTypeWoodShingles, HPXML::RoofTypeShingles, HPXML::RoofTypeCool
-      thick_in = 0.25 if thick_in.nil?
-      return new(name: type, thick_in: thick_in, k_in: 1.128, rho: 70.0, cp: 0.35)
+      mat_roof = new(name: roof_type, thick_in: 0.25, k_in: 1.128, rho: 70.0, cp: 0.35)
     when HPXML::RoofTypeConcrete
-      thick_in = 0.75 if thick_in.nil?
-      return new(name: type, thick_in: thick_in, k_in: 7.63, rho: 131.1, cp: 0.199)
+      mat_roof = new(name: roof_type, thick_in: 0.75, k_in: 7.63, rho: 131.1, cp: 0.199)
     when HPXML::RoofTypeClayTile
-      thick_in = 0.75 if thick_in.nil?
-      return new(name: type, thick_in: thick_in, k_in: 5.83, rho: 118.6, cp: 0.191)
+      mat_roof = new(name: roof_type, thick_in: 0.75, k_in: 5.83, rho: 118.6, cp: 0.191)
     when HPXML::RoofTypeEPS
-      thick_in = 1.0 if thick_in.nil?
-      return new(name: type, thick_in: thick_in, mat_base: BaseMaterial.InsulationRigid)
+      mat_roof = new(name: roof_type, thick_in: 1.0, mat_base: BaseMaterial.InsulationRigid)
     when HPXML::RoofTypePlasticRubber
-      thick_in = 0.25 if thick_in.nil?
-      return new(name: type, thick_in: thick_in, k_in: 2.78, rho: 110.8, cp: 0.36)
+      mat_roof = new(name: roof_type, thick_in: 0.25, k_in: 2.78, rho: 110.8, cp: 0.36)
+    else
+      fail "Unexpected roof type: #{roof_type}."
     end
 
-    fail "Unexpected type: #{type}."
+    return combine(mat_roof, mat_osb, "#{mat_roof.name} + #{mat_osb.name}")
   end
 end
 

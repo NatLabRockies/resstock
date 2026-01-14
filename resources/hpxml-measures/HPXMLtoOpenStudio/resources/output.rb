@@ -1333,9 +1333,9 @@ module Outputs
 
     # Total breaker spaces
     results_out << [line_break]
-    results_out << ['Electric Panel Breaker Spaces: Total Count', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.electric_panels.map { |electric_panel| electric_panel.rated_total_spaces }.sum(0.0) * hpxml_bldg.building_construction.number_of_units }.sum(0.0)]
-    results_out << ['Electric Panel Breaker Spaces: Occupied Count', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.electric_panels.map { |electric_panel| electric_panel.occupied_spaces }.sum(0.0) * hpxml_bldg.building_construction.number_of_units }.sum(0.0)]
-    results_out << ['Electric Panel Breaker Spaces: Headroom Count', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.electric_panels.map { |electric_panel| electric_panel.headroom_spaces }.sum(0.0) * hpxml_bldg.building_construction.number_of_units }.sum(0.0)]
+    results_out << ['Electric Panel Breaker Spaces: Total Count', hpxml_bldgs.map { |b| b.electric_panels.map { |p| p.rated_total_spaces }.sum * b.building_construction.number_of_units }.sum]
+    results_out << ['Electric Panel Breaker Spaces: Occupied Count', hpxml_bldgs.map { |b| b.electric_panels.map { |p| p.occupied_spaces }.sum * b.building_construction.number_of_units }.sum]
+    results_out << ['Electric Panel Breaker Spaces: Headroom Count', hpxml_bldgs.map { |b| b.electric_panels.map { |p| p.headroom_spaces }.sum * b.building_construction.number_of_units }.sum]
 
     # Summary panel loads
     all_panel_loads = hpxml_bldgs.map { |hpxml_bldg| get_total_panel_loads(hpxml_bldg) }
@@ -1354,6 +1354,10 @@ module Outputs
     results_out << ['Electric Panel Load: Well Pump (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypeWellPump] }.round(1)]
     results_out << ['Electric Panel Load: Electric Vehicle Charging (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypeElectricVehicleCharging] }.round(1)]
     results_out << ['Electric Panel Load: Other (W)', all_panel_loads.sum { |h| h[HPXML::ElectricPanelLoadTypeOther] }.round(1)]
+
+    # Total panel loads
+    results_out << [line_break]
+    results_out << ['Electric Panel Load: Max Current Rating (A)', hpxml_bldgs.map { |b| b.electric_panels.map { |p| p.max_current_rating }.sum * b.building_construction.number_of_units }.sum]
 
     # Load calculations
     hpxml_header.service_feeders_load_calculation_types.each do |service_feeders_load_calculation_type|

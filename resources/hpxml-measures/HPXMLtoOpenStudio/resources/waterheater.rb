@@ -193,7 +193,7 @@ module Waterheater
       runner.registerWarning("Both '#{SchedulesFile::Columns[:WaterHeaterSetpoint].name}' schedule file and setpoint temperature provided; the latter will be ignored.") if !t_set_c.nil?
     end
 
-    airflow_rate = 181.0 # cfm
+    airflow_rate = 200.0 # cfm, average value measured across a few different units
     min_temp = 42.0 # F
     max_temp = 120.0 # F
 
@@ -220,10 +220,28 @@ module Waterheater
 
     # WaterHeater:HeatPump:WrappedCondenser
     hpwh = apply_hpwh_wrapped_condenser(model, obj_name, coil, tank, fan, airflow_rate, hpwh_tamb, hpwh_rhamb, min_temp, max_temp, control_setpoint_schedule, unit_multiplier)
+    hpwh.additionalProperties.setFeature('HPXML_ID', water_heating_system.id) # Used by infiltration program
+
+    # Get ducting info
+    if not water_heating_system.hpwh_ducting_exhaust.nil?
+      if water_heating_system.hpwh_ducting_exhaust != HPXML::LocationOutside
+        runner.registerWarning('HPWH exhaust air ducted to a location other than outside is not currently supported; exhaust ducting will not be modeled.')
+        water_heating_system.hpwh_ducting_exhaust = nil
+      end
+      if not HPXML::conditioned_locations_this_unit.include? water_heating_system.location # This warning can't occur in the schematron since the location may be defaulted
+        runner.registerWarning('HPWH exhaust air ducting for a water heater located outside conditioned space is not currently supported; exhaust ducting will not be modeled.')
+        water_heating_system.hpwh_ducting_exhaust = nil
+      end
+    end
+    if not water_heating_system.hpwh_ducting_supply.nil?
+      runner.registerWarning('HPWH supply air ducted from another location is not currently supported; supply ducting will not be modeled.')
+      water_heating_system.hpwh_ducting_supply = nil
+    end
+    loc_duct_exhaust = water_heating_system.hpwh_ducting_exhaust
 
     # Amb temp & RH sensors, temp sensor shared across programs
     amb_temp_sensor, amb_rh_sensors = apply_hpwh_loc_temp_rh_sensors(model, obj_name, loc_space, loc_schedule, spaces)
-    hpwh_zone_heat_gain_program = apply_hpwh_zone_heat_gain_program(model, obj_name, loc_space, hpwh_tamb, hpwh_rhamb, tank, coil, fan, amb_temp_sensor, amb_rh_sensors, unit_multiplier)
+    hpwh_zone_heat_gain_program = apply_hpwh_zone_heat_gain_program(model, obj_name, loc_space, loc_duct_exhaust, hpwh_tamb, hpwh_rhamb, tank, coil, fan, amb_temp_sensor, amb_rh_sensors, unit_multiplier)
 
     # EMS for the HPWH control logic
     hpwh_ctrl_program = apply_hpwh_control_program(runner, model, obj_name, water_heating_system, amb_temp_sensor, top_element_sp, bottom_element_sp, min_temp, max_temp, sensed_setpoint_schedule, control_setpoint_schedule, schedules_file)
@@ -1186,6 +1204,7 @@ module Waterheater
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param obj_name [String] Name for the OpenStudio object
   # @param loc_space [OpenStudio::Model::Space] The space where the water heater is located
+  # @param loc_duct_exhaust [HPXML::LocationXXX] The HPXML location where the HPWH exhaust air is ducted to
   # @param hpwh_tamb [OpenStudio::Model::ScheduleConstant] HPWH ambient temperature (C)
   # @param hpwh_rhamb [OpenStudio::Model::ScheduleConstant] HPWH ambient relative humidity
   # @param tank [OpenStudio::Model::WaterHeaterStratified] The HPWH storage tank
@@ -1195,7 +1214,7 @@ module Waterheater
   # @param amb_rh_sensors [Array<OpenStudio::Model::EnergyManagementSystemSensor>] One or more HPWH ambient RH sensors
   # @param unit_multiplier [Integer] Number of similar dwelling units
   # @return [OpenStudio::Model::EnergyManagementSystemProgram] The HPWH heat gain program
-  def self.apply_hpwh_zone_heat_gain_program(model, obj_name, loc_space, hpwh_tamb, hpwh_rhamb, tank, coil, fan, amb_temp_sensor, amb_rh_sensors, unit_multiplier)
+  def self.apply_hpwh_zone_heat_gain_program(model, obj_name, loc_space, loc_duct_exhaust, hpwh_tamb, hpwh_rhamb, tank, coil, fan, amb_temp_sensor, amb_rh_sensors, unit_multiplier)
     # EMS Actuators: Inlet T & RH, sensible and latent gains to the space
     tamb_act_actuator = Model.add_ems_actuator(
       name: "#{obj_name} Tamb act",
@@ -1256,26 +1275,28 @@ module Waterheater
       key_name: tank.name
     )
 
-    sens_cool_sensor = Model.add_ems_sensor(
-      model,
-      name: "#{obj_name} sens cool",
-      output_var_or_meter_name: 'Cooling Coil Sensible Cooling Rate',
-      key_name: coil.name
-    )
+    if loc_duct_exhaust != HPXML::LocationOutside # If HPWH exhaust air is ducted to outside, no gains to the space
+      sens_cool_sensor = Model.add_ems_sensor(
+        model,
+        name: "#{obj_name} sens cool",
+        output_var_or_meter_name: 'Cooling Coil Sensible Cooling Rate',
+        key_name: coil.name
+      )
 
-    lat_cool_sensor = Model.add_ems_sensor(
-      model,
-      name: "#{obj_name} lat cool",
-      output_var_or_meter_name: 'Cooling Coil Latent Cooling Rate',
-      key_name: coil.name
-    )
+      lat_cool_sensor = Model.add_ems_sensor(
+        model,
+        name: "#{obj_name} lat cool",
+        output_var_or_meter_name: 'Cooling Coil Latent Cooling Rate',
+        key_name: coil.name
+      )
 
-    fan_power_sensor = Model.add_ems_sensor(
-      model,
-      name: "#{obj_name} fan pwr",
-      output_var_or_meter_name: 'Fan Electricity Rate',
-      key_name: fan.name
-    )
+      fan_power_sensor = Model.add_ems_sensor(
+        model,
+        name: "#{obj_name} fan pwr",
+        output_var_or_meter_name: 'Fan Electricity Rate',
+        key_name: fan.name
+      )
+    end
 
     hpwh_zone_heat_gain_program = Model.add_ems_program(
       model,
@@ -1290,8 +1311,13 @@ module Waterheater
     if not loc_space.nil?
       # Sensible/latent heat gain to the space
       # Tank losses are multiplied by E+ zone multiplier, so need to compensate here
-      hpwh_zone_heat_gain_program.addLine("Set #{sens_act_actuator.name} = (0 - #{sens_cool_sensor.name} - (#{tl_sensor.name} + #{fan_power_sensor.name})) / #{unit_multiplier}")
-      hpwh_zone_heat_gain_program.addLine("Set #{lat_act_actuator.name} = (0 - #{lat_cool_sensor.name}) / #{unit_multiplier}")
+      if loc_duct_exhaust != HPXML::LocationOutside
+        hpwh_zone_heat_gain_program.addLine("Set #{sens_act_actuator.name} = (0 - #{sens_cool_sensor.name} - (#{tl_sensor.name} + #{fan_power_sensor.name})) / #{unit_multiplier}")
+        hpwh_zone_heat_gain_program.addLine("Set #{lat_act_actuator.name} = (0 - #{lat_cool_sensor.name}) / #{unit_multiplier}")
+      else
+        hpwh_zone_heat_gain_program.addLine("Set #{sens_act_actuator.name} = (0 - #{tl_sensor.name}) / #{unit_multiplier}")
+        hpwh_zone_heat_gain_program.addLine("Set #{lat_act_actuator.name} = 0")
+      end
     end
     return hpwh_zone_heat_gain_program
   end
@@ -1348,7 +1374,7 @@ module Waterheater
 
     op_mode_schedule = nil
     if not schedules_file.nil?
-      op_mode_schedule = schedules_file.create_schedule_file(model, col_name: SchedulesFile::Columns[:WaterHeaterOperatingMode].name, schedule_type_limits_name: EPlus::ScheduleTypeLimitsFraction)
+      op_mode_schedule = schedules_file.create_schedule_file(model, col_name: SchedulesFile::Columns[:WaterHeaterHPWHOperatingMode].name, schedule_type_limits_name: EPlus::ScheduleTypeLimitsFraction)
     end
 
     # Sensor on op_mode_schedule
@@ -1360,8 +1386,8 @@ module Waterheater
         key_name: op_mode_schedule.name
       )
 
-      if not water_heating_system.operating_mode.nil?
-        runner.registerWarning("Both '#{SchedulesFile::Columns[:WaterHeaterOperatingMode].name}' schedule file and operating mode provided; the latter will be ignored.")
+      if not water_heating_system.hpwh_operating_mode.nil?
+        runner.registerWarning("Both '#{SchedulesFile::Columns[:WaterHeaterHPWHOperatingMode].name}' schedule file and operating mode provided; the latter will be ignored.")
       end
     end
 
@@ -1375,7 +1401,7 @@ module Waterheater
     )
     hpwh_ctrl_program.addLine("Set #{hpwhschedoverride_actuator.name} = #{t_set_sensor.name}")
     # If in HP only mode: still enable elements if ambient temperature is out of bounds, otherwise disable elements
-    if water_heating_system.operating_mode == HPXML::WaterHeaterOperatingModeHeatPumpOnly
+    if water_heating_system.hpwh_operating_mode == HPXML::WaterHeaterHPWHOperatingModeHeatPumpOnly
       hpwh_ctrl_program.addLine("If (#{amb_temp_sensor.name}<#{min_temp_c}) || (#{amb_temp_sensor.name}>#{max_temp_c})")
       hpwh_ctrl_program.addLine("  Set #{leschedoverride_actuator.name} = #{t_set_sensor.name}")
       hpwh_ctrl_program.addLine("  Set #{ueschedoverride_actuator.name} = #{t_set_sensor.name}")

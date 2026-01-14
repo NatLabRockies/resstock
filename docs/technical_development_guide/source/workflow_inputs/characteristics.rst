@@ -29391,7 +29391,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - brick veneer
      - brick veneer
      - fiber cement siding
-     - none
+     - not present
      - asbestos siding
      - composite shingle siding
      - stucco
@@ -36710,8 +36710,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - heat pump
      - electric resistance
      - gas fired
-     - none
-     - none
+     - not present
+     - not present
 
 Properties
 **********
@@ -44515,16 +44515,16 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.26
      - 
    * - ``enclosure_window_exterior_shading_type``
-     - none
-     - none
-     - none
-     - none
-     - none
-     - none
-     - none
-     - none
-     - none
-     - none
+     - not present
+     - not present
+     - not present
+     - not present
+     - not present
+     - not present
+     - not present
+     - not present
+     - not present
+     - not present
      - 
    * - ``enclosure_window_storm_glass_type``
      - 

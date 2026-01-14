@@ -86,9 +86,9 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
     electric_panel = hpxml_bldg.electric_panels[0]
 
-    assert_equal(17, electric_panel.rated_total_spaces)
+    assert_equal(16, electric_panel.rated_total_spaces)
     assert_equal(17, electric_panel.occupied_spaces)
-    assert_equal(0, electric_panel.headroom_spaces)
+    assert_equal(-1, electric_panel.headroom_spaces)
 
     # Load-Based Part A
     assert_in_epsilon(24662.0, electric_panel.capacity_total_watts[0], 0.001)
@@ -109,9 +109,9 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
     electric_panel = hpxml_bldg.electric_panels[0]
 
-    assert_equal(17, electric_panel.rated_total_spaces)
+    assert_equal(16, electric_panel.rated_total_spaces)
     assert_equal(17, electric_panel.occupied_spaces)
-    assert_equal(0, electric_panel.headroom_spaces)
+    assert_equal(-1, electric_panel.headroom_spaces)
 
     # Load-Based Part B
     assert_in_epsilon(34827.2, electric_panel.capacity_total_watts[0], 0.001)
@@ -948,9 +948,9 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     electric_panel_path = File.absolute_path(File.join(File.dirname(__FILE__), 'results_panel.json'))
     json = JSON.parse(File.read(electric_panel_path))
 
-    assert_equal(27, json['Electric Panel Breaker Spaces']['Total Count'])
+    assert_equal(16, json['Electric Panel Breaker Spaces']['Total Count'])
     assert_equal(27, json['Electric Panel Breaker Spaces']['Occupied Count'])
-    assert_equal(0, json['Electric Panel Breaker Spaces']['Headroom Count'])
+    assert_equal(-11, json['Electric Panel Breaker Spaces']['Headroom Count'])
     assert_equal(37463.6, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Total Load (W)'])
     assert_equal(156.1, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Total Capacity (A)'])
     assert_in_epsilon(100.0 - 156.1, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Headroom Capacity (A)'], 0.01)

@@ -224,7 +224,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     default_hpxml, _default_hpxml_bldg = _test_measure()
     default_hpxml.header.utility_bill_scenarios.each do |scenario|
-      _test_default_bills_values(scenario, 12, 12, nil, nil, nil, nil, nil, 0.1242, 1.0468, nil, nil, nil, nil, nil, HPXML::PVCompensationTypeNetMetering, HPXML::PVAnnualExcessSellbackRateTypeUserSpecified, 0.03, nil, nil, 0)
+      _test_default_bills_values(scenario, 12, 12, nil, nil, nil, nil, nil, 0.1253, 0.9688, nil, nil, nil, nil, nil, HPXML::PVCompensationTypeNetMetering, HPXML::PVAnnualExcessSellbackRateTypeUserSpecified, 0.03, nil, nil, 0)
     end
 
     # Test defaults w/ electricity JSON file
@@ -234,7 +234,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     default_hpxml, _default_hpxml_bldg = _test_measure()
     default_hpxml.header.utility_bill_scenarios.each do |scenario|
-      _test_default_bills_values(scenario, nil, 12, nil, nil, nil, nil, nil, nil, 1.0468, nil, nil, nil, nil, nil, HPXML::PVCompensationTypeNetMetering, HPXML::PVAnnualExcessSellbackRateTypeUserSpecified, 0.03, nil, nil, 0)
+      _test_default_bills_values(scenario, nil, 12, nil, nil, nil, nil, nil, nil, 0.9688, nil, nil, nil, nil, nil, HPXML::PVCompensationTypeNetMetering, HPXML::PVAnnualExcessSellbackRateTypeUserSpecified, 0.03, nil, nil, 0)
     end
   end
 
@@ -969,13 +969,13 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.roofs[0].radiant_barrier = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.99, HPXML::ColorDark, 0.90, false, nil, HPXML::InteriorFinishNone, nil, 45)
+    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.99, HPXML::ColorDark, 0.90, false, nil, HPXML::InteriorFinishNotPresent, nil, 45)
 
     # Test defaults w/o RoofColor & SolarAbsorptance
     hpxml_bldg.roofs[0].solar_absorptance = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.85, HPXML::ColorMedium, 0.90, false, nil, HPXML::InteriorFinishNone, nil, 45)
+    _test_default_roof_values(default_hpxml_bldg.roofs[0], HPXML::RoofTypeAsphaltShingles, 0.85, HPXML::ColorMedium, 0.90, false, nil, HPXML::InteriorFinishNotPresent, nil, 45)
 
     # Test defaults w/ conditioned space
     hpxml, hpxml_bldg = _create_hpxml('base-atticroof-cathedral.xml')
@@ -1079,7 +1079,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.walls[1].interior_finish_thickness = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_wall_values(default_hpxml_bldg.walls[1], HPXML::SidingTypeWood, 0.5, HPXML::ColorLight, 0.90, HPXML::InteriorFinishNone, nil, nil)
+    _test_default_wall_values(default_hpxml_bldg.walls[1], HPXML::SidingTypeWood, 0.5, HPXML::ColorLight, 0.90, HPXML::InteriorFinishNotPresent, nil, nil)
   end
 
   def test_foundation_walls
@@ -1133,7 +1133,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.foundation_walls[0].type = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_foundation_wall_values(default_hpxml_bldg.foundation_walls[0], 8.0, HPXML::InteriorFinishNone, nil, 135,
+    _test_default_foundation_wall_values(default_hpxml_bldg.foundation_walls[0], 8.0, HPXML::InteriorFinishNotPresent, nil, 135,
                                          1000, 0.0, 10.0, 0.0, 10.0, HPXML::FoundationWallTypeSolidConcrete)
   end
 
@@ -1159,7 +1159,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.floors[0].interior_finish_thickness = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_floor_values(default_hpxml_bldg.floors[0], HPXML::InteriorFinishNone, nil)
+    _test_default_floor_values(default_hpxml_bldg.floors[0], HPXML::InteriorFinishNotPresent, nil)
   end
 
   def test_slabs
@@ -1376,7 +1376,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     assert_equal(0.8276, default_hpxml_bldg.windows[0].interior_shading_factor_winter)
 
     # Test defaults w/ none shading
-    hpxml_bldg.windows[0].interior_shading_type = HPXML::InteriorShadingTypeNone
+    hpxml_bldg.windows[0].interior_shading_type = HPXML::InteriorShadingTypeNotPresent
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
 
@@ -1429,14 +1429,14 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
 
-    assert_equal(HPXML::InteriorShadingTypeNone, default_hpxml_bldg.windows[0].exterior_shading_type)
+    assert_equal(HPXML::InteriorShadingTypeNotPresent, default_hpxml_bldg.windows[0].exterior_shading_type)
     assert_nil(default_hpxml_bldg.windows[0].exterior_shading_coverage_summer)
     assert_nil(default_hpxml_bldg.windows[0].exterior_shading_coverage_winter)
     assert_equal(1.0, default_hpxml_bldg.windows[0].exterior_shading_factor_summer)
     assert_equal(1.0, default_hpxml_bldg.windows[0].exterior_shading_factor_winter)
 
     # Test defaults w/ none shading
-    hpxml_bldg.windows[0].exterior_shading_type = HPXML::ExteriorShadingTypeNone
+    hpxml_bldg.windows[0].exterior_shading_type = HPXML::ExteriorShadingTypeNotPresent
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
 
@@ -3626,38 +3626,38 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     # Test inputs not overridden by defaults
     hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump.xml')
     hpxml_bldg.water_heating_systems[0].tank_volume = 44.0
-    hpxml_bldg.water_heating_systems[0].operating_mode = HPXML::WaterHeaterOperatingModeHeatPumpOnly
+    hpxml_bldg.water_heating_systems[0].hpwh_operating_mode = HPXML::WaterHeaterHPWHOperatingModeHeatPumpOnly
     hpxml_bldg.water_heating_systems[0].heating_capacity = 4000.0
     hpxml_bldg.water_heating_systems[0].backup_heating_capacity = 5000.0
     hpxml_bldg.water_heating_systems[0].hpwh_confined_space_without_mitigation = true
     hpxml_bldg.water_heating_systems[0].hpwh_containment_volume = 800.0
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [44.0, HPXML::WaterHeaterOperatingModeHeatPumpOnly, 4000.0, 5000.0, true])
+    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [44.0, HPXML::WaterHeaterHPWHOperatingModeHeatPumpOnly, 4000.0, 5000.0, true])
 
     # Test defaults
     hpxml_bldg.water_heating_systems[0].tank_volume = nil
-    hpxml_bldg.water_heating_systems[0].operating_mode = nil
+    hpxml_bldg.water_heating_systems[0].hpwh_operating_mode = nil
     hpxml_bldg.water_heating_systems[0].heating_capacity = nil
     hpxml_bldg.water_heating_systems[0].backup_heating_capacity = nil
     hpxml_bldg.water_heating_systems[0].hpwh_confined_space_without_mitigation = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [66.0, HPXML::WaterHeaterOperatingModeHybridAuto, 6366.0, 15355.0, false])
+    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [66.0, HPXML::WaterHeaterHPWHOperatingModeHybridAuto, 6366.0, 15355.0, false])
 
     # Test defaults w/ num occupants = 1, num bedrooms = 1
     hpxml_bldg.building_construction.number_of_bedrooms = 1
     hpxml_bldg.building_occupancy.number_of_residents = 1
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [50.0, HPXML::WaterHeaterOperatingModeHybridAuto, 6366.0, 15355.0, false])
+    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [50.0, HPXML::WaterHeaterHPWHOperatingModeHybridAuto, 6366.0, 15355.0, false])
 
     # Test defaults w/ num occupants = 10, num bedrooms = 1
     hpxml_bldg.building_construction.number_of_bedrooms = 1
     hpxml_bldg.building_occupancy.number_of_residents = 10
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [80.0, HPXML::WaterHeaterOperatingModeHybridAuto, 6366.0, 15355.0, false])
+    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [80.0, HPXML::WaterHeaterHPWHOperatingModeHybridAuto, 6366.0, 15355.0, false])
   end
 
   def test_indirect_water_heaters
@@ -6316,7 +6316,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
       tank_volume, operating_mode, htg_cap, backup_htg_cap, hpwh_confined_space_without_mitigation = expected_wh_values[idx]
 
       assert_equal(tank_volume, wh_system.tank_volume)
-      assert_equal(operating_mode, wh_system.operating_mode)
+      assert_equal(operating_mode, wh_system.hpwh_operating_mode)
       assert_in_epsilon(htg_cap, wh_system.heating_capacity, 0.01)
       assert_in_epsilon(backup_htg_cap, wh_system.backup_heating_capacity, 0.01)
       assert_equal(hpwh_confined_space_without_mitigation, wh_system.hpwh_confined_space_without_mitigation)
