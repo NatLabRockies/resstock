@@ -212,7 +212,11 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     # Build the ochre command
     # Usage: ochre single [OPTIONS] INPUT_PATH
     # INPUT_PATH is the directory containing the HPXML file
-    cmd = "/Users/radhikar/Documents/buildstock2025/res_ochre/OCHRE/.venv/bin/ochre single '#{hpxml_dir_safe}'"
+    # Resolve res_ochre as parent directory of the project
+    measure_dir = File.dirname(__FILE__)
+    parent_dir = File.absolute_path(File.join(measure_dir, '../../..'))
+    ochre_bin = File.join(parent_dir, 'OCHRE', '.venv', 'bin', 'ochre')
+    cmd = "#{ochre_bin} single '#{hpxml_dir_safe}'"
     cmd += " --hpxml_file '#{hpxml_name_safe}'"
     cmd += " --output_path '#{output_dir_safe}'"
     cmd += " --time_res #{time_res_minutes}"
