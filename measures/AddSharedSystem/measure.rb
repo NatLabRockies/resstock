@@ -81,10 +81,9 @@ class AddSharedSystem < OpenStudio::Measure::ModelMeasure
         ee.setName("Test Object #{space.name}")
         ee.setSpace(space)
         ee_def.setName("Test Object #{space.name}")
-        # ee_def.setDesignLevel(1000)
+        ee_def.setDesignLevel(1000)
         ee.setSchedule(model.alwaysOnDiscreteSchedule)
         ee.setEndUseSubcategory('AddSharedSystem')
-        # ee.setEndUseSubcategory('cooking range')
       end
 
     elsif system == 'Fan Coil Cooling Only'

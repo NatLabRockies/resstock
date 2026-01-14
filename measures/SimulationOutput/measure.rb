@@ -318,9 +318,9 @@ class SimulationOutput < OpenStudio::Measure::ReportingMeasure
 
       name = step_value.name
       @new_results[name] = get_value_from_workflow_step_value(step_value)
-      if name == 'end_use_electricity_range_oven_m_btu'
-        @new_results[name] += @end_uses[[FT::Elec, EUT::RangeOven]].annual_output
-      end
+      next unless name == 'end_use_electricity_range_oven_m_btu'
+
+      @new_results[name] += @end_uses[[FT::Elec, EUT::RangeOven]].annual_output
     end
 
     # Timeseries
@@ -333,14 +333,8 @@ class SimulationOutput < OpenStudio::Measure::ReportingMeasure
     tol = 0.1 # 0.1%
 
     # Check sum of end use outputs match fuel outputs from meters
-    fuel_types = [FT::Elec,
-                  FT::Gas,
-                  FT::Oil,
-                  FT::Propane,
-                  FT::WoodCord,
-                  FT::WoodPellets,
-                  FT::Coal]
-    fuel_types.each do |fuel_type|
+    unique_fuel_types = [[FT::Elec, TE::Total], [FT::Elec, TE::Net], [FT::Gas, TE::Total], [FT::Oil, TE::Total], [FT::Propane, TE::Total], [FT::WoodCord, TE::Total], [FT::WoodPellets, TE::Total], [FT::Coal, TE::Total]]
+    unique_fuel_types.each do |fuel_type, total_or_net|
       total_or_net = (fuel_type == FT::Elec ? TE::Net : TE::Total)
       ft = OpenStudio::toUnderscoreCase(fuel_type)
 
