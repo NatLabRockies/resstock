@@ -203,9 +203,11 @@ def downselect_and_rename_cols(df: pl.LazyFrame, col_maps: Sequence[dict]) -> pl
     upgrade_cols = [col for col in all_cols if col.startswith("upgrade_costs.") and col.endswith("_name")]
     transformed_cols.extend([pl.col(col).alias(col) for col in upgrade_cols])
     print("transformed_cols: {}".format(len(transformed_cols)))
-    print("df.shape before: {}".format(df.shape))
+    print("df.shape before: {}".format(df.collect().shape))
+    print("df.head before: {}".format(df.collect().head()))
     df2 = df.select(transformed_cols)
-    print("df.shape after: {}".format(df2.shape))
+    print("df.shape after: {}".format(df2.collect().shape))
+    print("df.head after: {}".format(df2.collect().head()))
     return df2
 
 
