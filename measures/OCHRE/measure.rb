@@ -58,6 +58,24 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(365)
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('start_year', false)
+    arg.setDisplayName('Simulation Start Year')
+    arg.setDescription('Year to start the OCHRE simulation.')
+    arg.setDefaultValue(2018)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('start_month', false)
+    arg.setDisplayName('Simulation Start Month')
+    arg.setDescription('Month to start the OCHRE simulation (1-12).')
+    arg.setDefaultValue(1)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('start_day', false)
+    arg.setDisplayName('Simulation Start Day')
+    arg.setDescription('Day to start the OCHRE simulation (1-31).')
+    arg.setDefaultValue(1)
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument.makeBoolArgument('debug', false)
     arg.setDisplayName('Debug Mode')
     arg.setDescription('If true, generates additional debug output.')
@@ -130,6 +148,9 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     # Build OCHRE command line
     time_res_minutes = args[:time_res_minutes] || 10
     duration_days = args[:duration_days] || 365
+    start_year = args[:start_year] || 2018
+    start_month = args[:start_month] || 1
+    start_day = args[:start_day] || 1
 
     # get weather file path
     hpxml_bldg = hpxml.buildings[0]
@@ -138,7 +159,8 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     # Build OCHRE CLI command
     ochre_cmd = build_ochre_command(hpxml_path, output_dir,
                                     time_res_minutes, duration_days,
-                                    schedule_file, weather_file)
+                                    schedule_file, weather_file,
+                                    start_year, start_month, start_day)
 
     runner.registerInfo("Running OCHRE simulation: #{ochre_cmd}")
 
@@ -170,7 +192,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
   private
 
   # Build OCHRE command to run via CLI
-  def build_ochre_command(hpxml_path, output_dir, time_res_minutes, duration_days, schedule_file, weather_file)
+  def build_ochre_command(hpxml_path, output_dir, time_res_minutes, duration_days, schedule_file, weather_file, start_year, start_month, start_day)
     # Get directory and filename for HPXML
     hpxml_dir = File.dirname(hpxml_path)
     hpxml_name = File.basename(hpxml_path)
@@ -188,7 +210,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     cmd += " --output_path '#{output_dir_safe}'"
     cmd += " --time_res #{time_res_minutes}"
     cmd += " --duration #{duration_days}"
-    cmd += ' --start_year 2018 --start_month 1 --start_day 1'
+    cmd += " --start_year #{start_year} --start_month #{start_month} --start_day #{start_day}"
     cmd += ' --verbosity=9'
 
     if schedule_file && !schedule_file.empty?

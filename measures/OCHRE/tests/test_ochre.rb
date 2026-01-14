@@ -27,7 +27,7 @@ class OCHRETest < Minitest::Test
 
     # Get arguments and test that they are what we are expecting
     arguments = measure.arguments(model)
-    assert_equal(5, arguments.size)
+    assert_equal(8, arguments.size)
 
     # Check argument names
     arg_names = arguments.map(&:name)
@@ -35,6 +35,9 @@ class OCHRETest < Minitest::Test
     assert_includes(arg_names, 'output_dir')
     assert_includes(arg_names, 'time_res_minutes')
     assert_includes(arg_names, 'duration_days')
+    assert_includes(arg_names, 'start_year')
+    assert_includes(arg_names, 'start_month')
+    assert_includes(arg_names, 'start_day')
     assert_includes(arg_names, 'debug')
   end
 
@@ -88,5 +91,34 @@ class OCHRETest < Minitest::Test
     # Check the modeler description
     assert(!measure.modeler_description.empty?)
     assert(measure.modeler_description.include?('HPXMLtoOpenStudio'))
+  end
+
+  def test_start_date_arguments_defaults
+    # Create an instance of the measure
+    measure = OCHRE.new
+
+    # Make an empty model
+    model = OpenStudio::Model::Model.new
+
+    # Get arguments
+    arguments = measure.arguments(model)
+
+    # Find the start date arguments
+    start_year_arg = arguments.find { |arg| arg.name == 'start_year' }
+    start_month_arg = arguments.find { |arg| arg.name == 'start_month' }
+    start_day_arg = arguments.find { |arg| arg.name == 'start_day' }
+
+    # Check that they exist and are optional
+    assert_equal('start_year', start_year_arg.name)
+    assert_equal(false, start_year_arg.required)
+    assert_equal(2018, start_year_arg.defaultValueAsInteger)
+
+    assert_equal('start_month', start_month_arg.name)
+    assert_equal(false, start_month_arg.required)
+    assert_equal(1, start_month_arg.defaultValueAsInteger)
+
+    assert_equal('start_day', start_day_arg.name)
+    assert_equal(false, start_day_arg.required)
+    assert_equal(1, start_day_arg.defaultValueAsInteger)
   end
 end
