@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>add_shared_system</name>
   <uid>8ee9fa41-2685-42dd-acb4-8ed721810134</uid>
-  <version_id>aaee2156-a0bb-4937-a17f-7d3b983e7281</version_id>
-  <version_modified>2026-01-14T23:06:46Z</version_modified>
+  <version_id>4f5665df-7ce2-4cea-8fab-3074c14d789a</version_id>
+  <version_modified>2026-01-15T16:54:00Z</version_modified>
   <xml_checksum>BED8DECF</xml_checksum>
   <class_name>AddSharedSystem</class_name>
   <display_name>Add Shared System</display_name>
@@ -12580,7 +12580,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>7A3B963F</checksum>
+      <checksum>6782F99C</checksum>
     </file>
     <file>
       <filename>measure.txt</filename>

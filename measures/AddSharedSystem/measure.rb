@@ -76,12 +76,14 @@ class AddSharedSystem < OpenStudio::Measure::ModelMeasure
       # method_a(model, args[:hvac_heating_system], args[:hvac_heating_system_fuel])
 
       model.getSpaces.each do |space|
+        next unless space.name.to_s.include? 'conditioned'
+
         ee_def = OpenStudio::Model::ElectricEquipmentDefinition.new(model)
         ee = OpenStudio::Model::ElectricEquipment.new(ee_def)
         ee.setName("Test Object #{space.name}")
         ee.setSpace(space)
         ee_def.setName("Test Object #{space.name}")
-        ee_def.setDesignLevel(1000)
+        ee_def.setDesignLevel(100)
         ee.setSchedule(model.alwaysOnDiscreteSchedule)
         ee.setEndUseSubcategory('AddSharedSystem')
       end
