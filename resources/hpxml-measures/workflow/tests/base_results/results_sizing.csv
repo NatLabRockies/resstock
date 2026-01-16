@@ -104,6 +104,12 @@ denver-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-defrost-mode-sizi
 denver-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-defrost-mode-sizing-methodology-HERS-backup-supplemental.xml,39371.0,39371.0,16515.0,1181.0,1181.0
 denver-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-defrost-mode-sizing-methodology-MaxLoad-backup-emergency.xml,67347.0,67347.0,39371.0,2020.0,2020.0
 denver-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-defrost-mode-sizing-methodology-MaxLoad-backup-supplemental.xml,67347.0,67347.0,0.0,2020.0,2020.0
+denver-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-heat-pump-mode-sizing-methodology-ACCA-backup-emergency.xml,39097.0,39097.0,39371.0,1173.0,1173.0
+denver-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-heat-pump-mode-sizing-methodology-ACCA-backup-supplemental.xml,39097.0,39097.0,16515.0,1173.0,1173.0
+denver-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-heat-pump-mode-sizing-methodology-HERS-backup-emergency.xml,39371.0,39371.0,39371.0,1181.0,1181.0
+denver-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-heat-pump-mode-sizing-methodology-HERS-backup-supplemental.xml,39371.0,39371.0,16515.0,1181.0,1181.0
+denver-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-heat-pump-mode-sizing-methodology-MaxLoad-backup-emergency.xml,67347.0,67347.0,39371.0,2020.0,2020.0
+denver-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-heat-pump-mode-sizing-methodology-MaxLoad-backup-supplemental.xml,67347.0,67347.0,0.0,2020.0,2020.0
 denver-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-none-sizing-methodology-ACCA-backup-emergency.xml,39097.0,39097.0,39371.0,1173.0,1173.0
 denver-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-none-sizing-methodology-ACCA-backup-supplemental.xml,39097.0,39097.0,16515.0,1173.0,1173.0
 denver-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-none-sizing-methodology-HERS-backup-emergency.xml,39371.0,39371.0,39371.0,1181.0,1181.0
@@ -509,6 +515,12 @@ houston-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-defrost-mode-siz
 houston-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-defrost-mode-sizing-methodology-HERS-backup-supplemental.xml,41016.0,41016.0,0.0,1230.0,1230.0
 houston-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-defrost-mode-sizing-methodology-MaxLoad-backup-emergency.xml,41016.0,41016.0,24741.0,1230.0,1230.0
 houston-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-defrost-mode-sizing-methodology-MaxLoad-backup-supplemental.xml,41016.0,41016.0,0.0,1230.0,1230.0
+houston-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-heat-pump-mode-sizing-methodology-ACCA-backup-emergency.xml,41016.0,41016.0,24741.0,1230.0,1230.0
+houston-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-heat-pump-mode-sizing-methodology-ACCA-backup-supplemental.xml,41016.0,41016.0,0.0,1230.0,1230.0
+houston-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-heat-pump-mode-sizing-methodology-HERS-backup-emergency.xml,41016.0,41016.0,24741.0,1230.0,1230.0
+houston-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-heat-pump-mode-sizing-methodology-HERS-backup-supplemental.xml,41016.0,41016.0,0.0,1230.0,1230.0
+houston-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-heat-pump-mode-sizing-methodology-MaxLoad-backup-emergency.xml,41016.0,41016.0,24741.0,1230.0,1230.0
+houston-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-heat-pump-mode-sizing-methodology-MaxLoad-backup-supplemental.xml,41016.0,41016.0,0.0,1230.0,1230.0
 houston-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-none-sizing-methodology-ACCA-backup-emergency.xml,41016.0,41016.0,24741.0,1230.0,1230.0
 houston-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-none-sizing-methodology-ACCA-backup-supplemental.xml,41016.0,41016.0,0.0,1230.0,1230.0
 houston-hvac-autosize-air-to-air-heat-pump-var-speed-pan-heater-none-sizing-methodology-HERS-backup-emergency.xml,41016.0,41016.0,24741.0,1230.0,1230.0

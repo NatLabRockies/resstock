@@ -1565,7 +1565,7 @@
       <sch:assert role='ERROR' test='count(h:extension/h:PanHeaterPowerWatts) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/PanHeaterPowerWatts</sch:assert>
       <sch:assert role='ERROR' test='number(h:extension/h:PanHeaterPowerWatts) &gt;= 0.0 or not(h:extension/h:PanHeaterPowerWatts)'>Expected extension/PanHeaterPowerWatts to be greater than or equal to 0.0.</sch:assert>
       <sch:assert role='ERROR' test='count(h:extension/h:PanHeaterControlType) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/PanHeaterControlType</sch:assert>
-      <sch:assert role='ERROR' test='h:extension/h:PanHeaterControlType[text()="continuous" or text()="defrost mode"] or not(h:extension/h:PanHeaterControlType)'>Expected extension/PanHeaterControlType to be 'continuous' or 'defrost mode'</sch:assert>
+      <sch:assert role='ERROR' test='h:extension/h:PanHeaterControlType[text()="continuous" or text()="heat pump mode" or text()="defrost mode"] or not(h:extension/h:PanHeaterControlType)'>Expected extension/PanHeaterControlType to be 'continuous' or 'heat pump mode' or 'defrost mode'</sch:assert>
       <sch:assert role='ERROR' test='count(h:extension/h:BackupHeatingActiveDuringDefrost) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/BackupHeatingActiveDuringDefrost</sch:assert>
       <sch:assert role='ERROR' test='h:extension/h:BackupHeatingActiveDuringDefrost[text()="true" or text()="false"] or not(h:extension/h:BackupHeatingActiveDuringDefrost)'>Expected extension/BackupHeatingActiveDuringDefrost to be 'true' or 'false'</sch:assert>
       <sch:assert role='ERROR' test='count(h:extension/h:EquipmentType) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/EquipmentType</sch:assert>

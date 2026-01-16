@@ -259,6 +259,7 @@ class HPXML < Object
   HVACFanMotorTypePSC = 'PSC'
   HVACFanMotorTypeBPM = 'BPM'
   HVACPanHeaterControlTypeContinuous = 'continuous'
+  HVACPanHeaterControlTypeHeatPump = 'heat pump mode'
   HVACPanHeaterControlTypeDefrost = 'defrost mode'
   HydronicTypeBaseboard = 'baseboard'
   HydronicTypeRadiantCeiling = 'radiant ceiling'
