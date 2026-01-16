@@ -1,6 +1,6 @@
 schema_version: '0.4'
-os_version: 3.11.0-rc3
-os_sha: 7d1f8bdb36
+os_version: 3.11.0
+os_sha: 241b8abb4d
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
 output_directory: national_baseline
