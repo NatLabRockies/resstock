@@ -2888,9 +2888,10 @@ Each air-to-air heat pump is entered as a ``/HPXML/Building/BuildingDetails/Syst
          A non-zero charge defect should typically only be applied for systems that are charged on site, not for systems that have pre-charged line sets.
          See `ANSI/RESNET/ACCA 310-2020 <https://codes.iccsafe.org/content/ICC3102020P1>`_ for more information.
   .. [#] If CrankcaseHeaterPowerWatts not provided, defaults to 10 W per ton of rated cooling capacity per RESNET HERS Addendum 82.
-  .. [#] PanHeaterControlType choices are "continuous" or "defrost mode".
-  .. [#] If PanHeaterControlType is "continuous", the pan heater will operate anytime the outdoor temperature is below 32F.
-         If PanHeaterControlType is "defrost mode", the pan heater will only operate when the heat pump is in defrost mode and the outdoor temperature is below 32F.
+  .. [#] PanHeaterControlType choices are "continuous", "heat pump mode", or "defrost mode".
+  .. [#] If PanHeaterControlType is "continuous", the pan heater will operate anytime the outdoor temperature is below 32F and above the minimum compressor operating temperature.
+         If PanHeaterControlType is "heat pump mode", the pan heater will operate anytime the outdoor temperature is below 32F and the heat pump is operating.
+         If PanHeaterControlType is "defrost mode", the pan heater will operate anytime the outdoor temperature is below 32F and the heat pump is operating in defrost mode.
   .. [#] If BackupHeatingActiveDuringDefrost not provided, defaults to true if BackupType="integrated", otherwise false.
   .. [#] If BackupHeatingActiveDuringDefrost is "true", backup heating system is assumed to offset reduced heating capacity during defrost when its capacity is sufficient.
   .. [#] EquipmentType choices are "split system", "packaged system", "small duct high velocity system", or "space constrained system".
@@ -2983,9 +2984,10 @@ Each ``HeatPump`` should represent a single outdoor unit, whether connected to o
          A non-zero charge defect should typically only be applied for systems that are charged on site, not for systems that have pre-charged line sets.
          See `ANSI/RESNET/ACCA 310-2020 <https://codes.iccsafe.org/content/ICC3102020P1>`_ for more information.
   .. [#] If CrankcaseHeaterPowerWatts not provided, defaults to 10 W per ton of rated cooling capacity per RESNET HERS Addendum 82.
-  .. [#] PanHeaterControlType choices are "continuous" or "defrost mode".
-  .. [#] If PanHeaterControlType is "continuous", the pan heater will operate anytime the outdoor temperature is below 32F.
-         If PanHeaterControlType is "defrost mode", the pan heater will only operate when the heat pump is in defrost mode and the outdoor temperature is below 32F.
+  .. [#] PanHeaterControlType choices are "continuous", "heat pump mode", or "defrost mode".
+  .. [#] If PanHeaterControlType is "continuous", the pan heater will operate anytime the outdoor temperature is below 32F and above the minimum compressor operating temperature.
+         If PanHeaterControlType is "heat pump mode", the pan heater will operate anytime the outdoor temperature is below 32F and the heat pump is operating.
+         If PanHeaterControlType is "defrost mode", the pan heater will operate anytime the outdoor temperature is below 32F and the heat pump is in defrost mode.
   .. [#] If BackupHeatingActiveDuringDefrost not provided, defaults to true if BackupType="integrated" and there is an attached distribution system, otherwise false.
   .. [#] If BackupHeatingActiveDuringDefrost is "true", backup heating system is assumed to offset reduced heating capacity during defrost when its capacity is sufficient.
 

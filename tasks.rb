@@ -2217,6 +2217,8 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
           hpxml_bldg.heat_pumps[0].pan_heater_control_type = HPXML::HVACPanHeaterControlTypeContinuous
         elsif hpxml_file.include? 'pan-heater-defrost-mode'
           hpxml_bldg.heat_pumps[0].pan_heater_control_type = HPXML::HVACPanHeaterControlTypeDefrost
+        elsif hpxml_file.include? 'pan-heater-heat-pump-mode'
+          hpxml_bldg.heat_pumps[0].pan_heater_control_type = HPXML::HVACPanHeaterControlTypeHeatPump
         end
       end
     end

@@ -459,7 +459,7 @@ module HVAC
     if is_heatpump
       ems_program = apply_defrost_ems_program(model, htg_coil, control_zone.spaces[0], cooling_system, hpxml_bldg.building_construction.number_of_units)
       if cooling_system.pan_heater_watts.to_f > 0
-        apply_pan_heater_ems_program(model, ems_program, htg_coil, control_zone.spaces[0], cooling_system, hvac_unavailable_periods[:htg])
+        apply_pan_heater_ems_program(model, ems_program, htg_coil, control_zone.spaces[0], cooling_system, htg_ap.hp_min_temp, hvac_unavailable_periods[:htg])
       end
     end
     return air_loop
@@ -4655,9 +4655,10 @@ module HVAC
   # @param htg_coil [OpenStudio::Model::CoilHeatingDXSingleSpeed or OpenStudio::Model::CoilHeatingDXMultiSpeed] OpenStudio Heating Coil object
   # @param conditioned_space [OpenStudio::Model::Space] OpenStudio Space object for conditioned zone
   # @param heat_pump [HPXML::HeatPump] The HPXML heat pump of interest
+  # @param hp_min_temp [Double] Minimum heat pump compressor operating temperature for heating
   # @param heating_unavailable_periods [HPXML::UnavailablePeriods] Unavailable periods for heating
   # @return [nil]
-  def self.apply_pan_heater_ems_program(model, ems_program, htg_coil, conditioned_space, heat_pump, heating_unavailable_periods)
+  def self.apply_pan_heater_ems_program(model, ems_program, htg_coil, conditioned_space, heat_pump, hp_min_temp, heating_unavailable_periods)
     # Other equipment/actuator
     cnt = model.getOtherEquipments.count { |e| e.endUseSubcategory.start_with? Constants::ObjectTypePanHeater } # Ensure unique meter for each heat pump
     pan_heater_energy_oe = Model.add_other_equipment(
@@ -4693,15 +4694,18 @@ module HVAC
     end
 
     # EMS program
-    if htg_avail_sensor.nil?
-      ems_program.addLine("If (T_out <= #{UnitConversions.convert(32.0, 'F', 'C')})")
-    else # Don't run pan heater during heating unavailable period
-      ems_program.addLine("If (T_out <= #{UnitConversions.convert(32.0, 'F', 'C')}) && (#{htg_avail_sensor.name} == 1)")
+    temp_criteria = "If (T_out <= #{UnitConversions.convert(32.0, 'F', 'C')}) && (T_out >= #{UnitConversions.convert(hp_min_temp, 'F', 'C').round(2)})"
+    if not htg_avail_sensor.nil?
+      # Don't run pan heater during heating unavailable period either
+      temp_criteria += " && (#{htg_avail_sensor.name} == 1)"
     end
+    ems_program.addLine(temp_criteria)
     if heat_pump.pan_heater_control_type == HPXML::HVACPanHeaterControlTypeContinuous
       ems_program.addLine("  Set #{pan_heater_energy_oe_act.name} = #{heat_pump.pan_heater_watts}")
     elsif heat_pump.pan_heater_control_type == HPXML::HVACPanHeaterControlTypeDefrost
       ems_program.addLine("  Set #{pan_heater_energy_oe_act.name} = fraction_defrost * #{heat_pump.pan_heater_watts}")
+    elsif heat_pump.pan_heater_control_type == HPXML::HVACPanHeaterControlTypeHeatPump
+      ems_program.addLine("  Set #{pan_heater_energy_oe_act.name} = fraction_heating * #{heat_pump.pan_heater_watts}")
     end
     ems_program.addLine('Else')
     ems_program.addLine("  Set #{pan_heater_energy_oe_act.name} = 0.0")
@@ -4819,8 +4823,9 @@ module HVAC
     program.addLine("Set #{frost_pow_multiplier_act.name} = 1.0 - (0.3 * F_defrost)")
     program.addLine("If T_out <= #{max_oat_defrost}")
     program.addLine('  Set F_compressor = 1.0 - F_defrost')
-    program.addLine("  Set fraction_defrost = F_defrost * #{htg_coil_rtf_sensor.name}") # Defrost fraction with RTF
-    program.addLine("  If #{htg_coil_rtf_sensor.name} > 0") # Heating rate from sensors has RTF applied already, use F_compressor
+    program.addLine("  Set fraction_heating = #{htg_coil_rtf_sensor.name}")
+    program.addLine('  Set fraction_defrost = F_defrost * fraction_heating') # Defrost fraction with RTF
+    program.addLine('  If fraction_heating > 0') # Heating rate from sensors has RTF applied already, use F_compressor
     program.addLine("    Set q_dot_defrost = ((F_compressor * (#{htg_coil_htg_rate_sensor.name} / #{frost_cap_multiplier_act.name}) - #{htg_coil_htg_rate_sensor.name}) / fraction_defrost) / #{unit_multiplier}")
     program.addLine("    Set reduced_cap = (((#{htg_coil_htg_rate_sensor.name} / #{frost_cap_multiplier_act.name}) - #{htg_coil_htg_rate_sensor.name}) / fraction_defrost) / #{unit_multiplier}")
     program.addLine('  Else')

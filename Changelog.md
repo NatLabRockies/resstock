@@ -16,6 +16,8 @@ __New Features__
   - Updates supplemental heating energy use during defrost based on RESNET HERS Addendum 82.
   - Updates shared pump power for ground-source heat pumps on a shared recirculation loop to cycle with heating/cooling load rather than operate continuously per RESNET HERS Addendum 94.
   - Allows desuperheaters to be used with the experimental ground-source heat pump model.
+  - Adds `PanHeaterControlType="heat pump mode"`, in which the pan heater will run when the HP is running (and the outdoor temperature is below 32F).
+  - Updates `PanHeaterControlType="continuous"` to avoid pan heater operation when the outdoor temperature is below the minimum compressor temperature.
 - Allows optional `UsageMultiplier` for electric vehicles described using `Vehicles`.
 - Water heater improvements:
   - Allows HPWHs to have exhaust air ducted to the outside using `HPWHDucting/ExhaustAirTermination="outside"`.

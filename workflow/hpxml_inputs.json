@@ -1479,6 +1479,9 @@
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-pan-heater-defrost-mode.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml"
   },
+  "sample_files/base-hvac-air-to-air-heat-pump-var-speed-pan-heater-heat-pump-mode.xml": {
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml"
+  },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-pan-heater-none.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml"
   },
