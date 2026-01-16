@@ -15,12 +15,12 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  OPENSTUDIO_VER: 3.11.0-rc3
-  OPENSTUDIO_SHA: 7d1f8bdb36
+  OPENSTUDIO_VER: 3.11.0
+  OPENSTUDIO_SHA: 241b8abb4d
   OPENSTUDIO_VER_TO_SHA: "+" # "+" or "%2B" depending on OPENSTUDIO_URL
   OPENSTUDIO_PLATFORM: Ubuntu-24.04-x86_64
   OPENSTUDIO_EXT: deb
-  OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.11.0-rc3
+  OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.11.0
   BUILDSTOCK_BATCH_BRANCH: develop
   BUILDSTOCK_QUERY_BRANCH: main
 
