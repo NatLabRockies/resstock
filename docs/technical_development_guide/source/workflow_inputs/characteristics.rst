@@ -29759,6 +29759,19 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
+   * - ``hvac_cooling_shared_system``
+     - None
+     - None
+     - None
+     - None
+     - None
+     - None
+     - None
+     - None
+     - None
+     - None
+     - None
+     - 
 
 Properties
 **********
@@ -29782,6 +29795,9 @@ Properties
    * - ``hvac_cooling_system_cooling_compressor_type``
      - 
      - The compressor type of the cooling system. Applies to Central ACs and Mini-Split ACs.
+   * - ``hvac_cooling_shared_system``
+     - 
+     - The type of shared cooling system.
 .. _hvac_cooling_partial_space_conditioning:
 
 HVAC Cooling Partial Space Conditioning
@@ -30683,7 +30699,7 @@ Properties
      - The rated heating efficiency of the integrated backup.
    * - ``hvac_heating_shared_system``
      - 
-     - The type of shared system.
+     - The type of shared heating system.
    * - ``hvac_heat_pump_backup_use_existing_system``
      - 
      - Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system. This argument is only applicable for heat pump upgrades.
@@ -31305,6 +31321,14 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - FanCoil
      - 
      - 
+   * - ``hvac_cooling_shared_system``
+     - 
+     - 
+     - FanCoil
+     - FanCoil
+     - FanCoil
+     - 
+     - 
 
 Properties
 **********
@@ -31354,7 +31378,10 @@ Properties
      - The backup type. Use 'integrated' to represent e.g. built-in electric strip heat or dual-fuel integrated furnace. Use 'separate' to represent e.g. electric baseboard or boiler (based on Heating System 2).
    * - ``hvac_heating_shared_system``
      - 
-     - The type of shared system.
+     - The type of shared heating system.
+   * - ``hvac_cooling_shared_system``
+     - 
+     - The type of shared cooling system.
 .. _hvac_system_is_faulted:
 
 HVAC System Is Faulted

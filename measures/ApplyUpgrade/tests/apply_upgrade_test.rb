@@ -491,7 +491,7 @@ class ApplyUpgradeTest < Minitest::Test
 
     hpxml_existing.buildings.each do |hpxml_bldg_existing|
       # Check for correct capacity and autosizing factor values
-      measure.retain_existing_hvac_capacities_and_autosizing_factors(args, hpxml_bldg_existing, hpxml_bldg)
+      measure.retain_existing_hvac_capacities_and_autosizing_factors(hpxml_bldg_existing, hpxml_bldg, args)
 
       actual_values = {}
       if hpxml_bldg.heating_systems.count { |hs| hs.primary_system } > 0

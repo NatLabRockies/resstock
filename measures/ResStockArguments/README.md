@@ -1766,6 +1766,17 @@ The building vintage, used for informational purposes only.
 
 <br/>
 
+**Building Construction: Unit Multipliers**
+
+Specifies the unit multipliers. Use a comma-separated list.
+
+- **Name:** ``unit_multipliers``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
 **Enclosure: Ceiling Insulation Nominal R-value**
 
 Nominal R-value for the ceiling (attic floor).
@@ -1964,7 +1975,7 @@ The type and efficiency of the existing heating system.
 
 **HVAC: Heating Shared System Type**
 
-The type of shared system.
+The type of shared heating system.
 
 - **Name:** ``hvac_heating_shared_system``
 - **Type:** ``Choice``
@@ -2031,6 +2042,19 @@ The type and efficiency of the existing cooling system.
 - **Type:** ``String``
 
 - **Required:** ``false``
+
+<br/>
+
+**HVAC: Cooling Shared System Type**
+
+The type of shared cooling system.
+
+- **Name:** ``hvac_cooling_shared_system``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `None`, `FanCoil`
 
 <br/>
 

@@ -347,10 +347,8 @@ class TestRunAnalysis < Minitest::Test
   def _test_measure_order(osw)
     expected_order = ['BuildExistingModel',
                       'ApplyUpgrade',
-                      'HPXMLtoOpenStudio',
                       'UpgradeCosts',
-                      'ReportSimulationOutput',
-                      'ReportUtilityBills',
+                      'SimulationOutput',
                       'QOIReport',
                       'ServerDirectoryCleanup']
     json = JSON.parse(File.read(osw), symbolize_names: true)
@@ -381,13 +379,13 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, 'It is not possible to eliminate all HVAC energy use (e.g. crankcase/defrost energy) in EnergyPlus during an unavailable period.')
       next if _expected_warning_message(message, 'It is not possible to eliminate all DHW energy use (e.g. water heater parasitics) in EnergyPlus during an unavailable period.')
       next if _expected_warning_message(message, 'It is not possible to eliminate all HVAC energy use (e.g. crankcase/defrost energy) in EnergyPlus outside of an HVAC season.')
-      next if _expected_warning_message(message, 'No space heating specified, the model will not include space heating energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]')
-      next if _expected_warning_message(message, 'No space cooling specified, the model will not include space cooling energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]')
-      next if _expected_warning_message(message, 'No clothes washer specified, the model will not include clothes washer energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]')
-      next if _expected_warning_message(message, 'No clothes dryer specified, the model will not include clothes dryer energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]')
-      next if _expected_warning_message(message, 'No dishwasher specified, the model will not include dishwasher energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]')
-      next if _expected_warning_message(message, 'No refrigerator specified, the model will not include refrigerator energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]')
-      next if _expected_warning_message(message, 'No cooking range specified, the model will not include cooking range/oven energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]')
+      next if _expected_warning_message(message, 'No space heating specified, the model will not include space heating energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding')
+      next if _expected_warning_message(message, 'No space cooling specified, the model will not include space cooling energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding')
+      next if _expected_warning_message(message, 'No clothes washer specified, the model will not include clothes washer energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding')
+      next if _expected_warning_message(message, 'No clothes dryer specified, the model will not include clothes dryer energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding')
+      next if _expected_warning_message(message, 'No dishwasher specified, the model will not include dishwasher energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding')
+      next if _expected_warning_message(message, 'No refrigerator specified, the model will not include refrigerator energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding')
+      next if _expected_warning_message(message, 'No cooking range specified, the model will not include cooking range/oven energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding')
       next if _expected_warning_message(message, "Foundation type of 'AboveApartment' cannot have a non-zero height. Assuming height is zero.")
       next if _expected_warning_message(message, 'Could not find state average propane rate based on')
       next if _expected_warning_message(message, 'Could not find state average fuel oil rate based on')
@@ -400,9 +398,9 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, 'Could not find County=') # we intentionally leave some fields blank in resources/data/simple_rates/County.tsv
       next if _expected_warning_message(message, 'Battery without PV specified, and no charging/discharging schedule provided; battery is assumed to operate as backup and will not be modeled.')
       next if _expected_warning_message(message, "Request for output variable 'Zone People Occupant Count' returned no results.")
-      next if _expected_warning_message(message, 'No windows specified, the model will not include window heat transfer. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]')
-      next if _expected_warning_message(message, 'No interior lighting specified, the model will not include interior lighting energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]')
-      next if _expected_warning_message(message, 'No exterior lighting specified, the model will not include exterior lighting energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]')
+      next if _expected_warning_message(message, 'No windows specified, the model will not include window heat transfer. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding')
+      next if _expected_warning_message(message, 'No interior lighting specified, the model will not include interior lighting energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding')
+      next if _expected_warning_message(message, 'No exterior lighting specified, the model will not include exterior lighting energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding')
       next if _expected_warning_message(message, 'Home with unconditioned basement/crawlspace foundation type has both foundation wall insulation and floor insulation.')
       next if _expected_warning_message(message, 'Cooling capacity should typically be greater than or equal to 1000 Btu/hr. [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/CoolingSystem[CoolingSystemType="room air conditioner" or CoolingSystemType="packaged terminal air conditioner"]')
       next if _expected_warning_message(message, 'Cooling capacity should typically be greater than or equal to 1000 Btu/hr. [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/CoolingSystem[CoolingSystemType="central air conditioner"]')
@@ -418,6 +416,7 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, "Could not find row='pre_peak_period' in unavailable_periods.csv")
       next if _expected_warning_message(message, 'Electric vehicle specified with no charger provided; home EV charging will not be modeled.')
       next if _expected_warning_message(message, 'Based on the assumed vintage parsed in the title string of ASHRAE Handbook of Fundamentals 2017, we expected 15 Extreme fields but got 16, falling to back to heuristics.')
+      next if _expected_warning_message(message, 'NumberofUnits is greater than 1, indicating that the HPXML Building represents multiple dwelling units; simulation outputs will reflect this unit multiplier. [context: /HPXML/Building/BuildingDetails/BuildingSummary/BuildingConstruction, id: "MyBuilding')
 
       # For the EV minutes warning try replacing the number of minutes as a string rather than a number.
       new_message = message.gsub(/\(([^)]+)\)/) { |match| $1.match?(/^\d+(\.\d+)?$/) ? '(<number of minutes>)' : match }

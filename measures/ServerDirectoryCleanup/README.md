@@ -253,7 +253,7 @@ Present a bunch of bool arguments corresponding to EnergyPlus output files. "Fal
 
 <br/>
 
-**Retain *schedules.csv**
+**Retain *schedules*.csv**
 
 
 

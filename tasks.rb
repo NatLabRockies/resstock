@@ -63,14 +63,31 @@ if ARGV[0].to_sym == :update_measures
   puts 'Applying rubocop auto-correct to measures...'
   system(command)
 
-  # Update a ResStockArguments/resources file when the BuildResidentialHPXML measure changes.
-  # This will ensure that the ResStockArguments measure.xml is appropriately updated.
-  # Without this, the ResStockArguments measure has no differences and so OpenStudio
+  # Update a ResStockArguments/ResStockArgumentsPostHPXML/AddSharedSystem resources file
+  # when the BuildResidentialHPXML/BuildResidentialScheduleFile measure changes.
+  # This will ensure that their measure.xml is appropriately updated.
+  # Without this, the measure has no differences and so OpenStudio
   # would skip updating it.
-  measure_rb_path = File.join(File.dirname(__FILE__), 'resources/hpxml-measures/BuildResidentialHPXML/measure.rb')
-  ['ResStockArguments', 'ResStockArgumentsPostHPXML'].each do |resstock_measure_name|
+  hexdigest = ''
+  [File.join(File.dirname(__FILE__), 'resources/hpxml-measures/BuildResidentialHPXML/measure.rb'),
+   File.join(File.dirname(__FILE__), 'resources/hpxml-measures/BuildResidentialHPXML/measure.rb')].each do |measure_rb_path|
+    hexdigest += Digest::MD5.file(measure_rb_path).hexdigest
+  end
+  ['ResStockArguments', 'ResStockArgumentsPostHPXML', 'AddSharedSystem'].each do |resstock_measure_name|
     measure_txt_path = File.join(File.dirname(__FILE__), "measures/#{resstock_measure_name}/resources/measure.txt")
-    File.write(measure_txt_path, Digest::MD5.file(measure_rb_path).hexdigest)
+    File.write(measure_txt_path, hexdigest)
+  end
+
+  # Likewise for SimulationOutput, update a resource file
+  # when the ReportSimulationOutput/ReportUtilityBills measure changes.
+  hexdigest = ''
+  [File.join(File.dirname(__FILE__), 'resources/hpxml-measures/ReportSimulationOutput/measure.rb'),
+   File.join(File.dirname(__FILE__), 'resources/hpxml-measures/ReportUtilityBills/measure.rb')].each do |measure_rb_path|
+    hexdigest += Digest::MD5.file(measure_rb_path).hexdigest
+  end
+  ['SimulationOutput'].each do |resstock_measure_name|
+    measure_txt_path = File.join(File.dirname(__FILE__), "measures/#{resstock_measure_name}/resources/measure.txt")
+    File.write(measure_txt_path, hexdigest)
   end
 
   # Update measures XMLs

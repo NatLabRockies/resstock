@@ -43,17 +43,14 @@ The following depicts the order in which workflow measure steps are applied:
   ===== ============================= ================== ========= ============= ==========================
   1     BuildExistingModel            Model              No        Meta measure  ResStock
   2     ApplyUpgrade                  Model              Yes [#]_  Meta measure  ResStock
-  3     HPXMLtoOpenStudio             Model              No                      OS-HPXML [#]_
-  4     UpgradeCosts                  Model              No                      ResStock
-  5     *Other Model Measures*        Model              Yes                     Any [#]_
-  6     ReportSimulationOutput        Reporting          No                      OS-HPXML
-  7     ReportUtilityBills            Reporting          No                      OS-HPXML
-  8     *Other Reporting Measures*    Reporting          Yes                     Any [#]_
-  9     ServerDirectoryCleanup        Reporting          No                      ResStock
+  3     UpgradeCosts                  Model              No                      ResStock
+  4     *Other Model Measures*        Model              Yes                     Any [#]_
+  5     SimulationOutput              Reporting          No        Meta measure  ResStock
+  6     *Other Reporting Measures*    Reporting          Yes                     Any [#]_
+  7     ServerDirectoryCleanup        Reporting          No                      ResStock
   ===== ============================= ================== ========= ============= ==========================
 
  .. [#] Baseline models with no upgrades do not have the ApplyUpgrade measure applied.
- .. [#] OS-HPXML refers to the `OpenStudio-HPXML <https://github.com/NREL/OpenStudio-HPXML>`_ repository.
  .. [#] *Other Model Measures* do not need to originate from ResStock, but it is up to the user to ensure they work within the ResStock workflow.
  .. [#] *Other Reporting Measures* do not need to originate from ResStock, but it is up to the user to ensure they work within the ResStock workflow.
 
@@ -63,9 +60,23 @@ The BuildExistingModel and ApplyUpgrade meta measures call the following model m
   Index Measure                       Measure Type       Optional  Notes         Source
   ===== ============================= ================== ========= ============= ==========================
   1     ResStockArguments             Model              No                      ResStock
-  2     BuildResidentialHPXML         Model              No                      OS-HPXML
+  2     BuildResidentialHPXML         Model              No                      OS-HPXML [#]_
   3     BuildResidentialScheduleFile  Model              No                      OS-HPXML
   4     ResStockArgumentsPostHPXML    Model              No                      ResStock
+  5     HPXMLtoOpenStudio             Model              No [#]_                 OS-HPXML
+  6     AddSharedSystem               Model              No                      ResStock
+  ===== ============================= ================== ========= ============= ==========================
+
+ .. [#] OS-HPXML refers to the `OpenStudio-HPXML <https://github.com/NREL/OpenStudio-HPXML>`_ repository.
+ .. [#] The HPXMLtoOpenStudio measure is only called once in the workflow; it is called from BuildExistingModel for baseline models or from ApplyUpgrade for upgrade models.
+
+The SimulationOutput meta measure calls the following reporting measures:
+
+  ===== ============================= ================== ========= ============= ==========================
+  Index Measure                       Measure Type       Optional  Notes         Source
+  ===== ============================= ================== ========= ============= ==========================
+  1     ReportSimulationOutput        Reporting          No                      OS-HPXML
+  2     ReportUtilityBills            Reporting          No                      OS-HPXML
   ===== ============================= ================== ========= ============= ==========================
 
 .. _model-measures:

@@ -441,6 +441,39 @@ Utility bill PV monthly grid connection fees. If multiple scenarios, use a comma
 
 <br/>
 
+**Add component loads?**
+
+If true, adds the calculation of heating/cooling component loads (not enabled by default for faster performance).
+
+- **Name:** ``add_component_loads``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Debug Mode?**
+
+If true: 1) Writes in.osm file, 2) Generates additional log output, and 3) Creates all EnergyPlus output files.
+
+- **Name:** ``debug``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Whole SFA/MF Building Simulation?**
+
+Set true if creating an HPXML file to simulate a whole single-family attached or multifamily building with multiple dwelling units within. If an HPXML file already exists at the specified HPXML File Path, a new HPXML Building element describing the current dwelling unit will be appended to this HPXML file.
+
+- **Name:** ``whole_sfa_or_mf_building_sim``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
 
 
 

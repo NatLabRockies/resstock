@@ -64,6 +64,7 @@ workflow_generator:
       simulation_control_run_period_end_month: 12
       simulation_control_run_period_end_day_of_month: 31
       simulation_control_run_period_calendar_year: 2007
+      whole_sfa_or_mf_building_sim: true
 
     # Emissions scenarios
     emissions:

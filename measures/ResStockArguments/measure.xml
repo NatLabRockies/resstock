@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>3e9fcdb1-ddb2-457f-a3a0-0f0e0b156dbd</version_id>
-  <version_modified>2026-01-07T16:38:46Z</version_modified>
+  <version_id>91236a83-a550-4814-b124-7c393a9800f9</version_id>
+  <version_modified>2026-01-14T21:05:50Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -11573,6 +11573,14 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>unit_multipliers</name>
+      <display_name>Building Construction: Unit Multipliers</display_name>
+      <description>Specifies the unit multipliers. Use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>ceiling_insulation_r</name>
       <display_name>Enclosure: Ceiling Insulation Nominal R-value</display_name>
       <description>Nominal R-value for the ceiling (attic floor).</description>
@@ -11726,7 +11734,7 @@
     <argument>
       <name>hvac_heating_shared_system</name>
       <display_name>HVAC: Heating Shared System Type</display_name>
-      <description>The type of shared system.</description>
+      <description>The type of shared heating system.</description>
       <type>Choice</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -11786,6 +11794,24 @@
       <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_cooling_shared_system</name>
+      <display_name>HVAC: Cooling Shared System Type</display_name>
+      <description>The type of shared cooling system.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>None</value>
+          <display_name>None</display_name>
+        </choice>
+        <choice>
+          <value>FanCoil</value>
+          <display_name>FanCoil</display_name>
+        </choice>
+      </choices>
     </argument>
     <argument>
       <name>cooling_system_cooling_autosizing_factor</name>
@@ -12521,7 +12547,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>A44F2B41</checksum>
+      <checksum>F933DDC3</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12538,19 +12564,19 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>B145C290</checksum>
+      <checksum>23C7E2A8</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>C289753F</checksum>
+      <checksum>B39DBC1C</checksum>
     </file>
     <file>
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>3D353AD9</checksum>
+      <checksum>B8446B4E</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>
