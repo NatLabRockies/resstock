@@ -222,7 +222,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     cmd += " --time_res #{time_res_minutes}"
     cmd += " --duration #{duration_days}"
     cmd += " --start_year #{start_year} --start_month #{start_month} --start_day #{start_day}"
-    cmd += ' --verbosity=9'
+    cmd += ' --verbosity=2'
 
     if schedule_file && !schedule_file.empty?
       schedule_file_safe = schedule_file.gsub("'", "\\\\'")
