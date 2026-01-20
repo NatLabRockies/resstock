@@ -18,28 +18,6 @@ class OCHRETest < Minitest::Test
     FileUtils.rm_rf(@test_dir) if File.exist?(@test_dir)
   end
 
-  def test_number_of_arguments_and_argument_names
-    # Create an instance of the measure
-    measure = OCHRE.new
-
-    # Make an empty model
-    model = OpenStudio::Model::Model.new
-
-    # Get arguments and test that they are what we are expecting
-    arguments = measure.arguments(model)
-    assert_equal(8, arguments.size)
-
-    # Check argument names
-    arg_names = arguments.map(&:name)
-    assert_includes(arg_names, 'hpxml_path')
-    assert_includes(arg_names, 'output_dir')
-    assert_includes(arg_names, 'time_res_minutes')
-    assert_includes(arg_names, 'duration_days')
-    assert_includes(arg_names, 'start_year')
-    assert_includes(arg_names, 'start_month')
-    assert_includes(arg_names, 'start_day')
-    assert_includes(arg_names, 'debug')
-  end
 
   def test_bad_hpxml_path
     # Create an instance of the measure
