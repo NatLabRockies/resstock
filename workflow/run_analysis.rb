@@ -54,6 +54,7 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
   upgrades = upgrades.map { |u| u.gsub(/[^0-9A-Za-z]/, '') }
 
   thisdir = File.dirname(__FILE__)
+  parent_dir = File.absolute_path(File.join(thisdir, '../..'))
 
   project_directory = cfg['project_directory']
   output_directory = cfg['output_directory']
@@ -289,13 +290,19 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
 
     if use_ochre
       measures_only = true
+      ochre_cli_path = File.join(parent_dir, 'OCHRE', '.venv', 'bin', 'ochre')
+      unless File.exist?(ochre_cli_path)
+        puts "Error: OCHRE CLI not found at '#{ochre_cli_path}'. Please ensure OCHRE is installed at '#{File.join(parent_dir, 'OCHRE')}'."
+        return false
+      end
       osw['steps'] += [
         {
           'measure_dir_name' => 'OCHRE',
           'arguments' => {
             'hpxml_path' => '',
             'output_dir' => '',
-            'debug' => debug
+            'debug' => debug,
+            'ochre_cli' => ochre_cli_path
           }
         }
       ]
@@ -328,10 +335,10 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
         {
           'measure_dir_name' => 'ReportUtilityBills',
           'arguments' => { 'output_format' => 'csv',
-                          'include_annual_bills' => include_annual_bills,
-                          'include_monthly_bills' => include_monthly_bills,
-                          'register_annual_bills' => register_annual_bills,
-                          'register_monthly_bills' => register_monthly_bills }
+                           'include_annual_bills' => include_annual_bills,
+                           'include_monthly_bills' => include_monthly_bills,
+                           'register_annual_bills' => register_annual_bills,
+                           'register_monthly_bills' => register_monthly_bills }
         },
         {
           'measure_dir_name' => 'ServerDirectoryCleanup',
@@ -341,8 +348,6 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     end
     puts ("Generating OSW for upgrade: #{workflow_args}")
     puts (workflow_args['measures'])
-
-
 
     if upgrade_name != 'Baseline'
       apply_upgrade_measure = { 'measure_dir_name' => 'ApplyUpgrade',

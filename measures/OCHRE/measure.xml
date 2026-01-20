@@ -89,6 +89,14 @@
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
+    <argument>
+      <name>ochre_cli</name>
+      <display_name>OCHRE CLI Path</display_name>
+      <description>Absolute path to the OCHRE CLI executable.</description>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+    </argument>
   </arguments>
   <outputs />
   <provenances />

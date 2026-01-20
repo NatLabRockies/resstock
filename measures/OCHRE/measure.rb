@@ -87,6 +87,11 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Export interval in minutes (exports results periodically to reduce memory). Recommended: 43200 (30 days) for 1-minute resolution, 86400 (60 days) for 5-minute resolution. Leave blank to disable periodic export.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('ochre_cli', true)
+    arg.setDisplayName('OCHRE CLI Path')
+    arg.setDescription('Absolute path to the OCHRE CLI executable.')
+    args << arg
+
     return args
   end
 
@@ -162,8 +167,14 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     hpxml_bldg = hpxml.buildings[0]
     weather_file = Location.get_epw_path(hpxml_bldg, hpxml_path)
 
+    ochre_cli = args[:ochre_cli]
+    if ochre_cli.nil? || ochre_cli.empty?
+      runner.registerError('OCHRE CLI path is required.')
+      return false
+    end
+
     # Build OCHRE CLI command
-    ochre_cmd = build_ochre_command(hpxml_path, output_dir,
+    ochre_cmd = build_ochre_command(ochre_cli, hpxml_path, output_dir,
                                     time_res_minutes, duration_days,
                                     schedule_file, weather_file,
                                     start_year, start_month, start_day,
@@ -199,7 +210,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
   private
 
   # Build OCHRE command to run via CLI
-  def build_ochre_command(hpxml_path, output_dir, time_res_minutes, duration_days, schedule_file, weather_file, start_year, start_month, start_day, export_res_minutes = nil)
+  def build_ochre_command(ochre_cli, hpxml_path, output_dir, time_res_minutes, duration_days, schedule_file, weather_file, start_year, start_month, start_day, export_res_minutes = nil)
     # Get directory and filename for HPXML
     hpxml_dir = File.dirname(hpxml_path)
     hpxml_name = File.basename(hpxml_path)
@@ -212,11 +223,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     # Build the ochre command
     # Usage: ochre single [OPTIONS] INPUT_PATH
     # INPUT_PATH is the directory containing the HPXML file
-    # Resolve res_ochre as parent directory of the project
-    measure_dir = File.dirname(__FILE__)
-    parent_dir = File.absolute_path(File.join(measure_dir, '../../..'))
-    ochre_bin = File.join(parent_dir, 'OCHRE', '.venv', 'bin', 'ochre')
-    cmd = "#{ochre_bin} single '#{hpxml_dir_safe}'"
+    cmd = "#{ochre_cli} single '#{hpxml_dir_safe}'"
     cmd += " --hpxml_file '#{hpxml_name_safe}'"
     cmd += " --output_path '#{output_dir_safe}'"
     cmd += " --time_res #{time_res_minutes}"
