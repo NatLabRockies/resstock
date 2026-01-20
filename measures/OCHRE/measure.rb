@@ -229,6 +229,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     cmd += " --time_res #{time_res_minutes}"
     cmd += " --duration #{duration_days}"
     cmd += " --start_year #{start_year} --start_month #{start_month} --start_day #{start_day}"
+    # cmd += " --time_zone DST"
     cmd += ' --verbosity=2'
 
     if schedule_file && !schedule_file.empty?
