@@ -1,18 +1,51 @@
-/docs/read_the_docs/_build
+# Build directories
+/docs/technical_development_guide/_build
+/docs/technical_reference_guide/_build
 /lib
+
+# Measures and testing-related files
 /measures/UpgradeCosts/tests/in*
 /measures/UpgradeCosts/tests/*.xml
+
+# Project-specific files
 /project_national/national_baseline
-/project_national/national_upgrades
+/project_national/sdr_upgrades_tmy3*
+/project_national/sdr_upgrades_amy2018*
 /project_testing/testing_baseline
-/project_testing/testing_upgrades
+/national_baseline
+/testing_baseline
+/sdr_upgrades_tmy3*
+/test_upgrade_name
+
+# CSV files
 /resources/buildstock.csv
 /project_*/**/*.csv
-!/project_*/resources/source_report.csv
+!/project_*/resources/**/*.csv
+
+# Log files
 /project_*/**/*.log
+buildstockbatch_crash_details.log
+
+# Weather data
 /weather
+
+# Development environment and system files
+.idea/
 .vscode/
+node_modules/
 .DS_Store
 **/.ipynb_checkpoints/*
+**/.bsq_cache/
+
+# Data directories
 **/data/*
-!/resources/data/dictionary/outputs.csv
+
+# Python virtual environments
+**/.venv/
+
+# Python compiled files
+**/*.pyc
+**/__pycache__/
+# Postprocessing build outputs
+/postprocessing/build/
+/postprocessing/resstockpostproc.egg-info/

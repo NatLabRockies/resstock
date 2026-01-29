@@ -1,16 +1,23 @@
 # frozen_string_literal: true
 
-require 'openstudio'
-if File.exist? File.absolute_path(File.join(File.dirname(__FILE__), '../lib/resources/hpxml-measures/HPXMLtoOpenStudio/resources')) # Hack to run ResStock on AWS
-  resources_path = File.absolute_path(File.join(File.dirname(__FILE__), '../lib/resources/hpxml-measures/HPXMLtoOpenStudio/resources'))
-elsif File.exist? File.absolute_path(File.join(File.dirname(__FILE__), 'hpxml-measures/HPXMLtoOpenStudio/resources')) # Hack to run ResStock unit tests locally
-  resources_path = File.absolute_path(File.join(File.dirname(__FILE__), 'hpxml-measures/HPXMLtoOpenStudio/resources'))
-elsif File.exist? File.join(OpenStudio::BCLMeasure::userMeasuresDir.to_s, 'HPXMLtoOpenStudio/resources') # Hack to run measures in the OS App since applied measures are copied off into a temporary directory
-  resources_path = File.join(OpenStudio::BCLMeasure::userMeasuresDir.to_s, 'HPXMLtoOpenStudio/resources')
-end
-require File.join(resources_path, 'meta_measure')
-
 require 'csv'
+
+require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
+
+module Version
+  ResStock_Version = '2025_R1' # Version of ResStock
+  BuildStockBatch_Version = '2023.10.0' # Minimum required version of BuildStockBatch
+  WorkflowGenerator_Version = '2025.12.03' # Version of buildstockbatch workflow generator
+
+  def self.check_buildstockbatch_version
+    if ENV.keys.include?('BUILDSTOCKBATCH_VERSION') # buildstockbatch is installed
+      bsb_version = ENV['BUILDSTOCKBATCH_VERSION']
+      if Gem::Version.new(bsb_version) < Gem::Version.new(BuildStockBatch_Version)
+        fail "BuildStockBatch version #{BuildStockBatch_Version} or above is required. Found version: #{bsb_version}"
+      end
+    end
+  end
+end
 
 class TsvFile
   def initialize(full_path, runner)
@@ -27,21 +34,10 @@ class TsvFile
     option_key = 'Option='
     dep_key = 'Dependency='
 
-    full_header = nil
-    rows = []
-    CSV.foreach(@full_path, col_sep: "\t") do |row|
-      next if row[0].start_with? "\#"
-
-      row.delete_if { |x| x.nil? || (x.size == 0) } # purge trailing empty fields
-
-      # Store one header line
-      if full_header.nil?
-        full_header = row
-        next
-      end
-
-      rows << row
-    end
+    rows = File.readlines(@full_path).map { |row| row.split("\t") } # don't use CSV class for faster processing of large files
+    full_header = rows.shift
+    rows.delete_if { |row| row[0].start_with? "\#" }
+    rows.map! { |row| row.delete_if { |x| x.to_s.empty? } } # purge trailing empty fields
 
     if full_header.nil?
       register_error("Could not find header row in #{@filename}.", @runner)
@@ -73,11 +69,9 @@ class TsvFile
     dependency_cols.each do |dependency, col|
       dependency_options[dependency] = []
       rows.each do |row|
-        next if row[0].start_with? "\#"
-        next if dependency_options[dependency].include? row[col]
-
         dependency_options[dependency] << row[col]
       end
+      dependency_options[dependency].uniq!
     end
 
     return rows, option_cols, dependency_cols, dependency_options, full_header, header
@@ -87,24 +81,20 @@ class TsvFile
     # Caches data for faster tsv lookups
     rows_keys_s = {}
     @rows.each_with_index do |row, rownum|
-      next if row[0].start_with? "\#"
-
       row_key_values = {}
-      @dependency_cols.keys.each do |dep|
-        row_key_values[dep] = row[@dependency_cols[dep]]
+      @dependency_cols.each do |dep, col|
+        row_key_values[dep] = row[col]
       end
-      key_s = hash_to_string(row_key_values)
-      key_s_downcase = key_s.downcase
 
-      if not rows_keys_s[key_s_downcase].nil?
-        if key_s.size > 0
-          register_error("Multiple rows found in #{@filename} with dependencies: #{key_s}.", @runner)
+      if not rows_keys_s[row_key_values].nil?
+        if not row_key_values.empty?
+          register_error("Multiple rows found in #{@filename} with dependencies: #{hash_to_string(row_key_values)}.", @runner)
         else
           register_error("Multiple rows found in #{@filename}.", @runner)
         end
       end
 
-      rows_keys_s[key_s_downcase] = rownum
+      rows_keys_s[row_key_values] = rownum
     end
     return rows_keys_s
   end
@@ -119,13 +109,10 @@ class TsvFile
       dependency_values = {}
     end
 
-    key_s = hash_to_string(dependency_values)
-    key_s_downcase = key_s.downcase
-
-    rownum = @rows_keys_s[key_s_downcase]
+    rownum = @rows_keys_s[dependency_values]
     if rownum.nil?
-      if key_s.size > 0
-        register_error("Could not determine appropriate option in #{@filename} for sample value #{sample_value} with dependencies: #{key_s}.", @runner)
+      if not dependency_values.empty?
+        register_error("Could not determine appropriate option in #{@filename} for sample value #{sample_value} with dependencies: #{hash_to_string(dependency_values)}.", @runner)
       else
         register_error("Could not determine appropriate option in #{@filename} for sample value #{sample_value}.", @runner)
       end
@@ -255,25 +242,6 @@ def get_value_from_workflow_step_value(step_value)
   end
 end
 
-def get_values_from_runner_past_results(runner, measure_name)
-  require 'openstudio'
-  values = {}
-  success_value = OpenStudio::StepResult.new('Success')
-  runner.workflow.workflowSteps.each do |step|
-    next if not step.result.is_initialized
-
-    step_result = step.result.get
-    next if not step_result.measureName.is_initialized
-    next if step_result.measureName.get != measure_name
-    next if step_result.value != success_value
-
-    step_result.stepValues.each do |step_value|
-      values["#{step_value.name}"] = get_value_from_workflow_step_value(step_value)
-    end
-  end
-  return values
-end
-
 def get_value_from_runner(runner, key_lookup, error_if_missing = true)
   key_lookup = OpenStudio::toUnderscoreCase(key_lookup)
   runner.result.stepValues.each do |step_value|
@@ -304,7 +272,7 @@ def get_measure_args_from_option_names(lookup_csv_data, option_names, parameter_
       option_names.each do |option_name|
         next unless not option_name.nil?
 
-        if (row[0].downcase == parameter_name.downcase) && (row[1].downcase == option_name.downcase)
+        if (row[0].downcase == parameter_name.downcase) && (row[1] == option_name)
           current_option = option_name
           break
         end
@@ -353,6 +321,19 @@ def register_value(runner, parameter_name, option_name)
   runner.registerValue(parameter_name, option_name)
 end
 
+def register_logs(runner, new_runner)
+  # Register logs from measures called by meta measures
+  new_runner.result.warnings.each do |warning|
+    runner.registerWarning(warning.logMessage)
+  end
+  new_runner.result.info.each do |info|
+    runner.registerInfo(info.logMessage)
+  end
+  new_runner.result.errors.each do |error|
+    runner.registerError(error.logMessage)
+  end
+end
+
 # Accepts string option_apply_logic and tries to evaluate it based on
 # (parameter_name, option_name) pairs stored in runner.
 #
@@ -367,7 +348,7 @@ def evaluate_logic(option_apply_logic, runner, past_results = true)
     return
   end
 
-  values = get_values_from_runner_past_results(runner, 'build_existing_model')
+  values = Hash[runner.getPastStepValuesForMeasure('build_existing_model').collect { |k, v| [k.to_s, v] }]
   ruby_eval_str = ''
   option_apply_logic.split('||').each do |or_segment|
     or_segment.split('&&').each do |segment|
@@ -438,120 +419,12 @@ def get_data_for_sample(buildstock_csv_path, building_id, runner)
   fail msg
 end
 
-class RunOSWs
-  require 'csv'
-  require 'json'
-
-  def self.run(in_osw, parent_dir, cli_output, upgrade, measures, reporting_measures, measures_only = false)
-    # Run workflow
-    cli_path = OpenStudio.getOpenStudioCLI
-    command = "\"#{cli_path}\" run"
-    command += ' -m' if measures_only
-    command += " -w \"#{in_osw}\""
-
-    cli_output += `#{command}`
-
-    result_output = {}
-
-    out = File.join(parent_dir, 'out.osw')
-    out = JSON.parse(File.read(File.expand_path(out)))
-    started_at = out['started_at']
-    completed_at = out['completed_at']
-    completed_status = out['completed_status']
-
-    results = File.join(parent_dir, 'run/results.json')
-
-    return started_at, completed_at, completed_status, result_output, cli_output if measures_only || !File.exist?(results)
-
-    rows = {}
-    old_rows = JSON.parse(File.read(File.expand_path(results)))
-    old_rows.each do |measure, values|
-      rows[measure] = {}
-      values.each do |arg, val|
-        next if measure == 'BuildExistingModel' && arg == 'building_id'
-
-        rows[measure]["#{OpenStudio::toUnderscoreCase(measure)}.#{arg}"] = val
-      end
-    end
-
-    result_output = get_measure_results(rows, result_output, 'BuildExistingModel') if !upgrade
-    result_output = get_measure_results(rows, result_output, 'ApplyUpgrade')
-    measures.each do |measure|
-      result_output = get_measure_results(rows, result_output, measure)
-    end
-    result_output = get_measure_results(rows, result_output, 'ReportSimulationOutput')
-    result_output = get_measure_results(rows, result_output, 'ReportUtilityBills')
-    result_output = get_measure_results(rows, result_output, 'UpgradeCosts')
-    reporting_measures.each do |reporting_measure|
-      result_output = get_measure_results(rows, result_output, reporting_measure)
-    end
-
-    return started_at, completed_at, completed_status, result_output, cli_output
-  end
-
-  def self.get_measure_results(rows, result, measure)
-    if rows.keys.include?(measure)
-      result = result.merge(rows[measure])
-    end
-    return result
-  end
-
-  def self.write_summary_results(results_dir, filename, results)
-    if not File.exist?(results_dir)
-      Dir.mkdir(results_dir)
-    end
-    csv_out = File.join(results_dir, filename)
-
-    column_headers = []
-    results.each do |result|
-      result.keys.each do |col|
-        column_headers << col unless column_headers.include?(col)
-      end
-    end
-    column_headers = column_headers.sort
-
-    ['completed_status', 'completed_at', 'started_at', 'job_id', 'building_id'].each do |col|
-      column_headers.delete(col)
-      column_headers.insert(0, col)
-    end
-
-    CSV.open(csv_out, 'wb') do |csv|
-      csv << column_headers
-      results.sort_by { |h| h['building_id'] }.each do |result|
-        csv_row = []
-        column_headers.each do |column_header|
-          csv_row << result[column_header]
-        end
-        csv << csv_row
-      end
-    end
-
-    puts "Wrote: #{csv_out}"
-    return csv_out
-  end
-
-  def self._rm_path(path)
-    if Dir.exist?(path)
-      FileUtils.rm_r(path)
-    end
-    while true
-      break if not Dir.exist?(path)
-
-      sleep(0.01)
-    end
-  end
-end
-
-class Version
-  ResStock_Version = '3.1.0' # Version of ResStock
-  BuildStockBatch_Version = '2023.5.0' # Minimum required version of BuildStockBatch
-
-  def self.check_buildstockbatch_version
-    if ENV.keys.include?('BUILDSTOCKBATCH_VERSION') # buildstockbatch is installed
-      bsb_version = ENV['BUILDSTOCKBATCH_VERSION']
-      if bsb_version < BuildStockBatch_Version
-        fail "BuildStockBatch version #{BuildStockBatch_Version} or above is required. Found version: #{bsb_version}"
-      end
+def update_args_hash(hash, key, args)
+  if not hash.keys.include? key
+    hash[key] = [args]
+  else # merge new arguments into existing
+    args.each do |k, v|
+      hash[key][0][k] = v
     end
   end
 end

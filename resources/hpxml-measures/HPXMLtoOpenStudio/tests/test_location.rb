@@ -6,10 +6,16 @@ require 'openstudio/measure/ShowRunnerOutput'
 require 'fileutils'
 require_relative '../measure.rb'
 require_relative '../resources/util.rb'
+require_relative 'util.rb'
 
-class HPXMLtoOpenStudioLocationTest < MiniTest::Test
-  def sample_files_dir
-    return File.join(File.dirname(__FILE__), '..', '..', 'workflow', 'sample_files')
+class HPXMLtoOpenStudioLocationTest < Minitest::Test
+  def setup
+    @root_path = File.absolute_path(File.join(File.dirname(__FILE__), '..', '..'))
+    @sample_files_path = File.join(@root_path, 'workflow', 'sample_files')
+  end
+
+  def teardown
+    cleanup_results_files
   end
 
   def get_daylight_saving_month_and_days(model)
@@ -25,8 +31,8 @@ class HPXMLtoOpenStudioLocationTest < MiniTest::Test
 
   def test_dst_default
     args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(sample_files_dir, 'base.xml'))
-    model, _hpxml = _test_measure(args_hash)
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base.xml'))
+    model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
 
     assert_equal(1, model.getObjectsByType('OS:RunPeriodControl:DaylightSavingTime'.to_IddObjectType).size)
     begin_month, begin_day, end_month, end_day = get_daylight_saving_month_and_days(model)
@@ -38,8 +44,8 @@ class HPXMLtoOpenStudioLocationTest < MiniTest::Test
 
   def test_dst_custom
     args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(sample_files_dir, 'base-simcontrol-daylight-saving-custom.xml'))
-    model, _hpxml = _test_measure(args_hash)
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-simcontrol-daylight-saving-custom.xml'))
+    model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
 
     assert_equal(1, model.getObjectsByType('OS:RunPeriodControl:DaylightSavingTime'.to_IddObjectType).size)
     begin_month, begin_day, end_month, end_day = get_daylight_saving_month_and_days(model)
@@ -51,8 +57,8 @@ class HPXMLtoOpenStudioLocationTest < MiniTest::Test
 
   def test_dst_disabled
     args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(sample_files_dir, 'base-simcontrol-daylight-saving-disabled.xml'))
-    model, _hpxml = _test_measure(args_hash)
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-simcontrol-daylight-saving-disabled.xml'))
+    model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
 
     assert_equal(0, model.getObjectsByType('OS:RunPeriodControl:DaylightSavingTime'.to_IddObjectType).size)
   end
@@ -88,10 +94,10 @@ class HPXMLtoOpenStudioLocationTest < MiniTest::Test
     # assert that it ran correctly
     assert_equal('Success', result.value.valueName)
 
-    hpxml = HPXML.new(hpxml_path: args_hash['hpxml_path'])
+    hpxml = HPXML.new(hpxml_path: File.join(File.dirname(__FILE__), 'in.xml'))
 
     File.delete(File.join(File.dirname(__FILE__), 'in.xml'))
 
-    return model, hpxml
+    return model, hpxml, hpxml.buildings[0]
   end
 end

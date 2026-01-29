@@ -20,9 +20,16 @@ Rake::TestTask.new('test_measures') do |t|
   t.verbose = true
 end
 
-desc 'Run workflow tests'
-Rake::TestTask.new('test_workflow') do |t|
-  t.test_files = Dir['workflow/tests/*.rb']
+desc 'Run workflow1 tests'
+Rake::TestTask.new('test_workflow1') do |t|
+  t.test_files = Dir['workflow/tests/test_simulations1.rb']
+  t.warning = false
+  t.verbose = true
+end
+
+desc 'Run workflow2 tests'
+Rake::TestTask.new('test_workflow2') do |t|
+  t.test_files = Dir['workflow/tests/*.rb'] - Dir['workflow/tests/test_simulations1.rb']
   t.warning = false
   t.verbose = true
 end

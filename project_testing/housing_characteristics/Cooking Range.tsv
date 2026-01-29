@@ -1,4 +1,8 @@
-Option=Gas, 80% Usage	Option=Gas, 100% Usage	Option=Gas, 120% Usage	Option=Propane, 80% Usage	Option=Propane, 100% Usage	Option=Propane, 120% Usage	Option=Electric, 80% Usage	Option=Electric, 100% Usage	Option=Electric, 120% Usage	Option=Electric, Induction, 80% Usage	Option=Electric, Induction, 100% Usage	Option=Electric, Induction, 120% Usage	Option=None	sampling_probability
-0.076923	0.076923	0.076923	0.076923	0.076923	0.076923	0.076923	0.076923	0.076923	0.076923	0.076923	0.076923	0.076923	1
-# Created by: manually created
-# Description: Presence, fuel type, and usage level of the cooking range.
+Dependency=Geometry Building Type RECS	Option=Electric Induction	Option=Electric Resistance	Option=Gas	Option=None	Option=Propane	Option=Void	sampling_probability
+Mobile Home	0.2	0.2	0.2	0.2	0.2	0	0.111111
+Multi-Family with 2 - 4 Units	0.2	0.2	0.2	0.2	0.2	0	0.222222
+Multi-Family with 5+ Units	0.2	0.2	0.2	0.2	0.2	0	0.444444
+Single-Family Attached	0.2	0.2	0.2	0.2	0.2	0	0.111111
+Single-Family Detached	0.2	0.2	0.2	0.2	0.2	0	0.111111
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: Presence and fuel type of the cooking range.

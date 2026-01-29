@@ -1,7 +1,7 @@
 Dependency=Geometry Attic Type	Option=None	Option=Yes	Option=No	sampling_probability
-Vented Attic	0	0.5	0.5	0.12963
-Unvented Attic	0	0.5	0.5	0.12963
-Finished Attic or Cathedral Ceilings	1	0	0	0.074074
-None	1	0	0	0.666667
+Vented Attic	0	0.5	0.5	0.0617283
+Unvented Attic	0	0.5	0.5	0.0617283
+Finished Attic or Cathedral Ceilings	1	0	0	0.037037
+None	1	0	0	0.839506
 # Created by: manually created
 # Description: Presence of radiant barrier in the attic (not modeled in project_national).

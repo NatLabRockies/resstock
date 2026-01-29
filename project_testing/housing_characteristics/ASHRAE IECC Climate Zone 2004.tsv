@@ -1,7 +1,8 @@
-Dependency=County	Option=1A	Option=2A	Option=2B	Option=3A	Option=3B	Option=3C	Option=4A	Option=4B	Option=4C	Option=5A	Option=5B	Option=6A	Option=6B	Option=7A	Option=7B	sampling_probability
-CA, Los Angeles County	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0.25
-IL, Cook County	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0.25
-NY, New York County	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0.25
-TX, Harris County	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.25
+Dependency=County	Option=1A	Option=2A	Option=2B	Option=3A	Option=3B	Option=3C	Option=4A	Option=4B	Option=4C	Option=5A	Option=5B	Option=6A	Option=6B	Option=7A	Option=7AK	Option=7B	Option=8AK	sampling_probability
+AK, Fairbanks North Star Borough	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.2
+CA, Los Angeles County	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0.2
+IL, Cook County	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0.2
+NY, New York County	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0.2
+TX, Harris County	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.2
 # Created by: sources\spatial\tsv_maker.py
 # Description: Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located.

@@ -13,9 +13,9 @@ on:
 jobs:
   add-to-project:
     name: Add pull request or issue to project
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/add-to-project@v0.3.0
+      - uses: actions/add-to-project@v1.0.0
         with:
           project-url: https://github.com/orgs/NREL/projects/38
           github-token: ${{ secrets.GHB_TOKEN }}

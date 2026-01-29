@@ -1,111 +1,133 @@
 Parameter,Number of options,Number of dependencies,Created by,Description
-ASHRAE IECC Climate Zone 2004,15.0,1.0,sources\spatial\tsv_maker.py,Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located.
+ASHRAE IECC Climate Zone 2004,17.0,1.0,sources\spatial\tsv_maker.py,Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located.
 Bathroom Spot Vent Hour,24.0,0.0,manually created,Bathroom spot ventilation daily start hour
-Battery,5.0,1.0,manually created,"The presence, size, location, and efficiency of an onsite battery (not modeled in project_national)."
+Battery,3.0,0.0,manually created,The size of an onsite battery (not modeled in project_national).
 Bedrooms,5.0,1.0,sources\ahs\ahs2017_2019\tsv_maker.py,The number of bedrooms in the dwelling unit.
-Ceiling Fan,6.0,0.0,manually created,Presence and energy usage of ceiling fans at medium speed
+Ceiling Fan,4.0,0.0,manually created,Presence and energy usage of ceiling fans at medium speed.
 Census Region,4.0,1.0,manually created,The U.S. Census Region that the sample is located.
-Clothes Dryer,25.0,1.0,manually created,"The presence, rated efficiency, fuel type, and usage level of the clothes dryer in a dwelling unit."
-Clothes Washer,16.0,1.0,manually created,"Presence, rated efficiency, and usage level of the clothes washer."
-Clothes Washer Presence,2.0,0.0,sources\ahs\ahs2017_2019\tsv_maker.py,The number of bedrooms in the dwelling unit.
-Cooking Range,13.0,0.0,manually created,"Presence, fuel type, and usage level of the cooking range."
+Clothes Dryer,5.0,1.0,sources\recs\recs2020\tsv_maker.py,"The presence, rated efficiency, and fuel type of the clothes dryer in a dwelling unit."
+Clothes Dryer Usage Level,3.0,0.0,sources\other\tsv_maker.py,Clothes dryer energy usage level multiplier.
+Clothes Washer,4.0,1.0,sources\recs\recs2020\tsv_maker.py,Presence and rated efficiency of the clothes washer.
+Clothes Washer Presence,3.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence of a clothes washer in the dwelling unit.
+Clothes Washer Usage Level,3.0,0.0,sources\other\tsv_maker.py,Clothes washer energy usage level multiplier.
+Cooking Range,6.0,1.0,sources\recs\recs2020\tsv_maker.py,Presence and fuel type of the cooking range.
+Cooking Range Usage Level,3.0,0.0,sources\other\tsv_maker.py,Cooking range energy usage level multiplier.
 Cooling Setpoint,18.0,0.0,manually created,Baseline cooling setpoint with no offset applied.
 Cooling Setpoint Has Offset,2.0,0.0,manually created,Presence of a cooling setpoint offset.
 Cooling Setpoint Offset Magnitude,4.0,1.0,manually created,The magnitude of cooling setpoint offset.
 Cooling Setpoint Offset Period,56.0,1.0,manually created,The period and offset for the dwelling unit's cooling setpoint. Default for the day is from 9am to 5pm and for the night is 10pm to 7am.
+Cooling Unavailable Days,8.0,0.0,sources\recs\recs2020\tsv_maker.py,Number of days in a year the cooling system is unavailable.
 Corridor,5.0,1.0,manually created,Type of corridor attached to multi-family units.
-County,4.0,0.0,sources\spatial\tsv_maker.py,The U.S. County that the sample is located.
+County,5.0,0.0,sources\spatial\tsv_maker.py,The U.S. County that the sample is located.
+Custom State,2.0,1.0,sources\aris\tsv_maker.py,A custom selection of states to be able to have more fine tuned probability distributionin states where we have more data
 Dehumidifier,4.0,0.0,manually created,"Presence, water removal rate, and humidity setpoint of the dehumidifier."
-Dishwasher,22.0,0.0,sources\recs\recs2009\tsv_maker.py,The presence and rated efficiency of the dishwasher.
+Dishwasher,3.0,0.0,sources\recs\recs2020\tsv_maker.py,The presence and rated efficiency of the dishwasher.
+Dishwasher Usage Level,3.0,0.0,sources\other\tsv_maker.py,Dishwasher energy usage level multiplier.
 Door Area,3.0,1.0,manually created,Area of exterior doors
 Doors,3.0,0.0,manually created,Exterior door material and properties.
-Ducts,14.0,0.0,manually created,Duct insulation and leakage levels.
+Duct Leakage and Insulation,14.0,1.0,sources\other\tsv_maker.py,Duct insulation and leakage to outside from the portion of ducts in unconditioned spaces
+Duct Location,7.0,2.0,sources\other\tsv_maker.py,Location of Duct System
 Eaves,4.0,0.0,manually created,Depth of roof eaves.
-Electric Vehicle,3.0,0.0,manually created,Electric vehicle usage and efficiency (not used in project_national).
-Generation And Emissions Assessment Region,4.0,1.0,sources\spatial\tsv_maker.py,The generation and carbon emissions assessment region that the sample is located.
-Geometry Attic Type,4.0,2.0,manually created,The dwelling unit attic type.
+Electric Vehicle Battery,8.0,0.0,sources\tempo\tsv_maker.py,The type of electric vehicle and battery range in miles.
+Electric Vehicle Charge At Home,6.0,0.0,sources\recs\recs2020\tsv_maker.py,The percentage a household would or do charge their electric vehicle at home.
+Electric Vehicle Charger,3.0,1.0,sources\recs\recs2020\tsv_maker.py,Type of electric vehicle charger used at the dwelling unit
+Electric Vehicle Miles Traveled,11.0,0.0,manually created,The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.
+Electric Vehicle Outlet Access,2.0,0.0,sources\recs\recs2020\tsv_maker.py,The unit has an outlet within 20 feet of vehicle parking.
+Electric Vehicle Ownership,2.0,0.0,sources\experian\tsv_maker.py,The dwelling unit owns an electric vehicle.
+Generation And Emissions Assessment Region,5.0,1.0,sources\spatial\tsv_maker.py,The generation and carbon emissions assessment region that the sample is located in.
+Geometry Attic Type,4.0,2.0,sources\recs\recs2020\tsv_maker.py,The dwelling unit attic type.
 Geometry Building Horizontal Location MF,5.0,2.0,sources\recs\recs2009\tsv_maker.py,"Location of the single-family attached unit horizontally within the building (left, middle, right)."
 Geometry Building Horizontal Location SFA,4.0,1.0,manually created,"Location of the single-family attached unit horizontally within the building (left, middle, right)."
 Geometry Building Level MF,4.0,2.0,sources\recs\recs2009\tsv_maker.py,"Location of the multi-family unit vertically within the building (bottom, middle, top)."
-Geometry Building Number Units MF,28.0,1.0,manually created,The number of dwelling units in the multi-family building.
+Geometry Building Number Units MF,28.0,2.0,sources\recs\recs2009\tsv_maker.py,The number of dwelling units in the multi-family building.
 Geometry Building Number Units SFA,21.0,1.0,manually created,Number of units in the single-family attached building.
-Geometry Building Type ACS,9.0,0.0,sources\pums\pums2019_5yrs\tsv_maker.py,The building type classification according to the U.S. Census American Communicy Survey.
+Geometry Building Type ACS,9.0,0.0,sources\pums\pums2019_5yrs\tsv_maker.py,The building type classification according to the U.S. Census American Community Survey.
 Geometry Building Type Height,7.0,2.0,sources\recs\recs2009\tsv_maker.py,"The 2009 U.S. Energy Information Administration Residential Energy Consumption Survey  building type with multi-family buildings split out by low-rise, mid-rise, and high-rise."
 Geometry Building Type RECS,5.0,1.0,sources\pums\pums2019_5yrs\tsv_maker.py,The building type classification according to the U.S. Energy Information Administration Residential Energy Consumption Survey.
 Geometry Floor Area,9.0,0.0,sources\ahs\ahs2017_2019\tsv_maker.py,The finished floor area of the dwelling unit using bins from 2017-2019 AHS.
-Geometry Floor Area Bin,4.0,1.0,sources\recs\recs2009\tsv_maker.py,The finished floor area of the dwelling unit using bins from the U.S. Energy Information Administration Residential Energy Consumption Survey.
-Geometry Foundation Type,6.0,1.0,manually created,The type of foundation.
+Geometry Floor Area Bin,4.0,1.0,sources\recs\recs2020\tsv_maker.py,The finished floor area of the dwelling unit using bins from the U.S. Energy Information Administration Residential Energy Consumption Survey.
+Geometry Foundation Type,6.0,1.0,sources\recs\recs2009\tsv_maker.py,The type of foundation.
 Geometry Garage,4.0,4.0,manually created,The size of an attached garage.
-Geometry Stories,17.0,1.0,sources\recs\recs2009\tsv_maker.py,The number of building stories.
+Geometry Space Combination,130.0,5.0,sources\recs\recs2020\tsv_maker.py,"Valid combinations of building type, building level mf, attic, foundation, and garage"
+Geometry Stories,18.0,1.0,sources\recs\recs2009\tsv_maker.py,The number of building stories.
 Geometry Stories Low Rise,4.0,1.0,sources\recs\recs2009\tsv_maker.py,Number of building stories for low-rise buildings.
 Geometry Story Bin,2.0,1.0,sources\recs\recs2009\tsv_maker.py,The building has more than 8 or less than 8 stories.
 Geometry Wall Exterior Finish,11.0,1.0,sources\lightbox\residential\tsv_maker.py,Wall siding material and color.
 Geometry Wall Type,5.0,1.0,sources\lightbox\residential\tsv_maker.py,The wall material used for thermal mass calculations of exterior walls.
-HVAC Cooling Efficiency,11.0,2.0,sources\recs\2009\tsv_maker.py,The presence and efficiency of primary cooling system in the dwelling unit.
-HVAC Cooling Partial Space Conditioning,7.0,1.0,sources\recs\recs2009\tsv_maker.py,The fraction of the finished floor area that the cooling system provides cooling.
-HVAC Cooling Type,4.0,1.0,sources\recs\recs2009\tsv_maker.py,The presence and type of primary cooling system in the dwelling unit.
-HVAC Has Ducts,2.0,0.0,sources\recs\recs2009\tsv_maker.py,The presence of ducts in the dwelling unit.
-HVAC Has Shared System,4.0,4.0,manually created,The presence of an HVAC system shared between multiple dwelling units.
-HVAC Heating Efficiency,22.0,3.0,sources\recs\recs2009\tsv_maker.py,The presence and efficiency of the primary heating system in the dwelling unit.
-HVAC Heating Type,5.0,1.0,sources\recs\recs2009\tsv_maker.py,The presence and type of the primary heating system in the dwelling unit.
-HVAC Heating Type And Fuel,25.0,2.0,sources\recs\recs2009\tsv_maker.py,"The presence, type, and fuel of primary heating system."
-HVAC Secondary Heating Efficiency,4.0,1.0,manually created,Efficiency of the secondary heating system (not used in project_national).
-HVAC Secondary Heating Type And Fuel,4.0,1.0,manually created,Secondary HVAC system heating type and fuel (not used in project_national).
-HVAC Shared Efficiencies,10.0,2.0,sources\recs\2009\tsv_maker.py,The presence and efficiency of the shared HVAC system.
+Ground Thermal Conductivity,8.0,0.0,sources\smu\tsv_maker.py,The thermal conductivity (in Btu/hr-ft-F) of the ground using in foundation and geothermal heat pump heat transfer calculations.
+HVAC Cooling Autosizing Factor,2.0,1.0,manually created,The cooling airflow and capacity scaling factor applied to the auto-sizing methodology (not used in project_national).
+HVAC Cooling Efficiency,12.0,2.0,sources\recs\recs2020\tsv_maker.py,The presence and efficiency of primary cooling system in the dwelling unit.
+HVAC Cooling Partial Space Conditioning,8.0,1.0,sources\recs\recs2009\tsv_maker.py,The fraction of the finished floor area that the cooling system provides cooling.
+HVAC Cooling Type,6.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence and type of primary cooling system in the dwelling unit.
+HVAC Has Ducts,3.0,4.0,sources\recs\recs2020\tsv_maker.py,The presence of ducts in the dwelling unit.
+HVAC Has Shared System,5.0,3.0,sources\recs\recs2020\tsv_maker.py,The presence of an HVAC system shared between multiple dwelling units.
+HVAC Heating Autosizing Factor,2.0,1.0,manually created,The heating airflow and capacity scaling factor applied to the auto-sizing methodology (not used in project_national).
+HVAC Heating Efficiency,21.0,3.0,sources\recs\recs2020\tsv_maker.py,The presence and efficiency of the primary heating system in the dwelling unit.
+HVAC Heating Type,5.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence and type of the primary heating system in the dwelling unit.
+HVAC Heating Type And Fuel,25.0,2.0,sources\recs\recs2020\tsv_maker.py,"The presence, type, and fuel of primary heating system."
+HVAC Secondary Heating Efficiency,10.0,3.0,sources\aris\tsv_maker.py,The efficiency and type of the heating system.
+HVAC Secondary Heating Fuel,7.0,2.0,sources\aris\tsv_maker.py,Secondary Heating Fuel for the dwelling unit
+HVAC Secondary Heating Partial Space Conditioning,7.0,3.0,sources\aris\tsv_maker.py,The fraction of heating load served by secondary heating system
+HVAC Secondary Heating Type,3.0,3.0,sources\aris\tsv_maker.py,The efficiency and type of the heating system.
+HVAC Shared Efficiencies,7.0,2.0,sources\recs\recs2020\tsv_maker.py,The presence and efficiency of the shared HVAC system.
 HVAC System Is Faulted,2.0,0.0,manually created,The presence of the HVAC system having a fault (not used in project_national).
+HVAC System Is Scaled,2.0,0.0,manually created,Whether the HVAC system has been undersized or oversized (not used in project_national).
 HVAC System Single Speed AC Airflow,13.0,1.0,manually created,Single speed central and room air conditioner actual air flow rates.
 HVAC System Single Speed AC Charge,8.0,1.0,manually created,Central and room air conditioner deviation between design/installed charge.
 HVAC System Single Speed ASHP Airflow,13.0,1.0,manually created,Single speed air source heat pump actual air flow rates.
 HVAC System Single Speed ASHP Charge,8.0,1.0,manually created,Air source heat pump deviation between design/installed charge.
 Has PV,2.0,0.0,sources\dpv\tsv_maker.py,The dwelling unit has a rooftop photovoltaic system.
-Heating Fuel,6.0,0.0,sources\pums\pums2019_5yrs\tsv_maker.py,The primary fuel used for heating the dwelling unit.
+Heating Fuel,7.0,0.0,sources\pums\pums2019_5yrs\tsv_maker.py,The primary fuel used for heating the dwelling unit.
 Heating Setpoint,20.0,0.0,manually created,Baseline heating setpoint with no offset applied.
 Heating Setpoint Has Offset,2.0,0.0,manually created,Presence of a heating setpoint offset.
 Heating Setpoint Offset Magnitude,4.0,1.0,manually created,Magnitude of the heating setpoint offset.
 Heating Setpoint Offset Period,34.0,1.0,manually created,The period and offset for the dwelling unit's heating setpoint. Default for the day is from 9am to 5pm and for the night is 10pm to 7am.
-Holiday Lighting,2.0,1.0,manually created,Use of holiday lighting (not used in project_national).
-Hot Water Distribution,5.0,0.0,manually created,Hot water piping material and insulation level.
-Hot Water Fixtures,6.0,0.0,manually created,Hot water fixture usage and flow levels.
-Infiltration,27.0,0.0,sources\resdb\tsv_maker.py,Air leakage rates for the living and garage spaces
+Heating Unavailable Days,8.0,0.0,sources\recs\recs2020\tsv_maker.py,Number of days in a year the heating system is unavailable
+Holiday Lighting,2.0,1.0,sources\other\tsv_maker.py,Use of holiday lighting (not currently modeled separately from other exterior lighting).
+Hot Water Distribution,4.0,0.0,manually created,Type of distribution system and presence of hot water piping insulation.
+Hot Water Fixtures,16.0,0.0,sources\other\tsv_maker.py,Hot water fixture usage and flow levels.
+Infiltration,15.0,0.0,sources\resdb\tsv_maker.py,Total infiltration to the dwelling unit.
 Insulation Ceiling,9.0,1.0,manually created,Ceiling insulation level.
 Insulation Floor,6.0,1.0,manually created,Floor insulation level.
-Insulation Foundation Wall,6.0,1.0,manually created,Foundation walls insulation level.
+Insulation Foundation Wall,5.0,1.0,manually created,Foundation walls insulation level.
 Insulation Rim Joist,6.0,1.0,manually created,Foundation walls insulation level.
 Insulation Roof,8.0,1.0,manually created,Finished roof insulation level.
 Insulation Slab,8.0,1.0,manually created,Slab insulation level.
 Insulation Wall,16.0,1.0,manually created,Wall construction type and insulation level.
-Interior Shading,5.0,0.0,manually created,Fraction of window shading in the summer and winter.
-Lighting,6.0,0.0,originally created by sources\recs\2015\tsv_maker.py. Manually updated during the HPXML transition.,Fraction of lighting types.
-Lighting Interior Use,3.0,1.0,manually created,Interior lighting usage relative to the national average.
-Lighting Other Use,3.0,1.0,manually created,Exterior and garage lighting usage relative to the national average.
+Interior Shading,4.0,0.0,manually created,Type of window interior shading.
+Lighting,6.0,0.0,sources\recs\recs2020\tsv_maker.py,"Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options."
+Lighting Interior Use,3.0,1.0,sources\other\tsv_maker.py,Interior lighting usage relative to the national average.
+Lighting Other Use,3.0,1.0,sources\other\tsv_maker.py,Exterior and garage lighting usage relative to the national average.
 Mechanical Ventilation,5.0,0.0,manually created,Mechanical ventilation type and efficiency.
-Misc Extra Refrigerator,7.0,0.0,sources\recs\2009\tsv_maker.py,The presence and rated efficiency of the secondary refrigerator.
-Misc Freezer,6.0,0.0,sources\recs\recs2009\tsv_maker.py,The presence and rated efficiency of a standalone freezer.
-Misc Gas Fireplace,3.0,0.0,manually created,Presence of a gas fireplace.
-Misc Gas Grill,3.0,0.0,manually created,Presence of a gas grill.
-Misc Gas Lighting,3.0,0.0,manually created,Presence of exterior gas lighting.
-Misc Hot Tub Spa,3.0,1.0,sources\recs\2009\tsv_maker.py,The presence and heating fuel of a hot tub/spa at the dwelling unit.
-Misc Pool,2.0,1.0,sources\recs\recs2009\tsv_maker.py,The presence of a pool at the dwelling unit.
-Misc Pool Heater,4.0,1.0,manually created,The heating fuel of the pool heater if there is a pool.
-Misc Pool Pump,4.0,1.0,manually created,Presence and size of pool pump.
-Misc Well Pump,4.0,0.0,manually created,Presence and efficiency of well pump.
+Misc Extra Refrigerator,9.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence and rated efficiency of the secondary refrigerator.
+Misc Freezer,5.0,0.0,sources\recs\recs2020\tsv_maker.py,The presence and rated efficiency of a standalone freezer.
+Misc Gas Fireplace,2.0,0.0,manually created,Presence of a gas fireplace.
+Misc Gas Grill,2.0,0.0,manually created,Presence of a gas grill.
+Misc Gas Lighting,2.0,0.0,manually created,Presence of exterior gas lighting.
+Misc Hot Tub Spa,4.0,0.0,sources\recs\recs2020\tsv_maker.py,The presence and heating fuel of a hot tub/spa at the dwelling unit.
+Misc Pool,3.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence of a pool at the dwelling unit.
+Misc Pool Heater,5.0,1.0,sources\recs\recs2020\tsv_maker.py,The heating fuel of the pool heater if there is a pool.
+Misc Pool Pump,3.0,1.0,manually created,Presence and size of pool pump.
+Misc Well Pump,2.0,0.0,sources\ahs\ahs2017_2019\tsv_maker.py,Presence of well pump according to the use of well for domestic water source.
 Natural Ventilation,2.0,0.0,manually created,Schedule of natural ventilation from windows.
 Neighbors,6.0,0.0,manually created,Presence and distance between the dwelling unit and the nearest neighbors to the left and right.
-Occupants,11.0,0.0,sources\pums\pums2019_5yrs\tsv_maker.py,The number of occupants living in the dwelling unit.
+Occupants,11.0,1.0,sources\pums\pums2019_5yrs\tsv_maker.py,The number of occupants living in the dwelling unit.
 Orientation,16.0,0.0,manually created,Orientation of the front of the dwelling unit as it faces the street.
-Overhangs,6.0,0.0,manually created,"Presence, depth, and location of window overhangs (not used in project_national)."
 PV Orientation,9.0,1.0,sources\dpv\tsv_maker.py,The orientation of the photovoltaic system.
 PV System Size,8.0,1.0,sources\dpv\tsv_maker.py,The size of the photovoltaic system.
 Plug Load Diversity,7.0,0.0,manually created,Plug load diversity multiplier intended to add variation in plug load profiles across all simulations.
-Plug Loads,32.0,0.0,sources\recs\recs2015\tsv_maker.py,Plug load usage level which is varied by Census Division RECS and Building Type RECS.
-REEDS Balancing Area,4.0,1.0,sources\spatial\tsv_maker.py,The Regional Energy Deployment System Model (ReEDS) balancing area that the sample is located.
+Plug Loads,31.0,0.0,sources\recs\recs2015\tsv_maker.py,Plug load usage level which is varied by Census Division RECS and Building Type RECS.
+REEDS Balancing Area,5.0,1.0,sources\spatial\tsv_maker.py,The Regional Energy Deployment System Model (ReEDS) balancing area that the sample is located.
 Radiant Barrier,3.0,1.0,manually created,Presence of radiant barrier in the attic (not modeled in project_national).
 Range Spot Vent Hour,24.0,0.0,manually created,Range spot ventilation daily start hour.
-Refrigerator,22.0,0.0,Originally created by sources\recs\2009\tsv_maker.py. Manually updated during the HPXML transition.,The presence and rated efficiency of the primary refrigerator.
-Roof Material,7.0,0.0,manually created,Roof material and color.
-Solar Hot Water,7.0,1.0,manually created,"Presence, size, and location of solar hot water system (not modeled in project_national)."
-State,4.0,1.0,sources\spatial\tsv_maker.py,The U.S. State the sample is located.
+Refrigerator,9.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence and rated efficiency of the primary refrigerator.
+Refrigerator Usage Level,3.0,0.0,sources\other\tsv_maker.py,Refrigerator energy usage level multiplier.
+Roof Material,7.0,1.0,sources\recs\recs2020\tsv_maker.py,Roof material and color.
+State,5.0,1.0,sources\spatial\tsv_maker.py,The U.S. State the sample is located.
+Tenure,3.0,1.0,sources\pums\pums2019_5yrs\tsv_maker.py,The tenancy (owner or renter) of the household occupying the dwelling unit.
 Vacancy Status,2.0,0.0,sources\pums\pums2019_5yrs\tsv_maker.py,The vacancy status (occupied or vacant) of the dwelling unit.
-Water Heater Efficiency,16.0,0.0,sources\recs\recs2009\tsv_maker.py,"The efficiency, type, and heating fuel of water heater."
+Vintage,1.0,0.0,manually created,Time period in which the building was constructed.
+Water Heater Efficiency,18.0,0.0,sources\recs\recs2020\tsv_maker.py,"The efficiency, type, and heating fuel of water heater."
+Water Heater Location,8.0,2.0,sources\recs\recs2020\tsv_maker.py,location of water heater.
 Window Areas,9.0,1.0,sources\rbsa_II\tsv_maker.py,"Window to wall ratios of the front, back, left, and right walls."
-Windows,10.0,0.0,sources\recs\recs2015\tsv_maker.py,Construction type and efficiency levels of windows.
+Windows,11.0,2.0,sources\recs\recs2020\tsv_maker.py,Construction type and efficiency levels of windows.

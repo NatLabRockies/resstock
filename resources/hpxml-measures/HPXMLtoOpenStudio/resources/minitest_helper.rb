@@ -3,6 +3,7 @@
 called_from_cli = true
 begin
   OpenStudio.getOpenStudioCLI
+  OpenStudio::Logger.instance.standardOutLogger.setLogLevel(OpenStudio::Fatal)
 rescue
   called_from_cli = false
 end

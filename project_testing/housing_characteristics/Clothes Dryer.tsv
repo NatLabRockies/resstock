@@ -1,5 +1,5 @@
-Dependency=Clothes Washer Presence	Option=Gas, 80% Usage	Option=Gas, 100% Usage	Option=Gas, 120% Usage	Option=Gas, Premium, 80% Usage	Option=Gas, Premium, 100% Usage	Option=Gas, Premium, 120% Usage	Option=Propane, 80% Usage	Option=Propane, 100% Usage	Option=Propane, 120% Usage	Option=Electric, 80% Usage	Option=Electric, 100% Usage	Option=Electric, 120% Usage	Option=Electric, Premium, 80% Usage	Option=Electric, Premium, 100% Usage	Option=Electric, Premium, 120% Usage	Option=Electric, Premium, EnergyStar 80% Usage	Option=Electric, Premium, EnergyStar 100% Usage	Option=Electric, Premium, EnergyStar 120% Usage	Option=Electric, Heat Pump, Ventless, 80% Usage	Option=Electric, Heat Pump, Ventless, 100% Usage	Option=Electric, Heat Pump, Ventless, 120% Usage	Option=Electric, Premium, Heat Pump, Ventless, 80% Usage	Option=Electric, Premium, Heat Pump, Ventless, 100% Usage	Option=Electric, Premium, Heat Pump, Ventless, 120% Usage	Option=None	sampling_probability
-Yes	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.04	0.5
-None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.5
-# Created by: manually created
-# Description: The presence, rated efficiency, fuel type, and usage level of the clothes dryer in a dwelling unit.
+Dependency=Clothes Washer Presence	Option=Electric	Option=Gas	Option=None	Option=Propane	Option=Void	sampling_probability
+None	0	0	1	0	0	0.5
+Yes	0.25	0.25	0.25	0.25	0	0.5
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: The presence, rated efficiency, and fuel type of the clothes dryer in a dwelling unit.

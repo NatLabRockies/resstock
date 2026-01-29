@@ -1,42 +1,62 @@
 # frozen_string_literal: true
 
-require 'parallel'
 require 'json'
+require 'optparse'
+require 'parallel'
+require 'pathname'
+require 'time'
 require 'yaml'
+require 'zlib'
 
-require_relative '../resources/buildstock'
 require_relative '../resources/run_sampling_lib'
-require_relative '../resources/util'
+require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/util'
 
 $start_time = Time.now
 
-def run_workflow(yml, n_threads, measures_only, debug_arg, overwrite, building_ids, keep_run_folders, samplingonly)
-  fail "YML file does not exist at '#{yml}'." if !File.exist?(yml)
+def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_ids, upgrade_names, keep_run_folders, samplingonly)
+  if !File.exist?(yml)
+    puts "Error: YML file does not exist at '#{yml}'."
+    return false
+  end
 
-  cfg = YAML.load_file(yml)
+  cfg = YAML.load_file(yml, aliases: true)
 
   if !cfg['workflow_generator']['args'].keys.include?('build_existing_model') || !cfg['workflow_generator']['args'].keys.include?('simulation_output_report')
-    fail "Both 'build_existing_model' and 'simulation_output_report' must be included in yml."
+    puts "Error: Both 'build_existing_model' and 'simulation_output_report' must be included in yml."
+    return false
   end
 
   if !['residential_quota', 'residential_quota_downselect', 'precomputed'].include?(cfg['sampler']['type'])
-    fail "Sampler type '#{cfg['sampler']['type']}' is invalid or not supported."
+    puts "Error: Sampler type '#{cfg['sampler']['type']}' is invalid or not supported."
+    return false
   end
 
   if cfg['sampler']['type'] == 'residential_quota_downselect' && cfg['sampler']['args']['resample']
-    fail "Not supporting residential_quota_downselect's 'resample' at this time."
+    puts "Error: Not supporting residential_quota_downselect's 'resample' at this time."
+    return false
   end
+
+  cfg_upgrade_names = ['Baseline']
+  cfg_upgrade_names += cfg['upgrades'].collect { |u| u['upgrade_name'] } if cfg.keys.include?('upgrades')
+
+  invalid_upgrade_names = upgrade_names - cfg_upgrade_names
+  if !invalid_upgrade_names.empty?
+    puts "Error: At least one invalid upgrade_name was specified: #{invalid_upgrade_names.join(', ')}. Valid choices are: #{cfg_upgrade_names.join(', ')}."
+    return false
+  end
+
+  if upgrade_names.empty?
+    upgrades = cfg_upgrade_names
+  else
+    upgrades = upgrade_names
+  end
+  upgrades = upgrades.map { |u| u.gsub(/[^0-9A-Za-z]/, '') }
 
   thisdir = File.dirname(__FILE__)
 
-  buildstock_directory = cfg['buildstock_directory']
   project_directory = cfg['project_directory']
   output_directory = cfg['output_directory']
   n_datapoints = cfg['sampler']['args']['n_datapoints']
-
-  if !(Pathname.new buildstock_directory).absolute?
-    buildstock_directory = File.absolute_path(File.join(File.dirname(yml), buildstock_directory))
-  end
 
   if (Pathname.new output_directory).absolute?
     results_dir = output_directory
@@ -44,33 +64,27 @@ def run_workflow(yml, n_threads, measures_only, debug_arg, overwrite, building_i
     results_dir = File.absolute_path(output_directory)
   end
   FileUtils.rm_rf(results_dir) if overwrite
-  fail "Output directory '#{output_directory}' already exists." if File.exist?(results_dir)
+  if File.exist?(results_dir)
+    puts "Error: Output directory '#{output_directory}' already exists."
+    return false
+  end
 
   Dir.mkdir(results_dir)
 
-  # Create lib folder
-  lib_dir = File.join(thisdir, '../lib')
-  resources_dir = File.join(thisdir, '../resources')
-  housing_characteristics_dir = File.join(buildstock_directory, project_directory, 'housing_characteristics')
-  create_lib_folder(lib_dir, resources_dir, housing_characteristics_dir)
-
   # Create or read buildstock.csv
-  outfile = File.join('../lib/housing_characteristics/buildstock.csv')
   if !['precomputed'].include?(cfg['sampler']['type'])
-    create_buildstock_csv(project_directory, n_datapoints, outfile)
-    src = File.expand_path(File.join(File.dirname(__FILE__), '../lib/housing_characteristics/buildstock.csv'))
-    des = results_dir
-    FileUtils.cp(src, des)
-
+    buildstock_csv_path = File.join(results_dir, 'buildstock.csv')
+    create_buildstock_csv(project_directory, n_datapoints, buildstock_csv_path)
     return if samplingonly
 
     datapoints = (1..n_datapoints).to_a
   else
-    src = File.expand_path(File.join(File.dirname(yml), cfg['sampler']['args']['sample_file']))
-    des = File.expand_path(File.join(File.dirname(__FILE__), outfile))
-    FileUtils.cp(src, des)
+    buildstock_csv_path = cfg['sampler']['args']['sample_file']
+    unless (Pathname.new buildstock_csv_path).absolute?
+      buildstock_csv_path = File.expand_path(File.join(File.dirname(yml), buildstock_csv_path))
+    end
 
-    buildstock_csv = CSV.read(des, headers: true)
+    buildstock_csv = CSV.read(buildstock_csv_path, headers: true)
     datapoints = buildstock_csv['Building'].map { |x| Integer(x) }
     n_datapoints = datapoints.size
   end
@@ -81,130 +95,151 @@ def run_workflow(yml, n_threads, measures_only, debug_arg, overwrite, building_i
   xml_dir = File.join(results_dir, 'xml')
   Dir.mkdir(xml_dir)
 
-  upgrade_names = ['Baseline']
-  if cfg.keys.include?('upgrades')
-    cfg['upgrades'].each do |upgrade|
-      upgrade_names << upgrade['upgrade_name'].gsub(' ', '')
-    end
+  workflow_args = { 'build_existing_model' => {},
+                    'measures' => [],
+                    'simulation_output_report' => {},
+                    'server_directory_cleanup' => {} }
+  workflow_args.update(cfg['workflow_generator']['args'])
+
+  sim_ctl_args = {
+    'simulation_control_timestep' => 60,
+    'simulation_control_run_period_begin_month' => 1,
+    'simulation_control_run_period_begin_day_of_month' => 1,
+    'simulation_control_run_period_end_month' => 12,
+    'simulation_control_run_period_end_day_of_month' => 31,
+    'simulation_control_run_period_calendar_year' => 2007,
+    'add_component_loads' => false
+  }
+
+  bld_exist_model_args = {
+    'buildstock_csv_path': buildstock_csv_path,
+    'building_id': '',
+    'project_directory': project_directory,
+    'sample_weight': Float(cfg['baseline']['n_buildings_represented']) / n_datapoints # aligns with buildstockbatch
+  }
+
+  bld_exist_model_args.update(sim_ctl_args)
+  bld_exist_model_args.update(workflow_args['build_existing_model'])
+
+  add_component_loads = false
+  if bld_exist_model_args.keys.include?('add_component_loads')
+    add_component_loads = bld_exist_model_args['add_component_loads']
+    bld_exist_model_args.delete('add_component_loads')
+  end
+
+  if workflow_args.keys.include?('emissions')
+    emissions = workflow_args['emissions']
+    bld_exist_model_args['emissions_scenario_names'] = emissions.collect { |s| s['scenario_name'] }.join(',')
+    bld_exist_model_args['emissions_types'] = emissions.collect { |s| s['type'] }.join(',')
+    bld_exist_model_args['emissions_electricity_folders'] = emissions.collect { |s| s['elec_folder'] }.join(',')
+    bld_exist_model_args['emissions_natural_gas_values'] = emissions.collect { |s| s['gas_value'] }.join(',')
+    bld_exist_model_args['emissions_propane_values'] = emissions.collect { |s| s['propane_value'] }.join(',')
+    bld_exist_model_args['emissions_fuel_oil_values'] = emissions.collect { |s| s['oil_value'] }.join(',')
+    bld_exist_model_args['emissions_wood_values'] = emissions.collect { |s| s['wood_value'] }.join(',')
+  end
+
+  if workflow_args.keys.include?('utility_bills')
+    utility_bills = workflow_args['utility_bills']
+    bld_exist_model_args['utility_bill_scenario_names'] = utility_bills.collect { |s| s['scenario_name'] }.join(',')
+    bld_exist_model_args['utility_bill_simple_filepaths'] = utility_bills.collect { |s| s['simple_filepath'] }.join(',')
+    bld_exist_model_args['utility_bill_detailed_filepaths'] = utility_bills.collect { |s| s['detailed_filepath'] }.join(',')
+    bld_exist_model_args['utility_bill_electricity_fixed_charges'] = utility_bills.collect { |s| s['elec_fixed_charge'] }.join(',')
+    bld_exist_model_args['utility_bill_electricity_marginal_rates'] = utility_bills.collect { |s| s['elec_marginal_rate'] }.join(',')
+    bld_exist_model_args['utility_bill_natural_gas_fixed_charges'] = utility_bills.collect { |s| s['gas_fixed_charge'] }.join(',')
+    bld_exist_model_args['utility_bill_natural_gas_marginal_rates'] = utility_bills.collect { |s| s['gas_marginal_rate'] }.join(',')
+    bld_exist_model_args['utility_bill_propane_fixed_charges'] = utility_bills.collect { |s| s['propane_fixed_charge'] }.join(',')
+    bld_exist_model_args['utility_bill_propane_marginal_rates'] = utility_bills.collect { |s| s['propane_marginal_rate'] }.join(',')
+    bld_exist_model_args['utility_bill_fuel_oil_fixed_charges'] = utility_bills.collect { |s| s['oil_fixed_charge'] }.join(',')
+    bld_exist_model_args['utility_bill_fuel_oil_marginal_rates'] = utility_bills.collect { |s| s['oil_marginal_rate'] }.join(',')
+    bld_exist_model_args['utility_bill_wood_fixed_charges'] = utility_bills.collect { |s| s['wood_fixed_charge'] }.join(',')
+    bld_exist_model_args['utility_bill_wood_marginal_rates'] = utility_bills.collect { |s| s['wood_marginal_rate'] }.join(',')
+    bld_exist_model_args['utility_bill_pv_compensation_types'] = utility_bills.collect { |s| s['pv_compensation_type'] }.join(',')
+    bld_exist_model_args['utility_bill_pv_net_metering_annual_excess_sellback_rate_types'] = utility_bills.collect { |s| s['pv_net_metering_annual_excess_sellback_rate_type'] }.join(',')
+    bld_exist_model_args['utility_bill_pv_net_metering_annual_excess_sellback_rates'] = utility_bills.collect { |s| s['pv_net_metering_annual_excess_sellback_rate'] }.join(',')
+    bld_exist_model_args['utility_bill_pv_feed_in_tariff_rates'] = utility_bills.collect { |s| s['pv_feed_in_tariff_rate'] }.join(',')
+    bld_exist_model_args['utility_bill_pv_monthly_grid_connection_fee_units'] = utility_bills.collect { |s| s['pv_monthly_grid_connection_fee_units'] }.join(',')
+    bld_exist_model_args['utility_bill_pv_monthly_grid_connection_fees'] = utility_bills.collect { |s| s['pv_monthly_grid_connection_fee'] }.join(',')
+  end
+
+  if cfg['sampler']['type'] == 'residential_quota_downselect'
+    bld_exist_model_args['downselect_logic'] = make_apply_logic_arg(cfg['sampler']['args']['logic'])
+  end
+
+  sim_out_rep_args = {
+    'output_format' => 'csv',
+    'include_annual_total_consumptions' => true,
+    'include_annual_fuel_consumptions' => true,
+    'include_annual_end_use_consumptions' => true,
+    'include_annual_system_use_consumptions' => false,
+    'include_annual_emissions' => true,
+    'include_annual_emission_fuels' => true,
+    'include_annual_emission_end_uses' => true,
+    'include_annual_total_loads' => true,
+    'include_annual_unmet_hours' => true,
+    'include_annual_peak_fuels' => true,
+    'include_annual_peak_loads' => true,
+    'include_annual_component_loads' => true,
+    'include_annual_hot_water_uses' => true,
+    'include_annual_hvac_summary' => true,
+    'include_annual_resilience' => true,
+    'timeseries_frequency' => 'none',
+    'include_timeseries_total_consumptions' => false,
+    'include_timeseries_fuel_consumptions' => false,
+    'include_timeseries_end_use_consumptions' => true,
+    'include_timeseries_system_use_consumptions' => false,
+    'include_timeseries_emissions' => false,
+    'include_timeseries_emission_fuels' => false,
+    'include_timeseries_emission_end_uses' => false,
+    'include_timeseries_hot_water_uses' => false,
+    'include_timeseries_total_loads' => true,
+    'include_timeseries_component_loads' => false,
+    'include_timeseries_unmet_hours' => false,
+    'include_timeseries_zone_temperatures' => false,
+    'include_timeseries_zone_conditions' => false,
+    'include_timeseries_airflows' => false,
+    'include_timeseries_weather' => false,
+    'include_timeseries_resilience' => false,
+    'timeseries_timestamp_convention' => 'end',
+    'timeseries_num_decimal_places' => 3,
+    'add_timeseries_dst_column' => true,
+    'add_timeseries_utc_column' => true,
+    'user_output_variables' => '',
+    'user_output_meters' => ''
+  }
+  sim_out_rep_args.update(workflow_args['simulation_output_report'])
+
+  if sim_out_rep_args.keys.include?('output_variables')
+    output_variables = sim_out_rep_args['output_variables']
+    sim_out_rep_args['user_output_variables'] = output_variables.collect { |o| o['name'] }.join(',')
+    sim_out_rep_args.delete('output_variables')
+  end
+
+  if sim_out_rep_args.keys.include?('output_meters')
+    output_meters = sim_out_rep_args['output_meters']
+    sim_out_rep_args['user_output_meters'] = output_meters.collect { |o| o['name'] }.join(',')
+    sim_out_rep_args.delete('output_meters')
+  end
+
+  include_annual_bills = false
+  include_monthly_bills = false
+  register_annual_bills = true
+  register_monthly_bills = false
+  if sim_out_rep_args.keys.include?('include_annual_bills')
+    register_annual_bills = sim_out_rep_args['include_annual_bills']
+    sim_out_rep_args.delete('include_annual_bills')
+  end
+  if sim_out_rep_args.keys.include?('include_monthly_bills')
+    register_monthly_bills = sim_out_rep_args['include_monthly_bills']
+    sim_out_rep_args.delete('include_monthly_bills')
   end
 
   osw_paths = {}
-  upgrade_names.each_with_index do |upgrade_name, upgrade_idx|
+  upgrades.each do |upgrade_name|
     scenario_osw_dir = File.join(results_dir, 'osw', upgrade_name)
     Dir.mkdir(scenario_osw_dir)
 
     scenario_xml_dir = File.join(results_dir, 'xml', upgrade_name)
     Dir.mkdir(scenario_xml_dir)
-
-    workflow_args = { 'build_existing_model' => {},
-                      'measures' => [],
-                      'simulation_output_report' => {},
-                      'server_directory_cleanup' => {} }
-    workflow_args.update(cfg['workflow_generator']['args'])
-
-    sim_ctl_args = {
-      'simulation_control_timestep' => 60,
-      'simulation_control_run_period_begin_month' => 1,
-      'simulation_control_run_period_begin_day_of_month' => 1,
-      'simulation_control_run_period_end_month' => 12,
-      'simulation_control_run_period_end_day_of_month' => 31,
-      'simulation_control_run_period_calendar_year' => 2007,
-      'add_component_loads' => false
-    }
-
-    bld_exist_model_args = {
-      'building_id': '',
-      'sample_weight': Float(cfg['baseline']['n_buildings_represented']) / n_datapoints # aligns with buildstockbatch
-    }
-
-    bld_exist_model_args.update(sim_ctl_args)
-    bld_exist_model_args.update(workflow_args['build_existing_model'])
-
-    add_component_loads = false
-    if bld_exist_model_args.keys.include?('add_component_loads')
-      add_component_loads = bld_exist_model_args['add_component_loads']
-      bld_exist_model_args.delete('add_component_loads')
-    end
-
-    if workflow_args.keys.include?('emissions')
-      emissions = workflow_args['emissions']
-      bld_exist_model_args['emissions_scenario_names'] = emissions.collect { |s| s['scenario_name'] }.join(',')
-      bld_exist_model_args['emissions_types'] = emissions.collect { |s| s['type'] }.join(',')
-      bld_exist_model_args['emissions_electricity_folders'] = emissions.collect { |s| s['elec_folder'] }.join(',')
-      bld_exist_model_args['emissions_natural_gas_values'] = emissions.collect { |s| s['gas_value'] }.join(',')
-      bld_exist_model_args['emissions_propane_values'] = emissions.collect { |s| s['propane_value'] }.join(',')
-      bld_exist_model_args['emissions_fuel_oil_values'] = emissions.collect { |s| s['oil_value'] }.join(',')
-      bld_exist_model_args['emissions_wood_values'] = emissions.collect { |s| s['wood_value'] }.join(',')
-    end
-
-    if workflow_args.keys.include?('utility_bills')
-      utility_bills = workflow_args['utility_bills']
-      bld_exist_model_args['utility_bill_scenario_names'] = utility_bills.collect { |s| s['scenario_name'] }.join(',')
-      bld_exist_model_args['utility_bill_electricity_fixed_charges'] = utility_bills.collect { |s| s['elec_fixed_charge'] }.join(',')
-      bld_exist_model_args['utility_bill_electricity_marginal_rates'] = utility_bills.collect { |s| s['elec_marginal_rate'] }.join(',')
-      bld_exist_model_args['utility_bill_natural_gas_fixed_charges'] = utility_bills.collect { |s| s['gas_fixed_charge'] }.join(',')
-      bld_exist_model_args['utility_bill_natural_gas_marginal_rates'] = utility_bills.collect { |s| s['gas_marginal_rate'] }.join(',')
-      bld_exist_model_args['utility_bill_propane_fixed_charges'] = utility_bills.collect { |s| s['propane_fixed_charge'] }.join(',')
-      bld_exist_model_args['utility_bill_propane_marginal_rates'] = utility_bills.collect { |s| s['propane_marginal_rate'] }.join(',')
-      bld_exist_model_args['utility_bill_fuel_oil_fixed_charges'] = utility_bills.collect { |s| s['oil_fixed_charge'] }.join(',')
-      bld_exist_model_args['utility_bill_fuel_oil_marginal_rates'] = utility_bills.collect { |s| s['oil_marginal_rate'] }.join(',')
-      bld_exist_model_args['utility_bill_wood_fixed_charges'] = utility_bills.collect { |s| s['wood_fixed_charge'] }.join(',')
-      bld_exist_model_args['utility_bill_wood_marginal_rates'] = utility_bills.collect { |s| s['wood_marginal_rate'] }.join(',')
-      bld_exist_model_args['utility_bill_pv_compensation_types'] = utility_bills.collect { |s| s['pv_compensation_type'] }.join(',')
-      bld_exist_model_args['utility_bill_pv_net_metering_annual_excess_sellback_rate_types'] = utility_bills.collect { |s| s['pv_net_metering_annual_excess_sellback_rate_type'] }.join(',')
-      bld_exist_model_args['utility_bill_pv_net_metering_annual_excess_sellback_rates'] = utility_bills.collect { |s| s['pv_net_metering_annual_excess_sellback_rate'] }.join(',')
-      bld_exist_model_args['utility_bill_pv_feed_in_tariff_rates'] = utility_bills.collect { |s| s['pv_feed_in_tariff_rate'] }.join(',')
-      bld_exist_model_args['utility_bill_pv_monthly_grid_connection_fee_units'] = utility_bills.collect { |s| s['pv_monthly_grid_connection_fee_units'] }.join(',')
-      bld_exist_model_args['utility_bill_pv_monthly_grid_connection_fees'] = utility_bills.collect { |s| s['pv_monthly_grid_connection_fee'] }.join(',')
-    end
-
-    if cfg['sampler']['type'] == 'residential_quota_downselect'
-      bld_exist_model_args['downselect_logic'] = make_apply_logic_arg(cfg['sampler']['args']['logic'])
-    end
-
-    sim_out_rep_args = {
-      'output_format' => 'csv',
-      'include_annual_total_consumptions' => true,
-      'include_annual_fuel_consumptions' => true,
-      'include_annual_end_use_consumptions' => true,
-      'include_annual_system_use_consumptions' => false,
-      'include_annual_emissions' => true,
-      'include_annual_emission_fuels' => true,
-      'include_annual_emission_end_uses' => true,
-      'include_annual_total_loads' => true,
-      'include_annual_unmet_hours' => true,
-      'include_annual_peak_fuels' => true,
-      'include_annual_peak_loads' => true,
-      'include_annual_component_loads' => true,
-      'include_annual_hot_water_uses' => true,
-      'include_annual_hvac_summary' => true,
-      'timeseries_frequency' => 'none',
-      'include_timeseries_total_consumptions' => false,
-      'include_timeseries_fuel_consumptions' => false,
-      'include_timeseries_end_use_consumptions' => true,
-      'include_timeseries_system_use_consumptions' => false,
-      'include_timeseries_emissions' => false,
-      'include_timeseries_emission_fuels' => false,
-      'include_timeseries_emission_end_uses' => false,
-      'include_timeseries_hot_water_uses' => false,
-      'include_timeseries_total_loads' => true,
-      'include_timeseries_component_loads' => false,
-      'include_timeseries_unmet_hours' => false,
-      'include_timeseries_zone_temperatures' => false,
-      'include_timeseries_airflows' => false,
-      'include_timeseries_weather' => false,
-      'timeseries_timestamp_convention' => 'end',
-      'timeseries_num_decimal_places' => 3,
-      'add_timeseries_dst_column' => true,
-      'add_timeseries_utc_column' => true
-    }
-    sim_out_rep_args.update(workflow_args['simulation_output_report'])
-
-    if sim_out_rep_args.keys.include?('output_variables')
-      output_variables = sim_out_rep_args['output_variables']
-      sim_out_rep_args['user_output_variables'] = output_variables.collect { |o| o['name'] }.join(',')
-      sim_out_rep_args.delete('output_variables')
-    end
 
     osw = {
       'steps' => [
@@ -261,6 +296,10 @@ def run_workflow(yml, n_threads, measures_only, debug_arg, overwrite, building_i
           'add_component_loads' => add_component_loads,
           'skip_validation' => true
         }
+      },
+      {
+        'measure_dir_name' => 'UpgradeCosts',
+        'arguments' => { 'debug' => debug }
       }
     ]
 
@@ -272,16 +311,12 @@ def run_workflow(yml, n_threads, measures_only, debug_arg, overwrite, building_i
         'arguments' => sim_out_rep_args
       },
       {
-        'measure_dir_name' => 'ReportHPXMLOutput',
-        'arguments' => { 'output_format' => 'csv' }
-      },
-      {
         'measure_dir_name' => 'ReportUtilityBills',
-        'arguments' => { 'output_format' => 'csv' }
-      },
-      {
-        'measure_dir_name' => 'UpgradeCosts',
-        'arguments' => { 'debug' => debug }
+        'arguments' => { 'output_format' => 'csv',
+                         'include_annual_bills' => include_annual_bills,
+                         'include_monthly_bills' => include_monthly_bills,
+                         'register_annual_bills' => register_annual_bills,
+                         'register_monthly_bills' => register_monthly_bills }
       },
       {
         'measure_dir_name' => 'ServerDirectoryCleanup',
@@ -289,13 +324,11 @@ def run_workflow(yml, n_threads, measures_only, debug_arg, overwrite, building_i
       }
     ]
 
-    if upgrade_idx > 0
-      measure_d = cfg['upgrades'][upgrade_idx - 1]
+    if upgrade_name != 'Baseline'
       apply_upgrade_measure = { 'measure_dir_name' => 'ApplyUpgrade',
-                                'arguments' => { 'run_measure' => 1 } }
-      if measure_d.include?('upgrade_name')
-        apply_upgrade_measure['arguments']['upgrade_name'] = measure_d['upgrade_name']
-      end
+                                'arguments' => { 'project_directory': project_directory } }
+      measure_d = cfg['upgrades'].find { |u| u['upgrade_name'].gsub(/[^0-9A-Za-z]/, '') == upgrade_name }
+      apply_upgrade_measure['arguments']['upgrade_name'] = measure_d['upgrade_name']
       measure_d['options'].each_with_index do |option, opt_num|
         opt_num += 1
         apply_upgrade_measure['arguments']["option_#{opt_num}"] = option['option']
@@ -340,7 +373,7 @@ def run_workflow(yml, n_threads, measures_only, debug_arg, overwrite, building_i
     File.open(osw_paths[upgrade_name], 'w') do |f|
       f.write(JSON.pretty_generate(osw))
     end
-  end # end upgrade_names.each_with_index do |upgrade_name, upgrade_idx|
+  end # end upgrades.each do |upgrade_name|
 
   measures = []
   cfg['workflow_generator']['args'].keys.each do |wfg_arg|
@@ -362,6 +395,11 @@ def run_workflow(yml, n_threads, measures_only, debug_arg, overwrite, building_i
 
   # Create weather folder
   weather_dir = File.join(thisdir, '../weather')
+
+  if File.exist?(weather_dir) && Dir[File.join(weather_dir, '*.epw')].empty?
+    FileUtils.rm_rf(weather_dir)
+  end
+
   if !File.exist?(weather_dir)
     if cfg.keys.include?('weather_files_url')
       Dir.mkdir(weather_dir)
@@ -382,7 +420,8 @@ def run_workflow(yml, n_threads, measures_only, debug_arg, overwrite, building_i
         weather_files_path = File.absolute_path(File.join(File.dirname(yml), weather_files_path))
       end
     else
-      fail "Must include 'weather_files_url' or 'weather_files_path' in yml."
+      puts "Error: Must include 'weather_files_url' or 'weather_files_path' in yml."
+      return false
     end
 
     puts 'Extracting weather files...'
@@ -410,7 +449,7 @@ def run_workflow(yml, n_threads, measures_only, debug_arg, overwrite, building_i
   all_results_output = {}
   all_cli_output = []
 
-  Parallel.map(workflow_and_building_ids, in_threads: n_threads) do |upgrade_name, workflow, building_id|
+  Parallel.map(workflow_and_building_ids, in_threads: in_threads) do |upgrade_name, workflow, building_id|
     job_id = Parallel.worker_number + 1
     if keep_run_folders
       folder_id = workflow_and_building_ids.index([upgrade_name, workflow, building_id]) + 1
@@ -419,9 +458,9 @@ def run_workflow(yml, n_threads, measures_only, debug_arg, overwrite, building_i
     end
 
     all_results_output[upgrade_name] = [] if !all_results_output.keys.include?(upgrade_name)
-    samples_osw(results_dir, upgrade_name, workflow, building_id, job_id, folder_id, all_results_output, all_cli_output, measures, reporting_measures, measures_only, debug_arg)
+    samples_osw(results_dir, upgrade_name, workflow, building_id, job_id, folder_id, all_results_output, all_cli_output, measures, reporting_measures, measures_only, debug_arg, keep_run_folders)
 
-    info = "[Parallel(n_jobs=#{n_threads})]: "
+    info = "[Parallel(n_jobs=#{in_threads})]: "
     max_size = "#{workflow_and_building_ids.size}".size
     info += "%#{max_size}s" % "#{all_results_output.values.flatten.size}"
     info += " / #{workflow_and_building_ids.size}"
@@ -448,16 +487,7 @@ def run_workflow(yml, n_threads, measures_only, debug_arg, overwrite, building_i
     end
   end
 
-  FileUtils.rm_rf(lib_dir) if !debug_arg
-
   return true
-end
-
-def create_lib_folder(lib_dir, resources_dir, housing_characteristics_dir)
-  FileUtils.rm_rf(lib_dir)
-  Dir.mkdir(lib_dir)
-  FileUtils.cp_r(resources_dir, lib_dir)
-  FileUtils.cp_r(housing_characteristics_dir, lib_dir)
 end
 
 def create_buildstock_csv(project_dir, num_samples, outfile)
@@ -478,7 +508,7 @@ def get_elapsed_time(t1, t0)
   return t
 end
 
-def samples_osw(results_dir, upgrade_name, workflow, building_id, job_id, folder_id, all_results_output, all_cli_output, measures, reporting_measures, measures_only, debug)
+def samples_osw(results_dir, upgrade_name, workflow, building_id, job_id, folder_id, all_results_output, all_cli_output, measures, reporting_measures, measures_only, debug, keep_run_folders)
   scenario_osw_dir = File.join(results_dir, 'osw', upgrade_name)
   scenario_xml_dir = File.join(results_dir, 'xml', upgrade_name)
 
@@ -493,23 +523,26 @@ def samples_osw(results_dir, upgrade_name, workflow, building_id, job_id, folder
   hpxml_path = File.join(output_dir, 'home.xml')
   change_arguments(osw, building_id, hpxml_path, output_dir)
 
-  cli_output = "Building ID: #{building_id}. Upgrade Name: #{upgrade_name}. Job ID: #{job_id}.\n"
+  worker_folder_ = job_id
+  worker_folder_ = worker_folder if keep_run_folders
+  run_output = "Building ID: #{building_id}. Upgrade Name: #{upgrade_name}. Job ID: #{worker_folder_}\n"
   upgrade = upgrade_name != 'Baseline'
-  started_at, completed_at, completed_status, result_output, cli_output = RunOSWs.run(osw, worker_dir, cli_output, upgrade, measures, reporting_measures, measures_only)
+  started_at, completed_at, completed_status, eplusout_err, result_output, run_output = RunOSWs.run(osw, worker_dir, run_output, upgrade, measures, reporting_measures, measures_only)
 
   started_at = create_timestamp(started_at)
   completed_at = create_timestamp(completed_at)
 
   result_output['building_id'] = building_id
-  result_output['job_id'] = job_id
+  result_output['job_id'] = worker_folder_
   result_output['started_at'] = started_at
   result_output['completed_at'] = completed_at
   result_output['completed_status'] = completed_status
+  result_output['eplusout_err'] = eplusout_err
 
   clean_up_result_output(result_output, upgrade)
 
   all_results_output[upgrade_name] << result_output
-  all_cli_output << cli_output
+  all_cli_output << run_output
 
   run_dir = File.join(worker_dir, 'run')
   if debug
@@ -584,6 +617,125 @@ def make_apply_logic_arg(logic)
   end
 end
 
+class RunOSWs
+  require 'openstudio'
+  require 'csv'
+  require 'json'
+
+  def self.run(in_osw, parent_dir, run_output, upgrade, measures, reporting_measures, measures_only = false)
+    # Run workflow
+    cli_path = OpenStudio.getOpenStudioCLI
+    command = "\"#{cli_path}\" run"
+    command += ' -m' if measures_only
+    command += " -w \"#{in_osw}\""
+
+    system(command, [:out, :err] => File::NULL)
+    run_log = File.readlines(File.expand_path(File.join(parent_dir, 'run/run.log')))
+    run_log.each do |line|
+      next if line.include? 'Cannot find current Workflow Step'
+      next if line.include? 'WorkflowStepResult value called with undefined stepResult'
+      next if line.include? 'Appears there are no design condition fields in the EPW file'
+      next if line.include? 'No valid weather file defined in either the osm or osw.'
+      next if line.include? 'EPW file not found'
+      next if line.include? "'UseWeatherFile' is selected in YearDescription, but there are no weather file set for the model."
+      next if line.include? 'not within the expected limits' # Ignore EpwFile warnings
+      next if line.include? 'Unable to find sql file at'
+
+      # FIXME: should we investigate the following errors/warnings?
+      next if line.include? 'No construction for either surface'
+      next if line.include? 'Initial area of other surface'
+      next if line.include?('Surface') && line.include?('is adiabatic, removing all sub surfaces')
+
+      run_output += line
+    end
+
+    result_output = {}
+
+    out = File.join(parent_dir, 'out.osw')
+    out = File.expand_path(out)
+    fail "Could not find '#{out}'." unless File.exist?(out)
+
+    text = File.read(out)
+    out = JSON.parse(text)
+
+    started_at = out['started_at']
+    completed_at = out['completed_at']
+    completed_status = out['completed_status']
+    eplusout_err = out['eplusout_err']
+
+    data_point_out = File.join(parent_dir, 'run/data_point_out.json')
+
+    return started_at, completed_at, completed_status, eplusout_err, result_output, run_output if !File.exist?(data_point_out)
+
+    rows = {}
+    text = File.read(File.expand_path(data_point_out))
+    old_rows = JSON.parse(text)
+    old_rows.each do |measure, values|
+      rows[measure] = {}
+      values.each do |arg, val|
+        next if measure == 'BuildExistingModel' && arg == 'building_id'
+
+        rows[measure]["#{OpenStudio::toUnderscoreCase(measure)}.#{arg}"] = val
+      end
+    end
+
+    result_output = get_measure_results(rows, result_output, 'BuildExistingModel') if !upgrade
+    result_output = get_measure_results(rows, result_output, 'ApplyUpgrade')
+    measures.each do |measure|
+      result_output = get_measure_results(rows, result_output, measure)
+    end
+    result_output = get_measure_results(rows, result_output, 'UpgradeCosts')
+    result_output = get_measure_results(rows, result_output, 'ReportSimulationOutput')
+    result_output = get_measure_results(rows, result_output, 'ReportUtilityBills')
+    reporting_measures.each do |reporting_measure|
+      result_output = get_measure_results(rows, result_output, reporting_measure)
+    end
+
+    return started_at, completed_at, completed_status, eplusout_err, result_output, run_output
+  end
+
+  def self.get_measure_results(rows, result, measure)
+    if rows.keys.include?(measure)
+      result = result.merge(rows[measure])
+    end
+    return result
+  end
+
+  def self.write_summary_results(results_dir, filename, results)
+    if not File.exist?(results_dir)
+      Dir.mkdir(results_dir)
+    end
+    csv_out = File.join(results_dir, filename)
+
+    column_headers = []
+    results.each do |result|
+      result.keys.each do |col|
+        column_headers << col unless column_headers.include?(col)
+      end
+    end
+    column_headers = column_headers.sort
+
+    ['eplusout_err', 'completed_status', 'completed_at', 'started_at', 'job_id', 'building_id'].each do |col|
+      column_headers.delete(col)
+      column_headers.insert(0, col)
+    end
+
+    CSV.open(csv_out, 'wb') do |csv|
+      csv << column_headers
+      results.sort_by { |h| h['building_id'] }.each do |result|
+        csv_row = []
+        column_headers.each do |column_header|
+          csv_row << result[column_header]
+        end
+        csv << csv_row
+      end
+    end
+
+    puts "Wrote: #{csv_out}"
+    return csv_out
+  end
+end
+
 options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: #{File.basename(__FILE__)} -y buildstockbatch.yml\n e.g., #{File.basename(__FILE__)} -y national_baseline.yml\n"
@@ -607,8 +759,13 @@ OptionParser.new do |opts|
     options[:building_ids] << t
   end
 
+  options[:upgrade_names] = []
+  opts.on('-u', '--upgrade_name NAME', 'Only run this upgrade; can be called multiple times') do |t|
+    options[:upgrade_names] << t
+  end
+
   options[:keep_run_folders] = false
-  opts.on('-k', '--keep_run_folders', 'Preserve run folder for all datapoints') do |_t|
+  opts.on('-k', '--keep_run_folders', 'Preserve run folder for all datapoints; also populates run folder in cli_output.log and results-xxx.csv files') do |_t|
     options[:keep_run_folders] = true
   end
 
@@ -623,7 +780,7 @@ OptionParser.new do |opts|
   end
 
   options[:debug] = false
-  opts.on('-d', '--debug', 'Preserve lib folder and "existing" xml/osw files') do |_t|
+  opts.on('-d', '--debug', 'Preserve xml/osw files for existing building') do |_t|
     options[:debug] = true
   end
 
@@ -640,19 +797,19 @@ end.parse!
 
 if options[:version]
   puts "ResStock v#{Version::ResStock_Version}"
+  cli_path = OpenStudio.getOpenStudioCLI
+  command = "\"#{cli_path}\" #{File.dirname(__FILE__)}/../resources/hpxml-measures/workflow/run_simulation.rb -v"
+  system(command)
 else
   if not options[:yml]
-    fail "YML argument is required. Call #{File.basename(__FILE__)} -h for usage."
+    puts "Error: YML argument is required. Call #{File.basename(__FILE__)} -h for usage."
+    return
   end
 
   # Run analysis
   puts "YML: #{options[:yml]}"
   success = run_workflow(options[:yml], options[:threads], options[:measures_only], options[:debug], options[:overwrite],
-                         options[:building_ids], options[:keep_run_folders], options[:samplingonly])
+                         options[:building_ids], options[:upgrade_names], options[:keep_run_folders], options[:samplingonly])
 
-  if not success
-    exit! 1
-  end
-
-  puts "\nCompleted in #{get_elapsed_time(Time.now, $start_time)}."
+  puts "\nCompleted in #{get_elapsed_time(Time.now, $start_time)}." if success
 end

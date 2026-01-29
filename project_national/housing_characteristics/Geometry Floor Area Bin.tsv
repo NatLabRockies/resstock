@@ -1,14 +1,14 @@
 Dependency=Geometry Floor Area	Option=0-1499	Option=1500-2499	Option=2500-3999	Option=4000+	source_count	source_weight	sampling_probability
-0-499	1	0	0	0	755	7.15905e+06	0.032405
-1000-1499	1	0	0	0	2819	2.67582e+07	0.262041
-1500-1999	0	1	0	0	2047	1.87737e+07	0.193186
-2000-2499	0	1	0	0	1367	1.26713e+07	0.124504
-2500-2999	0	0	1	0	815	7.29895e+06	0.0654612
-3000-3999	0	0	1	0	869	7.86882e+06	0.0611767
-4000+	0	0	0	1	590	5.0953e+06	0.0302944
-500-749	1	0	0	0	1155	1.20227e+07	0.08528
-750-999	1	0	0	0	1567	1.50868e+07	0.145652
-# Created by: sources\recs\recs2009\tsv_maker.py
+0-499	1	0	0	0	265	2.28007e+06	0.0324051
+1000-1499	1	0	0	0	4001	2.84371e+07	0.262116
+1500-1999	0	1	0	0	3582	2.25466e+07	0.193175
+2000-2499	0	1	0	0	2600	1.55344e+07	0.124439
+2500-2999	0	0	1	0	1726	1.01211e+07	0.0654083
+3000-3999	0	0	1	0	1948	1.09877e+07	0.0610651
+4000+	0	0	0	1	1009	5.70074e+06	0.0302508
+500-749	1	0	0	0	1305	1.13372e+07	0.0854304
+750-999	1	0	0	0	2060	1.6584e+07	0.145711
+# Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The finished floor area of the dwelling unit using bins from the U.S. Energy Information Administration Residential Energy Consumption Survey.
-# Source: The sample counts and sample weights are constructed using U.S. EIA 2009 Residential Energy Consumption Survey (RECS) microdata.
+# Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 # Source: Geometry Floor Area bins are from the UNITSIZE field of the 2017 American Housing Survey (AHS).

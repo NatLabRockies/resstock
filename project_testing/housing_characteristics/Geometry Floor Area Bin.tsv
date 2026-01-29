@@ -8,5 +8,5 @@ Dependency=Geometry Floor Area	Option=0-1499	Option=1500-2499	Option=2500-3999	O
 4000+	0	0	0	1	0.111111
 500-749	1	0	0	0	0.111111
 750-999	1	0	0	0	0.111111
-# Created by: sources\recs\recs2009\tsv_maker.py
+# Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The finished floor area of the dwelling unit using bins from the U.S. Energy Information Administration Residential Energy Consumption Survey.

@@ -1,4 +1,5 @@
-Option=0	Option=1	Option=2	Option=3	Option=4	Option=5	Option=6	Option=7	Option=8	Option=9	Option=10+	sampling_probability
-0.0909091	0.0909091	0.0909091	0.0909091	0.0909091	0.0909091	0.0909091	0.0909091	0.0909091	0.0909091	0.0909091	1
+Dependency=Vacancy Status	Option=0	Option=1	Option=2	Option=3	Option=4	Option=5	Option=6	Option=7	Option=8	Option=9	Option=10+	sampling_probability
+Occupied	0	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.5
+Vacant	1	0	0	0	0	0	0	0	0	0	0	0.5
 # Created by: sources\pums\pums2019_5yrs\tsv_maker.py
 # Description: The number of occupants living in the dwelling unit.

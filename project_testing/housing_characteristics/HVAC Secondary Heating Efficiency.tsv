@@ -1,28 +1,45 @@
-Dependency=HVAC Heating Type And Fuel	Option=None	Option=Electric Baseboard, 100% Efficiency	Option=Electric Portable Heater, 100% Efficiency	Option=Fuel Fireplace, 60% AFUE	sampling_probability
-None	1	0	0	0	0.333333
-Void	1	0	0	0	0
-Electricity ASHP	1	0	0	0	0.025463
-Electricity Baseboard	1	0	0	0	0.00848765
-Electricity Electric Boiler	1	0	0	0	0.00848765
-Electricity Electric Furnace	1	0	0	0	0.025463
-Electricity Electric Wall Furnace	1	0	0	0	0.00848765
-Electricity MSHP	1	0	0	0	0.0416667
-Electricity Shared Heating	1	0	0	0	0.0486111
-Fuel Oil Fuel Boiler	1	0	0	0	0.0305556
-Fuel Oil Fuel Furnace	1	0	0	0	0.0509259
-Fuel Oil Fuel Wall/Floor Furnace	1	0	0	0	0.0203704
-Fuel Oil Shared Heating	1	0	0	0	0.0648148
-Natural Gas Fuel Boiler	1	0	0	0	0.0305556
-Natural Gas Fuel Furnace	1	0	0	0	0.0509259
-Natural Gas Fuel Wall/Floor Furnace	1	0	0	0	0.0203704
-Natural Gas Shared Heating	1	0	0	0	0.0648148
-Other Fuel Fuel Boiler	1	0	0	0	0
-Other Fuel Fuel Furnace	1	0	0	0	0
-Other Fuel Fuel Wall/Floor Furnace	1	0	0	0	0
-Other Fuel Shared Heating	1	0	0	0	0
-Propane Fuel Boiler	1	0	0	0	0.0305556
-Propane Fuel Furnace	1	0	0	0	0.0509259
-Propane Fuel Wall/Floor Furnace	1	0	0	0	0.0203704
-Propane Shared Heating	1	0	0	0	0.0648148
-# Created by: manually created
-# Description: Efficiency of the secondary heating system (not used in project_national).
+Dependency=Custom State	Dependency=HVAC Secondary Heating Fuel	Dependency=HVAC Secondary Heating Type	Option=Fuel Boiler, 76% AFUE	Option=Fuel Boiler, 80% AFUE	Option=Fuel Boiler, 90% AFUE	Option=Fuel Furnace, 60% AFUE	Option=Fuel Furnace, 76% AFUE	Option=Fuel Furnace, 80% AFUE	Option=Fuel Furnace, 92.5% AFUE	Option=None	Option=Shared Heating	Option=Void	sampling_probability
+AK	Electricity	Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+Others	Electricity	Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+AK	Electricity	Non-Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+Others	Electricity	Non-Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+AK	Electricity	None	0	0	0	0	0	0	0	1	0	0	0.0244898
+Others	Electricity	None	0	0	0	0	0	0	0	1	0	0	0
+AK	Fuel Oil	Ducted Heating	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0.00408163
+Others	Fuel Oil	Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+AK	Fuel Oil	Non-Ducted Heating	0.333333	0.333333	0.333333	0	0	0	0	0	0	0	0.0102041
+Others	Fuel Oil	Non-Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+AK	Fuel Oil	None	0	0	0	0	0	0	0	1	0	0	0.0102041
+Others	Fuel Oil	None	0	0	0	0	0	0	0	1	0	0	0
+AK	Natural Gas	Ducted Heating	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0.00408163
+Others	Natural Gas	Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+AK	Natural Gas	Non-Ducted Heating	0.333333	0.333333	0.333333	0	0	0	0	0	0	0	0.0102041
+Others	Natural Gas	Non-Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+AK	Natural Gas	None	0	0	0	0	0	0	0	1	0	0	0.0102041
+Others	Natural Gas	None	0	0	0	0	0	0	0	1	0	0	0
+AK	None	Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+Others	None	Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+AK	None	Non-Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+Others	None	Non-Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+AK	None	None	0	0	0	0	0	0	0	1	0	0	0.0530612
+Others	None	None	0	0	0	0	0	0	0	1	0	0	0.8
+AK	Other Fuel	Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+Others	Other Fuel	Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+AK	Other Fuel	Non-Ducted Heating	0	0	0	0	0	0	0	1	0	0	0.0244898
+Others	Other Fuel	Non-Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+AK	Other Fuel	None	0	0	0	0	0	0	0	1	0	0	0
+Others	Other Fuel	None	0	0	0	0	0	0	0	1	0	0	0
+AK	Propane	Ducted Heating	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0.00408163
+Others	Propane	Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+AK	Propane	Non-Ducted Heating	0.333333	0.333333	0.333333	0	0	0	0	0	0	0	0.0102041
+Others	Propane	Non-Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+AK	Propane	None	0	0	0	0	0	0	0	1	0	0	0.0102041
+Others	Propane	None	0	0	0	0	0	0	0	1	0	0	0
+AK	Wood	Ducted Heating	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0.00408163
+Others	Wood	Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+AK	Wood	Non-Ducted Heating	0.333333	0.333333	0.333333	0	0	0	0	0	0	0	0.0102041
+Others	Wood	Non-Ducted Heating	0	0	0	0	0	0	0	1	0	0	0
+AK	Wood	None	0	0	0	0	0	0	0	1	0	0	0.0102041
+Others	Wood	None	0	0	0	0	0	0	0	1	0	0	0
+# Created by: sources\aris\tsv_maker.py
+# Description: The efficiency and type of the heating system.

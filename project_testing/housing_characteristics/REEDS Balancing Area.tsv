@@ -1,7 +1,8 @@
-Dependency=County	Option=10	Option=67	Option=80	Option=127	sampling_probability
-CA, Los Angeles County	1	0	0	0	0.25
-IL, Cook County	0	0	1	0	0.25
-NY, New York County	0	0	0	1	0.25
-TX, Harris County	0	1	0	0	0.25
+Dependency=County	Option=10	Option=67	Option=80	Option=127	Option=None	sampling_probability
+AK, Fairbanks North Star Borough	0	0	0	0	1	0.2
+CA, Los Angeles County	1	0	0	0	0	0.2
+IL, Cook County	0	0	1	0	0	0.2
+NY, New York County	0	0	0	1	0	0.2
+TX, Harris County	0	1	0	0	0	0.2
 # Created by: sources\spatial\tsv_maker.py
 # Description: The Regional Energy Deployment System Model (ReEDS) balancing area that the sample is located.

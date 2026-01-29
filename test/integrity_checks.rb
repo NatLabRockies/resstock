@@ -26,7 +26,8 @@ def integrity_check(project_dir_name, housing_characteristics_dir = 'housing_cha
 
     parameter_names << parameter_name
   end
-
+  j = 1
+  n_params = parameter_names.length
   while parameters_processed.size != parameter_names.size
 
     if last_size == parameters_processed.size
@@ -87,7 +88,7 @@ def integrity_check(project_dir_name, housing_characteristics_dir = 'housing_cha
       end
       next if skip
 
-      puts "Checking for issues with #{project_dir_name}/#{parameter_name}..."
+      puts "(#{j}/#{n_params}) Checking for issues with #{project_dir_name}/#{parameter_name}..."
       parameters_processed << parameter_name
 
       # Test that dependency options exist
@@ -133,6 +134,7 @@ def integrity_check(project_dir_name, housing_characteristics_dir = 'housing_cha
       get_measure_args_from_option_names(lookup_csv_data, tsvfile.option_cols.keys, parameter_name, lookup_file)
       ending = Time.now
       puts "  Checking all options in options_lookup.tsv: \t#{ending - starting} seconds\n\n"
+      j += 1
     end
     if not err.empty?
       raise err

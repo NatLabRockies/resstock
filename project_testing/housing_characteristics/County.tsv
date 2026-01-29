@@ -1,4 +1,4 @@
-Option=CA, Los Angeles County	Option=IL, Cook County	Option=NY, New York County	Option=TX, Harris County	sampling_probability
-0.25	0.25	0.25	0.25	1
+Option=AK, Fairbanks North Star Borough	Option=CA, Los Angeles County	Option=IL, Cook County	Option=NY, New York County	Option=TX, Harris County	sampling_probability
+0.2	0.2	0.2	0.2	0.2	1
 # Created by: sources\spatial\tsv_maker.py
 # Description: The U.S. County that the sample is located.

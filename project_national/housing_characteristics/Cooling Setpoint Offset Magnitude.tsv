@@ -1,156 +1,175 @@
 Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Cooling Setpoint Has Offset	Dependency=Geometry Building Type RECS	Option=0F	Option=2F	Option=5F	Option=9F	source_count	source_weight	sampling_probability
-1A	No	Mobile Home	1	0	0	0	483	298512	0.00017974
-1A	Yes	Mobile Home	0	0.596291	0.312503	0.0912057	423	82844.6	0.00015052
-1A	No	Multi-Family with 2 - 4 Units	1	0	0	0	165	146819	0.000491505
-1A	Yes	Multi-Family with 2 - 4 Units	0	0.554658	0.324605	0.120737	131	111393	0.000375359
-1A	No	Multi-Family with 5+ Units	1	0	0	0	165	384215	0.00333861
-1A	Yes	Multi-Family with 5+ Units	0	0.554658	0.324605	0.120737	131	278155	0.00254968
-1A	No	Single-Family Attached	1	0	0	0	165	117709	0.000707417
-1A	Yes	Single-Family Attached	0	0.554658	0.324605	0.120737	131	105893	0.000540249
-1A	No	Single-Family Detached	1	0	0	0	483	1.80052e+06	0.00312367
-1A	Yes	Single-Family Detached	0	0.596291	0.312503	0.0912057	423	1.67495e+06	0.00261586
-2A	No	Mobile Home	1	0	0	0	483	298512	0.00621695
-2A	Yes	Mobile Home	0	0.596291	0.312503	0.0912057	423	82844.6	0.00520627
-2A	No	Multi-Family with 2 - 4 Units	1	0	0	0	165	146819	0.00400408
-2A	Yes	Multi-Family with 2 - 4 Units	0	0.554658	0.324605	0.120737	131	111393	0.00305789
-2A	No	Multi-Family with 5+ Units	1	0	0	0	165	384215	0.0126499
-2A	Yes	Multi-Family with 5+ Units	0	0.554658	0.324605	0.120737	131	278155	0.00966064
-2A	No	Single-Family Attached	1	0	0	0	165	117709	0.00261346
-2A	Yes	Single-Family Attached	0	0.554658	0.324605	0.120737	131	105893	0.00199588
-2A	No	Single-Family Detached	1	0	0	0	483	1.80052e+06	0.0387824
-2A	Yes	Single-Family Detached	0	0.596291	0.312503	0.0912057	423	1.67495e+06	0.0324776
-2B	No	Mobile Home	1	0	0	0	56	71381.1	0.000826879
-2B	Yes	Mobile Home	0	0.523752	0.319174	0.157074	61	85866.3	0.000941263
-2B	No	Multi-Family with 2 - 4 Units	1	0	0	0	24	0	0.00059925
-2B	Yes	Multi-Family with 2 - 4 Units	0	0.579446	0.350402	0.0701519	17	16996.2	0.00039296
-2B	No	Multi-Family with 5+ Units	1	0	0	0	24	226500	0.00206507
-2B	Yes	Multi-Family with 5+ Units	0	0.579446	0.350402	0.0701519	17	100753	0.00135418
-2B	No	Single-Family Attached	1	0	0	0	24	8440.97	0.00060575
-2B	Yes	Single-Family Attached	0	0.579446	0.350402	0.0701519	17	36313.3	0.000397222
-2B	No	Single-Family Detached	1	0	0	0	56	505428	0.0059323
-2B	Yes	Single-Family Detached	0	0.523752	0.319174	0.157074	61	570736	0.00675293
-3A	No	Mobile Home	1	0	0	0	442	415644	0.00925921
-3A	Yes	Mobile Home	0	0.581418	0.298971	0.119611	270	109242	0.00527439
-3A	No	Multi-Family with 2 - 4 Units	1	0	0	0	113	257541	0.00408676
-3A	Yes	Multi-Family with 2 - 4 Units	0	0.391744	0.406819	0.201438	86	164361	0.00269144
-3A	No	Multi-Family with 5+ Units	1	0	0	0	113	735383	0.011797
-3A	Yes	Multi-Family with 5+ Units	0	0.391744	0.406819	0.201438	86	556194	0.00776922
-3A	No	Single-Family Attached	1	0	0	0	113	225017	0.00222451
-3A	Yes	Single-Family Attached	0	0.391744	0.406819	0.201438	86	81549.5	0.00146501
-3A	No	Single-Family Detached	1	0	0	0	442	4.60804e+06	0.0569052
-3A	Yes	Single-Family Detached	0	0.581418	0.298971	0.119611	270	2.75243e+06	0.0324153
-3B	No	Mobile Home	1	0	0	0	172	20898.6	0.0020175
-3B	Yes	Mobile Home	0	0.342629	0.37043	0.286941	199	59210.6	0.00241108
-3B	No	Multi-Family with 2 - 4 Units	1	0	0	0	50	53990.2	0.00317168
-3B	Yes	Multi-Family with 2 - 4 Units	0	0.346094	0.28206	0.371845	60	38085.9	0.00376953
-3B	No	Multi-Family with 5+ Units	1	0	0	0	50	109830	0.00967722
-3B	Yes	Multi-Family with 5+ Units	0	0.346094	0.28206	0.371845	60	176695	0.0115013
-3B	No	Single-Family Attached	1	0	0	0	50	48755.1	0.00257695
-3B	Yes	Single-Family Attached	0	0.346094	0.28206	0.371845	60	37864	0.00306269
-3B	No	Single-Family Detached	1	0	0	0	172	681792	0.0251972
-3B	Yes	Single-Family Detached	0	0.342629	0.37043	0.286941	199	780565	0.0301128
-3C	No	Mobile Home	1	0	0	0	7	0	0.000109877
-3C	Yes	Mobile Home	0	0.735588	0.183926	0.0804854	11	0	0.000573311
-3C	No	Multi-Family with 2 - 4 Units	1	0	0	0	7	0	0.000979467
-3C	Yes	Multi-Family with 2 - 4 Units	0	0.735588	0.183926	0.0804854	11	0	0.00130666
-3C	No	Multi-Family with 5+ Units	1	0	0	0	7	32624.3	0.00253299
-3C	Yes	Multi-Family with 5+ Units	0	0.735588	0.183926	0.0804854	11	0	0.00337913
-3C	No	Single-Family Attached	1	0	0	0	7	13103.2	0.000923003
-3C	Yes	Single-Family Attached	0	0.735588	0.183926	0.0804854	11	0	0.00123133
-3C	No	Single-Family Detached	1	0	0	0	7	15707.3	0.00201947
-3C	Yes	Single-Family Detached	0	0.735588	0.183926	0.0804854	11	81957.1	0.0105371
-4A	No	Mobile Home	1	0	0	0	729	815456	0.00720814
-4A	Yes	Mobile Home	0	0.527263	0.389141	0.0835961	452	207275	0.00446678
-4A	No	Multi-Family with 2 - 4 Units	1	0	0	0	194	265547	0.010968
-4A	Yes	Multi-Family with 2 - 4 Units	0	0.304774	0.504054	0.191172	132	162138	0.00860341
-4A	No	Multi-Family with 5+ Units	1	0	0	0	194	893848	0.0257212
-4A	Yes	Multi-Family with 5+ Units	0	0.304774	0.504054	0.191172	132	714417	0.020176
-4A	No	Single-Family Attached	1	0	0	0	194	483659	0.0111053
-4A	Yes	Single-Family Attached	0	0.304774	0.504054	0.191172	132	412273	0.0087111
-4A	No	Single-Family Detached	1	0	0	0	729	5.65942e+06	0.0739027
-4A	Yes	Single-Family Detached	0	0.527263	0.389141	0.0835961	452	3.80512e+06	0.0457964
-4B	No	Mobile Home	1	0	0	0	172	20898.6	0.00042773
-4B	Yes	Mobile Home	0	0.342629	0.37043	0.286941	199	59210.6	0.000511174
-4B	No	Multi-Family with 2 - 4 Units	1	0	0	0	50	53990.2	0.000196848
-4B	Yes	Multi-Family with 2 - 4 Units	0	0.346094	0.28206	0.371845	60	38085.9	0.000233953
-4B	No	Multi-Family with 5+ Units	1	0	0	0	50	109830	0.000341375
-4B	Yes	Multi-Family with 5+ Units	0	0.346094	0.28206	0.371845	60	176695	0.000405723
-4B	No	Single-Family Attached	1	0	0	0	50	48755.1	0.000108911
-4B	Yes	Single-Family Attached	0	0.346094	0.28206	0.371845	60	37864	0.00012944
-4B	No	Single-Family Detached	1	0	0	0	172	681792	0.0024711
-4B	Yes	Single-Family Detached	0	0.342629	0.37043	0.286941	199	780565	0.00295317
-4C	No	Mobile Home	1	0	0	0	10	8640.83	0.000723909
-4C	Yes	Mobile Home	0	0.448617	0.485221	0.0661621	15	22135.7	0.00104177
-4C	No	Multi-Family with 2 - 4 Units	1	0	0	0	10	0	0.000754142
-4C	Yes	Multi-Family with 2 - 4 Units	0	0.448617	0.485221	0.0661621	15	0	0.00108528
-4C	No	Multi-Family with 5+ Units	1	0	0	0	10	0	0.00243127
-4C	Yes	Multi-Family with 5+ Units	0	0.448617	0.485221	0.0661621	15	0	0.00349883
-4C	No	Single-Family Attached	1	0	0	0	10	0	0.000524155
-4C	Yes	Single-Family Attached	0	0.448617	0.485221	0.0661621	15	0	0.000754309
-4C	No	Single-Family Detached	1	0	0	0	10	96734.6	0.00744872
-4C	Yes	Single-Family Detached	0	0.448617	0.485221	0.0661621	15	129509	0.0107194
-5A	No	Mobile Home	1	0	0	0	325	200335	0.00483897
-5A	Yes	Mobile Home	0	0.649903	0.26001	0.0900873	186	39814.4	0.0025181
-5A	No	Multi-Family with 2 - 4 Units	1	0	0	0	95	290153	0.0172463
-5A	Yes	Multi-Family with 2 - 4 Units	0	0.486724	0.358376	0.1549	52	85154.3	0.00757717
-5A	No	Multi-Family with 5+ Units	1	0	0	0	95	617831	0.0251081
-5A	Yes	Multi-Family with 5+ Units	0	0.486724	0.358376	0.1549	52	363187	0.0110312
-5A	No	Single-Family Attached	1	0	0	0	95	380052	0.00919871
-5A	Yes	Single-Family Attached	0	0.486724	0.358376	0.1549	52	117558	0.00404145
-5A	No	Single-Family Detached	1	0	0	0	325	3.80825e+06	0.0955204
-5A	Yes	Single-Family Detached	0	0.649903	0.26001	0.0900873	186	2.04617e+06	0.0497067
-5B	No	Mobile Home	1	0	0	0	45	8640.83	0.001234
-5B	Yes	Mobile Home	0	0.447147	0.426472	0.126381	63	54117.5	0.00157005
-5B	No	Multi-Family with 2 - 4 Units	1	0	0	0	14	0	0.00143672
-5B	Yes	Multi-Family with 2 - 4 Units	0	0.567048	0.146549	0.286404	13	4674.75	0.000744291
-5B	No	Multi-Family with 5+ Units	1	0	0	0	14	92811.9	0.00399604
-5B	Yes	Multi-Family with 5+ Units	0	0.567048	0.146549	0.286404	13	38117.3	0.00207014
-5B	No	Single-Family Attached	1	0	0	0	14	43538	0.00132925
-5B	Yes	Single-Family Attached	0	0.567048	0.146549	0.286404	13	27843.7	0.000688615
-5B	No	Single-Family Detached	1	0	0	0	45	412882	0.0110295
-5B	Yes	Single-Family Detached	0	0.447147	0.426472	0.126381	63	482196	0.0140331
-6A	No	Mobile Home	1	0	0	0	123	19857.1	0.00224946
-6A	Yes	Mobile Home	0	0.536489	0.337387	0.126124	69	4462.58	0.00112443
-6A	No	Multi-Family with 2 - 4 Units	1	0	0	0	18	17322.8	0.00372524
-6A	Yes	Multi-Family with 2 - 4 Units	0	0.527132	0.359639	0.113228	78	0	0.00137992
-6A	No	Multi-Family with 5+ Units	1	0	0	0	18	24916	0.00634173
-6A	Yes	Multi-Family with 5+ Units	0	0.527132	0.359639	0.113228	78	2756.3	0.00234914
-6A	No	Single-Family Attached	1	0	0	0	18	25724.6	0.00203872
-6A	Yes	Single-Family Attached	0	0.527132	0.359639	0.113228	78	22419.1	0.000755195
-6A	No	Single-Family Detached	1	0	0	0	123	422358	0.0278289
-6A	Yes	Single-Family Detached	0	0.536489	0.337387	0.126124	69	216587	0.0139108
-6B	No	Mobile Home	1	0	0	0	123	19857.1	0.000674335
-6B	Yes	Mobile Home	0	0.536489	0.337387	0.126124	69	4462.58	0.000337079
-6B	No	Multi-Family with 2 - 4 Units	1	0	0	0	18	17322.8	0.000470201
-6B	Yes	Multi-Family with 2 - 4 Units	0	0.527132	0.359639	0.113228	78	0	0.000174175
-6B	No	Multi-Family with 5+ Units	1	0	0	0	18	24916	0.000668855
-6B	Yes	Multi-Family with 5+ Units	0	0.527132	0.359639	0.113228	78	2756.3	0.000247762
-6B	No	Single-Family Attached	1	0	0	0	18	25724.6	0.000274504
-6B	Yes	Single-Family Attached	0	0.527132	0.359639	0.113228	78	22419.1	0.000101683
-6B	No	Single-Family Detached	1	0	0	0	123	422358	0.00422716
-6B	Yes	Single-Family Detached	0	0.536489	0.337387	0.126124	69	216587	0.00211302
-7A	No	Mobile Home	1	0	0	0	11	8006.95	0.000445405
-7A	Yes	Mobile Home	0	0.379879	0.42762	0.192501	5	0	0.00012788
-7A	No	Multi-Family with 2 - 4 Units	1	0	0	0	13	0	0.000269487
-7A	Yes	Multi-Family with 2 - 4 Units	0	0.379879	0.42762	0.192501	5	0	8.23245e-05
-7A	No	Multi-Family with 5+ Units	1	0	0	0	13	3350.55	0.000748706
-7A	Yes	Multi-Family with 5+ Units	0	0.379879	0.42762	0.192501	5	0	0.00022872
-7A	No	Single-Family Attached	1	0	0	0	13	2311.39	0.000160413
-7A	Yes	Single-Family Attached	0	0.379879	0.42762	0.192501	5	2311.39	4.90039e-05
-7A	No	Single-Family Detached	1	0	0	0	11	23648.2	0.00453276
-7A	Yes	Single-Family Detached	0	0.379879	0.42762	0.192501	5	9088.49	0.0013014
-7B	No	Mobile Home	1	0	0	0	11	8006.95	6.96493e-05
-7B	Yes	Mobile Home	0	0.379879	0.42762	0.192501	5	0	1.99969e-05
-7B	No	Multi-Family with 2 - 4 Units	1	0	0	0	13	0	4.97586e-05
-7B	Yes	Multi-Family with 2 - 4 Units	0	0.379879	0.42762	0.192501	5	0	1.52006e-05
-7B	No	Multi-Family with 5+ Units	1	0	0	0	13	3350.55	0.000174689
-7B	Yes	Multi-Family with 5+ Units	0	0.379879	0.42762	0.192501	5	0	5.33651e-05
-7B	No	Single-Family Attached	1	0	0	0	13	2311.39	6.16933e-05
-7B	Yes	Single-Family Attached	0	0.379879	0.42762	0.192501	5	2311.39	1.88465e-05
-7B	No	Single-Family Detached	1	0	0	0	11	23648.2	0.000524883
-7B	Yes	Single-Family Detached	0	0.379879	0.42762	0.192501	5	9088.49	0.000150699
-# Created by: sources\recs\recs2009_setpoints\tsv_maker.py
+1A	No	Mobile Home	1	0	0	0	136	0	0.000122195
+1A	Yes	Mobile Home	0	0.738948	0.16417	0.0968811	140	16405.8	0.000215442
+1A	No	Multi-Family with 2 - 4 Units	1	0	0	0	12	74282.1	0.000543036
+1A	Yes	Multi-Family with 2 - 4 Units	0	0.730257	0.18633	0.0834128	11	77575.4	0.000567111
+1A	No	Multi-Family with 5+ Units	1	0	0	0	55	398899	0.00333705
+1A	Yes	Multi-Family with 5+ Units	0	0.747416	0.200817	0.0517676	46	448813	0.00375462
+1A	No	Single-Family Attached	1	0	0	0	20	29818.2	0.000273872
+1A	Yes	Single-Family Attached	0	0.619494	0.327039	0.0534672	26	145072	0.00133245
+1A	No	Single-Family Detached	1	0	0	0	116	386521	0.00314125
+1A	Yes	Single-Family Detached	0	0.761735	0.127608	0.110657	113	572568	0.00465326
+2A	No	Mobile Home	1	0	0	0	64	731853	0.00682997
+2A	Yes	Mobile Home	0	0.625674	0.240145	0.134181	44	484521	0.00452176
+2A	No	Multi-Family with 2 - 4 Units	1	0	0	0	50	524440	0.00466654
+2A	Yes	Multi-Family with 2 - 4 Units	0	0.714889	0.186967	0.098144	24	264240	0.00235124
+2A	No	Multi-Family with 5+ Units	1	0	0	0	96	1.41094e+06	0.0126238
+2A	Yes	Multi-Family with 5+ Units	0	0.685374	0.230794	0.0838323	74	1.06707e+06	0.00954715
+2A	No	Single-Family Attached	1	0	0	0	54	361949	0.0028946
+2A	Yes	Single-Family Attached	0	0.477924	0.322917	0.19916	39	210809	0.00168589
+2A	No	Single-Family Detached	1	0	0	0	555	5.27779e+06	0.0397367
+2A	Yes	Single-Family Detached	0	0.68199	0.226	0.0920095	459	4.12767e+06	0.0310774
+2B	No	Mobile Home	1	0	0	0	24	169122	0.00130846
+2B	Yes	Mobile Home	0	0.582907	0.25262	0.164473	171	57983.2	0.000448604
+2B	No	Multi-Family with 2 - 4 Units	1	0	0	0	12	114872	0.000737584
+2B	Yes	Multi-Family with 2 - 4 Units	0	0.54816	0.25483	0.19701	30	38688.1	0.000248413
+2B	No	Multi-Family with 5+ Units	1	0	0	0	21	176424	0.00151961
+2B	Yes	Multi-Family with 5+ Units	0	0.555926	0.250484	0.193589	26	218058	0.00187822
+2B	No	Single-Family Attached	1	0	0	0	22	59846.7	0.000560181
+2B	Yes	Single-Family Attached	0	0.663337	0.336663	0	18	46634.4	0.00043651
+2B	No	Single-Family Detached	1	0	0	0	163	886531	0.00687036
+2B	Yes	Single-Family Detached	0	0.614485	0.215677	0.169838	145	740082	0.00573543
+3A	No	Mobile Home	1	0	0	0	131	1.03899e+06	0.00992724
+3A	Yes	Mobile Home	0	0.51687	0.28757	0.19556	63	472584	0.00451539
+3A	No	Multi-Family with 2 - 4 Units	1	0	0	0	69	537253	0.00479858
+3A	Yes	Multi-Family with 2 - 4 Units	0	0.60894	0.244488	0.146572	26	216889	0.00193719
+3A	No	Multi-Family with 5+ Units	1	0	0	0	126	1.42298e+06	0.0123184
+3A	Yes	Multi-Family with 5+ Units	0	0.574733	0.354835	0.0704314	68	823098	0.00712537
+3A	No	Single-Family Attached	1	0	0	0	88	400790	0.00215204
+3A	Yes	Single-Family Attached	0	0.699646	0.225272	0.075082	61	282034	0.00151438
+3A	No	Single-Family Detached	1	0	0	0	936	6.62443e+06	0.0546789
+3A	Yes	Single-Family Detached	0	0.610873	0.280715	0.108413	592	4.12914e+06	0.0340825
+3B	No	Mobile Home	1	0	0	0	32	338016	0.00277145
+3B	Yes	Mobile Home	0	0.566617	0.107242	0.326141	20	198725	0.00162938
+3B	No	Multi-Family with 2 - 4 Units	1	0	0	0	39	554274	0.00418633
+3B	Yes	Multi-Family with 2 - 4 Units	0	0.398154	0.238422	0.363423	25	358993	0.00271141
+3B	No	Multi-Family with 5+ Units	1	0	0	0	109	1.53645e+06	0.01203
+3B	Yes	Multi-Family with 5+ Units	0	0.340573	0.357982	0.301445	81	1.15149e+06	0.0090159
+3B	No	Single-Family Attached	1	0	0	0	68	440478	0.00315185
+3B	Yes	Single-Family Attached	0	0.480607	0.246114	0.273279	53	342738	0.00245246
+3B	No	Single-Family Detached	1	0	0	0	399	3.88564e+06	0.0310058
+3B	Yes	Single-Family Detached	0	0.553652	0.295267	0.151082	318	3.00238e+06	0.0239578
+3C	No	Mobile Home	1	0	0	0	155	45005.4	0.000478283
+3C	Yes	Mobile Home	0	0.372768	0.403135	0.224098	65	8690.89	0.000200625
+3C	No	Multi-Family with 2 - 4 Units	1	0	0	0	16	227852	0.00187384
+3C	Yes	Multi-Family with 2 - 4 Units	0	0	0.372843	0.627157	10	48390.8	0.000397962
+3C	No	Multi-Family with 5+ Units	1	0	0	0	43	603265	0.00509198
+3C	Yes	Multi-Family with 5+ Units	0	0	0.372843	0.627157	10	92776.1	0.000783094
+3C	No	Single-Family Attached	1	0	0	0	31	206918	0.0016461
+3C	Yes	Single-Family Attached	0	0.337182	0.348608	0.31421	10	62189.8	0.000494739
+3C	No	Single-Family Detached	1	0	0	0	119	1.21493e+06	0.00861667
+3C	Yes	Single-Family Detached	0	0.382784	0.399835	0.217381	54	544422	0.0038612
+4A	No	Mobile Home	1	0	0	0	152	1.04456e+06	0.00881157
+4A	Yes	Mobile Home	0	0.515284	0.292292	0.192424	51	330763	0.00279022
+4A	No	Multi-Family with 2 - 4 Units	1	0	0	0	170	1.4453e+06	0.0124312
+4A	Yes	Multi-Family with 2 - 4 Units	0	0.453506	0.306797	0.239698	81	815893	0.0070176
+4A	No	Multi-Family with 5+ Units	1	0	0	0	468	3.99461e+06	0.0312575
+4A	Yes	Multi-Family with 5+ Units	0	0.498824	0.296948	0.204228	221	1.83419e+06	0.0143523
+4A	No	Single-Family Attached	1	0	0	0	331	1.50307e+06	0.012914
+4A	Yes	Single-Family Attached	0	0.599143	0.264838	0.136019	175	788928	0.00677824
+4A	No	Single-Family Detached	1	0	0	0	1613	9.67887e+06	0.078521
+4A	Yes	Single-Family Detached	0	0.641576	0.269142	0.0892819	833	4.98337e+06	0.0404282
+4B	No	Mobile Home	1	0	0	0	70	48536.6	0.000468118
+4B	Yes	Mobile Home	0	0.478034	0.289804	0.232162	58	48203.5	0.000464906
+4B	No	Multi-Family with 2 - 4 Units	1	0	0	0	11	50312.2	0.000322213
+4B	Yes	Multi-Family with 2 - 4 Units	0	0.431977	0.335606	0.232417	50	16936.4	0.00010589
+4B	No	Multi-Family with 5+ Units	1	0	0	0	11	31222.6	0.000558784
+4B	Yes	Multi-Family with 5+ Units	0	0.431977	0.335606	0.232417	50	9858.55	0.000183634
+4B	No	Single-Family Attached	1	0	0	0	70	6120.61	0.000132212
+4B	Yes	Single-Family Attached	0	0.478034	0.289804	0.232162	58	8786.38	0.000104646
+4B	No	Single-Family Detached	1	0	0	0	60	368975	0.00307263
+4B	Yes	Single-Family Detached	0	0.50094	0.285444	0.213616	49	278314	0.00231766
+4C	No	Mobile Home	1	0	0	0	27	164208	0.000977455
+4C	Yes	Mobile Home	0	0.346044	0.261749	0.392207	19	130561	0.000777168
+4C	No	Multi-Family with 2 - 4 Units	1	0	0	0	18	168945	0.00154385
+4C	Yes	Multi-Family with 2 - 4 Units	0	0.521909	0.285818	0.192273	25	31083.8	0.000284049
+4C	No	Multi-Family with 5+ Units	1	0	0	0	86	717517	0.00484876
+4C	Yes	Multi-Family with 5+ Units	0	0.584639	0.255025	0.160336	21	154519	0.0010442
+4C	No	Single-Family Attached	1	0	0	0	23	88596.7	0.000870832
+4C	Yes	Single-Family Attached	0	0.149008	0.564225	0.286767	11	40657	0.000399625
+4C	No	Single-Family Detached	1	0	0	0	293	1.66678e+06	0.0126457
+4C	Yes	Single-Family Detached	0	0.486955	0.349575	0.16347	131	712900	0.00540868
+5A	No	Mobile Home	1	0	0	0	79	578184	0.00556135
+5A	Yes	Mobile Home	0	0.491901	0.217545	0.290555	24	181903	0.00174965
+5A	No	Multi-Family with 2 - 4 Units	1	0	0	0	179	1.90853e+06	0.0164223
+5A	Yes	Multi-Family with 2 - 4 Units	0	0.430216	0.304174	0.265611	90	958280	0.0082457
+5A	No	Multi-Family with 5+ Units	1	0	0	0	307	2.84272e+06	0.0226119
+5A	Yes	Multi-Family with 5+ Units	0	0.534485	0.326011	0.139504	180	1.67219e+06	0.0133011
+5A	No	Single-Family Attached	1	0	0	0	249	1.10708e+06	0.00855149
+5A	Yes	Single-Family Attached	0	0.617728	0.298068	0.0842043	147	596265	0.00460576
+5A	No	Single-Family Detached	1	0	0	0	1830	1.21007e+07	0.0965758
+5A	Yes	Single-Family Detached	0	0.616542	0.278416	0.105042	929	5.98194e+06	0.0477419
+5B	No	Mobile Home	1	0	0	0	48	223117	0.00212692
+5B	Yes	Mobile Home	0	0.262706	0.51322	0.224073	17	69189.5	0.000659567
+5B	No	Multi-Family with 2 - 4 Units	1	0	0	0	22	160987	0.00158845
+5B	Yes	Multi-Family with 2 - 4 Units	0	0.447185	0.320747	0.232068	46	58672	0.000578912
+5B	No	Multi-Family with 5+ Units	1	0	0	0	66	522310	0.00369569
+5B	Yes	Multi-Family with 5+ Units	0	0.526776	0.316431	0.156793	41	329652	0.00233251
+5B	No	Single-Family Attached	1	0	0	0	48	183089	0.00134151
+5B	Yes	Single-Family Attached	0	0.323057	0.615023	0.0619198	26	90585.3	0.000663726
+5B	No	Single-Family Detached	1	0	0	0	406	1.94243e+06	0.0143182
+5B	Yes	Single-Family Detached	0	0.540512	0.279958	0.17953	308	1.43632e+06	0.0105875
+6A	No	Mobile Home	1	0	0	0	63	249621	0.00260883
+6A	Yes	Mobile Home	0	0.18483	0.286217	0.528954	20	71181.9	0.000743934
+6A	No	Multi-Family with 2 - 4 Units	1	0	0	0	76	457445	0.00440927
+6A	Yes	Multi-Family with 2 - 4 Units	0	0.627968	0.285366	0.0866653	15	68878.3	0.000663913
+6A	No	Multi-Family with 5+ Units	1	0	0	0	131	844733	0.006611
+6A	Yes	Multi-Family with 5+ Units	0	0.568102	0.218031	0.213867	42	258803	0.00202543
+6A	No	Single-Family Attached	1	0	0	0	90	228546	0.00190967
+6A	Yes	Single-Family Attached	0	0.592714	0.388994	0.0182927	39	103731	0.00086675
+6A	No	Single-Family Detached	1	0	0	0	835	3.56739e+06	0.0289217
+6A	Yes	Single-Family Detached	0	0.640739	0.262818	0.0964427	343	1.54881e+06	0.0125566
+6B	No	Mobile Home	1	0	0	0	25	54398	0.000625392
+6B	Yes	Mobile Home	0	0.283147	0.651831	0.065022	17	33026	0.000379687
+6B	No	Multi-Family with 2 - 4 Units	1	0	0	0	13	50129.8	0.000475921
+6B	Yes	Multi-Family with 2 - 4 Units	0	0.362149	0.269227	0.368624	10	17318.6	0.000164419
+6B	No	Multi-Family with 5+ Units	1	0	0	0	23	83415	0.000704747
+6B	Yes	Multi-Family with 5+ Units	0	0.362149	0.269227	0.368624	10	24397.8	0.000206129
+6B	No	Single-Family Attached	1	0	0	0	19	27390.5	0.000183028
+6B	Yes	Single-Family Attached	0	0.672986	0.296297	0.0307172	15	28554.1	0.000190804
+6B	No	Single-Family Detached	1	0	0	0	228	468874	0.0044746
+6B	Yes	Single-Family Detached	0	0.367769	0.370906	0.261325	99	191325	0.00182587
+7A	No	Mobile Home	1	0	0	0	168	14735	0.000265291
+7A	Yes	Mobile Home	0	0.574173	0.391132	0.0346949	69	16907.3	0.000304403
+7A	No	Multi-Family with 2 - 4 Units	1	0	0	0	49	48688.5	0.000281612
+7A	Yes	Multi-Family with 2 - 4 Units	0	0.436032	0.387999	0.175969	22	11756	6.79963e-05
+7A	No	Multi-Family with 5+ Units	1	0	0	0	40	93944.4	0.000684847
+7A	Yes	Multi-Family with 5+ Units	0	0.327389	0.443996	0.228615	17	39295	0.000286457
+7A	No	Single-Family Attached	1	0	0	0	24	22613	0.000156571
+7A	Yes	Single-Family Attached	0	0.574173	0.391132	0.0346949	69	7442.91	5.1534e-05
+7A	No	Single-Family Detached	1	0	0	0	135	425758	0.0043137
+7A	Yes	Single-Family Detached	0	0.542331	0.417206	0.0404633	59	146460	0.00148391
+7AK	No	Mobile Home	1	0	0	0	11	10561.5	8.49386e-05
+7AK	Yes	Mobile Home	0	0.771428	0.228572	0	6	0	0
+7AK	No	Multi-Family with 2 - 4 Units	1	0	0	0	21	22380	0.000216819
+7AK	Yes	Multi-Family with 2 - 4 Units	0	0.771428	0.228572	0	6	1197.56	1.1602e-05
+7AK	No	Multi-Family with 5+ Units	1	0	0	0	27	30038.2	0.000214784
+7AK	Yes	Multi-Family with 5+ Units	0	0.771428	0.228572	0	6	0	0
+7AK	No	Single-Family Attached	1	0	0	0	41	22213.9	0.00013998
+7AK	Yes	Single-Family Attached	0	0.771428	0.228572	0	6	0	0
+7AK	No	Single-Family Detached	1	0	0	0	152	120044	0.00108833
+7AK	Yes	Single-Family Detached	0	0.771428	0.228572	0	6	3351.87	3.03881e-05
+7B	No	Mobile Home	1	0	0	0	278	0	8.90849e-05
+7B	Yes	Mobile Home	0	0.391179	0.399167	0.209654	131	0	0
+7B	No	Multi-Family with 2 - 4 Units	1	0	0	0	37	9139.16	6.45523e-05
+7B	Yes	Multi-Family with 2 - 4 Units	0	0.362149	0.269227	0.368624	10	0	0
+7B	No	Multi-Family with 5+ Units	1	0	0	0	37	0	0.000226626
+7B	Yes	Multi-Family with 5+ Units	0	0.362149	0.269227	0.368624	10	0	0
+7B	No	Single-Family Attached	1	0	0	0	278	1849.6	8.00354e-05
+7B	Yes	Single-Family Attached	0	0.391179	0.399167	0.209654	131	0	0
+7B	No	Single-Family Detached	1	0	0	0	278	17240.1	0.000671351
+7B	Yes	Single-Family Detached	0	0.391179	0.399167	0.209654	131	0	0
+8AK	No	Mobile Home	1	0	0	0	49	944.437	3.18953e-05
+8AK	Yes	Mobile Home	0	0.771428	0.228572	0	6	0	5.19423e-07
+8AK	No	Multi-Family with 2 - 4 Units	1	0	0	0	52	2167.75	5.99103e-05
+8AK	Yes	Multi-Family with 2 - 4 Units	0	0.771428	0.228572	0	6	0	8.84726e-07
+8AK	No	Multi-Family with 5+ Units	1	0	0	0	52	2185.89	5.44185e-05
+8AK	Yes	Multi-Family with 5+ Units	0	0.771428	0.228572	0	6	0	8.03626e-07
+8AK	No	Single-Family Attached	1	0	0	0	10	6375.09	2.87176e-05
+8AK	Yes	Single-Family Attached	0	0.771428	0.228572	0	6	0	0
+8AK	No	Single-Family Detached	1	0	0	0	38	35042.4	0.000335699
+8AK	Yes	Single-Family Detached	0	0.771428	0.228572	0	6	689.874	6.60884e-06
+# Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The magnitude of cooling setpoint offset.
-# Source: Constructed using U.S. EIA 2009 Residential Energy Consumption Survey (RECS) microdata.
-# Assumption: RECS data is queried from two building type groups: 1) Single-Family Detached and Mobile Homes and 2) Single-Family Attached, Multi-family with 2-4 Units, and Multi-Family with 5+ Units
-# Assumption: Dependencies with sample sizes < 10 used the combined data for both multifamily and single-family homes
+# Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+# Assumption: For dependency conditions with low samples, the following lumpings are used in progressive order until there are enough samples: 1) lumping buildings into Single-Family and Multi-Family only,  2) lumping buildings into Single-Family and Multi-Family only and lumping nearby climate zones within  A/B regions and separately 7AK and 8AK 3) lumping all building types together and lumping climate zones within A/B and separately 7AK and 8AK regions

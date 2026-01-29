@@ -7,13 +7,20 @@ on:
     types: [ synchronize, opened ]
   workflow_dispatch:
 
+# Cancel in-progress jobs when a new commit is pushed to the PR
+# This avoids CI jobs "stacking up" for the same PR
+# This won't stop existing job if new commit is pushed with [ci skip].
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   run-unit-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container:
-      image: docker://nrel/openstudio:3.6.1
+      image: docker://nrel/openstudio:3.10.0
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
 
@@ -24,42 +31,73 @@ jobs:
           sudo apt update
           sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
 
-      - name: Check HPXMLs
+      - name: Check measures
+        shell: bash
+        run: |
+          out=$(openstudio tasks.rb update_measures 2>&1)
+          if [[ "$out" == *"RuboCop failed"* ]]; then echo "$out" && exit 1; fi
+          echo "Checking for file differences..."
+          git config --global --add safe.directory $(realpath .)
+          git diff --exit-code --ignore-cr-at-eol *.rb
+
+      - name: Check HPXMLs/Schedules
         shell: bash
         run: |
           echo "Regenerating HPXML files..."
           openstudio tasks.rb update_hpxmls
-          echo "Checking for HPXML differences..."
           git config --global --add safe.directory $(realpath .)
-          git diff --exit-code --ignore-cr-at-eol *.xml
+          echo "Checking for HPXML differences..."
+          echo "If differences are found below, then HPXMLs need to be regenerated using: openstudio tasks.rb update_hpxmls"
+          git diff --exit-code --ignore-cr-at-eol workflow/*.xml
+          echo "Checking for schedule CSV differences..."
+          echo "If differences are found below, then schedule CSVs need to be regenerated using: openstudio tasks.rb update_hpxmls"
+          git diff --stat --ignore-cr-at-eol HPXMLtoOpenStudio/resources/schedule_files/*.csv
+
+          # Run the detailed diff script if there are changes
+          if ! git diff --quiet --ignore-cr-at-eol HPXMLtoOpenStudio/resources/schedule_files/*.csv; then
+            echo "Detailed schedule file differences:"
+            cd HPXMLtoOpenStudio/resources/schedule_files
+            openstudio print_diff.py
+          fi
 
       - name: Run measure unit tests
         run: |
           bundle exec rake test_measures
 
       - name: Store code coverage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: coverage
           name: coverage
+
+      - name: Store results
+        uses: actions/upload-artifact@v4
+        with:
+          path: workflow/tests/test_results
+          name: results-unit-tests
 
       - name: Build documentation
         run: |
           cd docs
           make html SPHINXOPTS="-W --keep-going -n"
 
+      - name: Check documentation
+        run: |
+          echo "Checking for misaligned documentation footnotes..."
+          for RST_FILE in docs/source/*.rst; do NUM_REFS=$(grep -F -o "[#]_" $RST_FILE | wc -l); NUM_FOOTNOTES=$(grep -F -o ".. [#]" $RST_FILE | wc -l); if [ $NUM_REFS != $NUM_FOOTNOTES ]; then echo "ERROR: Number of footnote references doesn't match number of footnotes in $RST_FILE." && exit 1; fi done
+
       - name: Save Docs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: documentation
           path: docs/_build/html/
 
-  run-workflow-tests:
-    runs-on: ubuntu-latest
+  run-workflow1-tests:
+    runs-on: ubuntu-22.04
     container:
-      image: docker://nrel/openstudio:3.6.1
+      image: docker://nrel/openstudio:3.10.0
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
 
@@ -69,103 +107,157 @@ jobs:
 
       - name: Run workflow tests
         run: |
-          bundle exec rake test_workflow
+          bundle exec rake test_workflow1
 
       - name: Store results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          path: workflow/tests/results
-          name: results
+          path: workflow/tests/test_results
+          name: results-workflow1-tests
+
+  run-workflow2-tests:
+    runs-on: ubuntu-22.04
+    container:
+      image: docker://nrel/openstudio:3.10.0
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install software
+        run: |
+          rm -f Gemfile.lock && bundle install
+
+      - name: Run workflow tests
+        run: |
+          bundle exec rake test_workflow2
+
+      - name: Store results
+        uses: actions/upload-artifact@v4
+        with:
+          path: workflow/tests/test_results
+          name: results-workflow2-tests
 
   run-windows-tests:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
       - name: Install software and run test
         shell: pwsh
         run: |
-          $env:OS_VERSION="3.6.1"
-          $env:OS_SHA="bb9481519e"
+          $env:OS_VERSION="3.10.0"
+          $env:OS_SHA="86d7e215a1"
           Invoke-WebRequest -OutFile Windows.tar.gz -URI "https://github.com/NREL/OpenStudio/releases/download/v${env:OS_VERSION}/OpenStudio-${env:OS_VERSION}+${env:OS_SHA}-Windows.tar.gz"
           tar -xzf Windows.tar.gz
           & .\OpenStudio-${env:OS_VERSION}+${env:OS_SHA}-Windows\bin\openstudio.exe workflow\run_simulation.rb -x workflow\sample_files\base.xml --hourly ALL --add-component-loads --add-stochastic-schedules
 
+  merge-results:
+    runs-on: ubuntu-22.04
+    needs: [run-workflow1-tests, run-workflow2-tests]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Download all results
+        uses: actions/download-artifact@v4
+        with:
+          path: test_results
+          pattern: results-*
+          merge-multiple: true
+
+      - name: Delete artifacts
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: results-*
+
+      - name: Merge results
+        run: |
+          mkdir workflow/tests/test_results
+          cp -r test_results/results* workflow/tests/test_results
+          cd workflow/tests
+          pip install pandas
+          for csv in test_results/*1_*.csv; do csv2="${csv/1_/2_}"; csv_out="${csv/1_/_}"; python merge.py $csv $csv2 $csv_out; rm $csv; rm $csv2; done
+
+      - name: Store results
+        uses: actions/upload-artifact@v4
+        with:
+          path: workflow/tests/test_results
+          name: test_results
+
   compare-results:
     if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    needs: [run-workflow-tests]
+    runs-on: ubuntu-22.04
+    needs: merge-results
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.base.sha }}
 
       - name: Store base results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: workflow/tests/base_results
           name: base_results
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Download base results
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          path: |
-            base_results
+          path: base_results
           name: base_results
 
       - name: Download feature results
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          path: |
-            results
-          name: results
+          path: test_results
+          name: test_results
 
       - name: Compare results
         run: |
           cp -r base_results/results*.csv workflow/tests/base_results
-          mkdir workflow/tests/results
-          cp -r results/results* workflow/tests/results
-          
+          mkdir workflow/tests/test_results
+          cp -r test_results/results* workflow/tests/test_results
+
           pip install numpy
           pip install pandas
           pip install plotly
           pip install kaleido
-          
+
           python workflow/tests/compare.py -a results
           python workflow/tests/compare.py -a visualize
 
       - name: Store comparisons
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: workflow/tests/comparisons
           name: comparisons
 
   update-results:
-    runs-on: ubuntu-latest
-    needs: [run-workflow-tests]
+    runs-on: ubuntu-22.04
+    needs: merge-results
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
 
       - name: Download feature results
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          path: |
-            results
-          name: results
+          path: test_results
+          name: test_results
 
       - name: Commit latest results
-        shell: bash        
+        shell: bash
         run: |
           branch_name="${{ github.head_ref }}"
           git pull origin $branch_name
-          cp -r results/results* workflow/tests/base_results
+          cp -r test_results/results* workflow/tests/base_results
           git add workflow/tests/base_results
           git status
           if [[ $(git diff --cached --exit-code) ]]; then

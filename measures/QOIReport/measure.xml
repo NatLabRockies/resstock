@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <measure>
-  <schema_version>3.0</schema_version>
+  <schema_version>3.1</schema_version>
   <name>qoi_report</name>
   <uid>be0bfc7f-25c6-435a-9acd-2f5fa8ac817d</uid>
-  <version_id>f5af7f98-7101-4780-8fd7-0b4246505fc1</version_id>
-  <version_modified>20230501T221656Z</version_modified>
+  <version_id>d0162a9c-0a92-4d84-a00d-2a15f32d1aa4</version_id>
+  <version_modified>2025-06-12T19:44:12Z</version_modified>
   <xml_checksum>15BF4E57</xml_checksum>
   <class_name>QOIReport</class_name>
   <display_name>QOI Report</display_name>
@@ -25,16 +25,16 @@
   </attributes>
   <files>
     <file>
-      <filename>constants.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>4A01E6CA</checksum>
+      <filename>README.md</filename>
+      <filetype>md</filetype>
+      <usage_type>readme</usage_type>
+      <checksum>A65EDE50</checksum>
     </file>
     <file>
-      <filename>qoi_report_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>FDE812FB</checksum>
+      <filename>README.md.erb</filename>
+      <filetype>erb</filetype>
+      <usage_type>readmeerb</usage_type>
+      <checksum>513F28E9</checksum>
     </file>
     <file>
       <version>
@@ -45,7 +45,19 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>48961FEB</checksum>
+      <checksum>58EBB489</checksum>
+    </file>
+    <file>
+      <filename>constants.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>F906A0BC</checksum>
+    </file>
+    <file>
+      <filename>qoi_report_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>EE1A7C50</checksum>
     </file>
   </files>
 </measure>

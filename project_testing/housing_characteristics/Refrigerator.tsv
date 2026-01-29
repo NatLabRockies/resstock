@@ -1,4 +1,8 @@
-Option=EF 6.7, 95% Usage	Option=EF 6.7, 100% Usage	Option=EF 6.7, 105% Usage	Option=EF 10.2, 95% Usage	Option=EF 10.2, 100% Usage	Option=EF 10.2, 105% Usage	Option=EF 10.5, 95% Usage	Option=EF 10.5, 100% Usage	Option=EF 10.5, 105% Usage	Option=EF 15.9, 95% Usage	Option=EF 15.9, 100% Usage	Option=EF 15.9, 105% Usage	Option=EF 17.6, 95% Usage	Option=EF 17.6, 100% Usage	Option=EF 17.6, 105% Usage	Option=EF 19.9, 95% Usage	Option=EF 19.9, 100% Usage	Option=EF 19.9, 105% Usage	Option=EF 21.9, 95% Usage	Option=EF 21.9, 100% Usage	Option=EF 21.9, 105% Usage	Option=None	sampling_probability
-0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	0.045455	1
-# Created by: Originally created by sources\recs\2009\tsv_maker.py. Manually updated during the HPXML transition.
+Dependency=Geometry Building Type RECS	Option=EF 6.7	Option=EF 10.2	Option=EF 10.5	Option=EF 15.9	Option=EF 17.6	Option=EF 19.9	Option=EF 21.9	Option=None	Option=Void	sampling_probability
+Mobile Home	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0	0.111111
+Multi-Family with 2 - 4 Units	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0	0.222222
+Multi-Family with 5+ Units	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0	0.444444
+Single-Family Attached	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0	0.111111
+Single-Family Detached	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0	0.111111
+# Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence and rated efficiency of the primary refrigerator.

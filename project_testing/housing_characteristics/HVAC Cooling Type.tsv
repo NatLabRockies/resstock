@@ -1,8 +1,8 @@
-Dependency=HVAC Heating Type	Option=Central AC	Option=Heat Pump	Option=None	Option=Room AC	sampling_probability
-Ducted Heat Pump	0	1	0	0	0.0416667
-Ducted Heating	0.333333	0	0.333333	0.333333	0.375
-Non-Ducted Heat Pump	0	1	0	0	0.0416667
-Non-Ducted Heating	0.333333	0	0.333333	0.333333	0.375
-None	0.333333	0	0.333333	0.333333	0.166667
-# Created by: sources\recs\recs2009\tsv_maker.py
+Dependency=HVAC Heating Type	Option=Central AC	Option=Ducted Heat Pump	Option=Evaporative or Swamp Cooler	Option=Non-Ducted Heat Pump	Option=None	Option=Room AC	sampling_probability
+Ducted Heat Pump	0	1	0	0	0	0	0.0357143
+Ducted Heating	0.333333	0	0	0	0.333333	0.333333	0.392857
+Non-Ducted Heat Pump	0	0	0	1	0	0	0.0357143
+Non-Ducted Heating	0.333333	0	0	0	0.333333	0.333333	0.392857
+None	0.333333	0	0	0	0.333333	0.333333	0.142857
+# Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence and type of primary cooling system in the dwelling unit.

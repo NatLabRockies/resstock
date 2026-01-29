@@ -1,17 +1,10 @@
-Electricity
-* https://www.eia.gov/electricity/data/browser/#/topic/7?agg=1,0&geo=g0fvvvvvvvvvo&endsec=8&linechart=ELEC.PRICE.US-RES.A&columnchart=ELEC.PRICE.US-RES.A&map=ELEC.PRICE.US-RES.A&freq=A&start=2020&end=2021&ctype=linechart&ltype=pin&rtype=s&pin=&rse=0&maptype=0
-* Download > Table (CSV) link
-* Average_retail_price_of_electricity.csv
-
-Natural Gas
-* https://www.eia.gov/dnav/ng/ng_pri_sum_a_EPG0_PRS_DMcf_a.htm
-* Download Series History link > Convert second tab (Data 1) to CSV
-* NG_PRI_SUM_A_EPG0_PRS_DMCF_A.csv
-
-Fuel Oil
-* https://www.eia.gov/dnav/pet/xls/PET_PRI_WFR_A_EPD2F_PRS_DPGAL_W.xls
-* PET_PRI_WFR_A_EPD2F_PRS_DPGAL_W.csv
-
-Propane
-* https://www.eia.gov/dnav/pet/xls/PET_PRI_WFR_A_EPLLPA_PRS_DPGAL_W.xls
-* PET_PRI_WFR_A_EPLLPA_PRS_DPGAL_W.csv
+EIA SEDS Prices
+* https://www.eia.gov/state/seds/seds-data-fuel.php?sid=US#DataFiles
+* Data files > Prices and expenditures > All price and expenditure estimates > Prices > Download Prices (CSV) link
+* All lines removed other than MSN codes for the following fuel types:
+* Electricity: ESRCD ($/MMBtu)
+* Natural Gas: NGRCD ($/MMBtu)
+* Distillate Fuel Oil: DFRCD ($/MMBtu)
+* Propane: PQRCD ($/MMBtu)
+* Coal: CLRCD ($/MMBtu)
+* Wood: WDRCD ($/MMBtu)

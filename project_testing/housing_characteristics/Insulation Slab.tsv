@@ -1,9 +1,9 @@
 Dependency=Geometry Foundation Type	Option=None	Option=Uninsulated	Option=2ft R5 Under, Horizontal	Option=2ft R10 Under, Horizontal	Option=4ft R5 Under, Horizontal	Option=2ft R5 Perimeter, Vertical	Option=2ft R10 Perimeter, Vertical	Option=R10 Whole Slab, Horizontal	sampling_probability
-Slab	0	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.294444
-Unheated Basement	1	0	0	0	0	0	0	0	0.294444
-Vented Crawlspace	1	0	0	0	0	0	0	0	0.147222
-Unvented Crawlspace	1	0	0	0	0	0	0	0	0.147222
-Ambient	1	0	0	0	0	0	0	0	0.0444444
-Heated Basement	1	0	0	0	0	0	0	0	0.0722222
+Slab	0	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.207407
+Unheated Basement	1	0	0	0	0	0	0	0	0.207407
+Vented Crawlspace	1	0	0	0	0	0	0	0	0.207407
+Unvented Crawlspace	1	0	0	0	0	0	0	0	0.207407
+Ambient	1	0	0	0	0	0	0	0	0.12963
+Heated Basement	1	0	0	0	0	0	0	0	0.0407408
 # Created by: manually created
 # Description: Slab insulation level.

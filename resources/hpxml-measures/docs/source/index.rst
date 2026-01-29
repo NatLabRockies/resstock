@@ -12,8 +12,11 @@ OpenStudio-HPXML documentation
 
    intro
    usage_instructions
+   hpxml_files
    workflow_inputs
    workflow_outputs
+   testing_framework
+   resources
 
 Indices and tables
 ==================

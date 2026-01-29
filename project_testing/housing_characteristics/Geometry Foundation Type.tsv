@@ -1,8 +1,8 @@
-Dependency=Geometry Building Type RECS	Option=Vented Crawlspace	Option=Unvented Crawlspace	Option=Heated Basement	Option=Ambient	Option=Slab	Option=Unheated Basement	sampling_probability
-Mobile Home	0.1	0.1	0.2	0.2	0.2	0.2	0.111111
-Multi-Family with 2 - 4 Units	0.166667	0.166667	0	0	0.333333	0.333333	0.222222
-Multi-Family with 5+ Units	0.166667	0.166667	0	0	0.333333	0.333333	0.444444
-Single-Family Attached	0.125	0.125	0.25	0	0.25	0.25	0.111111
-Single-Family Detached	0.1	0.1	0.2	0.2	0.2	0.2	0.111111
-# Created by: manually created
+Dependency=Geometry Building Type RECS	Option=Ambient	Option=Heated Basement	Option=Slab	Option=Unheated Basement	Option=Unvented Crawlspace	Option=Vented Crawlspace	sampling_probability
+Mobile Home	1	0	0	0	0	0	0.111111
+Multi-Family with 2 - 4 Units	0	0	0.25	0.25	0.25	0.25	0.222222
+Multi-Family with 5+ Units	0	0	0.25	0.25	0.25	0.25	0.444444
+Single-Family Attached	0	0.2	0.2	0.2	0.2	0.2	0.111111
+Single-Family Detached	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0.111111
+# Created by: sources\recs\recs2009\tsv_maker.py
 # Description: The type of foundation.

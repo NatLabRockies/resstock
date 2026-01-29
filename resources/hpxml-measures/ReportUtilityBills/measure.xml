@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <measure>
-  <schema_version>3.0</schema_version>
+  <schema_version>3.1</schema_version>
   <name>report_utility_bills</name>
   <uid>ca88a425-e59a-4bc4-af51-c7e7d1e960fe</uid>
-  <version_id>10456a16-b1fc-449f-b7f8-71fbcdabb1c9</version_id>
-  <version_modified>20230401T012721Z</version_modified>
+  <version_id>ee965db1-244b-417e-a112-c969ebd4f028</version_id>
+  <version_modified>2025-08-26T23:49:38Z</version_modified>
   <xml_checksum>15BF4E57</xml_checksum>
   <class_name>ReportUtilityBills</class_name>
   <display_name>Utility Bills Report</display_name>
@@ -34,6 +34,117 @@
         </choice>
       </choices>
     </argument>
+    <argument>
+      <name>include_annual_bills</name>
+      <display_name>Generate Annual Utility Bills</display_name>
+      <description>Generates output file containing annual utility bills.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_monthly_bills</name>
+      <display_name>Generate Monthly Utility Bills</display_name>
+      <description>Generates output file containing monthly utility bills.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>monthly_timestamp_convention</name>
+      <display_name>Generate Monthly Output: Timestamp Convention</display_name>
+      <description>Determines whether monthly timestamps use the start-of-period or end-of-period convention.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>start</default_value>
+      <choices>
+        <choice>
+          <value>start</value>
+          <display_name>start</display_name>
+        </choice>
+        <choice>
+          <value>end</value>
+          <display_name>end</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>annual_output_file_name</name>
+      <display_name>Annual Output File Name</display_name>
+      <description>If not provided, defaults to 'results_bills.csv' (or 'results_bills.json' or 'results_bills.msgpack').</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>monthly_output_file_name</name>
+      <display_name>Monthly Output File Name</display_name>
+      <description>If not provided, defaults to 'results_bills_monthly.csv' (or 'results_bills_monthly.json' or 'results_bills_monthly.msgpack').</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>register_annual_bills</name>
+      <display_name>Register Annual Utility Bills</display_name>
+      <description>Registers annual utility bills with the OpenStudio runner for downstream processing.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>register_monthly_bills</name>
+      <display_name>Register Monthly Utility Bills</display_name>
+      <description>Registers monthly utility bills with the OpenStudio runner for downstream processing.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
   </arguments>
   <outputs />
   <provenances />
@@ -49,10 +160,177 @@
   </attributes>
   <files>
     <file>
+      <filename>README.md</filename>
+      <filetype>md</filetype>
+      <usage_type>readme</usage_type>
+      <checksum>13D965BE</checksum>
+    </file>
+    <file>
+      <filename>README.md.erb</filename>
+      <filetype>erb</filetype>
+      <usage_type>readmeerb</usage_type>
+      <checksum>513F28E9</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>3.3.0</identifier>
+        <min_compatible>3.3.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>26A6E541</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/README.md</filename>
+      <filetype>md</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>4BA8526F</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Flat Rate Fixed Daily Charge.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>74762970</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Flat Rate Min Annual Charge.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>1852E380</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Flat Rate Min Monthly Charge.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>C69DF088</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Flat Rate.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>0C05E631</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Real-Time Pricing Rate Min Annual Charge.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>7832E989</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Real-Time Pricing Rate Min Monthly Charge.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>2ED4F8DD</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Real-Time Pricing Rate.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>DB996DB5</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Tiered Rate Min Annual Charge.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>8034C9C4</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Tiered Rate Min Monthly Charge.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>9741ABCB</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Tiered Rate.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>7326DA4D</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Tiered Time-of-Use Rate Min Annual Charge.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>5B4627A8</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Tiered Time-of-Use Rate Min Monthly Charge.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>0D8395ED</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Tiered Time-of-Use Rate.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>C1DF6316</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Time-of-Use Rate High Peak.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>3C8FEF9D</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Time-of-Use Rate Min Annual Charge.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>CB3DEEE1</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Time-of-Use Rate Min Monthly Charge.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>E9407FC4</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/Sample Time-of-Use Rate.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>AFB1E8EB</checksum>
+    </file>
+    <file>
+      <filename>detailed_rates/openei_rates.zip</filename>
+      <filetype>zip</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>FCDE5F5D</checksum>
+    </file>
+    <file>
+      <filename>simple_rates/HouseholdConsumption.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>0BEECB93</checksum>
+    </file>
+    <file>
+      <filename>simple_rates/README.md</filename>
+      <filetype>md</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>C7E1E1CB</checksum>
+    </file>
+    <file>
+      <filename>simple_rates/pr_all_update.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>CF6409BD</checksum>
+    </file>
+    <file>
+      <filename>util.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>BF9C0E6C</checksum>
+    </file>
+    <file>
       <filename>Contains Demand Charges.json</filename>
       <filetype>json</filetype>
       <usage_type>test</usage_type>
       <checksum>31A7BE3B</checksum>
+    </file>
+    <file>
+      <filename>Detailed Rate.json</filename>
+      <filetype>json</filetype>
+      <usage_type>test</usage_type>
+      <checksum>953EE2AC</checksum>
     </file>
     <file>
       <filename>Invalid Fixed Charge Units.json</filename>
@@ -73,171 +351,16 @@
       <checksum>3DCED656</checksum>
     </file>
     <file>
-      <filename>Jackson Electric Member Corp - A Residential Service Senior Citizen Low Income Assistance (Effective 2017-01-01).json</filename>
-      <filetype>json</filetype>
-      <usage_type>test</usage_type>
-      <checksum>953EE2AC</checksum>
-    </file>
-    <file>
       <filename>data.csv</filename>
       <filetype>csv</filetype>
       <usage_type>test</usage_type>
       <checksum>F96CB80F</checksum>
     </file>
     <file>
-      <filename>detailed_rates/openei_rates.zip</filename>
-      <filetype>zip</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>56DDA6EC</checksum>
-    </file>
-    <file>
-      <filename>detailed_rates/Sample Flat Rate.json</filename>
-      <filetype>json</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>C0FCBE3B</checksum>
-    </file>
-    <file>
-      <filename>detailed_rates/Sample Real-Time Pricing Rate.json</filename>
-      <filetype>json</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>40D684ED</checksum>
-    </file>
-    <file>
-      <filename>detailed_rates/Sample Tiered Rate.json</filename>
-      <filetype>json</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>27936FC1</checksum>
-    </file>
-    <file>
-      <filename>detailed_rates/Sample Tiered Time-of-Use Rate.json</filename>
-      <filetype>json</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>4508028D</checksum>
-    </file>
-    <file>
-      <filename>detailed_rates/Sample Time-of-Use Rate.json</filename>
-      <filetype>json</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>AD93D08A</checksum>
-    </file>
-    <file>
-      <filename>simple_rates/Average_retail_price_of_electricity.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>37E30685</checksum>
-    </file>
-    <file>
-      <filename>simple_rates/HouseholdConsumption.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>0BEECB93</checksum>
-    </file>
-    <file>
-      <filename>simple_rates/NG_PRI_SUM_A_EPG0_PRS_DMCF_A.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>2CE8192C</checksum>
-    </file>
-    <file>
-      <filename>simple_rates/PET_PRI_WFR_A_EPD2F_PRS_DPGAL_W.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>6FEB427A</checksum>
-    </file>
-    <file>
-      <filename>simple_rates/PET_PRI_WFR_A_EPLLPA_PRS_DPGAL_W.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>22112EBB</checksum>
-    </file>
-    <file>
-      <filename>simple_rates/README.md</filename>
-      <filetype>md</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>D9D25D07</checksum>
-    </file>
-    <file>
-      <filename>detailed_rates/Sample Flat Rate Min Annual Charge.json</filename>
-      <filetype>json</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>453ED6BD</checksum>
-    </file>
-    <file>
-      <filename>detailed_rates/Sample Flat Rate Min Monthly Charge.json</filename>
-      <filetype>json</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>A39362E3</checksum>
-    </file>
-    <file>
-      <filename>detailed_rates/Sample Real-Time Pricing Rate Min Annual Charge.json</filename>
-      <filetype>json</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>12C12981</checksum>
-    </file>
-    <file>
-      <filename>detailed_rates/Sample Real-Time Pricing Rate Min Monthly Charge.json</filename>
-      <filetype>json</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>DE28BDA1</checksum>
-    </file>
-    <file>
-      <filename>detailed_rates/Sample Tiered Rate Min Annual Charge.json</filename>
-      <filetype>json</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>05C5F7BD</checksum>
-    </file>
-    <file>
-      <filename>detailed_rates/Sample Tiered Rate Min Monthly Charge.json</filename>
-      <filetype>json</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>9177D651</checksum>
-    </file>
-    <file>
-      <filename>detailed_rates/Sample Tiered Time-of-Use Rate Min Annual Charge.json</filename>
-      <filetype>json</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>E59E9AEE</checksum>
-    </file>
-    <file>
-      <filename>detailed_rates/Sample Tiered Time-of-Use Rate Min Monthly Charge.json</filename>
-      <filetype>json</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>75AD92DF</checksum>
-    </file>
-    <file>
-      <filename>detailed_rates/Sample Time-of-Use Rate Min Annual Charge.json</filename>
-      <filetype>json</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>2CC2386E</checksum>
-    </file>
-    <file>
-      <filename>detailed_rates/Sample Time-of-Use Rate Min Monthly Charge.json</filename>
-      <filetype>json</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>387337AD</checksum>
-    </file>
-    <file>
-      <filename>util.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>041AE7DE</checksum>
-    </file>
-    <file>
-      <filename>utility_bills_test.rb</filename>
+      <filename>test_report_utility_bills.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>08FABF5F</checksum>
-    </file>
-    <file>
-      <version>
-        <software_program>OpenStudio</software_program>
-        <identifier>3.3.0</identifier>
-        <min_compatible>3.3.0</min_compatible>
-      </version>
-      <filename>measure.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>script</usage_type>
-      <checksum>13808DAA</checksum>
+      <checksum>94348A13</checksum>
     </file>
   </files>
 </measure>

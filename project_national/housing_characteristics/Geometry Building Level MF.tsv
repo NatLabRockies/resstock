@@ -1,7 +1,7 @@
 Dependency=Geometry Building Type RECS	Dependency=Geometry Stories	Option=Bottom	Option=Middle	Option=None	Option=Top	sampling_probability
-Single-Family Detached	1	0	0	1	0	0.378219
-Single-Family Detached	2	0	0	1	0	0.228165
-Single-Family Detached	3	0	0	1	0	0.0086589
+Single-Family Detached	1	0	0	1	0	0.419012
+Single-Family Detached	2	0	0	1	0	0.189036
+Single-Family Detached	3	0	0	1	0	0.00669568
 Single-Family Detached	4	0	0	1	0	0
 Single-Family Detached	5	0	0	1	0	0
 Single-Family Detached	6	0	0	1	0	0
@@ -16,26 +16,28 @@ Single-Family Detached	14	0	0	1	0	0
 Single-Family Detached	15	0	0	1	0	0
 Single-Family Detached	20	0	0	1	0	0
 Single-Family Detached	21	0	0	1	0	0
-Multi-Family with 5+ Units	1	1	0	0	0	0.0118592
-Multi-Family with 5+ Units	2	0.5	0	0	0.5	0.0617883
-Multi-Family with 5+ Units	3	0.333333	0.333333	0	0.333333	0.0564645
-Multi-Family with 5+ Units	4	0.25	0.5	0	0.25	0.0176808
-Multi-Family with 5+ Units	5	0.2	0.6	0	0.2	0.00797631
-Multi-Family with 5+ Units	6	0.166667	0.666667	0	0.166667	0.00712543
-Multi-Family with 5+ Units	7	0.142857	0.714286	0	0.142857	0.00130995
-Multi-Family with 5+ Units	8	0.125	0.75	0	0.125	0.00165544
-Multi-Family with 5+ Units	9	0.111111	0.777778	0	0.111111	0.00136231
-Multi-Family with 5+ Units	10	0.1	0.8	0	0.1	0.00169202
-Multi-Family with 5+ Units	11	0.0909091	0.818182	0	0.0909091	0.000926751
-Multi-Family with 5+ Units	12	0.0833333	0.833333	0	0.0833333	0.00179159
-Multi-Family with 5+ Units	13	0.0769231	0.846154	0	0.0769231	0.0011189
-Multi-Family with 5+ Units	14	0.0714286	0.857143	0	0.0714286	0.00115272
-Multi-Family with 5+ Units	15	0.0666667	0.866667	0	0.0666667	0.00103517
-Multi-Family with 5+ Units	20	0.05	0.9	0	0.05	0.00210734
-Multi-Family with 5+ Units	21	0.047619	0.904762	0	0.047619	0.00682112
-Single-Family Attached	1	0	0	1	0	0.0238682
-Single-Family Attached	2	0	0	1	0	0.0304436
-Single-Family Attached	3	0	0	1	0	0.00408286
+Single-Family Detached	35	0	0	1	0	0
+Multi-Family with 5+ Units	1	1	0	0	0	0.0117413
+Multi-Family with 5+ Units	2	0.5	0	0	0.5	0.0616695
+Multi-Family with 5+ Units	3	0.333333	0.333333	0	0.333333	0.0559484
+Multi-Family with 5+ Units	4	0.25	0.5	0	0.25	0.0177326
+Multi-Family with 5+ Units	5	0.2	0.6	0	0.2	0.00792207
+Multi-Family with 5+ Units	6	0.166667	0.666667	0	0.166667	0.00701718
+Multi-Family with 5+ Units	7	0.142857	0.714286	0	0.142857	0.00155383
+Multi-Family with 5+ Units	8	0.125	0.75	0	0.125	0.00162715
+Multi-Family with 5+ Units	9	0.111111	0.777778	0	0.111111	0.00132173
+Multi-Family with 5+ Units	10	0.1	0.8	0	0.1	0.00165043
+Multi-Family with 5+ Units	11	0.0909091	0.818182	0	0.0909091	0.00089699
+Multi-Family with 5+ Units	12	0.0833333	0.833333	0	0.0833333	0.00186565
+Multi-Family with 5+ Units	13	0.0769231	0.846154	0	0.0769231	0.00121017
+Multi-Family with 5+ Units	14	0.0714286	0.857143	0	0.0714286	0.00111998
+Multi-Family with 5+ Units	15	0.0666667	0.866667	0	0.0666667	0.00115789
+Multi-Family with 5+ Units	20	0.05	0.9	0	0.05	0.00206217
+Multi-Family with 5+ Units	21	0.047619	0.904762	0	0.047619	0.00660916
+Multi-Family with 5+ Units	35	0.0285714	0.942857	0	0.0285714	0.00112057
+Single-Family Attached	1	0	0	1	0	0.0266777
+Single-Family Attached	2	0	0	1	0	0.0289377
+Single-Family Attached	3	0	0	1	0	0.00294883
 Single-Family Attached	4	0	0	1	0	0
 Single-Family Attached	5	0	0	1	0	0
 Single-Family Attached	6	0	0	1	0	0
@@ -50,10 +52,11 @@ Single-Family Attached	14	0	0	1	0	0
 Single-Family Attached	15	0	0	1	0	0
 Single-Family Attached	20	0	0	1	0	0
 Single-Family Attached	21	0	0	1	0	0
-Multi-Family with 2 - 4 Units	1	1	0	0	0	0.0130425
-Multi-Family with 2 - 4 Units	2	0.5	0	0	0.5	0.0535386
-Multi-Family with 2 - 4 Units	3	0.333333	0.333333	0	0.333333	0.0112708
-Multi-Family with 2 - 4 Units	4	0.25	0.5	0	0.25	0.00208719
+Single-Family Attached	35	0	0	1	0	0
+Multi-Family with 2 - 4 Units	1	1	0	0	0	0.0130108
+Multi-Family with 2 - 4 Units	2	0.5	0	0	0.5	0.0535952
+Multi-Family with 2 - 4 Units	3	0.333333	0.333333	0	0.333333	0.011292
+Multi-Family with 2 - 4 Units	4	0.25	0.5	0	0.25	0.00207836
 Multi-Family with 2 - 4 Units	5	0.2	0.6	0	0.2	0
 Multi-Family with 2 - 4 Units	6	0.166667	0.666667	0	0.166667	0
 Multi-Family with 2 - 4 Units	7	0.142857	0.714286	0	0.142857	0
@@ -67,7 +70,8 @@ Multi-Family with 2 - 4 Units	14	0.0714286	0.857143	0	0.0714286	0
 Multi-Family with 2 - 4 Units	15	0.0666667	0.866667	0	0.0666667	0
 Multi-Family with 2 - 4 Units	20	0.05	0.9	0	0.05	0
 Multi-Family with 2 - 4 Units	21	0.047619	0.904762	0	0.047619	0
-Mobile Home	1	0	0	1	0	0.0627558
+Multi-Family with 2 - 4 Units	35	0.0285714	0.942857	0	0.0285714	0
+Mobile Home	1	0	0	1	0	0.0624897
 Mobile Home	2	0	0	1	0	0
 Mobile Home	3	0	0	1	0	0
 Mobile Home	4	0	0	1	0	0
@@ -84,6 +88,7 @@ Mobile Home	14	0	0	1	0	0
 Mobile Home	15	0	0	1	0	0
 Mobile Home	20	0	0	1	0	0
 Mobile Home	21	0	0	1	0	0
+Mobile Home	35	0	0	1	0	0
 # Created by: sources\recs\recs2009\tsv_maker.py
 # Description: Location of the multi-family unit vertically within the building (bottom, middle, top).
 # Source: Calculated directly from other distributions

@@ -1,5 +1,197 @@
-Option=Typical Efficiency	Option=None	sampling_probability
-0.127	0.873	1
-# Created by: manually created
-# Description: Presence and efficiency of well pump.
-# Source: Wilson et al. 'Building America House Simulation Protocols' 2014, national average fraction used for saturation
+Dependency=Census Division	Dependency=Geometry Building Type Height	Dependency=PUMA Metro Status	Option=None	Option=Typical Efficiency	source_count	source_weight	sampling_probability
+East North Central	Mobile Home	In metro area, not/partially in principal city	0.713706	0.286294	187	630357	0.00262814
+East North Central	Multi-Family with 2 - 4 Units	In metro area, not/partially in principal city	0.985907	0.0140926	528	1.61583e+06	0.0069998
+East North Central	Multi-Family with 5+ Units, 1-3 Stories	In metro area, not/partially in principal city	1	0	976	2.80129e+06	0.0125292
+East North Central	Multi-Family with 5+ Units, 4-7 Stories	In metro area, not/partially in principal city	1	0	244	626431	0.00231758
+East North Central	Multi-Family with 5+ Units, 8+ Stories	In metro area, not/partially in principal city	1	0	2	1	0.00143417
+East North Central	Single-Family Attached	In metro area, not/partially in principal city	0.976444	0.0235559	384	1.22476e+06	0.00572369
+East North Central	Single-Family Detached	In metro area, not/partially in principal city	0.799261	0.200739	3982	1.47166e+07	0.0667766
+East North Central	Mobile Home	In metro area, principal city	0.900706	0.099294	174	160115	6.79432e-05
+East North Central	Multi-Family with 2 - 4 Units	In metro area, principal city	0.995206	0.00479445	768	1.18549e+06	0.00396515
+East North Central	Multi-Family with 5+ Units, 1-3 Stories	In metro area, principal city	0.995319	0.00468081	1280	1.61106e+06	0.00287381
+East North Central	Multi-Family with 5+ Units, 4-7 Stories	In metro area, principal city	0.999303	0.000696992	645	953861	0.00139964
+East North Central	Multi-Family with 5+ Units, 8+ Stories	In metro area, principal city	1	0	2	1	0.000966107
+East North Central	Single-Family Attached	In metro area, principal city	0.960189	0.0398106	746	837859	0.000805703
+East North Central	Single-Family Detached	In metro area, principal city	0.892226	0.107774	5849	6.78764e+06	0.0066238
+East North Central	Mobile Home	Not/partially in metro area	0.665674	0.334326	235	743783	0.0032214
+East North Central	Multi-Family with 2 - 4 Units	Not/partially in metro area	0.932391	0.067609	185	449437	0.00214085
+East North Central	Multi-Family with 5+ Units, 1-3 Stories	Not/partially in metro area	0.994557	0.00544328	267	526469	0.00205992
+East North Central	Multi-Family with 5+ Units, 4-7 Stories	Not/partially in metro area	1	0	18	36351.3	0.000331804
+East North Central	Multi-Family with 5+ Units, 8+ Stories	Not/partially in metro area	1	0	2	1	0.00016274
+East North Central	Single-Family Attached	Not/partially in metro area	0.778088	0.221912	58	154935	0.000700735
+East North Central	Single-Family Detached	Not/partially in metro area	0.57671	0.42329	2067	6.57155e+06	0.0290623
+East South Central	Mobile Home	In metro area, not/partially in principal city	0.901964	0.0980362	290	802086	0.00195557
+East South Central	Multi-Family with 2 - 4 Units	In metro area, not/partially in principal city	1	0	369	723459	0.00167496
+East South Central	Multi-Family with 5+ Units, 1-3 Stories	In metro area, not/partially in principal city	1	0	611	1.51629e+06	0.00360225
+East South Central	Multi-Family with 5+ Units, 4-7 Stories	In metro area, not/partially in principal city	1	0	100	212793	0.000550363
+East South Central	Multi-Family with 5+ Units, 8+ Stories	In metro area, not/partially in principal city	1	0	3	1	0.000246749
+East South Central	Single-Family Attached	In metro area, not/partially in principal city	0.982534	0.0174659	138	334415	0.000859889
+East South Central	Single-Family Detached	In metro area, not/partially in principal city	0.952328	0.0476719	2490	7.83908e+06	0.0196382
+East South Central	Mobile Home	In metro area, principal city	0.832306	0.167694	703	0	4.25642e-05
+East South Central	Multi-Family with 2 - 4 Units	In metro area, principal city	0.995874	0.00412572	1084	0	0.000343832
+East South Central	Multi-Family with 5+ Units, 1-3 Stories	In metro area, principal city	0.999106	0.000893893	4851	0	0.000753356
+East South Central	Multi-Family with 5+ Units, 4-7 Stories	In metro area, principal city	0.99707	0.00292959	2567	0	0.000173656
+East South Central	Multi-Family with 5+ Units, 8+ Stories	In metro area, principal city	1	0	3	1	9.7721e-05
+East South Central	Single-Family Attached	In metro area, principal city	0.995436	0.00456433	2344	0	0.000200935
+East South Central	Single-Family Detached	In metro area, principal city	0.945107	0.0548927	14074	0	0.00237301
+East South Central	Mobile Home	Not/partially in metro area	0.910263	0.0897368	261	1.12374e+06	0.00542585
+East South Central	Multi-Family with 2 - 4 Units	Not/partially in metro area	1	0	94	216837	0.00170508
+East South Central	Multi-Family with 5+ Units, 1-3 Stories	Not/partially in metro area	1	0	79	257170	0.00157056
+East South Central	Multi-Family with 5+ Units, 4-7 Stories	Not/partially in metro area	0.979496	0.0205041	34	18187.4	0.000164811
+East South Central	Multi-Family with 5+ Units, 8+ Stories	Not/partially in metro area	1	0	3	1	6.80366e-05
+East South Central	Single-Family Attached	Not/partially in metro area	1	0	35	122488	0.000336408
+East South Central	Single-Family Detached	Not/partially in metro area	0.938445	0.061555	914	4.01701e+06	0.0203484
+Middle Atlantic	Mobile Home	In metro area, not/partially in principal city	0.607042	0.392958	139	475764	0.00177877
+Middle Atlantic	Multi-Family with 2 - 4 Units	In metro area, not/partially in principal city	0.940383	0.0596166	443	1.41475e+06	0.00881352
+Middle Atlantic	Multi-Family with 5+ Units, 1-3 Stories	In metro area, not/partially in principal city	0.949062	0.0509378	375	1.0253e+06	0.00819195
+Middle Atlantic	Multi-Family with 5+ Units, 4-7 Stories	In metro area, not/partially in principal city	1	0	146	369034	0.00228894
+Middle Atlantic	Multi-Family with 5+ Units, 8+ Stories	In metro area, not/partially in principal city	1	0	2	1	0.00152434
+Middle Atlantic	Single-Family Attached	In metro area, not/partially in principal city	0.9925	0.0075005	324	1.11568e+06	0.00764762
+Middle Atlantic	Single-Family Detached	In metro area, not/partially in principal city	0.741414	0.258586	1972	7.5503e+06	0.0490847
+Middle Atlantic	Mobile Home	In metro area, principal city	0.81342	0.18658	51	87856.6	7.25435e-05
+Middle Atlantic	Multi-Family with 2 - 4 Units	In metro area, principal city	0.993959	0.00604099	877	2.40659e+06	0.00814231
+Middle Atlantic	Multi-Family with 5+ Units, 1-3 Stories	In metro area, principal city	0.992767	0.00723302	860	1.989e+06	0.00787688
+Middle Atlantic	Multi-Family with 5+ Units, 4-7 Stories	In metro area, principal city	0.996024	0.00397618	1937	5.07916e+06	0.00567626
+Middle Atlantic	Multi-Family with 5+ Units, 8+ Stories	In metro area, principal city	1	0	2	1	0.00453789
+Middle Atlantic	Single-Family Attached	In metro area, principal city	0.994951	0.00504935	1501	2.62126e+06	0.00516457
+Middle Atlantic	Single-Family Detached	In metro area, principal city	0.887855	0.112145	3215	8.32252e+06	0.00406403
+Middle Atlantic	Mobile Home	Not/partially in metro area	0.28533	0.71467	110	383939	0.00147627
+Middle Atlantic	Multi-Family with 2 - 4 Units	Not/partially in metro area	0.817466	0.182534	65	196384	0.00129702
+Middle Atlantic	Multi-Family with 5+ Units, 1-3 Stories	Not/partially in metro area	0.912015	0.0879846	37	99646.3	0.000664475
+Middle Atlantic	Multi-Family with 5+ Units, 4-7 Stories	Not/partially in metro area	0.898207	0.101793	24	13907.9	0.000154203
+Middle Atlantic	Multi-Family with 5+ Units, 8+ Stories	Not/partially in metro area	1	0	2	1	8.78766e-05
+Middle Atlantic	Single-Family Attached	Not/partially in metro area	0.522382	0.477618	16	56583.9	0.000545385
+Middle Atlantic	Single-Family Detached	Not/partially in metro area	0.371662	0.628338	600	2.20586e+06	0.0104853
+Mountain	Mobile Home	In metro area, not/partially in principal city	0.89451	0.10549	266	780719	0.00298883
+Mountain	Multi-Family with 2 - 4 Units	In metro area, not/partially in principal city	1	0	263	741421	0.00253872
+Mountain	Multi-Family with 5+ Units, 1-3 Stories	In metro area, not/partially in principal city	1	0	635	1.90669e+06	0.00577122
+Mountain	Multi-Family with 5+ Units, 4-7 Stories	In metro area, not/partially in principal city	1	0	111	327513	0.00116947
+Mountain	Multi-Family with 5+ Units, 8+ Stories	In metro area, not/partially in principal city	1	0	2	1	0.000581928
+Mountain	Single-Family Attached	In metro area, not/partially in principal city	0.986571	0.0134288	236	780309	0.0025801
+Mountain	Single-Family Detached	In metro area, not/partially in principal city	0.94674	0.0532605	2250	8.18503e+06	0.0296961
+Mountain	Mobile Home	In metro area, principal city	0.959466	0.0405337	332	238095	0.000216408
+Mountain	Multi-Family with 2 - 4 Units	In metro area, principal city	0.994825	0.00517529	205	166429	0.000646538
+Mountain	Multi-Family with 5+ Units, 1-3 Stories	In metro area, principal city	0.999289	0.000711127	808	649468	0.00194255
+Mountain	Multi-Family with 5+ Units, 4-7 Stories	In metro area, principal city	1	0	80	71243.3	0.00049191
+Mountain	Multi-Family with 5+ Units, 8+ Stories	In metro area, principal city	1	0	2	1	0.000281291
+Mountain	Single-Family Attached	In metro area, principal city	1	0	288	237654	0.000564027
+Mountain	Single-Family Detached	In metro area, principal city	0.988112	0.0118876	2983	2.51953e+06	0.00459477
+Mountain	Mobile Home	Not/partially in metro area	0.732176	0.267824	204	988956	0.00285559
+Mountain	Multi-Family with 2 - 4 Units	Not/partially in metro area	0.891446	0.108554	62	249841	0.0010889
+Mountain	Multi-Family with 5+ Units, 1-3 Stories	Not/partially in metro area	0.950667	0.0493333	50	192854	0.0013193
+Mountain	Multi-Family with 5+ Units, 4-7 Stories	Not/partially in metro area	1	0	9	0	0.000227214
+Mountain	Multi-Family with 5+ Units, 8+ Stories	Not/partially in metro area	1	0	2	1	9.32218e-05
+Mountain	Single-Family Attached	Not/partially in metro area	0.967562	0.0324376	33	143145	0.000622664
+Mountain	Single-Family Detached	Not/partially in metro area	0.633749	0.366251	484	2.44594e+06	0.0126906
+New England	Mobile Home	In metro area, not/partially in principal city	0.605182	0.394818	38	126705	0.000573426
+New England	Multi-Family with 2 - 4 Units	In metro area, not/partially in principal city	0.972484	0.0275156	381	1.187e+06	0.00545054
+New England	Multi-Family with 5+ Units, 1-3 Stories	In metro area, not/partially in principal city	0.984374	0.0156259	296	713607	0.00390093
+New England	Multi-Family with 5+ Units, 4-7 Stories	In metro area, not/partially in principal city	1	0	147	342952	0.00114505
+New England	Multi-Family with 5+ Units, 8+ Stories	In metro area, not/partially in principal city	1	0	2	1	0.000617905
+New England	Single-Family Attached	In metro area, not/partially in principal city	0.898649	0.101351	100	276695	0.00176048
+New England	Single-Family Detached	In metro area, not/partially in principal city	0.707778	0.292222	1198	4.39856e+06	0.0201695
+New England	Mobile Home	In metro area, principal city	0.728447	0.271553	43	37227.4	1.36615e-05
+New England	Multi-Family with 2 - 4 Units	In metro area, principal city	0.98597	0.0140297	765	788200	0.00206802
+New England	Multi-Family with 5+ Units, 1-3 Stories	In metro area, principal city	0.988653	0.0113473	456	421851	0.00122006
+New England	Multi-Family with 5+ Units, 4-7 Stories	In metro area, principal city	0.999358	0.000642469	500	471297	0.000574228
+New England	Multi-Family with 5+ Units, 8+ Stories	In metro area, principal city	1	0	2	1	0.000312177
+New England	Single-Family Attached	In metro area, principal city	0.967242	0.0327578	204	205442	0.000293085
+New England	Single-Family Detached	In metro area, principal city	0.884362	0.115638	1999	2.01859e+06	0.00115185
+New England	Mobile Home	Not/partially in metro area	0.588182	0.411818	25	95314.1	0.00058635
+New England	Multi-Family with 2 - 4 Units	Not/partially in metro area	0.866704	0.133296	69	221230	0.000896842
+New England	Multi-Family with 5+ Units, 1-3 Stories	Not/partially in metro area	1	0	76	237664	0.000620796
+New England	Multi-Family with 5+ Units, 4-7 Stories	Not/partially in metro area	0.863629	0.136371	16	40943	0.000131281
+New England	Multi-Family with 5+ Units, 8+ Stories	Not/partially in metro area	1	0	2	1	4.22759e-05
+New England	Single-Family Attached	Not/partially in metro area	0.450872	0.549128	30	120090	0.000281075
+New England	Single-Family Detached	Not/partially in metro area	0.361484	0.638516	392	1.54582e+06	0.00643762
+Pacific	Mobile Home	In metro area, not/partially in principal city	0.764913	0.235087	291	915717	0.00480433
+Pacific	Multi-Family with 2 - 4 Units	In metro area, not/partially in principal city	0.976158	0.0238418	508	1.39115e+06	0.00746335
+Pacific	Multi-Family with 5+ Units, 1-3 Stories	In metro area, not/partially in principal city	0.994625	0.00537525	1088	2.9776e+06	0.0147549
+Pacific	Multi-Family with 5+ Units, 4-7 Stories	In metro area, not/partially in principal city	1	0	179	465900	0.00322778
+Pacific	Multi-Family with 5+ Units, 8+ Stories	In metro area, not/partially in principal city	1	0	2	1	0.00199797
+Pacific	Single-Family Attached	In metro area, not/partially in principal city	0.984829	0.0151714	377	1.15711e+06	0.00692764
+Pacific	Single-Family Detached	In metro area, not/partially in principal city	0.895379	0.104621	3188	1.11308e+07	0.0657306
+Pacific	Mobile Home	In metro area, principal city	0.931847	0.0681531	707	525451	0.000293917
+Pacific	Multi-Family with 2 - 4 Units	In metro area, principal city	0.999396	0.000603623	1582	1.60302e+06	0.00279747
+Pacific	Multi-Family with 5+ Units, 1-3 Stories	In metro area, principal city	0.998401	0.0015988	3905	4.10808e+06	0.00735368
+Pacific	Multi-Family with 5+ Units, 4-7 Stories	In metro area, principal city	0.997594	0.00240552	1343	1.24663e+06	0.00267687
+Pacific	Multi-Family with 5+ Units, 8+ Stories	In metro area, principal city	1	0	2	1	0.00148724
+Pacific	Single-Family Attached	In metro area, principal city	0.997102	0.00289809	1362	1.34592e+06	0.00198193
+Pacific	Single-Family Detached	In metro area, principal city	0.985778	0.0142222	11185	1.0547e+07	0.0107636
+Pacific	Mobile Home	Not/partially in metro area	0.614937	0.385063	91	350312	0.00146457
+Pacific	Multi-Family with 2 - 4 Units	Not/partially in metro area	1	0	28	90780.2	0.000756648
+Pacific	Multi-Family with 5+ Units, 1-3 Stories	Not/partially in metro area	1	0	48	164995	0.000896137
+Pacific	Multi-Family with 5+ Units, 4-7 Stories	Not/partially in metro area	1	0	9	30707	0.000147992
+Pacific	Multi-Family with 5+ Units, 8+ Stories	Not/partially in metro area	1	0	2	1	7.63798e-05
+Pacific	Single-Family Attached	Not/partially in metro area	0.8208	0.1792	13	67877.7	0.000348464
+Pacific	Single-Family Detached	Not/partially in metro area	0.761154	0.238846	477	2.02898e+06	0.00894616
+South Atlantic	Mobile Home	In metro area, not/partially in principal city	0.686615	0.313385	942	3.1152e+06	0.0102153
+South Atlantic	Multi-Family with 2 - 4 Units	In metro area, not/partially in principal city	0.968185	0.0318153	734	1.99862e+06	0.00723994
+South Atlantic	Multi-Family with 5+ Units, 1-3 Stories	In metro area, not/partially in principal city	0.998038	0.00196215	1563	4.55437e+06	0.0228502
+South Atlantic	Multi-Family with 5+ Units, 4-7 Stories	In metro area, not/partially in principal city	1	0	387	1.10105e+06	0.00451889
+South Atlantic	Multi-Family with 5+ Units, 8+ Stories	In metro area, not/partially in principal city	1	0	3	1	0.00257562
+South Atlantic	Single-Family Attached	In metro area, not/partially in principal city	0.983316	0.0166843	818	2.46148e+06	0.0114948
+South Atlantic	Single-Family Detached	In metro area, not/partially in principal city	0.849747	0.150253	6093	2.14315e+07	0.0865381
+South Atlantic	Mobile Home	In metro area, principal city	0.818257	0.181743	274	260047	0.000185481
+South Atlantic	Multi-Family with 2 - 4 Units	In metro area, principal city	0.99304	0.0069599	666	638984	0.001413
+South Atlantic	Multi-Family with 5+ Units, 1-3 Stories	In metro area, principal city	0.999105	0.000894582	2528	2.39628e+06	0.00393807
+South Atlantic	Multi-Family with 5+ Units, 4-7 Stories	In metro area, principal city	0.996548	0.00345221	2236	2.07617e+06	0.00155327
+South Atlantic	Multi-Family with 5+ Units, 8+ Stories	In metro area, principal city	1	0	3	1	0.00094569
+South Atlantic	Single-Family Attached	In metro area, principal city	0.995561	0.0044387	1949	1.85694e+06	0.00278805
+South Atlantic	Single-Family Detached	In metro area, principal city	0.927439	0.0725608	7913	7.82016e+06	0.00612379
+South Atlantic	Mobile Home	Not/partially in metro area	0.475601	0.524399	450	1.50869e+06	0.00828783
+South Atlantic	Multi-Family with 2 - 4 Units	Not/partially in metro area	0.964809	0.0351909	115	295022	0.00193676
+South Atlantic	Multi-Family with 5+ Units, 1-3 Stories	Not/partially in metro area	1	0	153	406294	0.0020995
+South Atlantic	Multi-Family with 5+ Units, 4-7 Stories	Not/partially in metro area	0.974525	0.0254755	28	82702.2	0.000340028
+South Atlantic	Multi-Family with 5+ Units, 8+ Stories	Not/partially in metro area	1	0	3	1	0.000144451
+South Atlantic	Single-Family Attached	Not/partially in metro area	0.901528	0.0984721	52	126494	0.000839025
+South Atlantic	Single-Family Detached	Not/partially in metro area	0.616055	0.383945	1406	4.95024e+06	0.0286029
+West North Central	Mobile Home	In metro area, not/partially in principal city	0.730923	0.269077	117	402493	0.000840833
+West North Central	Multi-Family with 2 - 4 Units	In metro area, not/partially in principal city	1	0	202	675369	0.00161595
+West North Central	Multi-Family with 5+ Units, 1-3 Stories	In metro area, not/partially in principal city	1	0	566	1.73944e+06	0.00420777
+West North Central	Multi-Family with 5+ Units, 4-7 Stories	In metro area, not/partially in principal city	1	0	166	512567	0.000973626
+West North Central	Multi-Family with 5+ Units, 8+ Stories	In metro area, not/partially in principal city	1	0	2	1	0.00047482
+West North Central	Single-Family Attached	In metro area, not/partially in principal city	0.985212	0.0147882	247	839271	0.00231233
+West North Central	Single-Family Detached	In metro area, not/partially in principal city	0.887063	0.112937	2179	8.56873e+06	0.0218535
+West North Central	Mobile Home	In metro area, principal city	0.900706	0.099294	174	0	3.68074e-05
+West North Central	Multi-Family with 2 - 4 Units	In metro area, principal city	0.995206	0.00479445	768	0	0.000798909
+West North Central	Multi-Family with 5+ Units, 1-3 Stories	In metro area, principal city	0.995319	0.00468081	1280	0	0.000955583
+West North Central	Multi-Family with 5+ Units, 4-7 Stories	In metro area, principal city	0.999303	0.000696992	645	0	0.000456038
+West North Central	Multi-Family with 5+ Units, 8+ Stories	In metro area, principal city	1	0	2	1	0.000292657
+West North Central	Single-Family Attached	In metro area, principal city	0.960189	0.0398106	746	0	0.000188876
+West North Central	Single-Family Detached	In metro area, principal city	0.892226	0.107774	5849	0	0.00290592
+West North Central	Mobile Home	Not/partially in metro area	0.76185	0.23815	168	460306	0.002404
+West North Central	Multi-Family with 2 - 4 Units	Not/partially in metro area	0.977192	0.0228083	149	329800	0.00169751
+West North Central	Multi-Family with 5+ Units, 1-3 Stories	Not/partially in metro area	0.990513	0.00948732	237	529821	0.0022523
+West North Central	Multi-Family with 5+ Units, 4-7 Stories	Not/partially in metro area	1	0	44	78369.9	0.000430774
+West North Central	Multi-Family with 5+ Units, 8+ Stories	Not/partially in metro area	1	0	2	1	0.000147519
+West North Central	Single-Family Attached	Not/partially in metro area	0.968698	0.0313022	63	142563	0.000776389
+West North Central	Single-Family Detached	Not/partially in metro area	0.76201	0.23799	1618	4.86554e+06	0.0235623
+West South Central	Mobile Home	In metro area, not/partially in principal city	0.849984	0.150016	387	1.20132e+06	0.00450567
+West South Central	Multi-Family with 2 - 4 Units	In metro area, not/partially in principal city	0.997415	0.0025849	490	1.07332e+06	0.00363712
+West South Central	Multi-Family with 5+ Units, 1-3 Stories	In metro area, not/partially in principal city	0.998288	0.00171153	824	2.14848e+06	0.0107255
+West South Central	Multi-Family with 5+ Units, 4-7 Stories	In metro area, not/partially in principal city	1	0	67	199926	0.00211336
+West South Central	Multi-Family with 5+ Units, 8+ Stories	In metro area, not/partially in principal city	1	0	3	1	0.000936189
+West South Central	Single-Family Attached	In metro area, not/partially in principal city	0.991586	0.00841384	189	436126	0.00188591
+West South Central	Single-Family Detached	In metro area, not/partially in principal city	0.943712	0.0562876	3153	1.07005e+07	0.0473751
+West South Central	Mobile Home	In metro area, principal city	0.840613	0.159387	429	439800	0.000151383
+West South Central	Multi-Family with 2 - 4 Units	In metro area, principal city	1	0	418	438952	0.00126994
+West South Central	Multi-Family with 5+ Units, 1-3 Stories	In metro area, principal city	0.999107	0.000893214	2323	2.4338e+06	0.00307748
+West South Central	Multi-Family with 5+ Units, 4-7 Stories	In metro area, principal city	1	0	331	370377	0.000808836
+West South Central	Multi-Family with 5+ Units, 8+ Stories	In metro area, principal city	1	0	3	1	0.000425998
+West South Central	Single-Family Attached	In metro area, principal city	0.994876	0.00512409	395	416773	0.000580446
+West South Central	Single-Family Detached	In metro area, principal city	0.965151	0.0348486	6161	6.89315e+06	0.0072672
+West South Central	Mobile Home	Not/partially in metro area	0.819941	0.180059	291	975639	0.00539627
+West South Central	Multi-Family with 2 - 4 Units	Not/partially in metro area	0.986152	0.013848	128	305307	0.00157764
+West South Central	Multi-Family with 5+ Units, 1-3 Stories	Not/partially in metro area	1	0	100	291350	0.00135085
+West South Central	Multi-Family with 5+ Units, 4-7 Stories	Not/partially in metro area	0.979496	0.0205041	34	1864.32	0.000181785
+West South Central	Multi-Family with 5+ Units, 8+ Stories	Not/partially in metro area	1	0	3	1	8.29294e-05
+West South Central	Single-Family Attached	Not/partially in metro area	1	0	46	137521	0.000353961
+West South Central	Single-Family Detached	Not/partially in metro area	0.873376	0.126624	1080	4.14596e+06	0.0218773
+# Created by: sources\ahs\ahs2017_2019\tsv_maker.py
+# Description: Presence of well pump according to the use of well for domestic water source.
+# Source: Constructed using 2017 and 2019 American Housing Survey (AHS) microdata.
+# Source: Core Based Statistical Area (CBSA) data based on the Feb 2013 CBSA delineation file.
+# Assumption: All well pumps are assumed to have typical efficiency.
+# Assumption: Where the number of samples < 10, the Census Division is aggregated up to Census Region.
+# Assumption: AHS has data for buildings up to 7 stories tall. Buildings with 8 or more stories are assumed not to have a well pump.

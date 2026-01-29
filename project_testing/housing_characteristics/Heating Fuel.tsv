@@ -1,4 +1,4 @@
-Option=Electricity	Option=Fuel Oil	Option=Natural Gas	Option=None	Option=Other Fuel	Option=Propane	sampling_probability
-0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	1
+Option=Electricity	Option=Fuel Oil	Option=Natural Gas	Option=None	Option=Other Fuel	Option=Propane	Option=Wood	sampling_probability
+0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	1
 # Created by: sources\pums\pums2019_5yrs\tsv_maker.py
 # Description: The primary fuel used for heating the dwelling unit.

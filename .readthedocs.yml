@@ -1,9 +1,13 @@
 version: 2
 
 sphinx:
-  configuration: docs/read_the_docs/source/conf.py
+  configuration: docs/technical_development_guide/source/conf.py
 
 build:
-  os: ubuntu-22.04
+  os: "ubuntu-22.04"
   tools:
-    python: "3.8"
+    python: "3.11"
+
+python:
+  install:
+    - requirements: docs/technical_development_guide/requirements.txt

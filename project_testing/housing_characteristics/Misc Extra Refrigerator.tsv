@@ -1,4 +1,8 @@
-Option=EF 6.7	Option=EF 10.2	Option=EF 10.5	Option=EF 15.9	Option=EF 17.6	Option=EF 19.9	Option=None	sampling_probability
-0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	1
-# Created by: sources\recs\2009\tsv_maker.py
+Dependency=Geometry Building Type RECS	Option=EF 6.7	Option=EF 10.2	Option=EF 10.5	Option=EF 15.9	Option=EF 17.6	Option=EF 19.9	Option=EF 21.9	Option=None	Option=Void	sampling_probability
+Mobile Home	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0	0.111111
+Multi-Family with 2 - 4 Units	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0	0.222222
+Multi-Family with 5+ Units	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0	0.444444
+Single-Family Attached	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0	0.111111
+Single-Family Detached	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0	0.111111
+# Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence and rated efficiency of the secondary refrigerator.

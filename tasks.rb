@@ -3,14 +3,16 @@
 def download_epws
   require_relative 'resources/hpxml-measures/HPXMLtoOpenStudio/resources/util'
 
+  weather_dir = File.join(File.dirname(__FILE__), 'weather')
+  FileUtils.mkdir(weather_dir) if !File.exist?(weather_dir)
+
   require 'tempfile'
   tmpfile = Tempfile.new('epw')
 
-  UrlResolver.fetch('https://data.nrel.gov/system/files/156/BuildStock_TMY3_FIPS.zip', tmpfile)
+  UrlResolver.fetch('https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip', tmpfile)
 
   puts 'Extracting weather files...'
   require 'zip'
-  weather_dir = File.join(File.dirname(__FILE__), 'weather')
   Zip.on_exists_proc = true
   Zip::File.open(tmpfile.path.to_s) do |zip_file|
     zip_file.each do |f|
@@ -24,7 +26,14 @@ def download_epws
   exit!
 end
 
-command_list = [:update_measures, :integrity_check_national, :integrity_check_testing, :download_weather]
+command_list = [
+  :update_measures,
+  :update_resources,
+  :integrity_check_national,
+  :integrity_check_testing,
+  :download_weather,
+  :unit_tests
+]
 
 def display_usage(command_list)
   puts "Usage: openstudio #{File.basename(__FILE__)} [COMMAND]\nCommands:\n  " + command_list.join("\n  ")
@@ -45,48 +54,42 @@ elsif not command_list.include? ARGV[0].to_sym
 end
 
 if ARGV[0].to_sym == :update_measures
-  # Prevent NREL error regarding U: drive when not VPNed in
-  ENV['HOME'] = 'C:' if !ENV['HOME'].nil? && ENV['HOME'].start_with?('U:')
-  ENV['HOMEDRIVE'] = 'C:\\' if !ENV['HOMEDRIVE'].nil? && ENV['HOMEDRIVE'].start_with?('U:')
-
-  # Apply rubocop
-  cops = ['Layout',
-          'Lint/DeprecatedClassMethods',
-          'Lint/DuplicateElsifCondition',
-          'Lint/DuplicateHashKey',
-          'Lint/DuplicateMethods',
-          'Lint/InterpolationCheck',
-          'Lint/LiteralAsCondition',
-          'Lint/RedundantStringCoercion',
-          'Lint/SelfAssignment',
-          'Lint/UnderscorePrefixedVariableName',
-          'Lint/UnusedBlockArgument',
-          'Lint/UnusedMethodArgument',
-          'Lint/UselessAssignment',
-          'Style/AndOr',
-          'Style/FrozenStringLiteralComment',
-          'Style/HashSyntax',
-          'Style/Next',
-          'Style/NilComparison',
-          'Style/RedundantParentheses',
-          'Style/RedundantSelf',
-          'Style/ReturnNil',
-          'Style/SelfAssignment',
-          'Style/StringLiterals',
-          'Style/StringLiteralsInInterpolation']
+  # Apply rubocop (uses .rubocop.yml)
   commands = ["\"require 'rubocop/rake_task' \"",
-              "\"RuboCop::RakeTask.new(:rubocop) do |t| t.options = ['--auto-correct', '--format', 'simple', '--only', '#{cops.join(',')}'] end\"",
+              "\"require 'stringio' \"",
+              "\"RuboCop::RakeTask.new(:rubocop) do |t| t.options = ['--autocorrect-all', '--format', 'simple'] end\"",
               '"Rake.application[:rubocop].invoke"']
   command = "#{OpenStudio.getOpenStudioCLI} -e #{commands.join(' -e ')}"
   puts 'Applying rubocop auto-correct to measures...'
   system(command)
 
+  # Update a ResStockArguments/resources file when the BuildResidentialHPXML measure changes.
+  # This will ensure that the ResStockArguments measure.xml is appropriately updated.
+  # Without this, the ResStockArguments measure has no differences and so OpenStudio
+  # would skip updating it.
+  measure_rb_path = File.join(File.dirname(__FILE__), 'resources/hpxml-measures/BuildResidentialHPXML/measure.rb')
+  ['ResStockArguments', 'ResStockArgumentsPostHPXML'].each do |resstock_measure_name|
+    measure_txt_path = File.join(File.dirname(__FILE__), "measures/#{resstock_measure_name}/resources/measure.txt")
+    File.write(measure_txt_path, Digest::MD5.file(measure_rb_path).hexdigest)
+  end
+
   # Update measures XMLs
-  command = "#{OpenStudio.getOpenStudioCLI} measure -t '#{File.join(File.dirname(__FILE__), 'measures')}'"
   puts 'Updating measure.xmls...'
-  system(command, [:out, :err] => File::NULL)
+  Dir['measures/**/measure.xml'].each do |measure_xml|
+    measure_dir = File.dirname(measure_xml)
+    command = "#{OpenStudio.getOpenStudioCLI} measure -u '#{measure_dir}'"
+    system(command, [:out, :err] => File::NULL)
+  end
 
   puts 'Done.'
+end
+
+if ARGV[0].to_sym == :update_resources
+  prefix = 'resources/hpxml-measures'
+  repository = 'https://github.com/NREL/OpenStudio-HPXML.git'
+  branch_or_tag = 'master'
+
+  system("git subtree pull --prefix #{prefix} #{repository} #{branch_or_tag} --squash")
 end
 
 if ARGV[0].to_sym == :integrity_check_national
@@ -107,4 +110,32 @@ end
 
 if ARGV[0].to_sym == :download_weather
   download_epws
+end
+
+if ARGV[0].to_sym == :unit_tests
+  tests_rbs = Dir['project_*/tests/*.rb'] + Dir['test/test_integrity_checks.rb'] + Dir['measures/*/tests/*.rb']
+
+  # Run tests in random order; we don't want them to only
+  # work when run in a specific order
+  tests_rbs.shuffle!
+
+  # Ensure we run all tests even if there are failures
+  failed_tests = []
+  tests_rbs.each do |test_rb|
+    success = system("#{OpenStudio.getOpenStudioCLI} #{test_rb}")
+    failed_tests << test_rb unless success
+  end
+
+  puts
+  puts
+
+  if not failed_tests.empty?
+    puts 'The following tests FAILED:'
+    failed_tests.each do |failed_test|
+      puts "- #{failed_test}"
+    end
+    exit! 1
+  end
+
+  puts 'All tests passed.'
 end

@@ -7,24 +7,15 @@ import csv
 import plotly
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-sys.path.pop(0)
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.abspath(__file__), '../../resources/hpxml-measures/workflow/tests')))
+from compare import BaseCompare, read_csv
 
-from compare import BaseCompare
 
 enum_maps = {'build_existing_model.geometry_building_type_recs': {'Single-Family Detached': 'SFD',
-                                                                  'Mobile Home': 'SFD',
+                                                                  'Mobile Home': 'MH',
                                                                   'Single-Family Attached': 'SFA',
                                                                   'Multi-Family with 2 - 4 Units': 'MF',
                                                                   'Multi-Family with 5+ Units': 'MF'} }
-
-cols_to_ignore = ['applicable',
-                  'output_format',
-                  'timeseries_frequency',
-                  'timeseries_timestamp_convention',
-                  'completed_status',
-                  'color_index',
-                  'upgrade_name']
 
 class MoreCompare(BaseCompare):
   def __init__(self, base_folder, feature_folder, export_folder, export_file, map_file):
@@ -51,7 +42,7 @@ class MoreCompare(BaseCompare):
           value_count = value_count.round(2)
           keys_to_values = dict(zip(value_count.index.values, value_count.values))
           keys_to_values = dict(sorted(keys_to_values.items(), key=lambda x: (x[1], x[0]), reverse=True))
-          value_counts.append([value_count.name])
+          value_counts.append([col])
           value_counts.append(keys_to_values.keys())
           value_counts.append(keys_to_values.values())
           value_counts.append('')
@@ -59,11 +50,11 @@ class MoreCompare(BaseCompare):
         w = csv.writer(f)
         w.writerows(value_counts)
 
-    df = pd.read_csv(os.path.join(self.base_folder, 'buildstock.csv'), dtype=str)
+    df = read_csv(os.path.join(self.base_folder, 'buildstock.csv'), dtype=str)
     file = os.path.join(self.export_folder, 'base_samples.csv')
     value_counts(df, file)
 
-    df = pd.read_csv(os.path.join(self.feature_folder, 'buildstock.csv'), dtype=str)
+    df = read_csv(os.path.join(self.feature_folder, 'buildstock.csv'), dtype=str)
     file = os.path.join(self.export_folder, 'feature_samples.csv')
     value_counts(df, file)
 
@@ -94,16 +85,16 @@ class MoreCompare(BaseCompare):
     has_characteristics = False
     if os.path.exists(os.path.join(self.base_folder, 'results_characteristics.csv')) and os.path.exists(os.path.join(self.feature_folder, 'results_characteristics.csv')):
       has_characteristics = True
-      base_df_char = pd.read_csv(os.path.join(self.base_folder, 'results_characteristics.csv'), index_col=0)
-      feature_df_char = pd.read_csv(os.path.join(self.feature_folder, 'results_characteristics.csv'), index_col=0)
+      base_df_char = read_csv(os.path.join(self.base_folder, 'results_characteristics.csv'), index_col=0)
+      feature_df_char = read_csv(os.path.join(self.feature_folder, 'results_characteristics.csv'), index_col=0)
 
     ## Outputs
-    base_df = pd.read_csv(os.path.join(self.base_folder, 'results_output.csv'), index_col=0)
-    feature_df = pd.read_csv(os.path.join(self.feature_folder, 'results_output.csv'), index_col=0)
+    base_df = read_csv(os.path.join(self.base_folder, 'results_output.csv'), index_col=0)
+    feature_df = read_csv(os.path.join(self.feature_folder, 'results_output.csv'), index_col=0)
 
     ## Mapping
     cwd = os.path.dirname(os.path.realpath(__file__))
-    map_df = pd.read_csv(map_file, usecols=['map_from','map_to'])
+    map_df = read_csv(map_file, usecols=['map_from','map_to'])
     map_df = map_df.dropna(axis=0)
     map_dict = {k:v for k,v in zip(map_df['map_from'], map_df['map_to'])}
 
@@ -224,8 +215,8 @@ class MoreCompare(BaseCompare):
     metrics = ['cvrmse', 'nmbe']
 
     for file in sorted(files):
-      base_df = pd.read_csv(os.path.join(self.base_folder, file), index_col=0)
-      feature_df = pd.read_csv(os.path.join(self.feature_folder, file), index_col=0)
+      base_df = read_csv(os.path.join(self.base_folder, file), index_col=0)
+      feature_df = read_csv(os.path.join(self.feature_folder, file), index_col=0)
 
       base_df = self.intersect_rows(base_df, feature_df)
       feature_df = self.intersect_rows(feature_df, base_df)
@@ -309,6 +300,76 @@ if __name__ == '__main__':
       compare.results(args.aggregate_column, args.aggregate_function, excludes, enum_maps)
     elif action == 'visualize':
       excludes = ['buildstock.csv', 'results_characteristics.csv']
-      compare.visualize(args.aggregate_column, args.aggregate_function, args.display_column, excludes, enum_maps, cols_to_ignore)
+      if 'sdr' in args.base_folder:
+        # this corresponds to diffs of results_upXX.csv files at
+        # test/base_results/upgrades/sdr_annual in the sdr-integration-tests job
+        # (i.e., sdr_upgrades_tmy3.yml annual upgrade results)
+        categories = ['in.',
+                      'out.params',
+                      'out.electricity',
+                      'out.fuel_oil',
+                      'out.natural_gas',
+                      'out.propane',
+                      'out.site_energy',
+                      'out.hot_water',
+                      'out.capacity',
+                      'out.load',
+                      'out.unmet_hours',
+                      'out.emissions',
+                      'out.bills',
+                      'out.panel',
+                      'out.component_load',
+                      'out.energy_burden']
+      else:
+        # this corresponds to diffs of results_output.csv file columns at
+        # test/base_results/baseline/annual in the integration-tests job
+        # (i.e., national_baseline.yml annual baseline results)
+        categories = ['.component_load_',
+                      '.emissions_',
+                      '.end_use_',
+                      '.energy_use_',
+                      '.fuel_use_',
+                      '.hot_water_',
+                      '.hvac_',
+                      '.load_',
+                      '.peak_',
+                      '.resilience_',
+                      '.unmet_hours_',
+                      '.electric_panel_',
+                      '.bills_electricity_energy',
+                      '.bills_electricity_fixed',
+                      '.bills_electricity_pv_credit',
+                      '.bills_electricity_total',
+                      '.bills_natural_gas_energy',
+                      '.bills_natural_gas_fixed',
+                      '.bills_natural_gas_total',
+                      '.bills_propane_energy',
+                      '.bills_propane_fixed',
+                      '.bills_propane_total',
+                      '.bills_fuel_oil_energy',
+                      '.bills_fuel_oil_fixed',
+                      '.bills_fuel_oil_total',
+                      '.bills_coal_energy',
+                      '.bills_coal_fixed',
+                      '.bills_coal_total',
+                      '.bills_wood_cord_energy',
+                      '.bills_wood_cord_fixed',
+                      '.bills_wood_cord_total',
+                      '.bills_wood_pellets_energy',
+                      '.bills_wood_pellets_fixed',
+                      '.bills_wood_pellets_total',
+                      '.bills_total',
+                      '.bills_2',
+                      '.bills_3',
+                      'upgrade_costs.',
+                      'qoi_report.']
+      for category in categories:
+        if category == 'in.':
+            continue
+        export_file = '{}.html'.format(category.strip('.').rstrip('_'))
+        cols_to_ignore = ['color_index'] + categories
+        cols_to_ignore.remove(category)
+        compare = MoreCompare(args.base_folder, args.feature_folder, args.export_folder, export_file, args.map_file)
+        compare.visualize(args.aggregate_column, args.aggregate_function, args.display_column, excludes, enum_maps, cols_to_ignore)
     elif action == 'timeseries':
       compare.timeseries()

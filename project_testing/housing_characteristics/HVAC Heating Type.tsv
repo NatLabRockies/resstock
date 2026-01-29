@@ -1,9 +1,10 @@
 Dependency=Heating Fuel	Option=Ducted Heat Pump	Option=Ducted Heating	Option=Non-Ducted Heat Pump	Option=Non-Ducted Heating	Option=None	sampling_probability
-Electricity	0.25	0.25	0.25	0.25	0	0.166667
-Fuel Oil	0	0.5	0	0.5	0	0.166667
-Natural Gas	0	0.5	0	0.5	0	0.166667
-None	0	0	0	0	1	0.166667
-Other Fuel	0	0.5	0	0.5	0	0.166667
-Propane	0	0.5	0	0.5	0	0.166667
-# Created by: sources\recs\recs2009\tsv_maker.py
+Electricity	0.25	0.25	0.25	0.25	0	0.142857
+Fuel Oil	0	0.5	0	0.5	0	0.142857
+Natural Gas	0	0.5	0	0.5	0	0.142857
+None	0	0	0	0	1	0.142857
+Other Fuel	0	0.5	0	0.5	0	0.142857
+Propane	0	0.5	0	0.5	0	0.142857
+Wood	0	0.5	0	0.5	0	0.142857
+# Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence and type of the primary heating system in the dwelling unit.

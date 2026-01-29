@@ -65,8 +65,8 @@ Row Index,Sums To,Annual Name,Annual Units,Timeseries ResStock Name,Timeseries B
 64,86,report_simulation_output.emissions_<type>_<scenario_name>_electricity_heating_heat_pump_backup_lb,lb,Emissions: <type>: <scenario_name>: Electricity: Heating Heat Pump Backup,emissions__<type>__<scenario_name>__electricity__heating_heat_pump_backup__lb,lb,Scenario emissions for this Electricity end use only
 65,86,report_simulation_output.emissions_<type>_<scenario_name>_electricity_heating_heat_pump_backup_fans_pumps_lb,lb,Emissions: <type>: <scenario_name>: Electricity: Heating Heat Pump Backup Fans/Pumps,emissions__<type>__<scenario_name>__electricity__heating_heat_pump_backup_fans_pumps__lb,lb,Scenario emissions for this Electricity end use only
 66,86,report_simulation_output.emissions_<type>_<scenario_name>_electricity_heating_lb,lb,Emissions: <type>: <scenario_name>: Electricity: Heating,emissions__<type>__<scenario_name>__electricity__heating__lb,lb,Scenario emissions for this Electricity end use only
-67,86,report_simulation_output.emissions_<type>_<scenario_name>_electricity_hot_tub_heater_lb,lb,Emissions: <type>: <scenario_name>: Electricity: Hot Tub Heater,emissions__<type>__<scenario_name>__electricity__hot_tub_heater__lb,lb,Scenario emissions for this Electricity end use only
-68,86,report_simulation_output.emissions_<type>_<scenario_name>_electricity_hot_tub_pump_lb,lb,Emissions: <type>: <scenario_name>: Electricity: Hot Tub Pump,emissions__<type>__<scenario_name>__electricity__hot_tub_pump__lb,lb,Scenario emissions for this Electricity end use only
+67,86,report_simulation_output.emissions_<type>_<scenario_name>_electricity_permanent_spa_heater_lb,lb,Emissions: <type>: <scenario_name>: Electricity: Permanent Spa Heater,emissions__<type>__<scenario_name>__electricity__permanent_spa_heater__lb,lb,Scenario emissions for this Electricity end use only
+68,86,report_simulation_output.emissions_<type>_<scenario_name>_electricity_permanent_spa_pump_lb,lb,Emissions: <type>: <scenario_name>: Electricity: Permanent Spa Pump,emissions__<type>__<scenario_name>__electricity__permanent_spa_pump__lb,lb,Scenario emissions for this Electricity end use only
 69,86,report_simulation_output.emissions_<type>_<scenario_name>_electricity_hot_water_lb,lb,Emissions: <type>: <scenario_name>: Electricity: Hot Water,emissions__<type>__<scenario_name>__electricity__hot_water__lb,lb,Scenario emissions for this Electricity end use only
 70,86,report_simulation_output.emissions_<type>_<scenario_name>_electricity_hot_water_recirc_pump_lb,lb,Emissions: <type>: <scenario_name>: Electricity: Hot Water Recirc Pump,emissions__<type>__<scenario_name>__electricity__hot_water_recirc_pump__lb,lb,Scenario emissions for this Electricity end use only
 71,86,report_simulation_output.emissions_<type>_<scenario_name>_electricity_hot_water_solar_thermal_pump_lb,lb,Emissions: <type>: <scenario_name>: Electricity: Hot Water Solar Thermal Pump,emissions__<type>__<scenario_name>__electricity__hot_water_solar_thermal_pump__lb,lb,Scenario emissions for this Electricity end use only
@@ -104,7 +104,7 @@ Row Index,Sums To,Annual Name,Annual Units,Timeseries ResStock Name,Timeseries B
 103,112,report_simulation_output.emissions_<type>_<scenario_name>_natural_gas_grill_lb,lb,Emissions: <type>: <scenario_name>: Natural Gas: Grill,emissions__<type>__<scenario_name>__natural_gas__grill__lb,lb,Scenario emissions for this Natural Gas end use only
 104,112,report_simulation_output.emissions_<type>_<scenario_name>_natural_gas_heating_heat_pump_backup_lb,lb,Emissions: <type>: <scenario_name>: Natural Gas: Heating Heat Pump Backup,emissions__<type>__<scenario_name>__natural_gas__heating_heat_pump_backup__lb,lb,Scenario emissions for this Natural Gas end use only
 105,112,report_simulation_output.emissions_<type>_<scenario_name>_natural_gas_heating_lb,lb,Emissions: <type>: <scenario_name>: Natural Gas: Heating,emissions__<type>__<scenario_name>__natural_gas__heating__lb,lb,Scenario emissions for this Natural Gas end use only
-106,112,report_simulation_output.emissions_<type>_<scenario_name>_natural_gas_hot_tub_heater_lb,lb,Emissions: <type>: <scenario_name>: Natural Gas: Hot Tub Heater,emissions__<type>__<scenario_name>__natural_gas__hot_tub_heater__lb,lb,Scenario emissions for this Natural Gas end use only
+106,112,report_simulation_output.emissions_<type>_<scenario_name>_natural_gas_permanent_spa_heater_lb,lb,Emissions: <type>: <scenario_name>: Natural Gas: Permanent Spa Heater,emissions__<type>__<scenario_name>__natural_gas__permanent_spa_heater__lb,lb,Scenario emissions for this Natural Gas end use only
 107,112,report_simulation_output.emissions_<type>_<scenario_name>_natural_gas_hot_water_lb,lb,Emissions: <type>: <scenario_name>: Natural Gas: Hot Water,emissions__<type>__<scenario_name>__natural_gas__hot_water__lb,lb,Scenario emissions for this Natural Gas end use only
 108,112,report_simulation_output.emissions_<type>_<scenario_name>_natural_gas_lighting_lb,lb,Emissions: <type>: <scenario_name>: Natural Gas: Lighting,emissions__<type>__<scenario_name>__natural_gas__lighting__lb,lb,Scenario emissions for this Natural Gas end use only
 109,112,report_simulation_output.emissions_<type>_<scenario_name>_natural_gas_mech_vent_preheating_lb,lb,Emissions: <type>: <scenario_name>: Natural Gas: Mech Vent Preheating,emissions__<type>__<scenario_name>__natural_gas__mech_vent_preheating__lb,lb,Scenario emissions for this Natural Gas end use only
@@ -146,16 +146,16 @@ Row Index,Sums To,Annual Name,Annual Units,Timeseries ResStock Name,Timeseries B
 145,147,report_simulation_output.emissions_<type>_<scenario_name>_wood_pellets_mech_vent_preheating_lb,lb,Emissions: <type>: <scenario_name>: Wood Pellets: Mech Vent Preheating,emissions__<type>__<scenario_name>__wood_pellets__mech_vent_preheating__lb,lb,Scenario emissions for this Wood Pellets end use only
 146,147,report_simulation_output.emissions_<type>_<scenario_name>_wood_pellets_range_oven_lb,lb,Emissions: <type>: <scenario_name>: Wood Pellets: Range/Oven,emissions__<type>__<scenario_name>__wood_pellets__range_oven__lb,lb,Scenario emissions for this Wood Pellets end use only
 147,125,report_simulation_output.emissions_<type>_<scenario_name>_wood_pellets_total_lb,lb,Emissions: <type>: <scenario_name>: Wood Pellets: Total,emissions__<type>__<scenario_name>__wood_pellets__total__lb,lb,Scenario emissions for Wood Pellets only
-148,247,report_simulation_output.end_use_coal_clothes_dryer_m_btu,MBtu,End Use: Coal: Clothes Dryer,end_use__coal__clothes_dryer__kwh,kBtu,
-149,247,report_simulation_output.end_use_coal_fireplace_m_btu,MBtu,End Use: Coal: Fireplace,end_use__coal__fireplace__kwh,kBtu,
-150,247,report_simulation_output.end_use_coal_generator_m_btu,MBtu,End Use: Coal: Generator,end_use__coal__generator__kwh,kBtu,
-151,247,report_simulation_output.end_use_coal_grill_m_btu,MBtu,End Use: Coal: Grill,end_use__coal__grill__kwh,kBtu,
-152,247,report_simulation_output.end_use_coal_heating_heat_pump_backup_m_btu,MBtu,End Use: Coal: Heating Heat Pump Backup,end_use__coal__heating_heat_pump_backup__kwh,kBtu,
-153,247,report_simulation_output.end_use_coal_heating_m_btu,MBtu,End Use: Coal: Heating,end_use__coal__heating__kwh,kBtu,Excludes heat pump backup
-154,247,report_simulation_output.end_use_coal_hot_water_m_btu,MBtu,End Use: Coal: Hot Water,end_use__coal__hot_water__kwh,kBtu,
-155,247,report_simulation_output.end_use_coal_lighting_m_btu,MBtu,End Use: Coal: Lighting,end_use__coal__lighting__kwh,kBtu,
-156,247,report_simulation_output.end_use_coal_mech_vent_preheating_m_btu,MBtu,End Use: Coal: Mech Vent Preheating,end_use__coal__mech_vent_preheating__kwh,kBtu,
-157,247,report_simulation_output.end_use_coal_range_oven_m_btu,MBtu,End Use: Coal: Range/Oven,end_use__coal__range_oven__kwh,kBtu,
+148,247,report_simulation_output.end_use_coal_clothes_dryer_m_btu,MBtu,End Use: Coal: Clothes Dryer,end_use__coal__clothes_dryer__kbtu,kBtu,
+149,247,report_simulation_output.end_use_coal_fireplace_m_btu,MBtu,End Use: Coal: Fireplace,end_use__coal__fireplace__kbtu,kBtu,
+150,247,report_simulation_output.end_use_coal_generator_m_btu,MBtu,End Use: Coal: Generator,end_use__coal__generator__kbtu,kBtu,
+151,247,report_simulation_output.end_use_coal_grill_m_btu,MBtu,End Use: Coal: Grill,end_use__coal__grill__kbtu,kBtu,
+152,247,report_simulation_output.end_use_coal_heating_heat_pump_backup_m_btu,MBtu,End Use: Coal: Heating Heat Pump Backup,end_use__coal__heating_heat_pump_backup__kbtu,kBtu,
+153,247,report_simulation_output.end_use_coal_heating_m_btu,MBtu,End Use: Coal: Heating,end_use__coal__heating__kbtu,kBtu,Excludes heat pump backup
+154,247,report_simulation_output.end_use_coal_hot_water_m_btu,MBtu,End Use: Coal: Hot Water,end_use__coal__hot_water__kbtu,kBtu,
+155,247,report_simulation_output.end_use_coal_lighting_m_btu,MBtu,End Use: Coal: Lighting,end_use__coal__lighting__kbtu,kBtu,
+156,247,report_simulation_output.end_use_coal_mech_vent_preheating_m_btu,MBtu,End Use: Coal: Mech Vent Preheating,end_use__coal__mech_vent_preheating__kbtu,kBtu,
+157,247,report_simulation_output.end_use_coal_range_oven_m_btu,MBtu,End Use: Coal: Range/Oven,end_use__coal__range_oven__kbtu,kBtu,
 158,249,report_simulation_output.end_use_electricity_battery_m_btu,MBtu,End Use: Electricity: Battery,end_use__electricity__battery__kwh,kWh,Positive value for charging (including efficiency losses); negative value for discharging
 159,249,report_simulation_output.end_use_electricity_ceiling_fan_m_btu,MBtu,End Use: Electricity: Ceiling Fan,end_use__electricity__ceiling_fan__kwh,kWh,
 160,249,report_simulation_output.end_use_electricity_clothes_dryer_m_btu,MBtu,End Use: Electricity: Clothes Dryer,end_use__electricity__clothes_dryer__kwh,kWh,
@@ -171,8 +171,8 @@ Row Index,Sums To,Annual Name,Annual Units,Timeseries ResStock Name,Timeseries B
 170,249,report_simulation_output.end_use_electricity_heating_heat_pump_backup_m_btu,MBtu,End Use: Electricity: Heating Heat Pump Backup,end_use__electricity__heating_heat_pump_backup__kwh,kWh,Excludes heat pump backup fans/pumps
 171,249,report_simulation_output.end_use_electricity_heating_heat_pump_backup_fans_pumps_m_btu,MBtu,End Use: Electricity: Heating Heat Pump Backup Fans/Pumps,end_use__electricity__heating_heat_pump_backup_fans_pumps__kwh,kWh,Includes supply fan (air distribution) or circulating pump (hydronic distribution) during heat pump backup
 172,249,report_simulation_output.end_use_electricity_heating_m_btu,MBtu,End Use: Electricity: Heating,end_use__electricity__heating__kwh,kWh,Excludes heat pump backup and fans/pumps
-173,249,report_simulation_output.end_use_electricity_hot_tub_heater_m_btu,MBtu,End Use: Electricity: Hot Tub Heater,end_use__electricity__hot_tub_heater__kwh,kWh,
-174,249,report_simulation_output.end_use_electricity_hot_tub_pump_m_btu,MBtu,End Use: Electricity: Hot Tub Pump,end_use__electricity__hot_tub_pump__kwh,kWh,
+173,249,report_simulation_output.end_use_electricity_permanent_spa_heater_m_btu,MBtu,End Use: Electricity: Permanent Spa Heater,end_use__electricity__permanent_spa_heater__kwh,kWh,
+174,249,report_simulation_output.end_use_electricity_permanent_spa_pump_m_btu,MBtu,End Use: Electricity: Permanent Spa Pump,end_use__electricity__permanent_spa_pump__kwh,kWh,
 175,249,report_simulation_output.end_use_electricity_hot_water_m_btu,MBtu,End Use: Electricity: Hot Water,end_use__electricity__hot_water__kwh,kWh,Excludes recirc pump and solar thermal pump
 176,249,report_simulation_output.end_use_electricity_hot_water_recirc_pump_m_btu,MBtu,End Use: Electricity: Hot Water Recirc Pump,end_use__electricity__hot_water_recirc_pump__kwh,kWh,
 177,249,report_simulation_output.end_use_electricity_hot_water_solar_thermal_pump_m_btu,MBtu,End Use: Electricity: Hot Water Solar Thermal Pump,end_use__electricity__hot_water_solar_thermal_pump__kwh,kWh,Non-zero only when using detailed (not simple) solar thermal inputs
@@ -207,7 +207,7 @@ Row Index,Sums To,Annual Name,Annual Units,Timeseries ResStock Name,Timeseries B
 206,251,report_simulation_output.end_use_natural_gas_grill_m_btu,MBtu,End Use: Natural Gas: Grill,end_use__natural_gas__grill__kbtu,kBtu,
 207,251,report_simulation_output.end_use_natural_gas_heating_heat_pump_backup_m_btu,MBtu,End Use: Natural Gas: Heating Heat Pump Backup,end_use__natural_gas__heating_heat_pump_backup__kbtu,kBtu,
 208,251,report_simulation_output.end_use_natural_gas_heating_m_btu,MBtu,End Use: Natural Gas: Heating,end_use__natural_gas__heating__kbtu,kBtu,Excludes heat pump backup
-209,251,report_simulation_output.end_use_natural_gas_hot_tub_heater_m_btu,MBtu,End Use: Natural Gas: Hot Tub Heater,end_use__natural_gas__hot_tub_heater__kbtu,kBtu,
+209,251,report_simulation_output.end_use_natural_gas_permanent_spa_heater_m_btu,MBtu,End Use: Natural Gas: Permanent Spa Heater,end_use__natural_gas__permanent_spa_heater__kbtu,kBtu,
 210,251,report_simulation_output.end_use_natural_gas_hot_water_m_btu,MBtu,End Use: Natural Gas: Hot Water,end_use__natural_gas__hot_water__kbtu,kBtu,
 211,251,report_simulation_output.end_use_natural_gas_lighting_m_btu,MBtu,End Use: Natural Gas: Lighting,end_use__natural_gas__lighting__kbtu,kBtu,
 212,251,report_simulation_output.end_use_natural_gas_mech_vent_preheating_m_btu,MBtu,End Use: Natural Gas: Mech Vent Preheating,end_use__natural_gas__mech_vent_preheating__kbtu,kBtu,
@@ -223,26 +223,26 @@ Row Index,Sums To,Annual Name,Annual Units,Timeseries ResStock Name,Timeseries B
 222,252,report_simulation_output.end_use_propane_lighting_m_btu,MBtu,End Use: Propane: Lighting,end_use__propane__lighting__kbtu,kBtu,
 223,252,report_simulation_output.end_use_propane_mech_vent_preheating_m_btu,MBtu,End Use: Propane: Mech Vent Preheating,end_use__propane__mech_vent_preheating__kbtu,kBtu,
 224,252,report_simulation_output.end_use_propane_range_oven_m_btu,MBtu,End Use: Propane: Range/Oven,end_use__propane__range_oven__kbtu,kBtu,
-225,253,report_simulation_output.end_use_wood_cord_clothes_dryer_m_btu,MBtu,End Use: Wood Cord: Clothes Dryer,end_use__wood_cord__clothes_dryer__kwh,kBtu,
-226,253,report_simulation_output.end_use_wood_cord_fireplace_m_btu,MBtu,End Use: Wood Cord: Fireplace,end_use__wood_cord__fireplace__kwh,kBtu,
-227,253,report_simulation_output.end_use_wood_cord_generator_m_btu,MBtu,End Use: Wood Cord: Generator,end_use__wood_cord__generator__kwh,kBtu,
-228,253,report_simulation_output.end_use_wood_cord_grill_m_btu,MBtu,End Use: Wood Cord: Grill,end_use__wood_cord__grill__kwh,kBtu,
-229,253,report_simulation_output.end_use_wood_cord_heating_heat_pump_backup_m_btu,MBtu,End Use: Wood Cord: Heating Heat Pump Backup,end_use__wood_cord__heating_heat_pump_backup__kwh,kBtu,
-230,253,report_simulation_output.end_use_wood_cord_heating_m_btu,MBtu,End Use: Wood Cord: Heating,end_use__wood_cord__heating__kwh,kBtu,Excludes heat pump backup
-231,253,report_simulation_output.end_use_wood_cord_hot_water_m_btu,MBtu,End Use: Wood Cord: Hot Water,end_use__wood_cord__hot_water__kwh,kBtu,
-232,253,report_simulation_output.end_use_wood_cord_lighting_m_btu,MBtu,End Use: Wood Cord: Lighting,end_use__wood_cord__lighting__kwh,kBtu,
-233,253,report_simulation_output.end_use_wood_cord_mech_vent_preheating_m_btu,MBtu,End Use: Wood Cord: Mech Vent Preheating,end_use__wood_cord__mech_vent_preheating__kwh,kBtu,
-234,253,report_simulation_output.end_use_wood_cord_range_oven_m_btu,MBtu,End Use: Wood Cord: Range/Oven,end_use__wood_cord__range_oven__kwh,kBtu,
-235,254,report_simulation_output.end_use_wood_pellets_clothes_dryer_m_btu,MBtu,End Use: Wood Pellets: Clothes Dryer,end_use__wood_pellets__clothes_dryer__kwh,kBtu,
-236,254,report_simulation_output.end_use_wood_pellets_fireplace_m_btu,MBtu,End Use: Wood Pellets: Fireplace,end_use__wood_pellets__fireplace__kwh,kBtu,
-237,254,report_simulation_output.end_use_wood_pellets_generator_m_btu,MBtu,End Use: Wood Pellets: Generator,end_use__wood_pellets__generator__kwh,kBtu,
-238,254,report_simulation_output.end_use_wood_pellets_grill_m_btu,MBtu,End Use: Wood Pellets: Grill,end_use__wood_pellets__grill__kwh,kBtu,
-239,254,report_simulation_output.end_use_wood_pellets_heating_heat_pump_backup_m_btu,MBtu,End Use: Wood Pellets: Heating Heat Pump Backup,end_use__wood_pellets__heating_heat_pump_backup__kwh,kBtu,
-240,254,report_simulation_output.end_use_wood_pellets_heating_m_btu,MBtu,End Use: Wood Pellets: Heating,end_use__wood_pellets__heating__kwh,kBtu,Excludes heat pump backup
-241,254,report_simulation_output.end_use_wood_pellets_hot_water_m_btu,MBtu,End Use: Wood Pellets: Hot Water,end_use__wood_pellets__hot_water__kwh,kBtu,
-242,254,report_simulation_output.end_use_wood_pellets_lighting_m_btu,MBtu,End Use: Wood Pellets: Lighting,end_use__wood_pellets__lighting__kwh,kBtu,
-243,254,report_simulation_output.end_use_wood_pellets_mech_vent_preheating_m_btu,MBtu,End Use: Wood Pellets: Mech Vent Preheating,end_use__wood_pellets__mech_vent_preheating__kwh,kBtu,
-244,254,report_simulation_output.end_use_wood_pellets_range_oven_m_btu,MBtu,End Use: Wood Pellets: Range/Oven,end_use__wood_pellets__range_oven__kwh,kBtu,
+225,253,report_simulation_output.end_use_wood_cord_clothes_dryer_m_btu,MBtu,End Use: Wood Cord: Clothes Dryer,end_use__wood_cord__clothes_dryer__kbtu,kBtu,
+226,253,report_simulation_output.end_use_wood_cord_fireplace_m_btu,MBtu,End Use: Wood Cord: Fireplace,end_use__wood_cord__fireplace__kbtu,kBtu,
+227,253,report_simulation_output.end_use_wood_cord_generator_m_btu,MBtu,End Use: Wood Cord: Generator,end_use__wood_cord__generator__kbtu,kBtu,
+228,253,report_simulation_output.end_use_wood_cord_grill_m_btu,MBtu,End Use: Wood Cord: Grill,end_use__wood_cord__grill__kbtu,kBtu,
+229,253,report_simulation_output.end_use_wood_cord_heating_heat_pump_backup_m_btu,MBtu,End Use: Wood Cord: Heating Heat Pump Backup,end_use__wood_cord__heating_heat_pump_backup__kbtu,kBtu,
+230,253,report_simulation_output.end_use_wood_cord_heating_m_btu,MBtu,End Use: Wood Cord: Heating,end_use__wood_cord__heating__kbtu,kBtu,Excludes heat pump backup
+231,253,report_simulation_output.end_use_wood_cord_hot_water_m_btu,MBtu,End Use: Wood Cord: Hot Water,end_use__wood_cord__hot_water__kbtu,kBtu,
+232,253,report_simulation_output.end_use_wood_cord_lighting_m_btu,MBtu,End Use: Wood Cord: Lighting,end_use__wood_cord__lighting__kbtu,kBtu,
+233,253,report_simulation_output.end_use_wood_cord_mech_vent_preheating_m_btu,MBtu,End Use: Wood Cord: Mech Vent Preheating,end_use__wood_cord__mech_vent_preheating__kbtu,kBtu,
+234,253,report_simulation_output.end_use_wood_cord_range_oven_m_btu,MBtu,End Use: Wood Cord: Range/Oven,end_use__wood_cord__range_oven__kbtu,kBtu,
+235,254,report_simulation_output.end_use_wood_pellets_clothes_dryer_m_btu,MBtu,End Use: Wood Pellets: Clothes Dryer,end_use__wood_pellets__clothes_dryer__kbtu,kBtu,
+236,254,report_simulation_output.end_use_wood_pellets_fireplace_m_btu,MBtu,End Use: Wood Pellets: Fireplace,end_use__wood_pellets__fireplace__kbtu,kBtu,
+237,254,report_simulation_output.end_use_wood_pellets_generator_m_btu,MBtu,End Use: Wood Pellets: Generator,end_use__wood_pellets__generator__kbtu,kBtu,
+238,254,report_simulation_output.end_use_wood_pellets_grill_m_btu,MBtu,End Use: Wood Pellets: Grill,end_use__wood_pellets__grill__kbtu,kBtu,
+239,254,report_simulation_output.end_use_wood_pellets_heating_heat_pump_backup_m_btu,MBtu,End Use: Wood Pellets: Heating Heat Pump Backup,end_use__wood_pellets__heating_heat_pump_backup__kbtu,kBtu,
+240,254,report_simulation_output.end_use_wood_pellets_heating_m_btu,MBtu,End Use: Wood Pellets: Heating,end_use__wood_pellets__heating__kbtu,kBtu,Excludes heat pump backup
+241,254,report_simulation_output.end_use_wood_pellets_hot_water_m_btu,MBtu,End Use: Wood Pellets: Hot Water,end_use__wood_pellets__hot_water__kbtu,kBtu,
+242,254,report_simulation_output.end_use_wood_pellets_lighting_m_btu,MBtu,End Use: Wood Pellets: Lighting,end_use__wood_pellets__lighting__kbtu,kBtu,
+243,254,report_simulation_output.end_use_wood_pellets_mech_vent_preheating_m_btu,MBtu,End Use: Wood Pellets: Mech Vent Preheating,end_use__wood_pellets__mech_vent_preheating__kbtu,kBtu,
+244,254,report_simulation_output.end_use_wood_pellets_range_oven_m_btu,MBtu,End Use: Wood Pellets: Range/Oven,end_use__wood_pellets__range_oven__kbtu,kBtu,
 245,,report_simulation_output.energy_use_net_m_btu,MBtu,Energy Use: Net,energy_use__net__kbtu,kBtu,Subtracts any power produced by PV or generators.
 246,,report_simulation_output.energy_use_total_m_btu,MBtu,Energy Use: Total,energy_use__total__kbtu,kBtu,Includes any battery charging/discharging
 247,246,report_simulation_output.fuel_use_coal_total_m_btu,MBtu,Fuel Use: Coal: Total,fuel_use__coal__total__kwh,kBtu,"Includes 'coal', 'anthracite coal', 'bituminous coal', and 'coke'."
@@ -261,140 +261,327 @@ Row Index,Sums To,Annual Name,Annual Units,Timeseries ResStock Name,Timeseries B
 260,,report_simulation_output.hvac_capacity_heat_pump_backup_btu_h,Btu/h,,,,Total HVAC heat pump backup capacity
 261,,report_simulation_output.hvac_capacity_heating_btu_h,Btu/h,,,,Total HVAC heating capacity
 262,,report_simulation_output.hvac_design_load_cooling_latent_ducts_btu_h,Btu/h,,,,Latent cooling design load for ducts
-263,,report_simulation_output.hvac_design_load_cooling_latent_infiltration_ventilation_btu_h,Btu/h,,,,Latent cooling design load for infiltration/ventilation
+263,,report_simulation_output.hvac_design_load_cooling_latent_infiltration_btu_h,Btu/h,,,,Latent cooling design load for infiltration
 264,,report_simulation_output.hvac_design_load_cooling_latent_internal_gains_btu_h,Btu/h,,,,Latent cooling design load for internal gains
 265,,report_simulation_output.hvac_design_load_cooling_latent_total_btu_h,Btu/h,,,,Total latent cooling design load
-266,,report_simulation_output.hvac_design_load_cooling_sensible_ceilings_btu_h,Btu/h,,,,Sensible cooling design load for ceilings
-267,,report_simulation_output.hvac_design_load_cooling_sensible_doors_btu_h,Btu/h,,,,Sensible cooling design load for doors
-268,,report_simulation_output.hvac_design_load_cooling_sensible_ducts_btu_h,Btu/h,,,,Sensible cooling design load for ducts
-269,,report_simulation_output.hvac_design_load_cooling_sensible_floors_btu_h,Btu/h,,,,Sensible cooling design load for floors
-270,,report_simulation_output.hvac_design_load_cooling_sensible_infiltration_ventilation_btu_h,Btu/h,,,,Sensible cooling design load for infiltration/ventilation
-271,,report_simulation_output.hvac_design_load_cooling_sensible_internal_gains_btu_h,Btu/h,,,,Sensible cooling design load for internal gains
-272,,report_simulation_output.hvac_design_load_cooling_sensible_roofs_btu_h,Btu/h,,,,Sensible cooling design load for roofs
-273,,report_simulation_output.hvac_design_load_cooling_sensible_skylights_btu_h,Btu/h,,,,Sensible cooling design load for skylights
-274,,report_simulation_output.hvac_design_load_cooling_sensible_slabs_btu_h,Btu/h,,,,Sensible cooling design load for slabs
-275,,report_simulation_output.hvac_design_load_cooling_sensible_total_btu_h,Btu/h,,,,Total sensible cooling design load
-276,,report_simulation_output.hvac_design_load_cooling_sensible_walls_btu_h,Btu/h,,,,Sensible cooling design load for walls
-277,,report_simulation_output.hvac_design_load_cooling_sensible_windows_btu_h,Btu/h,,,,Sensible cooling design load for windows
-278,,report_simulation_output.hvac_design_load_heating_ceilings_btu_h,Btu/h,,,,Heating design load for ceilings
-279,,report_simulation_output.hvac_design_load_heating_doors_btu_h,Btu/h,,,,Heating design load for doors
-280,,report_simulation_output.hvac_design_load_heating_ducts_btu_h,Btu/h,,,,Heating design load for ducts
-281,,report_simulation_output.hvac_design_load_heating_floors_btu_h,Btu/h,,,,Heating design load for floors
-282,,report_simulation_output.hvac_design_load_heating_infiltration_ventilation_btu_h,Btu/h,,,,Heating design load for infiltration/ventilation
-283,,report_simulation_output.hvac_design_load_heating_roofs_btu_h,Btu/h,,,,Heating design load for roofs
-284,,report_simulation_output.hvac_design_load_heating_skylights_btu_h,Btu/h,,,,Heating design load for skylights
-285,,report_simulation_output.hvac_design_load_heating_slabs_btu_h,Btu/h,,,,Heating design load for slabs
-286,,report_simulation_output.hvac_design_load_heating_total_btu_h,Btu/h,,,,Total heating design load
-287,,report_simulation_output.hvac_design_load_heating_walls_btu_h,Btu/h,,,,Heating design load for walls
-288,,report_simulation_output.hvac_design_load_heating_windows_btu_h,Btu/h,,,,Heating design load for windows
-289,,report_simulation_output.hvac_design_temperature_cooling_f,F,,,,1% cooling drybulb temperature
-290,,report_simulation_output.hvac_design_temperature_heating_f,F,,,,99% heating drybulb temperature
-291,,report_simulation_output.load_cooling_delivered_m_btu,MBtu,Load: Cooling: Delivered,load__cooling__delivered__kbtu,kBtu,Includes HVAC distribution losses.
-292,,report_simulation_output.load_heating_heat_pump_backup_m_btu,MBtu,Load: Heating: Heat Pump Backup,load__heating__heat_pump_backup__kbtu,kBtu,"Heating load delivered by the heat pump backup only, including distribution losses."
-293,,report_simulation_output.load_heating_delivered_m_btu,MBtu,Load: Heating: Delivered,load__heating__delivered__kbtu,kBtu,Includes HVAC distribution losses.
-294,,report_simulation_output.load_hot_water_delivered_m_btu,MBtu,Load: Hot Water: Delivered,load__hot_water__delivered__kbtu,kBtu,Includes contributions by desuperheaters or solar thermal systems.
-295,,report_simulation_output.load_hot_water_desuperheater_m_btu,MBtu,Load: Hot Water: Desuperheater,load__hot_water__desuperheater__kbtu,kBtu,Load served by the desuperheater.
-296,,report_simulation_output.load_hot_water_solar_thermal_m_btu,MBtu,Load: Hot Water: Solar Thermal,load__hot_water__solar_thermal__kbtu,kBtu,Load served by the solar thermal system.
-297,,report_simulation_output.load_hot_water_tank_losses_m_btu,MBtu,Load: Hot Water: Tank Losses,load__hot_water__tank_losses__kbtu,kBtu,
-298,,report_simulation_output.peak_electricity_summer_total_w,W,,,,Maximum value in Jun/Jul/Aug (or Dec/Jan/Feb in the southern hemisphere)
-299,,report_simulation_output.peak_electricity_winter_total_w,W,,,,Maximum value in Dec/Jan/Feb (or Jun/Jul/Aug in the southern hemisphere)
-300,,report_simulation_output.peak_load_cooling_delivered_k_btu_hr,kBtu/hr,,,,Includes HVAC distribution losses.
-301,,report_simulation_output.peak_load_heating_delivered_k_btu_hr,kBtu/hr,,,,Includes HVAC distribution losses.
-302,,report_simulation_output.unmet_hours_cooling_hr,hr,Unmet Hours: Cooling,unmet_hours__cooling__hr,hr,Number of hours where the cooling setpoint is not maintained.
-303,,report_simulation_output.unmet_hours_heating_hr,hr,Unmet Hours: Heating,unmet_hours__heating__hr,hr,Number of hours where the heating setpoint is not maintained.
-304,306,report_utility_bills.<scenario_name>_coal_energy_usd,$,,,,Scenario annual energy charges for coal.
-305,306,report_utility_bills.<scenario_name>_coal_fixed_usd,$,,,,Scenario annual fixed charges for coal.
-306,320,report_utility_bills.<scenario_name>_coal_total_usd,$,,,,Scenario annual total charges for coal.
-307,310,report_utility_bills.<scenario_name>_electricity_energy_usd,$,,,,Scenario annual energy charges for electricity.
-308,310,report_utility_bills.<scenario_name>_electricity_fixed_usd,$,,,,Scenario annual fixed charges for electricity.
-309,310,report_utility_bills.<scenario_name>_electricity_pv_credit_usd,$,,,,Scenario annual production credit (negative value) for PV.
-310,320,report_utility_bills.<scenario_name>_electricity_total_usd,$,,,,Scenario annual total charges for electricity.
-311,313,report_utility_bills.<scenario_name>_fuel_oil_energy_usd,$,,,,Scenario annual energy charges for fuel oil.
-312,313,report_utility_bills.<scenario_name>_fuel_oil_fixed_usd,$,,,,Scenario annual fixed charges for fuel oil.
-313,320,report_utility_bills.<scenario_name>_fuel_oil_total_usd,$,,,,Scenario annual total charges for fuel oil.
-314,316,report_utility_bills.<scenario_name>_natural_gas_energy_usd,$,,,,Scenario annual energy charges for natural gas.
-315,316,report_utility_bills.<scenario_name>_natural_gas_fixed_usd,$,,,,Scenario annual fixed charges for natural gas.
-316,320,report_utility_bills.<scenario_name>_natural_gas_total_usd,$,,,,Scenario annual total charges for natural gas.
-317,319,report_utility_bills.<scenario_name>_propane_energy_usd,$,,,,Scenario annual energy charges for propane.
-318,319,report_utility_bills.<scenario_name>_propane_fixed_usd,$,,,,Scenario annual fixed charges for propane.
-319,320,report_utility_bills.<scenario_name>_propane_total_usd,$,,,,Scenario annual total charges for propane.
-320,,report_utility_bills.<scenario_name>_total_usd,$,,,,Scenario annual total charges.
-321,323,report_utility_bills.<scenario_name>_wood_cord_energy_usd,$,,,,Scenario annual energy charges for wood cord.
-322,323,report_utility_bills.<scenario_name>_wood_cord_fixed_usd,$,,,,Scenario annual fixed charges for wood cord.
-323,320,report_utility_bills.<scenario_name>_wood_cord_total_usd,$,,,,Scenario annual total charges for wood cord.
-324,326,report_utility_bills.<scenario_name>_wood_pellets_energy_usd,$,,,,Scenario annual energy charges for wood pellets.
-325,326,report_utility_bills.<scenario_name>_wood_pellets_fixed_usd,$,,,,Scenario annual fixed charges for wood pellets.
-326,320,report_utility_bills.<scenario_name>_wood_pellets_total_usd,$,,,,Scenario annual total charges for wood pellets.
-327,,upgrade_costs.door_area_ft_2,ft^2,,,,Door Area
-328,,upgrade_costs.duct_unconditioned_surface_area_ft_2,ft^2,,,,Duct Unconditioned Surface Area
-329,,upgrade_costs.floor_area_attic_ft_2,ft^2,,,,"Floor Area, Attic"
-330,,upgrade_costs.floor_area_attic_insulation_increase_ft_2_delta_r_value,ft^2 * Delta R-value,,,,"Floor Area, Attic * Insulation Increase"
-331,,upgrade_costs.floor_area_conditioned_ft_2,ft^2,,,,"Floor Area, Conditioned"
-332,,upgrade_costs.floor_area_conditioned_infiltration_reduction_ft_2_delta_ach_50,ft^2 * Delta ACH50,,,,"Floor Area, Conditioned * Infiltration Reduction"
-333,,upgrade_costs.floor_area_foundation_ft_2,ft^2,,,,"Floor Area, Foundation"
-334,,upgrade_costs.floor_area_lighting_ft_2,ft^2,,,,"Floor Area, Lighting"
-335,,upgrade_costs.flow_rate_mechanical_ventilation_cfm,cfm,,,,"Flow Rate, Mechanical Ventilation"
-336,,upgrade_costs.rim_joist_area_above_grade_exterior_ft_2,ft^2,,,,"Rim Joist Area, Above-Grade, Exterior"
-337,,upgrade_costs.roof_area_ft_2,ft^2,,,,Roof Area
-338,,upgrade_costs.size_cooling_system_primary_k_btu_h,kBtu/h,,,,"Size, Cooling System Primary"
-339,,upgrade_costs.size_heat_pump_backup_primary_k_btu_h,kBtu/h,,,,"Size, Heat Pump Backup Primary"
-340,,upgrade_costs.size_heating_system_primary_k_btu_h,kBtu/h,,,,"Size, Heating System Primary"
-341,,upgrade_costs.size_heating_system_secondary_k_btu_h,kBtu/h,,,,"Size, Heating System Secondary"
-342,,upgrade_costs.size_water_heater_gal,gal,,,,"Size, Water Heater"
-343,,upgrade_costs.slab_perimeter_exposed_conditioned_ft,ft,,,,"Slab Perimeter, Exposed, Conditioned"
-344,,upgrade_costs.wall_area_above_grade_conditioned_ft_2,ft^2,,,,"Wall Area, Above-Grade, Conditioned"
-345,,upgrade_costs.wall_area_above_grade_exterior_ft_2,ft^2,,,,"Wall Area, Above-Grade, Exterior"
-346,,upgrade_costs.wall_area_below_grade_ft_2,ft^2,,,,"Wall Area, Below-Grade"
-347,,upgrade_costs.window_area_ft_2,ft^2,,,,Window Area
-348,,qoi_report.qoi_average_maximum_daily_timing_cooling_hour,hr,,,,The average hour (average daily index) for which the total site electricity maximum daily use occurs during the cooling season.
-349,,qoi_report.qoi_average_maximum_daily_timing_heating_hour,hr,,,,The average hour (average daily index) for which the total site electricity maximum daily use occurs during the heating season.
-350,,qoi_report.qoi_average_maximum_daily_timing_overlap_hour,hr,,,,The average hour (average daily index) for which the total site electricity maximum daily use occurs during the overlap season.
-351,,qoi_report.qoi_average_maximum_daily_use_cooling_kw,kW,,,,The total site electricity average maximum daily use during the cooling season (days with average outdoor air drybulb temperature greater than 70F).
-352,,qoi_report.qoi_average_maximum_daily_use_heating_kw,kW,,,,The total site electricity average maximum daily use during the heating season (days with average outdoor air drybulb temperature less than 55F).
-353,,qoi_report.qoi_average_maximum_daily_use_overlap_kw,kW,,,,The total site electricity average maximum daily use during the overlap season (days with average outdoor air drybulb temperature between 55F and 70F).
-354,,qoi_report.qoi_average_minimum_daily_use_cooling_kw,kW,,,,The total site electricity average minimum daily use during the cooling season (days with average outdoor air drybulb temperature greater than 70F).
-355,,qoi_report.qoi_average_minimum_daily_use_heating_kw,kW,,,,The total site electricity average minimum daily use during the heating season (days with average outdoor air drybulb temperature less than 55F).
-356,,qoi_report.qoi_average_minimum_daily_use_overlap_kw,kW,,,,The total site electricity average minimum daily use during the overlap season (days with average outdoor air drybulb temperature between 55F and 70F).
-357,,qoi_report.qoi_average_of_top_ten_highest_peaks_timing_cooling_hour,hr,,,,The average hour (average daily index) for which the total site electricity average of top 10 maximum daily use occurs during the cooling season.
-358,,qoi_report.qoi_average_of_top_ten_highest_peaks_timing_heating_hour,hr,,,,The average hour (average daily index) for which the total site electricity average of top 10 maximum daily use occurs during the heating season.
-359,,qoi_report.qoi_average_of_top_ten_highest_peaks_use_cooling_kw,kW,,,,The total site electricity average of top 10 maximum daily use during the cooling season (days with average outdoor air drybulb temperature greater than 70F).
-360,,qoi_report.qoi_average_of_top_ten_highest_peaks_use_heating_kw,kW,,,,The total site electricity average of top 10 maximum daily use during the heating season (days with average outdoor air drybulb temperature less than 55F).
-361,,qoi_report.qoi_peak_magnitude_timing_hour,hr,,,,The hour (annual index) for which the total site electricity annual peak use occurs.
-362,,qoi_report.qoi_peak_magnitude_use_kw,kW,,,,The total site electricity annual peak use (maximum value).
-363,,,,Time,time,,Local clock.
-364,,,,TimeDST,timedst,,Local clock daylight saving time.
-365,,,,TimeUTC,timeutc,,Local clock coordinated universal time.
-366,,,,Temperature: Attic - Unvented,temperature__attic_-_unvented__f,F,"Zone temperatures (in deg-F) for each space (e.g., living space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-367,,,,Temperature: Attic - Vented,temperature__attic_-_vented__f,F,"Zone temperatures (in deg-F) for each space (e.g., living space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-368,,,,Temperature: Basement - Unconditioned,temperature__basement_-_unconditioned__f,F,"Zone temperatures (in deg-F) for each space (e.g., living space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-369,,,,Temperature: Crawlspace - Unvented,temperature__crawlspace_-_unvented__f,F,"Zone temperatures (in deg-F) for each space (e.g., living space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-370,,,,Temperature: Crawlspace - Vented,temperature__crawlspace_-_vented__f,F,"Zone temperatures (in deg-F) for each space (e.g., living space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-371,,,,Temperature: Garage,temperature__garage__f,F,"Zone temperatures (in deg-F) for each space (e.g., living space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-372,,,,Temperature: Living Space,temperature__living_space__f,F,"Zone temperatures (in deg-F) for each space (e.g., living space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-373,,,,Temperature: Heating Setpoint,temperature__heating_setpoint__f,F,"Zone temperatures (in deg-F) for each space (e.g., living space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-374,,,,Temperature: Cooling Setpoint,temperature__cooling_setpoint__f,F,"Zone temperatures (in deg-F) for each space (e.g., living space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-375,,,,Airflow: Infiltration,airflow__infiltration__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
-376,,,,Airflow: Mechanical Ventilation,airflow__mechanical_ventilation__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
-377,,,,Airflow: Natural Ventilation,airflow__natural_ventilation__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
-378,,,,Weather: Drybulb Temperature,weather__drybulb_temperature__f,F,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-379,,,,Weather: Wetbulb Temperature,weather__wetbulb_temperature__f,F,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-380,,,,Weather: Relative Humidity,weather__relative_humidity__%,%,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-381,,,,Weather: Wind Speed,weather__wind_speed__mph,mph,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-382,,,,Weather: Diffuse Solar Radiation,weather__diffuse_solar_radiation__btu/(hr*ft^2),Btu/(hr*ft^2),"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-383,,,,Weather: Direct Solar Radiation,weather__direct_solar_radiation__btu/(hr*ft^2),Btu/(hr*ft^2),"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-384,,,,Zone People Occupant Count: Living Space,zone_people_occupant_count__living_space,,User-requested EnergyPlus output variable.
-385,,,,Schedule Value: Ceiling_fan,schedules_ceiling_fan,,
-386,,,,Schedule Value: Clothes_dryer,schedules_clothes_dryer,,
-387,,,,Schedule Value: Clothes_washer,schedules_clothes_washer,,
-388,,,,Schedule Value: Cooking_range,schedules_cooking_range,,
-389,,,,Schedule Value: Dishwasher,schedules_dishwasher,,
-390,,,,Schedule Value: Hot_water_clothes_washer,schedules_hot_water_clothes_washer,,
-391,,,,Schedule Value: Hot_water_dishwasher,schedules_hot_water_dishwasher,,
-392,,,,Schedule Value: Hot_water_fixtures,schedules_hot_water_fixtures,,
-393,,,,Schedule Value: Lighting_garage,schedules_lighting_garage,,
-394,,,,Schedule Value: Lighting_interior,schedules_lighting_interior,,
-395,,,,Schedule Value: Occupants,schedules_occupants,,
-396,,,,Schedule Value: Outage,schedules_outage,,
-397,,,,Schedule Value: Plug_loads_other,schedules_plug_loads_other,,
-398,,,,Schedule Value: Plug_loads_tv,schedules_plug_loads_tv,,
-399,,,,Schedule Value: Vacancy,schedules_vacancy,,
+266,,report_simulation_output.hvac_design_load_cooling_latent_ventilation_btu_h,Btu/h,,,,Latent cooling design load for ventilation
+267,,report_simulation_output.hvac_design_load_cooling_sensible_aed_excursion_btu_h,Btu/h,,,,Sensible cooling design load for Adequate Exposure Diversity (AED) excursion
+268,,report_simulation_output.hvac_design_load_cooling_sensible_blower_heat_btu_h,Btu/h,,,,Sensible cooling design load for blower fan heat
+269,,report_simulation_output.hvac_design_load_cooling_sensible_ceilings_btu_h,Btu/h,,,,Sensible cooling design load for ceilings
+270,,report_simulation_output.hvac_design_load_cooling_sensible_doors_btu_h,Btu/h,,,,Sensible cooling design load for doors
+271,,report_simulation_output.hvac_design_load_cooling_sensible_ducts_btu_h,Btu/h,,,,Sensible cooling design load for ducts
+272,,report_simulation_output.hvac_design_load_cooling_sensible_floors_btu_h,Btu/h,,,,Sensible cooling design load for floors
+273,,report_simulation_output.hvac_design_load_cooling_sensible_infiltration_btu_h,Btu/h,,,,Sensible cooling design load for infiltration
+274,,report_simulation_output.hvac_design_load_cooling_sensible_internal_gains_btu_h,Btu/h,,,,Sensible cooling design load for internal gains
+275,,report_simulation_output.hvac_design_load_cooling_sensible_roofs_btu_h,Btu/h,,,,Sensible cooling design load for roofs
+276,,report_simulation_output.hvac_design_load_cooling_sensible_skylights_btu_h,Btu/h,,,,Sensible cooling design load for skylights
+277,,report_simulation_output.hvac_design_load_cooling_sensible_slabs_btu_h,Btu/h,,,,Sensible cooling design load for slabs
+278,,report_simulation_output.hvac_design_load_cooling_sensible_total_btu_h,Btu/h,,,,Total sensible cooling design load
+279,,report_simulation_output.hvac_design_load_cooling_sensible_ventilation_btu_h,Btu/h,,,,Sensible cooling design load for ventilation
+280,,report_simulation_output.hvac_design_load_cooling_sensible_walls_btu_h,Btu/h,,,,Sensible cooling design load for walls
+281,,report_simulation_output.hvac_design_load_cooling_sensible_windows_btu_h,Btu/h,,,,Sensible cooling design load for windows
+282,,report_simulation_output.hvac_design_load_heating_ceilings_btu_h,Btu/h,,,,Heating design load for ceilings
+283,,report_simulation_output.hvac_design_load_heating_doors_btu_h,Btu/h,,,,Heating design load for doors
+284,,report_simulation_output.hvac_design_load_heating_ducts_btu_h,Btu/h,,,,Heating design load for ducts
+285,,report_simulation_output.hvac_design_load_heating_floors_btu_h,Btu/h,,,,Heating design load for floors
+286,,report_simulation_output.hvac_design_load_heating_infiltration_btu_h,Btu/h,,,,Heating design load for infiltration
+287,,report_simulation_output.hvac_design_load_heating_piping_btu_h,Btu/h,,,,Heating design load for hydronic piping
+288,,report_simulation_output.hvac_design_load_heating_roofs_btu_h,Btu/h,,,,Heating design load for roofs
+289,,report_simulation_output.hvac_design_load_heating_skylights_btu_h,Btu/h,,,,Heating design load for skylights
+290,,report_simulation_output.hvac_design_load_heating_slabs_btu_h,Btu/h,,,,Heating design load for slabs
+291,,report_simulation_output.hvac_design_load_heating_total_btu_h,Btu/h,,,,Total heating design load
+292,,report_simulation_output.hvac_design_load_heating_ventilation_btu_h,Btu/h,,,,Heating design load for ventilation
+293,,report_simulation_output.hvac_design_load_heating_walls_btu_h,Btu/h,,,,Heating design load for walls
+294,,report_simulation_output.hvac_design_load_heating_windows_btu_h,Btu/h,,,,Heating design load for windows
+295,,report_simulation_output.hvac_design_temperature_cooling_f,F,,,,1% cooling drybulb temperature
+296,,report_simulation_output.hvac_design_temperature_heating_f,F,,,,99% heating drybulb temperature
+297,,report_simulation_output.hvac_geothermal_loop_borehole_trench_count,#,,,,Total number of vertical boreholes
+298,,report_simulation_output.hvac_geothermal_loop_borehole_trench_length_ft,ft,,,,"Length (i.e., average depth) of each borehole"
+299,,report_simulation_output.load_cooling_delivered_m_btu,MBtu,Load: Cooling: Delivered,load__cooling__delivered__kbtu,kBtu,Includes HVAC distribution losses.
+300,,report_simulation_output.load_heating_heat_pump_backup_m_btu,MBtu,Load: Heating: Heat Pump Backup,load__heating__heat_pump_backup__kbtu,kBtu,"Heating load delivered by the heat pump backup only, including distribution losses."
+301,,report_simulation_output.load_heating_delivered_m_btu,MBtu,Load: Heating: Delivered,load__heating__delivered__kbtu,kBtu,Includes HVAC distribution losses.
+302,,report_simulation_output.load_hot_water_delivered_m_btu,MBtu,Load: Hot Water: Delivered,load__hot_water__delivered__kbtu,kBtu,Includes contributions by desuperheaters or solar thermal systems.
+303,,report_simulation_output.load_hot_water_desuperheater_m_btu,MBtu,Load: Hot Water: Desuperheater,load__hot_water__desuperheater__kbtu,kBtu,Load served by the desuperheater.
+304,,report_simulation_output.load_hot_water_solar_thermal_m_btu,MBtu,Load: Hot Water: Solar Thermal,load__hot_water__solar_thermal__kbtu,kBtu,Load served by the solar thermal system.
+305,,report_simulation_output.load_hot_water_tank_losses_m_btu,MBtu,Load: Hot Water: Tank Losses,load__hot_water__tank_losses__kbtu,kBtu,
+306,,report_simulation_output.peak_electricity_annual_net_w,W,,,,Annual maximum for total electricity consumption minus power produced by PV
+307,,report_simulation_output.peak_electricity_summer_net_w,W,,,,Summer maximum for total electricity consumption minus power produced by PV
+308,,report_simulation_output.peak_electricity_winter_net_w,W,,,,Winter maximum for total electricity consumption minus power produced by PV
+309,,report_simulation_output.peak_electricity_annual_total_w,W,,,,Annual maximum for total electricity consumption
+310,,report_simulation_output.peak_electricity_summer_total_w,W,,,,Summer maximum for total electricity consumption
+311,,report_simulation_output.peak_electricity_winter_total_w,W,,,,Winter maximum for total electricity consumption
+312,,report_simulation_output.peak_load_cooling_delivered_k_btu_hr,kBtu/hr,,,,Includes HVAC distribution losses.
+313,,report_simulation_output.peak_load_heating_delivered_k_btu_hr,kBtu/hr,,,,Includes HVAC distribution losses.
+314,,report_simulation_output.resilience_battery_hr,hr,Resilience: Battery,resilience__battery__hr,hr,Average length of time the battery state of charge can meet the electric load
+315,,report_simulation_output.unmet_hours_cooling_hr,hr,Unmet Hours: Cooling,unmet_hours__cooling__hr,hr,Number of hours where the cooling setpoint is not maintained.
+316,,report_simulation_output.unmet_hours_heating_hr,hr,Unmet Hours: Heating,unmet_hours__heating__hr,hr,Number of hours where the heating setpoint is not maintained.
+317,,report_simulation_output.unmet_hours_ev_driving_hr,hr,Unmet Hours: EV Driving,unmet_hours__ev_driving__hr,hr,Number of hours where the EV driving demand is not met.
+318,,report_simulation_output.electric_panel_breaker_spaces_clothes_dryer_count,#,,,,Sum of clothes dryer occupied spaces
+319,,report_simulation_output.electric_panel_breaker_spaces_cooling_count,#,,,,Sum of cooling system and heat pump cooling occupied spaces
+320,,report_simulation_output.electric_panel_breaker_spaces_dishwasher_count,#,,,,Sum of dishwasher occupied spaces
+321,,report_simulation_output.electric_panel_breaker_spaces_electric_vehicle_charging_count,#,,,,Sum of electric vehicle charging occupied spaces
+322,,report_simulation_output.electric_panel_breaker_spaces_heating_count,#,,,,Sum of heating system and heat pump heating occupied spaces
+323,,report_simulation_output.electric_panel_breaker_spaces_hot_water_count,#,,,,Sum of water heating system occupied spaces
+324,,report_simulation_output.electric_panel_breaker_spaces_mech_vent_count,#,,,,Sum of mechanical ventilation occupied spaces
+325,,report_simulation_output.electric_panel_breaker_spaces_other_count,#,,,,Sum of other occupied spaces
+326,,report_simulation_output.electric_panel_breaker_spaces_permanent_spa_heater_count,#,,,,Sum of permanent spa heater occupied spaces
+327,,report_simulation_output.electric_panel_breaker_spaces_permanent_spa_pump_count,#,,,,Sum of permanent spa pump occupied spaces
+328,,report_simulation_output.electric_panel_breaker_spaces_pool_heater_count,#,,,,Sum of pool heater occupied spaces
+329,,report_simulation_output.electric_panel_breaker_spaces_pool_pump_count,#,,,,Sum of pool pump occupied spaces
+330,,report_simulation_output.electric_panel_breaker_spaces_range_oven_count,#,,,,Sum of range/oven occupied spaces
+331,,report_simulation_output.electric_panel_breaker_spaces_well_pump_count,#,,,,Sum of well pump occupied spaces
+332,,report_simulation_output.electric_panel_breaker_spaces_headroom_count,#,,,,Total rated spaces minus occupied spaces
+333,,report_simulation_output.electric_panel_breaker_spaces_occupied_count,#,,,,Total number of occupied spaces on the panel
+334,,report_simulation_output.electric_panel_breaker_spaces_total_count,#,,,,Total rated number of spaces on the panel
+335,,report_simulation_output.electric_panel_load_clothes_dryer_w,W,,,,Sum of clothes dryer demand loads
+336,,report_simulation_output.electric_panel_load_cooling_w,W,,,,Sum of cooling system and heat pump cooling demand loads
+337,,report_simulation_output.electric_panel_load_dishwasher_w,W,,,,Sum of dishwasher demand loads
+338,,report_simulation_output.electric_panel_load_electric_vehicle_charging_w,W,,,,Sum of electric vehicle charging demand loads
+339,,report_simulation_output.electric_panel_load_heating_w,W,,,,Sum of heating system and heat pump heating demand loads
+340,,report_simulation_output.electric_panel_load_hot_water_w,W,,,,Sum of water heating system demand loads
+341,,report_simulation_output.electric_panel_load_mech_vent_w,W,,,,Sum of mechanical ventilation demand loads
+342,,report_simulation_output.electric_panel_load_other_w,W,,,,Sum of other demand loads
+343,,report_simulation_output.electric_panel_load_permanent_spa_heater_w,W,,,,Sum of permanent spa heater demand loads
+344,,report_simulation_output.electric_panel_load_permanent_spa_pump_w,W,,,,Sum of permanent spa pump demand loads
+345,,report_simulation_output.electric_panel_load_pool_heater_w,W,,,,Sum of pool heater demand loads
+346,,report_simulation_output.electric_panel_load_pool_pump_w,W,,,,Sum of pool pump demand loads
+347,,report_simulation_output.electric_panel_load_range_oven_w,W,,,,Sum of range/oven demand loads
+348,,report_simulation_output.electric_panel_load_well_pump_w,W,,,,Sum of well pump demand loads
+349,,report_simulation_output.electric_panel_load_<type>_headroom_capacity_a,A,,,,Panel max current rating (A) minus Total Capacity (A)
+350,,report_simulation_output.electric_panel_load_<type>_total_capacity_a,A,,,,Total Load (W) divided by panel voltage
+351,,report_simulation_output.electric_panel_load_<type>_total_load_w,W,,,,Calculated NEC demand load capacity
+352,354,report_utility_bills.<scenario_name>_coal_energy_usd,$,,,,Scenario annual energy charges for coal.
+353,354,report_utility_bills.<scenario_name>_coal_fixed_usd,$,,,,Scenario annual fixed charges for coal.
+354,428,report_utility_bills.<scenario_name>_coal_total_usd,$,,,,Scenario annual total charges for coal.
+355,,report_utility_bills.<scenario_name>_coal_total_usd_2007_01_01,$,,,,Scenario January total charges for coal.
+356,,report_utility_bills.<scenario_name>_coal_total_usd_2007_02_01,$,,,,Scenario February total charges for coal.
+357,,report_utility_bills.<scenario_name>_coal_total_usd_2007_03_01,$,,,,Scenario March total charges for coal.
+358,,report_utility_bills.<scenario_name>_coal_total_usd_2007_04_01,$,,,,Scenario April total charges for coal.
+359,,report_utility_bills.<scenario_name>_coal_total_usd_2007_05_01,$,,,,Scenario May total charges for coal.
+360,,report_utility_bills.<scenario_name>_coal_total_usd_2007_06_01,$,,,,Scenario June total charges for coal.
+361,,report_utility_bills.<scenario_name>_coal_total_usd_2007_07_01,$,,,,Scenario July total charges for coal.
+362,,report_utility_bills.<scenario_name>_coal_total_usd_2007_08_01,$,,,,Scenario August total charges for coal.
+363,,report_utility_bills.<scenario_name>_coal_total_usd_2007_09_01,$,,,,Scenario September total charges for coal.
+364,,report_utility_bills.<scenario_name>_coal_total_usd_2007_10_01,$,,,,Scenario October total charges for coal.
+365,,report_utility_bills.<scenario_name>_coal_total_usd_2007_11_01,$,,,,Scenario November total charges for coal.
+366,,report_utility_bills.<scenario_name>_coal_total_usd_2007_12_01,$,,,,Scenario December total charges for coal.
+367,370,report_utility_bills.<scenario_name>_electricity_energy_usd,$,,,,Scenario annual energy charges for electricity.
+368,370,report_utility_bills.<scenario_name>_electricity_fixed_usd,$,,,,Scenario annual fixed charges for electricity.
+369,370,report_utility_bills.<scenario_name>_electricity_pv_credit_usd,$,,,,Scenario annual production credit (negative value) for PV.
+370,428,report_utility_bills.<scenario_name>_electricity_total_usd,$,,,,Scenario annual total charges for electricity.
+371,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_01_01,$,,,,Scenario January total charges for electricity.
+372,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_02_01,$,,,,Scenario February total charges for electricity.
+373,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_03_01,$,,,,Scenario March total charges for electricity.
+374,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_04_01,$,,,,Scenario April total charges for electricity.
+375,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_05_01,$,,,,Scenario May total charges for electricity.
+376,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_06_01,$,,,,Scenario June total charges for electricity.
+377,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_07_01,$,,,,Scenario July total charges for electricity.
+378,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_08_01,$,,,,Scenario August total charges for electricity.
+379,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_09_01,$,,,,Scenario September total charges for electricity.
+380,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_10_01,$,,,,Scenario October total charges for electricity.
+381,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_11_01,$,,,,Scenario November total charges for electricity.
+382,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_12_01,$,,,,Scenario December total charges for electricity.
+383,385,report_utility_bills.<scenario_name>_fuel_oil_energy_usd,$,,,,Scenario annual energy charges for fuel oil.
+384,385,report_utility_bills.<scenario_name>_fuel_oil_fixed_usd,$,,,,Scenario annual fixed charges for fuel oil.
+385,428,report_utility_bills.<scenario_name>_fuel_oil_total_usd,$,,,,Scenario annual total charges for fuel oil.
+386,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_01_01,$,,,,Scenario January total charges for fuel oil.
+387,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_02_01,$,,,,Scenario February total charges for fuel oil.
+388,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_03_01,$,,,,Scenario March total charges for fuel oil.
+389,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_04_01,$,,,,Scenario April total charges for fuel oil.
+390,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_05_01,$,,,,Scenario May total charges for fuel oil.
+391,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_06_01,$,,,,Scenario June total charges for fuel oil.
+392,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_07_01,$,,,,Scenario July total charges for fuel oil.
+393,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_08_01,$,,,,Scenario August total charges for fuel oil.
+394,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_09_01,$,,,,Scenario September total charges for fuel oil.
+395,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_10_01,$,,,,Scenario October total charges for fuel oil.
+396,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_11_01,$,,,,Scenario November total charges for fuel oil.
+397,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_12_01,$,,,,Scenario December total charges for fuel oil.
+398,400,report_utility_bills.<scenario_name>_natural_gas_energy_usd,$,,,,Scenario annual energy charges for natural gas.
+399,400,report_utility_bills.<scenario_name>_natural_gas_fixed_usd,$,,,,Scenario annual fixed charges for natural gas.
+400,428,report_utility_bills.<scenario_name>_natural_gas_total_usd,$,,,,Scenario annual total charges for natural gas.
+401,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_01_01,$,,,,Scenario January total charges for natural gas.
+402,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_02_01,$,,,,Scenario February total charges for natural gas.
+403,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_03_01,$,,,,Scenario March total charges for natural gas.
+404,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_04_01,$,,,,Scenario April total charges for natural gas.
+405,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_05_01,$,,,,Scenario May total charges for natural gas.
+406,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_06_01,$,,,,Scenario June total charges for natural gas.
+407,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_07_01,$,,,,Scenario July total charges for natural gas.
+408,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_08_01,$,,,,Scenario August total charges for natural gas.
+409,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_09_01,$,,,,Scenario September total charges for natural gas.
+410,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_10_01,$,,,,Scenario October total charges for natural gas.
+411,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_11_01,$,,,,Scenario November total charges for natural gas.
+412,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_12_01,$,,,,Scenario December total charges for natural gas.
+413,415,report_utility_bills.<scenario_name>_propane_energy_usd,$,,,,Scenario annual energy charges for propane.
+414,415,report_utility_bills.<scenario_name>_propane_fixed_usd,$,,,,Scenario annual fixed charges for propane.
+415,428,report_utility_bills.<scenario_name>_propane_total_usd,$,,,,Scenario annual total charges for propane.
+416,,report_utility_bills.<scenario_name>_propane_total_usd_2007_01_01,$,,,,Scenario January total charges for propane.
+417,,report_utility_bills.<scenario_name>_propane_total_usd_2007_02_01,$,,,,Scenario February total charges for propane.
+418,,report_utility_bills.<scenario_name>_propane_total_usd_2007_03_01,$,,,,Scenario March total charges for propane.
+419,,report_utility_bills.<scenario_name>_propane_total_usd_2007_04_01,$,,,,Scenario April total charges for propane.
+420,,report_utility_bills.<scenario_name>_propane_total_usd_2007_05_01,$,,,,Scenario May total charges for propane.
+421,,report_utility_bills.<scenario_name>_propane_total_usd_2007_06_01,$,,,,Scenario June total charges for propane.
+422,,report_utility_bills.<scenario_name>_propane_total_usd_2007_07_01,$,,,,Scenario July total charges for propane.
+423,,report_utility_bills.<scenario_name>_propane_total_usd_2007_08_01,$,,,,Scenario August total charges for propane.
+424,,report_utility_bills.<scenario_name>_propane_total_usd_2007_09_01,$,,,,Scenario September total charges for propane.
+425,,report_utility_bills.<scenario_name>_propane_total_usd_2007_10_01,$,,,,Scenario October total charges for propane.
+426,,report_utility_bills.<scenario_name>_propane_total_usd_2007_11_01,$,,,,Scenario November total charges for propane.
+427,,report_utility_bills.<scenario_name>_propane_total_usd_2007_12_01,$,,,,Scenario December total charges for propane.
+428,,report_utility_bills.<scenario_name>_total_usd,$,,,,Scenario annual total charges.
+429,,report_utility_bills.<scenario_name>_total_usd_2007_01_01,$,,,,Scenario January total charges.
+430,,report_utility_bills.<scenario_name>_total_usd_2007_02_01,$,,,,Scenario February total charges.
+431,,report_utility_bills.<scenario_name>_total_usd_2007_03_01,$,,,,Scenario March total charges.
+432,,report_utility_bills.<scenario_name>_total_usd_2007_04_01,$,,,,Scenario April total charges.
+433,,report_utility_bills.<scenario_name>_total_usd_2007_05_01,$,,,,Scenario May total charges.
+434,,report_utility_bills.<scenario_name>_total_usd_2007_06_01,$,,,,Scenario June total charges.
+435,,report_utility_bills.<scenario_name>_total_usd_2007_07_01,$,,,,Scenario July total charges.
+436,,report_utility_bills.<scenario_name>_total_usd_2007_08_01,$,,,,Scenario August total charges.
+437,,report_utility_bills.<scenario_name>_total_usd_2007_09_01,$,,,,Scenario September total charges.
+438,,report_utility_bills.<scenario_name>_total_usd_2007_10_01,$,,,,Scenario October total charges.
+439,,report_utility_bills.<scenario_name>_total_usd_2007_11_01,$,,,,Scenario November total charges.
+440,,report_utility_bills.<scenario_name>_total_usd_2007_12_01,$,,,,Scenario December total charges.
+441,443,report_utility_bills.<scenario_name>_wood_cord_energy_usd,$,,,,Scenario annual energy charges for wood cord.
+442,443,report_utility_bills.<scenario_name>_wood_cord_fixed_usd,$,,,,Scenario annual fixed charges for wood cord.
+443,428,report_utility_bills.<scenario_name>_wood_cord_total_usd,$,,,,Scenario annual total charges for wood cord.
+444,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_01_01,$,,,,Scenario January total charges for wood cord.
+445,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_02_01,$,,,,Scenario February total charges for wood cord.
+446,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_03_01,$,,,,Scenario March total charges for wood cord.
+447,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_04_01,$,,,,Scenario April total charges for wood cord.
+448,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_05_01,$,,,,Scenario May total charges for wood cord.
+449,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_06_01,$,,,,Scenario June total charges for wood cord.
+450,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_07_01,$,,,,Scenario July total charges for wood cord.
+451,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_08_01,$,,,,Scenario August total charges for wood cord.
+452,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_09_01,$,,,,Scenario September total charges for wood cord.
+453,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_10_01,$,,,,Scenario October total charges for wood cord.
+454,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_11_01,$,,,,Scenario November total charges for wood cord.
+455,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_12_01,$,,,,Scenario December total charges for wood cord.
+456,458,report_utility_bills.<scenario_name>_wood_pellets_energy_usd,$,,,,Scenario annual energy charges for wood pellets.
+457,458,report_utility_bills.<scenario_name>_wood_pellets_fixed_usd,$,,,,Scenario annual fixed charges for wood pellets.
+458,428,report_utility_bills.<scenario_name>_wood_pellets_total_usd,$,,,,Scenario annual total charges for wood pellets.
+459,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_01_01,$,,,,Scenario January total charges for wood pellets.
+460,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_02_01,$,,,,Scenario February total charges for wood pellets.
+461,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_03_01,$,,,,Scenario March total charges for wood pellets.
+462,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_04_01,$,,,,Scenario April total charges for wood pellets.
+463,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_05_01,$,,,,Scenario May total charges for wood pellets.
+464,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_06_01,$,,,,Scenario June total charges for wood pellets.
+465,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_07_01,$,,,,Scenario July total charges for wood pellets.
+466,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_08_01,$,,,,Scenario August total charges for wood pellets.
+467,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_09_01,$,,,,Scenario September total charges for wood pellets.
+468,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_10_01,$,,,,Scenario October total charges for wood pellets.
+469,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_11_01,$,,,,Scenario November total charges for wood pellets.
+470,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_12_01,$,,,,Scenario December total charges for wood pellets.
+471,,upgrade_costs.door_area_ft_2,ft^2,,,,Door Area
+472,,upgrade_costs.duct_unconditioned_surface_area_ft_2,ft^2,,,,Duct Unconditioned Surface Area
+473,,upgrade_costs.floor_area_attic_ft_2,ft^2,,,,"Floor Area, Attic"
+474,,upgrade_costs.floor_area_attic_insulation_increase_ft_2_delta_r_value,ft^2 * Delta R-value,,,,"Floor Area, Attic * Insulation Increase"
+475,,upgrade_costs.floor_area_conditioned_ft_2,ft^2,,,,"Floor Area, Conditioned"
+476,,upgrade_costs.floor_area_conditioned_infiltration_reduction_ft_2_delta_ach_50,ft^2 * Delta ACH50,,,,"Floor Area, Conditioned * Infiltration Reduction"
+477,,upgrade_costs.floor_area_foundation_ft_2,ft^2,,,,"Floor Area, Foundation"
+478,,upgrade_costs.floor_area_lighting_ft_2,ft^2,,,,"Floor Area, Lighting"
+479,,upgrade_costs.flow_rate_mechanical_ventilation_cfm,cfm,,,,"Flow Rate, Mechanical Ventilation"
+480,,upgrade_costs.rim_joist_area_above_grade_exterior_ft_2,ft^2,,,,"Rim Joist Area, Above-Grade, Exterior"
+481,,upgrade_costs.roof_area_ft_2,ft^2,,,,Roof Area
+482,,upgrade_costs.size_cooling_system_primary_k_btu_h,kBtu/h,,,,"Size, Cooling System Primary"
+483,,upgrade_costs.size_heat_pump_backup_primary_k_btu_h,kBtu/h,,,,"Size, Heat Pump Backup Primary"
+484,,upgrade_costs.size_heating_system_primary_k_btu_h,kBtu/h,,,,"Size, Heating System Primary"
+485,,upgrade_costs.size_heating_system_secondary_k_btu_h,kBtu/h,,,,"Size, Heating System Secondary"
+486,,upgrade_costs.size_water_heater_gal,gal,,,,"Size, Water Heater"
+487,,upgrade_costs.slab_perimeter_exposed_conditioned_ft,ft,,,,"Slab Perimeter, Exposed, Conditioned"
+488,,upgrade_costs.wall_area_above_grade_conditioned_ft_2,ft^2,,,,"Wall Area, Above-Grade, Conditioned"
+489,,upgrade_costs.wall_area_above_grade_exterior_ft_2,ft^2,,,,"Wall Area, Above-Grade, Exterior"
+490,,upgrade_costs.wall_area_below_grade_ft_2,ft^2,,,,"Wall Area, Below-Grade"
+491,,upgrade_costs.window_area_ft_2,ft^2,,,,Window Area
+492,,qoi_report.qoi_average_maximum_daily_timing_cooling_hour,hr,,,,The average hour (average daily index) for which the total site electricity maximum daily use occurs during the cooling season.
+493,,qoi_report.qoi_average_maximum_daily_timing_heating_hour,hr,,,,The average hour (average daily index) for which the total site electricity maximum daily use occurs during the heating season.
+494,,qoi_report.qoi_average_maximum_daily_timing_overlap_hour,hr,,,,The average hour (average daily index) for which the total site electricity maximum daily use occurs during the overlap season.
+495,,qoi_report.qoi_average_maximum_daily_use_cooling_kw,kW,,,,The total site electricity average maximum daily use during the cooling season (days with average outdoor air drybulb temperature greater than 70F).
+496,,qoi_report.qoi_average_maximum_daily_use_heating_kw,kW,,,,The total site electricity average maximum daily use during the heating season (days with average outdoor air drybulb temperature less than 55F).
+497,,qoi_report.qoi_average_maximum_daily_use_overlap_kw,kW,,,,The total site electricity average maximum daily use during the overlap season (days with average outdoor air drybulb temperature between 55F and 70F).
+498,,qoi_report.qoi_average_minimum_daily_use_cooling_kw,kW,,,,The total site electricity average minimum daily use during the cooling season (days with average outdoor air drybulb temperature greater than 70F).
+499,,qoi_report.qoi_average_minimum_daily_use_heating_kw,kW,,,,The total site electricity average minimum daily use during the heating season (days with average outdoor air drybulb temperature less than 55F).
+500,,qoi_report.qoi_average_minimum_daily_use_overlap_kw,kW,,,,The total site electricity average minimum daily use during the overlap season (days with average outdoor air drybulb temperature between 55F and 70F).
+501,,qoi_report.qoi_average_of_top_ten_highest_peaks_timing_cooling_hour,hr,,,,The average hour (average daily index) for which the total site electricity average of top 10 maximum daily use occurs during the cooling season.
+502,,qoi_report.qoi_average_of_top_ten_highest_peaks_timing_heating_hour,hr,,,,The average hour (average daily index) for which the total site electricity average of top 10 maximum daily use occurs during the heating season.
+503,,qoi_report.qoi_average_of_top_ten_highest_peaks_use_cooling_kw,kW,,,,The total site electricity average of top 10 maximum daily use during the cooling season (days with average outdoor air drybulb temperature greater than 70F).
+504,,qoi_report.qoi_average_of_top_ten_highest_peaks_use_heating_kw,kW,,,,The total site electricity average of top 10 maximum daily use during the heating season (days with average outdoor air drybulb temperature less than 55F).
+505,,qoi_report.qoi_hourly_peak_magnitude_timing_hour,hr,,,,The hour (annual index) for which the total site electricity annual peak use occurs.
+506,,qoi_report.qoi_hourly_peak_magnitude_use_kw,kW,,,,The total site electricity annual peak use (maximum value).
+507,,,,Time,time,,Local clock.
+508,,,,TimeDST,timedst,,Local clock daylight saving time.
+509,,,,TimeUTC,timeutc,,Local clock coordinated universal time.
+510,,,,Temperature: Attic - Unvented,temperature__attic_-_unvented__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+511,,,,Temperature: Attic - Vented,temperature__attic_-_vented__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+512,,,,Temperature: Basement - Unconditioned,temperature__basement_-_unconditioned__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+513,,,,Temperature: Crawlspace - Unvented,temperature__crawlspace_-_unvented__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+514,,,,Temperature: Crawlspace - Vented,temperature__crawlspace_-_vented__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+515,,,,Temperature: Garage,temperature__garage__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+516,,,,Temperature: Conditioned Space,temperature__conditioned_space__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+517,,,,Temperature: Other Heated Space,temperature__other_heated_space__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+518,,,,Temperature: Heating Setpoint,temperature__heating_setpoint__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+519,,,,Temperature: Cooling Setpoint,temperature__cooling_setpoint__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+520,,,,Humidity Ratio: Attic - Unvented,humidity_ratio__attic_-_unvented__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+521,,,,Humidity Ratio: Attic - Vented,humidity_ratio__attic_-_vented__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+522,,,,Humidity Ratio: Basement - Unconditioned,humidity_ratio__basement_-_unconditioned__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+523,,,,Humidity Ratio: Crawlspace - Unvented,humidity_ratio__crawlspace_-_unvented__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+524,,,,Humidity Ratio: Crawlspace - Vented,humidity_ratio__crawlspace_-_vented__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+525,,,,Humidity Ratio: Garage,humidity_ratio__garage__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+526,,,,Humidity Ratio: Conditioned Space,humidity_ratio__conditioned_space__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+527,,,,Relative Humidity: Attic - Unvented,relative_humidity__attic_-_unvented__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+528,,,,Relative Humidity: Attic - Vented,relative_humidity__attic_-_vented__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+529,,,,Relative Humidity: Basement - Unconditioned,relative_humidity__basement_-_unconditioned__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+530,,,,Relative Humidity: Crawlspace - Unvented,relative_humidity__crawlspace_-_unvented__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+531,,,,Relative Humidity: Crawlspace - Vented,relative_humidity__crawlspace_-_vented__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+532,,,,Relative Humidity: Garage,relative_humidity__garage__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+533,,,,Relative Humidity: Conditioned Space,relative_humidity__conditioned_space__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+534,,,,Dewpoint Temperature: Attic - Unvented,dewpoint_temperature__attic_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+535,,,,Dewpoint Temperature: Attic - Vented,dewpoint_temperature__attic_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+536,,,,Dewpoint Temperature: Basement - Unconditioned,dewpoint_temperature__basement_-_unconditioned__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+537,,,,Dewpoint Temperature: Crawlspace - Unvented,dewpoint_temperature__crawlspace_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+538,,,,Dewpoint Temperature: Crawlspace - Vented,dewpoint_temperature__crawlspace_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+539,,,,Dewpoint Temperature: Garage,dewpoint_temperature__garage__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+540,,,,Dewpoint Temperature: Conditioned Space,dewpoint_temperature__conditioned_space__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+541,,,,Radiant Temperature: Attic - Unvented,radiant_temperature__attic_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+542,,,,Radiant Temperature: Attic - Vented,radiant_temperature__attic_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+543,,,,Radiant Temperature: Basement - Unconditioned,radiant_temperature__basement_-_unconditioned__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+544,,,,Radiant Temperature: Crawlspace - Unvented,radiant_temperature__crawlspace_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+545,,,,Radiant Temperature: Crawlspace - Vented,radiant_temperature__crawlspace_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+546,,,,Radiant Temperature: Garage,radiant_temperature__garage__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+547,,,,Radiant Temperature: Conditioned Space,radiant_temperature__conditioned_space__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+548,,,,Operative Temperature: Attic - Unvented,operative_temperature__attic_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+549,,,,Operative Temperature: Attic - Vented,operative_temperature__attic_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+550,,,,Operative Temperature: Basement - Unconditioned,operative_temperature__basement_-_unconditioned__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+551,,,,Operative Temperature: Crawlspace - Unvented,operative_temperature__crawlspace_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+552,,,,Operative Temperature: Crawlspace - Vented,operative_temperature__crawlspace_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+553,,,,Operative Temperature: Garage,operative_temperature__garage__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+554,,,,Operative Temperature: Conditioned Space,operative_temperature__conditioned_space__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+555,,,,Airflow: Infiltration,airflow__infiltration__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
+556,,,,Airflow: Mechanical Ventilation,airflow__mechanical_ventilation__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
+557,,,,Airflow: Natural Ventilation,airflow__natural_ventilation__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
+558,,,,Weather: Drybulb Temperature,weather__drybulb_temperature__f,F,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+559,,,,Weather: Wetbulb Temperature,weather__wetbulb_temperature__f,F,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+560,,,,Weather: Relative Humidity,weather__relative_humidity__%,%,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+561,,,,Weather: Wind Speed,weather__wind_speed__mph,mph,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+562,,,,Weather: Diffuse Solar Radiation,weather__diffuse_solar_radiation__btu/(hr*ft^2),Btu/(hr*ft^2),"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+563,,,,Weather: Direct Solar Radiation,weather__direct_solar_radiation__btu/(hr*ft^2),Btu/(hr*ft^2),"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+564,,,,Zone People Occupant Count: Conditioned Space,zone_people_occupant_count__conditioned_space,,"Any user-specified EnergyPlus output variables/meters (e.g., 'Zone People Occupant Count', 'MainsWater:Facility')."
+565,,,,Electricity:Facility,electricity_facility__j,J,"Any user-specified EnergyPlus output variables/meters (e.g., 'Zone People Occupant Count', 'MainsWater:Facility')."
+566,,,,,schedules_ceiling_fan,frac,Ceiling fan energy use schedule.
+567,,,,,schedules_clothes_dryer,frac,Clothes dryer energy use schedule.
+568,,,,,schedules_clothes_washer,frac,Clothes washer energy use schedule.
+569,,,,,schedules_cooking_range,frac,Cooking range & oven energy use schedule.
+570,,,,,schedules_dishwasher,frac,Dishwasher energy use schedule.
+571,,,,,schedules_hot_water_clothes_washer,frac,Clothes washer hot water use schedule.
+572,,,,,schedules_hot_water_dishwasher,frac,Dishwasher hot water use schedule.
+573,,,,,schedules_hot_water_fixtures,frac,"Fixtures (sinks, showers, baths) hot water use schedule."
+574,,,,,schedules_lighting_garage,frac,Garage lighting energy use schedule.
+575,,,,,schedules_lighting_interior,frac,Interior lighting energy use schedule.
+576,,,,,schedules_no_space_cooling,,Unavailable period.
+577,,,,,schedules_no_space_heating,,Unavailable period.
+578,,,,,schedules_occupants,frac,Occupant heat gain schedule.
+579,,,,,schedules_plug_loads_other,frac,Other plug load energy use schedule.
+580,,,,,schedules_plug_loads_tv,frac,Television plug load energy use schedule.
+581,,,,,schedules_power_outage,,Unavailable period.
+582,,,,,schedules_vacancy,,Unavailable period.
+583,,,,,schedules_electric_vehicle_charging,frac,Availability schedule for electric vehicle charging.
+584,,,,,schedules_electric_vehicle_discharging,frac,Availability schedule for electric vehicle discharging.
+585,,,,,schedules_peak_period,frac,Load flexibility measure ouput that indicates when the system is in the peak demand period.
+586,,,,,schedules_pre_peak_period,frac,Load flexibility measure ouput that identifies when the system is in the period leading up to the peak demand period.

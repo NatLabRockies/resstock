@@ -1,7 +1,7 @@
 Dependency=Geometry Attic Type	Option=Unfinished, Uninsulated	Option=Finished, Uninsulated	Option=Finished, R-7	Option=Finished, R-13	Option=Finished, R-19	Option=Finished, R-30	Option=Finished, R-38	Option=Finished, R-49	sampling_probability
-Vented Attic	1	0	0	0	0	0	0	0	0.12963
-Unvented Attic	1	0	0	0	0	0	0	0	0.12963
-Finished Attic or Cathedral Ceilings	0	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.074074
-None	0	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.666667
+Vented Attic	1	0	0	0	0	0	0	0	0.0617283
+Unvented Attic	1	0	0	0	0	0	0	0	0.0617283
+Finished Attic or Cathedral Ceilings	0	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.037037
+None	0	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.839506
 # Created by: manually created
 # Description: Finished roof insulation level.

@@ -1,8 +1,8 @@
-Dependency=Geometry Building Type RECS	Option=Has Pool	Option=None	sampling_probability
-Mobile Home	0.5	0.5	0.111111
-Multi-Family with 2 - 4 Units	0.5	0.5	0.222222
-Multi-Family with 5+ Units	0.5	0.5	0.444444
-Single-Family Attached	0.5	0.5	0.111111
-Single-Family Detached	0.5	0.5	0.111111
-# Created by: sources\recs\recs2009\tsv_maker.py
+Dependency=Geometry Building Type RECS	Option=Has Pool	Option=None	Option=Void	sampling_probability
+Mobile Home	0.5	0.5	0	0.111111
+Multi-Family with 2 - 4 Units	0.5	0.5	0	0.222222
+Multi-Family with 5+ Units	0.5	0.5	0	0.444444
+Single-Family Attached	0.5	0.5	0	0.111111
+Single-Family Detached	0.5	0.5	0	0.111111
+# Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence of a pool at the dwelling unit.

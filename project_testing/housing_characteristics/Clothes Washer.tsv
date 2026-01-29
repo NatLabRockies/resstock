@@ -1,5 +1,5 @@
-Dependency=Clothes Washer Presence	Option=None	Option=Standard, 80% Usage	Option=Standard, 100% Usage	Option=Standard, 120% Usage	Option=EnergyStar, 80% Usage	Option=EnergyStar, 100% Usage	Option=EnergyStar, 120% Usage	Option=EnergyStar More Efficient, 80% Usage	Option=EnergyStar More Efficient, 100% Usage	Option=EnergyStar More Efficient, 120% Usage	Option=EnergyStar Most Efficient, 80% Usage	Option=EnergyStar Most Efficient, 100% Usage	Option=EnergyStar Most Efficient, 120% Usage	Option=CEE Advanced Tier, 80% Usage	Option=CEE Advanced Tier, 100% Usage	Option=CEE Advanced Tier, 120% Usage	sampling_probability
-None	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.5
-Yes	0	0.066667	0.066667	0.066667	0.066667	0.066667	0.066667	0.066667	0.066667	0.066667	0.066667	0.066667	0.066667	0.066667	0.066667	0.066667	0.5
-# Created by: manually created
-# Description: Presence, rated efficiency, and usage level of the clothes washer.
+Dependency=Clothes Washer Presence	Option=EnergyStar	Option=None	Option=Standard	Option=Void	sampling_probability
+None	0	1	0	0	0.5
+Yes	0.5	0	0.5	0	0.5
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: Presence and rated efficiency of the clothes washer.

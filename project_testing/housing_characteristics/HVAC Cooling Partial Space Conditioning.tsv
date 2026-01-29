@@ -1,7 +1,9 @@
-Dependency=HVAC Cooling Type	Option=<10% Conditioned	Option=20% Conditioned	Option=40% Conditioned	Option=60% Conditioned	Option=80% Conditioned	Option=100% Conditioned	Option=None	sampling_probability
-Central AC	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.305556
-Heat Pump	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.0833334
-None	0	0	0	0	0	0	1	0.305556
-Room AC	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.305556
+Dependency=HVAC Cooling Type	Option=<10% Conditioned	Option=20% Conditioned	Option=40% Conditioned	Option=60% Conditioned	Option=80% Conditioned	Option=100% Conditioned	Option=None	Option=Void	sampling_probability
+Central AC	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0	0.309524
+Ducted Heat Pump	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0	0.0357143
+Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	0
+Non-Ducted Heat Pump	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0	0.0357143
+None	0	0	0	0	0	0	1	0	0.309524
+Room AC	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0	0.309524
 # Created by: sources\recs\recs2009\tsv_maker.py
 # Description: The fraction of the finished floor area that the cooling system provides cooling.

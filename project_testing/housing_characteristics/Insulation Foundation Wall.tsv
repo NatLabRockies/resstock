@@ -1,9 +1,9 @@
-Dependency=Geometry Foundation Type	Option=None	Option=Uninsulated	Option=Wall R-5, Exterior	Option=Wall R-10, Exterior	Option=Wall R-15, Exterior	Option=Wall R-13, Interior	sampling_probability
-Unheated Basement	0	0.2	0.2	0.2	0.2	0.2	0.294444
-Heated Basement	0	0.2	0.2	0.2	0.2	0.2	0.0722222
-Vented Crawlspace	0	0.2	0.2	0.2	0.2	0.2	0.147222
-Unvented Crawlspace	0	0.2	0.2	0.2	0.2	0.2	0.147222
-Ambient	1	0	0	0	0	0	0.0444444
-Slab	1	0	0	0	0	0	0.294444
+Dependency=Geometry Foundation Type	Option=None	Option=Uninsulated	Option=Wall R-5, Exterior	Option=Wall R-10, Exterior	Option=Wall R-15, Exterior	sampling_probability
+Unheated Basement	0	0.25	0.25	0.25	0.25	0.207407
+Heated Basement	0	0.25	0.25	0.25	0.25	0.0407408
+Vented Crawlspace	0	0.25	0.25	0.25	0.25	0.207407
+Unvented Crawlspace	0	0.25	0.25	0.25	0.25	0.207407
+Ambient	1	0	0	0	0	0.12963
+Slab	1	0	0	0	0	0.207407
 # Created by: manually created
 # Description: Foundation walls insulation level.

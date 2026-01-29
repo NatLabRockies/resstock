@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-class UnitConversions
-  # As there is a performance penalty to using OpenStudio's built-in unit convert()
-  # method, we use our own approach here.
-
-  # Hash value is [scalar, delta]
+# Collection of helper methods for performing unit conversions.
+module UnitConversions
   @Scalars = {
     # Energy
     ['btu', 'j'] => 1055.05585262,
@@ -34,6 +31,12 @@ class UnitConversions
     ['wh', 'kbtu'] => 0.003412141633127942,
     ['kbtu', 'btu'] => 1000.0,
     ['kbtu', 'mbtu'] => 0.001,
+    ['gal_fuel_oil', 'kbtu'] => 139,
+    ['gal_fuel_oil', 'mbtu'] => 139 / 1000.0,
+    ['gal_fuel_oil', 'j'] => 139 * 1000.0 * 1055.05585262,
+    ['gal_propane', 'kbtu'] => 91.6,
+    ['gal_propane', 'mbtu'] => 91.6 / 1000.0,
+    ['gal_propane', 'j'] => 91.6 * 1000.0 * 1055.05585262,
 
     # Power
     ['btu/hr', 'w'] => 0.2930710701722222,
@@ -44,6 +47,7 @@ class UnitConversions
     ['ton', 'kbtu/hr'] => 12.0,
     ['ton', 'w'] => 3516.85284207,
     ['w', 'btu/hr'] => 3.412141633127942,
+    ['kw', 'btu/hr'] => 3412.141633127942,
     ['kbtu/hr', 'kw'] => 0.2930710701722222,
 
     # Power Flux
@@ -62,6 +66,7 @@ class UnitConversions
     ['ft', 'm'] => 0.3048,
     ['in', 'm'] => 0.0254,
     ['m', 'mm'] => 1000.0,
+    ['in', 'mm'] => 25.4,
 
     # Area
     ['cm^2', 'ft^2'] => 1.0 / 929.0304,
@@ -118,7 +123,7 @@ class UnitConversions
     ['psi', 'pa'] => 6.89475729 * 1000.0,
 
     # Angles
-    ['rad', 'deg'] => 57.29578,
+    ['rad', 'deg'] => 180.0 / Math::PI,
 
     # R-Value
     ['hr*ft^2*f/btu', 'm^2*k/w'] => 0.1761,
@@ -133,6 +138,9 @@ class UnitConversions
     ['btu/(hr*ft*r)', 'w/(m*k)'] => 1.731,
     ['btu*in/(hr*ft^2*r)', 'w/(m*k)'] => 0.14425,
 
+    # Thermal Diffusivity
+    ['m^2/s', 'ft^2/hr'] => 38750.1,
+
     # Infiltration
     ['ft^2/(s^2*r)', 'l^2/(s^2*cm^4*k)'] => 0.001672,
     ['inh2o/mph^2', 'pa*s^2/m^2'] => 1246.0,
@@ -142,6 +150,15 @@ class UnitConversions
     ['lbm/lbm', 'grains'] => 7000.0,
   }
 
+  # Converts a number from one unit (e.g., 'ft') to another unit (e.g, 'm').
+  #
+  # As there is a *significant* performance penalty to using OpenStudio's built-in
+  # unit convert() method, we use our own approach here.
+  #
+  # @param x [Double] value to be converted from
+  # @param from [String] type of unit to convert from
+  # @param to [String] type of unit to convert to
+  # @return [Double] value converted to
   def self.convert(x, from, to)
     from_d = from.downcase
     to_d = to.downcase

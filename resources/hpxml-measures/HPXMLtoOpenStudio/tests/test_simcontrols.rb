@@ -6,10 +6,16 @@ require 'openstudio/measure/ShowRunnerOutput'
 require 'fileutils'
 require_relative '../measure.rb'
 require_relative '../resources/util.rb'
+require_relative 'util.rb'
 
-class HPXMLtoOpenStudioSimControlsTest < MiniTest::Test
-  def sample_files_dir
-    return File.join(File.dirname(__FILE__), '..', '..', 'workflow', 'sample_files')
+class HPXMLtoOpenStudioSimControlsTest < Minitest::Test
+  def setup
+    @root_path = File.absolute_path(File.join(File.dirname(__FILE__), '..', '..'))
+    @sample_files_path = File.join(@root_path, 'workflow', 'sample_files')
+  end
+
+  def teardown
+    cleanup_results_files
   end
 
   def get_run_period_month_and_days(model)
@@ -23,8 +29,8 @@ class HPXMLtoOpenStudioSimControlsTest < MiniTest::Test
 
   def test_run_period_year
     args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(sample_files_dir, 'base.xml'))
-    model, _hpxml = _test_measure(args_hash)
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base.xml'))
+    model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
 
     begin_month, begin_day, end_month, end_day = get_run_period_month_and_days(model)
     assert_equal(1, begin_month)
@@ -35,28 +41,28 @@ class HPXMLtoOpenStudioSimControlsTest < MiniTest::Test
 
   def test_run_period_1month
     args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(sample_files_dir, 'base-simcontrol-runperiod-1-month.xml'))
-    model, _hpxml = _test_measure(args_hash)
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-simcontrol-runperiod-1-month.xml'))
+    model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
 
     begin_month, begin_day, end_month, end_day = get_run_period_month_and_days(model)
     assert_equal(2, begin_month)
-    assert_equal(1, begin_day)
-    assert_equal(2, end_month)
-    assert_equal(28, end_day)
+    assert_equal(15, begin_day)
+    assert_equal(3, end_month)
+    assert_equal(15, end_day)
   end
 
   def test_timestep_1hour
     args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(sample_files_dir, 'base.xml'))
-    model, _hpxml = _test_measure(args_hash)
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base.xml'))
+    model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
 
     assert_equal(1, model.getTimestep.numberOfTimestepsPerHour)
   end
 
   def test_timestep_10min
     args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(sample_files_dir, 'base-simcontrol-timestep-10-mins.xml'))
-    model, _hpxml = _test_measure(args_hash)
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-simcontrol-timestep-10-mins.xml'))
+    model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
 
     assert_equal(6, model.getTimestep.numberOfTimestepsPerHour)
   end
@@ -92,10 +98,10 @@ class HPXMLtoOpenStudioSimControlsTest < MiniTest::Test
     # assert that it ran correctly
     assert_equal('Success', result.value.valueName)
 
-    hpxml = HPXML.new(hpxml_path: args_hash['hpxml_path'])
+    hpxml = HPXML.new(hpxml_path: File.join(File.dirname(__FILE__), 'in.xml'))
 
     File.delete(File.join(File.dirname(__FILE__), 'in.xml'))
 
-    return model, hpxml
+    return model, hpxml, hpxml.buildings[0]
   end
 end

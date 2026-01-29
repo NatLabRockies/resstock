@@ -3,7 +3,7 @@
 require_relative '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/minitest_helper'
 require_relative '../../test/integrity_checks'
 
-class TestProjectNational < MiniTest::Test
+class TestProjectNational < Minitest::Test
   def test_housing_characteristics
     begin
       project_dir_name = File.basename(File.dirname(File.dirname(__FILE__)))

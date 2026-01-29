@@ -1,25 +1,62 @@
-schema_version: '0.3'
-os_version: 3.6.1
-os_sha: bb9481519e
+schema_version: '0.4'
+os_version: 3.10.0
+os_sha: 86d7e215a1
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_testing # Relative to buildstock_directory
 output_directory: testing_baseline
-weather_files_url: https://data.nrel.gov/system/files/156/BuildStock_TMY3_FIPS.zip
-# weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip
+weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
+# weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
+# weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
+# weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
 
+# Baseline number of units
+baseline:
+  n_buildings_represented: 110000000
+
+# Sampler type and number of data points per baseline or upgrade
 sampler:
   type: residential_quota
   args:
     n_datapoints: 100
 
-# sampler:
-  # type: precomputed
-  # args:
-    # sample_file: ../buildstock.csv
+# NREL High Performance Computing machine configuration
+# Not used if running buildstock_local (local tests and CI)
+# kestrel:
+#   n_jobs: 3
+#   minutes_per_sim: 30
+#   account: <account>
+#   postprocessing:
+#     time: 20
+#     n_workers: 1
+#     n_procs: 20
+#   sampling:
+#     time: 5
 
+# Post proccessing and Amazon Web Services
+# postprocessing:
+#   # Post simulation partitioning
+#   keep_individual_timeseries: true
+#   partition_columns:
+#     - State
+#     - County
+#   # AWS upload bucket and athena setup (uncomment during production and testing runs)
+#   aws:
+#    region_name: us-west-2
+#    s3:
+#      bucket: sdr_resstock
+#      prefix: production_runs
+#    athena:
+#      glue_service_role: service-role/AWSGlueServiceRole-default
+#      database_name: sdr_resstock
+#      max_crawling_time: 1200
+
+# Workflow generator
 workflow_generator:
+  # ResStock HPXML workflow generator
   type: residential_hpxml
+  version: 2025.12.03
   args:
+    # Annual simulation and timestep
     build_existing_model:
       simulation_control_timestep: 60
       simulation_control_run_period_begin_month: 1
@@ -29,15 +66,17 @@ workflow_generator:
       simulation_control_run_period_calendar_year: 2007
       add_component_loads: true
 
+    # Emissions scenarios
     emissions:
       - scenario_name: LRMER_MidCase_15
         type: CO2e
-        elec_folder: data/cambium/LRMER_MidCase_15
+        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_15
         gas_value: 147.3
         propane_value: 177.8
         oil_value: 195.9
         wood_value: 200.0
 
+    # Utility bill rates
     utility_bills:
       - scenario_name: Bills
         elec_fixed_charge: 10.0
@@ -56,7 +95,15 @@ workflow_generator:
         pv_monthly_grid_connection_fee_units: $/kW
         pv_monthly_grid_connection_fee: 2.5
 
+      - scenario_name: Bills2
+        simple_filepath: data/utility_bills/test_simple_rates/State.tsv
+
+      - scenario_name: Bills3
+        detailed_filepath: data/utility_bills/test_detailed_rates/County.tsv
+
+    # Outputs to include
     simulation_output_report:
+      include_annual_emission_end_uses: true
       timeseries_frequency: hourly
       include_timeseries_total_consumptions: true
       include_timeseries_fuel_consumptions: true
@@ -69,27 +116,27 @@ workflow_generator:
       include_timeseries_component_loads: true
       include_timeseries_unmet_hours: true
       include_timeseries_zone_temperatures: true
+      include_timeseries_zone_conditions: true
       include_timeseries_airflows: true
       include_timeseries_weather: true
+      include_timeseries_resilience: true
       timeseries_timestamp_convention: end
       timeseries_num_decimal_places: 4
       output_variables:
         - name: Zone People Occupant Count
+      output_meters:
+        - name: Electricity:Facility
+      include_monthly_bills: true
 
+    # Other reporting measures to run
     reporting_measures:
       - measure_dir_name: QOIReport
+      - measure_dir_name: ServerDirectoryCleanup # include an additional ServerDirectoryCleanup to remove all the extra files that debug: true wrote (i.e., save disk space)
+        arguments:
+          retain_in_osm: true
+          retain_eplusout_err: true
+          retain_eplusout_mtd: true
+          retain_eplusout_rdd: true
+          retain_eplustbl_htm: true
 
-    debug: true
-
-baseline:
-  n_buildings_represented: 110000000
-
-eagle:
-  n_jobs: 2
-  minutes_per_sim: 1
-  account: <account you are authorized to use>
-  sampling:
-    time: 10
-  postprocessing:
-    time: 10
-    n_workers: 1
+    debug: true # passed into HPXMLtoOpenStudio, UpgradeCosts, and first instance of ServerDirectoryCleanup

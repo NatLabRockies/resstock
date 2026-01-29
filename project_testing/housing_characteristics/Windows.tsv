@@ -1,4 +1,9 @@
-Option=Double, Clear, Metal, Air	Option=Double, Clear, Metal, Air, Exterior Clear Storm	Option=Double, Clear, Non-metal, Air	Option=Double, Clear, Non-metal, Air, Exterior Clear Storm	Option=Double, Low-E, Non-metal, Air, M-Gain	Option=Single, Clear, Metal	Option=Single, Clear, Metal, Exterior Clear Storm	Option=Single, Clear, Non-metal	Option=Single, Clear, Non-metal, Exterior Clear Storm	Option=Triple, Low-E, Non-metal, Air, L-Gain	sampling_probability
-0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	1
-# Created by: sources\recs\recs2015\tsv_maker.py
+Dependency=Tenure	Dependency=Vacancy Status	Option=Double, Clear, Metal, Air	Option=Double, Clear, Metal, Air, Exterior Clear Storm	Option=Double, Clear, Non-metal, Air	Option=Double, Clear, Non-metal, Air, Exterior Clear Storm	Option=Double, Low-E, Non-metal, Air, M-Gain	Option=Single, Clear, Metal	Option=Single, Clear, Metal, Exterior Clear Storm	Option=Single, Clear, Non-metal	Option=Single, Clear, Non-metal, Exterior Clear Storm	Option=Triple, Low-E, Non-metal, Air, L-Gain	Option=Void	sampling_probability
+Not Available	Occupied	0	0	0	0	0	0	0	0	0	0	1	0
+Owner	Occupied	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0	0.25
+Renter	Occupied	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0	0.25
+Not Available	Vacant	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0.1	0	0.5
+Owner	Vacant	0	0	0	0	0	0	0	0	0	0	1	0
+Renter	Vacant	0	0	0	0	0	0	0	0	0	0	1	0
+# Created by: sources\recs\recs2020\tsv_maker.py
 # Description: Construction type and efficiency levels of windows.

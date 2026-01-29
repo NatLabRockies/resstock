@@ -1,4 +1,4 @@
-Option=144 Rated kWh, 80% Usage	Option=144 Rated kWh, 100% Usage	Option=144 Rated kWh, 120% Usage	Option=199 Rated kWh, 80% Usage	Option=199 Rated kWh, 100% Usage	Option=199 Rated kWh, 120% Usage	Option=220 Rated kWh, 80% Usage	Option=220 Rated kWh, 100% Usage	Option=220 Rated kWh, 120% Usage	Option=255 Rated kWh, 80% Usage	Option=255 Rated kWh, 100% Usage	Option=255 Rated kWh, 120% Usage	Option=270 Rated kWh, 80% Usage	Option=270 Rated kWh, 100% Usage	Option=270 Rated kWh, 120% Usage	Option=290 Rated kWh, 80% Usage	Option=290 Rated kWh, 100% Usage	Option=290 Rated kWh, 120% Usage	Option=318 Rated kWh, 80% Usage	Option=318 Rated kWh, 100% Usage	Option=318 Rated kWh, 120% Usage	Option=None	sampling_probability
-0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	0.0454545	1
-# Created by: sources\recs\recs2009\tsv_maker.py
+Option=EnergyStar	Option=None	Option=Standard	sampling_probability
+0.333333	0.333333	0.333333	1
+# Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence and rated efficiency of the dishwasher.

@@ -1,6 +1,7 @@
 # Declare files that will always have CRLF line endings on checkout.
 
 project_*/housing_characteristics/*.tsv text eol=crlf
-
+project_*/resources/**/*.csv text eol=crlf
+resources/options_lookup.tsv text eol=crlf
 test/tests_housing_characteristics/housing_characteristics_*/*.tsv text eol=crlf
 test/tests_housing_characteristics/housing_characteristics_newline_character/*.tsv text eol=lf

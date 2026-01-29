@@ -1,17 +1,17 @@
 Dependency=Geometry Building Type RECS	Dependency=Geometry Floor Area Bin	Dependency=Geometry Foundation Type	Dependency=Geometry Stories Low Rise	Option=1 Car	Option=2 Car	Option=3 Car	Option=None	sampling_probability
-Mobile Home	0-1499	Ambient	1	0	0	0	1	0.00987655
+Mobile Home	0-1499	Ambient	1	0	0	0	1	0.0493827
 Mobile Home	0-1499	Ambient	2	0	0	0	1	0
 Mobile Home	0-1499	Ambient	3	0	0	0	1	0
 Mobile Home	0-1499	Ambient	4+	0	0	0	1	0
-Mobile Home	1500-2499	Ambient	1	0	0	0	1	0.00493827
+Mobile Home	1500-2499	Ambient	1	0	0	0	1	0.0246914
 Mobile Home	1500-2499	Ambient	2	0	0	0	1	0
 Mobile Home	1500-2499	Ambient	3	0	0	0	1	0
 Mobile Home	1500-2499	Ambient	4+	0	0	0	1	0
-Mobile Home	2500-3999	Ambient	1	0	0	0	1	0.00493827
+Mobile Home	2500-3999	Ambient	1	0	0	0	1	0.0246914
 Mobile Home	2500-3999	Ambient	2	0	0	0	1	0
 Mobile Home	2500-3999	Ambient	3	0	0	0	1	0
 Mobile Home	2500-3999	Ambient	4+	0	0	0	1	0
-Mobile Home	4000+	Ambient	1	0	0	0	1	0.00246914
+Mobile Home	4000+	Ambient	1	0	0	0	1	0.0123457
 Mobile Home	4000+	Ambient	2	0	0	0	1	0
 Mobile Home	4000+	Ambient	3	0	0	0	1	0
 Mobile Home	4000+	Ambient	4+	0	0	0	1	0
@@ -63,195 +63,195 @@ Single-Family Attached	4000+	Ambient	1	0	0	0	1	0
 Single-Family Attached	4000+	Ambient	2	0	0	0	1	0
 Single-Family Attached	4000+	Ambient	3	0	0	0	1	0
 Single-Family Attached	4000+	Ambient	4+	0	0	0	1	0
-Single-Family Detached	0-1499	Ambient	1	0	0	0	1	0.00329218
-Single-Family Detached	0-1499	Ambient	2	0	0	0	1	0.00329218
-Single-Family Detached	0-1499	Ambient	3	0	0	0	1	0.00329218
+Single-Family Detached	0-1499	Ambient	1	0	0	0	1	0.00274349
+Single-Family Detached	0-1499	Ambient	2	0	0	0	1	0.00274349
+Single-Family Detached	0-1499	Ambient	3	0	0	0	1	0.00274349
 Single-Family Detached	0-1499	Ambient	4+	0	0	0	1	0
-Single-Family Detached	1500-2499	Ambient	1	0	0	0	1	0.00164609
-Single-Family Detached	1500-2499	Ambient	2	0	0	0	1	0.00164609
-Single-Family Detached	1500-2499	Ambient	3	0	0	0	1	0.00164609
+Single-Family Detached	1500-2499	Ambient	1	0	0	0	1	0.00137174
+Single-Family Detached	1500-2499	Ambient	2	0	0	0	1	0.00137174
+Single-Family Detached	1500-2499	Ambient	3	0	0	0	1	0.00137174
 Single-Family Detached	1500-2499	Ambient	4+	0	0	0	1	0
-Single-Family Detached	2500-3999	Ambient	1	0	0	0	1	0.00164609
-Single-Family Detached	2500-3999	Ambient	2	0	0	0	1	0.00164609
-Single-Family Detached	2500-3999	Ambient	3	0	0	0	1	0.00164609
+Single-Family Detached	2500-3999	Ambient	1	0	0	0	1	0.00137174
+Single-Family Detached	2500-3999	Ambient	2	0	0	0	1	0.00137174
+Single-Family Detached	2500-3999	Ambient	3	0	0	0	1	0.00137174
 Single-Family Detached	2500-3999	Ambient	4+	0	0	0	1	0
-Single-Family Detached	4000+	Ambient	1	0	0	0	1	0.000823045
-Single-Family Detached	4000+	Ambient	2	0	0	0	1	0.000823045
-Single-Family Detached	4000+	Ambient	3	0	0	0	1	0.000823045
+Single-Family Detached	4000+	Ambient	1	0	0	0	1	0.000685872
+Single-Family Detached	4000+	Ambient	2	0	0	0	1	0.000685872
+Single-Family Detached	4000+	Ambient	3	0	0	0	1	0.000685872
 Single-Family Detached	4000+	Ambient	4+	0	0	0	1	0
-Mobile Home	0-1499	Vented Crawlspace	1	0	0	0	1	0.00493827
+Mobile Home	0-1499	Vented Crawlspace	1	0	0	0	1	0
 Mobile Home	0-1499	Vented Crawlspace	2	0	0	0	1	0
 Mobile Home	0-1499	Vented Crawlspace	3	0	0	0	1	0
 Mobile Home	0-1499	Vented Crawlspace	4+	0	0	0	1	0
-Mobile Home	1500-2499	Vented Crawlspace	1	0	0	0	1	0.00246914
+Mobile Home	1500-2499	Vented Crawlspace	1	0	0	0	1	0
 Mobile Home	1500-2499	Vented Crawlspace	2	0	0	0	1	0
 Mobile Home	1500-2499	Vented Crawlspace	3	0	0	0	1	0
 Mobile Home	1500-2499	Vented Crawlspace	4+	0	0	0	1	0
-Mobile Home	2500-3999	Vented Crawlspace	1	0	0	0	1	0.00246914
+Mobile Home	2500-3999	Vented Crawlspace	1	0	0	0	1	0
 Mobile Home	2500-3999	Vented Crawlspace	2	0	0	0	1	0
 Mobile Home	2500-3999	Vented Crawlspace	3	0	0	0	1	0
 Mobile Home	2500-3999	Vented Crawlspace	4+	0	0	0	1	0
-Mobile Home	4000+	Vented Crawlspace	1	0	0	0	1	0.00123457
+Mobile Home	4000+	Vented Crawlspace	1	0	0	0	1	0
 Mobile Home	4000+	Vented Crawlspace	2	0	0	0	1	0
 Mobile Home	4000+	Vented Crawlspace	3	0	0	0	1	0
 Mobile Home	4000+	Vented Crawlspace	4+	0	0	0	1	0
-Multi-Family with 2 - 4 Units	0-1499	Vented Crawlspace	1	0	0	0	1	0.00617285
-Multi-Family with 2 - 4 Units	0-1499	Vented Crawlspace	2	0	0	0	1	0.00617285
-Multi-Family with 2 - 4 Units	0-1499	Vented Crawlspace	3	0	0	0	1	0.00205762
-Multi-Family with 2 - 4 Units	0-1499	Vented Crawlspace	4+	0	0	0	1	0.00205762
-Multi-Family with 2 - 4 Units	1500-2499	Vented Crawlspace	1	0	0	0	1	0.00308643
-Multi-Family with 2 - 4 Units	1500-2499	Vented Crawlspace	2	0	0	0	1	0.00308643
-Multi-Family with 2 - 4 Units	1500-2499	Vented Crawlspace	3	0	0	0	1	0.00102881
-Multi-Family with 2 - 4 Units	1500-2499	Vented Crawlspace	4+	0	0	0	1	0.00102881
-Multi-Family with 2 - 4 Units	2500-3999	Vented Crawlspace	1	0	0	0	1	0.00308643
-Multi-Family with 2 - 4 Units	2500-3999	Vented Crawlspace	2	0	0	0	1	0.00308643
-Multi-Family with 2 - 4 Units	2500-3999	Vented Crawlspace	3	0	0	0	1	0.00102881
-Multi-Family with 2 - 4 Units	2500-3999	Vented Crawlspace	4+	0	0	0	1	0.00102881
-Multi-Family with 2 - 4 Units	4000+	Vented Crawlspace	1	0	0	0	1	0.00154321
-Multi-Family with 2 - 4 Units	4000+	Vented Crawlspace	2	0	0	0	1	0.00154321
-Multi-Family with 2 - 4 Units	4000+	Vented Crawlspace	3	0	0	0	1	0.000514405
-Multi-Family with 2 - 4 Units	4000+	Vented Crawlspace	4+	0	0	0	1	0.000514405
-Multi-Family with 5+ Units	0-1499	Vented Crawlspace	1	0	0	0	1	0.00236693
-Multi-Family with 5+ Units	0-1499	Vented Crawlspace	2	0	0	0	1	0.00236693
-Multi-Family with 5+ Units	0-1499	Vented Crawlspace	3	0	0	0	1	0.00236693
-Multi-Family with 5+ Units	0-1499	Vented Crawlspace	4+	0	0	0	1	0.0258211
-Multi-Family with 5+ Units	1500-2499	Vented Crawlspace	1	0	0	0	1	0.00118347
-Multi-Family with 5+ Units	1500-2499	Vented Crawlspace	2	0	0	0	1	0.00118347
-Multi-Family with 5+ Units	1500-2499	Vented Crawlspace	3	0	0	0	1	0.00118347
-Multi-Family with 5+ Units	1500-2499	Vented Crawlspace	4+	0	0	0	1	0.0129105
-Multi-Family with 5+ Units	2500-3999	Vented Crawlspace	1	0	0	0	1	0.00118347
-Multi-Family with 5+ Units	2500-3999	Vented Crawlspace	2	0	0	0	1	0.00118347
-Multi-Family with 5+ Units	2500-3999	Vented Crawlspace	3	0	0	0	1	0.00118347
-Multi-Family with 5+ Units	2500-3999	Vented Crawlspace	4+	0	0	0	1	0.0129105
-Multi-Family with 5+ Units	4000+	Vented Crawlspace	1	0	0	0	1	0.000591733
-Multi-Family with 5+ Units	4000+	Vented Crawlspace	2	0	0	0	1	0.000591733
-Multi-Family with 5+ Units	4000+	Vented Crawlspace	3	0	0	0	1	0.000591733
-Multi-Family with 5+ Units	4000+	Vented Crawlspace	4+	0	0	0	1	0.00645527
-Single-Family Attached	0-1499	Vented Crawlspace	1	0	0	0	1	0.00205761
-Single-Family Attached	0-1499	Vented Crawlspace	2	0	0	0	1	0.00205761
-Single-Family Attached	0-1499	Vented Crawlspace	3	0	0	0	1	0.00205761
+Multi-Family with 2 - 4 Units	0-1499	Vented Crawlspace	1	0	0	0	1	0.00925926
+Multi-Family with 2 - 4 Units	0-1499	Vented Crawlspace	2	0	0	0	1	0.00925926
+Multi-Family with 2 - 4 Units	0-1499	Vented Crawlspace	3	0	0	0	1	0.00308642
+Multi-Family with 2 - 4 Units	0-1499	Vented Crawlspace	4+	0	0	0	1	0.00308642
+Multi-Family with 2 - 4 Units	1500-2499	Vented Crawlspace	1	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	1500-2499	Vented Crawlspace	2	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	1500-2499	Vented Crawlspace	3	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	1500-2499	Vented Crawlspace	4+	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	2500-3999	Vented Crawlspace	1	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	2500-3999	Vented Crawlspace	2	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	2500-3999	Vented Crawlspace	3	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	2500-3999	Vented Crawlspace	4+	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	4000+	Vented Crawlspace	1	0	0	0	1	0.00231481
+Multi-Family with 2 - 4 Units	4000+	Vented Crawlspace	2	0	0	0	1	0.00231481
+Multi-Family with 2 - 4 Units	4000+	Vented Crawlspace	3	0	0	0	1	0.000771605
+Multi-Family with 2 - 4 Units	4000+	Vented Crawlspace	4+	0	0	0	1	0.000771605
+Multi-Family with 5+ Units	0-1499	Vented Crawlspace	1	0	0	0	1	0.00342936
+Multi-Family with 5+ Units	0-1499	Vented Crawlspace	2	0	0	0	1	0.00342936
+Multi-Family with 5+ Units	0-1499	Vented Crawlspace	3	0	0	0	1	0.00342936
+Multi-Family with 5+ Units	0-1499	Vented Crawlspace	4+	0	0	0	1	0.0390947
+Multi-Family with 5+ Units	1500-2499	Vented Crawlspace	1	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	1500-2499	Vented Crawlspace	2	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	1500-2499	Vented Crawlspace	3	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	1500-2499	Vented Crawlspace	4+	0	0	0	1	0.0195473
+Multi-Family with 5+ Units	2500-3999	Vented Crawlspace	1	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	2500-3999	Vented Crawlspace	2	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	2500-3999	Vented Crawlspace	3	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	2500-3999	Vented Crawlspace	4+	0	0	0	1	0.0195473
+Multi-Family with 5+ Units	4000+	Vented Crawlspace	1	0	0	0	1	0.000857339
+Multi-Family with 5+ Units	4000+	Vented Crawlspace	2	0	0	0	1	0.000857339
+Multi-Family with 5+ Units	4000+	Vented Crawlspace	3	0	0	0	1	0.000857339
+Multi-Family with 5+ Units	4000+	Vented Crawlspace	4+	0	0	0	1	0.00977367
+Single-Family Attached	0-1499	Vented Crawlspace	1	0	0	0	1	0.00329218
+Single-Family Attached	0-1499	Vented Crawlspace	2	0	0	0	1	0.00329218
+Single-Family Attached	0-1499	Vented Crawlspace	3	0	0	0	1	0.00329218
 Single-Family Attached	0-1499	Vented Crawlspace	4+	0	0	0	1	0
-Single-Family Attached	1500-2499	Vented Crawlspace	1	0	0	0	1	0.00102881
-Single-Family Attached	1500-2499	Vented Crawlspace	2	0	0	0	1	0.00102881
-Single-Family Attached	1500-2499	Vented Crawlspace	3	0	0	0	1	0.00102881
+Single-Family Attached	1500-2499	Vented Crawlspace	1	0	0	0	1	0.00164609
+Single-Family Attached	1500-2499	Vented Crawlspace	2	0	0	0	1	0.00164609
+Single-Family Attached	1500-2499	Vented Crawlspace	3	0	0	0	1	0.00164609
 Single-Family Attached	1500-2499	Vented Crawlspace	4+	0	0	0	1	0
-Single-Family Attached	2500-3999	Vented Crawlspace	1	0	0	0	1	0.00102881
-Single-Family Attached	2500-3999	Vented Crawlspace	2	0	0	0	1	0.00102881
-Single-Family Attached	2500-3999	Vented Crawlspace	3	0	0	0	1	0.00102881
+Single-Family Attached	2500-3999	Vented Crawlspace	1	0	0	0	1	0.00164609
+Single-Family Attached	2500-3999	Vented Crawlspace	2	0	0	0	1	0.00164609
+Single-Family Attached	2500-3999	Vented Crawlspace	3	0	0	0	1	0.00164609
 Single-Family Attached	2500-3999	Vented Crawlspace	4+	0	0	0	1	0
-Single-Family Attached	4000+	Vented Crawlspace	1	0	0	0	1	0.000514403
-Single-Family Attached	4000+	Vented Crawlspace	2	0	0	0	1	0.000514403
-Single-Family Attached	4000+	Vented Crawlspace	3	0	0	0	1	0.000514403
+Single-Family Attached	4000+	Vented Crawlspace	1	0	0	0	1	0.000823044
+Single-Family Attached	4000+	Vented Crawlspace	2	0	0	0	1	0.000823044
+Single-Family Attached	4000+	Vented Crawlspace	3	0	0	0	1	0.000823044
 Single-Family Attached	4000+	Vented Crawlspace	4+	0	0	0	1	0
-Single-Family Detached	0-1499	Vented Crawlspace	1	0.5	0	0	0.5	0.00164609
-Single-Family Detached	0-1499	Vented Crawlspace	2	0.5	0	0	0.5	0.00164609
-Single-Family Detached	0-1499	Vented Crawlspace	3	0	0	0	1	0.00164609
+Single-Family Detached	0-1499	Vented Crawlspace	1	0.5	0	0	0.5	0.00274349
+Single-Family Detached	0-1499	Vented Crawlspace	2	0.5	0	0	0.5	0.00274349
+Single-Family Detached	0-1499	Vented Crawlspace	3	0	0	0	1	0.00274349
 Single-Family Detached	0-1499	Vented Crawlspace	4+	0	0	0	1	0
-Single-Family Detached	1500-2499	Vented Crawlspace	1	0.333333	0.333333	0	0.333333	0.000823045
-Single-Family Detached	1500-2499	Vented Crawlspace	2	0.333333	0.333333	0	0.333333	0.000823045
-Single-Family Detached	1500-2499	Vented Crawlspace	3	0.333333	0.333333	0	0.333333	0.000823045
+Single-Family Detached	1500-2499	Vented Crawlspace	1	0.333333	0.333333	0	0.333333	0.00137174
+Single-Family Detached	1500-2499	Vented Crawlspace	2	0.333333	0.333333	0	0.333333	0.00137174
+Single-Family Detached	1500-2499	Vented Crawlspace	3	0.333333	0.333333	0	0.333333	0.00137174
 Single-Family Detached	1500-2499	Vented Crawlspace	4+	0	0	0	1	0
-Single-Family Detached	2500-3999	Vented Crawlspace	1	0.25	0.25	0.25	0.25	0.000823045
-Single-Family Detached	2500-3999	Vented Crawlspace	2	0.25	0.25	0.25	0.25	0.000823045
-Single-Family Detached	2500-3999	Vented Crawlspace	3	0.25	0.25	0.25	0.25	0.000823045
+Single-Family Detached	2500-3999	Vented Crawlspace	1	0.25	0.25	0.25	0.25	0.00137174
+Single-Family Detached	2500-3999	Vented Crawlspace	2	0.25	0.25	0.25	0.25	0.00137174
+Single-Family Detached	2500-3999	Vented Crawlspace	3	0.25	0.25	0.25	0.25	0.00137174
 Single-Family Detached	2500-3999	Vented Crawlspace	4+	0	0	0	1	0
-Single-Family Detached	4000+	Vented Crawlspace	1	0.25	0.25	0.25	0.25	0.000411522
-Single-Family Detached	4000+	Vented Crawlspace	2	0.25	0.25	0.25	0.25	0.000411522
-Single-Family Detached	4000+	Vented Crawlspace	3	0.25	0.25	0.25	0.25	0.000411522
+Single-Family Detached	4000+	Vented Crawlspace	1	0.25	0.25	0.25	0.25	0.000685872
+Single-Family Detached	4000+	Vented Crawlspace	2	0.25	0.25	0.25	0.25	0.000685872
+Single-Family Detached	4000+	Vented Crawlspace	3	0.25	0.25	0.25	0.25	0.000685872
 Single-Family Detached	4000+	Vented Crawlspace	4+	0	0	0	1	0
-Mobile Home	0-1499	Unvented Crawlspace	1	0	0	0	1	0.00493827
+Mobile Home	0-1499	Unvented Crawlspace	1	0	0	0	1	0
 Mobile Home	0-1499	Unvented Crawlspace	2	0	0	0	1	0
 Mobile Home	0-1499	Unvented Crawlspace	3	0	0	0	1	0
 Mobile Home	0-1499	Unvented Crawlspace	4+	0	0	0	1	0
-Mobile Home	1500-2499	Unvented Crawlspace	1	0	0	0	1	0.00246914
+Mobile Home	1500-2499	Unvented Crawlspace	1	0	0	0	1	0
 Mobile Home	1500-2499	Unvented Crawlspace	2	0	0	0	1	0
 Mobile Home	1500-2499	Unvented Crawlspace	3	0	0	0	1	0
 Mobile Home	1500-2499	Unvented Crawlspace	4+	0	0	0	1	0
-Mobile Home	2500-3999	Unvented Crawlspace	1	0	0	0	1	0.00246914
+Mobile Home	2500-3999	Unvented Crawlspace	1	0	0	0	1	0
 Mobile Home	2500-3999	Unvented Crawlspace	2	0	0	0	1	0
 Mobile Home	2500-3999	Unvented Crawlspace	3	0	0	0	1	0
 Mobile Home	2500-3999	Unvented Crawlspace	4+	0	0	0	1	0
-Mobile Home	4000+	Unvented Crawlspace	1	0	0	0	1	0.00123457
+Mobile Home	4000+	Unvented Crawlspace	1	0	0	0	1	0
 Mobile Home	4000+	Unvented Crawlspace	2	0	0	0	1	0
 Mobile Home	4000+	Unvented Crawlspace	3	0	0	0	1	0
 Mobile Home	4000+	Unvented Crawlspace	4+	0	0	0	1	0
-Multi-Family with 2 - 4 Units	0-1499	Unvented Crawlspace	1	0	0	0	1	0.00617285
-Multi-Family with 2 - 4 Units	0-1499	Unvented Crawlspace	2	0	0	0	1	0.00617285
-Multi-Family with 2 - 4 Units	0-1499	Unvented Crawlspace	3	0	0	0	1	0.00205762
-Multi-Family with 2 - 4 Units	0-1499	Unvented Crawlspace	4+	0	0	0	1	0.00205762
-Multi-Family with 2 - 4 Units	1500-2499	Unvented Crawlspace	1	0	0	0	1	0.00308643
-Multi-Family with 2 - 4 Units	1500-2499	Unvented Crawlspace	2	0	0	0	1	0.00308643
-Multi-Family with 2 - 4 Units	1500-2499	Unvented Crawlspace	3	0	0	0	1	0.00102881
-Multi-Family with 2 - 4 Units	1500-2499	Unvented Crawlspace	4+	0	0	0	1	0.00102881
-Multi-Family with 2 - 4 Units	2500-3999	Unvented Crawlspace	1	0	0	0	1	0.00308643
-Multi-Family with 2 - 4 Units	2500-3999	Unvented Crawlspace	2	0	0	0	1	0.00308643
-Multi-Family with 2 - 4 Units	2500-3999	Unvented Crawlspace	3	0	0	0	1	0.00102881
-Multi-Family with 2 - 4 Units	2500-3999	Unvented Crawlspace	4+	0	0	0	1	0.00102881
-Multi-Family with 2 - 4 Units	4000+	Unvented Crawlspace	1	0	0	0	1	0.00154321
-Multi-Family with 2 - 4 Units	4000+	Unvented Crawlspace	2	0	0	0	1	0.00154321
-Multi-Family with 2 - 4 Units	4000+	Unvented Crawlspace	3	0	0	0	1	0.000514405
-Multi-Family with 2 - 4 Units	4000+	Unvented Crawlspace	4+	0	0	0	1	0.000514405
-Multi-Family with 5+ Units	0-1499	Unvented Crawlspace	1	0	0	0	1	0.00236693
-Multi-Family with 5+ Units	0-1499	Unvented Crawlspace	2	0	0	0	1	0.00236693
-Multi-Family with 5+ Units	0-1499	Unvented Crawlspace	3	0	0	0	1	0.00236693
-Multi-Family with 5+ Units	0-1499	Unvented Crawlspace	4+	0	0	0	1	0.0258211
-Multi-Family with 5+ Units	1500-2499	Unvented Crawlspace	1	0	0	0	1	0.00118347
-Multi-Family with 5+ Units	1500-2499	Unvented Crawlspace	2	0	0	0	1	0.00118347
-Multi-Family with 5+ Units	1500-2499	Unvented Crawlspace	3	0	0	0	1	0.00118347
-Multi-Family with 5+ Units	1500-2499	Unvented Crawlspace	4+	0	0	0	1	0.0129105
-Multi-Family with 5+ Units	2500-3999	Unvented Crawlspace	1	0	0	0	1	0.00118347
-Multi-Family with 5+ Units	2500-3999	Unvented Crawlspace	2	0	0	0	1	0.00118347
-Multi-Family with 5+ Units	2500-3999	Unvented Crawlspace	3	0	0	0	1	0.00118347
-Multi-Family with 5+ Units	2500-3999	Unvented Crawlspace	4+	0	0	0	1	0.0129105
-Multi-Family with 5+ Units	4000+	Unvented Crawlspace	1	0	0	0	1	0.000591733
-Multi-Family with 5+ Units	4000+	Unvented Crawlspace	2	0	0	0	1	0.000591733
-Multi-Family with 5+ Units	4000+	Unvented Crawlspace	3	0	0	0	1	0.000591733
-Multi-Family with 5+ Units	4000+	Unvented Crawlspace	4+	0	0	0	1	0.00645527
-Single-Family Attached	0-1499	Unvented Crawlspace	1	0	0	0	1	0.00205761
-Single-Family Attached	0-1499	Unvented Crawlspace	2	0	0	0	1	0.00205761
-Single-Family Attached	0-1499	Unvented Crawlspace	3	0	0	0	1	0.00205761
+Multi-Family with 2 - 4 Units	0-1499	Unvented Crawlspace	1	0	0	0	1	0.00925926
+Multi-Family with 2 - 4 Units	0-1499	Unvented Crawlspace	2	0	0	0	1	0.00925926
+Multi-Family with 2 - 4 Units	0-1499	Unvented Crawlspace	3	0	0	0	1	0.00308642
+Multi-Family with 2 - 4 Units	0-1499	Unvented Crawlspace	4+	0	0	0	1	0.00308642
+Multi-Family with 2 - 4 Units	1500-2499	Unvented Crawlspace	1	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	1500-2499	Unvented Crawlspace	2	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	1500-2499	Unvented Crawlspace	3	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	1500-2499	Unvented Crawlspace	4+	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	2500-3999	Unvented Crawlspace	1	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	2500-3999	Unvented Crawlspace	2	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	2500-3999	Unvented Crawlspace	3	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	2500-3999	Unvented Crawlspace	4+	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	4000+	Unvented Crawlspace	1	0	0	0	1	0.00231481
+Multi-Family with 2 - 4 Units	4000+	Unvented Crawlspace	2	0	0	0	1	0.00231481
+Multi-Family with 2 - 4 Units	4000+	Unvented Crawlspace	3	0	0	0	1	0.000771605
+Multi-Family with 2 - 4 Units	4000+	Unvented Crawlspace	4+	0	0	0	1	0.000771605
+Multi-Family with 5+ Units	0-1499	Unvented Crawlspace	1	0	0	0	1	0.00342936
+Multi-Family with 5+ Units	0-1499	Unvented Crawlspace	2	0	0	0	1	0.00342936
+Multi-Family with 5+ Units	0-1499	Unvented Crawlspace	3	0	0	0	1	0.00342936
+Multi-Family with 5+ Units	0-1499	Unvented Crawlspace	4+	0	0	0	1	0.0390947
+Multi-Family with 5+ Units	1500-2499	Unvented Crawlspace	1	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	1500-2499	Unvented Crawlspace	2	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	1500-2499	Unvented Crawlspace	3	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	1500-2499	Unvented Crawlspace	4+	0	0	0	1	0.0195473
+Multi-Family with 5+ Units	2500-3999	Unvented Crawlspace	1	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	2500-3999	Unvented Crawlspace	2	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	2500-3999	Unvented Crawlspace	3	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	2500-3999	Unvented Crawlspace	4+	0	0	0	1	0.0195473
+Multi-Family with 5+ Units	4000+	Unvented Crawlspace	1	0	0	0	1	0.000857339
+Multi-Family with 5+ Units	4000+	Unvented Crawlspace	2	0	0	0	1	0.000857339
+Multi-Family with 5+ Units	4000+	Unvented Crawlspace	3	0	0	0	1	0.000857339
+Multi-Family with 5+ Units	4000+	Unvented Crawlspace	4+	0	0	0	1	0.00977367
+Single-Family Attached	0-1499	Unvented Crawlspace	1	0	0	0	1	0.00329218
+Single-Family Attached	0-1499	Unvented Crawlspace	2	0	0	0	1	0.00329218
+Single-Family Attached	0-1499	Unvented Crawlspace	3	0	0	0	1	0.00329218
 Single-Family Attached	0-1499	Unvented Crawlspace	4+	0	0	0	1	0
-Single-Family Attached	1500-2499	Unvented Crawlspace	1	0	0	0	1	0.00102881
-Single-Family Attached	1500-2499	Unvented Crawlspace	2	0	0	0	1	0.00102881
-Single-Family Attached	1500-2499	Unvented Crawlspace	3	0	0	0	1	0.00102881
+Single-Family Attached	1500-2499	Unvented Crawlspace	1	0	0	0	1	0.00164609
+Single-Family Attached	1500-2499	Unvented Crawlspace	2	0	0	0	1	0.00164609
+Single-Family Attached	1500-2499	Unvented Crawlspace	3	0	0	0	1	0.00164609
 Single-Family Attached	1500-2499	Unvented Crawlspace	4+	0	0	0	1	0
-Single-Family Attached	2500-3999	Unvented Crawlspace	1	0	0	0	1	0.00102881
-Single-Family Attached	2500-3999	Unvented Crawlspace	2	0	0	0	1	0.00102881
-Single-Family Attached	2500-3999	Unvented Crawlspace	3	0	0	0	1	0.00102881
+Single-Family Attached	2500-3999	Unvented Crawlspace	1	0	0	0	1	0.00164609
+Single-Family Attached	2500-3999	Unvented Crawlspace	2	0	0	0	1	0.00164609
+Single-Family Attached	2500-3999	Unvented Crawlspace	3	0	0	0	1	0.00164609
 Single-Family Attached	2500-3999	Unvented Crawlspace	4+	0	0	0	1	0
-Single-Family Attached	4000+	Unvented Crawlspace	1	0	0	0	1	0.000514403
-Single-Family Attached	4000+	Unvented Crawlspace	2	0	0	0	1	0.000514403
-Single-Family Attached	4000+	Unvented Crawlspace	3	0	0	0	1	0.000514403
+Single-Family Attached	4000+	Unvented Crawlspace	1	0	0	0	1	0.000823044
+Single-Family Attached	4000+	Unvented Crawlspace	2	0	0	0	1	0.000823044
+Single-Family Attached	4000+	Unvented Crawlspace	3	0	0	0	1	0.000823044
 Single-Family Attached	4000+	Unvented Crawlspace	4+	0	0	0	1	0
-Single-Family Detached	0-1499	Unvented Crawlspace	1	0.5	0	0	0.5	0.00164609
-Single-Family Detached	0-1499	Unvented Crawlspace	2	0.5	0	0	0.5	0.00164609
-Single-Family Detached	0-1499	Unvented Crawlspace	3	0	0	0	1	0.00164609
+Single-Family Detached	0-1499	Unvented Crawlspace	1	0.5	0	0	0.5	0.00274349
+Single-Family Detached	0-1499	Unvented Crawlspace	2	0.5	0	0	0.5	0.00274349
+Single-Family Detached	0-1499	Unvented Crawlspace	3	0	0	0	1	0.00274349
 Single-Family Detached	0-1499	Unvented Crawlspace	4+	0	0	0	1	0
-Single-Family Detached	1500-2499	Unvented Crawlspace	1	0.333333	0.333333	0	0.333333	0.000823045
-Single-Family Detached	1500-2499	Unvented Crawlspace	2	0.333333	0.333333	0	0.333333	0.000823045
-Single-Family Detached	1500-2499	Unvented Crawlspace	3	0.333333	0.333333	0	0.333333	0.000823045
+Single-Family Detached	1500-2499	Unvented Crawlspace	1	0.333333	0.333333	0	0.333333	0.00137174
+Single-Family Detached	1500-2499	Unvented Crawlspace	2	0.333333	0.333333	0	0.333333	0.00137174
+Single-Family Detached	1500-2499	Unvented Crawlspace	3	0.333333	0.333333	0	0.333333	0.00137174
 Single-Family Detached	1500-2499	Unvented Crawlspace	4+	0	0	0	1	0
-Single-Family Detached	2500-3999	Unvented Crawlspace	1	0.25	0.25	0.25	0.25	0.000823045
-Single-Family Detached	2500-3999	Unvented Crawlspace	2	0.25	0.25	0.25	0.25	0.000823045
-Single-Family Detached	2500-3999	Unvented Crawlspace	3	0.25	0.25	0.25	0.25	0.000823045
+Single-Family Detached	2500-3999	Unvented Crawlspace	1	0.25	0.25	0.25	0.25	0.00137174
+Single-Family Detached	2500-3999	Unvented Crawlspace	2	0.25	0.25	0.25	0.25	0.00137174
+Single-Family Detached	2500-3999	Unvented Crawlspace	3	0.25	0.25	0.25	0.25	0.00137174
 Single-Family Detached	2500-3999	Unvented Crawlspace	4+	0	0	0	1	0
-Single-Family Detached	4000+	Unvented Crawlspace	1	0.25	0.25	0.25	0.25	0.000411522
-Single-Family Detached	4000+	Unvented Crawlspace	2	0.25	0.25	0.25	0.25	0.000411522
-Single-Family Detached	4000+	Unvented Crawlspace	3	0.25	0.25	0.25	0.25	0.000411522
+Single-Family Detached	4000+	Unvented Crawlspace	1	0.25	0.25	0.25	0.25	0.000685872
+Single-Family Detached	4000+	Unvented Crawlspace	2	0.25	0.25	0.25	0.25	0.000685872
+Single-Family Detached	4000+	Unvented Crawlspace	3	0.25	0.25	0.25	0.25	0.000685872
 Single-Family Detached	4000+	Unvented Crawlspace	4+	0	0	0	1	0
-Mobile Home	0-1499	Heated Basement	1	0	0	0	1	0.00987655
+Mobile Home	0-1499	Heated Basement	1	0	0	0	1	0
 Mobile Home	0-1499	Heated Basement	2	0	0	0	1	0
 Mobile Home	0-1499	Heated Basement	3	0	0	0	1	0
 Mobile Home	0-1499	Heated Basement	4+	0	0	0	1	0
-Mobile Home	1500-2499	Heated Basement	1	0	0	0	1	0.00493827
+Mobile Home	1500-2499	Heated Basement	1	0	0	0	1	0
 Mobile Home	1500-2499	Heated Basement	2	0	0	0	1	0
 Mobile Home	1500-2499	Heated Basement	3	0	0	0	1	0
 Mobile Home	1500-2499	Heated Basement	4+	0	0	0	1	0
-Mobile Home	2500-3999	Heated Basement	1	0	0	0	1	0.00493827
+Mobile Home	2500-3999	Heated Basement	1	0	0	0	1	0
 Mobile Home	2500-3999	Heated Basement	2	0	0	0	1	0
 Mobile Home	2500-3999	Heated Basement	3	0	0	0	1	0
 Mobile Home	2500-3999	Heated Basement	4+	0	0	0	1	0
-Mobile Home	4000+	Heated Basement	1	0	0	0	1	0.00246914
+Mobile Home	4000+	Heated Basement	1	0	0	0	1	0
 Mobile Home	4000+	Heated Basement	2	0	0	0	1	0
 Mobile Home	4000+	Heated Basement	3	0	0	0	1	0
 Mobile Home	4000+	Heated Basement	4+	0	0	0	1	0
@@ -287,197 +287,197 @@ Multi-Family with 5+ Units	4000+	Heated Basement	1	0	0	0	1	0
 Multi-Family with 5+ Units	4000+	Heated Basement	2	0	0	0	1	0
 Multi-Family with 5+ Units	4000+	Heated Basement	3	0	0	0	1	0
 Multi-Family with 5+ Units	4000+	Heated Basement	4+	0	0	0	1	0
-Single-Family Attached	0-1499	Heated Basement	1	0	0	0	1	0.00411522
-Single-Family Attached	0-1499	Heated Basement	2	0	0	0	1	0.00411522
-Single-Family Attached	0-1499	Heated Basement	3	0	0	0	1	0.00411522
+Single-Family Attached	0-1499	Heated Basement	1	0	0	0	1	0.00329218
+Single-Family Attached	0-1499	Heated Basement	2	0	0	0	1	0.00329218
+Single-Family Attached	0-1499	Heated Basement	3	0	0	0	1	0.00329218
 Single-Family Attached	0-1499	Heated Basement	4+	0	0	0	1	0
-Single-Family Attached	1500-2499	Heated Basement	1	0	0	0	1	0.00205761
-Single-Family Attached	1500-2499	Heated Basement	2	0	0	0	1	0.00205761
-Single-Family Attached	1500-2499	Heated Basement	3	0	0	0	1	0.00205761
+Single-Family Attached	1500-2499	Heated Basement	1	0	0	0	1	0.00164609
+Single-Family Attached	1500-2499	Heated Basement	2	0	0	0	1	0.00164609
+Single-Family Attached	1500-2499	Heated Basement	3	0	0	0	1	0.00164609
 Single-Family Attached	1500-2499	Heated Basement	4+	0	0	0	1	0
-Single-Family Attached	2500-3999	Heated Basement	1	0	0	0	1	0.00205761
-Single-Family Attached	2500-3999	Heated Basement	2	0	0	0	1	0.00205761
-Single-Family Attached	2500-3999	Heated Basement	3	0	0	0	1	0.00205761
+Single-Family Attached	2500-3999	Heated Basement	1	0	0	0	1	0.00164609
+Single-Family Attached	2500-3999	Heated Basement	2	0	0	0	1	0.00164609
+Single-Family Attached	2500-3999	Heated Basement	3	0	0	0	1	0.00164609
 Single-Family Attached	2500-3999	Heated Basement	4+	0	0	0	1	0
-Single-Family Attached	4000+	Heated Basement	1	0	0	0	1	0.00102881
-Single-Family Attached	4000+	Heated Basement	2	0	0	0	1	0.00102881
-Single-Family Attached	4000+	Heated Basement	3	0	0	0	1	0.00102881
+Single-Family Attached	4000+	Heated Basement	1	0	0	0	1	0.000823044
+Single-Family Attached	4000+	Heated Basement	2	0	0	0	1	0.000823044
+Single-Family Attached	4000+	Heated Basement	3	0	0	0	1	0.000823044
 Single-Family Attached	4000+	Heated Basement	4+	0	0	0	1	0
-Single-Family Detached	0-1499	Heated Basement	1	0.5	0	0	0.5	0.00329218
-Single-Family Detached	0-1499	Heated Basement	2	0.5	0	0	0.5	0.00329218
-Single-Family Detached	0-1499	Heated Basement	3	0	0	0	1	0.00329218
+Single-Family Detached	0-1499	Heated Basement	1	0.5	0	0	0.5	0.00274349
+Single-Family Detached	0-1499	Heated Basement	2	0.5	0	0	0.5	0.00274349
+Single-Family Detached	0-1499	Heated Basement	3	0	0	0	1	0.00274349
 Single-Family Detached	0-1499	Heated Basement	4+	0	0	0	1	0
-Single-Family Detached	1500-2499	Heated Basement	1	0.333333	0.333333	0	0.333333	0.00164609
-Single-Family Detached	1500-2499	Heated Basement	2	0.333333	0.333333	0	0.333333	0.00164609
-Single-Family Detached	1500-2499	Heated Basement	3	0.333333	0.333333	0	0.333333	0.00164609
+Single-Family Detached	1500-2499	Heated Basement	1	0.333333	0.333333	0	0.333333	0.00137174
+Single-Family Detached	1500-2499	Heated Basement	2	0.333333	0.333333	0	0.333333	0.00137174
+Single-Family Detached	1500-2499	Heated Basement	3	0.333333	0.333333	0	0.333333	0.00137174
 Single-Family Detached	1500-2499	Heated Basement	4+	0	0	0	1	0
-Single-Family Detached	2500-3999	Heated Basement	1	0.333333	0.333333	0	0.333333	0.00164609
-Single-Family Detached	2500-3999	Heated Basement	2	0.333333	0.333333	0	0.333333	0.00164609
-Single-Family Detached	2500-3999	Heated Basement	3	0.333333	0.333333	0	0.333333	0.00164609
+Single-Family Detached	2500-3999	Heated Basement	1	0.333333	0.333333	0	0.333333	0.00137174
+Single-Family Detached	2500-3999	Heated Basement	2	0.333333	0.333333	0	0.333333	0.00137174
+Single-Family Detached	2500-3999	Heated Basement	3	0.333333	0.333333	0	0.333333	0.00137174
 Single-Family Detached	2500-3999	Heated Basement	4+	0	0	0	1	0
-Single-Family Detached	4000+	Heated Basement	1	0.25	0.25	0.25	0.25	0.000823045
-Single-Family Detached	4000+	Heated Basement	2	0.25	0.25	0.25	0.25	0.000823045
-Single-Family Detached	4000+	Heated Basement	3	0.25	0.25	0.25	0.25	0.000823045
+Single-Family Detached	4000+	Heated Basement	1	0.25	0.25	0.25	0.25	0.000685872
+Single-Family Detached	4000+	Heated Basement	2	0.25	0.25	0.25	0.25	0.000685872
+Single-Family Detached	4000+	Heated Basement	3	0.25	0.25	0.25	0.25	0.000685872
 Single-Family Detached	4000+	Heated Basement	4+	0	0	0	1	0
-Mobile Home	0-1499	Slab	1	0	0	0	1	0.00987655
+Mobile Home	0-1499	Slab	1	0	0	0	1	0
 Mobile Home	0-1499	Slab	2	0	0	0	1	0
 Mobile Home	0-1499	Slab	3	0	0	0	1	0
 Mobile Home	0-1499	Slab	4+	0	0	0	1	0
-Mobile Home	1500-2499	Slab	1	0	0	0	1	0.00493827
+Mobile Home	1500-2499	Slab	1	0	0	0	1	0
 Mobile Home	1500-2499	Slab	2	0	0	0	1	0
 Mobile Home	1500-2499	Slab	3	0	0	0	1	0
 Mobile Home	1500-2499	Slab	4+	0	0	0	1	0
-Mobile Home	2500-3999	Slab	1	0	0	0	1	0.00493827
+Mobile Home	2500-3999	Slab	1	0	0	0	1	0
 Mobile Home	2500-3999	Slab	2	0	0	0	1	0
 Mobile Home	2500-3999	Slab	3	0	0	0	1	0
 Mobile Home	2500-3999	Slab	4+	0	0	0	1	0
-Mobile Home	4000+	Slab	1	0	0	0	1	0.00246914
+Mobile Home	4000+	Slab	1	0	0	0	1	0
 Mobile Home	4000+	Slab	2	0	0	0	1	0
 Mobile Home	4000+	Slab	3	0	0	0	1	0
 Mobile Home	4000+	Slab	4+	0	0	0	1	0
-Multi-Family with 2 - 4 Units	0-1499	Slab	1	0	0	0	1	0.0123457
-Multi-Family with 2 - 4 Units	0-1499	Slab	2	0	0	0	1	0.0123457
-Multi-Family with 2 - 4 Units	0-1499	Slab	3	0	0	0	1	0.00411522
-Multi-Family with 2 - 4 Units	0-1499	Slab	4+	0	0	0	1	0.00411522
-Multi-Family with 2 - 4 Units	1500-2499	Slab	1	0	0	0	1	0.00617284
-Multi-Family with 2 - 4 Units	1500-2499	Slab	2	0	0	0	1	0.00617284
-Multi-Family with 2 - 4 Units	1500-2499	Slab	3	0	0	0	1	0.00205761
-Multi-Family with 2 - 4 Units	1500-2499	Slab	4+	0	0	0	1	0.00205761
-Multi-Family with 2 - 4 Units	2500-3999	Slab	1	0	0	0	1	0.00617284
-Multi-Family with 2 - 4 Units	2500-3999	Slab	2	0	0	0	1	0.00617284
-Multi-Family with 2 - 4 Units	2500-3999	Slab	3	0	0	0	1	0.00205761
-Multi-Family with 2 - 4 Units	2500-3999	Slab	4+	0	0	0	1	0.00205761
-Multi-Family with 2 - 4 Units	4000+	Slab	1	0	0	0	1	0.00308642
-Multi-Family with 2 - 4 Units	4000+	Slab	2	0	0	0	1	0.00308642
-Multi-Family with 2 - 4 Units	4000+	Slab	3	0	0	0	1	0.00102881
-Multi-Family with 2 - 4 Units	4000+	Slab	4+	0	0	0	1	0.00102881
-Multi-Family with 5+ Units	0-1499	Slab	1	0	0	0	1	0.00473385
-Multi-Family with 5+ Units	0-1499	Slab	2	0	0	0	1	0.00473385
-Multi-Family with 5+ Units	0-1499	Slab	3	0	0	0	1	0.00473385
-Multi-Family with 5+ Units	0-1499	Slab	4+	0	0	0	1	0.051642
-Multi-Family with 5+ Units	1500-2499	Slab	1	0	0	0	1	0.00236692
-Multi-Family with 5+ Units	1500-2499	Slab	2	0	0	0	1	0.00236692
-Multi-Family with 5+ Units	1500-2499	Slab	3	0	0	0	1	0.00236692
-Multi-Family with 5+ Units	1500-2499	Slab	4+	0	0	0	1	0.025821
-Multi-Family with 5+ Units	2500-3999	Slab	1	0	0	0	1	0.00236692
-Multi-Family with 5+ Units	2500-3999	Slab	2	0	0	0	1	0.00236692
-Multi-Family with 5+ Units	2500-3999	Slab	3	0	0	0	1	0.00236692
-Multi-Family with 5+ Units	2500-3999	Slab	4+	0	0	0	1	0.025821
-Multi-Family with 5+ Units	4000+	Slab	1	0	0	0	1	0.00118346
-Multi-Family with 5+ Units	4000+	Slab	2	0	0	0	1	0.00118346
-Multi-Family with 5+ Units	4000+	Slab	3	0	0	0	1	0.00118346
-Multi-Family with 5+ Units	4000+	Slab	4+	0	0	0	1	0.0129105
-Single-Family Attached	0-1499	Slab	1	0	0	0	1	0.00411522
-Single-Family Attached	0-1499	Slab	2	0	0	0	1	0.00411522
-Single-Family Attached	0-1499	Slab	3	0	0	0	1	0.00411522
+Multi-Family with 2 - 4 Units	0-1499	Slab	1	0	0	0	1	0.00925926
+Multi-Family with 2 - 4 Units	0-1499	Slab	2	0	0	0	1	0.00925926
+Multi-Family with 2 - 4 Units	0-1499	Slab	3	0	0	0	1	0.00308642
+Multi-Family with 2 - 4 Units	0-1499	Slab	4+	0	0	0	1	0.00308642
+Multi-Family with 2 - 4 Units	1500-2499	Slab	1	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	1500-2499	Slab	2	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	1500-2499	Slab	3	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	1500-2499	Slab	4+	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	2500-3999	Slab	1	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	2500-3999	Slab	2	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	2500-3999	Slab	3	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	2500-3999	Slab	4+	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	4000+	Slab	1	0	0	0	1	0.00231481
+Multi-Family with 2 - 4 Units	4000+	Slab	2	0	0	0	1	0.00231481
+Multi-Family with 2 - 4 Units	4000+	Slab	3	0	0	0	1	0.000771605
+Multi-Family with 2 - 4 Units	4000+	Slab	4+	0	0	0	1	0.000771605
+Multi-Family with 5+ Units	0-1499	Slab	1	0	0	0	1	0.00342936
+Multi-Family with 5+ Units	0-1499	Slab	2	0	0	0	1	0.00342936
+Multi-Family with 5+ Units	0-1499	Slab	3	0	0	0	1	0.00342936
+Multi-Family with 5+ Units	0-1499	Slab	4+	0	0	0	1	0.0390947
+Multi-Family with 5+ Units	1500-2499	Slab	1	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	1500-2499	Slab	2	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	1500-2499	Slab	3	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	1500-2499	Slab	4+	0	0	0	1	0.0195473
+Multi-Family with 5+ Units	2500-3999	Slab	1	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	2500-3999	Slab	2	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	2500-3999	Slab	3	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	2500-3999	Slab	4+	0	0	0	1	0.0195473
+Multi-Family with 5+ Units	4000+	Slab	1	0	0	0	1	0.000857339
+Multi-Family with 5+ Units	4000+	Slab	2	0	0	0	1	0.000857339
+Multi-Family with 5+ Units	4000+	Slab	3	0	0	0	1	0.000857339
+Multi-Family with 5+ Units	4000+	Slab	4+	0	0	0	1	0.00977367
+Single-Family Attached	0-1499	Slab	1	0	0	0	1	0.00329218
+Single-Family Attached	0-1499	Slab	2	0	0	0	1	0.00329218
+Single-Family Attached	0-1499	Slab	3	0	0	0	1	0.00329218
 Single-Family Attached	0-1499	Slab	4+	0	0	0	1	0
-Single-Family Attached	1500-2499	Slab	1	0	0	0	1	0.00205761
-Single-Family Attached	1500-2499	Slab	2	0	0	0	1	0.00205761
-Single-Family Attached	1500-2499	Slab	3	0	0	0	1	0.00205761
+Single-Family Attached	1500-2499	Slab	1	0	0	0	1	0.00164609
+Single-Family Attached	1500-2499	Slab	2	0	0	0	1	0.00164609
+Single-Family Attached	1500-2499	Slab	3	0	0	0	1	0.00164609
 Single-Family Attached	1500-2499	Slab	4+	0	0	0	1	0
-Single-Family Attached	2500-3999	Slab	1	0	0	0	1	0.00205761
-Single-Family Attached	2500-3999	Slab	2	0	0	0	1	0.00205761
-Single-Family Attached	2500-3999	Slab	3	0	0	0	1	0.00205761
+Single-Family Attached	2500-3999	Slab	1	0	0	0	1	0.00164609
+Single-Family Attached	2500-3999	Slab	2	0	0	0	1	0.00164609
+Single-Family Attached	2500-3999	Slab	3	0	0	0	1	0.00164609
 Single-Family Attached	2500-3999	Slab	4+	0	0	0	1	0
-Single-Family Attached	4000+	Slab	1	0	0	0	1	0.00102881
-Single-Family Attached	4000+	Slab	2	0	0	0	1	0.00102881
-Single-Family Attached	4000+	Slab	3	0	0	0	1	0.00102881
+Single-Family Attached	4000+	Slab	1	0	0	0	1	0.000823044
+Single-Family Attached	4000+	Slab	2	0	0	0	1	0.000823044
+Single-Family Attached	4000+	Slab	3	0	0	0	1	0.000823044
 Single-Family Attached	4000+	Slab	4+	0	0	0	1	0
-Single-Family Detached	0-1499	Slab	1	0.5	0	0	0.5	0.00329218
-Single-Family Detached	0-1499	Slab	2	0.5	0	0	0.5	0.00329218
-Single-Family Detached	0-1499	Slab	3	0	0	0	1	0.00329218
+Single-Family Detached	0-1499	Slab	1	0.5	0	0	0.5	0.00274349
+Single-Family Detached	0-1499	Slab	2	0.5	0	0	0.5	0.00274349
+Single-Family Detached	0-1499	Slab	3	0	0	0	1	0.00274349
 Single-Family Detached	0-1499	Slab	4+	0	0	0	1	0
-Single-Family Detached	1500-2499	Slab	1	0.333333	0.333333	0	0.333333	0.00164609
-Single-Family Detached	1500-2499	Slab	2	0.333333	0.333333	0	0.333333	0.00164609
-Single-Family Detached	1500-2499	Slab	3	0.333333	0.333333	0	0.333333	0.00164609
+Single-Family Detached	1500-2499	Slab	1	0.333333	0.333333	0	0.333333	0.00137174
+Single-Family Detached	1500-2499	Slab	2	0.333333	0.333333	0	0.333333	0.00137174
+Single-Family Detached	1500-2499	Slab	3	0.333333	0.333333	0	0.333333	0.00137174
 Single-Family Detached	1500-2499	Slab	4+	0	0	0	1	0
-Single-Family Detached	2500-3999	Slab	1	0.25	0.25	0.25	0.25	0.00164609
-Single-Family Detached	2500-3999	Slab	2	0.25	0.25	0.25	0.25	0.00164609
-Single-Family Detached	2500-3999	Slab	3	0.25	0.25	0.25	0.25	0.00164609
+Single-Family Detached	2500-3999	Slab	1	0.25	0.25	0.25	0.25	0.00137174
+Single-Family Detached	2500-3999	Slab	2	0.25	0.25	0.25	0.25	0.00137174
+Single-Family Detached	2500-3999	Slab	3	0.25	0.25	0.25	0.25	0.00137174
 Single-Family Detached	2500-3999	Slab	4+	0	0	0	1	0
-Single-Family Detached	4000+	Slab	1	0.25	0.25	0.25	0.25	0.000823045
-Single-Family Detached	4000+	Slab	2	0.25	0.25	0.25	0.25	0.000823045
-Single-Family Detached	4000+	Slab	3	0.25	0.25	0.25	0.25	0.000823045
+Single-Family Detached	4000+	Slab	1	0.25	0.25	0.25	0.25	0.000685872
+Single-Family Detached	4000+	Slab	2	0.25	0.25	0.25	0.25	0.000685872
+Single-Family Detached	4000+	Slab	3	0.25	0.25	0.25	0.25	0.000685872
 Single-Family Detached	4000+	Slab	4+	0	0	0	1	0
-Mobile Home	0-1499	Unheated Basement	1	0	0	0	1	0.00987655
+Mobile Home	0-1499	Unheated Basement	1	0	0	0	1	0
 Mobile Home	0-1499	Unheated Basement	2	0	0	0	1	0
 Mobile Home	0-1499	Unheated Basement	3	0	0	0	1	0
 Mobile Home	0-1499	Unheated Basement	4+	0	0	0	1	0
-Mobile Home	1500-2499	Unheated Basement	1	0	0	0	1	0.00493827
+Mobile Home	1500-2499	Unheated Basement	1	0	0	0	1	0
 Mobile Home	1500-2499	Unheated Basement	2	0	0	0	1	0
 Mobile Home	1500-2499	Unheated Basement	3	0	0	0	1	0
 Mobile Home	1500-2499	Unheated Basement	4+	0	0	0	1	0
-Mobile Home	2500-3999	Unheated Basement	1	0	0	0	1	0.00493827
+Mobile Home	2500-3999	Unheated Basement	1	0	0	0	1	0
 Mobile Home	2500-3999	Unheated Basement	2	0	0	0	1	0
 Mobile Home	2500-3999	Unheated Basement	3	0	0	0	1	0
 Mobile Home	2500-3999	Unheated Basement	4+	0	0	0	1	0
-Mobile Home	4000+	Unheated Basement	1	0	0	0	1	0.00246914
+Mobile Home	4000+	Unheated Basement	1	0	0	0	1	0
 Mobile Home	4000+	Unheated Basement	2	0	0	0	1	0
 Mobile Home	4000+	Unheated Basement	3	0	0	0	1	0
 Mobile Home	4000+	Unheated Basement	4+	0	0	0	1	0
-Multi-Family with 2 - 4 Units	0-1499	Unheated Basement	1	0	0	0	1	0.0123457
-Multi-Family with 2 - 4 Units	0-1499	Unheated Basement	2	0	0	0	1	0.0123457
-Multi-Family with 2 - 4 Units	0-1499	Unheated Basement	3	0	0	0	1	0.00411522
-Multi-Family with 2 - 4 Units	0-1499	Unheated Basement	4+	0	0	0	1	0.00411522
-Multi-Family with 2 - 4 Units	1500-2499	Unheated Basement	1	0	0	0	1	0.00617284
-Multi-Family with 2 - 4 Units	1500-2499	Unheated Basement	2	0	0	0	1	0.00617284
-Multi-Family with 2 - 4 Units	1500-2499	Unheated Basement	3	0	0	0	1	0.00205761
-Multi-Family with 2 - 4 Units	1500-2499	Unheated Basement	4+	0	0	0	1	0.00205761
-Multi-Family with 2 - 4 Units	2500-3999	Unheated Basement	1	0	0	0	1	0.00617284
-Multi-Family with 2 - 4 Units	2500-3999	Unheated Basement	2	0	0	0	1	0.00617284
-Multi-Family with 2 - 4 Units	2500-3999	Unheated Basement	3	0	0	0	1	0.00205761
-Multi-Family with 2 - 4 Units	2500-3999	Unheated Basement	4+	0	0	0	1	0.00205761
-Multi-Family with 2 - 4 Units	4000+	Unheated Basement	1	0	0	0	1	0.00308642
-Multi-Family with 2 - 4 Units	4000+	Unheated Basement	2	0	0	0	1	0.00308642
-Multi-Family with 2 - 4 Units	4000+	Unheated Basement	3	0	0	0	1	0.00102881
-Multi-Family with 2 - 4 Units	4000+	Unheated Basement	4+	0	0	0	1	0.00102881
-Multi-Family with 5+ Units	0-1499	Unheated Basement	1	0	0	0	1	0.00473385
-Multi-Family with 5+ Units	0-1499	Unheated Basement	2	0	0	0	1	0.00473385
-Multi-Family with 5+ Units	0-1499	Unheated Basement	3	0	0	0	1	0.00473385
-Multi-Family with 5+ Units	0-1499	Unheated Basement	4+	0	0	0	1	0.051642
-Multi-Family with 5+ Units	1500-2499	Unheated Basement	1	0	0	0	1	0.00236692
-Multi-Family with 5+ Units	1500-2499	Unheated Basement	2	0	0	0	1	0.00236692
-Multi-Family with 5+ Units	1500-2499	Unheated Basement	3	0	0	0	1	0.00236692
-Multi-Family with 5+ Units	1500-2499	Unheated Basement	4+	0	0	0	1	0.025821
-Multi-Family with 5+ Units	2500-3999	Unheated Basement	1	0	0	0	1	0.00236692
-Multi-Family with 5+ Units	2500-3999	Unheated Basement	2	0	0	0	1	0.00236692
-Multi-Family with 5+ Units	2500-3999	Unheated Basement	3	0	0	0	1	0.00236692
-Multi-Family with 5+ Units	2500-3999	Unheated Basement	4+	0	0	0	1	0.025821
-Multi-Family with 5+ Units	4000+	Unheated Basement	1	0	0	0	1	0.00118346
-Multi-Family with 5+ Units	4000+	Unheated Basement	2	0	0	0	1	0.00118346
-Multi-Family with 5+ Units	4000+	Unheated Basement	3	0	0	0	1	0.00118346
-Multi-Family with 5+ Units	4000+	Unheated Basement	4+	0	0	0	1	0.0129105
-Single-Family Attached	0-1499	Unheated Basement	1	0	0	0	1	0.00411522
-Single-Family Attached	0-1499	Unheated Basement	2	0	0	0	1	0.00411522
-Single-Family Attached	0-1499	Unheated Basement	3	0	0	0	1	0.00411522
+Multi-Family with 2 - 4 Units	0-1499	Unheated Basement	1	0	0	0	1	0.00925926
+Multi-Family with 2 - 4 Units	0-1499	Unheated Basement	2	0	0	0	1	0.00925926
+Multi-Family with 2 - 4 Units	0-1499	Unheated Basement	3	0	0	0	1	0.00308642
+Multi-Family with 2 - 4 Units	0-1499	Unheated Basement	4+	0	0	0	1	0.00308642
+Multi-Family with 2 - 4 Units	1500-2499	Unheated Basement	1	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	1500-2499	Unheated Basement	2	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	1500-2499	Unheated Basement	3	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	1500-2499	Unheated Basement	4+	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	2500-3999	Unheated Basement	1	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	2500-3999	Unheated Basement	2	0	0	0	1	0.00462963
+Multi-Family with 2 - 4 Units	2500-3999	Unheated Basement	3	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	2500-3999	Unheated Basement	4+	0	0	0	1	0.00154321
+Multi-Family with 2 - 4 Units	4000+	Unheated Basement	1	0	0	0	1	0.00231481
+Multi-Family with 2 - 4 Units	4000+	Unheated Basement	2	0	0	0	1	0.00231481
+Multi-Family with 2 - 4 Units	4000+	Unheated Basement	3	0	0	0	1	0.000771605
+Multi-Family with 2 - 4 Units	4000+	Unheated Basement	4+	0	0	0	1	0.000771605
+Multi-Family with 5+ Units	0-1499	Unheated Basement	1	0	0	0	1	0.00342936
+Multi-Family with 5+ Units	0-1499	Unheated Basement	2	0	0	0	1	0.00342936
+Multi-Family with 5+ Units	0-1499	Unheated Basement	3	0	0	0	1	0.00342936
+Multi-Family with 5+ Units	0-1499	Unheated Basement	4+	0	0	0	1	0.0390947
+Multi-Family with 5+ Units	1500-2499	Unheated Basement	1	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	1500-2499	Unheated Basement	2	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	1500-2499	Unheated Basement	3	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	1500-2499	Unheated Basement	4+	0	0	0	1	0.0195473
+Multi-Family with 5+ Units	2500-3999	Unheated Basement	1	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	2500-3999	Unheated Basement	2	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	2500-3999	Unheated Basement	3	0	0	0	1	0.00171468
+Multi-Family with 5+ Units	2500-3999	Unheated Basement	4+	0	0	0	1	0.0195473
+Multi-Family with 5+ Units	4000+	Unheated Basement	1	0	0	0	1	0.000857339
+Multi-Family with 5+ Units	4000+	Unheated Basement	2	0	0	0	1	0.000857339
+Multi-Family with 5+ Units	4000+	Unheated Basement	3	0	0	0	1	0.000857339
+Multi-Family with 5+ Units	4000+	Unheated Basement	4+	0	0	0	1	0.00977367
+Single-Family Attached	0-1499	Unheated Basement	1	0	0	0	1	0.00329218
+Single-Family Attached	0-1499	Unheated Basement	2	0	0	0	1	0.00329218
+Single-Family Attached	0-1499	Unheated Basement	3	0	0	0	1	0.00329218
 Single-Family Attached	0-1499	Unheated Basement	4+	0	0	0	1	0
-Single-Family Attached	1500-2499	Unheated Basement	1	0	0	0	1	0.00205761
-Single-Family Attached	1500-2499	Unheated Basement	2	0	0	0	1	0.00205761
-Single-Family Attached	1500-2499	Unheated Basement	3	0	0	0	1	0.00205761
+Single-Family Attached	1500-2499	Unheated Basement	1	0	0	0	1	0.00164609
+Single-Family Attached	1500-2499	Unheated Basement	2	0	0	0	1	0.00164609
+Single-Family Attached	1500-2499	Unheated Basement	3	0	0	0	1	0.00164609
 Single-Family Attached	1500-2499	Unheated Basement	4+	0	0	0	1	0
-Single-Family Attached	2500-3999	Unheated Basement	1	0	0	0	1	0.00205761
-Single-Family Attached	2500-3999	Unheated Basement	2	0	0	0	1	0.00205761
-Single-Family Attached	2500-3999	Unheated Basement	3	0	0	0	1	0.00205761
+Single-Family Attached	2500-3999	Unheated Basement	1	0	0	0	1	0.00164609
+Single-Family Attached	2500-3999	Unheated Basement	2	0	0	0	1	0.00164609
+Single-Family Attached	2500-3999	Unheated Basement	3	0	0	0	1	0.00164609
 Single-Family Attached	2500-3999	Unheated Basement	4+	0	0	0	1	0
-Single-Family Attached	4000+	Unheated Basement	1	0	0	0	1	0.00102881
-Single-Family Attached	4000+	Unheated Basement	2	0	0	0	1	0.00102881
-Single-Family Attached	4000+	Unheated Basement	3	0	0	0	1	0.00102881
+Single-Family Attached	4000+	Unheated Basement	1	0	0	0	1	0.000823044
+Single-Family Attached	4000+	Unheated Basement	2	0	0	0	1	0.000823044
+Single-Family Attached	4000+	Unheated Basement	3	0	0	0	1	0.000823044
 Single-Family Attached	4000+	Unheated Basement	4+	0	0	0	1	0
-Single-Family Detached	0-1499	Unheated Basement	1	0.5	0	0	0.5	0.00329218
-Single-Family Detached	0-1499	Unheated Basement	2	0.5	0	0	0.5	0.00329218
-Single-Family Detached	0-1499	Unheated Basement	3	0	0	0	1	0.00329218
+Single-Family Detached	0-1499	Unheated Basement	1	0.5	0	0	0.5	0.00274349
+Single-Family Detached	0-1499	Unheated Basement	2	0.5	0	0	0.5	0.00274349
+Single-Family Detached	0-1499	Unheated Basement	3	0	0	0	1	0.00274349
 Single-Family Detached	0-1499	Unheated Basement	4+	0	0	0	1	0
-Single-Family Detached	1500-2499	Unheated Basement	1	0.333333	0.333333	0	0.333333	0.00164609
-Single-Family Detached	1500-2499	Unheated Basement	2	0.333333	0.333333	0	0.333333	0.00164609
-Single-Family Detached	1500-2499	Unheated Basement	3	0.333333	0.333333	0	0.333333	0.00164609
+Single-Family Detached	1500-2499	Unheated Basement	1	0.333333	0.333333	0	0.333333	0.00137174
+Single-Family Detached	1500-2499	Unheated Basement	2	0.333333	0.333333	0	0.333333	0.00137174
+Single-Family Detached	1500-2499	Unheated Basement	3	0.333333	0.333333	0	0.333333	0.00137174
 Single-Family Detached	1500-2499	Unheated Basement	4+	0	0	0	1	0
-Single-Family Detached	2500-3999	Unheated Basement	1	0.25	0.25	0.25	0.25	0.00164609
-Single-Family Detached	2500-3999	Unheated Basement	2	0.25	0.25	0.25	0.25	0.00164609
-Single-Family Detached	2500-3999	Unheated Basement	3	0.25	0.25	0.25	0.25	0.00164609
+Single-Family Detached	2500-3999	Unheated Basement	1	0.25	0.25	0.25	0.25	0.00137174
+Single-Family Detached	2500-3999	Unheated Basement	2	0.25	0.25	0.25	0.25	0.00137174
+Single-Family Detached	2500-3999	Unheated Basement	3	0.25	0.25	0.25	0.25	0.00137174
 Single-Family Detached	2500-3999	Unheated Basement	4+	0	0	0	1	0
-Single-Family Detached	4000+	Unheated Basement	1	0.25	0.25	0.25	0.25	0.000823045
-Single-Family Detached	4000+	Unheated Basement	2	0.25	0.25	0.25	0.25	0.000823045
-Single-Family Detached	4000+	Unheated Basement	3	0.25	0.25	0.25	0.25	0.000823045
+Single-Family Detached	4000+	Unheated Basement	1	0.25	0.25	0.25	0.25	0.000685872
+Single-Family Detached	4000+	Unheated Basement	2	0.25	0.25	0.25	0.25	0.000685872
+Single-Family Detached	4000+	Unheated Basement	3	0.25	0.25	0.25	0.25	0.000685872
 Single-Family Detached	4000+	Unheated Basement	4+	0	0	0	1	0
 # Created by: manually created
 # Description: The size of an attached garage.

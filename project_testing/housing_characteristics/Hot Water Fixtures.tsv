@@ -1,4 +1,4 @@
-Option=50% Usage	Option=100% Usage	Option=200% Usage	Option=50% Usage, Low Flow	Option=100% Usage, Low Flow	Option=200% Usage, Low Flow	sampling_probability
-0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	1
-# Created by: manually created
+Option=50% Usage	Option=60% Usage	Option=70% Usage	Option=80% Usage	Option=90% Usage	Option=100% Usage	Option=110% Usage	Option=120% Usage	Option=130% Usage	Option=140% Usage	Option=150% Usage	Option=160% Usage	Option=170% Usage	Option=180% Usage	Option=190% Usage	Option=200% Usage	sampling_probability
+0.0625	0.0625	0.0625	0.0625	0.0625	0.0625	0.0625	0.0625	0.0625	0.0625	0.0625	0.0625	0.0625	0.0625	0.0625	0.0625	1
+# Created by: sources\other\tsv_maker.py
 # Description: Hot water fixture usage and flow levels.

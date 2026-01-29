@@ -4,11 +4,9 @@
 # http://nrel.github.io/OpenStudio-user-documentation/reference/measure_writing_guide/
 
 require 'openstudio'
+require 'pathname'
+require_relative '../../resources/buildstock'
 require_relative '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
-
-# in addition to the above requires, this measure is expected to run in an
-# environment with resstock/resources/buildstock.rb loaded
-
 # start the measure
 class BuildExistingModel < OpenStudio::Measure::ModelMeasure
   # human readable name
@@ -28,19 +26,30 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
   # define the arguments that the user will input
   def arguments(model) # rubocop:disable Lint/UnusedMethodArgument
-    args = OpenStudio::Ruleset::OSArgumentVector.new
+    args = OpenStudio::Measure::OSArgumentVector.new
 
-    arg = OpenStudio::Ruleset::OSArgument.makeIntegerArgument('building_id', true)
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('buildstock_csv_path', false)
+    arg.setDefaultValue('buildstock.csv')
+    arg.setDisplayName('Buildstock CSV File Path')
+    arg.setDescription("Absolute/relative path of the buildstock CSV file. Relative is compared to the 'lib/housing_characteristics' directory.")
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('project_directory', true)
+    arg.setDisplayName('Project Directory')
+    arg.setDescription('The directory containing the housing characteristics folder (e.g., project_national).')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('building_id', true)
     arg.setDisplayName('Building Unit ID')
     arg.setDescription('The building unit number (between 1 and the number of samples).')
     args << arg
 
-    arg = OpenStudio::Ruleset::OSArgument.makeDoubleArgument('sample_weight', false)
+    arg = OpenStudio::Measure::OSArgument.makeDoubleArgument('sample_weight', false)
     arg.setDisplayName('Sample Weight of Simulation')
     arg.setDescription('Number of buildings this simulation represents.')
     args << arg
 
-    arg = OpenStudio::Ruleset::OSArgument.makeStringArgument('downselect_logic', false)
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('downselect_logic', false)
     arg.setDisplayName('Downselect Logic')
     arg.setDescription("Logic that specifies the subset of the building stock to be considered in the analysis. Specify one or more parameter|option as found in resources\\options_lookup.tsv. When multiple are included, they must be separated by '||' for OR and '&&' for AND, and using parentheses as appropriate. Prefix an option with '!' for not.")
     args << arg
@@ -81,7 +90,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     arg.setDescription('This numeric field should contain the calendar year that determines the start day of week. If you are running simulations using AMY weather files, the value entered for calendar year will not be used; it will be overridden by the actual year found in the AMY weather file.')
     args << arg
 
-    arg = OpenStudio::Ruleset::OSArgument.makeStringArgument('os_hescore_directory', false)
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('os_hescore_directory', false)
     arg.setDisplayName('HEScore Workflow: OpenStudio-HEScore directory path')
     arg.setDescription('Path to the OpenStudio-HEScore directory. If specified, the HEScore workflow will run.')
     args << arg
@@ -123,7 +132,17 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('utility_bill_scenario_names', false)
     arg.setDisplayName('Utility Bills: Scenario Names')
-    arg.setDescription('Names of utility bill scenarios. If multiple scenarios, use a comma-separated list. If multiple scenarios, use a comma-separated list.')
+    arg.setDescription('Names of utility bill scenarios. If multiple scenarios, use a comma-separated list.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('utility_bill_simple_filepaths', false)
+    arg.setDisplayName('Utility Bills: Simple Filepaths')
+    arg.setDescription('Relative paths of simple utility rates. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. Files must contain the name of the Parameter as the column header.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('utility_bill_detailed_filepaths', false)
+    arg.setDisplayName('Utility Bills: Detailed Filepaths')
+    arg.setDescription('Relative paths of detailed utility rates. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. Files must contain the name of the Parameter as the column header.')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('utility_bill_electricity_fixed_charges', false)
@@ -218,28 +237,28 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       return false
     end
 
-    # assign the user inputs to variables
-    args = get_argument_values(runner, arguments(model), user_arguments)
+    Version.check_buildstockbatch_version()
+
+    # Assign the user inputs to variables
+    args = runner.getArgumentValues(arguments(model), user_arguments)
 
     # Get file/dir paths
-    resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../lib/resources'))
-    characteristics_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../lib/housing_characteristics'))
-    buildstock_file = File.join(resources_dir, 'buildstock.rb')
+    resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../resources'))
+    characteristics_dir = File.absolute_path(File.join(File.dirname(__FILE__), "../../#{args[:project_directory]}/housing_characteristics"))
     measures_dir = File.join(File.dirname(__FILE__), '../../measures')
     hpxml_measures_dir = File.join(File.dirname(__FILE__), '../../resources/hpxml-measures')
     lookup_file = File.join(resources_dir, 'options_lookup.tsv')
-    buildstock_csv_path = File.absolute_path(File.join(characteristics_dir, 'buildstock.csv')) # Should have been generated by the Worker Initialization Script (run_sampling.rb) or provided by the project
 
-    if args[:os_hescore_directory].is_initialized
-      os_hescore_directory = args[:os_hescore_directory].get
+    buildstock_csv_path = args[:buildstock_csv_path]
+    unless (Pathname.new buildstock_csv_path).absolute?
+      buildstock_csv_path = File.absolute_path(File.join(characteristics_dir, buildstock_csv_path))
+    end
+
+    if not args[:os_hescore_directory].nil?
+      os_hescore_directory = args[:os_hescore_directory]
       hes_ruleset_measures_dir = File.join(os_hescore_directory, 'rulesets')
       run_hescore_workflow = true
     end
-
-    # Load buildstock_file
-    require File.join(File.dirname(buildstock_file), File.basename(buildstock_file, File.extname(buildstock_file)))
-
-    Version.check_buildstockbatch_version()
 
     # Check file/dir paths exist
     check_dir_exists(resources_dir, runner)
@@ -281,9 +300,9 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
     # Determine whether this building_id has been downselected based on the
     # {parameter_name: option_name} pairs
-    if args[:downselect_logic].is_initialized
+    if not args[:downselect_logic].nil?
 
-      downselect_logic = args[:downselect_logic].get
+      downselect_logic = args[:downselect_logic]
       downselect_logic = downselect_logic.strip
       downselected = evaluate_logic(downselect_logic, runner, false)
 
@@ -308,235 +327,89 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       print_option_assignment(parameter_name, option_name, runner)
       options_measure_args, _errors = get_measure_args_from_option_names(lookup_csv_data, [option_name], parameter_name, lookup_file, runner)
       options_measure_args[option_name].each do |measure_subdir, args_hash|
-        update_args_hash(measures, measure_subdir, args_hash, false)
+        update_args_hash(measures, measure_subdir, args_hash)
+        update_args_hash(measures, 'ResStockArgumentsPostHPXML', args_hash) if measure_subdir == 'ResStockArguments'
       end
     end
 
-    # Get the absolute paths relative to this meta measure in the run directory
-    new_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new) # we want only ResStockArguments registered argument values
-    if not apply_measures(measures_dir, { 'ResStockArguments' => measures['ResStockArguments'] }, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
-      register_logs(runner, new_runner)
+    # Run the ResStockArguments measure
+    resstock_arguments_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new) # we want only ResStockArguments registered argument values
+    measures['ResStockArguments'][0]['building_id'] = args[:building_id]
+    if not apply_measures(measures_dir, { 'ResStockArguments' => measures['ResStockArguments'] }, resstock_arguments_runner, model, true, 'OpenStudio::Measure::ModelMeasure', 'existing.osw')
+      register_logs(runner, resstock_arguments_runner)
       return false
     end
 
-    # Initialize measure keys with hpxml_path arguments
+    # Optional whole SFA/MF building simulation
+    whole_sfa_or_mf_building_sim = false
+    geometry_building_num_units = 1
+    if whole_sfa_or_mf_building_sim
+      resstock_arguments_runner.result.stepValues.each do |step_value|
+        if step_value.name == 'geometry_building_num_units'
+          geometry_building_num_units = Integer(get_value_from_workflow_step_value(step_value))
+        end
+      end
+    end
+
+    num_units_modeled = 1
+    max_num_units_modeled = 5
+    unit_multipliers = []
+    if whole_sfa_or_mf_building_sim && geometry_building_num_units > 1
+      num_units_modeled = [geometry_building_num_units, max_num_units_modeled].min
+      unit_multipliers = split_into(geometry_building_num_units, num_units_modeled)
+    end
+
+    # Set arguments for the BuildResidentialHPXML measure
     hpxml_path = File.expand_path('../existing.xml')
     measures['BuildResidentialHPXML'] = [{ 'hpxml_path' => hpxml_path }]
-    measures['BuildResidentialScheduleFile'] = [{ 'hpxml_path' => hpxml_path, 'hpxml_output_path' => hpxml_path }]
 
-    new_runner.result.stepValues.each do |step_value|
-      value = get_value_from_workflow_step_value(step_value)
-      next if value == ''
+    set_header(runner, measures, args, whole_sfa_or_mf_building_sim, bldg_data, resources_dir)
+    set_building_header(measures)
+    set_battery(measures, whole_sfa_or_mf_building_sim, num_units_modeled)
 
-      measures['BuildResidentialHPXML'][0][step_value.name] = value
-    end
+    new_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
+    (1..num_units_modeled).each do |unit_number|
+      if unit_number > 1
+        measures['BuildResidentialHPXML'][0]['existing_hpxml_path'] = hpxml_path
+      end
 
-    # Set additional properties
-    additional_properties = []
-    ['ceiling_insulation_r'].each do |arg_name|
-      arg_value = measures['ResStockArguments'][0][arg_name]
-      additional_properties << "#{arg_name}=#{arg_value}"
-    end
-    measures['BuildResidentialHPXML'][0]['additional_properties'] = additional_properties.join('|') unless additional_properties.empty?
+      set_resstock_arguments(measures, resstock_arguments_runner)
+      if not unit_multipliers.empty?
+        unit_multiplier = unit_multipliers[unit_number]
+      end
+      set_building_construction(measures, unit_multiplier)
+      set_dehumidifier(measures, unit_multiplier)
 
-    # Get software program used and version
-    measures['BuildResidentialHPXML'][0]['software_info_program_used'] = 'ResStock'
-    measures['BuildResidentialHPXML'][0]['software_info_program_version'] = Version::ResStock_Version
-
-    # Get registered values and pass them to BuildResidentialHPXML
-    measures['BuildResidentialHPXML'][0]['simulation_control_timestep'] = args[:simulation_control_timestep].get if args[:simulation_control_timestep].is_initialized
-    if args[:simulation_control_run_period_begin_month].is_initialized && args[:simulation_control_run_period_begin_day_of_month].is_initialized && args[:simulation_control_run_period_end_month].is_initialized && args[:simulation_control_run_period_end_day_of_month].is_initialized
-      begin_month = "#{Date::ABBR_MONTHNAMES[args[:simulation_control_run_period_begin_month].get]}"
-      begin_day = args[:simulation_control_run_period_begin_day_of_month].get
-      end_month = "#{Date::ABBR_MONTHNAMES[args[:simulation_control_run_period_end_month].get]}"
-      end_day = args[:simulation_control_run_period_end_day_of_month].get
-      measures['BuildResidentialHPXML'][0]['simulation_control_run_period'] = "#{begin_month} #{begin_day} - #{end_month} #{end_day}"
-    end
-    measures['BuildResidentialHPXML'][0]['simulation_control_run_period_calendar_year'] = args[:simulation_control_run_period_calendar_year].get if args[:simulation_control_run_period_calendar_year].is_initialized
-
-    # Emissions
-    if args[:emissions_scenario_names].is_initialized
-      if !bldg_data.keys.include?('Generation And Emissions Assessment Region')
-        runner.registerError('Emissions scenario(s) were specified, but could not find the Generation and Emissions Assessment (GEA) region.')
+      # Specify measures to run
+      measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }
+      if not apply_measures(hpxml_measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
+        register_logs(runner, new_runner)
         return false
       end
+    end
 
-      emissions_electricity_filepaths = []
-      scenarios = args[:emissions_electricity_folders].get.split(',')
-      scenarios.each do |scenario|
-        scenario = File.join(resources_dir, scenario)
-        if !File.exist?(scenario)
-          runner.registerError("Emissions scenario electricity folder '#{scenario}' does not exist.")
-          return false
-        end
+    if not run_hescore_workflow
+      # Set arguments for the BuildResidentialScheduleFile measure
+      measures['BuildResidentialScheduleFile'] = [{ 'hpxml_path' => hpxml_path,
+                                                    'hpxml_output_path' => hpxml_path,
+                                                    'schedules_random_seed' => args[:building_id],
+                                                    'output_csv_path' => File.expand_path('../schedules.csv'),
+                                                    'building_id' => 'ALL' }]
 
-        Dir["#{scenario}/*.csv"].each do |filepath|
-          emissions_electricity_filepaths << filepath if filepath.include?(bldg_data['Generation And Emissions Assessment Region'])
-        end
-      end
-
-      emissions_scenario_names = args[:emissions_scenario_names].get
-      emissions_types = args[:emissions_types].get
-      emissions_electricity_filepaths = emissions_electricity_filepaths.join(',')
-      emissions_electricity_units = ([HPXML::EmissionsScenario::UnitsKgPerMWh] * scenarios.size).join(',')
-
-      measures['BuildResidentialHPXML'][0]['emissions_scenario_names'] = emissions_scenario_names
-      measures['BuildResidentialHPXML'][0]['emissions_types'] = emissions_types
-      measures['BuildResidentialHPXML'][0]['emissions_electricity_units'] = emissions_electricity_units
-      measures['BuildResidentialHPXML'][0]['emissions_electricity_values_or_filepaths'] = emissions_electricity_filepaths
-      register_value(runner, 'emissions_scenario_names', emissions_scenario_names)
-      register_value(runner, 'emissions_types', emissions_types)
-      register_value(runner, 'emissions_electricity_units', emissions_electricity_units)
-      register_value(runner, 'emissions_electricity_values_or_filepaths', emissions_electricity_filepaths)
-
-      if args[:emissions_natural_gas_values].is_initialized || args[:emissions_propane_values].is_initialized || args[:emissions_fuel_oil_values].is_initialized || args[:emissions_wood_values].is_initialized
-        emissions_fossil_fuel_units = ([HPXML::EmissionsScenario::UnitsLbPerMBtu] * scenarios.size).join(',')
-        measures['BuildResidentialHPXML'][0]['emissions_fossil_fuel_units'] = emissions_fossil_fuel_units
-        register_value(runner, 'emissions_fossil_fuel_units', emissions_fossil_fuel_units)
-
-        if args[:emissions_natural_gas_values].is_initialized
-          emissions_natural_gas_values = args[:emissions_natural_gas_values].get
-          measures['BuildResidentialHPXML'][0]['emissions_natural_gas_values'] = emissions_natural_gas_values
-          register_value(runner, 'emissions_natural_gas_values', emissions_natural_gas_values)
-        end
-
-        if args[:emissions_propane_values].is_initialized
-          emissions_propane_values = args[:emissions_propane_values].get
-          measures['BuildResidentialHPXML'][0]['emissions_propane_values'] = emissions_propane_values
-          register_value(runner, 'emissions_propane_values', emissions_propane_values)
-        end
-
-        if args[:emissions_fuel_oil_values].is_initialized
-          emissions_fuel_oil_values = args[:emissions_fuel_oil_values].get
-          measures['BuildResidentialHPXML'][0]['emissions_fuel_oil_values'] = emissions_fuel_oil_values
-          register_value(runner, 'emissions_fuel_oil_values', emissions_fuel_oil_values)
-        end
-
-        if args[:emissions_wood_values].is_initialized
-          emissions_wood_values = args[:emissions_wood_values].get
-          measures['BuildResidentialHPXML'][0]['emissions_wood_values'] = emissions_wood_values
-          register_value(runner, 'emissions_wood_values', emissions_wood_values)
-        end
+      # Specify measures to run
+      measures_hash = { 'BuildResidentialScheduleFile' => measures['BuildResidentialScheduleFile'] }
+      if not apply_measures(hpxml_measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
+        register_logs(runner, new_runner)
+        return false
       end
     end
 
-    # Utility Bills
-    if args[:utility_bill_scenario_names].is_initialized
-      utility_bill_scenario_names = args[:utility_bill_scenario_names].get
-
-      measures['BuildResidentialHPXML'][0]['utility_bill_scenario_names'] = utility_bill_scenario_names
-      register_value(runner, 'utility_bill_scenario_names', utility_bill_scenario_names)
-
-      if args[:utility_bill_electricity_fixed_charges].is_initialized
-        utility_bill_electricity_fixed_charges = args[:utility_bill_electricity_fixed_charges].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_electricity_fixed_charges'] = utility_bill_electricity_fixed_charges
-        register_value(runner, 'utility_bill_electricity_fixed_charges', utility_bill_electricity_fixed_charges)
-      end
-
-      if args[:utility_bill_electricity_marginal_rates].is_initialized
-        utility_bill_electricity_marginal_rates = args[:utility_bill_electricity_marginal_rates].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_electricity_marginal_rates'] = utility_bill_electricity_marginal_rates
-        register_value(runner, 'utility_bill_electricity_marginal_rates', utility_bill_electricity_marginal_rates)
-      end
-
-      if args[:utility_bill_natural_gas_fixed_charges].is_initialized
-        utility_bill_natural_gas_fixed_charges = args[:utility_bill_natural_gas_fixed_charges].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_natural_gas_fixed_charges'] = utility_bill_natural_gas_fixed_charges
-        register_value(runner, 'utility_bill_natural_gas_fixed_charges', utility_bill_natural_gas_fixed_charges)
-      end
-
-      if args[:utility_bill_natural_gas_marginal_rates].is_initialized
-        utility_bill_natural_gas_marginal_rates = args[:utility_bill_natural_gas_marginal_rates].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_natural_gas_marginal_rates'] = utility_bill_natural_gas_marginal_rates
-        register_value(runner, 'utility_bill_natural_gas_marginal_rates', utility_bill_natural_gas_marginal_rates)
-      end
-
-      if args[:utility_bill_propane_fixed_charges].is_initialized
-        utility_bill_propane_fixed_charges = args[:utility_bill_propane_fixed_charges].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_propane_fixed_charges'] = utility_bill_propane_fixed_charges
-        register_value(runner, 'utility_bill_propane_fixed_charges', utility_bill_propane_fixed_charges)
-      end
-
-      if args[:utility_bill_propane_marginal_rates].is_initialized
-        utility_bill_propane_marginal_rates = args[:utility_bill_propane_marginal_rates].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_propane_marginal_rates'] = utility_bill_propane_marginal_rates
-        register_value(runner, 'utility_bill_propane_marginal_rates', utility_bill_propane_marginal_rates)
-      end
-
-      if args[:utility_bill_fuel_oil_fixed_charges].is_initialized
-        utility_bill_fuel_oil_fixed_charges = args[:utility_bill_fuel_oil_fixed_charges].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_fuel_oil_fixed_charges'] = utility_bill_fuel_oil_fixed_charges
-        register_value(runner, 'utility_bill_fuel_oil_fixed_charges', utility_bill_fuel_oil_fixed_charges)
-      end
-
-      if args[:utility_bill_fuel_oil_marginal_rates].is_initialized
-        utility_bill_fuel_oil_marginal_rates = args[:utility_bill_fuel_oil_marginal_rates].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_fuel_oil_marginal_rates'] = utility_bill_fuel_oil_marginal_rates
-        register_value(runner, 'utility_bill_fuel_oil_marginal_rates', utility_bill_fuel_oil_marginal_rates)
-      end
-
-      if args[:utility_bill_wood_fixed_charges].is_initialized
-        utility_bill_wood_fixed_charges = args[:utility_bill_wood_fixed_charges].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_wood_fixed_charges'] = utility_bill_wood_fixed_charges
-        register_value(runner, 'utility_bill_wood_fixed_charges', utility_bill_wood_fixed_charges)
-      end
-
-      if args[:utility_bill_wood_marginal_rates].is_initialized
-        utility_bill_wood_marginal_rates = args[:utility_bill_wood_marginal_rates].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_wood_marginal_rates'] = utility_bill_wood_marginal_rates
-        register_value(runner, 'utility_bill_wood_marginal_rates', utility_bill_wood_marginal_rates)
-      end
-
-      if args[:utility_bill_pv_compensation_types].is_initialized
-        utility_bill_pv_compensation_types = args[:utility_bill_pv_compensation_types].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_pv_compensation_types'] = utility_bill_pv_compensation_types
-        register_value(runner, 'utility_bill_pv_compensation_types', utility_bill_pv_compensation_types)
-      end
-
-      if args[:utility_bill_pv_net_metering_annual_excess_sellback_rate_types].is_initialized
-        utility_bill_pv_net_metering_annual_excess_sellback_rate_types = args[:utility_bill_pv_net_metering_annual_excess_sellback_rate_types].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_pv_net_metering_annual_excess_sellback_rate_types'] = utility_bill_pv_net_metering_annual_excess_sellback_rate_types
-        register_value(runner, 'utility_bill_pv_net_metering_annual_excess_sellback_rate_types', utility_bill_pv_net_metering_annual_excess_sellback_rate_types)
-      end
-
-      if args[:utility_bill_pv_net_metering_annual_excess_sellback_rates].is_initialized
-        utility_bill_pv_net_metering_annual_excess_sellback_rates = args[:utility_bill_pv_net_metering_annual_excess_sellback_rates].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_pv_net_metering_annual_excess_sellback_rates'] = utility_bill_pv_net_metering_annual_excess_sellback_rates
-        register_value(runner, 'utility_bill_pv_net_metering_annual_excess_sellback_rates', utility_bill_pv_net_metering_annual_excess_sellback_rates)
-      end
-
-      if args[:utility_bill_pv_feed_in_tariff_rates].is_initialized
-        utility_bill_pv_feed_in_tariff_rates = args[:utility_bill_pv_feed_in_tariff_rates].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_pv_feed_in_tariff_rates'] = utility_bill_pv_feed_in_tariff_rates
-        register_value(runner, 'utility_bill_pv_feed_in_tariff_rates', utility_bill_pv_feed_in_tariff_rates)
-      end
-
-      if args[:utility_bill_pv_monthly_grid_connection_fee_units].is_initialized
-        utility_bill_pv_monthly_grid_connection_fee_units = args[:utility_bill_pv_monthly_grid_connection_fee_units].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_pv_monthly_grid_connection_fee_units'] = utility_bill_pv_monthly_grid_connection_fee_units
-        register_value(runner, 'utility_bill_pv_monthly_grid_connection_fee_units', utility_bill_pv_monthly_grid_connection_fee_units)
-      end
-
-      if args[:utility_bill_pv_monthly_grid_connection_fees].is_initialized
-        utility_bill_pv_monthly_grid_connection_fees = args[:utility_bill_pv_monthly_grid_connection_fees].get
-        measures['BuildResidentialHPXML'][0]['utility_bill_pv_monthly_grid_connection_fees'] = utility_bill_pv_monthly_grid_connection_fees
-        register_value(runner, 'utility_bill_pv_monthly_grid_connection_fees', utility_bill_pv_monthly_grid_connection_fees)
-      end
-    end
-
-    # Get registered values and pass them to BuildResidentialScheduleFile
-    measures['BuildResidentialScheduleFile'][0]['schedules_random_seed'] = args[:building_id]
-    measures['BuildResidentialScheduleFile'][0]['output_csv_path'] = File.expand_path('../schedules.csv')
-
-    # Specify measures to run
-    measures['BuildResidentialHPXML'][0]['apply_defaults'] = true # for apply_hvac_sizing
-    if run_hescore_workflow
-      measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }
-    else
-      measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'], 'BuildResidentialScheduleFile' => measures['BuildResidentialScheduleFile'] }
-    end
-
-    if not apply_measures(hpxml_measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', 'existing.osw')
+    # Set arguments for the ResStockArgumentsPostHPXML measure
+    measures['ResStockArgumentsPostHPXML'] = [{}] if !measures.keys.include?('ResStockArgumentsPostHPXML')
+    measures['ResStockArgumentsPostHPXML'][0]['hpxml_path'] = hpxml_path
+    measures['ResStockArgumentsPostHPXML'][0]['building_id'] = args[:building_id]
+    measures_hash = { 'ResStockArgumentsPostHPXML' => measures['ResStockArgumentsPostHPXML'] }
+    if not apply_measures(measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
       register_logs(runner, new_runner)
       return false
     end
@@ -561,39 +434,235 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       end
     end
 
-    # Report some additional location and model characteristics
-    if File.exist?(hpxml_path)
-      hpxml = HPXML.new(hpxml_path: hpxml_path)
-    else
+    if not File.exist?(hpxml_path)
       runner.registerWarning("BuildExistingModel measure could not find '#{hpxml_path}'.")
       return true
     end
 
-    epw_path = Location.get_epw_path(hpxml, hpxml_path)
-    epw_file = OpenStudio::EpwFile.new(epw_path)
-    register_value(runner, 'weather_file_city', epw_file.city)
-    register_value(runner, 'weather_file_latitude', epw_file.latitude)
-    register_value(runner, 'weather_file_longitude', epw_file.longitude)
+    # Report values from ResStockArgumentsPostHPXML
+    ['weather_file_city',
+     'weather_file_latitude',
+     'weather_file_longitude',
+     'unit_height_above_grade',
+     'air_leakage_to_outside_ach_50',
+     'cooling_unavailable_period',
+     'heating_unavailable_period',
+     'electric_panel_service_max_current_rating',
+     'electric_panel_service_max_current_rating_bin'].each do |key_lookup|
+      new_runner.result.stepValues.each do |step_value|
+        next if step_value.name != key_lookup
 
-    if bldg_data.keys.include?('sample_weight')
-      sample_weight = bldg_data['sample_weight']
-      register_value(runner, 'sample_weight', sample_weight.to_s)
+        register_value(runner, key_lookup, get_value_from_workflow_step_value(step_value))
+      end
     end
+
+    # sample weight
+    if bldg_data.keys.include?('sample_weight')
+      register_value(runner, 'sample_weight', bldg_data['sample_weight'].to_s)
+    end
+
+    register_logs(runner, resstock_arguments_runner)
+    register_logs(runner, new_runner)
 
     return true
   end
 
-  def register_logs(runner, new_runner)
-    new_runner.result.warnings.each do |warning|
-      runner.registerWarning(warning.logMessage)
+  def set_header(runner, measures, args, whole_sfa_or_mf_building_sim, bldg_data, resources_dir)
+    # Whole SFA/MF Building Simulation?
+    measures['BuildResidentialHPXML'][0]['whole_sfa_or_mf_building_sim'] = whole_sfa_or_mf_building_sim
+
+    # Simulation Control
+    measures['BuildResidentialHPXML'][0]['simulation_control_timestep'] = args[:simulation_control_timestep].to_s if !args[:simulation_control_timestep].nil?
+    if !args[:simulation_control_run_period_begin_month].nil? && !args[:simulation_control_run_period_begin_day_of_month].nil? && !args[:simulation_control_run_period_end_month].nil? && !args[:simulation_control_run_period_end_day_of_month].nil?
+      begin_month = "#{Date::ABBR_MONTHNAMES[args[:simulation_control_run_period_begin_month]]}"
+      begin_day = args[:simulation_control_run_period_begin_day_of_month]
+      end_month = "#{Date::ABBR_MONTHNAMES[args[:simulation_control_run_period_end_month]]}"
+      end_day = args[:simulation_control_run_period_end_day_of_month]
+      measures['BuildResidentialHPXML'][0]['simulation_control_run_period'] = "#{begin_month} #{begin_day} - #{end_month} #{end_day}"
     end
-    new_runner.result.info.each do |info|
-      runner.registerInfo(info.logMessage)
+    measures['ResStockArgumentsPostHPXML'][0]['simulation_control_run_period_calendar_year'] = args[:simulation_control_run_period_calendar_year]
+
+    # Emissions
+    if not args[:emissions_scenario_names].nil?
+      if !bldg_data.keys.include?('Generation And Emissions Assessment Region')
+        runner.registerError('Emissions scenario(s) were specified, but could not find the Generation and Emissions Assessment (GEA) region.')
+        return false
+      end
+
+      emissions_electricity_filepaths = []
+      scenarios = args[:emissions_electricity_folders].split(',')
+      scenarios.each do |scenario|
+        scenario = File.join(resources_dir, scenario)
+        if !File.exist?(scenario)
+          runner.registerError("Emissions scenario electricity folder '#{scenario}' does not exist.")
+          return false
+        end
+
+        Dir["#{scenario}/*.csv"].each do |filepath|
+          emissions_electricity_filepaths << filepath if filepath.include?(bldg_data['Generation And Emissions Assessment Region'])
+        end
+      end
+
+      if emissions_electricity_filepaths.size != scenarios.size
+        runner.registerWarning('Not calculating emissions because an electricity filepath for at least one emissions scenario could not be located.')
+      else
+        emissions_electricity_filepaths = emissions_electricity_filepaths.join(',')
+        emissions_electricity_units = ([HPXML::EmissionsScenario::UnitsKgPerMWh] * scenarios.size).join(',')
+        emissions_fossil_fuel_units = ([HPXML::EmissionsScenario::UnitsLbPerMBtu] * scenarios.size).join(',')
+
+        measures['ResStockArgumentsPostHPXML'][0]['emissions_scenario_names'] = args[:emissions_scenario_names]
+        measures['ResStockArgumentsPostHPXML'][0]['emissions_types'] = args[:emissions_types]
+        measures['ResStockArgumentsPostHPXML'][0]['emissions_electricity_units'] = emissions_electricity_units
+        measures['ResStockArgumentsPostHPXML'][0]['emissions_electricity_filepaths'] = emissions_electricity_filepaths
+        measures['ResStockArgumentsPostHPXML'][0]['emissions_fossil_fuel_units'] = emissions_fossil_fuel_units
+        measures['ResStockArgumentsPostHPXML'][0]['emissions_natural_gas_values'] = args[:emissions_natural_gas_values]
+        measures['ResStockArgumentsPostHPXML'][0]['emissions_propane_values'] = args[:emissions_propane_values]
+        measures['ResStockArgumentsPostHPXML'][0]['emissions_fuel_oil_values'] = args[:emissions_fuel_oil_values]
+        measures['ResStockArgumentsPostHPXML'][0]['emissions_wood_values'] = args[:emissions_wood_values]
+
+        register_value(runner, 'emissions_electricity_units', emissions_electricity_units)
+        register_value(runner, 'emissions_electricity_filepaths', emissions_electricity_filepaths)
+        register_value(runner, 'emissions_fossil_fuel_units', emissions_fossil_fuel_units)
+      end
     end
-    new_runner.result.errors.each do |error|
-      runner.registerError(error.logMessage)
+
+    # Utility Bills
+    if not args[:utility_bill_scenario_names].nil?
+
+      num_scenarios = args[:utility_bill_scenario_names].count(',') + 1
+      utility_bill = {
+        'electricity_filepaths' => [nil] * num_scenarios,
+        'electricity_fixed_charges' => args[:utility_bill_electricity_fixed_charges].split(',').map(&:strip),
+        'electricity_marginal_rates' => args[:utility_bill_electricity_marginal_rates].split(',').map(&:strip),
+        'natural_gas_fixed_charges' => args[:utility_bill_natural_gas_fixed_charges].split(',').map(&:strip),
+        'natural_gas_marginal_rates' => args[:utility_bill_natural_gas_marginal_rates].split(',').map(&:strip),
+        'propane_fixed_charges' => args[:utility_bill_propane_fixed_charges].split(',').map(&:strip),
+        'propane_marginal_rates' => args[:utility_bill_propane_marginal_rates].split(',').map(&:strip),
+        'fuel_oil_fixed_charges' => args[:utility_bill_fuel_oil_fixed_charges].split(',').map(&:strip),
+        'fuel_oil_marginal_rates' => args[:utility_bill_fuel_oil_marginal_rates].split(',').map(&:strip),
+        'wood_fixed_charges' => args[:utility_bill_wood_fixed_charges].split(',').map(&:strip),
+        'wood_marginal_rates' => args[:utility_bill_wood_marginal_rates].split(',').map(&:strip),
+        'pv_compensation_types' => args[:utility_bill_pv_compensation_types].split(',').map(&:strip),
+        'pv_net_metering_annual_excess_sellback_rate_types' => args[:utility_bill_pv_net_metering_annual_excess_sellback_rate_types].split(',').map(&:strip),
+        'pv_net_metering_annual_excess_sellback_rates' => args[:utility_bill_pv_net_metering_annual_excess_sellback_rates].split(',').map(&:strip),
+        'pv_feed_in_tariff_rates' => args[:utility_bill_pv_feed_in_tariff_rates].split(',').map(&:strip),
+        'pv_monthly_grid_connection_fee_units' => args[:utility_bill_pv_monthly_grid_connection_fee_units].split(',').map(&:strip),
+        'pv_monthly_grid_connection_fees' => args[:utility_bill_pv_monthly_grid_connection_fees].split(',').map(&:strip),
+      }
+      for i in 0..(num_scenarios - 1)
+        simple_filepath = args[:utility_bill_simple_filepaths].split(',').map(&:strip)[i] rescue nil
+        detailed_filepath = args[:utility_bill_detailed_filepaths].split(',').map(&:strip)[i] rescue nil
+
+        next unless (!simple_filepath.nil? && !simple_filepath.empty?) || (!detailed_filepath.nil? && !detailed_filepath.empty?)
+
+        if !simple_filepath.nil? && !simple_filepath.empty?
+          simple_filepath = File.join(resources_dir, simple_filepath)
+          utility_rate = get_utility_rate(runner, simple_filepath, bldg_data)
+        elsif !detailed_filepath.nil? && !detailed_filepath.empty?
+          detailed_filepath = File.join(resources_dir, detailed_filepath)
+          utility_rate = get_utility_rate(runner, detailed_filepath, bldg_data)
+          utility_rate['elec_filepath'] = File.join(File.dirname(detailed_filepath), utility_rate['elec_filepath']) if !utility_rate['elec_filepath'].nil?
+        end
+
+        utility_bill['electricity_filepaths'][i] = utility_rate['elec_filepath']
+        utility_bill['electricity_fixed_charges'][i] = utility_rate['elec_fixed_charge']
+        utility_bill['electricity_marginal_rates'][i] = utility_rate['elec_marginal_rate']
+        utility_bill['natural_gas_fixed_charges'][i] = utility_rate['natural_gas_fixed_charge']
+        utility_bill['natural_gas_marginal_rates'][i] = utility_rate['natural_gas_marginal_rate']
+        utility_bill['propane_fixed_charges'][i] = utility_rate['propane_fixed_charge']
+        utility_bill['propane_marginal_rates'][i] = utility_rate['propane_marginal_rate']
+        utility_bill['fuel_oil_fixed_charges'][i] = utility_rate['fuel_oil_fixed_charge']
+        utility_bill['fuel_oil_marginal_rates'][i] = utility_rate['fuel_oil_marginal_rate']
+        utility_bill['wood_fixed_charges'][i] = utility_rate['wood_fixed_charge']
+        utility_bill['wood_marginal_rates'][i] = utility_rate['wood_marginal_rate']
+        utility_bill['pv_compensation_types'][i] = utility_rate['pv_compensation_type']
+        utility_bill['pv_net_metering_annual_excess_sellback_rate_types'][i] = utility_rate['pv_net_metering_annual_excess_sellback_rate_type']
+        utility_bill['pv_net_metering_annual_excess_sellback_rates'][i] = utility_rate['pv_net_metering_annual_excess_sellback_rate']
+        utility_bill['pv_feed_in_tariff_rates'][i] = utility_rate['pv_feed_in_tariff_rate']
+        utility_bill['pv_monthly_grid_connection_fee_units'][i] = utility_rate['pv_monthly_grid_connection_fee_units']
+        utility_bill['pv_monthly_grid_connection_fees'][i] = utility_rate['pv_monthly_grid_connection_fee']
+      end
+
+      measures['ResStockArgumentsPostHPXML'][0]['utility_bill_scenario_names'] = args[:utility_bill_scenario_names]
+
+      utility_bill.each do |arg, value_array|
+        full_arg = "utility_bill_#{arg}"
+        value_str = value_array.join(',')
+        measures['ResStockArgumentsPostHPXML'][0][full_arg] = value_str
+        register_value(runner, full_arg, value_str)
+      end
     end
-    return
+  end
+
+  def set_resstock_arguments(measures, child_runner)
+    # Assign ResStockArgument's runner arguments to BuildResidentialHPXML
+    child_runner.result.stepValues.each do |step_value|
+      next unless measures['BuildResidentialHPXML'][0][step_value.name].nil?
+
+      value = get_value_from_workflow_step_value(step_value)
+      next if value == ''
+
+      measures['BuildResidentialHPXML'][0][step_value.name] = value
+    end
+  end
+
+  def set_building_header(measures)
+    # Set additional properties
+    additional_properties = []
+
+    ['ceiling_insulation_r'].each do |arg_name|
+      arg_value = measures['ResStockArguments'][0][arg_name]
+      additional_properties << "#{arg_name}=#{arg_value}"
+    end
+    measures['BuildResidentialHPXML'][0]['additional_properties'] = additional_properties.join('|') unless additional_properties.empty?
+  end
+
+  def set_building_construction(measures, unit_multiplier)
+    if not unit_multiplier.nil?
+      measures['BuildResidentialHPXML'][0]['unit_multiplier'] = unit_multiplier
+    end
+  end
+
+  def set_dehumidifier(measures, unit_multiplier)
+    if unit_multiplier.to_i > 1
+      measures['BuildResidentialHPXML'][0]['appliance_dehumidifier'] = 'None' # limitation of OS-HPXML
+    end
+  end
+
+  def set_battery(measures, whole_sfa_or_mf_building_sim, num_units_modeled)
+    if whole_sfa_or_mf_building_sim && num_units_modeled > 1
+      measures['BuildResidentialHPXML'][0]['battery'] = 'None' # limitation of OS-HPXML
+    end
+  end
+
+  def split_into(n, p)
+    return [n / p + 1] * (n % p) + [n / p] * (p - n % p)
+  end
+
+  def get_utility_rate(runner, filepath, bldg_data)
+    if !File.exist?(filepath)
+      runner.registerError("Utility bill scenario file '#{filepath}' does not exist.")
+      return false
+    end
+
+    rows = CSV.read(filepath, headers: true, col_sep: "\t")
+    utility_rates = rows.map { |d| d.to_hash }
+    parameter = utility_rates[0].keys[0]
+
+    if !bldg_data.keys.include?(parameter)
+      runner.registerError("Utility bill scenario(s) were specified, but could not find #{parameter}.")
+      return false
+    end
+
+    utility_rates = utility_rates.select { |r| r[parameter] == bldg_data[parameter] }
+
+    if utility_rates.size != 1
+      runner.registerWarning("Could not find #{parameter}=#{bldg_data[parameter]} in #{filepath}.")
+      utility_rate = Hash[rows.headers.map { |x| [x, nil] }]
+    else
+      utility_rate = utility_rates[0]
+    end
+    return utility_rate
   end
 end
 

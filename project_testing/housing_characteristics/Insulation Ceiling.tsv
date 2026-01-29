@@ -1,7 +1,7 @@
 Dependency=Geometry Attic Type	Option=None	Option=Uninsulated	Option=R-7	Option=R-13	Option=R-19	Option=R-30	Option=R-38	Option=R-49	Option=R-60	sampling_probability
-Vented Attic	0	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.12963
-Unvented Attic	0	1	0	0	0	0	0	0	0	0.12963
-Finished Attic or Cathedral Ceilings	1	0	0	0	0	0	0	0	0	0.074074
-None	1	0	0	0	0	0	0	0	0	0.666667
+Vented Attic	0	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.0617283
+Unvented Attic	0	1	0	0	0	0	0	0	0	0.0617283
+Finished Attic or Cathedral Ceilings	1	0	0	0	0	0	0	0	0	0.037037
+None	1	0	0	0	0	0	0	0	0	0.839506
 # Created by: manually created
 # Description: Ceiling insulation level.

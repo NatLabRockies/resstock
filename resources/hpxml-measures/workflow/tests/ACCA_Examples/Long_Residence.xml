@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<HPXML xmlns='http://hpxmlonline.com/2019/10' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://hpxmlonline.com/2019/10' schemaVersion='4.0'>
+<HPXML xmlns='http://hpxmlonline.com/2023/09' schemaVersion='4.2'>
   <XMLTransactionHeaderInformation>
     <XMLType>HPXML</XMLType>
     <XMLGeneratedBy>hand</XMLGeneratedBy>
@@ -9,6 +9,13 @@
   <SoftwareInfo/>
   <Building>
     <BuildingID id='MyBuilding'/>
+    <Site>
+      <SiteID id='SiteID'/>
+      <GeoLocation>
+        <Latitude>41.0</Latitude>
+      </GeoLocation>
+      <Elevation>863.0</Elevation>
+    </Site>
     <ProjectStatus>
       <EventType>proposed workscope</EventType>
     </ProjectStatus>
@@ -16,14 +23,33 @@
       <BuildingSummary>
         <Site>
           <SiteType>suburban</SiteType>
+          <ShieldingofHome>normal</ShieldingofHome>
         </Site>
         <BuildingConstruction>
+          <YearBuilt>2000</YearBuilt>
           <ResidentialFacilityType>single-family detached</ResidentialFacilityType>
           <NumberofConditionedFloors>2.0</NumberofConditionedFloors>
           <NumberofConditionedFloorsAboveGrade>1.0</NumberofConditionedFloorsAboveGrade>
+          <AverageCeilingHeight>8.0</AverageCeilingHeight>
           <NumberofBedrooms>3</NumberofBedrooms>
           <ConditionedFloorArea>2958.0</ConditionedFloorArea>
         </BuildingConstruction>
+        <extension>
+          <HVACSizingControl>
+            <ManualJInputs>
+              <HeatingDesignTemperature>-5.0</HeatingDesignTemperature>
+              <CoolingDesignTemperature>89.0</CoolingDesignTemperature>
+              <DailyTemperatureRange>medium</DailyTemperatureRange>
+              <HeatingSetpoint>70.0</HeatingSetpoint>
+              <CoolingSetpoint>75.0</CoolingSetpoint>
+              <HumiditySetpoint>0.5</HumiditySetpoint>
+              <HumidityDifference>40.0</HumidityDifference>
+              <InternalLoadsSensible>2400.0</InternalLoadsSensible>
+              <InternalLoadsLatent>0.0</InternalLoadsLatent>
+              <NumberofOccupants>4.0</NumberofOccupants>
+            </ManualJInputs>
+          </HVACSizingControl>
+        </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
         <WeatherStation>
@@ -34,15 +60,159 @@
           </extension>
         </WeatherStation>
       </ClimateandRiskZones>
+      <Zones>
+        <Zone>
+          <SystemIdentifier id='LongResidenceConditioned'/>
+          <ZoneType>conditioned</ZoneType>
+          <Spaces>
+            <Space>
+              <SystemIdentifier id='laundry'/>
+              <FloorArea>77.0</FloorArea>
+              <extension>
+                <ManualJInputs>
+                  <InternalLoadsSensible>500.0</InternalLoadsSensible>
+                  <NumberofOccupants>0.0</NumberofOccupants>
+                </ManualJInputs>
+              </extension>
+            </Space>
+            <Space>
+              <SystemIdentifier id='kitchen'/>
+              <FloorArea>121.0</FloorArea>
+              <extension>
+                <ManualJInputs>
+                  <InternalLoadsSensible>1000.0</InternalLoadsSensible>
+                  <NumberofOccupants>0.0</NumberofOccupants>
+                </ManualJInputs>
+              </extension>
+            </Space>
+            <Space>
+              <SystemIdentifier id='bathroom_1'/>
+              <FloorArea>99.0</FloorArea>
+              <extension>
+                <ManualJInputs>
+                  <InternalLoadsSensible>0.0</InternalLoadsSensible>
+                  <NumberofOccupants>0.0</NumberofOccupants>
+                </ManualJInputs>
+              </extension>
+            </Space>
+            <Space>
+              <SystemIdentifier id='bedroom_3'/>
+              <FloorArea>110.0</FloorArea>
+              <extension>
+                <ManualJInputs>
+                  <InternalLoadsSensible>0.0</InternalLoadsSensible>
+                  <NumberofOccupants>0.0</NumberofOccupants>
+                </ManualJInputs>
+              </extension>
+            </Space>
+            <Space>
+              <SystemIdentifier id='bedroom_2'/>
+              <FloorArea>140.0</FloorArea>
+              <extension>
+                <ManualJInputs>
+                  <InternalLoadsSensible>0.0</InternalLoadsSensible>
+                  <NumberofOccupants>0.0</NumberofOccupants>
+                </ManualJInputs>
+              </extension>
+            </Space>
+            <Space>
+              <SystemIdentifier id='dining_room'/>
+              <FloorArea>126.0</FloorArea>
+              <extension>
+                <ManualJInputs>
+                  <InternalLoadsSensible>0.0</InternalLoadsSensible>
+                  <NumberofOccupants>0.0</NumberofOccupants>
+                </ManualJInputs>
+              </extension>
+            </Space>
+            <Space>
+              <SystemIdentifier id='living_room'/>
+              <FloorArea>294.0</FloorArea>
+              <extension>
+                <ManualJInputs>
+                  <InternalLoadsSensible>0.0</InternalLoadsSensible>
+                  <NumberofOccupants>2.0</NumberofOccupants>
+                </ManualJInputs>
+              </extension>
+            </Space>
+            <Space>
+              <SystemIdentifier id='hall_1'/>
+              <FloorArea>112.0</FloorArea>
+              <extension>
+                <ManualJInputs>
+                  <InternalLoadsSensible>0.0</InternalLoadsSensible>
+                  <NumberofOccupants>0.0</NumberofOccupants>
+                </ManualJInputs>
+              </extension>
+            </Space>
+            <Space>
+              <SystemIdentifier id='hall_2'/>
+              <FloorArea>165.0</FloorArea>
+              <extension>
+                <ManualJInputs>
+                  <InternalLoadsSensible>0.0</InternalLoadsSensible>
+                  <NumberofOccupants>0.0</NumberofOccupants>
+                </ManualJInputs>
+              </extension>
+            </Space>
+            <Space>
+              <SystemIdentifier id='bedroom_1'/>
+              <FloorArea>210.0</FloorArea>
+              <extension>
+                <ManualJInputs>
+                  <InternalLoadsSensible>0.0</InternalLoadsSensible>
+                  <NumberofOccupants>0.0</NumberofOccupants>
+                </ManualJInputs>
+              </extension>
+            </Space>
+            <Space>
+              <SystemIdentifier id='bathroom_2'/>
+              <FloorArea>25.0</FloorArea>
+              <extension>
+                <ManualJInputs>
+                  <InternalLoadsSensible>0.0</InternalLoadsSensible>
+                  <NumberofOccupants>0.0</NumberofOccupants>
+                </ManualJInputs>
+              </extension>
+            </Space>
+            <Space>
+              <SystemIdentifier id='recroom'/>
+              <FloorArea>783.0</FloorArea>
+              <extension>
+                <ManualJInputs>
+                  <InternalLoadsSensible>900.0</InternalLoadsSensible>
+                  <NumberofOccupants>2.0</NumberofOccupants>
+                </ManualJInputs>
+              </extension>
+            </Space>
+            <Space>
+              <SystemIdentifier id='workshop'/>
+              <FloorArea>360.0</FloorArea>
+              <extension>
+                <ManualJInputs>
+                  <InternalLoadsSensible>0.0</InternalLoadsSensible>
+                  <NumberofOccupants>0.0</NumberofOccupants>
+                </ManualJInputs>
+              </extension>
+            </Space>
+            <Space>
+              <SystemIdentifier id='utility_room'/>
+              <FloorArea>336.0</FloorArea>
+              <extension>
+                <ManualJInputs>
+                  <InternalLoadsSensible>0.0</InternalLoadsSensible>
+                  <NumberofOccupants>0.0</NumberofOccupants>
+                </ManualJInputs>
+              </extension>
+            </Space>
+          </Spaces>
+        </Zone>
+      </Zones>
       <Enclosure>
         <AirInfiltration>
           <AirInfiltrationMeasurement>
             <SystemIdentifier id='AirInfiltrationMeasurement1'/>
-            <HousePressure>50.0</HousePressure>
-            <BuildingAirLeakage>
-              <UnitofMeasure>ACH</UnitofMeasure>
-              <AirLeakage>2.8</AirLeakage>
-            </BuildingAirLeakage>
+            <LeakinessDescription>average</LeakinessDescription>
           </AirInfiltrationMeasurement>
         </AirInfiltration>
         <Roofs>
@@ -51,8 +221,7 @@
             <InteriorAdjacentTo>attic - vented</InteriorAdjacentTo>
             <Area>1712.7</Area>
             <RoofType>asphalt or fiberglass shingles</RoofType>
-            <SolarAbsorptance>0.92</SolarAbsorptance>
-            <Emittance>0.92</Emittance>
+            <RoofColor>dark</RoofColor>
             <Pitch>7.0</Pitch>
             <RadiantBarrier>false</RadiantBarrier>
             <Insulation>
@@ -63,88 +232,551 @@
         </Roofs>
         <Walls>
           <Wall>
-            <SystemIdentifier id='Wall1'/>
+            <SystemIdentifier id='WallLaundryEast'/>
+            <AttachedToSpace idref='laundry'/>
             <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
-            <InteriorAdjacentTo>living space</InteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
             <WallType>
               <WoodStud/>
             </WallType>
-            <Area>1280.0</Area>
+            <Area>56.0</Area>
+            <Orientation>east</Orientation>
             <Siding>brick veneer</Siding>
             <Insulation>
-              <SystemIdentifier id='Wall1Insulation'/>
+              <SystemIdentifier id='WallLaundryEastInsulation'/>
               <AssemblyEffectiveRValue>10.3</AssemblyEffectiveRValue>
             </Insulation>
           </Wall>
           <Wall>
-            <SystemIdentifier id='Wall2'/>
+            <SystemIdentifier id='WallLaundryNorth'/>
+            <AttachedToSpace idref='laundry'/>
             <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
-            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
             <WallType>
               <WoodStud/>
             </WallType>
-            <Area>480.0</Area>
+            <Area>88.0</Area>
+            <Orientation>north</Orientation>
             <Siding>brick veneer</Siding>
             <Insulation>
-              <SystemIdentifier id='Wall2Insulation'/>
-              <AssemblyEffectiveRValue>7.7</AssemblyEffectiveRValue>
+              <SystemIdentifier id='WallLaundryNorthInsulation'/>
+              <AssemblyEffectiveRValue>10.3</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='WallKitchenEast'/>
+            <AttachedToSpace idref='kitchen'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>88.0</Area>
+            <Orientation>east</Orientation>
+            <Siding>brick veneer</Siding>
+            <Insulation>
+              <SystemIdentifier id='WallKitchenEastInsulation'/>
+              <AssemblyEffectiveRValue>10.3</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='WallBathroom1East'/>
+            <AttachedToSpace idref='bathroom_1'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>72.0</Area>
+            <Orientation>east</Orientation>
+            <Siding>brick veneer</Siding>
+            <Insulation>
+              <SystemIdentifier id='WallBathroom1EastInsulation'/>
+              <AssemblyEffectiveRValue>10.3</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='WallBedroom3East'/>
+            <AttachedToSpace idref='bedroom_3'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>80.0</Area>
+            <Orientation>east</Orientation>
+            <Siding>brick veneer</Siding>
+            <Insulation>
+              <SystemIdentifier id='WallBedroom3EastInsulation'/>
+              <AssemblyEffectiveRValue>10.3</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='WallBedroom2East'/>
+            <AttachedToSpace idref='bedroom_2'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>112.0</Area>
+            <Orientation>east</Orientation>
+            <Siding>brick veneer</Siding>
+            <Insulation>
+              <SystemIdentifier id='WallBedroom2EastInsulation'/>
+              <AssemblyEffectiveRValue>10.3</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='WallBedroom2South'/>
+            <AttachedToSpace idref='bedroom_2'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>80.0</Area>
+            <Orientation>south</Orientation>
+            <Siding>brick veneer</Siding>
+            <Insulation>
+              <SystemIdentifier id='WallBedroom2SouthInsulation'/>
+              <AssemblyEffectiveRValue>10.3</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='WallDiningRoomNorth'/>
+            <AttachedToSpace idref='dining_room'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>144.0</Area>
+            <Orientation>north</Orientation>
+            <Siding>brick veneer</Siding>
+            <Insulation>
+              <SystemIdentifier id='WallDiningRoomNorthInsulation'/>
+              <AssemblyEffectiveRValue>10.3</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='WallDiningRoomWest'/>
+            <AttachedToSpace idref='dining_room'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>56.0</Area>
+            <Orientation>west</Orientation>
+            <Siding>brick veneer</Siding>
+            <Insulation>
+              <SystemIdentifier id='WallDiningRoomWestInsulation'/>
+              <AssemblyEffectiveRValue>10.3</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='WallLivingRoomWest'/>
+            <AttachedToSpace idref='living_room'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>168.0</Area>
+            <Orientation>west</Orientation>
+            <Siding>brick veneer</Siding>
+            <Insulation>
+              <SystemIdentifier id='WallLivingRoomWestInsulation'/>
+              <AssemblyEffectiveRValue>10.3</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='WallHall1West'/>
+            <AttachedToSpace idref='hall_1'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>64.0</Area>
+            <Orientation>west</Orientation>
+            <Siding>brick veneer</Siding>
+            <Insulation>
+              <SystemIdentifier id='WallHall1WestInsulation'/>
+              <AssemblyEffectiveRValue>10.3</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='WallBedroom1West'/>
+            <AttachedToSpace idref='bedroom_1'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>120.0</Area>
+            <Orientation>west</Orientation>
+            <Siding>brick veneer</Siding>
+            <Insulation>
+              <SystemIdentifier id='WallBedroom1WestInsulation'/>
+              <AssemblyEffectiveRValue>10.3</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='WallBedroom1South'/>
+            <AttachedToSpace idref='bedroom_1'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>112.0</Area>
+            <Orientation>south</Orientation>
+            <Siding>brick veneer</Siding>
+            <Insulation>
+              <SystemIdentifier id='WallBedroom1SouthInsulation'/>
+              <AssemblyEffectiveRValue>10.3</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='WallBathroom2South'/>
+            <AttachedToSpace idref='bathroom_2'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>40.0</Area>
+            <Orientation>south</Orientation>
+            <Siding>brick veneer</Siding>
+            <Insulation>
+              <SystemIdentifier id='WallBathroom2SouthInsulation'/>
+              <AssemblyEffectiveRValue>10.3</AssemblyEffectiveRValue>
             </Insulation>
           </Wall>
         </Walls>
         <FoundationWalls>
           <FoundationWall>
-            <SystemIdentifier id='FoundationWall1'/>
+            <SystemIdentifier id='FoundationWallWorkShopEast'/>
+            <AttachedToSpace idref='workshop'/>
             <ExteriorAdjacentTo>ground</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
             <Type>concrete block</Type>
-            <Height>5.0</Height>
-            <Area>800.0</Area>
+            <Height>8.0</Height>
+            <Area>192.0</Area>
+            <Orientation>east</Orientation>
             <DepthBelowGrade>5.0</DepthBelowGrade>
             <Insulation>
-              <SystemIdentifier id='FoundationWall1Insulation'/>
-              <Layer>
-                <InstallationType>continuous - exterior</InstallationType>
-                <NominalRValue>6.0</NominalRValue>
-                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
-                <DistanceToBottomOfInsulation>5.0</DistanceToBottomOfInsulation>
-              </Layer>
-              <Layer>
-                <InstallationType>continuous - interior</InstallationType>
-                <NominalRValue>0.0</NominalRValue>
-              </Layer>
+              <SystemIdentifier id='FoundationWallWorkShopEastInsulation'/>
+              <AssemblyEffectiveRValue>7.7</AssemblyEffectiveRValue>
+            </Insulation>
+          </FoundationWall>
+          <FoundationWall>
+            <SystemIdentifier id='FoundationWallWorkShopNorth'/>
+            <AttachedToSpace idref='workshop'/>
+            <ExteriorAdjacentTo>ground</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Type>concrete block</Type>
+            <Height>8.0</Height>
+            <Area>120.0</Area>
+            <Orientation>north</Orientation>
+            <DepthBelowGrade>5.0</DepthBelowGrade>
+            <Insulation>
+              <SystemIdentifier id='FoundationWallWorkShopNorthInsulation'/>
+              <AssemblyEffectiveRValue>7.7</AssemblyEffectiveRValue>
+            </Insulation>
+          </FoundationWall>
+          <FoundationWall>
+            <SystemIdentifier id='FoundationWallUtilityNorth'/>
+            <AttachedToSpace idref='utility_room'/>
+            <ExteriorAdjacentTo>ground</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Type>concrete block</Type>
+            <Height>8.0</Height>
+            <Area>112.0</Area>
+            <Orientation>north</Orientation>
+            <DepthBelowGrade>5.0</DepthBelowGrade>
+            <Insulation>
+              <SystemIdentifier id='FoundationWallUtilityNorthInsulation'/>
+              <AssemblyEffectiveRValue>7.7</AssemblyEffectiveRValue>
+            </Insulation>
+          </FoundationWall>
+          <FoundationWall>
+            <SystemIdentifier id='FoundationWallUtilityWest'/>
+            <AttachedToSpace idref='utility_room'/>
+            <ExteriorAdjacentTo>ground</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Type>concrete block</Type>
+            <Height>8.0</Height>
+            <Area>192.0</Area>
+            <Orientation>west</Orientation>
+            <DepthBelowGrade>5.0</DepthBelowGrade>
+            <Insulation>
+              <SystemIdentifier id='FoundationWallUtilityWestInsulation'/>
+              <AssemblyEffectiveRValue>7.7</AssemblyEffectiveRValue>
+            </Insulation>
+          </FoundationWall>
+          <FoundationWall>
+            <SystemIdentifier id='FoundationWallRecRoomEast'/>
+            <AttachedToSpace idref='recroom'/>
+            <ExteriorAdjacentTo>ground</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Type>concrete block</Type>
+            <Height>8.0</Height>
+            <Area>216.0</Area>
+            <Orientation>east</Orientation>
+            <DepthBelowGrade>5.0</DepthBelowGrade>
+            <Insulation>
+              <SystemIdentifier id='FoundationWallRecRoomEastInsulation'/>
+              <AssemblyEffectiveRValue>7.7</AssemblyEffectiveRValue>
+            </Insulation>
+          </FoundationWall>
+          <FoundationWall>
+            <SystemIdentifier id='FoundationWallRecRoomWest'/>
+            <AttachedToSpace idref='recroom'/>
+            <ExteriorAdjacentTo>ground</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Type>concrete block</Type>
+            <Height>8.0</Height>
+            <Area>216.0</Area>
+            <Orientation>west</Orientation>
+            <DepthBelowGrade>5.0</DepthBelowGrade>
+            <Insulation>
+              <SystemIdentifier id='FoundationWallRecRoomWestInsulation'/>
+              <AssemblyEffectiveRValue>7.7</AssemblyEffectiveRValue>
+            </Insulation>
+          </FoundationWall>
+          <FoundationWall>
+            <SystemIdentifier id='FoundationWallRecRoomSouth'/>
+            <AttachedToSpace idref='recroom'/>
+            <ExteriorAdjacentTo>ground</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Type>concrete block</Type>
+            <Height>8.0</Height>
+            <Area>232.0</Area>
+            <Orientation>south</Orientation>
+            <DepthBelowGrade>5.0</DepthBelowGrade>
+            <Insulation>
+              <SystemIdentifier id='FoundationWallRecRoomSouthInsulation'/>
+              <AssemblyEffectiveRValue>7.7</AssemblyEffectiveRValue>
             </Insulation>
           </FoundationWall>
         </FoundationWalls>
         <Floors>
           <Floor>
-            <SystemIdentifier id='Floor1'/>
+            <SystemIdentifier id='FloorLaundry'/>
+            <AttachedToSpace idref='laundry'/>
             <ExteriorAdjacentTo>attic - vented</ExteriorAdjacentTo>
-            <InteriorAdjacentTo>living space</InteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
             <FloorType>
               <WoodFrame/>
             </FloorType>
-            <Area>1479.0</Area>
+            <Area>77.0</Area>
             <Insulation>
-              <SystemIdentifier id='Floor1Insulation'/>
+              <SystemIdentifier id='FloorLaundryInsulation'/>
+              <AssemblyEffectiveRValue>20.4</AssemblyEffectiveRValue>
+            </Insulation>
+          </Floor>
+          <Floor>
+            <SystemIdentifier id='FloorKitchen'/>
+            <AttachedToSpace idref='kitchen'/>
+            <ExteriorAdjacentTo>attic - vented</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <FloorType>
+              <WoodFrame/>
+            </FloorType>
+            <Area>121.0</Area>
+            <Insulation>
+              <SystemIdentifier id='FloorKitchenInsulation'/>
+              <AssemblyEffectiveRValue>20.4</AssemblyEffectiveRValue>
+            </Insulation>
+          </Floor>
+          <Floor>
+            <SystemIdentifier id='FloorBathroom1'/>
+            <AttachedToSpace idref='bathroom_1'/>
+            <ExteriorAdjacentTo>attic - vented</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <FloorType>
+              <WoodFrame/>
+            </FloorType>
+            <Area>99.0</Area>
+            <Insulation>
+              <SystemIdentifier id='FloorBathroom1Insulation'/>
+              <AssemblyEffectiveRValue>20.4</AssemblyEffectiveRValue>
+            </Insulation>
+          </Floor>
+          <Floor>
+            <SystemIdentifier id='FloorBedroom3'/>
+            <AttachedToSpace idref='bedroom_3'/>
+            <ExteriorAdjacentTo>attic - vented</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <FloorType>
+              <WoodFrame/>
+            </FloorType>
+            <Area>110.0</Area>
+            <Insulation>
+              <SystemIdentifier id='FloorBedroom3Insulation'/>
+              <AssemblyEffectiveRValue>20.4</AssemblyEffectiveRValue>
+            </Insulation>
+          </Floor>
+          <Floor>
+            <SystemIdentifier id='FloorBedroom2'/>
+            <AttachedToSpace idref='bedroom_2'/>
+            <ExteriorAdjacentTo>attic - vented</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <FloorType>
+              <WoodFrame/>
+            </FloorType>
+            <Area>140.0</Area>
+            <Insulation>
+              <SystemIdentifier id='FloorBedroom2Insulation'/>
+              <AssemblyEffectiveRValue>20.4</AssemblyEffectiveRValue>
+            </Insulation>
+          </Floor>
+          <Floor>
+            <SystemIdentifier id='FloorDiningRoom'/>
+            <AttachedToSpace idref='dining_room'/>
+            <ExteriorAdjacentTo>attic - vented</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <FloorType>
+              <WoodFrame/>
+            </FloorType>
+            <Area>126.0</Area>
+            <Insulation>
+              <SystemIdentifier id='FloorDiningRoomInsulation'/>
+              <AssemblyEffectiveRValue>20.4</AssemblyEffectiveRValue>
+            </Insulation>
+          </Floor>
+          <Floor>
+            <SystemIdentifier id='FloorLivingRoom'/>
+            <AttachedToSpace idref='living_room'/>
+            <ExteriorAdjacentTo>attic - vented</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <FloorType>
+              <WoodFrame/>
+            </FloorType>
+            <Area>294.0</Area>
+            <Insulation>
+              <SystemIdentifier id='FloorLivingRoomInsulation'/>
+              <AssemblyEffectiveRValue>20.4</AssemblyEffectiveRValue>
+            </Insulation>
+          </Floor>
+          <Floor>
+            <SystemIdentifier id='FloorHall1'/>
+            <AttachedToSpace idref='hall_1'/>
+            <ExteriorAdjacentTo>attic - vented</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <FloorType>
+              <WoodFrame/>
+            </FloorType>
+            <Area>112.0</Area>
+            <Insulation>
+              <SystemIdentifier id='FloorHall1Insulation'/>
+              <AssemblyEffectiveRValue>20.4</AssemblyEffectiveRValue>
+            </Insulation>
+          </Floor>
+          <Floor>
+            <SystemIdentifier id='FloorHall2'/>
+            <AttachedToSpace idref='hall_2'/>
+            <ExteriorAdjacentTo>attic - vented</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <FloorType>
+              <WoodFrame/>
+            </FloorType>
+            <Area>165.0</Area>
+            <Insulation>
+              <SystemIdentifier id='FloorHall2Insulation'/>
+              <AssemblyEffectiveRValue>20.4</AssemblyEffectiveRValue>
+            </Insulation>
+          </Floor>
+          <Floor>
+            <SystemIdentifier id='FloorBedroom1'/>
+            <AttachedToSpace idref='bedroom_1'/>
+            <ExteriorAdjacentTo>attic - vented</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <FloorType>
+              <WoodFrame/>
+            </FloorType>
+            <Area>210.0</Area>
+            <Insulation>
+              <SystemIdentifier id='FloorBedroom1Insulation'/>
+              <AssemblyEffectiveRValue>20.4</AssemblyEffectiveRValue>
+            </Insulation>
+          </Floor>
+          <Floor>
+            <SystemIdentifier id='FloorBathroom2'/>
+            <AttachedToSpace idref='bathroom_2'/>
+            <ExteriorAdjacentTo>attic - vented</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <FloorType>
+              <WoodFrame/>
+            </FloorType>
+            <Area>25.0</Area>
+            <Insulation>
+              <SystemIdentifier id='FloorBathroom2Insulation'/>
               <AssemblyEffectiveRValue>20.4</AssemblyEffectiveRValue>
             </Insulation>
           </Floor>
         </Floors>
         <Slabs>
           <Slab>
-            <SystemIdentifier id='Slab1'/>
+            <SystemIdentifier id='SlabWorkshop'/>
+            <AttachedToSpace idref='workshop'/>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
-            <Area>1479.0</Area>
-            <ExposedPerimeter>160.0</ExposedPerimeter>
+            <Area>360.0</Area>
+            <ExposedPerimeter>39.0</ExposedPerimeter>
             <PerimeterInsulation>
-              <SystemIdentifier id='Slab1PerimeterInsulation'/>
+              <SystemIdentifier id='SlabWorkshopPerimeterInsulation'/>
               <Layer>
                 <NominalRValue>0.0</NominalRValue>
                 <InsulationDepth>0.0</InsulationDepth>
               </Layer>
             </PerimeterInsulation>
             <UnderSlabInsulation>
-              <SystemIdentifier id='Slab1UnderSlabInsulation'/>
+              <SystemIdentifier id='SlabWorkshopUnderSlabInsulation'/>
+              <Layer>
+                <NominalRValue>0.0</NominalRValue>
+                <InsulationWidth>0.0</InsulationWidth>
+              </Layer>
+            </UnderSlabInsulation>
+          </Slab>
+          <Slab>
+            <SystemIdentifier id='SlabUtility'/>
+            <AttachedToSpace idref='utility_room'/>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Area>336.0</Area>
+            <ExposedPerimeter>38.0</ExposedPerimeter>
+            <PerimeterInsulation>
+              <SystemIdentifier id='SlabUtilityPerimeterInsulation'/>
+              <Layer>
+                <NominalRValue>0.0</NominalRValue>
+                <InsulationDepth>0.0</InsulationDepth>
+              </Layer>
+            </PerimeterInsulation>
+            <UnderSlabInsulation>
+              <SystemIdentifier id='SlabUtilityUnderSlabInsulation'/>
+              <Layer>
+                <NominalRValue>0.0</NominalRValue>
+                <InsulationWidth>0.0</InsulationWidth>
+              </Layer>
+            </UnderSlabInsulation>
+          </Slab>
+          <Slab>
+            <SystemIdentifier id='SlabRecRoom'/>
+            <AttachedToSpace idref='recroom'/>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Area>783.0</Area>
+            <ExposedPerimeter>83.0</ExposedPerimeter>
+            <PerimeterInsulation>
+              <SystemIdentifier id='SlabRecRoomPerimeterInsulation'/>
+              <Layer>
+                <NominalRValue>0.0</NominalRValue>
+                <InsulationDepth>0.0</InsulationDepth>
+              </Layer>
+            </PerimeterInsulation>
+            <UnderSlabInsulation>
+              <SystemIdentifier id='SlabRecRoomUnderSlabInsulation'/>
               <Layer>
                 <NominalRValue>0.0</NominalRValue>
                 <InsulationWidth>0.0</InsulationWidth>
@@ -154,152 +786,300 @@
         </Slabs>
         <Windows>
           <Window>
-            <SystemIdentifier id='Window1'/>
+            <SystemIdentifier id='WindowDiningRoomNorth'/>
             <Area>20.0</Area>
-            <Azimuth>0</Azimuth>
+            <Orientation>north</Orientation>
+            <GlassLayers>double-pane</GlassLayers>
+            <GlassType>clear</GlassType>
             <UFactor>0.56</UFactor>
             <SHGC>0.66</SHGC>
             <InteriorShading>
-              <SystemIdentifier id='Window1InteriorShading'/>
-              <SummerShadingCoefficient>0.6</SummerShadingCoefficient>
+              <SystemIdentifier id='WindowDiningRoomNorthInteriorShading'/>
+              <Type>medium blinds</Type>
+              <BlindsSummerClosedOrOpen>half open</BlindsSummerClosedOrOpen>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
             </InteriorShading>
-            <AttachedToWall idref='Wall1'/>
+            <AttachedToWall idref='WallDiningRoomNorth'/>
           </Window>
           <Window>
-            <SystemIdentifier id='Window2'/>
-            <Area>8.0</Area>
-            <Azimuth>90</Azimuth>
+            <SystemIdentifier id='WindowBedroom1West'/>
+            <Area>17.0</Area>
+            <Orientation>west</Orientation>
+            <GlassLayers>single-pane</GlassLayers>
+            <GlassType>clear</GlassType>
             <UFactor>0.87</UFactor>
             <SHGC>0.67</SHGC>
             <InteriorShading>
-              <SystemIdentifier id='Window2InteriorShading'/>
-              <SummerShadingCoefficient>0.6</SummerShadingCoefficient>
+              <SystemIdentifier id='WindowBedroom1WestInteriorShading'/>
+              <Type>medium blinds</Type>
+              <BlindsSummerClosedOrOpen>half open</BlindsSummerClosedOrOpen>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
             </InteriorShading>
-            <AttachedToWall idref='Wall1'/>
+            <AttachedToWall idref='WallBedroom1West'/>
           </Window>
           <Window>
-            <SystemIdentifier id='Window3'/>
+            <SystemIdentifier id='WindowRecRoomSouth'/>
             <Area>8.0</Area>
-            <Azimuth>180</Azimuth>
+            <Orientation>south</Orientation>
+            <GlassLayers>single-pane</GlassLayers>
+            <GlassType>clear</GlassType>
             <UFactor>0.87</UFactor>
             <SHGC>0.67</SHGC>
             <InteriorShading>
-              <SystemIdentifier id='Window3InteriorShading'/>
-              <SummerShadingCoefficient>0.6</SummerShadingCoefficient>
+              <SystemIdentifier id='WindowRecRoomSouthInteriorShading'/>
+              <Type>medium blinds</Type>
+              <BlindsSummerClosedOrOpen>half open</BlindsSummerClosedOrOpen>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
             </InteriorShading>
-            <AttachedToWall idref='FoundationWall1'/>
+            <AttachedToWall idref='FoundationWallRecRoomSouth'/>
           </Window>
           <Window>
-            <SystemIdentifier id='Window4'/>
+            <SystemIdentifier id='WindowWorkshopEast'/>
             <Area>4.0</Area>
-            <Azimuth>90</Azimuth>
+            <Orientation>east</Orientation>
+            <GlassLayers>single-pane</GlassLayers>
+            <GlassType>clear</GlassType>
             <UFactor>0.87</UFactor>
             <SHGC>0.67</SHGC>
             <InteriorShading>
-              <SystemIdentifier id='Window4InteriorShading'/>
-              <SummerShadingCoefficient>0.6</SummerShadingCoefficient>
+              <SystemIdentifier id='WindowWorkshopEastInteriorShading'/>
+              <Type>medium blinds</Type>
+              <BlindsSummerClosedOrOpen>half open</BlindsSummerClosedOrOpen>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
             </InteriorShading>
-            <AttachedToWall idref='FoundationWall1'/>
+            <AttachedToWall idref='FoundationWallWorkShopEast'/>
           </Window>
           <Window>
-            <SystemIdentifier id='Window5'/>
+            <SystemIdentifier id='WindowRecRoomEast'/>
+            <Area>8.0</Area>
+            <Orientation>east</Orientation>
+            <UFactor>0.87</UFactor>
+            <SHGC>0.67</SHGC>
+            <InteriorShading>
+              <SystemIdentifier id='WindowRecRoomEastInteriorShading'/>
+              <Type>medium blinds</Type>
+              <BlindsSummerClosedOrOpen>half open</BlindsSummerClosedOrOpen>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
+            </InteriorShading>
+            <AttachedToWall idref='FoundationWallRecRoomEast'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='WindowKitchenEast'/>
             <Area>11.0</Area>
-            <Azimuth>90</Azimuth>
+            <Orientation>east</Orientation>
+            <GlassLayers>double-pane</GlassLayers>
+            <GlassType>clear</GlassType>
             <UFactor>0.57</UFactor>
             <SHGC>0.56</SHGC>
             <InteriorShading>
-              <SystemIdentifier id='Window5InteriorShading'/>
-              <SummerShadingCoefficient>0.6</SummerShadingCoefficient>
+              <SystemIdentifier id='WindowKitchenEastInteriorShading'/>
+              <Type>medium blinds</Type>
+              <BlindsSummerClosedOrOpen>half open</BlindsSummerClosedOrOpen>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
             </InteriorShading>
+            <InsectScreen>
+              <SystemIdentifier id='WindowKitchenEastInsectScreen'/>
+              <Location>interior</Location>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
+            </InsectScreen>
             <Overhangs>
               <Depth>1.0</Depth>
               <DistanceToTopOfWindow>1.0</DistanceToTopOfWindow>
               <DistanceToBottomOfWindow>5.0</DistanceToBottomOfWindow>
             </Overhangs>
-            <AttachedToWall idref='Wall1'/>
+            <AttachedToWall idref='WallKitchenEast'/>
           </Window>
           <Window>
-            <SystemIdentifier id='Window6'/>
-            <Area>58.0</Area>
-            <Azimuth>90</Azimuth>
+            <SystemIdentifier id='WindowBathroom1East'/>
+            <Area>8.0</Area>
+            <Orientation>east</Orientation>
+            <GlassLayers>double-pane</GlassLayers>
+            <GlassType>clear</GlassType>
             <UFactor>0.57</UFactor>
             <SHGC>0.56</SHGC>
             <InteriorShading>
-              <SystemIdentifier id='Window6InteriorShading'/>
-              <SummerShadingCoefficient>0.6</SummerShadingCoefficient>
+              <SystemIdentifier id='WindowBathroom1EastInteriorShading'/>
+              <Type>medium blinds</Type>
+              <BlindsSummerClosedOrOpen>half open</BlindsSummerClosedOrOpen>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
             </InteriorShading>
+            <InsectScreen>
+              <SystemIdentifier id='WindowBathroom1EastInsectScreen'/>
+              <Location>interior</Location>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
+            </InsectScreen>
             <Overhangs>
               <Depth>1.0</Depth>
               <DistanceToTopOfWindow>1.0</DistanceToTopOfWindow>
               <DistanceToBottomOfWindow>5.0</DistanceToBottomOfWindow>
             </Overhangs>
-            <AttachedToWall idref='Wall1'/>
+            <AttachedToWall idref='WallBathroom1East'/>
           </Window>
           <Window>
-            <SystemIdentifier id='Window7'/>
+            <SystemIdentifier id='WindowBedroom3East'/>
             <Area>22.0</Area>
-            <Azimuth>180</Azimuth>
+            <Orientation>east</Orientation>
+            <GlassLayers>double-pane</GlassLayers>
+            <GlassType>clear</GlassType>
             <UFactor>0.57</UFactor>
             <SHGC>0.56</SHGC>
             <InteriorShading>
-              <SystemIdentifier id='Window7InteriorShading'/>
-              <SummerShadingCoefficient>0.6</SummerShadingCoefficient>
+              <SystemIdentifier id='WindowBedroom3EastInteriorShading'/>
+              <Type>medium blinds</Type>
+              <BlindsSummerClosedOrOpen>half open</BlindsSummerClosedOrOpen>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
             </InteriorShading>
+            <InsectScreen>
+              <SystemIdentifier id='WindowBedroom3EastInsectScreen'/>
+              <Location>interior</Location>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
+            </InsectScreen>
+            <Overhangs>
+              <Depth>1.0</Depth>
+              <DistanceToTopOfWindow>1.0</DistanceToTopOfWindow>
+              <DistanceToBottomOfWindow>5.0</DistanceToBottomOfWindow>
+            </Overhangs>
+            <AttachedToWall idref='WallBedroom3East'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='WindowBedroom2East'/>
+            <Area>17.0</Area>
+            <Orientation>east</Orientation>
+            <GlassLayers>double-pane</GlassLayers>
+            <GlassType>clear</GlassType>
+            <UFactor>0.57</UFactor>
+            <SHGC>0.56</SHGC>
+            <InteriorShading>
+              <SystemIdentifier id='WindowBedroom2EastInteriorShading'/>
+              <Type>medium blinds</Type>
+              <BlindsSummerClosedOrOpen>half open</BlindsSummerClosedOrOpen>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
+            </InteriorShading>
+            <InsectScreen>
+              <SystemIdentifier id='WindowBedroom2EastInsectScreen'/>
+              <Location>interior</Location>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
+            </InsectScreen>
+            <Overhangs>
+              <Depth>1.0</Depth>
+              <DistanceToTopOfWindow>1.0</DistanceToTopOfWindow>
+              <DistanceToBottomOfWindow>5.0</DistanceToBottomOfWindow>
+            </Overhangs>
+            <AttachedToWall idref='WallBedroom2East'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='WindowBedroom2South'/>
+            <Area>11.0</Area>
+            <Orientation>south</Orientation>
+            <GlassLayers>double-pane</GlassLayers>
+            <GlassType>clear</GlassType>
+            <UFactor>0.57</UFactor>
+            <SHGC>0.56</SHGC>
+            <InteriorShading>
+              <SystemIdentifier id='WindowBedroom2SouthInteriorShading'/>
+              <Type>medium blinds</Type>
+              <BlindsSummerClosedOrOpen>half open</BlindsSummerClosedOrOpen>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
+            </InteriorShading>
+            <InsectScreen>
+              <SystemIdentifier id='WindowBedroom2SouthInsectScreen'/>
+              <Location>interior</Location>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
+            </InsectScreen>
             <Overhangs>
               <Depth>1.0</Depth>
               <DistanceToTopOfWindow>5.0</DistanceToTopOfWindow>
               <DistanceToBottomOfWindow>9.0</DistanceToBottomOfWindow>
             </Overhangs>
-            <AttachedToWall idref='Wall1'/>
+            <AttachedToWall idref='WallBedroom2South'/>
           </Window>
           <Window>
-            <SystemIdentifier id='Window8'/>
-            <Area>8.0</Area>
-            <Azimuth>180</Azimuth>
+            <SystemIdentifier id='WindowBedroom1South'/>
+            <Area>11.0</Area>
+            <Orientation>south</Orientation>
+            <GlassLayers>double-pane</GlassLayers>
+            <GlassType>clear</GlassType>
             <UFactor>0.57</UFactor>
             <SHGC>0.56</SHGC>
             <InteriorShading>
-              <SystemIdentifier id='Window8InteriorShading'/>
-              <SummerShadingCoefficient>0.6</SummerShadingCoefficient>
+              <SystemIdentifier id='WindowBedroom1SouthInteriorShading'/>
+              <Type>medium blinds</Type>
+              <BlindsSummerClosedOrOpen>half open</BlindsSummerClosedOrOpen>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
             </InteriorShading>
+            <InsectScreen>
+              <SystemIdentifier id='WindowBedroom1SouthInsectScreen'/>
+              <Location>interior</Location>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
+            </InsectScreen>
+            <Overhangs>
+              <Depth>1.0</Depth>
+              <DistanceToTopOfWindow>5.0</DistanceToTopOfWindow>
+              <DistanceToBottomOfWindow>9.0</DistanceToBottomOfWindow>
+            </Overhangs>
+            <AttachedToWall idref='WallBedroom1South'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='WindowBathroom2South'/>
+            <Area>8.0</Area>
+            <Orientation>south</Orientation>
+            <GlassLayers>double-pane</GlassLayers>
+            <GlassType>clear</GlassType>
+            <UFactor>0.57</UFactor>
+            <SHGC>0.56</SHGC>
+            <InteriorShading>
+              <SystemIdentifier id='WindowBathroom2SouthInteriorShading'/>
+              <Type>medium blinds</Type>
+              <BlindsSummerClosedOrOpen>half open</BlindsSummerClosedOrOpen>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
+            </InteriorShading>
+            <InsectScreen>
+              <SystemIdentifier id='WindowBathroom2SouthInsectScreen'/>
+              <Location>interior</Location>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
+            </InsectScreen>
             <Overhangs>
               <Depth>1.0</Depth>
               <DistanceToTopOfWindow>8.0</DistanceToTopOfWindow>
               <DistanceToBottomOfWindow>12.0</DistanceToBottomOfWindow>
             </Overhangs>
-            <AttachedToWall idref='Wall1'/>
+            <AttachedToWall idref='WallBathroom2South'/>
           </Window>
           <Window>
-            <SystemIdentifier id='Window9'/>
+            <SystemIdentifier id='WindowLivingRoomWest'/>
             <Area>40.0</Area>
-            <Azimuth>270</Azimuth>
+            <Orientation>west</Orientation>
+            <GlassLayers>double-pane</GlassLayers>
+            <GlassType>clear</GlassType>
             <UFactor>0.56</UFactor>
             <SHGC>0.66</SHGC>
             <InteriorShading>
-              <SystemIdentifier id='Window9InteriorShading'/>
-              <SummerShadingCoefficient>0.6</SummerShadingCoefficient>
+              <SystemIdentifier id='WindowLivingRoomWestInteriorShading'/>
+              <Type>medium blinds</Type>
+              <BlindsSummerClosedOrOpen>half open</BlindsSummerClosedOrOpen>
+              <SummerFractionCovered>1.0</SummerFractionCovered>
             </InteriorShading>
             <Overhangs>
               <Depth>1.0</Depth>
               <DistanceToTopOfWindow>1.0</DistanceToTopOfWindow>
               <DistanceToBottomOfWindow>6.0</DistanceToBottomOfWindow>
             </Overhangs>
-            <AttachedToWall idref='Wall1'/>
+            <AttachedToWall idref='WallLivingRoomWest'/>
           </Window>
         </Windows>
         <Doors>
           <Door>
-            <SystemIdentifier id='Door1'/>
-            <AttachedToWall idref='Wall1'/>
+            <SystemIdentifier id='DoorLaundryEast'/>
+            <AttachedToWall idref='WallLaundryEast'/>
             <Area>17.33</Area>
-            <Azimuth>90</Azimuth>
+            <Orientation>east</Orientation>
             <RValue>2.86</RValue>
           </Door>
           <Door>
-            <SystemIdentifier id='Door2'/>
-            <AttachedToWall idref='Wall1'/>
+            <SystemIdentifier id='DoorHall1West'/>
+            <AttachedToWall idref='WallHall1West'/>
             <Area>21.0</Area>
-            <Azimuth>270</Azimuth>
+            <Orientation>west</Orientation>
             <RValue>2.86</RValue>
           </Door>
         </Doors>
@@ -309,6 +1089,7 @@
           <HVACPlant>
             <HeatingSystem>
               <SystemIdentifier id='HeatingSystem1'/>
+              <AttachedToZone idref='LongResidenceConditioned'/>
               <DistributionSystem idref='HVACDistribution1'/>
               <HeatingSystemType>
                 <Furnace/>
@@ -322,9 +1103,11 @@
             </HeatingSystem>
             <CoolingSystem>
               <SystemIdentifier id='CoolingSystem1'/>
+              <AttachedToZone idref='LongResidenceConditioned'/>
               <DistributionSystem idref='HVACDistribution1'/>
               <CoolingSystemType>central air conditioner</CoolingSystemType>
               <CoolingSystemFuel>electricity</CoolingSystemFuel>
+              <CompressorType>single stage</CompressorType>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
                 <Units>SEER</Units>
@@ -358,6 +1141,11 @@
                     <TotalOrToOutside>to outside</TotalOrToOutside>
                   </DuctLeakage>
                 </DuctLeakageMeasurement>
+                <extension>
+                  <ManualJInputs>
+                    <BlowerFanHeatBtuh>1707.0</BlowerFanHeatBtuh>
+                  </ManualJInputs>
+                </extension>
               </AirDistribution>
             </DistributionSystemType>
           </HVACDistribution>
@@ -377,7 +1165,7 @@
       </Appliances>
       <MiscLoads>
         <PlugLoad>
-          <SystemIdentifier id='PlugLoad2'/>
+          <SystemIdentifier id='PlugLoad1'/>
           <PlugLoadType>other</PlugLoadType>
         </PlugLoad>
       </MiscLoads>

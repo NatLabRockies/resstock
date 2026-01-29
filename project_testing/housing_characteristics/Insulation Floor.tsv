@@ -1,9 +1,9 @@
 Dependency=Geometry Foundation Type	Option=None	Option=Uninsulated	Option=Ceiling R-13	Option=Ceiling R-19	Option=Ceiling R-30	Option=Ceiling R-38	sampling_probability
-Unheated Basement	0	0.2	0.2	0.2	0.2	0.2	0.294444
-Heated Basement	0	1	0	0	0	0	0.0722222
-Vented Crawlspace	0	0.2	0.2	0.2	0.2	0.2	0.147222
-Unvented Crawlspace	0	0.2	0.2	0.2	0.2	0.2	0.147222
-Ambient	0	0.2	0.2	0.2	0.2	0.2	0.0444444
-Slab	1	0	0	0	0	0	0.294444
+Unheated Basement	0	0.2	0.2	0.2	0.2	0.2	0.207407
+Heated Basement	0	1	0	0	0	0	0.0407408
+Vented Crawlspace	0	0.2	0.2	0.2	0.2	0.2	0.207407
+Unvented Crawlspace	0	0.2	0.2	0.2	0.2	0.2	0.207407
+Ambient	0	0.2	0.2	0.2	0.2	0.2	0.12963
+Slab	1	0	0	0	0	0	0.207407
 # Created by: manually created
 # Description: Floor insulation level.

@@ -1,3 +1,4 @@
+.ruby-version
 /coverage
 /docs/_build
 /results
@@ -97,7 +98,6 @@
 /weather/USA_AR_Batesville.AWOS.723448_TMY3.epw
 /weather/USA_AR_Bentonville.AWOS.723444_TMY3.epw
 /weather/USA_AR_El.Dorado-Goodwin.Field.723419_TMY3.epw
-/weather/USA_AR_Fayetteville-Drake.Field.723445_TMY3.epw
 /weather/USA_AR_Flippin.AWOS.723447_TMY3.epw
 /weather/USA_AR_Fort.Smith.Rgnl.AP.723440_TMY3.epw
 /weather/USA_AR_Harrison.AP.723446_TMY3.epw
@@ -744,7 +744,6 @@
 /weather/USA_OK_Lawton.Muni.AP.723575_TMY3.epw
 /weather/USA_OK_McAlester.Rgnl.AP.723566_TMY3.epw
 /weather/USA_OK_Oklahoma.City-Tinker.AFB.723540_TMY3.epw
-/weather/USA_OK_Oklahoma.City-Wiley.Post.Field.723544_TMY3.epw
 /weather/USA_OK_Oklahoma.City-Will.Rogers.World.AP.723530_TMY3.epw
 /weather/USA_OK_Ponca.City.Muni.AP.723546_TMY3.epw
 /weather/USA_OK_Stillwater.Rgnl.AP.723545_TMY3.epw
@@ -1005,12 +1004,14 @@
 /workflow/reports
 /workflow/out.osw
 /workflow/tests/results
-/workflow/tests/run
+/workflow/tests/run*
 /workflow/tests/test*
 /workflow/sample_files/results
-/workflow/sample_files/run
+/workflow/sample_files/run*/
 /files
 /BuildResidentialHPXML/tests/extra_files
 /ReportUtilityBills/resources/detailed_rates/*.json
 !/ReportUtilityBills/resources/detailed_rates/Sample*.json
 /ReportUtilityBills/tests/results_bills.csv
+/HPXMLtoOpenStudio/resources/data/g_functions/g-function_library_1.0
+/HPXMLtoOpenStudio/tests/in.schedules.csv

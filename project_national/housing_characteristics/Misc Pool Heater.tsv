@@ -1,24 +1,20 @@
-Dependency=Location Region	Dependency=Misc Pool	Option=Electric	Option=Gas	Option=None	Option=Solar	source_count	source_weight	sampling_probability
-CR02	Has Pool	0.037172	0.295992	0.645969	0.020867	34	227731	0.00190244
-CR03	Has Pool	0.05587	0.014509	0.914894	0.014727	68	367652	0.00332455
-CR04	Has Pool	0.018125	0.263365	0.70113	0.01738	51	847394	0.00711625
-CR05	Has Pool	0	0.287847	0.712153	0	9	71503	0.000599263
-CR06	Has Pool	0	0.122766	0.754468	0.122766	8	83656.4	0.000798062
-CR07	Has Pool	0.015346	0.148032	0.831384	0.005238	122	1.38026e+06	0.0114048
-CR08	Has Pool	0.057332	0.020645	0.899583	0.02244	103	763932	0.00680969
-CR09	Has Pool	0.099529	0.103394	0.772285	0.024793	286	2.46831e+06	0.0214265
-CR10	Has Pool	0.113659	0.142378	0.690054	0.053909	52	527130	0.0046328
-CR11	Has Pool	0.034658	0.190776	0.69407	0.080496	162	1.18956e+06	0.0101428
-CR02	None	0	0	1	0	907	5.95277e+06	0.0515528
-CR03	None	0	0	1	0	870	5.14344e+06	0.0452266
-CR04	None	0	0	1	0	857	1.47337e+07	0.126748
-CR05	None	0	0	1	0	436	3.84909e+06	0.0350898
-CR06	None	0	0	1	0	359	3.7628e+06	0.0342812
-CR07	None	0	0	1	0	1206	1.38791e+07	0.118987
-CR08	None	0	0	1	0	1777	1.36736e+07	0.121586
-CR09	None	0	0	1	0	2918	2.93302e+07	0.270985
-CR10	None	0	0	1	0	315	3.45755e+06	0.0330993
-CR11	None	0	0	1	0	1444	1.10253e+07	0.0942874
-# Created by: Originally created by sources\recs\2009\tsv_maker.py. Manually updated during the transition to HPXML.
+Dependency=Heating Fuel	Dependency=Misc Pool	Option=Electric Heat Pump	Option=Electricity	Option=Natural Gas	Option=None	Option=Other Fuel	source_count	source_weight	sampling_probability
+Electricity	Has Pool	0.0184454	0.139695	0.0703046	0.671207	0.100347	411	3.08643e+06	0.0290182
+Fuel Oil	Has Pool	0.0246983	0.0530754	0	0.749028	0.173199	105	431588	0.0040479
+Natural Gas	Has Pool	0.0175311	0.0376736	0.262356	0.634394	0.0480448	619	4.04905e+06	0.0316922
+None	Has Pool	0.0581784	0.125023	0.0990135	0.60331	0.114475	53	390468	0.000543151
+Other Fuel	Has Pool	0	0	0	0	1	1	6953.18	0.000551967
+Propane	Has Pool	0.0234773	0.0504515	0	0.739533	0.186538	66	409140	0.00376982
+Wood	Has Pool	0	0	0	0.941845	0.0581551	25	147130	0.00163127
+Electricity	None	0	0	0	1	0	5288	3.94876e+07	0.36502
+Fuel Oil	None	0	0	0	1	0	992	4.50335e+06	0.0445443
+Natural Gas	None	0	0	0	1	0	8976	5.86644e+07	0.436976
+None	None	0	0	0	1	0	698	5.39976e+06	0.010796
+Other Fuel	None	0	0	0	1	0	7	47557.2	0.00688887
+Propane	None	0	0	0	1	0	862	4.80248e+06	0.0465161
+Wood	None	0	0	0	1	0	393	2.10314e+06	0.0180041
+# Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The heating fuel of the pool heater if there is a pool.
-# Source: Constructed using U.S. EIA 2009 Residential Energy Consumption Survey (RECS) microdata.
+# Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+# Source: Constructed using the California Energy Commission 2019 Residential Appliance Saturation Study (RASS) microdata.
+# Assumption: Within electric pool heaters, proportion of heat pump electric pool heating vs. non-heat pump electric pool heating was derived from RASS 2019.

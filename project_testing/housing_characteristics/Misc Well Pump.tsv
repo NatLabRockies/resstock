@@ -1,4 +1,4 @@
-Option=None	Option=National Average	Option=Typical Efficiency	Option=High Efficiency	sampling_probability
-0.25	0.25	0.25	0.25	1
-# Created by: manually created
-# Description: Presence and efficiency of well pump.
+Option=None	Option=Typical Efficiency	sampling_probability
+0.5	0.5	1
+# Created by: sources\ahs\ahs2017_2019\tsv_maker.py
+# Description: Presence of well pump according to the use of well for domestic water source.

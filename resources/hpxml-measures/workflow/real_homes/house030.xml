@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<HPXML xmlns='http://hpxmlonline.com/2019/10' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://hpxmlonline.com/2019/10' schemaVersion='4.0'>
+<HPXML xmlns='http://hpxmlonline.com/2023/09' schemaVersion='4.2'>
   <XMLTransactionHeaderInformation>
     <XMLType>HPXML</XMLType>
     <XMLGeneratedBy>redacted</XMLGeneratedBy>
@@ -8,7 +8,11 @@
   </XMLTransactionHeaderInformation>
   <SoftwareInfo>
     <extension>
-      <OccupancyCalculationType>asset</OccupancyCalculationType>
+      <UtilityBillScenarios>
+        <UtilityBillScenario>
+          <Name>Bills</Name>
+        </UtilityBillScenario>
+      </UtilityBillScenarios>
     </extension>
   </SoftwareInfo>
   <Building>
@@ -73,13 +77,14 @@
             <AttachedToFoundationWall idref='FoundationWall3'/>
             <AttachedToFoundationWall idref='FoundationWall4'/>
             <AttachedToSlab idref='Slab1'/>
+            <AttachedToSlab idref='Slab2'/>
           </Foundation>
           <Foundation>
             <SystemIdentifier id='Foundation2'/>
             <FoundationType>
               <SlabOnGrade/>
             </FoundationType>
-            <AttachedToSlab idref='Slab2'/>
+            <AttachedToSlab idref='Slab3'/>
           </Foundation>
         </Foundations>
         <Roofs>
@@ -110,7 +115,7 @@
           <RimJoist>
             <SystemIdentifier id='RimJoist1'/>
             <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
-            <InteriorAdjacentTo>living space</InteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
             <Area>114.0</Area>
             <Insulation>
               <SystemIdentifier id='RimJoist1Insulation'/>
@@ -120,7 +125,7 @@
           <RimJoist>
             <SystemIdentifier id='RimJoist2'/>
             <ExteriorAdjacentTo>garage</ExteriorAdjacentTo>
-            <InteriorAdjacentTo>living space</InteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
             <Area>26.0</Area>
             <Insulation>
               <SystemIdentifier id='RimJoist2Insulation'/>
@@ -132,7 +137,7 @@
           <Wall>
             <SystemIdentifier id='Wall1'/>
             <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
-            <InteriorAdjacentTo>living space</InteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
             <WallType>
               <WoodStud/>
             </WallType>
@@ -146,7 +151,7 @@
           <Wall>
             <SystemIdentifier id='Wall2'/>
             <ExteriorAdjacentTo>garage</ExteriorAdjacentTo>
-            <InteriorAdjacentTo>living space</InteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
             <WallType>
               <WoodStud/>
             </WallType>
@@ -261,7 +266,7 @@
           <Floor>
             <SystemIdentifier id='Floor1'/>
             <ExteriorAdjacentTo>attic - unvented</ExteriorAdjacentTo>
-            <InteriorAdjacentTo>living space</InteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
             <FloorType>
               <WoodFrame/>
             </FloorType>
@@ -276,9 +281,8 @@
           <Slab>
             <SystemIdentifier id='Slab1'/>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
-            <Area>574.0</Area>
-            <ExposedPerimeter>69.0</ExposedPerimeter>
-            <DepthBelowGrade>5.7</DepthBelowGrade>
+            <Area>348.5</Area>
+            <ExposedPerimeter>25.5</ExposedPerimeter>
             <PerimeterInsulation>
               <SystemIdentifier id='Slab1PerimeterInsulation'/>
               <Layer>
@@ -296,15 +300,14 @@
           </Slab>
           <Slab>
             <SystemIdentifier id='Slab2'/>
-            <InteriorAdjacentTo>living space</InteriorAdjacentTo>
-            <Area>602.0</Area>
-            <ExposedPerimeter>71.0</ExposedPerimeter>
-            <DepthBelowGrade>0.0</DepthBelowGrade>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Area>225.5</Area>
+            <ExposedPerimeter>27.1</ExposedPerimeter>
             <PerimeterInsulation>
               <SystemIdentifier id='Slab2PerimeterInsulation'/>
               <Layer>
-                <NominalRValue>10.0</NominalRValue>
-                <InsulationDepth>4.0</InsulationDepth>
+                <NominalRValue>0.0</NominalRValue>
+                <InsulationDepth>0.0</InsulationDepth>
               </Layer>
             </PerimeterInsulation>
             <UnderSlabInsulation>
@@ -317,19 +320,38 @@
           </Slab>
           <Slab>
             <SystemIdentifier id='Slab3'/>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <Area>602.0</Area>
+            <ExposedPerimeter>71.0</ExposedPerimeter>
+            <PerimeterInsulation>
+              <SystemIdentifier id='Slab3PerimeterInsulation'/>
+              <Layer>
+                <NominalRValue>10.0</NominalRValue>
+                <InsulationDepth>4.0</InsulationDepth>
+              </Layer>
+            </PerimeterInsulation>
+            <UnderSlabInsulation>
+              <SystemIdentifier id='Slab3UnderSlabInsulation'/>
+              <Layer>
+                <NominalRValue>0.0</NominalRValue>
+                <InsulationWidth>0.0</InsulationWidth>
+              </Layer>
+            </UnderSlabInsulation>
+          </Slab>
+          <Slab>
+            <SystemIdentifier id='Slab4'/>
             <InteriorAdjacentTo>garage</InteriorAdjacentTo>
             <Area>416.0</Area>
             <ExposedPerimeter>81.58</ExposedPerimeter>
-            <DepthBelowGrade>0.0</DepthBelowGrade>
             <PerimeterInsulation>
-              <SystemIdentifier id='Slab3PerimeterInsulation'/>
+              <SystemIdentifier id='Slab4PerimeterInsulation'/>
               <Layer>
                 <NominalRValue>0.0</NominalRValue>
                 <InsulationDepth>0.0</InsulationDepth>
               </Layer>
             </PerimeterInsulation>
             <UnderSlabInsulation>
-              <SystemIdentifier id='Slab3UnderSlabInsulation'/>
+              <SystemIdentifier id='Slab4UnderSlabInsulation'/>
               <Layer>
                 <NominalRValue>0.0</NominalRValue>
                 <InsulationWidth>0.0</InsulationWidth>
@@ -425,7 +447,7 @@
           <HVACPlant>
             <HeatingSystem>
               <SystemIdentifier id='HeatingSystem1'/>
-              <UnitLocation>living space</UnitLocation>
+              <UnitLocation>conditioned space</UnitLocation>
               <DistributionSystem idref='HVACDistribution1'/>
               <HeatingSystemType>
                 <Boiler/>
@@ -469,13 +491,10 @@
         <WaterHeating>
           <WaterHeatingSystem>
             <SystemIdentifier id='WaterHeatingSystem1'/>
-            <FuelType>propane</FuelType>
             <WaterHeaterType>space-heating boiler with storage tank</WaterHeaterType>
-            <Location>living space</Location>
+            <Location>conditioned space</Location>
             <TankVolume>50.0</TankVolume>
             <FractionDHWLoadServed>1.0</FractionDHWLoadServed>
-            <EnergyFactor>0.8</EnergyFactor>
-            <RecoveryEfficiency>0.87</RecoveryEfficiency>
             <WaterHeaterInsulation>
               <Jacket>
                 <JacketRValue>0.0</JacketRValue>

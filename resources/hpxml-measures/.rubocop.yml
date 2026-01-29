@@ -1,75 +1,68 @@
+AllCops:
+  DisabledByDefault: true
+  NewCops: enable
+
+Layout:
+  Enabled: true
 Layout/EndOfLine:
   Enabled: false
 Layout/LineLength:
   AutoCorrect: false
   Enabled: false
-Layout/RescueEnsureAlignment:
-  AutoCorrect: true
+Lint/DeprecatedClassMethods:
+  Enabled: true
+Lint/DuplicateElsifCondition:
+  Enabled: true
+Lint/DuplicateHashKey:
+  Enabled: true
+Lint/DuplicateMethods:
+  Enabled: true
+Lint/InterpolationCheck:
+  Enabled: true
+Lint/LiteralAsCondition:
+  Enabled: true
+Lint/RedundantStringCoercion:
+  Enabled: true
+Lint/SelfAssignment:
+  Enabled: true
+Lint/UnderscorePrefixedVariableName:
+  Enabled: true
+Lint/UnusedBlockArgument:
+  Enabled: true
+Lint/UnusedMethodArgument:
+  Enabled: true
+Lint/UselessAssignment:
+  Enabled: true
+Style/AndOr:
+  Enabled: true
+Style/Documentation:
+  Exclude:
+    - '**/tests/*.rb'
+    - 'workflow/**/*.rb'
+    - 'tasks.rb'
+Style/DocumentationMethod:
+  Exclude:
+    - '**/tests/*.rb'
+    - 'workflow/**/*.rb'
+    - 'tasks.rb'
 Style/FrozenStringLiteralComment:
-  AutoCorrect: true
-Style/HashEachMethods:
   Enabled: true
-Style/HashTransformKeys:
+Style/HashSyntax:
   Enabled: true
-Style/HashTransformValues:
+  EnforcedShorthandSyntax: never
+Style/Next:
   Enabled: true
-Gemspec/DateAssignment:
+Style/NilComparison:
   Enabled: true
-Layout/SpaceBeforeBrackets:
+Style/RedundantParentheses:
   Enabled: true
-Lint/AmbiguousAssignment:
+Style/RedundantSelf:
   Enabled: true
-Lint/DeprecatedConstants:
+Style/ReturnNil:
   Enabled: true
-Lint/DuplicateBranch:
+Style/SelfAssignment:
   Enabled: true
-Lint/DuplicateRegexpCharacterClassElement:
+Style/StringLiterals:
   Enabled: true
-Lint/EmptyBlock:
-  Enabled: true
-Lint/EmptyClass:
-  Enabled: true
-Lint/LambdaWithoutLiteralBlock:
-  Enabled: true
-Lint/NoReturnInBeginEndBlocks:
-  Enabled: true
-Lint/NumberedParameterAssignment:
-  Enabled: true
-Lint/OrAssignmentToConstant:
-  Enabled: true
-Lint/RedundantDirGlobSort:
-  Enabled: true
-Lint/SymbolConversion:
-  Enabled: true
-Lint/ToEnumArguments:
-  Enabled: true
-Lint/TripleQuotes:
-  Enabled: true
-Lint/UnexpectedBlockArity:
-  Enabled: true
-Lint/UnmodifiedReduceAccumulator:
-  Enabled: true
-Style/ArgumentsForwarding:
-  Enabled: true
-Style/CollectionCompact:
-  Enabled: true
-Style/DocumentDynamicEvalDefinition:
-  Enabled: true
-Style/EndlessMethod:
-  Enabled: true
-Style/HashConversion:
-  Enabled: true
-Style/HashExcept:
-  Enabled: true
-Style/IfWithBooleanLiteralBranches:
-  Enabled: true
-Style/NegatedIfElseCondition:
-  Enabled: true
-Style/NilLambda:
-  Enabled: true
-Style/RedundantArgument:
-  Enabled: true
-Style/StringChars:
-  Enabled: true
-Style/SwapValues:
+Style/StringLiteralsInInterpolation:
   Enabled: true
