@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>d70ecb43-b4d0-40a3-a6ac-ca81b7069f80</version_id>
-  <version_modified>2026-01-07T16:38:47Z</version_modified>
+  <version_id>865b714c-3e2c-4019-9305-c225b59801a3</version_id>
+  <version_modified>2026-02-25T23:13:43Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -11573,6 +11573,14 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>unit_multipliers</name>
+      <display_name>Building Construction: Unit Multipliers</display_name>
+      <description>Specifies the unit multipliers. Use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>ceiling_insulation_r</name>
       <display_name>Enclosure: Ceiling Insulation Nominal R-value</display_name>
       <description>Nominal R-value for the ceiling (attic floor).</description>
@@ -12534,7 +12542,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>9039509D</checksum>
+      <checksum>B952664E</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

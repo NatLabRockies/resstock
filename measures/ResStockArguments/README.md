@@ -1766,6 +1766,17 @@ The building vintage, used for informational purposes only.
 
 <br/>
 
+**Building Construction: Unit Multipliers**
+
+Specifies the unit multipliers. Use a comma-separated list.
+
+- **Name:** ``unit_multipliers``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
 **Enclosure: Ceiling Insulation Nominal R-value**
 
 Nominal R-value for the ceiling (attic floor).
