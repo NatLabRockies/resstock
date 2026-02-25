@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# see the URL below for information on how to write OpenStudio measures
-# http://nrel.github.io/OpenStudio-user-documentation/reference/measure_writing_guide/
-
 # start the measure
 class ServerDirectoryCleanup < OpenStudio::Measure::ReportingMeasure
   # define the name that a user will see, this method may be deprecated as

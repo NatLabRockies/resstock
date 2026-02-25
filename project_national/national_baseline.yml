@@ -19,7 +19,7 @@ sampler:
   args:
     n_datapoints: 250
 
-# NREL High Performance Computing machine configuration
+# NLR High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
 # kestrel:
 #   n_jobs: 3

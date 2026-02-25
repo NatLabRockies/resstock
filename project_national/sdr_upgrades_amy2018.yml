@@ -21,7 +21,7 @@ sampler:
     sample_file: resources/sdr_minimal_buildstock.csv # For CI
     # n_datapoints: 550000 # For production run
 
-# NREL High Performance Computing machine configuration
+# NLR High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
 kestrel:
   n_jobs: 600
