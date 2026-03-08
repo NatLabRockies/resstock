@@ -1,0 +1,327 @@
+schema_version: '0.6'
+os_version: 3.10.0
+os_sha: 86d7e215a1
+buildstock_directory: ../ # Relative to this file or absolute
+project_directory: project_national # Relative to buildstock_directory
+output_directory: sdr_upgrades_amy2018
+weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
+# weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
+# weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
+# weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
+
+# Baseline number of units
+baseline:
+  n_buildings_represented: 139647020 # American Community Survey 2021 5-year, B25001, does not include territories
+
+# Sampler type and number of data points per baseline or upgrade
+sampler:
+  type: precomputed
+  # type: residential_quota # For production run
+  args:
+    sample_file: resources/sdr_minimal_buildstock.csv # For CI
+    # n_datapoints: 550000 # For production run
+
+# NREL High Performance Computing machine configuration
+# Not used if running buildstock_local (local tests and CI)
+kestrel:
+  n_jobs: 600
+  minutes_per_sim: 10
+  account: <account>
+  postprocessing:
+    time: 800
+    n_workers: 20
+    n_procs: 20
+  sampling:
+    time: 60
+
+# Timeout to avoid whole-job failures from long-running models
+max_minutes_per_sim: 5
+
+# Post processing and Amazon Web Services
+postprocessing:
+  # Post simulation partitioning
+  keep_individual_timeseries: true
+  partition_columns:
+    - State
+    - County
+  publish_annual_results: true
+  # AWS upload bucket and athena setup (uncomment during production and testing runs)
+  aws:
+   region_name: us-west-2
+   s3:
+     bucket: resstock-core
+     prefix: resstock_ci
+   athena:
+     glue_service_role: service-role/AWSGlueServiceRole-default
+     database_name: resstock_core
+     max_crawling_time: 1200
+
+# Workflow generator
+workflow_generator:
+  # ResStock HPXML workflow generator
+  type: residential_hpxml
+  version: 2025.04.29
+
+  args:
+    # Annual simulation and timestep
+    build_existing_model:
+      simulation_control_timestep: 15
+      simulation_control_run_period_begin_month: 1
+      simulation_control_run_period_begin_day_of_month: 1
+      simulation_control_run_period_end_month: 12
+      simulation_control_run_period_end_day_of_month: 31
+      simulation_control_run_period_calendar_year: 2018
+      add_component_loads: true
+
+    # Emissions scenarios
+    emissions:
+      - scenario_name: AER_HighRECost_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_HighRECost_Avg
+      - scenario_name: AER_HighRECostLowNGPrice_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_HighRECostLowNGPrice_Avg
+      - scenario_name: AER_LowRECost_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_LowRECost_Avg
+      - scenario_name: AER_LowRECostHighNGPrice_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_LowRECostHighNGPrice_Avg
+      - scenario_name: AER_MidCase_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_MidCase_Avg
+      - scenario_name: LRMER_HighRECost_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_15
+      - scenario_name: LRMER_HighRECost_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_25
+      - scenario_name: LRMER_HighRECostLowNGPrice_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_15
+      - scenario_name: LRMER_HighRECostLowNGPrice_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_25
+      - scenario_name: LRMER_LowRECost_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_15
+      - scenario_name: LRMER_LowRECost_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_25
+      - scenario_name: LRMER_LowRECostHighNGPrice_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_15
+      - scenario_name: LRMER_LowRECostHighNGPrice_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_25
+      - scenario_name: LRMER_MidCase_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_15
+      - scenario_name: LRMER_MidCase_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_25
+
+    # Utility bill rates
+    utility_bills:
+      - scenario_name: Utility Rates - Fixed + Variable
+        simple_filepath: data/utility_bills/sdr_rates/State.tsv
+
+    # Outputs to include
+    simulation_output_report:
+      timeseries_frequency: hourly
+      include_timeseries_total_consumptions: true
+      include_timeseries_fuel_consumptions: true
+      include_timeseries_end_use_consumptions: true
+      include_timeseries_emissions: true
+      include_timeseries_emission_fuels: true
+      include_timeseries_emission_end_uses: false
+      include_timeseries_hot_water_uses: true
+      include_timeseries_total_loads: true
+      include_timeseries_component_loads: true
+      include_timeseries_unmet_hours: true
+      include_timeseries_zone_temperatures: true
+      include_timeseries_zone_conditions: true
+      include_timeseries_airflows: true
+      include_timeseries_weather: true
+      include_timeseries_resilience: true
+      output_variables:
+        - name: People Sensible Heating Rate
+        - name: People Total Heating Rate
+        - name: Site Outdoor Air Humidity Ratio
+
+    # Other reporting measures to run
+    reporting_measures:
+      - measure_dir_name: QOIReport
+
+    # Files to keep
+    server_directory_cleanup:
+      retain_in_idf: true
+      retain_schedules_csv: true
+      retain_in_osm: true
+
+references:
+  ### -- Anchors dependent on other anchors -- ###
+  fossil_fuel_or_electricity: &fossil_fuel_or_electricity
+    - not: Heating Fuel|Wood
+    - not: Heating Fuel|Other Fuel
+    - not: Heating Fuel|None
+  
+  room_ac_ceer_16_20%_conditioned_apply_logic: &room_ac_ceer_16_20%_conditioned_apply_logic
+  # TODO: need to add in HVAC Cooling Efficiency|Room AC, CEER 16.0 somewhere
+    option: HVAC Cooling Partial Space Conditioning|20% Conditioned
+    apply_logic:
+    - or:
+      - HVAC Cooling Type|None
+    - or:
+      - HVAC Cooling Partial Space Conditioning|None
+    - or:
+      - Geometry Floor Area Bin|4000+
+  
+  room_ac_ceer_16_40%_conditioned_apply_logic: &room_ac_ceer_16_40%_conditioned_apply_logic
+     # TODO: need to add in HVAC Cooling Efficiency|Room AC, CEER 16.0 somewhere
+    option: HVAC Cooling Partial Space Conditioning|40% Conditioned
+    apply_logic:
+    - or:
+      - HVAC Cooling Type|None
+    - or:
+      - HVAC Cooling Partial Space Conditioning|None
+    - or:
+      - Geometry Floor Area Bin|2500-3999
+      - Geometry Floor Area Bin|1500-2499
+
+  room_ac_ceer_16_60%_conditioned_apply_logic: &room_ac_ceer_16_60%_conditioned_apply_logic
+     # TODO: need to add in HVAC Cooling Efficiency|Room AC, CEER 16.0 somewhere
+    option: HVAC Cooling Partial Space Conditioning|60% Conditioned
+    apply_logic:
+    - or:
+      - HVAC Cooling Type|None
+    - or:
+      - HVAC Cooling Partial Space Conditioning|None
+    - or:
+      - Geometry Floor Area Bin|0-1499
+  
+  room_ac_ceer_16_2026_reference_case_apply_logic: &room_ac_ceer_16_2026_reference_case_apply_logic
+    option: HVAC Cooling Efficiency|Room AC, CEER 16.0
+    apply_logic:
+    - or:
+      - HVAC Cooling Efficiency|Room AC, CEER 8.4
+      - HVAC Cooling Efficiency|Room AC, CEER 9.7
+      - HVAC Cooling Efficiency|Room AC, CEER 10.6
+      - HVAC Cooling Efficiency|Room AC, CEER 11.0
+      - HVAC Cooling Efficiency|Room AC, CEER 11.9
+  
+  natural_gas_boiler_84%_2026_reference_case_apply_logic: &natural_gas_boiler_84%_2026_reference_case_apply_logic
+    option: HVAC Heating Efficiency|Fuel Boiler, 84% AFUE
+    apply_logic:
+    - or:
+      - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+      - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+      - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+    - or:
+      - Heating Fuel|Natural Gas
+  
+  fuel_oil_boiler_86%_2026_reference_case_apply_logic: &fuel_oil_boiler_86%_2026_reference_case_apply_logic
+    option: HVAC Heating Efficiency|Fuel Boiler, 86% AFUE
+    apply_logic:
+    - or:
+      - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+      - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+      - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+    - or:
+      - Heating Fuel|Fuel Oil
+
+  natural_gas_wall_furnace_75%_2026_reference_case_apply_logic: &natural_gas_wall_furnace_75%_2026_reference_case_apply_logic
+    option: HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 75% AFUE
+    apply_logic:
+    - or:
+      - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE
+      - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
+    - or:
+      - Heating Fuel|Natural Gas
+    
+  cchp_apply_logic: &typical_cold_climate_logic
+    - HVAC Has Ducts|Yes # apply to homes with ducts who have non-shared HVAC or shared HVAC with room for a condenser
+    - or:
+        - not:
+          - or:
+            - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+            - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+            - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+            - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+            - HVAC Shared Efficiencies|Fan Coil Cooling Only
+        # - or:
+        - and:
+          - HVAC Cooling Type|Ducted Heat Pump
+          - or:
+            - Geometry Building Type ACS|10 to 19 Unit
+            - Geometry Building Type ACS|2 Unit
+            - Geometry Building Type ACS|20 to 49 Unit
+            - Geometry Building Type ACS|3 or 4 Unit
+            - Geometry Building Type ACS|5 to 9 Unit
+            - Geometry Building Type ACS|50 or more Unit
+        - and:
+          - HVAC Cooling Type|Non-Ducted Heat Pump
+          - or:
+            - Geometry Building Type ACS|10 to 19 Unit
+            - Geometry Building Type ACS|2 Unit
+            - Geometry Building Type ACS|20 to 49 Unit
+            - Geometry Building Type ACS|3 or 4 Unit
+            - Geometry Building Type ACS|5 to 9 Unit
+            - Geometry Building Type ACS|50 or more Unit
+        - and:
+          - HVAC Cooling Type|Central AC
+          - not: HVAC Shared Efficiencies|Fan Coil Cooling Only
+          - or:
+            - Geometry Building Type ACS|10 to 19 Unit
+            - Geometry Building Type ACS|2 Unit
+            - Geometry Building Type ACS|20 to 49 Unit
+            - Geometry Building Type ACS|3 or 4 Unit
+            - Geometry Building Type ACS|5 to 9 Unit
+            - Geometry Building Type ACS|50 or more Unit
+
+### Standard Data Release - Residential -- ###
+upgrades:
+  ### -- HVAC: Furnaces -- ###
+  - upgrade_name: Reference Non-ducted Space Heating and Air Conditioning Circa 2026
+    package_apply_logic:
+      and:
+      - *natural_gas_boiler_84%_2026_reference_case_apply_logic
+      - *fuel_oil_boiler_86%_2026_reference_case_apply_logic
+      - *natural_gas_wall_furnace_75%_2026_reference_case_apply_logic
+      - *room_ac_ceer_16_2026_reference_case_apply_logic
+
+  ### -- HVAC: Air Source Heat Pumps -- ###
+  - upgrade_name: Air Source Heat Pump SEER2 14.3, HSPF2 7.5
+  # TODO - add duct sizing limitation
+    package_apply_logic: *fossil_fuel_or_electricity
+    options:
+      - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic: *typical_cold_climate_logic
+
+      - option: Heating Fuel|Electricity
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: Heating Fuel|Electricity
+              
+      - option: HVAC Heating Type And Fuel|Electricity ASHP
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: HVAC Heating Type And Fuel|Electricity ASHP
+
+  ### -- HVAC: Room AC -- ###
+  - upgrade_name: Room AC
+    package_apply_logic:
+    - and:
+        - *room_ac_ceer_16_20%_conditioned_apply_logic
+        - *room_ac_ceer_16_40%_conditioned_apply_logic
+        - *room_ac_ceer_16_60%_conditioned_apply_logic
+    options:
+      - option: HVAC Cooling Efficiency|Room AC, CEER 16.0

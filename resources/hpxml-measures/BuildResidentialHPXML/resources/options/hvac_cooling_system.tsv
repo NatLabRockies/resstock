@@ -38,6 +38,7 @@ None	none
 "Room AC, CEER 11.0"	room air conditioner	CEER	11									
 "Room AC, CEER 11.9"	room air conditioner	CEER	11.9									
 "Room AC, CEER 13.1"	room air conditioner	CEER	13.1									
+"Room AC, CEER 16.0"	room air conditioner	CEER	16.0									
 "Packaged Terminal AC, EER 8.5"	packaged terminal air conditioner	EER	8.5									
 "Packaged Terminal AC, EER 9.8"	packaged terminal air conditioner	EER	9.8									
 "Packaged Terminal AC, EER 10.7"	packaged terminal air conditioner	EER	10.7									
@@ -63,3 +64,4 @@ Evaporative Cooler	evaporative cooler
 # Detailed Performance Data Cooling Min Speed COPs: Minimum speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.												
 # Detailed Performance Data Cooling Nom Speed COPs: Nominal speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.												
 # Detailed Performance Data Cooling Max Speed COPs: Maximum speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.												
+
