@@ -15,6 +15,12 @@ from resstockpostproc.shared_utils.timing import timed
 
 FIGURE_FORMATS = {FileType.html, FileType.svg, FileType.pdf}
 
+# Plotly HTML config: editable titles/labels + custom download buttons
+PLOTLY_HTML_CONFIG: dict = {
+    "editable": True,
+    "modeBarButtonsToRemove": ["toImage"],
+}
+
 
 @timed
 def save_figure(
@@ -33,7 +39,7 @@ def save_figure(
         ensure_directory(filepath)
         fullpath = filepath / f"{title}.{fmt.value}"
         if fmt == FileType.html:
-            fig.write_html(fullpath, include_plotlyjs="cdn")
+            fig.write_html(fullpath, include_plotlyjs="cdn", config=PLOTLY_HTML_CONFIG)
             _make_html_resizable(fullpath)
         else:
             # For PDF/SVG, use larger scale and ensure proper dimensions
@@ -56,16 +62,22 @@ def _make_html_resizable(html_path: Path) -> None:
         return
     orig_h, orig_w = m.group(1), m.group(2)
 
-    # 1. Make the plotly div fill its container
+    # 1. Hide "Click to enter ..." placeholder text from editable mode
+    placeholder_css = (
+        '<style>.js-placeholder{opacity:0!important;pointer-events:none!important}</style>\n'
+    )
+    html = html.replace("</head>", placeholder_css + "</head>")
+
+    # 2. Make the plotly div fill its container
     html = html.replace(
         f'style="height:{orig_h}px; width:{orig_w}px;"',
         'style="width:100%; height:100%;"',
     )
 
-    # 2. Remove fixed width/height from Plotly layout JSON so autosize takes effect
+    # 3. Remove fixed width/height from Plotly layout JSON so autosize takes effect
     html = re.sub(r'"width":\s*[\d.]+,\s*"height":\s*[\d.]+,', '"autosize":true,', html)
 
-    # 3. Wrap <body> content in a resizable container + add ResizeObserver
+    # 4. Wrap <body> content in a resizable container + add ResizeObserver
     resize_wrapper = (
         f'<div id="resize-container" style="resize:both; overflow:hidden; '
         f'width:{orig_w}px; height:{orig_h}px; border:1px solid #ddd; '
@@ -76,9 +88,32 @@ def _make_html_resizable(html_path: Path) -> None:
 (function() {
   var container = document.getElementById('resize-container');
   var chart = container.querySelector('.plotly-graph-div');
-  if (container && chart) {
-    new ResizeObserver(function() { Plotly.Plots.resize(chart); }).observe(container);
-  }
+  if (!container || !chart) return;
+
+  new ResizeObserver(function() { Plotly.Plots.resize(chart); }).observe(container);
+
+  // Add custom PNG and SVG download buttons to the modebar
+  var icon = Plotly.Icons.camera;
+  Plotly.newPlot(chart, chart.data, chart.layout, Object.assign({}, chart._context, {
+    editable: true,
+    modeBarButtonsToRemove: ['toImage'],
+    modeBarButtonsToAdd: [
+      {
+        name: 'Download PNG',
+        icon: icon,
+        click: function(gd) {
+          Plotly.downloadImage(gd, {format: 'png', filename: 'plot', width: gd.offsetWidth, height: gd.offsetHeight, scale: 2});
+        }
+      },
+      {
+        name: 'Download SVG',
+        icon: icon,
+        click: function(gd) {
+          Plotly.downloadImage(gd, {format: 'svg', filename: 'plot', width: gd.offsetWidth, height: gd.offsetHeight});
+        }
+      }
+    ]
+  }));
 })();
 </script>
 """
