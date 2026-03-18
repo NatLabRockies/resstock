@@ -20,6 +20,7 @@ COLUMNS = [
     "Group By",
     "Main Visualization",
     "Extra Visualization",
+    "Test",
 ]
 
 EIA_QUANTITIES = [
@@ -130,6 +131,32 @@ RECS_HIGHLIGHT_MONTHLY = {
     "Natural Gas Space Heating",
     "Natural Gas Water Heating",
 }
+
+
+def _path_signature(truth_source, quantity, metric, coverage, group_by):
+    """Compute code-path signature — rows with the same signature exercise the same pipeline path.
+
+    Two rows with the same signature traverse identical code paths through the
+    plotting pipeline (plotter selection, config resolution, rendering dispatch).
+    They differ only in the data flowing through.
+    """
+    if quantity == "Number of dwelling units":
+        qty_type = "units_count"
+    elif quantity == "All Enduses":
+        qty_type = "all_enduses"
+    else:
+        qty_type = "regular"
+
+    if group_by == "state":
+        gb_type = "state"
+    elif group_by == "utility":
+        gb_type = "utility"
+    else:
+        gb_type = "other"
+
+    cov_type = "all" if coverage in (EIA_COVERAGE, LRD_COVERAGE, RECS_ALL) else "users"
+
+    return (truth_source, metric, cov_type, gb_type, qty_type)
 
 
 def is_highlight(truth_source, quantity, group_by, metric):
@@ -297,6 +324,19 @@ def main():
     for i, row in enumerate(rows, start=1):
         row["Index"] = i
 
+    # Mark minimal test subset: first row for each unique code-path signature
+    seen_signatures = set()
+    for row in rows:
+        sig = _path_signature(
+            row["Truth Source"], row["Quantity"], row["Metric"],
+            row["Coverage"], row["Group By"],
+        )
+        if sig not in seen_signatures:
+            row["Test"] = "Yes"
+            seen_signatures.add(sig)
+        else:
+            row["Test"] = ""
+
     file_comments = [
         "# Created by: generate_plot_definition.py",
         "#",
@@ -327,6 +367,8 @@ def main():
         " 'difference view' = percent difference vs truth source."
         " 'temperature count' = temperature observation distribution."
         " Blank = no extra visualization.",
+        "# Test: 'Yes' marks one row per unique code-path signature."
+        " Use --test in plot_generator.py to generate only these rows.",
     ]
 
     output_path = Path(__file__).parent / "plot_definition.tsv"
@@ -343,6 +385,7 @@ def main():
     for s in ["eia", "recs", "lrd"]:
         print(f"  {s}: {by_source[s]} rows")
     print(f"  Highlighted: {sum(1 for r in rows if r['Highlight'] == 'Yes')}")
+    print(f"  Test subset: {sum(1 for r in rows if r['Test'] == 'Yes')}")
     print(f"  Unique quantities: {len(set(r['Quantity'] for r in rows))}")
 
 

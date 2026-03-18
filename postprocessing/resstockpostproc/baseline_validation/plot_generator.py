@@ -161,11 +161,12 @@ def _simplify_viz_label(viz_type):
 # ---------------------------------------------------------------------------
 
 
-def read_plot_definition(index=None):
+def read_plot_definition(index=None, test_only=False):
     """Read plot_definition.tsv and return list of (row_dict, [PlotSpec, ...]) tuples.
 
     Each TSV row produces 1-2 PlotSpecs (main + optional extra visualization).
     If index is provided, only return rows matching that index (int or range).
+    If test_only is True, only return rows where Test column is "Yes".
     """
     # Determine which indices to include
     if isinstance(index, int):
@@ -186,6 +187,9 @@ def read_plot_definition(index=None):
 
             row_index = int(idx_str)
             if wanted is not None and row_index not in wanted:
+                continue
+
+            if test_only and row.get("Test", "").strip() != "Yes":
                 continue
 
             # Parse fields
@@ -395,15 +399,38 @@ def _generate_spec_plots(
     append_html_row(html_path, results[result_key], OUTPUT_COLUMNS, html_suffix_size)
 
 
-def generate_plots(index=None):
+def _trim_focus_for_test(focus_values):
+    """Trim focus values to a minimal set for test mode.
+
+    Keeps at most 3 values covering each distinct code path:
+    - None (overview/multi-entity plot)
+    - "US Total" (single-entity with special Group By handling)
+    - One regular entity (single-entity with label simplification)
+    """
+    trimmed = []
+    has_regular = False
+    for v in focus_values:
+        if v is None:
+            trimmed.append(v)
+        elif v == "US Total":
+            trimmed.append(v)
+        elif not has_regular:
+            trimmed.append(v)
+            has_regular = True
+    return trimmed
+
+
+def generate_plots(index=None, test_only=False):
     """Generate plots from plot_definition.tsv.
 
     Args:
         index: If provided, only generate plots for this row index (int),
                or a set/list of indices. If None, generate all plots.
+        test_only: If True, only generate the test subset (Test=Yes rows)
+                   with limited focus expansion.
     """
     wall_start = time.perf_counter()
-    tasks = read_plot_definition(index)
+    tasks = read_plot_definition(index, test_only=test_only)
     logger.info(f"Generating {len(tasks)} plot definition rows ({sum(len(s) for _, s in tasks)} total plots)...")
 
     output_formats = [FileType(fmt.value) for fmt in workflow.plots.output_formats]
@@ -442,6 +469,9 @@ def generate_plots(index=None):
         # require a specific focus entity: ALL enduse plots and matrix layout)
         if sample_spec.quantity != DataCol.ALL and sample_spec.resolution != Resolution.hour_of_day_matrix:
             focus_values.insert(0, None)
+
+        if test_only:
+            focus_values = _trim_focus_for_test(focus_values)
 
         for focus_val in focus_values:
             work_items.append((row, spec_entries, row_index, focus_val))
@@ -546,6 +576,11 @@ def generate_lrd_plots():
     generate_plots(index=lrd_indices)
 
 
+def generate_test_plots():
+    """Generate only test subset plots (rows with Test=Yes, limited focus expansion)."""
+    generate_plots(test_only=True)
+
+
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
@@ -569,10 +604,14 @@ def main():
     parser.add_argument(
         "--index", type=str, default=None, help="Plot definition index to generate (e.g. '5', '1-10', '1,3,5')"
     )
+    parser.add_argument(
+        "--test", action="store_true", default=True,
+        help="Generate only test subset plots (rows with Test=Yes, limited focus expansion)",
+    )
     args = parser.parse_args()
 
     index = parse_index_arg(args.index) if args.index else None
-    generate_plots(index=index)
+    generate_plots(index=index, test_only=args.test)
     return 0
 
 
