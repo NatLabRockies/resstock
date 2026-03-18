@@ -311,10 +311,34 @@ def _resolve_lrd_title(plot_spec: PlotSpec) -> str:
             raise ValueError(f"Unsupported resolution '{plot_spec.resolution}' for LRD plot.")
 
 
+def _format_quantity_name(quantity: DataCol) -> str:
+    """Convert a DataCol enum value to a human-readable title-case name.
+
+    Examples: electricity_total → "Electricity Total", natural_gas_space_heating → "Natural Gas Space Heating"
+    """
+    return quantity.value.replace("_", " ").title()
+
+
+_AGGREGATION_LEVEL_LABELS = {
+    "census_division_recs": "Census Division",
+    "geometry_building_type_recs": "Building Type",
+    "building_america_climate_zone": "Climate Zone",
+    "heating_fuel": "Heating Fuel",
+    "state": "State",
+    "eiaid": "Utility",
+}
+
+
+def _format_aggregation_level(agg_level: str) -> str:
+    """Convert an aggregation level column name to a display label."""
+    return _AGGREGATION_LEVEL_LABELS.get(agg_level, agg_level.replace("_", " ").title())
+
+
 def _resolve_recs_eia_title(plot_spec: PlotSpec) -> str:
     """Build title for RECS/EIA plots based on quantity, aggregation, coverage, and view."""
-    quantity_name = "Enduse" if plot_spec.quantity == DataCol.ALL else plot_spec.quantity
-    grouping = f"in {plot_spec.focus_on}" if plot_spec.focus_on else f"by {plot_spec.aggregation_level}"
+    quantity_name = "Enduse" if plot_spec.quantity == DataCol.ALL else _format_quantity_name(plot_spec.quantity)
+    agg_label = _format_aggregation_level(plot_spec.aggregation_level)
+    grouping = f"in {plot_spec.focus_on}" if plot_spec.focus_on else f"by {agg_label}"
 
     # Dwelling unit count case
     if plot_spec.quantity == DataCol.UNITS_COUNT:
@@ -322,12 +346,12 @@ def _resolve_recs_eia_title(plot_spec: PlotSpec) -> str:
 
     # Penetration view
     elif plot_spec.view == ViewType.penetration:
-        base_title = f"Annual {plot_spec.quantity} Percent of Customers {grouping}"
+        base_title = f"Annual {quantity_name} Percent of Customers {grouping}"
 
     # Distribution view
     elif plot_spec.view == ViewType.distribution:
         unit = "kWh/user" if plot_spec.coverage == CoverageType.users_only else "kWh/home"
-        base_title = f"Annual {plot_spec.quantity} {unit} distribution {grouping}"
+        base_title = f"Annual {quantity_name} {unit} distribution {grouping}"
 
     # Total aggregation
     elif plot_spec.aggregation_type == AggregationType.total:
@@ -336,16 +360,16 @@ def _resolve_recs_eia_title(plot_spec: PlotSpec) -> str:
     # Average aggregation
     elif plot_spec.aggregation_type == AggregationType.average:
         if plot_spec.coverage == CoverageType.users_only:
-            base_title = f"Annual {plot_spec.quantity} per User {grouping}"
+            base_title = f"Annual {quantity_name} per User {grouping}"
         else:
-            base_title = f"Annual {plot_spec.quantity} per Unit {grouping}"
+            base_title = f"Annual {quantity_name} per Unit {grouping}"
 
     else:
         base_title = f"Annual {quantity_name} {grouping}"
 
-    # Add monthly prefix if applicable
+    # Replace "Annual" with "Monthly" if applicable
     if plot_spec.resolution == Resolution.month:
-        base_title = "Monthly " + base_title
+        base_title = base_title.replace("Annual ", "Monthly ", 1)
 
     return base_title
 
@@ -568,4 +592,4 @@ def get_second_category_title(plot_spec: PlotSpec) -> str:
         case _:
             if plot_spec.aggregation_level == "eiaid":
                 return "Utility (State)"
-            return plot_spec.aggregation_level.capitalize()
+            return _format_aggregation_level(plot_spec.aggregation_level)

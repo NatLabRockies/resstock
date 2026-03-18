@@ -71,6 +71,8 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
                 )
                 timeseries_column = "percent_time"
                 title = "Load Duration Curve of electricity consumption per dwelling unit"
+                if plot_spec.resolution == Resolution.top_100_hours:
+                    title += " (Top 100 Hours)"
                 ts_xtick_text = ("  0%", "100%    ")
                 max_val = final_df["percent_time"].max()
                 min_val = final_df["percent_time"].min()
