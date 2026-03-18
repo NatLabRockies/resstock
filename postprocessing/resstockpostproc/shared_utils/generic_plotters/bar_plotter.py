@@ -97,7 +97,7 @@ def create_bar_plot(
             else:
                 marker_color = colors
                 marker_pattern_shape = ""
-            ytickvals = y_data
+            ytickvals = x_data if orientation == "v" else y_data
             
             # Calculate error bars if rse_column is provided
             error_x = None

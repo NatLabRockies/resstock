@@ -7,10 +7,10 @@
 workgroup: rescore
 
 data_sources:
-  - db_name: buildstock_sdr
-    table_name: resstock_2024_amy2018_release_2
-    name: resstock_2024
-    db_schema: resstock_oedi_vu
+  # - db_name: buildstock_sdr
+  #   table_name: resstock_2024_amy2018_release_2
+  #   name: resstock_2024
+  #   db_schema: resstock_oedi_vu
   - db_name: buildstock_sdr
     table_name: resstock_amy2018_r1_2025
     name: resstock_2025
@@ -35,8 +35,9 @@ plots:
 
   output_formats:
     - html
-    - svg
-    - parquet
+    - csv
+    # - svg
+    # - parquet
 
 # Quantities to Generate
 # ----------------------

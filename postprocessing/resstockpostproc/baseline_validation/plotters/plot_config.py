@@ -2,6 +2,11 @@
 
 This module provides the PlotConfig dataclass and builder functions that
 translate a PlotSpec into rendering-ready configuration.
+
+Architecture:
+    build_plot_config() composes focused resolver functions, each handling
+    one aspect of the config. Each resolver internally dispatches based on
+    truth_source, resolution, and view_type.
 """
 
 from dataclasses import dataclass
@@ -44,6 +49,10 @@ class PlotConfig:
     ts_xtick_text: tuple | None
     x_unit: str
 
+    # Section titles (for tilemap grid and sidebar headers)
+    main_section_title: str
+    sidebar_section_title: str
+
     # Layout dimensions
     height: float
     width: float
@@ -53,8 +62,16 @@ class PlotConfig:
     is_single_entity: bool
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# Main Entry Point
+# ─────────────────────────────────────────────────────────────────────────────
+
+
 def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
     """Build a PlotConfig from a PlotSpec and data.
+
+    Composes focused resolver functions to build each config field.
+    Post-processing handles view-type swapping and monthly sidebar clearing.
 
     Args:
         plot_spec: The plot specification
@@ -63,29 +80,24 @@ def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
     Returns:
         PlotConfig with all rendering parameters resolved
     """
-    if plot_spec.truth_source == TruthSource.lrd:
-        return _build_lrd_config(plot_spec, data)
-    else:
-        return _build_recs_eia_config(plot_spec, data)
+    # Resolve all config fields
+    quantity_column = _resolve_quantity_column(plot_spec)
+    sidebar_column = _resolve_sidebar_column(plot_spec)
+    rse_column = _resolve_rse_column(plot_spec)
+    timeseries_column = _resolve_timeseries_column(plot_spec)
+    title = _resolve_title(plot_spec)
+    quantity_title = _resolve_quantity_title(plot_spec)
+    sidebar_title = _resolve_sidebar_title(plot_spec)
+    ts_xtick_vals, ts_xtick_text = _resolve_tick_config(plot_spec, data)
+    x_unit = _resolve_x_unit(plot_spec)
+    use_distribution_plot = _is_distribution_plot(plot_spec)
+    is_single_entity = _check_single_entity(data, plot_spec, timeseries_column)
+    height, width = _resolve_dimensions(plot_spec, is_single_entity)
 
+    # Resolve section titles (before view-type swapping)
+    main_section_title, sidebar_section_title = _resolve_section_titles(plot_spec, data, quantity_title, sidebar_column)
 
-# ─────────────────────────────────────────────────────────────────────────────
-# RECS/EIA Config Builder
-# ─────────────────────────────────────────────────────────────────────────────
-
-
-def _build_recs_eia_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
-    """Build config for RECS and EIA plots."""
-    quantity_column = _get_recs_quantity_column(plot_spec)
-    sidebar_column = _get_recs_sidebar_column(plot_spec)
-    rse_column = _get_recs_rse_column(plot_spec)
-    quantity_title = _get_recs_quantity_title(plot_spec)
-    sidebar_title = "Percent Difference (%)"
-    title = _build_recs_title(plot_spec)
-    timeseries_column = _get_recs_timeseries_column(plot_spec)
-    ts_xtick_vals, ts_xtick_text = _get_recs_tick_config(plot_spec)
-
-    # Handle view type swapping (diff_view swaps main quantity with sidebar)
+    # Post-processing: diff_view swaps quantity <-> sidebar
     if plot_spec.view == ViewType.diff_view and sidebar_column:
         quantity_title, quantity_column, sidebar_title, sidebar_column = (
             sidebar_title,
@@ -94,20 +106,16 @@ def _build_recs_eia_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfi
             quantity_column,
         )
         quantity_title = quantity_title.replace("Percent Difference (%)", r"% diff")
+        main_section_title, sidebar_section_title = sidebar_section_title, main_section_title
+        # RSE bounds are for the original values, not the percent differences
+        rse_column = None
 
-    # Clear sidebar for monthly resolution
-    if plot_spec.resolution == Resolution.month:
+    # Post-processing: monthly resolution clears sidebar (RECS/EIA only)
+    if plot_spec.resolution == Resolution.month and plot_spec.truth_source != TruthSource.lrd:
         sidebar_column = None
         sidebar_title = ""
-
-    # Determine if this is a distribution plot
-    use_distribution_plot = _is_distribution_plot(plot_spec)
-
-    # Determine if single entity (for simplified timeseries rendering)
-    is_single_entity = _check_single_entity(data, plot_spec, timeseries_column)
-
-    # Get dimensions
-    height, width = _get_recs_dimensions(plot_spec, is_single_entity)
+        main_section_title = ""
+        sidebar_section_title = ""
 
     return PlotConfig(
         quantity_column=quantity_column,
@@ -117,9 +125,11 @@ def _build_recs_eia_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfi
         title=title,
         quantity_title=quantity_title,
         sidebar_title=sidebar_title,
+        main_section_title=main_section_title,
+        sidebar_section_title=sidebar_section_title,
         ts_xtick_vals=ts_xtick_vals,
         ts_xtick_text=ts_xtick_text,
-        x_unit="",
+        x_unit=x_unit,
         height=height,
         width=width,
         use_distribution_plot=use_distribution_plot,
@@ -127,23 +137,34 @@ def _build_recs_eia_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfi
     )
 
 
-def _get_recs_quantity_column(plot_spec: PlotSpec) -> str:
-    """Determine the quantity column name based on aggregation type and view.
+# ─────────────────────────────────────────────────────────────────────────────
+# Resolver Functions
+# ─────────────────────────────────────────────────────────────────────────────
 
-    For distribution views, returns quartiles column. For penetration views,
-    returns percent_users column. Otherwise returns value column.
+
+def _resolve_quantity_column(plot_spec: PlotSpec) -> str:
+    """Resolve the main quantity column name.
+
+    LRD: Simple pattern with special case for temp_count_view.
+    RECS/EIA: Handles units_count, quartiles, percent_users, and value columns.
     """
-    # Customer count case (no quantity specified with total aggregation)
-    if plot_spec.quantity is None and plot_spec.aggregation_type == AggregationType.total:
+    # LRD: simple pattern
+    if plot_spec.truth_source == TruthSource.lrd:
+        if plot_spec.view == ViewType.temp_count_view:
+            return "temp_count"
+        return f"{plot_spec.quantity}_value"
+
+    # RECS/EIA: dwelling unit count case
+    if plot_spec.quantity == DataCol.UNITS_COUNT:
         return "units_count"
 
-    # Distribution box plot uses quartiles
+    # RECS/EIA: distribution box plot uses quartiles
     if plot_spec.view == ViewType.distribution:
         if plot_spec.coverage == CoverageType.users_only:
             return f"{plot_spec.quantity}_nonzero_quartiles"
         return f"{plot_spec.quantity}_quartiles"
 
-    # Penetration bar plot uses percent_users
+    # RECS/EIA: penetration bar plot uses percent_users
     if plot_spec.view == ViewType.penetration:
         return f"{plot_spec.quantity}_percent_users"
 
@@ -151,20 +172,27 @@ def _get_recs_quantity_column(plot_spec: PlotSpec) -> str:
     return f"{plot_spec.quantity}_value"
 
 
-def _get_recs_sidebar_column(plot_spec: PlotSpec) -> str | None:
-    """Determine the sidebar column name (percent difference).
+def _resolve_sidebar_column(plot_spec: PlotSpec) -> str | None:
+    """Resolve the sidebar column name (percent difference).
 
-    Distribution views don't have a sidebar (no percent difference for box plots).
+    LRD: Only shows sidebar for year resolution.
+    RECS/EIA: Distribution views don't have sidebar; others get percent_difference.
     """
-    # Distribution plots don't have sidebar
+    # LRD: sidebar only for year resolution
+    if plot_spec.truth_source == TruthSource.lrd:
+        if plot_spec.resolution == Resolution.year:
+            return f"{plot_spec.quantity}_value_percent_difference"
+        return None
+
+    # RECS/EIA: distribution plots don't have sidebar
     if plot_spec.view == ViewType.distribution:
         return None
 
-    # Customer count case
-    if plot_spec.quantity is None and plot_spec.aggregation_type == AggregationType.total:
+    # RECS/EIA: dwelling unit count case
+    if plot_spec.quantity == DataCol.UNITS_COUNT:
         return "units_count_percent_difference"
 
-    # Penetration view uses percent_users difference
+    # RECS/EIA: penetration view uses percent_users difference
     if plot_spec.view == ViewType.penetration:
         return f"{plot_spec.quantity}_percent_users_percent_difference"
 
@@ -172,20 +200,25 @@ def _get_recs_sidebar_column(plot_spec: PlotSpec) -> str | None:
     return f"{plot_spec.quantity}_value_percent_difference"
 
 
-def _get_recs_rse_column(plot_spec: PlotSpec) -> str | None:
-    """Determine the RSE column name (RECS only).
+def _resolve_rse_column(plot_spec: PlotSpec) -> str | None:
+    """Resolve the RSE (Relative Standard Error) column name.
 
-    Distribution views don't have RSE. Penetration views use percent_users RSE.
+    Only RECS has RSE columns. Distribution views don't have RSE.
     """
+    # Only RECS has RSE
     if plot_spec.truth_source != TruthSource.recs:
+        return None
+
+    # Monthly data doesn't have RSE columns
+    if plot_spec.resolution == Resolution.month:
         return None
 
     # Distribution plots don't have RSE
     if plot_spec.view == ViewType.distribution:
         return None
 
-    # Customer count case
-    if plot_spec.quantity is None and plot_spec.aggregation_type == AggregationType.total:
+    # Dwelling unit count case
+    if plot_spec.quantity == DataCol.UNITS_COUNT:
         return "units_count_rse"
 
     # Penetration view uses percent_users RSE
@@ -196,61 +229,117 @@ def _get_recs_rse_column(plot_spec: PlotSpec) -> str | None:
     return f"{plot_spec.quantity}_value_rse"
 
 
-def _get_recs_quantity_title(plot_spec: PlotSpec) -> str:
-    """Get the y-axis label based on aggregation type, coverage, and view.
+def _resolve_timeseries_column(plot_spec: PlotSpec) -> str | None:
+    """Resolve the timeseries/x-axis column name based on resolution.
 
-    - total aggregation: kWh (or count for customer plots)
-    - average aggregation: kWh/home or kWh/user depending on coverage
-    - penetration view: %
+    Returns the column name that provides the x-axis values for time-based plots.
     """
-    # Customer count case
-    if plot_spec.quantity is None and plot_spec.aggregation_type == AggregationType.total:
-        return "count"
+    match plot_spec.resolution:
+        case Resolution.year:
+            return None
 
-    # Penetration view shows percentages
-    if plot_spec.view == ViewType.penetration:
-        return "%"
+        case Resolution.month:
+            return "month"
 
-    # Total aggregation
-    if plot_spec.aggregation_type == AggregationType.total:
-        return "kWh"
+        case Resolution.day_of_year:
+            return "day of year"
 
-    # Average aggregation - depends on coverage
-    if plot_spec.aggregation_type == AggregationType.average:
-        if plot_spec.coverage == CoverageType.users_only:
-            return "kWh/user"
-        return "kWh/home"
+        case Resolution.hour_of_year | Resolution.top_100_hours:
+            if plot_spec.view in [ViewType.temp_view, ViewType.temp_count_view]:
+                return "resstock_temp"
+            return "percent_time"
 
-    return "kWh"
+        case Resolution.hour_of_day | Resolution.hour_of_day_summer | Resolution.hour_of_day_winter:
+            return plot_spec.resolution
+
+        case Resolution.hour_of_day_matrix:
+            return "hour of day"
+
+        case _:
+            return None
 
 
-def _build_recs_title(plot_spec: PlotSpec) -> str:
-    """Build the plot title for RECS/EIA plots.
+def _resolve_title(plot_spec: PlotSpec) -> str:
+    """Resolve the plot title based on resolution, view, and aggregation.
 
-    Title format depends on aggregation_type, coverage, and view type.
+    LRD: Resolution-driven titles about electricity consumption.
+    RECS/EIA: Complex titles based on quantity, aggregation, coverage, and view.
     """
-    quantity_name = plot_spec.quantity or "Enduse"
+    # LRD: resolution-driven titles
+    if plot_spec.truth_source == TruthSource.lrd:
+        return _resolve_lrd_title(plot_spec)
+
+    # RECS/EIA: complex title logic
+    return _resolve_recs_eia_title(plot_spec)
+
+
+def _resolve_lrd_title(plot_spec: PlotSpec) -> str:
+    """Build title for LRD plots based on resolution."""
+    match plot_spec.resolution:
+        case Resolution.year:
+            return "Annual electricity consumption per dwelling unit"
+
+        case Resolution.month:
+            return "Monthly electricity consumption per dwelling unit"
+
+        case Resolution.day_of_year:
+            return "Daily electricity consumption per dwelling unit"
+
+        case Resolution.hour_of_year | Resolution.top_100_hours:
+            if plot_spec.view == ViewType.temp_view:
+                return "Load Vs outdoor drybulb temperature"
+            if plot_spec.view == ViewType.temp_count_view:
+                return "Count of number of hours vs outdoor drybulb temperature"
+            title = "Load Duration Curve of electricity consumption per dwelling unit"
+            if plot_spec.resolution == Resolution.top_100_hours:
+                title += " (Top 100 Hours)"
+            return title
+
+        case Resolution.hour_of_day:
+            return "Average daily electricity consumption per dwelling unit"
+
+        case Resolution.hour_of_day_summer:
+            return "Average summer day hourly electricity consumption per dwelling unit"
+
+        case Resolution.hour_of_day_winter:
+            return "Average winter day hourly electricity consumption per dwelling unit"
+
+        case Resolution.hour_of_day_matrix:
+            return f"Hourly load profile matrix for {plot_spec.focus_on}"
+
+        case _:
+            raise ValueError(f"Unsupported resolution '{plot_spec.resolution}' for LRD plot.")
+
+
+def _resolve_recs_eia_title(plot_spec: PlotSpec) -> str:
+    """Build title for RECS/EIA plots based on quantity, aggregation, coverage, and view."""
+    quantity_name = "Enduse" if plot_spec.quantity == DataCol.ALL else plot_spec.quantity
     grouping = f"in {plot_spec.focus_on}" if plot_spec.focus_on else f"by {plot_spec.aggregation_level}"
 
-    # Customer count case (quantity=None with total aggregation)
-    if plot_spec.quantity is None and plot_spec.aggregation_type == AggregationType.total:
-        base_title = "Number of occupied dwelling units by State"
+    # Dwelling unit count case
+    if plot_spec.quantity == DataCol.UNITS_COUNT:
+        base_title = f"Number of occupied dwelling units {grouping}"
+
     # Penetration view
     elif plot_spec.view == ViewType.penetration:
-        base_title = f"Annual {plot_spec.quantity} Percent of Customers by State"
+        base_title = f"Annual {plot_spec.quantity} Percent of Customers {grouping}"
+
     # Distribution view
     elif plot_spec.view == ViewType.distribution:
         unit = "kWh/user" if plot_spec.coverage == CoverageType.users_only else "kWh/home"
         base_title = f"Annual {plot_spec.quantity} {unit} distribution {grouping}"
+
     # Total aggregation
     elif plot_spec.aggregation_type == AggregationType.total:
         base_title = f"Annual {quantity_name} {grouping}"
+
     # Average aggregation
     elif plot_spec.aggregation_type == AggregationType.average:
         if plot_spec.coverage == CoverageType.users_only:
-            base_title = f"Annual {plot_spec.quantity} per User by State"
+            base_title = f"Annual {plot_spec.quantity} per User {grouping}"
         else:
-            base_title = f"Annual {plot_spec.quantity} per Unit by State"
+            base_title = f"Annual {plot_spec.quantity} per Unit {grouping}"
+
     else:
         base_title = f"Annual {quantity_name} {grouping}"
 
@@ -261,122 +350,87 @@ def _build_recs_title(plot_spec: PlotSpec) -> str:
     return base_title
 
 
-def _get_recs_timeseries_column(plot_spec: PlotSpec) -> str | None:
-    """Get the timeseries column for RECS/EIA plots."""
-    if plot_spec.resolution == Resolution.month:
-        return "month"
-    return None
+def _resolve_quantity_title(plot_spec: PlotSpec) -> str:
+    """Resolve the y-axis label (quantity units).
+
+    Returns units like kWh, kWh/home, kWh/user, %, or count.
+    """
+    # LRD: mostly kWh, with special case for temp_count
+    if plot_spec.truth_source == TruthSource.lrd:
+        if plot_spec.view == ViewType.temp_count_view:
+            return "count"
+        return "kWh"
+
+    # RECS/EIA: dwelling unit count case
+    if plot_spec.quantity == DataCol.UNITS_COUNT:
+        return "count"
+
+    # RECS/EIA: penetration view shows percentages
+    if plot_spec.view == ViewType.penetration:
+        return "%"
+
+    # RECS/EIA: total aggregation
+    if plot_spec.aggregation_type == AggregationType.total:
+        return "kWh"
+
+    # RECS/EIA: average aggregation - depends on coverage
+    if plot_spec.aggregation_type == AggregationType.average:
+        if plot_spec.coverage == CoverageType.users_only:
+            return "kWh/user"
+        return "kWh/home"
+
+    return "kWh"
 
 
-def _get_recs_tick_config(plot_spec: PlotSpec) -> tuple:
-    """Get tick values and text for RECS/EIA plots."""
-    if plot_spec.resolution == Resolution.month:
-        return ("JAN", "DEC"), ("   Jan", "Dec   ")
-    return None, None
+def _resolve_sidebar_title(plot_spec: PlotSpec) -> str:
+    """Resolve the sidebar axis title.
+
+    Returns 'Percent Difference (%)' when sidebar is applicable, empty otherwise.
+    """
+    # LRD: sidebar only for year resolution
+    if plot_spec.truth_source == TruthSource.lrd:
+        if plot_spec.resolution == Resolution.year:
+            return "Percent Difference (%)"
+        return ""
+
+    # RECS/EIA: distribution plots don't have sidebar
+    if plot_spec.view == ViewType.distribution:
+        return ""
+
+    return "Percent Difference (%)"
 
 
-def _get_recs_dimensions(plot_spec: PlotSpec, is_single_entity: bool) -> tuple[float, float]:
-    """Get height and width for RECS/EIA plots."""
-    if is_single_entity:
-        return 1080 * 0.4, 1920 * 0.425
-    return 1080 * 0.8, 1920 * 0.85
+def _resolve_tick_config(plot_spec: PlotSpec, data: pl.DataFrame) -> tuple[tuple | None, tuple | None]:
+    """Resolve x-axis tick values and labels based on resolution.
 
-
-# ─────────────────────────────────────────────────────────────────────────────
-# LRD Config Builder
-# ─────────────────────────────────────────────────────────────────────────────
-
-
-def _build_lrd_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
-    """Build config for LRD (Load Research Data) plots."""
-    quantity_column = f"{plot_spec.quantity}_value"
-    quantity_title = "kWh"
-    sidebar_column = None
-    sidebar_title = ""
-    x_unit = ""
-    timeseries_column = None
-    ts_xtick_vals = None
-    ts_xtick_text = None
-    title = ""
-
+    Returns (tick_vals, tick_text) tuples or (None, None) for auto-ticks.
+    """
     match plot_spec.resolution:
-        case Resolution.year:
-            timeseries_column = None
-            sidebar_column = f"{plot_spec.quantity}_value_percent_difference"
-            sidebar_title = "Percent Difference (%)"
-            title = "Annual electricity consumption per dwelling unit"
-
         case Resolution.month:
-            timeseries_column = Resolution.month
-            ts_xtick_vals = ("JAN", "DEC")
-            ts_xtick_text = ("   Jan", "Dec   ")
-            title = "Monthly electricity consumption per dwelling unit"
+            return ("JAN", "DEC"), ("   Jan", "Dec   ")
 
         case Resolution.day_of_year:
-            timeseries_column = "day of year"
-            ts_xtick_vals = None  # Let Plotly auto-generate date ticks
-            ts_xtick_text = None
-            title = "Daily electricity consumption per dwelling unit"
+            # Let Plotly auto-generate date ticks
+            return None, None
 
         case Resolution.hour_of_year | Resolution.top_100_hours:
             if plot_spec.view in [ViewType.temp_view, ViewType.temp_count_view]:
-                x_unit = "°F"
-                timeseries_column = "resstock_temp"
-                if plot_spec.view == ViewType.temp_view:
-                    title = "Load Vs outdoor drybulb temperature"
-                else:
-                    quantity_title = "count"
-                    quantity_column = "temp_count"
-                    title = "Count of number of hours vs outdoor drybulb temperature"
-            else:
-                timeseries_column = "percent_time"
-                title = "Load Duration Curve of electricity consumption per dwelling unit"
-                if plot_spec.resolution == Resolution.top_100_hours:
-                    title += " (Top 100 Hours)"
-                # Tick values are computed from data
-                ts_xtick_vals, ts_xtick_text = _get_lrd_percent_time_ticks(data, plot_spec)
+                # Temperature plots use auto-ticks
+                return None, None
+            # Load duration curve: compute ticks from data
+            return _compute_percent_time_ticks(data, plot_spec)
 
         case Resolution.hour_of_day | Resolution.hour_of_day_summer | Resolution.hour_of_day_winter:
-            timeseries_column = plot_spec.resolution
-            ts_xtick_vals = (0, 23)
-            ts_xtick_text = ("     Hour 1", "Hour 24       ")
-            if plot_spec.resolution == Resolution.hour_of_day_summer:
-                title = "Average summer day hourly electricity consumption per dwelling unit"
-            elif plot_spec.resolution == Resolution.hour_of_day_winter:
-                title = "Average winter day hourly electricity consumption per dwelling unit"
-            else:
-                title = "Average daily electricity consumption per dwelling unit"
+            return (0, 23), ("     Hour 1", "Hour 24       ")
 
         case Resolution.hour_of_day_matrix:
-            timeseries_column = "hour of day"
-            ts_xtick_vals = (0, 23)
-            ts_xtick_text = ("     Hour 1", "Hour 24       ")
-            title = f"Hourly load profile matrix for {plot_spec.focus_on}"
+            return (0, 23), ("     Hour 1", "Hour 24       ")
 
         case _:
-            raise ValueError(f"Unsupported resolution '{plot_spec.resolution}' for LRD plot.")
-
-    height, width = _get_lrd_dimensions(plot_spec)
-
-    return PlotConfig(
-        quantity_column=quantity_column,
-        sidebar_column=sidebar_column,
-        rse_column=None,  # LRD doesn't have RSE
-        timeseries_column=timeseries_column,
-        title=title,
-        quantity_title=quantity_title,
-        sidebar_title=sidebar_title,
-        ts_xtick_vals=ts_xtick_vals,
-        ts_xtick_text=ts_xtick_text,
-        x_unit=x_unit,
-        height=height,
-        width=width,
-        use_distribution_plot=False,  # LRD doesn't use distribution plots
-        is_single_entity=False,  # LRD always uses tilemap
-    )
+            return None, None
 
 
-def _get_lrd_percent_time_ticks(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple:
+def _compute_percent_time_ticks(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[tuple | None, tuple | None]:
     """Compute tick values for load duration curve from data."""
     if "percent_time" not in data.columns:
         return None, None
@@ -392,15 +446,66 @@ def _get_lrd_percent_time_ticks(data: pl.DataFrame, plot_spec: PlotSpec) -> tupl
     return (min_val, max_val), ts_xtick_text
 
 
-def _get_lrd_dimensions(plot_spec: PlotSpec) -> tuple[float, float]:
-    """Get height and width for LRD plots."""
-    match plot_spec.resolution:
-        case Resolution.hour_of_day_matrix:
-            return 1800, 900  # Taller for 13 rows
-        case Resolution.day_of_year:
-            return 2000, 1400  # Tall for 15 rows, wide for date axis
-        case _:
-            return 1080 * 0.8, 1920 * 0.7
+def _resolve_x_unit(plot_spec: PlotSpec) -> str:
+    """Resolve the x-axis unit label.
+
+    Returns '°F' for temperature views, empty string otherwise.
+    """
+    if plot_spec.view in [ViewType.temp_view, ViewType.temp_count_view]:
+        return "°F"
+    return ""
+
+
+def _extract_truth_source_label(truth_source: TruthSource, data: pl.DataFrame) -> str:
+    """Extract a human-readable truth source label like 'EIA 2018' from data."""
+    if "source" not in data.columns:
+        return truth_source.value.upper()
+    sources = data["source"].unique().to_list()
+    ref_sources = [s for s in sources if truth_source.value in s]
+    if ref_sources:
+        # "eia_2018" → "EIA 2018", "recs_2020" → "RECS 2020"
+        return ref_sources[0].replace("_", " ").upper()
+    return truth_source.value.upper()
+
+
+def _resolve_section_titles(
+    plot_spec: PlotSpec, data: pl.DataFrame, quantity_title: str, sidebar_column: str | None
+) -> tuple[str, str]:
+    """Resolve descriptive section titles for the main grid and sidebar.
+
+    Returns (main_section_title, sidebar_section_title) before any view-type swapping.
+    In value_view: main shows quantity, sidebar shows percent difference description.
+    The caller handles swapping these for diff_view.
+    """
+    if sidebar_column is None:
+        return "", ""
+
+    truth_label = _extract_truth_source_label(plot_spec.truth_source, data)
+    sidebar_desc = f"Percent difference compared to {truth_label}"
+    return quantity_title, sidebar_desc
+
+
+def _resolve_dimensions(plot_spec: PlotSpec, is_single_entity: bool) -> tuple[float, float]:
+    """Resolve plot height and width based on resolution and entity count.
+
+    Returns (height, width) in pixels.
+    """
+    # LRD: resolution-specific dimensions
+    if plot_spec.truth_source == TruthSource.lrd:
+        match plot_spec.resolution:
+            case Resolution.hour_of_day_matrix:
+                return 1800, 900  # Taller for 13 rows
+            case Resolution.day_of_year:
+                return 2000, 1400  # Tall for 15 rows, wide for date axis
+            case _:
+                return 1080 * 0.8, 1920 * 0.7
+
+    # RECS/EIA: single entity gets smaller dimensions (except ALL enduse plots
+    # which contain all fuel/enduse combos and need full size)
+    if is_single_entity and plot_spec.quantity != DataCol.ALL:
+        return 1080 * 0.4, 1920 * 0.425
+
+    return 1080 * 0.8, 1920 * 0.85
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -413,12 +518,12 @@ def _is_distribution_plot(plot_spec: PlotSpec) -> bool:
 
     Returns True for:
     - ViewType.distribution (explicit distribution box plot)
-    - quantity=None (enduse penetration plots use bar layout via split_graph_by_enduse)
+    - quantity=ALL (enduse penetration plots use bar layout via split_graph_by_enduse)
     - non-state aggregation levels (use grouped bar chart)
     """
     if plot_spec.view == ViewType.distribution:
         return True
-    if plot_spec.quantity is None:
+    if plot_spec.quantity == DataCol.ALL:
         return True
     if plot_spec.aggregation_level not in [DataCol.STATE]:
         return True
@@ -427,14 +532,16 @@ def _is_distribution_plot(plot_spec: PlotSpec) -> bool:
 
 def _check_single_entity(data: pl.DataFrame, plot_spec: PlotSpec, timeseries_column: str | None) -> bool:
     """Check if data contains a single entity (triggers simplified rendering)."""
-    if timeseries_column is None:
-        return False
-
     if plot_spec.aggregation_level not in data.columns:
         return False
 
     unique_entities = data[plot_spec.aggregation_level].unique().to_list()
     return len(unique_entities) == 1
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Public Utilities
+# ─────────────────────────────────────────────────────────────────────────────
 
 
 def get_second_category_column(plot_spec: PlotSpec) -> str:

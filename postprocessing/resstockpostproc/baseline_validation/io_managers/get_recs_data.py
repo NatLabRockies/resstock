@@ -14,6 +14,7 @@ from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 from resstockpostproc.baseline_validation.data_processing.recs_rse import calculate_rse
 from resstockpostproc.shared_utils.caching import cached
+from resstockpostproc.shared_utils.timing import timed
 from typing import Literal
 from resstockpostproc.baseline_validation.schema.plot_spec import DataKey, AggregationType, CoverageType
 
@@ -72,7 +73,8 @@ def _calculate_weighted_quantiles(data: np.ndarray, weights: np.ndarray, quantil
     return result
 
 
-# @cached(cache_file="recs_annual_data_cache")
+@timed
+@cached(cache_file="recs_annual_data_cache")
 def get_annual_all(
     data_key: DataKey,
     year: int = 2020,
@@ -135,7 +137,9 @@ def get_annual_all(
                 ),
                 *(
                     (
-                        ((pl.col(col) > 0).cast(pl.Int64) * pl.col("NWEIGHT")).sum() / pl.col("NWEIGHT").sum() * 100
+                        ((pl.col(col) > 0).cast(pl.Int64) * pl.col("NWEIGHT")).sum()
+                        / ((pl.col(col) > 0).cast(pl.Int64) * pl.col("NWEIGHT")).sum()
+                        * 100
                     ).alias(f"{col}_percent_users")
                     for col in enduse_cols
                 ),
@@ -149,7 +153,7 @@ def get_annual_all(
         nonzero_quartile_results = []
 
         # Determine RSE stat type based on aggregation
-        rse_stat_type = "total" if aggregation == "sum" else "avg"
+        rse_stat_type = "total" if data_key.aggregation_type == AggregationType.total else "avg"
 
         for group_value in mdf.select(by).unique().to_series():
             group_data = mdf_pd[mdf_pd[by] == group_value]
@@ -230,7 +234,7 @@ def get_annual_all(
         result_df = result_df.join(nonzero_quartile_df, on=by, how="left")
 
         # Add US Total values
-        if aggregation == "sum":
+        if data_key.aggregation_type == AggregationType.total:
             # For sum: calculate US Total from full microdata
             us_total_values = {}
             us_total_values[by] = "US Total"
@@ -250,7 +254,7 @@ def get_annual_all(
             # Add US Total row to result_df
             us_total_df = pl.DataFrame([us_total_values])
             result_df = pl.concat([result_df, us_total_df], how="diagonal_relaxed")
-        elif aggregation == "per_unit_avg":
+        elif data_key.coverage == CoverageType.all_units:
             # For per_unit_avg: calculate US Total from full microdata (can't sum averages)
             us_total_values = {}
             us_total_values[by] = "US Total"
@@ -270,7 +274,7 @@ def get_annual_all(
             # Add US Total row to result_df
             us_total_df = pl.DataFrame([us_total_values])
             result_df = pl.concat([result_df, us_total_df], how="diagonal_relaxed")
-        else:  # aggregation == "per_user_avg"
+        else:  # data_key.coverage == CoverageType.users_only
             # For per_user_avg: calculate US Total from full microdata (only non-zero values)
             us_total_values = {}
             us_total_values[by] = "US Total"
@@ -280,12 +284,9 @@ def get_annual_all(
                 # Calculate weighted mean from full microdata (non-zero values only)
                 weighted_sum = (mdf[col] * mdf["NWEIGHT"]).sum()
                 customer_weight_sum = ((mdf[col] > 0).cast(pl.Int64) * mdf["NWEIGHT"]).sum()
-                total_weight_sum = mdf["NWEIGHT"].sum()
                 avg_value = weighted_sum / customer_weight_sum if customer_weight_sum > 0 else 0
                 us_total_values[f"{col}_value"] = avg_value
-                us_total_values[f"{col}_percent_users"] = (
-                    customer_weight_sum / total_weight_sum * 100 if total_weight_sum > 0 else 0
-                )
+                us_total_values[f"{col}_percent_users"] = 100.0 if customer_weight_sum > 0 else 0
 
             # Add US Total row to result_df
             us_total_df = pl.DataFrame([us_total_values])
@@ -365,14 +366,14 @@ def get_annual_all(
             )
     else:
         # Calculate value columns based on aggregation type
-        if aggregation == "sum":
+        if data_key.aggregation_type == AggregationType.total:
             # Stock energy: weighted sum
             result_df = mdf.select(
                 pl.len().alias("sample_count"),
                 pl.col("NWEIGHT").sum().alias("units_count"),
                 *((pl.col(col) * pl.col("NWEIGHT")).sum().alias(f"{col}_value") for col in enduse_cols),
             )
-        elif aggregation == "per_unit_avg":
+        elif data_key.coverage == CoverageType.all_units:
             # Per-unit energy: weighted mean (sum of weighted values / sum of all weights)
             result_df = mdf.select(
                 pl.len().alias("sample_count"),
@@ -382,7 +383,7 @@ def get_annual_all(
                     for col in enduse_cols
                 ),
             )
-        else:  # aggregation == "per_user_avg"
+        else:  # data_key.coverage == CoverageType.users_only
             # Per-user energy: weighted mean (sum of weighted values / sum of weights for non-zero values only)
             result_df = mdf.select(
                 pl.len().alias("sample_count"),
@@ -404,7 +405,7 @@ def get_annual_all(
         nonzero_quartile_dict = {}
 
         # Determine RSE stat type based on aggregation
-        rse_stat_type = "total" if aggregation == "sum" else "mean"
+        rse_stat_type = "total" if data_key.aggregation_type == AggregationType.total else "mean"
 
         # Calculate units_count_rse
         try:

@@ -70,10 +70,13 @@ RECS_CHARS_MAPPING: dict[str, VariableSpec] = {
         "RECS": {
             "column_name": "FUELHEAT",
             "mapping": {
+                -2: "None",
                 1: "Natural Gas",
                 2: "Propane",
                 3: "Fuel Oil",
-                4: "Electricity",
+                5: "Electricity",
+                7: "Wood",
+                99: "Other Fuel",
             }
         },
     },
@@ -94,7 +97,7 @@ RECS_CHARS_MAPPING: dict[str, VariableSpec] = {
         },
         "RECS": {
             "column_name": "BA_climate",
-            "mapping": PartialMap({}),
+            "mapping": PartialMap({"Very-Cold": "Very Cold"}),
         },
     },
     DataCol.EV_OWNERSHIP: {

@@ -23,6 +23,7 @@ from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.mapping import UtilityName2ID, ID2UtilityName
+from resstockpostproc.shared_utils.timing import timed
 
 AggregationBy = Literal["state", "eiaid"]
 
@@ -40,6 +41,8 @@ def get_plot_data(
     return apply_plot_spec(base_data, plot_spec)
 
 
+@timed
+@cache
 def get_base_data(data_key: DataKey) -> pl.DataFrame:
     """Load base data for a given data key (expensive operation).
 
@@ -56,6 +59,7 @@ def get_base_data(data_key: DataKey) -> pl.DataFrame:
     return _get_plot_data(data_key)
 
 
+@timed
 def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
     """Apply plot-specific transformations to base data (cheap operations).
 
@@ -214,7 +218,7 @@ def _keep_relevant_columns(
         if col.endswith(("_value", "_percent_users", "_quartiles", "_percent_difference", "_resoluition", "_rse"))
         and not col.startswith("units_count")
     ]
-    if plot_spec.quantity is not None:
+    if plot_spec.quantity != DataCol.ALL:
         drop_columns = [col for col in all_output_columns if plot_spec.quantity.value not in col]
         if DataCol.OUTDOOR_DRYBULB_TEMP + "_value" in drop_columns:
             drop_columns.remove(DataCol.OUTDOOR_DRYBULB_TEMP + "_value")  # Keep temperature column for LRD plots

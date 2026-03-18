@@ -9,6 +9,8 @@ from pathlib import Path
 import polars as pl
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
 from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
+from resstockpostproc.shared_utils.caching import cached
+from resstockpostproc.shared_utils.timing import timed
 from . import truth_data_paths as s3_paths
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from collections.abc import Sequence
@@ -21,6 +23,8 @@ from resstockpostproc.baseline_validation.schema.plot_spec import DataKey
 local_data_dir = Path(f"{workflow.output.output_dir}/data")
 
 
+@timed
+@cached(cache_file="eia_annual_data_cache")
 def get_annual_all(
     data_key: DataKey,
     years: list[int] | None = None,
@@ -81,6 +85,8 @@ def get_annual_all(
     return result
 
 
+@timed
+@cached(cache_file="eia_monthly_data_cache")
 def get_monthly_all(
     data_key: DataKey,
     years: list[int] | None = None,

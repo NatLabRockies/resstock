@@ -1,399 +1,569 @@
+"""Generate baseline validation plots from plot_definition.tsv.
+
+Usage:
+    python plot_generator.py                  # generate all plots
+    python plot_generator.py --index 5        # generate only plot definition row 5
+    python plot_generator.py --index 1-10     # generate rows 1 through 10
+"""
+
 import argparse
+import csv
 import logging
+import math
 import sys
+import time
+import traceback
 from pathlib import Path
-import sys
+
 import polars as pl
-from itertools import product
-from plotly.graph_objects import Figure
+
 from resstockpostproc.shared_utils.db_column_names import DataCol
-from resstockpostproc.baseline_validation.io_managers.get_lrd_data import get_lrd_data
-import resstockpostproc.shared_utils.db_column_names as db_cols
-from resstockpostproc.baseline_validation.io_managers import get_resstock_data as res_data
-from resstockpostproc.baseline_validation.io_managers import get_eia_data as eia_data
-from resstockpostproc.baseline_validation.schema.workflow_schema import PlotType, workflow
-from resstockpostproc.baseline_validation.utils import get_buildstock_query
-from resstockpostproc.baseline_validation.io_managers.output_manager import save_dataframe, save_figure
-from resstockpostproc.baseline_validation.plotters import eia_plotter, lrd_plotter, timeseries_plotter, recs_plotter
-from resstockpostproc.baseline_validation.schema.workflow_schema import PlotType, WorkflowConfig
+from resstockpostproc.baseline_validation.plotters import lrd_plotter, recs_plotter
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
-    FileType,
     AggregationType,
+    CoverageType,
+    FileType,
     TruthSource,
     ViewType,
     Resolution,
 )
+from resstockpostproc.baseline_validation.io_managers.output_manager import save_figure
+from resstockpostproc.baseline_validation.plotters.plot_config import get_second_category_column
 from resstockpostproc.baseline_validation.utils import ensure_directory
-from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data
-from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
+from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data, get_base_data
+from resstockpostproc.baseline_validation.create_html import create_html_shell, append_html_row, create_html_from_csv
+from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
+from resstockpostproc.shared_utils.timing import TimingStats
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger(__name__)
 
-def generate_eia_plots() -> None:
-    """Generate EIA validation plots."""
-    print("Generating EIA validation plots...")
-    quantities = [None, DataCol.ELECTRICITY_TOTAL, DataCol.NATURAL_GAS_TOTAL]
-    agg_levels = ["state"]  # eia_data.get_available_aggregation_levels()
-    quantity_types = [AggregationType.per_unit, AggregationType.stock_total]
-    resolutions = (Resolution.month, Resolution.year)
-    quantities = [DataCol.ELECTRICITY_TOTAL]
-    resolutions = (Resolution.year,)
-    quantity_types = (AggregationType.per_unit,)
-    for quantity, agg_level, quantity_type, resolution in product(quantities, agg_levels, quantity_types, resolutions):
-        print(f"  Processing {agg_level} level...")
-        plot_spec = PlotSpec(
-            truth_source=TruthSource.eia,
-            resolution=resolution,
-            aggregation_level=agg_level,
-            quantity=quantity,
-            focus_on=None,
-            aggregation_type=quantity_type,
-            view=ViewType.value_view,
-        )
-        _show_figure(plot_spec)
+SCHEMA_DIR = Path(__file__).parent / "schema"
+PLOT_DEFINITION_TSV = SCHEMA_DIR / "plot_definition.tsv"
 
-    print("EIA plots complete!")
-
-
-def generate_recs_plots() -> None:
-    """Generate RECS validation plots."""
-    print("Generating RECS validation plots...")
-    monthly_quantities = [
-        DataCol.ELECTRICITY_TOTAL,
-        DataCol.ELECTRICITY_WATER_HEATING,
-        DataCol.NATURAL_GAS_WATER_HEATING,
-        DataCol.NATURAL_GAS_TOTAL,
-        DataCol.NATURAL_GAS_SPACE_HEATING,
-        DataCol.ELECTRICITY_SPACE_HEATING,
-        DataCol.ELECTRICITY_SPACE_COOLING,
-    ]
-    quantities = monthly_quantities
-    quantities.extend(q for q in RECS_ENDUSE_MAP if q not in monthly_quantities)
-    quantities = [None]
-    agg_levels = [DataCol.CENSUS_DIVISION]
-    agg_types = [
-        AggregationType.stock_total,
-        AggregationType.per_unit_distribution,
-        AggregationType.per_unit,
-        AggregationType.percent_users,
-        AggregationType.per_user_distribution,
-        AggregationType.per_user,
-        AggregationType.customers,
-    ]
-    agg_types = [AggregationType.per_user_distribution]
-    resolutions = (Resolution.year,)
-    quantities = [None]
-    for quantity, agg_level, resolution, agg_type in product(quantities, agg_levels, resolutions, agg_types):
-        if resolution == "month" and agg_type == AggregationType.per_unit_distribution:
-            continue
-        plot_spec = PlotSpec(
-            truth_source=TruthSource.recs,
-            resolution=resolution,
-            aggregation_level=agg_level,
-            quantity=quantity,
-            focus_on="East North Central",
-            aggregation_type=agg_type,
-            view=ViewType.value_view,
-        )
-        _show_figure(plot_spec)
-
-
-# List of utilities for hour_of_day_matrix plots (from tilemap_plotter LAYOUTS)
-LRD_UTILITIES = [
-    "ComEd (IL)",
-    "OhioEd (OH)",
-    "ToledoEd (OH)",
-    "AEP (OH)",
-    "Cleveland (OH)",
-    "MetEd (PA)",
-    "Penelec (PA)",
-    "PP (PA)",
-    "WPP (PA)",
-    "PECO (PA)",
-    "PG&E (CA)",
-    "SCE (CA)",
-    "ERCOT",
-    "Appalachian (VA)",
-    "BGE (MD)",
+OUTPUT_COLUMNS = [
+    "Index",
+    "Highlight",
+    "Truth Source",
+    "Quantity",
+    "Metric",
+    "Coverage",
+    "Group By",
+    "Focus On",
+    "Main Visualization",
+    "Extra Visualization",
+    "Data",
+    "Discrepancy (CVRMSE)",
+    "Discrepancy (NMBE)",
 ]
 
 
-def _generate_hourly_matrix_plots() -> None:
-    """Generate hour_of_day_matrix plots for each utility."""
-    print("  Generating hourly matrix plots for each utility...")
+# ---------------------------------------------------------------------------
+# Parsers: TSV columns → PlotSpec fields
+# ---------------------------------------------------------------------------
 
-    for utility in LRD_UTILITIES:
-        print(f"    Processing {utility}...")
-        plot_spec = PlotSpec(
-            truth_source=TruthSource.lrd,
-            resolution=Resolution.hour_of_day_matrix,
-            aggregation_level="eiaid",
-            quantity=DataCol.ELECTRICITY_TOTAL,
-            focus_on=utility,
-            aggregation_type=AggregationType.per_unit,
-            view=ViewType.value_view,
-        )
-        _show_figure(plot_spec)
-\
-
-def generate_lrd_plots() -> None:
-    _generate_hourly_matrix_plots()
-
-    print("Generating LRD validation plots...")
-    agg_levels = ["eiaid"]  # eia_data.get_available_aggregation_levels()
-    agg_types = [AggregationType.stock_total]
-    resolutions = ("month", "year")
-
-    quantities = [DataCol.ELECTRICITY_TOTAL]
-    agg_levels = ["eiaid"]
-    agg_types = [AggregationType.per_unit]
-    resolutions = (
-        Resolution.year,
-        Resolution.month,
-        Resolution.day_of_year,
-        Resolution.hour_of_day,
+METRIC_MAP = {
+    "": (Resolution.year, AggregationType.total, ViewType.value_view),
+    "total annual consumption": (Resolution.year, AggregationType.total, ViewType.value_view),
+    "average annual consumption": (Resolution.year, AggregationType.average, ViewType.value_view),
+    "total monthly consumption": (Resolution.month, AggregationType.total, ViewType.value_view),
+    "average monthly consumption": (Resolution.month, AggregationType.average, ViewType.value_view),
+    "annual consumption distribution": (Resolution.year, AggregationType.average, ViewType.distribution),
+    "enduse penetration": (Resolution.year, AggregationType.total, ViewType.penetration),
+    "average daily consumption": (Resolution.day_of_year, AggregationType.average, ViewType.value_view),
+    "average hourly consumption": (Resolution.hour_of_day, AggregationType.average, ViewType.value_view),
+    "average hourly consumption (summer)": (
         Resolution.hour_of_day_summer,
+        AggregationType.average,
+        ViewType.value_view,
+    ),
+    "average hourly consumption (winter)": (
         Resolution.hour_of_day_winter,
-        Resolution.hour_of_year,
+        AggregationType.average,
+        ViewType.value_view,
+    ),
+    "average hourly consumption (matrix)": (
+        Resolution.hour_of_day_matrix,
+        AggregationType.average,
+        ViewType.value_view,
+    ),
+    "average hourly consumption (8760)": (Resolution.hour_of_year, AggregationType.average, ViewType.value_view),
+    "average hourly consumption (top 100 hours)": (
         Resolution.top_100_hours,
-    )
-    resolutions = (Resolution.hour_of_year,)
-    for quantity, agg_level, resolution, agg_type in product(quantities, agg_levels, resolutions, agg_types):
-        plot_spec = PlotSpec(
-            truth_source=TruthSource.lrd,
-            resolution=resolution,
-            aggregation_level=agg_level,
-            quantity=quantity,
-            # focus_on="US Total",
-            aggregation_type=agg_type,
-            view=ViewType.value_view,
-        )
-        _show_figure(plot_spec)
+        AggregationType.average,
+        ViewType.value_view,
+    ),
+    "hourly consumption vs temperature": (Resolution.hour_of_year, AggregationType.average, ViewType.temp_view),
+}
 
-def _show_figure(plot_spec: PlotSpec) -> None:
-    """Generate and show a plot based on the plot specification."""
-    fig = _create_plot(plot_spec)
-    # fig.show(renderer="browser")
+EXTRA_VIZ_MAP = {
+    "difference view": ViewType.diff_view,
+    "temperature count": ViewType.temp_count_view,
+}
 
 
-def _create_plot(plot_spec: PlotSpec) -> Figure:
-    """Create a plot based on the plot specification."""
-    data = get_plot_data(plot_spec)
-    plot_func = get_plotting_function(plot_spec.truth_source)
-    fig, title = plot_func(data, plot_spec)
-    fig.show(renderer="browser")
-    return fig
-
-    print("RECS plots complete!")
+def parse_metric(metric_str):
+    """Convert Metric column to (Resolution, AggregationType, ViewType)."""
+    if metric_str not in METRIC_MAP:
+        raise ValueError(f"Unknown metric: {metric_str!r}")
+    return METRIC_MAP[metric_str]
 
 
-# def generate_lrd_plots(
-#     workflow: WorkflowConfig,
-#     output_dir: Path,
-#     output_formats: tuple = ("html", "svg", "parquet"),
-# ) -> None:
-#     """Generate load duration curve plots."""
-#     print("Generating load duration curve plots...")
-
-#     bsq = get_buildstock_query(
-#         workgroup=workflow.workgroup,
-#         workflow.data_sources,
-#         truth_data_year=workflow.reference_data.truth_data_year,
-#         eia_mapping_version=workflow.reference_data.eia_mapping_version,
-#     )
-
-#     lrd_ref = get_lrd_data(year=workflow.reference_data.truth_data_year)
-#     utilities = lrd_ref.filter(pl.col("eiaid") > 0)["eiaid"].unique().to_list()
-
-#     buildstock_ts = get_timeseries(
-#         bsq,
-#         enduses=["fuel_use__electricity__total__kwh"],
-#         by="eiaid",
-#         restrict_list=utilities[:10],
-#     )
-
-#     buildstock_ldc = lrd_plotter.prepare_buildstock_ldc_data(buildstock_ts, per_unit=True, group_col="eiaid")
-#     lrd_ldc = lrd_plotter.calculate_load_duration_curve(lrd_ref, value_col="kwh_per_meter", group_col="eiaid")
-
-#     fig = lrd_plotter.plot_multi_utility_ldc(buildstock_ldc, lrd_ldc, group_col="eiaid", max_utilities=5)
-#     plot_dir = output_dir / "lrd"
-#     save_figure(fig, plot_dir, "multi_utility_ldc", formats=tuple(output_formats))
-#     save_dataframe(buildstock_ldc, plot_dir, "buildstock_ldc_data", formats=("parquet",))
-
-#     for utility in utilities[:5]:
-#         bs_util = buildstock_ldc.filter(pl.col("eiaid") == utility)
-#         lrd_util = lrd_ldc.filter(pl.col("eiaid") == utility)
-
-#         if bs_util.height > 0:
-#             fig = lrd_plotter.plot_load_duration_curve(
-#                 bs_util, lrd_util, value_col="kwh_per_unit", entity_name=f"Utility {utility}"
-#             )
-#             save_figure(fig, plot_dir / "by_utility", f"ldc_utility_{utility}", formats=tuple(output_formats))
-
-#     print("  LRD plots complete!")
+def parse_extra_viz(viz_str):
+    """Convert Extra Visualization column to ViewType or None."""
+    if not viz_str:
+        return None
+    if viz_str not in EXTRA_VIZ_MAP:
+        raise ValueError(f"Unknown extra visualization: {viz_str!r}")
+    return EXTRA_VIZ_MAP[viz_str]
 
 
-# def generate_timeseries_plots(
-#     workflow: WorkflowConfig,
-#     output_dir: Path,
-#     output_formats: tuple = ("html", "svg", "parquet"),
-# ) -> None:
-#     """Generate timeseries validation plots."""
-#     print("Generating timeseries plots...")
-
-#     bsq = get_buildstock_query(
-#         workgroup=workflow.workgroup,
-#         config=workflow.data_source,
-#         truth_data_year=workflow.reference_data.truth_data_year,
-#         eia_mapping_version=workflow.reference_data.eia_mapping_version,
-#     )
-
-#     eia_annual = _get_eia_annual_electricity(year=workflow.reference_data.truth_data_year)
-#     top_states = eia_annual.group_by("state").agg(pl.col("customers").sum()).sort("customers", descending=True).head(5)["state"].to_list()
-
-#     for state in top_states:
-#         print(f"  Processing {state}...")
-
-#         buildstock_ts = get_timeseries(
-#             bsq, enduses=["fuel_use__electricity__total__kwh"], by="state", restrict_list=[state]
-#         )
-
-#         if buildstock_ts.height == 0:
-#             continue
-
-#         state_ts = buildstock_ts.filter(pl.col("state") == state)
-
-#         fig = timeseries_plotter.plot_hourly_profiles(state_ts, by_month=True)
-#         plot_dir = output_dir / "timeseries" / state
-#         save_figure(fig, plot_dir, "hourly_profiles_by_month", formats=tuple(output_formats))
-
-#         fig = timeseries_plotter.plot_daily_aggregate(state_ts)
-#         save_figure(fig, plot_dir, "daily_aggregate", formats=tuple(output_formats))
-
-#     print("  Timeseries plots complete!")
+def parse_quantity(quantity_str):
+    """Convert Quantity column to DataCol."""
+    if quantity_str == "Number of dwelling units":
+        return DataCol.UNITS_COUNT
+    if quantity_str == "All Enduses":
+        return DataCol.ALL
+    normalized = quantity_str.lower().replace(" ", "_")
+    return DataCol(normalized)
 
 
-def get_plotting_function(truth_source: TruthSource):
-    """Return a plotting function for the given visualization type."""
+def parse_coverage(coverage_str):
+    """Convert Coverage column to CoverageType."""
+    if coverage_str in ("all units", "all occupied units"):
+        return CoverageType.all_units
+    if coverage_str in ("units with non-zero consumption", "occupied units with non-zero consumption"):
+        return CoverageType.users_only
+    raise ValueError(f"Unknown coverage: {coverage_str!r}")
+
+
+def parse_group_by(group_by_str):
+    """Convert Group By column to aggregation_level string."""
+    if group_by_str == "utility":
+        return "eiaid"
+    return group_by_str.lower().replace(" ", "_")
+
+
+_MULTI_ENTITY_PREFIXES = ("stack of ", "tilemap ", "grouped ")
+
+
+def _simplify_viz_label(viz_type):
+    """Strip multi-entity prefixes for focused (single-entity) plots."""
+    for prefix in _MULTI_ENTITY_PREFIXES:
+        if viz_type.startswith(prefix):
+            return viz_type[len(prefix):]
+    return viz_type
+
+
+# ---------------------------------------------------------------------------
+# TSV reading
+# ---------------------------------------------------------------------------
+
+
+def read_plot_definition(index=None):
+    """Read plot_definition.tsv and return list of (row_dict, [PlotSpec, ...]) tuples.
+
+    Each TSV row produces 1-2 PlotSpecs (main + optional extra visualization).
+    If index is provided, only return rows matching that index (int or range).
+    """
+    # Determine which indices to include
+    if isinstance(index, int):
+        wanted = {index}
+    elif isinstance(index, (set, list)):
+        wanted = set(index)
+    else:
+        wanted = None  # all rows
+
+    tasks = []
+    with open(PLOT_DEFINITION_TSV, newline="") as f:
+        reader = csv.DictReader(f, delimiter="\t")
+        for row in reader:
+            # Skip comment lines and blank rows
+            idx_str = row.get("Index", "").strip()
+            if not idx_str or idx_str.startswith("#"):
+                continue
+
+            row_index = int(idx_str)
+            if wanted is not None and row_index not in wanted:
+                continue
+
+            # Parse fields
+            truth_source = TruthSource(row["Truth Source"])
+            quantity = parse_quantity(row["Quantity"])
+            resolution, agg_type, view = parse_metric(row["Metric"])
+            coverage = parse_coverage(row["Coverage"])
+            group_by = parse_group_by(row["Group By"])
+
+            # Main PlotSpec
+            main_spec = PlotSpec(
+                truth_source=truth_source,
+                quantity=quantity,
+                resolution=resolution,
+                aggregation_type=agg_type,
+                coverage=coverage,
+                aggregation_level=group_by,
+                focus_on=None,
+                view=view,
+            )
+
+            spec_entries = [
+                (main_spec, "Main Visualization", row["Main Visualization"]),
+            ]
+
+            # Extra visualization (if present)
+            extra_view = parse_extra_viz(row.get("Extra Visualization", ""))
+            if extra_view:
+                extra_spec = PlotSpec(
+                    truth_source=truth_source,
+                    quantity=quantity,
+                    resolution=resolution,
+                    aggregation_type=agg_type,
+                    coverage=coverage,
+                    aggregation_level=group_by,
+                    focus_on=None,
+                    view=extra_view,
+                )
+                spec_entries.append((extra_spec, "Extra Visualization", row.get("Extra Visualization", "")))
+
+            tasks.append((row, spec_entries))
+
+    return tasks
+
+
+# ---------------------------------------------------------------------------
+# Plotting
+# ---------------------------------------------------------------------------
+
+
+def get_plotting_function(truth_source):
+    """Return the plotter for a truth source."""
     match truth_source:
         case TruthSource.eia:
             return recs_plotter.create_plot
-        case TruthSource.lrd:
-            return lrd_plotter.create_plot
         case TruthSource.recs:
             return recs_plotter.create_plot
+        case TruthSource.lrd:
+            return lrd_plotter.create_plot
         case _:
             raise ValueError(f"Unsupported truth source: {truth_source}")
 
 
-def generate_all_plots(
-    workflow: WorkflowConfig,
-    output_formats: tuple = ("html", "svg", "parquet"),
-    plot_types: list[PlotType] | None = None,
-) -> None:
-    """Generate all validation plots according to workflow configuration."""
-    if plot_types is None:
-        plot_types = list(workflow.plots.plot_types)
+def _compute_discrepancy(data, plot_spec):
+    """Compute CVRMSE and NMBE using raw values with global normalization (ASHRAE-style).
 
-    generate_recs_plots()
-    return
-    print(f"Generating baseline validation plots.")
-    print(f"Plot types: {[pt.value for pt in plot_types]}")
+    NMBE  = Σ(ResStock - Ref) / Σ(Ref) × 100
+    CVRMSE = sqrt(Σ(ResStock - Ref)² / n) / mean(Ref) × 100
+    """
+    if plot_spec.quantity == DataCol.ALL:
+        return None, None
+    if plot_spec.view in (ViewType.distribution, ViewType.penetration):
+        return None, None
 
-    if PlotType.lrd in plot_types:
-        generate_lrd_plots()
-    if PlotType.recs in plot_types:
-        generate_recs_plots()
-    if PlotType.eia in plot_types:
-        generate_eia_plots()
+    # Determine value column
+    if plot_spec.quantity == DataCol.UNITS_COUNT:
+        val_col = "units_count"
+    else:
+        val_col = f"{plot_spec.quantity}_value"
 
-    # if PlotType.lrd in plot_types:
-    #     generate_lrd_plots(workflow, output_base, output_formats)
+    if val_col not in data.columns:
+        return None, None
 
-    # if PlotType.timeseries in plot_types:
-    #     generate_timeseries_plots(workflow, output_base, output_formats)
+    # Identify reference and ResStock rows
+    truth = plot_spec.truth_source.value
+    ref_rows = data.filter(pl.col("source").str.contains(truth))
+    rs_rows = data.filter(pl.col("source").str.contains("resstock"))
 
-    print(f"\nAll plots generated successfully!")
-    print(f"Output location: {workflow.output.output_dir / workflow.output.run_name}")
+    if len(ref_rows) == 0 or len(rs_rows) == 0:
+        return None, None
+
+    # Determine join columns for pairing
+    agg_col = get_second_category_column(plot_spec)
+    join_cols = [agg_col]
+    # Load duration curves: join on percent_time (consumption percentile rank)
+    # not the raw hour index, which differs between sources after sorting
+    res_str = str(plot_spec.resolution)
+    if "percent_time" in data.columns:
+        join_cols.append("percent_time")
+    elif res_str in data.columns:
+        join_cols.append(res_str)
+
+    # Exclude "US Total" from multi-entity overviews to avoid double-counting.
+    # Skip when focused on US Total itself (single-entity plot).
+    if plot_spec.focus_on != "US Total":
+        ref_rows = ref_rows.filter(pl.col(agg_col) != "US Total")
+        rs_rows = rs_rows.filter(pl.col(agg_col) != "US Total")
+
+    # Pair up reference and ResStock values
+    ref_selected = ref_rows.select(join_cols + [pl.col(val_col).alias("ref_val")])
+    rs_selected = rs_rows.select(join_cols + [pl.col(val_col).alias("rs_val")])
+    paired = rs_selected.join(ref_selected, on=join_cols, how="inner")
+    paired = paired.drop_nulls(["ref_val", "rs_val"])
+
+    if len(paired) == 0:
+        return None, None
+
+    diffs = paired["rs_val"] - paired["ref_val"]
+    sum_ref = paired["ref_val"].sum()
+    mean_ref = paired["ref_val"].mean()
+
+    if sum_ref == 0 or mean_ref == 0:
+        return None, None
+
+    nmbe = float(diffs.sum() / sum_ref * 100)
+    rmse = float(math.sqrt((diffs**2).mean()))
+    cvrmse = float(rmse / mean_ref * 100)
+
+    return cvrmse, nmbe
 
 
-def main() -> int:
-    """Main entry point for baseline validation plot generation."""
-    parser = argparse.ArgumentParser(
-        description="Generate baseline validation plots comparing BuildStock results with reference data (EIA, LRD)"
+def _unnest_list_columns(df):
+    """Expand list columns into individual scalar columns.
+
+    E.g. a column ``electricity_total_quartiles`` containing 9-element lists
+    becomes ``electricity_total_quartiles_0`` … ``electricity_total_quartiles_8``.
+    """
+    new_cols = []
+    drop_cols = []
+    for col_name in df.columns:
+        if df[col_name].dtype.base_type() == pl.List:
+            list_len = df[col_name].list.len().max()
+            if list_len and list_len > 0:
+                for i in range(list_len):
+                    new_cols.append(pl.col(col_name).list.get(i).alias(f"{col_name}_{i}"))
+            drop_cols.append(col_name)
+    if new_cols:
+        return df.with_columns(new_cols).drop(drop_cols)
+    if drop_cols:
+        return df.drop(drop_cols)
+    return df
+
+
+def _generate_spec_plots(
+    spec_entries,
+    result_key,
+    row,
+    results,
+    output_formats,
+    link_format,
+    csv_path,
+    html_path,
+    html_suffix_size,
+    output_base,
+):
+    """Generate plots for a list of (PlotSpec, viz_col, viz_type_str) entries and update results."""
+    for plot_spec, viz_col, viz_type_str in spec_entries:
+        label = f"[{result_key}] {plot_spec.truth_source} {row['Quantity']} {row['Metric']} ({plot_spec.view})"
+        try:
+            logger.info(f"  Generating: {label}")
+            data = get_plot_data(plot_spec)
+            plot_func = get_plotting_function(plot_spec.truth_source)
+            fig, title = plot_func(data, plot_spec)
+            save_figure(fig, plot_spec, formats=output_formats)
+
+            # Build relative path from csv_path's directory to the plot file
+            path_seg, file_title = plot_spec.get_file_path_and_name()
+            rel_path = (
+                Path(f"{plot_spec.truth_source} plots ({link_format})") / path_seg / f"{file_title}.{link_format.value}"
+            )
+            rel_path_str = str(rel_path).replace("\\", "/")
+            results[result_key][viz_col] = f"{viz_type_str}({rel_path_str})"
+
+            # For main visualization: save data CSV and compute discrepancy metrics
+            if plot_spec.view == ViewType.value_view:
+                # Save data CSV (expand list columns into individual columns)
+                data_dir = output_base / f"{plot_spec.truth_source} data (csv)" / path_seg
+                ensure_directory(data_dir)
+                _unnest_list_columns(data).write_csv(data_dir / f"{file_title}.csv")
+                rel_data = Path(f"{plot_spec.truth_source} data (csv)") / path_seg / f"{file_title}.csv"
+                results[result_key]["Data"] = f"csv({str(rel_data).replace(chr(92), '/')})"
+
+                # Compute discrepancy metrics
+                cvrmse, nmbe = _compute_discrepancy(data, plot_spec)
+                if cvrmse is not None:
+                    results[result_key]["Discrepancy (CVRMSE)"] = f"{cvrmse:.1f}%"
+                    results[result_key]["Discrepancy (NMBE)"] = f"{nmbe:.1f}%"
+
+            logger.info(f"  OK: {label}")
+        except Exception:
+            tb = traceback.format_exc()
+            results[result_key][viz_col] = f"FAILED: {viz_type_str}({tb})"
+            logger.error(f"  FAILED: {label}\n{tb}")
+
+    # Append one CSV + HTML row when all viz columns for this result_key are done
+    _append_plot_row(csv_path, results[result_key])
+    append_html_row(html_path, results[result_key], OUTPUT_COLUMNS, html_suffix_size)
+
+
+def generate_plots(index=None):
+    """Generate plots from plot_definition.tsv.
+
+    Args:
+        index: If provided, only generate plots for this row index (int),
+               or a set/list of indices. If None, generate all plots.
+    """
+    wall_start = time.perf_counter()
+    tasks = read_plot_definition(index)
+    logger.info(f"Generating {len(tasks)} plot definition rows ({sum(len(s) for _, s in tasks)} total plots)...")
+
+    output_formats = [FileType(fmt.value) for fmt in workflow.plots.output_formats]
+    link_format = FileType.html if FileType.html in output_formats else output_formats[0]
+    output_base = Path(workflow.output.output_dir) / workflow.output.run_name
+    csv_path = output_base / "plot_index.csv"
+    html_path = output_base / "plot_index.html"
+
+    # Initialize the CSV (header only) and the HTML shell once up front.
+    # The HTML embeds CSV data in a <script type="text/csv"> block at the
+    # end of the file; append_html_row() performs O(1) appends there.
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(csv_path, "w", newline="") as f:
+        csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS).writeheader()
+    html_suffix_size = create_html_shell(html_path, OUTPUT_COLUMNS)
+
+    # One result row per output plot group, keyed for progressive updates
+    results = {}
+
+    for row, spec_entries in tasks:
+        row_index = row["Index"]
+        sample_spec = spec_entries[0][0]
+
+        # Expand: one overview (unfocused) + one per focus value
+        data_key = sample_spec.get_data_key()
+        base_data = get_base_data(data_key)
+        expand_col = "utility_name" if sample_spec.aggregation_level == "eiaid" else sample_spec.aggregation_level
+        focus_values = sorted(v for v in base_data[expand_col].unique().to_list() if v is not None)
+
+        # Skip "US Total" for non-state aggregations; put it first for state
+        if sample_spec.aggregation_level != "state":
+            focus_values = [v for v in focus_values if v != "US Total"]
+        elif "US Total" in focus_values:
+            focus_values.remove("US Total")
+            focus_values.insert(0, "US Total")
+
+        # Prepend None for the unfocused overview plot (skip for plots that
+        # require a specific focus entity: ALL enduse plots and matrix layout)
+        if sample_spec.quantity != DataCol.ALL and sample_spec.resolution != Resolution.hour_of_day_matrix:
+            focus_values.insert(0, None)
+
+        for focus_val in focus_values:
+            if focus_val is None:
+                sub_key = row_index
+            else:
+                sub_key = f"{row_index}_{focus_val}"
+
+            results[sub_key] = {col: row.get(col, "") for col in OUTPUT_COLUMNS}
+            results[sub_key]["Focus On"] = focus_val or ""
+            if focus_val == "US Total":
+                results[sub_key]["Group By"] = ""
+            # Only highlight the summary row (unfocused overview, or US Total when overview is skipped)
+            if focus_val is not None and focus_val != "US Total":
+                results[sub_key]["Highlight"] = ""
+            results[sub_key]["Main Visualization"] = ""
+            results[sub_key]["Extra Visualization"] = ""
+
+            focused_entries = [
+                (spec.model_copy(update={"focus_on": focus_val}), viz_col,
+                 _simplify_viz_label(viz_type) if focus_val else viz_type)
+                for spec, viz_col, viz_type in spec_entries
+            ]
+            _generate_spec_plots(
+                focused_entries,
+                sub_key,
+                row,
+                results,
+                output_formats,
+                link_format,
+                csv_path,
+                html_path,
+                html_suffix_size,
+                output_base,
+            )
+
+    # Summary
+    ok = sum(
+        1
+        for r in results.values()
+        for col in ("Main Visualization", "Extra Visualization")
+        if r[col] and not r[col].startswith("FAILED:")
+    )
+    failed = sum(
+        1
+        for r in results.values()
+        for col in ("Main Visualization", "Extra Visualization")
+        if r[col].startswith("FAILED:")
+    )
+    logger.info(f"Done: {ok} succeeded, {failed} failed, {ok + failed} total")
+
+    # Timing profiling summary
+    wall_elapsed = time.perf_counter() - wall_start
+    logger.info(
+        "\n=== Timing Summary ===\n%s\n%s\nTotal wall clock time: %.2fs",
+        TimingStats.summary(),
+        "-" * 95,
+        wall_elapsed,
     )
 
+
+def _append_plot_row(csv_path, row_dict):
+    """Append a single result row to plot_index.csv (O(1) append)."""
+    with open(csv_path, "a", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS)
+        writer.writerow(row_dict)
+
+
+# ---------------------------------------------------------------------------
+# Convenience wrappers
+# ---------------------------------------------------------------------------
+
+
+def generate_eia_plots():
+    """Generate only EIA plots."""
+    tasks = read_plot_definition()
+    eia_indices = {int(row["Index"]) for row, _ in tasks if row["Truth Source"] == "eia"}
+    generate_plots(index=eia_indices)
+
+
+def generate_recs_plots():
+    """Generate only RECS plots."""
+    tasks = read_plot_definition()
+    recs_indices = {int(row["Index"]) for row, _ in tasks if row["Truth Source"] == "recs"}
+    generate_plots(index=recs_indices)
+
+
+def generate_lrd_plots():
+    """Generate only LRD plots."""
+    tasks = read_plot_definition()
+    lrd_indices = {int(row["Index"]) for row, _ in tasks if row["Truth Source"] == "lrd"}
+    generate_plots(index=lrd_indices)
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
+
+
+def parse_index_arg(index_str):
+    """Parse index argument: single int, range (e.g. '1-10'), or comma-separated."""
+    indices = set()
+    for part in index_str.split(","):
+        part = part.strip()
+        if "-" in part:
+            start, end = part.split("-", 1)
+            indices.update(range(int(start), int(end) + 1))
+        else:
+            indices.add(int(part))
+    return indices
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Generate baseline validation plots from plot_definition.tsv")
     parser.add_argument(
-        "--config",
-        type=str,
-        default=str(Path(__file__).parent / "workflow.yaml"),
-        help="Path to workflow configuration YAML file (default: workflow.yaml in script directory)",
+        "--index", type=str, default=None, help="Plot definition index to generate (e.g. '5', '1-10', '1,3,5')"
     )
-
-    parser.add_argument(
-        "--output",
-        action="append",
-        help=(
-            "Output file types to generate (html, svg, json, parquet). "
-            "May be specified multiple times. Defaults to [html, svg, parquet] if not specified."
-        ),
-    )
-
-    parser.add_argument(
-        "--plot-type",
-        action="append",
-        choices=["eia", "load_duration", "timeseries", "all"],
-        help=(
-            "Types of plots to generate. May be specified multiple times. "
-            "Options: eia (EIA comparison), load_duration (load duration curves), "
-            "timeseries (timeseries analysis), all (all plot types). "
-            "Defaults to all plot types specified in config if not provided."
-        ),
-        default=["lrd"],
-    )
-
     args = parser.parse_args()
 
-    config_path = Path(args.config)
-    if not config_path.exists():
-        print(f"Error: Configuration file not found at {config_path}")
-        return 1
-
-    # Parse output types
-    output_types = []
-    if args.output:
-        allowed_types = {"svg", "html", "json", "parquet"}
-        for val in args.output:
-            for item in val.replace(",", " ").split():
-                if item in allowed_types:
-                    output_types.append(item)
-                else:
-                    print(f"Warning: Invalid output type '{item}'. Skipping.")
-
-    if not output_types:
-        # Use defaults from config
-        output_types = [fmt.value for fmt in workflow.plots.output_formats]
-
-    print(f"Output formats: {output_types}")
-
-    # Parse plot types
-    plot_types = None
-    if args.plot_type:
-        if "all" in args.plot_type:
-            plot_types = None  # Generate all
-        else:
-            plot_types = []
-            for pt in args.plot_type:
-                try:
-                    plot_types.append(PlotType(pt))
-                except ValueError:
-                    print(f"Warning: Invalid plot type '{pt}'. Skipping.")
-
-    generate_all_plots(
-        workflow=workflow,
-        output_formats=tuple(output_types),
-        plot_types=plot_types,
-    )
+    index = parse_index_arg(args.index) if args.index else None
+    generate_plots(index=index)
     return 0
 
 

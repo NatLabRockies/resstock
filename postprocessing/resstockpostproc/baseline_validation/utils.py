@@ -1,5 +1,6 @@
 """Shared utilities for baseline validation."""
 
+import functools
 from pathlib import Path
 from typing import Dict, List
 
@@ -141,17 +142,18 @@ def format_large_number(value: float, precision: int = 1) -> str:
     sign = "-" if value < 0 else ""
 
     if abs_value >= 1e12:
-        return f"{sign}{abs_value/1e12:.{precision}f}T"
+        return f"{sign}{abs_value / 1e12:.{precision}f}T"
     elif abs_value >= 1e9:
-        return f"{sign}{abs_value/1e9:.{precision}f}B"
+        return f"{sign}{abs_value / 1e9:.{precision}f}B"
     elif abs_value >= 1e6:
-        return f"{sign}{abs_value/1e6:.{precision}f}M"
+        return f"{sign}{abs_value / 1e6:.{precision}f}M"
     elif abs_value >= 1e3:
-        return f"{sign}{abs_value/1e3:.{precision}f}K"
+        return f"{sign}{abs_value / 1e3:.{precision}f}K"
     else:
         return f"{sign}{abs_value:.{precision}f}"
 
 
+@functools.lru_cache(maxsize=None)
 def get_buildstock_query(
     workgroup: str,
     config: DataSourceConfig,
@@ -164,7 +166,7 @@ def get_buildstock_query(
         db_name=config.db_name,
         table_name=config.table_name,
         skip_reports=skip_reports,
-        db_schema=config.db_schema
+        db_schema=config.db_schema,
     )
     bsq.utility.eia_mapping_year = truth_data_year
     return bsq

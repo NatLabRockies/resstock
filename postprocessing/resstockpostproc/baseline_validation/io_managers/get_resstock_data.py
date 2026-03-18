@@ -1,7 +1,8 @@
 import polars as pl
+import functools
 import pandas as pd
 from collections.abc import Sequence
-from typing import Literal
+
 
 from resstockpostproc.baseline_validation.io_managers.utils import apply_aggregation
 from .utils import add_us_total, add_missing_states
@@ -15,11 +16,14 @@ from resstockpostproc.baseline_validation.utils import get_buildstock_query
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
 from resstockpostproc.shared_utils.db_column_names import DataCol, DBCharCol
 from resstockpostproc.shared_utils.caching import cached
+from resstockpostproc.shared_utils.timing import timed
 from resstockpostproc.shared_utils.mapping import UtilityName2ID
 import sqlalchemy as sa
 from buildstock_query import MappedColumn
 
 
+@timed
+@cached(cache_file="resstock_timeseries_data_cache")
 def get_timeseries_all(
     data_key: DataKey,
     restrict_list: Sequence[str] | None = None,
@@ -35,7 +39,7 @@ def get_timeseries_all(
     if not workflow.data_sources:
         return None
 
-    by: Literal["state", "eiaid"] = "state" if data_key.aggregation_level == "state" else "eiaid"
+    by = data_key.aggregation_level
     resolution = data_key.resolution
 
     all_dfs = []
@@ -62,7 +66,7 @@ def get_timeseries_all(
 def get_timeseries(
     data_source: DataSourceConfig,
     resolution: Resolution = Resolution.month,
-    by: Literal["state", "eiaid"] = "state",
+    by: str = "state",
     restrict_list: Sequence[str] | None = None,
     occupied_only: bool = False,
 ) -> pl.DataFrame:
@@ -266,6 +270,8 @@ def _get_timestamp_grouping_func(resolution: Resolution):
     return timestamp_grouping_func
 
 
+@timed
+@cached(cache_file="resstock_annual_data_cache")
 def get_annual_all(
     data_key: DataKey,
     occupied_only: bool = False,
@@ -279,7 +285,7 @@ def get_annual_all(
     if not workflow.data_sources:
         return None
 
-    by: Literal["state", "eiaid"] = "state" if data_key.aggregation_level == "state" else "eiaid"
+    by = data_key.aggregation_level
 
     all_dfs = []
     for data_source in workflow.data_sources:
@@ -291,9 +297,11 @@ def get_annual_all(
     return final_df
 
 
+@timed
+@functools.lru_cache(maxsize=None)
 def get_annual(
     data_source: DataSourceConfig,
-    by: Literal["state", "eiaid"] = "state",
+    by: str = "state",
     occupied_only: bool = False,
 ) -> pl.DataFrame:
     """Get annual retail sales aggregated by geography and scaled to EIA customer counts."""

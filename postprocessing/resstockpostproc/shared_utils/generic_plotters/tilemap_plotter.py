@@ -7,6 +7,23 @@ from typing import Literal
 from collections.abc import Sequence, Callable
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
+
+def _wrap_text(text: str, max_chars: int = 25) -> str:
+    """Wrap text with <br> tags for Plotly annotations."""
+    words = text.split()
+    lines: list[str] = []
+    current = ""
+    for word in words:
+        if current and len(current) + 1 + len(word) > max_chars:
+            lines.append(current)
+            current = word
+        else:
+            current = f"{current} {word}" if current else word
+    if current:
+        lines.append(current)
+    return "<br>".join(lines)
+
+
 # LRDUtility2EIAID = {
 #     "AEP (OH)": 14006,  # using Ohio Power (OH)
 #     "Ameren (MO)": 19436,  # = Union Electric (MO)
@@ -124,6 +141,8 @@ def plot_tilemap(
     ts_xtick_text: tuple | None = None,
     ts_xtick_vals: tuple | None = None,
     x_unit: str = "",
+    main_section_title: str = "",
+    sidebar_section_title: str = "",
 ) -> go.Figure:
     """
     Generic annual sales plotting function with geographic layout and size-proportional subplots.
@@ -293,6 +312,34 @@ def plot_tilemap(
     fig.update_layout(
         title_text=title_text,
     )
+
+    # Add section titles above main grid and sidebar
+    if sidebar_column and column_widths and (main_section_title or sidebar_section_title):
+        main_cols_width = sum(column_widths[:-1])
+        main_x = main_cols_width / 2
+        sidebar_x = main_cols_width + column_widths[-1] / 2
+        section_y = 1.02
+
+        if main_section_title:
+            fig.add_annotation(
+                text=f"<b>{main_section_title}</b>",
+                xref="paper", yref="paper",
+                x=main_x, y=section_y,
+                showarrow=False,
+                font=dict(size=14),
+                xanchor="center", yanchor="bottom",
+            )
+        if sidebar_section_title:
+            wrapped = _wrap_text(sidebar_section_title, max_chars=25)
+            fig.add_annotation(
+                text=f"<b>{wrapped}</b>",
+                xref="paper", yref="paper",
+                x=sidebar_x, y=section_y,
+                showarrow=False,
+                font=dict(size=14),
+                xanchor="center", yanchor="bottom",
+            )
+
     return fig
 
 

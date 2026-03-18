@@ -17,9 +17,12 @@ from resstockpostproc.baseline_validation.plotters.plot_config import (
 )
 from resstockpostproc.baseline_validation.plotters.box_plotter import create_vertical_plot
 from resstockpostproc.shared_utils.generic_plotters import tilemap_plotter
+from resstockpostproc.shared_utils.generic_plotters.bar_plotter import create_bar_plot
 from resstockpostproc.shared_utils.generic_plotters.monthly_plotter import create_ts_plot
+from resstockpostproc.shared_utils.timing import timed
 
 
+@timed
 def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str]:
     """Create a validation plot from data and specification.
 
@@ -44,7 +47,10 @@ def _render(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.F
     if config.use_distribution_plot:
         return _render_distribution(data, plot_spec)
     elif config.is_single_entity:
-        return _render_single_entity_timeseries(data, config)
+        if config.timeseries_column:
+            return _render_single_entity_timeseries(data, config)
+        else:
+            return _render_single_entity_bar(data, config)
     else:
         return _render_tilemap(data, config, plot_spec)
 
@@ -71,6 +77,8 @@ def _render_tilemap(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec)
         title_text=config.title,
         sidebar_column=config.sidebar_column,
         sidebar_title=config.sidebar_title,
+        main_section_title=config.main_section_title,
+        sidebar_section_title=config.sidebar_section_title,
     )
 
 
@@ -88,6 +96,21 @@ def _render_single_entity_timeseries(data: pl.DataFrame, config: PlotConfig) -> 
         show_legends=True,
         x_unit=config.x_unit,
         fill_lower_bound=True,
+    )
+
+
+def _render_single_entity_bar(data: pl.DataFrame, config: PlotConfig) -> go.Figure:
+    """Render a simple bar chart for single-entity (focused) plots without timeseries."""
+    return create_bar_plot(
+        data=data,
+        quantity_column=config.quantity_column,
+        rse_column=config.rse_column,
+        first_category_column="source",
+        quantity_title=config.quantity_title,
+        first_category_title="Data Source",
+        orientation="v",
+        title_text=config.title,
+        show_legends=True,
     )
 
 

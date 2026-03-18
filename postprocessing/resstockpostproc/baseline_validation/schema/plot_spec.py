@@ -7,7 +7,7 @@ entire pipeline - data processing, figure creation, and output saving.
 from __future__ import annotations
 
 from pathlib import Path
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from enum import StrEnum
 from typing import NamedTuple
 from resstockpostproc.shared_utils.db_column_names import DataCol
@@ -46,12 +46,12 @@ class ViewType(StrEnum):
     """
 
     # Display modes
-    value_view = "value"
-    diff_view = "difference view"
-    temp_view = "temperature relation"
-    temp_count_view = "temperature count"
-    distribution = "distribution box plot"
-    penetration = "enduse penetration bar plot"
+    value_view = "value"  # The default view for most plots - shows actual values as the main plot
+    diff_view = "difference view"  # Shows percent difference with truth source as the main plot
+    temp_view = "temperature relation"  # Only for LRD plots - shows relationship between consumption and outdoor
+    temp_count_view = "temperature count"  # Only for LRD plots - distribution of temperature
+    distribution = "distribution box plot" # RECS only - shows distribution of per-unit/per-user values with box plot
+    penetration = "enduse penetration bar plot"  # Only for RECS - shows % of units with non-zero consumption for each
 
 
 class FileType(StrEnum):
@@ -104,11 +104,42 @@ class PlotSpec(NoExtraModel):
     truth_source: TruthSource = Field(..., description="Truth source for comparison plots (eia, recs, lrd).")
     aggregation_type: AggregationType = Field(..., description="Aggregation method: total or average")
     coverage: CoverageType = Field(..., description="Population coverage: all_units or users_only")
-    quantity: DataCol | None = Field(..., description="Column(s) to visualise.")
+    quantity: DataCol = Field(..., description="Column(s) to visualise. Use DataCol.ALL for all enduses.")
     resolution: Resolution = Field(..., description="Time resolution: monthly / annual / hourly")
     aggregation_level: str = Field(..., description="Grouping level, e.g. state, eiaid, vintage")
     focus_on: str | None = Field(default=None, description="Specific category to focus on. Example: CA")
     view: ViewType | None = Field(..., description="View type: diff_view, value_view, distribution, etc.")
+
+    @model_validator(mode="after")
+    def _reject_total_distribution(self) -> PlotSpec:
+        if self.aggregation_type == AggregationType.total and self.view == ViewType.distribution:
+            raise ValueError(
+                "ViewType.distribution requires AggregationType.average (not total). "
+                "Distribution box plots show per-unit/per-user quartiles, which are "
+                "incompatible with stock total values."
+            )
+        return self
+
+    @model_validator(mode="after")
+    def _validate_lrd_constraints(self) -> PlotSpec:
+        if self.truth_source != TruthSource.lrd:
+            return self
+        if self.quantity not in (DataCol.ELECTRICITY_TOTAL,):
+            raise ValueError(
+                f"LRD only supports quantity=ELECTRICITY_TOTAL (got {self.quantity}). "
+                "LRD data contains only hourly electricity consumption."
+            )
+        if self.aggregation_type != AggregationType.average:
+            raise ValueError(
+                f"LRD only supports aggregation_type=average (got {self.aggregation_type}). "
+                "LRD data is per-meter, not stock total."
+            )
+        if self.coverage != CoverageType.all_units:
+            raise ValueError(
+                f"LRD only supports coverage=all_units (got {self.coverage}). "
+                "LRD data does not distinguish between users and non-users."
+            )
+        return self
 
     def get_data_key(self) -> DataKey:
         """Get the data key that uniquely identifies the base dataset for this plot.
@@ -125,10 +156,9 @@ class PlotSpec(NoExtraModel):
         )
 
     def get_quantity_name(self) -> str:
-        if self.quantity is None:
+        if self.quantity == DataCol.ALL:
             return f"fuel {self.aggregation_type.value}"
-        else:
-            return f"{self.quantity.value} {self.aggregation_type.value}"
+        return f"{self.quantity.value} {self.aggregation_type.value}"
 
     def _get_title_prefix(self) -> str:
         qlabel = self.get_quantity_name()
@@ -146,6 +176,11 @@ class PlotSpec(NoExtraModel):
     def get_file_path_and_name(self) -> tuple[Path, str]:
         title_prefix = self._get_title_prefix()
         title = self.get_title()
+        # Append coverage and view to filename so different specs don't overwrite each other
+        if self.coverage != CoverageType.all_units:
+            title = title + f" ({self.coverage})"
+        if self.view != ViewType.value_view:
+            title = title + f" ({self.view})"
         path_segment = Path(title_prefix + f" by {self.aggregation_level}")
         path_segment /= self.focus_on if self.focus_on else "All"
         return path_segment, title

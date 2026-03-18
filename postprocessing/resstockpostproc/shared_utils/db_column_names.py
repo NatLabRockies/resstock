@@ -18,6 +18,7 @@ class DBSchema(StrEnum):
 
 
 class DataCol(StrEnum):
+    ALL = "all"  # Sentinel: all available quantities/enduses
     ELECTRICITY_TOTAL = "electricity_total"
     ELECTRICITY_SPACE_HEATING = "electricity_space_heating"
     ELECTRICITY_HEATING_FANS_PUMPS = "electricity_heating_fans_pumps"

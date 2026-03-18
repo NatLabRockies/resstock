@@ -1,8 +1,22 @@
 from resstockpostproc.shared_utils.generic_plotters import box_plotter, bar_plotter
 from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, AggregationType, CoverageType, ViewType
+from resstockpostproc.shared_utils.db_column_names import DataCol
 import plotly.graph_objects as go
 import polars as pl
 from plotly.subplots import make_subplots
+
+
+def _get_reference_source(df: pl.DataFrame) -> str:
+    """Get the reference (non-resstock) data source name for sorting.
+
+    Returns the first source that doesn't contain 'resstock' (e.g. 'recs_2020', 'lrd_2018').
+    Falls back to the first source if all contain 'resstock'.
+    """
+    sources = df["source"].unique(maintain_order=True).to_list()
+    for src in sources:
+        if "resstock" not in src:
+            return src
+    return sources[0]
 
 
 def _add_quartile_cols(df: pl.DataFrame, quartile_column: str) -> pl.DataFrame:
@@ -38,7 +52,11 @@ def _prepare_box_plot_data(df: pl.DataFrame, quantity: str, coverage: CoverageTy
         return df
     elif coverage == CoverageType.users_only:
         df = df.with_columns(
-            (pl.col("model_count") * pl.col(f"{quantity}_percent_users") / 100)
+            (
+                pl.col("model_count").fill_null(0).fill_nan(0)
+                * pl.col(f"{quantity}_percent_users").fill_null(0).fill_nan(0)
+                / 100
+            )
             .round(0)
             .cast(pl.Int32)
             .alias("n_points")
@@ -55,7 +73,17 @@ def split_graph_by_state(df: pl.DataFrame):
     Yields tuples of (df_subset, second_category_column, row, col) for each subplot.
     """
     # Get states sorted by their maximum mean value across all sources
-    sorted_states = df.filter(pl.col("source") == "recs_2020").sort("units_count", descending=True)["state"].to_list()
+    ref_source = _get_reference_source(df)
+    sorted_states = df.filter(pl.col("source") == ref_source).sort("units_count", descending=True)["state"].to_list()
+
+    # Single state: no need to split into two columns
+    if len(sorted_states) <= 1:
+
+        def _single_iterator():
+            yield df, "state", 1, 1
+
+        fig = make_subplots(rows=1, cols=1)
+        return fig, _single_iterator()
 
     # Split states into two columns
     mid_point = len(sorted_states) // 2
@@ -89,13 +117,26 @@ def split_graph_by_char(df: pl.DataFrame):
         col
         for col in df.columns
         if col not in ["source", "model_count", "units_count"]
-        and not col.endswith(("_value", "_quartiles", "_nonzero_quartiles", "_percent_users"))
+        and not col.endswith(
+            (
+                "_value",
+                "_quartiles",
+                "_nonzero_quartiles",
+                "_percent_users",
+                "_percent_difference",
+                "_rse",
+                "_upper_bound",
+                "_lower_bound",
+            )
+        )
     ][0]
 
-    # Get characteristic values sorted by their maximum mean value across all sources
-    sorted_chars = (
-        df.filter(pl.col("source") == "recs_2020").sort("units_count", descending=True)[char_column].to_list()
-    )
+    # Get characteristic values sorted by reference source values (descending)
+    ref_source = _get_reference_source(df)
+    ref_df = df.filter(pl.col("source") == ref_source)
+    if "units_count" in ref_df.columns and ref_df["units_count"].null_count() < len(ref_df):
+        ref_df = ref_df.sort("units_count", descending=True)
+    sorted_chars = ref_df[char_column].to_list()
 
     # All chars fit in one column
     def _graph_iterator():
@@ -220,9 +261,10 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
             # Rename 'quantity' column to 'enduse' to serve as second category
             group_df = group_df.rename({"quantity": "enduse"})
 
-            # Sort enduses by recs_2020 values (descending) for stable ordering
+            # Sort enduses by reference source values (descending) for stable ordering
+            ref_source = _get_reference_source(group_df)
             sort_order = (
-                group_df.filter(pl.col("source") == "recs_2020")
+                group_df.filter(pl.col("source") == ref_source)
                 .sort("enduse_value", descending=True)
                 .select("enduse")
                 .to_series()
@@ -242,9 +284,9 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
 
 def split_graph(df: pl.DataFrame, plot_spec: PlotSpec):
     """Split the graph data into subplots based on the plot specification."""
-    if plot_spec.aggregation_level == "state" and plot_spec.quantity is not None:
+    if plot_spec.aggregation_level == "state" and plot_spec.quantity != DataCol.ALL:
         return split_graph_by_state(df)
-    elif plot_spec.quantity is None:
+    elif plot_spec.quantity == DataCol.ALL:
         return split_graph_by_enduse(df, plot_spec)
     else:
         return split_graph_by_char(df)
@@ -263,8 +305,8 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
     quantity = plot_spec.quantity
     view = plot_spec.view
 
-    # Customer count case (quantity=None with total aggregation)
-    if quantity is None and plot_spec.aggregation_type == AggregationType.total:
+    # Dwelling unit count case
+    if quantity == DataCol.UNITS_COUNT:
         max_val = df["units_count"].max()
         return 0, float(max_val) if max_val is not None else 0.0
 
@@ -282,7 +324,7 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
 
     col_suffix += "_percent_difference" if view == ViewType.diff_view else ""
     all_quantities = (
-        [c for c in df.columns if c.endswith(col_suffix)] if quantity is None else [f"{quantity}{col_suffix}"]
+        [c for c in df.columns if c.endswith(col_suffix)] if quantity == DataCol.ALL else [f"{quantity}{col_suffix}"]
     )
     all_min_val, all_max_val = float("inf"), float("-inf")
     for quantity_col in all_quantities:
@@ -314,8 +356,8 @@ def create_vertical_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     Uses ViewType.distribution for box plots, otherwise bar plots.
     """
     # Determine quantity title based on view type, aggregation type, and coverage
-    if plot_spec.quantity is None and plot_spec.aggregation_type == AggregationType.total:
-        # Customer count case
+    if plot_spec.quantity == DataCol.UNITS_COUNT:
+        # Dwelling unit count case
         quantity_title = "count"
     elif plot_spec.view == ViewType.distribution:
         # Distribution box plot
@@ -332,9 +374,9 @@ def create_vertical_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     else:
         quantity_title = ""
 
-    if plot_spec.quantity is None:
+    if plot_spec.quantity == DataCol.ALL:
         if plot_spec.focus_on is None:
-            raise ValueError("When quantity is None, focus_on must be specified")
+            raise ValueError("When quantity is DataCol.ALL, focus_on must be specified")
         df = df.filter(pl.col(plot_spec.aggregation_level) == plot_spec.focus_on)
 
     show_legends = True
@@ -343,7 +385,7 @@ def create_vertical_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     custom_range = get_custom_range(df, plot_spec)
 
     for df_subset, second_cat_column, row, col in graph_iterator:
-        quantity_col = plot_spec.quantity or "enduse"
+        quantity_col = "enduse" if plot_spec.quantity == DataCol.ALL else plot_spec.quantity
 
         # Use box plot for distribution view
         if plot_spec.view == ViewType.distribution:
@@ -364,8 +406,7 @@ def create_vertical_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
             )
         else:
             # Bar plot for other view types
-            if plot_spec.quantity is None and plot_spec.aggregation_type == AggregationType.total:
-                # Customer count case
+            if plot_spec.quantity == DataCol.UNITS_COUNT:
                 quantity_col = "units_count"
             elif plot_spec.view == ViewType.penetration:
                 quantity_col = f"{quantity_col}_percent_users"
