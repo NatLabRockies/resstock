@@ -1,5 +1,6 @@
 """Functions for saving plots and data."""
 
+import re
 from pathlib import Path
 from typing import Literal
 
@@ -33,6 +34,7 @@ def save_figure(
         fullpath = filepath / f"{title}.{fmt.value}"
         if fmt == FileType.html:
             fig.write_html(fullpath, include_plotlyjs="cdn")
+            _make_html_resizable(fullpath)
         else:
             # For PDF/SVG, use larger scale and ensure proper dimensions
             # Get dimensions from figure layout, or use defaults
@@ -42,6 +44,49 @@ def save_figure(
             # Use scale=2 for better quality and proper sizing
             fig.write_image(fullpath, width=width, height=height, scale=2)
         print(f"Saved: {filepath}")
+
+
+def _make_html_resizable(html_path: Path) -> None:
+    """Post-process a Plotly HTML file to make the chart resizable via drag."""
+    html = html_path.read_text(encoding="utf-8")
+
+    # Extract the original fixed dimensions from the plotly-graph-div style
+    m = re.search(r'class="plotly-graph-div"\s+style="height:([\d.]+)px;\s*width:([\d.]+)px;"', html)
+    if not m:
+        return
+    orig_h, orig_w = m.group(1), m.group(2)
+
+    # 1. Make the plotly div fill its container
+    html = html.replace(
+        f'style="height:{orig_h}px; width:{orig_w}px;"',
+        'style="width:100%; height:100%;"',
+    )
+
+    # 2. Remove fixed width/height from Plotly layout JSON so autosize takes effect
+    html = re.sub(r'"width":\s*[\d.]+,\s*"height":\s*[\d.]+,', '"autosize":true,', html)
+
+    # 3. Wrap <body> content in a resizable container + add ResizeObserver
+    resize_wrapper = (
+        f'<div id="resize-container" style="resize:both; overflow:hidden; '
+        f'width:{orig_w}px; height:{orig_h}px; border:1px solid #ddd; '
+        f'position:relative; padding:0; margin:10px;">\n'
+    )
+    resize_script = """
+<script>
+(function() {
+  var container = document.getElementById('resize-container');
+  var chart = container.querySelector('.plotly-graph-div');
+  if (container && chart) {
+    new ResizeObserver(function() { Plotly.Plots.resize(chart); }).observe(container);
+  }
+})();
+</script>
+"""
+
+    html = html.replace("<body>\n", "<body>\n" + resize_wrapper)
+    html = html.replace("</body>", "</div>\n" + resize_script + "</body>")
+
+    html_path.write_text(html, encoding="utf-8")
 
 
 def save_dataframe(

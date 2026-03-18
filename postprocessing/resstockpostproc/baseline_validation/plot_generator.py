@@ -420,14 +420,12 @@ def generate_plots(index=None):
         csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS).writeheader()
     html_suffix_size = create_html_shell(html_path, OUTPUT_COLUMNS)
 
-    # One result row per output plot group, keyed for progressive updates
-    results = {}
-
+    # Pass 1: Expand all focus values to determine total work items
+    work_items = []
     for row, spec_entries in tasks:
         row_index = row["Index"]
         sample_spec = spec_entries[0][0]
 
-        # Expand: one overview (unfocused) + one per focus value
         data_key = sample_spec.get_data_key()
         base_data = get_base_data(data_key)
         expand_col = "utility_name" if sample_spec.aggregation_level == "eiaid" else sample_spec.aggregation_level
@@ -446,38 +444,49 @@ def generate_plots(index=None):
             focus_values.insert(0, None)
 
         for focus_val in focus_values:
-            if focus_val is None:
-                sub_key = row_index
-            else:
-                sub_key = f"{row_index}_{focus_val}"
+            work_items.append((row, spec_entries, row_index, focus_val))
 
-            results[sub_key] = {col: row.get(col, "") for col in OUTPUT_COLUMNS}
-            results[sub_key]["Focus On"] = focus_val or ""
-            if focus_val == "US Total":
-                results[sub_key]["Group By"] = ""
-            # Only highlight the summary row (unfocused overview, or US Total when overview is skipped)
-            if focus_val is not None and focus_val != "US Total":
-                results[sub_key]["Highlight"] = ""
-            results[sub_key]["Main Visualization"] = ""
-            results[sub_key]["Extra Visualization"] = ""
+    total = len(work_items)
+    logger.info(f"Total plot groups to generate: {total}")
 
-            focused_entries = [
-                (spec.model_copy(update={"focus_on": focus_val}), viz_col,
-                 _simplify_viz_label(viz_type) if focus_val else viz_type)
-                for spec, viz_col, viz_type in spec_entries
-            ]
-            _generate_spec_plots(
-                focused_entries,
-                sub_key,
-                row,
-                results,
-                output_formats,
-                link_format,
-                csv_path,
-                html_path,
-                html_suffix_size,
-                output_base,
-            )
+    # Pass 2: Generate plots with progress tracking
+    results = {}
+    for i, (row, spec_entries, row_index, focus_val) in enumerate(work_items, 1):
+        if focus_val is None:
+            sub_key = row_index
+        else:
+            sub_key = f"{row_index}_{focus_val}"
+
+        results[sub_key] = {col: row.get(col, "") for col in OUTPUT_COLUMNS}
+        results[sub_key]["Index"] = i
+        results[sub_key]["Focus On"] = focus_val or ""
+        if focus_val == "US Total":
+            results[sub_key]["Group By"] = ""
+        # Only highlight the summary row (unfocused overview, or US Total when overview is skipped)
+        if focus_val is not None and focus_val != "US Total":
+            results[sub_key]["Highlight"] = ""
+        results[sub_key]["Main Visualization"] = ""
+        results[sub_key]["Extra Visualization"] = ""
+
+        focused_entries = [
+            (spec.model_copy(update={"focus_on": focus_val}), viz_col,
+             _simplify_viz_label(viz_type) if focus_val else viz_type)
+            for spec, viz_col, viz_type in spec_entries
+        ]
+
+        logger.info(f"[{i}/{total}] ({i * 100 // total}%)")
+        _generate_spec_plots(
+            focused_entries,
+            sub_key,
+            row,
+            results,
+            output_formats,
+            link_format,
+            csv_path,
+            html_path,
+            html_suffix_size,
+            output_base,
+        )
 
     # Summary
     ok = sum(
