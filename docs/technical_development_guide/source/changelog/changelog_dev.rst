@@ -7,6 +7,53 @@ Development Changelog
     :released: pending
 
     .. change::
+        :tags: workflow, options, hpxml
+        :pullreq: 1460
+
+        **Date**: 2025-10-28
+
+        Title:
+        Move BuildResidentialHPXML measure to option-based arguments
+
+        Description:
+        Refactors ResStock to use the new BuildResidentialHPXML measure, which now has ~100 options instead of ~600 detailed
+        properties as arguments. Also moves much of the ResStock special sauce around configuring the HPXML models into the
+        ResStockArgumentsPostHPXML measure. The options_lookup.tsv file is now significantly simpler.
+
+        Assignees: Scott Horowitz
+
+    .. change::
+        :tags: feature, hvac
+        :pullreq: 1516
+
+        **Date**: 2025-10-24
+
+        Title:
+        Clean up baseline HVAC options
+
+        Description:
+        Continuing from PR 1503, cleaned up baseline HVAC options by switching to use SEER2 for CAC and SEER2/HSPF2 for ASHP.
+        Some HVAC option efficiencies were modified to better align with OS-HPXML default relationships.
+
+        Assignees: Lixi Liu, Scott Horowitz
+
+    .. change::
+        :tags: feature, hvac
+        :pullreq: 1503
+
+        **Date**: 2025-10-07
+
+        Title:
+        Clean up SDR yaml; tweak a few HVAC option
+
+        Description:
+        Removes unused options/anchors from the SDR yaml.
+        Removes unused HVAC options from options_lookup.tsv.
+        Proposes a few changes to HVAC options to align with proposed OS-HPXML options.
+
+        Assignees: Scott Horowitz
+
+    .. change::
         :tags: documentation, technical reference guide
         :pullreq: 1493, 1466, 1460
 
@@ -43,8 +90,6 @@ Development Changelog
         Updates ceiling fan options from assuming 1 ceiling fan in a home to using the OS-HPXML default (NumberofBedrooms + 1; from ANSI/RESNET/ICC 301).
         Updates SDR HPWH options to be UEF=3.5 and UEF=4.0.
         HPWH sizing logic moved to OS-HPXML.
-
-        OpenStudio-HPXML: `pull request 1879 <https://github.com/NREL/OpenStudio-HPXML/pull/1879>`_, `pull request 1939 <https://github.com/NREL/OpenStudio-HPXML/pull/1939>`_, `pull request 2028 <https://github.com/NREL/OpenStudio-HPXML/pull/2028>`_
 
         Assignees: Scott Horowitz
 

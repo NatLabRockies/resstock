@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>server_directory_cleanup</name>
   <uid>ec7d04ad-0b7b-495b-825a-e1b6d28d1d3f</uid>
-  <version_id>c18a33f9-682b-49fb-9944-cbd8ad95205d</version_id>
-  <version_modified>2025-10-01T22:08:32Z</version_modified>
+  <version_id>58064ae8-bfd4-4f04-bc69-c593bb0a7f76</version_id>
+  <version_modified>2026-01-05T22:45:19Z</version_modified>
   <xml_checksum>5F1EDF75</xml_checksum>
   <class_name>ServerDirectoryCleanup</class_name>
   <display_name>Server Directory Cleanup</display_name>
@@ -484,7 +484,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>73F2E49D</checksum>
+      <checksum>448E5EC0</checksum>
     </file>
   </files>
 </measure>

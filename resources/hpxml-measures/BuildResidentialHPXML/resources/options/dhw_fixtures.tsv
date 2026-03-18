@@ -1,0 +1,23 @@
+Option Name	Low Flow Showers	Low Flow Sinks	Usage Multiplier
+"Standard, 25% Usage"	FALSE	FALSE	0.25
+"Standard, 50% Usage"	FALSE	FALSE	0.5
+"Standard, 75% Usage"	FALSE	FALSE	0.75
+"Standard, 100% Usage"	FALSE	FALSE	
+"Standard, 125% Usage"	FALSE	FALSE	1.25
+"Standard, 150% Usage"	FALSE	FALSE	1.5
+"Standard, 175% Usage"	FALSE	FALSE	1.75
+"Standard, 200% Usage"	FALSE	FALSE	2
+"Standard, 400% Usage"	FALSE	FALSE	4
+"Low Flow, 25% Usage"	TRUE	TRUE	0.25
+"Low Flow, 50% Usage"	TRUE	TRUE	0.5
+"Low Flow, 75% Usage"	TRUE	TRUE	0.75
+"Low Flow, 100% Usage"	TRUE	TRUE	
+"Low Flow, 125% Usage"	TRUE	TRUE	1.25
+"Low Flow, 150% Usage"	TRUE	TRUE	1.5
+"Low Flow, 175% Usage"	TRUE	TRUE	1.75
+"Low Flow, 200% Usage"	TRUE	TRUE	2
+"Low Flow, 400% Usage"	TRUE	TRUE	4
+			
+# Low Flow Showers: Whether the shower fixtures are low flow (<= 2.0 gpm).			
+# Low Flow Sinks: Whether the sink fixtures are low flow (<= 2.0 gpm).			
+"# Usage Multiplier: Multiplier on the hot water usage that can reflect, e.g., high/low usage occupants."			

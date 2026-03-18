@@ -19,13 +19,12 @@ Dir["#{File.dirname(__FILE__)}/../../../../resources/hpxml-measures/HPXMLtoOpenS
 end
 
 class HVACScheduleGenerator
-  def initialize(hpxml, hpxml_path, runner, building_index)
+  def initialize(hpxml, hpxml_bldg, hpxml_path, runner, weather)
     @hpxml_path = hpxml_path
     @hpxml = hpxml
-    @hpxml_bldg = @hpxml.buildings[building_index]
-    @epw_path = Location.get_epw_path(@hpxml_bldg, @hpxml_path)
+    @hpxml_bldg = hpxml_bldg
     @runner = runner
-    @weather = WeatherFile.new(epw_path: @epw_path, runner: @runner)
+    @weather = weather
     @sim_year = Location.get_sim_calendar_year(@hpxml.header.sim_calendar_year, @weather)
     @total_days_in_year = Calendar.num_days_in_year(@sim_year)
     @sim_start_day = DateTime.new(@sim_year, 1, 1)

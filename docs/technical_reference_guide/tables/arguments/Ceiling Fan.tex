@@ -1,9 +1,0 @@
-\begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
-{The ResStock argument definitions set in the Ceiling Fan characteristic} {table:hc_arg_def_ceiling_fan}
-{Name & Required & Units & Type & Choices & Description}
-\texttt{ceiling\_fan\_present} & true &  & Boolean & true, false & Whether there are any ceiling fans.  \\ \hline
-\texttt{ceiling\_fan\_label\_energy\_use} & false & W & Double & auto & The label average energy use of the ceiling fan(s).   \\ \hline
-\texttt{ceiling\_fan\_efficiency} & false & CFM/W & Double & auto & The efficiency rating of the ceiling fan(s) at medium speed. Only used if Label Energy Use not provided.   \\ \hline
-\texttt{ceiling\_fan\_quantity} & false & \# & Integer & auto & Total number of ceiling fans.   \\ \hline
-\texttt{ceiling\_fan\_cooling\_setpoint\_temp\_offset} & false & F & Double & auto & The cooling setpoint temperature offset during months when the ceiling fans are operating. Only applies if ceiling fan quantity is greater than zero.   \\
-\end{customLongTable}

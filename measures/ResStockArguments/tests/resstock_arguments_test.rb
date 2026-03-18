@@ -28,18 +28,22 @@ class ResStockArgumentsTest < Minitest::Test
 
     measure = ResStockArguments.new
     model = OpenStudio::Model::Model.new
-    resstock_arguments = []
+    required_resstock_arguments = []
+    all_resstock_arguments = []
     measure.arguments(model).each do |arg|
       next if Constants::OtherExcludes.include? arg.name
 
-      resstock_arguments << arg.name
+      if arg.required
+        required_resstock_arguments << arg.name
+      end
+      all_resstock_arguments << arg.name
     end
 
-    missing_lookup_arguments = resstock_arguments - lookup_arguments
+    missing_lookup_arguments = required_resstock_arguments - lookup_arguments
     puts "missing options_lookup.tsv arguments: #{missing_lookup_arguments.sort}" if !missing_lookup_arguments.empty?
     assert_equal(0, missing_lookup_arguments.size)
 
-    extra_lookup_arguments = lookup_arguments - resstock_arguments
+    extra_lookup_arguments = lookup_arguments - all_resstock_arguments
     puts "extra options_lookup.tsv arguments: #{extra_lookup_arguments.sort}" if !extra_lookup_arguments.empty?
     assert_equal(0, extra_lookup_arguments.size)
   end

@@ -1,0 +1,23 @@
+Option Name	Pipe Insulation Nominal R-Value [F-ft2-hr/Btu]	System Type	Standard Piping Length [ft]	Recirculation Control Type	Recirculation Piping Loop Length [ft]	Recirculation Branch Piping Length [ft]	Recirculation Pump Power [W]
+"Uninsulated, Standard"	0	Standard					
+"Uninsulated, Recirc, Uncontrolled"	0	Recirculation		no control			
+"Uninsulated, Recirc, Timer Control"	0	Recirculation		timer			
+"Uninsulated, Recirc, Temperature Control"	0	Recirculation		temperature			
+"Uninsulated, Recirc, Presence Sensor Demand Control"	0	Recirculation		presence sensor demand control			
+"Uninsulated, Recirc, Manual Demand Control"	0	Recirculation		manual demand control			
+"Insulated, Standard"	3	Standard					
+"Insulated, Recirc, Uncontrolled"	3	Recirculation		no control			
+"Insulated, Recirc, Timer Control"	3	Recirculation		timer			
+"Insulated, Recirc, Temperature Control"	3	Recirculation		temperature			
+"Insulated, Recirc, Presence Sensor Demand Control"	3	Recirculation		presence sensor demand control			
+"Insulated, Recirc, Manual Demand Control"	3	Recirculation		manual demand control			
+"Detailed Example: Insulated, Recirc, Uncontrolled, 156.9ft Loop, 10ft Branch, 50 W"	3	Recirculation		no control		10	50
+"Detailed Example: Insulated, Recirc, Manual Demand Control, 156.9ft Loop, 10ft Branch, 50 W"	3	Recirculation		manual demand control		10	50
+							
+# Pipe Insulation Nominal R-Value: Nominal R-value of the pipe insulation.							
+# System Type: The type of hot water distribution system.							
+"# Standard Piping Length: If the system type is Standard, the length of hot water piping from the hot water heater to the farthest hot water fixture, measured longitudinally from plans, assuming the hot water piping does not run diagonally, plus 10 feet of piping for each floor level, plus 5 feet of piping for unconditioned basements (if any)."							
+"# Recirculation Control Type: If the system type is Recirculation, the type of hot water recirculation control, if any."							
+"# Recirculation Piping Loop Length: If the system type is Recirculation, the recirculation loop length including both supply and return sides, measured longitudinally from plans, assuming the hot water piping does not run diagonally, plus 20 feet of piping for each floor level greater than one plus 10 feet of piping for unconditioned basements."							
+"# Recirculation Branch Piping Length: If the system type is Recirculation, the length of the branch hot water piping from the recirculation loop to the farthest hot water fixture from the recirculation loop, measured longitudinally from plans, assuming the branch hot water piping does not run diagonally."							
+"# Recirculation Pump Power: If the system type is Recirculation, the recirculation pump power."							

@@ -1,0 +1,9 @@
+Option Name	Relative Humidity [frac]
+40% RH	0.4
+45% RH	0.45
+50% RH	0.5
+55% RH	0.55
+60% RH	0.6
+65% RH	0.65
+	
+# Relative Humidity: The relative humidity setpoint.	

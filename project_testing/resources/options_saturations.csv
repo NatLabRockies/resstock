@@ -1032,21 +1032,21 @@ Level,Parameter,Option,Saturation
 4,Geometry Space Combination,"Single-Family Detached, Vented Crawlspace, Vented Attic, 3 Car Garage",0.00042867
 4,Geometry Space Combination,"Single-Family Detached, Vented Crawlspace, Vented Attic, No Garage",0.00229576
 4,Geometry Space Combination,Void,0
-4,HVAC Cooling Efficiency,"AC, SEER 8",0.0472884
-4,HVAC Cooling Efficiency,"AC, SEER 10",0.0472884
-4,HVAC Cooling Efficiency,"AC, SEER 13",0.0472884
-4,HVAC Cooling Efficiency,"AC, SEER 15",0.0472884
+4,HVAC Cooling Efficiency,"AC, SEER2 7.6",0.0472884
+4,HVAC Cooling Efficiency,"AC, SEER2 9.5",0.0472884
+4,HVAC Cooling Efficiency,"AC, SEER2 12.4",0.0472884
+4,HVAC Cooling Efficiency,"AC, SEER2 14.3",0.0472884
 4,HVAC Cooling Efficiency,Ducted Heat Pump,0.0357143
 4,HVAC Cooling Efficiency,Non-Ducted Heat Pump,0.0357143
 4,HVAC Cooling Efficiency,None,0.309524
-4,HVAC Cooling Efficiency,"Room AC, EER 8.5",0.0773809
-4,HVAC Cooling Efficiency,"Room AC, EER 9.8",0.0773809
-4,HVAC Cooling Efficiency,"Room AC, EER 10.7",0.0773809
-4,HVAC Cooling Efficiency,"Room AC, EER 12.0",0.0773809
+4,HVAC Cooling Efficiency,"Room AC, CEER 8.4",0.0773809
+4,HVAC Cooling Efficiency,"Room AC, CEER 9.7",0.0773809
+4,HVAC Cooling Efficiency,"Room AC, CEER 10.6",0.0773809
+4,HVAC Cooling Efficiency,"Room AC, CEER 11.9",0.0773809
 4,HVAC Cooling Efficiency,Shared Cooling,0.12037
-4,HVAC Heating Efficiency,"ASHP, SEER 10, 6.2 HSPF",0.0119048
-4,HVAC Heating Efficiency,"ASHP, SEER 13, 7.7 HSPF",0.0119048
-4,HVAC Heating Efficiency,"ASHP, SEER 15, 8.5 HSPF",0.0119048
+4,HVAC Heating Efficiency,"ASHP, SEER2 9.5, 5.8 HSPF2",0.0119048
+4,HVAC Heating Efficiency,"ASHP, SEER2 12.4, 6.6 HSPF2",0.0119048
+4,HVAC Heating Efficiency,"ASHP, SEER2 14.3, 7.4 HSPF2",0.0119048
 4,HVAC Heating Efficiency,"Electric Baseboard, 100% Efficiency",0.00727512
 4,HVAC Heating Efficiency,"Electric Boiler, 100% AFUE",0.00727512
 4,HVAC Heating Efficiency,"Electric Furnace, 100% AFUE",0.0218254
@@ -1060,8 +1060,8 @@ Level,Parameter,Option,Saturation
 4,HVAC Heating Efficiency,"Fuel Furnace, 92.5% AFUE",0.0545635
 4,HVAC Heating Efficiency,"Fuel Wall/Floor Furnace, 60% AFUE",0.0436508
 4,HVAC Heating Efficiency,"Fuel Wall/Floor Furnace, 68% AFUE",0.0436508
-4,HVAC Heating Efficiency,"MSHP, SEER 14.5, 8.2 HSPF",0.0178572
-4,HVAC Heating Efficiency,"MSHP, SEER 29.3, 14 HSPF",0.0178572
+4,HVAC Heating Efficiency,"MSHP, SEER2 13.7, 7.4 HSPF2",0.0178572
+4,HVAC Heating Efficiency,"MSHP, SEER2 29, 12.3 HSPF2",0.0178572
 4,HVAC Heating Efficiency,None,0.142857
 4,HVAC Heating Efficiency,Shared Heating,0.305556
 4,HVAC Heating Efficiency,Void,0

@@ -1,0 +1,14 @@
+Option Name	Type	Shielding of Home
+Default		
+"Suburban, Normal"	suburban	normal
+"Suburban, Well-Shielded"	suburban	well-shielded
+"Suburban, Exposed"	suburban	exposed
+"Urban, Normal"	urban	normal
+"Urban, Well-Shielded"	urban	well-shielded
+"Urban, Exposed"	urban	exposed
+"Rural, Normal"	rural	normal
+"Rural, Well-Shielded"	rural	well-shielded
+"Rural, Exposed"	rural	exposed
+		
+# Type: Terrain type for infiltration model.		
+"# Shielding of Home: Presence of nearby buildings, trees, obstructions for infiltration model."		
