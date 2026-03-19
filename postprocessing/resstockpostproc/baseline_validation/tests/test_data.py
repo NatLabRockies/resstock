@@ -19,8 +19,8 @@ class TestData:
         eia_annual = _get_eia_annual_electricity(year=2018)
         assert isinstance(eia_annual, pl.DataFrame)
         assert eia_annual.height > 0
-        assert "customers" in eia_annual.columns
-        assert "sales_mwh" in eia_annual.columns
+        assert "units_count" in eia_annual.columns
+        assert "electricity_total_value" in eia_annual.columns
         assert "state" in eia_annual.columns or "eiaid" in eia_annual.columns
 
     def test_eia_monthly_electricity(self):
@@ -29,8 +29,8 @@ class TestData:
         assert isinstance(eia_monthly_elec, pl.DataFrame)
         assert eia_monthly_elec.height > 0
         assert "month" in eia_monthly_elec.columns
-        assert "customers" in eia_monthly_elec.columns
-        assert "sales_mwh" in eia_monthly_elec.columns
+        assert "units_count" in eia_monthly_elec.columns
+        assert "electricity_total_value" in eia_monthly_elec.columns
 
     def test_eia_monthly_gas(self):
         """Test loading EIA monthly natural gas data."""
@@ -38,7 +38,7 @@ class TestData:
         assert isinstance(eia_monthly_gas, pl.DataFrame)
         assert eia_monthly_gas.height > 0
         assert "month" in eia_monthly_gas.columns
-        assert "customers" in eia_monthly_gas.columns
+        assert "natural_gas_total_customers" in eia_monthly_gas.columns
 
     def test_lrd_data(self):
         """Test loading LRD data."""
@@ -46,7 +46,7 @@ class TestData:
         assert isinstance(lrd_data, pl.DataFrame)
         assert lrd_data.height > 0
         assert "eiaid" in lrd_data.columns
-        assert "kwh_per_meter" in lrd_data.columns
+        assert "electricity_total_value" in lrd_data.columns
         assert "time" in lrd_data.columns
 
     def test_lrd_data_invalid_year(self):

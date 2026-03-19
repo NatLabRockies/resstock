@@ -45,7 +45,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
             ts_xtick_text = None
             title = "Daily electricity consumption per dwelling unit"
             # Rename utility_name to utility_vertical to match the layout key
-            # final_df = final_df.rename({"utility_name": "utility_vertical"})
+            final_df = final_df.rename({"utility_name": "utility_vertical"})
         case Resolution.hour_of_year | Resolution.top_100_hours:
             if plot_spec.view in [ViewType.temp_view, ViewType.temp_count_view]:
                 # Data already transformed by gather_data._prepare_temperature_view()
