@@ -36,7 +36,8 @@ node_modules/
 .DS_Store
 **/.ipynb_checkpoints/*
 **/.bsq_cache/
-
+.history/
+.cache/
 # Data directories
 **/data/*
 
