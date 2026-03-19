@@ -15,7 +15,7 @@ from resstockpostproc.baseline_validation.plotters.plot_config import (
     get_second_category_column,
     get_second_category_title,
 )
-from resstockpostproc.baseline_validation.plotters.box_plotter import create_vertical_plot
+from resstockpostproc.baseline_validation.plotters.vertical_plotter import create_vertical_plot
 from resstockpostproc.shared_utils.generic_plotters import tilemap_plotter
 from resstockpostproc.shared_utils.generic_plotters.bar_plotter import create_bar_plot
 from resstockpostproc.shared_utils.generic_plotters.monthly_plotter import create_ts_plot
