@@ -62,9 +62,6 @@ def apply_theme(fig: go.Figure, title: str | None = None, **kwargs) -> go.Figure
             margin["t"] = margin.get("t", 80) + 30
             layout_updates["margin"] = margin
 
-    layout_updates["xaxis"] = {**DEFAULT_XAXIS, **layout_updates.get("xaxis", {})}
-    layout_updates["yaxis"] = {**DEFAULT_YAXIS, **layout_updates.get("yaxis", {})}
-
     fig.update_layout(**layout_updates)
     return fig
 
