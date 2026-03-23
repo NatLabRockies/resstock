@@ -353,7 +353,7 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
     return all_min_val, all_max_val
 
 
-def create_vertical_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
+def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     """Create a box plot or bar comparing data sources across states.
 
     Uses ViewType.distribution for box plots, otherwise bar plots.

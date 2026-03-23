@@ -15,7 +15,7 @@ from resstockpostproc.baseline_validation.plotters.plot_config import (
     get_second_category_column,
     get_second_category_title,
 )
-from resstockpostproc.baseline_validation.plotters.vertical_plotter import create_vertical_plot
+from resstockpostproc.baseline_validation.plotters.stacked_plotter import create_stacked_plot
 from resstockpostproc.shared_utils.generic_plotters import tilemap_plotter
 from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import filter_null_sources
 from resstockpostproc.shared_utils.generic_plotters.bar_plotter import create_bar_plot
@@ -59,8 +59,8 @@ def _get_null_sources(data: pl.DataFrame, source_column: str, quantity_column: s
 
 def _render(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
     """Select appropriate renderer and create the figure."""
-    if config.use_distribution_plot:
-        return _render_distribution(data, plot_spec)
+    if config.uses_stacked_layout:
+        return _render_stacked(data, plot_spec)
     elif config.is_single_entity:
         if config.timeseries_column:
             return _render_single_entity_timeseries(data, config)
@@ -149,6 +149,6 @@ def _render_single_entity_bar(data: pl.DataFrame, config: PlotConfig, plot_spec:
     )
 
 
-def _render_distribution(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
-    """Render distribution/box plots."""
-    return create_vertical_plot(data, plot_spec)
+def _render_stacked(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
+    """Render using stacked subplot layout (grouped bars or box plots)."""
+    return create_stacked_plot(data, plot_spec)

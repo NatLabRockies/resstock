@@ -1,9 +1,9 @@
-"""Tests for vertical_plotter — subplot splitting, quartile extraction, and range calculation."""
+"""Tests for stacked_plotter — subplot splitting, quartile extraction, and range calculation."""
 
 import polars as pl
 import pytest
 
-from resstockpostproc.baseline_validation.plotters.vertical_plotter import (
+from resstockpostproc.baseline_validation.plotters.stacked_plotter import (
     _add_quartile_cols,
     _get_reference_source,
     _prepare_box_plot_data,

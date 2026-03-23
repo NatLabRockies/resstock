@@ -55,7 +55,7 @@ class PlotConfig:
     width: float
 
     # Rendering mode flags
-    use_distribution_plot: bool
+    uses_stacked_layout: bool
     is_single_entity: bool
 
 
@@ -88,7 +88,7 @@ def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
     sidebar_title = _resolve_sidebar_title(plot_spec, truth_label)
     ts_xtick_vals, ts_xtick_text = _resolve_tick_config(plot_spec, data)
     x_unit = _resolve_x_unit(plot_spec)
-    use_distribution_plot = _is_distribution_plot(plot_spec)
+    uses_stacked_layout = _uses_stacked_layout(plot_spec)
     is_single_entity = _check_single_entity(data, plot_spec, timeseries_column)
     height, width = _resolve_dimensions(plot_spec, is_single_entity)
 
@@ -118,7 +118,7 @@ def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
         x_unit=x_unit,
         height=height,
         width=width,
-        use_distribution_plot=use_distribution_plot,
+        uses_stacked_layout=uses_stacked_layout,
         is_single_entity=is_single_entity,
     )
 
@@ -513,13 +513,13 @@ def _resolve_dimensions(plot_spec: PlotSpec, is_single_entity: bool) -> tuple[fl
 # ─────────────────────────────────────────────────────────────────────────────
 
 
-def _is_distribution_plot(plot_spec: PlotSpec) -> bool:
-    """Check if this plot should use distribution/box rendering.
+def _uses_stacked_layout(plot_spec: PlotSpec) -> bool:
+    """Check if this plot should use stacked subplot layout (one row per entity).
 
     Returns True for:
-    - ViewType.distribution (explicit distribution box plot)
-    - quantity=ALL (enduse penetration plots use bar layout via split_graph_by_enduse)
-    - non-state aggregation levels (use grouped bar chart)
+    - ViewType.distribution (box plots)
+    - quantity=ALL (enduse bar layout via split_graph_by_enduse)
+    - non-state aggregation levels (grouped bar/box charts)
     """
     if plot_spec.view == ViewType.distribution:
         return True
