@@ -47,7 +47,9 @@ class TestLRDPlotter:
                             }
                         )
 
-        return pl.DataFrame(data)
+        df = pl.DataFrame(data)
+        # Add month_daytype column (normally created by gather_data._prepare_hour_of_day_matrix)
+        return df.with_columns((pl.col("month") + "_" + pl.col("day_type")).alias("month_daytype"))
 
     @pytest.fixture
     def mock_year_data(self):
@@ -225,7 +227,7 @@ class TestDayOfYearResolution:
                     data.append(
                         {
                             "source": source,
-                            "utility_name": utility,
+                            "utility_vertical": utility,  # Renamed from utility_name by gather_data
                             "eiaid": 4110 if utility == "ComEd (IL)" else 14328,
                             "day of year": date,  # Datetime, not integer
                             f"{DataCol.ELECTRICITY_TOTAL}_value": 20.0 + 10.0 * (1 + 0.5 * ((day - 182) / 182) ** 2),

@@ -4,10 +4,10 @@ Index	Highlight	Truth Source	Quantity	Metric	Coverage	Group By	Main Visualizatio
 3		eia	Electricity Total	average annual consumption	all units	state	tilemap bar plot	difference view	Yes
 4	Yes	eia	Electricity Total	total monthly consumption	all units	state	tilemap timeseries		Yes
 5	Yes	eia	Electricity Total	average monthly consumption	all units	state	tilemap timeseries		Yes
-6		eia	Natural Gas Total	total annual consumption	all units	state	tilemap bar plot	difference view	
-7		eia	Natural Gas Total	average annual consumption	all units	state	tilemap bar plot	difference view	
-8	Yes	eia	Natural Gas Total	total monthly consumption	all units	state	tilemap timeseries		
-9	Yes	eia	Natural Gas Total	average monthly consumption	all units	state	tilemap timeseries		
+6		eia	Natural Gas Total	total annual consumption	all units	state	tilemap bar plot	difference view	Yes
+7		eia	Natural Gas Total	average annual consumption	all units	state	tilemap bar plot	difference view	Yes
+8	Yes	eia	Natural Gas Total	total monthly consumption	all units	state	tilemap timeseries		Yes
+9	Yes	eia	Natural Gas Total	average monthly consumption	all units	state	tilemap timeseries		Yes
 10		eia	Natural Gas Total	average annual consumption	units with non-zero consumption	state	tilemap bar plot	difference view	Yes
 11	Yes	eia	Natural Gas Total	average monthly consumption	units with non-zero consumption	state	tilemap timeseries		Yes
 12		eia	Natural Gas Total	enduse penetration	all units	state	grouped bar plot		Yes
@@ -73,19 +73,19 @@ Index	Highlight	Truth Source	Quantity	Metric	Coverage	Group By	Main Visualizatio
 72		recs	Electricity Total	total annual consumption	all occupied units	heating fuel	grouped bar plot	difference view	
 73		recs	Electricity Total	average annual consumption	all occupied units	heating fuel	grouped bar plot	difference view	
 74		recs	Electricity Total	annual consumption distribution	all occupied units	heating fuel	grouped box plot		
-75		recs	Natural Gas Total	total annual consumption	all occupied units	state	tilemap bar plot	difference view	
-76		recs	Natural Gas Total	average annual consumption	all occupied units	state	tilemap bar plot	difference view	
+75		recs	Natural Gas Total	total annual consumption	all occupied units	state	tilemap bar plot	difference view	Yes
+76		recs	Natural Gas Total	average annual consumption	all occupied units	state	tilemap bar plot	difference view	Yes
 77		recs	Natural Gas Total	average annual consumption	occupied units with non-zero consumption	state	tilemap bar plot	difference view	Yes
-78	Yes	recs	Natural Gas Total	total monthly consumption	all occupied units	state	tilemap timeseries		
-79	Yes	recs	Natural Gas Total	average monthly consumption	all occupied units	state	tilemap timeseries		
+78	Yes	recs	Natural Gas Total	total monthly consumption	all occupied units	state	tilemap timeseries		Yes
+79	Yes	recs	Natural Gas Total	average monthly consumption	all occupied units	state	tilemap timeseries		Yes
 80	Yes	recs	Natural Gas Total	average monthly consumption	occupied units with non-zero consumption	state	tilemap timeseries		Yes
-81		recs	Natural Gas Total	annual consumption distribution	all occupied units	state	grouped box plot		
+81		recs	Natural Gas Total	annual consumption distribution	all occupied units	state	grouped box plot		Yes
 82		recs	Natural Gas Total	annual consumption distribution	occupied units with non-zero consumption	state	grouped box plot		Yes
 83		recs	Natural Gas Total	enduse penetration	all occupied units	state	grouped bar plot		Yes
-84		recs	Natural Gas Total	total annual consumption	all occupied units	census division recs	grouped bar plot	difference view	
-85		recs	Natural Gas Total	average annual consumption	all occupied units	census division recs	grouped bar plot	difference view	
+84		recs	Natural Gas Total	total annual consumption	all occupied units	census division recs	grouped bar plot	difference view	Yes
+85		recs	Natural Gas Total	average annual consumption	all occupied units	census division recs	grouped bar plot	difference view	Yes
 86		recs	Natural Gas Total	average annual consumption	occupied units with non-zero consumption	census division recs	grouped bar plot	difference view	Yes
-87		recs	Natural Gas Total	annual consumption distribution	all occupied units	census division recs	grouped box plot		
+87		recs	Natural Gas Total	annual consumption distribution	all occupied units	census division recs	grouped box plot		Yes
 88		recs	Natural Gas Total	annual consumption distribution	occupied units with non-zero consumption	census division recs	grouped box plot		Yes
 89		recs	Natural Gas Total	enduse penetration	all occupied units	census division recs	grouped bar plot		Yes
 90		recs	Natural Gas Total	total annual consumption	all occupied units	geometry building type recs	grouped bar plot	difference view	
@@ -112,21 +112,21 @@ Index	Highlight	Truth Source	Quantity	Metric	Coverage	Group By	Main Visualizatio
 111		recs	Natural Gas Total	annual consumption distribution	all occupied units	heating fuel	grouped box plot		
 112		recs	Natural Gas Total	annual consumption distribution	occupied units with non-zero consumption	heating fuel	grouped box plot		
 113		recs	Natural Gas Total	enduse penetration	all occupied units	heating fuel	grouped bar plot		
-114		recs	Electricity Space Cooling	total annual consumption	all occupied units	state	tilemap bar plot	difference view	
-115		recs	Electricity Space Cooling	average annual consumption	all occupied units	state	tilemap bar plot	difference view	
-116		recs	Electricity Space Cooling	average annual consumption	occupied units with non-zero consumption	state	tilemap bar plot	difference view	
-117	Yes	recs	Electricity Space Cooling	total monthly consumption	all occupied units	state	tilemap timeseries		
-118	Yes	recs	Electricity Space Cooling	average monthly consumption	all occupied units	state	tilemap timeseries		
-119	Yes	recs	Electricity Space Cooling	average monthly consumption	occupied units with non-zero consumption	state	tilemap timeseries		
-120		recs	Electricity Space Cooling	annual consumption distribution	all occupied units	state	grouped box plot		
-121		recs	Electricity Space Cooling	annual consumption distribution	occupied units with non-zero consumption	state	grouped box plot		
-122		recs	Electricity Space Cooling	enduse penetration	all occupied units	state	grouped bar plot		
-123		recs	Electricity Space Cooling	total annual consumption	all occupied units	census division recs	grouped bar plot	difference view	
-124		recs	Electricity Space Cooling	average annual consumption	all occupied units	census division recs	grouped bar plot	difference view	
-125		recs	Electricity Space Cooling	average annual consumption	occupied units with non-zero consumption	census division recs	grouped bar plot	difference view	
-126		recs	Electricity Space Cooling	annual consumption distribution	all occupied units	census division recs	grouped box plot		
-127		recs	Electricity Space Cooling	annual consumption distribution	occupied units with non-zero consumption	census division recs	grouped box plot		
-128		recs	Electricity Space Cooling	enduse penetration	all occupied units	census division recs	grouped bar plot		
+114		recs	Electricity Space Cooling	total annual consumption	all occupied units	state	tilemap bar plot	difference view	Yes
+115		recs	Electricity Space Cooling	average annual consumption	all occupied units	state	tilemap bar plot	difference view	Yes
+116		recs	Electricity Space Cooling	average annual consumption	occupied units with non-zero consumption	state	tilemap bar plot	difference view	Yes
+117	Yes	recs	Electricity Space Cooling	total monthly consumption	all occupied units	state	tilemap timeseries		Yes
+118	Yes	recs	Electricity Space Cooling	average monthly consumption	all occupied units	state	tilemap timeseries		Yes
+119	Yes	recs	Electricity Space Cooling	average monthly consumption	occupied units with non-zero consumption	state	tilemap timeseries		Yes
+120		recs	Electricity Space Cooling	annual consumption distribution	all occupied units	state	grouped box plot		Yes
+121		recs	Electricity Space Cooling	annual consumption distribution	occupied units with non-zero consumption	state	grouped box plot		Yes
+122		recs	Electricity Space Cooling	enduse penetration	all occupied units	state	grouped bar plot		Yes
+123		recs	Electricity Space Cooling	total annual consumption	all occupied units	census division recs	grouped bar plot	difference view	Yes
+124		recs	Electricity Space Cooling	average annual consumption	all occupied units	census division recs	grouped bar plot	difference view	Yes
+125		recs	Electricity Space Cooling	average annual consumption	occupied units with non-zero consumption	census division recs	grouped bar plot	difference view	Yes
+126		recs	Electricity Space Cooling	annual consumption distribution	all occupied units	census division recs	grouped box plot		Yes
+127		recs	Electricity Space Cooling	annual consumption distribution	occupied units with non-zero consumption	census division recs	grouped box plot		Yes
+128		recs	Electricity Space Cooling	enduse penetration	all occupied units	census division recs	grouped bar plot		Yes
 129		recs	Electricity Space Cooling	total annual consumption	all occupied units	geometry building type recs	grouped bar plot	difference view	
 130		recs	Electricity Space Cooling	average annual consumption	all occupied units	geometry building type recs	grouped bar plot	difference view	
 131		recs	Electricity Space Cooling	average annual consumption	occupied units with non-zero consumption	geometry building type recs	grouped bar plot	difference view	
@@ -229,21 +229,21 @@ Index	Highlight	Truth Source	Quantity	Metric	Coverage	Group By	Main Visualizatio
 228		recs	Electricity Water Heating	annual consumption distribution	all occupied units	heating fuel	grouped box plot		
 229		recs	Electricity Water Heating	annual consumption distribution	occupied units with non-zero consumption	heating fuel	grouped box plot		
 230		recs	Electricity Water Heating	enduse penetration	all occupied units	heating fuel	grouped bar plot		
-231		recs	Natural Gas Space Heating	total annual consumption	all occupied units	state	tilemap bar plot	difference view	
-232		recs	Natural Gas Space Heating	average annual consumption	all occupied units	state	tilemap bar plot	difference view	
-233		recs	Natural Gas Space Heating	average annual consumption	occupied units with non-zero consumption	state	tilemap bar plot	difference view	
-234	Yes	recs	Natural Gas Space Heating	total monthly consumption	all occupied units	state	tilemap timeseries		
-235	Yes	recs	Natural Gas Space Heating	average monthly consumption	all occupied units	state	tilemap timeseries		
-236	Yes	recs	Natural Gas Space Heating	average monthly consumption	occupied units with non-zero consumption	state	tilemap timeseries		
-237		recs	Natural Gas Space Heating	annual consumption distribution	all occupied units	state	grouped box plot		
-238		recs	Natural Gas Space Heating	annual consumption distribution	occupied units with non-zero consumption	state	grouped box plot		
-239		recs	Natural Gas Space Heating	enduse penetration	all occupied units	state	grouped bar plot		
-240		recs	Natural Gas Space Heating	total annual consumption	all occupied units	census division recs	grouped bar plot	difference view	
-241		recs	Natural Gas Space Heating	average annual consumption	all occupied units	census division recs	grouped bar plot	difference view	
-242		recs	Natural Gas Space Heating	average annual consumption	occupied units with non-zero consumption	census division recs	grouped bar plot	difference view	
-243		recs	Natural Gas Space Heating	annual consumption distribution	all occupied units	census division recs	grouped box plot		
-244		recs	Natural Gas Space Heating	annual consumption distribution	occupied units with non-zero consumption	census division recs	grouped box plot		
-245		recs	Natural Gas Space Heating	enduse penetration	all occupied units	census division recs	grouped bar plot		
+231		recs	Natural Gas Space Heating	total annual consumption	all occupied units	state	tilemap bar plot	difference view	Yes
+232		recs	Natural Gas Space Heating	average annual consumption	all occupied units	state	tilemap bar plot	difference view	Yes
+233		recs	Natural Gas Space Heating	average annual consumption	occupied units with non-zero consumption	state	tilemap bar plot	difference view	Yes
+234	Yes	recs	Natural Gas Space Heating	total monthly consumption	all occupied units	state	tilemap timeseries		Yes
+235	Yes	recs	Natural Gas Space Heating	average monthly consumption	all occupied units	state	tilemap timeseries		Yes
+236	Yes	recs	Natural Gas Space Heating	average monthly consumption	occupied units with non-zero consumption	state	tilemap timeseries		Yes
+237		recs	Natural Gas Space Heating	annual consumption distribution	all occupied units	state	grouped box plot		Yes
+238		recs	Natural Gas Space Heating	annual consumption distribution	occupied units with non-zero consumption	state	grouped box plot		Yes
+239		recs	Natural Gas Space Heating	enduse penetration	all occupied units	state	grouped bar plot		Yes
+240		recs	Natural Gas Space Heating	total annual consumption	all occupied units	census division recs	grouped bar plot	difference view	Yes
+241		recs	Natural Gas Space Heating	average annual consumption	all occupied units	census division recs	grouped bar plot	difference view	Yes
+242		recs	Natural Gas Space Heating	average annual consumption	occupied units with non-zero consumption	census division recs	grouped bar plot	difference view	Yes
+243		recs	Natural Gas Space Heating	annual consumption distribution	all occupied units	census division recs	grouped box plot		Yes
+244		recs	Natural Gas Space Heating	annual consumption distribution	occupied units with non-zero consumption	census division recs	grouped box plot		Yes
+245		recs	Natural Gas Space Heating	enduse penetration	all occupied units	census division recs	grouped bar plot		Yes
 246		recs	Natural Gas Space Heating	total annual consumption	all occupied units	geometry building type recs	grouped bar plot	difference view	
 247		recs	Natural Gas Space Heating	average annual consumption	all occupied units	geometry building type recs	grouped bar plot	difference view	
 248		recs	Natural Gas Space Heating	average annual consumption	occupied units with non-zero consumption	geometry building type recs	grouped bar plot	difference view	
@@ -955,18 +955,18 @@ Index	Highlight	Truth Source	Quantity	Metric	Coverage	Group By	Main Visualizatio
 954		recs	Natural Gas Clothes Dryer	annual consumption distribution	all occupied units	heating fuel	grouped box plot		
 955		recs	Natural Gas Clothes Dryer	annual consumption distribution	occupied units with non-zero consumption	heating fuel	grouped box plot		
 956		recs	Natural Gas Clothes Dryer	enduse penetration	all occupied units	heating fuel	grouped bar plot		
-957		recs	Propane Total	total annual consumption	all occupied units	state	tilemap bar plot	difference view	
-958		recs	Propane Total	average annual consumption	all occupied units	state	tilemap bar plot	difference view	
-959		recs	Propane Total	average annual consumption	occupied units with non-zero consumption	state	tilemap bar plot	difference view	
-960		recs	Propane Total	annual consumption distribution	all occupied units	state	grouped box plot		
-961		recs	Propane Total	annual consumption distribution	occupied units with non-zero consumption	state	grouped box plot		
-962		recs	Propane Total	enduse penetration	all occupied units	state	grouped bar plot		
-963		recs	Propane Total	total annual consumption	all occupied units	census division recs	grouped bar plot	difference view	
-964		recs	Propane Total	average annual consumption	all occupied units	census division recs	grouped bar plot	difference view	
-965		recs	Propane Total	average annual consumption	occupied units with non-zero consumption	census division recs	grouped bar plot	difference view	
-966		recs	Propane Total	annual consumption distribution	all occupied units	census division recs	grouped box plot		
-967		recs	Propane Total	annual consumption distribution	occupied units with non-zero consumption	census division recs	grouped box plot		
-968		recs	Propane Total	enduse penetration	all occupied units	census division recs	grouped bar plot		
+957		recs	Propane Total	total annual consumption	all occupied units	state	tilemap bar plot	difference view	Yes
+958		recs	Propane Total	average annual consumption	all occupied units	state	tilemap bar plot	difference view	Yes
+959		recs	Propane Total	average annual consumption	occupied units with non-zero consumption	state	tilemap bar plot	difference view	Yes
+960		recs	Propane Total	annual consumption distribution	all occupied units	state	grouped box plot		Yes
+961		recs	Propane Total	annual consumption distribution	occupied units with non-zero consumption	state	grouped box plot		Yes
+962		recs	Propane Total	enduse penetration	all occupied units	state	grouped bar plot		Yes
+963		recs	Propane Total	total annual consumption	all occupied units	census division recs	grouped bar plot	difference view	Yes
+964		recs	Propane Total	average annual consumption	all occupied units	census division recs	grouped bar plot	difference view	Yes
+965		recs	Propane Total	average annual consumption	occupied units with non-zero consumption	census division recs	grouped bar plot	difference view	Yes
+966		recs	Propane Total	annual consumption distribution	all occupied units	census division recs	grouped box plot		Yes
+967		recs	Propane Total	annual consumption distribution	occupied units with non-zero consumption	census division recs	grouped box plot		Yes
+968		recs	Propane Total	enduse penetration	all occupied units	census division recs	grouped bar plot		Yes
 969		recs	Propane Total	total annual consumption	all occupied units	geometry building type recs	grouped bar plot	difference view	
 970		recs	Propane Total	average annual consumption	all occupied units	geometry building type recs	grouped bar plot	difference view	
 971		recs	Propane Total	average annual consumption	occupied units with non-zero consumption	geometry building type recs	grouped bar plot	difference view	
@@ -991,18 +991,18 @@ Index	Highlight	Truth Source	Quantity	Metric	Coverage	Group By	Main Visualizatio
 990		recs	Propane Total	annual consumption distribution	all occupied units	heating fuel	grouped box plot		
 991		recs	Propane Total	annual consumption distribution	occupied units with non-zero consumption	heating fuel	grouped box plot		
 992		recs	Propane Total	enduse penetration	all occupied units	heating fuel	grouped bar plot		
-993		recs	Propane Space Heating	total annual consumption	all occupied units	state	tilemap bar plot	difference view	
-994		recs	Propane Space Heating	average annual consumption	all occupied units	state	tilemap bar plot	difference view	
-995		recs	Propane Space Heating	average annual consumption	occupied units with non-zero consumption	state	tilemap bar plot	difference view	
-996		recs	Propane Space Heating	annual consumption distribution	all occupied units	state	grouped box plot		
-997		recs	Propane Space Heating	annual consumption distribution	occupied units with non-zero consumption	state	grouped box plot		
-998		recs	Propane Space Heating	enduse penetration	all occupied units	state	grouped bar plot		
-999		recs	Propane Space Heating	total annual consumption	all occupied units	census division recs	grouped bar plot	difference view	
-1000		recs	Propane Space Heating	average annual consumption	all occupied units	census division recs	grouped bar plot	difference view	
-1001		recs	Propane Space Heating	average annual consumption	occupied units with non-zero consumption	census division recs	grouped bar plot	difference view	
-1002		recs	Propane Space Heating	annual consumption distribution	all occupied units	census division recs	grouped box plot		
-1003		recs	Propane Space Heating	annual consumption distribution	occupied units with non-zero consumption	census division recs	grouped box plot		
-1004		recs	Propane Space Heating	enduse penetration	all occupied units	census division recs	grouped bar plot		
+993		recs	Propane Space Heating	total annual consumption	all occupied units	state	tilemap bar plot	difference view	Yes
+994		recs	Propane Space Heating	average annual consumption	all occupied units	state	tilemap bar plot	difference view	Yes
+995		recs	Propane Space Heating	average annual consumption	occupied units with non-zero consumption	state	tilemap bar plot	difference view	Yes
+996		recs	Propane Space Heating	annual consumption distribution	all occupied units	state	grouped box plot		Yes
+997		recs	Propane Space Heating	annual consumption distribution	occupied units with non-zero consumption	state	grouped box plot		Yes
+998		recs	Propane Space Heating	enduse penetration	all occupied units	state	grouped bar plot		Yes
+999		recs	Propane Space Heating	total annual consumption	all occupied units	census division recs	grouped bar plot	difference view	Yes
+1000		recs	Propane Space Heating	average annual consumption	all occupied units	census division recs	grouped bar plot	difference view	Yes
+1001		recs	Propane Space Heating	average annual consumption	occupied units with non-zero consumption	census division recs	grouped bar plot	difference view	Yes
+1002		recs	Propane Space Heating	annual consumption distribution	all occupied units	census division recs	grouped box plot		Yes
+1003		recs	Propane Space Heating	annual consumption distribution	occupied units with non-zero consumption	census division recs	grouped box plot		Yes
+1004		recs	Propane Space Heating	enduse penetration	all occupied units	census division recs	grouped bar plot		Yes
 1005		recs	Propane Space Heating	total annual consumption	all occupied units	geometry building type recs	grouped bar plot	difference view	
 1006		recs	Propane Space Heating	average annual consumption	all occupied units	geometry building type recs	grouped bar plot	difference view	
 1007		recs	Propane Space Heating	average annual consumption	occupied units with non-zero consumption	geometry building type recs	grouped bar plot	difference view	
@@ -1135,18 +1135,18 @@ Index	Highlight	Truth Source	Quantity	Metric	Coverage	Group By	Main Visualizatio
 1134		recs	Propane Clothes Dryer	annual consumption distribution	all occupied units	heating fuel	grouped box plot		
 1135		recs	Propane Clothes Dryer	annual consumption distribution	occupied units with non-zero consumption	heating fuel	grouped box plot		
 1136		recs	Propane Clothes Dryer	enduse penetration	all occupied units	heating fuel	grouped bar plot		
-1137		recs	Fuel Oil Total	total annual consumption	all occupied units	state	tilemap bar plot	difference view	
-1138		recs	Fuel Oil Total	average annual consumption	all occupied units	state	tilemap bar plot	difference view	
-1139		recs	Fuel Oil Total	average annual consumption	occupied units with non-zero consumption	state	tilemap bar plot	difference view	
-1140		recs	Fuel Oil Total	annual consumption distribution	all occupied units	state	grouped box plot		
-1141		recs	Fuel Oil Total	annual consumption distribution	occupied units with non-zero consumption	state	grouped box plot		
-1142		recs	Fuel Oil Total	enduse penetration	all occupied units	state	grouped bar plot		
-1143		recs	Fuel Oil Total	total annual consumption	all occupied units	census division recs	grouped bar plot	difference view	
-1144		recs	Fuel Oil Total	average annual consumption	all occupied units	census division recs	grouped bar plot	difference view	
-1145		recs	Fuel Oil Total	average annual consumption	occupied units with non-zero consumption	census division recs	grouped bar plot	difference view	
-1146		recs	Fuel Oil Total	annual consumption distribution	all occupied units	census division recs	grouped box plot		
-1147		recs	Fuel Oil Total	annual consumption distribution	occupied units with non-zero consumption	census division recs	grouped box plot		
-1148		recs	Fuel Oil Total	enduse penetration	all occupied units	census division recs	grouped bar plot		
+1137		recs	Fuel Oil Total	total annual consumption	all occupied units	state	tilemap bar plot	difference view	Yes
+1138		recs	Fuel Oil Total	average annual consumption	all occupied units	state	tilemap bar plot	difference view	Yes
+1139		recs	Fuel Oil Total	average annual consumption	occupied units with non-zero consumption	state	tilemap bar plot	difference view	Yes
+1140		recs	Fuel Oil Total	annual consumption distribution	all occupied units	state	grouped box plot		Yes
+1141		recs	Fuel Oil Total	annual consumption distribution	occupied units with non-zero consumption	state	grouped box plot		Yes
+1142		recs	Fuel Oil Total	enduse penetration	all occupied units	state	grouped bar plot		Yes
+1143		recs	Fuel Oil Total	total annual consumption	all occupied units	census division recs	grouped bar plot	difference view	Yes
+1144		recs	Fuel Oil Total	average annual consumption	all occupied units	census division recs	grouped bar plot	difference view	Yes
+1145		recs	Fuel Oil Total	average annual consumption	occupied units with non-zero consumption	census division recs	grouped bar plot	difference view	Yes
+1146		recs	Fuel Oil Total	annual consumption distribution	all occupied units	census division recs	grouped box plot		Yes
+1147		recs	Fuel Oil Total	annual consumption distribution	occupied units with non-zero consumption	census division recs	grouped box plot		Yes
+1148		recs	Fuel Oil Total	enduse penetration	all occupied units	census division recs	grouped bar plot		Yes
 1149		recs	Fuel Oil Total	total annual consumption	all occupied units	geometry building type recs	grouped bar plot	difference view	
 1150		recs	Fuel Oil Total	average annual consumption	all occupied units	geometry building type recs	grouped bar plot	difference view	
 1151		recs	Fuel Oil Total	average annual consumption	occupied units with non-zero consumption	geometry building type recs	grouped bar plot	difference view	
@@ -1171,18 +1171,18 @@ Index	Highlight	Truth Source	Quantity	Metric	Coverage	Group By	Main Visualizatio
 1170		recs	Fuel Oil Total	annual consumption distribution	all occupied units	heating fuel	grouped box plot		
 1171		recs	Fuel Oil Total	annual consumption distribution	occupied units with non-zero consumption	heating fuel	grouped box plot		
 1172		recs	Fuel Oil Total	enduse penetration	all occupied units	heating fuel	grouped bar plot		
-1173		recs	Fuel Oil Space Heating	total annual consumption	all occupied units	state	tilemap bar plot	difference view	
-1174		recs	Fuel Oil Space Heating	average annual consumption	all occupied units	state	tilemap bar plot	difference view	
-1175		recs	Fuel Oil Space Heating	average annual consumption	occupied units with non-zero consumption	state	tilemap bar plot	difference view	
-1176		recs	Fuel Oil Space Heating	annual consumption distribution	all occupied units	state	grouped box plot		
-1177		recs	Fuel Oil Space Heating	annual consumption distribution	occupied units with non-zero consumption	state	grouped box plot		
-1178		recs	Fuel Oil Space Heating	enduse penetration	all occupied units	state	grouped bar plot		
-1179		recs	Fuel Oil Space Heating	total annual consumption	all occupied units	census division recs	grouped bar plot	difference view	
-1180		recs	Fuel Oil Space Heating	average annual consumption	all occupied units	census division recs	grouped bar plot	difference view	
-1181		recs	Fuel Oil Space Heating	average annual consumption	occupied units with non-zero consumption	census division recs	grouped bar plot	difference view	
-1182		recs	Fuel Oil Space Heating	annual consumption distribution	all occupied units	census division recs	grouped box plot		
-1183		recs	Fuel Oil Space Heating	annual consumption distribution	occupied units with non-zero consumption	census division recs	grouped box plot		
-1184		recs	Fuel Oil Space Heating	enduse penetration	all occupied units	census division recs	grouped bar plot		
+1173		recs	Fuel Oil Space Heating	total annual consumption	all occupied units	state	tilemap bar plot	difference view	Yes
+1174		recs	Fuel Oil Space Heating	average annual consumption	all occupied units	state	tilemap bar plot	difference view	Yes
+1175		recs	Fuel Oil Space Heating	average annual consumption	occupied units with non-zero consumption	state	tilemap bar plot	difference view	Yes
+1176		recs	Fuel Oil Space Heating	annual consumption distribution	all occupied units	state	grouped box plot		Yes
+1177		recs	Fuel Oil Space Heating	annual consumption distribution	occupied units with non-zero consumption	state	grouped box plot		Yes
+1178		recs	Fuel Oil Space Heating	enduse penetration	all occupied units	state	grouped bar plot		Yes
+1179		recs	Fuel Oil Space Heating	total annual consumption	all occupied units	census division recs	grouped bar plot	difference view	Yes
+1180		recs	Fuel Oil Space Heating	average annual consumption	all occupied units	census division recs	grouped bar plot	difference view	Yes
+1181		recs	Fuel Oil Space Heating	average annual consumption	occupied units with non-zero consumption	census division recs	grouped bar plot	difference view	Yes
+1182		recs	Fuel Oil Space Heating	annual consumption distribution	all occupied units	census division recs	grouped box plot		Yes
+1183		recs	Fuel Oil Space Heating	annual consumption distribution	occupied units with non-zero consumption	census division recs	grouped box plot		Yes
+1184		recs	Fuel Oil Space Heating	enduse penetration	all occupied units	census division recs	grouped bar plot		Yes
 1185		recs	Fuel Oil Space Heating	total annual consumption	all occupied units	geometry building type recs	grouped bar plot	difference view	
 1186		recs	Fuel Oil Space Heating	average annual consumption	all occupied units	geometry building type recs	grouped bar plot	difference view	
 1187		recs	Fuel Oil Space Heating	average annual consumption	occupied units with non-zero consumption	geometry building type recs	grouped bar plot	difference view	
@@ -1264,4 +1264,4 @@ Index	Highlight	Truth Source	Quantity	Metric	Coverage	Group By	Main Visualizatio
 # Group By: Grouping dimension. 'state'/'utility' produce tilemap layouts. Others (census division recs, vintage, heating fuel, etc.) produce grouped bar charts.
 # Main Visualization: Primary chart type. tilemap bar plot, tilemap timeseries, grouped bar plot, grouped box plot, stack of timeseries, daily load shape, daily load shape matrix, load duration curve, temperature relation.
 # Extra Visualization: Secondary chart alongside the main one. 'difference view' = percent difference vs truth source. 'temperature count' = temperature observation distribution. Blank = no extra visualization.
-# Test: 'Yes' marks one row per unique code-path signature. Use --test in plot_generator.py to generate only these rows.
+# Test: 'Yes' marks one row per unique code-path signature (includes fuel type and total/enduse as signature dimensions). Use --test in plot_generator.py to generate only these rows.

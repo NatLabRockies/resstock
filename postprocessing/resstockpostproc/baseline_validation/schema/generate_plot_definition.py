@@ -133,12 +133,40 @@ RECS_HIGHLIGHT_MONTHLY = {
 }
 
 
+def _fuel_and_total(quantity):
+    """Extract fuel type and whether the quantity is a fuel total.
+
+    Returns (fuel_type, is_total) where:
+      - fuel_type is "electricity", "natural_gas", "propane", "fuel_oil", or None
+      - is_total is True for fuel totals (e.g. "Electricity Total"), False for individual enduses
+    """
+    if quantity in ("Number of dwelling units", "All Enduses"):
+        return None, False
+    q = quantity.lower()
+    if q.startswith("electricity"):
+        fuel = "electricity"
+    elif q.startswith("natural gas"):
+        fuel = "natural_gas"
+    elif q.startswith("propane"):
+        fuel = "propane"
+    elif q.startswith("fuel oil"):
+        fuel = "fuel_oil"
+    else:
+        fuel = None
+    is_total = q.endswith("total")
+    return fuel, is_total
+
+
 def _path_signature(truth_source, quantity, metric, coverage, group_by):
     """Compute code-path signature — rows with the same signature exercise the same pipeline path.
 
     Two rows with the same signature traverse identical code paths through the
     plotting pipeline (plotter selection, config resolution, rendering dispatch).
     They differ only in the data flowing through.
+
+    Includes fuel_type and is_total so the test subset covers every fuel
+    (electricity, natural_gas, propane, fuel_oil) in both total and individual-
+    enduse variants.
     """
     if quantity == "Number of dwelling units":
         qty_type = "units_count"
@@ -156,7 +184,9 @@ def _path_signature(truth_source, quantity, metric, coverage, group_by):
 
     cov_type = "all" if coverage in (EIA_COVERAGE, LRD_COVERAGE, RECS_ALL) else "users"
 
-    return (truth_source, metric, cov_type, gb_type, qty_type)
+    fuel_type, is_total = _fuel_and_total(quantity)
+
+    return (truth_source, metric, cov_type, gb_type, qty_type, fuel_type, is_total)
 
 
 def is_highlight(truth_source, quantity, group_by, metric):
@@ -367,7 +397,8 @@ def main():
         " 'difference view' = percent difference vs truth source."
         " 'temperature count' = temperature observation distribution."
         " Blank = no extra visualization.",
-        "# Test: 'Yes' marks one row per unique code-path signature."
+        "# Test: 'Yes' marks one row per unique code-path signature"
+        " (includes fuel type and total/enduse as signature dimensions)."
         " Use --test in plot_generator.py to generate only these rows.",
     ]
 
