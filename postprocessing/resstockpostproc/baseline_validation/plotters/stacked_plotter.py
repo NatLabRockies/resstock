@@ -1,4 +1,5 @@
 from resstockpostproc.shared_utils.generic_plotters import box_plotter, bar_plotter
+from resstockpostproc.shared_utils.generic_plotters.range_utils import compute_axis_range
 from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import filter_null_sources
 from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, AggregationType, CoverageType, ViewType
 from resstockpostproc.shared_utils.db_column_names import DataCol
@@ -309,9 +310,7 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
     # Dwelling unit count case
     if quantity == DataCol.UNITS_COUNT:
         col = "units_count_percent_difference" if view == ViewType.diff_view else "units_count"
-        max_val = df[col].fill_null(0).max()
-        min_val = min(0, float(df[col].fill_null(0).min() or 0))
-        return float(min_val), max(0, float(max_val)) if max_val is not None else 0.0
+        return compute_axis_range(df, col)
 
     # Determine if this is a distribution (box) plot and get column suffix
     is_dist = view == ViewType.distribution
@@ -334,13 +333,12 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
         if quantity_col not in df.columns:
             continue
         if is_dist:
-            min_val = df[quantity_col].fill_null([0]).list.get(0).min()
-            max_val = df[quantity_col].fill_null([0]).list.get(-1).max()
+            raw_min = df[quantity_col].fill_null([0]).list.get(0).min()
+            raw_max = df[quantity_col].fill_null([0]).list.get(-1).max()
+            min_val = min(0, float(raw_min) if raw_min is not None else 0.0)
+            max_val = max(0, float(raw_max) if raw_max is not None else 0.0)
         else:
-            min_val = df[quantity_col].fill_null(0).min()
-            max_val = df[quantity_col].fill_null(0).max()
-        min_val = min(0, float(min_val) if min_val is not None else 0.0)
-        max_val = max(0, float(max_val) if max_val is not None else 0.0)
+            min_val, max_val = compute_axis_range(df, quantity_col)
         all_min_val = min(all_min_val, min_val)
         all_max_val = max(all_max_val, max_val)
 

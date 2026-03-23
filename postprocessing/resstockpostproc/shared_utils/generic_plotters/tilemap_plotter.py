@@ -3,6 +3,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from .bar_plotter import create_bar_plot
 from .monthly_plotter import create_ts_plot
+from .range_utils import compute_axis_range
 from typing import Literal
 from collections.abc import Sequence, Callable
 from resstockpostproc.shared_utils.db_column_names import DataCol
@@ -157,17 +158,8 @@ def plot_tilemap(
     scale_data = data
     if separate_us_total_scale:
         scale_data = data.filter(pl.col(second_category_column) != "US Total")
-    if rse_column is not None:
-        upper_col = rse_column.replace("_rse", "_upper_bound")
-        lower_col = rse_column.replace("_rse", "_lower_bound")
-        global_max = scale_data[upper_col].max()
-        global_min = scale_data[lower_col].min()
-    else:
-        global_max = scale_data[quantity_column].max()
-        global_min = scale_data[quantity_column].min()
-    assert isinstance(global_max, (int, float)), "Could not determine global max for tilemap plot."
-    assert isinstance(global_min, (int, float)), "Could not determine global min for tilemap plot."
-    custom_range = (min(0, global_min), max(0, global_max) * 1.01)
+    global_min, global_max = compute_axis_range(scale_data, quantity_column, rse_column)
+    custom_range = (global_min, global_max * 1.01)
 
     layout = LAYOUTS[second_category_column]
     subplot_titles = []

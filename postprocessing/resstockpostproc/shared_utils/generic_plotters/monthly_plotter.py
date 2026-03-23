@@ -6,6 +6,8 @@ from typing import Any
 import polars as pl
 import plotly.graph_objects as go
 
+from .range_utils import compute_axis_range
+
 from resstockpostproc.shared_utils.generic_plotters import theme
 
 
@@ -38,14 +40,8 @@ def create_ts_plot(
 ) -> go.Figure:
     categories = data[first_category_column].unique(maintain_order=True).to_list()
     category_colors = theme.build_color_palette(categories)
-    if custom_range is None and rse_column is not None:
-        y_max = data[f"{rse_column.replace('_rse', '_upper_bound')}"].max()
-        y_min = data[f"{rse_column.replace('_rse', '_lower_bound')}"].min()
-        yrange = (min(0, y_min), max(0, y_max))
-    elif custom_range is None:
-        y_max = data[quantity_column].max()
-        y_min = data[quantity_column].min()
-        yrange = (min(0, y_min), max(0, y_max))
+    if custom_range is None:
+        yrange = compute_axis_range(data, quantity_column, rse_column)
     else:
         yrange = custom_range
     fig = fig or go.Figure()

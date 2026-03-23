@@ -1,4 +1,5 @@
 from . import theme
+from .range_utils import compute_axis_range
 import plotly.graph_objects as go
 import polars as pl
 
@@ -67,11 +68,12 @@ def create_bar_plot(
     quantity_cols = [quantity_column] if isinstance(quantity_column, str) else list(quantity_column)
     rse_cols = [rse_column] if isinstance(rse_column, str) else (list(rse_column) if rse_column is not None else None)
     
-    # Calculate min and max values from the quantity columns
-    all_values = []
-    for qcol in quantity_cols:
-        all_values.extend(data[qcol].fill_null(0).to_list())
-    data_min, data_max = min(0, *all_values), max(0, *all_values)
+    # Calculate min and max values from the quantity columns (RSE-aware)
+    data_min, data_max = 0.0, 0.0
+    for i, qcol in enumerate(quantity_cols):
+        rcol = rse_cols[i] if rse_cols and i < len(rse_cols) else None
+        q_min, q_max = compute_axis_range(data, qcol, rcol)
+        data_min, data_max = min(data_min, q_min), max(data_max, q_max)
     
     traces: list[go.Bar] = []
     xtitle: str | None = ""
