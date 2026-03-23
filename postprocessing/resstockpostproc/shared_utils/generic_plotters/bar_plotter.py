@@ -71,7 +71,7 @@ def create_bar_plot(
     all_values = []
     for qcol in quantity_cols:
         all_values.extend(data[qcol].fill_null(0).to_list())
-    data_min, data_max = min(0, *all_values), max(all_values)
+    data_min, data_max = min(0, *all_values), max(0, *all_values)
     
     traces: list[go.Bar] = []
     xtitle: str | None = ""

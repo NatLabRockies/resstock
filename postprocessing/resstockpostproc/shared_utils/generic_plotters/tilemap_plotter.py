@@ -167,7 +167,7 @@ def plot_tilemap(
         global_min = scale_data[quantity_column].min()
     assert isinstance(global_max, (int, float)), "Could not determine global max for tilemap plot."
     assert isinstance(global_min, (int, float)), "Could not determine global min for tilemap plot."
-    custom_range = (min(0, global_min), global_max * 1.01)
+    custom_range = (min(0, global_min), max(0, global_max) * 1.01)
 
     layout = LAYOUTS[second_category_column]
     subplot_titles = []

@@ -147,7 +147,7 @@ def create_box_plot(
     if custom_range is None:
         min_val = data["min"].min()
         min_val = min(0, min_val)
-        max_val = data["max"].max()
+        max_val = max(0, data["max"].max())
     else:
         min_val, max_val = custom_range
     fig.update_xaxes(tick0=min_val, range=[min_val, max_val], row=row, col=col,

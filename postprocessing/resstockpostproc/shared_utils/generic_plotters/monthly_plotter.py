@@ -41,11 +41,11 @@ def create_ts_plot(
     if custom_range is None and rse_column is not None:
         y_max = data[f"{rse_column.replace('_rse', '_upper_bound')}"].max()
         y_min = data[f"{rse_column.replace('_rse', '_lower_bound')}"].min()
-        yrange = (min(0, y_min), y_max)
+        yrange = (min(0, y_min), max(0, y_max))
     elif custom_range is None:
         y_max = data[quantity_column].max()
         y_min = data[quantity_column].min()
-        yrange = (min(0, y_min), y_max)
+        yrange = (min(0, y_min), max(0, y_max))
     else:
         yrange = custom_range
     fig = fig or go.Figure()

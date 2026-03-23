@@ -311,7 +311,7 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
         col = "units_count_percent_difference" if view == ViewType.diff_view else "units_count"
         max_val = df[col].fill_null(0).max()
         min_val = min(0, float(df[col].fill_null(0).min() or 0))
-        return float(min_val), float(max_val) if max_val is not None else 0.0
+        return float(min_val), max(0, float(max_val)) if max_val is not None else 0.0
 
     # Determine if this is a distribution (box) plot and get column suffix
     is_dist = view == ViewType.distribution
@@ -340,7 +340,7 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
             min_val = df[quantity_col].fill_null(0).min()
             max_val = df[quantity_col].fill_null(0).max()
         min_val = min(0, float(min_val) if min_val is not None else 0.0)
-        max_val = float(max_val) if max_val is not None else 0.0
+        max_val = max(0, float(max_val) if max_val is not None else 0.0)
         all_min_val = min(all_min_val, min_val)
         all_max_val = max(all_max_val, max_val)
 
