@@ -297,9 +297,9 @@ def plot_tilemap(
             category_font_size=11,
         )
 
-    # Remove grid lines from all subplots
-    fig.update_xaxes(showgrid=False)
-    fig.update_yaxes(showgrid=False, zeroline=True, zerolinewidth=2, zerolinecolor="darkgray")
+    # Remove grid and axis border lines from all subplots
+    fig.update_xaxes(showgrid=False, showline=False)
+    fig.update_yaxes(showgrid=False, showline=False, zeroline=True, zerolinewidth=2, zerolinecolor="darkgray")
     fig.update_layout(
         title_text=title_text,
     )
