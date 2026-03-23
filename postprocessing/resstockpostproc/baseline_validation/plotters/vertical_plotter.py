@@ -1,4 +1,5 @@
 from resstockpostproc.shared_utils.generic_plotters import box_plotter, bar_plotter
+from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import filter_null_sources
 from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, AggregationType, CoverageType, ViewType
 from resstockpostproc.shared_utils.db_column_names import DataCol
 import plotly.graph_objects as go
@@ -307,8 +308,10 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
 
     # Dwelling unit count case
     if quantity == DataCol.UNITS_COUNT:
-        max_val = df["units_count"].max()
-        return 0, float(max_val) if max_val is not None else 0.0
+        col = "units_count_percent_difference" if view == ViewType.diff_view else "units_count"
+        max_val = df[col].fill_null(0).max()
+        min_val = min(0, float(df[col].fill_null(0).min() or 0))
+        return float(min_val), float(max_val) if max_val is not None else 0.0
 
     # Determine if this is a distribution (box) plot and get column suffix
     is_dist = view == ViewType.distribution
@@ -379,6 +382,14 @@ def create_vertical_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
             raise ValueError("When quantity is DataCol.ALL, focus_on must be specified")
         df = df.filter(pl.col(plot_spec.aggregation_level) == plot_spec.focus_on)
 
+    # Exclude US Total from total-aggregation value_view plots to prevent scale domination
+    # (only when showing all entities, not when focused specifically on US Total)
+    if (plot_spec.aggregation_type == AggregationType.total
+            and plot_spec.view == ViewType.value_view
+            and plot_spec.focus_on is None
+            and plot_spec.aggregation_level in df.columns):
+        df = df.filter(pl.col(plot_spec.aggregation_level) != "US Total")
+
     show_legends = True
     assert plot_spec is not None
     fig, graph_iterator = split_graph(df, plot_spec)
@@ -413,6 +424,8 @@ def create_vertical_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
             else:
                 quantity_col = f"{quantity_col}_value"
             quantity_col += "_percent_difference" if plot_spec.view == ViewType.diff_view else ""
+            if plot_spec.view == ViewType.diff_view:
+                df_subset = filter_null_sources(df_subset, "source", quantity_col)
             bar_plotter.create_bar_plot(
                 data=df_subset,
                 quantity_column=quantity_col,

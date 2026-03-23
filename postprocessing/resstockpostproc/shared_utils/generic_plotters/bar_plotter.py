@@ -53,6 +53,7 @@ def create_bar_plot(
     show_legends: bool = True,
     show_ticks: bool = True,
     custom_range: tuple[float, float] | None = None,
+    category_font_size: int | None = None,
 ) -> go.Figure:
     """
     Creates a simple, grouped or stacked bar plot depending on the inputs.
@@ -207,8 +208,11 @@ def create_bar_plot(
         fig.update_xaxes(range=data_range, row=row, col=col,
                          title_text=quantity_title, showticklabels=show_ticks
                          )
-        fig.update_yaxes(type="category", tickmode="array", tickvals=categories, showticklabels=True,
-                          categoryorder="array", categoryarray=categories, row=row, col=col)
+        yaxis_kwargs = dict(type="category", tickmode="array", tickvals=categories, showticklabels=True,
+                            categoryorder="array", categoryarray=categories, row=row, col=col)
+        if category_font_size is not None:
+            yaxis_kwargs["tickfont"] = {"size": category_font_size}
+        fig.update_yaxes(**yaxis_kwargs)
         fig.update_layout(legend_traceorder="reversed")
     else:
         fig.update_yaxes(range=data_range,

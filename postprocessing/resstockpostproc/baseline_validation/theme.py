@@ -57,6 +57,10 @@ def apply_theme(fig: go.Figure, title: str | None = None, **kwargs) -> go.Figure
     if title:
         layout_updates["title"] = {"text": title, "font": {"size": 16, "color": "#333"},
                                    "x": 0.5, "xanchor": "center"}
+        if "<br>" in title:
+            margin = layout_updates.get("margin", {}).copy()
+            margin["t"] = margin.get("t", 80) + 30
+            layout_updates["margin"] = margin
 
     layout_updates["xaxis"] = {**DEFAULT_XAXIS, **layout_updates.get("xaxis", {})}
     layout_updates["yaxis"] = {**DEFAULT_YAXIS, **layout_updates.get("yaxis", {})}

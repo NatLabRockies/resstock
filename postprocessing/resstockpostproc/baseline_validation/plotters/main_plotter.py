@@ -7,7 +7,7 @@ regardless of truth source (RECS, EIA, LRD) or visualization type.
 import polars as pl
 import plotly.graph_objects as go
 
-from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, Resolution
+from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, Resolution, AggregationType, ViewType
 from resstockpostproc.baseline_validation.theme import apply_theme
 from resstockpostproc.baseline_validation.plotters.plot_config import (
     build_plot_config,
@@ -17,6 +17,7 @@ from resstockpostproc.baseline_validation.plotters.plot_config import (
 )
 from resstockpostproc.baseline_validation.plotters.vertical_plotter import create_vertical_plot
 from resstockpostproc.shared_utils.generic_plotters import tilemap_plotter
+from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import filter_null_sources
 from resstockpostproc.shared_utils.generic_plotters.bar_plotter import create_bar_plot
 from resstockpostproc.shared_utils.generic_plotters.monthly_plotter import create_ts_plot
 from resstockpostproc.shared_utils.timing import timed
@@ -42,6 +43,20 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
     return fig, config.title
 
 
+def _get_null_sources(data: pl.DataFrame, source_column: str, quantity_column: str) -> list[str]:
+    """Identify sources where the quantity column is entirely null."""
+    if quantity_column not in data.columns:
+        return []
+    return (
+        data.group_by(source_column)
+        .agg(pl.col(quantity_column).is_null().all().alias("all_null"))
+        .filter(pl.col("all_null"))
+        .select(source_column)
+        .to_series()
+        .to_list()
+    )
+
+
 def _render(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
     """Select appropriate renderer and create the figure."""
     if config.use_distribution_plot:
@@ -50,7 +65,7 @@ def _render(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.F
         if config.timeseries_column:
             return _render_single_entity_timeseries(data, config)
         else:
-            return _render_single_entity_bar(data, config)
+            return _render_single_entity_bar(data, config, plot_spec)
     else:
         return _render_tilemap(data, config, plot_spec)
 
@@ -59,6 +74,19 @@ def _render_tilemap(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec)
     """Render using tilemap layout with bar or timeseries subplots."""
     second_category_column = get_second_category_column(plot_spec)
     second_category_title = get_second_category_title(plot_spec)
+
+    exclude_from_sidebar = (
+        ["US Total"]
+        if plot_spec.aggregation_type == AggregationType.total and plot_spec.view == ViewType.diff_view
+        else None
+    )
+
+    # In diff_view, exclude reference source from subplots (it always has 0% diff)
+    exclude_sources = (
+        _get_null_sources(data, "source", config.quantity_column)
+        if plot_spec.view == ViewType.diff_view
+        else None
+    )
 
     return tilemap_plotter.plot_tilemap(
         data=data,
@@ -77,8 +105,12 @@ def _render_tilemap(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec)
         title_text=config.title,
         sidebar_column=config.sidebar_column,
         sidebar_title=config.sidebar_title,
-        main_section_title=config.main_section_title,
-        sidebar_section_title=config.sidebar_section_title,
+        exclude_from_sidebar=exclude_from_sidebar,
+        exclude_sources=exclude_sources,
+        separate_us_total_scale=(
+            plot_spec.aggregation_type == AggregationType.total
+            and plot_spec.view == ViewType.value_view
+        ),
     )
 
 
@@ -99,8 +131,11 @@ def _render_single_entity_timeseries(data: pl.DataFrame, config: PlotConfig) -> 
     )
 
 
-def _render_single_entity_bar(data: pl.DataFrame, config: PlotConfig) -> go.Figure:
+def _render_single_entity_bar(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
     """Render a simple bar chart for single-entity (focused) plots without timeseries."""
+    # In diff_view, exclude reference source (it always has 0% diff)
+    if plot_spec.view == ViewType.diff_view:
+        data = filter_null_sources(data, "source", config.quantity_column)
     return create_bar_plot(
         data=data,
         quantity_column=config.quantity_column,

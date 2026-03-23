@@ -7,7 +7,6 @@ Functions for generating load duration curve validation plots
 import polars as pl
 import plotly.graph_objects as go
 
-from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, Resolution, ViewType
 from resstockpostproc.shared_utils.generic_plotters import tilemap_plotter
 from resstockpostproc.shared_utils.generic_plotters.bar_plotter import create_bar_plot
@@ -33,44 +32,31 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
             ts_xtick_vals = ()
             ts_xtick_text = ()
             sidebar_column = f"{plot_spec.quantity}_value_percent_difference"
-            title = "Annual electricity consumption per dwelling unit"
+            title = "Annual Electricity Consumption per Dwelling Unit"
         case Resolution.month:
             timeseries_column = Resolution.month
             ts_xtick_vals = ("JAN", "DEC")
             ts_xtick_text = ("   Jan", "Dec   ")
-            title = "Monthly electricity consumption per dwelling unit"
+            title = "Monthly Electricity Consumption per Dwelling Unit"
         case Resolution.day_of_year:
             timeseries_column = "day of year"  # Now contains actual dates
             ts_xtick_vals = None  # Let Plotly auto-generate date ticks
             ts_xtick_text = None
-            title = "Daily electricity consumption per dwelling unit"
-            # Rename utility_name to utility_vertical to match the layout key
-            final_df = final_df.rename({"utility_name": "utility_vertical"})
+            title = "Daily Electricity Consumption per Dwelling Unit"
         case Resolution.hour_of_year | Resolution.top_100_hours:
             if plot_spec.view in [ViewType.temp_view, ViewType.temp_count_view]:
                 # Data already transformed by gather_data._prepare_temperature_view()
                 x_unit = "°F"
                 timeseries_column = "resstock_temp"
                 if plot_spec.view == ViewType.temp_view:
-                    title = "Load Vs outdoor drybulb temperature"
+                    title = "Load vs Outdoor Drybulb Temperature"
                 else:
                     quantity_title = "count"
                     quantity_column = "temp_count"
-                    title = "Count of number of hours vs outdoor drybulb temperature"
+                    title = "Count of Number of Hours vs Outdoor Drybulb Temperature"
             else:
-                final_df = final_df.sort(
-                    "source", "utility_name", f"{plot_spec.quantity}_value", descending=[False, False, True]
-                ).with_columns(
-                    (
-                        (pl.int_range(pl.len()) + 1).over("source", "utility_name")
-                        * 100
-                        / (pl.len()).over("source", "utility_name")
-                    )
-                    .round(3)
-                    .alias("percent_time")
-                )
                 timeseries_column = "percent_time"
-                title = "Load Duration Curve of electricity consumption per dwelling unit"
+                title = "Load Duration Curve of Electricity Consumption per Dwelling Unit"
                 if plot_spec.resolution == Resolution.top_100_hours:
                     title += " (Top 100 Hours)"
                 ts_xtick_text = ("  0%", "100%    ")
@@ -83,25 +69,19 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
             ts_xtick_vals = (0, 23)
             ts_xtick_text = ("     Hour 1", "Hour 24       ")
             if plot_spec.resolution == Resolution.hour_of_day_summer:
-                title = "Average summer day hourly electricity consumption per dwelling unit"
+                title = "Average Summer Day Hourly Electricity Consumption per Dwelling Unit"
             elif plot_spec.resolution == Resolution.hour_of_day_winter:
-                title = "Average winter day hourly electricity consumption per dwelling unit"
+                title = "Average Winter Day Hourly Electricity Consumption per Dwelling Unit"
             else:
-                title = "Average daily electricity consumption per dwelling unit"
+                title = "Average Daily Electricity Consumption per Dwelling Unit"
         case Resolution.hour_of_day_matrix:
-            # Filter to single utility using focus_on
             if not plot_spec.focus_on:
                 raise ValueError("hour_of_day_matrix requires focus_on to specify a single utility")
-
-            final_df = final_df.filter(pl.col("utility_name") == plot_spec.focus_on)
-
-            # Create combined column for tilemap layout
-            final_df = final_df.with_columns((pl.col("month") + "_" + pl.col("day_type")).alias("month_daytype"))
 
             timeseries_column = "hour of day"
             ts_xtick_vals = (0, 23)
             ts_xtick_text = ("     Hour 1", "Hour 24       ")
-            title = f"Hourly load profile matrix for {plot_spec.focus_on}"
+            title = f"Hourly Load Profile Matrix for {plot_spec.focus_on}"
         case _:
             raise ValueError(f"Unsupported resolution '{plot_spec.resolution}' for LRD plot.")
 

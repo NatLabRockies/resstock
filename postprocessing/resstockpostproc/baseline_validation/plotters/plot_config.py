@@ -22,6 +22,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     Resolution,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
+from resstockpostproc.shared_utils.mapping import ABBR2STATE
 
 
 @dataclass(frozen=True)
@@ -48,10 +49,6 @@ class PlotConfig:
     ts_xtick_vals: tuple | None
     ts_xtick_text: tuple | None
     x_unit: str
-
-    # Section titles (for tilemap grid and sidebar headers)
-    main_section_title: str
-    sidebar_section_title: str
 
     # Layout dimensions
     height: float
@@ -87,35 +84,26 @@ def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
     timeseries_column = _resolve_timeseries_column(plot_spec)
     title = _resolve_title(plot_spec)
     quantity_title = _resolve_quantity_title(plot_spec)
-    sidebar_title = _resolve_sidebar_title(plot_spec)
+    truth_label = _extract_truth_source_label(plot_spec.truth_source, data) if sidebar_column else ""
+    sidebar_title = _resolve_sidebar_title(plot_spec, truth_label)
     ts_xtick_vals, ts_xtick_text = _resolve_tick_config(plot_spec, data)
     x_unit = _resolve_x_unit(plot_spec)
     use_distribution_plot = _is_distribution_plot(plot_spec)
     is_single_entity = _check_single_entity(data, plot_spec, timeseries_column)
     height, width = _resolve_dimensions(plot_spec, is_single_entity)
 
-    # Resolve section titles (before view-type swapping)
-    main_section_title, sidebar_section_title = _resolve_section_titles(plot_spec, data, quantity_title, sidebar_column)
-
     # Post-processing: diff_view swaps quantity <-> sidebar
     if plot_spec.view == ViewType.diff_view and sidebar_column:
-        quantity_title, quantity_column, sidebar_title, sidebar_column = (
-            sidebar_title,
-            sidebar_column,
-            quantity_title,
-            quantity_column,
-        )
-        quantity_title = quantity_title.replace("Percent Difference (%)", r"% diff")
-        main_section_title, sidebar_section_title = sidebar_section_title, main_section_title
-        # RSE bounds are for the original values, not the percent differences
+        quantity_column, sidebar_column = sidebar_column, quantity_column
+        sidebar_title = quantity_title
+        quantity_title = "% diff"
+        title = _resolve_diff_view_title(plot_spec, truth_label)
         rse_column = None
 
     # Post-processing: monthly resolution clears sidebar (RECS/EIA only)
     if plot_spec.resolution == Resolution.month and plot_spec.truth_source != TruthSource.lrd:
         sidebar_column = None
         sidebar_title = ""
-        main_section_title = ""
-        sidebar_section_title = ""
 
     return PlotConfig(
         quantity_column=quantity_column,
@@ -125,8 +113,6 @@ def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
         title=title,
         quantity_title=quantity_title,
         sidebar_title=sidebar_title,
-        main_section_title=main_section_title,
-        sidebar_section_title=sidebar_section_title,
         ts_xtick_vals=ts_xtick_vals,
         ts_xtick_text=ts_xtick_text,
         x_unit=x_unit,
@@ -277,46 +263,46 @@ def _resolve_lrd_title(plot_spec: PlotSpec) -> str:
     """Build title for LRD plots based on resolution."""
     match plot_spec.resolution:
         case Resolution.year:
-            return "Annual electricity consumption per dwelling unit"
+            return "Annual Electricity Consumption per Dwelling Unit"
 
         case Resolution.month:
-            return "Monthly electricity consumption per dwelling unit"
+            return "Monthly Electricity Consumption per Dwelling Unit"
 
         case Resolution.day_of_year:
-            return "Daily electricity consumption per dwelling unit"
+            return "Daily Electricity Consumption per Dwelling Unit"
 
         case Resolution.hour_of_year | Resolution.top_100_hours:
             if plot_spec.view == ViewType.temp_view:
-                return "Load Vs outdoor drybulb temperature"
+                return "Load vs Outdoor Drybulb Temperature"
             if plot_spec.view == ViewType.temp_count_view:
-                return "Count of number of hours vs outdoor drybulb temperature"
-            title = "Load Duration Curve of electricity consumption per dwelling unit"
+                return "Count of Number of Hours vs Outdoor Drybulb Temperature"
+            title = "Load Duration Curve of Electricity Consumption per Dwelling Unit"
             if plot_spec.resolution == Resolution.top_100_hours:
                 title += " (Top 100 Hours)"
             return title
 
         case Resolution.hour_of_day:
-            return "Average daily electricity consumption per dwelling unit"
+            return "Average Daily Electricity Consumption per Dwelling Unit"
 
         case Resolution.hour_of_day_summer:
-            return "Average summer day hourly electricity consumption per dwelling unit"
+            return "Average Summer Day Hourly Electricity Consumption per Dwelling Unit"
 
         case Resolution.hour_of_day_winter:
-            return "Average winter day hourly electricity consumption per dwelling unit"
+            return "Average Winter Day Hourly Electricity Consumption per Dwelling Unit"
 
         case Resolution.hour_of_day_matrix:
-            return f"Hourly load profile matrix for {plot_spec.focus_on}"
+            return f"Hourly Load Profile Matrix for {plot_spec.focus_on}"
 
         case _:
             raise ValueError(f"Unsupported resolution '{plot_spec.resolution}' for LRD plot.")
 
 
 def _format_quantity_name(quantity: DataCol) -> str:
-    """Convert a DataCol enum value to a human-readable title-case name.
+    """Human-readable quantity name for plot titles.
 
-    Examples: electricity_total → "Electricity Total", natural_gas_space_heating → "Natural Gas Space Heating"
+    Examples: ELECTRICITY_TOTAL → "Electricity", NATURAL_GAS_SPACE_HEATING → "Space Heating Natural Gas"
     """
-    return quantity.value.replace("_", " ").title()
+    return quantity.label
 
 
 _AGGREGATION_LEVEL_LABELS = {
@@ -334,44 +320,59 @@ def _format_aggregation_level(agg_level: str) -> str:
     return _AGGREGATION_LEVEL_LABELS.get(agg_level, agg_level.replace("_", " ").title())
 
 
+def _format_focus_label(focus_on: str) -> str:
+    """Convert a raw focus_on value to a human-readable display label.
+
+    "US Total" → "U.S. Total", state abbreviations → full names, others pass through.
+    """
+    if focus_on == "US Total":
+        return "U.S. Total"
+    if focus_on in ABBR2STATE:
+        return ABBR2STATE[focus_on]
+    return focus_on
+
+
 def _resolve_recs_eia_title(plot_spec: PlotSpec) -> str:
-    """Build title for RECS/EIA plots based on quantity, aggregation, coverage, and view."""
-    quantity_name = "Enduse" if plot_spec.quantity == DataCol.ALL else _format_quantity_name(plot_spec.quantity)
+    """Build publication-quality title for RECS/EIA plots."""
+    quantity_name = _format_quantity_name(plot_spec.quantity) if plot_spec.quantity != DataCol.ALL else "Enduse"
     agg_label = _format_aggregation_level(plot_spec.aggregation_level)
-    grouping = f"in {plot_spec.focus_on}" if plot_spec.focus_on else f"by {agg_label}"
+    grouping = f"({_format_focus_label(plot_spec.focus_on)})" if plot_spec.focus_on else f"by {agg_label}"
+    is_monthly = plot_spec.resolution == Resolution.month
 
     # Dwelling unit count case
     if plot_spec.quantity == DataCol.UNITS_COUNT:
-        base_title = f"Number of occupied dwelling units {grouping}"
+        return f"Number of Occupied Dwelling Units {grouping}"
 
     # Penetration view
-    elif plot_spec.view == ViewType.penetration:
-        base_title = f"Annual {quantity_name} Percent of Customers {grouping}"
+    if plot_spec.view == ViewType.penetration:
+        if plot_spec.quantity == DataCol.ALL:
+            usage_name = "the specified End Use"
+        else:
+            usage_name = plot_spec.quantity.penetration_label
+        return f"Share of Dwelling Units using {usage_name} {grouping}"
 
     # Distribution view
-    elif plot_spec.view == ViewType.distribution:
-        unit = "kWh/user" if plot_spec.coverage == CoverageType.users_only else "kWh/home"
-        base_title = f"Annual {quantity_name} {unit} distribution {grouping}"
+    if plot_spec.view == ViewType.distribution:
+        per = "per Consuming Dwelling Unit" if plot_spec.coverage == CoverageType.users_only else "per Dwelling Unit"
+        return f"Distribution of {quantity_name} Consumption {per} {grouping}"
 
     # Total aggregation
-    elif plot_spec.aggregation_type == AggregationType.total:
-        base_title = f"Annual {quantity_name} {grouping}"
+    period = "Monthly" if is_monthly else "Annual"
+    if plot_spec.aggregation_type == AggregationType.total:
+        return f"{period} {quantity_name} Consumption {grouping}"
 
     # Average aggregation
-    elif plot_spec.aggregation_type == AggregationType.average:
-        if plot_spec.coverage == CoverageType.users_only:
-            base_title = f"Annual {quantity_name} per User {grouping}"
-        else:
-            base_title = f"Annual {quantity_name} per Unit {grouping}"
+    per = "per Consuming Dwelling Unit" if plot_spec.coverage == CoverageType.users_only else "per Dwelling Unit"
+    return f"Average {period} {quantity_name} Consumption {per} {grouping}"
 
-    else:
-        base_title = f"Annual {quantity_name} {grouping}"
 
-    # Replace "Annual" with "Monthly" if applicable
-    if plot_spec.resolution == Resolution.month:
-        base_title = base_title.replace("Annual ", "Monthly ", 1)
+def _resolve_diff_view_title(plot_spec: PlotSpec, truth_label: str) -> str:
+    """Build the figure title for diff_view plots.
 
-    return base_title
+    Reuses the value_view title and wraps it with percent difference framing.
+    """
+    base = _resolve_recs_eia_title(plot_spec)
+    return f"Percent Difference on {base}<br> Compared to {truth_label}"
 
 
 def _resolve_quantity_title(plot_spec: PlotSpec) -> str:
@@ -406,22 +407,14 @@ def _resolve_quantity_title(plot_spec: PlotSpec) -> str:
     return "kWh"
 
 
-def _resolve_sidebar_title(plot_spec: PlotSpec) -> str:
-    """Resolve the sidebar axis title.
+def _resolve_sidebar_title(plot_spec: PlotSpec, truth_label: str) -> str:
+    """Resolve the sidebar subplot title.
 
-    Returns 'Percent Difference (%)' when sidebar is applicable, empty otherwise.
+    Returns a full description like 'Percent difference compared to RECS 2020'.
     """
-    # LRD: sidebar only for year resolution
-    if plot_spec.truth_source == TruthSource.lrd:
-        if plot_spec.resolution == Resolution.year:
-            return "Percent Difference (%)"
-        return ""
-
-    # RECS/EIA: distribution plots don't have sidebar
     if plot_spec.view == ViewType.distribution:
         return ""
-
-    return "Percent Difference (%)"
+    return f"Percent Difference Compared to {truth_label}"
 
 
 def _resolve_tick_config(plot_spec: PlotSpec, data: pl.DataFrame) -> tuple[tuple | None, tuple | None]:
@@ -490,23 +483,6 @@ def _extract_truth_source_label(truth_source: TruthSource, data: pl.DataFrame) -
         # "eia_2018" → "EIA 2018", "recs_2020" → "RECS 2020"
         return ref_sources[0].replace("_", " ").upper()
     return truth_source.value.upper()
-
-
-def _resolve_section_titles(
-    plot_spec: PlotSpec, data: pl.DataFrame, quantity_title: str, sidebar_column: str | None
-) -> tuple[str, str]:
-    """Resolve descriptive section titles for the main grid and sidebar.
-
-    Returns (main_section_title, sidebar_section_title) before any view-type swapping.
-    In value_view: main shows quantity, sidebar shows percent difference description.
-    The caller handles swapping these for diff_view.
-    """
-    if sidebar_column is None:
-        return "", ""
-
-    truth_label = _extract_truth_source_label(plot_spec.truth_source, data)
-    sidebar_desc = f"Percent difference compared to {truth_label}"
-    return quantity_title, sidebar_desc
 
 
 def _resolve_dimensions(plot_spec: PlotSpec, is_single_entity: bool) -> tuple[float, float]:
