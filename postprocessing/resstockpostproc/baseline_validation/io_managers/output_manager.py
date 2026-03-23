@@ -1,5 +1,6 @@
 """Functions for saving plots and data."""
 
+import hashlib
 import re
 from pathlib import Path
 from typing import Literal
@@ -16,8 +17,17 @@ from resstockpostproc.shared_utils.timing import timed
 FIGURE_FORMATS = {FileType.html, FileType.svg, FileType.pdf}
 
 # Plotly HTML config: editable titles/labels + custom download buttons
+# Use granular "edits" instead of blanket "editable: True" so shapes stay non-interactive
 PLOTLY_HTML_CONFIG: dict = {
-    "editable": True,
+    "edits": {
+        "annotationPosition": True,
+        "annotationText": True,
+        "axisTitleText": True,
+        "legendPosition": True,
+        "legendText": True,
+        "shapePosition": False,
+        "titleText": True,
+    },
     "modeBarButtonsToRemove": ["toImage"],
 }
 
@@ -39,7 +49,8 @@ def save_figure(
         ensure_directory(filepath)
         fullpath = filepath / f"{title}.{fmt.value}"
         if fmt == FileType.html:
-            fig.write_html(fullpath, include_plotlyjs="cdn", config=PLOTLY_HTML_CONFIG)
+            div_id = "fig-" + hashlib.md5(str(fullpath).encode()).hexdigest()
+            fig.write_html(fullpath, include_plotlyjs="cdn", config=PLOTLY_HTML_CONFIG, div_id=div_id)
             _make_html_resizable(fullpath)
         else:
             # For PDF/SVG, use larger scale and ensure proper dimensions
@@ -74,10 +85,7 @@ def _make_html_resizable(html_path: Path) -> None:
         'style="width:100%; height:100%;"',
     )
 
-    # 3. Remove fixed width/height from Plotly layout JSON so autosize takes effect
-    html = re.sub(r'"width":\s*[\d.]+,\s*"height":\s*[\d.]+,', '"autosize":true,', html)
-
-    # 4. Wrap <body> content in a resizable container + add ResizeObserver
+    # 3. Wrap <body> content in a resizable container + add ResizeObserver
     resize_wrapper = (
         f'<div id="resize-container" style="resize:both; overflow:hidden; '
         f'width:{orig_w}px; height:{orig_h}px; border:1px solid #ddd; '
@@ -92,10 +100,23 @@ def _make_html_resizable(html_path: Path) -> None:
 
   new ResizeObserver(function() { Plotly.Plots.resize(chart); }).observe(container);
 
+  // Remove fixed dimensions so autosize works with the resizable container
+  delete chart.layout.width;
+  delete chart.layout.height;
+  chart.layout.autosize = true;
+
   // Add custom PNG and SVG download buttons to the modebar
   var icon = Plotly.Icons.camera;
   Plotly.newPlot(chart, chart.data, chart.layout, Object.assign({}, chart._context, {
-    editable: true,
+    edits: {
+      annotationPosition: true,
+      annotationText: true,
+      axisTitleText: true,
+      legendPosition: true,
+      legendText: true,
+      shapePosition: false,
+      titleText: true,
+    },
     modeBarButtonsToRemove: ['toImage'],
     modeBarButtonsToAdd: [
       {

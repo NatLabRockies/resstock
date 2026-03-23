@@ -1,0 +1,3 @@
+state,model_count,units_count,units_count_rse,source,units_count_percent_difference,units_count_upper_bound,units_count_lower_bound
+AK,311,257192.99999983,8.783732293263399e-10,recs_2020,,257193.00000425786,257192.99999540215
+AK,1003,254665.3837454544,,resstock_2025,-0.982770236506156,254665.3837454544,254665.3837454544

@@ -8,20 +8,15 @@ from collections.abc import Sequence, Callable
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
 
-def _wrap_text(text: str, max_chars: int = 25) -> str:
-    """Wrap text with <br> tags for Plotly annotations."""
-    words = text.split()
-    lines: list[str] = []
-    current = ""
-    for word in words:
-        if current and len(current) + 1 + len(word) > max_chars:
-            lines.append(current)
-            current = word
-        else:
-            current = f"{current} {word}" if current else word
-    if current:
-        lines.append(current)
-    return "<br>".join(lines)
+def filter_null_sources(data: pl.DataFrame, source_column: str, quantity_column: str) -> pl.DataFrame:
+    """Remove sources where the quantity column is entirely null."""
+    valid_sources = (
+        data.group_by(source_column)
+        .agg(pl.col(quantity_column).is_null().all().alias("all_null"))
+        .filter(~pl.col("all_null"))
+        .select(source_column)
+    )
+    return data.join(valid_sources, on=source_column, how="inner")
 
 
 # LRDUtility2EIAID = {
@@ -141,8 +136,9 @@ def plot_tilemap(
     ts_xtick_text: tuple | None = None,
     ts_xtick_vals: tuple | None = None,
     x_unit: str = "",
-    main_section_title: str = "",
-    sidebar_section_title: str = "",
+    exclude_from_sidebar: list[str] | None = None,
+    exclude_sources: list[str] | None = None,
+    separate_us_total_scale: bool = True,
 ) -> go.Figure:
     """
     Generic annual sales plotting function with geographic layout and size-proportional subplots.
@@ -158,14 +154,17 @@ def plot_tilemap(
         suffix: Column suffix to use (e.g., '_value', '_percent_users', or '_quartiles')
         quantity_type: Type of quantity being plotted
     """
+    scale_data = data
+    if separate_us_total_scale:
+        scale_data = data.filter(pl.col(second_category_column) != "US Total")
     if rse_column is not None:
         upper_col = rse_column.replace("_rse", "_upper_bound")
         lower_col = rse_column.replace("_rse", "_lower_bound")
-        global_max = data.filter(pl.col(second_category_column) != "US Total")[upper_col].max()
-        global_min = data.filter(pl.col(second_category_column) != "US Total")[lower_col].min()
+        global_max = scale_data[upper_col].max()
+        global_min = scale_data[lower_col].min()
     else:
-        global_max = data.filter(pl.col(second_category_column) != "US Total")[quantity_column].max()
-        global_min = data.filter(pl.col(second_category_column) != "US Total")[quantity_column].min()
+        global_max = scale_data[quantity_column].max()
+        global_min = scale_data[quantity_column].min()
     assert isinstance(global_max, (int, float)), "Could not determine global max for tilemap plot."
     assert isinstance(global_min, (int, float)), "Could not determine global min for tilemap plot."
     custom_range = (min(0, global_min), global_max * 1.01)
@@ -231,6 +230,8 @@ def plot_tilemap(
         entity_df = data.filter(pl.col(second_category_column) == entity)
         if entity_df.is_empty():
             continue
+        if exclude_sources:
+            entity_df = entity_df.filter(~pl.col(first_category_column).is_in(exclude_sources))
 
         is_us_total = entity == "US Total"
         show_yticks = is_us_total or col == 1 or (col > 1 and layout[row - 1][col - 2] is None)
@@ -246,11 +247,11 @@ def plot_tilemap(
                 second_category_title="",
                 orientation="v",
                 title_text="",
-                show_legends=show_legends and i == 0,
+                show_legends=show_legends and i == 0 and not exclude_sources,
                 fig=fig,
                 row=row,
                 col=col,
-                custom_range=custom_range if entity != "US Total" else None,
+                custom_range=custom_range if not (entity == "US Total" and separate_us_total_scale) else None,
                 show_ticks=show_yticks,
             )
         else:
@@ -263,11 +264,11 @@ def plot_tilemap(
                 quantity_title=quantity_title if show_yticks else "",
                 first_category_title="",
                 title_text="",
-                show_legends=show_legends and i == 0,
+                show_legends=show_legends and i == 0 and not exclude_sources,
                 fig=fig,
                 row=row,
                 col=col,
-                custom_range=custom_range if entity != "US Total" else None,
+                custom_range=custom_range if not (entity == "US Total" and separate_us_total_scale) else None,
                 show_ticks=show_yticks,
                 x_tick_vals=ts_xtick_vals,
                 x_tick_text=ts_xtick_text,
@@ -280,14 +281,11 @@ def plot_tilemap(
 
     # Add sidebar horizontal bar plot if specified
     if sidebar_column:
-        # sidebar_df = data.filter(pl.col(second_category_column) != "US Total").sort(sidebar_column, descending=True)
+        sidebar_data = data
+        if exclude_from_sidebar:
+            sidebar_data = sidebar_data.filter(~pl.col(second_category_column).is_in(exclude_from_sidebar))
         sidebar_df = (
-            data
-            .group_by(first_category_column)
-            .agg([pl.col(sidebar_column).is_null().all().alias("all_null")])
-            .filter(~pl.col("all_null"))
-            .select(first_category_column)
-            .join(data, on=first_category_column, how="inner")
+            filter_null_sources(sidebar_data, first_category_column, sidebar_column)
             .sort(sidebar_column, descending=True)
         )
         # print(categories)
@@ -300,10 +298,11 @@ def plot_tilemap(
             first_category_title="",
             orientation="h",
             title_text=sidebar_title,
-            show_legends=False,
+            show_legends=bool(exclude_sources),
             fig=fig,
             row=1,
             col=ncols,
+            category_font_size=11,
         )
 
     # Remove grid lines from all subplots
@@ -312,33 +311,6 @@ def plot_tilemap(
     fig.update_layout(
         title_text=title_text,
     )
-
-    # Add section titles above main grid and sidebar
-    if sidebar_column and column_widths and (main_section_title or sidebar_section_title):
-        main_cols_width = sum(column_widths[:-1])
-        main_x = main_cols_width / 2
-        sidebar_x = main_cols_width + column_widths[-1] / 2
-        section_y = 1.02
-
-        if main_section_title:
-            fig.add_annotation(
-                text=f"<b>{main_section_title}</b>",
-                xref="paper", yref="paper",
-                x=main_x, y=section_y,
-                showarrow=False,
-                font=dict(size=14),
-                xanchor="center", yanchor="bottom",
-            )
-        if sidebar_section_title:
-            wrapped = _wrap_text(sidebar_section_title, max_chars=25)
-            fig.add_annotation(
-                text=f"<b>{wrapped}</b>",
-                xref="paper", yref="paper",
-                x=sidebar_x, y=section_y,
-                showarrow=False,
-                font=dict(size=14),
-                xanchor="center", yanchor="bottom",
-            )
 
     return fig
 
@@ -397,4 +369,5 @@ def _enlarge_us_total_box(nrows, ncols, row, col, specs, fig):
         y1=y_top,
         line={"color": "black", "width": 2},
         layer="below",
+        editable=False,
     )
