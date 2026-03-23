@@ -84,5 +84,5 @@ quantities:
 # Output Configuration
 # --------------------
 output:
-  output_dir: ~/Documents/baseline_validation_outputs
+  output_dir: test_output/
   run_name: baseline_val
