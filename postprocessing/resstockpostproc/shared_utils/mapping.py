@@ -30,6 +30,8 @@ STATE2ABBR: dict[str, str] = {
     "Vermont": "VT", "Virginia": "VA", "Washington": "WA", "West Virginia": "WV",
     "Wisconsin": "WI", "Wyoming": "WY", "District of Columbia": "DC",
 }
+ABBR2STATE: dict[str, str] = {v: k for k, v in STATE2ABBR.items()}
+
 UtilityName2ID = {
     "AEP (OH)": 14006,  # using Ohio Power (OH)
     # "Ameren (MO)": 19436,  # = Union Electric (MO) - doesn't have full year data

@@ -68,6 +68,80 @@ class DataCol(StrEnum):
     UTILITY_NAME = "utility_name"
     TIMESTAMP = "timestamp"
 
+    @property
+    def label(self) -> str:
+        """Human-readable display name for plot titles and labels.
+
+        Fuel totals: "Electricity", "Natural Gas", etc.
+        End uses: "Space Heating Electricity", "Cooking Natural Gas", etc.
+        """
+        for prefix, fuel_name in _FUEL_PREFIXES.items():
+            if self.value.startswith(prefix + "_"):
+                enduse = self.value[len(prefix) + 1:]
+                if enduse == "total":
+                    return fuel_name
+                enduse_name = _ENDUSE_OVERRIDES.get(enduse, enduse.replace("_", " ").title())
+                return f"{enduse_name} {fuel_name}"
+        return self.value.replace("_", " ").title()
+
+    @property
+    def penetration_label(self) -> str:
+        """Label for usage-share titles and end-use bar labels.
+
+        Electricity-only end-uses drop the "Electric" prefix (e.g. "Refrigerator", "Lighting").
+        Multi-fuel end-uses keep the fuel adjective (e.g. "Electric Space Heating", "Natural Gas Cooking").
+        Fuel totals use the noun form: "Electricity", "Natural Gas".
+        """
+        for prefix, adj in _FUEL_ADJECTIVES.items():
+            if self.value.startswith(prefix + "_"):
+                enduse = self.value[len(prefix) + 1:]
+                if enduse == "total":
+                    return _FUEL_PREFIXES[prefix]
+                enduse_name = _ENDUSE_OVERRIDES.get(enduse, enduse.replace("_", " ").title())
+                if prefix == "electricity" and enduse in _ELECTRICITY_ONLY_ENDUSES:
+                    return enduse_name
+                return f"{adj} {enduse_name}"
+        return self.value.replace("_", " ").title()
+
+
+_FUEL_PREFIXES = {
+    "electricity": "Electricity",
+    "natural_gas": "Natural Gas",
+    "propane": "Propane",
+    "fuel_oil": "Fuel Oil",
+}
+
+_ENDUSE_OVERRIDES = {
+    "ev_charging": "EV Charging",
+    "fan_pumps": "Fans & Pumps",
+    "heating_fans_pumps": "Heating Fans & Pumps",
+    "cooling_fan_pumps": "Cooling Fans & Pumps",
+    "plug_load": "Plug Loads",
+    "ceiling_fan": "Ceiling Fans",
+}
+
+_FUEL_ADJECTIVES = {
+    "electricity": "Electric",
+    "natural_gas": "Natural Gas",
+    "propane": "Propane",
+    "fuel_oil": "Fuel Oil",
+}
+
+
+def _compute_electricity_only_enduses() -> set[str]:
+    """Identify end-uses that exist only as electricity (no gas/propane/oil variant)."""
+    enduse_fuels: dict[str, set[str]] = {}
+    for dc in DataCol:
+        for fuel in _FUEL_PREFIXES:
+            if dc.value.startswith(fuel + "_"):
+                enduse = dc.value[len(fuel) + 1:]
+                if enduse != "total":
+                    enduse_fuels.setdefault(enduse, set()).add(fuel)
+    return {e for e, fuels in enduse_fuels.items() if fuels == {"electricity"}}
+
+
+_ELECTRICITY_ONLY_ENDUSES = _compute_electricity_only_enduses()
+
 
 _RESSTOCK_ENDUSE_COL_MAP: dict[DBSchema, dict[DataCol, None | str | tuple[str, ...]]] = {
     DBSchema.OEDI_NEW: {
