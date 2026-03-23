@@ -8,6 +8,7 @@ import polars as pl
 import plotly.graph_objects as go
 
 from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, Resolution, AggregationType, ViewType
+from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.theme import apply_theme
 from resstockpostproc.baseline_validation.plotters.plot_config import (
     build_plot_config,
@@ -57,15 +58,20 @@ def _get_null_sources(data: pl.DataFrame, source_column: str, quantity_column: s
     )
 
 
+def _needs_stacked_plotter(plot_spec: PlotSpec) -> bool:
+    """True for distribution box plots and ALL-enduse plots that need split_graph."""
+    return plot_spec.view == ViewType.distribution or plot_spec.quantity == DataCol.ALL
+
+
 def _render(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
     """Select appropriate renderer and create the figure."""
-    if config.uses_stacked_layout:
-        return _render_stacked(data, plot_spec)
-    elif config.is_single_entity:
+    if config.is_single_entity and not _needs_stacked_plotter(plot_spec):
         if config.timeseries_column:
             return _render_single_entity_timeseries(data, config)
         else:
             return _render_single_entity_bar(data, config, plot_spec)
+    elif config.uses_stacked_layout:
+        return _render_stacked(data, plot_spec)
     else:
         return _render_tilemap(data, config, plot_spec)
 
