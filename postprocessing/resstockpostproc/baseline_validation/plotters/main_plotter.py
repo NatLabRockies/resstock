@@ -138,8 +138,11 @@ def _render_single_entity_timeseries(data: pl.DataFrame, config: PlotConfig) -> 
 
 
 def _render_single_entity_bar(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
-    """Render a simple bar chart for single-entity (focused) plots without timeseries."""
-    # In diff_view, exclude reference source (it always has 0% diff)
+    """Render a bar chart for single-entity (focused) plots without timeseries.
+
+    Uses the same grouped-by-source pattern as tilemap subplots so that RSE
+    error bars are correctly skipped for sources without RSE data.
+    """
     if plot_spec.view == ViewType.diff_view:
         data = filter_null_sources(data, "source", config.quantity_column)
     return create_bar_plot(
@@ -147,8 +150,10 @@ def _render_single_entity_bar(data: pl.DataFrame, config: PlotConfig, plot_spec:
         quantity_column=config.quantity_column,
         rse_column=config.rse_column,
         first_category_column="source",
+        second_category_column=get_second_category_column(plot_spec),
         quantity_title=config.quantity_title,
-        first_category_title="Data Source",
+        first_category_title="",
+        second_category_title="",
         orientation="v",
         title_text=config.title,
         show_legends=True,

@@ -21,7 +21,7 @@ def _calculate_error_bars(
     def coallesce(val, default=0):
         return default if val is None else val
     errors = [abs(coallesce(val) * 1.96 * coallesce(rse) / 100) for val, rse in zip(data, rse_data)]
-    
+
     error_dict = {
         "type": "data",
         "array": errors,
