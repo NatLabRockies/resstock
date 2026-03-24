@@ -31,6 +31,10 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     Resolution,
 )
 from resstockpostproc.baseline_validation.io_managers.output_manager import save_figure
+from resstockpostproc.baseline_validation.io_managers.data_table import (
+    generate_data_table_html,
+    should_generate_table,
+)
 from resstockpostproc.baseline_validation.plotters.plot_config import get_second_category_column
 from resstockpostproc.baseline_validation.utils import ensure_directory
 from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data, get_base_data
@@ -63,15 +67,24 @@ _FOOTNOTE_MATCH_KEYS = {
 }
 
 
-def _resolve_footnotes(footnote_rules: list[dict], row: dict) -> list[str]:
+def _resolve_footnotes(footnote_rules: list[dict], row: dict, context: str | None = None) -> list[str]:
     """Collect all notes whose attribute matchers match the given plot definition row.
 
     Each rule specifies attribute matchers (truth_source, quantity, metric, coverage).
     A rule matches when ALL its specified attributes equal the row's TSV column values.
     Unspecified attributes act as wildcards.
+
+    Args:
+        context: If provided ("plot" or "table"), only include notes that match
+            this context. Notes without a context key are always included.
     """
     matched = []
     for rule in footnote_rules:
+        # Filter by context if specified
+        rule_context = rule.get("context")
+        if context and rule_context and rule_context != context:
+            continue
+
         if all(
             row.get(tsv_col, "").strip() == str(rule[yaml_key])
             for yaml_key, tsv_col in _FOOTNOTE_MATCH_KEYS.items()
@@ -92,8 +105,6 @@ OUTPUT_COLUMNS = [
     "Main Visualization",
     "Extra Visualization",
     "Data",
-    "Discrepancy (CVRMSE)",
-    "Discrepancy (NMBE)",
 ]
 
 
@@ -299,12 +310,14 @@ def _compute_discrepancy(data, plot_spec):
     """
     if plot_spec.quantity == DataCol.ALL:
         return None, None
-    if plot_spec.view in (ViewType.distribution, ViewType.penetration):
+    if plot_spec.view == ViewType.distribution:
         return None, None
 
     # Determine value column
     if plot_spec.quantity == DataCol.UNITS_COUNT:
         val_col = "units_count"
+    elif plot_spec.view == ViewType.penetration:
+        val_col = f"{plot_spec.quantity}_percent_users"
     else:
         val_col = f"{plot_spec.quantity}_value"
 
@@ -393,6 +406,7 @@ def _generate_spec_plots(
     html_suffix_size,
     output_base,
     footnotes=None,
+    table_footnotes=None,
     source_labels=None,
 ):
     """Generate plots for a list of (PlotSpec, viz_col, viz_type_str) entries and update results."""
@@ -414,20 +428,36 @@ def _generate_spec_plots(
             rel_path_str = str(rel_path).replace("\\", "/")
             results[result_key][viz_col] = f"{viz_type_str}({rel_path_str})"
 
-            # For main visualization: save data CSV and compute discrepancy metrics
-            if plot_spec.view == ViewType.value_view:
+            # For main visualization: save data CSV, compute discrepancy, generate data table
+            if plot_spec.view in (ViewType.value_view, ViewType.penetration):
                 # Save data CSV (expand list columns into individual columns)
                 data_dir = output_base / f"{plot_spec.truth_source} data (csv)" / path_seg
                 ensure_directory(data_dir)
                 _unnest_list_columns(data).write_csv(data_dir / f"{file_title}.csv")
-                rel_data = Path(f"{plot_spec.truth_source} data (csv)") / path_seg / f"{file_title}.csv"
-                results[result_key]["Data"] = f"csv({str(rel_data).replace(chr(92), '/')})"
 
-                # Compute discrepancy metrics
+                # Compute discrepancy metrics (shown in the data table, not the plot index)
                 cvrmse, nmbe = _compute_discrepancy(data, plot_spec)
-                if cvrmse is not None:
-                    results[result_key]["Discrepancy (CVRMSE)"] = f"{cvrmse:.1f}%"
-                    results[result_key]["Discrepancy (NMBE)"] = f"{nmbe:.1f}%"
+
+                # Generate interactive HTML data table
+                if should_generate_table(data, plot_spec):
+                    table_dir = output_base / f"{plot_spec.truth_source} data (html)" / path_seg
+                    ensure_directory(table_dir)
+                    table_path = table_dir / f"{file_title}.html"
+                    # rel_path_str is relative to output_base; the table HTML is
+                    # 3 directories deep ({ts} data (html)/metric/focus/), so prepend ../../../
+                    plot_rel_from_table = "../../../" + rel_path_str
+                    generate_data_table_html(
+                        data=data,
+                        plot_spec=plot_spec,
+                        output_path=table_path,
+                        plot_rel_path=plot_rel_from_table,
+                        cvrmse=cvrmse,
+                        nmbe=nmbe,
+                        footnotes=table_footnotes,
+                        source_labels=source_labels,
+                    )
+                    rel_table = Path(f"{plot_spec.truth_source} data (html)") / path_seg / f"{file_title}.html"
+                    results[result_key]["Data"] = f"data table({str(rel_table).replace(chr(92), '/')})"
 
             logger.info(f"  OK: {label}")
         except Exception:
@@ -548,7 +578,8 @@ def generate_plots(index=None, test_only=False):
             for spec, viz_col, viz_type in spec_entries
         ]
 
-        matched_notes = _resolve_footnotes(footnote_rules, row)
+        matched_notes = _resolve_footnotes(footnote_rules, row, context="plot")
+        table_notes = _resolve_footnotes(footnote_rules, row, context="table")
 
         logger.info(f"[{i}/{total}] ({i * 100 // total}%)")
         _generate_spec_plots(
@@ -563,6 +594,7 @@ def generate_plots(index=None, test_only=False):
             html_suffix_size,
             output_base,
             footnotes=matched_notes or None,
+            table_footnotes=table_notes or None,
             source_labels=source_labels or None,
         )
 

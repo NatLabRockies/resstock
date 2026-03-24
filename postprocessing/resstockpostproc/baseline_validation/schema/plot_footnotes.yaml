@@ -10,15 +10,22 @@
 #   metric        — e.g. "enduse penetration", "total annual consumption"
 #   coverage      — e.g. "all units", "units with non-zero consumption"
 #
-# Omitted keys act as wildcards (match anything).
+# Optional context key restricts when a note is shown:
+#   context: plot   — only shown on plot pages (not data tables)
+#   context: table  — only shown on data table pages (not plots)
+#   (omitted)       — shown on both plots and data tables
+#
+# Omitted matcher keys act as wildcards (match anything).
 
 notes:
   - truth_source: recs
+    context: plot
     note: >
       Error bars represent the 95% confidence interval based on
       RECS relative standard error (RSE) estimates.
 
   - quantity: Number of dwelling units
+    context: plot
     note: >
       ResStock dwelling unit counts represent the number of dwelling units
       captured through the combination of models and sampling weights.

@@ -50,3 +50,4 @@ node_modules/
 # Postprocessing build outputs
 /postprocessing/build/
 /postprocessing/resstockpostproc.egg-info/
+test_output/
