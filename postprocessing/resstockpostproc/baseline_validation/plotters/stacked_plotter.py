@@ -1,6 +1,7 @@
 from resstockpostproc.shared_utils.generic_plotters import box_plotter, bar_plotter
 from resstockpostproc.shared_utils.generic_plotters.range_utils import compute_axis_range
 from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import filter_null_sources
+from resstockpostproc.baseline_validation.io_managers.get_recs_data import get_enduse_order
 from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, AggregationType, CoverageType, ViewType
 from resstockpostproc.shared_utils.db_column_names import DataCol
 import plotly.graph_objects as go
@@ -263,17 +264,12 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
             # Rename 'quantity' column to 'enduse' to serve as second category
             group_df = group_df.rename({"quantity": "enduse"})
 
-            # Sort enduses by reference source values (descending) for stable ordering
-            ref_source = _get_reference_source(group_df)
-            sort_order = (
-                group_df.filter(pl.col("source") == ref_source)
-                .sort("enduse_value", descending=True)
-                .select("enduse")
-                .to_series()
-                .to_list()
-            )
+            # Sort enduses by canonical RECS national total order (consistent across all views)
+            canonical_order = get_enduse_order().get(group_name, [])
+            sort_order = [e for e in canonical_order if e in group_df["enduse"].unique().to_list()]
+            # Append any enduses not in canonical order (shouldn't happen, but defensive)
+            sort_order += [e for e in group_df["enduse"].unique().to_list() if e not in sort_order]
 
-            # Apply the sort order
             enduse_order = pl.DataFrame({"enduse": sort_order, "enduse_order": range(len(sort_order))})
             group_df = (
                 group_df.join(enduse_order, on="enduse").sort("enduse_order", maintain_order=True).drop("enduse_order")

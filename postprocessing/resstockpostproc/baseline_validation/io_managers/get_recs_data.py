@@ -593,3 +593,42 @@ def get_monthly_all(
 
     monthly_df = monthly_df.with_columns(pl.lit("recs_2020").alias("source"))
     return monthly_df
+
+
+_FUEL_GROUPS = {
+    "Fuel Totals": ["electricity_total", "natural_gas_total", "propane_total", "fuel_oil_total"],
+    "Electricity End uses": "electricity_",
+    "Natural Gas End uses": "natural_gas_",
+    "Propane End uses": "propane_",
+    "Fuel Oil End uses": "fuel_oil_",
+}
+
+
+@cached(cache_file="recs_enduse_order_cache")
+def get_enduse_order() -> dict[str, list[str]]:
+    """Return enduses sorted by US-level RECS total annual value (descending).
+
+    Computes weighted sum of each enduse from the RECS microdata and returns
+    a dict mapping fuel group name to an ordered list of enduse column names.
+    The order is consistent across all entities and view types.
+    """
+    mdf = get_df_from_s3(s3_paths.RECS_2020_microdata, local_data_dir)
+    enduse_cols = list(RECS_ENDUSE_MAP.keys())
+
+    # Compute US-level weighted total for each enduse
+    totals = {}
+    for col in enduse_cols:
+        totals[str(col)] = (mdf[col] * mdf["NWEIGHT"]).sum()
+
+    result = {}
+    for group_name, spec in _FUEL_GROUPS.items():
+        if isinstance(spec, list):
+            group_enduses = [e for e in spec if e in totals]
+        else:
+            group_enduses = [
+                str(e) for e in enduse_cols
+                if str(e).startswith(spec) and not str(e).endswith("_total")
+            ]
+        result[group_name] = sorted(group_enduses, key=lambda e: totals.get(e, 0), reverse=True)
+
+    return result
