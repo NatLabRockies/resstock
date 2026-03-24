@@ -3,7 +3,8 @@ os_version: 3.10.0
 os_sha: 86d7e215a1
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
-output_directory: sdr_upgrades_amy2018
+# output_directory: sdr_upgrades_amy2018
+output_directory: /kfs2/projects/enduse/sdr/runs/joe/sdr_upgrades_amy2018_retain_files
 weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
 # weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
@@ -15,18 +16,18 @@ baseline:
 
 # Sampler type and number of data points per baseline or upgrade
 sampler:
-  type: precomputed
-  # type: residential_quota # For production run
+  # type: precomputed
+  type: residential_quota # For production run
   args:
-    sample_file: resources/sdr_minimal_buildstock.csv # For CI
-    # n_datapoints: 550000 # For production run
+    # sample_file: resources/sdr_minimal_buildstock.csv # For CI
+    n_datapoints: 550000 # For production run
 
 # NREL High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
 kestrel:
   n_jobs: 600
   minutes_per_sim: 10
-  account: <account>
+  account: enduse
   postprocessing:
     time: 800
     n_workers: 20
@@ -36,25 +37,6 @@ kestrel:
 
 # Timeout to avoid whole-job failures from long-running models
 max_minutes_per_sim: 5
-
-# Post processing and Amazon Web Services
-postprocessing:
-  # Post simulation partitioning
-  keep_individual_timeseries: true
-  partition_columns:
-    - State
-    - County
-  publish_annual_results: true
-  # AWS upload bucket and athena setup (uncomment during production and testing runs)
-  aws:
-   region_name: us-west-2
-   s3:
-     bucket: resstock-core
-     prefix: resstock_ci
-   athena:
-     glue_service_role: service-role/AWSGlueServiceRole-default
-     database_name: resstock_core
-     max_crawling_time: 1200
 
 # Workflow generator
 workflow_generator:
@@ -558,6 +540,18 @@ references:
       - Misc Pool Heater|Natural Gas
       - Misc Hot Tub Spa|Natural Gas
 
+  air_sealing_infiltration_reduction: &air_sealing_infiltration_reduction
+    option: Infiltration Reduction|25%
+    apply_logic:
+      - or:
+          - Infiltration|10 ACH50
+          - Infiltration|15 ACH50
+          - Infiltration|20 ACH50
+          - Infiltration|25 ACH50
+          - Infiltration|30 ACH50
+          - Infiltration|40 ACH50
+          - Infiltration|50 ACH50
+
 ### Standard Data Release - Residential -- ###
 upgrades:
   ### -- HVAC: Furnaces -- ###
@@ -1001,3 +995,47 @@ upgrades:
     options:
       - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
       - *demand_flexibility_30_minute_random_shift
+
+  - upgrade_name: General Air Sealing
+    options:
+      - *air_sealing_infiltration_reduction
+
+  - upgrade_name: General Air Sealing, Attic Floor Insulation, and Duct Sealing
+    options:
+      ### --Envelope Package -- ###
+      - *air_sealing_infiltration_reduction
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
+      - *duct_seal_only_r6
+      - *duct_seal_only_r8
+      - *duct_seal_and_insulate
+
+  - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing
+    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
+    options:
+      - *dual_speed_ducted_ghp
+      - *heat_pump_cooling_efficiency_ducted
+      - *partial_conditioning_100_percent_ducts_only
+      ### --Envelope Package -- ###
+      - *air_sealing_infiltration_reduction
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
+      - *duct_seal_only_r6
+      - *duct_seal_only_r8
+      - *duct_seal_and_insulate
+
+  - upgrade_name: Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing
+    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
+    options:
+      - option: HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4
+        apply_logic: *ducted_ashp_apply_logic
+
+      - *heat_pump_cooling_efficiency_ducted
+      - *partial_conditioning_100_percent_ducts_only
+      ### --Envelope Package -- ###
+      - *air_sealing_infiltration_reduction
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
+      - *duct_seal_only_r6
+      - *duct_seal_only_r8
+      - *duct_seal_and_insulate
