@@ -380,7 +380,6 @@ def _build_table_html(
 </head>
 <body>
   <h1>{title}</h1>
-  <div class="subtitle">{subtitle} &mdash; Units: {units}</div>
   {metrics_html}
   {nav_html}
   <table id="dataTable">
