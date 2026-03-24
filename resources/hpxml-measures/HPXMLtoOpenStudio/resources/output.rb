@@ -963,7 +963,7 @@ module Outputs
     runner.registerInfo("Wrote file: #{osm_output_path}")
 
     # Copy EPW file to run dir
-    epw_output_path = File.join(output_dir, 'in.epw')
+    epw_output_path = File.join(output_dir, 'in.epw.txt') # .txt is so workflow gem doesn't "clean" this up
     FileUtils.cp(weather.epw_path, epw_output_path)
   end
 
