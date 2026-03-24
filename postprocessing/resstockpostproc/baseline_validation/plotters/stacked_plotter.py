@@ -424,9 +424,11 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
             quantity_col += "_percent_difference" if plot_spec.view == ViewType.diff_view else ""
             if plot_spec.view == ViewType.diff_view:
                 df_subset = filter_null_sources(df_subset, "source", quantity_col)
+            rse_col = f"{quantity_col}_rse"
             bar_plotter.create_bar_plot(
                 data=df_subset,
                 quantity_column=quantity_col,
+                rse_column=rse_col if rse_col in df_subset.columns else None,
                 first_category_column="source",
                 second_category_column=second_cat_column,
                 quantity_title=quantity_title,
