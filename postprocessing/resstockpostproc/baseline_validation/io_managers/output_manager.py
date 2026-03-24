@@ -187,14 +187,17 @@ def _build_footer_html(
             items = []
             for key in sorted(relevant_keys):
                 sl = source_labels[key]
-                escaped_desc = html_lib.escape(sl.description)
-                if sl.url:
-                    items.append(
-                        f'<li><strong>{html_lib.escape(sl.label)}:</strong> '
-                        f'<a href="{html_lib.escape(sl.url)}" target="_blank">{escaped_desc}</a></li>'
-                    )
-                else:
-                    items.append(f'<li><strong>{html_lib.escape(sl.label)}:</strong> {escaped_desc}</li>')
+                escaped_label = html_lib.escape(sl.label)
+                entry_parts = []
+                for entry in sl.entries:
+                    escaped_desc = html_lib.escape(entry.description)
+                    if entry.url:
+                        entry_parts.append(
+                            f'<a href="{html_lib.escape(entry.url)}" target="_blank">{escaped_desc}</a>'
+                        )
+                    else:
+                        entry_parts.append(escaped_desc)
+                items.append(f'<li><strong>{escaped_label}:</strong> {", ".join(entry_parts)}</li>')
             parts.append(
                 '<div class="plot-sources"><strong>Data Sources:</strong><ul>'
                 + "".join(items)

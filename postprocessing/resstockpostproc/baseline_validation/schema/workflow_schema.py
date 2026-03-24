@@ -65,12 +65,18 @@ class DataSourceConfig(NoExtraModel):
         )
 
 
+class DataSourceEntry(NoExtraModel):
+    """A single dataset within a data source."""
+
+    description: str = Field(description="Full description of this dataset")
+    url: str = Field(default="", description="URL to the dataset documentation")
+
+
 class DataSourceLabel(NoExtraModel):
     """Human-readable label for a data source appearing in plot legends."""
 
     label: str = Field(description="Short display name (e.g. 'EIA 2018')")
-    description: str = Field(description="Full description of the data source")
-    url: str = Field(default="", description="URL to the data source documentation")
+    entries: list[DataSourceEntry] = Field(description="List of datasets comprising this source")
 
 
 class PlotSpecification(NoExtraModel):

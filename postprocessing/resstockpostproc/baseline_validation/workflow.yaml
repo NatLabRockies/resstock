@@ -94,17 +94,24 @@ output:
 data_source_labels:
   eia_2018:
     label: "EIA 2018"
-    description: "EIA-861 Annual Electric Utility Data"
-    url: "https://www.eia.gov/electricity/data/eia861/"
+    entries:
+      - description: "EIA-861 Annual Electric Utility Data (2018)"
+        url: "https://www.eia.gov/electricity/data/eia861/"
+      - description: "EIA-861M Monthly Electric Power Industry Report (2018)"
+        url: "https://www.eia.gov/electricity/data/eia861m/"
+      - description: "EIA-176 Natural Gas Consumption Data (2018)"
+        url: "https://www.eia.gov/dnav/ng/ng_cons_sum_a_EPG0_vrs_mmcf_m.htm"
   recs_2020:
     label: "RECS 2020"
-    description: "Residential Energy Consumption Survey 2020"
-    url: "https://www.eia.gov/consumption/residential/"
+    entries:
+      - description: "Residential Energy Consumption Survey 2020"
+        url: "https://www.eia.gov/consumption/residential/"
   resstock_2025:
     label: "ResStock 2025"
-    description: "ResStock Standard Data Release 2025 Release 1"
-    url: "https://resstock.nrel.gov/"
+    entries:
+      - description: "ResStock Standard Data Release 2025 Release 1"
+        url: "https://resstock.nrel.gov/"
   lrd_2018:
     label: "LRD 2018"
-    description: "Utility Load Research Data 2018"
-    url: ""
+    entries:
+      - description: "Utility Load Research Data 2018"
