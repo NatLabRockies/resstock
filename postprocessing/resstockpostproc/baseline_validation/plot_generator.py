@@ -15,6 +15,8 @@ import time
 import traceback
 from pathlib import Path
 
+import yaml
+
 import polars as pl
 
 from resstockpostproc.shared_utils.db_column_names import DataCol
@@ -41,6 +43,42 @@ logger = logging.getLogger(__name__)
 
 SCHEMA_DIR = Path(__file__).parent / "schema"
 PLOT_DEFINITION_TSV = SCHEMA_DIR / "plot_definition.tsv"
+FOOTNOTES_YAML = SCHEMA_DIR / "plot_footnotes.yaml"
+
+
+def _load_footnote_rules() -> list[dict]:
+    """Load cascading footnote rules from plot_footnotes.yaml."""
+    if not FOOTNOTES_YAML.exists():
+        return []
+    with open(FOOTNOTES_YAML) as f:
+        data = yaml.safe_load(f) or {}
+    return data.get("notes", [])
+
+
+_FOOTNOTE_MATCH_KEYS = {
+    "truth_source": "Truth Source",
+    "quantity": "Quantity",
+    "metric": "Metric",
+    "coverage": "Coverage",
+}
+
+
+def _resolve_footnotes(footnote_rules: list[dict], row: dict) -> list[str]:
+    """Collect all notes whose attribute matchers match the given plot definition row.
+
+    Each rule specifies attribute matchers (truth_source, quantity, metric, coverage).
+    A rule matches when ALL its specified attributes equal the row's TSV column values.
+    Unspecified attributes act as wildcards.
+    """
+    matched = []
+    for rule in footnote_rules:
+        if all(
+            row.get(tsv_col, "").strip() == str(rule[yaml_key])
+            for yaml_key, tsv_col in _FOOTNOTE_MATCH_KEYS.items()
+            if yaml_key in rule
+        ):
+            matched.append(rule["note"].strip())
+    return matched
 
 OUTPUT_COLUMNS = [
     "Index",
@@ -354,6 +392,8 @@ def _generate_spec_plots(
     html_path,
     html_suffix_size,
     output_base,
+    footnotes=None,
+    source_labels=None,
 ):
     """Generate plots for a list of (PlotSpec, viz_col, viz_type_str) entries and update results."""
     for plot_spec, viz_col, viz_type_str in spec_entries:
@@ -363,7 +403,8 @@ def _generate_spec_plots(
             data = get_plot_data(plot_spec)
             plot_func = get_plotting_function(plot_spec.truth_source)
             fig, title = plot_func(data, plot_spec)
-            save_figure(fig, plot_spec, formats=output_formats)
+            save_figure(fig, plot_spec, formats=output_formats,
+                        footnotes=footnotes, source_labels=source_labels)
 
             # Build relative path from csv_path's directory to the plot file
             path_seg, file_title = plot_spec.get_file_path_and_name()
@@ -432,6 +473,9 @@ def generate_plots(index=None, test_only=False):
     wall_start = time.perf_counter()
     tasks = read_plot_definition(index, test_only=test_only)
     logger.info(f"Generating {len(tasks)} plot definition rows ({sum(len(s) for _, s in tasks)} total plots)...")
+
+    footnote_rules = _load_footnote_rules()
+    source_labels = workflow.data_source_labels
 
     output_formats = [FileType(fmt.value) for fmt in workflow.plots.output_formats]
     link_format = FileType.html if FileType.html in output_formats else output_formats[0]
@@ -504,6 +548,8 @@ def generate_plots(index=None, test_only=False):
             for spec, viz_col, viz_type in spec_entries
         ]
 
+        matched_notes = _resolve_footnotes(footnote_rules, row)
+
         logger.info(f"[{i}/{total}] ({i * 100 // total}%)")
         _generate_spec_plots(
             focused_entries,
@@ -516,6 +562,8 @@ def generate_plots(index=None, test_only=False):
             html_path,
             html_suffix_size,
             output_base,
+            footnotes=matched_notes or None,
+            source_labels=source_labels or None,
         )
 
     # Summary

@@ -86,3 +86,25 @@ quantities:
 output:
   output_dir: test_output/
   run_name: baseline_val
+
+# Data Source Labels
+# ------------------
+# Human-readable labels for data sources appearing in plot legends.
+# Keys must match the 'source' column values in plot data (e.g. eia_2018, resstock_2025).
+data_source_labels:
+  eia_2018:
+    label: "EIA 2018"
+    description: "EIA-861 Annual Electric Utility Data"
+    url: "https://www.eia.gov/electricity/data/eia861/"
+  recs_2020:
+    label: "RECS 2020"
+    description: "Residential Energy Consumption Survey 2020"
+    url: "https://www.eia.gov/consumption/residential/"
+  resstock_2025:
+    label: "ResStock 2025"
+    description: "ResStock Standard Data Release 2025 Release 1"
+    url: "https://resstock.nrel.gov/"
+  lrd_2018:
+    label: "LRD 2018"
+    description: "Utility Load Research Data 2018"
+    url: ""

@@ -1,6 +1,7 @@
 """Functions for saving plots and data."""
 
 import hashlib
+import html as html_lib
 import re
 from pathlib import Path
 from typing import Literal
@@ -37,6 +38,8 @@ def save_figure(
     fig: go.Figure,
     plot_spec: PlotSpec,
     formats: list[FileType] = [FileType.html],
+    footnotes: list[str] | None = None,
+    source_labels: dict | None = None,
 ) -> None:
     """Save a Plotly figure in multiple formats."""
 
@@ -51,7 +54,12 @@ def save_figure(
         if fmt == FileType.html:
             div_id = "fig-" + hashlib.md5(str(fullpath).encode()).hexdigest()
             fig.write_html(fullpath, include_plotlyjs="cdn", config=PLOTLY_HTML_CONFIG, div_id=div_id)
-            _make_html_resizable(fullpath)
+            _make_html_resizable(
+                fullpath,
+                footnotes=footnotes,
+                source_labels=source_labels,
+                truth_source=plot_spec.truth_source.value,
+            )
         else:
             # For PDF/SVG, use larger scale and ensure proper dimensions
             # Get dimensions from figure layout, or use defaults
@@ -63,7 +71,12 @@ def save_figure(
         print(f"Saved: {filepath}")
 
 
-def _make_html_resizable(html_path: Path) -> None:
+def _make_html_resizable(
+    html_path: Path,
+    footnotes: list[str] | None = None,
+    source_labels: dict | None = None,
+    truth_source: str | None = None,
+) -> None:
     """Post-process a Plotly HTML file to make the chart resizable via drag."""
     html = html_path.read_text(encoding="utf-8")
 
@@ -74,10 +87,20 @@ def _make_html_resizable(html_path: Path) -> None:
     orig_h, orig_w = m.group(1), m.group(2)
 
     # 1. Hide "Click to enter ..." placeholder text from editable mode
-    placeholder_css = (
-        '<style>.js-placeholder{opacity:0!important;pointer-events:none!important}</style>\n'
+    # and add footer styles
+    footer_css = (
+        '<style>'
+        '.js-placeholder{opacity:0!important;pointer-events:none!important}'
+        f'.plot-footer{{margin:10px;padding:12px 16px;font-family:Arial,sans-serif;font-size:13px;color:#444;border-top:1px solid #ddd;max-width:{orig_w}px}}'
+        '.plot-sources ul{margin:4px 0 0 20px;padding:0}'
+        '.plot-sources li{margin-bottom:2px}'
+        '.plot-sources a{color:#1a73e8;text-decoration:none}'
+        '.plot-sources a:hover{text-decoration:underline}'
+        '.plot-notes{margin-top:8px}'
+        '.plot-notes li{margin-bottom:4px;font-style:italic}'
+        '</style>\n'
     )
-    html = html.replace("</head>", placeholder_css + "</head>")
+    html = html.replace("</head>", footer_css + "</head>")
 
     # 2. Make the plotly div fill its container
     html = html.replace(
@@ -140,9 +163,52 @@ def _make_html_resizable(html_path: Path) -> None:
 """
 
     html = html.replace("<body>\n", "<body>\n" + resize_wrapper)
-    html = html.replace("</body>", "</div>\n" + resize_script + "</body>")
+
+    # Build footer with Data Sources and Notes sections
+    footer_html = _build_footer_html(source_labels, truth_source, footnotes)
+
+    html = html.replace("</body>", "</div>\n" + footer_html + resize_script + "</body>")
 
     html_path.write_text(html, encoding="utf-8")
+
+
+def _build_footer_html(
+    source_labels: dict | None,
+    truth_source: str | None,
+    footnotes: list[str] | None,
+) -> str:
+    """Build the Data Sources + Notes footer HTML for an individual plot page."""
+    parts: list[str] = []
+
+    # Data Sources section
+    if source_labels and truth_source:
+        relevant_keys = [k for k in source_labels if truth_source in k or "resstock" in k]
+        if relevant_keys:
+            items = []
+            for key in sorted(relevant_keys):
+                sl = source_labels[key]
+                escaped_desc = html_lib.escape(sl.description)
+                if sl.url:
+                    items.append(
+                        f'<li><strong>{html_lib.escape(sl.label)}:</strong> '
+                        f'<a href="{html_lib.escape(sl.url)}" target="_blank">{escaped_desc}</a></li>'
+                    )
+                else:
+                    items.append(f'<li><strong>{html_lib.escape(sl.label)}:</strong> {escaped_desc}</li>')
+            parts.append(
+                '<div class="plot-sources"><strong>Data Sources:</strong><ul>'
+                + "".join(items)
+                + "</ul></div>"
+            )
+
+    # Notes section
+    if footnotes:
+        note_items = "".join(f"<li>{html_lib.escape(n)}</li>" for n in footnotes)
+        parts.append(f'<div class="plot-notes"><strong>Notes:</strong><ul>{note_items}</ul></div>')
+
+    if not parts:
+        return ""
+    return '<div class="plot-footer">' + "\n".join(parts) + "</div>\n"
 
 
 def save_dataframe(

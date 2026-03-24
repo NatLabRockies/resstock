@@ -65,6 +65,14 @@ class DataSourceConfig(NoExtraModel):
         )
 
 
+class DataSourceLabel(NoExtraModel):
+    """Human-readable label for a data source appearing in plot legends."""
+
+    label: str = Field(description="Short display name (e.g. 'EIA 2018')")
+    description: str = Field(description="Full description of the data source")
+    url: str = Field(default="", description="URL to the data source documentation")
+
+
 class PlotSpecification(NoExtraModel):
     """Specification for which plots to generate."""
 
@@ -111,6 +119,10 @@ class WorkflowConfig(NoExtraModel):
         description="List of quantities to generate plots for. If None or empty, all quantities will be generated.",
     )
     output: OutputConfig = Field(description="Output configuration")
+    data_source_labels: dict[str, DataSourceLabel] = Field(
+        default_factory=dict,
+        description="Labels for data sources in plot legends (key = source column value, e.g. 'eia_2018')",
+    )
 
     @field_validator("data_sources", mode="before")
     @classmethod

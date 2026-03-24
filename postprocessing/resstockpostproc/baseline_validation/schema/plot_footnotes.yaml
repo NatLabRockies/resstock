@@ -1,0 +1,35 @@
+# Cascading plot footnotes
+# ========================
+# Each entry specifies attribute matchers and a note.
+# A note applies when ALL specified attributes match the plot's TSV row values.
+# Multiple matching notes accumulate in order.
+#
+# Supported matcher keys (must match TSV column values exactly):
+#   truth_source  — "eia", "recs", or "lrd"
+#   quantity      — e.g. "Number of dwelling units", "Natural Gas Total"
+#   metric        — e.g. "enduse penetration", "total annual consumption"
+#   coverage      — e.g. "all units", "units with non-zero consumption"
+#
+# Omitted keys act as wildcards (match anything).
+
+notes:
+  - truth_source: recs
+    note: >
+      Error bars represent the 95% confidence interval based on
+      RECS relative standard error (RSE) estimates.
+
+  - quantity: Number of dwelling units
+    note: >
+      ResStock dwelling unit counts represent the number of dwelling units
+      captured through the combination of models and sampling weights.
+      Number of models (available on hover) shows the actual number of
+      building models used for simulation.
+
+  - truth_source: eia
+    quantity: Natural Gas Total
+    metric: enduse penetration
+    note: >
+      The share of dwelling units with natural gas is calculated for EIA
+      by dividing the natural gas customer count by the electricity customer
+      count. For ResStock, it is the percent of models that have non-zero
+      natural gas consumption.
