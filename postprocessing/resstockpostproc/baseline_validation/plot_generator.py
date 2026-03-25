@@ -35,7 +35,10 @@ from resstockpostproc.baseline_validation.io_managers.data_table import (
     generate_data_table_html,
     should_generate_table,
 )
-from resstockpostproc.baseline_validation.plotters.plot_config import get_second_category_column
+from resstockpostproc.baseline_validation.plotters.plot_config import (
+    get_second_category_column,
+    _resolve_timeseries_column,
+)
 from resstockpostproc.baseline_validation.utils import ensure_directory
 from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data, get_base_data
 from resstockpostproc.baseline_validation.create_html import create_html_shell, append_html_row, create_html_from_csv
@@ -335,13 +338,10 @@ def _compute_discrepancy(data, plot_spec):
     # Determine join columns for pairing
     agg_col = get_second_category_column(plot_spec)
     join_cols = [agg_col]
-    # Load duration curves: join on percent_time (consumption percentile rank)
-    # not the raw hour index, which differs between sources after sorting
-    res_str = str(plot_spec.resolution)
-    if "percent_time" in data.columns:
-        join_cols.append("percent_time")
-    elif res_str in data.columns:
-        join_cols.append(res_str)
+    # Add the timeseries column to the join (e.g., month, hour of day, percent_time)
+    ts_col = _resolve_timeseries_column(plot_spec)
+    if ts_col and str(ts_col) in data.columns:
+        join_cols.append(str(ts_col))
 
     # Exclude "US Total" from multi-entity overviews to avoid double-counting.
     # Skip when focused on US Total itself (single-entity plot).
@@ -354,6 +354,11 @@ def _compute_discrepancy(data, plot_spec):
     rs_selected = rs_rows.select(join_cols + [pl.col(val_col).alias("rs_val")])
     paired = rs_selected.join(ref_selected, on=join_cols, how="inner")
     paired = paired.drop_nulls(["ref_val", "rs_val"])
+    # NaN means no data for this enduse in a state — treat as zero consumption
+    paired = paired.with_columns(
+        pl.col("ref_val").fill_nan(0),
+        pl.col("rs_val").fill_nan(0),
+    )
 
     if len(paired) == 0:
         return None, None

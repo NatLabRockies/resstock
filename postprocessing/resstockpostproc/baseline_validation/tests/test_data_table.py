@@ -1,6 +1,7 @@
 """Tests for data_table HTML table generation."""
 
 import json
+
 import polars as pl
 import pytest
 
@@ -278,3 +279,5 @@ class TestGenerateDataTableHtml:
         # The metrics banner div should not appear (CSS class definition is always present)
         assert '<div class="metrics-banner">' not in html
         assert "HAS_METRICS = false" in html
+
+

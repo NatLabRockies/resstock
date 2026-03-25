@@ -126,6 +126,11 @@ def _filter_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
             drop_cols.append(col)
             continue
 
+        # For value_view, drop percent_users percent_difference — only the value diff matters
+        if plot_spec.view == ViewType.value_view and col.endswith("_percent_users_percent_difference"):
+            drop_cols.append(col)
+            continue
+
         # For penetration views, drop _value columns — only percent_users matters
         if plot_spec.view == ViewType.penetration:
             if col.endswith("_value") or col.endswith("_value_percent_difference"):
@@ -647,6 +652,11 @@ def generate_data_table_html(
     rs_val_col = f"{rs_label}: {val_suffix}"
     abs_diff_key = f"Abs Difference: {val_suffix}"
     if ref_val_col in pivoted.columns and rs_val_col in pivoted.columns:
+        # NaN means no data for this enduse — treat as zero consumption
+        pivoted = pivoted.with_columns(
+            pl.col(ref_val_col).fill_nan(0),
+            pl.col(rs_val_col).fill_nan(0),
+        )
         # Insert the absolute diff column right before the percent diff column
         pivoted = pivoted.with_columns(
             (pl.col(rs_val_col) - pl.col(ref_val_col)).alias(abs_diff_key)
