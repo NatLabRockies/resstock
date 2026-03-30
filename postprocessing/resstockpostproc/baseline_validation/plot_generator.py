@@ -1,20 +1,24 @@
-"""Generate baseline validation plots from plot_definition.tsv.
+"""Generate baseline validation plots.
 
 Usage:
     python plot_generator.py                  # generate all plots
     python plot_generator.py --index 5        # generate only plot definition row 5
     python plot_generator.py --index 1-10     # generate rows 1 through 10
+    python plot_generator.py --test           # generate test subset only
 """
 
 import argparse
 import csv
 import logging
 import math
+import os
 import sys
 import time
 import traceback
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
+from tqdm import tqdm
 import yaml
 
 import polars as pl
@@ -23,12 +27,21 @@ from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.plotters import lrd_plotter, recs_plotter
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
-    AggregationType,
-    CoverageType,
     FileType,
     TruthSource,
     ViewType,
     Resolution,
+    CoverageType,
+    format_aggregation_level,
+)
+from resstockpostproc.baseline_validation.schema.plot_definitions import (
+    PlotTemplate,
+    generate_all_templates,
+    generate_slot_triples,
+    is_highlight,
+    SpecPair,
+    _make_pair,
+    _make_spec,
 )
 from resstockpostproc.baseline_validation.io_managers.output_manager import save_figure
 from resstockpostproc.baseline_validation.io_managers.data_table import (
@@ -41,15 +54,21 @@ from resstockpostproc.baseline_validation.plotters.plot_config import (
 )
 from resstockpostproc.baseline_validation.utils import ensure_directory
 from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data, get_base_data
-from resstockpostproc.baseline_validation.create_html import create_html_shell, append_html_row, create_html_from_csv
+from resstockpostproc.baseline_validation.create_html import init_html_index, append_index_row, finalize_html_index
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
-from resstockpostproc.shared_utils.timing import TimingStats
+from resstockpostproc.shared_utils.timing import TimingStats, timed
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s", force=True)
 logger = logging.getLogger(__name__)
 
+
+class _TqdmLoggingHandler(logging.Handler):
+    """Routes log output through tqdm.write() so log lines don't clobber the progress bar."""
+
+    def emit(self, record):
+        tqdm.write(self.format(record))
+
 SCHEMA_DIR = Path(__file__).parent / "schema"
-PLOT_DEFINITION_TSV = SCHEMA_DIR / "plot_definition.tsv"
 FOOTNOTES_YAML = SCHEMA_DIR / "plot_footnotes.yaml"
 
 
@@ -66,24 +85,18 @@ _FOOTNOTE_MATCH_KEYS = {
     "truth_source": "Truth Source",
     "quantity": "Quantity",
     "metric": "Metric",
-    "coverage": "Coverage",
 }
 
 
 def _resolve_footnotes(footnote_rules: list[dict], row: dict, context: str | None = None) -> list[str]:
-    """Collect all notes whose attribute matchers match the given plot definition row.
+    """Collect all notes whose attribute matchers match the given row.
 
-    Each rule specifies attribute matchers (truth_source, quantity, metric, coverage).
-    A rule matches when ALL its specified attributes equal the row's TSV column values.
+    Each rule specifies attribute matchers (truth_source, quantity, metric).
+    A rule matches when ALL its specified attributes equal the row values.
     Unspecified attributes act as wildcards.
-
-    Args:
-        context: If provided ("plot" or "table"), only include notes that match
-            this context. Notes without a context key are always included.
     """
     matched = []
     for rule in footnote_rules:
-        # Filter by context if specified
         rule_context = rule.get("context")
         if context and rule_context and rule_context != context:
             continue
@@ -96,111 +109,25 @@ def _resolve_footnotes(footnote_rules: list[dict], row: dict, context: str | Non
             matched.append(rule["note"].strip())
     return matched
 
+
 OUTPUT_COLUMNS = [
     "Index",
     "Highlight",
     "Truth Source",
     "Quantity",
     "Metric",
-    "Coverage",
+    "Filter 1",
+    "Filter 2",
     "Group By",
-    "Focus On",
-    "Main Visualization",
-    "Extra Visualization",
+    "Comparison Plot",
     "Data",
 ]
-
-
-# ---------------------------------------------------------------------------
-# Parsers: TSV columns → PlotSpec fields
-# ---------------------------------------------------------------------------
-
-METRIC_MAP = {
-    "": (Resolution.year, AggregationType.total, ViewType.value_view),
-    "total annual consumption": (Resolution.year, AggregationType.total, ViewType.value_view),
-    "average annual consumption": (Resolution.year, AggregationType.average, ViewType.value_view),
-    "total monthly consumption": (Resolution.month, AggregationType.total, ViewType.value_view),
-    "average monthly consumption": (Resolution.month, AggregationType.average, ViewType.value_view),
-    "annual consumption distribution": (Resolution.year, AggregationType.average, ViewType.distribution),
-    "enduse penetration": (Resolution.year, AggregationType.total, ViewType.penetration),
-    "average daily consumption": (Resolution.day_of_year, AggregationType.average, ViewType.value_view),
-    "average hourly consumption": (Resolution.hour_of_day, AggregationType.average, ViewType.value_view),
-    "average hourly consumption (summer)": (
-        Resolution.hour_of_day_summer,
-        AggregationType.average,
-        ViewType.value_view,
-    ),
-    "average hourly consumption (winter)": (
-        Resolution.hour_of_day_winter,
-        AggregationType.average,
-        ViewType.value_view,
-    ),
-    "average hourly consumption (matrix)": (
-        Resolution.hour_of_day_matrix,
-        AggregationType.average,
-        ViewType.value_view,
-    ),
-    "average hourly consumption (8760)": (Resolution.hour_of_year, AggregationType.average, ViewType.value_view),
-    "average hourly consumption (top 100 hours)": (
-        Resolution.top_100_hours,
-        AggregationType.average,
-        ViewType.value_view,
-    ),
-    "hourly consumption vs temperature": (Resolution.hour_of_year, AggregationType.average, ViewType.temp_view),
-}
-
-EXTRA_VIZ_MAP = {
-    "difference view": ViewType.diff_view,
-    "temperature count": ViewType.temp_count_view,
-}
-
-
-def parse_metric(metric_str):
-    """Convert Metric column to (Resolution, AggregationType, ViewType)."""
-    if metric_str not in METRIC_MAP:
-        raise ValueError(f"Unknown metric: {metric_str!r}")
-    return METRIC_MAP[metric_str]
-
-
-def parse_extra_viz(viz_str):
-    """Convert Extra Visualization column to ViewType or None."""
-    if not viz_str:
-        return None
-    if viz_str not in EXTRA_VIZ_MAP:
-        raise ValueError(f"Unknown extra visualization: {viz_str!r}")
-    return EXTRA_VIZ_MAP[viz_str]
-
-
-def parse_quantity(quantity_str):
-    """Convert Quantity column to DataCol."""
-    if quantity_str == "Number of dwelling units":
-        return DataCol.UNITS_COUNT
-    if quantity_str == "All Enduses":
-        return DataCol.ALL
-    normalized = quantity_str.lower().replace(" ", "_")
-    return DataCol(normalized)
-
-
-def parse_coverage(coverage_str):
-    """Convert Coverage column to CoverageType."""
-    if coverage_str in ("all units", "all occupied units"):
-        return CoverageType.all_units
-    if coverage_str in ("units with non-zero consumption", "occupied units with non-zero consumption"):
-        return CoverageType.users_only
-    raise ValueError(f"Unknown coverage: {coverage_str!r}")
-
-
-def parse_group_by(group_by_str):
-    """Convert Group By column to aggregation_level string."""
-    if group_by_str == "utility":
-        return "eiaid"
-    return group_by_str.lower().replace(" ", "_")
 
 
 _MULTI_ENTITY_PREFIXES = ("stack of ", "tilemap ", "grouped ")
 
 
-def _simplify_viz_label(viz_type):
+def _simplify_viz_label(viz_type: str) -> str:
     """Strip multi-entity prefixes for focused (single-entity) plots."""
     for prefix in _MULTI_ENTITY_PREFIXES:
         if viz_type.startswith(prefix):
@@ -209,82 +136,275 @@ def _simplify_viz_label(viz_type):
 
 
 # ---------------------------------------------------------------------------
-# TSV reading
+# Spec loading
 # ---------------------------------------------------------------------------
 
 
-def read_plot_definition(index=None, test_only=False):
-    """Read plot_definition.tsv and return list of (row_dict, [PlotSpec, ...]) tuples.
+def get_test_template_indices(templates: list[PlotTemplate]) -> set[int]:
+    """Return 0-based indices of templates covering unique code paths (test subset)."""
+    seen: set[tuple] = set()
+    test_indices: set[int] = set()
+    for i, tmpl in enumerate(templates):
+        sig = _template_signature(tmpl)
+        if sig not in seen:
+            test_indices.add(i)
+            seen.add(sig)
+    return test_indices
 
-    Each TSV row produces 1-2 PlotSpecs (main + optional extra visualization).
-    If index is provided, only return rows matching that index (int or range).
-    If test_only is True, only return rows where Test column is "Yes".
-    """
-    # Determine which indices to include
-    if isinstance(index, int):
-        wanted = {index}
-    elif isinstance(index, (set, list)):
-        wanted = set(index)
+
+def _template_signature(tmpl: PlotTemplate) -> tuple:
+    """Compute code-path signature for template test subset selection."""
+    if tmpl.quantity == DataCol.UNITS_COUNT:
+        qty_type = "units_count"
+    elif tmpl.quantity == DataCol.ALL:
+        qty_type = "all_enduses"
     else:
-        wanted = None  # all rows
+        qty_type = "regular"
 
-    tasks = []
-    with open(PLOT_DEFINITION_TSV, newline="") as f:
-        reader = csv.DictReader(f, delimiter="\t")
-        for row in reader:
-            # Skip comment lines and blank rows
-            idx_str = row.get("Index", "").strip()
-            if not idx_str or idx_str.startswith("#"):
+    cov_type = "all" if tmpl.coverage == CoverageType.all_units else "users"
+
+    fuel_type = None
+    is_total = False
+    if tmpl.quantity not in (DataCol.UNITS_COUNT, DataCol.ALL):
+        val = tmpl.quantity.value
+        for prefix in ("electricity", "natural_gas", "propane", "fuel_oil"):
+            if val.startswith(prefix + "_"):
+                fuel_type = prefix
+                is_total = val == prefix + "_total"
+                break
+
+    return (
+        tmpl.truth_source, tmpl.resolution, tmpl.view,
+        tmpl.aggregation_type, cov_type, qty_type,
+        fuel_type, is_total, len(tmpl.eligible_chars),
+    )
+
+
+def _build_spec_entries(main_spec: PlotSpec, extra_spec: PlotSpec | None) -> list[tuple[PlotSpec, str]]:
+    """Convert a SpecPair into the spec_entries list used by the plot loop."""
+    entries = [(main_spec, main_spec.display_viz_label)]
+    if extra_spec is not None:
+        entries.append((extra_spec, extra_spec.display_viz_label))
+    return entries
+
+
+def _build_output_row(main_spec: PlotSpec) -> dict[str, str]:
+    """Build the output row dict from a main PlotSpec's display properties."""
+    return {
+        "Index": "",
+        "Highlight": "Yes" if is_highlight(main_spec) else "",
+        "Truth Source": main_spec.truth_source.value,
+        "Quantity": main_spec.display_quantity,
+        "Metric": main_spec.display_metric,
+        "Filter 1": "",
+        "Filter 2": "",
+        "Group By": main_spec.display_group_by,
+        "Comparison Plot": "",
+        "Data": "",
+    }
+
+
+def _footnote_row(main_spec: PlotSpec) -> dict[str, str]:
+    """Build a dict for footnote matching from a PlotSpec."""
+    return {
+        "Truth Source": main_spec.truth_source.value,
+        "Quantity": main_spec.display_quantity,
+        "Metric": main_spec.display_metric,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Unified template expansion
+# ---------------------------------------------------------------------------
+
+
+def _get_focus_values(
+    data: pl.DataFrame,
+    expand_col: str,
+    quantity: DataCol,
+    resolution: Resolution,
+    test_only: bool,
+) -> list[str | None]:
+    """Get sorted focus values for a column, with overview (None) prepended."""
+    col = "utility_name" if expand_col == "eiaid" else expand_col
+    values = sorted(v for v in data[col].unique().to_list() if v is not None)
+
+    if expand_col != "state":
+        values = [v for v in values if v != "US Total"]
+    elif "US Total" in values:
+        values.remove("US Total")
+        values.insert(0, "US Total")
+
+    # Prepend None for the unfocused overview (skip for ALL enduse or matrix)
+    if quantity != DataCol.ALL and resolution != Resolution.hour_of_day_matrix:
+        values.insert(0, None)
+
+    if test_only:
+        values = _trim_focus_for_test(values)
+
+    return values
+
+
+def _expand_templates(
+    templates: list[PlotTemplate],
+    test_only: bool = False,
+) -> list[tuple[SpecPair, int, list, object, tuple, str | None]]:
+    """Expand templates into work items using slot triples.
+
+    For each template, generates all valid (F1, F2, agg_level) triples, then
+    expands focus values for each dimension. Each work item contains everything
+    needed for Pass 2 metadata and Pass 3 plotting.
+
+    Returns list of (spec_pair, tmpl_index, spec_entries, focus_val, focus_on, agg_level).
+    """
+    work_items = []
+
+    for tmpl_index, tmpl in enumerate(templates):
+        allow_cross = (
+            tmpl.truth_source == TruthSource.recs
+            and tmpl.resolution == Resolution.year
+        )
+        triples = generate_slot_triples(tmpl.eligible_chars, allow_cross_filter=allow_cross)
+
+        for f1_char, f2_char, agg_level in triples:
+            # Skip (None, None, None) — a total with no grouping has no meaningful plot
+            if f1_char is None and f2_char is None and agg_level is None:
                 continue
 
-            row_index = int(idx_str)
-            if wanted is not None and row_index not in wanted:
-                continue
-
-            if test_only and row.get("Test", "").strip() != "Yes":
-                continue
-
-            # Parse fields
-            truth_source = TruthSource(row["Truth Source"])
-            quantity = parse_quantity(row["Quantity"])
-            resolution, agg_type, view = parse_metric(row["Metric"])
-            coverage = parse_coverage(row["Coverage"])
-            group_by = parse_group_by(row["Group By"])
-
-            # Main PlotSpec
-            main_spec = PlotSpec(
-                truth_source=truth_source,
-                quantity=quantity,
-                resolution=resolution,
-                aggregation_type=agg_type,
-                coverage=coverage,
-                aggregation_level=group_by,
-                focus_on=None,
-                view=view,
+            # --- Base spec construction ---
+            # Build a PlotSpec with the triple's agg_level.
+            # When agg_level is None (leaf or no-grouping), we still need a valid
+            # PlotSpec — aggregation_level will be set to None.
+            spec = _make_spec(
+                truth_source=tmpl.truth_source,
+                quantity=tmpl.quantity,
+                resolution=tmpl.resolution,
+                aggregation_type=tmpl.aggregation_type,
+                coverage=tmpl.coverage,
+                aggregation_level=agg_level,
+                view=tmpl.view,
             )
+            spec_pair = _make_pair(spec)
+            main_spec, extra_spec = spec_pair
+            spec_entries = _build_spec_entries(main_spec, extra_spec)
 
-            spec_entries = [
-                (main_spec, "Main Visualization", row["Main Visualization"]),
-            ]
-
-            # Extra visualization (if present)
-            extra_view = parse_extra_viz(row.get("Extra Visualization", ""))
-            if extra_view:
-                extra_spec = PlotSpec(
-                    truth_source=truth_source,
-                    quantity=quantity,
-                    resolution=resolution,
-                    aggregation_type=agg_type,
-                    coverage=coverage,
-                    aggregation_level=group_by,
-                    focus_on=None,
-                    view=extra_view,
+            # --- Case 1: No filters (F1=None) → expand focus on agg_level ---
+            if f1_char is None:
+                data_key = main_spec.get_data_key()
+                base_data = get_base_data(data_key)
+                focus_values = _get_focus_values(
+                    base_data, agg_level, tmpl.quantity, tmpl.resolution, test_only,
                 )
-                spec_entries.append((extra_spec, "Extra Visualization", row.get("Extra Visualization", "")))
+                for fv in focus_values:
+                    focus_on = ((agg_level, fv),) if fv is not None else ()
+                    work_items.append((
+                        spec_pair, tmpl_index, spec_entries, fv, focus_on, agg_level,
+                    ))
+                continue
 
-            tasks.append((row, spec_entries))
+            # --- F1 is set: discover F1 values ---
+            # Use any spec with agg_level=f1_char to get the data
+            f1_lookup_spec = _make_spec(
+                truth_source=tmpl.truth_source,
+                quantity=tmpl.quantity,
+                resolution=tmpl.resolution,
+                aggregation_type=tmpl.aggregation_type,
+                coverage=tmpl.coverage,
+                aggregation_level=f1_char,
+                view=tmpl.view,
+            )
+            f1_data = get_base_data(f1_lookup_spec.get_data_key())
+            f1_col = "utility_name" if f1_char == "eiaid" else f1_char
+            f1_values = sorted(
+                v for v in f1_data[f1_col].unique().to_list()
+                if v is not None and v != "US Total"
+            )
+            if test_only:
+                f1_values = f1_values[:1]
 
-    return tasks
+            for f1_val in f1_values:
+                # --- Case 2: F1 set, F2=None ---
+                if f2_char is None:
+                    if agg_level is not None:
+                        # Cross-filter: F1 set + agg_level set → expand focus on agg
+                        filtered_entries = _build_filtered_entries(
+                            spec_entries, ((f1_char, f1_val),),
+                        )
+                        if not filtered_entries:
+                            continue
+
+                        filtered_key = filtered_entries[0][0].get_data_key()
+                        filtered_data = get_base_data(filtered_key)
+                        inner_values = _get_focus_values(
+                            filtered_data, agg_level, tmpl.quantity, tmpl.resolution, test_only,
+                        )
+
+                        for fv in inner_values:
+                            if fv is not None:
+                                focus_on = ((f1_char, f1_val), (agg_level, fv))
+                            else:
+                                focus_on = ((f1_char, f1_val),)
+                            final_agg = agg_level if fv is None else None
+                            work_items.append((
+                                spec_pair, tmpl_index,
+                                filtered_entries if fv is None else spec_entries,
+                                fv, focus_on, final_agg,
+                            ))
+                    else:
+                        # F1 set, no agg, no F2 → single filtered entity, no grouping
+                        focus_on = ((f1_char, f1_val),)
+                        filtered_entries = _build_filtered_entries(spec_entries, focus_on)
+                        if filtered_entries:
+                            work_items.append((
+                                spec_pair, tmpl_index, filtered_entries, None, focus_on, None,
+                            ))
+                    continue
+
+                # --- Case 3: F1 set, F2 set (agg_level is always None) ---
+                f2_filtered_entries = _build_filtered_entries(
+                    spec_entries, ((f1_char, f1_val),),
+                )
+                if not f2_filtered_entries:
+                    continue
+
+                f2_key = f2_filtered_entries[0][0].get_data_key()
+                f2_data = get_base_data(f2_key)
+                f2_col = "utility_name" if f2_char == "eiaid" else f2_char
+
+                if f2_col not in f2_data.columns:
+                    continue
+
+                f2_values = sorted(
+                    v for v in f2_data[f2_col].unique().to_list()
+                    if v is not None and v != "US Total"
+                )
+                if test_only:
+                    f2_values = f2_values[:1]
+
+                for f2_val in f2_values:
+                    focus_on = ((f1_char, f1_val), (f2_char, f2_val))
+                    work_items.append((
+                        spec_pair, tmpl_index, spec_entries, None, focus_on, None,
+                    ))
+
+    logger.info(f"Template expansion: {len(templates)} templates -> {len(work_items)} work items")
+    return work_items
+
+
+def _build_filtered_entries(
+    spec_entries: list[tuple[PlotSpec, str]],
+    focus_on: tuple[tuple[str, str], ...],
+) -> list[tuple[PlotSpec, str]]:
+    """Build spec_entries with focus_on applied (cross-filter)."""
+    filtered = []
+    for spec, viz_type_str in spec_entries:
+        try:
+            filtered_spec = spec.model_copy(update={"focus_on": focus_on})
+            filtered.append((filtered_spec, viz_type_str))
+        except ValueError as e:
+            logger.warning(f"Skipping filtered spec: {e}")
+            continue
+    return filtered
 
 
 # ---------------------------------------------------------------------------
@@ -305,6 +425,7 @@ def get_plotting_function(truth_source):
             raise ValueError(f"Unsupported truth source: {truth_source}")
 
 
+@timed
 def _compute_discrepancy(data, plot_spec):
     """Compute CVRMSE and NMBE using raw values with global normalization (ASHRAE-style).
 
@@ -345,7 +466,8 @@ def _compute_discrepancy(data, plot_spec):
 
     # Exclude "US Total" from multi-entity overviews to avoid double-counting.
     # Skip when focused on US Total itself (single-entity plot).
-    if plot_spec.focus_on != "US Total":
+    is_us_total_focus = any(val == "US Total" for _, val in plot_spec.focus_on)
+    if not is_us_total_focus:
         ref_rows = ref_rows.filter(pl.col(agg_col) != "US Total")
         rs_rows = rs_rows.filter(pl.col(agg_col) != "US Total")
 
@@ -399,58 +521,68 @@ def _unnest_list_columns(df):
     return df
 
 
+@timed
+def _save_data_csv(data, data_dir, file_title):
+    """Save plot data as CSV, expanding list columns into individual columns."""
+    _unnest_list_columns(data).write_csv(data_dir / f"{file_title}.csv")
+
+
+@timed
 def _generate_spec_plots(
     spec_entries,
-    result_key,
-    row,
-    results,
     output_formats,
     link_format,
-    csv_path,
-    html_path,
-    html_suffix_size,
     output_base,
     footnotes=None,
     table_footnotes=None,
     source_labels=None,
-):
-    """Generate plots for a list of (PlotSpec, viz_col, viz_type_str) entries and update results."""
-    for plot_spec, viz_col, viz_type_str in spec_entries:
-        label = f"[{result_key}] {plot_spec.truth_source} {row['Quantity']} {row['Metric']} ({plot_spec.view})"
+) -> tuple[str, str | None] | None:
+    """Generate plots for a list of (PlotSpec, viz_type_str) entries.
+
+    Returns (viz_parts_joined, data_rel_path) on success, or None if skipped.
+    All file I/O writes to unique per-spec paths (safe for parallel execution).
+    """
+    # Check if data is available for this combination before generating any plots.
+    first_spec = spec_entries[0][0]
+    probe_data = get_plot_data(first_spec)
+    sources = probe_data["source"].unique().to_list() if not probe_data.is_empty() else []
+    has_reference = any("resstock" not in s for s in sources)
+    has_resstock = any("resstock" in s for s in sources)
+    if not has_reference or not has_resstock:
+        return None
+
+    viz_parts = []
+    data_rel = None
+    for plot_spec, viz_type_str in spec_entries:
         try:
-            logger.info(f"  Generating: {label}")
             data = get_plot_data(plot_spec)
             plot_func = get_plotting_function(plot_spec.truth_source)
             fig, title = plot_func(data, plot_spec)
             save_figure(fig, plot_spec, formats=output_formats,
                         footnotes=footnotes, source_labels=source_labels)
 
-            # Build relative path from csv_path's directory to the plot file
+            # Build relative path to the plot file
             path_seg, file_title = plot_spec.get_file_path_and_name()
             rel_path = (
                 Path(f"{plot_spec.truth_source} plots ({link_format})") / path_seg / f"{file_title}.{link_format.value}"
             )
             rel_path_str = str(rel_path).replace("\\", "/")
-            results[result_key][viz_col] = f"{viz_type_str}({rel_path_str})"
+            viz_parts.append(f"{viz_type_str}||{rel_path_str}")
 
             # For main visualization: save data CSV, compute discrepancy, generate data table
             if plot_spec.view in (ViewType.value_view, ViewType.penetration):
-                # Save data CSV (expand list columns into individual columns)
                 data_dir = output_base / f"{plot_spec.truth_source} data (csv)" / path_seg
                 ensure_directory(data_dir)
-                _unnest_list_columns(data).write_csv(data_dir / f"{file_title}.csv")
+                _save_data_csv(data, data_dir, file_title)
 
-                # Compute discrepancy metrics (shown in the data table, not the plot index)
                 cvrmse, nmbe = _compute_discrepancy(data, plot_spec)
 
-                # Generate interactive HTML data table
                 if should_generate_table(data, plot_spec):
                     table_dir = output_base / f"{plot_spec.truth_source} data (html)" / path_seg
                     ensure_directory(table_dir)
                     table_path = table_dir / f"{file_title}.html"
-                    # rel_path_str is relative to output_base; the table HTML is
-                    # 3 directories deep ({ts} data (html)/metric/focus/), so prepend ../../../
-                    plot_rel_from_table = "../../../" + rel_path_str
+                    table_depth = len(table_path.relative_to(output_base).parents) - 1
+                    plot_rel_from_table = "../" * table_depth + rel_path_str
                     generate_data_table_html(
                         data=data,
                         plot_spec=plot_spec,
@@ -462,27 +594,18 @@ def _generate_spec_plots(
                         source_labels=source_labels,
                     )
                     rel_table = Path(f"{plot_spec.truth_source} data (html)") / path_seg / f"{file_title}.html"
-                    results[result_key]["Data"] = f"data table({str(rel_table).replace(chr(92), '/')})"
+                    data_rel = f"data table||{str(rel_table).replace(chr(92), '/')}"
 
-            logger.info(f"  OK: {label}")
         except Exception:
             tb = traceback.format_exc()
-            results[result_key][viz_col] = f"FAILED: {viz_type_str}({tb})"
-            logger.error(f"  FAILED: {label}\n{tb}")
+            viz_parts.append(f"FAILED: {viz_type_str}||{tb}")
 
-    # Append one CSV + HTML row when all viz columns for this result_key are done
-    _append_plot_row(csv_path, results[result_key])
-    append_html_row(html_path, results[result_key], OUTPUT_COLUMNS, html_suffix_size)
+    return " ;; ".join(viz_parts), data_rel
+
 
 
 def _trim_focus_for_test(focus_values):
-    """Trim focus values to a minimal set for test mode.
-
-    Keeps at most 3 values covering each distinct code path:
-    - None (overview/multi-entity plot)
-    - "US Total" (single-entity with special Group By handling)
-    - One regular entity (single-entity with label simplification)
-    """
+    """Trim focus values to a minimal set for test mode."""
     trimmed = []
     has_regular = False
     for v in focus_values:
@@ -496,18 +619,67 @@ def _trim_focus_for_test(focus_values):
     return trimmed
 
 
-def generate_plots(index=None, test_only=False):
-    """Generate plots from plot_definition.tsv.
+def _worker_init():
+    """Process initializer for worker pool — collect timing in memory, use read-only disk cache."""
+    from resstockpostproc.shared_utils import caching
+    TimingStats.enable_worker_mode()
+    caching.CACHE_READ_ONLY = True
+    # Suppress worker stdout/stderr — the main process logs progress via tqdm.
+    sys.stdout = open(os.devnull, "w")
+    sys.stderr = open(os.devnull, "w")
+
+
+def _worker_run(*args, **kwargs):
+    """Wrapper that runs _generate_spec_plots and harvests timing data from the worker process."""
+    result = _generate_spec_plots(*args, **kwargs)
+    timing_stats, trace_events = TimingStats.harvest_worker_stats()
+    return result, timing_stats, trace_events
+
+
+def _handle_plot_result(sub_key, result, results, csv_path, index_state):
+    """Apply a worker's result to shared state (main process only)."""
+    if result is None:
+        return
+    viz_parts_str, data_rel = result
+    results[sub_key]["Comparison Plot"] = viz_parts_str
+    if data_rel:
+        results[sub_key]["Data"] = data_rel
+    row = results[sub_key]
+    if "FAILED:" in viz_parts_str:
+        logger.error(f"FAILED [{sub_key}]: {viz_parts_str}")
+    else:
+        parts = [row["Truth Source"], row["Quantity"], row["Metric"]]
+        if row.get("Filter 1"):
+            parts.append(row["Filter 1"])
+        if row.get("Filter 2"):
+            parts.append(row["Filter 2"])
+        logger.info(" | ".join(parts))
+    _append_plot_row(csv_path, row)
+    append_index_row(index_state, row)
+
+
+def generate_plots(index=None, test_only=False, parallel=True):
+    """Generate baseline validation plots.
 
     Args:
-        index: If provided, only generate plots for this row index (int),
+        index: If provided, only generate plots for this template index (int),
                or a set/list of indices. If None, generate all plots.
-        test_only: If True, only generate the test subset (Test=Yes rows)
-                   with limited focus expansion.
+        test_only: If True, only generate the test subset with limited focus expansion.
+        parallel: If True, use ProcessPoolExecutor for parallel plot generation.
     """
     wall_start = time.perf_counter()
-    tasks = read_plot_definition(index, test_only=test_only)
-    logger.info(f"Generating {len(tasks)} plot definition rows ({sum(len(s) for _, s in tasks)} total plots)...")
+    templates = generate_all_templates()
+
+    if test_only:
+        # Select templates that cover unique code paths
+        test_idx = get_test_template_indices(templates)
+        templates = [t for i, t in enumerate(templates) if i in test_idx]
+
+    if index is not None:
+        wanted = set(index) if isinstance(index, (set, list)) else {index}
+        templates = [t for i, t in enumerate(templates) if (i + 1) in wanted]
+
+    logger.info(f"Expanding {len(templates)} plot templates...")
 
     footnote_rules = _load_footnote_rules()
     source_labels = workflow.data_source_labels
@@ -515,107 +687,159 @@ def generate_plots(index=None, test_only=False):
     output_formats = [FileType(fmt.value) for fmt in workflow.plots.output_formats]
     link_format = FileType.html if FileType.html in output_formats else output_formats[0]
     output_base = Path(workflow.output.output_dir) / workflow.output.run_name
-    csv_path = output_base / "plot_index.csv"
-    html_path = output_base / "plot_index.html"
+    csv_path = output_base / "comparisons_index.tsv"
+    html_path = output_base / "comparisons_index.html"
 
-    # Initialize the CSV (header only) and the HTML shell once up front.
-    # The HTML embeds CSV data in a <script type="text/csv"> block at the
-    # end of the file; append_html_row() performs O(1) appends there.
+    # Initialize the CSV (header only) and the HTML index (shell + data dir).
     csv_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # Chrome Trace Event Format — streaming writes for Perfetto UI visualization
+    trace_path = output_base / "trace.json"
+    TimingStats.start_trace(trace_path)
     with open(csv_path, "w", newline="") as f:
-        csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS).writeheader()
-    html_suffix_size = create_html_shell(html_path, OUTPUT_COLUMNS)
+        csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS, delimiter="\t").writeheader()
+    index_state = init_html_index(html_path, OUTPUT_COLUMNS)
 
-    # Pass 1: Expand all focus values to determine total work items
-    work_items = []
-    for row, spec_entries in tasks:
-        row_index = row["Index"]
-        sample_spec = spec_entries[0][0]
-
-        data_key = sample_spec.get_data_key()
-        base_data = get_base_data(data_key)
-        expand_col = "utility_name" if sample_spec.aggregation_level == "eiaid" else sample_spec.aggregation_level
-        focus_values = sorted(v for v in base_data[expand_col].unique().to_list() if v is not None)
-
-        # Skip "US Total" for non-state aggregations; put it first for state
-        if sample_spec.aggregation_level != "state":
-            focus_values = [v for v in focus_values if v != "US Total"]
-        elif "US Total" in focus_values:
-            focus_values.remove("US Total")
-            focus_values.insert(0, "US Total")
-
-        # Prepend None for the unfocused overview plot (skip for plots that
-        # require a specific focus entity: ALL enduse plots and matrix layout)
-        if sample_spec.quantity != DataCol.ALL and sample_spec.resolution != Resolution.hour_of_day_matrix:
-            focus_values.insert(0, None)
-
-        if test_only:
-            focus_values = _trim_focus_for_test(focus_values)
-
-        for focus_val in focus_values:
-            work_items.append((row, spec_entries, row_index, focus_val))
+    # Expand templates into work items via slot triples
+    work_items = _expand_templates(templates, test_only=test_only)
 
     total = len(work_items)
     logger.info(f"Total plot groups to generate: {total}")
 
-    # Pass 2: Generate plots with progress tracking
+    # Build metadata for all work items and prepare plot arguments
     results = {}
-    for i, (row, spec_entries, row_index, focus_val) in enumerate(work_items, 1):
-        if focus_val is None:
-            sub_key = row_index
+    plot_args = []
+    from resstockpostproc.shared_utils.mapping import ABBR2STATE
+
+    for i, (spec_pair, tmpl_index, spec_entries, focus_val, focus_on, agg_level) in enumerate(work_items, 1):
+        main_spec, extra_spec = spec_pair
+
+        # Build a unique key for this work item
+        if focus_on:
+            filter_parts = "_".join(f"{c}_{v}" for c, v in focus_on)
+            sub_key = (
+                f"f_{filter_parts}_{tmpl_index}"
+                if focus_val is None
+                else f"f_{filter_parts}_{tmpl_index}_{focus_val}"
+            )
         else:
-            sub_key = f"{row_index}_{focus_val}"
+            sub_key = (
+                tmpl_index
+                if focus_val is None
+                else f"{tmpl_index}_{focus_val}"
+            )
 
-        results[sub_key] = {col: row.get(col, "") for col in OUTPUT_COLUMNS}
-        results[sub_key]["Index"] = i
-        results[sub_key]["Focus On"] = focus_val or ""
-        if focus_val == "US Total":
-            results[sub_key]["Group By"] = ""
-        # Only highlight the summary row (unfocused overview, or US Total when overview is skipped)
-        if focus_val is not None and focus_val != "US Total":
-            results[sub_key]["Highlight"] = ""
-        results[sub_key]["Main Visualization"] = ""
-        results[sub_key]["Extra Visualization"] = ""
+        # Compute final focus_on for the leaf plot
+        final_focus_tuples = list(focus_on)
+        if focus_val is not None and agg_level is not None:
+            final_focus_tuples.append((agg_level, focus_val))
+        final_focus_on = tuple(final_focus_tuples)
+        final_agg = agg_level if focus_val is None else None
 
-        focused_entries = [
-            (spec.model_copy(update={"focus_on": focus_val}), viz_col,
-             _simplify_viz_label(viz_type) if focus_val else viz_type)
-            for spec, viz_col, viz_type in spec_entries
-        ]
-
-        matched_notes = _resolve_footnotes(footnote_rules, row, context="plot")
-        table_notes = _resolve_footnotes(footnote_rules, row, context="table")
-
-        logger.info(f"[{i}/{total}] ({i * 100 // total}%)")
-        _generate_spec_plots(
-            focused_entries,
-            sub_key,
-            row,
-            results,
-            output_formats,
-            link_format,
-            csv_path,
-            html_path,
-            html_suffix_size,
-            output_base,
-            footnotes=matched_notes or None,
-            table_footnotes=table_notes or None,
-            source_labels=source_labels or None,
+        # Build a concrete main_spec with the triple's agg_level for display
+        display_spec = _make_spec(
+            truth_source=main_spec.truth_source,
+            quantity=main_spec.quantity,
+            resolution=main_spec.resolution,
+            aggregation_type=main_spec.aggregation_type,
+            coverage=main_spec.coverage,
+            aggregation_level=agg_level or (final_focus_on[0][0] if final_focus_on else "state"),
+            view=main_spec.view,
         )
 
-    # Summary
-    ok = sum(
-        1
-        for r in results.values()
-        for col in ("Main Visualization", "Extra Visualization")
-        if r[col] and not r[col].startswith("FAILED:")
-    )
-    failed = sum(
-        1
-        for r in results.values()
-        for col in ("Main Visualization", "Extra Visualization")
-        if r[col].startswith("FAILED:")
-    )
+        results[sub_key] = _build_output_row(display_spec)
+        results[sub_key]["Index"] = i
+        if final_agg is None:
+            results[sub_key]["Group By"] = ""
+        if final_focus_on and not any(v == "US Total" for _, v in final_focus_on):
+            results[sub_key]["Highlight"] = ""
+        results[sub_key]["Comparison Plot"] = ""
+
+        if final_focus_on:
+            for idx, (char, value) in enumerate(final_focus_on):
+                display = ABBR2STATE.get(value, value) if char == "state" else value
+                category = format_aggregation_level(char)
+                results[sub_key][f"Filter {idx + 1}"] = f"{category}: {display}"
+
+        focused_entries = [
+            (
+                spec.model_copy(update={
+                    "focus_on": final_focus_on,
+                    "aggregation_level": final_agg,
+                }),
+                _simplify_viz_label(viz_type) if focus_val else viz_type,
+            )
+            for spec, viz_type in spec_entries
+        ]
+
+        fn_row = _footnote_row(display_spec)
+        matched_notes = _resolve_footnotes(footnote_rules, fn_row, context="plot") or None
+        table_notes = _resolve_footnotes(footnote_rules, fn_row, context="table") or None
+
+        plot_args.append((sub_key, focused_entries, matched_notes, table_notes))
+
+    # Pass 3: Generate plots — parallel or sequential
+    common_kwargs = dict(output_formats=output_formats, link_format=link_format,
+                         output_base=output_base, source_labels=source_labels or None)
+
+    # Swap logging to tqdm-aware handler so log lines render above the progress bar
+    root_logger = logging.getLogger()
+    original_handlers = root_logger.handlers[:]
+    tqdm_handler = _TqdmLoggingHandler()
+    tqdm_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+    root_logger.handlers = [tqdm_handler]
+
+    pbar = tqdm(total=total, desc="Generating plots", unit="plot",
+                bar_format="{desc}: {percentage:6.2f}%|{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]")
+    try:
+        if parallel:
+            max_workers = max(2, min(8, (os.cpu_count() or 4) - 2))
+            logger.info(f"Using {max_workers} worker processes")
+            futures = {}
+            with ProcessPoolExecutor(max_workers=max_workers, initializer=_worker_init) as executor:
+                for sub_key, focused_entries, matched_notes, table_notes in plot_args:
+                    future = executor.submit(
+                        _worker_run, focused_entries,
+                        footnotes=matched_notes, table_footnotes=table_notes, **common_kwargs,
+                    )
+                    futures[future] = sub_key
+                for future in as_completed(futures):
+                    sub_key = futures[future]
+                    try:
+                        result, worker_stats, worker_events = future.result()
+                        TimingStats.merge_worker_stats(worker_stats, worker_events)
+                    except Exception:
+                        logger.error(f"Worker exception for [{sub_key}]:\n{traceback.format_exc()}")
+                        result = None
+                    _handle_plot_result(sub_key, result, results, csv_path, index_state)
+                    pbar.update(1)
+        else:
+            for sub_key, focused_entries, matched_notes, table_notes in plot_args:
+                result = _generate_spec_plots(
+                    focused_entries, footnotes=matched_notes, table_footnotes=table_notes,
+                    **common_kwargs,
+                )
+                _handle_plot_result(sub_key, result, results, csv_path, index_state)
+                pbar.update(1)
+    finally:
+        pbar.close()
+        root_logger.handlers = original_handlers
+
+    # Write the final HTML with static script tags for all shards
+    finalize_html_index(index_state)
+
+    # Summary — count individual viz entries (comma-separated in "Comparison Plot")
+    ok = 0
+    failed = 0
+    for r in results.values():
+        for part in r["Comparison Plot"].split(" ;; "):
+            part = part.strip()
+            if not part:
+                continue
+            if part.startswith("FAILED:"):
+                failed += 1
+            else:
+                ok += 1
     logger.info(f"Done: {ok} succeeded, {failed} failed, {ok + failed} total")
 
     # Timing profiling summary
@@ -627,11 +851,16 @@ def generate_plots(index=None, test_only=False):
         wall_elapsed,
     )
 
+    # Close trace file
+    TimingStats.stop_trace()
+    logger.info(f"Trace file: {trace_path} (open in https://ui.perfetto.dev)")
 
-def _append_plot_row(csv_path, row_dict):
-    """Append a single result row to plot_index.csv (O(1) append)."""
-    with open(csv_path, "a", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS)
+
+@timed
+def _append_plot_row(tsv_path, row_dict):
+    """Append a single result row to the TSV index (O(1) append)."""
+    with open(tsv_path, "a", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS, delimiter="\t")
         writer.writerow(row_dict)
 
 
@@ -642,27 +871,27 @@ def _append_plot_row(csv_path, row_dict):
 
 def generate_eia_plots():
     """Generate only EIA plots."""
-    tasks = read_plot_definition()
-    eia_indices = {int(row["Index"]) for row, _ in tasks if row["Truth Source"] == "eia"}
+    all_tmpls = generate_all_templates()
+    eia_indices = {i + 1 for i, t in enumerate(all_tmpls) if t.truth_source == TruthSource.eia}
     generate_plots(index=eia_indices)
 
 
 def generate_recs_plots():
     """Generate only RECS plots."""
-    tasks = read_plot_definition()
-    recs_indices = {int(row["Index"]) for row, _ in tasks if row["Truth Source"] == "recs"}
+    all_tmpls = generate_all_templates()
+    recs_indices = {i + 1 for i, t in enumerate(all_tmpls) if t.truth_source == TruthSource.recs}
     generate_plots(index=recs_indices)
 
 
 def generate_lrd_plots():
     """Generate only LRD plots."""
-    tasks = read_plot_definition()
-    lrd_indices = {int(row["Index"]) for row, _ in tasks if row["Truth Source"] == "lrd"}
+    all_tmpls = generate_all_templates()
+    lrd_indices = {i + 1 for i, t in enumerate(all_tmpls) if t.truth_source == TruthSource.lrd}
     generate_plots(index=lrd_indices)
 
 
 def generate_test_plots():
-    """Generate only test subset plots (rows with Test=Yes, limited focus expansion)."""
+    """Generate only test subset plots (limited focus expansion)."""
     generate_plots(test_only=True)
 
 
@@ -685,18 +914,22 @@ def parse_index_arg(index_str):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate baseline validation plots from plot_definition.tsv")
+    parser = argparse.ArgumentParser(description="Generate baseline validation plots")
     parser.add_argument(
         "--index", type=str, default=None, help="Plot definition index to generate (e.g. '5', '1-10', '1,3,5')"
     )
     parser.add_argument(
-        "--test", action="store_true", default=True,
-        help="Generate only test subset plots (rows with Test=Yes, limited focus expansion)",
+        "--test", action="store_true", default=False,
+        help="Generate only test subset plots (limited focus expansion)",
+    )
+    parser.add_argument(
+        "--no-parallel", action="store_true", default=False,
+        help="Disable parallel plot generation (run sequentially)",
     )
     args = parser.parse_args()
 
     index = parse_index_arg(args.index) if args.index else None
-    generate_plots(index=index, test_only=args.test)
+    generate_plots(index=index, test_only=args.test, parallel=not args.no_parallel)
     return 0
 
 

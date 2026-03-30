@@ -39,6 +39,10 @@ plots:
     # - svg
     # - parquet
 
+  # Cross-filter expansion for RECS annual plots is now automatic.
+  # All valid (filter, sub-filter, group-by) combinations are generated
+  # from the eligible characteristics per source/resolution.
+
 # Quantities to Generate
 # ----------------------
 # List of quantities to generate comparison plots for.
@@ -84,8 +88,8 @@ quantities:
 # Output Configuration
 # --------------------
 output:
-  output_dir: test_output/
-  run_name: baseline_val
+  output_dir: /Users/radhikar/Documents/buildstock2025/baseline_validation_output/
+  run_name: baseline_val7
 
 # Data Source Labels
 # ------------------
