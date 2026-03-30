@@ -8,6 +8,10 @@ from pathlib import Path
 from typing import Any
 from collections.abc import Callable
 
+# When True, the @cached decorator opens shelve in read-only mode.
+# Worker processes set this to True at init to avoid concurrent shelve corruption.
+CACHE_READ_ONLY: bool = False
+
 
 def cached(cache_file: str) -> Callable:
     """
@@ -41,16 +45,19 @@ def cached(cache_file: str) -> Callable:
             
             # Try to get cached result
             # Note: shelve uses pickle internally, which is needed for arbitrary object caching
-            with shelve.open(cache_path) as cache:  # noqa: S301
+            flag = "r" if CACHE_READ_ONLY else "c"
+            with shelve.open(cache_path, flag=flag) as cache:  # noqa: S301
                 if cache_key in cache:
                     return cache[cache_key]
-                
-                # Compute result if not cached
-                result = func(*args, **kwargs)
-                
-                # Store result in cache
+
+            if CACHE_READ_ONLY:
+                # Cache miss in read-only mode — compute without storing
+                return func(*args, **kwargs)
+
+            # Compute result and store in cache
+            result = func(*args, **kwargs)
+            with shelve.open(cache_path) as cache:  # noqa: S301
                 cache[cache_key] = result
-                
             return result
         
         return wrapper

@@ -6,12 +6,14 @@ from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.caching import cached
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
+from resstockpostproc.shared_utils.timing import timed
 from typing import Literal
 
 import polars as pl
 import logging
 
 
+@timed
 @cached(cache_file="lrd_data_cache")
 def get_lrd_data(year: int = 2018) -> pl.DataFrame:
     if year != 2018:
@@ -33,6 +35,7 @@ def get_lrd_data(year: int = 2018) -> pl.DataFrame:
     return df
 
 
+@timed
 def get_lrd_aggregated(
     year: int = 2018,
     resolution: Resolution = Resolution.year,

@@ -7,8 +7,10 @@ and footer injection (Data Sources + Notes).
 import html as html_lib
 import re
 from pathlib import Path
+from resstockpostproc.shared_utils.timing import timed
 
 
+@timed
 def postprocess_plot_html(
     html_path: Path,
     footnotes: list[str] | None = None,
@@ -111,6 +113,7 @@ def postprocess_plot_html(
     html_path.write_text(html, encoding="utf-8")
 
 
+@timed
 def _build_footer_html(
     source_labels: dict | None,
     truth_source: str | None,

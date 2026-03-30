@@ -30,6 +30,7 @@ dependencies = [
     "kaleido",
     "nbformat>=4.2.0",
     "pandas",
+    "playwright>=1.58.0",
     "plotly",
     "polars-lts-cpu",
     "prefect>=3.4.5",
@@ -40,6 +41,7 @@ dependencies = [
     "ruff>=0.14.4",
     "s3fs",
     "scipy>=1.16.1",
+    "tqdm>=4.67.3",
     "xlsxwriter>=3.2.9",
 ]
 

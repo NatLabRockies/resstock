@@ -7,6 +7,7 @@ from .range_utils import compute_axis_range
 from typing import Literal
 from collections.abc import Sequence, Callable
 from resstockpostproc.shared_utils.db_column_names import DataCol
+from resstockpostproc.shared_utils.timing import timed
 
 
 def filter_null_sources(data: pl.DataFrame, source_column: str, quantity_column: str) -> pl.DataFrame:
@@ -117,6 +118,7 @@ LAYOUTS = {
 }
 
 
+@timed
 def plot_tilemap(
     data: pl.DataFrame,
     quantity_column: str,

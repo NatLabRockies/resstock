@@ -70,6 +70,7 @@ def save_figure(
         print(f"Saved: {filepath}")
 
 
+@timed
 def save_dataframe(
     df: pl.DataFrame,
     output_dir: Path,

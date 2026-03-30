@@ -12,12 +12,15 @@ from resstockpostproc.shared_utils.generic_plotters import tilemap_plotter
 from resstockpostproc.shared_utils.generic_plotters.bar_plotter import create_bar_plot
 from resstockpostproc.shared_utils.generic_plotters.monthly_plotter import create_ts_plot
 from resstockpostproc.baseline_validation.theme import apply_theme
+from resstockpostproc.shared_utils.timing import timed
 
 
+@timed
 def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str]:
     """Create load duration curve plot based on the plot specification."""
 
-    assert plot_spec.aggregation_level == "eiaid", "LRD plots only support aggregation level 'eiaid'"
+    agg = plot_spec.aggregation_level or plot_spec.effective_group_by[-1]
+    assert agg == "eiaid", "LRD plots only support aggregation level 'eiaid'"
     final_df = data.clone()
     sidebar_column = None
     ts_xtick_vals = None
@@ -44,7 +47,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
             ts_xtick_text = None
             title = "Daily Electricity Consumption per Dwelling Unit"
         case Resolution.hour_of_year | Resolution.top_100_hours:
-            if plot_spec.view in [ViewType.temp_view, ViewType.temp_count_view]:
+            if plot_spec.view in [ViewType.temp_view, ViewType.temp_distribution_view]:
                 # Data already transformed by gather_data._prepare_temperature_view()
                 x_unit = "°F"
                 timeseries_column = "resstock_temp"
@@ -81,7 +84,8 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
             timeseries_column = "hour of day"
             ts_xtick_vals = (0, 23)
             ts_xtick_text = ("     Hour 1", "Hour 24       ")
-            title = f"Hourly Load Profile Matrix for {plot_spec.focus_on}"
+            focus_display = ", ".join(v for _, v in plot_spec.focus_on)
+            title = f"Hourly Load Profile Matrix for {focus_display}"
         case _:
             raise ValueError(f"Unsupported resolution '{plot_spec.resolution}' for LRD plot.")
 

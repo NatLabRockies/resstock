@@ -5,7 +5,7 @@ import logging
 import sys
 from pathlib import Path
 
-from resstockpostproc.baseline_validation.plot_generator import generate_all_plots
+from resstockpostproc.baseline_validation.plot_generator import generate_plots
 from resstockpostproc.baseline_validation.schema.workflow_schema import PlotType, workflow
 
 # Suppress verbose logging from image export libraries
@@ -85,11 +85,7 @@ def main() -> int:
                 except ValueError:
                     print(f"Warning: Invalid plot type '{pt}'. Skipping.")
 
-    generate_all_plots(
-        workflow=workflow,
-        output_formats=tuple(output_types),
-        plot_types=plot_types,
-    )
+    generate_plots()
     return 0
 
 

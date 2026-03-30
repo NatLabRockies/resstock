@@ -128,10 +128,6 @@ def apply_aggregation(data_key: DataKey, df: pl.DataFrame) -> pl.DataFrame:
                 if percent_users_col in df.columns
             ]
         )
-        # For users_only, percent_users denominator is nonzero users (= numerator), so always 100%
-        all_percent_users_cols = [col for col in df.columns if col.endswith("_percent_users")]
-        if all_percent_users_cols:
-            df = df.with_columns([pl.lit(100.0).alias(col) for col in all_percent_users_cols])
     else:
         raise ValueError(f"Unsure how to apply aggregation for {data_key.coverage} coverage.")
     return df

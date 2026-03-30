@@ -6,21 +6,28 @@ from pathlib import Path
 import pytest
 
 from resstockpostproc.baseline_validation.create_html import (
-    append_html_row,
+    init_html_index,
+    append_index_row,
+    finalize_html_index,
     create_html_from_csv,
-    create_html_shell,
     parse_viz_cell,
+    DATA_DIR_NAME,
 )
 
 
 class TestParseVizCell:
     def test_success_format(self):
-        display, url = parse_viz_cell("tilemap(eia plots/path/to/file.html)")
+        display, url = parse_viz_cell("tilemap||eia plots/path/to/file.html")
         assert display == "tilemap"
         assert url == "eia plots/path/to/file.html"
 
+    def test_success_with_parentheses_in_label(self):
+        display, url = parse_viz_cell("tilemap bar plot (difference)||eia plots (html)/path.html")
+        assert display == "tilemap bar plot (difference)"
+        assert url == "eia plots (html)/path.html"
+
     def test_failed_with_traceback(self):
-        display, tb = parse_viz_cell("FAILED: tilemap(Traceback (most recent call last):\n  File ...)")
+        display, tb = parse_viz_cell("FAILED: tilemap||Traceback (most recent call last):\n  File ...")
         assert display == "FAILED"
         assert "Traceback" in tb
 
@@ -40,62 +47,110 @@ class TestParseVizCell:
         assert url is None
 
 
-class TestHtmlRoundTrip:
-    """Test the incremental shell + append protocol."""
+class TestShardedIndex:
+    """Test the sharded HTML index generation."""
 
-    def test_shell_and_append(self, tmp_path):
-        html_path = tmp_path / "test.html"
-        headers = ["Index", "Name", "Main Visualization"]
+    def test_init_creates_data_dir(self, tmp_path):
+        html_path = tmp_path / "plot_index.html"
+        headers = ["Index", "Filter 1", "Name", "Main Visualization"]
 
-        suffix_size = create_html_shell(html_path, headers)
-        assert html_path.exists()
-        assert suffix_size > 0
+        state = init_html_index(html_path, headers)
 
-        # Append two rows
-        append_html_row(
-            html_path,
-            {"Index": "1", "Name": "plot_a", "Main Visualization": "tilemap(a.html)"},
-            headers,
-            suffix_size,
-        )
-        append_html_row(
-            html_path,
-            {"Index": "2", "Name": "plot_b", "Main Visualization": "FAILED: bar"},
-            headers,
-            suffix_size,
-        )
+        # HTML is NOT written yet (deferred to finalize)
+        assert not html_path.exists()
+        data_dir = tmp_path / DATA_DIR_NAME
+        assert data_dir.is_dir()
+
+    def test_finalize_writes_html_with_script_tags(self, tmp_path):
+        html_path = tmp_path / "plot_index.html"
+        headers = ["Index", "Filter 1", "Name", "Main Visualization"]
+        state = init_html_index(html_path, headers)
+
+        append_index_row(state, {
+            "Index": "1", "Filter 1": "", "Name": "overview",
+            "Main Visualization": "tilemap(a.html)",
+        })
+        append_index_row(state, {
+            "Index": "2", "Filter 1": "Alaska", "Name": "ak_plot",
+            "Main Visualization": "bar(b.html)",
+        })
+
+        finalize_html_index(state)
 
         content = html_path.read_text()
+        assert content.endswith("</html>\n")
+        # Should have static script tags for both shards
+        assert f'src="{DATA_DIR_NAME}/data-_none_.js"' in content
+        assert f'src="{DATA_DIR_NAME}/data-Alaska.js"' in content
+        # Should have inline manifest
+        assert "window.shardManifest" in content
 
-        # The HTML should be well-formed (suffix intact)
-        assert content.endswith("</script>\n</body>\n</html>\n")
+    def test_append_creates_shard_files(self, tmp_path):
+        html_path = tmp_path / "plot_index.html"
+        headers = ["Index", "Filter 1", "Name", "Main Visualization"]
+        state = init_html_index(html_path, headers)
 
-        # Extract the CSV data block
-        csv_start = content.index('<script id="csvdata" type="text/csv">')
-        csv_end = content.index("</script>", csv_start)
-        csv_block = content[csv_start:csv_end]
-        # The CSV data is after the closing >
-        csv_data = csv_block.split(">", 1)[1].strip()
+        append_index_row(state, {
+            "Index": "1", "Filter 1": "", "Name": "overview",
+            "Main Visualization": "tilemap(a.html)",
+        })
+        append_index_row(state, {
+            "Index": "2", "Filter 1": "Alaska", "Name": "ak_plot",
+            "Main Visualization": "bar(b.html)",
+        })
 
-        lines = csv_data.split("\n")
-        assert len(lines) == 3  # header + 2 data rows
-        assert "plot_a" in lines[1]
-        assert "plot_b" in lines[2]
+        data_dir = tmp_path / DATA_DIR_NAME
+        none_shard = data_dir / "data-_none_.js"
+        alaska_shard = data_dir / "data-Alaska.js"
 
-    def test_batch_from_csv(self, tmp_path):
-        csv_path = tmp_path / "input.csv"
+        assert none_shard.exists()
+        assert alaska_shard.exists()
+
+        none_content = none_shard.read_text()
+        assert "window.addRows(`" in none_content
+        assert "overview" in none_content
+        assert none_content.strip().endswith("`);")
+
+        alaska_content = alaska_shard.read_text()
+        assert "ak_plot" in alaska_content
+
+    def test_multiple_rows_same_shard(self, tmp_path):
+        html_path = tmp_path / "plot_index.html"
+        headers = ["Index", "Filter 1", "Name", "Main Visualization"]
+        state = init_html_index(html_path, headers)
+
+        append_index_row(state, {
+            "Index": "1", "Filter 1": "Alaska", "Name": "plot_a",
+            "Main Visualization": "",
+        })
+        append_index_row(state, {
+            "Index": "2", "Filter 1": "Alaska", "Name": "plot_b",
+            "Main Visualization": "",
+        })
+
+        shard = (tmp_path / DATA_DIR_NAME / "data-Alaska.js").read_text()
+        assert "plot_a" in shard
+        assert "plot_b" in shard
+        assert shard.strip().startswith("window.addRows(`")
+        assert shard.strip().endswith("`);")
+
+    def test_batch_from_tsv(self, tmp_path):
+        tsv_path = tmp_path / "input.tsv"
         html_path = tmp_path / "output.html"
 
-        # Write a CSV
-        with open(csv_path, "w", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=["Index", "Name"])
+        with open(tsv_path, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=["Index", "Filter 1", "Name"], delimiter="\t")
             writer.writeheader()
-            writer.writerow({"Index": "1", "Name": "row1"})
-            writer.writerow({"Index": "2", "Name": "row2"})
+            writer.writerow({"Index": "1", "Filter 1": "", "Name": "row1"})
+            writer.writerow({"Index": "2", "Filter 1": "TX", "Name": "row2"})
 
-        create_html_from_csv(csv_path, html_path)
+        create_html_from_csv(tsv_path, html_path)
+
+        assert html_path.exists()
+        data_dir = tmp_path / DATA_DIR_NAME
+        assert (data_dir / "data-_none_.js").exists()
+        assert (data_dir / "data-TX.js").exists()
 
         content = html_path.read_text()
-        assert "row1" in content
-        assert "row2" in content
-        assert content.endswith("</script>\n</body>\n</html>\n")
+        assert f'src="{DATA_DIR_NAME}/data-_none_.js"' in content
+        assert f'src="{DATA_DIR_NAME}/data-TX.js"' in content

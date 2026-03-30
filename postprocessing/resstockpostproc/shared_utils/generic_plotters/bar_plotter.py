@@ -1,5 +1,6 @@
 from . import theme
 from .range_utils import compute_axis_range
+from resstockpostproc.shared_utils.timing import timed
 import plotly.graph_objects as go
 import polars as pl
 
@@ -34,6 +35,7 @@ def _calculate_error_bars(
     return (error_dict, None) if orientation == "h" else (None, error_dict)
 
 
+@timed
 def create_bar_plot(
     *,
     data: pl.DataFrame,

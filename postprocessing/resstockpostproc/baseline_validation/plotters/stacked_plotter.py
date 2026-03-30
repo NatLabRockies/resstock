@@ -4,6 +4,7 @@ from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import filte
 from resstockpostproc.baseline_validation.io_managers.get_recs_data import get_enduse_order
 from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, AggregationType, CoverageType, ViewType
 from resstockpostproc.shared_utils.db_column_names import DataCol
+from resstockpostproc.shared_utils.timing import timed
 import plotly.graph_objects as go
 import polars as pl
 from plotly.subplots import make_subplots
@@ -16,6 +17,8 @@ def _get_reference_source(df: pl.DataFrame) -> str:
     Falls back to the first source if all contain 'resstock'.
     """
     sources = df["source"].unique(maintain_order=True).to_list()
+    if not sources:
+        raise ValueError("No data sources found in dataframe")
     for src in sources:
         if "resstock" not in src:
             return src
@@ -36,7 +39,7 @@ def _add_quartile_cols(df: pl.DataFrame, quartile_column: str) -> pl.DataFrame:
         ]
     )
 
-
+@timed
 def _prepare_box_plot_data(df: pl.DataFrame, quantity: str, coverage: CoverageType) -> pl.DataFrame:
     """Prepare the data for box plot by adding necessary columns.
 
@@ -69,7 +72,7 @@ def _prepare_box_plot_data(df: pl.DataFrame, quantity: str, coverage: CoverageTy
     else:
         raise ValueError(f"Unsupported coverage type for box plot: {coverage}")
 
-
+@timed
 def split_graph_by_state(df: pl.DataFrame):
     """Split the graph data into subplots if needed.
 
@@ -109,7 +112,7 @@ def split_graph_by_state(df: pl.DataFrame):
     fig = make_subplots(rows=1, cols=2)
     return fig, _graph_iterator()
 
-
+@timed
 def split_graph_by_char(df: pl.DataFrame):
     """Split the graph data into subplots based on a character column.
 
@@ -155,7 +158,7 @@ def split_graph_by_char(df: pl.DataFrame):
     fig = make_subplots(rows=1, cols=1)
     return fig, _graph_iterator()
 
-
+@timed
 def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
     """Split the graph data into subplots by end-use categories.
 
@@ -240,7 +243,8 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
 
             # Pivot the dataframe to create a 'quantity' column
             # Keep id columns that don't vary by quantity
-            id_cols = [plot_spec.aggregation_level, "model_count", "units_count", "source"]
+            agg_col = plot_spec.aggregation_level or plot_spec.effective_group_by[-1]
+            id_cols = [agg_col, "model_count", "units_count", "source"]
 
             # Build list of columns to unpivot for each quantity
             value_cols = []
@@ -256,6 +260,14 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
                 # Rename columns to remove the quantity prefix
                 rename_map = {c: c.replace(f"{qty}_", "enduse_") for c in qty_df.columns if c.startswith(f"{qty}_")}
                 qty_df = qty_df.rename(rename_map)
+                # Cast scalar numeric enduse columns to Float64 to avoid SchemaError
+                # when sparse data produces Int64 nulls for some enduses.
+                # Skip list columns (e.g. _quartiles) which are already List[Float64].
+                enduse_cols = [
+                    c for c in qty_df.columns
+                    if c.startswith("enduse_") and qty_df[c].dtype.is_numeric()
+                ]
+                qty_df = qty_df.with_columns(pl.col(c).cast(pl.Float64) for c in enduse_cols)
                 qty_df = qty_df.with_columns(pl.lit(qty).alias("quantity"))
                 dfs_to_concat.append(qty_df)
 
@@ -279,17 +291,17 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
 
     return fig, _graph_iterator()
 
-
+@timed
 def split_graph(df: pl.DataFrame, plot_spec: PlotSpec):
     """Split the graph data into subplots based on the plot specification."""
-    if plot_spec.aggregation_level == "state" and plot_spec.quantity != DataCol.ALL:
+    if plot_spec.aggregation_level == "state" and plot_spec.quantity != DataCol.ALL and not plot_spec.focus_on:
         return split_graph_by_state(df)
     elif plot_spec.quantity == DataCol.ALL:
         return split_graph_by_enduse(df, plot_spec)
     else:
         return split_graph_by_char(df)
 
-
+@timed
 def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, float]:
     """Get custom y-axis range for the plot.
 
@@ -347,6 +359,7 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
     return all_min_val, all_max_val
 
 
+@timed
 def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     """Create a box plot or bar comparing data sources across states.
 
@@ -371,18 +384,22 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     else:
         quantity_title = ""
 
+    agg_col = plot_spec.aggregation_level or plot_spec.effective_group_by[-1]
     if plot_spec.quantity == DataCol.ALL:
-        if plot_spec.focus_on is None:
-            raise ValueError("When quantity is DataCol.ALL, focus_on must be specified")
-        df = df.filter(pl.col(plot_spec.aggregation_level) == plot_spec.focus_on)
+        if not plot_spec.focus_on:
+            raise ValueError("When quantity is DataCol.ALL, focus_on must specify an entity")
+        for col, val in plot_spec.focus_on:
+            filter_col = "utility_name" if col == "eiaid" else col
+            if filter_col in df.columns:
+                df = df.filter(pl.col(filter_col) == val)
 
     # Exclude US Total from total-aggregation value_view plots to prevent scale domination
     # (only when showing all entities, not when focused specifically on US Total)
     if (plot_spec.aggregation_type == AggregationType.total
             and plot_spec.view == ViewType.value_view
-            and plot_spec.focus_on is None
-            and plot_spec.aggregation_level in df.columns):
-        df = df.filter(pl.col(plot_spec.aggregation_level) != "US Total")
+            and not plot_spec.focus_on
+            and agg_col in df.columns):
+        df = df.filter(pl.col(agg_col) != "US Total")
 
     show_legends = True
     assert plot_spec is not None

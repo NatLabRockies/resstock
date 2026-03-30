@@ -17,17 +17,16 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     CoverageType,
     Resolution,
     ViewType,
+    format_aggregation_level,
 )
 from resstockpostproc.baseline_validation.plotters.plot_config import (
-    _resolve_title,
     _resolve_quantity_title,
-    _format_focus_label,
-    _format_aggregation_level,
     _extract_truth_source_label,
     _resolve_timeseries_column,
     get_second_category_column,
 )
 from resstockpostproc.baseline_validation.io_managers.html_utils import _build_footer_html
+from resstockpostproc.shared_utils.timing import timed
 
 
 # Maximum pivoted row count before we skip HTML table generation
@@ -59,7 +58,7 @@ _DROP_CONTAINS = (
     "_nonzero_quartiles_",
 )
 
-
+@timed
 def should_generate_table(data: pl.DataFrame, plot_spec: PlotSpec) -> bool:
     """Check whether an HTML table should be generated for this plot.
 
@@ -81,7 +80,7 @@ def should_generate_table(data: pl.DataFrame, plot_spec: PlotSpec) -> bool:
         return False  # Single-row table (e.g., focused single-entity annual) adds no value
     return estimated <= _ROW_LIMIT
 
-
+@timed
 def _filter_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
     """Drop irrelevant columns, keeping only comparison-meaningful ones."""
     # Protect structural columns (join keys) from being dropped
@@ -139,7 +138,7 @@ def _filter_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
 
     return data.drop(drop_cols)
 
-
+@timed
 def _pivot_by_source(
     data: pl.DataFrame,
     plot_spec: PlotSpec,
@@ -218,7 +217,8 @@ def _build_column_config(
     """Build column metadata for the HTML table (header labels, formats, types)."""
     units = _resolve_quantity_title(plot_spec)
     entity_col = get_second_category_column(plot_spec)
-    entity_label = _format_aggregation_level(plot_spec.aggregation_level)
+    agg = plot_spec.aggregation_level or plot_spec.effective_group_by[-1]
+    entity_label = format_aggregation_level(agg)
 
     ts_col = _resolve_timeseries_column(plot_spec)
 
@@ -280,7 +280,7 @@ def _humanize_column(raw_name: str, source_prefix: str, units: str, is_diff: boo
     clean = raw_name.replace("_", " ").title()
     return f"{source_prefix}: {clean}"
 
-
+@timed
 def _build_table_html(
     data: pl.DataFrame,
     col_config: list[dict],
@@ -294,14 +294,17 @@ def _build_table_html(
     ref_val_col: str = "",
 ) -> str:
     """Build a self-contained HTML page with an interactive data table."""
-    title = html_lib.escape(_resolve_title(plot_spec))
+    title = html_lib.escape(plot_spec.get_display_title())
     units = html_lib.escape(_resolve_quantity_title(plot_spec))
 
     # Subtitle: focused entity or aggregation level
-    if plot_spec.focus_on:
-        subtitle = html_lib.escape(_format_focus_label(plot_spec.focus_on))
+    focus_display = plot_spec.get_filter_display_name()
+    if focus_display:
+        subtitle = html_lib.escape(focus_display)
+    elif plot_spec.aggregation_level:
+        subtitle = html_lib.escape(f"by {format_aggregation_level(plot_spec.aggregation_level)}")
     else:
-        subtitle = html_lib.escape(f"by {_format_aggregation_level(plot_spec.aggregation_level)}")
+        subtitle = ""
 
     # Serialize data to JSON for embedding
     # Convert to list of dicts, coercing non-JSON-native types (datetime, date, etc.)
@@ -604,6 +607,7 @@ def _csv_filename(plot_spec: PlotSpec) -> str:
     return f"{title}.csv"
 
 
+@timed
 def generate_data_table_html(
     data: pl.DataFrame,
     plot_spec: PlotSpec,

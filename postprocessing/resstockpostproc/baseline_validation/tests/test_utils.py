@@ -108,7 +108,7 @@ class TestApplyAggregation:
     def _make_key(self, agg_type, coverage):
         return DataKey(
             truth_source=TruthSource.eia,
-            aggregation_level="state",
+            group_by=("state",),
             resolution=Resolution.year,
             aggregation_type=agg_type,
             coverage=coverage,
@@ -149,8 +149,8 @@ class TestApplyAggregation:
 
         # denominator = 50/100 * 100 = 50 users → 1000/50 = 20.0
         assert result["electricity_total_value"].item() == pytest.approx(20.0)
-        # percent_users should be reset to 100 for users_only
-        assert result["electricity_total_percent_users"].item() == pytest.approx(100.0)
+        # percent_users should retain the real penetration rate
+        assert result["electricity_total_percent_users"].item() == pytest.approx(50.0)
 
     def test_average_all_units_multiple_value_cols(self):
         """All _value columns should be divided, not just one."""

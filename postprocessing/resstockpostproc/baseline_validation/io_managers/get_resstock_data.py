@@ -32,14 +32,14 @@ def get_timeseries_all(
     """Get timeseries data for all configured data sources.
 
     Args:
-        data_key: DataKey containing aggregation_level, resolution, aggregation_type, and coverage
+        data_key: DataKey containing group_by, resolution, aggregation_type, and coverage
         restrict_list: Optional list of entity IDs to restrict to (e.g., eiaid list)
         occupied_only: If True, only include occupied units (for RECS comparison)
     """
     if not workflow.data_sources:
         return None
 
-    by = data_key.aggregation_level
+    by = data_key.group_by[0]  # timeseries only supports single-column groupby
     resolution = data_key.resolution
 
     all_dfs = []
@@ -63,6 +63,7 @@ def get_timeseries_all(
     return final_df
 
 
+@timed
 def get_timeseries(
     data_source: DataSourceConfig,
     resolution: Resolution = Resolution.month,
@@ -176,6 +177,7 @@ def get_timeseries(
     return ts_data
 
 
+@timed
 def _get_timeseries_by_char(
     bsq: BuildStockQuery,
     data_source: DataSourceConfig,
@@ -213,6 +215,7 @@ def _get_timeseries_by_char(
     return result
 
 
+@timed
 def _get_timeseries_by_utilities(
     bsq: BuildStockQuery,
     data_source: DataSourceConfig,
@@ -279,22 +282,41 @@ def get_annual_all(
     """Get annual data for all configured data sources.
 
     Args:
-        data_key: DataKey containing aggregation_level, aggregation_type, and coverage
+        data_key: DataKey containing group_by, aggregation_type, and coverage
         occupied_only: If True, only include occupied units (for RECS comparison)
     """
     if not workflow.data_sources:
         return None
 
-    by = data_key.aggregation_level
+    by_cols = list(data_key.group_by)
 
     all_dfs = []
     for data_source in workflow.data_sources:
-        df = get_annual(data_source, by, occupied_only=occupied_only)
+        if len(by_cols) == 1:
+            df = get_annual(data_source, by_cols[0], occupied_only=occupied_only)
+        else:
+            df = _get_annual_two_char_cached(data_source, by_cols[0], by_cols[1], occupied_only)
         df = apply_aggregation(data_key, df)
         df = df.with_columns(pl.lit(data_source.name).alias("source"))
         all_dfs.append(df)
     final_df = pl.concat(all_dfs, how="diagonal_relaxed")
     return final_df
+
+
+@functools.lru_cache(maxsize=None)
+def _get_annual_two_char_cached(
+    data_source: DataSourceConfig,
+    by: str,
+    filter_char: str,
+    occupied_only: bool,
+) -> pl.DataFrame:
+    """Cached 2-column annual query. Multiple filter_values share this cache."""
+    bsq = get_buildstock_query(
+        workgroup=workflow.workgroup,
+        config=data_source,
+        skip_reports=True,
+    )
+    return _get_annual_by_two_chars(bsq, by, filter_char, data_source, occupied_only)
 
 
 @timed
@@ -329,6 +351,7 @@ def _get_by_col(by: str, bsq: BuildStockQuery):
     return by_col
 
 
+@timed
 def _get_annual_by_char(
     bsq: BuildStockQuery, by: str, data_source: DataSourceConfig, occupied_only: bool
 ) -> pl.DataFrame:
@@ -360,6 +383,50 @@ def _get_annual_by_char(
     df = pl.from_pandas(result_df)
     char_cols = get_db_characteristics_colnames(data_source.db_schema)
     enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline")
+    df = _transform_columns(df, data_source.db_schema)
+    return df
+
+
+@timed
+def _get_annual_by_two_chars(
+    bsq: BuildStockQuery, by: str, filter_char: str, data_source: DataSourceConfig, occupied_only: bool
+) -> pl.DataFrame:
+    """Load annual data grouped by TWO characteristics (by + filter_char).
+
+    Used for pre-filtered plots: the 2-column groupby produces per-cell values,
+    which can then be cheaply filtered to a specific filter_char value.
+    BSQ computes correct per-cell totals, averages, quartiles, and nonzero counts.
+    """
+    char_cols = get_db_characteristics_colnames(data_source.db_schema)
+    enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline")
+    restrict = [(char_cols.VACANCY, ["Occupied"])] if occupied_only else []
+    by_col = _get_by_col(by, bsq)
+    filter_col = _get_by_col(filter_char, bsq)
+    result_df = bsq.query(
+        enduses=enduses,
+        get_nonzero_count=True,
+        get_quartiles=True,
+        group_by=[by_col, filter_col],
+        annual_only=True,
+        restrict=restrict,
+    )
+    bsq.save_cache()
+
+    # Add US Total per filter_value: group by filter_col only (sums across all `by` values)
+    result_us_total = bsq.query(
+        enduses=enduses,
+        annual_only=True,
+        get_nonzero_count=True,
+        get_quartiles=True,
+        group_by=[filter_col],
+        restrict=restrict,
+    )
+    bsq.save_cache()
+    result_us_total[by] = "US Total"
+    result_us_total = result_us_total[result_df.columns]
+    result_df = pd.concat([result_df, result_us_total], ignore_index=True)
+
+    df = pl.from_pandas(result_df)
     df = _transform_columns(df, data_source.db_schema)
     return df
 

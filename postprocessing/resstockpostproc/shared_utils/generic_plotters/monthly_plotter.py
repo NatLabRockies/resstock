@@ -9,6 +9,7 @@ import plotly.graph_objects as go
 from .range_utils import compute_axis_range
 
 from resstockpostproc.shared_utils.generic_plotters import theme
+from resstockpostproc.shared_utils.timing import timed
 
 
 # Month name to index mapping for parsing month values
@@ -17,6 +18,7 @@ MONTH_NAME_TO_INDEX.update({abbr.lower(): idx for idx, abbr in enumerate(calenda
 MONTH_INDEX_TO_LABEL = {idx: calendar.month_abbr[idx] for idx in range(1, 13)}
 
 
+@timed
 def create_ts_plot(
     *,
     data: pl.DataFrame,

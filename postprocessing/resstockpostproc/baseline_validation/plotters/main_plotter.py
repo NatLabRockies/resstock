@@ -43,7 +43,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
     fig = apply_theme(fig, title=config.title, height=config.height, width=config.width)
     return fig, config.title
 
-
+@timed
 def _get_null_sources(data: pl.DataFrame, source_column: str, quantity_column: str) -> list[str]:
     """Identify sources where the quantity column is entirely null."""
     if quantity_column not in data.columns:
@@ -57,12 +57,11 @@ def _get_null_sources(data: pl.DataFrame, source_column: str, quantity_column: s
         .to_list()
     )
 
-
 def _needs_stacked_plotter(plot_spec: PlotSpec) -> bool:
     """True for distribution box plots and ALL-enduse plots that need split_graph."""
     return plot_spec.view == ViewType.distribution or plot_spec.quantity == DataCol.ALL
 
-
+@timed
 def _render(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
     """Select appropriate renderer and create the figure."""
     if config.is_single_entity and not _needs_stacked_plotter(plot_spec):
@@ -75,7 +74,7 @@ def _render(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.F
     else:
         return _render_tilemap(data, config, plot_spec)
 
-
+@timed
 def _render_tilemap(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
     """Render using tilemap layout with bar or timeseries subplots."""
     second_category_column = get_second_category_column(plot_spec)
@@ -119,7 +118,7 @@ def _render_tilemap(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec)
         ),
     )
 
-
+@timed
 def _render_single_entity_timeseries(data: pl.DataFrame, config: PlotConfig) -> go.Figure:
     """Render a simple timeseries for single-entity (focused) plots."""
     return create_ts_plot(
@@ -136,7 +135,7 @@ def _render_single_entity_timeseries(data: pl.DataFrame, config: PlotConfig) -> 
         fill_lower_bound=True,
     )
 
-
+@timed
 def _render_single_entity_bar(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
     """Render a bar chart for single-entity (focused) plots without timeseries.
 
@@ -159,7 +158,7 @@ def _render_single_entity_bar(data: pl.DataFrame, config: PlotConfig, plot_spec:
         show_legends=True,
     )
 
-
+@timed
 def _render_stacked(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     """Render using stacked subplot layout (grouped bars or box plots)."""
     return create_stacked_plot(data, plot_spec)

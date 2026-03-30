@@ -1,4 +1,5 @@
 from resstockpostproc.shared_utils.generic_plotters import theme
+from resstockpostproc.shared_utils.timing import timed
 
 
 import numpy as np
@@ -6,6 +7,7 @@ import plotly.graph_objects as go
 import polars as pl
 
 
+@timed
 def create_box_plot(
     data: pl.DataFrame,
     *,

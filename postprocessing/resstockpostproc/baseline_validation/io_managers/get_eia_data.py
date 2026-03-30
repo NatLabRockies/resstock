@@ -38,7 +38,7 @@ def get_annual_all(
     if years is None:
         years = workflow.reference_years.get("eia", [2018])
 
-    by: Literal["state", "eiaid"] = "state" if data_key.aggregation_level == "state" else "eiaid"
+    by: Literal["state", "eiaid"] = "state" if "state" in data_key.group_by else "eiaid"
 
     dfs = []
     for year in years:
@@ -100,7 +100,7 @@ def get_monthly_all(
     if years is None:
         years = workflow.reference_years.get("eia", [2018])
 
-    by: Literal["state", "eiaid"] = "state" if data_key.aggregation_level == "state" else "eiaid"
+    by: Literal["state", "eiaid"] = "state" if "state" in data_key.group_by else "eiaid"
 
     dfs = []
     for year in years:
@@ -147,6 +147,7 @@ def get_available_aggregation_levels() -> Sequence[Literal["state", "eiaid"]]:
     return ("state", "eiaid")
 
 
+@timed
 def _get_eia_annual_electricity(year: int = 2018, by: Literal["state", "eiaid"] = "state") -> pl.DataFrame:
     df = get_df_from_s3(s3_paths.EIA_ANNUAL_ELECTRICITY, local_data_dir)
     df = df.filter(pl.col("year") == year)
@@ -160,6 +161,7 @@ def _get_eia_annual_electricity(year: int = 2018, by: Literal["state", "eiaid"] 
     return df
 
 
+@timed
 def _get_eia_monthly_electricity(year: int = 2018, by: Literal["state", "eiaid"] = "state") -> pl.DataFrame:
     df = get_df_from_s3(s3_paths.EIA_MONTHLY_ELECTRICITY, local_data_dir)
     df = df.filter(pl.col("year") == year)
@@ -174,6 +176,7 @@ def _get_eia_monthly_electricity(year: int = 2018, by: Literal["state", "eiaid"]
     return df
 
 
+@timed
 def _get_eia_monthly_gas(year: int = 2018, by: Literal["state", "eiaid"] = "state") -> pl.DataFrame:
     df = get_df_from_s3(s3_paths.EIA_MONTHLY_NATURAL_GAS, local_data_dir)
     df = df.with_columns((pl.col("natural_gas_kbtu") * KBTU2KWH).alias("sales_kwh"))

@@ -25,9 +25,10 @@ from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.mapping import UtilityName2ID, ID2UtilityName
 from resstockpostproc.shared_utils.timing import timed
 
-AggregationBy = Literal["state", "eiaid"]
+AggregationBy = Literal["state", "eiaid"]  # Legacy type alias for EIA/LRD data
 
 
+@timed
 def get_plot_data(
     plot_spec: PlotSpec,
 ) -> pl.DataFrame:
@@ -80,23 +81,35 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
     """
     df = _keep_relevant_columns(base_data, plot_spec)
     df = _add_95ci_bounds(df)
-    df = (
-        df.with_columns(pl.col("units_count").mean().over(plot_spec.aggregation_level).alias("avg_units_count"))
-        .sort("avg_units_count", descending=True, maintain_order=True)
-        .drop("avg_units_count")
-    )
+    # Sort by units_count within the primary grouping column (if any)
+    sort_col = plot_spec.aggregation_level or (plot_spec.effective_group_by[0] if plot_spec.effective_group_by else None)
+    if sort_col and sort_col in df.columns:
+        df = (
+            df.with_columns(pl.col("units_count").mean().over(sort_col).alias("avg_units_count"))
+            .sort("avg_units_count", descending=True, maintain_order=True)
+            .drop("avg_units_count")
+        )
 
-    if "eiaid" in df.columns and plot_spec.aggregation_level == "eiaid":
+    if "eiaid" in df.columns and "eiaid" in plot_spec.effective_group_by:
         df = df.with_columns(
             pl.col("eiaid")
             .cast(pl.Int16)
             .replace_strict(ID2UtilityName, default="Unknown Utility")
             .alias("utility_name")
         )
-        if plot_spec.focus_on:
-            df = df.filter(pl.col("utility_name") == plot_spec.focus_on)
-    elif plot_spec.focus_on:
-        df = df.filter(pl.col(plot_spec.aggregation_level) == plot_spec.focus_on)
+
+    # Apply focus_on post-filters.
+    # For cross-dimension filters (multi-column group_by), drop the filtered column
+    # so downstream layout logic doesn't pick the wrong grouping dimension.
+    data_key = plot_spec.get_data_key()
+    is_multi_col = len(data_key.group_by) > 1
+    for col, val in plot_spec.focus_on:
+        if col == "eiaid" and "utility_name" in df.columns:
+            df = df.filter(pl.col("utility_name") == val)
+        elif col in df.columns:
+            df = df.filter(pl.col(col) == val)
+            if is_multi_col and plot_spec.aggregation_level is not None and col != plot_spec.aggregation_level:
+                df = df.drop(col)
 
     # Apply LRD-specific resolution transforms
     if plot_spec.truth_source == TruthSource.lrd:
@@ -106,21 +119,22 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
 
 
 # @cache
+@timed
 def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
     """Internal function to load data based on DataKey.
 
     Args:
-        data_key: DataKey containing truth_source, aggregation_level, resolution,
+        data_key: DataKey containing truth_source, group_by, resolution,
                   aggregation_type, and coverage
     """
     truth_source = data_key.truth_source
-    aggregation_level = data_key.aggregation_level
+    group_by = data_key.group_by
     resolution = data_key.resolution
 
     groups = []
     if truth_source == TruthSource.eia:
-        assert aggregation_level in ["state", "eiaid"], "EIA data only supports 'state' or 'eiaid' aggregation levels."
-        by = "state" if aggregation_level == "state" else "eiaid"
+        by = "state" if "state" in group_by else "eiaid"
+        assert by in ["state", "eiaid"], "EIA data only supports 'state' or 'eiaid' aggregation levels."
         if resolution == Resolution.month:
             source_data = get_eia_data.get_monthly_all(
                 data_key=data_key, years=workflow.reference_years.get("eia", [2018])
@@ -136,7 +150,7 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
             groups = [by]
     elif truth_source == TruthSource.recs:
         if resolution == Resolution.month:
-            assert aggregation_level in ["state"], "RECS data only supports 'state' aggregation level for monthly."
+            assert len(group_by) == 1, "RECS monthly only supports single-column groupby."
             source_data = get_recs_data.get_monthly_all(data_key=data_key, year=2020)
             resstock_data = get_resstock_data.get_timeseries_all(data_key=data_key, occupied_only=True)
             groups = ["state", "month"]
@@ -144,7 +158,7 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
             assert resolution == Resolution.year, "RECS data only supports 'year' or 'month' resolutions."
             source_data = get_recs_data.get_annual_all(data_key=data_key, year=2020)
             resstock_data = get_resstock_data.get_annual_all(data_key=data_key, occupied_only=True)
-            groups = [aggregation_level]
+            groups = list(group_by)
     elif truth_source == TruthSource.lrd:
         assert data_key.aggregation_type == AggregationType.average and data_key.coverage == CoverageType.all_units, (
             "LRD data only supports 'average' aggregation with 'all_units' coverage."
@@ -160,7 +174,6 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
         else:
             resstock_data = get_resstock_data.get_timeseries_all(data_key=data_key, restrict_list=eiaidlist)
             groups = ["eiaid", resolution]
-        # resstock_data = recs_mapping.add_enduse_columns(resstock_data)
 
     else:
         raise NotImplementedError(f"Truth source {truth_source} not implemented.")
@@ -263,6 +276,7 @@ def _add_95ci_bounds(
     return df
 
 
+@timed
 def scale_to_eia_customers(
     buildstock_df: pl.DataFrame,
     eia_df: pl.DataFrame,
@@ -303,7 +317,7 @@ def _apply_lrd_resolution_transforms(df: pl.DataFrame, plot_spec: PlotSpec) -> p
     """
     match plot_spec.resolution:
         case Resolution.hour_of_year | Resolution.top_100_hours:
-            if plot_spec.view in [ViewType.temp_view, ViewType.temp_count_view]:
+            if plot_spec.view in [ViewType.temp_view, ViewType.temp_distribution_view]:
                 return _prepare_temperature_view(df, plot_spec)
             else:
                 return _prepare_load_duration_curve(df, plot_spec)

@@ -20,9 +20,9 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     ViewType,
     TruthSource,
     Resolution,
+    format_aggregation_level,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
-from resstockpostproc.shared_utils.mapping import ABBR2STATE
 
 
 @dataclass(frozen=True)
@@ -82,7 +82,7 @@ def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
     sidebar_column = _resolve_sidebar_column(plot_spec)
     rse_column = _resolve_rse_column(plot_spec)
     timeseries_column = _resolve_timeseries_column(plot_spec)
-    title = _resolve_title(plot_spec)
+    title = plot_spec.get_display_title()
     quantity_title = _resolve_quantity_title(plot_spec)
     truth_label = _extract_truth_source_label(plot_spec.truth_source, data) if sidebar_column else ""
     sidebar_title = _resolve_sidebar_title(plot_spec, truth_label)
@@ -136,7 +136,7 @@ def _resolve_quantity_column(plot_spec: PlotSpec) -> str:
     """
     # LRD: simple pattern
     if plot_spec.truth_source == TruthSource.lrd:
-        if plot_spec.view == ViewType.temp_count_view:
+        if plot_spec.view == ViewType.temp_distribution_view:
             return "temp_count"
         return f"{plot_spec.quantity}_value"
 
@@ -231,7 +231,7 @@ def _resolve_timeseries_column(plot_spec: PlotSpec) -> str | None:
             return "day of year"
 
         case Resolution.hour_of_year | Resolution.top_100_hours:
-            if plot_spec.view in [ViewType.temp_view, ViewType.temp_count_view]:
+            if plot_spec.view in [ViewType.temp_view, ViewType.temp_distribution_view]:
                 return "resstock_temp"
             return "percent_time"
 
@@ -245,133 +245,12 @@ def _resolve_timeseries_column(plot_spec: PlotSpec) -> str | None:
             return None
 
 
-def _resolve_title(plot_spec: PlotSpec) -> str:
-    """Resolve the plot title based on resolution, view, and aggregation.
-
-    LRD: Resolution-driven titles about electricity consumption.
-    RECS/EIA: Complex titles based on quantity, aggregation, coverage, and view.
-    """
-    # LRD: resolution-driven titles
-    if plot_spec.truth_source == TruthSource.lrd:
-        return _resolve_lrd_title(plot_spec)
-
-    # RECS/EIA: complex title logic
-    return _resolve_recs_eia_title(plot_spec)
-
-
-def _resolve_lrd_title(plot_spec: PlotSpec) -> str:
-    """Build title for LRD plots based on resolution."""
-    match plot_spec.resolution:
-        case Resolution.year:
-            return "Annual Electricity Consumption per Dwelling Unit"
-
-        case Resolution.month:
-            return "Monthly Electricity Consumption per Dwelling Unit"
-
-        case Resolution.day_of_year:
-            return "Daily Electricity Consumption per Dwelling Unit"
-
-        case Resolution.hour_of_year | Resolution.top_100_hours:
-            if plot_spec.view == ViewType.temp_view:
-                return "Load vs Outdoor Drybulb Temperature"
-            if plot_spec.view == ViewType.temp_count_view:
-                return "Count of Number of Hours vs Outdoor Drybulb Temperature"
-            title = "Load Duration Curve of Electricity Consumption per Dwelling Unit"
-            if plot_spec.resolution == Resolution.top_100_hours:
-                title += " (Top 100 Hours)"
-            return title
-
-        case Resolution.hour_of_day:
-            return "Average Daily Electricity Consumption per Dwelling Unit"
-
-        case Resolution.hour_of_day_summer:
-            return "Average Summer Day Hourly Electricity Consumption per Dwelling Unit"
-
-        case Resolution.hour_of_day_winter:
-            return "Average Winter Day Hourly Electricity Consumption per Dwelling Unit"
-
-        case Resolution.hour_of_day_matrix:
-            return f"Hourly Load Profile Matrix for {plot_spec.focus_on}"
-
-        case _:
-            raise ValueError(f"Unsupported resolution '{plot_spec.resolution}' for LRD plot.")
-
-
-def _format_quantity_name(quantity: DataCol) -> str:
-    """Human-readable quantity name for plot titles.
-
-    Examples: ELECTRICITY_TOTAL → "Electricity", NATURAL_GAS_SPACE_HEATING → "Space Heating Natural Gas"
-    """
-    return quantity.label
-
-
-_AGGREGATION_LEVEL_LABELS = {
-    "census_division_recs": "Census Division",
-    "geometry_building_type_recs": "Building Type",
-    "building_america_climate_zone": "Climate Zone",
-    "heating_fuel": "Heating Fuel",
-    "state": "State",
-    "eiaid": "Utility",
-}
-
-
-def _format_aggregation_level(agg_level: str) -> str:
-    """Convert an aggregation level column name to a display label."""
-    return _AGGREGATION_LEVEL_LABELS.get(agg_level, agg_level.replace("_", " ").title())
-
-
-def _format_focus_label(focus_on: str) -> str:
-    """Convert a raw focus_on value to a human-readable display label.
-
-    "US Total" → "U.S. Total", state abbreviations → full names, others pass through.
-    """
-    if focus_on == "US Total":
-        return "U.S. Total"
-    if focus_on in ABBR2STATE:
-        return ABBR2STATE[focus_on]
-    return focus_on
-
-
-def _resolve_recs_eia_title(plot_spec: PlotSpec) -> str:
-    """Build publication-quality title for RECS/EIA plots."""
-    quantity_name = _format_quantity_name(plot_spec.quantity) if plot_spec.quantity != DataCol.ALL else "Enduse"
-    agg_label = _format_aggregation_level(plot_spec.aggregation_level)
-    grouping = f"({_format_focus_label(plot_spec.focus_on)})" if plot_spec.focus_on else f"by {agg_label}"
-    is_monthly = plot_spec.resolution == Resolution.month
-
-    # Dwelling unit count case
-    if plot_spec.quantity == DataCol.UNITS_COUNT:
-        return f"Number of Occupied Dwelling Units {grouping}"
-
-    # Penetration view
-    if plot_spec.view == ViewType.penetration:
-        if plot_spec.quantity == DataCol.ALL:
-            usage_name = "the specified End Use"
-        else:
-            usage_name = plot_spec.quantity.penetration_label
-        return f"Share of Dwelling Units using {usage_name} {grouping}"
-
-    # Distribution view
-    if plot_spec.view == ViewType.distribution:
-        per = "per Consuming Dwelling Unit" if plot_spec.coverage == CoverageType.users_only else "per Dwelling Unit"
-        return f"Distribution of {quantity_name} Consumption {per} {grouping}"
-
-    # Total aggregation
-    period = "Monthly" if is_monthly else "Annual"
-    if plot_spec.aggregation_type == AggregationType.total:
-        return f"{period} {quantity_name} Consumption {grouping}"
-
-    # Average aggregation
-    per = "per Consuming Dwelling Unit" if plot_spec.coverage == CoverageType.users_only else "per Dwelling Unit"
-    return f"Average {period} {quantity_name} Consumption {per} {grouping}"
-
-
 def _resolve_diff_view_title(plot_spec: PlotSpec, truth_label: str) -> str:
     """Build the figure title for diff_view plots.
 
     Reuses the value_view title and wraps it with percent difference framing.
     """
-    base = _resolve_recs_eia_title(plot_spec)
+    base = plot_spec.get_display_title()
     return f"Percent Difference on {base}<br> Compared to {truth_label}"
 
 
@@ -382,7 +261,7 @@ def _resolve_quantity_title(plot_spec: PlotSpec) -> str:
     """
     # LRD: mostly kWh, with special case for temp_count
     if plot_spec.truth_source == TruthSource.lrd:
-        if plot_spec.view == ViewType.temp_count_view:
+        if plot_spec.view == ViewType.temp_distribution_view:
             return "count"
         return "kWh"
 
@@ -431,7 +310,7 @@ def _resolve_tick_config(plot_spec: PlotSpec, data: pl.DataFrame) -> tuple[tuple
             return None, None
 
         case Resolution.hour_of_year | Resolution.top_100_hours:
-            if plot_spec.view in [ViewType.temp_view, ViewType.temp_count_view]:
+            if plot_spec.view in [ViewType.temp_view, ViewType.temp_distribution_view]:
                 # Temperature plots use auto-ticks
                 return None, None
             # Load duration curve: compute ticks from data
@@ -468,7 +347,7 @@ def _resolve_x_unit(plot_spec: PlotSpec) -> str:
 
     Returns '°F' for temperature views, empty string otherwise.
     """
-    if plot_spec.view in [ViewType.temp_view, ViewType.temp_count_view]:
+    if plot_spec.view in [ViewType.temp_view, ViewType.temp_distribution_view]:
         return "°F"
     return ""
 
@@ -525,15 +404,15 @@ def _uses_stacked_layout(plot_spec: PlotSpec) -> bool:
         return True
     if plot_spec.quantity == DataCol.ALL:
         return True
-    if plot_spec.aggregation_level not in [DataCol.STATE]:
+    if plot_spec.aggregation_level is None or plot_spec.aggregation_level not in [DataCol.STATE]:
         return True
     return False
 
 
 def _check_single_entity(data: pl.DataFrame, plot_spec: PlotSpec, timeseries_column: str | None) -> bool:
     """Check if data contains a single entity (triggers simplified rendering)."""
-    if plot_spec.aggregation_level not in data.columns:
-        return False
+    if plot_spec.aggregation_level is None or plot_spec.aggregation_level not in data.columns:
+        return True  # No aggregation = single entity
 
     unique_entities = data[plot_spec.aggregation_level].unique().to_list()
     return len(unique_entities) == 1
@@ -548,6 +427,8 @@ def get_second_category_column(plot_spec: PlotSpec) -> str:
     """Get the column name for the second category (layout grouping).
 
     This determines which column is used for the tilemap layout.
+    Uses aggregation_level if set, otherwise falls back to the DataKey's
+    aggregation_level (derived from focus_on columns).
     """
     match plot_spec.resolution:
         case Resolution.hour_of_day_matrix:
@@ -555,9 +436,10 @@ def get_second_category_column(plot_spec: PlotSpec) -> str:
         case Resolution.day_of_year:
             return "utility_vertical"
         case _:
-            if plot_spec.aggregation_level == "eiaid":
+            agg = plot_spec.aggregation_level or plot_spec.effective_group_by[-1]
+            if agg == "eiaid":
                 return "utility_name"
-            return plot_spec.aggregation_level
+            return agg
 
 
 def get_second_category_title(plot_spec: PlotSpec) -> str:
@@ -566,6 +448,7 @@ def get_second_category_title(plot_spec: PlotSpec) -> str:
         case Resolution.hour_of_day_matrix:
             return "Month / Day Type"
         case _:
-            if plot_spec.aggregation_level == "eiaid":
+            agg = plot_spec.aggregation_level or plot_spec.effective_group_by[-1]
+            if agg == "eiaid":
                 return "Utility (State)"
-            return _format_aggregation_level(plot_spec.aggregation_level)
+            return format_aggregation_level(agg)
