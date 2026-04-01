@@ -10,7 +10,6 @@
 # Project-specific files
 /project_national/national_baseline
 /project_national/sdr_upgrades_tmy3*
-/project_national/sdr_upgrades_amy2018*
 /project_testing/testing_baseline
 /national_baseline
 /testing_baseline
@@ -30,22 +29,11 @@ buildstockbatch_crash_details.log
 /weather
 
 # Development environment and system files
-.idea/
 .vscode/
-node_modules/
 .DS_Store
 **/.ipynb_checkpoints/*
 **/.bsq_cache/
 
-# Data directories
-**/data/*
-
-# Python virtual environments
-**/.venv/
-
-# Python compiled files
-**/*.pyc
-**/__pycache__/
 # Postprocessing build outputs
 /postprocessing/build/
 /postprocessing/resstockpostproc.egg-info/

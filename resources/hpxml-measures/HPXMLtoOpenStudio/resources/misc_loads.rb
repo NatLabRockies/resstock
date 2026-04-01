@@ -249,10 +249,10 @@ module MiscLoads
     heater_sch = nil
     if pool_or_spa.is_a? HPXML::Pool
       obj_name = Constants::ObjectTypeMiscPoolHeater
-      col_name = SchedulesFile::Columns[:PoolHeater].name
+      col_name = 'pool_heater'
     else
       obj_name = Constants::ObjectTypeMiscPermanentSpaHeater
-      col_name = SchedulesFile::Columns[:PermanentSpaHeater].name
+      col_name = 'permanent_spa_heater'
     end
     if not schedules_file.nil?
       heater_sch = schedules_file.create_schedule_file(model, col_name: col_name)
@@ -334,10 +334,10 @@ module MiscLoads
     pump_sch = nil
     if pool_or_spa.is_a? HPXML::Pool
       obj_name = Constants::ObjectTypeMiscPoolPump
-      col_name = SchedulesFile::Columns[:PoolPump].name
+      col_name = 'pool_pump'
     else
       obj_name = Constants::ObjectTypeMiscPermanentSpaPump
-      col_name = SchedulesFile::Columns[:PermanentSpaPump].name
+      col_name = 'permanent_spa_pump'
     end
     if not schedules_file.nil?
       pump_sch = schedules_file.create_schedule_file(model, col_name: col_name)

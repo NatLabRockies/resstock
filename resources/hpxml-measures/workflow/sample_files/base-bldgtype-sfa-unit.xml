@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<HPXML xmlns='http://hpxmlonline.com/2023/09' schemaVersion='4.2'>
+<HPXML xmlns='http://hpxmlonline.com/2023/09' schemaVersion='4.0'>
   <XMLTransactionHeaderInformation>
     <XMLType>HPXML</XMLType>
     <XMLGeneratedBy>tasks.rb</XMLGeneratedBy>
@@ -8,9 +8,12 @@
   </XMLTransactionHeaderInformation>
   <SoftwareInfo>
     <extension>
+      <SimulationControl>
+        <Timestep>60</Timestep>
+      </SimulationControl>
       <UtilityBillScenarios>
         <UtilityBillScenario>
-          <Name>Default</Name>
+          <Name>Bills</Name>
         </UtilityBillScenario>
       </UtilityBillScenarios>
     </extension>
@@ -29,6 +32,7 @@
     <BuildingDetails>
       <BuildingSummary>
         <Site>
+          <SiteType>suburban</SiteType>
           <Surroundings>attached on one side</Surroundings>
           <VerticalSurroundings>no units above or below</VerticalSurroundings>
           <AzimuthOfFrontOfHome>180</AzimuthOfFrontOfHome>
@@ -39,6 +43,7 @@
         </Site>
         <BuildingConstruction>
           <ResidentialFacilityType>single-family attached</ResidentialFacilityType>
+          <NumberofUnitsInBuilding>3</NumberofUnitsInBuilding>
           <NumberofConditionedFloors>2.0</NumberofConditionedFloors>
           <NumberofConditionedFloorsAboveGrade>1.0</NumberofConditionedFloorsAboveGrade>
           <AverageCeilingHeight>8.0</AverageCeilingHeight>
@@ -130,7 +135,7 @@
             <Emittance>0.92</Emittance>
             <Insulation>
               <SystemIdentifier id='RimJoist1Insulation'/>
-              <AssemblyEffectiveRValue>13.9</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>23.0</AssemblyEffectiveRValue>
             </Insulation>
           </RimJoist>
           <RimJoist>
@@ -163,7 +168,7 @@
             </InteriorFinish>
             <Insulation>
               <SystemIdentifier id='Wall1Insulation'/>
-              <AssemblyEffectiveRValue>22.7</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>23.0</AssemblyEffectiveRValue>
             </Insulation>
           </Wall>
           <Wall>
@@ -222,9 +227,9 @@
             <SystemIdentifier id='FoundationWall1'/>
             <ExteriorAdjacentTo>ground</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
-            <Type>solid concrete</Type>
             <Height>8.0</Height>
             <Area>685.9</Area>
+            <Thickness>8.0</Thickness>
             <DepthBelowGrade>7.0</DepthBelowGrade>
             <InteriorFinish>
               <Type>gypsum board</Type>
@@ -233,7 +238,9 @@
               <SystemIdentifier id='FoundationWall1Insulation'/>
               <Layer>
                 <InstallationType>continuous - exterior</InstallationType>
-                <NominalRValue>10.0</NominalRValue>
+                <NominalRValue>8.9</NominalRValue>
+                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
+                <DistanceToBottomOfInsulation>8.0</DistanceToBottomOfInsulation>
               </Layer>
               <Layer>
                 <InstallationType>continuous - interior</InstallationType>
@@ -245,9 +252,9 @@
             <SystemIdentifier id='FoundationWall2'/>
             <ExteriorAdjacentTo>basement - conditioned</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
-            <Type>solid concrete</Type>
             <Height>8.0</Height>
             <Area>293.9</Area>
+            <Thickness>8.0</Thickness>
             <DepthBelowGrade>7.0</DepthBelowGrade>
             <InteriorFinish>
               <Type>gypsum board</Type>
@@ -280,7 +287,7 @@
             </InteriorFinish>
             <Insulation>
               <SystemIdentifier id='Floor1Insulation'/>
-              <AssemblyEffectiveRValue>39.6</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>39.3</AssemblyEffectiveRValue>
             </Insulation>
           </Floor>
         </Floors>
@@ -289,6 +296,7 @@
             <SystemIdentifier id='Slab1'/>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
             <Area>900.0</Area>
+            <Thickness>4.0</Thickness>
             <ExposedPerimeter>85.7</ExposedPerimeter>
             <PerimeterInsulation>
               <SystemIdentifier id='Slab1PerimeterInsulation'/>
@@ -315,11 +323,12 @@
             <SystemIdentifier id='Window1'/>
             <Area>35.3</Area>
             <Azimuth>0</Azimuth>
-            <UFactor>0.35</UFactor>
-            <SHGC>0.44</SHGC>
+            <UFactor>0.33</UFactor>
+            <SHGC>0.45</SHGC>
             <InteriorShading>
               <SystemIdentifier id='Window1InteriorShading'/>
-              <Type>light curtains</Type>
+              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
             </InteriorShading>
             <FractionOperable>0.67</FractionOperable>
             <AttachedToWall idref='Wall1'/>
@@ -328,11 +337,12 @@
             <SystemIdentifier id='Window2'/>
             <Area>35.3</Area>
             <Azimuth>180</Azimuth>
-            <UFactor>0.35</UFactor>
-            <SHGC>0.44</SHGC>
+            <UFactor>0.33</UFactor>
+            <SHGC>0.45</SHGC>
             <InteriorShading>
               <SystemIdentifier id='Window2InteriorShading'/>
-              <Type>light curtains</Type>
+              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
             </InteriorShading>
             <FractionOperable>0.67</FractionOperable>
             <AttachedToWall idref='Wall1'/>
@@ -341,11 +351,12 @@
             <SystemIdentifier id='Window3'/>
             <Area>52.9</Area>
             <Azimuth>270</Azimuth>
-            <UFactor>0.35</UFactor>
-            <SHGC>0.44</SHGC>
+            <UFactor>0.33</UFactor>
+            <SHGC>0.45</SHGC>
             <InteriorShading>
               <SystemIdentifier id='Window3InteriorShading'/>
-              <Type>light curtains</Type>
+              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
             </InteriorShading>
             <FractionOperable>0.67</FractionOperable>
             <AttachedToWall idref='Wall1'/>
@@ -375,7 +386,7 @@
                 <Furnace/>
               </HeatingSystemType>
               <HeatingSystemFuel>natural gas</HeatingSystemFuel>
-              <HeatingCapacity>25000.0</HeatingCapacity>
+              <HeatingCapacity>24000.0</HeatingCapacity>
               <AnnualHeatingEfficiency>
                 <Units>AFUE</Units>
                 <Value>0.92</Value>
@@ -391,8 +402,8 @@
               <CompressorType>single stage</CompressorType>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
-                <Units>SEER2</Units>
-                <Value>13.4</Value>
+                <Units>SEER</Units>
+                <Value>13.0</Value>
               </AnnualCoolingEfficiency>
             </CoolingSystem>
           </HVACPlant>
@@ -461,13 +472,18 @@
             <FuelType>electricity</FuelType>
             <WaterHeaterType>storage water heater</WaterHeaterType>
             <Location>conditioned space</Location>
+            <TankVolume>40.0</TankVolume>
             <FractionDHWLoadServed>1.0</FractionDHWLoadServed>
-            <UniformEnergyFactor>0.94</UniformEnergyFactor>
+            <HeatingCapacity>18767.0</HeatingCapacity>
+            <EnergyFactor>0.95</EnergyFactor>
+            <HotWaterTemperature>125.0</HotWaterTemperature>
           </WaterHeatingSystem>
           <HotWaterDistribution>
             <SystemIdentifier id='HotWaterDistribution1'/>
             <SystemType>
-              <Standard/>
+              <Standard>
+                <PipingLength>50.0</PipingLength>
+              </Standard>
             </SystemType>
             <PipeInsulation>
               <PipeRValue>0.0</PipeRValue>
@@ -476,7 +492,7 @@
           <WaterFixture>
             <SystemIdentifier id='WaterFixture1'/>
             <WaterFixtureType>shower head</WaterFixtureType>
-            <LowFlow>false</LowFlow>
+            <LowFlow>true</LowFlow>
           </WaterFixture>
           <WaterFixture>
             <SystemIdentifier id='WaterFixture2'/>
@@ -488,6 +504,7 @@
       <Appliances>
         <ClothesWasher>
           <SystemIdentifier id='ClothesWasher1'/>
+          <Location>conditioned space</Location>
           <IntegratedModifiedEnergyFactor>1.21</IntegratedModifiedEnergyFactor>
           <RatedAnnualkWh>380.0</RatedAnnualkWh>
           <LabelElectricRate>0.12</LabelElectricRate>
@@ -498,12 +515,15 @@
         </ClothesWasher>
         <ClothesDryer>
           <SystemIdentifier id='ClothesDryer1'/>
+          <Location>conditioned space</Location>
           <FuelType>electricity</FuelType>
-          <DryingMethod>conventional</DryingMethod>
           <CombinedEnergyFactor>3.73</CombinedEnergyFactor>
+          <Vented>true</Vented>
+          <VentedFlowRate>150.0</VentedFlowRate>
         </ClothesDryer>
         <Dishwasher>
           <SystemIdentifier id='Dishwasher1'/>
+          <Location>conditioned space</Location>
           <RatedAnnualkWh>307.0</RatedAnnualkWh>
           <PlaceSettingCapacity>12</PlaceSettingCapacity>
           <LabelElectricRate>0.12</LabelElectricRate>
@@ -513,10 +533,12 @@
         </Dishwasher>
         <Refrigerator>
           <SystemIdentifier id='Refrigerator1'/>
+          <Location>conditioned space</Location>
           <RatedAnnualkWh>650.0</RatedAnnualkWh>
         </Refrigerator>
         <CookingRange>
           <SystemIdentifier id='CookingRange1'/>
+          <Location>conditioned space</Location>
           <FuelType>electricity</FuelType>
           <IsInduction>false</IsInduction>
         </CookingRange>
@@ -579,10 +601,22 @@
         <PlugLoad>
           <SystemIdentifier id='PlugLoad1'/>
           <PlugLoadType>TV other</PlugLoadType>
+          <Load>
+            <Units>kWh/year</Units>
+            <Value>620.0</Value>
+          </Load>
         </PlugLoad>
         <PlugLoad>
           <SystemIdentifier id='PlugLoad2'/>
           <PlugLoadType>other</PlugLoadType>
+          <Load>
+            <Units>kWh/year</Units>
+            <Value>1638.0</Value>
+          </Load>
+          <extension>
+            <FracSensible>0.855</FracSensible>
+            <FracLatent>0.045</FracLatent>
+          </extension>
         </PlugLoad>
       </MiscLoads>
     </BuildingDetails>

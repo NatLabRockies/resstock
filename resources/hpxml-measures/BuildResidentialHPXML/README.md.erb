@@ -22,10 +22,7 @@
 <% end %>
 - **Required:** ``<%= argument[:required] %>``
 <% if argument[:type] == "Choice" %>
-- **Choices:** <br/>  - `<%= argument[:choice_values].join("`<br/>  - `") %>`
-<% end %>
-<% if argument[:default_value] %>
-- **Default:** `<%= argument[:default_value] %>`
+- **Choices:** `<%= argument[:choice_values].join("`, `") %>`
 <% end %>
 <br/>
 <% end %>
