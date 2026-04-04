@@ -13,29 +13,17 @@ classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3.11",
 ]
-requires-python = ">=3.12,<3.13"
+requires-python = ">=3.11"
 dependencies = [
-    "boto3[crt]>=1.39.4",
-    "connectorx>=0.4.3",
-    "dash-bootstrap-components>=2.0.3",
-    "dash-extensions>=2.0.4",
-    "dash[diskcache]>=3.0.4",
-    "diskcache>=5.6.3",
-    "filelock>=3.19.1",
-    "fsspec",
-    "geopandas",
-    "gunicorn>=23.0.0",
-    "kaleido",
-    "nbformat>=4.2.0",
     "pandas",
+    "geopandas",
     "plotly",
-    "polars-lts-cpu",
-    "prefect>=3.4.5",
     "pyarrow",
-    "pydantic>=2.11.5",
-    "pyyaml",
+    "fsspec",
     "s3fs",
-    "scipy>=1.16.1",
+    "polars",
+    "buildstock_query @ git+https://github.com/NREL/buildstock-query@main",
+    "kaleido==0.2.1",
 ]
 
 [project.urls]
@@ -52,27 +40,12 @@ resstockpostproc = [
     "resources/**/*"
 ]
 
-[dependency-groups]
+[project.optional-dependencies]
 dev = [
-    "boto3-stubs>=1.39.4",
-    "ipykernel",
-    "mypy>=1.16.0",
-    "pandas-stubs",
-    "plotly-stubs>=0.0.5",
-    "pre-commit>=4.2.0",
     "pytest",
-    "scipy-stubs",
-    "types-colorama",
-    "types-decorator",
-    "types-geopandas",
-    "types-greenlet",
-    "types-jsonschema",
-    "types-openpyxl",
-    "types-pexpect",
-    "types-psutil",
-    "types-pygments",
-    "types-python-dateutil",
-    "types-pyyaml",
+    "black",
+    "autopep8",
+    "ipykernel",
 ]
 
 [tool.hatch.metadata]  # To allow direct references to git dependencies
@@ -82,15 +55,8 @@ allow-direct-references = true
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
-[tool.prefect.server.ephemeral]
-enabled = true
-[tool.prefect.server]
-analytics_enabled = false
-[tool.prefect.cloud]
-enable_orchestration_telemetry = false
-[tool.prefect.logging]
-level = "INFO"
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+]
 
-[tool.mypy]
-files = "resstockpostproc/upgrade_comparison"
-follow_imports = "silent"

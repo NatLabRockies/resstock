@@ -97,7 +97,7 @@ def print_failures(failures: list[dict[str, Any]], csv_path: str) -> None:
         # Handle step_failures formatting
         try:
             # Use ast.literal_eval to safely parse Python literal syntax
-            import ast  # noqa: PLC0415
+            import ast
 
             # If step_failures is a string representation of a Python list
             if isinstance(step_failures, str) and step_failures.strip().startswith("["):

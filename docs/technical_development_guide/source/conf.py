@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = u'ResStock'
-copyright = u'2026, NLR'
+copyright = u'2019, NREL'
 author = u'NREL'
 
 # The short X.Y version

@@ -8744,6 +8744,17 @@ Logic that specifies if the entire package upgrade (all options) will apply base
 
 <br/>
 
+**Run Measure**
+
+integer argument to run measure [1 is run, 0 is no run]
+
+- **Name:** ``run_measure``
+- **Type:** ``Integer``
+
+- **Required:** ``true``
+
+<br/>
+
 
 
 

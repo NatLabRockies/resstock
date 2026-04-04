@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# see the URL below for information on how to write OpenStudio measures
+# http://nrel.github.io/OpenStudio-user-documentation/reference/measure_writing_guide/
+
 require 'openstudio'
 require 'msgpack'
 require_relative 'resources/constants'
@@ -23,18 +26,16 @@ class QOIReport < OpenStudio::Measure::ReportingMeasure
     return args
   end
 
-  def modelOutputRequests(model, runner, user_arguments)
-    return false if runner.halted
+  def energyPlusOutputRequests(runner, user_arguments)
+    super(runner, user_arguments)
 
-    # use the built-in error checking
-    if !runner.validateUserArguments(arguments(model), user_arguments)
-      return false
-    end
+    return OpenStudio::IdfObjectVector.new if runner.halted
 
-    Model.add_output_variable(model, key_value: '*', variable_name: 'Site Outdoor Air Drybulb Temperature', reporting_frequency: 'hourly')
-    Model.add_output_meter(model, meter_name: 'Electricity:Facility', reporting_frequency: 'hourly')
+    results = OpenStudio::IdfObjectVector.new
+    results << OpenStudio::IdfObject.load('Output:Variable,*,Site Outdoor Air Drybulb Temperature,hourly;').get
+    results << OpenStudio::IdfObject.load('Output:Meter,Electricity:Facility,hourly;').get
 
-    return true
+    return results
   end
 
   def seasons

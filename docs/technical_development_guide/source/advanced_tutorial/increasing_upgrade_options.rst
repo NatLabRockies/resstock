@@ -1,7 +1,7 @@
 Increasing Upgrade Options
 ==========================
 
-To allow more options per upgrade or costs per option, increase the relevant constants assigned in ``measures/ApplyUpgrade/resources/constants.rb``:
+To allow more options per upgrade, increase the value returned by the following method defined in ``measures/ApplyUpgrade/resources/constants.rb``:
 
 .. code::
 
@@ -10,4 +10,4 @@ To allow more options per upgrade or costs per option, increase the relevant con
     NumApplyUpgradesCostsPerOption = 2
   ...
   
-Then run ``openstudio tasks.rb update_measures``. See :doc:`testing_infrastructure/running_task_commands` for instructions on how to run tasks.
+Then run ``openstudio tasks.rb update_measures``. See :doc:`running_task_commands` for instructions on how to run tasks.

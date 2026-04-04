@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_existing_model</name>
   <uid>dedf59bb-3b88-4f16-8755-2c1ff5519cbf</uid>
-  <version_id>e89a57eb-db14-4c56-b2f9-5c453336eca5</version_id>
-  <version_modified>2026-01-05T22:45:14Z</version_modified>
+  <version_id>af11c120-e93c-4c27-b280-3862a45c0930</version_id>
+  <version_modified>2025-05-22T16:11:00Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>BuildExistingModel</class_name>
   <display_name>Build Existing Model</display_name>
@@ -173,7 +173,7 @@
     <argument>
       <name>utility_bill_scenario_names</name>
       <display_name>Utility Bills: Scenario Names</display_name>
-      <description>Names of utility bill scenarios. If multiple scenarios, use a comma-separated list.</description>
+      <description>Names of utility bill scenarios. If multiple scenarios, use a comma-separated list. If multiple scenarios, use a comma-separated list.</description>
       <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -340,7 +340,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>DA3A75A2</checksum>
+      <checksum>E4A69761</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -357,7 +357,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>2A37E546</checksum>
+      <checksum>9B711C98</checksum>
     </file>
   </files>
 </measure>

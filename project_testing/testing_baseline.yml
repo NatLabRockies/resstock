@@ -1,6 +1,6 @@
 schema_version: '0.4'
-os_version: 3.10.0
-os_sha: 86d7e215a1
+os_version: 3.9.0
+os_sha: c77fbb9569
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_testing # Relative to buildstock_directory
 output_directory: testing_baseline
@@ -19,7 +19,7 @@ sampler:
   args:
     n_datapoints: 100
 
-# NLR High Performance Computing machine configuration
+# NREL High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
 # kestrel:
 #   n_jobs: 3
@@ -54,7 +54,7 @@ sampler:
 workflow_generator:
   # ResStock HPXML workflow generator
   type: residential_hpxml
-  version: 2025.12.03
+  version: 2025.04.29
   args:
     # Annual simulation and timestep
     build_existing_model:
@@ -103,7 +103,6 @@ workflow_generator:
 
     # Outputs to include
     simulation_output_report:
-      include_annual_emission_end_uses: true
       timeseries_frequency: hourly
       include_timeseries_total_consumptions: true
       include_timeseries_fuel_consumptions: true
@@ -131,7 +130,7 @@ workflow_generator:
     # Other reporting measures to run
     reporting_measures:
       - measure_dir_name: QOIReport
-      - measure_dir_name: ServerDirectoryCleanup # include an additional ServerDirectoryCleanup to remove all the extra files that debug: true wrote (i.e., save disk space)
+      - measure_dir_name: ServerDirectoryCleanup # tack this on so we can save some disk space (when using debug: true)
         arguments:
           retain_in_osm: true
           retain_eplusout_err: true
@@ -139,4 +138,4 @@ workflow_generator:
           retain_eplusout_rdd: true
           retain_eplustbl_htm: true
 
-    debug: true # passed into HPXMLtoOpenStudio, UpgradeCosts, and first instance of ServerDirectoryCleanup
+    debug: true

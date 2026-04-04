@@ -1,4 +1,4 @@
-Option=Uninsulated	Option=Insulated	Option=Insulated, Timer	Option=Insulated, Demand	sampling_probability
-0.25	0.25	0.25	0.25	1
+Option=Uninsulated	Option=R-2	Option=R-2, Timer	Option=R-2, Demand	Option=R-5, Timer	sampling_probability
+0.2	0.2	0.2	0.2	0.2	1
 # Created by: manually created
-# Description: Type of distribution system and presence of hot water piping insulation.
+# Description: Hot water piping material and insulation level.
