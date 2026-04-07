@@ -32,6 +32,9 @@ notes:
       metric:
         - Distribution of Consumption per Dwelling Unit
         - Distribution of Consumption per Consuming Dwelling Unit
+        - Monthly Consumption
+        - Average Monthly Consumption per Dwelling Unit
+        - Average Monthly Consumption per Consuming Dwelling Unit
     note: >
       Error bars represent the 95% confidence interval based on
       RECS relative standard error (RSE) estimates.
