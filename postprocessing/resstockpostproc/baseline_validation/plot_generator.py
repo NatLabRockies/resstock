@@ -268,28 +268,31 @@ def _expand_templates(
     work_items = []
 
     for tmpl_index, tmpl in enumerate(templates):
-        allow_cross = (
-            tmpl.truth_source == TruthSource.recs
-            and tmpl.resolution == Resolution.year
-        )
+        allow_cross = tmpl.truth_source in (TruthSource.recs, TruthSource.eia)
+        if allow_cross and tmpl.truth_source == TruthSource.recs and tmpl.resolution == Resolution.year:
+            cross_chars = RECS_CROSS_FILTER_CHARS
+        else:
+            # Monthly RECS / EIA: only state can be a filter
+            cross_chars = ("state",) if allow_cross else None
         triples = generate_slot_triples(
             tmpl.eligible_chars,
             allow_cross_filter=allow_cross,
-            cross_filter_chars=RECS_CROSS_FILTER_CHARS if allow_cross else None,
+            cross_filter_chars=cross_chars,
         )
 
         for f1_char, f2_char, agg_level in triples:
             # --- Base spec construction ---
-            # Build a PlotSpec with the triple's agg_level.
-            # When agg_level is None (leaf or no-grouping), we still need a valid
-            # PlotSpec — aggregation_level will be set to None.
+            # Use agg_level when set, otherwise fall back to f1_char so that
+            # Block 2 triples like (state, None, None) get the right
+            # aggregation_level for viz labels and data fetching.
+            effective_agg = agg_level or f1_char
             spec = _make_spec(
                 truth_source=tmpl.truth_source,
                 quantity=tmpl.quantity,
                 resolution=tmpl.resolution,
                 aggregation_type=tmpl.aggregation_type,
                 coverage=tmpl.coverage,
-                aggregation_level=agg_level,
+                aggregation_level=effective_agg,
                 view=tmpl.view,
             )
             spec_pair = _make_pair(spec)
