@@ -46,8 +46,10 @@ notes:
       - Average Monthly Consumption per Dwelling Unit
       - Average Monthly Consumption per Consuming Dwelling Unit
     note: >
-      The light-colored band around RECS indicates the 95% confidence
-      interval based on RECS relative standard error (RSE) estimates.
+      The darker filled area represents RECS consumption (from the lower
+      confidence bound to zero). The lighter band above it shows the 95%
+      confidence interval based on RECS relative standard error (RSE)
+      estimates.
 
   - quantity: Number of dwelling units
     context: plot
