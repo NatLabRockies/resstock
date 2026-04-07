@@ -203,9 +203,10 @@ def _resolve_rse_column(plot_spec: PlotSpec) -> str | None:
     if plot_spec.view == ViewType.distribution:
         return None
 
-    # Dwelling unit count case
+    # Dwelling unit counts derive from calibrated weights (raked to Census
+    # control totals), so jackknife RSE is near-zero and misleading — skip.
     if plot_spec.quantity == DataCol.UNITS_COUNT:
-        return "units_count_rse"
+        return None
 
     # Penetration view uses percent_users RSE
     if plot_spec.view == ViewType.penetration:

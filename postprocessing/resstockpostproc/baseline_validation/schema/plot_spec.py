@@ -410,7 +410,7 @@ class PlotSpec(NoExtraModel):
         Uses effective_group_by (sorted union of focus_on columns + aggregation_level)
         to determine which columns the data must be grouped by.
         """
-        group_by = self.effective_group_by
+        group_by = self.effective_group_by or ("state",)
         return DataKey(
             truth_source=self.truth_source,
             group_by=group_by,

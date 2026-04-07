@@ -47,8 +47,9 @@ class TestResolveRSEColumn:
         """Distribution box plots use quartiles, not RSE."""
         assert _resolve_rse_column(_make_spec(view=ViewType.distribution)) is None
 
-    def test_units_count_quantity(self):
-        assert _resolve_rse_column(_make_spec(quantity=DataCol.UNITS_COUNT)) == "units_count_rse"
+    def test_units_count_has_no_rse(self):
+        """Unit counts derive from calibrated weights — RSE is meaningless."""
+        assert _resolve_rse_column(_make_spec(quantity=DataCol.UNITS_COUNT)) is None
 
     def test_penetration_view(self):
         spec = _make_spec(

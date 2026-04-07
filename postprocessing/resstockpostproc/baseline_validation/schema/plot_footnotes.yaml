@@ -15,11 +15,23 @@
 #   context: table  — only shown on data table pages (not plots)
 #   (omitted)       — shown on both plots and data tables
 #
+# Optional exclude key skips the note when any excluded value matches:
+#   exclude:
+#     quantity: Number of dwelling units          # single value
+#     metric:                                     # or a list of values
+#       - Distribution of Consumption per Dwelling Unit
+#       - Distribution of Consumption per Consuming Dwelling Unit
+#
 # Omitted matcher keys act as wildcards (match anything).
 
 notes:
   - truth_source: recs
     context: plot
+    exclude:
+      quantity: Number of dwelling units
+      metric:
+        - Distribution of Consumption per Dwelling Unit
+        - Distribution of Consumption per Consuming Dwelling Unit
     note: >
       Error bars represent the 95% confidence interval based on
       RECS relative standard error (RSE) estimates.

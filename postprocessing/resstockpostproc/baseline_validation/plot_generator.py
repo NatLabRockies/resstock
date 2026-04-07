@@ -95,6 +95,10 @@ def _resolve_footnotes(footnote_rules: list[dict], row: dict, context: str | Non
     Each rule specifies attribute matchers (truth_source, quantity, metric).
     A rule matches when ALL its specified attributes equal the row values.
     Unspecified attributes act as wildcards.
+
+    Rules may also specify an ``exclude`` map whose keys are the same
+    matcher names.  If any excluded value matches the row, the rule is
+    skipped.  Values can be a single string or a list of strings.
     """
     matched = []
     for rule in footnote_rules:
@@ -102,12 +106,27 @@ def _resolve_footnotes(footnote_rules: list[dict], row: dict, context: str | Non
         if context and rule_context and rule_context != context:
             continue
 
-        if all(
+        # Positive matchers — all specified keys must match
+        if not all(
             row.get(tsv_col, "").strip() == str(rule[yaml_key])
             for yaml_key, tsv_col in _FOOTNOTE_MATCH_KEYS.items()
             if yaml_key in rule
         ):
-            matched.append(rule["note"].strip())
+            continue
+
+        # Exclusion matchers — skip if any excluded value matches
+        excludes = rule.get("exclude", {})
+        if any(
+            row.get(tsv_col, "").strip() in (
+                [str(excludes[yaml_key])] if isinstance(excludes[yaml_key], str)
+                else [str(v) for v in excludes[yaml_key]]
+            )
+            for yaml_key, tsv_col in _FOOTNOTE_MATCH_KEYS.items()
+            if yaml_key in excludes
+        ):
+            continue
+
+        matched.append(rule["note"].strip())
     return matched
 
 
@@ -276,6 +295,33 @@ def _expand_templates(
             if tmpl.quantity == DataCol.ALL and agg_level is not None:
                 continue
 
+            # (None, None, None) = "US Total overview" with no grouping.
+            # Synthesise a single-entity spec grouped by the template's
+            # primary char, focused on "US Total".  LRD has no US Total
+            # concept, so skip it entirely.
+            if f1_char is None and agg_level is None:
+                if tmpl.truth_source == TruthSource.lrd:
+                    continue
+                # "US Total overview" — fetch state-level data but focus on
+                # US Total only.  agg_level stays None so downstream code
+                # treats this as a single-entity plot (no Group By in index).
+                default_char = tmpl.eligible_chars[0]   # "state" for RECS/EIA
+                spec = _make_spec(
+                    truth_source=tmpl.truth_source,
+                    quantity=tmpl.quantity,
+                    resolution=tmpl.resolution,
+                    aggregation_type=tmpl.aggregation_type,
+                    coverage=tmpl.coverage,
+                    aggregation_level=default_char,
+                    view=tmpl.view,
+                )
+                spec = spec.model_copy(update={
+                    "focus_on": ((default_char, "US Total"),),
+                })
+                spec_pair = _make_pair(spec)
+                main_spec, extra_spec = spec_pair
+                spec_entries = _build_spec_entries(main_spec, extra_spec)
+
             # --- Case 1: No filters (F1=None) → overview only ---
             if f1_char is None:
                 # hour_of_day_matrix requires per-utility focus; expand each
@@ -292,8 +338,11 @@ def _expand_templates(
                     continue
                 # Warm the disk cache so worker processes find the data.
                 get_base_data(main_spec.get_data_key())
+                # Pass focus_on from the spec so the US Total focus (set by
+                # the (None,None,None) handler above) propagates to plotters.
                 work_items.append((
-                    spec_pair, tmpl_index, spec_entries, None, (), agg_level,
+                    spec_pair, tmpl_index, spec_entries, None,
+                    main_spec.focus_on, agg_level,
                 ))
                 continue
 
@@ -734,9 +783,14 @@ def generate_plots(index=None, test_only=False, parallel=True):
 
         if final_focus_on:
             for idx, (char, value) in enumerate(final_focus_on):
-                display = ABBR2STATE.get(value, value) if char == "state" else value
-                category = format_aggregation_level(char)
-                results[sub_key][f"Filter {idx + 1}"] = f"{category}: {display}"
+                if value == "US Total":
+                    # US Total is represented as empty filter (same as "(None)")
+                    # to stay consistent with overview rows that have no filter.
+                    results[sub_key][f"Filter {idx + 1}"] = ""
+                else:
+                    display = ABBR2STATE.get(value, value) if char == "state" else value
+                    category = format_aggregation_level(char)
+                    results[sub_key][f"Filter {idx + 1}"] = f"{category}: {display}"
 
         focused_entries = [
             (
@@ -744,7 +798,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
                     "focus_on": final_focus_on,
                     "aggregation_level": final_agg,
                 }),
-                _simplify_viz_label(viz_type) if focus_val else viz_type,
+                _simplify_viz_label(viz_type) if focus_val or final_agg is None else viz_type,
             )
             for spec, viz_type in spec_entries
         ]
@@ -896,7 +950,7 @@ def main():
         "--index", type=str, default=None, help="Plot definition index to generate (e.g. '5', '1-10', '1,3,5')"
     )
     parser.add_argument(
-        "--test", action="store_true", default=False,
+        "--test", action="store_true", default=True,
         help="Generate only test subset plots (limited focus expansion)",
     )
     parser.add_argument(
