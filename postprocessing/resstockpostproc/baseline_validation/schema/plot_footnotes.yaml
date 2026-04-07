@@ -4,7 +4,7 @@
 # A note applies when ALL specified attributes match the plot's TSV row values.
 # Multiple matching notes accumulate in order.
 #
-# Supported matcher keys (must match TSV column values exactly):
+# Supported matcher keys (single string or list of strings — any-of):
 #   truth_source  — "eia", "recs", or "lrd"
 #   quantity      — e.g. "Number of dwelling units", "Natural Gas Total"
 #   metric        — e.g. "enduse penetration", "total annual consumption"
@@ -38,6 +38,16 @@ notes:
     note: >
       Error bars represent the 95% confidence interval based on
       RECS relative standard error (RSE) estimates.
+
+  - truth_source: recs
+    context: plot
+    metric:
+      - Monthly Consumption
+      - Average Monthly Consumption per Dwelling Unit
+      - Average Monthly Consumption per Consuming Dwelling Unit
+    note: >
+      The light-colored band around RECS indicates the 95% confidence
+      interval based on RECS relative standard error (RSE) estimates.
 
   - quantity: Number of dwelling units
     context: plot

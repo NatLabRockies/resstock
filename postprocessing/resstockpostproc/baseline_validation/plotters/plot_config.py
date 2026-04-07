@@ -195,10 +195,6 @@ def _resolve_rse_column(plot_spec: PlotSpec) -> str | None:
     if plot_spec.truth_source != TruthSource.recs:
         return None
 
-    # Monthly data doesn't have RSE columns
-    if plot_spec.resolution == Resolution.month:
-        return None
-
     # Distribution plots don't have RSE
     if plot_spec.view == ViewType.distribution:
         return None

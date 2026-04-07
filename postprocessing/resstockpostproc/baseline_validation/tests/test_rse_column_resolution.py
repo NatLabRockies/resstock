@@ -39,9 +39,9 @@ class TestResolveRSEColumn:
             )
         ) is None
 
-    def test_monthly_resolution_returns_none(self):
-        """Monthly RECS data has no RSE columns."""
-        assert _resolve_rse_column(_make_spec(resolution=Resolution.month)) is None
+    def test_monthly_resolution_has_rse(self):
+        """Monthly RECS data has RSE columns (from published tables)."""
+        assert _resolve_rse_column(_make_spec(resolution=Resolution.month)) == "electricity_total_value_rse"
 
     def test_distribution_view_returns_none(self):
         """Distribution box plots use quartiles, not RSE."""

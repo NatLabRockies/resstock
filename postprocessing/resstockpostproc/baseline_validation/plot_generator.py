@@ -106,9 +106,15 @@ def _resolve_footnotes(footnote_rules: list[dict], row: dict, context: str | Non
         if context and rule_context and rule_context != context:
             continue
 
-        # Positive matchers — all specified keys must match
+        # Positive matchers — all specified keys must match.
+        # Values can be a single string or a list of strings (any-of).
+        def _matches(rule_val, row_val: str) -> bool:
+            if isinstance(rule_val, list):
+                return row_val in [str(v) for v in rule_val]
+            return row_val == str(rule_val)
+
         if not all(
-            row.get(tsv_col, "").strip() == str(rule[yaml_key])
+            _matches(rule[yaml_key], row.get(tsv_col, "").strip())
             for yaml_key, tsv_col in _FOOTNOTE_MATCH_KEYS.items()
             if yaml_key in rule
         ):
