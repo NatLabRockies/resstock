@@ -278,6 +278,7 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
     .fp-item.selected {{ background: #d2e3fc; font-weight: 600; }}
     .fp-item.all-item {{ color: #555; font-style: italic; }}
     .fp-category {{ width: 100%; padding: 3px 4px; font-size: 12px; border: 1px solid #ccc; border-bottom: none; background: #fafafa; }}
+    .filter-panels.disabled {{ opacity: 0.4; pointer-events: none; }}
 
     /* --- Table --- */
     .table-wrap {{ padding: 0 20px 20px; }}
@@ -308,6 +309,7 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
       <button class='reset-btn' onclick='resetFilters()'>Reset</button>
       <span class='stats' id='stats'>Loading data...</span>
       <span class='spacer'></span>
+      <label class='highlight-toggle'><input type='checkbox' id='show-all-cb' onchange='onShowAllChange()'>Show all</label>
       <div class='pagination' id='pagination'>
         <button id='btn-first' onclick='goToPage(0)'>&laquo;</button>
         <button id='btn-prev' onclick='goToPage(currentPage-1)'>&lsaquo;</button>
@@ -375,6 +377,7 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
     let filteredIndices = [];
     let filterSelections = {{}};  // colIdx -> selected value
     let highlightOnly = true;
+    let showAll = false;
     let currentPage = 0;
     let pageSize = PAGE_SIZE_DEFAULT;
     let totalPages = 0;
@@ -642,16 +645,29 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
       applyFilters();
     }}
 
+    function onShowAllChange() {{
+      showAll = document.getElementById('show-all-cb').checked;
+      const panels = document.getElementById('filter-panels');
+      if (showAll) {{
+        panels.classList.add('disabled');
+      }} else {{
+        panels.classList.remove('disabled');
+      }}
+      applyFilters();
+    }}
+
     // ---- Apply filters + render ----
     function applyFilters() {{
       let rows = getBaseRows();
-      for (const colIdx of FILTER_ORDER) {{
-        const val = filterSelections[colIdx];
-        if (val != null && val !== '') {{
-          rows = narrowRows(rows, colIdx, val);
-        }} else if (val === '') {{
-          // "(None)" — match rows with empty values in this column
-          rows = rows.filter(i => !(allDataRows[i][colIdx] || '').trim());
+      if (!showAll) {{
+        for (const colIdx of FILTER_ORDER) {{
+          const val = filterSelections[colIdx];
+          if (val != null && val !== '') {{
+            rows = narrowRows(rows, colIdx, val);
+          }} else if (val === '') {{
+            // "(None)" — match rows with empty values in this column
+            rows = rows.filter(i => !(allDataRows[i][colIdx] || '').trim());
+          }}
         }}
       }}
       filteredIndices = rows.sort((a, b) => {{
@@ -734,14 +750,26 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
     function resetFilters() {{
       filterSelections = {{}};
       categorySelections = {{}};
+      for (const colIdx of NONE_DEFAULT_COLS) {{
+        filterSelections[colIdx] = '';
+      }}
       highlightOnly = true;
+      showAll = false;
       document.getElementById('highlight-cb').checked = true;
+      document.getElementById('show-all-cb').checked = false;
+      document.getElementById('filter-panels').classList.remove('disabled');
       rebuildFilters();
       applyFilters();
     }}
 
+    // Columns that default to "(None)" selected (empty string)
+    const NONE_DEFAULT_COLS = new Set([FILTER1_COL, FILTER1_COL + 1, FILTER1_COL + 2]);
+
     // ---- Init ----
     function initPage() {{
+      for (const colIdx of NONE_DEFAULT_COLS) {{
+        filterSelections[colIdx] = '';
+      }}
       rebuildFilters();
       applyFilters();
     }}
