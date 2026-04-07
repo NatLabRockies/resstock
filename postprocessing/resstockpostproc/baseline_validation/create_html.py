@@ -538,7 +538,7 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
         listEl.innerHTML = '';
 
         // Check if any combos have empty values in this column
-        const hasEmpty = isFilterCol && combos.some(c => !(c[comboPos] || '').trim());
+        const hasEmpty = combos.some(c => !(c[comboPos] || '').trim());
 
         // For Filter columns: populate category dropdown and filter values
         let displayValues = values;
@@ -550,19 +550,23 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
             const catList = Array.from(cats).sort();
             const curCat = categorySelections[colIdx] || '';
             catEl.innerHTML = '';
-            const allOpt = document.createElement('option');
-            allOpt.value = '';
-            allOpt.textContent = '(All categories)';
-            catEl.appendChild(allOpt);
-            for (const cat of catList) {{
-              const opt = document.createElement('option');
-              opt.value = cat;
-              opt.textContent = cat;
-              if (cat === curCat) opt.selected = true;
-              catEl.appendChild(opt);
-            }}
-            if (curCat && catList.includes(curCat)) {{
-              displayValues = values.filter(v => v.startsWith(curCat + ': '));
+            if (catList.length > 1) {{
+              for (const cat of catList) {{
+                const opt = document.createElement('option');
+                opt.value = cat;
+                opt.textContent = cat;
+                if (cat === curCat) opt.selected = true;
+                catEl.appendChild(opt);
+              }}
+              if (curCat && catList.includes(curCat)) {{
+                displayValues = values.filter(v => v.startsWith(curCat + ': '));
+              }} else {{
+                categorySelections[colIdx] = catList[0] || '';
+                displayValues = values.filter(v => v.startsWith(catList[0] + ': '));
+              }}
+            }} else if (catList.length === 1) {{
+              categorySelections[colIdx] = catList[0];
+              displayValues = values;
             }} else {{
               categorySelections[colIdx] = '';
             }}
@@ -577,13 +581,21 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
         }} else if (isMandatory) {{
           // Mandatory filters (e.g. Quantity): no "(All)" — must pick a value
         }} else {{
-          if (values.length > 1) {{
+          // Add "(None)" for non-mandatory columns with empty values (e.g. Group By)
+          if (hasEmpty) {{
+            const noneDiv = document.createElement('div');
+            noneDiv.className = 'fp-item all-item' + (selected === '' ? ' selected' : '');
+            noneDiv.textContent = '(None)';
+            noneDiv.onclick = function() {{ selectFilter(colIdx, ''); }};
+            listEl.appendChild(noneDiv);
+          }}
+          if (values.length > 1 || (values.length >= 1 && hasEmpty)) {{
             const allDiv = document.createElement('div');
-            allDiv.className = 'fp-item all-item' + (!selected ? ' selected' : '');
+            allDiv.className = 'fp-item all-item' + (!selected && selected !== '' ? ' selected' : '');
             allDiv.textContent = '(All)';
             allDiv.onclick = function() {{ selectFilter(colIdx, null); }};
             listEl.appendChild(allDiv);
-          }} else if (values.length === 1 && !selected) {{
+          }} else if (values.length === 1 && !hasEmpty && !selected) {{
             filterSelections[colIdx] = values[0];
           }}
         }}
@@ -603,7 +615,7 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
         // Narrow combos for next filter panel
         if (effectiveSel != null && effectiveSel !== '' && values.includes(effectiveSel)) {{
           combos = combos.filter(c => (c[comboPos] || '').trim() === effectiveSel);
-        }} else if (effectiveSel === '' && isFilterCol) {{
+        }} else if (effectiveSel === '') {{
           combos = combos.filter(c => !(c[comboPos] || '').trim());
         }} else if (effectiveSel && !values.includes(effectiveSel)) {{
           delete filterSelections[colIdx];
@@ -617,13 +629,9 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
       }} else {{
         filterSelections[colIdx] = value;
       }}
-      // Clear all selections to the RIGHT of this filter
-      const pos = FILTER_ORDER.indexOf(colIdx);
-      if (pos >= 0) {{
-        for (let j = pos + 1; j < FILTER_ORDER.length; j++) {{
-          delete filterSelections[FILTER_ORDER[j]];
-        }}
-      }}
+      // Downstream selections are preserved — rebuildFilters will
+      // automatically invalidate any that are no longer valid (line
+      // "effectiveSel && !values.includes(effectiveSel)" clears them).
       rebuildFilters();
       applyFilters();
     }}
@@ -641,12 +649,16 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
         const val = filterSelections[colIdx];
         if (val != null && val !== '') {{
           rows = narrowRows(rows, colIdx, val);
-        }} else if (val === '' && (colIdx === 5 || colIdx === 6)) {{
-          // "(None)" for Filter 1/2 — match empty values
+        }} else if (val === '') {{
+          // "(None)" — match rows with empty values in this column
           rows = rows.filter(i => !(allDataRows[i][colIdx] || '').trim());
         }}
       }}
-      filteredIndices = rows;
+      filteredIndices = rows.sort((a, b) => {{
+        const ia = parseInt(allDataRows[a][0]) || 0;
+        const ib = parseInt(allDataRows[b][0]) || 0;
+        return ia - ib;
+      }});
       currentPage = 0;
       renderPage();
     }}

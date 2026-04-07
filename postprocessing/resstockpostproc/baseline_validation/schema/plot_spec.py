@@ -180,7 +180,7 @@ def _build_recs_eia_display_title(spec: PlotSpec) -> str:
     elif agg_label:
         grouping = f"by {agg_label}"
     else:
-        grouping = ""
+        grouping = "(US Total)"
     is_monthly = spec.resolution == Resolution.month
 
     # Dwelling unit count case
@@ -410,7 +410,7 @@ class PlotSpec(NoExtraModel):
         Uses effective_group_by (sorted union of focus_on columns + aggregation_level)
         to determine which columns the data must be grouped by.
         """
-        group_by = self.effective_group_by or ("state",)
+        group_by = self.effective_group_by
         return DataKey(
             truth_source=self.truth_source,
             group_by=group_by,

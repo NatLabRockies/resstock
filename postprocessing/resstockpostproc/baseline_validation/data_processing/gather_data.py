@@ -131,6 +131,14 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
     group_by = data_key.group_by
     resolution = data_key.resolution
 
+    # Empty group_by means "whole US" — fetch state-level data (which includes
+    # US Total rows) and filter down after percent-difference computation.
+    us_total_only = len(group_by) == 0
+    if us_total_only:
+        data_key = DataKey(truth_source, ("state",), resolution,
+                           data_key.aggregation_type, data_key.coverage)
+        group_by = ("state",)
+
     groups = []
     if truth_source == TruthSource.eia:
         by = "state" if "state" in group_by else "eiaid"
@@ -192,6 +200,8 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
         final_df = final_df.rename({"sample_count": "model_count"})
     elif "model_count" not in final_df.columns:
         final_df = final_df.with_columns(pl.lit(None).cast(pl.Int64).alias("model_count"))
+    if us_total_only and "state" in final_df.columns:
+        final_df = final_df.filter(pl.col("state") == "US Total")
     return final_df
 
 

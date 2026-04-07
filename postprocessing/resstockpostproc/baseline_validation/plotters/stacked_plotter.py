@@ -243,7 +243,7 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
 
             # Pivot the dataframe to create a 'quantity' column
             # Keep id columns that don't vary by quantity
-            agg_col = plot_spec.aggregation_level or plot_spec.effective_group_by[-1]
+            agg_col = plot_spec.aggregation_level or (plot_spec.effective_group_by[-1] if plot_spec.effective_group_by else "state")
             id_cols = [agg_col, "model_count", "units_count", "source"]
 
             # Build list of columns to unpivot for each quantity
@@ -282,10 +282,11 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
             # Append any enduses not in canonical order (shouldn't happen, but defensive)
             sort_order += [e for e in group_df["enduse"].unique().to_list() if e not in sort_order]
 
-            enduse_order = pl.DataFrame({"enduse": sort_order, "enduse_order": range(len(sort_order))})
-            group_df = (
-                group_df.join(enduse_order, on="enduse").sort("enduse_order", maintain_order=True).drop("enduse_order")
-            )
+            if sort_order:
+                enduse_order = pl.DataFrame({"enduse": sort_order, "enduse_order": range(len(sort_order))})
+                group_df = (
+                    group_df.join(enduse_order, on="enduse").sort("enduse_order", maintain_order=True).drop("enduse_order")
+                )
 
             yield group_df, "enduse", row, col
 
@@ -384,21 +385,21 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     else:
         quantity_title = ""
 
-    agg_col = plot_spec.aggregation_level or plot_spec.effective_group_by[-1]
+    agg_col = plot_spec.aggregation_level or (plot_spec.effective_group_by[-1] if plot_spec.effective_group_by else "state")
     if plot_spec.quantity == DataCol.ALL:
-        if not plot_spec.focus_on:
-            raise ValueError("When quantity is DataCol.ALL, focus_on must specify an entity")
-        for col, val in plot_spec.focus_on:
-            filter_col = "utility_name" if col == "eiaid" else col
-            if filter_col in df.columns:
-                df = df.filter(pl.col(filter_col) == val)
+        if plot_spec.focus_on:
+            for col, val in plot_spec.focus_on:
+                filter_col = "utility_name" if col == "eiaid" else col
+                if filter_col in df.columns:
+                    df = df.filter(pl.col(filter_col) == val)
 
     # Exclude US Total from total-aggregation value_view plots to prevent scale domination
-    # (only when showing all entities, not when focused specifically on US Total)
+    # (only when showing all entities, not when focused on a single entity like US Total)
     if (plot_spec.aggregation_type == AggregationType.total
             and plot_spec.view == ViewType.value_view
             and not plot_spec.focus_on
-            and agg_col in df.columns):
+            and agg_col in df.columns
+            and df[agg_col].n_unique() > 1):
         df = df.filter(pl.col(agg_col) != "US Total")
 
     show_legends = True

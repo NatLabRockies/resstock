@@ -197,6 +197,7 @@ class TestUnnestListColumns:
 from resstockpostproc.baseline_validation.schema.plot_definitions import (
     generate_slot_triples,
     RECS_ANNUAL_CHARS,
+    RECS_CROSS_FILTER_CHARS,
     RECS_MONTHLY_CHARS,
     EIA_CHARS,
     LRD_CHARS,
@@ -306,3 +307,60 @@ class TestGenerateSlotTriples:
             # No (state, None, census_div), (census_div, None, state), or (state, census_div, None)
         ]
         assert triples == expected
+
+    # --- Tests for cross_filter_chars restriction ---
+
+    def test_cross_filter_chars_count(self):
+        """RECS annual with cross_filter_chars produces exactly 23 triples."""
+        triples = generate_slot_triples(
+            RECS_ANNUAL_CHARS, allow_cross_filter=True,
+            cross_filter_chars=RECS_CROSS_FILTER_CHARS,
+        )
+        assert len(triples) == 23
+
+    def test_cross_filter_chars_restricts_f1(self):
+        """F1 only appears for chars in cross_filter_chars."""
+        triples = generate_slot_triples(
+            RECS_ANNUAL_CHARS, allow_cross_filter=True,
+            cross_filter_chars=RECS_CROSS_FILTER_CHARS,
+        )
+        f1_chars = {f1 for f1, _, _ in triples if f1 is not None}
+        assert f1_chars == set(RECS_CROSS_FILTER_CHARS)
+
+    def test_cross_filter_chars_restricts_f2(self):
+        """F2 only appears for chars in cross_filter_chars."""
+        triples = generate_slot_triples(
+            RECS_ANNUAL_CHARS, allow_cross_filter=True,
+            cross_filter_chars=RECS_CROSS_FILTER_CHARS,
+        )
+        f2_chars = {f2 for _, f2, _ in triples if f2 is not None}
+        assert f2_chars == {"geometry_building_type_recs"}
+
+    def test_cross_filter_chars_block1_unchanged(self):
+        """Block 1 (None, None, agg) triples still include all 6 chars."""
+        triples = generate_slot_triples(
+            RECS_ANNUAL_CHARS, allow_cross_filter=True,
+            cross_filter_chars=RECS_CROSS_FILTER_CHARS,
+        )
+        block1_aggs = {agg for f1, f2, agg in triples if f1 is None and f2 is None and agg is not None}
+        assert block1_aggs == set(RECS_ANNUAL_CHARS)
+
+    def test_cross_filter_chars_agg_uses_all_eligible(self):
+        """(f1, None, agg) triples still use all eligible non-conflicting chars for agg."""
+        triples = generate_slot_triples(
+            RECS_ANNUAL_CHARS, allow_cross_filter=True,
+            cross_filter_chars=RECS_CROSS_FILTER_CHARS,
+        )
+        # For F1=building_type (non-geo), agg should include all 5 other chars
+        bt_aggs = {agg for f1, f2, agg in triples
+                   if f1 == "geometry_building_type_recs" and f2 is None and agg is not None}
+        expected = set(RECS_ANNUAL_CHARS) - {"geometry_building_type_recs"}
+        assert bt_aggs == expected
+
+    def test_cross_filter_chars_none_is_backward_compatible(self):
+        """cross_filter_chars=None preserves original 49-triple behavior."""
+        triples = generate_slot_triples(
+            RECS_ANNUAL_CHARS, allow_cross_filter=True,
+            cross_filter_chars=None,
+        )
+        assert len(triples) == 49

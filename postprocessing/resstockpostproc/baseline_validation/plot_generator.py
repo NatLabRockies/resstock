@@ -36,6 +36,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
 )
 from resstockpostproc.baseline_validation.schema.plot_definitions import (
     PlotTemplate,
+    RECS_CROSS_FILTER_CHARS,
     generate_all_templates,
     generate_slot_triples,
     is_highlight,
@@ -180,6 +181,15 @@ def _template_signature(tmpl: PlotTemplate) -> tuple:
     )
 
 
+def _template_display_quantity(tmpl: PlotTemplate) -> str:
+    """Return the display quantity name for a template (matches workflow.yaml names)."""
+    if tmpl.quantity == DataCol.UNITS_COUNT:
+        return "Number of dwelling units"
+    if tmpl.quantity == DataCol.ALL:
+        return "All Enduses"
+    return tmpl.quantity.label
+
+
 def _build_spec_entries(main_spec: PlotSpec, extra_spec: PlotSpec | None) -> list[tuple[PlotSpec, str]]:
     """Convert a SpecPair into the spec_entries list used by the plot loop."""
     entries = [(main_spec, main_spec.display_viz_label)]
@@ -218,33 +228,6 @@ def _footnote_row(main_spec: PlotSpec) -> dict[str, str]:
 # ---------------------------------------------------------------------------
 
 
-def _get_focus_values(
-    data: pl.DataFrame,
-    expand_col: str,
-    quantity: DataCol,
-    resolution: Resolution,
-    test_only: bool,
-) -> list[str | None]:
-    """Get sorted focus values for a column, with overview (None) prepended."""
-    col = "utility_name" if expand_col == "eiaid" else expand_col
-    values = sorted(v for v in data[col].unique().to_list() if v is not None)
-
-    if expand_col != "state":
-        values = [v for v in values if v != "US Total"]
-    elif "US Total" in values:
-        values.remove("US Total")
-        values.insert(0, "US Total")
-
-    # Prepend None for the unfocused overview (skip for ALL enduse or matrix)
-    if quantity != DataCol.ALL and resolution != Resolution.hour_of_day_matrix:
-        values.insert(0, None)
-
-    if test_only:
-        values = _trim_focus_for_test(values)
-
-    return values
-
-
 def _expand_templates(
     templates: list[PlotTemplate],
     test_only: bool = False,
@@ -264,13 +247,13 @@ def _expand_templates(
             tmpl.truth_source == TruthSource.recs
             and tmpl.resolution == Resolution.year
         )
-        triples = generate_slot_triples(tmpl.eligible_chars, allow_cross_filter=allow_cross)
+        triples = generate_slot_triples(
+            tmpl.eligible_chars,
+            allow_cross_filter=allow_cross,
+            cross_filter_chars=RECS_CROSS_FILTER_CHARS if allow_cross else None,
+        )
 
         for f1_char, f2_char, agg_level in triples:
-            # Skip (None, None, None) — a total with no grouping has no meaningful plot
-            if f1_char is None and f2_char is None and agg_level is None:
-                continue
-
             # --- Base spec construction ---
             # Build a PlotSpec with the triple's agg_level.
             # When agg_level is None (leaf or no-grouping), we still need a valid
@@ -288,18 +271,30 @@ def _expand_templates(
             main_spec, extra_spec = spec_pair
             spec_entries = _build_spec_entries(main_spec, extra_spec)
 
-            # --- Case 1: No filters (F1=None) → expand focus on agg_level ---
+            # ALL enduses: skip any triple with agg_level set — can't
+            # group a stacked enduse chart by another dimension.
+            if tmpl.quantity == DataCol.ALL and agg_level is not None:
+                continue
+
+            # --- Case 1: No filters (F1=None) → overview only ---
             if f1_char is None:
-                data_key = main_spec.get_data_key()
-                base_data = get_base_data(data_key)
-                focus_values = _get_focus_values(
-                    base_data, agg_level, tmpl.quantity, tmpl.resolution, test_only,
-                )
-                for fv in focus_values:
-                    focus_on = ((agg_level, fv),) if fv is not None else ()
-                    work_items.append((
-                        spec_pair, tmpl_index, spec_entries, fv, focus_on, agg_level,
-                    ))
+                # hour_of_day_matrix requires per-utility focus; expand each
+                # utility as a separate work item (LRD has no Block 2 triples).
+                if tmpl.resolution == Resolution.hour_of_day_matrix:
+                    data_key = main_spec.get_data_key()
+                    base_data = get_base_data(data_key)
+                    col = "utility_name" if agg_level == "eiaid" else agg_level
+                    for val in sorted(v for v in base_data[col].unique().to_list() if v is not None):
+                        work_items.append((
+                            spec_pair, tmpl_index, spec_entries, val,
+                            ((agg_level, val),), agg_level,
+                        ))
+                    continue
+                # Warm the disk cache so worker processes find the data.
+                get_base_data(main_spec.get_data_key())
+                work_items.append((
+                    spec_pair, tmpl_index, spec_entries, None, (), agg_level,
+                ))
                 continue
 
             # --- F1 is set: discover F1 values ---
@@ -326,30 +321,19 @@ def _expand_templates(
                 # --- Case 2: F1 set, F2=None ---
                 if f2_char is None:
                     if agg_level is not None:
-                        # Cross-filter: F1 set + agg_level set → expand focus on agg
+                        # Cross-filter: F1 set + agg_level set → overview only
                         filtered_entries = _build_filtered_entries(
                             spec_entries, ((f1_char, f1_val),),
                         )
                         if not filtered_entries:
                             continue
-
-                        filtered_key = filtered_entries[0][0].get_data_key()
-                        filtered_data = get_base_data(filtered_key)
-                        inner_values = _get_focus_values(
-                            filtered_data, agg_level, tmpl.quantity, tmpl.resolution, test_only,
-                        )
-
-                        for fv in inner_values:
-                            if fv is not None:
-                                focus_on = ((f1_char, f1_val), (agg_level, fv))
-                            else:
-                                focus_on = ((f1_char, f1_val),)
-                            final_agg = agg_level if fv is None else None
-                            work_items.append((
-                                spec_pair, tmpl_index,
-                                filtered_entries if fv is None else spec_entries,
-                                fv, focus_on, final_agg,
-                            ))
+                        # Warm cache for the 2-column group_by DataKey that
+                        # workers will request (focus_on col + agg_level).
+                        get_base_data(filtered_entries[0][0].get_data_key())
+                        focus_on = ((f1_char, f1_val),)
+                        work_items.append((
+                            spec_pair, tmpl_index, filtered_entries, None, focus_on, agg_level,
+                        ))
                     else:
                         # F1 set, no agg, no F2 → single filtered entity, no grouping
                         focus_on = ((f1_char, f1_val),)
@@ -361,14 +345,16 @@ def _expand_templates(
                     continue
 
                 # --- Case 3: F1 set, F2 set (agg_level is always None) ---
-                f2_filtered_entries = _build_filtered_entries(
-                    spec_entries, ((f1_char, f1_val),),
+                f2_lookup_spec = _make_spec(
+                    truth_source=tmpl.truth_source,
+                    quantity=tmpl.quantity,
+                    resolution=tmpl.resolution,
+                    aggregation_type=tmpl.aggregation_type,
+                    coverage=tmpl.coverage,
+                    aggregation_level=f2_char,
+                    view=tmpl.view,
                 )
-                if not f2_filtered_entries:
-                    continue
-
-                f2_key = f2_filtered_entries[0][0].get_data_key()
-                f2_data = get_base_data(f2_key)
+                f2_data = get_base_data(f2_lookup_spec.get_data_key())
                 f2_col = "utility_name" if f2_char == "eiaid" else f2_char
 
                 if f2_col not in f2_data.columns:
@@ -604,21 +590,6 @@ def _generate_spec_plots(
 
 
 
-def _trim_focus_for_test(focus_values):
-    """Trim focus values to a minimal set for test mode."""
-    trimmed = []
-    has_regular = False
-    for v in focus_values:
-        if v is None:
-            trimmed.append(v)
-        elif v == "US Total":
-            trimmed.append(v)
-        elif not has_regular:
-            trimmed.append(v)
-            has_regular = True
-    return trimmed
-
-
 def _worker_init():
     """Process initializer for worker pool — collect timing in memory, use read-only disk cache."""
     from resstockpostproc.shared_utils import caching
@@ -670,6 +641,11 @@ def generate_plots(index=None, test_only=False, parallel=True):
     wall_start = time.perf_counter()
     templates = generate_all_templates()
 
+    if workflow.quantities:
+        allowed = set(workflow.quantities)
+        templates = [t for t in templates if _template_display_quantity(t) in allowed]
+        logger.info(f"Filtered to {len(templates)} templates matching workflow quantities: {sorted(allowed)}")
+
     if test_only:
         # Select templates that cover unique code paths
         test_idx = get_test_template_indices(templates)
@@ -715,16 +691,17 @@ def generate_plots(index=None, test_only=False, parallel=True):
         main_spec, extra_spec = spec_pair
 
         # Build a unique key for this work item
+        agg_suffix = f"_by_{agg_level}" if agg_level else ""
         if focus_on:
             filter_parts = "_".join(f"{c}_{v}" for c, v in focus_on)
             sub_key = (
-                f"f_{filter_parts}_{tmpl_index}"
+                f"f_{filter_parts}_{tmpl_index}{agg_suffix}"
                 if focus_val is None
                 else f"f_{filter_parts}_{tmpl_index}_{focus_val}"
             )
         else:
             sub_key = (
-                tmpl_index
+                f"{tmpl_index}{agg_suffix}"
                 if focus_val is None
                 else f"{tmpl_index}_{focus_val}"
             )

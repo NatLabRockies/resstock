@@ -7,10 +7,10 @@
 workgroup: rescore
 
 data_sources:
-  # - db_name: buildstock_sdr
-  #   table_name: resstock_2024_amy2018_release_2
-  #   name: resstock_2024
-  #   db_schema: resstock_oedi_vu
+  - db_name: buildstock_sdr
+    table_name: resstock_2024_amy2018_release_2
+    name: resstock_2024
+    db_schema: resstock_oedi_vu
   - db_name: buildstock_sdr
     table_name: resstock_amy2018_r1_2025
     name: resstock_2025
@@ -51,45 +51,45 @@ plots:
 quantities:
   - All Enduses
   - Number of dwelling units
-  - Electricity Total
-  - Natural Gas Total
-  - Electricity Space Cooling
-  - Electricity Space Heating
-  - Electricity Water Heating
-  - Natural Gas Space Heating
-  - Natural Gas Water Heating
-  - Electricity Plug Load
-  - Electricity Refrigerator
-  - Electricity Lighting
-  - Electricity Television
-  - Electricity Clothes Dryer
-  - Electricity Cooling Fan Pumps
-  - Electricity Heating Fans Pumps
-  - Electricity Freezer
-  - Electricity Cooking
-  - Electricity Pool Pumps
-  - Electricity Ceiling Fan
-  - Electricity Dishwasher
-  - Electricity Clothes Washer
-  - Electricity Pool Heater
-  - Electricity EV Charging
-  - Natural Gas Cooking
-  - Natural Gas Pool Heater
-  - Natural Gas Clothes Dryer
-  - Propane Total
-  - Propane Space Heating
-  - Propane Water Heating
-  - Propane Cooking
-  - Propane Clothes Dryer
-  - Fuel Oil Total
-  - Fuel Oil Space Heating
-  - Fuel Oil Water Heating
+  - Electricity
+  - Natural Gas
+  - Space Cooling Electricity
+  - Space Heating Electricity
+  - Water Heating Electricity
+  - Space Heating Natural Gas
+  - Water Heating Natural Gas
+  - Plug Loads Electricity
+  - Refrigerator Electricity
+  - Lighting Electricity
+  - Television Electricity
+  - Clothes Dryer Electricity
+  - Cooling Fans & Pumps Electricity
+  - Heating Fans & Pumps Electricity
+  - Freezer Electricity
+  - Cooking Electricity
+  - Pool Pumps Electricity
+  - Ceiling Fans Electricity
+  - Dishwasher Electricity
+  - Clothes Washer Electricity
+  - Pool Heater Electricity
+  - EV Charging Electricity
+  - Cooking Natural Gas
+  - Pool Heater Natural Gas
+  - Clothes Dryer Natural Gas
+  - Propane
+  - Space Heating Propane
+  - Water Heating Propane
+  - Cooking Propane
+  - Clothes Dryer Propane
+  - Fuel Oil
+  - Space Heating Fuel Oil
+  - Water Heating Fuel Oil
 
 # Output Configuration
 # --------------------
 output:
   output_dir: /Users/radhikar/Documents/buildstock2025/baseline_validation_output/
-  run_name: baseline_val7
+  run_name: baseline_val_diff4
 
 # Data Source Labels
 # ------------------
@@ -114,6 +114,11 @@ data_source_labels:
     label: "ResStock 2025"
     entries:
       - description: "ResStock Standard Data Release 2025 Release 1"
+        url: "https://resstock.nrel.gov/"
+  resstock_2024:
+    label: "ResStock 2024"
+    entries:
+      - description: "ResStock Standard Data Release 2024 Release 2"
         url: "https://resstock.nrel.gov/"
   lrd_2018:
     label: "LRD 2018"

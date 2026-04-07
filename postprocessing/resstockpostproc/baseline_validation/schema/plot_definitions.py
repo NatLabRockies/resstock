@@ -101,6 +101,11 @@ RECS_MONTHLY_CHARS = ("state",)  # monthly RECS data is pre-aggregated at state 
 EIA_CHARS = ("state",)  # EIA only supports state-level grouping
 LRD_CHARS = ("eiaid",)  # LRD only supports utility-level grouping
 
+# Chars allowed as F1/F2 in cross-filter triples. All 6 chars remain available
+# as aggregation_level (Block 1 base plots and Block 2 sub-grouping), but only
+# these three can drive the expensive focus-value expansion as filters.
+RECS_CROSS_FILTER_CHARS = ("state", "census_division_recs", "geometry_building_type_recs")
+
 
 @dataclass(frozen=True)
 class PlotTemplate:
@@ -135,6 +140,7 @@ def _is_geo_conflict(a: str | None, b: str | None) -> bool:
 def generate_slot_triples(
     eligible_chars: tuple[str, ...],
     allow_cross_filter: bool = False,
+    cross_filter_chars: tuple[str, ...] | None = None,
 ) -> list[SlotTriple]:
     """Generate all valid (filter_1, filter_2, aggregation_level) triples.
 
@@ -145,6 +151,10 @@ def generate_slot_triples(
         allow_cross_filter: When True, allow triples where F1 is set AND
             aggregation_level is set (cross-dimension filtering). Only valid for
             sources with microdata (RECS annual).
+        cross_filter_chars: When provided, restricts which chars from
+            eligible_chars may appear as F1 or F2 in Block 2 triples. The
+            aggregation_level dimension still draws from all eligible_chars.
+            When None (default), all eligible_chars may be used as F1/F2.
 
     Returns:
         List of (F1, F2, agg_level) triples. Each value is a char name or None.
@@ -174,7 +184,11 @@ def generate_slot_triples(
         return triples
 
     # --- Block 2: F1=char (cross-filter — requires allow_cross_filter) ---
+    cf_set = set(cross_filter_chars) if cross_filter_chars is not None else None
     for i, f1 in enumerate(eligible_chars):
+        if cf_set is not None and f1 not in cf_set:
+            continue
+
         # F1 set, F2=None, agg=None (filtered, no sub-grouping)
         triples.append((f1, None, None))
 
@@ -190,6 +204,8 @@ def generate_slot_triples(
         for j in range(i + 1, len(eligible_chars)):
             f2 = eligible_chars[j]
             if _is_geo_conflict(f1, f2):
+                continue
+            if cf_set is not None and f2 not in cf_set:
                 continue
             triples.append((f1, f2, None))
 
@@ -248,8 +264,6 @@ def _extra_view_for(spec: PlotSpec) -> ViewType | None:
         return ViewType.diff_view
 
     if spec.truth_source == TruthSource.lrd:
-        if spec.resolution == Resolution.year:
-            return ViewType.diff_view
         if spec.resolution == Resolution.hour_of_year and spec.view == ViewType.value_view:
             # 8760 load duration curve does NOT get diff_view;
             # temperature views are separate specs, not extras
