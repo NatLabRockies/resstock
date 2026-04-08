@@ -15,7 +15,7 @@ from pydantic import BaseModel, Field, model_validator
 from enum import StrEnum
 from typing import NamedTuple
 from resstockpostproc.shared_utils.db_column_names import DataCol
-
+from resstockpostproc.shared_utils.mapping import ABBR2STATE
 
 GEOGRAPHIC_DIMENSIONS = {"state", "census_division_recs", "building_america_climate_zone"}
 """Dimensions that represent geographic groupings. Filtering by one geographic dimension
@@ -113,40 +113,18 @@ class DataKey(NamedTuple):
         return f"DataKey({self.comparison_dataset}, {self.effective_group_by}, {self.resolution}, {self.aggregation_type}, {self.coverage})"
 
 
-# Map characteristic keys to human-readable directory names for focus_on output paths
-FILTER_CHAR_DISPLAY = {
-    DataCol.STATE: "By State",
-    DataCol.BUILDING_TYPE: "By Building Type",
-    DataCol.VINTAGE: "By Vintage",
-    DataCol.CENSUS_DIVISION: "By Census Division",
-    DataCol.HEATING_FUEL: "By Heating Fuel",
-    DataCol.CLIMATE_ZONE: "By Climate Zone",
-}
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Display label functions
-#
-# These derive human-readable strings from PlotSpec fields. Used by both the
-# plotters (figure titles) and the HTML index (filter facets / column values).
-# ─────────────────────────────────────────────────────────────────────────────
-
-GROUP_BY_LABELS = {
-    DataCol.CENSUS_DIVISION: "Census Division",
-    DataCol.BUILDING_TYPE: "Building Type",
-    DataCol.CLIMATE_ZONE: "Climate Zone",
-    DataCol.HEATING_FUEL: "Heating Fuel",
-    DataCol.STATE: "State",
-    DataCol.UTILITY: "Utility",
-}
-
-
 def format_group_by(group_by: str) -> str:
     """Convert a group_by column name to a display label.
 
+    Uses DataCol enum member names for known columns, falls back to title-casing
+    the raw string for unknown values.
+
     Examples: "census_division_recs" → "Census Division", "state" → "State"
     """
-    return GROUP_BY_LABELS.get(group_by, group_by.replace("_", " ").title())
+    try:
+        return DataCol(group_by).name.replace("_", " ").title()
+    except ValueError:
+        return group_by.replace("_", " ").title()
 
 
 def format_focus_label(value: str) -> str:
@@ -154,7 +132,6 @@ def format_focus_label(value: str) -> str:
 
     "US Total" → "U.S. Total", state abbreviations → full names, others pass through.
     """
-    from resstockpostproc.shared_utils.mapping import ABBR2STATE
     if value == "US Total":
         return "U.S. Total"
     if value in ABBR2STATE:
@@ -162,115 +139,14 @@ def format_focus_label(value: str) -> str:
     return value
 
 
-def _build_recs_eia_display_title(spec: PlotSpec) -> str:
-    """Build publication-quality title for RECS/EIA plots.
-
-    Examples:
-        "Average Monthly Electricity Consumption per Dwelling Unit by State"
-        "Distribution of Electricity Consumption per Consuming Dwelling Unit by State"
-        "Share of Dwelling Units using Refrigerator by State"
-        "Number of Occupied Dwelling Units by State"
-    """
-    quantity_name = spec.quantity.label if spec.quantity != DataCol.ALL else "Enduse"
-    agg_label = format_group_by(spec.group_by) if spec.group_by else ""
-    # Build grouping label from focus_on display and group_by
-    focus_display = spec.get_filter_display_name()
-    if focus_display and agg_label:
-        grouping = f"({focus_display} only) by {agg_label}"
-    elif focus_display:
-        grouping = f"({focus_display})"
-    elif agg_label:
-        grouping = f"by {agg_label}"
-    else:
-        grouping = "(US Total)"
-    is_monthly = spec.resolution == Resolution.month
-
-    # Dwelling unit count case
-    if spec.quantity == DataCol.UNITS_COUNT:
-        return f"Number of Occupied Dwelling Units {grouping}"
-
-    # Penetration view
-    if spec.view == ViewType.penetration:
-        if spec.quantity == DataCol.ALL:
-            usage_name = "the specified End Use"
-        else:
-            usage_name = spec.quantity.penetration_label
-        return f"Share of Dwelling Units using {usage_name} {grouping}"
-
-    # Distribution view
-    if spec.view == ViewType.distribution:
-        per = "per Consuming Dwelling Unit" if spec.coverage == CoverageType.users_only else "per Dwelling Unit"
-        return f"Distribution of {quantity_name} Consumption {per} {grouping}"
-
-    # Total aggregation
-    period = "Monthly" if is_monthly else "Annual"
-    if spec.aggregation_type == AggregationType.total:
-        return f"{period} {quantity_name} Consumption {grouping}"
-
-    # Average aggregation
-    per = "per Consuming Dwelling Unit" if spec.coverage == CoverageType.users_only else "per Dwelling Unit"
-    return f"Average {period} {quantity_name} Consumption {per} {grouping}"
-
-
-def _build_lrd_display_title(spec: PlotSpec) -> str:
-    """Build title for LRD plots based on resolution."""
-    match spec.resolution:
-        case Resolution.year:
-            return "Annual Electricity Consumption per Dwelling Unit"
-        case Resolution.month:
-            return "Monthly Electricity Consumption per Dwelling Unit"
-        case Resolution.day_of_year:
-            return "Daily Electricity Consumption per Dwelling Unit"
-        case Resolution.hour_of_year | Resolution.top_100_hours:
-            if spec.view == ViewType.temp_view:
-                return "Load vs Outdoor Drybulb Temperature"
-            if spec.view == ViewType.temp_distribution_view:
-                return "Count of Number of Hours vs Outdoor Drybulb Temperature"
-            title = "Load Duration Curve of Electricity Consumption per Dwelling Unit"
-            if spec.resolution == Resolution.top_100_hours:
-                title += " (Top 100 Hours)"
-            return title
-        case Resolution.hour_of_day:
-            return "Average Daily Electricity Consumption per Dwelling Unit"
-        case Resolution.hour_of_day_summer:
-            return "Average Summer Day Hourly Electricity Consumption per Dwelling Unit"
-        case Resolution.hour_of_day_winter:
-            return "Average Winter Day Hourly Electricity Consumption per Dwelling Unit"
-        case Resolution.hour_of_day_matrix:
-            focus_display = ", ".join(v for _, v in spec.focus_on)
-            return f"Hourly Load Profile Matrix for {focus_display}"
-        case _:
-            raise ValueError(f"Unsupported resolution '{spec.resolution}' for LRD plot.")
-
-
-def _build_recs_eia_metric_label(spec: PlotSpec) -> str:
-    """Build the metric facet label — the title without quantity name and grouping.
-
-    This is the "shape" of the comparison, aligned with the plot title vocabulary.
-
-    Examples:
-        "Annual Consumption" (total, year)
-        "Average Monthly Consumption per Dwelling Unit" (average, month, all_units)
-        "Average Annual Consumption per Consuming Dwelling Unit" (average, year, users_only)
-        "Distribution of Consumption per Dwelling Unit" (distribution)
-        "Enduse Penetration" (penetration)
-    """
-    if spec.quantity == DataCol.UNITS_COUNT:
-        return "Number of Occupied Dwelling Units"
-
-    if spec.view == ViewType.penetration:
-        return "Enduse Penetration"
-
-    if spec.view == ViewType.distribution:
-        per = "per Consuming Dwelling Unit" if spec.coverage == CoverageType.users_only else "per Dwelling Unit"
-        return f"Distribution of Consumption {per}"
-
-    period = "Monthly" if spec.resolution == Resolution.month else "Annual"
-    if spec.aggregation_type == AggregationType.total:
-        return f"{period} Consumption"
-
-    per = "per Consuming Dwelling Unit" if spec.coverage == CoverageType.users_only else "per Dwelling Unit"
-    return f"Average {period} Consumption {per}"
+_PERIOD_LABEL = {
+    Resolution.year: "Annual",
+    Resolution.month: "Monthly",
+    Resolution.day_of_year: "Daily",
+    Resolution.hour_of_day: "Average Daily",
+    Resolution.hour_of_day_summer: "Average Summer Day Hourly",
+    Resolution.hour_of_day_winter: "Average Winter Day Hourly",
+}
 
 
 class PlotSpec(NoExtraModel):
@@ -292,19 +168,6 @@ class PlotSpec(NoExtraModel):
                     "(('state', 'AK'), ('vintage', '1990s')) focuses on AK 1990s homes.",
     )
     view: ViewType | None = Field(..., description="View type: diff_view, value_view, distribution, etc.")
-
-    @property
-    def effective_group_by(self) -> tuple[str, ...]:
-        """Sorted tuple of all columns the data handler must group by.
-
-        This is the union of focus_on columns and group_by, sorted
-        alphabetically so that ("state", "vintage") and ("vintage", "state")
-        produce the same DataKey for cache consistency.
-        """
-        cols = {col for col, _ in self.focus_on}
-        if self.group_by is not None:
-            cols.add(self.group_by)
-        return tuple(sorted(cols))
 
     @model_validator(mode="after")
     def _reject_total_distribution(self) -> PlotSpec:
@@ -401,8 +264,14 @@ class PlotSpec(NoExtraModel):
 
         return self
 
-    def get_data_key(self) -> DataKey:
-        """Get the data key that uniquely identifies the base dataset for this plot.
+    @property
+    def _per_unit_label(self) -> str:
+        """'per Consuming Dwelling Unit' or 'per Dwelling Unit'."""
+        return "per Consuming Dwelling Unit" if self.coverage == CoverageType.users_only else "per Dwelling Unit"
+
+    @property
+    def data_key(self) -> DataKey:
+        """Data key that uniquely identifies the base dataset for this plot.
 
         Uses effective_group_by (sorted union of focus_on columns + group_by)
         to determine which columns the data must be grouped by.
@@ -415,16 +284,81 @@ class PlotSpec(NoExtraModel):
             coverage=self.coverage,
         )
 
-    def get_display_title(self) -> str:
+    @property
+    def effective_group_by(self) -> tuple[str, ...]:
+        """Sorted tuple of all columns the data handler must group by.
+
+        This is the union of focus_on columns and group_by, sorted
+        alphabetically so that ("state", "vintage") and ("vintage", "state")
+        produce the same DataKey for cache consistency.
+        """
+        cols = {col for col, _ in self.focus_on}
+        if self.group_by is not None:
+            cols.add(self.group_by)
+        return tuple(sorted(cols))
+
+    @property
+    def display_title(self) -> str:
         """Publication-quality title for the plot figure and HTML index.
+
+        Handles all comparison datasets (EIA, RECS, LRD) in a single method.
+        LRD-specific resolutions (load duration curves, temperature plots, hourly
+        matrices) get unique titles; everything else follows the common pattern:
+        "{Period} {Quantity} Consumption {Per} {Grouping}"
 
         Examples:
             "Average Monthly Electricity Consumption per Dwelling Unit by State"
-            "Annual Electricity Consumption per Dwelling Unit"  (LRD)
+            "Annual Electricity Consumption per Dwelling Unit"
+            "Load Duration Curve of Electricity Consumption per Dwelling Unit"
         """
+        # ── LRD-specific resolutions with unique title patterns ──
         if self.comparison_dataset == ComparisonDataset.lrd:
-            return _build_lrd_display_title(self)
-        return _build_recs_eia_display_title(self)
+            match self.resolution:
+                case Resolution.hour_of_year | Resolution.top_100_hours:
+                    if self.view == ViewType.temp_view:
+                        return "Load vs Outdoor Drybulb Temperature"
+                    if self.view == ViewType.temp_distribution_view:
+                        return "Count of Number of Hours vs Outdoor Drybulb Temperature"
+                    title = "Load Duration Curve of Electricity Consumption per Dwelling Unit"
+                    if self.resolution == Resolution.top_100_hours:
+                        title += " (Top 100 Hours)"
+                    return title
+                case Resolution.hour_of_day_matrix:
+                    focus_display = ", ".join(v for _, v in self.focus_on)
+                    return f"Hourly Load Profile Matrix for {focus_display}"
+
+        # ── Grouping suffix (shared by all common-pattern titles) ──
+        agg_label = format_group_by(self.group_by) if self.group_by else ""
+        focus_display = self.filter_display_name
+        if focus_display and agg_label:
+            grouping = f"({focus_display} only) by {agg_label}"
+        elif focus_display:
+            grouping = f"({focus_display})"
+        elif agg_label:
+            grouping = f"by {agg_label}"
+        else:
+            grouping = "(US Total)"
+
+        # ── Special RECS/EIA view types ──
+        quantity_name = self.quantity.label if self.quantity != DataCol.ALL else "Enduse"
+
+        if self.quantity == DataCol.UNITS_COUNT:
+            return f"Number of Occupied Dwelling Units {grouping}"
+
+        if self.view == ViewType.penetration:
+            usage_name = "the specified End Use" if self.quantity == DataCol.ALL else self.quantity.penetration_label
+            return f"Share of Dwelling Units using {usage_name} {grouping}"
+
+        if self.view == ViewType.distribution:
+            return f"Distribution of {quantity_name} Consumption {self._per_unit_label} {grouping}"
+
+        # ── Common pattern: "{Period} {Quantity} Consumption {Per} {Grouping}" ──
+        period = _PERIOD_LABEL.get(self.resolution, "Annual")
+
+        if self.aggregation_type == AggregationType.total:
+            return f"{period} {quantity_name} Consumption {grouping}"
+
+        return f"Average {period} {quantity_name} Consumption {self._per_unit_label} {grouping}"
 
     @property
     def display_quantity(self) -> str:
@@ -443,12 +377,30 @@ class PlotSpec(NoExtraModel):
     def display_metric(self) -> str:
         """Metric facet label — title-aligned, without quantity name or grouping.
 
-        For RECS/EIA: uses _build_recs_eia_metric_label().
-        For LRD: uses the full LRD title (which already excludes grouping).
+        Examples:
+            "Annual Consumption" (total, year)
+            "Average Monthly Consumption per Dwelling Unit" (average, month, all_units)
+            "Distribution of Consumption per Dwelling Unit" (distribution)
+            "Load Duration Curve of Electricity Consumption per Dwelling Unit" (LRD)
         """
         if self.comparison_dataset == ComparisonDataset.lrd:
-            return _build_lrd_display_title(self)
-        return _build_recs_eia_metric_label(self)
+            # LRD metric IS the full display_title (no grouping to strip)
+            return self.display_title
+
+        if self.quantity == DataCol.UNITS_COUNT:
+            return "Number of Occupied Dwelling Units"
+
+        if self.view == ViewType.penetration:
+            return "Enduse Penetration"
+
+        if self.view == ViewType.distribution:
+            return f"Distribution of Consumption {self._per_unit_label}"
+
+        period = _PERIOD_LABEL.get(self.resolution, "Annual")
+        if self.aggregation_type == AggregationType.total:
+            return f"{period} Consumption"
+
+        return f"Average {period} Consumption {self._per_unit_label}"
 
     @property
     def display_group_by(self) -> str:
@@ -477,16 +429,13 @@ class PlotSpec(NoExtraModel):
         if self.quantity == DataCol.ALL:
             return "grouped bar plot"
 
+        # LRD-specific resolutions (year/month fall through to shared tilemap block)
         if self.comparison_dataset == ComparisonDataset.lrd:
-            if self.resolution == Resolution.year:
-                return "tilemap bar plot"
-            if self.resolution == Resolution.month:
-                return "tilemap timeseries plot"
             if self.resolution == Resolution.day_of_year:
                 return "stack of timeseries plot"
             if self.resolution == Resolution.hour_of_day_matrix:
                 return "daily load shape matrix"
-            if self.resolution in (Resolution.hour_of_day_summer, Resolution.hour_of_day_winter):
+            if self.resolution in (Resolution.hour_of_day, Resolution.hour_of_day_summer, Resolution.hour_of_day_winter):
                 return "daily load shape"
             if self.resolution in (Resolution.hour_of_year, Resolution.top_100_hours):
                 if self.view == ViewType.temp_view:
@@ -494,9 +443,8 @@ class PlotSpec(NoExtraModel):
                 if self.view == ViewType.temp_distribution_view:
                     return "temperature distribution"
                 return "load duration curve"
-            if self.resolution == Resolution.hour_of_day:
-                return "daily load shape"
 
+        # Tilemap layouts for state/utility grouping (shared by EIA, RECS, LRD)
         if self.group_by in (DataCol.STATE, DataCol.UTILITY):
             if self.resolution == Resolution.year:
                 return "tilemap bar plot"
@@ -505,66 +453,26 @@ class PlotSpec(NoExtraModel):
 
         return "grouped bar plot"
 
-    # ── File-path-style labels (for file naming) ─────────────────────────
+    @property
+    def filter_display_name(self) -> str:
+        """Human-readable label for the focus_on filters.
 
-    def get_quantity_name(self) -> str:
-        if self.quantity == DataCol.ALL:
-            return f"fuel {self.aggregation_type.value}"
-        return f"{self.quantity.value} {self.aggregation_type.value}"
-
-    def _get_title_prefix(self) -> str:
-        qlabel = self.get_quantity_name()
-        title_prefix = f"{self.comparison_dataset} {self.resolution} {qlabel} comparison"
-        return title_prefix
-
-    def _format_focus_display(self) -> str:
-        """Format focus_on entries for display in titles.
-
-        Returns a human-readable string like 'Alaska' or 'Alaska, Single-Family Detached'.
+        State abbreviations → full names, others pass through.
         Returns '' if focus_on is empty.
+
+        Examples: 'Alaska', 'Alaska, Single-Family Detached'
         """
-        if not self.focus_on:
-            return ""
-        from resstockpostproc.shared_utils.mapping import ABBR2STATE
-        parts = []
-        for col, value in self.focus_on:
-            if col == "state":
-                parts.append(ABBR2STATE.get(value, value))
-            else:
-                parts.append(value)
-        return ", ".join(parts)
+        return ", ".join(format_focus_label(v) for _, v in self.focus_on)
 
-    def get_filter_suffix(self) -> str:
-        """Return filter suffix for titles, e.g. ' (Alaska only)' or ''."""
-        display = self._format_focus_display()
-        if not display:
-            return ""
-        return f" ({display} only)"
+    @property
+    def file_path_and_name(self) -> tuple[Path, str]:
+        """Build the output file path and filename from display-quality labels.
 
-    def get_filter_display_name(self) -> str:
-        """Full display name for the focus_on filters.
-
-        For state abbreviations, returns the full state name.
-        For other characteristics, the value is already human-readable.
+        Returns (path_segment, filename) where:
+        - path_segment uses human-readable directory names (e.g. "By State/Alaska")
+        - filename is the display_title with coverage/view suffixes
         """
-        return self._format_focus_display()
-
-    def get_title(self) -> str:
-        title_prefix = self._get_title_prefix()
-        focus_display = self._format_focus_display()
-        if focus_display and self.group_by:
-            title = title_prefix + f" ({focus_display} only) by {self.group_by}"
-        elif focus_display:
-            title = title_prefix + " for " + focus_display
-        elif self.group_by:
-            title = title_prefix + f" by {self.group_by}"
-        else:
-            title = title_prefix
-        return title
-
-    def get_file_path_and_name(self) -> tuple[Path, str]:
-        title_prefix = self._get_title_prefix()
-        title = self.get_title()
+        title = self.display_title
         # Append coverage and view to filename so different specs don't overwrite each other
         if self.coverage != CoverageType.all_units:
             title = title + f" ({self.coverage})"
@@ -573,11 +481,11 @@ class PlotSpec(NoExtraModel):
         # Focus entries go at the top of the path hierarchy
         filter_dir = Path()
         for char, value in self.focus_on:
-            filter_dir /= FILTER_CHAR_DISPLAY.get(char, f"By {char}")
-            filter_dir /= value
+            filter_dir /= f"By {format_group_by(char)}"
+            filter_dir /= format_focus_label(value)
         if self.group_by:
-            path_segment = filter_dir / Path(title_prefix + f" by {self.group_by}")
+            path_segment = filter_dir / f"By {format_group_by(self.group_by)}"
             path_segment /= "All"  # overview within the aggregation
         else:
-            path_segment = filter_dir / Path(title_prefix)
+            path_segment = filter_dir
         return path_segment, title

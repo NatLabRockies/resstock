@@ -82,7 +82,7 @@ def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
     sidebar_column = _resolve_sidebar_column(plot_spec)
     rse_column = _resolve_rse_column(plot_spec)
     timeseries_column = _resolve_timeseries_column(plot_spec)
-    title = plot_spec.get_display_title()
+    title = plot_spec.display_title
     quantity_title = _resolve_quantity_title(plot_spec)
     comparison_label = _extract_comparison_dataset_label(plot_spec.comparison_dataset, data) if sidebar_column else ""
     sidebar_title = _resolve_sidebar_title(plot_spec, comparison_label)
@@ -247,7 +247,7 @@ def _resolve_diff_view_title(plot_spec: PlotSpec, comparison_label: str) -> str:
 
     Reuses the value_view title and wraps it with percent difference framing.
     """
-    base = plot_spec.get_display_title()
+    base = plot_spec.display_title
     return f"Percent Difference on {base}<br> Compared to {comparison_label}"
 
 

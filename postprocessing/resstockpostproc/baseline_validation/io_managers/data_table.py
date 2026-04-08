@@ -294,11 +294,11 @@ def _build_table_html(
     ref_val_col: str = "",
 ) -> str:
     """Build a self-contained HTML page with an interactive data table."""
-    title = html_lib.escape(plot_spec.get_display_title())
+    title = html_lib.escape(plot_spec.display_title)
     units = html_lib.escape(_resolve_quantity_title(plot_spec))
 
     # Subtitle: focused entity or group_by level
-    focus_display = plot_spec.get_filter_display_name()
+    focus_display = plot_spec.filter_display_name
     if focus_display:
         subtitle = html_lib.escape(focus_display)
     elif plot_spec.group_by:
@@ -603,7 +603,7 @@ def _build_table_html(
 
 def _csv_filename(plot_spec: PlotSpec) -> str:
     """Generate a filename for the downloadable CSV."""
-    _, title = plot_spec.get_file_path_and_name()
+    _, title = plot_spec.file_path_and_name
     return f"{title}.csv"
 
 

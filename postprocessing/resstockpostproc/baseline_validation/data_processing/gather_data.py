@@ -41,7 +41,7 @@ def get_plot_data(
     This is the legacy interface that loads data and applies plot-specific operations.
     For batch processing, prefer using get_base_data() + apply_plot_spec() separately.
     """
-    data_key = plot_spec.get_data_key()
+    data_key = plot_spec.data_key
     base_data = get_base_data(data_key)
     return apply_plot_spec(base_data, plot_spec)
 
@@ -105,7 +105,7 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
     # Apply focus_on post-filters.
     # For cross-dimension filters (multi-column group_by), drop the filtered column
     # so downstream layout logic doesn't pick the wrong grouping dimension.
-    data_key = plot_spec.get_data_key()
+    data_key = plot_spec.data_key
     is_multi_col = len(data_key.effective_group_by) > 1
     for col, val in plot_spec.focus_on:
         if col in df.columns:

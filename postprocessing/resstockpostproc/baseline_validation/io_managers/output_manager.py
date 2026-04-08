@@ -46,7 +46,7 @@ def save_figure(
         if fmt not in FIGURE_FORMATS:
             continue
         output_dir = workflow.output.output_dir / workflow.output.run_name / f"{plot_spec.comparison_dataset} plots ({fmt})"
-        path_seg, title = plot_spec.get_file_path_and_name()
+        path_seg, title = plot_spec.file_path_and_name
         filepath = output_dir / path_seg
         ensure_directory(filepath)
         fullpath = filepath / f"{title}.{fmt.value}"

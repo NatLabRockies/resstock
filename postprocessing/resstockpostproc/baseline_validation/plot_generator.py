@@ -333,7 +333,7 @@ def _expand_templates(
                 # hour_of_day_matrix requires per-utility focus; expand each
                 # utility as a separate work item (LRD has no Block 2 triples).
                 if tmpl.resolution == Resolution.hour_of_day_matrix:
-                    data_key = main_spec.get_data_key()
+                    data_key = main_spec.data_key
                     base_data = get_base_data(data_key)
                     col = group_by
                     for val in sorted(v for v in base_data[col].unique().to_list() if v is not None):
@@ -343,7 +343,7 @@ def _expand_templates(
                         ))
                     continue
                 # Warm the disk cache so worker processes find the data.
-                get_base_data(main_spec.get_data_key())
+                get_base_data(main_spec.data_key)
                 # Pass focus_on from the spec so the US Total focus (set by
                 # the (None,None,None) handler above) propagates to plotters.
                 work_items.append((
@@ -363,7 +363,7 @@ def _expand_templates(
                 group_by=f1_char,
                 view=tmpl.view,
             )
-            f1_data = get_base_data(f1_lookup_spec.get_data_key())
+            f1_data = get_base_data(f1_lookup_spec.data_key)
             f1_col = f1_char
             f1_values = sorted(
                 v for v in f1_data[f1_col].unique().to_list()
@@ -384,7 +384,7 @@ def _expand_templates(
                             continue
                         # Warm cache for the 2-column group_by DataKey that
                         # workers will request (focus_on col + group_by).
-                        get_base_data(filtered_entries[0][0].get_data_key())
+                        get_base_data(filtered_entries[0][0].data_key)
                         focus_on = ((f1_char, f1_val),)
                         work_items.append((
                             spec_pair, tmpl_index, filtered_entries, None, focus_on, group_by,
@@ -409,7 +409,7 @@ def _expand_templates(
                     group_by=f2_char,
                     view=tmpl.view,
                 )
-                f2_data = get_base_data(f2_lookup_spec.get_data_key())
+                f2_data = get_base_data(f2_lookup_spec.data_key)
                 f2_col = f2_char
 
                 if f2_col not in f2_data.columns:
@@ -603,7 +603,7 @@ def _generate_spec_plots(
                         footnotes=footnotes, source_labels=source_labels)
 
             # Build relative path to the plot file
-            path_seg, file_title = plot_spec.get_file_path_and_name()
+            path_seg, file_title = plot_spec.file_path_and_name
             rel_path = (
                 Path(f"{plot_spec.comparison_dataset} plots ({link_format})") / path_seg / f"{file_title}.{link_format.value}"
             )
