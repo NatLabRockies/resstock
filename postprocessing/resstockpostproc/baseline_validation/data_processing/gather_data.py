@@ -54,7 +54,7 @@ def get_base_data(data_key: DataKey) -> pl.DataFrame:
     Use apply_plot_spec() to apply plot-specific transformations.
 
     Args:
-        data_key: DataKey containing comparison_dataset, aggregation_level, resolution,
+        data_key: DataKey containing comparison_dataset, group_by, resolution,
                   aggregation_type, and coverage
     """
     return _get_plot_data(data_key)
@@ -82,7 +82,7 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
     df = _keep_relevant_columns(base_data, plot_spec)
     df = _add_95ci_bounds(df)
     # Sort by units_count within the primary grouping column (if any)
-    sort_col = plot_spec.aggregation_level or (plot_spec.effective_group_by[0] if plot_spec.effective_group_by else None)
+    sort_col = plot_spec.group_by or (plot_spec.effective_group_by[0] if plot_spec.effective_group_by else None)
     if sort_col and sort_col in df.columns:
         df = (
             df.with_columns(pl.col("units_count").mean().over(sort_col).alias("avg_units_count"))
@@ -102,13 +102,13 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
     # For cross-dimension filters (multi-column group_by), drop the filtered column
     # so downstream layout logic doesn't pick the wrong grouping dimension.
     data_key = plot_spec.get_data_key()
-    is_multi_col = len(data_key.group_by) > 1
+    is_multi_col = len(data_key.effective_group_by) > 1
     for col, val in plot_spec.focus_on:
         if col == "eiaid" and "utility_name" in df.columns:
             df = df.filter(pl.col("utility_name") == val)
         elif col in df.columns:
             df = df.filter(pl.col(col) == val)
-            if is_multi_col and plot_spec.aggregation_level is not None and col != plot_spec.aggregation_level:
+            if is_multi_col and plot_spec.group_by is not None and col != plot_spec.group_by:
                 df = df.drop(col)
 
     # Apply LRD-specific resolution transforms
@@ -124,11 +124,11 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
     """Internal function to load data based on DataKey.
 
     Args:
-        data_key: DataKey containing comparison_dataset, group_by, resolution,
+        data_key: DataKey containing comparison_dataset, effective_group_by, resolution,
                   aggregation_type, and coverage
     """
     comparison_dataset = data_key.comparison_dataset
-    group_by = data_key.group_by
+    group_by = data_key.effective_group_by  # local alias for readability
     resolution = data_key.resolution
 
     groups = []

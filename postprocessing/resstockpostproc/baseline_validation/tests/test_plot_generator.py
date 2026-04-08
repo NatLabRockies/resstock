@@ -24,7 +24,7 @@ def _make_spec(**overrides):
         resolution=Resolution.year,
         aggregation_type=AggregationType.total,
         coverage=CoverageType.all_units,
-        aggregation_level="state",
+        group_by="state",
         view=ViewType.value_view,
     )
     defaults.update(overrides)
@@ -122,7 +122,7 @@ class TestComputeDiscrepancy:
             "state": ["US Total", "US Total"],
             "electricity_total_value": [100.0, 120.0],
         })
-        spec = _make_spec(focus_on=(("state", "US Total"),), aggregation_level=None)
+        spec = _make_spec(focus_on=(("state", "US Total"),), group_by=None)
         cvrmse, nmbe = _compute_discrepancy(data, spec)
 
         assert nmbe == pytest.approx(20.0)
@@ -267,7 +267,7 @@ class TestGenerateSlotTriples:
                 assert agg is None, f"F2={f2} with agg={agg}"
 
     def test_f1_not_equal_to_agg(self):
-        """F1 never equals aggregation_level."""
+        """F1 never equals group_by."""
         triples = generate_slot_triples(RECS_ANNUAL_CHARS, allow_cross_filter=True)
         for f1, _, agg in triples:
             if f1 is not None and agg is not None:

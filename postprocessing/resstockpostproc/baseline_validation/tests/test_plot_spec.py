@@ -22,7 +22,7 @@ def _make_spec(**overrides):
         resolution=Resolution.year,
         aggregation_type=AggregationType.total,
         coverage=CoverageType.all_units,
-        aggregation_level="state",
+        group_by="state",
         view=ViewType.value_view,
     )
     defaults.update(overrides)
@@ -50,7 +50,7 @@ class TestLRDConstraints:
             quantity=DataCol.ELECTRICITY_TOTAL,
             aggregation_type=AggregationType.average,
             coverage=CoverageType.all_units,
-            aggregation_level="eiaid",
+            group_by="eiaid",
         )
         assert spec.comparison_dataset == ComparisonDataset.lrd
 

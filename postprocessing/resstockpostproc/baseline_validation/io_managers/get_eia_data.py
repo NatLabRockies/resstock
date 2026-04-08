@@ -32,13 +32,13 @@ def get_annual_all(
     """Get annual EIA data for multiple years, with columns suffixed by year.
 
     Args:
-        data_key: DataKey containing aggregation_level, aggregation_type, and coverage
+        data_key: DataKey containing group_by, aggregation_type, and coverage
         years: List of years to include. Defaults to workflow.reference_years["eia"]
     """
     if years is None:
         years = workflow.reference_years.get("eia", [2018])
 
-    by: Literal["state", "eiaid"] = "state" if "state" in data_key.group_by else "eiaid"
+    by: Literal["state", "eiaid"] = "state" if "state" in data_key.effective_group_by else "eiaid"
 
     dfs = []
     for year in years:
@@ -94,13 +94,13 @@ def get_monthly_all(
     """Get monthly EIA data for multiple years, with columns suffixed by year.
 
     Args:
-        data_key: DataKey containing aggregation_level, aggregation_type, and coverage
+        data_key: DataKey containing group_by, aggregation_type, and coverage
         years: List of years to include. Defaults to workflow.reference_years["eia"]
     """
     if years is None:
         years = workflow.reference_years.get("eia", [2018])
 
-    by: Literal["state", "eiaid"] = "state" if "state" in data_key.group_by else "eiaid"
+    by: Literal["state", "eiaid"] = "state" if "state" in data_key.effective_group_by else "eiaid"
 
     dfs = []
     for year in years:
@@ -143,7 +143,7 @@ def get_monthly_all(
     return result
 
 
-def get_available_aggregation_levels() -> Sequence[Literal["state", "eiaid"]]:
+def get_available_group_bys() -> Sequence[Literal["state", "eiaid"]]:
     return ("state", "eiaid")
 
 

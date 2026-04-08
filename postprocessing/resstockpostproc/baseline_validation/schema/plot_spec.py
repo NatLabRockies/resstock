@@ -93,7 +93,7 @@ class DataKey(NamedTuple):
 
     All plots with the same DataKey can share the same expensive data loading operation.
 
-    group_by is a sorted tuple of column names the data must be grouped by.
+    effective_group_by is a sorted tuple of column names the data must be grouped by.
     For single-dimension plots: ("state",) or ("eiaid",).
     For cross-dimension plots: ("census_division_recs", "state").
 
@@ -102,13 +102,13 @@ class DataKey(NamedTuple):
     """
 
     comparison_dataset: ComparisonDataset
-    group_by: tuple[str, ...]
+    effective_group_by: tuple[str, ...]
     resolution: Resolution
     aggregation_type: AggregationType
     coverage: CoverageType
 
     def __str__(self) -> str:
-        return f"DataKey({self.comparison_dataset}, {self.group_by}, {self.resolution}, {self.aggregation_type}, {self.coverage})"
+        return f"DataKey({self.comparison_dataset}, {self.effective_group_by}, {self.resolution}, {self.aggregation_type}, {self.coverage})"
 
 
 # Map characteristic keys to human-readable directory names for focus_on output paths
@@ -139,7 +139,7 @@ AGGREGATION_LEVEL_LABELS = {
 }
 
 
-def format_aggregation_level(agg_level: str) -> str:
+def format_group_by(agg_level: str) -> str:
     """Convert an aggregation level column name to a display label.
 
     Examples: "census_division_recs" → "Census Division", "state" → "State"
@@ -170,8 +170,8 @@ def _build_recs_eia_display_title(spec: PlotSpec) -> str:
         "Number of Occupied Dwelling Units by State"
     """
     quantity_name = spec.quantity.label if spec.quantity != DataCol.ALL else "Enduse"
-    agg_label = format_aggregation_level(spec.aggregation_level) if spec.aggregation_level else ""
-    # Build grouping label from focus_on display and aggregation_level
+    agg_label = format_group_by(spec.group_by) if spec.group_by else ""
+    # Build grouping label from focus_on display and group_by
     focus_display = spec.get_filter_display_name()
     if focus_display and agg_label:
         grouping = f"({focus_display} only) by {agg_label}"
@@ -277,7 +277,7 @@ class PlotSpec(NoExtraModel):
     coverage: CoverageType = Field(..., description="Population coverage: all_units or users_only")
     quantity: DataCol = Field(..., description="Column(s) to visualise. Use DataCol.ALL for all enduses.")
     resolution: Resolution = Field(..., description="Time resolution: monthly / annual / hourly")
-    aggregation_level: str | None = Field(
+    group_by: str | None = Field(
         default=None,
         description="Optional sub-grouping dimension (e.g. state, vintage). "
                     "When None, data is grouped only by focus_on columns.",
@@ -295,13 +295,13 @@ class PlotSpec(NoExtraModel):
     def effective_group_by(self) -> tuple[str, ...]:
         """Sorted tuple of all columns the data handler must group by.
 
-        This is the union of focus_on columns and aggregation_level, sorted
+        This is the union of focus_on columns and group_by, sorted
         alphabetically so that ("state", "vintage") and ("vintage", "state")
         produce the same DataKey for cache consistency.
         """
         cols = {col for col, _ in self.focus_on}
-        if self.aggregation_level is not None:
-            cols.add(self.aggregation_level)
+        if self.group_by is not None:
+            cols.add(self.group_by)
         return tuple(sorted(cols))
 
     @model_validator(mode="after")
@@ -361,24 +361,24 @@ class PlotSpec(NoExtraModel):
                 )
             seen_cols.add(col)
 
-        if len(self.focus_on) == 2 and self.aggregation_level is not None:
+        if len(self.focus_on) == 2 and self.group_by is not None:
             raise ValueError(
-                "aggregation_level must be None when focus_on has 2 filters. "
+                "group_by must be None when focus_on has 2 filters. "
                 "Data is too thin for meaningful sub-grouping with 2 filters applied."
             )
 
-        if self.aggregation_level is not None and self.aggregation_level in seen_cols:
+        if self.group_by is not None and self.group_by in seen_cols:
             raise ValueError(
-                f"aggregation_level '{self.aggregation_level}' cannot also appear in focus_on. "
-                "To select one entity from the aggregation, set aggregation_level=None and "
+                f"group_by '{self.group_by}' cannot also appear in focus_on. "
+                "To select one entity from the aggregation, set group_by=None and "
                 "add (column, value) to focus_on instead."
             )
 
-        # When focus_on is used with an aggregation_level, the focus_on columns are
+        # When focus_on is used with an group_by, the focus_on columns are
         # cross-dimension filters that require microdata → RECS annual only.
-        # When aggregation_level is None, focus_on columns ARE the grouping dimension
+        # When group_by is None, focus_on columns ARE the grouping dimension
         # (same-dimension selection) and work for any comparison dataset.
-        if self.focus_on and self.aggregation_level is not None:
+        if self.focus_on and self.group_by is not None:
             if self.comparison_dataset != ComparisonDataset.recs:
                 raise ValueError(
                     f"Cross-dimension focus_on filters are only supported for RECS "
@@ -394,8 +394,8 @@ class PlotSpec(NoExtraModel):
 
         # No geographic-to-geographic conflicts across all group dimensions
         geo_cols = {col for col, _ in self.focus_on if col in GEOGRAPHIC_DIMENSIONS}
-        if self.aggregation_level in GEOGRAPHIC_DIMENSIONS:
-            geo_cols.add(self.aggregation_level)
+        if self.group_by in GEOGRAPHIC_DIMENSIONS:
+            geo_cols.add(self.group_by)
         if len(geo_cols) > 1:
             raise ValueError(
                 f"Multiple geographic dimensions found: {geo_cols}. "
@@ -407,13 +407,13 @@ class PlotSpec(NoExtraModel):
     def get_data_key(self) -> DataKey:
         """Get the data key that uniquely identifies the base dataset for this plot.
 
-        Uses effective_group_by (sorted union of focus_on columns + aggregation_level)
+        Uses effective_group_by (sorted union of focus_on columns + group_by)
         to determine which columns the data must be grouped by.
         """
-        group_by = self.effective_group_by or ("state",)
+        egb = self.effective_group_by or ("state",)
         return DataKey(
             comparison_dataset=self.comparison_dataset,
-            group_by=group_by,
+            effective_group_by=egb,
             resolution=self.resolution,
             aggregation_type=self.aggregation_type,
             coverage=self.coverage,
@@ -462,9 +462,9 @@ class PlotSpec(NoExtraModel):
     @property
     def display_group_by(self) -> str:
         """Group-by facet label: 'State', 'Census Division', 'Utility', etc."""
-        if not self.aggregation_level:
+        if not self.group_by:
             return ""
-        return format_aggregation_level(self.aggregation_level)
+        return format_group_by(self.group_by)
 
     @property
     def display_viz_label(self) -> str:
@@ -506,7 +506,7 @@ class PlotSpec(NoExtraModel):
             if self.resolution == Resolution.hour_of_day:
                 return "daily load shape"
 
-        if self.aggregation_level in ("state", "eiaid"):
+        if self.group_by in ("state", "eiaid"):
             if self.resolution == Resolution.year:
                 return "tilemap bar plot"
             if self.resolution == Resolution.month:
@@ -561,12 +561,12 @@ class PlotSpec(NoExtraModel):
     def get_title(self) -> str:
         title_prefix = self._get_title_prefix()
         focus_display = self._format_focus_display()
-        if focus_display and self.aggregation_level:
-            title = title_prefix + f" ({focus_display} only) by {self.aggregation_level}"
+        if focus_display and self.group_by:
+            title = title_prefix + f" ({focus_display} only) by {self.group_by}"
         elif focus_display:
             title = title_prefix + " for " + focus_display
-        elif self.aggregation_level:
-            title = title_prefix + f" by {self.aggregation_level}"
+        elif self.group_by:
+            title = title_prefix + f" by {self.group_by}"
         else:
             title = title_prefix
         return title
@@ -584,8 +584,8 @@ class PlotSpec(NoExtraModel):
         for char, value in self.focus_on:
             filter_dir /= FILTER_CHAR_DISPLAY.get(char, f"By {char}")
             filter_dir /= value
-        if self.aggregation_level:
-            path_segment = filter_dir / Path(title_prefix + f" by {self.aggregation_level}")
+        if self.group_by:
+            path_segment = filter_dir / Path(title_prefix + f" by {self.group_by}")
             path_segment /= "All"  # overview within the aggregation
         else:
             path_segment = filter_dir / Path(title_prefix)

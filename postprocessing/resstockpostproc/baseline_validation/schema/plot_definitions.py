@@ -2,7 +2,7 @@
 
 PlotTemplates describe WHAT to plot (metric identity + eligible chars).
 generate_slot_triples() enumerates HOW to slice it (filter_1, filter_2,
-aggregation_level). The expansion loop in plot_generator.py combines these
+group_by). The expansion loop in plot_generator.py combines these
 to produce concrete PlotSpec objects for each data slice.
 
 Usage:
@@ -102,7 +102,7 @@ EIA_CHARS = ("state",)  # EIA only supports state-level grouping
 LRD_CHARS = ("eiaid",)  # LRD only supports utility-level grouping
 
 # Chars allowed as F1/F2 in cross-filter triples. All 6 chars remain available
-# as aggregation_level (Block 1 base plots and Block 2 sub-grouping), but only
+# as group_by (Block 1 base plots and Block 2 sub-grouping), but only
 # these three can drive the expensive focus-value expansion as filters.
 RECS_CROSS_FILTER_CHARS = ("state", "census_division_recs", "geometry_building_type_recs")
 
@@ -115,7 +115,7 @@ class PlotTemplate:
     aggregation_type, coverage, view) and the ordered set of eligible
     characteristics available for the (F1, F2, agg_level) slot triple expansion.
 
-    The aggregation_level and focus_on are NOT part of the template — those are
+    The group_by and focus_on are NOT part of the template — those are
     determined by the slot triple generator and the expansion loop.
     """
 
@@ -129,7 +129,7 @@ class PlotTemplate:
 
 
 SlotTriple = tuple[str | None, str | None, str | None]
-"""(filter_1, filter_2, aggregation_level) — None means the slot is unused."""
+"""(filter_1, filter_2, group_by) — None means the slot is unused."""
 
 
 def _is_geo_conflict(a: str | None, b: str | None) -> bool:
@@ -142,18 +142,18 @@ def generate_slot_triples(
     allow_cross_filter: bool = False,
     cross_filter_chars: tuple[str, ...] | None = None,
 ) -> list[SlotTriple]:
-    """Generate all valid (filter_1, filter_2, aggregation_level) triples.
+    """Generate all valid (filter_1, filter_2, group_by) triples.
 
     Args:
         eligible_chars: Ordered tuple of available characteristics. The ordering
             determines the upper-triangle dedup: F2 can only use chars that come
             AFTER F1 in this tuple, preventing (A,B)/(B,A) duplicates.
         allow_cross_filter: When True, allow triples where F1 is set AND
-            aggregation_level is set (cross-dimension filtering). Only valid for
+            group_by is set (cross-dimension filtering). Only valid for
             sources with microdata (RECS annual).
         cross_filter_chars: When provided, restricts which chars from
             eligible_chars may appear as F1 or F2 in Block 2 triples. The
-            aggregation_level dimension still draws from all eligible_chars.
+            group_by dimension still draws from all eligible_chars.
             When None (default), all eligible_chars may be used as F1/F2.
 
     Returns:
@@ -179,7 +179,7 @@ def generate_slot_triples(
 
     if not allow_cross_filter:
         # Without cross-filter, F1 can only be used as a same-dimension
-        # focus (drilling into one entity of the aggregation_level).
+        # focus (drilling into one entity of the group_by).
         # That expansion is handled by focus_val in the main loop, not here.
         return triples
 
@@ -265,7 +265,7 @@ def _extra_view_for(spec: PlotSpec) -> ViewType | None:
         return None
 
     # EIA/RECS state or utility with annual resolution → diff view
-    if spec.aggregation_level in ("state", "eiaid"):
+    if spec.group_by in ("state", "eiaid"):
         if spec.resolution == Resolution.year:
             return ViewType.diff_view
         return None  # monthly tilemaps don't get diff view
@@ -292,7 +292,7 @@ def _make_spec(
     resolution: Resolution,
     aggregation_type: AggregationType,
     coverage: CoverageType,
-    aggregation_level: str | None,
+    group_by: str | None,
     view: ViewType = ViewType.value_view,
 ) -> PlotSpec:
     return PlotSpec(
@@ -301,7 +301,7 @@ def _make_spec(
         resolution=resolution,
         aggregation_type=aggregation_type,
         coverage=coverage,
-        aggregation_level=aggregation_level,
+        group_by=group_by,
         view=view,
     )
 
@@ -311,7 +311,7 @@ def _make_spec(
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _eia_templates() -> Iterator[PlotTemplate]:
-    """Generate EIA plot templates (no aggregation_level baked in)."""
+    """Generate EIA plot templates (no group_by baked in)."""
     mk = lambda q, res, agg_type, cov, view=ViewType.value_view: PlotTemplate(
         comparison_dataset=ComparisonDataset.eia, quantity=q, resolution=res,
         aggregation_type=agg_type, coverage=cov, view=view,
@@ -421,7 +421,7 @@ def generate_all_templates() -> list[PlotTemplate]:
 
     Each template describes a metric to plot (source, quantity, resolution, etc.)
     along with the eligible characteristics for slot triple expansion.
-    The aggregation_level and focus_on are NOT baked in — those are determined
+    The group_by and focus_on are NOT baked in — those are determined
     by generate_slot_triples() in the expansion loop.
     """
     from itertools import chain

@@ -108,7 +108,7 @@ class TestApplyAggregation:
     def _make_key(self, agg_type, coverage):
         return DataKey(
             comparison_dataset=ComparisonDataset.eia,
-            group_by=("state",),
+            effective_group_by=("state",),
             resolution=Resolution.year,
             aggregation_type=agg_type,
             coverage=coverage,

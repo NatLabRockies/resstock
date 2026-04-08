@@ -19,7 +19,7 @@ from resstockpostproc.shared_utils.timing import timed
 def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str]:
     """Create load duration curve plot based on the plot specification."""
 
-    agg = plot_spec.aggregation_level or plot_spec.effective_group_by[-1]
+    agg = plot_spec.group_by or plot_spec.effective_group_by[-1]
     assert agg == "eiaid", "LRD plots only support aggregation level 'eiaid'"
     final_df = data.clone()
     sidebar_column = None

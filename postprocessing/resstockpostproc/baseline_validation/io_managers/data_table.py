@@ -17,7 +17,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     CoverageType,
     Resolution,
     ViewType,
-    format_aggregation_level,
+    format_group_by,
 )
 from resstockpostproc.baseline_validation.plotters.plot_config import (
     _resolve_quantity_title,
@@ -217,8 +217,8 @@ def _build_column_config(
     """Build column metadata for the HTML table (header labels, formats, types)."""
     units = _resolve_quantity_title(plot_spec)
     entity_col = get_second_category_column(plot_spec)
-    agg = plot_spec.aggregation_level or plot_spec.effective_group_by[-1]
-    entity_label = format_aggregation_level(agg)
+    agg = plot_spec.group_by or plot_spec.effective_group_by[-1]
+    entity_label = format_group_by(agg)
 
     ts_col = _resolve_timeseries_column(plot_spec)
 
@@ -301,8 +301,8 @@ def _build_table_html(
     focus_display = plot_spec.get_filter_display_name()
     if focus_display:
         subtitle = html_lib.escape(focus_display)
-    elif plot_spec.aggregation_level:
-        subtitle = html_lib.escape(f"by {format_aggregation_level(plot_spec.aggregation_level)}")
+    elif plot_spec.group_by:
+        subtitle = html_lib.escape(f"by {format_group_by(plot_spec.group_by)}")
     else:
         subtitle = ""
 

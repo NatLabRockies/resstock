@@ -32,14 +32,14 @@ def get_timeseries_all(
     """Get timeseries data for all configured data sources.
 
     Args:
-        data_key: DataKey containing group_by, resolution, aggregation_type, and coverage
+        data_key: DataKey containing effective_group_by, resolution, aggregation_type, and coverage
         restrict_list: Optional list of entity IDs to restrict to (e.g., eiaid list)
         occupied_only: If True, only include occupied units (for RECS comparison)
     """
     if not workflow.data_sources:
         return None
 
-    by = data_key.group_by[0]  # timeseries only supports single-column groupby
+    by = data_key.effective_group_by[0]  # timeseries only supports single-column groupby
     resolution = data_key.resolution
 
     all_dfs = []
@@ -282,13 +282,13 @@ def get_annual_all(
     """Get annual data for all configured data sources.
 
     Args:
-        data_key: DataKey containing group_by, aggregation_type, and coverage
+        data_key: DataKey containing effective_group_by, aggregation_type, and coverage
         occupied_only: If True, only include occupied units (for RECS comparison)
     """
     if not workflow.data_sources:
         return None
 
-    by_cols = list(data_key.group_by)
+    by_cols = list(data_key.effective_group_by)
 
     all_dfs = []
     for data_source in workflow.data_sources:

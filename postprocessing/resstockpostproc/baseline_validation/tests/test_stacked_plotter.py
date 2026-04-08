@@ -30,7 +30,7 @@ def _make_spec(**overrides):
         resolution=Resolution.year,
         aggregation_type=AggregationType.average,
         coverage=CoverageType.all_units,
-        aggregation_level="state",
+        group_by="state",
         view=ViewType.value_view,
     )
     defaults.update(overrides)
@@ -218,7 +218,7 @@ class TestSplitGraphDispatch:
             "units_count": [5000, 5000],
             "electricity_total_value": [100.0, 110.0],
         })
-        spec = _make_spec(aggregation_level="state", quantity=DataCol.ELECTRICITY_TOTAL)
+        spec = _make_spec(group_by="state", quantity=DataCol.ELECTRICITY_TOTAL)
         fig, iterator = split_graph(df, spec)
         chunks = list(iterator)
         # Single state → single chunk
@@ -233,7 +233,7 @@ class TestSplitGraphDispatch:
             "units_count": [1000, 1000],
             "electricity_total_value": [100.0, 110.0],
         })
-        spec = _make_spec(aggregation_level="vintage", quantity=DataCol.ELECTRICITY_TOTAL)
+        spec = _make_spec(group_by="vintage", quantity=DataCol.ELECTRICITY_TOTAL)
         fig, iterator = split_graph(df, spec)
         chunks = list(iterator)
         assert chunks[0][1] == "vintage"

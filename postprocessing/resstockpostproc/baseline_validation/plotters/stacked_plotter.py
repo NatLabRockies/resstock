@@ -243,7 +243,7 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
 
             # Pivot the dataframe to create a 'quantity' column
             # Keep id columns that don't vary by quantity
-            agg_col = plot_spec.aggregation_level or (plot_spec.effective_group_by[-1] if plot_spec.effective_group_by else "state")
+            agg_col = plot_spec.group_by or (plot_spec.effective_group_by[-1] if plot_spec.effective_group_by else "state")
             id_cols = [agg_col, "model_count", "units_count", "source"]
 
             # Build list of columns to unpivot for each quantity
@@ -295,7 +295,7 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
 @timed
 def split_graph(df: pl.DataFrame, plot_spec: PlotSpec):
     """Split the graph data into subplots based on the plot specification."""
-    if plot_spec.aggregation_level == "state" and plot_spec.quantity != DataCol.ALL and not plot_spec.focus_on:
+    if plot_spec.group_by == "state" and plot_spec.quantity != DataCol.ALL and not plot_spec.focus_on:
         return split_graph_by_state(df)
     elif plot_spec.quantity == DataCol.ALL:
         return split_graph_by_enduse(df, plot_spec)
@@ -385,7 +385,7 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     else:
         quantity_title = ""
 
-    agg_col = plot_spec.aggregation_level or (plot_spec.effective_group_by[-1] if plot_spec.effective_group_by else "state")
+    agg_col = plot_spec.group_by or (plot_spec.effective_group_by[-1] if plot_spec.effective_group_by else "state")
     if plot_spec.quantity == DataCol.ALL:
         if plot_spec.focus_on:
             for col, val in plot_spec.focus_on:

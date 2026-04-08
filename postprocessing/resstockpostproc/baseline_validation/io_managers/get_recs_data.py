@@ -120,13 +120,13 @@ def get_annual_all(
     """Get annual RECS data aggregated by the specified level.
 
     Args:
-        data_key: DataKey containing group_by, aggregation_type, and coverage
+        data_key: DataKey containing effective_group_by, aggregation_type, and coverage
         year: Year of RECS data (only 2020 supported)
     """
     if year != 2020:
         raise ValueError("RECS data is only available for the year 2020.")
 
-    by_cols = list(data_key.group_by)
+    by_cols = list(data_key.effective_group_by)
     by = by_cols[0]  # primary groupby column (used for US Total)
     mdf = get_df_from_s3(s3_paths.RECS_2020_microdata, local_data_dir)
 
@@ -515,19 +515,19 @@ def get_monthly_all(
     """Get monthly RECS data aggregated by state.
 
     Args:
-        data_key: DataKey containing aggregation_level, aggregation_type, and coverage
+        data_key: DataKey containing group_by, aggregation_type, and coverage
         year: Year of RECS data (only 2020 supported)
     """
     if year != 2020:
         raise ValueError("RECS data is only available for the year 2020.")
 
-    if len(data_key.group_by) > 1:
+    if len(data_key.effective_group_by) > 1:
         raise ValueError(
             "Multi-column groupby is not supported for monthly RECS data. "
             "Monthly RECS data is pre-aggregated and cannot be filtered by building characteristics."
         )
 
-    by = data_key.group_by[0]
+    by = data_key.effective_group_by[0]
 
     if by not in ("state",):
         raise ValueError("Monthly data only available aggregated by 'state'.")

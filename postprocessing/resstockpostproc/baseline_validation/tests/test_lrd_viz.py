@@ -78,7 +78,7 @@ class TestLRDPlotter:
         plot_spec = PlotSpec(
             comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.hour_of_day_matrix,
-            aggregation_level=None,
+            group_by=None,
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(("eiaid", "ComEd (IL)"),),
             aggregation_type=AggregationType.average,
@@ -98,7 +98,7 @@ class TestLRDPlotter:
         plot_spec = PlotSpec(
             comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.hour_of_day_matrix,
-            aggregation_level="eiaid",
+            group_by="eiaid",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(),  # Missing required parameter
             aggregation_type=AggregationType.average,
@@ -114,7 +114,7 @@ class TestLRDPlotter:
         plot_spec = PlotSpec(
             comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.hour_of_day_matrix,
-            aggregation_level=None,
+            group_by=None,
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(("eiaid", "ComEd (IL)"),),
             aggregation_type=AggregationType.average,
@@ -133,7 +133,7 @@ class TestLRDPlotter:
         plot_spec = PlotSpec(
             comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.year,
-            aggregation_level="eiaid",
+            group_by="eiaid",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(),
             aggregation_type=AggregationType.average,
@@ -153,7 +153,7 @@ class TestLRDPlotter:
         plot_spec = PlotSpec(
             comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.month,
-            aggregation_level="eiaid",
+            group_by="eiaid",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(),
             aggregation_type=AggregationType.average,
@@ -250,7 +250,7 @@ class TestDayOfYearResolution:
         plot_spec = PlotSpec(
             comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.day_of_year,
-            aggregation_level="eiaid",
+            group_by="eiaid",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(),
             aggregation_type=AggregationType.average,

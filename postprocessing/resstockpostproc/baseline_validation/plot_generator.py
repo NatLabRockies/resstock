@@ -32,7 +32,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     ViewType,
     Resolution,
     CoverageType,
-    format_aggregation_level,
+    format_group_by,
 )
 from resstockpostproc.baseline_validation.schema.plot_definitions import (
     PlotTemplate,
@@ -281,7 +281,7 @@ def _expand_templates(
             # --- Base spec construction ---
             # Use agg_level when set, otherwise fall back to f1_char so that
             # Block 2 triples like (state, None, None) get the right
-            # aggregation_level for viz labels and data fetching.
+            # group_by for viz labels and data fetching.
             effective_agg = agg_level or f1_char
             spec = _make_spec(
                 comparison_dataset=tmpl.comparison_dataset,
@@ -289,7 +289,7 @@ def _expand_templates(
                 resolution=tmpl.resolution,
                 aggregation_type=tmpl.aggregation_type,
                 coverage=tmpl.coverage,
-                aggregation_level=effective_agg,
+                group_by=effective_agg,
                 view=tmpl.view,
             )
             spec_pair = _make_pair(spec)
@@ -318,7 +318,7 @@ def _expand_templates(
                     resolution=tmpl.resolution,
                     aggregation_type=tmpl.aggregation_type,
                     coverage=tmpl.coverage,
-                    aggregation_level=default_char,
+                    group_by=default_char,
                     view=tmpl.view,
                 )
                 spec = spec.model_copy(update={
@@ -360,7 +360,7 @@ def _expand_templates(
                 resolution=tmpl.resolution,
                 aggregation_type=tmpl.aggregation_type,
                 coverage=tmpl.coverage,
-                aggregation_level=f1_char,
+                group_by=f1_char,
                 view=tmpl.view,
             )
             f1_data = get_base_data(f1_lookup_spec.get_data_key())
@@ -406,7 +406,7 @@ def _expand_templates(
                     resolution=tmpl.resolution,
                     aggregation_type=tmpl.aggregation_type,
                     coverage=tmpl.coverage,
-                    aggregation_level=f2_char,
+                    group_by=f2_char,
                     view=tmpl.view,
                 )
                 f2_data = get_base_data(f2_lookup_spec.get_data_key())
@@ -775,7 +775,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
             resolution=main_spec.resolution,
             aggregation_type=main_spec.aggregation_type,
             coverage=main_spec.coverage,
-            aggregation_level=agg_level or (final_focus_on[0][0] if final_focus_on else "state"),
+            group_by=agg_level or (final_focus_on[0][0] if final_focus_on else "state"),
             view=main_spec.view,
         )
 
@@ -793,14 +793,14 @@ def generate_plots(index=None, test_only=False, parallel=True):
                     results[sub_key][f"Filter {idx + 1}"] = ""
                 else:
                     display = ABBR2STATE.get(value, value) if char == "state" else value
-                    category = format_aggregation_level(char)
+                    category = format_group_by(char)
                     results[sub_key][f"Filter {idx + 1}"] = f"{category}: {display}"
 
         focused_entries = [
             (
                 spec.model_copy(update={
                     "focus_on": final_focus_on,
-                    "aggregation_level": final_agg,
+                    "group_by": final_agg,
                 }),
                 _simplify_viz_label(viz_type) if focus_val or final_agg is None else viz_type,
             )

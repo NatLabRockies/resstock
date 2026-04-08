@@ -20,7 +20,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     ViewType,
     ComparisonDataset,
     Resolution,
-    format_aggregation_level,
+    format_group_by,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
@@ -401,17 +401,17 @@ def _uses_stacked_layout(plot_spec: PlotSpec) -> bool:
         return True
     if plot_spec.quantity == DataCol.ALL:
         return True
-    if plot_spec.aggregation_level is None or plot_spec.aggregation_level not in [DataCol.STATE]:
+    if plot_spec.group_by is None or plot_spec.group_by not in [DataCol.STATE]:
         return True
     return False
 
 
 def _check_single_entity(data: pl.DataFrame, plot_spec: PlotSpec, timeseries_column: str | None) -> bool:
     """Check if data contains a single entity (triggers simplified rendering)."""
-    if plot_spec.aggregation_level is None or plot_spec.aggregation_level not in data.columns:
+    if plot_spec.group_by is None or plot_spec.group_by not in data.columns:
         return True  # No aggregation = single entity
 
-    unique_entities = data[plot_spec.aggregation_level].unique().to_list()
+    unique_entities = data[plot_spec.group_by].unique().to_list()
     return len(unique_entities) == 1
 
 
@@ -424,8 +424,8 @@ def get_second_category_column(plot_spec: PlotSpec) -> str:
     """Get the column name for the second category (layout grouping).
 
     This determines which column is used for the tilemap layout.
-    Uses aggregation_level if set, otherwise falls back to the DataKey's
-    aggregation_level (derived from focus_on columns).
+    Uses group_by if set, otherwise falls back to the DataKey's
+    group_by (derived from focus_on columns).
     """
     match plot_spec.resolution:
         case Resolution.hour_of_day_matrix:
@@ -433,7 +433,7 @@ def get_second_category_column(plot_spec: PlotSpec) -> str:
         case Resolution.day_of_year:
             return "utility_vertical"
         case _:
-            agg = plot_spec.aggregation_level or plot_spec.effective_group_by[-1]
+            agg = plot_spec.group_by or plot_spec.effective_group_by[-1]
             if agg == "eiaid":
                 return "utility_name"
             return agg
@@ -445,7 +445,7 @@ def get_second_category_title(plot_spec: PlotSpec) -> str:
         case Resolution.hour_of_day_matrix:
             return "Month / Day Type"
         case _:
-            agg = plot_spec.aggregation_level or plot_spec.effective_group_by[-1]
+            agg = plot_spec.group_by or plot_spec.effective_group_by[-1]
             if agg == "eiaid":
                 return "Utility (State)"
-            return format_aggregation_level(agg)
+            return format_group_by(agg)
