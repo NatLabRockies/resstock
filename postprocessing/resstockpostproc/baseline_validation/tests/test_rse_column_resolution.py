@@ -8,7 +8,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     AggregationType,
     CoverageType,
     Resolution,
-    TruthSource,
+    ComparisonDataset,
     ViewType,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
@@ -16,7 +16,7 @@ from resstockpostproc.shared_utils.db_column_names import DataCol
 
 def _make_spec(**overrides):
     defaults = dict(
-        truth_source=TruthSource.recs,
+        comparison_dataset=ComparisonDataset.recs,
         quantity=DataCol.ELECTRICITY_TOTAL,
         resolution=Resolution.year,
         aggregation_type=AggregationType.average,
@@ -31,10 +31,10 @@ def _make_spec(**overrides):
 class TestResolveRSEColumn:
     def test_non_recs_returns_none(self):
         """EIA and LRD sources have no RSE data."""
-        assert _resolve_rse_column(_make_spec(truth_source=TruthSource.eia)) is None
+        assert _resolve_rse_column(_make_spec(comparison_dataset=ComparisonDataset.eia)) is None
         assert _resolve_rse_column(
             _make_spec(
-                truth_source=TruthSource.lrd,
+                comparison_dataset=ComparisonDataset.lrd,
                 aggregation_level="eiaid",
             )
         ) is None

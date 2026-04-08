@@ -11,7 +11,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     DataKey,
     Resolution,
     ViewType,
-    TruthSource,
+    ComparisonDataset,
     AggregationType,
     CoverageType,
 )
@@ -54,7 +54,7 @@ def get_base_data(data_key: DataKey) -> pl.DataFrame:
     Use apply_plot_spec() to apply plot-specific transformations.
 
     Args:
-        data_key: DataKey containing truth_source, aggregation_level, resolution,
+        data_key: DataKey containing comparison_dataset, aggregation_level, resolution,
                   aggregation_type, and coverage
     """
     return _get_plot_data(data_key)
@@ -112,7 +112,7 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
                 df = df.drop(col)
 
     # Apply LRD-specific resolution transforms
-    if plot_spec.truth_source == TruthSource.lrd:
+    if plot_spec.comparison_dataset == ComparisonDataset.lrd:
         df = _apply_lrd_resolution_transforms(df, plot_spec)
 
     return df
@@ -124,15 +124,15 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
     """Internal function to load data based on DataKey.
 
     Args:
-        data_key: DataKey containing truth_source, group_by, resolution,
+        data_key: DataKey containing comparison_dataset, group_by, resolution,
                   aggregation_type, and coverage
     """
-    truth_source = data_key.truth_source
+    comparison_dataset = data_key.comparison_dataset
     group_by = data_key.group_by
     resolution = data_key.resolution
 
     groups = []
-    if truth_source == TruthSource.eia:
+    if comparison_dataset == ComparisonDataset.eia:
         by = "state" if "state" in group_by else "eiaid"
         assert by in ["state", "eiaid"], "EIA data only supports 'state' or 'eiaid' aggregation levels."
         if resolution == Resolution.month:
@@ -148,7 +148,7 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
             )
             resstock_data = get_resstock_data.get_annual_all(data_key=data_key)
             groups = [by]
-    elif truth_source == TruthSource.recs:
+    elif comparison_dataset == ComparisonDataset.recs:
         if resolution == Resolution.month:
             assert len(group_by) == 1, "RECS monthly only supports single-column groupby."
             source_data = get_recs_data.get_monthly_all(data_key=data_key, year=2020)
@@ -159,7 +159,7 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
             source_data = get_recs_data.get_annual_all(data_key=data_key, year=2020)
             resstock_data = get_resstock_data.get_annual_all(data_key=data_key, occupied_only=True)
             groups = list(group_by)
-    elif truth_source == TruthSource.lrd:
+    elif comparison_dataset == ComparisonDataset.lrd:
         assert data_key.aggregation_type == AggregationType.average and data_key.coverage == CoverageType.all_units, (
             "LRD data only supports 'average' aggregation with 'all_units' coverage."
         )
@@ -176,7 +176,7 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
             groups = ["eiaid", resolution]
 
     else:
-        raise NotImplementedError(f"Truth source {truth_source} not implemented.")
+        raise NotImplementedError(f"Comparison dataset {comparison_dataset} not implemented.")
     # resstock_data = recs_mapping.add_characteristic_columns(resstock_data, data_source="ResStock")
     if resstock_data is not None:
         df = pl.concat([source_data, resstock_data], how="diagonal_relaxed")
@@ -184,7 +184,7 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
         df = source_data
     val_columns = [col for col in df.columns if col.endswith(("_value", "_percent_users"))]
     val_columns += ["units_count"]
-    ref_cols = [col for col in df["source"].unique(maintain_order=True) if truth_source in col]
+    ref_cols = [col for col in df["source"].unique(maintain_order=True) if comparison_dataset in col]
     final_df = _add_percent_difference(
         df, join_columns=groups, value_columns=val_columns, ref_column="source", ref_cols=ref_cols
     )
@@ -237,17 +237,17 @@ def _keep_relevant_columns(
             drop_columns.remove(DataCol.OUTDOOR_DRYBULB_TEMP + "_value")  # Keep temperature column for LRD plots
         df = df.drop(drop_columns)
         return df
-    if plot_spec.truth_source == "eia":
+    if plot_spec.comparison_dataset == "eia":
         relevant_quatities = [
             DataCol.ELECTRICITY_TOTAL,
             DataCol.NATURAL_GAS_TOTAL,
         ]
-    elif plot_spec.truth_source == "recs":
+    elif plot_spec.comparison_dataset == "recs":
         relevant_quatities = list(RECS_ENDUSE_MAP.keys())
-    elif plot_spec.truth_source == "lrd":
+    elif plot_spec.comparison_dataset == "lrd":
         relevant_quatities = [DataCol.ELECTRICITY_TOTAL, DataCol.OUTDOOR_DRYBULB_TEMP]
     else:
-        raise NotImplementedError(f"Truth source {plot_spec.truth_source} not implemented.")
+        raise NotImplementedError(f"Comparison dataset {plot_spec.comparison_dataset} not implemented.")
     to_drop_columns = []
     for col in all_output_columns:
         if not any(q.value in col for q in relevant_quatities):

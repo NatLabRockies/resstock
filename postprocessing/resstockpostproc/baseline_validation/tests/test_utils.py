@@ -13,7 +13,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     CoverageType,
     DataKey,
     Resolution,
-    TruthSource,
+    ComparisonDataset,
 )
 
 
@@ -107,7 +107,7 @@ class TestAddMissingStates:
 class TestApplyAggregation:
     def _make_key(self, agg_type, coverage):
         return DataKey(
-            truth_source=TruthSource.eia,
+            comparison_dataset=ComparisonDataset.eia,
             group_by=("state",),
             resolution=Resolution.year,
             aggregation_type=agg_type,

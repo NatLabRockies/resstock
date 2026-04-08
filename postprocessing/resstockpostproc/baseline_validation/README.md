@@ -81,7 +81,7 @@ data_source:
 
 # Reference data settings
 reference_data:
-  truth_data_year: 2018
+  comparison_data_year: 2018
   eia_mapping_version: 3
 
 # Plot specifications
@@ -234,7 +234,7 @@ data_source:
 
 ```yaml
 reference_data:
-  truth_data_year: 2018           # Year of EIA/LRD data
+  comparison_data_year: 2018           # Year of EIA/LRD data
   eia_mapping_version: 3          # EIA utility mapping version
 ```
 

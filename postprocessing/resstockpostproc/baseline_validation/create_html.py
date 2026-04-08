@@ -129,8 +129,7 @@ def parse_viz_cell(cell_value: str) -> tuple[str, str | None]:
 
 _HTML_COLUMN_WIDTHS = {
     "Index": "3%",
-    "Highlight": "4%",
-    "Truth Source": "7%",
+    "Comparison Dataset": "7%",
     "Quantity": "13%",
     "Metric": "18%",
     "Filter 1": "10%",
@@ -158,18 +157,18 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
     filter_col_indices = [i for i, h in enumerate(html_headers) if h not in _NO_FILTER_COLUMNS]
     filter_col_indices_js = json.dumps(filter_col_indices)
 
-    # Filter panel order: Quantity(3), Truth Source(2), Metric(4),
-    #   Filter 1(5), Filter 2(6), Group By(7)
+    # Filter panel order: Quantity(2), Comparison Dataset(1), Metric(3),
+    #   Filter 1(4), Filter 2(5), Group By(6)
     filter_order = [
-        (3, "Quantity"), (2, "Truth Source"), (4, "Metric"),
-        (5, "Filter 1"), (6, "Filter 2"), (7, "Group By"),
+        (2, "Quantity"), (1, "Comparison Dataset"), (3, "Metric"),
+        (4, "Filter 1"), (5, "Filter 2"), (6, "Group By"),
     ]
     # Only include columns that actually exist in the headers
     filter_order = [(idx, name) for idx, name in filter_order if idx < len(html_headers)]
     filter_order_js = json.dumps([idx for idx, _ in filter_order])
 
     # Mandatory filters (no "(All)" option — user must pick a value)
-    mandatory_filters_js = json.dumps([3])  # Quantity
+    mandatory_filters_js = json.dumps([1, 2])  # Comparison Dataset, Quantity
 
     # Quantity sort order: Number of dwelling units, All Enduses, then fuel/enduse order
     quantity_order = [
@@ -199,7 +198,7 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
     panel_html_parts = []
     for col_idx, label in filter_order:
         # Filter 1/2 get a category dropdown above the value list
-        if col_idx in (5, 6):
+        if col_idx in (4, 5):  # Filter 1, Filter 2
             panel_html_parts.append(
                 f"      <div class='fp' id='fp-{col_idx}'>\n"
                 f"        <div class='fp-label'>{label}</div>\n"
@@ -208,8 +207,9 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
                 f"      </div>"
             )
         else:
+            wide = ' fp-wide' if col_idx == 3 else ''  # Metric panel gets extra width
             panel_html_parts.append(
-                f"      <div class='fp' id='fp-{col_idx}'>\n"
+                f"      <div class='fp{wide}' id='fp-{col_idx}'>\n"
                 f"        <div class='fp-label'>{label}</div>\n"
                 f"        <div class='fp-list' id='fp-list-{col_idx}'></div>\n"
                 f"      </div>"
@@ -253,8 +253,8 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
     /* --- Top bar: title + checkbox + reset + stats + pagination --- */
     .top-bar {{ display: flex; align-items: center; gap: 16px; margin-bottom: 8px; flex-wrap: wrap; }}
     .top-bar h1 {{ margin: 0; font-size: 18px; font-weight: 700; white-space: nowrap; }}
-    .highlight-toggle {{ display: flex; align-items: center; gap: 5px; font-size: 13px; cursor: pointer; user-select: none; white-space: nowrap; }}
-    .highlight-toggle input {{ cursor: pointer; }}
+    .cb-toggle {{ display: flex; align-items: center; gap: 5px; font-size: 13px; cursor: pointer; user-select: none; white-space: nowrap; }}
+    .cb-toggle input {{ cursor: pointer; }}
     .reset-btn {{ padding: 4px 10px; background: #fff; color: #1a1a1a; border: 1px solid #aaa; cursor: pointer; border-radius: 3px; font-size: 12px; }}
     .reset-btn:hover {{ background: #f0f0f0; }}
     .stats {{ font-size: 13px; color: #555; font-weight: 500; white-space: nowrap; }}
@@ -270,6 +270,7 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
     /* --- Filter panels --- */
     .filter-panels {{ display: flex; gap: 6px; margin-bottom: 8px; }}
     .fp {{ flex: 1; min-width: 100px; display: flex; flex-direction: column; }}
+    .fp.fp-wide {{ flex: 2; }}
     .fp-label {{ font-size: 11px; font-weight: 700; color: #1a1a1a; text-transform: uppercase; letter-spacing: 0.3px; padding: 4px 6px; background: #f5f5f5; border: 1px solid #ccc; border-bottom: none; border-radius: 3px 3px 0 0; }}
     .fp-list {{ height: 120px; overflow-y: auto; border: 1px solid #ccc; border-radius: 0 0 3px 3px; background: #fff; }}
     .fp-item {{ padding: 3px 8px; font-size: 13px; cursor: pointer; border-bottom: 1px solid #f0f0f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
@@ -305,11 +306,10 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
   <div class='sticky-header'>
     <div class='top-bar'>
       <h1>Comparisons Index</h1>
-      <label class='highlight-toggle'><input type='checkbox' id='highlight-cb' checked onchange='onHighlightChange()'>Highlighted only</label>
       <button class='reset-btn' onclick='resetFilters()'>Reset</button>
       <span class='stats' id='stats'>Loading data...</span>
       <span class='spacer'></span>
-      <label class='highlight-toggle'><input type='checkbox' id='show-all-cb' onchange='onShowAllChange()'>Show all</label>
+      <label class='cb-toggle'><input type='checkbox' id='show-all-cb' onchange='onShowAllChange()'>Show all</label>
       <div class='pagination' id='pagination'>
         <button id='btn-first' onclick='goToPage(0)'>&laquo;</button>
         <button id='btn-prev' onclick='goToPage(currentPage-1)'>&lsaquo;</button>
@@ -361,9 +361,8 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
     const FILTER_ORDER = {filter_order_js};
     const MANDATORY_FILTERS = new Set({mandatory_filters_js});
     const QUANTITY_ORDER = {quantity_order_js};
-    const HIGHLIGHT_COL = 1;
-    const FILTER1_COL = 5;
-    const QUANTITY_COL = 3;
+    const FILTER1_COL = 4;
+    const QUANTITY_COL = 2;
     const PAGE_SIZE_DEFAULT = 100;
 
     // Maps combo tuple position → header column index for filter panels.
@@ -376,7 +375,6 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
     let allCombos = [];      // unique filter-column tuples from combinations.js
     let filteredIndices = [];
     let filterSelections = {{}};  // colIdx -> selected value
-    let highlightOnly = true;
     let showAll = false;
     let currentPage = 0;
     let pageSize = PAGE_SIZE_DEFAULT;
@@ -483,23 +481,6 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
 
     // ---- Cascading filter logic (uses compact combinations index) ----
 
-    // Position of the Highlight column within a combo tuple
-    const HIGHLIGHT_COMBO_POS = COL_TO_COMBO[HIGHLIGHT_COL];
-
-    function getBaseCombos() {{
-      // Start with all combos, optionally filtered by Highlight
-      if (!highlightOnly) return allCombos;
-      return allCombos.filter(c => (c[HIGHLIGHT_COMBO_POS] || '').trim() === 'Yes');
-    }}
-
-    function getBaseRows() {{
-      // Start with all rows, optionally filtered by Highlight
-      if (!highlightOnly) return allDataRows.map((_, i) => i);
-      return allDataRows.reduce((acc, row, i) => {{
-        if ((row[HIGHLIGHT_COL] || '').trim() === 'Yes') acc.push(i);
-        return acc;
-      }}, []);
-    }}
 
     function sortValues(arr, colIdx) {{
       if (colIdx === QUANTITY_COL) {{
@@ -521,7 +502,7 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
     }}
 
     function rebuildFilters() {{
-      let combos = getBaseCombos();
+      let combos = [...allCombos];
 
       for (const colIdx of FILTER_ORDER) {{
         const listEl = document.getElementById('fp-list-' + colIdx);
@@ -569,6 +550,11 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
               }}
             }} else if (catList.length === 1) {{
               categorySelections[colIdx] = catList[0];
+              const opt = document.createElement('option');
+              opt.value = catList[0];
+              opt.textContent = catList[0];
+              opt.selected = true;
+              catEl.appendChild(opt);
               displayValues = values;
             }} else {{
               categorySelections[colIdx] = '';
@@ -582,7 +568,10 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
             listEl.appendChild(noneDiv);
           }}
         }} else if (isMandatory) {{
-          // Mandatory filters (e.g. Quantity): no "(All)" — must pick a value
+          // Mandatory filters (e.g. Quantity, Comparison Dataset): no "(All)" — auto-select first value
+          if (!selected) {{
+            filterSelections[colIdx] = values[0];
+          }}
         }} else {{
           // Add "(None)" for non-mandatory columns with empty values (e.g. Group By)
           if (hasEmpty) {{
@@ -639,12 +628,6 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
       applyFilters();
     }}
 
-    function onHighlightChange() {{
-      highlightOnly = document.getElementById('highlight-cb').checked;
-      rebuildFilters();
-      applyFilters();
-    }}
-
     function onShowAllChange() {{
       showAll = document.getElementById('show-all-cb').checked;
       const panels = document.getElementById('filter-panels');
@@ -658,7 +641,7 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
 
     // ---- Apply filters + render ----
     function applyFilters() {{
-      let rows = getBaseRows();
+      let rows = allDataRows.map((_, i) => i);
       if (!showAll) {{
         for (const colIdx of FILTER_ORDER) {{
           const val = filterSelections[colIdx];
@@ -753,9 +736,7 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
       for (const colIdx of NONE_DEFAULT_COLS) {{
         filterSelections[colIdx] = '';
       }}
-      highlightOnly = true;
       showAll = false;
-      document.getElementById('highlight-cb').checked = true;
       document.getElementById('show-all-cb').checked = false;
       document.getElementById('filter-panels').classList.remove('disabled');
       rebuildFilters();

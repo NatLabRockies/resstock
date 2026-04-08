@@ -5,7 +5,7 @@
 # Multiple matching notes accumulate in order.
 #
 # Supported matcher keys (single string or list of strings — any-of):
-#   truth_source  — "eia", "recs", or "lrd"
+#   comparison_dataset — "eia", "recs", or "lrd"
 #   quantity      — e.g. "Number of dwelling units", "Natural Gas Total"
 #   metric        — e.g. "enduse penetration", "total annual consumption"
 #   coverage      — e.g. "all units", "units with non-zero consumption"
@@ -25,7 +25,7 @@
 # Omitted matcher keys act as wildcards (match anything).
 
 notes:
-  - truth_source: recs
+  - comparison_dataset: recs
     context: plot
     exclude:
       quantity: Number of dwelling units
@@ -39,7 +39,7 @@ notes:
       Error bars represent the 95% confidence interval based on
       RECS relative standard error (RSE) estimates.
 
-  - truth_source: recs
+  - comparison_dataset: recs
     context: plot
     metric:
       - Monthly Consumption
@@ -59,7 +59,7 @@ notes:
       Number of models (available on hover) shows the actual number of
       building models used for simulation.
 
-  - truth_source: eia
+  - comparison_dataset: eia
     quantity: Natural Gas Total
     metric: enduse penetration
     note: >

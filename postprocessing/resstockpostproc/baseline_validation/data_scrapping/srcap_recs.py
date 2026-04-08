@@ -10,7 +10,7 @@ from resstockpostproc.baseline_validation.data_processing.recs_mapping import ad
 from resstockpostproc.baseline_validation.data_processing.recs_mapping import add_characteristic_columns
 from resstockpostproc.baseline_validation.utils import KBTU2KWH
 from resstockpostproc.shared_utils.mapping import STATE2ABBR
-from resstockpostproc.baseline_validation.io_managers import truth_data_paths as s3_paths
+from resstockpostproc.baseline_validation.io_managers import comparison_data_paths as s3_paths
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
 DATA_ROOT = Path(__file__).parent / "data"

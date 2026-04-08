@@ -16,7 +16,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     AggregationType,
     CoverageType,
     Resolution,
-    TruthSource,
+    ComparisonDataset,
     ViewType,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
@@ -24,7 +24,7 @@ from resstockpostproc.shared_utils.db_column_names import DataCol
 
 def _make_spec(**overrides):
     defaults = dict(
-        truth_source=TruthSource.eia,
+        comparison_dataset=ComparisonDataset.eia,
         quantity=DataCol.ELECTRICITY_TOTAL,
         resolution=Resolution.year,
         aggregation_type=AggregationType.total,
@@ -59,7 +59,7 @@ def _make_annual_data():
 class TestShouldGenerateTable:
     def test_skips_all_enduse(self):
         spec = _make_spec(
-            truth_source=TruthSource.recs,
+            comparison_dataset=ComparisonDataset.recs,
             quantity=DataCol.ALL,
             aggregation_type=AggregationType.average,
         )
@@ -74,7 +74,7 @@ class TestShouldGenerateTable:
     def test_skips_large_hourly(self):
         """Hourly 8760 data with many entities exceeds threshold."""
         spec = _make_spec(
-            truth_source=TruthSource.lrd,
+            comparison_dataset=ComparisonDataset.lrd,
             quantity=DataCol.ELECTRICITY_TOTAL,
             resolution=Resolution.hour_of_year,
             aggregation_type=AggregationType.average,
@@ -116,7 +116,7 @@ class TestFilterColumns:
     def test_keeps_percent_users_for_users_only(self):
         data = _make_annual_data()
         spec = _make_spec(
-            truth_source=TruthSource.recs,
+            comparison_dataset=ComparisonDataset.recs,
             coverage=CoverageType.users_only,
             aggregation_type=AggregationType.average,
         )

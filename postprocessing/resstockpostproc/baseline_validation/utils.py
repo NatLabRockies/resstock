@@ -157,16 +157,18 @@ def format_large_number(value: float, precision: int = 1) -> str:
 def get_buildstock_query(
     workgroup: str,
     config: DataSourceConfig,
-    truth_data_year: int = 2018,
+    comparison_data_year: int = 2018,
     skip_reports: bool = False,
 ) -> BuildStockQuery:
     """Create and configure a BuildStockQuery instance."""
+    cache_folder = str(Path(__file__).resolve().parent.parent.parent / ".bsq_cache")
     bsq = BuildStockQuery(
         workgroup=workgroup,
         db_name=config.db_name,
         table_name=config.table_name,
         skip_reports=skip_reports,
         db_schema=config.db_schema,
+        cache_folder=cache_folder,
     )
-    bsq.utility.eia_mapping_year = truth_data_year
+    bsq.utility.eia_mapping_year = comparison_data_year
     return bsq

@@ -22,12 +22,12 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     AggregationType,
     CoverageType,
     Resolution,
-    TruthSource,
+    ComparisonDataset,
     ViewType,
 )
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Constants: what combinations are valid per truth source
+# Constants: what combinations are valid per comparison dataset
 # ─────────────────────────────────────────────────────────────────────────────
 
 EIA_QUANTITIES: list[DataCol] = [
@@ -119,7 +119,7 @@ class PlotTemplate:
     determined by the slot triple generator and the expansion loop.
     """
 
-    truth_source: TruthSource
+    comparison_dataset: ComparisonDataset
     quantity: DataCol
     resolution: Resolution
     aggregation_type: AggregationType
@@ -226,17 +226,6 @@ RECS_MONTHLY_QUANTITIES: set[DataCol] = {
 # 100% penetration — users-only coverage and penetration rows are meaningless
 RECS_FULL_PENETRATION: set[DataCol] = {DataCol.ELECTRICITY_TOTAL}
 
-# Quantities highlighted on RECS monthly + state rows
-RECS_HIGHLIGHT_MONTHLY: set[DataCol] = {
-    DataCol.ELECTRICITY_TOTAL,
-    DataCol.NATURAL_GAS_TOTAL,
-    DataCol.ELECTRICITY_SPACE_COOLING,
-    DataCol.ELECTRICITY_SPACE_HEATING,
-    DataCol.ELECTRICITY_WATER_HEATING,
-    DataCol.NATURAL_GAS_SPACE_HEATING,
-    DataCol.NATURAL_GAS_WATER_HEATING,
-}
-
 # LRD metric tuples: (Resolution, ViewType)
 # All LRD metrics are average + all_units (enforced by PlotSpec validators)
 _LRD_METRICS: list[tuple[Resolution, ViewType]] = [
@@ -260,10 +249,13 @@ SpecPair = tuple[PlotSpec, PlotSpec | None]
 
 def _extra_view_for(spec: PlotSpec) -> ViewType | None:
     """Determine the companion extra-view for a main spec, or None."""
+    if spec.view == ViewType.distribution:
+        return None
+
     if spec.quantity == DataCol.ALL:
         return ViewType.diff_view
 
-    if spec.truth_source == TruthSource.lrd:
+    if spec.comparison_dataset == ComparisonDataset.lrd:
         if spec.resolution == Resolution.hour_of_year and spec.view == ViewType.value_view:
             # 8760 load duration curve does NOT get diff_view;
             # temperature views are separate specs, not extras
@@ -295,7 +287,7 @@ def _make_pair(spec: PlotSpec) -> SpecPair:
 
 
 def _make_spec(
-    truth_source: TruthSource,
+    comparison_dataset: ComparisonDataset,
     quantity: DataCol,
     resolution: Resolution,
     aggregation_type: AggregationType,
@@ -304,7 +296,7 @@ def _make_spec(
     view: ViewType = ViewType.value_view,
 ) -> PlotSpec:
     return PlotSpec(
-        truth_source=truth_source,
+        comparison_dataset=comparison_dataset,
         quantity=quantity,
         resolution=resolution,
         aggregation_type=aggregation_type,
@@ -315,42 +307,13 @@ def _make_spec(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Highlight
-# ─────────────────────────────────────────────────────────────────────────────
-
-def is_highlight(spec: PlotSpec) -> bool:
-    """Return True if this spec is a key summary plot to feature prominently."""
-    ts = spec.truth_source
-    q = spec.quantity
-    agg = spec.aggregation_level
-    res = spec.resolution
-
-    if ts == TruthSource.eia and q == DataCol.UNITS_COUNT and agg == "state":
-        return True
-    if ts == TruthSource.recs and q == DataCol.UNITS_COUNT and agg in ("state", "vintage"):
-        return True
-    if ts == TruthSource.recs and q == DataCol.ALL and res == Resolution.year and spec.view != ViewType.penetration:
-        return True
-    if ts == TruthSource.eia and q in (DataCol.ELECTRICITY_TOTAL, DataCol.NATURAL_GAS_TOTAL) and agg == "state" and res == Resolution.month:
-        return True
-    if ts == TruthSource.recs and q in RECS_HIGHLIGHT_MONTHLY and agg == "state" and res == Resolution.month:
-        return True
-    if ts == TruthSource.lrd and res in (Resolution.month, Resolution.day_of_year, Resolution.hour_of_year):
-        if spec.view == ViewType.value_view:
-            return True
-    if ts == TruthSource.lrd and spec.view == ViewType.temp_view:
-        return True
-    return False
-
-
-# ─────────────────────────────────────────────────────────────────────────────
 # Template generators
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _eia_templates() -> Iterator[PlotTemplate]:
     """Generate EIA plot templates (no aggregation_level baked in)."""
     mk = lambda q, res, agg_type, cov, view=ViewType.value_view: PlotTemplate(
-        truth_source=TruthSource.eia, quantity=q, resolution=res,
+        comparison_dataset=ComparisonDataset.eia, quantity=q, resolution=res,
         aggregation_type=agg_type, coverage=cov, view=view,
         eligible_chars=EIA_CHARS,
     )
@@ -377,7 +340,7 @@ def _eia_templates() -> Iterator[PlotTemplate]:
 def _all_enduses_templates() -> Iterator[PlotTemplate]:
     """Emit the 6 All Enduses templates."""
     mk = lambda agg, cov, view: PlotTemplate(
-        truth_source=TruthSource.recs, quantity=DataCol.ALL, resolution=Resolution.year,
+        comparison_dataset=ComparisonDataset.recs, quantity=DataCol.ALL, resolution=Resolution.year,
         aggregation_type=agg, coverage=cov, view=view,
         eligible_chars=RECS_ANNUAL_CHARS,
     )
@@ -395,7 +358,7 @@ def _recs_energy_templates(quantity: DataCol) -> Iterator[PlotTemplate]:
     skip_users = quantity in RECS_FULL_PENETRATION
 
     mk = lambda res, agg_type, cov, view=ViewType.value_view, chars=RECS_ANNUAL_CHARS: PlotTemplate(
-        truth_source=TruthSource.recs, quantity=quantity, resolution=res,
+        comparison_dataset=ComparisonDataset.recs, quantity=quantity, resolution=res,
         aggregation_type=agg_type, coverage=cov, view=view,
         eligible_chars=chars,
     )
@@ -423,7 +386,7 @@ def _recs_templates() -> Iterator[PlotTemplate]:
     for quantity in RECS_QUANTITIES:
         if quantity == DataCol.UNITS_COUNT:
             yield PlotTemplate(
-                truth_source=TruthSource.recs, quantity=DataCol.UNITS_COUNT,
+                comparison_dataset=ComparisonDataset.recs, quantity=DataCol.UNITS_COUNT,
                 resolution=Resolution.year, aggregation_type=AggregationType.total,
                 coverage=CoverageType.all_units, view=ViewType.value_view,
                 eligible_chars=RECS_ANNUAL_CHARS,
@@ -439,14 +402,14 @@ def _lrd_templates() -> Iterator[PlotTemplate]:
     for quantity in LRD_QUANTITIES:
         for resolution, view in _LRD_METRICS:
             yield PlotTemplate(
-                truth_source=TruthSource.lrd, quantity=quantity,
+                comparison_dataset=ComparisonDataset.lrd, quantity=quantity,
                 resolution=resolution, aggregation_type=AggregationType.average,
                 coverage=CoverageType.all_units, view=view,
                 eligible_chars=LRD_CHARS,
             )
             if resolution == Resolution.hour_of_year:
                 yield PlotTemplate(
-                    truth_source=TruthSource.lrd, quantity=quantity,
+                    comparison_dataset=ComparisonDataset.lrd, quantity=quantity,
                     resolution=resolution, aggregation_type=AggregationType.average,
                     coverage=CoverageType.all_units, view=ViewType.temp_view,
                     eligible_chars=LRD_CHARS,

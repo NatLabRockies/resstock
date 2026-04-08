@@ -15,7 +15,7 @@ def postprocess_plot_html(
     html_path: Path,
     footnotes: list[str] | None = None,
     source_labels: dict | None = None,
-    truth_source: str | None = None,
+    comparison_dataset: str | None = None,
 ) -> None:
     """Post-process a Plotly HTML file: make the chart resizable and add a footer."""
     html = html_path.read_text(encoding="utf-8")
@@ -106,7 +106,7 @@ def postprocess_plot_html(
     html = html.replace("<body>\n", "<body>\n" + resize_wrapper)
 
     # 5. Build and inject footer with Data Sources and Notes
-    footer_html = _build_footer_html(source_labels, truth_source, footnotes)
+    footer_html = _build_footer_html(source_labels, comparison_dataset, footnotes)
 
     html = html.replace("</body>", "</div>\n" + footer_html + resize_script + "</body>")
 
@@ -116,15 +116,15 @@ def postprocess_plot_html(
 @timed
 def _build_footer_html(
     source_labels: dict | None,
-    truth_source: str | None,
+    comparison_dataset: str | None,
     footnotes: list[str] | None,
 ) -> str:
     """Build the Data Sources + Notes footer HTML for an individual plot page."""
     parts: list[str] = []
 
     # Data Sources section
-    if source_labels and truth_source:
-        relevant_keys = [k for k in source_labels if truth_source in k or "resstock" in k]
+    if source_labels and comparison_dataset:
+        relevant_keys = [k for k in source_labels if comparison_dataset in k or "resstock" in k]
         if relevant_keys:
             items = []
             for key in sorted(relevant_keys):

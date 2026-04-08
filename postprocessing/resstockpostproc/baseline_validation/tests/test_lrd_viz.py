@@ -9,7 +9,7 @@ from resstockpostproc.baseline_validation.io_managers.get_lrd_data import get_lr
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
     Resolution,
-    TruthSource,
+    ComparisonDataset,
     AggregationType,
     CoverageType,
     ViewType,
@@ -76,7 +76,7 @@ class TestLRDPlotter:
     def test_create_plot_hour_of_day_matrix(self, mock_hourly_matrix_data):
         """Test creating hour_of_day_matrix plot."""
         plot_spec = PlotSpec(
-            truth_source=TruthSource.lrd,
+            comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.hour_of_day_matrix,
             aggregation_level=None,
             quantity=DataCol.ELECTRICITY_TOTAL,
@@ -96,7 +96,7 @@ class TestLRDPlotter:
     def test_create_plot_hour_of_day_matrix_requires_focus_on(self, mock_hourly_matrix_data):
         """Test that hour_of_day_matrix raises error without focus_on."""
         plot_spec = PlotSpec(
-            truth_source=TruthSource.lrd,
+            comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.hour_of_day_matrix,
             aggregation_level="eiaid",
             quantity=DataCol.ELECTRICITY_TOTAL,
@@ -112,7 +112,7 @@ class TestLRDPlotter:
     def test_create_plot_hour_of_day_matrix_creates_month_daytype_column(self, mock_hourly_matrix_data):
         """Test that hour_of_day_matrix creates the combined month_daytype column."""
         plot_spec = PlotSpec(
-            truth_source=TruthSource.lrd,
+            comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.hour_of_day_matrix,
             aggregation_level=None,
             quantity=DataCol.ELECTRICITY_TOTAL,
@@ -131,7 +131,7 @@ class TestLRDPlotter:
     def test_create_plot_year_resolution(self, mock_year_data):
         """Test creating year resolution plot."""
         plot_spec = PlotSpec(
-            truth_source=TruthSource.lrd,
+            comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.year,
             aggregation_level="eiaid",
             quantity=DataCol.ELECTRICITY_TOTAL,
@@ -151,7 +151,7 @@ class TestLRDPlotter:
         # Create a plot spec with an invalid resolution (if one exists)
         # For now, test that a valid resolution works
         plot_spec = PlotSpec(
-            truth_source=TruthSource.lrd,
+            comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.month,
             aggregation_level="eiaid",
             quantity=DataCol.ELECTRICITY_TOTAL,
@@ -248,7 +248,7 @@ class TestDayOfYearResolution:
     def test_create_plot_day_of_year(self, mock_day_of_year_data):
         """Test creating day_of_year plot with vertical layout."""
         plot_spec = PlotSpec(
-            truth_source=TruthSource.lrd,
+            comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.day_of_year,
             aggregation_level="eiaid",
             quantity=DataCol.ELECTRICITY_TOTAL,

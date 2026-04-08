@@ -1,4 +1,4 @@
-from resstockpostproc.baseline_validation.io_managers import truth_data_paths as s3_paths
+from resstockpostproc.baseline_validation.io_managers import comparison_data_paths as s3_paths
 from resstockpostproc.baseline_validation.schema.plot_spec import Resolution
 from resstockpostproc.shared_utils.mapping import UtilityName2ID
 from resstockpostproc.baseline_validation.io_managers.get_eia_data import local_data_dir

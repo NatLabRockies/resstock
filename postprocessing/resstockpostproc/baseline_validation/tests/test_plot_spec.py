@@ -8,7 +8,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     AggregationType,
     CoverageType,
     Resolution,
-    TruthSource,
+    ComparisonDataset,
     ViewType,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
@@ -17,7 +17,7 @@ from resstockpostproc.shared_utils.db_column_names import DataCol
 def _make_spec(**overrides):
     """Build a valid EIA PlotSpec, then apply overrides."""
     defaults = dict(
-        truth_source=TruthSource.eia,
+        comparison_dataset=ComparisonDataset.eia,
         quantity=DataCol.ELECTRICITY_TOTAL,
         resolution=Resolution.year,
         aggregation_type=AggregationType.total,
@@ -36,7 +36,7 @@ class TestRejectTotalDistribution:
 
     def test_average_distribution_allowed(self):
         spec = _make_spec(
-            truth_source=TruthSource.recs,
+            comparison_dataset=ComparisonDataset.recs,
             aggregation_type=AggregationType.average,
             view=ViewType.distribution,
         )
@@ -46,18 +46,18 @@ class TestRejectTotalDistribution:
 class TestLRDConstraints:
     def test_valid_lrd_spec(self):
         spec = _make_spec(
-            truth_source=TruthSource.lrd,
+            comparison_dataset=ComparisonDataset.lrd,
             quantity=DataCol.ELECTRICITY_TOTAL,
             aggregation_type=AggregationType.average,
             coverage=CoverageType.all_units,
             aggregation_level="eiaid",
         )
-        assert spec.truth_source == TruthSource.lrd
+        assert spec.comparison_dataset == ComparisonDataset.lrd
 
     def test_lrd_wrong_quantity(self):
         with pytest.raises(ValidationError, match="LRD only supports quantity=ELECTRICITY_TOTAL"):
             _make_spec(
-                truth_source=TruthSource.lrd,
+                comparison_dataset=ComparisonDataset.lrd,
                 quantity=DataCol.NATURAL_GAS_TOTAL,
                 aggregation_type=AggregationType.average,
                 coverage=CoverageType.all_units,
@@ -66,7 +66,7 @@ class TestLRDConstraints:
     def test_lrd_wrong_aggregation_type(self):
         with pytest.raises(ValidationError, match="LRD only supports aggregation_type=average"):
             _make_spec(
-                truth_source=TruthSource.lrd,
+                comparison_dataset=ComparisonDataset.lrd,
                 quantity=DataCol.ELECTRICITY_TOTAL,
                 aggregation_type=AggregationType.total,
                 coverage=CoverageType.all_units,
@@ -75,7 +75,7 @@ class TestLRDConstraints:
     def test_lrd_wrong_coverage(self):
         with pytest.raises(ValidationError, match="LRD only supports coverage=all_units"):
             _make_spec(
-                truth_source=TruthSource.lrd,
+                comparison_dataset=ComparisonDataset.lrd,
                 quantity=DataCol.ELECTRICITY_TOTAL,
                 aggregation_type=AggregationType.average,
                 coverage=CoverageType.users_only,
@@ -84,9 +84,9 @@ class TestLRDConstraints:
     def test_non_lrd_skips_lrd_constraints(self):
         """EIA/RECS specs should not be subject to LRD-specific validation."""
         spec = _make_spec(
-            truth_source=TruthSource.eia,
+            comparison_dataset=ComparisonDataset.eia,
             quantity=DataCol.NATURAL_GAS_TOTAL,
             aggregation_type=AggregationType.total,
             coverage=CoverageType.all_units,
         )
-        assert spec.truth_source == TruthSource.eia
+        assert spec.comparison_dataset == ComparisonDataset.eia

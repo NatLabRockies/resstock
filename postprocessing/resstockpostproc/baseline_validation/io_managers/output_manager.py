@@ -45,7 +45,7 @@ def save_figure(
     for fmt in formats:
         if fmt not in FIGURE_FORMATS:
             continue
-        output_dir = workflow.output.output_dir / workflow.output.run_name / f"{plot_spec.truth_source} plots ({fmt})"
+        output_dir = workflow.output.output_dir / workflow.output.run_name / f"{plot_spec.comparison_dataset} plots ({fmt})"
         path_seg, title = plot_spec.get_file_path_and_name()
         filepath = output_dir / path_seg
         ensure_directory(filepath)
@@ -57,7 +57,7 @@ def save_figure(
                 fullpath,
                 footnotes=footnotes,
                 source_labels=source_labels,
-                truth_source=plot_spec.truth_source.value,
+                comparison_dataset=plot_spec.comparison_dataset.value,
             )
         else:
             # For PDF/SVG, use larger scale and ensure proper dimensions

@@ -1,7 +1,7 @@
 """Main plotter for baseline validation.
 
 This module provides a single entry point for creating all validation plots,
-regardless of truth source (RECS, EIA, LRD) or visualization type.
+regardless of comparison dataset (RECS, EIA, LRD) or visualization type.
 """
 
 import polars as pl
@@ -29,7 +29,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
     """Create a validation plot from data and specification.
 
     This is the single entry point for all plot types in baseline validation.
-    Handles RECS, EIA, and LRD truth sources with various resolutions and aggregations.
+    Handles RECS, EIA, and LRD comparison datasets with various resolutions and aggregations.
 
     Args:
         data: Pre-processed DataFrame from apply_plot_spec()

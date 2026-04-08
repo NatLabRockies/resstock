@@ -28,7 +28,7 @@ from resstockpostproc.baseline_validation.plotters import lrd_plotter, recs_plot
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
     FileType,
-    TruthSource,
+    ComparisonDataset,
     ViewType,
     Resolution,
     CoverageType,
@@ -39,7 +39,6 @@ from resstockpostproc.baseline_validation.schema.plot_definitions import (
     RECS_CROSS_FILTER_CHARS,
     generate_all_templates,
     generate_slot_triples,
-    is_highlight,
     SpecPair,
     _make_pair,
     _make_spec,
@@ -83,7 +82,7 @@ def _load_footnote_rules() -> list[dict]:
 
 
 _FOOTNOTE_MATCH_KEYS = {
-    "truth_source": "Truth Source",
+    "comparison_dataset": "Comparison Dataset",
     "quantity": "Quantity",
     "metric": "Metric",
 }
@@ -92,7 +91,7 @@ _FOOTNOTE_MATCH_KEYS = {
 def _resolve_footnotes(footnote_rules: list[dict], row: dict, context: str | None = None) -> list[str]:
     """Collect all notes whose attribute matchers match the given row.
 
-    Each rule specifies attribute matchers (truth_source, quantity, metric).
+    Each rule specifies attribute matchers (comparison_dataset, quantity, metric).
     A rule matches when ALL its specified attributes equal the row values.
     Unspecified attributes act as wildcards.
 
@@ -138,8 +137,7 @@ def _resolve_footnotes(footnote_rules: list[dict], row: dict, context: str | Non
 
 OUTPUT_COLUMNS = [
     "Index",
-    "Highlight",
-    "Truth Source",
+    "Comparison Dataset",
     "Quantity",
     "Metric",
     "Filter 1",
@@ -200,7 +198,7 @@ def _template_signature(tmpl: PlotTemplate) -> tuple:
                 break
 
     return (
-        tmpl.truth_source, tmpl.resolution, tmpl.view,
+        tmpl.comparison_dataset, tmpl.resolution, tmpl.view,
         tmpl.aggregation_type, cov_type, qty_type,
         fuel_type, is_total, len(tmpl.eligible_chars),
     )
@@ -227,8 +225,7 @@ def _build_output_row(main_spec: PlotSpec) -> dict[str, str]:
     """Build the output row dict from a main PlotSpec's display properties."""
     return {
         "Index": "",
-        "Highlight": "Yes" if is_highlight(main_spec) else "",
-        "Truth Source": main_spec.truth_source.value,
+        "Comparison Dataset": main_spec.comparison_dataset.value,
         "Quantity": main_spec.display_quantity,
         "Metric": main_spec.display_metric,
         "Filter 1": "",
@@ -242,7 +239,7 @@ def _build_output_row(main_spec: PlotSpec) -> dict[str, str]:
 def _footnote_row(main_spec: PlotSpec) -> dict[str, str]:
     """Build a dict for footnote matching from a PlotSpec."""
     return {
-        "Truth Source": main_spec.truth_source.value,
+        "Comparison Dataset": main_spec.comparison_dataset.value,
         "Quantity": main_spec.display_quantity,
         "Metric": main_spec.display_metric,
     }
@@ -268,8 +265,8 @@ def _expand_templates(
     work_items = []
 
     for tmpl_index, tmpl in enumerate(templates):
-        allow_cross = tmpl.truth_source in (TruthSource.recs, TruthSource.eia)
-        if allow_cross and tmpl.truth_source == TruthSource.recs and tmpl.resolution == Resolution.year:
+        allow_cross = tmpl.comparison_dataset in (ComparisonDataset.recs, ComparisonDataset.eia)
+        if allow_cross and tmpl.comparison_dataset == ComparisonDataset.recs and tmpl.resolution == Resolution.year:
             cross_chars = RECS_CROSS_FILTER_CHARS
         else:
             # Monthly RECS / EIA: only state can be a filter
@@ -287,7 +284,7 @@ def _expand_templates(
             # aggregation_level for viz labels and data fetching.
             effective_agg = agg_level or f1_char
             spec = _make_spec(
-                truth_source=tmpl.truth_source,
+                comparison_dataset=tmpl.comparison_dataset,
                 quantity=tmpl.quantity,
                 resolution=tmpl.resolution,
                 aggregation_type=tmpl.aggregation_type,
@@ -309,14 +306,14 @@ def _expand_templates(
             # primary char, focused on "US Total".  LRD has no US Total
             # concept, so skip it entirely.
             if f1_char is None and agg_level is None:
-                if tmpl.truth_source == TruthSource.lrd:
+                if tmpl.comparison_dataset == ComparisonDataset.lrd:
                     continue
                 # "US Total overview" — fetch state-level data but focus on
                 # US Total only.  agg_level stays None so downstream code
                 # treats this as a single-entity plot (no Group By in index).
                 default_char = tmpl.eligible_chars[0]   # "state" for RECS/EIA
                 spec = _make_spec(
-                    truth_source=tmpl.truth_source,
+                    comparison_dataset=tmpl.comparison_dataset,
                     quantity=tmpl.quantity,
                     resolution=tmpl.resolution,
                     aggregation_type=tmpl.aggregation_type,
@@ -341,8 +338,8 @@ def _expand_templates(
                     col = "utility_name" if agg_level == "eiaid" else agg_level
                     for val in sorted(v for v in base_data[col].unique().to_list() if v is not None):
                         work_items.append((
-                            spec_pair, tmpl_index, spec_entries, val,
-                            ((agg_level, val),), agg_level,
+                            spec_pair, tmpl_index, spec_entries, None,
+                            ((agg_level, val),), None,
                         ))
                     continue
                 # Warm the disk cache so worker processes find the data.
@@ -358,7 +355,7 @@ def _expand_templates(
             # --- F1 is set: discover F1 values ---
             # Use any spec with agg_level=f1_char to get the data
             f1_lookup_spec = _make_spec(
-                truth_source=tmpl.truth_source,
+                comparison_dataset=tmpl.comparison_dataset,
                 quantity=tmpl.quantity,
                 resolution=tmpl.resolution,
                 aggregation_type=tmpl.aggregation_type,
@@ -404,7 +401,7 @@ def _expand_templates(
 
                 # --- Case 3: F1 set, F2 set (agg_level is always None) ---
                 f2_lookup_spec = _make_spec(
-                    truth_source=tmpl.truth_source,
+                    comparison_dataset=tmpl.comparison_dataset,
                     quantity=tmpl.quantity,
                     resolution=tmpl.resolution,
                     aggregation_type=tmpl.aggregation_type,
@@ -456,17 +453,17 @@ def _build_filtered_entries(
 # ---------------------------------------------------------------------------
 
 
-def get_plotting_function(truth_source):
-    """Return the plotter for a truth source."""
-    match truth_source:
-        case TruthSource.eia:
+def get_plotting_function(comparison_dataset):
+    """Return the plotter for a comparison dataset."""
+    match comparison_dataset:
+        case ComparisonDataset.eia:
             return recs_plotter.create_plot
-        case TruthSource.recs:
+        case ComparisonDataset.recs:
             return recs_plotter.create_plot
-        case TruthSource.lrd:
+        case ComparisonDataset.lrd:
             return lrd_plotter.create_plot
         case _:
-            raise ValueError(f"Unsupported truth source: {truth_source}")
+            raise ValueError(f"Unsupported comparison dataset: {comparison_dataset}")
 
 
 @timed
@@ -493,8 +490,8 @@ def _compute_discrepancy(data, plot_spec):
         return None, None
 
     # Identify reference and ResStock rows
-    truth = plot_spec.truth_source.value
-    ref_rows = data.filter(pl.col("source").str.contains(truth))
+    comparison = plot_spec.comparison_dataset.value
+    ref_rows = data.filter(pl.col("source").str.contains(comparison))
     rs_rows = data.filter(pl.col("source").str.contains("resstock"))
 
     if len(ref_rows) == 0 or len(rs_rows) == 0:
@@ -600,7 +597,7 @@ def _generate_spec_plots(
     for plot_spec, viz_type_str in spec_entries:
         try:
             data = get_plot_data(plot_spec)
-            plot_func = get_plotting_function(plot_spec.truth_source)
+            plot_func = get_plotting_function(plot_spec.comparison_dataset)
             fig, title = plot_func(data, plot_spec)
             save_figure(fig, plot_spec, formats=output_formats,
                         footnotes=footnotes, source_labels=source_labels)
@@ -608,21 +605,21 @@ def _generate_spec_plots(
             # Build relative path to the plot file
             path_seg, file_title = plot_spec.get_file_path_and_name()
             rel_path = (
-                Path(f"{plot_spec.truth_source} plots ({link_format})") / path_seg / f"{file_title}.{link_format.value}"
+                Path(f"{plot_spec.comparison_dataset} plots ({link_format})") / path_seg / f"{file_title}.{link_format.value}"
             )
             rel_path_str = str(rel_path).replace("\\", "/")
             viz_parts.append(f"{viz_type_str}||{rel_path_str}")
 
             # For main visualization: save data CSV, compute discrepancy, generate data table
             if plot_spec.view in (ViewType.value_view, ViewType.penetration):
-                data_dir = output_base / f"{plot_spec.truth_source} data (csv)" / path_seg
+                data_dir = output_base / f"{plot_spec.comparison_dataset} data (csv)" / path_seg
                 ensure_directory(data_dir)
                 _save_data_csv(data, data_dir, file_title)
 
                 cvrmse, nmbe = _compute_discrepancy(data, plot_spec)
 
                 if should_generate_table(data, plot_spec):
-                    table_dir = output_base / f"{plot_spec.truth_source} data (html)" / path_seg
+                    table_dir = output_base / f"{plot_spec.comparison_dataset} data (html)" / path_seg
                     ensure_directory(table_dir)
                     table_path = table_dir / f"{file_title}.html"
                     table_depth = len(table_path.relative_to(output_base).parents) - 1
@@ -637,7 +634,7 @@ def _generate_spec_plots(
                         footnotes=table_footnotes,
                         source_labels=source_labels,
                     )
-                    rel_table = Path(f"{plot_spec.truth_source} data (html)") / path_seg / f"{file_title}.html"
+                    rel_table = Path(f"{plot_spec.comparison_dataset} data (html)") / path_seg / f"{file_title}.html"
                     data_rel = f"data table||{str(rel_table).replace(chr(92), '/')}"
 
         except Exception:
@@ -677,7 +674,7 @@ def _handle_plot_result(sub_key, result, results, csv_path, index_state):
     if "FAILED:" in viz_parts_str:
         logger.error(f"FAILED [{sub_key}]: {viz_parts_str}")
     else:
-        parts = [row["Truth Source"], row["Quantity"], row["Metric"]]
+        parts = [row["Comparison Dataset"], row["Quantity"], row["Metric"]]
         if row.get("Filter 1"):
             parts.append(row["Filter 1"])
         if row.get("Filter 2"):
@@ -773,7 +770,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
 
         # Build a concrete main_spec with the triple's agg_level for display
         display_spec = _make_spec(
-            truth_source=main_spec.truth_source,
+            comparison_dataset=main_spec.comparison_dataset,
             quantity=main_spec.quantity,
             resolution=main_spec.resolution,
             aggregation_type=main_spec.aggregation_type,
@@ -786,8 +783,6 @@ def generate_plots(index=None, test_only=False, parallel=True):
         results[sub_key]["Index"] = i
         if final_agg is None:
             results[sub_key]["Group By"] = ""
-        if final_focus_on and not any(v == "US Total" for _, v in final_focus_on):
-            results[sub_key]["Highlight"] = ""
         results[sub_key]["Comparison Plot"] = ""
 
         if final_focus_on:
@@ -912,21 +907,21 @@ def _append_plot_row(tsv_path, row_dict):
 def generate_eia_plots():
     """Generate only EIA plots."""
     all_tmpls = generate_all_templates()
-    eia_indices = {i + 1 for i, t in enumerate(all_tmpls) if t.truth_source == TruthSource.eia}
+    eia_indices = {i + 1 for i, t in enumerate(all_tmpls) if t.comparison_dataset == ComparisonDataset.eia}
     generate_plots(index=eia_indices)
 
 
 def generate_recs_plots():
     """Generate only RECS plots."""
     all_tmpls = generate_all_templates()
-    recs_indices = {i + 1 for i, t in enumerate(all_tmpls) if t.truth_source == TruthSource.recs}
+    recs_indices = {i + 1 for i, t in enumerate(all_tmpls) if t.comparison_dataset == ComparisonDataset.recs}
     generate_plots(index=recs_indices)
 
 
 def generate_lrd_plots():
     """Generate only LRD plots."""
     all_tmpls = generate_all_templates()
-    lrd_indices = {i + 1 for i, t in enumerate(all_tmpls) if t.truth_source == TruthSource.lrd}
+    lrd_indices = {i + 1 for i, t in enumerate(all_tmpls) if t.comparison_dataset == ComparisonDataset.lrd}
     generate_plots(index=lrd_indices)
 
 

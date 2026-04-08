@@ -6,7 +6,7 @@ translate a PlotSpec into rendering-ready configuration.
 Architecture:
     build_plot_config() composes focused resolver functions, each handling
     one aspect of the config. Each resolver internally dispatches based on
-    truth_source, resolution, and view_type.
+    comparison_dataset, resolution, and view_type.
 """
 
 from dataclasses import dataclass
@@ -18,7 +18,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     AggregationType,
     CoverageType,
     ViewType,
-    TruthSource,
+    ComparisonDataset,
     Resolution,
     format_aggregation_level,
 )
@@ -84,8 +84,8 @@ def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
     timeseries_column = _resolve_timeseries_column(plot_spec)
     title = plot_spec.get_display_title()
     quantity_title = _resolve_quantity_title(plot_spec)
-    truth_label = _extract_truth_source_label(plot_spec.truth_source, data) if sidebar_column else ""
-    sidebar_title = _resolve_sidebar_title(plot_spec, truth_label)
+    comparison_label = _extract_comparison_dataset_label(plot_spec.comparison_dataset, data) if sidebar_column else ""
+    sidebar_title = _resolve_sidebar_title(plot_spec, comparison_label)
     ts_xtick_vals, ts_xtick_text = _resolve_tick_config(plot_spec, data)
     x_unit = _resolve_x_unit(plot_spec)
     uses_stacked_layout = _uses_stacked_layout(plot_spec)
@@ -97,11 +97,11 @@ def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
         quantity_column, sidebar_column = sidebar_column, quantity_column
         sidebar_title = quantity_title
         quantity_title = "% diff"
-        title = _resolve_diff_view_title(plot_spec, truth_label)
+        title = _resolve_diff_view_title(plot_spec, comparison_label)
         rse_column = None
 
     # Post-processing: monthly resolution clears sidebar (RECS/EIA only)
-    if plot_spec.resolution == Resolution.month and plot_spec.truth_source != TruthSource.lrd:
+    if plot_spec.resolution == Resolution.month and plot_spec.comparison_dataset != ComparisonDataset.lrd:
         sidebar_column = None
         sidebar_title = ""
 
@@ -135,7 +135,7 @@ def _resolve_quantity_column(plot_spec: PlotSpec) -> str:
     RECS/EIA: Handles units_count, quartiles, percent_users, and value columns.
     """
     # LRD: simple pattern
-    if plot_spec.truth_source == TruthSource.lrd:
+    if plot_spec.comparison_dataset == ComparisonDataset.lrd:
         if plot_spec.view == ViewType.temp_distribution_view:
             return "temp_count"
         return f"{plot_spec.quantity}_value"
@@ -165,7 +165,7 @@ def _resolve_sidebar_column(plot_spec: PlotSpec) -> str | None:
     RECS/EIA: Distribution views don't have sidebar; others get percent_difference.
     """
     # LRD: sidebar only for year resolution
-    if plot_spec.truth_source == TruthSource.lrd:
+    if plot_spec.comparison_dataset == ComparisonDataset.lrd:
         if plot_spec.resolution == Resolution.year:
             return f"{plot_spec.quantity}_value_percent_difference"
         return None
@@ -192,7 +192,7 @@ def _resolve_rse_column(plot_spec: PlotSpec) -> str | None:
     Only RECS has RSE columns. Distribution views don't have RSE.
     """
     # Only RECS has RSE
-    if plot_spec.truth_source != TruthSource.recs:
+    if plot_spec.comparison_dataset != ComparisonDataset.recs:
         return None
 
     # Distribution plots don't have RSE
@@ -242,13 +242,13 @@ def _resolve_timeseries_column(plot_spec: PlotSpec) -> str | None:
             return None
 
 
-def _resolve_diff_view_title(plot_spec: PlotSpec, truth_label: str) -> str:
+def _resolve_diff_view_title(plot_spec: PlotSpec, comparison_label: str) -> str:
     """Build the figure title for diff_view plots.
 
     Reuses the value_view title and wraps it with percent difference framing.
     """
     base = plot_spec.get_display_title()
-    return f"Percent Difference on {base}<br> Compared to {truth_label}"
+    return f"Percent Difference on {base}<br> Compared to {comparison_label}"
 
 
 def _resolve_quantity_title(plot_spec: PlotSpec) -> str:
@@ -257,7 +257,7 @@ def _resolve_quantity_title(plot_spec: PlotSpec) -> str:
     Returns units like kWh, kWh/home, kWh/user, %, or count.
     """
     # LRD: mostly kWh, with special case for temp_count
-    if plot_spec.truth_source == TruthSource.lrd:
+    if plot_spec.comparison_dataset == ComparisonDataset.lrd:
         if plot_spec.view == ViewType.temp_distribution_view:
             return "count"
         return "kWh"
@@ -283,14 +283,14 @@ def _resolve_quantity_title(plot_spec: PlotSpec) -> str:
     return "kWh"
 
 
-def _resolve_sidebar_title(plot_spec: PlotSpec, truth_label: str) -> str:
+def _resolve_sidebar_title(plot_spec: PlotSpec, comparison_label: str) -> str:
     """Resolve the sidebar subplot title.
 
     Returns a full description like 'Percent difference compared to RECS 2020'.
     """
     if plot_spec.view == ViewType.distribution:
         return ""
-    return f"Percent Difference Compared to {truth_label}"
+    return f"Percent Difference Compared to {comparison_label}"
 
 
 def _resolve_tick_config(plot_spec: PlotSpec, data: pl.DataFrame) -> tuple[tuple | None, tuple | None]:
@@ -349,16 +349,16 @@ def _resolve_x_unit(plot_spec: PlotSpec) -> str:
     return ""
 
 
-def _extract_truth_source_label(truth_source: TruthSource, data: pl.DataFrame) -> str:
-    """Extract a human-readable truth source label like 'EIA 2018' from data."""
+def _extract_comparison_dataset_label(comparison_dataset: ComparisonDataset, data: pl.DataFrame) -> str:
+    """Extract a human-readable comparison dataset label like 'EIA 2018' from data."""
     if "source" not in data.columns:
-        return truth_source.value.upper()
+        return comparison_dataset.value.upper()
     sources = data["source"].unique().to_list()
-    ref_sources = [s for s in sources if truth_source.value in s]
+    ref_sources = [s for s in sources if comparison_dataset.value in s]
     if ref_sources:
         # "eia_2018" → "EIA 2018", "recs_2020" → "RECS 2020"
         return ref_sources[0].replace("_", " ").upper()
-    return truth_source.value.upper()
+    return comparison_dataset.value.upper()
 
 
 def _resolve_dimensions(plot_spec: PlotSpec, is_single_entity: bool) -> tuple[float, float]:
@@ -367,7 +367,7 @@ def _resolve_dimensions(plot_spec: PlotSpec, is_single_entity: bool) -> tuple[fl
     Returns (height, width) in pixels.
     """
     # LRD: resolution-specific dimensions
-    if plot_spec.truth_source == TruthSource.lrd:
+    if plot_spec.comparison_dataset == ComparisonDataset.lrd:
         match plot_spec.resolution:
             case Resolution.hour_of_day_matrix:
                 return 1800, 900  # Taller for 13 rows

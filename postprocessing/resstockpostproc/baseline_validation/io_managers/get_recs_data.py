@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 import numpy as np
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
 from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
-from . import truth_data_paths as s3_paths
+from . import comparison_data_paths as s3_paths
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 from resstockpostproc.baseline_validation.data_processing.recs_rse import calculate_rse

@@ -21,7 +21,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
 )
 from resstockpostproc.baseline_validation.plotters.plot_config import (
     _resolve_quantity_title,
-    _extract_truth_source_label,
+    _extract_comparison_dataset_label,
     _resolve_timeseries_column,
     get_second_category_column,
 )
@@ -157,14 +157,14 @@ def _pivot_by_source(
         join_cols.append(str(ts_col))
 
     # Identify the two source labels
-    ref_label = _extract_truth_source_label(plot_spec.truth_source, data)
+    ref_label = _extract_comparison_dataset_label(plot_spec.comparison_dataset, data)
     sources = data["source"].unique().to_list()
     rs_sources = [s for s in sources if "resstock" in s]
     rs_label = _format_source_label(rs_sources[0]) if rs_sources else "ResStock"
 
     # Split by source
-    truth_val = plot_spec.truth_source.value
-    ref_df = data.filter(pl.col("source").str.contains(truth_val))
+    comparison_val = plot_spec.comparison_dataset.value
+    ref_df = data.filter(pl.col("source").str.contains(comparison_val))
     rs_df = data.filter(pl.col("source").str.contains("resstock"))
 
     # Determine value columns to pivot (everything that's not a join col or source)
@@ -340,7 +340,7 @@ def _build_table_html(
     nav_html = '<div class="nav-links">' + " | ".join(nav_parts) + "</div>"
 
     # Build footer
-    footer_html = _build_footer_html(source_labels, plot_spec.truth_source.value, footnotes)
+    footer_html = _build_footer_html(source_labels, plot_spec.comparison_dataset.value, footnotes)
 
     return f"""<!DOCTYPE html>
 <html>

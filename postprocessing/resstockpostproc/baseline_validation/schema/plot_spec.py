@@ -54,7 +54,7 @@ class ViewType(StrEnum):
 
     # Display modes
     value_view = "value"  # The default view for most plots - shows actual values as the main plot
-    diff_view = "difference view"  # Shows percent difference with truth source as the main plot
+    diff_view = "difference view"  # Shows percent difference with comparison dataset as the main plot
     temp_view = "temperature relation"  # Only for LRD plots - shows relationship between consumption and outdoor
     temp_distribution_view = "temperature distribution"  # Only for LRD plots - distribution of temperature
     distribution = "distribution box plot" # RECS only - shows distribution of per-unit/per-user values with box plot
@@ -70,7 +70,7 @@ class FileType(StrEnum):
     csv = "csv"
 
 
-class TruthSource(StrEnum):
+class ComparisonDataset(StrEnum):
     eia = "eia"
     lrd = "lrd"
     recs = "recs"
@@ -101,14 +101,14 @@ class DataKey(NamedTuple):
     filters applied after data loading.
     """
 
-    truth_source: TruthSource
+    comparison_dataset: ComparisonDataset
     group_by: tuple[str, ...]
     resolution: Resolution
     aggregation_type: AggregationType
     coverage: CoverageType
 
     def __str__(self) -> str:
-        return f"DataKey({self.truth_source}, {self.group_by}, {self.resolution}, {self.aggregation_type}, {self.coverage})"
+        return f"DataKey({self.comparison_dataset}, {self.group_by}, {self.resolution}, {self.aggregation_type}, {self.coverage})"
 
 
 # Map characteristic keys to human-readable directory names for focus_on output paths
@@ -272,7 +272,7 @@ def _build_recs_eia_metric_label(spec: PlotSpec) -> str:
 
 
 class PlotSpec(NoExtraModel):
-    truth_source: TruthSource = Field(..., description="Truth source for comparison plots (eia, recs, lrd).")
+    comparison_dataset: ComparisonDataset = Field(..., description="Comparison dataset for validation plots (eia, recs, lrd).")
     aggregation_type: AggregationType = Field(..., description="Aggregation method: total or average")
     coverage: CoverageType = Field(..., description="Population coverage: all_units or users_only")
     quantity: DataCol = Field(..., description="Column(s) to visualise. Use DataCol.ALL for all enduses.")
@@ -316,7 +316,7 @@ class PlotSpec(NoExtraModel):
 
     @model_validator(mode="after")
     def _validate_lrd_constraints(self) -> PlotSpec:
-        if self.truth_source != TruthSource.lrd:
+        if self.comparison_dataset != ComparisonDataset.lrd:
             return self
         if self.quantity not in (DataCol.ELECTRICITY_TOTAL,):
             raise ValueError(
@@ -377,12 +377,12 @@ class PlotSpec(NoExtraModel):
         # When focus_on is used with an aggregation_level, the focus_on columns are
         # cross-dimension filters that require microdata → RECS annual only.
         # When aggregation_level is None, focus_on columns ARE the grouping dimension
-        # (same-dimension selection) and work for any truth source.
+        # (same-dimension selection) and work for any comparison dataset.
         if self.focus_on and self.aggregation_level is not None:
-            if self.truth_source != TruthSource.recs:
+            if self.comparison_dataset != ComparisonDataset.recs:
                 raise ValueError(
                     f"Cross-dimension focus_on filters are only supported for RECS "
-                    f"(got truth_source={self.truth_source}). "
+                    f"(got comparison_dataset={self.comparison_dataset}). "
                     "EIA and LRD data lack building-level characteristics for filtering."
                 )
             if self.resolution != Resolution.year:
@@ -412,7 +412,7 @@ class PlotSpec(NoExtraModel):
         """
         group_by = self.effective_group_by or ("state",)
         return DataKey(
-            truth_source=self.truth_source,
+            comparison_dataset=self.comparison_dataset,
             group_by=group_by,
             resolution=self.resolution,
             aggregation_type=self.aggregation_type,
@@ -431,7 +431,7 @@ class PlotSpec(NoExtraModel):
             "Average Monthly Electricity Consumption per Dwelling Unit by State"
             "Annual Electricity Consumption per Dwelling Unit"  (LRD)
         """
-        if self.truth_source == TruthSource.lrd:
+        if self.comparison_dataset == ComparisonDataset.lrd:
             return _build_lrd_display_title(self)
         return _build_recs_eia_display_title(self)
 
@@ -455,7 +455,7 @@ class PlotSpec(NoExtraModel):
         For RECS/EIA: uses _build_recs_eia_metric_label().
         For LRD: uses the full LRD title (which already excludes grouping).
         """
-        if self.truth_source == TruthSource.lrd:
+        if self.comparison_dataset == ComparisonDataset.lrd:
             return _build_lrd_display_title(self)
         return _build_recs_eia_metric_label(self)
 
@@ -480,10 +480,13 @@ class PlotSpec(NoExtraModel):
     @property
     def _base_viz_label(self) -> str:
         """Base visualization type label before view-type suffixes."""
+        if self.view == ViewType.distribution:
+            return "grouped box plot"
+
         if self.quantity == DataCol.ALL:
             return "grouped bar plot"
 
-        if self.truth_source == TruthSource.lrd:
+        if self.comparison_dataset == ComparisonDataset.lrd:
             if self.resolution == Resolution.year:
                 return "tilemap bar plot"
             if self.resolution == Resolution.month:
@@ -509,9 +512,6 @@ class PlotSpec(NoExtraModel):
             if self.resolution == Resolution.month:
                 return "tilemap timeseries plot"
 
-        if self.view == ViewType.distribution:
-            return "grouped box plot"
-
         return "grouped bar plot"
 
     # ── File-path-style labels (for file naming) ─────────────────────────
@@ -523,7 +523,7 @@ class PlotSpec(NoExtraModel):
 
     def _get_title_prefix(self) -> str:
         qlabel = self.get_quantity_name()
-        title_prefix = f"{self.truth_source} {self.resolution} {qlabel} comparison"
+        title_prefix = f"{self.comparison_dataset} {self.resolution} {qlabel} comparison"
         return title_prefix
 
     def _format_focus_display(self) -> str:

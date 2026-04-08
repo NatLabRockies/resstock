@@ -11,7 +11,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     AggregationType,
     CoverageType,
     Resolution,
-    TruthSource,
+    ComparisonDataset,
     ViewType,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
@@ -19,7 +19,7 @@ from resstockpostproc.shared_utils.db_column_names import DataCol
 
 def _make_spec(**overrides):
     defaults = dict(
-        truth_source=TruthSource.eia,
+        comparison_dataset=ComparisonDataset.eia,
         quantity=DataCol.ELECTRICITY_TOTAL,
         resolution=Resolution.year,
         aggregation_type=AggregationType.total,
@@ -67,7 +67,7 @@ class TestComputeDiscrepancy:
 
     def test_returns_none_for_all_quantity(self):
         spec = _make_spec(
-            truth_source=TruthSource.recs,
+            comparison_dataset=ComparisonDataset.recs,
             quantity=DataCol.ALL,
             aggregation_type=AggregationType.average,
         )
@@ -76,7 +76,7 @@ class TestComputeDiscrepancy:
 
     def test_returns_none_for_distribution_view(self):
         spec = _make_spec(
-            truth_source=TruthSource.recs,
+            comparison_dataset=ComparisonDataset.recs,
             aggregation_type=AggregationType.average,
             view=ViewType.distribution,
         )
