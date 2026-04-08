@@ -259,19 +259,19 @@ class TestGenerateSlotTriples:
             if f2 is not None:
                 assert f1 is not None, f"F2={f2} without F1"
 
-    def test_f2_and_agg_mutually_exclusive(self):
-        """When F2 is set, agg_level must be None."""
+    def test_f2_and_group_by_mutually_exclusive(self):
+        """When F2 is set, group_by must be None."""
         triples = generate_slot_triples(RECS_ANNUAL_CHARS, allow_cross_filter=True)
-        for f1, f2, agg in triples:
+        for f1, f2, group_by in triples:
             if f2 is not None:
-                assert agg is None, f"F2={f2} with agg={agg}"
+                assert group_by is None, f"F2={f2} with group_by={group_by}"
 
-    def test_f1_not_equal_to_agg(self):
+    def test_f1_not_equal_to_group_by(self):
         """F1 never equals group_by."""
         triples = generate_slot_triples(RECS_ANNUAL_CHARS, allow_cross_filter=True)
-        for f1, _, agg in triples:
-            if f1 is not None and agg is not None:
-                assert f1 != agg, f"F1=agg={f1}"
+        for f1, _, group_by in triples:
+            if f1 is not None and group_by is not None:
+                assert f1 != group_by, f"F1=group_by={f1}"
 
     def test_all_triples_unique(self):
         """No duplicate triples."""

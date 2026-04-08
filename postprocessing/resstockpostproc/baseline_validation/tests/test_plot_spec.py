@@ -50,7 +50,7 @@ class TestLRDConstraints:
             quantity=DataCol.ELECTRICITY_TOTAL,
             aggregation_type=AggregationType.average,
             coverage=CoverageType.all_units,
-            group_by="eiaid",
+            group_by="utility",
         )
         assert spec.comparison_dataset == ComparisonDataset.lrd
 

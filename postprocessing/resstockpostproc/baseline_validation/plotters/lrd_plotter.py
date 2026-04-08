@@ -20,7 +20,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
     """Create load duration curve plot based on the plot specification."""
 
     agg = plot_spec.group_by or plot_spec.effective_group_by[-1]
-    assert agg == "eiaid", "LRD plots only support aggregation level 'eiaid'"
+    assert agg == "utility", "LRD plots only support group_by='utility'"
     final_df = data.clone()
     sidebar_column = None
     ts_xtick_vals = None
@@ -97,7 +97,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
         second_category_column = "utility_vertical"
         second_category_title = "Utility (State)"
     else:
-        second_category_column = "utility_name"
+        second_category_column = "utility"
         second_category_title = "Utility (State)"
 
     # Detect single-entity (focused) plots for simplified rendering

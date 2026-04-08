@@ -94,8 +94,10 @@ class DataKey(NamedTuple):
     All plots with the same DataKey can share the same expensive data loading operation.
 
     effective_group_by is a sorted tuple of column names the data must be grouped by.
-    For single-dimension plots: ("state",) or ("eiaid",).
-    For cross-dimension plots: ("census_division_recs", "state").
+    For single-dimension plots: ("state",) or ("utility",).
+    For cross-dimension plots: ("census_division_recs", "state"). The plotter may use the 
+    data differently than how it is queried but making a single grouped query reduces number
+    of queries needed.
 
     focus_on values are NOT included here — they are cheap post-aggregation
     filters applied after data loading.
@@ -113,12 +115,12 @@ class DataKey(NamedTuple):
 
 # Map characteristic keys to human-readable directory names for focus_on output paths
 FILTER_CHAR_DISPLAY = {
-    "state": "By State",
-    "geometry_building_type_recs": "By Building Type",
-    "vintage": "By Vintage",
-    "census_division_recs": "By Census Division",
-    "heating_fuel": "By Heating Fuel",
-    "building_america_climate_zone": "By Climate Zone",
+    DataCol.STATE: "By State",
+    DataCol.BUILDING_TYPE: "By Building Type",
+    DataCol.VINTAGE: "By Vintage",
+    DataCol.CENSUS_DIVISION: "By Census Division",
+    DataCol.HEATING_FUEL: "By Heating Fuel",
+    DataCol.CLIMATE_ZONE: "By Climate Zone",
 }
 
 
@@ -129,22 +131,22 @@ FILTER_CHAR_DISPLAY = {
 # plotters (figure titles) and the HTML index (filter facets / column values).
 # ─────────────────────────────────────────────────────────────────────────────
 
-AGGREGATION_LEVEL_LABELS = {
-    "census_division_recs": "Census Division",
-    "geometry_building_type_recs": "Building Type",
-    "building_america_climate_zone": "Climate Zone",
-    "heating_fuel": "Heating Fuel",
-    "state": "State",
-    "eiaid": "Utility",
+GROUP_BY_LABELS = {
+    DataCol.CENSUS_DIVISION: "Census Division",
+    DataCol.BUILDING_TYPE: "Building Type",
+    DataCol.CLIMATE_ZONE: "Climate Zone",
+    DataCol.HEATING_FUEL: "Heating Fuel",
+    DataCol.STATE: "State",
+    DataCol.UTILITY: "Utility",
 }
 
 
-def format_group_by(agg_level: str) -> str:
-    """Convert an aggregation level column name to a display label.
+def format_group_by(group_by: str) -> str:
+    """Convert a group_by column name to a display label.
 
     Examples: "census_division_recs" → "Census Division", "state" → "State"
     """
-    return AGGREGATION_LEVEL_LABELS.get(agg_level, agg_level.replace("_", " ").title())
+    return GROUP_BY_LABELS.get(group_by, group_by.replace("_", " ").title())
 
 
 def format_focus_label(value: str) -> str:
@@ -369,15 +371,11 @@ class PlotSpec(NoExtraModel):
 
         if self.group_by is not None and self.group_by in seen_cols:
             raise ValueError(
-                f"group_by '{self.group_by}' cannot also appear in focus_on. "
+                "group_by cannot also appear in focus_on. "
                 "To select one entity from the aggregation, set group_by=None and "
                 "add (column, value) to focus_on instead."
             )
 
-        # When focus_on is used with an group_by, the focus_on columns are
-        # cross-dimension filters that require microdata → RECS annual only.
-        # When group_by is None, focus_on columns ARE the grouping dimension
-        # (same-dimension selection) and work for any comparison dataset.
         if self.focus_on and self.group_by is not None:
             if self.comparison_dataset != ComparisonDataset.recs:
                 raise ValueError(
@@ -389,10 +387,9 @@ class PlotSpec(NoExtraModel):
                 raise ValueError(
                     f"Cross-dimension focus_on filters are only supported for annual resolution "
                     f"(got {self.resolution}). "
-                    "Monthly RECS data is pre-aggregated and cannot be filtered."
+                    "Monthly RECS data is pre-aggregated and cannot be further broken down."
                 )
 
-        # No geographic-to-geographic conflicts across all group dimensions
         geo_cols = {col for col, _ in self.focus_on if col in GEOGRAPHIC_DIMENSIONS}
         if self.group_by in GEOGRAPHIC_DIMENSIONS:
             geo_cols.add(self.group_by)
@@ -410,19 +407,13 @@ class PlotSpec(NoExtraModel):
         Uses effective_group_by (sorted union of focus_on columns + group_by)
         to determine which columns the data must be grouped by.
         """
-        egb = self.effective_group_by or ("state",)
         return DataKey(
             comparison_dataset=self.comparison_dataset,
-            effective_group_by=egb,
+            effective_group_by=self.effective_group_by or ("state",),
             resolution=self.resolution,
             aggregation_type=self.aggregation_type,
             coverage=self.coverage,
         )
-
-    # ── Display labels ──────────────────────────────────────────────────
-    # These derive human-readable strings for the plot figure and the HTML
-    # index.  The same building blocks produce both the full title and the
-    # individual facet labels (Quantity, Metric, Group By).
 
     def get_display_title(self) -> str:
         """Publication-quality title for the plot figure and HTML index.
@@ -506,7 +497,7 @@ class PlotSpec(NoExtraModel):
             if self.resolution == Resolution.hour_of_day:
                 return "daily load shape"
 
-        if self.group_by in ("state", "eiaid"):
+        if self.group_by in (DataCol.STATE, DataCol.UTILITY):
             if self.resolution == Resolution.year:
                 return "tilemap bar plot"
             if self.resolution == Resolution.month:

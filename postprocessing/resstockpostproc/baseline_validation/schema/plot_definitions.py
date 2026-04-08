@@ -87,7 +87,7 @@ RECS_GROUP_BYS = [
     "heating_fuel",
 ]
 
-LRD_GROUP_BYS = ["eiaid"]
+LRD_GROUP_BYS = ["utility"]
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Eligible chars per source / resolution
@@ -99,7 +99,7 @@ LRD_GROUP_BYS = ["eiaid"]
 RECS_ANNUAL_CHARS = tuple(RECS_GROUP_BYS)  # all 6 chars available
 RECS_MONTHLY_CHARS = ("state",)  # monthly RECS data is pre-aggregated at state level
 EIA_CHARS = ("state",)  # EIA only supports state-level grouping
-LRD_CHARS = ("eiaid",)  # LRD only supports utility-level grouping
+LRD_CHARS = ("utility",)  # LRD only supports utility-level grouping
 
 # Chars allowed as F1/F2 in cross-filter triples. All 6 chars remain available
 # as group_by (Block 1 base plots and Block 2 sub-grouping), but only
@@ -113,7 +113,7 @@ class PlotTemplate:
 
     A PlotTemplate captures the metric identity (source, quantity, resolution,
     aggregation_type, coverage, view) and the ordered set of eligible
-    characteristics available for the (F1, F2, agg_level) slot triple expansion.
+    characteristics available for the (F1, F2, group_by) slot triple expansion.
 
     The group_by and focus_on are NOT part of the template — those are
     determined by the slot triple generator and the expansion loop.
@@ -157,14 +157,14 @@ def generate_slot_triples(
             When None (default), all eligible_chars may be used as F1/F2.
 
     Returns:
-        List of (F1, F2, agg_level) triples. Each value is a char name or None.
+        List of (F1, F2, group_by) triples. Each value is a char name or None.
 
     Rules:
-        - F1=None → F2 must be None; agg_level can be any char or None
-        - F1=char[i], F2=None → agg_level can be any char except F1 (or None),
+        - F1=None → F2 must be None; group_by can be any char or None
+        - F1=char[i], F2=None → group_by can be any char except F1 (or None),
           subject to geographic exclusion. Requires allow_cross_filter when
-          agg_level is not None.
-        - F1=char[i], F2=char[j>i] → agg_level must be None.
+          group_by is not None.
+        - F1=char[i], F2=char[j>i] → group_by must be None.
           Requires allow_cross_filter (since F1 is a filter on a grouping dim).
         - No two geographic dimensions may appear in the same triple.
     """
@@ -265,7 +265,7 @@ def _extra_view_for(spec: PlotSpec) -> ViewType | None:
         return None
 
     # EIA/RECS state or utility with annual resolution → diff view
-    if spec.group_by in ("state", "eiaid"):
+    if spec.group_by in ("state", "utility"):
         if spec.resolution == Resolution.year:
             return ViewType.diff_view
         return None  # monthly tilemaps don't get diff view

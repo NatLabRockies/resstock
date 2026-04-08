@@ -61,11 +61,11 @@ class DataCol(StrEnum):
     BUILDING_TYPE = "geometry_building_type_recs"
     HEATING_FUEL = "heating_fuel"
     CENSUS_DIVISION = "census_division_recs"
-    BLDG_AMERICA_CLIMATE_ZONE = "building_america_climate_zone"
+    CLIMATE_ZONE = "building_america_climate_zone"
     EV_OWNERSHIP = "electric_vehicle_ownership"
     UNITS_COUNT = "units_count"
     OUTDOOR_DRYBULB_TEMP = "outdoor_drybulb_temp"
-    UTILITY_NAME = "utility_name"
+    UTILITY = "utility"
     TIMESTAMP = "timestamp"
 
     @property

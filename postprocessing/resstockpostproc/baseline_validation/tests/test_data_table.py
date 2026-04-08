@@ -78,14 +78,14 @@ class TestShouldGenerateTable:
             quantity=DataCol.ELECTRICITY_TOTAL,
             resolution=Resolution.hour_of_year,
             aggregation_type=AggregationType.average,
-            group_by="eiaid",
+            group_by="utility",
         )
         # 15 utilities x 8760 hours x 2 sources = 262,800 rows
         rows = []
         for uid in range(15):
             for h in range(8760):
                 for src in ["lrd_2018", "resstock_2025"]:
-                    rows.append({"eiaid": uid, "utility_name": f"Util{uid}", "hour of year": h,
+                    rows.append({"eiaid": uid, "utility": f"Util{uid}", "hour of year": h,
                                  "source": src, "electricity_total_value": 1.0,
                                  "percent_time": h / 8760 * 100})
         data = pl.DataFrame(rows)

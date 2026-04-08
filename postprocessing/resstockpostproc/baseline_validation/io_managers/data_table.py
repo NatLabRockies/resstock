@@ -297,7 +297,7 @@ def _build_table_html(
     title = html_lib.escape(plot_spec.get_display_title())
     units = html_lib.escape(_resolve_quantity_title(plot_spec))
 
-    # Subtitle: focused entity or aggregation level
+    # Subtitle: focused entity or group_by level
     focus_display = plot_spec.get_filter_display_name()
     if focus_display:
         subtitle = html_lib.escape(focus_display)

@@ -20,9 +20,9 @@ def get_lrd_data(year: int = 2018) -> pl.DataFrame:
         raise ValueError("LRD data only available for 2018")
 
     df = get_df_from_s3(s3_paths.LRD_2018, local_data_dir)
-    df = df.rename({"utility": "utility_name", "kWh per meter": f"{DataCol.ELECTRICITY_TOTAL}_value"})
+    df = df.rename({"kWh per meter": f"{DataCol.ELECTRICITY_TOTAL}_value"})
     df = df.with_columns(
-        pl.col("utility_name").replace_strict(UtilityName2ID, default=None).alias("eiaid"),
+        pl.col("utility").replace_strict(UtilityName2ID, default=None).alias("eiaid"),
         pl.col("time").str.to_datetime(),
     )
     unmapped_count = df.filter(pl.col("eiaid").is_null()).height
@@ -41,7 +41,7 @@ def get_lrd_aggregated(
     resolution: Resolution = Resolution.year,
     restrict_list: tuple[str, ...] | None = None,
 ) -> pl.DataFrame:
-    eiaid_cols = ["eiaid", "utility_name"]
+    eiaid_cols = ["eiaid", "utility"]
     if year != 2018:
         raise ValueError("LRD data only available for 2018")
     df = get_lrd_data(year=year)

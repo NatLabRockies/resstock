@@ -29,9 +29,9 @@ plots:
   plot_types:
     - recs
 
-  aggregation_levels:
+  group_by_levels:
     - state
-    - eiaid
+    - utility
 
   output_formats:
     - html

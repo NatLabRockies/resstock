@@ -75,7 +75,7 @@ LAYOUTS = {
         [None, "US Total", None],
         [None, None, None],
     ],
-    DataCol.UTILITY_NAME: [
+    DataCol.UTILITY: [
         ["ComEd (IL)", "OhioEd (OH)", "ToledoEd (OH)", "AEP (OH)", "Cleveland (OH)"],
         ["MetEd (PA)", "Penelec (PA)", "PP (PA)", "WPP (PA)", "PECO (PA)"],
         ["PG&E (CA)", "SCE (CA)", "ERCOT", "Appalachian (VA)", "BGE (MD)"],  # "Ameren (MO)" doesn't have full year data

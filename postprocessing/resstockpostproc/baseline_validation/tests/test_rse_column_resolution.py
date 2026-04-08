@@ -35,7 +35,7 @@ class TestResolveRSEColumn:
         assert _resolve_rse_column(
             _make_spec(
                 comparison_dataset=ComparisonDataset.lrd,
-                group_by="eiaid",
+                group_by="utility",
             )
         ) is None
 

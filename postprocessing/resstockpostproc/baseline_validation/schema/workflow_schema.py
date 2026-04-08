@@ -26,11 +26,11 @@ class PlotType(str, Enum):
     timeseries = "timeseries"
 
 
-class AggregationLevel(str, Enum):
-    """Geographic aggregation levels for validation."""
+class GroupByLevel(str, Enum):
+    """Geographic group_by levels for validation."""
 
     state = "state"
-    eiaid = "eiaid"
+    utility = "utility"
 
 
 class OutputFormat(str, Enum):
@@ -86,9 +86,9 @@ class PlotSpecification(NoExtraModel):
         default=(PlotType.eia, PlotType.lrd, PlotType.timeseries),
         description="Types of validation plots to generate",
     )
-    aggregation_levels: tuple[AggregationLevel, ...] = Field(
-        default=(AggregationLevel.state, AggregationLevel.eiaid),
-        description="Geographic aggregation levels for plots",
+    group_by_levels: tuple[GroupByLevel, ...] = Field(
+        default=(GroupByLevel.state, GroupByLevel.utility),
+        description="Geographic group_by levels for plots",
     )
     output_formats: tuple[OutputFormat, ...] = Field(
         default=(OutputFormat.html, OutputFormat.svg, OutputFormat.parquet),

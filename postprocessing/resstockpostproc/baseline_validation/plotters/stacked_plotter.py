@@ -389,7 +389,7 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     if plot_spec.quantity == DataCol.ALL:
         if plot_spec.focus_on:
             for col, val in plot_spec.focus_on:
-                filter_col = "utility_name" if col == "eiaid" else col
+                filter_col = col
                 if filter_col in df.columns:
                     df = df.filter(pl.col(filter_col) == val)
 

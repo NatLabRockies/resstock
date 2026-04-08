@@ -90,7 +90,7 @@ RECS_CHARS_MAPPING: dict[str, VariableSpec] = {
             "mapping": PartialMap({})
         },
     },
-    DataCol.BLDG_AMERICA_CLIMATE_ZONE: {
+    DataCol.CLIMATE_ZONE: {
         "ResStock": {
             "column_name": "in.building_america_climate_zone",
             "mapping": PartialMap({})

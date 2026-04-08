@@ -25,7 +25,11 @@ from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.mapping import UtilityName2ID, ID2UtilityName
 from resstockpostproc.shared_utils.timing import timed
 
-AggregationBy = Literal["state", "eiaid"]  # Legacy type alias for EIA/LRD data
+AggregationBy = Literal["state", "eiaid"]  # IO-layer type: raw DB column names
+
+# Translation from config-level group_by names to raw DB column names.
+# The config layer uses "utility"; the IO layer (queries, DataFrames pre-mapping) uses "eiaid".
+_CONFIG_TO_IO_COL = {"utility": "eiaid"}
 
 
 @timed
@@ -90,12 +94,12 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
             .drop("avg_units_count")
         )
 
-    if "eiaid" in df.columns and "eiaid" in plot_spec.effective_group_by:
+    if "eiaid" in df.columns and "utility" in plot_spec.effective_group_by:
         df = df.with_columns(
             pl.col("eiaid")
             .cast(pl.Int16)
             .replace_strict(ID2UtilityName, default="Unknown Utility")
-            .alias("utility_name")
+            .alias("utility")
         )
 
     # Apply focus_on post-filters.
@@ -104,9 +108,7 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
     data_key = plot_spec.get_data_key()
     is_multi_col = len(data_key.effective_group_by) > 1
     for col, val in plot_spec.focus_on:
-        if col == "eiaid" and "utility_name" in df.columns:
-            df = df.filter(pl.col("utility_name") == val)
-        elif col in df.columns:
+        if col in df.columns:
             df = df.filter(pl.col(col) == val)
             if is_multi_col and plot_spec.group_by is not None and col != plot_spec.group_by:
                 df = df.drop(col)
@@ -131,34 +133,38 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
     group_by = data_key.effective_group_by  # local alias for readability
     resolution = data_key.resolution
 
+    # Translate config-level column names to IO-level (e.g. "utility" → "eiaid")
+    io_group_by = tuple(_CONFIG_TO_IO_COL.get(c, c) for c in group_by)
+    io_data_key = data_key._replace(effective_group_by=io_group_by) if io_group_by != group_by else data_key
+
     groups = []
     if comparison_dataset == ComparisonDataset.eia:
-        by = "state" if "state" in group_by else "eiaid"
-        assert by in ["state", "eiaid"], "EIA data only supports 'state' or 'eiaid' aggregation levels."
+        by = "state" if "state" in io_group_by else "eiaid"
+        assert by in ["state", "eiaid"], "EIA data only supports group_by='state' or group_by='eiaid'."
         if resolution == Resolution.month:
             source_data = get_eia_data.get_monthly_all(
-                data_key=data_key, years=workflow.reference_years.get("eia", [2018])
+                data_key=io_data_key, years=workflow.reference_years.get("eia", [2018])
             )
-            resstock_data = get_resstock_data.get_timeseries_all(data_key=data_key)
+            resstock_data = get_resstock_data.get_timeseries_all(data_key=io_data_key)
             groups = [by, "month"]
         else:
             assert resolution == Resolution.year, "EIA data only supports 'year' or 'month' resolutions."
             source_data = get_eia_data.get_annual_all(
-                data_key=data_key, years=workflow.reference_years.get("eia", [2018])
+                data_key=io_data_key, years=workflow.reference_years.get("eia", [2018])
             )
-            resstock_data = get_resstock_data.get_annual_all(data_key=data_key)
+            resstock_data = get_resstock_data.get_annual_all(data_key=io_data_key)
             groups = [by]
     elif comparison_dataset == ComparisonDataset.recs:
         if resolution == Resolution.month:
             assert len(group_by) == 1, "RECS monthly only supports single-column groupby."
-            source_data = get_recs_data.get_monthly_all(data_key=data_key, year=2020)
-            resstock_data = get_resstock_data.get_timeseries_all(data_key=data_key, occupied_only=True)
+            source_data = get_recs_data.get_monthly_all(data_key=io_data_key, year=2020)
+            resstock_data = get_resstock_data.get_timeseries_all(data_key=io_data_key, occupied_only=True)
             groups = ["state", "month"]
         else:
             assert resolution == Resolution.year, "RECS data only supports 'year' or 'month' resolutions."
-            source_data = get_recs_data.get_annual_all(data_key=data_key, year=2020)
-            resstock_data = get_resstock_data.get_annual_all(data_key=data_key, occupied_only=True)
-            groups = list(group_by)
+            source_data = get_recs_data.get_annual_all(data_key=io_data_key, year=2020)
+            resstock_data = get_resstock_data.get_annual_all(data_key=io_data_key, occupied_only=True)
+            groups = list(io_group_by)
     elif comparison_dataset == ComparisonDataset.lrd:
         assert data_key.aggregation_type == AggregationType.average and data_key.coverage == CoverageType.all_units, (
             "LRD data only supports 'average' aggregation with 'all_units' coverage."
@@ -166,13 +172,13 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
         eiaidlist = tuple([str(eiaid) for eiaid in UtilityName2ID.values()])
         source_data = get_lrd_data.get_lrd_aggregated(year=2018, resolution=resolution, restrict_list=eiaidlist)
         if resolution == Resolution.year:
-            resstock_data = get_resstock_data.get_annual_all(data_key=data_key)
+            resstock_data = get_resstock_data.get_annual_all(data_key=io_data_key)
             groups = ["eiaid"]
         elif resolution == Resolution.hour_of_day_matrix:
-            resstock_data = get_resstock_data.get_timeseries_all(data_key=data_key, restrict_list=eiaidlist)
+            resstock_data = get_resstock_data.get_timeseries_all(data_key=io_data_key, restrict_list=eiaidlist)
             groups = ["eiaid", "month", "day_type", "hour of day"]
         else:
-            resstock_data = get_resstock_data.get_timeseries_all(data_key=data_key, restrict_list=eiaidlist)
+            resstock_data = get_resstock_data.get_timeseries_all(data_key=io_data_key, restrict_list=eiaidlist)
             groups = ["eiaid", resolution]
 
     else:
@@ -347,21 +353,21 @@ def _prepare_temperature_view(df: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataF
 
     # Create reference temperature from ResStock data
     ref_temp = df.filter(pl.col("source") == resstock_src).select(
-        "utility_name", pl.col(plot_spec.resolution), pl.col(temp_col).alias("resstock_temp")
+        "utility", pl.col(plot_spec.resolution), pl.col(temp_col).alias("resstock_temp")
     )
 
     # Join reference temperature to all rows
-    df = df.join(ref_temp, on=("utility_name", plot_spec.resolution), how="left")
+    df = df.join(ref_temp, on=("utility", plot_spec.resolution), how="left")
 
     # Sort by temperature
-    df = df.sort("source", "utility_name", "resstock_temp", descending=[False, False, False], maintain_order=True)
+    df = df.sort("source", "utility", "resstock_temp", descending=[False, False, False], maintain_order=True)
 
     # Aggregate by temperature bins
-    df = df.group_by(["source", "utility_name", "resstock_temp"], maintain_order=True).agg(
+    df = df.group_by(["source", "utility", "resstock_temp"], maintain_order=True).agg(
         pl.col(f"{plot_spec.quantity}_value").mean(), pl.count().alias("temp_count")
     )
 
-    return df.sort("source", "utility_name", "resstock_temp", descending=[False, False, False])
+    return df.sort("source", "utility", "resstock_temp", descending=[False, False, False])
 
 
 def _prepare_load_duration_curve(df: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
@@ -369,11 +375,11 @@ def _prepare_load_duration_curve(df: pl.DataFrame, plot_spec: PlotSpec) -> pl.Da
     quantity_col = f"{plot_spec.quantity}_value"
 
     # Sort by value descending within each source/utility
-    df = df.sort("source", "utility_name", quantity_col, descending=[False, False, True])
+    df = df.sort("source", "utility", quantity_col, descending=[False, False, True])
 
     # Add percent_time column (percentage of hours at or above this load)
     df = df.with_columns(
-        ((pl.int_range(pl.len()) + 1).over("source", "utility_name") * 100 / (pl.len()).over("source", "utility_name"))
+        ((pl.int_range(pl.len()) + 1).over("source", "utility") * 100 / (pl.len()).over("source", "utility"))
         .round(3)
         .alias("percent_time")
     )
@@ -386,8 +392,8 @@ def _prepare_load_duration_curve(df: pl.DataFrame, plot_spec: PlotSpec) -> pl.Da
 
 
 def _prepare_day_of_year_layout(df: pl.DataFrame) -> pl.DataFrame:
-    """Rename utility_name to utility_vertical for vertical layout."""
-    return df.rename({"utility_name": "utility_vertical"})
+    """Rename utility to utility_vertical for vertical layout."""
+    return df.rename({"utility": "utility_vertical"})
 
 
 def _prepare_hour_of_day_matrix(df: pl.DataFrame) -> pl.DataFrame:

@@ -90,9 +90,9 @@ plots:
     - eia
     - load_duration
     - timeseries
-  aggregation_levels:
+  group_by_levels:
     - state
-    - eiaid
+    - utility
   output_formats:
     - html
     - svg
@@ -247,9 +247,9 @@ plots:
     - load_duration
     - timeseries
 
-  aggregation_levels:             # Geographic aggregation
+  group_by_levels:             # Geographic grouping
     - state
-    - eiaid
+    - utility
 
   output_formats:                 # File formats to save
     - html                        # Interactive plots

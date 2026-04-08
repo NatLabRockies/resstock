@@ -37,7 +37,7 @@ class TestLRDPlotter:
                         data.append(
                             {
                                 "source": source,
-                                "utility_name": "ComEd (IL)",
+                                "utility": "ComEd (IL)",
                                 "eiaid": 4110,
                                 "month": month,
                                 "day_type": day_type,
@@ -63,7 +63,7 @@ class TestLRDPlotter:
                 data.append(
                     {
                         "source": source,
-                        "utility_name": utility,
+                        "utility": utility,
                         "eiaid": 4110 if utility == "ComEd (IL)" else 14328,
                         f"{DataCol.ELECTRICITY_TOTAL}_value": 8000.0 + (500.0 if "resstock" in source else 0),
                         f"{DataCol.ELECTRICITY_TOTAL}_value_percent_difference": 5.0 if "resstock" in source else 0.0,
@@ -80,7 +80,7 @@ class TestLRDPlotter:
             resolution=Resolution.hour_of_day_matrix,
             group_by=None,
             quantity=DataCol.ELECTRICITY_TOTAL,
-            focus_on=(("eiaid", "ComEd (IL)"),),
+            focus_on=(("utility", "ComEd (IL)"),),
             aggregation_type=AggregationType.average,
             coverage=CoverageType.all_units,
             view=ViewType.value_view,
@@ -98,7 +98,7 @@ class TestLRDPlotter:
         plot_spec = PlotSpec(
             comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.hour_of_day_matrix,
-            group_by="eiaid",
+            group_by="utility",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(),  # Missing required parameter
             aggregation_type=AggregationType.average,
@@ -116,7 +116,7 @@ class TestLRDPlotter:
             resolution=Resolution.hour_of_day_matrix,
             group_by=None,
             quantity=DataCol.ELECTRICITY_TOTAL,
-            focus_on=(("eiaid", "ComEd (IL)"),),
+            focus_on=(("utility", "ComEd (IL)"),),
             aggregation_type=AggregationType.average,
             coverage=CoverageType.all_units,
             view=ViewType.value_view,
@@ -133,7 +133,7 @@ class TestLRDPlotter:
         plot_spec = PlotSpec(
             comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.year,
-            group_by="eiaid",
+            group_by="utility",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(),
             aggregation_type=AggregationType.average,
@@ -153,7 +153,7 @@ class TestLRDPlotter:
         plot_spec = PlotSpec(
             comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.month,
-            group_by="eiaid",
+            group_by="utility",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(),
             aggregation_type=AggregationType.average,
@@ -227,7 +227,7 @@ class TestDayOfYearResolution:
                     data.append(
                         {
                             "source": source,
-                            "utility_vertical": utility,  # Renamed from utility_name by gather_data
+                            "utility_vertical": utility,  # Renamed from utility by gather_data
                             "eiaid": 4110 if utility == "ComEd (IL)" else 14328,
                             "day of year": date,  # Datetime, not integer
                             f"{DataCol.ELECTRICITY_TOTAL}_value": 20.0 + 10.0 * (1 + 0.5 * ((day - 182) / 182) ** 2),
@@ -250,7 +250,7 @@ class TestDayOfYearResolution:
         plot_spec = PlotSpec(
             comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.day_of_year,
-            group_by="eiaid",
+            group_by="utility",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(),
             aggregation_type=AggregationType.average,

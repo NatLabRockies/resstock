@@ -395,7 +395,7 @@ def _uses_stacked_layout(plot_spec: PlotSpec) -> bool:
     Returns True for:
     - ViewType.distribution (box plots)
     - quantity=ALL (enduse bar layout via split_graph_by_enduse)
-    - non-state aggregation levels (grouped bar/box charts)
+    - non-state group_by levels (grouped bar/box charts)
     """
     if plot_spec.view == ViewType.distribution:
         return True
@@ -433,10 +433,7 @@ def get_second_category_column(plot_spec: PlotSpec) -> str:
         case Resolution.day_of_year:
             return "utility_vertical"
         case _:
-            agg = plot_spec.group_by or plot_spec.effective_group_by[-1]
-            if agg == "eiaid":
-                return "utility_name"
-            return agg
+            return plot_spec.group_by or plot_spec.effective_group_by[-1]
 
 
 def get_second_category_title(plot_spec: PlotSpec) -> str:
@@ -446,6 +443,6 @@ def get_second_category_title(plot_spec: PlotSpec) -> str:
             return "Month / Day Type"
         case _:
             agg = plot_spec.group_by or plot_spec.effective_group_by[-1]
-            if agg == "eiaid":
+            if agg == "utility":
                 return "Utility (State)"
             return format_group_by(agg)

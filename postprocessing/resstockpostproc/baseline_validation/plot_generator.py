@@ -256,11 +256,11 @@ def _expand_templates(
 ) -> list[tuple[SpecPair, int, list, object, tuple, str | None]]:
     """Expand templates into work items using slot triples.
 
-    For each template, generates all valid (F1, F2, agg_level) triples, then
+    For each template, generates all valid (F1, F2, group_by) triples, then
     expands focus values for each dimension. Each work item contains everything
     needed for Pass 2 metadata and Pass 3 plotting.
 
-    Returns list of (spec_pair, tmpl_index, spec_entries, focus_val, focus_on, agg_level).
+    Returns list of (spec_pair, tmpl_index, spec_entries, focus_val, focus_on, group_by).
     """
     work_items = []
 
@@ -277,12 +277,12 @@ def _expand_templates(
             cross_filter_chars=cross_chars,
         )
 
-        for f1_char, f2_char, agg_level in triples:
+        for f1_char, f2_char, group_by in triples:
             # --- Base spec construction ---
-            # Use agg_level when set, otherwise fall back to f1_char so that
+            # Use group_by when set, otherwise fall back to f1_char so that
             # Block 2 triples like (state, None, None) get the right
             # group_by for viz labels and data fetching.
-            effective_agg = agg_level or f1_char
+            effective_agg = group_by or f1_char
             spec = _make_spec(
                 comparison_dataset=tmpl.comparison_dataset,
                 quantity=tmpl.quantity,
@@ -296,20 +296,20 @@ def _expand_templates(
             main_spec, extra_spec = spec_pair
             spec_entries = _build_spec_entries(main_spec, extra_spec)
 
-            # ALL enduses: skip any triple with agg_level set — can't
+            # ALL enduses: skip any triple with group_by set — can't
             # group a stacked enduse chart by another dimension.
-            if tmpl.quantity == DataCol.ALL and agg_level is not None:
+            if tmpl.quantity == DataCol.ALL and group_by is not None:
                 continue
 
             # (None, None, None) = "US Total overview" with no grouping.
             # Synthesise a single-entity spec grouped by the template's
             # primary char, focused on "US Total".  LRD has no US Total
             # concept, so skip it entirely.
-            if f1_char is None and agg_level is None:
+            if f1_char is None and group_by is None:
                 if tmpl.comparison_dataset == ComparisonDataset.lrd:
                     continue
                 # "US Total overview" — fetch state-level data but focus on
-                # US Total only.  agg_level stays None so downstream code
+                # US Total only.  group_by stays None so downstream code
                 # treats this as a single-entity plot (no Group By in index).
                 default_char = tmpl.eligible_chars[0]   # "state" for RECS/EIA
                 spec = _make_spec(
@@ -335,11 +335,11 @@ def _expand_templates(
                 if tmpl.resolution == Resolution.hour_of_day_matrix:
                     data_key = main_spec.get_data_key()
                     base_data = get_base_data(data_key)
-                    col = "utility_name" if agg_level == "eiaid" else agg_level
+                    col = group_by
                     for val in sorted(v for v in base_data[col].unique().to_list() if v is not None):
                         work_items.append((
                             spec_pair, tmpl_index, spec_entries, None,
-                            ((agg_level, val),), None,
+                            ((group_by, val),), None,
                         ))
                     continue
                 # Warm the disk cache so worker processes find the data.
@@ -348,12 +348,12 @@ def _expand_templates(
                 # the (None,None,None) handler above) propagates to plotters.
                 work_items.append((
                     spec_pair, tmpl_index, spec_entries, None,
-                    main_spec.focus_on, agg_level,
+                    main_spec.focus_on, group_by,
                 ))
                 continue
 
             # --- F1 is set: discover F1 values ---
-            # Use any spec with agg_level=f1_char to get the data
+            # Use any spec with group_by=f1_char to get the data
             f1_lookup_spec = _make_spec(
                 comparison_dataset=tmpl.comparison_dataset,
                 quantity=tmpl.quantity,
@@ -364,7 +364,7 @@ def _expand_templates(
                 view=tmpl.view,
             )
             f1_data = get_base_data(f1_lookup_spec.get_data_key())
-            f1_col = "utility_name" if f1_char == "eiaid" else f1_char
+            f1_col = f1_char
             f1_values = sorted(
                 v for v in f1_data[f1_col].unique().to_list()
                 if v is not None and v != "US Total"
@@ -375,19 +375,19 @@ def _expand_templates(
             for f1_val in f1_values:
                 # --- Case 2: F1 set, F2=None ---
                 if f2_char is None:
-                    if agg_level is not None:
-                        # Cross-filter: F1 set + agg_level set → overview only
+                    if group_by is not None:
+                        # Cross-filter: F1 set + group_by set → overview only
                         filtered_entries = _build_filtered_entries(
                             spec_entries, ((f1_char, f1_val),),
                         )
                         if not filtered_entries:
                             continue
                         # Warm cache for the 2-column group_by DataKey that
-                        # workers will request (focus_on col + agg_level).
+                        # workers will request (focus_on col + group_by).
                         get_base_data(filtered_entries[0][0].get_data_key())
                         focus_on = ((f1_char, f1_val),)
                         work_items.append((
-                            spec_pair, tmpl_index, filtered_entries, None, focus_on, agg_level,
+                            spec_pair, tmpl_index, filtered_entries, None, focus_on, group_by,
                         ))
                     else:
                         # F1 set, no agg, no F2 → single filtered entity, no grouping
@@ -399,7 +399,7 @@ def _expand_templates(
                             ))
                     continue
 
-                # --- Case 3: F1 set, F2 set (agg_level is always None) ---
+                # --- Case 3: F1 set, F2 set (group_by is always None) ---
                 f2_lookup_spec = _make_spec(
                     comparison_dataset=tmpl.comparison_dataset,
                     quantity=tmpl.quantity,
@@ -410,7 +410,7 @@ def _expand_templates(
                     view=tmpl.view,
                 )
                 f2_data = get_base_data(f2_lookup_spec.get_data_key())
-                f2_col = "utility_name" if f2_char == "eiaid" else f2_char
+                f2_col = f2_char
 
                 if f2_col not in f2_data.columns:
                     continue
@@ -742,11 +742,11 @@ def generate_plots(index=None, test_only=False, parallel=True):
     plot_args = []
     from resstockpostproc.shared_utils.mapping import ABBR2STATE
 
-    for i, (spec_pair, tmpl_index, spec_entries, focus_val, focus_on, agg_level) in enumerate(work_items, 1):
+    for i, (spec_pair, tmpl_index, spec_entries, focus_val, focus_on, group_by) in enumerate(work_items, 1):
         main_spec, extra_spec = spec_pair
 
         # Build a unique key for this work item
-        agg_suffix = f"_by_{agg_level}" if agg_level else ""
+        agg_suffix = f"_by_{group_by}" if group_by else ""
         if focus_on:
             filter_parts = "_".join(f"{c}_{v}" for c, v in focus_on)
             sub_key = (
@@ -763,19 +763,19 @@ def generate_plots(index=None, test_only=False, parallel=True):
 
         # Compute final focus_on for the leaf plot
         final_focus_tuples = list(focus_on)
-        if focus_val is not None and agg_level is not None:
-            final_focus_tuples.append((agg_level, focus_val))
+        if focus_val is not None and group_by is not None:
+            final_focus_tuples.append((group_by, focus_val))
         final_focus_on = tuple(final_focus_tuples)
-        final_agg = agg_level if focus_val is None else None
+        final_agg = group_by if focus_val is None else None
 
-        # Build a concrete main_spec with the triple's agg_level for display
+        # Build a concrete main_spec with the triple's group_by for display
         display_spec = _make_spec(
             comparison_dataset=main_spec.comparison_dataset,
             quantity=main_spec.quantity,
             resolution=main_spec.resolution,
             aggregation_type=main_spec.aggregation_type,
             coverage=main_spec.coverage,
-            group_by=agg_level or (final_focus_on[0][0] if final_focus_on else "state"),
+            group_by=group_by or (final_focus_on[0][0] if final_focus_on else "state"),
             view=main_spec.view,
         )
 
