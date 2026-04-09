@@ -6,6 +6,8 @@
 require 'openstudio'
 require 'json'
 require 'csv'
+require 'time'
+require 'set'
 
 # Load HPXML resources
 resources_path = File.absolute_path(File.join(File.dirname(__FILE__), '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources'))
@@ -92,6 +94,11 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Absolute path to the OCHRE CLI executable.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('seed', false)
+    arg.setDisplayName('Random Seed')
+    arg.setDescription('Random seed for reproducibility. If set, passed to OCHRE CLI.')
+    args << arg
+
     return args
   end
 
@@ -173,12 +180,14 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
       return false
     end
 
+    seed = args[:seed]
+
     # Build OCHRE CLI command
     ochre_cmd = build_ochre_command(ochre_cli, hpxml_path, output_dir,
                                     time_res_minutes, duration_days,
                                     schedule_file, weather_file,
                                     start_year, start_month, start_day,
-                                    export_res_minutes)
+                                    export_res_minutes, seed)
 
     runner.registerInfo("Running OCHRE simulation: #{ochre_cmd}")
 
@@ -202,6 +211,22 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
       return false
     end
 
+    # Register annual results so they appear in data_point_out.json under the "OCHRE" key.
+    # BuildStockBatch postprocessing reads these to populate results_up00.csv.
+    annual_results_path = File.join(output_dir, 'results_annual.csv')
+    if File.exist?(annual_results_path)
+      CSV.foreach(annual_results_path) do |row|
+        next if row.length < 2
+
+        metric_name = row[0].strip
+        value = row[1].to_f
+        registered_name = OpenStudio.toUnderscoreCase(metric_name).chomp('_')
+        runner.registerValue(registered_name, value)
+      end
+    else
+      runner.registerWarning("Annual results file not found: #{annual_results_path}")
+    end
+
     runner.registerFinalCondition('OCHRE simulation completed successfully')
 
     return true
@@ -210,7 +235,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
   private
 
   # Build OCHRE command to run via CLI
-  def build_ochre_command(ochre_cli, hpxml_path, output_dir, time_res_minutes, duration_days, schedule_file, weather_file, start_year, start_month, start_day, export_res_minutes = nil)
+  def build_ochre_command(ochre_cli, hpxml_path, output_dir, time_res_minutes, duration_days, schedule_file, weather_file, start_year, start_month, start_day, export_res_minutes = nil, seed = nil)
     # Get directory and filename for HPXML
     hpxml_dir = File.dirname(hpxml_path)
     hpxml_name = File.basename(hpxml_path)
@@ -230,7 +255,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     cmd += " --duration #{duration_days}"
     cmd += " --start_year #{start_year} --start_month #{start_month} --start_day #{start_day}"
     # cmd += " --time_zone DST"
-    cmd += ' --verbosity=2'
+    cmd += ' --verbosity=9'
 
     if schedule_file && !schedule_file.empty?
       schedule_file_safe = schedule_file.gsub("'", "\\\\'")
@@ -242,6 +267,13 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     # Convert from minutes to days for the CLI (which expects days)
     if export_res_minutes && export_res_minutes > 0
       cmd += " --export_res #{export_res_minutes}"
+    end
+
+    # Use ResStock output format for direct compatibility with downstream measures
+    cmd += ' --output_format resstock'
+
+    if seed
+      cmd += " --seed #{seed}"
     end
 
     return cmd

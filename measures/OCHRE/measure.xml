@@ -97,6 +97,14 @@
       <required>true</required>
       <model_dependent>false</model_dependent>
     </argument>
+    <argument>
+      <name>seed</name>
+      <display_name>Random Seed</display_name>
+      <description>Random seed for reproducibility. If set, passed to OCHRE CLI.</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
   </arguments>
   <outputs />
   <provenances />
