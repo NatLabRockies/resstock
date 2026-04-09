@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<measure>
+  <schema_version>3.1</schema_version>
+  <name>ochre</name>
+  <uid>a1b2c3d4-e5f6-7890-abcd-ef1234567890</uid>
+  <version_id>12345678-90ab-cdef-1234-567890abcdef</version_id>
+  <version_modified>2025-12-12T00:00:00Z</version_modified>
+  <xml_checksum>OCHRE001</xml_checksum>
+  <class_name>OCHRE</class_name>
+  <display_name>OCHRE Simulator</display_name>
+  <description>Runs OCHRE (Object-oriented Controllable High-resolution Residential Energy Model) simulation as an alternative to HPXMLtoOpenStudio/EnergyPlus.</description>
+  <modeler_description>This measure replaces the HPXMLtoOpenStudio + EnergyPlus workflow with OCHRE simulation. It takes an HPXML file as input, runs OCHRE via command line, and converts the outputs to match the expected format for downstream reporting measures.</modeler_description>
+  <arguments>
+    <argument>
+      <name>hpxml_path</name>
+      <display_name>HPXML File Path</display_name>
+      <description>Absolute/relative path of the HPXML file.</description>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>output_dir</name>
+      <display_name>Output Directory</display_name>
+      <description>Absolute/relative path for outputs.</description>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>time_res_minutes</name>
+      <display_name>Time Resolution (minutes)</display_name>
+      <description>Time resolution for OCHRE simulation in minutes.</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>10</default_value>
+    </argument>
+    <argument>
+      <name>duration_days</name>
+      <display_name>Duration (days)</display_name>
+      <description>Simulation duration in days.</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>365</default_value>
+    </argument>
+    <argument>
+      <name>start_year</name>
+      <display_name>Simulation Start Year</display_name>
+      <description>Year to start the OCHRE simulation.</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>2018</default_value>
+    </argument>
+    <argument>
+      <name>start_month</name>
+      <display_name>Simulation Start Month</display_name>
+      <description>Month to start the OCHRE simulation (1-12).</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>start_day</name>
+      <display_name>Simulation Start Day</display_name>
+      <description>Day to start the OCHRE simulation (1-31).</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>debug</name>
+      <display_name>Debug Mode</display_name>
+      <description>If true, generates additional debug output.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+    </argument>
+    <argument>
+      <name>export_res</name>
+      <display_name>Export Resolution (minutes)</display_name>
+      <description>Export interval in minutes (exports results periodically to reduce memory). Recommended: 43200 (30 days) for 1-minute resolution, 86400 (60 days) for 5-minute resolution. Leave blank to disable periodic export.</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>ochre_cli</name>
+      <display_name>OCHRE CLI Path</display_name>
+      <description>Absolute path to the OCHRE CLI executable.</description>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>seed</name>
+      <display_name>Random Seed</display_name>
+      <description>Random seed for reproducibility. If set, passed to OCHRE CLI.</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+  </arguments>
+  <outputs />
+  <provenances />
+  <tags>
+    <tag>Whole Building.Space Types</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>OCHRE001</checksum>
+    </file>
+  </files>
+</measure>

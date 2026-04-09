@@ -5,7 +5,7 @@ buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
 output_directory: national_baseline
 weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
-# weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
+# weather_files_path: ../weather # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
 
@@ -15,9 +15,9 @@ baseline:
 
 # Sampler type and number of data points per baseline or upgrade
 sampler:
-  type: residential_quota
+  type: precomputed
   args:
-    n_datapoints: 250
+    sample_file: buildstock.csv
 
 # NREL High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
@@ -36,29 +36,30 @@ sampler:
 # postprocessing:
 #   # Post simulation partitioning
 #   keep_individual_timeseries: true
-#   partition_columns:
-#     - State
-#     - County
+#   # partition_columns:
+#   #   - State
+#   #   - County
 #   # AWS upload bucket and athena setup (uncomment during production and testing runs)
 #   aws:
 #    region_name: us-west-2
 #    s3:
-#      bucket: sdr_resstock
-#      prefix: production_runs
+#      bucket: resstock-panels
+#      prefix: ochre_runs
 #    athena:
 #      glue_service_role: service-role/AWSGlueServiceRole-default
-#      database_name: sdr_resstock
+#      database_name: resstock_panels
 #      max_crawling_time: 1200
 
 # Workflow generator
 workflow_generator:
   # ResStock HPXML workflow generator
   type: residential_hpxml
-  version: 2025.04.29
+  version: 2026.01.12
   args:
     # Annual simulation and timestep
+    use_ochre: true
     build_existing_model:
-      simulation_control_timestep: 60
+      simulation_control_timestep: 1
       simulation_control_run_period_begin_month: 1
       simulation_control_run_period_begin_day_of_month: 1
       simulation_control_run_period_end_month: 12
@@ -100,4 +101,4 @@ workflow_generator:
 
     # Files to keep
     server_directory_cleanup:
-      retain_schedules_csv: false
+      retain_schedules_csv: true
