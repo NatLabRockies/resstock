@@ -160,7 +160,7 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
     # Filter panel order: Quantity(2), Comparison Dataset(1), Metric(3),
     #   Filter 1(4), Filter 2(5), Group By(6)
     filter_order = [
-        (2, "Quantity"), (1, "Comparison Dataset"), (3, "Metric"),
+        (1, "Comparison Dataset"), (2, "Quantity"), (3, "Metric"),
         (4, "Filter 1"), (5, "Filter 2"), (6, "Group By"),
     ]
     # Only include columns that actually exist in the headers

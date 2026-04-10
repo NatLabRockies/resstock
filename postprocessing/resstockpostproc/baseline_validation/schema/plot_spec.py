@@ -331,7 +331,7 @@ class PlotSpec(NoExtraModel):
         agg_label = format_group_by(self.group_by) if self.group_by else ""
         focus_display = self.filter_display_name
         if focus_display and agg_label:
-            grouping = f"({focus_display} only) by {agg_label}"
+            grouping = f"by {agg_label} ({focus_display})"
         elif focus_display:
             grouping = f"({focus_display})"
         elif agg_label:
@@ -473,11 +473,8 @@ class PlotSpec(NoExtraModel):
         - filename is the display_title with coverage/view suffixes
         """
         title = self.display_title
-        # Append coverage and view to filename so different specs don't overwrite each other
-        if self.coverage != CoverageType.all_units:
-            title = title + f" ({self.coverage})"
-        if self.view != ViewType.value_view:
-            title = title + f" ({self.view})"
+        if self.view == ViewType.diff_view:
+            title = title + " (difference view)"
         # Focus entries go at the top of the path hierarchy.
         # "US Total" is a sibling of "By State", not a child.
         filter_dir = Path()
