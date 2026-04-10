@@ -337,7 +337,7 @@ class PlotSpec(NoExtraModel):
         elif agg_label:
             grouping = f"by {agg_label}"
         else:
-            grouping = "(US Total)"
+            grouping = "(U.S. Total)"
 
         # ── Special RECS/EIA view types ──
         quantity_name = self.quantity.label if self.quantity != DataCol.ALL else "Enduse"
@@ -478,14 +478,14 @@ class PlotSpec(NoExtraModel):
             title = title + f" ({self.coverage})"
         if self.view != ViewType.value_view:
             title = title + f" ({self.view})"
-        # Focus entries go at the top of the path hierarchy
+        # Focus entries go at the top of the path hierarchy.
+        # "US Total" is a sibling of "By State", not a child.
         filter_dir = Path()
         for char, value in self.focus_on:
-            filter_dir /= f"By {format_group_by(char)}"
-            filter_dir /= format_focus_label(value)
-        if self.group_by:
-            path_segment = filter_dir / f"By {format_group_by(self.group_by)}"
-            path_segment /= "All"  # overview within the aggregation
-        else:
-            path_segment = filter_dir
+            if value == "US Total":
+                filter_dir /= "U.S. Total"
+            else:
+                filter_dir /= f"By {format_group_by(char)}"
+                filter_dir /= format_focus_label(value)
+        path_segment = filter_dir / f"By {format_group_by(self.group_by)}" if self.group_by else filter_dir
         return path_segment, title

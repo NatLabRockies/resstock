@@ -45,6 +45,7 @@ from resstockpostproc.baseline_validation.schema.plot_definitions import (
 )
 from resstockpostproc.baseline_validation.io_managers.output_manager import save_figure
 from resstockpostproc.baseline_validation.io_managers.data_table import (
+    _format_source_label,
     generate_data_table_html,
     should_generate_table,
 )
@@ -467,16 +468,19 @@ def get_plotting_function(comparison_dataset):
 
 
 @timed
-def _compute_discrepancy(data, plot_spec):
-    """Compute CVRMSE and NMBE using raw values with global normalization (ASHRAE-style).
+def _compute_discrepancy(data, plot_spec) -> dict[str, tuple[float, float]]:
+    """Compute CVRMSE and NMBE for each ResStock source using ASHRAE-style global normalization.
 
     NMBE  = Σ(ResStock - Ref) / Σ(Ref) × 100
     CVRMSE = sqrt(Σ(ResStock - Ref)² / n) / mean(Ref) × 100
+
+    Returns a dict keyed by formatted source label (e.g. "ResStock 2025"), with
+    (cvrmse, nmbe) values. Empty dict when metrics cannot be computed.
     """
     if plot_spec.quantity == DataCol.ALL:
-        return None, None
+        return {}
     if plot_spec.view == ViewType.distribution:
-        return None, None
+        return {}
 
     # Determine value column
     if plot_spec.quantity == DataCol.UNITS_COUNT:
@@ -487,15 +491,15 @@ def _compute_discrepancy(data, plot_spec):
         val_col = f"{plot_spec.quantity}_value"
 
     if val_col not in data.columns:
-        return None, None
+        return {}
 
     # Identify reference and ResStock rows
     comparison = plot_spec.comparison_dataset.value
     ref_rows = data.filter(pl.col("source").str.contains(comparison))
-    rs_rows = data.filter(pl.col("source").str.contains("resstock"))
+    rs_sources = sorted(s for s in data["source"].unique().to_list() if "resstock" in s)
 
-    if len(ref_rows) == 0 or len(rs_rows) == 0:
-        return None, None
+    if len(ref_rows) == 0 or not rs_sources:
+        return {}
 
     # Determine join columns for pairing
     agg_col = get_second_category_column(plot_spec)
@@ -506,38 +510,42 @@ def _compute_discrepancy(data, plot_spec):
         join_cols.append(str(ts_col))
 
     # Exclude "US Total" from multi-entity overviews to avoid double-counting.
-    # Skip when focused on US Total itself (single-entity plot).
     is_us_total_focus = any(val == "US Total" for _, val in plot_spec.focus_on)
     if not is_us_total_focus:
         ref_rows = ref_rows.filter(pl.col(agg_col) != "US Total")
-        rs_rows = rs_rows.filter(pl.col(agg_col) != "US Total")
 
-    # Pair up reference and ResStock values
     ref_selected = ref_rows.select(join_cols + [pl.col(val_col).alias("ref_val")])
-    rs_selected = rs_rows.select(join_cols + [pl.col(val_col).alias("rs_val")])
-    paired = rs_selected.join(ref_selected, on=join_cols, how="inner")
-    paired = paired.drop_nulls(["ref_val", "rs_val"])
-    # NaN means no data for this enduse in a state — treat as zero consumption
-    paired = paired.with_columns(
-        pl.col("ref_val").fill_nan(0),
-        pl.col("rs_val").fill_nan(0),
-    )
 
-    if len(paired) == 0:
-        return None, None
+    metrics: dict[str, tuple[float, float]] = {}
+    for rs_source in rs_sources:
+        rs_rows = data.filter(pl.col("source") == rs_source)
+        if not is_us_total_focus:
+            rs_rows = rs_rows.filter(pl.col(agg_col) != "US Total")
 
-    diffs = paired["rs_val"] - paired["ref_val"]
-    sum_ref = paired["ref_val"].sum()
-    mean_ref = paired["ref_val"].mean()
+        rs_selected = rs_rows.select(join_cols + [pl.col(val_col).alias("rs_val")])
+        paired = rs_selected.join(ref_selected, on=join_cols, how="inner")
+        paired = paired.drop_nulls(["ref_val", "rs_val"])
+        paired = paired.with_columns(
+            pl.col("ref_val").fill_nan(0),
+            pl.col("rs_val").fill_nan(0),
+        )
 
-    if sum_ref == 0 or mean_ref == 0:
-        return None, None
+        if len(paired) == 0:
+            continue
 
-    nmbe = float(diffs.sum() / sum_ref * 100)
-    rmse = float(math.sqrt((diffs**2).mean()))
-    cvrmse = float(rmse / mean_ref * 100)
+        diffs = paired["rs_val"] - paired["ref_val"]
+        sum_ref = paired["ref_val"].sum()
+        mean_ref = paired["ref_val"].mean()
 
-    return cvrmse, nmbe
+        if sum_ref == 0 or mean_ref == 0:
+            continue
+
+        nmbe = float(diffs.sum() / sum_ref * 100)
+        rmse = float(math.sqrt((diffs**2).mean()))
+        cvrmse = float(rmse / mean_ref * 100)
+        metrics[_format_source_label(rs_source)] = (cvrmse, nmbe)
+
+    return metrics
 
 
 def _unnest_list_columns(df):
@@ -611,12 +619,17 @@ def _generate_spec_plots(
             viz_parts.append(f"{viz_type_str}||{rel_path_str}")
 
             # For main visualization: save data CSV, compute discrepancy, generate data table
-            if plot_spec.view in (ViewType.value_view, ViewType.penetration):
+            if plot_spec.view in (
+                ViewType.value_view,
+                ViewType.penetration,
+                ViewType.distribution,
+                ViewType.temp_view,
+            ):
                 data_dir = output_base / f"{plot_spec.comparison_dataset} data (csv)" / path_seg
                 ensure_directory(data_dir)
                 _save_data_csv(data, data_dir, file_title)
 
-                cvrmse, nmbe = _compute_discrepancy(data, plot_spec)
+                metrics_by_source = _compute_discrepancy(data, plot_spec)
 
                 if should_generate_table(data, plot_spec):
                     table_dir = output_base / f"{plot_spec.comparison_dataset} data (html)" / path_seg
@@ -629,13 +642,17 @@ def _generate_spec_plots(
                         plot_spec=plot_spec,
                         output_path=table_path,
                         plot_rel_path=plot_rel_from_table,
-                        cvrmse=cvrmse,
-                        nmbe=nmbe,
+                        metrics_by_source=metrics_by_source,
                         footnotes=table_footnotes,
                         source_labels=source_labels,
                     )
                     rel_table = Path(f"{plot_spec.comparison_dataset} data (html)") / path_seg / f"{file_title}.html"
-                    data_rel = f"data table||{str(rel_table).replace(chr(92), '/')}"
+                    rel_csv = Path(f"{plot_spec.comparison_dataset} data (csv)") / path_seg / f"{file_title}.csv"
+                    data_rel = (
+                        f"data table||{str(rel_table).replace(chr(92), '/')}"
+                        " ;; "
+                        f"download csv||{str(rel_csv).replace(chr(92), '/')}"
+                    )
 
         except Exception:
             tb = traceback.format_exc()

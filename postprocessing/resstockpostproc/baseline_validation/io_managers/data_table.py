@@ -24,13 +24,14 @@ from resstockpostproc.baseline_validation.plotters.plot_config import (
     _extract_comparison_dataset_label,
     _resolve_timeseries_column,
     get_second_category_column,
+    get_second_category_title,
 )
 from resstockpostproc.baseline_validation.io_managers.html_utils import _build_footer_html
 from resstockpostproc.shared_utils.timing import timed
 
 
-# Maximum pivoted row count before we skip HTML table generation
-_ROW_LIMIT = 10_000
+# Page size for client-side pagination (large tables render in chunks)
+_PAGE_SIZE = 500
 
 # Columns and suffixes to always drop from the table
 _DROP_SUFFIXES = (
@@ -58,27 +59,93 @@ _DROP_CONTAINS = (
     "_nonzero_quartiles_",
 )
 
+# Quartile list indices that carry semantic meaning (the 9-element list in
+# stacked_plotter._add_quartile_cols uses these positions; others are unused).
+_QUARTILE_INDICES = [
+    (0, "min"),
+    (3, "q1"),
+    (4, "median"),
+    (5, "q3"),
+    (8, "max"),
+]
+
+# Per-enduse wide columns start with one of these fuel prefixes.
+_FUEL_PREFIXES_TUPLE = ("electricity_", "natural_gas_", "propane_", "fuel_oil_")
+
+
 @timed
 def should_generate_table(data: pl.DataFrame, plot_spec: PlotSpec) -> bool:
     """Check whether an HTML table should be generated for this plot.
 
-    Returns False for ALL-enduse plots, and for datasets that would produce
-    more than _ROW_LIMIT rows after pivoting.
+    All plots get a table: large tables paginate client-side, single-row
+    tables are preserved for completeness, and ALL-enduse plots are melted
+    into tall form so the same pivot pipeline applies to them too.
     """
-    if plot_spec.quantity == DataCol.ALL:
-        return False
+    return True
 
-    # Estimate pivoted row count
-    entity_col = get_second_category_column(plot_spec)
-    ts_col = _resolve_timeseries_column(plot_spec)
 
-    n_entities = data[entity_col].n_unique() if entity_col in data.columns else 1
-    n_time = data[str(ts_col)].n_unique() if ts_col and str(ts_col) in data.columns else 1
-    # Pivot combines 2 source rows into 1
-    estimated = n_entities * n_time
-    if estimated <= 1:
-        return False  # Single-row table (e.g., focused single-entity annual) adds no value
-    return estimated <= _ROW_LIMIT
+def _melt_enduse_columns(data: pl.DataFrame) -> pl.DataFrame:
+    """Melt wide per-enduse columns into tall form with an 'enduse' label column.
+
+    Each row (entity, source) becomes N rows (entity, source, enduse). Enduse
+    columns are renamed from their fuel/enduse prefix to a single ``all_`` prefix
+    (matching ``DataCol.ALL.value``), so downstream logic keyed on
+    ``plot_spec.quantity`` continues to work unchanged.
+
+    Used only for ALL-quantity RECS plots.
+    """
+    enduse_prefixes = sorted({
+        c.removesuffix("_value")
+        for c in data.columns
+        if c.startswith(_FUEL_PREFIXES_TUPLE) and c.endswith("_value")
+    })
+    if not enduse_prefixes:
+        return data
+
+    id_cols = [c for c in data.columns if not c.startswith(_FUEL_PREFIXES_TUPLE)]
+
+    def _label(prefix: str) -> str:
+        try:
+            return DataCol(prefix).label
+        except ValueError:
+            return prefix.replace("_", " ").title()
+
+    dfs = []
+    for prefix in enduse_prefixes:
+        cols = [c for c in data.columns if c.startswith(f"{prefix}_")]
+        rename_map = {c: c.replace(f"{prefix}_", "all_", 1) for c in cols}
+        sub = data.select(id_cols + cols).rename(rename_map)
+        # Cast numeric 'all_*' columns to Float64 — sparse enduses can produce
+        # Int64 nulls that break diagonal_relaxed concat schema unification.
+        cast_cols = [
+            c for c in sub.columns
+            if c.startswith("all_") and sub[c].dtype.is_numeric()
+        ]
+        sub = sub.with_columns(pl.col(c).cast(pl.Float64) for c in cast_cols)
+        sub = sub.with_columns(pl.lit(_label(prefix)).alias("enduse"))
+        dfs.append(sub)
+
+    return pl.concat(dfs, how="diagonal_relaxed")
+
+
+def _extract_quartile_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
+    """Extract scalar min/q1/median/q3/max columns from the raw quartile list column.
+
+    Mirrors stacked_plotter._add_quartile_cols. Coverage selects which list column
+    to read: all_units → ``_quartiles``; users_only → ``_nonzero_quartiles``.
+    """
+    quantity = plot_spec.quantity
+    list_col = (
+        f"{quantity}_nonzero_quartiles"
+        if plot_spec.coverage == CoverageType.users_only
+        else f"{quantity}_quartiles"
+    )
+    if list_col not in data.columns:
+        return data
+    return data.with_columns([
+        pl.col(list_col).list.get(idx).cast(pl.Float64).alias(f"{quantity}_{name}")
+        for idx, name in _QUARTILE_INDICES
+    ])
 
 @timed
 def _filter_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
@@ -89,6 +156,8 @@ def _filter_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
     structural = {entity_col, "source"}
     if ts_col:
         structural.add(str(ts_col))
+    if "enduse" in data.columns:
+        structural.add("enduse")
 
     keep_percent_users = (
         plot_spec.view == ViewType.penetration
@@ -136,17 +205,37 @@ def _filter_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
                 drop_cols.append(col)
                 continue
 
+        # For distribution view, drop the single percent_difference column
+        # (it compares means, not distributions, and is unintuitive next to quartiles).
+        if plot_spec.view == ViewType.distribution and col.endswith("_percent_difference"):
+            drop_cols.append(col)
+            continue
+
+        # For hour_of_day_matrix, utility/month/day_type are already encoded in
+        # the combined month_daytype entity column + focus_on, so per-source
+        # copies of these split columns carry no new information.
+        if plot_spec.resolution == Resolution.hour_of_day_matrix and col in {"utility", "month", "day_type"}:
+            drop_cols.append(col)
+            continue
+
     return data.drop(drop_cols)
 
 @timed
 def _pivot_by_source(
     data: pl.DataFrame,
     plot_spec: PlotSpec,
-) -> tuple[pl.DataFrame, str, str]:
+) -> tuple[pl.DataFrame, str, list[str]]:
     """Pivot long-format data to wide format, with sources as column groups.
 
+    Each ResStock source becomes its own column group with:
+      - "{rs_label}: {value_col}"
+      - "{rs_label} Difference (%)" (from the existing percent_difference column)
+
+    The reference (e.g. EIA 2018) gets its own group: "{ref_label}: {value_col}".
+
     Returns:
-        (pivoted_df, ref_label, rs_label) where labels are like "RECS 2020", "ResStock 2025".
+        (pivoted_df, ref_label, rs_labels) where rs_labels is a sorted list like
+        ["ResStock 2024", "ResStock 2025"].
     """
     entity_col = get_second_category_column(plot_spec)
     ts_col = _resolve_timeseries_column(plot_spec)
@@ -155,47 +244,46 @@ def _pivot_by_source(
     join_cols = [entity_col]
     if ts_col and str(ts_col) in data.columns:
         join_cols.append(str(ts_col))
+    if "enduse" in data.columns:
+        join_cols.append("enduse")
 
-    # Identify the two source labels
+    # Identify all source labels
     ref_label = _extract_comparison_dataset_label(plot_spec.comparison_dataset, data)
     sources = data["source"].unique().to_list()
-    rs_sources = [s for s in sources if "resstock" in s]
-    rs_label = _format_source_label(rs_sources[0]) if rs_sources else "ResStock"
+    rs_sources = sorted(s for s in sources if "resstock" in s)
+    rs_labels = [_format_source_label(s) for s in rs_sources]
 
     # Split by source
     comparison_val = plot_spec.comparison_dataset.value
     ref_df = data.filter(pl.col("source").str.contains(comparison_val))
-    rs_df = data.filter(pl.col("source").str.contains("resstock"))
 
     # Determine value columns to pivot (everything that's not a join col or source)
     skip_cols = set(join_cols) | {"source"}
     value_cols = [c for c in data.columns if c not in skip_cols]
-
-    # Identify the percent_difference column(s) — these belong to ResStock only
     diff_cols = [c for c in value_cols if c.endswith("_percent_difference")]
     non_diff_cols = [c for c in value_cols if c not in diff_cols]
 
-    # Select and rename reference columns
+    # Select and rename reference columns (no diff cols on the reference side)
     ref_available = [c for c in non_diff_cols if c in ref_df.columns]
-    ref_renamed = ref_df.select(
+    pivoted = ref_df.select(
         join_cols + [pl.col(c).alias(f"{ref_label}: {c}") for c in ref_available]
     )
 
-    # Select and rename ResStock columns (non-diff)
-    rs_non_diff = [c for c in non_diff_cols if c in rs_df.columns]
-    rs_diff_available = [c for c in diff_cols if c in rs_df.columns]
+    # Add each ResStock source as its own column group
+    for rs_source, rs_label in zip(rs_sources, rs_labels):
+        rs_df = data.filter(pl.col("source") == rs_source)
+        rs_non_diff = [c for c in non_diff_cols if c in rs_df.columns]
+        rs_diff_available = [c for c in diff_cols if c in rs_df.columns]
 
-    rs_select_exprs = (
-        [pl.col(c) for c in join_cols]
-        + [pl.col(c).alias(f"{rs_label}: {c}") for c in rs_non_diff]
-        + [pl.col(c).alias(f"Difference: {c}") for c in rs_diff_available]
-    )
-    rs_renamed = rs_df.select(rs_select_exprs)
+        rs_select_exprs = (
+            [pl.col(c) for c in join_cols]
+            + [pl.col(c).alias(f"{rs_label}: {c}") for c in rs_non_diff]
+            + [pl.col(c).alias(f"{rs_label} Difference (%): {c}") for c in rs_diff_available]
+        )
+        rs_renamed = rs_df.select(rs_select_exprs)
+        pivoted = pivoted.join(rs_renamed, on=join_cols, how="full", coalesce=True)
 
-    # Join on dimension columns
-    pivoted = ref_renamed.join(rs_renamed, on=join_cols, how="full", coalesce=True)
-
-    return pivoted, ref_label, rs_label
+    return pivoted, ref_label, rs_labels
 
 
 def _format_source_label(source_str: str) -> str:
@@ -209,18 +297,27 @@ def _format_source_label(source_str: str) -> str:
 
 
 def _build_column_config(
-    columns: list[str],
+    data: pl.DataFrame,
     plot_spec: PlotSpec,
     ref_label: str,
-    rs_label: str,
+    rs_labels: list[str],
 ) -> list[dict]:
     """Build column metadata for the HTML table (header labels, formats, types)."""
+    columns = data.columns
     units = _resolve_quantity_title(plot_spec)
     entity_col = get_second_category_column(plot_spec)
-    agg = plot_spec.group_by or plot_spec.effective_group_by[-1]
-    entity_label = format_group_by(agg)
+    if entity_col == "month_daytype":
+        # hour_of_day_matrix: entity column carries month_daytype strings,
+        # so its header should match the plotter's second-category title.
+        entity_label = get_second_category_title(plot_spec)
+    else:
+        agg = plot_spec.group_by or plot_spec.effective_group_by[-1]
+        entity_label = format_group_by(agg)
 
     ts_col = _resolve_timeseries_column(plot_spec)
+
+    abs_diff_units = "percentage points" if units == "%" else units
+    is_distribution = plot_spec.view == ViewType.distribution
 
     config = []
     for col in columns:
@@ -230,51 +327,107 @@ def _build_column_config(
             continue
 
         if ts_col and col == str(ts_col):
-            label = col.replace("_", " ").title() if "_" in col else col.title()
-            config.append({"key": col, "label": label, "type": "string", "format": ""})
+            if col == "resstock_temp":
+                label = "Temperature (°F)"
+            else:
+                label = col.replace("_", " ").title() if "_" in col else col.title()
+            # Numeric ts columns (e.g. resstock_temp, hour of day) need "number"
+            # type so client-side sorting compares values as numbers, not strings.
+            col_type = "number" if data[col].dtype.is_numeric() else "string"
+            col_format = ",.0f" if col_type == "number" else ""
+            config.append({"key": col, "label": label, "type": col_type, "format": col_format})
             continue
 
-        # Source-prefixed value columns
-        is_abs_diff = col.startswith("Abs Difference: ")
-        is_diff = col.startswith("Difference: ")
-        is_ref = col.startswith(f"{ref_label}: ")
-        is_rs = col.startswith(f"{rs_label}: ")
+        if col == "enduse":
+            config.append({"key": col, "label": "End Use", "type": "string", "format": ""})
+            continue
 
-        if is_abs_diff:
-            abs_diff_units = "percentage points" if units == "%" else units
-            config.append({"key": col, "label": f"Difference ({abs_diff_units})", "type": "abs_diff", "format": "+,.1f"})
-        elif is_diff:
-            raw_name = col[len("Difference: "):]
-            label = _humanize_column(raw_name, "Difference", units, is_diff=True)
-            config.append({"key": col, "label": label, "type": "diff", "format": "+.1f%"})
-        elif is_ref:
+        # Per-source ResStock columns
+        matched = False
+        for rs_label in rs_labels:
+            abs_diff_prefix = f"{rs_label} Difference ({abs_diff_units}): "
+            pct_diff_prefix = f"{rs_label} Difference (%): "
+            value_prefix = f"{rs_label}: "
+            if col.startswith(abs_diff_prefix):
+                config.append({
+                    "key": col,
+                    "label": f"{rs_label} Difference ({abs_diff_units})",
+                    "type": "abs_diff",
+                    "format": "+,.1f",
+                })
+                matched = True
+                break
+            if col.startswith(pct_diff_prefix):
+                config.append({
+                    "key": col,
+                    "label": f"{rs_label} Difference (%)",
+                    "type": "diff",
+                    "format": "+.1f%",
+                })
+                matched = True
+                break
+            if col.startswith(value_prefix):
+                raw_name = col[len(value_prefix):]
+                config.append({
+                    "key": col,
+                    "label": _humanize_column(raw_name, rs_label, units, is_distribution),
+                    "type": "number",
+                    "format": ",.1f",
+                })
+                matched = True
+                break
+        if matched:
+            continue
+
+        # Reference columns
+        if col.startswith(f"{ref_label}: "):
             raw_name = col[len(f"{ref_label}: "):]
-            label = _humanize_column(raw_name, ref_label, units)
-            config.append({"key": col, "label": label, "type": "number", "format": ",.1f"})
-        elif is_rs:
-            raw_name = col[len(f"{rs_label}: "):]
-            label = _humanize_column(raw_name, rs_label, units)
-            config.append({"key": col, "label": label, "type": "number", "format": ",.1f"})
-        else:
-            # Fallback
-            config.append({"key": col, "label": col.replace("_", " ").title(), "type": "string", "format": ""})
+            config.append({
+                "key": col,
+                "label": _humanize_column(raw_name, ref_label, units, is_distribution),
+                "type": "number",
+                "format": ",.1f",
+            })
+            continue
+
+        # Fallback
+        config.append({"key": col, "label": col.replace("_", " ").title(), "type": "string", "format": ""})
 
     return config
 
 
-def _humanize_column(raw_name: str, source_prefix: str, units: str, is_diff: bool = False) -> str:
-    """Convert a raw column name like 'electricity_total_value' into a human-readable header."""
-    if is_diff:
-        return "Difference (%)"
+_QUARTILE_SUFFIX_LABELS = {
+    "_min": "Min",
+    "_q1": "Q1",
+    "_median": "Median",
+    "_q3": "Q3",
+    "_max": "Max",
+}
 
+
+def _humanize_column(
+    raw_name: str, source_prefix: str, units: str, is_distribution: bool = False
+) -> str:
+    """Convert a raw column name like 'electricity_total_value' into a human-readable header.
+
+    When ``is_distribution`` is True, ``_value`` columns are labeled "Average"
+    so they sit naturally alongside the Min/Q1/Median/Q3/Max quartile columns.
+    """
     if raw_name == "units_count":
         return f"{source_prefix}: Dwelling Units"
     if raw_name == "model_count":
         return f"{source_prefix}: Model Count"
+    if raw_name == "temp_count":
+        return f"{source_prefix}: Hour Count"
     if "percent_users" in raw_name and "percent_difference" not in raw_name:
         return f"{source_prefix}: % Users"
     if raw_name.endswith("_value"):
+        if is_distribution:
+            return f"{source_prefix}: Average ({units})"
         return f"{source_prefix} ({units})"
+    for suffix, label in _QUARTILE_SUFFIX_LABELS.items():
+        if raw_name.endswith(suffix):
+            return f"{source_prefix}: {label} ({units})"
 
     # Fallback: clean up the raw name
     clean = raw_name.replace("_", " ").title()
@@ -286,14 +439,19 @@ def _build_table_html(
     col_config: list[dict],
     plot_spec: PlotSpec,
     plot_rel_path: str | None,
-    cvrmse: float | None,
-    nmbe: float | None,
+    metrics_by_source: dict[str, tuple[float, float]],
     footnotes: list[str] | None,
     source_labels: dict | None,
-    ref_label: str = "",
-    ref_val_col: str = "",
+    ref_label: str,
+    rs_sources_js: list[dict[str, str]],
 ) -> str:
-    """Build a self-contained HTML page with an interactive data table."""
+    """Build a self-contained HTML page with an interactive data table.
+
+    Args:
+        metrics_by_source: Mapping of ResStock label → (cvrmse, nmbe).
+        rs_sources_js: List of {label, refKey, absDiffKey} dicts used by the JS
+            to compute per-source formula derivations at render time.
+    """
     title = html_lib.escape(plot_spec.display_title)
     units = html_lib.escape(_resolve_quantity_title(plot_spec))
 
@@ -320,23 +478,29 @@ def _build_table_html(
     config_json = json.dumps(col_config)
     csv_filename_js = json.dumps(_csv_filename(plot_spec))  # safe for JS embedding
 
-    # Build metrics HTML (NMBE first, then CVRMSE)
+    # Build a single metrics banner with one row per source
     metrics_html = ""
-    if cvrmse is not None or nmbe is not None:
-        parts = []
-        if nmbe is not None:
-            parts.append(f'<span class="metric"><strong>NMBE:</strong> {nmbe:.1f}%</span>')
-        if cvrmse is not None:
-            parts.append(f'<span class="metric"><strong>CV(RMSE):</strong> {cvrmse:.1f}%</span>')
-        metrics_html = '<div class="metrics-banner">' + " ".join(parts) + "</div>"
+    if metrics_by_source:
+        rows = []
+        for label, (cv, nb) in metrics_by_source.items():
+            rows.append(
+                '<tr>'
+                f'<td class="metric-label">{html_lib.escape(label)}</td>'
+                f'<td><strong>NMBE:</strong> {nb:.1f}%</td>'
+                f'<td><strong>CV(RMSE):</strong> {cv:.1f}%</td>'
+                '</tr>'
+            )
+        metrics_html = (
+            '<table class="metrics-banner"><tbody>'
+            + "".join(rows)
+            + '</tbody></table>'
+        )
 
     # Build navigation links
     nav_parts = []
     if plot_rel_path:
         nav_parts.append(f'<a href="{plot_rel_path}" target="_blank">View Plot</a>')
     nav_parts.append('<a href="#" onclick="downloadCSV(); return false;">Download CSV</a>')
-    # Navigate up to find plot_index.html: data tables are in "{ts} data (html)/metric/focus/"
-    nav_parts.append('<a href="../../../plot_index.html">Back to Plot Index</a>')
     nav_html = '<div class="nav-links">' + " | ".join(nav_parts) + "</div>"
 
     # Build footer
@@ -352,19 +516,24 @@ def _build_table_html(
     h1 {{ font-size: 22px; margin-bottom: 4px; }}
     .subtitle {{ font-size: 15px; color: #666; margin-bottom: 12px; }}
     .metrics-banner {{
-      display: flex; gap: 24px; padding: 12px 20px; margin: 12px 0;
-      background: #f0f4f8; border: 1px solid #d0d7de; border-radius: 6px;
+      margin: 16px 0; background: #f0f4f8; border: 1px solid #d0d7de;
+      border-radius: 6px; border-collapse: collapse;
     }}
-    .metric {{ font-size: 15px; }}
-    .metric strong {{ color: #1a1a1a; }}
+    .metrics-banner td {{
+      border: none; padding: 8px 20px; font-size: 14px; text-align: left;
+      white-space: nowrap;
+    }}
+    .metrics-banner td.metric-label {{ font-weight: bold; color: #1a1a1a; }}
+    .metrics-banner td strong {{ color: #1a1a1a; }}
     .nav-links {{ margin: 12px 0 16px; font-size: 14px; }}
     .nav-links a {{ color: #1a73e8; text-decoration: none; }}
     .nav-links a:hover {{ text-decoration: underline; }}
-    table {{ border-collapse: collapse; width: auto; max-width: 100%; margin-top: 8px; }}
+    table {{ border-collapse: collapse; width: auto; max-width: 100%; margin-top: 8px; table-layout: auto; }}
     th, td {{ border: 1px solid #ddd; padding: 8px 10px; text-align: right; font-size: 13px; white-space: nowrap; }}
     th {{
       background-color: #D3D3D3; font-weight: bold; cursor: pointer;
-      position: sticky; top: 0; user-select: none; white-space: nowrap;
+      position: sticky; top: 0; user-select: none;
+      white-space: normal; word-wrap: break-word; max-width: 140px;
     }}
     th:hover {{ background-color: #c0c0c0; }}
     th .sort-arrow {{ font-size: 10px; margin-left: 4px; opacity: 0.6; }}
@@ -374,38 +543,60 @@ def _build_table_html(
     tbody tr:hover {{ background-color: #e8f0fe; }}
     .diff-pos {{ color: #c62828; }}
     .diff-neg {{ color: #1565c0; }}
+    .metrics-details {{
+      margin: 20px 0; background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px;
+    }}
+    .metrics-details > summary {{
+      cursor: pointer; padding: 12px 20px; font-size: 15px; font-weight: bold;
+      font-family: Arial, sans-serif; user-select: none; list-style: revert;
+    }}
+    .metrics-details > summary:hover {{ background: #eef1f5; }}
+    .metrics-details[open] > summary {{ border-bottom: 1px solid #e0e0e0; }}
     .metrics-formula {{
-      margin: 20px 0; padding: 16px 20px;
-      background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px;
+      padding: 16px 20px;
       font-family: 'Courier New', Courier, monospace; font-size: 13px;
       line-height: 1.7; white-space: pre-wrap; color: #333;
     }}
-    .metrics-formula h3 {{ font-family: Arial, sans-serif; font-size: 15px; margin: 0 0 10px; }}
     .metrics-formula .result {{ font-weight: bold; }}
     .metrics-formula .note {{ font-family: Arial, sans-serif; font-style: italic; font-size: 12px; color: #666; margin-top: 8px; }}
+    .pagination {{
+      margin: 12px 0; font-size: 13px; display: flex; gap: 8px; align-items: center;
+    }}
+    .pagination button {{
+      padding: 4px 10px; border: 1px solid #ccc; background: #fff; cursor: pointer;
+      border-radius: 3px; font-size: 13px;
+    }}
+    .pagination button:hover:not(:disabled) {{ background: #f0f0f0; }}
+    .pagination button:disabled {{ opacity: 0.4; cursor: not-allowed; }}
+    .pagination .info {{ color: #666; }}
     .plot-footer {{ margin-top: 24px; }}
   </style>
 </head>
 <body>
   <h1>{title}</h1>
-  {metrics_html}
   {nav_html}
+  <div id="pagination" class="pagination"></div>
   <table id="dataTable">
     <thead><tr id="headerRow"></tr></thead>
     <tbody id="tableBody"></tbody>
   </table>
-  <div id="metricsFormula"></div>
+  {metrics_html}
+  <details id="metricsDetails" class="metrics-details">
+    <summary>Discrepancy Metrics Details</summary>
+    <div id="metricsFormula" class="metrics-formula"></div>
+  </details>
   {footer_html}
   <script>
     const DATA = {data_json};
     const COLUMNS = {config_json};
-    const HAS_METRICS = {json.dumps(cvrmse is not None)};
+    const RS_SOURCES = {json.dumps(rs_sources_js)};
     const FOCUS_ON = {json.dumps(plot_spec.focus_on)};
     const REF_LABEL = {json.dumps(ref_label)};
-    const REF_VAL_KEY = {json.dumps(ref_val_col)};
+    const PAGE_SIZE = {_PAGE_SIZE};
 
     let sortCol = null;
     let sortAsc = true;
+    let currentPage = 0;
 
     function render() {{
       // Header
@@ -423,10 +614,13 @@ def _build_table_html(
         hr.appendChild(th);
       }});
 
-      // Body
+      // Body — only render rows for the current page
+      const start = currentPage * PAGE_SIZE;
+      const end = Math.min(start + PAGE_SIZE, DATA.length);
       const tb = document.getElementById('tableBody');
       tb.innerHTML = '';
-      DATA.forEach(row => {{
+      for (let i = start; i < end; i++) {{
+        const row = DATA[i];
         const tr = document.createElement('tr');
         COLUMNS.forEach(col => {{
           const td = document.createElement('td');
@@ -448,7 +642,50 @@ def _build_table_html(
           tr.appendChild(td);
         }});
         tb.appendChild(tr);
-      }});
+      }}
+
+      renderPagination();
+    }}
+
+    function renderPagination() {{
+      const div = document.getElementById('pagination');
+      const totalPages = Math.max(1, Math.ceil(DATA.length / PAGE_SIZE));
+      if (totalPages <= 1) {{
+        div.innerHTML = '';
+        return;
+      }}
+      const start = currentPage * PAGE_SIZE + 1;
+      const end = Math.min((currentPage + 1) * PAGE_SIZE, DATA.length);
+      div.innerHTML = '';
+
+      const first = document.createElement('button');
+      first.textContent = '\\u00AB First';
+      first.disabled = currentPage === 0;
+      first.onclick = () => {{ currentPage = 0; render(); }};
+      div.appendChild(first);
+
+      const prev = document.createElement('button');
+      prev.textContent = '\\u2039 Prev';
+      prev.disabled = currentPage === 0;
+      prev.onclick = () => {{ currentPage--; render(); }};
+      div.appendChild(prev);
+
+      const info = document.createElement('span');
+      info.className = 'info';
+      info.textContent = `Rows ${{start.toLocaleString()}}\\u2013${{end.toLocaleString()}} of ${{DATA.length.toLocaleString()}} (page ${{currentPage + 1}} / ${{totalPages}})`;
+      div.appendChild(info);
+
+      const next = document.createElement('button');
+      next.textContent = 'Next \\u203A';
+      next.disabled = currentPage >= totalPages - 1;
+      next.onclick = () => {{ currentPage++; render(); }};
+      div.appendChild(next);
+
+      const last = document.createElement('button');
+      last.textContent = 'Last \\u00BB';
+      last.disabled = currentPage >= totalPages - 1;
+      last.onclick = () => {{ currentPage = totalPages - 1; render(); }};
+      div.appendChild(last);
     }}
 
     function formatNumber(val, fmt) {{
@@ -513,6 +750,7 @@ def _build_table_html(
         }}
         return sortAsc ? cmp : -cmp;
       }});
+      currentPage = 0;
       render();
     }}
 
@@ -539,57 +777,69 @@ def _build_table_html(
     }}
 
     function renderMetricsFormula() {{
-      if (!HAS_METRICS) return;
+      const details = document.getElementById('metricsDetails');
       const div = document.getElementById('metricsFormula');
-
-      // Find the ref value column and abs diff column
-      const refCol = COLUMNS.find(c => c.key === REF_VAL_KEY);
-      const absDiffCol = COLUMNS.find(c => c.type === 'abs_diff');
+      if (!RS_SOURCES || RS_SOURCES.length === 0) {{
+        details.style.display = 'none';
+        return;
+      }}
       const entityCol = COLUMNS.find(c => c.type === 'string');
 
-      if (!refCol || !absDiffCol) return;
-
       // Filter rows: exclude "US Total" for multi-entity views (avoids double-counting)
-      const rows = FOCUS_ON === 'US Total' ? DATA :
+      const focusedOnUsTotal = Array.isArray(FOCUS_ON) &&
+        FOCUS_ON.some(t => Array.isArray(t) && t[1] === 'US Total');
+      const rows = focusedOnUsTotal ? DATA :
         DATA.filter(r => entityCol ? String(r[entityCol.key]) !== 'US Total' : true);
-
-      let sumRef = 0, sumDiff = 0, sumDiffSq = 0, n = 0;
-      rows.forEach(r => {{
-        const ref = r[refCol.key];
-        const diff = r[absDiffCol.key];
-        if (ref !== null && ref !== undefined && diff !== null && diff !== undefined) {{
-          sumRef += Number(ref);
-          sumDiff += Number(diff);
-          sumDiffSq += Number(diff) * Number(diff);
-          n++;
-        }}
-      }});
-
-      if (n === 0 || sumRef === 0) return;
-
-      const meanRef = sumRef / n;
-      const nmbe = (sumDiff / sumRef) * 100;
-      const rmse = Math.sqrt(sumDiffSq / n);
-      const cvrmse = (rmse / meanRef) * 100;
 
       const fmt = (v) => v.toLocaleString('en-US', {{maximumFractionDigits: 1}});
       const fmtInt = (v) => Math.round(v).toLocaleString('en-US');
 
-      let html = '<div class="metrics-formula">';
-      html += '<h3>Discrepancy Metrics</h3>';
-      html += `<strong>NMBE</strong> (Normalized Mean Bias Error)\\n`;
-      html += `  = \\u03A3(ResStock \\u2212 Reference) / \\u03A3(Reference) \\u00D7 100\\n`;
-      html += `  = ${{fmt(sumDiff)}} / ${{fmt(sumRef)}} \\u00D7 100\\n`;
-      html += `  = <span class="result">${{fmt(nmbe)}}%</span>\\n\\n`;
-      html += `<strong>CV(RMSE)</strong> (Coefficient of Variation of Root Mean Square Error)\\n`;
-      html += `  = \\u221A[\\u03A3(ResStock \\u2212 Reference)\\u00B2 / n] / mean(Reference) \\u00D7 100\\n`;
-      html += `  = \\u221A[${{fmt(sumDiffSq)}} / ${{fmtInt(n)}}] / ${{fmt(meanRef)}} \\u00D7 100\\n`;
-      html += `  = ${{fmt(rmse)}} / ${{fmt(meanRef)}} \\u00D7 100\\n`;
-      html += `  = <span class="result">${{fmt(cvrmse)}}%</span>`;
-      if (FOCUS_ON !== 'US Total' && DATA.some(r => entityCol && String(r[entityCol.key]) === 'US Total')) {{
-        html += '\\n\\n<div class="note">Note: "US Total" is excluded from these calculations to avoid double-counting.</div>';
+      let html = '';
+      let anyDerivation = false;
+      RS_SOURCES.forEach(src => {{
+        const refKey = src.refKey;
+        const absDiffKey = src.absDiffKey;
+        if (!refKey || !absDiffKey) return;
+
+        let sumRef = 0, sumDiff = 0, sumDiffSq = 0, n = 0;
+        rows.forEach(r => {{
+          const ref = r[refKey];
+          const diff = r[absDiffKey];
+          if (ref !== null && ref !== undefined && diff !== null && diff !== undefined) {{
+            sumRef += Number(ref);
+            sumDiff += Number(diff);
+            sumDiffSq += Number(diff) * Number(diff);
+            n++;
+          }}
+        }});
+        if (n === 0 || sumRef === 0) return;
+
+        const meanRef = sumRef / n;
+        const nmbe = (sumDiff / sumRef) * 100;
+        const rmse = Math.sqrt(sumDiffSq / n);
+        const cvrmse = (rmse / meanRef) * 100;
+
+        anyDerivation = true;
+        html += `<strong>${{escapeHtml(src.label)}}</strong>\\n\\n`;
+        html += `<strong>NMBE</strong> (Normalized Mean Bias Error)\\n`;
+        html += `  = \\u03A3(${{escapeHtml(src.label)}} \\u2212 Reference) / \\u03A3(Reference) \\u00D7 100\\n`;
+        html += `  = ${{fmt(sumDiff)}} / ${{fmt(sumRef)}} \\u00D7 100\\n`;
+        html += `  = <span class="result">${{fmt(nmbe)}}%</span>\\n\\n`;
+        html += `<strong>CV(RMSE)</strong> (Coefficient of Variation of Root Mean Square Error)\\n`;
+        html += `  = \\u221A[\\u03A3(${{escapeHtml(src.label)}} \\u2212 Reference)\\u00B2 / n] / mean(Reference) \\u00D7 100\\n`;
+        html += `  = \\u221A[${{fmt(sumDiffSq)}} / ${{fmtInt(n)}}] / ${{fmt(meanRef)}} \\u00D7 100\\n`;
+        html += `  = ${{fmt(rmse)}} / ${{fmt(meanRef)}} \\u00D7 100\\n`;
+        html += `  = <span class="result">${{fmt(cvrmse)}}%</span>\\n\\n`;
+      }});
+
+      if (!anyDerivation) {{
+        details.style.display = 'none';
+        return;
       }}
-      html += '</div>';
+
+      if (!focusedOnUsTotal && DATA.some(r => entityCol && String(r[entityCol.key]) === 'US Total')) {{
+        html += '<div class="note">Note: "U.S. Total" is excluded from these calculations to avoid double-counting.</div>';
+      }}
       div.innerHTML = html;
     }}
 
@@ -613,8 +863,7 @@ def generate_data_table_html(
     plot_spec: PlotSpec,
     output_path: Path,
     plot_rel_path: str | None = None,
-    cvrmse: float | None = None,
-    nmbe: float | None = None,
+    metrics_by_source: dict[str, tuple[float, float]] | None = None,
     footnotes: list[str] | None = None,
     source_labels: dict | None = None,
 ) -> None:
@@ -625,8 +874,7 @@ def generate_data_table_html(
         plot_spec: The plot specification.
         output_path: Where to write the HTML file.
         plot_rel_path: Relative path to the corresponding plot HTML (for navigation).
-        cvrmse: Precomputed CV(RMSE) value, or None.
-        nmbe: Precomputed NMBE value, or None.
+        metrics_by_source: Per-source (cvrmse, nmbe) tuples keyed by source label.
         footnotes: Footnotes for the footer.
         source_labels: Data source labels for the footer.
     """
@@ -637,15 +885,35 @@ def generate_data_table_html(
         )
         return
 
+    metrics_by_source = metrics_by_source or {}
+    if plot_spec.quantity == DataCol.ALL:
+        data = _melt_enduse_columns(data)
+    if plot_spec.view == ViewType.distribution:
+        data = _extract_quartile_columns(data, plot_spec)
     filtered = _filter_columns(data, plot_spec)
-    pivoted, ref_label, rs_label = _pivot_by_source(filtered, plot_spec)
+    pivoted, ref_label, rs_labels = _pivot_by_source(filtered, plot_spec)
 
     # Drop columns that are entirely null (e.g., reference model_count, unused diff columns)
     all_null_cols = [c for c in pivoted.columns if pivoted[c].is_null().all()]
     if all_null_cols:
         pivoted = pivoted.drop(all_null_cols)
 
-    # Add absolute difference column (ResStock - Reference) for the main value
+    # Drop dimension columns that are constant across all rows — they're
+    # redundant with the title/subtitle (e.g. "State" showing "US Total" in
+    # every row of an ALL-enduse US Total overview).
+    entity_col = get_second_category_column(plot_spec)
+    ts_col = _resolve_timeseries_column(plot_spec)
+    candidate_dim_cols = [entity_col]
+    if ts_col and str(ts_col) in pivoted.columns:
+        candidate_dim_cols.append(str(ts_col))
+    constant_cols = [
+        c for c in candidate_dim_cols
+        if c in pivoted.columns and pivoted[c].n_unique() <= 1
+    ]
+    if constant_cols:
+        pivoted = pivoted.drop(constant_cols)
+
+    # Determine the value column suffix
     if plot_spec.quantity == DataCol.UNITS_COUNT:
         val_suffix = "units_count"
     elif plot_spec.view == ViewType.penetration:
@@ -653,30 +921,71 @@ def generate_data_table_html(
     else:
         val_suffix = f"{plot_spec.quantity}_value"
     ref_val_col = f"{ref_label}: {val_suffix}"
-    rs_val_col = f"{rs_label}: {val_suffix}"
-    abs_diff_key = f"Abs Difference: {val_suffix}"
-    if ref_val_col in pivoted.columns and rs_val_col in pivoted.columns:
-        # NaN means no data for this enduse — treat as zero consumption
-        pivoted = pivoted.with_columns(
-            pl.col(ref_val_col).fill_nan(0),
-            pl.col(rs_val_col).fill_nan(0),
-        )
-        # Insert the absolute diff column right before the percent diff column
-        pivoted = pivoted.with_columns(
-            (pl.col(rs_val_col) - pl.col(ref_val_col)).alias(abs_diff_key)
-        )
-        # Reorder: move abs_diff before the Difference: (percent) column
-        pct_diff_cols = [c for c in pivoted.columns if c.startswith("Difference: ")]
-        if pct_diff_cols:
-            ordered = [c for c in pivoted.columns if c != abs_diff_key and c not in pct_diff_cols]
-            ordered.append(abs_diff_key)
-            ordered.extend(pct_diff_cols)
-            pivoted = pivoted.select(ordered)
 
-    col_config = _build_column_config(pivoted.columns, plot_spec, ref_label, rs_label)
+    units = _resolve_quantity_title(plot_spec)
+    abs_diff_units = "percentage points" if units == "%" else units
+
+    # Add per-source absolute-difference columns and gather (refKey, absDiffKey) for JS.
+    # Distribution plots compare entire quartile distributions, not single values,
+    # so per-source diff columns and discrepancy formulas don't apply.
+    rs_sources_js: list[dict[str, str]] = []
+    if plot_spec.view != ViewType.distribution:
+        for rs_label in rs_labels:
+            rs_val_col = f"{rs_label}: {val_suffix}"
+            abs_diff_key = f"{rs_label} Difference ({abs_diff_units}): {val_suffix}"
+            if ref_val_col in pivoted.columns and rs_val_col in pivoted.columns:
+                pivoted = pivoted.with_columns(
+                    pl.col(ref_val_col).fill_nan(0),
+                    pl.col(rs_val_col).fill_nan(0),
+                )
+                pivoted = pivoted.with_columns(
+                    (pl.col(rs_val_col) - pl.col(ref_val_col)).alias(abs_diff_key)
+                )
+                rs_sources_js.append({
+                    "label": rs_label,
+                    "refKey": ref_val_col,
+                    "absDiffKey": abs_diff_key,
+                })
+
+    # Reorder: group each source's columns together (value, abs diff, pct diff).
+    # For distribution view, sort each source's stat columns canonically:
+    # mean (value) → min → q1 → median → q3 → max.
+    _STAT_ORDER = ("_value", "_min", "_q1", "_median", "_q3", "_max")
+
+    def _stat_sort_key(col: str) -> int:
+        for i, suffix in enumerate(_STAT_ORDER):
+            if col.endswith(suffix):
+                return i
+        return len(_STAT_ORDER)
+
+    if rs_labels:
+        dimension_cols = [
+            c for c in pivoted.columns
+            if not c.startswith(f"{ref_label}: ")
+            and not any(
+                c.startswith(f"{lbl}: ") or c.startswith(f"{lbl} Difference")
+                for lbl in rs_labels
+            )
+        ]
+        ref_cols = sorted(
+            [c for c in pivoted.columns if c.startswith(f"{ref_label}: ")],
+            key=_stat_sort_key,
+        )
+        ordered = list(dimension_cols) + list(ref_cols)
+        for rs_label in rs_labels:
+            value_cols = sorted(
+                [c for c in pivoted.columns if c.startswith(f"{rs_label}: ")],
+                key=_stat_sort_key,
+            )
+            abs_diff_cols = [c for c in pivoted.columns if c.startswith(f"{rs_label} Difference ({abs_diff_units}): ")]
+            pct_diff_cols = [c for c in pivoted.columns if c.startswith(f"{rs_label} Difference (%): ")]
+            ordered.extend(value_cols + abs_diff_cols + pct_diff_cols)
+        pivoted = pivoted.select(ordered)
+
+    col_config = _build_column_config(pivoted, plot_spec, ref_label, rs_labels)
 
     html = _build_table_html(
         pivoted, col_config, plot_spec, plot_rel_path,
-        cvrmse, nmbe, footnotes, source_labels, ref_label, ref_val_col,
+        metrics_by_source, footnotes, source_labels, ref_label, rs_sources_js,
     )
     output_path.write_text(html, encoding="utf-8")

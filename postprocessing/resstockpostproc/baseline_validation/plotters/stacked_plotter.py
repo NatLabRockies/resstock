@@ -375,7 +375,7 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
         if plot_spec.coverage == CoverageType.users_only:
             quantity_title = "kWh/user"
         else:
-            quantity_title = "kWh/home"
+            quantity_title = "kWh/unit"
     elif plot_spec.view == ViewType.penetration:
         quantity_title = "%"
     elif plot_spec.view == ViewType.diff_view:

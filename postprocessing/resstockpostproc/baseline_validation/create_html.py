@@ -131,12 +131,12 @@ _HTML_COLUMN_WIDTHS = {
     "Index": "3%",
     "Comparison Dataset": "7%",
     "Quantity": "13%",
-    "Metric": "18%",
+    "Metric": "16%",
     "Filter 1": "10%",
     "Filter 2": "10%",
     "Group By": "8%",
-    "Comparison Plot": "18%",
-    "Data": "9%",
+    "Comparison Plot": "16%",
+    "Data": "13%",
 }
 
 
@@ -269,16 +269,16 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
 
     /* --- Filter panels --- */
     .filter-panels {{ display: flex; gap: 6px; margin-bottom: 8px; }}
-    .fp {{ flex: 1; min-width: 100px; display: flex; flex-direction: column; }}
+    .fp {{ flex: 1; min-width: 100px; height: 160px; display: flex; flex-direction: column; }}
     .fp.fp-wide {{ flex: 2; }}
-    .fp-label {{ font-size: 11px; font-weight: 700; color: #1a1a1a; text-transform: uppercase; letter-spacing: 0.3px; padding: 4px 6px; background: #f5f5f5; border: 1px solid #ccc; border-bottom: none; border-radius: 3px 3px 0 0; }}
-    .fp-list {{ height: 120px; overflow-y: auto; border: 1px solid #ccc; border-radius: 0 0 3px 3px; background: #fff; }}
+    .fp-label {{ font-size: 11px; font-weight: 700; color: #1a1a1a; text-transform: uppercase; letter-spacing: 0.3px; padding: 4px 6px; background: #f5f5f5; border: 1px solid #ccc; border-bottom: none; border-radius: 3px 3px 0 0; flex: 0 0 auto; }}
+    .fp-list {{ flex: 1 1 auto; min-height: 0; overflow-y: auto; border: 1px solid #ccc; border-radius: 0 0 3px 3px; background: #fff; }}
     .fp-item {{ padding: 3px 8px; font-size: 13px; cursor: pointer; border-bottom: 1px solid #f0f0f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
     .fp-item:last-child {{ border-bottom: none; }}
     .fp-item:hover {{ background: #e8f0fe; }}
     .fp-item.selected {{ background: #d2e3fc; font-weight: 600; }}
     .fp-item.all-item {{ color: #555; font-style: italic; }}
-    .fp-category {{ width: 100%; padding: 3px 4px; font-size: 12px; border: 1px solid #ccc; border-bottom: none; background: #fafafa; }}
+    .fp-category {{ width: 100%; padding: 3px 4px; font-size: 12px; border: 1px solid #ccc; border-bottom: none; background: #fafafa; flex: 0 0 auto; }}
     .filter-panels.disabled {{ opacity: 0.4; pointer-events: none; }}
 
     /* --- Table --- */

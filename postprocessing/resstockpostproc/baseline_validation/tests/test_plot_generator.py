@@ -47,8 +47,10 @@ class TestComputeDiscrepancy:
             "electricity_total_value": [100.0, 200.0, 110.0, 190.0],
         })
         spec = _make_spec()
-        cvrmse, nmbe = _compute_discrepancy(data, spec)
+        metrics = _compute_discrepancy(data, spec)
 
+        assert "ResStock 2024" in metrics
+        cvrmse, nmbe = metrics["ResStock 2024"]
         assert nmbe == pytest.approx(0.0)
         assert cvrmse == pytest.approx(10.0 / 150.0 * 100)
 
@@ -60,46 +62,61 @@ class TestComputeDiscrepancy:
             "electricity_total_value": [100.0, 120.0],
         })
         spec = _make_spec()
-        cvrmse, nmbe = _compute_discrepancy(data, spec)
+        metrics = _compute_discrepancy(data, spec)
 
+        cvrmse, nmbe = metrics["ResStock 2024"]
         assert nmbe == pytest.approx(20.0)  # (120-100)/100 * 100
         assert cvrmse == pytest.approx(20.0)
 
-    def test_returns_none_for_all_quantity(self):
+    def test_multiple_sources(self):
+        """Each ResStock source should get its own metric entry."""
+        data = pl.DataFrame({
+            "source": ["eia_2018", "resstock_2024", "resstock_2025"],
+            "state": ["CA", "CA", "CA"],
+            "electricity_total_value": [100.0, 120.0, 110.0],
+        })
+        spec = _make_spec()
+        metrics = _compute_discrepancy(data, spec)
+
+        assert set(metrics.keys()) == {"ResStock 2024", "ResStock 2025"}
+        assert metrics["ResStock 2024"][1] == pytest.approx(20.0)
+        assert metrics["ResStock 2025"][1] == pytest.approx(10.0)
+
+    def test_returns_empty_for_all_quantity(self):
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             quantity=DataCol.ALL,
             aggregation_type=AggregationType.average,
         )
         data = pl.DataFrame({"source": ["recs"], "state": ["CA"], "electricity_total_value": [1.0]})
-        assert _compute_discrepancy(data, spec) == (None, None)
+        assert _compute_discrepancy(data, spec) == {}
 
-    def test_returns_none_for_distribution_view(self):
+    def test_returns_empty_for_distribution_view(self):
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             aggregation_type=AggregationType.average,
             view=ViewType.distribution,
         )
         data = pl.DataFrame({"source": ["recs"], "state": ["CA"], "electricity_total_value": [1.0]})
-        assert _compute_discrepancy(data, spec) == (None, None)
+        assert _compute_discrepancy(data, spec) == {}
 
-    def test_returns_none_when_no_resstock_rows(self):
+    def test_returns_empty_when_no_resstock_rows(self):
         data = pl.DataFrame({
             "source": ["eia_2018", "eia_2018"],
             "state": ["CA", "NY"],
             "electricity_total_value": [100.0, 200.0],
         })
         spec = _make_spec()
-        assert _compute_discrepancy(data, spec) == (None, None)
+        assert _compute_discrepancy(data, spec) == {}
 
-    def test_returns_none_when_zero_reference(self):
+    def test_returns_empty_when_zero_reference(self):
         data = pl.DataFrame({
             "source": ["eia_2018", "resstock_2024"],
             "state": ["CA", "CA"],
             "electricity_total_value": [0.0, 50.0],
         })
         spec = _make_spec()
-        assert _compute_discrepancy(data, spec) == (None, None)
+        assert _compute_discrepancy(data, spec) == {}
 
     def test_excludes_us_total_by_default(self):
         """US Total rows should be excluded when focus_on is not 'US Total'."""
@@ -109,7 +126,7 @@ class TestComputeDiscrepancy:
             "electricity_total_value": [100.0, 999.0, 100.0, 999.0],
         })
         spec = _make_spec()
-        cvrmse, nmbe = _compute_discrepancy(data, spec)
+        cvrmse, nmbe = _compute_discrepancy(data, spec)["ResStock 2024"]
 
         # Only CA is used (US Total excluded) → perfect match
         assert nmbe == pytest.approx(0.0)
@@ -123,7 +140,7 @@ class TestComputeDiscrepancy:
             "electricity_total_value": [100.0, 120.0],
         })
         spec = _make_spec(focus_on=(("state", "US Total"),), group_by=None)
-        cvrmse, nmbe = _compute_discrepancy(data, spec)
+        cvrmse, nmbe = _compute_discrepancy(data, spec)["ResStock 2024"]
 
         assert nmbe == pytest.approx(20.0)
 
@@ -135,7 +152,7 @@ class TestComputeDiscrepancy:
             "units_count": [1000.0, 1100.0],
         })
         spec = _make_spec(quantity=DataCol.UNITS_COUNT)
-        cvrmse, nmbe = _compute_discrepancy(data, spec)
+        cvrmse, nmbe = _compute_discrepancy(data, spec)["ResStock 2024"]
 
         assert nmbe == pytest.approx(10.0)
 
@@ -148,7 +165,7 @@ class TestComputeDiscrepancy:
             "electricity_total_value": [100.0, 200.0, 110.0, 220.0],
         })
         spec = _make_spec(resolution=Resolution.month)
-        cvrmse, nmbe = _compute_discrepancy(data, spec)
+        cvrmse, nmbe = _compute_discrepancy(data, spec)["ResStock 2024"]
 
         # diffs = [10, 20], sum_ref = 300, NMBE = 30/300*100 = 10%
         assert nmbe == pytest.approx(10.0)

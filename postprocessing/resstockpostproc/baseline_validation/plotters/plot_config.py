@@ -254,13 +254,13 @@ def _resolve_diff_view_title(plot_spec: PlotSpec, comparison_label: str) -> str:
 def _resolve_quantity_title(plot_spec: PlotSpec) -> str:
     """Resolve the y-axis label (quantity units).
 
-    Returns units like kWh, kWh/home, kWh/user, %, or count.
+    Returns units like kWh, kWh/unit, kWh/user, %, or count.
     """
-    # LRD: mostly kWh, with special case for temp_count
+    # LRD: always per-meter (per dwelling unit), except the temperature distribution count
     if plot_spec.comparison_dataset == ComparisonDataset.lrd:
         if plot_spec.view == ViewType.temp_distribution_view:
             return "count"
-        return "kWh"
+        return "kWh/unit"
 
     # RECS/EIA: dwelling unit count case
     if plot_spec.quantity == DataCol.UNITS_COUNT:
@@ -278,7 +278,7 @@ def _resolve_quantity_title(plot_spec: PlotSpec) -> str:
     if plot_spec.aggregation_type == AggregationType.average:
         if plot_spec.coverage == CoverageType.users_only:
             return "kWh/user"
-        return "kWh/home"
+        return "kWh/unit"
 
     return "kWh"
 
