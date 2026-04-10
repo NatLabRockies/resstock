@@ -128,14 +128,14 @@ def parse_viz_cell(cell_value: str) -> tuple[str, str | None]:
 
 
 _HTML_COLUMN_WIDTHS = {
-    "Index": "3%",
-    "Comparison Dataset": "7%",
+    "Index": "0%",
+    "Comparison Dataset": "8%",
     "Quantity": "13%",
-    "Metric": "16%",
-    "Filter 1": "10%",
-    "Filter 2": "10%",
+    "Metric": "17%",
+    "Filter 1": "11%",
+    "Filter 2": "11%",
     "Group By": "8%",
-    "Comparison Plot": "16%",
+    "Comparison Plot": "17%",
     "Data": "13%",
 }
 
@@ -194,27 +194,33 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
     ]
     quantity_order_js = json.dumps(quantity_order)
 
-    # Build filter panel HTML containers (content populated by JS)
-    panel_html_parts = []
-    for col_idx, label in filter_order:
-        # Filter 1/2 get a category dropdown above the value list
-        if col_idx in (4, 5):  # Filter 1, Filter 2
-            panel_html_parts.append(
-                f"      <div class='fp' id='fp-{col_idx}'>\n"
-                f"        <div class='fp-label'>{label}</div>\n"
-                f"        <select class='fp-category' id='fp-cat-{col_idx}' onchange='onCategoryChange({col_idx})'></select>\n"
-                f"        <div class='fp-list' id='fp-list-{col_idx}'></div>\n"
-                f"      </div>"
+    # Build filter cells for the second <thead> row (one <th> per column).
+    # Filterable columns get a list panel; non-filterable get an empty cell.
+    filter_col_set = {idx for idx, _ in filter_order}
+    filter_th_parts = []
+    for col_idx, h in enumerate(html_headers):
+        w = _HTML_COLUMN_WIDTHS.get(h, "")
+        style = f" style='width:{w}'" if w else ""
+        if col_idx not in filter_col_set:
+            filter_th_parts.append(f"          <th{style} class='filter-cell'></th>")
+        elif col_idx in (4, 5):  # Filter 1/2 get a category dropdown
+            filter_th_parts.append(
+                f"          <th{style} class='filter-cell'>\n"
+                f"            <div class='fp' id='fp-{col_idx}'>\n"
+                f"              <select class='fp-category' id='fp-cat-{col_idx}' onchange='onCategoryChange({col_idx})'></select>\n"
+                f"              <div class='fp-list' id='fp-list-{col_idx}'></div>\n"
+                f"            </div>\n"
+                f"          </th>"
             )
         else:
-            wide = ' fp-wide' if col_idx == 3 else ''  # Metric panel gets extra width
-            panel_html_parts.append(
-                f"      <div class='fp{wide}' id='fp-{col_idx}'>\n"
-                f"        <div class='fp-label'>{label}</div>\n"
-                f"        <div class='fp-list' id='fp-list-{col_idx}'></div>\n"
-                f"      </div>"
+            filter_th_parts.append(
+                f"          <th{style} class='filter-cell'>\n"
+                f"            <div class='fp' id='fp-{col_idx}'>\n"
+                f"              <div class='fp-list' id='fp-list-{col_idx}'></div>\n"
+                f"            </div>\n"
+                f"          </th>"
             )
-    panels_html = "\n".join(panel_html_parts)
+    filter_th_cells = "\n".join(filter_th_parts)
 
     # Build <thead> with per-column widths
     th_parts = []
@@ -247,8 +253,8 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
     *, *::before, *::after {{ box-sizing: border-box; }}
     body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #1a1a1a; background: #fff; }}
 
-    /* --- Sticky header --- */
-    .sticky-header {{ position: sticky; top: 0; z-index: 10; background: #fff; padding: 10px 20px 0; border-bottom: 1px solid #d0d0d0; }}
+    /* --- Top header bar --- */
+    .sticky-header {{ background: #fff; padding: 10px 20px 0; border-bottom: 1px solid #d0d0d0; }}
 
     /* --- Top bar: title + checkbox + reset + stats + pagination --- */
     .top-bar {{ display: flex; align-items: center; gap: 16px; margin-bottom: 8px; flex-wrap: wrap; }}
@@ -267,25 +273,26 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
     .pagination select {{ padding: 2px 4px; font-size: 12px; border: 1px solid #bbb; border-radius: 3px; }}
     .pagination label {{ font-size: 12px; color: #555; }}
 
-    /* --- Filter panels --- */
-    .filter-panels {{ display: flex; gap: 6px; margin-bottom: 8px; }}
-    .fp {{ flex: 1; min-width: 100px; height: 160px; display: flex; flex-direction: column; }}
-    .fp.fp-wide {{ flex: 2; }}
-    .fp-label {{ font-size: 11px; font-weight: 700; color: #1a1a1a; text-transform: uppercase; letter-spacing: 0.3px; padding: 4px 6px; background: #f5f5f5; border: 1px solid #ccc; border-bottom: none; border-radius: 3px 3px 0 0; flex: 0 0 auto; }}
-    .fp-list {{ flex: 1 1 auto; min-height: 0; overflow-y: auto; border: 1px solid #ccc; border-radius: 0 0 3px 3px; background: #fff; }}
-    .fp-item {{ padding: 3px 8px; font-size: 13px; cursor: pointer; border-bottom: 1px solid #f0f0f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
+    /* --- Filter cells (second <thead> row) --- */
+    .filter-cell {{ padding: 4px; vertical-align: top; background: #fff; border-bottom: 1px solid #d0d0d0; }}
+    .fp {{ display: flex; flex-direction: column; height: 130px; }}
+    .fp-list {{ flex: 1 1 auto; min-height: 0; overflow-y: auto; border: 1px solid #ccc; border-radius: 3px; background: #fff; }}
+    .fp-item {{ padding: 3px 8px; font-size: 13px; cursor: pointer; border-bottom: 1px solid #f0f0f0; white-space: normal; word-wrap: break-word; }}
     .fp-item:last-child {{ border-bottom: none; }}
     .fp-item:hover {{ background: #e8f0fe; }}
     .fp-item.selected {{ background: #d2e3fc; font-weight: 600; }}
     .fp-item.all-item {{ color: #555; font-style: italic; }}
-    .fp-category {{ width: 100%; padding: 3px 4px; font-size: 12px; border: 1px solid #ccc; border-bottom: none; background: #fafafa; flex: 0 0 auto; }}
-    .filter-panels.disabled {{ opacity: 0.4; pointer-events: none; }}
+    .fp-category {{ width: 100%; padding: 3px 4px; font-size: 12px; border: 1px solid #ccc; border-bottom: none; border-radius: 3px 3px 0 0; background: #fafafa; flex: 0 0 auto; }}
 
     /* --- Table --- */
     .table-wrap {{ padding: 0 20px 20px; }}
-    .table-wrap table {{ border-collapse: collapse; width: 100%; table-layout: fixed; }}
-    th {{ padding: 7px 10px; text-align: left; font-size: 11px; font-weight: 700; color: #1a1a1a; text-transform: uppercase; letter-spacing: 0.3px; border-bottom: 2px solid #bbb; border-right: 1px solid #e0e0e0; background: #f7f7f7; }}
+    .table-wrap table {{ border-collapse: separate; border-spacing: 0; width: 100%; table-layout: fixed; }}
+    thead tr:first-child th {{ position: sticky; top: 0; z-index: 6; }}
+    thead tr:nth-child(2) th {{ position: sticky; top: 30px; z-index: 5; }}  /* JS adjusts top dynamically */
+    th {{ padding: 7px 10px; text-align: left; font-size: 12px; font-weight: normal; color: #1a1a1a; letter-spacing: 0.3px; border-bottom: 2px solid #bbb; border-right: 1px solid #e0e0e0; background: #f7f7f7; white-space: normal; word-wrap: break-word; }}
     th:last-child {{ border-right: none; }}
+    /* Hide the Index column (first column) — kept in data for sorting */
+    th:first-child, td:first-child {{ display: none; }}
     td {{ padding: 6px 10px; font-size: 13px; border-bottom: 1px solid #ddd; border-right: 1px solid #eee; color: #1a1a1a; word-wrap: break-word; overflow-wrap: break-word; white-space: normal; }}
     td:last-child {{ border-right: none; }}
     tbody tr:hover {{ background: #eef3ff; }}
@@ -326,15 +333,15 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
         </label>
       </div>
     </div>
-    <div class='filter-panels' id='filter-panels'>
-{panels_html}
-    </div>
   </div>
   <div class='table-wrap'>
     <table>
       <thead>
         <tr>
 {th_cells}
+        </tr>
+        <tr id='filter-panels'>
+{filter_th_cells}
         </tr>
       </thead>
       <tbody id='tbody'>
@@ -398,7 +405,9 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
     function onCategoryChange(colIdx) {{
       const sel = document.getElementById('fp-cat-' + colIdx);
       categorySelections[colIdx] = sel.value;
-      delete filterSelections[colIdx];
+      // Auto-select "(None)" for filter columns that default to it
+      filterSelections[colIdx] = NONE_DEFAULT_COLS.has(colIdx) ? '' : undefined;
+      if (filterSelections[colIdx] === undefined) delete filterSelections[colIdx];
       rebuildFilters();
       applyFilters();
     }}
@@ -630,12 +639,8 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
 
     function onShowAllChange() {{
       showAll = document.getElementById('show-all-cb').checked;
-      const panels = document.getElementById('filter-panels');
-      if (showAll) {{
-        panels.classList.add('disabled');
-      }} else {{
-        panels.classList.remove('disabled');
-      }}
+      const filterRow = document.getElementById('filter-panels');
+      filterRow.style.display = showAll ? 'none' : '';
       applyFilters();
     }}
 
@@ -738,7 +743,7 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
       }}
       showAll = false;
       document.getElementById('show-all-cb').checked = false;
-      document.getElementById('filter-panels').classList.remove('disabled');
+      document.getElementById('filter-panels').style.display = '';
       rebuildFilters();
       applyFilters();
     }}
@@ -753,6 +758,13 @@ def _build_html_shell(headers: Sequence[str], manifest: dict[str, str]) -> str:
       }}
       rebuildFilters();
       applyFilters();
+      // Set the filter row's sticky offset to the height of the header label row
+      const headerRow = document.querySelector('thead tr:first-child');
+      const filterRow = document.getElementById('filter-panels');
+      if (headerRow && filterRow) {{
+        const h = headerRow.getBoundingClientRect().height;
+        Array.from(filterRow.children).forEach(th => th.style.top = h + 'px');
+      }}
     }}
 
     document.addEventListener('DOMContentLoaded', initPage);

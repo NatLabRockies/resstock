@@ -26,6 +26,10 @@
 
 notes:
   - comparison_dataset: recs
+    note: >
+      Only occupied dwelling units are included in the comparison.
+
+  - comparison_dataset: recs
     context: plot
     exclude:
       quantity: Number of dwelling units

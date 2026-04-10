@@ -21,7 +21,7 @@ data_sources:
 reference_years:
   eia:
     - 2018
-    # - 2020
+    - 2020
   recs:
     - 2020
 
@@ -104,6 +104,15 @@ data_source_labels:
       - description: "EIA-861M Monthly Electric Power Industry Report (2018)"
         url: "https://www.eia.gov/electricity/data/eia861m/"
       - description: "EIA-176 Natural Gas Consumption Data (2018)"
+        url: "https://www.eia.gov/dnav/ng/ng_cons_sum_a_EPG0_vrs_mmcf_m.htm"
+  eia_2020:
+    label: "EIA 2020"
+    entries:
+      - description: "EIA-861 Annual Electric Utility Data (2020)"
+        url: "https://www.eia.gov/electricity/data/eia861/"
+      - description: "EIA-861M Monthly Electric Power Industry Report (2020)"
+        url: "https://www.eia.gov/electricity/data/eia861m/"
+      - description: "EIA-176 Natural Gas Consumption Data (2020)"
         url: "https://www.eia.gov/dnav/ng/ng_cons_sum_a_EPG0_vrs_mmcf_m.htm"
   recs_2020:
     label: "RECS 2020"

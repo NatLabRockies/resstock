@@ -353,11 +353,12 @@ def _extract_comparison_dataset_label(comparison_dataset: ComparisonDataset, dat
     """Extract a human-readable comparison dataset label like 'EIA 2018' from data."""
     if "source" not in data.columns:
         return comparison_dataset.value.upper()
-    sources = data["source"].unique().to_list()
-    ref_sources = [s for s in sources if comparison_dataset.value in s]
+    sources = data["source"].unique(maintain_order=True).to_list()
+    ref_sources = [s for s in sources if comparison_dataset.value in s.lower()]
     if ref_sources:
-        # "eia_2018" → "EIA 2018", "recs_2020" → "RECS 2020"
-        return ref_sources[0].replace("_", " ").upper()
+        # First match is the primary reference (same insertion order used by _add_percent_difference).
+        # Already human-readable after source renaming (e.g. "EIA 2018", "RECS 2020").
+        return ref_sources[0]
     return comparison_dataset.value.upper()
 
 

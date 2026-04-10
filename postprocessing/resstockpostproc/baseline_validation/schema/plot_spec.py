@@ -343,7 +343,8 @@ class PlotSpec(NoExtraModel):
         quantity_name = self.quantity.label if self.quantity != DataCol.ALL else "Enduse"
 
         if self.quantity == DataCol.UNITS_COUNT:
-            return f"Number of Occupied Dwelling Units {grouping}"
+            du_label = "Occupied Dwelling Units" if self.comparison_dataset == ComparisonDataset.recs else "Dwelling Units"
+            return f"Number of {du_label} {grouping}"
 
         if self.view == ViewType.penetration:
             usage_name = "the specified End Use" if self.quantity == DataCol.ALL else self.quantity.penetration_label
@@ -359,6 +360,20 @@ class PlotSpec(NoExtraModel):
             return f"{period} {quantity_name} Consumption {grouping}"
 
         return f"Average {period} {quantity_name} Consumption {self._per_unit_label} {grouping}"
+
+    @property
+    def display_comparison_dataset(self) -> str:
+        """Human-readable label for the comparison dataset (e.g. 'EIA 2018', 'RECS 2020').
+
+        Resolves from workflow.data_source_labels by finding the first key that
+        starts with the comparison_dataset value. Falls back to uppercase enum value.
+        """
+        from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
+        ds = self.comparison_dataset.value
+        for key, label_obj in workflow.data_source_labels.items():
+            if key.startswith(ds):
+                return label_obj.label
+        return ds.upper()
 
     @property
     def display_quantity(self) -> str:
@@ -388,7 +403,8 @@ class PlotSpec(NoExtraModel):
             return self.display_title
 
         if self.quantity == DataCol.UNITS_COUNT:
-            return "Number of Occupied Dwelling Units"
+            du_label = "Occupied Dwelling Units" if self.comparison_dataset == ComparisonDataset.recs else "Dwelling Units"
+            return f"Number of {du_label}"
 
         if self.view == ViewType.penetration:
             return "Enduse Penetration"

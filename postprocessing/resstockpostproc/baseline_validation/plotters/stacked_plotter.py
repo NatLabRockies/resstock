@@ -20,7 +20,7 @@ def _get_reference_source(df: pl.DataFrame) -> str:
     if not sources:
         raise ValueError("No data sources found in dataframe")
     for src in sources:
-        if "resstock" not in src:
+        if "resstock" not in src.lower():
             return src
     return sources[0]
 

@@ -3,6 +3,7 @@ import urllib.request
 from pathlib import Path
 import zipfile
 import pandas as pd
+import ssl
 # Download the 861 Annual Data files from EIA
 
 files_path = Path(__file__).parent / "data"
@@ -28,7 +29,7 @@ def get_excel_file(zip_file, file_name):
 
 sales_dfs = []
 territory_dfs = []
-last_year = 2023
+last_year = 2026
 for year in range(2012, last_year + 1):
     raw_file = eia861_raw_path / f"f861{year}.zip"
     if not raw_file.exists():
@@ -37,7 +38,10 @@ for year in range(2012, last_year + 1):
         else:
             url = f"https://www.eia.gov/electricity/data/eia861/zip/f861{year}.zip"
         print(f"Downloading {url}")
-        urllib.request.urlretrieve(url, raw_file)
+        ssl_context = ssl._create_unverified_context()
+        with urllib.request.urlopen(url, context=ssl_context) as response:
+            with open(raw_file, 'wb') as out_file:
+                out_file.write(response.read())
     try:
         filezip = zipfile.ZipFile(raw_file)
     except zipfile.BadZipFile:

@@ -117,6 +117,15 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
     if plot_spec.comparison_dataset == ComparisonDataset.lrd:
         df = _apply_lrd_resolution_transforms(df, plot_spec)
 
+    # Rename source column values to human-readable labels from workflow config.
+    # This makes plot legends, CSV exports, and data tables all use consistent
+    # display labels (e.g. "eia_2018" → "EIA 2018", "resstock_2025" → "ResStock 2025").
+    source_label_map = {k: v.label for k, v in workflow.data_source_labels.items()}
+    if source_label_map and "source" in df.columns:
+        df = df.with_columns(
+            pl.col("source").replace_strict(source_label_map, default=pl.col("source"))
+        )
+
     return df
 
 
@@ -349,7 +358,7 @@ def _prepare_temperature_view(df: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataF
     df = df.with_columns((pl.col(temp_col) / 4 * 9 / 5 + 32).round(0).cast(pl.Int32))
 
     # Get ResStock source for reference temperature
-    resstock_src = next(src for src in df["source"].unique(maintain_order=True) if "resstock" in src)
+    resstock_src = next(src for src in df["source"].unique(maintain_order=True) if "resstock" in src.lower())
 
     # Create reference temperature from ResStock data
     ref_temp = df.filter(pl.col("source") == resstock_src).select(

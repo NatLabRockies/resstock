@@ -226,7 +226,7 @@ def _build_output_row(main_spec: PlotSpec) -> dict[str, str]:
     """Build the output row dict from a main PlotSpec's display properties."""
     return {
         "Index": "",
-        "Comparison Dataset": main_spec.comparison_dataset.value,
+        "Comparison Dataset": main_spec.display_comparison_dataset,
         "Quantity": main_spec.display_quantity,
         "Metric": main_spec.display_metric,
         "Filter 1": "",
@@ -493,10 +493,11 @@ def _compute_discrepancy(data, plot_spec) -> dict[str, tuple[float, float]]:
     if val_col not in data.columns:
         return {}
 
-    # Identify reference and ResStock rows
+    # Identify reference and ResStock rows (case-insensitive — source values may
+    # be raw like "eia_2018" or display labels like "EIA 2018").
     comparison = plot_spec.comparison_dataset.value
-    ref_rows = data.filter(pl.col("source").str.contains(comparison))
-    rs_sources = sorted(s for s in data["source"].unique().to_list() if "resstock" in s)
+    ref_rows = data.filter(pl.col("source").str.to_lowercase().str.contains(comparison))
+    rs_sources = sorted(s for s in data["source"].unique().to_list() if "resstock" in s.lower())
 
     if len(ref_rows) == 0 or not rs_sources:
         return {}
@@ -595,8 +596,8 @@ def _generate_spec_plots(
     first_spec = spec_entries[0][0]
     probe_data = get_plot_data(first_spec)
     sources = probe_data["source"].unique().to_list() if not probe_data.is_empty() else []
-    has_reference = any("resstock" not in s for s in sources)
-    has_resstock = any("resstock" in s for s in sources)
+    has_reference = any("resstock" not in s.lower() for s in sources)
+    has_resstock = any("resstock" in s.lower() for s in sources)
     if not has_reference or not has_resstock:
         return None
 

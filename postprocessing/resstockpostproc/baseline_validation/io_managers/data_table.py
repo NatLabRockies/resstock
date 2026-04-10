@@ -247,15 +247,16 @@ def _pivot_by_source(
     if "enduse" in data.columns:
         join_cols.append("enduse")
 
-    # Identify all source labels
-    ref_label = _extract_comparison_dataset_label(plot_spec.comparison_dataset, data)
-    sources = data["source"].unique().to_list()
-    rs_sources = sorted(s for s in sources if "resstock" in s)
-    rs_labels = [_format_source_label(s) for s in rs_sources]
-
-    # Split by source
+    # Identify all source labels (source values are already human-readable
+    # display labels from apply_plot_spec, e.g. "EIA 2018", "ResStock 2025").
     comparison_val = plot_spec.comparison_dataset.value
-    ref_df = data.filter(pl.col("source").str.contains(comparison_val))
+    sources = data["source"].unique().to_list()
+    ref_sources = [s for s in sources if comparison_val in s.lower()]
+    ref_label = ref_sources[0] if ref_sources else comparison_val.upper()
+    rs_labels = sorted(s for s in sources if "resstock" in s.lower())
+
+    # Split by source (case-insensitive matching)
+    ref_df = data.filter(pl.col("source").str.to_lowercase().str.contains(comparison_val))
 
     # Determine value columns to pivot (everything that's not a join col or source)
     skip_cols = set(join_cols) | {"source"}
@@ -270,8 +271,8 @@ def _pivot_by_source(
     )
 
     # Add each ResStock source as its own column group
-    for rs_source, rs_label in zip(rs_sources, rs_labels):
-        rs_df = data.filter(pl.col("source") == rs_source)
+    for rs_label in rs_labels:
+        rs_df = data.filter(pl.col("source") == rs_label)
         rs_non_diff = [c for c in non_diff_cols if c in rs_df.columns]
         rs_diff_available = [c for c in diff_cols if c in rs_df.columns]
 
