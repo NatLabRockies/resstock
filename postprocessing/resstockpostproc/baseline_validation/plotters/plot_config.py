@@ -380,7 +380,7 @@ def _resolve_dimensions(plot_spec: PlotSpec, is_single_entity: bool) -> tuple[fl
     # RECS/EIA: single entity gets smaller dimensions (except ALL enduse plots
     # which contain all fuel/enduse combos and need full size)
     if is_single_entity and plot_spec.quantity != DataCol.ALL:
-        return 1080 * 0.4, 1920 * 0.425
+        return 1080 * 0.32, 1920 * 0.34
 
     return 1080 * 0.8, 1920 * 0.85
 

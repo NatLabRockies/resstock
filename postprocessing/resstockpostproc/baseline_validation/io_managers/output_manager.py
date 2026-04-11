@@ -51,10 +51,12 @@ def save_figure(
         ensure_directory(filepath)
         fullpath = filepath / f"{title}.{fmt.value}"
         if fmt == FileType.html:
+            raw_path = filepath / f"{title}.raw.{fmt.value}"
             div_id = "fig-" + hashlib.md5(str(fullpath).encode()).hexdigest()
-            fig.write_html(fullpath, include_plotlyjs="cdn", config=PLOTLY_HTML_CONFIG, div_id=div_id)
+            fig.write_html(raw_path, include_plotlyjs="cdn", config=PLOTLY_HTML_CONFIG, div_id=div_id)
             postprocess_plot_html(
-                fullpath,
+                raw_path,
+                output_path=fullpath,
                 footnotes=footnotes,
                 source_labels=source_labels,
                 comparison_dataset=plot_spec.comparison_dataset.value,

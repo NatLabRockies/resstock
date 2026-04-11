@@ -13,6 +13,7 @@ import logging
 import math
 import os
 import sys
+from collections import defaultdict
 import time
 import traceback
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -611,7 +612,7 @@ def _generate_spec_plots(
             save_figure(fig, plot_spec, formats=output_formats,
                         footnotes=footnotes, source_labels=source_labels)
 
-            # Build relative path to the plot file
+            # Build relative path to the enhanced plot file
             path_seg, file_title = plot_spec.file_path_and_name
             rel_path = (
                 Path(f"{plot_spec.comparison_dataset} plots ({link_format})") / path_seg / f"{file_title}.{link_format.value}"
@@ -758,6 +759,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
     # Build metadata for all work items and prepare plot arguments
     results = {}
     plot_args = []
+    stacking_groups: dict[tuple, list[tuple[str, PlotSpec, str]]] = defaultdict(list)
     from resstockpostproc.shared_utils.mapping import ABBR2STATE
 
     for i, (spec_pair, tmpl_index, spec_entries, focus_val, focus_on, group_by) in enumerate(work_items, 1):
@@ -831,6 +833,25 @@ def generate_plots(index=None, test_only=False, parallel=True):
 
         plot_args.append((sub_key, focused_entries, matched_notes, table_notes))
 
+        # Collect value_view specs for stacking into "All Enduses (Stacked)" pages.
+        # Skip ALL (already a stacked enduse chart) and UNITS_COUNT (not an enduse).
+        value_view_spec = next(
+            (spec for spec, vt in focused_entries if spec.view == ViewType.value_view), None
+        )
+        if value_view_spec is not None and main_spec.quantity not in (DataCol.ALL, DataCol.UNITS_COUNT):
+            group_key = (
+                results[sub_key]["Comparison Dataset"],
+                results[sub_key]["Metric"],
+                results[sub_key]["Filter 1"],
+                results[sub_key]["Filter 2"],
+                results[sub_key]["Group By"],
+            )
+            stacking_groups[group_key].append((
+                display_spec.display_quantity,
+                value_view_spec,
+                sub_key,
+            ))
+
     # Pass 3: Generate plots — parallel or sequential
     common_kwargs = dict(output_formats=output_formats, link_format=link_format,
                          output_base=output_base, source_labels=source_labels or None)
@@ -877,6 +898,95 @@ def generate_plots(index=None, test_only=False, parallel=True):
     finally:
         pbar.close()
         root_logger.handlers = original_handlers
+
+    # Pass 4: Assemble synthetic "All Enduses (Stacked)" pages by combining
+    # the raw (non-enhanced) Plotly HTML files already written in Pass 3.
+    from resstockpostproc.baseline_validation.io_managers.html_utils import postprocess_plot_html
+    eligible_groups = {k: v for k, v in stacking_groups.items() if len(v) >= 2}
+    stacked_count = 0
+    stacked_pbar = tqdm(
+        eligible_groups.items(), total=len(eligible_groups),
+        desc="Generating stacked pages", unit="page",
+        bar_format="{desc}: {percentage:6.2f}%|{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}]",
+    )
+    for group_key, quantity_specs in stacked_pbar:
+
+        comparison_ds, metric, filter1, filter2, group_by_label = group_key
+
+        # Collect the raw (non-enhanced) HTML files
+        raw_html_paths = []
+        all_footnotes: list[str] = []
+        for qty_label, spec, _ in quantity_specs:
+            path_seg, file_title = spec.file_path_and_name
+            raw_path = (
+                output_base / f"{spec.comparison_dataset} plots ({link_format})"
+                / path_seg / f"{file_title}.raw.{link_format.value}"
+            )
+            if raw_path.exists():
+                raw_html_paths.append(raw_path)
+                fn_row = _footnote_row(spec)
+                notes = _resolve_footnotes(footnote_rules, fn_row, context="plot")
+                if notes:
+                    all_footnotes.extend(notes)
+
+        if len(raw_html_paths) < 2:
+            continue
+
+        # Deduplicate footnotes preserving order
+        seen: set[str] = set()
+        unique_notes = [n for n in all_footnotes if n not in seen and not seen.add(n)]
+
+        # Build the stacked page using postprocess_plot_html with multiple inputs
+        first_spec = quantity_specs[0][1]
+        path_seg = first_spec.file_path_and_name[0]
+        stacked_title = f"All Enduses (Stacked) {metric}"
+        stacked_path = (
+            output_base / f"{first_spec.comparison_dataset} plots ({link_format})"
+            / path_seg / f"{stacked_title}.{link_format.value}"
+        )
+        ensure_directory(stacked_path.parent)
+        stacked_scale = 1.0 if group_by_label in ("State", "") else 0.5
+        postprocess_plot_html(
+            raw_html_paths,
+            output_path=stacked_path,
+            footnotes=unique_notes or None,
+            source_labels=source_labels,
+            comparison_dataset=first_spec.comparison_dataset.value,
+            scale=stacked_scale,
+        )
+
+        # Add index row
+        rel_path = (
+            Path(f"{first_spec.comparison_dataset} plots ({link_format})")
+            / path_seg / f"{stacked_title}.{link_format.value}"
+        )
+        stacked_sub_key = f"stacked_{stacked_count}"
+        stacked_count += 1
+        stacked_row = {
+            "Index": "",
+            "Comparison Dataset": comparison_ds,
+            "Quantity": "All Enduses (Stacked)",
+            "Metric": metric,
+            "Filter 1": filter1,
+            "Filter 2": filter2,
+            "Group By": group_by_label,
+            "Comparison Plot": f"stacked view||{str(rel_path).replace(chr(92), '/')}",
+            "Data": "",
+        }
+        results[stacked_sub_key] = stacked_row
+        _append_plot_row(csv_path, stacked_row)
+        append_index_row(index_state, stacked_row)
+
+    stacked_pbar.close()
+    if stacked_count:
+        logger.info(f"Generated {stacked_count} synthetic 'All Enduses (Stacked)' pages")
+
+    # Clean up raw Plotly HTML files — only the post-processed versions are needed.
+    for ds in ComparisonDataset:
+        plots_dir = output_base / f"{ds} plots ({link_format})"
+        if plots_dir.exists():
+            for raw_html in plots_dir.rglob(f"*.raw.{link_format.value}"):
+                raw_html.unlink()
 
     # Write the final HTML with static script tags for all shards
     finalize_html_index(index_state)
