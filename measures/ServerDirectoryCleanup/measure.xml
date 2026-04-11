@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>server_directory_cleanup</name>
   <uid>ec7d04ad-0b7b-495b-825a-e1b6d28d1d3f</uid>
-  <version_id>c18a33f9-682b-49fb-9944-cbd8ad95205d</version_id>
-  <version_modified>2025-10-01T22:08:32Z</version_modified>
+  <version_id>3d23b09c-eea6-43f6-be52-4ffed86e2b23</version_id>
+  <version_modified>2024-07-22T22:22:14Z</version_modified>
   <xml_checksum>5F1EDF75</xml_checksum>
   <class_name>ServerDirectoryCleanup</class_name>
   <display_name>Server Directory Cleanup</display_name>
@@ -86,24 +86,6 @@
     <argument>
       <name>retain_eplusout_bnd</name>
       <display_name>Retain eplusout.bnd</display_name>
-      <type>Boolean</type>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>false</default_value>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>retain_eplusout_csv</name>
-      <display_name>Retain eplusout.csv</display_name>
       <type>Boolean</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -264,80 +246,8 @@
       </choices>
     </argument>
     <argument>
-      <name>retain_eplusout_sql</name>
-      <display_name>Retain eplusout.sql</display_name>
-      <type>Boolean</type>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>false</default_value>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>retain_eplusout_perflog_csv</name>
-      <display_name>Retain eplusout_perflog.csv</display_name>
-      <type>Boolean</type>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>false</default_value>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>retain_eplusout_json</name>
-      <display_name>Retain eplusout*.json</display_name>
-      <type>Boolean</type>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>false</default_value>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
       <name>retain_eplusout_msgpack</name>
       <display_name>Retain eplusout*.msgpack</display_name>
-      <type>Boolean</type>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>false</default_value>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>retain_eplusmtr_csv</name>
-      <display_name>Retain eplusmtr.csv</display_name>
       <type>Boolean</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -467,7 +377,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>3228A56C</checksum>
+      <checksum>EDEB37CC</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -484,7 +394,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>73F2E49D</checksum>
+      <checksum>56D96FB6</checksum>
     </file>
   </files>
 </measure>

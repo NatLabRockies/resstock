@@ -98,54 +98,42 @@ class WorkflowOtherTest < Minitest::Test
     assert_equal(0, component_loads.size)
   end
 
-  def test_run_simulation_stochastic_occupancy_schedules
-    hpxml_names = ['base-schedules-simple.xml',
-                   'base-misc-loads-large-uncommon.xml',
-                   'base-misc-loads-large-uncommon2.xml',
-                   'base-lighting-ceiling-fans.xml']
+  def test_run_simulation_detailed_occupancy_schedules
+    [false, true].each do |debug|
+      # Check that the simulation produces stochastic schedules if requested
+      sample_files_path = File.join(File.dirname(__FILE__), '..', 'sample_files')
+      tmp_hpxml_path = File.join(sample_files_path, 'tmp.xml')
+      hpxml = HPXML.new(hpxml_path: File.join(sample_files_path, 'base.xml'))
+      XMLHelper.write_file(hpxml.to_doc, tmp_hpxml_path)
 
-    hpxml_names.each do |hpxml_name|
-      [false, true].each do |debug|
-        # Check that the simulation produces stochastic schedules if requested
-        sample_files_path = File.join(File.dirname(__FILE__), '..', 'sample_files')
-        tmp_hpxml_path = File.join(sample_files_path, 'tmp.xml')
-        hpxml = HPXML.new(hpxml_path: File.join(sample_files_path, hpxml_name))
-        XMLHelper.write_file(hpxml.to_doc, tmp_hpxml_path)
+      rb_path = File.join(File.dirname(__FILE__), '..', 'run_simulation.rb')
+      xml = File.absolute_path(tmp_hpxml_path)
+      command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\" --add-stochastic-schedules"
+      command += ' -d' if debug
+      system(command, err: File::NULL)
 
-        rb_path = File.join(File.dirname(__FILE__), '..', 'run_simulation.rb')
-        xml = File.absolute_path(tmp_hpxml_path)
-        command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\" --add-stochastic-schedules"
-        command += ' -d' if debug
-        system(command, err: File::NULL)
+      # Check for output files
+      assert(File.exist? File.join(File.dirname(xml), 'run', 'results_annual.csv'))
+      assert(File.exist? File.join(File.dirname(xml), 'run', 'in.schedules.csv'))
+      assert(File.exist? File.join(File.dirname(xml), 'run', 'stochastic.csv'))
 
-        # Check for output files
-        assert(File.exist? File.join(File.dirname(xml), 'run', 'results_annual.csv'))
-        assert(File.exist? File.join(File.dirname(xml), 'run', 'in.schedules.csv'))
-        assert(File.exist? File.join(File.dirname(xml), 'run', 'stochastic.csv'))
-
-        # Check for E+ msgpack files
-        if debug
-          assert(File.exist? File.join(File.dirname(xml), 'run', 'eplusout.msgpack'))
-        else
-          refute(File.exist? File.join(File.dirname(xml), 'run', 'eplusout.msgpack'))
-        end
-
-        # Check stochastic.csv headers
-        schedules = CSV.read(File.join(File.dirname(xml), 'run', 'stochastic.csv'), headers: true)
-        if debug
-          assert(schedules.headers.include?(SchedulesFile::Columns[:Sleeping].name))
-        else
-          refute(schedules.headers.include?(SchedulesFile::Columns[:Sleeping].name))
-        end
-
-        # Check run.log has no warnings about both simple and detailed schedules
-        assert(File.exist? File.join(File.dirname(xml), 'run', 'run.log'))
-        log_lines = File.readlines(File.join(File.dirname(xml), 'run', 'run.log')).map(&:strip)
-        refute(log_lines.any? { |log_line| log_line.include?('will be ignored') })
-
-        # Cleanup
-        File.delete(tmp_hpxml_path) if File.exist? tmp_hpxml_path
+      # Check for E+ msgpack files
+      if debug
+        assert(File.exist? File.join(File.dirname(xml), 'run', 'eplusout.msgpack'))
+      else
+        refute(File.exist? File.join(File.dirname(xml), 'run', 'eplusout.msgpack'))
       end
+
+      # Check stochastic.csv headers
+      schedules = CSV.read(File.join(File.dirname(xml), 'run', 'stochastic.csv'), headers: true)
+      if debug
+        assert(schedules.headers.include?(SchedulesFile::Columns[:Sleeping].name))
+      else
+        refute(schedules.headers.include?(SchedulesFile::Columns[:Sleeping].name))
+      end
+
+      # Cleanup
+      File.delete(tmp_hpxml_path) if File.exist? tmp_hpxml_path
     end
   end
 
@@ -250,105 +238,27 @@ class WorkflowOtherTest < Minitest::Test
     refute(File.exist? File.join(File.dirname(xml), 'run', 'eplusout.msgpack'))
   end
 
-  def test_run_simulation_electric_panel_outputs
-    # Check that the simulation produces electric panel only when requested
+  def test_run_defaulted_in_xml
+    # Check that if we simulate the in.xml file (HPXML w/ defaults), we get
+    # the same results as the original HPXML.
 
-    # Run base.xml (no panel information or calculation types)
+    # Run base.xml
     rb_path = File.join(File.dirname(__FILE__), '..', 'run_simulation.rb')
     xml = File.join(File.dirname(__FILE__), '..', 'sample_files', 'base.xml')
     command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\""
     system(command, err: File::NULL)
-
-    # Check for output files
-    refute(File.exist? File.join(File.dirname(xml), 'run', 'results_panel.csv'))
-
-    # Run base-detailed-electric-panel-no-calculation-types.xml (panel information but no calculation types)
-    xml = File.join(File.dirname(__FILE__), '..', 'sample_files', 'base-detailed-electric-panel-no-calculation-types.xml')
-    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\""
-    system(command, err: File::NULL)
-
-    # Check for output files
-    refute(File.exist? File.join(File.dirname(xml), 'run', 'results_panel.csv'))
-
-    # Run base-detailed-electric-panel.xml (both panel information and calculation types)
-    xml = File.join(File.dirname(__FILE__), '..', 'sample_files', 'base-detailed-electric-panel.xml')
-    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\""
-    system(command, err: File::NULL)
-
-    # Check for output files
-    assert(File.exist? File.join(File.dirname(xml), 'run', 'results_panel.csv'))
-  end
-
-  def test_run_defaulted_in_xml_with_hvac_installation_quality
-    # Check that if we simulate the in.xml file (HPXML w/ defaults), we get
-    # the same results as the original HPXML for a home with HVAC installation
-    # defects.
-
-    rb_path = File.join(File.dirname(__FILE__), '..', 'run_simulation.rb')
-    sample_files_path = File.join(File.dirname(__FILE__), '..', 'sample_files')
-
-    tmp_hpxml_path = File.join(sample_files_path, 'tmp.xml')
-    hpxml = HPXML.new(hpxml_path: File.join(sample_files_path, 'base-hvac-install-quality-air-to-air-heat-pump-1-speed.xml'))
-    hpxml.buildings[0].header.allow_increased_fixed_capacities = true
-    hpxml.buildings[0].heat_pumps[0].heating_capacity /= 10.0
-    hpxml.buildings[0].heat_pumps[0].cooling_capacity /= 10.0
-    hpxml.buildings[0].heat_pumps[0].backup_heating_capacity /= 10.0
-    hpxml.buildings[0].heat_pumps[0].heating_design_airflow_cfm /= 10.0
-    hpxml.buildings[0].heat_pumps[0].cooling_design_airflow_cfm /= 10.0
-    XMLHelper.write_file(hpxml.to_doc, tmp_hpxml_path)
-
-    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{tmp_hpxml_path}\""
-    system(command, err: File::NULL)
-    assert(File.exist? File.join(File.dirname(tmp_hpxml_path), 'run', 'results_annual.csv'))
-    base_results = CSV.read(File.join(File.dirname(tmp_hpxml_path), 'run', 'results_annual.csv'))
+    assert(File.exist? File.join(File.dirname(xml), 'run', 'results_annual.csv'))
+    base_results = CSV.read(File.join(File.dirname(xml), 'run', 'results_annual.csv'))
 
     # Run in.xml (generated from base.xml)
-    in_xml = File.join(File.dirname(tmp_hpxml_path), 'run', 'in.xml')
-    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{in_xml}\""
+    xml2 = File.join(File.dirname(xml), 'run', 'in.xml')
+    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml2}\""
     system(command, err: File::NULL)
-    assert(File.exist? File.join(File.dirname(in_xml), 'run', 'results_annual.csv'))
-    default_results = CSV.read(File.join(File.dirname(in_xml), 'run', 'results_annual.csv'))
+    assert(File.exist? File.join(File.dirname(xml2), 'run', 'results_annual.csv'))
+    default_results = CSV.read(File.join(File.dirname(xml2), 'run', 'results_annual.csv'))
 
     # Check two output files are identical
     assert_equal(base_results, default_results)
-
-    # Cleanup
-    File.delete(tmp_hpxml_path) if File.exist? tmp_hpxml_path
-  end
-
-  def test_defrost_heating_loads
-    # Check that if we simulate the heat pump with or without supplemental during defrost
-    # we get the same heating load results
-
-    # Run the test file without supplemental heat during defrost
-    rb_path = File.join(File.dirname(__FILE__), '..', 'run_simulation.rb')
-    xml = File.join(File.dirname(__FILE__), '..', 'sample_files', 'base-hvac-mini-split-heat-pump-ductless-backup-integrated.xml')
-    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\""
-    system(command, err: File::NULL)
-
-    # Check for output files
-    annual_output_path = File.join(File.dirname(xml), 'run', 'results_annual.csv')
-    assert(File.exist? annual_output_path)
-    result_rows = CSV.read(annual_output_path, headers: false)
-    heating_loads_no_defrost_backup = Float(result_rows.find { |r| r[0].to_s.start_with? 'Load: Heating: Delivered' }[1]).round(2)
-    supp_heat_loads_no_defrost_backup = Float(result_rows.find { |r| r[0].to_s.start_with? 'Load: Heating: Heat Pump Backup' }[1]).round(2)
-    supp_heat_energy_no_defrost_backup = Float(result_rows.find { |r| r[0].to_s.start_with? 'End Use: Electricity: Heating Heat Pump Backup (' }[1]).round(2)
-
-    # Run the test file with supplemental heat during defrost
-    xml = File.join(File.dirname(__FILE__), '..', 'sample_files', 'base-hvac-mini-split-heat-pump-ductless-backup-integrated-defrost-with-backup-heat-active.xml')
-    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\""
-    system(command, err: File::NULL)
-
-    # Check for output files
-    annual_output_path = File.join(File.dirname(xml), 'run', 'results_annual.csv')
-    assert(File.exist? annual_output_path)
-    result_rows = CSV.read(annual_output_path, headers: false)
-    heating_loads_with_defrost_backup = Float(result_rows.find { |r| r[0].to_s.start_with? 'Load: Heating: Delivered' }[1]).round(2)
-    supp_heat_loads_with_defrost_backup = Float(result_rows.find { |r| r[0].to_s.start_with? 'Load: Heating: Heat Pump Backup' }[1]).round(2)
-    supp_heat_energy_with_defrost_backup = Float(result_rows.find { |r| r[0].to_s.start_with? 'End Use: Electricity: Heating Heat Pump Backup (' }[1]).round(2)
-    assert_equal(heating_loads_no_defrost_backup, heating_loads_with_defrost_backup)
-    assert_equal(supp_heat_loads_no_defrost_backup, supp_heat_loads_with_defrost_backup)
-    assert_operator(supp_heat_energy_with_defrost_backup, :>, supp_heat_energy_no_defrost_backup)
   end
 
   def test_template_osws

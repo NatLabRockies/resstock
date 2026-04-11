@@ -324,19 +324,19 @@
     "intermediate_peak_end": "2050-11-16 20:00:00"
   },
   "ME":
-  {
-    "summer_peak_start": "2050-08-10 17:00:00",
-    "summer_peak_end": "2050-08-10 21:00:00",
-    "winter_peak_start": "2050-02-15 17:00:00",
-    "winter_peak_end": "2050-02-15 21:00:00",
-    "intermediate_peak_start": "2050-11-28 16:00:00",
-    "intermediate_peak_end": "2050-11-28 20:00:00"
-  },
-  "KY":
-  {
-    "summer_peak_start": "2050-07-07 19:00:00",
-    "summer_peak_end": "2050-07-07 23:00:00",
-    "winter_peak_start": "2050-12-12 17:00:00",
+{
+  "summer_peak_start": "2050-08-10 17:00:00",
+  "summer_peak_end": "2050-08-10 21:00:00",
+  "winter_peak_start": "2050-02-15 17:00:00",
+  "winter_peak_end": "2050-02-15 21:00:00",
+  "intermediate_peak_start": "2050-11-28 16:00:00",
+  "intermediate_peak_end": "2050-11-28 20:00:00"
+},
+"KY":
+{
+"summer_peak_start": "2050-07-07 19:00:00",
+"summer_peak_end": "2050-07-07 23:00:00",
+"winter_peak_start": "2050-12-12 17:00:00",
     "winter_peak_end": "2050-12-12 21:00:00",
     "intermediate_peak_start": "2050-11-29 17:00:00",
     "intermediate_peak_end": "2050-11-29 21:00:00"

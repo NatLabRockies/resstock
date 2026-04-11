@@ -3,8 +3,8 @@
 This folder contains the Read The Docs project for the ResStock Technical Development Guide.
 
 ## GitHub Actions
-In the `.github/workflows/config.yml` file, the `Build technical development guide` step of the `build-documentation` job compiles the project into the `_build/html` folder.
-This folder is then uploaded in the `Save documentation` step.
+In the `.github/workflows/config.yml` file, the `updates-results` job `Build technical development guide` task compiles the project into the `_build/html` folder.
+This folder is then uploaded in the `Save technical development guide` task.
 These actions will help keep the document up to date with any changes and fail in the tests if the document does not compile.
 
 ## Building Technical Development Guide Locally

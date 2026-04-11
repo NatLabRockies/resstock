@@ -1,4 +1,4 @@
-Dependency=HVAC Cooling Type	Dependency=HVAC Has Shared System	Option=AC, SEER2 7.6	Option=AC, SEER2 9.5	Option=AC, SEER2 12.4	Option=AC, SEER2 14.3	Option=Ducted Heat Pump	Option=Non-Ducted Heat Pump	Option=None	Option=Room AC, CEER 8.4	Option=Room AC, CEER 9.7	Option=Room AC, CEER 10.6	Option=Room AC, CEER 11.9	Option=Shared Cooling	sampling_probability
+Dependency=HVAC Cooling Type	Dependency=HVAC Has Shared System	Option=AC, SEER 8	Option=AC, SEER 10	Option=AC, SEER 13	Option=AC, SEER 15	Option=Ducted Heat Pump	Option=Non-Ducted Heat Pump	Option=None	Option=Room AC, EER 8.5	Option=Room AC, EER 9.8	Option=Room AC, EER 10.7	Option=Room AC, EER 12.0	Option=Shared Cooling	sampling_probability
 Central AC	Cooling Only	0	0	0	0	0	0	0	0	0	0	0	1	0.0694444
 Central AC	Heating Only	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0.0509259
 Central AC	Heating and Cooling	0	0	0	0	0	0	0	0	0	0	0	1	0.0509259

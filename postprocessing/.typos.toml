@@ -1,7 +1,0 @@
-[default]
-# This regex will ignore any "word" that is exactly two capital letters,
-# surrounded by word boundaries (like spaces, quotes, etc.).
-# This effectively ignores all two-letter state abbreviations and similar acronyms.
-extend-ignore-identifiers-re = [
-  "\\b[A-Z]{2}\\b",
-]

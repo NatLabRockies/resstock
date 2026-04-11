@@ -1,0 +1,5 @@
+Option=None	sampling_probability
+1	1
+# Created by: manually created
+# Description: Presence, depth, and location of window overhangs (not used in project_national).
+# Source: Not applicable; all homes are assumed to not have window overhangs other than eaves.

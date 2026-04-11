@@ -6,7 +6,6 @@
 require 'openstudio'
 require_relative 'resources/constants'
 require_relative '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
-require_relative '../../resources/hpxml-measures/BuildResidentialHPXML/resources/options'
 
 # start the measure
 class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
@@ -227,7 +226,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
     measures = {}
     upgrade_args_hash = nil
-    existing_options_measure_args = {}
     resstock_arguments_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new) # we want only ResStockArguments registered argument values
     if apply_package_upgrade
       # Obtain measures and arguments to be called
@@ -273,7 +271,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
         options_measure_args, _errors = get_measure_args_from_option_names(lookup_csv_data, [option_name], parameter_name, lookup_file, runner)
         options_measure_args[option_name].each do |measure_subdir, args_hash|
           update_args_hash(measures, measure_subdir, args_hash)
-          update_args_hash(measures, 'ResStockArgumentsPostHPXML', args_hash) if measure_subdir == 'ResStockArguments'
         end
       end
 
@@ -286,9 +283,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       if !measures.keys.include?('ResStockArguments')
         measures['ResStockArguments'] = [{}]
       end
-      if !measures.keys.include?('ResStockArgumentsPostHPXML')
-        measures['ResStockArgumentsPostHPXML'] = [{}]
-      end
 
       # Save the hash of applicable upgrade measure arguments
       upgrade_args_hash = measures['ResStockArguments'][0].clone
@@ -300,8 +294,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
           existing_option_name = values[OpenStudio::toUnderscoreCase(parameter_name)]
 
           options_measure_args, _errors = get_measure_args_from_option_names(lookup_csv_data, [existing_option_name], parameter_name, lookup_file, runner)
-          existing_options_measure_args[parameter_name] = options_measure_args[existing_option_name]
-          existing_options_measure_args[parameter_name].each do |measure_subdir2, args_hash|
+          options_measure_args[existing_option_name].each do |measure_subdir2, args_hash|
             next if measure_subdir != measure_subdir2
 
             # Append any new arguments
@@ -312,7 +305,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
               new_args_hash[k] = v
             end
             update_args_hash(measures, measure_subdir, new_args_hash)
-            update_args_hash(measures, 'ResStockArgumentsPostHPXML', new_args_hash) if measure_subdir == 'ResStockArguments'
           end
         end
       end
@@ -335,6 +327,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     # Set arguments for the BuildResidentialHPXML measure
     hpxml_path = File.expand_path('../upgraded.xml')
     measures['BuildResidentialHPXML'] = [{ 'hpxml_path' => hpxml_path }]
+    measures['BuildResidentialHPXML'][0]['apply_defaults'] = true
+    measures['BuildResidentialHPXML'][0]['apply_validation'] = true
 
     set_header(measures, hpxml, values)
     set_building_header(measures)
@@ -350,10 +344,9 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       set_building_construction(measures, hpxml_bldg)
       set_dehumidifier(measures, hpxml_bldg)
       set_electric_panel(measures, hpxml_bldg, upgrade_args_hash)
-
-      # HVAC
       set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
-      set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg, existing_options_measure_args['HVAC Heating Efficiency']['ResStockArguments']['hvac_heating_system'])
+
+      set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg)
       baseline_max_airflow_cfm = set_autosizing_limits(runner, measures, hpxml_bldg)
 
       # Specify measures to run
@@ -363,7 +356,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
         return false
       end
 
-      set_adjusted_fan_efficiency(runner, measures, hpxml_bldg, baseline_max_airflow_cfm)
+      set_adjusted_fan_efficiency(runner, measures, hpxml_path, unit_number, baseline_max_airflow_cfm)
     end
 
     # Set arguments for the BuildResidentialScheduleFile measure
@@ -381,6 +374,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     end
 
     # Set arguments for the ResStockArgumentsPostHPXML measure
+    measures['ResStockArgumentsPostHPXML'] = [{}] if !measures.keys.include?('ResStockArgumentsPostHPXML')
     measures['ResStockArgumentsPostHPXML'][0]['hpxml_path'] = hpxml_path
     measures['ResStockArgumentsPostHPXML'][0]['building_id'] = values['building_id']
     measures_hash = { 'ResStockArgumentsPostHPXML' => measures['ResStockArgumentsPostHPXML'] }
@@ -401,7 +395,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
       osw_out = 'upgraded.osw'
       osw_out = "upgraded#{i + 1}.osw" if i > 0
-      next if apply_measures(dir, measures_to_apply, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', osw_out)
+      next unless not apply_measures(dir, measures_to_apply, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', osw_out)
 
       register_logs(runner, new_runner)
       return false
@@ -435,6 +429,10 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     # Whole SFA/MF Building Simulation?
     measures['BuildResidentialHPXML'][0]['whole_sfa_or_mf_building_sim'] = hpxml.header.whole_sfa_or_mf_building_sim
 
+    # Software Info
+    measures['BuildResidentialHPXML'][0]['software_info_program_used'] = hpxml.header.software_program_used
+    measures['BuildResidentialHPXML'][0]['software_info_program_version'] = hpxml.header.software_program_version
+
     # Simulation Control
     measures['BuildResidentialHPXML'][0]['simulation_control_timestep'] = values['simulation_control_timestep']
     if !values['simulation_control_run_period_begin_month'].nil? && !values['simulation_control_run_period_begin_day_of_month'].nil? && !values['simulation_control_run_period_end_month'].nil? && !values['simulation_control_run_period_end_day_of_month'].nil?
@@ -444,43 +442,54 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       end_day = values['simulation_control_run_period_end_day_of_month']
       measures['BuildResidentialHPXML'][0]['simulation_control_run_period'] = "#{begin_month} #{begin_day} - #{end_month} #{end_day}"
     end
-    measures['ResStockArgumentsPostHPXML'][0]['simulation_control_run_period_calendar_year'] = values['simulation_control_run_period_calendar_year']
+    measures['BuildResidentialHPXML'][0]['simulation_control_run_period_calendar_year'] = values['simulation_control_run_period_calendar_year']
 
     # Emissions
-    if values.keys.include?('emissions_electricity_filepaths')
-      values.each do |arg, value|
-        next unless arg.start_with? 'emissions'
-        next if arg == 'emissions_electricity_folders'
-
-        measures['ResStockArgumentsPostHPXML'][0][arg] = value
-      end
+    if values.keys.include?('emissions_electricity_values_or_filepaths')
+      measures['BuildResidentialHPXML'][0]['emissions_scenario_names'] = values['emissions_scenario_names']
+      measures['BuildResidentialHPXML'][0]['emissions_types'] = values['emissions_types']
+      measures['BuildResidentialHPXML'][0]['emissions_electricity_units'] = values['emissions_electricity_units']
+      measures['BuildResidentialHPXML'][0]['emissions_electricity_values_or_filepaths'] = values['emissions_electricity_values_or_filepaths']
+      measures['BuildResidentialHPXML'][0]['emissions_fossil_fuel_units'] = values['emissions_fossil_fuel_units']
+      measures['BuildResidentialHPXML'][0]['emissions_natural_gas_values'] = values['emissions_natural_gas_values']
+      measures['BuildResidentialHPXML'][0]['emissions_propane_values'] = values['emissions_propane_values']
+      measures['BuildResidentialHPXML'][0]['emissions_fuel_oil_values'] = values['emissions_fuel_oil_values']
+      measures['BuildResidentialHPXML'][0]['emissions_wood_values'] = values['emissions_wood_values']
     end
 
     # Utility Bills
-    values.each do |arg, value|
-      next unless arg.start_with? 'utility_bill'
-      next if ['utility_bill_simple_filepaths', 'utility_bill_detailed_filepaths'].include? arg
-
-      measures['ResStockArgumentsPostHPXML'][0][arg] = value
-    end
+    measures['BuildResidentialHPXML'][0]['utility_bill_scenario_names'] = values['utility_bill_scenario_names']
+    measures['BuildResidentialHPXML'][0]['utility_bill_electricity_filepaths'] = values['utility_bill_electricity_filepaths']
+    measures['BuildResidentialHPXML'][0]['utility_bill_electricity_fixed_charges'] = values['utility_bill_electricity_fixed_charges']
+    measures['BuildResidentialHPXML'][0]['utility_bill_electricity_marginal_rates'] = values['utility_bill_electricity_marginal_rates']
+    measures['BuildResidentialHPXML'][0]['utility_bill_natural_gas_fixed_charges'] = values['utility_bill_natural_gas_fixed_charges']
+    measures['BuildResidentialHPXML'][0]['utility_bill_natural_gas_marginal_rates'] = values['utility_bill_natural_gas_marginal_rates']
+    measures['BuildResidentialHPXML'][0]['utility_bill_propane_fixed_charges'] = values['utility_bill_propane_fixed_charges']
+    measures['BuildResidentialHPXML'][0]['utility_bill_propane_marginal_rates'] = values['utility_bill_propane_marginal_rates']
+    measures['BuildResidentialHPXML'][0]['utility_bill_fuel_oil_fixed_charges'] = values['utility_bill_fuel_oil_fixed_charges']
+    measures['BuildResidentialHPXML'][0]['utility_bill_fuel_oil_marginal_rates'] = values['utility_bill_fuel_oil_marginal_rates']
+    measures['BuildResidentialHPXML'][0]['utility_bill_wood_fixed_charges'] = values['utility_bill_wood_fixed_charges']
+    measures['BuildResidentialHPXML'][0]['utility_bill_wood_marginal_rates'] = values['utility_bill_wood_marginal_rates']
+    measures['BuildResidentialHPXML'][0]['utility_bill_pv_compensation_types'] = values['utility_bill_pv_compensation_types']
+    measures['BuildResidentialHPXML'][0]['utility_bill_pv_net_metering_annual_excess_sellback_rate_types'] = values['utility_bill_pv_net_metering_annual_excess_sellback_rate_types']
+    measures['BuildResidentialHPXML'][0]['utility_bill_pv_net_metering_annual_excess_sellback_rates'] = values['utility_bill_pv_net_metering_annual_excess_sellback_rates']
+    measures['BuildResidentialHPXML'][0]['utility_bill_pv_feed_in_tariff_rates'] = values['utility_bill_pv_feed_in_tariff_rates']
+    measures['BuildResidentialHPXML'][0]['utility_bill_pv_monthly_grid_connection_fee_units'] = values['utility_bill_pv_monthly_grid_connection_fee_units']
+    measures['BuildResidentialHPXML'][0]['utility_bill_pv_monthly_grid_connection_fees'] = values['utility_bill_pv_monthly_grid_connection_fees']
   end
 
   def set_resstock_arguments(measures, child_runner)
     # Assign ResStockArgument's runner arguments to BuildResidentialHPXML
     child_runner.result.stepValues.each do |step_value|
-      next unless measures['BuildResidentialHPXML'][0][step_value.name].nil?
-
       value = get_value_from_workflow_step_value(step_value)
-      next if value == ''
+      next if value == '' || Constants::ArgumentsToExclude.include?(step_value.name)
 
       measures['BuildResidentialHPXML'][0][step_value.name] = value
     end
   end
 
   def set_building_construction(measures, hpxml_bldg)
-    if hpxml_bldg.building_construction.number_of_units > 1
-      measures['BuildResidentialHPXML'][0]['unit_multiplier'] = hpxml_bldg.building_construction.number_of_units
-    end
+    measures['BuildResidentialHPXML'][0]['unit_multiplier'] = hpxml_bldg.building_construction.number_of_units
   end
 
   def set_building_header(measures)
@@ -494,61 +503,63 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
   def set_dehumidifier(measures, hpxml_bldg)
     if hpxml_bldg.building_construction.number_of_units > 1
-      measures['BuildResidentialHPXML'][0]['appliance_dehumidifier'] = 'None' # limitation of OS-HPXML
+      measures['BuildResidentialHPXML'][0]['dehumidifier_type'] = 'none' # limitation of OS-HPXML
     end
   end
 
   def set_battery(measures, hpxml)
     if hpxml.header.whole_sfa_or_mf_building_sim && hpxml.buildings.size > 1
-      measures['BuildResidentialHPXML'][0]['battery'] = 'None' # limitation of OS-HPXML
+      measures['BuildResidentialHPXML'][0]['battery_present'] = 'false' # limitation of OS-HPXML
     end
   end
 
   def set_electric_panel(measures, hpxml_bldg, upgrade_args_hash)
-    measures['ResStockArgumentsPostHPXML'][0]['electric_panel_service_max_current_rating'] = hpxml_bldg.electric_panels[0].max_current_rating
-    measures['ResStockArgumentsPostHPXML'][0]['electric_panel_breaker_spaces_rated_total'] = hpxml_bldg.electric_panels[0].breaker_spaces_total
+    measures['BuildResidentialHPXML'][0]['electric_panel_service_rating'] = hpxml_bldg.electric_panels[0].max_current_rating
+    measures['BuildResidentialHPXML'][0]['electric_panel_breaker_spaces_type'] = 'total'
+    measures['BuildResidentialHPXML'][0]['electric_panel_breaker_spaces'] = hpxml_bldg.electric_panels[0].breaker_spaces_total
 
     panel_system_additions = get_panel_system_additions(upgrade_args_hash)
-    measures['ResStockArgumentsPostHPXML'][0].update(panel_system_additions)
+    measures['BuildResidentialHPXML'][0].update(panel_system_additions)
   end
 
   def set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
     # Retain (calculated) HVAC capacities if upgrade is not HVAC system related
     # Do not retain HVAC autosizing factors and defect ratios if upgrade is HVAC system related
     hvac_system_upgrades = get_hvac_system_upgrades(hpxml_bldg, upgrade_args_hash)
-    values = get_hvac_system_values(hpxml_bldg, hvac_system_upgrades)
+    capacities, autosizing_factors, defect_ratios = get_hvac_system_values(hpxml_bldg, hvac_system_upgrades)
 
-    values.each do |arg, value|
-      measures['ResStockArgumentsPostHPXML'][0][arg] = value
-    end
+    measures['BuildResidentialHPXML'][0]['heating_system_heating_capacity'] = capacities['heating_system_heating_capacity']
+    measures['BuildResidentialHPXML'][0]['heating_system_2_heating_capacity'] = capacities['heating_system_2_heating_capacity']
+    measures['BuildResidentialHPXML'][0]['cooling_system_cooling_capacity'] = capacities['cooling_system_cooling_capacity']
+    measures['BuildResidentialHPXML'][0]['heat_pump_heating_capacity'] = capacities['heat_pump_heating_capacity']
+    measures['BuildResidentialHPXML'][0]['heat_pump_cooling_capacity'] = capacities['heat_pump_cooling_capacity']
+    measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_capacity'] = capacities['heat_pump_backup_heating_capacity']
+
+    measures['BuildResidentialHPXML'][0]['heating_system_heating_autosizing_factor'] = autosizing_factors['heating_system_heating_autosizing_factor']
+    measures['BuildResidentialHPXML'][0]['heating_system_2_heating_autosizing_factor'] = autosizing_factors['heating_system_2_heating_autosizing_factor']
+    measures['BuildResidentialHPXML'][0]['cooling_system_cooling_autosizing_factor'] = autosizing_factors['cooling_system_cooling_autosizing_factor']
+    measures['BuildResidentialHPXML'][0]['heat_pump_heating_autosizing_factor'] = autosizing_factors['heat_pump_heating_autosizing_factor']
+    measures['BuildResidentialHPXML'][0]['heat_pump_cooling_autosizing_factor'] = autosizing_factors['heat_pump_cooling_autosizing_factor']
+    measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_autosizing_factor'] = autosizing_factors['heat_pump_backup_heating_autosizing_factor']
+
+    measures['BuildResidentialHPXML'][0]['heating_system_airflow_defect_ratio'] = defect_ratios['heating_system_airflow_defect_ratio']
+    measures['BuildResidentialHPXML'][0]['cooling_system_airflow_defect_ratio'] = defect_ratios['cooling_system_airflow_defect_ratio']
+    measures['BuildResidentialHPXML'][0]['cooling_system_charge_defect_ratio'] = defect_ratios['cooling_system_charge_defect_ratio']
+    measures['BuildResidentialHPXML'][0]['heat_pump_airflow_defect_ratio'] = defect_ratios['heat_pump_airflow_defect_ratio']
+    measures['BuildResidentialHPXML'][0]['heat_pump_charge_defect_ratio'] = defect_ratios['heat_pump_charge_defect_ratio']
   end
 
-  def get_detailed_hvac_arguments(measures)
-    # Returns a hash of detailed option properties (from the option TSV) for the given HVAC systems
-    args = {}
-    ['hvac_heating_system',
-     'hvac_heating_system_2',
-     'hvac_cooling_system',
-     'hvac_heat_pump'].each do |parameter_name|
-      tsv_filename = "#{parameter_name}.tsv"
-      get_option_properties(args, tsv_filename, measures['ResStockArguments'][0][parameter_name])
-    end
-    return args
-  end
-
-  def set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg, hvac_heating_system)
+  def set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg)
     # Retain Existing Heating System as Heat Pump Backup
-    if measures['ResStockArguments'][0]['hvac_heat_pump_backup_use_existing_system'].to_s.downcase == 'true'
-      args = get_detailed_hvac_arguments(measures)
+    if measures['ResStockArguments'][0]['heat_pump_backup_use_existing_system'] == 'true'
+      heating_system = get_heating_system(hpxml_bldg)
+      heat_pump_type = measures['BuildResidentialHPXML'][0]['heat_pump_type']
+      heat_pump_is_ducted = measures['BuildResidentialHPXML'][0]['heat_pump_is_ducted']
 
       # Only set the backup if the heat pump is applied and there is an existing heating system
-      heat_pump_type = args[:hvac_heat_pump_type]
-      if not heat_pump_type.nil?
-        heating_system = get_heating_system(hpxml_bldg)
-
-        if hvac_heating_system != 'None'
-          heat_pump_is_ducted = args[:hvac_heat_pump_is_ducted]
-          heat_pump_backup_type = get_heat_pump_backup_type(heating_system.distribution_system, heat_pump_type, heat_pump_is_ducted)
+      if heat_pump_type != 'none'
+        if not heating_system.nil?
+          heat_pump_backup_type = get_heat_pump_backup_type(heating_system, heat_pump_type, heat_pump_is_ducted)
           heat_pump_backup_values = get_heat_pump_backup_values(heating_system)
 
           heating_system_type = heat_pump_backup_values['heating_system_type']
@@ -563,14 +574,13 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
             # Likely only fuel-fired furnace as integrated backup
             if heat_pump_backup_fuel != HPXML::FuelTypeElectricity
-              measures['BuildResidentialHPXML'][0]['hvac_heat_pump_backup'] = 'Integrated, Electricity, 100% Efficiency' # Intentionally set the default which is then re-set in ResStockArgumentsPostHPXML
+              measures['BuildResidentialHPXML'][0]['heat_pump_backup_type'] = heat_pump_backup_type
+              measures['BuildResidentialHPXML'][0]['heat_pump_backup_fuel'] = heat_pump_backup_fuel
+              measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_efficiency'] = heat_pump_backup_heating_efficiency
+              measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_capacity'] = heat_pump_backup_heating_capacity
+              measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_autosizing_factor'] = heat_pump_backup_heating_autosizing_factor
 
-              measures['ResStockArgumentsPostHPXML'][0]['heat_pump_backup_fuel'] = heat_pump_backup_fuel
-              measures['ResStockArgumentsPostHPXML'][0]['heat_pump_backup_heating_efficiency'] = heat_pump_backup_heating_efficiency
-              measures['ResStockArgumentsPostHPXML'][0]['heat_pump_backup_heating_capacity'] = heat_pump_backup_heating_capacity
-              measures['ResStockArgumentsPostHPXML'][0]['heat_pump_backup_heating_autosizing_factor'] = heat_pump_backup_heating_autosizing_factor
-
-              runner.registerInfo("Found '#{heating_system_type}' heating system type; setting it as 'heat_pump_backup_type=#{heat_pump_backup_type}'.")
+              runner.registerInfo("Found '#{heating_system_type}' heating system type; setting it as 'heat_pump_backup_type=#{measures['BuildResidentialHPXML'][0]['heat_pump_backup_type']}'.")
             else # Likely would not have electric furnace as integrated backup
               runner.registerInfo("Found '#{heating_system_type}' heating system type with '#{heat_pump_backup_fuel}' fuel type; not setting it as integrated backup.")
             end
@@ -579,21 +589,27 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
           # e.g., ductless heat pump (e.g., ductless minisplit) with ducted (e.g., furnace) or ductless (e.g., boiler) backup
           # e.g., ducted heat pump (e.g., ashp, gshp) with ductless (e.g., boiler) backup
           elsif heat_pump_backup_type == HPXML::HeatPumpBackupTypeSeparate
-            measures['BuildResidentialHPXML'][0]['hvac_heat_pump_heating_load_served'] = '100%' # It's possible this was < 1.0 due to adjustment for secondary heating system
-            measures['BuildResidentialHPXML'][0]['hvac_heat_pump_backup'] = 'Separate Heating System'
-            measures['BuildResidentialHPXML'][0]['hvac_heating_system_2'] = hvac_heating_system
+            # It's possible this was < 1.0 due to adjustment for secondary heating system
+            measures['BuildResidentialHPXML'][0]['heat_pump_fraction_heat_load_served'] = 1.0
 
-            measures['ResStockArgumentsPostHPXML'][0]['heating_system_2_fuel'] = heat_pump_backup_fuel
-            measures['ResStockArgumentsPostHPXML'][0]['heating_system_2_heating_capacity'] = heat_pump_backup_heating_capacity
-            measures['ResStockArgumentsPostHPXML'][0]['heating_system_2_heating_autosizing_factor'] = heat_pump_backup_heating_autosizing_factor
+            measures['BuildResidentialHPXML'][0]['heat_pump_backup_type'] = heat_pump_backup_type
+            measures['BuildResidentialHPXML'][0]['heating_system_2_type'] = heating_system_type
+            measures['BuildResidentialHPXML'][0]['heating_system_2_fuel'] = heat_pump_backup_fuel
+            measures['BuildResidentialHPXML'][0]['heating_system_2_heating_efficiency'] = heat_pump_backup_heating_efficiency
+            measures['BuildResidentialHPXML'][0]['heating_system_2_heating_capacity'] = heat_pump_backup_heating_capacity
+            measures['BuildResidentialHPXML'][0]['heating_system_2_heating_autosizing_factor'] = heat_pump_backup_heating_autosizing_factor
 
-            runner.registerInfo("Found '#{heating_system_type}' heating system type; setting it as 'heat_pump_backup_type=#{heat_pump_backup_type}'.")
+            # Hard set these to default values in case the lookup set them to "auto"
+            measures['BuildResidentialHPXML'][0]['heat_pump_backup_fuel'] = HPXML::FuelTypeElectricity
+            measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_efficiency'] = 1
+
+            runner.registerInfo("Found '#{heating_system_type}' heating system type; setting it as 'heat_pump_backup_type=#{measures['BuildResidentialHPXML'][0]['heat_pump_backup_type']}'.")
           end
         elsif heating_system.nil?
-          # Set heat pump backup type to default in case the lookup had set it to separate
-          if measures['ResStockArguments'][0]['hvac_heat_pump_backup'] == 'Separate Heating System'
-            measures['BuildResidentialHPXML'][0]['hvac_heat_pump_backup'] = 'Integrated, Electricity, 100% Efficiency'
-          end
+          # Hard set these to default values in case the lookup set them to "auto"
+          measures['BuildResidentialHPXML'][0]['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeIntegrated
+          measures['BuildResidentialHPXML'][0]['heat_pump_backup_fuel'] = HPXML::FuelTypeElectricity
+          measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_efficiency'] = 1
 
           runner.registerWarning('Either a primary heating system was not found, or it was found but is a shared system; not setting it as heat pump backup.')
         end
@@ -604,47 +620,32 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   def set_autosizing_limits(runner, measures, hpxml_bldg)
     # Use Autosizing Limits and Maintain Duct System Curve (Part 1)
     # Set the autosizing limit based on the baseline airflow.
-    if measures['ResStockArguments'][0]['hvac_heat_pump_sizing_is_duct_limited'].to_s.downcase == 'true'
+    if measures['ResStockArguments'][0]['heat_pump_sizing_is_duct_limited'] == 'true'
       duct_restriction_values = get_duct_restriction_values(hpxml_bldg)
       baseline_max_airflow_cfm = duct_restriction_values['max_airflow_cfm']
       autosizing_limit = duct_restriction_values['autosizing_limit']
 
       # Only limit HVAC system types with ducted air distribution.
       if not autosizing_limit.nil?
-        args = get_detailed_hvac_arguments(measures)
-
-        # Heating system
-        heating_system_type = args[:hvac_heating_system_type]
-        if [HPXML::HVACTypeFurnace].include?(heating_system_type)
-          measures['ResStockArgumentsPostHPXML'][0]['heating_system_heating_autosizing_limit'] = autosizing_limit
+        if [HPXML::HVACTypeFurnace].include?(measures['BuildResidentialHPXML'][0]['heating_system_type'])
+          measures['BuildResidentialHPXML'][0]['heating_system_heating_autosizing_limit'] = autosizing_limit
           runner.registerInfo("The capacity of the upgraded heating system is limited to 'heating_system_heating_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
         end
-
-        # Cooling system
-        cooling_system_type = args[:hvac_cooling_system_type]
-        cooling_system_is_ducted = args[:hvac_cooling_system_is_ducted]
-        if ([HPXML::HVACTypeCentralAirConditioner].include?(cooling_system_type) ||
-           ([HPXML::HVACTypeMiniSplitAirConditioner].include?(cooling_system_type) && cooling_system_is_ducted))
-          measures['ResStockArgumentsPostHPXML'][0]['cooling_system_cooling_autosizing_limit'] = autosizing_limit
+        if [HPXML::HVACTypeCentralAirConditioner].include?(measures['BuildResidentialHPXML'][0]['cooling_system_type']) ||
+           ([HPXML::HVACTypeEvaporativeCooler, HPXML::HVACTypeMiniSplitAirConditioner].include?(measures['BuildResidentialHPXML'][0]['cooling_system_type']) && (measures['BuildResidentialHPXML'][0]['cooling_system_is_ducted'] == 'true'))
+          measures['BuildResidentialHPXML'][0]['cooling_system_cooling_autosizing_limit'] = autosizing_limit
           runner.registerInfo("The capacity of the upgraded cooling system is limited to 'cooling_system_cooling_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
         end
-
-        # Heat pump
-        heat_pump_type = args[:hvac_heat_pump_type]
-        heat_pump_is_ducted = args[:hvac_heat_pump_is_ducted]
-        if ([HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpGroundToAir].include?(heat_pump_type) ||
-           ([HPXML::HVACTypeHeatPumpMiniSplit].include?(heat_pump_type) && heat_pump_is_ducted))
-          measures['ResStockArgumentsPostHPXML'][0]['heat_pump_heating_autosizing_limit'] = autosizing_limit
-          measures['ResStockArgumentsPostHPXML'][0]['heat_pump_cooling_autosizing_limit'] = autosizing_limit
+        if [HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpGroundToAir].include?(measures['BuildResidentialHPXML'][0]['heat_pump_type']) ||
+           ([HPXML::HVACTypeHeatPumpMiniSplit].include?(measures['BuildResidentialHPXML'][0]['heat_pump_type']) && (measures['BuildResidentialHPXML'][0]['heat_pump_is_ducted']) == 'true')
+          measures['BuildResidentialHPXML'][0]['heat_pump_heating_autosizing_limit'] = autosizing_limit
+          measures['BuildResidentialHPXML'][0]['heat_pump_cooling_autosizing_limit'] = autosizing_limit
           # We intentionally do not limit the heat pump backup heating autosized value.
           runner.registerInfo("The heating capacity of the upgraded heat pump is limited to 'heat_pump_heating_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
           runner.registerInfo("The cooling capacity of the upgraded heat pump is limited to 'heat_pump_cooling_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
         end
-
-        # Heating system 2
-        heating_system_2_type = args[:hvac_heating_system_2_type]
-        if [HPXML::HVACTypeFurnace].include?(heating_system_2_type)
-          measures['ResStockArgumentsPostHPXML'][0]['heating_system_2_heating_autosizing_limit'] = autosizing_limit
+        if [HPXML::HVACTypeFurnace].include?(measures['BuildResidentialHPXML'][0]['heating_system_2_type'])
+          measures['BuildResidentialHPXML'][0]['heating_system_2_heating_autosizing_limit'] = autosizing_limit
           runner.registerInfo("The capacity of the upgraded second heating system is limited to 'heating_system_2_heating_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
         end
       end
@@ -653,35 +654,52 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     return
   end
 
-  def set_adjusted_fan_efficiency(runner, measures, hpxml_bldg, baseline_max_airflow_cfm)
+  def set_adjusted_fan_efficiency(runner, measures, hpxml_path, unit_number, baseline_max_airflow_cfm)
     # Use Autosizing Limits and Maintain Duct System Curve (Part 2)
     # - Get the upgrade airflow cfm.
     # - Use it along with the baseline airflow cfm and upgrade blower fan W/cfm.
-    # - Set the adjustment to the upgrade blower fan W/cfm.
-    if measures['ResStockArguments'][0]['hvac_heat_pump_sizing_is_duct_limited'].to_s.downcase == 'true'
+    # - Make an adjustment to the upgrade blower fan W/cfm.
+    # - Update the HPXML Building (using a method borrowed from BuildResidentialHPXML).
+    # - Write the updated HPXML file back out.
+    if measures['ResStockArguments'][0]['heat_pump_sizing_is_duct_limited'] == 'true'
+      if File.exist?(hpxml_path)
+        hpxml = HPXML.new(hpxml_path: hpxml_path)
+      else
+        runner.registerWarning("ApplyUpgrade measure could not find '#{hpxml_path}'.")
+        return true
+      end
+      hpxml_bldg = hpxml.buildings[unit_number]
+
       duct_restriction_values = get_duct_restriction_values(hpxml_bldg)
       upgrade_max_airflow_cfm = duct_restriction_values['max_airflow_cfm']
 
       if (not baseline_max_airflow_cfm.nil?) && (not upgrade_max_airflow_cfm.nil?) # ducted -> ducted
         fan_watts_per_cfm = get_fan_watts_per_cfm(hpxml_bldg)
         adjusted_fan_watts_per_cfm = get_adjusted_fan_watts_per_cfm(baseline_max_airflow_cfm, upgrade_max_airflow_cfm, fan_watts_per_cfm)
-        measures['ResStockArgumentsPostHPXML'][0]['hvac_blower_fan_watts_per_cfm'] = adjusted_fan_watts_per_cfm
+
+        HPXMLFile.set_hvac_blower(hpxml_bldg, { :hvac_blower_fan_watts_per_cfm => adjusted_fan_watts_per_cfm })
+        XMLHelper.write_file(hpxml.to_doc(), hpxml_path)
+
         runner.registerInfo("The blower fan efficiency of #{fan_watts_per_cfm} was adjusted to 'hvac_blower_fan_watts_per_cfm=#{adjusted_fan_watts_per_cfm}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an upgrade maximum airflow rate of #{upgrade_max_airflow_cfm} cfm.")
       end
     end
   end
 
   def get_heating_system(hpxml_bldg)
-    return hpxml_bldg.heating_systems.find { |h| h.primary_system && !h.is_shared_system }
+    hpxml_bldg.heating_systems.each do |heating_system|
+      next unless heating_system.primary_system
+      next if heating_system.is_shared_system
+
+      return heating_system
+    end
+    return
   end
 
-  def get_heat_pump_backup_type(heating_distribution_system, heat_pump_type, heat_pump_is_ducted)
-    ducted_backup = (!heating_distribution_system.nil? && heating_distribution_system.distribution_system_type == HPXML::HVACDistributionTypeAir)
-    if ducted_backup
-      if ([HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpGroundToAir].include?(heat_pump_type) ||
-         ([HPXML::HVACTypeHeatPumpMiniSplit].include?(heat_pump_type) && heat_pump_is_ducted))
-        return HPXML::HeatPumpBackupTypeIntegrated
-      end
+  def get_heat_pump_backup_type(heating_system, heat_pump_type, heat_pump_is_ducted)
+    ducted_backup = [HPXML::HVACTypeFurnace].include?(heating_system.heating_system_type)
+    if (ducted_backup && (heat_pump_type == HPXML::HVACTypeHeatPumpMiniSplit) && (heat_pump_is_ducted == 'true')) ||
+       (ducted_backup && [HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpGroundToAir].include?(heat_pump_type))
+      return HPXML::HeatPumpBackupTypeIntegrated
     end
 
     return HPXML::HeatPumpBackupTypeSeparate
@@ -711,7 +729,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     hvac_system_upgrades = []
     args_hash.keys.each do |arg|
       # Detect whether we are upgrading the heating system
-      if arg == 'hvac_heating_system'
+      if arg.start_with?('heating_system_') && (not arg.start_with?('heating_system_2_'))
         hpxml_bldg.heating_systems.each do |heating_system|
           next unless heating_system.primary_system
 
@@ -720,7 +738,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       end
 
       # Detect whether we are upgrading the secondary heating system
-      if arg == 'hvac_heating_system_2'
+      if arg.start_with?('heating_system_2_')
         hpxml_bldg.heating_systems.each do |heating_system|
           next if heating_system.primary_system
 
@@ -729,14 +747,14 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       end
 
       # Detect whether we are upgrading the cooling system
-      if arg == 'hvac_cooling_system'
+      if arg.start_with?('cooling_system_')
         hpxml_bldg.cooling_systems.each do |cooling_system|
           hvac_system_upgrades << cooling_system.id
         end
       end
 
       # Detect whether we are upgrading the heat pump
-      next if arg != 'hvac_heat_pump'
+      next unless arg.start_with?('heat_pump_')
 
       hpxml_bldg.heat_pumps.each do |heat_pump|
         hvac_system_upgrades << heat_pump.id
@@ -747,13 +765,16 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   end
 
   def get_hvac_system_values(hpxml_bldg, hvac_system_upgrades)
-    values = {
+    capacities = {
       'heating_system_heating_capacity' => nil,
       'heating_system_2_heating_capacity' => nil,
       'cooling_system_cooling_capacity' => nil,
       'heat_pump_heating_capacity' => nil,
       'heat_pump_cooling_capacity' => nil,
-      'heat_pump_backup_heating_capacity' => nil,
+      'heat_pump_backup_heating_capacity' => nil
+    }
+
+    autosizing_factors = {
       'heating_system_heating_autosizing_factor' => nil,
       'heating_system_2_heating_autosizing_factor' => nil,
       'cooling_system_cooling_autosizing_factor' => nil,
@@ -762,82 +783,97 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       'heat_pump_backup_heating_autosizing_factor' => nil
     }
 
+    defect_ratios = {
+      'heating_system_airflow_defect_ratio' => nil,
+      'cooling_system_airflow_defect_ratio' => nil,
+      'cooling_system_charge_defect_ratio' => nil,
+      'heat_pump_airflow_defect_ratio' => nil,
+      'heat_pump_charge_defect_ratio' => nil
+    }
+
     hpxml_bldg.heating_systems.each do |heating_system|
       next unless heating_system.primary_system
       next if hvac_system_upgrades.include?(heating_system.id)
 
-      values['heating_system_heating_capacity'] = heating_system.heating_capacity
-      values['heating_system_heating_autosizing_factor'] = heating_system.heating_autosizing_factor
+      capacities['heating_system_heating_capacity'] = heating_system.heating_capacity
+      autosizing_factors['heating_system_heating_autosizing_factor'] = heating_system.heating_autosizing_factor
+      defect_ratios['heating_system_airflow_defect_ratio'] = heating_system.airflow_defect_ratio
     end
 
     hpxml_bldg.heating_systems.each do |heating_system|
       next if heating_system.primary_system
       next if hvac_system_upgrades.include?(heating_system.id)
 
-      values['heating_system_2_heating_capacity'] = heating_system.heating_capacity
-      values['heating_system_2_heating_autosizing_factor'] = heating_system.heating_autosizing_factor
+      capacities['heating_system_2_heating_capacity'] = heating_system.heating_capacity
+      autosizing_factors['heating_system_2_heating_autosizing_factor'] = heating_system.heating_autosizing_factor
     end
 
     hpxml_bldg.cooling_systems.each do |cooling_system|
       next if hvac_system_upgrades.include?(cooling_system.id)
 
-      values['cooling_system_cooling_capacity'] = cooling_system.cooling_capacity
-      values['cooling_system_cooling_autosizing_factor'] = cooling_system.cooling_autosizing_factor
+      capacities['cooling_system_cooling_capacity'] = cooling_system.cooling_capacity
+      autosizing_factors['cooling_system_cooling_autosizing_factor'] = cooling_system.cooling_autosizing_factor
+      defect_ratios['cooling_system_airflow_defect_ratio'] = cooling_system.airflow_defect_ratio
+      defect_ratios['cooling_system_charge_defect_ratio'] = cooling_system.charge_defect_ratio
     end
 
     hpxml_bldg.heat_pumps.each do |heat_pump|
       next if hvac_system_upgrades.include?(heat_pump.id)
 
-      values['heat_pump_heating_capacity'] = heat_pump.heating_capacity
-      values['heat_pump_cooling_capacity'] = heat_pump.cooling_capacity
-      values['heat_pump_backup_heating_capacity'] = heat_pump.backup_heating_capacity
-      values['heat_pump_heating_autosizing_factor'] = heat_pump.heating_autosizing_factor
-      values['heat_pump_cooling_autosizing_factor'] = heat_pump.cooling_autosizing_factor
-      values['heat_pump_backup_heating_autosizing_factor'] = heat_pump.backup_heating_autosizing_factor
+      capacities['heat_pump_heating_capacity'] = heat_pump.heating_capacity
+      capacities['heat_pump_cooling_capacity'] = heat_pump.cooling_capacity
+      capacities['heat_pump_backup_heating_capacity'] = heat_pump.backup_heating_capacity
+      autosizing_factors['heat_pump_heating_autosizing_factor'] = heat_pump.heating_autosizing_factor
+      autosizing_factors['heat_pump_cooling_autosizing_factor'] = heat_pump.cooling_autosizing_factor
+      autosizing_factors['heat_pump_backup_heating_autosizing_factor'] = heat_pump.backup_heating_autosizing_factor
+      defect_ratios['heat_pump_airflow_defect_ratio'] = heat_pump.airflow_defect_ratio
+      defect_ratios['heat_pump_charge_defect_ratio'] = heat_pump.charge_defect_ratio
     end
 
-    return values
+    return capacities, autosizing_factors, defect_ratios
   end
 
   def get_panel_system_additions(args_hash)
     panel_system_additions = {}
     args_hash.each do |arg_name, _value|
-      if arg_name == 'hvac_heating_system'
-        panel_system_additions['electric_panel_load_heating_system_new_load'] = true
-      elsif arg_name == 'hvac_cooling_system'
-        panel_system_additions['electric_panel_load_cooling_system_new_load'] = true
-      elsif arg_name == 'hvac_heat_pump'
-        panel_system_additions['electric_panel_load_heat_pump_new_load'] = true
-      elsif arg_name == 'hvac_heating_system_2'
-        panel_system_additions['electric_panel_load_heating_system_2_new_load'] = true
-      elsif arg_name == 'ventilation_mechanical'
-        panel_system_additions['electric_panel_load_mech_vent_fan_new_load'] = true
-      elsif arg_name == 'ventilation_whole_house_fan'
-        panel_system_additions['electric_panel_load_whole_house_fan_new_load'] = true
-      elsif arg_name == 'ventilation_kitchen'
-        panel_system_additions['electric_panel_load_kitchen_fans_new_load'] = true
-      elsif arg_name == 'ventilation_bathroom'
-        panel_system_additions['electric_panel_load_bathroom_fans_new_load'] = true
-      elsif arg_name == 'dhw_water_heater'
-        panel_system_additions['electric_panel_load_electric_water_heater_new_load'] = true
-      elsif arg_name == 'appliance_clothes_dryer'
-        panel_system_additions['electric_panel_load_electric_clothes_dryer_new_load'] = true
-      elsif arg_name == 'appliance_dishwasher'
-        panel_system_additions['electric_panel_load_dishwasher_new_load'] = true
-      elsif arg_name == 'appliance_cooking_range_oven'
-        panel_system_additions['electric_panel_load_electric_cooking_range_new_load'] = true
-      elsif arg_name == 'misc_well_pump'
-        panel_system_additions['electric_panel_load_misc_plug_loads_well_pump_new_load'] = true
-      elsif arg_name == 'misc_electric_vehicle_charging'
-        panel_system_additions['electric_panel_load_misc_plug_loads_vehicle_new_load'] = true
-      elsif arg_name == 'misc_pool'
-        # FIXME: Need to check for pump and/or heater
-        panel_system_additions['electric_panel_load_pool_pump_new_load'] = true
-        panel_system_additions['electric_panel_load_electric_pool_heater_new_load'] = true
-      elsif arg_name == 'misc_permanent_spa'
-        # FIXME: Need to check for pump and/or heater
-        panel_system_additions['electric_panel_load_permanent_spa_pump_new_load'] = true
-        panel_system_additions['electric_panel_load_electric_permanent_spa_heater_new_load'] = true
+      if arg_name.start_with?('heating_system_') && (not arg_name.start_with?('heating_system_2_'))
+        panel_system_additions['electric_panel_load_heating_system_addition'] = true
+      elsif arg_name.start_with?('cooling_system_')
+        panel_system_additions['electric_panel_load_cooling_system_addition'] = true
+      elsif arg_name.start_with?('heat_pump_')
+        panel_system_additions['electric_panel_load_heat_pump_addition'] = true
+      elsif arg_name.start_with?('heating_system_2_')
+        panel_system_additions['electric_panel_load_heating_system_2_addition'] = true
+      elsif arg_name.start_with?('mech_vent_') && (not arg_name.start_with?('mech_vent_2_'))
+        panel_system_additions['electric_panel_load_mech_vent_fan_addition'] = true
+      elsif arg_name.start_with?('mech_vent_2_')
+        panel_system_additions['electric_panel_load_mech_vent_2_addition'] = true
+      elsif arg_name.start_with?('whole_house_fan_')
+        panel_system_additions['electric_panel_load_whole_house_fan_addition'] = true
+      elsif arg_name.start_with?('kitchen_fans_')
+        panel_system_additions['electric_panel_load_kitchen_fans_addition'] = true
+      elsif arg_name.start_with?('bathroom_fans_')
+        panel_system_additions['electric_panel_load_bathroom_fans_addition'] = true
+      elsif arg_name.start_with?('water_heater_')
+        panel_system_additions['electric_panel_load_water_heater_addition'] = true
+      elsif arg_name.start_with?('clothes_dryer_')
+        panel_system_additions['electric_panel_load_clothes_dryer_addition'] = true
+      elsif arg_name.start_with?('dishwasher_')
+        panel_system_additions['electric_panel_load_dishwasher_addition'] = true
+      elsif arg_name.start_with?('cooking_range_oven_')
+        panel_system_additions['electric_panel_load_cooking_range_addition'] = true
+      elsif arg_name.start_with?('misc_plug_loads_well_pump_')
+        panel_system_additions['electric_panel_load_misc_plug_loads_well_pump_addition'] = true
+      elsif arg_name.start_with?('misc_plug_loads_vehicle_')
+        panel_system_additions['electric_panel_load_misc_plug_loads_vehicle_addition'] = true
+      elsif arg_name.start_with?('pool_pump_')
+        panel_system_additions['electric_panel_load_pool_pump_addition'] = true
+      elsif arg_name.start_with?('pool_heater_')
+        panel_system_additions['electric_panel_load_pool_heater_addition'] = true
+      elsif arg_name.start_with?('permanent_spa_pump_')
+        panel_system_additions['electric_panel_load_permanent_spa_pump_addition'] = true
+      elsif arg_name.start_with?('permanent_spa_heater_')
+        panel_system_additions['electric_panel_load_permanent_spa_heater_addition'] = true
         # else
         # panel_system_additions['electric_panel_load_other_addition'] = true
       end
@@ -858,25 +894,25 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
       hvac_distribution.hvac_systems.each do |hvac_system|
         if hvac_system.is_a?(HPXML::HeatingSystem)
-          heating_airflow_cfm = hvac_system.heating_design_airflow_cfm
+          heating_airflow_cfm = hvac_system.heating_airflow_cfm
           if !heating_airflow_cfm.nil?
             fraction_heat_load_served = hvac_system.fraction_heat_load_served
             air_distribution_airflows << heating_airflow_cfm / fraction_heat_load_served
           end
         elsif hvac_system.is_a?(HPXML::CoolingSystem)
-          cooling_airflow_cfm = hvac_system.cooling_design_airflow_cfm
+          cooling_airflow_cfm = hvac_system.cooling_airflow_cfm
           if !cooling_airflow_cfm.nil?
             fraction_cool_load_served = hvac_system.fraction_cool_load_served
             air_distribution_airflows << cooling_airflow_cfm / fraction_cool_load_served
           end
         elsif hvac_system.is_a?(HPXML::HeatPump)
-          heating_airflow_cfm = hvac_system.heating_design_airflow_cfm
+          heating_airflow_cfm = hvac_system.heating_airflow_cfm
           if !heating_airflow_cfm.nil?
             fraction_heat_load_served = hvac_system.fraction_heat_load_served
             air_distribution_airflows << heating_airflow_cfm / fraction_heat_load_served
           end
 
-          cooling_airflow_cfm = hvac_system.cooling_design_airflow_cfm
+          cooling_airflow_cfm = hvac_system.cooling_airflow_cfm
           if !cooling_airflow_cfm.nil?
             fraction_cool_load_served = hvac_system.fraction_cool_load_served
             air_distribution_airflows << cooling_airflow_cfm / fraction_cool_load_served

@@ -1,9 +1,9 @@
 Parameter,Number of options,Number of dependencies,Created by,Description
 ASHRAE IECC Climate Zone 2004,17.0,1.0,sources\spatial\tsv_maker.py,Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located.
 Bathroom Spot Vent Hour,24.0,0.0,manually created,Bathroom spot ventilation daily start hour
-Battery,3.0,0.0,manually created,The size of an onsite battery (not modeled in project_national).
+Battery,5.0,1.0,manually created,"The presence, size, location, and efficiency of an onsite battery (not modeled in project_national)."
 Bedrooms,5.0,1.0,sources\ahs\ahs2017_2019\tsv_maker.py,The number of bedrooms in the dwelling unit.
-Ceiling Fan,4.0,0.0,manually created,Presence and energy usage of ceiling fans at medium speed.
+Ceiling Fan,6.0,0.0,manually created,Presence and energy usage of ceiling fans at medium speed
 Census Region,4.0,1.0,manually created,The U.S. Census Region that the sample is located.
 Clothes Dryer,5.0,1.0,sources\recs\recs2020\tsv_maker.py,"The presence, rated efficiency, and fuel type of the clothes dryer in a dwelling unit."
 Clothes Dryer Usage Level,3.0,0.0,sources\other\tsv_maker.py,Clothes dryer energy usage level multiplier.
@@ -84,35 +84,36 @@ Heating Setpoint Offset Magnitude,4.0,1.0,manually created,Magnitude of the heat
 Heating Setpoint Offset Period,34.0,1.0,manually created,The period and offset for the dwelling unit's heating setpoint. Default for the day is from 9am to 5pm and for the night is 10pm to 7am.
 Heating Unavailable Days,8.0,0.0,sources\recs\recs2020\tsv_maker.py,Number of days in a year the heating system is unavailable
 Holiday Lighting,2.0,1.0,sources\other\tsv_maker.py,Use of holiday lighting (not currently modeled separately from other exterior lighting).
-Hot Water Distribution,4.0,0.0,manually created,Type of distribution system and presence of hot water piping insulation.
+Hot Water Distribution,5.0,0.0,manually created,Hot water piping material and insulation level.
 Hot Water Fixtures,16.0,0.0,sources\other\tsv_maker.py,Hot water fixture usage and flow levels.
-Infiltration,15.0,0.0,sources\resdb\tsv_maker.py,Total infiltration to the dwelling unit.
+Infiltration,27.0,0.0,sources\resdb\tsv_maker.py,Total infiltration to the dwelling unit.
 Insulation Ceiling,9.0,1.0,manually created,Ceiling insulation level.
 Insulation Floor,6.0,1.0,manually created,Floor insulation level.
-Insulation Foundation Wall,5.0,1.0,manually created,Foundation walls insulation level.
+Insulation Foundation Wall,6.0,1.0,manually created,Foundation walls insulation level.
 Insulation Rim Joist,6.0,1.0,manually created,Foundation walls insulation level.
 Insulation Roof,8.0,1.0,manually created,Finished roof insulation level.
 Insulation Slab,8.0,1.0,manually created,Slab insulation level.
 Insulation Wall,16.0,1.0,manually created,Wall construction type and insulation level.
-Interior Shading,4.0,0.0,manually created,Type of window interior shading.
+Interior Shading,5.0,0.0,manually created,Fraction of window shading in the summer and winter.
 Lighting,6.0,0.0,sources\recs\recs2020\tsv_maker.py,"Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options."
 Lighting Interior Use,3.0,1.0,sources\other\tsv_maker.py,Interior lighting usage relative to the national average.
 Lighting Other Use,3.0,1.0,sources\other\tsv_maker.py,Exterior and garage lighting usage relative to the national average.
 Mechanical Ventilation,5.0,0.0,manually created,Mechanical ventilation type and efficiency.
 Misc Extra Refrigerator,9.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence and rated efficiency of the secondary refrigerator.
-Misc Freezer,5.0,0.0,sources\recs\recs2020\tsv_maker.py,The presence and rated efficiency of a standalone freezer.
-Misc Gas Fireplace,2.0,0.0,manually created,Presence of a gas fireplace.
-Misc Gas Grill,2.0,0.0,manually created,Presence of a gas grill.
-Misc Gas Lighting,2.0,0.0,manually created,Presence of exterior gas lighting.
+Misc Freezer,6.0,0.0,sources\recs\recs2020\tsv_maker.py,The presence and rated efficiency of a standalone freezer.
+Misc Gas Fireplace,3.0,0.0,manually created,Presence of a gas fireplace.
+Misc Gas Grill,3.0,0.0,manually created,Presence of a gas grill.
+Misc Gas Lighting,3.0,0.0,manually created,Presence of exterior gas lighting.
 Misc Hot Tub Spa,4.0,0.0,sources\recs\recs2020\tsv_maker.py,The presence and heating fuel of a hot tub/spa at the dwelling unit.
 Misc Pool,3.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence of a pool at the dwelling unit.
 Misc Pool Heater,5.0,1.0,sources\recs\recs2020\tsv_maker.py,The heating fuel of the pool heater if there is a pool.
-Misc Pool Pump,3.0,1.0,manually created,Presence and size of pool pump.
+Misc Pool Pump,4.0,1.0,manually created,Presence and size of pool pump.
 Misc Well Pump,2.0,0.0,sources\ahs\ahs2017_2019\tsv_maker.py,Presence of well pump according to the use of well for domestic water source.
 Natural Ventilation,2.0,0.0,manually created,Schedule of natural ventilation from windows.
 Neighbors,6.0,0.0,manually created,Presence and distance between the dwelling unit and the nearest neighbors to the left and right.
 Occupants,11.0,1.0,sources\pums\pums2019_5yrs\tsv_maker.py,The number of occupants living in the dwelling unit.
 Orientation,16.0,0.0,manually created,Orientation of the front of the dwelling unit as it faces the street.
+Overhangs,6.0,0.0,manually created,"Presence, depth, and location of window overhangs (not used in project_national)."
 PV Orientation,9.0,1.0,sources\dpv\tsv_maker.py,The orientation of the photovoltaic system.
 PV System Size,8.0,1.0,sources\dpv\tsv_maker.py,The size of the photovoltaic system.
 Plug Load Diversity,7.0,0.0,manually created,Plug load diversity multiplier intended to add variation in plug load profiles across all simulations.
@@ -126,8 +127,7 @@ Roof Material,7.0,1.0,sources\recs\recs2020\tsv_maker.py,Roof material and color
 State,5.0,1.0,sources\spatial\tsv_maker.py,The U.S. State the sample is located.
 Tenure,3.0,1.0,sources\pums\pums2019_5yrs\tsv_maker.py,The tenancy (owner or renter) of the household occupying the dwelling unit.
 Vacancy Status,2.0,0.0,sources\pums\pums2019_5yrs\tsv_maker.py,The vacancy status (occupied or vacant) of the dwelling unit.
-Vintage,1.0,0.0,manually created,Time period in which the building was constructed.
-Water Heater Efficiency,18.0,0.0,sources\recs\recs2020\tsv_maker.py,"The efficiency, type, and heating fuel of water heater."
+Water Heater Efficiency,21.0,0.0,sources\recs\recs2020\tsv_maker.py,"The efficiency, type, and heating fuel of water heater."
 Water Heater Location,8.0,2.0,sources\recs\recs2020\tsv_maker.py,location of water heater.
 Window Areas,9.0,1.0,sources\rbsa_II\tsv_maker.py,"Window to wall ratios of the front, back, left, and right walls."
 Windows,11.0,2.0,sources\recs\recs2020\tsv_maker.py,Construction type and efficiency levels of windows.

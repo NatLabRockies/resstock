@@ -3,7 +3,7 @@
     {
       "name": "Sample Tiered Rate",
       "sector": "Residential",
-      "description": "Sample file",
+      "description": "Sample file defined by BEopt.",
       "fixedchargeunits": "$/month",
       "fixedchargefirstmeter": 9,
       "energyweekdayschedule": [
