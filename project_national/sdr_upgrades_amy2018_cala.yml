@@ -3,7 +3,7 @@ os_version: 3.9.0 # 3.10.0
 os_sha: c77fbb9569 # 86d7e215a1
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
-output_directory: /kfs2/projects/panels/2026_cala_rnd100/sdr_2025_amy2018_50k_sfd_occupied/
+output_directory: /kfs2/projects/panels/2026_cala_rnd100/sdr_2025_amy2018_50k_sfd_occupied_2/
 # weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
 # weather_files_path: /Users/lliu2/Documents/buildstock/BuildStock_2018_FIPS.zip # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
@@ -30,12 +30,12 @@ sampler:
 # NLR High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
 kestrel:
-  n_jobs: 5
+  n_jobs: 3 # 5
   minutes_per_sim: 4
   account: panels
   postprocessing:
     time: 180
-    n_workers: 6
+    n_workers: 3 # 6
     n_procs: 2
   sampling:
     time: 30
@@ -115,17 +115,20 @@ workflow_generator:
       retain_schedules_csv: false
       retain_in_osm: false
 
-
-### Standard Data Release - Residential -- ###
 upgrades:
-  ### -- HVAC: Furnaces -- ###
-  - upgrade_name: Cala hybrid mode
-    options:
-      - option: Water Heater Efficiency|Cala Hybrid Mode
-        # apply_logic: all
+  ### -- Water heaters -- ###
+  # - upgrade_name: Cala hybrid mode
+  #   options:
+  #     - option: Water Heater Efficiency|Cala Hybrid Mode
+  #       # apply_logic: all
 
-  - upgrade_name: Cala heat pump only mode
+  # - upgrade_name: Cala heat pump only mode
+  #   options:
+  #     - option: Water Heater Efficiency|Cala Heat Pump Only Mode
+  #       # apply_logic: all
+  
+  - upgrade_name: Electric resistance water heater
     options:
-      - option: Water Heater Efficiency|Cala Heat Pump Only Mode
+      - option: Water Heater Efficiency|Electric Standard
         # apply_logic: all
 
