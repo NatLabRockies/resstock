@@ -759,7 +759,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
     # Build metadata for all work items and prepare plot arguments
     results = {}
     plot_args = []
-    stacking_groups: dict[tuple, list[tuple[str, PlotSpec, str]]] = defaultdict(list)
+    stacking_groups: dict[tuple, list[tuple[str, list[tuple[PlotSpec, str]]]]] = defaultdict(list)
     from resstockpostproc.shared_utils.mapping import ABBR2STATE
 
     for i, (spec_pair, tmpl_index, spec_entries, focus_val, focus_on, group_by) in enumerate(work_items, 1):
@@ -833,12 +833,12 @@ def generate_plots(index=None, test_only=False, parallel=True):
 
         plot_args.append((sub_key, focused_entries, matched_notes, table_notes))
 
-        # Collect value_view specs for stacking into "All Enduses (Stacked)" pages.
+        # Collect spec pairs for stacking into "All Enduses (Stacked)" pages.
+        # Each group entry stores (qty_label, focused_entries) — the same
+        # (PlotSpec, viz_label) list used for individual plot generation,
+        # so the stacker knows exactly which views exist for each quantity.
         # Skip ALL (already a stacked enduse chart) and UNITS_COUNT (not an enduse).
-        value_view_spec = next(
-            (spec for spec, vt in focused_entries if spec.view == ViewType.value_view), None
-        )
-        if value_view_spec is not None and main_spec.quantity not in (DataCol.ALL, DataCol.UNITS_COUNT):
+        if main_spec.quantity not in (DataCol.ALL, DataCol.UNITS_COUNT):
             group_key = (
                 results[sub_key]["Comparison Dataset"],
                 results[sub_key]["Metric"],
@@ -848,8 +848,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
             )
             stacking_groups[group_key].append((
                 display_spec.display_quantity,
-                value_view_spec,
-                sub_key,
+                focused_entries,
             ))
 
     # Pass 3: Generate plots — parallel or sequential
@@ -900,82 +899,59 @@ def generate_plots(index=None, test_only=False, parallel=True):
         root_logger.handlers = original_handlers
 
     # Pass 4: Assemble synthetic "All Enduses (Stacked)" pages by combining
-    # the raw (non-enhanced) Plotly HTML files already written in Pass 3.
+    # the raw Plotly HTML files already written in Pass 3. View-agnostic: for
+    # each view position in focused_entries, transpose across quantities.
     from resstockpostproc.baseline_validation.io_managers.html_utils import postprocess_plot_html
     eligible_groups = {k: v for k, v in stacking_groups.items() if len(v) >= 2}
     stacked_count = 0
+
+    def _raw_path(spec: PlotSpec) -> Path:
+        ps, ft = spec.file_path_and_name
+        return output_base / f"{spec.comparison_dataset} plots ({link_format})" / ps / f"{ft}.raw.{link_format.value}"
+
     stacked_pbar = tqdm(
         eligible_groups.items(), total=len(eligible_groups),
         desc="Generating stacked pages", unit="page",
         bar_format="{desc}: {percentage:6.2f}%|{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}]",
     )
-    for group_key, quantity_specs in stacked_pbar:
-
-        comparison_ds, metric, filter1, filter2, group_by_label = group_key
-
-        # Collect the raw (non-enhanced) HTML files
-        raw_html_paths = []
-        all_footnotes: list[str] = []
-        for qty_label, spec, _ in quantity_specs:
-            path_seg, file_title = spec.file_path_and_name
-            raw_path = (
-                output_base / f"{spec.comparison_dataset} plots ({link_format})"
-                / path_seg / f"{file_title}.raw.{link_format.value}"
-            )
-            if raw_path.exists():
-                raw_html_paths.append(raw_path)
-                fn_row = _footnote_row(spec)
-                notes = _resolve_footnotes(footnote_rules, fn_row, context="plot")
-                if notes:
-                    all_footnotes.extend(notes)
-
-        if len(raw_html_paths) < 2:
-            continue
-
-        # Deduplicate footnotes preserving order
-        seen: set[str] = set()
-        unique_notes = [n for n in all_footnotes if n not in seen and not seen.add(n)]
-
-        # Build the stacked page using postprocess_plot_html with multiple inputs
-        first_spec = quantity_specs[0][1]
+    for group_key, qty_entries in stacked_pbar:
+        ds, metric, f1, f2, gb = group_key
+        first_spec = qty_entries[0][1][0][0]
         path_seg = first_spec.file_path_and_name[0]
-        stacked_title = f"All Enduses (Stacked) {metric}"
-        stacked_path = (
-            output_base / f"{first_spec.comparison_dataset} plots ({link_format})"
-            / path_seg / f"{stacked_title}.{link_format.value}"
-        )
-        ensure_directory(stacked_path.parent)
-        stacked_scale = 1.0 if group_by_label in ("State", "") else 0.5
-        postprocess_plot_html(
-            raw_html_paths,
-            output_path=stacked_path,
-            footnotes=unique_notes or None,
-            source_labels=source_labels,
-            comparison_dataset=first_spec.comparison_dataset.value,
-            scale=stacked_scale,
-        )
+        scale = 1.0 if gb in ("State", "") else 0.5
 
-        # Add index row
-        rel_path = (
-            Path(f"{first_spec.comparison_dataset} plots ({link_format})")
-            / path_seg / f"{stacked_title}.{link_format.value}"
-        )
-        stacked_sub_key = f"stacked_{stacked_count}"
-        stacked_count += 1
-        stacked_row = {
-            "Index": "",
-            "Comparison Dataset": comparison_ds,
-            "Quantity": "All Enduses (Stacked)",
-            "Metric": metric,
-            "Filter 1": filter1,
-            "Filter 2": filter2,
-            "Group By": group_by_label,
-            "Comparison Plot": f"stacked view||{str(rel_path).replace(chr(92), '/')}",
-            "Data": "",
-        }
-        results[stacked_sub_key] = stacked_row
-        _append_plot_row(csv_path, stacked_row)
-        append_index_row(index_state, stacked_row)
+        # Deduplicated footnotes across all quantities
+        notes = list(dict.fromkeys(
+            n for _, entries in qty_entries
+            for n in (_resolve_footnotes(footnote_rules, _footnote_row(entries[0][0]), context="plot") or [])
+        ))
+
+        # One stacked page per view position (position 0 = main, 1 = extra, ...)
+        viz_parts = []
+        for i, (_, viz_label) in enumerate(qty_entries[0][1]):
+            paths = [p for p in (_raw_path(e[i][0]) for _, e in qty_entries if i < len(e)) if p.exists()]
+            if len(paths) < 2:
+                continue
+            title = f"All Enduses (Stacked) {metric}" + (f" ({viz_label})" if i > 0 else "")
+            ds_dir = f"{first_spec.comparison_dataset} plots ({link_format})"
+            out = output_base / ds_dir / path_seg / f"{title}.{link_format.value}"
+            ensure_directory(out.parent)
+            postprocess_plot_html(
+                paths, output_path=out, footnotes=notes or None,
+                source_labels=source_labels, scale=scale,
+                comparison_dataset=first_spec.comparison_dataset.value,
+            )
+            rel = Path(ds_dir) / path_seg / f"{title}.{link_format.value}"
+            viz_parts.append(f"stacked {viz_label}||{str(rel).replace(chr(92), '/')}")
+            stacked_count += 1
+
+        if viz_parts:
+            row = {"Index": "", "Comparison Dataset": ds, "Quantity": "All Enduses (Stacked)",
+                   "Metric": metric, "Filter 1": f1, "Filter 2": f2, "Group By": gb,
+                   "Comparison Plot": " ;; ".join(viz_parts), "Data": ""}
+            results[f"stacked_{stacked_count}"] = row
+            _append_plot_row(csv_path, row)
+            append_index_row(index_state, row)
 
     stacked_pbar.close()
     if stacked_count:
@@ -1082,7 +1058,7 @@ def main():
         "--index", type=str, default=None, help="Plot definition index to generate (e.g. '5', '1-10', '1,3,5')"
     )
     parser.add_argument(
-        "--test", action="store_true", default=True,
+        "--test", action="store_true", default=False,
         help="Generate only test subset plots (limited focus expansion)",
     )
     parser.add_argument(
