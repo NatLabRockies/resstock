@@ -3,7 +3,14 @@
 import polars as pl
 import pytest
 
-from resstockpostproc.baseline_validation.plot_generator import _compute_discrepancy, _unnest_list_columns
+from resstockpostproc.baseline_validation.plot_generator import (
+    _all_enduses_viz_label,
+    _compute_discrepancy,
+    _should_generate_stacked_table,
+    _stacked_title_from_grouped,
+    _to_all_enduses_tall_data,
+    _unnest_list_columns,
+)
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
     Metric,
@@ -198,6 +205,56 @@ class TestUnnestListColumns:
         assert "values" not in result.columns
         assert "values_0" in result.columns
         assert "values_1" in result.columns
+
+
+class TestAllEndusesHelpers:
+    def test_to_all_enduses_tall_data_renames_quantity_prefix_and_adds_enduse(self):
+        spec = _make_spec(quantity=DataCol.ELECTRICITY_TOTAL)
+        df = pl.DataFrame({
+            "source": ["recs_2020"],
+            "state": ["CA"],
+            "electricity_total_value": [123.4],
+            "electricity_total_percent_difference": [1.5],
+        })
+        out = _to_all_enduses_tall_data(df, spec)
+
+        assert out.columns[0] == "enduse"
+        assert out["enduse"].to_list() == ["Electricity"]
+        assert "all_value" in out.columns
+        assert "all_percent_difference" in out.columns
+        assert "electricity_total_value" not in out.columns
+
+    def test_grouped_to_stacked_title_suffix(self):
+        grouped = "Annual Enduse Consumption by State (grouped view)"
+        grouped_diff = "Annual Enduse Consumption by State (grouped symmetric percent difference view)"
+
+        assert _stacked_title_from_grouped(grouped, ViewType.value_view).endswith("(stacked view)")
+        assert _stacked_title_from_grouped(grouped_diff, ViewType.diff_view).endswith(
+            "(stacked symmetric percent difference view)"
+        )
+
+    def test_all_enduses_viz_label_convention(self):
+        assert _all_enduses_viz_label(ViewType.value_view, stacked=False) == "all enduses (grouped)"
+        assert _all_enduses_viz_label(ViewType.diff_view, stacked=False) == "all enduses (grouped difference)"
+        assert _all_enduses_viz_label(ViewType.value_view, stacked=True) == "all enduses (stacked)"
+        assert _all_enduses_viz_label(ViewType.diff_view, stacked=True) == "all enduses (stacked difference)"
+
+    def test_should_generate_stacked_table(self):
+        assert _should_generate_stacked_table(
+            "State", ComparisonDataset.recs, Resolution.year, Metric.total
+        ) is True
+        assert _should_generate_stacked_table(
+            "", ComparisonDataset.recs, Resolution.year, Metric.total
+        ) is False
+        assert _should_generate_stacked_table(
+            "", ComparisonDataset.recs, Resolution.month, Metric.total
+        ) is True
+        assert _should_generate_stacked_table(
+            "", ComparisonDataset.recs, Resolution.year, Metric.distribution
+        ) is True
+        assert _should_generate_stacked_table(
+            "", ComparisonDataset.eia, Resolution.year, Metric.total
+        ) is True
 
 
 # ---------------------------------------------------------------------------

@@ -309,6 +309,39 @@ class TestGenerateDataTableHtml:
         # The metrics banner div should not appear (CSS class definition is always present)
         assert 'class="metrics-banner"' not in html
 
+    def test_download_csv_filename_override(self, tmp_path):
+        data = _make_annual_data()
+        spec = _make_spec()
+        output_path = tmp_path / "csv_name_override.html"
+
+        generate_data_table_html(
+            data=data,
+            plot_spec=spec,
+            output_path=output_path,
+            csv_download_filename="Annual Enduse Consumption (stacked view).csv",
+        )
+
+        html = output_path.read_text(encoding="utf-8")
+        assert 'a.download = "Annual Enduse Consumption (stacked view).csv";' in html
+
+    def test_can_disable_discrepancy_metrics_details(self, tmp_path):
+        data = _make_annual_data()
+        spec = _make_spec()
+        output_path = tmp_path / "no_discrepancy_details.html"
+
+        generate_data_table_html(
+            data=data,
+            plot_spec=spec,
+            output_path=output_path,
+            metrics_by_source={"ResStock 2025": 11.7},
+            include_discrepancy_metrics=False,
+        )
+
+        html = output_path.read_text(encoding="utf-8")
+        assert 'id="metricsDetails"' not in html
+        assert "Discrepancy Metrics Details" not in html
+        assert "const RS_SOURCES = []" in html
+
     def test_matrix_entity_label_is_month_daytype(self, tmp_path):
         """Load Profile Matrix tables should label the entity column 'Month / Day Type'."""
         data = pl.DataFrame({

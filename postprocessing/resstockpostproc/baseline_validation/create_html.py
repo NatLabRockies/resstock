@@ -432,9 +432,9 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
         const key = keyFromRow(ROWS[i]);
         const info = KEY_INFO.get(key);
         if (info) {{
-          info.count += 1;
+          info.rowIdxs.push(i);
         }} else {{
-          KEY_INFO.set(key, {{ count: 1, firstRowIdx: i }});
+          KEY_INFO.set(key, {{ rowIdxs: [i] }});
         }}
       }}
     }}
@@ -629,16 +629,37 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
       }}
     }}
 
-    function getDataTableTab(row) {{
+    function getDataTableTabs(row) {{
       const entries = parseEntries(row?.[COL_IDX['Data']] || '');
-      if (!entries.length) return null;
+      if (!entries.length) return [];
       const lower = s => (s || '').toLowerCase();
-      const htmlEntry = entries.find(e => lower(e.path).endsWith('.html') || lower(e.path).endsWith('.htm'));
-      if (!htmlEntry) return null;
-      return {{
-        label: 'Data Table',
-        path: htmlEntry.path,
-      }};
+      return entries
+        .filter(e => lower(e.path).endsWith('.html') || lower(e.path).endsWith('.htm'))
+        .map(e => ({{
+          label: e.label && e.label.toLowerCase() === 'data table' ? 'Data Table' : (e.label || 'Data Table'),
+          path: e.path,
+        }}));
+    }}
+
+    function uniquifyTabLabels(tabs) {{
+      const counts = Object.create(null);
+      return tabs.map(tab => {{
+        const base = tab.label || 'Plot';
+        const next = (counts[base] || 0) + 1;
+        counts[base] = next;
+        return next === 1 ? tab : {{ ...tab, label: `${{base}} (${{next}})` }};
+      }});
+    }}
+
+    function collectTabsForRows(rowIdxs) {{
+      const plotTabs = [];
+      const dataTabs = [];
+      for (const rowIdx of rowIdxs) {{
+        const row = ROWS[rowIdx];
+        plotTabs.push(...parseEntries(row?.[COL_IDX['Comparison Plot']] || ''));
+        dataTabs.push(...getDataTableTabs(row));
+      }}
+      return uniquifyTabLabels([...plotTabs, ...dataTabs]);
     }}
 
     function renderTabs() {{
@@ -690,13 +711,8 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
     function renderMain() {{
       const key = keyFromFilterSelection();
       const info = KEY_INFO.get(key) || null;
-      const row = info ? ROWS[info.firstRowIdx] : null;
-
-      currentTabs = parseEntries(row?.[COL_IDX['Comparison Plot']] || '');
-      const dataTableTab = getDataTableTab(row);
-      if (dataTableTab) {{
-        currentTabs.push(dataTableTab);
-      }}
+      const rowIdxs = info ? info.rowIdxs : [];
+      currentTabs = collectTabsForRows(rowIdxs);
       if (requestedTabIdx != null) {{
         activeTabIdx = Math.max(
           0,

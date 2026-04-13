@@ -518,7 +518,11 @@ class PlotSpec(NoExtraModel):
         - filename is the display_title with coverage/view suffixes
         """
         title = self.display_title
-        if self.view == ViewType.diff_view:
+        if self.quantity == DataCol.ALL and self.view == ViewType.value_view:
+            title = title + " (grouped view)"
+        elif self.quantity == DataCol.ALL and self.view == ViewType.diff_view:
+            title = title + " (grouped symmetric percent difference view)"
+        elif self.view == ViewType.diff_view:
             title = title + " (symmetric percent difference view)"
         # Focus entries go at the top of the path hierarchy.
         # "US Total" is a sibling of "By State", not a child.

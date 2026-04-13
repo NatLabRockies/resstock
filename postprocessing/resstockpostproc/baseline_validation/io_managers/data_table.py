@@ -442,6 +442,8 @@ def _build_table_html(
     source_labels: dict | None,
     ref_label: str,
     rs_sources_js: list[dict[str, str]],
+    csv_download_filename: str | None = None,
+    include_discrepancy_metrics: bool = True,
 ) -> str:
     """Build a self-contained HTML page with an interactive data table.
 
@@ -474,7 +476,7 @@ def _build_table_html(
 
     data_json = json.dumps(rows_json)
     config_json = json.dumps(col_config)
-    csv_filename_js = json.dumps(_csv_filename(plot_spec))  # safe for JS embedding
+    csv_filename_js = json.dumps(csv_download_filename or _csv_filename(plot_spec))  # safe for JS embedding
 
     # Compact summary header content (shown in the collapsible <summary>)
     summary_html = "Discrepancy Metrics Details"
@@ -490,6 +492,14 @@ def _build_table_html(
         summary_html = (
             '<span class="summary-prefix">sMAPE</span>'
             + "".join(chips)
+        )
+    metrics_details_html = ""
+    if include_discrepancy_metrics:
+        metrics_details_html = (
+            '<details id="metricsDetails" class="metrics-details">'
+            f"<summary>{summary_html}</summary>"
+            '<div id="metricsFormula" class="metrics-formula"></div>'
+            "</details>"
         )
 
     # Build navigation links
@@ -586,10 +596,7 @@ def _build_table_html(
     <thead><tr id="headerRow"></tr></thead>
     <tbody id="tableBody"></tbody>
   </table>
-  <details id="metricsDetails" class="metrics-details">
-    <summary>{summary_html}</summary>
-    <div id="metricsFormula" class="metrics-formula"></div>
-  </details>
+  {metrics_details_html}
   {footer_html}
   <script>
     const DATA = {data_json};
@@ -783,6 +790,9 @@ def _build_table_html(
 
     function renderMetricsFormula() {{
       const details = document.getElementById('metricsDetails');
+      if (!details) {{
+        return;
+      }}
       const div = document.getElementById('metricsFormula');
       if (!RS_SOURCES || RS_SOURCES.length === 0) {{
         details.style.display = 'none';
@@ -871,6 +881,8 @@ def generate_data_table_html(
     metrics_by_source: dict[str, float] | None = None,
     footnotes: list[str] | None = None,
     source_labels: dict | None = None,
+    csv_download_filename: str | None = None,
+    include_discrepancy_metrics: bool = True,
 ) -> None:
     """Generate an interactive HTML data table page.
 
@@ -882,6 +894,8 @@ def generate_data_table_html(
         metrics_by_source: Per-source sMAPE (%) keyed by source label.
         footnotes: Footnotes for the footer.
         source_labels: Data source labels for the footer.
+        csv_download_filename: Optional filename used by the in-page Download CSV action.
+        include_discrepancy_metrics: Whether to include discrepancy formula details.
     """
     if data.is_empty():
         output_path.write_text(
@@ -934,7 +948,7 @@ def generate_data_table_html(
     # Distribution plots compare entire quartile distributions, not single values,
     # so per-source diff columns and discrepancy formulas don't apply.
     rs_sources_js: list[dict[str, str]] = []
-    if not plot_spec.is_distribution_metric:
+    if include_discrepancy_metrics and not plot_spec.is_distribution_metric:
         for rs_label in rs_labels:
             rs_val_col = f"{rs_label}: {val_suffix}"
             abs_diff_key = f"{rs_label} Absolute Difference ({abs_diff_units}): {val_suffix}"
@@ -994,5 +1008,7 @@ def generate_data_table_html(
     html = _build_table_html(
         pivoted, col_config, plot_spec, plot_rel_path,
         metrics_by_source, footnotes, source_labels, ref_label, rs_sources_js,
+        csv_download_filename=csv_download_filename,
+        include_discrepancy_metrics=include_discrepancy_metrics,
     )
     output_path.write_text(html, encoding="utf-8")
