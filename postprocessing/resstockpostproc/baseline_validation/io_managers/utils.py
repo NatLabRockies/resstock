@@ -3,9 +3,8 @@ Utility functions for data loading and processing
 """
 
 import polars as pl
-from typing import Literal
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
-from resstockpostproc.baseline_validation.schema.plot_spec import DataKey, AggregationType, CoverageType
+from resstockpostproc.baseline_validation.schema.plot_spec import DataKey, Metric, CoverageType
 
 
 
@@ -112,7 +111,7 @@ def apply_aggregation(data_key: DataKey, df: pl.DataFrame) -> pl.DataFrame:
         DataFrame with values transformed according to aggregation type
     """
 
-    if data_key.aggregation_type == AggregationType.total:
+    if data_key.aggregation_type == Metric.total:
         return df  # No transformation needed
 
     if data_key.coverage == CoverageType.all_units:

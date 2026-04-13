@@ -21,7 +21,7 @@ data_sources:
 reference_years:
   eia:
     - 2018
-    - 2020
+    # - 2020
   recs:
     - 2020
 
@@ -89,7 +89,7 @@ quantities:
 # --------------------
 output:
   output_dir: /Users/radhikar/Documents/buildstock2025/baseline_validation_output/
-  run_name: baseline_val_test
+  run_name: baseline_val_metric_full
 
 # Data Source Labels
 # ------------------

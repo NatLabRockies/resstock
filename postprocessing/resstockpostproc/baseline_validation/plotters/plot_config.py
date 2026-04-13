@@ -15,7 +15,7 @@ import polars as pl
 
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
-    AggregationType,
+    Metric,
     CoverageType,
     ViewType,
     ComparisonDataset,
@@ -145,13 +145,13 @@ def _resolve_quantity_column(plot_spec: PlotSpec) -> str:
         return "units_count"
 
     # RECS/EIA: distribution box plot uses quartiles
-    if plot_spec.view == ViewType.distribution:
+    if plot_spec.is_distribution_metric:
         if plot_spec.coverage == CoverageType.users_only:
             return f"{plot_spec.quantity}_nonzero_quartiles"
         return f"{plot_spec.quantity}_quartiles"
 
     # RECS/EIA: penetration bar plot uses percent_users
-    if plot_spec.view == ViewType.penetration:
+    if plot_spec.is_penetration_metric:
         return f"{plot_spec.quantity}_percent_users"
 
     # Default: value column
@@ -171,7 +171,7 @@ def _resolve_sidebar_column(plot_spec: PlotSpec) -> str | None:
         return None
 
     # RECS/EIA: distribution plots don't have sidebar
-    if plot_spec.view == ViewType.distribution:
+    if plot_spec.is_distribution_metric:
         return None
 
     # RECS/EIA: dwelling unit count case
@@ -179,7 +179,7 @@ def _resolve_sidebar_column(plot_spec: PlotSpec) -> str | None:
         return "units_count_percent_difference"
 
     # RECS/EIA: penetration view uses percent_users difference
-    if plot_spec.view == ViewType.penetration:
+    if plot_spec.is_penetration_metric:
         return f"{plot_spec.quantity}_percent_users_percent_difference"
 
     # Default: value percent difference
@@ -196,7 +196,7 @@ def _resolve_rse_column(plot_spec: PlotSpec) -> str | None:
         return None
 
     # Distribution plots don't have RSE
-    if plot_spec.view == ViewType.distribution:
+    if plot_spec.is_distribution_metric:
         return None
 
     # Dwelling unit counts derive from calibrated weights (raked to Census
@@ -205,7 +205,7 @@ def _resolve_rse_column(plot_spec: PlotSpec) -> str | None:
         return None
 
     # Penetration view uses percent_users RSE
-    if plot_spec.view == ViewType.penetration:
+    if plot_spec.is_penetration_metric:
         return f"{plot_spec.quantity}_percent_users_rse"
 
     # Default: value RSE
@@ -267,15 +267,15 @@ def _resolve_quantity_title(plot_spec: PlotSpec) -> str:
         return "count"
 
     # RECS/EIA: penetration view shows percentages
-    if plot_spec.view == ViewType.penetration:
+    if plot_spec.is_penetration_metric:
         return "%"
 
     # RECS/EIA: total aggregation
-    if plot_spec.aggregation_type == AggregationType.total:
+    if plot_spec.aggregation_type == Metric.total:
         return "kWh"
 
     # RECS/EIA: average aggregation - depends on coverage
-    if plot_spec.aggregation_type == AggregationType.average:
+    if plot_spec.aggregation_type in (Metric.average, Metric.distribution):
         if plot_spec.coverage == CoverageType.users_only:
             return "kWh/user"
         return "kWh/unit"
@@ -288,7 +288,7 @@ def _resolve_sidebar_title(plot_spec: PlotSpec, comparison_label: str) -> str:
 
     Returns a full description like 'Percent difference compared to RECS 2020'.
     """
-    if plot_spec.view == ViewType.distribution:
+    if plot_spec.is_distribution_metric:
         return ""
     return f"Percent Difference Compared to {comparison_label}"
 
@@ -380,9 +380,9 @@ def _resolve_dimensions(plot_spec: PlotSpec, is_single_entity: bool) -> tuple[fl
     # RECS/EIA: single entity gets smaller dimensions (except ALL enduse plots
     # which contain all fuel/enduse combos and need full size)
     if is_single_entity and plot_spec.quantity != DataCol.ALL:
-        return 1080 * 0.45, 1920 * 0.34
+        return 1080 * 0.34, 1920 * 0.4
 
-    return 1080 * 0.8, 1920 * 0.85
+    return 1080 * 0.75, 1920 * 0.75
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -398,7 +398,7 @@ def _uses_stacked_layout(plot_spec: PlotSpec) -> bool:
     - quantity=ALL (enduse bar layout via split_graph_by_enduse)
     - non-state group_by levels (grouped bar/box charts)
     """
-    if plot_spec.view == ViewType.distribution:
+    if plot_spec.is_distribution_metric:
         return True
     if plot_spec.quantity == DataCol.ALL:
         return True

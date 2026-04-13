@@ -4,7 +4,6 @@ from typing import Literal
 
 import polars as pl
 from functools import cache
-from resstockpostproc.baseline_validation.utils import NUM2MONTH
 
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
@@ -12,7 +11,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     Resolution,
     ViewType,
     ComparisonDataset,
-    AggregationType,
+    Metric,
     CoverageType,
 )
 from resstockpostproc.baseline_validation.io_managers import get_eia_data
@@ -175,7 +174,7 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
             resstock_data = get_resstock_data.get_annual_all(data_key=io_data_key, occupied_only=True)
             groups = list(io_group_by)
     elif comparison_dataset == ComparisonDataset.lrd:
-        assert data_key.aggregation_type == AggregationType.average and data_key.coverage == CoverageType.all_units, (
+        assert data_key.aggregation_type == Metric.average and data_key.coverage == CoverageType.all_units, (
             "LRD data only supports 'average' aggregation with 'all_units' coverage."
         )
         eiaidlist = tuple([str(eiaid) for eiaid in UtilityName2ID.values()])

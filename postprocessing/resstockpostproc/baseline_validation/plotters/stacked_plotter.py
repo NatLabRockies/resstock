@@ -2,7 +2,7 @@ from resstockpostproc.shared_utils.generic_plotters import box_plotter, bar_plot
 from resstockpostproc.shared_utils.generic_plotters.range_utils import compute_axis_range
 from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import filter_null_sources
 from resstockpostproc.baseline_validation.io_managers.get_recs_data import get_enduse_order
-from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, AggregationType, CoverageType, ViewType
+from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, Metric, CoverageType, ViewType
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.timing import timed
 import plotly.graph_objects as go
@@ -322,13 +322,13 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
         return compute_axis_range(df, col)
 
     # Determine if this is a distribution (box) plot and get column suffix
-    is_dist = view == ViewType.distribution
+    is_dist = plot_spec.is_distribution_metric
     if is_dist:
         if plot_spec.coverage == CoverageType.users_only:
             col_suffix = "_nonzero_quartiles"
         else:
             col_suffix = "_quartiles"
-    elif view == ViewType.penetration:
+    elif plot_spec.is_penetration_metric:
         col_suffix = "_percent_users"
     else:
         col_suffix = "_value"
@@ -364,19 +364,19 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
 def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     """Create a box plot or bar comparing data sources across states.
 
-    Uses ViewType.distribution for box plots, otherwise bar plots.
+    Uses distribution metric for box plots, otherwise bar plots.
     """
     # Determine quantity title based on view type, aggregation type, and coverage
     if plot_spec.quantity == DataCol.UNITS_COUNT:
         # Dwelling unit count case
         quantity_title = "count"
-    elif plot_spec.view == ViewType.distribution:
+    elif plot_spec.is_distribution_metric:
         # Distribution box plot
         if plot_spec.coverage == CoverageType.users_only:
             quantity_title = "kWh/user"
         else:
             quantity_title = "kWh/unit"
-    elif plot_spec.view == ViewType.penetration:
+    elif plot_spec.is_penetration_metric:
         quantity_title = "%"
     elif plot_spec.view == ViewType.diff_view:
         quantity_title = "Percent Difference"
@@ -395,7 +395,7 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
 
     # Exclude US Total from total-aggregation value_view plots to prevent scale domination
     # (only when showing all entities, not when focused on a single entity like US Total)
-    if (plot_spec.aggregation_type == AggregationType.total
+    if (plot_spec.aggregation_type == Metric.total
             and plot_spec.view == ViewType.value_view
             and not plot_spec.focus_on
             and agg_col in df.columns
@@ -411,7 +411,7 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
         quantity_col = "enduse" if plot_spec.quantity == DataCol.ALL else plot_spec.quantity
 
         # Use box plot for distribution view
-        if plot_spec.view == ViewType.distribution:
+        if plot_spec.is_distribution_metric:
             plot_df = _prepare_box_plot_data(df_subset.clone(), quantity_col, plot_spec.coverage)
             box_plotter.create_box_plot(
                 plot_df,
@@ -431,7 +431,7 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
             # Bar plot for other view types
             if plot_spec.quantity == DataCol.UNITS_COUNT:
                 quantity_col = "units_count"
-            elif plot_spec.view == ViewType.penetration:
+            elif plot_spec.is_penetration_metric:
                 quantity_col = f"{quantity_col}_percent_users"
             else:
                 quantity_col = f"{quantity_col}_value"

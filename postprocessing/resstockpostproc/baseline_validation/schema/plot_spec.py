@@ -30,9 +30,11 @@ class NoExtraModel(BaseModel):
         frozen = True
 
 
-class AggregationType(StrEnum):
+class Metric(StrEnum):
     total = "total"
     average = "average"
+    distribution = "distribution"
+    penetration = "penetration"
 
 
 class CoverageType(StrEnum):
@@ -57,8 +59,6 @@ class ViewType(StrEnum):
     diff_view = "difference view"  # Shows percent difference with comparison dataset as the main plot
     temp_view = "temperature relation"  # Only for LRD plots - shows relationship between consumption and outdoor
     temp_distribution_view = "temperature distribution"  # Only for LRD plots - distribution of temperature
-    distribution = "distribution box plot" # RECS only - shows distribution of per-unit/per-user values with box plot
-    penetration = "enduse penetration bar plot"  # Only for RECS - shows % of units with non-zero consumption for each
 
 
 class FileType(StrEnum):
@@ -106,7 +106,7 @@ class DataKey(NamedTuple):
     comparison_dataset: ComparisonDataset
     effective_group_by: tuple[str, ...]
     resolution: Resolution
-    aggregation_type: AggregationType
+    aggregation_type: Metric
     coverage: CoverageType
 
     def __str__(self) -> str:
@@ -151,7 +151,7 @@ _PERIOD_LABEL = {
 
 class PlotSpec(NoExtraModel):
     comparison_dataset: ComparisonDataset = Field(..., description="Comparison dataset for validation plots (eia, recs, lrd).")
-    aggregation_type: AggregationType = Field(..., description="Aggregation method: total or average")
+    aggregation_type: Metric = Field(..., description="Metric: total, average, distribution, or penetration")
     coverage: CoverageType = Field(..., description="Population coverage: all_units or users_only")
     quantity: DataCol = Field(..., description="Column(s) to visualise. Use DataCol.ALL for all enduses.")
     resolution: Resolution = Field(..., description="Time resolution: monthly / annual / hourly")
@@ -167,16 +167,23 @@ class PlotSpec(NoExtraModel):
                     "Example: (('state', 'AK'),) focuses on Alaska. "
                     "(('state', 'AK'), ('vintage', '1990s')) focuses on AK 1990s homes.",
     )
-    view: ViewType | None = Field(..., description="View type: diff_view, value_view, distribution, etc.")
+    view: ViewType | None = Field(..., description="View type: diff_view, value_view, temp_view, etc.")
 
     @model_validator(mode="after")
-    def _reject_total_distribution(self) -> PlotSpec:
-        if self.aggregation_type == AggregationType.total and self.view == ViewType.distribution:
-            raise ValueError(
-                "ViewType.distribution requires AggregationType.average (not total). "
-                "Distribution box plots show per-unit/per-user quartiles, which are "
-                "incompatible with stock total values."
-            )
+    def _validate_metric_constraints(self) -> PlotSpec:
+        if self.aggregation_type == Metric.distribution and self.comparison_dataset != ComparisonDataset.recs:
+            raise ValueError("Metric.distribution is only supported for RECS.")
+        if self.aggregation_type == Metric.distribution and self.quantity in (DataCol.UNITS_COUNT, DataCol.ALL):
+            raise ValueError("Metric.distribution requires an end-use quantity (not UNITS_COUNT or ALL).")
+        if self.aggregation_type == Metric.penetration:
+            if self.comparison_dataset not in (ComparisonDataset.recs, ComparisonDataset.eia):
+                raise ValueError("Metric.penetration is only supported for RECS and EIA.")
+            if self.coverage != CoverageType.all_units:
+                raise ValueError("Metric.penetration requires coverage=all_units.")
+            if self.quantity in (DataCol.UNITS_COUNT,):
+                raise ValueError("Metric.penetration does not apply to UNITS_COUNT.")
+        if self.view == ViewType.diff_view and self.aggregation_type == Metric.distribution:
+            raise ValueError("Metric.distribution does not support diff_view.")
         return self
 
     @model_validator(mode="after")
@@ -188,9 +195,9 @@ class PlotSpec(NoExtraModel):
                 f"LRD only supports quantity=ELECTRICITY_TOTAL (got {self.quantity}). "
                 "LRD data contains only hourly electricity consumption."
             )
-        if self.aggregation_type != AggregationType.average:
+        if self.data_aggregation_type != Metric.average:
             raise ValueError(
-                f"LRD only supports aggregation_type=average (got {self.aggregation_type}). "
+                f"LRD only supports average-backed metrics (got {self.aggregation_type}). "
                 "LRD data is per-meter, not stock total."
             )
         if self.coverage != CoverageType.all_units:
@@ -280,9 +287,26 @@ class PlotSpec(NoExtraModel):
             comparison_dataset=self.comparison_dataset,
             effective_group_by=self.effective_group_by or ("state",),
             resolution=self.resolution,
-            aggregation_type=self.aggregation_type,
+            aggregation_type=self.data_aggregation_type,
             coverage=self.coverage,
         )
+
+    @property
+    def data_aggregation_type(self) -> Metric:
+        """Aggregation used for base data fetching (total/average only)."""
+        if self.aggregation_type == Metric.distribution:
+            return Metric.average
+        if self.aggregation_type == Metric.penetration:
+            return Metric.total
+        return self.aggregation_type
+
+    @property
+    def is_distribution_metric(self) -> bool:
+        return self.aggregation_type == Metric.distribution
+
+    @property
+    def is_penetration_metric(self) -> bool:
+        return self.aggregation_type == Metric.penetration
 
     @property
     def effective_group_by(self) -> tuple[str, ...]:
@@ -346,17 +370,17 @@ class PlotSpec(NoExtraModel):
             du_label = "Occupied Dwelling Units" if self.comparison_dataset == ComparisonDataset.recs else "Dwelling Units"
             return f"Number of {du_label} {grouping}"
 
-        if self.view == ViewType.penetration:
+        if self.is_penetration_metric:
             usage_name = "the specified End Use" if self.quantity == DataCol.ALL else self.quantity.penetration_label
             return f"Share of Dwelling Units using {usage_name} {grouping}"
 
-        if self.view == ViewType.distribution:
+        if self.is_distribution_metric:
             return f"Distribution of {quantity_name} Consumption {self._per_unit_label} {grouping}"
 
         # ── Common pattern: "{Period} {Quantity} Consumption {Per} {Grouping}" ──
         period = _PERIOD_LABEL.get(self.resolution, "Annual")
 
-        if self.aggregation_type == AggregationType.total:
+        if self.aggregation_type == Metric.total:
             return f"{period} {quantity_name} Consumption {grouping}"
 
         return f"Average {period} {quantity_name} Consumption {self._per_unit_label} {grouping}"
@@ -389,13 +413,17 @@ class PlotSpec(NoExtraModel):
         return self.quantity.label
 
     @property
+    def display_coverage(self) -> str:
+        return "All Units" if self.coverage == CoverageType.all_units else "Consuming Units Only"
+
+    @property
     def display_metric(self) -> str:
         """Metric facet label — title-aligned, without quantity name or grouping.
 
         Examples:
-            "Annual Consumption" (total, year)
-            "Average Monthly Consumption per Dwelling Unit" (average, month, all_units)
-            "Distribution of Consumption per Dwelling Unit" (distribution)
+            "Total Annual Consumption" (total, year)
+            "Average Monthly Consumption" (average, month)
+            "Distribution of Annual Consumption" (distribution)
             "Load Duration Curve of Electricity Consumption per Dwelling Unit" (LRD)
         """
         if self.comparison_dataset == ComparisonDataset.lrd:
@@ -406,17 +434,18 @@ class PlotSpec(NoExtraModel):
             du_label = "Occupied Dwelling Units" if self.comparison_dataset == ComparisonDataset.recs else "Dwelling Units"
             return f"Number of {du_label}"
 
-        if self.view == ViewType.penetration:
+        if self.is_penetration_metric:
             return "Enduse Penetration"
 
-        if self.view == ViewType.distribution:
-            return f"Distribution of Consumption {self._per_unit_label}"
-
         period = _PERIOD_LABEL.get(self.resolution, "Annual")
-        if self.aggregation_type == AggregationType.total:
-            return f"{period} Consumption"
 
-        return f"Average {period} Consumption {self._per_unit_label}"
+        if self.is_distribution_metric:
+            return f"Distribution of {period} Consumption"
+
+        if self.aggregation_type == Metric.total:
+            return f"Total {period} Consumption"
+
+        return f"Average {period} Consumption"
 
     @property
     def display_group_by(self) -> str:
@@ -439,7 +468,7 @@ class PlotSpec(NoExtraModel):
     @property
     def _base_viz_label(self) -> str:
         """Base visualization type label before view-type suffixes."""
-        if self.view == ViewType.distribution:
+        if self.is_distribution_metric:
             return "grouped box plot"
 
         if self.quantity == DataCol.ALL:

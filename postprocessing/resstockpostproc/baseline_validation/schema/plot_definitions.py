@@ -19,7 +19,7 @@ from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     GEOGRAPHIC_DIMENSIONS,
     PlotSpec,
-    AggregationType,
+    Metric,
     CoverageType,
     Resolution,
     ComparisonDataset,
@@ -122,7 +122,7 @@ class PlotTemplate:
     comparison_dataset: ComparisonDataset
     quantity: DataCol
     resolution: Resolution
-    aggregation_type: AggregationType
+    aggregation_type: Metric
     coverage: CoverageType
     view: ViewType
     eligible_chars: tuple[str, ...]
@@ -249,7 +249,7 @@ SpecPair = tuple[PlotSpec, PlotSpec | None]
 
 def _extra_view_for(spec: PlotSpec) -> ViewType | None:
     """Determine the companion extra-view for a main spec, or None."""
-    if spec.view == ViewType.distribution:
+    if spec.is_distribution_metric:
         return None
 
     if spec.quantity == DataCol.ALL:
@@ -271,7 +271,7 @@ def _extra_view_for(spec: PlotSpec) -> ViewType | None:
         return None  # monthly tilemaps don't get diff view
 
     # Non-state grouped bars → diff view
-    if spec.view in (ViewType.value_view, ViewType.penetration):
+    if spec.view == ViewType.value_view:
         return ViewType.diff_view
 
     return None
@@ -290,7 +290,7 @@ def _make_spec(
     comparison_dataset: ComparisonDataset,
     quantity: DataCol,
     resolution: Resolution,
-    aggregation_type: AggregationType,
+    aggregation_type: Metric,
     coverage: CoverageType,
     group_by: str | None,
     view: ViewType = ViewType.value_view,
@@ -319,37 +319,39 @@ def _eia_templates() -> Iterator[PlotTemplate]:
     )
     for quantity in EIA_QUANTITIES:
         if quantity == DataCol.UNITS_COUNT:
-            yield mk(DataCol.UNITS_COUNT, Resolution.year, AggregationType.total, CoverageType.all_units)
+            yield mk(DataCol.UNITS_COUNT, Resolution.year, Metric.total, CoverageType.all_units)
             continue
 
         for res, agg_type in [
-            (Resolution.year, AggregationType.total),
-            (Resolution.year, AggregationType.average),
-            (Resolution.month, AggregationType.total),
-            (Resolution.month, AggregationType.average),
+            (Resolution.year, Metric.total),
+            (Resolution.year, Metric.average),
+            (Resolution.month, Metric.total),
+            (Resolution.month, Metric.average),
         ]:
             yield mk(quantity, res, agg_type, CoverageType.all_units)
 
         if quantity == DataCol.NATURAL_GAS_TOTAL:
             for res in (Resolution.year, Resolution.month):
-                yield mk(quantity, res, AggregationType.average, CoverageType.users_only)
-            yield mk(quantity, Resolution.year, AggregationType.total,
-                     CoverageType.all_units, ViewType.penetration)
+                yield mk(quantity, res, Metric.average, CoverageType.users_only)
+            yield mk(quantity, Resolution.year, Metric.penetration,
+                     CoverageType.all_units, ViewType.value_view)
 
 
 def _all_enduses_templates() -> Iterator[PlotTemplate]:
-    """Emit the 6 All Enduses templates."""
+    """Emit All Enduses templates.
+
+    Distribution metric is intentionally excluded because PlotSpec requires
+    distribution to use a specific end-use quantity (not DataCol.ALL).
+    """
     mk = lambda agg, cov, view: PlotTemplate(
         comparison_dataset=ComparisonDataset.recs, quantity=DataCol.ALL, resolution=Resolution.year,
         aggregation_type=agg, coverage=cov, view=view,
         eligible_chars=RECS_ANNUAL_CHARS,
     )
-    yield mk(AggregationType.total, CoverageType.all_units, ViewType.value_view)
-    yield mk(AggregationType.average, CoverageType.all_units, ViewType.value_view)
-    yield mk(AggregationType.average, CoverageType.users_only, ViewType.value_view)
-    yield mk(AggregationType.average, CoverageType.all_units, ViewType.distribution)
-    yield mk(AggregationType.average, CoverageType.users_only, ViewType.distribution)
-    yield mk(AggregationType.total, CoverageType.all_units, ViewType.penetration)
+    yield mk(Metric.total, CoverageType.all_units, ViewType.value_view)
+    yield mk(Metric.average, CoverageType.all_units, ViewType.value_view)
+    yield mk(Metric.average, CoverageType.users_only, ViewType.value_view)
+    yield mk(Metric.penetration, CoverageType.all_units, ViewType.value_view)
 
 
 def _recs_energy_templates(quantity: DataCol) -> Iterator[PlotTemplate]:
@@ -364,21 +366,21 @@ def _recs_energy_templates(quantity: DataCol) -> Iterator[PlotTemplate]:
     )
 
     # Annual templates (all 6 chars eligible)
-    yield mk(Resolution.year, AggregationType.total, CoverageType.all_units)
-    yield mk(Resolution.year, AggregationType.average, CoverageType.all_units)
+    yield mk(Resolution.year, Metric.total, CoverageType.all_units)
+    yield mk(Resolution.year, Metric.average, CoverageType.all_units)
     if not skip_users:
-        yield mk(Resolution.year, AggregationType.average, CoverageType.users_only)
-    yield mk(Resolution.year, AggregationType.average, CoverageType.all_units, ViewType.distribution)
+        yield mk(Resolution.year, Metric.average, CoverageType.users_only)
+    yield mk(Resolution.year, Metric.distribution, CoverageType.all_units, ViewType.value_view)
     if not skip_users:
-        yield mk(Resolution.year, AggregationType.average, CoverageType.users_only, ViewType.distribution)
-        yield mk(Resolution.year, AggregationType.total, CoverageType.all_units, ViewType.penetration)
+        yield mk(Resolution.year, Metric.distribution, CoverageType.users_only, ViewType.value_view)
+        yield mk(Resolution.year, Metric.penetration, CoverageType.all_units, ViewType.value_view)
 
     # Monthly templates (only state eligible)
     if has_monthly:
-        yield mk(Resolution.month, AggregationType.total, CoverageType.all_units, chars=RECS_MONTHLY_CHARS)
-        yield mk(Resolution.month, AggregationType.average, CoverageType.all_units, chars=RECS_MONTHLY_CHARS)
+        yield mk(Resolution.month, Metric.total, CoverageType.all_units, chars=RECS_MONTHLY_CHARS)
+        yield mk(Resolution.month, Metric.average, CoverageType.all_units, chars=RECS_MONTHLY_CHARS)
         if not skip_users:
-            yield mk(Resolution.month, AggregationType.average, CoverageType.users_only, chars=RECS_MONTHLY_CHARS)
+            yield mk(Resolution.month, Metric.average, CoverageType.users_only, chars=RECS_MONTHLY_CHARS)
 
 
 def _recs_templates() -> Iterator[PlotTemplate]:
@@ -387,7 +389,7 @@ def _recs_templates() -> Iterator[PlotTemplate]:
         if quantity == DataCol.UNITS_COUNT:
             yield PlotTemplate(
                 comparison_dataset=ComparisonDataset.recs, quantity=DataCol.UNITS_COUNT,
-                resolution=Resolution.year, aggregation_type=AggregationType.total,
+                resolution=Resolution.year, aggregation_type=Metric.total,
                 coverage=CoverageType.all_units, view=ViewType.value_view,
                 eligible_chars=RECS_ANNUAL_CHARS,
             )
@@ -403,14 +405,14 @@ def _lrd_templates() -> Iterator[PlotTemplate]:
         for resolution, view in _LRD_METRICS:
             yield PlotTemplate(
                 comparison_dataset=ComparisonDataset.lrd, quantity=quantity,
-                resolution=resolution, aggregation_type=AggregationType.average,
+                resolution=resolution, aggregation_type=Metric.average,
                 coverage=CoverageType.all_units, view=view,
                 eligible_chars=LRD_CHARS,
             )
             if resolution == Resolution.hour_of_year:
                 yield PlotTemplate(
                     comparison_dataset=ComparisonDataset.lrd, quantity=quantity,
-                    resolution=resolution, aggregation_type=AggregationType.average,
+                    resolution=resolution, aggregation_type=Metric.average,
                     coverage=CoverageType.all_units, view=ViewType.temp_view,
                     eligible_chars=LRD_CHARS,
                 )

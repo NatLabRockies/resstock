@@ -159,10 +159,7 @@ def _filter_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
     if "enduse" in data.columns:
         structural.add("enduse")
 
-    keep_percent_users = (
-        plot_spec.view == ViewType.penetration
-        or plot_spec.coverage == CoverageType.users_only
-    )
+    keep_percent_users = plot_spec.is_penetration_metric or plot_spec.coverage == CoverageType.users_only
 
     drop_cols = []
     for col in data.columns:
@@ -200,14 +197,14 @@ def _filter_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
             continue
 
         # For penetration views, drop _value columns — only percent_users matters
-        if plot_spec.view == ViewType.penetration:
+        if plot_spec.is_penetration_metric:
             if col.endswith("_value") or col.endswith("_value_percent_difference"):
                 drop_cols.append(col)
                 continue
 
         # For distribution view, drop the single percent_difference column
         # (it compares means, not distributions, and is unintuitive next to quartiles).
-        if plot_spec.view == ViewType.distribution and col.endswith("_percent_difference"):
+        if plot_spec.is_distribution_metric and col.endswith("_percent_difference"):
             drop_cols.append(col)
             continue
 
@@ -318,7 +315,7 @@ def _build_column_config(
     ts_col = _resolve_timeseries_column(plot_spec)
 
     abs_diff_units = "percentage points" if units == "%" else units
-    is_distribution = plot_spec.view == ViewType.distribution
+    is_distribution = plot_spec.is_distribution_metric
 
     config = []
     for col in columns:
@@ -889,7 +886,7 @@ def generate_data_table_html(
     metrics_by_source = metrics_by_source or {}
     if plot_spec.quantity == DataCol.ALL:
         data = _melt_enduse_columns(data)
-    if plot_spec.view == ViewType.distribution:
+    if plot_spec.is_distribution_metric:
         data = _extract_quartile_columns(data, plot_spec)
     filtered = _filter_columns(data, plot_spec)
     pivoted, ref_label, rs_labels = _pivot_by_source(filtered, plot_spec)
@@ -917,7 +914,7 @@ def generate_data_table_html(
     # Determine the value column suffix
     if plot_spec.quantity == DataCol.UNITS_COUNT:
         val_suffix = "units_count"
-    elif plot_spec.view == ViewType.penetration:
+    elif plot_spec.is_penetration_metric:
         val_suffix = f"{plot_spec.quantity}_percent_users"
     else:
         val_suffix = f"{plot_spec.quantity}_value"
@@ -930,7 +927,7 @@ def generate_data_table_html(
     # Distribution plots compare entire quartile distributions, not single values,
     # so per-source diff columns and discrepancy formulas don't apply.
     rs_sources_js: list[dict[str, str]] = []
-    if plot_spec.view != ViewType.distribution:
+    if not plot_spec.is_distribution_metric:
         for rs_label in rs_labels:
             rs_val_col = f"{rs_label}: {val_suffix}"
             abs_diff_key = f"{rs_label} Difference ({abs_diff_units}): {val_suffix}"

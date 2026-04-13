@@ -6,10 +6,8 @@ Functions for loading and processing reference data (EIA, LRD, etc.) for validat
 import logging
 from pathlib import Path
 
-import polars as pl
-
-logger = logging.getLogger(__name__)
 import numpy as np
+import polars as pl
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
 from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
 from . import comparison_data_paths as s3_paths
@@ -18,9 +16,10 @@ from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS
 from resstockpostproc.baseline_validation.data_processing.recs_rse import calculate_rse
 from resstockpostproc.shared_utils.caching import cached
 from resstockpostproc.shared_utils.timing import timed
-from typing import Literal
-from resstockpostproc.baseline_validation.schema.plot_spec import DataKey, AggregationType, CoverageType
+from resstockpostproc.baseline_validation.schema.plot_spec import DataKey, Metric, CoverageType
 from resstockpostproc.baseline_validation.schema.recs_chars_mapping import RECS_CHARS_MAPPING, PartialMap
+
+logger = logging.getLogger(__name__)
 
 
 local_data_dir = Path(f"{workflow.output.output_dir}/data")
@@ -134,7 +133,7 @@ def get_annual_all(
 
     if by_cols:
         # Calculate value columns based on aggregation type
-        if data_key.aggregation_type == AggregationType.total:
+        if data_key.aggregation_type == Metric.total:
             # Stock energy: weighted sum
             result_df = mdf.group_by(by_cols).agg(
                 pl.len().alias("sample_count"),
@@ -191,7 +190,7 @@ def get_annual_all(
         nonzero_quartile_results = []
 
         # Determine RSE stat type based on aggregation
-        rse_stat_type = "total" if data_key.aggregation_type == AggregationType.total else "avg"
+        rse_stat_type = "total" if data_key.aggregation_type == Metric.total else "avg"
 
         unique_groups = mdf.select(by_cols).unique()
         n_groups = len(unique_groups)
@@ -305,7 +304,7 @@ def get_annual_all(
                 weight_sum = mdf_subset["NWEIGHT"].sum()
                 nonzero_weight_sum = ((mdf_subset[col] > 0).cast(pl.Int64) * mdf_subset["NWEIGHT"]).sum()
 
-                if data_key.aggregation_type == AggregationType.total:
+                if data_key.aggregation_type == Metric.total:
                     us_total_values[f"{col}_value"] = weighted_sum
                     us_total_values[f"{col}_percent_users"] = (
                         (nonzero_weight_sum / weight_sum * 100) if weight_sum > 0 else 0
@@ -398,7 +397,7 @@ def get_annual_all(
                 )
     else:
         # Calculate value columns based on aggregation type
-        if data_key.aggregation_type == AggregationType.total:
+        if data_key.aggregation_type == Metric.total:
             # Stock energy: weighted sum
             result_df = mdf.select(
                 pl.len().alias("sample_count"),
@@ -437,7 +436,7 @@ def get_annual_all(
         nonzero_quartile_dict = {}
 
         # Determine RSE stat type based on aggregation
-        rse_stat_type = "total" if data_key.aggregation_type == AggregationType.total else "mean"
+        rse_stat_type = "total" if data_key.aggregation_type == Metric.total else "mean"
 
         # Calculate units_count_rse
         try:
@@ -601,7 +600,7 @@ def get_monthly_all(
     monthly_df = monthly_df.join(annual_df.select([by] + percent_users_cols + ["units_count"]), on=by, how="left")
 
     # Apply aggregation transformation if needed
-    if data_key.coverage == CoverageType.all_units and data_key.aggregation_type == AggregationType.average:
+    if data_key.coverage == CoverageType.all_units and data_key.aggregation_type == Metric.average:
         # For per-unit energy, divide value columns by units_count
         value_cols = [col for col in monthly_df.columns if col.endswith("_value")]
         avg_exprs = []
@@ -615,7 +614,7 @@ def get_monthly_all(
             )
         if avg_exprs:
             monthly_df = monthly_df.with_columns(avg_exprs)
-    elif data_key.coverage == CoverageType.users_only and data_key.aggregation_type == AggregationType.average:
+    elif data_key.coverage == CoverageType.users_only and data_key.aggregation_type == Metric.average:
         # For per-user energy, divide value columns by customer columns
         value_cols = [col for col in monthly_df.columns if col.endswith("_value")]
         avg_exprs = []

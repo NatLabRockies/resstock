@@ -142,6 +142,7 @@ OUTPUT_COLUMNS = [
     "Comparison Dataset",
     "Quantity",
     "Metric",
+    "Coverage",
     "Filter 1",
     "Filter 2",
     "Group By",
@@ -230,6 +231,7 @@ def _build_output_row(main_spec: PlotSpec) -> dict[str, str]:
         "Comparison Dataset": main_spec.display_comparison_dataset,
         "Quantity": main_spec.display_quantity,
         "Metric": main_spec.display_metric,
+        "Coverage": main_spec.display_coverage,
         "Filter 1": "",
         "Filter 2": "",
         "Group By": main_spec.display_group_by,
@@ -480,13 +482,13 @@ def _compute_discrepancy(data, plot_spec) -> dict[str, tuple[float, float]]:
     """
     if plot_spec.quantity == DataCol.ALL:
         return {}
-    if plot_spec.view == ViewType.distribution:
+    if plot_spec.is_distribution_metric:
         return {}
 
     # Determine value column
     if plot_spec.quantity == DataCol.UNITS_COUNT:
         val_col = "units_count"
-    elif plot_spec.view == ViewType.penetration:
+    elif plot_spec.is_penetration_metric:
         val_col = f"{plot_spec.quantity}_percent_users"
     else:
         val_col = f"{plot_spec.quantity}_value"
@@ -623,10 +625,8 @@ def _generate_spec_plots(
             # For main visualization: save data CSV, compute discrepancy, generate data table
             if plot_spec.view in (
                 ViewType.value_view,
-                ViewType.penetration,
-                ViewType.distribution,
                 ViewType.temp_view,
-            ):
+            ) or plot_spec.is_penetration_metric or plot_spec.is_distribution_metric:
                 data_dir = output_base / f"{plot_spec.comparison_dataset} data (csv)" / path_seg
                 ensure_directory(data_dir)
                 _save_data_csv(data, data_dir, file_title)
@@ -842,6 +842,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
             group_key = (
                 results[sub_key]["Comparison Dataset"],
                 results[sub_key]["Metric"],
+                results[sub_key]["Coverage"],
                 results[sub_key]["Filter 1"],
                 results[sub_key]["Filter 2"],
                 results[sub_key]["Group By"],
@@ -915,7 +916,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
         bar_format="{desc}: {percentage:6.2f}%|{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}]",
     )
     for group_key, qty_entries in stacked_pbar:
-        ds, metric, f1, f2, gb = group_key
+        ds, metric, coverage, f1, f2, gb = group_key
         first_spec = qty_entries[0][1][0][0]
         path_seg = first_spec.file_path_and_name[0]
         scale = 1.0 if gb in ("State", "") else 0.5
@@ -946,9 +947,18 @@ def generate_plots(index=None, test_only=False, parallel=True):
             stacked_count += 1
 
         if viz_parts:
-            row = {"Index": "", "Comparison Dataset": ds, "Quantity": "All Enduses (Stacked)",
-                   "Metric": metric, "Filter 1": f1, "Filter 2": f2, "Group By": gb,
-                   "Comparison Plot": " ;; ".join(viz_parts), "Data": ""}
+            row = {
+                "Index": "",
+                "Comparison Dataset": ds,
+                "Quantity": "All Enduses (Stacked)",
+                "Metric": metric,
+                "Coverage": coverage,
+                "Filter 1": f1,
+                "Filter 2": f2,
+                "Group By": gb,
+                "Comparison Plot": " ;; ".join(viz_parts),
+                "Data": "",
+            }
             results[f"stacked_{stacked_count}"] = row
             _append_plot_row(csv_path, row)
             append_index_row(index_state, row)
