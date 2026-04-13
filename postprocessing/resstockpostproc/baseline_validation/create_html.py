@@ -230,6 +230,26 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
       'Distribution of Annual Consumption',
       'Enduse Penetration',
     ];
+    const QUANTITY_PRIORITY = {{
+      'Number of dwelling units': 0,
+      'All Enduses': 1,
+      'All Enduses (Stacked)': 1,
+      'Electricity': 2,
+      'Natural Gas': 3,
+      'Propane': 4,
+      'Fuel Oil': 5,
+      // Defensive aliases in case alternate labels appear in future rows.
+      'Electricity Total': 2,
+      'Natural Gas Total': 3,
+      'Propane Total': 4,
+      'Fuel Oil Total': 5,
+    }};
+    const FUEL_GROUP_ORDER = {{
+      'Electricity': 0,
+      'Natural Gas': 1,
+      'Propane': 2,
+      'Fuel Oil': 3,
+    }};
 
     const COL_IDX = Object.create(null);
     HEADERS.forEach((h, i) => COL_IDX[h] = i);
@@ -277,6 +297,25 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
 
     function comboPos(col) {{
       return FILTER_COLS.indexOf(col);
+    }}
+
+    function quantityFuelGroup(value) {{
+      if (value.endsWith(' Electricity')) return 'Electricity';
+      if (value.endsWith(' Natural Gas')) return 'Natural Gas';
+      if (value.endsWith(' Propane')) return 'Propane';
+      if (value.endsWith(' Fuel Oil')) return 'Fuel Oil';
+      return null;
+    }}
+
+    function quantitySortKey(value) {{
+      if (Object.prototype.hasOwnProperty.call(QUANTITY_PRIORITY, value)) {{
+        return [QUANTITY_PRIORITY[value], value];
+      }}
+      const group = quantityFuelGroup(value);
+      if (group != null) {{
+        return [10 + FUEL_GROUP_ORDER[group], value];
+      }}
+      return [9999, value];
     }}
 
     function keyFromFilterSelection() {{
@@ -356,6 +395,12 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
           const ia = Object.prototype.hasOwnProperty.call(orderMap, a) ? orderMap[a] : 9999;
           const ib = Object.prototype.hasOwnProperty.call(orderMap, b) ? orderMap[b] : 9999;
           return ia - ib || a.localeCompare(b);
+        }});
+      }} else if (col === 'Quantity') {{
+        vals.sort((a, b) => {{
+          const [pa, la] = quantitySortKey(a);
+          const [pb, lb] = quantitySortKey(b);
+          return pa - pb || la.localeCompare(lb);
         }});
       }} else {{
         vals.sort((a, b) => a.localeCompare(b));

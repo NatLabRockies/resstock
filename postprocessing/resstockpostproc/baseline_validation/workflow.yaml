@@ -49,8 +49,8 @@ plots:
 # If empty or not specified, all quantities will be generated.
 # To generate plots for only a subset of quantities, list them here.
 quantities:
-  - All Enduses
   - Number of dwelling units
+  - All Enduses
   - Electricity
   - Natural Gas
   - Space Cooling Electricity
