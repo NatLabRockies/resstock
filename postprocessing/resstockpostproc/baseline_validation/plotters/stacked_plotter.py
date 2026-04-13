@@ -2,8 +2,15 @@ from resstockpostproc.shared_utils.generic_plotters import box_plotter, bar_plot
 from resstockpostproc.shared_utils.generic_plotters.range_utils import compute_axis_range
 from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import filter_null_sources
 from resstockpostproc.baseline_validation.io_managers.get_recs_data import get_enduse_order
-from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, Metric, CoverageType, ViewType
+from resstockpostproc.baseline_validation.schema.plot_spec import (
+    PlotSpec,
+    Metric,
+    CoverageType,
+    ViewType,
+    ComparisonDataset,
+)
 from resstockpostproc.shared_utils.db_column_names import DataCol
+from resstockpostproc.shared_utils.sorting import human_sort
 from resstockpostproc.shared_utils.timing import timed
 import plotly.graph_objects as go
 import polars as pl
@@ -112,8 +119,61 @@ def split_graph_by_state(df: pl.DataFrame):
     fig = make_subplots(rows=1, cols=2)
     return fig, _graph_iterator()
 
+
+_RECS_SEMANTIC_SORT_COLUMNS = {
+    "vintage",
+    "census_division_recs",
+    "geometry_building_type_recs",
+    "heating_fuel",
+    "building_america_climate_zone",
+}
+
+
+def _dedupe_keep_order(values: list) -> list:
+    """Return unique values while preserving the first-seen order."""
+    return list(dict.fromkeys([v for v in values if v is not None]))
+
+
+def _sort_chars_by_units_count(ref_df: pl.DataFrame, char_column: str) -> list:
+    """Sort characteristic values by reference-source units_count descending."""
+    sorted_ref = ref_df
+    if "units_count" in sorted_ref.columns and sorted_ref["units_count"].null_count() < len(sorted_ref):
+        sorted_ref = sorted_ref.sort("units_count", descending=True)
+    return _dedupe_keep_order(sorted_ref[char_column].to_list())
+
+
+def _sort_chars_semantically_for_recs(ref_df: pl.DataFrame, char_column: str) -> list[str]:
+    """Sort RECS characteristic labels using shared human/custom sorting rules."""
+    sorted_df = human_sort(
+        ref_df.select(pl.col(char_column).cast(pl.String).alias(char_column)).drop_nulls().lazy(),
+        char_column,
+    ).collect()
+    ordered = _dedupe_keep_order(sorted_df[char_column].to_list())
+
+    # Keep U.S. total at the front for consistency with existing grouped views.
+    if "US Total" in ordered:
+        ordered = ["US Total"] + [v for v in ordered if v != "US Total"]
+    return ordered
+
+
+def _resolve_sorted_chars(df: pl.DataFrame, char_column: str, plot_spec: PlotSpec | None) -> list:
+    """Resolve characteristic order with RECS semantic ordering and fallback behavior."""
+    ref_source = _get_reference_source(df)
+    ref_df = df.filter(pl.col("source") == ref_source)
+
+    if (
+        plot_spec is not None
+        and plot_spec.comparison_dataset == ComparisonDataset.recs
+        and char_column in _RECS_SEMANTIC_SORT_COLUMNS
+    ):
+        ordered = _sort_chars_semantically_for_recs(ref_df, char_column)
+        return ordered if ordered else _sort_chars_by_units_count(ref_df, char_column)
+
+    return _sort_chars_by_units_count(ref_df, char_column)
+
+
 @timed
-def split_graph_by_char(df: pl.DataFrame):
+def split_graph_by_char(df: pl.DataFrame, plot_spec: PlotSpec | None = None):
     """Split the graph data into subplots based on a character column.
 
     Yields tuples of (df_subset, second_category_column, row, col) for each subplot.
@@ -137,12 +197,7 @@ def split_graph_by_char(df: pl.DataFrame):
         )
     ][0]
 
-    # Get characteristic values sorted by reference source values (descending)
-    ref_source = _get_reference_source(df)
-    ref_df = df.filter(pl.col("source") == ref_source)
-    if "units_count" in ref_df.columns and ref_df["units_count"].null_count() < len(ref_df):
-        ref_df = ref_df.sort("units_count", descending=True)
-    sorted_chars = ref_df[char_column].to_list()
+    sorted_chars = _resolve_sorted_chars(df, char_column, plot_spec)
 
     # All chars fit in one column
     def _graph_iterator():
@@ -300,7 +355,7 @@ def split_graph(df: pl.DataFrame, plot_spec: PlotSpec):
     elif plot_spec.quantity == DataCol.ALL:
         return split_graph_by_enduse(df, plot_spec)
     else:
-        return split_graph_by_char(df)
+        return split_graph_by_char(df, plot_spec)
 
 @timed
 def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, float]:

@@ -165,6 +165,113 @@ class TestSplitGraphByChar:
         assert col_name == "vintage"
         assert row == 1 and col == 1
 
+    def test_recs_census_division_custom_order_with_us_total_first(self):
+        df = pl.DataFrame({
+            "source": ["recs_2020"] * 4 + ["resstock_2024"] * 4,
+            "census_division_recs": [
+                "Pacific",
+                "Middle Atlantic",
+                "US Total",
+                "New England",
+                "Pacific",
+                "Middle Atlantic",
+                "US Total",
+                "New England",
+            ],
+            "units_count": [9000, 8000, 1000, 7000, 9100, 7900, 1000, 7100],
+            "electricity_total_value": [100.0, 100.0, 100.0, 100.0, 110.0, 110.0, 110.0, 110.0],
+        })
+        spec = _make_spec(group_by="census_division_recs")
+        _, iterator = split_graph_by_char(df, spec)
+        df_out, _, _, _ = list(iterator)[0]
+
+        ordered = df_out.filter(pl.col("source") == "recs_2020")["census_division_recs"].to_list()
+        assert ordered == ["US Total", "New England", "Middle Atlantic", "Pacific"]
+
+    def test_recs_building_type_custom_order_with_label_variants(self):
+        df = pl.DataFrame({
+            "source": ["recs_2020"] * 5 + ["resstock_2024"] * 5,
+            "geometry_building_type_recs": [
+                "Mobile Home",
+                "Multi-Family with 5+ Units",
+                "Single-Family Detached",
+                "Multi-Family with 2 - 4 Units",
+                "Single-Family Attached",
+                "Mobile Home",
+                "Multi-Family with 5+ Units",
+                "Single-Family Detached",
+                "Multi-Family with 2 - 4 Units",
+                "Single-Family Attached",
+            ],
+            "units_count": [10000, 9000, 2000, 8000, 7000, 10010, 9010, 2010, 8010, 7010],
+            "electricity_total_value": [1.0] * 10,
+        })
+        spec = _make_spec(group_by="geometry_building_type_recs")
+        _, iterator = split_graph_by_char(df, spec)
+        df_out, _, _, _ = list(iterator)[0]
+
+        ordered = df_out.filter(pl.col("source") == "recs_2020")["geometry_building_type_recs"].to_list()
+        assert ordered == [
+            "Single-Family Detached",
+            "Single-Family Attached",
+            "Multi-Family with 2 - 4 Units",
+            "Multi-Family with 5+ Units",
+            "Mobile Home",
+        ]
+
+    def test_recs_vintage_human_sort_with_us_total_pinned_first(self):
+        df = pl.DataFrame({
+            "source": ["recs_2020"] * 5 + ["resstock_2024"] * 5,
+            "vintage": [
+                "2010s",
+                "<1950",
+                "1990s",
+                "US Total",
+                "1950s",
+                "2010s",
+                "<1950",
+                "1990s",
+                "US Total",
+                "1950s",
+            ],
+            "units_count": [9000, 8000, 7000, 1000, 6000, 9010, 8010, 7010, 1000, 6010],
+            "electricity_total_value": [1.0] * 10,
+        })
+        spec = _make_spec(group_by="vintage")
+        _, iterator = split_graph_by_char(df, spec)
+        df_out, _, _, _ = list(iterator)[0]
+
+        ordered = df_out.filter(pl.col("source") == "recs_2020")["vintage"].to_list()
+        assert ordered == ["US Total", "<1950", "1950s", "1990s", "2010s"]
+
+    def test_recs_unknown_char_falls_back_to_units_count_descending(self):
+        df = pl.DataFrame({
+            "source": ["recs_2020"] * 3 + ["resstock_2024"] * 3,
+            "custom_char": ["A", "B", "C", "A", "B", "C"],
+            "units_count": [10, 30, 20, 11, 31, 21],
+            "electricity_total_value": [1.0] * 6,
+        })
+        spec = _make_spec(group_by="custom_char")
+        _, iterator = split_graph_by_char(df, spec)
+        df_out, _, _, _ = list(iterator)[0]
+
+        ordered = df_out.filter(pl.col("source") == "recs_2020")["custom_char"].to_list()
+        assert ordered == ["B", "C", "A"]
+
+    def test_non_recs_keeps_units_count_sort_even_for_semantic_chars(self):
+        df = pl.DataFrame({
+            "source": ["eia_2018"] * 3 + ["resstock_2024"] * 3,
+            "vintage": ["<1950", "1950s", "2010s", "<1950", "1950s", "2010s"],
+            "units_count": [10, 20, 30, 11, 21, 31],
+            "electricity_total_value": [1.0] * 6,
+        })
+        spec = _make_spec(comparison_dataset=ComparisonDataset.eia, group_by="vintage")
+        _, iterator = split_graph_by_char(df, spec)
+        df_out, _, _, _ = list(iterator)[0]
+
+        ordered = df_out.filter(pl.col("source") == "eia_2018")["vintage"].to_list()
+        assert ordered == ["2010s", "1950s", "<1950"]
+
 
 class TestGetCustomRange:
     def test_units_count_range(self):
