@@ -9,7 +9,7 @@ from resstockpostproc.baseline_validation.io_managers.utils import (
     apply_aggregation,
 )
 from resstockpostproc.baseline_validation.schema.plot_spec import (
-    AggregationType,
+    Metric,
     CoverageType,
     DataKey,
     Resolution,
@@ -120,7 +120,7 @@ class TestApplyAggregation:
             "electricity_total_value": [1000.0],
             "units_count": [10.0],
         })
-        key = self._make_key(AggregationType.total, CoverageType.all_units)
+        key = self._make_key(Metric.total, CoverageType.all_units)
         result = apply_aggregation(key, df)
 
         assert result["electricity_total_value"].item() == 1000.0
@@ -131,7 +131,7 @@ class TestApplyAggregation:
             "electricity_total_value": [1000.0],
             "units_count": [10.0],
         })
-        key = self._make_key(AggregationType.average, CoverageType.all_units)
+        key = self._make_key(Metric.average, CoverageType.all_units)
         result = apply_aggregation(key, df)
 
         assert result["electricity_total_value"].item() == pytest.approx(100.0)
@@ -144,7 +144,7 @@ class TestApplyAggregation:
             "electricity_total_percent_users": [50],
             "units_count": [100.0],
         })
-        key = self._make_key(AggregationType.average, CoverageType.users_only)
+        key = self._make_key(Metric.average, CoverageType.users_only)
         result = apply_aggregation(key, df)
 
         # denominator = 50/100 * 100 = 50 users → 1000/50 = 20.0
@@ -160,7 +160,7 @@ class TestApplyAggregation:
             "natural_gas_total_value": [200.0],
             "units_count": [10.0],
         })
-        key = self._make_key(AggregationType.average, CoverageType.all_units)
+        key = self._make_key(Metric.average, CoverageType.all_units)
         result = apply_aggregation(key, df)
 
         assert result["electricity_total_value"].item() == pytest.approx(50.0)

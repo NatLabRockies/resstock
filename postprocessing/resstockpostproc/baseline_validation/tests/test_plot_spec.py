@@ -5,7 +5,7 @@ from pydantic import ValidationError
 
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
-    AggregationType,
+    Metric,
     CoverageType,
     Resolution,
     ComparisonDataset,
@@ -20,7 +20,7 @@ def _make_spec(**overrides):
         comparison_dataset=ComparisonDataset.eia,
         quantity=DataCol.ELECTRICITY_TOTAL,
         resolution=Resolution.year,
-        aggregation_type=AggregationType.total,
+        aggregation_type=Metric.total,
         coverage=CoverageType.all_units,
         group_by="state",
         view=ViewType.value_view,
@@ -31,16 +31,16 @@ def _make_spec(**overrides):
 
 class TestRejectTotalDistribution:
     def test_total_distribution_raises(self):
-        with pytest.raises(ValidationError, match="distribution requires AggregationType.average"):
-            _make_spec(aggregation_type=AggregationType.total, view=ViewType.distribution)
+        with pytest.raises(ValidationError, match="distribution requires Metric.average"):
+            _make_spec(aggregation_type=Metric.total, view=ViewType.value_view)
 
     def test_average_distribution_allowed(self):
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
-            aggregation_type=AggregationType.average,
-            view=ViewType.distribution,
+            aggregation_type=Metric.average,
+            view=ViewType.value_view,
         )
-        assert spec.view == ViewType.distribution
+        assert spec.view == ViewType.value_view
 
 
 class TestLRDConstraints:
@@ -48,7 +48,7 @@ class TestLRDConstraints:
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.lrd,
             quantity=DataCol.ELECTRICITY_TOTAL,
-            aggregation_type=AggregationType.average,
+            aggregation_type=Metric.average,
             coverage=CoverageType.all_units,
             group_by="utility",
         )
@@ -59,7 +59,7 @@ class TestLRDConstraints:
             _make_spec(
                 comparison_dataset=ComparisonDataset.lrd,
                 quantity=DataCol.NATURAL_GAS_TOTAL,
-                aggregation_type=AggregationType.average,
+                aggregation_type=Metric.average,
                 coverage=CoverageType.all_units,
             )
 
@@ -68,7 +68,7 @@ class TestLRDConstraints:
             _make_spec(
                 comparison_dataset=ComparisonDataset.lrd,
                 quantity=DataCol.ELECTRICITY_TOTAL,
-                aggregation_type=AggregationType.total,
+                aggregation_type=Metric.total,
                 coverage=CoverageType.all_units,
             )
 
@@ -77,7 +77,7 @@ class TestLRDConstraints:
             _make_spec(
                 comparison_dataset=ComparisonDataset.lrd,
                 quantity=DataCol.ELECTRICITY_TOTAL,
-                aggregation_type=AggregationType.average,
+                aggregation_type=Metric.average,
                 coverage=CoverageType.users_only,
             )
 
@@ -86,7 +86,7 @@ class TestLRDConstraints:
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.eia,
             quantity=DataCol.NATURAL_GAS_TOTAL,
-            aggregation_type=AggregationType.total,
+            aggregation_type=Metric.total,
             coverage=CoverageType.all_units,
         )
         assert spec.comparison_dataset == ComparisonDataset.eia

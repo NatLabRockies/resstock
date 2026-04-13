@@ -10,7 +10,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
     Resolution,
     ComparisonDataset,
-    AggregationType,
+    Metric,
     CoverageType,
     ViewType,
 )
@@ -81,7 +81,7 @@ class TestLRDPlotter:
             group_by=None,
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(("utility", "ComEd (IL)"),),
-            aggregation_type=AggregationType.average,
+            aggregation_type=Metric.average,
             coverage=CoverageType.all_units,
             view=ViewType.value_view,
         )
@@ -101,7 +101,7 @@ class TestLRDPlotter:
             group_by="utility",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(),  # Missing required parameter
-            aggregation_type=AggregationType.average,
+            aggregation_type=Metric.average,
             coverage=CoverageType.all_units,
             view=ViewType.value_view,
         )
@@ -117,7 +117,7 @@ class TestLRDPlotter:
             group_by=None,
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(("utility", "ComEd (IL)"),),
-            aggregation_type=AggregationType.average,
+            aggregation_type=Metric.average,
             coverage=CoverageType.all_units,
             view=ViewType.value_view,
         )
@@ -136,7 +136,7 @@ class TestLRDPlotter:
             group_by="utility",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(),
-            aggregation_type=AggregationType.average,
+            aggregation_type=Metric.average,
             coverage=CoverageType.all_units,
             view=ViewType.value_view,
         )
@@ -156,7 +156,7 @@ class TestLRDPlotter:
             group_by="utility",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(),
-            aggregation_type=AggregationType.average,
+            aggregation_type=Metric.average,
             coverage=CoverageType.all_units,
             view=ViewType.value_view,
         )
@@ -253,7 +253,7 @@ class TestDayOfYearResolution:
             group_by="utility",
             quantity=DataCol.ELECTRICITY_TOTAL,
             focus_on=(),
-            aggregation_type=AggregationType.average,
+            aggregation_type=Metric.average,
             coverage=CoverageType.all_units,
             view=ViewType.value_view,
         )

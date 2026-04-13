@@ -519,7 +519,7 @@ class PlotSpec(NoExtraModel):
         """
         title = self.display_title
         if self.view == ViewType.diff_view:
-            title = title + " (difference view)"
+            title = title + " (symmetric percent difference view)"
         # Focus entries go at the top of the path hierarchy.
         # "US Total" is a sibling of "By State", not a child.
         filter_dir = Path()

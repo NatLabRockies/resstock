@@ -13,8 +13,10 @@ from __future__ import annotations
 import csv
 import io
 import json
+import os
 import re
 import sys
+import tempfile
 from collections import defaultdict
 from collections.abc import Sequence
 from pathlib import Path
@@ -28,12 +30,89 @@ _JS_SUFFIX = "\n`);\n"
 
 
 class IndexState:
-  """In-memory index state for incremental row appends."""
+  """Incremental index state for O(1) shard appends and streamed combinations."""
 
   def __init__(self, html_path: Path, headers: Sequence[str]):
     self.html_path = html_path
-    self.headers = list(headers)
-    self.rows: list[dict[str, str]] = []
+    headers_list = list(headers)
+    if "Coverage" not in headers_list:
+      insert_at = headers_list.index("Metric") + 1 if "Metric" in headers_list else len(headers_list)
+      headers_list.insert(insert_at, "Coverage")
+    self.headers = headers_list
+    self.data_dir = html_path.parent / DATA_DIR_NAME
+    self.manifest: dict[str, str] = {}
+    self.shard_suffix_sizes: dict[str, int] = {}
+    self.filter_cols = [h for h in self.headers if h not in NON_FILTER_COLUMNS]
+    self._combo_file = None
+    self._manifest_changed = False
+    self._combo_count = 0
+    self._combo_flush_interval = 1000
+
+  def _create_shard(self, filter1_value: str) -> str:
+    filename = _shard_filename(filter1_value)
+    shard_path = self.data_dir / filename
+    shard_path.write_text("window.addRows(`\n" + _JS_SUFFIX, encoding="utf-8")
+    self.shard_suffix_sizes[filename] = len(_JS_SUFFIX.encode("utf-8"))
+    self.manifest[filter1_value] = filename
+    self._manifest_changed = True
+    return filename
+
+  def get_or_create_shard(self, filter1_value: str) -> str:
+    if filter1_value in self.manifest:
+      self._manifest_changed = False
+      return self.manifest[filter1_value]
+    return self._create_shard(filter1_value)
+
+  def open_combo_file(self) -> None:
+    combo_path = self.data_dir / COMBINATIONS_FILENAME
+    self._combo_file = open(combo_path, "a", encoding="utf-8")
+
+  def close_combo_file(self) -> None:
+    if self._combo_file:
+      self._combo_file.flush()
+      self._combo_file.close()
+      self._combo_file = None
+
+  def append_to_shard(self, row_dict: dict) -> None:
+    self._manifest_changed = False
+
+    row = dict(row_dict)
+    row.setdefault("Coverage", "All Units")
+    row = _normalize_rows([row])[0]
+    row = {h: row.get(h, "") for h in self.headers}
+
+    filter1_value = str(row.get(_FILTER1_COLUMN, "")).strip()
+    filename = self.get_or_create_shard(filter1_value)
+    shard_path = self.data_dir / filename
+    suffix_size = self.shard_suffix_sizes[filename]
+    tsv_line = _row_to_tsv_line(row, self.headers)
+
+    with open(shard_path, "r+b") as f:
+      f.seek(-suffix_size, 2)
+      f.write(tsv_line.encode("utf-8"))
+      f.write(_JS_SUFFIX.encode("utf-8"))
+
+    combo = [row.get(c, "") for c in self.filter_cols]
+    if self._combo_file:
+      self._combo_file.write(f"window.addCombos({json.dumps(combo, ensure_ascii=False)});\n")
+      self._combo_count += 1
+      if self._combo_count % self._combo_flush_interval == 0:
+        self._combo_file.flush()
+
+  @property
+  def needs_html_rewrite(self) -> bool:
+    return self._manifest_changed
+
+
+def _atomic_write(path: Path, content: str) -> None:
+  fd, tmp = tempfile.mkstemp(dir=path.parent, suffix=".tmp")
+  try:
+    with os.fdopen(fd, "w", encoding="utf-8") as f:
+      f.write(content)
+    os.replace(tmp, path)
+  except BaseException:
+    os.unlink(tmp)
+    raise
 
 
 def _canonical_metric_label(metric: str) -> str:
@@ -119,12 +198,12 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
 <html>
 <head>
   <meta charset='UTF-8'>
-  <title>Comparisons Index</title>
+  <title>ResStock Comparison Explorer</title>
   <style>
     * {{ box-sizing: border-box; }}
     html, body {{ height: 100%; overflow: hidden; }}
     body {{ margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1a1a1a; }}
-    .app {{ display: grid; grid-template-columns: 288px 1fr; height: 100vh; height: 100dvh; }}
+    .app {{ display: grid; grid-template-columns: 322px 1fr; height: 100vh; height: 100dvh; }}
     .sidebar {{
       border-right: 1px solid #ddd;
       padding: 12px;
@@ -170,10 +249,11 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
       top: 0;
       z-index: 1;
     }}
-    .main {{ display: grid; grid-template-rows: auto 1fr; min-width: 0; }}
+    .main {{ display: grid; grid-template-rows: auto auto 1fr; min-width: 0; }}
     .tabs {{
       display: flex;
       gap: 4px;
+      align-items: center;
       padding: 8px 10px 0;
       border-bottom: 1px solid #c6c6c6;
       background: #f6f6f6;
@@ -196,11 +276,30 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
       color: #0b57d0;
       font-weight: 700;
     }}
+    .tab-tools {{
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      min-height: 22px;
+      padding: 2px 10px 4px;
+      background: #fff;
+      border: none;
+    }}
+    .open-tab-link {{
+      font-size: 12px;
+      color: #0b57d0;
+      text-decoration: none;
+      white-space: nowrap;
+    }}
+    .open-tab-link:hover {{
+      text-decoration: underline;
+    }}
     .viewer {{
       position: relative;
       min-height: 0;
       border: 1px solid #c6c6c6;
       border-top: none;
+      border-left: none;
       background: #fff;
     }}
     iframe {{ width: 100%; height: 100%; border: 0; }}
@@ -210,11 +309,12 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
 <body>
   <div class='app'>
     <aside class='sidebar'>
-      <div class='title'>Comparisons Index</div>
+      <div class='title'>ResStock Comparison Explorer</div>
       <div id='filters'></div>
     </aside>
     <main class='main'>
       <div class='tabs' id='tabs'></div>
+      <div class='tab-tools' id='tabTools'></div>
       <div class='viewer' id='viewer'></div>
     </main>
   </div>
@@ -551,11 +651,25 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
         b.onclick = () => {{
           activeTabIdx = idx;
           renderTabs();
+          renderOpenTabLink();
           renderViewer();
           writeStateToUrl();
         }};
         host.appendChild(b);
       }});
+    }}
+
+    function renderOpenTabLink() {{
+      const host = document.getElementById('tabTools');
+      host.innerHTML = '';
+      if (!currentTabs.length) return;
+      const openLink = document.createElement('a');
+      openLink.className = 'open-tab-link';
+      openLink.textContent = 'Open in a new tab';
+      openLink.target = '_blank';
+      openLink.rel = 'noopener noreferrer';
+      openLink.href = currentTabs[activeTabIdx].path;
+      host.appendChild(openLink);
     }}
 
     function renderViewer() {{
@@ -594,6 +708,7 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
       }}
 
       renderTabs();
+      renderOpenTabLink();
       renderViewer();
       writeStateToUrl();
     }}
@@ -684,18 +799,28 @@ create_html2_from_csv = create_html_from_csv
 
 
 def init_html_index(html_path: Path, headers: Sequence[str]) -> IndexState:
-    """Initialize an in-memory HTML index state for incremental row append."""
-    return IndexState(html_path=html_path, headers=headers)
+    """Initialize disk-backed index state for incremental row append."""
+    html_path.parent.mkdir(parents=True, exist_ok=True)
+    data_dir = html_path.parent / DATA_DIR_NAME
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    state = IndexState(html_path=html_path, headers=headers)
+    (data_dir / COMBINATIONS_FILENAME).write_text("", encoding="utf-8")
+    state.open_combo_file()
+    return state
 
 
 def append_index_row(state: IndexState, row_dict: dict) -> None:
-    """Append one row to the in-memory index state."""
-    state.rows.append(dict(row_dict))
+    """Append one row to disk shards/combinations in O(1)."""
+    state.append_to_shard(row_dict)
+    if state.needs_html_rewrite:
+        _atomic_write(state.html_path, _build_html(state.headers, state.manifest))
 
 
 def finalize_html_index(state: IndexState) -> None:
-    """Write final comparisons_index.html + sharded data files."""
-    create_html_from_rows(state.rows, state.headers, state.html_path)
+    """Close streams and write final comparisons_index.html."""
+    state.close_combo_file()
+    _atomic_write(state.html_path, _build_html(state.headers, state.manifest))
 
 
 def main() -> int:

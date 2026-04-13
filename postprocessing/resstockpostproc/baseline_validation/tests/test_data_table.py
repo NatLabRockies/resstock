@@ -14,7 +14,7 @@ from resstockpostproc.baseline_validation.io_managers.data_table import (
 )
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
-    AggregationType,
+    Metric,
     CoverageType,
     Resolution,
     ComparisonDataset,
@@ -28,7 +28,7 @@ def _make_spec(**overrides):
         comparison_dataset=ComparisonDataset.eia,
         quantity=DataCol.ELECTRICITY_TOTAL,
         resolution=Resolution.year,
-        aggregation_type=AggregationType.total,
+        aggregation_type=Metric.total,
         coverage=CoverageType.all_units,
         group_by="state",
         view=ViewType.value_view,
@@ -63,7 +63,7 @@ class TestShouldGenerateTable:
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             quantity=DataCol.ALL,
-            aggregation_type=AggregationType.average,
+            aggregation_type=Metric.average,
         )
         data = pl.DataFrame({"state": ["CA"], "source": ["recs_2020"]})
         assert should_generate_table(data, spec) is True
@@ -79,7 +79,7 @@ class TestShouldGenerateTable:
             comparison_dataset=ComparisonDataset.lrd,
             quantity=DataCol.ELECTRICITY_TOTAL,
             resolution=Resolution.hour_of_year,
-            aggregation_type=AggregationType.average,
+            aggregation_type=Metric.average,
             group_by="utility",
         )
         data = pl.DataFrame({
@@ -124,7 +124,7 @@ class TestFilterColumns:
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             coverage=CoverageType.users_only,
-            aggregation_type=AggregationType.average,
+            aggregation_type=Metric.average,
         )
         filtered = _filter_columns(data, spec)
 
@@ -178,7 +178,7 @@ class TestFilterColumns:
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.hour_of_day_matrix,
-            aggregation_type=AggregationType.average,
+            aggregation_type=Metric.average,
             focus_on=(("utility", "AEP (OH)"),),
             group_by=None,
         )
@@ -259,7 +259,7 @@ class TestGenerateDataTableHtml:
             plot_spec=spec,
             output_path=output_path,
             plot_rel_path="../plots/test_plot.html",
-            metrics_by_source={"ResStock 2025": (19.1, 11.7)},
+            metrics_by_source={"ResStock 2025": 11.7},
         )
 
         html = output_path.read_text(encoding="utf-8")
@@ -267,22 +267,20 @@ class TestGenerateDataTableHtml:
         # Title present
         assert "Electricity" in html or "electricity" in html
         # Metrics present
-        assert "19.1%" in html
         assert "11.7%" in html
-        assert "CV(RMSE)" in html
-        assert "NMBE" in html
+        assert "sMAPE" in html
         # Source label appears in the per-source banner
         assert "ResStock 2025" in html
         # Navigation links
-        assert "View Plot" in html
+        assert "View Plot" not in html
         assert "Download CSV" in html
         # Data is embedded as JSON
         assert "const DATA = " in html
         assert "const COLUMNS = " in html
         # Sort functionality
         assert "sortBy" in html
-        # Per-source absolute difference column (e.g., "ResStock 2025 Difference (kWh)")
-        assert "Difference (kWh)" in html
+        # Per-source absolute difference column (e.g., "ResStock 2025 Absolute Difference (kWh)")
+        assert "Absolute Difference (kWh)" in html
         assert "abs_diff" in html
         # Formula breakdown section
         assert "renderMetricsFormula" in html
@@ -325,7 +323,7 @@ class TestGenerateDataTableHtml:
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.hour_of_day_matrix,
-            aggregation_type=AggregationType.average,
+            aggregation_type=Metric.average,
             focus_on=(("utility", "AEP (OH)"),),
             group_by=None,
         )
@@ -363,8 +361,8 @@ class TestDistributionTable:
         data = _make_distribution_data()
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
-            view=ViewType.distribution,
-            aggregation_type=AggregationType.average,
+            view=ViewType.value_view,
+            aggregation_type=Metric.distribution,
         )
         output_path = tmp_path / "dist_table.html"
         generate_data_table_html(data=data, plot_spec=spec, output_path=output_path)
@@ -384,8 +382,8 @@ class TestDistributionTable:
         data = _make_distribution_data()
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
-            view=ViewType.distribution,
-            aggregation_type=AggregationType.average,
+            view=ViewType.value_view,
+            aggregation_type=Metric.distribution,
         )
         output_path = tmp_path / "dist_no_metrics.html"
         generate_data_table_html(data=data, plot_spec=spec, output_path=output_path)
@@ -395,7 +393,7 @@ class TestDistributionTable:
         # rendered <table class="metrics-banner"> wrapper should appear)
         assert '<table class="metrics-banner">' not in html
         # No per-source absolute-difference columns should be generated
-        assert "Difference (kWh)" not in html
+        assert "Absolute Difference (kWh)" not in html
         # JS RS_SOURCES list is empty (no per-source formula derivations)
         assert "const RS_SOURCES = []" in html
 
@@ -414,8 +412,8 @@ class TestDistributionTable:
         })
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
-            view=ViewType.distribution,
-            aggregation_type=AggregationType.average,
+            view=ViewType.value_view,
+            aggregation_type=Metric.distribution,
             coverage=CoverageType.users_only,
         )
         output_path = tmp_path / "dist_users_only.html"
@@ -461,7 +459,7 @@ class TestAllEnduseTable:
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             quantity=DataCol.ALL,
-            aggregation_type=AggregationType.average,
+            aggregation_type=Metric.average,
         )
         output_path = tmp_path / "all_table.html"
         generate_data_table_html(data=data, plot_spec=spec, output_path=output_path)
@@ -483,7 +481,7 @@ class TestAllEnduseTable:
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             quantity=DataCol.ALL,
-            aggregation_type=AggregationType.average,
+            aggregation_type=Metric.average,
             focus_on=(("state", "US Total"),),
             group_by=None,
         )
@@ -497,7 +495,7 @@ class TestAllEnduseTable:
         assert '"label": "State"' not in html
 
     def test_all_enduse_distribution_table(self, tmp_path):
-        """ALL-quantity distribution plots should render quartile stats per enduse."""
+        """ALL-quantity distribution specs are invalid under the Metric-based schema."""
         data = pl.DataFrame({
             "state": ["CA", "CA"],
             "source": ["recs_2020", "resstock_2025"],
@@ -508,19 +506,13 @@ class TestAllEnduseTable:
             ],
             "model_count": [None, 500.0],
         })
-        spec = _make_spec(
-            comparison_dataset=ComparisonDataset.recs,
-            quantity=DataCol.ALL,
-            view=ViewType.distribution,
-            aggregation_type=AggregationType.average,
-        )
-        output_path = tmp_path / "all_dist.html"
-        generate_data_table_html(data=data, plot_spec=spec, output_path=output_path)
-        html = output_path.read_text(encoding="utf-8")
-        assert "End Use" in html
-        assert "Min" in html
-        assert "Median" in html
-        assert "Max" in html
+        with pytest.raises(Exception):
+            _make_spec(
+                comparison_dataset=ComparisonDataset.recs,
+                quantity=DataCol.ALL,
+                view=ViewType.value_view,
+                aggregation_type=Metric.distribution,
+            )
 
 
 class TestTemperatureViewTable:
@@ -539,7 +531,7 @@ class TestTemperatureViewTable:
             comparison_dataset=ComparisonDataset.lrd,
             quantity=DataCol.ELECTRICITY_TOTAL,
             resolution=Resolution.hour_of_year,
-            aggregation_type=AggregationType.average,
+            aggregation_type=Metric.average,
             view=ViewType.temp_view,
             group_by="utility",
         )
@@ -557,5 +549,3 @@ class TestTemperatureViewTable:
         # The Utility column has 2 distinct values so it stays
         assert "AEP (OH)" in html
         assert "PG&amp;E (CA)" in html or "PG&E (CA)" in html
-
-

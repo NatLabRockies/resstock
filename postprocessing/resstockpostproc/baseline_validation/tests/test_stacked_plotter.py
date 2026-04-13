@@ -13,7 +13,7 @@ from resstockpostproc.baseline_validation.plotters.stacked_plotter import (
     split_graph_by_state,
 )
 from resstockpostproc.baseline_validation.schema.plot_spec import (
-    AggregationType,
+    Metric,
     CoverageType,
     PlotSpec,
     Resolution,
@@ -28,7 +28,7 @@ def _make_spec(**overrides):
         comparison_dataset=ComparisonDataset.recs,
         quantity=DataCol.ELECTRICITY_TOTAL,
         resolution=Resolution.year,
-        aggregation_type=AggregationType.average,
+        aggregation_type=Metric.average,
         coverage=CoverageType.all_units,
         group_by="state",
         view=ViewType.value_view,
@@ -186,7 +186,7 @@ class TestGetCustomRange:
         df = pl.DataFrame({
             "electricity_total_quartiles": [[5.0, 10.0, 20.0, 30.0, 50.0, 70.0, 80.0, 90.0, 95.0]],
         })
-        spec = _make_spec(view=ViewType.distribution)
+        spec = _make_spec(view=ViewType.value_view)
         min_val, max_val = get_custom_range(df, spec)
         assert min_val == 0  # min(0, first element)
         assert max_val == 95.0  # last element
@@ -195,7 +195,7 @@ class TestGetCustomRange:
         df = pl.DataFrame({"electricity_total_percent_users": [20.0, 80.0, 100.0]})
         spec = _make_spec(
             view=ViewType.penetration,
-            aggregation_type=AggregationType.total,
+            aggregation_type=Metric.total,
         )
         min_val, max_val = get_custom_range(df, spec)
         assert min_val == 0

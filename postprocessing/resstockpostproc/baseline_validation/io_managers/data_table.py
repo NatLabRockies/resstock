@@ -1,7 +1,7 @@
 """Generate interactive HTML data table pages for baseline validation plots.
 
 Each table page shows the plot's data in a pivoted, sortable format with
-discrepancy metrics (CVRMSE, NMBE) and navigation links back to the plot
+discrepancy metrics (sMAPE) and navigation links back to the plot
 and the plot index.
 """
 
@@ -226,7 +226,7 @@ def _pivot_by_source(
 
     Each ResStock source becomes its own column group with:
       - "{rs_label}: {value_col}"
-      - "{rs_label} Difference (%)" (from the existing percent_difference column)
+      - "{rs_label} Symmetric Percent Difference (%)" (from the existing percent_difference column)
 
     The reference (e.g. EIA 2018) gets its own group: "{ref_label}: {value_col}".
 
@@ -276,7 +276,7 @@ def _pivot_by_source(
         rs_select_exprs = (
             [pl.col(c) for c in join_cols]
             + [pl.col(c).alias(f"{rs_label}: {c}") for c in rs_non_diff]
-            + [pl.col(c).alias(f"{rs_label} Difference (%): {c}") for c in rs_diff_available]
+            + [pl.col(c).alias(f"{rs_label} Symmetric Percent Difference (%): {c}") for c in rs_diff_available]
         )
         rs_renamed = rs_df.select(rs_select_exprs)
         pivoted = pivoted.join(rs_renamed, on=join_cols, how="full", coalesce=True)
@@ -343,13 +343,13 @@ def _build_column_config(
         # Per-source ResStock columns
         matched = False
         for rs_label in rs_labels:
-            abs_diff_prefix = f"{rs_label} Difference ({abs_diff_units}): "
-            pct_diff_prefix = f"{rs_label} Difference (%): "
+            abs_diff_prefix = f"{rs_label} Absolute Difference ({abs_diff_units}): "
+            pct_diff_prefix = f"{rs_label} Symmetric Percent Difference (%): "
             value_prefix = f"{rs_label}: "
             if col.startswith(abs_diff_prefix):
                 config.append({
                     "key": col,
-                    "label": f"{rs_label} Difference ({abs_diff_units})",
+                    "label": f"{rs_label} Absolute Difference ({abs_diff_units})",
                     "type": "abs_diff",
                     "format": "+,.1f",
                 })
@@ -358,7 +358,7 @@ def _build_column_config(
             if col.startswith(pct_diff_prefix):
                 config.append({
                     "key": col,
-                    "label": f"{rs_label} Difference (%)",
+                    "label": f"{rs_label} Symmetric Percent Difference (%)",
                     "type": "diff",
                     "format": "+.1f%",
                 })
@@ -437,7 +437,7 @@ def _build_table_html(
     col_config: list[dict],
     plot_spec: PlotSpec,
     plot_rel_path: str | None,
-    metrics_by_source: dict[str, tuple[float, float]],
+    metrics_by_source: dict[str, float],
     footnotes: list[str] | None,
     source_labels: dict | None,
     ref_label: str,
@@ -446,7 +446,7 @@ def _build_table_html(
     """Build a self-contained HTML page with an interactive data table.
 
     Args:
-        metrics_by_source: Mapping of ResStock label → (cvrmse, nmbe).
+        metrics_by_source: Mapping of ResStock label → sMAPE (%).
         rs_sources_js: List of {label, refKey, absDiffKey} dicts used by the JS
             to compute per-source formula derivations at render time.
     """
@@ -476,28 +476,24 @@ def _build_table_html(
     config_json = json.dumps(col_config)
     csv_filename_js = json.dumps(_csv_filename(plot_spec))  # safe for JS embedding
 
-    # Build a single metrics banner with one row per source
-    metrics_html = ""
+    # Compact summary header content (shown in the collapsible <summary>)
+    summary_html = "Discrepancy Metrics Details"
     if metrics_by_source:
-        rows = []
-        for label, (cv, nb) in metrics_by_source.items():
-            rows.append(
-                '<tr>'
-                f'<td class="metric-label">{html_lib.escape(label)}</td>'
-                f'<td><strong>NMBE:</strong> {nb:.1f}%</td>'
-                f'<td><strong>CV(RMSE):</strong> {cv:.1f}%</td>'
-                '</tr>'
+        chips = []
+        for label, smape in metrics_by_source.items():
+            chips.append(
+                f'<span class="metric-chip">'
+                f'<span class="metric-chip-label">{html_lib.escape(label)}</span>'
+                f'<span class="metric-chip-value">{smape:.1f}%</span>'
+                f"</span>"
             )
-        metrics_html = (
-            '<table class="metrics-banner"><tbody>'
-            + "".join(rows)
-            + '</tbody></table>'
+        summary_html = (
+            '<span class="summary-prefix">sMAPE</span>'
+            + "".join(chips)
         )
 
     # Build navigation links
     nav_parts = []
-    if plot_rel_path:
-        nav_parts.append(f'<a href="{plot_rel_path}" target="_blank">View Plot</a>')
     nav_parts.append('<a href="#" onclick="downloadCSV(); return false;">Download CSV</a>')
     nav_html = '<div class="nav-links">' + " | ".join(nav_parts) + "</div>"
 
@@ -532,6 +528,7 @@ def _build_table_html(
       background-color: #D3D3D3; font-weight: bold; cursor: pointer;
       position: sticky; top: 0; user-select: none;
       white-space: normal; word-wrap: break-word; max-width: 140px;
+      z-index: 3; background-clip: padding-box;
     }}
     th:hover {{ background-color: #c0c0c0; }}
     th .sort-arrow {{ font-size: 10px; margin-left: 4px; opacity: 0.6; }}
@@ -547,9 +544,20 @@ def _build_table_html(
     .metrics-details > summary {{
       cursor: pointer; padding: 12px 20px; font-size: 15px; font-weight: bold;
       font-family: Arial, sans-serif; user-select: none; list-style: revert;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
     }}
     .metrics-details > summary:hover {{ background: #eef1f5; }}
     .metrics-details[open] > summary {{ border-bottom: 1px solid #e0e0e0; }}
+    .summary-prefix {{
+      font-weight: 700; color: #1a1a1a; margin-right: 4px;
+    }}
+    .metric-chip {{
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #ffffff; border: 1px solid #d0d7de; border-radius: 999px;
+      padding: 2px 8px; font-size: 13px; font-weight: 600;
+    }}
+    .metric-chip-label {{ color: #555; font-weight: 600; }}
+    .metric-chip-value {{ color: #1a1a1a; font-weight: 700; }}
     .metrics-formula {{
       padding: 16px 20px;
       font-family: 'Courier New', Courier, monospace; font-size: 13px;
@@ -578,9 +586,8 @@ def _build_table_html(
     <thead><tr id="headerRow"></tr></thead>
     <tbody id="tableBody"></tbody>
   </table>
-  {metrics_html}
   <details id="metricsDetails" class="metrics-details">
-    <summary>Discrepancy Metrics Details</summary>
+    <summary>{summary_html}</summary>
     <div id="metricsFormula" class="metrics-formula"></div>
   </details>
   {footer_html}
@@ -799,35 +806,35 @@ def _build_table_html(
         const absDiffKey = src.absDiffKey;
         if (!refKey || !absDiffKey) return;
 
-        let sumRef = 0, sumDiff = 0, sumDiffSq = 0, n = 0;
+        let sumTerms = 0, sumAbsSpd = 0, n = 0;
         rows.forEach(r => {{
           const ref = r[refKey];
           const diff = r[absDiffKey];
           if (ref !== null && ref !== undefined && diff !== null && diff !== undefined) {{
-            sumRef += Number(ref);
-            sumDiff += Number(diff);
-            sumDiffSq += Number(diff) * Number(diff);
-            n++;
+            const refNum = Number(ref);
+            const diffNum = Number(diff);
+            const rsNum = refNum + diffNum;
+            const denom = Math.abs(refNum) + Math.abs(rsNum);
+            if (denom > 0) {{
+              const term = Math.abs(diffNum) / denom;
+              sumTerms += term;
+              sumAbsSpd += 200 * term;
+              n++;
+            }}
           }}
         }});
-        if (n === 0 || sumRef === 0) return;
+        if (n === 0) return;
 
-        const meanRef = sumRef / n;
-        const nmbe = (sumDiff / sumRef) * 100;
-        const rmse = Math.sqrt(sumDiffSq / n);
-        const cvrmse = (rmse / meanRef) * 100;
+        const smape = (2 * sumTerms / n) * 100;
 
         anyDerivation = true;
         html += `<strong>${{escapeHtml(src.label)}}</strong>\\n\\n`;
-        html += `<strong>NMBE</strong> (Normalized Mean Bias Error)\\n`;
-        html += `  = \\u03A3(${{escapeHtml(src.label)}} \\u2212 Reference) / \\u03A3(Reference) \\u00D7 100\\n`;
-        html += `  = ${{fmt(sumDiff)}} / ${{fmt(sumRef)}} \\u00D7 100\\n`;
-        html += `  = <span class="result">${{fmt(nmbe)}}%</span>\\n\\n`;
-        html += `<strong>CV(RMSE)</strong> (Coefficient of Variation of Root Mean Square Error)\\n`;
-        html += `  = \\u221A[\\u03A3(${{escapeHtml(src.label)}} \\u2212 Reference)\\u00B2 / n] / mean(Reference) \\u00D7 100\\n`;
-        html += `  = \\u221A[${{fmt(sumDiffSq)}} / ${{fmtInt(n)}}] / ${{fmt(meanRef)}} \\u00D7 100\\n`;
-        html += `  = ${{fmt(rmse)}} / ${{fmt(meanRef)}} \\u00D7 100\\n`;
-        html += `  = <span class="result">${{fmt(cvrmse)}}%</span>\\n\\n`;
+        html += `<strong>sMAPE</strong> (Symmetric Mean Absolute Percentage Error)\\n`;
+        html += `  = (2 / n) \\u00D7 \\u03A3\\u007CForecast \\u2212 Actual\\u007C / (\\u007CActual\\u007C + \\u007CForecast\\u007C) \\u00D7 100\\n`;
+        html += `  = \\u03A3\\u007CSymmetric Percent Difference\\u007C / n\\n`;
+        html += `  = ${{fmt(sumAbsSpd)}} / ${{fmtInt(n)}}\\n`;
+        html += `  = (2 / ${{fmtInt(n)}}) \\u00D7 ${{fmt(sumTerms)}} \\u00D7 100\\n`;
+        html += `  = <span class="result">${{fmt(smape)}}%</span>\\n\\n`;
       }});
 
       if (!anyDerivation) {{
@@ -861,7 +868,7 @@ def generate_data_table_html(
     plot_spec: PlotSpec,
     output_path: Path,
     plot_rel_path: str | None = None,
-    metrics_by_source: dict[str, tuple[float, float]] | None = None,
+    metrics_by_source: dict[str, float] | None = None,
     footnotes: list[str] | None = None,
     source_labels: dict | None = None,
 ) -> None:
@@ -872,7 +879,7 @@ def generate_data_table_html(
         plot_spec: The plot specification.
         output_path: Where to write the HTML file.
         plot_rel_path: Relative path to the corresponding plot HTML (for navigation).
-        metrics_by_source: Per-source (cvrmse, nmbe) tuples keyed by source label.
+        metrics_by_source: Per-source sMAPE (%) keyed by source label.
         footnotes: Footnotes for the footer.
         source_labels: Data source labels for the footer.
     """
@@ -930,7 +937,7 @@ def generate_data_table_html(
     if not plot_spec.is_distribution_metric:
         for rs_label in rs_labels:
             rs_val_col = f"{rs_label}: {val_suffix}"
-            abs_diff_key = f"{rs_label} Difference ({abs_diff_units}): {val_suffix}"
+            abs_diff_key = f"{rs_label} Absolute Difference ({abs_diff_units}): {val_suffix}"
             if ref_val_col in pivoted.columns and rs_val_col in pivoted.columns:
                 pivoted = pivoted.with_columns(
                     pl.col(ref_val_col).fill_nan(0),
@@ -961,7 +968,9 @@ def generate_data_table_html(
             c for c in pivoted.columns
             if not c.startswith(f"{ref_label}: ")
             and not any(
-                c.startswith(f"{lbl}: ") or c.startswith(f"{lbl} Difference")
+                c.startswith(f"{lbl}: ")
+                or c.startswith(f"{lbl} Absolute Difference")
+                or c.startswith(f"{lbl} Symmetric Percent Difference")
                 for lbl in rs_labels
             )
         ]
@@ -975,8 +984,8 @@ def generate_data_table_html(
                 [c for c in pivoted.columns if c.startswith(f"{rs_label}: ")],
                 key=_stat_sort_key,
             )
-            abs_diff_cols = [c for c in pivoted.columns if c.startswith(f"{rs_label} Difference ({abs_diff_units}): ")]
-            pct_diff_cols = [c for c in pivoted.columns if c.startswith(f"{rs_label} Difference (%): ")]
+            abs_diff_cols = [c for c in pivoted.columns if c.startswith(f"{rs_label} Absolute Difference ({abs_diff_units}): ")]
+            pct_diff_cols = [c for c in pivoted.columns if c.startswith(f"{rs_label} Symmetric Percent Difference (%): ")]
             ordered.extend(value_cols + abs_diff_cols + pct_diff_cols)
         pivoted = pivoted.select(ordered)
 

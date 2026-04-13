@@ -10,7 +10,6 @@ Usage:
 import argparse
 import csv
 import logging
-import math
 import os
 import sys
 from collections import defaultdict
@@ -471,14 +470,13 @@ def get_plotting_function(comparison_dataset):
 
 
 @timed
-def _compute_discrepancy(data, plot_spec) -> dict[str, tuple[float, float]]:
-    """Compute CVRMSE and NMBE for each ResStock source using ASHRAE-style global normalization.
+def _compute_discrepancy(data, plot_spec) -> dict[str, float]:
+    """Compute sMAPE (%) for each ResStock source.
 
-    NMBE  = Σ(ResStock - Ref) / Σ(Ref) × 100
-    CVRMSE = sqrt(Σ(ResStock - Ref)² / n) / mean(Ref) × 100
+    sMAPE = (2 / n) * Σ(|ResStock - Ref| / (|Ref| + |ResStock|)) * 100
 
     Returns a dict keyed by formatted source label (e.g. "ResStock 2025"), with
-    (cvrmse, nmbe) values. Empty dict when metrics cannot be computed.
+    per-source sMAPE (%) values. Empty dict when metrics cannot be computed.
     """
     if plot_spec.quantity == DataCol.ALL:
         return {}
@@ -520,7 +518,7 @@ def _compute_discrepancy(data, plot_spec) -> dict[str, tuple[float, float]]:
 
     ref_selected = ref_rows.select(join_cols + [pl.col(val_col).alias("ref_val")])
 
-    metrics: dict[str, tuple[float, float]] = {}
+    metrics: dict[str, float] = {}
     for rs_source in rs_sources:
         rs_rows = data.filter(pl.col("source") == rs_source)
         if not is_us_total_focus:
@@ -537,17 +535,18 @@ def _compute_discrepancy(data, plot_spec) -> dict[str, tuple[float, float]]:
         if len(paired) == 0:
             continue
 
-        diffs = paired["rs_val"] - paired["ref_val"]
-        sum_ref = paired["ref_val"].sum()
-        mean_ref = paired["ref_val"].mean()
+        term_df = paired.with_columns(
+            (
+                (pl.col("rs_val") - pl.col("ref_val")).abs()
+                / (pl.col("rs_val").abs() + pl.col("ref_val").abs())
+            ).alias("smape_term")
+        ).filter((pl.col("rs_val").abs() + pl.col("ref_val").abs()) > 0)
 
-        if sum_ref == 0 or mean_ref == 0:
+        if len(term_df) == 0:
             continue
 
-        nmbe = float(diffs.sum() / sum_ref * 100)
-        rmse = float(math.sqrt((diffs**2).mean()))
-        cvrmse = float(rmse / mean_ref * 100)
-        metrics[_format_source_label(rs_source)] = (cvrmse, nmbe)
+        smape = float(2.0 * term_df["smape_term"].mean() * 100.0)
+        metrics[_format_source_label(rs_source)] = smape
 
     return metrics
 
@@ -1068,7 +1067,7 @@ def main():
         "--index", type=str, default=None, help="Plot definition index to generate (e.g. '5', '1-10', '1,3,5')"
     )
     parser.add_argument(
-        "--test", action="store_true", default=False,
+        "--test", action="store_true", default=True,
         help="Generate only test subset plots (limited focus expansion)",
     )
     parser.add_argument(

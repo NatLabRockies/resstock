@@ -379,7 +379,7 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     elif plot_spec.is_penetration_metric:
         quantity_title = "%"
     elif plot_spec.view == ViewType.diff_view:
-        quantity_title = "Percent Difference"
+        quantity_title = "Symmetric Percent Difference"
     elif plot_spec.view == ViewType.value_view:
         quantity_title = "kWh"
     else:

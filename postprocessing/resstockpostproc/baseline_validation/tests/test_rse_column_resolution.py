@@ -5,7 +5,7 @@ import pytest
 from resstockpostproc.baseline_validation.plotters.plot_config import _resolve_rse_column
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
-    AggregationType,
+    Metric,
     CoverageType,
     Resolution,
     ComparisonDataset,
@@ -19,7 +19,7 @@ def _make_spec(**overrides):
         comparison_dataset=ComparisonDataset.recs,
         quantity=DataCol.ELECTRICITY_TOTAL,
         resolution=Resolution.year,
-        aggregation_type=AggregationType.average,
+        aggregation_type=Metric.average,
         coverage=CoverageType.all_units,
         group_by="state",
         view=ViewType.value_view,
@@ -45,7 +45,7 @@ class TestResolveRSEColumn:
 
     def test_distribution_view_returns_none(self):
         """Distribution box plots use quartiles, not RSE."""
-        assert _resolve_rse_column(_make_spec(view=ViewType.distribution)) is None
+        assert _resolve_rse_column(_make_spec(view=ViewType.value_view)) is None
 
     def test_units_count_has_no_rse(self):
         """Unit counts derive from calibrated weights — RSE is meaningless."""
@@ -55,7 +55,7 @@ class TestResolveRSEColumn:
         spec = _make_spec(
             quantity=DataCol.ELECTRICITY_TOTAL,
             view=ViewType.penetration,
-            aggregation_type=AggregationType.total,
+            aggregation_type=Metric.total,
         )
         assert _resolve_rse_column(spec) == "electricity_total_percent_users_rse"
 
