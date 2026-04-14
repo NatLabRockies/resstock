@@ -341,6 +341,30 @@ def _build_output_row(main_spec: PlotSpec) -> dict[str, str]:
     }
 
 
+def _apply_lrd_sidebar_semantics(
+    row: dict[str, str],
+    display_spec: PlotSpec,
+    final_focus_on: tuple[tuple[str, str], ...],
+) -> None:
+    """Normalize LRD index facets to the simplified Metric/Filter/Group By model."""
+    if display_spec.comparison_dataset != ComparisonDataset.lrd:
+        return
+
+    # Default LRD sidebar facets are utility-grouped with no explicit filters.
+    row["Filter 1"] = ""
+    row["Filter 2"] = ""
+    row["Group By"] = "Utility"
+
+    if display_spec.resolution == Resolution.hour_of_day_summer:
+        row["Filter 1"] = "Season: Summer"
+    elif display_spec.resolution == Resolution.hour_of_day_winter:
+        row["Filter 1"] = "Season: Winter"
+    elif display_spec.resolution == Resolution.hour_of_day_matrix:
+        utility = next((val for char, val in final_focus_on if char == "utility"), "")
+        row["Filter 1"] = f"Utility: {utility}" if utility else ""
+        row["Group By"] = "Month-Day"
+
+
 def _footnote_row(main_spec: PlotSpec) -> dict[str, str]:
     """Build a dict for footnote matching from a PlotSpec."""
     return {
@@ -916,6 +940,8 @@ def generate_plots(index=None, test_only=False, parallel=True):
                     display = ABBR2STATE.get(value, value) if char == "state" else value
                     category = format_group_by(char)
                     results[sub_key][f"Filter {idx + 1}"] = f"{category}: {display}"
+
+        _apply_lrd_sidebar_semantics(results[sub_key], display_spec, final_focus_on)
 
         focused_entries = []
         for spec, viz_type in spec_entries:

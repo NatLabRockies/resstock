@@ -5,6 +5,7 @@ import pytest
 
 from resstockpostproc.baseline_validation.plot_generator import (
     _all_enduses_viz_label,
+    _apply_lrd_sidebar_semantics,
     _compute_discrepancy,
     _should_generate_stacked_table,
     _stacked_title_from_grouped,
@@ -255,6 +256,69 @@ class TestAllEndusesHelpers:
         assert _should_generate_stacked_table(
             "", ComparisonDataset.eia, Resolution.year, Metric.total
         ) is True
+
+
+class TestLRDSidebarSemantics:
+    @staticmethod
+    def _make_lrd_spec(resolution: Resolution) -> PlotSpec:
+        defaults = dict(
+            comparison_dataset=ComparisonDataset.lrd,
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            aggregation_type=Metric.average,
+            coverage=CoverageType.all_units,
+            view=ViewType.value_view,
+        )
+        if resolution == Resolution.hour_of_day_matrix:
+            return PlotSpec(
+                resolution=resolution,
+                group_by=None,
+                focus_on=(("utility", "ComEd (IL)"),),
+                **defaults,
+            )
+        return PlotSpec(
+            resolution=resolution,
+            group_by="utility",
+            focus_on=(),
+            **defaults,
+        )
+
+    def test_non_lrd_row_unchanged(self):
+        row = {"Filter 1": "State: Alaska", "Filter 2": "", "Group By": "State"}
+        spec = _make_spec()
+        _apply_lrd_sidebar_semantics(row, spec, ())
+        assert row == {"Filter 1": "State: Alaska", "Filter 2": "", "Group By": "State"}
+
+    def test_lrd_default_facets(self):
+        row = {"Filter 1": "stale", "Filter 2": "stale", "Group By": ""}
+        spec = self._make_lrd_spec(Resolution.year)
+        _apply_lrd_sidebar_semantics(row, spec, ())
+        assert row["Filter 1"] == ""
+        assert row["Filter 2"] == ""
+        assert row["Group By"] == "Utility"
+
+    @pytest.mark.parametrize(
+        "resolution,expected_filter_1",
+        [
+            (Resolution.hour_of_day_summer, "Season: Summer"),
+            (Resolution.hour_of_day_winter, "Season: Winter"),
+        ],
+    )
+    def test_lrd_seasonal_facets(self, resolution, expected_filter_1):
+        row = {"Filter 1": "", "Filter 2": "", "Group By": ""}
+        spec = self._make_lrd_spec(resolution)
+        _apply_lrd_sidebar_semantics(row, spec, ())
+        assert row["Filter 1"] == expected_filter_1
+        assert row["Filter 2"] == ""
+        assert row["Group By"] == "Utility"
+
+    def test_lrd_matrix_facets(self):
+        row = {"Filter 1": "", "Filter 2": "stale", "Group By": ""}
+        spec = self._make_lrd_spec(Resolution.hour_of_day_matrix)
+        focus_on = (("utility", "ComEd (IL)"),)
+        _apply_lrd_sidebar_semantics(row, spec, focus_on)
+        assert row["Filter 1"] == "Utility: ComEd (IL)"
+        assert row["Filter 2"] == ""
+        assert row["Group By"] == "Month-Day"
 
 
 # ---------------------------------------------------------------------------

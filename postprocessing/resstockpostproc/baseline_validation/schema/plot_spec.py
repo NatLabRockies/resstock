@@ -424,10 +424,26 @@ class PlotSpec(NoExtraModel):
             "Total Annual Consumption" (total, year)
             "Average Monthly Consumption" (average, month)
             "Distribution of Annual Consumption" (distribution)
-            "Load Duration Curve of Electricity Consumption per Dwelling Unit" (LRD)
+            "Load Duration Plot" (LRD)
         """
         if self.comparison_dataset == ComparisonDataset.lrd:
-            # LRD metric IS the full display_title (no grouping to strip)
+            if self.view in (ViewType.temp_view, ViewType.temp_distribution_view):
+                return "Load Vs Outdoor Drybulb Temperature"
+            if self.resolution == Resolution.year:
+                return "Average Annual Consumption"
+            if self.resolution == Resolution.month:
+                return "Average Monthly Consumption"
+            if self.resolution == Resolution.day_of_year:
+                return "Average Daily Consumption"
+            if self.resolution in (
+                Resolution.hour_of_day,
+                Resolution.hour_of_day_summer,
+                Resolution.hour_of_day_winter,
+                Resolution.hour_of_day_matrix,
+            ):
+                return "Average Day Hourly Consumption"
+            if self.resolution in (Resolution.hour_of_year, Resolution.top_100_hours):
+                return "Load Duration Plot"
             return self.display_title
 
         if self.quantity == DataCol.UNITS_COUNT:

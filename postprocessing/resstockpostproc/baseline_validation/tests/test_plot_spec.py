@@ -90,3 +90,61 @@ class TestLRDConstraints:
             coverage=CoverageType.all_units,
         )
         assert spec.comparison_dataset == ComparisonDataset.eia
+
+
+class TestLRDDisplayMetricLabels:
+    @staticmethod
+    def _make_lrd_spec(
+        resolution: Resolution,
+        view: ViewType = ViewType.value_view,
+        focus_on: tuple[tuple[str, str], ...] = (),
+        group_by: str | None = "utility",
+    ) -> PlotSpec:
+        return PlotSpec(
+            comparison_dataset=ComparisonDataset.lrd,
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            resolution=resolution,
+            aggregation_type=Metric.average,
+            coverage=CoverageType.all_units,
+            focus_on=focus_on,
+            group_by=group_by,
+            view=view,
+        )
+
+    @pytest.mark.parametrize(
+        "resolution,view,group_by,focus_on,expected",
+        [
+            (Resolution.year, ViewType.value_view, "utility", (), "Average Annual Consumption"),
+            (Resolution.month, ViewType.value_view, "utility", (), "Average Monthly Consumption"),
+            (Resolution.day_of_year, ViewType.value_view, "utility", (), "Average Daily Consumption"),
+            (Resolution.hour_of_day, ViewType.value_view, "utility", (), "Average Day Hourly Consumption"),
+            (Resolution.hour_of_day_summer, ViewType.value_view, "utility", (), "Average Day Hourly Consumption"),
+            (Resolution.hour_of_day_winter, ViewType.value_view, "utility", (), "Average Day Hourly Consumption"),
+            (
+                Resolution.hour_of_day_matrix,
+                ViewType.value_view,
+                None,
+                (("utility", "ComEd (IL)"),),
+                "Average Day Hourly Consumption",
+            ),
+            (Resolution.hour_of_year, ViewType.value_view, "utility", (), "Load Duration Plot"),
+            (Resolution.top_100_hours, ViewType.value_view, "utility", (), "Load Duration Plot"),
+            (
+                Resolution.hour_of_year,
+                ViewType.temp_view,
+                "utility",
+                (),
+                "Load Vs Outdoor Drybulb Temperature",
+            ),
+            (
+                Resolution.hour_of_year,
+                ViewType.temp_distribution_view,
+                "utility",
+                (),
+                "Load Vs Outdoor Drybulb Temperature",
+            ),
+        ],
+    )
+    def test_display_metric_label_mapping(self, resolution, view, group_by, focus_on, expected):
+        spec = self._make_lrd_spec(resolution=resolution, view=view, focus_on=focus_on, group_by=group_by)
+        assert spec.display_metric == expected

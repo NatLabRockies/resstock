@@ -27,6 +27,18 @@ _FILTER1_COLUMN = "Filter 1"
 DATA_DIR_NAME = "comparisons_index_data"
 COMBINATIONS_FILENAME = "combinations.js"
 _JS_SUFFIX = "\n`);\n"
+METRIC_ORDER = [
+    "Total Annual Consumption",
+    "Total Monthly Consumption",
+    "Average Annual Consumption",
+    "Average Monthly Consumption",
+    "Average Daily Consumption",
+    "Average Day Hourly Consumption",
+    "Load Duration Plot",
+    "Load Vs Outdoor Drybulb Temperature",
+    "Distribution of Annual Consumption",
+    "Enduse Penetration",
+]
 
 
 class IndexState:
@@ -180,6 +192,7 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
     filter_cols = [h for h in headers if h not in NON_FILTER_COLUMNS]
     headers_json = json.dumps(list(headers), ensure_ascii=False)
     filter_cols_json = json.dumps(filter_cols, ensure_ascii=False)
+    metric_order_json = json.dumps(METRIC_ORDER, ensure_ascii=False)
 
     data_script_tags = [
         f'  <script src="{DATA_DIR_NAME}/{COMBINATIONS_FILENAME}" defer></script>',
@@ -322,14 +335,7 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
   <script>
     const HEADERS = {headers_json};
     const FILTER_COLS = {filter_cols_json};
-    const METRIC_ORDER = [
-      'Total Annual Consumption',
-      'Total Monthly Consumption',
-      'Average Annual Consumption',
-      'Average Monthly Consumption',
-      'Distribution of Annual Consumption',
-      'Enduse Penetration',
-    ];
+    const METRIC_ORDER = {metric_order_json};
     const QUANTITY_PRIORITY = {{
       'Number of dwelling units': 0,
       'All Enduses': 1,
