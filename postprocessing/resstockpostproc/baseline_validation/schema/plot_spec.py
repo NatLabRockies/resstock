@@ -66,6 +66,7 @@ class Layout(StrEnum):
 
     auto = "auto"
     two_column = "two_column"
+    histogram = "histogram"
 
 
 class FileType(StrEnum):
@@ -175,7 +176,7 @@ class PlotSpec(NoExtraModel):
                     "(('state', 'AK'), ('vintage', '1990s')) focuses on AK 1990s homes.",
     )
     view: ViewType | None = Field(..., description="View type: diff_view, value_view, temp_view, etc.")
-    layout: Layout = Field(default=Layout.auto, description="Layout hint: auto or two_column")
+    layout: Layout = Field(default=Layout.auto, description="Layout hint: auto, two_column, or histogram")
 
     @model_validator(mode="after")
     def _validate_metric_constraints(self) -> PlotSpec:
@@ -496,10 +497,13 @@ class PlotSpec(NoExtraModel):
         base = self._base_viz_label
         layout_label = self._default_viz_layout if layout is None else layout
 
-        if self.layout == Layout.two_column:
+        if self.layout == Layout.histogram:
+            return "Histogram"
+
+        if self.layout != Layout.auto:
             if self.view == ViewType.diff_view:
-                return f"{base} (two_column difference view)"
-            return f"{base} (two_column)"
+                return f"{base} ({self.layout.value} difference view)"
+            return f"{base} ({self.layout.value})"
 
         if self.view == ViewType.diff_view:
             if layout_label == "grouped":
@@ -535,6 +539,8 @@ class PlotSpec(NoExtraModel):
     @property
     def _base_viz_label(self) -> str:
         """Base visualization type label before any optional suffix."""
+        if self.layout == Layout.histogram:
+            return "Histogram"
         if self.is_distribution_metric:
             return "Box Plot"
         if self.resolution == Resolution.year:
@@ -561,8 +567,8 @@ class PlotSpec(NoExtraModel):
         - filename is the display_title with coverage/view suffixes
         """
         title = self.display_title
-        if self.layout == Layout.two_column:
-            title = title + " (two_column layout)"
+        if self.layout != Layout.auto:
+            title = title + f" ({self.layout.value} layout)"
         if self.quantity == DataCol.ALL and self.view == ViewType.value_view:
             title = title + " (grouped view)"
         elif self.quantity == DataCol.ALL and self.view == ViewType.diff_view:

@@ -280,13 +280,13 @@ def _extra_views_for(spec: PlotSpec) -> list[ViewType]:
 
 def _extra_layouts_for(spec: PlotSpec) -> list[Layout]:
     """Determine any companion layout variants for a spec family."""
+    if spec.is_distribution_metric:
+        return [Layout.histogram]
     if spec.comparison_dataset not in (ComparisonDataset.eia, ComparisonDataset.recs):
         return []
     if spec.resolution != Resolution.year:
         return []
     if spec.group_by != "state":
-        return []
-    if spec.is_distribution_metric:
         return []
     if spec.quantity == DataCol.ALL:
         return []
@@ -456,4 +456,3 @@ def generate_all_templates() -> list[PlotTemplate]:
     """
     from itertools import chain
     return list(chain(_eia_templates(), _recs_templates(), _lrd_templates()))
-

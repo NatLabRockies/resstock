@@ -63,6 +63,7 @@ def _needs_stacked_plotter(plot_spec: PlotSpec) -> bool:
         plot_spec.is_distribution_metric
         or plot_spec.quantity == DataCol.ALL
         or plot_spec.layout == Layout.two_column
+        or plot_spec.layout == Layout.histogram
     )
 
 @timed

@@ -30,6 +30,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     FileType,
     ComparisonDataset,
     ViewType,
+    Layout,
     Resolution,
     CoverageType,
     Metric,
@@ -319,6 +320,18 @@ def _template_display_quantity(tmpl: PlotTemplate) -> str:
 def _build_spec_entries(specs: list[PlotSpec]) -> list[tuple[PlotSpec, str]]:
     """Convert a related-spec family into the spec_entries list used by the plot loop."""
     return [(spec, spec.display_viz_label) for spec in specs]
+
+
+def _emit_layout_for_final_group(spec: PlotSpec, final_group_by: str | None) -> bool:
+    """Decide whether a spec layout should be emitted for a focused row."""
+    if spec.layout == Layout.histogram:
+        # Histogram companions are only emitted for final no-group distribution rows.
+        return spec.is_distribution_metric and final_group_by is None
+    if spec.layout == Layout.two_column:
+        # two_column splits a state-grouped annual bar into two columns —
+        # only meaningful when the final row is actually grouped by state.
+        return final_group_by == "state"
+    return True
 
 
 def _build_output_row(main_spec: PlotSpec) -> dict[str, str]:
@@ -949,10 +962,15 @@ def generate_plots(index=None, test_only=False, parallel=True):
                 "focus_on": final_focus_on,
                 "group_by": final_agg,
             })
+            if not _emit_layout_for_final_group(focused_spec, final_agg):
+                continue
             viz_label = focused_spec.display_viz_label
             if focused_spec.quantity == DataCol.ALL:
                 viz_label = _all_enduses_viz_label(focused_spec, stacked=False)
             focused_entries.append((focused_spec, viz_label))
+
+        if not focused_entries:
+            continue
 
         fn_row = _footnote_row(display_spec)
         matched_notes = _resolve_footnotes(footnote_rules, fn_row, context="plot") or None

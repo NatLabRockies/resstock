@@ -5,6 +5,7 @@
 # BuildStock Data Source
 # ----------------------
 workgroup: rescore
+resstock_histogram_data_root: /Users/radhikar/Documents/buildstock2025/baseline_validation_output/data
 
 data_sources:
   - db_name: buildstock_sdr

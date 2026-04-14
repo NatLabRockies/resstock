@@ -194,3 +194,29 @@ class TestDisplayVizLabels:
 
         assert auto_title != two_col_title
         assert two_col_title.endswith("(two_column layout)")
+
+    def test_histogram_layout_viz_label(self):
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.distribution,
+            view=ViewType.value_view,
+            group_by=None,
+            layout=Layout.histogram,
+        )
+        assert spec.display_viz_label == "Histogram"
+
+    def test_histogram_layout_file_title_suffix(self):
+        auto_spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.distribution,
+            view=ViewType.value_view,
+            group_by=None,
+            layout=Layout.auto,
+        )
+        hist_spec = auto_spec.model_copy(update={"layout": Layout.histogram})
+
+        _, auto_title = auto_spec.file_path_and_name
+        _, hist_title = hist_spec.file_path_and_name
+
+        assert auto_title != hist_title
+        assert hist_title.endswith("(histogram layout)")

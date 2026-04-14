@@ -9,6 +9,7 @@ from resstockpostproc.baseline_validation.plot_generator import (
     _apply_lrd_sidebar_semantics,
     _build_spec_entries,
     _compute_discrepancy,
+    _emit_layout_for_final_group,
     _generate_spec_plots,
     _should_generate_stacked_page_group,
     _should_generate_stacked_table,
@@ -332,6 +333,48 @@ class TestRelatedSpecFamilies:
         )
         family = _make_related_specs(spec)
         assert all(s.layout == Layout.auto for s in family)
+
+    def test_distribution_family_adds_histogram_companion(self):
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.distribution,
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            resolution=Resolution.year,
+            group_by="state",
+            view=ViewType.value_view,
+        )
+        family = _make_related_specs(spec)
+        assert [(s.view, s.layout) for s in family] == [
+            (ViewType.value_view, Layout.auto),
+            (ViewType.value_view, Layout.histogram),
+        ]
+
+    def test_histogram_layout_emits_only_for_final_no_group(self):
+        hist_spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.distribution,
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            resolution=Resolution.year,
+            group_by="state",
+            view=ViewType.value_view,
+            layout=Layout.histogram,
+        )
+        assert _emit_layout_for_final_group(hist_spec, None) is True
+        assert _emit_layout_for_final_group(hist_spec, "state") is False
+
+    def test_two_column_layout_emits_only_for_final_state_group(self):
+        two_col_spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.average,
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            resolution=Resolution.year,
+            group_by="state",
+            view=ViewType.value_view,
+            layout=Layout.two_column,
+        )
+        assert _emit_layout_for_final_group(two_col_spec, "state") is True
+        assert _emit_layout_for_final_group(two_col_spec, None) is False
+        assert _emit_layout_for_final_group(two_col_spec, "vintage") is False
 
     def test_build_spec_entries_uses_unique_viz_labels_for_layout_variants(self):
         spec = _make_spec(

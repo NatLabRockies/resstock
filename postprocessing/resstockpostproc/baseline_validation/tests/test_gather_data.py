@@ -3,7 +3,17 @@
 import polars as pl
 import pytest
 
-from resstockpostproc.baseline_validation.data_processing.gather_data import _add_95ci_bounds
+from resstockpostproc.baseline_validation.data_processing.gather_data import _add_95ci_bounds, get_plot_data
+from resstockpostproc.baseline_validation.schema.plot_spec import (
+    ComparisonDataset,
+    CoverageType,
+    Layout,
+    Metric,
+    PlotSpec,
+    Resolution,
+    ViewType,
+)
+from resstockpostproc.shared_utils.db_column_names import DataCol
 
 
 class TestAdd95CIBounds:
@@ -76,3 +86,44 @@ class TestAdd95CIBounds:
         assert result["electricity_total_value_upper_bound"].item() == pytest.approx(29.6)
         # lower = 10 - 19.6 = -9.6
         assert result["electricity_total_value_lower_bound"].item() == pytest.approx(-9.6)
+
+
+class TestGetPlotDataRouting:
+    @staticmethod
+    def _make_hist_spec() -> PlotSpec:
+        return PlotSpec(
+            comparison_dataset=ComparisonDataset.recs,
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            resolution=Resolution.year,
+            aggregation_type=Metric.distribution,
+            coverage=CoverageType.all_units,
+            group_by=None,
+            view=ViewType.value_view,
+            layout=Layout.histogram,
+        )
+
+    def test_histogram_layout_uses_exact_histogram_pipeline(self, monkeypatch):
+        expected = pl.DataFrame(
+            {
+                "source": ["RECS 2020"],
+                "bin": [0],
+                "bin_left": [0.0],
+                "bin_right": [1.0],
+                "count_pct": [100.0],
+            }
+        )
+        monkeypatch.setattr(
+            "resstockpostproc.baseline_validation.data_processing.gather_data.get_distribution_histogram_data",
+            lambda _spec: expected,
+        )
+        monkeypatch.setattr(
+            "resstockpostproc.baseline_validation.data_processing.gather_data.get_base_data",
+            lambda _key: (_ for _ in ()).throw(AssertionError("get_base_data should not be called for histogram")),
+        )
+        out = get_plot_data(self._make_hist_spec())
+        assert out.equals(expected)
+
+    def test_histogram_layout_rejects_grouped_specs(self):
+        grouped = self._make_hist_spec().model_copy(update={"group_by": "state"})
+        with pytest.raises(ValueError, match="group_by=None"):
+            get_plot_data(grouped)

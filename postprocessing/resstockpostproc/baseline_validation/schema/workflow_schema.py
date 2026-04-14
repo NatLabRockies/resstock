@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Literal
 
 import yaml
-from pydantic import Field, field_validator
+from pydantic import Field, field_validator, model_validator
 
 from resstockpostproc.baseline_validation.schema.plot_spec import NoExtraModel
 from resstockpostproc.shared_utils.db_column_names import DBSchema
@@ -111,6 +111,13 @@ class OutputConfig(NoExtraModel):
 
 class WorkflowConfig(NoExtraModel):
     workgroup: str = Field(description="Athena workgroup")
+    resstock_histogram_data_root: Path = Field(
+        description=(
+            "Root folder for exact ResStock histogram raw data. "
+            "Per-source files are inferred as "
+            "<root>/ResStock Data/<data_source.name>/upgrade0.parquet"
+        )
+    )
     data_sources: list[DataSourceConfig] = Field(
         default_factory=list,
         description="BuildStock data source configuration (optional - leave empty for EIA-only comparisons)",
@@ -137,6 +144,32 @@ class WorkflowConfig(NoExtraModel):
         if v is None:
             return []
         return v
+
+    @field_validator("resstock_histogram_data_root", mode="before")
+    @classmethod
+    def expand_histogram_data_root_path(cls, v: str | Path) -> Path:
+        """Expand user paths and convert to Path object."""
+        return Path(v).expanduser().resolve()
+
+    def get_resstock_histogram_raw_file(self, source_name: str) -> Path:
+        """Infer the exact raw parquet path for one ResStock source."""
+        return self.resstock_histogram_data_root / "ResStock Data" / source_name / "upgrade0.parquet"
+
+    @model_validator(mode="after")
+    def validate_histogram_raw_inputs(self) -> WorkflowConfig:
+        """Fail fast if required exact-histogram raw files are missing."""
+        missing = [
+            str(self.get_resstock_histogram_raw_file(ds.name))
+            for ds in self.data_sources
+            if not self.get_resstock_histogram_raw_file(ds.name).exists()
+        ]
+        if missing:
+            preview = "\n - ".join(missing[:10])
+            raise ValueError(
+                "Missing required ResStock histogram raw parquet files:\n"
+                f" - {preview}"
+            )
+        return self
 
     @classmethod
     def from_yaml(cls, yaml_path: str | Path) -> WorkflowConfig:

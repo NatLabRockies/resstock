@@ -759,12 +759,15 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
 
     function pickDefaultOptionForCol(col, opts) {{
       if (!opts.length) return '';
+      // Prefer the empty option ("no filter" / "no grouping") whenever it
+      // exists, so Filter 1, Filter 2, and Group By all start out unset
+      // rather than defaulting to the first concrete value.
+      if (opts.includes('')) return '';
       if (!isFilterPairCol(col)) return opts[0];
 
       const activeTab = resolveFilterTab(col, opts);
       const tabFirst = firstOptionInFilterTab(opts, activeTab);
       if (tabFirst) return tabFirst;
-      if (opts.includes('')) return '';
       return opts[0];
     }}
 

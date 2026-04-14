@@ -10,6 +10,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     DataKey,
     Resolution,
     ViewType,
+    Layout,
     ComparisonDataset,
     Metric,
     CoverageType,
@@ -18,6 +19,7 @@ from resstockpostproc.baseline_validation.io_managers import get_eia_data
 from resstockpostproc.baseline_validation.io_managers import get_recs_data
 from resstockpostproc.baseline_validation.io_managers import get_resstock_data
 from resstockpostproc.baseline_validation.io_managers import get_lrd_data
+from resstockpostproc.baseline_validation.data_processing.histogram_data import get_distribution_histogram_data
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 from resstockpostproc.shared_utils.db_column_names import DataCol
@@ -40,6 +42,13 @@ def get_plot_data(
     This is the legacy interface that loads data and applies plot-specific operations.
     For batch processing, prefer using get_base_data() + apply_plot_spec() separately.
     """
+    if plot_spec.layout == Layout.histogram:
+        if not plot_spec.is_distribution_metric:
+            raise ValueError("layout=histogram is only supported for distribution plots.")
+        if plot_spec.group_by is not None:
+            raise ValueError("layout=histogram is only supported for single-entity plots (group_by=None).")
+        return get_distribution_histogram_data(plot_spec)
+
     data_key = plot_spec.data_key
     base_data = get_base_data(data_key)
     return apply_plot_spec(base_data, plot_spec)

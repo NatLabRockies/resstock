@@ -1,4 +1,5 @@
 from resstockpostproc.shared_utils.generic_plotters import box_plotter, bar_plotter
+from resstockpostproc.shared_utils.generic_plotters import theme as plot_theme
 from resstockpostproc.shared_utils.generic_plotters.range_utils import compute_axis_range
 from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import filter_null_sources
 from resstockpostproc.baseline_validation.io_managers.get_recs_data import get_enduse_order
@@ -422,12 +423,100 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
     return all_min_val, all_max_val
 
 
+def _create_histogram_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
+    """Create a single-entity histogram from explicit per-bin percentages."""
+    if not plot_spec.is_distribution_metric:
+        raise ValueError("Histogram layout is only supported for distribution metrics.")
+    if plot_spec.group_by is not None:
+        raise ValueError("Histogram layout is only supported when group_by=None.")
+
+    required = {"source", "bin", "bin_left", "bin_right", "count_pct"}
+    missing = sorted(required - set(df.columns))
+    if missing:
+        raise ValueError(f"Histogram input missing required columns: {missing}")
+    if df.is_empty():
+        return go.Figure()
+
+    plot_df = df.sort(["source", "bin"], maintain_order=True)
+    overflow_bin = int(plot_df["bin"].max())
+
+    core_width = (
+        plot_df.filter(pl.col("bin") != overflow_bin)
+        .select((pl.col("bin_right") - pl.col("bin_left")).median().alias("w"))
+        .item(0, 0)
+    )
+    if core_width is None or core_width <= 0:
+        core_width = 1.0
+
+    p98 = (
+        plot_df.filter(pl.col("bin") == overflow_bin)
+        .select(pl.col("bin_left").min().alias("p98"))
+        .item(0, 0)
+    )
+    if p98 is None:
+        p98 = (
+            plot_df.filter(pl.col("bin") != overflow_bin)
+            .select(pl.col("bin_right").max().alias("core_max"))
+            .item(0, 0)
+        )
+    if p98 is None:
+        p98 = 0.0
+    p98 = float(p98)
+    core_width = float(core_width)
+
+    plot_df = plot_df.with_columns(
+        pl.when(pl.col("bin") == overflow_bin)
+        .then(pl.lit(p98 + core_width))
+        .otherwise((pl.col("bin_left") + pl.col("bin_right")) / 2.0)
+        .alias("_bin_center"),
+        pl.when(pl.col("bin") == overflow_bin)
+        .then(pl.lit(2.0 * core_width))
+        .otherwise((pl.col("bin_right") - pl.col("bin_left")).clip(lower_bound=0.0))
+        .alias("_bar_width"),
+    )
+
+    sources = plot_df["source"].unique(maintain_order=True).to_list()
+    palette = plot_theme.build_color_palette(sources)
+    fig = go.Figure()
+    for source in sources:
+        sub = plot_df.filter(pl.col("source") == source)
+        fig.add_bar(
+            x=sub["_bin_center"].to_list(),
+            y=sub["count_pct"].to_list(),
+            width=sub["_bar_width"].to_list(),
+            name=source,
+            marker_color=palette.get(source),
+            opacity=0.7,
+            customdata=list(zip(sub["bin_left"].to_list(), sub["bin_right"].to_list())),  # type: ignore[arg-type]
+            hovertemplate="%{customdata[0]:.1f} to %{customdata[1]:.1f}<br>%{y:.2f}%<extra></extra>",
+        )
+
+    x_max = max(1.0, p98 + 2.0 * core_width)
+    max_pct = plot_df["count_pct"].max()
+    y_max = float(max_pct) if max_pct is not None else 0.0
+    y_max = max(1.0, y_max * 1.1)
+
+    x_title = "kWh/user" if plot_spec.coverage == CoverageType.users_only else "kWh/unit"
+    fig.update_layout(
+        barmode="overlay",
+        bargap=0.0,
+        bargroupgap=0.0,
+        legend_title_text="Data Source",
+    )
+    fig.update_xaxes(title_text=x_title, range=[0, x_max])
+    fig.update_yaxes(title_text="Stock Share", ticksuffix="%", range=[0, y_max])
+    return fig
+
+
 @timed
 def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     """Create a box plot or bar comparing data sources across states.
 
     Uses distribution metric for box plots, otherwise bar plots.
     """
+    if plot_spec.layout == Layout.histogram:
+        return _create_histogram_plot(df, plot_spec)
+
     # Determine quantity title based on view type, aggregation type, and coverage
     if plot_spec.quantity == DataCol.UNITS_COUNT:
         # Dwelling unit count case

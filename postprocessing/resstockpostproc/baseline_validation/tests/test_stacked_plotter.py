@@ -2,11 +2,13 @@
 
 import polars as pl
 import pytest
+import plotly.graph_objects as go
 
 from resstockpostproc.baseline_validation.plotters.stacked_plotter import (
     _add_quartile_cols,
     _get_reference_source,
     _prepare_box_plot_data,
+    create_stacked_plot,
     get_custom_range,
     split_graph,
     split_graph_by_char,
@@ -367,3 +369,70 @@ class TestSplitGraphDispatch:
         _, iterator = split_graph(df, spec)
         chunks = list(iterator)
         assert chunks[0][1] == "state"
+
+
+class TestHistogramLayoutRouting:
+    def test_histogram_layout_routes_to_histogram_renderer(self, monkeypatch):
+        calls = {"count": 0}
+
+        def _fake_hist_renderer(df, plot_spec):
+            calls["count"] += 1
+            return go.Figure()
+
+        monkeypatch.setattr(
+            "resstockpostproc.baseline_validation.plotters.stacked_plotter._create_histogram_plot",
+            _fake_hist_renderer,
+        )
+
+        data = pl.DataFrame({
+            "source": ["RECS 2020", "ResStock 2025"],
+            "bin": [0, 0],
+            "bin_left": [0.0, 0.0],
+            "bin_right": [1.0, 1.0],
+            "count_pct": [10.0, 12.0],
+        })
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.distribution,
+            view=ViewType.value_view,
+            group_by=None,
+            layout=Layout.histogram,
+        )
+        fig = create_stacked_plot(data, spec)
+        assert isinstance(fig, go.Figure)
+        assert calls["count"] == 1
+
+    def test_histogram_overflow_tail_geometry_and_style(self):
+        data = pl.DataFrame({
+            "source": ["RECS 2020", "RECS 2020", "ResStock 2025", "ResStock 2025"],
+            "bin": [0, 49, 0, 49],
+            "bin_left": [0.0, 100.0, 0.0, 100.0],
+            "bin_right": [10.0, 500.0, 10.0, 400.0],
+            "count_pct": [4.0, 1.0, 3.0, 2.0],
+        })
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.distribution,
+            view=ViewType.value_view,
+            group_by=None,
+            layout=Layout.histogram,
+        )
+        fig = create_stacked_plot(data, spec)
+
+        assert fig.layout.barmode == "overlay"
+        assert fig.layout.bargap == 0
+        assert fig.layout.bargroupgap == 0
+
+        for trace in fig.data:
+            assert isinstance(trace, go.Bar)
+            assert trace.opacity == pytest.approx(0.4)
+            # bin 0 center is midpoint of [0,10], overflow center is p98 + core_width = 100 + 10
+            assert trace.x[0] == pytest.approx(5.0)
+            assert trace.x[1] == pytest.approx(110.0)
+            # overflow width is 2x core width
+            assert trace.width[0] == pytest.approx(10.0)
+            assert trace.width[1] == pytest.approx(20.0)
+
+        # right edge clipped to the synthetic tail, not raw max
+        assert fig.layout.xaxis.range[0] == pytest.approx(0.0)
+        assert fig.layout.xaxis.range[1] == pytest.approx(120.0)
