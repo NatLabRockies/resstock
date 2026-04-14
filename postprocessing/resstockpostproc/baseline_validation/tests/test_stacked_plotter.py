@@ -19,6 +19,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     Resolution,
     ComparisonDataset,
     ViewType,
+    Layout,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
@@ -293,7 +294,11 @@ class TestGetCustomRange:
         df = pl.DataFrame({
             "electricity_total_quartiles": [[5.0, 10.0, 20.0, 30.0, 50.0, 70.0, 80.0, 90.0, 95.0]],
         })
-        spec = _make_spec(view=ViewType.value_view)
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.distribution,
+            view=ViewType.value_view,
+        )
         min_val, max_val = get_custom_range(df, spec)
         assert min_val == 0  # min(0, first element)
         assert max_val == 95.0  # last element
@@ -301,8 +306,7 @@ class TestGetCustomRange:
     def test_penetration_range(self):
         df = pl.DataFrame({"electricity_total_percent_users": [20.0, 80.0, 100.0]})
         spec = _make_spec(
-            view=ViewType.penetration,
-            aggregation_type=Metric.total,
+            aggregation_type=Metric.penetration,
         )
         min_val, max_val = get_custom_range(df, spec)
         assert min_val == 0
@@ -344,3 +348,22 @@ class TestSplitGraphDispatch:
         fig, iterator = split_graph(df, spec)
         chunks = list(iterator)
         assert chunks[0][1] == "vintage"
+
+    def test_two_column_layout_prefers_state_split_even_with_focus(self):
+        """two_column layout should use state split path for state-grouped data."""
+        df = pl.DataFrame({
+            "source": ["recs_2020", "resstock_2024", "recs_2020", "resstock_2024"],
+            "state": ["CA", "CA", "TX", "TX"],
+            "vintage": ["pre-1950", "pre-1950", "pre-1950", "pre-1950"],
+            "units_count": [5000, 5000, 4000, 4000],
+            "electricity_total_value": [100.0, 110.0, 90.0, 95.0],
+        })
+        spec = _make_spec(
+            group_by="state",
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            focus_on=(("vintage", "pre-1950"),),
+            layout=Layout.two_column,
+        )
+        _, iterator = split_graph(df, spec)
+        chunks = list(iterator)
+        assert chunks[0][1] == "state"

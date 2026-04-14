@@ -89,7 +89,7 @@ quantities:
 # --------------------
 output:
   output_dir: /Users/radhikar/Documents/buildstock2025/baseline_validation_output/
-  run_name: baseline_val_full_2024_2025
+  run_name: baseline_val_test_2024_2025_two_col
 
 # Data Source Labels
 # ------------------

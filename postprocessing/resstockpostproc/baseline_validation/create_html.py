@@ -180,6 +180,34 @@ def _shard_filename(filter1_value: str) -> str:
     return f"data-{_sanitize_filename(filter1_value)}.js"
 
 
+def parse_viz_cell(cell_value: str) -> tuple[str, str | None]:
+  """Parse 'viz_type||path' format into (display_text, url_or_traceback).
+
+  Returns:
+      - ("viz_type", "path") for success
+      - ("FAILED", "traceback...") for failure with traceback
+      - ("FAILED", None) for failure without traceback
+      - ("", None) for empty cells
+  """
+  if not cell_value or not cell_value.strip():
+    return ("", None)
+
+  cell_value = cell_value.strip()
+
+  if cell_value.startswith("FAILED:"):
+    after = cell_value[len("FAILED:"):].strip()
+    parts = after.split("||", 1)
+    if len(parts) == 2:
+      return ("FAILED", parts[1].strip())
+    return ("FAILED", None)
+
+  parts = cell_value.split("||", 1)
+  if len(parts) == 2:
+    return (parts[0].strip(), parts[1].strip())
+
+  return (cell_value, None)
+
+
 def _row_to_tsv_line(row: dict[str, str], headers: Sequence[str]) -> str:
     buf = io.StringIO()
     writer = csv.DictWriter(buf, fieldnames=headers, delimiter="\t", lineterminator="\n")
@@ -193,6 +221,7 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
     headers_json = json.dumps(list(headers), ensure_ascii=False)
     filter_cols_json = json.dumps(filter_cols, ensure_ascii=False)
     metric_order_json = json.dumps(METRIC_ORDER, ensure_ascii=False)
+    manifest_json = json.dumps(manifest, ensure_ascii=False)
 
     data_script_tags = [
         f'  <script src="{DATA_DIR_NAME}/{COMBINATIONS_FILENAME}" defer></script>',
@@ -375,6 +404,7 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
     const HEADERS = {headers_json};
     const FILTER_COLS = {filter_cols_json};
     const METRIC_ORDER = {metric_order_json};
+    window.shardManifest = {manifest_json};
     const QUANTITY_PRIORITY = {{
       'Number of dwelling units': 0,
       'All Enduses': 1,

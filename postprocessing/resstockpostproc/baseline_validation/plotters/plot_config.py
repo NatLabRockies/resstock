@@ -18,6 +18,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     Metric,
     CoverageType,
     ViewType,
+    Layout,
     ComparisonDataset,
     Resolution,
     format_group_by,
@@ -290,7 +291,7 @@ def _resolve_sidebar_title(plot_spec: PlotSpec, comparison_label: str) -> str:
     """
     if plot_spec.is_distribution_metric:
         return ""
-    return f"Symmetric Percent Difference Compared to {comparison_label}"
+    return f"Symmetric Percent Difference<br>Compared to {comparison_label}"
 
 
 def _resolve_tick_config(plot_spec: PlotSpec, data: pl.DataFrame) -> tuple[tuple | None, tuple | None]:
@@ -394,10 +395,13 @@ def _uses_stacked_layout(plot_spec: PlotSpec) -> bool:
     """Check if this plot should use stacked subplot layout (one row per entity).
 
     Returns True for:
+    - layout=two_column (forces stacked/two-panel state rendering)
     - ViewType.distribution (box plots)
     - quantity=ALL (enduse bar layout via split_graph_by_enduse)
     - non-state group_by levels (grouped bar/box charts)
     """
+    if plot_spec.layout == Layout.two_column:
+        return True
     if plot_spec.is_distribution_metric:
         return True
     if plot_spec.quantity == DataCol.ALL:

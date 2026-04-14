@@ -40,8 +40,8 @@ from resstockpostproc.baseline_validation.schema.plot_definitions import (
     RECS_CROSS_FILTER_CHARS,
     generate_all_templates,
     generate_slot_triples,
-    SpecPair,
-    _make_pair,
+    SpecFamily,
+    _make_related_specs,
     _make_spec,
 )
 from resstockpostproc.baseline_validation.io_managers.output_manager import save_figure
@@ -316,12 +316,9 @@ def _template_display_quantity(tmpl: PlotTemplate) -> str:
     return tmpl.quantity.label
 
 
-def _build_spec_entries(main_spec: PlotSpec, extra_spec: PlotSpec | None) -> list[tuple[PlotSpec, str]]:
-    """Convert a SpecPair into the spec_entries list used by the plot loop."""
-    entries = [(main_spec, main_spec.display_viz_label)]
-    if extra_spec is not None:
-        entries.append((extra_spec, extra_spec.display_viz_label))
-    return entries
+def _build_spec_entries(specs: list[PlotSpec]) -> list[tuple[PlotSpec, str]]:
+    """Convert a related-spec family into the spec_entries list used by the plot loop."""
+    return [(spec, spec.display_viz_label) for spec in specs]
 
 
 def _build_output_row(main_spec: PlotSpec) -> dict[str, str]:
@@ -381,14 +378,14 @@ def _footnote_row(main_spec: PlotSpec) -> dict[str, str]:
 def _expand_templates(
     templates: list[PlotTemplate],
     test_only: bool = False,
-) -> list[tuple[SpecPair, int, list, object, tuple, str | None]]:
+) -> list[tuple[SpecFamily, int, list, object, tuple, str | None]]:
     """Expand templates into work items using slot triples.
 
     For each template, generates all valid (F1, F2, group_by) triples, then
     expands focus values for each dimension. Each work item contains everything
     needed for Pass 2 metadata and Pass 3 plotting.
 
-    Returns list of (spec_pair, tmpl_index, spec_entries, focus_val, focus_on, group_by).
+    Returns list of (spec_family, tmpl_index, spec_entries, focus_val, focus_on, group_by).
     """
     work_items = []
 
@@ -420,9 +417,9 @@ def _expand_templates(
                 group_by=effective_agg,
                 view=tmpl.view,
             )
-            spec_pair = _make_pair(spec)
-            main_spec, extra_spec = spec_pair
-            spec_entries = _build_spec_entries(main_spec, extra_spec)
+            spec_family = _make_related_specs(spec)
+            main_spec = spec_family[0]
+            spec_entries = _build_spec_entries(spec_family)
 
             # ALL enduses: skip any triple with group_by set — can't
             # group a stacked enduse chart by another dimension.
@@ -452,9 +449,9 @@ def _expand_templates(
                 spec = spec.model_copy(update={
                     "focus_on": ((default_char, "US Total"),),
                 })
-                spec_pair = _make_pair(spec)
-                main_spec, extra_spec = spec_pair
-                spec_entries = _build_spec_entries(main_spec, extra_spec)
+                spec_family = _make_related_specs(spec)
+                main_spec = spec_family[0]
+                spec_entries = _build_spec_entries(spec_family)
 
             # --- Case 1: No filters (F1=None) → overview only ---
             if f1_char is None:
@@ -466,7 +463,7 @@ def _expand_templates(
                     col = group_by
                     for val in sorted(v for v in base_data[col].unique().to_list() if v is not None):
                         work_items.append((
-                            spec_pair, tmpl_index, spec_entries, None,
+                            spec_family, tmpl_index, spec_entries, None,
                             ((group_by, val),), None,
                         ))
                     continue
@@ -475,7 +472,7 @@ def _expand_templates(
                 # Pass focus_on from the spec so the US Total focus (set by
                 # the (None,None,None) handler above) propagates to plotters.
                 work_items.append((
-                    spec_pair, tmpl_index, spec_entries, None,
+                    spec_family, tmpl_index, spec_entries, None,
                     main_spec.focus_on, group_by,
                 ))
                 continue
@@ -515,7 +512,7 @@ def _expand_templates(
                         get_base_data(filtered_entries[0][0].data_key)
                         focus_on = ((f1_char, f1_val),)
                         work_items.append((
-                            spec_pair, tmpl_index, filtered_entries, None, focus_on, group_by,
+                            spec_family, tmpl_index, filtered_entries, None, focus_on, group_by,
                         ))
                     else:
                         # F1 set, no agg, no F2 → single filtered entity, no grouping
@@ -523,7 +520,7 @@ def _expand_templates(
                         filtered_entries = _build_filtered_entries(spec_entries, focus_on)
                         if filtered_entries:
                             work_items.append((
-                                spec_pair, tmpl_index, filtered_entries, None, focus_on, None,
+                                spec_family, tmpl_index, filtered_entries, None, focus_on, None,
                             ))
                     continue
 
@@ -553,7 +550,7 @@ def _expand_templates(
                 for f2_val in f2_values:
                     focus_on = ((f1_char, f1_val), (f2_char, f2_val))
                     work_items.append((
-                        spec_pair, tmpl_index, spec_entries, None, focus_on, None,
+                        spec_family, tmpl_index, spec_entries, None, focus_on, None,
                     ))
 
     logger.info(f"Template expansion: {len(templates)} templates -> {len(work_items)} work items")
@@ -730,7 +727,7 @@ def _generate_spec_plots(
 
     viz_parts = []
     data_rel = None
-    for plot_spec, viz_type_str in spec_entries:
+    for idx, (plot_spec, viz_type_str) in enumerate(spec_entries):
         try:
             data = get_plot_data(plot_spec)
             plot_func = get_plotting_function(plot_spec.comparison_dataset)
@@ -746,11 +743,15 @@ def _generate_spec_plots(
             rel_path_str = str(rel_path).replace("\\", "/")
             viz_parts.append(f"{viz_type_str}||{rel_path_str}")
 
-            # For main visualization: save data CSV, compute discrepancy, generate data table
-            if plot_spec.view in (
+            # Data exports and table links are anchored to the primary spec only.
+            if idx == 0 and (
+                plot_spec.view in (
                 ViewType.value_view,
                 ViewType.temp_view,
-            ) or plot_spec.is_penetration_metric or plot_spec.is_distribution_metric:
+                )
+                or plot_spec.is_penetration_metric
+                or plot_spec.is_distribution_metric
+            ):
                 data_dir = output_base / f"{plot_spec.comparison_dataset} data (csv)" / path_seg
                 ensure_directory(data_dir)
                 _save_data_csv(data, data_dir, file_title)
@@ -886,8 +887,8 @@ def generate_plots(index=None, test_only=False, parallel=True):
     stacking_groups: dict[tuple, list[tuple[str, list[tuple[PlotSpec, str]]]]] = defaultdict(list)
     from resstockpostproc.shared_utils.mapping import ABBR2STATE
 
-    for i, (spec_pair, tmpl_index, spec_entries, focus_val, focus_on, group_by) in enumerate(work_items, 1):
-        main_spec, extra_spec = spec_pair
+    for i, (spec_family, tmpl_index, spec_entries, focus_val, focus_on, group_by) in enumerate(work_items, 1):
+        main_spec = spec_family[0]
 
         # Build a unique key for this work item
         agg_suffix = f"_by_{group_by}" if group_by else ""
@@ -1253,7 +1254,7 @@ def main():
         "--index", type=str, default=None, help="Plot definition index to generate (e.g. '5', '1-10', '1,3,5')"
     )
     parser.add_argument(
-        "--test", action="store_true", default=False,
+        "--test", action="store_true", default=True,
         help="Generate only test subset plots (limited focus expansion)",
     )
     parser.add_argument(

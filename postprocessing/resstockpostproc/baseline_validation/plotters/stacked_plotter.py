@@ -7,6 +7,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     Metric,
     CoverageType,
     ViewType,
+    Layout,
     ComparisonDataset,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
@@ -350,6 +351,12 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
 @timed
 def split_graph(df: pl.DataFrame, plot_spec: PlotSpec):
     """Split the graph data into subplots based on the plot specification."""
+    if (
+        plot_spec.layout == Layout.two_column
+        and plot_spec.quantity != DataCol.ALL
+        and "state" in df.columns
+    ):
+        return split_graph_by_state(df)
     if plot_spec.group_by == "state" and plot_spec.quantity != DataCol.ALL and not plot_spec.focus_on:
         return split_graph_by_state(df)
     elif plot_spec.quantity == DataCol.ALL:

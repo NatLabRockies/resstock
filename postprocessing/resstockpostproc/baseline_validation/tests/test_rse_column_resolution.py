@@ -45,7 +45,13 @@ class TestResolveRSEColumn:
 
     def test_distribution_view_returns_none(self):
         """Distribution box plots use quartiles, not RSE."""
-        assert _resolve_rse_column(_make_spec(view=ViewType.value_view)) is None
+        assert _resolve_rse_column(
+            _make_spec(
+                comparison_dataset=ComparisonDataset.recs,
+                aggregation_type=Metric.distribution,
+                view=ViewType.value_view,
+            )
+        ) is None
 
     def test_units_count_has_no_rse(self):
         """Unit counts derive from calibrated weights — RSE is meaningless."""
@@ -54,8 +60,7 @@ class TestResolveRSEColumn:
     def test_penetration_view(self):
         spec = _make_spec(
             quantity=DataCol.ELECTRICITY_TOTAL,
-            view=ViewType.penetration,
-            aggregation_type=Metric.total,
+            aggregation_type=Metric.penetration,
         )
         assert _resolve_rse_column(spec) == "electricity_total_percent_users_rse"
 

@@ -2,11 +2,14 @@
 
 import polars as pl
 import pytest
+import plotly.graph_objects as go
 
 from resstockpostproc.baseline_validation.plot_generator import (
     _all_enduses_viz_label,
     _apply_lrd_sidebar_semantics,
+    _build_spec_entries,
     _compute_discrepancy,
+    _generate_spec_plots,
     _should_generate_stacked_page_group,
     _should_generate_stacked_table,
     _stacked_title_from_grouped,
@@ -20,6 +23,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     Resolution,
     ComparisonDataset,
     ViewType,
+    Layout,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
@@ -299,6 +303,128 @@ class TestAllEndusesHelpers:
         assert _should_generate_stacked_page_group(two_qty_entries) is True
 
 
+class TestRelatedSpecFamilies:
+    def test_state_annual_gets_ordered_auto_and_two_column_specs(self):
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.average,
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            resolution=Resolution.year,
+            group_by="state",
+            view=ViewType.value_view,
+        )
+        family = _make_related_specs(spec)
+        assert [(s.view, s.layout) for s in family] == [
+            (ViewType.value_view, Layout.auto),
+            (ViewType.diff_view, Layout.auto),
+            (ViewType.value_view, Layout.two_column),
+            (ViewType.diff_view, Layout.two_column),
+        ]
+
+    def test_ineligible_specs_do_not_get_two_column_layout(self):
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.average,
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            resolution=Resolution.month,
+            group_by="state",
+            view=ViewType.value_view,
+        )
+        family = _make_related_specs(spec)
+        assert all(s.layout == Layout.auto for s in family)
+
+    def test_build_spec_entries_uses_unique_viz_labels_for_layout_variants(self):
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.average,
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            resolution=Resolution.year,
+            group_by="state",
+            view=ViewType.value_view,
+        )
+        entries = _build_spec_entries(_make_related_specs(spec))
+        labels = [label for _, label in entries]
+        assert len(labels) == len(set(labels))
+        assert "Bar Plot (two_column)" in labels
+        assert "Bar Plot (two_column difference view)" in labels
+
+
+class TestGenerateSpecPlotsPrimaryDataAnchor:
+    def test_data_and_table_generated_once_for_primary_spec(self, tmp_path, monkeypatch):
+        spec_primary = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.average,
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            resolution=Resolution.year,
+            group_by="state",
+            view=ViewType.value_view,
+            layout=Layout.auto,
+        )
+        spec_two_col = spec_primary.model_copy(update={"layout": Layout.two_column})
+        spec_entries = [
+            (spec_primary, spec_primary.display_viz_label),
+            (spec_two_col, spec_two_col.display_viz_label),
+        ]
+
+        data = pl.DataFrame({
+            "source": ["recs_2020", "resstock_2024"],
+            "state": ["CA", "CA"],
+            "electricity_total_value": [100.0, 110.0],
+        })
+
+        table_calls = []
+        csv_calls = []
+
+        monkeypatch.setattr(
+            "resstockpostproc.baseline_validation.plot_generator.get_plot_data",
+            lambda _spec: data,
+        )
+        monkeypatch.setattr(
+            "resstockpostproc.baseline_validation.plot_generator.get_plotting_function",
+            lambda _ds: (lambda _data, _spec: (go.Figure(), "title")),
+        )
+        monkeypatch.setattr(
+            "resstockpostproc.baseline_validation.plot_generator.save_figure",
+            lambda *_args, **_kwargs: None,
+        )
+        monkeypatch.setattr(
+            "resstockpostproc.baseline_validation.plot_generator._compute_discrepancy",
+            lambda _data, _spec: {},
+        )
+        monkeypatch.setattr(
+            "resstockpostproc.baseline_validation.plot_generator.should_generate_table",
+            lambda _data, _spec: True,
+        )
+        monkeypatch.setattr(
+            "resstockpostproc.baseline_validation.plot_generator.generate_data_table_html",
+            lambda **kwargs: table_calls.append(kwargs["output_path"]),
+        )
+        monkeypatch.setattr(
+            "resstockpostproc.baseline_validation.plot_generator._save_data_csv",
+            lambda _data, _dir, _title: csv_calls.append(_title),
+        )
+
+        from resstockpostproc.baseline_validation.schema.plot_spec import FileType
+
+        result = _generate_spec_plots(
+            spec_entries=spec_entries,
+            output_formats=[FileType.html],
+            link_format=FileType.html,
+            output_base=tmp_path,
+        )
+
+        assert result is not None
+        _, data_rel = result
+        assert data_rel is not None
+        assert len(table_calls) == 1
+        assert len(csv_calls) == 1
+
+        _, primary_title = spec_primary.file_path_and_name
+        _, two_col_title = spec_two_col.file_path_and_name
+        assert primary_title in data_rel
+        assert two_col_title not in data_rel
+
+
 class TestLRDSidebarSemantics:
     @staticmethod
     def _make_lrd_spec(resolution: Resolution) -> PlotSpec:
@@ -373,6 +499,7 @@ from resstockpostproc.baseline_validation.schema.plot_definitions import (
     RECS_MONTHLY_CHARS,
     EIA_CHARS,
     LRD_CHARS,
+    _make_related_specs,
 )
 from resstockpostproc.baseline_validation.schema.plot_spec import GEOGRAPHIC_DIMENSIONS
 

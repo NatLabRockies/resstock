@@ -10,6 +10,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     Resolution,
     ComparisonDataset,
     ViewType,
+    Layout,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
@@ -31,13 +32,17 @@ def _make_spec(**overrides):
 
 class TestRejectTotalDistribution:
     def test_total_distribution_raises(self):
-        with pytest.raises(ValidationError, match="distribution requires Metric.average"):
-            _make_spec(aggregation_type=Metric.total, view=ViewType.value_view)
+        with pytest.raises(ValidationError, match="Metric.distribution is only supported for RECS"):
+            _make_spec(
+                comparison_dataset=ComparisonDataset.eia,
+                aggregation_type=Metric.distribution,
+                view=ViewType.value_view,
+            )
 
     def test_average_distribution_allowed(self):
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
-            aggregation_type=Metric.average,
+            aggregation_type=Metric.distribution,
             view=ViewType.value_view,
         )
         assert spec.view == ViewType.value_view
@@ -64,7 +69,7 @@ class TestLRDConstraints:
             )
 
     def test_lrd_wrong_aggregation_type(self):
-        with pytest.raises(ValidationError, match="LRD only supports aggregation_type=average"):
+        with pytest.raises(ValidationError, match="LRD only supports average-backed metrics"):
             _make_spec(
                 comparison_dataset=ComparisonDataset.lrd,
                 quantity=DataCol.ELECTRICITY_TOTAL,
@@ -172,3 +177,20 @@ class TestDisplayVizLabels:
     def test_display_viz_label_format(self, overrides, expected):
         spec = _make_spec(**overrides)
         assert spec.display_viz_label == expected
+
+    def test_two_column_layout_viz_label(self):
+        spec = _make_spec(layout=Layout.two_column)
+        assert spec.display_viz_label == "Bar Plot (two_column)"
+
+        diff_spec = _make_spec(view=ViewType.diff_view, layout=Layout.two_column)
+        assert diff_spec.display_viz_label == "Bar Plot (two_column difference view)"
+
+    def test_two_column_layout_file_title_suffix(self):
+        auto_spec = _make_spec()
+        two_col_spec = _make_spec(layout=Layout.two_column)
+
+        _, auto_title = auto_spec.file_path_and_name
+        _, two_col_title = two_col_spec.file_path_and_name
+
+        assert auto_title != two_col_title
+        assert two_col_title.endswith("(two_column layout)")

@@ -7,7 +7,7 @@ regardless of comparison dataset (RECS, EIA, LRD) or visualization type.
 import polars as pl
 import plotly.graph_objects as go
 
-from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, Metric, ViewType
+from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, Metric, ViewType, Layout
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.theme import apply_theme
 from resstockpostproc.baseline_validation.plotters.plot_config import (
@@ -59,7 +59,11 @@ def _get_null_sources(data: pl.DataFrame, source_column: str, quantity_column: s
 
 def _needs_stacked_plotter(plot_spec: PlotSpec) -> bool:
     """True for distribution box plots and ALL-enduse plots that need split_graph."""
-    return plot_spec.is_distribution_metric or plot_spec.quantity == DataCol.ALL
+    return (
+        plot_spec.is_distribution_metric
+        or plot_spec.quantity == DataCol.ALL
+        or plot_spec.layout == Layout.two_column
+    )
 
 @timed
 def _render(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:

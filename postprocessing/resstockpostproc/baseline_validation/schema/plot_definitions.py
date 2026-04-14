@@ -24,6 +24,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     Resolution,
     ComparisonDataset,
     ViewType,
+    Layout,
 )
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -240,50 +241,75 @@ _LRD_METRICS: list[tuple[Resolution, ViewType]] = [
     (Resolution.top_100_hours, ViewType.value_view),
 ]
 
-SpecPair = tuple[PlotSpec, PlotSpec | None]
+SpecFamily = list[PlotSpec]
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Helpers
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _extra_view_for(spec: PlotSpec) -> ViewType | None:
-    """Determine the companion extra-view for a main spec, or None."""
+def _extra_views_for(spec: PlotSpec) -> list[ViewType]:
+    """Determine any companion extra-views for a main spec."""
     if spec.is_distribution_metric:
-        return None
+        return []
 
     if spec.quantity == DataCol.ALL:
-        return ViewType.diff_view
+        return [ViewType.diff_view]
 
     if spec.comparison_dataset == ComparisonDataset.lrd:
         if spec.resolution == Resolution.hour_of_year and spec.view == ViewType.value_view:
             # 8760 load duration curve does NOT get diff_view;
             # temperature views are separate specs, not extras
-            return None
+            return []
         if spec.view == ViewType.temp_view:
-            return ViewType.temp_distribution_view
-        return None
+            return [ViewType.temp_distribution_view]
+        return []
 
     # EIA/RECS state or utility with annual resolution → diff view
     if spec.group_by in ("state", "utility"):
         if spec.resolution == Resolution.year:
-            return ViewType.diff_view
-        return None  # monthly tilemaps don't get diff view
+            return [ViewType.diff_view]
+        return []  # monthly tilemaps don't get diff view
 
     # Non-state grouped bars → diff view
     if spec.view == ViewType.value_view:
-        return ViewType.diff_view
+        return [ViewType.diff_view]
 
-    return None
+    return []
 
 
-def _make_pair(spec: PlotSpec) -> SpecPair:
-    """Build a (main_spec, extra_spec_or_None) pair."""
-    extra_view = _extra_view_for(spec)
-    if extra_view:
-        extra = spec.model_copy(update={"view": extra_view})
-        return (spec, extra)
-    return (spec, None)
+def _extra_layouts_for(spec: PlotSpec) -> list[Layout]:
+    """Determine any companion layout variants for a spec family."""
+    if spec.comparison_dataset not in (ComparisonDataset.eia, ComparisonDataset.recs):
+        return []
+    if spec.resolution != Resolution.year:
+        return []
+    if spec.group_by != "state":
+        return []
+    if spec.is_distribution_metric:
+        return []
+    if spec.quantity == DataCol.ALL:
+        return []
+    return [Layout.two_column]
+
+
+def _make_related_specs(spec: PlotSpec) -> SpecFamily:
+    """Build an ordered family of related specs for one slot triple.
+
+    Order:
+      1) main view in auto layout
+      2) any extra views in auto layout
+      3) main view in each extra layout
+      4) extra views in each extra layout
+    """
+    family = [spec]
+    extra_views = _extra_views_for(spec)
+    auto_specs = family + [spec.model_copy(update={"view": view}) for view in extra_views]
+
+    related: list[PlotSpec] = list(auto_specs)
+    for layout in _extra_layouts_for(spec):
+        related.extend(s.model_copy(update={"layout": layout}) for s in auto_specs)
+    return related
 
 
 def _make_spec(
@@ -294,6 +320,7 @@ def _make_spec(
     coverage: CoverageType,
     group_by: str | None,
     view: ViewType = ViewType.value_view,
+    layout: Layout = Layout.auto,
 ) -> PlotSpec:
     return PlotSpec(
         comparison_dataset=comparison_dataset,
@@ -303,6 +330,7 @@ def _make_spec(
         coverage=coverage,
         group_by=group_by,
         view=view,
+        layout=layout,
     )
 
 
@@ -428,5 +456,4 @@ def generate_all_templates() -> list[PlotTemplate]:
     """
     from itertools import chain
     return list(chain(_eia_templates(), _recs_templates(), _lrd_templates()))
-
 

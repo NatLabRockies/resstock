@@ -61,6 +61,13 @@ class ViewType(StrEnum):
     temp_distribution_view = "temperature distribution"  # Only for LRD plots - distribution of temperature
 
 
+class Layout(StrEnum):
+    """Layout hint for alternate rendering arrangements of the same view."""
+
+    auto = "auto"
+    two_column = "two_column"
+
+
 class FileType(StrEnum):
     html = "html"
     svg = "svg"
@@ -168,6 +175,7 @@ class PlotSpec(NoExtraModel):
                     "(('state', 'AK'), ('vintage', '1990s')) focuses on AK 1990s homes.",
     )
     view: ViewType | None = Field(..., description="View type: diff_view, value_view, temp_view, etc.")
+    layout: Layout = Field(default=Layout.auto, description="Layout hint: auto or two_column")
 
     @model_validator(mode="after")
     def _validate_metric_constraints(self) -> PlotSpec:
@@ -488,6 +496,11 @@ class PlotSpec(NoExtraModel):
         base = self._base_viz_label
         layout_label = self._default_viz_layout if layout is None else layout
 
+        if self.layout == Layout.two_column:
+            if self.view == ViewType.diff_view:
+                return f"{base} (two_column difference view)"
+            return f"{base} (two_column)"
+
         if self.view == ViewType.diff_view:
             if layout_label == "grouped":
                 suffix = "grouped difference view"
@@ -548,6 +561,8 @@ class PlotSpec(NoExtraModel):
         - filename is the display_title with coverage/view suffixes
         """
         title = self.display_title
+        if self.layout == Layout.two_column:
+            title = title + " (two_column layout)"
         if self.quantity == DataCol.ALL and self.view == ViewType.value_view:
             title = title + " (grouped view)"
         elif self.quantity == DataCol.ALL and self.view == ViewType.diff_view:
