@@ -1,7 +1,6 @@
 """Generic monthly line chart plotter for creating scatter line charts with monthly data."""
 
 import calendar
-from typing import Any
 
 import polars as pl
 import plotly.graph_objects as go
@@ -37,15 +36,13 @@ def create_ts_plot(
     x_tick_text: tuple | None = None,
     x_tick_vals: tuple | None = None,
     x_unit: str = "",
+    x_range: tuple[float, float] | None = None,
     fill_lower_bound: bool = False,
     custom_range: tuple[float, float] | None = None,
 ) -> go.Figure:
     categories = data[first_category_column].unique(maintain_order=True).to_list()
     category_colors = theme.build_color_palette(categories)
-    if custom_range is None:
-        yrange = compute_axis_range(data, quantity_column, rse_column)
-    else:
-        yrange = custom_range
+    yrange = compute_axis_range(data, quantity_column, rse_column) if custom_range is None else custom_range
     fig = fig or go.Figure()
     for i, category in enumerate(categories):
         category_data = data.filter(pl.col(first_category_column) == category)
@@ -124,16 +121,18 @@ def create_ts_plot(
             automargin=True,
             showticklabels=True,
             showgrid=False,
+            range=x_range,
             row=row,
             col=col,
         )
     else:
         # Use explicit tick values/labels
         default_tick_vals = all_ticks if len(all_ticks) <= 12 else [all_ticks[0], all_ticks[-1]]
-        default_tick_text = [f"{val}{x_unit}" for val in default_tick_vals]
-        default_tick_text[0] = " " * len(default_tick_text[0]) + default_tick_text[0]
-        default_tick_text[-1] = default_tick_text[-1] + " " * len(default_tick_text[-1])
         tickvals = list(x_tick_vals) if x_tick_vals else default_tick_vals
+        default_tick_text = [f"{val}{x_unit}" for val in tickvals]
+        if len(default_tick_text) > 1:
+            default_tick_text[0] = " " * len(default_tick_text[0]) + default_tick_text[0]
+            default_tick_text[-1] = default_tick_text[-1] + " " * len(default_tick_text[-1])
         ticktext = list(x_tick_text) if x_tick_text else default_tick_text
 
         fig.update_xaxes(
@@ -142,7 +141,7 @@ def create_ts_plot(
             tickvals=tickvals,
             ticktext=ticktext,
             tickfont={"size": 10},
-            range=(all_ticks[0], all_ticks[-1]),
+            range=x_range if x_range is not None else (all_ticks[0], all_ticks[-1]),
             automargin=True,
             showticklabels=True,
             showgrid=False,

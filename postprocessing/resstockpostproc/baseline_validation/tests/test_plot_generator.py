@@ -7,6 +7,7 @@ from resstockpostproc.baseline_validation.plot_generator import (
     _all_enduses_viz_label,
     _apply_lrd_sidebar_semantics,
     _compute_discrepancy,
+    _should_generate_stacked_page_group,
     _should_generate_stacked_table,
     _stacked_title_from_grouped,
     _to_all_enduses_tall_data,
@@ -235,10 +236,18 @@ class TestAllEndusesHelpers:
         )
 
     def test_all_enduses_viz_label_convention(self):
-        assert _all_enduses_viz_label(ViewType.value_view, stacked=False) == "all enduses (grouped)"
-        assert _all_enduses_viz_label(ViewType.diff_view, stacked=False) == "all enduses (grouped difference)"
-        assert _all_enduses_viz_label(ViewType.value_view, stacked=True) == "all enduses (stacked)"
-        assert _all_enduses_viz_label(ViewType.diff_view, stacked=True) == "all enduses (stacked difference)"
+        value_spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            quantity=DataCol.ALL,
+            aggregation_type=Metric.average,
+            view=ViewType.value_view,
+        )
+        diff_spec = value_spec.model_copy(update={"view": ViewType.diff_view})
+
+        assert _all_enduses_viz_label(value_spec, stacked=False) == "Bar Plot (grouped)"
+        assert _all_enduses_viz_label(diff_spec, stacked=False) == "Bar Plot (grouped difference view)"
+        assert _all_enduses_viz_label(value_spec, stacked=True) == "Bar Plot (stacked)"
+        assert _all_enduses_viz_label(diff_spec, stacked=True) == "Bar Plot (stacked difference view)"
 
     def test_should_generate_stacked_table(self):
         assert _should_generate_stacked_table(
@@ -256,6 +265,38 @@ class TestAllEndusesHelpers:
         assert _should_generate_stacked_table(
             "", ComparisonDataset.eia, Resolution.year, Metric.total
         ) is True
+
+    def test_should_generate_stacked_page_group_skips_lrd(self):
+        lrd_spec = _make_spec(
+            comparison_dataset=ComparisonDataset.lrd,
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            aggregation_type=Metric.average,
+            coverage=CoverageType.all_units,
+            group_by="utility",
+            view=ViewType.value_view,
+        )
+        qty_entries = [
+            ("Electricity", [(lrd_spec, "Bar Plot (grouped)")]),
+            ("Natural Gas", [(lrd_spec, "Bar Plot (grouped)")]),
+        ]
+        assert _should_generate_stacked_page_group(qty_entries) is False
+
+    def test_should_generate_stacked_page_group_requires_multiple_quantities(self):
+        recs_spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            aggregation_type=Metric.average,
+            coverage=CoverageType.all_units,
+            group_by="state",
+            view=ViewType.value_view,
+        )
+        single_qty_entries = [("Electricity", [(recs_spec, "Bar Plot (grouped)")])]
+        two_qty_entries = [
+            ("Electricity", [(recs_spec, "Bar Plot (grouped)")]),
+            ("Natural Gas", [(recs_spec, "Bar Plot (grouped)")]),
+        ]
+        assert _should_generate_stacked_page_group(single_qty_entries) is False
+        assert _should_generate_stacked_page_group(two_qty_entries) is True
 
 
 class TestLRDSidebarSemantics:

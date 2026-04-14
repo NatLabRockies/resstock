@@ -4,6 +4,8 @@ Load Duration Curve Plotter
 Functions for generating load duration curve validation plots
 """
 
+import math
+
 import polars as pl
 import plotly.graph_objects as go
 
@@ -22,10 +24,11 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
     agg = plot_spec.group_by or plot_spec.effective_group_by[-1]
     assert agg == "utility", "LRD plots only support group_by='utility'"
     final_df = data.clone()
-    sidebar_column = None
     ts_xtick_vals = None
     ts_xtick_text = None
     timeseries_column = None
+    x_range = None
+    x_axis_title_bottom_row = None
     x_unit = ""
     quantity_title = "kWh"
     quantity_column = f"{plot_spec.quantity}_value"
@@ -34,7 +37,6 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
             timeseries_column = None
             ts_xtick_vals = ()
             ts_xtick_text = ()
-            sidebar_column = f"{plot_spec.quantity}_value_percent_difference"
             title = "Annual Electricity Consumption per Dwelling Unit"
         case Resolution.month:
             timeseries_column = Resolution.month
@@ -49,8 +51,20 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
         case Resolution.hour_of_year | Resolution.top_100_hours:
             if plot_spec.view in [ViewType.temp_view, ViewType.temp_distribution_view]:
                 # Data already transformed by gather_data._prepare_temperature_view()
-                x_unit = "°F"
+                x_unit = ""
                 timeseries_column = "resstock_temp"
+                temp_min, temp_max = final_df.select(
+                    pl.col("resstock_temp").cast(pl.Float64).min().alias("temp_min"),
+                    pl.col("resstock_temp").cast(pl.Float64).max().alias("temp_max"),
+                ).row(0)
+                if temp_min is None or temp_max is None:
+                    raise ValueError("Temperature view requires non-empty resstock_temp values")
+                range_min = int(math.floor(temp_min / 30.0) * 30)
+                range_max = int(math.ceil(temp_max / 30.0) * 30)
+                x_range = (float(range_min), float(range_max))
+                ts_xtick_vals = tuple(range(range_min, range_max + 1, 30))
+                ts_xtick_text = tuple(str(v) for v in ts_xtick_vals)
+                x_axis_title_bottom_row = "Temperature (°F)"
                 if plot_spec.view == ViewType.temp_view:
                     title = "Load vs Outdoor Drybulb Temperature"
                 else:
@@ -117,6 +131,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
                 x_unit=x_unit,
                 x_tick_vals=ts_xtick_vals,
                 x_tick_text=ts_xtick_text,
+                x_range=x_range,
                 fill_lower_bound=True,
             )
         else:
@@ -145,6 +160,8 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
             timeseries_column=timeseries_column,
             ts_xtick_vals=ts_xtick_vals,
             ts_xtick_text=ts_xtick_text,
+            x_range=x_range,
+            x_axis_title_bottom_row=x_axis_title_bottom_row,
             x_unit=x_unit,
             title_text=title,
         )
@@ -157,6 +174,20 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
         else:
             height = 1080 * 0.8
             width = 1920 * 0.7
+
+    if plot_spec.view in [ViewType.temp_view, ViewType.temp_distribution_view] and is_single:
+        fig.update_xaxes(title_text="Temperature (°F)")
+
+    if plot_spec.view in [ViewType.temp_view, ViewType.temp_distribution_view]:
+        fig.update_xaxes(
+            ticks="outside",
+            ticklen=4,
+            tickwidth=1,
+            tickcolor="rgba(80,80,80,0.9)",
+            showline=True,
+            linecolor="rgba(120,120,120,0.9)",
+            tickangle=0,
+        )
 
     fig = apply_theme(fig, title=title, height=height, width=width)
     return fig, title

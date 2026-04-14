@@ -470,49 +470,63 @@ class PlotSpec(NoExtraModel):
             return ""
         return format_group_by(self.group_by)
 
+    def viz_label(self, layout: str | None = None) -> str:
+        """Normalized visualization label for explorer/index tabs.
+
+        Base labels are constrained to:
+        - Bar Plot
+        - Box Plot
+        - Timeseries Plot
+
+        Optional suffixes:
+        - (grouped)
+        - (stacked)
+        - (difference view)
+        - (grouped difference view)
+        - (stacked difference view)
+        """
+        base = self._base_viz_label
+        layout_label = self._default_viz_layout if layout is None else layout
+
+        if self.view == ViewType.diff_view:
+            if layout_label == "grouped":
+                suffix = "grouped difference view"
+            elif layout_label == "stacked":
+                suffix = "stacked difference view"
+            else:
+                suffix = "difference view"
+        elif layout_label in ("grouped", "stacked"):
+            suffix = layout_label
+        else:
+            suffix = None
+
+        return f"{base} ({suffix})" if suffix else base
+
     @property
     def display_viz_label(self) -> str:
         """Visualization type label for the HTML index.
 
-        Examples: 'tilemap bar plot', 'grouped bar plot (difference)', 'daily load shape'
+        Examples: 'Bar Plot', 'Bar Plot (grouped)', 'Timeseries Plot (difference view)'
         """
-        label = self._base_viz_label
-        if self.view == ViewType.diff_view:
-            label += " (difference)"
-        return label
+        return self.viz_label()
+
+    @property
+    def _default_viz_layout(self) -> str | None:
+        """Default layout qualifier used in display_viz_label."""
+        if self.quantity == DataCol.ALL:
+            return "grouped"
+        if self.group_by:
+            return "grouped"
+        return None
 
     @property
     def _base_viz_label(self) -> str:
-        """Base visualization type label before view-type suffixes."""
+        """Base visualization type label before any optional suffix."""
         if self.is_distribution_metric:
-            return "grouped box plot"
-
-        if self.quantity == DataCol.ALL:
-            return "grouped bar plot"
-
-        # LRD-specific resolutions (year/month fall through to shared tilemap block)
-        if self.comparison_dataset == ComparisonDataset.lrd:
-            if self.resolution == Resolution.day_of_year:
-                return "stack of timeseries plot"
-            if self.resolution == Resolution.hour_of_day_matrix:
-                return "daily load shape matrix"
-            if self.resolution in (Resolution.hour_of_day, Resolution.hour_of_day_summer, Resolution.hour_of_day_winter):
-                return "daily load shape"
-            if self.resolution in (Resolution.hour_of_year, Resolution.top_100_hours):
-                if self.view == ViewType.temp_view:
-                    return "temperature relation"
-                if self.view == ViewType.temp_distribution_view:
-                    return "temperature distribution"
-                return "load duration curve"
-
-        # Tilemap layouts for state/utility grouping (shared by EIA, RECS, LRD)
-        if self.group_by in (DataCol.STATE, DataCol.UTILITY):
-            if self.resolution == Resolution.year:
-                return "tilemap bar plot"
-            if self.resolution == Resolution.month:
-                return "tilemap timeseries plot"
-
-        return "grouped bar plot"
+            return "Box Plot"
+        if self.resolution == Resolution.year:
+            return "Bar Plot"
+        return "Timeseries Plot"
 
     @property
     def filter_display_name(self) -> str:

@@ -148,3 +148,27 @@ class TestLRDDisplayMetricLabels:
     def test_display_metric_label_mapping(self, resolution, view, group_by, focus_on, expected):
         spec = self._make_lrd_spec(resolution=resolution, view=view, focus_on=focus_on, group_by=group_by)
         assert spec.display_metric == expected
+
+
+class TestDisplayVizLabels:
+    @pytest.mark.parametrize(
+        "overrides,expected",
+        [
+            ({"group_by": None}, "Bar Plot"),
+            ({}, "Bar Plot (grouped)"),
+            ({"group_by": None, "view": ViewType.diff_view}, "Bar Plot (difference view)"),
+            ({"view": ViewType.diff_view}, "Bar Plot (grouped difference view)"),
+            ({"group_by": None, "resolution": Resolution.month}, "Timeseries Plot"),
+            (
+                {
+                    "comparison_dataset": ComparisonDataset.recs,
+                    "aggregation_type": Metric.distribution,
+                    "view": ViewType.value_view,
+                },
+                "Box Plot (grouped)",
+            ),
+        ],
+    )
+    def test_display_viz_label_format(self, overrides, expected):
+        spec = _make_spec(**overrides)
+        assert spec.display_viz_label == expected

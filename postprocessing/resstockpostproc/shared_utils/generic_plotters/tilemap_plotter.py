@@ -138,6 +138,8 @@ def plot_tilemap(
     timeseries_column: str | None = None,
     ts_xtick_text: tuple | None = None,
     ts_xtick_vals: tuple | None = None,
+    x_range: tuple[float, float] | None = None,
+    x_axis_title_bottom_row: str | None = None,
     x_unit: str = "",
     exclude_from_sidebar: list[str] | None = None,
     exclude_sources: list[str] | None = None,
@@ -266,6 +268,7 @@ def plot_tilemap(
                 show_ticks=show_yticks,
                 x_tick_vals=ts_xtick_vals,
                 x_tick_text=ts_xtick_text,
+                x_range=x_range,
                 x_unit=x_unit,
                 fill_lower_bound=True,
             )
@@ -301,6 +304,15 @@ def plot_tilemap(
 
     # Remove grid and axis border lines from all subplots
     fig.update_xaxes(showgrid=False, showline=False)
+
+    if x_axis_title_bottom_row:
+        for col in range(1, ncols + 1):
+            if sidebar_column and col == ncols:
+                continue
+            if layout[nrows - 1][col - 1] is None:
+                continue
+            fig.update_xaxes(title_text=x_axis_title_bottom_row, row=nrows, col=col)
+
     fig.update_yaxes(showgrid=False, showline=False, zeroline=True, zerolinewidth=2, zerolinecolor="darkgray")
     fig.update_layout(
         title_text=title_text,

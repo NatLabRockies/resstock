@@ -73,6 +73,26 @@ class TestLRDPlotter:
 
         return pl.DataFrame(data)
 
+    @pytest.fixture
+    def mock_temperature_view_data(self):
+        """Create mock data for LRD temperature-based views."""
+        sources = ["lrd_reference", "resstock_2024", "resstock_2025"]
+        temps = [30, 40, 50, 60, 70]
+        data = []
+        for source in sources:
+            for temp in temps:
+                data.append(
+                    {
+                        "source": source,
+                        "utility": "ComEd (IL)",
+                        "eiaid": 4110,
+                        "resstock_temp": temp,
+                        f"{DataCol.ELECTRICITY_TOTAL}_value": 1.5 + temp / 100.0,
+                        "temp_count": 24,
+                    }
+                )
+        return pl.DataFrame(data)
+
     def test_create_plot_hour_of_day_matrix(self, mock_hourly_matrix_data):
         """Test creating hour_of_day_matrix plot."""
         plot_spec = PlotSpec(
@@ -166,6 +186,23 @@ class TestLRDPlotter:
 
         fig, title = lrd_plotter.create_plot(data_with_month, plot_spec)
         assert fig is not None
+
+    @pytest.mark.parametrize("view", [ViewType.temp_view, ViewType.temp_distribution_view])
+    def test_temperature_views_set_xaxis_title(self, mock_temperature_view_data, view):
+        """Temperature-relation plots should label x-axis in Fahrenheit."""
+        plot_spec = PlotSpec(
+            comparison_dataset=ComparisonDataset.lrd,
+            resolution=Resolution.hour_of_year,
+            group_by="utility",
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            focus_on=(),
+            aggregation_type=Metric.average,
+            coverage=CoverageType.all_units,
+            view=view,
+        )
+
+        fig, _ = lrd_plotter.create_plot(mock_temperature_view_data, plot_spec)
+        assert fig.layout.xaxis.title.text == "Temperature (°F)"
 
 
 class TestHourOfDayMatrixDataProcessing:

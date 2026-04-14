@@ -151,26 +151,15 @@ OUTPUT_COLUMNS = [
 ]
 
 
-_MULTI_ENTITY_PREFIXES = ("stack of ", "tilemap ", "grouped ")
 _GROUPED_VIEW_SUFFIX = " (grouped view)"
 _GROUPED_DIFF_VIEW_SUFFIX = " (grouped symmetric percent difference view)"
 _STACKED_VIEW_SUFFIX = " (stacked view)"
 _STACKED_DIFF_VIEW_SUFFIX = " (stacked symmetric percent difference view)"
 
 
-def _simplify_viz_label(viz_type: str) -> str:
-    """Strip multi-entity prefixes for focused (single-entity) plots."""
-    for prefix in _MULTI_ENTITY_PREFIXES:
-        if viz_type.startswith(prefix):
-            return viz_type[len(prefix):]
-    return viz_type
-
-
-def _all_enduses_viz_label(view: ViewType, stacked: bool) -> str:
-    """Canonical tab labels for grouped/stacked All Enduses variants."""
-    if stacked:
-        return "all enduses (stacked difference)" if view == ViewType.diff_view else "all enduses (stacked)"
-    return "all enduses (grouped difference)" if view == ViewType.diff_view else "all enduses (grouped)"
+def _all_enduses_viz_label(plot_spec: PlotSpec, stacked: bool) -> str:
+    """Tab label for grouped/stacked All Enduses variants using standard viz terms."""
+    return plot_spec.viz_label(layout="stacked" if stacked else "grouped")
 
 
 def _stacked_title_from_grouped(grouped_title: str, view: ViewType) -> str:
@@ -261,6 +250,16 @@ def _should_generate_stacked_table(
         return resolution != Resolution.year or aggregation_type == Metric.distribution
 
     return False
+
+
+def _should_generate_stacked_page_group(
+    qty_entries: list[tuple[str, list[tuple[PlotSpec, str]]]],
+) -> bool:
+    """Decide whether Pass 4 should synthesize an All Enduses stacked page for a group."""
+    if len(qty_entries) < 2:
+        return False
+    first_spec = qty_entries[0][1][0][0]
+    return first_spec.comparison_dataset != ComparisonDataset.lrd
 
 
 # ---------------------------------------------------------------------------
@@ -944,14 +943,14 @@ def generate_plots(index=None, test_only=False, parallel=True):
         _apply_lrd_sidebar_semantics(results[sub_key], display_spec, final_focus_on)
 
         focused_entries = []
-        for spec, viz_type in spec_entries:
+        for spec, _ in spec_entries:
             focused_spec = spec.model_copy(update={
                 "focus_on": final_focus_on,
                 "group_by": final_agg,
             })
-            viz_label = _simplify_viz_label(viz_type) if focus_val or final_agg is None else viz_type
+            viz_label = focused_spec.display_viz_label
             if focused_spec.quantity == DataCol.ALL:
-                viz_label = _all_enduses_viz_label(focused_spec.view, stacked=False)
+                viz_label = _all_enduses_viz_label(focused_spec, stacked=False)
             focused_entries.append((focused_spec, viz_label))
 
         fn_row = _footnote_row(display_spec)
@@ -1030,7 +1029,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
     # the raw Plotly HTML files already written in Pass 3. View-agnostic: for
     # each view position in focused_entries, transpose across quantities.
     from resstockpostproc.baseline_validation.io_managers.html_utils import postprocess_plot_html
-    eligible_groups = {k: v for k, v in stacking_groups.items() if len(v) >= 2}
+    eligible_groups = {k: v for k, v in stacking_groups.items() if _should_generate_stacked_page_group(v)}
     stacked_count = 0
     stacked_table_data_cache: dict[tuple, pl.DataFrame] = {}
 
@@ -1081,7 +1080,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
             )
             rel = Path(ds_dir) / path_seg / f"{title}.{link_format.value}"
             rel_str = str(rel).replace("\\", "/")
-            stacked_label = _all_enduses_viz_label(all_view_spec.view, stacked=True)
+            stacked_label = _all_enduses_viz_label(all_view_spec, stacked=True)
             viz_parts.append(f"{stacked_label}||{rel_str}")
             stacked_outputs.append((i, all_view_spec, rel_str))
             stacked_count += 1
@@ -1254,7 +1253,7 @@ def main():
         "--index", type=str, default=None, help="Plot definition index to generate (e.g. '5', '1-10', '1,3,5')"
     )
     parser.add_argument(
-        "--test", action="store_true", default=True,
+        "--test", action="store_true", default=False,
         help="Generate only test subset plots (limited focus expansion)",
     )
     parser.add_argument(
