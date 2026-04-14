@@ -242,6 +242,40 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
       flex: 1 1 0;
     }}
     .filter-label {{ font-size: 12px; color: #555; margin-bottom: 4px; font-weight: 600; }}
+    .filter-tabs {{
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      padding: 0 4px 0;
+      margin-bottom: 0;
+      border: none;
+      border-bottom: 1px solid #bbb;
+      border-radius: 0;
+      background: transparent;
+      overflow: hidden;
+      flex-wrap: wrap;
+    }}
+    .filter-tab {{
+      margin-bottom: -1px;
+      border: 1px solid #b8b8b8;
+      border-bottom-color: #bbb;
+      border-radius: 7px 7px 0 0;
+      background: #efefef;
+      color: #555;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      line-height: 1;
+      white-space: nowrap;
+    }}
+    .filter-tab:hover {{ background: #e8f0fe; }}
+    .filter-tab.active {{
+      background: #d2e3fc;
+      border-color: #8ab4f8;
+      border-bottom-color: #d2e3fc;
+      color: #0b57d0;
+      font-weight: 700;
+    }}
     .filter-list {{
       border: 1px solid #bbb;
       border-radius: 4px;
@@ -249,6 +283,11 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
       overflow-y: auto;
       min-height: 0;
       flex: 1 1 auto;
+    }}
+    .filter-list.with-tabs {{
+      border-top: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
     }}
     .filter-item {{ padding: 5px 7px; font-size: 13px; cursor: pointer; border-bottom: 1px solid #eee; }}
     .filter-item:last-child {{ border-bottom: none; }}
@@ -370,6 +409,12 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
     const NL = String.fromCharCode(10);
     const TAB = String.fromCharCode(9);
     const KEY_SEP = String.fromCharCode(31);
+    const FILTER1_COL = 'Filter 1';
+    const FILTER2_COL = 'Filter 2';
+    const FILTER_TAB_PRIORITY = ['Building Type', 'Census Division', 'State'];
+    const FILTER_TAB_PRIORITY_MAP = Object.create(null);
+    FILTER_TAB_PRIORITY.forEach((label, idx) => FILTER_TAB_PRIORITY_MAP[label] = idx);
+    const filterTabSelection = Object.create(null);
 
     function norm(v) {{
       return (v ?? '').toString().trim();
@@ -386,6 +431,156 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
         rows.push(line.split(TAB));
       }}
       return rows;
+    }}
+
+    function isFilterPairCol(col) {{
+      return col === FILTER1_COL || col === FILTER2_COL;
+    }}
+
+    function otherFilterPairCol(col) {{
+      return col === FILTER1_COL ? FILTER2_COL : FILTER1_COL;
+    }}
+
+    function parseFilterCategoryValue(raw) {{
+      const text = norm(raw);
+      const idx = text.indexOf(': ');
+      if (idx < 0) return {{ category: '', value: text }};
+      return {{
+        category: text.slice(0, idx),
+        value: text.slice(idx + 2),
+      }};
+    }}
+
+    function filterOptionDisplayLabel(raw) {{
+      const text = norm(raw);
+      if (!text) return fmt(text);
+      const parsed = parseFilterCategoryValue(text);
+      return parsed.value || text;
+    }}
+
+    function sortedFilterTabCategories(options) {{
+      const cats = Array.from(new Set(
+        options
+          .map(v => parseFilterCategoryValue(v).category)
+          .filter(Boolean),
+      ));
+      cats.sort((a, b) => {{
+        const ia = Object.prototype.hasOwnProperty.call(FILTER_TAB_PRIORITY_MAP, a)
+          ? FILTER_TAB_PRIORITY_MAP[a]
+          : FILTER_TAB_PRIORITY.length;
+        const ib = Object.prototype.hasOwnProperty.call(FILTER_TAB_PRIORITY_MAP, b)
+          ? FILTER_TAB_PRIORITY_MAP[b]
+          : FILTER_TAB_PRIORITY.length;
+        return ia - ib || a.localeCompare(b);
+      }});
+      return cats;
+    }}
+
+    function resolveFilterTab(col, opts) {{
+      const categories = sortedFilterTabCategories(opts);
+      if (!categories.length) {{
+        delete filterTabSelection[col];
+        return '';
+      }}
+      const selected = norm(selection[col] ?? '');
+      const selectedCategory = parseFilterCategoryValue(selected).category;
+      let active = filterTabSelection[col] || '';
+      if (selected && selectedCategory && categories.includes(selectedCategory)) {{
+        active = selectedCategory;
+      }}
+      if (!categories.includes(active)) {{
+        active = categories[0];
+      }}
+      filterTabSelection[col] = active;
+      return active;
+    }}
+
+    function firstOptionInFilterTab(opts, category) {{
+      if (!category) return '';
+      for (const val of opts) {{
+        const text = norm(val);
+        if (!text) continue;
+        if (parseFilterCategoryValue(text).category === category) {{
+          return text;
+        }}
+      }}
+      return '';
+    }}
+
+    function sortFilterPairValues(vals) {{
+      vals.sort((a, b) => {{
+        const ap = parseFilterCategoryValue(a);
+        const bp = parseFilterCategoryValue(b);
+        const aCategory = ap.category;
+        const bCategory = bp.category;
+        const ia = Object.prototype.hasOwnProperty.call(FILTER_TAB_PRIORITY_MAP, aCategory)
+          ? FILTER_TAB_PRIORITY_MAP[aCategory]
+          : FILTER_TAB_PRIORITY.length;
+        const ib = Object.prototype.hasOwnProperty.call(FILTER_TAB_PRIORITY_MAP, bCategory)
+          ? FILTER_TAB_PRIORITY_MAP[bCategory]
+          : FILTER_TAB_PRIORITY.length;
+        return ia - ib
+          || aCategory.localeCompare(bCategory)
+          || ap.value.localeCompare(bp.value);
+      }});
+    }}
+
+    function filterCombosByPrior(priorCols) {{
+      let subset = COMBOS;
+      for (const p of priorCols) {{
+        if (isFilterPairCol(p)) continue;
+        const pPos = comboPos(p);
+        subset = subset.filter(c => norm(c[pPos]) === norm(selection[p] ?? ''));
+      }}
+
+      const applyF1 = priorCols.includes(FILTER1_COL);
+      const applyF2 = priorCols.includes(FILTER2_COL);
+      if (!(applyF1 || applyF2)) {{
+        return subset;
+      }}
+
+      const f1Sel = norm(selection[FILTER1_COL] ?? '');
+      const f2Sel = norm(selection[FILTER2_COL] ?? '');
+      const f1Pos = comboPos(FILTER1_COL);
+      const f2Pos = comboPos(FILTER2_COL);
+      return subset.filter(c => {{
+        const f1 = norm(c[f1Pos]);
+        const f2 = norm(c[f2Pos]);
+        if (applyF1 && applyF2) {{
+          return (f1 === f1Sel && f2 === f2Sel)
+            || (f1 === f2Sel && f2 === f1Sel);
+        }}
+        if (applyF1) return f1 === f1Sel || f2 === f1Sel;
+        return f1 === f2Sel || f2 === f2Sel;
+      }});
+    }}
+
+    function filterPairValuesForCol(col, subset, priorCols) {{
+      const selfPos = comboPos(col);
+      const otherCol = otherFilterPairCol(col);
+      const otherPos = comboPos(otherCol);
+      const applyOther = priorCols.includes(otherCol);
+      const otherSel = norm(selection[otherCol] ?? '');
+      const vals = new Set();
+
+      for (const combo of subset) {{
+        const selfVal = norm(combo[selfPos]);
+        const otherVal = norm(combo[otherPos]);
+        if (applyOther) {{
+          if (selfVal === otherSel) vals.add(otherVal);
+          if (otherVal === otherSel) vals.add(selfVal);
+        }} else {{
+          vals.add(selfVal);
+          vals.add(otherVal);
+        }}
+      }}
+
+      const hasNone = vals.has('');
+      vals.delete('');
+      const ordered = Array.from(vals);
+      sortFilterPairValues(ordered);
+      if (hasNone) ordered.unshift('');
+      return ordered;
     }}
 
     window.addRows = function(tsvText) {{
@@ -426,6 +621,14 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
 
     function keyFromFilterSelection() {{
       return FILTER_COLS.map(c => norm(selection[c])).join(KEY_SEP);
+    }}
+
+    function keyFromFilterSelectionSwappedPair() {{
+      return FILTER_COLS.map(c => {{
+        if (c === FILTER1_COL) return norm(selection[FILTER2_COL]);
+        if (c === FILTER2_COL) return norm(selection[FILTER1_COL]);
+        return norm(selection[c]);
+      }}).join(KEY_SEP);
     }}
 
     function keyFromRow(rowArr) {{
@@ -487,13 +690,23 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
     }}
 
     function optionsFor(col, priorCols) {{
-      let subset = COMBOS;
-      for (const p of priorCols) {{
-        const pPos = comboPos(p);
-        subset = subset.filter(c => norm(c[pPos]) === norm(selection[p] ?? ''));
+      if (
+        col === FILTER2_COL
+        && priorCols.includes(FILTER1_COL)
+        && norm(selection[FILTER1_COL] ?? '') === ''
+      ) {{
+        return [''];
       }}
+
+      const subset = filterCombosByPrior(priorCols);
+      let vals;
+      if (isFilterPairCol(col)) {{
+        vals = filterPairValuesForCol(col, subset, priorCols);
+        return vals;
+      }}
+
       const cPos = comboPos(col);
-      const vals = Array.from(new Set(subset.map(c => norm(c[cPos]))));
+      vals = Array.from(new Set(subset.map(c => norm(c[cPos]))));
       if (col === 'Metric') {{
         const orderMap = {{}};
         METRIC_ORDER.forEach((m, i) => orderMap[m] = i);
@@ -514,6 +727,36 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
       return vals;
     }}
 
+    function pickDefaultOptionForCol(col, opts) {{
+      if (!opts.length) return '';
+      if (!isFilterPairCol(col)) return opts[0];
+
+      const activeTab = resolveFilterTab(col, opts);
+      const tabFirst = firstOptionInFilterTab(opts, activeTab);
+      if (tabFirst) return tabFirst;
+      if (opts.includes('')) return '';
+      return opts[0];
+    }}
+
+    function onFilterTabClick(col, category) {{
+      const previousTab = filterTabSelection[col] || '';
+      filterTabSelection[col] = category;
+      const idx = FILTER_COLS.indexOf(col);
+      const opts = optionsFor(col, FILTER_COLS.slice(0, idx));
+      if (previousTab !== category) {{
+        if (opts.includes('')) {{
+          selection[col] = '';
+        }} else {{
+          const tabFirst = firstOptionInFilterTab(opts, category);
+          selection[col] = tabFirst || (opts[0] || '');
+        }}
+      }} else if (!opts.includes(norm(selection[col] ?? ''))) {{
+        const tabFirst = firstOptionInFilterTab(opts, category);
+        selection[col] = opts.includes('') ? '' : (tabFirst || (opts[0] || ''));
+      }}
+      rebuildFilters(col);
+    }}
+
     function rebuildFilters(changedCol) {{
       const startIdx = changedCol ? FILTER_COLS.indexOf(changedCol) : 0;
       for (let i = Math.max(0, startIdx); i < FILTER_COLS.length; i++) {{
@@ -521,7 +764,10 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
         const prior = FILTER_COLS.slice(0, i);
         const opts = optionsFor(col, prior);
         if (!opts.includes(norm(selection[col] ?? ''))) {{
-          selection[col] = opts.length ? opts[0] : '';
+          selection[col] = pickDefaultOptionForCol(col, opts);
+        }}
+        if (isFilterPairCol(col)) {{
+          resolveFilterTab(col, opts);
         }}
       }}
       renderFilters();
@@ -533,6 +779,7 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
       host.innerHTML = '';
       const rowPx = 27;
       const compactableLists = [];
+      const stickyCandidateLists = [];
       FILTER_COLS.forEach(col => {{
         const i = FILTER_COLS.indexOf(col);
         const prior = FILTER_COLS.slice(0, i);
@@ -546,8 +793,38 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
         label.textContent = col;
         block.appendChild(label);
 
+        let shownOpts = opts;
+        let hasFilterTabs = false;
+        if (isFilterPairCol(col)) {{
+          const categories = sortedFilterTabCategories(opts);
+          const activeTab = resolveFilterTab(col, opts);
+          if (categories.length) {{
+            const tabs = document.createElement('div');
+            tabs.className = 'filter-tabs';
+            hasFilterTabs = true;
+            categories.forEach(category => {{
+              const tabBtn = document.createElement('button');
+              tabBtn.type = 'button';
+              tabBtn.className = 'filter-tab' + (category === activeTab ? ' active' : '');
+              tabBtn.textContent = category;
+              tabBtn.onclick = () => onFilterTabClick(col, category);
+              tabs.appendChild(tabBtn);
+            }});
+            block.appendChild(tabs);
+          }}
+          shownOpts = opts.filter(v => {{
+            const text = norm(v);
+            if (!text) return true;
+            if (!activeTab) return true;
+            return parseFilterCategoryValue(text).category === activeTab;
+          }});
+        }}
+
         const list = document.createElement('div');
         list.className = 'filter-list';
+        if (hasFilterTabs) {{
+          list.classList.add('with-tabs');
+        }}
 
         if (col === 'Quantity') {{
           // Keep Quantity selector stable, but allow adaptive compaction if needed.
@@ -570,7 +847,7 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
 
         if (col === 'Filter 1' || col === 'Filter 2' || col === 'Group By') {{
           // Make these lists adapt to content so they don't reserve excess space.
-          const visibleCount = Math.max(1, Math.min(opts.length, 6));
+          const visibleCount = Math.max(1, Math.min(shownOpts.length, 6));
           list.style.flex = '0 0 auto';
           list.style.maxHeight = `${{visibleCount * rowPx + 2}}px`;
           block.style.flex = '0 0 auto';
@@ -593,10 +870,10 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
           block.style.flex = '0 0 auto';
         }}
 
-        for (const val of opts) {{
+        for (const val of shownOpts) {{
           const item = document.createElement('div');
           item.className = 'filter-item' + (norm(selection[col]) === val ? ' selected' : '');
-          item.textContent = fmt(val);
+          item.textContent = isFilterPairCol(col) ? filterOptionDisplayLabel(val) : fmt(val);
           item.onclick = () => {{
             selection[col] = val;
             rebuildFilters(col);
@@ -606,19 +883,7 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
 
         block.appendChild(list);
         host.appendChild(block);
-
-        // Enable sticky pinning only when the list actually overflows.
-        // Must run after mount, because clientHeight is unreliable before DOM layout.
-        const selectedItem = list.querySelector('.filter-item.selected');
-        if (selectedItem) {{
-          const hasOverflow = list.scrollHeight > list.clientHeight + 1;
-          if (hasOverflow) {{
-            selectedItem.classList.add('sticky-selected');
-            list.prepend(selectedItem);
-          }} else {{
-            selectedItem.classList.remove('sticky-selected');
-          }}
-        }}
+        stickyCandidateLists.push(list);
       }});
 
       // If the stack is too tall, compact key lists so Group By remains visible.
@@ -632,6 +897,19 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
         const nextRows = Number(list.dataset.currentRows || '0') - 1;
         list.dataset.currentRows = String(nextRows);
         list.style.maxHeight = `${{nextRows * rowPx + 2}}px`;
+      }}
+
+      // Enable sticky pinning after final compaction so overflow detection is accurate.
+      for (const list of stickyCandidateLists) {{
+        const selectedItem = list.querySelector('.filter-item.selected');
+        if (!selectedItem) continue;
+        const hasOverflow = list.scrollHeight > list.clientHeight + 1;
+        if (hasOverflow) {{
+          selectedItem.classList.add('sticky-selected');
+          list.prepend(selectedItem);
+        }} else {{
+          selectedItem.classList.remove('sticky-selected');
+        }}
       }}
     }}
 
@@ -716,7 +994,13 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
 
     function renderMain() {{
       const key = keyFromFilterSelection();
-      const info = KEY_INFO.get(key) || null;
+      let info = KEY_INFO.get(key) || null;
+      if (!info && FILTER_COLS.includes(FILTER1_COL) && FILTER_COLS.includes(FILTER2_COL)) {{
+        const swappedKey = keyFromFilterSelectionSwappedPair();
+        if (swappedKey !== key) {{
+          info = KEY_INFO.get(swappedKey) || null;
+        }}
+      }}
       const rowIdxs = info ? info.rowIdxs : [];
       currentTabs = collectTabsForRows(rowIdxs);
       if (requestedTabIdx != null) {{
@@ -742,7 +1026,10 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
       FILTER_COLS.forEach((col, i) => {{
         const opts = optionsFor(col, FILTER_COLS.slice(0, i));
         if (!(col in selection)) {{
-          selection[col] = opts.length ? opts[0] : '';
+          selection[col] = pickDefaultOptionForCol(col, opts);
+        }}
+        if (isFilterPairCol(col)) {{
+          resolveFilterTab(col, opts);
         }}
       }});
 
