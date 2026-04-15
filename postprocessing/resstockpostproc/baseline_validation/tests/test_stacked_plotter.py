@@ -425,7 +425,7 @@ class TestHistogramLayoutRouting:
 
         for trace in fig.data:
             assert isinstance(trace, go.Bar)
-            assert trace.opacity == pytest.approx(0.4)
+            assert trace.opacity == pytest.approx(0.7)
             # bin 0 center is midpoint of [0,10], overflow center is p98 + core_width = 100 + 10
             assert trace.x[0] == pytest.approx(5.0)
             assert trace.x[1] == pytest.approx(110.0)
