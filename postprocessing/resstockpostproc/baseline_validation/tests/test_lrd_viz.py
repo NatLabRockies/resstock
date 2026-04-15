@@ -166,6 +166,26 @@ class TestLRDPlotter:
         assert fig is not None
         assert "annual" in title.lower()
 
+    def test_create_plot_year_resolution_includes_model_count_hover(self, mock_year_data):
+        plot_spec = PlotSpec(
+            comparison_dataset=ComparisonDataset.lrd,
+            resolution=Resolution.year,
+            group_by="utility",
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            focus_on=(),
+            aggregation_type=Metric.average,
+            coverage=CoverageType.all_units,
+            view=ViewType.value_view,
+        )
+
+        fig, _ = lrd_plotter.create_plot(mock_year_data, plot_spec)
+
+        lrd_trace = next(trace for trace in fig.data if trace.name == "lrd_reference")
+        resstock_trace = next(trace for trace in fig.data if trace.name == "resstock_2024")
+        assert "%{customdata[1]}" not in lrd_trace.hovertemplate
+        assert "%{customdata[1]}" in resstock_trace.hovertemplate
+        assert resstock_trace.customdata[0][1] == "Number of Models: 100"
+
     def test_create_plot_unsupported_resolution(self, mock_year_data):
         """Test that unsupported resolution raises error."""
         # Create a plot spec with an invalid resolution (if one exists)
@@ -302,6 +322,26 @@ class TestDayOfYearResolution:
         # Check dimensions are set for vertical layout
         assert fig.layout.height == 2000
         assert fig.layout.width == 1400
+
+    def test_create_plot_day_of_year_includes_model_count_hover(self, mock_day_of_year_data):
+        plot_spec = PlotSpec(
+            comparison_dataset=ComparisonDataset.lrd,
+            resolution=Resolution.day_of_year,
+            group_by="utility",
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            focus_on=(),
+            aggregation_type=Metric.average,
+            coverage=CoverageType.all_units,
+            view=ViewType.value_view,
+        )
+
+        fig, _ = lrd_plotter.create_plot(mock_day_of_year_data, plot_spec)
+
+        lrd_trace = next(trace for trace in fig.data if trace.name == "lrd_2018")
+        resstock_trace = next(trace for trace in fig.data if trace.name == "resstock_2024")
+        assert "%{customdata[1]}" not in lrd_trace.hovertemplate
+        assert "%{customdata[1]}" in resstock_trace.hovertemplate
+        assert resstock_trace.customdata[0][1] == "Number of Models: 100"
 
     def test_utility_vertical_layout_exists(self):
         """Test that utility_vertical layout exists and has correct structure."""

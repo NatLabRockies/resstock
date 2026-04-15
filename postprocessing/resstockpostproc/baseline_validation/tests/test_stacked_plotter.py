@@ -436,3 +436,38 @@ class TestHistogramLayoutRouting:
         # right edge clipped to the synthetic tail, not raw max
         assert fig.layout.xaxis.range[0] == pytest.approx(0.0)
         assert fig.layout.xaxis.range[1] == pytest.approx(120.0)
+
+
+class TestStackedHoverFormatting:
+    def test_grouped_bar_hover_uses_compact_values_and_source_specific_count_labels(self):
+        data = pl.DataFrame({
+            "source": ["RECS 2020", "ResStock 2025", "RECS 2020", "ResStock 2025"],
+            "state": ["CA", "CA", "TX", "TX"],
+            "units_count": [5000, 5000, 4000, 4000],
+            "electricity_total_value": [1_223_232_232.22, 1_101_987_600.0, 98_765_432.0, 45_678_901.0],
+            "electricity_total_value_rse": [5.0, None, 7.0, None],
+            "model_count": [240.1234, 500.0, 321.0, 654.0],
+        })
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            group_by="state",
+            aggregation_type=Metric.average,
+            coverage=CoverageType.all_units,
+            view=ViewType.value_view,
+        )
+
+        fig = create_stacked_plot(data, spec)
+
+        recs_traces = [trace for trace in fig.data if trace.name == "RECS 2020"]
+        resstock_traces = [trace for trace in fig.data if trace.name == "ResStock 2025"]
+
+        assert recs_traces
+        assert resstock_traces
+        assert all("Value: %{customdata[0]}" in trace.hovertemplate for trace in fig.data)
+        assert all("%{customdata[1]}" in trace.hovertemplate for trace in fig.data)
+        assert all("kWh" not in trace.customdata[0][0] for trace in fig.data)
+        assert any(trace.customdata[0][0] == "1.22B" for trace in recs_traces)
+        assert all(trace.customdata[0][1].startswith("Number of Samples:") for trace in recs_traces)
+        assert any(trace.customdata[0][0] == "1.10B" for trace in resstock_traces)
+        assert all(trace.customdata[0][1].startswith("Number of Models:") for trace in resstock_traces)

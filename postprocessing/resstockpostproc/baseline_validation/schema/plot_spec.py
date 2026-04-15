@@ -495,8 +495,6 @@ class PlotSpec(NoExtraModel):
         """Resolve the hover/table label for model_count based on the specific source."""
         source = (source_label or "").strip().lower()
         if "resstock" in source:
-            if self.comparison_dataset == ComparisonDataset.lrd:
-                return None
             return "Number of Models"
         if self.comparison_dataset == ComparisonDataset.recs and "recs" in source:
             return "Number of Samples"

@@ -1,9 +1,9 @@
 from . import theme
+from .hover_formatting import format_compact_hover_value, format_count_value
 from .range_utils import compute_axis_range
 from resstockpostproc.shared_utils.timing import timed
 import plotly.graph_objects as go
 import polars as pl
-import math
 
 
 from typing import Literal
@@ -13,44 +13,6 @@ from collections.abc import Callable, Sequence
 def _hover_value_label(quantity_title: str) -> str:
     label = quantity_title.strip()
     return label if label else "Value"
-
-
-def _format_compact_number(value: float | int | None) -> str:
-    if value is None:
-        return ""
-
-    numeric = float(value)
-    abs_numeric = abs(numeric)
-    for threshold, suffix in (
-        (1_000_000_000_000, "T"),
-        (1_000_000_000, "B"),
-        (1_000_000, "M"),
-        (1_000, "K"),
-    ):
-        if abs_numeric >= threshold:
-            return f"{numeric / threshold:,.2f}{suffix}"
-    return f"{numeric:,.2f}"
-
-
-def _format_hover_value(value: float | int | None, quantity_title: str) -> str:
-    base = _format_compact_number(value)
-    quantity = quantity_title.strip()
-    if not base:
-        return ""
-    if not quantity or quantity == "count":
-        return base
-    if "%" in quantity:
-        return f"{base}%"
-    return f"{base} {quantity}"
-
-
-def _format_count_value(value: float | int | None) -> str:
-    if value is None:
-        return ""
-    rounded = int(math.floor(float(value) + 0.5))
-    return f"{rounded:,}"
-
-
 def _build_hovertemplate(
     *,
     orientation: Literal["h", "v"],
@@ -191,7 +153,7 @@ def create_bar_plot(
             customdata = None
             if compact_hover_values:
                 value_data = x_data if orientation == "h" else y_data
-                value_strings = [_format_hover_value(v, quantity_title) for v in value_data]
+                value_strings = [format_compact_hover_value(v, quantity_title) for v in value_data]
                 customdata = [(value_str,) for value_str in value_strings]
             
             traces.append(
@@ -249,13 +211,13 @@ def create_bar_plot(
                         else group_data["model_count"].to_list()
                     )
                     count_strings = [
-                        f"{resolved_count_label}: {_format_count_value(mc)}" if mc is not None else ""
+                        f"{resolved_count_label}: {format_count_value(mc)}" if mc is not None else ""
                         for mc in model_counts
                     ]
                 value_strings = None
                 if compact_hover_values:
                     value_data = xvals if orientation == "h" else yvals
-                    value_strings = [_format_hover_value(v, quantity_title) for v in value_data]
+                    value_strings = [format_compact_hover_value(v, quantity_title) for v in value_data]
 
                 text_vals = None
                 if is_stacked and q_idx == 0:

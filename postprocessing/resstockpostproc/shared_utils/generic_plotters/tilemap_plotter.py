@@ -277,6 +277,8 @@ def plot_tilemap(
                 x_range=x_range,
                 x_unit=x_unit,
                 fill_lower_bound=True,
+                count_label=count_label,
+                count_label_resolver=count_label_resolver,
                 compact_hover_values=compact_hover_values,
             )
 

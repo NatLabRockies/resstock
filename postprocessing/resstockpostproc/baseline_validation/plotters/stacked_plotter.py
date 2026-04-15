@@ -604,6 +604,8 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                 col=col,
                 show_legends=show_legends,
                 custom_range=custom_range,
+                count_label_resolver=lambda source: plot_spec.model_count_display_label_for_source(source),
+                compact_hover_values=True,
             )
         show_legends = False  # Only show legends for the first subplot
 

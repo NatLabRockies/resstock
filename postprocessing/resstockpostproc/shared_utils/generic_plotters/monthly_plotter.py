@@ -1,10 +1,12 @@
 """Generic monthly line chart plotter for creating scatter line charts with monthly data."""
 
 import calendar
+from collections.abc import Callable
 
 import polars as pl
 import plotly.graph_objects as go
 
+from .hover_formatting import format_compact_hover_value, format_count_value
 from .range_utils import compute_axis_range
 
 from resstockpostproc.shared_utils.generic_plotters import theme
@@ -15,35 +17,6 @@ from resstockpostproc.shared_utils.timing import timed
 MONTH_NAME_TO_INDEX = {name.lower(): idx for idx, name in enumerate(calendar.month_name) if name}
 MONTH_NAME_TO_INDEX.update({abbr.lower(): idx for idx, abbr in enumerate(calendar.month_abbr) if abbr})
 MONTH_INDEX_TO_LABEL = {idx: calendar.month_abbr[idx] for idx in range(1, 13)}
-
-
-def _format_compact_number(value: float | int | None) -> str:
-    if value is None:
-        return ""
-
-    numeric = float(value)
-    abs_numeric = abs(numeric)
-    for threshold, suffix in (
-        (1_000_000_000_000, "T"),
-        (1_000_000_000, "B"),
-        (1_000_000, "M"),
-        (1_000, "K"),
-    ):
-        if abs_numeric >= threshold:
-            return f"{numeric / threshold:,.2f}{suffix}"
-    return f"{numeric:,.2f}"
-
-
-def _format_hover_value(value: float | int | None, quantity_title: str) -> str:
-    base = _format_compact_number(value)
-    quantity = quantity_title.strip()
-    if not base:
-        return ""
-    if not quantity or quantity == "count":
-        return base
-    if "%" in quantity:
-        return f"{base}%"
-    return f"{base} {quantity}"
 
 
 @timed
@@ -68,6 +41,8 @@ def create_ts_plot(
     x_range: tuple[float, float] | None = None,
     fill_lower_bound: bool = False,
     custom_range: tuple[float, float] | None = None,
+    count_label: str | None = "Number of models",
+    count_label_resolver: Callable[[str], str | None] | None = None,
     compact_hover_values: bool = False,
 ) -> go.Figure:
     categories = data[first_category_column].unique(maintain_order=True).to_list()
@@ -126,12 +101,41 @@ def create_ts_plot(
             )
             fill_lower_bound = False  # Only ever fill the lower bound once for first category
 
-        customdata = [(_format_hover_value(v, quantity_title),) for v in y_values] if compact_hover_values else None
-        hovertemplate = (
-            "%{x}<br>" + f"{category}: " + "%{customdata[0]}<extra></extra>"
-            if compact_hover_values
-            else "%{x}<br>" + f"{category}: " + "%{y:,.2f}" + (f" {quantity_title}" if quantity_title else "") + "<extra></extra>"
+        resolved_count_label = (
+            count_label_resolver(category)
+            if count_label_resolver is not None
+            else count_label
         )
+        count_strings = None
+        if resolved_count_label and "model_count" in category_data.columns:
+            count_strings = [
+                f"{resolved_count_label}: {format_count_value(model_count)}" if model_count is not None else ""
+                for model_count in category_data["model_count"].to_list()
+            ]
+
+        customdata = None
+        if compact_hover_values and count_strings is not None:
+            customdata = list(zip(
+                [format_compact_hover_value(v, quantity_title) for v in y_values],
+                count_strings,
+            ))
+        elif compact_hover_values:
+            customdata = [(format_compact_hover_value(v, quantity_title),) for v in y_values]
+        elif count_strings is not None:
+            customdata = [(count_str,) for count_str in count_strings]
+
+        if compact_hover_values:
+            hovertemplate = "%{x}<br>" + f"{category}: " + "%{customdata[0]}"
+            if count_strings is not None:
+                hovertemplate += "<br>%{customdata[1]}"
+            hovertemplate += "<extra></extra>"
+        else:
+            hovertemplate = "%{x}<br>" + f"{category}: " + "%{y:,.2f}"
+            if quantity_title:
+                hovertemplate += f" {quantity_title}"
+            if count_strings is not None:
+                hovertemplate += "<br>%{customdata[0]}"
+            hovertemplate += "<extra></extra>"
 
         fig.add_scatter(
             x=x_values,
