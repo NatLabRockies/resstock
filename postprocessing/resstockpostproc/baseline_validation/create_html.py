@@ -21,6 +21,8 @@ from collections import defaultdict
 from collections.abc import Sequence
 from pathlib import Path
 
+from resstockpostproc.baseline_validation.schema.plot_spec import ALL_ENDUSES_DISPLAY
+
 
 NON_FILTER_COLUMNS = {"Index", "Comparison Plot", "Data"}
 _FILTER1_COLUMN = "Filter 1"
@@ -164,6 +166,14 @@ def _normalize_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
         ds = str(r.get("Comparison Dataset", "")).strip().upper()
         if "Metric" in r and not ds.startswith("LRD"):
             r["Metric"] = _canonical_metric_label(str(r.get("Metric", "")))
+        if r.get("Quantity") == "All Enduses":
+            r["Quantity"] = ALL_ENDUSES_DISPLAY
+        for col in ("Filter 1", "Filter 2", "Group By"):
+            value = str(r.get(col, ""))
+            if value == "Climate Zone":
+                r[col] = "Building America Climate Zone"
+            elif value.startswith("Climate Zone: "):
+                r[col] = value.replace("Climate Zone: ", "Building America Climate Zone: ", 1)
         norm_rows.append(r)
     return norm_rows
 
@@ -407,6 +417,7 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
     window.shardManifest = {manifest_json};
     const QUANTITY_PRIORITY = {{
       'Number of dwelling units': 0,
+      {json.dumps(ALL_ENDUSES_DISPLAY)}: 1,
       'All Enduses': 1,
       'All Enduses (Stacked)': 1,
       'Electricity': 2,
@@ -706,6 +717,8 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
       }}
     }}
 
+    let suppressHistoryPush = false;
+
     function writeStateToUrl() {{
       const params = new URLSearchParams();
       FILTER_COLS.forEach((col, i) => {{
@@ -716,7 +729,13 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
       const newUrl = qs
         ? `${{window.location.pathname}}?${{qs}}${{window.location.hash}}`
         : window.location.pathname;
-      window.history.replaceState(null, '', newUrl);
+      const currentUrl = `${{window.location.pathname}}${{window.location.search}}${{window.location.hash}}`;
+      if (newUrl === currentUrl) return;
+      if (suppressHistoryPush) {{
+        window.history.replaceState(null, '', newUrl);
+      }} else {{
+        window.history.pushState(null, '', newUrl);
+      }}
     }}
 
     function optionsFor(col, priorCols) {{
@@ -1066,8 +1085,24 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
         }}
       }});
 
-      rebuildFilters();
+      suppressHistoryPush = true;
+      try {{
+        rebuildFilters();
+      }} finally {{
+        suppressHistoryPush = false;
+      }}
     }}
+
+    window.addEventListener('popstate', () => {{
+      FILTER_COLS.forEach(col => {{ selection[col] = ''; }});
+      loadStateFromUrl();
+      suppressHistoryPush = true;
+      try {{
+        rebuildFilters();
+      }} finally {{
+        suppressHistoryPush = false;
+      }}
+    }});
 
     document.addEventListener('DOMContentLoaded', initPage);
   </script>
