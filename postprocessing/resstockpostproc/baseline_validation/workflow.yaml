@@ -12,10 +12,13 @@ data_sources:
     table_name: resstock_2024_amy2018_release_2
     name: resstock_2024
     db_schema: resstock_oedi_vu
+    baseline_metadata_and_annual_results_parquet_url: s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2024/resstock_amy2018_release_2/metadata_and_annual_results/national/parquet/baseline_metadata_and_annual_results.parquet
   - db_name: buildstock_sdr
     table_name: resstock_amy2018_r1_2025
     name: resstock_2025
     db_schema: resstock_oedi_new
+    baseline_metadata_and_annual_results_parquet_url: s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/resstock_amy2018_release_1/metadata_and_annual_results/national/full/parquet/upgrade0.parquet
+
 
 
 

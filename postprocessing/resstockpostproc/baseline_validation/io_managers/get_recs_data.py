@@ -13,7 +13,7 @@ from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
 from . import comparison_data_paths as s3_paths
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
-from resstockpostproc.baseline_validation.data_processing.recs_rse import calculate_rse
+from resstockpostproc.baseline_validation.data_processing.recs_rse import calculate_rse_batch
 from resstockpostproc.shared_utils.caching import cached
 from resstockpostproc.shared_utils.timing import timed
 from resstockpostproc.baseline_validation.schema.plot_spec import DataKey, Metric, CoverageType
@@ -206,33 +206,24 @@ def get_annual_all(
             quartile_row = dict(group_row)
             nonzero_quartile_row = dict(group_row)
 
-            # Calculate units_count_rse (RSE of the sum of weights)
-            # Create a constant column of 1s to calculate RSE of weight sum
+            # Batched RSE calculation: extracts the 61-column weight matrix once
+            # per group and evaluates units_count + value + percent_users RSE
+            # for every enduse in a single matmul pass.
+            rse_requests = [("_constant_", "total")]
+            for col in enduse_cols:
+                rse_requests.append((col, rse_stat_type))
+                rse_requests.append((col, "percent"))
             try:
-                # For units_count RSE, we treat it as a "total" of a constant (1) variable
-                group_data_temp = group_data.copy()
-                group_data_temp["_constant_"] = 1
-                units_count_rse = calculate_rse(group_data_temp, "_constant_", stat_type="total")
-                rse_row["units_count_rse"] = units_count_rse
+                group_data_with_const = group_data.assign(_constant_=1.0)
+                batched_rse = calculate_rse_batch(group_data_with_const, rse_requests)
             except Exception:
-                rse_row["units_count_rse"] = None
+                batched_rse = dict.fromkeys(rse_requests)
+            rse_row["units_count_rse"] = batched_rse.get(("_constant_", "total"))
+            for col in enduse_cols:
+                rse_row[f"{col}_value_rse"] = batched_rse.get((col, rse_stat_type))
+                rse_row[f"{col}_percent_users_rse"] = batched_rse.get((col, "percent"))
 
             for col in enduse_cols:
-                try:
-                    rse = calculate_rse(group_data, col, stat_type=rse_stat_type)
-                    rse_row[f"{col}_value_rse"] = rse
-                except Exception:
-                    # If RSE calculation fails, set to None
-                    rse_row[f"{col}_value_rse"] = None
-
-                # Calculate RSE for percent_users (binary indicator: col > 0)
-                try:
-                    # For percent_users, we calculate RSE of the proportion/mean of the binary indicator
-                    rse_percent_users = calculate_rse(group_data, col, stat_type="percent")
-                    rse_row[f"{col}_percent_users_rse"] = rse_percent_users
-                except Exception:
-                    rse_row[f"{col}_percent_users_rse"] = None
-
                 # Calculate quartiles for the column
                 try:
                     data_values = group_data[col].values
@@ -330,27 +321,21 @@ def get_annual_all(
             us_total_quartile_dict = {}
             us_total_nonzero_quartile_dict = {}
 
+            rse_requests = [("_constant_", "total")]
+            for col in enduse_cols:
+                rse_requests.append((col, rse_stat_type))
+                rse_requests.append((col, "percent"))
             try:
-                mdf_pd_temp = mdf_subset_pd.copy()
-                mdf_pd_temp["_constant_"] = 1
-                units_count_rse = calculate_rse(mdf_pd_temp, "_constant_", stat_type="total")
-                us_total_rse_dict["units_count_rse"] = units_count_rse
+                mdf_subset_with_const = mdf_subset_pd.assign(_constant_=1.0)
+                batched_rse = calculate_rse_batch(mdf_subset_with_const, rse_requests)
             except Exception:
-                us_total_rse_dict["units_count_rse"] = None
+                batched_rse = dict.fromkeys(rse_requests)
+            us_total_rse_dict["units_count_rse"] = batched_rse.get(("_constant_", "total"))
+            for col in enduse_cols:
+                us_total_rse_dict[f"{col}_value_rse"] = batched_rse.get((col, rse_stat_type))
+                us_total_rse_dict[f"{col}_percent_users_rse"] = batched_rse.get((col, "percent"))
 
             for col in enduse_cols:
-                try:
-                    rse = calculate_rse(mdf_subset_pd, col, stat_type=rse_stat_type)
-                    us_total_rse_dict[f"{col}_value_rse"] = rse
-                except Exception:
-                    us_total_rse_dict[f"{col}_value_rse"] = None
-
-                try:
-                    rse_percent_users = calculate_rse(mdf_subset_pd, col, stat_type="percent")
-                    us_total_rse_dict[f"{col}_percent_users_rse"] = rse_percent_users
-                except Exception:
-                    us_total_rse_dict[f"{col}_percent_users_rse"] = None
-
                 try:
                     data_values = mdf_subset_pd[col].values
                     weights = mdf_subset_pd["NWEIGHT"].values
@@ -436,31 +421,21 @@ def get_annual_all(
         nonzero_quartile_dict = {}
 
         # Determine RSE stat type based on aggregation
-        rse_stat_type = "total" if data_key.aggregation_type == Metric.total else "mean"
+        rse_stat_type = "total" if data_key.aggregation_type == Metric.total else "avg"
 
-        # Calculate units_count_rse
-        try:
-            mdf_pd_temp = mdf_pd.copy()
-            mdf_pd_temp["_constant_"] = 1
-            units_count_rse = calculate_rse(mdf_pd_temp, "_constant_", stat_type="total")
-            rse_dict["units_count_rse"] = [units_count_rse]
-        except Exception:
-            rse_dict["units_count_rse"] = [None]
-
+        rse_requests = [("_constant_", "total")]
         for col in enduse_cols:
-            try:
-                rse = calculate_rse(mdf_pd, col, stat_type=rse_stat_type)
-                rse_dict[f"{col}_value_rse"] = [rse]
-            except Exception:
-                # If RSE calculation fails, set to None
-                rse_dict[f"{col}_value_rse"] = [None]
-
-            # Calculate RSE for percent_users
-            try:
-                rse_percent_users = calculate_rse(mdf_pd, col, stat_type="percent")
-                rse_dict[f"{col}_percent_users_rse"] = [rse_percent_users]
-            except Exception:
-                rse_dict[f"{col}_percent_users_rse"] = [None]
+            rse_requests.append((col, rse_stat_type))
+            rse_requests.append((col, "percent"))
+        try:
+            mdf_pd_with_const = mdf_pd.assign(_constant_=1.0)
+            batched_rse = calculate_rse_batch(mdf_pd_with_const, rse_requests)
+        except Exception:
+            batched_rse = dict.fromkeys(rse_requests)
+        rse_dict["units_count_rse"] = [batched_rse.get(("_constant_", "total"))]
+        for col in enduse_cols:
+            rse_dict[f"{col}_value_rse"] = [batched_rse.get((col, rse_stat_type))]
+            rse_dict[f"{col}_percent_users_rse"] = [batched_rse.get((col, "percent"))]
 
             # Calculate quartiles (including all values)
             try:

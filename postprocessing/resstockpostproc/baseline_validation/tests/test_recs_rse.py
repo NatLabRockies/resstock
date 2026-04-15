@@ -1,10 +1,17 @@
 """Tests for Jackknife RSE calculation."""
 
+import warnings
+
 import numpy as np
 import pandas as pd
 import pytest
 
-from resstockpostproc.baseline_validation.data_processing.recs_rse import calculate_rse, R, WEIGHT_COL
+from resstockpostproc.baseline_validation.data_processing.recs_rse import (
+    R,
+    WEIGHT_COL,
+    calculate_rse,
+    calculate_rse_batch,
+)
 
 
 def _make_recs_df(values, base_weights, replicate_overrides=None):
@@ -149,3 +156,68 @@ class TestCalculateRSEValidation:
         df = _make_recs_df(values=[1], base_weights=[1.0])
         with pytest.raises(ValueError, match="stat_type must be one of"):
             calculate_rse(df, "VAR", stat_type="invalid")
+
+
+class TestCalculateRSEBatch:
+    def test_batch_matches_loop(self):
+        """Batched results must match per-call calculate_rse across stat types."""
+        df = _make_recs_df(
+            values=[10, 20, 30, 0],
+            base_weights=[1.0, 2.0, 1.5, 0.5],
+            replicate_overrides={1: [0.5, 2.5, 2.0, 0.0], 7: [1.5, 1.5, 1.0, 1.0]},
+        )
+        df["VAR2"] = [5, 0, 15, 25]
+        for i in range(1, R + 1):
+            pass  # VAR2 already broadcasts; replicate columns stay as-is
+
+        requests = [
+            ("VAR", "total"),
+            ("VAR", "avg"),
+            ("VAR", "percent"),
+            ("VAR2", "avg"),
+            ("VAR2", "percent"),
+        ]
+        batch = calculate_rse_batch(df, requests)
+
+        for var, stat in requests:
+            expected = calculate_rse(df, var, stat_type=stat)
+            actual = batch[(var, stat)]
+            assert np.isclose(actual, expected, rtol=1e-10, atol=1e-12), (
+                f"mismatch for {(var, stat)}: batch={actual}, loop={expected}"
+            )
+
+    def test_batch_empty_requests(self):
+        df = _make_recs_df(values=[1, 2], base_weights=[1.0, 1.0])
+        assert calculate_rse_batch(df, []) == {}
+
+    def test_batch_zero_weight_returns_nan(self):
+        df = _make_recs_df(values=[10, 20], base_weights=[0.0, 0.0])
+        batch = calculate_rse_batch(df, [("VAR", "avg"), ("VAR", "percent")])
+        assert np.isnan(batch[("VAR", "avg")])
+        assert np.isnan(batch[("VAR", "percent")])
+
+
+class TestCalculateRSEDegenerateWeights:
+    def test_zero_base_weight_avg_returns_nan(self):
+        df = _make_recs_df(values=[10, 20], base_weights=[0.0, 0.0])
+        rse = calculate_rse(df, "VAR", stat_type="avg")
+        assert np.isnan(rse)
+
+    def test_zero_base_weight_percent_returns_nan(self):
+        df = _make_recs_df(values=[10, 20], base_weights=[0.0, 0.0])
+        rse = calculate_rse(df, "VAR", stat_type="percent")
+        assert np.isnan(rse)
+
+    def test_zero_replicate_weight_no_warning_and_finite(self):
+        """A single collapsed replicate must not produce a RuntimeWarning or NaN RSE."""
+        df = _make_recs_df(
+            values=[10, 20],
+            base_weights=[1.0, 1.0],
+            replicate_overrides={1: [0.0, 0.0]},
+        )
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", RuntimeWarning)
+            rse_avg = calculate_rse(df, "VAR", stat_type="avg")
+            rse_pct = calculate_rse(df, "VAR", stat_type="percent")
+        assert np.isfinite(rse_avg)
+        assert np.isfinite(rse_pct)

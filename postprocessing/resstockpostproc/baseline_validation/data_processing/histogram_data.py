@@ -7,6 +7,13 @@ from pathlib import Path
 
 import polars as pl
 
+from resstockpostproc.baseline_validation.resstock_raw import (
+    quantity_col_candidates as _quantity_col_candidates,
+    resolve_existing_char_column as _resolve_existing_char_column,
+    resolve_resstock_quantity_col as _resolve_resstock_quantity_col,
+    resstock_group_expr as _resstock_group_expr,
+    resstock_quantity_expr as _resstock_quantity_expr,
+)
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     CoverageType,
     DataKey,
@@ -18,7 +25,7 @@ from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow, DataSourceConfig
 from resstockpostproc.baseline_validation.io_managers import comparison_data_paths as s3_paths
 from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
-from resstockpostproc.shared_utils.db_column_names import DBSchema, get_db_enduse_colnames_map
+from resstockpostproc.shared_utils.db_column_names import DBSchema
 from resstockpostproc.shared_utils.histogram_utils import build_weighted_histogram_with_overflow
 from resstockpostproc.shared_utils.timing import timed
 
@@ -146,35 +153,6 @@ def _recs_group_expr(col: str) -> pl.Expr:
         return expr.alias(col)
     return pl.col(raw_col).replace_strict(mapping, default=None).cast(pl.String).alias(col)
 
-
-def _resstock_group_expr(col: str, available_cols: set[str]) -> pl.Expr:
-    """Build mapped ResStock expression for one grouping/filter column."""
-    if col not in RECS_CHARS_MAPPING:
-        raise ValueError(f"Unsupported ResStock grouping column for histogram: {col}")
-    spec = RECS_CHARS_MAPPING[col]["ResStock"]
-    raw_col = _resolve_existing_char_column(spec["column_name"], available_cols)
-    mapping = spec["mapping"]
-
-    if isinstance(mapping, PartialMap):
-        expr = pl.col(raw_col).cast(pl.String)
-        if mapping:
-            expr = expr.replace(mapping)
-        return expr.alias(col)
-    return pl.col(raw_col).replace_strict(mapping, default=None).cast(pl.String).alias(col)
-
-
-def _resolve_existing_char_column(col: str, available_cols: set[str]) -> str:
-    """Resolve characteristic column names across known naming variants."""
-    if col in available_cols:
-        return col
-    if col.startswith("in.") and col.removeprefix("in.") in available_cols:
-        return col.removeprefix("in.")
-    alt = f"build_existing_model.{col.removeprefix('in.')}"
-    if alt in available_cols:
-        return alt
-    raise ValueError(f"Missing required characteristic column '{col}' in raw histogram parquet")
-
-
 def _recs_quantity_expr(quantity: DataCol) -> pl.Expr:
     """Build RECS quantity expression in kWh for a DataCol."""
     if quantity not in RECS_ENDUSE_MAP:
@@ -184,81 +162,6 @@ def _recs_quantity_expr(quantity: DataCol) -> pl.Expr:
         exprs = [pl.col(item["column_name"]).cast(pl.Float64) * float(item["factor"]) for item in spec]
         return pl.sum_horizontal(exprs)
     return pl.col(spec["column_name"]).cast(pl.Float64) * float(spec["factor"])
-
-
-def _resstock_quantity_expr(
-    quantity: DataCol,
-    db_schema: DBSchema,
-    available_cols: set[str],
-) -> pl.Expr:
-    """Build ResStock quantity expression from mapped raw column(s).
-
-    Handles raw parquet schema variants by trying:
-    1) the configured schema map first,
-    2) then the alternate schema map(s),
-    while normalizing unit suffix variants (bare, .kwh, ..kwh, .c, ..c).
-    """
-    mapping_options: list[str | tuple[str, ...]] = []
-    primary = get_db_enduse_colnames_map(db_schema).get(quantity)
-    if primary is not None:
-        mapping_options.append(primary)
-
-    for schema_option in DBSchema:
-        if schema_option == db_schema:
-            continue
-        alt = get_db_enduse_colnames_map(schema_option).get(quantity)
-        if alt is not None and alt not in mapping_options:
-            mapping_options.append(alt)
-
-    if not mapping_options:
-        raise ValueError(f"Quantity {quantity} has no ResStock raw mapping for any known schema")
-
-    last_error: ValueError | None = None
-    for mapped in mapping_options:
-        raw_cols = [mapped] if isinstance(mapped, str) else list(mapped)
-        try:
-            resolved_cols = [_resolve_resstock_quantity_col(col, available_cols) for col in raw_cols]
-        except ValueError as exc:
-            last_error = exc
-            continue
-
-        exprs = [pl.col(col).cast(pl.Float64) for col in resolved_cols]
-        if len(exprs) == 1:
-            return exprs[0]
-        return pl.sum_horizontal(exprs)
-
-    assert last_error is not None
-    raise last_error
-
-
-def _resolve_resstock_quantity_col(col: str, available_cols: set[str]) -> str:
-    """Resolve an end-use column name against available raw parquet columns."""
-    candidates = _quantity_col_candidates(col)
-    for cand in candidates:
-        if cand in available_cols:
-            return cand
-    raise ValueError(f"Missing required quantity column '{col}' in raw histogram parquet")
-
-
-def _quantity_col_candidates(col: str) -> list[str]:
-    """Generate candidate raw-column variants for one mapped quantity column."""
-    base = col
-    for suffix in ("..kwh", ".kwh", "..c", ".c"):
-        if base.endswith(suffix):
-            base = base.removesuffix(suffix)
-            break
-
-    candidates = [
-        col,
-        base,
-        f"{base}.kwh",
-        f"{base}..kwh",
-        f"{base}.c",
-        f"{base}..c",
-    ]
-    # preserve order while de-duplicating
-    return list(dict.fromkeys(candidates))
-
 
 def _add_us_total_rows(df: pl.DataFrame, group_cols: list[str]) -> pl.DataFrame:
     """Add US Total pseudo-group rows when state is one of the grouping columns."""

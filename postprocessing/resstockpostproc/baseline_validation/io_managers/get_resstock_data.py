@@ -1,25 +1,34 @@
-import polars as pl
 import functools
-import pandas as pd
 from collections.abc import Sequence
+import numpy as np
 
+import pandas as pd
+import polars as pl
+
+import sqlalchemy as sa
+from buildstock_query import BuildStockQuery, MappedColumn
 
 from resstockpostproc.baseline_validation.io_managers.utils import apply_aggregation
-from .utils import add_us_total, add_missing_states
+from resstockpostproc.baseline_validation.resstock_raw import (
+    resolve_existing_char_column,
+    resstock_group_expr,
+    resstock_quantity_expr,
+)
+from .utils import add_missing_states
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow, DataSourceConfig
 from resstockpostproc.baseline_validation.schema.plot_spec import Resolution, DataKey
 from resstockpostproc.baseline_validation.schema.recs_chars_mapping import RECS_CHARS_MAPPING
 from resstockpostproc.shared_utils.db_column_names import get_db_enduse_colnames_map, get_db_characteristics_colnames
-from buildstock_query import BuildStockQuery
 from resstockpostproc.baseline_validation.schema.workflow_schema import DBSchema
 from resstockpostproc.baseline_validation.utils import get_buildstock_query
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
-from resstockpostproc.shared_utils.db_column_names import DataCol, DBCharCol
+from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.caching import cached
 from resstockpostproc.shared_utils.timing import timed
 from resstockpostproc.shared_utils.mapping import UtilityName2ID
-import sqlalchemy as sa
-from buildstock_query import MappedColumn
+
+
+_ANNUAL_QUANTILES = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
 
 
 @timed
@@ -273,6 +282,175 @@ def _get_timestamp_grouping_func(resolution: Resolution):
     return timestamp_grouping_func
 
 
+def _calculate_weighted_quantiles(data: np.ndarray, weights: np.ndarray, quantiles: list[float]) -> np.ndarray:
+    """Calculate weighted quantiles for raw annual parquet aggregation."""
+    sorted_indices = np.argsort(data)
+    sorted_data = data[sorted_indices]
+    sorted_weights = weights[sorted_indices]
+
+    cumsum_weights = np.cumsum(sorted_weights)
+    total_weight = cumsum_weights[-1]
+    cumsum_normalized = cumsum_weights / total_weight
+
+    result = np.zeros(len(quantiles))
+    for i, q in enumerate(quantiles):
+        if q == 0:
+            result[i] = sorted_data[0]
+        elif q == 1:
+            result[i] = sorted_data[-1]
+        else:
+            idx = np.searchsorted(cumsum_normalized, q)
+            if idx == 0:
+                result[i] = sorted_data[0]
+            elif idx >= len(sorted_data):
+                result[i] = sorted_data[-1]
+            else:
+                w0 = cumsum_normalized[idx - 1]
+                w1 = cumsum_normalized[idx]
+                v0 = sorted_data[idx - 1]
+                v1 = sorted_data[idx]
+                if w1 - w0 > 0:
+                    result[i] = v0 + (v1 - v0) * (q - w0) / (w1 - w0)
+                else:
+                    result[i] = v0
+
+    return result
+
+
+def _build_quantity_exprs_for_raw(
+    db_schema: DBSchema,
+    available_cols: set[str],
+) -> list[pl.Expr]:
+    exprs: list[pl.Expr] = []
+    for quantity, mapped in get_db_enduse_colnames_map(db_schema).items():
+        if mapped is None or quantity == DataCol.OUTDOOR_DRYBULB_TEMP:
+            continue
+        expr = resstock_quantity_expr(quantity, db_schema, available_cols).fill_null(0.0)
+        exprs.append(expr.alias(str(quantity)))
+    return exprs
+
+
+def _get_raw_annual_data(
+    data_source: DataSourceConfig,
+    group_cols: Sequence[str],
+    occupied_only: bool,
+) -> pl.DataFrame | None:
+    """Aggregate annual non-utility data directly from the downloaded raw parquet."""
+    if not group_cols or any(col == "eiaid" for col in group_cols):
+        return None
+
+    raw_path = workflow.get_resstock_histogram_raw_file(data_source.name)
+    lf = pl.scan_parquet(raw_path)
+    schema = lf.collect_schema()
+    available_cols = set(schema.names())
+    if "weight" not in available_cols:
+        return None
+
+    try:
+        group_exprs = [resstock_group_expr(col, available_cols) for col in group_cols]
+        quantity_exprs = _build_quantity_exprs_for_raw(data_source.db_schema, available_cols)
+        if occupied_only:
+            vacancy_col = resolve_existing_char_column(
+                get_db_characteristics_colnames(data_source.db_schema).VACANCY,
+                available_cols,
+            )
+            lf = lf.filter(pl.col(vacancy_col) == "Occupied")
+    except ValueError:
+        return None
+
+    if not quantity_exprs:
+        return None
+
+    raw_rows = lf.select(
+        *group_exprs,
+        pl.col("weight").cast(pl.Float64).alias("weight"),
+        *quantity_exprs,
+    ).collect()
+
+    annual_raw = _aggregate_raw_annual_rows(raw_rows, list(group_cols))
+    annual = _transform_columns(annual_raw, data_source.db_schema)
+    if list(group_cols) == ["state"]:
+        annual = add_missing_states(annual)
+    return annual
+
+
+def _aggregate_raw_annual_rows(rows: pl.DataFrame, group_cols: list[str]) -> pl.DataFrame:
+    """Aggregate weighted annual values, user counts, and quartiles from raw rows."""
+    quantity_cols = [col for col in rows.columns if col not in {*group_cols, "weight"}]
+    grouped = _aggregate_raw_annual_groups(rows, group_cols, quantity_cols)
+
+    secondary_cols = group_cols[1:]
+    us_total = _aggregate_raw_annual_groups(rows, secondary_cols, quantity_cols).with_columns(
+        pl.lit("US Total").alias(group_cols[0])
+    )
+    ordered_cols = group_cols + [col for col in grouped.columns if col not in group_cols]
+    us_total = us_total.select(ordered_cols)
+    return pl.concat([grouped, us_total], how="diagonal_relaxed")
+
+
+def _aggregate_raw_annual_groups(
+    rows: pl.DataFrame,
+    group_cols: list[str],
+    quantity_cols: list[str],
+) -> pl.DataFrame:
+    if rows.is_empty():
+        return _empty_raw_annual_frame(group_cols, quantity_cols)
+
+    if group_cols:
+        partitions = rows.partition_by(group_cols, as_dict=True, maintain_order=True)
+    else:
+        partitions = {(): rows}
+
+    result_rows = []
+    for key, group in partitions.items():
+        row = _partition_key_dict(group_cols, key)
+        weights = group["weight"].to_numpy()
+        row["units_count"] = float(weights.sum())
+
+        for quantity_col in quantity_cols:
+            values = group[quantity_col].to_numpy()
+            nonzero_mask = values > 0
+            nonzero_weights = weights[nonzero_mask]
+            nonzero_values = values[nonzero_mask]
+
+            row[quantity_col] = float(np.dot(values, weights))
+            row[f"{quantity_col}__nonzero_units_count"] = float(nonzero_weights.sum())
+            row[f"{quantity_col}__upgrade__quartiles"] = _weighted_quantiles_or_zeros(values, weights)
+            row[f"{quantity_col}__upgrade__nonzero_quartiles"] = _weighted_quantiles_or_zeros(
+                nonzero_values,
+                nonzero_weights,
+            )
+
+        result_rows.append(row)
+
+    return pl.DataFrame(result_rows)
+
+
+def _partition_key_dict(group_cols: list[str], key: object) -> dict[str, object]:
+    if not group_cols:
+        return {}
+    if not isinstance(key, tuple):
+        key = (key,)
+    return dict(zip(group_cols, key, strict=True))
+
+
+def _weighted_quantiles_or_zeros(values: np.ndarray, weights: np.ndarray) -> list[float]:
+    if len(values) == 0 or weights.sum() <= 0:
+        return [0.0] * len(_ANNUAL_QUANTILES)
+    return _calculate_weighted_quantiles(values, weights, _ANNUAL_QUANTILES).tolist()
+
+
+def _empty_raw_annual_frame(group_cols: list[str], quantity_cols: list[str]) -> pl.DataFrame:
+    schema: dict[str, pl.DataType] = {col: pl.String for col in group_cols}
+    schema["units_count"] = pl.Float64
+    for quantity_col in quantity_cols:
+        schema[quantity_col] = pl.Float64
+        schema[f"{quantity_col}__nonzero_units_count"] = pl.Float64
+        schema[f"{quantity_col}__upgrade__quartiles"] = pl.List(pl.Float64)
+        schema[f"{quantity_col}__upgrade__nonzero_quartiles"] = pl.List(pl.Float64)
+    return pl.DataFrame(schema=schema)
+
+
 @timed
 @cached(cache_file="resstock_annual_data_cache")
 def get_annual_all(
@@ -311,6 +489,9 @@ def _get_annual_two_char_cached(
     occupied_only: bool,
 ) -> pl.DataFrame:
     """Cached 2-column annual query. Multiple filter_values share this cache."""
+    raw_df = _get_raw_annual_data(data_source, (by, filter_char), occupied_only)
+    if raw_df is not None:
+        return raw_df
     bsq = get_buildstock_query(
         workgroup=workflow.workgroup,
         config=data_source,
@@ -327,6 +508,9 @@ def get_annual(
     occupied_only: bool = False,
 ) -> pl.DataFrame:
     """Get annual retail sales aggregated by geography and scaled to EIA customer counts."""
+    raw_df = _get_raw_annual_data(data_source, (by,), occupied_only)
+    if raw_df is not None:
+        return raw_df
     bsq = get_buildstock_query(
         workgroup=workflow.workgroup,
         config=data_source,
