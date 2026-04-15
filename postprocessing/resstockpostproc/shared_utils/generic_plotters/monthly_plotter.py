@@ -17,6 +17,35 @@ MONTH_NAME_TO_INDEX.update({abbr.lower(): idx for idx, abbr in enumerate(calenda
 MONTH_INDEX_TO_LABEL = {idx: calendar.month_abbr[idx] for idx in range(1, 13)}
 
 
+def _format_compact_number(value: float | int | None) -> str:
+    if value is None:
+        return ""
+
+    numeric = float(value)
+    abs_numeric = abs(numeric)
+    for threshold, suffix in (
+        (1_000_000_000_000, "T"),
+        (1_000_000_000, "B"),
+        (1_000_000, "M"),
+        (1_000, "K"),
+    ):
+        if abs_numeric >= threshold:
+            return f"{numeric / threshold:,.2f}{suffix}"
+    return f"{numeric:,.2f}"
+
+
+def _format_hover_value(value: float | int | None, quantity_title: str) -> str:
+    base = _format_compact_number(value)
+    quantity = quantity_title.strip()
+    if not base:
+        return ""
+    if not quantity or quantity == "count":
+        return base
+    if "%" in quantity:
+        return f"{base}%"
+    return f"{base} {quantity}"
+
+
 @timed
 def create_ts_plot(
     *,
@@ -39,6 +68,7 @@ def create_ts_plot(
     x_range: tuple[float, float] | None = None,
     fill_lower_bound: bool = False,
     custom_range: tuple[float, float] | None = None,
+    compact_hover_values: bool = False,
 ) -> go.Figure:
     categories = data[first_category_column].unique(maintain_order=True).to_list()
     category_colors = theme.build_color_palette(categories)
@@ -96,6 +126,13 @@ def create_ts_plot(
             )
             fill_lower_bound = False  # Only ever fill the lower bound once for first category
 
+        customdata = [(_format_hover_value(v, quantity_title),) for v in y_values] if compact_hover_values else None
+        hovertemplate = (
+            "%{x}<br>" + f"{category}: " + "%{customdata[0]}<extra></extra>"
+            if compact_hover_values
+            else "%{x}<br>" + f"{category}: " + "%{y:,.2f}" + (f" {quantity_title}" if quantity_title else "") + "<extra></extra>"
+        )
+
         fig.add_scatter(
             x=x_values,
             y=y_values,
@@ -104,7 +141,8 @@ def create_ts_plot(
             legendgroup=category,
             marker={"color": color, "size": 4},
             line={"color": color, "width": 2},
-            hovertemplate="%{x}<br>" + f"{category}: " + "%{y:,.0f} " + quantity_title + "<extra></extra>",
+            customdata=customdata,
+            hovertemplate=hovertemplate,
             showlegend=show_legends,
             row=row,
             col=col,

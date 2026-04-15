@@ -11,6 +11,8 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     ComparisonDataset,
     ViewType,
     Layout,
+    format_group_by,
+    ALL_ENDUSES_DISPLAY,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
@@ -220,3 +222,16 @@ class TestDisplayVizLabels:
 
         assert auto_title != hist_title
         assert hist_title.endswith("(histogram layout)")
+
+
+class TestDisplayLabels:
+    def test_all_quantity_uses_clearer_display_label(self):
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            quantity=DataCol.ALL,
+            aggregation_type=Metric.average,
+        )
+        assert spec.display_quantity == ALL_ENDUSES_DISPLAY
+
+    def test_climate_zone_uses_full_group_label(self):
+        assert format_group_by("building_america_climate_zone") == "Building America Climate Zone"

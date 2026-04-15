@@ -35,6 +35,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     CoverageType,
     Metric,
     format_group_by,
+    ALL_ENDUSES_DISPLAY,
 )
 from resstockpostproc.baseline_validation.schema.plot_definitions import (
     PlotTemplate,
@@ -153,9 +154,9 @@ OUTPUT_COLUMNS = [
 
 
 _GROUPED_VIEW_SUFFIX = " (grouped view)"
-_GROUPED_DIFF_VIEW_SUFFIX = " (grouped symmetric percent difference view)"
+_GROUPED_DIFF_VIEW_SUFFIX = " (grouped difference view)"
 _STACKED_VIEW_SUFFIX = " (stacked view)"
-_STACKED_DIFF_VIEW_SUFFIX = " (stacked symmetric percent difference view)"
+_STACKED_DIFF_VIEW_SUFFIX = " (stacked difference view)"
 
 
 def _all_enduses_viz_label(plot_spec: PlotSpec, stacked: bool) -> str:
@@ -168,8 +169,8 @@ def _stacked_title_from_grouped(grouped_title: str, view: ViewType) -> str:
     if view == ViewType.diff_view:
         if grouped_title.endswith(_GROUPED_DIFF_VIEW_SUFFIX):
             return grouped_title.removesuffix(_GROUPED_DIFF_VIEW_SUFFIX) + _STACKED_DIFF_VIEW_SUFFIX
-        if grouped_title.endswith(" (symmetric percent difference view)"):
-            return grouped_title.removesuffix(" (symmetric percent difference view)") + _STACKED_DIFF_VIEW_SUFFIX
+        if grouped_title.endswith(" (difference view)"):
+            return grouped_title.removesuffix(" (difference view)") + _STACKED_DIFF_VIEW_SUFFIX
         return grouped_title + _STACKED_DIFF_VIEW_SUFFIX
     if grouped_title.endswith(_GROUPED_VIEW_SUFFIX):
         return grouped_title.removesuffix(_GROUPED_VIEW_SUFFIX) + _STACKED_VIEW_SUFFIX
@@ -606,12 +607,13 @@ def get_plotting_function(comparison_dataset):
 
 @timed
 def _compute_discrepancy(data, plot_spec) -> dict[str, float]:
-    """Compute sMAPE (%) for each ResStock source.
+    """Compute MAPE (%) for each ResStock source.
 
-    sMAPE = (2 / n) * Σ(|ResStock - Ref| / (|Ref| + |ResStock|)) * 100
+    MAPE = mean(|ResStock - Ref| / |Ref|) × 100
 
-    Returns a dict keyed by formatted source label (e.g. "ResStock 2025"), with
-    per-source sMAPE (%) values. Empty dict when metrics cannot be computed.
+    Rows with zero reference values are excluded. Returns a dict keyed by
+    formatted source label (e.g. "ResStock 2025"), with per-source MAPE (%)
+    values. Empty dict when metrics cannot be computed.
     """
     if plot_spec.quantity == DataCol.ALL:
         return {}
@@ -670,18 +672,13 @@ def _compute_discrepancy(data, plot_spec) -> dict[str, float]:
         if len(paired) == 0:
             continue
 
-        term_df = paired.with_columns(
-            (
-                (pl.col("rs_val") - pl.col("ref_val")).abs()
-                / (pl.col("rs_val").abs() + pl.col("ref_val").abs())
-            ).alias("smape_term")
-        ).filter((pl.col("rs_val").abs() + pl.col("ref_val").abs()) > 0)
-
+        term_df = paired.filter(pl.col("ref_val").abs() > 0).with_columns(
+            ((pl.col("rs_val") - pl.col("ref_val")).abs() / pl.col("ref_val").abs()).alias("mape_term")
+        )
         if len(term_df) == 0:
             continue
 
-        smape = float(2.0 * term_df["smape_term"].mean() * 100.0)
-        metrics[_format_source_label(rs_source)] = smape
+        metrics[_format_source_label(rs_source)] = float(term_df["mape_term"].mean() * 100.0)
 
     return metrics
 
@@ -1154,7 +1151,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
                 "Comparison Dataset": ds,
                 # Keep stacked synthetic rows under the same Quantity facet so both
                 # regular and stacked variants appear together in the explorer.
-                "Quantity": "All Enduses",
+                "Quantity": ALL_ENDUSES_DISPLAY,
                 "Metric": metric,
                 "Coverage": coverage,
                 "Filter 1": f1,

@@ -55,13 +55,14 @@ notes:
       confidence interval based on RECS relative standard error (RSE)
       estimates.
 
-  - quantity: Number of dwelling units
+  - comparison_dataset: recs
+    quantity: Number of dwelling units
     context: plot
     note: >
       ResStock dwelling unit counts represent the number of dwelling units
       captured through the combination of models and sampling weights.
-      Number of models (available on hover) shows the actual number of
-      building models used for simulation.
+      On hover, the RECS reference bar shows number of samples and the
+      ResStock bar shows number of models.
 
   - comparison_dataset: eia
     quantity: Natural Gas Total

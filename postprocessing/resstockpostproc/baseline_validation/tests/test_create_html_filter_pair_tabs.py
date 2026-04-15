@@ -97,3 +97,37 @@ def test_filter_pair_swapped_lookup_fallback_present(tmp_path):
     assert "function keyFromFilterSelectionSwappedPair()" in html
     assert "if (!info && FILTER_COLS.includes(FILTER1_COL) && FILTER_COLS.includes(FILTER2_COL)) {" in html
     assert "const swappedKey = keyFromFilterSelectionSwappedPair();" in html
+
+
+def test_normalizes_display_labels_in_index_rows(tmp_path):
+    headers = [
+        "Index",
+        "Comparison Dataset",
+        "Quantity",
+        "Metric",
+        "Coverage",
+        "Filter 1",
+        "Filter 2",
+        "Group By",
+        "Comparison Plot",
+        "Data",
+    ]
+    rows = [{
+        "Index": "1",
+        "Comparison Dataset": "RECS 2020",
+        "Quantity": "All Enduses",
+        "Metric": "Average Annual Consumption",
+        "Coverage": "All Units",
+        "Filter 1": "Climate Zone: Mixed-Humid",
+        "Filter 2": "",
+        "Group By": "Climate Zone",
+        "Comparison Plot": "bar plot||recs plots (html)/example.html",
+        "Data": "",
+    }]
+
+    html_path = tmp_path / "comparisons_index.html"
+    create_html_from_rows(rows, headers, html_path)
+    html = html_path.read_text(encoding="utf-8")
+
+    assert "All Fuels and Enduses" in html
+    assert "Building America Climate Zone" in html

@@ -133,6 +133,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
                 x_tick_text=ts_xtick_text,
                 x_range=x_range,
                 fill_lower_bound=True,
+                compact_hover_values=True,
             )
         else:
             fig = create_bar_plot(
@@ -144,6 +145,8 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
                 orientation="v",
                 title_text=title,
                 show_legends=True,
+                count_label=None,
+                compact_hover_values=True,
             )
         height = 1080 * 0.4
         width = 1920 * 0.425
@@ -164,6 +167,8 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
             x_axis_title_bottom_row=x_axis_title_bottom_row,
             x_unit=x_unit,
             title_text=title,
+            count_label=None,
+            compact_hover_values=True,
         )
         if plot_spec.resolution == Resolution.hour_of_day_matrix:
             height = 1800

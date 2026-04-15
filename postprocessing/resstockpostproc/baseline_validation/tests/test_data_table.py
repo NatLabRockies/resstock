@@ -207,6 +207,7 @@ class TestDropAllNullColumns:
         html = output_path.read_text(encoding="utf-8")
         # The EIA 2018 model_count column should be dropped (all null for EIA)
         assert "EIA 2018: Model Count" not in html
+        assert "Number of Models" in html
 
 
 class TestPivotBySource:
@@ -259,7 +260,7 @@ class TestGenerateDataTableHtml:
             plot_spec=spec,
             output_path=output_path,
             plot_rel_path="../plots/test_plot.html",
-            metrics_by_source={"ResStock 2025": 11.7},
+            metrics_by_source={"ResStock 2025": 17.5},
         )
 
         html = output_path.read_text(encoding="utf-8")
@@ -267,9 +268,11 @@ class TestGenerateDataTableHtml:
         # Title present
         assert "Electricity" in html or "electricity" in html
         # Metrics present
-        assert "11.7%" in html
-        assert "sMAPE" in html
-        # Source label appears in the per-source banner
+        assert "17.5%" in html
+        assert "MAPE" in html
+        assert "CV(RMSE)" not in html
+        assert "NMBE" not in html
+        # Source label appears in the per-source summary chips
         assert "ResStock 2025" in html
         # Navigation links
         assert "View Plot" not in html
@@ -279,12 +282,14 @@ class TestGenerateDataTableHtml:
         assert "const COLUMNS = " in html
         # Sort functionality
         assert "sortBy" in html
-        # Per-source absolute difference column (e.g., "ResStock 2025 Absolute Difference (kWh)")
-        assert "Absolute Difference (kWh)" in html
+        # Per-source difference column (e.g., "ResStock 2025 Difference (kWh)")
+        assert "Difference (kWh)" in html
         assert "abs_diff" in html
         # Formula breakdown section
         assert "renderMetricsFormula" in html
         assert "RS_SOURCES" in html
+        assert "Rows with zero reference are excluded from MAPE." in html
+        assert '<table class="metrics-banner">' not in html
 
     def test_empty_data(self, tmp_path):
         spec = _make_spec()
@@ -333,7 +338,7 @@ class TestGenerateDataTableHtml:
             data=data,
             plot_spec=spec,
             output_path=output_path,
-            metrics_by_source={"ResStock 2025": 11.7},
+            metrics_by_source={"ResStock 2025": 17.5},
             include_discrepancy_metrics=False,
         )
 
@@ -425,8 +430,8 @@ class TestDistributionTable:
         # No populated banner (the CSS class definition is always present, but no
         # rendered <table class="metrics-banner"> wrapper should appear)
         assert '<table class="metrics-banner">' not in html
-        # No per-source absolute-difference columns should be generated
-        assert "Absolute Difference (kWh)" not in html
+        # No per-source difference columns should be generated
+        assert "Difference (kWh)" not in html
         # JS RS_SOURCES list is empty (no per-source formula derivations)
         assert "const RS_SOURCES = []" in html
 
@@ -455,6 +460,22 @@ class TestDistributionTable:
         # Median values from the nonzero quartile list should appear (95.0 and 100.0)
         assert "95" in html
         assert "100" in html
+
+    def test_recs_model_count_uses_source_specific_labels(self, tmp_path):
+        data = pl.DataFrame({
+            "state": ["CA", "CA"],
+            "source": ["recs_2020", "resstock_2025"],
+            "electricity_total_value": [100.0, 110.0],
+            "electricity_total_value_percent_difference": [None, 9.5],
+            "model_count": [240.0, 500.0],
+        })
+        spec = _make_spec(comparison_dataset=ComparisonDataset.recs, aggregation_type=Metric.average)
+        output_path = tmp_path / "recs_samples.html"
+        generate_data_table_html(data=data, plot_spec=spec, output_path=output_path)
+
+        html = output_path.read_text(encoding="utf-8")
+        assert "Number of Samples" in html
+        assert "Number of Models" in html
 
 
 class TestAllEnduseTable:

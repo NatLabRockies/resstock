@@ -3,10 +3,83 @@ from .range_utils import compute_axis_range
 from resstockpostproc.shared_utils.timing import timed
 import plotly.graph_objects as go
 import polars as pl
+import math
 
 
 from typing import Literal
 from collections.abc import Callable, Sequence
+
+
+def _hover_value_label(quantity_title: str) -> str:
+    label = quantity_title.strip()
+    return label if label else "Value"
+
+
+def _format_compact_number(value: float | int | None) -> str:
+    if value is None:
+        return ""
+
+    numeric = float(value)
+    abs_numeric = abs(numeric)
+    for threshold, suffix in (
+        (1_000_000_000_000, "T"),
+        (1_000_000_000, "B"),
+        (1_000_000, "M"),
+        (1_000, "K"),
+    ):
+        if abs_numeric >= threshold:
+            return f"{numeric / threshold:,.2f}{suffix}"
+    return f"{numeric:,.2f}"
+
+
+def _format_hover_value(value: float | int | None, quantity_title: str) -> str:
+    base = _format_compact_number(value)
+    quantity = quantity_title.strip()
+    if not base:
+        return ""
+    if not quantity or quantity == "count":
+        return base
+    if "%" in quantity:
+        return f"{base}%"
+    return f"{base} {quantity}"
+
+
+def _format_count_value(value: float | int | None) -> str:
+    if value is None:
+        return ""
+    rounded = int(math.floor(float(value) + 0.5))
+    return f"{rounded:,}"
+
+
+def _build_hovertemplate(
+    *,
+    orientation: Literal["h", "v"],
+    quantity_title: str,
+    include_trace_name: bool = False,
+    include_count: bool = False,
+    use_custom_value: bool = False,
+) -> str:
+    parts: list[str] = []
+    if include_trace_name:
+        parts.append("%{fullData.name}")
+
+    if use_custom_value:
+        if orientation == "h":
+            parts.extend(["%{y}", "Value: %{customdata[0]}"])
+        else:
+            parts.extend(["%{x}", "Value: %{customdata[0]}"])
+    else:
+        value_label = _hover_value_label(quantity_title)
+        if orientation == "h":
+            parts.extend(["%{y}", f"{value_label}: %{{x:,.2f}}"])
+        else:
+            parts.extend(["%{x}", f"{value_label}: %{{y:,.2f}}"])
+
+    if include_count:
+        count_idx = 1 if use_custom_value else 0
+        parts.append(f"%{{customdata[{count_idx}]}}")
+
+    return "<br>".join(parts) + "<extra></extra>"
 
 
 def _calculate_error_bars(
@@ -57,6 +130,9 @@ def create_bar_plot(
     show_ticks: bool = True,
     custom_range: tuple[float, float] | None = None,
     category_font_size: int | None = None,
+    count_label: str | None = "Number of models",
+    count_label_resolver: Callable[[str], str | None] | None = None,
+    compact_hover_values: bool = False,
 ) -> go.Figure:
     """
     Creates a simple, grouped or stacked bar plot depending on the inputs.
@@ -111,6 +187,12 @@ def create_bar_plot(
                 rse_col = rse_cols[q_idx] if len(rse_cols) > q_idx else rse_cols[0]
                 rse_data = list(reversed(data[rse_col].fill_null(0)))
                 error_x, error_y = _calculate_error_bars(orientation, x_data, y_data, rse_data)
+
+            customdata = None
+            if compact_hover_values:
+                value_data = x_data if orientation == "h" else y_data
+                value_strings = [_format_hover_value(v, quantity_title) for v in value_data]
+                customdata = [(value_str,) for value_str in value_strings]
             
             traces.append(
                 go.Bar(
@@ -122,7 +204,13 @@ def create_bar_plot(
                     marker_pattern_shape=marker_pattern_shape,
                     marker_line_width=5,
                     showlegend=is_stacked and show_legends,
-                    hovertemplate="%{x}<br>%{y}" if orientation == "h" else "%{y}<br>%{x}",
+                    hovertemplate=_build_hovertemplate(
+                        orientation=orientation,
+                        quantity_title=quantity_title,
+                        include_trace_name=len(quantity_cols) > 1,
+                        use_custom_value=compact_hover_values,
+                    ),
+                    customdata=customdata,
                     error_x=error_x,
                     error_y=error_y,
                 )
@@ -144,11 +232,30 @@ def create_bar_plot(
                 if orientation == "h":
                     xvals = list(reversed(group_data[qcol]))
                     yvals = list(reversed(group_data[second_category_column]))
-                    model_counts = list(reversed(group_data["model_count"]))
                 else:
                     xvals = group_data[second_category_column].to_list()
                     yvals = group_data[qcol].to_list()
-                    model_counts = group_data["model_count"].to_list()
+
+                resolved_count_label = (
+                    count_label_resolver(group_name)
+                    if count_label_resolver is not None
+                    else count_label
+                )
+                count_strings = None
+                if resolved_count_label and "model_count" in group_data.columns:
+                    model_counts = (
+                        list(reversed(group_data["model_count"]))
+                        if orientation == "h"
+                        else group_data["model_count"].to_list()
+                    )
+                    count_strings = [
+                        f"{resolved_count_label}: {_format_count_value(mc)}" if mc is not None else ""
+                        for mc in model_counts
+                    ]
+                value_strings = None
+                if compact_hover_values:
+                    value_data = xvals if orientation == "h" else yvals
+                    value_strings = [_format_hover_value(v, quantity_title) for v in value_data]
 
                 text_vals = None
                 if is_stacked and q_idx == 0:
@@ -164,6 +271,14 @@ def create_bar_plot(
                     else:
                         rse_data = group_data[rse_col].fill_null(0).to_list()
                     error_x, error_y = _calculate_error_bars(orientation, xvals, yvals, rse_data)
+
+                customdata = None
+                if value_strings is not None and count_strings is not None:
+                    customdata = list(zip(value_strings, count_strings))
+                elif value_strings is not None:
+                    customdata = [(value_str,) for value_str in value_strings]
+                elif count_strings is not None:
+                    customdata = [(count_str,) for count_str in count_strings]
                 
                 traces.append(
                     go.Bar(
@@ -181,9 +296,14 @@ def create_bar_plot(
                         insidetextanchor="middle",
                         cliponaxis=False,
                         showlegend=((idx == 0) or (not is_stacked)) and show_legends,
-                        hovertext=[f"Number of models: {mc}" for mc in model_counts],
-                        hoverinfo="all",
-                        customdata=model_counts,
+                        hovertemplate=_build_hovertemplate(
+                            orientation=orientation,
+                            quantity_title=quantity_title,
+                            include_trace_name=True,
+                            include_count=count_strings is not None,
+                            use_custom_value=value_strings is not None,
+                        ),
+                        customdata=customdata,
                         error_x=error_x,
                         error_y=error_y,
                     )

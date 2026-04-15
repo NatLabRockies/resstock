@@ -144,6 +144,9 @@ def plot_tilemap(
     exclude_from_sidebar: list[str] | None = None,
     exclude_sources: list[str] | None = None,
     separate_us_total_scale: bool = True,
+    count_label: str | None = "Number of models",
+    count_label_resolver: Callable[[str], str | None] | None = None,
+    compact_hover_values: bool = False,
 ) -> go.Figure:
     """
     Generic annual sales plotting function with geographic layout and size-proportional subplots.
@@ -249,6 +252,9 @@ def plot_tilemap(
                 col=col,
                 custom_range=custom_range if not (entity == "US Total" and separate_us_total_scale) else None,
                 show_ticks=show_yticks,
+                count_label=count_label,
+                count_label_resolver=count_label_resolver,
+                compact_hover_values=compact_hover_values,
             )
         else:
             create_ts_plot(
@@ -271,6 +277,7 @@ def plot_tilemap(
                 x_range=x_range,
                 x_unit=x_unit,
                 fill_lower_bound=True,
+                compact_hover_values=compact_hover_values,
             )
 
         if entity == "US Total":
@@ -300,6 +307,9 @@ def plot_tilemap(
             row=1,
             col=ncols,
             category_font_size=11,
+            count_label=count_label,
+            count_label_resolver=count_label_resolver,
+            compact_hover_values=compact_hover_values,
         )
 
     # Remove grid and axis border lines from all subplots

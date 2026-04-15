@@ -21,6 +21,8 @@ GEOGRAPHIC_DIMENSIONS = {"state", "census_division_recs", "building_america_clim
 """Dimensions that represent geographic groupings. Filtering by one geographic dimension
 while grouping by another produces degenerate plots (e.g., one state → one census division)."""
 
+ALL_ENDUSES_DISPLAY = "All Fuels and Enduses"
+
 
 class NoExtraModel(BaseModel):
     """Base model that forbids extra fields and is frozen."""
@@ -130,7 +132,10 @@ def format_group_by(group_by: str) -> str:
     Examples: "census_division_recs" → "Census Division", "state" → "State"
     """
     try:
-        return DataCol(group_by).name.replace("_", " ").title()
+        data_col = DataCol(group_by)
+        if data_col == DataCol.CLIMATE_ZONE:
+            return "Building America Climate Zone"
+        return data_col.name.replace("_", " ").title()
     except ValueError:
         return group_by.replace("_", " ").title()
 
@@ -413,12 +418,12 @@ class PlotSpec(NoExtraModel):
         """Quantity facet label for the HTML index.
 
         Examples: "Electricity", "Space Heating Natural Gas",
-                  "Number of dwelling units", "All Enduses"
+                  "Number of dwelling units", "All Fuels and Enduses"
         """
         if self.quantity == DataCol.UNITS_COUNT:
             return "Number of dwelling units"
         if self.quantity == DataCol.ALL:
-            return "All Enduses"
+            return ALL_ENDUSES_DISPLAY
         return self.quantity.label
 
     @property
@@ -478,6 +483,24 @@ class PlotSpec(NoExtraModel):
         if not self.group_by:
             return ""
         return format_group_by(self.group_by)
+
+    @property
+    def model_count_display_label(self) -> str | None:
+        """Human-readable label for model_count displays, or None to hide it."""
+        if self.comparison_dataset == ComparisonDataset.recs:
+            return "Number of Samples"
+        return None
+
+    def model_count_display_label_for_source(self, source_label: str) -> str | None:
+        """Resolve the hover/table label for model_count based on the specific source."""
+        source = (source_label or "").strip().lower()
+        if "resstock" in source:
+            if self.comparison_dataset == ComparisonDataset.lrd:
+                return None
+            return "Number of Models"
+        if self.comparison_dataset == ComparisonDataset.recs and "recs" in source:
+            return "Number of Samples"
+        return None
 
     def viz_label(self, layout: str | None = None) -> str:
         """Normalized visualization label for explorer/index tabs.
@@ -572,9 +595,9 @@ class PlotSpec(NoExtraModel):
         if self.quantity == DataCol.ALL and self.view == ViewType.value_view:
             title = title + " (grouped view)"
         elif self.quantity == DataCol.ALL and self.view == ViewType.diff_view:
-            title = title + " (grouped symmetric percent difference view)"
+            title = title + " (grouped difference view)"
         elif self.view == ViewType.diff_view:
-            title = title + " (symmetric percent difference view)"
+            title = title + " (difference view)"
         # Focus entries go at the top of the path hierarchy.
         # "US Total" is a sibling of "By State", not a child.
         filter_dir = Path()

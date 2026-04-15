@@ -246,10 +246,10 @@ def _resolve_timeseries_column(plot_spec: PlotSpec) -> str | None:
 def _resolve_diff_view_title(plot_spec: PlotSpec, comparison_label: str) -> str:
     """Build the figure title for diff_view plots.
 
-    Reuses the value_view title and wraps it with symmetric percent difference framing.
+    Reuses the value_view title and wraps it with percent difference framing.
     """
     base = plot_spec.display_title
-    return f"Symmetric Percent Difference on {base}<br> Compared to {comparison_label}"
+    return f"Percent Difference on {base}<br> Compared to {comparison_label}"
 
 
 def _resolve_quantity_title(plot_spec: PlotSpec) -> str:
@@ -287,11 +287,11 @@ def _resolve_quantity_title(plot_spec: PlotSpec) -> str:
 def _resolve_sidebar_title(plot_spec: PlotSpec, comparison_label: str) -> str:
     """Resolve the sidebar subplot title.
 
-    Returns a full description like 'Symmetric percent difference compared to RECS 2020'.
+    Returns a full description like 'Percent difference compared to RECS 2020'.
     """
     if plot_spec.is_distribution_metric:
         return ""
-    return f"Symmetric Percent Difference<br>Compared to {comparison_label}"
+    return f"Percent Difference<br>Compared to {comparison_label}"
 
 
 def _resolve_tick_config(plot_spec: PlotSpec, data: pl.DataFrame) -> tuple[tuple | None, tuple | None]:

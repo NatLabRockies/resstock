@@ -221,33 +221,13 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
 def _add_percent_difference(
     df: pl.DataFrame, join_columns: list[str], value_columns: list[str], ref_column: str, ref_cols: list[str]
 ) -> pl.DataFrame:
-    """Add signed symmetric percent difference columns against the reference source.
-
-    For each value column, computes:
-        200 * (x - ref) / (|x| + |ref|)
-
-    This is the signed symmetric percentage difference (bounded to [-200, 200]
-    when both values are finite and denominator > 0). If both x and ref are 0,
-    the result is set to 0. Reference rows themselves keep ``None``.
-    """
+    """Add signed percent difference columns against the reference source."""
     ref_val = ref_cols[0]
     ref_df = df.filter(pl.col(ref_column) == ref_val).select(join_columns + value_columns)
     full_df = df.join(ref_df, on=join_columns, suffix="_ref")
     result = full_df.with_columns(
         pl.when(~pl.col(ref_column).is_in(ref_cols[:1]))
-        .then(
-            pl.when(pl.col(f"{value_column}").is_not_null() & pl.col(f"{value_column}_ref").is_not_null())
-            .then(
-                pl.when((pl.col(f"{value_column}").abs() + pl.col(f"{value_column}_ref").abs()) > 0)
-                .then(
-                    200
-                    * (pl.col(f"{value_column}") - pl.col(f"{value_column}_ref"))
-                    / (pl.col(f"{value_column}").abs() + pl.col(f"{value_column}_ref").abs())
-                )
-                .otherwise(0.0)
-            )
-            .otherwise(None)
-        )
+        .then((pl.col(f"{value_column}") - pl.col(f"{value_column}_ref")) / pl.col(f"{value_column}_ref") * 100)
         .otherwise(None)
         .alias(f"{value_column}_percent_difference")
         for value_column in value_columns
