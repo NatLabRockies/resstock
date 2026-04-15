@@ -19,10 +19,14 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 from tqdm import tqdm
-import yaml
 
 import polars as pl
 
+from resstockpostproc.baseline_validation.footnotes import (
+    dedupe_note_groups,
+    get_plot_notes,
+    get_table_notes,
+)
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.plotters import lrd_plotter, recs_plotter
 from resstockpostproc.baseline_validation.schema.plot_spec import (
@@ -71,72 +75,6 @@ class _TqdmLoggingHandler(logging.Handler):
 
     def emit(self, record):
         tqdm.write(self.format(record))
-
-SCHEMA_DIR = Path(__file__).parent / "schema"
-FOOTNOTES_YAML = SCHEMA_DIR / "plot_footnotes.yaml"
-
-
-def _load_footnote_rules() -> list[dict]:
-    """Load cascading footnote rules from plot_footnotes.yaml."""
-    if not FOOTNOTES_YAML.exists():
-        return []
-    with open(FOOTNOTES_YAML) as f:
-        data = yaml.safe_load(f) or {}
-    return data.get("notes", [])
-
-
-_FOOTNOTE_MATCH_KEYS = {
-    "comparison_dataset": "Comparison Dataset",
-    "quantity": "Quantity",
-    "metric": "Metric",
-}
-
-
-def _resolve_footnotes(footnote_rules: list[dict], row: dict, context: str | None = None) -> list[str]:
-    """Collect all notes whose attribute matchers match the given row.
-
-    Each rule specifies attribute matchers (comparison_dataset, quantity, metric).
-    A rule matches when ALL its specified attributes equal the row values.
-    Unspecified attributes act as wildcards.
-
-    Rules may also specify an ``exclude`` map whose keys are the same
-    matcher names.  If any excluded value matches the row, the rule is
-    skipped.  Values can be a single string or a list of strings.
-    """
-    matched = []
-    for rule in footnote_rules:
-        rule_context = rule.get("context")
-        if context and rule_context and rule_context != context:
-            continue
-
-        # Positive matchers — all specified keys must match.
-        # Values can be a single string or a list of strings (any-of).
-        def _matches(rule_val, row_val: str) -> bool:
-            if isinstance(rule_val, list):
-                return row_val in [str(v) for v in rule_val]
-            return row_val == str(rule_val)
-
-        if not all(
-            _matches(rule[yaml_key], row.get(tsv_col, "").strip())
-            for yaml_key, tsv_col in _FOOTNOTE_MATCH_KEYS.items()
-            if yaml_key in rule
-        ):
-            continue
-
-        # Exclusion matchers — skip if any excluded value matches
-        excludes = rule.get("exclude", {})
-        if any(
-            row.get(tsv_col, "").strip() in (
-                [str(excludes[yaml_key])] if isinstance(excludes[yaml_key], str)
-                else [str(v) for v in excludes[yaml_key]]
-            )
-            for yaml_key, tsv_col in _FOOTNOTE_MATCH_KEYS.items()
-            if yaml_key in excludes
-        ):
-            continue
-
-        matched.append(rule["note"].strip())
-    return matched
 
 
 OUTPUT_COLUMNS = [
@@ -375,13 +313,16 @@ def _apply_lrd_sidebar_semantics(
         row["Group By"] = "Month-Day"
 
 
-def _footnote_row(main_spec: PlotSpec) -> dict[str, str]:
-    """Build a dict for footnote matching from a PlotSpec."""
-    return {
-        "Comparison Dataset": main_spec.comparison_dataset.value,
-        "Quantity": main_spec.display_quantity,
-        "Metric": main_spec.display_metric,
-    }
+def _collect_stacked_notes(
+    qty_entries: list[tuple[str, list[tuple[PlotSpec, str]]]],
+    note_getter,
+) -> list[str] | None:
+    """Collect deduplicated notes across stacked quantity entries."""
+    return dedupe_note_groups(
+        note_getter(entries[0][0])
+        for _, entries in qty_entries
+        if entries
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -866,7 +807,6 @@ def generate_plots(index=None, test_only=False, parallel=True):
 
     logger.info(f"Expanding {len(templates)} plot templates...")
 
-    footnote_rules = _load_footnote_rules()
     source_labels = workflow.data_source_labels
 
     output_formats = [FileType(fmt.value) for fmt in workflow.plots.output_formats]
@@ -969,9 +909,8 @@ def generate_plots(index=None, test_only=False, parallel=True):
         if not focused_entries:
             continue
 
-        fn_row = _footnote_row(display_spec)
-        matched_notes = _resolve_footnotes(footnote_rules, fn_row, context="plot") or None
-        table_notes = _resolve_footnotes(footnote_rules, fn_row, context="table") or None
+        matched_notes = get_plot_notes(display_spec)
+        table_notes = get_table_notes(display_spec)
 
         plot_args.append((sub_key, focused_entries, matched_notes, table_notes))
 
@@ -1068,14 +1007,8 @@ def generate_plots(index=None, test_only=False, parallel=True):
             scale_x, scale_y = 0.75, 0.5
 
         # Deduplicated footnotes across all quantities
-        plot_notes = list(dict.fromkeys(
-            n for _, entries in qty_entries
-            for n in (_resolve_footnotes(footnote_rules, _footnote_row(entries[0][0]), context="plot") or [])
-        ))
-        table_notes = list(dict.fromkeys(
-            n for _, entries in qty_entries
-            for n in (_resolve_footnotes(footnote_rules, _footnote_row(entries[0][0]), context="table") or [])
-        ))
+        plot_notes = _collect_stacked_notes(qty_entries, get_plot_notes)
+        table_notes = _collect_stacked_notes(qty_entries, get_table_notes)
 
         # One stacked page per view position (position 0 = main, 1 = extra, ...)
         viz_parts = []
@@ -1093,7 +1026,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
             out = output_base / ds_dir / path_seg / f"{title}.{link_format.value}"
             ensure_directory(out.parent)
             postprocess_plot_html(
-                paths, output_path=out, footnotes=plot_notes or None,
+                paths, output_path=out, footnotes=plot_notes,
                 source_labels=source_labels, scale_x=scale_x, scale_y=scale_y,
                 comparison_dataset=first_spec.comparison_dataset.value,
             )
@@ -1136,7 +1069,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
                         output_path=table_path,
                         plot_rel_path=plot_rel_from_table,
                         metrics_by_source={},
-                        footnotes=table_notes or None,
+                        footnotes=table_notes,
                         source_labels=source_labels,
                         csv_download_filename=f"{table_file_title}.csv",
                         include_discrepancy_metrics=False,

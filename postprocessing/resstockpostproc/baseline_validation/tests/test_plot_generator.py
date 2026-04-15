@@ -4,10 +4,16 @@ import polars as pl
 import pytest
 import plotly.graph_objects as go
 
+from resstockpostproc.baseline_validation.footnotes import (
+    RECS_GENERIC_RSE_NOTE,
+    RECS_OCCUPIED_UNITS_NOTE,
+    get_plot_notes,
+)
 from resstockpostproc.baseline_validation.plot_generator import (
     _all_enduses_viz_label,
     _apply_lrd_sidebar_semantics,
     _build_spec_entries,
+    _collect_stacked_notes,
     _compute_discrepancy,
     _emit_layout_for_final_group,
     _generate_spec_plots,
@@ -309,6 +315,30 @@ class TestAllEndusesHelpers:
         ]
         assert _should_generate_stacked_page_group(single_qty_entries) is False
         assert _should_generate_stacked_page_group(two_qty_entries) is True
+
+    def test_collect_stacked_notes_dedupes_shared_quantity_notes(self):
+        recs_elec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            quantity=DataCol.ELECTRICITY_TOTAL,
+            aggregation_type=Metric.average,
+            group_by="state",
+            view=ViewType.value_view,
+        )
+        recs_gas = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            quantity=DataCol.NATURAL_GAS_TOTAL,
+            aggregation_type=Metric.average,
+            group_by="state",
+            view=ViewType.value_view,
+        )
+        qty_entries = [
+            ("Electricity", [(recs_elec, "Bar Plot (grouped)")]),
+            ("Natural Gas", [(recs_gas, "Bar Plot (grouped)")]),
+        ]
+
+        notes = _collect_stacked_notes(qty_entries, get_plot_notes)
+
+        assert notes == [RECS_OCCUPIED_UNITS_NOTE, RECS_GENERIC_RSE_NOTE]
 
 
 class TestRelatedSpecFamilies:
