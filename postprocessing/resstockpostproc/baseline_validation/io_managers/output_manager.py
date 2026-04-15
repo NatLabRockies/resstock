@@ -20,11 +20,11 @@ FIGURE_FORMATS = {FileType.html, FileType.svg, FileType.pdf}
 # Use granular "edits" instead of blanket "editable: True" so shapes stay non-interactive
 PLOTLY_HTML_CONFIG: dict = {
     "edits": {
-        "annotationPosition": True,
+        "annotationPosition": False,
         "annotationText": True,
         "axisTitleText": True,
         "legendPosition": True,
-        "legendText": True,
+        "legendText": False,
         "shapePosition": False,
         "titleText": True,
     },

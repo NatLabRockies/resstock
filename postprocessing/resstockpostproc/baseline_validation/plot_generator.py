@@ -1062,7 +1062,10 @@ def generate_plots(index=None, test_only=False, parallel=True):
         ds, metric, coverage, f1, f2, gb = group_key
         first_spec = qty_entries[0][1][0][0]
         path_seg = first_spec.file_path_and_name[0]
-        scale = 1.0 if gb in ("State", "") else 0.5
+        if gb in ("State", ""):
+            scale_x, scale_y = 1.0, 1.0
+        else:
+            scale_x, scale_y = 0.75, 0.5
 
         # Deduplicated footnotes across all quantities
         plot_notes = list(dict.fromkeys(
@@ -1091,7 +1094,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
             ensure_directory(out.parent)
             postprocess_plot_html(
                 paths, output_path=out, footnotes=plot_notes or None,
-                source_labels=source_labels, scale=scale,
+                source_labels=source_labels, scale_x=scale_x, scale_y=scale_y,
                 comparison_dataset=first_spec.comparison_dataset.value,
             )
             rel = Path(ds_dir) / path_seg / f"{title}.{link_format.value}"

@@ -18,7 +18,8 @@ def postprocess_plot_html(
     footnotes: list[str] | None = None,
     source_labels: dict | None = None,
     comparison_dataset: str | None = None,
-    scale: float = 1.0,
+    scale_x: float = 1.0,
+    scale_y: float = 1.0,
 ) -> None:
     """Post-process Plotly HTML file(s): make chart(s) resizable and add a footer.
 
@@ -34,6 +35,8 @@ def postprocess_plot_html(
         footnotes: Note strings for the footer.
         source_labels: Data source labels for the footer.
         comparison_dataset: Raw enum value (e.g. ``"eia"``) for footer filtering.
+        scale_x: Horizontal scale factor applied to the initial container width.
+        scale_y: Vertical scale factor applied to the initial per-chart height.
     """
     if isinstance(html_paths, Path):
         html_paths = [html_paths]
@@ -73,8 +76,8 @@ def postprocess_plot_html(
         return
 
     # Apply scale and compute container dimensions
-    scaled_w = int(float(orig_w) * scale)
-    scaled_h = int(float(orig_h) * scale)
+    scaled_w = int(float(orig_w) * scale_x)
+    scaled_h = int(float(orig_h) * scale_y)
     if len(chart_sections) > 1:
         container_h = scaled_h * len(chart_sections)
     else:
@@ -124,11 +127,11 @@ def postprocess_plot_html(
     var icon = Plotly.Icons.camera;
     Plotly.newPlot(chart, chart.data, chart.layout, Object.assign({}, chart._context || {}, {
       edits: {
-        annotationPosition: true,
+        annotationPosition: false,
         annotationText: true,
         axisTitleText: true,
         legendPosition: true,
-        legendText: true,
+        legendText: false,
         shapePosition: false,
         titleText: true,
       },

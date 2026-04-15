@@ -21,6 +21,7 @@ DEFAULT_LAYOUT = {
     "hoverlabel": {"bgcolor": "white", "font_size": 14, "font_family": "Arial"},
     "margin": {"l": 80, "r": 40, "t": 80, "b": 80},
     "autosize": True,
+    "legend": {"title": {"text": "Data Source"}},
 }
 
 DEFAULT_XAXIS = {
