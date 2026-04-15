@@ -115,7 +115,7 @@ def _load_resstock_hist_rows(
     group_cols: list[str],
 ) -> pl.DataFrame:
     """Load one ResStock raw parquet's rows needed for histogram binning."""
-    raw_path = workflow.get_resstock_histogram_raw_file(data_source.name)
+    raw_path = workflow.get_resstock_data_file(data_source.name)
     lf = pl.scan_parquet(raw_path)
     schema = lf.collect_schema()
     available = set(schema.names())

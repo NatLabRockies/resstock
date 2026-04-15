@@ -5,7 +5,6 @@
 # BuildStock Data Source
 # ----------------------
 workgroup: rescore
-resstock_histogram_data_root: /Users/radhikar/Documents/buildstock2025/baseline_validation_output/data
 
 data_sources:
   - db_name: buildstock_sdr
@@ -18,9 +17,6 @@ data_sources:
     name: resstock_2025
     db_schema: resstock_oedi_new
     baseline_metadata_and_annual_results_parquet_url: s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/resstock_amy2018_release_1/metadata_and_annual_results/national/full/parquet/upgrade0.parquet
-
-
-
 
 reference_years:
   eia:
@@ -89,8 +85,6 @@ quantities:
   - Space Heating Fuel Oil
   - Water Heating Fuel Oil
 
-# Output Configuration
-# --------------------
 output:
   output_dir: /Users/radhikar/Documents/buildstock2025/baseline_validation_output/
   run_name: baseline_val_test_2024_2025_test

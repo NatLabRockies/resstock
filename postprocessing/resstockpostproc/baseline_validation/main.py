@@ -71,6 +71,7 @@ def main() -> int:
         output_types = [fmt.value for fmt in workflow.plots.output_formats]
 
     print(f"Output formats: {output_types}")
+    workflow.ensure_resstock_data_files()
 
     # Parse plot types
     plot_types = None

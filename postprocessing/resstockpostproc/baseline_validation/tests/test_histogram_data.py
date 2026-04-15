@@ -44,7 +44,7 @@ class TestHistogramRawLoaders:
         )
         monkeypatch.setattr(
             type(histogram_data.workflow),
-            "get_resstock_histogram_raw_file",
+            "get_resstock_data_file",
             lambda self, _name: Path("/tmp/fake_upgrade0.parquet"),
         )
         monkeypatch.setattr(histogram_data.pl, "scan_parquet", lambda _path: raw.lazy())

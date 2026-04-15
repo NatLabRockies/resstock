@@ -11,10 +11,11 @@ from pathlib import Path
 from typing import Literal
 
 import yaml
-from pydantic import Field, field_validator, model_validator
+from pydantic import Field, field_validator
 
 from resstockpostproc.baseline_validation.schema.plot_spec import NoExtraModel
 from resstockpostproc.shared_utils.db_column_names import DBSchema
+from resstockpostproc.shared_utils.s3_manager import download_s3_file
 
 
 class PlotType(str, Enum):
@@ -50,6 +51,10 @@ class DataSourceConfig(NoExtraModel):
     db_name: str = Field(description="Athena database name")
     table_name: str = Field(description="Athena table name")
     db_schema: DBSchema = Field(description="Database schema", default=DBSchema.OEDI_NEW)
+    baseline_metadata_and_annual_results_parquet_url: str | None = Field(
+        default=None,
+        description="Optional S3 URL for the baseline metadata-and-annual-results parquet cached locally for fast reads.",
+    )
 
     def __hash__(self):
         return hash((self.name, self.db_name, self.table_name, self.db_schema))
@@ -111,13 +116,6 @@ class OutputConfig(NoExtraModel):
 
 class WorkflowConfig(NoExtraModel):
     workgroup: str = Field(description="Athena workgroup")
-    resstock_histogram_data_root: Path = Field(
-        description=(
-            "Root folder for exact ResStock histogram raw data. "
-            "Per-source files are inferred as "
-            "<root>/ResStock Data/<data_source.name>/upgrade0.parquet"
-        )
-    )
     data_sources: list[DataSourceConfig] = Field(
         default_factory=list,
         description="BuildStock data source configuration (optional - leave empty for EIA-only comparisons)",
@@ -145,31 +143,49 @@ class WorkflowConfig(NoExtraModel):
             return []
         return v
 
-    @field_validator("resstock_histogram_data_root", mode="before")
-    @classmethod
-    def expand_histogram_data_root_path(cls, v: str | Path) -> Path:
-        """Expand user paths and convert to Path object."""
-        return Path(v).expanduser().resolve()
+    @property
+    def resstock_data_root(self) -> Path:
+        """Local cache root for downloaded ResStock baseline parquet data."""
+        return self.output.output_dir / "data"
 
-    def get_resstock_histogram_raw_file(self, source_name: str) -> Path:
-        """Infer the exact raw parquet path for one ResStock source."""
-        return self.resstock_histogram_data_root / "ResStock Data" / source_name / "upgrade0.parquet"
+    def get_resstock_data_dir(self, source_name: str) -> Path:
+        """Return the local per-source cache directory for one ResStock data source."""
+        return self.resstock_data_root / "ResStock Data" / source_name
 
-    @model_validator(mode="after")
-    def validate_histogram_raw_inputs(self) -> WorkflowConfig:
-        """Fail fast if required exact-histogram raw files are missing."""
-        missing = [
-            str(self.get_resstock_histogram_raw_file(ds.name))
-            for ds in self.data_sources
-            if not self.get_resstock_histogram_raw_file(ds.name).exists()
-        ]
-        if missing:
-            preview = "\n - ".join(missing[:10])
+    def get_resstock_data_file_path(self, source_name: str) -> Path:
+        """Return the expected local baseline parquet path for one ResStock data source."""
+        return self.get_resstock_data_dir(source_name) / "upgrade0.parquet"
+
+    def _get_data_source_config(self, source_name: str) -> DataSourceConfig:
+        for data_source in self.data_sources:
+            if data_source.name == source_name:
+                return data_source
+        raise KeyError(f"Unknown ResStock data source '{source_name}'")
+
+    def ensure_resstock_data_file(self, source_name: str) -> Path:
+        """Ensure the cached local baseline parquet exists for one ResStock data source."""
+        local_path = self.get_resstock_data_file_path(source_name)
+        if local_path.exists():
+            return local_path
+
+        data_source = self._get_data_source_config(source_name)
+        parquet_url = data_source.baseline_metadata_and_annual_results_parquet_url
+        if not parquet_url:
             raise ValueError(
-                "Missing required ResStock histogram raw parquet files:\n"
-                f" - {preview}"
+                "Missing local ResStock baseline parquet and no "
+                "`baseline_metadata_and_annual_results_parquet_url` was configured "
+                f"for data source '{source_name}'. Expected local file: {local_path}"
             )
-        return self
+        return download_s3_file(parquet_url, local_path)
+
+    def ensure_resstock_data_files(self) -> None:
+        """Ensure all configured ResStock baseline parquet files are present locally."""
+        for data_source in self.data_sources:
+            self.ensure_resstock_data_file(data_source.name)
+
+    def get_resstock_data_file(self, source_name: str) -> Path:
+        """Return the local baseline parquet path, downloading it on demand if needed."""
+        return self.ensure_resstock_data_file(source_name)
 
     @classmethod
     def from_yaml(cls, yaml_path: str | Path) -> WorkflowConfig:

@@ -41,6 +41,22 @@ def get_df_from_s3(full_s3_path, cache_dir: Path | None = None) -> pl.DataFrame:
         raise ValueError(f"Invalid file type for {local_path}")
 
 
+def download_s3_file(full_s3_path: str, local_path: Path) -> Path:
+    """Download an S3 object to a specific local path if it is missing or outdated."""
+    if not full_s3_path.startswith("s3://"):
+        raise ValueError(f"Only s3:// URLs are supported, got: {full_s3_path}")
+
+    s3bucket, s3path = full_s3_path.removeprefix("s3://").split("/", 1)
+    if not _is_file_same(s3bucket, s3path, local_path):
+        client = _get_s3_client()
+        print(f"Downloading {s3path} from S3 bucket {s3bucket} to {local_path}")
+        if local_path.exists():
+            print(" because local file is outdated.")
+        local_path.parent.mkdir(parents=True, exist_ok=True)
+        client.download_file(s3bucket, s3path, local_path.as_posix())
+    return local_path
+
+
 def _is_file_same(bucket, s3_key, local_path):
     if not local_path.exists():
         return False

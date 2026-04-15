@@ -339,7 +339,7 @@ def _get_raw_annual_data(
     if not group_cols or any(col == "eiaid" for col in group_cols):
         return None
 
-    raw_path = workflow.get_resstock_histogram_raw_file(data_source.name)
+    raw_path = workflow.get_resstock_data_file(data_source.name)
     lf = pl.scan_parquet(raw_path)
     schema = lf.collect_schema()
     available_cols = set(schema.names())
