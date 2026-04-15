@@ -16,6 +16,7 @@ from collections.abc import Callable
 # When True, the @cached decorator opens shelve in read-only mode.
 # Worker processes set this to True at init to avoid concurrent shelve corruption.
 CACHE_READ_ONLY: bool = False
+CACHE_ROOT = Path(__file__).resolve().parents[2] / ".cache"
 
 
 def cached(cache_file: str) -> Callable:
@@ -32,7 +33,7 @@ def cached(cache_file: str) -> Callable:
             return result
     """
     def decorator(func: Callable) -> Callable:
-        cache_dir = Path(__file__).parent.parent / ".cache" / cache_file
+        cache_dir = CACHE_ROOT / cache_file
         cache_dir.mkdir(parents=True, exist_ok=True)
 
         @functools.wraps(func)

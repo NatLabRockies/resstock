@@ -346,6 +346,11 @@ pre-commit run --all-files --show-diff-on-failure
 - Check internet connectivity
 - Data cached in `~/.buildstock_cache`
 
+**Stale local cache after query-layer fixes:**
+- BuildStockQuery result caches live in `postprocessing/.bsq_cache`
+- Baseline-validation disk caches live in `postprocessing/.cache`
+- If an upstream `buildstock_query` fix changes the expected raw query result, clear both locations before rerunning so stale cached DataFrames are not reused
+
 **Memory issues with large runs:**
 - Polars is memory-efficient, but large timeseries can be demanding
 - Consider processing states/utilities in batches
