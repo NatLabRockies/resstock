@@ -1,0 +1,115 @@
+"""Tests for Python-generated plot and table footnotes."""
+
+from resstockpostproc.baseline_validation.footnotes import (
+    EIA_NATURAL_GAS_PENETRATION_NOTE,
+    RECS_GENERIC_RSE_NOTE,
+    RECS_MONTHLY_CI_NOTE,
+    RECS_OCCUPIED_UNITS_NOTE,
+    RECS_UNITS_COUNT_NOTE,
+    get_plot_notes,
+    get_table_notes,
+)
+from resstockpostproc.baseline_validation.schema.plot_spec import (
+    ComparisonDataset,
+    CoverageType,
+    Metric,
+    PlotSpec,
+    Resolution,
+    ViewType,
+)
+from resstockpostproc.shared_utils.db_column_names import DataCol
+
+
+def _make_spec(**overrides):
+    defaults = dict(
+        comparison_dataset=ComparisonDataset.recs,
+        quantity=DataCol.ELECTRICITY_TOTAL,
+        resolution=Resolution.year,
+        aggregation_type=Metric.average,
+        coverage=CoverageType.all_units,
+        group_by="state",
+        view=ViewType.value_view,
+    )
+    defaults.update(overrides)
+    return PlotSpec(**defaults)
+
+
+class TestPlotNotes:
+    def test_recs_annual_value_plot_includes_dataset_and_rse_notes(self):
+        notes = get_plot_notes(_make_spec())
+
+        assert notes == [RECS_OCCUPIED_UNITS_NOTE, RECS_GENERIC_RSE_NOTE]
+
+    def test_recs_distribution_plot_omits_generic_rse_note(self):
+        notes = get_plot_notes(
+            _make_spec(
+                aggregation_type=Metric.distribution,
+                quantity=DataCol.ELECTRICITY_TOTAL,
+            )
+        )
+
+        assert notes == [RECS_OCCUPIED_UNITS_NOTE]
+        assert RECS_GENERIC_RSE_NOTE not in notes
+
+    def test_recs_monthly_plot_uses_ci_band_note(self):
+        notes = get_plot_notes(
+            _make_spec(
+                resolution=Resolution.month,
+                aggregation_type=Metric.average,
+            )
+        )
+
+        assert notes == [RECS_OCCUPIED_UNITS_NOTE, RECS_MONTHLY_CI_NOTE]
+        assert RECS_GENERIC_RSE_NOTE not in notes
+
+    def test_recs_units_count_plot_uses_quantity_note_not_rse_note(self):
+        notes = get_plot_notes(
+            _make_spec(
+                quantity=DataCol.UNITS_COUNT,
+                aggregation_type=Metric.total,
+            )
+        )
+
+        assert notes == [RECS_OCCUPIED_UNITS_NOTE, RECS_UNITS_COUNT_NOTE]
+        assert RECS_GENERIC_RSE_NOTE not in notes
+
+    def test_eia_natural_gas_penetration_plot_uses_specific_note(self):
+        notes = get_plot_notes(
+            _make_spec(
+                comparison_dataset=ComparisonDataset.eia,
+                quantity=DataCol.NATURAL_GAS_TOTAL,
+                aggregation_type=Metric.penetration,
+            )
+        )
+
+        assert notes == [EIA_NATURAL_GAS_PENETRATION_NOTE]
+
+
+class TestTableNotes:
+    def test_table_notes_keep_shared_dataset_note_and_omit_plot_only_notes(self):
+        notes = get_table_notes(_make_spec())
+
+        assert notes == [RECS_OCCUPIED_UNITS_NOTE]
+        assert RECS_GENERIC_RSE_NOTE not in notes
+
+    def test_units_count_table_omits_plot_only_quantity_note(self):
+        notes = get_table_notes(
+            _make_spec(
+                quantity=DataCol.UNITS_COUNT,
+                aggregation_type=Metric.total,
+            )
+        )
+
+        assert notes == [RECS_OCCUPIED_UNITS_NOTE]
+        assert RECS_UNITS_COUNT_NOTE not in notes
+
+    def test_eia_penetration_note_is_shared_with_tables(self):
+        notes = get_table_notes(
+            _make_spec(
+                comparison_dataset=ComparisonDataset.eia,
+                quantity=DataCol.NATURAL_GAS_TOTAL,
+                aggregation_type=Metric.penetration,
+            )
+        )
+
+        assert notes == [EIA_NATURAL_GAS_PENETRATION_NOTE]
