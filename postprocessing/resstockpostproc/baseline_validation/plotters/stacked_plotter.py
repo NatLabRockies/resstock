@@ -1,5 +1,6 @@
 from resstockpostproc.shared_utils.generic_plotters import box_plotter, bar_plotter
 from resstockpostproc.shared_utils.generic_plotters import theme as plot_theme
+from resstockpostproc.shared_utils.generic_plotters.hover_formatting import format_compact_number
 from resstockpostproc.shared_utils.generic_plotters.range_utils import compute_axis_range
 from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import filter_null_sources
 from resstockpostproc.baseline_validation.io_managers.get_recs_data import get_enduse_order
@@ -17,6 +18,12 @@ from resstockpostproc.shared_utils.timing import timed
 import plotly.graph_objects as go
 import polars as pl
 from plotly.subplots import make_subplots
+
+_HISTOGRAM_HOVER_TEMPLATE = (
+    "%{fullData.name}<br>"
+    "Range: %{customdata[0]} to %{customdata[1]}<br>"
+    "Stock Share: %{y:.2f}%<extra></extra>"
+)
 
 
 def _get_reference_source(df: pl.DataFrame) -> str:
@@ -531,6 +538,9 @@ def _create_grouped_histogram_plot(
     sources = plot_df["source"].unique(maintain_order=True).to_list()
     palette = plot_theme.build_color_palette(sources)
     x_max = max(1.0, p98 + 2.0 * core_width)
+    max_pct = plot_df["count_pct"].max()
+    shared_y_max = float(max_pct) if max_pct is not None else 0.0
+    shared_y_max = max(1.0, shared_y_max * 1.1)
     x_title = "kWh/user" if plot_spec.coverage == CoverageType.users_only else "kWh/unit"
 
     for row_idx, group_val in enumerate(group_values, start=1):
@@ -548,17 +558,17 @@ def _create_grouped_histogram_plot(
                 opacity=0.7,
                 showlegend=(row_idx == 1),
                 legendgroup=source,
-                customdata=list(zip(sub["bin_left"].to_list(), sub["bin_right"].to_list())),  # type: ignore[arg-type]
-                hovertemplate="%{customdata[0]:.1f} to %{customdata[1]:.1f}<br>%{y:.2f}%<extra></extra>",
+                customdata=[
+                    (format_compact_number(left), format_compact_number(right))
+                    for left, right in zip(sub["bin_left"].to_list(), sub["bin_right"].to_list(), strict=True)
+                ],
+                hovertemplate=_HISTOGRAM_HOVER_TEMPLATE,
                 row=row_idx,
                 col=1,
             )
 
-        max_pct = group_df["count_pct"].max()
-        y_max = float(max_pct) if max_pct is not None else 0.0
-        y_max = max(1.0, y_max * 1.1)
         fig.update_xaxes(range=[0, x_max], row=row_idx, col=1)
-        fig.update_yaxes(title_text="Stock Share", ticksuffix="%", range=[0, y_max], row=row_idx, col=1)
+        fig.update_yaxes(title_text="Stock Share", ticksuffix="%", range=[0, shared_y_max], row=row_idx, col=1)
 
     # x-axis title on bottom subplot only
     fig.update_xaxes(title_text=x_title, row=n_groups, col=1)
@@ -607,8 +617,11 @@ def _create_histogram_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
             name=source,
             marker_color=palette.get(source),
             opacity=0.7,
-            customdata=list(zip(sub["bin_left"].to_list(), sub["bin_right"].to_list())),  # type: ignore[arg-type]
-            hovertemplate="%{customdata[0]:.1f} to %{customdata[1]:.1f}<br>%{y:.2f}%<extra></extra>",
+            customdata=[
+                (format_compact_number(left), format_compact_number(right))
+                for left, right in zip(sub["bin_left"].to_list(), sub["bin_right"].to_list(), strict=True)
+            ],
+            hovertemplate=_HISTOGRAM_HOVER_TEMPLATE,
         )
 
     x_max = max(1.0, p98 + 2.0 * core_width)

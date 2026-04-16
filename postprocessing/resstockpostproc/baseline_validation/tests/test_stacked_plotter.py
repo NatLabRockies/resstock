@@ -432,10 +432,39 @@ class TestHistogramLayoutRouting:
             # overflow width is 2x core width
             assert trace.width[0] == pytest.approx(10.0)
             assert trace.width[1] == pytest.approx(20.0)
+            assert "%{fullData.name}" in trace.hovertemplate
+            assert "Range: %{customdata[0]} to %{customdata[1]}" in trace.hovertemplate
+            assert "Stock Share: %{y:.2f}%" in trace.hovertemplate
+            assert trace.customdata[0][0] == "0.00"
+            assert trace.customdata[1][1] in {"500.00", "400.00"}
 
         # right edge clipped to the synthetic tail, not raw max
         assert fig.layout.xaxis.range[0] == pytest.approx(0.0)
         assert fig.layout.xaxis.range[1] == pytest.approx(120.0)
+
+    def test_histogram_hover_uses_compact_range_formatting(self):
+        data = pl.DataFrame({
+            "source": ["RECS 2020", "RECS 2020", "ResStock 2025", "ResStock 2025"],
+            "bin": [0, 49, 0, 49],
+            "bin_left": [1_000.0, 10_000.0, 1_000.0, 10_000.0],
+            "bin_right": [2_500.0, 1_500_000.0, 2_500.0, 2_000_000_000.0],
+            "count_pct": [4.0, 1.0, 3.0, 2.0],
+        })
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.distribution,
+            view=ViewType.value_view,
+            group_by=None,
+            layout=Layout.histogram,
+        )
+
+        fig = create_stacked_plot(data, spec)
+
+        assert all("%{fullData.name}" in trace.hovertemplate for trace in fig.data)
+        assert any(trace.customdata[0][0] == "1.00K" for trace in fig.data)
+        assert any(trace.customdata[0][1] == "2.50K" for trace in fig.data)
+        assert any(trace.customdata[1][1] == "1.50M" for trace in fig.data)
+        assert any(trace.customdata[1][1] == "2.00B" for trace in fig.data)
 
     def test_grouped_histogram_creates_faceted_subplots(self):
         """Grouped histogram produces one subplot row per group_by category."""
@@ -469,6 +498,11 @@ class TestHistogramLayoutRouting:
 
         # Subplots share x-axis range
         assert fig.layout.xaxis.range == fig.layout.xaxis2.range
+        assert fig.layout.yaxis.range == fig.layout.yaxis2.range
+        assert all("%{fullData.name}" in trace.hovertemplate for trace in bar_traces)
+        assert all("Range: %{customdata[0]} to %{customdata[1]}" in trace.hovertemplate for trace in bar_traces)
+        assert any(trace.customdata[0][0] == "0.00" for trace in bar_traces)
+        assert any(trace.customdata[1][1] == "20.00" for trace in bar_traces)
 
     def test_grouped_histogram_single_group_uses_single_panel(self):
         """When group_by column has only one value, falls back to single panel."""
