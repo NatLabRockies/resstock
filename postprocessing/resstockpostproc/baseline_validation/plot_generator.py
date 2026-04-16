@@ -658,11 +658,12 @@ def _generate_spec_plots(
     output_formats,
     link_format,
     output_base,
-    footnotes=None,
-    table_footnotes=None,
     source_labels=None,
 ) -> tuple[str, str | None] | None:
     """Generate plots for a list of (PlotSpec, viz_type_str) entries.
+
+    Footnotes are computed per-spec via get_plot_notes/get_table_notes so that
+    layout-specific notes (e.g. histogram overflow) appear only where relevant.
 
     Returns (viz_parts_joined, data_rel_path) on success, or None if skipped.
     All file I/O writes to unique per-spec paths (safe for parallel execution).
@@ -683,8 +684,9 @@ def _generate_spec_plots(
             data = get_plot_data(plot_spec)
             plot_func = get_plotting_function(plot_spec.comparison_dataset)
             fig, title = plot_func(data, plot_spec)
+            spec_footnotes = get_plot_notes(plot_spec)
             save_figure(fig, plot_spec, formats=output_formats,
-                        footnotes=footnotes, source_labels=source_labels)
+                        footnotes=spec_footnotes, source_labels=source_labels)
 
             # Build relative path to the enhanced plot file
             path_seg, file_title = plot_spec.file_path_and_name
@@ -715,13 +717,14 @@ def _generate_spec_plots(
                     table_path = table_dir / f"{file_title}.html"
                     table_depth = len(table_path.relative_to(output_base).parents) - 1
                     plot_rel_from_table = "../" * table_depth + rel_path_str
+                    spec_table_footnotes = get_table_notes(plot_spec)
                     generate_data_table_html(
                         data=data,
                         plot_spec=plot_spec,
                         output_path=table_path,
                         plot_rel_path=plot_rel_from_table,
                         metrics_by_source=metrics_by_source,
-                        footnotes=table_footnotes,
+                        footnotes=spec_table_footnotes,
                         source_labels=source_labels,
                     )
                     rel_table = Path(f"{plot_spec.comparison_dataset} data (html)") / path_seg / f"{file_title}.html"
@@ -909,10 +912,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
         if not focused_entries:
             continue
 
-        matched_notes = get_plot_notes(display_spec)
-        table_notes = get_table_notes(display_spec)
-
-        plot_args.append((sub_key, focused_entries, matched_notes, table_notes))
+        plot_args.append((sub_key, focused_entries))
 
         # Collect spec pairs for stacking into "All Enduses (Stacked)" pages.
         # Each group entry stores (qty_label, focused_entries) — the same
@@ -952,10 +952,9 @@ def generate_plots(index=None, test_only=False, parallel=True):
             logger.info(f"Using {max_workers} worker processes")
             futures = {}
             with ProcessPoolExecutor(max_workers=max_workers, initializer=_worker_init) as executor:
-                for sub_key, focused_entries, matched_notes, table_notes in plot_args:
+                for sub_key, focused_entries in plot_args:
                     future = executor.submit(
-                        _worker_run, focused_entries,
-                        footnotes=matched_notes, table_footnotes=table_notes, **common_kwargs,
+                        _worker_run, focused_entries, **common_kwargs,
                     )
                     futures[future] = sub_key
                 for future in as_completed(futures):
@@ -969,10 +968,9 @@ def generate_plots(index=None, test_only=False, parallel=True):
                     _handle_plot_result(sub_key, result, results, csv_path, index_state)
                     pbar.update(1)
         else:
-            for sub_key, focused_entries, matched_notes, table_notes in plot_args:
+            for sub_key, focused_entries in plot_args:
                 result = _generate_spec_plots(
-                    focused_entries, footnotes=matched_notes, table_footnotes=table_notes,
-                    **common_kwargs,
+                    focused_entries, **common_kwargs,
                 )
                 _handle_plot_result(sub_key, result, results, csv_path, index_state)
                 pbar.update(1)
