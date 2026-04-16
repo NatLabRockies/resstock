@@ -91,7 +91,7 @@ def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
     x_unit = _resolve_x_unit(plot_spec)
     uses_stacked_layout = _uses_stacked_layout(plot_spec)
     is_single_entity = _check_single_entity(data, plot_spec, timeseries_column)
-    height, width = _resolve_dimensions(plot_spec, is_single_entity)
+    height, width = _resolve_dimensions(plot_spec, is_single_entity, data)
 
     # Post-processing: diff_view swaps quantity <-> sidebar
     if plot_spec.view == ViewType.diff_view and sidebar_column:
@@ -363,11 +363,20 @@ def _extract_comparison_dataset_label(comparison_dataset: ComparisonDataset, dat
     return comparison_dataset.value.upper()
 
 
-def _resolve_dimensions(plot_spec: PlotSpec, is_single_entity: bool) -> tuple[float, float]:
+def _resolve_dimensions(
+    plot_spec: PlotSpec, is_single_entity: bool, data: pl.DataFrame | None = None
+) -> tuple[float, float]:
     """Resolve plot height and width based on resolution and entity count.
 
     Returns (height, width) in pixels.
     """
+    # Grouped histogram: scale height with group count
+    if plot_spec.layout == Layout.histogram and not is_single_entity and data is not None:
+        group_col = plot_spec.group_by
+        if group_col and group_col in data.columns:
+            n_groups = data[group_col].n_unique()
+            return max(400, 250 * n_groups), 1920 * 0.5
+
     # LRD: resolution-specific dimensions
     if plot_spec.comparison_dataset == ComparisonDataset.lrd:
         match plot_spec.resolution:

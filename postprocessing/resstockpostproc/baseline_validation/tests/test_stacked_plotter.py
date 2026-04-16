@@ -437,6 +437,82 @@ class TestHistogramLayoutRouting:
         assert fig.layout.xaxis.range[0] == pytest.approx(0.0)
         assert fig.layout.xaxis.range[1] == pytest.approx(120.0)
 
+    def test_grouped_histogram_creates_faceted_subplots(self):
+        """Grouped histogram produces one subplot row per group_by category."""
+        data = pl.DataFrame({
+            "source": ["RECS 2020", "ResStock 2025"] * 4,
+            "state": ["CA", "CA", "TX", "TX", "CA", "CA", "TX", "TX"],
+            "bin": [0, 0, 0, 0, 1, 1, 1, 1],
+            "bin_left": [0.0, 0.0, 0.0, 0.0, 10.0, 10.0, 10.0, 10.0],
+            "bin_right": [10.0, 10.0, 10.0, 10.0, 20.0, 20.0, 20.0, 20.0],
+            "count_pct": [5.0, 6.0, 3.0, 4.0, 8.0, 7.0, 2.0, 3.0],
+        })
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.distribution,
+            view=ViewType.value_view,
+            group_by="state",
+            layout=Layout.histogram,
+        )
+        fig = create_stacked_plot(data, spec)
+        assert isinstance(fig, go.Figure)
+
+        # 2 groups x 2 sources = 4 bar traces
+        bar_traces = [t for t in fig.data if isinstance(t, go.Bar)]
+        assert len(bar_traces) == 4
+
+        # Only first subplot row shows legend entries
+        legend_traces = [t for t in bar_traces if t.showlegend]
+        no_legend_traces = [t for t in bar_traces if not t.showlegend]
+        assert len(legend_traces) == 2
+        assert len(no_legend_traces) == 2
+
+        # Subplots share x-axis range
+        assert fig.layout.xaxis.range == fig.layout.xaxis2.range
+
+    def test_grouped_histogram_single_group_uses_single_panel(self):
+        """When group_by column has only one value, falls back to single panel."""
+        data = pl.DataFrame({
+            "source": ["RECS 2020", "ResStock 2025"],
+            "state": ["CA", "CA"],
+            "bin": [0, 0],
+            "bin_left": [0.0, 0.0],
+            "bin_right": [10.0, 10.0],
+            "count_pct": [5.0, 6.0],
+        })
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.distribution,
+            view=ViewType.value_view,
+            group_by="state",
+            layout=Layout.histogram,
+        )
+        fig = create_stacked_plot(data, spec)
+        # Single group falls through to single-panel renderer (no subplots)
+        assert isinstance(fig, go.Figure)
+        bar_traces = [t for t in fig.data if isinstance(t, go.Bar)]
+        assert len(bar_traces) == 2
+
+    def test_grouped_histogram_rejects_inconsistent_geometry(self):
+        data = pl.DataFrame({
+            "source": ["RECS 2020", "ResStock 2025", "RECS 2020", "ResStock 2025"],
+            "state": ["CA", "CA", "TX", "TX"],
+            "bin": [0, 0, 49, 49],
+            "bin_left": [0.0, 0.0, 100.0, 200.0],
+            "bin_right": [10.0, 10.0, 300.0, 400.0],
+            "count_pct": [5.0, 6.0, 3.0, 4.0],
+        })
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.distribution,
+            view=ViewType.value_view,
+            group_by="state",
+            layout=Layout.histogram,
+        )
+
+        with pytest.raises(ValueError, match="inconsistent overflow bin placement"):
+            create_stacked_plot(data, spec)
+
 
 class TestStackedHoverFormatting:
     def test_grouped_bar_hover_uses_compact_values_and_source_specific_count_labels(self):

@@ -43,8 +43,8 @@ EIA_NATURAL_GAS_PENETRATION_NOTE = (
     "the percent of models that have non-zero natural gas consumption."
 )
 HISTOGRAM_OVERFLOW_NOTE = (
-    "Values above the 98th percentile are grouped into an overflow bin shown at double "
-    "width. Hover over the bin to see its actual range."
+    "Values above the weighted RECS 2020 98th-percentile cutoff are grouped into an "
+    "overflow bin shown at double width. Hover over the bin to see its actual range."
 )
 
 

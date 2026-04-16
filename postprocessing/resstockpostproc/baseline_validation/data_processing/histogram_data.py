@@ -36,10 +36,13 @@ _LOCAL_RECS_DATA_DIR = Path(f"{workflow.output.output_dir}/data")
 @timed
 def get_distribution_histogram_data(plot_spec: PlotSpec) -> pl.DataFrame:
     """Get exact histogram data for one distribution histogram plot spec."""
+    geometry_cols = tuple(col for col in plot_spec.effective_group_by if col != plot_spec.group_by)
     hist = _get_distribution_histogram_base(
         plot_spec.data_key,
         plot_spec.quantity,
         plot_spec.coverage,
+        geometry_cols,
+        "recs_2020",
     )
 
     # Apply focus filters on histogram rows (US Total is represented explicitly).
@@ -48,8 +51,9 @@ def get_distribution_histogram_data(plot_spec: PlotSpec) -> pl.DataFrame:
         if col in out.columns:
             out = out.filter(pl.col(col) == val)
 
-    # Histogram layout is no-group only; drop grouping columns after filtering.
-    drop_cols = [col for col in plot_spec.effective_group_by if col in out.columns]
+    # Drop focus_on filter columns (already applied) but keep group_by column.
+    cols_to_keep = {plot_spec.group_by} if plot_spec.group_by else set()
+    drop_cols = [col for col in plot_spec.effective_group_by if col in out.columns and col not in cols_to_keep]
     if drop_cols:
         out = out.drop(drop_cols)
 
@@ -58,7 +62,10 @@ def get_distribution_histogram_data(plot_spec: PlotSpec) -> pl.DataFrame:
         out = out.with_columns(
             pl.col("source").replace_strict(source_label_map, default=pl.col("source"))
         )
-    return out.sort(["source", "bin"])
+    sort_cols = ["source", "bin"]
+    if plot_spec.group_by and plot_spec.group_by in out.columns:
+        sort_cols = [plot_spec.group_by] + sort_cols
+    return out.sort(sort_cols)
 
 
 @cache
@@ -66,6 +73,8 @@ def _get_distribution_histogram_base(
     data_key: DataKey,
     quantity: DataCol,
     coverage: CoverageType,
+    geometry_cols: tuple[str, ...],
+    geometry_source: str | None,
 ) -> pl.DataFrame:
     """Compute cached exact histogram base data for one DataKey/quantity/coverage."""
     group_cols = list(data_key.effective_group_by)
@@ -84,6 +93,8 @@ def _get_distribution_histogram_base(
         value_col="value",
         weight_col="weight",
         group_cols=group_cols,
+        geometry_cols=list(geometry_cols),
+        geometry_source=geometry_source,
         n_core_bins=49,
     )
 

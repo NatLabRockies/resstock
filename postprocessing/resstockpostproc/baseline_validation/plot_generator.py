@@ -264,8 +264,7 @@ def _build_spec_entries(specs: list[PlotSpec]) -> list[tuple[PlotSpec, str]]:
 def _emit_layout_for_final_group(spec: PlotSpec, final_group_by: str | None) -> bool:
     """Decide whether a spec layout should be emitted for a focused row."""
     if spec.layout == Layout.histogram:
-        # Histogram companions are only emitted for final no-group distribution rows.
-        return spec.is_distribution_metric and final_group_by is None
+        return spec.is_distribution_metric
     if spec.layout == Layout.two_column:
         # two_column splits a state-grouped annual bar into two columns —
         # only meaningful when the final row is actually grouped by state.

@@ -123,7 +123,21 @@ class TestGetPlotDataRouting:
         out = get_plot_data(self._make_hist_spec())
         assert out.equals(expected)
 
-    def test_histogram_layout_rejects_grouped_specs(self):
+    def test_histogram_layout_accepts_grouped_specs(self, monkeypatch):
+        expected = pl.DataFrame(
+            {
+                "state": ["CA", "TX"],
+                "source": ["RECS 2020", "RECS 2020"],
+                "bin": [0, 0],
+                "bin_left": [0.0, 0.0],
+                "bin_right": [1.0, 1.0],
+                "count_pct": [50.0, 50.0],
+            }
+        )
+        monkeypatch.setattr(
+            "resstockpostproc.baseline_validation.data_processing.gather_data.get_distribution_histogram_data",
+            lambda _spec: expected,
+        )
         grouped = self._make_hist_spec().model_copy(update={"group_by": "state"})
-        with pytest.raises(ValueError, match="group_by=None"):
-            get_plot_data(grouped)
+        out = get_plot_data(grouped)
+        assert out.equals(expected)

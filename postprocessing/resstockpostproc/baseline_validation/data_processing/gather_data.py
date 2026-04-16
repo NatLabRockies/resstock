@@ -45,8 +45,6 @@ def get_plot_data(
     if plot_spec.layout == Layout.histogram:
         if not plot_spec.is_distribution_metric:
             raise ValueError("layout=histogram is only supported for distribution plots.")
-        if plot_spec.group_by is not None:
-            raise ValueError("layout=histogram is only supported for single-entity plots (group_by=None).")
         return get_distribution_histogram_data(plot_spec)
 
     data_key = plot_spec.data_key

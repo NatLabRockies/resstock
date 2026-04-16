@@ -85,6 +85,8 @@ class TestPlotNotes:
             )
         )
         assert HISTOGRAM_OVERFLOW_NOTE in notes
+        assert "RECS 2020" in HISTOGRAM_OVERFLOW_NOTE
+        assert "cutoff" in HISTOGRAM_OVERFLOW_NOTE
 
     def test_non_histogram_distribution_omits_overflow_note(self):
         notes = get_plot_notes(

@@ -386,7 +386,7 @@ class TestRelatedSpecFamilies:
             (ViewType.value_view, Layout.histogram),
         ]
 
-    def test_histogram_layout_emits_only_for_final_no_group(self):
+    def test_histogram_layout_emits_for_any_group(self):
         hist_spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             aggregation_type=Metric.distribution,
@@ -397,7 +397,7 @@ class TestRelatedSpecFamilies:
             layout=Layout.histogram,
         )
         assert _emit_layout_for_final_group(hist_spec, None) is True
-        assert _emit_layout_for_final_group(hist_spec, "state") is False
+        assert _emit_layout_for_final_group(hist_spec, "state") is True
 
     def test_two_column_layout_emits_only_for_final_state_group(self):
         two_col_spec = _make_spec(
