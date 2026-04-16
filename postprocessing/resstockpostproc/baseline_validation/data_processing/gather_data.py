@@ -115,11 +115,18 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
     # so downstream layout logic doesn't pick the wrong grouping dimension.
     data_key = plot_spec.data_key
     is_multi_col = len(data_key.effective_group_by) > 1
+    is_us_total_focus = any(val == "US Total" for _, val in plot_spec.focus_on)
     for col, val in plot_spec.focus_on:
         if col in df.columns:
             df = df.filter(pl.col(col) == val)
             if is_multi_col and plot_spec.group_by is not None and col != plot_spec.group_by:
                 df = df.drop(col)
+
+    # When focus_on filters are active (e.g. "Building Type: Mobile Home"),
+    # "US Total" rows in the group_by column are actually filtered-subset
+    # totals, not true US totals.  Remove them to avoid misleading labels.
+    if plot_spec.focus_on and not is_us_total_focus and plot_spec.group_by and plot_spec.group_by in df.columns:
+        df = df.filter(pl.col(plot_spec.group_by) != "US Total")
 
     # Apply LRD-specific resolution transforms
     if plot_spec.comparison_dataset == ComparisonDataset.lrd:

@@ -7,6 +7,7 @@ from .range_utils import compute_axis_range
 from typing import Literal
 from collections.abc import Sequence, Callable
 from resstockpostproc.shared_utils.db_column_names import DataCol
+from resstockpostproc.shared_utils.mapping import ABBR2STATE
 from resstockpostproc.shared_utils.timing import timed
 
 
@@ -213,7 +214,7 @@ def plot_tilemap(
     fig = make_subplots(
         rows=nrows,
         cols=ncols,
-        subplot_titles=subplot_titles,
+        subplot_titles=[""] * len(subplot_titles),
         specs=specs,
         shared_yaxes=False,
         shared_xaxes=ncols == 1, # Share x-axes only if single column
@@ -234,6 +235,7 @@ def plot_tilemap(
 
         is_us_total = entity == "US Total"
         show_yticks = is_us_total or col == 1 or (col > 1 and layout[row - 1][col - 2] is None)
+        hover_label = ABBR2STATE.get(entity, entity)
         if timeseries_column is None:
             create_bar_plot(
                 data=entity_df,
@@ -255,6 +257,7 @@ def plot_tilemap(
                 count_label=count_label,
                 count_label_resolver=count_label_resolver,
                 compact_hover_values=compact_hover_values,
+                hover_prefix=hover_label,
             )
         else:
             create_ts_plot(
@@ -280,10 +283,18 @@ def plot_tilemap(
                 count_label=count_label,
                 count_label_resolver=count_label_resolver,
                 compact_hover_values=compact_hover_values,
+                hover_prefix=hover_label,
             )
 
         if entity == "US Total":
             _enlarge_us_total_box(nrows, ncols, row, col, specs, fig)
+
+    # Use x-axis titles as subplot labels (positioned below each subplot)
+    # instead of Plotly's built-in subplot_titles (which sit at the top).
+    standoff = 0 if timeseries_column else 3
+    for entity_name, (row, col) in entity_position.items():
+        if entity_name:
+            fig.update_xaxes(title_text=entity_name, title_standoff=standoff, row=row, col=col)
 
     # Add sidebar horizontal bar plot if specified
     if sidebar_column:
@@ -321,9 +332,10 @@ def plot_tilemap(
         for col in range(1, ncols + 1):
             if sidebar_column and col == ncols:
                 continue
-            if layout[nrows - 1][col - 1] is None:
+            entity = layout[nrows - 1][col - 1] if col - 1 < len(layout[nrows - 1]) else None
+            if entity is None:
                 continue
-            fig.update_xaxes(title_text=x_axis_title_bottom_row, row=nrows, col=col)
+            fig.update_xaxes(title_text=f"{entity}<br>{x_axis_title_bottom_row}", row=nrows, col=col)
 
     fig.update_yaxes(showgrid=False, showline=False, zeroline=True, zerolinewidth=2, zerolinecolor="darkgray")
     fig.update_layout(

@@ -44,6 +44,7 @@ def create_ts_plot(
     count_label: str | None = "Number of models",
     count_label_resolver: Callable[[str], str | None] | None = None,
     compact_hover_values: bool = False,
+    hover_prefix: str = "",
 ) -> go.Figure:
     categories = data[first_category_column].unique(maintain_order=True).to_list()
     category_colors = theme.build_color_palette(categories)
@@ -124,13 +125,14 @@ def create_ts_plot(
         elif count_strings is not None:
             customdata = [(count_str,) for count_str in count_strings]
 
+        hover_start = f"{hover_prefix}<br>" if hover_prefix else ""
         if compact_hover_values:
-            hovertemplate = "%{x}<br>" + f"{category}: " + "%{customdata[0]}"
+            hovertemplate = hover_start + "%{x}<br>" + f"{category}: " + "%{customdata[0]}"
             if count_strings is not None:
                 hovertemplate += "<br>%{customdata[1]}"
             hovertemplate += "<extra></extra>"
         else:
-            hovertemplate = "%{x}<br>" + f"{category}: " + "%{y:,.2f}"
+            hovertemplate = hover_start + "%{x}<br>" + f"{category}: " + "%{y:,.2f}"
             if quantity_title:
                 hovertemplate += f" {quantity_title}"
             if count_strings is not None:

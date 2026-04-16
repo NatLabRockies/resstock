@@ -20,22 +20,25 @@ def _build_hovertemplate(
     include_trace_name: bool = False,
     include_count: bool = False,
     use_custom_value: bool = False,
+    hover_prefix: str = "",
 ) -> str:
     parts: list[str] = []
+    if hover_prefix:
+        parts.append(hover_prefix)
     if include_trace_name:
         parts.append("%{fullData.name}")
 
+    # When hover_prefix is set, it already identifies the entity —
+    # skip the redundant category axis label (%{x} or %{y}).
     if use_custom_value:
-        if orientation == "h":
-            parts.extend(["%{y}", "Value: %{customdata[0]}"])
-        else:
-            parts.extend(["%{x}", "Value: %{customdata[0]}"])
+        if not hover_prefix:
+            parts.append("%{y}" if orientation == "h" else "%{x}")
+        parts.append("Value: %{customdata[0]}")
     else:
         value_label = _hover_value_label(quantity_title)
-        if orientation == "h":
-            parts.extend(["%{y}", f"{value_label}: %{{x:,.2f}}"])
-        else:
-            parts.extend(["%{x}", f"{value_label}: %{{y:,.2f}}"])
+        if not hover_prefix:
+            parts.append("%{y}" if orientation == "h" else "%{x}")
+        parts.append(f"{value_label}: %{{x:,.2f}}" if orientation == "h" else f"{value_label}: %{{y:,.2f}}")
 
     if include_count:
         count_idx = 1 if use_custom_value else 0
@@ -95,6 +98,7 @@ def create_bar_plot(
     count_label: str | None = "Number of models",
     count_label_resolver: Callable[[str], str | None] | None = None,
     compact_hover_values: bool = False,
+    hover_prefix: str = "",
 ) -> go.Figure:
     """
     Creates a simple, grouped or stacked bar plot depending on the inputs.
@@ -171,6 +175,7 @@ def create_bar_plot(
                         quantity_title=quantity_title,
                         include_trace_name=len(quantity_cols) > 1,
                         use_custom_value=compact_hover_values,
+                        hover_prefix=hover_prefix,
                     ),
                     customdata=customdata,
                     error_x=error_x,
@@ -264,6 +269,7 @@ def create_bar_plot(
                             include_trace_name=True,
                             include_count=count_strings is not None,
                             use_custom_value=value_strings is not None,
+                            hover_prefix=hover_prefix,
                         ),
                         customdata=customdata,
                         error_x=error_x,
