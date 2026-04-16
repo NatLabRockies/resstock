@@ -97,6 +97,11 @@ class TestPlotNotes:
         )
         assert notes is None or HISTOGRAM_OVERFLOW_NOTE not in notes
 
+    def test_recs_diff_view_omits_rse_note(self):
+        notes = get_plot_notes(_make_spec(view=ViewType.diff_view))
+
+        assert notes is None or RECS_GENERIC_RSE_NOTE not in notes
+
     def test_eia_natural_gas_penetration_plot_uses_specific_note(self):
         notes = get_plot_notes(
             _make_spec(

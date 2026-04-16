@@ -12,6 +12,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     Layout,
     PlotSpec,
     Resolution,
+    ViewType,
 )
 from resstockpostproc.shared_utils.db_column_names import (
     DataCol,
@@ -136,7 +137,7 @@ def get_metric_notes(plot_spec: PlotSpec, context: NoteContext) -> list[str] | N
 
     if _uses_monthly_ci_band(plot_spec):
         notes.append(RECS_MONTHLY_CI_NOTE)
-    elif _has_recs_rse(plot_spec):
+    elif _has_recs_rse(plot_spec) and plot_spec.view != ViewType.diff_view:
         notes.append(RECS_GENERIC_RSE_NOTE)
 
     if plot_spec.layout == Layout.histogram:
