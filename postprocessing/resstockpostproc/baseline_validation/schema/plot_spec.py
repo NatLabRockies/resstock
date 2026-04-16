@@ -287,8 +287,16 @@ class PlotSpec(NoExtraModel):
 
     @property
     def _per_unit_label(self) -> str:
-        """'per Consuming Dwelling Unit' or 'per Dwelling Unit'."""
-        return "per Consuming Dwelling Unit" if self.coverage == CoverageType.users_only else "per Dwelling Unit"
+        """'per Dwelling Unit' variant, qualified with 'Occupied' for RECS.
+
+        Includes a leading <br> so plot titles break onto a second line cleanly.
+        """
+        is_recs = self.comparison_dataset == ComparisonDataset.recs
+        if self.coverage == CoverageType.users_only:
+            unit = "per Occupied Consuming Dwelling Unit" if is_recs else "per Consuming Dwelling Unit"
+        else:
+            unit = "per Occupied Dwelling Unit" if is_recs else "per Dwelling Unit"
+        return f"<br>{unit}"
 
     @property
     def data_key(self) -> DataKey:
@@ -428,7 +436,10 @@ class PlotSpec(NoExtraModel):
 
     @property
     def display_coverage(self) -> str:
-        return "All Units" if self.coverage == CoverageType.all_units else "Consuming Units Only"
+        is_recs = self.comparison_dataset == ComparisonDataset.recs
+        if self.coverage == CoverageType.all_units:
+            return "All Occupied Dwelling Units" if is_recs else "All Dwelling Units"
+        return "Occupied Consuming Dwelling Units Only" if is_recs else "Consuming Dwelling Units Only"
 
     @property
     def display_metric(self) -> str:

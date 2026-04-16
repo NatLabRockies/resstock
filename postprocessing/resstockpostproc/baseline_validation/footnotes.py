@@ -8,10 +8,16 @@ from typing import Literal
 from resstockpostproc.baseline_validation.plotters.plot_config import _resolve_rse_column
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     ComparisonDataset,
+    CoverageType,
+    Layout,
     PlotSpec,
     Resolution,
 )
-from resstockpostproc.shared_utils.db_column_names import DataCol
+from resstockpostproc.shared_utils.db_column_names import (
+    DataCol,
+    _ENDUSE_OVERRIDES,
+    _FUEL_PREFIXES,
+)
 
 
 NoteContext = Literal["plot", "table"]
@@ -36,6 +42,27 @@ EIA_NATURAL_GAS_PENETRATION_NOTE = (
     "natural gas customer count by the electricity customer count. For ResStock, it is "
     "the percent of models that have non-zero natural gas consumption."
 )
+HISTOGRAM_OVERFLOW_NOTE = (
+    "Values above the 98th percentile are grouped into an overflow bin shown at double "
+    "width. Hover over the bin to see its actual range."
+)
+
+
+def _fuel_and_enduse(quantity: DataCol) -> tuple[str, str | None] | None:
+    """Extract (fuel_name, enduse_name_or_None) from a fuel/enduse DataCol.
+
+    Returns None for non-fuel quantities (ALL, UNITS_COUNT, etc.).
+    For fuel totals: ("Natural Gas", None).
+    For enduses: ("Electricity", "Space Cooling").
+    """
+    for prefix, fuel_name in _FUEL_PREFIXES.items():
+        if quantity.value.startswith(prefix + "_"):
+            enduse = quantity.value[len(prefix) + 1:]
+            if enduse == "total":
+                return (fuel_name, None)
+            enduse_name = _ENDUSE_OVERRIDES.get(enduse, enduse.replace("_", " ").title())
+            return (fuel_name, enduse_name)
+    return None
 
 
 def _merge_notes(*note_groups: list[str] | None) -> list[str] | None:
@@ -62,16 +89,35 @@ def _uses_monthly_ci_band(plot_spec: PlotSpec) -> bool:
 
 
 def get_dataset_notes(plot_spec: PlotSpec) -> list[str] | None:
-    """Return dataset-wide caveat notes."""
-    if plot_spec.comparison_dataset == ComparisonDataset.recs:
-        return [RECS_OCCUPIED_UNITS_NOTE]
+    """Return dataset-wide caveat notes.
+
+    RECS "occupied units" note is handled by get_coverage_note() instead,
+    so this function can focus on future dataset-level caveats.
+    """
+    _ = plot_spec
     return None
 
 
 def get_coverage_note(plot_spec: PlotSpec) -> list[str] | None:
-    """Return coverage-specific notes when coverage changes interpretation."""
-    _ = plot_spec
-    return None
+    """Return coverage-specific notes about which dwelling units are included."""
+    is_recs = plot_spec.comparison_dataset == ComparisonDataset.recs
+    is_users = plot_spec.coverage == CoverageType.users_only
+
+    if not is_recs and not is_users:
+        return None
+
+    if is_recs and not is_users:
+        return [RECS_OCCUPIED_UNITS_NOTE]
+
+    # users_only: describe which consuming units are included
+    prefix = "Only occupied dwelling units" if is_recs else "Only dwelling units"
+    parts = _fuel_and_enduse(plot_spec.quantity)
+    if parts is None:
+        return [f"{prefix} with non-zero consumption are included in the comparison."]
+    fuel_name, enduse_name = parts
+    if enduse_name is None:
+        return [f"{prefix} which consumed {fuel_name} are included in the comparison."]
+    return [f"{prefix} which consumed {fuel_name} for {enduse_name} are included in the comparison."]
 
 
 def get_metric_notes(plot_spec: PlotSpec, context: NoteContext) -> list[str] | None:
@@ -92,6 +138,9 @@ def get_metric_notes(plot_spec: PlotSpec, context: NoteContext) -> list[str] | N
         notes.append(RECS_MONTHLY_CI_NOTE)
     elif _has_recs_rse(plot_spec):
         notes.append(RECS_GENERIC_RSE_NOTE)
+
+    if plot_spec.layout == Layout.histogram:
+        notes.append(HISTOGRAM_OVERFLOW_NOTE)
 
     return notes or None
 

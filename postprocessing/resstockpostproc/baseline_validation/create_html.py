@@ -91,7 +91,8 @@ class IndexState:
     self._manifest_changed = False
 
     row = dict(row_dict)
-    row.setdefault("Coverage", "All Units")
+    _is_recs = "RECS" in str(row.get("Comparison Dataset", "")).upper()
+    row.setdefault("Coverage", "All Occupied Dwelling Units" if _is_recs else "All Dwelling Units")
     row = _normalize_rows([row])[0]
     row = {h: row.get(h, "") for h in self.headers}
 
@@ -1126,7 +1127,8 @@ def create_html_from_rows(rows: list[dict[str, str]], headers: Sequence[str], ht
     row_list = []
     for r in rows:
         rr = dict(r)
-        rr.setdefault("Coverage", "All Units")
+        _is_recs = "RECS" in str(rr.get("Comparison Dataset", "")).upper()
+        rr.setdefault("Coverage", "All Occupied Dwelling Units" if _is_recs else "All Dwelling Units")
         row_list.append(rr)
 
     html_path.parent.mkdir(parents=True, exist_ok=True)
