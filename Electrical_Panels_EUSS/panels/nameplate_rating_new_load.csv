@@ -19,7 +19,7 @@ well pump,1.5 HP,240,,1119,,,https://www.rpswaterpumps.com/collections/pump-for-
 clothes dryer,electric ventless,240,,2640,,,the data the brennan shared,NEC 220-18 says min 5000 W
 clothes dryer,electric,240,,5760,,,the data the brennan shared,NEC 220-18 says min 5000 W
 clothes dryer,"electric, 120V",120,,996,,,,brennan shared
-clothes dryer,heat pump,240,,860,,,the data the brennan shared,same as electric resistance
+clothes dryer,heat pump,240,30,5760,,,the data the brennan shared,same as electric resistance (previously 860)
 clothes dryer,"heat pump, 120V",120,,996,,,,same as electric resistance
 range/oven,electric,240,,12000,,,,"brennan shared, 8000-16000 W, Kopperfield 8000W"
 range/oven,induction,240,,12000,,,,"brennan shared, 8000-16000 W"
