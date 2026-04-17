@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from functools import cache
+import logging
 from pathlib import Path
 
 import polars as pl
@@ -31,6 +32,7 @@ from resstockpostproc.shared_utils.timing import timed
 
 
 _LOCAL_RECS_DATA_DIR = Path(f"{workflow.output.output_dir}/data")
+logger = logging.getLogger(__name__)
 
 
 @timed
@@ -136,7 +138,17 @@ def _load_resstock_hist_rows(
         )
 
     group_exprs = [_resstock_group_expr(col, available) for col in group_cols]
-    value_expr = _resstock_quantity_expr(quantity, data_source.db_schema, available).alias("value")
+    try:
+        value_expr = _resstock_quantity_expr(quantity, data_source.db_schema, available).alias("value")
+    except ValueError as exc:
+        if "Missing required quantity column" not in str(exc):
+            raise
+        logger.info(
+            "Skipping histogram source %s for quantity %s because the raw parquet lacks that enduse column.",
+            data_source.name,
+            quantity,
+        )
+        return _empty_hist_rows(group_cols)
 
     out = lf.select(
         *group_exprs,
@@ -185,3 +197,14 @@ def _add_us_total_rows(df: pl.DataFrame, group_cols: list[str]) -> pl.DataFrame:
         ],
         how="diagonal_relaxed",
     )
+
+
+def _empty_hist_rows(group_cols: list[str]) -> pl.DataFrame:
+    """Return an empty histogram-row dataframe with the expected schema."""
+    schema = {col: pl.String for col in group_cols}
+    schema.update({
+        "value": pl.Float64,
+        "weight": pl.Float64,
+        "source": pl.String,
+    })
+    return pl.DataFrame(schema=schema)

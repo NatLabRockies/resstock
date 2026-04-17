@@ -109,6 +109,37 @@ class TestHistogramRawLoaders:
         )
         assert expr.meta.output_name() == "out.electricity.total.energy_consumption.kwh"
 
+    def test_resstock_loader_skips_source_when_optional_quantity_column_is_missing(self, monkeypatch):
+        raw = pl.DataFrame(
+            {
+                "out.electricity.total.energy_consumption..kwh": [10.0, 40.0],
+                "weight": [1.5, 4.5],
+            }
+        )
+        monkeypatch.setattr(
+            type(histogram_data.workflow),
+            "get_resstock_data_file",
+            lambda self, _name: Path("/tmp/fake_upgrade0.parquet"),
+        )
+        monkeypatch.setattr(histogram_data.pl, "scan_parquet", lambda _path: raw.lazy())
+
+        source = DataSourceConfig(
+            name="resstock_2024",
+            db_name="buildstock",
+            table_name="baseline",
+            db_schema=DBSchema.OEDI_NEW,
+        )
+
+        out = histogram_data._load_resstock_hist_rows(
+            data_source=source,
+            quantity=DataCol.ELECTRICITY_TELEVISION,
+            coverage=CoverageType.all_units,
+            group_cols=[],
+        )
+
+        assert out.is_empty()
+        assert out.columns == ["value", "weight", "source"]
+
 
 class TestHistogramDataGeometryScope:
     def test_focus_slice_uses_recs_geometry_across_grouped_facets(self, monkeypatch):
