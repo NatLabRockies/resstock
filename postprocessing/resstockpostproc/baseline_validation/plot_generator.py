@@ -27,6 +27,15 @@ from resstockpostproc.baseline_validation.footnotes import (
     get_plot_notes,
     get_table_notes,
 )
+from resstockpostproc.baseline_validation.dashboard_paths import (
+    comparisons_index_data_dir,
+    comparisons_index_tsv_path,
+    dashboard_assets_dir,
+    dashboard_html_path,
+    dataset_output_dir,
+    relative_href_from_file,
+    trace_output_path,
+)
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.plotters import lrd_plotter, recs_plotter
 from resstockpostproc.baseline_validation.schema.plot_spec import (
@@ -50,7 +59,12 @@ from resstockpostproc.baseline_validation.schema.plot_definitions import (
     _make_related_specs,
     _make_spec,
 )
-from resstockpostproc.baseline_validation.io_managers.output_manager import save_figure
+from resstockpostproc.baseline_validation.io_managers.output_manager import (
+    ensure_plotly_asset,
+    plotly_cdn_url,
+    save_figure,
+    save_static_images_batch,
+)
 from resstockpostproc.baseline_validation.io_managers.data_table import (
     _format_source_label,
     generate_data_table_html,
@@ -67,6 +81,8 @@ from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.shared_utils.timing import TimingStats, timed
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s", force=True)
+for noisy_logger_name in ("kaleido", "choreographer", "browser_proc"):
+    logging.getLogger(noisy_logger_name).setLevel(logging.ERROR)
 logger = logging.getLogger(__name__)
 
 
@@ -75,6 +91,65 @@ class _TqdmLoggingHandler(logging.Handler):
 
     def emit(self, record):
         tqdm.write(self.format(record))
+
+
+_OWNS_KALEIDO_SYNC_SERVER = False
+
+
+def _has_static_image_outputs(output_formats: list[FileType]) -> bool:
+    """Return whether a run will emit any Kaleido-backed image outputs."""
+    return any(fmt in {FileType.svg, FileType.pdf} for fmt in output_formats)
+
+
+def _kaleido_sync_server_options() -> dict:
+    """Match Plotly's Kaleido defaults when starting a persistent sync server."""
+    import plotly.io as pio
+
+    options = {"n": 1}
+    if pio.defaults.plotlyjs:
+        options["plotlyjs"] = pio.defaults.plotlyjs
+    if pio.defaults.mathjax:
+        options["mathjax"] = pio.defaults.mathjax
+    return options
+
+
+def _is_kaleido_sync_server_running() -> bool:
+    """Return whether the process-local Kaleido sync server is already running."""
+    import kaleido
+
+    server = getattr(kaleido, "_global_server", None)
+    return bool(server and server.is_running())
+
+
+def _ensure_kaleido_sync_server() -> bool:
+    """Start the process-local Kaleido sync server if needed.
+
+    Returns True only when this module started the server and therefore owns
+    shutting it down later.
+    """
+    global _OWNS_KALEIDO_SYNC_SERVER
+
+    if _is_kaleido_sync_server_running():
+        return False
+
+    import kaleido
+
+    kaleido.start_sync_server(silence_warnings=True, **_kaleido_sync_server_options())
+    _OWNS_KALEIDO_SYNC_SERVER = True
+    return True
+
+
+def _stop_kaleido_sync_server_if_owned() -> None:
+    """Stop the process-local Kaleido sync server only if this module started it."""
+    global _OWNS_KALEIDO_SYNC_SERVER
+
+    if not _OWNS_KALEIDO_SYNC_SERVER:
+        return
+
+    import kaleido
+
+    kaleido.stop_sync_server(silence_warnings=True)
+    _OWNS_KALEIDO_SYNC_SERVER = False
 
 
 OUTPUT_COLUMNS = [
@@ -651,13 +726,41 @@ def _save_data_csv(data, data_dir, file_title):
     _unnest_list_columns(data).write_csv(data_dir / f"{file_title}.csv")
 
 
+def _resolve_output_formats(output_formats: list[FileType] | None) -> list[FileType]:
+    """Resolve effective output formats for a run.
+
+    HTML output always implies SVG backup output.
+    """
+    resolved = list(output_formats or [FileType(fmt.value) for fmt in workflow.plots.output_formats])
+    deduped: list[FileType] = []
+    for fmt in resolved:
+        if fmt not in deduped:
+            deduped.append(fmt)
+    if FileType.html in deduped and FileType.svg not in deduped:
+        deduped.append(FileType.svg)
+    return deduped
+
+
+def _plot_output_path(output_root: Path, plot_spec: PlotSpec, fmt: FileType) -> Path:
+    """Return the absolute output path for a plot artifact."""
+    path_seg, file_title = plot_spec.file_path_and_name
+    return dataset_output_dir(output_root, str(plot_spec.comparison_dataset), "plots", fmt.value) / path_seg / f"{file_title}.{fmt.value}"
+
+
+def _data_output_path(output_root: Path, plot_spec: PlotSpec, fmt: FileType) -> Path:
+    """Return the absolute output path for a data artifact."""
+    path_seg, file_title = plot_spec.file_path_and_name
+    return dataset_output_dir(output_root, str(plot_spec.comparison_dataset), "data", fmt.value) / path_seg / f"{file_title}.{fmt.value}"
+
+
 @timed
 def _generate_spec_plots(
     spec_entries,
     output_formats,
     link_format,
-    output_base,
+    output_root,
     source_labels=None,
+    plotly_asset_path: Path | None = None,
 ) -> tuple[str, str | None] | None:
     """Generate plots for a list of (PlotSpec, viz_type_str) entries.
 
@@ -676,23 +779,35 @@ def _generate_spec_plots(
     if not has_reference or not has_resstock:
         return None
 
+    dashboard_path = dashboard_html_path(output_root)
     viz_parts = []
     data_rel = None
+    static_image_jobs: list[tuple[go.Figure, PlotSpec, FileType]] = []
     for idx, (plot_spec, viz_type_str) in enumerate(spec_entries):
         try:
             data = get_plot_data(plot_spec)
             plot_func = get_plotting_function(plot_spec.comparison_dataset)
             fig, title = plot_func(data, plot_spec)
             spec_footnotes = get_plot_notes(plot_spec)
-            save_figure(fig, plot_spec, formats=output_formats,
-                        footnotes=spec_footnotes, source_labels=source_labels)
+            html_formats = [fmt for fmt in output_formats if fmt == FileType.html]
+            if html_formats:
+                save_figure(
+                    fig,
+                    plot_spec,
+                    formats=html_formats,
+                    footnotes=spec_footnotes,
+                    source_labels=source_labels,
+                    output_root=output_root,
+                    plotly_asset_path=plotly_asset_path,
+                )
+            static_image_jobs.extend(
+                (fig, plot_spec, fmt) for fmt in output_formats if fmt in {FileType.svg, FileType.pdf}
+            )
 
             # Build relative path to the enhanced plot file
-            path_seg, file_title = plot_spec.file_path_and_name
-            rel_path = (
-                Path(f"{plot_spec.comparison_dataset} plots ({link_format})") / path_seg / f"{file_title}.{link_format.value}"
-            )
-            rel_path_str = str(rel_path).replace("\\", "/")
+            _, file_title = plot_spec.file_path_and_name
+            plot_path = _plot_output_path(output_root, plot_spec, link_format)
+            rel_path_str = relative_href_from_file(plot_path, dashboard_path)
             viz_parts.append(f"{viz_type_str}||{rel_path_str}")
 
             # Data exports and table links are anchored to the primary spec only.
@@ -704,18 +819,18 @@ def _generate_spec_plots(
                 or plot_spec.is_penetration_metric
                 or plot_spec.is_distribution_metric
             ):
-                data_dir = output_base / f"{plot_spec.comparison_dataset} data (csv)" / path_seg
+                data_path = _data_output_path(output_root, plot_spec, FileType.csv)
+                data_dir = data_path.parent
                 ensure_directory(data_dir)
                 _save_data_csv(data, data_dir, file_title)
 
                 metrics_by_source = _compute_discrepancy(data, plot_spec)
 
                 if should_generate_table(data, plot_spec):
-                    table_dir = output_base / f"{plot_spec.comparison_dataset} data (html)" / path_seg
+                    table_path = _data_output_path(output_root, plot_spec, FileType.html)
+                    table_dir = table_path.parent
                     ensure_directory(table_dir)
-                    table_path = table_dir / f"{file_title}.html"
-                    table_depth = len(table_path.relative_to(output_base).parents) - 1
-                    plot_rel_from_table = "../" * table_depth + rel_path_str
+                    plot_rel_from_table = relative_href_from_file(plot_path, table_path)
                     spec_table_footnotes = get_table_notes(plot_spec)
                     generate_data_table_html(
                         data=data,
@@ -726,23 +841,25 @@ def _generate_spec_plots(
                         footnotes=spec_table_footnotes,
                         source_labels=source_labels,
                     )
-                    rel_table = Path(f"{plot_spec.comparison_dataset} data (html)") / path_seg / f"{file_title}.html"
-                    rel_csv = Path(f"{plot_spec.comparison_dataset} data (csv)") / path_seg / f"{file_title}.csv"
+                    rel_table = relative_href_from_file(table_path, dashboard_path)
+                    rel_csv = relative_href_from_file(data_path, dashboard_path)
                     data_rel = (
-                        f"data table||{str(rel_table).replace(chr(92), '/')}"
+                        f"data table||{rel_table}"
                         " ;; "
-                        f"download csv||{str(rel_csv).replace(chr(92), '/')}"
+                        f"download csv||{rel_csv}"
                     )
 
         except Exception:
             tb = traceback.format_exc()
             viz_parts.append(f"FAILED: {viz_type_str}||{tb}")
 
+    save_static_images_batch(static_image_jobs, output_root=output_root)
+
     return " ;; ".join(viz_parts), data_rel
 
 
 
-def _worker_init():
+def _worker_init(enable_persistent_kaleido: bool = True):
     """Process initializer for worker pool — collect timing in memory, use read-only disk cache."""
     from resstockpostproc.shared_utils import caching
     TimingStats.enable_worker_mode()
@@ -750,6 +867,8 @@ def _worker_init():
     # Suppress worker stdout/stderr — the main process logs progress via tqdm.
     sys.stdout = open(os.devnull, "w")
     sys.stderr = open(os.devnull, "w")
+    if enable_persistent_kaleido:
+        _ensure_kaleido_sync_server()
 
 
 def _worker_run(*args, **kwargs):
@@ -781,7 +900,7 @@ def _handle_plot_result(sub_key, result, results, csv_path, index_state):
     append_index_row(index_state, row)
 
 
-def generate_plots(index=None, test_only=False, parallel=True):
+def generate_plots(index=None, test_only=False, parallel=True, output_formats: list[FileType] | None = None):
     """Generate baseline validation plots.
 
     Args:
@@ -811,21 +930,24 @@ def generate_plots(index=None, test_only=False, parallel=True):
 
     source_labels = workflow.data_source_labels
 
-    output_formats = [FileType(fmt.value) for fmt in workflow.plots.output_formats]
+    output_formats = _resolve_output_formats(output_formats)
+    needs_persistent_kaleido = _has_static_image_outputs(output_formats)
     link_format = FileType.html if FileType.html in output_formats else output_formats[0]
-    output_base = Path(workflow.output.output_dir) / workflow.output.run_name
-    csv_path = output_base / "comparisons_index.tsv"
-    html_path = output_base / "comparisons_index.html"
+    output_root = Path(workflow.output.output_dir) / workflow.output.run_name
+    csv_path = comparisons_index_tsv_path(output_root)
+    html_path = dashboard_html_path(output_root)
+    index_data_dir = comparisons_index_data_dir(output_root)
+    plotly_asset_path = ensure_plotly_asset(dashboard_assets_dir(output_root))
 
     # Initialize the CSV (header only) and the HTML index (shell + data dir).
     csv_path.parent.mkdir(parents=True, exist_ok=True)
 
     # Chrome Trace Event Format — streaming writes for Perfetto UI visualization
-    trace_path = output_base / "trace.json"
+    trace_path = trace_output_path(output_root)
     TimingStats.start_trace(trace_path)
     with open(csv_path, "w", newline="") as f:
         csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS, delimiter="\t").writeheader()
-    index_state = init_html_index(html_path, OUTPUT_COLUMNS)
+    index_state = init_html_index(html_path, OUTPUT_COLUMNS, data_dir=index_data_dir)
 
     # Expand templates into work items via slot triples
     work_items = _expand_templates(templates, test_only=test_only)
@@ -933,8 +1055,13 @@ def generate_plots(index=None, test_only=False, parallel=True):
             ))
 
     # Pass 3: Generate plots — parallel or sequential
-    common_kwargs = dict(output_formats=output_formats, link_format=link_format,
-                         output_base=output_base, source_labels=source_labels or None)
+    common_kwargs = dict(
+        output_formats=output_formats,
+        link_format=link_format,
+        output_root=output_root,
+        source_labels=source_labels or None,
+        plotly_asset_path=plotly_asset_path,
+    )
 
     # Swap logging to tqdm-aware handler so log lines render above the progress bar
     root_logger = logging.getLogger()
@@ -950,7 +1077,11 @@ def generate_plots(index=None, test_only=False, parallel=True):
             max_workers = max(2, min(8, (os.cpu_count() or 4) - 2))
             logger.info(f"Using {max_workers} worker processes")
             futures = {}
-            with ProcessPoolExecutor(max_workers=max_workers, initializer=_worker_init) as executor:
+            with ProcessPoolExecutor(
+                max_workers=max_workers,
+                initializer=_worker_init,
+                initargs=(needs_persistent_kaleido,),
+            ) as executor:
                 for sub_key, focused_entries in plot_args:
                     future = executor.submit(
                         _worker_run, focused_entries, **common_kwargs,
@@ -967,6 +1098,8 @@ def generate_plots(index=None, test_only=False, parallel=True):
                     _handle_plot_result(sub_key, result, results, csv_path, index_state)
                     pbar.update(1)
         else:
+            if needs_persistent_kaleido:
+                _ensure_kaleido_sync_server()
             for sub_key, focused_entries in plot_args:
                 result = _generate_spec_plots(
                     focused_entries, **common_kwargs,
@@ -974,6 +1107,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
                 _handle_plot_result(sub_key, result, results, csv_path, index_state)
                 pbar.update(1)
     finally:
+        _stop_kaleido_sync_server_if_owned()
         pbar.close()
         root_logger.handlers = original_handlers
 
@@ -984,10 +1118,11 @@ def generate_plots(index=None, test_only=False, parallel=True):
     eligible_groups = {k: v for k, v in stacking_groups.items() if _should_generate_stacked_page_group(v)}
     stacked_count = 0
     stacked_table_data_cache: dict[tuple, pl.DataFrame] = {}
+    dashboard_path = dashboard_html_path(output_root)
 
     def _raw_path(spec: PlotSpec) -> Path:
-        ps, ft = spec.file_path_and_name
-        return output_base / f"{spec.comparison_dataset} plots ({link_format})" / ps / f"{ft}.raw.{link_format.value}"
+        raw_path = _plot_output_path(output_root, spec, link_format)
+        return raw_path.with_name(f"{raw_path.stem}.raw.{link_format.value}")
 
     stacked_pbar = tqdm(
         eligible_groups.items(), total=len(eligible_groups),
@@ -1019,19 +1154,19 @@ def generate_plots(index=None, test_only=False, parallel=True):
             all_view_spec = view_spec.model_copy(update={"quantity": DataCol.ALL})
             _, grouped_title = all_view_spec.file_path_and_name
             title = _stacked_title_from_grouped(grouped_title, all_view_spec.view)
-            ds_dir = f"{first_spec.comparison_dataset} plots ({link_format})"
-            out = output_base / ds_dir / path_seg / f"{title}.{link_format.value}"
+            out = dataset_output_dir(output_root, str(first_spec.comparison_dataset), "plots", link_format.value) / path_seg / f"{title}.{link_format.value}"
             ensure_directory(out.parent)
             postprocess_plot_html(
                 paths, output_path=out, footnotes=plot_notes,
                 source_labels=source_labels, scale_x=scale_x, scale_y=scale_y,
                 comparison_dataset=first_spec.comparison_dataset.value,
+                plotly_cdn_src=plotly_cdn_url(),
+                plotly_asset_path=plotly_asset_path,
             )
-            rel = Path(ds_dir) / path_seg / f"{title}.{link_format.value}"
-            rel_str = str(rel).replace("\\", "/")
+            rel_str = relative_href_from_file(out, dashboard_path)
             stacked_label = _all_enduses_viz_label(all_view_spec, stacked=True)
             viz_parts.append(f"{stacked_label}||{rel_str}")
-            stacked_outputs.append((i, all_view_spec, rel_str))
+            stacked_outputs.append((i, all_view_spec, str(out)))
             stacked_count += 1
 
         if viz_parts:
@@ -1045,19 +1180,19 @@ def generate_plots(index=None, test_only=False, parallel=True):
                     (o for o in stacked_outputs if o[1].view == ViewType.value_view),
                     stacked_outputs[0],
                 )
+                stacked_plot_path = Path(table_rel_plot)
                 stacked_data = _build_stacked_table_data(
                     qty_entries, table_view_index, stacked_table_data_cache
                 )
                 if not stacked_data.is_empty() and should_generate_table(stacked_data, table_spec):
-                    table_dir = output_base / f"{table_spec.comparison_dataset} data (html)" / path_seg
+                    table_dir = dataset_output_dir(output_root, str(table_spec.comparison_dataset), "data", FileType.html.value) / path_seg
                     ensure_directory(table_dir)
-                    data_dir = output_base / f"{table_spec.comparison_dataset} data (csv)" / path_seg
+                    data_dir = dataset_output_dir(output_root, str(table_spec.comparison_dataset), "data", FileType.csv.value) / path_seg
                     ensure_directory(data_dir)
 
-                    table_file_title = Path(table_rel_plot).stem
+                    table_file_title = stacked_plot_path.stem
                     table_path = table_dir / f"{table_file_title}.html"
-                    table_depth = len(table_path.relative_to(output_base).parents) - 1
-                    plot_rel_from_table = "../" * table_depth + table_rel_plot
+                    plot_rel_from_table = relative_href_from_file(stacked_plot_path, table_path)
 
                     _save_data_csv(stacked_data, data_dir, table_file_title)
                     generate_data_table_html(
@@ -1071,12 +1206,12 @@ def generate_plots(index=None, test_only=False, parallel=True):
                         csv_download_filename=f"{table_file_title}.csv",
                         include_discrepancy_metrics=False,
                     )
-                    rel_table = Path(f"{table_spec.comparison_dataset} data (html)") / path_seg / f"{table_file_title}.html"
-                    rel_csv = Path(f"{table_spec.comparison_dataset} data (csv)") / path_seg / f"{table_file_title}.csv"
+                    rel_table = relative_href_from_file(table_path, dashboard_path)
+                    rel_csv = relative_href_from_file(data_dir / f"{table_file_title}.csv", dashboard_path)
                     data_rel = (
-                        f"data table||{str(rel_table).replace(chr(92), '/')}"
+                        f"data table||{rel_table}"
                         " ;; "
-                        f"download csv||{str(rel_csv).replace(chr(92), '/')}"
+                        f"download csv||{rel_csv}"
                     )
 
             row = {
@@ -1103,7 +1238,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
 
     # Clean up raw Plotly HTML files — only the post-processed versions are needed.
     for ds in ComparisonDataset:
-        plots_dir = output_base / f"{ds} plots ({link_format})"
+        plots_dir = dataset_output_dir(output_root, str(ds), "plots", link_format.value)
         if plots_dir.exists():
             for raw_html in plots_dir.rglob(f"*.raw.{link_format.value}"):
                 raw_html.unlink()

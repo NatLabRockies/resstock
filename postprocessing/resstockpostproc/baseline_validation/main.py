@@ -7,10 +7,11 @@ from pathlib import Path
 
 from resstockpostproc.baseline_validation.plot_generator import generate_plots
 from resstockpostproc.baseline_validation.schema.workflow_schema import PlotType, workflow
+from resstockpostproc.baseline_validation.schema.plot_spec import FileType
 
 # Suppress verbose logging from image export libraries
-logging.getLogger("kaleido").setLevel(logging.WARNING)
-logging.getLogger("choreographer").setLevel(logging.WARNING)
+logging.getLogger("kaleido").setLevel(logging.ERROR)
+logging.getLogger("choreographer").setLevel(logging.ERROR)
 
 
 def main() -> int:
@@ -86,7 +87,7 @@ def main() -> int:
                 except ValueError:
                     print(f"Warning: Invalid plot type '{pt}'. Skipping.")
 
-    generate_plots()
+    generate_plots(output_formats=[FileType(output_type) for output_type in output_types])
     return 0
 
 

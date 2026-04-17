@@ -107,33 +107,34 @@ output:
 
 ### Output
 
-All outputs are written to `<output_dir>/plots/<run_name>/`:
+All outputs are written to `<output_dir>/<run_name>/`.
+Open `comparison_dashboard.html` in that run directory to browse the generated dashboard.
 
 ```
-plots/
-└── baseline_2023_03_16/
-    ├── eia/
-    │   ├── annual_state/
-    │   │   ├── html/
-    │   │   ├── svg/
-    │   │   └── data/
-    │   ├── annual_eiaid/
-    │   └── monthly_state/
-    ├── lrd/
-    │   ├── html/
-    │   ├── svg/
-    │   └── data/
-    └── timeseries/
-        └── {state}/
-            ├── html/
-            └── svg/
+baseline_2023_03_16/
+├── comparison_dashboard.html
+└── dashboard_data/
+    ├── assets/
+    │   └── plotly-<version>.min.js
+    ├── comparisons_index/
+    │   ├── combinations.js
+    │   └── data-*.js
+    ├── comparisons_index.tsv
+    ├── trace.json
+    ├── eia plots (html)/
+    ├── eia plots (svg)/
+    ├── eia data (html)/
+    ├── eia data (csv)/
+    ├── recs plots (html)/
+    └── ...
 ```
 
 **Output formats:**
-- `html/` - Interactive Plotly visualizations
-- `svg/` - Vector graphics for reports
-- `data/` - Parquet files with plot data for further analysis
-- `figure_json/` - Serialized Plotly JSON (optional)
+- `comparison_dashboard.html` - standalone dashboard entrypoint
+- `dashboard_data/* plots (html)/` - interactive Plotly visualizations
+- `dashboard_data/* plots (svg)/` - SVG backups for HTML plots
+- `dashboard_data/* data (html)/` - interactive table views
+- `dashboard_data/* data (csv)/` - exported table data
 
 ## Prerequisites
 
@@ -253,7 +254,7 @@ plots:
 
   output_formats:                 # File formats to save
     - html                        # Interactive plots
-    - svg                         # Static vector graphics
+    - svg                         # Static vector graphics (also added automatically when html is requested)
     - parquet                     # Data tables
 ```
 

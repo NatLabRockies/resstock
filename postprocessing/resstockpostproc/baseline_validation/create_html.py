@@ -1,6 +1,4 @@
-"""Generate comparisons_index.html with single-select sidebar filters and inline plot viewer.
-
-This is an alternative index UI to comparisons_index.html.
+"""Generate a standalone dashboard with single-select sidebar filters and an inline plot viewer.
 
 Behavior:
 - Left sidebar contains all filter dimensions, single-select only (no "All").
@@ -21,12 +19,16 @@ from collections import defaultdict
 from collections.abc import Sequence
 from pathlib import Path
 
+from resstockpostproc.baseline_validation.dashboard_paths import (
+    COMPARISONS_INDEX_DIRNAME,
+    relative_href_from_file,
+)
 from resstockpostproc.baseline_validation.schema.plot_spec import ALL_ENDUSES_DISPLAY
 
 
 NON_FILTER_COLUMNS = {"Index", "Comparison Plot", "Data"}
 _FILTER1_COLUMN = "Filter 1"
-DATA_DIR_NAME = "comparisons_index_data"
+DATA_DIR_NAME = COMPARISONS_INDEX_DIRNAME
 COMBINATIONS_FILENAME = "combinations.js"
 _JS_SUFFIX = "\n`);\n"
 METRIC_ORDER = [
@@ -46,14 +48,21 @@ METRIC_ORDER = [
 class IndexState:
   """Incremental index state for O(1) shard appends and streamed combinations."""
 
-  def __init__(self, html_path: Path, headers: Sequence[str]):
+  def __init__(
+      self,
+      html_path: Path,
+      headers: Sequence[str],
+      data_dir: Path | None = None,
+      data_dir_href: str | None = None,
+  ):
     self.html_path = html_path
     headers_list = list(headers)
     if "Coverage" not in headers_list:
       insert_at = headers_list.index("Metric") + 1 if "Metric" in headers_list else len(headers_list)
       headers_list.insert(insert_at, "Coverage")
     self.headers = headers_list
-    self.data_dir = html_path.parent / DATA_DIR_NAME
+    self.data_dir = data_dir or (html_path.parent / DATA_DIR_NAME)
+    self.data_dir_href = data_dir_href or relative_href_from_file(self.data_dir, html_path)
     self.manifest: dict[str, str] = {}
     self.shard_suffix_sizes: dict[str, int] = {}
     self.filter_cols = [h for h in self.headers if h not in NON_FILTER_COLUMNS]
@@ -227,7 +236,7 @@ def _row_to_tsv_line(row: dict[str, str], headers: Sequence[str]) -> str:
     return line.replace("\\", "\\\\").replace("`", "\\`").replace("${", "\\${")
 
 
-def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
+def _build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: str) -> str:
     filter_cols = [h for h in headers if h not in NON_FILTER_COLUMNS]
     headers_json = json.dumps(list(headers), ensure_ascii=False)
     filter_cols_json = json.dumps(filter_cols, ensure_ascii=False)
@@ -235,15 +244,15 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
     manifest_json = json.dumps(manifest, ensure_ascii=False)
 
     data_script_tags = [
-        f'  <script src="{DATA_DIR_NAME}/{COMBINATIONS_FILENAME}" defer></script>',
+        f'  <script src="{data_dir_href}/{COMBINATIONS_FILENAME}" defer></script>',
     ]
     if "" in manifest:
         data_script_tags.append(
-            f'  <script src="{DATA_DIR_NAME}/{manifest[""]}" defer></script>'
+            f'  <script src="{data_dir_href}/{manifest[""]}" defer></script>'
         )
     for key in sorted(k for k in manifest if k != ""):
         data_script_tags.append(
-            f'  <script src="{DATA_DIR_NAME}/{manifest[key]}" defer></script>'
+            f'  <script src="{data_dir_href}/{manifest[key]}" defer></script>'
         )
     data_scripts_html = "\n".join(data_script_tags)
 
@@ -1114,7 +1123,12 @@ def _build_html(headers: Sequence[str], manifest: dict[str, str]) -> str:
 """
 
 
-def create_html_from_rows(rows: list[dict[str, str]], headers: Sequence[str], html_path: Path) -> None:
+def create_html_from_rows(
+    rows: list[dict[str, str]],
+    headers: Sequence[str],
+    html_path: Path,
+    data_dir: Path | None = None,
+) -> None:
     if not headers:
         html_path.write_text("<html><body><p>Empty file</p></body></html>", encoding="utf-8")
         return
@@ -1132,8 +1146,9 @@ def create_html_from_rows(rows: list[dict[str, str]], headers: Sequence[str], ht
         row_list.append(rr)
 
     html_path.parent.mkdir(parents=True, exist_ok=True)
-    data_dir = html_path.parent / DATA_DIR_NAME
+    data_dir = data_dir or (html_path.parent / DATA_DIR_NAME)
     data_dir.mkdir(parents=True, exist_ok=True)
+    data_dir_href = relative_href_from_file(data_dir, html_path)
 
     shard_rows: dict[str, list[dict[str, str]]] = defaultdict(list)
     combinations_set: set[tuple[str, ...]] = set()
@@ -1161,29 +1176,33 @@ def create_html_from_rows(rows: list[dict[str, str]], headers: Sequence[str], ht
         encoding="utf-8",
     )
 
-    html_path.write_text(_build_html(headers_list, manifest), encoding="utf-8")
+    html_path.write_text(_build_html(headers_list, manifest, data_dir_href), encoding="utf-8")
     print(f"HTML file created: {html_path} ({len(row_list)} rows, {len(manifest)} shards)")
 
 
-def create_html_from_csv(csv_path: Path, html_path: Path) -> None:
+def create_html_from_csv(csv_path: Path, html_path: Path, data_dir: Path | None = None) -> None:
     with open(csv_path, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f, delimiter="\t")
         headers = reader.fieldnames or []
         rows = list(reader)
-    create_html_from_rows(rows, headers, html_path)
+    create_html_from_rows(rows, headers, html_path, data_dir=data_dir)
 
 
 # Backward-compatible alias if older callers still reference this name.
 create_html2_from_csv = create_html_from_csv
 
 
-def init_html_index(html_path: Path, headers: Sequence[str]) -> IndexState:
+def init_html_index(
+    html_path: Path,
+    headers: Sequence[str],
+    data_dir: Path | None = None,
+) -> IndexState:
     """Initialize disk-backed index state for incremental row append."""
     html_path.parent.mkdir(parents=True, exist_ok=True)
-    data_dir = html_path.parent / DATA_DIR_NAME
+    data_dir = data_dir or (html_path.parent / DATA_DIR_NAME)
     data_dir.mkdir(parents=True, exist_ok=True)
 
-    state = IndexState(html_path=html_path, headers=headers)
+    state = IndexState(html_path=html_path, headers=headers, data_dir=data_dir)
     (data_dir / COMBINATIONS_FILENAME).write_text("", encoding="utf-8")
     state.open_combo_file()
     return state
@@ -1193,13 +1212,13 @@ def append_index_row(state: IndexState, row_dict: dict) -> None:
     """Append one row to disk shards/combinations in O(1)."""
     state.append_to_shard(row_dict)
     if state.needs_html_rewrite:
-        _atomic_write(state.html_path, _build_html(state.headers, state.manifest))
+        _atomic_write(state.html_path, _build_html(state.headers, state.manifest, state.data_dir_href))
 
 
 def finalize_html_index(state: IndexState) -> None:
-    """Close streams and write final comparisons_index.html."""
+    """Close streams and write the final dashboard HTML."""
     state.close_combo_file()
-    _atomic_write(state.html_path, _build_html(state.headers, state.manifest))
+    _atomic_write(state.html_path, _build_html(state.headers, state.manifest, state.data_dir_href))
 
 
 def main() -> int:

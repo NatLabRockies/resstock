@@ -7,7 +7,105 @@ and footer injection (Data Sources + Notes).
 import html as html_lib
 import re
 from pathlib import Path
+
+from resstockpostproc.baseline_validation.dashboard_paths import relative_href_from_file
 from resstockpostproc.shared_utils.timing import timed
+
+
+_BODY_RE = re.compile(r"<body[^>]*>\n?(.*?)</body>", re.DOTALL)
+_HEAD_RE = re.compile(r"(<head>.*?</head>)", re.DOTALL)
+_PLOTLY_DIV_STYLE_RE = re.compile(
+    r'class="plotly-graph-div"\s+style="height:([^;"]+);\s*width:([^;"]+);"'
+)
+_PLOTLY_CONFIG_RE = re.compile(
+    r'<script[^>]*>\s*window\.PlotlyConfig\s*=\s*\{MathJaxConfig:\s*[\'"]local[\'"]\};\s*</script>',
+    re.DOTALL,
+)
+_PLOTLY_CDN_SCRIPT_RE = re.compile(
+    r'<script[^>]+src="https://cdn\.plot\.ly/plotly-[^"]+\.min\.js"[^>]*></script>',
+    re.DOTALL,
+)
+
+
+def _build_plotly_loader_html(
+    plotly_cdn_src: str,
+    local_plotly_src: str | None = None,
+    sibling_plotly_src: str | None = None,
+) -> str:
+    """Return a blocking Plotly loader with CDN-first, multi-step fallback behavior."""
+    escaped_cdn = html_lib.escape(plotly_cdn_src, quote=True)
+    fallback_steps: list[str] = []
+    if local_plotly_src:
+        escaped_local = html_lib.escape(local_plotly_src, quote=True)
+        fallback_steps.append(
+            "<script type=\"text/javascript\">\n"
+            "if (!window.Plotly) {\n"
+            f"  document.write('<script charset=\"utf-8\" src=\"{escaped_local}\"><\\\\/script>');\n"
+            "}\n"
+            "</script>\n"
+        )
+    if sibling_plotly_src:
+        escaped_sibling = html_lib.escape(sibling_plotly_src, quote=True)
+        fallback_steps.append(
+            "<script type=\"text/javascript\">\n"
+            "if (!window.Plotly) {\n"
+            f"  document.write('<script charset=\"utf-8\" src=\"{escaped_sibling}\"><\\\\/script>');\n"
+            "}\n"
+            "</script>\n"
+        )
+    return (
+        "<script type=\"text/javascript\">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>\n"
+        f"<script charset=\"utf-8\" src=\"{escaped_cdn}\"></script>\n"
+        + "".join(fallback_steps)
+        +
+        "<script type=\"text/javascript\">\n"
+        "(function() {\n"
+        "  if (!window.Plotly || window.Plotly.__baselineDashboardPatched) return;\n"
+        "  var originalNewPlot = window.Plotly.newPlot;\n"
+        "  var icon = window.Plotly.Icons.camera;\n"
+        "  var extraButtons = [\n"
+        "    {\n"
+        "      name: 'Download PNG',\n"
+        "      icon: icon,\n"
+        "      click: function(gd) {\n"
+        "        window.Plotly.downloadImage(gd, {format: 'png', filename: 'plot', width: gd.offsetWidth, height: gd.offsetHeight, scale: 2});\n"
+        "      }\n"
+        "    },\n"
+        "    {\n"
+        "      name: 'Download SVG',\n"
+        "      icon: icon,\n"
+        "      click: function(gd) {\n"
+        "        window.Plotly.downloadImage(gd, {format: 'svg', filename: 'plot', width: gd.offsetWidth, height: gd.offsetHeight});\n"
+        "      }\n"
+        "    }\n"
+        "  ];\n"
+        "  window.Plotly.newPlot = function(gd, data, layout, config) {\n"
+        "    var mergedConfig = Object.assign({}, config || {});\n"
+        "    var existingButtons = Array.isArray(mergedConfig.modeBarButtonsToAdd)\n"
+        "      ? mergedConfig.modeBarButtonsToAdd.slice()\n"
+        "      : [];\n"
+        "    mergedConfig.modeBarButtonsToAdd = existingButtons.concat(extraButtons);\n"
+        "    return originalNewPlot.call(window.Plotly, gd, data, layout, mergedConfig);\n"
+        "  };\n"
+        "  window.Plotly.__baselineDashboardPatched = true;\n"
+        "})();\n"
+        "</script>\n"
+    )
+
+
+def _coerce_plotly_dim(value: str, default: int) -> int:
+    """Convert a Plotly div dimension string into a pixel integer."""
+    match = re.match(r"\s*([\d.]+)px\s*$", value)
+    if not match:
+        return default
+    return int(float(match.group(1)))
+
+
+def _strip_plotly_bootstrap(body_content: str) -> str:
+    """Remove Plotly bootstrap scripts so the page can provide a shared loader once."""
+    body_content = _PLOTLY_CONFIG_RE.sub("", body_content, count=1)
+    body_content = _PLOTLY_CDN_SCRIPT_RE.sub("", body_content, count=1)
+    return body_content
 
 
 @timed
@@ -20,6 +118,8 @@ def postprocess_plot_html(
     comparison_dataset: str | None = None,
     scale_x: float = 1.0,
     scale_y: float = 1.0,
+    plotly_cdn_src: str | None = None,
+    plotly_asset_path: Path | None = None,
 ) -> None:
     """Post-process Plotly HTML file(s): make chart(s) resizable and add a footer.
 
@@ -43,27 +143,37 @@ def postprocess_plot_html(
     if output_path is None:
         output_path = html_paths[0]
 
+    local_plotly_src = None
+    sibling_plotly_src = None
+    if output_path is not None and plotly_asset_path is not None:
+        local_plotly_src = relative_href_from_file(plotly_asset_path, output_path)
+        sibling_plotly_src = relative_href_from_file(output_path.with_name(plotly_asset_path.name), output_path)
+
     # Read all input HTMLs and extract chart sections
     chart_sections = []
     orig_w, orig_h = "1200", "600"
     for i, path in enumerate(html_paths):
         html = path.read_text(encoding="utf-8")
-        m = re.search(r'class="plotly-graph-div"\s+style="height:([\d.]+)px;\s*width:([\d.]+)px;"', html)
-        if not m:
-            continue
-        orig_h, orig_w = m.group(1), m.group(2)
+        m = _PLOTLY_DIV_STYLE_RE.search(html)
+        if m:
+            orig_h_raw, orig_w_raw = m.group(1).strip(), m.group(2).strip()
+            orig_h = str(_coerce_plotly_dim(orig_h_raw, 600))
+            orig_w = str(_coerce_plotly_dim(orig_w_raw, 1200))
 
-        # Make the plotly div fill its container
-        html = html.replace(
-            f'style="height:{orig_h}px; width:{orig_w}px;"',
-            'style="width:100%; height:100%;"',
-        )
+            # Make the plotly div fill its container
+            html = html.replace(
+                f'style="height:{orig_h_raw}; width:{orig_w_raw};"',
+                'style="width:100%; height:100%;"',
+                1,
+            )
 
         # Extract the <body> content (between <body> and </body>)
-        body_match = re.search(r"<body[^>]*>\n?(.*?)</body>", html, re.DOTALL)
+        body_match = _BODY_RE.search(html)
         if not body_match:
             continue
         body_content = body_match.group(1).strip()
+        if plotly_cdn_src and (local_plotly_src or sibling_plotly_src):
+            body_content = _strip_plotly_bootstrap(body_content).strip()
 
         # Add heading for stacked (multi-chart) pages
         if len(html_paths) > 1 and headings and i < len(headings):
@@ -107,60 +217,71 @@ def postprocess_plot_html(
         f'position:relative; padding:0; margin:10px;">\n'
     )
 
-    # ResizeObserver + custom download buttons (handles multiple charts)
+    # ResizeObserver + autosize handling (download buttons are injected by the loader patch)
     resize_script = """
 <script>
 (function() {
-  var container = document.getElementById('resize-container');
-  var charts = container.querySelectorAll('.plotly-graph-div');
-  if (!container || !charts.length) return;
+  function initResizeBehavior() {
+    var container = document.getElementById('resize-container');
+    if (!container || !window.Plotly) return;
 
-  new ResizeObserver(function() {
-    charts.forEach(function(c) { Plotly.Plots.resize(c); });
-  }).observe(container);
+    var charts = Array.prototype.slice.call(container.querySelectorAll('.plotly-graph-div'));
+    if (!charts.length) return;
 
-  charts.forEach(function(chart) {
-    delete chart.layout.width;
-    delete chart.layout.height;
-    chart.layout.autosize = true;
+    function chartsReady() {
+      return charts.every(function(chart) {
+        return !!(chart.layout && chart._fullLayout);
+      });
+    }
 
-    var icon = Plotly.Icons.camera;
-    Plotly.newPlot(chart, chart.data, chart.layout, Object.assign({}, chart._context || {}, {
-      edits: {
-        annotationPosition: false,
-        annotationText: true,
-        axisTitleText: true,
-        legendPosition: true,
-        legendText: false,
-        shapePosition: false,
-        titleText: true,
-      },
-      modeBarButtonsToRemove: ['toImage'],
-      modeBarButtonsToAdd: [
-        {
-          name: 'Download PNG',
-          icon: icon,
-          click: function(gd) {
-            Plotly.downloadImage(gd, {format: 'png', filename: 'plot', width: gd.offsetWidth, height: gd.offsetHeight, scale: 2});
-          }
-        },
-        {
-          name: 'Download SVG',
-          icon: icon,
-          click: function(gd) {
-            Plotly.downloadImage(gd, {format: 'svg', filename: 'plot', width: gd.offsetWidth, height: gd.offsetHeight});
-          }
-        }
-      ]
-    }));
-  });
+    function autosizeCharts() {
+      charts.forEach(function(chart) {
+        if (!chart.layout) return;
+        delete chart.layout.width;
+        delete chart.layout.height;
+        chart.layout.autosize = true;
+        window.Plotly.Plots.resize(chart);
+      });
+    }
+
+    function waitForCharts(attempt) {
+      if (!chartsReady()) {
+        if (attempt >= 100) return;
+        window.setTimeout(function() { waitForCharts(attempt + 1); }, 50);
+        return;
+      }
+
+      autosizeCharts();
+      new ResizeObserver(function() {
+        charts.forEach(function(chart) {
+          if (chart.layout) window.Plotly.Plots.resize(chart);
+        });
+      }).observe(container);
+    }
+
+    waitForCharts(0);
+  }
+
+  if (document.readyState === 'complete') {
+    initResizeBehavior();
+  } else {
+    window.addEventListener('load', initResizeBehavior, { once: true });
+  }
 })();
 </script>
 """
 
-    # Take the <head> from the first input (contains Plotly CDN script)
+    plotly_loader_html = ""
+    if plotly_cdn_src and (local_plotly_src or sibling_plotly_src):
+        plotly_loader_html = _build_plotly_loader_html(
+            plotly_cdn_src,
+            local_plotly_src=local_plotly_src,
+            sibling_plotly_src=sibling_plotly_src,
+        )
+
+    # Take the <head> from the first input and inject page CSS there.
     first_html = html_paths[0].read_text(encoding="utf-8")
-    head_match = re.search(r"(<head>.*?</head>)", first_html, re.DOTALL)
+    head_match = _HEAD_RE.search(first_html)
     head = head_match.group(1) if head_match else "<head></head>"
     head = head.replace("</head>", css + "</head>")
 
@@ -171,6 +292,7 @@ def postprocess_plot_html(
     body_inner = "\n".join(chart_sections)
     final_html = (
         "<!DOCTYPE html>\n<html>\n" + head + "\n<body>\n"
+        + plotly_loader_html
         + resize_wrapper + body_inner + "\n</div>\n"
         + footer_html + resize_script
         + "</body>\n</html>"

@@ -2,6 +2,10 @@
 
 from pathlib import Path
 
+from resstockpostproc.baseline_validation.dashboard_paths import (
+    comparisons_index_data_dir,
+    dashboard_html_path,
+)
 from resstockpostproc.baseline_validation.create_html import create_html_from_rows
 
 
@@ -28,7 +32,7 @@ def _generate_html(tmp_path: Path) -> str:
             "Filter 1": "State: Colorado",
             "Filter 2": "Building Type: Single-Family Detached",
             "Group By": "",
-            "Comparison Plot": "bar plot||recs plots (html)/example_a.html",
+            "Comparison Plot": "bar plot||dashboard_data/recs plots (html)/example_a.html",
             "Data": "",
         },
         {
@@ -40,7 +44,7 @@ def _generate_html(tmp_path: Path) -> str:
             "Filter 1": "Census Division: Mountain",
             "Filter 2": "Building Type: Single-Family Detached",
             "Group By": "",
-            "Comparison Plot": "bar plot||recs plots (html)/example_b.html",
+            "Comparison Plot": "bar plot||dashboard_data/recs plots (html)/example_b.html",
             "Data": "",
         },
         {
@@ -52,13 +56,13 @@ def _generate_html(tmp_path: Path) -> str:
             "Filter 1": "Utility: Example Utility",
             "Filter 2": "",
             "Group By": "Month-Day",
-            "Comparison Plot": "line plot||lrd plots (html)/example_c.html",
+            "Comparison Plot": "line plot||dashboard_data/lrd plots (html)/example_c.html",
             "Data": "",
         },
     ]
 
-    html_path = tmp_path / "comparisons_index.html"
-    create_html_from_rows(rows, headers, html_path)
+    html_path = dashboard_html_path(tmp_path)
+    create_html_from_rows(rows, headers, html_path, data_dir=comparisons_index_data_dir(tmp_path))
     return html_path.read_text(encoding="utf-8")
 
 
@@ -121,12 +125,12 @@ def test_normalizes_display_labels_in_index_rows(tmp_path):
         "Filter 1": "Climate Zone: Mixed-Humid",
         "Filter 2": "",
         "Group By": "Climate Zone",
-        "Comparison Plot": "bar plot||recs plots (html)/example.html",
+        "Comparison Plot": "bar plot||dashboard_data/recs plots (html)/example.html",
         "Data": "",
     }]
 
-    html_path = tmp_path / "comparisons_index.html"
-    create_html_from_rows(rows, headers, html_path)
+    html_path = dashboard_html_path(tmp_path)
+    create_html_from_rows(rows, headers, html_path, data_dir=comparisons_index_data_dir(tmp_path))
     html = html_path.read_text(encoding="utf-8")
 
     assert "All Fuels and Enduses" in html

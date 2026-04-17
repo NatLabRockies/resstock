@@ -5,6 +5,10 @@ from pathlib import Path
 
 import pytest
 
+from resstockpostproc.baseline_validation.dashboard_paths import (
+    comparisons_index_data_dir,
+    dashboard_html_path,
+)
 from resstockpostproc.baseline_validation.create_html import (
     init_html_index,
     append_index_row,
@@ -51,20 +55,21 @@ class TestShardedIndex:
     """Test the sharded HTML index generation."""
 
     def test_init_creates_data_dir(self, tmp_path):
-        html_path = tmp_path / "plot_index.html"
+        html_path = dashboard_html_path(tmp_path)
+        data_dir = comparisons_index_data_dir(tmp_path)
         headers = ["Index", "Filter 1", "Name", "Main Visualization"]
 
-        state = init_html_index(html_path, headers)
+        state = init_html_index(html_path, headers, data_dir=data_dir)
 
         # HTML is NOT written yet (deferred to finalize)
         assert not html_path.exists()
-        data_dir = tmp_path / DATA_DIR_NAME
         assert data_dir.is_dir()
 
     def test_finalize_writes_html_with_script_tags(self, tmp_path):
-        html_path = tmp_path / "plot_index.html"
+        html_path = dashboard_html_path(tmp_path)
+        data_dir = comparisons_index_data_dir(tmp_path)
         headers = ["Index", "Filter 1", "Name", "Main Visualization"]
-        state = init_html_index(html_path, headers)
+        state = init_html_index(html_path, headers, data_dir=data_dir)
 
         append_index_row(state, {
             "Index": "1", "Filter 1": "", "Name": "overview",
@@ -80,15 +85,16 @@ class TestShardedIndex:
         content = html_path.read_text()
         assert content.endswith("</html>\n")
         # Should have static script tags for both shards
-        assert f'src="{DATA_DIR_NAME}/data-_none_.js"' in content
-        assert f'src="{DATA_DIR_NAME}/data-Alaska.js"' in content
+        assert 'src="dashboard_data/comparisons_index/data-_none_.js"' in content
+        assert 'src="dashboard_data/comparisons_index/data-Alaska.js"' in content
         # Should have inline manifest
         assert "window.shardManifest" in content
 
     def test_append_creates_shard_files(self, tmp_path):
-        html_path = tmp_path / "plot_index.html"
+        html_path = dashboard_html_path(tmp_path)
+        data_dir = comparisons_index_data_dir(tmp_path)
         headers = ["Index", "Filter 1", "Name", "Main Visualization"]
-        state = init_html_index(html_path, headers)
+        state = init_html_index(html_path, headers, data_dir=data_dir)
 
         append_index_row(state, {
             "Index": "1", "Filter 1": "", "Name": "overview",
@@ -99,7 +105,6 @@ class TestShardedIndex:
             "Main Visualization": "bar(b.html)",
         })
 
-        data_dir = tmp_path / DATA_DIR_NAME
         none_shard = data_dir / "data-_none_.js"
         alaska_shard = data_dir / "data-Alaska.js"
 
@@ -115,9 +120,10 @@ class TestShardedIndex:
         assert "ak_plot" in alaska_content
 
     def test_multiple_rows_same_shard(self, tmp_path):
-        html_path = tmp_path / "plot_index.html"
+        html_path = dashboard_html_path(tmp_path)
+        data_dir = comparisons_index_data_dir(tmp_path)
         headers = ["Index", "Filter 1", "Name", "Main Visualization"]
-        state = init_html_index(html_path, headers)
+        state = init_html_index(html_path, headers, data_dir=data_dir)
 
         append_index_row(state, {
             "Index": "1", "Filter 1": "Alaska", "Name": "plot_a",
@@ -128,7 +134,7 @@ class TestShardedIndex:
             "Main Visualization": "",
         })
 
-        shard = (tmp_path / DATA_DIR_NAME / "data-Alaska.js").read_text()
+        shard = (data_dir / "data-Alaska.js").read_text()
         assert "plot_a" in shard
         assert "plot_b" in shard
         assert shard.strip().startswith("window.addRows(`")
@@ -136,7 +142,8 @@ class TestShardedIndex:
 
     def test_batch_from_tsv(self, tmp_path):
         tsv_path = tmp_path / "input.tsv"
-        html_path = tmp_path / "output.html"
+        html_path = dashboard_html_path(tmp_path)
+        data_dir = comparisons_index_data_dir(tmp_path)
 
         with open(tsv_path, "w", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=["Index", "Filter 1", "Name"], delimiter="\t")
@@ -144,13 +151,12 @@ class TestShardedIndex:
             writer.writerow({"Index": "1", "Filter 1": "", "Name": "row1"})
             writer.writerow({"Index": "2", "Filter 1": "TX", "Name": "row2"})
 
-        create_html_from_csv(tsv_path, html_path)
+        create_html_from_csv(tsv_path, html_path, data_dir=data_dir)
 
         assert html_path.exists()
-        data_dir = tmp_path / DATA_DIR_NAME
         assert (data_dir / "data-_none_.js").exists()
         assert (data_dir / "data-TX.js").exists()
 
         content = html_path.read_text()
-        assert f'src="{DATA_DIR_NAME}/data-_none_.js"' in content
-        assert f'src="{DATA_DIR_NAME}/data-TX.js"' in content
+        assert 'src="dashboard_data/comparisons_index/data-_none_.js"' in content
+        assert 'src="dashboard_data/comparisons_index/data-TX.js"' in content
