@@ -3,7 +3,7 @@
 from resstockpostproc.baseline_validation.footnotes import (
     EIA_NATURAL_GAS_PENETRATION_NOTE,
     HISTOGRAM_OVERFLOW_NOTE,
-    RECS_GENERIC_RSE_NOTE,
+    RECS_ANNUAL_CI_NOTE,
     RECS_MONTHLY_CI_NOTE,
     RECS_OCCUPIED_UNITS_NOTE,
     RECS_UNITS_COUNT_NOTE,
@@ -40,7 +40,7 @@ class TestPlotNotes:
     def test_recs_annual_value_plot_includes_dataset_and_rse_notes(self):
         notes = get_plot_notes(_make_spec())
 
-        assert notes == [RECS_OCCUPIED_UNITS_NOTE, RECS_GENERIC_RSE_NOTE]
+        assert notes == [RECS_OCCUPIED_UNITS_NOTE, RECS_ANNUAL_CI_NOTE]
 
     def test_recs_distribution_plot_omits_generic_rse_note(self):
         notes = get_plot_notes(
@@ -51,7 +51,7 @@ class TestPlotNotes:
         )
 
         assert notes == [RECS_OCCUPIED_UNITS_NOTE]
-        assert RECS_GENERIC_RSE_NOTE not in notes
+        assert RECS_ANNUAL_CI_NOTE not in notes
 
     def test_recs_monthly_plot_uses_ci_band_note(self):
         notes = get_plot_notes(
@@ -62,7 +62,7 @@ class TestPlotNotes:
         )
 
         assert notes == [RECS_OCCUPIED_UNITS_NOTE, RECS_MONTHLY_CI_NOTE]
-        assert RECS_GENERIC_RSE_NOTE not in notes
+        assert RECS_ANNUAL_CI_NOTE not in notes
 
     def test_recs_units_count_plot_uses_quantity_note_not_rse_note(self):
         notes = get_plot_notes(
@@ -73,7 +73,7 @@ class TestPlotNotes:
         )
 
         assert notes == [RECS_OCCUPIED_UNITS_NOTE, RECS_UNITS_COUNT_NOTE]
-        assert RECS_GENERIC_RSE_NOTE not in notes
+        assert RECS_ANNUAL_CI_NOTE not in notes
 
     def test_histogram_plot_includes_overflow_note(self):
         notes = get_plot_notes(
@@ -100,7 +100,7 @@ class TestPlotNotes:
     def test_recs_diff_view_omits_rse_note(self):
         notes = get_plot_notes(_make_spec(view=ViewType.diff_view))
 
-        assert notes is None or RECS_GENERIC_RSE_NOTE not in notes
+        assert notes is None or RECS_ANNUAL_CI_NOTE not in notes
 
     def test_eia_natural_gas_penetration_plot_uses_specific_note(self):
         notes = get_plot_notes(
@@ -119,7 +119,7 @@ class TestTableNotes:
         notes = get_table_notes(_make_spec())
 
         assert notes == [RECS_OCCUPIED_UNITS_NOTE]
-        assert RECS_GENERIC_RSE_NOTE not in notes
+        assert RECS_ANNUAL_CI_NOTE not in notes
 
     def test_units_count_table_omits_plot_only_quantity_note(self):
         notes = get_table_notes(

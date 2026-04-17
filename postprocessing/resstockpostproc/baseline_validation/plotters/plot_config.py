@@ -38,7 +38,8 @@ class PlotConfig:
     # Column names
     quantity_column: str
     sidebar_column: str | None
-    rse_column: str | None
+    lower_bound_column: str | None
+    upper_bound_column: str | None
     timeseries_column: str | None
 
     # Titles and labels
@@ -81,7 +82,13 @@ def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
     # Resolve all config fields
     quantity_column = _resolve_quantity_column(plot_spec)
     sidebar_column = _resolve_sidebar_column(plot_spec)
-    rse_column = _resolve_rse_column(plot_spec)
+    lower_bound_column, upper_bound_column = _resolve_bound_columns(plot_spec)
+    if (
+        lower_bound_column is not None
+        and upper_bound_column is not None
+        and (lower_bound_column not in data.columns or upper_bound_column not in data.columns)
+    ):
+        lower_bound_column, upper_bound_column = None, None
     timeseries_column = _resolve_timeseries_column(plot_spec)
     title = plot_spec.display_title
     quantity_title = _resolve_quantity_title(plot_spec)
@@ -99,7 +106,7 @@ def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
         sidebar_title = quantity_title
         quantity_title = "% diff"
         title = _resolve_diff_view_title(plot_spec, comparison_label)
-        rse_column = None
+        lower_bound_column, upper_bound_column = None, None
 
     # Post-processing: monthly resolution clears sidebar (RECS/EIA only)
     if plot_spec.resolution == Resolution.month and plot_spec.comparison_dataset != ComparisonDataset.lrd:
@@ -109,7 +116,8 @@ def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
     return PlotConfig(
         quantity_column=quantity_column,
         sidebar_column=sidebar_column,
-        rse_column=rse_column,
+        lower_bound_column=lower_bound_column,
+        upper_bound_column=upper_bound_column,
         timeseries_column=timeseries_column,
         title=title,
         quantity_title=quantity_title,
@@ -187,30 +195,26 @@ def _resolve_sidebar_column(plot_spec: PlotSpec) -> str | None:
     return f"{plot_spec.quantity}_value_percent_difference"
 
 
-def _resolve_rse_column(plot_spec: PlotSpec) -> str | None:
-    """Resolve the RSE (Relative Standard Error) column name.
+def _resolve_bound_columns(plot_spec: PlotSpec) -> tuple[str | None, str | None]:
+    """Resolve lower/upper confidence-bound column names for uncertainty plots."""
+    lower_col: str | None = None
+    upper_col: str | None = None
 
-    Only RECS has RSE columns. Distribution views don't have RSE.
-    """
-    # Only RECS has RSE
     if plot_spec.comparison_dataset != ComparisonDataset.recs:
-        return None
+        return lower_col, upper_col
 
-    # Distribution plots don't have RSE
     if plot_spec.is_distribution_metric:
-        return None
+        return lower_col, upper_col
 
-    # Dwelling unit counts derive from calibrated weights (raked to Census
-    # control totals), so jackknife RSE is near-zero and misleading — skip.
     if plot_spec.quantity == DataCol.UNITS_COUNT:
-        return None
+        return lower_col, upper_col
 
-    # Penetration view uses percent_users RSE
     if plot_spec.is_penetration_metric:
-        return f"{plot_spec.quantity}_percent_users_rse"
+        base_col = f"{plot_spec.quantity}_percent_users"
+    else:
+        base_col = f"{plot_spec.quantity}_value"
 
-    # Default: value RSE
-    return f"{plot_spec.quantity}_value_rse"
+    return f"{base_col}_lower_bound", f"{base_col}_upper_bound"
 
 
 def _resolve_timeseries_column(plot_spec: PlotSpec) -> str | None:

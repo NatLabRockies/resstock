@@ -1202,7 +1202,7 @@ def main():
         "--index", type=str, default=None, help="Plot definition index to generate (e.g. '5', '1-10', '1,3,5')"
     )
     parser.add_argument(
-        "--test", action="store_true", default=True,
+        "--test", action="store_true", default=False,
         help="Generate only test subset plots (limited focus expansion)",
     )
     parser.add_argument(

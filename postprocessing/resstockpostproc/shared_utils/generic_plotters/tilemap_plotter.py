@@ -127,7 +127,8 @@ def plot_tilemap(
     second_category_column: str,
     quantity_title: str,
     first_category_title: str,
-    rse_column: str | None = None,
+    lower_bound_column: str | None = None,
+    upper_bound_column: str | None = None,
     sidebar_column: str | None = None,
     sidebar_title: str = "",
     second_category_title: str | None = None,
@@ -166,7 +167,7 @@ def plot_tilemap(
     scale_data = data
     if separate_us_total_scale:
         scale_data = data.filter(pl.col(second_category_column) != "US Total")
-    global_min, global_max = compute_axis_range(scale_data, quantity_column, rse_column)
+    global_min, global_max = compute_axis_range(scale_data, quantity_column, lower_bound_column, upper_bound_column)
     custom_range = (global_min, global_max * 1.01)
 
     layout = LAYOUTS[second_category_column]
@@ -240,7 +241,8 @@ def plot_tilemap(
             create_bar_plot(
                 data=entity_df,
                 quantity_column=quantity_column,
-                rse_column=rse_column,
+                lower_bound_column=lower_bound_column,
+                upper_bound_column=upper_bound_column,
                 first_category_column=first_category_column,
                 second_category_column=second_category_column,
                 quantity_title=quantity_title if show_yticks else "",
@@ -264,7 +266,8 @@ def plot_tilemap(
                 data=entity_df,
                 timeseries_column=timeseries_column,
                 quantity_column=quantity_column,
-                rse_column=rse_column,
+                lower_bound_column=lower_bound_column,
+                upper_bound_column=upper_bound_column,
                 first_category_column=first_category_column,
                 quantity_title=quantity_title if show_yticks else "",
                 first_category_title="",

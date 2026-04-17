@@ -6,7 +6,12 @@ from collections.abc import Callable
 import polars as pl
 import plotly.graph_objects as go
 
-from .hover_formatting import format_compact_hover_value, format_count_value
+from .hover_formatting import (
+    build_hover_customdata,
+    format_compact_hover_value,
+    format_confidence_interval,
+    format_count_value,
+)
 from .range_utils import compute_axis_range
 
 from resstockpostproc.shared_utils.generic_plotters import theme
@@ -26,7 +31,8 @@ def create_ts_plot(
     timeseries_column: str,
     quantity_column: str,
     first_category_column: str,
-    rse_column: str | None = None,
+    lower_bound_column: str | None = None,
+    upper_bound_column: str | None = None,
     first_category_title: str | None = None,
     quantity_title: str = "Value",
     title_text: str = "",
@@ -48,7 +54,11 @@ def create_ts_plot(
 ) -> go.Figure:
     categories = data[first_category_column].unique(maintain_order=True).to_list()
     category_colors = theme.build_color_palette(categories)
-    yrange = compute_axis_range(data, quantity_column, rse_column) if custom_range is None else custom_range
+    yrange = (
+        compute_axis_range(data, quantity_column, lower_bound_column, upper_bound_column)
+        if custom_range is None
+        else custom_range
+    )
     fig = fig or go.Figure()
     for i, category in enumerate(categories):
         category_data = data.filter(pl.col(first_category_column) == category)
@@ -58,12 +68,24 @@ def create_ts_plot(
         color = category_colors[category]
         x_values = category_data[timeseries_column].to_list()
         y_values = category_data[quantity_column].to_list()
-        rse_values = category_data[rse_column].to_list() if rse_column else []
-        if rse_column is not None and any(rse is not None for rse in rse_values):
-            upper_col = f"{rse_column.replace('_rse', '_upper_bound')}"
-            lower_col = f"{rse_column.replace('_rse', '_lower_bound')}"
-            upper_vals = category_data[upper_col].fill_null(0).to_list()
-            lower_vals = category_data[lower_col].fill_null(0).to_list()
+        if (
+            lower_bound_column is not None
+            and upper_bound_column is not None
+            and lower_bound_column in category_data.columns
+            and upper_bound_column in category_data.columns
+            and (
+                category_data[lower_bound_column].null_count() < category_data.height
+                or category_data[upper_bound_column].null_count() < category_data.height
+            )
+        ):
+            upper_vals = category_data[upper_bound_column].fill_null(0).to_list()
+            lower_vals = category_data[lower_bound_column].fill_null(0).to_list()
+            ci_strings = [
+                format_confidence_interval(lower, upper, quantity_title)
+                for lower, upper in zip(lower_vals, upper_vals)
+            ]
+            if not any(ci_strings):
+                ci_strings = None
 
             # Add the confidence band (upper to lower)
             fig.add_scatter(
@@ -75,7 +97,7 @@ def create_ts_plot(
                 line={"color": "rgba(255,255,255,0)"},
                 showlegend=show_legends and i == 0,
                 name="95% CI Band",
-                legendgroup=f"confidence_band_{rse_column}",
+                legendgroup=f"confidence_band_{quantity_column}",
                 hoverinfo="skip",
                 row=row,
                 col=col,
@@ -84,6 +106,7 @@ def create_ts_plot(
         else:
             lower_vals = y_values
             lower_fill_name = f"{category} filled area"
+            ci_strings = None
         # Add the lower bound filled area (from lower bound to 0) if requested
         if fill_lower_bound:
             fig.add_scatter(
@@ -114,29 +137,33 @@ def create_ts_plot(
                 for model_count in category_data["model_count"].to_list()
             ]
 
-        customdata = None
-        if compact_hover_values and count_strings is not None:
-            customdata = list(zip(
-                [format_compact_hover_value(v, quantity_title) for v in y_values],
-                count_strings,
-            ))
-        elif compact_hover_values:
-            customdata = [(format_compact_hover_value(v, quantity_title),) for v in y_values]
-        elif count_strings is not None:
-            customdata = [(count_str,) for count_str in count_strings]
+        value_strings = (
+            [format_compact_hover_value(v, quantity_title) for v in y_values]
+            if compact_hover_values
+            else None
+        )
+        customdata = build_hover_customdata(value_strings, count_strings, ci_strings)
 
         hover_start = f"{hover_prefix}<br>" if hover_prefix else ""
         if compact_hover_values:
             hovertemplate = hover_start + "%{x}<br>" + f"{category}: " + "%{customdata[0]}"
+            custom_idx = 1
             if count_strings is not None:
-                hovertemplate += "<br>%{customdata[1]}"
+                hovertemplate += f"<br>%{{customdata[{custom_idx}]}}"
+                custom_idx += 1
+            if ci_strings is not None:
+                hovertemplate += f"<br>%{{customdata[{custom_idx}]}}"
             hovertemplate += "<extra></extra>"
         else:
             hovertemplate = hover_start + "%{x}<br>" + f"{category}: " + "%{y:,.2f}"
             if quantity_title:
                 hovertemplate += f" {quantity_title}"
+            custom_idx = 0
             if count_strings is not None:
-                hovertemplate += "<br>%{customdata[0]}"
+                hovertemplate += f"<br>%{{customdata[{custom_idx}]}}"
+                custom_idx += 1
+            if ci_strings is not None:
+                hovertemplate += f"<br>%{{customdata[{custom_idx}]}}"
             hovertemplate += "<extra></extra>"
 
         fig.add_scatter(

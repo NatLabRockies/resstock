@@ -1,5 +1,10 @@
 from . import theme
-from .hover_formatting import format_compact_hover_value, format_count_value
+from .hover_formatting import (
+    build_hover_customdata,
+    format_compact_hover_value,
+    format_confidence_interval,
+    format_count_value,
+)
 from .range_utils import compute_axis_range
 from resstockpostproc.shared_utils.timing import timed
 import plotly.graph_objects as go
@@ -19,6 +24,7 @@ def _build_hovertemplate(
     quantity_title: str,
     include_trace_name: bool = False,
     include_count: bool = False,
+    include_ci: bool = False,
     use_custom_value: bool = False,
     hover_prefix: str = "",
 ) -> str:
@@ -40,9 +46,12 @@ def _build_hovertemplate(
             parts.append("%{y}" if orientation == "h" else "%{x}")
         parts.append(f"{value_label}: %{{x:,.2f}}" if orientation == "h" else f"{value_label}: %{{y:,.2f}}")
 
+    custom_idx = 1 if use_custom_value else 0
     if include_count:
-        count_idx = 1 if use_custom_value else 0
-        parts.append(f"%{{customdata[{count_idx}]}}")
+        parts.append(f"%{{customdata[{custom_idx}]}}")
+        custom_idx += 1
+    if include_ci:
+        parts.append(f"%{{customdata[{custom_idx}]}}")
 
     return "<br>".join(parts) + "<extra></extra>"
 
@@ -51,19 +60,30 @@ def _calculate_error_bars(
     orientation: Literal["h", "v"],
     x_data: list,
     y_data: list,
-    rse_data: list,
+    lower_bound_data: list,
+    upper_bound_data: list,
 ) -> tuple[dict | None, dict | None]:
-    """Calculate error bars for bar plots based on RSE values (95% CI)."""
-    if all(rse == 0 for rse in rse_data):  # no error bars if RSE is zero (typically means N/A)
-        return None, None
+    """Calculate asymmetric error bars for bar plots from lower/upper bounds."""
     data = x_data if orientation == "h" else y_data
     def coallesce(val, default=0):
         return default if val is None else val
-    errors = [abs(coallesce(val) * 1.96 * coallesce(rse) / 100) for val, rse in zip(data, rse_data)]
+
+    errors_plus = [
+        max(0.0, coallesce(upper, coallesce(val)) - coallesce(val))
+        for val, upper in zip(data, upper_bound_data)
+    ]
+    errors_minus = [
+        max(0.0, coallesce(val) - coallesce(lower, coallesce(val)))
+        for val, lower in zip(data, lower_bound_data)
+    ]
+    if all(err_plus == 0 and err_minus == 0 for err_plus, err_minus in zip(errors_plus, errors_minus)):
+        return None, None
 
     error_dict = {
         "type": "data",
-        "array": errors,
+        "array": errors_plus,
+        "arrayminus": errors_minus,
+        "symmetric": False,
         "visible": True,
         "color": "black",
         "thickness": 1.5,
@@ -78,7 +98,8 @@ def create_bar_plot(
     *,
     data: pl.DataFrame,
     quantity_column: list[str] | str,
-    rse_column: list[str] | str | None = None,
+    lower_bound_column: list[str] | str | None = None,
+    upper_bound_column: list[str] | str | None = None,
     first_category_column: str,
     second_category_column: str | None = None,
     quantity_title: str,
@@ -110,13 +131,23 @@ def create_bar_plot(
     
     is_stacked = not (isinstance(quantity_column, str) or second_category_column is None)
     quantity_cols = [quantity_column] if isinstance(quantity_column, str) else list(quantity_column)
-    rse_cols = [rse_column] if isinstance(rse_column, str) else (list(rse_column) if rse_column is not None else None)
+    lower_bound_cols = (
+        [lower_bound_column]
+        if isinstance(lower_bound_column, str)
+        else (list(lower_bound_column) if lower_bound_column is not None else None)
+    )
+    upper_bound_cols = (
+        [upper_bound_column]
+        if isinstance(upper_bound_column, str)
+        else (list(upper_bound_column) if upper_bound_column is not None else None)
+    )
     
-    # Calculate min and max values from the quantity columns (RSE-aware)
+    # Calculate min and max values from the quantity columns (bound-aware)
     data_min, data_max = 0.0, 0.0
     for i, qcol in enumerate(quantity_cols):
-        rcol = rse_cols[i] if rse_cols and i < len(rse_cols) else None
-        q_min, q_max = compute_axis_range(data, qcol, rcol)
+        lower_col = lower_bound_cols[i] if lower_bound_cols and i < len(lower_bound_cols) else None
+        upper_col = upper_bound_cols[i] if upper_bound_cols and i < len(upper_bound_cols) else None
+        q_min, q_max = compute_axis_range(data, qcol, lower_col, upper_col)
         data_min, data_max = min(data_min, q_min), max(data_max, q_max)
     
     traces: list[go.Bar] = []
@@ -146,19 +177,38 @@ def create_bar_plot(
                 marker_pattern_shape = ""
             ytickvals = x_data if orientation == "v" else y_data
             
-            # Calculate error bars if rse_column is provided
+            # Calculate error bars if bounds are provided
             error_x = None
             error_y = None
-            if rse_cols is not None:
-                rse_col = rse_cols[q_idx] if len(rse_cols) > q_idx else rse_cols[0]
-                rse_data = list(reversed(data[rse_col].fill_null(0)))
-                error_x, error_y = _calculate_error_bars(orientation, x_data, y_data, rse_data)
+            if lower_bound_cols is not None and upper_bound_cols is not None:
+                lower_col = lower_bound_cols[q_idx] if len(lower_bound_cols) > q_idx else lower_bound_cols[0]
+                upper_col = upper_bound_cols[q_idx] if len(upper_bound_cols) > q_idx else upper_bound_cols[0]
+                if lower_col in data.columns and upper_col in data.columns:
+                    lower_data = list(reversed(data[lower_col].to_list()))
+                    upper_data = list(reversed(data[upper_col].to_list()))
+                    error_x, error_y = _calculate_error_bars(
+                        orientation,
+                        x_data,
+                        y_data,
+                        lower_data,
+                        upper_data,
+                    )
+                    ci_strings = [
+                        format_confidence_interval(lower, upper, quantity_title)
+                        for lower, upper in zip(lower_data, upper_data)
+                    ]
+                    if not any(ci_strings):
+                        ci_strings = None
+                else:
+                    ci_strings = None
+            else:
+                ci_strings = None
 
-            customdata = None
+            value_strings = None
             if compact_hover_values:
                 value_data = x_data if orientation == "h" else y_data
                 value_strings = [format_compact_hover_value(v, quantity_title) for v in value_data]
-                customdata = [(value_str,) for value_str in value_strings]
+            customdata = build_hover_customdata(value_strings, ci_strings)
             
             traces.append(
                 go.Bar(
@@ -174,6 +224,7 @@ def create_bar_plot(
                         orientation=orientation,
                         quantity_title=quantity_title,
                         include_trace_name=len(quantity_cols) > 1,
+                        include_ci=ci_strings is not None,
                         use_custom_value=compact_hover_values,
                         hover_prefix=hover_prefix,
                     ),
@@ -228,24 +279,38 @@ def create_bar_plot(
                 if is_stacked and q_idx == 0:
                     text_vals = [""] * (len(xvals) - 1) + [group_name]
                 
-                # Calculate error bars if rse_column is provided
+                # Calculate error bars if bounds are provided
                 error_x = None
                 error_y = None
-                if rse_cols is not None:
-                    rse_col = rse_cols[q_idx] if len(rse_cols) > q_idx else rse_cols[0]
-                    if orientation == "h":
-                        rse_data = list(reversed(group_data[rse_col].fill_null(0)))
+                if lower_bound_cols is not None and upper_bound_cols is not None:
+                    lower_col = lower_bound_cols[q_idx] if len(lower_bound_cols) > q_idx else lower_bound_cols[0]
+                    upper_col = upper_bound_cols[q_idx] if len(upper_bound_cols) > q_idx else upper_bound_cols[0]
+                    if lower_col in group_data.columns and upper_col in group_data.columns:
+                        if orientation == "h":
+                            lower_data = list(reversed(group_data[lower_col].to_list()))
+                            upper_data = list(reversed(group_data[upper_col].to_list()))
+                        else:
+                            lower_data = group_data[lower_col].to_list()
+                            upper_data = group_data[upper_col].to_list()
+                        error_x, error_y = _calculate_error_bars(
+                            orientation,
+                            xvals,
+                            yvals,
+                            lower_data,
+                            upper_data,
+                        )
+                        ci_strings = [
+                            format_confidence_interval(lower, upper, quantity_title)
+                            for lower, upper in zip(lower_data, upper_data)
+                        ]
+                        if not any(ci_strings):
+                            ci_strings = None
                     else:
-                        rse_data = group_data[rse_col].fill_null(0).to_list()
-                    error_x, error_y = _calculate_error_bars(orientation, xvals, yvals, rse_data)
+                        ci_strings = None
+                else:
+                    ci_strings = None
 
-                customdata = None
-                if value_strings is not None and count_strings is not None:
-                    customdata = list(zip(value_strings, count_strings))
-                elif value_strings is not None:
-                    customdata = [(value_str,) for value_str in value_strings]
-                elif count_strings is not None:
-                    customdata = [(count_str,) for count_str in count_strings]
+                customdata = build_hover_customdata(value_strings, count_strings, ci_strings)
                 
                 traces.append(
                     go.Bar(
@@ -268,6 +333,7 @@ def create_bar_plot(
                             quantity_title=quantity_title,
                             include_trace_name=True,
                             include_count=count_strings is not None,
+                            include_ci=ci_strings is not None,
                             use_custom_value=value_strings is not None,
                             hover_prefix=hover_prefix,
                         ),

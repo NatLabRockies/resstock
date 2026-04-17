@@ -36,6 +36,38 @@ def format_compact_hover_value(value: float | int | None, quantity_title: str) -
     return base
 
 
+def format_precise_hover_value(value: float | int | None, quantity_title: str) -> str:
+    """Format hover values with separators and two decimals."""
+    if value is None:
+        return ""
+    numeric = float(value)
+    base = f"{numeric:,.2f}"
+    if _is_percentage_quantity(quantity_title):
+        return f"{base}%"
+    return base
+
+
+def format_confidence_interval(lower: float | int | None, upper: float | int | None, quantity_title: str) -> str:
+    """Format a hover line for an explicit confidence interval."""
+    lower_text = format_precise_hover_value(lower, quantity_title)
+    upper_text = format_precise_hover_value(upper, quantity_title)
+    if not lower_text or not upper_text:
+        return ""
+    return f"95% Confidence Interval: {lower_text} to {upper_text}"
+
+
+def build_hover_customdata(*series: list[str] | None) -> list[tuple[str, ...]] | None:
+    """Zip optional hover-data columns into Plotly customdata tuples."""
+    active_series = [values for values in series if values is not None]
+    if not active_series:
+        return None
+    row_count = len(active_series[0])
+    return [
+        tuple(values[idx] for values in series if values is not None)
+        for idx in range(row_count)
+    ]
+
+
 def format_count_value(value: float | int | None) -> str:
     """Format a count-like value as a rounded integer with separators."""
     if value is None:

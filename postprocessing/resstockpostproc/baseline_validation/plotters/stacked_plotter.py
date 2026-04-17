@@ -417,7 +417,11 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
             min_val = min(0, float(raw_min) if raw_min is not None else 0.0)
             max_val = max(0, float(raw_max) if raw_max is not None else 0.0)
         else:
-            min_val, max_val = compute_axis_range(df, quantity_col)
+            lower_col = f"{quantity_col}_lower_bound"
+            upper_col = f"{quantity_col}_upper_bound"
+            if lower_col not in df.columns or upper_col not in df.columns:
+                lower_col, upper_col = None, None
+            min_val, max_val = compute_axis_range(df, quantity_col, lower_col, upper_col)
         all_min_val = min(all_min_val, min_val)
         all_max_val = max(all_max_val, max_val)
 
@@ -722,11 +726,13 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
             quantity_col += "_percent_difference" if plot_spec.view == ViewType.diff_view else ""
             if plot_spec.view == ViewType.diff_view:
                 df_subset = filter_null_sources(df_subset, "source", quantity_col)
-            rse_col = f"{quantity_col}_rse"
+            lower_col = f"{quantity_col}_lower_bound"
+            upper_col = f"{quantity_col}_upper_bound"
             bar_plotter.create_bar_plot(
                 data=df_subset,
                 quantity_column=quantity_col,
-                rse_column=rse_col if rse_col in df_subset.columns else None,
+                lower_bound_column=lower_col if lower_col in df_subset.columns else None,
+                upper_bound_column=upper_col if upper_col in df_subset.columns else None,
                 first_category_column="source",
                 second_category_column=second_cat_column,
                 quantity_title=quantity_title,

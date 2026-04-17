@@ -9,12 +9,16 @@ def test_bar_hover_uses_two_decimals_and_recs_sample_label():
         "source": ["RECS 2020", "ResStock 2025"],
         "state": ["CA", "CA"],
         "electricity_total_value": [1_223_232_232.22, 1_101_987_600.0],
+        "electricity_total_value_lower_bound": [1_100_000_000.0, None],
+        "electricity_total_value_upper_bound": [1_300_000_000.0, None],
         "model_count": [240.1234, 500.0],
     })
 
     fig = create_bar_plot(
         data=data,
         quantity_column="electricity_total_value",
+        lower_bound_column="electricity_total_value_lower_bound",
+        upper_bound_column="electricity_total_value_upper_bound",
         first_category_column="source",
         second_category_column="state",
         quantity_title="kWh/unit",
@@ -31,9 +35,12 @@ def test_bar_hover_uses_two_decimals_and_recs_sample_label():
     resstock_trace = fig.data[1]
     assert "Value: %{customdata[0]}" in recs_trace.hovertemplate
     assert "%{customdata[1]}" in recs_trace.hovertemplate
+    assert "%{customdata[2]}" in recs_trace.hovertemplate
     assert recs_trace.customdata[0][0] == "1.22B"
     assert recs_trace.customdata[0][1] == "Number of Samples: 240"
+    assert recs_trace.customdata[0][2] == "95% Confidence Interval: 1,100,000,000.00 to 1,300,000,000.00"
     assert resstock_trace.customdata[0][1] == "Number of Models: 500"
+    assert "Confidence Interval" not in resstock_trace.hovertemplate
 
 
 def test_bar_hover_uses_resstock_models_only_for_eia_plot():
@@ -88,19 +95,25 @@ def test_monthly_hover_uses_compact_values():
         "source": ["RECS 2020", "RECS 2020"],
         "month": ["JAN", "FEB"],
         "electricity_total_value": [1_223_232_232.22, 98_765_432.0],
+        "electricity_total_value_lower_bound": [1_100_000_000.0, 90_000_000.0],
+        "electricity_total_value_upper_bound": [1_300_000_000.0, 120_000_000.0],
     })
 
     fig = create_ts_plot(
         data=data,
         timeseries_column="month",
         quantity_column="electricity_total_value",
+        lower_bound_column="electricity_total_value_lower_bound",
+        upper_bound_column="electricity_total_value_upper_bound",
         first_category_column="source",
         quantity_title="kWh",
         compact_hover_values=True,
     )
 
     assert "%{customdata[0]}" in fig.data[-1].hovertemplate
+    assert "%{customdata[1]}" in fig.data[-1].hovertemplate
     assert fig.data[-1].customdata[0][0] == "1.22B"
+    assert fig.data[-1].customdata[0][1] == "95% Confidence Interval: 1,100,000,000.00 to 1,300,000,000.00"
 
 
 def test_monthly_hover_can_include_source_specific_count_labels():

@@ -5,7 +5,6 @@ from __future__ import annotations
 from collections.abc import Iterable
 from typing import Literal
 
-from resstockpostproc.baseline_validation.plotters.plot_config import _resolve_rse_column
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     ComparisonDataset,
     CoverageType,
@@ -24,9 +23,9 @@ from resstockpostproc.shared_utils.db_column_names import (
 NoteContext = Literal["plot", "table"]
 
 RECS_OCCUPIED_UNITS_NOTE = "Only occupied dwelling units are included in the comparison."
-RECS_GENERIC_RSE_NOTE = (
-    "Error bars represent the 95% confidence interval based on RECS relative standard "
-    "error (RSE) estimates."
+RECS_ANNUAL_CI_NOTE = (
+    "Error bars represent the 95% confidence interval computed from RECS "
+    "replicate weights using a log-normal method."
 )
 RECS_MONTHLY_CI_NOTE = (
     "The darker filled area represents RECS consumption (from the lower confidence bound "
@@ -76,17 +75,18 @@ def _merge_notes(*note_groups: list[str] | None) -> list[str] | None:
     return deduped or None
 
 
-def _has_recs_rse(plot_spec: PlotSpec) -> bool:
-    """True when the plot uses RECS RSE-backed uncertainty data."""
+def _has_recs_uncertainty(plot_spec: PlotSpec) -> bool:
+    """True when the plot uses RECS confidence bounds."""
     return (
         plot_spec.comparison_dataset == ComparisonDataset.recs
-        and _resolve_rse_column(plot_spec) is not None
+        and not plot_spec.is_distribution_metric
+        and plot_spec.quantity != DataCol.UNITS_COUNT
     )
 
 
 def _uses_monthly_ci_band(plot_spec: PlotSpec) -> bool:
     """True for RECS monthly value plots rendered with the filled CI band."""
-    return _has_recs_rse(plot_spec) and plot_spec.resolution == Resolution.month
+    return _has_recs_uncertainty(plot_spec) and plot_spec.resolution == Resolution.month
 
 
 def get_dataset_notes(plot_spec: PlotSpec) -> list[str] | None:
@@ -137,8 +137,8 @@ def get_metric_notes(plot_spec: PlotSpec, context: NoteContext) -> list[str] | N
 
     if _uses_monthly_ci_band(plot_spec):
         notes.append(RECS_MONTHLY_CI_NOTE)
-    elif _has_recs_rse(plot_spec) and plot_spec.view != ViewType.diff_view:
-        notes.append(RECS_GENERIC_RSE_NOTE)
+    elif _has_recs_uncertainty(plot_spec) and plot_spec.view != ViewType.diff_view:
+        notes.append(RECS_ANNUAL_CI_NOTE)
 
     if plot_spec.layout == Layout.histogram:
         notes.append(HISTOGRAM_OVERFLOW_NOTE)

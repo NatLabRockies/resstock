@@ -90,7 +90,6 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
         DataFrame ready for plotting
     """
     df = _keep_relevant_columns(base_data, plot_spec)
-    df = _add_95ci_bounds(df)
     # Sort by units_count within the primary grouping column (if any)
     sort_col = plot_spec.group_by or (plot_spec.effective_group_by[0] if plot_spec.effective_group_by else None)
     if sort_col and sort_col in df.columns:
@@ -257,7 +256,17 @@ def _keep_relevant_columns(
     all_output_columns = [
         col
         for col in df.columns
-        if col.endswith(("_value", "_percent_users", "_quartiles", "_percent_difference", "_resoluition", "_rse"))
+        if col.endswith(
+            (
+                "_value",
+                "_percent_users",
+                "_quartiles",
+                "_percent_difference",
+                "_value_resolution",
+                "_upper_bound",
+                "_lower_bound",
+            )
+        )
         and not col.startswith("units_count")
     ]
     if plot_spec.quantity != DataCol.ALL:
@@ -282,26 +291,6 @@ def _keep_relevant_columns(
         if not any(q.value in col for q in relevant_quatities):
             to_drop_columns.append(col)
     df = df.drop(to_drop_columns)
-    return df
-
-
-def _add_95ci_bounds(
-    df: pl.DataFrame,
-) -> pl.DataFrame:
-    """Add RSE-based upper and lower 95% confidence intervals to the DataFrame."""
-    rse_columns = [col for col in df.columns if col.endswith("_rse")]
-    for rse_col in rse_columns:
-        base_col = rse_col.removesuffix("_rse")
-        upper_col = rse_col.replace("_rse", "_upper_bound")
-        lower_col = rse_col.replace("_rse", "_lower_bound")
-        df = df.with_columns(
-            (pl.col(base_col) + (pl.col(base_col) * pl.col(rse_col).fill_null(0).abs() / 100.0 * 1.96)).alias(
-                upper_col
-            ),
-            (pl.col(base_col) - (pl.col(base_col) * pl.col(rse_col).fill_null(0).abs() / 100.0 * 1.96)).alias(
-                lower_col
-            ),
-        )
     return df
 
 

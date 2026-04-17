@@ -5,7 +5,7 @@ import pytest
 import plotly.graph_objects as go
 
 from resstockpostproc.baseline_validation.footnotes import (
-    RECS_GENERIC_RSE_NOTE,
+    RECS_ANNUAL_CI_NOTE,
     RECS_OCCUPIED_UNITS_NOTE,
     get_plot_notes,
 )
@@ -338,7 +338,7 @@ class TestAllEndusesHelpers:
 
         notes = _collect_stacked_notes(qty_entries, get_plot_notes)
 
-        assert notes == [RECS_OCCUPIED_UNITS_NOTE, RECS_GENERIC_RSE_NOTE]
+        assert notes == [RECS_OCCUPIED_UNITS_NOTE, RECS_ANNUAL_CI_NOTE]
 
 
 class TestRelatedSpecFamilies:

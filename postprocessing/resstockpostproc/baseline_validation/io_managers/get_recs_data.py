@@ -13,7 +13,7 @@ from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
 from . import comparison_data_paths as s3_paths
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
-from resstockpostproc.baseline_validation.data_processing.recs_rse import calculate_rse_batch
+from resstockpostproc.baseline_validation.data_processing.recs_rse import CI_Z, calculate_bounds_batch
 from resstockpostproc.shared_utils.caching import cached
 from resstockpostproc.shared_utils.timing import timed
 from resstockpostproc.baseline_validation.schema.plot_spec import DataKey, Metric, CoverageType
@@ -110,8 +110,56 @@ def _calculate_weighted_quantiles(data: np.ndarray, weights: np.ndarray, quantil
     return result
 
 
+def _resolve_recs_value_stat_type(data_key: DataKey) -> str:
+    """Return the bound estimator that matches the plotted RECS value statistic."""
+    if data_key.aggregation_type == Metric.total:
+        return "total"
+    if data_key.coverage == CoverageType.users_only:
+        return "avg_nonzero"
+    return "avg"
+
+
+def _normalize_bounds(bounds: tuple[float, float] | None) -> tuple[float | None, float | None]:
+    if bounds is None:
+        return None, None
+    return bounds
+
+
+def _build_bounds_row(
+    bounds_by_request: dict[tuple[str, str], tuple[float, float] | None],
+    enduse_cols: tuple,
+    value_stat_type: str,
+) -> dict[str, float | None]:
+    """Map batched bound results onto dataframe column names."""
+    row: dict[str, float | None] = {}
+    for col in enduse_cols:
+        value_lower, value_upper = _normalize_bounds(bounds_by_request.get((col, value_stat_type)))
+        pct_lower, pct_upper = _normalize_bounds(bounds_by_request.get((col, "percent")))
+        row[f"{col}_value_lower_bound"] = value_lower
+        row[f"{col}_value_upper_bound"] = value_upper
+        row[f"{col}_percent_users_lower_bound"] = pct_lower
+        row[f"{col}_percent_users_upper_bound"] = pct_upper
+    return row
+
+
+def _add_symmetric_bounds_from_rse(df: pl.DataFrame) -> pl.DataFrame:
+    """Convert published monthly RSE columns into explicit lower/upper bounds."""
+    rse_columns = [col for col in df.columns if col.endswith("_rse")]
+    if not rse_columns:
+        return df
+
+    exprs: list[pl.Expr] = []
+    for rse_col in rse_columns:
+        base_col = rse_col.removesuffix("_rse")
+        margin = pl.col(base_col) * pl.col(rse_col).fill_null(0).abs() / 100.0 * CI_Z
+        exprs.append((pl.col(base_col) + margin).alias(f"{base_col}_upper_bound"))
+        exprs.append((pl.col(base_col) - margin).alias(f"{base_col}_lower_bound"))
+
+    return df.with_columns(exprs).drop(rse_columns)
+
+
 @timed
-@cached(cache_file="recs_annual_data_cache")
+@cached(cache_file="recs_annual_data_cache_v2")
 def get_annual_all(
     data_key: DataKey,
     year: int = 2020,
@@ -126,7 +174,7 @@ def get_annual_all(
         raise ValueError("RECS data is only available for the year 2020.")
 
     by_cols = list(data_key.effective_group_by)
-    by = by_cols[0]  # primary groupby column (used for US Total)
+    by = by_cols[0] if by_cols else None  # primary groupby column (used for US Total)
     mdf = get_df_from_s3(s3_paths.RECS_2020_microdata, local_data_dir)
 
     enduse_cols = tuple(RECS_ENDUSE_MAP.keys())
@@ -182,46 +230,37 @@ def get_annual_all(
                 ),
             )
 
-        # Calculate RSE and quartiles by group
-        # Convert to pandas for RSE calculation
+        # Calculate confidence bounds and quartiles by group
         mdf_pd = mdf.to_pandas()
-        rse_results = []
+        bounds_results = []
         quartile_results = []
         nonzero_quartile_results = []
 
-        # Determine RSE stat type based on aggregation
-        rse_stat_type = "total" if data_key.aggregation_type == Metric.total else "avg"
+        value_stat_type = _resolve_recs_value_stat_type(data_key)
 
         unique_groups = mdf.select(by_cols).unique()
         n_groups = len(unique_groups)
-        logger.info(f"Computing RSE/quartiles for {n_groups} groups ({by_cols})...")
+        logger.info(f"Computing RECS confidence bounds/quartiles for {n_groups} groups ({by_cols})...")
         for gi, group_row in enumerate(unique_groups.iter_rows(named=True)):
             if gi > 0 and gi % 50 == 0:
-                logger.info(f"  RSE progress: {gi}/{n_groups}")
+                logger.info(f"  RECS uncertainty progress: {gi}/{n_groups}")
             mask = True
             for col_name in by_cols:
                 mask = mask & (mdf_pd[col_name] == group_row[col_name])
             group_data = mdf_pd[mask]
-            rse_row = dict(group_row)
+            bounds_row = dict(group_row)
             quartile_row = dict(group_row)
             nonzero_quartile_row = dict(group_row)
 
-            # Batched RSE calculation: extracts the 61-column weight matrix once
-            # per group and evaluates units_count + value + percent_users RSE
-            # for every enduse in a single matmul pass.
-            rse_requests = [("_constant_", "total")]
+            bound_requests = []
             for col in enduse_cols:
-                rse_requests.append((col, rse_stat_type))
-                rse_requests.append((col, "percent"))
+                bound_requests.append((col, value_stat_type))
+                bound_requests.append((col, "percent"))
             try:
-                group_data_with_const = group_data.assign(_constant_=1.0)
-                batched_rse = calculate_rse_batch(group_data_with_const, rse_requests)
+                batched_bounds = calculate_bounds_batch(group_data, bound_requests)
             except Exception:
-                batched_rse = dict.fromkeys(rse_requests)
-            rse_row["units_count_rse"] = batched_rse.get(("_constant_", "total"))
-            for col in enduse_cols:
-                rse_row[f"{col}_value_rse"] = batched_rse.get((col, rse_stat_type))
-                rse_row[f"{col}_percent_users_rse"] = batched_rse.get((col, "percent"))
+                batched_bounds = dict.fromkeys(bound_requests)
+            bounds_row.update(_build_bounds_row(batched_bounds, enduse_cols, value_stat_type))
 
             for col in enduse_cols:
                 # Calculate quartiles for the column
@@ -257,15 +296,15 @@ def get_annual_all(
                 except Exception:
                     nonzero_quartile_row[f"{col}_nonzero_quartiles"] = [0.0] * 9
 
-            rse_results.append(rse_row)
+            bounds_results.append(bounds_row)
             quartile_results.append(quartile_row)
             nonzero_quartile_results.append(nonzero_quartile_row)
 
-        # Convert RSE and quartile results to polars and join with value results
-        rse_df = pl.DataFrame(rse_results)
+        # Convert bound and quartile results to polars and join with value results
+        bounds_df = pl.DataFrame(bounds_results)
         quartile_df = pl.DataFrame(quartile_results)
         nonzero_quartile_df = pl.DataFrame(nonzero_quartile_results)
-        result_df = result_df.join(rse_df, on=by_cols, how="left")
+        result_df = result_df.join(bounds_df, on=by_cols, how="left")
         result_df = result_df.join(quartile_df, on=by_cols, how="left")
         result_df = result_df.join(nonzero_quartile_df, on=by_cols, how="left")
 
@@ -316,24 +355,20 @@ def get_annual_all(
             us_total_df = pl.DataFrame([us_total_values])
             result_df = pl.concat([result_df, us_total_df], how="diagonal_relaxed")
 
-            # Calculate RSE and quartiles for this US Total row
-            us_total_rse_dict = {}
+            # Calculate confidence bounds and quartiles for this US Total row
+            us_total_bounds_dict = {}
             us_total_quartile_dict = {}
             us_total_nonzero_quartile_dict = {}
 
-            rse_requests = [("_constant_", "total")]
+            bound_requests = []
             for col in enduse_cols:
-                rse_requests.append((col, rse_stat_type))
-                rse_requests.append((col, "percent"))
+                bound_requests.append((col, value_stat_type))
+                bound_requests.append((col, "percent"))
             try:
-                mdf_subset_with_const = mdf_subset_pd.assign(_constant_=1.0)
-                batched_rse = calculate_rse_batch(mdf_subset_with_const, rse_requests)
+                batched_bounds = calculate_bounds_batch(mdf_subset_pd, bound_requests)
             except Exception:
-                batched_rse = dict.fromkeys(rse_requests)
-            us_total_rse_dict["units_count_rse"] = batched_rse.get(("_constant_", "total"))
-            for col in enduse_cols:
-                us_total_rse_dict[f"{col}_value_rse"] = batched_rse.get((col, rse_stat_type))
-                us_total_rse_dict[f"{col}_percent_users_rse"] = batched_rse.get((col, "percent"))
+                batched_bounds = dict.fromkeys(bound_requests)
+            us_total_bounds_dict.update(_build_bounds_row(batched_bounds, enduse_cols, value_stat_type))
 
             for col in enduse_cols:
                 try:
@@ -368,9 +403,9 @@ def get_annual_all(
             for sc, sv in sec_vals.items():
                 us_mask = us_mask & (pl.col(sc) == sv)
 
-            for col, rse_value in us_total_rse_dict.items():
+            for col, bound_value in us_total_bounds_dict.items():
                 result_df = result_df.with_columns(
-                    pl.when(us_mask).then(pl.lit(rse_value)).otherwise(pl.col(col)).alias(col)
+                    pl.when(us_mask).then(pl.lit(bound_value)).otherwise(pl.col(col)).alias(col)
                 )
             for col, quartile_value in us_total_quartile_dict.items():
                 result_df = result_df.with_columns(
@@ -413,30 +448,26 @@ def get_annual_all(
                 ),
             )
 
-        # Calculate RSE and quartiles
-        # Convert to pandas for RSE calculation
+        # Calculate confidence bounds and quartiles
         mdf_pd = mdf.to_pandas()
-        rse_dict = {}
+        bounds_dict = {}
         quartile_dict = {}
         nonzero_quartile_dict = {}
 
-        # Determine RSE stat type based on aggregation
-        rse_stat_type = "total" if data_key.aggregation_type == Metric.total else "avg"
+        value_stat_type = _resolve_recs_value_stat_type(data_key)
 
-        rse_requests = [("_constant_", "total")]
+        bound_requests = []
         for col in enduse_cols:
-            rse_requests.append((col, rse_stat_type))
-            rse_requests.append((col, "percent"))
+            bound_requests.append((col, value_stat_type))
+            bound_requests.append((col, "percent"))
         try:
-            mdf_pd_with_const = mdf_pd.assign(_constant_=1.0)
-            batched_rse = calculate_rse_batch(mdf_pd_with_const, rse_requests)
+            batched_bounds = calculate_bounds_batch(mdf_pd, bound_requests)
         except Exception:
-            batched_rse = dict.fromkeys(rse_requests)
-        rse_dict["units_count_rse"] = [batched_rse.get(("_constant_", "total"))]
-        for col in enduse_cols:
-            rse_dict[f"{col}_value_rse"] = [batched_rse.get((col, rse_stat_type))]
-            rse_dict[f"{col}_percent_users_rse"] = [batched_rse.get((col, "percent"))]
+            batched_bounds = dict.fromkeys(bound_requests)
+        for col_name, bound_value in _build_bounds_row(batched_bounds, enduse_cols, value_stat_type).items():
+            bounds_dict[col_name] = [bound_value]
 
+        for col in enduse_cols:
             # Calculate quartiles (including all values)
             try:
                 data_values = mdf_pd[col].values
@@ -468,11 +499,11 @@ def get_annual_all(
             except Exception:
                 nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = [0.0] * 9
 
-        # Add RSE and quartile columns to result
-        rse_df = pl.DataFrame(rse_dict)
+        # Add bound and quartile columns to result
+        bounds_df = pl.DataFrame(bounds_dict)
         quartile_df = pl.DataFrame(quartile_dict)
         nonzero_quartile_df = pl.DataFrame(nonzero_quartile_dict)
-        result_df = pl.concat([result_df, rse_df, quartile_df, nonzero_quartile_df], how="horizontal")
+        result_df = pl.concat([result_df, bounds_df, quartile_df, nonzero_quartile_df], how="horizontal")
 
     # Note: US Total is only added when grouped by a column (e.g., state)
     # For ungrouped data, the result is already the US total
@@ -481,7 +512,7 @@ def get_annual_all(
 
 
 @timed
-@cached(cache_file="recs_monthly_data_cache")
+@cached(cache_file="recs_monthly_data_cache_v2")
 def get_monthly_all(
     data_key: DataKey,
     year: int = 2020,
@@ -604,6 +635,7 @@ def get_monthly_all(
         if avg_exprs:
             monthly_df = monthly_df.with_columns(avg_exprs)
 
+    monthly_df = _add_symmetric_bounds_from_rse(monthly_df)
     monthly_df = monthly_df.with_columns(pl.lit("recs_2020").alias("source"))
     return monthly_df
 
