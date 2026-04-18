@@ -187,7 +187,8 @@ def plot_tilemap(
                     subplot_titles.append(sidebar_title)
                 continue
             entity_name = layout[row][col] if col < len(layout[row]) else None
-            subplot_titles.append(entity_name or "")
+            # Tile labels are rendered below via x-axis titles; keep this slot blank.
+            subplot_titles.append("")
             entity_position[entity_name] = (row + 1, col + 1)
 
     # Create column specs for sidebar spanning all rows
@@ -215,7 +216,7 @@ def plot_tilemap(
     fig = make_subplots(
         rows=nrows,
         cols=ncols,
-        subplot_titles=[""] * len(subplot_titles),
+        subplot_titles=subplot_titles,
         specs=specs,
         shared_yaxes=False,
         shared_xaxes=ncols == 1, # Share x-axes only if single column
