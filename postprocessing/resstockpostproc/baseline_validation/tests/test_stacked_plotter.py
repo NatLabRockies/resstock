@@ -76,22 +76,22 @@ class TestPrepareBoxPlotData:
             "electricity_total_quartiles": [quartiles],
             "electricity_total_nonzero_quartiles": [quartiles],
             "electricity_total_percent_users": [80.0],
-            "model_count": [1000],
+            "model_count": [800],
         })
 
     def test_all_units_uses_quartiles(self):
         df = self._make_df()
         result = _prepare_box_plot_data(df, "electricity_total", CoverageType.all_units)
 
-        assert result["n_points"].item() == 1000  # model_count directly
+        assert result["n_points"].item() == 800  # model_count directly
         assert result["q1"].item() == 25.0
         assert result["mean"].item() == 500.0
 
-    def test_users_only_uses_nonzero_quartiles(self):
+    def test_users_only_uses_incoming_nonzero_count_and_nonzero_quartiles(self):
         df = self._make_df()
         result = _prepare_box_plot_data(df, "electricity_total", CoverageType.users_only)
 
-        # n_points = round(model_count * percent_users / 100) = round(1000 * 80 / 100) = 800
+        # model_count is already the exact nonzero count for the quantity upstream.
         assert result["n_points"].item() == 800
         assert result["q1"].item() == 25.0
 

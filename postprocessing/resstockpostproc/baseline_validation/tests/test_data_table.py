@@ -477,6 +477,28 @@ class TestDistributionTable:
         assert "Number of Samples" in html
         assert "Number of Models" in html
 
+    def test_users_only_table_hides_raw_nonzero_count_column(self, tmp_path):
+        data = pl.DataFrame({
+            "state": ["CA", "CA"],
+            "source": ["recs_2020", "resstock_2025"],
+            "electricity_total_value": [100.0, 110.0],
+            "electricity_total_percent_users": [80.0, 90.0],
+            "electricity_total_nonzero_sample_count": [240.0, 500.0],
+            "model_count": [240.0, 500.0],
+        })
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            aggregation_type=Metric.average,
+            coverage=CoverageType.users_only,
+        )
+        output_path = tmp_path / "users_only_counts.html"
+        generate_data_table_html(data=data, plot_spec=spec, output_path=output_path)
+
+        html = output_path.read_text(encoding="utf-8")
+        assert "Number of Samples" in html
+        assert "Number of Models" in html
+        assert "Nonzero Sample Count" not in html
+
 
 class TestAllEnduseTable:
     def test_melt_produces_enduse_column(self):
@@ -521,6 +543,34 @@ class TestAllEnduseTable:
         assert "End Use" in html
         assert "Electricity" in html
         assert "Space Heating Electricity" in html
+
+    def test_all_enduse_users_only_table_uses_per_enduse_count(self, tmp_path):
+        data = pl.DataFrame({
+            "state": ["CA", "CA"],
+            "source": ["recs_2020", "resstock_2025"],
+            "electricity_total_value": [5000.0, 5200.0],
+            "electricity_total_nonzero_sample_count": [111.0, 222.0],
+            "electricity_space_heating_value": [1200.0, 1250.0],
+            "electricity_space_heating_nonzero_sample_count": [333.0, 444.0],
+            "model_count": [999.0, 888.0],
+        })
+        spec = _make_spec(
+            comparison_dataset=ComparisonDataset.recs,
+            quantity=DataCol.ALL,
+            aggregation_type=Metric.average,
+            coverage=CoverageType.users_only,
+        )
+        output_path = tmp_path / "all_users_only_table.html"
+        generate_data_table_html(data=data, plot_spec=spec, output_path=output_path)
+
+        html = output_path.read_text(encoding="utf-8")
+        assert "Number of Samples" in html
+        assert "Number of Models" in html
+        assert "All Nonzero Sample Count" not in html
+        assert "999.0" not in html
+        assert "888.0" not in html
+        assert '"recs_2020: model_count": 111' in html
+        assert '"resstock_2025: model_count": 222' in html
 
     def test_all_enduse_drops_constant_entity_column(self, tmp_path):
         """For focused single-entity ALL plots, the state column is dropped as redundant."""

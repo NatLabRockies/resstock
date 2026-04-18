@@ -68,7 +68,10 @@ def _prepare_box_plot_data(df: pl.DataFrame, quantity: str, coverage: CoverageTy
     Args:
         df: Input DataFrame
         quantity: The quantity column name (without suffix)
-        coverage: CoverageType.all_units uses _quartiles, CoverageType.users_only uses _nonzero_quartiles
+        coverage: CoverageType.all_units uses _quartiles, CoverageType.users_only uses _nonzero_quartiles.
+            For non-ALL users_only plots, model_count is already normalized upstream to the
+            exact nonzero model/sample count for this quantity, so box-plot n_points should
+            use it directly.
     """
     df = df.with_columns(pl.lit([]).alias("outliers"))
     df = df.with_columns(pl.lit([]).alias("outlier_buildings"))
@@ -80,14 +83,7 @@ def _prepare_box_plot_data(df: pl.DataFrame, quantity: str, coverage: CoverageTy
         return df
     elif coverage == CoverageType.users_only:
         df = df.with_columns(
-            (
-                pl.col("model_count").fill_null(0).fill_nan(0)
-                * pl.col(f"{quantity}_percent_users").fill_null(0).fill_nan(0)
-                / 100
-            )
-            .round(0)
-            .cast(pl.Int32)
-            .alias("n_points")
+            pl.col("model_count").fill_null(0).fill_nan(0).cast(pl.Int32).alias("n_points")
         )
         df = _add_quartile_cols(df, f"{quantity}_nonzero_quartiles")
         return df
