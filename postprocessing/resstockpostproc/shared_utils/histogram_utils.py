@@ -154,6 +154,7 @@ def build_weighted_histogram_with_overflow(
     group_stats = clean.group_by(total_group_cols, maintain_order=True).agg(
         pl.col(weight_col).sum().cast(pl.Float64).alias("_total_weight"),
         pl.col(value_col).max().cast(pl.Float64).alias("_group_max_val"),
+        pl.len().cast(pl.Int64).alias("sample_count"),
     )
 
     sources = clean.select([*group_cols, source_col]).unique(maintain_order=True)
@@ -171,6 +172,7 @@ def build_weighted_histogram_with_overflow(
         .with_columns(
             pl.col("_total_weight").fill_null(0.0),
             pl.col("_group_max_val").fill_null(pl.col("_p98")),
+            pl.col("sample_count").fill_null(0).cast(pl.Int64),
             pl.when(pl.col("_total_weight") > 0)
             .then(pl.col("count") / pl.col("_total_weight") * 100.0)
             .otherwise(0.0)
@@ -191,7 +193,7 @@ def build_weighted_histogram_with_overflow(
         )
         .drop(["_total_weight", "_group_max_val", "_p98", "_core_width"])
     )
-    select_cols = [*group_cols, source_col, "bin", "bin_left", "bin_right", "bin_center", "count", "count_pct"]
+    select_cols = [*group_cols, source_col, "bin", "bin_left", "bin_right", "bin_center", "count", "count_pct", "sample_count"]
     return hist.select(select_cols)
 
 
@@ -205,6 +207,7 @@ def _empty_histogram_frame(source_col: str, group_cols: list[str]) -> pl.DataFra
             "bin_center": pl.Float64,
             "count": pl.Float64,
             "count_pct": pl.Float64,
+            "sample_count": pl.Int64,
         }
     )
     return pl.DataFrame(schema=schema)

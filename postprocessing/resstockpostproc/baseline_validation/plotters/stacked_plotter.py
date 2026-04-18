@@ -19,11 +19,17 @@ import plotly.graph_objects as go
 import polars as pl
 from plotly.subplots import make_subplots
 
-_HISTOGRAM_HOVER_TEMPLATE = (
-    "%{fullData.name}<br>"
-    "Range: %{customdata[0]} to %{customdata[1]}<br>"
-    "Stock Share: %{y:.2f}%<extra></extra>"
-)
+def _histogram_hover_template(count_label: str | None, count_value: int | None) -> str:
+    """Build the histogram hover template, optionally appending a per-trace count row."""
+    if count_label and count_value is not None:
+        count_line = f"<br>{count_label}: {count_value:,}"
+    else:
+        count_line = ""
+    return (
+        "%{fullData.name}<br>"
+        "Range: %{customdata[0]} to %{customdata[1]}<br>"
+        f"Stock Share: %{{y:.2f}}%{count_line}<extra></extra>"
+    )
 
 
 def _get_reference_source(df: pl.DataFrame) -> str:
@@ -563,6 +569,12 @@ def _create_grouped_histogram_plot(
             sub = group_df.filter(pl.col("source") == source)
             if sub.is_empty():
                 continue
+            count_label = plot_spec.model_count_display_label_for_source(source)
+            count_value = (
+                int(sub["sample_count"][0])
+                if "sample_count" in sub.columns and sub["sample_count"][0] is not None
+                else None
+            )
             fig.add_bar(
                 x=sub["_bin_center"].to_list(),
                 y=sub["count_pct"].to_list(),
@@ -576,7 +588,7 @@ def _create_grouped_histogram_plot(
                     (format_compact_number(left), format_compact_number(right))
                     for left, right in zip(sub["bin_left"].to_list(), sub["bin_right"].to_list(), strict=True)
                 ],
-                hovertemplate=_HISTOGRAM_HOVER_TEMPLATE,
+                hovertemplate=_histogram_hover_template(count_label, count_value),
                 row=row_idx,
                 col=1,
             )
@@ -624,6 +636,12 @@ def _create_histogram_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     fig = go.Figure()
     for source in sources:
         sub = plot_df.filter(pl.col("source") == source)
+        count_label = plot_spec.model_count_display_label_for_source(source)
+        count_value = (
+            int(sub["sample_count"][0])
+            if "sample_count" in sub.columns and len(sub) and sub["sample_count"][0] is not None
+            else None
+        )
         fig.add_bar(
             x=sub["_bin_center"].to_list(),
             y=sub["count_pct"].to_list(),
@@ -635,7 +653,7 @@ def _create_histogram_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                 (format_compact_number(left), format_compact_number(right))
                 for left, right in zip(sub["bin_left"].to_list(), sub["bin_right"].to_list(), strict=True)
             ],
-            hovertemplate=_HISTOGRAM_HOVER_TEMPLATE,
+            hovertemplate=_histogram_hover_template(count_label, count_value),
         )
 
     x_max = max(1.0, p98 + 2.0 * core_width)
