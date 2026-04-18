@@ -24,7 +24,7 @@ reference_years:
 
 output:
   output_dir: /Users/radhikar/Documents/buildstock2025/
-  run_name: baseline_val_test_2024_2025_final_test
+  run_name: baseline_val_test_2024_2025_final_patch
 
 # Data Source Labels
 # ------------------

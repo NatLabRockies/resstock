@@ -406,6 +406,7 @@ def _aggregate_raw_annual_groups(
         row = _partition_key_dict(group_cols, key)
         weights = group["weight"].to_numpy()
         row["units_count"] = float(weights.sum())
+        row["sample_count"] = int(len(group))
 
         for quantity_col in quantity_cols:
             values = group[quantity_col].to_numpy()
@@ -443,6 +444,7 @@ def _weighted_quantiles_or_zeros(values: np.ndarray, weights: np.ndarray) -> lis
 def _empty_raw_annual_frame(group_cols: list[str], quantity_cols: list[str]) -> pl.DataFrame:
     schema: dict[str, pl.DataType] = {col: pl.String for col in group_cols}
     schema["units_count"] = pl.Float64
+    schema["sample_count"] = pl.Int64
     for quantity_col in quantity_cols:
         schema[quantity_col] = pl.Float64
         schema[f"{quantity_col}__nonzero_units_count"] = pl.Float64
