@@ -5,7 +5,6 @@ discrepancy metrics (MAPE) and navigation links back to the plot
 and the plot index.
 """
 
-import html as html_lib
 import json
 from pathlib import Path
 
