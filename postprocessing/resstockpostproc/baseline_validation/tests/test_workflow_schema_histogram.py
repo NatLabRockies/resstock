@@ -2,6 +2,8 @@
 
 from pathlib import Path
 
+import pytest
+
 from resstockpostproc.baseline_validation.schema import workflow_schema
 from resstockpostproc.baseline_validation.schema.workflow_schema import WorkflowConfig
 
@@ -81,3 +83,21 @@ class TestWorkflowHistogramPathInference:
 
         assert "baseline_metadata_and_annual_results_parquet_url" in err_text
         assert str(expected_path) in err_text
+
+    def test_removed_plots_section_is_rejected(self, tmp_path: Path):
+        cfg_dict = _base_cfg(output_dir=tmp_path / "out")
+        cfg_dict["plots"] = {"output_formats": ["html", "svg"]}
+
+        with pytest.raises(Exception) as err:
+            WorkflowConfig.model_validate(cfg_dict)
+
+        assert "plots" in str(err.value)
+
+    def test_removed_quantities_section_is_rejected(self, tmp_path: Path):
+        cfg_dict = _base_cfg(output_dir=tmp_path / "out")
+        cfg_dict["quantities"] = ["Electricity"]
+
+        with pytest.raises(Exception) as err:
+            WorkflowConfig.model_validate(cfg_dict)
+
+        assert "quantities" in str(err.value)

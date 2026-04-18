@@ -15,6 +15,7 @@ from resstockpostproc.baseline_validation.footnotes import (
     get_plot_notes,
 )
 from resstockpostproc.baseline_validation.plot_generator import (
+    DEFAULT_PLOT_OUTPUT_FORMATS,
     _all_enduses_viz_label,
     _apply_lrd_sidebar_semantics,
     _build_spec_entries,
@@ -26,7 +27,6 @@ from resstockpostproc.baseline_validation.plot_generator import (
     _has_static_image_outputs,
     _plot_output_path,
     _data_output_path,
-    _resolve_output_formats,
     _should_generate_stacked_page_group,
     _should_generate_stacked_table,
     _stop_kaleido_sync_server_if_owned,
@@ -593,16 +593,9 @@ class TestGenerateSpecPlotsPrimaryDataAnchor:
         assert all(fmt == FileType.svg for _, _, fmt in jobs)
 
 
-class TestResolveOutputFormats:
-    def test_html_implies_svg(self):
-        assert _resolve_output_formats([FileType.html, FileType.parquet]) == [
-            FileType.html,
-            FileType.parquet,
-            FileType.svg,
-        ]
-
-    def test_non_html_does_not_force_svg(self):
-        assert _resolve_output_formats([FileType.parquet]) == [FileType.parquet]
+class TestDefaultOutputFormats:
+    def test_standard_run_uses_html_and_svg(self):
+        assert DEFAULT_PLOT_OUTPUT_FORMATS == [FileType.html, FileType.svg]
 
 
 class TestKaleidoSyncServerLifecycle:
@@ -677,10 +670,8 @@ class TestKaleidoSyncServerLifecycle:
             plot_generator_module,
             "workflow",
             SimpleNamespace(
-                quantities=[],
                 data_source_labels={},
                 output=SimpleNamespace(output_dir=tmp_path, run_name="seq-kaleido"),
-                plots=SimpleNamespace(output_formats=[FileType.html]),
             ),
         )
         monkeypatch.setattr(
@@ -711,7 +702,7 @@ class TestKaleidoSyncServerLifecycle:
         monkeypatch.setattr(plot_generator_module.TimingStats, "stop_trace", lambda: None)
         monkeypatch.setattr(plot_generator_module.TimingStats, "summary", lambda: "timing summary")
 
-        generate_plots(parallel=False, output_formats=[FileType.html])
+        generate_plots(parallel=False)
 
         assert lifecycle_calls == ["start", "stop"]
 

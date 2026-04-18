@@ -164,6 +164,7 @@ OUTPUT_COLUMNS = [
     "Comparison Plot",
     "Data",
 ]
+DEFAULT_PLOT_OUTPUT_FORMATS = [FileType.html, FileType.svg]
 
 
 _GROUPED_VIEW_SUFFIX = " (grouped view)"
@@ -320,15 +321,6 @@ def _template_signature(tmpl: PlotTemplate) -> tuple:
         tmpl.aggregation_type, cov_type, qty_type,
         fuel_type, is_total, len(tmpl.eligible_chars),
     )
-
-
-def _template_display_quantity(tmpl: PlotTemplate) -> str:
-    """Return the display quantity name for a template (matches workflow.yaml names)."""
-    if tmpl.quantity == DataCol.UNITS_COUNT:
-        return "Number of dwelling units"
-    if tmpl.quantity == DataCol.ALL:
-        return "All Enduses"
-    return tmpl.quantity.label
 
 
 def _build_spec_entries(specs: list[PlotSpec]) -> list[tuple[PlotSpec, str]]:
@@ -726,21 +718,6 @@ def _save_data_csv(data, data_dir, file_title):
     _unnest_list_columns(data).write_csv(data_dir / f"{file_title}.csv")
 
 
-def _resolve_output_formats(output_formats: list[FileType] | None) -> list[FileType]:
-    """Resolve effective output formats for a run.
-
-    HTML output always implies SVG backup output.
-    """
-    resolved = list(output_formats or [FileType(fmt.value) for fmt in workflow.plots.output_formats])
-    deduped: list[FileType] = []
-    for fmt in resolved:
-        if fmt not in deduped:
-            deduped.append(fmt)
-    if FileType.html in deduped and FileType.svg not in deduped:
-        deduped.append(FileType.svg)
-    return deduped
-
-
 def _plot_output_path(output_root: Path, plot_spec: PlotSpec, fmt: FileType) -> Path:
     """Return the absolute output path for a plot artifact."""
     path_seg, file_title = plot_spec.file_path_and_name
@@ -900,7 +877,7 @@ def _handle_plot_result(sub_key, result, results, csv_path, index_state):
     append_index_row(index_state, row)
 
 
-def generate_plots(index=None, test_only=False, parallel=True, output_formats: list[FileType] | None = None):
+def generate_plots(index=None, test_only=False, parallel=True):
     """Generate baseline validation plots.
 
     Args:
@@ -911,11 +888,6 @@ def generate_plots(index=None, test_only=False, parallel=True, output_formats: l
     """
     wall_start = time.perf_counter()
     templates = generate_all_templates()
-
-    if workflow.quantities:
-        allowed = set(workflow.quantities)
-        templates = [t for t in templates if _template_display_quantity(t) in allowed]
-        logger.info(f"Filtered to {len(templates)} templates matching workflow quantities: {sorted(allowed)}")
 
     if test_only:
         # Select templates that cover unique code paths
@@ -930,7 +902,7 @@ def generate_plots(index=None, test_only=False, parallel=True, output_formats: l
 
     source_labels = workflow.data_source_labels
 
-    output_formats = _resolve_output_formats(output_formats)
+    output_formats = list(DEFAULT_PLOT_OUTPUT_FORMATS)
     needs_persistent_kaleido = _has_static_image_outputs(output_formats)
     link_format = FileType.html if FileType.html in output_formats else output_formats[0]
     output_root = Path(workflow.output.output_dir) / workflow.output.run_name
@@ -1337,7 +1309,7 @@ def main():
         "--index", type=str, default=None, help="Plot definition index to generate (e.g. '5', '1-10', '1,3,5')"
     )
     parser.add_argument(
-        "--test", action="store_true", default=False,
+        "--test", action="store_true", default=True,
         help="Generate only test subset plots (limited focus expansion)",
     )
     parser.add_argument(

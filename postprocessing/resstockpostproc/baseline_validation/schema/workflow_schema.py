@@ -6,9 +6,7 @@ Defines Pydantic models for validating baseline validation workflow configuratio
 
 from __future__ import annotations
 
-from enum import Enum
 from pathlib import Path
-from typing import Literal
 
 import yaml
 from pydantic import Field, field_validator
@@ -16,32 +14,6 @@ from pydantic import Field, field_validator
 from resstockpostproc.baseline_validation.schema.plot_spec import NoExtraModel
 from resstockpostproc.shared_utils.db_column_names import DBSchema
 from resstockpostproc.shared_utils.s3_manager import download_s3_file
-
-
-class PlotType(str, Enum):
-    """Types of validation plots to generate."""
-
-    eia = "eia"
-    lrd = "lrd"
-    recs = "recs"
-    timeseries = "timeseries"
-
-
-class GroupByLevel(str, Enum):
-    """Geographic group_by levels for validation."""
-
-    state = "state"
-    utility = "utility"
-
-
-class OutputFormat(str, Enum):
-    """Supported output formats."""
-
-    html = "html"
-    svg = "svg"
-    json = "json"
-    parquet = "parquet"
-    csv = "csv"
 
 
 class DataSourceConfig(NoExtraModel):
@@ -84,23 +56,6 @@ class DataSourceLabel(NoExtraModel):
     entries: list[DataSourceEntry] = Field(description="List of datasets comprising this source")
 
 
-class PlotSpecification(NoExtraModel):
-    """Specification for which plots to generate."""
-
-    plot_types: tuple[PlotType, ...] = Field(
-        default=(PlotType.eia, PlotType.lrd, PlotType.timeseries),
-        description="Types of validation plots to generate",
-    )
-    group_by_levels: tuple[GroupByLevel, ...] = Field(
-        default=(GroupByLevel.state, GroupByLevel.utility),
-        description="Geographic group_by levels for plots",
-    )
-    output_formats: tuple[OutputFormat, ...] = Field(
-        default=(OutputFormat.html, OutputFormat.svg, OutputFormat.parquet),
-        description="Output file formats",
-    )
-
-
 class OutputConfig(NoExtraModel):
     """Configuration for output paths and behavior."""
 
@@ -123,11 +78,6 @@ class WorkflowConfig(NoExtraModel):
     reference_years: dict[str, list[int]] = Field(
         default={"eia": [2018], "recs": [2020]},
         description="Reference years per data source (e.g., {'eia': [2018, 2024], 'recs': [2020]})",
-    )
-    plots: PlotSpecification = Field(default_factory=PlotSpecification, description="Plot specifications")
-    quantities: list[str] | None = Field(
-        default=None,
-        description="List of quantities to generate plots for. If None or empty, all quantities will be generated.",
     )
     output: OutputConfig = Field(description="Output configuration")
     data_source_labels: dict[str, DataSourceLabel] = Field(

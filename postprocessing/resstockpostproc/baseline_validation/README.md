@@ -1,67 +1,104 @@
 # Baseline Validation
 
-The baseline validation tool generates quality-control visualizations comparing BuildStock baseline results with reference data from EIA (Energy Information Administration) and other authoritative sources. This tool validates that the baseline simulation accurately represents real-world energy consumption patterns.
+The baseline validation tool generates quality-control visualizations comparing BuildStock baseline results with reference data from EIA, RECS, and LRD. This tool validates that the baseline simulation accurately represents real-world energy consumption patterns.
 
 ## Overview
 
-This tool compares BuildStock baseline simulation results against:
-- **EIA 861** - Annual and monthly electricity sales data
-- **EIA 176** - Natural gas sales data
-- **LRD (Load Research Data)** - Hourly load profiles from utilities
+Baseline validation is organized around three comparison families that answer different questions about the quality of a BuildStock baseline.
 
-It produces three types of validation analyses:
-1. **EIA Comparison** - Annual and monthly sales comparisons at state and utility levels
-2. **Load Duration Curves** - Hourly load shape validation against utility data
-3. **Timeseries Analysis** - Temporal patterns and profiles
+### EIA Comparison
+
+Compares modeled annual and monthly consumption against published EIA reference data:
+- **EIA 861** for electricity sales
+- **EIA 176** for natural gas sales
+- supporting checks such as dwelling-unit counts and state-level rollups
+
+This is the broad system-level validation layer. It answers whether the modeled housing stock matches real-world aggregate energy consumption at state and national scales.
+
+### RECS Comparison
+
+Compares modeled residential behavior against **RECS 2020** survey-based household data:
+- end-use consumption comparisons
+- end-use penetration comparisons
+- annual consumption distribution comparisons
+- cross-filtered views by state, census division, building type, climate zone, vintage, and heating fuel
+
+This is the household- and end-use-level validation layer. It answers whether the baseline looks realistic for individual homes and occupant-facing end uses, not just in aggregate totals.
+
+### LRD Comparison
+
+Compares modeled hourly load shapes against **Load Research Data (LRD)** from utilities:
+- load duration curves
+- hourly and seasonal shape comparisons
+- time-series views for utility-level consumption patterns
+
+This is the temporal validation layer. It answers whether the baseline captures realistic timing and shape of load, not just annual or monthly totals.
 
 ## Architecture
 
-This tool follows a **functional programming** approach with clear separation of concerns:
+The tool is organized as a small orchestration layer on top of schema definitions, data loaders, data-processing helpers, plot renderers, and dashboard packaging utilities.
 
 ```
 baseline_validation/
-├── workflow.yaml              # Configuration file
-├── main.py                    # CLI entry point
-├── plot_generator.py          # Orchestration layer
-├── schema/                    # Pydantic configuration schemas
-│   └── workflow_schema.py
-├── io_managers/               # I/O operations
-│   ├── input_manager.py       # BuildStockQuery setup
-│   └── output_manager.py      # Save plots and data
-├── data_processing/           # Pure transformation functions
-│   └── data_processor.py      # Aggregation and scaling logic
-├── reference_data/            # Reference data loaders
-│   └── eia_data_loader.py     # EIA and LRD data loading
-├── plotters/                  # Plotting functions
-│   ├── eia_plotter.py         # EIA comparison plots
-│   ├── lrd_plotter.py         # Load duration curves
-│   └── timeseries_plotter.py  # Timeseries visualizations
-├── utils.py                   # Shared constants and utilities
-└── theme.py                   # Plot styling
+├── workflow.yaml                  # User-facing run configuration
+├── main.py                        # CLI entry point
+├── plot_generator.py              # Main orchestration and parallel generation
+├── create_html.py                 # Dashboard shell and sharded index generation
+├── dashboard_paths.py             # Shared output-path conventions
+├── footnotes.py                   # Reference/source footnote helpers
+├── resstock_raw.py                # Raw-column resolution helpers for ResStock
+├── utils.py                       # Shared utility helpers
+├── theme.py                       # Plot styling
+├── schema/
+│   ├── workflow_schema.py         # Workflow config validation
+│   ├── plot_definitions.py        # Code-defined comparison catalog
+│   ├── plot_spec.py               # Plot specification model
+│   ├── recs_chars_mapping.py      # RECS characteristic mappings
+│   └── recs_enduse_mapping.py     # RECS end-use mappings
+├── data_processing/
+│   ├── gather_data.py             # Core comparison-data assembly
+│   ├── histogram_data.py          # Histogram/distribution preparation
+│   ├── recs_mapping.py            # RECS label and grouping helpers
+│   └── recs_rse.py                # RECS relative standard error handling
+├── io_managers/
+│   ├── get_eia_data.py            # EIA reference data loading
+│   ├── get_recs_data.py           # RECS reference data loading
+│   ├── get_lrd_data.py            # LRD reference data loading
+│   ├── get_resstock_data.py       # BuildStock result loading
+│   ├── comparison_data_paths.py   # Comparison-specific output locations
+│   ├── data_table.py              # HTML/CSV data table generation
+│   ├── html_utils.py              # Plot HTML post-processing and packaging
+│   └── output_manager.py          # Figure and static asset persistence
+├── plotters/
+│   ├── main_plotter.py            # Shared plot rendering entry points
+│   ├── recs_plotter.py            # RECS-specific comparison plots
+│   ├── lrd_plotter.py             # Load-shape and LRD plots
+│   ├── stacked_plotter.py         # Stacked and split plot generation
+│   └── plot_config.py             # Plot styling/config helpers
+└── tests/                         # Regression coverage for data, plots, HTML, and CLI
 ```
 
 ### Key Design Principles
 
-1. **Functional Approach**: Pure functions with no side effects
-   - Data in → Data out
-   - No class state or memoization
-   - Testable with mock data
+1. **Separation of concerns**
+   - `main.py` starts a standard run
+   - `plot_generator.py` coordinates the workflow
+   - `io_managers/` owns loading and persistence
+   - `data_processing/` prepares comparison-ready tables
+   - `plotters/` turns prepared data into figures
+   - `create_html.py` packages the dashboard entrypoint and sharded index
 
-2. **Separation of Concerns**:
-   - I/O (`io_managers`) - Loading and saving
-   - Transformation (`data_processing`) - Pure data operations
-   - Visualization (`plotters`) - Plot generation
-   - Orchestration (`plot_generator`) - Workflow coordination
+2. **Code-defined comparison catalog**
+   - The standard run path is fixed in code
+   - `schema/plot_definitions.py` enumerates the comparison templates the tool generates
+   - `workflow.yaml` stays small and focused on data sources, reference years, and output location
 
-3. **Configuration over Code**:
-   - YAML configuration instead of Python config
-   - Pydantic schema validation
-   - Declarative plot specifications
+3. **Reusable packaging pipeline**
+   - Interactive plot pages are generated as HTML
+   - SVG backups are emitted for the same plots
+   - `create_html.py` assembles `comparison_dashboard.html` plus `dashboard_data/`
+   - vendored assets keep the dashboard usable offline as a directory bundle
 
-4. **Modern Python**:
-   - Uses **Polars** for data processing (fast, expressive)
-   - Type hints throughout
-   - Consistent with `upgrade_comparison` patterns
 
 ## Input / Output
 
@@ -72,37 +109,26 @@ baseline_validation/
 This is the primary configuration file. Key settings:
 
 ```yaml
-# BuildStock data source
-data_source:
-  db_name: resstock-core
-  table_name: 2023-03-16-national-baseline-full
-  workgroup: rescore
-  buildstock_type: resstock
+workgroup: rescore
 
-# Reference data settings
-reference_data:
-  comparison_data_year: 2018
-  eia_mapping_version: 3
+data_sources:
+  - name: resstock_2025
+    db_name: buildstock_sdr
+    table_name: resstock_amy2018_r1_2025
+    db_schema: resstock_oedi_new
 
-# Plot specifications
-plots:
-  plot_types:
-    - eia
-    - load_duration
-    - timeseries
-  group_by_levels:
-    - state
-    - utility
-  output_formats:
-    - html
-    - svg
-    - parquet
+reference_years:
+  eia: [2018]
+  recs: [2020]
 
-# Output configuration
 output:
   output_dir: ~/Documents/baseline_validation_outputs
   run_name: baseline_2023_03_16
-  overwrite: false
+
+data_source_labels:
+  eia_2018:
+    label: "EIA 2018"
+    entries: []
 ```
 
 ### Output
@@ -152,18 +178,6 @@ uv run resstockpostproc/baseline_validation/main.py
 
 # Specify custom config
 uv run resstockpostproc/baseline_validation/main.py --config /path/to/config.yaml
-
-# Generate specific plot types only
-uv run resstockpostproc/baseline_validation/main.py --plot-type eia
-
-# Generate multiple specific types
-uv run resstockpostproc/baseline_validation/main.py --plot-type eia --plot-type timeseries
-
-# Specify output formats
-uv run resstockpostproc/baseline_validation/main.py --output html --output svg
-
-# Overwrite existing outputs
-uv run resstockpostproc/baseline_validation/main.py --overwrite
 ```
 
 ### CLI Options
@@ -173,21 +187,13 @@ uv run resstockpostproc/baseline_validation/main.py --help
 ```
 
 ```
-usage: main.py [-h] [--config CONFIG] [--output OUTPUT]
-               [--plot-type {eia,load_duration,timeseries,all}]
-               [--overwrite]
+usage: main.py [-h] [--config CONFIG]
 
 Generate baseline validation plots comparing BuildStock results with reference data
 
 options:
   -h, --help            show this help message and exit
   --config CONFIG       Path to workflow configuration YAML file
-  --output OUTPUT       Output file types to generate (html, svg, json,
-                        parquet). May be specified multiple times.
-  --plot-type {eia,load_duration,timeseries,all}
-                        Types of plots to generate. May be specified multiple
-                        times.
-  --overwrite           Overwrite existing output files
 ```
 
 ## Plot Types
@@ -200,6 +206,15 @@ Validates annual and monthly energy consumption against EIA reported data:
 - **Customer counts comparison** - BuildStock unit counts vs EIA customer counts
 - **Monthly profiles** - Seasonal patterns for electricity and natural gas
 - **Fuel-specific validation** - Separate electricity and natural gas analysis
+
+### RECS Comparison Plots
+
+Validates residential end-use and household-level distributions against RECS microdata:
+
+- **Annual end-use comparisons** - Average and total consumption by end use
+- **Penetration comparisons** - Share of occupied units using each end use
+- **Distribution plots** - Survey-based consumption distributions for household end uses
+- **Cross-filtered views** - Breakdowns by state, census division, building type, climate zone, vintage, and heating fuel
 
 ### Load Duration Curves
 
@@ -224,38 +239,22 @@ Validates temporal patterns and profiles:
 ### Data Source Configuration
 
 ```yaml
-data_source:
-  db_name: resstock-core          # Athena database
-  table_name: baseline-2024-v3    # Athena table
-  workgroup: rescore              # Athena workgroup
-  buildstock_type: resstock       # resstock or comstock
+workgroup: rescore
+
+data_sources:
+  - name: resstock_2025
+    db_name: buildstock_sdr
+    table_name: resstock_amy2018_r1_2025
+    db_schema: resstock_oedi_new
+    baseline_metadata_and_annual_results_parquet_url: s3://...
 ```
 
 ### Reference Data Configuration
 
 ```yaml
-reference_data:
-  comparison_data_year: 2018           # Year of EIA/LRD data
-  eia_mapping_version: 3          # EIA utility mapping version
-```
-
-### Plot Specifications
-
-```yaml
-plots:
-  plot_types:                     # Which plot categories to generate
-    - eia
-    - load_duration
-    - timeseries
-
-  group_by_levels:             # Geographic grouping
-    - state
-    - utility
-
-  output_formats:                 # File formats to save
-    - html                        # Interactive plots
-    - svg                         # Static vector graphics (also added automatically when html is requested)
-    - parquet                     # Data tables
+reference_years:
+  eia: [2018]
+  recs: [2020]
 ```
 
 ### Output Configuration
@@ -264,64 +263,18 @@ plots:
 output:
   output_dir: ~/validation_outputs  # Base output directory
   run_name: baseline_2024           # Run identifier
-  overwrite: false                  # Whether to overwrite existing
 ```
 
-## Comparison with upgrade_comparison
+### Data Source Labels
 
-Both tools share similar architectural patterns:
-
-**Similarities:**
-- Functional programming approach
-- YAML configuration with Pydantic validation
-- Separated I/O, processing, and plotting layers
-- Polars for data processing
-- CLI with argparse
-
-**Differences:**
-- **Purpose**: Baseline validation vs upgrade comparison
-- **Reference data**: EIA/LRD vs baseline-to-upgrade deltas
-- **Aggregation**: State/utility vs upgrade groups
-- **Plot types**: Validation scatter plots vs savings distributions
-
-## Migrating from buildstock_viz
-
-If you previously used `buildstock_viz`, here's how to migrate:
-
-**Old approach (buildstock_viz):**
-```python
-from buildstock_viz.visualizers import EIAViz
-
-viz = EIAViz(
-    db_name="resstock-core",
-    table_name="baseline-2024",
-    workgroup="rescore"
-)
-viz.generate_all_plots(root_path="/path/to/output")
-```
-
-**New approach (baseline_validation):**
 ```yaml
-# workflow.yaml
-data_source:
-  db_name: resstock-core
-  table_name: baseline-2024
-  workgroup: rescore
-
-output:
-  output_dir: /path/to/output
-  run_name: my_validation
+data_source_labels:
+  eia_2018:
+    label: "EIA 2018"
+    entries:
+      - description: "EIA-861 Annual Electric Utility Data (2018)"
+        url: "https://www.eia.gov/electricity/data/eia861/"
 ```
-
-```bash
-uv run resstockpostproc/baseline_validation/main.py --config workflow.yaml
-```
-
-**Key migration steps:**
-1. Convert `config.py` settings to `workflow.yaml`
-2. Use CLI instead of Python scripts
-3. Reference data automatically downloaded and cached
-4. Outputs organized by plot type instead of flat structure
 
 ## Developing and Testing
 
@@ -354,22 +307,10 @@ pre-commit run --all-files --show-diff-on-failure
 
 **Memory issues with large runs:**
 - Polars is memory-efficient, but large timeseries can be demanding
-- Consider processing states/utilities in batches
-- Increase available memory or use compute instance
+- Make sure not other CPU/Memory intensive application is running
 
 ## Future Enhancements
 
-Potential additions (not yet implemented):
-- Dashboard interface (similar to upgrade_comparison)
-- Parallel plot generation
-- Statistical validation metrics (R², RMSE, etc.)
-- Automated QC pass/fail criteria
-- Integration with CI/CD pipelines
-- ComStock validation support
-
-## Reference
-
-- **BuildStockQuery**: https://github.com/NREL/buildstock-query
-- **Polars**: https://pola.rs/
-- **Plotly**: https://plotly.com/python/
-- **EIA 861**: https://www.eia.gov/electricity/data/eia861/
+- Plot generation is already parallel, but data loading/querying is sequential.
+  While the polars engine already makes use of multiple cores there is room for speeding
+  things up by making both step parallel.

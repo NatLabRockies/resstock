@@ -1,9 +1,6 @@
 # Baseline Validation Workflow Configuration
-# ===========================================
-# This file defines the configuration for baseline validation plots
+# =========================================
 
-# BuildStock Data Source
-# ----------------------
 workgroup: rescore
 
 data_sources:
@@ -25,69 +22,9 @@ reference_years:
   recs:
     - 2020
 
-plots:
-  plot_types:
-    - recs
-
-  group_by_levels:
-    - state
-    - utility
-
-  output_formats:
-    - html
-    - csv
-    # - svg
-    # - parquet
-
-  # Cross-filter expansion for RECS annual plots is now automatic.
-  # All valid (filter, sub-filter, group-by) combinations are generated
-  # from the eligible characteristics per source/resolution.
-
-# Quantities to Generate
-# ----------------------
-# List of quantities to generate comparison plots for.
-# If empty or not specified, all quantities will be generated.
-# To generate plots for only a subset of quantities, list them here.
-quantities:
-  - Number of dwelling units
-  - All Enduses
-  - Electricity
-  - Natural Gas
-  - Space Cooling Electricity
-  - Space Heating Electricity
-  - Water Heating Electricity
-  - Space Heating Natural Gas
-  - Water Heating Natural Gas
-  - Plug Loads Electricity
-  - Refrigerator Electricity
-  - Lighting Electricity
-  - Television Electricity
-  - Clothes Dryer Electricity
-  - Cooling Fans & Pumps Electricity
-  - Heating Fans & Pumps Electricity
-  - Freezer Electricity
-  - Cooking Electricity
-  - Pool Pumps Electricity
-  - Ceiling Fans Electricity
-  - Dishwasher Electricity
-  - Clothes Washer Electricity
-  - Pool Heater Electricity
-  - EV Charging Electricity
-  - Cooking Natural Gas
-  - Pool Heater Natural Gas
-  - Clothes Dryer Natural Gas
-  - Propane
-  - Space Heating Propane
-  - Water Heating Propane
-  - Cooking Propane
-  - Clothes Dryer Propane
-  - Fuel Oil
-  - Space Heating Fuel Oil
-  - Water Heating Fuel Oil
-
 output:
-  output_dir: /Users/radhikar/Documents/buildstock2025/baseline_validation_output/
-  run_name: baseline_val_test_2024_2025_final
+  output_dir: /Users/radhikar/Documents/buildstock2025/
+  run_name: baseline_val_test_2024_2025_final_test
 
 # Data Source Labels
 # ------------------
@@ -121,12 +58,12 @@ data_source_labels:
     label: "ResStock 2025"
     entries:
       - description: "ResStock Standard Data Release 2025 Release 1"
-        url: "https://resstock.nrel.gov/"
+        url: "https://resstock.nlr.gov/"
   resstock_2024:
     label: "ResStock 2024"
     entries:
       - description: "ResStock Standard Data Release 2024 Release 2"
-        url: "https://resstock.nrel.gov/"
+        url: "https://resstock.nlr.gov/"
   lrd_2018:
     label: "LRD 2018"
     entries:
