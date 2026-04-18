@@ -128,6 +128,48 @@ def _melt_enduse_columns(data: pl.DataFrame) -> pl.DataFrame:
     return pl.concat(dfs, how="diagonal_relaxed")
 
 
+def _normalize_model_count_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
+    """Align table count columns with displayed plot semantics.
+
+    For users_only tables, model_count is the display count shown in hover/table
+    labels. Non-ALL plots already normalize it upstream; ALL-enduse tables still
+    carry per-enduse nonzero counts as ``all_nonzero_sample_count`` after melt.
+    Normalize model_count from the appropriate nonzero count when present, then
+    drop raw ``*_nonzero_sample_count`` columns so tables do not expose duplicate
+    or stale count columns.
+
+    Also scales units_count to the users-only subset (units_count * percent_users
+    / 100) so "Dwelling Units" stays in sync with "Number of Models/Samples".
+    """
+    nonzero_cols = [c for c in data.columns if c.endswith("_nonzero_sample_count")]
+    if not nonzero_cols:
+        return data
+
+    if plot_spec.coverage == CoverageType.users_only:
+        quantity = plot_spec.quantity
+        target_col = "all_nonzero_sample_count" if quantity == DataCol.ALL else f"{quantity}_nonzero_sample_count"
+        if target_col in data.columns:
+            replacement = pl.col(target_col).cast(pl.Int64, strict=False)
+            if "model_count" in data.columns:
+                data = data.with_columns(
+                    replacement.fill_null(pl.col("model_count").cast(pl.Int64, strict=False)).alias("model_count")
+                )
+            else:
+                data = data.with_columns(replacement.alias("model_count"))
+
+        percent_users_col = (
+            "all_percent_users" if quantity == DataCol.ALL else f"{quantity}_percent_users"
+        )
+        if "units_count" in data.columns and percent_users_col in data.columns:
+            data = data.with_columns(
+                (pl.col("units_count") * pl.col(percent_users_col) / 100.0)
+                .round(0)
+                .alias("units_count")
+            )
+
+    return data.drop(nonzero_cols)
+
+
 def _extract_quartile_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
     """Extract scalar min/q1/median/q3/max columns from the raw quartile list column.
 
@@ -477,15 +519,15 @@ def _build_table_html(
         rs_sources_js: List of {label, refKey, absDiffKey} dicts used by the JS
             to compute per-source formula derivations at render time.
     """
-    title = html_lib.escape(plot_spec.display_title)
-    units = html_lib.escape(_resolve_quantity_title(plot_spec))
+    title = plot_spec.display_title
+    units = _resolve_quantity_title(plot_spec)
 
     # Subtitle: focused entity or group_by level
     focus_display = plot_spec.filter_display_name
     if focus_display:
-        subtitle = html_lib.escape(focus_display)
+        subtitle = focus_display
     elif plot_spec.group_by:
-        subtitle = html_lib.escape(f"by {format_group_by(plot_spec.group_by)}")
+        subtitle = f"by {format_group_by(plot_spec.group_by)}"
     else:
         subtitle = ""
 
@@ -509,7 +551,7 @@ def _build_table_html(
         for label, mape in metrics_by_source.items():
             chips.append(
                 f'<span class="metric-chip">'
-                f'<span class="metric-chip-label">{html_lib.escape(label)}</span>'
+                f'<span class="metric-chip-label">{label}</span>'
                 f'<span class="metric-chip-value">{mape:.1f}%</span>'
                 f"</span>"
             )
@@ -932,6 +974,7 @@ def generate_data_table_html(
     metrics_by_source = metrics_by_source or {}
     if plot_spec.quantity == DataCol.ALL:
         data = _melt_enduse_columns(data)
+    data = _normalize_model_count_columns(data, plot_spec)
     if plot_spec.is_distribution_metric:
         data = _extract_quartile_columns(data, plot_spec)
     filtered = _filter_columns(data, plot_spec)
