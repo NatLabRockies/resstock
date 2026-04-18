@@ -193,6 +193,10 @@ def get_annual_all(
                     ).alias(f"{col}_percent_users")
                     for col in enduse_cols
                 ),
+                *(
+                    (pl.col(col) > 0).sum().alias(f"{col}_nonzero_sample_count")
+                    for col in enduse_cols
+                ),
             )
         elif data_key.coverage == CoverageType.all_units:
             # Per-unit energy: weighted mean (sum of weighted values / sum of all weights)
@@ -207,6 +211,10 @@ def get_annual_all(
                     (
                         ((pl.col(col) > 0).cast(pl.Int64) * pl.col("NWEIGHT")).sum() / pl.col("NWEIGHT").sum() * 100
                     ).alias(f"{col}_percent_users")
+                    for col in enduse_cols
+                ),
+                *(
+                    (pl.col(col) > 0).sum().alias(f"{col}_nonzero_sample_count")
                     for col in enduse_cols
                 ),
             )
@@ -226,6 +234,10 @@ def get_annual_all(
                     (
                         ((pl.col(col) > 0).cast(pl.Int64) * pl.col("NWEIGHT")).sum() / pl.col("NWEIGHT").sum() * 100
                     ).alias(f"{col}_percent_users")
+                    for col in enduse_cols
+                ),
+                *(
+                    (pl.col(col) > 0).sum().alias(f"{col}_nonzero_sample_count")
                     for col in enduse_cols
                 ),
             )
@@ -333,6 +345,7 @@ def get_annual_all(
                 weighted_sum = (mdf_subset[col] * mdf_subset["NWEIGHT"]).sum()
                 weight_sum = mdf_subset["NWEIGHT"].sum()
                 nonzero_weight_sum = ((mdf_subset[col] > 0).cast(pl.Int64) * mdf_subset["NWEIGHT"]).sum()
+                us_total_values[f"{col}_nonzero_sample_count"] = int((mdf_subset[col] > 0).sum())
 
                 if data_key.aggregation_type == Metric.total:
                     us_total_values[f"{col}_value"] = weighted_sum

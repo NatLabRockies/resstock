@@ -340,6 +340,16 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
             # Rename 'quantity' column to 'enduse' to serve as second category
             group_df = group_df.rename({"quantity": "enduse"})
 
+            # For users_only coverage, the count shown in hover should be
+            # the per-enduse nonzero sample count, not the group total.
+            if (
+                plot_spec.coverage == CoverageType.users_only
+                and "enduse_nonzero_sample_count" in group_df.columns
+            ):
+                group_df = group_df.with_columns(
+                    pl.col("enduse_nonzero_sample_count").alias("model_count")
+                )
+
             # Sort enduses by canonical RECS national total order (consistent across all views)
             canonical_order = get_enduse_order().get(group_name, [])
             sort_order = [e for e in canonical_order if e in group_df["enduse"].unique().to_list()]

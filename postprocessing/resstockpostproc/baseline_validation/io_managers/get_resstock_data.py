@@ -416,6 +416,7 @@ def _aggregate_raw_annual_groups(
 
             row[quantity_col] = float(np.dot(values, weights))
             row[f"{quantity_col}__nonzero_units_count"] = float(nonzero_weights.sum())
+            row[f"{quantity_col}__nonzero_sample_count"] = int(nonzero_mask.sum())
             row[f"{quantity_col}__upgrade__quartiles"] = _weighted_quantiles_or_zeros(values, weights)
             row[f"{quantity_col}__upgrade__nonzero_quartiles"] = _weighted_quantiles_or_zeros(
                 nonzero_values,
@@ -448,6 +449,7 @@ def _empty_raw_annual_frame(group_cols: list[str], quantity_cols: list[str]) -> 
     for quantity_col in quantity_cols:
         schema[quantity_col] = pl.Float64
         schema[f"{quantity_col}__nonzero_units_count"] = pl.Float64
+        schema[f"{quantity_col}__nonzero_sample_count"] = pl.Int64
         schema[f"{quantity_col}__upgrade__quartiles"] = pl.List(pl.Float64)
         schema[f"{quantity_col}__upgrade__nonzero_quartiles"] = pl.List(pl.Float64)
     return pl.DataFrame(schema=schema)
@@ -686,6 +688,12 @@ def _transform_columns(df: pl.DataFrame, db_schema: DBSchema) -> pl.DataFrame:
         if nonzero_col in df.columns:
             new_cols_expr.append((pl.col(nonzero_col) / pl.col("units_count") * 100).alias(percent_users_col_name))
             to_drop_cols.append(nonzero_col)
+
+        # Handle nonzero_sample_count column (per-quantity raw row count)
+        nonzero_sample_col = new_name + "__nonzero_sample_count"
+        if nonzero_sample_col in df.columns:
+            new_cols_expr.append(pl.col(nonzero_sample_col).alias(f"{new_name}_nonzero_sample_count"))
+            to_drop_cols.append(nonzero_sample_col)
 
         # Handle quartiles column
         quartiles_db_col = new_name + "__upgrade__quartiles"

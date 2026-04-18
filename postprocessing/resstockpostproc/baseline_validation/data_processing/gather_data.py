@@ -138,6 +138,20 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
             pl.col("source").replace_strict(source_label_map, default=pl.col("source"))
         )
 
+    # For users_only coverage, the displayed count should reflect only nonzero
+    # rows for the current quantity (not the total group size). Overwrite
+    # model_count with the quantity-specific nonzero count when available.
+    # ALL-enduse plots keep the total; the grouped plotter substitutes per-enduse
+    # counts from {quantity}_nonzero_sample_count itself.
+    if (
+        plot_spec.coverage == CoverageType.users_only
+        and plot_spec.quantity != DataCol.ALL
+        and "model_count" in df.columns
+    ):
+        nonzero_col = f"{plot_spec.quantity}_nonzero_sample_count"
+        if nonzero_col in df.columns:
+            df = df.with_columns(pl.col(nonzero_col).alias("model_count"))
+
     return df
 
 
