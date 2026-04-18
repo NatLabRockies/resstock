@@ -615,8 +615,13 @@ def get_monthly_all(
     percent_users_cols = [
         f"{col.replace('_value', '_percent_users')}" for col in monthly_df.columns if col.endswith("_value")
     ]
+    nonzero_sample_cols = [
+        col.replace("_value", "_nonzero_sample_count") for col in monthly_df.columns if col.endswith("_value")
+    ]
     annual_df = get_annual_all(data_key=data_key, year=year)
-    monthly_df = monthly_df.join(annual_df.select([by] + percent_users_cols + ["units_count"]), on=by, how="left")
+    available_nonzero = [c for c in nonzero_sample_cols if c in annual_df.columns]
+    join_cols = [by] + percent_users_cols + ["units_count", "sample_count"] + available_nonzero
+    monthly_df = monthly_df.join(annual_df.select(join_cols), on=by, how="left")
 
     # Apply aggregation transformation if needed
     if data_key.coverage == CoverageType.all_units and data_key.aggregation_type == Metric.average:
