@@ -73,6 +73,8 @@ from resstockpostproc.baseline_validation.io_managers.data_table import (
 from resstockpostproc.baseline_validation.plotters.plot_config import (
     get_second_category_column,
     _resolve_timeseries_column,
+    _resolve_sidebar_column,
+    _uses_stacked_layout,
 )
 from resstockpostproc.baseline_validation.utils import ensure_directory
 from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data, get_base_data
@@ -1026,6 +1028,20 @@ def generate_plots(index=None, test_only=False, parallel=True):
                 focused_entries,
             ))
 
+    # Apply _patch_guard: drop specs the guard rejects (default: no-op).
+    # Used for surgical re-runs; see _patch_guard docstring.
+    guarded_plot_args = []
+    for sub_key, focused_entries in plot_args:
+        kept = [(s, label) for s, label in focused_entries if _patch_guard(s)]
+        if kept:
+            guarded_plot_args.append((sub_key, kept))
+    if len(guarded_plot_args) != len(plot_args):
+        logger.info(
+            f"_patch_guard filtered {len(plot_args)} plot groups -> {len(guarded_plot_args)}"
+        )
+    plot_args = guarded_plot_args
+    total = len(plot_args)
+
     # Pass 3: Generate plots — parallel or sequential
     common_kwargs = dict(
         output_formats=output_formats,
@@ -1303,13 +1319,39 @@ def parse_index_arg(index_str):
     return indices
 
 
+def _patch_guard(plot_spec: PlotSpec) -> bool:
+    """Regeneration guard for surgical reruns.
+
+    Returns True for every spec by default (full regeneration). To re-generate
+    only a subset of HTMLs (e.g. after a bug fix that affects one rendering
+    path), uncomment one of the example narrowings below. Any spec where this
+    returns False is skipped in Pass 3 and no HTML/CSV is rewritten for it.
+
+    Examples (uncomment one; keep the default-true return as the fallback):
+
+    # Only regenerate tilemap-with-sidebar plots (state-grouped tiles with a
+    # right-hand horizontal bar sidebar). Excludes single-entity focused
+    # plots and monthly/hourly resolutions that don't render a sidebar:"""
+
+    return (
+        _resolve_sidebar_column(plot_spec) is not None
+        and _resolve_timeseries_column(plot_spec) is None
+        and not _uses_stacked_layout(plot_spec)
+        and not any(char == plot_spec.group_by for char, _ in plot_spec.focus_on)
+    )
+
+    # Only regenerate LRD plots:
+    # return plot_spec.comparison_dataset == ComparisonDataset.lrd
+    # return True
+
+
 def main():
     parser = argparse.ArgumentParser(description="Generate baseline validation plots")
     parser.add_argument(
         "--index", type=str, default=None, help="Plot definition index to generate (e.g. '5', '1-10', '1,3,5')"
     )
     parser.add_argument(
-        "--test", action="store_true", default=True,
+        "--test", action="store_true", default=False,
         help="Generate only test subset plots (limited focus expansion)",
     )
     parser.add_argument(
