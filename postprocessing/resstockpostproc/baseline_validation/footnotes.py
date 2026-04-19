@@ -33,7 +33,8 @@ RECS_MONTHLY_CI_NOTE = (
     "relative standard error (RSE) estimates."
 )
 RECS_MONTHLY_BAR_RSE_NOTE = (
-    "Error bars are based on RECS relative standard error (RSE) estimates."
+    "Error bars represent the 95% confidence interval computed from "
+    "RECS published monthly relative standard error (RSE) estimates."
 )
 RECS_UNITS_COUNT_NOTE = (
     "ResStock dwelling unit counts represent the number of dwelling units captured "
