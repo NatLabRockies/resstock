@@ -4,6 +4,7 @@ from resstockpostproc.shared_utils.generic_plotters.hover_formatting import form
 from resstockpostproc.shared_utils.generic_plotters.range_utils import compute_axis_range
 from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import filter_null_sources
 from resstockpostproc.baseline_validation.io_managers.get_recs_data import get_enduse_order
+from resstockpostproc.baseline_validation.plotters.plot_config import resolve_percent_difference_column
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
     Metric,
@@ -766,6 +767,7 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                 custom_range=custom_range,
                 count_label_resolver=lambda source: plot_spec.model_count_display_label_for_source(source),
                 compact_hover_values=True,
+                percent_difference_column=resolve_percent_difference_column(quantity_col, df_subset),
             )
         show_legends = False  # Only show legends for the first subplot
 
