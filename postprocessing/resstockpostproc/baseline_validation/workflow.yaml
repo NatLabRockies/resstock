@@ -24,8 +24,7 @@ reference_years:
 
 output:
   output_dir: /Users/radhikar/Documents/buildstock2025/
-  run_name: baseline_val_test_2024_2025_final_patch
-
+  run_name: baseline_val_test_2024_2025_final_test4
 # Data Source Labels
 # ------------------
 # Human-readable labels for data sources appearing in plot legends.
