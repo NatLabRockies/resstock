@@ -167,6 +167,18 @@ def _resolve_quantity_column(plot_spec: PlotSpec) -> str:
     return f"{plot_spec.quantity}_value"
 
 
+def resolve_percent_difference_column(quantity_column: str, data: pl.DataFrame) -> str | None:
+    """Return the per-row percent_difference companion column if it exists in data, else None.
+
+    Returns None when quantity_column is already a percent_difference (e.g. diff_view), since
+    the main axis itself carries the diff and a hover line would be redundant.
+    """
+    if quantity_column.endswith("_percent_difference"):
+        return None
+    derived = f"{quantity_column}_percent_difference"
+    return derived if derived in data.columns else None
+
+
 def _resolve_sidebar_column(plot_spec: PlotSpec) -> str | None:
     """Resolve the sidebar column name (percent difference).
 

@@ -48,9 +48,9 @@ def format_precise_hover_value(value: float | int | None, quantity_title: str) -
 
 
 def format_confidence_interval(lower: float | int | None, upper: float | int | None, quantity_title: str) -> str:
-    """Format a hover line for an explicit confidence interval."""
-    lower_text = format_precise_hover_value(lower, quantity_title)
-    upper_text = format_precise_hover_value(upper, quantity_title)
+    """Format a hover line for an explicit confidence interval using K/M/B/T suffixes."""
+    lower_text = format_compact_hover_value(lower, quantity_title)
+    upper_text = format_compact_hover_value(upper, quantity_title)
     if not lower_text or not upper_text:
         return ""
     return f"95% Confidence Interval: {lower_text} to {upper_text}"
@@ -74,3 +74,10 @@ def format_count_value(value: float | int | None) -> str:
         return ""
     rounded = int(math.floor(float(value) + 0.5))
     return f"{rounded:,}"
+
+
+def format_percent_difference(value: float | int | None) -> str:
+    """Format a percent-difference hover line like 'Difference: +12.34%' (empty for None)."""
+    if value is None:
+        return ""
+    return f"Difference: {float(value):+.2f}%"

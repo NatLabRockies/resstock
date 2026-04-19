@@ -15,6 +15,7 @@ from resstockpostproc.baseline_validation.plotters.plot_config import (
     PlotConfig,
     get_second_category_column,
     get_second_category_title,
+    resolve_percent_difference_column,
 )
 from resstockpostproc.baseline_validation.plotters.stacked_plotter import create_stacked_plot
 from resstockpostproc.shared_utils.generic_plotters import tilemap_plotter
@@ -75,7 +76,7 @@ def _render(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.F
     """Select appropriate renderer and create the figure."""
     if config.is_single_entity and not _needs_stacked_plotter(plot_spec):
         if config.timeseries_column:
-            return _render_single_entity_timeseries(data, config)
+            return _render_single_entity_timeseries(data, config, plot_spec)
         else:
             return _render_single_entity_bar(data, config, plot_spec)
     elif config.uses_stacked_layout:
@@ -128,10 +129,11 @@ def _render_tilemap(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec)
         ),
         count_label_resolver=lambda source: _resolve_count_label(plot_spec, source),
         compact_hover_values=True,
+        percent_difference_column=resolve_percent_difference_column(config.quantity_column, data),
     )
 
 @timed
-def _render_single_entity_timeseries(data: pl.DataFrame, config: PlotConfig) -> go.Figure:
+def _render_single_entity_timeseries(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
     """Render a simple timeseries for single-entity (focused) plots."""
     return create_ts_plot(
         data=data,
@@ -146,7 +148,9 @@ def _render_single_entity_timeseries(data: pl.DataFrame, config: PlotConfig) -> 
         show_legends=True,
         x_unit=config.x_unit,
         fill_lower_bound=True,
+        count_label_resolver=lambda source: _resolve_count_label(plot_spec, source),
         compact_hover_values=True,
+        percent_difference_column=resolve_percent_difference_column(config.quantity_column, data),
     )
 
 @timed
@@ -173,6 +177,7 @@ def _render_single_entity_bar(data: pl.DataFrame, config: PlotConfig, plot_spec:
         show_legends=True,
         count_label_resolver=lambda source: _resolve_count_label(plot_spec, source),
         compact_hover_values=True,
+        percent_difference_column=resolve_percent_difference_column(config.quantity_column, data),
     )
 
 @timed

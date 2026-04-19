@@ -66,7 +66,8 @@ class TestLRDPlotter:
                         "utility": utility,
                         "eiaid": 4110 if utility == "ComEd (IL)" else 14328,
                         f"{DataCol.ELECTRICITY_TOTAL}_value": 8000.0 + (500.0 if "resstock" in source else 0),
-                        f"{DataCol.ELECTRICITY_TOTAL}_value_percent_difference": 5.0 if "resstock" in source else 0.0,
+                        # Reference source itself has None (mirrors _add_percent_difference in gather_data).
+                        f"{DataCol.ELECTRICITY_TOTAL}_value_percent_difference": 5.0 if "resstock" in source else None,
                         "model_count": 100,  # Required for bar plotter
                     }
                 )

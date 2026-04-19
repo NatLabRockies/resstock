@@ -149,6 +149,7 @@ def plot_tilemap(
     count_label: str | None = "Number of models",
     count_label_resolver: Callable[[str], str | None] | None = None,
     compact_hover_values: bool = False,
+    percent_difference_column: str | None = None,
 ) -> go.Figure:
     """
     Generic annual sales plotting function with geographic layout and size-proportional subplots.
@@ -261,6 +262,7 @@ def plot_tilemap(
                 count_label_resolver=count_label_resolver,
                 compact_hover_values=compact_hover_values,
                 hover_prefix=hover_label,
+                percent_difference_column=percent_difference_column,
             )
         else:
             create_ts_plot(
@@ -288,6 +290,7 @@ def plot_tilemap(
                 count_label_resolver=count_label_resolver,
                 compact_hover_values=compact_hover_values,
                 hover_prefix=hover_label,
+                percent_difference_column=percent_difference_column,
             )
 
         if entity == "US Total":

@@ -4,6 +4,7 @@ from .hover_formatting import (
     format_compact_hover_value,
     format_confidence_interval,
     format_count_value,
+    format_percent_difference,
 )
 from .range_utils import compute_axis_range
 from resstockpostproc.shared_utils.timing import timed
@@ -26,6 +27,7 @@ def _build_hovertemplate(
     include_count: bool = False,
     include_ci: bool = False,
     use_custom_value: bool = False,
+    include_diff: bool = False,
     hover_prefix: str = "",
 ) -> str:
     parts: list[str] = []
@@ -46,12 +48,21 @@ def _build_hovertemplate(
             parts.append("%{y}" if orientation == "h" else "%{x}")
         parts.append(f"{value_label}: %{{x:,.2f}}" if orientation == "h" else f"{value_label}: %{{y:,.2f}}")
 
-    custom_idx = 1 if use_custom_value else 0
-    if include_count:
-        parts.append(f"%{{customdata[{custom_idx}]}}")
-        custom_idx += 1
-    if include_ci:
-        parts.append(f"%{{customdata[{custom_idx}]}}")
+    # customdata tuple order is (value, count, ci, diff) — fixed by the zip.
+    # Display order: value → diff → ci → count (count last).
+    idx = 1 if use_custom_value else 0
+    count_idx = idx if include_count else None
+    idx += int(include_count)
+    ci_idx = idx if include_ci else None
+    idx += int(include_ci)
+    diff_idx = idx if include_diff else None
+
+    if diff_idx is not None:
+        parts.append(f"%{{customdata[{diff_idx}]}}")
+    if ci_idx is not None:
+        parts.append(f"%{{customdata[{ci_idx}]}}")
+    if count_idx is not None:
+        parts.append(f"%{{customdata[{count_idx}]}}")
 
     return "<br>".join(parts) + "<extra></extra>"
 
@@ -120,6 +131,7 @@ def create_bar_plot(
     count_label_resolver: Callable[[str], str | None] | None = None,
     compact_hover_values: bool = False,
     hover_prefix: str = "",
+    percent_difference_column: str | None = None,
 ) -> go.Figure:
     """
     Creates a simple, grouped or stacked bar plot depending on the inputs.
@@ -208,8 +220,15 @@ def create_bar_plot(
             if compact_hover_values:
                 value_data = x_data if orientation == "h" else y_data
                 value_strings = [format_compact_hover_value(v, quantity_title) for v in value_data]
-            customdata = build_hover_customdata(value_strings, ci_strings)
-            
+
+            diff_strings = None
+            if percent_difference_column and percent_difference_column in data.columns:
+                diff_raw = list(reversed(data[percent_difference_column].to_list()))
+                diff_strings = [format_percent_difference(v) for v in diff_raw]
+                if not any(diff_strings):
+                    diff_strings = None
+            customdata = build_hover_customdata(value_strings, ci_strings, diff_strings)
+
             traces.append(
                 go.Bar(
                     name=label_formatter(qcol),
@@ -226,6 +245,7 @@ def create_bar_plot(
                         include_trace_name=len(quantity_cols) > 1,
                         include_ci=ci_strings is not None,
                         use_custom_value=compact_hover_values,
+                        include_diff=diff_strings is not None,
                         hover_prefix=hover_prefix,
                     ),
                     customdata=customdata,
@@ -310,8 +330,17 @@ def create_bar_plot(
                 else:
                     ci_strings = None
 
-                customdata = build_hover_customdata(value_strings, count_strings, ci_strings)
-                
+                diff_strings = None
+                if percent_difference_column and percent_difference_column in group_data.columns:
+                    if orientation == "h":
+                        diff_raw = list(reversed(group_data[percent_difference_column].to_list()))
+                    else:
+                        diff_raw = group_data[percent_difference_column].to_list()
+                    diff_strings = [format_percent_difference(v) for v in diff_raw]
+                    if not any(diff_strings):
+                        diff_strings = None
+                customdata = build_hover_customdata(value_strings, count_strings, ci_strings, diff_strings)
+
                 traces.append(
                     go.Bar(
                         name=label_formatter(qcol) if is_stacked else group_name,
@@ -335,6 +364,7 @@ def create_bar_plot(
                             include_count=count_strings is not None,
                             include_ci=ci_strings is not None,
                             use_custom_value=value_strings is not None,
+                            include_diff=diff_strings is not None,
                             hover_prefix=hover_prefix,
                         ),
                         customdata=customdata,

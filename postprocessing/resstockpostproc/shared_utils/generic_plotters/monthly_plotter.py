@@ -11,6 +11,7 @@ from .hover_formatting import (
     format_compact_hover_value,
     format_confidence_interval,
     format_count_value,
+    format_percent_difference,
 )
 from .range_utils import compute_axis_range
 
@@ -22,6 +23,19 @@ from resstockpostproc.shared_utils.timing import timed
 MONTH_NAME_TO_INDEX = {name.lower(): idx for idx, name in enumerate(calendar.month_name) if name}
 MONTH_NAME_TO_INDEX.update({abbr.lower(): idx for idx, abbr in enumerate(calendar.month_abbr) if abbr})
 MONTH_INDEX_TO_LABEL = {idx: calendar.month_abbr[idx] for idx in range(1, 13)}
+# Resolve any month abbreviation or name (case-insensitive) to the full month name for hover labels.
+MONTH_LABEL_TO_FULL = {
+    key: calendar.month_name[idx] for key, idx in MONTH_NAME_TO_INDEX.items()
+}
+
+
+def _expand_month_label(label: str) -> str:
+    """Expand a month abbreviation (e.g. 'JAN', '   Jan') to the full name ('January').
+
+    Non-month strings pass through unchanged (after stripping).
+    """
+    stripped = label.strip()
+    return MONTH_LABEL_TO_FULL.get(stripped.lower(), stripped)
 
 
 @timed
@@ -51,6 +65,7 @@ def create_ts_plot(
     count_label_resolver: Callable[[str], str | None] | None = None,
     compact_hover_values: bool = False,
     hover_prefix: str = "",
+    percent_difference_column: str | None = None,
 ) -> go.Figure:
     categories = data[first_category_column].unique(maintain_order=True).to_list()
     category_colors = theme.build_color_palette(categories)
@@ -142,29 +157,49 @@ def create_ts_plot(
             if compact_hover_values
             else None
         )
-        customdata = build_hover_customdata(value_strings, count_strings, ci_strings)
+
+        diff_strings = None
+        if percent_difference_column and percent_difference_column in category_data.columns:
+            diff_raw = category_data[percent_difference_column].to_list()
+            diff_strings = [format_percent_difference(v) for v in diff_raw]
+            if not any(diff_strings):
+                diff_strings = None
+
+        # Strip padding (e.g. "   Jan") and, for month abbreviations, expand to the
+        # full name (JAN → January) for clearer hover labels. Non-month strings pass
+        # through unchanged. Plotly otherwise substitutes the padded ticktext for %{x}.
+        label_strings = None
+        if x_values and isinstance(x_values[0], str):
+            label_strings = [_expand_month_label(str(v)) for v in x_values]
+
+        customdata = build_hover_customdata(value_strings, count_strings, ci_strings, diff_strings, label_strings)
 
         hover_start = f"{hover_prefix}<br>" if hover_prefix else ""
+        # customdata tuple order is (value, count, ci, diff, label) — fixed by the zip.
+        # Display order: label (or %{x}) first, then value, then diff, count, ci.
+        idx = 1 if compact_hover_values else 0
+        count_idx = idx if count_strings is not None else None
+        idx += int(count_strings is not None)
+        ci_idx = idx if ci_strings is not None else None
+        idx += int(ci_strings is not None)
+        diff_idx = idx if diff_strings is not None else None
+        idx += int(diff_strings is not None)
+        label_idx = idx if label_strings is not None else None
+
+        x_ref = f"%{{customdata[{label_idx}]}}" if label_idx is not None else "%{x}"
         if compact_hover_values:
-            hovertemplate = hover_start + "%{x}<br>" + f"{category}: " + "%{customdata[0]}"
-            custom_idx = 1
-            if count_strings is not None:
-                hovertemplate += f"<br>%{{customdata[{custom_idx}]}}"
-                custom_idx += 1
-            if ci_strings is not None:
-                hovertemplate += f"<br>%{{customdata[{custom_idx}]}}"
-            hovertemplate += "<extra></extra>"
+            hovertemplate = hover_start + f"{x_ref}<br>" + f"{category}: " + "%{customdata[0]}"
         else:
-            hovertemplate = hover_start + "%{x}<br>" + f"{category}: " + "%{y:,.2f}"
+            hovertemplate = hover_start + f"{x_ref}<br>" + f"{category}: " + "%{y:,.2f}"
             if quantity_title:
                 hovertemplate += f" {quantity_title}"
-            custom_idx = 0
-            if count_strings is not None:
-                hovertemplate += f"<br>%{{customdata[{custom_idx}]}}"
-                custom_idx += 1
-            if ci_strings is not None:
-                hovertemplate += f"<br>%{{customdata[{custom_idx}]}}"
-            hovertemplate += "<extra></extra>"
+        if diff_idx is not None:
+            hovertemplate += f"<br>%{{customdata[{diff_idx}]}}"
+        if ci_idx is not None:
+            hovertemplate += f"<br>%{{customdata[{ci_idx}]}}"
+        if count_idx is not None:
+            hovertemplate += f"<br>%{{customdata[{count_idx}]}}"
+        hovertemplate += "<extra></extra>"
 
         fig.add_scatter(
             x=x_values,

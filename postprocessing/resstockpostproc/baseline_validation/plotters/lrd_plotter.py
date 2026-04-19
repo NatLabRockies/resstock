@@ -13,6 +13,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, Reso
 from resstockpostproc.shared_utils.generic_plotters import tilemap_plotter
 from resstockpostproc.shared_utils.generic_plotters.bar_plotter import create_bar_plot
 from resstockpostproc.shared_utils.generic_plotters.monthly_plotter import create_ts_plot
+from resstockpostproc.baseline_validation.plotters.plot_config import resolve_percent_difference_column
 from resstockpostproc.baseline_validation.theme import apply_theme
 from resstockpostproc.shared_utils.timing import timed
 
@@ -121,6 +122,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
     # Detect single-entity (focused) plots for simplified rendering
     is_single = second_category_column in final_df.columns and final_df[second_category_column].n_unique() == 1
 
+    diff_col = resolve_percent_difference_column(quantity_column, final_df)
     if is_single:
         if timeseries_column:
             fig = create_ts_plot(
@@ -139,6 +141,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
                 fill_lower_bound=True,
                 count_label_resolver=lambda source: _resolve_count_label(plot_spec, source),
                 compact_hover_values=True,
+                percent_difference_column=diff_col,
             )
         else:
             fig = create_bar_plot(
@@ -152,6 +155,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
                 show_legends=True,
                 count_label_resolver=lambda source: _resolve_count_label(plot_spec, source),
                 compact_hover_values=True,
+                percent_difference_column=diff_col,
             )
         height = 1080 * 0.4
         width = 1920 * 0.425
@@ -174,6 +178,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
             title_text=title,
             count_label_resolver=lambda source: _resolve_count_label(plot_spec, source),
             compact_hover_values=True,
+            percent_difference_column=diff_col,
         )
         if plot_spec.resolution == Resolution.hour_of_day_matrix:
             height = 1800
