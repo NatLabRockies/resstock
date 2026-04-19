@@ -446,7 +446,6 @@ def create_ts_bar_plot(
         tickmode="array",
         tickvals=default_tick_vals,
         ticktext=default_tick_text,
-        tickfont={"size": 10},
         automargin=True,
         showticklabels=True,
         showgrid=False,
@@ -456,8 +455,6 @@ def create_ts_bar_plot(
 
     y_axis_kwargs = {
         "title_text": quantity_title if show_ticks else "",
-        "title_font": {"size": 12},
-        "tickfont": {"size": 10},
         "automargin": True,
         "showticklabels": show_ticks,
         "showgrid": True,
