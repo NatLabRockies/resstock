@@ -4,6 +4,7 @@ from resstockpostproc.baseline_validation.footnotes import (
     EIA_NATURAL_GAS_PENETRATION_NOTE,
     HISTOGRAM_OVERFLOW_NOTE,
     RECS_ANNUAL_CI_NOTE,
+    RECS_MONTHLY_BAR_RSE_NOTE,
     RECS_MONTHLY_CI_NOTE,
     RECS_OCCUPIED_UNITS_NOTE,
     RECS_UNITS_COUNT_NOTE,
@@ -62,6 +63,19 @@ class TestPlotNotes:
         )
 
         assert notes == [RECS_OCCUPIED_UNITS_NOTE, RECS_MONTHLY_CI_NOTE]
+        assert RECS_ANNUAL_CI_NOTE not in notes
+
+    def test_recs_monthly_single_entity_uses_rse_error_bar_note(self):
+        notes = get_plot_notes(
+            _make_spec(
+                resolution=Resolution.month,
+                aggregation_type=Metric.average,
+                group_by=None,
+            )
+        )
+
+        assert notes == [RECS_OCCUPIED_UNITS_NOTE, RECS_MONTHLY_BAR_RSE_NOTE]
+        assert RECS_MONTHLY_CI_NOTE not in notes
         assert RECS_ANNUAL_CI_NOTE not in notes
 
     def test_recs_units_count_plot_uses_quantity_note_not_rse_note(self):

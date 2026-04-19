@@ -32,6 +32,9 @@ RECS_MONTHLY_CI_NOTE = (
     "to zero). The lighter band above it shows the 95% confidence interval based on RECS "
     "relative standard error (RSE) estimates."
 )
+RECS_MONTHLY_BAR_RSE_NOTE = (
+    "Error bars are based on RECS relative standard error (RSE) estimates."
+)
 RECS_UNITS_COUNT_NOTE = (
     "ResStock dwelling unit counts represent the number of dwelling units captured "
     "through the combination of models and sampling weights. On hover, the RECS reference "
@@ -85,8 +88,21 @@ def _has_recs_uncertainty(plot_spec: PlotSpec) -> bool:
 
 
 def _uses_monthly_ci_band(plot_spec: PlotSpec) -> bool:
-    """True for RECS monthly value plots rendered with the filled CI band."""
-    return _has_recs_uncertainty(plot_spec) and plot_spec.resolution == Resolution.month
+    """True for grouped RECS monthly value plots rendered with the filled CI band."""
+    return (
+        _has_recs_uncertainty(plot_spec)
+        and plot_spec.resolution == Resolution.month
+        and plot_spec.group_by is not None
+    )
+
+
+def _uses_monthly_bar_rse_error_bars(plot_spec: PlotSpec) -> bool:
+    """True for single-entity RECS monthly bar plots with RSE-based error bars."""
+    return (
+        _has_recs_uncertainty(plot_spec)
+        and plot_spec.resolution == Resolution.month
+        and plot_spec.group_by is None
+    )
 
 
 def get_dataset_notes(plot_spec: PlotSpec) -> list[str] | None:
@@ -137,6 +153,8 @@ def get_metric_notes(plot_spec: PlotSpec, context: NoteContext) -> list[str] | N
 
     if _uses_monthly_ci_band(plot_spec):
         notes.append(RECS_MONTHLY_CI_NOTE)
+    elif _uses_monthly_bar_rse_error_bars(plot_spec) and plot_spec.view != ViewType.diff_view:
+        notes.append(RECS_MONTHLY_BAR_RSE_NOTE)
     elif _has_recs_uncertainty(plot_spec) and plot_spec.view != ViewType.diff_view:
         notes.append(RECS_ANNUAL_CI_NOTE)
 
