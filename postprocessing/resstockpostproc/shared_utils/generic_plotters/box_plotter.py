@@ -27,8 +27,9 @@ def create_box_plot(
     """Render a box-and-violin plot from the summary produced upstream."""
     fig = fig or go.Figure()
 
-    first_cats = list(reversed(data[first_category_column].unique(maintain_order=True).to_list()))
-    upgrade_palette = theme.build_color_palette(first_cats)
+    first_cats_data_order = data[first_category_column].unique(maintain_order=True).to_list()
+    upgrade_palette = theme.build_color_palette(first_cats_data_order)
+    first_cats = list(reversed(first_cats_data_order))
     firstcat2pos = {cat: i for i, cat in enumerate(first_cats)}
 
     if second_category_column is not None:
