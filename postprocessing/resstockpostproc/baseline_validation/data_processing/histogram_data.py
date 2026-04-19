@@ -26,7 +26,7 @@ from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow, DataSourceConfig
 from resstockpostproc.baseline_validation.io_managers import comparison_data_paths as s3_paths
 from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
-from resstockpostproc.shared_utils.db_column_names import DBSchema
+from resstockpostproc.shared_utils.db_column_names import DBSchema, get_db_characteristics_colnames
 from resstockpostproc.shared_utils.histogram_utils import build_weighted_histogram_with_overflow
 from resstockpostproc.shared_utils.timing import timed
 
@@ -136,6 +136,12 @@ def _load_resstock_hist_rows(
         raise ValueError(
             f"Missing required 'weight' column in ResStock histogram file: {raw_path}"
         )
+
+    vacancy_col = _resolve_existing_char_column(
+        get_db_characteristics_colnames(data_source.db_schema).VACANCY,
+        available,
+    )
+    lf = lf.filter(pl.col(vacancy_col) == "Occupied")
 
     group_exprs = [_resstock_group_expr(col, available) for col in group_cols]
     try:

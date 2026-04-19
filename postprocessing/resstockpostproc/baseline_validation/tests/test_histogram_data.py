@@ -64,8 +64,9 @@ class TestHistogramRawLoaders:
     def test_resstock_loader_uses_weight_and_users_only_filter(self, monkeypatch):
         raw = pl.DataFrame(
             {
-                "out.electricity.total.energy_consumption..kwh": [0.0, 40.0],
-                "weight": [1.5, 4.5],
+                "out.electricity.total.energy_consumption..kwh": [0.0, 40.0, 99.0],
+                "weight": [1.5, 4.5, 7.0],
+                "in.vacancy_status": ["Occupied", "Occupied", "Vacant"],
             }
         )
         monkeypatch.setattr(
@@ -100,6 +101,35 @@ class TestHistogramRawLoaders:
         assert out_users["value"].to_list() == [40.0]
         assert out_users["weight"].to_list() == [4.5]
 
+    def test_resstock_loader_raises_when_vacancy_column_missing(self, monkeypatch):
+        raw = pl.DataFrame(
+            {
+                "out.electricity.total.energy_consumption..kwh": [10.0, 40.0],
+                "weight": [1.5, 4.5],
+            }
+        )
+        monkeypatch.setattr(
+            type(histogram_data.workflow),
+            "get_resstock_data_file",
+            lambda self, _name: Path("/tmp/fake_upgrade0.parquet"),
+        )
+        monkeypatch.setattr(histogram_data.pl, "scan_parquet", lambda _path: raw.lazy())
+
+        source = DataSourceConfig(
+            name="resstock_2025",
+            db_name="buildstock",
+            table_name="baseline",
+            db_schema=DBSchema.OEDI_NEW,
+        )
+
+        with pytest.raises(ValueError, match="vacancy_status"):
+            histogram_data._load_resstock_hist_rows(
+                data_source=source,
+                quantity=DataCol.ELECTRICITY_TOTAL,
+                coverage=CoverageType.all_units,
+                group_cols=[],
+            )
+
     def test_resstock_quantity_resolution_handles_single_dot_kwh_suffix(self):
         available = {"out.electricity.total.energy_consumption.kwh"}
         expr = histogram_data._resstock_quantity_expr(
@@ -114,6 +144,7 @@ class TestHistogramRawLoaders:
             {
                 "out.electricity.total.energy_consumption..kwh": [10.0, 40.0],
                 "weight": [1.5, 4.5],
+                "in.vacancy_status": ["Occupied", "Occupied"],
             }
         )
         monkeypatch.setattr(
