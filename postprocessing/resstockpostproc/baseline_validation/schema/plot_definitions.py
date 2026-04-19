@@ -265,6 +265,13 @@ def _extra_views_for(spec: PlotSpec) -> list[ViewType]:
             return [ViewType.temp_distribution_view]
         return []
 
+    # Monthly single-entity (U.S. Total overview or state-focused) → diff view
+    # as a grouped bar plot. focus_on being set at template-expansion time
+    # signals this spec will resolve to a single entity; monthly validators
+    # forbid cross-dimension filters so len(focus_on) >= 1 implies single-entity.
+    if spec.resolution == Resolution.month and spec.focus_on:
+        return [ViewType.diff_view]
+
     # EIA/RECS state or utility with annual resolution → diff view
     if spec.group_by in ("state", "utility"):
         if spec.resolution == Resolution.year:

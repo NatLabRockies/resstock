@@ -7,7 +7,7 @@ regardless of comparison dataset (RECS, EIA, LRD) or visualization type.
 import polars as pl
 import plotly.graph_objects as go
 
-from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, Metric, ViewType, Layout
+from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, Metric, ViewType, Layout, Resolution
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.theme import apply_theme
 from resstockpostproc.baseline_validation.plotters.plot_config import (
@@ -21,7 +21,7 @@ from resstockpostproc.baseline_validation.plotters.stacked_plotter import create
 from resstockpostproc.shared_utils.generic_plotters import tilemap_plotter
 from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import filter_null_sources
 from resstockpostproc.shared_utils.generic_plotters.bar_plotter import create_bar_plot
-from resstockpostproc.shared_utils.generic_plotters.monthly_plotter import create_ts_plot
+from resstockpostproc.shared_utils.generic_plotters.monthly_plotter import create_ts_plot, create_ts_bar_plot
 from resstockpostproc.shared_utils.timing import timed
 
 
@@ -76,6 +76,8 @@ def _render(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.F
     """Select appropriate renderer and create the figure."""
     if config.is_single_entity and not _needs_stacked_plotter(plot_spec):
         if config.timeseries_column:
+            if plot_spec.resolution == Resolution.month:
+                return _render_single_entity_monthly_bar(data, config, plot_spec)
             return _render_single_entity_timeseries(data, config, plot_spec)
         else:
             return _render_single_entity_bar(data, config, plot_spec)
@@ -152,6 +154,33 @@ def _render_single_entity_timeseries(data: pl.DataFrame, config: PlotConfig, plo
         compact_hover_values=True,
         percent_difference_column=resolve_percent_difference_column(config.quantity_column, data),
     )
+
+@timed
+def _render_single_entity_monthly_bar(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
+    """Render a grouped bar chart for single-entity monthly plots.
+
+    One bar per source at each month tick; reference source is dropped in
+    diff_view so only ResStock source(s) render (matches _render_single_entity_bar).
+    """
+    if plot_spec.view == ViewType.diff_view:
+        data = filter_null_sources(data, "source", config.quantity_column)
+    return create_ts_bar_plot(
+        data=data,
+        timeseries_column=config.timeseries_column,
+        quantity_column=config.quantity_column,
+        first_category_column="source",
+        lower_bound_column=config.lower_bound_column,
+        upper_bound_column=config.upper_bound_column,
+        first_category_title="Data Source",
+        quantity_title=config.quantity_title,
+        title_text=config.title,
+        show_legends=True,
+        x_unit=config.x_unit,
+        count_label_resolver=lambda source: _resolve_count_label(plot_spec, source),
+        compact_hover_values=True,
+        percent_difference_column=resolve_percent_difference_column(config.quantity_column, data),
+    )
+
 
 @timed
 def _render_single_entity_bar(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:

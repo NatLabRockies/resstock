@@ -165,7 +165,12 @@ class TestDisplayVizLabels:
             ({}, "Bar Plot (grouped)"),
             ({"group_by": None, "view": ViewType.diff_view}, "Bar Plot (difference view)"),
             ({"view": ViewType.diff_view}, "Bar Plot (grouped difference view)"),
-            ({"group_by": None, "resolution": Resolution.month}, "Timeseries Plot"),
+            ({"group_by": None, "resolution": Resolution.month}, "Bar Plot"),
+            (
+                {"group_by": None, "resolution": Resolution.month, "view": ViewType.diff_view},
+                "Bar Plot (difference view)",
+            ),
+            ({"resolution": Resolution.month}, "Timeseries Plot (grouped)"),
             (
                 {
                     "comparison_dataset": ComparisonDataset.recs,

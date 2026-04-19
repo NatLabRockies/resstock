@@ -577,6 +577,8 @@ class PlotSpec(NoExtraModel):
             return "Box Plot"
         if self.resolution == Resolution.year:
             return "Bar Plot"
+        if self.resolution == Resolution.month and self.group_by is None:
+            return "Bar Plot"
         return "Timeseries Plot"
 
     @property
