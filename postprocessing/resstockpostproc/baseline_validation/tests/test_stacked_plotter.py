@@ -496,9 +496,10 @@ class TestHistogramLayoutRouting:
         assert len(legend_traces) == 2
         assert len(no_legend_traces) == 2
 
-        # Subplots share x-axis range
+        # Subplots keep a shared x-axis range, but each y-axis autoranges independently.
         assert fig.layout.xaxis.range == fig.layout.xaxis2.range
-        assert fig.layout.yaxis.range == fig.layout.yaxis2.range
+        assert fig.layout.yaxis.range is None
+        assert fig.layout.yaxis2.range is None
         assert all("%{fullData.name}" in trace.hovertemplate for trace in bar_traces)
         assert all("Range: %{customdata[0]} to %{customdata[1]}" in trace.hovertemplate for trace in bar_traces)
         assert any(trace.customdata[0][0] == "0.00" for trace in bar_traces)

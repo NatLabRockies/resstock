@@ -554,9 +554,6 @@ def _create_grouped_histogram_plot(
     sources = plot_df["source"].unique(maintain_order=True).to_list()
     palette = plot_theme.build_color_palette(sources)
     x_max = max(1.0, p98 + 2.0 * core_width)
-    max_pct = plot_df["count_pct"].max()
-    shared_y_max = float(max_pct) if max_pct is not None else 0.0
-    shared_y_max = max(1.0, shared_y_max * 1.1)
     x_title = "kWh/user" if plot_spec.coverage == CoverageType.users_only else "kWh/unit"
 
     for row_idx, group_val in enumerate(group_values, start=1):
@@ -590,7 +587,7 @@ def _create_grouped_histogram_plot(
             )
 
         fig.update_xaxes(range=[0, x_max], row=row_idx, col=1)
-        fig.update_yaxes(title_text="Stock Share", ticksuffix="%", range=[0, shared_y_max], row=row_idx, col=1)
+        fig.update_yaxes(title_text="Stock Share", ticksuffix="%", row=row_idx, col=1)
 
     # x-axis title on bottom subplot only
     fig.update_xaxes(title_text=x_title, row=n_groups, col=1)
