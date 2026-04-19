@@ -692,34 +692,6 @@ def _compute_discrepancy(data, plot_spec) -> dict[str, float]:
     return metrics
 
 
-def _unnest_list_columns(df):
-    """Expand list columns into individual scalar columns.
-
-    E.g. a column ``electricity_total_quartiles`` containing 9-element lists
-    becomes ``electricity_total_quartiles_0`` … ``electricity_total_quartiles_8``.
-    """
-    new_cols = []
-    drop_cols = []
-    for col_name in df.columns:
-        if df[col_name].dtype.base_type() == pl.List:
-            list_len = df[col_name].list.len().max()
-            if list_len and list_len > 0:
-                for i in range(list_len):
-                    new_cols.append(pl.col(col_name).list.get(i).alias(f"{col_name}_{i}"))
-            drop_cols.append(col_name)
-    if new_cols:
-        return df.with_columns(new_cols).drop(drop_cols)
-    if drop_cols:
-        return df.drop(drop_cols)
-    return df
-
-
-@timed
-def _save_data_csv(data, data_dir, file_title):
-    """Save plot data as CSV, expanding list columns into individual columns."""
-    _unnest_list_columns(data).write_csv(data_dir / f"{file_title}.csv")
-
-
 def _plot_output_path(output_root: Path, plot_spec: PlotSpec, fmt: FileType) -> Path:
     """Return the absolute output path for a plot artifact."""
     path_seg, file_title = plot_spec.file_path_and_name
@@ -798,11 +770,6 @@ def _generate_spec_plots(
                 or plot_spec.is_penetration_metric
                 or plot_spec.is_distribution_metric
             ):
-                data_path = _data_output_path(output_root, plot_spec, FileType.csv)
-                data_dir = data_path.parent
-                ensure_directory(data_dir)
-                _save_data_csv(data, data_dir, file_title)
-
                 metrics_by_source = _compute_discrepancy(data, plot_spec)
 
                 if should_generate_table(data, plot_spec):
@@ -821,12 +788,7 @@ def _generate_spec_plots(
                         source_labels=source_labels,
                     )
                     rel_table = relative_href_from_file(table_path, dashboard_path)
-                    rel_csv = relative_href_from_file(data_path, dashboard_path)
-                    data_rel = (
-                        f"data table||{rel_table}"
-                        " ;; "
-                        f"download csv||{rel_csv}"
-                    )
+                    data_rel = f"data table||{rel_table}"
 
         except Exception:
             tb = traceback.format_exc()
@@ -1175,14 +1137,11 @@ def generate_plots(index=None, test_only=False, parallel=True):
                 if not stacked_data.is_empty() and should_generate_table(stacked_data, table_spec):
                     table_dir = dataset_output_dir(output_root, str(table_spec.comparison_dataset), "data", FileType.html.value) / path_seg
                     ensure_directory(table_dir)
-                    data_dir = dataset_output_dir(output_root, str(table_spec.comparison_dataset), "data", FileType.csv.value) / path_seg
-                    ensure_directory(data_dir)
 
                     table_file_title = stacked_plot_path.stem
                     table_path = table_dir / f"{table_file_title}.html"
                     plot_rel_from_table = relative_href_from_file(stacked_plot_path, table_path)
 
-                    _save_data_csv(stacked_data, data_dir, table_file_title)
                     generate_data_table_html(
                         data=stacked_data,
                         plot_spec=table_spec,
@@ -1195,12 +1154,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
                         include_discrepancy_metrics=False,
                     )
                     rel_table = relative_href_from_file(table_path, dashboard_path)
-                    rel_csv = relative_href_from_file(data_dir / f"{table_file_title}.csv", dashboard_path)
-                    data_rel = (
-                        f"data table||{rel_table}"
-                        " ;; "
-                        f"download csv||{rel_csv}"
-                    )
+                    data_rel = f"data table||{rel_table}"
 
             row = {
                 "Index": "",
@@ -1332,7 +1286,7 @@ def _patch_guard(plot_spec: PlotSpec) -> bool:
     # Only regenerate tilemap-with-sidebar plots (state-grouped tiles with a
     # right-hand horizontal bar sidebar). Excludes single-entity focused
     # plots and monthly/hourly resolutions that don't render a sidebar:"""
-
+    return True
     return (
         _resolve_sidebar_column(plot_spec) is not None
         and _resolve_timeseries_column(plot_spec) is None
@@ -1351,7 +1305,7 @@ def main():
         "--index", type=str, default=None, help="Plot definition index to generate (e.g. '5', '1-10', '1,3,5')"
     )
     parser.add_argument(
-        "--test", action="store_true", default=False,
+        "--test", action="store_true", default=True,
         help="Generate only test subset plots (limited focus expansion)",
     )
     parser.add_argument(

@@ -32,7 +32,6 @@ from resstockpostproc.baseline_validation.plot_generator import (
     _stop_kaleido_sync_server_if_owned,
     _stacked_title_from_grouped,
     _to_all_enduses_tall_data,
-    _unnest_list_columns,
     generate_plots,
 )
 from resstockpostproc.baseline_validation.schema.plot_spec import (
@@ -204,42 +203,6 @@ class TestComputeDiscrepancy:
         spec = _make_spec(resolution=Resolution.month)
         mape = _compute_discrepancy(data, spec)["ResStock 2024"]
         assert mape == pytest.approx(10.0)
-
-
-class TestUnnestListColumns:
-    def test_expands_list_column(self):
-        df = pl.DataFrame({
-            "name": ["a", "b"],
-            "quartiles": [[1, 2, 3], [4, 5, 6]],
-        })
-        result = _unnest_list_columns(df)
-
-        assert "quartiles" not in result.columns
-        assert "quartiles_0" in result.columns
-        assert "quartiles_1" in result.columns
-        assert "quartiles_2" in result.columns
-        assert result["quartiles_0"].to_list() == [1, 4]
-        assert result["quartiles_2"].to_list() == [3, 6]
-
-    def test_no_list_columns_unchanged(self):
-        df = pl.DataFrame({"a": [1, 2], "b": ["x", "y"]})
-        result = _unnest_list_columns(df)
-        assert result.columns == ["a", "b"]
-        assert result["a"].to_list() == [1, 2]
-
-    def test_mixed_list_and_scalar(self):
-        df = pl.DataFrame({
-            "name": ["a", "b"],
-            "score": [10.0, 20.0],
-            "values": [[1, 2], [3, 4]],
-        })
-        result = _unnest_list_columns(df)
-
-        assert "name" in result.columns
-        assert "score" in result.columns
-        assert "values" not in result.columns
-        assert "values_0" in result.columns
-        assert "values_1" in result.columns
 
 
 class TestAllEndusesHelpers:
@@ -466,7 +429,6 @@ class TestGenerateSpecPlotsPrimaryDataAnchor:
         })
 
         table_calls = []
-        csv_calls = []
 
         monkeypatch.setattr(
             "resstockpostproc.baseline_validation.plot_generator.get_plot_data",
@@ -493,10 +455,6 @@ class TestGenerateSpecPlotsPrimaryDataAnchor:
             "resstockpostproc.baseline_validation.plot_generator.generate_data_table_html",
             lambda **kwargs: (table_calls.append(kwargs["output_path"]), table_kwargs.update(kwargs)),
         )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator._save_data_csv",
-            lambda _data, _dir, _title: csv_calls.append(_title),
-        )
 
         result = _generate_spec_plots(
             spec_entries=spec_entries,
@@ -510,13 +468,12 @@ class TestGenerateSpecPlotsPrimaryDataAnchor:
         viz_parts, data_rel = result
         assert data_rel is not None
         assert len(table_calls) == 1
-        assert len(csv_calls) == 1
 
         _, primary_title = spec_primary.file_path_and_name
         _, two_col_title = spec_two_col.file_path_and_name
         assert "||dashboard_data/" in viz_parts
         assert "data table||dashboard_data/" in data_rel
-        assert "download csv||dashboard_data/" in data_rel
+        assert "download csv" not in data_rel
         assert primary_title in data_rel
         assert two_col_title not in data_rel
         expected_table_path = _data_output_path(tmp_path, spec_primary, FileType.html)
@@ -571,10 +528,6 @@ class TestGenerateSpecPlotsPrimaryDataAnchor:
         monkeypatch.setattr(
             "resstockpostproc.baseline_validation.plot_generator.should_generate_table",
             lambda _data, _spec: False,
-        )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator._save_data_csv",
-            lambda *_args, **_kwargs: None,
         )
 
         _generate_spec_plots(
