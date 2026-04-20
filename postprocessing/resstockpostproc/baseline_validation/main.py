@@ -1,16 +1,16 @@
-"""Baseline Validation CLI."""
+"""Baseline Validation user-facing CLI.
+
+Thin wrapper over plot_generator.generate_plots for end users. For the
+developer/refactor fast-path entry point (--test, --no-svg, --index, etc.),
+run plot_generator.py directly.
+"""
 
 import argparse
-import logging
 import sys
 from pathlib import Path
 
 from resstockpostproc.baseline_validation.plot_generator import generate_plots
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
-
-# Suppress verbose logging from image export libraries
-logging.getLogger("kaleido").setLevel(logging.ERROR)
-logging.getLogger("choreographer").setLevel(logging.ERROR)
 
 
 def main() -> int:
