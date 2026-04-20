@@ -18,10 +18,6 @@ from resstockpostproc.baseline_validation.theme import apply_theme
 from resstockpostproc.shared_utils.timing import timed
 
 
-def _resolve_count_label(plot_spec: PlotSpec, source_label: str) -> str | None:
-    return plot_spec.model_count_display_label_for_source(source_label)
-
-
 @timed
 def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str]:
     """Create load duration curve plot based on the plot specification."""
@@ -139,7 +135,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
                 x_tick_text=ts_xtick_text,
                 x_range=x_range,
                 fill_lower_bound=True,
-                count_label_resolver=lambda source: _resolve_count_label(plot_spec, source),
+                count_label_resolver=plot_spec.model_count_display_label_for_source,
                 compact_hover_values=True,
                 percent_difference_column=diff_col,
             )
@@ -153,7 +149,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
                 orientation="v",
                 title_text=title,
                 show_legends=True,
-                count_label_resolver=lambda source: _resolve_count_label(plot_spec, source),
+                count_label_resolver=plot_spec.model_count_display_label_for_source,
                 compact_hover_values=True,
                 percent_difference_column=diff_col,
             )
@@ -176,7 +172,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
             x_axis_title_bottom_row=x_axis_title_bottom_row,
             x_unit=x_unit,
             title_text=title,
-            count_label_resolver=lambda source: _resolve_count_label(plot_spec, source),
+            count_label_resolver=plot_spec.model_count_display_label_for_source,
             compact_hover_values=True,
             percent_difference_column=diff_col,
         )

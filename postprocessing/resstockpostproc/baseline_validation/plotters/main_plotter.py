@@ -68,9 +68,6 @@ def _needs_stacked_plotter(plot_spec: PlotSpec) -> bool:
     )
 
 
-def _resolve_count_label(plot_spec: PlotSpec, source_label: str) -> str | None:
-    return plot_spec.model_count_display_label_for_source(source_label)
-
 @timed
 def _render(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
     """Select appropriate renderer and create the figure."""
@@ -129,7 +126,7 @@ def _render_tilemap(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec)
             plot_spec.aggregation_type == Metric.total
             and plot_spec.view == ViewType.value_view
         ),
-        count_label_resolver=lambda source: _resolve_count_label(plot_spec, source),
+        count_label_resolver=plot_spec.model_count_display_label_for_source,
         compact_hover_values=True,
         percent_difference_column=resolve_percent_difference_column(config.quantity_column, data),
     )
@@ -150,7 +147,7 @@ def _render_single_entity_timeseries(data: pl.DataFrame, config: PlotConfig, plo
         show_legends=True,
         x_unit=config.x_unit,
         fill_lower_bound=True,
-        count_label_resolver=lambda source: _resolve_count_label(plot_spec, source),
+        count_label_resolver=plot_spec.model_count_display_label_for_source,
         compact_hover_values=True,
         percent_difference_column=resolve_percent_difference_column(config.quantity_column, data),
     )
@@ -176,7 +173,7 @@ def _render_single_entity_monthly_bar(data: pl.DataFrame, config: PlotConfig, pl
         title_text=config.title,
         show_legends=True,
         x_unit=config.x_unit,
-        count_label_resolver=lambda source: _resolve_count_label(plot_spec, source),
+        count_label_resolver=plot_spec.model_count_display_label_for_source,
         compact_hover_values=True,
         percent_difference_column=resolve_percent_difference_column(config.quantity_column, data),
     )
@@ -204,7 +201,7 @@ def _render_single_entity_bar(data: pl.DataFrame, config: PlotConfig, plot_spec:
         orientation="v",
         title_text=config.title,
         show_legends=True,
-        count_label_resolver=lambda source: _resolve_count_label(plot_spec, source),
+        count_label_resolver=plot_spec.model_count_display_label_for_source,
         compact_hover_values=True,
         percent_difference_column=resolve_percent_difference_column(config.quantity_column, data),
     )
