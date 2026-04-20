@@ -253,7 +253,7 @@ def _extra_views_for(spec: PlotSpec) -> list[ViewType]:
     if spec.is_distribution_metric:
         return []
 
-    if spec.quantity == DataCol.ALL:
+    if spec.is_all_enduses:
         return [ViewType.diff_view]
 
     if spec.comparison_dataset == ComparisonDataset.lrd:
@@ -295,7 +295,7 @@ def _extra_layouts_for(spec: PlotSpec) -> list[Layout]:
         return []
     if spec.group_by != "state":
         return []
-    if spec.quantity == DataCol.ALL:
+    if spec.is_all_enduses:
         return []
     return [Layout.two_column]
 

@@ -141,7 +141,7 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
     # counts from {quantity}_nonzero_sample_count itself.
     if (
         plot_spec.coverage == CoverageType.users_only
-        and plot_spec.quantity != DataCol.ALL
+        and not plot_spec.is_all_enduses
         and "model_count" in df.columns
     ):
         nonzero_col = f"{plot_spec.quantity}_nonzero_sample_count"
@@ -277,7 +277,7 @@ def _keep_relevant_columns(
         )
         and not col.startswith("units_count")
     ]
-    if plot_spec.quantity != DataCol.ALL:
+    if not plot_spec.is_all_enduses:
         drop_columns = [col for col in all_output_columns if plot_spec.quantity.value not in col]
         if DataCol.OUTDOOR_DRYBULB_TEMP + "_value" in drop_columns:
             drop_columns.remove(DataCol.OUTDOOR_DRYBULB_TEMP + "_value")  # Keep temperature column for LRD plots

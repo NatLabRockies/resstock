@@ -129,7 +129,7 @@ def _normalize_model_count_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> p
 
     if plot_spec.coverage == CoverageType.users_only:
         quantity = plot_spec.quantity
-        target_col = "all_nonzero_sample_count" if quantity == DataCol.ALL else f"{quantity}_nonzero_sample_count"
+        target_col = "all_nonzero_sample_count" if plot_spec.is_all_enduses else f"{quantity}_nonzero_sample_count"
         if target_col in data.columns:
             replacement = pl.col(target_col).cast(pl.Int64, strict=False)
             if "model_count" in data.columns:
@@ -140,7 +140,7 @@ def _normalize_model_count_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> p
                 data = data.with_columns(replacement.alias("model_count"))
 
         percent_users_col = (
-            "all_percent_users" if quantity == DataCol.ALL else f"{quantity}_percent_users"
+            "all_percent_users" if plot_spec.is_all_enduses else f"{quantity}_percent_users"
         )
         if "units_count" in data.columns and percent_users_col in data.columns:
             data = data.with_columns(
@@ -932,7 +932,7 @@ def generate_data_table_html(
         return
 
     metrics_by_source = metrics_by_source or {}
-    if plot_spec.quantity == DataCol.ALL:
+    if plot_spec.is_all_enduses:
         data = _melt_enduse_columns(data)
     data = _normalize_model_count_columns(data, plot_spec)
     if plot_spec.is_distribution_metric:

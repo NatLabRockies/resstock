@@ -634,7 +634,7 @@ def _compute_discrepancy(data, plot_spec) -> dict[str, float]:
     formatted source label (e.g. "ResStock 2025"), with per-source MAPE (%)
     values. Empty dict when metrics cannot be computed.
     """
-    if plot_spec.quantity == DataCol.ALL:
+    if plot_spec.is_all_enduses:
         return {}
     if plot_spec.is_distribution_metric:
         return {}
@@ -1044,7 +1044,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
             if not _emit_layout_for_final_group(focused_spec, final_agg):
                 continue
             viz_label = focused_spec.display_viz_label
-            if focused_spec.quantity == DataCol.ALL:
+            if focused_spec.is_all_enduses:
                 viz_label = _all_enduses_viz_label(focused_spec, stacked=False)
             focused_entries.append((focused_spec, viz_label))
 

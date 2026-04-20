@@ -373,13 +373,13 @@ def split_graph(df: pl.DataFrame, plot_spec: PlotSpec):
     """Split the graph data into subplots based on the plot specification."""
     if (
         plot_spec.layout == Layout.two_column
-        and plot_spec.quantity != DataCol.ALL
+        and not plot_spec.is_all_enduses
         and "state" in df.columns
     ):
         return split_graph_by_state(df)
-    if plot_spec.group_by == "state" and plot_spec.quantity != DataCol.ALL and not plot_spec.focus_on:
+    if plot_spec.group_by == "state" and not plot_spec.is_all_enduses and not plot_spec.focus_on:
         return split_graph_by_state(df)
-    elif plot_spec.quantity == DataCol.ALL:
+    elif plot_spec.is_all_enduses:
         return split_graph_by_enduse(df, plot_spec)
     else:
         return split_graph_by_char(df, plot_spec)
@@ -417,7 +417,7 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
 
     col_suffix += "_percent_difference" if view == ViewType.diff_view else ""
     all_quantities = (
-        [c for c in df.columns if c.endswith(col_suffix)] if quantity == DataCol.ALL else [f"{quantity}{col_suffix}"]
+        [c for c in df.columns if c.endswith(col_suffix)] if plot_spec.is_all_enduses else [f"{quantity}{col_suffix}"]
     )
     all_min_val, all_max_val = float("inf"), float("-inf")
     for quantity_col in all_quantities:
@@ -695,7 +695,7 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
         quantity_title = ""
 
     agg_col = plot_spec.group_by or (plot_spec.effective_group_by[-1] if plot_spec.effective_group_by else "state")
-    if plot_spec.quantity == DataCol.ALL:
+    if plot_spec.is_all_enduses:
         if plot_spec.focus_on:
             for col, val in plot_spec.focus_on:
                 filter_col = col
@@ -717,7 +717,7 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     custom_range = get_custom_range(df, plot_spec)
 
     for df_subset, second_cat_column, row, col in graph_iterator:
-        quantity_col = "enduse" if plot_spec.quantity == DataCol.ALL else plot_spec.quantity
+        quantity_col = "enduse" if plot_spec.is_all_enduses else plot_spec.quantity
 
         # Use box plot for distribution view
         if plot_spec.is_distribution_metric:

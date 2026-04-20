@@ -331,6 +331,10 @@ class PlotSpec(NoExtraModel):
         return self.aggregation_type == Metric.penetration
 
     @property
+    def is_all_enduses(self) -> bool:
+        return self.quantity == DataCol.ALL
+
+    @property
     def effective_group_by(self) -> tuple[str, ...]:
         """Sorted tuple of all columns the data handler must group by.
 
@@ -386,14 +390,14 @@ class PlotSpec(NoExtraModel):
             grouping = "(U.S. Total)"
 
         # ── Special RECS/EIA view types ──
-        quantity_name = self.quantity.label if self.quantity != DataCol.ALL else "Enduse"
+        quantity_name = self.quantity.label if not self.is_all_enduses else "Enduse"
 
         if self.quantity == DataCol.UNITS_COUNT:
             du_label = "Occupied Dwelling Units" if self.comparison_dataset == ComparisonDataset.recs else "Dwelling Units"
             return f"Number of {du_label} {grouping}"
 
         if self.is_penetration_metric:
-            usage_name = "the specified End Use" if self.quantity == DataCol.ALL else self.quantity.penetration_label
+            usage_name = "the specified End Use" if self.is_all_enduses else self.quantity.penetration_label
             return f"Share of Dwelling Units using {usage_name} {grouping}"
 
         if self.is_distribution_metric:
@@ -430,7 +434,7 @@ class PlotSpec(NoExtraModel):
         """
         if self.quantity == DataCol.UNITS_COUNT:
             return "Number of dwelling units"
-        if self.quantity == DataCol.ALL:
+        if self.is_all_enduses:
             return ALL_ENDUSES_DISPLAY
         return self.quantity.label
 
@@ -562,7 +566,7 @@ class PlotSpec(NoExtraModel):
     @property
     def _default_viz_layout(self) -> str | None:
         """Default layout qualifier used in display_viz_label."""
-        if self.quantity == DataCol.ALL:
+        if self.is_all_enduses:
             return "grouped"
         if self.group_by:
             return "grouped"
@@ -603,9 +607,9 @@ class PlotSpec(NoExtraModel):
         title = self.display_title
         if self.layout != Layout.auto:
             title = title + f" ({self.layout.value} layout)"
-        if self.quantity == DataCol.ALL and self.view == ViewType.value_view:
+        if self.is_all_enduses and self.view == ViewType.value_view:
             title = title + " (grouped view)"
-        elif self.quantity == DataCol.ALL and self.view == ViewType.diff_view:
+        elif self.is_all_enduses and self.view == ViewType.diff_view:
             title = title + " (grouped difference view)"
         elif self.view == ViewType.diff_view:
             title = title + " (difference view)"

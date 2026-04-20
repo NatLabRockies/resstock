@@ -346,7 +346,7 @@ def _resolve_dimensions(
 
     # RECS/EIA: single entity gets smaller dimensions (except ALL enduse plots
     # which contain all fuel/enduse combos and need full size)
-    if is_single_entity and plot_spec.quantity != DataCol.ALL:
+    if is_single_entity and not plot_spec.is_all_enduses:
         return 1080 * 0.34, 1920 * 0.4
 
     return 1080 * 0.75, 1920 * 0.75
@@ -370,7 +370,7 @@ def _uses_stacked_layout(plot_spec: PlotSpec) -> bool:
         return True
     if plot_spec.is_distribution_metric:
         return True
-    if plot_spec.quantity == DataCol.ALL:
+    if plot_spec.is_all_enduses:
         return True
     if plot_spec.group_by is None or plot_spec.group_by not in [DataCol.STATE]:
         return True
