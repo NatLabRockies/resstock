@@ -6,10 +6,12 @@ import polars as pl
 import pytest
 
 from resstockpostproc.baseline_validation.io_managers.data_table import (
-    _filter_columns,
-    _pivot_by_source,
-    _melt_enduse_columns,
     generate_data_table_html,
+)
+from resstockpostproc.baseline_validation.io_managers.data_table_transform import (
+    filter_columns,
+    melt_enduse_columns,
+    pivot_by_source,
 )
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
@@ -60,7 +62,7 @@ class TestFilterColumns:
     def test_drops_quartiles_rse_bounds(self):
         data = _make_annual_data()
         spec = _make_spec()
-        filtered = _filter_columns(data, spec)
+        filtered = filter_columns(data, spec)
 
         # Quartile, RSE, and bound columns should be gone
         for col in filtered.columns:
@@ -72,7 +74,7 @@ class TestFilterColumns:
     def test_drops_percent_users_for_all_units(self):
         data = _make_annual_data()
         spec = _make_spec(coverage=CoverageType.all_units)
-        filtered = _filter_columns(data, spec)
+        filtered = filter_columns(data, spec)
 
         for col in filtered.columns:
             assert "percent_users" not in col
@@ -84,14 +86,14 @@ class TestFilterColumns:
             coverage=CoverageType.users_only,
             aggregation_type=Metric.average,
         )
-        filtered = _filter_columns(data, spec)
+        filtered = filter_columns(data, spec)
 
         assert "electricity_total_percent_users" in filtered.columns
 
     def test_keeps_essential_columns(self):
         data = _make_annual_data()
         spec = _make_spec()
-        filtered = _filter_columns(data, spec)
+        filtered = filter_columns(data, spec)
 
         assert "state" in filtered.columns
         assert "source" in filtered.columns
@@ -108,7 +110,7 @@ class TestFilterColumns:
             "electricity_total_value": [100.0, 130.0],
         })
         spec = _make_spec()
-        filtered = _filter_columns(data, spec)
+        filtered = filter_columns(data, spec)
         assert "eiaid" not in filtered.columns
 
     def test_drops_raw_quartile_list_columns(self):
@@ -118,7 +120,7 @@ class TestFilterColumns:
             pl.lit([1.0, 2.0]).alias("electricity_total_nonzero_quartiles"),
         )
         spec = _make_spec()
-        filtered = _filter_columns(data, spec)
+        filtered = filter_columns(data, spec)
         assert "electricity_total_quartiles" not in filtered.columns
         assert "electricity_total_nonzero_quartiles" not in filtered.columns
 
@@ -140,7 +142,7 @@ class TestFilterColumns:
             focus_on=(("utility", "AEP (OH)"),),
             group_by=None,
         )
-        filtered = _filter_columns(data, spec)
+        filtered = filter_columns(data, spec)
         assert "utility" not in filtered.columns
         assert "month" not in filtered.columns
         assert "day_type" not in filtered.columns
@@ -172,8 +174,8 @@ class TestPivotBySource:
     def test_annual_pivot(self):
         data = _make_annual_data()
         spec = _make_spec()
-        filtered = _filter_columns(data, spec)
-        pivoted, ref_label, rs_labels = _pivot_by_source(filtered, spec)
+        filtered = filter_columns(data, spec)
+        pivoted, ref_label, rs_labels = pivot_by_source(filtered, spec)
 
         # Should have 2 rows (CA, NY) instead of 4
         assert len(pivoted) == 2
@@ -200,7 +202,7 @@ class TestPivotBySource:
             "units_count": [1000.0, 1050.0, 1000.0, 1050.0],
         })
         spec = _make_spec(resolution=Resolution.month)
-        pivoted, _, _ = _pivot_by_source(data, spec)
+        pivoted, _, _ = pivot_by_source(data, spec)
 
         # Should have 2 rows (JAN, FEB) for the single entity
         assert len(pivoted) == 2
@@ -468,7 +470,7 @@ class TestAllEnduseTable:
             "electricity_space_heating_value": [1200.0, 1250.0],
             "natural_gas_total_value": [2000.0, 2100.0],
         })
-        melted = _melt_enduse_columns(data)
+        melted = melt_enduse_columns(data)
         assert "enduse" in melted.columns
         assert "all_value" in melted.columns
         # 3 enduses × 2 sources = 6 rows (one state)
