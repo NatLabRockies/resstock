@@ -19,12 +19,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 from tqdm import tqdm
 
-import polars as pl
 
-from resstockpostproc.baseline_validation.footnotes import (
-    get_plot_notes,
-    get_table_notes,
-)
 from resstockpostproc.baseline_validation.dashboard_paths import (
     comparisons_index_data_dir,
     comparisons_index_tsv_path,
@@ -32,7 +27,6 @@ from resstockpostproc.baseline_validation.dashboard_paths import (
     dashboard_html_path,
     dashboard_output_root,
     dataset_output_dir,
-    relative_href_from_file,
     trace_output_path,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
@@ -40,9 +34,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
     FileType,
     ComparisonDataset,
-    ViewType,
     format_group_by,
-    ALL_ENDUSES_DISPLAY,
 )
 from resstockpostproc.baseline_validation.schema.plot_definitions import (
     generate_all_templates,
@@ -50,12 +42,10 @@ from resstockpostproc.baseline_validation.schema.plot_definitions import (
 )
 from resstockpostproc.baseline_validation.generation.render_runner import (
     OUTPUT_COLUMNS,
-    append_plot_row,
     ensure_kaleido_sync_server,
     generate_spec_plots,
     handle_plot_result,
     has_static_image_outputs,
-    plot_output_path,
     render_key,
     stop_kaleido_sync_server_if_owned,
     worker_init,
@@ -72,23 +62,13 @@ from resstockpostproc.baseline_validation.generation.index_rows import (
 )
 from resstockpostproc.baseline_validation.generation.stacked_pages import (
     all_enduses_viz_label,
-    build_stacked_table_data,
-    collect_stacked_notes,
-    should_generate_stacked_page_group,
-    should_generate_stacked_table,
-    stacked_title_from_grouped,
+    generate_stacked_pages,
 )
 from resstockpostproc.baseline_validation.io_managers.output_manager import (
     ensure_plotly_asset,
-    plotly_cdn_url,
 )
-from resstockpostproc.baseline_validation.io_managers.data_table import (
-    generate_data_table_html,
-)
-from resstockpostproc.baseline_validation.utils import ensure_directory
 from resstockpostproc.baseline_validation.create_html import (
     init_html_index,
-    append_index_row,
     finalize_html_index,
     create_html_from_rows,
 )
@@ -369,118 +349,16 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     # Pass 4: Assemble synthetic "All Enduses (Stacked)" pages by combining
     # the raw Plotly HTML files already written in Pass 3. View-agnostic: for
     # each view position in focused_entries, transpose across quantities.
-    from resstockpostproc.baseline_validation.io_managers.html_utils import postprocess_plot_html
-    eligible_groups = {k: v for k, v in stacking_groups.items() if should_generate_stacked_page_group(v)}
-    stacked_count = 0
-    stacked_table_data_cache: dict[tuple, pl.DataFrame] = {}
-    dashboard_path = dashboard_html_path(output_root)
-
-    def _raw_path(spec: PlotSpec) -> Path:
-        raw_path = plot_output_path(output_root, spec, link_format)
-        return raw_path.with_name(f"{raw_path.stem}.raw.{link_format.value}")
-
-    stacked_pbar = tqdm(
-        eligible_groups.items(), total=len(eligible_groups),
-        desc="Generating stacked pages", unit="page",
-        bar_format="{desc}: {percentage:6.2f}%|{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}]",
+    stacked_count = generate_stacked_pages(
+        stacking_groups,
+        output_root=output_root,
+        link_format=link_format,
+        source_labels=source_labels,
+        plotly_asset_path=plotly_asset_path,
+        results=results,
+        index_state=index_state,
+        csv_path=csv_path,
     )
-    for group_key, qty_entries in stacked_pbar:
-        ds, metric, coverage, f1, f2, gb = group_key
-        first_spec = qty_entries[0][1][0][0]
-        path_seg = first_spec.file_path_and_name[0]
-        if gb in ("State", ""):
-            scale_x, scale_y = 1.0, 1.0
-        else:
-            scale_x, scale_y = 0.75, 0.5
-
-        # Deduplicated footnotes across all quantities
-        plot_notes = collect_stacked_notes(qty_entries, get_plot_notes)
-        table_notes = collect_stacked_notes(qty_entries, get_table_notes)
-
-        # One stacked page per view position (position 0 = main, 1 = extra, ...)
-        viz_parts = []
-        stacked_outputs: list[tuple[int, PlotSpec, str]] = []
-        for i, _ in enumerate(qty_entries[0][1]):
-            view_spec = qty_entries[0][1][i][0]
-            paths = [p for p in (_raw_path(e[i][0]) for _, e in qty_entries if i < len(e)) if p.exists()]
-            if len(paths) < 2:
-                continue
-
-            all_view_spec = view_spec.model_copy(update={"quantity": DataCol.ALL})
-            _, grouped_title = all_view_spec.file_path_and_name
-            title = stacked_title_from_grouped(grouped_title, all_view_spec.view)
-            out = dataset_output_dir(output_root, str(first_spec.comparison_dataset), "plots", link_format.value) / path_seg / f"{title}.{link_format.value}"
-            ensure_directory(out.parent)
-            postprocess_plot_html(
-                paths, output_path=out, footnotes=plot_notes,
-                source_labels=source_labels, scale_x=scale_x, scale_y=scale_y,
-                comparison_dataset=first_spec.comparison_dataset.value,
-                plotly_cdn_src=plotly_cdn_url(),
-                plotly_asset_path=plotly_asset_path,
-            )
-            rel_str = relative_href_from_file(out, dashboard_path)
-            stacked_label = all_enduses_viz_label(all_view_spec, stacked=True)
-            viz_parts.append(f"{stacked_label}||{rel_str}")
-            stacked_outputs.append((i, all_view_spec, str(out)))
-            stacked_count += 1
-
-        if viz_parts:
-            data_rel = ""
-            if stacked_outputs and should_generate_stacked_table(
-                gb, first_spec.comparison_dataset, first_spec.resolution, first_spec.aggregation_type
-            ):
-                # Build stacked data tables for grouped rows, plus selected
-                # ungrouped rows (EIA and certain RECS cases).
-                table_view_index, table_spec, table_rel_plot = next(
-                    (o for o in stacked_outputs if o[1].view == ViewType.value_view),
-                    stacked_outputs[0],
-                )
-                stacked_plot_path = Path(table_rel_plot)
-                stacked_data = build_stacked_table_data(
-                    qty_entries, table_view_index, stacked_table_data_cache
-                )
-                if not stacked_data.is_empty():
-                    table_dir = dataset_output_dir(output_root, str(table_spec.comparison_dataset), "data", FileType.html.value) / path_seg
-                    ensure_directory(table_dir)
-
-                    table_file_title = stacked_plot_path.stem
-                    table_path = table_dir / f"{table_file_title}.html"
-                    plot_rel_from_table = relative_href_from_file(stacked_plot_path, table_path)
-
-                    generate_data_table_html(
-                        data=stacked_data,
-                        plot_spec=table_spec,
-                        output_path=table_path,
-                        plot_rel_path=plot_rel_from_table,
-                        metrics_by_source={},
-                        footnotes=table_notes,
-                        source_labels=source_labels,
-                        csv_download_filename=f"{table_file_title}.csv",
-                        include_discrepancy_metrics=False,
-                    )
-                    rel_table = relative_href_from_file(table_path, dashboard_path)
-                    data_rel = f"data table||{rel_table}"
-
-            row = {
-                "Index": "",
-                "Comparison Dataset": ds,
-                # Keep stacked synthetic rows under the same Quantity facet so both
-                # regular and stacked variants appear together in the explorer.
-                "Quantity": ALL_ENDUSES_DISPLAY,
-                "Metric": metric,
-                "Coverage": coverage,
-                "Filter 1": f1,
-                "Filter 2": f2,
-                "Group By": gb,
-                "Comparison Plot": " ;; ".join(viz_parts),
-                "Data": data_rel,
-            }
-            results[f"stacked_{stacked_count}"] = row
-            if index_state is not None:
-                append_plot_row(csv_path, row)
-                append_index_row(index_state, row)
-
-    stacked_pbar.close()
     if stacked_count:
         logger.info(f"Generated {stacked_count} synthetic 'All Enduses (Stacked)' pages")
 
