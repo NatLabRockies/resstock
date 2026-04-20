@@ -1,4 +1,4 @@
-from resstockpostproc.baseline_validation.create_html import METRIC_ORDER
+from resstockpostproc.baseline_validation.create_html_viewer import METRIC_ORDER
 
 
 def test_metric_order_includes_simplified_lrd_metrics():
