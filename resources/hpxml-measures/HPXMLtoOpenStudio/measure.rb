@@ -50,25 +50,25 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
     format_chs << 'csv'
     format_chs << 'json'
     format_chs << 'msgpack'
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('output_format', format_chs, false)
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('output_format', format_chs, false)
     arg.setDisplayName('Output Format')
     arg.setDescription('The file format of the HVAC design load details output.')
     arg.setDefaultValue('csv')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('annual_output_file_name', false)
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('annual_output_file_name', false)
     arg.setDisplayName('Annual Output File Name')
     arg.setDescription("The name of the file w/ HVAC design loads and capacities. If not provided, defaults to 'results_annual.csv' (or '.json' or '.msgpack').")
     arg.setDefaultValue('results_annual')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('electric_panel_output_file_name', false)
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('electric_panel_output_file_name', false)
     arg.setDisplayName('Electric Panel Output File Name')
     arg.setDescription("The name of the file w/ electric panel outputs. If not provided, defaults to 'results_panel.csv' (or '.json' or '.msgpack').")
     arg.setDefaultValue('results_panel')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('design_load_details_output_file_name', false)
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('design_load_details_output_file_name', false)
     arg.setDisplayName('Design Load Details Output File Name')
     arg.setDescription("The name of the file w/ additional HVAC design load details. If not provided, defaults to 'results_design_load_details.csv' (or '.json' or '.msgpack').")
     arg.setDefaultValue('results_design_load_details')
@@ -353,9 +353,9 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
     Geometry.apply_rim_joists(runner, model, spaces, hpxml_bldg)
     Geometry.apply_floors(runner, model, spaces, hpxml_bldg, hpxml.header)
     Geometry.apply_foundation_walls_slabs(runner, model, spaces, weather, hpxml_bldg, hpxml.header, schedules_file)
-    Geometry.apply_windows(model, spaces, hpxml_bldg, hpxml.header)
+    Geometry.apply_windows(runner, model, spaces, hpxml_bldg, hpxml.header)
     Geometry.apply_doors(model, spaces, hpxml_bldg)
-    Geometry.apply_skylights(model, spaces, hpxml_bldg, hpxml.header)
+    Geometry.apply_skylights(runner, model, spaces, hpxml_bldg, hpxml.header)
     Geometry.apply_conditioned_floor_area(model, spaces, hpxml_bldg)
     Geometry.apply_thermal_mass(model, spaces, hpxml_bldg, hpxml.header)
     Geometry.set_zone_volumes(spaces, hpxml_bldg, hpxml.header)

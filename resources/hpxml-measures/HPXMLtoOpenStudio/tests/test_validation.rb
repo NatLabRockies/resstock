@@ -1337,7 +1337,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'solar-thermal-system-with-combi-tankless' => ["Water heating system 'WaterHeatingSystem1' connected to solar thermal system 'SolarThermalSystem1' cannot be a space-heating boiler."],
                             'solar-thermal-system-with-desuperheater' => ["Water heating system 'WaterHeatingSystem1' connected to solar thermal system 'SolarThermalSystem1' cannot be attached to a desuperheater."],
                             'solar-thermal-system-with-dhw-indirect' => ["Water heating system 'WaterHeatingSystem1' connected to solar thermal system 'SolarThermalSystem1' cannot be a space-heating boiler."],
-                            'storm-windows-unexpected-window-ufactor' => ['Storm windows are currently restricted to windows with U-factor >= 0.45, while base window U-Factor was 0.35.'],
                             'surface-attached-to-uncond-space' => ["Surface 'Wall2Space2' is attached to the space of an unconditioned zone."],
                             'surface-attached-to-uncond-space2' => ["Surface 'Slab2Space4' is attached to the space of an unconditioned zone."],
                             'unattached-cfis' => ["Attached HVAC distribution system 'foobar' not found for ventilation fan 'VentilationFan1'."],
@@ -1807,9 +1806,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                              collector_rated_optical_efficiency: 0.77,
                                              collector_rated_thermal_losses: 0.793,
                                              water_heating_system_idref: 'WaterHeatingSystem1')
-      when 'storm-windows-unexpected-window-ufactor'
-        hpxml, hpxml_bldg = _create_hpxml('base.xml')
-        hpxml_bldg.windows[0].storm_type = 'clear'
       when 'surface-attached-to-uncond-space'
         hpxml, hpxml_bldg = _create_hpxml('base-zones-spaces.xml')
         hpxml_bldg.walls[-1].attached_to_space_idref = hpxml_bldg.zones.find { |zone| zone.zone_type != HPXML::ZoneTypeConditioned }.spaces[0].id
@@ -2029,7 +2025,8 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                               'schedule-file-max-power-ratio-with-single-speed-system' => ['Maximum power ratio schedule is only supported for variable speed systems.'],
                               'schedule-file-max-power-ratio-with-two-speed-system' => ['Maximum power ratio schedule is only supported for variable speed systems.'],
                               'schedule-file-max-power-ratio-with-separate-backup-system' => ['Maximum power ratio schedule is only supported for integrated backup system. Schedule is ignored for heating.'],
-                              'schedule-file-unknown-columns' => ['Unknown column found in schedule file: unknown_column'] }
+                              'schedule-file-unknown-columns' => ['Unknown column found in schedule file: unknown_column'],
+                              'storm-windows-low-window-ufactor' => ['Storm windows may not be modeled accurately when window U-factor is lower than 0.3, while base window U-Factor was 0.25.'] }
 
     all_expected_warnings.each_with_index do |(warning_case, expected_warnings), i|
       puts "[#{i + 1}/#{all_expected_warnings.size}] Testing #{warning_case}..."
@@ -2201,6 +2198,10 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         csv_data[0][csv_data[0].find_index('lighting_interior')] = 'unknown_column'
         File.write(@tmp_csv_path, csv_data.map(&:to_csv).join)
         hpxml_bldg.header.schedules_filepaths = [@tmp_csv_path]
+      when 'storm-windows-low-window-ufactor'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.windows[0].ufactor = 0.25
+        hpxml_bldg.windows[0].storm_type = 'clear'
       else
         fail "Unhandled case: #{warning_case}."
       end

@@ -1,0 +1,10 @@
+Option Name	Type
+Electricity	electricity
+Natural Gas	natural gas
+Fuel Oil	fuel oil
+Propane	propane
+Wood Cord	wood
+Wood Pellets	wood pellets
+Coal	coal
+	
+# Type: The type of fuel.	

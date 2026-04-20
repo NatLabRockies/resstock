@@ -541,8 +541,8 @@
               <CompressorType>single stage</CompressorType>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
-                <Units>SEER</Units>
-                <Value>10.0</Value>
+                <Units>SEER2</Units>
+                <Value>9.5</Value>
               </AnnualCoolingEfficiency>
               <extension>
                 <FanPowerWattsPerCFM>0.5</FanPowerWattsPerCFM>

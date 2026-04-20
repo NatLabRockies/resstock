@@ -1,0 +1,37 @@
+\paragraph{Description}
+% \input{characteristics/description/Hot Water Fixtures}
+Hot water fixture usage and flow levels.
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/Hot Water Fixtures}
+\begin{itemize}
+\item
+  Field data from a demand management program with 1,700 residential
+  electric resistance water heaters in the Northeast U.S. census division.
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/Hot Water Fixtures}
+
+\paragraph{Options}
+The Hot Water Fixtures options are shown in Table \ref{table:hc_opt_hot_water_fixtures}.
+
+\input{characteristics/options/Hot Water Fixtures}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_hot_water_fixtures}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-fixtures}{Water Fixtures} documentation for additional information.
+
+\input{characteristics/properties/Hot Water Fixtures}
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/Hot Water Fixtures}
+\begin{itemize}
+\item
+  A log-normal distribution was shown to match the distribution of annual
+  energy consumption.
+\item
+  The data shows appoximately a log-normal distribution. From the data, the average multiplier is 0.8 and the
+  standard deviation is 0.2. The average multiplier was mean-shifted from 0.8 to 1 average usage.
+\item
+  Low, Medium, and High usage is assigned based on the lower 25th
+  percent, middle 50th percent, and upper 25th percent.
+\end{itemize}

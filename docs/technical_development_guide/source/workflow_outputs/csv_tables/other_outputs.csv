@@ -15,7 +15,7 @@ build_existing_model.sample_weight,Number of buildings this simulation represent
 build_existing_model.units_represented,The number of dwelling units this simulation represents. Should always be one.
 build_existing_model.emissions_electricity_folders,"Relative paths of electricity emissions factor schedule files with hourly values. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. File names must contain GEA region names."
 build_existing_model.emissions_electricity_units,"Electricity emissions factors units. If multiple scenarios, use a comma-separated list. Only lb/MWh and kg/MWh are allowed."
-build_existing_model.emissions_electricity_values_or_filepaths,"Electricity emissions factors values, specified as either an annual factor or an absolute/relative path to a file with hourly factors. If multiple scenarios, use a comma-separated list."
+build_existing_model.emissions_electricity_filepaths,"Electricity emissions factors values, specified as an absolute/relative path to a file with hourly factors. If multiple scenarios, use a comma-separated list."
 build_existing_model.emissions_fossil_fuel_units,"Fossil fuel emissions factors units. If multiple scenarios, use a comma-separated list. Only lb/MBtu and kg/MBtu are allowed."
 build_existing_model.emissions_fuel_oil_values,"Fuel oil emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list."
 build_existing_model.emissions_natural_gas_values,"Natural gas emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list."
@@ -45,7 +45,7 @@ build_existing_model.utility_bill_pv_monthly_grid_connection_fee_units,"Utility 
 build_existing_model.utility_bill_pv_monthly_grid_connection_fees,"Utility bill PV monthly grid connection fees. If multiple scenarios, use a comma-separated list."
 build_existing_model.utility_bill_pv_net_metering_annual_excess_sellback_rate_types,"Utility bill PV net metering annual excess sellback rate types. Only applies if the PV compensation type is 'NetMetering'. If multiple scenarios, use a comma-separated list."
 build_existing_model.utility_bill_pv_net_metering_annual_excess_sellback_rates,"Utility bill PV net metering annual excess sellback rates. Only applies if the PV compensation type is 'NetMetering' and the PV annual excess sellback rate type is 'User-Specified'. If multiple scenarios, use a comma-separated list."
-build_existing_model.utility_bill_scenario_names,"Names of utility bill scenarios. If multiple scenarios, use a comma-separated list. If multiple scenarios, use a comma-separated list."
+build_existing_model.utility_bill_scenario_names,"Names of utility bill scenarios. If multiple scenarios, use a comma-separated list."
 build_existing_model.utility_bill_simple_filepaths,"Relative paths of simple utility rates. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. Files must contain the name of the Parameter as the column header."
 build_existing_model.utility_bill_wood_fixed_charges,"Wood utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list."
 build_existing_model.utility_bill_wood_marginal_rates,"Wood utility bill marginal rates. If multiple scenarios, use a comma-separated list."
@@ -58,7 +58,7 @@ build_existing_model.electric_panel_service_rating,The service rating capacity v
 build_existing_model.electric_panel_service_rating_bin,The sampled service rating capacity bin of the electric panel.
 build_existing_model.unit_height_above_grade,Height of the lowest conditioned floor above grade for the unit.
 apply_upgrade.applicable,The measure was applied to the workflow.
-apply_upgrade.upgrade_name,User-specificed name that describes the upgrade.
+apply_upgrade.upgrade_name,User-specified name that describes the upgrade.
 apply_upgrade.reference_scenario,The upgrade_name which should act as a reference to this upgrade to calculate savings.
 report_simulation_output.applicable,The measure was applied to the workflow.
 report_simulation_output.output_format,"The file format of the annual (and timeseries, if requested) outputs. If 'csv_dview' is selected, the timeseries CSV file will include header rows that facilitate opening the file in the DView application."

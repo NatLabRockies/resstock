@@ -10,6 +10,8 @@ HPXML Resources
 
 - `HPXML Python Version Translator <https://github.com/NREL/hpxml_version_translator>`_
 
+- `HPXML Calibration <https://github.com/NREL/OpenStudio-HPXML-calibration>`_
+
 OpenStudio Resources
 --------------------
 

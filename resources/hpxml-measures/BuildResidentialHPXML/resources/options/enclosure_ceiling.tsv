@@ -1,0 +1,18 @@
+Option Name	Assembly R-Value [F-ft2-hr/Btu]
+Uninsulated	2.1
+R-7	8.7
+R-13	14.6
+R-19	20.6
+R-30	31.6
+R-38	39.6
+R-49	50.6
+R-60	61.6
+IECC U-0.035	28.57
+IECC U-0.030	33.33
+IECC U-0.026	38.46
+IECC U-0.024	41.67
+"Detailed Example: R-11, 2x6, 24 in o.c., 10% Framing"	11.75
+"Detailed Example: R-19, 2x6, 24 in o.c., 10% Framing"	18.45
+"Detailed Example: R-19 + R-38, 2x6, 24 in o.c., 10% Framing"	57.49
+	
+# Assembly R-Value: Assembly R-value for the ceiling.	

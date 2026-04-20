@@ -1,0 +1,48 @@
+{
+  "measure_paths": [
+	"../../../measures",
+    "../../../resources/hpxml-measures"
+  ],
+  "steps": [
+    {
+      "arguments": {
+        "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/test.xml",
+        "location_epw_path": "USA_CO_Denver.Intl.AP.725650_TMY3.epw",
+        "geometry_unit_type": "Single-Family Detached, 1 Story",
+        "geometry_unit_conditioned_floor_area": "4500.0",
+        "geometry_unit_aspect_ratio": "1.8",
+        "geometry_unit_direction": "South",
+        "geometry_unit_num_bedrooms": "4",
+        "geometry_unit_num_bathrooms": "3",
+        "geometry_unit_num_occupants": "3",
+        "geometry_foundation_type": "Basement, Conditioned",
+        "geometry_attic_type": "Attic, Unvented, Gable",
+        "hvac_heating_system": "None",
+        "hvac_cooling_system": "None",
+        "hvac_heat_pump": "Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7",
+        "hvac_heat_pump_capacity": "5.0 tons",
+        "hvac_heat_pump_backup": "Integrated, Electricity, 100% Efficiency",
+        "hvac_heat_pump_backup_capacity": "100 kBtu/hr",
+        "hvac_ducts": "None",
+        "dhw_water_heater": "Natural Gas, Tankless, UEF 0.93",
+        "enclosure_ceiling": "R-38",
+        "enclosure_roof": "Uninsulated",
+        "enclosure_wall": "Wood Stud, R-13",
+        "enclosure_window": "Double, Clear, Metal, Air",
+        "electric_vehicle": "Midsize, 200 Mile Range, 11000 miles/yr",
+        "electric_vehicle_charger": "Level 1, 90% Charging at Home"
+      },
+      "measure_dir_name": "BuildResidentialHPXML"
+    },
+    {
+      "measure_dir_name": "ResStockArgumentsPostHPXML",
+      "arguments": {
+          "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/test.xml",
+          "building_id": "1",
+          "geometry_unit_cfa_bin": "4000+",
+          "vintage": "1960s",
+          "dhw_water_heater_jacket_rvalue": "-5"
+      }
+    }
+  ]
+}

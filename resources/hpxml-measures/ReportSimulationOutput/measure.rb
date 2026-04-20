@@ -41,97 +41,97 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     format_chs << 'json'
     format_chs << 'msgpack'
     format_chs << 'csv_dview'
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('output_format', format_chs, false)
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('output_format', format_chs, false)
     arg.setDisplayName('Output Format')
     arg.setDescription("The file format of the annual (and timeseries, if requested) outputs. If 'csv_dview' is selected, the timeseries CSV file will include header rows that facilitate opening the file in the DView application.")
     arg.setDefaultValue('csv')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_total_consumptions', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_total_consumptions', false)
     arg.setDisplayName('Generate Annual Output: Total Consumptions')
     arg.setDescription('Generates annual energy consumptions for the total building.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_fuel_consumptions', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_fuel_consumptions', false)
     arg.setDisplayName('Generate Annual Output: Fuel Consumptions')
     arg.setDescription('Generates annual energy consumptions for each fuel type.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_end_use_consumptions', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_end_use_consumptions', false)
     arg.setDisplayName('Generate Annual Output: End Use Consumptions')
     arg.setDescription('Generates annual energy consumptions for each end use.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_system_use_consumptions', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_system_use_consumptions', false)
     arg.setDisplayName('Generate Annual Output: System Use Consumptions')
     arg.setDescription('Generates annual energy consumptions for each end use of each HVAC and water heating system.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_emissions', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_emissions', false)
     arg.setDisplayName('Generate Annual Output: Emissions')
     arg.setDescription('Generates annual emissions. Requires the appropriate HPXML inputs to be specified.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_emission_fuels', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_emission_fuels', false)
     arg.setDisplayName('Generate Annual Output: Emission Fuel Uses')
     arg.setDescription('Generates annual emissions for each fuel type. Requires the appropriate HPXML inputs to be specified.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_emission_end_uses', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_emission_end_uses', false)
     arg.setDisplayName('Generate Annual Output: Emission End Uses')
     arg.setDescription('Generates annual emissions for each end use. Requires the appropriate HPXML inputs to be specified.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_total_loads', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_total_loads', false)
     arg.setDisplayName('Generate Annual Output: Total Loads')
     arg.setDescription('Generates annual heating, cooling, and hot water loads.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_unmet_hours', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_unmet_hours', false)
     arg.setDisplayName('Generate Annual Output: Unmet Hours')
     arg.setDescription('Generates annual unmet hours for heating, cooling, and EV driving.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_peak_fuels', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_peak_fuels', false)
     arg.setDisplayName('Generate Annual Output: Peak Fuels')
     arg.setDescription('Generates annual/summer/winter electricity peaks.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_peak_loads', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_peak_loads', false)
     arg.setDisplayName('Generate Annual Output: Peak Loads')
     arg.setDescription('Generates annual peak loads for heating/cooling.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_component_loads', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_component_loads', false)
     arg.setDisplayName('Generate Annual Output: Component Loads')
     arg.setDescription('Generates annual heating and cooling loads disaggregated by component type.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_hot_water_uses', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_hot_water_uses', false)
     arg.setDisplayName('Generate Annual Output: Hot Water Uses')
     arg.setDescription('Generates annual hot water usages for each end use.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_hvac_summary', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_hvac_summary', false)
     arg.setDisplayName('Generate Annual Output: HVAC Summary')
     arg.setDescription('Generates HVAC capacities, design temperatures, and design loads.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_resilience', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_resilience', false)
     arg.setDisplayName('Generate Annual Output: Resilience')
     arg.setDescription('Generates annual resilience outputs.')
     arg.setDefaultValue(true)
@@ -143,103 +143,103 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     timeseries_frequency_chs << EPlus::TimeseriesFrequencyHourly
     timeseries_frequency_chs << EPlus::TimeseriesFrequencyDaily
     timeseries_frequency_chs << EPlus::TimeseriesFrequencyMonthly
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('timeseries_frequency', timeseries_frequency_chs, false)
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('timeseries_frequency', timeseries_frequency_chs, false)
     arg.setDisplayName('Timeseries Reporting Frequency')
     arg.setDescription("The frequency at which to report timeseries output data. Using '#{EPlus::TimeseriesFrequencyNone}' will disable timeseries outputs.")
     arg.setDefaultValue(EPlus::TimeseriesFrequencyNone)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_total_consumptions', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_total_consumptions', false)
     arg.setDisplayName('Generate Timeseries Output: Total Consumptions')
     arg.setDescription('Generates timeseries energy consumptions for the total building.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_fuel_consumptions', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_fuel_consumptions', false)
     arg.setDisplayName('Generate Timeseries Output: Fuel Consumptions')
     arg.setDescription('Generates timeseries energy consumptions for each fuel type.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_end_use_consumptions', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_end_use_consumptions', false)
     arg.setDisplayName('Generate Timeseries Output: End Use Consumptions')
     arg.setDescription('Generates timeseries energy consumptions for each end use.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_system_use_consumptions', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_system_use_consumptions', false)
     arg.setDisplayName('Generate Timeseries Output: System Use Consumptions')
     arg.setDescription('Generates timeseries energy consumptions for each end use of each HVAC and water heating system.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_emissions', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_emissions', false)
     arg.setDisplayName('Generate Timeseries Output: Emissions')
     arg.setDescription('Generates timeseries emissions. Requires the appropriate HPXML inputs to be specified.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_emission_fuels', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_emission_fuels', false)
     arg.setDisplayName('Generate Timeseries Output: Emission Fuel Uses')
     arg.setDescription('Generates timeseries emissions for each fuel type. Requires the appropriate HPXML inputs to be specified.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_emission_end_uses', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_emission_end_uses', false)
     arg.setDisplayName('Generate Timeseries Output: Emission End Uses')
     arg.setDescription('Generates timeseries emissions for each end use. Requires the appropriate HPXML inputs to be specified.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_hot_water_uses', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_hot_water_uses', false)
     arg.setDisplayName('Generate Timeseries Output: Hot Water Uses')
     arg.setDescription('Generates timeseries hot water usages for each end use.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_total_loads', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_total_loads', false)
     arg.setDisplayName('Generate Timeseries Output: Total Loads')
     arg.setDescription('Generates timeseries heating, cooling, and hot water loads.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_component_loads', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_component_loads', false)
     arg.setDisplayName('Generate Timeseries Output: Component Loads')
     arg.setDescription('Generates timeseries heating and cooling loads disaggregated by component type.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_unmet_hours', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_unmet_hours', false)
     arg.setDisplayName('Generate Timeseries Output: Unmet Hours')
     arg.setDescription('Generates timeseries unmet hours for heating, cooling, and EV driving.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_zone_temperatures', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_zone_temperatures', false)
     arg.setDisplayName('Generate Timeseries Output: Zone Temperatures')
     arg.setDescription('Generates timeseries temperatures for each thermal zone.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_zone_conditions', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_zone_conditions', false)
     arg.setDisplayName('Generate Timeseries Output: Zone Conditions')
     arg.setDescription('Generates timeseries temperatures and humidities for each thermal zone.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_airflows', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_airflows', false)
     arg.setDisplayName('Generate Timeseries Output: Airflows')
     arg.setDescription('Generates timeseries airflows.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_weather', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_weather', false)
     arg.setDisplayName('Generate Timeseries Output: Weather')
     arg.setDescription('Generates timeseries weather data.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_timeseries_resilience', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_timeseries_resilience', false)
     arg.setDisplayName('Generate Timeseries Output: Resilience')
     arg.setDescription('Generates timeseries resilience outputs.')
     arg.setDefaultValue(false)
@@ -248,45 +248,45 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     timestamp_chs = OpenStudio::StringVector.new
     timestamp_chs << 'start'
     timestamp_chs << 'end'
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('timeseries_timestamp_convention', timestamp_chs, false)
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('timeseries_timestamp_convention', timestamp_chs, false)
     arg.setDisplayName('Generate Timeseries Output: Timestamp Convention')
     arg.setDescription("Determines whether timeseries timestamps use the start-of-period or end-of-period convention. Doesn't apply if the output format is 'csv_dview'.")
     arg.setDefaultValue('start')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('timeseries_num_decimal_places', false)
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('timeseries_num_decimal_places', false)
     arg.setDisplayName('Generate Timeseries Output: Number of Decimal Places')
     arg.setDescription('Allows overriding the default number of decimal places for timeseries outputs.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('add_timeseries_dst_column', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('add_timeseries_dst_column', false)
     arg.setDisplayName('Generate Timeseries Output: Add TimeDST Column')
     arg.setDescription('Optionally add, in addition to the default local standard Time column, a local clock TimeDST column. Requires that daylight saving time is enabled.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('add_timeseries_utc_column', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('add_timeseries_utc_column', false)
     arg.setDisplayName('Generate Timeseries Output: Add TimeUTC Column')
     arg.setDescription('Optionally add, in addition to the default local standard Time column, a local clock TimeUTC column. If the time zone UTC offset is not provided in the HPXML file, the time zone in the EPW header will be used.')
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('user_output_variables', false)
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('user_output_variables', false)
     arg.setDisplayName('Generate Timeseries Output: EnergyPlus Output Variables')
     arg.setDescription('Optionally generates timeseries EnergyPlus output variables. If multiple output variables are desired, use a comma-separated list. Do not include key values; by default all key values will be requested. Example: "Zone People Occupant Count, Zone People Total Heating Energy"')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('user_output_meters', false)
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('user_output_meters', false)
     arg.setDisplayName('Generate Timeseries Output: EnergyPlus Output Meters')
     arg.setDescription('Optionally generates timeseries EnergyPlus output meters. If multiple output meters are desired, use a comma-separated list. Example: "Electricity:Facility, HeatingCoils:EnergyTransfer"')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('annual_output_file_name', false)
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('annual_output_file_name', false)
     arg.setDisplayName('Annual Output File Name')
     arg.setDescription("If not provided, defaults to 'results_annual.csv' (or 'results_annual.json' or 'results_annual.msgpack').")
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('timeseries_output_file_name', false)
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('timeseries_output_file_name', false)
     arg.setDisplayName('Timeseries Output File Name')
     arg.setDescription("If not provided, defaults to 'results_timeseries.csv' (or 'results_timeseries.json' or 'results_timeseries.msgpack').")
     args << arg
@@ -300,7 +300,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
   def outputs
     result = OpenStudio::Measure::OSOutputVector.new
 
-    setup_outputs(true)
+    setup_outputs()
 
     [@totals,
      @fuels,
@@ -369,7 +369,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
 
     args = get_arguments(runner, arguments(model), user_arguments)
 
-    setup_outputs(false, args)
+    setup_outputs(args)
     args = setup_timeseries_includes(args)
 
     has_electricity_production = false
@@ -605,7 +605,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     @hpxml_header = hpxml.header
     @hpxml_bldgs = hpxml.buildings
 
-    setup_outputs(false, args)
+    setup_outputs(args)
 
     if not File.exist? File.join(output_dir, 'eplusout.msgpack')
       runner.registerError('Cannot find eplusout.msgpack.')
@@ -898,27 +898,6 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
         end
       end
     end
-
-    # Disaggregate 8760 GSHP shared pump energy into heating vs cooling by
-    # applying proportionally to the GSHP heating & cooling fan/pump energy use.
-    gshp_shared_loop_end_use = @end_uses[[FT::Elec, 'TempGSHPSharedPump']]
-    htg_fan_pump_end_use = @end_uses[[FT::Elec, EUT::HeatingFanPump]]
-    backup_htg_fan_pump_end_use = @end_uses[[FT::Elec, EUT::HeatingHeatPumpBackupFanPump]]
-    clg_fan_pump_end_use = @end_uses[[FT::Elec, EUT::CoolingFanPump]]
-    gshp_shared_loop_end_use.annual_output_by_system.keys.each do |sys_id|
-      # Calculate heating & cooling fan/pump end use multiplier
-      htg_energy = htg_fan_pump_end_use.annual_output_by_system[sys_id].to_f + backup_htg_fan_pump_end_use.annual_output_by_system[sys_id].to_f
-      clg_energy = clg_fan_pump_end_use.annual_output_by_system[sys_id].to_f
-      shared_pump_energy = gshp_shared_loop_end_use.annual_output_by_system[sys_id]
-      energy_multiplier = (htg_energy + clg_energy + shared_pump_energy) / (htg_energy + clg_energy)
-      # Apply multiplier
-      [htg_fan_pump_end_use, backup_htg_fan_pump_end_use, clg_fan_pump_end_use].each do |end_use|
-        next if end_use.annual_output_by_system[sys_id].nil?
-
-        apply_multiplier_to_output(end_use, [], sys_id, energy_multiplier)
-      end
-    end
-    @end_uses.delete([FT::Elec, 'TempGSHPSharedPump'])
 
     # Hot Water Uses
     @hot_water_uses.each do |_hot_water_type, hot_water|
@@ -1270,7 +1249,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     @output_variables = {}
     @output_variables_requests.each do |output_variable_name|
       key_values, units = get_output_variable_key_values_and_units(output_variable_name)
-      if key_values.empty?
+      if units.nil?
         runner.registerWarning("Request for output variable '#{output_variable_name}' returned no results.")
         next
       end
@@ -1935,6 +1914,11 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
         data.delete_at(1) # Remove units, added to header data above
         data.delete_at(0) # Remove series name, added to header data above
 
+        # DView requires a units string to display a variable, but some EnergyPlus output
+        # variables (like Runtime Fractions) don't have units. So we specify them as
+        # unitless for DView.
+        header_data[-1].map! { |units| units.empty? ? 'unitless' : units }
+
         # Apply daylight savings
         if args[:timeseries_frequency] == EPlus::TimeseriesFrequencyTimestep || args[:timeseries_frequency] == EPlus::TimeseriesFrequencyHourly
           if @hpxml_bldgs[0].dst_observed
@@ -2203,10 +2187,10 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
   # @param var_name [Name] Name of the EnergyPlus output variable
   # @return [Array<String, String>] The key value and units for the output variable
   def get_output_variable_key_values_and_units(var_name)
-    keys = []
-    units = ''
-    return keys, units if @msgpackDataTimeseries.nil?
+    return if @msgpackDataTimeseries.nil?
 
+    keys = []
+    units = nil
     @msgpackDataTimeseries['Cols'].each do |col|
       next unless col['Variable'].end_with? ":#{var_name}"
 
@@ -2532,10 +2516,9 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
   # objects will be later populated by reading and processing EnergyPlus outputs. The output objects
   # typically contain the relevant EnergyPlus output variables/meters.
   #
-  # @param called_from_outputs_method [Boolean] Whether this method was called from the outputs method
   # @param args [Hash] Map of :argument_name => value
   # @return [nil]
-  def setup_outputs(called_from_outputs_method, args = {})
+  def setup_outputs(args = {})
     # Returns the timeseries units associated with energy use
     # for the given fuel.
     #
@@ -2647,11 +2630,6 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     @end_uses[[FT::Coal, EUT::Lighting]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Coal, EUT::Lighting]))
     @end_uses[[FT::Coal, EUT::Fireplace]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Coal, EUT::Fireplace]))
     @end_uses[[FT::Coal, EUT::Generator]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Coal, EUT::Generator]))
-    if not called_from_outputs_method
-      # Temporary end use to disaggregate 8760 GSHP shared loop pump energy into heating vs cooling.
-      # This end use will not appear in output data/files.
-      @end_uses[[FT::Elec, 'TempGSHPSharedPump']] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Elec, 'TempGSHPSharedPump']))
-    end
     @end_uses.each do |key, end_use|
       fuel_type, end_use_type = key
       end_use.name = "End Use: #{fuel_type}: #{end_use_type}"
@@ -3085,7 +3063,6 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
         subcategory = object.endUseSubcategory
         end_use = nil
         { Constants::ObjectTypeHotWaterRecircPump => EUT::HotWaterRecircPump,
-          Constants::ObjectTypeGSHPSharedPump => 'TempGSHPSharedPump',
           Constants::ObjectTypeClothesWasher => EUT::ClothesWasher,
           Constants::ObjectTypeClothesDryer => EUT::ClothesDryer,
           Constants::ObjectTypeDishwasher => EUT::Dishwasher,
