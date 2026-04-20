@@ -76,6 +76,15 @@ def _figure_dimensions(fig: go.Figure) -> tuple[int, int]:
     return width, height
 
 
+def _figure_output_path(output_root: Path, plot_spec: PlotSpec, fmt: FileType) -> Path:
+    """Resolve the per-plot output file path and ensure its parent directory exists."""
+    output_dir = dataset_output_dir(output_root, str(plot_spec.comparison_dataset), "plots", fmt.value)
+    path_seg, title = plot_spec.file_path_and_name
+    filepath = output_dir / path_seg
+    ensure_directory(filepath)
+    return filepath / f"{title}.{fmt.value}"
+
+
 def _write_static_image(fig: go.Figure, fullpath: Path) -> None:
     """Write one static image with Plotly/Kaleido."""
     width, height = _figure_dimensions(fig)
@@ -94,11 +103,7 @@ def save_static_images_batch(
     output_root = output_root or dashboard_output_root(workflow)
     normalized_jobs: list[tuple[go.Figure, Path, str, int, int]] = []
     for fig, plot_spec, fmt in jobs:
-        output_dir = dataset_output_dir(output_root, str(plot_spec.comparison_dataset), "plots", fmt.value)
-        path_seg, title = plot_spec.file_path_and_name
-        filepath = output_dir / path_seg
-        ensure_directory(filepath)
-        fullpath = filepath / f"{title}.{fmt.value}"
+        fullpath = _figure_output_path(output_root, plot_spec, fmt)
         width, height = _figure_dimensions(fig)
         normalized_jobs.append((fig, fullpath, fmt.value, width, height))
 
@@ -136,13 +141,9 @@ def save_figure(
     for fmt in formats:
         if fmt not in FIGURE_FORMATS:
             continue
-        output_dir = dataset_output_dir(output_root, str(plot_spec.comparison_dataset), "plots", fmt.value)
-        path_seg, title = plot_spec.file_path_and_name
-        filepath = output_dir / path_seg
-        ensure_directory(filepath)
-        fullpath = filepath / f"{title}.{fmt.value}"
+        fullpath = _figure_output_path(output_root, plot_spec, fmt)
         if fmt == FileType.html:
-            raw_path = filepath / f"{title}.raw.{fmt.value}"
+            raw_path = fullpath.with_name(f"{fullpath.stem}.raw{fullpath.suffix}")
             div_id = "fig-" + hashlib.md5(str(fullpath).encode()).hexdigest()
             fig.write_html(raw_path, include_plotlyjs="cdn", config=PLOTLY_HTML_CONFIG, div_id=div_id)
             postprocess_plot_html(
@@ -156,7 +157,7 @@ def save_figure(
             )
         else:
             _write_static_image(fig, fullpath)
-        print(f"Saved: {filepath}")
+        print(f"Saved: {fullpath.parent}")
 
 
 @timed
