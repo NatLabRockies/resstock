@@ -68,6 +68,13 @@ def _needs_stacked_plotter(plot_spec: PlotSpec) -> bool:
     )
 
 
+def _drop_reference_source_in_diff_view(data: pl.DataFrame, plot_spec: PlotSpec, config: PlotConfig) -> pl.DataFrame:
+    """In diff_view, drop sources whose quantity column is entirely null (the reference)."""
+    if plot_spec.view != ViewType.diff_view:
+        return data
+    return filter_null_sources(data, "source", config.quantity_column)
+
+
 @timed
 def _render(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
     """Select appropriate renderer and create the figure."""
@@ -159,8 +166,7 @@ def _render_single_entity_monthly_bar(data: pl.DataFrame, config: PlotConfig, pl
     One bar per source at each month tick; reference source is dropped in
     diff_view so only ResStock source(s) render (matches _render_single_entity_bar).
     """
-    if plot_spec.view == ViewType.diff_view:
-        data = filter_null_sources(data, "source", config.quantity_column)
+    data = _drop_reference_source_in_diff_view(data, plot_spec, config)
     return create_ts_bar_plot(
         data=data,
         timeseries_column=config.timeseries_column,
@@ -186,8 +192,7 @@ def _render_single_entity_bar(data: pl.DataFrame, config: PlotConfig, plot_spec:
     Uses the same grouped-by-source pattern as tilemap subplots so that RSE
     error bars are correctly skipped for sources without RSE data.
     """
-    if plot_spec.view == ViewType.diff_view:
-        data = filter_null_sources(data, "source", config.quantity_column)
+    data = _drop_reference_source_in_diff_view(data, plot_spec, config)
     return create_bar_plot(
         data=data,
         quantity_column=config.quantity_column,
