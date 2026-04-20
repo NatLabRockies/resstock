@@ -38,8 +38,8 @@ from resstockpostproc.baseline_validation.generation.render_runner import (
 )
 from resstockpostproc.baseline_validation.generation.work_items import (
     build_plot_args,
+    build_render_gate,
     expand_templates,
-    get_test_template_indices,
 )
 from resstockpostproc.baseline_validation.generation.stacked_pages import (
     generate_stacked_pages,
@@ -91,25 +91,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
         wanted = set(index) if isinstance(index, (set, list)) else {index}
         templates = [t for i, t in enumerate(templates) if (i + 1) in wanted]
 
-    # When --test is active, every work item still flows through Pass 2 + TSV
-    # emission so that `comparisons_index.tsv` matches a full run. Only the
-    # actual render work (plotly/kaleido/data-table HTML) is suppressed for
-    # items outside the "test subset" the old --test logic would have picked.
-    render_keys: set[tuple] | None = None
-    if test_only:
-        subset_tmpl_idx = get_test_template_indices(templates)
-        # Deterministic mapping from subset-local tmpl_index back to the
-        # full-templates index that the main pass will emit on work items.
-        subset_to_full_idx = sorted(subset_tmpl_idx)
-        subset_templates = [templates[i] for i in subset_to_full_idx]
-        subset_items = expand_templates(subset_templates, test_only=True)
-        render_keys = set()
-        for item in subset_items:
-            spec_family, subset_ti, spec_entries, focus_val, focus_on, group_by = item
-            full_ti = subset_to_full_idx[subset_ti]
-            render_keys.add((full_ti, focus_on, focus_val, group_by))
-        logger.info(f"--test render gate: {len(render_keys)} items will actually render")
-
+    render_keys = build_render_gate(templates, test_only)
     logger.info(f"Expanding {len(templates)} plot templates...")
 
     source_labels = workflow.data_source_labels
@@ -208,18 +190,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     # and dashboard HTML from the materialized TSV.
     write_canonical_index(csv_path, html_path, index_data_dir)
 
-    # Summary — count individual viz entries (comma-separated in "Comparison Plot")
-    ok = 0
-    failed = 0
-    for r in results.values():
-        for part in r["Comparison Plot"].split(" ;; "):
-            part = part.strip()
-            if not part:
-                continue
-            if part.startswith("FAILED:"):
-                failed += 1
-            else:
-                ok += 1
+    ok, failed = _count_plot_outcomes(results)
     logger.info(f"Done: {ok} succeeded, {failed} failed, {ok + failed} total")
 
     # Timing profiling summary
@@ -234,6 +205,21 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     # Close trace file
     TimingStats.stop_trace()
     logger.info(f"Trace file: {trace_path} (open in https://ui.perfetto.dev)")
+
+
+def _count_plot_outcomes(results: dict[str, dict[str, str]]) -> tuple[int, int]:
+    """Return (ok, failed) counts across all viz entries in all result rows."""
+    ok = failed = 0
+    for row in results.values():
+        for raw_part in row["Comparison Plot"].split(" ;; "):
+            part = raw_part.strip()
+            if not part:
+                continue
+            if part.startswith("FAILED:"):
+                failed += 1
+            else:
+                ok += 1
+    return ok, failed
 
 
 @timed

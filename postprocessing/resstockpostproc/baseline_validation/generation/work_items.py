@@ -53,6 +53,27 @@ def get_test_template_indices(templates: list[PlotTemplate]) -> set[int]:
     return test_indices
 
 
+def build_render_gate(templates: list[PlotTemplate], test_only: bool) -> set[tuple] | None:
+    """Return the render-key whitelist for --test runs, or None for full runs.
+
+    Under --test, Pass 2 still emits every TSV row (so the index matches a
+    full run), but Pass 3 renders only items whose render_key is in this set.
+    """
+    if not test_only:
+        return None
+    subset_tmpl_idx = get_test_template_indices(templates)
+    subset_to_full_idx = sorted(subset_tmpl_idx)
+    subset_templates = [templates[i] for i in subset_to_full_idx]
+    subset_items = expand_templates(subset_templates, test_only=True)
+    render_keys: set[tuple] = set()
+    for item in subset_items:
+        _, subset_ti, _, focus_val, focus_on, group_by = item
+        full_ti = subset_to_full_idx[subset_ti]
+        render_keys.add((full_ti, focus_on, focus_val, group_by))
+    logger.info(f"--test render gate: {len(render_keys)} items will actually render")
+    return render_keys
+
+
 def template_signature(tmpl: PlotTemplate) -> tuple:
     """Compute code-path signature for template test subset selection."""
     if tmpl.quantity == DataCol.UNITS_COUNT:
