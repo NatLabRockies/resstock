@@ -18,6 +18,7 @@ from resstockpostproc.shared_utils.caching import cached
 from resstockpostproc.shared_utils.timing import timed
 from resstockpostproc.baseline_validation.schema.plot_spec import DataKey, Metric, CoverageType
 from resstockpostproc.baseline_validation.schema.recs_chars_mapping import RECS_CHARS_MAPPING, PartialMap
+from resstockpostproc.baseline_validation.io_managers.stats import weighted_quantiles
 
 logger = logging.getLogger(__name__)
 
@@ -57,57 +58,6 @@ def _apply_recs_pre_filter(mdf: pl.DataFrame, pre_filter: tuple[str, str]) -> pl
                 f"Valid values: {sorted(set(mapping.values()))}"
             )
         return mdf.filter(pl.col(recs_col).is_in(inv_map[value]))
-
-
-def _calculate_weighted_quantiles(data: np.ndarray, weights: np.ndarray, quantiles: list[float]) -> np.ndarray:
-    """Calculate weighted quantiles.
-
-    Args:
-        data: Data values
-        weights: Weights for each data value
-        quantiles: List of quantiles to calculate (between 0 and 1)
-
-    Returns:
-        Array of quantile values
-    """
-    # Sort data and weights by data values
-    sorted_indices = np.argsort(data)
-    sorted_data = data[sorted_indices]
-    sorted_weights = weights[sorted_indices]
-
-    # Calculate cumulative weights
-    cumsum_weights = np.cumsum(sorted_weights)
-    total_weight = cumsum_weights[-1]
-
-    # Normalize cumulative weights to [0, 1]
-    cumsum_normalized = cumsum_weights / total_weight
-
-    # Calculate quantiles
-    result = np.zeros(len(quantiles))
-    for i, q in enumerate(quantiles):
-        if q == 0:
-            result[i] = sorted_data[0]
-        elif q == 1:
-            result[i] = sorted_data[-1]
-        else:
-            # Find the index where cumulative weight exceeds quantile
-            idx = np.searchsorted(cumsum_normalized, q)
-            if idx == 0:
-                result[i] = sorted_data[0]
-            elif idx >= len(sorted_data):
-                result[i] = sorted_data[-1]
-            else:
-                # Linear interpolation
-                w0 = cumsum_normalized[idx - 1]
-                w1 = cumsum_normalized[idx]
-                v0 = sorted_data[idx - 1]
-                v1 = sorted_data[idx]
-                if w1 - w0 > 0:
-                    result[i] = v0 + (v1 - v0) * (q - w0) / (w1 - w0)
-                else:
-                    result[i] = v0
-
-    return result
 
 
 def _resolve_recs_value_stat_type(data_key: DataKey) -> str:
@@ -282,7 +232,7 @@ def get_annual_all(
                     if len(data_values) > 0:
                         # Calculate weighted quartiles
                         quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
-                        quartiles = _calculate_weighted_quantiles(data_values, weights, quantiles)
+                        quartiles = weighted_quantiles(data_values, weights, quantiles)
                         quartile_row[f"{col}_quartiles"] = quartiles.tolist()
                     else:
                         quartile_row[f"{col}_quartiles"] = [0.0] * 9
@@ -299,7 +249,7 @@ def get_annual_all(
                     if len(data_values_nonzero) > 0:
                         # Calculate weighted quartiles for non-zero values
                         quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
-                        nonzero_quartiles = _calculate_weighted_quantiles(
+                        nonzero_quartiles = weighted_quantiles(
                             data_values_nonzero, weights_nonzero, quantiles
                         )
                         nonzero_quartile_row[f"{col}_nonzero_quartiles"] = nonzero_quartiles.tolist()
@@ -389,7 +339,7 @@ def get_annual_all(
                     weights = mdf_subset_pd["NWEIGHT"].values
                     if len(data_values) > 0:
                         quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
-                        quartiles = _calculate_weighted_quantiles(data_values, weights, quantiles)
+                        quartiles = weighted_quantiles(data_values, weights, quantiles)
                         us_total_quartile_dict[f"{col}_quartiles"] = quartiles.tolist()
                     else:
                         us_total_quartile_dict[f"{col}_quartiles"] = [0.0] * 9
@@ -404,7 +354,7 @@ def get_annual_all(
                     weights_nonzero = weights[non_zero_mask]
                     if len(data_values_nonzero) > 0:
                         quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
-                        nonzero_quartiles = _calculate_weighted_quantiles(data_values_nonzero, weights_nonzero, quantiles)
+                        nonzero_quartiles = weighted_quantiles(data_values_nonzero, weights_nonzero, quantiles)
                         us_total_nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = nonzero_quartiles.tolist()
                     else:
                         us_total_nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = [0.0] * 9
@@ -488,7 +438,7 @@ def get_annual_all(
 
                 if len(data_values) > 0:
                     quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
-                    quartiles = _calculate_weighted_quantiles(data_values, weights, quantiles)
+                    quartiles = weighted_quantiles(data_values, weights, quantiles)
                     quartile_dict[f"{col}_quartiles"] = quartiles.tolist()
                 else:
                     quartile_dict[f"{col}_quartiles"] = [0.0] * 9
@@ -505,7 +455,7 @@ def get_annual_all(
 
                 if len(data_values_nonzero) > 0:
                     quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
-                    nonzero_quartiles = _calculate_weighted_quantiles(data_values_nonzero, weights_nonzero, quantiles)
+                    nonzero_quartiles = weighted_quantiles(data_values_nonzero, weights_nonzero, quantiles)
                     nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = nonzero_quartiles.tolist()
                 else:
                     nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = [0.0] * 9
