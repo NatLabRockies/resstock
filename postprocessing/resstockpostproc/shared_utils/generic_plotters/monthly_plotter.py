@@ -352,11 +352,13 @@ def create_ts_bar_plot(
             ]
             if not any(ci_strings):
                 ci_strings = None
+            def _nz(val, default=0):
+                return default if val is None else val
             error_y = {
                 "type": "data",
                 "symmetric": False,
-                "array": [max(0.0, u - y) for u, y in zip(upper_vals, y_values)],
-                "arrayminus": [max(0.0, y - l) for l, y in zip(lower_vals, y_values)],
+                "array": [max(0.0, _nz(u, _nz(y)) - _nz(y)) for u, y in zip(upper_vals, y_values)],
+                "arrayminus": [max(0.0, _nz(y) - _nz(lo, _nz(y))) for lo, y in zip(lower_vals, y_values)],
                 "color": "rgba(0,0,0,0.6)",
                 "thickness": 1,
                 "width": 3,
