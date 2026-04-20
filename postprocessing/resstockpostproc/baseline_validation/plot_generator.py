@@ -574,32 +574,6 @@ def _rewrite_index_in_sorted_order(tsv_path: Path, html_path: Path, data_dir: Pa
 # ---------------------------------------------------------------------------
 
 
-def generate_eia_plots():
-    """Generate only EIA plots."""
-    all_tmpls = generate_all_templates()
-    eia_indices = {i + 1 for i, t in enumerate(all_tmpls) if t.comparison_dataset == ComparisonDataset.eia}
-    generate_plots(index=eia_indices)
-
-
-def generate_recs_plots():
-    """Generate only RECS plots."""
-    all_tmpls = generate_all_templates()
-    recs_indices = {i + 1 for i, t in enumerate(all_tmpls) if t.comparison_dataset == ComparisonDataset.recs}
-    generate_plots(index=recs_indices)
-
-
-def generate_lrd_plots():
-    """Generate only LRD plots."""
-    all_tmpls = generate_all_templates()
-    lrd_indices = {i + 1 for i, t in enumerate(all_tmpls) if t.comparison_dataset == ComparisonDataset.lrd}
-    generate_plots(index=lrd_indices)
-
-
-def generate_test_plots():
-    """Generate only test subset plots (limited focus expansion)."""
-    generate_plots(test_only=True)
-
-
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
