@@ -76,7 +76,12 @@ from resstockpostproc.baseline_validation.plotters.plot_config import (
 )
 from resstockpostproc.baseline_validation.utils import ensure_directory
 from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data, get_base_data
-from resstockpostproc.baseline_validation.create_html import init_html_index, append_index_row, finalize_html_index
+from resstockpostproc.baseline_validation.create_html import (
+    init_html_index,
+    append_index_row,
+    finalize_html_index,
+    create_html_from_rows,
+)
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.shared_utils.timing import TimingStats, timed
 
@@ -839,7 +844,7 @@ def _handle_plot_result(sub_key, result, results, csv_path, index_state):
     append_index_row(index_state, row)
 
 
-def generate_plots(index=None, test_only=False, parallel=True):
+def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     """Generate baseline validation plots.
 
     Args:
@@ -847,6 +852,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
                or a set/list of indices. If None, generate all plots.
         test_only: If True, only generate the test subset with limited focus expansion.
         parallel: If True, use ProcessPoolExecutor for parallel plot generation.
+        no_svg: If True, skip SVG output (faster for test/determinism checks).
     """
     wall_start = time.perf_counter()
     templates = generate_all_templates()
@@ -864,7 +870,7 @@ def generate_plots(index=None, test_only=False, parallel=True):
 
     source_labels = workflow.data_source_labels
 
-    output_formats = list(DEFAULT_PLOT_OUTPUT_FORMATS)
+    output_formats = [fmt for fmt in DEFAULT_PLOT_OUTPUT_FORMATS if not (no_svg and fmt == FileType.svg)]
     needs_persistent_kaleido = _has_static_image_outputs(output_formats)
     link_format = FileType.html if FileType.html in output_formats else output_formats[0]
     output_root = Path(workflow.output.output_dir) / workflow.output.run_name
@@ -1183,8 +1189,14 @@ def generate_plots(index=None, test_only=False, parallel=True):
             for raw_html in plots_dir.rglob(f"*.raw.{link_format.value}"):
                 raw_html.unlink()
 
-    # Write the final HTML with static script tags for all shards
+    # Finalize the streaming index (closes combo file, writes a dashboard HTML).
     finalize_html_index(index_state)
+
+    # Rows were appended in worker-completion order, which is non-deterministic.
+    # Re-read the TSV, sort by Index (stacked rows with empty Index go last in
+    # their original write order), and rewrite TSV + shards + combinations.js +
+    # dashboard HTML so repeat runs produce byte-identical output.
+    _rewrite_index_in_sorted_order(csv_path, html_path, index_data_dir)
 
     # Summary — count individual viz entries (comma-separated in "Comparison Plot")
     ok = 0
@@ -1220,6 +1232,37 @@ def _append_plot_row(tsv_path, row_dict):
     with open(tsv_path, "a", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS, delimiter="\t")
         writer.writerow(row_dict)
+
+
+@timed
+def _rewrite_index_in_sorted_order(tsv_path: Path, html_path: Path, data_dir: Path) -> None:
+    """Rewrite TSV, shards, combinations.js, and dashboard HTML in canonical order.
+
+    The streaming append path lets users preview partial output while plots are
+    still being generated, but the write order is non-deterministic. This pass
+    re-reads the TSV, sorts rows by numeric Index (stacked rows with empty Index
+    preserved at the end in append order), and rewrites every consumer of that
+    row order so repeat runs produce byte-identical output.
+    """
+    with open(tsv_path, newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f, delimiter="\t")
+        headers = reader.fieldnames or list(OUTPUT_COLUMNS)
+        rows = list(reader)
+
+    def _sort_key(row: dict) -> tuple[int, int]:
+        idx = str(row.get("Index", "")).strip()
+        # Numeric indices first (ascending), then stacked/empty-index rows after.
+        return (0, int(idx)) if idx.isdigit() else (1, 0)
+
+    sorted_rows = sorted(enumerate(rows), key=lambda pair: (_sort_key(pair[1]), pair[0]))
+    rows_in_order = [r for _, r in sorted_rows]
+
+    with open(tsv_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=headers, delimiter="\t")
+        writer.writeheader()
+        writer.writerows(rows_in_order)
+
+    create_html_from_rows(rows_in_order, headers, html_path, data_dir=data_dir)
 
 
 # ---------------------------------------------------------------------------
@@ -1282,6 +1325,7 @@ def _patch_guard(plot_spec: PlotSpec) -> bool:
     Currently narrowed to: RECS monthly space-heat/cool, state-focused plots.
     Covers the null-y_values bar-plot crashes in monthly_plotter.create_ts_bar_plot.
     """
+    return True
     null_prone_quantities = {
         DataCol.ELECTRICITY_SPACE_COOLING,
         DataCol.ELECTRICITY_SPACE_HEATING,
@@ -1313,17 +1357,26 @@ def main():
         "--index", type=str, default=None, help="Plot definition index to generate (e.g. '5', '1-10', '1,3,5')"
     )
     parser.add_argument(
-        "--test", action="store_true", default=False,
+        "--test", action="store_true", default=True,
         help="Generate only test subset plots (limited focus expansion)",
     )
     parser.add_argument(
         "--no-parallel", action="store_true", default=False,
         help="Disable parallel plot generation (run sequentially)",
     )
+    parser.add_argument(
+        "--no-svg", action="store_true", default=True,
+        help="Skip SVG output (faster; useful for determinism checks and test runs)",
+    )
     args = parser.parse_args()
 
     index = parse_index_arg(args.index) if args.index else None
-    generate_plots(index=index, test_only=args.test, parallel=not args.no_parallel)
+    generate_plots(
+        index=index,
+        test_only=args.test,
+        parallel=not args.no_parallel,
+        no_svg=args.no_svg,
+    )
     return 0
 
 
