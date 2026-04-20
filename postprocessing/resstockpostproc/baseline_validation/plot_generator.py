@@ -11,7 +11,6 @@ import argparse
 import csv
 import logging
 import sys
-from collections import defaultdict
 import time
 from pathlib import Path
 
@@ -25,34 +24,24 @@ from resstockpostproc.baseline_validation.dashboard_paths import (
     dataset_output_dir,
     trace_output_path,
 )
-from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.schema.plot_spec import (
-    PlotSpec,
     FileType,
     ComparisonDataset,
-    format_group_by,
 )
 from resstockpostproc.baseline_validation.schema.plot_definitions import (
     generate_all_templates,
-    _make_spec,
 )
 from resstockpostproc.baseline_validation.generation.render_runner import (
     OUTPUT_COLUMNS,
     has_static_image_outputs,
     render_all_work_items,
-    render_key,
 )
 from resstockpostproc.baseline_validation.generation.work_items import (
-    emit_layout_for_final_group,
+    build_plot_args,
     expand_templates,
     get_test_template_indices,
 )
-from resstockpostproc.baseline_validation.generation.index_rows import (
-    apply_lrd_sidebar_semantics,
-    build_output_row,
-)
 from resstockpostproc.baseline_validation.generation.stacked_pages import (
-    all_enduses_viz_label,
     generate_stacked_pages,
 )
 from resstockpostproc.baseline_validation.io_managers.output_manager import (
@@ -157,119 +146,10 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     # `--test` gating happens per-work-item downstream (via `render_keys`),
     # not at expansion time.
     work_items = expand_templates(templates, test_only=False)
-
     total = len(work_items)
     logger.info(f"Total plot groups to generate: {total}")
 
-    # Build metadata for all work items and prepare plot arguments
-    results = {}
-    plot_args = []
-    stacking_groups: dict[tuple, list[tuple[str, list[tuple[PlotSpec, str]]]]] = defaultdict(list)
-    from resstockpostproc.shared_utils.mapping import ABBR2STATE
-
-    for i, work_item in enumerate(work_items, 1):
-        spec_family, tmpl_index, spec_entries, focus_val, focus_on, group_by = work_item
-        main_spec = spec_family[0]
-
-        # --test render gate: only a representative subset actually renders.
-        # Non-render items still produce TSV rows (probe + path assembly + table
-        # decision) so the index matches what a full run would emit.
-        is_dry_run = render_keys is not None and render_key(work_item) not in render_keys
-        if is_dry_run and not TEST_PRODUCES_FULL_INDEX:
-            # Legacy --test mode: skip dry-run items entirely. No row in the TSV,
-            # no entry in `plot_args`, no `stacking_groups` contribution. The
-            # downstream code is the same as a full run; it just sees fewer items.
-            continue
-
-        # Build a unique key for this work item
-        agg_suffix = f"_by_{group_by}" if group_by else ""
-        if focus_on:
-            filter_parts = "_".join(f"{c}_{v}" for c, v in focus_on)
-            sub_key = (
-                f"f_{filter_parts}_{tmpl_index}{agg_suffix}"
-                if focus_val is None
-                else f"f_{filter_parts}_{tmpl_index}_{focus_val}"
-            )
-        else:
-            sub_key = (
-                f"{tmpl_index}{agg_suffix}"
-                if focus_val is None
-                else f"{tmpl_index}_{focus_val}"
-            )
-
-        # Compute final focus_on for the leaf plot
-        final_focus_tuples = list(focus_on)
-        if focus_val is not None and group_by is not None:
-            final_focus_tuples.append((group_by, focus_val))
-        final_focus_on = tuple(final_focus_tuples)
-        final_agg = group_by if focus_val is None else None
-
-        # Build a concrete main_spec with the triple's group_by for display
-        display_spec = _make_spec(
-            comparison_dataset=main_spec.comparison_dataset,
-            quantity=main_spec.quantity,
-            resolution=main_spec.resolution,
-            aggregation_type=main_spec.aggregation_type,
-            coverage=main_spec.coverage,
-            group_by=group_by or (final_focus_on[0][0] if final_focus_on else "state"),
-            view=main_spec.view,
-        )
-
-        results[sub_key] = build_output_row(display_spec)
-        results[sub_key]["Index"] = i
-        if final_agg is None:
-            results[sub_key]["Group By"] = ""
-        results[sub_key]["Comparison Plot"] = ""
-
-        if final_focus_on:
-            for idx, (char, value) in enumerate(final_focus_on):
-                if value == "US Total":
-                    # US Total is represented as empty filter (same as "(None)")
-                    # to stay consistent with overview rows that have no filter.
-                    results[sub_key][f"Filter {idx + 1}"] = ""
-                else:
-                    display = ABBR2STATE.get(value, value) if char == "state" else value
-                    category = format_group_by(char)
-                    results[sub_key][f"Filter {idx + 1}"] = f"{category}: {display}"
-
-        apply_lrd_sidebar_semantics(results[sub_key], display_spec, final_focus_on)
-
-        focused_entries = []
-        for spec, _ in spec_entries:
-            focused_spec = spec.model_copy(update={
-                "focus_on": final_focus_on,
-                "group_by": final_agg,
-            })
-            if not emit_layout_for_final_group(focused_spec, final_agg):
-                continue
-            viz_label = focused_spec.display_viz_label
-            if focused_spec.is_all_enduses:
-                viz_label = all_enduses_viz_label(focused_spec, stacked=False)
-            focused_entries.append((focused_spec, viz_label))
-
-        if not focused_entries:
-            continue
-
-        plot_args.append((sub_key, focused_entries, is_dry_run))
-
-        # Collect spec pairs for stacking into "All Enduses (Stacked)" pages.
-        # Each group entry stores (qty_label, focused_entries) — the same
-        # (PlotSpec, viz_label) list used for individual plot generation,
-        # so the stacker knows exactly which views exist for each quantity.
-        # Skip ALL (already a stacked enduse chart) and UNITS_COUNT (not an enduse).
-        if main_spec.quantity not in (DataCol.ALL, DataCol.UNITS_COUNT):
-            group_key = (
-                results[sub_key]["Comparison Dataset"],
-                results[sub_key]["Metric"],
-                results[sub_key]["Coverage"],
-                results[sub_key]["Filter 1"],
-                results[sub_key]["Filter 2"],
-                results[sub_key]["Group By"],
-            )
-            stacking_groups[group_key].append((
-                display_spec.display_quantity,
-                focused_entries,
-            ))
+    results, plot_args, stacking_groups = build_plot_args(work_items, render_keys)
 
     # Pass 3: Generate plots — parallel or sequential
     render_all_work_items(

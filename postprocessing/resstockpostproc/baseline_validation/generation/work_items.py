@@ -8,14 +8,17 @@ ready for rendering.
 from __future__ import annotations
 
 import logging
+from collections import defaultdict
 
 from resstockpostproc.shared_utils.db_column_names import DataCol
+from resstockpostproc.shared_utils.mapping import ABBR2STATE
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
     ComparisonDataset,
     Resolution,
     Layout,
     CoverageType,
+    format_group_by,
 )
 from resstockpostproc.baseline_validation.schema.plot_definitions import (
     PlotTemplate,
@@ -26,6 +29,14 @@ from resstockpostproc.baseline_validation.schema.plot_definitions import (
     _make_spec,
 )
 from resstockpostproc.baseline_validation.data_processing.gather_data import get_base_data
+from resstockpostproc.baseline_validation.generation.index_rows import (
+    apply_lrd_sidebar_semantics,
+    build_output_row,
+)
+from resstockpostproc.baseline_validation.generation.render_runner import render_key
+from resstockpostproc.baseline_validation.generation.stacked_pages import (
+    all_enduses_viz_label,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -282,3 +293,161 @@ def build_filtered_entries(
             logger.warning(f"Skipping filtered spec: {e}")
             continue
     return filtered
+
+
+# ---------------------------------------------------------------------------
+# Pass 2: build per-work-item metadata + plot_args + stacking_groups
+# ---------------------------------------------------------------------------
+
+
+def _make_sub_key(
+    focus_on: tuple,
+    focus_val: object,
+    tmpl_index: int,
+    group_by: str | None,
+) -> str:
+    """Compose the unique sub_key identifying this work item in results."""
+    agg_suffix = f"_by_{group_by}" if group_by else ""
+    if focus_on:
+        filter_parts = "_".join(f"{c}_{v}" for c, v in focus_on)
+        if focus_val is None:
+            return f"f_{filter_parts}_{tmpl_index}{agg_suffix}"
+        return f"f_{filter_parts}_{tmpl_index}_{focus_val}"
+    if focus_val is None:
+        return f"{tmpl_index}{agg_suffix}"
+    return f"{tmpl_index}_{focus_val}"
+
+
+def _compute_final_focus(
+    focus_on: tuple,
+    focus_val: object,
+    group_by: str | None,
+) -> tuple[tuple, str | None]:
+    """Return (final_focus_on, final_agg) for the leaf plot."""
+    final_focus_tuples = list(focus_on)
+    if focus_val is not None and group_by is not None:
+        final_focus_tuples.append((group_by, focus_val))
+    final_focus_on = tuple(final_focus_tuples)
+    final_agg = group_by if focus_val is None else None
+    return final_focus_on, final_agg
+
+
+def _build_display_spec(
+    main_spec: PlotSpec,
+    group_by: str | None,
+    final_focus_on: tuple,
+) -> PlotSpec:
+    """Build the concrete display PlotSpec with group_by for the index row."""
+    default_group = final_focus_on[0][0] if final_focus_on else "state"
+    return _make_spec(
+        comparison_dataset=main_spec.comparison_dataset,
+        quantity=main_spec.quantity,
+        resolution=main_spec.resolution,
+        aggregation_type=main_spec.aggregation_type,
+        coverage=main_spec.coverage,
+        group_by=group_by or default_group,
+        view=main_spec.view,
+    )
+
+
+def _format_filter_cell(char: str, value: str) -> str:
+    """Format one (char, value) focus tuple into a display filter-cell string."""
+    if value == "US Total":
+        return ""
+    display = ABBR2STATE.get(value, value) if char == "state" else value
+    return f"{format_group_by(char)}: {display}"
+
+
+def _populate_filter_cells(row: dict, final_focus_on: tuple) -> None:
+    """Fill row's Filter 1/2 cells from the final focus tuples."""
+    for idx, (char, value) in enumerate(final_focus_on):
+        row[f"Filter {idx + 1}"] = _format_filter_cell(char, value)
+
+
+def _build_focused_entries(
+    spec_entries: list,
+    final_focus_on: tuple,
+    final_agg: str | None,
+) -> list[tuple[PlotSpec, str]]:
+    """Build the per-work-item (focused_spec, viz_label) list for rendering."""
+    focused_entries: list[tuple[PlotSpec, str]] = []
+    for spec, _ in spec_entries:
+        focused_spec = spec.model_copy(update={
+            "focus_on": final_focus_on,
+            "group_by": final_agg,
+        })
+        if not emit_layout_for_final_group(focused_spec, final_agg):
+            continue
+        viz_label = (
+            all_enduses_viz_label(focused_spec, stacked=False)
+            if focused_spec.is_all_enduses
+            else focused_spec.display_viz_label
+        )
+        focused_entries.append((focused_spec, viz_label))
+    return focused_entries
+
+
+def _stacking_group_key(row: dict) -> tuple:
+    """Return the 6-field key used to bucket rows for 'All Enduses (Stacked)'."""
+    return (
+        row["Comparison Dataset"],
+        row["Metric"],
+        row["Coverage"],
+        row["Filter 1"],
+        row["Filter 2"],
+        row["Group By"],
+    )
+
+
+def build_plot_args(
+    work_items: list,
+    render_keys: set[tuple] | None,
+) -> tuple[
+    dict[str, dict[str, str]],
+    list[tuple[str, list, bool]],
+    dict[tuple, list],
+]:
+    """Build per-work-item rows, focused entries, and stacking groups.
+
+    Returns:
+        (results, plot_args, stacking_groups) — the three outputs Pass 3 and
+        Pass 4 consume.
+    """
+    results: dict[str, dict[str, str]] = {}
+    plot_args: list[tuple[str, list, bool]] = []
+    stacking_groups: dict[tuple, list] = defaultdict(list)
+
+    for i, work_item in enumerate(work_items, 1):
+        spec_family, tmpl_index, spec_entries, focus_val, focus_on, group_by = work_item
+        main_spec = spec_family[0]
+
+        is_dry_run = render_keys is not None and render_key(work_item) not in render_keys
+
+        sub_key = _make_sub_key(focus_on, focus_val, tmpl_index, group_by)
+        final_focus_on, final_agg = _compute_final_focus(focus_on, focus_val, group_by)
+        display_spec = _build_display_spec(main_spec, group_by, final_focus_on)
+
+        row = build_output_row(display_spec)
+        row["Index"] = i
+        if final_agg is None:
+            row["Group By"] = ""
+        row["Comparison Plot"] = ""
+        _populate_filter_cells(row, final_focus_on)
+        apply_lrd_sidebar_semantics(row, display_spec, final_focus_on)
+        results[sub_key] = row
+
+        focused_entries = _build_focused_entries(spec_entries, final_focus_on, final_agg)
+        if not focused_entries:
+            continue
+
+        plot_args.append((sub_key, focused_entries, is_dry_run))
+
+        # Skip ALL (already stacked) and UNITS_COUNT (not an enduse).
+        if main_spec.quantity in (DataCol.ALL, DataCol.UNITS_COUNT):
+            continue
+        stacking_groups[_stacking_group_key(row)].append((
+            display_spec.display_quantity,
+            focused_entries,
+        ))
+
+    return results, plot_args, stacking_groups
