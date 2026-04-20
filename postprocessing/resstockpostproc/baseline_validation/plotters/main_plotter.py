@@ -8,7 +8,6 @@ import polars as pl
 import plotly.graph_objects as go
 
 from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, Metric, ViewType, Layout, Resolution
-from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.theme import apply_theme
 from resstockpostproc.baseline_validation.plotters.plot_config import (
     build_plot_config,

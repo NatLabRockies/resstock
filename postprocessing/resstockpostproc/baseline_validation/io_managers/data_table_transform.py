@@ -147,7 +147,7 @@ def extract_quartile_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.Data
     """Extract scalar min/q1/median/q3/max columns from the raw quartile list column.
 
     Uses QUARTILE_INDICES from plot_semantics; parallels
-    stacked_plotter._add_quartile_cols which emits a different column shape.
+    box_plot_data.add_quartile_cols which emits a different column shape.
     Coverage selects which list column to read: all_units → ``_quartiles``;
     users_only → ``_nonzero_quartiles``.
     """

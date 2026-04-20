@@ -4,15 +4,19 @@ import polars as pl
 import pytest
 import plotly.graph_objects as go
 
-from resstockpostproc.baseline_validation.plotters.stacked_plotter import (
-    _add_quartile_cols,
-    _get_reference_source,
-    _prepare_box_plot_data,
-    create_stacked_plot,
-    get_custom_range,
+from resstockpostproc.baseline_validation.plotters.box_plot_data import (
+    add_quartile_cols,
+    prepare_box_plot_data,
+)
+from resstockpostproc.baseline_validation.plotters.graph_splitting import (
+    get_reference_source,
     split_graph,
     split_graph_by_char,
     split_graph_by_state,
+)
+from resstockpostproc.baseline_validation.plotters.stacked_plotter import (
+    create_stacked_plot,
+    get_custom_range,
 )
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     Metric,
@@ -43,11 +47,11 @@ def _make_spec(**overrides):
 class TestGetReferenceSource:
     def test_returns_non_resstock_source(self):
         df = pl.DataFrame({"source": ["resstock_2024", "recs_2020", "resstock_2025"]})
-        assert _get_reference_source(df) == "recs_2020"
+        assert get_reference_source(df) == "recs_2020"
 
     def test_falls_back_to_first_when_all_resstock(self):
         df = pl.DataFrame({"source": ["resstock_2024", "resstock_2025"]})
-        assert _get_reference_source(df) == "resstock_2024"
+        assert get_reference_source(df) == "resstock_2024"
 
 
 class TestAddQuartileCols:
@@ -55,7 +59,7 @@ class TestAddQuartileCols:
         """Quartiles list: [min, p2, p10, q1, median, q3, p90, p98, max]."""
         quartiles = [0.0, 2.0, 10.0, 25.0, 50.0, 75.0, 90.0, 98.0, 100.0]
         df = pl.DataFrame({"electricity_total_quartiles": [quartiles]})
-        result = _add_quartile_cols(df, "electricity_total_quartiles")
+        result = add_quartile_cols(df, "electricity_total_quartiles")
 
         assert result["q1"].item() == 25.0
         assert result["median"].item() == 50.0
@@ -81,7 +85,7 @@ class TestPrepareBoxPlotData:
 
     def test_all_units_uses_quartiles(self):
         df = self._make_df()
-        result = _prepare_box_plot_data(df, "electricity_total", CoverageType.all_units)
+        result = prepare_box_plot_data(df, "electricity_total", CoverageType.all_units)
 
         assert result["n_points"].item() == 800  # model_count directly
         assert result["q1"].item() == 25.0
@@ -89,7 +93,7 @@ class TestPrepareBoxPlotData:
 
     def test_users_only_uses_incoming_nonzero_count_and_nonzero_quartiles(self):
         df = self._make_df()
-        result = _prepare_box_plot_data(df, "electricity_total", CoverageType.users_only)
+        result = prepare_box_plot_data(df, "electricity_total", CoverageType.users_only)
 
         # model_count is already the exact nonzero count for the quantity upstream.
         assert result["n_points"].item() == 800
@@ -100,7 +104,7 @@ class TestPrepareBoxPlotData:
         with pytest.raises(ValueError, match="Unsupported coverage type"):
             # Create a mock coverage that's not all_units or users_only
             # We can test this by passing a string that doesn't match
-            _prepare_box_plot_data(df, "electricity_total", "invalid")
+            prepare_box_plot_data(df, "electricity_total", "invalid")
 
 
 class TestSplitGraphByState:
@@ -380,7 +384,7 @@ class TestHistogramLayoutRouting:
             return go.Figure()
 
         monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plotters.stacked_plotter._create_histogram_plot",
+            "resstockpostproc.baseline_validation.plotters.stacked_plotter.create_histogram_plot",
             _fake_hist_renderer,
         )
 

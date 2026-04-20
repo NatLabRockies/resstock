@@ -15,8 +15,6 @@ import polars as pl
 
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
-    Metric,
-    CoverageType,
     ViewType,
     Layout,
     ComparisonDataset,
