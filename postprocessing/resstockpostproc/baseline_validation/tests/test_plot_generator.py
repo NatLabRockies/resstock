@@ -11,12 +11,14 @@ from resstockpostproc.baseline_validation.footnotes import (
 )
 from resstockpostproc.baseline_validation.plot_generator import (
     _all_enduses_viz_label,
-    _apply_lrd_sidebar_semantics,
     _collect_stacked_notes,
     _should_generate_stacked_page_group,
     _should_generate_stacked_table,
     _stacked_title_from_grouped,
     _to_all_enduses_tall_data,
+)
+from resstockpostproc.baseline_validation.generation.index_rows import (
+    apply_lrd_sidebar_semantics,
 )
 from resstockpostproc.baseline_validation.generation.render_runner import (
     compute_discrepancy,
@@ -422,13 +424,13 @@ class TestLRDSidebarSemantics:
     def test_non_lrd_row_unchanged(self):
         row = {"Filter 1": "State: Alaska", "Filter 2": "", "Group By": "State"}
         spec = _make_spec()
-        _apply_lrd_sidebar_semantics(row, spec, ())
+        apply_lrd_sidebar_semantics(row, spec, ())
         assert row == {"Filter 1": "State: Alaska", "Filter 2": "", "Group By": "State"}
 
     def test_lrd_default_facets(self):
         row = {"Filter 1": "stale", "Filter 2": "stale", "Group By": ""}
         spec = self._make_lrd_spec(Resolution.year)
-        _apply_lrd_sidebar_semantics(row, spec, ())
+        apply_lrd_sidebar_semantics(row, spec, ())
         assert row["Filter 1"] == ""
         assert row["Filter 2"] == ""
         assert row["Group By"] == "Utility"
@@ -443,7 +445,7 @@ class TestLRDSidebarSemantics:
     def test_lrd_seasonal_facets(self, resolution, expected_filter_1):
         row = {"Filter 1": "", "Filter 2": "", "Group By": ""}
         spec = self._make_lrd_spec(resolution)
-        _apply_lrd_sidebar_semantics(row, spec, ())
+        apply_lrd_sidebar_semantics(row, spec, ())
         assert row["Filter 1"] == expected_filter_1
         assert row["Filter 2"] == ""
         assert row["Group By"] == "Utility"
@@ -452,7 +454,7 @@ class TestLRDSidebarSemantics:
         row = {"Filter 1": "", "Filter 2": "stale", "Group By": ""}
         spec = self._make_lrd_spec(Resolution.hour_of_day_matrix)
         focus_on = (("utility", "ComEd (IL)"),)
-        _apply_lrd_sidebar_semantics(row, spec, focus_on)
+        apply_lrd_sidebar_semantics(row, spec, focus_on)
         assert row["Filter 1"] == "Utility: ComEd (IL)"
         assert row["Filter 2"] == ""
         assert row["Group By"] == "Month-Day"

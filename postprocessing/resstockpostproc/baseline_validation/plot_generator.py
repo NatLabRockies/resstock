@@ -70,6 +70,10 @@ from resstockpostproc.baseline_validation.generation.work_items import (
     expand_templates,
     get_test_template_indices,
 )
+from resstockpostproc.baseline_validation.generation.index_rows import (
+    apply_lrd_sidebar_semantics,
+    build_output_row,
+)
 from resstockpostproc.baseline_validation.io_managers.output_manager import (
     ensure_plotly_asset,
     plotly_cdn_url,
@@ -220,51 +224,6 @@ def _should_generate_stacked_page_group(
     return first_spec.comparison_dataset != ComparisonDataset.lrd
 
 
-# ---------------------------------------------------------------------------
-# Spec loading
-# ---------------------------------------------------------------------------
-
-
-def _build_output_row(main_spec: PlotSpec) -> dict[str, str]:
-    """Build the output row dict from a main PlotSpec's display properties."""
-    return {
-        "Index": "",
-        "Comparison Dataset": main_spec.display_comparison_dataset,
-        "Quantity": main_spec.display_quantity,
-        "Metric": main_spec.display_metric,
-        "Coverage": main_spec.display_coverage,
-        "Filter 1": "",
-        "Filter 2": "",
-        "Group By": main_spec.display_group_by,
-        "Comparison Plot": "",
-        "Data": "",
-    }
-
-
-def _apply_lrd_sidebar_semantics(
-    row: dict[str, str],
-    display_spec: PlotSpec,
-    final_focus_on: tuple[tuple[str, str], ...],
-) -> None:
-    """Normalize LRD index facets to the simplified Metric/Filter/Group By model."""
-    if display_spec.comparison_dataset != ComparisonDataset.lrd:
-        return
-
-    # Default LRD sidebar facets are utility-grouped with no explicit filters.
-    row["Filter 1"] = ""
-    row["Filter 2"] = ""
-    row["Group By"] = "Utility"
-
-    if display_spec.resolution == Resolution.hour_of_day_summer:
-        row["Filter 1"] = "Season: Summer"
-    elif display_spec.resolution == Resolution.hour_of_day_winter:
-        row["Filter 1"] = "Season: Winter"
-    elif display_spec.resolution == Resolution.hour_of_day_matrix:
-        utility = next((val for char, val in final_focus_on if char == "utility"), "")
-        row["Filter 1"] = f"Utility: {utility}" if utility else ""
-        row["Group By"] = "Month-Day"
-
-
 def _collect_stacked_notes(
     qty_entries: list[tuple[str, list[tuple[PlotSpec, str]]]],
     note_getter,
@@ -412,7 +371,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
             view=main_spec.view,
         )
 
-        results[sub_key] = _build_output_row(display_spec)
+        results[sub_key] = build_output_row(display_spec)
         results[sub_key]["Index"] = i
         if final_agg is None:
             results[sub_key]["Group By"] = ""
@@ -429,7 +388,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
                     category = format_group_by(char)
                     results[sub_key][f"Filter {idx + 1}"] = f"{category}: {display}"
 
-        _apply_lrd_sidebar_semantics(results[sub_key], display_spec, final_focus_on)
+        apply_lrd_sidebar_semantics(results[sub_key], display_spec, final_focus_on)
 
         focused_entries = []
         for spec, _ in spec_entries:
