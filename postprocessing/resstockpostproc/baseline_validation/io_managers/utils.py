@@ -79,21 +79,22 @@ def add_missing_states(df: pl.DataFrame) -> pl.DataFrame:
     Returns:
         DataFrame with missing states added
     """
-    too_add_states = ["AK", "HI"]
+    states_to_add = ["AK", "HI"]
     existing_states = set(df["state"].unique().to_list())
-    missing_states = set(too_add_states) - existing_states
+    missing_states = [s for s in states_to_add if s not in existing_states]
     if not missing_states:
         return df
 
     if "month" in df.columns:
-        missing_data = []
-        for state in missing_states:
-            for month in NUM2MONTH.values():
-                missing_data.append({"state": state, "month": month})
+        missing_data = [
+            {"state": state, "month": month}
+            for state in missing_states
+            for month in NUM2MONTH.values()
+        ]
         missing_df = pl.DataFrame(missing_data)
         join_cols = ["state", "month"]
     else:
-        missing_df = pl.DataFrame({"state": list(missing_states)})
+        missing_df = pl.DataFrame({"state": missing_states})
         join_cols = ["state"]
 
     df = df.join(missing_df, on=join_cols, how="outer", coalesce=True)
