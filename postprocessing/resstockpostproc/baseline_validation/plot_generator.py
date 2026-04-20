@@ -1070,18 +1070,6 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
                 focused_entries,
             ))
 
-    # Apply _patch_guard: drop specs the guard rejects (default: no-op).
-    # Used for surgical re-runs; see _patch_guard docstring.
-    guarded_plot_args = []
-    for sub_key, focused_entries, is_dry_run in plot_args:
-        kept = [(s, label) for s, label in focused_entries if _patch_guard(s)]
-        if kept:
-            guarded_plot_args.append((sub_key, kept, is_dry_run))
-    if len(guarded_plot_args) != len(plot_args):
-        logger.info(
-            f"_patch_guard filtered {len(plot_args)} plot groups -> {len(guarded_plot_args)}"
-        )
-    plot_args = guarded_plot_args
     total = len(plot_args)
 
     # Pass 3: Generate plots — parallel or sequential
@@ -1399,43 +1387,6 @@ def parse_index_arg(index_str):
         else:
             indices.add(int(part))
     return indices
-
-
-def _patch_guard(plot_spec: PlotSpec) -> bool:
-    """Regeneration guard for surgical reruns.
-
-    Returns True for every spec by default (full regeneration). To re-generate
-    only a subset of HTMLs (e.g. after a bug fix that affects one rendering
-    path), uncomment one of the example narrowings below. Any spec where this
-    returns False is skipped in Pass 3 and no HTML/CSV is rewritten for it.
-
-    Currently narrowed to: RECS monthly space-heat/cool, state-focused plots.
-    Covers the null-y_values bar-plot crashes in monthly_plotter.create_ts_bar_plot.
-    """
-    return True
-    null_prone_quantities = {
-        DataCol.ELECTRICITY_SPACE_COOLING,
-        DataCol.ELECTRICITY_SPACE_HEATING,
-        DataCol.NATURAL_GAS_SPACE_HEATING,
-    }
-    return (
-        plot_spec.comparison_dataset == ComparisonDataset.recs
-        and plot_spec.resolution == Resolution.month
-        and plot_spec.quantity in null_prone_quantities
-        and any(col == "state" for col, _ in plot_spec.focus_on)
-    )
-
-    # Examples:
-    # Only regenerate tilemap-with-sidebar plots:
-    # return (
-    #     _resolve_sidebar_column(plot_spec) is not None
-    #     and _resolve_timeseries_column(plot_spec) is None
-    #     and not _uses_stacked_layout(plot_spec)
-    #     and not any(char == plot_spec.group_by for char, _ in plot_spec.focus_on)
-    # )
-    # Only regenerate LRD plots:
-    # return plot_spec.comparison_dataset == ComparisonDataset.lrd
-    # return True
 
 
 def main():
