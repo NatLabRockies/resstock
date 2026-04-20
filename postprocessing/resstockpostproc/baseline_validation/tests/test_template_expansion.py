@@ -8,7 +8,7 @@ from resstockpostproc.baseline_validation.generation.work_items import (
     build_spec_entries,
     expand_templates,
 )
-from resstockpostproc.baseline_validation.plot_generator import _render_key
+from resstockpostproc.baseline_validation.generation.render_runner import render_key
 from resstockpostproc.baseline_validation.schema.plot_definitions import (
     PlotTemplate,
     RECS_CROSS_FILTER_CHARS,
@@ -168,7 +168,7 @@ def test_render_key_is_stable_for_equivalent_items_and_distinguishes_focus_group
     different_group = (["family-d"], 7, [("entry-d", "Bar Plot")], None, (("state", "CA"),), None)
     different_focus_val = (["family-e"], 7, [("entry-e", "Bar Plot")], "state:CA", (("state", "CA"),), "vintage")
 
-    assert _render_key(base_item) == _render_key(same_identity)
-    assert _render_key(base_item) != _render_key(different_focus)
-    assert _render_key(base_item) != _render_key(different_group)
-    assert _render_key(base_item) != _render_key(different_focus_val)
+    assert render_key(base_item) == render_key(same_identity)
+    assert render_key(base_item) != render_key(different_focus)
+    assert render_key(base_item) != render_key(different_group)
+    assert render_key(base_item) != render_key(different_focus_val)

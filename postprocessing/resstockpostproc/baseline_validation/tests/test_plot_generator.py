@@ -8,6 +8,7 @@ import pytest
 import plotly.graph_objects as go
 
 import resstockpostproc.baseline_validation.plot_generator as plot_generator_module
+import resstockpostproc.baseline_validation.generation.render_runner as render_runner_module
 from resstockpostproc.baseline_validation.dashboard_paths import relative_href_from_file
 from resstockpostproc.baseline_validation.footnotes import (
     RECS_ANNUAL_CI_NOTE,
@@ -19,18 +20,20 @@ from resstockpostproc.baseline_validation.plot_generator import (
     _all_enduses_viz_label,
     _apply_lrd_sidebar_semantics,
     _collect_stacked_notes,
-    _compute_discrepancy,
-    _ensure_kaleido_sync_server,
-    _generate_spec_plots,
-    _has_static_image_outputs,
-    _plot_output_path,
-    _data_output_path,
     _should_generate_stacked_page_group,
     _should_generate_stacked_table,
-    _stop_kaleido_sync_server_if_owned,
     _stacked_title_from_grouped,
     _to_all_enduses_tall_data,
     generate_plots,
+)
+from resstockpostproc.baseline_validation.generation.render_runner import (
+    compute_discrepancy,
+    data_output_path,
+    ensure_kaleido_sync_server,
+    generate_spec_plots,
+    has_static_image_outputs,
+    plot_output_path,
+    stop_kaleido_sync_server_if_owned,
 )
 from resstockpostproc.baseline_validation.generation.work_items import (
     build_spec_entries,
@@ -77,7 +80,7 @@ class TestComputeDiscrepancy:
             "electricity_total_value": [100.0, 200.0, 110.0, 190.0],
         })
         spec = _make_spec()
-        metrics = _compute_discrepancy(data, spec)
+        metrics = compute_discrepancy(data, spec)
 
         assert "ResStock 2024" in metrics
         mape = metrics["ResStock 2024"]
@@ -91,7 +94,7 @@ class TestComputeDiscrepancy:
             "electricity_total_value": [100.0, 120.0],
         })
         spec = _make_spec()
-        metrics = _compute_discrepancy(data, spec)
+        metrics = compute_discrepancy(data, spec)
 
         mape = metrics["ResStock 2024"]
         assert mape == pytest.approx(20.0)
@@ -104,7 +107,7 @@ class TestComputeDiscrepancy:
             "electricity_total_value": [100.0, 120.0, 110.0],
         })
         spec = _make_spec()
-        metrics = _compute_discrepancy(data, spec)
+        metrics = compute_discrepancy(data, spec)
 
         assert set(metrics.keys()) == {"ResStock 2024", "ResStock 2025"}
         assert metrics["ResStock 2024"] == pytest.approx(20.0)
@@ -117,7 +120,7 @@ class TestComputeDiscrepancy:
             aggregation_type=Metric.average,
         )
         data = pl.DataFrame({"source": ["recs"], "state": ["CA"], "electricity_total_value": [1.0]})
-        assert _compute_discrepancy(data, spec) == {}
+        assert compute_discrepancy(data, spec) == {}
 
     def test_returns_empty_for_distribution_view(self):
         spec = _make_spec(
@@ -126,7 +129,7 @@ class TestComputeDiscrepancy:
             view=ViewType.value_view,
         )
         data = pl.DataFrame({"source": ["recs"], "state": ["CA"], "electricity_total_value": [1.0]})
-        assert _compute_discrepancy(data, spec) == {}
+        assert compute_discrepancy(data, spec) == {}
 
     def test_returns_empty_when_no_resstock_rows(self):
         data = pl.DataFrame({
@@ -135,7 +138,7 @@ class TestComputeDiscrepancy:
             "electricity_total_value": [100.0, 200.0],
         })
         spec = _make_spec()
-        assert _compute_discrepancy(data, spec) == {}
+        assert compute_discrepancy(data, spec) == {}
 
     def test_returns_empty_when_zero_reference(self):
         data = pl.DataFrame({
@@ -144,7 +147,7 @@ class TestComputeDiscrepancy:
             "electricity_total_value": [0.0, 50.0],
         })
         spec = _make_spec()
-        assert _compute_discrepancy(data, spec) == {}
+        assert compute_discrepancy(data, spec) == {}
 
     def test_skips_zero_reference_rows_in_mape_average(self):
         data = pl.DataFrame({
@@ -154,7 +157,7 @@ class TestComputeDiscrepancy:
         })
         spec = _make_spec()
 
-        metrics = _compute_discrepancy(data, spec)
+        metrics = compute_discrepancy(data, spec)
 
         # CA is excluded because the reference is zero; NY contributes 20/200 = 10%
         assert metrics["ResStock 2024"] == pytest.approx(10.0)
@@ -167,7 +170,7 @@ class TestComputeDiscrepancy:
             "electricity_total_value": [100.0, 999.0, 100.0, 999.0],
         })
         spec = _make_spec()
-        mape = _compute_discrepancy(data, spec)["ResStock 2024"]
+        mape = compute_discrepancy(data, spec)["ResStock 2024"]
 
         # Only CA is used (US Total excluded) → perfect match
         assert mape == pytest.approx(0.0)
@@ -180,7 +183,7 @@ class TestComputeDiscrepancy:
             "electricity_total_value": [100.0, 120.0],
         })
         spec = _make_spec(focus_on=(("state", "US Total"),), group_by=None)
-        mape = _compute_discrepancy(data, spec)["ResStock 2024"]
+        mape = compute_discrepancy(data, spec)["ResStock 2024"]
         assert mape == pytest.approx(20.0)
 
     def test_units_count_quantity(self):
@@ -191,7 +194,7 @@ class TestComputeDiscrepancy:
             "units_count": [1000.0, 1100.0],
         })
         spec = _make_spec(quantity=DataCol.UNITS_COUNT)
-        mape = _compute_discrepancy(data, spec)["ResStock 2024"]
+        mape = compute_discrepancy(data, spec)["ResStock 2024"]
         assert mape == pytest.approx(10.0)
 
     def test_monthly_resolution_joins_on_month(self):
@@ -203,7 +206,7 @@ class TestComputeDiscrepancy:
             "electricity_total_value": [100.0, 200.0, 110.0, 220.0],
         })
         spec = _make_spec(resolution=Resolution.month)
-        mape = _compute_discrepancy(data, spec)["ResStock 2024"]
+        mape = compute_discrepancy(data, spec)["ResStock 2024"]
         assert mape == pytest.approx(10.0)
 
 
@@ -433,28 +436,28 @@ class TestGenerateSpecPlotsPrimaryDataAnchor:
         table_calls = []
 
         monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.get_plot_data",
+            "resstockpostproc.baseline_validation.generation.render_runner.get_plot_data",
             lambda _spec: data,
         )
         monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.get_plotting_function",
+            "resstockpostproc.baseline_validation.generation.render_runner.get_plotting_function",
             lambda _ds: (lambda _data, _spec: (go.Figure(), "title")),
         )
         monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.save_figure",
+            "resstockpostproc.baseline_validation.generation.render_runner.save_figure",
             lambda *_args, **_kwargs: None,
         )
         monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator._compute_discrepancy",
+            "resstockpostproc.baseline_validation.generation.render_runner.compute_discrepancy",
             lambda _data, _spec: {},
         )
         table_kwargs = {}
         monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.generate_data_table_html",
+            "resstockpostproc.baseline_validation.generation.render_runner.generate_data_table_html",
             lambda **kwargs: (table_calls.append(kwargs["output_path"]), table_kwargs.update(kwargs)),
         )
 
-        result = _generate_spec_plots(
+        result = generate_spec_plots(
             spec_entries=spec_entries,
             output_formats=[FileType.html],
             link_format=FileType.html,
@@ -474,8 +477,8 @@ class TestGenerateSpecPlotsPrimaryDataAnchor:
         assert "download csv" not in data_rel
         assert primary_title in data_rel
         assert two_col_title not in data_rel
-        expected_table_path = _data_output_path(tmp_path, spec_primary, FileType.html)
-        expected_plot_path = _plot_output_path(tmp_path, spec_primary, FileType.html)
+        expected_table_path = data_output_path(tmp_path, spec_primary, FileType.html)
+        expected_plot_path = plot_output_path(tmp_path, spec_primary, FileType.html)
         assert table_kwargs["plot_rel_path"] == relative_href_from_file(expected_plot_path, expected_table_path)
 
     def test_static_images_are_batched_once_per_work_item(self, tmp_path, monkeypatch):
@@ -504,31 +507,31 @@ class TestGenerateSpecPlotsPrimaryDataAnchor:
         static_batch_calls = []
 
         monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.get_plot_data",
+            "resstockpostproc.baseline_validation.generation.render_runner.get_plot_data",
             lambda _spec: data,
         )
         monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.get_plotting_function",
+            "resstockpostproc.baseline_validation.generation.render_runner.get_plotting_function",
             lambda _ds: (lambda _data, _spec: (go.Figure(), "title")),
         )
         monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.save_figure",
+            "resstockpostproc.baseline_validation.generation.render_runner.save_figure",
             lambda *_args, **kwargs: html_save_calls.append(kwargs["formats"]),
         )
         monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.save_static_images_batch",
+            "resstockpostproc.baseline_validation.generation.render_runner.save_static_images_batch",
             lambda jobs, output_root=None: static_batch_calls.append((jobs, output_root)),
         )
         monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator._compute_discrepancy",
+            "resstockpostproc.baseline_validation.generation.render_runner.compute_discrepancy",
             lambda _data, _spec: {},
         )
         monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.generate_data_table_html",
+            "resstockpostproc.baseline_validation.generation.render_runner.generate_data_table_html",
             lambda **_kwargs: None,
         )
 
-        _generate_spec_plots(
+        generate_spec_plots(
             spec_entries=spec_entries,
             output_formats=[FileType.html, FileType.svg],
             link_format=FileType.html,
@@ -578,41 +581,41 @@ class TestKaleidoSyncServerLifecycle:
         fake_kaleido = self._fake_kaleido_module(start_calls, stop_calls)
 
         monkeypatch.setitem(sys.modules, "kaleido", fake_kaleido)
-        monkeypatch.setattr(plot_generator_module, "_OWNS_KALEIDO_SYNC_SERVER", False)
+        monkeypatch.setattr(render_runner_module, "_OWNS_KALEIDO_SYNC_SERVER", False)
         monkeypatch.setattr("plotly.io.defaults.plotlyjs", "/tmp/plotly.min.js")
         monkeypatch.setattr("plotly.io.defaults.mathjax", "/tmp/mathjax.js")
 
-        assert _ensure_kaleido_sync_server() is True
+        assert ensure_kaleido_sync_server() is True
         assert start_calls == [
             (
                 True,
                 {"n": 1, "plotlyjs": "/tmp/plotly.min.js", "mathjax": "/tmp/mathjax.js"},
             )
         ]
-        assert plot_generator_module._OWNS_KALEIDO_SYNC_SERVER is True
+        assert render_runner_module._OWNS_KALEIDO_SYNC_SERVER is True
 
-        assert _ensure_kaleido_sync_server() is False
+        assert ensure_kaleido_sync_server() is False
         assert len(start_calls) == 1
 
-        _stop_kaleido_sync_server_if_owned()
+        stop_kaleido_sync_server_if_owned()
         assert stop_calls == [True]
-        assert plot_generator_module._OWNS_KALEIDO_SYNC_SERVER is False
+        assert render_runner_module._OWNS_KALEIDO_SYNC_SERVER is False
 
     def test_stop_kaleido_sync_server_if_owned_skips_external_server(self, monkeypatch):
         stop_calls = []
         fake_kaleido = self._fake_kaleido_module([], stop_calls, running=True)
 
         monkeypatch.setitem(sys.modules, "kaleido", fake_kaleido)
-        monkeypatch.setattr(plot_generator_module, "_OWNS_KALEIDO_SYNC_SERVER", False)
+        monkeypatch.setattr(render_runner_module, "_OWNS_KALEIDO_SYNC_SERVER", False)
 
-        _stop_kaleido_sync_server_if_owned()
+        stop_kaleido_sync_server_if_owned()
 
         assert stop_calls == []
 
     def test_has_static_image_outputs_detects_svg_and_pdf(self):
-        assert _has_static_image_outputs([FileType.html, FileType.svg]) is True
-        assert _has_static_image_outputs([FileType.pdf]) is True
-        assert _has_static_image_outputs([FileType.html, FileType.parquet]) is False
+        assert has_static_image_outputs([FileType.html, FileType.svg]) is True
+        assert has_static_image_outputs([FileType.pdf]) is True
+        assert has_static_image_outputs([FileType.html, FileType.parquet]) is False
 
     def test_generate_plots_sequential_starts_and_stops_persistent_kaleido_server(self, tmp_path, monkeypatch):
         lifecycle_calls = []
@@ -642,11 +645,11 @@ class TestKaleidoSyncServerLifecycle:
             lambda _state: None,
         )
         monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator._ensure_kaleido_sync_server",
+            "resstockpostproc.baseline_validation.plot_generator.ensure_kaleido_sync_server",
             lambda: lifecycle_calls.append("start") or True,
         )
         monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator._stop_kaleido_sync_server_if_owned",
+            "resstockpostproc.baseline_validation.plot_generator.stop_kaleido_sync_server_if_owned",
             lambda: lifecycle_calls.append("stop"),
         )
         monkeypatch.setattr(plot_generator_module.TimingStats, "start_trace", lambda _path: None)
