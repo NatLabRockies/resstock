@@ -164,23 +164,14 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     if stacked_count:
         logger.info(f"Generated {stacked_count} synthetic 'All Enduses (Stacked)' pages")
 
-    # Clean up raw Plotly HTML files — only the post-processed versions are needed.
-    for ds in ComparisonDataset:
-        plots_dir = dataset_output_dir(output_root, str(ds), "plots", link_format.value)
-        if plots_dir.exists():
-            for raw_html in plots_dir.rglob(f"*.raw.{link_format.value}"):
-                raw_html.unlink()
+    _cleanup_raw_plot_html(output_root, link_format)
 
     if stream_incremental:
-        # Finalize the streaming index (closes combo file, writes dashboard HTML).
         finalize_html_index(index_state)
     else:
         # No incremental writes happened. Materialize the TSV from in-memory
         # results so write_canonical_index has something to rewrite.
-        with open(csv_path, "w", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS, delimiter="\t")
-            writer.writeheader()
-            writer.writerows(results.values())
+        _write_results_tsv(csv_path, results)
 
     # Rows were appended in worker-completion order, which is non-deterministic.
     # Re-read the TSV, sort by Index (stacked rows with empty Index go last in
@@ -205,6 +196,24 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     # Close trace file
     TimingStats.stop_trace()
     logger.info(f"Trace file: {trace_path} (open in https://ui.perfetto.dev)")
+
+
+def _cleanup_raw_plot_html(output_root: Path, link_format: FileType) -> None:
+    """Delete the raw Plotly HTML files that Pass 3 wrote; only postprocessed outputs survive."""
+    for ds in ComparisonDataset:
+        plots_dir = dataset_output_dir(output_root, str(ds), "plots", link_format.value)
+        if not plots_dir.exists():
+            continue
+        for raw_html in plots_dir.rglob(f"*.raw.{link_format.value}"):
+            raw_html.unlink()
+
+
+def _write_results_tsv(csv_path: Path, results: dict[str, dict[str, str]]) -> None:
+    """Materialize the in-memory results dict as the comparisons_index TSV."""
+    with open(csv_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS, delimiter="\t")
+        writer.writeheader()
+        writer.writerows(results.values())
 
 
 def _count_plot_outcomes(results: dict[str, dict[str, str]]) -> tuple[int, int]:
@@ -263,11 +272,11 @@ def write_canonical_index(tsv_path: Path, html_path: Path, data_dir: Path) -> No
 # ---------------------------------------------------------------------------
 
 
-def parse_index_arg(index_str):
+def parse_index_arg(index_str: str) -> set[int]:
     """Parse index argument: single int, range (e.g. '1-10'), or comma-separated."""
-    indices = set()
-    for part in index_str.split(","):
-        part = part.strip()
+    indices: set[int] = set()
+    for raw_part in index_str.split(","):
+        part = raw_part.strip()
         if "-" in part:
             start, end = part.split("-", 1)
             indices.update(range(int(start), int(end) + 1))
