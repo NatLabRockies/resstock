@@ -20,7 +20,7 @@ from resstockpostproc.baseline_validation.generation.stacked_pages import (
 from resstockpostproc.baseline_validation.generation.index_rows import (
     apply_lrd_sidebar_semantics,
 )
-from resstockpostproc.baseline_validation.generation.render_runner import (
+from resstockpostproc.baseline_validation.data_processing.metrics import (
     compute_discrepancy,
 )
 from resstockpostproc.baseline_validation.generation.work_items import (

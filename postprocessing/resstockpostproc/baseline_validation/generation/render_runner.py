@@ -21,11 +21,11 @@ import traceback
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
-import polars as pl
 from plotly import graph_objects as go
 from tqdm import tqdm
 
 from resstockpostproc.baseline_validation.create_html import append_index_row
+from resstockpostproc.baseline_validation.data_processing.metrics import compute_discrepancy
 from resstockpostproc.baseline_validation.dashboard_paths import (
     dashboard_html_path,
     dataset_output_dir,
@@ -43,14 +43,7 @@ from resstockpostproc.baseline_validation.io_managers.output_manager import (
     save_figure,
     save_static_images_batch,
 )
-from resstockpostproc.baseline_validation.plot_semantics import (
-    format_source_label,
-    resolve_timeseries_column,
-)
 from resstockpostproc.baseline_validation.plotters import lrd_plotter, main_plotter
-from resstockpostproc.baseline_validation.plotters.plot_config import (
-    get_second_category_column,
-)
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     ComparisonDataset,
     FileType,
@@ -58,7 +51,6 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     ViewType,
 )
 from resstockpostproc.baseline_validation.utils import ensure_directory
-from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.timing import TimingStats, timed
 
 logger = logging.getLogger(__name__)
@@ -151,84 +143,6 @@ def get_plotting_function(comparison_dataset):
             return lrd_plotter.create_plot
         case _:
             raise ValueError(f"Unsupported comparison dataset: {comparison_dataset}")
-
-
-@timed
-def compute_discrepancy(data, plot_spec) -> dict[str, float]:
-    """Compute MAPE (%) for each ResStock source.
-
-    MAPE = mean(|ResStock - Ref| / |Ref|) × 100
-
-    Rows with zero reference values are excluded. Returns a dict keyed by
-    formatted source label (e.g. "ResStock 2025"), with per-source MAPE (%)
-    values. Empty dict when metrics cannot be computed.
-    """
-    if plot_spec.is_all_enduses:
-        return {}
-    if plot_spec.is_distribution_metric:
-        return {}
-
-    # Determine value column
-    if plot_spec.quantity == DataCol.UNITS_COUNT:
-        val_col = "units_count"
-    elif plot_spec.is_penetration_metric:
-        val_col = f"{plot_spec.quantity}_percent_users"
-    else:
-        val_col = f"{plot_spec.quantity}_value"
-
-    if val_col not in data.columns:
-        return {}
-
-    # Identify reference and ResStock rows (case-insensitive — source values may
-    # be raw like "eia_2018" or display labels like "EIA 2018").
-    comparison = plot_spec.comparison_dataset.value
-    ref_rows = data.filter(pl.col("source").str.to_lowercase().str.contains(comparison))
-    rs_sources = sorted(s for s in data["source"].unique().to_list() if "resstock" in s.lower())
-
-    if len(ref_rows) == 0 or not rs_sources:
-        return {}
-
-    # Determine join columns for pairing
-    agg_col = get_second_category_column(plot_spec)
-    join_cols = [agg_col]
-    # Add the timeseries column to the join (e.g., month, hour of day, percent_time)
-    ts_col = resolve_timeseries_column(plot_spec)
-    if ts_col and str(ts_col) in data.columns:
-        join_cols.append(str(ts_col))
-
-    # Exclude "US Total" from multi-entity overviews to avoid double-counting.
-    is_us_total_focus = any(val == "US Total" for _, val in plot_spec.focus_on)
-    if not is_us_total_focus:
-        ref_rows = ref_rows.filter(pl.col(agg_col) != "US Total")
-
-    ref_selected = ref_rows.select(join_cols + [pl.col(val_col).alias("ref_val")])
-
-    metrics: dict[str, float] = {}
-    for rs_source in rs_sources:
-        rs_rows = data.filter(pl.col("source") == rs_source)
-        if not is_us_total_focus:
-            rs_rows = rs_rows.filter(pl.col(agg_col) != "US Total")
-
-        rs_selected = rs_rows.select(join_cols + [pl.col(val_col).alias("rs_val")])
-        paired = rs_selected.join(ref_selected, on=join_cols, how="inner")
-        paired = paired.drop_nulls(["ref_val", "rs_val"])
-        paired = paired.with_columns(
-            pl.col("ref_val").fill_nan(0),
-            pl.col("rs_val").fill_nan(0),
-        )
-
-        if len(paired) == 0:
-            continue
-
-        term_df = paired.filter(pl.col("ref_val").abs() > 0).with_columns(
-            ((pl.col("rs_val") - pl.col("ref_val")).abs() / pl.col("ref_val").abs()).alias("mape_term")
-        )
-        if len(term_df) == 0:
-            continue
-
-        metrics[format_source_label(rs_source)] = float(term_df["mape_term"].mean() * 100.0)
-
-    return metrics
 
 
 def plot_output_path(output_root: Path, plot_spec: PlotSpec, fmt: FileType) -> Path:
