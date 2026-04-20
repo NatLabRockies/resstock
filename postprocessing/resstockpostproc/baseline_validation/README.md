@@ -41,14 +41,21 @@ The tool is organized as a small orchestration layer on top of schema definition
 ```
 baseline_validation/
 ├── workflow.yaml                  # User-facing run configuration
-├── main.py                        # CLI entry point
-├── plot_generator.py              # Main orchestration and parallel generation
-├── create_html.py                 # Dashboard shell and sharded index generation
+├── main.py                        # User-facing CLI entry point
+├── plot_generator.py              # Run-orchestration coordinator + developer CLI
+├── create_html.py                 # IndexState writer + sharded index API
+├── create_html_viewer.py          # Dashboard viewer-page HTML shell
 ├── dashboard_paths.py             # Shared output-path conventions
+├── plot_semantics.py              # Cross-module plot semantic helpers (timeseries/quartile/source-label)
 ├── footnotes.py                   # Reference/source footnote helpers
 ├── resstock_raw.py                # Raw-column resolution helpers for ResStock
 ├── utils.py                       # Shared utility helpers
 ├── theme.py                       # Plot styling
+├── generation/                    # Pieces of the run pipeline (extracted from plot_generator)
+│   ├── work_items.py              # Template expansion + plot_args build + render gate
+│   ├── render_runner.py           # Render dispatch, worker pool lifecycle, Kaleido server
+│   ├── stacked_pages.py           # Synthetic All-Enduses stacked-page generation
+│   └── index_rows.py              # Per-plot dashboard row assembly
 ├── schema/
 │   ├── workflow_schema.py         # Workflow config validation
 │   ├── plot_definitions.py        # Code-defined comparison catalog
@@ -56,8 +63,10 @@ baseline_validation/
 │   ├── recs_chars_mapping.py      # RECS characteristic mappings
 │   └── recs_enduse_mapping.py     # RECS end-use mappings
 ├── data_processing/
-│   ├── gather_data.py             # Core comparison-data assembly
+│   ├── gather_data.py             # Core comparison-data dispatch and post-processing
+│   ├── dataset_adapters.py        # Per-dataset (EIA/RECS/LRD) source+ResStock loaders
 │   ├── histogram_data.py          # Histogram/distribution preparation
+│   ├── metrics.py                 # MAPE / discrepancy computation
 │   ├── recs_mapping.py            # RECS label and grouping helpers
 │   └── recs_rse.py                # RECS relative standard error handling
 ├── io_managers/
@@ -65,15 +74,23 @@ baseline_validation/
 │   ├── get_recs_data.py           # RECS reference data loading
 │   ├── get_lrd_data.py            # LRD reference data loading
 │   ├── get_resstock_data.py       # BuildStock result loading
+│   ├── stats.py                   # Shared weighted-statistics helpers
 │   ├── comparison_data_paths.py   # Comparison-specific output locations
-│   ├── data_table.py              # HTML/CSV data table generation
+│   ├── data_table.py              # HTML data-table page assembly (orchestrator)
+│   ├── data_table_transform.py    # Data-table dataframe transforms (melt/pivot/filter/quartiles)
+│   ├── data_table_columns.py      # Data-table column-config / humanization
 │   ├── html_utils.py              # Plot HTML post-processing and packaging
 │   └── output_manager.py          # Figure and static asset persistence
 ├── plotters/
 │   ├── main_plotter.py            # Shared plot rendering entry points
 │   ├── lrd_plotter.py             # Load-shape and LRD plots
-│   ├── stacked_plotter.py         # Stacked and split plot generation
+│   ├── stacked_plotter.py         # Stacked-plot orchestrator
+│   ├── box_plot_data.py           # Box-plot quartile column helpers
+│   ├── graph_splitting.py         # split_graph_by_state/char/enduse helpers
+│   ├── histogram_plot.py          # Histogram/grouped-histogram rendering
 │   └── plot_config.py             # Plot styling/config helpers
+├── scripts/
+│   └── verify_refactor.sh         # Snapshot-based refactor verification harness
 └── tests/                         # Regression coverage for data, plots, HTML, and CLI
 ```
 
@@ -277,7 +294,7 @@ data_source_labels:
 
 ## Developing and Testing
 
-Run tests (when test suite is created):
+Run unit tests:
 ```bash
 uv run pytest resstockpostproc/baseline_validation/tests
 ```
@@ -285,6 +302,53 @@ uv run pytest resstockpostproc/baseline_validation/tests
 Run pre-commit checks:
 ```bash
 pre-commit run --all-files --show-diff-on-failure
+```
+
+### Refactor Verification Workflow
+
+Unit tests catch logic regressions; they don't catch byte-level changes in the
+generated dashboard. For refactor work — anything that should be behavior-
+preserving — use the snapshot-comparison harness:
+
+```bash
+bash resstockpostproc/baseline_validation/scripts/verify_refactor.sh <scope>
+```
+
+The harness regenerates the dashboard into a known-good snapshot repo and fails
+if anything diverges from the committed baseline.
+
+**Scope selection** (controls which caches get wiped before regen):
+
+| Scope        | Wipes                       | Use when…                                                            |
+|--------------|-----------------------------|----------------------------------------------------------------------|
+| `plot-only`  | nothing                     | Plotters, HTML, theme, footnotes — anything downstream of cached data |
+| `loader`     | `.cache`                    | Data-loader logic changed but BuildStockQuery inputs are unchanged    |
+| `query`      | `.cache` and `.bsq_cache`   | BSQ inputs / query construction / table or schema selection changed   |
+
+Pick the narrowest scope that still exercises the change. When in doubt,
+escalate — never under-declare cache scope.
+
+**Snapshot repo**: a separate git repo at
+`/Users/radhikar/Documents/buildstock2025/baseline_val_test_2024_2025_final_test`
+holds the known-good dashboard state. The harness regenerates into that repo
+and uses `git status --porcelain` as the pass/fail signal. If the snapshot
+needs to absorb an intentional output change (e.g. a determinism fix, or a
+deliberate visual update), run the harness, inspect the diffs, then
+`git add -A && git commit` in the snapshot repo to re-baseline.
+
+**One-step-per-commit rule**: each refactor step should be a self-contained
+commit with unit tests passing. Batch end-to-end verification (one
+`verify_refactor.sh` run covers several commits); if it fails, `git bisect`
+over those commits to find the regression. Don't bundle unrelated steps in one
+commit — keep `git bisect` useful.
+
+**Live progress**: the harness's stdout buffers heavily by default. To watch
+progress live in another terminal:
+
+```bash
+PYTHONUNBUFFERED=1 bash resstockpostproc/baseline_validation/scripts/verify_refactor.sh plot-only 2>&1 | tee /tmp/verify.log
+# in another terminal:
+tail -f /tmp/verify.log
 ```
 
 ## Troubleshooting
