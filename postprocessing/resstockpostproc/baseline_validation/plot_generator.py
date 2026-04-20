@@ -10,14 +10,10 @@ Usage:
 import argparse
 import csv
 import logging
-import os
 import sys
 from collections import defaultdict
 import time
-import traceback
-from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
-from tqdm import tqdm
 
 
 from resstockpostproc.baseline_validation.dashboard_paths import (
@@ -42,14 +38,9 @@ from resstockpostproc.baseline_validation.schema.plot_definitions import (
 )
 from resstockpostproc.baseline_validation.generation.render_runner import (
     OUTPUT_COLUMNS,
-    ensure_kaleido_sync_server,
-    generate_spec_plots,
-    handle_plot_result,
     has_static_image_outputs,
+    render_all_work_items,
     render_key,
-    stop_kaleido_sync_server_if_owned,
-    worker_init,
-    worker_run,
 )
 from resstockpostproc.baseline_validation.generation.work_items import (
     emit_layout_for_final_group,
@@ -79,13 +70,6 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 for noisy_logger_name in ("kaleido", "choreographer", "browser_proc"):
     logging.getLogger(noisy_logger_name).setLevel(logging.ERROR)
 logger = logging.getLogger(__name__)
-
-
-class _TqdmLoggingHandler(logging.Handler):
-    """Routes log output through tqdm.write() so log lines don't clobber the progress bar."""
-
-    def emit(self, record):
-        tqdm.write(self.format(record))
 
 
 DEFAULT_PLOT_OUTPUT_FORMATS = [FileType.html, FileType.svg]
@@ -287,64 +271,20 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
                 focused_entries,
             ))
 
-    total = len(plot_args)
-
     # Pass 3: Generate plots — parallel or sequential
-    common_kwargs = dict(
+    render_all_work_items(
+        plot_args,
+        parallel=parallel,
         output_formats=output_formats,
         link_format=link_format,
         output_root=output_root,
         source_labels=source_labels or None,
         plotly_asset_path=plotly_asset_path,
+        needs_persistent_kaleido=needs_persistent_kaleido,
+        results=results,
+        index_state=index_state,
+        csv_path=csv_path,
     )
-
-    # Swap logging to tqdm-aware handler so log lines render above the progress bar
-    root_logger = logging.getLogger()
-    original_handlers = root_logger.handlers[:]
-    tqdm_handler = _TqdmLoggingHandler()
-    tqdm_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
-    root_logger.handlers = [tqdm_handler]
-
-    pbar = tqdm(total=total, desc="Generating plots", unit="plot",
-                bar_format="{desc}: {percentage:6.2f}%|{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]")
-    try:
-        if parallel:
-            max_workers = max(2, min(8, (os.cpu_count() or 4) - 2))
-            logger.info(f"Using {max_workers} worker processes")
-            futures = {}
-            with ProcessPoolExecutor(
-                max_workers=max_workers,
-                initializer=worker_init,
-                initargs=(needs_persistent_kaleido,),
-            ) as executor:
-                for sub_key, focused_entries, is_dry_run in plot_args:
-                    future = executor.submit(
-                        worker_run, focused_entries, is_dry_run=is_dry_run, **common_kwargs,
-                    )
-                    futures[future] = sub_key
-                for future in as_completed(futures):
-                    sub_key = futures[future]
-                    try:
-                        result, worker_stats, worker_events = future.result()
-                        TimingStats.merge_worker_stats(worker_stats, worker_events)
-                    except Exception:
-                        logger.error(f"Worker exception for [{sub_key}]:\n{traceback.format_exc()}")
-                        result = None
-                    handle_plot_result(sub_key, result, results, csv_path, index_state)
-                    pbar.update(1)
-        else:
-            if needs_persistent_kaleido:
-                ensure_kaleido_sync_server()
-            for sub_key, focused_entries, is_dry_run in plot_args:
-                result = generate_spec_plots(
-                    focused_entries, is_dry_run=is_dry_run, **common_kwargs,
-                )
-                handle_plot_result(sub_key, result, results, csv_path, index_state)
-                pbar.update(1)
-    finally:
-        stop_kaleido_sync_server_if_owned()
-        pbar.close()
-        root_logger.handlers = original_handlers
 
     # Pass 4: Assemble synthetic "All Enduses (Stacked)" pages by combining
     # the raw Plotly HTML files already written in Pass 3. View-agnostic: for

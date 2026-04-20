@@ -12,15 +12,18 @@ owns:
 
 from __future__ import annotations
 
+import contextlib
 import csv
 import logging
 import os
 import sys
 import traceback
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 import polars as pl
 from plotly import graph_objects as go
+from tqdm import tqdm
 
 from resstockpostproc.baseline_validation.create_html import append_index_row
 from resstockpostproc.baseline_validation.dashboard_paths import (
@@ -397,6 +400,119 @@ def handle_plot_result(sub_key, result, results, csv_path, index_state):
     if index_state is not None:
         append_plot_row(csv_path, row)
         append_index_row(index_state, row)
+
+
+class _TqdmLoggingHandler(logging.Handler):
+    """Routes log output through tqdm.write() so log lines don't clobber the progress bar."""
+
+    def emit(self, record):
+        tqdm.write(self.format(record))
+
+
+@contextlib.contextmanager
+def _tqdm_logging_context(total: int):
+    """Yield a tqdm progress bar with logging routed through tqdm.write()."""
+    root_logger = logging.getLogger()
+    original_handlers = root_logger.handlers[:]
+    tqdm_handler = _TqdmLoggingHandler()
+    tqdm_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+    root_logger.handlers = [tqdm_handler]
+    pbar = tqdm(
+        total=total,
+        desc="Generating plots",
+        unit="plot",
+        bar_format="{desc}: {percentage:6.2f}%|{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]",
+    )
+    try:
+        yield pbar
+    finally:
+        stop_kaleido_sync_server_if_owned()
+        pbar.close()
+        root_logger.handlers = original_handlers
+
+
+def _submit_all(executor, plot_args, common_kwargs) -> dict:
+    """Submit every plot_args entry to the executor and return {future: sub_key}."""
+    futures: dict = {}
+    for sub_key, focused_entries, is_dry_run in plot_args:
+        future = executor.submit(
+            worker_run, focused_entries, is_dry_run=is_dry_run, **common_kwargs,
+        )
+        futures[future] = sub_key
+    return futures
+
+
+def _consume_result(future, sub_key):
+    """Collect one worker result or log its traceback; return result or None."""
+    try:
+        result, worker_stats, worker_events = future.result()
+    except Exception:
+        logger.error(f"Worker exception for [{sub_key}]:\n{traceback.format_exc()}")
+        return None
+    TimingStats.merge_worker_stats(worker_stats, worker_events)
+    return result
+
+
+def _render_parallel(plot_args, pbar, common_kwargs, needs_persistent_kaleido, handle_result) -> None:
+    """Run plot_args in a ProcessPoolExecutor, calling handle_result on each completion."""
+    max_workers = max(2, min(8, (os.cpu_count() or 4) - 2))
+    logger.info(f"Using {max_workers} worker processes")
+    with ProcessPoolExecutor(
+        max_workers=max_workers,
+        initializer=worker_init,
+        initargs=(needs_persistent_kaleido,),
+    ) as executor:
+        futures = _submit_all(executor, plot_args, common_kwargs)
+        for future in as_completed(futures):
+            sub_key = futures[future]
+            result = _consume_result(future, sub_key)
+            handle_result(sub_key, result)
+            pbar.update(1)
+
+
+def _render_sequential(plot_args, pbar, common_kwargs, needs_persistent_kaleido, handle_result) -> None:
+    """Run plot_args in-process, calling handle_result on each completion."""
+    if needs_persistent_kaleido:
+        ensure_kaleido_sync_server()
+    for sub_key, focused_entries, is_dry_run in plot_args:
+        result = generate_spec_plots(
+            focused_entries, is_dry_run=is_dry_run, **common_kwargs,
+        )
+        handle_result(sub_key, result)
+        pbar.update(1)
+
+
+def render_all_work_items(
+    plot_args,
+    *,
+    parallel: bool,
+    output_formats,
+    link_format,
+    output_root: Path,
+    source_labels,
+    plotly_asset_path: Path,
+    needs_persistent_kaleido: bool,
+    results: dict,
+    index_state,
+    csv_path: Path,
+) -> None:
+    """Render every work item — parallel or sequential — into results and TSV index."""
+    common_kwargs = dict(
+        output_formats=output_formats,
+        link_format=link_format,
+        output_root=output_root,
+        source_labels=source_labels,
+        plotly_asset_path=plotly_asset_path,
+    )
+
+    def handle_result(sub_key, result):
+        handle_plot_result(sub_key, result, results, csv_path, index_state)
+
+    with _tqdm_logging_context(len(plot_args)) as pbar:
+        if parallel:
+            _render_parallel(plot_args, pbar, common_kwargs, needs_persistent_kaleido, handle_result)
+        else:
+            _render_sequential(plot_args, pbar, common_kwargs, needs_persistent_kaleido, handle_result)
 
 
 def render_key(work_item: tuple) -> tuple:
