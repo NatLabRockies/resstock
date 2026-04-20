@@ -2,7 +2,6 @@ from resstockpostproc.baseline_validation.schema.recs_chars_mapping import RECS_
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 
 import polars as pl
-from typing import Literal
 
 def add_enduse_columns(df: pl.DataFrame) -> pl.DataFrame:
     new_columns = []

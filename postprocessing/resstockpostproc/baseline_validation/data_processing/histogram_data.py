@@ -9,9 +9,7 @@ from pathlib import Path
 import polars as pl
 
 from resstockpostproc.baseline_validation.resstock_raw import (
-    quantity_col_candidates as _quantity_col_candidates,
     resolve_existing_char_column as _resolve_existing_char_column,
-    resolve_resstock_quantity_col as _resolve_resstock_quantity_col,
     resstock_group_expr as _resstock_group_expr,
     resstock_quantity_expr as _resstock_quantity_expr,
 )
@@ -26,7 +24,7 @@ from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow, DataSourceConfig
 from resstockpostproc.baseline_validation.io_managers import comparison_data_paths as s3_paths
 from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
-from resstockpostproc.shared_utils.db_column_names import DBSchema, get_db_characteristics_colnames
+from resstockpostproc.shared_utils.db_column_names import get_db_characteristics_colnames
 from resstockpostproc.shared_utils.histogram_utils import build_weighted_histogram_with_overflow
 from resstockpostproc.shared_utils.timing import timed
 

@@ -759,7 +759,7 @@ def _generate_spec_plots(
             if not is_dry_run:
                 data = get_plot_data(plot_spec)
                 plot_func = get_plotting_function(plot_spec.comparison_dataset)
-                fig, title = plot_func(data, plot_spec)
+                fig, _ = plot_func(data, plot_spec)
                 spec_footnotes = get_plot_notes(plot_spec)
                 html_formats = [fmt for fmt in output_formats if fmt == FileType.html]
                 if html_formats:
@@ -778,7 +778,6 @@ def _generate_spec_plots(
 
             # Build relative path to the enhanced plot file (pure path derivation
             # — runs whether or not the file was written).
-            _, file_title = plot_spec.file_path_and_name
             plot_path = _plot_output_path(output_root, plot_spec, link_format)
             rel_path_str = relative_href_from_file(plot_path, dashboard_path)
             viz_parts.append(f"{viz_type_str}||{rel_path_str}")

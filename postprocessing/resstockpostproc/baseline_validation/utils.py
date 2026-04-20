@@ -24,8 +24,6 @@ NUM2MONTH: Dict[int, str] = {
     12: "December",
 }
 
-MONTH2NUM: Dict[str, int] = {v: k for k, v in NUM2MONTH.items()}
-
 SEASON2MONTHS: Dict[str, List[int]] = {
     "summer": [6, 7, 8],
     "winter": [12, 1, 2],
@@ -34,79 +32,6 @@ SEASON2MONTHS: Dict[str, List[int]] = {
 }
 
 
-CAT2COLOR: Dict[str, str] = {
-    "plug_loads": "#4A4D4A",
-    "refrigeration": "#29AAE7",
-    "cooking": "#ff2200",
-    "dishwasher": "#D3D3D3",
-    "clothes": "#51e889",
-    "hot_water": "#FFB239",
-    "ventilation": "#FF79AD",
-    "pool_pumps": "#632C94",
-    "recreational_heater": "#ff7300",
-    "lighting": "#F7DF10",
-    "heating": "#EF1C21",
-    "cooling": "#0071BD",
-    "pv": "#4748a8",
-    "net": "#0055ff",
-    "total": "#0055ff",
-}
-
-NG_CAT2ENDUSES: Dict[str, List[str]] = {
-    "clothes": ["end_use__natural_gas__clothes_dryer__kbtu"],
-    "heating": [
-        "end_use__natural_gas__heating__kbtu",
-        "end_use__natural_gas__heating_heat_pump_backup__kbtu",
-        "end_use__natural_gas__fireplace__kbtu",
-    ],
-    "cooking": ["end_use__natural_gas__range_oven__kbtu", "end_use__natural_gas__grill__kbtu"],
-    "lighting": ["end_use__natural_gas__lighting__kbtu"],
-    "recreational_heater": [
-        "end_use__natural_gas__hot_tub_heater__kbtu",
-        "end_use__natural_gas__pool_heater__kbtu",
-    ],
-    "hot_water": ["end_use__natural_gas__hot_water__kbtu"],
-    "total": ["fuel_use__natural_gas__total__kbtu"],
-}
-
-ELEC_CAT2ENDUSES: Dict[str, List[str]] = {
-    "plug_loads": ["end_use__electricity__plug_loads__kwh"],
-    "refrigeration": ["end_use__electricity__freezer__kwh", "end_use__electricity__refrigerator__kwh"],
-    "cooking": ["end_use__electricity__range_oven__kwh"],
-    "dishwasher": ["end_use__electricity__dishwasher__kwh"],
-    "clothes": ["end_use__electricity__clothes_dryer__kwh", "end_use__electricity__clothes_washer__kwh"],
-    "hot_water": ["end_use__electricity__hot_water__kwh"],
-    "ventilation": ["end_use__electricity__mech_vent__kwh"],
-    "pool_pumps": [
-        "end_use__electricity__hot_tub_pump__kwh",
-        "end_use__electricity__pool_pump__kwh",
-        "end_use__electricity__well_pump__kwh",
-    ],
-    "recreational_heater": [
-        "end_use__electricity__hot_tub_heater__kwh",
-        "end_use__electricity__pool_heater__kwh",
-    ],
-    "lighting": [
-        "end_use__electricity__lighting_exterior__kwh",
-        "end_use__electricity__lighting_garage__kwh",
-        "end_use__electricity__lighting_interior__kwh",
-    ],
-    "heating": [
-        "end_use__electricity__heating__kwh",
-        "end_use__electricity__heating_fans_pumps__kwh",
-        "end_use__electricity__heating_heat_pump_backup__kwh",
-    ],
-    "cooling": [
-        "end_use__electricity__ceiling_fan__kwh",
-        "end_use__electricity__cooling__kwh",
-        "end_use__electricity__cooling_fans_pumps__kwh",
-    ],
-    "pv": ["end_use__electricity__pv__kwh"],
-    "net": ["fuel_use__electricity__net__kwh"],
-    "total": ["fuel_use__electricity__total__kwh"],
-}
-
-MBTU2KWH = 293.07107
 KBTU2KWH = 0.29307107
 
 

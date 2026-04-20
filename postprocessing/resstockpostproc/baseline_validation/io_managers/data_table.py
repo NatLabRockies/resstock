@@ -20,7 +20,6 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
 )
 from resstockpostproc.baseline_validation.plotters.plot_config import (
     _resolve_quantity_title,
-    _extract_comparison_dataset_label,
     _resolve_timeseries_column,
     get_second_category_column,
     get_second_category_title,
@@ -508,16 +507,6 @@ def _build_table_html(
             to compute per-source formula derivations at render time.
     """
     title = plot_spec.display_title
-    units = _resolve_quantity_title(plot_spec)
-
-    # Subtitle: focused entity or group_by level
-    focus_display = plot_spec.filter_display_name
-    if focus_display:
-        subtitle = focus_display
-    elif plot_spec.group_by:
-        subtitle = f"by {format_group_by(plot_spec.group_by)}"
-    else:
-        subtitle = ""
 
     # Serialize data to JSON for embedding
     # Convert to list of dicts, coercing non-JSON-native types (datetime, date, etc.)

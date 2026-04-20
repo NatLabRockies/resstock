@@ -155,7 +155,6 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
     return df
 
 
-# @cache
 @timed
 def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
     """Internal function to load data based on DataKey.
@@ -218,7 +217,6 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
 
     else:
         raise NotImplementedError(f"Comparison dataset {comparison_dataset} not implemented.")
-    # resstock_data = recs_mapping.add_characteristic_columns(resstock_data, data_source="ResStock")
     if resstock_data is not None:
         df = pl.concat([source_data, resstock_data], how="diagonal_relaxed")
     else:

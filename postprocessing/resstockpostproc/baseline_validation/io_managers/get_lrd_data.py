@@ -7,7 +7,6 @@ from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.caching import cached
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
 from resstockpostproc.shared_utils.timing import timed
-from typing import Literal
 
 import polars as pl
 import logging
