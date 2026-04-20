@@ -213,13 +213,6 @@ def _add_percent_difference(
     return result.drop(ref_columns_to_drop)
 
 
-def _pivot_enduse_columns(df: pl.DataFrame, groups: list) -> pl.DataFrame:
-    """Pivot enduse columns to have unified column names."""
-    index_cols = groups + ["units_count", "sample_count", "source", "quantity_type"]
-    df = df.unpivot(index=index_cols, variable_name="quantity", value_name="value")
-    return df
-
-
 def _keep_relevant_columns(
     df: pl.DataFrame,
     plot_spec: PlotSpec,
