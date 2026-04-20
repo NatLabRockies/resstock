@@ -11,7 +11,10 @@ from resstockpostproc.shared_utils.db_column_names import DataCol, DBSchema, get
 def resstock_group_expr(col: str, available_cols: set[str]) -> pl.Expr:
     """Build mapped ResStock expression for one grouping/filter column."""
     if col not in RECS_CHARS_MAPPING:
-        raise ValueError(f"Unsupported ResStock grouping column: {col}")
+        known = ", ".join(sorted(RECS_CHARS_MAPPING))
+        raise ValueError(
+            f"Unsupported ResStock grouping column {col!r}. Known: {known}"
+        )
     spec = RECS_CHARS_MAPPING[col]["ResStock"]
     raw_col = resolve_existing_char_column(spec["column_name"], available_cols)
     mapping = spec["mapping"]
@@ -26,14 +29,16 @@ def resstock_group_expr(col: str, available_cols: set[str]) -> pl.Expr:
 
 def resolve_existing_char_column(col: str, available_cols: set[str]) -> str:
     """Resolve characteristic column names across known naming variants."""
-    if col in available_cols:
-        return col
-    if col.startswith("in.") and col.removeprefix("in.") in available_cols:
-        return col.removeprefix("in.")
-    alt = f"build_existing_model.{col.removeprefix('in.')}"
-    if alt in available_cols:
-        return alt
-    raise ValueError(f"Missing required characteristic column '{col}' in raw histogram parquet")
+    bare = col.removeprefix("in.")
+    tried = [col, bare, f"build_existing_model.{bare}"]
+    for candidate in tried:
+        if candidate in available_cols:
+            return candidate
+    raise ValueError(
+        f"Missing required characteristic column {col!r} in raw histogram parquet. "
+        f"Tried variants: {tried}. Sample of available cols (first 10): "
+        f"{sorted(available_cols)[:10]} (of {len(available_cols)} total)."
+    )
 
 
 def resstock_quantity_expr(
@@ -55,7 +60,11 @@ def resstock_quantity_expr(
             mapping_options.append(alt)
 
     if not mapping_options:
-        raise ValueError(f"Quantity {quantity} has no ResStock raw mapping for any known schema")
+        schemas_tried = ", ".join(s.value if hasattr(s, "value") else str(s) for s in DBSchema)
+        raise ValueError(
+            f"Quantity {quantity!r} has no ResStock raw mapping for any known schema "
+            f"({schemas_tried}). Add it to get_db_enduse_colnames_map for at least one schema."
+        )
 
     last_error: ValueError | None = None
     for mapped in mapping_options:
@@ -81,7 +90,12 @@ def resolve_resstock_quantity_col(col: str, available_cols: set[str]) -> str:
     for cand in candidates:
         if cand in available_cols:
             return cand
-    raise ValueError(f"Missing required quantity column '{col}' in raw histogram parquet")
+    nearby = [c for c in available_cols if col.split(".")[0] in c]
+    raise ValueError(
+        f"Missing required quantity column {col!r} in raw histogram parquet. "
+        f"Tried candidates: {candidates}. "
+        f"Columns containing the same base prefix (sample, max 10): {sorted(nearby)[:10]}."
+    )
 
 
 def quantity_col_candidates(col: str) -> list[str]:
