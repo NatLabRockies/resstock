@@ -18,11 +18,9 @@ from resstockpostproc.baseline_validation.plot_generator import (
     DEFAULT_PLOT_OUTPUT_FORMATS,
     _all_enduses_viz_label,
     _apply_lrd_sidebar_semantics,
-    _build_spec_entries,
     _collect_stacked_notes,
     _compute_discrepancy,
     _ensure_kaleido_sync_server,
-    _emit_layout_for_final_group,
     _generate_spec_plots,
     _has_static_image_outputs,
     _plot_output_path,
@@ -33,6 +31,10 @@ from resstockpostproc.baseline_validation.plot_generator import (
     _stacked_title_from_grouped,
     _to_all_enduses_tall_data,
     generate_plots,
+)
+from resstockpostproc.baseline_validation.generation.work_items import (
+    build_spec_entries,
+    emit_layout_for_final_group,
 )
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
@@ -372,8 +374,8 @@ class TestRelatedSpecFamilies:
             view=ViewType.value_view,
             layout=Layout.histogram,
         )
-        assert _emit_layout_for_final_group(hist_spec, None) is True
-        assert _emit_layout_for_final_group(hist_spec, "state") is True
+        assert emit_layout_for_final_group(hist_spec, None) is True
+        assert emit_layout_for_final_group(hist_spec, "state") is True
 
     def test_two_column_layout_emits_only_for_final_state_group(self):
         two_col_spec = _make_spec(
@@ -385,9 +387,9 @@ class TestRelatedSpecFamilies:
             view=ViewType.value_view,
             layout=Layout.two_column,
         )
-        assert _emit_layout_for_final_group(two_col_spec, "state") is True
-        assert _emit_layout_for_final_group(two_col_spec, None) is False
-        assert _emit_layout_for_final_group(two_col_spec, "vintage") is False
+        assert emit_layout_for_final_group(two_col_spec, "state") is True
+        assert emit_layout_for_final_group(two_col_spec, None) is False
+        assert emit_layout_for_final_group(two_col_spec, "vintage") is False
 
     def test_build_spec_entries_uses_unique_viz_labels_for_layout_variants(self):
         spec = _make_spec(
@@ -398,7 +400,7 @@ class TestRelatedSpecFamilies:
             group_by="state",
             view=ViewType.value_view,
         )
-        entries = _build_spec_entries(_make_related_specs(spec))
+        entries = build_spec_entries(_make_related_specs(spec))
         labels = [label for _, label in entries]
         assert len(labels) == len(set(labels))
         assert "Bar Plot (two_column)" in labels

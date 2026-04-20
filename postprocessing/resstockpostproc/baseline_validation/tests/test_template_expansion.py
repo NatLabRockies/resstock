@@ -2,15 +2,16 @@
 
 import polars as pl
 
-import resstockpostproc.baseline_validation.plot_generator as plot_generator_module
-from resstockpostproc.baseline_validation.plot_generator import (
-    _build_filtered_entries,
-    _build_spec_entries,
-    _expand_templates,
-    _render_key,
+import resstockpostproc.baseline_validation.generation.work_items as work_items_module
+from resstockpostproc.baseline_validation.generation.work_items import (
+    build_filtered_entries,
+    build_spec_entries,
+    expand_templates,
 )
+from resstockpostproc.baseline_validation.plot_generator import _render_key
 from resstockpostproc.baseline_validation.schema.plot_definitions import (
     PlotTemplate,
+    RECS_CROSS_FILTER_CHARS,
     _make_related_specs,
     _make_spec,
 )
@@ -42,7 +43,7 @@ def _install_expansion_stubs(monkeypatch, triples):
     def fake_generate_slot_triples(eligible_chars, allow_cross_filter=False, cross_filter_chars=None):
         assert eligible_chars == ("state", "geometry_building_type_recs", "vintage")
         assert allow_cross_filter is True
-        assert cross_filter_chars == plot_generator_module.RECS_CROSS_FILTER_CHARS
+        assert cross_filter_chars == RECS_CROSS_FILTER_CHARS
         return triples
 
     base_data = {
@@ -62,8 +63,8 @@ def _install_expansion_stubs(monkeypatch, triples):
             raise AssertionError(f"Unexpected DataKey request: {data_key}")
         return base_data[key]
 
-    monkeypatch.setattr(plot_generator_module, "generate_slot_triples", fake_generate_slot_triples)
-    monkeypatch.setattr(plot_generator_module, "get_base_data", fake_get_base_data)
+    monkeypatch.setattr(work_items_module, "generate_slot_triples", fake_generate_slot_triples)
+    monkeypatch.setattr(work_items_module, "get_base_data", fake_get_base_data)
 
 
 def _focus_and_group(work_items):
@@ -83,7 +84,7 @@ def test_expand_templates_characterizes_overview_and_cross_filter_items(monkeypa
         ],
     )
 
-    work_items = _expand_templates([template], test_only=False)
+    work_items = expand_templates([template], test_only=False)
 
     assert _focus_and_group(work_items) == [
         ((("state", "US Total"),), None),
@@ -130,7 +131,7 @@ def test_expand_templates_test_only_limits_focus_value_expansion(monkeypatch):
         ],
     )
 
-    work_items = _expand_templates([template], test_only=True)
+    work_items = expand_templates([template], test_only=True)
 
     assert _focus_and_group(work_items) == [
         ((("state", "US Total"),), None),
@@ -150,10 +151,10 @@ def test_build_filtered_entries_preserves_labels_and_applies_focus_on():
         group_by="vintage",
         view=ViewType.value_view,
     )
-    spec_entries = _build_spec_entries(_make_related_specs(base_spec))
+    spec_entries = build_spec_entries(_make_related_specs(base_spec))
     focus_on = (("state", "CA"),)
 
-    filtered_entries = _build_filtered_entries(spec_entries, focus_on)
+    filtered_entries = build_filtered_entries(spec_entries, focus_on)
 
     assert [label for _, label in filtered_entries] == [label for _, label in spec_entries]
     assert all(spec.focus_on == focus_on for spec, _ in filtered_entries)
