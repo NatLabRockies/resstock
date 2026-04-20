@@ -14,6 +14,11 @@ ASSETS_DIRNAME = "assets"
 TRACE_FILENAME = "trace.json"
 
 
+def dashboard_output_root(workflow) -> Path:
+    """Return the per-run output root: <output_dir>/<run_name>."""
+    return Path(workflow.output.output_dir) / workflow.output.run_name
+
+
 def dashboard_html_path(output_root: Path) -> Path:
     """Return the root dashboard HTML path for a run."""
     return output_root / DASHBOARD_FILENAME

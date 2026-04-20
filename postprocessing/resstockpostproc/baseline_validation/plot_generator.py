@@ -32,6 +32,7 @@ from resstockpostproc.baseline_validation.dashboard_paths import (
     comparisons_index_tsv_path,
     dashboard_assets_dir,
     dashboard_html_path,
+    dashboard_output_root,
     dataset_output_dir,
     relative_href_from_file,
     trace_output_path,
@@ -927,7 +928,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     output_formats = [fmt for fmt in DEFAULT_PLOT_OUTPUT_FORMATS if not (no_svg and fmt == FileType.svg)]
     needs_persistent_kaleido = _has_static_image_outputs(output_formats)
     link_format = FileType.html if FileType.html in output_formats else output_formats[0]
-    output_root = Path(workflow.output.output_dir) / workflow.output.run_name
+    output_root = dashboard_output_root(workflow)
     csv_path = comparisons_index_tsv_path(output_root)
     html_path = dashboard_html_path(output_root)
     index_data_dir = comparisons_index_data_dir(output_root)

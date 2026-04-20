@@ -11,7 +11,7 @@ import plotly.io as pio
 import polars as pl
 from plotly.offline import get_plotlyjs
 
-from resstockpostproc.baseline_validation.dashboard_paths import dataset_output_dir
+from resstockpostproc.baseline_validation.dashboard_paths import dashboard_output_root, dataset_output_dir
 from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, FileType
 from resstockpostproc.baseline_validation.utils import ensure_directory
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
@@ -91,7 +91,7 @@ def save_static_images_batch(
     if not jobs:
         return
 
-    output_root = output_root or (Path(workflow.output.output_dir) / workflow.output.run_name)
+    output_root = output_root or dashboard_output_root(workflow)
     normalized_jobs: list[tuple[go.Figure, Path, str, int, int]] = []
     for fig, plot_spec, fmt in jobs:
         output_dir = dataset_output_dir(output_root, str(plot_spec.comparison_dataset), "plots", fmt.value)
@@ -131,7 +131,7 @@ def save_figure(
     plotly_asset_path: Path | None = None,
 ) -> None:
     """Save a Plotly figure in multiple formats."""
-    output_root = output_root or (Path(workflow.output.output_dir) / workflow.output.run_name)
+    output_root = output_root or dashboard_output_root(workflow)
 
     for fmt in formats:
         if fmt not in FIGURE_FORMATS:
