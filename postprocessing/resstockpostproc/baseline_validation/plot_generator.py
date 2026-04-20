@@ -63,16 +63,6 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_PLOT_OUTPUT_FORMATS = [FileType.html, FileType.svg]
 
-# When True, --test runs emit a TSV / dashboard matching a full run: every
-# work item's row is present, even though only the test subset is rendered.
-# Use False so that the dasboard only contains available plots from the test.
-TEST_PRODUCES_FULL_INDEX = True
-
-
-# ---------------------------------------------------------------------------
-# Plotting
-# ---------------------------------------------------------------------------
-
 
 def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     """Generate baseline validation plots.
