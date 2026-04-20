@@ -8,6 +8,8 @@ stable public names.
 
 from __future__ import annotations
 
+import polars as pl
+
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     ComparisonDataset,
     CoverageType,
@@ -16,6 +18,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     Resolution,
     ViewType,
 )
+from resstockpostproc.baseline_validation.schema.workflow_schema import DataSourceLabel
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
 
@@ -110,3 +113,22 @@ def quartile_list_column(quantity: str, coverage: CoverageType) -> str:
     if coverage == CoverageType.users_only:
         return f"{quantity}_nonzero_quartiles"
     return f"{quantity}_quartiles"
+
+
+def apply_source_labels(
+    df: pl.DataFrame,
+    data_source_labels: dict[str, DataSourceLabel],
+) -> pl.DataFrame:
+    """Rename raw source keys to human-readable display labels.
+
+    ``data_source_labels`` is typically ``workflow.data_source_labels`` from
+    the caller's module — passed explicitly so tests can monkeypatch the
+    caller's ``workflow`` without reaching into this helper. No-op when the
+    map is empty or the frame has no ``source`` column.
+    """
+    label_map = {k: v.label for k, v in data_source_labels.items()}
+    if not label_map or "source" not in df.columns:
+        return df
+    return df.with_columns(
+        pl.col("source").replace_strict(label_map, default=pl.col("source"))
+    )

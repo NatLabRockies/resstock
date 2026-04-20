@@ -22,6 +22,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
 from resstockpostproc.baseline_validation.schema.recs_chars_mapping import RECS_CHARS_MAPPING, PartialMap
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow, DataSourceConfig
+from resstockpostproc.baseline_validation.plot_semantics import apply_source_labels
 from resstockpostproc.baseline_validation.io_managers import comparison_data_paths as s3_paths
 from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
 from resstockpostproc.shared_utils.db_column_names import get_db_characteristics_colnames
@@ -57,11 +58,7 @@ def get_distribution_histogram_data(plot_spec: PlotSpec) -> pl.DataFrame:
     if drop_cols:
         out = out.drop(drop_cols)
 
-    source_label_map = {k: v.label for k, v in workflow.data_source_labels.items()}
-    if source_label_map and "source" in out.columns:
-        out = out.with_columns(
-            pl.col("source").replace_strict(source_label_map, default=pl.col("source"))
-        )
+    out = apply_source_labels(out, workflow.data_source_labels)
     sort_cols = ["source", "bin"]
     if plot_spec.group_by and plot_spec.group_by in out.columns:
         sort_cols = [plot_spec.group_by] + sort_cols

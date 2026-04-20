@@ -22,6 +22,7 @@ from resstockpostproc.baseline_validation.io_managers import get_lrd_data
 from resstockpostproc.baseline_validation.data_processing.histogram_data import get_distribution_histogram_data
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
+from resstockpostproc.baseline_validation.plot_semantics import apply_source_labels
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.mapping import UtilityName2ID, ID2UtilityName
 from resstockpostproc.shared_utils.timing import timed
@@ -129,14 +130,9 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
     if plot_spec.comparison_dataset == ComparisonDataset.lrd:
         df = _apply_lrd_resolution_transforms(df, plot_spec)
 
-    # Rename source column values to human-readable labels from workflow config.
-    # This makes plot legends, CSV exports, and data tables all use consistent
-    # display labels (e.g. "eia_2018" → "EIA 2018", "resstock_2025" → "ResStock 2025").
-    source_label_map = {k: v.label for k, v in workflow.data_source_labels.items()}
-    if source_label_map and "source" in df.columns:
-        df = df.with_columns(
-            pl.col("source").replace_strict(source_label_map, default=pl.col("source"))
-        )
+    # Rename source column values to human-readable labels (e.g. "eia_2018" → "EIA 2018")
+    # so legends, CSV exports, and data tables all share the same display labels.
+    df = apply_source_labels(df, workflow.data_source_labels)
 
     # For users_only coverage, the displayed count should reflect only nonzero
     # rows for the current quantity (not the total group size). Overwrite
