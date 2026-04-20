@@ -71,7 +71,6 @@ baseline_validation/
 │   └── output_manager.py          # Figure and static asset persistence
 ├── plotters/
 │   ├── main_plotter.py            # Shared plot rendering entry points
-│   ├── recs_plotter.py            # RECS-specific comparison plots
 │   ├── lrd_plotter.py             # Load-shape and LRD plots
 │   ├── stacked_plotter.py         # Stacked and split plot generation
 │   └── plot_config.py             # Plot styling/config helpers

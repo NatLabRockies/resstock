@@ -37,7 +37,7 @@ from resstockpostproc.baseline_validation.dashboard_paths import (
     trace_output_path,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
-from resstockpostproc.baseline_validation.plotters import lrd_plotter, recs_plotter
+from resstockpostproc.baseline_validation.plotters import lrd_plotter, main_plotter
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
     FileType,
@@ -612,9 +612,9 @@ def get_plotting_function(comparison_dataset):
     """Return the plotter for a comparison dataset."""
     match comparison_dataset:
         case ComparisonDataset.eia:
-            return recs_plotter.create_plot
+            return main_plotter.create_plot
         case ComparisonDataset.recs:
-            return recs_plotter.create_plot
+            return main_plotter.create_plot
         case ComparisonDataset.lrd:
             return lrd_plotter.create_plot
         case _:
