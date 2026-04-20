@@ -4,26 +4,24 @@ Process all upgrade files within a directory
 
 Time taken using v2 code with 2023 NEC:
             file        times
-18  results_up19  4830.850212
-12  results_up13  4816.053314
-6   results_up07  4800.770155
-13  results_up14  4791.084499
-16  results_up17  4782.846577
-2   results_up03  4777.145023
-11  results_up12  4760.582760
-5   results_up06  4758.665472
-9   results_up10  4755.117190
-4   results_up05  4745.850651
-15  results_up16  4741.353851
-17  results_up18  4731.831953
-8   results_up09  4267.398691
-10  results_up11  4179.391637
-3   results_up04  4173.802558
-1   results_up02  4172.237552
-7   results_up08  4003.896083
-14  results_up15  3983.834895
-0   results_up01  3376.984346
-Total time: 85449.69741868973
+16  results_up19  5097.815834
+7   results_up10  5083.756061
+15  results_up18  5060.335938
+13  results_up16  5042.569544
+14  results_up17  5024.495859
+10  results_up13  4939.901564
+9   results_up12  4889.072212
+11  results_up14  4888.306009
+1   results_up03  4852.231698
+5   results_up07  4743.431066
+4   results_up06  4712.497623
+3   results_up05  4687.041750
+8   results_up11  4341.246547
+6   results_up09  4302.919732
+0   results_up02  4222.727420
+2   results_up04  4142.325663
+12  results_up15  4109.281922
+Total time: 80139.95644235611
 
 """
 

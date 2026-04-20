@@ -1197,7 +1197,7 @@ def calculate_new_load_total_220_83(dfi: pd.DataFrame, dfu: pd.DataFrame, n_kit:
     upgradable_loads = [x.removeprefix("new_") for x in new_loads]
     df_upgraded = df_new[new_loads].rename(columns=dict(zip(new_loads, upgradable_loads)))
     cond_upgraded = df_upgraded>0
-    loads_upgraded = cond_upgraded.apply(lambda x: list(x[x].index), axis=1).rename("loads_upgraded_83", inplace=True) # record which loads are upgraded
+    loads_upgraded = cond_upgraded.apply(lambda x: list(x[x].index), axis=1).rename("loads_upgraded_83") # record which loads are upgraded
 
     # replace where upgraded with nan then update with new loads
     df_change = df_loads[upgradable_loads].mask(cond_upgraded)
@@ -1342,7 +1342,7 @@ def main(
     sfd_only: bool = False, 
     explode_result: bool = False, 
     result_as_map: bool = False,
-    building_id: int | None = None,
+    building_id: str | None = None,
     ):
     if baseline_filename is None:
         baseline_filename = (

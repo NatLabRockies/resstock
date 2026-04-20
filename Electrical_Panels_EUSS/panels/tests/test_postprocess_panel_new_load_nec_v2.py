@@ -13,7 +13,7 @@ sys.path.append(str(Path(__file__).parents[2]))
 from panels.postprocess_panel_new_load_nec_v2 import apply_demand_factor
 
 
-def test_all_upgrades_no_ev(filedir):
+def test_all_upgrades(filedir):
     filedir = Path(filedir)
     list_garbage_disposal = []
     files = sorted([x for x in sorted(filedir.glob("*results_up*"))])
@@ -39,15 +39,6 @@ def test_all_upgrades_no_ev(filedir):
             raise ValueError(f"Unsupported file type: {file.suffix}")
         assert not df.empty, f"{file} is empty."
 
-        ## record garbage disposal
-        list_garbage_disposal.append(df.set_index("building_id")["has_garbage_disposal"].rename(upg))
-
-        # tests
-        _test_existing_calculation(df)
-        _test_83_calculation(df)
-        _test_87_calculation(df)
-
-        # breakpoint()
         if upg in ["01", "02", "04", "08", "09", "11", "15"]:
             check_water_heater_load(df, type="er")
             check_cooking_load(df, low_power=False)
@@ -72,8 +63,17 @@ def test_all_upgrades_no_ev(filedir):
             check_ev_load(df, level=2)
         else:
             raise ValueError(f"Unsupported {filedir=}")
-        
+
+        # tests
+        _test_existing_calculation(df)
+        _test_83_calculation(df)
+        _test_87_calculation(df)
+        _test_amp_to_load(df)
+
         print(f"{upg}: passed all tests.")
+
+        ## record garbage disposal
+        list_garbage_disposal.append(df.set_index("building_id")["has_garbage_disposal"].rename(upg))
 
         
     # check garbage disposal across upgrades
@@ -120,8 +120,7 @@ def check_ev_load(df, level: Literal[0,1,2]):
     if level == 0:
         assert get_values(df["new_load_evse_83"]) == get_values(df["new_load_evse_87"]) == set()
     elif level == 1:
-        assert get_values(df["new_load_evse_83"]) == set()
-        assert get_values(df["new_load_evse_87"]) == {1650}
+        assert get_values(df["new_load_evse_83"]) == get_values(df["new_load_evse_87"]) == {1650}
     elif level == 2:
         assert get_values(df["new_load_evse_83"]) == get_values(df["new_load_evse_87"]) == {7680}
     else:
@@ -143,6 +142,13 @@ def get_total_gross_load(x, threshold=8000):
         return (x - threshold) / 0.4 + threshold
     else:
         return x
+
+
+def _test_amp_to_load(df):
+    amp_cols = [col for col in df.columns if col.startswith(f"amp_total_")]
+    for amp_col in amp_cols:
+        load_col = amp_col.replace("amp_total_", "load_total_").replace("_A_", "_VA_")
+        assert np.isclose(df[amp_col].fillna(0)*240, df[load_col].fillna(0), atol=1e-2).all()
 
 
 def _test_existing_calculation(df):
@@ -172,9 +178,8 @@ def _test_83_calculation(df):
     
     # check loads_upgraded for hvac load:
     # load can stay the same even if equipment has changed
-    # so we can only check that load stays the same if load_hvac is not included in loads_upgraded
     cond = ~loads_upgraded.str.contains("load_hvac")
-    assert (df.loc[cond, "load_hvac"]!=df.loc[cond, "new_load_hvac_83"]).any()
+    assert set(df.loc[cond, "upgrade_has_new_hvac"].unique()) == {False}
 
     # check loads_upgraded for hvac and post-upgrade load
     gross_load = df["load_total_pre_upgrade_VA_220_83"].apply(get_total_gross_load)
@@ -189,8 +194,6 @@ def _test_83_calculation(df):
     cond = df["upgrade_has_new_hvac"] == False
     total_load1 = (gross_load_adj.loc[cond] - df.loc[cond, "load_hvac"].fillna(0) + df.loc[cond, "new_load_hvac_83"].fillna(0)).apply(apply_demand_factor)
     total_load2 = df.loc[cond, "load_total_post_upgrade_VA_220_83"]
-    if not np.isclose(total_load1, total_load2, atol=1e-2).all():
-        breakpoint()
     assert np.isclose(total_load1, total_load2, atol=1e-2).all()
 
     # 2. check those with new HVAC
@@ -258,6 +261,6 @@ def _test_87_calculation(df):
 
 if __name__ == "__main__":
     output_dir = "/Volumes/Lixi_Liu/panels_results_550k"
-    output_folder = "nec_calculations_no_ev_1"
+    output_folder = "test_result_files/nec_calculations_no_ev"
 
-    test_all_upgrades_no_ev(filedir=f"{output_dir}/{output_folder}")
+    test_all_upgrades(filedir=f"{output_dir}/{output_folder}")

@@ -90,7 +90,7 @@ geometry_unit_aspect_ratio = {
 KBTU_H_TO_W = 293.07103866
 
 
-def get_nameplate_rating(df_rating, load_category, appliance, parameter="volt-amps"):
+def get_nameplate_rating(df_rating: pd.DataFrame, load_category: str, appliance: str, parameter: str = "volt-amps") -> float | str:
     row = df_rating.loc[(df_rating['load_category'] == load_category) & (df_rating['appliance'] == appliance)]
     return list(row[parameter])[0]
 
@@ -135,7 +135,7 @@ garage_door_half_hp_power_rating = get_nameplate_rating(nameplate_rating, 'garag
 
 
 ### -------- existing load specs --------
-def _general_load_lighting(row):
+def _general_load_lighting(row: pd.Series) -> float:
     """General Lighting & Receptacle Loads. NEC 220.41
     Accounts for motors < 1/8HP and connected to lighting circuit is covered by lighting load
     Dwelling footprint area MUST include garage
@@ -177,7 +177,7 @@ def _general_load_lighting(row):
     return 3 * floor_area
 
 
-def _general_load_kitchen(row, n=2):
+def _general_load_kitchen(row: pd.Series, n: int | str = 2) -> float:
     """Small Appliance Branch Circuits. NEC 220-16(a)
         At least 2 small appliances branch circuits at 20A must be included. NEC 210-11(c)1
 
@@ -205,7 +205,7 @@ def _general_load_kitchen(row, n=2):
     return n * 1500
 
 
-def _general_load_laundry(row, n=1):
+def _general_load_laundry(row: pd.Series, n: int | str = 1) -> float:
     """Laundry Branch Circuit(s). NEC 210-11(c)2, 220-16(b), 220-4(c)
         At least 1 laundry branch circuit must be included.
 
@@ -220,7 +220,7 @@ def _general_load_laundry(row, n=1):
     return 1500*n
 
 
-def _general_load_washer(row):
+def _general_load_washer(row: pd.Series) -> float:
     """If washer is larger than laundry branch circuit, add
         Pecan St clothes washers: 600-1440 W (1165 wt avg)
         Pecan St gas dryers: 600-2760 W (800 wt avg)
@@ -239,7 +239,7 @@ def _general_load_washer(row):
     return 0
 
 
-def _fixed_load_water_heater(row):
+def _fixed_load_water_heater(row: pd.Series) -> float:
     """
     NumberofBathrooms = NumberofBedrooms/2 + 0.5
     Bedrooms = [1, 2, 3, 4, 5]
@@ -271,7 +271,7 @@ def _fixed_load_water_heater(row):
     return 0
 
 
-def _fixed_load_dishwasher(row):
+def _fixed_load_dishwasher(row: pd.Series) -> float:
     """
     Dishwasher: 12-15A, 120V
         Amperage not super correlated with kWh rating, but will assume 12A for <=255kWh, and 15A else
@@ -284,7 +284,7 @@ def _fixed_load_dishwasher(row):
     return dishwasher_power_rating
 
 
-def _fixed_load_ventilations(row):
+def _fixed_load_ventilations(row: pd.Series) -> float:
     """
     Per 2010 BAHSP / OS-HPXML defaults
     Bathroom fans: (code mandate)
@@ -314,7 +314,7 @@ def _fixed_load_ventilations(row):
     return bathroom_vent + kitchen_vent # W
 
 
-def _fixed_load_garage_door(row):
+def _fixed_load_garage_door(row: pd.Series) -> float:
     """
     Garage door opener invented in 1926, did not rise in popularity until 1970s
     Per Kitsap, 35 million homes have garage door openers
@@ -347,7 +347,7 @@ def _fixed_load_garage_door(row):
             raise ValueError(f"Unsupported {row['build_existing_model.geometry_garage']=}")
 
 
-def _fixed_load_garbage_disposal(row):
+def _fixed_load_garbage_disposal(row: pd.Series) -> float:
     """
     garbage disposal: 0.8 - 1.5 kVA (1.2kVA avg), typically second largest motor, after AC compressor
     Insinkerator: 1/3 - 1 HP (3/4 HP avg = 912 W)
@@ -363,7 +363,7 @@ def _fixed_load_garbage_disposal(row):
     return 0
 
 
-def _fixed_load_garbage_compactor(row):
+def _fixed_load_garbage_compactor(row: pd.Series) -> float:
     """
     We do not currently model compactor
     Ownership is ~ 3% as of 2013 (AHS)
@@ -375,7 +375,7 @@ def _fixed_load_garbage_compactor(row):
     return 0
 
 
-def _fixed_load_hot_tub_spa(row):
+def _fixed_load_hot_tub_spa(row: pd.Series) -> float:
     if row["completed_status"] != "Success":
         return np.nan
 
@@ -384,7 +384,7 @@ def _fixed_load_hot_tub_spa(row):
     return 0
 
 
-def _fixed_load_well_pump(row):
+def _fixed_load_well_pump(row: pd.Series) -> float:
     """ pump/motor nameplates taken from NEC tables based on HP, not PF needed """
     if row["completed_status"] != "Success":
         return np.nan
@@ -404,7 +404,7 @@ def _fixed_load_well_pump(row):
     raise ValueError(f'Unsupported {row["build_existing_model.misc_well_pump"]=}')
 
 
-def _special_load_dryer(row, method):
+def _special_load_dryer(row: pd.Series, method: str) -> float:
     """Clothes Dryers. NEC 220-18
     Use 5000 watts or nameplate rating whichever is larger (in another version, use DF=1 for # appliance <=4)
     240V, 22/24/30A breaker (vented), 30/40A (ventless heat pump), 30A (ventless electric)
@@ -438,7 +438,7 @@ def _special_load_dryer(row, method):
     return dryer_elctric_power_rating
 
 
-def _special_load_cooking_range_oven(row): 
+def _special_load_cooking_range_oven(row: pd.Series) -> float: 
     """ Assuming a single electric range (combined oven/stovetop) for each dwelling unit """
     if row["completed_status"] != "Success":
         return np.nan
@@ -461,13 +461,13 @@ def _special_load_cooking_range_oven(row):
     return range_elctric_power_rating 
 
 
-def _special_load_space_heating_no_ahu(row):
+def _special_load_space_heating_no_ahu(row: pd.Series) -> tuple[list[Optional[str]], list[float]]:
     if row["completed_status"] != "Success":
-        return np.nan
+        return [None for _ in range(3)], [np.nan for _ in range(3)]
 
     # shared heating is not part of dwelling unit's panel
     if row["build_existing_model.hvac_has_shared_system"] in ["Heating Only", "Heating and Cooling"]:
-        return 0
+        return [None, None, None], [0, 0, 0]
 
     # heating load
     heating_type = get_heating_type(row["build_existing_model.hvac_heating_efficiency"])
@@ -481,23 +481,22 @@ def _special_load_space_heating_no_ahu(row):
     system_cols = [
         heating_type,
         secondary_heating_type,
-        "er",
+        "er" if row["upgrade_costs.size_heat_pump_backup_primary_k_btu_h"] > 0 else None,
         ]
 
-    heating_load = sum(
-            [hvac_heating_conversion(x, system_type=y) for x, y in zip(heating_cols, system_cols)]
-        )
-
-    return heating_load
+    heating_loads = [hvac_heating_conversion(x, system_type=y) for x, y in zip(heating_cols, system_cols)]
 
 
-def _special_load_space_cooling_no_ahu(row):
+    return system_cols, heating_loads
+
+
+def _special_load_space_cooling_no_ahu(row: pd.Series) -> tuple[Optional[str], float]:
     if row["completed_status"] != "Success":
-        return np.nan
+        return None, np.nan
 
     # shared cooling is not part of dwelling unit's panel
     if row["build_existing_model.hvac_has_shared_system"] in ["Cooling Only", "Heating and Cooling"]:
-        return 0
+        return None, 0
 
     cooling_type = get_cooling_type(row["build_existing_model.hvac_cooling_efficiency"])
     cooling_load = hvac_cooling_conversion(
@@ -505,10 +504,10 @@ def _special_load_space_cooling_no_ahu(row):
         system_type=cooling_type
     )
  
-    return cooling_load
+    return cooling_type, cooling_load
 
 
-def _special_load_space_conditioning(row) -> (float, float, float, Optional[str]):
+def _special_load_space_conditioning(row: pd.Series) -> tuple[float, float, float, Optional[str]]:
     """ Not accounting for humidifier
     assume secondary heating is separately controlled from primary heating
     1 Btu/h = 0.29307103866W
@@ -518,24 +517,19 @@ def _special_load_space_conditioning(row) -> (float, float, float, Optional[str]
             special_load_for_heating_or_cooling
     """
     if row["completed_status"] != "Success":
-        return np.nan
+        return np.nan, np.nan, np.nan, None
     
-    heating_load = _special_load_space_heating_no_ahu(row) # combines primary, secondary, and backup
-    cooling_load = _special_load_space_cooling_no_ahu(row)
-
-    heating_type = get_heating_type(row["build_existing_model.hvac_heating_efficiency"])
-    secondary_heating_type = get_heating_type(row["build_existing_model.hvac_secondary_heating_efficiency"])
-    cooling_type = get_cooling_type(row["build_existing_model.hvac_cooling_efficiency"])
+    heating_types, heating_loads,  = _special_load_space_heating_no_ahu(row) # combines primary, secondary, and backup
+    cooling_type, cooling_load = _special_load_space_cooling_no_ahu(row)
 
     # Add AHU
-    heat_ahu, cool_ahu, error_msg = _get_air_handlers(row, heating_type, secondary_heating_type, cooling_type, apply_check=False)
-    heating_load += heat_ahu if heating_load > 0 else 0
-    cooling_load += cool_ahu if cooling_load > 0 else 0
-    # breakpoint()
+    heat_ahu, cool_ahu, error_msg = _get_air_handlers(row, heating_types[0], heating_types[1], cooling_type, apply_check=False)
+    heating_load = sum(heating_loads) + heat_ahu
+    cooling_load += cool_ahu
     return heating_load, cooling_load, max(heating_load, cooling_load), error_msg
 
 
-def _special_load_pool_heater(row):
+def _special_load_pool_heater(row: pd.Series) -> float:
     """NEC 680.9
     https://twphamilton.com/wp/wp-content/uploads/doc033548.pdf
     """
@@ -550,7 +544,7 @@ def _special_load_pool_heater(row):
     raise ValueError(f'Unknown {row["build_existing_model.misc_pool_heater"]=}')
 
 
-def _special_load_pool_pump(row):
+def _special_load_pool_pump(row: pd.Series) -> float:
     """NEC 680
     In ResStock, the pool pump options are 0.75-1 HP, which are erroneously coded.
     According to this BA report, a standard single-speed HP is 1.5-2 HP.
@@ -573,7 +567,7 @@ def _special_load_pool_pump(row):
     raise ValueError(f'Unknown {row["build_existing_model.misc_pool_pump"]=}')
 
 
-def _special_load_evse(row, method):
+def _special_load_evse(row: pd.Series, method: str) -> float:
     if row["completed_status"] != "Success":
         return np.nan
 
@@ -588,10 +582,11 @@ def _special_load_evse(row, method):
         raise ValueError(f"Unsupported {method=}")
     if "level 2" in ev:
         return EVSE_power_rating_level2
+    raise ValueError(f"Unsupported {row['build_existing_model.electric_vehicle']=}")
 
 
 ### -------- new load specs --------
-def _new_load_evse(row, option_columns, method):
+def _new_load_evse(row: pd.Series, option_columns: list[str], method: str) -> float:
     if row["completed_status"] != "Success":
         return np.nan
 
@@ -608,7 +603,7 @@ def _new_load_evse(row, option_columns, method):
 
     return 0
 
-def _new_load_pool_heater(row, option_columns):
+def _new_load_pool_heater(row: pd.Series, option_columns: list[str]) -> float:
     if row["completed_status"] != "Success":
         return np.nan
 
@@ -620,7 +615,7 @@ def _new_load_pool_heater(row, option_columns):
     return 0
 
 
-def _new_load_hot_tub_spa(row, option_columns):
+def _new_load_hot_tub_spa(row: pd.Series, option_columns: list[str]) -> float:
     if row["completed_status"] != "Success":
         return np.nan
 
@@ -632,7 +627,7 @@ def _new_load_hot_tub_spa(row, option_columns):
     return 0
 
 
-def _new_load_range_oven(row, option_columns):
+def _new_load_range_oven(row: pd.Series, option_columns: list[str]) -> float:
     if row["completed_status"] != "Success":
         return np.nan
 
@@ -650,7 +645,7 @@ def _new_load_range_oven(row, option_columns):
     return 0
 
 
-def _new_load_dryer(row, option_columns, method):
+def _new_load_dryer(row: pd.Series, option_columns: list[str], method: str) -> float:
     if row["completed_status"] != "Success":
         return np.nan
 
@@ -678,7 +673,7 @@ def _new_load_dryer(row, option_columns, method):
     return 0
 
 
-def _new_load_water_heating(row, option_columns):
+def _new_load_water_heating(row: pd.Series, option_columns: list[str]) -> float:
     if row["completed_status"] != "Success":
         return np.nan
 
@@ -702,9 +697,9 @@ def _new_load_water_heating(row, option_columns):
     return 0
 
 
-def _new_load_space_conditioning(row, option_columns):
+def _new_load_space_conditioning(row: pd.Series, option_columns: list[str]) -> tuple[bool, float, float, float, Optional[str]]:
     if row["completed_status"] != "Success":
-        return np.nan
+        return False, np.nan, np.nan, np.nan, None
 
     # heating load
     heating_type = None
@@ -782,8 +777,8 @@ def _new_load_space_conditioning(row, option_columns):
 
     # Add AHU
     heat_ahu, cool_ahu, ahu_error_msg = _get_air_handlers(row, heating_type, secondary_heating_type, cooling_type, apply_check=True)
-    heating_load += heat_ahu if heating_load > 0 else 0
-    cooling_load += cool_ahu if cooling_load > 0 else 0
+    heating_load += heat_ahu
+    cooling_load += cool_ahu
     if ahu_error_msg:
         error_msg += ahu_error_msg
     
@@ -791,31 +786,30 @@ def _new_load_space_conditioning(row, option_columns):
 
     hvac_changed = new_heating or new_secondary_heating or new_cooling
     hvac_load = max(heating_load, cooling_load)
-    # breakpoint()
     return hvac_changed, heating_load, cooling_load, hvac_load, error_msg
 
 
 ### -------- util funcs --------
-def _is_ducted(hvac_type) -> bool | None:
+def _is_ducted(hvac_type: Optional[str]) -> bool | None:
     if hvac_type:
         # non-ducted uses "non-ducted"
         return "ducted" in hvac_type and "non-ducted" not in hvac_type
     return None
 
 
-def _is_heat_pump(hvac_type) -> bool | None:
+def _is_heat_pump(hvac_type: Optional[str]) -> bool | None:
     if hvac_type:
         return "hp" in hvac_type
     return None
 
 
-def _is_fuel(heating_type) -> bool | None:
+def _is_fuel(heating_type: Optional[str]) -> bool | None:
     if heating_type:
         return "fuel" in heating_type
     return None
 
 
-def _check_hvac_consistency(heating_type, secondary_heating_type, cooling_type):
+def _check_hvac_consistency(heating_type: Optional[str], secondary_heating_type: Optional[str], cooling_type: Optional[str]) -> None:
     if _is_heat_pump(heating_type):
         assert heating_type == cooling_type, f"expecting {cooling_type=} of a {heating_type=} to be a heat pump"
         assert _is_ducted(heating_type) == _is_ducted(cooling_type), f"expecting consistent duct type between {heating_type=} and {cooling_type=}"
@@ -823,7 +817,7 @@ def _check_hvac_consistency(heating_type, secondary_heating_type, cooling_type):
     assert not _is_heat_pump(secondary_heating_type), "secondary heating cannot be a heat pump"
 
 
-def _get_air_handler_for_heating(capacity, heating_type, apply_check=True) -> (float, Optional[str]):
+def _get_air_handler_for_heating(capacity: float, heating_type: Optional[str], apply_check: bool = True) -> tuple[float, Optional[str]]:
     if not heating_type:
         return 0, None
 
@@ -843,7 +837,7 @@ def _get_air_handler_for_heating(capacity, heating_type, apply_check=True) -> (f
     return heat_ahu, msg
 
 
-def _get_air_handlers(row, heating_type, secondary_heating_type, cooling_type, apply_check=True) -> (float, float, Optional[str]):
+def _get_air_handlers(row: pd.Series, heating_type: Optional[str], secondary_heating_type: Optional[str], cooling_type: Optional[str], apply_check: bool = True) -> tuple[float, float, Optional[str]]:
     """Typically you need more volume of air to cool the house than to heat it. 
     So the cooling requirements determine the size of the air handler. 
     However the air handler comes with the furnace. 
@@ -903,7 +897,7 @@ def _get_air_handlers(row, heating_type, secondary_heating_type, cooling_type, a
     return heat_ahu, cool_ahu, error_msg
 
 
-def get_cooling_type(cool_eff) -> Optional[str]:
+def get_cooling_type(cool_eff: str) -> Optional[str]:
     """
     Take "build_existing_model.hvac_cooling_efficiency" NOT "build_existing_model.hvac_cooling_type"
     """
@@ -921,7 +915,7 @@ def get_cooling_type(cool_eff) -> Optional[str]:
     raise ValueError(f"Unknown cooling type {cool_eff}")
     
 
-def get_heating_type(heat_eff) -> Optional[str]:
+def get_heating_type(heat_eff: str) -> Optional[str]:
     ht = heat_eff.lower()
     if "ashp" in ht:
         return "ducted hp"
@@ -947,28 +941,28 @@ def get_heating_type(heat_eff) -> Optional[str]:
     raise ValueError(f"Unsupported: {heat_eff=}")
 
 
-def hvac_240V_air_handler(nom_cap) -> float:
+def hvac_240V_air_handler(nom_cap: float) -> float:
     ahu_volt = get_nameplate_rating(nameplate_rating, 'space heating/cooling', 'electric air handler', parameter="voltage")
     amp_para = get_nameplate_rating(nameplate_rating, 'space heating/cooling', 'electric air handler', parameter="amperage").split(",")
     ahu_amp = max(float(amp_para[2]), float(amp_para[0])*float(nom_cap) + float(amp_para[1]))
     return ahu_volt * ahu_amp if nom_cap > 0 else 0
 
 
-def hvac_120V_air_handler(nom_cap) -> float:
+def hvac_120V_air_handler(nom_cap: float) -> float:
     ahu_volt = get_nameplate_rating(nameplate_rating, 'space heating', 'fuel air handler', parameter="voltage")
     amp_para = get_nameplate_rating(nameplate_rating, 'space heating', 'fuel air handler', parameter="amperage").split(",")
     ahu_amp = max(float(amp_para[2]), float(amp_para[0])*float(nom_cap) + float(amp_para[1]))
     return ahu_volt * ahu_amp if nom_cap > 0 else 0
 
 
-def apply_va_linear_regression(nom_cap, load_category, appliance) -> float:
+def apply_va_linear_regression(nom_cap: float, load_category: str, appliance: str) -> float:
     volt = get_nameplate_rating(nameplate_rating, load_category, appliance, parameter="voltage")
     amp_para = get_nameplate_rating(nameplate_rating, load_category, appliance, parameter="amperage").split(",")
     amp = float(amp_para[0])*float(nom_cap) + float(amp_para[1])
     return volt * amp if nom_cap > 0 else 0
 
 
-def hvac_heating_conversion(nom_heat_cap, system_type=None) -> float:
+def hvac_heating_conversion(nom_heat_cap: float, system_type: Optional[str] = None) -> float:
     """ 
     Relationship between either minimum breaker or minimum circuit amp (x voltage) and nameplate capacity
     nominal conditions refer to AHRI standard conditions: 47F?
@@ -993,7 +987,7 @@ def hvac_heating_conversion(nom_heat_cap, system_type=None) -> float:
     raise ValueError(f"Unknown {system_type=}")
 
 
-def hvac_cooling_conversion(nom_cool_cap, system_type=None) -> float:
+def hvac_cooling_conversion(nom_cool_cap: float, system_type: Optional[str] = None) -> float:
     """ 
     Relationship between either minimum breaker or minimum circuit amp (x voltage) and nameplate capacity
     nominal conditions refer to AHRI standard conditions: 95F?
@@ -1019,7 +1013,7 @@ def hvac_cooling_conversion(nom_cool_cap, system_type=None) -> float:
         raise ValueError(f"Unknown {system_type=}")
 
 
-def standard_amperage(x: float) -> int:
+def standard_amperage(x: float) -> int | float:
     """Convert min_amp_col into standard panel size
     http://www.naffainc.com/x/CB2/Elect/EHtmFiles/StdPanelSizes.htm
     """
@@ -1072,7 +1066,7 @@ def bin_panel_sizes(df_column: pd.Series) -> pd.Series:
 
 
 
-def generate_plots(df: pd.DataFrame, dfo: pd.DataFrame, output_dir: Path, sfd_only: bool = False, upgrade_num: str = ""):
+def generate_plots(df: pd.DataFrame, dfo: pd.DataFrame, output_dir: Path, sfd_only: bool = False, upgrade_num: str = "") -> None:
     msg = " for Single-Family Detached only" if sfd_only else ""
     print(f"generating plots{msg}...")
     HC_list = [
@@ -1115,8 +1109,8 @@ def generate_plots(df: pd.DataFrame, dfo: pd.DataFrame, output_dir: Path, sfd_on
 
 
 def existing_load_labels_limited() -> list[str]:
-    existing_loads_labels = [
-        "load_heating", "load_cooling", "load_hvac", "hvac_msg",
+    existing_loads_labels = ["load_heating", "load_cooling", "load_hvac", "hvac_msg",]
+    existing_loads_labels += [
         "load_water_heater",
         "load_dryer",
         "load_range_oven",
@@ -1128,7 +1122,8 @@ def existing_load_labels_limited() -> list[str]:
 
 
 def existing_load_labels() -> list[str]:
-    existing_loads_labels = existing_load_labels_limited() + [
+    existing_loads_labels = existing_load_labels_limited()
+    existing_loads_labels += [
         "load_lighting",
         "load_kitchen",
         "load_laundry",
@@ -1142,14 +1137,11 @@ def existing_load_labels() -> list[str]:
     return existing_loads_labels
 
 
-def apply_existing_loads_limited(row, method: str) -> list[float]:
+def apply_existing_loads_limited(row: pd.Series, method: str) -> list:
     """ breakdown of existing load for limited load categories """
-    if row["completed_status"] != "Success":
-        return [np.nan for x in range(7)]
 
-    (heating_load, cooling_load, hvac_load, error_msg) = _special_load_space_conditioning(row)
-    existing_loads = [
-            heating_load, cooling_load, hvac_load, error_msg,
+    existing_loads = list(_special_load_space_conditioning(row)) # (heating_load, cooling_load, hvac_load, error_msg)
+    existing_loads += [ 
             _fixed_load_water_heater(row),
             _special_load_dryer(row, method),
             _special_load_cooking_range_oven(row),
@@ -1161,12 +1153,11 @@ def apply_existing_loads_limited(row, method: str) -> list[float]:
     return existing_loads
 
 
-def apply_existing_loads(row, method: str, n_kit: int = 2, n_ldr: int = 1) -> list[float]:
+def apply_existing_loads(row: pd.Series, method: str, n_kit: int = 2, n_ldr: int = 1) -> list:
     """ Load summing method """
-    if row["completed_status"] != "Success":
-        return [np.nan for x in range(15)]
 
-    existing_loads = apply_existing_loads_limited(row, method) + [
+    existing_loads = apply_existing_loads_limited(row, method) 
+    existing_loads += [
             _general_load_lighting(row), # sqft
             _general_load_kitchen(row, n=n_kit), # consider logic based on sqft
             _general_load_laundry(row, n=n_ldr), # consider logic based on sqft (up to 2)
@@ -1184,7 +1175,7 @@ def apply_existing_loads(row, method: str, n_kit: int = 2, n_ldr: int = 1) -> li
     return existing_loads
 
 
-def apply_demand_factor(x, threshold=8000):
+def apply_demand_factor(x: float, threshold: float = 8000) -> float:
     """
     Split load into the following tiers and apply associated multiplier factor
         If threshold == 8000:
@@ -1197,7 +1188,7 @@ def apply_demand_factor(x, threshold=8000):
     )
 
 
-def apply_total_load_220_83(row, has_new_hvac_load: bool) -> float | list[float]:
+def apply_total_load_220_83(row: pd.Series, has_new_hvac_load: bool) -> float:
     """Apply demand factor to existing loads per 220.83"""
     threshold = 8000 # VA
     if has_new_hvac_load:
@@ -1301,7 +1292,7 @@ def calculate_new_loads(df: pd.DataFrame, dfu: pd.DataFrame, method: str, result
     return df_up
 
 
-def get_upgrade_columns_and_options(option_columns, upgrade_options, parameter):
+def get_upgrade_columns_and_options(option_columns: list[str], upgrade_options: list[str], parameter: str) -> tuple[list[str], list[str]]:
     columns = []  # 'upgrade_costs.option_<>_name'
     options = []  # e.g., 'ASHP, SEER 15, 9.0 HSPF' if parameter = 'HVAC Heating Efficiency'
     for col, upgrade_option in zip(option_columns, upgrade_options):
@@ -1379,7 +1370,6 @@ def calculate_new_load_total_220_83(dfi: pd.DataFrame, dfu: pd.DataFrame, n_kit:
     total_amp_post = "amp_total_post_upgrade_A_220_83"
     # determine HVAC as new load IF AND ONLY IF the hvac load increases post-upgrade, which is the determinant for whether demand factor gets applied to hvac load or not
     new_hvac = (df_upgraded["load_hvac"]>df_existing["load_hvac"]).rename("upgrade_has_new_hvac")
-    # breakpoint()
     df_loads.loc[new_hvac, total_load_post] = df_loads.loc[new_hvac].apply(lambda x: apply_total_load_220_83(x, has_new_hvac_load=True), axis=1)
     df_loads.loc[~new_hvac, total_load_post] = df_loads.loc[~new_hvac].apply(lambda x: apply_total_load_220_83(x, has_new_hvac_load=False), axis=1)
     df_loads[total_amp_post] = df_loads[total_load_post] / 240
@@ -1489,7 +1479,7 @@ def calculate_new_load_total_220_87(df: pd.DataFrame, dfu: pd.DataFrame, explode
     return dfu.join(df_new[cols].set_index("building_id"), on="building_id")
 
 
-def assign_garbage_disposal(df):
+def assign_garbage_disposal(df: pd.DataFrame) -> pd.DataFrame:
     """ Garbage disposal was invented in 1938 (Insinkable) and is in 52% of homes as of 2013 (AHS) 
 
     Note: need to apply to original baseline, not when it is filtered to upgrade applicable.
@@ -1504,7 +1494,7 @@ def assign_garbage_disposal(df):
     return df
 
 
-def fix_well_pump(df):
+def fix_well_pump(df: pd.DataFrame) -> pd.DataFrame:
     """ ResStock version specific 
     Currently well pump (12.7%) is randomly assigned to units.
     In 2013 AHS, well pump is said to serve up to 5 units.
@@ -1527,7 +1517,7 @@ def main(
     result_as_map: bool = False,
     building_id: int | None = None,
     ev_level: int = 0, # 0, 1, 2 - level of EVSE load to add
-    ):
+    ) -> None:
     if baseline_filename is None:
         baseline_filename = (
             Path(__file__).resolve().parent
