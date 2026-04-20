@@ -1,9 +1,22 @@
-"""Generate a standalone dashboard with single-select sidebar filters and an inline plot viewer.
+"""Dashboard index writer: shard/combinations/HTML assembly.
 
-Behavior:
-- Left sidebar contains all filter dimensions, single-select only (no "All").
-- Right panel shows tabbed content for available comparison plots.
-- A dedicated "Data Table" tab is included when a data-table HTML exists.
+Two write paths coexist here by design:
+
+1. **Canonical batch writer** — ``create_html_from_rows`` / ``create_html_from_csv``:
+   given a complete row list, produces shards, combinations.js, and the
+   dashboard HTML in one pass. This is also the single writer that
+   guarantees deterministic output order.
+
+2. **Preview streaming writer** — ``IndexState`` + ``init_html_index`` /
+   ``append_index_row`` / ``finalize_html_index``: writes rows
+   incrementally as they arrive (in worker-completion order, i.e.
+   non-deterministic). Lets users open ``comparison_dashboard.html``
+   mid-run to see partial progress.
+
+In a full run ``plot_generator`` drives the preview writer during plot
+generation, then calls the canonical batch writer via
+``write_canonical_index`` to produce the deterministic final state.
+The streamed output is always overwritten by the canonical pass.
 """
 
 from __future__ import annotations
@@ -316,9 +329,14 @@ def append_index_row(state: IndexState, row_dict: dict) -> None:
 
 
 def finalize_html_index(state: IndexState) -> None:
-    """Close streams and write the final dashboard HTML."""
+    """Close the streaming combinations file.
+
+    The HTML and shards written incrementally during the run are preview
+    artifacts; the caller is expected to follow up with the canonical
+    deterministic writer (create_html_from_rows) to rewrite everything
+    from the sorted TSV.
+    """
     state.close_combo_file()
-    _atomic_write(state.html_path, build_html(state.headers, state.manifest, state.data_dir_href))
 
 
 def main() -> int:

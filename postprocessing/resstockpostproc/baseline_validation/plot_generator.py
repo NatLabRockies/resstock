@@ -181,7 +181,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     # partial output on a full run. They're dead weight on --test since every
     # item goes through handle_plot_result but most are dry-run-only (path
     # strings only, no real files to show). Skip them under --test; the final
-    # `_rewrite_index_in_sorted_order` pass materializes everything in one shot.
+    # `write_canonical_index` pass materializes everything in one shot.
     stream_incremental = not test_only
     index_state = None
     if stream_incremental:
@@ -496,7 +496,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
         finalize_html_index(index_state)
     else:
         # No incremental writes happened. Materialize the TSV from in-memory
-        # results so _rewrite_index_in_sorted_order has something to rewrite.
+        # results so write_canonical_index has something to rewrite.
         with open(csv_path, "w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS, delimiter="\t")
             writer.writeheader()
@@ -508,7 +508,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     # dashboard HTML so repeat runs produce byte-identical output. Also handles
     # the non-streaming case: it's still the single place that writes shards
     # and dashboard HTML from the materialized TSV.
-    _rewrite_index_in_sorted_order(csv_path, html_path, index_data_dir)
+    write_canonical_index(csv_path, html_path, index_data_dir)
 
     # Summary — count individual viz entries (comma-separated in "Comparison Plot")
     ok = 0
@@ -539,7 +539,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
 
 
 @timed
-def _rewrite_index_in_sorted_order(tsv_path: Path, html_path: Path, data_dir: Path) -> None:
+def write_canonical_index(tsv_path: Path, html_path: Path, data_dir: Path) -> None:
     """Rewrite TSV, shards, combinations.js, and dashboard HTML in canonical order.
 
     The streaming append path lets users preview partial output while plots are

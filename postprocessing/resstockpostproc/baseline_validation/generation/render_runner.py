@@ -376,7 +376,7 @@ def handle_plot_result(sub_key, result, results, csv_path, index_state):
 
     When `index_state` is None, skip the incremental TSV/shard/HTML writes.
     The caller is responsible for materializing everything at the end by
-    calling `_rewrite_index_in_sorted_order` from the in-memory `results`.
+    calling `write_canonical_index` from the in-memory `results`.
     """
     if result is None:
         return
