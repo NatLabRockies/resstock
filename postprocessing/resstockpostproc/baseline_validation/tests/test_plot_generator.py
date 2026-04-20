@@ -9,13 +9,13 @@ from resstockpostproc.baseline_validation.footnotes import (
     RECS_OCCUPIED_UNITS_NOTE,
     get_plot_notes,
 )
-from resstockpostproc.baseline_validation.plot_generator import (
-    _all_enduses_viz_label,
-    _collect_stacked_notes,
-    _should_generate_stacked_page_group,
-    _should_generate_stacked_table,
-    _stacked_title_from_grouped,
-    _to_all_enduses_tall_data,
+from resstockpostproc.baseline_validation.generation.stacked_pages import (
+    all_enduses_viz_label,
+    collect_stacked_notes,
+    should_generate_stacked_page_group,
+    should_generate_stacked_table,
+    stacked_title_from_grouped,
+    to_all_enduses_tall_data,
 )
 from resstockpostproc.baseline_validation.generation.index_rows import (
     apply_lrd_sidebar_semantics,
@@ -206,7 +206,7 @@ class TestAllEndusesHelpers:
             "electricity_total_value": [123.4],
             "electricity_total_percent_difference": [1.5],
         })
-        out = _to_all_enduses_tall_data(df, spec)
+        out = to_all_enduses_tall_data(df, spec)
 
         assert out.columns[0] == "enduse"
         assert out["enduse"].to_list() == ["Electricity"]
@@ -218,8 +218,8 @@ class TestAllEndusesHelpers:
         grouped = "Annual Enduse Consumption by State (grouped view)"
         grouped_diff = "Annual Enduse Consumption by State (grouped difference view)"
 
-        assert _stacked_title_from_grouped(grouped, ViewType.value_view).endswith("(stacked view)")
-        assert _stacked_title_from_grouped(grouped_diff, ViewType.diff_view).endswith("(stacked difference view)")
+        assert stacked_title_from_grouped(grouped, ViewType.value_view).endswith("(stacked view)")
+        assert stacked_title_from_grouped(grouped_diff, ViewType.diff_view).endswith("(stacked difference view)")
 
     def test_all_enduses_viz_label_convention(self):
         value_spec = _make_spec(
@@ -230,25 +230,25 @@ class TestAllEndusesHelpers:
         )
         diff_spec = value_spec.model_copy(update={"view": ViewType.diff_view})
 
-        assert _all_enduses_viz_label(value_spec, stacked=False) == "Bar Plot (grouped)"
-        assert _all_enduses_viz_label(diff_spec, stacked=False) == "Bar Plot (grouped difference view)"
-        assert _all_enduses_viz_label(value_spec, stacked=True) == "Bar Plot (stacked)"
-        assert _all_enduses_viz_label(diff_spec, stacked=True) == "Bar Plot (stacked difference view)"
+        assert all_enduses_viz_label(value_spec, stacked=False) == "Bar Plot (grouped)"
+        assert all_enduses_viz_label(diff_spec, stacked=False) == "Bar Plot (grouped difference view)"
+        assert all_enduses_viz_label(value_spec, stacked=True) == "Bar Plot (stacked)"
+        assert all_enduses_viz_label(diff_spec, stacked=True) == "Bar Plot (stacked difference view)"
 
     def test_should_generate_stacked_table(self):
-        assert _should_generate_stacked_table(
+        assert should_generate_stacked_table(
             "State", ComparisonDataset.recs, Resolution.year, Metric.total
         ) is True
-        assert _should_generate_stacked_table(
+        assert should_generate_stacked_table(
             "", ComparisonDataset.recs, Resolution.year, Metric.total
         ) is False
-        assert _should_generate_stacked_table(
+        assert should_generate_stacked_table(
             "", ComparisonDataset.recs, Resolution.month, Metric.total
         ) is True
-        assert _should_generate_stacked_table(
+        assert should_generate_stacked_table(
             "", ComparisonDataset.recs, Resolution.year, Metric.distribution
         ) is True
-        assert _should_generate_stacked_table(
+        assert should_generate_stacked_table(
             "", ComparisonDataset.eia, Resolution.year, Metric.total
         ) is True
 
@@ -265,7 +265,7 @@ class TestAllEndusesHelpers:
             ("Electricity", [(lrd_spec, "Bar Plot (grouped)")]),
             ("Natural Gas", [(lrd_spec, "Bar Plot (grouped)")]),
         ]
-        assert _should_generate_stacked_page_group(qty_entries) is False
+        assert should_generate_stacked_page_group(qty_entries) is False
 
     def test_should_generate_stacked_page_group_requires_multiple_quantities(self):
         recs_spec = _make_spec(
@@ -281,8 +281,8 @@ class TestAllEndusesHelpers:
             ("Electricity", [(recs_spec, "Bar Plot (grouped)")]),
             ("Natural Gas", [(recs_spec, "Bar Plot (grouped)")]),
         ]
-        assert _should_generate_stacked_page_group(single_qty_entries) is False
-        assert _should_generate_stacked_page_group(two_qty_entries) is True
+        assert should_generate_stacked_page_group(single_qty_entries) is False
+        assert should_generate_stacked_page_group(two_qty_entries) is True
 
     def test_collect_stacked_notes_dedupes_shared_quantity_notes(self):
         recs_elec = _make_spec(
@@ -304,7 +304,7 @@ class TestAllEndusesHelpers:
             ("Natural Gas", [(recs_gas, "Bar Plot (grouped)")]),
         ]
 
-        notes = _collect_stacked_notes(qty_entries, get_plot_notes)
+        notes = collect_stacked_notes(qty_entries, get_plot_notes)
 
         assert notes == [RECS_OCCUPIED_UNITS_NOTE, RECS_ANNUAL_CI_NOTE]
 

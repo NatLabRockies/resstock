@@ -22,7 +22,6 @@ from tqdm import tqdm
 import polars as pl
 
 from resstockpostproc.baseline_validation.footnotes import (
-    dedupe_note_groups,
     get_plot_notes,
     get_table_notes,
 )
@@ -42,8 +41,6 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     FileType,
     ComparisonDataset,
     ViewType,
-    Resolution,
-    Metric,
     format_group_by,
     ALL_ENDUSES_DISPLAY,
 )
@@ -56,7 +53,6 @@ from resstockpostproc.baseline_validation.generation.render_runner import (
     append_plot_row,
     ensure_kaleido_sync_server,
     generate_spec_plots,
-    get_plotting_function,
     handle_plot_result,
     has_static_image_outputs,
     plot_output_path,
@@ -74,6 +70,14 @@ from resstockpostproc.baseline_validation.generation.index_rows import (
     apply_lrd_sidebar_semantics,
     build_output_row,
 )
+from resstockpostproc.baseline_validation.generation.stacked_pages import (
+    all_enduses_viz_label,
+    build_stacked_table_data,
+    collect_stacked_notes,
+    should_generate_stacked_page_group,
+    should_generate_stacked_table,
+    stacked_title_from_grouped,
+)
 from resstockpostproc.baseline_validation.io_managers.output_manager import (
     ensure_plotly_asset,
     plotly_cdn_url,
@@ -82,7 +86,6 @@ from resstockpostproc.baseline_validation.io_managers.data_table import (
     generate_data_table_html,
 )
 from resstockpostproc.baseline_validation.utils import ensure_directory
-from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data
 from resstockpostproc.baseline_validation.create_html import (
     init_html_index,
     append_index_row,
@@ -111,129 +114,6 @@ DEFAULT_PLOT_OUTPUT_FORMATS = [FileType.html, FileType.svg]
 # work item's row is present, even though only the test subset is rendered.
 # Use False so that the dasboard only contains available plots from the test.
 TEST_PRODUCES_FULL_INDEX = True
-
-
-_GROUPED_VIEW_SUFFIX = " (grouped view)"
-_GROUPED_DIFF_VIEW_SUFFIX = " (grouped difference view)"
-_STACKED_VIEW_SUFFIX = " (stacked view)"
-_STACKED_DIFF_VIEW_SUFFIX = " (stacked difference view)"
-
-
-def _all_enduses_viz_label(plot_spec: PlotSpec, stacked: bool) -> str:
-    """Tab label for grouped/stacked All Enduses variants using standard viz terms."""
-    return plot_spec.viz_label(layout="stacked" if stacked else "grouped")
-
-
-def _stacked_title_from_grouped(grouped_title: str, view: ViewType) -> str:
-    """Convert an ALL-enduses grouped filename title into stacked title."""
-    if view == ViewType.diff_view:
-        if grouped_title.endswith(_GROUPED_DIFF_VIEW_SUFFIX):
-            return grouped_title.removesuffix(_GROUPED_DIFF_VIEW_SUFFIX) + _STACKED_DIFF_VIEW_SUFFIX
-        if grouped_title.endswith(" (difference view)"):
-            return grouped_title.removesuffix(" (difference view)") + _STACKED_DIFF_VIEW_SUFFIX
-        return grouped_title + _STACKED_DIFF_VIEW_SUFFIX
-    if grouped_title.endswith(_GROUPED_VIEW_SUFFIX):
-        return grouped_title.removesuffix(_GROUPED_VIEW_SUFFIX) + _STACKED_VIEW_SUFFIX
-    return grouped_title + _STACKED_VIEW_SUFFIX
-
-
-def _stacked_table_cache_key(spec: PlotSpec) -> tuple:
-    """Hashable key for caching stacked-table source data per PlotSpec."""
-    return (
-        spec.comparison_dataset.value,
-        spec.quantity.value,
-        spec.resolution.value,
-        spec.aggregation_type.value,
-        spec.coverage.value,
-        spec.group_by,
-        spec.focus_on,
-        spec.view.value if spec.view else "",
-    )
-
-
-def _to_all_enduses_tall_data(data: pl.DataFrame, spec: PlotSpec) -> pl.DataFrame:
-    """Normalize one enduse dataframe to ALL-enduses schema with a leading enduse column."""
-    prefix = f"{spec.quantity.value}_"
-    rename_map = {c: c.replace(prefix, "all_", 1) for c in data.columns if c.startswith(prefix)}
-    if not rename_map:
-        return pl.DataFrame()
-
-    tall = data.rename(rename_map).with_columns(pl.lit(spec.display_quantity).alias("enduse"))
-    ordered_cols = ["enduse"] + [c for c in tall.columns if c != "enduse"]
-    return tall.select(ordered_cols)
-
-
-def _build_stacked_table_data(
-    qty_entries: list[tuple[str, list[tuple[PlotSpec, str]]]],
-    view_index: int,
-    data_cache: dict[tuple, pl.DataFrame],
-) -> pl.DataFrame:
-    """Build stacked ALL-enduses table data by concatenating quantity data vertically."""
-    frames: list[pl.DataFrame] = []
-    for _, entries in qty_entries:
-        if view_index >= len(entries):
-            continue
-        spec = entries[view_index][0]
-        cache_key = _stacked_table_cache_key(spec)
-        data = data_cache.get(cache_key)
-        if data is None:
-            data = get_plot_data(spec)
-            data_cache[cache_key] = data
-        if data.is_empty():
-            continue
-        normalized = _to_all_enduses_tall_data(data, spec)
-        if not normalized.is_empty():
-            frames.append(normalized)
-
-    if not frames:
-        return pl.DataFrame()
-    return pl.concat(frames, how="diagonal_relaxed")
-
-
-def _should_generate_stacked_table(
-    group_by_label: str,
-    comparison_dataset: ComparisonDataset,
-    resolution: Resolution,
-    aggregation_type: Metric,
-) -> bool:
-    """Decide whether synthetic stacked All Enduses rows should include table data."""
-    # Always include for grouped rows.
-    if bool(group_by_label):
-        return True
-
-    # For EIA, include ungrouped (U.S. Total / no group_by) stacked rows.
-    if comparison_dataset == ComparisonDataset.eia:
-        return True
-
-    # For RECS, include ungrouped rows when:
-    # - resolution is not annual, or
-    # - metric is distribution.
-    if comparison_dataset == ComparisonDataset.recs:
-        return resolution != Resolution.year or aggregation_type == Metric.distribution
-
-    return False
-
-
-def _should_generate_stacked_page_group(
-    qty_entries: list[tuple[str, list[tuple[PlotSpec, str]]]],
-) -> bool:
-    """Decide whether Pass 4 should synthesize an All Enduses stacked page for a group."""
-    if len(qty_entries) < 2:
-        return False
-    first_spec = qty_entries[0][1][0][0]
-    return first_spec.comparison_dataset != ComparisonDataset.lrd
-
-
-def _collect_stacked_notes(
-    qty_entries: list[tuple[str, list[tuple[PlotSpec, str]]]],
-    note_getter,
-) -> list[str] | None:
-    """Collect deduplicated notes across stacked quantity entries."""
-    return dedupe_note_groups(
-        note_getter(entries[0][0])
-        for _, entries in qty_entries
-        if entries
-    )
 
 
 # ---------------------------------------------------------------------------
@@ -400,7 +280,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
                 continue
             viz_label = focused_spec.display_viz_label
             if focused_spec.is_all_enduses:
-                viz_label = _all_enduses_viz_label(focused_spec, stacked=False)
+                viz_label = all_enduses_viz_label(focused_spec, stacked=False)
             focused_entries.append((focused_spec, viz_label))
 
         if not focused_entries:
@@ -490,7 +370,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     # the raw Plotly HTML files already written in Pass 3. View-agnostic: for
     # each view position in focused_entries, transpose across quantities.
     from resstockpostproc.baseline_validation.io_managers.html_utils import postprocess_plot_html
-    eligible_groups = {k: v for k, v in stacking_groups.items() if _should_generate_stacked_page_group(v)}
+    eligible_groups = {k: v for k, v in stacking_groups.items() if should_generate_stacked_page_group(v)}
     stacked_count = 0
     stacked_table_data_cache: dict[tuple, pl.DataFrame] = {}
     dashboard_path = dashboard_html_path(output_root)
@@ -514,8 +394,8 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
             scale_x, scale_y = 0.75, 0.5
 
         # Deduplicated footnotes across all quantities
-        plot_notes = _collect_stacked_notes(qty_entries, get_plot_notes)
-        table_notes = _collect_stacked_notes(qty_entries, get_table_notes)
+        plot_notes = collect_stacked_notes(qty_entries, get_plot_notes)
+        table_notes = collect_stacked_notes(qty_entries, get_table_notes)
 
         # One stacked page per view position (position 0 = main, 1 = extra, ...)
         viz_parts = []
@@ -528,7 +408,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
 
             all_view_spec = view_spec.model_copy(update={"quantity": DataCol.ALL})
             _, grouped_title = all_view_spec.file_path_and_name
-            title = _stacked_title_from_grouped(grouped_title, all_view_spec.view)
+            title = stacked_title_from_grouped(grouped_title, all_view_spec.view)
             out = dataset_output_dir(output_root, str(first_spec.comparison_dataset), "plots", link_format.value) / path_seg / f"{title}.{link_format.value}"
             ensure_directory(out.parent)
             postprocess_plot_html(
@@ -539,14 +419,14 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
                 plotly_asset_path=plotly_asset_path,
             )
             rel_str = relative_href_from_file(out, dashboard_path)
-            stacked_label = _all_enduses_viz_label(all_view_spec, stacked=True)
+            stacked_label = all_enduses_viz_label(all_view_spec, stacked=True)
             viz_parts.append(f"{stacked_label}||{rel_str}")
             stacked_outputs.append((i, all_view_spec, str(out)))
             stacked_count += 1
 
         if viz_parts:
             data_rel = ""
-            if stacked_outputs and _should_generate_stacked_table(
+            if stacked_outputs and should_generate_stacked_table(
                 gb, first_spec.comparison_dataset, first_spec.resolution, first_spec.aggregation_type
             ):
                 # Build stacked data tables for grouped rows, plus selected
@@ -556,7 +436,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
                     stacked_outputs[0],
                 )
                 stacked_plot_path = Path(table_rel_plot)
-                stacked_data = _build_stacked_table_data(
+                stacked_data = build_stacked_table_data(
                     qty_entries, table_view_index, stacked_table_data_cache
                 )
                 if not stacked_data.is_empty():
