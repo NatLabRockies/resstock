@@ -12,19 +12,15 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     ViewType,
     Layout,
     ComparisonDataset,
-    Metric,
     CoverageType,
 )
-from resstockpostproc.baseline_validation.io_managers import get_eia_data
-from resstockpostproc.baseline_validation.io_managers import get_recs_data
-from resstockpostproc.baseline_validation.io_managers import get_resstock_data
-from resstockpostproc.baseline_validation.io_managers import get_lrd_data
 from resstockpostproc.baseline_validation.data_processing.histogram_data import get_distribution_histogram_data
+from resstockpostproc.baseline_validation.data_processing.dataset_adapters import load_eia, load_recs, load_lrd
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 from resstockpostproc.baseline_validation.plot_semantics import apply_source_labels
 from resstockpostproc.shared_utils.db_column_names import DataCol
-from resstockpostproc.shared_utils.mapping import UtilityName2ID, ID2UtilityName
+from resstockpostproc.shared_utils.mapping import ID2UtilityName
 from resstockpostproc.shared_utils.timing import timed
 
 AggregationBy = Literal["state", "eiaid"]  # IO-layer type: raw DB column names
@@ -151,6 +147,20 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
     return df
 
 
+def _to_io_data_key(data_key: DataKey) -> DataKey:
+    """Translate config-level column names to IO-level (e.g. "utility" → "eiaid")."""
+    group_by = data_key.effective_group_by
+    io_group_by = tuple(_CONFIG_TO_IO_COL.get(c, c) for c in group_by)
+    return data_key._replace(effective_group_by=io_group_by) if io_group_by != group_by else data_key
+
+
+_DATASET_ADAPTERS = {
+    ComparisonDataset.eia: load_eia,
+    ComparisonDataset.recs: load_recs,
+    ComparisonDataset.lrd: load_lrd,
+}
+
+
 @timed
 def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
     """Internal function to load data based on DataKey.
@@ -160,59 +170,13 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
                   aggregation_type, and coverage
     """
     comparison_dataset = data_key.comparison_dataset
-    group_by = data_key.effective_group_by  # local alias for readability
-    resolution = data_key.resolution
+    io_data_key = _to_io_data_key(data_key)
 
-    # Translate config-level column names to IO-level (e.g. "utility" → "eiaid")
-    io_group_by = tuple(_CONFIG_TO_IO_COL.get(c, c) for c in group_by)
-    io_data_key = data_key._replace(effective_group_by=io_group_by) if io_group_by != group_by else data_key
-
-    groups = []
-    if comparison_dataset == ComparisonDataset.eia:
-        by = "state" if "state" in io_group_by else "eiaid"
-        assert by in ["state", "eiaid"], "EIA data only supports group_by='state' or group_by='eiaid'."
-        if resolution == Resolution.month:
-            source_data = get_eia_data.get_monthly_all(
-                data_key=io_data_key, years=workflow.reference_years.get("eia", [2018])
-            )
-            resstock_data = get_resstock_data.get_timeseries_all(data_key=io_data_key)
-            groups = [by, "month"]
-        else:
-            assert resolution == Resolution.year, "EIA data only supports 'year' or 'month' resolutions."
-            source_data = get_eia_data.get_annual_all(
-                data_key=io_data_key, years=workflow.reference_years.get("eia", [2018])
-            )
-            resstock_data = get_resstock_data.get_annual_all(data_key=io_data_key)
-            groups = [by]
-    elif comparison_dataset == ComparisonDataset.recs:
-        if resolution == Resolution.month:
-            assert len(group_by) == 1, "RECS monthly only supports single-column groupby."
-            source_data = get_recs_data.get_monthly_all(data_key=io_data_key, year=2020)
-            resstock_data = get_resstock_data.get_timeseries_all(data_key=io_data_key, occupied_only=True)
-            groups = ["state", "month"]
-        else:
-            assert resolution == Resolution.year, "RECS data only supports 'year' or 'month' resolutions."
-            source_data = get_recs_data.get_annual_all(data_key=io_data_key, year=2020)
-            resstock_data = get_resstock_data.get_annual_all(data_key=io_data_key, occupied_only=True)
-            groups = list(io_group_by)
-    elif comparison_dataset == ComparisonDataset.lrd:
-        assert data_key.aggregation_type == Metric.average and data_key.coverage == CoverageType.all_units, (
-            "LRD data only supports 'average' aggregation with 'all_units' coverage."
-        )
-        eiaidlist = tuple([str(eiaid) for eiaid in UtilityName2ID.values()])
-        source_data = get_lrd_data.get_lrd_aggregated(year=2018, resolution=resolution, restrict_list=eiaidlist)
-        if resolution == Resolution.year:
-            resstock_data = get_resstock_data.get_annual_all(data_key=io_data_key)
-            groups = ["eiaid"]
-        elif resolution == Resolution.hour_of_day_matrix:
-            resstock_data = get_resstock_data.get_timeseries_all(data_key=io_data_key, restrict_list=eiaidlist)
-            groups = ["eiaid", "month", "day_type", "hour of day"]
-        else:
-            resstock_data = get_resstock_data.get_timeseries_all(data_key=io_data_key, restrict_list=eiaidlist)
-            groups = ["eiaid", resolution]
-
-    else:
+    adapter = _DATASET_ADAPTERS.get(comparison_dataset)
+    if adapter is None:
         raise NotImplementedError(f"Comparison dataset {comparison_dataset} not implemented.")
+    source_data, resstock_data, groups = adapter(io_data_key)
+
     if resstock_data is not None:
         df = pl.concat([source_data, resstock_data], how="diagonal_relaxed")
     else:
