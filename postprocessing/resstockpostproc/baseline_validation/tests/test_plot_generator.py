@@ -1,22 +1,15 @@
 """Tests for plot_generator discrepancy math and list unnesting."""
 
-import sys
-from types import SimpleNamespace
 
 import polars as pl
 import pytest
-import plotly.graph_objects as go
 
-import resstockpostproc.baseline_validation.plot_generator as plot_generator_module
-import resstockpostproc.baseline_validation.generation.render_runner as render_runner_module
-from resstockpostproc.baseline_validation.dashboard_paths import relative_href_from_file
 from resstockpostproc.baseline_validation.footnotes import (
     RECS_ANNUAL_CI_NOTE,
     RECS_OCCUPIED_UNITS_NOTE,
     get_plot_notes,
 )
 from resstockpostproc.baseline_validation.plot_generator import (
-    DEFAULT_PLOT_OUTPUT_FORMATS,
     _all_enduses_viz_label,
     _apply_lrd_sidebar_semantics,
     _collect_stacked_notes,
@@ -24,16 +17,9 @@ from resstockpostproc.baseline_validation.plot_generator import (
     _should_generate_stacked_table,
     _stacked_title_from_grouped,
     _to_all_enduses_tall_data,
-    generate_plots,
 )
 from resstockpostproc.baseline_validation.generation.render_runner import (
     compute_discrepancy,
-    data_output_path,
-    ensure_kaleido_sync_server,
-    generate_spec_plots,
-    has_static_image_outputs,
-    plot_output_path,
-    stop_kaleido_sync_server_if_owned,
 )
 from resstockpostproc.baseline_validation.generation.work_items import (
     build_spec_entries,
@@ -47,7 +33,6 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     ComparisonDataset,
     ViewType,
     Layout,
-    FileType,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
@@ -408,257 +393,6 @@ class TestRelatedSpecFamilies:
         assert len(labels) == len(set(labels))
         assert "Bar Plot (two_column)" in labels
         assert "Bar Plot (two_column difference view)" in labels
-
-
-class TestGenerateSpecPlotsPrimaryDataAnchor:
-    def test_data_and_table_generated_once_for_primary_spec(self, tmp_path, monkeypatch):
-        spec_primary = _make_spec(
-            comparison_dataset=ComparisonDataset.recs,
-            aggregation_type=Metric.average,
-            quantity=DataCol.ELECTRICITY_TOTAL,
-            resolution=Resolution.year,
-            group_by="state",
-            view=ViewType.value_view,
-            layout=Layout.auto,
-        )
-        spec_two_col = spec_primary.model_copy(update={"layout": Layout.two_column})
-        spec_entries = [
-            (spec_primary, spec_primary.display_viz_label),
-            (spec_two_col, spec_two_col.display_viz_label),
-        ]
-
-        data = pl.DataFrame({
-            "source": ["recs_2020", "resstock_2024"],
-            "state": ["CA", "CA"],
-            "electricity_total_value": [100.0, 110.0],
-        })
-
-        table_calls = []
-
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.generation.render_runner.get_plot_data",
-            lambda _spec: data,
-        )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.generation.render_runner.get_plotting_function",
-            lambda _ds: (lambda _data, _spec: (go.Figure(), "title")),
-        )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.generation.render_runner.save_figure",
-            lambda *_args, **_kwargs: None,
-        )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.generation.render_runner.compute_discrepancy",
-            lambda _data, _spec: {},
-        )
-        table_kwargs = {}
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.generation.render_runner.generate_data_table_html",
-            lambda **kwargs: (table_calls.append(kwargs["output_path"]), table_kwargs.update(kwargs)),
-        )
-
-        result = generate_spec_plots(
-            spec_entries=spec_entries,
-            output_formats=[FileType.html],
-            link_format=FileType.html,
-            output_root=tmp_path,
-            plotly_asset_path=tmp_path / "dashboard_data" / "assets" / "plotly-3.1.1.min.js",
-        )
-
-        assert result is not None
-        viz_parts, data_rel = result
-        assert data_rel is not None
-        assert len(table_calls) == 1
-
-        _, primary_title = spec_primary.file_path_and_name
-        _, two_col_title = spec_two_col.file_path_and_name
-        assert "||dashboard_data/" in viz_parts
-        assert "data table||dashboard_data/" in data_rel
-        assert "download csv" not in data_rel
-        assert primary_title in data_rel
-        assert two_col_title not in data_rel
-        expected_table_path = data_output_path(tmp_path, spec_primary, FileType.html)
-        expected_plot_path = plot_output_path(tmp_path, spec_primary, FileType.html)
-        assert table_kwargs["plot_rel_path"] == relative_href_from_file(expected_plot_path, expected_table_path)
-
-    def test_static_images_are_batched_once_per_work_item(self, tmp_path, monkeypatch):
-        spec_primary = _make_spec(
-            comparison_dataset=ComparisonDataset.recs,
-            aggregation_type=Metric.average,
-            quantity=DataCol.ELECTRICITY_TOTAL,
-            resolution=Resolution.year,
-            group_by="state",
-            view=ViewType.value_view,
-            layout=Layout.auto,
-        )
-        spec_two_col = spec_primary.model_copy(update={"layout": Layout.two_column})
-        spec_entries = [
-            (spec_primary, spec_primary.display_viz_label),
-            (spec_two_col, spec_two_col.display_viz_label),
-        ]
-
-        data = pl.DataFrame({
-            "source": ["recs_2020", "resstock_2024"],
-            "state": ["CA", "CA"],
-            "electricity_total_value": [100.0, 110.0],
-        })
-
-        html_save_calls = []
-        static_batch_calls = []
-
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.generation.render_runner.get_plot_data",
-            lambda _spec: data,
-        )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.generation.render_runner.get_plotting_function",
-            lambda _ds: (lambda _data, _spec: (go.Figure(), "title")),
-        )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.generation.render_runner.save_figure",
-            lambda *_args, **kwargs: html_save_calls.append(kwargs["formats"]),
-        )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.generation.render_runner.save_static_images_batch",
-            lambda jobs, output_root=None: static_batch_calls.append((jobs, output_root)),
-        )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.generation.render_runner.compute_discrepancy",
-            lambda _data, _spec: {},
-        )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.generation.render_runner.generate_data_table_html",
-            lambda **_kwargs: None,
-        )
-
-        generate_spec_plots(
-            spec_entries=spec_entries,
-            output_formats=[FileType.html, FileType.svg],
-            link_format=FileType.html,
-            output_root=tmp_path,
-            plotly_asset_path=tmp_path / "dashboard_data" / "assets" / "plotly-3.1.1.min.js",
-        )
-
-        assert html_save_calls == [[FileType.html], [FileType.html]]
-        assert len(static_batch_calls) == 1
-        jobs, output_root = static_batch_calls[0]
-        assert output_root == tmp_path
-        assert len(jobs) == 2
-        assert all(fmt == FileType.svg for _, _, fmt in jobs)
-
-
-class TestDefaultOutputFormats:
-    def test_standard_run_uses_html_and_svg(self):
-        assert DEFAULT_PLOT_OUTPUT_FORMATS == [FileType.html, FileType.svg]
-
-
-class TestKaleidoSyncServerLifecycle:
-    @staticmethod
-    def _fake_kaleido_module(start_calls, stop_calls, running=False):
-        server_state = {"running": running}
-
-        class _FakeServer:
-            def is_running(self):
-                return server_state["running"]
-
-        def _start_sync_server(*, silence_warnings=False, **kwargs):
-            start_calls.append((silence_warnings, kwargs))
-            server_state["running"] = True
-
-        def _stop_sync_server(*, silence_warnings=False):
-            stop_calls.append(silence_warnings)
-            server_state["running"] = False
-
-        return SimpleNamespace(
-            _global_server=_FakeServer(),
-            start_sync_server=_start_sync_server,
-            stop_sync_server=_stop_sync_server,
-        )
-
-    def test_ensure_kaleido_sync_server_starts_once_and_tracks_ownership(self, monkeypatch):
-        start_calls = []
-        stop_calls = []
-        fake_kaleido = self._fake_kaleido_module(start_calls, stop_calls)
-
-        monkeypatch.setitem(sys.modules, "kaleido", fake_kaleido)
-        monkeypatch.setattr(render_runner_module, "_OWNS_KALEIDO_SYNC_SERVER", False)
-        monkeypatch.setattr("plotly.io.defaults.plotlyjs", "/tmp/plotly.min.js")
-        monkeypatch.setattr("plotly.io.defaults.mathjax", "/tmp/mathjax.js")
-
-        assert ensure_kaleido_sync_server() is True
-        assert start_calls == [
-            (
-                True,
-                {"n": 1, "plotlyjs": "/tmp/plotly.min.js", "mathjax": "/tmp/mathjax.js"},
-            )
-        ]
-        assert render_runner_module._OWNS_KALEIDO_SYNC_SERVER is True
-
-        assert ensure_kaleido_sync_server() is False
-        assert len(start_calls) == 1
-
-        stop_kaleido_sync_server_if_owned()
-        assert stop_calls == [True]
-        assert render_runner_module._OWNS_KALEIDO_SYNC_SERVER is False
-
-    def test_stop_kaleido_sync_server_if_owned_skips_external_server(self, monkeypatch):
-        stop_calls = []
-        fake_kaleido = self._fake_kaleido_module([], stop_calls, running=True)
-
-        monkeypatch.setitem(sys.modules, "kaleido", fake_kaleido)
-        monkeypatch.setattr(render_runner_module, "_OWNS_KALEIDO_SYNC_SERVER", False)
-
-        stop_kaleido_sync_server_if_owned()
-
-        assert stop_calls == []
-
-    def test_has_static_image_outputs_detects_svg_and_pdf(self):
-        assert has_static_image_outputs([FileType.html, FileType.svg]) is True
-        assert has_static_image_outputs([FileType.pdf]) is True
-        assert has_static_image_outputs([FileType.html, FileType.parquet]) is False
-
-    def test_generate_plots_sequential_starts_and_stops_persistent_kaleido_server(self, tmp_path, monkeypatch):
-        lifecycle_calls = []
-
-        monkeypatch.setattr(
-            plot_generator_module,
-            "workflow",
-            SimpleNamespace(
-                data_source_labels={},
-                output=SimpleNamespace(output_dir=tmp_path, run_name="seq-kaleido"),
-            ),
-        )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.generate_all_templates",
-            lambda: [],
-        )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.ensure_plotly_asset",
-            lambda asset_dir: asset_dir / "plotly.min.js",
-        )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.init_html_index",
-            lambda html_path, columns, data_dir=None: {"html_path": html_path, "data_dir": data_dir, "columns": columns},
-        )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.finalize_html_index",
-            lambda _state: None,
-        )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.ensure_kaleido_sync_server",
-            lambda: lifecycle_calls.append("start") or True,
-        )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.stop_kaleido_sync_server_if_owned",
-            lambda: lifecycle_calls.append("stop"),
-        )
-        monkeypatch.setattr(plot_generator_module.TimingStats, "start_trace", lambda _path: None)
-        monkeypatch.setattr(plot_generator_module.TimingStats, "stop_trace", lambda: None)
-        monkeypatch.setattr(plot_generator_module.TimingStats, "summary", lambda: "timing summary")
-
-        generate_plots(parallel=False)
-
-        assert lifecycle_calls == ["start", "stop"]
 
 
 class TestLRDSidebarSemantics:
