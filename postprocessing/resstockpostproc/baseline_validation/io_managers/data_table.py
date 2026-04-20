@@ -72,17 +72,6 @@ _QUARTILE_INDICES = [
 _FUEL_PREFIXES_TUPLE = ("electricity_", "natural_gas_", "propane_", "fuel_oil_")
 
 
-@timed
-def should_generate_table(data: pl.DataFrame, plot_spec: PlotSpec) -> bool:
-    """Check whether an HTML table should be generated for this plot.
-
-    All plots get a table: large tables paginate client-side, single-row
-    tables are preserved for completeness, and ALL-enduse plots are melted
-    into tall form so the same pivot pipeline applies to them too.
-    """
-    return True
-
-
 def _melt_enduse_columns(data: pl.DataFrame) -> pl.DataFrame:
     """Melt wide per-enduse columns into tall form with an 'enduse' label column.
 

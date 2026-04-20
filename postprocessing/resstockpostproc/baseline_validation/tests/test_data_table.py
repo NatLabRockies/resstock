@@ -6,7 +6,6 @@ import polars as pl
 import pytest
 
 from resstockpostproc.baseline_validation.io_managers.data_table import (
-    should_generate_table,
     _filter_columns,
     _pivot_by_source,
     _melt_enduse_columns,
@@ -55,47 +54,6 @@ def _make_annual_data():
         "electricity_total_percent_users": [100.0, 100.0, 99.5, 99.8],
         "electricity_total_percent_users_percent_difference": [None, 0.0, None, 0.3],
     })
-
-
-class TestShouldGenerateTable:
-    def test_accepts_all_enduse(self):
-        """ALL-quantity plots are now melted into tall form and get a table."""
-        spec = _make_spec(
-            comparison_dataset=ComparisonDataset.recs,
-            quantity=DataCol.ALL,
-            aggregation_type=Metric.average,
-        )
-        data = pl.DataFrame({"state": ["CA"], "source": ["recs_2020"]})
-        assert should_generate_table(data, spec) is True
-
-    def test_accepts_small_annual(self):
-        spec = _make_spec()
-        data = _make_annual_data()
-        assert should_generate_table(data, spec) is True
-
-    def test_accepts_large_hourly(self):
-        """Large hourly tables are still generated — they paginate client-side."""
-        spec = _make_spec(
-            comparison_dataset=ComparisonDataset.lrd,
-            quantity=DataCol.ELECTRICITY_TOTAL,
-            resolution=Resolution.hour_of_year,
-            aggregation_type=Metric.average,
-            group_by="utility",
-        )
-        data = pl.DataFrame({
-            "utility": ["Util1"], "hour of year": [0],
-            "source": ["lrd_2018"], "electricity_total_value": [1.0],
-        })
-        assert should_generate_table(data, spec) is True
-
-    def test_accepts_single_row(self):
-        """Single-entity annual plots still get a table for completeness."""
-        spec = _make_spec()
-        data = pl.DataFrame({
-            "state": ["CA"], "source": ["eia_2018"],
-            "electricity_total_value": [100.0],
-        })
-        assert should_generate_table(data, spec) is True
 
 
 class TestFilterColumns:

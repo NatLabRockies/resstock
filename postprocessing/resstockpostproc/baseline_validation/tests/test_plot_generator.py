@@ -446,10 +446,6 @@ class TestGenerateSpecPlotsPrimaryDataAnchor:
             "resstockpostproc.baseline_validation.plot_generator._compute_discrepancy",
             lambda _data, _spec: {},
         )
-        monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.should_generate_table",
-            lambda _data, _spec: True,
-        )
         table_kwargs = {}
         monkeypatch.setattr(
             "resstockpostproc.baseline_validation.plot_generator.generate_data_table_html",
@@ -526,8 +522,8 @@ class TestGenerateSpecPlotsPrimaryDataAnchor:
             lambda _data, _spec: {},
         )
         monkeypatch.setattr(
-            "resstockpostproc.baseline_validation.plot_generator.should_generate_table",
-            lambda _data, _spec: False,
+            "resstockpostproc.baseline_validation.plot_generator.generate_data_table_html",
+            lambda **_kwargs: None,
         )
 
         _generate_spec_plots(

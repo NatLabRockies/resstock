@@ -17,7 +17,7 @@ import time
 import traceback
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
-
+from plotly import graph_objects as go
 from tqdm import tqdm
 
 import polars as pl
@@ -68,7 +68,6 @@ from resstockpostproc.baseline_validation.io_managers.output_manager import (
 from resstockpostproc.baseline_validation.io_managers.data_table import (
     _format_source_label,
     generate_data_table_html,
-    should_generate_table,
 )
 from resstockpostproc.baseline_validation.plotters.plot_config import (
     get_second_category_column,
@@ -170,6 +169,11 @@ OUTPUT_COLUMNS = [
     "Data",
 ]
 DEFAULT_PLOT_OUTPUT_FORMATS = [FileType.html, FileType.svg]
+
+# When True, --test runs emit a TSV / dashboard matching a full run: every
+# work item's row is present, even though only the test subset is rendered.
+# Use False so that the dasboard only contains available plots from the test.
+TEST_PRODUCES_FULL_INDEX = True
 
 
 _GROUPED_VIEW_SUFFIX = " (grouped view)"
@@ -715,6 +719,7 @@ def _generate_spec_plots(
     output_root,
     source_labels=None,
     plotly_asset_path: Path | None = None,
+    is_dry_run: bool = False,
 ) -> tuple[str, str | None] | None:
     """Generate plots for a list of (PlotSpec, viz_type_str) entries.
 
@@ -723,6 +728,11 @@ def _generate_spec_plots(
 
     Returns (viz_parts_joined, data_rel_path) on success, or None if skipped.
     All file I/O writes to unique per-spec paths (safe for parallel execution).
+
+    When `is_dry_run` is True, actual plotting/HTML/SVG/data-table writes are
+    skipped. The row's `Comparison Plot` and `Data` columns are still populated
+    with predicted paths, which lets --test runs produce a TSV byte-identical
+    to a full run (the paths just don't exist on disk).
     """
     # Check if data is available for this combination before generating any plots.
     first_spec = spec_entries[0][0]
@@ -739,48 +749,53 @@ def _generate_spec_plots(
     static_image_jobs: list[tuple[go.Figure, PlotSpec, FileType]] = []
     for idx, (plot_spec, viz_type_str) in enumerate(spec_entries):
         try:
-            data = get_plot_data(plot_spec)
-            plot_func = get_plotting_function(plot_spec.comparison_dataset)
-            fig, title = plot_func(data, plot_spec)
-            spec_footnotes = get_plot_notes(plot_spec)
-            html_formats = [fmt for fmt in output_formats if fmt == FileType.html]
-            if html_formats:
-                save_figure(
-                    fig,
-                    plot_spec,
-                    formats=html_formats,
-                    footnotes=spec_footnotes,
-                    source_labels=source_labels,
-                    output_root=output_root,
-                    plotly_asset_path=plotly_asset_path,
-                )
-            static_image_jobs.extend(
-                (fig, plot_spec, fmt) for fmt in output_formats if fmt in {FileType.svg, FileType.pdf}
+            is_primary_table_candidate = idx == 0 and (
+                plot_spec.view in (ViewType.value_view, ViewType.temp_view)
+                or plot_spec.is_penetration_metric
+                or plot_spec.is_distribution_metric
             )
 
-            # Build relative path to the enhanced plot file
+            if not is_dry_run:
+                data = get_plot_data(plot_spec)
+                plot_func = get_plotting_function(plot_spec.comparison_dataset)
+                fig, title = plot_func(data, plot_spec)
+                spec_footnotes = get_plot_notes(plot_spec)
+                html_formats = [fmt for fmt in output_formats if fmt == FileType.html]
+                if html_formats:
+                    save_figure(
+                        fig,
+                        plot_spec,
+                        formats=html_formats,
+                        footnotes=spec_footnotes,
+                        source_labels=source_labels,
+                        output_root=output_root,
+                        plotly_asset_path=plotly_asset_path,
+                    )
+                static_image_jobs.extend(
+                    (fig, plot_spec, fmt) for fmt in output_formats if fmt in {FileType.svg, FileType.pdf}
+                )
+
+            # Build relative path to the enhanced plot file (pure path derivation
+            # — runs whether or not the file was written).
             _, file_title = plot_spec.file_path_and_name
             plot_path = _plot_output_path(output_root, plot_spec, link_format)
             rel_path_str = relative_href_from_file(plot_path, dashboard_path)
             viz_parts.append(f"{viz_type_str}||{rel_path_str}")
 
             # Data exports and table links are anchored to the primary spec only.
-            if idx == 0 and (
-                plot_spec.view in (
-                ViewType.value_view,
-                ViewType.temp_view,
-                )
-                or plot_spec.is_penetration_metric
-                or plot_spec.is_distribution_metric
-            ):
-                metrics_by_source = _compute_discrepancy(data, plot_spec)
+            # Every primary table candidate gets a table link; the HTML is only
+            # actually written when we're rendering.
+            if is_primary_table_candidate:
+                table_path = _data_output_path(output_root, plot_spec, FileType.html)
+                rel_table = relative_href_from_file(table_path, dashboard_path)
+                data_rel = f"data table||{rel_table}"
 
-                if should_generate_table(data, plot_spec):
-                    table_path = _data_output_path(output_root, plot_spec, FileType.html)
+                if not is_dry_run:
                     table_dir = table_path.parent
                     ensure_directory(table_dir)
                     plot_rel_from_table = relative_href_from_file(plot_path, table_path)
                     spec_table_footnotes = get_table_notes(plot_spec)
+                    metrics_by_source = _compute_discrepancy(data, plot_spec)
                     generate_data_table_html(
                         data=data,
                         plot_spec=plot_spec,
@@ -790,14 +805,13 @@ def _generate_spec_plots(
                         footnotes=spec_table_footnotes,
                         source_labels=source_labels,
                     )
-                    rel_table = relative_href_from_file(table_path, dashboard_path)
-                    data_rel = f"data table||{rel_table}"
 
         except Exception:
             tb = traceback.format_exc()
             viz_parts.append(f"FAILED: {viz_type_str}||{tb}")
 
-    save_static_images_batch(static_image_jobs, output_root=output_root)
+    if not is_dry_run:
+        save_static_images_batch(static_image_jobs, output_root=output_root)
 
     return " ;; ".join(viz_parts), data_rel
 
@@ -823,7 +837,12 @@ def _worker_run(*args, **kwargs):
 
 
 def _handle_plot_result(sub_key, result, results, csv_path, index_state):
-    """Apply a worker's result to shared state (main process only)."""
+    """Apply a worker's result to shared state (main process only).
+
+    When `index_state` is None, skip the incremental TSV/shard/HTML writes.
+    The caller is responsible for materializing everything at the end by
+    calling `_rewrite_index_in_sorted_order` from the in-memory `results`.
+    """
     if result is None:
         return
     viz_parts_str, data_rel = result
@@ -840,8 +859,29 @@ def _handle_plot_result(sub_key, result, results, csv_path, index_state):
         if row.get("Filter 2"):
             parts.append(row["Filter 2"])
         logger.info(" | ".join(parts))
-    _append_plot_row(csv_path, row)
-    append_index_row(index_state, row)
+    if index_state is not None:
+        _append_plot_row(csv_path, row)
+        append_index_row(index_state, row)
+
+
+def _render_key(work_item: tuple) -> tuple:
+    """Stable identity for a work item.
+
+    Keys by `(tmpl_index, focus_on, focus_val, group_by)`. `tmpl_index` is
+    expected to be an index into the *full* `templates` list — so the side pass
+    that builds `render_keys` must translate its subset-local indices back to
+    full-list positions before using this key (see generate_plots).
+
+    Previously this used `_template_signature(tmpls[tmpl_index])`. That was
+    incorrect: `_template_signature` deduplicates templates (e.g., collapses
+    many RECS quantity/view/metric templates into one signature), so the key
+    over-matched — every template sharing a subset template's signature would
+    satisfy the membership check and get rendered. Using the raw tmpl_index
+    restricts rendering to exactly the templates `get_test_template_indices`
+    picks.
+    """
+    _, tmpl_index, _, focus_val, focus_on, group_by = work_item
+    return (tmpl_index, focus_on, focus_val, group_by)
 
 
 def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
@@ -857,14 +897,28 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     wall_start = time.perf_counter()
     templates = generate_all_templates()
 
-    if test_only:
-        # Select templates that cover unique code paths
-        test_idx = get_test_template_indices(templates)
-        templates = [t for i, t in enumerate(templates) if i in test_idx]
-
     if index is not None:
         wanted = set(index) if isinstance(index, (set, list)) else {index}
         templates = [t for i, t in enumerate(templates) if (i + 1) in wanted]
+
+    # When --test is active, every work item still flows through Pass 2 + TSV
+    # emission so that `comparisons_index.tsv` matches a full run. Only the
+    # actual render work (plotly/kaleido/data-table HTML) is suppressed for
+    # items outside the "test subset" the old --test logic would have picked.
+    render_keys: set[tuple] | None = None
+    if test_only:
+        subset_tmpl_idx = get_test_template_indices(templates)
+        # Deterministic mapping from subset-local tmpl_index back to the
+        # full-templates index that the main pass will emit on work items.
+        subset_to_full_idx = sorted(subset_tmpl_idx)
+        subset_templates = [templates[i] for i in subset_to_full_idx]
+        subset_items = _expand_templates(subset_templates, test_only=True)
+        render_keys = set()
+        for item in subset_items:
+            spec_family, subset_ti, spec_entries, focus_val, focus_on, group_by = item
+            full_ti = subset_to_full_idx[subset_ti]
+            render_keys.add((full_ti, focus_on, focus_val, group_by))
+        logger.info(f"--test render gate: {len(render_keys)} items will actually render")
 
     logger.info(f"Expanding {len(templates)} plot templates...")
 
@@ -885,12 +939,23 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     # Chrome Trace Event Format — streaming writes for Perfetto UI visualization
     trace_path = trace_output_path(output_root)
     TimingStats.start_trace(trace_path)
-    with open(csv_path, "w", newline="") as f:
-        csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS, delimiter="\t").writeheader()
-    index_state = init_html_index(html_path, OUTPUT_COLUMNS, data_dir=index_data_dir)
 
-    # Expand templates into work items via slot triples
-    work_items = _expand_templates(templates, test_only=test_only)
+    # Incremental appends (TSV/shard/combo/dashboard-HTML) let users preview
+    # partial output on a full run. They're dead weight on --test since every
+    # item goes through _handle_plot_result but most are dry-run-only (path
+    # strings only, no real files to show). Skip them under --test; the final
+    # `_rewrite_index_in_sorted_order` pass materializes everything in one shot.
+    stream_incremental = not test_only
+    index_state = None
+    if stream_incremental:
+        with open(csv_path, "w", newline="") as f:
+            csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS, delimiter="\t").writeheader()
+        index_state = init_html_index(html_path, OUTPUT_COLUMNS, data_dir=index_data_dir)
+
+    # Expand templates into work items via slot triples. Always fully expand —
+    # `--test` gating happens per-work-item downstream (via `render_keys`),
+    # not at expansion time.
+    work_items = _expand_templates(templates, test_only=False)
 
     total = len(work_items)
     logger.info(f"Total plot groups to generate: {total}")
@@ -901,8 +966,19 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     stacking_groups: dict[tuple, list[tuple[str, list[tuple[PlotSpec, str]]]]] = defaultdict(list)
     from resstockpostproc.shared_utils.mapping import ABBR2STATE
 
-    for i, (spec_family, tmpl_index, spec_entries, focus_val, focus_on, group_by) in enumerate(work_items, 1):
+    for i, work_item in enumerate(work_items, 1):
+        spec_family, tmpl_index, spec_entries, focus_val, focus_on, group_by = work_item
         main_spec = spec_family[0]
+
+        # --test render gate: only a representative subset actually renders.
+        # Non-render items still produce TSV rows (probe + path assembly + table
+        # decision) so the index matches what a full run would emit.
+        is_dry_run = render_keys is not None and _render_key(work_item) not in render_keys
+        if is_dry_run and not TEST_PRODUCES_FULL_INDEX:
+            # Legacy --test mode: skip dry-run items entirely. No row in the TSV,
+            # no entry in `plot_args`, no `stacking_groups` contribution. The
+            # downstream code is the same as a full run; it just sees fewer items.
+            continue
 
         # Build a unique key for this work item
         agg_suffix = f"_by_{group_by}" if group_by else ""
@@ -973,7 +1049,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
         if not focused_entries:
             continue
 
-        plot_args.append((sub_key, focused_entries))
+        plot_args.append((sub_key, focused_entries, is_dry_run))
 
         # Collect spec pairs for stacking into "All Enduses (Stacked)" pages.
         # Each group entry stores (qty_label, focused_entries) — the same
@@ -997,10 +1073,10 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     # Apply _patch_guard: drop specs the guard rejects (default: no-op).
     # Used for surgical re-runs; see _patch_guard docstring.
     guarded_plot_args = []
-    for sub_key, focused_entries in plot_args:
+    for sub_key, focused_entries, is_dry_run in plot_args:
         kept = [(s, label) for s, label in focused_entries if _patch_guard(s)]
         if kept:
-            guarded_plot_args.append((sub_key, kept))
+            guarded_plot_args.append((sub_key, kept, is_dry_run))
     if len(guarded_plot_args) != len(plot_args):
         logger.info(
             f"_patch_guard filtered {len(plot_args)} plot groups -> {len(guarded_plot_args)}"
@@ -1036,9 +1112,9 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
                 initializer=_worker_init,
                 initargs=(needs_persistent_kaleido,),
             ) as executor:
-                for sub_key, focused_entries in plot_args:
+                for sub_key, focused_entries, is_dry_run in plot_args:
                     future = executor.submit(
-                        _worker_run, focused_entries, **common_kwargs,
+                        _worker_run, focused_entries, is_dry_run=is_dry_run, **common_kwargs,
                     )
                     futures[future] = sub_key
                 for future in as_completed(futures):
@@ -1054,9 +1130,9 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
         else:
             if needs_persistent_kaleido:
                 _ensure_kaleido_sync_server()
-            for sub_key, focused_entries in plot_args:
+            for sub_key, focused_entries, is_dry_run in plot_args:
                 result = _generate_spec_plots(
-                    focused_entries, **common_kwargs,
+                    focused_entries, is_dry_run=is_dry_run, **common_kwargs,
                 )
                 _handle_plot_result(sub_key, result, results, csv_path, index_state)
                 pbar.update(1)
@@ -1138,7 +1214,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
                 stacked_data = _build_stacked_table_data(
                     qty_entries, table_view_index, stacked_table_data_cache
                 )
-                if not stacked_data.is_empty() and should_generate_table(stacked_data, table_spec):
+                if not stacked_data.is_empty():
                     table_dir = dataset_output_dir(output_root, str(table_spec.comparison_dataset), "data", FileType.html.value) / path_seg
                     ensure_directory(table_dir)
 
@@ -1175,8 +1251,9 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
                 "Data": data_rel,
             }
             results[f"stacked_{stacked_count}"] = row
-            _append_plot_row(csv_path, row)
-            append_index_row(index_state, row)
+            if index_state is not None:
+                _append_plot_row(csv_path, row)
+                append_index_row(index_state, row)
 
     stacked_pbar.close()
     if stacked_count:
@@ -1189,13 +1266,23 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
             for raw_html in plots_dir.rglob(f"*.raw.{link_format.value}"):
                 raw_html.unlink()
 
-    # Finalize the streaming index (closes combo file, writes a dashboard HTML).
-    finalize_html_index(index_state)
+    if stream_incremental:
+        # Finalize the streaming index (closes combo file, writes dashboard HTML).
+        finalize_html_index(index_state)
+    else:
+        # No incremental writes happened. Materialize the TSV from in-memory
+        # results so _rewrite_index_in_sorted_order has something to rewrite.
+        with open(csv_path, "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=OUTPUT_COLUMNS, delimiter="\t")
+            writer.writeheader()
+            writer.writerows(results.values())
 
     # Rows were appended in worker-completion order, which is non-deterministic.
     # Re-read the TSV, sort by Index (stacked rows with empty Index go last in
     # their original write order), and rewrite TSV + shards + combinations.js +
-    # dashboard HTML so repeat runs produce byte-identical output.
+    # dashboard HTML so repeat runs produce byte-identical output. Also handles
+    # the non-streaming case: it's still the single place that writes shards
+    # and dashboard HTML from the materialized TSV.
     _rewrite_index_in_sorted_order(csv_path, html_path, index_data_dir)
 
     # Summary — count individual viz entries (comma-separated in "Comparison Plot")
