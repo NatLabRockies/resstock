@@ -19,10 +19,13 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     format_group_by,
 )
 from resstockpostproc.baseline_validation.plotters.plot_config import (
-    _resolve_quantity_title,
-    _resolve_timeseries_column,
     get_second_category_column,
     get_second_category_title,
+)
+from resstockpostproc.baseline_validation.plot_semantics import (
+    format_source_label,
+    resolve_quantity_title,
+    resolve_timeseries_column,
 )
 from resstockpostproc.baseline_validation.io_managers.html_utils import _build_footer_html
 from resstockpostproc.shared_utils.timing import timed
@@ -181,7 +184,7 @@ def _filter_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
     """Drop irrelevant columns, keeping only comparison-meaningful ones."""
     # Protect structural columns (join keys) from being dropped
     entity_col = get_second_category_column(plot_spec)
-    ts_col = _resolve_timeseries_column(plot_spec)
+    ts_col = resolve_timeseries_column(plot_spec)
     structural = {entity_col, "source"}
     if ts_col:
         structural.add(str(ts_col))
@@ -272,7 +275,7 @@ def _pivot_by_source(
         ["ResStock 2024", "ResStock 2025"].
     """
     entity_col = get_second_category_column(plot_spec)
-    ts_col = _resolve_timeseries_column(plot_spec)
+    ts_col = resolve_timeseries_column(plot_spec)
 
     # Identify join columns (dimensions)
     join_cols = [entity_col]
@@ -321,16 +324,6 @@ def _pivot_by_source(
     return pivoted, ref_label, rs_labels
 
 
-def _format_source_label(source_str: str) -> str:
-    """Format a raw source string like 'resstock_2025' into 'ResStock 2025'."""
-    parts = source_str.split("_")
-    if parts[0].lower() == "resstock":
-        parts[0] = "ResStock"
-    else:
-        parts[0] = parts[0].upper()
-    return " ".join(parts)
-
-
 def _build_column_config(
     data: pl.DataFrame,
     plot_spec: PlotSpec,
@@ -339,7 +332,7 @@ def _build_column_config(
 ) -> list[dict]:
     """Build column metadata for the HTML table (header labels, formats, types)."""
     columns = data.columns
-    units = _resolve_quantity_title(plot_spec)
+    units = resolve_quantity_title(plot_spec)
     entity_col = get_second_category_column(plot_spec)
     if entity_col == "month_daytype":
         # hour_of_day_matrix: entity column carries month_daytype strings,
@@ -349,7 +342,7 @@ def _build_column_config(
         agg = plot_spec.group_by or plot_spec.effective_group_by[-1]
         entity_label = format_group_by(agg)
 
-    ts_col = _resolve_timeseries_column(plot_spec)
+    ts_col = resolve_timeseries_column(plot_spec)
 
     abs_diff_units = "percentage points" if units == "%" else units
     is_distribution = plot_spec.is_distribution_metric
@@ -966,7 +959,7 @@ def generate_data_table_html(
     # redundant with the title/subtitle (e.g. "State" showing "US Total" in
     # every row of an ALL-enduse US Total overview).
     entity_col = get_second_category_column(plot_spec)
-    ts_col = _resolve_timeseries_column(plot_spec)
+    ts_col = resolve_timeseries_column(plot_spec)
     candidate_dim_cols = [entity_col]
     if ts_col and str(ts_col) in pivoted.columns:
         candidate_dim_cols.append(str(ts_col))
@@ -986,7 +979,7 @@ def generate_data_table_html(
         val_suffix = f"{plot_spec.quantity}_value"
     ref_val_col = f"{ref_label}: {val_suffix}"
 
-    units = _resolve_quantity_title(plot_spec)
+    units = resolve_quantity_title(plot_spec)
     abs_diff_units = "percentage points" if units == "%" else units
 
     # Add per-source difference columns and gather (refKey, absDiffKey) for JS.

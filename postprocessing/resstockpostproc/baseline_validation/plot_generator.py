@@ -67,12 +67,14 @@ from resstockpostproc.baseline_validation.io_managers.output_manager import (
     save_static_images_batch,
 )
 from resstockpostproc.baseline_validation.io_managers.data_table import (
-    _format_source_label,
     generate_data_table_html,
 )
 from resstockpostproc.baseline_validation.plotters.plot_config import (
     get_second_category_column,
-    _resolve_timeseries_column,
+)
+from resstockpostproc.baseline_validation.plot_semantics import (
+    format_source_label,
+    resolve_timeseries_column,
 )
 from resstockpostproc.baseline_validation.utils import ensure_directory
 from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data, get_base_data
@@ -661,7 +663,7 @@ def _compute_discrepancy(data, plot_spec) -> dict[str, float]:
     agg_col = get_second_category_column(plot_spec)
     join_cols = [agg_col]
     # Add the timeseries column to the join (e.g., month, hour of day, percent_time)
-    ts_col = _resolve_timeseries_column(plot_spec)
+    ts_col = resolve_timeseries_column(plot_spec)
     if ts_col and str(ts_col) in data.columns:
         join_cols.append(str(ts_col))
 
@@ -695,7 +697,7 @@ def _compute_discrepancy(data, plot_spec) -> dict[str, float]:
         if len(term_df) == 0:
             continue
 
-        metrics[_format_source_label(rs_source)] = float(term_df["mape_term"].mean() * 100.0)
+        metrics[format_source_label(rs_source)] = float(term_df["mape_term"].mean() * 100.0)
 
     return metrics
 
