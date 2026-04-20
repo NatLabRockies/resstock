@@ -44,29 +44,19 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     FileType,
     ComparisonDataset,
     ViewType,
-    Layout,
     Resolution,
-    CoverageType,
     Metric,
     format_group_by,
     ALL_ENDUSES_DISPLAY,
 )
 from resstockpostproc.baseline_validation.schema.plot_definitions import (
-    PlotTemplate,
-    RECS_CROSS_FILTER_CHARS,
     generate_all_templates,
-    generate_slot_triples,
-    SpecFamily,
-    _make_related_specs,
     _make_spec,
 )
 from resstockpostproc.baseline_validation.generation.work_items import (
-    build_filtered_entries,
-    build_spec_entries,
     emit_layout_for_final_group,
     expand_templates,
     get_test_template_indices,
-    template_signature,
 )
 from resstockpostproc.baseline_validation.io_managers.output_manager import (
     ensure_plotly_asset,
@@ -85,7 +75,7 @@ from resstockpostproc.baseline_validation.plot_semantics import (
     resolve_timeseries_column,
 )
 from resstockpostproc.baseline_validation.utils import ensure_directory
-from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data, get_base_data
+from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data
 from resstockpostproc.baseline_validation.create_html import (
     init_html_index,
     append_index_row,
