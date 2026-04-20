@@ -25,6 +25,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.plot_semantics import (
+    quartile_list_column,
     resolve_quantity_title,
     resolve_timeseries_column,
 )
@@ -159,9 +160,7 @@ def _resolve_quantity_column(plot_spec: PlotSpec) -> str:
 
     # RECS/EIA: distribution box plot uses quartiles
     if plot_spec.is_distribution_metric:
-        if plot_spec.coverage == CoverageType.users_only:
-            return f"{plot_spec.quantity}_nonzero_quartiles"
-        return f"{plot_spec.quantity}_quartiles"
+        return quartile_list_column(plot_spec.quantity, plot_spec.coverage)
 
     # RECS/EIA: penetration bar plot uses percent_users
     if plot_spec.is_penetration_metric:

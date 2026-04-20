@@ -23,7 +23,9 @@ from resstockpostproc.baseline_validation.plotters.plot_config import (
     get_second_category_title,
 )
 from resstockpostproc.baseline_validation.plot_semantics import (
+    QUARTILE_INDICES,
     format_source_label,
+    quartile_list_column,
     resolve_quantity_title,
     resolve_timeseries_column,
 )
@@ -59,16 +61,6 @@ _DROP_CONTAINS = (
     "_quartiles_",
     "_nonzero_quartiles_",
 )
-
-# Quartile list indices that carry semantic meaning (the 9-element list in
-# stacked_plotter._add_quartile_cols uses these positions; others are unused).
-_QUARTILE_INDICES = [
-    (0, "min"),
-    (3, "q1"),
-    (4, "median"),
-    (5, "q3"),
-    (8, "max"),
-]
 
 # Per-enduse wide columns start with one of these fuel prefixes.
 _FUEL_PREFIXES_TUPLE = ("electricity_", "natural_gas_", "propane_", "fuel_oil_")
@@ -163,20 +155,18 @@ def _normalize_model_count_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> p
 def _extract_quartile_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
     """Extract scalar min/q1/median/q3/max columns from the raw quartile list column.
 
-    Mirrors stacked_plotter._add_quartile_cols. Coverage selects which list column
-    to read: all_units → ``_quartiles``; users_only → ``_nonzero_quartiles``.
+    Uses QUARTILE_INDICES from plot_semantics; parallels
+    stacked_plotter._add_quartile_cols which emits a different column shape.
+    Coverage selects which list column to read: all_units → ``_quartiles``;
+    users_only → ``_nonzero_quartiles``.
     """
     quantity = plot_spec.quantity
-    list_col = (
-        f"{quantity}_nonzero_quartiles"
-        if plot_spec.coverage == CoverageType.users_only
-        else f"{quantity}_quartiles"
-    )
+    list_col = quartile_list_column(quantity, plot_spec.coverage)
     if list_col not in data.columns:
         return data
     return data.with_columns([
         pl.col(list_col).list.get(idx).cast(pl.Float64).alias(f"{quantity}_{name}")
-        for idx, name in _QUARTILE_INDICES
+        for idx, name in QUARTILE_INDICES
     ])
 
 @timed

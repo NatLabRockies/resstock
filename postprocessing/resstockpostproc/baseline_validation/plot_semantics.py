@@ -89,3 +89,24 @@ def format_source_label(source_str: str) -> str:
     else:
         parts[0] = parts[0].upper()
     return " ".join(parts)
+
+
+QUARTILE_INDICES: tuple[tuple[int, str], ...] = (
+    (0, "min"),
+    (3, "q1"),
+    (4, "median"),
+    (5, "q3"),
+    (8, "max"),
+)
+"""List-index positions carrying semantic meaning in a 9-element quartile list."""
+
+
+def quartile_list_column(quantity: str, coverage: CoverageType) -> str:
+    """Return the quartile list column for ``quantity`` given coverage.
+
+    all_units coverage reads from ``{quantity}_quartiles``; users_only
+    reads from ``{quantity}_nonzero_quartiles``.
+    """
+    if coverage == CoverageType.users_only:
+        return f"{quantity}_nonzero_quartiles"
+    return f"{quantity}_quartiles"

@@ -4,6 +4,7 @@ from resstockpostproc.shared_utils.generic_plotters.hover_formatting import form
 from resstockpostproc.shared_utils.generic_plotters.range_utils import compute_axis_range
 from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import filter_null_sources
 from resstockpostproc.baseline_validation.io_managers.get_recs_data import get_enduse_order
+from resstockpostproc.baseline_validation.plot_semantics import quartile_list_column
 from resstockpostproc.baseline_validation.plotters.plot_config import resolve_percent_difference_column
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
@@ -80,16 +81,14 @@ def _prepare_box_plot_data(df: pl.DataFrame, quantity: str, coverage: CoverageTy
 
     if coverage == CoverageType.all_units:
         df = df.with_columns(pl.col("model_count").alias("n_points"))
-        df = _add_quartile_cols(df, f"{quantity}_quartiles")
-        return df
     elif coverage == CoverageType.users_only:
         df = df.with_columns(
             pl.col("model_count").fill_null(0).fill_nan(0).cast(pl.Int32).alias("n_points")
         )
-        df = _add_quartile_cols(df, f"{quantity}_nonzero_quartiles")
-        return df
     else:
         raise ValueError(f"Unsupported coverage type for box plot: {coverage}")
+    df = _add_quartile_cols(df, quartile_list_column(quantity, coverage))
+    return df
 
 @timed
 def split_graph_by_state(df: pl.DataFrame):
