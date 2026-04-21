@@ -1,8 +1,4 @@
-"""Shared weighted-statistics helpers for baseline validation loaders.
-
-Extracted from get_recs_data.py / get_resstock_data.py in refactor plan V2
-step 5.1. Consumers: annual aggregation in both loaders.
-"""
+"""Shared weighted-statistics helpers for RECS/ResStock annual aggregation."""
 
 from __future__ import annotations
 
@@ -19,17 +15,7 @@ def weighted_quantiles(
     weights: np.ndarray,
     quantiles: list[float],
 ) -> np.ndarray:
-    """Calculate weighted quantiles.
-
-    Args:
-        data: Data values
-        weights: Weights for each data value
-        quantiles: List of quantiles to calculate (between 0 and 1)
-
-    Returns:
-        Array of quantile values
-
-    """
+    """Return weighted quantiles of ``data`` at the cumulative-weight cutoffs ``quantiles``."""
     # Sort data and weights by data values
     sorted_indices = np.argsort(data)
     sorted_data = data[sorted_indices]

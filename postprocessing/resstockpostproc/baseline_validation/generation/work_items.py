@@ -122,13 +122,10 @@ def expand_templates(
     templates: list[PlotTemplate],
     test_only: bool = False,
 ) -> list[tuple[SpecFamily, int, list, object, tuple, str | None]]:
-    """Expand templates into work items using slot triples.
+    """Expand templates into ``(spec_family, tmpl_index, spec_entries, focus_val, focus_on, group_by)`` items.
 
-    For each template, generates all valid (F1, F2, group_by) triples, then
-    expands focus values for each dimension. Each work item contains everything
-    needed for Pass 2 metadata and Pass 3 plotting.
-
-    Returns list of (spec_family, tmpl_index, spec_entries, focus_val, focus_on, group_by).
+    Iterates all valid (F1, F2, group_by) triples per template and expands
+    focus values; the tuples are consumed by Pass 2 (metadata) and Pass 3 (plot).
     """
     work_items = []
 
@@ -428,13 +425,7 @@ def build_plot_args(
     list[tuple[str, list, bool]],
     dict[tuple, list],
 ]:
-    """Build per-work-item rows, focused entries, and stacking groups.
-
-    Returns:
-        (results, plot_args, stacking_groups) — the three outputs Pass 3 and
-        Pass 4 consume.
-
-    """
+    """Return ``(results, plot_args, stacking_groups)`` — the Pass 3 / Pass 4 inputs."""
     results: dict[str, dict[str, str]] = {}
     plot_args: list[tuple[str, list, bool]] = []
     stacking_groups: dict[tuple, list] = defaultdict(list)

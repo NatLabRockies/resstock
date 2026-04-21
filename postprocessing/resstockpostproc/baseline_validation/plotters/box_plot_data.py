@@ -32,16 +32,12 @@ def add_quartile_cols(df: pl.DataFrame, quartile_column: str) -> pl.DataFrame:
 
 @timed
 def prepare_box_plot_data(df: pl.DataFrame, quantity: str, coverage: CoverageType) -> pl.DataFrame:
-    """Prepare the data for box plot by adding necessary columns.
+    """Add box-plot columns (outliers, mean, n_points, quartiles) to ``df``.
 
-    Args:
-        df: Input DataFrame
-        quantity: The quantity column name (without suffix)
-        coverage: CoverageType.all_units uses _quartiles, CoverageType.users_only uses _nonzero_quartiles.
-            For non-ALL users_only plots, model_count is already normalized upstream to the
-            exact nonzero model/sample count for this quantity, so box-plot n_points should
-            use it directly.
-
+    Coverage selects the quartile source list: all_units → ``_quartiles``,
+    users_only → ``_nonzero_quartiles``. For non-ALL users_only plots,
+    ``model_count`` is already normalized upstream to the per-quantity
+    nonzero count, so it's used as-is for ``n_points``.
     """
     df = df.with_columns(pl.lit([]).alias("outliers"))
     df = df.with_columns(pl.lit([]).alias("outlier_buildings"))
