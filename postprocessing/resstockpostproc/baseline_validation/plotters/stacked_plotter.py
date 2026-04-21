@@ -80,6 +80,20 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
     return all_min_val, all_max_val
 
 
+def _stacked_quantity_title(plot_spec: PlotSpec) -> str:
+    if plot_spec.quantity == DataCol.UNITS_COUNT:
+        return "count"
+    if plot_spec.is_distribution_metric:
+        return "kWh/user" if plot_spec.coverage == CoverageType.users_only else "kWh/unit"
+    if plot_spec.is_penetration_metric:
+        return "%"
+    if plot_spec.view == ViewType.diff_view:
+        return "Percent Difference"
+    if plot_spec.view == ViewType.value_view:
+        return "kWh"
+    return ""
+
+
 @timed
 def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     """Create a box plot or bar comparing data sources across states.
@@ -89,32 +103,13 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     if plot_spec.layout == Layout.histogram:
         return create_histogram_plot(df, plot_spec)
 
-    # Determine quantity title based on view type, aggregation type, and coverage
-    if plot_spec.quantity == DataCol.UNITS_COUNT:
-        # Dwelling unit count case
-        quantity_title = "count"
-    elif plot_spec.is_distribution_metric:
-        # Distribution box plot
-        if plot_spec.coverage == CoverageType.users_only:
-            quantity_title = "kWh/user"
-        else:
-            quantity_title = "kWh/unit"
-    elif plot_spec.is_penetration_metric:
-        quantity_title = "%"
-    elif plot_spec.view == ViewType.diff_view:
-        quantity_title = "Percent Difference"
-    elif plot_spec.view == ViewType.value_view:
-        quantity_title = "kWh"
-    else:
-        quantity_title = ""
+    quantity_title = _stacked_quantity_title(plot_spec)
 
     agg_col = plot_spec.group_by or (plot_spec.effective_group_by[-1] if plot_spec.effective_group_by else "state")
-    if plot_spec.is_all_enduses:
-        if plot_spec.focus_on:
-            for col, val in plot_spec.focus_on:
-                filter_col = col
-                if filter_col in df.columns:
-                    df = df.filter(pl.col(filter_col) == val)
+    if plot_spec.is_all_enduses and plot_spec.focus_on:
+        for col, val in plot_spec.focus_on:
+            if col in df.columns:
+                df = df.filter(pl.col(col) == val)
 
     # Exclude US Total from total-aggregation value_view plots to prevent scale domination
     # (only when showing all entities, not when focused on a single entity like US Total)
@@ -159,15 +154,18 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
             else:
                 quantity_col = f"{quantity_col}_value"
             quantity_col += "_percent_difference" if plot_spec.view == ViewType.diff_view else ""
-            if plot_spec.view == ViewType.diff_view:
-                df_subset = filter_null_sources(df_subset, "source", quantity_col)
+            plot_df = (
+                filter_null_sources(df_subset, "source", quantity_col)
+                if plot_spec.view == ViewType.diff_view
+                else df_subset
+            )
             lower_col = f"{quantity_col}_lower_bound"
             upper_col = f"{quantity_col}_upper_bound"
             bar_plotter.create_bar_plot(
-                data=df_subset,
+                data=plot_df,
                 quantity_column=quantity_col,
-                lower_bound_column=lower_col if lower_col in df_subset.columns else None,
-                upper_bound_column=upper_col if upper_col in df_subset.columns else None,
+                lower_bound_column=lower_col if lower_col in plot_df.columns else None,
+                upper_bound_column=upper_col if upper_col in plot_df.columns else None,
                 first_category_column="source",
                 second_category_column=second_cat_column,
                 quantity_title=quantity_title,
@@ -178,9 +176,9 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
                 col=col,
                 show_legends=show_legends,
                 custom_range=custom_range,
-                count_label_resolver=lambda source: plot_spec.model_count_display_label_for_source(source),
+                count_label_resolver=plot_spec.model_count_display_label_for_source,
                 compact_hover_values=True,
-                percent_difference_column=resolve_percent_difference_column(quantity_col, df_subset),
+                percent_difference_column=resolve_percent_difference_column(quantity_col, plot_df),
             )
         show_legends = False  # Only show legends for the first subplot
 
