@@ -13,6 +13,7 @@ Usage:
 from __future__ import annotations
 
 from collections.abc import Iterator
+from itertools import chain
 from dataclasses import dataclass
 
 from resstockpostproc.shared_utils.db_column_names import DataCol
@@ -461,5 +462,4 @@ def generate_all_templates() -> list[PlotTemplate]:
     The group_by and focus_on are NOT baked in — those are determined
     by generate_slot_triples() in the expansion loop.
     """
-    from itertools import chain
     return list(chain(_eia_templates(), _recs_templates(), _lrd_templates()))

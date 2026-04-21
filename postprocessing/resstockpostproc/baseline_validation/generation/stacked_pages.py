@@ -22,6 +22,9 @@ from resstockpostproc.baseline_validation.footnotes import (
 from resstockpostproc.baseline_validation.create_html import append_index_row
 from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data
 from resstockpostproc.baseline_validation.generation.render_runner import append_plot_row, plot_output_path
+from resstockpostproc.baseline_validation.io_managers.data_table import generate_data_table_html
+from resstockpostproc.baseline_validation.io_managers.html_utils import postprocess_plot_html
+from resstockpostproc.baseline_validation.io_managers.output_manager import plotly_cdn_url
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     ALL_ENDUSES_DISPLAY,
     ComparisonDataset,
@@ -191,9 +194,6 @@ def _write_stacked_view_html(
     plotly_asset_path: Path,
 ) -> tuple[PlotSpec, Path]:
     """Post-process per-quantity raw HTML into a single combined stacked page file."""
-    from resstockpostproc.baseline_validation.io_managers.html_utils import postprocess_plot_html
-    from resstockpostproc.baseline_validation.io_managers.output_manager import plotly_cdn_url
-
     all_view_spec = view_spec.model_copy(update={"quantity": DataCol.ALL})
     _, grouped_title = all_view_spec.file_path_and_name
     title = stacked_title_from_grouped(grouped_title, all_view_spec.view)
@@ -271,7 +271,6 @@ def _maybe_build_stacked_table(
         group_by_label, first_spec.comparison_dataset, first_spec.resolution, first_spec.aggregation_type
     ):
         return ""
-    from resstockpostproc.baseline_validation.io_managers.data_table import generate_data_table_html
 
     table_view_index, table_spec, table_rel_plot = next(
         (o for o in stacked_outputs if o[1].view == ViewType.value_view),

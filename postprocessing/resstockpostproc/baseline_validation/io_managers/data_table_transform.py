@@ -218,10 +218,9 @@ def filter_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
             continue
 
         # For penetration views, drop _value columns — only percent_users matters
-        if plot_spec.is_penetration_metric:
-            if col.endswith("_value") or col.endswith("_value_percent_difference"):
-                drop_cols.append(col)
-                continue
+        if plot_spec.is_penetration_metric and col.endswith(("_value", "_value_percent_difference")):
+            drop_cols.append(col)
+            continue
 
         # For distribution view, drop the single percent_difference column
         # (it compares means, not distributions, and is unintuitive next to quartiles).
