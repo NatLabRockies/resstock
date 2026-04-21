@@ -115,6 +115,37 @@ def _assert_consistent_histogram_geometry(plot_df: pl.DataFrame, overflow_bin: i
         )
 
 
+def _add_histogram_bar(
+    fig: go.Figure,
+    sub: pl.DataFrame,
+    source: str,
+    plot_spec: PlotSpec,
+    palette: dict,
+    **bar_kwargs,
+) -> None:
+    """Add one histogram trace (one source's bars) to ``fig``."""
+    count_label = plot_spec.model_count_display_label_for_source(source)
+    count_value = (
+        int(sub["sample_count"][0])
+        if "sample_count" in sub.columns and len(sub) and sub["sample_count"][0] is not None
+        else None
+    )
+    fig.add_bar(
+        x=sub["_bin_center"].to_list(),
+        y=sub["count_pct"].to_list(),
+        width=sub["_bar_width"].to_list(),
+        name=source,
+        marker_color=palette.get(source),
+        opacity=0.7,
+        customdata=[
+            (format_compact_number(left), format_compact_number(right))
+            for left, right in zip(sub["bin_left"].to_list(), sub["bin_right"].to_list(), strict=True)
+        ],
+        hovertemplate=_histogram_hover_template(count_label, count_value),
+        **bar_kwargs,
+    )
+
+
 def _create_grouped_histogram_plot(
     df: pl.DataFrame, plot_spec: PlotSpec, group_col: str
 ) -> go.Figure:
@@ -144,26 +175,10 @@ def _create_grouped_histogram_plot(
             sub = group_df.filter(pl.col("source") == source)
             if sub.is_empty():
                 continue
-            count_label = plot_spec.model_count_display_label_for_source(source)
-            count_value = (
-                int(sub["sample_count"][0])
-                if "sample_count" in sub.columns and sub["sample_count"][0] is not None
-                else None
-            )
-            fig.add_bar(
-                x=sub["_bin_center"].to_list(),
-                y=sub["count_pct"].to_list(),
-                width=sub["_bar_width"].to_list(),
-                name=source,
-                marker_color=palette.get(source),
-                opacity=0.7,
+            _add_histogram_bar(
+                fig, sub, source, plot_spec, palette,
                 showlegend=(row_idx == 1),
                 legendgroup=source,
-                customdata=[
-                    (format_compact_number(left), format_compact_number(right))
-                    for left, right in zip(sub["bin_left"].to_list(), sub["bin_right"].to_list(), strict=True)
-                ],
-                hovertemplate=_histogram_hover_template(count_label, count_value),
                 row=row_idx,
                 col=1,
             )
@@ -211,25 +226,7 @@ def create_histogram_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     fig = go.Figure()
     for source in sources:
         sub = plot_df.filter(pl.col("source") == source)
-        count_label = plot_spec.model_count_display_label_for_source(source)
-        count_value = (
-            int(sub["sample_count"][0])
-            if "sample_count" in sub.columns and len(sub) and sub["sample_count"][0] is not None
-            else None
-        )
-        fig.add_bar(
-            x=sub["_bin_center"].to_list(),
-            y=sub["count_pct"].to_list(),
-            width=sub["_bar_width"].to_list(),
-            name=source,
-            marker_color=palette.get(source),
-            opacity=0.7,
-            customdata=[
-                (format_compact_number(left), format_compact_number(right))
-                for left, right in zip(sub["bin_left"].to_list(), sub["bin_right"].to_list(), strict=True)
-            ],
-            hovertemplate=_histogram_hover_template(count_label, count_value),
-        )
+        _add_histogram_bar(fig, sub, source, plot_spec, palette)
 
     x_max = max(1.0, p98 + 2.0 * core_width)
     max_pct = plot_df["count_pct"].max()
