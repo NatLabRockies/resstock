@@ -1,12 +1,7 @@
-"""Plot configuration derived from PlotSpec for rendering.
+"""PlotConfig dataclass and builders that resolve a PlotSpec into render-ready fields.
 
-This module provides the PlotConfig dataclass and builder functions that
-translate a PlotSpec into rendering-ready configuration.
-
-Architecture:
-    build_plot_config() composes focused resolver functions, each handling
-    one aspect of the config. Each resolver internally dispatches based on
-    comparison_dataset, resolution, and view_type.
+``build_plot_config`` composes focused per-field resolvers; each resolver
+dispatches on comparison_dataset, resolution, and view_type.
 """
 
 from dataclasses import dataclass
@@ -31,12 +26,7 @@ from resstockpostproc.baseline_validation.plot_semantics import (
 
 @dataclass(frozen=True)
 class PlotConfig:
-    """Fully resolved configuration for rendering a plot.
-
-    This is an intermediate representation between PlotSpec (user-facing)
-    and the actual rendering calls. It contains all the derived values
-    needed to call the rendering functions.
-    """
+    """Intermediate representation between user-facing PlotSpec and the renderer."""
 
     # Column names
     quantity_column: str
@@ -70,19 +60,7 @@ class PlotConfig:
 
 
 def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
-    """Build a PlotConfig from a PlotSpec and data.
-
-    Composes focused resolver functions to build each config field.
-    Post-processing handles view-type swapping and monthly sidebar clearing.
-
-    Args:
-        plot_spec: The plot specification
-        data: The prepared DataFrame (used to check for single-entity rendering)
-
-    Returns:
-        PlotConfig with all rendering parameters resolved
-
-    """
+    """Resolve ``plot_spec`` into a PlotConfig; ``data`` is used for single-entity detection."""
     # Resolve all config fields
     quantity_column = _resolve_quantity_column(plot_spec)
     sidebar_column = _resolve_sidebar_column(plot_spec)
@@ -357,13 +335,10 @@ def _resolve_dimensions(
 
 
 def _uses_stacked_layout(plot_spec: PlotSpec) -> bool:
-    """Check if this plot should use stacked subplot layout (one row per entity).
+    """True when the plot needs stacked subplots (one row per entity).
 
-    Returns True for:
-    - layout=two_column (forces stacked/two-panel state rendering)
-    - ViewType.distribution (box plots)
-    - quantity=ALL (enduse bar layout via split_graph_by_enduse)
-    - non-state group_by levels (grouped bar/box charts)
+    Covers two_column layout, box plots, all-enduses splits, and every
+    non-state group_by.
     """
     if plot_spec.layout == Layout.two_column:
         return True
@@ -391,12 +366,7 @@ def _check_single_entity(data: pl.DataFrame, plot_spec: PlotSpec, timeseries_col
 
 
 def get_second_category_column(plot_spec: PlotSpec) -> str:
-    """Get the column name for the second category (layout grouping).
-
-    This determines which column is used for the tilemap layout.
-    Uses group_by if set, otherwise falls back to the DataKey's
-    group_by (derived from focus_on columns).
-    """
+    """Column for tilemap layout grouping; falls back to DataKey when ``group_by`` is unset."""
     match plot_spec.resolution:
         case Resolution.hour_of_day_matrix:
             return "month_daytype"
