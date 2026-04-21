@@ -256,7 +256,9 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
 
             # Pivot the dataframe to create a 'quantity' column
             # Keep id columns that don't vary by quantity
-            agg_col = plot_spec.group_by or (plot_spec.effective_group_by[-1] if plot_spec.effective_group_by else "state")
+            agg_col = plot_spec.group_by or (
+                plot_spec.effective_group_by[-1] if plot_spec.effective_group_by else "state"
+            )
             id_cols = [agg_col, "model_count", "units_count", "source"]
 
             # Build list of columns to unpivot for each quantity
@@ -308,7 +310,9 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
             if sort_order:
                 enduse_order = pl.DataFrame({"enduse": sort_order, "enduse_order": range(len(sort_order))})
                 group_df = (
-                    group_df.join(enduse_order, on="enduse").sort("enduse_order", maintain_order=True).drop("enduse_order")
+                    group_df.join(enduse_order, on="enduse")
+                    .sort("enduse_order", maintain_order=True)
+                    .drop("enduse_order")
                 )
 
             yield group_df, "enduse", row, col

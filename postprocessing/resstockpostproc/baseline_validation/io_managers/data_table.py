@@ -57,6 +57,7 @@ def _build_table_html(
         metrics_by_source: Mapping of ResStock label → MAPE (%).
         rs_sources_js: List of {label, refKey, absDiffKey} dicts used by the JS
             to compute per-source formula derivations at render time.
+
     """
     title = plot_spec.display_title
 
@@ -492,6 +493,7 @@ def generate_data_table_html(
         source_labels: Data source labels for the footer.
         csv_download_filename: Optional filename used by the in-page Download CSV action.
         include_discrepancy_metrics: Whether to include discrepancy formula details.
+
     """
     if data.is_empty():
         output_path.write_text(

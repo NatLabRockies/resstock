@@ -73,6 +73,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
         test_only: If True, only generate the test subset with limited focus expansion.
         parallel: If True, use ProcessPoolExecutor for parallel plot generation.
         no_svg: If True, skip SVG output (faster for test/determinism checks).
+
     """
     wall_start = time.perf_counter()
     templates = generate_all_templates()

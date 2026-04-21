@@ -28,6 +28,7 @@ def weighted_quantiles(
 
     Returns:
         Array of quantile values
+
     """
     # Sort data and weights by data values
     sorted_indices = np.argsort(data)

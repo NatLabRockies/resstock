@@ -38,9 +38,8 @@ for year in range(2012, last_year + 1):
             url = f"https://www.eia.gov/electricity/data/eia861/zip/f861{year}.zip"
         print(f"Downloading {url}")
         ssl_context = ssl._create_unverified_context()
-        with urllib.request.urlopen(url, context=ssl_context) as response:
-            with open(raw_file, 'wb') as out_file:
-                out_file.write(response.read())
+        with urllib.request.urlopen(url, context=ssl_context) as response, open(raw_file, "wb") as out_file:
+            out_file.write(response.read())
     try:
         filezip = zipfile.ZipFile(raw_file)
     except zipfile.BadZipFile:
@@ -60,8 +59,8 @@ for year in range(2012, last_year + 1):
                        "State": "state", "Megawatthours": "sales_mwh",
                        "Count": "customers", "County": "county"}
     sales_df.rename(columns=col_rename_dict, inplace=True)
-    sales_df = sales_df.groupby(['year', 'eiaid', 'state']).agg({"utility_name": "first", 'sales_mwh': 'sum',
-                                                                 'customers': 'sum'})
+    sales_df = sales_df.groupby(["year", "eiaid", "state"]).agg({"utility_name": "first", "sales_mwh": "sum",
+                                                                 "customers": "sum"})
 
     sales_dfs.append(sales_df.reset_index())
 

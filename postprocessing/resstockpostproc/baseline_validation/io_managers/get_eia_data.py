@@ -1,5 +1,4 @@
-"""
-Reference Data Loader
+"""Reference Data Loader
 ---------------------
 Functions for loading and processing reference data (EIA, LRD, etc.) for validation
 """
@@ -34,6 +33,7 @@ def get_annual_all(
     Args:
         data_key: DataKey containing group_by, aggregation_type, and coverage
         years: List of years to include. Defaults to workflow.reference_years["eia"]
+
     """
     if years is None:
         years = workflow.reference_years.get("eia", [2018])
@@ -47,7 +47,9 @@ def get_annual_all(
         annual_monthly_gas_df = monthly_gas_df.group_by(by, maintain_order=True).agg(
             pl.col(f"{DataCol.NATURAL_GAS_TOTAL}_value").sum(), pl.col(f"{DataCol.NATURAL_GAS_TOTAL}_customers").mean()
         )
-        year_df = annual_elec_df.join(annual_monthly_gas_df, on=by, how="full", coalesce=True, maintain_order="left_right")
+        year_df = annual_elec_df.join(
+            annual_monthly_gas_df, on=by, how="full", coalesce=True, maintain_order="left_right",
+        )
         year_df = year_df.with_columns(
             (100 * pl.col(f"{DataCol.NATURAL_GAS_TOTAL}_customers") / pl.col(DataCol.UNITS_COUNT)).alias(
                 f"{DataCol.NATURAL_GAS_TOTAL}_percent_users"
@@ -96,6 +98,7 @@ def get_monthly_all(
     Args:
         data_key: DataKey containing group_by, aggregation_type, and coverage
         years: List of years to include. Defaults to workflow.reference_years["eia"]
+
     """
     if years is None:
         years = workflow.reference_years.get("eia", [2018])
@@ -106,7 +109,9 @@ def get_monthly_all(
     for year in years:
         monthly_elec_df = _get_eia_monthly_electricity(year=year, by=by)
         monthly_gas_df = _get_eia_monthly_gas(year=year, by=by)
-        year_df = monthly_elec_df.join(monthly_gas_df, on=[by, "month"], how="full", coalesce=True, maintain_order="left_right")
+        year_df = monthly_elec_df.join(
+            monthly_gas_df, on=[by, "month"], how="full", coalesce=True, maintain_order="left_right",
+        )
         year_df = year_df.with_columns(
             (100 * pl.col(f"{DataCol.NATURAL_GAS_TOTAL}_customers") / pl.col(DataCol.UNITS_COUNT)).alias(
                 f"{DataCol.NATURAL_GAS_TOTAL}_percent_users"

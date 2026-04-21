@@ -28,6 +28,7 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
 
     Returns:
         Tuple of (min_val, max_val) for y-axis range
+
     """
     quantity = plot_spec.quantity
     view = plot_spec.view

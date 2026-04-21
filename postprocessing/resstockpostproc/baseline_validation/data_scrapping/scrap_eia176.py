@@ -37,13 +37,13 @@ df_heat_content_annual = pd.read_excel(raw_path, sheet_name="Data 1", skiprows=2
 
 def cleanup_df(df, prefix, value_name):
     df = df.rename(columns=lambda col: m.group(1) if (m := re.match(r"([a-zA-Z\. ]*) " + f"{prefix}", col)) else col)
-    df.insert(0, 'year', pd.to_datetime(df['Date']).dt.year)
-    df.insert(1, 'month', pd.to_datetime(df['Date']).dt.month)
+    df.insert(0, "year", pd.to_datetime(df["Date"]).dt.year)
+    df.insert(1, "month", pd.to_datetime(df["Date"]).dt.month)
     df = df.drop(columns=["U.S.", "Date"])
-    df = df[df['year'] >= 2012]
-    df = df.melt(['year', 'month'], var_name='state', value_name=value_name)
-    df['state'] = df['state'].map(STATE2ABBR)
-    assert df['state'].isna().sum() == 0
+    df = df[df["year"] >= 2012]
+    df = df.melt(["year", "month"], var_name="state", value_name=value_name)
+    df["state"] = df["state"].map(STATE2ABBR)
+    assert df["state"].isna().sum() == 0
     return df
 
 
@@ -52,10 +52,10 @@ df_heat_content_monthly = cleanup_df(df_heat_content_monthly, "Heat Content", "h
 df_heat_content_annual = cleanup_df(df_heat_content_annual, "Heat Content", "heat_content_btu_per_cf")
 
 # for years where monthly data is not available, use annual data
-df_heat_content_monthly.set_index(['year', 'state'], inplace=True)
-df_heat_content_monthly.update(df_heat_content_annual.set_index(['year', 'state']), overwrite=False)
+df_heat_content_monthly.set_index(["year", "state"], inplace=True)
+df_heat_content_monthly.update(df_heat_content_annual.set_index(["year", "state"]), overwrite=False)
 df_heat_content_monthly.reset_index(inplace=True)
 
-df_merged = df_consumption.merge(df_heat_content_monthly, on=['year', 'month', 'state'])
-df_merged['natural_gas_kbtu'] = df_merged['natural_gas_mmcf'] * df_merged['heat_content_btu_per_cf'] * 1000
+df_merged = df_consumption.merge(df_heat_content_monthly, on=["year", "month", "state"])
+df_merged["natural_gas_kbtu"] = df_merged["natural_gas_mmcf"] * df_merged["heat_content_btu_per_cf"] * 1000
 df_merged.to_csv(eia861_processed_path / "natural_gas_monthly_sales.csv", index=False)

@@ -1,5 +1,4 @@
-"""
-Load Duration Curve Plotter
+"""Load Duration Curve Plotter
 ---------------------------
 Functions for generating load duration curve validation plots
 """
@@ -21,7 +20,6 @@ from resstockpostproc.shared_utils.timing import timed
 @timed
 def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str]:
     """Create load duration curve plot based on the plot specification."""
-
     agg = plot_spec.group_by or plot_spec.effective_group_by[-1]
     assert agg == "utility", "LRD plots only support group_by='utility'"
     final_df = data.clone()

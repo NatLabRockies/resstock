@@ -169,6 +169,7 @@ def generate_slot_triples(
         - F1=char[i], F2=char[j>i] → group_by must be None.
           Requires allow_cross_filter (since F1 is a filter on a grouping dim).
         - No two geographic dimensions may appear in the same triple.
+
     """
     triples: list[SlotTriple] = []
 

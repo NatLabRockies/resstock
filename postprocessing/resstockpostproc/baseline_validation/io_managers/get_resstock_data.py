@@ -42,6 +42,7 @@ def get_timeseries_all(
         data_key: DataKey containing effective_group_by, resolution, aggregation_type, and coverage
         restrict_list: Optional list of entity IDs to restrict to (e.g., eiaid list)
         occupied_only: If True, only include occupied units (for RECS comparison)
+
     """
     if not workflow.data_sources:
         return None
@@ -440,6 +441,7 @@ def get_annual_all(
     Args:
         data_key: DataKey containing effective_group_by, aggregation_type, and coverage
         occupied_only: If True, only include occupied units (for RECS comparison)
+
     """
     if not workflow.data_sources:
         return None
@@ -653,7 +655,8 @@ def _transform_columns(df: pl.DataFrame, db_schema: DBSchema) -> pl.DataFrame:
 
 def _resolve_characteristic_column_name(df: pl.DataFrame, column_name: str) -> str:
     """Return the characteristic column name as present in BuildStockQuery results.
-    This is needed because sometimes BSQ removes the in. prefix from characteristic columns."""
+    This is needed because sometimes BSQ removes the in. prefix from characteristic columns.
+    """
     if column_name in df.columns:
         return column_name
     if column_name.startswith("in."):

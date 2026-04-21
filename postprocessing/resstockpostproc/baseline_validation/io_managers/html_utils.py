@@ -137,6 +137,7 @@ def postprocess_plot_html(
         comparison_dataset: Raw enum value (e.g. ``"eia"``) for footer filtering.
         scale_x: Horizontal scale factor applied to the initial container width.
         scale_y: Vertical scale factor applied to the initial per-chart height.
+
     """
     if isinstance(html_paths, Path):
         html_paths = [html_paths]

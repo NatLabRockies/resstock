@@ -1,5 +1,4 @@
-"""
-Utility functions for data loading and processing
+"""Utility functions for data loading and processing
 """
 
 import polars as pl
@@ -14,8 +13,7 @@ def add_us_total(
     group_cols: list[str] | None = None,
     exclude_cols: list[str] | None = None,
 ) -> pl.DataFrame:
-    """
-    Add a "US Total" pseudo-entity by summing all values across all entities.
+    """Add a "US Total" pseudo-entity by summing all values across all entities.
 
     Args:
         df: DataFrame to add US Total to
@@ -27,6 +25,7 @@ def add_us_total(
 
     Returns:
         DataFrame with US Total row(s) added
+
     """
     # Check if US Total already exists
     if "US Total" in df[by].unique().to_list():
@@ -67,8 +66,7 @@ def add_us_total(
 
 
 def add_missing_states(df: pl.DataFrame) -> pl.DataFrame:
-    """
-    Make sure all states are present in the dataframe.
+    """Make sure all states are present in the dataframe.
     Older ResStock runs sometimes lack HI and AK which makes comparisons difficult.
     Add null rows for missing states.
 
@@ -76,8 +74,10 @@ def add_missing_states(df: pl.DataFrame) -> pl.DataFrame:
         df: DataFrame to add All States to. Must contain a 'state' column.
         additional_join_cols: Additional columns to join on when adding missing states.
                               This is useful for monthly data where 'month' is also a grouping column.
+
     Returns:
         DataFrame with missing states added
+
     """
     states_to_add = ["AK", "HI"]
     existing_states = set(df["state"].unique().to_list())
@@ -109,8 +109,8 @@ def apply_aggregation(data_key: DataKey, df: pl.DataFrame) -> pl.DataFrame:
 
     Returns:
         DataFrame with values transformed according to aggregation type
-    """
 
+    """
     if data_key.aggregation_type == Metric.total:
         return df  # No transformation needed
 

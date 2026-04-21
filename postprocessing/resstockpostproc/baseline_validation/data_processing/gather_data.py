@@ -63,6 +63,7 @@ def get_base_data(data_key: DataKey) -> pl.DataFrame:
     Args:
         data_key: DataKey containing comparison_dataset, group_by, resolution,
                   aggregation_type, and coverage
+
     """
     return _get_plot_data(data_key)
 
@@ -85,6 +86,7 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
 
     Returns:
         DataFrame ready for plotting
+
     """
     df = _keep_relevant_columns(base_data, plot_spec)
     # Sort by units_count within the primary grouping column (if any)
@@ -168,6 +170,7 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
     Args:
         data_key: DataKey containing comparison_dataset, effective_group_by, resolution,
                   aggregation_type, and coverage
+
     """
     comparison_dataset = data_key.comparison_dataset
     io_data_key = _to_io_data_key(data_key)

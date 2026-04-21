@@ -1,5 +1,4 @@
-"""
-Configuration schema for baseline validation
+"""Configuration schema for baseline validation
 --------------------------------------------
 Defines Pydantic models for validating baseline validation workflow configuration
 """
@@ -25,7 +24,10 @@ class DataSourceConfig(NoExtraModel):
     db_schema: DBSchema = Field(description="Database schema", default=DBSchema.OEDI_NEW)
     baseline_metadata_and_annual_results_parquet_url: str | None = Field(
         default=None,
-        description="Optional S3 URL for the baseline metadata-and-annual-results parquet cached locally for fast reads.",
+        description=(
+            "Optional S3 URL for the baseline metadata-and-annual-results parquet"
+            " cached locally for fast reads."
+        ),
     )
 
     def __hash__(self):

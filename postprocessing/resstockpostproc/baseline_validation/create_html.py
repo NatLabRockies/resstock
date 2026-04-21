@@ -212,6 +212,7 @@ def parse_viz_cell(cell_value: str) -> tuple[str, str | None]:
       - ("FAILED", "traceback...") for failure with traceback
       - ("FAILED", None) for failure without traceback
       - ("", None) for empty cells
+
   """
   if not cell_value or not cell_value.strip():
     return ("", None)

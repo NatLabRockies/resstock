@@ -118,7 +118,10 @@ class DataKey(NamedTuple):
     coverage: CoverageType
 
     def __str__(self) -> str:
-        return f"DataKey({self.comparison_dataset}, {self.effective_group_by}, {self.resolution}, {self.aggregation_type}, {self.coverage})"
+        return (
+            f"DataKey({self.comparison_dataset}, {self.effective_group_by}, {self.resolution},"
+            f" {self.aggregation_type}, {self.coverage})"
+        )
 
 
 def format_group_by(group_by: str) -> str:
@@ -161,7 +164,9 @@ _PERIOD_LABEL = {
 
 
 class PlotSpec(NoExtraModel):
-    comparison_dataset: ComparisonDataset = Field(..., description="Comparison dataset for validation plots (eia, recs, lrd).")
+    comparison_dataset: ComparisonDataset = Field(
+        ..., description="Comparison dataset for validation plots (eia, recs, lrd).",
+    )
     aggregation_type: Metric = Field(..., description="Metric: total, average, distribution, or penetration")
     coverage: CoverageType = Field(..., description="Population coverage: all_units or users_only")
     quantity: DataCol = Field(..., description="Column(s) to visualise. Use DataCol.ALL for all enduses.")
@@ -358,6 +363,7 @@ class PlotSpec(NoExtraModel):
             "Average Monthly Electricity Consumption per Dwelling Unit by State"
             "Annual Electricity Consumption per Dwelling Unit"
             "Load Duration Curve of Electricity Consumption per Dwelling Unit"
+
         """
         # ── LRD-specific resolutions with unique title patterns ──
         if self.comparison_dataset == ComparisonDataset.lrd:
@@ -391,7 +397,11 @@ class PlotSpec(NoExtraModel):
         quantity_name = self.quantity.label if not self.is_all_enduses else "Enduse"
 
         if self.quantity == DataCol.UNITS_COUNT:
-            du_label = "Occupied Dwelling Units" if self.comparison_dataset == ComparisonDataset.recs else "Dwelling Units"
+            du_label = (
+                "Occupied Dwelling Units"
+                if self.comparison_dataset == ComparisonDataset.recs
+                else "Dwelling Units"
+            )
             return f"Number of {du_label} {grouping}"
 
         if self.is_penetration_metric:
@@ -452,6 +462,7 @@ class PlotSpec(NoExtraModel):
             "Average Monthly Consumption" (average, month)
             "Distribution of Annual Consumption" (distribution)
             "Load Duration Plot" (LRD)
+
         """
         if self.comparison_dataset == ComparisonDataset.lrd:
             if self.view in (ViewType.temp_view, ViewType.temp_distribution_view):
@@ -474,7 +485,11 @@ class PlotSpec(NoExtraModel):
             return self.display_title
 
         if self.quantity == DataCol.UNITS_COUNT:
-            du_label = "Occupied Dwelling Units" if self.comparison_dataset == ComparisonDataset.recs else "Dwelling Units"
+            du_label = (
+                "Occupied Dwelling Units"
+                if self.comparison_dataset == ComparisonDataset.recs
+                else "Dwelling Units"
+            )
             return f"Number of {du_label}"
 
         if self.is_penetration_metric:

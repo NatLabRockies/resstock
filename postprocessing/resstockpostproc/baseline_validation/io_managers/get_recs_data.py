@@ -183,6 +183,7 @@ def get_annual_all(
     Args:
         data_key: DataKey containing effective_group_by, aggregation_type, and coverage
         year: Year of RECS data (only 2020 supported)
+
     """
     if year != 2020:
         raise ValueError("RECS data is only available for the year 2020.")
@@ -320,6 +321,7 @@ def get_monthly_all(
     Args:
         data_key: DataKey containing group_by, aggregation_type, and coverage
         year: Year of RECS data (only 2020 supported)
+
     """
     if year != 2020:
         raise ValueError("RECS data is only available for the year 2020.")

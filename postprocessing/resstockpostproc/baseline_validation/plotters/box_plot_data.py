@@ -41,6 +41,7 @@ def prepare_box_plot_data(df: pl.DataFrame, quantity: str, coverage: CoverageTyp
             For non-ALL users_only plots, model_count is already normalized upstream to the
             exact nonzero model/sample count for this quantity, so box-plot n_points should
             use it directly.
+
     """
     df = df.with_columns(pl.lit([]).alias("outliers"))
     df = df.with_columns(pl.lit([]).alias("outlier_buildings"))

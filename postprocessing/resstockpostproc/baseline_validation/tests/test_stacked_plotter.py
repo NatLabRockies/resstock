@@ -328,7 +328,7 @@ class TestGetCustomRange:
 
 class TestSplitGraphDispatch:
     def test_state_non_all_dispatches_to_state(self):
-        """state aggregation + non-ALL quantity → split_graph_by_state."""
+        """State aggregation + non-ALL quantity → split_graph_by_state."""
         df = pl.DataFrame({
             "source": ["recs_2020", "resstock_2024"],
             "state": ["CA", "CA"],

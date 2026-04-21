@@ -101,7 +101,7 @@ class TestFilterColumns:
         assert "units_count" in filtered.columns
 
     def test_always_drops_eiaid(self):
-        """eiaid should be dropped even without utility_name present."""
+        """Eiaid should be dropped even without utility_name present."""
         data = pl.DataFrame({
             "eiaid": [1, 1],
             "state": ["CA", "CA"],

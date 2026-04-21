@@ -37,6 +37,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
 
     Returns:
         Tuple of (Plotly figure, title string)
+
     """
     config = build_plot_config(plot_spec, data)
     fig = _render(data, config, plot_spec)

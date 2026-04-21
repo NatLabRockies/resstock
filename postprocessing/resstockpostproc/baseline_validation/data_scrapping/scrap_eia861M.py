@@ -57,8 +57,8 @@ for year in range(2012, last_year + 1):
         sales_df.rename(columns=col_rename_dict, inplace=True)
     # Exclude 88888 utility which represents "All Utilities"
     sales_df = sales_df[sales_df["eiaid"] != 88888]
-    sales_df = sales_df.groupby(['year', 'month', 'eiaid', 'state']).agg({"utility_name": "first", 'sales_mwh': 'sum',
-                                                                          'customers': 'sum'})
+    sales_df = sales_df.groupby(["year", "month", "eiaid", "state"]).agg({"utility_name": "first", "sales_mwh": "sum",
+                                                                          "customers": "sum"})
 
     sales_dfs.append(sales_df.reset_index())
 

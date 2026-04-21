@@ -148,13 +148,15 @@ def get_plotting_function(comparison_dataset):
 def plot_output_path(output_root: Path, plot_spec: PlotSpec, fmt: FileType) -> Path:
     """Return the absolute output path for a plot artifact."""
     path_seg, file_title = plot_spec.file_path_and_name
-    return dataset_output_dir(output_root, str(plot_spec.comparison_dataset), "plots", fmt.value) / path_seg / f"{file_title}.{fmt.value}"
+    dataset_dir = dataset_output_dir(output_root, str(plot_spec.comparison_dataset), "plots", fmt.value)
+    return dataset_dir / path_seg / f"{file_title}.{fmt.value}"
 
 
 def data_output_path(output_root: Path, plot_spec: PlotSpec, fmt: FileType) -> Path:
     """Return the absolute output path for a data artifact."""
     path_seg, file_title = plot_spec.file_path_and_name
-    return dataset_output_dir(output_root, str(plot_spec.comparison_dataset), "data", fmt.value) / path_seg / f"{file_title}.{fmt.value}"
+    dataset_dir = dataset_output_dir(output_root, str(plot_spec.comparison_dataset), "data", fmt.value)
+    return dataset_dir / path_seg / f"{file_title}.{fmt.value}"
 
 
 @timed

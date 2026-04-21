@@ -433,6 +433,7 @@ def build_plot_args(
     Returns:
         (results, plot_args, stacking_groups) — the three outputs Pass 3 and
         Pass 4 consume.
+
     """
     results: dict[str, dict[str, str]] = {}
     plot_args: list[tuple[str, list, bool]] = []

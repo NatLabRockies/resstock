@@ -253,6 +253,7 @@ def pivot_by_source(
     Returns:
         (pivoted_df, ref_label, rs_labels) where rs_labels is a sorted list like
         ["ResStock 2024", "ResStock 2025"].
+
     """
     entity_col = get_second_category_column(plot_spec)
     ts_col = resolve_timeseries_column(plot_spec)

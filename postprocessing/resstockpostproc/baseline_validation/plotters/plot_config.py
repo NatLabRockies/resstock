@@ -81,6 +81,7 @@ def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
 
     Returns:
         PlotConfig with all rendering parameters resolved
+
     """
     # Resolve all config fields
     quantity_column = _resolve_quantity_column(plot_spec)
