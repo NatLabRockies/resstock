@@ -97,8 +97,7 @@ def add_missing_states(df: pl.DataFrame) -> pl.DataFrame:
         missing_df = pl.DataFrame({"state": missing_states})
         join_cols = ["state"]
 
-    df = df.join(missing_df, on=join_cols, how="outer", coalesce=True, maintain_order="left_right")
-    return df
+    return df.join(missing_df, on=join_cols, how="full", coalesce=True, maintain_order="left_right")
 
 
 def apply_aggregation(data_key: DataKey, df: pl.DataFrame) -> pl.DataFrame:
