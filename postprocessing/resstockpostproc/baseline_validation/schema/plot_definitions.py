@@ -111,14 +111,10 @@ RECS_CROSS_FILTER_CHARS = ("state", "census_division_recs", "geometry_building_t
 
 @dataclass(frozen=True)
 class PlotTemplate:
-    """Describes WHAT to plot, without specifying HOW to slice it.
+    """Metric identity plus the eligible chars for slot-triple expansion.
 
-    A PlotTemplate captures the metric identity (source, quantity, resolution,
-    aggregation_type, coverage, view) and the ordered set of eligible
-    characteristics available for the (F1, F2, group_by) slot triple expansion.
-
-    The group_by and focus_on are NOT part of the template — those are
-    determined by the slot triple generator and the expansion loop.
+    ``group_by`` and ``focus_on`` are deliberately excluded — the slot-triple
+    generator and expansion loop own those.
     """
 
     comparison_dataset: ComparisonDataset
@@ -144,32 +140,15 @@ def generate_slot_triples(
     allow_cross_filter: bool = False,
     cross_filter_chars: tuple[str, ...] | None = None,
 ) -> list[SlotTriple]:
-    """Generate all valid (filter_1, filter_2, group_by) triples.
+    """Enumerate (filter_1, filter_2, group_by) triples for a char set.
 
-    Args:
-        eligible_chars: Ordered tuple of available characteristics. The ordering
-            determines the upper-triangle dedup: F2 can only use chars that come
-            AFTER F1 in this tuple, preventing (A,B)/(B,A) duplicates.
-        allow_cross_filter: When True, allow triples where F1 is set AND
-            group_by is set (cross-dimension filtering). Only valid for
-            sources with microdata (RECS annual).
-        cross_filter_chars: When provided, restricts which chars from
-            eligible_chars may appear as F1 or F2 in Block 2 triples. The
-            group_by dimension still draws from all eligible_chars.
-            When None (default), all eligible_chars may be used as F1/F2.
-
-    Returns:
-        List of (F1, F2, group_by) triples. Each value is a char name or None.
-
-    Rules:
-        - F1=None → F2 must be None; group_by can be any char or None
-        - F1=char[i], F2=None → group_by can be any char except F1 (or None),
-          subject to geographic exclusion. Requires allow_cross_filter when
-          group_by is not None.
-        - F1=char[i], F2=char[j>i] → group_by must be None.
-          Requires allow_cross_filter (since F1 is a filter on a grouping dim).
-        - No two geographic dimensions may appear in the same triple.
-
+    Upper-triangle dedup: F2 only draws from chars AFTER F1 in
+    ``eligible_chars``, which prevents (A,B)/(B,A) duplicates. Block 2
+    (F1 set) is emitted only when ``allow_cross_filter`` is True — that
+    path is restricted to sources with microdata (RECS annual).
+    ``cross_filter_chars`` optionally restricts which chars may appear
+    in F1/F2 slots of Block 2; group_by always draws from all eligible
+    chars. Geographic dimensions never co-occur in a triple.
     """
     triples: list[SlotTriple] = []
 
@@ -456,11 +435,5 @@ def _lrd_templates() -> Iterator[PlotTemplate]:
 
 
 def generate_all_templates() -> list[PlotTemplate]:
-    """Generate the complete ordered list of plot templates.
-
-    Each template describes a metric to plot (source, quantity, resolution, etc.)
-    along with the eligible characteristics for slot triple expansion.
-    The group_by and focus_on are NOT baked in — those are determined
-    by generate_slot_triples() in the expansion loop.
-    """
+    """Return the complete ordered list of plot templates."""
     return list(chain(_eia_templates(), _recs_templates(), _lrd_templates()))
