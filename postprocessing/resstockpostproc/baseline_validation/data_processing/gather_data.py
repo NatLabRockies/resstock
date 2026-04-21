@@ -240,23 +240,16 @@ def _keep_relevant_columns(
             drop_columns.remove(DataCol.OUTDOOR_DRYBULB_TEMP + "_value")  # Keep temperature column for LRD plots
         df = df.drop(drop_columns)
         return df
-    if plot_spec.comparison_dataset == "eia":
-        relevant_quatities = [
-            DataCol.ELECTRICITY_TOTAL,
-            DataCol.NATURAL_GAS_TOTAL,
-        ]
-    elif plot_spec.comparison_dataset == "recs":
-        relevant_quatities = list(RECS_ENDUSE_MAP.keys())
-    elif plot_spec.comparison_dataset == "lrd":
-        relevant_quatities = [DataCol.ELECTRICITY_TOTAL, DataCol.OUTDOOR_DRYBULB_TEMP]
-    else:
+    relevant_quantities_by_dataset = {
+        ComparisonDataset.eia: [DataCol.ELECTRICITY_TOTAL, DataCol.NATURAL_GAS_TOTAL],
+        ComparisonDataset.recs: list(RECS_ENDUSE_MAP.keys()),
+        ComparisonDataset.lrd: [DataCol.ELECTRICITY_TOTAL, DataCol.OUTDOOR_DRYBULB_TEMP],
+    }
+    if plot_spec.comparison_dataset not in relevant_quantities_by_dataset:
         raise NotImplementedError(f"Comparison dataset {plot_spec.comparison_dataset} not implemented.")
-    to_drop_columns = []
-    for col in all_output_columns:
-        if not any(q.value in col for q in relevant_quatities):
-            to_drop_columns.append(col)
-    df = df.drop(to_drop_columns)
-    return df
+    relevant_quantities = relevant_quantities_by_dataset[plot_spec.comparison_dataset]
+    to_drop = [col for col in all_output_columns if not any(q.value in col for q in relevant_quantities)]
+    return df.drop(to_drop)
 
 
 @timed
@@ -318,8 +311,6 @@ def _prepare_temperature_view(df: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataF
     Converts temperature from C*4 to F, joins with ResStock reference temperature,
     and aggregates by temperature bins.
     """
-    from resstockpostproc.shared_utils.db_column_names import DataCol
-
     temp_col = f"{DataCol.OUTDOOR_DRYBULB_TEMP}_value"
 
     # Convert from C*4 to Fahrenheit
