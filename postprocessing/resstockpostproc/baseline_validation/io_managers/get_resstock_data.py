@@ -78,6 +78,97 @@ def get_timeseries_all(
     return final_df
 
 
+_HOUR_OF_DAY_SEASON_MONTHS = {
+    Resolution.hour_of_day_summer: (6, 7, 8),
+    Resolution.hour_of_day_winter: (12, 1, 2),
+}
+
+
+def _reshape_monthly(result: pl.DataFrame, by: str, ts_col: str) -> pl.DataFrame:
+    data = result.with_columns(pl.col(ts_col).dt.month().alias("month")).sort(by=[by, "month"])
+    return data.with_columns(pl.col("month").replace_strict(NUM2MONTH, default=None))
+
+
+def _reshape_daily(result: pl.DataFrame, by: str, ts_col: str) -> pl.DataFrame:
+    return result.with_columns(pl.col(ts_col).dt.truncate("1d").alias("day of year")).sort(by=[by, "day of year"])
+
+
+def _reshape_hourly(result: pl.DataFrame, by: str, ts_col: str, resolution: Resolution) -> pl.DataFrame:
+    hour_index = (pl.col(ts_col).dt.ordinal_day() - 1) * 24 + pl.col(ts_col).dt.hour()
+    return result.with_columns(hour_index.alias(resolution)).sort(by=[by, resolution])
+
+
+def _reshape_hour_of_day(result: pl.DataFrame, by: str, ts_col: str) -> pl.DataFrame:
+    value_cols = [col for col in result.columns if col not in {by, ts_col}]
+    return (
+        result.with_columns(pl.col(ts_col).dt.hour().alias(Resolution.hour_of_day))
+        .group_by([by, Resolution.hour_of_day], maintain_order=True)
+        .agg(pl.col(c).mean().alias(c) for c in value_cols)
+        .sort(by=[by, Resolution.hour_of_day])
+    )
+
+
+def _reshape_hour_of_day_season(
+    result: pl.DataFrame, by: str, ts_col: str, resolution: Resolution
+) -> pl.DataFrame:
+    months = _HOUR_OF_DAY_SEASON_MONTHS[resolution]
+    value_cols = [col for col in result.columns if col not in {by, ts_col, "month"}]
+    return (
+        result.with_columns(
+            pl.col(ts_col).dt.hour().alias(resolution),
+            pl.col(ts_col).dt.month().alias("month"),
+        )
+        .filter(pl.col("month").is_in(list(months)))
+        .group_by([by, resolution], maintain_order=True)
+        .agg(pl.col(c).mean().alias(c) for c in value_cols)
+        .sort(by=[by, resolution])
+    )
+
+
+def _reshape_hour_of_day_matrix(result: pl.DataFrame, by: str, ts_col: str) -> pl.DataFrame:
+    with_keys = result.with_columns(
+        pl.col(ts_col).dt.hour().alias("hour of day"),
+        pl.col(ts_col).dt.month().replace_strict(NUM2MONTH, default=None).alias("month"),
+        pl.when(pl.col(ts_col).dt.weekday() < 5)
+        .then(pl.lit("Weekday"))
+        .otherwise(pl.lit("Weekend"))
+        .alias("day_type"),
+    )
+    value_cols = [col for col in result.columns if col not in {by, ts_col}]
+
+    def _mean_agg(keys: list[str], month_override: str | None = None, day_override: str | None = None):
+        df = with_keys.group_by(keys, maintain_order=True).agg(pl.col(c).mean().alias(c) for c in value_cols)
+        overrides = []
+        if month_override is not None:
+            overrides.append(pl.lit(month_override).alias("month"))
+        if day_override is not None:
+            overrides.append(pl.lit(day_override).alias("day_type"))
+        return df.with_columns(overrides) if overrides else df
+
+    frames = [
+        _mean_agg([by, "month", "day_type", "hour of day"]),
+        _mean_agg([by, "month", "hour of day"], day_override="All Days"),
+        _mean_agg([by, "day_type", "hour of day"], month_override="All Year"),
+        _mean_agg([by, "hour of day"], month_override="All Year", day_override="All Days"),
+    ]
+    return pl.concat(frames, how="diagonal_relaxed").sort(by=[by, "month", "day_type", "hour of day"])
+
+
+def _reshape_timeseries(result: pl.DataFrame, by: str, ts_col: str, resolution: Resolution) -> pl.DataFrame:
+    if resolution == Resolution.month:
+        return _reshape_monthly(result, by, ts_col)
+    if resolution == Resolution.day_of_year:
+        return _reshape_daily(result, by, ts_col)
+    if resolution in {Resolution.hour_of_year, Resolution.top_100_hours}:
+        return _reshape_hourly(result, by, ts_col, resolution)
+    if resolution in _HOUR_OF_DAY_SEASON_MONTHS:
+        return _reshape_hour_of_day_season(result, by, ts_col, resolution)
+    if resolution == Resolution.hour_of_day_matrix:
+        return _reshape_hour_of_day_matrix(result, by, ts_col)
+    assert resolution == Resolution.hour_of_day, f"Unsupported resolution: {resolution}"
+    return _reshape_hour_of_day(result, by, ts_col)
+
+
 @timed
 def get_timeseries(
     data_source: DataSourceConfig,
@@ -86,13 +177,14 @@ def get_timeseries(
     restrict_list: Sequence[str] | None = None,
     occupied_only: bool = False,
 ) -> pl.DataFrame:
-    """Aggregate monthly data from timeseries."""
+    """Fetch and reshape timeseries data from BuildStockQuery."""
     bsq = get_buildstock_query(
         workgroup=workflow.workgroup,
         config=data_source,
         skip_reports=True,
     )
-    db_char_col = get_db_characteristics_colnames(data_source.db_schema)
+    ts_col = get_db_characteristics_colnames(data_source.db_schema).TIMESTAMP
+
     if by == "eiaid":
         assert not occupied_only, "occupied_only is not supported when by='eiaid'"
         assert restrict_list, "restrict_list must be provided when by='eiaid'"
@@ -103,90 +195,7 @@ def get_timeseries(
         )
 
     result = _transform_columns(result, data_source.db_schema)
-    if resolution == Resolution.month:
-        ts_data = result.with_columns(pl.col(db_char_col.TIMESTAMP).dt.month().alias("month"))
-        ts_data = ts_data.sort(by=[by, "month"])
-        ts_data = ts_data.with_columns(pl.col("month").replace_strict(NUM2MONTH, default=None))
-    elif resolution == Resolution.day_of_year:
-        # Use actual date (truncated to day) instead of ordinal day number
-        ts_data = result.with_columns(pl.col(db_char_col.TIMESTAMP).dt.truncate("1d").alias("day of year"))
-        ts_data = ts_data.sort(by=[by, "day of year"])
-    elif resolution in {Resolution.hour_of_year, Resolution.top_100_hours}:
-        ts_data = result.with_columns(
-            ((pl.col(db_char_col.TIMESTAMP).dt.ordinal_day() - 1) * 24 + pl.col(db_char_col.TIMESTAMP).dt.hour()).alias(
-                resolution
-            )
-        )
-        ts_data = ts_data.sort(by=[by, resolution])
-    elif resolution == Resolution.hour_of_day_summer:
-        ts_data = result.with_columns(
-            pl.col(db_char_col.TIMESTAMP).dt.hour().alias(Resolution.hour_of_day_summer),
-            pl.col(db_char_col.TIMESTAMP).dt.month().alias("month"),
-        )
-        ts_data = ts_data.filter(pl.col("month").is_in([6, 7, 8]))
-        ts_data = ts_data.group_by([by, Resolution.hour_of_day_summer], maintain_order=True).agg(
-            [pl.col(col).mean().alias(col) for col in result.columns if col not in {by, db_char_col.TIMESTAMP, "month"}]
-        )
-        ts_data = ts_data.sort(by=[by, Resolution.hour_of_day_summer])
-    elif resolution == Resolution.hour_of_day_winter:
-        ts_data = result.with_columns(
-            pl.col(db_char_col.TIMESTAMP).dt.hour().alias(Resolution.hour_of_day_winter),
-            pl.col(db_char_col.TIMESTAMP).dt.month().alias("month"),
-        )
-        ts_data = ts_data.filter(pl.col("month").is_in([12, 1, 2]))
-        ts_data = ts_data.group_by([by, Resolution.hour_of_day_winter], maintain_order=True).agg(
-            [pl.col(col).mean().alias(col) for col in result.columns if col not in {by, db_char_col.TIMESTAMP, "month"}]
-        )
-        ts_data = ts_data.sort(by=[by, Resolution.hour_of_day_winter])
-    elif resolution == Resolution.hour_of_day_matrix:
-        # Add hour, month, and day_type columns
-        ts_data = result.with_columns(
-            pl.col(db_char_col.TIMESTAMP).dt.hour().alias("hour of day"),
-            pl.col(db_char_col.TIMESTAMP).dt.month().replace_strict(NUM2MONTH, default=None).alias("month"),
-            pl.when(pl.col(db_char_col.TIMESTAMP).dt.weekday() < 5)  # Mon=0..Fri=4 are weekdays
-            .then(pl.lit("Weekday"))
-            .otherwise(pl.lit("Weekend"))
-            .alias("day_type"),
-        )
-        value_cols = [col for col in result.columns if col not in {by, db_char_col.TIMESTAMP}]
-
-        # 1. Monthly by day_type (e.g., JAN + Weekday)
-        monthly_by_daytype = ts_data.group_by([by, "month", "day_type", "hour of day"], maintain_order=True).agg(
-            [pl.col(col).mean().alias(col) for col in value_cols]
-        )
-
-        # 2. Monthly "All Days" (aggregate across weekday/weekend)
-        monthly_all_days = (
-            ts_data.group_by([by, "month", "hour of day"], maintain_order=True)
-            .agg([pl.col(col).mean().alias(col) for col in value_cols])
-            .with_columns(pl.lit("All Days").alias("day_type"))
-        )
-
-        # 3. "All Year" by day_type
-        yearly_by_daytype = (
-            ts_data.group_by([by, "day_type", "hour of day"], maintain_order=True)
-            .agg([pl.col(col).mean().alias(col) for col in value_cols])
-            .with_columns(pl.lit("All Year").alias("month"))
-        )
-
-        # 4. "All Year" + "All Days"
-        yearly_all_days = (
-            ts_data.group_by([by, "hour of day"], maintain_order=True)
-            .agg([pl.col(col).mean().alias(col) for col in value_cols])
-            .with_columns(pl.lit("All Year").alias("month"), pl.lit("All Days").alias("day_type"))
-        )
-
-        ts_data = pl.concat(
-            [monthly_by_daytype, monthly_all_days, yearly_by_daytype, yearly_all_days], how="diagonal_relaxed"
-        )
-        ts_data = ts_data.sort(by=[by, "month", "day_type", "hour of day"])
-    else:  # hour_of_day
-        assert resolution == Resolution.hour_of_day, f"Unsupported resolution: {resolution}"
-        ts_data = result.with_columns(pl.col(db_char_col.TIMESTAMP).dt.hour().alias(Resolution.hour_of_day))
-        ts_data = ts_data.group_by([by, Resolution.hour_of_day], maintain_order=True).agg(
-            [pl.col(col).mean().alias(col) for col in result.columns if col not in {by, db_char_col.TIMESTAMP}]
-        )
-        ts_data = ts_data.sort(by=[by, Resolution.hour_of_day])
+    ts_data = _reshape_timeseries(result, by, ts_col, resolution)
     if by == "state":
         ts_data = add_missing_states(ts_data)
     return ts_data
@@ -472,7 +481,7 @@ def _get_annual_two_char_cached(
         config=data_source,
         skip_reports=True,
     )
-    return _get_annual_by_two_chars(bsq, by, filter_char, data_source, occupied_only)
+    return _get_annual_by_chars(bsq, by, data_source, occupied_only, filter_char=filter_char)
 
 
 @timed
@@ -494,7 +503,7 @@ def get_annual(
     if by == "eiaid":
         assert not occupied_only, "occupied_only is not supported when by='eiaid'"
         return _get_annual_by_eiaid(bsq, data_source)
-    df = _get_annual_by_char(bsq, by, data_source, occupied_only)
+    df = _get_annual_by_chars(bsq, by, data_source, occupied_only)
     if by == "state":
         df = add_missing_states(df)
     return df
@@ -510,84 +519,49 @@ def _get_by_col(by: str, bsq: BuildStockQuery):
     return by_col
 
 
-@timed
-def _get_annual_by_char(
-    bsq: BuildStockQuery, by: str, data_source: DataSourceConfig, occupied_only: bool
-) -> pl.DataFrame:
-    char_cols = get_db_characteristics_colnames(data_source.db_schema)
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline")
-    restrict = [(char_cols.VACANCY, ["Occupied"])] if occupied_only else []
-    by_col = _get_by_col(by, bsq)
-    result_df = bsq.query(
+def _bsq_annual_query(bsq: BuildStockQuery, enduses, group_by: list, restrict: list) -> pd.DataFrame:
+    """Run a single annual BSQ query with the common flags used by annual loaders."""
+    result = bsq.query(
         enduses=enduses,
         get_nonzero_count=True,
         get_quartiles=True,
-        group_by=[by_col],
+        group_by=group_by,
         annual_only=True,
         restrict=restrict,
     )
     bsq.save_cache()
-    result_us_total = bsq.query(
-        enduses=enduses,
-        annual_only=True,
-        get_nonzero_count=True,
-        get_quartiles=True,
-        restrict=restrict,
-    )
-    bsq.save_cache()
-    result_us_total[by] = "US Total"
-    result_us_total = result_us_total[result_df.columns]
-    result_df = pd.concat([result_df, result_us_total], ignore_index=True)
-
-    df = pl.from_pandas(result_df)
-    char_cols = get_db_characteristics_colnames(data_source.db_schema)
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline")
-    df = _transform_columns(df, data_source.db_schema)
-    return df
+    return result
 
 
 @timed
-def _get_annual_by_two_chars(
-    bsq: BuildStockQuery, by: str, filter_char: str, data_source: DataSourceConfig, occupied_only: bool
+def _get_annual_by_chars(
+    bsq: BuildStockQuery,
+    by: str,
+    data_source: DataSourceConfig,
+    occupied_only: bool,
+    filter_char: str | None = None,
 ) -> pl.DataFrame:
-    """Load annual data grouped by TWO characteristics (by + filter_char).
+    """Load annual BSQ data grouped by `by` (and optionally `filter_char`).
 
-    Used for pre-filtered plots: the 2-column groupby produces per-cell values,
-    which can then be cheaply filtered to a specific filter_char value.
-    BSQ computes correct per-cell totals, averages, quartiles, and nonzero counts.
+    With filter_char set, BSQ computes per-cell (by × filter_char) totals,
+    averages, quartiles, and nonzero counts — cheap to filter downstream.
+    The US-Total row is computed by dropping `by` from the group_by.
     """
     char_cols = get_db_characteristics_colnames(data_source.db_schema)
     enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline")
     restrict = [(char_cols.VACANCY, ["Occupied"])] if occupied_only else []
+
     by_col = _get_by_col(by, bsq)
-    filter_col = _get_by_col(filter_char, bsq)
-    result_df = bsq.query(
-        enduses=enduses,
-        get_nonzero_count=True,
-        get_quartiles=True,
-        group_by=[by_col, filter_col],
-        annual_only=True,
-        restrict=restrict,
-    )
-    bsq.save_cache()
+    extra_cols = [_get_by_col(filter_char, bsq)] if filter_char else []
 
-    # Add US Total per filter_value: group by filter_col only (sums across all `by` values)
-    result_us_total = bsq.query(
-        enduses=enduses,
-        annual_only=True,
-        get_nonzero_count=True,
-        get_quartiles=True,
-        group_by=[filter_col],
-        restrict=restrict,
-    )
-    bsq.save_cache()
-    result_us_total[by] = "US Total"
-    result_us_total = result_us_total[result_df.columns]
-    result_df = pd.concat([result_df, result_us_total], ignore_index=True)
+    main = _bsq_annual_query(bsq, enduses, [by_col, *extra_cols], restrict)
+    us_total = _bsq_annual_query(bsq, enduses, extra_cols, restrict)
+    us_total[by] = "US Total"
+    us_total = us_total[main.columns]
+    combined = pd.concat([main, us_total], ignore_index=True)
 
-    df = pl.from_pandas(result_df)
-    df = _transform_columns(df, data_source.db_schema)
-    return df
+    df = pl.from_pandas(combined)
+    return _transform_columns(df, data_source.db_schema)
 
 
 def _get_annual_by_eiaid(bsq, data_source):
