@@ -53,11 +53,8 @@ def _build_table_html(
 ) -> str:
     """Build a self-contained HTML page with an interactive data table.
 
-    Args:
-        metrics_by_source: Mapping of ResStock label → MAPE (%).
-        rs_sources_js: List of {label, refKey, absDiffKey} dicts used by the JS
-            to compute per-source formula derivations at render time.
-
+    ``rs_sources_js`` items have the shape ``{label, refKey, absDiffKey}``
+    and drive the per-source MAPE formula derivations rendered by the JS.
     """
     title = plot_spec.display_title
 
@@ -481,20 +478,7 @@ def generate_data_table_html(
     csv_download_filename: str | None = None,
     include_discrepancy_metrics: bool = True,
 ) -> None:
-    """Generate an interactive HTML data table page.
-
-    Args:
-        data: The raw plot data DataFrame (same data used for the plot).
-        plot_spec: The plot specification.
-        output_path: Where to write the HTML file.
-        plot_rel_path: Relative path to the corresponding plot HTML (for navigation).
-        metrics_by_source: Per-source MAPE (%) keyed by source label.
-        footnotes: Footnotes for the footer.
-        source_labels: Data source labels for the footer.
-        csv_download_filename: Optional filename used by the in-page Download CSV action.
-        include_discrepancy_metrics: Whether to include discrepancy formula details.
-
-    """
+    """Write an interactive HTML data table page for ``data`` to ``output_path``."""
     if data.is_empty():
         output_path.write_text(
             "<html><body><p>No data available.</p></body></html>",
