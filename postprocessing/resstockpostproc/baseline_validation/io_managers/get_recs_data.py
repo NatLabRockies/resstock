@@ -92,6 +92,72 @@ def _build_bounds_row(
     return row
 
 
+_QUANTILES = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
+_ZERO_QUARTILES = [0.0] * 9
+
+
+def _value_expr(col: str, data_key: DataKey) -> pl.Expr:
+    """Weighted value expression per RECS aggregation/coverage rules."""
+    weighted = (pl.col(col) * pl.col("NWEIGHT")).sum()
+    if data_key.aggregation_type == Metric.total:
+        return weighted.alias(f"{col}_value")
+    if data_key.coverage == CoverageType.all_units:
+        return (weighted / pl.col("NWEIGHT").sum()).alias(f"{col}_value")
+    return (weighted / ((pl.col(col) > 0).cast(pl.Int64) * pl.col("NWEIGHT")).sum()).alias(f"{col}_value")
+
+
+def _percent_users_expr(col: str) -> pl.Expr:
+    return (
+        ((pl.col(col) > 0).cast(pl.Int64) * pl.col("NWEIGHT")).sum()
+        / pl.col("NWEIGHT").sum() * 100
+    ).alias(f"{col}_percent_users")
+
+
+def _enduse_value_exprs(enduse_cols: tuple, data_key: DataKey, *, include_group_counts: bool) -> list[pl.Expr]:
+    """Build the list of value/percent_users/nonzero_sample_count exprs for agg() or select()."""
+    exprs: list[pl.Expr] = [
+        pl.len().alias("sample_count"),
+        pl.col("NWEIGHT").sum().alias("units_count"),
+        *(_value_expr(col, data_key) for col in enduse_cols),
+    ]
+    if include_group_counts:
+        exprs.extend(_percent_users_expr(col) for col in enduse_cols)
+        exprs.extend((pl.col(col) > 0).sum().alias(f"{col}_nonzero_sample_count") for col in enduse_cols)
+    return exprs
+
+
+def _bounds_for_group(group_data_pd, enduse_cols: tuple, value_stat_type: str) -> dict:
+    """Run bounds_batch and map onto dataframe column names; returns empty on failure."""
+    bound_requests = [req for col in enduse_cols for req in ((col, value_stat_type), (col, "percent"))]
+    try:
+        batched_bounds = calculate_bounds_batch(group_data_pd, bound_requests)
+    except Exception:
+        batched_bounds = dict.fromkeys(bound_requests)
+    return _build_bounds_row(batched_bounds, enduse_cols, value_stat_type)
+
+
+def _weighted_quartiles_or_zeros(values, weights) -> list[float]:
+    try:
+        if len(values) == 0:
+            return _ZERO_QUARTILES.copy()
+        return weighted_quantiles(values, weights, _QUANTILES).tolist()
+    except Exception:
+        return _ZERO_QUARTILES.copy()
+
+
+def _quartiles_for_group(group_data_pd, enduse_cols: tuple) -> tuple[dict, dict]:
+    """Return (quartiles, nonzero_quartiles) dicts keyed by downstream column names."""
+    quartiles: dict = {}
+    nonzero_quartiles: dict = {}
+    weights = group_data_pd["NWEIGHT"].values
+    for col in enduse_cols:
+        values = group_data_pd[col].values
+        quartiles[f"{col}_quartiles"] = _weighted_quartiles_or_zeros(values, weights)
+        mask = values > 0
+        nonzero_quartiles[f"{col}_nonzero_quartiles"] = _weighted_quartiles_or_zeros(values[mask], weights[mask])
+    return quartiles, nonzero_quartiles
+
+
 def _add_symmetric_bounds_from_rse(df: pl.DataFrame) -> pl.DataFrame:
     """Convert published monthly RSE columns into explicit lower/upper bounds."""
     rse_columns = [col for col in df.columns if col.endswith("_rse")]
@@ -130,67 +196,9 @@ def get_annual_all(
     enduse_cols = tuple(RECS_ENDUSE_MAP.keys())
 
     if by_cols:
-        # Calculate value columns based on aggregation type
-        if data_key.aggregation_type == Metric.total:
-            # Stock energy: weighted sum
-            result_df = mdf.group_by(by_cols, maintain_order=True).agg(
-                pl.len().alias("sample_count"),
-                pl.col("NWEIGHT").sum().alias("units_count"),
-                *((pl.col(col) * pl.col("NWEIGHT")).sum().alias(f"{col}_value") for col in enduse_cols),
-                *(
-                    (
-                        ((pl.col(col) > 0).cast(pl.Int64) * pl.col("NWEIGHT")).sum() / pl.col("NWEIGHT").sum() * 100
-                    ).alias(f"{col}_percent_users")
-                    for col in enduse_cols
-                ),
-                *(
-                    (pl.col(col) > 0).sum().alias(f"{col}_nonzero_sample_count")
-                    for col in enduse_cols
-                ),
-            )
-        elif data_key.coverage == CoverageType.all_units:
-            # Per-unit energy: weighted mean (sum of weighted values / sum of all weights)
-            result_df = mdf.group_by(by_cols, maintain_order=True).agg(
-                pl.len().alias("sample_count"),
-                pl.col("NWEIGHT").sum().alias("units_count"),
-                *(
-                    ((pl.col(col) * pl.col("NWEIGHT")).sum() / pl.col("NWEIGHT").sum()).alias(f"{col}_value")
-                    for col in enduse_cols
-                ),
-                *(
-                    (
-                        ((pl.col(col) > 0).cast(pl.Int64) * pl.col("NWEIGHT")).sum() / pl.col("NWEIGHT").sum() * 100
-                    ).alias(f"{col}_percent_users")
-                    for col in enduse_cols
-                ),
-                *(
-                    (pl.col(col) > 0).sum().alias(f"{col}_nonzero_sample_count")
-                    for col in enduse_cols
-                ),
-            )
-        else:
-            # Per-user energy: weighted mean (sum of weighted values / sum of weights for non-zero values only)
-            result_df = mdf.group_by(by_cols, maintain_order=True).agg(
-                pl.len().alias("sample_count"),
-                pl.col("NWEIGHT").sum().alias("units_count"),
-                *(
-                    (
-                        (pl.col(col) * pl.col("NWEIGHT")).sum()
-                        / ((pl.col(col) > 0).cast(pl.Int64) * pl.col("NWEIGHT")).sum()
-                    ).alias(f"{col}_value")
-                    for col in enduse_cols
-                ),
-                *(
-                    (
-                        ((pl.col(col) > 0).cast(pl.Int64) * pl.col("NWEIGHT")).sum() / pl.col("NWEIGHT").sum() * 100
-                    ).alias(f"{col}_percent_users")
-                    for col in enduse_cols
-                ),
-                *(
-                    (pl.col(col) > 0).sum().alias(f"{col}_nonzero_sample_count")
-                    for col in enduse_cols
-                ),
-            )
+        result_df = mdf.group_by(by_cols, maintain_order=True).agg(
+            _enduse_value_exprs(enduse_cols, data_key, include_group_counts=True)
+        )
 
         # Calculate confidence bounds and quartiles by group
         mdf_pd = mdf.to_pandas()
@@ -210,57 +218,10 @@ def get_annual_all(
             for col_name in by_cols:
                 mask = mask & (mdf_pd[col_name] == group_row[col_name])
             group_data = mdf_pd[mask]
-            bounds_row = dict(group_row)
-            quartile_row = dict(group_row)
-            nonzero_quartile_row = dict(group_row)
-
-            bound_requests = []
-            for col in enduse_cols:
-                bound_requests.append((col, value_stat_type))
-                bound_requests.append((col, "percent"))
-            try:
-                batched_bounds = calculate_bounds_batch(group_data, bound_requests)
-            except Exception:
-                batched_bounds = dict.fromkeys(bound_requests)
-            bounds_row.update(_build_bounds_row(batched_bounds, enduse_cols, value_stat_type))
-
-            for col in enduse_cols:
-                # Calculate quartiles for the column
-                try:
-                    data_values = group_data[col].values
-                    weights = group_data["NWEIGHT"].values
-                    if len(data_values) > 0:
-                        # Calculate weighted quartiles
-                        quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
-                        quartiles = weighted_quantiles(data_values, weights, quantiles)
-                        quartile_row[f"{col}_quartiles"] = quartiles.tolist()
-                    else:
-                        quartile_row[f"{col}_quartiles"] = [0.0] * 9
-                except Exception:
-                    quartile_row[f"{col}_quartiles"] = [0.0] * 9
-
-                # Calculate nonzero quartiles for the column (exclude zeros)
-                try:
-                    data_values = group_data[col].values
-                    weights = group_data["NWEIGHT"].values
-                    non_zero_mask = data_values > 0
-                    data_values_nonzero = data_values[non_zero_mask]
-                    weights_nonzero = weights[non_zero_mask]
-                    if len(data_values_nonzero) > 0:
-                        # Calculate weighted quartiles for non-zero values
-                        quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
-                        nonzero_quartiles = weighted_quantiles(
-                            data_values_nonzero, weights_nonzero, quantiles
-                        )
-                        nonzero_quartile_row[f"{col}_nonzero_quartiles"] = nonzero_quartiles.tolist()
-                    else:
-                        nonzero_quartile_row[f"{col}_nonzero_quartiles"] = [0.0] * 9
-                except Exception:
-                    nonzero_quartile_row[f"{col}_nonzero_quartiles"] = [0.0] * 9
-
-            bounds_results.append(bounds_row)
-            quartile_results.append(quartile_row)
-            nonzero_quartile_results.append(nonzero_quartile_row)
+            quartiles, nonzero_quartiles = _quartiles_for_group(group_data, enduse_cols)
+            bounds_results.append({**group_row, **_bounds_for_group(group_data, enduse_cols, value_stat_type)})
+            quartile_results.append({**group_row, **quartiles})
+            nonzero_quartile_results.append({**group_row, **nonzero_quartiles})
 
         # Convert bound and quartile results to polars and join with value results
         bounds_df = pl.DataFrame(bounds_results)
@@ -318,155 +279,31 @@ def get_annual_all(
             us_total_df = pl.DataFrame([us_total_values])
             result_df = pl.concat([result_df, us_total_df], how="diagonal_relaxed")
 
-            # Calculate confidence bounds and quartiles for this US Total row
-            us_total_bounds_dict = {}
-            us_total_quartile_dict = {}
-            us_total_nonzero_quartile_dict = {}
+            us_bounds = _bounds_for_group(mdf_subset_pd, enduse_cols, value_stat_type)
+            us_quartiles, us_nonzero_quartiles = _quartiles_for_group(mdf_subset_pd, enduse_cols)
 
-            bound_requests = []
-            for col in enduse_cols:
-                bound_requests.append((col, value_stat_type))
-                bound_requests.append((col, "percent"))
-            try:
-                batched_bounds = calculate_bounds_batch(mdf_subset_pd, bound_requests)
-            except Exception:
-                batched_bounds = dict.fromkeys(bound_requests)
-            us_total_bounds_dict.update(_build_bounds_row(batched_bounds, enduse_cols, value_stat_type))
-
-            for col in enduse_cols:
-                try:
-                    data_values = mdf_subset_pd[col].values
-                    weights = mdf_subset_pd["NWEIGHT"].values
-                    if len(data_values) > 0:
-                        quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
-                        quartiles = weighted_quantiles(data_values, weights, quantiles)
-                        us_total_quartile_dict[f"{col}_quartiles"] = quartiles.tolist()
-                    else:
-                        us_total_quartile_dict[f"{col}_quartiles"] = [0.0] * 9
-                except Exception:
-                    us_total_quartile_dict[f"{col}_quartiles"] = [0.0] * 9
-
-                try:
-                    data_values = mdf_subset_pd[col].values
-                    weights = mdf_subset_pd["NWEIGHT"].values
-                    non_zero_mask = data_values > 0
-                    data_values_nonzero = data_values[non_zero_mask]
-                    weights_nonzero = weights[non_zero_mask]
-                    if len(data_values_nonzero) > 0:
-                        quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
-                        nonzero_quartiles = weighted_quantiles(data_values_nonzero, weights_nonzero, quantiles)
-                        us_total_nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = nonzero_quartiles.tolist()
-                    else:
-                        us_total_nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = [0.0] * 9
-                except Exception:
-                    us_total_nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = [0.0] * 9
-
-            # Build a mask for this specific US Total row
             us_mask = pl.col(by) == "US Total"
             for sc, sv in sec_vals.items():
                 us_mask = us_mask & (pl.col(sc) == sv)
 
-            for col, bound_value in us_total_bounds_dict.items():
-                result_df = result_df.with_columns(
-                    pl.when(us_mask).then(pl.lit(bound_value)).otherwise(pl.col(col)).alias(col)
-                )
-            for col, quartile_value in us_total_quartile_dict.items():
-                result_df = result_df.with_columns(
-                    pl.when(us_mask).then(pl.lit(quartile_value)).otherwise(pl.col(col)).alias(col)
-                )
-            for col, nonzero_quartile_value in us_total_nonzero_quartile_dict.items():
-                result_df = result_df.with_columns(
-                    pl.when(us_mask).then(pl.lit(nonzero_quartile_value)).otherwise(pl.col(col)).alias(col)
-                )
+            for stats_dict in (us_bounds, us_quartiles, us_nonzero_quartiles):
+                for col, value in stats_dict.items():
+                    result_df = result_df.with_columns(
+                        pl.when(us_mask).then(pl.lit(value)).otherwise(pl.col(col)).alias(col)
+                    )
     else:
-        # Calculate value columns based on aggregation type
-        if data_key.aggregation_type == Metric.total:
-            # Stock energy: weighted sum
-            result_df = mdf.select(
-                pl.len().alias("sample_count"),
-                pl.col("NWEIGHT").sum().alias("units_count"),
-                *((pl.col(col) * pl.col("NWEIGHT")).sum().alias(f"{col}_value") for col in enduse_cols),
-            )
-        elif data_key.coverage == CoverageType.all_units:
-            # Per-unit energy: weighted mean (sum of weighted values / sum of all weights)
-            result_df = mdf.select(
-                pl.len().alias("sample_count"),
-                pl.col("NWEIGHT").sum().alias("units_count"),
-                *(
-                    ((pl.col(col) * pl.col("NWEIGHT")).sum() / pl.col("NWEIGHT").sum()).alias(f"{col}_value")
-                    for col in enduse_cols
-                ),
-            )
-        else:  # data_key.coverage == CoverageType.users_only
-            # Per-user energy: weighted mean (sum of weighted values / sum of weights for non-zero values only)
-            result_df = mdf.select(
-                pl.len().alias("sample_count"),
-                pl.col("NWEIGHT").sum().alias("units_count"),
-                *(
-                    (
-                        (pl.col(col) * pl.col("NWEIGHT")).sum()
-                        / ((pl.col(col) > 0).cast(pl.Int64) * pl.col("NWEIGHT")).sum()
-                    ).alias(f"{col}_value")
-                    for col in enduse_cols
-                ),
-            )
+        result_df = mdf.select(_enduse_value_exprs(enduse_cols, data_key, include_group_counts=False))
 
-        # Calculate confidence bounds and quartiles
         mdf_pd = mdf.to_pandas()
-        bounds_dict = {}
-        quartile_dict = {}
-        nonzero_quartile_dict = {}
-
         value_stat_type = _resolve_recs_value_stat_type(data_key)
-
-        bound_requests = []
-        for col in enduse_cols:
-            bound_requests.append((col, value_stat_type))
-            bound_requests.append((col, "percent"))
-        try:
-            batched_bounds = calculate_bounds_batch(mdf_pd, bound_requests)
-        except Exception:
-            batched_bounds = dict.fromkeys(bound_requests)
-        for col_name, bound_value in _build_bounds_row(batched_bounds, enduse_cols, value_stat_type).items():
-            bounds_dict[col_name] = [bound_value]
-
-        for col in enduse_cols:
-            # Calculate quartiles (including all values)
-            try:
-                data_values = mdf_pd[col].values
-                weights = mdf_pd["NWEIGHT"].values
-
-                if len(data_values) > 0:
-                    quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
-                    quartiles = weighted_quantiles(data_values, weights, quantiles)
-                    quartile_dict[f"{col}_quartiles"] = quartiles.tolist()
-                else:
-                    quartile_dict[f"{col}_quartiles"] = [0.0] * 9
-            except Exception:
-                quartile_dict[f"{col}_quartiles"] = [0.0] * 9
-
-            # Calculate nonzero quartiles (exclude zeros)
-            try:
-                data_values = mdf_pd[col].values
-                weights = mdf_pd["NWEIGHT"].values
-                non_zero_mask = data_values > 0
-                data_values_nonzero = data_values[non_zero_mask]
-                weights_nonzero = weights[non_zero_mask]
-
-                if len(data_values_nonzero) > 0:
-                    quantiles = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
-                    nonzero_quartiles = weighted_quantiles(data_values_nonzero, weights_nonzero, quantiles)
-                    nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = nonzero_quartiles.tolist()
-                else:
-                    nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = [0.0] * 9
-            except Exception:
-                nonzero_quartile_dict[f"{col}_nonzero_quartiles"] = [0.0] * 9
-
-        # Add bound and quartile columns to result
-        bounds_df = pl.DataFrame(bounds_dict)
-        quartile_df = pl.DataFrame(quartile_dict)
-        nonzero_quartile_df = pl.DataFrame(nonzero_quartile_dict)
-        result_df = pl.concat([result_df, bounds_df, quartile_df, nonzero_quartile_df], how="horizontal")
+        bounds = _bounds_for_group(mdf_pd, enduse_cols, value_stat_type)
+        quartiles, nonzero_quartiles = _quartiles_for_group(mdf_pd, enduse_cols)
+        stats_row = {
+            **{k: [v] for k, v in bounds.items()},
+            **{k: [v] for k, v in quartiles.items()},
+            **{k: [v] for k, v in nonzero_quartiles.items()},
+        }
+        result_df = pl.concat([result_df, pl.DataFrame(stats_row)], how="horizontal")
 
     # Note: US Total is only added when grouped by a column (e.g., state)
     # For ungrouped data, the result is already the US total
