@@ -2,14 +2,13 @@
 
 import functools
 from pathlib import Path
-from typing import Dict, List
 
 import polars as pl
 
 from resstockpostproc.baseline_validation.schema.workflow_schema import DataSourceConfig
 from buildstock_query import BuildStockQuery
 
-NUM2MONTH: Dict[int, str] = {
+NUM2MONTH: dict[int, str] = {
     1: "January",
     2: "February",
     3: "March",
@@ -24,7 +23,7 @@ NUM2MONTH: Dict[int, str] = {
     12: "December",
 }
 
-SEASON2MONTHS: Dict[str, List[int]] = {
+SEASON2MONTHS: dict[str, list[int]] = {
     "summer": [6, 7, 8],
     "winter": [12, 1, 2],
     "shoulder": [3, 4, 5, 9, 10, 11],
@@ -78,7 +77,7 @@ def format_large_number(value: float, precision: int = 1) -> str:
         return f"{sign}{abs_value:.{precision}f}"
 
 
-@functools.lru_cache(maxsize=None)
+@functools.cache
 def get_buildstock_query(
     workgroup: str,
     config: DataSourceConfig,

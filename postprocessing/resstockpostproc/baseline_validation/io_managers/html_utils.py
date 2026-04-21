@@ -38,7 +38,7 @@ def _build_plotly_loader_html(
     if local_plotly_src:
         escaped_local = html_lib.escape(local_plotly_src, quote=True)
         fallback_steps.append(
-            "<script type=\"text/javascript\">\n"
+            '<script type="text/javascript">\n'
             "if (!window.Plotly) {\n"
             f"  document.write('<script charset=\"utf-8\" src=\"{escaped_local}\"><\\\\/script>');\n"
             "}\n"
@@ -47,7 +47,7 @@ def _build_plotly_loader_html(
     if sibling_plotly_src:
         escaped_sibling = html_lib.escape(sibling_plotly_src, quote=True)
         fallback_steps.append(
-            "<script type=\"text/javascript\">\n"
+            '<script type="text/javascript">\n'
             "if (!window.Plotly) {\n"
             f"  document.write('<script charset=\"utf-8\" src=\"{escaped_sibling}\"><\\\\/script>');\n"
             "}\n"
@@ -55,10 +55,10 @@ def _build_plotly_loader_html(
         )
     return (
         "<script type=\"text/javascript\">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>\n"
-        f"<script charset=\"utf-8\" src=\"{escaped_cdn}\"></script>\n"
+        f'<script charset="utf-8" src="{escaped_cdn}"></script>\n'
         + "".join(fallback_steps)
         +
-        "<script type=\"text/javascript\">\n"
+        '<script type="text/javascript">\n'
         "(function() {\n"
         "  if (!window.Plotly || window.Plotly.__baselineDashboardPatched) return;\n"
         "  var originalNewPlot = window.Plotly.newPlot;\n"
@@ -195,19 +195,19 @@ def postprocess_plot_html(
 
     # Build CSS
     css = (
-        '<style>'
-        '.js-placeholder{opacity:0!important;pointer-events:none!important}'
-        '#resize-container{display:flex;flex-direction:column}'
-        '#resize-container>*{flex:1 1 0;min-height:0}'
-        '#resize-container>h2{flex:0 0 auto}'
-        f'.plot-footer{{margin:10px;padding:12px 16px;font-family:Arial,sans-serif;font-size:13px;color:#444;border-top:1px solid #ddd;max-width:{scaled_w}px}}'
-        '.plot-sources ul{margin:4px 0 0 20px;padding:0}'
-        '.plot-sources li{margin-bottom:2px}'
-        '.plot-sources a{color:#1a73e8;text-decoration:none}'
-        '.plot-sources a:hover{text-decoration:underline}'
-        '.plot-notes{margin-top:8px}'
-        '.plot-notes li{margin-bottom:4px;font-style:italic}'
-        '</style>\n'
+        "<style>"
+        ".js-placeholder{opacity:0!important;pointer-events:none!important}"
+        "#resize-container{display:flex;flex-direction:column}"
+        "#resize-container>*{flex:1 1 0;min-height:0}"
+        "#resize-container>h2{flex:0 0 auto}"
+        f".plot-footer{{margin:10px;padding:12px 16px;font-family:Arial,sans-serif;font-size:13px;color:#444;border-top:1px solid #ddd;max-width:{scaled_w}px}}"
+        ".plot-sources ul{margin:4px 0 0 20px;padding:0}"
+        ".plot-sources li{margin-bottom:2px}"
+        ".plot-sources a{color:#1a73e8;text-decoration:none}"
+        ".plot-sources a:hover{text-decoration:underline}"
+        ".plot-notes{margin-top:8px}"
+        ".plot-notes li{margin-bottom:4px;font-style:italic}"
+        "</style>\n"
     )
 
     # Resizable container

@@ -202,7 +202,7 @@ def _add_us_total_rows(df: pl.DataFrame, group_cols: list[str]) -> pl.DataFrame:
 
 def _empty_hist_rows(group_cols: list[str]) -> pl.DataFrame:
     """Return an empty histogram-row dataframe with the expected schema."""
-    schema = {col: pl.String for col in group_cols}
+    schema = dict.fromkeys(group_cols, pl.String)
     schema.update({
         "value": pl.Float64,
         "weight": pl.Float64,
