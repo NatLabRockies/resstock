@@ -205,15 +205,7 @@ def _shard_filename(filter1_value: str) -> str:
 
 
 def parse_viz_cell(cell_value: str) -> tuple[str, str | None]:
-  """Parse 'viz_type||path' format into (display_text, url_or_traceback).
-
-  Returns:
-      - ("viz_type", "path") for success
-      - ("FAILED", "traceback...") for failure with traceback
-      - ("FAILED", None) for failure without traceback
-      - ("", None) for empty cells
-
-  """
+  """Parse 'viz_type||path' into (viz_type, path) / ('FAILED', tb|None) / ('', None)."""
   if not cell_value or not cell_value.strip():
     return ("", None)
 
@@ -330,13 +322,7 @@ def append_index_row(state: IndexState, row_dict: dict) -> None:
 
 
 def finalize_html_index(state: IndexState) -> None:
-    """Close the streaming combinations file.
-
-    The HTML and shards written incrementally during the run are preview
-    artifacts; the caller is expected to follow up with the canonical
-    deterministic writer (create_html_from_rows) to rewrite everything
-    from the sorted TSV.
-    """
+    """Close the streaming combinations file; caller must run the canonical writer next."""
     state.close_combo_file()
 
 
