@@ -32,7 +32,12 @@ def test_postprocess_plot_html_uses_cdn_then_local_fallback(tmp_path):
     assert plotly_cdn_url() in html
     assert "../../assets/" + plotly_asset_filename() in html
     assert f'src="{sibling_href}"' in html
-    assert html.index(plotly_cdn_url()) < html.index("../../assets/" + plotly_asset_filename()) < html.index(f'src="{sibling_href}"') < html.index("Plotly.newPlot")
+    assert (
+        html.index(plotly_cdn_url())
+        < html.index("../../assets/" + plotly_asset_filename())
+        < html.index(f'src="{sibling_href}"')
+        < html.index("Plotly.newPlot")
+    )
     assert html.count("window.PlotlyConfig") == 1
     assert "window.Plotly.newPlot = function" in html
     assert "modeBarButtonsToAdd = existingButtons.concat(extraButtons)" in html

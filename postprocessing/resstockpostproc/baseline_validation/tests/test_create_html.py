@@ -56,7 +56,7 @@ class TestShardedIndex:
         data_dir = comparisons_index_data_dir(tmp_path)
         headers = ["Index", "Filter 1", "Name", "Main Visualization"]
 
-        state = init_html_index(html_path, headers, data_dir=data_dir)
+        init_html_index(html_path, headers, data_dir=data_dir)
 
         # HTML is NOT written yet (deferred to finalize)
         assert not html_path.exists()

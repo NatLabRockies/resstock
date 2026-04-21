@@ -3,6 +3,7 @@
 from pathlib import Path
 
 import pytest
+from pydantic import ValidationError
 
 from resstockpostproc.baseline_validation.schema import workflow_schema
 from resstockpostproc.baseline_validation.schema.workflow_schema import WorkflowConfig
@@ -88,7 +89,7 @@ class TestWorkflowHistogramPathInference:
         cfg_dict = _base_cfg(output_dir=tmp_path / "out")
         cfg_dict["plots"] = {"output_formats": ["html", "svg"]}
 
-        with pytest.raises(Exception) as err:
+        with pytest.raises(ValidationError, match="plots") as err:
             WorkflowConfig.model_validate(cfg_dict)
 
         assert "plots" in str(err.value)
@@ -97,7 +98,7 @@ class TestWorkflowHistogramPathInference:
         cfg_dict = _base_cfg(output_dir=tmp_path / "out")
         cfg_dict["quantities"] = ["Electricity"]
 
-        with pytest.raises(Exception) as err:
+        with pytest.raises(ValidationError, match="quantities") as err:
             WorkflowConfig.model_validate(cfg_dict)
 
         assert "quantities" in str(err.value)

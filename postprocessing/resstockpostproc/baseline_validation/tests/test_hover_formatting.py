@@ -228,7 +228,7 @@ def test_bar_hover_display_order_is_value_diff_ci_count():
         first_category_title="Data Source",
         second_category_title="State",
         orientation="v",
-        count_label_resolver=lambda source: "Number of Models",
+        count_label_resolver=lambda _source: "Number of Models",
         compact_hover_values=True,
         percent_difference_column="electricity_total_value_percent_difference",
     )
@@ -266,7 +266,7 @@ def test_monthly_hover_display_order_is_value_diff_ci_count():
         upper_bound_column="electricity_total_value_upper_bound",
         first_category_column="source",
         quantity_title="kWh",
-        count_label_resolver=lambda source: "Number of Models",
+        count_label_resolver=lambda _source: "Number of Models",
         compact_hover_values=True,
         percent_difference_column="electricity_total_value_percent_difference",
     )

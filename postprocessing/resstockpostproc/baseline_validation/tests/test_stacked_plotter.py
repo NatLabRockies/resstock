@@ -100,12 +100,14 @@ class TestSplitGraphByState:
         rows = []
         for state, uc in zip(states, units_counts):
             rows.append({"source": "recs_2020", "state": state, "units_count": uc, "electricity_total_value": 100.0})
-            rows.append({"source": "resstock_2024", "state": state, "units_count": uc, "electricity_total_value": 110.0})
+            rows.append(
+                {"source": "resstock_2024", "state": state, "units_count": uc, "electricity_total_value": 110.0},
+            )
         return pl.DataFrame(rows)
 
     def test_multi_state_splits_into_two_columns(self):
         df = self._make_state_df(["CA", "TX", "NY", "FL"], [5000, 4000, 3000, 2000])
-        fig, iterator = split_graph_by_state(df)
+        _fig, iterator = split_graph_by_state(df)
 
         chunks = list(iterator)
         assert len(chunks) == 2
@@ -113,31 +115,34 @@ class TestSplitGraphByState:
         # First column: top 2 states by units_count (CA, TX)
         df1, col_name, row, col = chunks[0]
         assert col_name == "state"
-        assert row == 1 and col == 1
+        assert row == 1
+        assert col == 1
         states_1 = df1["state"].unique().to_list()
         assert set(states_1) == {"CA", "TX"}
 
         # Second column: bottom 2 states (NY, FL)
         df2, col_name, row, col = chunks[1]
-        assert row == 1 and col == 2
+        assert row == 1
+        assert col == 2
         states_2 = df2["state"].unique().to_list()
         assert set(states_2) == {"NY", "FL"}
 
     def test_single_state_no_split(self):
         df = self._make_state_df(["CA"], [5000])
-        fig, iterator = split_graph_by_state(df)
+        _fig, iterator = split_graph_by_state(df)
 
         chunks = list(iterator)
         assert len(chunks) == 1
         _, _, row, col = chunks[0]
-        assert row == 1 and col == 1
+        assert row == 1
+        assert col == 1
 
     def test_states_sorted_by_units_count_descending(self):
         """The reference source's states should be sorted by units_count descending."""
         df = self._make_state_df(["FL", "CA", "NY"], [2000, 5000, 3000])
-        fig, iterator = split_graph_by_state(df)
+        _fig, iterator = split_graph_by_state(df)
 
-        chunk1, chunk2 = list(iterator)
+        chunk1, _chunk2 = list(iterator)
         # First column gets the top state (CA, sorted desc by units_count)
         first_state = chunk1[0]["state"].unique().to_list()[0]
         assert first_state == "CA"
@@ -151,13 +156,14 @@ class TestSplitGraphByChar:
             "units_count": [1000, 2000, 1000, 2000],
             "electricity_total_value": [100.0, 200.0, 110.0, 220.0],
         })
-        fig, iterator = split_graph_by_char(df)
+        _fig, iterator = split_graph_by_char(df)
 
         chunks = list(iterator)
         assert len(chunks) == 1
-        df_out, col_name, row, col = chunks[0]
+        _df_out, col_name, row, col = chunks[0]
         assert col_name == "vintage"
-        assert row == 1 and col == 1
+        assert row == 1
+        assert col == 1
 
     def test_recs_census_division_custom_order_with_us_total_first(self):
         df = pl.DataFrame({
@@ -177,7 +183,7 @@ class TestSplitGraphByChar:
         })
         spec = _make_spec(group_by="census_division_recs")
         _, iterator = split_graph_by_char(df, spec)
-        df_out, _, _, _ = list(iterator)[0]
+        df_out, _, _, _ = next(iter(iterator))
 
         ordered = df_out.filter(pl.col("source") == "recs_2020")["census_division_recs"].to_list()
         assert ordered == ["US Total", "New England", "Middle Atlantic", "Pacific"]
@@ -202,7 +208,7 @@ class TestSplitGraphByChar:
         })
         spec = _make_spec(group_by="geometry_building_type_recs")
         _, iterator = split_graph_by_char(df, spec)
-        df_out, _, _, _ = list(iterator)[0]
+        df_out, _, _, _ = next(iter(iterator))
 
         ordered = df_out.filter(pl.col("source") == "recs_2020")["geometry_building_type_recs"].to_list()
         assert ordered == [
@@ -233,7 +239,7 @@ class TestSplitGraphByChar:
         })
         spec = _make_spec(group_by="vintage")
         _, iterator = split_graph_by_char(df, spec)
-        df_out, _, _, _ = list(iterator)[0]
+        df_out, _, _, _ = next(iter(iterator))
 
         ordered = df_out.filter(pl.col("source") == "recs_2020")["vintage"].to_list()
         assert ordered == ["US Total", "<1950", "1950s", "1990s", "2010s"]
@@ -247,7 +253,7 @@ class TestSplitGraphByChar:
         })
         spec = _make_spec(group_by="custom_char")
         _, iterator = split_graph_by_char(df, spec)
-        df_out, _, _, _ = list(iterator)[0]
+        df_out, _, _, _ = next(iter(iterator))
 
         ordered = df_out.filter(pl.col("source") == "recs_2020")["custom_char"].to_list()
         assert ordered == ["B", "C", "A"]
@@ -261,7 +267,7 @@ class TestSplitGraphByChar:
         })
         spec = _make_spec(comparison_dataset=ComparisonDataset.eia, group_by="vintage")
         _, iterator = split_graph_by_char(df, spec)
-        df_out, _, _, _ = list(iterator)[0]
+        df_out, _, _, _ = next(iter(iterator))
 
         ordered = df_out.filter(pl.col("source") == "eia_2018")["vintage"].to_list()
         assert ordered == ["2010s", "1950s", "<1950"]
@@ -323,7 +329,7 @@ class TestSplitGraphDispatch:
             "electricity_total_value": [100.0, 110.0],
         })
         spec = _make_spec(group_by="state", quantity=DataCol.ELECTRICITY_TOTAL)
-        fig, iterator = split_graph(df, spec)
+        _fig, iterator = split_graph(df, spec)
         chunks = list(iterator)
         # Single state → single chunk
         assert len(chunks) == 1
@@ -338,7 +344,7 @@ class TestSplitGraphDispatch:
             "electricity_total_value": [100.0, 110.0],
         })
         spec = _make_spec(group_by="vintage", quantity=DataCol.ELECTRICITY_TOTAL)
-        fig, iterator = split_graph(df, spec)
+        _fig, iterator = split_graph(df, spec)
         chunks = list(iterator)
         assert chunks[0][1] == "vintage"
 
@@ -366,7 +372,7 @@ class TestHistogramLayoutRouting:
     def test_histogram_layout_routes_to_histogram_renderer(self, monkeypatch):
         calls = {"count": 0}
 
-        def _fake_hist_renderer(df, plot_spec):
+        def _fake_hist_renderer(_df, _plot_spec):
             calls["count"] += 1
             return go.Figure()
 

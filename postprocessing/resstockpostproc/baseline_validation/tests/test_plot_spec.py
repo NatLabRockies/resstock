@@ -22,7 +22,7 @@ from resstockpostproc.baseline_validation.tests._helpers import make_eia_spec as
 
 class TestRejectTotalDistribution:
     def test_total_distribution_raises(self):
-        with pytest.raises(ValidationError, match="Metric.distribution is only supported for RECS"):
+        with pytest.raises(ValidationError, match=r"Metric\.distribution is only supported for RECS"):
             _make_spec(
                 comparison_dataset=ComparisonDataset.eia,
                 aggregation_type=Metric.distribution,
@@ -107,7 +107,7 @@ class TestLRDDisplayMetricLabels:
         )
 
     @pytest.mark.parametrize(
-        "resolution,view,group_by,focus_on,expected",
+        ("resolution", "view", "group_by", "focus_on", "expected"),
         [
             (Resolution.year, ViewType.value_view, "utility", (), "Average Annual Consumption"),
             (Resolution.month, ViewType.value_view, "utility", (), "Average Monthly Consumption"),
@@ -147,7 +147,7 @@ class TestLRDDisplayMetricLabels:
 
 class TestDisplayVizLabels:
     @pytest.mark.parametrize(
-        "overrides,expected",
+        ("overrides", "expected"),
         [
             ({"group_by": None}, "Bar Plot"),
             ({}, "Bar Plot (grouped)"),

@@ -27,14 +27,24 @@ from resstockpostproc.baseline_validation.generation.work_items import (
     build_spec_entries,
     emit_layout_for_final_group,
 )
+from resstockpostproc.baseline_validation.schema.plot_definitions import (
+    EIA_CHARS,
+    LRD_CHARS,
+    RECS_ANNUAL_CHARS,
+    RECS_CROSS_FILTER_CHARS,
+    RECS_MONTHLY_CHARS,
+    _make_related_specs,
+    generate_slot_triples,
+)
 from resstockpostproc.baseline_validation.schema.plot_spec import (
-    PlotSpec,
-    Metric,
-    CoverageType,
-    Resolution,
+    GEOGRAPHIC_DIMENSIONS,
     ComparisonDataset,
-    ViewType,
+    CoverageType,
     Layout,
+    Metric,
+    PlotSpec,
+    Resolution,
+    ViewType,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
@@ -388,13 +398,13 @@ class TestRelatedSpecFamilies:
 class TestLRDSidebarSemantics:
     @staticmethod
     def _make_lrd_spec(resolution: Resolution) -> PlotSpec:
-        defaults = dict(
-            comparison_dataset=ComparisonDataset.lrd,
-            quantity=DataCol.ELECTRICITY_TOTAL,
-            aggregation_type=Metric.average,
-            coverage=CoverageType.all_units,
-            view=ViewType.value_view,
-        )
+        defaults = {
+            "comparison_dataset": ComparisonDataset.lrd,
+            "quantity": DataCol.ELECTRICITY_TOTAL,
+            "aggregation_type": Metric.average,
+            "coverage": CoverageType.all_units,
+            "view": ViewType.value_view,
+        }
         if resolution == Resolution.hour_of_day_matrix:
             return PlotSpec(
                 resolution=resolution,
@@ -424,7 +434,7 @@ class TestLRDSidebarSemantics:
         assert row["Group By"] == "Utility"
 
     @pytest.mark.parametrize(
-        "resolution,expected_filter_1",
+        ("resolution", "expected_filter_1"),
         [
             (Resolution.hour_of_day_summer, "Season: Summer"),
             (Resolution.hour_of_day_winter, "Season: Winter"),
@@ -451,17 +461,6 @@ class TestLRDSidebarSemantics:
 # ---------------------------------------------------------------------------
 # generate_slot_triples tests
 # ---------------------------------------------------------------------------
-
-from resstockpostproc.baseline_validation.schema.plot_definitions import (
-    generate_slot_triples,
-    RECS_ANNUAL_CHARS,
-    RECS_CROSS_FILTER_CHARS,
-    RECS_MONTHLY_CHARS,
-    EIA_CHARS,
-    LRD_CHARS,
-    _make_related_specs,
-)
-from resstockpostproc.baseline_validation.schema.plot_spec import GEOGRAPHIC_DIMENSIONS
 
 
 class TestGenerateSlotTriples:

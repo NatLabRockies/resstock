@@ -25,7 +25,7 @@ def _patch_minimal_raw(monkeypatch, raw: pl.DataFrame) -> None:
     monkeypatch.setattr(
         type(get_resstock_data.workflow),
         "get_resstock_data_file",
-        lambda self, _name: Path("/tmp/fake_upgrade0.parquet"),
+        lambda _self, _name: Path("/tmp/fake_upgrade0.parquet"),  # noqa: S108 — mock path, never hits disk
     )
     monkeypatch.setattr(get_resstock_data.pl, "scan_parquet", lambda _path: raw.lazy())
     monkeypatch.setattr(get_resstock_data, "get_db_enduse_colnames_map", lambda _schema: minimal_map)
@@ -52,7 +52,7 @@ class TestResStockAnnualFastPath:
         monkeypatch.setattr(
             get_resstock_data,
             "get_buildstock_query",
-            lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("Athena should not be used")),
+            lambda *_args, **_kwargs: (_ for _ in ()).throw(AssertionError("Athena should not be used")),
         )
 
         out = get_resstock_data.get_annual(_make_source("raw_state"), by="state", occupied_only=True)
@@ -89,7 +89,7 @@ class TestResStockAnnualFastPath:
         monkeypatch.setattr(
             get_resstock_data,
             "get_buildstock_query",
-            lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("Athena should not be used")),
+            lambda *_args, **_kwargs: (_ for _ in ()).throw(AssertionError("Athena should not be used")),
         )
 
         out = get_resstock_data._get_annual_two_char_cached(
@@ -120,7 +120,7 @@ class TestResStockAnnualFastPath:
             "scan_parquet",
             lambda _path: (_ for _ in ()).throw(AssertionError("raw parquet should not be scanned for eiaid")),
         )
-        monkeypatch.setattr(get_resstock_data, "get_buildstock_query", lambda *args, **kwargs: sentinel_bsq)
+        monkeypatch.setattr(get_resstock_data, "get_buildstock_query", lambda *_args, **_kwargs: sentinel_bsq)
         monkeypatch.setattr(
             get_resstock_data,
             "_get_annual_by_eiaid",

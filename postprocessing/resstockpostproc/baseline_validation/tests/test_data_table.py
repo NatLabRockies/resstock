@@ -3,6 +3,7 @@
 
 import polars as pl
 import pytest
+from pydantic import ValidationError
 
 from resstockpostproc.baseline_validation.io_managers.data_table import (
     generate_data_table_html,
@@ -324,7 +325,7 @@ class TestGenerateDataTableHtml:
 
 
 def _make_distribution_data():
-    """Minimal distribution dataset: 2 states × 2 sources, with 9-element quartile lists."""
+    """Minimal distribution dataset: 2 states x 2 sources, with 9-element quartile lists."""
     return pl.DataFrame({
         "state": ["CA", "CA", "NY", "NY"],
         "source": ["recs_2020", "resstock_2025", "recs_2020", "resstock_2025"],
@@ -459,7 +460,7 @@ class TestAllEnduseTable:
         melted = melt_enduse_columns(data)
         assert "enduse" in melted.columns
         assert "all_value" in melted.columns
-        # 3 enduses × 2 sources = 6 rows (one state)
+        # 3 enduses x 2 sources = 6 rows (one state)
         assert len(melted) == 6
         labels = set(melted["enduse"].unique().to_list())
         assert "Electricity" in labels  # electricity_total fuel total
@@ -544,19 +545,9 @@ class TestAllEnduseTable:
         # (Using the escaped JSON check for the label "State")
         assert '"label": "State"' not in html
 
-    def test_all_enduse_distribution_table(self, tmp_path):
+    def test_all_enduse_distribution_table(self):
         """ALL-quantity distribution specs are invalid under the Metric-based schema."""
-        data = pl.DataFrame({
-            "state": ["CA", "CA"],
-            "source": ["recs_2020", "resstock_2025"],
-            "electricity_total_value": [5000.0, 5200.0],
-            "electricity_total_quartiles": [
-                [10.0, 0.0, 0.0, 25.0, 50.0, 75.0, 0.0, 0.0, 100.0],
-                [12.0, 0.0, 0.0, 28.0, 55.0, 80.0, 0.0, 0.0, 110.0],
-            ],
-            "model_count": [None, 500.0],
-        })
-        with pytest.raises(Exception):
+        with pytest.raises(ValidationError, match="distribution requires an end-use quantity"):
             _make_spec(
                 comparison_dataset=ComparisonDataset.recs,
                 quantity=DataCol.ALL,

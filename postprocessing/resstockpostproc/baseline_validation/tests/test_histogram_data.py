@@ -21,19 +21,18 @@ from resstockpostproc.shared_utils.db_column_names import DataCol, DBSchema
 
 
 def _make_histogram_spec(**overrides) -> PlotSpec:
-    defaults = dict(
-        comparison_dataset=ComparisonDataset.recs,
-        quantity=DataCol.ELECTRICITY_TOTAL,
-        resolution=Resolution.year,
-        aggregation_type=Metric.distribution,
-        coverage=CoverageType.all_units,
-        group_by="vintage",
-        focus_on=(("state", "CA"),),
-        view=ViewType.value_view,
-        layout=Layout.histogram,
-    )
-    defaults.update(overrides)
-    return PlotSpec(**defaults)
+    defaults = {
+        "comparison_dataset": ComparisonDataset.recs,
+        "quantity": DataCol.ELECTRICITY_TOTAL,
+        "resolution": Resolution.year,
+        "aggregation_type": Metric.distribution,
+        "coverage": CoverageType.all_units,
+        "group_by": "vintage",
+        "focus_on": (("state", "CA"),),
+        "view": ViewType.value_view,
+        "layout": Layout.histogram,
+    }
+    return PlotSpec(**{**defaults, **overrides})
 
 
 class TestHistogramRawLoaders:
@@ -72,7 +71,7 @@ class TestHistogramRawLoaders:
         monkeypatch.setattr(
             type(histogram_data.workflow),
             "get_resstock_data_file",
-            lambda self, _name: Path("/tmp/fake_upgrade0.parquet"),
+            lambda _self, _name: Path("/tmp/fake_upgrade0.parquet"),  # noqa: S108 — mock path, never hits disk
         )
         monkeypatch.setattr(histogram_data.pl, "scan_parquet", lambda _path: raw.lazy())
 
@@ -111,7 +110,7 @@ class TestHistogramRawLoaders:
         monkeypatch.setattr(
             type(histogram_data.workflow),
             "get_resstock_data_file",
-            lambda self, _name: Path("/tmp/fake_upgrade0.parquet"),
+            lambda _self, _name: Path("/tmp/fake_upgrade0.parquet"),  # noqa: S108 — mock path, never hits disk
         )
         monkeypatch.setattr(histogram_data.pl, "scan_parquet", lambda _path: raw.lazy())
 
@@ -150,7 +149,7 @@ class TestHistogramRawLoaders:
         monkeypatch.setattr(
             type(histogram_data.workflow),
             "get_resstock_data_file",
-            lambda self, _name: Path("/tmp/fake_upgrade0.parquet"),
+            lambda _self, _name: Path("/tmp/fake_upgrade0.parquet"),  # noqa: S108 — mock path, never hits disk
         )
         monkeypatch.setattr(histogram_data.pl, "scan_parquet", lambda _path: raw.lazy())
 

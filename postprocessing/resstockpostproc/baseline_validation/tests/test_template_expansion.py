@@ -26,17 +26,16 @@ from resstockpostproc.shared_utils.db_column_names import DataCol
 
 
 def _make_template(**overrides):
-    defaults = dict(
-        comparison_dataset=ComparisonDataset.recs,
-        quantity=DataCol.ELECTRICITY_TOTAL,
-        resolution=Resolution.year,
-        aggregation_type=Metric.average,
-        coverage=CoverageType.all_units,
-        view=ViewType.value_view,
-        eligible_chars=("state", "geometry_building_type_recs", "vintage"),
-    )
-    defaults.update(overrides)
-    return PlotTemplate(**defaults)
+    defaults = {
+        "comparison_dataset": ComparisonDataset.recs,
+        "quantity": DataCol.ELECTRICITY_TOTAL,
+        "resolution": Resolution.year,
+        "aggregation_type": Metric.average,
+        "coverage": CoverageType.all_units,
+        "view": ViewType.value_view,
+        "eligible_chars": ("state", "geometry_building_type_recs", "vintage"),
+    }
+    return PlotTemplate(**{**defaults, **overrides})
 
 
 def _install_expansion_stubs(monkeypatch, triples):

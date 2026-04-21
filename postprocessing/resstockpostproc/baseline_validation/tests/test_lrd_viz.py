@@ -204,7 +204,7 @@ class TestLRDPlotter:
         # Add month column for month resolution
         data_with_month = mock_year_data.with_columns(pl.lit("JAN").alias("month"))
 
-        fig, title = lrd_plotter.create_plot(data_with_month, plot_spec)
+        fig, _title = lrd_plotter.create_plot(data_with_month, plot_spec)
         assert fig is not None
 
     @pytest.mark.parametrize("view", [ViewType.temp_view, ViewType.temp_distribution_view])
@@ -245,7 +245,7 @@ class TestHourOfDayMatrixDataProcessing:
 
     def test_month_daytype_layout_coverage(self):
         """Test that all expected month_daytype combinations are covered."""
-        from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import LAYOUTS
+        from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import LAYOUTS  # noqa: PLC0415 — lazy to avoid test collection import cost
 
         layout = LAYOUTS["month_daytype"]
 
@@ -270,7 +270,7 @@ class TestDayOfYearResolution:
     @pytest.fixture
     def mock_day_of_year_data(self):
         """Create mock data for day_of_year resolution tests."""
-        from datetime import datetime, timedelta
+        from datetime import datetime, timedelta  # noqa: PLC0415 — fixture-local
 
         sources = ["lrd_2018", "resstock_2024", "resstock_2025"]
         utilities = ["ComEd (IL)", "PG&E (CA)", "SCE (CA)"]
@@ -345,7 +345,7 @@ class TestDayOfYearResolution:
 
     def test_utility_vertical_layout_exists(self):
         """Test that utility_vertical layout exists and has correct structure."""
-        from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import LAYOUTS
+        from resstockpostproc.shared_utils.generic_plotters.tilemap_plotter import LAYOUTS  # noqa: PLC0415 — lazy to avoid test collection import cost
 
         assert "utility_vertical" in LAYOUTS
         layout = LAYOUTS["utility_vertical"]
