@@ -1,6 +1,6 @@
 """Tests for Python-generated plot and table footnotes."""
 
-from resstockpostproc.baseline_validation.footnotes import (
+from resstockpostproc.baseline_validation.plot_helpers.footnotes import (
     EIA_NATURAL_GAS_PENETRATION_NOTE,
     HISTOGRAM_OVERFLOW_NOTE,
     RECS_ANNUAL_CI_NOTE,

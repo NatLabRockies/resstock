@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import polars as pl
 
-from resstockpostproc.baseline_validation.plot_semantics import (
+from resstockpostproc.baseline_validation.plot_helpers.plot_semantics import (
     format_source_label,
     resolve_timeseries_column,
 )

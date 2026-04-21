@@ -8,7 +8,7 @@ from pathlib import Path
 
 import polars as pl
 
-from resstockpostproc.baseline_validation.resstock_raw import (
+from resstockpostproc.baseline_validation.plot_helpers.resstock_raw import (
     resolve_existing_char_column as _resolve_existing_char_column,
     resstock_group_expr as _resstock_group_expr,
     resstock_quantity_expr as _resstock_quantity_expr,
@@ -22,7 +22,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
 from resstockpostproc.baseline_validation.schema.recs_chars_mapping import RECS_CHARS_MAPPING, PartialMap
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow, DataSourceConfig
-from resstockpostproc.baseline_validation.plot_semantics import apply_source_labels
+from resstockpostproc.baseline_validation.plot_helpers.plot_semantics import apply_source_labels
 from resstockpostproc.baseline_validation.io_managers import comparison_data_paths as s3_paths
 from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
 from resstockpostproc.shared_utils.db_column_names import get_db_characteristics_colnames

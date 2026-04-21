@@ -17,7 +17,7 @@ repos:
       - id: check-docstring-first
         exclude: |
           (?x)^postprocessing/resstockpostproc/baseline_validation/(
-            plot_semantics\.py
+            plot_helpers/plot_semantics\.py
             |schema/plot_definitions\.py
             |schema/plot_spec\.py
           )$

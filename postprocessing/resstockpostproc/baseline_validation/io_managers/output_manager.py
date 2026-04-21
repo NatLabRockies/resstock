@@ -13,7 +13,7 @@ from plotly.offline import get_plotlyjs
 
 from resstockpostproc.baseline_validation.dashboard.dashboard_paths import dashboard_output_root, dataset_output_dir
 from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, FileType
-from resstockpostproc.baseline_validation.utils import ensure_directory
+from resstockpostproc.baseline_validation.plot_helpers.utils import ensure_directory
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.baseline_validation.io_managers.html_utils import postprocess_plot_html
 from resstockpostproc.shared_utils.timing import timed

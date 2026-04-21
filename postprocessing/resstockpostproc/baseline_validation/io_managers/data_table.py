@@ -15,7 +15,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec
 from resstockpostproc.baseline_validation.plotters.plot_config import (
     get_second_category_column,
 )
-from resstockpostproc.baseline_validation.plot_semantics import (
+from resstockpostproc.baseline_validation.plot_helpers.plot_semantics import (
     resolve_quantity_title,
     resolve_timeseries_column,
 )

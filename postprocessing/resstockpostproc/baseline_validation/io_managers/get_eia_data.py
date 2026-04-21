@@ -14,7 +14,7 @@ from . import comparison_data_paths as s3_paths
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from collections.abc import Sequence
 from typing import Literal
-from resstockpostproc.baseline_validation.utils import KBTU2KWH
+from resstockpostproc.baseline_validation.plot_helpers.utils import KBTU2KWH
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.baseline_validation.io_managers.utils import apply_aggregation, add_us_total
 from resstockpostproc.baseline_validation.schema.plot_spec import DataKey

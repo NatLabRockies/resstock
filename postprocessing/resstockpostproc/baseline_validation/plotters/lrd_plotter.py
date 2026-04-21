@@ -13,7 +13,7 @@ from resstockpostproc.shared_utils.generic_plotters import tilemap_plotter
 from resstockpostproc.shared_utils.generic_plotters.bar_plotter import create_bar_plot
 from resstockpostproc.shared_utils.generic_plotters.monthly_plotter import create_ts_plot
 from resstockpostproc.baseline_validation.plotters.plot_config import resolve_percent_difference_column
-from resstockpostproc.baseline_validation.theme import apply_theme
+from resstockpostproc.baseline_validation.plot_helpers.theme import apply_theme
 from resstockpostproc.shared_utils.timing import timed
 
 

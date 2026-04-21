@@ -27,7 +27,7 @@ from resstockpostproc.baseline_validation.dashboard.dashboard_paths import (
     relative_href_from_file,
 )
 from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data
-from resstockpostproc.baseline_validation.footnotes import (
+from resstockpostproc.baseline_validation.plot_helpers.footnotes import (
     get_plot_notes,
     get_table_notes,
 )
@@ -45,7 +45,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
     ViewType,
 )
-from resstockpostproc.baseline_validation.utils import ensure_directory
+from resstockpostproc.baseline_validation.plot_helpers.utils import ensure_directory
 from resstockpostproc.shared_utils.timing import TimingStats, timed
 
 logger = logging.getLogger(__name__)

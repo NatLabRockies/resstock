@@ -19,7 +19,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
 from resstockpostproc.baseline_validation.plotters.plot_config import (
     get_second_category_column,
 )
-from resstockpostproc.baseline_validation.plot_semantics import (
+from resstockpostproc.baseline_validation.plot_helpers.plot_semantics import (
     QUARTILE_INDICES,
     quartile_list_column,
     resolve_timeseries_column,

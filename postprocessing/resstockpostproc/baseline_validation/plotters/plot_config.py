@@ -17,7 +17,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     format_group_by,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
-from resstockpostproc.baseline_validation.plot_semantics import (
+from resstockpostproc.baseline_validation.plot_helpers.plot_semantics import (
     quartile_list_column,
     resolve_quantity_title,
     resolve_timeseries_column,

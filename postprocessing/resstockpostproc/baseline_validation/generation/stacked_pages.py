@@ -14,7 +14,7 @@ from pathlib import Path
 import polars as pl
 from tqdm import tqdm
 
-from resstockpostproc.baseline_validation.footnotes import (
+from resstockpostproc.baseline_validation.plot_helpers.footnotes import (
     dedupe_note_groups,
     get_plot_notes,
     get_table_notes,
@@ -40,7 +40,7 @@ from resstockpostproc.baseline_validation.dashboard.dashboard_paths import (
     dataset_output_dir,
     relative_href_from_file,
 )
-from resstockpostproc.baseline_validation.utils import ensure_directory
+from resstockpostproc.baseline_validation.plot_helpers.utils import ensure_directory
 
 logger = logging.getLogger(__name__)
 

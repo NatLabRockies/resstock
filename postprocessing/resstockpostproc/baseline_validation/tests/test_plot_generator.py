@@ -3,7 +3,7 @@
 import polars as pl
 import pytest
 
-from resstockpostproc.baseline_validation.footnotes import (
+from resstockpostproc.baseline_validation.plot_helpers.footnotes import (
     RECS_ANNUAL_CI_NOTE,
     RECS_OCCUPIED_UNITS_NOTE,
     get_plot_notes,

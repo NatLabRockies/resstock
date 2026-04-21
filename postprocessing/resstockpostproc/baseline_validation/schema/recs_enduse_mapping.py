@@ -1,6 +1,6 @@
 from typing import TypedDict
 
-from resstockpostproc.baseline_validation.utils import KBTU2KWH
+from resstockpostproc.baseline_validation.plot_helpers.utils import KBTU2KWH
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
 

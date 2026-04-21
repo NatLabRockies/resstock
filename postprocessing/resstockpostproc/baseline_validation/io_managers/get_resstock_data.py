@@ -10,7 +10,7 @@ from buildstock_query import BuildStockQuery, MappedColumn
 
 from resstockpostproc.baseline_validation.io_managers.utils import apply_aggregation
 from resstockpostproc.baseline_validation.io_managers.stats import ANNUAL_QUANTILES, weighted_quantiles
-from resstockpostproc.baseline_validation.resstock_raw import (
+from resstockpostproc.baseline_validation.plot_helpers.resstock_raw import (
     resolve_existing_char_column,
     resstock_group_expr,
     resstock_quantity_expr,
@@ -21,7 +21,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import Resolution, Da
 from resstockpostproc.baseline_validation.schema.recs_chars_mapping import RECS_CHARS_MAPPING
 from resstockpostproc.shared_utils.db_column_names import get_db_enduse_colnames_map, get_db_characteristics_colnames
 from resstockpostproc.baseline_validation.schema.workflow_schema import DBSchema
-from resstockpostproc.baseline_validation.utils import get_buildstock_query
+from resstockpostproc.baseline_validation.plot_helpers.utils import get_buildstock_query
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.caching import cached

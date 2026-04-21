@@ -3,7 +3,7 @@ from pathlib import Path
 import polars as pl
 import pytest
 
-from resstockpostproc.baseline_validation import resstock_raw
+from resstockpostproc.baseline_validation.plot_helpers import resstock_raw
 from resstockpostproc.baseline_validation.io_managers import get_resstock_data
 from resstockpostproc.baseline_validation.schema.workflow_schema import DataSourceConfig
 from resstockpostproc.shared_utils.db_column_names import DataCol, DBSchema

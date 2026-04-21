@@ -10,7 +10,7 @@ Extracted from stacked_plotter.py in refactor plan V2 step 6.2.
 
 import polars as pl
 
-from resstockpostproc.baseline_validation.plot_semantics import QUARTILE_INDICES, quartile_list_column
+from resstockpostproc.baseline_validation.plot_helpers.plot_semantics import QUARTILE_INDICES, quartile_list_column
 from resstockpostproc.baseline_validation.schema.plot_spec import CoverageType
 from resstockpostproc.shared_utils.timing import timed
 

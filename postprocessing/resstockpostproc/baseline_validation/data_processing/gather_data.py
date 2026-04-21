@@ -18,7 +18,7 @@ from resstockpostproc.baseline_validation.data_processing.histogram_data import 
 from resstockpostproc.baseline_validation.data_processing.dataset_adapters import load_eia, load_recs, load_lrd
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 from resstockpostproc.baseline_validation.schema.recs_enduse_mapping import RECS_ENDUSE_MAP
-from resstockpostproc.baseline_validation.plot_semantics import apply_source_labels
+from resstockpostproc.baseline_validation.plot_helpers.plot_semantics import apply_source_labels
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.mapping import ID2UtilityName
 from resstockpostproc.shared_utils.timing import timed
