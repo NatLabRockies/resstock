@@ -74,6 +74,15 @@ def _drop_reference_source_in_diff_view(data: pl.DataFrame, plot_spec: PlotSpec,
     return filter_null_sources(data, "source", config.quantity_column)
 
 
+def _shared_plot_kwargs(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> dict:
+    """Kwargs every plotter takes for source labels, percent-diff hover, and compact values."""
+    return {
+        "count_label_resolver": plot_spec.model_count_display_label_for_source,
+        "compact_hover_values": True,
+        "percent_difference_column": resolve_percent_difference_column(config.quantity_column, data),
+    }
+
+
 @timed
 def _render(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
     """Select appropriate renderer and create the figure."""
@@ -132,9 +141,7 @@ def _render_tilemap(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec)
             plot_spec.aggregation_type == Metric.total
             and plot_spec.view == ViewType.value_view
         ),
-        count_label_resolver=plot_spec.model_count_display_label_for_source,
-        compact_hover_values=True,
-        percent_difference_column=resolve_percent_difference_column(config.quantity_column, data),
+        **_shared_plot_kwargs(data, config, plot_spec),
     )
 
 @timed
@@ -153,9 +160,7 @@ def _render_single_entity_timeseries(data: pl.DataFrame, config: PlotConfig, plo
         show_legends=True,
         x_unit=config.x_unit,
         fill_lower_bound=True,
-        count_label_resolver=plot_spec.model_count_display_label_for_source,
-        compact_hover_values=True,
-        percent_difference_column=resolve_percent_difference_column(config.quantity_column, data),
+        **_shared_plot_kwargs(data, config, plot_spec),
     )
 
 @timed
@@ -178,9 +183,7 @@ def _render_single_entity_monthly_bar(data: pl.DataFrame, config: PlotConfig, pl
         title_text=config.title,
         show_legends=True,
         x_unit=config.x_unit,
-        count_label_resolver=plot_spec.model_count_display_label_for_source,
-        compact_hover_values=True,
-        percent_difference_column=resolve_percent_difference_column(config.quantity_column, data),
+        **_shared_plot_kwargs(data, config, plot_spec),
     )
 
 
@@ -205,9 +208,7 @@ def _render_single_entity_bar(data: pl.DataFrame, config: PlotConfig, plot_spec:
         orientation="v",
         title_text=config.title,
         show_legends=True,
-        count_label_resolver=plot_spec.model_count_display_label_for_source,
-        compact_hover_values=True,
-        percent_difference_column=resolve_percent_difference_column(config.quantity_column, data),
+        **_shared_plot_kwargs(data, config, plot_spec),
     )
 
 @timed

@@ -119,6 +119,11 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
     is_single = second_category_column in final_df.columns and final_df[second_category_column].n_unique() == 1
 
     diff_col = resolve_percent_difference_column(quantity_column, final_df)
+    shared_kwargs = {
+        "count_label_resolver": plot_spec.model_count_display_label_for_source,
+        "compact_hover_values": True,
+        "percent_difference_column": diff_col,
+    }
     if is_single:
         if timeseries_column:
             fig = create_ts_plot(
@@ -135,9 +140,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
                 x_tick_text=ts_xtick_text,
                 x_range=x_range,
                 fill_lower_bound=True,
-                count_label_resolver=plot_spec.model_count_display_label_for_source,
-                compact_hover_values=True,
-                percent_difference_column=diff_col,
+                **shared_kwargs,
             )
         else:
             fig = create_bar_plot(
@@ -149,9 +152,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
                 orientation="v",
                 title_text=title,
                 show_legends=True,
-                count_label_resolver=plot_spec.model_count_display_label_for_source,
-                compact_hover_values=True,
-                percent_difference_column=diff_col,
+                **shared_kwargs,
             )
         height = 1080 * 0.4
         width = 1920 * 0.425
@@ -172,9 +173,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
             x_axis_title_bottom_row=x_axis_title_bottom_row,
             x_unit=x_unit,
             title_text=title,
-            count_label_resolver=plot_spec.model_count_display_label_for_source,
-            compact_hover_values=True,
-            percent_difference_column=diff_col,
+            **shared_kwargs,
         )
         if plot_spec.resolution == Resolution.hour_of_day_matrix:
             height = 1800
