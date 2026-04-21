@@ -38,19 +38,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
-
-def _make_spec(**overrides):
-    defaults = dict(
-        comparison_dataset=ComparisonDataset.eia,
-        quantity=DataCol.ELECTRICITY_TOTAL,
-        resolution=Resolution.year,
-        aggregation_type=Metric.total,
-        coverage=CoverageType.all_units,
-        group_by="state",
-        view=ViewType.value_view,
-    )
-    defaults.update(overrides)
-    return PlotSpec(**defaults)
+from resstockpostproc.baseline_validation.tests._helpers import make_eia_spec as _make_spec
 
 
 class TestComputeDiscrepancy:

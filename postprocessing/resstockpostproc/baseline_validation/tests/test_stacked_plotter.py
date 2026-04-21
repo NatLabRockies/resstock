@@ -21,8 +21,6 @@ from resstockpostproc.baseline_validation.plotters.stacked_plotter import (
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     Metric,
     CoverageType,
-    PlotSpec,
-    Resolution,
     ComparisonDataset,
     ViewType,
     Layout,
@@ -30,18 +28,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
 
-def _make_spec(**overrides):
-    defaults = dict(
-        comparison_dataset=ComparisonDataset.recs,
-        quantity=DataCol.ELECTRICITY_TOTAL,
-        resolution=Resolution.year,
-        aggregation_type=Metric.average,
-        coverage=CoverageType.all_units,
-        group_by="state",
-        view=ViewType.value_view,
-    )
-    defaults.update(overrides)
-    return PlotSpec(**defaults)
+from resstockpostproc.baseline_validation.tests._helpers import make_recs_spec as _make_spec
 
 
 class TestGetReferenceSource:
