@@ -58,13 +58,10 @@ _FUEL_PREFIXES_TUPLE = ("electricity_", "natural_gas_", "propane_", "fuel_oil_")
 
 
 def melt_enduse_columns(data: pl.DataFrame) -> pl.DataFrame:
-    """Melt wide per-enduse columns into tall form with an 'enduse' label column.
+    """Melt per-enduse columns into tall form with an ``enduse`` label column.
 
-    Each row (entity, source) becomes N rows (entity, source, enduse). Enduse
-    columns are renamed from their fuel/enduse prefix to a single ``all_`` prefix
-    (matching ``DataCol.ALL.value``), so downstream logic keyed on
-    ``plot_spec.quantity`` continues to work unchanged.
-
+    Prefixes are renamed to a single ``all_`` prefix (matches ``DataCol.ALL.value``)
+    so downstream logic keyed on ``plot_spec.quantity`` works unchanged.
     Used only for ALL-quantity RECS plots.
     """
     enduse_prefixes = sorted({
@@ -102,17 +99,12 @@ def melt_enduse_columns(data: pl.DataFrame) -> pl.DataFrame:
 
 
 def normalize_model_count_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
-    """Align table count columns with displayed plot semantics.
+    """Align count columns with displayed plot semantics for users_only tables.
 
-    For users_only tables, model_count is the display count shown in hover/table
-    labels. Non-ALL plots already normalize it upstream; ALL-enduse tables still
-    carry per-enduse nonzero counts as ``all_nonzero_sample_count`` after melt.
-    Normalize model_count from the appropriate nonzero count when present, then
-    drop raw ``*_nonzero_sample_count`` columns so tables do not expose duplicate
-    or stale count columns.
-
-    Also scales units_count to the users-only subset (units_count * percent_users
-    / 100) so "Dwelling Units" stays in sync with "Number of Models/Samples".
+    Substitutes ``model_count`` from the matching ``*_nonzero_sample_count``
+    (picking ``all_*`` for ALL-enduse tables after melt) and scales
+    ``units_count`` by ``percent_users`` so "Dwelling Units" stays in sync
+    with "Number of Models/Samples". Raw nonzero columns are then dropped.
     """
     nonzero_cols = [c for c in data.columns if c.endswith("_nonzero_sample_count")]
     if not nonzero_cols:
@@ -144,12 +136,11 @@ def normalize_model_count_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl
 
 
 def extract_quartile_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
-    """Extract scalar min/q1/median/q3/max columns from the raw quartile list column.
+    """Extract scalar min/q1/median/q3/max columns from the quartile list column.
 
-    Uses QUARTILE_INDICES from plot_semantics; parallels
-    box_plot_data.add_quartile_cols which emits a different column shape.
-    Coverage selects which list column to read: all_units → ``_quartiles``;
-    users_only → ``_nonzero_quartiles``.
+    Parallels ``box_plot_data.add_quartile_cols`` which emits a different shape.
+    Coverage picks the source list: all_units → ``_quartiles``, users_only
+    → ``_nonzero_quartiles``.
     """
     quantity = plot_spec.quantity
     list_col = quartile_list_column(quantity, plot_spec.coverage)
@@ -242,18 +233,10 @@ def pivot_by_source(
     data: pl.DataFrame,
     plot_spec: PlotSpec,
 ) -> tuple[pl.DataFrame, str, list[str]]:
-    """Pivot long-format data to wide format, with sources as column groups.
+    """Pivot to wide format, one column group per source; return (df, ref_label, rs_labels).
 
-    Each ResStock source becomes its own column group with:
-      - "{rs_label}: {value_col}"
-      - "{rs_label} Difference (%)" (from the existing percent_difference column)
-
-    The reference (e.g. EIA 2018) gets its own group: "{ref_label}: {value_col}".
-
-    Returns:
-        (pivoted_df, ref_label, rs_labels) where rs_labels is a sorted list like
-        ["ResStock 2024", "ResStock 2025"].
-
+    Column naming: ``{rs_label}: {value_col}`` and ``{rs_label} Difference (%)``
+    for ResStock sources; ``{ref_label}: {value_col}`` for the reference.
     """
     entity_col = get_second_category_column(plot_spec)
     ts_col = resolve_timeseries_column(plot_spec)
