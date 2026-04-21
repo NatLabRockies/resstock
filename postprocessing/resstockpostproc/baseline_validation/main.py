@@ -1,8 +1,8 @@
-"""Baseline Validation user-facing CLI.
+"""User-facing CLI for baseline_validation.
 
-Thin wrapper over plot_generator.generate_plots for end users. For the
-developer/refactor fast-path entry point (--test, --no-svg, --index, etc.),
-run plot_generator.py directly.
+Thin wrapper over generation.plot_generator.generate_plots. For the
+developer fast-path entry point (--test, --no-svg, --index, etc.),
+run generation/plot_generator.py directly.
 """
 
 import argparse
@@ -14,9 +14,11 @@ from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 
 
 def main() -> int:
-    """Main entry point for baseline validation plot generation."""
+    """Main entry point for ResStock comparison plot generation."""
     parser = argparse.ArgumentParser(
-        description="Generate baseline validation plots comparing BuildStock results with reference data (EIA, LRD)"
+        description=(
+            "Generate comparison graphics and data between a ResStock baseline and other data sources (EIA, RECS, LRD)."
+        ),
     )
 
     parser.add_argument(

@@ -1,49 +1,14 @@
 # Baseline Validation
 
-The baseline validation tool generates quality-control visualizations comparing BuildStock baseline results with reference data from EIA, RECS, and LRD. This tool validates that the baseline simulation accurately represents real-world energy consumption patterns.
+<img src="example_plots/dashboard_screenshot.png" alt="Dashboard screenshot" width="900">
 
-## Overview
+The baseline validation tool generates a comparison dashboard between a ResStock baseline and other data sources (EIA, RECS, utility LRD). The tool for comparing upgrades against baseline within a ResStock run is found in the `upgrade_comparison` folder.
 
-Baseline validation is organized around three comparison families that answer different questions about the quality of a BuildStock baseline.
+See [`plot_showcase.md`](plot_showcase.md) for a gallery of representative plots the tool produces.
 
-### EIA Comparison
+## Configuration
 
-Compares modeled annual and monthly consumption against published EIA reference data:
-
-- **EIA 861** for electricity sales
-- **EIA 176** for natural gas sales
-- supporting checks such as dwelling-unit counts and state-level rollups
-
-This is the broad system-level validation layer. It answers whether the modeled housing stock matches real-world aggregate energy consumption at state and national scales.
-
-### RECS Comparison
-
-Compares modeled residential behavior against **RECS 2020** survey-based household data:
-
-- end-use consumption comparisons
-- end-use penetration comparisons
-- annual consumption distribution comparisons
-- cross-filtered views by state, census division, building type, climate zone, vintage, and heating fuel
-
-This is the household- and end-use-level validation layer. It answers whether the baseline looks realistic for individual homes and occupant-facing end uses, not just in aggregate totals.
-
-### LRD Comparison
-
-Compares modeled hourly load shapes against **Load Research Data (LRD)** from utilities:
-
-- load duration curves
-- hourly and seasonal shape comparisons
-- time-series views for utility-level consumption patterns
-
-This is the temporal validation layer. It answers whether the baseline captures realistic timing and shape of load, not just annual or monthly totals.
-
-## Input / Output
-
-### Input
-
-**`workflow.yaml` (main configuration)**
-
-This is the primary configuration file. Key settings:
+The run is driven by `workflow.yaml`. A complete example:
 
 ```yaml
 workgroup: rescore
@@ -53,22 +18,72 @@ data_sources:
     db_name: buildstock_sdr
     table_name: resstock_amy2018_r1_2025
     db_schema: resstock_oedi_new
+    baseline_metadata_and_annual_results_parquet_url: s3://oedi-data-lake/.../upgrade0.parquet
 
 reference_years:
-  eia: [2018]
-  recs: [2020]
+  eia:
+    - 2018
+  recs:
+    - 2020
 
 output:
   output_dir: ~/Documents/baseline_validation_outputs
-  run_name: baseline_2023_03_16
+  run_name: baseline_2025_release1
 
 data_source_labels:
   eia_2018:
     label: "EIA 2018"
-    entries: []
+    entries:
+      - description: "EIA-861 Annual Electric Utility Data (2018)"
+        url: "https://www.eia.gov/electricity/data/eia861/"
+      - description: "EIA-176 Natural Gas Consumption Data (2018)"
+        url: "https://www.eia.gov/dnav/ng/ng_cons_sum_a_EPG0_vrs_mmcf_m.htm"
+  recs_2020:
+    label: "RECS 2020"
+    entries:
+      - description: "Residential Energy Consumption Survey 2020"
+        url: "https://www.eia.gov/consumption/residential/"
+  resstock_2025:
+    label: "ResStock 2025"
+    entries:
+      - description: "ResStock Standard Data Release 2025 Release 1"
+        url: "https://resstock.nlr.gov/"
 ```
 
-### Output
+### Fields
+
+**`workgroup`** — Athena workgroup that query runs against. Typically left alone; only change if your team uses a different workgroup.
+
+**`data_sources`** — list of ResStock runs to compare. **This is the field you edit most often.** Each entry:
+
+- `name` — identifier used internally and in plot legends (via `data_source_labels`). Convention: `resstock_<release_year>`.
+- `db_name` — Athena database containing the run's table (e.g. `buildstock_sdr`).
+- `table_name` — Athena table name of the baseline results.
+- `db_schema` — schema alias used to resolve column names. See `DBSchema` in `shared_utils/db_column_names.py` for valid values (`resstock_oedi_new`, `resstock_oedi_vu`, etc.). Pick the one that matches how your run was published in Athena.
+- `baseline_metadata_and_annual_results_parquet_url` — S3 URL to the baseline parquet, downloaded once on first run and cached under `<output_dir>/<run_name>/data/`. Enables the raw-parquet fast path; Athena is still used for timeseries queries.
+
+Listing two or more sources produces side-by-side plots across ResStock releases.
+
+**`reference_years`** — which years of each reference dataset to pull. Changes rarely — only when EIA or RECS publish a new release.
+
+- `eia` — list of years. Listing multiple years overlays them on the same plot (e.g. `[2018, 2020]` shows both).
+- `recs` — list of years. Currently only `2020` is supported (hard-coded in `get_recs_data.py`).
+
+**`output`** — where to write the dashboard.
+
+- `output_dir` — base directory. All runs are placed as subdirectories under this path.
+- `run_name` — subdirectory name for this run. Change every run so you don't overwrite previous outputs.
+
+**`data_source_labels`** — human-readable labels used in plot legends and the dashboard's data-source footer. Add one entry per `source` value that will appear in plot data. The keys must match source column values exactly (e.g. `eia_2018`, `resstock_2025`, `recs_2020`, `lrd_2018`).
+
+Each label has:
+
+- `label` — short display name shown in legends and sidebar (e.g. `"EIA 2018"`).
+- `entries` — list of `{description, url}` dicts shown in the per-plot footer. Lets the dashboard credit the underlying datasets; leave `entries: []` if you don't have URLs to attribute.
+
+Keys present in `data_sources` but missing from `data_source_labels` default to the uppercase source name.
+
+## Output
 
 All outputs are written to `<output_dir>/<run_name>/`.
 Open `comparison_dashboard.html` in that run directory to browse the generated dashboard.
@@ -87,18 +102,16 @@ baseline_2023_03_16/
     ├── eia plots (html)/
     ├── eia plots (svg)/
     ├── eia data (html)/
-    ├── eia data (csv)/
     ├── recs plots (html)/
     └── ...
 ```
 
 **Output formats:**
 
-- `comparison_dashboard.html` — standalone dashboard entrypoint
-- `dashboard_data/* plots (html)/` — interactive Plotly visualizations
+- `comparison_dashboard.html` — main dashboard entrypoint
+- `dashboard_data/* plots (html)/` — interactive Plotly visualizations plots
 - `dashboard_data/* plots (svg)/` — SVG backups for HTML plots
 - `dashboard_data/* data (html)/` — interactive table views
-- `dashboard_data/* data (csv)/` — exported table data
 
 ## Prerequisites
 
@@ -114,8 +127,6 @@ Execute from the `postprocessing` directory:
 # Basic usage (uses workflow.yaml in baseline_validation/)
 uv run resstockpostproc/baseline_validation/main.py
 
-# Specify custom config
-uv run resstockpostproc/baseline_validation/main.py --config /path/to/config.yaml
 ```
 
 ### CLI Options
@@ -123,91 +134,11 @@ uv run resstockpostproc/baseline_validation/main.py --config /path/to/config.yam
 ```
 usage: main.py [-h] [--config CONFIG]
 
-Generate baseline validation plots comparing BuildStock results with reference data
+Generate comparison graphics and data between a ResStock baseline and other data sources (EIA, RECS, LRD).
 
 options:
   -h, --help            show this help message and exit
   --config CONFIG       Path to workflow configuration YAML file
-```
-
-## Plot Types
-
-### EIA Comparison Plots
-
-Validates annual and monthly energy consumption against EIA reported data:
-
-- **Annual sales scatter plots** — state and utility level comparisons
-- **Customer counts comparison** — BuildStock unit counts vs EIA customer counts
-- **Monthly profiles** — seasonal patterns for electricity and natural gas
-- **Fuel-specific validation** — separate electricity and natural gas analysis
-
-### RECS Comparison Plots
-
-Validates residential end-use and household-level distributions against RECS microdata:
-
-- **Annual end-use comparisons** — average and total consumption by end use
-- **Penetration comparisons** — share of occupied units using each end use
-- **Distribution plots** — survey-based consumption distributions for household end uses
-- **Cross-filtered views** — breakdowns by state, census division, building type, climate zone, vintage, and heating fuel
-
-### Load Duration Curves
-
-Validates hourly load shapes against utility load research data:
-
-- **Multi-utility LDC** — comparison across multiple utilities
-- **Individual utility curves** — detailed per-utility validation
-- **Seasonal LDC** — summer, winter, shoulder season patterns
-- **Per-customer normalization** — removes scale effects to focus on shapes
-
-### Timeseries Plots
-
-Validates temporal patterns and profiles:
-
-- **Hourly profiles by month** — average hourly consumption patterns
-- **Daily aggregates** — daily consumption over the year
-- **Stacked end-use profiles** — end-use breakdowns over time
-- **State-level analysis** — focus on high-population states
-
-## Configuration Details
-
-### Data Source Configuration
-
-```yaml
-workgroup: rescore
-
-data_sources:
-  - name: resstock_2025
-    db_name: buildstock_sdr
-    table_name: resstock_amy2018_r1_2025
-    db_schema: resstock_oedi_new
-    baseline_metadata_and_annual_results_parquet_url: s3://...
-```
-
-### Reference Data Configuration
-
-```yaml
-reference_years:
-  eia: [2018]
-  recs: [2020]
-```
-
-### Output Configuration
-
-```yaml
-output:
-  output_dir: ~/validation_outputs # Base output directory
-  run_name: baseline_2024 # Run identifier
-```
-
-### Data Source Labels
-
-```yaml
-data_source_labels:
-  eia_2018:
-    label: "EIA 2018"
-    entries:
-      - description: "EIA-861 Annual Electric Utility Data (2018)"
-        url: "https://www.eia.gov/electricity/data/eia861/"
 ```
 
 ## Developing and Testing
@@ -228,7 +159,8 @@ pre-commit run --all-files --show-diff-on-failure
 
 - Plot generation is already parallel, but data loading/querying is sequential.
   While the polars engine already makes use of multiple cores there is room for speeding
-  things up by making both steps parallel.
+  things up by making both steps parallel - especially on first run that does lots of
+  query.
 
 # Developer notes
 
@@ -377,12 +309,6 @@ means touching the catalog and the renderer; usually no workflow.yaml change.
 6. **End-to-end** — regenerate the dashboard and inspect the new plot visually
    before calling it done.
 
-### Adding a new end-use only
-
-If you just need to add a new end-use quantity (e.g., a new appliance category),
-the catalog in `schema/plot_definitions.py` already loops over `RECS_QUANTITIES` —
-adding the `DataCol` entry and extending that list is usually all it takes.
-
 ## Caching gotchas
 
 There are **three caches** in play, and they don't all invalidate themselves.
@@ -401,11 +327,11 @@ Decorator: `@cached(cache_file="...")` on top of `get_annual_all`,
 
 ### 2. `postprocessing/.bsq_cache/` — BuildStockQuery Athena query cache
 
-Owned by BuildStockQuery, not us. Stores materialized Athena query results.
+Owned by BuildStockQuery. Stores materialized Athena query results.
 
 - Changes to query construction (e.g., modifying an aggregation or a filter_char)
   produce a new cache key automatically.
-- Changes to the underlying Athena table (new source year, schema migration) do
+- Changes to the underlying Athena table (data fixes) do
   NOT — BSQ will happily serve stale results. Delete `.bsq_cache/` when pointing at
   a different `data_source` or when the remote table contents have changed.
 
@@ -424,20 +350,6 @@ Decorator: `@cache` on `data_processing/gather_data.get_base_data`.
 3. Unit tests run with a separate read-only cache, so they won't pick up your
    changes either until you clear that state. Look for `CACHE_READ_ONLY = True`
    in `generation/render_runner.worker_init`.
-
-### Byte-identical verification
-
-Unit tests catch logic regressions; they don't catch byte-level drift in the
-generated dashboard. For refactor-style changes (anything meant to be
-behavior-preserving), use a personal snapshot-comparison workflow:
-
-1. Pick a reference `workflow.yaml` that produces a known-good dashboard.
-2. Commit the generated dashboard into a separate local git repo.
-3. After each refactor commit, regenerate into that repo and check
-   `git status --porcelain` — it should be empty.
-
-The `baseline_validation/scripts/` directory is gitignored and holds personal
-tooling along these lines; treat it as your own notebook.
 
 ## Running tests
 
