@@ -1,5 +1,5 @@
 from typing import TypedDict
-from resstockpostproc.shared_utils.db_column_names import DataCol, DBCharCol
+from resstockpostproc.shared_utils.db_column_names import DataCol
 
 class PartialMap(dict):
     def __missing__(self, key):

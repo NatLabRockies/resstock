@@ -2,10 +2,9 @@
 
 import polars as pl
 import pytest
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from resstockpostproc.baseline_validation.plotters import lrd_plotter
-from resstockpostproc.baseline_validation.io_managers.get_lrd_data import get_lrd_data
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     PlotSpec,
     Resolution,

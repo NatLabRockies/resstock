@@ -1,9 +1,7 @@
 """Tests for HTML generation and viz cell parsing."""
 
 import csv
-from pathlib import Path
 
-import pytest
 
 from resstockpostproc.baseline_validation.dashboard_paths import (
     comparisons_index_data_dir,
@@ -15,7 +13,6 @@ from resstockpostproc.baseline_validation.create_html import (
     finalize_html_index,
     create_html_from_csv,
     parse_viz_cell,
-    DATA_DIR_NAME,
 )
 
 

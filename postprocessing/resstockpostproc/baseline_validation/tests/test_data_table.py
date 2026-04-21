@@ -1,6 +1,5 @@
 """Tests for data_table HTML table generation."""
 
-import json
 
 import polars as pl
 import pytest

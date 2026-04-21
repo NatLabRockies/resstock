@@ -6,7 +6,6 @@ Functions for loading and processing reference data (EIA, LRD, etc.) for validat
 import logging
 from pathlib import Path
 
-import numpy as np
 import polars as pl
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
 from resstockpostproc.shared_utils.s3_manager import get_df_from_s3
