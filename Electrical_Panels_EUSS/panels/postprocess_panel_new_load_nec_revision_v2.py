@@ -526,9 +526,10 @@ def _special_load_space_conditioning(row) -> tuple[float, float, float, Optional
     cooling_type, cooling_load = _special_load_space_cooling_no_ahu(row)
 
     # Add AHU
-    heat_ahu, cool_ahu, error_msg = _get_air_handlers(row, heating_types[0], heating_types[1], cooling_type, apply_check=False)
+    heat_ahu, cool_ahu, error_msg = _get_air_handlers(row, heating_types, cooling_type, apply_check=False)
     heating_load = sum(heating_loads) + heat_ahu
     cooling_load += cool_ahu
+
     return heating_load, cooling_load, max(heating_load, cooling_load), error_msg
 
 
@@ -553,7 +554,7 @@ def _special_load_space_conditioning_itemized(row) -> tuple[
     cooling_load = cool_load
 
     # AHU
-    heat_ahu, cool_ahu, error_msg = _get_air_handlers(row, heating_types[0], heating_types[1], cooling_type, apply_check=False)
+    heat_ahu, cool_ahu, error_msg = _get_air_handlers(row, heating_types, cooling_type, apply_check=False)
 
     # Get final loads
     heating_load += heat_ahu
@@ -562,6 +563,7 @@ def _special_load_space_conditioning_itemized(row) -> tuple[
 
     outputs = [heating_load, cooling_load, hvac_load, error_msg]
     outputs += heating_types + [cooling_type] + heat_loads + [cool_load, heat_ahu, cool_ahu]
+
     return tuple(outputs)
 
 
@@ -748,10 +750,10 @@ def _new_load_space_conditioning(row, option_columns):
     for opt_col in option_columns:
         option = row[opt_col].lower()
         if ("hvac heating efficiency" in option):
-            heating_type = get_heating_type(option)
+            heating_type = get_heating_type(option.split("|")[1])
             new_heating = True
         if ("hvac secondary heating efficiency" in option):
-            secondary_heating_type = get_heating_type(option)
+            secondary_heating_type = get_heating_type(option.split("|")[1])
             new_secondary_heating = True
 
     # takes baseline values if not found in upgrade
@@ -766,7 +768,10 @@ def _new_load_space_conditioning(row, option_columns):
         if new_heating and "existing" in row["apply_upgrade.upgrade_name"].lower():
             backup_heating_type = get_heating_type(row["build_existing_model.hvac_heating_efficiency"])
         else:
-            backup_heating_type = "er"
+            if _is_ducted(heating_type or ""):
+                backup_heating_type = "ducted er"
+            else:
+                backup_heating_type = "non-ducteder"
 
     heating_cols = [
         row["upgrade_costs.size_heating_system_primary_k_btu_h"],
@@ -789,7 +794,7 @@ def _new_load_space_conditioning(row, option_columns):
     for opt_col in option_columns:
         option = row[opt_col].lower()
         if ("hvac cooling efficiency" in option):
-            cooling_type = get_cooling_type(option)
+            cooling_type = get_cooling_type(option.split("|")[1])
             new_cooling = True
 
     # if not found in upgrade, check if it's a heat pump, else take baseline value
@@ -812,7 +817,8 @@ def _new_load_space_conditioning(row, option_columns):
         error_msg += f"0 cooling load for {cooling_type=}."
 
     # Add AHU
-    heat_ahu, cool_ahu, ahu_error_msg = _get_air_handlers(row, heating_type, secondary_heating_type, cooling_type, apply_check=True)
+    heating_types = [heating_type, secondary_heating_type, backup_heating_type]
+    heat_ahu, cool_ahu, ahu_error_msg = _get_air_handlers(row, heating_types, cooling_type, apply_check=True)
     heating_load += heat_ahu
     cooling_load += cool_ahu
     if ahu_error_msg:
@@ -822,6 +828,7 @@ def _new_load_space_conditioning(row, option_columns):
 
     hvac_changed = new_heating or new_secondary_heating or new_cooling
     hvac_load = max(heating_load, cooling_load)
+
     return hvac_changed, heating_load, cooling_load, hvac_load, error_msg
 
 
@@ -845,10 +852,10 @@ def _new_load_space_conditioning_itemized(row, option_columns):
     for opt_col in option_columns:
         option = row[opt_col].lower()
         if ("hvac heating efficiency" in option):
-            heating_type = get_heating_type(option)
+            heating_type = get_heating_type(option.split("|")[1])
             new_heating = True
         if ("hvac secondary heating efficiency" in option):
-            secondary_heating_type = get_heating_type(option)
+            secondary_heating_type = get_heating_type(option.split("|")[1])
             new_secondary_heating = True
 
     # takes baseline values if not found in upgrade
@@ -863,7 +870,10 @@ def _new_load_space_conditioning_itemized(row, option_columns):
         if new_heating and "existing" in row["apply_upgrade.upgrade_name"].lower():
             backup_heating_type = get_heating_type(row["build_existing_model.hvac_heating_efficiency"])
         else:
-            backup_heating_type = "er"
+            if _is_ducted(heating_type or ""):
+                backup_heating_type = "ducted er"
+            else:
+                backup_heating_type = "non-ducted er"
 
     heating_cols = [
         row["upgrade_costs.size_heating_system_primary_k_btu_h"],
@@ -887,7 +897,7 @@ def _new_load_space_conditioning_itemized(row, option_columns):
     for opt_col in option_columns:
         option = row[opt_col].lower()
         if ("hvac cooling efficiency" in option):
-            cooling_type = get_cooling_type(option)
+            cooling_type = get_cooling_type(option.split("|")[1])
             new_cooling = True
 
     # if not found in upgrade, check if it's a heat pump, else take baseline value
@@ -912,7 +922,7 @@ def _new_load_space_conditioning_itemized(row, option_columns):
         error_msg += f"0 cooling load for {cooling_type=}."
 
     # Add AHU
-    heat_ahu, cool_ahu, ahu_error_msg = _get_air_handlers(row, heating_type, secondary_heating_type, cooling_type, apply_check=True)
+    heat_ahu, cool_ahu, ahu_error_msg = _get_air_handlers(row, heating_types, cooling_type, apply_check=True)
     if ahu_error_msg:
         error_msg += ahu_error_msg
     
@@ -979,7 +989,7 @@ def _get_air_handler_for_heating(capacity, heating_type, apply_check=True) -> tu
     return heat_ahu, msg
 
 
-def _get_air_handlers(row, heating_type, secondary_heating_type, cooling_type, apply_check=True) -> tuple[float, float, Optional[str]]:
+def _get_air_handlers(row, heating_types, cooling_type, apply_check=True) -> tuple[float, float, Optional[str]]:
     """Typically you need more volume of air to cool the house than to heat it. 
     So the cooling requirements determine the size of the air handler. 
     However the air handler comes with the furnace. 
@@ -991,32 +1001,55 @@ def _get_air_handlers(row, heating_type, secondary_heating_type, cooling_type, a
     - if electric furnace with CAC, 240V, take max of heat/cool to determine AHU
     - if no ducted heating, use CAC (based on cool cap only)
     """
+    [heating_type, secondary_heating_type, backup_heating_type] = heating_types
 
     # _check_hvac_consistency(heating_type, secondary_heating_type, cooling_type)
     error_msg = ""
     if _is_heat_pump(heating_type):
-        if _is_ducted(heating_type):
-            if secondary_heating_type:
-                # HP coil is added to existing furnace
-                heat_ahu, msg = _get_air_handler_for_heating(row["upgrade_costs.size_heating_system_secondary_k_btu_h"], secondary_heating_type, apply_check=apply_check)
-                if msg:
-                    error_msg += f"Secondary heating error: {msg} "
-            else:
-                # regular with or without integrated electric backup
-                heat_ahu = hvac_240V_air_handler(row["upgrade_costs.size_heating_system_primary_k_btu_h"])
-                if apply_check:
-                    if heat_ahu == 0:
-                        error_msg += f"Primary HP heating error: expecting a AHU load for {heating_type=} "
+        if _is_ducted(secondary_heating_type):
+            # HP coil is added to existing furnace
+            heat_ahu, msg = _get_air_handler_for_heating(row["upgrade_costs.size_heating_system_secondary_k_btu_h"], secondary_heating_type, apply_check=apply_check)
+            if msg:
+                error_msg += f"Secondary heating error: {msg} "
+            cool_ahu = heat_ahu
         else:
-            # non-ducted HP
-            heat_ahu = 0
-        cool_ahu = heat_ahu
+            if _is_ducted(heating_type):
+                if _is_fuel(backup_heating_type) and _is_ducted(backup_heating_type):
+                    # use backup fuel furnace
+                    heat_ahu, msg = _get_air_handler_for_heating(row['upgrade_costs.size_heat_pump_backup_primary_k_btu_h'], backup_heating_type, apply_check=apply_check)
+                    if msg:
+                        error_msg += f"Backup heating error: {msg} "
+                else:
+                    # regular with or without integrated electric backup
+                    heat_ahu = hvac_240V_air_handler(row["upgrade_costs.size_heating_system_primary_k_btu_h"])
+                    if apply_check:
+                        if heat_ahu == 0:
+                            error_msg += f"Primary HP heating error: expecting a AHU load for {heating_type=} "
+                cool_ahu = heat_ahu
+            else:
+                # non-ducted HP
+                if _is_ducted(backup_heating_type):
+                    # non-ducted HP with ducted backup, use backup furnace
+                    heat_ahu, msg = _get_air_handler_for_heating(row['upgrade_costs.size_heat_pump_backup_primary_k_btu_h'], backup_heating_type, apply_check=apply_check)
+                    if msg:
+                        error_msg += f"Backup heating error: {msg} "
+                    cool_ahu = 0
+                else:
+                    heat_ahu = cool_ahu = 0
 
     else:
         # not heat pump
-        heat_ahu, msg = _get_air_handler_for_heating(row["upgrade_costs.size_heating_system_primary_k_btu_h"], heating_type, apply_check=apply_check)
+        heat_ahu1, msg = _get_air_handler_for_heating(row["upgrade_costs.size_heating_system_primary_k_btu_h"], heating_type, apply_check=apply_check)
         if msg:
             error_msg += f"Primary non-HP heating error: {msg} "
+
+        heat_ahu2, msg = _get_air_handler_for_heating(row["upgrade_costs.size_heating_system_secondary_k_btu_h"], secondary_heating_type, apply_check=apply_check)
+        if msg:
+            error_msg += f"Secondary non-HP heating error: {msg} "
+
+        # assume if both primary and secondary heating are ducted, they use the same AHU, so take the max load of either to determine AHU load
+        heat_ahu = max(heat_ahu1, heat_ahu2)
+
         # cooling
         if _is_ducted(cooling_type):
             cool_ahu = hvac_240V_air_handler(row["upgrade_costs.size_cooling_system_primary_k_btu_h"])
@@ -1071,7 +1104,7 @@ def get_heating_type(heat_eff) -> Optional[str]:
         else:
             raise ValueError(f"Unsupported: {heat_eff=}")
     if "fuel" in ht:
-        if ("boiler" in ht) or ("wall furnace" in ht) or ("baseboard" in ht):
+        if ("boiler" in ht) or ("wall/floor furnace" in ht) or ("baseboard" in ht):
             return "non-ducted fuel"
         elif "furnace" in ht:
             return "ducted fuel"
@@ -1538,8 +1571,8 @@ def get_existing_and_new_hvac_loads(df: pd.DataFrame, dfu: pd.DataFrame) -> pd.D
     cond_new_hvac = dfu2["new_load_hvac"] > df["load_hvac"]
     dfo["upgrade_has_new_hvac"] = cond_new_hvac
 
-    # 1. HVAC is not new, record as "post_upg_load_existing_hvac" (subject to 40% demand factor)
-    dfo.loc[~cond_new_hvac, "post_upg_load_existing_hvac"] += df.loc[~cond_new_hvac, "load_hvac"]
+    # 1. HVAC is less than before and therefore not new, record as "post_upg_load_existing_hvac" (subject to 40% demand factor)
+    dfo.loc[~cond_new_hvac, "post_upg_load_existing_hvac"] += dfu2.loc[~cond_new_hvac, "new_load_hvac"]
 
     # 2. HVAC is new:
     # 2.1. New HVAC is cooling-dominant, record entire new HVAC load as "post_upg_load_new_hvac_non_er" (subject to 50% demand factor)
@@ -1547,7 +1580,6 @@ def get_existing_and_new_hvac_loads(df: pd.DataFrame, dfu: pd.DataFrame) -> pd.D
     dfo.loc[cond_new_hvac & cond_hvac_cooling_dominant, "post_upg_load_new_hvac_non_er"] += dfu2.loc[cond_new_hvac & cond_hvac_cooling_dominant, "new_load_hvac"]
 
     # 2.2. New HVAC is heating-dominant, further split into ER vs. non-ER heating load based on primary, secondary, and backup heating type
-    cond_ducted_heat = pd.Series(False, index=dfu2.index)
     for heat_type, heat_load in zip(
         ["new_type_primary_heat", "new_type_secondary_heat", "new_type_backup_heat"],
         ["new_load_primary_heat", "new_load_secondary_heat", "new_load_backup_heat"],
@@ -1556,18 +1588,11 @@ def get_existing_and_new_hvac_loads(df: pd.DataFrame, dfu: pd.DataFrame) -> pd.D
         cond_er_heat = dfu2[heat_type].str.contains("er", case=False, na=False)
         final_cond_er = cond_new_hvac  & ~cond_hvac_cooling_dominant & cond_er_heat
         dfo.loc[final_cond_er, "post_upg_load_new_hvac_er"] += dfu2.loc[final_cond_er, heat_load]
-        final_cond_non_er = cond_new_hvac  & ~cond_hvac_cooling_dominant & ~cond_er_heat
-        dfo.loc[final_cond_non_er, "post_upg_load_new_hvac_non_er"] += dfu2.loc[final_cond_non_er, heat_load]
-
-        cond_ducted_heat |= dfu2[heat_type].str.contains("ducted", case=False, na=False)
-    
-    # add AHU for heating
-    final_cond_ducted_er = cond_new_hvac  & ~cond_hvac_cooling_dominant & cond_ducted_heat & dfo["post_upg_load_new_hvac_er"]>0
-    dfo.loc[final_cond_ducted_er, "post_upg_load_new_hvac_er"] += dfu2.loc[final_cond_ducted_er, "new_load_heat_ahu"]
-
-    final_cond_ducted_non_er = cond_new_hvac  & ~cond_hvac_cooling_dominant & cond_ducted_heat & dfo["post_upg_load_new_hvac_non_er"]>0
-    dfo.loc[final_cond_ducted_non_er, "post_upg_load_new_hvac_non_er"] += dfu2.loc[final_cond_ducted_non_er, "new_load_heat_ahu"]
-
+        
+    # get HVAC non-ER load, AHU, if any, will be part of non-ER heating
+    cond_non_er_load = cond_new_hvac  & ~cond_hvac_cooling_dominant
+    dfo.loc[cond_non_er_load, "post_upg_load_new_hvac_non_er"] += dfu2.loc[cond_non_er_load, "new_load_heating"] - dfo.loc[cond_non_er_load, "post_upg_load_new_hvac_er"]
+   
     # QC
     # All HVAC load is accounted for as either existing HVAC load, new ER HVAC load, or new non-ER HVAC load
     # assert dfo[["post_upg_load_existing_hvac", "post_upg_load_new_hvac_er", "post_upg_load_new_hvac_non_er"]].sum(axis=1).equals(pd.concat([dfu2["new_load_hvac"], df["load_hvac"]], axis=1).max(axis=1))
@@ -1845,10 +1870,18 @@ def main(
     df = df[df["completed_status"]=="Success"].reset_index(drop=True)
 
     ## Assign garbage disposal to post-1940 homes randomly so ownership is 52% of dwelling units per 2013 AHS
-    df = assign_garbage_disposal(df) # note: assign this before baseline is filtered to match upgrade or it will lead to changing assignment
+    garbage_disposal_assignment_file = Path(baseline_filename).parent / "garbage_disposal_assignment.csv"
 
-    assert len(df) == 483063, "baseline has changed, update this as needed"
+    if not garbage_disposal_assignment_file.exists():
+        assert len(df) == 483063, "baseline has changed, update this as needed"
 
+        df = assign_garbage_disposal(df) # note: assign this before baseline is filtered to match upgrade or it will lead to changing assignment
+        df[["building_id", "has_garbage_disposal"]].to_csv(garbage_disposal_assignment_file, index=False) # save assignment for reference and reproducibility
+    else:
+        df_gd = pd.read_csv(garbage_disposal_assignment_file)
+        assert set(df["building_id"]).issubset(set(df_gd["building_id"])), "Garbage disposal assignment file does not match baseline building_id"
+        df = df.merge(df_gd, on="building_id", how="left")
+    
     # apply building_id filter
     if building_id:
         dfu = dfu.loc[dfu["building_id"]==int(building_id)].reset_index(drop=True)

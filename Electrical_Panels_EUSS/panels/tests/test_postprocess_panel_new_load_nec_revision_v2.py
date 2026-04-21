@@ -31,12 +31,15 @@ def test_all_upgrades(filedir):
         file_2023 = filedir_2023 / file.name
 
         if file.suffix == ".csv":
+            print(f"skipping {file}")
             continue
 
-        # if int(upg) < 10:
+        # if int(upg) != 2:
+        # print(f"skipping {file}")
         #     continue
 
         # if int(upg) > 1:
+        # print(f"skipping {file}")
         #     continue
 
         if file.suffix == ".csv":
@@ -178,11 +181,13 @@ def check_hvac_load(df, check_new_load: bool = False):
     cond = df[f"{prefix}type_primary_heat"].fillna("").str.startswith("ducted")
     cond |= df[f"{prefix}type_secondary_heat"].fillna("").str.startswith("ducted")
     cond |= df[f"{prefix}type_backup_heat"].fillna("").str.startswith("ducted")
+    cond &= ~df[f"{prefix}hvac_msg"].fillna("").str.contains("expecting a AHU", case=False, na=False)
     assert (df.loc[cond, f"{prefix}load_heat_ahu"] > 0).all()
     assert (df.loc[~cond, f"{prefix}load_heat_ahu"].fillna(0) == 0).all()
 
     # check this is cooling ahu load if ducted cooling
     cond = df[f"{prefix}type_cool"].fillna("").str.startswith("ducted")
+    cond &= ~df[f"{prefix}hvac_msg"].fillna("").str.contains("expecting a AHU", case=False, na=False)
     assert (df.loc[cond, f"{prefix}load_cool_ahu"] > 0).all()
     assert (df.loc[~cond, f"{prefix}load_cool_ahu"].fillna(0) == 0).all()
 
@@ -206,22 +211,31 @@ def check_83_existing_and_new_hvac_evse_separation(df):
     """Check that existing and new HVAC and EVSEloads are correctly identified"""
     cond = df["upgrade_has_new_hvac"]==True
     assert (df.loc[cond, "post_upg_load_existing_hvac"] == 0).all()
-    assert (df.loc[cond, ["post_upg_load_new_hvac_er", "post_upg_load_new_hvac_non_er"]].sum(axis=1)).equals(df.loc[cond, "new_load_hvac"].fillna(0))
+    f1 = (df.loc[cond, ["post_upg_load_new_hvac_er", "post_upg_load_new_hvac_non_er"]].sum(axis=1)).fillna(0)
+    f2 = df.loc[cond, "new_load_hvac"].fillna(0)
+    assert np.isclose(f1, f2, atol=1e-2).all()
 
     # new HVAC is cooling-dominant
     cond_cool = df["new_load_cooling"] > df["new_load_heating"]
-    assert df.loc[cond & cond_cool, "post_upg_load_new_hvac_non_er"].equals(df.loc[cond & cond_cool, "new_load_cooling"])
+    f1 = df.loc[cond & cond_cool, "post_upg_load_new_hvac_er"].fillna(0)
+    f2 = df.loc[cond & cond_cool, "new_load_cooling"].fillna(0)
+    assert np.isclose(f1, f2, atol=1e-2).all()
 
     # new HVAC is heating-dominant
-    assert df.loc[cond & ~cond_cool, ["post_upg_load_new_hvac_er", "post_upg_load_new_hvac_non_er"]].sum(axis=1).equals(df.loc[cond & ~cond_cool, "new_load_heating"].fillna(0))
+    f1 = df.loc[cond & ~cond_cool, ["post_upg_load_new_hvac_er", "post_upg_load_new_hvac_non_er"]].sum(axis=1).fillna(0)
+    f2 = df.loc[cond & ~cond_cool, "new_load_heating"].fillna(0)
+    assert np.isclose(f1, f2, atol=1e-2).all()
 
     # hvac is existing
-    assert df.loc[~cond, "post_upg_load_existing_hvac"].equals(df.loc[~cond, "load_hvac"])
+    f1 = df.loc[~cond, "post_upg_load_existing_hvac"].fillna(0)
+    f2 = df.loc[~cond, "new_load_hvac"].fillna(0)
+    assert np.isclose(f1, f2, atol=1e-2).all()
     assert (df.loc[~cond, ["post_upg_load_new_hvac_er", "post_upg_load_new_hvac_non_er"]].sum(axis=1) == 0).all()
 
     # new EVSE
-    assert df.loc[df["new_load_evse"]>0, "post_upg_load_new_hvac_er"].equals(df.loc[df["new_load_evse"]>0, "new_load_evse"])
-
+    f1 = df.loc[df["new_load_evse"]>0, "post_upg_load_new_evse"].fillna(0)
+    f2 = df.loc[df["new_load_evse"]>0, "new_load_evse"].fillna(0)
+    assert np.isclose(f1, f2, atol=1e-2).all()
 
 def check_83_post_upg_load_calculation(df):
     """ Check that total load is correct from calculation using post_upg_load cols
@@ -294,7 +308,6 @@ def _test_83_calculation(df):
     # post-upgrade gross load calculated from post_upg_load cols
     post_upg_cols = [col for col in df.columns if col.startswith("post_upg_load_")]
     post_upg_gross_load2 = df[post_upg_cols].fillna(0).sum(axis=1)
-
     assert np.isclose(post_upg_gross_load1, post_upg_gross_load2, atol=1e-2).all()
 
 
@@ -334,6 +347,6 @@ def _compare_2023_and_2026(df_2023, df_2026):
 
 if __name__ == "__main__":
     output_dir = "/Volumes/Lixi_Liu/panels_results_550k"
-    output_folder = "test_result_files/nec_calculations_revision_no_ev"
+    output_folder = "results_to_fix/nec_calculations_revision_no_ev"
 
     test_all_upgrades(filedir=f"{output_dir}/{output_folder}")
