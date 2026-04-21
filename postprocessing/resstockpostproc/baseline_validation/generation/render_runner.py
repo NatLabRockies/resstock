@@ -1,13 +1,8 @@
-"""Render execution and worker lifecycle for baseline validation plot generation.
+"""Render execution and worker lifecycle for plot generation.
 
-Extracted from plot_generator.py in refactor plan V2 step 3.2. This module
-owns:
-- Plot rendering per-spec (generate_spec_plots)
-- Worker pool init/run helpers (worker_init, worker_run) — the names are
-  pickled by ProcessPoolExecutor, so their module path must stay stable.
-- Kaleido sync-server ownership (ensure_kaleido_sync_server, stop_kaleido_sync_server_if_owned)
-- Output path derivation for plots and data tables
-- Dispatch to the right plotter by comparison dataset
+Owns per-spec rendering, the worker pool, the Kaleido sync server, and
+plot/data output-path derivation. Worker helper names are pickled by
+ProcessPoolExecutor, so their module path must stay stable.
 """
 
 from __future__ import annotations
@@ -102,11 +97,7 @@ def _is_kaleido_sync_server_running() -> bool:
 
 
 def ensure_kaleido_sync_server() -> bool:
-    """Start the process-local Kaleido sync server if needed.
-
-    Returns True only when this module started the server and therefore owns
-    shutting it down later.
-    """
+    """Start the Kaleido sync server if needed; True iff we now own shutdown."""
     global _OWNS_KALEIDO_SYNC_SERVER
 
     if _is_kaleido_sync_server_running():
@@ -169,18 +160,11 @@ def generate_spec_plots(
     plotly_asset_path: Path | None = None,
     is_dry_run: bool = False,
 ) -> tuple[str, str | None] | None:
-    """Generate plots for a list of (PlotSpec, viz_type_str) entries.
+    """Render the (PlotSpec, viz_type) entries; return (joined_viz, data_rel) or None.
 
-    Footnotes are computed per-spec via get_plot_notes/get_table_notes so that
-    layout-specific notes (e.g. histogram overflow) appear only where relevant.
-
-    Returns (viz_parts_joined, data_rel_path) on success, or None if skipped.
-    All file I/O writes to unique per-spec paths (safe for parallel execution).
-
-    When `is_dry_run` is True, actual plotting/HTML/SVG/data-table writes are
-    skipped. The row's `Comparison Plot` and `Data` columns are still populated
-    with predicted paths, which lets --test runs produce a TSV byte-identical
-    to a full run (the paths just don't exist on disk).
+    ``is_dry_run`` skips plot/HTML/SVG/data-table writes but still populates
+    predicted paths — this is what makes --test produce a TSV byte-identical
+    to a full run.
     """
     # Check if data is available for this combination before generating any plots.
     first_spec = spec_entries[0][0]
@@ -291,12 +275,7 @@ def append_plot_row(tsv_path, row_dict):
 
 
 def handle_plot_result(sub_key, result, results, csv_path, index_state):
-    """Apply a worker's result to shared state (main process only).
-
-    When `index_state` is None, skip the incremental TSV/shard/HTML writes.
-    The caller is responsible for materializing everything at the end by
-    calling `write_canonical_index` from the in-memory `results`.
-    """
+    """Apply a worker's result to shared state; ``index_state=None`` defers all writes to the canonical pass."""
     if result is None:
         return
     viz_parts_str, data_rel = result
@@ -432,20 +411,11 @@ def render_all_work_items(
 
 
 def render_key(work_item: tuple) -> tuple:
-    """Stable identity for a work item.
+    """Stable (tmpl_index, focus_on, focus_val, group_by) identity for a work item.
 
-    Keys by `(tmpl_index, focus_on, focus_val, group_by)`. `tmpl_index` is
-    expected to be an index into the *full* `templates` list — so the side pass
-    that builds `render_keys` must translate its subset-local indices back to
-    full-list positions before using this key (see generate_plots).
-
-    Previously this used `template_signature(tmpls[tmpl_index])`. That was
-    incorrect: `template_signature` deduplicates templates (e.g., collapses
-    many RECS quantity/view/metric templates into one signature), so the key
-    over-matched — every template sharing a subset template's signature would
-    satisfy the membership check and get rendered. Using the raw tmpl_index
-    restricts rendering to exactly the templates `get_test_template_indices`
-    picks.
+    ``tmpl_index`` must index into the *full* templates list; subset callers
+    must translate back. NOT ``template_signature`` — that dedup collapses
+    many templates into one, which over-matches and breaks --test filtering.
     """
     _, tmpl_index, _, focus_val, focus_on, group_by = work_item
     return (tmpl_index, focus_on, focus_val, group_by)
