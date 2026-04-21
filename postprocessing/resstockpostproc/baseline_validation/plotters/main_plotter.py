@@ -51,8 +51,7 @@ def _needs_stacked_plotter(plot_spec: PlotSpec) -> bool:
     return (
         plot_spec.is_distribution_metric
         or plot_spec.is_all_enduses
-        or plot_spec.layout == Layout.two_column
-        or plot_spec.layout == Layout.histogram
+        or plot_spec.layout in (Layout.two_column, Layout.histogram)
     )
 
 

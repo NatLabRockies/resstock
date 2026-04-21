@@ -29,10 +29,10 @@ for year in range(2012, last_year + 1):
         else:
             url = f"https://www.eia.gov/electricity/data/eia861m/xls/{filename}"
         print(f"Downloading {url}")
-        response = urllib.request.urlopen(url)
+        response = urllib.request.urlopen(url)  # noqa: S310 — fixed EIA URL
         if "spreadsheetml.sheet" not in response.headers.get_content_type():
             raise ValueError(f"URL {url} does not contain a downloadable file")
-        urllib.request.urlretrieve(url, raw_file)
+        urllib.request.urlretrieve(url, raw_file)  # noqa: S310 — fixed EIA URL
 
 
     # read the excel file
@@ -44,7 +44,7 @@ for year in range(2012, last_year + 1):
         col_rename_dict = {"YEAR": "year", "MONTH": "month", "UTILITYID": "eiaid", "UTILNAME": "utility_name",
                            "STATE_CODE": "state", "RESIDENTIAL SALES (MWh)": "sales_mwh",
                            "RESIDENTIAL CUSTOMERS": "customers"}
-        sales_df.rename(columns=col_rename_dict, inplace=True)
+        sales_df = sales_df.rename(columns=col_rename_dict)
     else:
         cols_to_read = ["Year", "Month", "Utility Number",
                         "Utility Name", "State", "Megawatthours", "Count"]
@@ -54,7 +54,7 @@ for year in range(2012, last_year + 1):
                            "Utility Name": "utility_name",
                            "State": "state", "Megawatthours": "sales_mwh",
                            "Count": "customers"}
-        sales_df.rename(columns=col_rename_dict, inplace=True)
+        sales_df = sales_df.rename(columns=col_rename_dict)
     # Exclude 88888 utility which represents "All Utilities"
     sales_df = sales_df[sales_df["eiaid"] != 88888]
     sales_df = sales_df.groupby(["year", "month", "eiaid", "state"]).agg({"utility_name": "first", "sales_mwh": "sum",

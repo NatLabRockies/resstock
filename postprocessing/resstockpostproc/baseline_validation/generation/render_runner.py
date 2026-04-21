@@ -78,7 +78,7 @@ def has_static_image_outputs(output_formats: list[FileType]) -> bool:
 
 def _kaleido_sync_server_options() -> dict:
     """Match Plotly's Kaleido defaults when starting a persistent sync server."""
-    import plotly.io as pio
+    import plotly.io as pio  # noqa: PLC0415 — lazy: avoid Kaleido import on non-render paths
 
     options = {"n": 1}
     if pio.defaults.plotlyjs:
@@ -90,7 +90,7 @@ def _kaleido_sync_server_options() -> dict:
 
 def _is_kaleido_sync_server_running() -> bool:
     """Return whether the process-local Kaleido sync server is already running."""
-    import kaleido
+    import kaleido  # noqa: PLC0415 — lazy: avoid Kaleido import on non-render paths
 
     server = getattr(kaleido, "_global_server", None)
     return bool(server and server.is_running())
@@ -98,12 +98,12 @@ def _is_kaleido_sync_server_running() -> bool:
 
 def ensure_kaleido_sync_server() -> bool:
     """Start the Kaleido sync server if needed; True iff we now own shutdown."""
-    global _OWNS_KALEIDO_SYNC_SERVER
+    global _OWNS_KALEIDO_SYNC_SERVER  # noqa: PLW0603 — module-level ownership flag
 
     if _is_kaleido_sync_server_running():
         return False
 
-    import kaleido
+    import kaleido  # noqa: PLC0415 — lazy: avoid Kaleido import on non-render paths
 
     kaleido.start_sync_server(silence_warnings=True, **_kaleido_sync_server_options())
     _OWNS_KALEIDO_SYNC_SERVER = True
@@ -112,12 +112,12 @@ def ensure_kaleido_sync_server() -> bool:
 
 def stop_kaleido_sync_server_if_owned() -> None:
     """Stop the process-local Kaleido sync server only if this module started it."""
-    global _OWNS_KALEIDO_SYNC_SERVER
+    global _OWNS_KALEIDO_SYNC_SERVER  # noqa: PLW0603 — module-level ownership flag
 
     if not _OWNS_KALEIDO_SYNC_SERVER:
         return
 
-    import kaleido
+    import kaleido  # noqa: PLC0415 — lazy: avoid Kaleido import on non-render paths
 
     kaleido.stop_sync_server(silence_warnings=True)
     _OWNS_KALEIDO_SYNC_SERVER = False
@@ -224,14 +224,12 @@ def generate_spec_plots(
                 if not is_dry_run:
                     table_dir = table_path.parent
                     ensure_directory(table_dir)
-                    plot_rel_from_table = relative_href_from_file(plot_path, table_path)
                     spec_table_footnotes = get_table_notes(plot_spec)
                     metrics_by_source = compute_discrepancy(data, plot_spec)
                     generate_data_table_html(
                         data=data,
                         plot_spec=plot_spec,
                         output_path=table_path,
-                        plot_rel_path=plot_rel_from_table,
                         metrics_by_source=metrics_by_source,
                         footnotes=spec_table_footnotes,
                         source_labels=source_labels,
@@ -249,12 +247,12 @@ def generate_spec_plots(
 
 def worker_init(enable_persistent_kaleido: bool = True):
     """Process initializer for worker pool — collect timing in memory, use read-only disk cache."""
-    from resstockpostproc.shared_utils import caching
+    from resstockpostproc.shared_utils import caching  # noqa: PLC0415 — lazy: runs only in worker process
     TimingStats.enable_worker_mode()
     caching.CACHE_READ_ONLY = True
     # Suppress worker stdout/stderr — the main process logs progress via tqdm.
-    sys.stdout = open(os.devnull, "w")
-    sys.stderr = open(os.devnull, "w")
+    sys.stdout = open(os.devnull, "w")  # noqa: SIM115 — intentionally lives for the worker's lifetime
+    sys.stderr = open(os.devnull, "w")  # noqa: SIM115 — intentionally lives for the worker's lifetime
     if enable_persistent_kaleido:
         ensure_kaleido_sync_server()
 

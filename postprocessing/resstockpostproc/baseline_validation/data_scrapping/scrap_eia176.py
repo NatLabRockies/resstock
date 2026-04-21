@@ -19,19 +19,19 @@ eia861_processed_path.mkdir(parents=True, exist_ok=True)
 monthly_file = "NG_CONS_SUM_A_EPG0_VRS_MMCF_M.xls"
 full_url = f"https://www.eia.gov/dnav/ng/xls/{monthly_file}"
 raw_path = eia861_raw_path / monthly_file
-urllib.request.urlretrieve(full_url, raw_path)
+urllib.request.urlretrieve(full_url, raw_path)  # noqa: S310 — fixed EIA URL
 df_consumption = pd.read_excel(raw_path, sheet_name="Data 1", skiprows=2, skipfooter=1, na_values=["."])
 
 monthly_heatcontent_file = "NG_CONS_HEAT_A_EPG0_VGTH_BTUCF_M.xls"
 raw_path = eia861_raw_path / monthly_heatcontent_file
 full_url = f"https://www.eia.gov/dnav/ng/xls/{monthly_heatcontent_file}"
-urllib.request.urlretrieve(full_url, raw_path)
+urllib.request.urlretrieve(full_url, raw_path)  # noqa: S310 — fixed EIA URL
 df_heat_content_monthly = pd.read_excel(raw_path, sheet_name="Data 1", skiprows=2, skipfooter=1, na_values=["."])
 
 annul_heatcontent_file = "NG_CONS_HEAT_A_EPG0_VGTH_BTUCF_A.xls"
 raw_path = eia861_raw_path / monthly_heatcontent_file
 full_url = f"https://www.eia.gov/dnav/ng/xls/{annul_heatcontent_file}"
-urllib.request.urlretrieve(full_url, raw_path)
+urllib.request.urlretrieve(full_url, raw_path)  # noqa: S310 — fixed EIA URL
 df_heat_content_annual = pd.read_excel(raw_path, sheet_name="Data 1", skiprows=2, skipfooter=1, na_values=["."])
 
 
@@ -52,9 +52,9 @@ df_heat_content_monthly = cleanup_df(df_heat_content_monthly, "Heat Content", "h
 df_heat_content_annual = cleanup_df(df_heat_content_annual, "Heat Content", "heat_content_btu_per_cf")
 
 # for years where monthly data is not available, use annual data
-df_heat_content_monthly.set_index(["year", "state"], inplace=True)
+df_heat_content_monthly = df_heat_content_monthly.set_index(["year", "state"])
 df_heat_content_monthly.update(df_heat_content_annual.set_index(["year", "state"]), overwrite=False)
-df_heat_content_monthly.reset_index(inplace=True)
+df_heat_content_monthly = df_heat_content_monthly.reset_index()
 
 df_merged = df_consumption.merge(df_heat_content_monthly, on=["year", "month", "state"])
 df_merged["natural_gas_kbtu"] = df_merged["natural_gas_mmcf"] * df_merged["heat_content_btu_per_cf"] * 1000

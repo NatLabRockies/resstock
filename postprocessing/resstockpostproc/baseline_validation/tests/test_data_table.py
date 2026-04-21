@@ -218,7 +218,6 @@ class TestGenerateDataTableHtml:
             data=data,
             plot_spec=spec,
             output_path=output_path,
-            plot_rel_path="../plots/test_plot.html",
             metrics_by_source={"ResStock 2025": 17.5},
         )
 

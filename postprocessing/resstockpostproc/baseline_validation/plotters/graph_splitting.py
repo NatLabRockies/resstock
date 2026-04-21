@@ -138,7 +138,7 @@ def split_graph_by_char(df: pl.DataFrame, plot_spec: PlotSpec | None = None):
     Yields tuples of (df_subset, second_category_column, row, col) for each subplot.
     """
     # Get the characteristic column name (first column that isn't source, model_count, units_count, or a quantity)
-    _QUANTITY_SUFFIXES = (
+    quantity_suffixes = (
         "_value",
         "_quartiles",
         "_nonzero_quartiles",
@@ -152,7 +152,7 @@ def split_graph_by_char(df: pl.DataFrame, plot_spec: PlotSpec | None = None):
         col
         for col in df.columns
         if col not in ("source", "model_count", "units_count")
-        and not col.endswith(_QUANTITY_SUFFIXES)
+        and not col.endswith(quantity_suffixes)
     )
 
     sorted_chars = resolve_sorted_chars(df, char_column, plot_spec)

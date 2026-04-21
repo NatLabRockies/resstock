@@ -92,7 +92,7 @@ class IndexState:
 
   def open_combo_file(self) -> None:
     combo_path = self.data_dir / COMBINATIONS_FILENAME
-    self._combo_file = open(combo_path, "a", encoding="utf-8")
+    self._combo_file = open(combo_path, "a", encoding="utf-8")  # noqa: SIM115 — long-lived; closed by close_combo_file
 
   def close_combo_file(self) -> None:
     if self._combo_file:

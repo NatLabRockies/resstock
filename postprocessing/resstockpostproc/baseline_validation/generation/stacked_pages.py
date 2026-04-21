@@ -288,13 +288,11 @@ def _maybe_build_stacked_table(
     ensure_directory(table_dir)
     table_file_title = stacked_plot_path.stem
     table_path = table_dir / f"{table_file_title}.html"
-    plot_rel_from_table = relative_href_from_file(stacked_plot_path, table_path)
 
     generate_data_table_html(
         data=stacked_data,
         plot_spec=table_spec,
         output_path=table_path,
-        plot_rel_path=plot_rel_from_table,
         metrics_by_source={},
         footnotes=table_notes,
         source_labels=source_labels,

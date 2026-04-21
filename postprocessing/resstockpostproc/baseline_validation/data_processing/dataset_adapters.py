@@ -58,9 +58,8 @@ def load_recs(io_data_key: DataKey) -> tuple[pl.DataFrame, pl.DataFrame, list[st
 def load_lrd(io_data_key: DataKey) -> tuple[pl.DataFrame, pl.DataFrame | None, list[str]]:
     """Load LRD reference + ResStock data and the join-groups for percent_difference."""
     resolution = io_data_key.resolution
-    assert io_data_key.aggregation_type == Metric.average and io_data_key.coverage == CoverageType.all_units, (
-        "LRD data only supports 'average' aggregation with 'all_units' coverage."
-    )
+    assert io_data_key.aggregation_type == Metric.average, "LRD only supports 'average' aggregation"
+    assert io_data_key.coverage == CoverageType.all_units, "LRD only supports 'all_units' coverage"
     eiaidlist = tuple([str(eiaid) for eiaid in UtilityName2ID.values()])
     source_data = get_lrd_data.get_lrd_aggregated(year=2018, resolution=resolution, restrict_list=eiaidlist)
     if resolution == Resolution.year:

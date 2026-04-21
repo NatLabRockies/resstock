@@ -42,7 +42,6 @@ def _build_table_html(
     data: pl.DataFrame,
     col_config: list[dict],
     plot_spec: PlotSpec,
-    plot_rel_path: str | None,
     metrics_by_source: dict[str, float],
     footnotes: list[str] | None,
     source_labels: dict | None,
@@ -63,7 +62,7 @@ def _build_table_html(
     rows_json = data.to_dicts()
     for row in rows_json:
         for k, v in row.items():
-            if v is None or (isinstance(v, float) and v != v):  # NaN check
+            if v is None or (isinstance(v, float) and v != v):  # noqa: PLR0124 — v != v is the NaN idiom
                 row[k] = None
             elif hasattr(v, "isoformat"):  # datetime, date, time
                 row[k] = str(v)
@@ -471,7 +470,6 @@ def generate_data_table_html(
     data: pl.DataFrame,
     plot_spec: PlotSpec,
     output_path: Path,
-    plot_rel_path: str | None = None,
     metrics_by_source: dict[str, float] | None = None,
     footnotes: list[str] | None = None,
     source_labels: dict | None = None,
@@ -552,21 +550,20 @@ def generate_data_table_html(
     # Reorder: group each source's columns together (value, abs diff, pct diff).
     # For distribution view, sort each source's stat columns canonically:
     # mean (value) → min → q1 → median → q3 → max.
-    _STAT_ORDER = ("_value", "_min", "_q1", "_median", "_q3", "_max")
+    stat_order = ("_value", "_min", "_q1", "_median", "_q3", "_max")
 
     def _stat_sort_key(col: str) -> int:
-        for i, suffix in enumerate(_STAT_ORDER):
+        for i, suffix in enumerate(stat_order):
             if col.endswith(suffix):
                 return i
-        return len(_STAT_ORDER)
+        return len(stat_order)
 
     if rs_labels:
         dimension_cols = [
             c for c in pivoted.columns
             if not c.startswith(f"{ref_label}: ")
             and not any(
-                c.startswith(f"{lbl}: ")
-                or c.startswith(f"{lbl} Difference")
+                c.startswith((f"{lbl}: ", f"{lbl} Difference"))
                 for lbl in rs_labels
             )
         ]
@@ -588,7 +585,7 @@ def generate_data_table_html(
     col_config = build_column_config(pivoted, plot_spec, ref_label, rs_labels)
 
     html = _build_table_html(
-        pivoted, col_config, plot_spec, plot_rel_path,
+        pivoted, col_config, plot_spec,
         metrics_by_source, footnotes, source_labels, ref_label, rs_sources_js,
         csv_download_filename=csv_download_filename,
         include_discrepancy_metrics=include_discrepancy_metrics,

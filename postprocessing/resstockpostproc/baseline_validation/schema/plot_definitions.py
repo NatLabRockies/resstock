@@ -328,11 +328,14 @@ def _make_spec(
 
 def _eia_templates() -> Iterator[PlotTemplate]:
     """Generate EIA plot templates (no group_by baked in)."""
-    mk = lambda q, res, agg_type, cov, view=ViewType.value_view: PlotTemplate(
-        comparison_dataset=ComparisonDataset.eia, quantity=q, resolution=res,
-        aggregation_type=agg_type, coverage=cov, view=view,
-        eligible_chars=EIA_CHARS,
-    )
+
+    def mk(q, res, agg_type, cov, view=ViewType.value_view):
+        return PlotTemplate(
+            comparison_dataset=ComparisonDataset.eia, quantity=q, resolution=res,
+            aggregation_type=agg_type, coverage=cov, view=view,
+            eligible_chars=EIA_CHARS,
+        )
+
     for quantity in EIA_QUANTITIES:
         if quantity == DataCol.UNITS_COUNT:
             yield mk(DataCol.UNITS_COUNT, Resolution.year, Metric.total, CoverageType.all_units)
@@ -359,11 +362,13 @@ def _all_enduses_templates() -> Iterator[PlotTemplate]:
     Distribution metric is intentionally excluded because PlotSpec requires
     distribution to use a specific end-use quantity (not DataCol.ALL).
     """
-    mk = lambda agg, cov, view: PlotTemplate(
-        comparison_dataset=ComparisonDataset.recs, quantity=DataCol.ALL, resolution=Resolution.year,
-        aggregation_type=agg, coverage=cov, view=view,
-        eligible_chars=RECS_ANNUAL_CHARS,
-    )
+    def mk(agg, cov, view):
+        return PlotTemplate(
+            comparison_dataset=ComparisonDataset.recs, quantity=DataCol.ALL, resolution=Resolution.year,
+            aggregation_type=agg, coverage=cov, view=view,
+            eligible_chars=RECS_ANNUAL_CHARS,
+        )
+
     yield mk(Metric.total, CoverageType.all_units, ViewType.value_view)
     yield mk(Metric.average, CoverageType.all_units, ViewType.value_view)
     yield mk(Metric.average, CoverageType.users_only, ViewType.value_view)
@@ -375,11 +380,13 @@ def _recs_energy_templates(quantity: DataCol) -> Iterator[PlotTemplate]:
     has_monthly = quantity in RECS_MONTHLY_QUANTITIES
     skip_users = quantity in RECS_FULL_PENETRATION
 
-    mk = lambda res, agg_type, cov, view=ViewType.value_view, chars=RECS_ANNUAL_CHARS: PlotTemplate(
-        comparison_dataset=ComparisonDataset.recs, quantity=quantity, resolution=res,
-        aggregation_type=agg_type, coverage=cov, view=view,
-        eligible_chars=chars,
-    )
+    def mk(res, agg_type, cov, view=ViewType.value_view, chars=RECS_ANNUAL_CHARS):
+        return PlotTemplate(
+            comparison_dataset=ComparisonDataset.recs, quantity=quantity, resolution=res,
+            aggregation_type=agg_type, coverage=cov, view=view,
+            eligible_chars=chars,
+        )
+
 
     # Annual templates (all 6 chars eligible)
     yield mk(Resolution.year, Metric.total, CoverageType.all_units)

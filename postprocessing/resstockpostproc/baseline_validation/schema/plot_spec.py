@@ -396,7 +396,7 @@ class PlotSpec(NoExtraModel):
         Resolves from workflow.data_source_labels by finding the first key that
         starts with the comparison_dataset value. Falls back to uppercase enum value.
         """
-        from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
+        from resstockpostproc.baseline_validation.schema.workflow_schema import workflow  # noqa: PLC0415 — breaks circular import with workflow_schema
         ds = self.comparison_dataset.value
         for key, label_obj in workflow.data_source_labels.items():
             if key.startswith(ds):

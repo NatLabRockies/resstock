@@ -526,7 +526,7 @@ def _get_annual_by_chars(
 ) -> pl.DataFrame:
     """Load annual BSQ data grouped by `by` (and optionally `filter_char`).
 
-    With filter_char set, BSQ computes per-cell (by × filter_char) totals,
+    With filter_char set, BSQ computes per-cell (by x filter_char) totals,
     averages, quartiles, and nonzero counts — cheap to filter downstream.
     The US-Total row is computed by dropping `by` from the group_by.
     """

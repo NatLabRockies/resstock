@@ -79,7 +79,7 @@ def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
     ts_xtick_vals, ts_xtick_text = _resolve_tick_config(plot_spec, data)
     x_unit = _resolve_x_unit(plot_spec)
     uses_stacked_layout = _uses_stacked_layout(plot_spec)
-    is_single_entity = _check_single_entity(data, plot_spec, timeseries_column)
+    is_single_entity = _check_single_entity(data, plot_spec)
     height, width = _resolve_dimensions(plot_spec, is_single_entity, data)
 
     # Post-processing: diff_view swaps quantity <-> sidebar
@@ -340,18 +340,16 @@ def _uses_stacked_layout(plot_spec: PlotSpec) -> bool:
     Covers two_column layout, box plots, all-enduses splits, and every
     non-state group_by.
     """
-    if plot_spec.layout == Layout.two_column:
-        return True
-    if plot_spec.is_distribution_metric:
-        return True
-    if plot_spec.is_all_enduses:
-        return True
-    if plot_spec.group_by is None or plot_spec.group_by not in [DataCol.STATE]:
-        return True
-    return False
+    return (
+        plot_spec.layout == Layout.two_column
+        or plot_spec.is_distribution_metric
+        or plot_spec.is_all_enduses
+        or plot_spec.group_by is None
+        or plot_spec.group_by not in [DataCol.STATE]
+    )
 
 
-def _check_single_entity(data: pl.DataFrame, plot_spec: PlotSpec, timeseries_column: str | None) -> bool:
+def _check_single_entity(data: pl.DataFrame, plot_spec: PlotSpec) -> bool:
     """Check if data contains a single entity (triggers simplified rendering)."""
     if plot_spec.group_by is None or plot_spec.group_by not in data.columns:
         return True  # No aggregation = single entity
