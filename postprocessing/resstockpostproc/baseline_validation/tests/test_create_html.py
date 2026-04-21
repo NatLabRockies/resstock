@@ -3,11 +3,11 @@
 import csv
 
 
-from resstockpostproc.baseline_validation.dashboard_paths import (
+from resstockpostproc.baseline_validation.dashboard.dashboard_paths import (
     comparisons_index_data_dir,
     dashboard_html_path,
 )
-from resstockpostproc.baseline_validation.create_html import (
+from resstockpostproc.baseline_validation.dashboard.create_html import (
     init_html_index,
     append_index_row,
     finalize_html_index,

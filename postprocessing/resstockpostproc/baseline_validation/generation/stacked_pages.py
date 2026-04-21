@@ -19,7 +19,7 @@ from resstockpostproc.baseline_validation.footnotes import (
     get_plot_notes,
     get_table_notes,
 )
-from resstockpostproc.baseline_validation.create_html import append_index_row
+from resstockpostproc.baseline_validation.dashboard.create_html import append_index_row
 from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data
 from resstockpostproc.baseline_validation.generation.render_runner import append_plot_row, plot_output_path
 from resstockpostproc.baseline_validation.io_managers.data_table import generate_data_table_html
@@ -35,7 +35,7 @@ from resstockpostproc.baseline_validation.schema.plot_spec import (
     ViewType,
 )
 from resstockpostproc.shared_utils.db_column_names import DataCol
-from resstockpostproc.baseline_validation.dashboard_paths import (
+from resstockpostproc.baseline_validation.dashboard.dashboard_paths import (
     dashboard_html_path,
     dataset_output_dir,
     relative_href_from_file,

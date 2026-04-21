@@ -19,9 +19,9 @@ from pathlib import Path
 from plotly import graph_objects as go
 from tqdm import tqdm
 
-from resstockpostproc.baseline_validation.create_html import append_index_row
+from resstockpostproc.baseline_validation.dashboard.create_html import append_index_row
 from resstockpostproc.baseline_validation.data_processing.metrics import compute_discrepancy
-from resstockpostproc.baseline_validation.dashboard_paths import (
+from resstockpostproc.baseline_validation.dashboard.dashboard_paths import (
     dashboard_html_path,
     dataset_output_dir,
     relative_href_from_file,

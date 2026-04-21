@@ -75,5 +75,5 @@ ban-relative-imports = "all"
 # Files dominated by HTML/JS template strings where wrapping a line would
 # change the emitted dashboard output. Short lines checked by eye.
 "**/baseline_validation/io_managers/data_table.py" = ["E501"]
-"**/baseline_validation/create_html_viewer.py" = ["E501"]
+"**/baseline_validation/dashboard/create_html_viewer.py" = ["E501"]
 "**/baseline_validation/io_managers/html_utils.py" = ["E501"]

@@ -2,11 +2,11 @@
 
 from pathlib import Path
 
-from resstockpostproc.baseline_validation.dashboard_paths import (
+from resstockpostproc.baseline_validation.dashboard.dashboard_paths import (
     comparisons_index_data_dir,
     dashboard_html_path,
 )
-from resstockpostproc.baseline_validation.create_html import create_html_from_rows
+from resstockpostproc.baseline_validation.dashboard.create_html import create_html_from_rows
 
 
 def _generate_html(tmp_path: Path) -> str:

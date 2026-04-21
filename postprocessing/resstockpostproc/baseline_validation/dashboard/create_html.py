@@ -32,12 +32,12 @@ from collections import defaultdict
 from collections.abc import Sequence
 from pathlib import Path
 
-from resstockpostproc.baseline_validation.create_html_viewer import (
+from resstockpostproc.baseline_validation.dashboard.create_html_viewer import (
     COMBINATIONS_FILENAME,
     NON_FILTER_COLUMNS,
     build_html,
 )
-from resstockpostproc.baseline_validation.dashboard_paths import (
+from resstockpostproc.baseline_validation.dashboard.dashboard_paths import (
     COMPARISONS_INDEX_DIRNAME,
     relative_href_from_file,
 )
@@ -328,7 +328,7 @@ def finalize_html_index(state: IndexState) -> None:
 
 def main() -> int:
     if len(sys.argv) != 3:
-        print("Usage: python -m resstockpostproc.baseline_validation.create_html <input.tsv> <output.html>")
+        print("Usage: python -m resstockpostproc.baseline_validation.dashboard.create_html <input.tsv> <output.html>")
         return 1
 
     csv_path = Path(sys.argv[1])

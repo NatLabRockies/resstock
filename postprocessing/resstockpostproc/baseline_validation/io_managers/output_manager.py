@@ -11,7 +11,7 @@ import plotly.io as pio
 import polars as pl
 from plotly.offline import get_plotlyjs
 
-from resstockpostproc.baseline_validation.dashboard_paths import dashboard_output_root, dataset_output_dir
+from resstockpostproc.baseline_validation.dashboard.dashboard_paths import dashboard_output_root, dataset_output_dir
 from resstockpostproc.baseline_validation.schema.plot_spec import PlotSpec, FileType
 from resstockpostproc.baseline_validation.utils import ensure_directory
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow

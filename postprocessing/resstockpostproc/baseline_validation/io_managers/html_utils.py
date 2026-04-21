@@ -8,7 +8,7 @@ import html as html_lib
 import re
 from pathlib import Path
 
-from resstockpostproc.baseline_validation.dashboard_paths import relative_href_from_file
+from resstockpostproc.baseline_validation.dashboard.dashboard_paths import relative_href_from_file
 from resstockpostproc.shared_utils.timing import timed
 
 

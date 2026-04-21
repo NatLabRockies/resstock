@@ -15,7 +15,7 @@ import time
 from pathlib import Path
 
 
-from resstockpostproc.baseline_validation.dashboard_paths import (
+from resstockpostproc.baseline_validation.dashboard.dashboard_paths import (
     comparisons_index_data_dir,
     comparisons_index_tsv_path,
     dashboard_assets_dir,
@@ -47,7 +47,7 @@ from resstockpostproc.baseline_validation.generation.stacked_pages import (
 from resstockpostproc.baseline_validation.io_managers.output_manager import (
     ensure_plotly_asset,
 )
-from resstockpostproc.baseline_validation.create_html import (
+from resstockpostproc.baseline_validation.dashboard.create_html import (
     init_html_index,
     finalize_html_index,
     create_html_from_rows,
