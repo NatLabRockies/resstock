@@ -17,7 +17,7 @@ from resstockpostproc.shared_utils.caching import cached
 from resstockpostproc.shared_utils.timing import timed
 from resstockpostproc.baseline_validation.schema.plot_spec import DataKey, Metric, CoverageType
 from resstockpostproc.baseline_validation.schema.recs_chars_mapping import RECS_CHARS_MAPPING, PartialMap
-from resstockpostproc.baseline_validation.io_managers.stats import weighted_quantiles
+from resstockpostproc.baseline_validation.io_managers.stats import ANNUAL_QUANTILES, weighted_quantiles
 
 logger = logging.getLogger(__name__)
 
@@ -91,7 +91,6 @@ def _build_bounds_row(
     return row
 
 
-_QUANTILES = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
 _ZERO_QUARTILES = [0.0] * 9
 
 
@@ -139,7 +138,7 @@ def _weighted_quartiles_or_zeros(values, weights) -> list[float]:
     try:
         if len(values) == 0:
             return _ZERO_QUARTILES.copy()
-        return weighted_quantiles(values, weights, _QUANTILES).tolist()
+        return weighted_quantiles(values, weights, ANNUAL_QUANTILES).tolist()
     except Exception:
         return _ZERO_QUARTILES.copy()
 

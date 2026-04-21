@@ -9,6 +9,11 @@ from __future__ import annotations
 import numpy as np
 
 
+# 9-element quartile grid used by both RECS and ResStock annual loaders.
+# Indices match QUARTILE_INDICES in plot_semantics (min=0, q1=3, median=4, q3=5, max=8).
+ANNUAL_QUANTILES = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
+
+
 def weighted_quantiles(
     data: np.ndarray,
     weights: np.ndarray,

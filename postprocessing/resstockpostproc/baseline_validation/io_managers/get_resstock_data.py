@@ -9,7 +9,7 @@ import sqlalchemy as sa
 from buildstock_query import BuildStockQuery, MappedColumn
 
 from resstockpostproc.baseline_validation.io_managers.utils import apply_aggregation
-from resstockpostproc.baseline_validation.io_managers.stats import weighted_quantiles
+from resstockpostproc.baseline_validation.io_managers.stats import ANNUAL_QUANTILES, weighted_quantiles
 from resstockpostproc.baseline_validation.resstock_raw import (
     resolve_existing_char_column,
     resstock_group_expr,
@@ -27,9 +27,6 @@ from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.caching import cached
 from resstockpostproc.shared_utils.timing import timed
 from resstockpostproc.shared_utils.mapping import UtilityName2ID
-
-
-_ANNUAL_QUANTILES = [0, 0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98, 1]
 
 
 @timed
@@ -415,8 +412,8 @@ def _partition_key_dict(group_cols: list[str], key: object) -> dict[str, object]
 
 def _weighted_quantiles_or_zeros(values: np.ndarray, weights: np.ndarray) -> list[float]:
     if len(values) == 0 or weights.sum() <= 0:
-        return [0.0] * len(_ANNUAL_QUANTILES)
-    return weighted_quantiles(values, weights, _ANNUAL_QUANTILES).tolist()
+        return [0.0] * len(ANNUAL_QUANTILES)
+    return weighted_quantiles(values, weights, ANNUAL_QUANTILES).tolist()
 
 
 def _empty_raw_annual_frame(group_cols: list[str], quantity_cols: list[str]) -> pl.DataFrame:
