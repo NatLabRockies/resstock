@@ -133,7 +133,7 @@ def get_annual_all(
         # Calculate value columns based on aggregation type
         if data_key.aggregation_type == Metric.total:
             # Stock energy: weighted sum
-            result_df = mdf.group_by(by_cols).agg(
+            result_df = mdf.group_by(by_cols, maintain_order=True).agg(
                 pl.len().alias("sample_count"),
                 pl.col("NWEIGHT").sum().alias("units_count"),
                 *((pl.col(col) * pl.col("NWEIGHT")).sum().alias(f"{col}_value") for col in enduse_cols),
@@ -150,7 +150,7 @@ def get_annual_all(
             )
         elif data_key.coverage == CoverageType.all_units:
             # Per-unit energy: weighted mean (sum of weighted values / sum of all weights)
-            result_df = mdf.group_by(by_cols).agg(
+            result_df = mdf.group_by(by_cols, maintain_order=True).agg(
                 pl.len().alias("sample_count"),
                 pl.col("NWEIGHT").sum().alias("units_count"),
                 *(
@@ -170,7 +170,7 @@ def get_annual_all(
             )
         else:
             # Per-user energy: weighted mean (sum of weighted values / sum of weights for non-zero values only)
-            result_df = mdf.group_by(by_cols).agg(
+            result_df = mdf.group_by(by_cols, maintain_order=True).agg(
                 pl.len().alias("sample_count"),
                 pl.col("NWEIGHT").sum().alias("units_count"),
                 *(
@@ -200,7 +200,7 @@ def get_annual_all(
 
         value_stat_type = _resolve_recs_value_stat_type(data_key)
 
-        unique_groups = mdf.select(by_cols).unique()
+        unique_groups = mdf.select(by_cols).unique(maintain_order=True)
         n_groups = len(unique_groups)
         logger.info(f"Computing RECS confidence bounds/quartiles for {n_groups} groups ({by_cols})...")
         for gi, group_row in enumerate(unique_groups.iter_rows(named=True)):
@@ -266,15 +266,15 @@ def get_annual_all(
         bounds_df = pl.DataFrame(bounds_results)
         quartile_df = pl.DataFrame(quartile_results)
         nonzero_quartile_df = pl.DataFrame(nonzero_quartile_results)
-        result_df = result_df.join(bounds_df, on=by_cols, how="left")
-        result_df = result_df.join(quartile_df, on=by_cols, how="left")
-        result_df = result_df.join(nonzero_quartile_df, on=by_cols, how="left")
+        result_df = result_df.join(bounds_df, on=by_cols, how="left", maintain_order="left_right")
+        result_df = result_df.join(quartile_df, on=by_cols, how="left", maintain_order="left_right")
+        result_df = result_df.join(nonzero_quartile_df, on=by_cols, how="left", maintain_order="left_right")
 
         # Add US Total values.
         # For multi-column groupby, compute one US Total per secondary dimension value.
         secondary_cols = by_cols[1:]  # empty for single-column
         if secondary_cols:
-            secondary_combos = list(mdf.select(secondary_cols).unique().iter_rows(named=True))
+            secondary_combos = list(mdf.select(secondary_cols).unique(maintain_order=True).iter_rows(named=True))
             logger.info(f"Computing US Total for {len(secondary_combos)} secondary groups...")
         else:
             secondary_combos = [{}]  # single iteration for single-column
@@ -571,7 +571,7 @@ def get_monthly_all(
     annual_df = get_annual_all(data_key=data_key, year=year)
     available_nonzero = [c for c in nonzero_sample_cols if c in annual_df.columns]
     join_cols = [by] + percent_users_cols + ["units_count", "sample_count"] + available_nonzero
-    monthly_df = monthly_df.join(annual_df.select(join_cols), on=by, how="left")
+    monthly_df = monthly_df.join(annual_df.select(join_cols), on=by, how="left", maintain_order="left_right")
 
     # Apply aggregation transformation if needed
     if data_key.coverage == CoverageType.all_units and data_key.aggregation_type == Metric.average:

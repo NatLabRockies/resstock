@@ -92,7 +92,7 @@ def _mape_for_source(
         rs_rows = rs_rows.filter(pl.col(agg_col) != "US Total")
 
     rs_selected = rs_rows.select(join_cols + [pl.col(val_col).alias("rs_val")])
-    paired = rs_selected.join(ref_selected, on=join_cols, how="inner")
+    paired = rs_selected.join(ref_selected, on=join_cols, how="inner", maintain_order="left_right")
     paired = paired.drop_nulls(["ref_val", "rs_val"])
     paired = paired.with_columns(
         pl.col("ref_val").fill_nan(0),

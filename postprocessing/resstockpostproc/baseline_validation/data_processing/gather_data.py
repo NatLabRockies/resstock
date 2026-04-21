@@ -200,7 +200,7 @@ def _add_percent_difference(
     """Add signed percent difference columns against the reference source."""
     ref_val = ref_cols[0]
     ref_df = df.filter(pl.col(ref_column) == ref_val).select(join_columns + value_columns)
-    full_df = df.join(ref_df, on=join_columns, suffix="_ref")
+    full_df = df.join(ref_df, on=join_columns, suffix="_ref", maintain_order="left_right")
     result = full_df.with_columns(
         pl.when(~pl.col(ref_column).is_in(ref_cols[:1]))
         .then((pl.col(f"{value_column}") - pl.col(f"{value_column}_ref")) / pl.col(f"{value_column}_ref") * 100)
@@ -266,8 +266,8 @@ def scale_to_eia_customers(
     by: AggregationBy = "state",
 ) -> pl.DataFrame:
     """Scale BuildStock data to match EIA customer counts."""
-    eia_customers = eia_df.group_by(by).agg(pl.col("customers").sum().alias("customers"))
-    scaled = buildstock_df.join(eia_customers, on=by, how="left")
+    eia_customers = eia_df.group_by(by, maintain_order=True).agg(pl.col("customers").sum().alias("customers"))
+    scaled = buildstock_df.join(eia_customers, on=by, how="left", maintain_order="left_right")
     scaled = scaled.with_columns((pl.col("customers") / pl.col("units_count")).alias("customer_factor"))
 
     exclude_cols = {by, "sample_count", "units_count", "customers", "customer_factor", "month", "time"}
@@ -334,7 +334,7 @@ def _prepare_temperature_view(df: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataF
     )
 
     # Join reference temperature to all rows
-    df = df.join(ref_temp, on=("utility", plot_spec.resolution), how="left")
+    df = df.join(ref_temp, on=("utility", plot_spec.resolution), how="left", maintain_order="left_right")
 
     # Sort by temperature
     df = df.sort("source", "utility", "resstock_temp", descending=[False, False, False], maintain_order=True)

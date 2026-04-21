@@ -268,7 +268,7 @@ def pivot_by_source(
     # Identify all source labels (source values are already human-readable
     # display labels from apply_plot_spec, e.g. "EIA 2018", "ResStock 2025").
     comparison_val = plot_spec.comparison_dataset.value
-    sources = data["source"].unique().to_list()
+    sources = data["source"].unique(maintain_order=True).to_list()
     ref_sources = [s for s in sources if comparison_val in s.lower()]
     ref_label = ref_sources[0] if ref_sources else comparison_val.upper()
     rs_labels = sorted(s for s in sources if "resstock" in s.lower())
@@ -300,6 +300,6 @@ def pivot_by_source(
             + [pl.col(c).alias(f"{rs_label} Difference (%): {c}") for c in rs_diff_available]
         )
         rs_renamed = rs_df.select(rs_select_exprs)
-        pivoted = pivoted.join(rs_renamed, on=join_cols, how="full", coalesce=True)
+        pivoted = pivoted.join(rs_renamed, on=join_cols, how="full", coalesce=True, maintain_order="left_right")
 
     return pivoted, ref_label, rs_labels

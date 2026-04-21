@@ -69,7 +69,7 @@ def get_timeseries_all(
         nonzero_sample_cols = [col for col in nonzero_sample_cols if col in annual_df.columns]
         df = df.join(
             annual_df.select([by] + percent_users_cols + nonzero_sample_cols),
-            on=[by], how="left",
+            on=[by], how="left", maintain_order="left_right",
         )
         df = apply_aggregation(data_key, df)
         df = df.with_columns(pl.lit(data_source.name).alias("source"))

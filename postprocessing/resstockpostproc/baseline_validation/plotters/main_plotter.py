@@ -49,7 +49,7 @@ def _get_null_sources(data: pl.DataFrame, source_column: str, quantity_column: s
     if quantity_column not in data.columns:
         return []
     return (
-        data.group_by(source_column)
+        data.group_by(source_column, maintain_order=True)
         .agg(pl.col(quantity_column).is_null().all().alias("all_null"))
         .filter(pl.col("all_null"))
         .select(source_column)
