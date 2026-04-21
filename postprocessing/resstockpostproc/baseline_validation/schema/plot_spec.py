@@ -11,7 +11,7 @@ both the plotters (for figure titles) and the HTML index (for filter facets).
 from __future__ import annotations
 
 from pathlib import Path
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 from enum import StrEnum
 from typing import NamedTuple
 from resstockpostproc.shared_utils.db_column_names import DataCol
@@ -27,9 +27,7 @@ ALL_ENDUSES_DISPLAY = "All Fuels and Enduses"
 class NoExtraModel(BaseModel):
     """Base model that forbids extra fields and is frozen."""
 
-    class Config:
-        extra = "forbid"
-        frozen = True
+    model_config = ConfigDict(extra="forbid", frozen=True)
 
 
 class Metric(StrEnum):
