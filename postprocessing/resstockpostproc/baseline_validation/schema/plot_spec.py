@@ -47,12 +47,7 @@ class CoverageType(StrEnum):
 
 
 class ViewType(StrEnum):
-    """View type for rendering plots.
-
-    value_view is the default view — the plotting function decides the layout
-    (tilemap, stacked, etc.) based on the rest of the PlotSpec.
-    Other view types hint a different visualization of the same data.
-    """
+    """View type for rendering plots; ``value_view`` defers layout to the plotter."""
 
     # Display modes
     value_view = "value"  # The default view for most plots - shows actual values as the main plot
@@ -97,18 +92,11 @@ class Resolution(StrEnum):
 
 
 class DataKey(NamedTuple):
-    """Key that uniquely identifies a base dataset.
+    """Identity of a base dataset; plots sharing a DataKey share one load.
 
-    All plots with the same DataKey can share the same expensive data loading operation.
-
-    effective_group_by is a sorted tuple of column names the data must be grouped by.
-    For single-dimension plots: ("state",) or ("utility",).
-    For cross-dimension plots: ("census_division_recs", "state"). The plotter may use the 
-    data differently than how it is queried but making a single grouped query reduces number
-    of queries needed.
-
-    focus_on values are NOT included here — they are cheap post-aggregation
-    filters applied after data loading.
+    ``effective_group_by`` is a sorted tuple so cross-dimension order doesn't
+    produce different cache keys. ``focus_on`` values are excluded — they are
+    cheap post-aggregation filters.
     """
 
     comparison_dataset: ComparisonDataset
@@ -125,13 +113,7 @@ class DataKey(NamedTuple):
 
 
 def format_group_by(group_by: str) -> str:
-    """Convert a group_by column name to a display label.
-
-    Uses DataCol enum member names for known columns, falls back to title-casing
-    the raw string for unknown values.
-
-    Examples: "census_division_recs" → "Census Division", "state" → "State"
-    """
+    """Display label for a group_by column: ``census_division_recs`` → ``Census Division``."""
     try:
         data_col = DataCol(group_by)
         if data_col == DataCol.CLIMATE_ZONE:
@@ -339,12 +321,7 @@ class PlotSpec(NoExtraModel):
 
     @property
     def effective_group_by(self) -> tuple[str, ...]:
-        """Sorted tuple of all columns the data handler must group by.
-
-        This is the union of focus_on columns and group_by, sorted
-        alphabetically so that ("state", "vintage") and ("vintage", "state")
-        produce the same DataKey for cache consistency.
-        """
+        """Sorted union of focus_on columns and ``group_by`` (sorted for cache consistency)."""
         cols = {col for col, _ in self.focus_on}
         if self.group_by is not None:
             cols.add(self.group_by)
@@ -352,18 +329,11 @@ class PlotSpec(NoExtraModel):
 
     @property
     def display_title(self) -> str:
-        """Publication-quality title for the plot figure and HTML index.
+        """Publication-quality title.
 
-        Handles all comparison datasets (EIA, RECS, LRD) in a single method.
-        LRD-specific resolutions (load duration curves, temperature plots, hourly
-        matrices) get unique titles; everything else follows the common pattern:
-        "{Period} {Quantity} Consumption {Per} {Grouping}"
-
-        Examples:
-            "Average Monthly Electricity Consumption per Dwelling Unit by State"
-            "Annual Electricity Consumption per Dwelling Unit"
-            "Load Duration Curve of Electricity Consumption per Dwelling Unit"
-
+        Non-LRD pattern: ``{Period} {Quantity} Consumption {Per} {Grouping}``.
+        LRD resolutions (load duration, temperature, hourly matrix) take
+        bespoke patterns.
         """
         # ── LRD-specific resolutions with unique title patterns ──
         if self.comparison_dataset == ComparisonDataset.lrd:
@@ -455,15 +425,7 @@ class PlotSpec(NoExtraModel):
 
     @property
     def display_metric(self) -> str:
-        """Metric facet label — title-aligned, without quantity name or grouping.
-
-        Examples:
-            "Total Annual Consumption" (total, year)
-            "Average Monthly Consumption" (average, month)
-            "Distribution of Annual Consumption" (distribution)
-            "Load Duration Plot" (LRD)
-
-        """
+        """Metric facet label — title-aligned, without quantity or grouping."""
         if self.comparison_dataset == ComparisonDataset.lrd:
             if self.view in (ViewType.temp_view, ViewType.temp_distribution_view):
                 return "Load Vs Outdoor Drybulb Temperature"
@@ -529,20 +491,7 @@ class PlotSpec(NoExtraModel):
         return None
 
     def viz_label(self, layout: str | None = None) -> str:
-        """Normalized visualization label for explorer/index tabs.
-
-        Base labels are constrained to:
-        - Bar Plot
-        - Box Plot
-        - Timeseries Plot
-
-        Optional suffixes:
-        - (grouped)
-        - (stacked)
-        - (difference view)
-        - (grouped difference view)
-        - (stacked difference view)
-        """
+        """Normalized viz label for explorer/index tabs (Bar/Box/Timeseries + optional suffix)."""
         base = self._base_viz_label
         layout_label = self._default_viz_layout if layout is None else layout
 
@@ -600,23 +549,12 @@ class PlotSpec(NoExtraModel):
 
     @property
     def filter_display_name(self) -> str:
-        """Human-readable label for the focus_on filters.
-
-        State abbreviations → full names, others pass through.
-        Returns '' if focus_on is empty.
-
-        Examples: 'Alaska', 'Alaska, Single-Family Detached'
-        """
+        """Human-readable focus_on label, e.g. ``Alaska, Single-Family Detached``; ``''`` when empty."""
         return ", ".join(format_focus_label(v) for _, v in self.focus_on)
 
     @property
     def file_path_and_name(self) -> tuple[Path, str]:
-        """Build the output file path and filename from display-quality labels.
-
-        Returns (path_segment, filename) where:
-        - path_segment uses human-readable directory names (e.g. "By State/Alaska")
-        - filename is the display_title with coverage/view suffixes
-        """
+        """Return ``(path_segment, filename)`` built from display-quality labels."""
         title = self.display_title
         if self.layout != Layout.auto:
             title = title + f" ({self.layout.value} layout)"
