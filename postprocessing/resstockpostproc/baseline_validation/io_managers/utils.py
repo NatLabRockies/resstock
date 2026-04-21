@@ -5,7 +5,6 @@ from resstockpostproc.shared_utils.mapping import NUM2MONTH
 from resstockpostproc.baseline_validation.schema.plot_spec import DataKey, Metric, CoverageType
 
 
-
 def add_us_total(
     df: pl.DataFrame,
     by: str,
@@ -68,11 +67,7 @@ def add_missing_states(df: pl.DataFrame) -> pl.DataFrame:
         return df
 
     if "month" in df.columns:
-        missing_data = [
-            {"state": state, "month": month}
-            for state in missing_states
-            for month in NUM2MONTH.values()
-        ]
+        missing_data = [{"state": state, "month": month} for state in missing_states for month in NUM2MONTH.values()]
         missing_df = pl.DataFrame(missing_data)
         join_cols = ["state", "month"]
     else:

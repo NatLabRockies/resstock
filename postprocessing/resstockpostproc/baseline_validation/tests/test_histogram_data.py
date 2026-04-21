@@ -180,8 +180,14 @@ class TestHistogramDataGeometryScope:
                 "state": ["CA"] * 4 + ["TX"] * 4,
                 "vintage": ["old", "old", "new", "new"] * 2,
                 "value": [
-                    10.0, 20.0, 10.0, 30.0,
-                    100.0, 200.0, 100.0, 300.0,
+                    10.0,
+                    20.0,
+                    10.0,
+                    30.0,
+                    100.0,
+                    200.0,
+                    100.0,
+                    300.0,
                 ],
                 "weight": [49.0, 1.0, 49.0, 1.0] * 2,
                 "source": ["recs_2020"] * 8,
@@ -192,8 +198,14 @@ class TestHistogramDataGeometryScope:
                 "state": ["CA"] * 4 + ["TX"] * 4,
                 "vintage": ["old", "old", "new", "new"] * 2,
                 "value": [
-                    10.0, 500.0, 10.0, 600.0,
-                    100.0, 5000.0, 100.0, 7000.0,
+                    10.0,
+                    500.0,
+                    10.0,
+                    600.0,
+                    100.0,
+                    5000.0,
+                    100.0,
+                    7000.0,
                 ],
                 "weight": [1.0] * 8,
                 "source": ["resstock_2025"] * 8,
@@ -291,9 +303,7 @@ class TestHistogramDataGeometryScope:
             _make_histogram_spec(group_by=None, focus_on=(("state", "CA"),))
         )
 
-        recs_overflow = out.filter(
-            (pl.col("source") == "recs_2020") & (pl.col("bin") == 49)
-        )["count_pct"].item()
+        recs_overflow = out.filter((pl.col("source") == "recs_2020") & (pl.col("bin") == 49))["count_pct"].item()
         assert recs_overflow == pytest.approx(2.0)
 
     def test_public_histogram_pipeline_caps_recs_overflow_below_top_jump(self, monkeypatch):
@@ -339,7 +349,5 @@ class TestHistogramDataGeometryScope:
             _make_histogram_spec(group_by=None, focus_on=(("state", "CA"),))
         )
 
-        recs_overflow = out.filter(
-            (pl.col("source") == "recs_2020") & (pl.col("bin") == 49)
-        )["count_pct"].item()
+        recs_overflow = out.filter((pl.col("source") == "recs_2020") & (pl.col("bin") == 49))["count_pct"].item()
         assert recs_overflow == pytest.approx(1.34)

@@ -161,11 +161,7 @@ def collect_stacked_notes(
     note_getter,
 ) -> list[str] | None:
     """Collect deduplicated notes across stacked quantity entries."""
-    return dedupe_note_groups(
-        note_getter(entries[0][0])
-        for _, entries in qty_entries
-        if entries
-    )
+    return dedupe_note_groups(note_getter(entries[0][0]) for _, entries in qty_entries if entries)
 
 
 # ---------------------------------------------------------------------------
@@ -204,8 +200,12 @@ def _write_stacked_view_html(
     )
     ensure_directory(out.parent)
     postprocess_plot_html(
-        paths, output_path=out, footnotes=plot_notes,
-        source_labels=source_labels, scale_x=scale_x, scale_y=scale_y,
+        paths,
+        output_path=out,
+        footnotes=plot_notes,
+        source_labels=source_labels,
+        scale_x=scale_x,
+        scale_y=scale_y,
         comparison_dataset=all_view_spec.comparison_dataset.value,
         plotly_cdn_src=plotly_cdn_url(),
         plotly_asset_path=plotly_asset_path,
@@ -232,16 +232,22 @@ def _build_stacked_views_for_group(
     for i, _ in enumerate(qty_entries[0][1]):
         view_spec = qty_entries[0][1][i][0]
         paths = [
-            p for p in (_raw_path(output_root, e[i][0], link_format) for _, e in qty_entries if i < len(e))
+            p
+            for p in (_raw_path(output_root, e[i][0], link_format) for _, e in qty_entries if i < len(e))
             if p.exists()
         ]
         if len(paths) < 2:
             continue
         all_view_spec, out = _write_stacked_view_html(
-            view_spec, paths,
-            output_root=output_root, link_format=link_format, path_seg=path_seg,
-            scale_x=scale_x, scale_y=scale_y,
-            plot_notes=plot_notes, source_labels=source_labels,
+            view_spec,
+            paths,
+            output_root=output_root,
+            link_format=link_format,
+            path_seg=path_seg,
+            scale_x=scale_x,
+            scale_y=scale_y,
+            plot_notes=plot_notes,
+            source_labels=source_labels,
             plotly_asset_path=plotly_asset_path,
         )
         rel_str = relative_href_from_file(out, dashboard_path)
@@ -282,8 +288,7 @@ def _maybe_build_stacked_table(
 
     stacked_plot_path = Path(table_rel_plot)
     table_dir = (
-        dataset_output_dir(output_root, str(table_spec.comparison_dataset), "data", FileType.html.value)
-        / path_seg
+        dataset_output_dir(output_root, str(table_spec.comparison_dataset), "data", FileType.html.value) / path_seg
     )
     ensure_directory(table_dir)
     table_file_title = stacked_plot_path.stem
@@ -344,8 +349,10 @@ def generate_stacked_pages(
     stacked_count = 0
 
     stacked_pbar = tqdm(
-        eligible_groups.items(), total=len(eligible_groups),
-        desc="Generating stacked pages", unit="page",
+        eligible_groups.items(),
+        total=len(eligible_groups),
+        desc="Generating stacked pages",
+        unit="page",
         bar_format="{desc}: {percentage:6.2f}%|{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}]",
     )
     for group_key, qty_entries in stacked_pbar:
@@ -360,10 +367,15 @@ def generate_stacked_pages(
         viz_parts: list[str] = []
         stacked_outputs = _build_stacked_views_for_group(
             qty_entries,
-            output_root=output_root, link_format=link_format, path_seg=path_seg,
-            scale_x=scale_x, scale_y=scale_y,
-            plot_notes=plot_notes, source_labels=source_labels,
-            plotly_asset_path=plotly_asset_path, dashboard_path=dashboard_path,
+            output_root=output_root,
+            link_format=link_format,
+            path_seg=path_seg,
+            scale_x=scale_x,
+            scale_y=scale_y,
+            plot_notes=plot_notes,
+            source_labels=source_labels,
+            plotly_asset_path=plotly_asset_path,
+            dashboard_path=dashboard_path,
             viz_parts=viz_parts,
         )
         stacked_count += len(stacked_outputs)
@@ -371,9 +383,16 @@ def generate_stacked_pages(
             continue
 
         data_rel = _maybe_build_stacked_table(
-            stacked_outputs, qty_entries, first_spec, gb,
-            output_root=output_root, path_seg=path_seg, dashboard_path=dashboard_path,
-            table_notes=table_notes, source_labels=source_labels, cache=table_data_cache,
+            stacked_outputs,
+            qty_entries,
+            first_spec,
+            gb,
+            output_root=output_root,
+            path_seg=path_seg,
+            dashboard_path=dashboard_path,
+            table_notes=table_notes,
+            source_labels=source_labels,
+            cache=table_data_cache,
         )
         row = _build_stacked_row(group_key, viz_parts, data_rel)
         results[f"stacked_{stacked_count}"] = row

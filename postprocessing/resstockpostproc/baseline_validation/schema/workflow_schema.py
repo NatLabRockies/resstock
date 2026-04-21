@@ -25,8 +25,7 @@ class DataSourceConfig(NoExtraModel):
     baseline_metadata_and_annual_results_parquet_url: str | None = Field(
         default=None,
         description=(
-            "Optional S3 URL for the baseline metadata-and-annual-results parquet"
-            " cached locally for fast reads."
+            "Optional S3 URL for the baseline metadata-and-annual-results parquet cached locally for fast reads."
         ),
     )
 

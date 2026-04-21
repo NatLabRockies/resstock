@@ -56,16 +56,48 @@ class TestBuildWeightedHistogramWithOverflow:
                 "group": ["A"] * 10 + ["B"] * 10,
                 "source": (["recs_2020"] * 5 + ["resstock_2025"] * 5) * 2,
                 "value": [
-                    0.0, 10.0, 20.0, 30.0, 500.0,
-                    0.0, 5.0, 15.0, 25.0, 600.0,
-                    0.0, 100.0, 200.0, 300.0, 5000.0,
-                    0.0, 30.0, 60.0, 90.0, 400.0,
+                    0.0,
+                    10.0,
+                    20.0,
+                    30.0,
+                    500.0,
+                    0.0,
+                    5.0,
+                    15.0,
+                    25.0,
+                    600.0,
+                    0.0,
+                    100.0,
+                    200.0,
+                    300.0,
+                    5000.0,
+                    0.0,
+                    30.0,
+                    60.0,
+                    90.0,
+                    400.0,
                 ],
                 "weight": [
-                    1.0, 2.0, 3.0, 4.0, 5.0,
-                    6.0, 7.0, 8.0, 9.0, 10.0,
-                    11.0, 12.0, 13.0, 14.0, 15.0,
-                    16.0, 17.0, 18.0, 19.0, 20.0,
+                    1.0,
+                    2.0,
+                    3.0,
+                    4.0,
+                    5.0,
+                    6.0,
+                    7.0,
+                    8.0,
+                    9.0,
+                    10.0,
+                    11.0,
+                    12.0,
+                    13.0,
+                    14.0,
+                    15.0,
+                    16.0,
+                    17.0,
+                    18.0,
+                    19.0,
+                    20.0,
                 ],
             }
         )
@@ -94,9 +126,7 @@ class TestBuildWeightedHistogramWithOverflow:
             pl.col("count").sum().alias("total_weight"),
             pl.col("count_pct").sum().alias("pct"),
         )
-        expected = data.group_by(["group", "source"]).agg(
-            pl.col("weight").sum().alias("expected_weight")
-        )
+        expected = data.group_by(["group", "source"]).agg(pl.col("weight").sum().alias("expected_weight"))
         joined = totals.join(expected, on=["group", "source"], how="inner")
 
         for row in joined.iter_rows(named=True):
@@ -128,9 +158,7 @@ class TestBuildWeightedHistogramWithOverflow:
         assert resstock_overflow["bin_right"].item() == pytest.approx(300.0)
         assert recs_overflow["count_pct"].item() == pytest.approx(2.0)
 
-        core_widths = out.filter(pl.col("bin") != 4).select(
-            (pl.col("bin_right") - pl.col("bin_left")).alias("width")
-        )
+        core_widths = out.filter(pl.col("bin") != 4).select((pl.col("bin_right") - pl.col("bin_left")).alias("width"))
         assert core_widths["width"].n_unique() == 1
         assert core_widths["width"].unique().item() == pytest.approx(2.5)
 
@@ -177,12 +205,12 @@ class TestBuildWeightedHistogramWithOverflow:
             n_core_bins=49,
         )
 
-        pooled_recs_overflow = pooled.filter(
-            (pl.col("source") == "recs_2020") & (pl.col("bin") == 49)
-        )["count_pct"].item()
-        anchored_recs_overflow = anchored.filter(
-            (pl.col("source") == "recs_2020") & (pl.col("bin") == 49)
-        )["count_pct"].item()
+        pooled_recs_overflow = pooled.filter((pl.col("source") == "recs_2020") & (pl.col("bin") == 49))[
+            "count_pct"
+        ].item()
+        anchored_recs_overflow = anchored.filter((pl.col("source") == "recs_2020") & (pl.col("bin") == 49))[
+            "count_pct"
+        ].item()
 
         assert pooled_recs_overflow > 15.0
         assert anchored_recs_overflow <= 2.0 + 1e-9
@@ -202,7 +230,5 @@ class TestBuildWeightedHistogramWithOverflow:
             n_core_bins=4,
         )
 
-        recs_overflow = out.filter(
-            (pl.col("source") == "recs_2020") & (pl.col("bin") == 4)
-        )["count_pct"].item()
+        recs_overflow = out.filter((pl.col("source") == "recs_2020") & (pl.col("bin") == 4))["count_pct"].item()
         assert recs_overflow == pytest.approx(1.34)

@@ -190,8 +190,7 @@ class TestCoverageNotes:
             )
         )
         expected = (
-            "Only occupied dwelling units which consumed Electricity for Space Cooling "
-            "are included in the comparison."
+            "Only occupied dwelling units which consumed Electricity for Space Cooling are included in the comparison."
         )
         assert expected in notes
 

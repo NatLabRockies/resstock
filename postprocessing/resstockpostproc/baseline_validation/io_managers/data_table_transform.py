@@ -33,8 +33,8 @@ _DROP_SUFFIXES = (
     "_upper_bound",
     "_lower_bound",
     "_value_resolution",
-    "_quartiles",           # raw list columns (pre-unnest)
-    "_nonzero_quartiles",   # raw list columns (pre-unnest)
+    "_quartiles",  # raw list columns (pre-unnest)
+    "_nonzero_quartiles",  # raw list columns (pre-unnest)
 )
 
 _DROP_EXACT = {
@@ -64,11 +64,9 @@ def melt_enduse_columns(data: pl.DataFrame) -> pl.DataFrame:
     so downstream logic keyed on ``plot_spec.quantity`` works unchanged.
     Used only for ALL-quantity RECS plots.
     """
-    enduse_prefixes = sorted({
-        c.removesuffix("_value")
-        for c in data.columns
-        if c.startswith(_FUEL_PREFIXES_TUPLE) and c.endswith("_value")
-    })
+    enduse_prefixes = sorted(
+        {c.removesuffix("_value") for c in data.columns if c.startswith(_FUEL_PREFIXES_TUPLE) and c.endswith("_value")}
+    )
     if not enduse_prefixes:
         return data
 
@@ -87,10 +85,7 @@ def melt_enduse_columns(data: pl.DataFrame) -> pl.DataFrame:
         sub = data.select(id_cols + cols).rename(rename_map)
         # Cast numeric 'all_*' columns to Float64 — sparse enduses can produce
         # Int64 nulls that break diagonal_relaxed concat schema unification.
-        cast_cols = [
-            c for c in sub.columns
-            if c.startswith("all_") and sub[c].dtype.is_numeric()
-        ]
+        cast_cols = [c for c in sub.columns if c.startswith("all_") and sub[c].dtype.is_numeric()]
         sub = sub.with_columns(pl.col(c).cast(pl.Float64) for c in cast_cols)
         sub = sub.with_columns(pl.lit(_label(prefix)).alias("enduse"))
         dfs.append(sub)
@@ -122,14 +117,10 @@ def normalize_model_count_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl
             else:
                 data = data.with_columns(replacement.alias("model_count"))
 
-        percent_users_col = (
-            "all_percent_users" if plot_spec.is_all_enduses else f"{quantity}_percent_users"
-        )
+        percent_users_col = "all_percent_users" if plot_spec.is_all_enduses else f"{quantity}_percent_users"
         if "units_count" in data.columns and percent_users_col in data.columns:
             data = data.with_columns(
-                (pl.col("units_count") * pl.col(percent_users_col) / 100.0)
-                .round(0)
-                .alias("units_count")
+                (pl.col("units_count") * pl.col(percent_users_col) / 100.0).round(0).alias("units_count")
             )
 
     return data.drop(nonzero_cols)
@@ -146,10 +137,10 @@ def extract_quartile_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.Data
     list_col = quartile_list_column(quantity, plot_spec.coverage)
     if list_col not in data.columns:
         return data
-    return data.with_columns([
-        pl.col(list_col).list.get(idx).cast(pl.Float64).alias(f"{quantity}_{name}")
-        for idx, name in QUARTILE_INDICES
-    ])
+    return data.with_columns(
+        [pl.col(list_col).list.get(idx).cast(pl.Float64).alias(f"{quantity}_{name}") for idx, name in QUARTILE_INDICES]
+    )
+
 
 @timed
 def filter_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
@@ -228,6 +219,7 @@ def filter_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
 
     return data.drop(drop_cols)
 
+
 @timed
 def pivot_by_source(
     data: pl.DataFrame,
@@ -267,9 +259,7 @@ def pivot_by_source(
 
     # Select and rename reference columns (no diff cols on the reference side)
     ref_available = [c for c in non_diff_cols if c in ref_df.columns]
-    pivoted = ref_df.select(
-        join_cols + [pl.col(c).alias(f"{ref_label}: {c}") for c in ref_available]
-    )
+    pivoted = ref_df.select(join_cols + [pl.col(c).alias(f"{ref_label}: {c}") for c in ref_available])
 
     # Add each ResStock source as its own column group
     for rs_label in rs_labels:

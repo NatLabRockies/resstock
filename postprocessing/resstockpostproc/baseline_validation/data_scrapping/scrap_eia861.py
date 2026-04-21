@@ -15,8 +15,7 @@ eia861_processed_path.mkdir(parents=True, exist_ok=True)
 
 
 def get_excel_file(zip_file, file_name):
-    all_file_names = [f"{file_name}.xlsx", f"{file_name}.xls",
-                  f"{file_name.lower()}.xlsx", f"{file_name.lower()}.xls"]
+    all_file_names = [f"{file_name}.xlsx", f"{file_name}.xls", f"{file_name.lower()}.xlsx", f"{file_name.lower()}.xls"]
     for candidate_file in all_file_names:
         try:
             file = zip_file.open(candidate_file)
@@ -25,6 +24,7 @@ def get_excel_file(zip_file, file_name):
         except KeyError:
             continue
     raise KeyError(f"File {file_name} not found in zip file {zip_file}")
+
 
 sales_dfs = []
 territory_dfs = []
@@ -49,18 +49,26 @@ for year in range(2012, last_year + 1):
     sales_file = get_excel_file(filezip, f"Sales_Ult_Cust_{year}")
     # read the excel file
     cols_to_read = ["Data Year", "Utility Number", "Utility Name", "State", "Megawatthours", "Count", "Part"]
-    sales_df = pd.read_excel(sales_file, usecols=cols_to_read, skiprows=2, skipfooter=1, na_values=["."],
-                             sheet_name=0, verbose=False)
+    sales_df = pd.read_excel(
+        sales_file, usecols=cols_to_read, skiprows=2, skipfooter=1, na_values=["."], sheet_name=0, verbose=False
+    )
     # Exclude "C" for Sales and Customers aggregation according to EIA
     # Check the footnote in the excel file
     sales_df = sales_df[sales_df["Part"] != "C"]
 
-    col_rename_dict = {"Data Year": "year", "Utility Number": "eiaid", "Utility Name": "utility_name",
-                       "State": "state", "Megawatthours": "sales_mwh",
-                       "Count": "customers", "County": "county"}
+    col_rename_dict = {
+        "Data Year": "year",
+        "Utility Number": "eiaid",
+        "Utility Name": "utility_name",
+        "State": "state",
+        "Megawatthours": "sales_mwh",
+        "Count": "customers",
+        "County": "county",
+    }
     sales_df = sales_df.rename(columns=col_rename_dict)
-    sales_df = sales_df.groupby(["year", "eiaid", "state"]).agg({"utility_name": "first", "sales_mwh": "sum",
-                                                                 "customers": "sum"})
+    sales_df = sales_df.groupby(["year", "eiaid", "state"]).agg(
+        {"utility_name": "first", "sales_mwh": "sum", "customers": "sum"}
+    )
 
     sales_dfs.append(sales_df.reset_index())
 

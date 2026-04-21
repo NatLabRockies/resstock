@@ -48,7 +48,7 @@ ignore = [
     "PLR0912", # too-many-branches
     "PLR0913", # too-many-arguments
     "PLR0915", # too-many-statements
-    "PD901", # df for variable assignment
+    "PD901", # df for variable assignment is our convention in polars code
     "PGH003", # Use specific rule codes when ignoring type issues instead of type: ignore
     "I001", # isort
     "TID252", # relative imports are used in the dashboard to keep things simple

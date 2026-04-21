@@ -50,126 +50,126 @@ _JS_SUFFIX = "\n`);\n"
 
 
 class IndexState:
-  """Incremental index state for O(1) shard appends and streamed combinations."""
+    """Incremental index state for O(1) shard appends and streamed combinations."""
 
-  def __init__(
-      self,
-      html_path: Path,
-      headers: Sequence[str],
-      data_dir: Path | None = None,
-      data_dir_href: str | None = None,
-  ):
-    self.html_path = html_path
-    headers_list = list(headers)
-    if "Coverage" not in headers_list:
-      insert_at = headers_list.index("Metric") + 1 if "Metric" in headers_list else len(headers_list)
-      headers_list.insert(insert_at, "Coverage")
-    self.headers = headers_list
-    self.data_dir = data_dir or (html_path.parent / DATA_DIR_NAME)
-    self.data_dir_href = data_dir_href or relative_href_from_file(self.data_dir, html_path)
-    self.manifest: dict[str, str] = {}
-    self.shard_suffix_sizes: dict[str, int] = {}
-    self.filter_cols = [h for h in self.headers if h not in NON_FILTER_COLUMNS]
-    self._combo_file = None
-    self._manifest_changed = False
-    self._combo_count = 0
-    self._combo_flush_interval = 1000
+    def __init__(
+        self,
+        html_path: Path,
+        headers: Sequence[str],
+        data_dir: Path | None = None,
+        data_dir_href: str | None = None,
+    ):
+        self.html_path = html_path
+        headers_list = list(headers)
+        if "Coverage" not in headers_list:
+            insert_at = headers_list.index("Metric") + 1 if "Metric" in headers_list else len(headers_list)
+            headers_list.insert(insert_at, "Coverage")
+        self.headers = headers_list
+        self.data_dir = data_dir or (html_path.parent / DATA_DIR_NAME)
+        self.data_dir_href = data_dir_href or relative_href_from_file(self.data_dir, html_path)
+        self.manifest: dict[str, str] = {}
+        self.shard_suffix_sizes: dict[str, int] = {}
+        self.filter_cols = [h for h in self.headers if h not in NON_FILTER_COLUMNS]
+        self._combo_file = None
+        self._manifest_changed = False
+        self._combo_count = 0
+        self._combo_flush_interval = 1000
 
-  def _create_shard(self, filter1_value: str) -> str:
-    filename = _shard_filename(filter1_value)
-    shard_path = self.data_dir / filename
-    shard_path.write_text("window.addRows(`\n" + _JS_SUFFIX, encoding="utf-8")
-    self.shard_suffix_sizes[filename] = len(_JS_SUFFIX.encode("utf-8"))
-    self.manifest[filter1_value] = filename
-    self._manifest_changed = True
-    return filename
+    def _create_shard(self, filter1_value: str) -> str:
+        filename = _shard_filename(filter1_value)
+        shard_path = self.data_dir / filename
+        shard_path.write_text("window.addRows(`\n" + _JS_SUFFIX, encoding="utf-8")
+        self.shard_suffix_sizes[filename] = len(_JS_SUFFIX.encode("utf-8"))
+        self.manifest[filter1_value] = filename
+        self._manifest_changed = True
+        return filename
 
-  def get_or_create_shard(self, filter1_value: str) -> str:
-    if filter1_value in self.manifest:
-      self._manifest_changed = False
-      return self.manifest[filter1_value]
-    return self._create_shard(filter1_value)
+    def get_or_create_shard(self, filter1_value: str) -> str:
+        if filter1_value in self.manifest:
+            self._manifest_changed = False
+            return self.manifest[filter1_value]
+        return self._create_shard(filter1_value)
 
-  def open_combo_file(self) -> None:
-    combo_path = self.data_dir / COMBINATIONS_FILENAME
-    self._combo_file = open(combo_path, "a", encoding="utf-8")  # noqa: SIM115 — long-lived; closed by close_combo_file
+    def open_combo_file(self) -> None:
+        combo_path = self.data_dir / COMBINATIONS_FILENAME
+        self._combo_file = open(combo_path, "a", encoding="utf-8")  # noqa: SIM115 — long-lived; closed by close_combo_file
 
-  def close_combo_file(self) -> None:
-    if self._combo_file:
-      self._combo_file.flush()
-      self._combo_file.close()
-      self._combo_file = None
+    def close_combo_file(self) -> None:
+        if self._combo_file:
+            self._combo_file.flush()
+            self._combo_file.close()
+            self._combo_file = None
 
-  def append_to_shard(self, row_dict: dict) -> None:
-    self._manifest_changed = False
+    def append_to_shard(self, row_dict: dict) -> None:
+        self._manifest_changed = False
 
-    row = dict(row_dict)
-    _is_recs = "RECS" in str(row.get("Comparison Dataset", "")).upper()
-    row.setdefault("Coverage", "All Occupied Dwelling Units" if _is_recs else "All Dwelling Units")
-    row = _normalize_rows([row])[0]
-    row = {h: row.get(h, "") for h in self.headers}
+        row = dict(row_dict)
+        _is_recs = "RECS" in str(row.get("Comparison Dataset", "")).upper()
+        row.setdefault("Coverage", "All Occupied Dwelling Units" if _is_recs else "All Dwelling Units")
+        row = _normalize_rows([row])[0]
+        row = {h: row.get(h, "") for h in self.headers}
 
-    filter1_value = str(row.get(_FILTER1_COLUMN, "")).strip()
-    filename = self.get_or_create_shard(filter1_value)
-    shard_path = self.data_dir / filename
-    suffix_size = self.shard_suffix_sizes[filename]
-    tsv_line = _row_to_tsv_line(row, self.headers)
+        filter1_value = str(row.get(_FILTER1_COLUMN, "")).strip()
+        filename = self.get_or_create_shard(filter1_value)
+        shard_path = self.data_dir / filename
+        suffix_size = self.shard_suffix_sizes[filename]
+        tsv_line = _row_to_tsv_line(row, self.headers)
 
-    with open(shard_path, "r+b") as f:
-      f.seek(-suffix_size, 2)
-      f.write(tsv_line.encode("utf-8"))
-      f.write(_JS_SUFFIX.encode("utf-8"))
+        with open(shard_path, "r+b") as f:
+            f.seek(-suffix_size, 2)
+            f.write(tsv_line.encode("utf-8"))
+            f.write(_JS_SUFFIX.encode("utf-8"))
 
-    combo = [row.get(c, "") for c in self.filter_cols]
-    if self._combo_file:
-      self._combo_file.write(f"window.addCombos({json.dumps(combo, ensure_ascii=False)});\n")
-      self._combo_count += 1
-      if self._combo_count % self._combo_flush_interval == 0:
-        self._combo_file.flush()
+        combo = [row.get(c, "") for c in self.filter_cols]
+        if self._combo_file:
+            self._combo_file.write(f"window.addCombos({json.dumps(combo, ensure_ascii=False)});\n")
+            self._combo_count += 1
+            if self._combo_count % self._combo_flush_interval == 0:
+                self._combo_file.flush()
 
-  @property
-  def needs_html_rewrite(self) -> bool:
-    return self._manifest_changed
+    @property
+    def needs_html_rewrite(self) -> bool:
+        return self._manifest_changed
 
 
 def _atomic_write(path: Path, content: str) -> None:
-  fd, tmp = tempfile.mkstemp(dir=path.parent, suffix=".tmp")
-  try:
-    with os.fdopen(fd, "w", encoding="utf-8") as f:
-      f.write(content)
-    os.replace(tmp, path)
-  except BaseException:
-    os.unlink(tmp)
-    raise
+    fd, tmp = tempfile.mkstemp(dir=path.parent, suffix=".tmp")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(content)
+        os.replace(tmp, path)
+    except BaseException:
+        os.unlink(tmp)
+        raise
 
 
 def _canonical_metric_label(metric: str) -> str:
-  """Normalize metric labels for index filter display."""
-  m = (metric or "").strip()
-  if not m:
-    return m
+    """Normalize metric labels for index filter display."""
+    m = (metric or "").strip()
+    if not m:
+        return m
 
-  if m in {
-    "Total Annual Consumption",
-    "Total Monthly Consumption",
-    "Average Annual Consumption",
-    "Average Monthly Consumption",
-    "Distribution of Annual Consumption",
-    "Enduse Penetration",
-  }:
-    return m
+    if m in {
+        "Total Annual Consumption",
+        "Total Monthly Consumption",
+        "Average Annual Consumption",
+        "Average Monthly Consumption",
+        "Distribution of Annual Consumption",
+        "Enduse Penetration",
+    }:
+        return m
 
-  if m == "Annual Consumption":
-    return "Total Annual Consumption"
-  if m == "Monthly Consumption":
-    return "Total Monthly Consumption"
-  if m.startswith("Average Annual Consumption"):
-    return "Average Annual Consumption"
-  if m.startswith("Average Monthly Consumption"):
-    return "Average Monthly Consumption"
-  if m.startswith("Distribution"):
-    return "Distribution of Annual Consumption"
-  return m
+    if m == "Annual Consumption":
+        return "Total Annual Consumption"
+    if m == "Monthly Consumption":
+        return "Total Monthly Consumption"
+    if m.startswith("Average Annual Consumption"):
+        return "Average Annual Consumption"
+    if m.startswith("Average Monthly Consumption"):
+        return "Average Monthly Consumption"
+    if m.startswith("Distribution"):
+        return "Distribution of Annual Consumption"
+    return m
 
 
 def _normalize_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
@@ -205,24 +205,24 @@ def _shard_filename(filter1_value: str) -> str:
 
 
 def parse_viz_cell(cell_value: str) -> tuple[str, str | None]:
-  """Parse 'viz_type||path' into (viz_type, path) / ('FAILED', tb|None) / ('', None)."""
-  if not cell_value or not cell_value.strip():
-    return ("", None)
+    """Parse 'viz_type||path' into (viz_type, path) / ('FAILED', tb|None) / ('', None)."""
+    if not cell_value or not cell_value.strip():
+        return ("", None)
 
-  cell_value = cell_value.strip()
+    cell_value = cell_value.strip()
 
-  if cell_value.startswith("FAILED:"):
-    after = cell_value[len("FAILED:"):].strip()
-    parts = after.split("||", 1)
+    if cell_value.startswith("FAILED:"):
+        after = cell_value[len("FAILED:") :].strip()
+        parts = after.split("||", 1)
+        if len(parts) == 2:
+            return ("FAILED", parts[1].strip())
+        return ("FAILED", None)
+
+    parts = cell_value.split("||", 1)
     if len(parts) == 2:
-      return ("FAILED", parts[1].strip())
-    return ("FAILED", None)
+        return (parts[0].strip(), parts[1].strip())
 
-  parts = cell_value.split("||", 1)
-  if len(parts) == 2:
-    return (parts[0].strip(), parts[1].strip())
-
-  return (cell_value, None)
+    return (cell_value, None)
 
 
 def _row_to_tsv_line(row: dict[str, str], headers: Sequence[str]) -> str:
@@ -327,19 +327,19 @@ def finalize_html_index(state: IndexState) -> None:
 
 
 def main() -> int:
-  if len(sys.argv) != 3:
-    print("Usage: python -m resstockpostproc.baseline_validation.create_html <input.tsv> <output.html>")
-    return 1
+    if len(sys.argv) != 3:
+        print("Usage: python -m resstockpostproc.baseline_validation.create_html <input.tsv> <output.html>")
+        return 1
 
-  csv_path = Path(sys.argv[1])
-  html_path = Path(sys.argv[2])
+    csv_path = Path(sys.argv[1])
+    html_path = Path(sys.argv[2])
 
-  if not csv_path.exists():
-    print(f"Error: Input file not found: {csv_path}")
-    return 1
+    if not csv_path.exists():
+        print(f"Error: Input file not found: {csv_path}")
+        return 1
 
-  create_html_from_csv(csv_path, html_path)
-  return 0
+    create_html_from_csv(csv_path, html_path)
+    return 0
 
 
 if __name__ == "__main__":

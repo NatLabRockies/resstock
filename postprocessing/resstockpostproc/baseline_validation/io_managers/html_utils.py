@@ -14,9 +14,7 @@ from resstockpostproc.shared_utils.timing import timed
 
 _BODY_RE = re.compile(r"<body[^>]*>\n?(.*?)</body>", re.DOTALL)
 _HEAD_RE = re.compile(r"(<head>.*?</head>)", re.DOTALL)
-_PLOTLY_DIV_STYLE_RE = re.compile(
-    r'class="plotly-graph-div"\s+style="height:([^;"]+);\s*width:([^;"]+);"'
-)
+_PLOTLY_DIV_STYLE_RE = re.compile(r'class="plotly-graph-div"\s+style="height:([^;"]+);\s*width:([^;"]+);"')
 _PLOTLY_CONFIG_RE = re.compile(
     r'<script[^>]*>\s*window\.PlotlyConfig\s*=\s*\{MathJaxConfig:\s*[\'"]local[\'"]\};\s*</script>',
     re.DOTALL,
@@ -40,7 +38,7 @@ def _build_plotly_loader_html(
         fallback_steps.append(
             '<script type="text/javascript">\n'
             "if (!window.Plotly) {\n"
-            f"  document.write('<script charset=\"utf-8\" src=\"{escaped_local}\"><\\\\/script>');\n"
+            f'  document.write(\'<script charset="utf-8" src="{escaped_local}"><\\\\/script>\');\n'
             "}\n"
             "</script>\n"
         )
@@ -49,7 +47,7 @@ def _build_plotly_loader_html(
         fallback_steps.append(
             '<script type="text/javascript">\n'
             "if (!window.Plotly) {\n"
-            f"  document.write('<script charset=\"utf-8\" src=\"{escaped_sibling}\"><\\\\/script>');\n"
+            f'  document.write(\'<script charset="utf-8" src="{escaped_sibling}"><\\\\/script>\');\n'
             "}\n"
             "</script>\n"
         )
@@ -57,8 +55,7 @@ def _build_plotly_loader_html(
         "<script type=\"text/javascript\">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>\n"
         f'<script charset="utf-8" src="{escaped_cdn}"></script>\n'
         + "".join(fallback_steps)
-        +
-        '<script type="text/javascript">\n'
+        + '<script type="text/javascript">\n'
         "(function() {\n"
         "  if (!window.Plotly || window.Plotly.__baselineDashboardPatched) return;\n"
         "  var originalNewPlot = window.Plotly.newPlot;\n"
@@ -198,7 +195,7 @@ def postprocess_plot_html(
     # Resizable container
     resize_wrapper = (
         f'<div id="resize-container" style="resize:both; overflow:hidden; '
-        f'width:{scaled_w}px; height:{container_h}px; border:1px solid #ddd; '
+        f"width:{scaled_w}px; height:{container_h}px; border:1px solid #ddd; "
         f'position:relative; padding:0; margin:10px;">\n'
     )
 
@@ -276,10 +273,15 @@ def postprocess_plot_html(
     # Assemble final HTML
     body_inner = "\n".join(chart_sections)
     final_html = (
-        "<!DOCTYPE html>\n<html>\n" + head + "\n<body>\n"
+        "<!DOCTYPE html>\n<html>\n"
+        + head
+        + "\n<body>\n"
         + plotly_loader_html
-        + resize_wrapper + body_inner + "\n</div>\n"
-        + footer_html + resize_script
+        + resize_wrapper
+        + body_inner
+        + "\n</div>\n"
+        + footer_html
+        + resize_script
         + "</body>\n</html>"
     )
 
@@ -307,16 +309,12 @@ def _build_footer_html(
                 for entry in sl.entries:
                     escaped_desc = html_lib.escape(entry.description)
                     if entry.url:
-                        entry_parts.append(
-                            f'<a href="{html_lib.escape(entry.url)}" target="_blank">{escaped_desc}</a>'
-                        )
+                        entry_parts.append(f'<a href="{html_lib.escape(entry.url)}" target="_blank">{escaped_desc}</a>')
                     else:
                         entry_parts.append(escaped_desc)
-                items.append(f'<li><strong>{escaped_label}:</strong> {", ".join(entry_parts)}</li>')
+                items.append(f"<li><strong>{escaped_label}:</strong> {', '.join(entry_parts)}</li>")
             parts.append(
-                '<div class="plot-sources"><strong>Data Sources:</strong><ul>'
-                + "".join(items)
-                + "</ul></div>"
+                '<div class="plot-sources"><strong>Data Sources:</strong><ul>' + "".join(items) + "</ul></div>"
             )
 
     # Notes section

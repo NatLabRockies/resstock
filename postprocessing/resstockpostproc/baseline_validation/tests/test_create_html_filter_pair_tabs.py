@@ -116,18 +116,20 @@ def test_normalizes_display_labels_in_index_rows(tmp_path):
         "Comparison Plot",
         "Data",
     ]
-    rows = [{
-        "Index": "1",
-        "Comparison Dataset": "RECS 2020",
-        "Quantity": "All Enduses",
-        "Metric": "Average Annual Consumption",
-        "Coverage": "All Occupied Dwelling Units",
-        "Filter 1": "Climate Zone: Mixed-Humid",
-        "Filter 2": "",
-        "Group By": "Climate Zone",
-        "Comparison Plot": "bar plot||dashboard_data/recs plots (html)/example.html",
-        "Data": "",
-    }]
+    rows = [
+        {
+            "Index": "1",
+            "Comparison Dataset": "RECS 2020",
+            "Quantity": "All Enduses",
+            "Metric": "Average Annual Consumption",
+            "Coverage": "All Occupied Dwelling Units",
+            "Filter 1": "Climate Zone: Mixed-Humid",
+            "Filter 2": "",
+            "Group By": "Climate Zone",
+            "Comparison Plot": "bar plot||dashboard_data/recs plots (html)/example.html",
+            "Data": "",
+        }
+    ]
 
     html_path = dashboard_html_path(tmp_path)
     create_html_from_rows(rows, headers, html_path, data_dir=comparisons_index_data_dir(tmp_path))

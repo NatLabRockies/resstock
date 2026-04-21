@@ -32,6 +32,7 @@ def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str
     fig = apply_theme(fig, title=config.title, height=config.height, width=config.width)
     return fig, config.title
 
+
 @timed
 def _get_null_sources(data: pl.DataFrame, source_column: str, quantity_column: str) -> list[str]:
     """Identify sources where the quantity column is entirely null."""
@@ -45,6 +46,7 @@ def _get_null_sources(data: pl.DataFrame, source_column: str, quantity_column: s
         .to_series()
         .to_list()
     )
+
 
 def _needs_stacked_plotter(plot_spec: PlotSpec) -> bool:
     """True for distribution box plots and ALL-enduse plots that need split_graph."""
@@ -86,6 +88,7 @@ def _render(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.F
     else:
         return _render_tilemap(data, config, plot_spec)
 
+
 @timed
 def _render_tilemap(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
     """Render using tilemap layout with bar or timeseries subplots."""
@@ -93,16 +96,12 @@ def _render_tilemap(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec)
     second_category_title = get_second_category_title(plot_spec)
 
     exclude_from_sidebar = (
-        ["US Total"]
-        if plot_spec.aggregation_type == Metric.total and plot_spec.view == ViewType.diff_view
-        else None
+        ["US Total"] if plot_spec.aggregation_type == Metric.total and plot_spec.view == ViewType.diff_view else None
     )
 
     # In diff_view, exclude reference source from subplots (it always has 0% diff)
     exclude_sources = (
-        _get_null_sources(data, "source", config.quantity_column)
-        if plot_spec.view == ViewType.diff_view
-        else None
+        _get_null_sources(data, "source", config.quantity_column) if plot_spec.view == ViewType.diff_view else None
     )
 
     return tilemap_plotter.plot_tilemap(
@@ -125,12 +124,10 @@ def _render_tilemap(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec)
         sidebar_title=config.sidebar_title,
         exclude_from_sidebar=exclude_from_sidebar,
         exclude_sources=exclude_sources,
-        separate_us_total_scale=(
-            plot_spec.aggregation_type == Metric.total
-            and plot_spec.view == ViewType.value_view
-        ),
+        separate_us_total_scale=(plot_spec.aggregation_type == Metric.total and plot_spec.view == ViewType.value_view),
         **_shared_plot_kwargs(data, config, plot_spec),
     )
+
 
 @timed
 def _render_single_entity_timeseries(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
@@ -150,6 +147,7 @@ def _render_single_entity_timeseries(data: pl.DataFrame, config: PlotConfig, plo
         fill_lower_bound=True,
         **_shared_plot_kwargs(data, config, plot_spec),
     )
+
 
 @timed
 def _render_single_entity_monthly_bar(data: pl.DataFrame, config: PlotConfig, plot_spec: PlotSpec) -> go.Figure:
@@ -198,6 +196,7 @@ def _render_single_entity_bar(data: pl.DataFrame, config: PlotConfig, plot_spec:
         show_legends=True,
         **_shared_plot_kwargs(data, config, plot_spec),
     )
+
 
 @timed
 def _render_stacked(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:

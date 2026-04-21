@@ -68,14 +68,24 @@ class TestShardedIndex:
         headers = ["Index", "Filter 1", "Name", "Main Visualization"]
         state = init_html_index(html_path, headers, data_dir=data_dir)
 
-        append_index_row(state, {
-            "Index": "1", "Filter 1": "", "Name": "overview",
-            "Main Visualization": "tilemap(a.html)",
-        })
-        append_index_row(state, {
-            "Index": "2", "Filter 1": "Alaska", "Name": "ak_plot",
-            "Main Visualization": "bar(b.html)",
-        })
+        append_index_row(
+            state,
+            {
+                "Index": "1",
+                "Filter 1": "",
+                "Name": "overview",
+                "Main Visualization": "tilemap(a.html)",
+            },
+        )
+        append_index_row(
+            state,
+            {
+                "Index": "2",
+                "Filter 1": "Alaska",
+                "Name": "ak_plot",
+                "Main Visualization": "bar(b.html)",
+            },
+        )
 
         finalize_html_index(state)
 
@@ -93,14 +103,24 @@ class TestShardedIndex:
         headers = ["Index", "Filter 1", "Name", "Main Visualization"]
         state = init_html_index(html_path, headers, data_dir=data_dir)
 
-        append_index_row(state, {
-            "Index": "1", "Filter 1": "", "Name": "overview",
-            "Main Visualization": "tilemap(a.html)",
-        })
-        append_index_row(state, {
-            "Index": "2", "Filter 1": "Alaska", "Name": "ak_plot",
-            "Main Visualization": "bar(b.html)",
-        })
+        append_index_row(
+            state,
+            {
+                "Index": "1",
+                "Filter 1": "",
+                "Name": "overview",
+                "Main Visualization": "tilemap(a.html)",
+            },
+        )
+        append_index_row(
+            state,
+            {
+                "Index": "2",
+                "Filter 1": "Alaska",
+                "Name": "ak_plot",
+                "Main Visualization": "bar(b.html)",
+            },
+        )
 
         none_shard = data_dir / "data-_none_.js"
         alaska_shard = data_dir / "data-Alaska.js"
@@ -122,14 +142,24 @@ class TestShardedIndex:
         headers = ["Index", "Filter 1", "Name", "Main Visualization"]
         state = init_html_index(html_path, headers, data_dir=data_dir)
 
-        append_index_row(state, {
-            "Index": "1", "Filter 1": "Alaska", "Name": "plot_a",
-            "Main Visualization": "",
-        })
-        append_index_row(state, {
-            "Index": "2", "Filter 1": "Alaska", "Name": "plot_b",
-            "Main Visualization": "",
-        })
+        append_index_row(
+            state,
+            {
+                "Index": "1",
+                "Filter 1": "Alaska",
+                "Name": "plot_a",
+                "Main Visualization": "",
+            },
+        )
+        append_index_row(
+            state,
+            {
+                "Index": "2",
+                "Filter 1": "Alaska",
+                "Name": "plot_b",
+                "Main Visualization": "",
+            },
+        )
 
         shard = (data_dir / "data-Alaska.js").read_text()
         assert "plot_a" in shard

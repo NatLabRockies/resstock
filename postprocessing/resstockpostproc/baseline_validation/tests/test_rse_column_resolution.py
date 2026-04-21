@@ -16,9 +16,10 @@ from resstockpostproc.baseline_validation.tests._helpers import make_recs_spec a
 class TestResolveBoundColumns:
     def test_non_recs_returns_none(self):
         assert _resolve_bound_columns(_make_spec(comparison_dataset=ComparisonDataset.eia)) == (None, None)
-        assert _resolve_bound_columns(
-            _make_spec(comparison_dataset=ComparisonDataset.lrd, group_by="utility")
-        ) == (None, None)
+        assert _resolve_bound_columns(_make_spec(comparison_dataset=ComparisonDataset.lrd, group_by="utility")) == (
+            None,
+            None,
+        )
 
     def test_monthly_resolution_has_value_bounds(self):
         assert _resolve_bound_columns(_make_spec(resolution=Resolution.month)) == (
@@ -27,9 +28,10 @@ class TestResolveBoundColumns:
         )
 
     def test_distribution_view_returns_none(self):
-        assert _resolve_bound_columns(
-            _make_spec(aggregation_type=Metric.distribution, view=ViewType.value_view)
-        ) == (None, None)
+        assert _resolve_bound_columns(_make_spec(aggregation_type=Metric.distribution, view=ViewType.value_view)) == (
+            None,
+            None,
+        )
 
     def test_units_count_has_no_bounds(self):
         assert _resolve_bound_columns(_make_spec(quantity=DataCol.UNITS_COUNT)) == (None, None)

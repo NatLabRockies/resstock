@@ -147,7 +147,8 @@ _PERIOD_LABEL = {
 
 class PlotSpec(NoExtraModel):
     comparison_dataset: ComparisonDataset = Field(
-        ..., description="Comparison dataset for validation plots (eia, recs, lrd).",
+        ...,
+        description="Comparison dataset for validation plots (eia, recs, lrd).",
     )
     aggregation_type: Metric = Field(..., description="Metric: total, average, distribution, or penetration")
     coverage: CoverageType = Field(..., description="Population coverage: all_units or users_only")
@@ -156,14 +157,14 @@ class PlotSpec(NoExtraModel):
     group_by: str | None = Field(
         default=None,
         description="Optional sub-grouping dimension (e.g. state, vintage). "
-                    "When None, data is grouped only by focus_on columns.",
+        "When None, data is grouped only by focus_on columns.",
     )
     focus_on: tuple[tuple[str, str], ...] = Field(
         default=(),
         description="Filter tuples: ((column, value), ...). Max 2 tuples. "
-                    "Each restricts the data to that column=value. "
-                    "Example: (('state', 'AK'),) focuses on Alaska. "
-                    "(('state', 'AK'), ('vintage', '1990s')) focuses on AK 1990s homes.",
+        "Each restricts the data to that column=value. "
+        "Example: (('state', 'AK'),) focuses on Alaska. "
+        "(('state', 'AK'), ('vintage', '1990s')) focuses on AK 1990s homes.",
     )
     view: ViewType | None = Field(..., description="View type: diff_view, value_view, temp_view, etc.")
     layout: Layout = Field(default=Layout.auto, description="Layout hint: auto, two_column, or histogram")
@@ -226,10 +227,7 @@ class PlotSpec(NoExtraModel):
         seen_cols = set()
         for col, _ in self.focus_on:
             if col in seen_cols:
-                raise ValueError(
-                    f"focus_on contains duplicate column '{col}'. "
-                    "Each column can appear at most once."
-                )
+                raise ValueError(f"focus_on contains duplicate column '{col}'. Each column can appear at most once.")
             seen_cols.add(col)
 
         if len(self.focus_on) == 2 and self.group_by is not None:
@@ -368,9 +366,7 @@ class PlotSpec(NoExtraModel):
 
         if self.quantity == DataCol.UNITS_COUNT:
             du_label = (
-                "Occupied Dwelling Units"
-                if self.comparison_dataset == ComparisonDataset.recs
-                else "Dwelling Units"
+                "Occupied Dwelling Units" if self.comparison_dataset == ComparisonDataset.recs else "Dwelling Units"
             )
             return f"Number of {du_label} {grouping}"
 
@@ -397,6 +393,7 @@ class PlotSpec(NoExtraModel):
         starts with the comparison_dataset value. Falls back to uppercase enum value.
         """
         from resstockpostproc.baseline_validation.schema.workflow_schema import workflow  # noqa: PLC0415 — breaks circular import with workflow_schema
+
         ds = self.comparison_dataset.value
         for key, label_obj in workflow.data_source_labels.items():
             if key.startswith(ds):
@@ -448,9 +445,7 @@ class PlotSpec(NoExtraModel):
 
         if self.quantity == DataCol.UNITS_COUNT:
             du_label = (
-                "Occupied Dwelling Units"
-                if self.comparison_dataset == ComparisonDataset.recs
-                else "Dwelling Units"
+                "Occupied Dwelling Units" if self.comparison_dataset == ComparisonDataset.recs else "Dwelling Units"
             )
             return f"Number of {du_label}"
 

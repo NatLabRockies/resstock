@@ -119,37 +119,43 @@ def build_column_config(
             pct_diff_prefix = f"{rs_label} Difference (%): "
             value_prefix = f"{rs_label}: "
             if col.startswith(abs_diff_prefix):
-                config.append({
-                    "key": col,
-                    "label": f"{rs_label} Difference ({abs_diff_units})",
-                    "type": "abs_diff",
-                    "format": "+,.1f",
-                })
+                config.append(
+                    {
+                        "key": col,
+                        "label": f"{rs_label} Difference ({abs_diff_units})",
+                        "type": "abs_diff",
+                        "format": "+,.1f",
+                    }
+                )
                 matched = True
                 break
             if col.startswith(pct_diff_prefix):
-                config.append({
-                    "key": col,
-                    "label": f"{rs_label} Difference (%)",
-                    "type": "diff",
-                    "format": "+.1f%",
-                })
+                config.append(
+                    {
+                        "key": col,
+                        "label": f"{rs_label} Difference (%)",
+                        "type": "diff",
+                        "format": "+.1f%",
+                    }
+                )
                 matched = True
                 break
             if col.startswith(value_prefix):
-                raw_name = col[len(value_prefix):]
-                config.append({
-                    "key": col,
-                    "label": _humanize_column(
-                        raw_name,
-                        rs_label,
-                        units,
-                        is_distribution,
-                        plot_spec.model_count_display_label_for_source(rs_label),
-                    ),
-                    "type": "number",
-                    "format": ",.1f",
-                })
+                raw_name = col[len(value_prefix) :]
+                config.append(
+                    {
+                        "key": col,
+                        "label": _humanize_column(
+                            raw_name,
+                            rs_label,
+                            units,
+                            is_distribution,
+                            plot_spec.model_count_display_label_for_source(rs_label),
+                        ),
+                        "type": "number",
+                        "format": ",.1f",
+                    }
+                )
                 matched = True
                 break
         if matched:
@@ -157,19 +163,21 @@ def build_column_config(
 
         # Reference columns
         if col.startswith(f"{ref_label}: "):
-            raw_name = col[len(f"{ref_label}: "):]
-            config.append({
-                "key": col,
-                "label": _humanize_column(
-                    raw_name,
-                    ref_label,
-                    units,
-                    is_distribution,
-                    plot_spec.model_count_display_label_for_source(ref_label),
-                ),
-                "type": "number",
-                "format": ",.1f",
-            })
+            raw_name = col[len(f"{ref_label}: ") :]
+            config.append(
+                {
+                    "key": col,
+                    "label": _humanize_column(
+                        raw_name,
+                        ref_label,
+                        units,
+                        is_distribution,
+                        plot_spec.model_count_display_label_for_source(ref_label),
+                    ),
+                    "type": "number",
+                    "format": ",.1f",
+                }
+            )
             continue
 
         # Fallback

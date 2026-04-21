@@ -128,9 +128,7 @@ def _load_resstock_hist_rows(
     schema = lf.collect_schema()
     available = set(schema.names())
     if "weight" not in available:
-        raise ValueError(
-            f"Missing required 'weight' column in ResStock histogram file: {raw_path}"
-        )
+        raise ValueError(f"Missing required 'weight' column in ResStock histogram file: {raw_path}")
 
     vacancy_col = _resolve_existing_char_column(
         get_db_characteristics_colnames(data_source.db_schema).VACANCY,
@@ -177,6 +175,7 @@ def _recs_group_expr(col: str) -> pl.Expr:
         return expr.alias(col)
     return pl.col(raw_col).replace_strict(mapping, default=None).cast(pl.String).alias(col)
 
+
 def _recs_quantity_expr(quantity: DataCol) -> pl.Expr:
     """Build RECS quantity expression in kWh for a DataCol."""
     if quantity not in RECS_ENDUSE_MAP:
@@ -186,6 +185,7 @@ def _recs_quantity_expr(quantity: DataCol) -> pl.Expr:
         exprs = [pl.col(item["column_name"]).cast(pl.Float64) * float(item["factor"]) for item in spec]
         return pl.sum_horizontal(exprs)
     return pl.col(spec["column_name"]).cast(pl.Float64) * float(spec["factor"])
+
 
 def _add_us_total_rows(df: pl.DataFrame, group_cols: list[str]) -> pl.DataFrame:
     """Add US Total pseudo-group rows when state is one of the grouping columns."""
@@ -203,9 +203,11 @@ def _add_us_total_rows(df: pl.DataFrame, group_cols: list[str]) -> pl.DataFrame:
 def _empty_hist_rows(group_cols: list[str]) -> pl.DataFrame:
     """Return an empty histogram-row dataframe with the expected schema."""
     schema = dict.fromkeys(group_cols, pl.String)
-    schema.update({
-        "value": pl.Float64,
-        "weight": pl.Float64,
-        "source": pl.String,
-    })
+    schema.update(
+        {
+            "value": pl.Float64,
+            "weight": pl.Float64,
+            "source": pl.String,
+        }
+    )
     return pl.DataFrame(schema=schema)

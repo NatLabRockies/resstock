@@ -111,11 +111,13 @@ def create_stacked_plot(df: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
 
     # Exclude US Total from total-aggregation value_view plots to prevent scale domination
     # (only when showing all entities, not when focused on a single entity like US Total)
-    if (plot_spec.aggregation_type == Metric.total
-            and plot_spec.view == ViewType.value_view
-            and not plot_spec.focus_on
-            and agg_col in df.columns
-            and df[agg_col].n_unique() > 1):
+    if (
+        plot_spec.aggregation_type == Metric.total
+        and plot_spec.view == ViewType.value_view
+        and not plot_spec.focus_on
+        and agg_col in df.columns
+        and df[agg_col].n_unique() > 1
+    ):
         df = df.filter(pl.col(agg_col) != "US Total")
 
     show_legends = True

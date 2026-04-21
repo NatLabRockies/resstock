@@ -45,16 +45,10 @@ def _compute_histogram_geometry(plot_df: pl.DataFrame) -> tuple[int, float, floa
     if core_width is None or core_width <= 0:
         core_width = 1.0
 
-    p98 = (
-        plot_df.filter(pl.col("bin") == overflow_bin)
-        .select(pl.col("bin_left").min().alias("p98"))
-        .item(0, 0)
-    )
+    p98 = plot_df.filter(pl.col("bin") == overflow_bin).select(pl.col("bin_left").min().alias("p98")).item(0, 0)
     if p98 is None:
         p98 = (
-            plot_df.filter(pl.col("bin") != overflow_bin)
-            .select(pl.col("bin_right").max().alias("core_max"))
-            .item(0, 0)
+            plot_df.filter(pl.col("bin") != overflow_bin).select(pl.col("bin_right").max().alias("core_max")).item(0, 0)
         )
     if p98 is None:
         p98 = 0.0
@@ -92,8 +86,7 @@ def _assert_consistent_histogram_geometry(plot_df: pl.DataFrame, overflow_bin: i
         and float(core_width_max) - float(core_width_min) > tolerance
     ):
         raise ValueError(
-            "Histogram input contains inconsistent core bin widths; "
-            "grouped histograms must share one bin geometry."
+            "Histogram input contains inconsistent core bin widths; grouped histograms must share one bin geometry."
         )
 
     overflow_left_min, overflow_left_max = (
@@ -146,9 +139,7 @@ def _add_histogram_bar(
     )
 
 
-def _create_grouped_histogram_plot(
-    df: pl.DataFrame, plot_spec: PlotSpec, group_col: str
-) -> go.Figure:
+def _create_grouped_histogram_plot(df: pl.DataFrame, plot_spec: PlotSpec, group_col: str) -> go.Figure:
     """Create a faceted histogram with one subplot row per group_by category."""
     group_values = resolve_sorted_chars(df, group_col, plot_spec)
     n_groups = len(group_values)
@@ -176,7 +167,11 @@ def _create_grouped_histogram_plot(
             if sub.is_empty():
                 continue
             _add_histogram_bar(
-                fig, sub, source, plot_spec, palette,
+                fig,
+                sub,
+                source,
+                plot_spec,
+                palette,
                 showlegend=(row_idx == 1),
                 legendgroup=source,
                 row=row_idx,

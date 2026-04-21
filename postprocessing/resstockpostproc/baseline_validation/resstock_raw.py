@@ -12,9 +12,7 @@ def resstock_group_expr(col: str, available_cols: set[str]) -> pl.Expr:
     """Build mapped ResStock expression for one grouping/filter column."""
     if col not in RECS_CHARS_MAPPING:
         known = ", ".join(sorted(RECS_CHARS_MAPPING))
-        raise ValueError(
-            f"Unsupported ResStock grouping column {col!r}. Known: {known}"
-        )
+        raise ValueError(f"Unsupported ResStock grouping column {col!r}. Known: {known}")
     spec = RECS_CHARS_MAPPING[col]["ResStock"]
     raw_col = resolve_existing_char_column(spec["column_name"], available_cols)
     mapping = spec["mapping"]

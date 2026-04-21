@@ -1,6 +1,5 @@
 """Tests for data_table HTML table generation."""
 
-
 import polars as pl
 import pytest
 from pydantic import ValidationError
@@ -28,22 +27,24 @@ from resstockpostproc.baseline_validation.tests._helpers import make_eia_spec as
 
 def _make_annual_data():
     """Create a minimal annual dataset with 2 states x 2 sources."""
-    return pl.DataFrame({
-        "state": ["CA", "CA", "NY", "NY"],
-        "source": ["eia_2018", "resstock_2025", "eia_2018", "resstock_2025"],
-        "electricity_total_value": [100.0, 130.0, 200.0, 190.0],
-        "electricity_total_value_percent_difference": [None, 30.0, None, -5.0],
-        "units_count": [1000.0, 1050.0, 2000.0, 1980.0],
-        "model_count": [None, 500.0, None, 600.0],
-        "electricity_total_value_rse": [0.5, None, 0.3, None],
-        "electricity_total_value_upper_bound": [101.0, 130.0, 201.0, 190.0],
-        "electricity_total_value_lower_bound": [99.0, 130.0, 199.0, 190.0],
-        "electricity_total_quartiles_0": [10.0, 20.0, 30.0, 40.0],
-        "electricity_total_quartiles_1": [50.0, 60.0, 70.0, 80.0],
-        "electricity_total_nonzero_quartiles_0": [15.0, 25.0, 35.0, 45.0],
-        "electricity_total_percent_users": [100.0, 100.0, 99.5, 99.8],
-        "electricity_total_percent_users_percent_difference": [None, 0.0, None, 0.3],
-    })
+    return pl.DataFrame(
+        {
+            "state": ["CA", "CA", "NY", "NY"],
+            "source": ["eia_2018", "resstock_2025", "eia_2018", "resstock_2025"],
+            "electricity_total_value": [100.0, 130.0, 200.0, 190.0],
+            "electricity_total_value_percent_difference": [None, 30.0, None, -5.0],
+            "units_count": [1000.0, 1050.0, 2000.0, 1980.0],
+            "model_count": [None, 500.0, None, 600.0],
+            "electricity_total_value_rse": [0.5, None, 0.3, None],
+            "electricity_total_value_upper_bound": [101.0, 130.0, 201.0, 190.0],
+            "electricity_total_value_lower_bound": [99.0, 130.0, 199.0, 190.0],
+            "electricity_total_quartiles_0": [10.0, 20.0, 30.0, 40.0],
+            "electricity_total_quartiles_1": [50.0, 60.0, 70.0, 80.0],
+            "electricity_total_nonzero_quartiles_0": [15.0, 25.0, 35.0, 45.0],
+            "electricity_total_percent_users": [100.0, 100.0, 99.5, 99.8],
+            "electricity_total_percent_users_percent_difference": [None, 0.0, None, 0.3],
+        }
+    )
 
 
 class TestFilterColumns:
@@ -91,12 +92,14 @@ class TestFilterColumns:
 
     def test_always_drops_eiaid(self):
         """Eiaid should be dropped even without utility_name present."""
-        data = pl.DataFrame({
-            "eiaid": [1, 1],
-            "state": ["CA", "CA"],
-            "source": ["eia_2018", "resstock_2025"],
-            "electricity_total_value": [100.0, 130.0],
-        })
+        data = pl.DataFrame(
+            {
+                "eiaid": [1, 1],
+                "state": ["CA", "CA"],
+                "source": ["eia_2018", "resstock_2025"],
+                "electricity_total_value": [100.0, 130.0],
+            }
+        )
         spec = _make_spec()
         filtered = filter_columns(data, spec)
         assert "eiaid" not in filtered.columns
@@ -114,15 +117,17 @@ class TestFilterColumns:
 
     def test_matrix_drops_redundant_split_cols(self):
         """hour_of_day_matrix should drop utility/month/day_type — encoded in month_daytype."""
-        data = pl.DataFrame({
-            "month_daytype": ["JAN_Weekday", "JAN_Weekend"],
-            "utility": ["AEP (OH)", "AEP (OH)"],
-            "month": ["JAN", "JAN"],
-            "day_type": ["Weekday", "Weekend"],
-            "hour of day": [0, 0],
-            "source": ["lrd_2018", "lrd_2018"],
-            "electricity_total_value": [1.5, 1.8],
-        })
+        data = pl.DataFrame(
+            {
+                "month_daytype": ["JAN_Weekday", "JAN_Weekend"],
+                "utility": ["AEP (OH)", "AEP (OH)"],
+                "month": ["JAN", "JAN"],
+                "day_type": ["Weekday", "Weekend"],
+                "hour of day": [0, 0],
+                "source": ["lrd_2018", "lrd_2018"],
+                "electricity_total_value": [1.5, 1.8],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.hour_of_day_matrix,
@@ -140,14 +145,16 @@ class TestFilterColumns:
 class TestDropAllNullColumns:
     def test_drops_all_null_columns_after_pivot(self, tmp_path):
         """Columns that are entirely null after pivoting should not appear in the table."""
-        data = pl.DataFrame({
-            "state": ["CA", "CA"],
-            "source": ["eia_2018", "resstock_2025"],
-            "electricity_total_value": [100.0, 130.0],
-            "electricity_total_value_percent_difference": [None, 30.0],
-            "units_count": [1000.0, 1050.0],
-            "model_count": [None, 500.0],  # EIA has no model_count → all null for ref side
-        })
+        data = pl.DataFrame(
+            {
+                "state": ["CA", "CA"],
+                "source": ["eia_2018", "resstock_2025"],
+                "electricity_total_value": [100.0, 130.0],
+                "electricity_total_value_percent_difference": [None, 30.0],
+                "units_count": [1000.0, 1050.0],
+                "model_count": [None, 500.0],  # EIA has no model_count → all null for ref side
+            }
+        )
         spec = _make_spec()
         output_path = tmp_path / "test_null.html"
         generate_data_table_html(data=data, plot_spec=spec, output_path=output_path)
@@ -181,14 +188,16 @@ class TestPivotBySource:
 
     def test_monthly_preserves_month(self):
         """Monthly data should keep month as a row dimension."""
-        data = pl.DataFrame({
-            "state": ["CA", "CA", "CA", "CA"],
-            "month": ["JAN", "JAN", "FEB", "FEB"],
-            "source": ["eia_2018", "resstock_2025", "eia_2018", "resstock_2025"],
-            "electricity_total_value": [100.0, 120.0, 90.0, 105.0],
-            "electricity_total_value_percent_difference": [None, 20.0, None, 16.7],
-            "units_count": [1000.0, 1050.0, 1000.0, 1050.0],
-        })
+        data = pl.DataFrame(
+            {
+                "state": ["CA", "CA", "CA", "CA"],
+                "month": ["JAN", "JAN", "FEB", "FEB"],
+                "source": ["eia_2018", "resstock_2025", "eia_2018", "resstock_2025"],
+                "electricity_total_value": [100.0, 120.0, 90.0, 105.0],
+                "electricity_total_value_percent_difference": [None, 20.0, None, 16.7],
+                "units_count": [1000.0, 1050.0, 1000.0, 1050.0],
+            }
+        )
         spec = _make_spec(resolution=Resolution.month)
         pivoted, _, _ = pivot_by_source(data, spec)
 
@@ -296,15 +305,17 @@ class TestGenerateDataTableHtml:
 
     def test_matrix_entity_label_is_month_daytype(self, tmp_path):
         """Load Profile Matrix tables should label the entity column 'Month / Day Type'."""
-        data = pl.DataFrame({
-            "month_daytype": ["JAN_Weekday", "JAN_Weekend"],
-            "utility": ["AEP (OH)", "AEP (OH)"],
-            "month": ["JAN", "JAN"],
-            "day_type": ["Weekday", "Weekend"],
-            "hour of day": [0, 0],
-            "source": ["lrd_2018", "lrd_2018"],
-            "electricity_total_value": [1.5, 1.8],
-        })
+        data = pl.DataFrame(
+            {
+                "month_daytype": ["JAN_Weekday", "JAN_Weekend"],
+                "utility": ["AEP (OH)", "AEP (OH)"],
+                "month": ["JAN", "JAN"],
+                "day_type": ["Weekday", "Weekend"],
+                "hour of day": [0, 0],
+                "source": ["lrd_2018", "lrd_2018"],
+                "electricity_total_value": [1.5, 1.8],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.lrd,
             resolution=Resolution.hour_of_day_matrix,
@@ -326,18 +337,20 @@ class TestGenerateDataTableHtml:
 
 def _make_distribution_data():
     """Minimal distribution dataset: 2 states x 2 sources, with 9-element quartile lists."""
-    return pl.DataFrame({
-        "state": ["CA", "CA", "NY", "NY"],
-        "source": ["recs_2020", "resstock_2025", "recs_2020", "resstock_2025"],
-        "electricity_total_value": [80.0, 90.0, 120.0, 130.0],
-        "electricity_total_quartiles": [
-            [10.0, 0.0, 0.0, 50.0, 80.0, 110.0, 0.0, 0.0, 200.0],
-            [12.0, 0.0, 0.0, 55.0, 90.0, 125.0, 0.0, 0.0, 220.0],
-            [20.0, 0.0, 0.0, 80.0, 120.0, 160.0, 0.0, 0.0, 300.0],
-            [22.0, 0.0, 0.0, 85.0, 130.0, 175.0, 0.0, 0.0, 320.0],
-        ],
-        "model_count": [None, 500.0, None, 600.0],
-    })
+    return pl.DataFrame(
+        {
+            "state": ["CA", "CA", "NY", "NY"],
+            "source": ["recs_2020", "resstock_2025", "recs_2020", "resstock_2025"],
+            "electricity_total_value": [80.0, 90.0, 120.0, 130.0],
+            "electricity_total_quartiles": [
+                [10.0, 0.0, 0.0, 50.0, 80.0, 110.0, 0.0, 0.0, 200.0],
+                [12.0, 0.0, 0.0, 55.0, 90.0, 125.0, 0.0, 0.0, 220.0],
+                [20.0, 0.0, 0.0, 80.0, 120.0, 160.0, 0.0, 0.0, 300.0],
+                [22.0, 0.0, 0.0, 85.0, 130.0, 175.0, 0.0, 0.0, 320.0],
+            ],
+            "model_count": [None, 500.0, None, 600.0],
+        }
+    )
 
 
 class TestDistributionTable:
@@ -384,17 +397,19 @@ class TestDistributionTable:
 
     def test_distribution_uses_nonzero_quartiles_for_users_only(self, tmp_path):
         """When coverage=users_only, the helper reads `_nonzero_quartiles` instead."""
-        data = pl.DataFrame({
-            "state": ["CA", "CA"],
-            "source": ["recs_2020", "resstock_2025"],
-            "electricity_total_value": [80.0, 90.0],
-            "electricity_total_nonzero_quartiles": [
-                [15.0, 0.0, 0.0, 60.0, 95.0, 130.0, 0.0, 0.0, 220.0],
-                [18.0, 0.0, 0.0, 65.0, 100.0, 140.0, 0.0, 0.0, 240.0],
-            ],
-            "electricity_total_percent_users": [98.0, 97.5],
-            "model_count": [None, 500.0],
-        })
+        data = pl.DataFrame(
+            {
+                "state": ["CA", "CA"],
+                "source": ["recs_2020", "resstock_2025"],
+                "electricity_total_value": [80.0, 90.0],
+                "electricity_total_nonzero_quartiles": [
+                    [15.0, 0.0, 0.0, 60.0, 95.0, 130.0, 0.0, 0.0, 220.0],
+                    [18.0, 0.0, 0.0, 65.0, 100.0, 140.0, 0.0, 0.0, 240.0],
+                ],
+                "electricity_total_percent_users": [98.0, 97.5],
+                "model_count": [None, 500.0],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             view=ViewType.value_view,
@@ -409,13 +424,15 @@ class TestDistributionTable:
         assert "100" in html
 
     def test_recs_model_count_uses_source_specific_labels(self, tmp_path):
-        data = pl.DataFrame({
-            "state": ["CA", "CA"],
-            "source": ["recs_2020", "resstock_2025"],
-            "electricity_total_value": [100.0, 110.0],
-            "electricity_total_value_percent_difference": [None, 9.5],
-            "model_count": [240.0, 500.0],
-        })
+        data = pl.DataFrame(
+            {
+                "state": ["CA", "CA"],
+                "source": ["recs_2020", "resstock_2025"],
+                "electricity_total_value": [100.0, 110.0],
+                "electricity_total_value_percent_difference": [None, 9.5],
+                "model_count": [240.0, 500.0],
+            }
+        )
         spec = _make_spec(comparison_dataset=ComparisonDataset.recs, aggregation_type=Metric.average)
         output_path = tmp_path / "recs_samples.html"
         generate_data_table_html(data=data, plot_spec=spec, output_path=output_path)
@@ -425,14 +442,16 @@ class TestDistributionTable:
         assert "Number of Models" in html
 
     def test_users_only_table_hides_raw_nonzero_count_column(self, tmp_path):
-        data = pl.DataFrame({
-            "state": ["CA", "CA"],
-            "source": ["recs_2020", "resstock_2025"],
-            "electricity_total_value": [100.0, 110.0],
-            "electricity_total_percent_users": [80.0, 90.0],
-            "electricity_total_nonzero_sample_count": [240.0, 500.0],
-            "model_count": [240.0, 500.0],
-        })
+        data = pl.DataFrame(
+            {
+                "state": ["CA", "CA"],
+                "source": ["recs_2020", "resstock_2025"],
+                "electricity_total_value": [100.0, 110.0],
+                "electricity_total_percent_users": [80.0, 90.0],
+                "electricity_total_nonzero_sample_count": [240.0, 500.0],
+                "model_count": [240.0, 500.0],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             aggregation_type=Metric.average,
@@ -450,13 +469,15 @@ class TestDistributionTable:
 class TestAllEnduseTable:
     def test_melt_produces_enduse_column(self):
         """The melt helper should rename per-enduse columns to 'all_*' and add an 'enduse' column."""
-        data = pl.DataFrame({
-            "state": ["CA", "CA"],
-            "source": ["recs_2020", "resstock_2025"],
-            "electricity_total_value": [5000.0, 5200.0],
-            "electricity_space_heating_value": [1200.0, 1250.0],
-            "natural_gas_total_value": [2000.0, 2100.0],
-        })
+        data = pl.DataFrame(
+            {
+                "state": ["CA", "CA"],
+                "source": ["recs_2020", "resstock_2025"],
+                "electricity_total_value": [5000.0, 5200.0],
+                "electricity_space_heating_value": [1200.0, 1250.0],
+                "natural_gas_total_value": [2000.0, 2100.0],
+            }
+        )
         melted = melt_enduse_columns(data)
         assert "enduse" in melted.columns
         assert "all_value" in melted.columns
@@ -469,16 +490,18 @@ class TestAllEnduseTable:
 
     def test_all_enduse_table_end_to_end(self, tmp_path):
         """ALL-quantity RECS value tables should render with an End Use column."""
-        data = pl.DataFrame({
-            "state": ["CA", "CA", "NY", "NY"],
-            "source": ["recs_2020", "resstock_2025"] * 2,
-            "electricity_total_value": [5000.0, 5200.0, 6000.0, 6300.0],
-            "electricity_total_value_percent_difference": [None, 4.0, None, 5.0],
-            "electricity_space_heating_value": [1200.0, 1250.0, 1500.0, 1550.0],
-            "electricity_space_heating_value_percent_difference": [None, 4.2, None, 3.3],
-            "units_count": [1000.0, 1050.0, 2000.0, 2050.0],
-            "model_count": [None, 500.0, None, 600.0],
-        })
+        data = pl.DataFrame(
+            {
+                "state": ["CA", "CA", "NY", "NY"],
+                "source": ["recs_2020", "resstock_2025"] * 2,
+                "electricity_total_value": [5000.0, 5200.0, 6000.0, 6300.0],
+                "electricity_total_value_percent_difference": [None, 4.0, None, 5.0],
+                "electricity_space_heating_value": [1200.0, 1250.0, 1500.0, 1550.0],
+                "electricity_space_heating_value_percent_difference": [None, 4.2, None, 3.3],
+                "units_count": [1000.0, 1050.0, 2000.0, 2050.0],
+                "model_count": [None, 500.0, None, 600.0],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             quantity=DataCol.ALL,
@@ -492,15 +515,17 @@ class TestAllEnduseTable:
         assert "Space Heating Electricity" in html
 
     def test_all_enduse_users_only_table_uses_per_enduse_count(self, tmp_path):
-        data = pl.DataFrame({
-            "state": ["CA", "CA"],
-            "source": ["recs_2020", "resstock_2025"],
-            "electricity_total_value": [5000.0, 5200.0],
-            "electricity_total_nonzero_sample_count": [111.0, 222.0],
-            "electricity_space_heating_value": [1200.0, 1250.0],
-            "electricity_space_heating_nonzero_sample_count": [333.0, 444.0],
-            "model_count": [999.0, 888.0],
-        })
+        data = pl.DataFrame(
+            {
+                "state": ["CA", "CA"],
+                "source": ["recs_2020", "resstock_2025"],
+                "electricity_total_value": [5000.0, 5200.0],
+                "electricity_total_nonzero_sample_count": [111.0, 222.0],
+                "electricity_space_heating_value": [1200.0, 1250.0],
+                "electricity_space_heating_nonzero_sample_count": [333.0, 444.0],
+                "model_count": [999.0, 888.0],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             quantity=DataCol.ALL,
@@ -522,13 +547,15 @@ class TestAllEnduseTable:
     def test_all_enduse_drops_constant_entity_column(self, tmp_path):
         """For focused single-entity ALL plots, the state column is dropped as redundant."""
         # US Total overview: all rows have state="US Total"
-        data = pl.DataFrame({
-            "state": ["US Total", "US Total"],
-            "source": ["recs_2020", "resstock_2025"],
-            "electricity_total_value": [5000.0, 5200.0],
-            "electricity_space_heating_value": [1200.0, 1250.0],
-            "model_count": [None, 500.0],
-        })
+        data = pl.DataFrame(
+            {
+                "state": ["US Total", "US Total"],
+                "source": ["recs_2020", "resstock_2025"],
+                "electricity_total_value": [5000.0, 5200.0],
+                "electricity_space_heating_value": [1200.0, 1250.0],
+                "model_count": [None, 500.0],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             quantity=DataCol.ALL,
@@ -561,13 +588,15 @@ class TestTemperatureViewTable:
         """Temperature relation plots render a combined energy + hour-count table."""
         # Shape mirrors gather_data._prepare_temperature_view output: one row per
         # (source, utility, resstock_temp) with the mean energy and the count of hours.
-        data = pl.DataFrame({
-            "utility": ["AEP (OH)"] * 6 + ["PG&E (CA)"] * 6,
-            "source": ["lrd_2018", "lrd_2018", "lrd_2018", "resstock_2025", "resstock_2025", "resstock_2025"] * 2,
-            "resstock_temp": [30, 50, 70, 30, 50, 70] * 2,
-            "electricity_total_value": [2.5, 1.8, 2.2, 2.6, 1.7, 2.3, 3.0, 1.5, 1.8, 3.1, 1.4, 1.9],
-            "temp_count": [120, 300, 180, 118, 302, 182, 100, 350, 200, 99, 351, 201],
-        })
+        data = pl.DataFrame(
+            {
+                "utility": ["AEP (OH)"] * 6 + ["PG&E (CA)"] * 6,
+                "source": ["lrd_2018", "lrd_2018", "lrd_2018", "resstock_2025", "resstock_2025", "resstock_2025"] * 2,
+                "resstock_temp": [30, 50, 70, 30, 50, 70] * 2,
+                "electricity_total_value": [2.5, 1.8, 2.2, 2.6, 1.7, 2.3, 3.0, 1.5, 1.8, 3.1, 1.4, 1.9],
+                "temp_count": [120, 300, 180, 118, 302, 182, 100, 350, 200, 99, 351, 201],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.lrd,
             quantity=DataCol.ELECTRICITY_TOTAL,

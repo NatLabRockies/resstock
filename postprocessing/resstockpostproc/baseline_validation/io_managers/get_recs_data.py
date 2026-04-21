@@ -105,10 +105,9 @@ def _value_expr(col: str, data_key: DataKey) -> pl.Expr:
 
 
 def _percent_users_expr(col: str) -> pl.Expr:
-    return (
-        ((pl.col(col) > 0).cast(pl.Int64) * pl.col("NWEIGHT")).sum()
-        / pl.col("NWEIGHT").sum() * 100
-    ).alias(f"{col}_percent_users")
+    return (((pl.col(col) > 0).cast(pl.Int64) * pl.col("NWEIGHT")).sum() / pl.col("NWEIGHT").sum() * 100).alias(
+        f"{col}_percent_users"
+    )
 
 
 def _enduse_value_exprs(enduse_cols: tuple, data_key: DataKey, *, include_group_counts: bool) -> list[pl.Expr]:
@@ -265,9 +264,7 @@ def get_annual_all(
                         (nonzero_weight_sum / weight_sum * 100) if weight_sum > 0 else 0
                     )
                 else:  # users_only
-                    us_total_values[f"{col}_value"] = (
-                        weighted_sum / nonzero_weight_sum if nonzero_weight_sum > 0 else 0
-                    )
+                    us_total_values[f"{col}_value"] = weighted_sum / nonzero_weight_sum if nonzero_weight_sum > 0 else 0
                     us_total_values[f"{col}_percent_users"] = (
                         (nonzero_weight_sum / weight_sum * 100) if weight_sum > 0 else 0
                     )
@@ -467,10 +464,7 @@ def get_enduse_order() -> dict[str, list[str]]:
         if isinstance(spec, list):
             group_enduses = [e for e in spec if e in totals]
         else:
-            group_enduses = [
-                str(e) for e in enduse_cols
-                if str(e).startswith(spec) and not str(e).endswith("_total")
-            ]
+            group_enduses = [str(e) for e in enduse_cols if str(e).startswith(spec) and not str(e).endswith("_total")]
         result[group_name] = sorted(group_enduses, key=lambda e: totals.get(e, 0), reverse=True)
 
     return result

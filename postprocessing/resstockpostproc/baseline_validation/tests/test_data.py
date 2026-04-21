@@ -53,4 +53,3 @@ class TestData:
         """Test that loading LRD data for invalid year raises error."""
         with pytest.raises(ValueError, match="LRD data only available for 2018"):
             get_lrd_data(year=2019)
-    

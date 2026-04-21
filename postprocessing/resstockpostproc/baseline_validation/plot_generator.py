@@ -79,7 +79,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     templates = generate_all_templates()
 
     if index is not None:
-        wanted = set(index) if isinstance(index, (set, list)) else {index}
+        wanted = set(index) if isinstance(index, set | list) else {index}
         templates = [t for i, t in enumerate(templates) if (i + 1) in wanted]
 
     render_keys = build_render_gate(templates, test_only)
@@ -272,15 +272,21 @@ def main():
         "--index", type=str, default=None, help="Plot definition index to generate (e.g. '5', '1-10', '1,3,5')"
     )
     parser.add_argument(
-        "--test", action="store_true", default=True,
+        "--test",
+        action="store_true",
+        default=True,
         help="Generate only test subset plots (limited focus expansion)",
     )
     parser.add_argument(
-        "--no-parallel", action="store_true", default=False,
+        "--no-parallel",
+        action="store_true",
+        default=False,
         help="Disable parallel plot generation (run sequentially)",
     )
     parser.add_argument(
-        "--no-svg", action="store_true", default=True,
+        "--no-svg",
+        action="store_true",
+        default=True,
         help="Skip SVG output (faster; useful for determinism checks and test runs)",
     )
     args = parser.parse_args()

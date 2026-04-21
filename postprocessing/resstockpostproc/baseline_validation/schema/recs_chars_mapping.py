@@ -1,9 +1,11 @@
 from typing import TypedDict
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
+
 class PartialMap(dict):
     def __missing__(self, key):
         return key
+
 
 class MapSpec(TypedDict):
     column_name: str
@@ -11,7 +13,7 @@ class MapSpec(TypedDict):
 
 
 class VariableSpec(TypedDict):
-    ResStock: MapSpec 
+    ResStock: MapSpec
     RECS: MapSpec
 
 
@@ -43,14 +45,11 @@ RECS_CHARS_MAPPING: dict[str, VariableSpec] = {
                 7: "2000s",
                 8: "2010s",
                 9: "2010s",
-            }
+            },
         },
     },
     DataCol.BUILDING_TYPE: {
-        "ResStock": {
-            "column_name": "in.geometry_building_type_recs",
-            "mapping": PartialMap({})
-        },
+        "ResStock": {"column_name": "in.geometry_building_type_recs", "mapping": PartialMap({})},
         "RECS": {
             "column_name": "TYPEHUQ",
             "mapping": {
@@ -59,14 +58,11 @@ RECS_CHARS_MAPPING: dict[str, VariableSpec] = {
                 3: "Single-Family Attached",
                 4: "Multi-Family with 2 - 4 Units",
                 5: "Multi-Family with 5+ Units",
-            }
+            },
         },
     },
     DataCol.HEATING_FUEL: {
-        "ResStock": {
-            "column_name": "in.heating_fuel",
-            "mapping": PartialMap({})
-        },
+        "ResStock": {"column_name": "in.heating_fuel", "mapping": PartialMap({})},
         "RECS": {
             "column_name": "FUELHEAT",
             "mapping": {
@@ -77,47 +73,32 @@ RECS_CHARS_MAPPING: dict[str, VariableSpec] = {
                 5: "Electricity",
                 7: "Wood",
                 99: "Other Fuel",
-            }
+            },
         },
     },
     DataCol.CENSUS_DIVISION: {
-        "ResStock": {
-            "column_name": "in.census_division_recs",
-            "mapping": PartialMap({})
-        },
-        "RECS": {
-            "column_name": "DIVISION",
-            "mapping": PartialMap({})
-        },
+        "ResStock": {"column_name": "in.census_division_recs", "mapping": PartialMap({})},
+        "RECS": {"column_name": "DIVISION", "mapping": PartialMap({})},
     },
     DataCol.CLIMATE_ZONE: {
-        "ResStock": {
-            "column_name": "in.building_america_climate_zone",
-            "mapping": PartialMap({})
-        },
+        "ResStock": {"column_name": "in.building_america_climate_zone", "mapping": PartialMap({})},
         "RECS": {
             "column_name": "BA_climate",
             "mapping": PartialMap({"Very-Cold": "Very Cold"}),
         },
     },
     DataCol.EV_OWNERSHIP: {
-        "ResStock": {
-            "column_name": "in.electric_vehicle_ownership",
-            "mapping": PartialMap({})
-        },
+        "ResStock": {"column_name": "in.electric_vehicle_ownership", "mapping": PartialMap({})},
         "RECS": {
             "column_name": "ELECVEH",
             "mapping": {
                 1: "Yes",
                 0: "No",
-            }
+            },
         },
     },
     DataCol.STATE: {
-        "ResStock": {
-            "column_name": "in.state",
-            "mapping": PartialMap({})
-        },
+        "ResStock": {"column_name": "in.state", "mapping": PartialMap({})},
         "RECS": {
             "column_name": "state_postal",
             "mapping": PartialMap({}),

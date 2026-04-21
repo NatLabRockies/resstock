@@ -60,15 +60,17 @@ class TestAddQuartileCols:
 class TestPrepareBoxPlotData:
     def _make_df(self):
         quartiles = [0.0, 2.0, 10.0, 25.0, 50.0, 75.0, 90.0, 98.0, 100.0]
-        return pl.DataFrame({
-            "source": ["recs_2020"],
-            "state": ["CA"],
-            "electricity_total_value": [500.0],
-            "electricity_total_quartiles": [quartiles],
-            "electricity_total_nonzero_quartiles": [quartiles],
-            "electricity_total_percent_users": [80.0],
-            "model_count": [800],
-        })
+        return pl.DataFrame(
+            {
+                "source": ["recs_2020"],
+                "state": ["CA"],
+                "electricity_total_value": [500.0],
+                "electricity_total_quartiles": [quartiles],
+                "electricity_total_nonzero_quartiles": [quartiles],
+                "electricity_total_percent_users": [80.0],
+                "model_count": [800],
+            }
+        )
 
     def test_all_units_uses_quartiles(self):
         df = self._make_df()
@@ -150,12 +152,14 @@ class TestSplitGraphByState:
 
 class TestSplitGraphByChar:
     def test_single_column_layout(self):
-        df = pl.DataFrame({
-            "source": ["recs_2020", "recs_2020", "resstock_2024", "resstock_2024"],
-            "vintage": ["pre-1950", "1950-1970", "pre-1950", "1950-1970"],
-            "units_count": [1000, 2000, 1000, 2000],
-            "electricity_total_value": [100.0, 200.0, 110.0, 220.0],
-        })
+        df = pl.DataFrame(
+            {
+                "source": ["recs_2020", "recs_2020", "resstock_2024", "resstock_2024"],
+                "vintage": ["pre-1950", "1950-1970", "pre-1950", "1950-1970"],
+                "units_count": [1000, 2000, 1000, 2000],
+                "electricity_total_value": [100.0, 200.0, 110.0, 220.0],
+            }
+        )
         _fig, iterator = split_graph_by_char(df)
 
         chunks = list(iterator)
@@ -166,21 +170,23 @@ class TestSplitGraphByChar:
         assert col == 1
 
     def test_recs_census_division_custom_order_with_us_total_first(self):
-        df = pl.DataFrame({
-            "source": ["recs_2020"] * 4 + ["resstock_2024"] * 4,
-            "census_division_recs": [
-                "Pacific",
-                "Middle Atlantic",
-                "US Total",
-                "New England",
-                "Pacific",
-                "Middle Atlantic",
-                "US Total",
-                "New England",
-            ],
-            "units_count": [9000, 8000, 1000, 7000, 9100, 7900, 1000, 7100],
-            "electricity_total_value": [100.0, 100.0, 100.0, 100.0, 110.0, 110.0, 110.0, 110.0],
-        })
+        df = pl.DataFrame(
+            {
+                "source": ["recs_2020"] * 4 + ["resstock_2024"] * 4,
+                "census_division_recs": [
+                    "Pacific",
+                    "Middle Atlantic",
+                    "US Total",
+                    "New England",
+                    "Pacific",
+                    "Middle Atlantic",
+                    "US Total",
+                    "New England",
+                ],
+                "units_count": [9000, 8000, 1000, 7000, 9100, 7900, 1000, 7100],
+                "electricity_total_value": [100.0, 100.0, 100.0, 100.0, 110.0, 110.0, 110.0, 110.0],
+            }
+        )
         spec = _make_spec(group_by="census_division_recs")
         _, iterator = split_graph_by_char(df, spec)
         df_out, _, _, _ = next(iter(iterator))
@@ -189,23 +195,25 @@ class TestSplitGraphByChar:
         assert ordered == ["US Total", "New England", "Middle Atlantic", "Pacific"]
 
     def test_recs_building_type_custom_order_with_label_variants(self):
-        df = pl.DataFrame({
-            "source": ["recs_2020"] * 5 + ["resstock_2024"] * 5,
-            "geometry_building_type_recs": [
-                "Mobile Home",
-                "Multi-Family with 5+ Units",
-                "Single-Family Detached",
-                "Multi-Family with 2 - 4 Units",
-                "Single-Family Attached",
-                "Mobile Home",
-                "Multi-Family with 5+ Units",
-                "Single-Family Detached",
-                "Multi-Family with 2 - 4 Units",
-                "Single-Family Attached",
-            ],
-            "units_count": [10000, 9000, 2000, 8000, 7000, 10010, 9010, 2010, 8010, 7010],
-            "electricity_total_value": [1.0] * 10,
-        })
+        df = pl.DataFrame(
+            {
+                "source": ["recs_2020"] * 5 + ["resstock_2024"] * 5,
+                "geometry_building_type_recs": [
+                    "Mobile Home",
+                    "Multi-Family with 5+ Units",
+                    "Single-Family Detached",
+                    "Multi-Family with 2 - 4 Units",
+                    "Single-Family Attached",
+                    "Mobile Home",
+                    "Multi-Family with 5+ Units",
+                    "Single-Family Detached",
+                    "Multi-Family with 2 - 4 Units",
+                    "Single-Family Attached",
+                ],
+                "units_count": [10000, 9000, 2000, 8000, 7000, 10010, 9010, 2010, 8010, 7010],
+                "electricity_total_value": [1.0] * 10,
+            }
+        )
         spec = _make_spec(group_by="geometry_building_type_recs")
         _, iterator = split_graph_by_char(df, spec)
         df_out, _, _, _ = next(iter(iterator))
@@ -220,23 +228,25 @@ class TestSplitGraphByChar:
         ]
 
     def test_recs_vintage_human_sort_with_us_total_pinned_first(self):
-        df = pl.DataFrame({
-            "source": ["recs_2020"] * 5 + ["resstock_2024"] * 5,
-            "vintage": [
-                "2010s",
-                "<1950",
-                "1990s",
-                "US Total",
-                "1950s",
-                "2010s",
-                "<1950",
-                "1990s",
-                "US Total",
-                "1950s",
-            ],
-            "units_count": [9000, 8000, 7000, 1000, 6000, 9010, 8010, 7010, 1000, 6010],
-            "electricity_total_value": [1.0] * 10,
-        })
+        df = pl.DataFrame(
+            {
+                "source": ["recs_2020"] * 5 + ["resstock_2024"] * 5,
+                "vintage": [
+                    "2010s",
+                    "<1950",
+                    "1990s",
+                    "US Total",
+                    "1950s",
+                    "2010s",
+                    "<1950",
+                    "1990s",
+                    "US Total",
+                    "1950s",
+                ],
+                "units_count": [9000, 8000, 7000, 1000, 6000, 9010, 8010, 7010, 1000, 6010],
+                "electricity_total_value": [1.0] * 10,
+            }
+        )
         spec = _make_spec(group_by="vintage")
         _, iterator = split_graph_by_char(df, spec)
         df_out, _, _, _ = next(iter(iterator))
@@ -245,12 +255,14 @@ class TestSplitGraphByChar:
         assert ordered == ["US Total", "<1950", "1950s", "1990s", "2010s"]
 
     def test_recs_unknown_char_falls_back_to_units_count_descending(self):
-        df = pl.DataFrame({
-            "source": ["recs_2020"] * 3 + ["resstock_2024"] * 3,
-            "custom_char": ["A", "B", "C", "A", "B", "C"],
-            "units_count": [10, 30, 20, 11, 31, 21],
-            "electricity_total_value": [1.0] * 6,
-        })
+        df = pl.DataFrame(
+            {
+                "source": ["recs_2020"] * 3 + ["resstock_2024"] * 3,
+                "custom_char": ["A", "B", "C", "A", "B", "C"],
+                "units_count": [10, 30, 20, 11, 31, 21],
+                "electricity_total_value": [1.0] * 6,
+            }
+        )
         spec = _make_spec(group_by="custom_char")
         _, iterator = split_graph_by_char(df, spec)
         df_out, _, _, _ = next(iter(iterator))
@@ -259,12 +271,14 @@ class TestSplitGraphByChar:
         assert ordered == ["B", "C", "A"]
 
     def test_non_recs_keeps_units_count_sort_even_for_semantic_chars(self):
-        df = pl.DataFrame({
-            "source": ["eia_2018"] * 3 + ["resstock_2024"] * 3,
-            "vintage": ["<1950", "1950s", "2010s", "<1950", "1950s", "2010s"],
-            "units_count": [10, 20, 30, 11, 21, 31],
-            "electricity_total_value": [1.0] * 6,
-        })
+        df = pl.DataFrame(
+            {
+                "source": ["eia_2018"] * 3 + ["resstock_2024"] * 3,
+                "vintage": ["<1950", "1950s", "2010s", "<1950", "1950s", "2010s"],
+                "units_count": [10, 20, 30, 11, 21, 31],
+                "electricity_total_value": [1.0] * 6,
+            }
+        )
         spec = _make_spec(comparison_dataset=ComparisonDataset.eia, group_by="vintage")
         _, iterator = split_graph_by_char(df, spec)
         df_out, _, _, _ = next(iter(iterator))
@@ -290,9 +304,11 @@ class TestGetCustomRange:
 
     def test_distribution_range_from_quartiles(self):
         """Distribution view reads min/max from quartiles list column."""
-        df = pl.DataFrame({
-            "electricity_total_quartiles": [[5.0, 10.0, 20.0, 30.0, 50.0, 70.0, 80.0, 90.0, 95.0]],
-        })
+        df = pl.DataFrame(
+            {
+                "electricity_total_quartiles": [[5.0, 10.0, 20.0, 30.0, 50.0, 70.0, 80.0, 90.0, 95.0]],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             aggregation_type=Metric.distribution,
@@ -322,12 +338,14 @@ class TestGetCustomRange:
 class TestSplitGraphDispatch:
     def test_state_non_all_dispatches_to_state(self):
         """State aggregation + non-ALL quantity → split_graph_by_state."""
-        df = pl.DataFrame({
-            "source": ["recs_2020", "resstock_2024"],
-            "state": ["CA", "CA"],
-            "units_count": [5000, 5000],
-            "electricity_total_value": [100.0, 110.0],
-        })
+        df = pl.DataFrame(
+            {
+                "source": ["recs_2020", "resstock_2024"],
+                "state": ["CA", "CA"],
+                "units_count": [5000, 5000],
+                "electricity_total_value": [100.0, 110.0],
+            }
+        )
         spec = _make_spec(group_by="state", quantity=DataCol.ELECTRICITY_TOTAL)
         _fig, iterator = split_graph(df, spec)
         chunks = list(iterator)
@@ -337,12 +355,14 @@ class TestSplitGraphDispatch:
 
     def test_char_aggregation_dispatches_to_char(self):
         """Non-state, non-ALL → split_graph_by_char."""
-        df = pl.DataFrame({
-            "source": ["recs_2020", "resstock_2024"],
-            "vintage": ["pre-1950", "pre-1950"],
-            "units_count": [1000, 1000],
-            "electricity_total_value": [100.0, 110.0],
-        })
+        df = pl.DataFrame(
+            {
+                "source": ["recs_2020", "resstock_2024"],
+                "vintage": ["pre-1950", "pre-1950"],
+                "units_count": [1000, 1000],
+                "electricity_total_value": [100.0, 110.0],
+            }
+        )
         spec = _make_spec(group_by="vintage", quantity=DataCol.ELECTRICITY_TOTAL)
         _fig, iterator = split_graph(df, spec)
         chunks = list(iterator)
@@ -350,13 +370,15 @@ class TestSplitGraphDispatch:
 
     def test_two_column_layout_prefers_state_split_even_with_focus(self):
         """two_column layout should use state split path for state-grouped data."""
-        df = pl.DataFrame({
-            "source": ["recs_2020", "resstock_2024", "recs_2020", "resstock_2024"],
-            "state": ["CA", "CA", "TX", "TX"],
-            "vintage": ["pre-1950", "pre-1950", "pre-1950", "pre-1950"],
-            "units_count": [5000, 5000, 4000, 4000],
-            "electricity_total_value": [100.0, 110.0, 90.0, 95.0],
-        })
+        df = pl.DataFrame(
+            {
+                "source": ["recs_2020", "resstock_2024", "recs_2020", "resstock_2024"],
+                "state": ["CA", "CA", "TX", "TX"],
+                "vintage": ["pre-1950", "pre-1950", "pre-1950", "pre-1950"],
+                "units_count": [5000, 5000, 4000, 4000],
+                "electricity_total_value": [100.0, 110.0, 90.0, 95.0],
+            }
+        )
         spec = _make_spec(
             group_by="state",
             quantity=DataCol.ELECTRICITY_TOTAL,
@@ -381,13 +403,15 @@ class TestHistogramLayoutRouting:
             _fake_hist_renderer,
         )
 
-        data = pl.DataFrame({
-            "source": ["RECS 2020", "ResStock 2025"],
-            "bin": [0, 0],
-            "bin_left": [0.0, 0.0],
-            "bin_right": [1.0, 1.0],
-            "count_pct": [10.0, 12.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["RECS 2020", "ResStock 2025"],
+                "bin": [0, 0],
+                "bin_left": [0.0, 0.0],
+                "bin_right": [1.0, 1.0],
+                "count_pct": [10.0, 12.0],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             aggregation_type=Metric.distribution,
@@ -400,13 +424,15 @@ class TestHistogramLayoutRouting:
         assert calls["count"] == 1
 
     def test_histogram_overflow_tail_geometry_and_style(self):
-        data = pl.DataFrame({
-            "source": ["RECS 2020", "RECS 2020", "ResStock 2025", "ResStock 2025"],
-            "bin": [0, 49, 0, 49],
-            "bin_left": [0.0, 100.0, 0.0, 100.0],
-            "bin_right": [10.0, 500.0, 10.0, 400.0],
-            "count_pct": [4.0, 1.0, 3.0, 2.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["RECS 2020", "RECS 2020", "ResStock 2025", "ResStock 2025"],
+                "bin": [0, 49, 0, 49],
+                "bin_left": [0.0, 100.0, 0.0, 100.0],
+                "bin_right": [10.0, 500.0, 10.0, 400.0],
+                "count_pct": [4.0, 1.0, 3.0, 2.0],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             aggregation_type=Metric.distribution,
@@ -440,13 +466,15 @@ class TestHistogramLayoutRouting:
         assert fig.layout.xaxis.range[1] == pytest.approx(120.0)
 
     def test_histogram_hover_uses_compact_range_formatting(self):
-        data = pl.DataFrame({
-            "source": ["RECS 2020", "RECS 2020", "ResStock 2025", "ResStock 2025"],
-            "bin": [0, 49, 0, 49],
-            "bin_left": [1_000.0, 10_000.0, 1_000.0, 10_000.0],
-            "bin_right": [2_500.0, 1_500_000.0, 2_500.0, 2_000_000_000.0],
-            "count_pct": [4.0, 1.0, 3.0, 2.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["RECS 2020", "RECS 2020", "ResStock 2025", "ResStock 2025"],
+                "bin": [0, 49, 0, 49],
+                "bin_left": [1_000.0, 10_000.0, 1_000.0, 10_000.0],
+                "bin_right": [2_500.0, 1_500_000.0, 2_500.0, 2_000_000_000.0],
+                "count_pct": [4.0, 1.0, 3.0, 2.0],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             aggregation_type=Metric.distribution,
@@ -465,14 +493,16 @@ class TestHistogramLayoutRouting:
 
     def test_grouped_histogram_creates_faceted_subplots(self):
         """Grouped histogram produces one subplot row per group_by category."""
-        data = pl.DataFrame({
-            "source": ["RECS 2020", "ResStock 2025"] * 4,
-            "state": ["CA", "CA", "TX", "TX", "CA", "CA", "TX", "TX"],
-            "bin": [0, 0, 0, 0, 1, 1, 1, 1],
-            "bin_left": [0.0, 0.0, 0.0, 0.0, 10.0, 10.0, 10.0, 10.0],
-            "bin_right": [10.0, 10.0, 10.0, 10.0, 20.0, 20.0, 20.0, 20.0],
-            "count_pct": [5.0, 6.0, 3.0, 4.0, 8.0, 7.0, 2.0, 3.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["RECS 2020", "ResStock 2025"] * 4,
+                "state": ["CA", "CA", "TX", "TX", "CA", "CA", "TX", "TX"],
+                "bin": [0, 0, 0, 0, 1, 1, 1, 1],
+                "bin_left": [0.0, 0.0, 0.0, 0.0, 10.0, 10.0, 10.0, 10.0],
+                "bin_right": [10.0, 10.0, 10.0, 10.0, 20.0, 20.0, 20.0, 20.0],
+                "count_pct": [5.0, 6.0, 3.0, 4.0, 8.0, 7.0, 2.0, 3.0],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             aggregation_type=Metric.distribution,
@@ -504,14 +534,16 @@ class TestHistogramLayoutRouting:
 
     def test_grouped_histogram_single_group_uses_single_panel(self):
         """When group_by column has only one value, falls back to single panel."""
-        data = pl.DataFrame({
-            "source": ["RECS 2020", "ResStock 2025"],
-            "state": ["CA", "CA"],
-            "bin": [0, 0],
-            "bin_left": [0.0, 0.0],
-            "bin_right": [10.0, 10.0],
-            "count_pct": [5.0, 6.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["RECS 2020", "ResStock 2025"],
+                "state": ["CA", "CA"],
+                "bin": [0, 0],
+                "bin_left": [0.0, 0.0],
+                "bin_right": [10.0, 10.0],
+                "count_pct": [5.0, 6.0],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             aggregation_type=Metric.distribution,
@@ -526,14 +558,16 @@ class TestHistogramLayoutRouting:
         assert len(bar_traces) == 2
 
     def test_grouped_histogram_rejects_inconsistent_geometry(self):
-        data = pl.DataFrame({
-            "source": ["RECS 2020", "ResStock 2025", "RECS 2020", "ResStock 2025"],
-            "state": ["CA", "CA", "TX", "TX"],
-            "bin": [0, 0, 49, 49],
-            "bin_left": [0.0, 0.0, 100.0, 200.0],
-            "bin_right": [10.0, 10.0, 300.0, 400.0],
-            "count_pct": [5.0, 6.0, 3.0, 4.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["RECS 2020", "ResStock 2025", "RECS 2020", "ResStock 2025"],
+                "state": ["CA", "CA", "TX", "TX"],
+                "bin": [0, 0, 49, 49],
+                "bin_left": [0.0, 0.0, 100.0, 200.0],
+                "bin_right": [10.0, 10.0, 300.0, 400.0],
+                "count_pct": [5.0, 6.0, 3.0, 4.0],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             aggregation_type=Metric.distribution,
@@ -548,14 +582,16 @@ class TestHistogramLayoutRouting:
 
 class TestStackedHoverFormatting:
     def test_grouped_bar_hover_uses_compact_values_and_source_specific_count_labels(self):
-        data = pl.DataFrame({
-            "source": ["RECS 2020", "ResStock 2025", "RECS 2020", "ResStock 2025"],
-            "state": ["CA", "CA", "TX", "TX"],
-            "units_count": [5000, 5000, 4000, 4000],
-            "electricity_total_value": [1_223_232_232.22, 1_101_987_600.0, 98_765_432.0, 45_678_901.0],
-            "electricity_total_value_rse": [5.0, None, 7.0, None],
-            "model_count": [240.1234, 500.0, 321.0, 654.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["RECS 2020", "ResStock 2025", "RECS 2020", "ResStock 2025"],
+                "state": ["CA", "CA", "TX", "TX"],
+                "units_count": [5000, 5000, 4000, 4000],
+                "electricity_total_value": [1_223_232_232.22, 1_101_987_600.0, 98_765_432.0, 45_678_901.0],
+                "electricity_total_value_rse": [5.0, None, 7.0, None],
+                "model_count": [240.1234, 500.0, 321.0, 654.0],
+            }
+        )
         spec = _make_spec(
             comparison_dataset=ComparisonDataset.recs,
             quantity=DataCol.ELECTRICITY_TOTAL,

@@ -3,10 +3,12 @@ from typing import TypedDict
 from resstockpostproc.baseline_validation.utils import KBTU2KWH
 from resstockpostproc.shared_utils.db_column_names import DataCol
 
+
 class SourceSpec(TypedDict):
     column_name: str
     description: str
     factor: float
+
 
 class VariableSpec(TypedDict):
     ResStock: SourceSpec | tuple[SourceSpec, ...]
@@ -220,7 +222,5 @@ RECS_ENDUSE_MAP: dict[DataCol, RECSField | tuple[RECSField, ...]] = {
 
 
 if __name__ == "__main__":
-    electricity_enduses = [
-        col.value for col in DataCol if col.value.startswith("electricity")
-    ]
+    electricity_enduses = [col.value for col in DataCol if col.value.startswith("electricity")]
     print(f"List of RECS end-use mappings ({len(electricity_enduses)}):")

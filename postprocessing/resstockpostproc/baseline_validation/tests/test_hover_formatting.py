@@ -6,14 +6,16 @@ from resstockpostproc.shared_utils.generic_plotters.monthly_plotter import creat
 
 
 def test_bar_hover_uses_two_decimals_and_recs_sample_label():
-    data = pl.DataFrame({
-        "source": ["RECS 2020", "ResStock 2025"],
-        "state": ["CA", "CA"],
-        "electricity_total_value": [1_223_232_232.22, 1_101_987_600.0],
-        "electricity_total_value_lower_bound": [1_100_000_000.0, None],
-        "electricity_total_value_upper_bound": [1_300_000_000.0, None],
-        "model_count": [240.1234, 500.0],
-    })
+    data = pl.DataFrame(
+        {
+            "source": ["RECS 2020", "ResStock 2025"],
+            "state": ["CA", "CA"],
+            "electricity_total_value": [1_223_232_232.22, 1_101_987_600.0],
+            "electricity_total_value_lower_bound": [1_100_000_000.0, None],
+            "electricity_total_value_upper_bound": [1_300_000_000.0, None],
+            "model_count": [240.1234, 500.0],
+        }
+    )
 
     fig = create_bar_plot(
         data=data,
@@ -26,9 +28,7 @@ def test_bar_hover_uses_two_decimals_and_recs_sample_label():
         first_category_title="Data Source",
         second_category_title="State",
         orientation="v",
-        count_label_resolver=lambda source: (
-            "Number of Samples" if "recs" in source.lower() else "Number of Models"
-        ),
+        count_label_resolver=lambda source: ("Number of Samples" if "recs" in source.lower() else "Number of Models"),
         compact_hover_values=True,
     )
 
@@ -46,12 +46,14 @@ def test_bar_hover_uses_two_decimals_and_recs_sample_label():
 
 
 def test_bar_hover_uses_resstock_models_only_for_eia_plot():
-    data = pl.DataFrame({
-        "source": ["EIA 2018", "ResStock 2025"],
-        "state": ["CA", "CA"],
-        "electricity_total_value": [2_345_600.0, 2_789_000.0],
-        "model_count": [None, 120.0],
-    })
+    data = pl.DataFrame(
+        {
+            "source": ["EIA 2018", "ResStock 2025"],
+            "state": ["CA", "CA"],
+            "electricity_total_value": [2_345_600.0, 2_789_000.0],
+            "model_count": [None, 120.0],
+        }
+    )
 
     fig = create_bar_plot(
         data=data,
@@ -74,10 +76,12 @@ def test_bar_hover_uses_resstock_models_only_for_eia_plot():
 
 
 def test_bar_hover_retains_percent_suffix_for_percentage_titles():
-    data = pl.DataFrame({
-        "source": ["RECS 2020"],
-        "electricity_total_percent_difference": [12.3456],
-    })
+    data = pl.DataFrame(
+        {
+            "source": ["RECS 2020"],
+            "electricity_total_percent_difference": [12.3456],
+        }
+    )
 
     fig = create_bar_plot(
         data=data,
@@ -93,13 +97,15 @@ def test_bar_hover_retains_percent_suffix_for_percentage_titles():
 
 
 def test_monthly_hover_uses_compact_values():
-    data = pl.DataFrame({
-        "source": ["RECS 2020", "RECS 2020"],
-        "month": ["JAN", "FEB"],
-        "electricity_total_value": [1_223_232_232.22, 98_765_432.0],
-        "electricity_total_value_lower_bound": [1_100_000_000.0, 90_000_000.0],
-        "electricity_total_value_upper_bound": [1_300_000_000.0, 120_000_000.0],
-    })
+    data = pl.DataFrame(
+        {
+            "source": ["RECS 2020", "RECS 2020"],
+            "month": ["JAN", "FEB"],
+            "electricity_total_value": [1_223_232_232.22, 98_765_432.0],
+            "electricity_total_value_lower_bound": [1_100_000_000.0, 90_000_000.0],
+            "electricity_total_value_upper_bound": [1_300_000_000.0, 120_000_000.0],
+        }
+    )
 
     fig = create_ts_plot(
         data=data,
@@ -120,12 +126,14 @@ def test_monthly_hover_uses_compact_values():
 
 
 def test_monthly_hover_can_include_source_specific_count_labels():
-    data = pl.DataFrame({
-        "source": ["LRD 2018", "LRD 2018", "ResStock 2025", "ResStock 2025"],
-        "month": ["JAN", "FEB", "JAN", "FEB"],
-        "electricity_total_value": [1_223_232_232.22, 98_765_432.0, 1_101_987_600.0, 87_654_321.0],
-        "model_count": [None, None, 500.0, 500.0],
-    })
+    data = pl.DataFrame(
+        {
+            "source": ["LRD 2018", "LRD 2018", "ResStock 2025", "ResStock 2025"],
+            "month": ["JAN", "FEB", "JAN", "FEB"],
+            "electricity_total_value": [1_223_232_232.22, 98_765_432.0, 1_101_987_600.0, 87_654_321.0],
+            "model_count": [None, None, 500.0, 500.0],
+        }
+    )
 
     fig = create_ts_plot(
         data=data,
@@ -153,12 +161,14 @@ def test_format_percent_difference_formats_sign_and_none():
 
 
 def test_bar_hover_includes_percent_difference_line():
-    data = pl.DataFrame({
-        "source": ["RECS 2020", "ResStock 2025"],
-        "state": ["CA", "CA"],
-        "electricity_total_value": [1_000_000.0, 1_100_000.0],
-        "electricity_total_value_percent_difference": [None, 10.0],
-    })
+    data = pl.DataFrame(
+        {
+            "source": ["RECS 2020", "ResStock 2025"],
+            "state": ["CA", "CA"],
+            "electricity_total_value": [1_000_000.0, 1_100_000.0],
+            "electricity_total_value_percent_difference": [None, 10.0],
+        }
+    )
 
     fig = create_bar_plot(
         data=data,
@@ -180,12 +190,14 @@ def test_bar_hover_includes_percent_difference_line():
 
 
 def test_bar_hover_skips_percent_difference_when_all_null():
-    data = pl.DataFrame({
-        "source": ["RECS 2020"],
-        "state": ["CA"],
-        "electricity_total_value": [1_000_000.0],
-        "electricity_total_value_percent_difference": [None],
-    })
+    data = pl.DataFrame(
+        {
+            "source": ["RECS 2020"],
+            "state": ["CA"],
+            "electricity_total_value": [1_000_000.0],
+            "electricity_total_value_percent_difference": [None],
+        }
+    )
 
     fig = create_bar_plot(
         data=data,
@@ -207,15 +219,17 @@ def test_bar_hover_skips_percent_difference_when_all_null():
 
 def test_bar_hover_display_order_is_value_diff_ci_count():
     """Hover display order must be: value → diff → ci → count (count last)."""
-    data = pl.DataFrame({
-        "source": ["RECS 2020", "ResStock 2025"],
-        "state": ["CA", "CA"],
-        "electricity_total_value": [1_000_000.0, 1_100_000.0],
-        "electricity_total_value_lower_bound": [900_000.0, 1_000_000.0],
-        "electricity_total_value_upper_bound": [1_100_000.0, 1_200_000.0],
-        "electricity_total_value_percent_difference": [None, 10.0],
-        "model_count": [240.0, 500.0],
-    })
+    data = pl.DataFrame(
+        {
+            "source": ["RECS 2020", "ResStock 2025"],
+            "state": ["CA", "CA"],
+            "electricity_total_value": [1_000_000.0, 1_100_000.0],
+            "electricity_total_value_lower_bound": [900_000.0, 1_000_000.0],
+            "electricity_total_value_upper_bound": [1_100_000.0, 1_200_000.0],
+            "electricity_total_value_percent_difference": [None, 10.0],
+            "model_count": [240.0, 500.0],
+        }
+    )
 
     fig = create_bar_plot(
         data=data,
@@ -248,15 +262,17 @@ def test_bar_hover_display_order_is_value_diff_ci_count():
 
 def test_monthly_hover_display_order_is_value_diff_ci_count():
     """Monthly hover display order must be: value → diff → ci → count."""
-    data = pl.DataFrame({
-        "source": ["ResStock 2025", "ResStock 2025"],
-        "month": ["JAN", "FEB"],
-        "electricity_total_value": [1_100_000.0, 900_000.0],
-        "electricity_total_value_lower_bound": [1_000_000.0, 800_000.0],
-        "electricity_total_value_upper_bound": [1_200_000.0, 1_000_000.0],
-        "electricity_total_value_percent_difference": [10.0, -5.0],
-        "model_count": [500.0, 500.0],
-    })
+    data = pl.DataFrame(
+        {
+            "source": ["ResStock 2025", "ResStock 2025"],
+            "month": ["JAN", "FEB"],
+            "electricity_total_value": [1_100_000.0, 900_000.0],
+            "electricity_total_value_lower_bound": [1_000_000.0, 800_000.0],
+            "electricity_total_value_upper_bound": [1_200_000.0, 1_000_000.0],
+            "electricity_total_value_percent_difference": [10.0, -5.0],
+            "model_count": [500.0, 500.0],
+        }
+    )
 
     fig = create_ts_plot(
         data=data,
@@ -287,11 +303,13 @@ def test_monthly_hover_display_order_is_value_diff_ci_count():
 
 def test_monthly_hover_expands_abbreviated_month_labels():
     """Monthly hover must show the full month name ('January') not 'JAN' or '   Jan'."""
-    data = pl.DataFrame({
-        "source": ["ResStock 2025", "ResStock 2025"],
-        "month": ["JAN", "FEB"],
-        "electricity_total_value": [1_100_000.0, 900_000.0],
-    })
+    data = pl.DataFrame(
+        {
+            "source": ["ResStock 2025", "ResStock 2025"],
+            "month": ["JAN", "FEB"],
+            "electricity_total_value": [1_100_000.0, 900_000.0],
+        }
+    )
 
     fig = create_ts_plot(
         data=data,
@@ -314,11 +332,13 @@ def test_monthly_hover_expands_abbreviated_month_labels():
 
 def test_monthly_hover_passes_non_month_strings_through():
     """Non-month string x values (e.g. 'Hour 1') should pass through unchanged (stripped)."""
-    data = pl.DataFrame({
-        "source": ["ResStock 2025", "ResStock 2025"],
-        "x_label": ["  Hour 1  ", "Hour 24"],
-        "electricity_total_value": [1_100_000.0, 900_000.0],
-    })
+    data = pl.DataFrame(
+        {
+            "source": ["ResStock 2025", "ResStock 2025"],
+            "x_label": ["  Hour 1  ", "Hour 24"],
+            "electricity_total_value": [1_100_000.0, 900_000.0],
+        }
+    )
 
     fig = create_ts_plot(
         data=data,
@@ -335,12 +355,14 @@ def test_monthly_hover_passes_non_month_strings_through():
 
 
 def test_monthly_hover_includes_percent_difference_line():
-    data = pl.DataFrame({
-        "source": ["RECS 2020", "RECS 2020", "ResStock 2025", "ResStock 2025"],
-        "month": ["JAN", "FEB", "JAN", "FEB"],
-        "electricity_total_value": [1_000_000_000.0, 90_000_000.0, 1_100_000_000.0, 80_000_000.0],
-        "electricity_total_value_percent_difference": [None, None, 10.0, -11.11],
-    })
+    data = pl.DataFrame(
+        {
+            "source": ["RECS 2020", "RECS 2020", "ResStock 2025", "ResStock 2025"],
+            "month": ["JAN", "FEB", "JAN", "FEB"],
+            "electricity_total_value": [1_000_000_000.0, 90_000_000.0, 1_100_000_000.0, 80_000_000.0],
+            "electricity_total_value_percent_difference": [None, None, 10.0, -11.11],
+        }
+    )
 
     fig = create_ts_plot(
         data=data,

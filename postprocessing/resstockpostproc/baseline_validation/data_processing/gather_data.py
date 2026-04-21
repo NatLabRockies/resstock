@@ -71,10 +71,7 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
 
     if "eiaid" in df.columns and "utility" in plot_spec.effective_group_by:
         df = df.with_columns(
-            pl.col("eiaid")
-            .cast(pl.Int16)
-            .replace_strict(ID2UtilityName, default="Unknown Utility")
-            .alias("utility")
+            pl.col("eiaid").cast(pl.Int16).replace_strict(ID2UtilityName, default="Unknown Utility").alias("utility")
         )
 
     # Apply focus_on post-filters.
@@ -108,11 +105,7 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
     # model_count with the quantity-specific nonzero count when available.
     # ALL-enduse plots keep the total; the grouped plotter substitutes per-enduse
     # counts from {quantity}_nonzero_sample_count itself.
-    if (
-        plot_spec.coverage == CoverageType.users_only
-        and not plot_spec.is_all_enduses
-        and "model_count" in df.columns
-    ):
+    if plot_spec.coverage == CoverageType.users_only and not plot_spec.is_all_enduses and "model_count" in df.columns:
         nonzero_col = f"{plot_spec.quantity}_nonzero_sample_count"
         if nonzero_col in df.columns:
             df = df.with_columns(pl.col(nonzero_col).alias("model_count"))

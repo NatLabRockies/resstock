@@ -1,6 +1,5 @@
 """Tests for plot_generator discrepancy math and list unnesting."""
 
-
 import polars as pl
 import pytest
 
@@ -59,11 +58,13 @@ class TestComputeDiscrepancy:
         # ref = [100, 200], rs = [110, 190]
         # terms = [10/100, 10/200]
         # MAPE = mean(0.1, 0.05) * 100 = 7.5
-        data = pl.DataFrame({
-            "source": ["eia_2018", "eia_2018", "resstock_2024", "resstock_2024"],
-            "state": ["CA", "NY", "CA", "NY"],
-            "electricity_total_value": [100.0, 200.0, 110.0, 190.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["eia_2018", "eia_2018", "resstock_2024", "resstock_2024"],
+                "state": ["CA", "NY", "CA", "NY"],
+                "electricity_total_value": [100.0, 200.0, 110.0, 190.0],
+            }
+        )
         spec = _make_spec()
         metrics = compute_discrepancy(data, spec)
 
@@ -73,11 +74,13 @@ class TestComputeDiscrepancy:
 
     def test_positive_bias(self):
         """ResStock consistently higher -> higher MAPE."""
-        data = pl.DataFrame({
-            "source": ["eia_2018", "resstock_2024"],
-            "state": ["CA", "CA"],
-            "electricity_total_value": [100.0, 120.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["eia_2018", "resstock_2024"],
+                "state": ["CA", "CA"],
+                "electricity_total_value": [100.0, 120.0],
+            }
+        )
         spec = _make_spec()
         metrics = compute_discrepancy(data, spec)
 
@@ -86,11 +89,13 @@ class TestComputeDiscrepancy:
 
     def test_multiple_sources(self):
         """Each ResStock source should get its own metric entry."""
-        data = pl.DataFrame({
-            "source": ["eia_2018", "resstock_2024", "resstock_2025"],
-            "state": ["CA", "CA", "CA"],
-            "electricity_total_value": [100.0, 120.0, 110.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["eia_2018", "resstock_2024", "resstock_2025"],
+                "state": ["CA", "CA", "CA"],
+                "electricity_total_value": [100.0, 120.0, 110.0],
+            }
+        )
         spec = _make_spec()
         metrics = compute_discrepancy(data, spec)
 
@@ -117,29 +122,35 @@ class TestComputeDiscrepancy:
         assert compute_discrepancy(data, spec) == {}
 
     def test_returns_empty_when_no_resstock_rows(self):
-        data = pl.DataFrame({
-            "source": ["eia_2018", "eia_2018"],
-            "state": ["CA", "NY"],
-            "electricity_total_value": [100.0, 200.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["eia_2018", "eia_2018"],
+                "state": ["CA", "NY"],
+                "electricity_total_value": [100.0, 200.0],
+            }
+        )
         spec = _make_spec()
         assert compute_discrepancy(data, spec) == {}
 
     def test_returns_empty_when_zero_reference(self):
-        data = pl.DataFrame({
-            "source": ["eia_2018", "resstock_2024"],
-            "state": ["CA", "CA"],
-            "electricity_total_value": [0.0, 50.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["eia_2018", "resstock_2024"],
+                "state": ["CA", "CA"],
+                "electricity_total_value": [0.0, 50.0],
+            }
+        )
         spec = _make_spec()
         assert compute_discrepancy(data, spec) == {}
 
     def test_skips_zero_reference_rows_in_mape_average(self):
-        data = pl.DataFrame({
-            "source": ["eia_2018", "eia_2018", "resstock_2024", "resstock_2024"],
-            "state": ["CA", "NY", "CA", "NY"],
-            "electricity_total_value": [0.0, 200.0, 50.0, 220.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["eia_2018", "eia_2018", "resstock_2024", "resstock_2024"],
+                "state": ["CA", "NY", "CA", "NY"],
+                "electricity_total_value": [0.0, 200.0, 50.0, 220.0],
+            }
+        )
         spec = _make_spec()
 
         metrics = compute_discrepancy(data, spec)
@@ -149,11 +160,13 @@ class TestComputeDiscrepancy:
 
     def test_excludes_us_total_by_default(self):
         """US Total rows should be excluded when focus_on is not 'US Total'."""
-        data = pl.DataFrame({
-            "source": ["eia_2018", "eia_2018", "resstock_2024", "resstock_2024"],
-            "state": ["CA", "US Total", "CA", "US Total"],
-            "electricity_total_value": [100.0, 999.0, 100.0, 999.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["eia_2018", "eia_2018", "resstock_2024", "resstock_2024"],
+                "state": ["CA", "US Total", "CA", "US Total"],
+                "electricity_total_value": [100.0, 999.0, 100.0, 999.0],
+            }
+        )
         spec = _make_spec()
         mape = compute_discrepancy(data, spec)["ResStock 2024"]
 
@@ -162,34 +175,40 @@ class TestComputeDiscrepancy:
 
     def test_includes_us_total_when_focused(self):
         """When focused on US Total, US Total rows should be included."""
-        data = pl.DataFrame({
-            "source": ["eia_2018", "resstock_2024"],
-            "state": ["US Total", "US Total"],
-            "electricity_total_value": [100.0, 120.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["eia_2018", "resstock_2024"],
+                "state": ["US Total", "US Total"],
+                "electricity_total_value": [100.0, 120.0],
+            }
+        )
         spec = _make_spec(focus_on=(("state", "US Total"),), group_by=None)
         mape = compute_discrepancy(data, spec)["ResStock 2024"]
         assert mape == pytest.approx(20.0)
 
     def test_units_count_quantity(self):
         """When quantity is UNITS_COUNT, val_col should be 'units_count'."""
-        data = pl.DataFrame({
-            "source": ["eia_2018", "resstock_2024"],
-            "state": ["CA", "CA"],
-            "units_count": [1000.0, 1100.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["eia_2018", "resstock_2024"],
+                "state": ["CA", "CA"],
+                "units_count": [1000.0, 1100.0],
+            }
+        )
         spec = _make_spec(quantity=DataCol.UNITS_COUNT)
         mape = compute_discrepancy(data, spec)["ResStock 2024"]
         assert mape == pytest.approx(10.0)
 
     def test_monthly_resolution_joins_on_month(self):
         """Monthly data should join on both state and month."""
-        data = pl.DataFrame({
-            "source": ["eia_2018", "eia_2018", "resstock_2024", "resstock_2024"],
-            "state": ["CA", "CA", "CA", "CA"],
-            "month": ["JAN", "FEB", "JAN", "FEB"],
-            "electricity_total_value": [100.0, 200.0, 110.0, 220.0],
-        })
+        data = pl.DataFrame(
+            {
+                "source": ["eia_2018", "eia_2018", "resstock_2024", "resstock_2024"],
+                "state": ["CA", "CA", "CA", "CA"],
+                "month": ["JAN", "FEB", "JAN", "FEB"],
+                "electricity_total_value": [100.0, 200.0, 110.0, 220.0],
+            }
+        )
         spec = _make_spec(resolution=Resolution.month)
         mape = compute_discrepancy(data, spec)["ResStock 2024"]
         assert mape == pytest.approx(10.0)
@@ -198,12 +217,14 @@ class TestComputeDiscrepancy:
 class TestAllEndusesHelpers:
     def test_to_all_enduses_tall_data_renames_quantity_prefix_and_adds_enduse(self):
         spec = _make_spec(quantity=DataCol.ELECTRICITY_TOTAL)
-        df = pl.DataFrame({
-            "source": ["recs_2020"],
-            "state": ["CA"],
-            "electricity_total_value": [123.4],
-            "electricity_total_percent_difference": [1.5],
-        })
+        df = pl.DataFrame(
+            {
+                "source": ["recs_2020"],
+                "state": ["CA"],
+                "electricity_total_value": [123.4],
+                "electricity_total_percent_difference": [1.5],
+            }
+        )
         out = to_all_enduses_tall_data(df, spec)
 
         assert out.columns[0] == "enduse"
@@ -234,21 +255,11 @@ class TestAllEndusesHelpers:
         assert all_enduses_viz_label(diff_spec, stacked=True) == "Bar Plot (stacked difference view)"
 
     def test_should_generate_stacked_table(self):
-        assert should_generate_stacked_table(
-            "State", ComparisonDataset.recs, Resolution.year, Metric.total
-        ) is True
-        assert should_generate_stacked_table(
-            "", ComparisonDataset.recs, Resolution.year, Metric.total
-        ) is False
-        assert should_generate_stacked_table(
-            "", ComparisonDataset.recs, Resolution.month, Metric.total
-        ) is True
-        assert should_generate_stacked_table(
-            "", ComparisonDataset.recs, Resolution.year, Metric.distribution
-        ) is True
-        assert should_generate_stacked_table(
-            "", ComparisonDataset.eia, Resolution.year, Metric.total
-        ) is True
+        assert should_generate_stacked_table("State", ComparisonDataset.recs, Resolution.year, Metric.total) is True
+        assert should_generate_stacked_table("", ComparisonDataset.recs, Resolution.year, Metric.total) is False
+        assert should_generate_stacked_table("", ComparisonDataset.recs, Resolution.month, Metric.total) is True
+        assert should_generate_stacked_table("", ComparisonDataset.recs, Resolution.year, Metric.distribution) is True
+        assert should_generate_stacked_table("", ComparisonDataset.eia, Resolution.year, Metric.total) is True
 
     def test_should_generate_stacked_page_group_skips_lrd(self):
         lrd_spec = _make_spec(
@@ -553,9 +564,7 @@ class TestGenerateSlotTriples:
 
     def test_two_geo_chars(self):
         """Two geographic chars — cross-filter combos blocked by geo constraint."""
-        triples = generate_slot_triples(
-            ("state", "census_division_recs"), allow_cross_filter=True
-        )
+        triples = generate_slot_triples(("state", "census_division_recs"), allow_cross_filter=True)
         expected = [
             (None, None, None),
             (None, None, "state"),
@@ -571,7 +580,8 @@ class TestGenerateSlotTriples:
     def test_cross_filter_chars_count(self):
         """RECS annual with cross_filter_chars produces exactly 23 triples."""
         triples = generate_slot_triples(
-            RECS_ANNUAL_CHARS, allow_cross_filter=True,
+            RECS_ANNUAL_CHARS,
+            allow_cross_filter=True,
             cross_filter_chars=RECS_CROSS_FILTER_CHARS,
         )
         assert len(triples) == 23
@@ -579,7 +589,8 @@ class TestGenerateSlotTriples:
     def test_cross_filter_chars_restricts_f1(self):
         """F1 only appears for chars in cross_filter_chars."""
         triples = generate_slot_triples(
-            RECS_ANNUAL_CHARS, allow_cross_filter=True,
+            RECS_ANNUAL_CHARS,
+            allow_cross_filter=True,
             cross_filter_chars=RECS_CROSS_FILTER_CHARS,
         )
         f1_chars = {f1 for f1, _, _ in triples if f1 is not None}
@@ -588,7 +599,8 @@ class TestGenerateSlotTriples:
     def test_cross_filter_chars_restricts_f2(self):
         """F2 only appears for chars in cross_filter_chars."""
         triples = generate_slot_triples(
-            RECS_ANNUAL_CHARS, allow_cross_filter=True,
+            RECS_ANNUAL_CHARS,
+            allow_cross_filter=True,
             cross_filter_chars=RECS_CROSS_FILTER_CHARS,
         )
         f2_chars = {f2 for _, f2, _ in triples if f2 is not None}
@@ -597,7 +609,8 @@ class TestGenerateSlotTriples:
     def test_cross_filter_chars_block1_unchanged(self):
         """Block 1 (None, None, agg) triples still include all 6 chars."""
         triples = generate_slot_triples(
-            RECS_ANNUAL_CHARS, allow_cross_filter=True,
+            RECS_ANNUAL_CHARS,
+            allow_cross_filter=True,
             cross_filter_chars=RECS_CROSS_FILTER_CHARS,
         )
         block1_aggs = {agg for f1, f2, agg in triples if f1 is None and f2 is None and agg is not None}
@@ -606,19 +619,22 @@ class TestGenerateSlotTriples:
     def test_cross_filter_chars_agg_uses_all_eligible(self):
         """(f1, None, agg) triples still use all eligible non-conflicting chars for agg."""
         triples = generate_slot_triples(
-            RECS_ANNUAL_CHARS, allow_cross_filter=True,
+            RECS_ANNUAL_CHARS,
+            allow_cross_filter=True,
             cross_filter_chars=RECS_CROSS_FILTER_CHARS,
         )
         # For F1=building_type (non-geo), agg should include all 5 other chars
-        bt_aggs = {agg for f1, f2, agg in triples
-                   if f1 == "geometry_building_type_recs" and f2 is None and agg is not None}
+        bt_aggs = {
+            agg for f1, f2, agg in triples if f1 == "geometry_building_type_recs" and f2 is None and agg is not None
+        }
         expected = set(RECS_ANNUAL_CHARS) - {"geometry_building_type_recs"}
         assert bt_aggs == expected
 
     def test_cross_filter_chars_none_is_backward_compatible(self):
         """cross_filter_chars=None preserves original 49-triple behavior."""
         triples = generate_slot_triples(
-            RECS_ANNUAL_CHARS, allow_cross_filter=True,
+            RECS_ANNUAL_CHARS,
+            allow_cross_filter=True,
             cross_filter_chars=None,
         )
         assert len(triples) == 49

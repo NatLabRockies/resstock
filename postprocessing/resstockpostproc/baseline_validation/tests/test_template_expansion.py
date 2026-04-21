@@ -47,13 +47,17 @@ def _install_expansion_stubs(monkeypatch, triples):
 
     base_data = {
         ("state",): pl.DataFrame({"state": ["NY", "CA", "US Total"]}),
-        ("geometry_building_type_recs",): pl.DataFrame({
-            "geometry_building_type_recs": ["Single-Family Detached", "Mobile Home"],
-        }),
-        ("state", "vintage"): pl.DataFrame({
-            "state": ["CA", "NY"],
-            "vintage": ["1990s", "2000s"],
-        }),
+        ("geometry_building_type_recs",): pl.DataFrame(
+            {
+                "geometry_building_type_recs": ["Single-Family Detached", "Mobile Home"],
+            }
+        ),
+        ("state", "vintage"): pl.DataFrame(
+            {
+                "state": ["CA", "NY"],
+                "vintage": ["1990s", "2000s"],
+            }
+        ),
     }
 
     def fake_get_base_data(data_key):

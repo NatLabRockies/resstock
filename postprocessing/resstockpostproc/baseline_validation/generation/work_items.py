@@ -96,9 +96,15 @@ def template_signature(tmpl: PlotTemplate) -> tuple:
                 break
 
     return (
-        tmpl.comparison_dataset, tmpl.resolution, tmpl.view,
-        tmpl.aggregation_type, cov_type, qty_type,
-        fuel_type, is_total, len(tmpl.eligible_chars),
+        tmpl.comparison_dataset,
+        tmpl.resolution,
+        tmpl.view,
+        tmpl.aggregation_type,
+        cov_type,
+        qty_type,
+        fuel_type,
+        is_total,
+        len(tmpl.eligible_chars),
     )
 
 
@@ -176,7 +182,7 @@ def expand_templates(
                 # "US Total overview" — fetch state-level data but focus on
                 # US Total only.  group_by stays None so downstream code
                 # treats this as a single-entity plot (no Group By in index).
-                default_char = tmpl.eligible_chars[0]   # "state" for RECS/EIA
+                default_char = tmpl.eligible_chars[0]  # "state" for RECS/EIA
                 spec = _make_spec(
                     comparison_dataset=tmpl.comparison_dataset,
                     quantity=tmpl.quantity,
@@ -186,9 +192,11 @@ def expand_templates(
                     group_by=default_char,
                     view=tmpl.view,
                 )
-                spec = spec.model_copy(update={
-                    "focus_on": ((default_char, "US Total"),),
-                })
+                spec = spec.model_copy(
+                    update={
+                        "focus_on": ((default_char, "US Total"),),
+                    }
+                )
                 spec_family = _make_related_specs(spec)
                 main_spec = spec_family[0]
                 spec_entries = build_spec_entries(spec_family)
@@ -202,19 +210,31 @@ def expand_templates(
                     base_data = get_base_data(data_key)
                     col = group_by
                     for val in sorted(v for v in base_data[col].unique().to_list() if v is not None):
-                        work_items.append((
-                            spec_family, tmpl_index, spec_entries, None,
-                            ((group_by, val),), None,
-                        ))
+                        work_items.append(
+                            (
+                                spec_family,
+                                tmpl_index,
+                                spec_entries,
+                                None,
+                                ((group_by, val),),
+                                None,
+                            )
+                        )
                     continue
                 # Warm the disk cache so worker processes find the data.
                 get_base_data(main_spec.data_key)
                 # Pass focus_on from the spec so the US Total focus (set by
                 # the (None,None,None) handler above) propagates to plotters.
-                work_items.append((
-                    spec_family, tmpl_index, spec_entries, None,
-                    main_spec.focus_on, group_by,
-                ))
+                work_items.append(
+                    (
+                        spec_family,
+                        tmpl_index,
+                        spec_entries,
+                        None,
+                        main_spec.focus_on,
+                        group_by,
+                    )
+                )
                 continue
 
             # --- F1 is set: discover F1 values ---
@@ -230,10 +250,7 @@ def expand_templates(
             )
             f1_data = get_base_data(f1_lookup_spec.data_key)
             f1_col = f1_char
-            f1_values = sorted(
-                v for v in f1_data[f1_col].unique().to_list()
-                if v is not None and v != "US Total"
-            )
+            f1_values = sorted(v for v in f1_data[f1_col].unique().to_list() if v is not None and v != "US Total")
             if test_only:
                 f1_values = f1_values[:1]
 
@@ -243,7 +260,8 @@ def expand_templates(
                     if group_by is not None:
                         # Cross-filter: F1 set + group_by set → overview only
                         filtered_entries = build_filtered_entries(
-                            spec_entries, ((f1_char, f1_val),),
+                            spec_entries,
+                            ((f1_char, f1_val),),
                         )
                         if not filtered_entries:
                             continue
@@ -251,17 +269,31 @@ def expand_templates(
                         # workers will request (focus_on col + group_by).
                         get_base_data(filtered_entries[0][0].data_key)
                         focus_on = ((f1_char, f1_val),)
-                        work_items.append((
-                            spec_family, tmpl_index, filtered_entries, None, focus_on, group_by,
-                        ))
+                        work_items.append(
+                            (
+                                spec_family,
+                                tmpl_index,
+                                filtered_entries,
+                                None,
+                                focus_on,
+                                group_by,
+                            )
+                        )
                     else:
                         # F1 set, no agg, no F2 → single filtered entity, no grouping
                         focus_on = ((f1_char, f1_val),)
                         filtered_entries = build_filtered_entries(spec_entries, focus_on)
                         if filtered_entries:
-                            work_items.append((
-                                spec_family, tmpl_index, filtered_entries, None, focus_on, None,
-                            ))
+                            work_items.append(
+                                (
+                                    spec_family,
+                                    tmpl_index,
+                                    filtered_entries,
+                                    None,
+                                    focus_on,
+                                    None,
+                                )
+                            )
                     continue
 
                 # --- Case 3: F1 set, F2 set (group_by is always None) ---
@@ -280,18 +312,22 @@ def expand_templates(
                 if f2_col not in f2_data.columns:
                     continue
 
-                f2_values = sorted(
-                    v for v in f2_data[f2_col].unique().to_list()
-                    if v is not None and v != "US Total"
-                )
+                f2_values = sorted(v for v in f2_data[f2_col].unique().to_list() if v is not None and v != "US Total")
                 if test_only:
                     f2_values = f2_values[:1]
 
                 for f2_val in f2_values:
                     focus_on = ((f1_char, f1_val), (f2_char, f2_val))
-                    work_items.append((
-                        spec_family, tmpl_index, spec_entries, None, focus_on, None,
-                    ))
+                    work_items.append(
+                        (
+                            spec_family,
+                            tmpl_index,
+                            spec_entries,
+                            None,
+                            focus_on,
+                            None,
+                        )
+                    )
 
     logger.info(f"Template expansion: {len(templates)} templates -> {len(work_items)} work items")
     return work_items
@@ -390,10 +426,12 @@ def _build_focused_entries(
     """Build the per-work-item (focused_spec, viz_label) list for rendering."""
     focused_entries: list[tuple[PlotSpec, str]] = []
     for spec, _ in spec_entries:
-        focused_spec = spec.model_copy(update={
-            "focus_on": final_focus_on,
-            "group_by": final_agg,
-        })
+        focused_spec = spec.model_copy(
+            update={
+                "focus_on": final_focus_on,
+                "group_by": final_agg,
+            }
+        )
         if not emit_layout_for_final_group(focused_spec, final_agg):
             continue
         viz_label = (
@@ -458,9 +496,11 @@ def build_plot_args(
         # Skip ALL (already stacked) and UNITS_COUNT (not an enduse).
         if main_spec.quantity in (DataCol.ALL, DataCol.UNITS_COUNT):
             continue
-        stacking_groups[_stacking_group_key(row)].append((
-            display_spec.display_quantity,
-            focused_entries,
-        ))
+        stacking_groups[_stacking_group_key(row)].append(
+            (
+                display_spec.display_quantity,
+                focused_entries,
+            )
+        )
 
     return results, plot_args, stacking_groups

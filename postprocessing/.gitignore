@@ -15,4 +15,5 @@ build/
 .env
 .history
 resstockpostproc/upgrade_comparison/sdr_plots/
+resstockpostproc/baseline_validation/scripts/
 uv

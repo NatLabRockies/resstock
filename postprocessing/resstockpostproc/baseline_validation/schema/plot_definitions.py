@@ -229,6 +229,7 @@ SpecFamily = list[PlotSpec]
 # Helpers
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def _extra_views_for(spec: PlotSpec) -> list[ViewType]:
     """Determine any companion extra-views for a main spec."""
     if spec.is_distribution_metric:
@@ -326,13 +327,18 @@ def _make_spec(
 # Template generators
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def _eia_templates() -> Iterator[PlotTemplate]:
     """Generate EIA plot templates (no group_by baked in)."""
 
     def mk(q, res, agg_type, cov, view=ViewType.value_view):
         return PlotTemplate(
-            comparison_dataset=ComparisonDataset.eia, quantity=q, resolution=res,
-            aggregation_type=agg_type, coverage=cov, view=view,
+            comparison_dataset=ComparisonDataset.eia,
+            quantity=q,
+            resolution=res,
+            aggregation_type=agg_type,
+            coverage=cov,
+            view=view,
             eligible_chars=EIA_CHARS,
         )
 
@@ -352,8 +358,7 @@ def _eia_templates() -> Iterator[PlotTemplate]:
         if quantity == DataCol.NATURAL_GAS_TOTAL:
             for res in (Resolution.year, Resolution.month):
                 yield mk(quantity, res, Metric.average, CoverageType.users_only)
-            yield mk(quantity, Resolution.year, Metric.penetration,
-                     CoverageType.all_units, ViewType.value_view)
+            yield mk(quantity, Resolution.year, Metric.penetration, CoverageType.all_units, ViewType.value_view)
 
 
 def _all_enduses_templates() -> Iterator[PlotTemplate]:
@@ -362,10 +367,15 @@ def _all_enduses_templates() -> Iterator[PlotTemplate]:
     Distribution metric is intentionally excluded because PlotSpec requires
     distribution to use a specific end-use quantity (not DataCol.ALL).
     """
+
     def mk(agg, cov, view):
         return PlotTemplate(
-            comparison_dataset=ComparisonDataset.recs, quantity=DataCol.ALL, resolution=Resolution.year,
-            aggregation_type=agg, coverage=cov, view=view,
+            comparison_dataset=ComparisonDataset.recs,
+            quantity=DataCol.ALL,
+            resolution=Resolution.year,
+            aggregation_type=agg,
+            coverage=cov,
+            view=view,
             eligible_chars=RECS_ANNUAL_CHARS,
         )
 
@@ -382,11 +392,14 @@ def _recs_energy_templates(quantity: DataCol) -> Iterator[PlotTemplate]:
 
     def mk(res, agg_type, cov, view=ViewType.value_view, chars=RECS_ANNUAL_CHARS):
         return PlotTemplate(
-            comparison_dataset=ComparisonDataset.recs, quantity=quantity, resolution=res,
-            aggregation_type=agg_type, coverage=cov, view=view,
+            comparison_dataset=ComparisonDataset.recs,
+            quantity=quantity,
+            resolution=res,
+            aggregation_type=agg_type,
+            coverage=cov,
+            view=view,
             eligible_chars=chars,
         )
-
 
     # Annual templates (all 6 chars eligible)
     yield mk(Resolution.year, Metric.total, CoverageType.all_units)
@@ -411,9 +424,12 @@ def _recs_templates() -> Iterator[PlotTemplate]:
     for quantity in RECS_QUANTITIES:
         if quantity == DataCol.UNITS_COUNT:
             yield PlotTemplate(
-                comparison_dataset=ComparisonDataset.recs, quantity=DataCol.UNITS_COUNT,
-                resolution=Resolution.year, aggregation_type=Metric.total,
-                coverage=CoverageType.all_units, view=ViewType.value_view,
+                comparison_dataset=ComparisonDataset.recs,
+                quantity=DataCol.UNITS_COUNT,
+                resolution=Resolution.year,
+                aggregation_type=Metric.total,
+                coverage=CoverageType.all_units,
+                view=ViewType.value_view,
                 eligible_chars=RECS_ANNUAL_CHARS,
             )
         elif quantity == DataCol.ALL:
@@ -427,16 +443,22 @@ def _lrd_templates() -> Iterator[PlotTemplate]:
     for quantity in LRD_QUANTITIES:
         for resolution, view in _LRD_METRICS:
             yield PlotTemplate(
-                comparison_dataset=ComparisonDataset.lrd, quantity=quantity,
-                resolution=resolution, aggregation_type=Metric.average,
-                coverage=CoverageType.all_units, view=view,
+                comparison_dataset=ComparisonDataset.lrd,
+                quantity=quantity,
+                resolution=resolution,
+                aggregation_type=Metric.average,
+                coverage=CoverageType.all_units,
+                view=view,
                 eligible_chars=LRD_CHARS,
             )
             if resolution == Resolution.hour_of_year:
                 yield PlotTemplate(
-                    comparison_dataset=ComparisonDataset.lrd, quantity=quantity,
-                    resolution=resolution, aggregation_type=Metric.average,
-                    coverage=CoverageType.all_units, view=ViewType.temp_view,
+                    comparison_dataset=ComparisonDataset.lrd,
+                    quantity=quantity,
+                    resolution=resolution,
+                    aggregation_type=Metric.average,
+                    coverage=CoverageType.all_units,
+                    view=ViewType.temp_view,
                     eligible_chars=LRD_CHARS,
                 )
 

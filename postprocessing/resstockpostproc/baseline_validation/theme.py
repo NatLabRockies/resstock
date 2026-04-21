@@ -9,8 +9,16 @@ HIGHLIGHT_COLOR = "#FFB239"
 NEUTRAL_COLOR = "#4A4D4A"
 
 CATEGORICAL_COLORS = [
-    "#0071BD", "#EF1C21", "#FFB239", "#51e889", "#29AAE7",
-    "#F7DF10", "#FF79AD", "#632C94", "#4A4D4A", "#D3D3D3",
+    "#0071BD",
+    "#EF1C21",
+    "#FFB239",
+    "#51e889",
+    "#29AAE7",
+    "#F7DF10",
+    "#FF79AD",
+    "#632C94",
+    "#4A4D4A",
+    "#D3D3D3",
 ]
 
 DEFAULT_LAYOUT = {
@@ -50,14 +58,14 @@ DEFAULT_YAXIS = {
     "mirror": False,
 }
 
+
 def apply_theme(fig: go.Figure, title: str | None = None, **kwargs) -> go.Figure:
     """Apply consistent theme to a Plotly figure."""
     layout_updates = DEFAULT_LAYOUT.copy()
     layout_updates.update(kwargs)
 
     if title:
-        layout_updates["title"] = {"text": title, "font": {"size": 16, "color": "#333"},
-                                   "x": 0.5, "xanchor": "center"}
+        layout_updates["title"] = {"text": title, "font": {"size": 16, "color": "#333"}, "x": 0.5, "xanchor": "center"}
         if "<br>" in title:
             margin = layout_updates.get("margin", {}).copy()
             margin["t"] = margin.get("t", 80) + 30

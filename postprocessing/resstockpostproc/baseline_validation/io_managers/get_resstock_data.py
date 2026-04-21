@@ -60,7 +60,9 @@ def get_timeseries_all(
         nonzero_sample_cols = [col for col in nonzero_sample_cols if col in annual_df.columns]
         df = df.join(
             annual_df.select([by] + percent_users_cols + nonzero_sample_cols),
-            on=[by], how="left", maintain_order="left_right",
+            on=[by],
+            how="left",
+            maintain_order="left_right",
         )
         df = apply_aggregation(data_key, df)
         df = df.with_columns(pl.lit(data_source.name).alias("source"))
@@ -99,9 +101,7 @@ def _reshape_hour_of_day(result: pl.DataFrame, by: str, ts_col: str) -> pl.DataF
     )
 
 
-def _reshape_hour_of_day_season(
-    result: pl.DataFrame, by: str, ts_col: str, resolution: Resolution
-) -> pl.DataFrame:
+def _reshape_hour_of_day_season(result: pl.DataFrame, by: str, ts_col: str, resolution: Resolution) -> pl.DataFrame:
     months = _HOUR_OF_DAY_SEASON_MONTHS[resolution]
     value_cols = [col for col in result.columns if col not in {by, ts_col, "month"}]
     return (
@@ -120,10 +120,7 @@ def _reshape_hour_of_day_matrix(result: pl.DataFrame, by: str, ts_col: str) -> p
     with_keys = result.with_columns(
         pl.col(ts_col).dt.hour().alias("hour of day"),
         pl.col(ts_col).dt.month().replace_strict(NUM2MONTH, default=None).alias("month"),
-        pl.when(pl.col(ts_col).dt.weekday() < 5)
-        .then(pl.lit("Weekday"))
-        .otherwise(pl.lit("Weekend"))
-        .alias("day_type"),
+        pl.when(pl.col(ts_col).dt.weekday() < 5).then(pl.lit("Weekday")).otherwise(pl.lit("Weekend")).alias("day_type"),
     )
     value_cols = [col for col in result.columns if col not in {by, ts_col}]
 

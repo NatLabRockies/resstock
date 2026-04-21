@@ -41,13 +41,9 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
         f'  <script src="{data_dir_href}/{COMBINATIONS_FILENAME}" defer></script>',
     ]
     if "" in manifest:
-        data_script_tags.append(
-            f'  <script src="{data_dir_href}/{manifest[""]}" defer></script>'
-        )
+        data_script_tags.append(f'  <script src="{data_dir_href}/{manifest[""]}" defer></script>')
     for key in sorted(k for k in manifest if k != ""):
-        data_script_tags.append(
-            f'  <script src="{data_dir_href}/{manifest[key]}" defer></script>'
-        )
+        data_script_tags.append(f'  <script src="{data_dir_href}/{manifest[key]}" defer></script>')
     data_scripts_html = "\n".join(data_script_tags)
 
     return f"""<!DOCTYPE html>

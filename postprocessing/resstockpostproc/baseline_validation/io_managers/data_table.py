@@ -81,10 +81,7 @@ def _build_table_html(
                 f'<span class="metric-chip-value">{mape:.1f}%</span>'
                 f"</span>"
             )
-        summary_html = (
-            '<span class="summary-prefix">MAPE</span>'
-            + "".join(chips)
-        )
+        summary_html = '<span class="summary-prefix">MAPE</span>' + "".join(chips)
     metrics_details_html = ""
     if include_discrepancy_metrics:
         metrics_details_html = (
@@ -506,10 +503,7 @@ def generate_data_table_html(
     candidate_dim_cols = [entity_col]
     if ts_col and str(ts_col) in pivoted.columns:
         candidate_dim_cols.append(str(ts_col))
-    constant_cols = [
-        c for c in candidate_dim_cols
-        if c in pivoted.columns and pivoted[c].n_unique() <= 1
-    ]
+    constant_cols = [c for c in candidate_dim_cols if c in pivoted.columns and pivoted[c].n_unique() <= 1]
     if constant_cols:
         pivoted = pivoted.drop(constant_cols)
 
@@ -538,14 +532,14 @@ def generate_data_table_html(
                     pl.col(ref_val_col).fill_nan(0),
                     pl.col(rs_val_col).fill_nan(0),
                 )
-                pivoted = pivoted.with_columns(
-                    (pl.col(rs_val_col) - pl.col(ref_val_col)).alias(abs_diff_key)
+                pivoted = pivoted.with_columns((pl.col(rs_val_col) - pl.col(ref_val_col)).alias(abs_diff_key))
+                rs_sources_js.append(
+                    {
+                        "label": rs_label,
+                        "refKey": ref_val_col,
+                        "absDiffKey": abs_diff_key,
+                    }
                 )
-                rs_sources_js.append({
-                    "label": rs_label,
-                    "refKey": ref_val_col,
-                    "absDiffKey": abs_diff_key,
-                })
 
     # Reorder: group each source's columns together (value, abs diff, pct diff).
     # For distribution view, sort each source's stat columns canonically:
@@ -560,12 +554,10 @@ def generate_data_table_html(
 
     if rs_labels:
         dimension_cols = [
-            c for c in pivoted.columns
+            c
+            for c in pivoted.columns
             if not c.startswith(f"{ref_label}: ")
-            and not any(
-                c.startswith((f"{lbl}: ", f"{lbl} Difference"))
-                for lbl in rs_labels
-            )
+            and not any(c.startswith((f"{lbl}: ", f"{lbl} Difference")) for lbl in rs_labels)
         ]
         ref_cols = sorted(
             [c for c in pivoted.columns if c.startswith(f"{ref_label}: ")],
@@ -585,8 +577,14 @@ def generate_data_table_html(
     col_config = build_column_config(pivoted, plot_spec, ref_label, rs_labels)
 
     html = _build_table_html(
-        pivoted, col_config, plot_spec,
-        metrics_by_source, footnotes, source_labels, ref_label, rs_sources_js,
+        pivoted,
+        col_config,
+        plot_spec,
+        metrics_by_source,
+        footnotes,
+        source_labels,
+        ref_label,
+        rs_sources_js,
         csv_download_filename=csv_download_filename,
         include_discrepancy_metrics=include_discrepancy_metrics,
     )

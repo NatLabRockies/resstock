@@ -248,6 +248,7 @@ def generate_spec_plots(
 def worker_init(enable_persistent_kaleido: bool = True):
     """Process initializer for worker pool — collect timing in memory, use read-only disk cache."""
     from resstockpostproc.shared_utils import caching  # noqa: PLC0415 — lazy: runs only in worker process
+
     TimingStats.enable_worker_mode()
     caching.CACHE_READ_ONLY = True
     # Suppress worker stdout/stderr — the main process logs progress via tqdm.
@@ -329,7 +330,10 @@ def _submit_all(executor, plot_args, common_kwargs) -> dict:
     futures: dict = {}
     for sub_key, focused_entries, is_dry_run in plot_args:
         future = executor.submit(
-            worker_run, focused_entries, is_dry_run=is_dry_run, **common_kwargs,
+            worker_run,
+            focused_entries,
+            is_dry_run=is_dry_run,
+            **common_kwargs,
         )
         futures[future] = sub_key
     return futures
@@ -369,7 +373,9 @@ def _render_sequential(plot_args, pbar, common_kwargs, needs_persistent_kaleido,
         ensure_kaleido_sync_server()
     for sub_key, focused_entries, is_dry_run in plot_args:
         result = generate_spec_plots(
-            focused_entries, is_dry_run=is_dry_run, **common_kwargs,
+            focused_entries,
+            is_dry_run=is_dry_run,
+            **common_kwargs,
         )
         handle_result(sub_key, result)
         pbar.update(1)

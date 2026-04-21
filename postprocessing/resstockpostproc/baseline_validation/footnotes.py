@@ -24,8 +24,7 @@ NoteContext = Literal["plot", "table"]
 
 RECS_OCCUPIED_UNITS_NOTE = "Only occupied dwelling units are included in the comparison."
 RECS_ANNUAL_CI_NOTE = (
-    "Error bars represent the 95% confidence interval computed from RECS "
-    "replicate weights using a log-normal method."
+    "Error bars represent the 95% confidence interval computed from RECS replicate weights using a log-normal method."
 )
 RECS_MONTHLY_CI_NOTE = (
     "The darker filled area represents RECS consumption (from the lower confidence bound "
@@ -61,7 +60,7 @@ def _fuel_and_enduse(quantity: DataCol) -> tuple[str, str | None] | None:
     """
     for prefix, fuel_name in _FUEL_PREFIXES.items():
         if quantity.value.startswith(prefix + "_"):
-            enduse = quantity.value[len(prefix) + 1:]
+            enduse = quantity.value[len(prefix) + 1 :]
             if enduse == "total":
                 return (fuel_name, None)
             enduse_name = _ENDUSE_OVERRIDES.get(enduse, enduse.replace("_", " ").title())
@@ -71,11 +70,7 @@ def _fuel_and_enduse(quantity: DataCol) -> tuple[str, str | None] | None:
 
 def _merge_notes(*note_groups: list[str] | None) -> list[str] | None:
     """Flatten note lists, preserving order while removing duplicates."""
-    deduped = list(dict.fromkeys(
-        note
-        for group in note_groups
-        for note in (group or [])
-    ))
+    deduped = list(dict.fromkeys(note for group in note_groups for note in (group or [])))
     return deduped or None
 
 
@@ -91,19 +86,13 @@ def _has_recs_uncertainty(plot_spec: PlotSpec) -> bool:
 def _uses_monthly_ci_band(plot_spec: PlotSpec) -> bool:
     """True for grouped RECS monthly value plots rendered with the filled CI band."""
     return (
-        _has_recs_uncertainty(plot_spec)
-        and plot_spec.resolution == Resolution.month
-        and plot_spec.group_by is not None
+        _has_recs_uncertainty(plot_spec) and plot_spec.resolution == Resolution.month and plot_spec.group_by is not None
     )
 
 
 def _uses_monthly_bar_rse_error_bars(plot_spec: PlotSpec) -> bool:
     """True for single-entity RECS monthly bar plots with RSE-based error bars."""
-    return (
-        _has_recs_uncertainty(plot_spec)
-        and plot_spec.resolution == Resolution.month
-        and plot_spec.group_by is None
-    )
+    return _has_recs_uncertainty(plot_spec) and plot_spec.resolution == Resolution.month and plot_spec.group_by is None
 
 
 def get_dataset_notes(plot_spec: PlotSpec) -> list[str] | None:

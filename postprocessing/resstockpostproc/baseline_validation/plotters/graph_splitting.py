@@ -151,8 +151,7 @@ def split_graph_by_char(df: pl.DataFrame, plot_spec: PlotSpec | None = None):
     char_column = next(
         col
         for col in df.columns
-        if col not in ("source", "model_count", "units_count")
-        and not col.endswith(quantity_suffixes)
+        if col not in ("source", "model_count", "units_count") and not col.endswith(quantity_suffixes)
     )
 
     sorted_chars = resolve_sorted_chars(df, char_column, plot_spec)
@@ -170,6 +169,7 @@ def split_graph_by_char(df: pl.DataFrame, plot_spec: PlotSpec | None = None):
 
     fig = make_subplots(rows=1, cols=1)
     return fig, _graph_iterator()
+
 
 @timed
 def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
@@ -278,10 +278,7 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
                 # Cast scalar numeric enduse columns to Float64 to avoid SchemaError
                 # when sparse data produces Int64 nulls for some enduses.
                 # Skip list columns (e.g. _quartiles) which are already List[Float64].
-                enduse_cols = [
-                    c for c in qty_df.columns
-                    if c.startswith("enduse_") and qty_df[c].dtype.is_numeric()
-                ]
+                enduse_cols = [c for c in qty_df.columns if c.startswith("enduse_") and qty_df[c].dtype.is_numeric()]
                 qty_df = qty_df.with_columns(pl.col(c).cast(pl.Float64) for c in enduse_cols)
                 qty_df = qty_df.with_columns(pl.lit(qty).alias("quantity"))
                 dfs_to_concat.append(qty_df)
@@ -293,13 +290,8 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
 
             # For users_only coverage, the count shown in hover should be
             # the per-enduse nonzero sample count, not the group total.
-            if (
-                plot_spec.coverage == CoverageType.users_only
-                and "enduse_nonzero_sample_count" in group_df.columns
-            ):
-                group_df = group_df.with_columns(
-                    pl.col("enduse_nonzero_sample_count").alias("model_count")
-                )
+            if plot_spec.coverage == CoverageType.users_only and "enduse_nonzero_sample_count" in group_df.columns:
+                group_df = group_df.with_columns(pl.col("enduse_nonzero_sample_count").alias("model_count"))
 
             # Sort enduses by canonical RECS national total order (consistent across all views)
             canonical_order = get_enduse_order().get(group_name, [])
@@ -319,14 +311,11 @@ def split_graph_by_enduse(df: pl.DataFrame, plot_spec: PlotSpec):
 
     return fig, _graph_iterator()
 
+
 @timed
 def split_graph(df: pl.DataFrame, plot_spec: PlotSpec):
     """Split the graph data into subplots based on the plot specification."""
-    if (
-        plot_spec.layout == Layout.two_column
-        and not plot_spec.is_all_enduses
-        and "state" in df.columns
-    ):
+    if plot_spec.layout == Layout.two_column and not plot_spec.is_all_enduses and "state" in df.columns:
         return split_graph_by_state(df)
     if plot_spec.group_by == "state" and not plot_spec.is_all_enduses and not plot_spec.focus_on:
         return split_graph_by_state(df)

@@ -129,6 +129,4 @@ def apply_source_labels(
     label_map = {k: v.label for k, v in data_source_labels.items()}
     if not label_map or "source" not in df.columns:
         return df
-    return df.with_columns(
-        pl.col("source").replace_strict(label_map, default=pl.col("source"))
-    )
+    return df.with_columns(pl.col("source").replace_strict(label_map, default=pl.col("source")))

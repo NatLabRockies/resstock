@@ -42,7 +42,11 @@ def get_annual_all(
             pl.col(f"{DataCol.NATURAL_GAS_TOTAL}_value").sum(), pl.col(f"{DataCol.NATURAL_GAS_TOTAL}_customers").mean()
         )
         year_df = annual_elec_df.join(
-            annual_monthly_gas_df, on=by, how="full", coalesce=True, maintain_order="left_right",
+            annual_monthly_gas_df,
+            on=by,
+            how="full",
+            coalesce=True,
+            maintain_order="left_right",
         )
         year_df = year_df.with_columns(
             (100 * pl.col(f"{DataCol.NATURAL_GAS_TOTAL}_customers") / pl.col(DataCol.UNITS_COUNT)).alias(
@@ -98,7 +102,11 @@ def get_monthly_all(
         monthly_elec_df = _get_eia_monthly_electricity(year=year, by=by)
         monthly_gas_df = _get_eia_monthly_gas(year=year, by=by)
         year_df = monthly_elec_df.join(
-            monthly_gas_df, on=[by, "month"], how="full", coalesce=True, maintain_order="left_right",
+            monthly_gas_df,
+            on=[by, "month"],
+            how="full",
+            coalesce=True,
+            maintain_order="left_right",
         )
         year_df = year_df.with_columns(
             (100 * pl.col(f"{DataCol.NATURAL_GAS_TOTAL}_customers") / pl.col(DataCol.UNITS_COUNT)).alias(
