@@ -10,24 +10,25 @@ Extracted from stacked_plotter.py in refactor plan V2 step 6.2.
 
 import polars as pl
 
-from resstockpostproc.baseline_validation.plot_semantics import quartile_list_column
+from resstockpostproc.baseline_validation.plot_semantics import QUARTILE_INDICES, quartile_list_column
 from resstockpostproc.baseline_validation.schema.plot_spec import CoverageType
 from resstockpostproc.shared_utils.timing import timed
 
 
+# Box plotter reads whisker columns separately from min/max; alias them
+# from the shared quartile indices so there's one source of truth.
+_WHISKER_ALIASES = {"min": "lower_whisker", "max": "upper_whisker"}
+
+
 def add_quartile_cols(df: pl.DataFrame, quartile_column: str) -> pl.DataFrame:
-    """Helper function to get the quartile column names for a given quantity column."""
-    return df.with_columns(
-        [
-            pl.col(quartile_column).list.get(3).cast(pl.Float64).alias("q1"),
-            pl.col(quartile_column).list.get(4).cast(pl.Float64).alias("median"),
-            pl.col(quartile_column).list.get(5).cast(pl.Float64).alias("q3"),
-            pl.col(quartile_column).list.get(0).cast(pl.Float64).alias("lower_whisker"),
-            pl.col(quartile_column).list.get(0).cast(pl.Float64).alias("min"),
-            pl.col(quartile_column).list.get(8).cast(pl.Float64).alias("upper_whisker"),
-            pl.col(quartile_column).list.get(8).cast(pl.Float64).alias("max"),
-        ]
-    )
+    """Extract scalar q1/median/q3/min/max (+ whisker aliases) from the list column."""
+    exprs: list[pl.Expr] = []
+    for idx, name in QUARTILE_INDICES:
+        col = pl.col(quartile_column).list.get(idx).cast(pl.Float64)
+        exprs.append(col.alias(name))
+        if name in _WHISKER_ALIASES:
+            exprs.append(col.alias(_WHISKER_ALIASES[name]))
+    return df.with_columns(exprs)
 
 @timed
 def prepare_box_plot_data(df: pl.DataFrame, quantity: str, coverage: CoverageType) -> pl.DataFrame:
