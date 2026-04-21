@@ -4,7 +4,7 @@
 
 The baseline validation tool generates a comparison dashboard between a ResStock baseline and other data sources (EIA, RECS, utility LRD). The tool for comparing upgrades against baseline within a ResStock run is found in the `upgrade_comparison` folder.
 
-See [`plot_showcase.md`](plot_showcase.md) for a gallery of representative plots the tool produces.
+See [`example_plots/`](example_plots/README.md) for a gallery of representative plots the tool produces.
 
 ## Configuration
 
