@@ -20,10 +20,7 @@ from resstockpostproc.shared_utils.generic_plotters.hover_formatting import form
 
 def _histogram_hover_template(count_label: str | None, count_value: int | None) -> str:
     """Build the histogram hover template, optionally appending a per-trace count row."""
-    if count_label and count_value is not None:
-        count_line = f"<br>{count_label}: {count_value:,}"
-    else:
-        count_line = ""
+    count_line = f"<br>{count_label}: {count_value:,}" if count_label and count_value is not None else ""
     return (
         "%{fullData.name}<br>"
         "Range: %{customdata[0]} to %{customdata[1]}<br>"

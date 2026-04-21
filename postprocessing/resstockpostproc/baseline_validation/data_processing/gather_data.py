@@ -177,10 +177,7 @@ def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
         raise NotImplementedError(f"Comparison dataset {comparison_dataset} not implemented.")
     source_data, resstock_data, groups = adapter(io_data_key)
 
-    if resstock_data is not None:
-        df = pl.concat([source_data, resstock_data], how="diagonal_relaxed")
-    else:
-        df = source_data
+    df = pl.concat([source_data, resstock_data], how="diagonal_relaxed") if resstock_data is not None else source_data
     val_columns = [col for col in df.columns if col.endswith(("_value", "_percent_users"))]
     val_columns += ["units_count"]
     ref_cols = [col for col in df["source"].unique(maintain_order=True) if comparison_dataset in col]

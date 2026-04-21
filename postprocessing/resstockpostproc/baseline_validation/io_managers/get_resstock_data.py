@@ -376,10 +376,7 @@ def _aggregate_raw_annual_groups(
     if rows.is_empty():
         return _empty_raw_annual_frame(group_cols, quantity_cols)
 
-    if group_cols:
-        partitions = rows.partition_by(group_cols, as_dict=True, maintain_order=True)
-    else:
-        partitions = {(): rows}
+    partitions = rows.partition_by(group_cols, as_dict=True, maintain_order=True) if group_cols else {(): rows}
 
     result_rows = []
     for key, group in partitions.items():

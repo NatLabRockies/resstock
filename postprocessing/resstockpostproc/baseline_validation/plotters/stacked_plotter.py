@@ -40,10 +40,7 @@ def get_custom_range(df: pl.DataFrame, plot_spec: PlotSpec) -> tuple[float, floa
     # Determine if this is a distribution (box) plot and get column suffix
     is_dist = plot_spec.is_distribution_metric
     if is_dist:
-        if plot_spec.coverage == CoverageType.users_only:
-            col_suffix = "_nonzero_quartiles"
-        else:
-            col_suffix = "_quartiles"
+        col_suffix = "_nonzero_quartiles" if plot_spec.coverage == CoverageType.users_only else "_quartiles"
     elif plot_spec.is_penetration_metric:
         col_suffix = "_percent_users"
     else:

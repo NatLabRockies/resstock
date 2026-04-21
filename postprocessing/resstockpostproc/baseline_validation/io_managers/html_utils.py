@@ -188,10 +188,7 @@ def postprocess_plot_html(
     # Apply scale and compute container dimensions
     scaled_w = int(float(orig_w) * scale_x)
     scaled_h = int(float(orig_h) * scale_y)
-    if len(chart_sections) > 1:
-        container_h = scaled_h * len(chart_sections)
-    else:
-        container_h = scaled_h
+    container_h = scaled_h * len(chart_sections) if len(chart_sections) > 1 else scaled_h
 
     # Build CSS
     css = (
