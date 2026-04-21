@@ -26,19 +26,7 @@ from resstockpostproc.shared_utils.timing import timed
 
 @timed
 def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[go.Figure, str]:
-    """Create a validation plot from data and specification.
-
-    This is the single entry point for all plot types in baseline validation.
-    Handles RECS, EIA, and LRD comparison datasets with various resolutions and aggregations.
-
-    Args:
-        data: Pre-processed DataFrame from apply_plot_spec()
-        plot_spec: Plot specification defining what to render
-
-    Returns:
-        Tuple of (Plotly figure, title string)
-
-    """
+    """Render ``plot_spec`` against ``data``; single entry point for RECS/EIA/LRD."""
     config = build_plot_config(plot_spec, data)
     fig = _render(data, config, plot_spec)
     fig = apply_theme(fig, title=config.title, height=config.height, width=config.width)
