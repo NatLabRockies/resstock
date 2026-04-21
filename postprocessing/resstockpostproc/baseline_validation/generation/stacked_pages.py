@@ -19,7 +19,9 @@ from resstockpostproc.baseline_validation.footnotes import (
     get_plot_notes,
     get_table_notes,
 )
+from resstockpostproc.baseline_validation.create_html import append_index_row
 from resstockpostproc.baseline_validation.data_processing.gather_data import get_plot_data
+from resstockpostproc.baseline_validation.generation.render_runner import append_plot_row, plot_output_path
 from resstockpostproc.baseline_validation.schema.plot_spec import (
     ALL_ENDUSES_DISPLAY,
     ComparisonDataset,
@@ -171,7 +173,6 @@ def collect_stacked_notes(
 
 def _raw_path(output_root: Path, spec: PlotSpec, link_format: FileType) -> Path:
     """Return the `.raw.<fmt>` sibling path for a spec's Pass 3 plot output."""
-    from resstockpostproc.baseline_validation.generation.render_runner import plot_output_path
     raw_path = plot_output_path(output_root, spec, link_format)
     return raw_path.with_name(f"{raw_path.stem}.raw.{link_format.value}")
 
@@ -340,9 +341,6 @@ def generate_stacked_pages(
     csv_path: Path,
 ) -> int:
     """Synthesize All Enduses (Stacked) pages across eligible quantity groups."""
-    from resstockpostproc.baseline_validation.generation.render_runner import append_plot_row
-    from resstockpostproc.baseline_validation.create_html import append_index_row
-
     eligible_groups = {k: v for k, v in stacking_groups.items() if should_generate_stacked_page_group(v)}
     dashboard_path = dashboard_html_path(output_root)
     table_data_cache: dict[tuple, pl.DataFrame] = {}

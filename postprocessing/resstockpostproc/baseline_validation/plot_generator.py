@@ -252,16 +252,6 @@ def write_canonical_index(tsv_path: Path, html_path: Path, data_dir: Path) -> No
     create_html_from_rows(rows_in_order, headers, html_path, data_dir=data_dir)
 
 
-# ---------------------------------------------------------------------------
-# Convenience wrappers
-# ---------------------------------------------------------------------------
-
-
-# ---------------------------------------------------------------------------
-# CLI
-# ---------------------------------------------------------------------------
-
-
 def parse_index_arg(index_str: str) -> set[int]:
     """Parse index argument: single int, range (e.g. '1-10'), or comma-separated."""
     indices: set[int] = set()
