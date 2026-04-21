@@ -34,10 +34,10 @@ _CONFIG_TO_IO_COL = {"utility": "eiaid"}
 def get_plot_data(
     plot_spec: PlotSpec,
 ) -> pl.DataFrame:
-    """Get the data for plotting based on the plot specification.
+    """Return the plot-ready DataFrame for ``plot_spec``.
 
-    This is the legacy interface that loads data and applies plot-specific operations.
-    For batch processing, prefer using get_base_data() + apply_plot_spec() separately.
+    Equivalent to ``apply_plot_spec(get_base_data(key), plot_spec)``; batch
+    callers should use the split form to share base_data across plots.
     """
     if plot_spec.layout == Layout.histogram:
         if not plot_spec.is_distribution_metric:
@@ -52,42 +52,13 @@ def get_plot_data(
 @timed
 @cache
 def get_base_data(data_key: DataKey) -> pl.DataFrame:
-    """Load base data for a given data key (expensive operation).
-
-    This function loads the raw data that can be shared across multiple plots.
-    It should be called once per unique DataKey.
-
-    The returned DataFrame contains all quantities and is not filtered by plot_spec.
-    Use apply_plot_spec() to apply plot-specific transformations.
-
-    Args:
-        data_key: DataKey containing comparison_dataset, group_by, resolution,
-                  aggregation_type, and coverage
-
-    """
+    """Load the unfiltered DataFrame for a DataKey; expensive — cache per key."""
     return _get_plot_data(data_key)
 
 
 @timed
 def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
-    """Apply plot-specific transformations to base data (cheap operations).
-
-    This function performs only the lightweight operations that depend on plot_spec:
-    - Column filtering based on quantity
-    - Adding confidence interval bounds
-    - Sorting by units_count
-    - Adding utility names
-    - Filtering by focus_on
-    - LRD-specific resolution transforms (temperature view, load duration curve, etc.)
-
-    Args:
-        base_data: DataFrame returned by get_base_data()
-        plot_spec: The specific plot specification
-
-    Returns:
-        DataFrame ready for plotting
-
-    """
+    """Return a plot-ready DataFrame by applying ``plot_spec`` to pre-loaded base_data."""
     df = _keep_relevant_columns(base_data, plot_spec)
     # Sort by units_count within the primary grouping column (if any)
     sort_col = plot_spec.group_by or (plot_spec.effective_group_by[0] if plot_spec.effective_group_by else None)
@@ -165,13 +136,7 @@ _DATASET_ADAPTERS = {
 
 @timed
 def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
-    """Internal function to load data based on DataKey.
-
-    Args:
-        data_key: DataKey containing comparison_dataset, effective_group_by, resolution,
-                  aggregation_type, and coverage
-
-    """
+    """Dispatch to the dataset adapter for ``data_key.comparison_dataset``."""
     comparison_dataset = data_key.comparison_dataset
     io_data_key = _to_io_data_key(data_key)
 
@@ -283,14 +248,7 @@ def scale_to_eia_customers(
 
 
 def _apply_lrd_resolution_transforms(df: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
-    """Apply LRD-specific transforms based on resolution and view.
-
-    These transforms prepare the data for specific LRD plot types:
-    - Temperature view: aggregate by temperature bins
-    - Load duration curve: sort and add percent_time column
-    - Day of year: rename column for vertical layout
-    - Hour of day matrix: create combined month_daytype column
-    """
+    """Route to the LRD transform matching ``plot_spec.resolution``/``view``."""
     match plot_spec.resolution:
         case Resolution.hour_of_year | Resolution.top_100_hours:
             if plot_spec.view in [ViewType.temp_view, ViewType.temp_distribution_view]:
