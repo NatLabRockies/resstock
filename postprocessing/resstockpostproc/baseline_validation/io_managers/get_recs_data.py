@@ -178,12 +178,9 @@ def get_annual_all(
     data_key: DataKey,
     year: int = 2020,
 ) -> pl.DataFrame:
-    """Get annual RECS data aggregated by the specified level.
+    """Load annual RECS data aggregated by ``data_key.effective_group_by``.
 
-    Args:
-        data_key: DataKey containing effective_group_by, aggregation_type, and coverage
-        year: Year of RECS data (only 2020 supported)
-
+    Only ``year=2020`` is supported; anything else raises.
     """
     if year != 2020:
         raise ValueError("RECS data is only available for the year 2020.")
@@ -316,13 +313,7 @@ def get_monthly_all(
     data_key: DataKey,
     year: int = 2020,
 ) -> pl.DataFrame:
-    """Get monthly RECS data aggregated by state.
-
-    Args:
-        data_key: DataKey containing group_by, aggregation_type, and coverage
-        year: Year of RECS data (only 2020 supported)
-
-    """
+    """Load monthly RECS data aggregated by state; only ``year=2020`` is supported."""
     if year != 2020:
         raise ValueError("RECS data is only available for the year 2020.")
 

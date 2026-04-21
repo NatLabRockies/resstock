@@ -28,13 +28,7 @@ def get_annual_all(
     data_key: DataKey,
     years: list[int] | None = None,
 ) -> pl.DataFrame:
-    """Get annual EIA data for multiple years, with columns suffixed by year.
-
-    Args:
-        data_key: DataKey containing group_by, aggregation_type, and coverage
-        years: List of years to include. Defaults to workflow.reference_years["eia"]
-
-    """
+    """Load annual EIA data for ``years``, emitting wide output with columns suffixed by year."""
     if years is None:
         years = workflow.reference_years.get("eia", [2018])
 
@@ -93,13 +87,7 @@ def get_monthly_all(
     data_key: DataKey,
     years: list[int] | None = None,
 ) -> pl.DataFrame:
-    """Get monthly EIA data for multiple years, with columns suffixed by year.
-
-    Args:
-        data_key: DataKey containing group_by, aggregation_type, and coverage
-        years: List of years to include. Defaults to workflow.reference_years["eia"]
-
-    """
+    """Load monthly EIA data for ``years``, emitting wide output with columns suffixed by year."""
     if years is None:
         years = workflow.reference_years.get("eia", [2018])
 

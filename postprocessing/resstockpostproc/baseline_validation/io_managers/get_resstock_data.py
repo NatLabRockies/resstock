@@ -36,14 +36,7 @@ def get_timeseries_all(
     restrict_list: Sequence[str] | None = None,
     occupied_only: bool = False,
 ) -> pl.DataFrame | None:
-    """Get timeseries data for all configured data sources.
-
-    Args:
-        data_key: DataKey containing effective_group_by, resolution, aggregation_type, and coverage
-        restrict_list: Optional list of entity IDs to restrict to (e.g., eiaid list)
-        occupied_only: If True, only include occupied units (for RECS comparison)
-
-    """
+    """Load timeseries data from every configured source; ``occupied_only`` is for RECS comparison."""
     if not workflow.data_sources:
         return None
 
@@ -436,13 +429,7 @@ def get_annual_all(
     data_key: DataKey,
     occupied_only: bool = False,
 ) -> pl.DataFrame | None:
-    """Get annual data for all configured data sources.
-
-    Args:
-        data_key: DataKey containing effective_group_by, aggregation_type, and coverage
-        occupied_only: If True, only include occupied units (for RECS comparison)
-
-    """
+    """Load annual data from every configured source; ``occupied_only`` is for RECS comparison."""
     if not workflow.data_sources:
         return None
 
