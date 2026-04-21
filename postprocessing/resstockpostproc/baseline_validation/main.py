@@ -9,7 +9,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from resstockpostproc.baseline_validation.plot_generator import generate_plots
+from resstockpostproc.baseline_validation.generation.plot_generator import generate_plots
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 
 
