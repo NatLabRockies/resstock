@@ -411,13 +411,13 @@ def render_all_work_items(
     csv_path: Path,
 ) -> None:
     """Render every work item — parallel or sequential — into results and TSV index."""
-    common_kwargs = dict(
-        output_formats=output_formats,
-        link_format=link_format,
-        output_root=output_root,
-        source_labels=source_labels,
-        plotly_asset_path=plotly_asset_path,
-    )
+    common_kwargs = {
+        "output_formats": output_formats,
+        "link_format": link_format,
+        "output_root": output_root,
+        "source_labels": source_labels,
+        "plotly_asset_path": plotly_asset_path,
+    }
 
     def handle_result(sub_key, result):
         handle_plot_result(sub_key, result, results, csv_path, index_state)
