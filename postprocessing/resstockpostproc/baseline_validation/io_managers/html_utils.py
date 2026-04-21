@@ -121,23 +121,10 @@ def postprocess_plot_html(
     plotly_cdn_src: str | None = None,
     plotly_asset_path: Path | None = None,
 ) -> None:
-    """Post-process Plotly HTML file(s): make chart(s) resizable and add a footer.
+    """Make Plotly HTML resizable and add a footer; stack multiple inputs vertically.
 
-    For a single input, produces a self-contained page with one resizable chart.
-    For multiple inputs, stacks all charts vertically in a single resizable
-    container with ``<h2>`` headings between them.
-
-    Args:
-        html_paths: One or more raw Plotly HTML files (from ``fig.write_html``).
-        output_path: Where to write the enhanced HTML. Defaults to overwriting
-            the (single) input path.
-        headings: Per-chart ``<h2>`` headings (only used when len(html_paths) > 1).
-        footnotes: Note strings for the footer.
-        source_labels: Data source labels for the footer.
-        comparison_dataset: Raw enum value (e.g. ``"eia"``) for footer filtering.
-        scale_x: Horizontal scale factor applied to the initial container width.
-        scale_y: Vertical scale factor applied to the initial per-chart height.
-
+    ``headings`` applies only when len(html_paths) > 1. ``output_path``
+    defaults to overwriting the first input.
     """
     if isinstance(html_paths, Path):
         html_paths = [html_paths]
