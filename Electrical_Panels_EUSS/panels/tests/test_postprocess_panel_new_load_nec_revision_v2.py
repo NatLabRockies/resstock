@@ -1,5 +1,26 @@
 """
 test results from postprocess_panel_new_load_nec_revision_v2.py for all upgrades and revisions, with and without EVSE load, and with expected output file generated from postprocess_panel_new_load_nec__all_upgrades_v2.py
+            file        times
+17  results_up18  2690.403251
+15  results_up16  2623.392355
+9   results_up10  2620.571184
+18  results_up19  2610.169854
+6   results_up07  2603.094789
+2   results_up03  2588.278425
+4   results_up05  2582.901195
+16  results_up17  2580.225365
+11  results_up12  2575.030520
+13  results_up14  2570.105863
+5   results_up06  2565.150829
+12  results_up13  2558.272691
+8   results_up09  2299.502978
+10  results_up11  2264.189128
+1   results_up02  2257.784862
+3   results_up04  2253.838991
+14  results_up15  2193.885650
+7   results_up08  2183.142486
+0   results_up01  1949.202812
+Total time: 46569.143228530884
 """
 
 from pathlib import Path
@@ -35,11 +56,11 @@ def test_all_upgrades(filedir):
             continue
 
         # if int(upg) != 2:
-        # print(f"skipping {file}")
+        #     print(f"skipping {file}")
         #     continue
 
-        # if int(upg) > 1:
-        # print(f"skipping {file}")
+        # if int(upg) < 15:
+        #     print(f"skipping {file}")
         #     continue
 
         if file.suffix == ".csv":
@@ -89,6 +110,7 @@ def test_all_upgrades(filedir):
                 df_2023 = pd.read_parquet(file_2023)
              else:
                 raise ValueError(f"Unsupported file type: {file_2023.suffix}")
+             print("Comparing with 2023 calculation...")
              _compare_2023_and_2026(df_2023, df)
 
         print(f"{upg}: passed all tests.")
@@ -216,13 +238,13 @@ def check_83_existing_and_new_hvac_evse_separation(df):
     assert np.isclose(f1, f2, atol=1e-2).all()
 
     # new HVAC is cooling-dominant
-    cond_cool = df["new_load_cooling"] > df["new_load_heating"]
-    f1 = df.loc[cond & cond_cool, "post_upg_load_new_hvac_er"].fillna(0)
+    cond_cool = df["new_load_cooling"].fillna(0) > df["new_load_heating"].fillna(0)
+    f1 = df.loc[cond & cond_cool, "post_upg_load_new_hvac_non_er"].fillna(0)
     f2 = df.loc[cond & cond_cool, "new_load_cooling"].fillna(0)
     assert np.isclose(f1, f2, atol=1e-2).all()
 
     # new HVAC is heating-dominant
-    f1 = df.loc[cond & ~cond_cool, ["post_upg_load_new_hvac_er", "post_upg_load_new_hvac_non_er"]].sum(axis=1).fillna(0)
+    f1 = df.loc[cond & ~cond_cool, ["post_upg_load_new_hvac_er", "post_upg_load_new_hvac_non_er"]].fillna(0).sum(axis=1)
     f2 = df.loc[cond & ~cond_cool, "new_load_heating"].fillna(0)
     assert np.isclose(f1, f2, atol=1e-2).all()
 
@@ -347,6 +369,6 @@ def _compare_2023_and_2026(df_2023, df_2026):
 
 if __name__ == "__main__":
     output_dir = "/Volumes/Lixi_Liu/panels_results_550k"
-    output_folder = "results_to_fix/nec_calculations_revision_no_ev"
+    output_folder = "nec_calculations_revision_ev_level2"
 
     test_all_upgrades(filedir=f"{output_dir}/{output_folder}")
