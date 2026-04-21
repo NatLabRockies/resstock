@@ -1,5 +1,4 @@
-"""Utility functions for data loading and processing
-"""
+"""Utility functions for data loading and processing."""
 
 import polars as pl
 from resstockpostproc.shared_utils.mapping import NUM2MONTH
@@ -13,19 +12,10 @@ def add_us_total(
     group_cols: list[str] | None = None,
     exclude_cols: list[str] | None = None,
 ) -> pl.DataFrame:
-    """Add a "US Total" pseudo-entity by summing all values across all entities.
+    """Append a "US Total" pseudo-entity summed across ``by``.
 
-    Args:
-        df: DataFrame to add US Total to
-        by: The column name that contains the entity identifiers (e.g., 'state', 'eiaid')
-        group_cols: Additional columns to group by (e.g., ['month'] for monthly data).
-                   If None, assumes annual data with no grouping needed.
-        exclude_cols: Columns to exclude from summation (e.g., sample_count, RSE columns).
-                     These will be set to None in the US Total row.
-
-    Returns:
-        DataFrame with US Total row(s) added
-
+    ``exclude_cols`` are left out of the sum and set to None in the new row.
+    No-op if ``by`` already contains "US Total".
     """
     # Check if US Total already exists
     if "US Total" in df[by].unique().to_list():
@@ -66,18 +56,10 @@ def add_us_total(
 
 
 def add_missing_states(df: pl.DataFrame) -> pl.DataFrame:
-    """Make sure all states are present in the dataframe.
-    Older ResStock runs sometimes lack HI and AK which makes comparisons difficult.
-    Add null rows for missing states.
+    """Add null rows for any missing AK/HI states.
 
-    Args:
-        df: DataFrame to add All States to. Must contain a 'state' column.
-        additional_join_cols: Additional columns to join on when adding missing states.
-                              This is useful for monthly data where 'month' is also a grouping column.
-
-    Returns:
-        DataFrame with missing states added
-
+    Older ResStock runs drop these, which breaks state-by-state comparisons.
+    Joins on ``month`` too when the column is present.
     """
     states_to_add = ["AK", "HI"]
     existing_states = set(df["state"].unique().to_list())
@@ -101,16 +83,7 @@ def add_missing_states(df: pl.DataFrame) -> pl.DataFrame:
 
 
 def apply_aggregation(data_key: DataKey, df: pl.DataFrame) -> pl.DataFrame:
-    """Apply aggregation transformation based on DataKey.
-
-    Args:
-        data_key: DataKey containing aggregation_type and coverage
-        df: DataFrame with _value columns and units_count
-
-    Returns:
-        DataFrame with values transformed according to aggregation type
-
-    """
+    """Divide ``_value`` columns by per-unit denominator matching ``data_key.coverage``."""
     if data_key.aggregation_type == Metric.total:
         return df  # No transformation needed
 
