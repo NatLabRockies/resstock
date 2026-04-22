@@ -853,9 +853,15 @@ jobs:
         run: |
           uv run python resstockpostproc/baseline_validation/main.py --test --no-parallel
 
+      - name: Package baseline validation outputs
+        # Wrap in tar first because output filenames contain '<br>' (HTML line-break
+        # from plot titles), which upload-artifact rejects to stay Windows-compatible.
+        run: |
+          tar -czf /home/runner/baseline-validation-plots.tar.gz -C /home/runner baseline_validation_outputs/run_2025_release1
+
       - name: Upload baseline validation plots
         uses: actions/upload-artifact@v4
         with:
           name: baseline-validation-plots
-          path: /home/runner/baseline_validation_outputs/run_2025_release1
+          path: /home/runner/baseline-validation-plots.tar.gz
           if-no-files-found: error
