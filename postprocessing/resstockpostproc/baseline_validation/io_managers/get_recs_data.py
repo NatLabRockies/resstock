@@ -68,12 +68,6 @@ def _resolve_recs_value_stat_type(data_key: DataKey) -> str:
     return "avg"
 
 
-def _normalize_bounds(bounds: tuple[float, float] | None) -> tuple[float | None, float | None]:
-    if bounds is None:
-        return None, None
-    return bounds
-
-
 def _build_bounds_row(
     bounds_by_request: dict[tuple[str, str], tuple[float, float] | None],
     enduse_cols: tuple,
@@ -82,8 +76,8 @@ def _build_bounds_row(
     """Map batched bound results onto dataframe column names."""
     row: dict[str, float | None] = {}
     for col in enduse_cols:
-        value_lower, value_upper = _normalize_bounds(bounds_by_request.get((col, value_stat_type)))
-        pct_lower, pct_upper = _normalize_bounds(bounds_by_request.get((col, "percent")))
+        value_lower, value_upper = bounds_by_request.get((col, value_stat_type)) or (None, None)
+        pct_lower, pct_upper = bounds_by_request.get((col, "percent")) or (None, None)
         row[f"{col}_value_lower_bound"] = value_lower
         row[f"{col}_value_upper_bound"] = value_upper
         row[f"{col}_percent_users_lower_bound"] = pct_lower

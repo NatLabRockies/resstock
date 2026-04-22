@@ -368,7 +368,7 @@ def _aggregate_raw_annual_groups(
 
     result_rows = []
     for key, group in partitions.items():
-        row = _partition_key_dict(group_cols, key)
+        row: dict[str, object] = dict(zip(group_cols, key, strict=True))
         weights = group["weight"].to_numpy()
         row["units_count"] = float(weights.sum())
         row["sample_count"] = len(group)
@@ -391,14 +391,6 @@ def _aggregate_raw_annual_groups(
         result_rows.append(row)
 
     return pl.DataFrame(result_rows)
-
-
-def _partition_key_dict(group_cols: list[str], key: object) -> dict[str, object]:
-    if not group_cols:
-        return {}
-    if not isinstance(key, tuple):
-        key = (key,)
-    return dict(zip(group_cols, key, strict=True))
 
 
 def _weighted_quantiles_or_zeros(values: np.ndarray, weights: np.ndarray) -> list[float]:
