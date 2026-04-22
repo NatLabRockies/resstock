@@ -846,6 +846,7 @@ jobs:
         run: |
           uv venv
           uv pip install -e . --group dev
+          uv pip install git+https://github.com/NREL/buildstock-query.git@$BUILDSTOCK_QUERY_BRANCH
 
       - name: Run baseline validation test subset
         working-directory: postprocessing
@@ -856,5 +857,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: baseline-validation-plots
-          path: ~/baseline_validation_outputs/run_2025_release1
+          path: /home/runner/baseline_validation_outputs/run_2025_release1
           if-no-files-found: error
