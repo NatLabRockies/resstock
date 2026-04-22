@@ -1,7 +1,5 @@
 """Pure transformation functions for processing BuildStock data for baseline validation."""
 
-from typing import Literal
-
 import polars as pl
 from functools import cache
 
@@ -22,8 +20,6 @@ from resstockpostproc.baseline_validation.plot_helpers.plot_semantics import app
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.mapping import ID2UtilityName
 from resstockpostproc.shared_utils.timing import timed
-
-AggregationBy = Literal["state", "eiaid"]  # IO-layer type: raw DB column names
 
 # Translation from config-level group_by names to raw DB column names.
 # The config layer uses "utility"; the IO layer (queries, DataFrames pre-mapping) uses "eiaid".
@@ -202,31 +198,6 @@ def _keep_relevant_columns(
     relevant_quantities = relevant_quantities_by_dataset[plot_spec.comparison_dataset]
     to_drop = [col for col in all_output_columns if not any(q.value in col for q in relevant_quantities)]
     return df.drop(to_drop)
-
-
-@timed
-def scale_to_eia_customers(
-    buildstock_df: pl.DataFrame,
-    eia_df: pl.DataFrame,
-    by: AggregationBy = "state",
-) -> pl.DataFrame:
-    """Scale BuildStock data to match EIA customer counts."""
-    eia_customers = eia_df.group_by(by, maintain_order=True).agg(pl.col("customers").sum().alias("customers"))
-    scaled = buildstock_df.join(eia_customers, on=by, how="left", maintain_order="left_right")
-    scaled = scaled.with_columns((pl.col("customers") / pl.col("units_count")).alias("customer_factor"))
-
-    exclude_cols = {by, "sample_count", "units_count", "customers", "customer_factor", "month", "time"}
-    numeric_cols = [col for col in scaled.columns if col not in exclude_cols and scaled[col].dtype.is_numeric()]
-
-    scale_exprs = [
-        pl.when(pl.col("customer_factor").is_not_null())
-        .then(pl.col(col) * pl.col("customer_factor"))
-        .otherwise(pl.col(col))
-        .alias(col)
-        for col in numeric_cols
-    ]
-
-    return scaled.with_columns(scale_exprs)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
