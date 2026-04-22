@@ -72,7 +72,7 @@ def format_count_value(value: float | int | None) -> str:
     """Format a count-like value as a rounded integer with separators."""
     if value is None:
         return ""
-    rounded = int(math.floor(float(value) + 0.5))
+    rounded = math.floor(float(value) + 0.5)
     return f"{rounded:,}"
 
 

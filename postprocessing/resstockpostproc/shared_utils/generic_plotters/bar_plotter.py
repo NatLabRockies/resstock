@@ -115,7 +115,7 @@ def create_bar_plot(
     second_category_column: str | None = None,
     quantity_title: str,
     first_category_title: str,
-    second_category_title: str | None = None,
+    second_category_title: str | None = None,  # noqa: ARG001 — accepted for API uniformity; not currently honored
     orientation: Literal["h", "v"] = "h",
     title_text: str = "",
     label_formatter: Callable | None = None,
@@ -163,8 +163,6 @@ def create_bar_plot(
         data_min, data_max = min(data_min, q_min), max(data_max, q_max)
     
     traces: list[go.Bar] = []
-    xtitle: str | None = ""
-    ytitle: str | None = ""
     ytickvals: list[str] | None = None
 
     if second_category_column is None:
@@ -173,12 +171,10 @@ def create_bar_plot(
             if orientation == "h":
                 x_data = list(reversed(data[qcol]))
                 y_data = list(reversed(data[first_category_column]))
-                xtitle, ytitle = quantity_title, first_category_title
                 colors = [first_cat_pallete.get(y, "#626D72") for y in y_data]
             else:
                 x_data = list(reversed(data[first_category_column]))
                 y_data = list(reversed(data[qcol]))
-                xtitle, ytitle = first_category_title, quantity_title
                 colors = [first_cat_pallete.get(x, "#626D72") for x in x_data]
 
             if len(quantity_cols) > 1:
@@ -373,9 +369,6 @@ def create_bar_plot(
                     )
                 )
                 ytickvals = yvals
-        xtitle, ytitle = (
-            (quantity_title, second_category_title) if orientation == "h" else (second_category_title, quantity_title)
-        )
 
     fig = fig or go.Figure()
     fig.update_layout(
@@ -396,8 +389,16 @@ def create_bar_plot(
         fig.update_xaxes(range=data_range, row=row, col=col,
                          title_text=quantity_title, showticklabels=show_ticks
                          )
-        yaxis_kwargs = dict(type="category", tickmode="array", tickvals=categories, showticklabels=True,
-                            categoryorder="array", categoryarray=categories, row=row, col=col)
+        yaxis_kwargs = {
+            "type": "category",
+            "tickmode": "array",
+            "tickvals": categories,
+            "showticklabels": True,
+            "categoryorder": "array",
+            "categoryarray": categories,
+            "row": row,
+            "col": col,
+        }
         if category_font_size is not None:
             yaxis_kwargs["tickfont"] = {"size": category_font_size}
         fig.update_yaxes(**yaxis_kwargs)

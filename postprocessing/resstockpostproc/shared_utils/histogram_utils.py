@@ -193,12 +193,22 @@ def build_weighted_histogram_with_overflow(
         )
         .drop(["_total_weight", "_group_max_val", "_p98", "_core_width"])
     )
-    select_cols = [*group_cols, source_col, "bin", "bin_left", "bin_right", "bin_center", "count", "count_pct", "sample_count"]
+    select_cols = [
+        *group_cols,
+        source_col,
+        "bin",
+        "bin_left",
+        "bin_right",
+        "bin_center",
+        "count",
+        "count_pct",
+        "sample_count",
+    ]
     return hist.select(select_cols)
 
 
 def _empty_histogram_frame(source_col: str, group_cols: list[str]) -> pl.DataFrame:
-    schema = {col: pl.String for col in [*group_cols, source_col]}
+    schema = dict.fromkeys([*group_cols, source_col], pl.String)
     schema.update(
         {
             "bin": pl.Int32,

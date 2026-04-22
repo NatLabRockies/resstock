@@ -1,11 +1,11 @@
 import polars as pl
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+from collections.abc import Callable
+
 from .bar_plotter import create_bar_plot
 from .monthly_plotter import create_ts_plot
 from .range_utils import compute_axis_range
-from typing import Literal
-from collections.abc import Sequence, Callable
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.mapping import ABBR2STATE
 from resstockpostproc.shared_utils.timing import timed
@@ -126,16 +126,13 @@ def plot_tilemap(
     first_category_column: str,
     second_category_column: str,
     quantity_title: str,
-    first_category_title: str,
+    first_category_title: str,  # noqa: ARG001 — accepted for API uniformity; not currently honored in subplot labels
     lower_bound_column: str | None = None,
     upper_bound_column: str | None = None,
     sidebar_column: str | None = None,
     sidebar_title: str = "",
-    second_category_title: str | None = None,
-    orientation: Literal["h", "v"] = "h",
+    second_category_title: str | None = None,  # noqa: ARG001 — accepted for API uniformity; not currently honored in subplot labels
     title_text: str = "",
-    label_formatter: Callable | None = None,
-    categories: Sequence[str] | None = None,
     show_legends: bool = True,
     timeseries_column: str | None = None,
     ts_xtick_text: tuple | None = None,

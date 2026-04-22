@@ -55,8 +55,7 @@ def cached(cache_file: str) -> Callable:
                 with shelve.open(cache_path, flag=flag) as cache:  # noqa: S301
                     if "result" in cache:
                         return cache["result"]
-            except Exception:
-                # Shelve file may not exist yet in read-only mode
+            except Exception:  # noqa: S110 — shelve file may not exist yet in read-only mode
                 pass
 
             if CACHE_READ_ONLY:

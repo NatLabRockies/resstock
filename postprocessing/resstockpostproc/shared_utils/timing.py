@@ -30,7 +30,7 @@ import os
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import IO
+from typing import IO, ClassVar
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +53,7 @@ class TimingStats:
     object around.
     """
 
-    _stats: dict[str, _FuncStats] = {}
+    _stats: ClassVar[dict[str, _FuncStats]] = {}
     _trace_file: IO | None = None
     _epoch: float = 0.0
     _wall_epoch: float = 0.0  # wall-clock epoch for aligning worker trace events
@@ -61,12 +61,12 @@ class TimingStats:
     _flush_interval: int = 100  # flush trace file every N events
     # Worker-process mode: collect events in memory instead of writing to file
     _is_worker: bool = False
-    _pending_events: list[dict] = []
+    _pending_events: ClassVar[list[dict]] = []
 
     @classmethod
     def start_trace(cls, path: Path) -> None:
         """Open a Chrome Trace Event Format file for streaming writes."""
-        cls._trace_file = open(path, "w")
+        cls._trace_file = open(path, "w")  # noqa: SIM115 — long-lived; closed by stop_trace
         cls._trace_file.write("[\n")
         cls._epoch = 0.0
         cls._event_count = 0

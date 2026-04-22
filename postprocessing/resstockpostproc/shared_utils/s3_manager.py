@@ -1,5 +1,5 @@
 import hashlib
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 import boto3
 import polars as pl
@@ -10,13 +10,13 @@ _s3_client = None
 
 
 def _get_s3_client():
-    global _s3_client
+    global _s3_client  # noqa: PLW0603 — module-level singleton to avoid repeated session setup
     if _s3_client is None:
         _s3_client = boto3.client("s3")
     return _s3_client
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_df_from_s3(full_s3_path: str, cache_dir: Path) -> pl.DataFrame:
     """Download (if needed) and read an S3 file as a Polars DataFrame.
 
@@ -70,7 +70,9 @@ def _is_file_same(bucket, s3_key, local_path):
 
 
 def _calculate_md5(file_path):
-    hash_md5 = hashlib.md5()
+    # MD5 here is used as an integrity hash for comparison against the S3 ETag,
+    # not for cryptographic security.
+    hash_md5 = hashlib.md5(usedforsecurity=False)
     with open(file_path, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
             hash_md5.update(chunk)
