@@ -53,7 +53,26 @@ def get_plot_data(
 @cache
 def get_base_data(data_key: DataKey) -> pl.DataFrame:
     """Load the unfiltered DataFrame for a DataKey; expensive — cache per key."""
-    return _get_plot_data(data_key)
+    comparison_dataset = data_key.comparison_dataset
+    io_data_key = _to_io_data_key(data_key)
+
+    adapter = _DATASET_ADAPTERS.get(comparison_dataset)
+    if adapter is None:
+        raise NotImplementedError(f"Comparison dataset {comparison_dataset} not implemented.")
+    source_data, resstock_data, groups = adapter(io_data_key)
+
+    df = pl.concat([source_data, resstock_data], how="diagonal_relaxed") if resstock_data is not None else source_data
+    val_columns = [col for col in df.columns if col.endswith(("_value", "_percent_users"))]
+    val_columns += ["units_count"]
+    ref_cols = [col for col in df["source"].unique(maintain_order=True) if comparison_dataset in col]
+    final_df = _add_percent_difference(
+        df, join_columns=groups, value_columns=val_columns, ref_column="source", ref_cols=ref_cols
+    )
+    if "sample_count" in final_df.columns:
+        final_df = final_df.rename({"sample_count": "model_count"})
+    elif "model_count" not in final_df.columns:
+        final_df = final_df.with_columns(pl.lit(None).cast(pl.Int64).alias("model_count"))
+    return final_df
 
 
 @timed
@@ -125,31 +144,6 @@ _DATASET_ADAPTERS = {
     ComparisonDataset.recs: load_recs,
     ComparisonDataset.lrd: load_lrd,
 }
-
-
-@timed
-def _get_plot_data(data_key: DataKey) -> pl.DataFrame:
-    """Dispatch to the dataset adapter for ``data_key.comparison_dataset``."""
-    comparison_dataset = data_key.comparison_dataset
-    io_data_key = _to_io_data_key(data_key)
-
-    adapter = _DATASET_ADAPTERS.get(comparison_dataset)
-    if adapter is None:
-        raise NotImplementedError(f"Comparison dataset {comparison_dataset} not implemented.")
-    source_data, resstock_data, groups = adapter(io_data_key)
-
-    df = pl.concat([source_data, resstock_data], how="diagonal_relaxed") if resstock_data is not None else source_data
-    val_columns = [col for col in df.columns if col.endswith(("_value", "_percent_users"))]
-    val_columns += ["units_count"]
-    ref_cols = [col for col in df["source"].unique(maintain_order=True) if comparison_dataset in col]
-    final_df = _add_percent_difference(
-        df, join_columns=groups, value_columns=val_columns, ref_column="source", ref_cols=ref_cols
-    )
-    if "sample_count" in final_df.columns:
-        final_df = final_df.rename({"sample_count": "model_count"})
-    elif "model_count" not in final_df.columns:
-        final_df = final_df.with_columns(pl.lit(None).cast(pl.Int64).alias("model_count"))
-    return final_df
 
 
 def _add_percent_difference(
