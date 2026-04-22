@@ -129,13 +129,15 @@ def save_static_images_batch(
 def save_figure(
     fig: go.Figure,
     plot_spec: PlotSpec,
-    formats: list[FileType] = [FileType.html],
+    formats: list[FileType] | None = None,
     footnotes: list[str] | None = None,
     source_labels: dict | None = None,
     output_root: Path | None = None,
     plotly_asset_path: Path | None = None,
 ) -> None:
     """Save a Plotly figure in multiple formats."""
+    if formats is None:
+        formats = [FileType.html]
     output_root = output_root or dashboard_output_root(workflow)
 
     for fmt in formats:
