@@ -1,9 +1,8 @@
 """Dashboard viewer HTML shell for the baseline validation index.
 
-Extracted from create_html.py in refactor plan V2 step 4.2. This module
-owns the self-contained HTML shell (inline CSS + JS + filter UI) that
+Owns the self-contained HTML shell (inline CSS + JS + filter UI) that
 wraps the sharded dashboard data. Data writing and IndexState lifecycle
-stay in create_html.py.
+live in create_html.py.
 """
 
 from __future__ import annotations

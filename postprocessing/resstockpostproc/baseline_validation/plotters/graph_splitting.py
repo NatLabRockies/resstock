@@ -5,8 +5,6 @@ row, col) chunks for stacked rendering — state-pair columns, per-char
 single column, or the 4x2 end-use layout — plus the ordering utilities
 (reference source resolution, RECS semantic sort, units_count fallback)
 those splitters depend on.
-
-Extracted from stacked_plotter.py in refactor plan V2 step 6.2.
 """
 
 import polars as pl

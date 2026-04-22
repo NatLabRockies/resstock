@@ -1,8 +1,7 @@
 """Data-shaping helpers for baseline validation data tables.
 
-Extracted from data_table.py in refactor plan V2 step 4.1. This module owns
-the transformation pipeline that turns a raw plot DataFrame into the pivoted
-shape consumed by the HTML page builder.
+Owns the transformation pipeline that turns a raw plot DataFrame into the
+pivoted shape consumed by the HTML page builder.
 """
 
 from __future__ import annotations

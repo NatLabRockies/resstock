@@ -1,8 +1,7 @@
 """Data-analysis metrics used by baseline validation plots.
 
-Extracted from render_runner.py in refactor plan V2 step 5.4. These are
-pure analysis helpers — they compute statistics over already-loaded
-DataFrames and do not touch rendering or I/O.
+Pure analysis helpers — compute statistics over already-loaded DataFrames;
+do not touch rendering or I/O.
 """
 
 from __future__ import annotations

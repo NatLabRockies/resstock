@@ -1,7 +1,6 @@
 """Dashboard index row assembly for baseline validation.
 
-Extracted from plot_generator.py in refactor plan V2 step 3.3. These helpers
-build the per-plot row dict that the dashboard index consumes, including
+Builds the per-plot row dict that the dashboard index consumes, including
 dataset-specific facet normalization.
 """
 

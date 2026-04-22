@@ -1,9 +1,8 @@
 """Synthetic All Enduses stacked-page generation helpers.
 
-Extracted from plot_generator.py in refactor plan V2 step 3.4. These helpers
-decide when to synthesize an All Enduses stacked page from per-quantity
-grouped plots, reshape per-quantity data into the tall ALL-enduses schema,
-assemble the combined table data, and collect deduplicated footnotes.
+Decides when to synthesize an All Enduses stacked page from per-quantity
+grouped plots, reshapes per-quantity data into the tall ALL-enduses schema,
+assembles the combined table data, and collects deduplicated footnotes.
 """
 
 from __future__ import annotations

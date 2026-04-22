@@ -1,7 +1,6 @@
 """Template/work-item expansion helpers for baseline validation plot generation.
 
-Extracted from plot_generator.py in refactor plan V2 step 3.1. These helpers
-turn PlotTemplates into concrete work items (PlotSpecs + focus/label tuples)
+Turns PlotTemplates into concrete work items (PlotSpecs + focus/label tuples)
 ready for rendering.
 """
 

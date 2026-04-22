@@ -4,8 +4,6 @@ Computes shared bin geometry (including the synthetic overflow tail),
 validates that grouped inputs share that geometry, and renders either a
 single-panel or faceted-per-group histogram figure from pre-binned
 ``count_pct`` data.
-
-Extracted from stacked_plotter.py in refactor plan V2 step 6.2.
 """
 
 import plotly.graph_objects as go

@@ -1,8 +1,7 @@
 """Column presentation helpers for baseline validation data tables.
 
-Extracted from data_table.py in refactor plan V2 step 4.1. This module owns
-the mapping from raw DataFrame column names to the user-facing column config
-consumed by the HTML table renderer.
+Owns the mapping from raw DataFrame column names to the user-facing column
+config consumed by the HTML table renderer.
 """
 
 from __future__ import annotations

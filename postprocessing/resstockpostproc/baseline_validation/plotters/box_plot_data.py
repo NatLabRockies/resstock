@@ -4,8 +4,6 @@ Builds the scalar q1/median/q3/whisker/min/max columns that ``box_plotter``
 consumes from the list-valued ``_quartiles`` / ``_nonzero_quartiles``
 column produced upstream, and prepares the dataframe shape
 (``n_points``, ``mean``, ``outliers``) expected by the box-plot renderer.
-
-Extracted from stacked_plotter.py in refactor plan V2 step 6.2.
 """
 
 import polars as pl
