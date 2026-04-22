@@ -146,7 +146,8 @@ def save_figure(
         fullpath = _figure_output_path(output_root, plot_spec, fmt)
         if fmt == FileType.html:
             raw_path = fullpath.with_name(f"{fullpath.stem}.raw{fullpath.suffix}")
-            div_id = "fig-" + hashlib.md5(str(fullpath).encode(), usedforsecurity=False).hexdigest()
+            rel_path = fullpath.relative_to(output_root)
+            div_id = "fig-" + hashlib.md5(str(rel_path).encode(), usedforsecurity=False).hexdigest()
             fig.write_html(raw_path, include_plotlyjs="cdn", config=PLOTLY_HTML_CONFIG, div_id=div_id)
             postprocess_plot_html(
                 raw_path,
