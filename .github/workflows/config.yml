@@ -805,3 +805,56 @@ jobs:
           name: plots
           path: postprocessing/resstockpostproc/upgrade_comparison/sdr_plots/plots/sdr_plots_ci
           if-no-files-found: error
+
+  baseline-validation-tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Setup chrome
+        uses: browser-actions/setup-chrome@v2
+        id: chrome
+        with:
+          chrome-version: stable
+          install-dependencies: true
+
+      - name: Set BROWSER_PATH
+        run: echo "BROWSER_PATH=${{ steps.chrome.outputs.chrome-path }}" >> $GITHUB_ENV
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.1.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+          role-duration-seconds: 1200
+          role-session-name: MySession
+
+      - name: Install postprocessing dependencies
+        working-directory: postprocessing
+        run: |
+          uv venv
+          uv pip install -e . --group dev
+
+      - name: Run baseline validation test subset
+        working-directory: postprocessing
+        run: |
+          uv run python resstockpostproc/baseline_validation/main.py --test
+
+      - name: Upload baseline validation plots
+        uses: actions/upload-artifact@v4
+        with:
+          name: baseline-validation-plots
+          path: ~/baseline_validation_outputs/run_2025_release1
+          if-no-files-found: error
