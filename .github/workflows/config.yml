@@ -851,7 +851,7 @@ jobs:
       - name: Run baseline validation test subset
         working-directory: postprocessing
         run: |
-          uv run python resstockpostproc/baseline_validation/main.py --test
+          uv run python resstockpostproc/baseline_validation/main.py --test --no-parallel
 
       - name: Upload baseline validation plots
         uses: actions/upload-artifact@v4

@@ -28,10 +28,16 @@ def main() -> int:
         default=False,
         help="Generate only test subset plots (limited focus expansion)",
     )
+    parser.add_argument(
+        "--no-parallel",
+        action="store_true",
+        default=False,
+        help="Disable parallel plot generation (run sequentially; useful for memory-constrained CI)",
+    )
     args = parser.parse_args()
 
     workflow.ensure_resstock_data_files()
-    generate_plots(test_only=args.test)
+    generate_plots(test_only=args.test, parallel=not args.no_parallel)
     return 0
 
 
