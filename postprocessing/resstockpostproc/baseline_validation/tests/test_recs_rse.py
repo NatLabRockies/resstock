@@ -5,7 +5,6 @@ import pandas as pd
 import pytest
 
 from resstockpostproc.baseline_validation.data_processing.recs_rse import (
-    FAY_EPSILON,
     WEIGHT_COL,
     calculate_bounds_batch,
     calculate_log_ci_bounds,
@@ -23,7 +22,7 @@ def _make_recs_df(values, base_weights, replicate_overrides=None, n_replicates=6
 
 
 def _expected_bounds(base_estimate: float, replicate_estimate: float, n_replicates: int) -> tuple[float, float]:
-    variance_log = ((np.log(replicate_estimate) - np.log(base_estimate)) ** 2) / (n_replicates * (1 - FAY_EPSILON) ** 2)
+    variance_log = (n_replicates - 1) / n_replicates * ((np.log(replicate_estimate) - np.log(base_estimate)) ** 2)
     se_log = np.sqrt(variance_log)
     lower = np.exp(np.log(base_estimate) - 1.96 * se_log)
     upper = np.exp(np.log(base_estimate) + 1.96 * se_log)

@@ -1,4 +1,4 @@
-"""Helpers for RECS replicate-weight confidence bounds."""
+"""Helpers for RECS replicate-weight confidence bounds (jackknife)."""
 
 from __future__ import annotations
 
@@ -9,7 +9,6 @@ import numpy as np
 
 
 WEIGHT_COL = "NWEIGHT"
-FAY_EPSILON = 0.5
 CI_Z = 1.96
 _VALID_STATS = {"total", "avg", "avg_nonzero", "percent"}
 _REP_WEIGHT_RE = re.compile(rf"^{WEIGHT_COL}(\d+)$")
@@ -59,7 +58,8 @@ def _log_bounds_from_estimates(estimates: np.ndarray) -> tuple[float, float]:
 
     log_base = np.log(base_estimate)
     log_reps = np.log(replicate_estimates)
-    variance_log = np.sum((log_reps - log_base) ** 2) / (replicate_estimates.size * (1 - FAY_EPSILON) ** 2)
+    n_reps = replicate_estimates.size
+    variance_log = (n_reps - 1) / n_reps * np.sum((log_reps - log_base) ** 2)
     se_log = np.sqrt(variance_log)
     lower = float(np.exp(log_base - CI_Z * se_log))
     upper = float(np.exp(log_base + CI_Z * se_log))
