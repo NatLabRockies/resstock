@@ -12,12 +12,11 @@ from resstockpostproc.shared_utils.generic_plotters.bar_plotter import create_ba
 from resstockpostproc.upgrade_comparison.plotters import plot_utils
 from resstockpostproc.upgrade_comparison.schema.plot_spec import PlotSpec, QuantityType
 from resstockpostproc.upgrade_comparison.schema.workflow_schema import QuantityGroup
-from resstockpostproc.upgrade_comparison.schema.workflow_schema import WorkflowConfig
 
 __all__ = ["create_plot"]
 
 
-def create_plot(data: pl.DataFrame, plot_spec: PlotSpec, workflow: WorkflowConfig) -> go.Figure:
+def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     """Create a bar-style plot based on the plot specification."""
     if plot_spec.quantity_type == QuantityType.prevalence:
         upgrades = data["upgrade_name"].unique(maintain_order=True).to_list()

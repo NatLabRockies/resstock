@@ -10,12 +10,11 @@ import polars as pl
 __all__ = ["create_plot"]
 
 from resstockpostproc.shared_utils.generic_plotters.box_plotter import create_box_plot
-from resstockpostproc.upgrade_comparison.schema.workflow_schema import WorkflowConfig
 from resstockpostproc.upgrade_comparison.plotters import plot_utils
 from resstockpostproc.upgrade_comparison.schema.plot_spec import PlotSpec
 
 
-def create_plot(data: pl.DataFrame, plot_spec: PlotSpec, workflow: WorkflowConfig) -> go.Figure:
+def create_plot(data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
     """Create a box plot using Plotly to show distribution and outliers."""
     if isinstance(plot_spec.quantity, str):
         return create_box_plot(

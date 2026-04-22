@@ -37,7 +37,7 @@ def get_app() -> DashProxy:
     return app
 
 
-def run_dashboard(port: int = 8052) -> None:
+def run_dashboard(port: int = 8051) -> None:
     """Launch the dashboard server."""
     try:
         print(f"Running dashboard on port {port}")

@@ -203,7 +203,7 @@ def register_plotting_callbacks(app, ctx: RunContext) -> None:
             print(f"Data prepared in {time.time() - start_time:.1f} seconds. Generating data ...")
             plotting_fn = get_plotting_function(plot_spec.visualization_type)
             start_time = time.time()
-            fig = plotting_fn(df, plot_spec=plot_spec, workflow=run_workflow)
+            fig = plotting_fn(df, plot_spec=plot_spec)
             print(f"Figure generated in {time.time() - start_time:.1f} seconds.")
 
         fig.layout.title.subtitle.text = ""
