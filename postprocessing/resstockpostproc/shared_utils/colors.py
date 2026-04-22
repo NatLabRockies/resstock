@@ -1,5 +1,5 @@
 QUALITATIVE_SERIES = [  # from light series in https://sronpersonalpages.nl/~pault/
-    "#77AADD",  # light blude
+    "#77AADD",  # light blue
     "#44BB99",  # mint
     "#FFAABB",  # pink
     "#99DDFF",  # light cyan

@@ -1,13 +1,14 @@
 """User-facing CLI for baseline_validation.
 
-Thin wrapper over generation.plot_generator.generate_plots. For the
-developer fast-path entry point (--test, --no-svg, --index, etc.),
-run generation/plot_generator.py directly.
+Thin wrapper over generation.plot_generator.generate_plots. Configuration
+is picked up from ``workflow.yaml`` next to this file — edit that file
+to change inputs/outputs. For the developer fast-path entry point
+(``--test``, ``--no-svg``, ``--index``, etc.), run
+``generation/plot_generator.py`` directly.
 """
 
 import argparse
 import sys
-from pathlib import Path
 
 from resstockpostproc.baseline_validation.generation.plot_generator import generate_plots
 from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
@@ -15,25 +16,12 @@ from resstockpostproc.baseline_validation.schema.workflow_schema import workflow
 
 def main() -> int:
     """Main entry point for ResStock comparison plot generation."""
-    parser = argparse.ArgumentParser(
+    argparse.ArgumentParser(
         description=(
             "Generate comparison graphics and data between a ResStock baseline and other data sources (EIA, RECS, LRD)."
+            " Edit workflow.yaml next to this script to change inputs and output location."
         ),
-    )
-
-    parser.add_argument(
-        "--config",
-        type=str,
-        default=str(Path(__file__).parent / "workflow.yaml"),
-        help="Path to workflow configuration YAML file (default: workflow.yaml in script directory)",
-    )
-
-    args = parser.parse_args()
-
-    config_path = Path(args.config)
-    if not config_path.exists():
-        print(f"Error: Configuration file not found at {config_path}")
-        return 1
+    ).parse_args()
 
     workflow.ensure_resstock_data_files()
     generate_plots()

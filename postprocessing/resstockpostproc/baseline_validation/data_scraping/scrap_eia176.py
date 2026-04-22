@@ -28,9 +28,9 @@ full_url = f"https://www.eia.gov/dnav/ng/xls/{monthly_heatcontent_file}"
 urllib.request.urlretrieve(full_url, raw_path)  # noqa: S310 — fixed EIA URL
 df_heat_content_monthly = pd.read_excel(raw_path, sheet_name="Data 1", skiprows=2, skipfooter=1, na_values=["."])
 
-annul_heatcontent_file = "NG_CONS_HEAT_A_EPG0_VGTH_BTUCF_A.xls"
-raw_path = eia861_raw_path / monthly_heatcontent_file
-full_url = f"https://www.eia.gov/dnav/ng/xls/{annul_heatcontent_file}"
+annual_heatcontent_file = "NG_CONS_HEAT_A_EPG0_VGTH_BTUCF_A.xls"
+raw_path = eia861_raw_path / annual_heatcontent_file
+full_url = f"https://www.eia.gov/dnav/ng/xls/{annual_heatcontent_file}"
 urllib.request.urlretrieve(full_url, raw_path)  # noqa: S310 — fixed EIA URL
 df_heat_content_annual = pd.read_excel(raw_path, sheet_name="Data 1", skiprows=2, skipfooter=1, na_values=["."])
 

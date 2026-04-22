@@ -121,24 +121,10 @@ baseline_2023_03_16/
 
 ## Running the Generator
 
-Execute from the `postprocessing` directory:
+Edit `workflow.yaml` (next to `main.py`) to point at the data sources and output directory you want, then run from the `postprocessing` directory:
 
 ```bash
-# Basic usage (uses workflow.yaml in baseline_validation/)
 uv run resstockpostproc/baseline_validation/main.py
-
-```
-
-### CLI Options
-
-```
-usage: main.py [-h] [--config CONFIG]
-
-Generate comparison graphics and data between a ResStock baseline and other data sources (EIA, RECS, LRD).
-
-options:
-  -h, --help            show this help message and exit
-  --config CONFIG       Path to workflow configuration YAML file
 ```
 
 ## Developing and Testing

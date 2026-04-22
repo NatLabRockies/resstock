@@ -23,8 +23,9 @@ reference_years:
     - 2020
 
 output:
-  output_dir: /Users/radhikar/Documents/buildstock2025/
-  run_name: baseline_val_test_2024_2025_final_test
+  # Override this with your own directory — the script expands ~
+  output_dir: ~/baseline_validation_outputs
+  run_name: run_2025_release1
 # Data Source Labels
 # ------------------
 # Human-readable labels for data sources appearing in plot legends.

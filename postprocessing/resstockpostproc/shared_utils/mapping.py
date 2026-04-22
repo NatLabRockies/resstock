@@ -1,6 +1,3 @@
-from typing import Dict
-
-
 NUM2MONTH = {
     1: "JAN",
     2: "FEB",

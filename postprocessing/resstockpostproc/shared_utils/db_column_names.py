@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 from enum import StrEnum
-from typing import  TypedDict
 from pydantic import BaseModel
 
 
@@ -237,7 +236,7 @@ _RESSTOCK_ENDUSE_COL_MAP: dict[DBSchema, dict[DataCol, None | str | tuple[str, .
         DataCol.FUEL_OIL_TOTAL: "out.fuel_oil.total.energy_consumption",
         DataCol.FUEL_OIL_SPACE_HEATING: "out.fuel_oil.heating.energy_consumption",
         DataCol.FUEL_OIL_WATER_HEATING: "out.fuel_oil.hot_water.energy_consumption",
-        DataCol.OUTDOOR_DRYBULB_TEMP: "out.outdoor_air_dryblub_temp.c",
+        DataCol.OUTDOOR_DRYBULB_TEMP: "out.outdoor_air_drybulb_temp.c",
     },
 }
 
