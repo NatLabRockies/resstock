@@ -17,13 +17,15 @@ def _get_s3_client():
 
 
 @lru_cache(maxsize=None)
-def get_df_from_s3(full_s3_path, cache_dir: Path | None = None) -> pl.DataFrame:
+def get_df_from_s3(full_s3_path: str, cache_dir: Path) -> pl.DataFrame:
     """Download (if needed) and read an S3 file as a Polars DataFrame.
 
     Results are cached in-memory so repeated calls with the same arguments
     skip the S3 HEAD check, local MD5 computation, and disk read entirely.
     """
-    s3bucket, s3path = full_s3_path.replace("s3://", "").split("/", 1)
+    if not full_s3_path.startswith("s3://"):
+        raise ValueError(f"Only s3:// URLs are supported, got: {full_s3_path}")
+    s3bucket, s3path = full_s3_path.removeprefix("s3://").split("/", 1)
     local_path = cache_dir / s3path
     if not _is_file_same(s3bucket, s3path, local_path):
         client = _get_s3_client()
