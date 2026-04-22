@@ -274,7 +274,7 @@ def main():
     parser.add_argument(
         "--test",
         action="store_true",
-        default=True,
+        default=False,
         help="Generate only test subset plots (limited focus expansion)",
     )
     parser.add_argument(
