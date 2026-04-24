@@ -25,7 +25,7 @@ The `-o` flag is needed to process OEDI-formatted data. `-x` is used to break ou
 Run the following command to generate one file per upgrade on panel capacity constraint.
 
 ```
-$ python postprocess_panel_new_load_nec_for_sdr_2024_2__all_upgrades.py -o -x <path_to_oedi_data>
+$ python postprocess_panel_new_load_nec_for_sdr_2024_2__all_upgrades_v2.py -o -x <path_to_oedi_data>
 ```
 The `-o` flag is needed to process OEDI-formatted data. `-x` (different from above, confusing I know) is used to export the result as a lookup by building id. This command can take a while to complete. The results will be exported to a folder labeled `nec_calculations` within the `<path_to_oedi_data>` directory.
 

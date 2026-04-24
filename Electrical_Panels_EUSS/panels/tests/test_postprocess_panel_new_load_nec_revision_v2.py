@@ -369,6 +369,6 @@ def _compare_2023_and_2026(df_2023, df_2026):
 
 if __name__ == "__main__":
     output_dir = "/Volumes/Lixi_Liu/panels_results_550k"
-    output_folder = "nec_calculations_revision_ev_level2"
+    output_folder = "nec_calculations_revision_no_ev"
 
     test_all_upgrades(filedir=f"{output_dir}/{output_folder}")

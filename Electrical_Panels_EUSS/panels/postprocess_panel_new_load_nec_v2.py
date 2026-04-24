@@ -133,7 +133,6 @@ garage_door_half_hp_power_rating = get_nameplate_rating(nameplate_rating, 'garag
 
 # --- funcs ---
 
-
 ### -------- existing load specs --------
 def _general_load_lighting(row: pd.Series) -> float:
     """General Lighting & Receptacle Loads. NEC 220.41

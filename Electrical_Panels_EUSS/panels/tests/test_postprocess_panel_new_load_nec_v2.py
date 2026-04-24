@@ -261,6 +261,6 @@ def _test_87_calculation(df):
 
 if __name__ == "__main__":
     output_dir = "/Volumes/Lixi_Liu/panels_results_550k"
-    output_folder = "results_to_fix/nec_calculations_ev_level2"
+    output_folder = "nec_calculations_ev_level2"
 
     test_all_upgrades(filedir=f"{output_dir}/{output_folder}")
