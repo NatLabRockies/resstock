@@ -64,7 +64,8 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
       flex-direction: column;
       min-height: 0;
     }}
-    .title {{ font-size: 20px; font-weight: 700; margin: 4px 0 12px; }}
+    .title {{ font-size: 20px; font-weight: 700; margin: 4px 0 2px; }}
+    .subtitle {{ font-size: 12px; font-weight: 400; color: #6b6b6b; margin: 0 0 12px; }}
     #filters {{
       flex: 1 1 auto;
       min-height: 0;
@@ -200,6 +201,7 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
   <div class='app'>
     <aside class='sidebar'>
       <div class='title'>ResStock Comparison Explorer</div>
+      <div class='subtitle'>uses AMY2018 versions</div>
       <div id='filters'></div>
     </aside>
     <main class='main'>
