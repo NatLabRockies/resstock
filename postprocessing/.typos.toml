@@ -5,3 +5,12 @@
 extend-ignore-identifiers-re = [
   "\\b[A-Z]{2}\\b",
 ]
+# Domain acronyms used in baseline_validation:
+#   MAPE — Mean Absolute Percentage Error
+#   RTO  — Regional Transmission Organization (ISO_RTO_REGION column)
+#   BA   — Building America (climate zone column)
+[default.extend-words]
+MAPE = "MAPE"
+mape = "mape"
+RTO = "RTO"
+BA = "BA"

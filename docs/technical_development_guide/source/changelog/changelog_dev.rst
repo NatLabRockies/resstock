@@ -7,6 +7,24 @@ Development Changelog
     :released: pending
 
     .. change::
+        :tags: feature, software, postprocessing
+        :pullreq: 1529
+
+        **Date**: 2026-04-22
+
+        Title:
+        Add baseline_validation tool to resstockpostproc
+
+        Description:
+        Adds a baseline validation tool that compares a ResStock baseline run against public data sources
+        (EIA 861, EIA 176, RECS 2020, LRD) and generates an interactive comparison dashboard. Supports annual and
+        monthly resolutions across U.S. Total, state, census division, building type, vintage, climate zone, and
+        heating-fuel aggregations. A baseline-validation CI job runs the tool under --test on every PR and
+        uploads the generated dashboard as a CI artifact for review.
+
+        Assignees: Rajendra Adhikari
+
+    .. change::
         :tags: workflow, options, hpxml
         :pullreq: 1460
 

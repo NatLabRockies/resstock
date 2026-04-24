@@ -1,0 +1,70 @@
+# Baseline Validation Workflow Configuration
+# =========================================
+
+workgroup: rescore
+
+data_sources:
+  - db_name: buildstock_sdr
+    table_name: resstock_2024_amy2018_release_2
+    name: resstock_2024
+    db_schema: resstock_oedi_vu
+    baseline_metadata_and_annual_results_parquet_url: s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2024/resstock_amy2018_release_2/metadata_and_annual_results/national/parquet/baseline_metadata_and_annual_results.parquet
+  - db_name: buildstock_sdr
+    table_name: resstock_amy2018_r1_2025
+    name: resstock_2025
+    db_schema: resstock_oedi_new
+    baseline_metadata_and_annual_results_parquet_url: s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/resstock_amy2018_release_1/metadata_and_annual_results/national/full/parquet/upgrade0.parquet
+
+reference_years:
+  eia:
+    - 2018
+    # - 2020
+  recs:
+    - 2020
+
+output:
+  # Override this with your own directory — the script expands ~
+  output_dir: ~/baseline_validation_outputs
+  run_name: run_2025_release1
+# Data Source Labels
+# ------------------
+# Human-readable labels for data sources appearing in plot legends.
+# Keys must match the 'source' column values in plot data (e.g. eia_2018, resstock_2025).
+data_source_labels:
+  eia_2018:
+    label: "EIA 2018"
+    entries:
+      - description: "EIA-861 Annual Electric Utility Data (2018)"
+        url: "https://www.eia.gov/electricity/data/eia861/"
+      - description: "EIA-861M Monthly Electric Power Industry Report (2018)"
+        url: "https://www.eia.gov/electricity/data/eia861m/"
+      - description: "EIA-176 Natural Gas Consumption Data (2018)"
+        url: "https://www.eia.gov/dnav/ng/ng_cons_sum_a_EPG0_vrs_mmcf_m.htm"
+  # eia_2020:
+  #   label: "EIA 2020"
+  #   entries:
+  #     - description: "EIA-861 Annual Electric Utility Data (2020)"
+  #       url: "https://www.eia.gov/electricity/data/eia861/"
+  #     - description: "EIA-861M Monthly Electric Power Industry Report (2020)"
+  #       url: "https://www.eia.gov/electricity/data/eia861m/"
+  #     - description: "EIA-176 Natural Gas Consumption Data (2020)"
+  #       url: "https://www.eia.gov/dnav/ng/ng_cons_sum_a_EPG0_vrs_mmcf_m.htm"
+  recs_2020:
+    label: "RECS 2020"
+    entries:
+      - description: "Residential Energy Consumption Survey 2020"
+        url: "https://www.eia.gov/consumption/residential/"
+  resstock_2025:
+    label: "ResStock 2025"
+    entries:
+      - description: "ResStock Standard Data Release 2025 Release 1"
+        url: "https://resstock.nlr.gov/"
+  resstock_2024:
+    label: "ResStock 2024"
+    entries:
+      - description: "ResStock Standard Data Release 2024 Release 2"
+        url: "https://resstock.nlr.gov/"
+  lrd_2018:
+    label: "LRD 2018"
+    entries:
+      - description: "Utility Load Research Data 2018"

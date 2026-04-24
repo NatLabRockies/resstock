@@ -1,10 +1,10 @@
-files: ^postprocessing/resstockpostproc/upgrade_comparison/
+files: ^postprocessing/resstockpostproc/(upgrade_comparison|baseline_validation)/
 repos:
   - repo: https://github.com/crate-ci/typos
     rev: v1.34.0
     hooks:
       - id: typos
-        exclude: '\.(csv|geojson|json|ipynb)$'
+        exclude: '\.(csv|geojson|json|ipynb|svg|png)$'
         args: [] # Disable writing changes
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
@@ -15,6 +15,12 @@ repos:
       - id: check-builtin-literals
       - id: check-case-conflict
       - id: check-docstring-first
+        exclude: |
+          (?x)^postprocessing/resstockpostproc/baseline_validation/(
+            plot_helpers/plot_semantics\.py
+            |schema/plot_definitions\.py
+            |schema/plot_spec\.py
+          )$
       - id: check-executables-have-shebangs
       - id: check-illegal-windows-names
       - id: check-json
