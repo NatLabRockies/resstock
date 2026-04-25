@@ -74,12 +74,12 @@ new_result_dir = Path("/Volumes/Lixi_Liu/panels_results_550k")
 comparison_dir = Path("/Volumes/Lixi_Liu/panels_results_550k/compare_old_new_results")
 
 folders = [
-    # "nec_calculations_revision_no_ev",
-    # "nec_calculations_revision_ev_level1",
-    # "nec_calculations_revision_ev_level2",
-    "nec_calculations_no_ev",
-    "nec_calculations_ev_level1",
-    "nec_calculations_ev_level2",
+    "nec_calculations_revision_no_ev",
+    "nec_calculations_revision_ev_level1",
+    "nec_calculations_revision_ev_level2",
+    # "nec_calculations_no_ev",
+    # "nec_calculations_ev_level1",
+    # "nec_calculations_ev_level2",
 ]
 
 print("Comparing NEC calculation results:")

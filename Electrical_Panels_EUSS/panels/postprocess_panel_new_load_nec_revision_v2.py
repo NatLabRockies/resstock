@@ -771,7 +771,7 @@ def _new_load_space_conditioning(row, option_columns):
             if _is_ducted(heating_type or ""):
                 backup_heating_type = "ducted er"
             else:
-                backup_heating_type = "non-ducteder"
+                backup_heating_type = "non-ducted er"
 
     heating_cols = [
         row["upgrade_costs.size_heating_system_primary_k_btu_h"],
