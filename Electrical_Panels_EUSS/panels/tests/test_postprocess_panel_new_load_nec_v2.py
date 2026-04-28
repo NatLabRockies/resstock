@@ -160,9 +160,8 @@ def _test_existing_calculation(df):
 
 
 def _test_83_calculation(df):
-    # check upgrade_has_new_hvac
-    assert set(df.loc[df["new_load_hvac_83"] > df["load_hvac"], "upgrade_has_new_hvac"].unique()) == {True}
-    assert set(df.loc[df["new_load_hvac_83"] <= df["load_hvac"], "upgrade_has_new_hvac"].unique()) == {False}
+    # check upgrade_has_new_hvac is based on hvac_eq_changed
+    assert df["hvac_eq_changed_83"].equals(df["upgrade_has_new_hvac"])
 
     new_load_cols = [col for col in df.columns if col.startswith("new_load_") and "83" in col]
     non_hvac_new_load_cols = [col for col in new_load_cols if col not in ["new_load_heating_83", "new_load_cooling_83", "new_load_hvac_83"]]
@@ -200,6 +199,8 @@ def _test_83_calculation(df):
     cond = df["upgrade_has_new_hvac"] == True
     total_load1 = (gross_load_adj.loc[cond] - df.loc[cond, "load_hvac"].fillna(0)).apply(apply_demand_factor) + df.loc[cond, "new_load_hvac_83"].fillna(0)
     total_load2 = df.loc[cond, "load_total_post_upgrade_VA_220_83"]
+    if not np.isclose(total_load1, total_load2, atol=1e-2).all():
+        breakpoint()
     assert np.isclose(total_load1, total_load2, atol=1e-2).all()
 
 
@@ -221,6 +222,9 @@ def sum_87_loads_vector(df, columns):
     return total
 
 def _test_87_calculation(df):
+    # get upgrade_has_new_hvac for 87
+    upgrade_has_new_hvac = df["new_load_hvac_87"] > df["load_hvac"]
+
     # check post-upgrade load
     new_load_cols = [col for col in df.columns if col.startswith("new_load_") and "87" in col]
     non_hvac_new_load_cols = [col for col in new_load_cols if col not in ["new_load_heating_87", "new_load_cooling_87", "new_load_hvac_87", "new_load_total_VA_220_87"]]
@@ -236,7 +240,7 @@ def _test_87_calculation(df):
     
     # check loads_upgraded for hvac and total new load
     # 1. check those without new HVAC
-    cond = df["upgrade_has_new_hvac"] == False
+    cond = upgrade_has_new_hvac == False
     # check that load_hvac is not included in loads_upgraded for those without new hvac load
     assert set(loads_upgraded.loc[cond].apply(lambda x: "load_hvac" not in x).unique()) == {True}
 
@@ -245,7 +249,7 @@ def _test_87_calculation(df):
     assert np.isclose(new_load1, new_load2, atol=1e-2).all()
 
     # 2. check those with new HVAC
-    cond = df["upgrade_has_new_hvac"] == True
+    cond = upgrade_has_new_hvac == True
     # check that load_hvac is included in loads_upgraded for those with new hvac load
     assert set(loads_upgraded.loc[cond].apply(lambda x: "load_hvac" in x).unique()) == {True}
 

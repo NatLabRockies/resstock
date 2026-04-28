@@ -56,13 +56,15 @@ Note:
 
 # README on result columns:
 "upgrade_has_new_hvac": whether upgraded HVAC is considered new for the purpose of 83 load calculation. If TRUE, use part B) else use part A)
-    - Hvac load is only considered new if it is higher than existing hvac load, even if new hvac equipment is added. 
-    - This is to avoid overestimating load increase for which the new or replaced equipment does not increase the "coincident" hvac load,
+    - Hvac load is considered new if HVAC equipment has changed, NOT if post-upgrade load has increased. 
+    - This is based on topical reading of 220.83 section.
         like: electric replacement of fuel heating in a cooling-dominant home, or replacement of electric heating with ASHP (no backup).
 "hvac_eq_changed_83": whether HVAC equipment has changed in the upgrade, regardless of whether it's considered new load for 83 load calculation
 "loads_upgraded_83": list of loads that should be swapped to when constructing the upgraded itemized loads from the baseline itemized loads.
 "hvac_eq_changed_87" (same as "hvac_eq_changed_83"): whether HVAC equipment has changed in the upgrade, which is the determinant for whether demand factor gets applied to hvac load or not for 87 load calculation
-"loads_upgraded_87": list of loads that make up the total new load for 87 load calculation. (load is only considered new if it is higher than before)
+"loads_upgraded_87": list of loads that make up the total new load for 87 load calculation. 
+    - Unlike with 83, load is only considered new if it is higher than before.
+     - This is to avoid overestimating load increase for which the new or replaced equipment does not increase the "coincident" hvac load,
 """
 
 import pandas as pd
@@ -789,7 +791,6 @@ def _new_load_space_conditioning(row, option_columns):
 
     hvac_changed = new_heating or new_secondary_heating or new_cooling
     hvac_load = max(heating_load, cooling_load)
-
     return hvac_changed, heating_load, cooling_load, hvac_load, error_msg
 
 
@@ -1375,12 +1376,16 @@ def calculate_new_load_total_220_83(dfi: pd.DataFrame, dfu: pd.DataFrame, n_kit:
     df_upgraded = df_new[new_loads].rename(columns=dict(zip(new_loads, upgradable_loads)))
     cond_upgraded = df_upgraded > 0
     # overwrite condition to ensure value is updated only where HVAC has changed 
-    # (cannot use hvac_changed because HVAC capacity changes with envelope upgrade in this resstock version even if equipment did not change)
-    cond_upgraded["load_hvac"] = df_upgraded["load_hvac"] != df_existing["load_hvac"]
+    new_hvac = df_new["hvac_eq_changed"].copy().rename("upgrade_has_new_hvac")
+    cond_upgraded["load_hvac"] = new_hvac  # only consider load_hvac as upgraded if hvac equipment changed, regardless of load change
     loads_upgraded = cond_upgraded.apply(lambda x: list(x[x].index), axis=1).rename("loads_upgraded_83") # record which loads are accounted as new in final calculation
 
-    # replace where upgraded with nan then update with new loads
-    df_change = df_loads[upgradable_loads].mask(cond_upgraded)
+    # except for HVAC, replace where upgraded with nan then update with new loads
+    # for HVAC, use post-upgrade load directly.
+    df_change = pd.concat([
+        df_upgraded["load_hvac"].fillna(0), 
+        df_loads[upgradable_loads].mask(cond_upgraded).drop(columns=["load_hvac"])
+    ], axis=1)
     df_change.update(df_upgraded, overwrite=False)
     df_loads[upgradable_loads] = df_change
 
@@ -1395,8 +1400,8 @@ def calculate_new_load_total_220_83(dfi: pd.DataFrame, dfu: pd.DataFrame, n_kit:
     # hvac is only considered "new" if the hvac load increases
     total_load_post = "load_total_post_upgrade_VA_220_83"
     total_amp_post = "amp_total_post_upgrade_A_220_83"
-    # determine HVAC as new load IF AND ONLY IF the hvac load increases post-upgrade, which is the determinant for whether demand factor gets applied to hvac load or not
-    new_hvac = (df_upgraded["load_hvac"]>df_existing["load_hvac"]).rename("upgrade_has_new_hvac")
+    # determine HVAC as new load IF the HVAC equipment has changed (not necessarily the load has increased post-upgrade) 
+    # e.g., if post-upgrade has 10kW new heating and 14kW existing cooling, then hvac load is 14 kW and discounted as a new load at 100% per 220.83[B]
     df_loads.loc[new_hvac, total_load_post] = df_loads.loc[new_hvac].apply(lambda x: apply_total_load_220_83(x, has_new_hvac_load=True), axis=1)
     df_loads.loc[~new_hvac, total_load_post] = df_loads.loc[~new_hvac].apply(lambda x: apply_total_load_220_83(x, has_new_hvac_load=False), axis=1)
     df_loads[total_amp_post] = df_loads[total_load_post] / 240
