@@ -77,9 +77,9 @@ folders = [
     "nec_calculations_revision_no_ev",
     "nec_calculations_revision_ev_level1",
     "nec_calculations_revision_ev_level2",
-    # "nec_calculations_no_ev",
-    # "nec_calculations_ev_level1",
-    # "nec_calculations_ev_level2",
+    "nec_calculations_no_ev",
+    "nec_calculations_ev_level1",
+    "nec_calculations_ev_level2",
 ]
 
 print("Comparing NEC calculation results:")
@@ -206,6 +206,13 @@ for i, folder in enumerate(folders, 1):
                 df_out = get_stats_for_num_col(dfo, dfn, col)
                 res_lst.append(df_out)
                 continue
+        
+        # get summary of HVAC msg
+        for col in dfn.columns:
+            if not "msg" in col:
+                continue
+            df_out = _get_value_counts(dfn[col], "param_value", "_new")
+            res_lst.append(df_out)
         
 
         # finalize result_summary

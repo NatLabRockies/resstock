@@ -775,7 +775,7 @@ def _new_load_space_conditioning(row, option_columns):
     # record inconsistency
     error_msg = ""
     if heating_type and heating_load == 0:
-        error_msg += f"0 heating load for {heating_type=}. "
+        error_msg += f"0 heating load for primary {heating_type=}. "
     if cooling_type and cooling_load == 0:
         error_msg += f"0 cooling load for {cooling_type=}."
 

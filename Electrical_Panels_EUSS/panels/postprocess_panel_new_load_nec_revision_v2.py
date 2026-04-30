@@ -812,7 +812,7 @@ def _new_load_space_conditioning(row, option_columns):
     # record inconsistency
     error_msg = ""
     if heating_type and heating_load == 0:
-        error_msg += f"0 heating load for {heating_type=}. "
+        error_msg += f"0 heating load for primary {heating_type=}. "
     if cooling_type and cooling_load == 0:
         error_msg += f"0 cooling load for {cooling_type=}."
 
@@ -874,6 +874,8 @@ def _new_load_space_conditioning_itemized(row, option_columns):
                 backup_heating_type = "ducted er"
             else:
                 backup_heating_type = "non-ducted er"
+            if row["upgrade_costs.size_heat_pump_backup_primary_k_btu_h"] == 0:
+                backup_heating_type = None # no backup
 
     heating_cols = [
         row["upgrade_costs.size_heating_system_primary_k_btu_h"],
@@ -915,9 +917,9 @@ def _new_load_space_conditioning_itemized(row, option_columns):
 
     # record inconsistency
     error_msg = ""
-    for heat_load, heat_type in zip(heat_loads, heating_types):
-        if heat_type and heat_load == 0:
-            error_msg += f"0 heating load for {heat_type=}. "
+    for heat_load, prefix, heat_type in zip(heat_loads, ["primary", "secondary", "backup"], heating_types):
+        if heat_type and not _is_fuel(heat_type) and heat_load == 0:
+            error_msg += f"0 heating load for {prefix} {heat_type=}. "
     if cooling_type and cool_load == 0:
         error_msg += f"0 cooling load for {cooling_type=}."
 
@@ -937,7 +939,6 @@ def _new_load_space_conditioning_itemized(row, option_columns):
 
     outputs = [hvac_changed, heating_load, cooling_load, hvac_load, error_msg]
     outputs += heating_types + [cooling_type] + heat_loads + [cool_load, heat_ahu, cool_ahu]
-
     return tuple(outputs)
 
 
