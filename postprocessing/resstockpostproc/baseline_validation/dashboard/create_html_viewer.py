@@ -50,6 +50,15 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
 <head>
   <meta charset='UTF-8'>
   <title>ResStock Comparison Explorer</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S5YQKCKW13"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+
+    gtag('config', 'G-S5YQKCKW13');
+  </script>
   <style>
     * {{ box-sizing: border-box; }}
     html, body {{ height: 100%; overflow: hidden; }}
