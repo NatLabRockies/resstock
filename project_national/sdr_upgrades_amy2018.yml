@@ -21,7 +21,7 @@ sampler:
     sample_file: resources/sdr_minimal_buildstock.csv # For CI
     # n_datapoints: 550000 # For production run
 
-# NREL High Performance Computing machine configuration
+# NLR High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
 kestrel:
   n_jobs: 600
@@ -60,7 +60,7 @@ postprocessing:
 workflow_generator:
   # ResStock HPXML workflow generator
   type: residential_hpxml
-  version: 2025.04.29
+  version: 2025.12.03
 
   args:
     # Annual simulation and timestep
@@ -558,6 +558,18 @@ references:
       - Misc Pool Heater|Natural Gas
       - Misc Hot Tub Spa|Natural Gas
 
+  air_sealing_infiltration_reduction: &air_sealing_infiltration_reduction
+    option: Infiltration Reduction|25%
+    apply_logic:
+      - or:
+          - Infiltration|10 ACH50
+          - Infiltration|15 ACH50
+          - Infiltration|20 ACH50
+          - Infiltration|25 ACH50
+          - Infiltration|30 ACH50
+          - Infiltration|40 ACH50
+          - Infiltration|50 ACH50
+
 ### Standard Data Release - Residential -- ###
 upgrades:
   ### -- HVAC: Furnaces -- ###
@@ -803,6 +815,60 @@ upgrades:
               - *typical_cold_climate_logic
               - not: HVAC Heating Type And Fuel|Electricity ASHP
 
+  - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited
+    package_apply_logic: *fossil_fuel_or_electricity
+    options:
+      - option: HVAC Heating Efficiency|ASHP, SEER2 18, 8.5 HSPF2, Typical Cold Climate, Sizing is Duct Limited
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic: *typical_cold_climate_logic
+
+      - option: Heating Fuel|Electricity
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: Heating Fuel|Electricity
+
+      - option: HVAC Heating Type And Fuel|Electricity ASHP
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: HVAC Heating Type And Fuel|Electricity ASHP
+
+  - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing
+    package_apply_logic: *fossil_fuel_or_electricity
+    options:
+      - option: HVAC Heating Efficiency|ASHP, SEER2 18, 8.5 HSPF2, Typical Cold Climate, Use Existing System as Backup
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic: *typical_cold_climate_logic
+
+      - option: Heating Fuel|Electricity
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: Heating Fuel|Electricity
+
+      - option: HVAC Heating Type And Fuel|Electricity ASHP
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: HVAC Heating Type And Fuel|Electricity ASHP
+
   - upgrade_name: Dual Fuel Heat Pump System
     package_apply_logic: *fossil_fuel_or_electricity
     options:
@@ -1001,3 +1067,47 @@ upgrades:
     options:
       - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
       - *demand_flexibility_30_minute_random_shift
+
+  - upgrade_name: General Air Sealing
+    options:
+      - *air_sealing_infiltration_reduction
+
+  - upgrade_name: General Air Sealing, Attic Floor Insulation, and Duct Sealing
+    options:
+      ### --Envelope Package -- ###
+      - *air_sealing_infiltration_reduction
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
+      - *duct_seal_only_r6
+      - *duct_seal_only_r8
+      - *duct_seal_and_insulate
+
+  - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing
+    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
+    options:
+      - *dual_speed_ducted_ghp
+      - *heat_pump_cooling_efficiency_ducted
+      - *partial_conditioning_100_percent_ducts_only
+      ### --Envelope Package -- ###
+      - *air_sealing_infiltration_reduction
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
+      - *duct_seal_only_r6
+      - *duct_seal_only_r8
+      - *duct_seal_and_insulate
+
+  - upgrade_name: Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, General Air Sealing, Attic Floor Insulation, and Duct Sealing
+    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
+    options:
+      - option: HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4
+        apply_logic: *ducted_ashp_apply_logic
+
+      - *heat_pump_cooling_efficiency_ducted
+      - *partial_conditioning_100_percent_ducts_only
+      ### --Envelope Package -- ###
+      - *air_sealing_infiltration_reduction
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
+      - *duct_seal_only_r6
+      - *duct_seal_only_r8
+      - *duct_seal_and_insulate

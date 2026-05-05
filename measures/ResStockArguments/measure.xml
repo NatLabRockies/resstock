@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>05104c47-a54a-40f2-89bc-86afdec7a2de</version_id>
-  <version_modified>2025-11-13T16:46:08Z</version_modified>
+  <version_id>7a5aa58a-4632-4620-9eb7-7ae06b300bd0</version_id>
+  <version_modified>2026-01-05T22:45:17Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -265,7 +265,7 @@
       <type>Integer</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>2025</default_value>
+      <default_value>2026</default_value>
     </argument>
     <argument>
       <name>geometry_attached_walls</name>
@@ -11613,6 +11613,14 @@
       <default_value>0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0</default_value>
     </argument>
     <argument>
+      <name>hvac_heating_system_existing</name>
+      <display_name>HVAC: Existing Heating System</display_name>
+      <description>The type and efficiency of the existing heating system.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>hvac_heating_shared_system</name>
       <display_name>HVAC: Heating Shared System Type</display_name>
       <description>The type of shared system.</description>
@@ -11635,28 +11643,10 @@
       </choices>
     </argument>
     <argument>
-      <name>heating_system_heating_capacity</name>
-      <display_name>HVAC: Heating System Heating Capacity</display_name>
-      <description>The output heating capacity of the heating system.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heating_system_heating_autosizing_factor</name>
       <display_name>HVAC: Heating System Heating Autosizing Factor</display_name>
       <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
       <type>Double</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heating_system_heating_autosizing_limit</name>
-      <display_name>HVAC: Heating System Heating Autosizing Limit</display_name>
-      <description>The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -11679,53 +11669,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heating_system_2_fuel</name>
-      <display_name>HVAC: Heating System 2 Fuel Type</display_name>
-      <description>The fuel type of the second heating system.</description>
-      <type>Choice</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>electricity</value>
-          <display_name>electricity</display_name>
-        </choice>
-        <choice>
-          <value>natural gas</value>
-          <display_name>natural gas</display_name>
-        </choice>
-        <choice>
-          <value>fuel oil</value>
-          <display_name>fuel oil</display_name>
-        </choice>
-        <choice>
-          <value>propane</value>
-          <display_name>propane</display_name>
-        </choice>
-        <choice>
-          <value>wood</value>
-          <display_name>wood</display_name>
-        </choice>
-        <choice>
-          <value>wood pellets</value>
-          <display_name>wood pellets</display_name>
-        </choice>
-        <choice>
-          <value>coal</value>
-          <display_name>coal</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>heating_system_2_heating_capacity</name>
-      <display_name>HVAC: Heating System 2 Heating Capacity</display_name>
-      <description>The output heating capacity of the second heating system.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heating_system_2_heating_autosizing_factor</name>
       <display_name>HVAC: Heating System 2 Heating Autosizing Factor</display_name>
       <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
@@ -11734,20 +11677,10 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heating_system_2_heating_autosizing_limit</name>
-      <display_name>HVAC: Heating System 2 Heating Autosizing Limit</display_name>
-      <description>The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>cooling_system_cooling_capacity</name>
-      <display_name>HVAC: Cooling System Cooling Capacity</display_name>
-      <description>The output cooling capacity of the cooling system.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
+      <name>hvac_cooling_system_existing</name>
+      <display_name>HVAC: Existing Cooling System</display_name>
+      <description>The type and efficiency of the existing cooling system.</description>
+      <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -11756,15 +11689,6 @@
       <display_name>HVAC: Cooling System Cooling Autosizing Factor</display_name>
       <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
       <type>Double</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>cooling_system_cooling_autosizing_limit</name>
-      <display_name>HVAC: Cooling System Cooling Autosizing Limit</display_name>
-      <description>The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -11796,11 +11720,10 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heat_pump_heating_capacity</name>
-      <display_name>HVAC: Heat Pump Heating Capacity</display_name>
-      <description>The output heating capacity of the heat pump.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
+      <name>hvac_heat_pump_existing</name>
+      <display_name>HVAC: Existing Heat Pump</display_name>
+      <description>The type and efficiency of the existing heat pump.</description>
+      <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -11813,24 +11736,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heat_pump_heating_autosizing_limit</name>
-      <display_name>HVAC: Heat Pump Heating Autosizing Limit</display_name>
-      <description>The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heat_pump_cooling_capacity</name>
-      <display_name>HVAC: Heat Pump Cooling Capacity</display_name>
-      <description>The output cooling capacity of the heat pump.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heat_pump_cooling_autosizing_factor</name>
       <display_name>HVAC: Heat Pump Cooling Autosizing Factor</display_name>
       <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
@@ -11839,37 +11744,10 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heat_pump_cooling_autosizing_limit</name>
-      <display_name>HVAC: Heat Pump Cooling Autosizing Limit</display_name>
-      <description>The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_heating_capacity</name>
-      <display_name>HVAC: Heat Pump Backup Heating Capacity</display_name>
-      <description>The backup output heating capacity of the heat pump.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heat_pump_backup_heating_autosizing_factor</name>
       <display_name>HVAC: Heat Pump Backup Heating Autosizing Factor</display_name>
       <description>The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.</description>
       <type>Double</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_heating_autosizing_limit</name>
-      <display_name>HVAC: Heat Pump Backup Heating Autosizing Limit</display_name>
-      <description>The maximum capacity limit applied to the auto-sizing methodology if Backup Type is integrated.</description>
-      <type>Double</type>
-      <units>Btu/hr</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -11897,40 +11775,6 @@
       <description>The fraction of manufacturer recommended charge of the heat pump.</description>
       <type>Double</type>
       <units>Frac</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_fuel</name>
-      <display_name>HVAC: Heat Pump Backup Fuel Type</display_name>
-      <description>The backup fuel type of the heat pump.</description>
-      <type>Choice</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>electricity</value>
-          <display_name>electricity</display_name>
-        </choice>
-        <choice>
-          <value>natural gas</value>
-          <display_name>natural gas</display_name>
-        </choice>
-        <choice>
-          <value>fuel oil</value>
-          <display_name>fuel oil</display_name>
-        </choice>
-        <choice>
-          <value>propane</value>
-          <display_name>propane</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_heating_efficiency</name>
-      <display_name>HVAC: Heat Pump Backup Rated Efficiency</display_name>
-      <description>The backup rated efficiency value of the heat pump.</description>
-      <type>Double</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -11969,24 +11813,6 @@
           <display_name>false</display_name>
         </choice>
       </choices>
-    </argument>
-    <argument>
-      <name>baseline_max_airflow_cfm</name>
-      <display_name>HVAC: Baseline Maximum Airflow Rate</display_name>
-      <description>The maximum airflow rate for the baseline home. Applies only when using Heat Pump Sizing Is Duct Limited.</description>
-      <type>Double</type>
-      <units>CFM</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>hvac_blower_fan_watts_per_cfm</name>
-      <display_name>HVAC: Blower Fan Efficiency</display_name>
-      <description>The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems)..</description>
-      <type>Double</type>
-      <units>W/CFM</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>hvac_perf_data_heating_outdoor_temperatures</name>
@@ -12111,6 +11937,14 @@
       <description>Maximum speed efficiency COP values of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to variable speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.</description>
       <type>String</type>
       <units>W/W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_heating_system_2_existing</name>
+      <display_name>HVAC: Existing Heating System 2</display_name>
+      <description>The type and efficiency of the existing second heating system.</description>
+      <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -12342,357 +12176,6 @@
       </choices>
     </argument>
     <argument>
-      <name>electric_panel_service_max_current_rating</name>
-      <display_name>Electric Panel: Service Max Current Rating</display_name>
-      <description>The service max current rating of the electric panel.</description>
-      <type>Double</type>
-      <units>A</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>electric_panel_breaker_spaces_headroom</name>
-      <display_name>Electric Panel: Breaker Spaces Headroom</display_name>
-      <description>The unoccupied number of breaker spaces on the electric panel.</description>
-      <type>Integer</type>
-      <units>#</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>electric_panel_breaker_spaces_rated_total</name>
-      <display_name>Electric Panel: Breaker Spaces Rated Total</display_name>
-      <description>The rated total number of breaker spaces on the electric panel.</description>
-      <type>Integer</type>
-      <units>#</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>electric_panel_load_heating_system_new_load</name>
-      <display_name>Electric Panel: Heating System New Load</display_name>
-      <description>Whether the heating system is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_cooling_system_new_load</name>
-      <display_name>Electric Panel: Cooling System New Load</display_name>
-      <description>Whether the cooling system is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_heat_pump_new_load</name>
-      <display_name>Electric Panel: Heat Pump New Load</display_name>
-      <description>Whether the heat pump is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_heating_system_2_new_load</name>
-      <display_name>Electric Panel: Heating System 2 New Load</display_name>
-      <description>Whether the second heating system is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_mech_vent_fan_new_load</name>
-      <display_name>Electric Panel: Mechanical Ventilation New Load</display_name>
-      <description>Whether the mechanical ventilation is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_whole_house_fan_new_load</name>
-      <display_name>Electric Panel: Whole House Fan New Load</display_name>
-      <description>Whether the whole house fan is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_kitchen_fans_new_load</name>
-      <display_name>Electric Panel: Kitchen Fans New Load</display_name>
-      <description>Whether the kitchen fans is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_bathroom_fans_new_load</name>
-      <display_name>Electric Panel: Bathroom Fans New Load</display_name>
-      <description>Whether the bathroom fans is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_electric_water_heater_new_load</name>
-      <display_name>Electric Panel: Electric Water Heater New Load</display_name>
-      <description>Whether the water heater is a new panel load addition to an existing service panel. Only applies to electric water heater.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_electric_clothes_dryer_new_load</name>
-      <display_name>Electric Panel: Electric Clothes Dryer New Load</display_name>
-      <description>Whether the clothes dryer is a new panel load addition to an existing service panel. Only applies to electric clothes dryer.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_dishwasher_new_load</name>
-      <display_name>Electric Panel: Dishwasher New Load</display_name>
-      <description>Whether the dishwasher is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_electric_cooking_range_new_load</name>
-      <display_name>Electric Panel: Electric Cooking Range/Oven New Load</display_name>
-      <description>Whether the cooking range is a new panel load addition to an existing service panel. Only applies to electric cooking range/oven.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_misc_plug_loads_well_pump_new_load</name>
-      <display_name>Electric Panel: Misc Plug Loads Well Pump New Load</display_name>
-      <description>Whether the well pump is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_misc_plug_loads_vehicle_new_load</name>
-      <display_name>Electric Panel: Misc Plug Loads Vehicle New Load</display_name>
-      <description>Whether the electric vehicle is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_pool_pump_new_load</name>
-      <display_name>Electric Panel: Pool Pump New Load</display_name>
-      <description>Whether the pool pump is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_electric_pool_heater_new_load</name>
-      <display_name>Electric Panel: Electric Pool Heater New Load</display_name>
-      <description>Whether the pool heater is a new panel load addition to an existing service panel. Only applies to electric pool heater.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_permanent_spa_pump_new_load</name>
-      <display_name>Electric Panel: Permanent Spa Pump New Load</display_name>
-      <description>Whether the spa pump is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>electric_panel_load_electric_permanent_spa_heater_new_load</name>
-      <display_name>Electric Panel: Electric Permanent Spa Heater New Load</display_name>
-      <description>Whether the spa heater is a new panel load addition to an existing service panel. Only applies to electric permanent spa heater.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
       <name>electric_panel_load_other_power_rating</name>
       <display_name>Electric Panel: Other Power Rating</display_name>
       <description>Specifies the panel load other power rating. This represents the total of all other electric loads that are fastened in place, permanently connected, or located on a specific circuit. For example, garbage disposal, built-in microwave.</description>
@@ -12700,24 +12183,6 @@
       <units>W</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>electric_panel_load_other_new_load</name>
-      <display_name>Electric Panel: Other New Load</display_name>
-      <description>Whether the other load is a new panel load addition to an existing service panel.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
     </argument>
     <argument>
       <name>emissions_scenario_names</name>
@@ -12953,7 +12418,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>3A00BFB1</checksum>
+      <checksum>7D9F548E</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12970,13 +12435,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>A9646487</checksum>
+      <checksum>7F60B6F8</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>444E3DBD</checksum>
+      <checksum>C289753F</checksum>
     </file>
     <file>
       <filename>measure.txt</filename>

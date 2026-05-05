@@ -19,7 +19,7 @@ sampler:
   args:
     n_datapoints: 100
 
-# NREL High Performance Computing machine configuration
+# NLR High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
 # kestrel:
 #   n_jobs: 3
@@ -54,7 +54,7 @@ sampler:
 workflow_generator:
   # ResStock HPXML workflow generator
   type: residential_hpxml
-  version: 2025.04.29
+  version: 2025.12.03
   args:
     # Annual simulation and timestep
     build_existing_model:
