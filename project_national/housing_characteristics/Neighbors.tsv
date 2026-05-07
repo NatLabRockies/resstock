@@ -1,0 +1,10 @@
+Dependency=Geometry Building Type RECS	Option=Left/Right at 15ft	Option=2	Option=4	Option=7	Option=12	Option=27	Option=None	sampling_probability
+Mobile Home	1	0	0	0	0	0	0	0.0624897
+Single-Family Detached	1	0	0	0	0	0	0	0.614743
+Single-Family Attached	0	0.005808	0.104524	0.154273	0.286172	0.4101	0.039122	0.0585642
+Multi-Family with 2 - 4 Units	0	0.005808	0.104524	0.154273	0.286172	0.4101	0.039122	0.0799763
+Multi-Family with 5+ Units	0	0.005808	0.104524	0.154273	0.286172	0.4101	0.039122	0.184227
+# Created by: manually created
+# Description: Presence and distance between the dwelling unit and the nearest neighbors to the left and right.
+# Source: OpenStreetMap data queried by Radiant Labs for Multi-Family and Single-Family Attached
+# Source: Engineering Judgement for others

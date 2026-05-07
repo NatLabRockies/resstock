@@ -1,0 +1,9 @@
+Dependency=Geometry Building Type RECS	Option=Not Applicable	Option=Double-Loaded Interior	Option=None	Option=Single Exterior Front	Option=Double Exterior	sampling_probability
+Mobile Home	1	0	0	0	0	0.0624897
+Multi-Family with 2 - 4 Units	0	1	0	0	0	0.0799763
+Multi-Family with 5+ Units	0	1	0	0	0	0.184227
+Single-Family Attached	1	0	0	0	0	0.0585642
+Single-Family Detached	1	0	0	0	0	0.614743
+# Created by: manually created
+# Description: Type of corridor attached to multi-family units.
+# Source: Engineering Judgment

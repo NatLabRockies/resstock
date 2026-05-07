@@ -1,0 +1,18 @@
+Dependency=Heating Fuel	Dependency=Misc Pool	Option=Electricity	Option=Natural Gas	Option=None	Option=Other Fuel	source_count	source_weight	sampling_probability
+Electricity	Has Pool	0.158141	0.0703046	0.671207	0.100347	411	3.08643e+06	0.0290182
+Fuel Oil	Has Pool	0.0777736	0	0.749028	0.173199	105	431588	0.0040479
+Natural Gas	Has Pool	0.0552047	0.262356	0.634394	0.0480448	619	4.04905e+06	0.0316922
+None	Has Pool	0.183201	0.0990135	0.60331	0.114475	53	390468	0.000543151
+Other Fuel	Has Pool	0	0	0	1	1	6953.18	0.000551967
+Propane	Has Pool	0.0739288	0	0.739533	0.186538	66	409140	0.00376982
+Wood	Has Pool	0	0	0.941845	0.0581551	25	147130	0.00163127
+Electricity	None	0	0	1	0	5288	3.94876e+07	0.36502
+Fuel Oil	None	0	0	1	0	992	4.50335e+06	0.0445443
+Natural Gas	None	0	0	1	0	8976	5.86644e+07	0.436976
+None	None	0	0	1	0	698	5.39976e+06	0.010796
+Other Fuel	None	0	0	1	0	7	47557.2	0.00688887
+Propane	None	0	0	1	0	862	4.80248e+06	0.0465161
+Wood	None	0	0	1	0	393	2.10314e+06	0.0180041
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: The heating fuel of the pool heater if there is a pool.
+# Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.

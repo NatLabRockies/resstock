@@ -1,0 +1,10 @@
+Dependency=Insulation Foundation Wall	Option=None	Option=Uninsulated	Option=R-5, Exterior	Option=R-10, Exterior	Option=R-15, Exterior	sampling_probability
+None	1	0	0	0	0	0.481809
+Uninsulated	0	1	0	0	0	0.473216
+Wall R-5, Exterior	0	0	1	0	0	0.0115217
+Wall R-10, Exterior	0	0	0	1	0	0.0282678
+Wall R-15, Exterior	0	0	0	0	1	0.00518625
+# Created by: manually created
+# Description: Insulation level for rim joists.
+# Source: Engineering Judgement
+# Assumptions: Rim joist insulation is the same value as the foundation wall insulation.

@@ -1,0 +1,7 @@
+Option=1A	Option=2A	Option=2B	Option=3A	Option=3B	Option=3C	Option=4A	Option=4B	Option=4C	Option=5A	Option=5B	Option=6A	Option=6B	Option=7A	Option=7AK	Option=7B	Option=8AK	source_count	source_weight	sampling_probability
+0.0179403	0.115935	0.0197434	0.13305	0.0929124	0.0234445	0.215302	0.0077307	0.0288003	0.225367	0.037893	0.0613171	0.0092306	0.00789633	0.00178684	0.00113165	0.000519458	1.10783e+07	1.34055e+08	1
+# Created by: sources\spatial\tsv_maker.py
+# Description: Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located.
+# Source: Spatial definitions are from the U.S. Census Bureau as of July 1, 2015.
+# Source: Unit counts are from the American Community Survey 5-yr 2016.
+# Source: Climate zone data are from ASHRAE 169 2006, IECC 2012, and M.C. Baechler 2015.

@@ -1,0 +1,9 @@
+Dependency=Usage Level	Option=80% Usage	Option=100% Usage	Option=120% Usage	sampling_probability
+Average	0	1	0	0
+Medium	0	1	0	0.5
+Low	1	0	0	0.25
+High	0	0	1	0.25
+# Created by: sources\other\tsv_maker.py
+# Description: Clothes washer energy usage level multiplier.
+# Source: n/a
+# Assumption: Engineering judgement

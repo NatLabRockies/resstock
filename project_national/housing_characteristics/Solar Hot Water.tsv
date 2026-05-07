@@ -1,0 +1,5 @@
+Option=None	sampling_probability
+1	1
+# Created by: manually created
+# Description: Presence, size, and location of solar hot water system (not modeled in project_national).
+# Source: Not applicable; all homes are assumed to not have solar water heating.

@@ -1,0 +1,73 @@
+schema_version: '0.3'
+os_version: 3.7.0
+os_sha: d5269793f1
+buildstock_directory: ../ # Relative to this file or absolute
+project_directory: project_national # Relative to buildstock_directory
+output_directory: model_extraction/upgrade6
+weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
+# weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip
+
+sampler:
+  type: precomputed
+  args:
+    sample_file: ../technoeconomic_analysis/Postprocessing/data_/upgrade_buildstock_csv/buildstock_30k_6_5.csv
+
+workflow_generator:
+  type: residential_hpxml
+  args:
+    build_existing_model:
+      simulation_control_timestep: 2
+      simulation_control_run_period_begin_month: 1
+      simulation_control_run_period_begin_day_of_month: 1
+      simulation_control_run_period_end_month: 12
+      simulation_control_run_period_end_day_of_month: 31
+      simulation_control_run_period_calendar_year: 2007
+
+    emissions:
+      - scenario_name: LRMER_LowRECost_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2022/LRMER_LowRECost_25
+        gas_value: 147.3
+        propane_value: 177.8
+        oil_value: 195.9
+
+    utility_bills:
+      - scenario_name: Utility Rates - Fixed + Variable
+        simple_filepath: data/utility_bills/simple_rates/State.tsv
+
+    simulation_output_report:
+      timeseries_frequency: timestep
+      include_timeseries_total_consumptions: true
+      include_timeseries_fuel_consumptions: true
+      include_timeseries_end_use_consumptions: true
+      include_timeseries_emissions: true
+      include_timeseries_emission_fuels: true
+      include_timeseries_emission_end_uses: true
+      include_timeseries_hot_water_uses: true
+      include_timeseries_total_loads: true
+      include_timeseries_component_loads: true
+      include_timeseries_unmet_hours: true
+      include_timeseries_zone_temperatures: true
+      include_timeseries_airflows: true
+      include_timeseries_weather: true
+      include_timeseries_resilience: true
+
+    reporting_measures:
+      - measure_dir_name: QOIReport
+
+    server_directory_cleanup:
+      retain_in_idf: false
+      retain_schedules_csv: false
+
+baseline:
+  n_buildings_represented: 140382740 # American Community Survey 2022 5-year, B25001, contiguous US + AK
+
+eagle:
+  n_jobs: 3
+  minutes_per_sim: 30
+  account: <account you are authorized to use>
+  postprocessing:
+    time: 20
+    n_workers: 1
+  sampling:
+    time: 5

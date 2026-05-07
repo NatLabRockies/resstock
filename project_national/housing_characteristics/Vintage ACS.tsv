@@ -1,0 +1,13 @@
+Dependency=Vintage	Option=<1940	Option=1940-59	Option=1960-79	Option=1980-99	Option=2000-09	Option=2010s	source_count	source_weight	sampling_probability
+1940s	0	1	0	0	0	0	355048	6.73701e+06	0.0494067
+1950s	0	1	0	0	0	0	738638	1.41551e+07	0.103841
+1960s	0	0	1	0	0	0	740581	1.45688e+07	0.10664
+1970s	0	0	1	0	0	0	1.05072e+06	2.08791e+07	0.152322
+1980s	0	0	0	1	0	0	913122	1.84718e+07	0.134333
+1990s	0	0	0	1	0	0	937574	1.90402e+07	0.137902
+2000s	0	0	0	0	1	0	890619	1.90881e+07	0.137424
+2010s	0	0	0	0	0	1	307090	7.1042e+06	0.0507351
+<1940	1	0	0	0	0	0	927867	1.73847e+07	0.127395
+# Created by: sources\pums\pums2019_5yrs\tsv_maker.py
+# Description: Time period in which the dwelling unit was constructed as defined by the U.S. Census American Community Survey.
+# Source: 2019-5yrs Public Use Microdata Samples (PUMS). IPUMS USA, University of Minnesota, www.ipums.org.

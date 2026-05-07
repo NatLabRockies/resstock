@@ -1,0 +1,14 @@
+Dependency=Geometry Floor Area	Option=0-1499	Option=1500-2499	Option=2500-3999	Option=4000+	source_count	source_weight	sampling_probability
+0-499	1	0	0	0	614	4.61815e+06	0.0324051
+1000-1499	1	0	0	0	4676	3.23418e+07	0.262116
+1500-1999	0	1	0	0	3363	2.10238e+07	0.193175
+2000-2499	0	1	0	0	2351	1.39773e+07	0.124439
+2500-2999	0	0	1	0	1300	7.37333e+06	0.0654083
+3000-3999	0	0	1	0	1370	7.68791e+06	0.0610651
+4000+	0	0	0	1	617	3.46631e+06	0.0302508
+500-749	1	0	0	0	1613	1.32117e+07	0.0854304
+750-999	1	0	0	0	2592	1.98287e+07	0.145711
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: The finished floor area of the dwelling unit using bins from the U.S. Energy Information Administration Residential Energy Consumption Survey.
+# Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+# Source: Geometry Floor Area bins are from the UNITSIZE field of the 2017 American Housing Survey (AHS).

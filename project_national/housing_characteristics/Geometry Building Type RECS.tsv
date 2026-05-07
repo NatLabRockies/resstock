@@ -1,0 +1,13 @@
+Dependency=Geometry Building Type ACS	Option=Mobile Home	Option=Multi-Family with 2 - 4 Units	Option=Multi-Family with 5+ Units	Option=Single-Family Attached	Option=Single-Family Detached	source_count	source_weight	sampling_probability
+10 to 19 Unit	0	0	1	0	0	224667	6.13051e+06	0.0445628
+2 Unit	0	1	0	0	0	211703	4.92923e+06	0.0361162
+20 to 49 Unit	0	0	1	0	0	196531	5.05921e+06	0.0367574
+3 or 4 Unit	0	1	0	0	0	252225	6.00741e+06	0.0438601
+5 to 9 Unit	0	0	1	0	0	251246	6.49973e+06	0.0473605
+50 or more Unit	0	0	1	0	0	311060	7.6506e+06	0.055546
+Mobile Home	1	0	0	0	0	442198	8.60466e+06	0.0624897
+Single-Family Attached	0	0	0	1	0	377918	8.03464e+06	0.0585642
+Single-Family Detached	0	0	0	0	1	4.59371e+06	8.4513e+07	0.614743
+# Created by: sources\pums\pums2019_5yrs\tsv_maker.py
+# Description: The building type classification according to the U.S. Energy Information Administration Residential Energy Consumption Survey.
+# Source: 2019-5yrs Public Use Microdata Samples (PUMS). IPUMS USA, University of Minnesota, www.ipums.org.

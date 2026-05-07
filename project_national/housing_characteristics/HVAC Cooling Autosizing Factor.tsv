@@ -1,0 +1,29 @@
+Dependency=HVAC Cooling Efficiency	Dependency=HVAC System Is Scaled	Option=None	Option=40% Oversized	sampling_probability
+AC, SEER 8	Yes	1	0	0
+AC, SEER 10	Yes	1	0	0
+AC, SEER 13	Yes	1	0	0
+AC, SEER 15	Yes	1	0	0
+Non-Ducted Heat Pump	Yes	1	0	0
+Ducted Heat Pump	Yes	1	0	0
+None	Yes	1	0	0
+Room AC, EER 8.5	Yes	1	0	0
+Room AC, EER 9.8	Yes	1	0	0
+Room AC, EER 10.7	Yes	1	0	0
+Room AC, EER 12.0	Yes	1	0	0
+Shared Cooling	Yes	1	0	0
+AC, SEER 8	No	1	0	0.00895804
+AC, SEER 10	No	1	0	0.0600251
+AC, SEER 13	No	1	0	0.289855
+AC, SEER 15	No	1	0	0.133652
+Non-Ducted Heat Pump	No	1	0	0.00974977
+Ducted Heat Pump	No	1	0	0.153727
+None	No	1	0	0.105864
+Room AC, EER 8.5	No	1	0	0.00426393
+Room AC, EER 9.8	No	1	0	0.0257062
+Room AC, EER 10.7	No	1	0	0.096141
+Room AC, EER 12.0	No	1	0	0.0737362
+Shared Cooling	No	1	0	0.0383222
+# Created by: manually created
+# Description: The cooling airflow and capacity scaling factor applied to the auto-sizing methodology (not used in project_national).
+# Source: Engineering Judgment
+# Assumption: HVAC sizing follows ACCA Manual J and Manual S. There is no additional oversizing or undersizing the airflow and capacity of the HVAC system.

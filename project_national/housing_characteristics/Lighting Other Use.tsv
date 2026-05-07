@@ -1,0 +1,5 @@
+Option=100% Usage	sampling_probability
+1	1
+# Created by: manually created
+# Description: Exterior and garage lighting usage relative to the national average.
+# Source: Not applicable; this parameter for adding diversity to lighting usage patterns is not currently used.

@@ -1,0 +1,5 @@
+Option=Hour0	Option=Hour1	Option=Hour2	Option=Hour3	Option=Hour4	Option=Hour5	Option=Hour6	Option=Hour7	Option=Hour8	Option=Hour9	Option=Hour10	Option=Hour11	Option=Hour12	Option=Hour13	Option=Hour14	Option=Hour15	Option=Hour16	Option=Hour17	Option=Hour18	Option=Hour19	Option=Hour20	Option=Hour21	Option=Hour22	Option=Hour23	sampling_probability
+0.061	0.061	0.061	0.061	0.061	0.061	0.061	0.053	0.025	0.015	0.015	0.015	0.015	0.015	0.015	0.015	0.018	0.033	0.054	0.054	0.054	0.061	0.061	0.061	1
+# Created by: manually created
+# Description: Bathroom spot ventilation daily start hour
+# Source: Same as occupancy schedule from Wilson et al. 'Building America House Simulation Protocols' 2014

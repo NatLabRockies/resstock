@@ -1,0 +1,47 @@
+Dependency=HVAC Heating Efficiency	Dependency=HVAC System Is Scaled	Option=None	Option=40% Oversized	sampling_probability
+ASHP, SEER 10, 6.2 HSPF	Yes	1	0	0
+ASHP, SEER 13, 7.7 HSPF	Yes	1	0	0
+ASHP, SEER 15, 8.5 HSPF	Yes	1	0	0
+Electric Baseboard, 100% Efficiency	Yes	1	0	0
+Electric Boiler, 100% AFUE	Yes	1	0	0
+Electric Furnace, 100% AFUE	Yes	1	0	0
+Electric Wall Furnace, 100% AFUE	Yes	1	0	0
+Fuel Boiler, 76% AFUE	Yes	1	0	0
+Fuel Boiler, 80% AFUE	Yes	1	0	0
+Fuel Boiler, 90% AFUE	Yes	1	0	0
+Fuel Furnace, 60% AFUE	Yes	0	1	0
+Fuel Furnace, 76% AFUE	Yes	0	1	0
+Fuel Furnace, 80% AFUE	Yes	0	1	0
+Fuel Furnace, 92.5% AFUE	Yes	0	1	0
+Fuel Wall/Floor Furnace, 60% AFUE	Yes	1	0	0
+Fuel Wall/Floor Furnace, 68% AFUE	Yes	1	0	0
+MSHP, SEER 14.5, 8.2 HSPF	Yes	1	0	0
+MSHP, SEER 29.3, 14 HSPF	Yes	1	0	0
+None	Yes	1	0	0
+Shared Heating	Yes	1	0	0
+Void	Yes	1	0	0
+ASHP, SEER 10, 6.2 HSPF	No	1	0	0.00718034
+ASHP, SEER 13, 7.7 HSPF	No	1	0	0.0740766
+ASHP, SEER 15, 8.5 HSPF	No	1	0	0.0724697
+Electric Baseboard, 100% Efficiency	No	1	0	0.0628257
+Electric Boiler, 100% AFUE	No	1	0	0.00205738
+Electric Furnace, 100% AFUE	No	1	0	0.113321
+Electric Wall Furnace, 100% AFUE	No	1	0	0.0110709
+Fuel Boiler, 76% AFUE	No	1	0	0.00887696
+Fuel Boiler, 80% AFUE	No	1	0	0.0325257
+Fuel Boiler, 90% AFUE	No	1	0	0.00494728
+Fuel Furnace, 60% AFUE	No	1	0	0.0049303
+Fuel Furnace, 76% AFUE	No	1	0	0.0277536
+Fuel Furnace, 80% AFUE	No	1	0	0.247115
+Fuel Furnace, 92.5% AFUE	No	1	0	0.153317
+Fuel Wall/Floor Furnace, 60% AFUE	No	1	0	0.0318916
+Fuel Wall/Floor Furnace, 68% AFUE	No	1	0	0.0282639
+MSHP, SEER 14.5, 8.2 HSPF	No	1	0	0.00959704
+MSHP, SEER 29.3, 14 HSPF	No	1	0	0.000152729
+None	No	1	0	0.0113431
+Shared Heating	No	1	0	0.0962845
+Void	No	1	0	0
+# Created by: manually created
+# Description: The heating airflow and capacity scaling factor applied to the auto-sizing methodology (not used in project_national).
+# Source: Engineering Judgment
+# Assumption: HVAC sizing follows ACCA Manual J and Manual S. There is no additional oversizing or undersizing the airflow and capacity of the HVAC system.

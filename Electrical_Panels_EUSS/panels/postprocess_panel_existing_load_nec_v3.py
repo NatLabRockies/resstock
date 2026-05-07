@@ -9,8 +9,9 @@ NEC panel capacity = min. main circuit breaker size (A)
 
 By: Lixi.Liu@nrel.gov, Ilan.Upfal@nrel.gov
 Date: 02/01/2023
-Updated: 04/19/2026
-Note: fixed inconsistencies in parsing HVAC eq (same fixes in postprocess_panel_new_load_nec_revision_v2.py)
+Updated: 05/07/2026
+Note: 
+- fixed inconsistencies in garbage assignment and parsing HVAC eq (same fixes in postprocess_panel_new_load_nec_revision_v2.py)
 
 -----------------
 

@@ -1,0 +1,5 @@
+Option=Summer = 0.7, Winter = 0.85	sampling_probability
+1	1
+# Created by: manually created
+# Description: Fraction of window shading in the summer and winter.
+# Source: ANSI/RESNET/ICC 301 Standard

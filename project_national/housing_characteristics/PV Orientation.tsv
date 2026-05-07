@@ -1,0 +1,7 @@
+Dependency=Has PV	Option=East	Option=None	Option=North	Option=Northeast	Option=Northwest	Option=South	Option=Southeast	Option=Southwest	Option=West	source_count	source_weight	sampling_probability
+No	0	1	0	0	0	0	0	0	0	1e-16	1e-16	0.99062
+Yes	0.158286	0	0.0167208	0.0145514	0.00988364	0.449425	0.143045	0.121028	0.0870602	903007	903007	0.00937984
+# Created by: sources\dpv\tsv_maker.py
+# Description: The orientation of the photovoltaic system.
+# Source: Constructed using LBNL's 2020 Tracking the Sun (TTS).
+# Assumption: PV orientation mapped based on azimuth angle of primary array (180 deg is South-facing).

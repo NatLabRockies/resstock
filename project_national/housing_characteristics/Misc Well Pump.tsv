@@ -1,0 +1,5 @@
+Option=Typical Efficiency	Option=None	sampling_probability
+0.127	0.873	1
+# Created by: manually created
+# Description: Presence and efficiency of well pump.
+# Source: Wilson et al. 'Building America House Simulation Protocols' 2014, national average fraction used for saturation

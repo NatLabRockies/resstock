@@ -1,0 +1,1500 @@
+schema_version: '0.3'
+os_version: 3.7.0
+os_sha: d5269793f1
+buildstock_directory: ../ # Relative to this file or absolute
+project_directory: project_national # Relative to buildstock_directory
+output_directory: /kfs2/projects/panels/run/full_run_20240505
+#weather_files_url: https://data.nrel.gov/system/files/156/BuildStock_TMY3_FIPS.zip
+weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip
+
+
+sampler:
+  type: residential_quota_downselect
+  args:
+    n_datapoints: 550000
+    logic:
+      - not: State|HI
+    resample: true
+
+workflow_generator:
+  type: residential_hpxml
+  args:
+    build_existing_model:
+      simulation_control_timestep: 15
+      simulation_control_run_period_begin_month: 1
+      simulation_control_run_period_begin_day_of_month: 1
+      simulation_control_run_period_end_month: 12
+      simulation_control_run_period_end_day_of_month: 31
+      simulation_control_run_period_calendar_year: 2007
+
+    emissions:
+      - scenario_name: LRMER_LowRECost_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2022/LRMER_LowRECost_25
+        gas_value: 147.3
+        propane_value: 177.8
+        oil_value: 195.9
+
+    utility_bills:
+      - scenario_name: Utility Rates - Fixed + Variable
+        simple_filepath: data/utility_bills/simple_rates/State.tsv
+
+    simulation_output_report:
+      timeseries_frequency: timestep
+      include_timeseries_total_consumptions: true
+      include_timeseries_fuel_consumptions: true
+      include_timeseries_end_use_consumptions: true
+      include_timeseries_emissions: true
+      include_timeseries_emission_fuels: true
+      include_timeseries_emission_end_uses: true
+      include_timeseries_hot_water_uses: true
+      include_timeseries_total_loads: true
+      include_timeseries_component_loads: true
+      include_timeseries_unmet_hours: true
+      include_timeseries_zone_temperatures: true
+      include_timeseries_airflows: true
+      include_timeseries_weather: true
+      include_timeseries_resilience: true
+
+    reporting_measures:
+      - measure_dir_name: QOIReport
+
+    server_directory_cleanup:
+      retain_in_idf: false
+      retain_schedules_csv: false
+
+baseline:
+  n_buildings_represented: 140382740 # American Community Survey 2022 5-year, B25001, contiguous US + AK
+
+references:
+
+    options:
+    #### 1.0 Common Options For Heat Pump with ele backup, 8 options ####
+      - &heating_fuel
+        option: Heating Fuel|Electricity
+        apply_logic:
+          - not: Heating Fuel|None
+          - not: Heating Fuel|Electricity
+      - &cooling_efficiency_ducted
+        option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: &logic_ducted_hvac_no_ashp
+          - HVAC Has Ducts|Yes
+          - not:
+            - Heating Fuel|None
+            - HVAC Cooling Type|None
+          - not: HVAC Heating Type And Fuel|Electricity ASHP      
+      - &cooling_efficiency_ductless
+        option: HVAC Cooling Efficiency|Non-Ducted Heat Pump
+        apply_logic: &logic_ductless_hvac_no_mshp
+          - HVAC Has Ducts|No
+          - not:
+            - Heating Fuel|None
+            - HVAC Cooling Type|None
+          - not: HVAC Heating Type And Fuel|Electricity MSHP
+      - &100_percent_conditioned
+        option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic:
+          - or:
+            - *logic_ducted_hvac_no_ashp
+            - *logic_ductless_hvac_no_mshp
+      - &cooling_setpoint_offset_magnitude_0
+        option: Cooling Setpoint Offset Magnitude|0F
+        apply_logic:
+          - or:
+            - *logic_ducted_hvac_no_ashp
+            - *logic_ductless_hvac_no_mshp      
+      - &cooling_setpoint_offset_period_none
+        option: Cooling Setpoint Offset Period|None
+        apply_logic:
+          - or:
+            - *logic_ducted_hvac_no_ashp
+            - *logic_ductless_hvac_no_mshp
+      - &heating_setpoint_offset_magnitude_0
+        option: Heating Setpoint Offset Magnitude|0F
+        apply_logic:
+          - or:
+            - *logic_ducted_hvac_no_ashp
+            - *logic_ductless_hvac_no_mshp     
+      - &heating_setpoint_offset_period_none
+        option: Heating Setpoint Offset Period|None
+        apply_logic:
+          - or:
+            - *logic_ducted_hvac_no_ashp
+            - *logic_ductless_hvac_no_mshp
+
+    #### 1.0 Common Options For Heat Pump with existing backup, 8 options ####
+      - &hp_exist_bkup_heating_fuel
+        option: Heating Fuel|Electricity
+        apply_logic:
+          - not: Heating Fuel|None
+          - not: Heating Fuel|Electricity
+          - HVAC Has Shared System|None
+
+      - &hp_exist_bkup_cooling_efficiency_ducted
+        option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: &logic_ducted_hvac_no_ashp_no_shared_sys
+          - HVAC Has Ducts|Yes
+          - not:
+            - Heating Fuel|None
+            - HVAC Cooling Type|None
+          - not: HVAC Heating Type And Fuel|Electricity ASHP
+          - HVAC Has Shared System|None
+      
+      - &hp_exist_bkup_cooling_efficiency_ductless
+        option: HVAC Cooling Efficiency|Non-Ducted Heat Pump
+        apply_logic: &logic_ductless_hvac_no_mshp_no_shared_sys
+          - HVAC Has Ducts|No
+          - not:
+            - Heating Fuel|None
+            - HVAC Cooling Type|None
+          - not: HVAC Heating Type And Fuel|Electricity MSHP
+          - HVAC Has Shared System|None
+
+      - &hp_exist_bkup_100_percent_conditioned
+        option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic:
+          - or:
+            - *logic_ducted_hvac_no_ashp_no_shared_sys
+            - *logic_ductless_hvac_no_mshp_no_shared_sys
+
+      - &hp_exist_bkup_cooling_setpoint_offset_magnitude_0
+        option: Cooling Setpoint Offset Magnitude|0F
+        apply_logic:
+          - or:
+            - *logic_ducted_hvac_no_ashp_no_shared_sys
+            - *logic_ductless_hvac_no_mshp_no_shared_sys
+      
+      - &hp_exist_bkup_cooling_setpoint_offset_period_none
+        option: Cooling Setpoint Offset Period|None
+        apply_logic:
+          - or:
+            - *logic_ducted_hvac_no_ashp_no_shared_sys
+            - *logic_ductless_hvac_no_mshp_no_shared_sys
+
+      - &hp_exist_bkup_heating_setpoint_offset_magnitude_0
+        option: Heating Setpoint Offset Magnitude|0F
+        apply_logic:
+          - or:
+            - *logic_ducted_hvac_no_ashp_no_shared_sys
+            - *logic_ductless_hvac_no_mshp_no_shared_sys
+      
+      - &hp_exist_bkup_heating_setpoint_offset_period_none
+        option: Heating Setpoint Offset Period|None
+        apply_logic:
+          - or:
+            - *logic_ducted_hvac_no_ashp_no_shared_sys
+            - *logic_ductless_hvac_no_mshp_no_shared_sys
+
+    #### 1.1 Electric Resistance Heating, 6 options ####
+      - *heating_fuel
+      - &electric_resistance_heating_heating_eff_boiler 
+        option: HVAC Heating Efficiency|Electric Boiler, 100% AFUE
+        apply_logic: &apply_logic_fuel_boiler
+          - or: 
+            - HVAC Heating Efficiency|Fuel Boiler, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Boiler, 80% AFUE
+            - HVAC Heating Efficiency|Fuel Boiler, 90% AFUE
+        costs: 
+        # Source: REMDb for replacing existing boiler to electric boiler
+        # then inflated from January 2018 to December 2023 using a 1.24 multiplier.
+          - value: 3844 
+            multiplier: Fixed (1)
+          - value: 0
+            multiplier: Size, Heating System Primary (kBtu/h)
+        lifetime: 24     
+      - &electric_resistance_heating_heating_eff_fuel_furnace
+        option: HVAC Heating Efficiency|Electric Furnace, 100% AFUE
+        apply_logic: &apply_logic_fuel_furnace
+          - or: 
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+        costs: 
+        # Source: REMDb for replacing existing furnace to electric furnace
+        # inflated from January 2018 to December 2023) using a 1.24 multiplier.
+          - value: 1984 
+            multiplier: Fixed (1)
+          - value: 350
+            multiplier: Size, Heating System Primary (kBtu/h)
+        lifetime: 20      
+      - &electric_resistance_heating_heating_eff_wall_floor_furnace
+        option: HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE
+        apply_logic: &apply_logic_fuel_wall_floor_furnace
+          - or: 
+            - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
+        costs: 
+        # TBD
+        # cost for the initial run Source: REMDb for replacing existing furnace to electric furnace
+        # inflated from January 2018 to December 2023) using a 1.24 multiplier.
+          - value: 1984 
+            multiplier: Fixed (1)
+          - value: 350
+            multiplier: Size, Heating System Primary (kBtu/h)
+        lifetime: 20
+      - &electric_resistance_hvac_shared_eff_shared_heating_only
+        option: HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        apply_logic:
+          - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        costs: 
+        # TBD
+        # Assume $3844 cost for an average capacity (in euss results), then use a ratio to get cost 
+        # The average heating system size in euss is 45 kBtu/h .
+          - value: 0 
+            multiplier: Fixed (1)
+          - value: 85.42
+            multiplier: Size, Heating System Primary (kBtu/h)
+        lifetime: 24
+      - &electric_resistance_hvac_shared_eff_shared_heating_cooling
+        option: HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        apply_logic:
+          - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        costs:
+        # assume the same as Boiler Baseboards Heating Only, Fuel
+          - value: 85.42
+            multiplier: Size, Heating System Primary (kBtu/h)
+        lifetime: 24
+
+    #### 1.2 Federal Minimum Heat Pump With Electric Backup, 2 options  ####
+      - &fed_min_ashp_ducted
+        option: HVAC Heating Efficiency|ASHP, SEER 15.05, 8.82 HSPF, HERS, Supplemental Backup Sizing # same as base option
+        apply_logic:
+          - HVAC Has Ducts|Yes
+          - not:
+            - Heating Fuel|None
+            - HVAC Cooling Type|None
+          - not: HVAC Heating Type And Fuel|Electricity ASHP
+        costs: &costs_ashp_ducted_8-82_HSPF
+        # Source: Custom regression by Brennan Less. Ducted heat pump project costs were regressed on nameplate tons and HSPF,
+        # from data described in in Less et al. https://doi.org/10.20357/B7FP4D. January 2019 $ inflated to April 2023 $ using 1.21 factor.
+        # Ducted ASHP regression n=317. Implicitly includes electrical upgrades and electric backup.
+          - value: 3680.19 # for HSPF 8.82
+            multiplier: Fixed (1)
+          - value: 167.64
+            multiplier: Size, Heating System Primary (kBtu/h)
+        lifetime: &lifetime_HP 15
+
+      - &fed_min_mshp_ductless
+        option: HVAC Heating Efficiency|MSHP, SEER 14.5, 8.33 HSPF, HERS, Supplemental Backup Sizing # federal minimum is SEER 14.3, but 14.5 is lowest SEER in baseline ResStock
+        apply_logic:
+          - HVAC Has Ducts|No
+          - not:
+            - Heating Fuel|None
+            - HVAC Cooling Type|None
+          - not: HVAC Heating Type And Fuel|Electricity MSHP
+        costs: &costs_mshp_ductless_8-33_HSPF
+        # Source: Custom regression by Brennan Less. Ductless heat pump project costs were regressed on nameplate tons,
+        # from data described in in Less et al. https://doi.org/10.20357/B7FP4D. January 2019 $ inflated to April 2023 $ using 1.21 factor.
+        # Ductless MSHP n=173, HSPF median 11, range 9.3–14.2. Implicitly includes multiple zones and electrical upgrades.
+        # Regression results in costs that are 15–30% higher than costs from The Heat Pump Store as documented in https://redwoodenergy.net/wp-content/uploads/2021/02/Pocket-Guide-to-All-Electric-Retrofits-of-Single-Family-Homes.pdf 
+        # LBNL data were not sufficient to include a relationship between SEER or HSPF and cost, so cost deltas for higher 
+        # and lower HSPF were added using the relationship between HSPF and cost for ductless MSHPs in REMDB: 2.2% addition or subtraction per point
+        # according to how many points above or below the HSPF rating is from 10.5 (https://remdb.nrel.gov/).
+          - value: 2679.52
+            multiplier: Fixed (1)
+          - value: 347.97
+            multiplier: Size, Heating System Primary (kBtu/h)
+        lifetime: *lifetime_HP
+      
+    #### 1.3 Federal Minimum Level Heat Pump With Existing Heating Backup, 32 options ####
+      ##ASHP non-ducted heating##
+      - &fed_min_ashp_exist_backup_no_shared_ducts
+        option: HVAC Heating Efficiency|ASHP, SEER 15.05, 8.82 HSPF, Separate Backup, HERS, Supplemental Backup Sizing
+        apply_logic: 
+          - HVAC Has Shared System|None
+          - HVAC Has Ducts|Yes
+          - HVAC Heating Type|Non-Ducted Heating
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+
+      # Set secondary heating fuel type
+      - &secondary_heating_type_fuel_natural_gas
+        option: HVAC Secondary Heating Fuel|Natural Gas
+        apply_logic:
+          - or: 
+            - HVAC Heating Type And Fuel|Natural Gas Fuel Boiler
+            - HVAC Heating Type And Fuel|Natural Gas Fuel Wall/Floor Furnace
+      - &secondary_heating_type_fuel_propane
+        option: HVAC Secondary Heating Fuel|Propane
+        apply_logic:
+          - or:
+            - HVAC Heating Type And Fuel|Propane Fuel Boiler
+            - HVAC Heating Type And Fuel|Propane Fuel Wall/Floor Furnace
+      - &secondary_heating_type_fuel_fuel_oil
+        option: HVAC Secondary Heating Fuel|Fuel Oil
+        apply_logic:
+          - or:
+            - HVAC Heating Type And Fuel|Fuel Oil Fuel Boiler
+            - HVAC Heating Type And Fuel|Fuel Oil Fuel Wall/Floor Furnace
+      - &secondary_heating_type_fuel_other_fuel
+        option: HVAC Secondary Heating Fuel|Other Fuel
+        apply_logic:
+          - or:
+            - HVAC Heating Type And Fuel|Other Fuel Fuel Boiler
+            - HVAC Heating Type And Fuel|Other Fuel Fuel Wall/Floor Furnace
+      - &secondary_heating_type_fuel_electricity
+        option: HVAC Secondary Heating Fuel|Electricity
+        apply_logic:
+          - or:
+            - HVAC Heating Type And Fuel|Electricity Baseboard
+            - HVAC Heating Type And Fuel|Electricity Electric Boiler
+            - HVAC Heating Type And Fuel|Electricity Electric Wall Furnace
+
+      # Set secondary fuel boiler efficiency levels
+      - &secondary_boiler_76
+        option: HVAC Secondary Heating Efficiency|Fuel Boiler, 76% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Boiler, 76% AFUE
+      - &secondary_boiler_80
+        option: HVAC Secondary Heating Efficiency|Fuel Boiler, 80% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Boiler, 80% AFUE
+      - &secondary_boiler_90
+        option: HVAC Secondary Heating Efficiency|Fuel Boiler, 90% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Boiler, 90% AFUE
+      - &secondary_ele_boiler
+        option: HVAC Secondary Heating Efficiency|Electric Boiler, 100% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Boiler, 100% AFUE
+
+      # Set secondary fuel Wall/Floor Furnace efficiency levels
+      - &secondary_wallfloor_furnace_60
+        option: HVAC Secondary Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE
+      - &secondary_wallfloor_furnace_68
+        option: HVAC Secondary Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
+      - &secondary_ele_wallfloor_furnace
+        option: HVAC Secondary Heating Efficiency|Electric Wall Furnace, 100% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE
+      
+      # Set secondary electric Wall/Floor Furnace efficiency levels
+      - &secondary_ele_baseboard
+        option: HVAC Secondary Heating Efficiency|Electric Baseboard, 100% Efficiency
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency
+
+      ## ASHP ducted heating ##
+      # Natural Gas as backup
+      - &fed_min_ashp_exist_backup_shared_ducts_60_ng
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 60% AFUE NG, 0F-40F switchover band
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+          - HVAC Heating Type And Fuel|Natural Gas Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+      - &fed_min_ashp_exist_backup_shared_ducts_76_ng
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 76% AFUE NG, 0F-40F switchover band
+        apply_logic: 
+          - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+          - HVAC Heating Type And Fuel|Natural Gas Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+      - &fed_min_ashp_exist_backup_shared_ducts_80_ng
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 80% AFUE NG, 0F-40F switchover band
+        apply_logic: 
+          - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+          - HVAC Heating Type And Fuel|Natural Gas Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+      - &fed_min_ashp_exist_backup_shared_ducts_92-5_ng
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 92.5% AFUE NG, 0F-40F switchover band
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+          - HVAC Heating Type And Fuel|Natural Gas Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+
+        #Fuel Oil as backup
+      - &fed_min_ashp_exist_backup_shared_ducts_60_fo
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 60% AFUE Fuel Oil, 0F-40F switchover band
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+          - HVAC Heating Type And Fuel|Fuel Oil Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+      - &fed_min_ashp_exist_backup_shared_ducts_76_fo
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 76% AFUE Fuel Oil, 0F-40F switchover band
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+          - HVAC Heating Type And Fuel|Fuel Oil Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+      - &fed_min_ashp_exist_backup_shared_ducts_80_fo
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 80% AFUE Fuel Oil, 0F-40F switchover band
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+          - HVAC Heating Type And Fuel|Fuel Oil Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+      - &fed_min_ashp_exist_backup_shared_ducts_92-5_fo
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 92.5% AFUE Fuel Oil, 0F-40F switchover band
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+          - HVAC Heating Type And Fuel|Fuel Oil Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+
+        # Propane as backup
+      - &fed_min_ashp_exist_backup_shared_ducts_60_propane
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 60% AFUE Propane, 0F-40F switchover band
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+          - HVAC Heating Type And Fuel|Propane Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+      - &fed_min_ashp_exist_backup_shared_ducts_76_propane
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 76% AFUE Propane, 0F-40F switchover band
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+          - HVAC Heating Type And Fuel|Propane Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+      - &fed_min_ashp_exist_backup_shared_ducts_80_propane
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 80% AFUE Propane, 0F-40F switchover band
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+          - HVAC Heating Type And Fuel|Propane Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+      - &fed_min_ashp_exist_backup_shared_ducts_92-5_propane
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 92.5% AFUE Propane, 0F-40F switchover band
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+          - HVAC Heating Type And Fuel|Propane Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+      
+      # Other Fuel as backup
+      - &fed_min_ashp_exist_backup_shared_ducts_60_of
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 60% AFUE Other Fuel, 0F-40F switchover band
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+          - HVAC Heating Type And Fuel|Other Fuel Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+      - &fed_min_ashp_exist_backup_shared_ducts_76_of
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 76% AFUE Other Fuel, 0F-40F switchover band
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+          - HVAC Heating Type And Fuel|Other Fuel Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+      - &fed_min_ashp_exist_backup_shared_ducts_80_of
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 80% AFUE Other Fuel, 0F-40F switchover band
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+          - HVAC Heating Type And Fuel|Other Fuel Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+      - &fed_min_ashp_exist_backup_shared_ducts_92-5_of
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.05, 8.82 HSPF, Integrated Backup, HERS, Supplemental Backup Sizing, 92.5% AFUE Other Fuel, 0F-40F switchover band
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+          - HVAC Heating Type And Fuel|Other Fuel Fuel Furnace        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+
+      # Electricity as backup
+      - &fed_min_ashp_exist_backup_shared_ducts_electricity
+        option: HVAC Heating Efficiency|ASHP, SEER 15.05, 8.82 HSPF, HERS, Supplemental Backup Sizing
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Furnace, 100% AFUE        
+        costs: *costs_ashp_ducted_8-82_HSPF
+        lifetime: *lifetime_HP
+
+      ## MSHP non-ducted heating ##
+      - &fed_min_mshp_exist_backup
+        option: HVAC Heating Efficiency|MSHP, SEER 14.5, 8.33 HSPF, Separate Backup, HERS, Supplemental Backup Sizing 
+        apply_logic: 
+          - HVAC Has Shared System|None
+          - HVAC Has Ducts|No
+          - not:
+            - Heating Fuel|None
+            - HVAC Cooling Type|None
+          - not: HVAC Heating Type And Fuel|Electricity MSHP
+        costs: *costs_mshp_ductless_8-33_HSPF
+        lifetime: *lifetime_HP
+
+    #### 1.4 High-Efficiency Heat Pump With Electric Backup, 2 options  ####
+      - &high_eff_ashp_ducted
+        option: HVAC Heating Efficiency|ASHP, SEER 20, 11 HSPF, CCHP, Max Load, Supplemental Backup Sizing
+        apply_logic:
+          - HVAC Has Ducts|Yes
+          - not:
+            - Heating Fuel|None
+            - HVAC Cooling Type|None
+          - not: HVAC Heating Type And Fuel|Electricity ASHP
+        costs: &costs_ashp_ducted_SEER_20_11_HSPF
+        # Source: Custom regression by Brennan Less. Ducted heat pump project costs were regressed on nameplate tons and HSPF,
+        # from data described in in Less et al. https://doi.org/10.20357/B7FP4D. January 2019 $ inflated to April 2023 $ using 1.21 factor.
+        # Ducted ASHP regression n=317. Implicitly includes electrical upgrades and electric backup.
+          - value: 10229.58 # for HSPF 11
+            multiplier: Fixed (1)
+          - value: 167.64
+            multiplier: Size, Heating System Primary (kBtu/h)
+        lifetime: *lifetime_HP
+
+      - &high_eff_mshp_ductless
+        option: HVAC Heating Efficiency|MSHP, SEER 20, 11 HSPF, CCHP, Max Load, Supplemental Backup Sizing
+        apply_logic:
+          - HVAC Has Ducts|No
+          - not:
+            - Heating Fuel|None
+            - HVAC Cooling Type|None
+          - not: HVAC Heating Type And Fuel|Electricity MSHP
+        costs: &costs_mshp_ductless_SEER_20_11_HSPF
+        # Source: Custom regression by Brennan Less. Ductless heat pump project costs were regressed on nameplate tons,
+        # from data described in in Less et al. https://doi.org/10.20357/B7FP4D. January 2019 $ inflated to April 2023 $ using 1.21 factor.
+        # Ductless MSHP n=173, HSPF median 11, range 9.3–14.2. Implicitly includes multiple zones and electrical upgrades.
+        # Regression results in costs that are 15–30% higher than costs from The Heat Pump Store as documented in https://redwoodenergy.net/wp-content/uploads/2021/02/Pocket-Guide-to-All-Electric-Retrofits-of-Single-Family-Homes.pdf 
+        # LBNL data were not sufficient to include a relationship between SEER or HSPF and cost, so cost deltas for higher 
+        # and lower HSPF were added using the relationship between HSPF and cost for ductless MSHPs in REMDB: 2.2% addition or subtraction per point
+        # according to how many points above or below the HSPF rating is from 10.5 (https://remdb.nrel.gov/).
+          - value: 2844.81
+            multiplier: Fixed (1)
+          - value: 369.43
+            multiplier: Size, Heating System Primary (kBtu/h)
+        lifetime: *lifetime_HP
+
+    #### 2.1 Electric Water Heating, 3 options  ####
+      - &water_heater_fuel_eff_premium
+        option: Water Heater Efficiency|Electric Premium
+        apply_logic:
+          - or:
+            - Water Heater Efficiency|Fuel Oil Premium
+            - Water Heater Efficiency|Natural Gas Premium
+            - Water Heater Efficiency|Propane Premium
+        costs: 
+        # Source: REMDb for replacing non-electric tank water heater to electric tank water heater (EF=0.95)
+        # then inflated from January 2018 to December 2023) using a 1.24 multiplier.
+          - value: 1078.8 # for EF 0.92
+            multiplier: Fixed (1)
+          - value: 2.36
+            multiplier: Size, Water Heater (gal)
+        lifetime: 13
+      - &water_heater_fuel_eff_standard
+        option: Water Heater Efficiency|Electric Standard
+        apply_logic:
+          - or:
+            - Water Heater Efficiency|Fuel Oil Standard
+            - Water Heater Efficiency|Natural Gas Standard
+            - Water Heater Efficiency|Propane Standard
+            - Water Heater Efficiency|FIXME Fuel Oil Indirect
+            - Water Heater Efficiency|Other Fuel
+        costs: 
+        # Source: REMDb for replacing non-electric tank water heater to electric tank water heater (EF=0.95)
+        # then inflated from January 2018 to December 2023) using a 1.24 multiplier.
+          - value: 1016.8 # for EF 0.95
+            multiplier: Fixed (1)
+          - value: 4.34
+            multiplier: Size, Water Heater (gal)
+        lifetime: 13
+      - &water_heater_fuel_eff_tankless
+        option: Water Heater Efficiency|Electric Tankless
+        apply_logic:
+          - or:
+            - Water Heater Efficiency|Natural Gas Tankless
+            - Water Heater Efficiency|Propane Tankless
+        costs: 
+        # TBD
+          - value: 2356  # REMDb for replacing to tankless natural gas water heater (EF=0.96) and then inflated from January 2018 to December 2023) using a 1.24 multiplier
+            multiplier: Fixed (1)
+          - value: 0
+            multiplier: Size, Water Heater (gal)
+        lifetime: 20
+
+    #### 2.2 240V HPWH, 3 options  ####
+      - &240V_hpwh_50_gal
+        option: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF
+        apply_logic:
+          - not: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF
+          - or:
+            - Bedrooms|1
+            - Bedrooms|2
+            - Bedrooms|3
+        costs:
+          - value: 2712.82 # Median installed cost for 50 gal heat pump water heaters in Less et al. https://doi.org/10.20357/B7FP4D, inflation adjusted with 1.21 factor
+            multiplier: Fixed (1)
+        lifetime: &hpwh_lifetime 13
+      - &240V_hpwh_66_gal
+        option: Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF
+        apply_logic:
+          - not: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF
+          - Bedrooms|4
+        costs:
+          - value: 3736.48  # Interpolated between 50 gal and 80 gal HPWH costs in Less et al. https://doi.org/10.20357/B7FP4D, inflation adjusted with 1.21 factor
+            multiplier: Fixed (1)
+        lifetime: *hpwh_lifetime
+      - &240V_hpwh_80_gal
+        option: Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF
+        apply_logic:
+          - not: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF
+          - Bedrooms|5
+        costs:
+          - value: 4631.88 # Median installed cost for 80 gal heat pump water heaters in Less et al. https://doi.org/10.20357/B7FP4D, inflation adjusted with 1.21 factor
+            multiplier: Fixed (1)
+        lifetime: *hpwh_lifetime
+
+    #### 2.3 120V HPWH With Shared Circuit  ####
+      - &120v_hpwh_50_gal
+        option: Water Heater Efficiency|Electric Heat Pump, 50 gal, 120 V Shared
+        apply_logic:
+          - or:
+            - Bedrooms|1
+        costs:
+          - value: 2099
+            multiplier: Fixed (1)
+        lifetime: *hpwh_lifetime
+      - &120v_hpwh_65_gal
+        option: Water Heater Efficiency|Electric Heat Pump, 65 gal, 120 V Shared
+        apply_logic:
+          - Bedrooms|2
+        costs:
+          - value: 2499
+            multiplier: Fixed (1)
+        lifetime: *hpwh_lifetime
+      - &120v_hpwh_80_gal
+        option: Water Heater Efficiency|Electric Heat Pump, 80 gal, 120 V Shared
+        apply_logic:
+          - or:
+            - Bedrooms|3
+            - Bedrooms|4
+            - Bedrooms|5
+        costs:
+          - value: 3000
+            multiplier: Fixed (1)
+        lifetime: *hpwh_lifetime
+
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - &electric_resistance_cooking
+        option: Cooking Range|Electric Resistance
+        apply_logic: &logic_cooking
+          - or:
+            - Cooking Range|Gas
+            - Cooking Range|Propane
+        costs:
+          - value: 774 # Lowest-priced electric range and oven from wirecutter on 7/7/23, GE Model #JB645DKWW (black is same price)
+                       # https://www.lowes.com/pd/GE-Smooth-Surface-4-Elements-5-3-cu-ft-Self-Cleaning-Freestanding-Electric-Range-White-Common-30-in-Actual-29-875-in/1000014250
+                       # It is $630 at big box stores as of July 2023, $774 = $630 * 1.07 sales tax + $100 delivery/install
+            multiplier: Fixed (1)
+        lifetime: 13 # from REMDB https://remdb.nrel.gov/measures?group_id=4&component_type_id=279&actionId=2204&bcId=6961
+                     # 17 from IEA https://www.eia.gov/analysis/studies/buildings/equipcosts/pdf/appendix-a.pdf
+
+    #### 4 Electric Clothes Dryer, 1 option  ####
+      - &clothes_dryer_electric 
+        option: Clothes Dryer|Electric
+        apply_logic: &logic_dryer
+          - or:
+            - Clothes Dryer|Gas
+            - Clothes Dryer|Propane
+        costs:
+          - value: 718 # Cheaper of top-ranked electric dryer on Consumer Reports, is full-size
+                       # https://www.homedepot.com/p/GE-7-4-cu-ft-Electric-Dryer-with-Sensor-Dry-in-White-GTD58EBSVWS/324668239
+                       # It is $578 at big box stores as of Feb 2024, $718 = $578 * 1.07 sales tax + $100 delivery/install
+            multiplier: Fixed (1)
+        lifetime: 13 # 13 is from REMDB https://remdb.nrel.gov/measures?group_id=4&component_type_id=374&actionId=1925&bcId=5849
+
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - &electric_pool_heaters 
+        option: Misc Pool Heater|Electricity
+        apply_logic: &logic_pool_heater
+          - or:
+            - Misc Pool Heater|Natural Gas
+            - Misc Pool Heater|Other Fuel
+        costs:
+          - value: 4590 # https://lesliespool.com/jacuzzi-127000-btu-pro-grade-electric-pool-heat-pump/85451.html
+                        # installation $310 - varies on state and zip code between 228 and 400 USD
+                        # tax 7%
+            multiplier: Fixed (1)
+        lifetime: 15
+      - &electric_spa_heaters 
+        option: Misc Hot Tub Spa|Electricity
+        apply_logic: &logic_spa_heater
+          - or:
+            - Misc Hot Tub Spa|Natural Gas
+            - Misc Hot Tub Spa|Other Fuel
+        costs:
+          - value: 2760 # https://lesliespool.com/raypak-model-0018-e3t-electric-3-series-titanium-pool-spa-heater---18kw---61419-btu-hr/382735.html
+                        # installation $310 - varies on state and zip code between 228 and 400 USD
+                        # tax 7%
+            multiplier: Fixed (1)
+        lifetime: 15
+
+    #### 6 Envelope, 12 options ####
+      - &attic_insulation_IECC_CZ1A
+        option: Insulation Ceiling|R-30
+        apply_logic:
+          - ASHRAE IECC Climate Zone 2004|1A
+          - Geometry Attic Type|Vented Attic
+          - or:
+            - Insulation Ceiling|Uninsulated
+            - Insulation Ceiling|R-7
+            - Insulation Ceiling|R-13
+            - Insulation Ceiling|R-19
+        costs:
+          - value: 0.0482 # $/(ft^2 * Delta R-value), from original REMDB xlsx for blown cellulose (0.0154+0.019)
+                          # apply inflation factor 1.4 (Jan 2010 to Apr 2023) to 0.0344 https://www.bls.gov/data/inflation_calculator.htm
+            multiplier: Floor Area, Attic * Insulation Increase (ft^2 * Delta R-value)
+          - value: 0.2163 # $/(ft^2), from original REMDB xlsx for blown cellulose (0.1505+0.004)
+                          # apply inflation factor 1.4 (Jan 2010 to Apr 2023) to 0.1545
+            multiplier: Floor Area, Attic (ft^2)
+        lifetime: 60 # years effective useful life for opaque envelope components, from https://www.nyserda.ny.gov/-/media/Files/Programs/energy-code-training/Residential-Cost-Analysis-Report.pdf 
+      - &attic_insulation_IECC_CZ2A-2B-3A-3B-3C
+        option: Insulation Ceiling|R-49
+        apply_logic:
+          - or:
+            - ASHRAE IECC Climate Zone 2004|2A
+            - ASHRAE IECC Climate Zone 2004|2B
+            - ASHRAE IECC Climate Zone 2004|3A
+            - ASHRAE IECC Climate Zone 2004|3B
+            - ASHRAE IECC Climate Zone 2004|3C
+          - Geometry Attic Type|Vented Attic
+          - or:
+            - Insulation Ceiling|Uninsulated
+            - Insulation Ceiling|R-7
+            - Insulation Ceiling|R-13
+            - Insulation Ceiling|R-19
+            - Insulation Ceiling|R-30
+            - Insulation Ceiling|R-38
+        costs:
+          - value: 0.0482 # $/(ft^2 * Delta R-value), from original REMDB xlsx for blown cellulose (0.0154+0.019)
+                          # apply inflation factor 1.4 (Jan 2010 to Apr 2023) to 0.0344 https://www.bls.gov/data/inflation_calculator.htm
+            multiplier: Floor Area, Attic * Insulation Increase (ft^2 * Delta R-value)
+          - value: 0.2163 # $/(ft^2), from original REMDB xlsx for blown cellulose (0.1505+0.004)
+                          # apply inflation factor 1.4 (Jan 2010 to Apr 2023) to 0.1545
+            multiplier: Floor Area, Attic (ft^2)
+        lifetime: 60 # years effective useful life for opaque envelope components, from https://www.nyserda.ny.gov/-/media/Files/Programs/energy-code-training/Residential-Cost-Analysis-Report.pdf
+      - &attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B-7AK-8AK
+        option: Insulation Ceiling|R-60
+        apply_logic:
+          - or:
+            - ASHRAE IECC Climate Zone 2004|4A
+            - ASHRAE IECC Climate Zone 2004|4B
+            - ASHRAE IECC Climate Zone 2004|4C
+            - ASHRAE IECC Climate Zone 2004|5A
+            - ASHRAE IECC Climate Zone 2004|5B
+            - ASHRAE IECC Climate Zone 2004|6A
+            - ASHRAE IECC Climate Zone 2004|6B
+            - ASHRAE IECC Climate Zone 2004|7A
+            - ASHRAE IECC Climate Zone 2004|7B
+            - ASHRAE IECC Climate Zone 2004|7AK
+            - ASHRAE IECC Climate Zone 2004|8AK
+          - Geometry Attic Type|Vented Attic
+          - or:
+            - Insulation Ceiling|Uninsulated
+            - Insulation Ceiling|R-7
+            - Insulation Ceiling|R-13
+            - Insulation Ceiling|R-19
+            - Insulation Ceiling|R-30
+            - Insulation Ceiling|R-38
+            - Insulation Ceiling|R-49
+        costs:
+          - value: 0.0482 # $/(ft^2 * Delta R-value), from original REMDB xlsx for blown cellulose (0.0154+0.019)
+                          # apply inflation factor 1.4 (Jan 2010 to Apr 2023) to 0.0344 https://www.bls.gov/data/inflation_calculator.htm
+            multiplier: Floor Area, Attic * Insulation Increase (ft^2 * Delta R-value)
+          - value: 0.2163 # $/(ft^2), from original REMDB xlsx for blown cellulose (0.1505+0.004)
+                          # apply inflation factor 1.4 (Jan 2010 to Apr 2023) to 0.1545
+            multiplier: Floor Area, Attic (ft^2)
+        lifetime: 60 # years effective useful life for opaque envelope components, from https://www.nyserda.ny.gov/-/media/Files/Programs/energy-code-training/Residential-Cost-Analysis-Report.pdf
+      # General air sealing - 30% total reduction in ACH50 for homes with greater than 10 ACH50
+      # 30% is consistent with median reduction documented in https://doi.org/10.20357/B7FP4D 
+      - &infiltration_30pct_reduction
+        option: Infiltration Reduction|30%
+        apply_logic:
+          - or:
+            - Infiltration|50 ACH50
+            - Infiltration|40 ACH50
+            - Infiltration|30 ACH50
+            - Infiltration|25 ACH50
+            - Infiltration|20 ACH50
+            - Infiltration|15 ACH50
+        costs:
+          - value: 0.53 # from LBNL data for general air sealing (https://doi.org/10.20357/B7FP4D).
+                        # Interpolated between 20% and 40% reductions to get $0.44/ft2,
+                        # then used 1.2052 multiplier to inflate from Jan 2019 to April 2023 https://www.bls.gov/data/inflation_calculator.htm
+            multiplier: Floor Area, Conditioned (ft^2)
+        lifetime: 60 # years effective useful life for opaque envelope components, from https://www.nyserda.ny.gov/-/media/Files/Programs/energy-code-training/Residential-Cost-Analysis-Report.pdf
+      - &ducts_category1
+        option: Duct Leakage and Insulation|10% Leakage to Outside, R-8
+        apply_logic:
+          or: 
+            - Duct Leakage and Insulation|30% Leakage to Outside, Uninsulated
+            - Duct Leakage and Insulation|30% Leakage to Outside, R-4
+        costs:
+          - value: 3.09 
+            multiplier: Duct Unconditioned Surface Area (ft^2)
+        lifetime: 60
+      - &ducts_category2
+        option: Duct Leakage and Insulation|10% Leakage to Outside, R-8
+        apply_logic:
+          or: 
+            - Duct Leakage and Insulation|30% Leakage to Outside, R-8
+        costs:
+          - value: 1.13 # 
+            multiplier: Duct Unconditioned Surface Area (ft^2)
+        lifetime: 60
+      - &ducts_category3
+        option: Duct Leakage and Insulation|10% Leakage to Outside, R-6
+        apply_logic:
+          or: 
+            - Duct Leakage and Insulation|30% Leakage to Outside, R-6
+        costs:
+          - value: 1.13
+            multiplier: Duct Unconditioned Surface Area (ft^2)
+        lifetime: 60
+      - &ducts_category4
+        option: Duct Leakage and Insulation|10% Leakage to Outside, R-8
+        apply_logic:
+          or: 
+            - Duct Leakage and Insulation|20% Leakage to Outside, Uninsulated
+            - Duct Leakage and Insulation|20% Leakage to Outside, R-4
+        costs:
+          - value: 2.52 
+            multiplier: Duct Unconditioned Surface Area (ft^2)
+        lifetime: 60
+      - &ducts_category5
+        option: Duct Leakage and Insulation|10% Leakage to Outside, R-8
+        apply_logic:
+          - Duct Leakage and Insulation|20% Leakage to Outside, R-8
+        costs:
+          - value: 0.56 
+            multiplier: Duct Unconditioned Surface Area (ft^2)
+        lifetime: 60
+      - &ducts_category6
+        option: Duct Leakage and Insulation|10% Leakage to Outside, R-6
+        apply_logic:
+          - Duct Leakage and Insulation|20% Leakage to Outside, R-6
+        costs:
+          - value: 0.56 
+            multiplier: Duct Unconditioned Surface Area (ft^2)
+        lifetime: 60
+      - &ducts_category7 #improving insulation only
+        option: Duct Leakage and Insulation|10% Leakage to Outside, R-8
+        apply_logic:
+          or: 
+            - Duct Leakage and Insulation|10% Leakage to Outside, Uninsulated
+            - Duct Leakage and Insulation|10% Leakage to Outside, R-4
+        costs:
+          - value: 1.96 
+            multiplier: Duct Unconditioned Surface Area (ft^2)
+        lifetime: 60 #
+      - &drill_and_fill
+        option: Insulation Wall|Wood Stud, R-13
+        apply_logic:
+          - Insulation Wall|Wood Stud, Uninsulated
+        costs: 
+          - value: 2.70 # 2.24 is from LBNL data (https://doi.org/10.20357/B7FP4D); 
+                        # mid-value of NREL REMDB: 2.20 (https://remdb.nrel.gov/measures?group_id=12&component_type_id=184&actionId=703&bcId=2015)
+                        #then used 1.2052 multiplier to 2.24 to inflate from Jan 2019 to April 2023
+            multiplier: Wall Area, Above-Grade, Conditioned (ft^2)
+        lifetime: 60 # years effective useful life for opaque envelope components, from https://www.nyserda.ny.gov/-/media/Files/Programs/energy-code-training/Residential-Cost-Analysis-Report.pdf
+
+    #### package apply logic #####    
+    package_apply_logic1: &with_heat_pump_ele_backup
+      - or:
+        - and:
+          - not:
+            - Heating Fuel|None
+            - HVAC Cooling Type|None
+          - not:
+            - or:
+              - HVAC Heating Type And Fuel|Electricity ASHP
+              - HVAC Heating Type And Fuel|Electricity MSHP
+        - not: Water Heater Fuel|Electricity
+        - *logic_cooking
+        - *logic_dryer
+        - *logic_pool_heater
+        - *logic_spa_heater        
+    package_apply_logic2: &with_heat_pump_existing_backup
+      - or:
+        - and:
+          - not:
+            - Heating Fuel|None
+            - HVAC Cooling Type|None
+          - not:
+            - or:
+              - HVAC Heating Type And Fuel|Electricity ASHP
+              - HVAC Heating Type And Fuel|Electricity MSHP
+          - HVAC Has Shared System|None
+        - not: Water Heater Fuel|Electricity
+        - *logic_cooking
+        - *logic_dryer
+        - *logic_pool_heater
+        - *logic_spa_heater
+    package_apply_logic3: &with_heat_pump_ele_backup_hpwh
+      - or:
+        - and:
+          - not:
+            - Heating Fuel|None
+            - HVAC Cooling Type|None
+          - not:
+            - or:
+              - HVAC Heating Type And Fuel|Electricity ASHP
+              - HVAC Heating Type And Fuel|Electricity MSHP
+        - not: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF
+        - *logic_cooking
+        - *logic_dryer
+        - *logic_pool_heater
+        - *logic_spa_heater
+      
+upgrades:
+  - upgrade_name: 1.1 Inefficient Electrification
+    options:
+    #### 1.1 Electric Resistance Heating 6 options ####
+      - *heating_fuel
+      - *electric_resistance_heating_heating_eff_boiler    
+      - *electric_resistance_heating_heating_eff_fuel_furnace
+      - *electric_resistance_heating_heating_eff_wall_floor_furnace
+      - *electric_resistance_hvac_shared_eff_shared_heating_only
+      - *electric_resistance_hvac_shared_eff_shared_heating_cooling
+    #### 2.1 Electric Water Heating, 3 options ####
+      - *water_heater_fuel_eff_premium
+      - *water_heater_fuel_eff_standard
+      - *water_heater_fuel_eff_tankless
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - *electric_resistance_cooking
+    #### 4 Electric Clothes Dryer, 1 options  ####
+      - *clothes_dryer_electric 
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - *electric_pool_heaters 
+      - *electric_spa_heaters 
+  
+  - upgrade_name: 1.2 BAU Electrification
+    options:
+    #### 1.0 Common Options For Heat Pump with ele backup, 8 options ####
+      - *heating_fuel
+      - *cooling_efficiency_ducted
+      - *cooling_efficiency_ductless
+      - *100_percent_conditioned
+      - *cooling_setpoint_offset_magnitude_0
+      - *cooling_setpoint_offset_period_none
+      - *heating_setpoint_offset_magnitude_0
+      - *heating_setpoint_offset_period_none
+    #### 1.2 Federal Minimum Heat Pump With Electric Backup, 2 options  ####
+      - *fed_min_ashp_ducted
+      - *fed_min_mshp_ductless
+    #### 2.1 Electric Water Heating, 3 options ####
+      - *water_heater_fuel_eff_premium
+      - *water_heater_fuel_eff_standard
+      - *water_heater_fuel_eff_tankless
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - *electric_resistance_cooking
+    #### 4 Electric Clothes Dryer, 1 options  ####
+      - *clothes_dryer_electric 
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - *electric_pool_heaters 
+      - *electric_spa_heaters 
+  
+  - upgrade_name: 1.3 BAU Electrification with HPWH
+    options:
+    #### 1.0 Common Options For Heat Pump with ele backup, 8 options ####
+      - *heating_fuel
+      - *cooling_efficiency_ducted
+      - *cooling_efficiency_ductless
+      - *100_percent_conditioned
+      - *cooling_setpoint_offset_magnitude_0
+      - *cooling_setpoint_offset_period_none
+      - *heating_setpoint_offset_magnitude_0
+      - *heating_setpoint_offset_period_none
+    #### 1.2 Federal Minimum Heat Pump With Electric Backup, 2 options  ####
+      - *fed_min_ashp_ducted
+      - *fed_min_mshp_ductless
+    #### 2.2 240V HPWH, 3 options  ####
+      - *240V_hpwh_50_gal
+      - *240V_hpwh_66_gal
+      - *240V_hpwh_80_gal
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - *electric_resistance_cooking
+    #### 4 Electric Clothes Dryer, 1 options  ####
+      - *clothes_dryer_electric 
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - *electric_pool_heaters 
+      - *electric_spa_heaters
+
+  - upgrade_name: 1.4 High Efficiency Space Heating Electrification 
+    options:
+    #### 1.0 Common Options For Heat Pump with ele backup, 8 options ####
+      - *heating_fuel
+      - *cooling_efficiency_ducted
+      - *cooling_efficiency_ductless
+      - *100_percent_conditioned
+      - *cooling_setpoint_offset_magnitude_0
+      - *cooling_setpoint_offset_period_none
+      - *heating_setpoint_offset_magnitude_0
+      - *heating_setpoint_offset_period_none
+    #### 1.4 High-Efficiency Heat Pump With Electric Backup, 2 options  ####
+      - *high_eff_ashp_ducted
+      - *high_eff_mshp_ductless
+    #### 2.1 Electric Water Heating, 3 options ####
+      - *water_heater_fuel_eff_premium
+      - *water_heater_fuel_eff_standard
+      - *water_heater_fuel_eff_tankless
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - *electric_resistance_cooking
+    #### 4 Electric Clothes Dryer, 1 options  ####
+      - *clothes_dryer_electric 
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - *electric_pool_heaters 
+      - *electric_spa_heaters
+
+  - upgrade_name: 1.5 High Efficiency Space Heating Electrification With HPWH  
+    options:
+    #### 1.0 Common Options For Heat Pump with ele backup, 8 options ####
+      - *heating_fuel
+      - *cooling_efficiency_ducted
+      - *cooling_efficiency_ductless
+      - *100_percent_conditioned
+      - *cooling_setpoint_offset_magnitude_0
+      - *cooling_setpoint_offset_period_none
+      - *heating_setpoint_offset_magnitude_0
+      - *heating_setpoint_offset_period_none
+    #### 1.4 High-Efficiency Heat Pump With Electric Backup, 2 options  ####
+      - *high_eff_ashp_ducted
+      - *high_eff_mshp_ductless
+    #### 2.2 240V HPWH, 3 options  ####
+      - *240V_hpwh_50_gal
+      - *240V_hpwh_66_gal
+      - *240V_hpwh_80_gal
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - *electric_resistance_cooking
+    #### 4 Electric Clothes Dryer, 1 options  ####
+      - *clothes_dryer_electric 
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - *electric_pool_heaters 
+      - *electric_spa_heaters
+
+  - upgrade_name: 1.6 Low-voltage Electrification
+    options:
+    #### 1.0 Common Options For Heat Pump with ele backup, 8 options ####
+      - *heating_fuel
+      - *cooling_efficiency_ducted
+      - *cooling_efficiency_ductless
+      - *100_percent_conditioned
+      - *cooling_setpoint_offset_magnitude_0
+      - *cooling_setpoint_offset_period_none
+      - *heating_setpoint_offset_magnitude_0
+      - *heating_setpoint_offset_period_none
+    #### 1.2 Federal Minimum Heat Pump With Electric Backup, 2 options  ####
+      - *fed_min_ashp_ducted
+      - *fed_min_mshp_ductless
+    #### 2.2 120V HPWH, 3 options  ####
+      - *120v_hpwh_50_gal
+      - *120v_hpwh_65_gal
+      - *120v_hpwh_80_gal
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - *electric_resistance_cooking
+    #### 4 Electric Clothes Dryer, 1 options  ####
+      - *clothes_dryer_electric 
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - *electric_pool_heaters 
+      - *electric_spa_heaters
+
+  - upgrade_name: 1.7 High Efficiency and Low-voltage Electrification
+    options:
+    #### 1.0 Common Options For Heat Pump with ele backup, 8 options ####
+      - *heating_fuel
+      - *cooling_efficiency_ducted
+      - *cooling_efficiency_ductless
+      - *100_percent_conditioned
+      - *cooling_setpoint_offset_magnitude_0
+      - *cooling_setpoint_offset_period_none
+      - *heating_setpoint_offset_magnitude_0
+      - *heating_setpoint_offset_period_none
+    #### 1.4 High-Efficiency Heat Pump With Electric Backup, 2 options  ####
+      - *high_eff_ashp_ducted
+      - *high_eff_mshp_ductless
+    #### 2.2 120V HPWH, 3 options  ####
+      - *120v_hpwh_50_gal
+      - *120v_hpwh_65_gal
+      - *120v_hpwh_80_gal
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - *electric_resistance_cooking
+    #### 4 Electric Clothes Dryer, 1 options  ####
+      - *clothes_dryer_electric 
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - *electric_pool_heaters 
+      - *electric_spa_heaters
+
+  - upgrade_name: 1.8 BAU Electrification with Existing Fuel Backup
+    options:
+    #### 1.0 Common Options For Heat Pump with existing backup, 8 options ####
+      - *hp_exist_bkup_heating_fuel
+      - *hp_exist_bkup_cooling_efficiency_ducted
+      - *hp_exist_bkup_cooling_efficiency_ductless
+      - *hp_exist_bkup_100_percent_conditioned
+      - *hp_exist_bkup_cooling_setpoint_offset_magnitude_0
+      - *hp_exist_bkup_cooling_setpoint_offset_period_none
+      - *hp_exist_bkup_heating_setpoint_offset_magnitude_0
+      - *hp_exist_bkup_heating_setpoint_offset_period_none
+    #### 1.3 Federal Minimum Level Heat Pump With Existing Heating Backup, 32 options  ####
+      - *fed_min_ashp_exist_backup_no_shared_ducts
+      - *secondary_heating_type_fuel_natural_gas
+      - *secondary_heating_type_fuel_propane
+      - *secondary_heating_type_fuel_fuel_oil
+      - *secondary_heating_type_fuel_other_fuel
+      - *secondary_heating_type_fuel_electricity
+      - *secondary_boiler_76
+      - *secondary_boiler_80
+      - *secondary_boiler_90
+      - *secondary_ele_boiler
+      - *secondary_wallfloor_furnace_60
+      - *secondary_wallfloor_furnace_68
+      - *secondary_ele_wallfloor_furnace
+      - *secondary_ele_baseboard
+      - *fed_min_ashp_exist_backup_shared_ducts_60_ng
+      - *fed_min_ashp_exist_backup_shared_ducts_76_ng
+      - *fed_min_ashp_exist_backup_shared_ducts_80_ng
+      - *fed_min_ashp_exist_backup_shared_ducts_92-5_ng
+      - *fed_min_ashp_exist_backup_shared_ducts_60_fo
+      - *fed_min_ashp_exist_backup_shared_ducts_76_fo
+      - *fed_min_ashp_exist_backup_shared_ducts_80_fo
+      - *fed_min_ashp_exist_backup_shared_ducts_92-5_fo
+      - *fed_min_ashp_exist_backup_shared_ducts_60_propane
+      - *fed_min_ashp_exist_backup_shared_ducts_76_propane
+      - *fed_min_ashp_exist_backup_shared_ducts_80_propane
+      - *fed_min_ashp_exist_backup_shared_ducts_92-5_propane
+      - *fed_min_ashp_exist_backup_shared_ducts_60_of
+      - *fed_min_ashp_exist_backup_shared_ducts_76_of
+      - *fed_min_ashp_exist_backup_shared_ducts_80_of
+      - *fed_min_ashp_exist_backup_shared_ducts_92-5_of
+      - *fed_min_ashp_exist_backup_shared_ducts_electricity
+      - *fed_min_mshp_exist_backup
+    #### 2.1 Electric Water Heating, 3 options ####
+      - *water_heater_fuel_eff_premium
+      - *water_heater_fuel_eff_standard
+      - *water_heater_fuel_eff_tankless
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - *electric_resistance_cooking
+    #### 4 Electric Clothes Dryer, 1 options  ####
+      - *clothes_dryer_electric 
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - *electric_pool_heaters 
+      - *electric_spa_heaters 
+
+  - upgrade_name: 2.1. BAU Electrification with Envelope 
+    package_apply_logic: *with_heat_pump_ele_backup
+    options:
+    #### 1.0 Common Options For Heat Pump with ele backup, 8 options ####
+      - *heating_fuel
+      - *cooling_efficiency_ducted
+      - *cooling_efficiency_ductless
+      - *100_percent_conditioned
+      - *cooling_setpoint_offset_magnitude_0
+      - *cooling_setpoint_offset_period_none
+      - *heating_setpoint_offset_magnitude_0
+      - *heating_setpoint_offset_period_none
+    #### 1.2 Federal Minimum Heat Pump With Electric Backup, 2 options  ####
+      - *fed_min_ashp_ducted
+      - *fed_min_mshp_ductless
+    #### 2.1 Electric Water Heating, 3 options ####
+      - *water_heater_fuel_eff_premium
+      - *water_heater_fuel_eff_standard
+      - *water_heater_fuel_eff_tankless
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - *electric_resistance_cooking
+    #### 4 Electric Clothes Dryer, 1 options  ####
+      - *clothes_dryer_electric 
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - *electric_pool_heaters 
+      - *electric_spa_heaters
+    #### 6 Envelope, 12 options ####
+      - *attic_insulation_IECC_CZ1A
+      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
+      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B-7AK-8AK
+      - *infiltration_30pct_reduction
+      - *ducts_category1
+      - *ducts_category3
+      - *ducts_category4 
+      - *ducts_category5
+      - *ducts_category6
+      - *ducts_category7 
+      - *drill_and_fill
+  
+  - upgrade_name: 2.2 BAU Electrification with HPWH with Envelope
+    package_apply_logic: *with_heat_pump_ele_backup_hpwh
+    options:
+    #### 1.0 Common Options For Heat Pump with ele backup, 8 options ####
+      - *heating_fuel
+      - *cooling_efficiency_ducted
+      - *cooling_efficiency_ductless
+      - *100_percent_conditioned
+      - *cooling_setpoint_offset_magnitude_0
+      - *cooling_setpoint_offset_period_none
+      - *heating_setpoint_offset_magnitude_0
+      - *heating_setpoint_offset_period_none
+    #### 1.2 Federal Minimum Heat Pump With Electric Backup, 2 options  ####
+      - *fed_min_ashp_ducted
+      - *fed_min_mshp_ductless
+    #### 2.2 240V HPWH, 3 options  ####
+      - *240V_hpwh_50_gal
+      - *240V_hpwh_66_gal
+      - *240V_hpwh_80_gal
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - *electric_resistance_cooking
+    #### 4 Electric Clothes Dryer, 1 options  ####
+      - *clothes_dryer_electric 
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - *electric_pool_heaters 
+      - *electric_spa_heaters
+    #### 6 Envelope, 12 options ####
+      - *attic_insulation_IECC_CZ1A
+      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
+      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B-7AK-8AK
+      - *infiltration_30pct_reduction
+      - *ducts_category1
+      - *ducts_category3
+      - *ducts_category4 
+      - *ducts_category5
+      - *ducts_category6
+      - *ducts_category7 
+      - *drill_and_fill
+
+  - upgrade_name: 2.3 High Efficiency Space Heating Electrification with Envelope 
+    package_apply_logic: *with_heat_pump_ele_backup
+    options:
+    #### 1.0 Common Options For Heat Pump with ele backup, 8 options ####
+      - *heating_fuel
+      - *cooling_efficiency_ducted
+      - *cooling_efficiency_ductless
+      - *100_percent_conditioned
+      - *cooling_setpoint_offset_magnitude_0
+      - *cooling_setpoint_offset_period_none
+      - *heating_setpoint_offset_magnitude_0
+      - *heating_setpoint_offset_period_none
+    #### 1.4 High-Efficiency Heat Pump With Electric Backup, 2 options  ####
+      - *high_eff_ashp_ducted
+      - *high_eff_mshp_ductless
+    #### 2.1 Electric Water Heating, 4 options ####
+      - *water_heater_fuel_eff_premium
+      - *water_heater_fuel_eff_standard
+      - *water_heater_fuel_eff_tankless
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - *electric_resistance_cooking
+    #### 4 Electric Clothes Dryer, 1 options  ####
+      - *clothes_dryer_electric 
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - *electric_pool_heaters 
+      - *electric_spa_heaters
+    #### 6 Envelope, 12 options ####
+      - *attic_insulation_IECC_CZ1A
+      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
+      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B-7AK-8AK
+      - *infiltration_30pct_reduction
+      - *ducts_category1
+      - *ducts_category3
+      - *ducts_category4 
+      - *ducts_category5
+      - *ducts_category6
+      - *ducts_category7 
+      - *drill_and_fill
+
+  - upgrade_name: 2.4 High Efficiency Space Heating Electrification With HPWH with Envelope  
+    package_apply_logic: *with_heat_pump_ele_backup_hpwh
+    options:
+    #### 1.0 Common Options For Heat Pump with ele backup, 8 options ####
+      - *heating_fuel
+      - *cooling_efficiency_ducted
+      - *cooling_efficiency_ductless
+      - *100_percent_conditioned
+      - *cooling_setpoint_offset_magnitude_0
+      - *cooling_setpoint_offset_period_none
+      - *heating_setpoint_offset_magnitude_0
+      - *heating_setpoint_offset_period_none
+    #### 1.4 High-Efficiency Heat Pump With Electric Backup, 2 options  ####
+      - *high_eff_ashp_ducted
+      - *high_eff_mshp_ductless
+    #### 2.2 240V HPWH, 4 options  ####
+      - *240V_hpwh_50_gal
+      - *240V_hpwh_66_gal
+      - *240V_hpwh_80_gal
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - *electric_resistance_cooking
+    #### 4 Electric Clothes Dryer, 1 options  ####
+      - *clothes_dryer_electric 
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - *electric_pool_heaters 
+      - *electric_spa_heaters
+    #### 6 Envelope, 12 options ####
+      - *attic_insulation_IECC_CZ1A
+      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
+      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B-7AK-8AK
+      - *infiltration_30pct_reduction
+      - *ducts_category1
+      - *ducts_category3
+      - *ducts_category4 
+      - *ducts_category5
+      - *ducts_category6
+      - *ducts_category7 
+      - *drill_and_fill
+  
+  - upgrade_name: 2.5 Low-voltage Electrification with Envelope
+    options:
+    #### 1.0 Common Options For Heat Pump with ele backup, 8 options ####
+      - *heating_fuel
+      - *cooling_efficiency_ducted
+      - *cooling_efficiency_ductless
+      - *100_percent_conditioned
+      - *cooling_setpoint_offset_magnitude_0
+      - *cooling_setpoint_offset_period_none
+      - *heating_setpoint_offset_magnitude_0
+      - *heating_setpoint_offset_period_none
+    #### 1.2 Federal Minimum Heat Pump With Electric Backup, 2 options  ####
+      - *fed_min_ashp_ducted
+      - *fed_min_mshp_ductless
+    #### 2.2 120V HPWH, 3 options  ####
+      - *120v_hpwh_50_gal
+      - *120v_hpwh_65_gal
+      - *120v_hpwh_80_gal
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - *electric_resistance_cooking
+    #### 4 Electric Clothes Dryer, 1 options  ####
+      - *clothes_dryer_electric 
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - *electric_pool_heaters 
+      - *electric_spa_heaters
+    #### 6 Envelope, 12 options ####
+      - *attic_insulation_IECC_CZ1A
+      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
+      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B-7AK-8AK
+      - *infiltration_30pct_reduction
+      - *ducts_category1
+      - *ducts_category3
+      - *ducts_category4 
+      - *ducts_category5
+      - *ducts_category6
+      - *ducts_category7 
+      - *drill_and_fill
+
+  - upgrade_name: 2.6 High Efficiency and Low-voltage Electrification with Envelope
+    options:
+    #### 1.0 Common Options For Heat Pump with ele backup, 8 options ####
+      - *heating_fuel
+      - *cooling_efficiency_ducted
+      - *cooling_efficiency_ductless
+      - *100_percent_conditioned
+      - *cooling_setpoint_offset_magnitude_0
+      - *cooling_setpoint_offset_period_none
+      - *heating_setpoint_offset_magnitude_0
+      - *heating_setpoint_offset_period_none
+    #### 1.4 High-Efficiency Heat Pump With Electric Backup, 2 options  ####
+      - *high_eff_ashp_ducted
+      - *high_eff_mshp_ductless
+    #### 2.2 120V HPWH, 3 options  ####
+      - *120v_hpwh_50_gal
+      - *120v_hpwh_65_gal
+      - *120v_hpwh_80_gal
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - *electric_resistance_cooking
+    #### 4 Electric Clothes Dryer, 1 options  ####
+      - *clothes_dryer_electric 
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - *electric_pool_heaters 
+      - *electric_spa_heaters
+    #### 6 Envelope, 12 options ####
+      - *attic_insulation_IECC_CZ1A
+      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
+      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B-7AK-8AK
+      - *infiltration_30pct_reduction
+      - *ducts_category1
+      - *ducts_category3
+      - *ducts_category4 
+      - *ducts_category5
+      - *ducts_category6
+      - *ducts_category7 
+      - *drill_and_fill
+
+  - upgrade_name: 2.7 BAU Electrification with Existing Fuel Backup with Envelope
+    package_apply_logic: *with_heat_pump_existing_backup
+    options:
+    #### 1.0 Common Options For Heat Pump with existing backup, 8 options ####
+      - *hp_exist_bkup_heating_fuel
+      - *hp_exist_bkup_cooling_efficiency_ducted
+      - *hp_exist_bkup_cooling_efficiency_ductless
+      - *hp_exist_bkup_100_percent_conditioned
+      - *hp_exist_bkup_cooling_setpoint_offset_magnitude_0
+      - *hp_exist_bkup_cooling_setpoint_offset_period_none
+      - *hp_exist_bkup_heating_setpoint_offset_magnitude_0
+      - *hp_exist_bkup_heating_setpoint_offset_period_none
+    #### 1.3 Federal Minimum Level Heat Pump With Existing Heating Backup, 32 options  ####
+      - *fed_min_ashp_exist_backup_no_shared_ducts
+      - *secondary_heating_type_fuel_natural_gas
+      - *secondary_heating_type_fuel_propane
+      - *secondary_heating_type_fuel_fuel_oil
+      - *secondary_heating_type_fuel_other_fuel
+      - *secondary_heating_type_fuel_electricity
+      - *secondary_boiler_76
+      - *secondary_boiler_80
+      - *secondary_boiler_90
+      - *secondary_ele_boiler
+      - *secondary_wallfloor_furnace_60
+      - *secondary_wallfloor_furnace_68
+      - *secondary_ele_wallfloor_furnace
+      - *secondary_ele_baseboard
+      - *fed_min_ashp_exist_backup_shared_ducts_60_ng
+      - *fed_min_ashp_exist_backup_shared_ducts_76_ng
+      - *fed_min_ashp_exist_backup_shared_ducts_80_ng
+      - *fed_min_ashp_exist_backup_shared_ducts_92-5_ng
+      - *fed_min_ashp_exist_backup_shared_ducts_60_fo
+      - *fed_min_ashp_exist_backup_shared_ducts_76_fo
+      - *fed_min_ashp_exist_backup_shared_ducts_80_fo
+      - *fed_min_ashp_exist_backup_shared_ducts_92-5_fo
+      - *fed_min_ashp_exist_backup_shared_ducts_60_propane
+      - *fed_min_ashp_exist_backup_shared_ducts_76_propane
+      - *fed_min_ashp_exist_backup_shared_ducts_80_propane
+      - *fed_min_ashp_exist_backup_shared_ducts_92-5_propane
+      - *fed_min_ashp_exist_backup_shared_ducts_60_of
+      - *fed_min_ashp_exist_backup_shared_ducts_76_of
+      - *fed_min_ashp_exist_backup_shared_ducts_80_of
+      - *fed_min_ashp_exist_backup_shared_ducts_92-5_of
+      - *fed_min_ashp_exist_backup_shared_ducts_electricity
+      - *fed_min_mshp_exist_backup
+    #### 2.1 Electric Water Heating, 3 options ####
+      - *water_heater_fuel_eff_premium
+      - *water_heater_fuel_eff_standard
+      - *water_heater_fuel_eff_tankless
+    #### 3 Electric Resistance Cooking, 1 option  ####
+      - *electric_resistance_cooking
+    #### 4 Electric Clothes Dryer, 1 options  ####
+      - *clothes_dryer_electric 
+    #### 5 Electric Pool Heater And Hot Tub Spa Heater, 2 options  ####
+      - *electric_pool_heaters 
+      - *electric_spa_heaters
+    #### 6 Envelope, 12 options ####
+      - *attic_insulation_IECC_CZ1A
+      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
+      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B-7AK-8AK
+      - *infiltration_30pct_reduction
+      - *ducts_category1
+      - *ducts_category3
+      - *ducts_category4 
+      - *ducts_category5
+      - *ducts_category6
+      - *ducts_category7 
+      - *drill_and_fill 
+  
+kestrel:
+  n_jobs: 300
+  minutes_per_sim: 2
+  account: panels
+  sampling:
+    time: 100
+  postprocessing:
+    time: 2000 
+    n_workers: 20
+
+postprocessing:
+  aws:
+    region_name: us-west-2
+    s3:
+      bucket: resstock-panels
+      prefix: resstock-panels_runs
+    athena:
+      glue_service_role: service-role/AWSGlueServiceRole-default
+      database_name: resstock_panels 
+      max_crawling_time: 2000

@@ -1,0 +1,5 @@
+Option=None	sampling_probability
+1	1
+# Created by: manually created
+# Description: Presence, water removal rate, and humidity setpoint of the dehumidifier.
+# Source: Not applicable (dehumidifiers are not explicitly modeled separate from plug loads)

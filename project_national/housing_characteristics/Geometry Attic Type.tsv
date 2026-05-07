@@ -1,0 +1,1206 @@
+Dependency=Census Division RECS	Dependency=Geometry Building Type RECS	Dependency=Geometry Stories Low Rise	Dependency=Vintage ACS	Option=Finished Attic or Cathedral Ceilings	Option=None	Option=Unvented Attic	Option=Vented Attic	source_count	source_weight	sampling_probability
+East North Central	Mobile Home	1	1940-59	0	1	0	0	131	2534.4	0.000121446
+East North Central	Mobile Home	2	1940-59	0	1	0	0	131	2534.4	0
+East North Central	Mobile Home	3	1940-59	0	1	0	0	131	2534.4	0
+East North Central	Mobile Home	4+	1940-59	0	1	0	0	131	2534.4	0
+East North Central	Multi-Family with 2 - 4 Units	1	1940-59	0	1	0	0	41	72708.1	0.00019438
+East North Central	Multi-Family with 2 - 4 Units	2	1940-59	0	1	0	0	41	72708.1	0.0014668
+East North Central	Multi-Family with 2 - 4 Units	3	1940-59	0	1	0	0	41	72708.1	0.000321042
+East North Central	Multi-Family with 2 - 4 Units	4+	1940-59	0	1	0	0	41	72708.1	5.9604e-05
+East North Central	Multi-Family with 5+ Units	1	1940-59	0	1	0	0	41	70701.3	0.00014465
+East North Central	Multi-Family with 5+ Units	2	1940-59	0	1	0	0	41	70701.3	0.000740225
+East North Central	Multi-Family with 5+ Units	3	1940-59	0	1	0	0	41	70701.3	0.000564173
+East North Central	Multi-Family with 5+ Units	4+	1940-59	0	1	0	0	41	70701.3	0.000818557
+East North Central	Single-Family Attached	1	1940-59	0	0.459913	0.121323	0.418765	10	15025.3	0.000414197
+East North Central	Single-Family Attached	2	1940-59	0.123223	0.0520342	0.0623756	0.762367	15	37100.8	0.000292232
+East North Central	Single-Family Attached	3	1940-59	0	0.797091	0.0305212	0.172388	25	9491.41	1.30567e-05
+East North Central	Single-Family Attached	4+	1940-59	0	1	0	0	11	4533.1	0
+East North Central	Single-Family Detached	1	1940-59	0	0.304663	0.0543099	0.641027	269	1.82312e+06	0.0179559
+East North Central	Single-Family Detached	2	1940-59	0.0940001	0.337674	0.0447115	0.523615	250	1.06408e+06	0.00631995
+East North Central	Single-Family Detached	3	1940-59	0.141831	0.766666	0.00804005	0.0834628	10	11525.1	0.000231457
+East North Central	Single-Family Detached	4+	1940-59	0	1	0	0	11	0	0
+East North Central	Mobile Home	1	1960-79	0	1	0	0	16	36734.6	0.00176622
+East North Central	Mobile Home	2	1960-79	0	1	0	0	16	36734.6	0
+East North Central	Mobile Home	3	1960-79	0	1	0	0	16	36734.6	0
+East North Central	Mobile Home	4+	1960-79	0	1	0	0	16	36734.6	0
+East North Central	Multi-Family with 2 - 4 Units	1	1960-79	0	1	0	0	22	84370.1	0.000460581
+East North Central	Multi-Family with 2 - 4 Units	2	1960-79	0	1	0	0	22	84370.1	0.00210151
+East North Central	Multi-Family with 2 - 4 Units	3	1960-79	0	1	0	0	22	84370.1	0.00046791
+East North Central	Multi-Family with 2 - 4 Units	4+	1960-79	0	1	0	0	22	84370.1	4.15463e-06
+East North Central	Multi-Family with 5+ Units	1	1960-79	0	1	0	0	78	243098	0.000636424
+East North Central	Multi-Family with 5+ Units	2	1960-79	0	1	0	0	78	243098	0.00320942
+East North Central	Multi-Family with 5+ Units	3	1960-79	0	1	0	0	78	243098	0.00247481
+East North Central	Multi-Family with 5+ Units	4+	1960-79	0	1	0	0	78	243098	0.00187955
+East North Central	Single-Family Attached	1	1960-79	0	0.599403	0.0408626	0.359734	18	72776.7	0.000784935
+East North Central	Single-Family Attached	2	1960-79	0.0108543	0.570954	0.0108543	0.407337	31	133175	0.000671965
+East North Central	Single-Family Attached	3	1960-79	0	0.797091	0.0305212	0.172388	25	4348.67	3.52679e-05
+East North Central	Single-Family Attached	4+	1960-79	0	1	0	0	11	0	0
+East North Central	Single-Family Detached	1	1960-79	0	0.301025	0.0381884	0.660787	241	1.92554e+06	0.0190935
+East North Central	Single-Family Detached	2	1960-79	0.0209961	0.367716	0.0396055	0.571683	132	1.05613e+06	0.00583833
+East North Central	Single-Family Detached	3	1960-79	0	0.345959	0.0816778	0.572363	14	127597	0.000372303
+East North Central	Single-Family Detached	4+	1960-79	0	1	0	0	11	5801.05	0
+East North Central	Mobile Home	1	1980-99	0	1	0	0	25	68825.5	0.0029646
+East North Central	Mobile Home	2	1980-99	0	1	0	0	25	68825.5	0
+East North Central	Mobile Home	3	1980-99	0	1	0	0	25	68825.5	0
+East North Central	Mobile Home	4+	1980-99	0	1	0	0	25	68825.5	0
+East North Central	Multi-Family with 2 - 4 Units	1	1980-99	0	1	0	0	19	78188.1	0.000273022
+East North Central	Multi-Family with 2 - 4 Units	2	1980-99	0	1	0	0	19	78188.1	0.00182638
+East North Central	Multi-Family with 2 - 4 Units	3	1980-99	0	1	0	0	19	78188.1	0.000208395
+East North Central	Multi-Family with 2 - 4 Units	4+	1980-99	0	1	0	0	19	78188.1	1.06455e-05
+East North Central	Multi-Family with 5+ Units	1	1980-99	0	1	0	0	56	176391	0.000488564
+East North Central	Multi-Family with 5+ Units	2	1980-99	0	1	0	0	56	176391	0.00293885
+East North Central	Multi-Family with 5+ Units	3	1980-99	0	1	0	0	56	176391	0.00238666
+East North Central	Multi-Family with 5+ Units	4+	1980-99	0	1	0	0	56	176391	0.000829592
+East North Central	Single-Family Attached	1	1980-99	0	0.55159	0.0322548	0.416155	30	152757	0.000938082
+East North Central	Single-Family Attached	2	1980-99	0.0179538	0.506122	0.029563	0.446362	32	162263	0.00138481
+East North Central	Single-Family Attached	3	1980-99	0	0.797091	0.0305212	0.172388	25	23509.2	0.000112779
+East North Central	Single-Family Attached	4+	1980-99	0	1	0	0	11	0	0
+East North Central	Single-Family Detached	1	1980-99	0	0.326375	0.0413884	0.632237	125	1.1473e+06	0.0107548
+East North Central	Single-Family Detached	2	1980-99	0.0104274	0.321188	0.0324914	0.635894	138	1.3692e+06	0.00815272
+East North Central	Single-Family Detached	3	1980-99	0.00409357	0.680344	0.00409357	0.311469	15	86443.5	0.000303194
+East North Central	Single-Family Detached	4+	1980-99	0	1	0	0	11	0	0
+East North Central	Mobile Home	1	2000-09	0	1	0	0	20	19471.9	0.000758733
+East North Central	Mobile Home	2	2000-09	0	1	0	0	20	19471.9	0
+East North Central	Mobile Home	3	2000-09	0	1	0	0	20	19471.9	0
+East North Central	Mobile Home	4+	2000-09	0	1	0	0	20	19471.9	0
+East North Central	Multi-Family with 2 - 4 Units	1	2000-09	0	1	0	0	12	28553.4	7.75512e-05
+East North Central	Multi-Family with 2 - 4 Units	2	2000-09	0	1	0	0	12	28553.4	0.000603128
+East North Central	Multi-Family with 2 - 4 Units	3	2000-09	0	1	0	0	12	28553.4	6.70946e-05
+East North Central	Multi-Family with 2 - 4 Units	4+	2000-09	0	1	0	0	12	28553.4	4.41082e-06
+East North Central	Multi-Family with 5+ Units	1	2000-09	0	1	0	0	37	102011	0.000148868
+East North Central	Multi-Family with 5+ Units	2	2000-09	0	1	0	0	37	102011	0.000941186
+East North Central	Multi-Family with 5+ Units	3	2000-09	0	1	0	0	37	102011	0.000671038
+East North Central	Multi-Family with 5+ Units	4+	2000-09	0	1	0	0	37	102011	0.000936751
+East North Central	Single-Family Attached	1	2000-09	0	0.693952	0	0.306048	26	97492.9	0.000637212
+East North Central	Single-Family Attached	2	2000-09	0	0.722293	0.0660818	0.211626	14	54552.8	0.000788155
+East North Central	Single-Family Attached	3	2000-09	0	0.780928	0	0.219072	10	24890.9	0.000154306
+East North Central	Single-Family Attached	4+	2000-09	0	1	0	0	11	7770.94	0
+East North Central	Single-Family Detached	1	2000-09	0	0.393056	0.0145172	0.592427	75	521502	0.00502061
+East North Central	Single-Family Detached	2	2000-09	0.0675921	0.232787	0.0637499	0.635871	81	609442	0.00532141
+East North Central	Single-Family Detached	3	2000-09	0.106387	0.537958	0	0.355655	12	32492.5	0.000106484
+East North Central	Single-Family Detached	4+	2000-09	0	1	0	0	11	0	0
+East North Central	Mobile Home	1	2010s	0	1	0	0	11	22152.9	0.000243675
+East North Central	Mobile Home	2	2010s	0	1	0	0	11	22152.9	0
+East North Central	Mobile Home	3	2010s	0	1	0	0	11	22152.9	0
+East North Central	Mobile Home	4+	2010s	0	1	0	0	11	22152.9	0
+East North Central	Multi-Family with 2 - 4 Units	1	2010s	0	1	0	0	12	12689.6	3.00575e-05
+East North Central	Multi-Family with 2 - 4 Units	2	2010s	0	1	0	0	12	12689.6	0.000233762
+East North Central	Multi-Family with 2 - 4 Units	3	2010s	0	1	0	0	12	12689.6	2.45928e-05
+East North Central	Multi-Family with 2 - 4 Units	4+	2010s	0	1	0	0	12	12689.6	1.61673e-06
+East North Central	Multi-Family with 5+ Units	1	2010s	0	1	0	0	26	59033.1	6.68733e-05
+East North Central	Multi-Family with 5+ Units	2	2010s	0	1	0	0	26	59033.1	0.000395294
+East North Central	Multi-Family with 5+ Units	3	2010s	0	1	0	0	26	59033.1	0.000332788
+East North Central	Multi-Family with 5+ Units	4+	2010s	0	1	0	0	26	59033.1	0.000535815
+East North Central	Single-Family Attached	1	2010s	0	0.632528	0	0.367472	32	22670.7	0.000107651
+East North Central	Single-Family Attached	2	2010s	0	0.632442	0.044542	0.323016	20	26380.9	0.000137356
+East North Central	Single-Family Attached	3	2010s	0	0.780928	0	0.219072	10	7069.09	2.48017e-05
+East North Central	Single-Family Attached	4+	2010s	0	1	0	0	11	0	0
+East North Central	Single-Family Detached	1	2010s	0	0.275019	0.0094511	0.71553	32	211457	0.00121424
+East North Central	Single-Family Detached	2	2010s	0.00797653	0.395743	0.0238904	0.57239	42	262297	0.00137407
+East North Central	Single-Family Detached	3	2010s	0.106387	0.537958	0	0.355655	12	8014.47	2.82048e-05
+East North Central	Single-Family Detached	4+	2010s	0	1	0	0	11	0	0
+East North Central	Mobile Home	1	<1940	0	1	0	0	131	6549.46	6.281e-05
+East North Central	Mobile Home	2	<1940	0	1	0	0	131	6549.46	0
+East North Central	Mobile Home	3	<1940	0	1	0	0	131	6549.46	0
+East North Central	Mobile Home	4+	<1940	0	1	0	0	131	6549.46	0
+East North Central	Multi-Family with 2 - 4 Units	1	<1940	0	1	0	0	33	94920.9	0.00132303
+East North Central	Multi-Family with 2 - 4 Units	2	<1940	0	1	0	0	33	94920.9	0.00231767
+East North Central	Multi-Family with 2 - 4 Units	3	<1940	0	1	0	0	33	94920.9	0.000726461
+East North Central	Multi-Family with 2 - 4 Units	4+	<1940	0	1	0	0	33	94920.9	0.000301997
+East North Central	Multi-Family with 5+ Units	1	<1940	0	1	0	0	29	83082.4	0.000179124
+East North Central	Multi-Family with 5+ Units	2	<1940	0	1	0	0	29	83082.4	0.000404021
+East North Central	Multi-Family with 5+ Units	3	<1940	0	1	0	0	29	83082.4	0.000739914
+East North Central	Multi-Family with 5+ Units	4+	<1940	0	1	0	0	29	83082.4	0.00161178
+East North Central	Single-Family Attached	1	<1940	0	0.459913	0.121323	0.418765	10	0	0.000174093
+East North Central	Single-Family Attached	2	<1940	0.274199	0.115788	0.1388	0.471213	11	43086.4	0.000452395
+East North Central	Single-Family Attached	3	<1940	0	0.797091	0.0305212	0.172388	25	6859.21	0.00010684
+East North Central	Single-Family Attached	4+	<1940	0	1	0	0	11	0	0
+East North Central	Single-Family Detached	1	<1940	0	0.227425	0.057371	0.715204	114	843659	0.00795626
+East North Central	Single-Family Detached	2	<1940	0.097372	0.273518	0.0590786	0.570032	199	1.47739e+06	0.0119529
+East North Central	Single-Family Detached	3	<1940	0.141831	0.766666	0.00804005	0.0834628	10	10109.9	0.000466452
+East North Central	Single-Family Detached	4+	<1940	0	1	0	0	11	0	0
+East South Central	Mobile Home	1	1940-59	0	1	0	0	14	6873.45	7.83262e-05
+East South Central	Mobile Home	2	1940-59	0	1	0	0	14	6873.45	0
+East South Central	Mobile Home	3	1940-59	0	1	0	0	14	6873.45	0
+East South Central	Mobile Home	4+	1940-59	0	1	0	0	14	6873.45	0
+East South Central	Multi-Family with 2 - 4 Units	1	1940-59	0	1	0	0	45	4932.75	4.20626e-05
+East South Central	Multi-Family with 2 - 4 Units	2	1940-59	0	1	0	0	45	4932.75	0.000317407
+East South Central	Multi-Family with 2 - 4 Units	3	1940-59	0	1	0	0	45	4932.75	8.30382e-05
+East South Central	Multi-Family with 2 - 4 Units	4+	1940-59	0	1	0	0	45	4932.75	1.54167e-05
+East South Central	Multi-Family with 5+ Units	1	1940-59	0	1	0	0	92	9077.21	3.14156e-05
+East South Central	Multi-Family with 5+ Units	2	1940-59	0	1	0	0	92	9077.21	0.00016592
+East South Central	Multi-Family with 5+ Units	3	1940-59	0	1	0	0	92	9077.21	0.000126029
+East South Central	Multi-Family with 5+ Units	4+	1940-59	0	1	0	0	92	9077.21	0.000137293
+East South Central	Single-Family Attached	1	1940-59	0	0.595458	0.0791264	0.325416	26	2013.93	6.3875e-05
+East South Central	Single-Family Attached	2	1940-59	0.0490557	0.502562	0.0484081	0.399974	68	2626.05	4.39183e-05
+East South Central	Single-Family Attached	3	1940-59	0.113654	0.625252	0.0157067	0.245388	13	0	3.69033e-06
+East South Central	Single-Family Attached	4+	1940-59	0	1	0	0	11	0	0
+East South Central	Single-Family Detached	1	1940-59	0	0.28967	0.106306	0.604024	154	595545	0.0049398
+East South Central	Single-Family Detached	2	1940-59	0.0405647	0.296815	0.0215908	0.641029	54	121620	0.00188495
+East South Central	Single-Family Detached	3	1940-59	0.156637	0.283075	0.0942007	0.466088	14	2838.62	7.39083e-05
+East South Central	Single-Family Detached	4+	1940-59	0	1	0	0	11	0	0
+East South Central	Mobile Home	1	1960-79	0	1	0	0	26	37963.9	0.00123272
+East South Central	Mobile Home	2	1960-79	0	1	0	0	26	37963.9	0
+East South Central	Mobile Home	3	1960-79	0	1	0	0	26	37963.9	0
+East South Central	Mobile Home	4+	1960-79	0	1	0	0	26	37963.9	0
+East South Central	Multi-Family with 2 - 4 Units	1	1960-79	0	1	0	0	19	32071.4	0.000179049
+East South Central	Multi-Family with 2 - 4 Units	2	1960-79	0	1	0	0	19	32071.4	0.000816953
+East South Central	Multi-Family with 2 - 4 Units	3	1960-79	0	1	0	0	19	32071.4	0.000175271
+East South Central	Multi-Family with 2 - 4 Units	4+	1960-79	0	1	0	0	19	32071.4	1.55625e-06
+East South Central	Multi-Family with 5+ Units	1	1960-79	0	1	0	0	26	52033.3	0.000178601
+East South Central	Multi-Family with 5+ Units	2	1960-79	0	1	0	0	26	52033.3	0.000905008
+East South Central	Multi-Family with 5+ Units	3	1960-79	0	1	0	0	26	52033.3	0.000614335
+East South Central	Multi-Family with 5+ Units	4+	1960-79	0	1	0	0	26	52033.3	0.000301116
+East South Central	Single-Family Attached	1	1960-79	0	0.559114	0.0826987	0.358187	15	31274	0.000144095
+East South Central	Single-Family Attached	2	1960-79	0.0381281	0.383747	0.012365	0.565759	49	6330.62	0.000120932
+East South Central	Single-Family Attached	3	1960-79	0.0340805	0.388298	0.0929849	0.484636	62	2184.24	3.80525e-06
+East South Central	Single-Family Attached	4+	1960-79	0	1	0	0	11	0	0
+East South Central	Single-Family Detached	1	1960-79	0	0.301531	0.0452752	0.653194	193	1.12799e+06	0.00932049
+East South Central	Single-Family Detached	2	1960-79	0.0512417	0.287037	0.0301699	0.631552	51	273493	0.00277285
+East South Central	Single-Family Detached	3	1960-79	0.160071	0.229452	0.0650899	0.545386	55	0	0.000177203
+East South Central	Single-Family Detached	4+	1960-79	0	1	0	0	11	4301.84	0
+East South Central	Mobile Home	1	1980-99	0	1	0	0	61	93755.7	0.00420873
+East South Central	Mobile Home	2	1980-99	0	1	0	0	61	93755.7	0
+East South Central	Mobile Home	3	1980-99	0	1	0	0	61	93755.7	0
+East South Central	Mobile Home	4+	1980-99	0	1	0	0	61	93755.7	0
+East South Central	Multi-Family with 2 - 4 Units	1	1980-99	0	1	0	0	19	32861.9	0.000139346
+East South Central	Multi-Family with 2 - 4 Units	2	1980-99	0	1	0	0	19	32861.9	0.000932157
+East South Central	Multi-Family with 2 - 4 Units	3	1980-99	0	1	0	0	19	32861.9	9.54757e-05
+East South Central	Multi-Family with 2 - 4 Units	4+	1980-99	0	1	0	0	19	32861.9	4.87721e-06
+East South Central	Multi-Family with 5+ Units	1	1980-99	0	1	0	0	32	74963.9	0.000201688
+East South Central	Multi-Family with 5+ Units	2	1980-99	0	1	0	0	32	74963.9	0.00126479
+East South Central	Multi-Family with 5+ Units	3	1980-99	0	1	0	0	32	74963.9	0.000858307
+East South Central	Multi-Family with 5+ Units	4+	1980-99	0	1	0	0	32	74963.9	0.000228105
+East South Central	Single-Family Attached	1	1980-99	0	0.369925	0.211311	0.418764	13	32388	0.000170753
+East South Central	Single-Family Attached	2	1980-99	0	0.46093	0	0.53907	20	44507.5	0.000291506
+East South Central	Single-Family Attached	3	1980-99	0	0.377417	0.138998	0.483585	15	4863.99	2.89852e-05
+East South Central	Single-Family Attached	4+	1980-99	0	1	0	0	11	0	0
+East South Central	Single-Family Detached	1	1980-99	0	0.2408	0.0831289	0.676071	156	942736	0.00683066
+East South Central	Single-Family Detached	2	1980-99	0.0828816	0.265525	0.0381688	0.613425	88	481509	0.00418889
+East South Central	Single-Family Detached	3	1980-99	0.0402998	0.216985	0.0402998	0.702415	19	14385.9	0.000151138
+East South Central	Single-Family Detached	4+	1980-99	0	1	0	0	11	0	0
+East South Central	Mobile Home	1	2000-09	0	1	0	0	30	33422.2	0.00144789
+East South Central	Mobile Home	2	2000-09	0	1	0	0	30	33422.2	0
+East South Central	Mobile Home	3	2000-09	0	1	0	0	30	33422.2	0
+East South Central	Mobile Home	4+	2000-09	0	1	0	0	30	33422.2	0
+East South Central	Multi-Family with 2 - 4 Units	1	2000-09	0	1	0	0	11	17019.5	4.29274e-05
+East South Central	Multi-Family with 2 - 4 Units	2	2000-09	0	1	0	0	11	17019.5	0.000333853
+East South Central	Multi-Family with 2 - 4 Units	3	2000-09	0	1	0	0	11	17019.5	3.52087e-05
+East South Central	Multi-Family with 2 - 4 Units	4+	2000-09	0	1	0	0	11	17019.5	2.31463e-06
+East South Central	Multi-Family with 5+ Units	1	2000-09	0	1	0	0	19	29865.1	7.55127e-05
+East South Central	Multi-Family with 5+ Units	2	2000-09	0	1	0	0	19	29865.1	0.000518147
+East South Central	Multi-Family with 5+ Units	3	2000-09	0	1	0	0	19	29865.1	0.000326197
+East South Central	Multi-Family with 5+ Units	4+	2000-09	0	1	0	0	19	29865.1	0.000271712
+East South Central	Single-Family Attached	1	2000-09	0	0.203873	0.135574	0.660553	16	15926.9	0.000141447
+East South Central	Single-Family Attached	2	2000-09	0.209865	0.265978	0.108033	0.416124	13	11401.1	0.000169675
+East South Central	Single-Family Attached	3	2000-09	0.0357304	0.342313	0.105107	0.516849	29	0	2.76805e-05
+East South Central	Single-Family Attached	4+	2000-09	0	1	0	0	11	0	0
+East South Central	Single-Family Detached	1	2000-09	0	0.248874	0.0800361	0.67109	96	423369	0.003669
+East South Central	Single-Family Detached	2	2000-09	0.0618382	0.145302	0.0331498	0.75971	78	314334	0.00271701
+East South Central	Single-Family Detached	3	2000-09	0.189144	0.211057	0.052597	0.547202	16	7046.54	5.06895e-05
+East South Central	Single-Family Detached	4+	2000-09	0	1	0	0	11	0	0
+East South Central	Mobile Home	1	2010s	0	1	0	0	12	17221.5	0.000435203
+East South Central	Mobile Home	2	2010s	0	1	0	0	12	17221.5	0
+East South Central	Mobile Home	3	2010s	0	1	0	0	12	17221.5	0
+East South Central	Mobile Home	4+	2010s	0	1	0	0	12	17221.5	0
+East South Central	Multi-Family with 2 - 4 Units	1	2010s	0	1	0	0	18	11277.8	2.30257e-05
+East South Central	Multi-Family with 2 - 4 Units	2	2010s	0	1	0	0	18	11277.8	0.000179075
+East South Central	Multi-Family with 2 - 4 Units	3	2010s	0	1	0	0	18	11277.8	1.7842e-05
+East South Central	Multi-Family with 2 - 4 Units	4+	2010s	0	1	0	0	18	11277.8	1.17294e-06
+East South Central	Multi-Family with 5+ Units	1	2010s	0	1	0	0	21	39876	4.45614e-05
+East South Central	Multi-Family with 5+ Units	2	2010s	0	1	0	0	21	39876	0.000290376
+East South Central	Multi-Family with 5+ Units	3	2010s	0	1	0	0	21	39876	0.000200211
+East South Central	Multi-Family with 5+ Units	4+	2010s	0	1	0	0	21	39876	0.000222547
+East South Central	Single-Family Attached	1	2010s	0	0.203873	0.135574	0.660553	16	14094.4	5.28329e-05
+East South Central	Single-Family Attached	2	2010s	0.209865	0.265978	0.108033	0.416124	13	13283.8	6.47226e-05
+East South Central	Single-Family Attached	3	2010s	0.0357304	0.342313	0.105107	0.516849	29	1867.03	1.34552e-05
+East South Central	Single-Family Attached	4+	2010s	0	1	0	0	11	0	0
+East South Central	Single-Family Detached	1	2010s	0	0.129259	0.130076	0.740664	49	283356	0.00113139
+East South Central	Single-Family Detached	2	2010s	0.0255246	0.243615	0.100873	0.629988	24	123279	0.0010428
+East South Central	Single-Family Detached	3	2010s	0.189144	0.211057	0.052597	0.547202	16	6031.98	1.71548e-05
+East South Central	Single-Family Detached	4+	2010s	0	1	0	0	11	0	0
+East South Central	Mobile Home	1	<1940	0	1	0	0	14	3384.29	2.11256e-05
+East South Central	Mobile Home	2	<1940	0	1	0	0	14	3384.29	0
+East South Central	Mobile Home	3	<1940	0	1	0	0	14	3384.29	0
+East South Central	Mobile Home	4+	<1940	0	1	0	0	14	3384.29	0
+East South Central	Multi-Family with 2 - 4 Units	1	<1940	0	1	0	0	45	3570.32	7.63827e-05
+East South Central	Multi-Family with 2 - 4 Units	2	<1940	0	1	0	0	45	3570.32	0.000133806
+East South Central	Multi-Family with 2 - 4 Units	3	<1940	0	1	0	0	45	3570.32	5.34364e-05
+East South Central	Multi-Family with 2 - 4 Units	4+	<1940	0	1	0	0	45	3570.32	2.22141e-05
+East South Central	Multi-Family with 5+ Units	1	<1940	0	1	0	0	92	4699.69	1.66325e-05
+East South Central	Multi-Family with 5+ Units	2	<1940	0	1	0	0	92	4699.69	3.82016e-05
+East South Central	Multi-Family with 5+ Units	3	<1940	0	1	0	0	92	4699.69	7.02372e-05
+East South Central	Multi-Family with 5+ Units	4+	<1940	0	1	0	0	92	4699.69	0.000140562
+East South Central	Single-Family Attached	1	<1940	0	0.595458	0.0791264	0.325416	26	5204.46	1.18108e-05
+East South Central	Single-Family Attached	2	<1940	0.0490557	0.502562	0.0484081	0.399974	68	0	3.41782e-05
+East South Central	Single-Family Attached	3	<1940	0.113654	0.625252	0.0157067	0.245388	13	0	9.87129e-06
+East South Central	Single-Family Attached	4+	<1940	0	1	0	0	11	0	0
+East South Central	Single-Family Detached	1	<1940	0	0.338128	0.0851949	0.576677	88	319352	0.00128391
+East South Central	Single-Family Detached	2	<1940	0.102204	0.402271	0.0543988	0.441126	42	124743	0.00200674
+East South Central	Single-Family Detached	3	<1940	0.156637	0.283075	0.0942007	0.466088	14	7335.64	0.000101035
+East South Central	Single-Family Detached	4+	<1940	0	1	0	0	11	0	0
+Middle Atlantic	Mobile Home	1	1940-59	0	1	0	0	101	6566.09	8.45032e-05
+Middle Atlantic	Mobile Home	2	1940-59	0	1	0	0	101	6566.09	0
+Middle Atlantic	Mobile Home	3	1940-59	0	1	0	0	101	6566.09	0
+Middle Atlantic	Mobile Home	4+	1940-59	0	1	0	0	101	6566.09	0
+Middle Atlantic	Multi-Family with 2 - 4 Units	1	1940-59	0	1	0	0	84	127463	0.000384021
+Middle Atlantic	Multi-Family with 2 - 4 Units	2	1940-59	0	1	0	0	84	127463	0.00289784
+Middle Atlantic	Multi-Family with 2 - 4 Units	3	1940-59	0	1	0	0	84	127463	0.000522075
+Middle Atlantic	Multi-Family with 2 - 4 Units	4+	1940-59	0	1	0	0	84	127463	9.69272e-05
+Middle Atlantic	Multi-Family with 5+ Units	1	1940-59	0	1	0	0	144	199880	0.000279672
+Middle Atlantic	Multi-Family with 5+ Units	2	1940-59	0	1	0	0	144	199880	0.00135963
+Middle Atlantic	Multi-Family with 5+ Units	3	1940-59	0	1	0	0	144	199880	0.00105005
+Middle Atlantic	Multi-Family with 5+ Units	4+	1940-59	0	1	0	0	144	199880	0.00296629
+Middle Atlantic	Single-Family Attached	1	1940-59	0	0.588969	0	0.411031	11	27623.9	0.00132217
+Middle Atlantic	Single-Family Attached	2	1940-59	0.128293	0.586991	0.0323464	0.252369	64	225157	0.00114738
+Middle Atlantic	Single-Family Attached	3	1940-59	0.115317	0.683335	0	0.201349	10	24482.3	8.00563e-05
+Middle Atlantic	Single-Family Attached	4+	1940-59	0	1	0	0	12	2743.03	0
+Middle Atlantic	Single-Family Detached	1	1940-59	0	0.319664	0.0597603	0.620576	152	839522	0.0113034
+Middle Atlantic	Single-Family Detached	2	1940-59	0.110656	0.403167	0.0703389	0.415839	338	1.23418e+06	0.00489142
+Middle Atlantic	Single-Family Detached	3	1940-59	0.232119	0.219984	0.0647588	0.483138	29	137405	0.000194659
+Middle Atlantic	Single-Family Detached	4+	1940-59	0	1	0	0	10	13372.9	0
+Middle Atlantic	Mobile Home	1	1960-79	0	1	0	0	12	25684.9	0.00108787
+Middle Atlantic	Mobile Home	2	1960-79	0	1	0	0	12	25684.9	0
+Middle Atlantic	Mobile Home	3	1960-79	0	1	0	0	12	25684.9	0
+Middle Atlantic	Mobile Home	4+	1960-79	0	1	0	0	12	25684.9	0
+Middle Atlantic	Multi-Family with 2 - 4 Units	1	1960-79	0	1	0	0	44	128934	0.000566921
+Middle Atlantic	Multi-Family with 2 - 4 Units	2	1960-79	0	1	0	0	44	128934	0.00258671
+Middle Atlantic	Multi-Family with 2 - 4 Units	3	1960-79	0	1	0	0	44	128934	0.000424483
+Middle Atlantic	Multi-Family with 2 - 4 Units	4+	1960-79	0	1	0	0	44	128934	3.76904e-06
+Middle Atlantic	Multi-Family with 5+ Units	1	1960-79	0	1	0	0	99	256488	0.000506476
+Middle Atlantic	Multi-Family with 5+ Units	2	1960-79	0	1	0	0	99	256488	0.00241624
+Middle Atlantic	Multi-Family with 5+ Units	3	1960-79	0	1	0	0	99	256488	0.00230623
+Middle Atlantic	Multi-Family with 5+ Units	4+	1960-79	0	1	0	0	99	256488	0.00311648
+Middle Atlantic	Single-Family Attached	1	1960-79	0	0.587838	0.0402664	0.371895	12	72813.6	0.00103937
+Middle Atlantic	Single-Family Attached	2	1960-79	0.118277	0.46591	0.0376729	0.378141	25	167542	0.00085555
+Middle Atlantic	Single-Family Attached	3	1960-79	0.0616637	0.641638	0.00163028	0.295068	64	55551.4	3.17474e-05
+Middle Atlantic	Single-Family Attached	4+	1960-79	0	1	0	0	12	0	0
+Middle Atlantic	Single-Family Detached	1	1960-79	0	0.427344	0.0387217	0.533934	109	741905	0.0109587
+Middle Atlantic	Single-Family Detached	2	1960-79	0.050074	0.335766	0.0302322	0.583927	165	1.05719e+06	0.00401621
+Middle Atlantic	Single-Family Detached	3	1960-79	0.0729743	0.289785	0.0528518	0.584389	21	50299.3	0.000253958
+Middle Atlantic	Single-Family Detached	4+	1960-79	0	1	0	0	10	12475.7	0
+Middle Atlantic	Mobile Home	1	1980-99	0	1	0	0	23	43697.7	0.00153842
+Middle Atlantic	Mobile Home	2	1980-99	0	1	0	0	23	43697.7	0
+Middle Atlantic	Mobile Home	3	1980-99	0	1	0	0	23	43697.7	0
+Middle Atlantic	Mobile Home	4+	1980-99	0	1	0	0	23	43697.7	0
+Middle Atlantic	Multi-Family with 2 - 4 Units	1	1980-99	0	1	0	0	32	90363.9	0.000247955
+Middle Atlantic	Multi-Family with 2 - 4 Units	2	1980-99	0	1	0	0	32	90363.9	0.00165869
+Middle Atlantic	Multi-Family with 2 - 4 Units	3	1980-99	0	1	0	0	32	90363.9	0.000142538
+Middle Atlantic	Multi-Family with 2 - 4 Units	4+	1980-99	0	1	0	0	32	90363.9	7.28131e-06
+Middle Atlantic	Multi-Family with 5+ Units	1	1980-99	0	1	0	0	65	156545	0.00029191
+Middle Atlantic	Multi-Family with 5+ Units	2	1980-99	0	1	0	0	65	156545	0.00163836
+Middle Atlantic	Multi-Family with 5+ Units	3	1980-99	0	1	0	0	65	156545	0.00184028
+Middle Atlantic	Multi-Family with 5+ Units	4+	1980-99	0	1	0	0	65	156545	0.000923384
+Middle Atlantic	Single-Family Attached	1	1980-99	0	0.582975	0.0216393	0.395386	21	48683.4	0.000960987
+Middle Atlantic	Single-Family Attached	2	1980-99	0.0319686	0.606945	0.00824581	0.352841	41	240591	0.00167662
+Middle Atlantic	Single-Family Attached	3	1980-99	0.099284	0.540433	0	0.360283	11	69085.3	0.000203362
+Middle Atlantic	Single-Family Attached	4+	1980-99	0	1	0	0	12	0	0
+Middle Atlantic	Single-Family Detached	1	1980-99	0	0.525333	0.0383782	0.436289	57	380023	0.00627493
+Middle Atlantic	Single-Family Detached	2	1980-99	0.0170186	0.333785	0.0170186	0.632178	135	832512	0.00446173
+Middle Atlantic	Single-Family Detached	3	1980-99	0.244639	0.433706	0	0.321654	12	11033	0.000159749
+Middle Atlantic	Single-Family Detached	4+	1980-99	0	1	0	0	10	0	0
+Middle Atlantic	Mobile Home	1	2000-09	0	1	0	0	20	10395.8	0.000433614
+Middle Atlantic	Mobile Home	2	2000-09	0	1	0	0	20	10395.8	0
+Middle Atlantic	Mobile Home	3	2000-09	0	1	0	0	20	10395.8	0
+Middle Atlantic	Mobile Home	4+	2000-09	0	1	0	0	20	10395.8	0
+Middle Atlantic	Multi-Family with 2 - 4 Units	1	2000-09	0	1	0	0	19	23887.2	9.27298e-05
+Middle Atlantic	Multi-Family with 2 - 4 Units	2	2000-09	0	1	0	0	19	23887.2	0.000721175
+Middle Atlantic	Multi-Family with 2 - 4 Units	3	2000-09	0	1	0	0	19	23887.2	5.80311e-05
+Middle Atlantic	Multi-Family with 2 - 4 Units	4+	2000-09	0	1	0	0	19	23887.2	3.81498e-06
+Middle Atlantic	Multi-Family with 5+ Units	1	2000-09	0	1	0	0	32	74753.7	0.000104002
+Middle Atlantic	Multi-Family with 5+ Units	2	2000-09	0	1	0	0	32	74753.7	0.000558869
+Middle Atlantic	Multi-Family with 5+ Units	3	2000-09	0	1	0	0	32	74753.7	0.00054775
+Middle Atlantic	Multi-Family with 5+ Units	4+	2000-09	0	1	0	0	32	74753.7	0.00109466
+Middle Atlantic	Single-Family Attached	1	2000-09	0	0.417692	0.142711	0.439598	12	47679.3	0.000470012
+Middle Atlantic	Single-Family Attached	2	2000-09	0	0.486054	0	0.513946	15	81083.7	0.000576316
+Middle Atlantic	Single-Family Attached	3	2000-09	0	0.644082	0	0.355918	10	64393	0.000154972
+Middle Atlantic	Single-Family Attached	4+	2000-09	0	1	0	0	12	0	0
+Middle Atlantic	Single-Family Detached	1	2000-09	0	0.325266	0	0.674734	19	122480	0.00248766
+Middle Atlantic	Single-Family Detached	2	2000-09	0.0510714	0.178087	0.0134576	0.757384	59	370375	0.00225218
+Middle Atlantic	Single-Family Detached	3	2000-09	0.194951	0.372661	0.0463119	0.386075	89	6653.34	3.91234e-05
+Middle Atlantic	Single-Family Detached	4+	2000-09	0	1	0	0	10	0	0
+Middle Atlantic	Mobile Home	1	2010s	0	1	0	0	20	2970.26	0.000146755
+Middle Atlantic	Mobile Home	2	2010s	0	1	0	0	20	2970.26	0
+Middle Atlantic	Mobile Home	3	2010s	0	1	0	0	20	2970.26	0
+Middle Atlantic	Mobile Home	4+	2010s	0	1	0	0	20	2970.26	0
+Middle Atlantic	Multi-Family with 2 - 4 Units	1	2010s	0	1	0	0	10	19241.6	3.2235e-05
+Middle Atlantic	Multi-Family with 2 - 4 Units	2	2010s	0	1	0	0	10	19241.6	0.000250697
+Middle Atlantic	Multi-Family with 2 - 4 Units	3	2010s	0	1	0	0	10	19241.6	2.14501e-05
+Middle Atlantic	Multi-Family with 2 - 4 Units	4+	2010s	0	1	0	0	10	19241.6	1.41013e-06
+Middle Atlantic	Multi-Family with 5+ Units	1	2010s	0	1	0	0	42	73514.4	6.60964e-05
+Middle Atlantic	Multi-Family with 5+ Units	2	2010s	0	1	0	0	42	73514.4	0.000340486
+Middle Atlantic	Multi-Family with 5+ Units	3	2010s	0	1	0	0	42	73514.4	0.000360706
+Middle Atlantic	Multi-Family with 5+ Units	4+	2010s	0	1	0	0	42	73514.4	0.000754727
+Middle Atlantic	Single-Family Attached	1	2010s	0	0.417692	0.142711	0.439598	12	13428.4	0.000165431
+Middle Atlantic	Single-Family Attached	2	2010s	0.0833976	0.424637	0.11554	0.376426	14	60727.8	0.000214208
+Middle Atlantic	Single-Family Attached	3	2010s	0	0.604552	0	0.395448	13	13108.5	4.68803e-05
+Middle Atlantic	Single-Family Attached	4+	2010s	0	1	0	0	12	0	0
+Middle Atlantic	Single-Family Detached	1	2010s	0	0.237594	0	0.762406	17	72793.8	0.000723669
+Middle Atlantic	Single-Family Detached	2	2010s	0.0613727	0.319548	0.0617956	0.557283	34	159063	0.000614376
+Middle Atlantic	Single-Family Detached	3	2010s	0.194951	0.372661	0.0463119	0.386075	89	4782.74	9.96904e-06
+Middle Atlantic	Single-Family Detached	4+	2010s	0	1	0	0	10	0	0
+Middle Atlantic	Mobile Home	1	<1940	0	1	0	0	101	0	3.64273e-05
+Middle Atlantic	Mobile Home	2	<1940	0	1	0	0	101	0	0
+Middle Atlantic	Mobile Home	3	<1940	0	1	0	0	101	0	0
+Middle Atlantic	Mobile Home	4+	<1940	0	1	0	0	101	0	0
+Middle Atlantic	Multi-Family with 2 - 4 Units	1	<1940	0	1	0	0	61	147884	0.00212579
+Middle Atlantic	Multi-Family with 2 - 4 Units	2	<1940	0	1	0	0	61	147884	0.00372394
+Middle Atlantic	Multi-Family with 2 - 4 Units	3	<1940	0	1	0	0	61	147884	0.00118835
+Middle Atlantic	Multi-Family with 2 - 4 Units	4+	<1940	0	1	0	0	61	147884	0.00049401
+Middle Atlantic	Multi-Family with 5+ Units	1	<1940	0	1	0	0	105	237215	0.000347953
+Middle Atlantic	Multi-Family with 5+ Units	2	<1940	0	1	0	0	105	237215	0.000888586
+Middle Atlantic	Multi-Family with 5+ Units	3	<1940	0	1	0	0	105	237215	0.00183
+Middle Atlantic	Multi-Family with 5+ Units	4+	<1940	0	1	0	0	105	237215	0.00541396
+Middle Atlantic	Single-Family Attached	1	<1940	0	0.588969	0	0.411031	11	14783.5	0.00094123
+Middle Atlantic	Single-Family Attached	2	<1940	0.184665	0.583663	0.0270521	0.20462	52	354205	0.0027537
+Middle Atlantic	Single-Family Attached	3	<1940	0.115317	0.683335	0	0.201349	10	63267.9	0.00071759
+Middle Atlantic	Single-Family Attached	4+	<1940	0	1	0	0	12	7088.62	0
+Middle Atlantic	Single-Family Detached	1	<1940	0	0.188757	0.121323	0.689921	48	283571	0.00517876
+Middle Atlantic	Single-Family Detached	2	<1940	0.138735	0.260957	0.0701339	0.530174	240	1.46984e+06	0.00937057
+Middle Atlantic	Single-Family Detached	3	<1940	0.429416	0.376575	0	0.194009	13	75666.9	0.000442906
+Middle Atlantic	Single-Family Detached	4+	<1940	0	1	0	0	10	12379.8	0
+Mountain North	Mobile Home	1	1940-59	0	1	0	0	258	573.825	3.73287e-05
+Mountain North	Mobile Home	2	1940-59	0	1	0	0	258	573.825	0
+Mountain North	Mobile Home	3	1940-59	0	1	0	0	258	573.825	0
+Mountain North	Mobile Home	4+	1940-59	0	1	0	0	258	573.825	0
+Mountain North	Multi-Family with 2 - 4 Units	1	1940-59	0	1	0	0	39	3424.23	2.32436e-05
+Mountain North	Multi-Family with 2 - 4 Units	2	1940-59	0	1	0	0	39	3424.23	0.000175398
+Mountain North	Multi-Family with 2 - 4 Units	3	1940-59	0	1	0	0	39	3424.23	4.35221e-05
+Mountain North	Multi-Family with 2 - 4 Units	4+	1940-59	0	1	0	0	39	3424.23	8.08022e-06
+Mountain North	Multi-Family with 5+ Units	1	1940-59	0	1	0	0	72	6596.4	1.9699e-05
+Mountain North	Multi-Family with 5+ Units	2	1940-59	0	1	0	0	72	6596.4	8.91877e-05
+Mountain North	Multi-Family with 5+ Units	3	1940-59	0	1	0	0	72	6596.4	6.89172e-05
+Mountain North	Multi-Family with 5+ Units	4+	1940-59	0	1	0	0	72	6596.4	9.67222e-05
+Mountain North	Single-Family Attached	1	1940-59	0	0.6269	0.0284607	0.34464	28	18224.3	6.09581e-05
+Mountain North	Single-Family Attached	2	1940-59	0	0.881664	0	0.118336	12	981.676	4.51145e-05
+Mountain North	Single-Family Attached	3	1940-59	0.0273293	0.787784	0.0273293	0.157558	32	0	1.67152e-06
+Mountain North	Single-Family Attached	4+	1940-59	0	1	0	0	14	0	0
+Mountain North	Single-Family Detached	1	1940-59	0	0.498176	0.00449323	0.497331	116	304945	0.00229425
+Mountain North	Single-Family Detached	2	1940-59	0.0244456	0.453446	0.014093	0.508016	53	98826.7	0.000859742
+Mountain North	Single-Family Detached	3	1940-59	0.0210452	0.599602	0.0189829	0.36037	83	8913.66	3.29706e-05
+Mountain North	Single-Family Detached	4+	1940-59	0	1	0	0	13	0	0
+Mountain North	Mobile Home	1	1960-79	0	1	0	0	31	23323.5	0.000818806
+Mountain North	Mobile Home	2	1960-79	0	1	0	0	31	23323.5	0
+Mountain North	Mobile Home	3	1960-79	0	1	0	0	31	23323.5	0
+Mountain North	Mobile Home	4+	1960-79	0	1	0	0	31	23323.5	0
+Mountain North	Multi-Family with 2 - 4 Units	1	1960-79	0	1	0	0	16	29648.1	9.79087e-05
+Mountain North	Multi-Family with 2 - 4 Units	2	1960-79	0	1	0	0	16	29648.1	0.000446731
+Mountain North	Multi-Family with 2 - 4 Units	3	1960-79	0	1	0	0	16	29648.1	0.000115436
+Mountain North	Multi-Family with 2 - 4 Units	4+	1960-79	0	1	0	0	16	29648.1	1.02497e-06
+Mountain North	Multi-Family with 5+ Units	1	1960-79	0	1	0	0	34	57379	0.000118487
+Mountain North	Multi-Family with 5+ Units	2	1960-79	0	1	0	0	34	57379	0.000638206
+Mountain North	Multi-Family with 5+ Units	3	1960-79	0	1	0	0	34	57379	0.00055838
+Mountain North	Multi-Family with 5+ Units	4+	1960-79	0	1	0	0	34	57379	0.000373557
+Mountain North	Single-Family Attached	1	1960-79	0	0.700327	0.0265488	0.273124	66	22645.9	0.000238126
+Mountain North	Single-Family Attached	2	1960-79	0.0232158	0.595412	0.0579309	0.323441	52	21246.1	0.000176345
+Mountain North	Single-Family Attached	3	1960-79	0.0273293	0.787784	0.0273293	0.157558	32	7127.29	5.01849e-06
+Mountain North	Single-Family Attached	4+	1960-79	0	1	0	0	14	0	0
+Mountain North	Single-Family Detached	1	1960-79	0	0.620428	0.0164421	0.36313	132	402653	0.00398069
+Mountain North	Single-Family Detached	2	1960-79	0.0124525	0.336758	0.0220052	0.628784	64	206974	0.00149206
+Mountain North	Single-Family Detached	3	1960-79	0	0.57851	0	0.42149	15	11979.9	9.53338e-05
+Mountain North	Single-Family Detached	4+	1960-79	0	1	0	0	13	12868.1	0
+Mountain North	Mobile Home	1	1980-99	0	1	0	0	35	25456.4	0.000851148
+Mountain North	Mobile Home	2	1980-99	0	1	0	0	35	25456.4	0
+Mountain North	Mobile Home	3	1980-99	0	1	0	0	35	25456.4	0
+Mountain North	Mobile Home	4+	1980-99	0	1	0	0	35	25456.4	0
+Mountain North	Multi-Family with 2 - 4 Units	1	1980-99	0	1	0	0	69	13727.8	7.57919e-05
+Mountain North	Multi-Family with 2 - 4 Units	2	1980-99	0	1	0	0	69	13727.8	0.00050701
+Mountain North	Multi-Family with 2 - 4 Units	3	1980-99	0	1	0	0	69	13727.8	6.23204e-05
+Mountain North	Multi-Family with 2 - 4 Units	4+	1980-99	0	1	0	0	69	13727.8	3.18353e-06
+Mountain North	Multi-Family with 5+ Units	1	1980-99	0	1	0	0	32	53362.1	0.0001356
+Mountain North	Multi-Family with 5+ Units	2	1980-99	0	1	0	0	32	53362.1	0.000773357
+Mountain North	Multi-Family with 5+ Units	3	1980-99	0	1	0	0	32	53362.1	0.000751451
+Mountain North	Multi-Family with 5+ Units	4+	1980-99	0	1	0	0	32	53362.1	0.000241723
+Mountain North	Single-Family Attached	1	1980-99	0	0.682299	0	0.317701	12	36371.4	0.0002856
+Mountain North	Single-Family Attached	2	1980-99	0	0.528404	0	0.471596	15	41359.2	0.000409708
+Mountain North	Single-Family Attached	3	1980-99	0.0273293	0.787784	0.0273293	0.157558	32	0	2.91185e-05
+Mountain North	Single-Family Attached	4+	1980-99	0	1	0	0	14	0	0
+Mountain North	Single-Family Detached	1	1980-99	0	0.38892	0.0175786	0.593501	117	427217	0.0036651
+Mountain North	Single-Family Detached	2	1980-99	0.018288	0.486611	0.0201784	0.474923	98	417634	0.00258753
+Mountain North	Single-Family Detached	3	1980-99	0	0.714537	0	0.285463	13	48389.8	9.59222e-05
+Mountain North	Single-Family Detached	4+	1980-99	0	1	0	0	13	6633.21	0
+Mountain North	Mobile Home	1	2000-09	0	1	0	0	10	7299.26	0.000237144
+Mountain North	Mobile Home	2	2000-09	0	1	0	0	10	7299.26	0
+Mountain North	Mobile Home	3	2000-09	0	1	0	0	10	7299.26	0
+Mountain North	Mobile Home	4+	2000-09	0	1	0	0	10	7299.26	0
+Mountain North	Multi-Family with 2 - 4 Units	1	2000-09	0	1	0	0	26	4287.57	2.51218e-05
+Mountain North	Multi-Family with 2 - 4 Units	2	2000-09	0	1	0	0	26	4287.57	0.000195376
+Mountain North	Multi-Family with 2 - 4 Units	3	2000-09	0	1	0	0	26	4287.57	2.26995e-05
+Mountain North	Multi-Family with 2 - 4 Units	4+	2000-09	0	1	0	0	26	4287.57	1.49227e-06
+Mountain North	Multi-Family with 5+ Units	1	2000-09	0	1	0	0	13	22913.6	5.36686e-05
+Mountain North	Multi-Family with 5+ Units	2	2000-09	0	1	0	0	13	22913.6	0.000327577
+Mountain North	Multi-Family with 5+ Units	3	2000-09	0	1	0	0	13	22913.6	0.000253738
+Mountain North	Multi-Family with 5+ Units	4+	2000-09	0	1	0	0	13	22913.6	0.000291465
+Mountain North	Single-Family Attached	1	2000-09	0	0.687688	0	0.312312	10	21621.7	0.00021191
+Mountain North	Single-Family Attached	2	2000-09	0.0346202	0.464502	0.0839594	0.416919	15	45120.5	0.00026602
+Mountain North	Single-Family Attached	3	2000-09	0.0482181	0.760632	0.0482181	0.142932	20	3776.9	5.56489e-05
+Mountain North	Single-Family Attached	4+	2000-09	0	1	0	0	14	0	0
+Mountain North	Single-Family Detached	1	2000-09	0	0.341509	0.0279792	0.630512	72	236342	0.00229323
+Mountain North	Single-Family Detached	2	2000-09	0.0301141	0.408088	0.0186912	0.543107	80	290118	0.00208049
+Mountain North	Single-Family Detached	3	2000-09	0.0214897	0.389962	0.0214897	0.567059	23	18737.6	3.98569e-05
+Mountain North	Single-Family Detached	4+	2000-09	0	1	0	0	13	0	0
+Mountain North	Mobile Home	1	2010s	0	1	0	0	15	3886	9.05388e-05
+Mountain North	Mobile Home	2	2010s	0	1	0	0	15	3886	0
+Mountain North	Mobile Home	3	2010s	0	1	0	0	15	3886	0
+Mountain North	Mobile Home	4+	2010s	0	1	0	0	15	3886	0
+Mountain North	Multi-Family with 2 - 4 Units	1	2010s	0	1	0	0	26	5964.56	1.11904e-05
+Mountain North	Multi-Family with 2 - 4 Units	2	2010s	0	1	0	0	26	5964.56	8.70292e-05
+Mountain North	Multi-Family with 2 - 4 Units	3	2010s	0	1	0	0	26	5964.56	1.10716e-05
+Mountain North	Multi-Family with 2 - 4 Units	4+	2010s	0	1	0	0	26	5964.56	7.2785e-07
+Mountain North	Multi-Family with 5+ Units	1	2010s	0	1	0	0	20	34845.2	3.15803e-05
+Mountain North	Multi-Family with 5+ Units	2	2010s	0	1	0	0	20	34845.2	0.000171005
+Mountain North	Multi-Family with 5+ Units	3	2010s	0	1	0	0	20	34845.2	0.000176953
+Mountain North	Multi-Family with 5+ Units	4+	2010s	0	1	0	0	20	34845.2	0.000296962
+Mountain North	Single-Family Attached	1	2010s	0	0.687688	0	0.312312	10	10470.9	8.47529e-05
+Mountain North	Single-Family Attached	2	2010s	0.0508031	0.375728	0.0800275	0.493441	23	31055.7	0.000100782
+Mountain North	Single-Family Attached	3	2010s	0.0482181	0.760632	0.0482181	0.142932	20	17445	2.30455e-05
+Mountain North	Single-Family Attached	4+	2010s	0	1	0	0	14	0	0
+Mountain North	Single-Family Detached	1	2010s	0	0.329493	0.0352306	0.635276	49	152911	0.000811487
+Mountain North	Single-Family Detached	2	2010s	0.00733382	0.516274	0.00733382	0.469058	46	153887	0.000693474
+Mountain North	Single-Family Detached	3	2010s	0.0214897	0.389962	0.0214897	0.567059	23	15260.1	1.21839e-05
+Mountain North	Single-Family Detached	4+	2010s	0	1	0	0	13	7012.8	0
+Mountain North	Mobile Home	1	<1940	0	1	0	0	258	0	2.13392e-05
+Mountain North	Mobile Home	2	<1940	0	1	0	0	258	0	0
+Mountain North	Mobile Home	3	<1940	0	1	0	0	258	0	0
+Mountain North	Mobile Home	4+	<1940	0	1	0	0	258	0	0
+Mountain North	Multi-Family with 2 - 4 Units	1	<1940	0	1	0	0	39	7658.71	5.87762e-05
+Mountain North	Multi-Family with 2 - 4 Units	2	<1940	0	1	0	0	39	7658.71	0.000102964
+Mountain North	Multi-Family with 2 - 4 Units	3	<1940	0	1	0	0	39	7658.71	4.74367e-05
+Mountain North	Multi-Family with 2 - 4 Units	4+	<1940	0	1	0	0	39	7658.71	1.97199e-05
+Mountain North	Multi-Family with 5+ Units	1	<1940	0	1	0	0	72	7189.69	1.60219e-05
+Mountain North	Multi-Family with 5+ Units	2	<1940	0	1	0	0	72	7189.69	3.901e-05
+Mountain North	Multi-Family with 5+ Units	3	<1940	0	1	0	0	72	7189.69	7.51433e-05
+Mountain North	Multi-Family with 5+ Units	4+	<1940	0	1	0	0	72	7189.69	0.000136817
+Mountain North	Single-Family Attached	1	<1940	0	0.6269	0.0284607	0.34464	28	9862.46	1.89674e-05
+Mountain North	Single-Family Attached	2	<1940	0	0.881664	0	0.118336	12	2536.88	5.21875e-05
+Mountain North	Single-Family Attached	3	<1940	0.0273293	0.787784	0.0273293	0.157558	32	0	1.46187e-05
+Mountain North	Single-Family Attached	4+	<1940	0	1	0	0	14	0	0
+Mountain North	Single-Family Detached	1	<1940	0	0.326585	0.0221394	0.651276	69	169803	0.00100825
+Mountain North	Single-Family Detached	2	<1940	0.0622503	0.603278	0.0358877	0.298584	41	100291	0.00136464
+Mountain North	Single-Family Detached	3	<1940	0.0210452	0.599602	0.0189829	0.36037	83	4456.61	4.40234e-05
+Mountain North	Single-Family Detached	4+	<1940	0	1	0	0	13	0	0
+Mountain South	Mobile Home	1	1940-59	0	1	0	0	258	5591.76	6.53305e-05
+Mountain South	Mobile Home	2	1940-59	0	1	0	0	258	5591.76	0
+Mountain South	Mobile Home	3	1940-59	0	1	0	0	258	5591.76	0
+Mountain South	Mobile Home	4+	1940-59	0	1	0	0	258	5591.76	0
+Mountain South	Multi-Family with 2 - 4 Units	1	1940-59	0	1	0	0	39	3974.97	1.40525e-05
+Mountain South	Multi-Family with 2 - 4 Units	2	1940-59	0	1	0	0	39	3974.97	0.000106041
+Mountain South	Multi-Family with 2 - 4 Units	3	1940-59	0	1	0	0	39	3974.97	3.39009e-05
+Mountain South	Multi-Family with 2 - 4 Units	4+	1940-59	0	1	0	0	39	3974.97	6.29397e-06
+Mountain South	Multi-Family with 5+ Units	1	1940-59	0	1	0	0	72	5642.14	1.55545e-05
+Mountain South	Multi-Family with 5+ Units	2	1940-59	0	1	0	0	72	5642.14	7.54516e-05
+Mountain South	Multi-Family with 5+ Units	3	1940-59	0	1	0	0	72	5642.14	5.81021e-05
+Mountain South	Multi-Family with 5+ Units	4+	1940-59	0	1	0	0	72	5642.14	9.03281e-05
+Mountain South	Single-Family Attached	1	1940-59	0	0.6269	0.0284607	0.34464	28	11974.5	5.7469e-05
+Mountain South	Single-Family Attached	2	1940-59	0	0.881664	0	0.118336	12	6379.73	4.06557e-05
+Mountain South	Single-Family Attached	3	1940-59	0.0273293	0.787784	0.0273293	0.157558	32	0	1.40008e-06
+Mountain South	Single-Family Attached	4+	1940-59	0	1	0	0	14	0	0
+Mountain South	Single-Family Detached	1	1940-59	0	0.578618	0.0374708	0.383911	53	216028	0.00164489
+Mountain South	Single-Family Detached	2	1940-59	0.0548861	0.459214	0.0245239	0.461376	155	1281.8	0.000562755
+Mountain South	Single-Family Detached	3	1940-59	0.0210452	0.599602	0.0189829	0.36037	83	0	2.00208e-05
+Mountain South	Single-Family Detached	4+	1940-59	0	1	0	0	13	0	0
+Mountain South	Mobile Home	1	1960-79	0	1	0	0	19	26521.2	0.00117145
+Mountain South	Mobile Home	2	1960-79	0	1	0	0	19	26521.2	0
+Mountain South	Mobile Home	3	1960-79	0	1	0	0	19	26521.2	0
+Mountain South	Mobile Home	4+	1960-79	0	1	0	0	19	26521.2	0
+Mountain South	Multi-Family with 2 - 4 Units	1	1960-79	0	1	0	0	10	19612	9.11592e-05
+Mountain South	Multi-Family with 2 - 4 Units	2	1960-79	0	1	0	0	10	19612	0.000415935
+Mountain South	Multi-Family with 2 - 4 Units	3	1960-79	0	1	0	0	10	19612	0.000122608
+Mountain South	Multi-Family with 2 - 4 Units	4+	1960-79	0	1	0	0	10	19612	1.08865e-06
+Mountain South	Multi-Family with 5+ Units	1	1960-79	0	1	0	0	30	57546.7	0.000109228
+Mountain South	Multi-Family with 5+ Units	2	1960-79	0	1	0	0	30	57546.7	0.000563554
+Mountain South	Multi-Family with 5+ Units	3	1960-79	0	1	0	0	30	57546.7	0.000453865
+Mountain South	Multi-Family with 5+ Units	4+	1960-79	0	1	0	0	30	57546.7	0.000338999
+Mountain South	Single-Family Attached	1	1960-79	0	0.880113	0	0.119887	14	30234.8	0.000295029
+Mountain South	Single-Family Attached	2	1960-79	0.0232158	0.595412	0.0579309	0.323441	52	9951.26	0.000219022
+Mountain South	Single-Family Attached	3	1960-79	0.0273293	0.787784	0.0273293	0.157558	32	0	6.34016e-06
+Mountain South	Single-Family Attached	4+	1960-79	0	1	0	0	14	0	0
+Mountain South	Single-Family Detached	1	1960-79	0	0.579456	0.0215349	0.399009	112	511083	0.00369843
+Mountain South	Single-Family Detached	2	1960-79	0	0.81603	0	0.18397	14	59356.4	0.00126029
+Mountain South	Single-Family Detached	3	1960-79	0	0.57851	0	0.42149	15	14009.3	8.07161e-05
+Mountain South	Single-Family Detached	4+	1960-79	0	1	0	0	13	0	0
+Mountain South	Mobile Home	1	1980-99	0	1	0	0	36	55351.4	0.00199868
+Mountain South	Mobile Home	2	1980-99	0	1	0	0	36	55351.4	0
+Mountain South	Mobile Home	3	1980-99	0	1	0	0	36	55351.4	0
+Mountain South	Mobile Home	4+	1980-99	0	1	0	0	36	55351.4	0
+Mountain South	Multi-Family with 2 - 4 Units	1	1980-99	0	1	0	0	15	31787.8	0.000104917
+Mountain South	Multi-Family with 2 - 4 Units	2	1980-99	0	1	0	0	15	31787.8	0.000701843
+Mountain South	Multi-Family with 2 - 4 Units	3	1980-99	0	1	0	0	15	31787.8	9.91127e-05
+Mountain South	Multi-Family with 2 - 4 Units	4+	1980-99	0	1	0	0	15	31787.8	5.063e-06
+Mountain South	Multi-Family with 5+ Units	1	1980-99	0	1	0	0	33	65123.7	0.000201361
+Mountain South	Multi-Family with 5+ Units	2	1980-99	0	1	0	0	33	65123.7	0.00123347
+Mountain South	Multi-Family with 5+ Units	3	1980-99	0	1	0	0	33	65123.7	0.00102271
+Mountain South	Multi-Family with 5+ Units	4+	1980-99	0	1	0	0	33	65123.7	0.000375401
+Mountain South	Single-Family Attached	1	1980-99	0	0.756737	0.0305856	0.212677	20	57137.4	0.000259776
+Mountain South	Single-Family Attached	2	1980-99	0.0395046	0.605893	0.0401695	0.314432	76	16211.9	0.000373893
+Mountain South	Single-Family Attached	3	1980-99	0.0273293	0.787784	0.0273293	0.157558	32	0	2.76081e-05
+Mountain South	Single-Family Attached	4+	1980-99	0	1	0	0	14	0	0
+Mountain South	Single-Family Detached	1	1980-99	0	0.510229	0.0563436	0.433428	144	756040	0.00466605
+Mountain South	Single-Family Detached	2	1980-99	0.0534863	0.513212	0.0239055	0.409396	56	273985	0.00319764
+Mountain South	Single-Family Detached	3	1980-99	0.0380884	0.675342	0.0329751	0.253594	37	4457.88	0.000115623
+Mountain South	Single-Family Detached	4+	1980-99	0	1	0	0	13	3988.92	0
+Mountain South	Mobile Home	1	2000-09	0	1	0	0	10	12665.4	0.000604287
+Mountain South	Mobile Home	2	2000-09	0	1	0	0	10	12665.4	0
+Mountain South	Mobile Home	3	2000-09	0	1	0	0	10	12665.4	0
+Mountain South	Mobile Home	4+	2000-09	0	1	0	0	10	12665.4	0
+Mountain South	Multi-Family with 2 - 4 Units	1	2000-09	0	1	0	0	26	7048.11	3.00853e-05
+Mountain South	Multi-Family with 2 - 4 Units	2	2000-09	0	1	0	0	26	7048.11	0.000233978
+Mountain South	Multi-Family with 2 - 4 Units	3	2000-09	0	1	0	0	26	7048.11	3.21427e-05
+Mountain South	Multi-Family with 2 - 4 Units	4+	2000-09	0	1	0	0	26	7048.11	2.11307e-06
+Mountain South	Multi-Family with 5+ Units	1	2000-09	0	1	0	0	23	43120.6	5.87884e-05
+Mountain South	Multi-Family with 5+ Units	2	2000-09	0	1	0	0	23	43120.6	0.000385382
+Mountain South	Multi-Family with 5+ Units	3	2000-09	0	1	0	0	23	43120.6	0.000268573
+Mountain South	Multi-Family with 5+ Units	4+	2000-09	0	1	0	0	23	43120.6	0.000380054
+Mountain South	Single-Family Attached	1	2000-09	0	0.574361	0	0.425639	15	20968.4	0.000120152
+Mountain South	Single-Family Attached	2	2000-09	0.0496664	0.475093	0.0496664	0.425574	10	27391	0.000151174
+Mountain South	Single-Family Attached	3	2000-09	0.0482181	0.760632	0.0482181	0.142932	20	2354.23	3.1219e-05
+Mountain South	Single-Family Attached	4+	2000-09	0	1	0	0	14	0	0
+Mountain South	Single-Family Detached	1	2000-09	0	0.406153	0.0283447	0.565503	109	484318	0.0033023
+Mountain South	Single-Family Detached	2	2000-09	0.081344	0.340211	0.0335772	0.544868	45	214025	0.00295596
+Mountain South	Single-Family Detached	3	2000-09	0.0214897	0.389962	0.0214897	0.567059	23	0	5.76048e-05
+Mountain South	Single-Family Detached	4+	2000-09	0	1	0	0	13	0	0
+Mountain South	Mobile Home	1	2010s	0	1	0	0	15	6576.42	0.000147566
+Mountain South	Mobile Home	2	2010s	0	1	0	0	15	6576.42	0
+Mountain South	Mobile Home	3	2010s	0	1	0	0	15	6576.42	0
+Mountain South	Mobile Home	4+	2010s	0	1	0	0	15	6576.42	0
+Mountain South	Multi-Family with 2 - 4 Units	1	2010s	0	1	0	0	26	3504.86	8.07929e-06
+Mountain South	Multi-Family with 2 - 4 Units	2	2010s	0	1	0	0	26	3504.86	6.2834e-05
+Mountain South	Multi-Family with 2 - 4 Units	3	2010s	0	1	0	0	26	3504.86	8.33721e-06
+Mountain South	Multi-Family with 2 - 4 Units	4+	2010s	0	1	0	0	26	3504.86	5.4809e-07
+Mountain South	Multi-Family with 5+ Units	1	2010s	0	1	0	0	29	9850.15	2.18948e-05
+Mountain South	Multi-Family with 5+ Units	2	2010s	0	1	0	0	29	9850.15	0.000132154
+Mountain South	Multi-Family with 5+ Units	3	2010s	0	1	0	0	29	9850.15	0.000109309
+Mountain South	Multi-Family with 5+ Units	4+	2010s	0	1	0	0	29	9850.15	0.000188474
+Mountain South	Single-Family Attached	1	2010s	0	0.574361	0	0.425639	15	13694.6	2.89129e-05
+Mountain South	Single-Family Attached	2	2010s	0.0426736	0.548998	0.0426736	0.365655	12	4488.46	3.48697e-05
+Mountain South	Single-Family Attached	3	2010s	0.0482181	0.760632	0.0482181	0.142932	20	2698.2	8.05862e-06
+Mountain South	Single-Family Attached	4+	2010s	0	1	0	0	14	0	0
+Mountain South	Single-Family Detached	1	2010s	0	0.467945	0.110545	0.42151	53	214898	0.000732924
+Mountain South	Single-Family Detached	2	2010s	0	0.397773	0	0.602227	27	110165	0.000659485
+Mountain South	Single-Family Detached	3	2010s	0.0214897	0.389962	0.0214897	0.567059	23	7872.06	1.19879e-05
+Mountain South	Single-Family Detached	4+	2010s	0	1	0	0	13	0	0
+Mountain South	Mobile Home	1	<1940	0	1	0	0	258	0	1.72068e-05
+Mountain South	Mobile Home	2	<1940	0	1	0	0	258	0	0
+Mountain South	Mobile Home	3	<1940	0	1	0	0	258	0	0
+Mountain South	Mobile Home	4+	<1940	0	1	0	0	258	0	0
+Mountain South	Multi-Family with 2 - 4 Units	1	<1940	0	1	0	0	39	0	1.30972e-05
+Mountain South	Multi-Family with 2 - 4 Units	2	<1940	0	1	0	0	39	0	2.29435e-05
+Mountain South	Multi-Family with 2 - 4 Units	3	<1940	0	1	0	0	39	0	1.0403e-05
+Mountain South	Multi-Family with 2 - 4 Units	4+	<1940	0	1	0	0	39	0	4.32462e-06
+Mountain South	Multi-Family with 5+ Units	1	<1940	0	1	0	0	72	3227.02	3.23604e-06
+Mountain South	Multi-Family with 5+ Units	2	<1940	0	1	0	0	72	3227.02	7.79026e-06
+Mountain South	Multi-Family with 5+ Units	3	<1940	0	1	0	0	72	3227.02	1.46687e-05
+Mountain South	Multi-Family with 5+ Units	4+	<1940	0	1	0	0	72	3227.02	3.45277e-05
+Mountain South	Single-Family Attached	1	<1940	0	0.6269	0.0284607	0.34464	28	5713.44	7.28132e-06
+Mountain South	Single-Family Attached	2	<1940	0	0.881664	0	0.118336	12	0	1.89647e-05
+Mountain South	Single-Family Attached	3	<1940	0.0273293	0.787784	0.0273293	0.157558	32	0	5.37617e-06
+Mountain South	Single-Family Attached	4+	<1940	0	1	0	0	14	0	0
+Mountain South	Single-Family Detached	1	<1940	0	0.618611	0.0200401	0.361348	23	89474.9	0.000245856
+Mountain South	Single-Family Detached	2	<1940	0.0548861	0.459214	0.0245239	0.461376	155	3312.45	0.000308188
+Mountain South	Single-Family Detached	3	<1940	0.0210452	0.599602	0.0189829	0.36037	83	0	9.56381e-06
+Mountain South	Single-Family Detached	4+	<1940	0	1	0	0	13	0	0
+New England	Mobile Home	1	1940-59	0	1	0	0	101	1409.14	4.00387e-05
+New England	Mobile Home	2	1940-59	0	1	0	0	101	1409.14	0
+New England	Mobile Home	3	1940-59	0	1	0	0	101	1409.14	0
+New England	Mobile Home	4+	1940-59	0	1	0	0	101	1409.14	0
+New England	Multi-Family with 2 - 4 Units	1	1940-59	0	1	0	0	94	49765.5	0.000108555
+New England	Multi-Family with 2 - 4 Units	2	1940-59	0	1	0	0	94	49765.5	0.000819166
+New England	Multi-Family with 2 - 4 Units	3	1940-59	0	1	0	0	94	49765.5	0.000202091
+New England	Multi-Family with 2 - 4 Units	4+	1940-59	0	1	0	0	94	49765.5	3.75197e-05
+New England	Multi-Family with 5+ Units	1	1940-59	0	1	0	0	62	34914.9	5.40377e-05
+New England	Multi-Family with 5+ Units	2	1940-59	0	1	0	0	62	34914.9	0.000268019
+New England	Multi-Family with 5+ Units	3	1940-59	0	1	0	0	62	34914.9	0.000203485
+New England	Multi-Family with 5+ Units	4+	1940-59	0	1	0	0	62	34914.9	0.000290837
+New England	Single-Family Attached	1	1940-59	0	0.588969	0	0.411031	11	9548.81	9.47232e-05
+New England	Single-Family Attached	2	1940-59	0.13542	0.412506	0.102168	0.349906	24	21623.1	8.43864e-05
+New England	Single-Family Attached	3	1940-59	0.107552	0.673638	0	0.21881	16	3348.22	5.65465e-06
+New England	Single-Family Attached	4+	1940-59	0	1	0	0	12	3340.68	0
+New England	Single-Family Detached	1	1940-59	0	0.31809	0.057876	0.624033	96	272622	0.00398733
+New England	Single-Family Detached	2	1940-59	0.0546411	0.455413	0.0319126	0.458033	291	488792	0.0017004
+New England	Single-Family Detached	3	1940-59	0.0493972	0.697321	0.0709669	0.182315	19	26502.4	6.89695e-05
+New England	Single-Family Detached	4+	1940-59	0	1	0	0	10	4776.11	0
+New England	Mobile Home	1	1960-79	0	1	0	0	18	12831	0.00037731
+New England	Mobile Home	2	1960-79	0	1	0	0	18	12831	0
+New England	Mobile Home	3	1960-79	0	1	0	0	18	12831	0
+New England	Mobile Home	4+	1960-79	0	1	0	0	18	12831	0
+New England	Multi-Family with 2 - 4 Units	1	1960-79	0	1	0	0	43	65405	0.000194679
+New England	Multi-Family with 2 - 4 Units	2	1960-79	0	1	0	0	43	65405	0.000888267
+New England	Multi-Family with 2 - 4 Units	3	1960-79	0	1	0	0	43	65405	0.000195173
+New England	Multi-Family with 2 - 4 Units	4+	1960-79	0	1	0	0	43	65405	1.73296e-06
+New England	Multi-Family with 5+ Units	1	1960-79	0	1	0	0	60	78501.3	0.000174377
+New England	Multi-Family with 5+ Units	2	1960-79	0	1	0	0	60	78501.3	0.000893235
+New England	Multi-Family with 5+ Units	3	1960-79	0	1	0	0	60	78501.3	0.000745996
+New England	Multi-Family with 5+ Units	4+	1960-79	0	1	0	0	60	78501.3	0.00060997
+New England	Single-Family Attached	1	1960-79	0	0.619304	0.0371923	0.343504	15	5785.29	0.000217897
+New England	Single-Family Attached	2	1960-79	0.0396291	0.402391	0.0396291	0.51835	16	29525.5	0.000173333
+New England	Single-Family Attached	3	1960-79	0.0616637	0.641638	0.00163028	0.295068	64	0	1.05896e-05
+New England	Single-Family Attached	4+	1960-79	0	1	0	0	12	0	0
+New England	Single-Family Detached	1	1960-79	0	0.296853	0.012522	0.690625	118	327134	0.00498104
+New England	Single-Family Detached	2	1960-79	0.0249569	0.219138	0.0225888	0.733316	131	346114	0.00170904
+New England	Single-Family Detached	3	1960-79	0.10758	0.347181	0.0607739	0.484465	13	37931.3	0.000108531
+New England	Single-Family Detached	4+	1960-79	0	1	0	0	10	3158.45	0
+New England	Mobile Home	1	1980-99	0	1	0	0	22	13718.1	0.000529228
+New England	Mobile Home	2	1980-99	0	1	0	0	22	13718.1	0
+New England	Mobile Home	3	1980-99	0	1	0	0	22	13718.1	0
+New England	Mobile Home	4+	1980-99	0	1	0	0	22	13718.1	0
+New England	Multi-Family with 2 - 4 Units	1	1980-99	0	1	0	0	17	26013	0.000114224
+New England	Multi-Family with 2 - 4 Units	2	1980-99	0	1	0	0	17	26013	0.000764105
+New England	Multi-Family with 2 - 4 Units	3	1980-99	0	1	0	0	17	26013	7.52241e-05
+New England	Multi-Family with 2 - 4 Units	4+	1980-99	0	1	0	0	17	26013	3.8427e-06
+New England	Multi-Family with 5+ Units	1	1980-99	0	1	0	0	53	65068.6	0.00013925
+New England	Multi-Family with 5+ Units	2	1980-99	0	1	0	0	53	65068.6	0.000772
+New England	Multi-Family with 5+ Units	3	1980-99	0	1	0	0	53	65068.6	0.000785121
+New England	Multi-Family with 5+ Units	4+	1980-99	0	1	0	0	53	65068.6	0.00032949
+New England	Single-Family Attached	1	1980-99	0	0.541595	0.0690299	0.389375	12	23764.1	0.000301379
+New England	Single-Family Attached	2	1980-99	0.0232362	0.321457	0	0.655307	35	70223.4	0.000485449
+New England	Single-Family Attached	3	1980-99	0.0772473	0.496947	0.00628584	0.41952	20	19708.4	4.57549e-05
+New England	Single-Family Attached	4+	1980-99	0	1	0	0	12	0	0
+New England	Single-Family Detached	1	1980-99	0	0.4228	0.0162942	0.560906	53	149590	0.0032406
+New England	Single-Family Detached	2	1980-99	0.0469249	0.266482	0.0372705	0.649322	194	546509	0.00257122
+New England	Single-Family Detached	3	1980-99	0.335749	0.409032	0	0.25522	10	29624.8	9.54649e-05
+New England	Single-Family Detached	4+	1980-99	0	1	0	0	10	0	0
+New England	Mobile Home	1	2000-09	0	1	0	0	10	6006.79	0.000165762
+New England	Mobile Home	2	2000-09	0	1	0	0	10	6006.79	0
+New England	Mobile Home	3	2000-09	0	1	0	0	10	6006.79	0
+New England	Mobile Home	4+	2000-09	0	1	0	0	10	6006.79	0
+New England	Multi-Family with 2 - 4 Units	1	2000-09	0	1	0	0	10	6534.44	2.6382e-05
+New England	Multi-Family with 2 - 4 Units	2	2000-09	0	1	0	0	10	6534.44	0.000205177
+New England	Multi-Family with 2 - 4 Units	3	2000-09	0	1	0	0	10	6534.44	1.86886e-05
+New England	Multi-Family with 2 - 4 Units	4+	2000-09	0	1	0	0	10	6534.44	1.22859e-06
+New England	Multi-Family with 5+ Units	1	2000-09	0	1	0	0	17	21564.9	3.68049e-05
+New England	Multi-Family with 5+ Units	2	2000-09	0	1	0	0	17	21564.9	0.000196234
+New England	Multi-Family with 5+ Units	3	2000-09	0	1	0	0	17	21564.9	0.000186381
+New England	Multi-Family with 5+ Units	4+	2000-09	0	1	0	0	17	21564.9	0.000330207
+New England	Single-Family Attached	1	2000-09	0	0.465452	0.131006	0.403543	15	4892.87	0.000150003
+New England	Single-Family Attached	2	2000-09	0.0799283	0.526113	0	0.393959	15	24420.7	0.000184791
+New England	Single-Family Attached	3	2000-09	0.0358599	0.537309	0	0.426831	21	13921.1	3.4678e-05
+New England	Single-Family Attached	4+	2000-09	0	1	0	0	12	0	0
+New England	Single-Family Detached	1	2000-09	0	0.476965	0.0631947	0.45984	22	54559.4	0.00139199
+New England	Single-Family Detached	2	2000-09	0.0282348	0.138073	0.00288587	0.830807	72	202636	0.00103766
+New England	Single-Family Detached	3	2000-09	0.194951	0.372661	0.0463119	0.386075	89	11820	1.82364e-05
+New England	Single-Family Detached	4+	2000-09	0	1	0	0	10	0	0
+New England	Mobile Home	1	2010s	0	1	0	0	12	1059.8	4.30731e-05
+New England	Mobile Home	2	2010s	0	1	0	0	12	1059.8	0
+New England	Mobile Home	3	2010s	0	1	0	0	12	1059.8	0
+New England	Mobile Home	4+	2010s	0	1	0	0	12	1059.8	0
+New England	Multi-Family with 2 - 4 Units	1	2010s	0	1	0	0	10	6892.87	1.18591e-05
+New England	Multi-Family with 2 - 4 Units	2	2010s	0	1	0	0	10	6892.87	9.22298e-05
+New England	Multi-Family with 2 - 4 Units	3	2010s	0	1	0	0	10	6892.87	9.3977e-06
+New England	Multi-Family with 2 - 4 Units	4+	2010s	0	1	0	0	10	6892.87	6.17807e-07
+New England	Multi-Family with 5+ Units	1	2010s	0	1	0	0	25	23762	2.21947e-05
+New England	Multi-Family with 5+ Units	2	2010s	0	1	0	0	25	23762	0.000106929
+New England	Multi-Family with 5+ Units	3	2010s	0	1	0	0	25	23762	0.000119933
+New England	Multi-Family with 5+ Units	4+	2010s	0	1	0	0	25	23762	0.000241523
+New England	Single-Family Attached	1	2010s	0	0.465452	0.131006	0.403543	15	0	5.45296e-05
+New England	Single-Family Attached	2	2010s	0.201968	0.15629	0	0.641742	10	15959.9	6.92044e-05
+New England	Single-Family Attached	3	2010s	0.0358599	0.537309	0	0.426831	21	6841.46	1.44897e-05
+New England	Single-Family Attached	4+	2010s	0	1	0	0	12	0	0
+New England	Single-Family Detached	1	2010s	0	0.565456	0.0631406	0.371403	23	45608.7	0.000384432
+New England	Single-Family Detached	2	2010s	0.0376851	0.269208	0.0246343	0.668473	43	87874.8	0.000316119
+New England	Single-Family Detached	3	2010s	0.194951	0.372661	0.0463119	0.386075	89	1190.24	4.42157e-06
+New England	Single-Family Detached	4+	2010s	0	1	0	0	10	0	0
+New England	Mobile Home	1	<1940	0	1	0	0	101	0	1.80253e-05
+New England	Mobile Home	2	<1940	0	1	0	0	101	0	0
+New England	Mobile Home	3	<1940	0	1	0	0	101	0	0
+New England	Mobile Home	4+	<1940	0	1	0	0	101	0	0
+New England	Multi-Family with 2 - 4 Units	1	<1940	0	1	0	0	86	94110.4	0.00120804
+New England	Multi-Family with 2 - 4 Units	2	<1940	0	1	0	0	86	94110.4	0.00211624
+New England	Multi-Family with 2 - 4 Units	3	<1940	0	1	0	0	86	94110.4	0.000933071
+New England	Multi-Family with 2 - 4 Units	4+	<1940	0	1	0	0	86	94110.4	0.000387887
+New England	Multi-Family with 5+ Units	1	<1940	0	1	0	0	51	52108.3	0.000146402
+New England	Multi-Family with 5+ Units	2	<1940	0	1	0	0	51	52108.3	0.000320692
+New England	Multi-Family with 5+ Units	3	<1940	0	1	0	0	51	52108.3	0.000570693
+New England	Multi-Family with 5+ Units	4+	<1940	0	1	0	0	51	52108.3	0.00102089
+New England	Single-Family Attached	1	<1940	0	0.588969	0	0.411031	11	5749.43	7.87237e-05
+New England	Single-Family Attached	2	<1940	0.161805	0.3724	0.104979	0.360816	20	32697.4	0.000257348
+New England	Single-Family Attached	3	<1940	0.107552	0.673638	0	0.21881	16	8652.56	7.17023e-05
+New England	Single-Family Attached	4+	<1940	0	1	0	0	12	0	0
+New England	Single-Family Detached	1	<1940	0	0.0691416	0.125073	0.805785	35	85051.1	0.00198632
+New England	Single-Family Detached	2	<1940	0.0917834	0.335525	0.0403495	0.532343	223	558184	0.00395063
+New England	Single-Family Detached	3	<1940	0.0743903	0.544176	0.106873	0.27456	17	45478.1	0.000206539
+New England	Single-Family Detached	4+	<1940	0	1	0	0	10	12342.6	0
+Pacific	Mobile Home	1	1940-59	0	1	0	0	258	3398.66	0.00022941
+Pacific	Mobile Home	2	1940-59	0	1	0	0	258	3398.66	0
+Pacific	Mobile Home	3	1940-59	0	1	0	0	258	3398.66	0
+Pacific	Mobile Home	4+	1940-59	0	1	0	0	258	3398.66	0
+Pacific	Multi-Family with 2 - 4 Units	1	1940-59	0	1	0	0	30	46247	0.000150923
+Pacific	Multi-Family with 2 - 4 Units	2	1940-59	0	1	0	0	30	46247	0.00113887
+Pacific	Multi-Family with 2 - 4 Units	3	1940-59	0	1	0	0	30	46247	0.000381642
+Pacific	Multi-Family with 2 - 4 Units	4+	1940-59	0	1	0	0	30	46247	7.08547e-05
+Pacific	Multi-Family with 5+ Units	1	1940-59	0	1	0	0	60	99009.9	0.000228323
+Pacific	Multi-Family with 5+ Units	2	1940-59	0	1	0	0	60	99009.9	0.00108752
+Pacific	Multi-Family with 5+ Units	3	1940-59	0	1	0	0	60	99009.9	0.000832871
+Pacific	Multi-Family with 5+ Units	4+	1940-59	0	1	0	0	60	99009.9	0.00106611
+Pacific	Single-Family Attached	1	1940-59	0	0.532547	0.0182873	0.449166	16	63442.8	0.000648075
+Pacific	Single-Family Attached	2	1940-59	0	0.881664	0	0.118336	12	24125	0.000490912
+Pacific	Single-Family Attached	3	1940-59	0.0273293	0.787784	0.0273293	0.157558	32	0	2.93948e-05
+Pacific	Single-Family Attached	4+	1940-59	0	1	0	0	14	0	0
+Pacific	Single-Family Detached	1	1940-59	0	0.421975	0.0439078	0.534117	297	1.77914e+06	0.0138423
+Pacific	Single-Family Detached	2	1940-59	0.0404035	0.499225	0.0226204	0.437751	101	390332	0.0048194
+Pacific	Single-Family Detached	3	1940-59	0.0210452	0.599602	0.0189829	0.36037	83	20405.4	0.000175513
+Pacific	Single-Family Detached	4+	1940-59	0	1	0	0	13	3012.15	0
+Pacific	Mobile Home	1	1960-79	0	1	0	0	51	108235	0.00284759
+Pacific	Mobile Home	2	1960-79	0	1	0	0	51	108235	0
+Pacific	Mobile Home	3	1960-79	0	1	0	0	51	108235	0
+Pacific	Mobile Home	4+	1960-79	0	1	0	0	51	108235	0
+Pacific	Multi-Family with 2 - 4 Units	1	1960-79	0	1	0	0	43	118454	0.000555902
+Pacific	Multi-Family with 2 - 4 Units	2	1960-79	0	1	0	0	43	118454	0.00253643
+Pacific	Multi-Family with 2 - 4 Units	3	1960-79	0	1	0	0	43	118454	0.000715473
+Pacific	Multi-Family with 2 - 4 Units	4+	1960-79	0	1	0	0	43	118454	6.35277e-06
+Pacific	Multi-Family with 5+ Units	1	1960-79	0	1	0	0	140	323303	0.000819309
+Pacific	Multi-Family with 5+ Units	2	1960-79	0	1	0	0	140	323303	0.00426109
+Pacific	Multi-Family with 5+ Units	3	1960-79	0	1	0	0	140	323303	0.0036162
+Pacific	Multi-Family with 5+ Units	4+	1960-79	0	1	0	0	140	323303	0.00275767
+Pacific	Single-Family Attached	1	1960-79	0	0.674491	0.0325782	0.292931	43	240433	0.00149463
+Pacific	Single-Family Attached	2	1960-79	0.0276504	0.563804	0.0689969	0.339549	39	163320	0.001212
+Pacific	Single-Family Attached	3	1960-79	0.0273293	0.787784	0.0273293	0.157558	32	14376.6	3.80627e-05
+Pacific	Single-Family Attached	4+	1960-79	0	1	0	0	14	0	0
+Pacific	Single-Family Detached	1	1960-79	0	0.488833	0.0311775	0.47999	279	2.05884e+06	0.0169391
+Pacific	Single-Family Detached	2	1960-79	0.053294	0.47831	0.0283576	0.440038	137	745832	0.00553714
+Pacific	Single-Family Detached	3	1960-79	0	0.57851	0	0.42149	15	60324.5	0.000350586
+Pacific	Single-Family Detached	4+	1960-79	0	1	0	0	13	5749.78	0
+Pacific	Mobile Home	1	1980-99	0	1	0	0	34	66894.6	0.00246687
+Pacific	Mobile Home	2	1980-99	0	1	0	0	34	66894.6	0
+Pacific	Mobile Home	3	1980-99	0	1	0	0	34	66894.6	0
+Pacific	Mobile Home	4+	1980-99	0	1	0	0	34	66894.6	0
+Pacific	Multi-Family with 2 - 4 Units	1	1980-99	0	1	0	0	46	115080	0.000342575
+Pacific	Multi-Family with 2 - 4 Units	2	1980-99	0	1	0	0	46	115080	0.00229166
+Pacific	Multi-Family with 2 - 4 Units	3	1980-99	0	1	0	0	46	115080	0.000290143
+Pacific	Multi-Family with 2 - 4 Units	4+	1980-99	0	1	0	0	46	115080	1.48215e-05
+Pacific	Multi-Family with 5+ Units	1	1980-99	0	1	0	0	101	278554	0.000658384
+Pacific	Multi-Family with 5+ Units	2	1980-99	0	1	0	0	101	278554	0.00376055
+Pacific	Multi-Family with 5+ Units	3	1980-99	0	1	0	0	101	278554	0.00377527
+Pacific	Multi-Family with 5+ Units	4+	1980-99	0	1	0	0	101	278554	0.00162193
+Pacific	Single-Family Attached	1	1980-99	0	0.594966	0.0331462	0.371888	29	149101	0.00110705
+Pacific	Single-Family Attached	2	1980-99	0.0490485	0.608495	0.049874	0.292583	55	238302	0.00170107
+Pacific	Single-Family Attached	3	1980-99	0.0273293	0.787784	0.0273293	0.157558	32	34151.2	0.00014616
+Pacific	Single-Family Attached	4+	1980-99	0	1	0	0	14	5392.64	0
+Pacific	Single-Family Detached	1	1980-99	0	0.425679	0.0489122	0.525409	181	1.25953e+06	0.0130129
+Pacific	Single-Family Detached	2	1980-99	0.0401716	0.400843	0.0436538	0.515332	209	1.26144e+06	0.00769223
+Pacific	Single-Family Detached	3	1980-99	0.0557571	0.64599	0.0482718	0.249981	23	113924	0.000262464
+Pacific	Single-Family Detached	4+	1980-99	0	1	0	0	13	20961.2	0
+Pacific	Mobile Home	1	2000-09	0	1	0	0	10	16886.7	0.000772801
+Pacific	Mobile Home	2	2000-09	0	1	0	0	10	16886.7	0
+Pacific	Mobile Home	3	2000-09	0	1	0	0	10	16886.7	0
+Pacific	Mobile Home	4+	2000-09	0	1	0	0	10	16886.7	0
+Pacific	Multi-Family with 2 - 4 Units	1	2000-09	0	1	0	0	13	15208.3	7.69742e-05
+Pacific	Multi-Family with 2 - 4 Units	2	2000-09	0	1	0	0	13	15208.3	0.000598641
+Pacific	Multi-Family with 2 - 4 Units	3	2000-09	0	1	0	0	13	15208.3	7.2366e-05
+Pacific	Multi-Family with 2 - 4 Units	4+	2000-09	0	1	0	0	13	15208.3	4.75736e-06
+Pacific	Multi-Family with 5+ Units	1	2000-09	0	1	0	0	60	143238	0.000167543
+Pacific	Multi-Family with 5+ Units	2	2000-09	0	1	0	0	60	143238	0.000958888
+Pacific	Multi-Family with 5+ Units	3	2000-09	0	1	0	0	60	143238	0.000860011
+Pacific	Multi-Family with 5+ Units	4+	2000-09	0	1	0	0	60	143238	0.00164715
+Pacific	Single-Family Attached	1	2000-09	0	0.672706	0.0150889	0.312205	33	31053.9	0.000523395
+Pacific	Single-Family Attached	2	2000-09	0	0.597889	0	0.402111	21	71246.4	0.000587447
+Pacific	Single-Family Attached	3	2000-09	0.0754395	0.790023	0.0754395	0.0590977	12	18394.6	8.60516e-05
+Pacific	Single-Family Attached	4+	2000-09	0	1	0	0	14	0	0
+Pacific	Single-Family Detached	1	2000-09	0	0.44927	0.0312431	0.519487	85	558006	0.00609339
+Pacific	Single-Family Detached	2	2000-09	0.0182063	0.338715	0.0131747	0.629905	130	705924	0.0050121
+Pacific	Single-Family Detached	3	2000-09	0	0.286538	0	0.713462	10	49532.4	8.39855e-05
+Pacific	Single-Family Detached	4+	2000-09	0	1	0	0	13	703.774	0
+Pacific	Mobile Home	1	2010s	0	1	0	0	15	5282.84	0.000195537
+Pacific	Mobile Home	2	2010s	0	1	0	0	15	5282.84	0
+Pacific	Mobile Home	3	2010s	0	1	0	0	15	5282.84	0
+Pacific	Mobile Home	4+	2010s	0	1	0	0	15	5282.84	0
+Pacific	Multi-Family with 2 - 4 Units	1	2010s	0	1	0	0	13	12612.7	3.04913e-05
+Pacific	Multi-Family with 2 - 4 Units	2	2010s	0	1	0	0	13	12612.7	0.000237136
+Pacific	Multi-Family with 2 - 4 Units	3	2010s	0	1	0	0	13	12612.7	2.6915e-05
+Pacific	Multi-Family with 2 - 4 Units	4+	2010s	0	1	0	0	13	12612.7	1.7694e-06
+Pacific	Multi-Family with 5+ Units	1	2010s	0	1	0	0	59	120075	8.31967e-05
+Pacific	Multi-Family with 5+ Units	2	2010s	0	1	0	0	59	120075	0.000426368
+Pacific	Multi-Family with 5+ Units	3	2010s	0	1	0	0	59	120075	0.000482836
+Pacific	Multi-Family with 5+ Units	4+	2010s	0	1	0	0	59	120075	0.00115069
+Pacific	Single-Family Attached	1	2010s	0	0.672706	0.0150889	0.312205	33	4146.51	0.000178432
+Pacific	Single-Family Attached	2	2010s	0.129219	0.437232	0.129219	0.30433	14	31950.2	0.000215957
+Pacific	Single-Family Attached	3	2010s	0.0754395	0.790023	0.0754395	0.0590977	12	28145.8	4.54442e-05
+Pacific	Single-Family Attached	4+	2010s	0	1	0	0	14	0	0
+Pacific	Single-Family Detached	1	2010s	0	0.330572	0.116358	0.55307	39	203035	0.00153269
+Pacific	Single-Family Detached	2	2010s	0.00680542	0.618981	0.0204312	0.353783	71	345717	0.00135941
+Pacific	Single-Family Detached	3	2010s	0.034823	0.348589	0.034823	0.581765	14	17950.4	2.08904e-05
+Pacific	Single-Family Detached	4+	2010s	0	1	0	0	13	0	0
+Pacific	Mobile Home	1	<1940	0	1	0	0	258	0	5.06079e-05
+Pacific	Mobile Home	2	<1940	0	1	0	0	258	0	0
+Pacific	Mobile Home	3	<1940	0	1	0	0	258	0	0
+Pacific	Mobile Home	4+	<1940	0	1	0	0	258	0	0
+Pacific	Multi-Family with 2 - 4 Units	1	<1940	0	1	0	0	17	33391.7	0.000371028
+Pacific	Multi-Family with 2 - 4 Units	2	<1940	0	1	0	0	17	33391.7	0.000649964
+Pacific	Multi-Family with 2 - 4 Units	3	<1940	0	1	0	0	17	33391.7	0.000319126
+Pacific	Multi-Family with 2 - 4 Units	4+	<1940	0	1	0	0	17	33391.7	0.000132664
+Pacific	Multi-Family with 5+ Units	1	<1940	0	1	0	0	37	95042.8	0.000111504
+Pacific	Multi-Family with 5+ Units	2	<1940	0	1	0	0	37	95042.8	0.000289823
+Pacific	Multi-Family with 5+ Units	3	<1940	0	1	0	0	37	95042.8	0.000585071
+Pacific	Multi-Family with 5+ Units	4+	<1940	0	1	0	0	37	95042.8	0.00137069
+Pacific	Single-Family Attached	1	<1940	0	0.561976	0.0417936	0.396231	16	38352.8	0.00018602
+Pacific	Single-Family Attached	2	<1940	0	0.881664	0	0.118336	12	32426.2	0.000467645
+Pacific	Single-Family Attached	3	<1940	0.0273293	0.787784	0.0273293	0.157558	32	0	0.000100298
+Pacific	Single-Family Attached	4+	<1940	0	1	0	0	14	0	0
+Pacific	Single-Family Detached	1	<1940	0	0.450754	0.0612203	0.488026	134	942053	0.00345474
+Pacific	Single-Family Detached	2	<1940	0.0785029	0.366824	0.0266813	0.527992	67	346149	0.00504542
+Pacific	Single-Family Detached	3	<1940	0.0210452	0.599602	0.0189829	0.36037	83	17278.1	0.00020602
+Pacific	Single-Family Detached	4+	<1940	0	1	0	0	13	7784.1	0
+South Atlantic	Mobile Home	1	1940-59	0	1	0	0	14	16376.4	0.000285542
+South Atlantic	Mobile Home	2	1940-59	0	1	0	0	14	16376.4	0
+South Atlantic	Mobile Home	3	1940-59	0	1	0	0	14	16376.4	0
+South Atlantic	Mobile Home	4+	1940-59	0	1	0	0	14	16376.4	0
+South Atlantic	Multi-Family with 2 - 4 Units	1	1940-59	0	1	0	0	34	28169.9	0.00011687
+South Atlantic	Multi-Family with 2 - 4 Units	2	1940-59	0	1	0	0	34	28169.9	0.000881906
+South Atlantic	Multi-Family with 2 - 4 Units	3	1940-59	0	1	0	0	34	28169.9	0.000244593
+South Atlantic	Multi-Family with 2 - 4 Units	4+	1940-59	0	1	0	0	34	28169.9	4.54106e-05
+South Atlantic	Multi-Family with 5+ Units	1	1940-59	0	1	0	0	72	53276.2	0.000140544
+South Atlantic	Multi-Family with 5+ Units	2	1940-59	0	1	0	0	72	53276.2	0.000709084
+South Atlantic	Multi-Family with 5+ Units	3	1940-59	0	1	0	0	72	53276.2	0.00054638
+South Atlantic	Multi-Family with 5+ Units	4+	1940-59	0	1	0	0	72	53276.2	0.000771043
+South Atlantic	Single-Family Attached	1	1940-59	0	0.595458	0.0791264	0.325416	26	26995.1	0.00078394
+South Atlantic	Single-Family Attached	2	1940-59	0.0533846	0.46459	0.0529776	0.429048	63	88624.5	0.000616021
+South Atlantic	Single-Family Attached	3	1940-59	0.0776959	0.427435	0.0107374	0.484132	13	12201.1	3.71443e-05
+South Atlantic	Single-Family Attached	4+	1940-59	0	1	0	0	11	327.081	0
+South Atlantic	Single-Family Detached	1	1940-59	0	0.388595	0.0662098	0.545195	211	1.3323e+06	0.0125298
+South Atlantic	Single-Family Detached	2	1940-59	0.0961065	0.316368	0.105428	0.482097	151	504463	0.00479079
+South Atlantic	Single-Family Detached	3	1940-59	0.156637	0.283075	0.0942007	0.466088	14	31104.8	0.000186817
+South Atlantic	Single-Family Detached	4+	1940-59	0	1	0	0	11	7902.69	0
+South Atlantic	Mobile Home	1	1960-79	0	1	0	0	43	101293	0.00430647
+South Atlantic	Mobile Home	2	1960-79	0	1	0	0	43	101293	0
+South Atlantic	Mobile Home	3	1960-79	0	1	0	0	43	101293	0
+South Atlantic	Mobile Home	4+	1960-79	0	1	0	0	43	101293	0
+South Atlantic	Multi-Family with 2 - 4 Units	1	1960-79	0	1	0	0	48	91964.4	0.000481322
+South Atlantic	Multi-Family with 2 - 4 Units	2	1960-79	0	1	0	0	48	91964.4	0.00219614
+South Atlantic	Multi-Family with 2 - 4 Units	3	1960-79	0	1	0	0	48	91964.4	0.000524685
+South Atlantic	Multi-Family with 2 - 4 Units	4+	1960-79	0	1	0	0	48	91964.4	4.65874e-06
+South Atlantic	Multi-Family with 5+ Units	1	1960-79	0	1	0	0	118	318332	0.000803986
+South Atlantic	Multi-Family with 5+ Units	2	1960-79	0	1	0	0	118	318332	0.00410454
+South Atlantic	Multi-Family with 5+ Units	3	1960-79	0	1	0	0	118	318332	0.00335957
+South Atlantic	Multi-Family with 5+ Units	4+	1960-79	0	1	0	0	118	318332	0.00278173
+South Atlantic	Single-Family Attached	1	1960-79	0	0.65871	0	0.34129	22	149611	0.00131305
+South Atlantic	Single-Family Attached	2	1960-79	0.0471064	0.312532	0.0152767	0.625085	38	175708	0.00122037
+South Atlantic	Single-Family Attached	3	1960-79	0.0340805	0.388298	0.0929849	0.484636	62	17883.9	5.38346e-05
+South Atlantic	Single-Family Attached	4+	1960-79	0	1	0	0	11	0	0
+South Atlantic	Single-Family Detached	1	1960-79	0	0.345695	0.0377823	0.616523	323	2.62689e+06	0.0223885
+South Atlantic	Single-Family Detached	2	1960-79	0.0555515	0.211533	0.0510545	0.681861	124	783973	0.00697938
+South Atlantic	Single-Family Detached	3	1960-79	0.160071	0.229452	0.0650899	0.545386	55	29866.6	0.000445714
+South Atlantic	Single-Family Detached	4+	1960-79	0	1	0	0	11	0	0
+South Atlantic	Mobile Home	1	1980-99	0	1	0	0	112	269044	0.0105103
+South Atlantic	Mobile Home	2	1980-99	0	1	0	0	112	269044	0
+South Atlantic	Mobile Home	3	1980-99	0	1	0	0	112	269044	0
+South Atlantic	Mobile Home	4+	1980-99	0	1	0	0	112	269044	0
+South Atlantic	Multi-Family with 2 - 4 Units	1	1980-99	0	1	0	0	43	92411.7	0.000425052
+South Atlantic	Multi-Family with 2 - 4 Units	2	1980-99	0	1	0	0	43	92411.7	0.00284339
+South Atlantic	Multi-Family with 2 - 4 Units	3	1980-99	0	1	0	0	43	92411.7	0.000328716
+South Atlantic	Multi-Family with 2 - 4 Units	4+	1980-99	0	1	0	0	43	92411.7	1.67919e-05
+South Atlantic	Multi-Family with 5+ Units	1	1980-99	0	1	0	0	127	361120	0.00101132
+South Atlantic	Multi-Family with 5+ Units	2	1980-99	0	1	0	0	127	361120	0.00600735
+South Atlantic	Multi-Family with 5+ Units	3	1980-99	0	1	0	0	127	361120	0.00551114
+South Atlantic	Multi-Family with 5+ Units	4+	1980-99	0	1	0	0	127	361120	0.00184523
+South Atlantic	Single-Family Attached	1	1980-99	0	0.379492	0.122793	0.497714	29	200365	0.00201809
+South Atlantic	Single-Family Attached	2	1980-99	0.0323929	0.383141	0.0605363	0.52393	68	374833	0.0031097
+South Atlantic	Single-Family Attached	3	1980-99	0	0.371382	0.107476	0.521142	10	41926.3	0.00032585
+South Atlantic	Single-Family Attached	4+	1980-99	0	1	0	0	11	1685.9	0
+South Atlantic	Single-Family Detached	1	1980-99	0	0.243151	0.0331832	0.723666	305	2.74523e+06	0.0219968
+South Atlantic	Single-Family Detached	2	1980-99	0.0580661	0.183058	0.0641385	0.694738	295	2.10714e+06	0.0144964
+South Atlantic	Single-Family Detached	3	1980-99	0.0458728	0.246992	0.0458728	0.661263	16	104027	0.000512217
+South Atlantic	Single-Family Detached	4+	1980-99	0	1	0	0	11	0	0
+South Atlantic	Mobile Home	1	2000-09	0	1	0	0	35	69082.3	0.00281181
+South Atlantic	Mobile Home	2	2000-09	0	1	0	0	35	69082.3	0
+South Atlantic	Mobile Home	3	2000-09	0	1	0	0	35	69082.3	0
+South Atlantic	Mobile Home	4+	2000-09	0	1	0	0	35	69082.3	0
+South Atlantic	Multi-Family with 2 - 4 Units	1	2000-09	0	1	0	0	19	35635.3	0.000116741
+South Atlantic	Multi-Family with 2 - 4 Units	2	2000-09	0	1	0	0	19	35635.3	0.000907917
+South Atlantic	Multi-Family with 2 - 4 Units	3	2000-09	0	1	0	0	19	35635.3	0.000103877
+South Atlantic	Multi-Family with 2 - 4 Units	4+	2000-09	0	1	0	0	19	35635.3	6.82892e-06
+South Atlantic	Multi-Family with 5+ Units	1	2000-09	0	1	0	0	91	213021	0.000353535
+South Atlantic	Multi-Family with 5+ Units	2	2000-09	0	1	0	0	91	213021	0.00215081
+South Atlantic	Multi-Family with 5+ Units	3	2000-09	0	1	0	0	91	213021	0.00183189
+South Atlantic	Multi-Family with 5+ Units	4+	2000-09	0	1	0	0	91	213021	0.00252822
+South Atlantic	Single-Family Attached	1	2000-09	0	0.441881	0.0445025	0.513617	26	155289	0.00124907
+South Atlantic	Single-Family Attached	2	2000-09	0.0630934	0.424316	0.0434718	0.469119	50	270736	0.00157887
+South Atlantic	Single-Family Attached	3	2000-09	0	0.0853194	0.0810269	0.833654	10	46444.5	0.000336881
+South Atlantic	Single-Family Attached	4+	2000-09	0	1	0	0	11	3426	0
+South Atlantic	Single-Family Detached	1	2000-09	0	0.237364	0.0564349	0.706201	155	1.19977e+06	0.0122814
+South Atlantic	Single-Family Detached	2	2000-09	0.0619604	0.158945	0.0669031	0.712192	184	1.19489e+06	0.00993087
+South Atlantic	Single-Family Detached	3	2000-09	0.230694	0.245842	0	0.523464	10	46177.1	0.000173749
+South Atlantic	Single-Family Detached	4+	2000-09	0	1	0	0	11	0	0
+South Atlantic	Mobile Home	1	2010s	0	1	0	0	19	40624	0.000703078
+South Atlantic	Mobile Home	2	2010s	0	1	0	0	19	40624	0
+South Atlantic	Mobile Home	3	2010s	0	1	0	0	19	40624	0
+South Atlantic	Mobile Home	4+	2010s	0	1	0	0	19	40624	0
+South Atlantic	Multi-Family with 2 - 4 Units	1	2010s	0	1	0	0	12	22766.7	4.10341e-05
+South Atlantic	Multi-Family with 2 - 4 Units	2	2010s	0	1	0	0	12	22766.7	0.000319129
+South Atlantic	Multi-Family with 2 - 4 Units	3	2010s	0	1	0	0	12	22766.7	3.36977e-05
+South Atlantic	Multi-Family with 2 - 4 Units	4+	2010s	0	1	0	0	12	22766.7	2.21529e-06
+South Atlantic	Multi-Family with 5+ Units	1	2010s	0	1	0	0	74	148286	0.000154881
+South Atlantic	Multi-Family with 5+ Units	2	2010s	0	1	0	0	74	148286	0.000856889
+South Atlantic	Multi-Family with 5+ Units	3	2010s	0	1	0	0	74	148286	0.000857928
+South Atlantic	Multi-Family with 5+ Units	4+	2010s	0	1	0	0	74	148286	0.00145693
+South Atlantic	Single-Family Attached	1	2010s	0	0.412228	0.0724537	0.515319	33	32368.9	0.000446852
+South Atlantic	Single-Family Attached	2	2010s	0.0427186	0.571916	0	0.385366	23	106183	0.000581375
+South Atlantic	Single-Family Attached	3	2010s	0.0662744	0.496367	0.141901	0.295458	15	70928.4	0.000126702
+South Atlantic	Single-Family Attached	4+	2010s	0	1	0	0	11	1566.59	0
+South Atlantic	Single-Family Detached	1	2010s	0	0.323151	0.0576737	0.619176	111	802164	0.00323335
+South Atlantic	Single-Family Detached	2	2010s	0.0547603	0.120985	0.0550695	0.769186	110	652488	0.00343581
+South Atlantic	Single-Family Detached	3	2010s	0.230694	0.245842	0	0.523464	10	8294.84	6.71491e-05
+South Atlantic	Single-Family Detached	4+	2010s	0	1	0	0	11	2878.32	0
+South Atlantic	Mobile Home	1	<1940	0	1	0	0	14	3489.51	7.14136e-05
+South Atlantic	Mobile Home	2	<1940	0	1	0	0	14	3489.51	0
+South Atlantic	Mobile Home	3	<1940	0	1	0	0	14	3489.51	0
+South Atlantic	Mobile Home	4+	<1940	0	1	0	0	14	3489.51	0
+South Atlantic	Multi-Family with 2 - 4 Units	1	<1940	0	1	0	0	23	21021.9	0.000245598
+South Atlantic	Multi-Family with 2 - 4 Units	2	<1940	0	1	0	0	23	21021.9	0.000430236
+South Atlantic	Multi-Family with 2 - 4 Units	3	<1940	0	1	0	0	23	21021.9	0.000192761
+South Atlantic	Multi-Family with 2 - 4 Units	4+	<1940	0	1	0	0	23	21021.9	8.01328e-05
+South Atlantic	Multi-Family with 5+ Units	1	<1940	0	1	0	0	45	32484.4	5.90558e-05
+South Atlantic	Multi-Family with 5+ Units	2	<1940	0	1	0	0	45	32484.4	0.00014668
+South Atlantic	Multi-Family with 5+ Units	3	<1940	0	1	0	0	45	32484.4	0.000282145
+South Atlantic	Multi-Family with 5+ Units	4+	<1940	0	1	0	0	45	32484.4	0.000694792
+South Atlantic	Single-Family Attached	1	<1940	0	0.595458	0.0791264	0.325416	26	36523.3	0.000263772
+South Atlantic	Single-Family Attached	2	<1940	0.0554024	0.533064	0.054382	0.357152	50	91346.2	0.000801017
+South Atlantic	Single-Family Attached	3	<1940	0.138448	0.761654	0.0191332	0.0807647	12	17694.7	0.000259332
+South Atlantic	Single-Family Attached	4+	<1940	0	1	0	0	11	845.253	0
+South Atlantic	Single-Family Detached	1	<1940	0	0.297874	0.0540146	0.648112	77	539187	0.00290731
+South Atlantic	Single-Family Detached	2	<1940	0.113769	0.212818	0.0831735	0.590239	106	490145	0.00469333
+South Atlantic	Single-Family Detached	3	<1940	0.156637	0.283075	0.0942007	0.466088	14	37258.9	0.000215321
+South Atlantic	Single-Family Detached	4+	<1940	0	1	0	0	11	0	0
+West North Central	Mobile Home	1	1940-59	0	1	0	0	131	874.587	5.0904e-05
+West North Central	Mobile Home	2	1940-59	0	1	0	0	131	874.587	0
+West North Central	Mobile Home	3	1940-59	0	1	0	0	131	874.587	0
+West North Central	Mobile Home	4+	1940-59	0	1	0	0	131	874.587	0
+West North Central	Multi-Family with 2 - 4 Units	1	1940-59	0	1	0	0	16	12074.3	4.8438e-05
+West North Central	Multi-Family with 2 - 4 Units	2	1940-59	0	1	0	0	16	12074.3	0.000365516
+West North Central	Multi-Family with 2 - 4 Units	3	1940-59	0	1	0	0	16	12074.3	0.000100542
+West North Central	Multi-Family with 2 - 4 Units	4+	1940-59	0	1	0	0	16	12074.3	1.86663e-05
+West North Central	Multi-Family with 5+ Units	1	1940-59	0	1	0	0	30	25948.1	4.64245e-05
+West North Central	Multi-Family with 5+ Units	2	1940-59	0	1	0	0	30	25948.1	0.000217277
+West North Central	Multi-Family with 5+ Units	3	1940-59	0	1	0	0	30	25948.1	0.000167576
+West North Central	Multi-Family with 5+ Units	4+	1940-59	0	1	0	0	30	25948.1	0.000233017
+West North Central	Single-Family Attached	1	1940-59	0	0.459913	0.121323	0.418765	10	19430.5	0.000109186
+West North Central	Single-Family Attached	2	1940-59	0.167478	0.200208	0.0847772	0.547538	22	12231.2	7.74748e-05
+West North Central	Single-Family Attached	3	1940-59	0	0.797091	0.0305212	0.172388	25	0	2.70581e-06
+West North Central	Single-Family Attached	4+	1940-59	0	1	0	0	11	0	0
+West North Central	Single-Family Detached	1	1940-59	0	0.356586	0.0454832	0.597931	241	752715	0.00644113
+West North Central	Single-Family Detached	2	1940-59	0.0743012	0.310174	0.0420073	0.573518	183	370089	0.00248253
+West North Central	Single-Family Detached	3	1940-59	0.141831	0.766666	0.00804005	0.0834628	10	21976.2	0.000101517
+West North Central	Single-Family Detached	4+	1940-59	0	1	0	0	11	0	0
+West North Central	Mobile Home	1	1960-79	0	1	0	0	17	17744.2	0.000977495
+West North Central	Mobile Home	2	1960-79	0	1	0	0	17	17744.2	0
+West North Central	Mobile Home	3	1960-79	0	1	0	0	17	17744.2	0
+West North Central	Mobile Home	4+	1960-79	0	1	0	0	17	17744.2	0
+West North Central	Multi-Family with 2 - 4 Units	1	1960-79	0	1	0	0	25	47865.5	0.000173295
+West North Central	Multi-Family with 2 - 4 Units	2	1960-79	0	1	0	0	25	47865.5	0.000790699
+West North Central	Multi-Family with 2 - 4 Units	3	1960-79	0	1	0	0	25	47865.5	0.000198334
+West North Central	Multi-Family with 2 - 4 Units	4+	1960-79	0	1	0	0	25	47865.5	1.76103e-06
+West North Central	Multi-Family with 5+ Units	1	1960-79	0	1	0	0	52	78709.1	0.000220848
+West North Central	Multi-Family with 5+ Units	2	1960-79	0	1	0	0	52	78709.1	0.00117527
+West North Central	Multi-Family with 5+ Units	3	1960-79	0	1	0	0	52	78709.1	0.000997228
+West North Central	Multi-Family with 5+ Units	4+	1960-79	0	1	0	0	52	78709.1	0.000672632
+West North Central	Single-Family Attached	1	1960-79	0	0.897757	0	0.102243	10	30343.7	0.000338051
+West North Central	Single-Family Attached	2	1960-79	0	0.515481	0	0.484519	10	31460.6	0.00027969
+West North Central	Single-Family Attached	3	1960-79	0	0.797091	0.0305212	0.172388	25	9593.51	8.87942e-06
+West North Central	Single-Family Attached	4+	1960-79	0	1	0	0	11	0	0
+West North Central	Single-Family Detached	1	1960-79	0	0.435823	0.0307332	0.533444	228	980370	0.00863689
+West North Central	Single-Family Detached	2	1960-79	0.0466951	0.367089	0.0421825	0.544033	114	496713	0.00299303
+West North Central	Single-Family Detached	3	1960-79	0	0.649182	0	0.350818	10	29124.3	0.000189281
+West North Central	Single-Family Detached	4+	1960-79	0	1	0	0	11	8385.72	0
+West North Central	Mobile Home	1	1980-99	0	1	0	0	27	38992.2	0.00158222
+West North Central	Mobile Home	2	1980-99	0	1	0	0	27	38992.2	0
+West North Central	Mobile Home	3	1980-99	0	1	0	0	27	38992.2	0
+West North Central	Mobile Home	4+	1980-99	0	1	0	0	27	38992.2	0
+West North Central	Multi-Family with 2 - 4 Units	1	1980-99	0	1	0	0	13	19892.7	0.000110389
+West North Central	Multi-Family with 2 - 4 Units	2	1980-99	0	1	0	0	13	19892.7	0.000738446
+West North Central	Multi-Family with 2 - 4 Units	3	1980-99	0	1	0	0	13	19892.7	8.41558e-05
+West North Central	Multi-Family with 2 - 4 Units	4+	1980-99	0	1	0	0	13	19892.7	4.29896e-06
+West North Central	Multi-Family with 5+ Units	1	1980-99	0	1	0	0	55	104386	0.000218311
+West North Central	Multi-Family with 5+ Units	2	1980-99	0	1	0	0	55	104386	0.00119752
+West North Central	Multi-Family with 5+ Units	3	1980-99	0	1	0	0	55	104386	0.00129078
+West North Central	Multi-Family with 5+ Units	4+	1980-99	0	1	0	0	55	104386	0.000449609
+West North Central	Single-Family Attached	1	1980-99	0	0.464472	0	0.535528	30	101084	0.00045069
+West North Central	Single-Family Attached	2	1980-99	0.0698326	0.516217	0	0.41395	20	55680.1	0.000658805
+West North Central	Single-Family Attached	3	1980-99	0	0.797091	0.0305212	0.172388	25	15686.6	4.00304e-05
+West North Central	Single-Family Attached	4+	1980-99	0	1	0	0	11	0	0
+West North Central	Single-Family Detached	1	1980-99	0	0.369354	0.0230497	0.607596	133	614405	0.00536238
+West North Central	Single-Family Detached	2	1980-99	0	0.280667	0.00628836	0.713044	117	559704	0.00426127
+West North Central	Single-Family Detached	3	1980-99	0.00409357	0.680344	0.00409357	0.311469	15	24437.8	0.00016343
+West North Central	Single-Family Detached	4+	1980-99	0	1	0	0	11	9646.44	0
+West North Central	Mobile Home	1	2000-09	0	1	0	0	14	19636.6	0.000484451
+West North Central	Mobile Home	2	2000-09	0	1	0	0	14	19636.6	0
+West North Central	Mobile Home	3	2000-09	0	1	0	0	14	19636.6	0
+West North Central	Mobile Home	4+	2000-09	0	1	0	0	14	19636.6	0
+West North Central	Multi-Family with 2 - 4 Units	1	2000-09	0	1	0	0	11	12144.7	3.2859e-05
+West North Central	Multi-Family with 2 - 4 Units	2	2000-09	0	1	0	0	11	12144.7	0.00025555
+West North Central	Multi-Family with 2 - 4 Units	3	2000-09	0	1	0	0	11	12144.7	2.51264e-05
+West North Central	Multi-Family with 2 - 4 Units	4+	2000-09	0	1	0	0	11	12144.7	1.65181e-06
+West North Central	Multi-Family with 5+ Units	1	2000-09	0	1	0	0	29	36504	7.23646e-05
+West North Central	Multi-Family with 5+ Units	2	2000-09	0	1	0	0	29	36504	0.000421355
+West North Central	Multi-Family with 5+ Units	3	2000-09	0	1	0	0	29	36504	0.000359873
+West North Central	Multi-Family with 5+ Units	4+	2000-09	0	1	0	0	29	36504	0.000470063
+West North Central	Single-Family Attached	1	2000-09	0	0.595537	0	0.404463	14	32484.2	0.000363824
+West North Central	Single-Family Attached	2	2000-09	0.0455443	0.374404	0.129082	0.45097	17	39450.1	0.00043248
+West North Central	Single-Family Attached	3	2000-09	0	0.780928	0	0.219072	10	848.661	7.91257e-05
+West North Central	Single-Family Attached	4+	2000-09	0	1	0	0	11	0	0
+West North Central	Single-Family Detached	1	2000-09	0	0.351206	0.0112638	0.63753	104	399655	0.00284003
+West North Central	Single-Family Detached	2	2000-09	0.0291959	0.355057	0.0291959	0.586551	65	248618	0.00277487
+West North Central	Single-Family Detached	3	2000-09	0.106387	0.537958	0	0.355655	12	7469.21	5.61962e-05
+West North Central	Single-Family Detached	4+	2000-09	0	1	0	0	11	0	0
+West North Central	Mobile Home	1	2010s	0	1	0	0	22	7676.56	0.000146725
+West North Central	Mobile Home	2	2010s	0	1	0	0	22	7676.56	0
+West North Central	Mobile Home	3	2010s	0	1	0	0	22	7676.56	0
+West North Central	Mobile Home	4+	2010s	0	1	0	0	22	7676.56	0
+West North Central	Multi-Family with 2 - 4 Units	1	2010s	0	1	0	0	17	4397.72	1.76786e-05
+West North Central	Multi-Family with 2 - 4 Units	2	2010s	0	1	0	0	17	4397.72	0.00013749
+West North Central	Multi-Family with 2 - 4 Units	3	2010s	0	1	0	0	17	4397.72	1.31813e-05
+West North Central	Multi-Family with 2 - 4 Units	4+	2010s	0	1	0	0	17	4397.72	8.66541e-07
+West North Central	Multi-Family with 5+ Units	1	2010s	0	1	0	0	37	45655.4	5.52892e-05
+West North Central	Multi-Family with 5+ Units	2	2010s	0	1	0	0	37	45655.4	0.000287503
+West North Central	Multi-Family with 5+ Units	3	2010s	0	1	0	0	37	45655.4	0.000287479
+West North Central	Multi-Family with 5+ Units	4+	2010s	0	1	0	0	37	45655.4	0.000435874
+West North Central	Single-Family Attached	1	2010s	0	0.705152	0.0711177	0.22373	17	41832	0.000113128
+West North Central	Single-Family Attached	2	2010s	0	0.416235	0	0.583765	11	14446.3	0.000141827
+West North Central	Single-Family Attached	3	2010s	0	0.780928	0	0.219072	10	4478.7	2.32977e-05
+West North Central	Single-Family Attached	4+	2010s	0	1	0	0	11	0	0
+West North Central	Single-Family Detached	1	2010s	0	0.341057	0.0388185	0.620125	70	255888	0.00093633
+West North Central	Single-Family Detached	2	2010s	0	0.427131	0	0.572869	34	122736	0.00102997
+West North Central	Single-Family Detached	3	2010s	0.106387	0.537958	0	0.355655	12	6588.53	1.95118e-05
+West North Central	Single-Family Detached	4+	2010s	0	1	0	0	11	0	0
+West North Central	Mobile Home	1	<1940	0	1	0	0	131	2260.13	3.98438e-05
+West North Central	Mobile Home	2	<1940	0	1	0	0	131	2260.13	0
+West North Central	Mobile Home	3	<1940	0	1	0	0	131	2260.13	0
+West North Central	Mobile Home	4+	<1940	0	1	0	0	131	2260.13	0
+West North Central	Multi-Family with 2 - 4 Units	1	<1940	0	1	0	0	11	19978.8	0.000271175
+West North Central	Multi-Family with 2 - 4 Units	2	<1940	0	1	0	0	11	19978.8	0.000475041
+West North Central	Multi-Family with 2 - 4 Units	3	<1940	0	1	0	0	11	19978.8	0.000174619
+West North Central	Multi-Family with 2 - 4 Units	4+	<1940	0	1	0	0	11	19978.8	7.25911e-05
+West North Central	Multi-Family with 5+ Units	1	<1940	0	1	0	0	20	24961.9	4.93162e-05
+West North Central	Multi-Family with 5+ Units	2	<1940	0	1	0	0	20	24961.9	0.000119879
+West North Central	Multi-Family with 5+ Units	3	<1940	0	1	0	0	20	24961.9	0.000231353
+West North Central	Multi-Family with 5+ Units	4+	<1940	0	1	0	0	20	24961.9	0.000514238
+West North Central	Single-Family Attached	1	<1940	0	0.459913	0.121323	0.418765	10	13771.5	3.53528e-05
+West North Central	Single-Family Attached	2	<1940	0.167478	0.200208	0.0847772	0.547538	22	5421.16	9.81786e-05
+West North Central	Single-Family Attached	3	<1940	0	0.797091	0.0305212	0.172388	25	0	2.48711e-05
+West North Central	Single-Family Attached	4+	<1940	0	1	0	0	11	0	0
+West North Central	Single-Family Detached	1	<1940	0	0.289151	0.0850272	0.625822	119	472544	0.00394077
+West North Central	Single-Family Detached	2	<1940	0.0722715	0.331289	0.0363265	0.560113	153	598584	0.00585401
+West North Central	Single-Family Detached	3	<1940	0.141831	0.766666	0.00804005	0.0834628	10	9111.7	0.000238534
+West North Central	Single-Family Detached	4+	<1940	0	1	0	0	11	0	0
+West South Central	Mobile Home	1	1940-59	0	1	0	0	14	3447	0.000152734
+West South Central	Mobile Home	2	1940-59	0	1	0	0	14	3447	0
+West South Central	Mobile Home	3	1940-59	0	1	0	0	14	3447	0
+West South Central	Mobile Home	4+	1940-59	0	1	0	0	14	3447	0
+West South Central	Multi-Family with 2 - 4 Units	1	1940-59	0	1	0	0	45	7581.44	5.81399e-05
+West South Central	Multi-Family with 2 - 4 Units	2	1940-59	0	1	0	0	45	7581.44	0.000438727
+West South Central	Multi-Family with 2 - 4 Units	3	1940-59	0	1	0	0	45	7581.44	9.76977e-05
+West South Central	Multi-Family with 2 - 4 Units	4+	1940-59	0	1	0	0	45	7581.44	1.81383e-05
+West South Central	Multi-Family with 5+ Units	1	1940-59	0	1	0	0	13	21596.8	5.33313e-05
+West South Central	Multi-Family with 5+ Units	2	1940-59	0	1	0	0	13	21596.8	0.000257975
+West South Central	Multi-Family with 5+ Units	3	1940-59	0	1	0	0	13	21596.8	0.00019938
+West South Central	Multi-Family with 5+ Units	4+	1940-59	0	1	0	0	13	21596.8	0.000264783
+West South Central	Single-Family Attached	1	1940-59	0	0.783232	0.0327938	0.183974	14	35399.9	0.000165859
+West South Central	Single-Family Attached	2	1940-59	0.0490557	0.502562	0.0484081	0.399974	68	8313.37	0.000125507
+West South Central	Single-Family Attached	3	1940-59	0.113654	0.625252	0.0157067	0.245388	13	0	5.81833e-06
+West South Central	Single-Family Attached	4+	1940-59	0	1	0	0	11	0	0
+West South Central	Single-Family Detached	1	1940-59	0	0.368036	0.0517161	0.580248	194	1.11568e+06	0.00909522
+West South Central	Single-Family Detached	2	1940-59	0.118935	0.402601	0.0908645	0.3876	21	90952.7	0.00300964
+West South Central	Single-Family Detached	3	1940-59	0.156637	0.283075	0.0942007	0.466088	14	5133.12	0.000104859
+West South Central	Single-Family Detached	4+	1940-59	0	1	0	0	11	0	0
+West South Central	Mobile Home	1	1960-79	0	1	0	0	21	37069.7	0.00176444
+West South Central	Mobile Home	2	1960-79	0	1	0	0	21	37069.7	0
+West South Central	Mobile Home	3	1960-79	0	1	0	0	21	37069.7	0
+West South Central	Mobile Home	4+	1960-79	0	1	0	0	21	37069.7	0
+West South Central	Multi-Family with 2 - 4 Units	1	1960-79	0	1	0	0	21	50050.3	0.000297231
+West South Central	Multi-Family with 2 - 4 Units	2	1960-79	0	1	0	0	21	50050.3	0.00135619
+West South Central	Multi-Family with 2 - 4 Units	3	1960-79	0	1	0	0	21	50050.3	0.000316567
+West South Central	Multi-Family with 2 - 4 Units	4+	1960-79	0	1	0	0	21	50050.3	2.81084e-06
+West South Central	Multi-Family with 5+ Units	1	1960-79	0	1	0	0	42	138822	0.000439419
+West South Central	Multi-Family with 5+ Units	2	1960-79	0	1	0	0	42	138822	0.00228425
+West South Central	Multi-Family with 5+ Units	3	1960-79	0	1	0	0	42	138822	0.00170804
+West South Central	Multi-Family with 5+ Units	4+	1960-79	0	1	0	0	42	138822	0.00100915
+West South Central	Single-Family Attached	1	1960-79	0	0.563004	0.196081	0.240916	16	59230.5	0.000414862
+West South Central	Single-Family Attached	2	1960-79	0.0381281	0.383747	0.012365	0.565759	49	35044.4	0.000363482
+West South Central	Single-Family Attached	3	1960-79	0.0340805	0.388298	0.0929849	0.484636	62	0	1.82855e-05
+West South Central	Single-Family Attached	4+	1960-79	0	1	0	0	11	0	0
+West South Central	Single-Family Detached	1	1960-79	0	0.25387	0.0569474	0.689183	309	2.27766e+06	0.0154124
+West South Central	Single-Family Detached	2	1960-79	0.0471508	0.0988847	0.0471508	0.806814	37	257494	0.00478997
+West South Central	Single-Family Detached	3	1960-79	0.160071	0.229452	0.0650899	0.545386	55	8499.12	0.00030427
+West South Central	Single-Family Detached	4+	1960-79	0	1	0	0	11	10247.3	0
+West South Central	Mobile Home	1	1980-99	0	1	0	0	63	137531	0.00502593
+West South Central	Mobile Home	2	1980-99	0	1	0	0	63	137531	0
+West South Central	Mobile Home	3	1980-99	0	1	0	0	63	137531	0
+West South Central	Mobile Home	4+	1980-99	0	1	0	0	63	137531	0
+West South Central	Multi-Family with 2 - 4 Units	1	1980-99	0	1	0	0	38	94943.1	0.000253486
+West South Central	Multi-Family with 2 - 4 Units	2	1980-99	0	1	0	0	38	94943.1	0.0016957
+West South Central	Multi-Family with 2 - 4 Units	3	1980-99	0	1	0	0	38	94943.1	0.000193222
+West South Central	Multi-Family with 2 - 4 Units	4+	1980-99	0	1	0	0	38	94943.1	9.87042e-06
+West South Central	Multi-Family with 5+ Units	1	1980-99	0	1	0	0	58	201214	0.000511947
+West South Central	Multi-Family with 5+ Units	2	1980-99	0	1	0	0	58	201214	0.00310131
+West South Central	Multi-Family with 5+ Units	3	1980-99	0	1	0	0	58	201214	0.00277617
+West South Central	Multi-Family with 5+ Units	4+	1980-99	0	1	0	0	58	201214	0.000852934
+West South Central	Single-Family Attached	1	1980-99	0	0.519239	0.112104	0.368658	15	48615.7	0.000332626
+West South Central	Single-Family Attached	2	1980-99	0.0314319	0.382746	0.0507816	0.53504	96	27494.6	0.000477839
+West South Central	Single-Family Attached	3	1980-99	0	0.377417	0.138998	0.483585	15	9313.18	4.00971e-05
+West South Central	Single-Family Attached	4+	1980-99	0	1	0	0	11	0	0
+West South Central	Single-Family Detached	1	1980-99	0	0.212882	0.110407	0.67671	242	1.82475e+06	0.0120415
+West South Central	Single-Family Detached	2	1980-99	0.103103	0.101635	0.0993605	0.695901	99	751612	0.007639
+West South Central	Single-Family Detached	3	1980-99	0.0402998	0.216985	0.0402998	0.702415	19	0	0.000264333
+West South Central	Single-Family Detached	4+	1980-99	0	1	0	0	11	0	0
+West South Central	Mobile Home	1	2000-09	0	1	0	0	27	50546	0.00219885
+West South Central	Mobile Home	2	2000-09	0	1	0	0	27	50546	0
+West South Central	Mobile Home	3	2000-09	0	1	0	0	27	50546	0
+West South Central	Mobile Home	4+	2000-09	0	1	0	0	27	50546	0
+West South Central	Multi-Family with 2 - 4 Units	1	2000-09	0	1	0	0	14	29437.1	8.53463e-05
+West South Central	Multi-Family with 2 - 4 Units	2	2000-09	0	1	0	0	14	29437.1	0.000663752
+West South Central	Multi-Family with 2 - 4 Units	3	2000-09	0	1	0	0	14	29437.1	7.10383e-05
+West South Central	Multi-Family with 2 - 4 Units	4+	2000-09	0	1	0	0	14	29437.1	4.67007e-06
+West South Central	Multi-Family with 5+ Units	1	2000-09	0	1	0	0	34	105670	0.000173816
+West South Central	Multi-Family with 5+ Units	2	2000-09	0	1	0	0	34	105670	0.00109262
+West South Central	Multi-Family with 5+ Units	3	2000-09	0	1	0	0	34	105670	0.000903744
+West South Central	Multi-Family with 5+ Units	4+	2000-09	0	1	0	0	34	105670	0.00111287
+West South Central	Single-Family Attached	1	2000-09	0	0.233314	0.0595735	0.707113	15	26233.9	0.000203947
+West South Central	Single-Family Attached	2	2000-09	0.0435382	0.4447	0.0833111	0.428451	14	32239.6	0.000248914
+West South Central	Single-Family Attached	3	2000-09	0.0357304	0.342313	0.105107	0.516849	29	8322.24	4.93576e-05
+West South Central	Single-Family Attached	4+	2000-09	0	1	0	0	11	0	0
+West South Central	Single-Family Detached	1	2000-09	0	0.088556	0.0827336	0.82871	150	995978	0.00747756
+West South Central	Single-Family Detached	2	2000-09	0.0953688	0.118222	0.0950923	0.691317	87	648109	0.0058498
+West South Central	Single-Family Detached	3	2000-09	0.189144	0.211057	0.052597	0.547202	16	7673.42	9.48722e-05
+West South Central	Single-Family Detached	4+	2000-09	0	1	0	0	11	0	0
+West South Central	Mobile Home	1	2010s	0	1	0	0	21	49994.6	0.000864006
+West South Central	Mobile Home	2	2010s	0	1	0	0	21	49994.6	0
+West South Central	Mobile Home	3	2010s	0	1	0	0	21	49994.6	0
+West South Central	Mobile Home	4+	2010s	0	1	0	0	21	49994.6	0
+West South Central	Multi-Family with 2 - 4 Units	1	2010s	0	1	0	0	20	10415.5	4.75659e-05
+West South Central	Multi-Family with 2 - 4 Units	2	2010s	0	1	0	0	20	10415.5	0.000369928
+West South Central	Multi-Family with 2 - 4 Units	3	2010s	0	1	0	0	20	10415.5	3.67895e-05
+West South Central	Multi-Family with 2 - 4 Units	4+	2010s	0	1	0	0	20	10415.5	2.41855e-06
+West South Central	Multi-Family with 5+ Units	1	2010s	0	1	0	0	42	139024	0.000120885
+West South Central	Multi-Family with 5+ Units	2	2010s	0	1	0	0	42	139024	0.00069906
+West South Central	Multi-Family with 5+ Units	3	2010s	0	1	0	0	42	139024	0.000670223
+West South Central	Multi-Family with 5+ Units	4+	2010s	0	1	0	0	42	139024	0.00109648
+West South Central	Single-Family Attached	1	2010s	0	0.233314	0.0595735	0.707113	15	18366.2	9.59911e-05
+West South Central	Single-Family Attached	2	2010s	0.0435382	0.4447	0.0833111	0.428451	14	24463.4	0.000116954
+West South Central	Single-Family Attached	3	2010s	0.0357304	0.342313	0.105107	0.516849	29	3999.02	2.1449e-05
+West South Central	Single-Family Attached	4+	2010s	0	1	0	0	11	0	0
+West South Central	Single-Family Detached	1	2010s	0	0.102813	0.0692226	0.827964	112	782695	0.00314389
+West South Central	Single-Family Detached	2	2010s	0.0674499	0.0977209	0.0674499	0.767379	60	426338	0.00295703
+West South Central	Single-Family Detached	3	2010s	0.189144	0.211057	0.052597	0.547202	16	16805.7	5.61105e-05
+West South Central	Single-Family Detached	4+	2010s	0	1	0	0	11	9637.13	0
+West South Central	Mobile Home	1	<1940	0	1	0	0	14	1270.76	4.73552e-05
+West South Central	Mobile Home	2	<1940	0	1	0	0	14	1270.76	0
+West South Central	Mobile Home	3	<1940	0	1	0	0	14	1270.76	0
+West South Central	Mobile Home	4+	<1940	0	1	0	0	14	1270.76	0
+West South Central	Multi-Family with 2 - 4 Units	1	<1940	0	1	0	0	45	3405.5	0.000132411
+West South Central	Multi-Family with 2 - 4 Units	2	<1940	0	1	0	0	45	3405.5	0.000231956
+West South Central	Multi-Family with 2 - 4 Units	3	<1940	0	1	0	0	45	3405.5	7.13788e-05
+West South Central	Multi-Family with 2 - 4 Units	4+	<1940	0	1	0	0	45	3405.5	2.96729e-05
+West South Central	Multi-Family with 5+ Units	1	<1940	0	1	0	0	13	14787.5	2.05495e-05
+West South Central	Multi-Family with 5+ Units	2	<1940	0	1	0	0	13	14787.5	4.90642e-05
+West South Central	Multi-Family with 5+ Units	3	<1940	0	1	0	0	13	14787.5	9.20523e-05
+West South Central	Multi-Family with 5+ Units	4+	<1940	0	1	0	0	13	14787.5	0.000212873
+West South Central	Single-Family Attached	1	<1940	0	0.61539	0.0807507	0.30386	14	18520.8	3.23188e-05
+West South Central	Single-Family Attached	2	<1940	0.0490557	0.502562	0.0484081	0.399974	68	8699.24	8.45395e-05
+West South Central	Single-Family Attached	3	<1940	0.113654	0.625252	0.0157067	0.245388	13	0	2.24744e-05
+West South Central	Single-Family Attached	4+	<1940	0	1	0	0	11	0	0
+West South Central	Single-Family Detached	1	<1940	0	0.34667	0.0769225	0.576407	94	562030	0.00177888
+West South Central	Single-Family Detached	2	<1940	0.201641	0.113561	0.0970076	0.58779	14	63055.6	0.00239822
+West South Central	Single-Family Detached	3	<1940	0.156637	0.283075	0.0942007	0.466088	14	13265.2	0.000101984
+West South Central	Single-Family Detached	4+	<1940	0	1	0	0	11	0	0
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: The dwelling unit attic type.
+# Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+# Assumption: Multi-Family building types and Mobile Homes have Flat Roof (None) only.
+# Assumption: 1-story Single-Family building types cannot have Finished Attic/Cathedral Ceiling because that attic type is modeled as a new story and 1-story does not a second story. 4+story Single-Family and mobile homes are an impossible combination.

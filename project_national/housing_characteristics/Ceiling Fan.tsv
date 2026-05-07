@@ -1,0 +1,7 @@
+Dependency=Vacancy Status	Option=None	Option=Standard Efficiency	Option=Standard Efficiency, No usage	sampling_probability
+Occupied	0.28	0.72	0	0.878483
+Vacant	0.28	0	0.72	0.121517
+# Created by: manually created
+# Description: Presence and energy usage of ceiling fans at medium speed
+# Source: Wilson et al. 'Building America House Simulation Protocols' 2014, national average used as saturation
+# Assumption: If the unit is vacant there is no ceiling fan energy

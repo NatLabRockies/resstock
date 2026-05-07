@@ -1,0 +1,8 @@
+Dependency=Usage Level	Option=50%	Option=100%	Option=200%	sampling_probability
+Low	1	0	0	0.25
+Medium	0	1	0	0.5
+High	0	0	1	0.25
+Average	0	1	0	0
+# Created by: manually created
+# Description: Plug load diversity multiplier intended to add variation in plug load profiles across all simulations.
+# Source: Engineering Judgement, Calibration

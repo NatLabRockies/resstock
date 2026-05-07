@@ -1,0 +1,55 @@
+Dependency=Census Division RECS	Dependency=Geometry Building Type RECS	Option=78%	Option=79%	Option=82%	Option=84%	Option=85%	Option=86%	Option=89%	Option=91%	Option=94%	Option=95%	Option=96%	Option=97%	Option=99%	Option=100%	Option=101%	Option=102%	Option=103%	Option=104%	Option=105%	Option=106%	Option=108%	Option=110%	Option=113%	Option=119%	Option=121%	Option=123%	Option=134%	Option=137%	Option=140%	Option=144%	Option=166%	source_count	source_weight	sampling_probability
+East North Central	Mobile Home	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	18	629627	0.00591748
+East North Central	Multi-Family with 2 - 4 Units	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	46	1.48863e+06	0.0131058
+East North Central	Multi-Family with 5+ Units	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	143	2.80104e+06	0.0240749
+East North Central	Single-Family Attached	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	53	870186	0.00723013
+East North Central	Single-Family Detached	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	576	1.23049e+07	0.102463
+East South Central	Mobile Home	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	31	799716	0.00742399
+East South Central	Multi-Family with 2 - 4 Units	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	24	417443	0.00372387
+East South Central	Multi-Family with 5+ Units	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	24	784823	0.00722751
+East South Central	Single-Family Attached	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	20	164067	0.00139723
+East South Central	Single-Family Detached	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	273	5.03114e+06	0.0423596
+Middle Atlantic	Mobile Home	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	12	361506	0.00332758
+Middle Atlantic	Multi-Family with 2 - 4 Units	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	50	2.15266e+06	0.0182528
+Middle Atlantic	Multi-Family with 5+ Units	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	120	3.68879e+06	0.0310028
+Middle Atlantic	Single-Family Attached	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	51	1.58343e+06	0.0133576
+Middle Atlantic	Single-Family Detached	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	308	7.5913e+06	0.063634
+Mountain North	Mobile Home	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	13	245027	0.00205631
+Mountain North	Multi-Family with 2 - 4 Units	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	6	252547	0.00214325
+Mountain North	Multi-Family with 5+ Units	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	27	647161	0.00573523
+Mountain North	Single-Family Attached	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	19	249379	0.00207959
+Mountain North	Single-Family Detached	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	163	2.85276e+06	0.0234512
+Mountain South	Mobile Home	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	6	406149	0.00400453
+Mountain South	Multi-Family with 2 - 4 Units	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	9	238561	0.0021309
+Mountain South	Multi-Family with 5+ Units	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	37	678820	0.00614287
+Mountain South	Single-Family Attached	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	14	191461	0.0016872
+Mountain South	Single-Family Detached	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	176	2.75188e+06	0.0235303
+New England	Mobile Home	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	6	128601	0.00117344
+New England	Multi-Family with 2 - 4 Units	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	27	1.00692e+06	0.0084154
+New England	Multi-Family with 5+ Units	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	28	997220	0.0085647
+New England	Single-Family Attached	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	25	283319	0.00233464
+New England	Single-Family Detached	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	167	3.21278e+06	0.0277589
+Pacific	Mobile Home	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	55	783483	0.00656282
+Pacific	Multi-Family with 2 - 4 Units	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	51	1.37096e+06	0.0110175
+Pacific	Multi-Family with 5+ Units	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	215	3.9691e+06	0.032619
+Pacific	Single-Family Attached	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	108	1.14445e+06	0.00925804
+Pacific	Single-Family Detached	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	656	1.06063e+07	0.0854403
+South Atlantic	Mobile Home	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	92	1.99612e+06	0.0186886
+South Atlantic	Multi-Family with 2 - 4 Units	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	46	1.22394e+06	0.0105897
+South Atlantic	Multi-Family with 5+ Units	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	128	4.13207e+06	0.0389657
+South Atlantic	Single-Family Attached	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	122	1.77076e+06	0.0151219
+South Atlantic	Single-Family Detached	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	670	1.4352e+07	0.121265
+West North Central	Mobile Home	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	15	350708	0.00328164
+West North Central	Multi-Family with 2 - 4 Units	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	27	473461	0.00411237
+West North Central	Multi-Family with 5+ Units	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	72	1.18925e+06	0.0101911
+West North Central	Single-Family Attached	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	40	409583	0.0032776
+West North Central	Single-Family Detached	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	337	5.85434e+06	0.0483216
+West South Central	Mobile Home	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	38	1.08611e+06	0.0100533
+West South Central	Multi-Family with 2 - 4 Units	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	25	767115	0.0064847
+West South Central	Multi-Family with 5+ Units	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	64	2.25952e+06	0.0197029
+West South Central	Single-Family Attached	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	27	343496	0.00282032
+West South Central	Single-Family Detached	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	426	9.3137e+06	0.0765195
+# Created by: sources\recs\recs2015\tsv_maker.py
+# Description: Plug load usage level which is varied by Census Division RECS and Building Type RECS.
+# Source: Constructed using U.S. EIA 2015 Residential Energy Consumption Survey (RECS) microdata.
+# Assumption: Multipliers are based on ratio of the ResStock MELS regression equations and the MELS modeled in RECS.

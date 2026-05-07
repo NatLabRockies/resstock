@@ -1,0 +1,11 @@
+Dependency=Usage Level	Option=40% Usage	Option=50% Usage	Option=60% Usage	Option=70% Usage	Option=80% Usage	Option=90% Usage	Option=100% Usage	Option=110% Usage	Option=120% Usage	Option=130% Usage	Option=140% Usage	Option=150% Usage	Option=160% Usage	Option=170% Usage	Option=180% Usage	Option=190% Usage	Option=200% Usage	source_count	source_weight	sampling_probability
+Low	0.00104844	0.0361725	0.26082	0.701959	0	0	0	0	0	0	0	0	0	0	0	0	0	1700	1700	0.25
+Medium	0	0	0	0	0.527436	0.472564	0	0	0	0	0	0	0	0	0	0	0	1700	1700	0.5
+High	0	0	0	0	0	0	0.524138	0.275616	0.123572	0.0493377	0.0180979	0.00623972	0.00205649	0.000656194	0.000204683	6.28787e-05	1.91334e-05	1700	1700	0.25
+Average	0	0	0	0	0.527436	0.472564	0	0	0	0	0	0	0	0	0	0	0	1700	1700	0
+# Created by: sources\other\tsv_maker.py
+# Description: Hot water fixture usage and flow levels.
+# Source: Field data from a demand management program with 1700 residential electric resistance water heaters in the Northeast U.S.
+# Assumption: A lognormal distribution was shown to match the distribution of annual energy consumption.
+# Assumption: For the lognormal distribution the average multiplier is 0.8 and the standard deviation is 0.2.
+# Assumption: Low, Medium, and High usage is assigned based on the lower 25th percent, middle 50th percent, and upper 25th percent. The bins do not align perfectly with these bins so the lower users are a total of 25 percent, the medium users are 47 percent, and the high users are 28 percent of the stock.

@@ -1,0 +1,6 @@
+Dependency=Misc Pool	Option=None	Option=1.0 HP Pump	sampling_probability
+None	1	0	0.928746
+Has Pool	0	1	0.0712545
+# Created by: manually created
+# Description: Presence and size of pool pump.
+# Source: Wilson et al. 'Building America House Simulation Protocols' 2014, national average fraction used for saturation

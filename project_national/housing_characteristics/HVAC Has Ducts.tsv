@@ -1,0 +1,369 @@
+Dependency=HVAC Cooling Type	Dependency=HVAC Has Shared System	Dependency=HVAC Heating Type	Dependency=HVAC Secondary Heating Type	Option=No	Option=Yes	Option=Void	source_count	source_weight	sampling_probability
+Central AC	Cooling Only	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Central AC	Heating Only	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Central AC	Heating and Cooling	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Central AC	None	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Cooling Only	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating Only	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating and Cooling	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	None	Ducted Heat Pump	Ducted Heating	0	1	0	0	0	0
+Evaporative or Swamp Cooler	Cooling Only	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating Only	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating and Cooling	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	None	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Cooling Only	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating Only	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating and Cooling	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	None	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+None	Cooling Only	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+None	Heating Only	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+None	Heating and Cooling	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+None	None	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Room AC	Cooling Only	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Room AC	Heating Only	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Room AC	Heating and Cooling	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Room AC	None	Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Central AC	Cooling Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Central AC	Heating Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Central AC	Heating and Cooling	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Central AC	None	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Cooling Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating and Cooling	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	None	Ducted Heat Pump	Non-Ducted Heating	0	1	0	0	0	0
+Evaporative or Swamp Cooler	Cooling Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating and Cooling	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	None	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Cooling Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating and Cooling	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	None	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+None	Cooling Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+None	Heating Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+None	Heating and Cooling	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+None	None	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Room AC	Cooling Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Room AC	Heating Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Room AC	Heating and Cooling	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Room AC	None	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Central AC	Cooling Only	Ducted Heat Pump	None	0	0	1	0	0	0
+Central AC	Heating Only	Ducted Heat Pump	None	0	0	1	0	0	0
+Central AC	Heating and Cooling	Ducted Heat Pump	None	0	0	1	0	0	0
+Central AC	None	Ducted Heat Pump	None	0	0	1	0	0	0
+Ducted Heat Pump	Cooling Only	Ducted Heat Pump	None	0	0	1	47	451720	0
+Ducted Heat Pump	Heating Only	Ducted Heat Pump	None	0	0	1	18	181554	0
+Ducted Heat Pump	Heating and Cooling	Ducted Heat Pump	None	0	0	1	48	436437	0
+Ducted Heat Pump	None	Ducted Heat Pump	None	0	1	0	1874	1.32488e+07	0.153727
+Evaporative or Swamp Cooler	Cooling Only	Ducted Heat Pump	None	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating Only	Ducted Heat Pump	None	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating and Cooling	Ducted Heat Pump	None	0	0	1	0	0	0
+Evaporative or Swamp Cooler	None	Ducted Heat Pump	None	0	0	1	2	9970.17	0
+Non-Ducted Heat Pump	Cooling Only	Ducted Heat Pump	None	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating Only	Ducted Heat Pump	None	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating and Cooling	Ducted Heat Pump	None	0	0	1	2	14232.5	0
+Non-Ducted Heat Pump	None	Ducted Heat Pump	None	0	0	1	5	54053.1	0
+None	Cooling Only	Ducted Heat Pump	None	0	0	1	0	0	0
+None	Heating Only	Ducted Heat Pump	None	0	0	1	13	114050	0
+None	Heating and Cooling	Ducted Heat Pump	None	0	0	1	0	0	0
+None	None	Ducted Heat Pump	None	0	0	1	133	997311	0
+Room AC	Cooling Only	Ducted Heat Pump	None	0	0	1	1	16229.6	0
+Room AC	Heating Only	Ducted Heat Pump	None	0	0	1	17	160759	0
+Room AC	Heating and Cooling	Ducted Heat Pump	None	0	0	1	2	14619.5	0
+Room AC	None	Ducted Heat Pump	None	0	0	1	56	431964	0
+Central AC	Cooling Only	Ducted Heating	Ducted Heating	0	1	0	0	0	0
+Central AC	Heating Only	Ducted Heating	Ducted Heating	0	1	0	0	0	0
+Central AC	Heating and Cooling	Ducted Heating	Ducted Heating	0	1	0	0	0	0
+Central AC	None	Ducted Heating	Ducted Heating	0	1	0	0	0	0
+Ducted Heat Pump	Cooling Only	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating Only	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating and Cooling	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	None	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Cooling Only	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating Only	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating and Cooling	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	None	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Cooling Only	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating Only	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating and Cooling	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	None	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+None	Cooling Only	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+None	Heating Only	Ducted Heating	Ducted Heating	0	1	0	0	0	1.11162e-07
+None	Heating and Cooling	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+None	None	Ducted Heating	Ducted Heating	0	1	0	0	0	9.7788e-06
+Room AC	Cooling Only	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Room AC	Heating Only	Ducted Heating	Ducted Heating	0	1	0	0	0	0
+Room AC	Heating and Cooling	Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Room AC	None	Ducted Heating	Ducted Heating	0	1	0	0	0	0
+Central AC	Cooling Only	Ducted Heating	Non-Ducted Heating	0	1	0	0	0	0
+Central AC	Heating Only	Ducted Heating	Non-Ducted Heating	0	1	0	0	0	0
+Central AC	Heating and Cooling	Ducted Heating	Non-Ducted Heating	1	0	0	0	0	0
+Central AC	None	Ducted Heating	Non-Ducted Heating	0	1	0	0	0	0
+Ducted Heat Pump	Cooling Only	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating Only	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating and Cooling	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	None	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Cooling Only	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating Only	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating and Cooling	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	None	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Cooling Only	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating Only	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating and Cooling	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	None	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+None	Cooling Only	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+None	Heating Only	Ducted Heating	Non-Ducted Heating	1	0	0	0	0	1.64011e-06
+None	Heating and Cooling	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+None	None	Ducted Heating	Non-Ducted Heating	0	1	0	0	0	6.53233e-05
+Room AC	Cooling Only	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Room AC	Heating Only	Ducted Heating	Non-Ducted Heating	1	0	0	0	0	0
+Room AC	Heating and Cooling	Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Room AC	None	Ducted Heating	Non-Ducted Heating	0	1	0	0	0	0
+Central AC	Cooling Only	Ducted Heating	None	0	1	0	117	1.15051e+06	0.00973118
+Central AC	Heating Only	Ducted Heating	None	0	1	0	68	657899	0.00586748
+Central AC	Heating and Cooling	Ducted Heating	None	1	0	0	223	1.95182e+06	0.0164786
+Central AC	None	Ducted Heating	None	0	1	0	8477	5.41028e+07	0.427677
+Ducted Heat Pump	Cooling Only	Ducted Heating	None	0	0	1	0	0	0
+Ducted Heat Pump	Heating Only	Ducted Heating	None	0	0	1	0	0	0
+Ducted Heat Pump	Heating and Cooling	Ducted Heating	None	0	0	1	0	0	0
+Ducted Heat Pump	None	Ducted Heating	None	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Cooling Only	Ducted Heating	None	0	0	1	1	12738	0
+Evaporative or Swamp Cooler	Heating Only	Ducted Heating	None	0	0	1	1	11001.4	0
+Evaporative or Swamp Cooler	Heating and Cooling	Ducted Heating	None	0	0	1	1	6629.42	0
+Evaporative or Swamp Cooler	None	Ducted Heating	None	0	0	1	106	565717	0
+Non-Ducted Heat Pump	Cooling Only	Ducted Heating	None	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating Only	Ducted Heating	None	0	0	1	3	20386	0
+Non-Ducted Heat Pump	Heating and Cooling	Ducted Heating	None	0	0	1	2	31005.7	0
+Non-Ducted Heat Pump	None	Ducted Heating	None	0	0	1	69	314070	0
+None	Cooling Only	Ducted Heating	None	0	0	1	0	0	0
+None	Heating Only	Ducted Heating	None	1	0	0	97	726521	0.00638884
+None	Heating and Cooling	Ducted Heating	None	0	0	1	0	0	0
+None	None	Ducted Heating	None	0	1	0	966	5.8016e+06	0.0469453
+Room AC	Cooling Only	Ducted Heating	None	0	0	1	4	49518.2	0
+Room AC	Heating Only	Ducted Heating	None	1	0	0	170	1.48933e+06	0.0144609
+Room AC	Heating and Cooling	Ducted Heating	None	0	0	1	20	203466	0
+Room AC	None	Ducted Heating	None	0	1	0	1186	7.32581e+06	0.0620083
+Central AC	Cooling Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Central AC	Heating Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Central AC	Heating and Cooling	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Central AC	None	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Cooling Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating and Cooling	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	None	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Cooling Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating and Cooling	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	None	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Cooling Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating and Cooling	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	None	Non-Ducted Heat Pump	Ducted Heating	0	1	0	0	0	3.76642e-07
+None	Cooling Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+None	Heating Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+None	Heating and Cooling	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+None	None	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Room AC	Cooling Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Room AC	Heating Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Room AC	Heating and Cooling	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Room AC	None	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0	0	0
+Central AC	Cooling Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Central AC	Heating Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Central AC	Heating and Cooling	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Central AC	None	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Cooling Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating and Cooling	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	None	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Cooling Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating and Cooling	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	None	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Cooling Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating and Cooling	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	None	Non-Ducted Heat Pump	Non-Ducted Heating	1	0	0	0	0	5.57931e-06
+None	Cooling Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+None	Heating Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+None	Heating and Cooling	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+None	None	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Room AC	Cooling Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Room AC	Heating Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Room AC	Heating and Cooling	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Room AC	None	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0	0	0
+Central AC	Cooling Only	Non-Ducted Heat Pump	None	0	0	1	3	21821.4	0
+Central AC	Heating Only	Non-Ducted Heat Pump	None	0	0	1	2	13519.1	0
+Central AC	Heating and Cooling	Non-Ducted Heat Pump	None	0	0	1	2	10614.8	0
+Central AC	None	Non-Ducted Heat Pump	None	0	0	1	28	231867	0
+Ducted Heat Pump	Cooling Only	Non-Ducted Heat Pump	None	0	0	1	0	0	0
+Ducted Heat Pump	Heating Only	Non-Ducted Heat Pump	None	0	0	1	0	0	0
+Ducted Heat Pump	Heating and Cooling	Non-Ducted Heat Pump	None	0	0	1	0	0	0
+Ducted Heat Pump	None	Non-Ducted Heat Pump	None	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Cooling Only	Non-Ducted Heat Pump	None	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating Only	Non-Ducted Heat Pump	None	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating and Cooling	Non-Ducted Heat Pump	None	0	0	1	0	0	0
+Evaporative or Swamp Cooler	None	Non-Ducted Heat Pump	None	0	0	1	0	0	0
+Non-Ducted Heat Pump	Cooling Only	Non-Ducted Heat Pump	None	0	0	1	1	7293.19	0
+Non-Ducted Heat Pump	Heating Only	Non-Ducted Heat Pump	None	0	0	1	1	3891.93	0
+Non-Ducted Heat Pump	Heating and Cooling	Non-Ducted Heat Pump	None	0	0	1	1	10248.6	0
+Non-Ducted Heat Pump	None	Non-Ducted Heat Pump	None	1	0	0	85	524296	0.00974382
+None	Cooling Only	Non-Ducted Heat Pump	None	0	0	1	0	0	0
+None	Heating Only	Non-Ducted Heat Pump	None	0	0	1	2	20533.6	0
+None	Heating and Cooling	Non-Ducted Heat Pump	None	0	0	1	0	0	0
+None	None	Non-Ducted Heat Pump	None	0	0	1	14	91557.8	0
+Room AC	Cooling Only	Non-Ducted Heat Pump	None	0	0	1	0	0	0
+Room AC	Heating Only	Non-Ducted Heat Pump	None	0	0	1	5	43794.5	0
+Room AC	Heating and Cooling	Non-Ducted Heat Pump	None	0	0	1	1	7118.35	0
+Room AC	None	Non-Ducted Heat Pump	None	0	0	1	9	72454.5	0
+Central AC	Cooling Only	Non-Ducted Heating	Ducted Heating	0	1	0	0	0	0
+Central AC	Heating Only	Non-Ducted Heating	Ducted Heating	0	1	0	0	0	0
+Central AC	Heating and Cooling	Non-Ducted Heating	Ducted Heating	0	1	0	0	0	0
+Central AC	None	Non-Ducted Heating	Ducted Heating	0	1	0	0	0	0
+Ducted Heat Pump	Cooling Only	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating Only	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating and Cooling	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	None	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Cooling Only	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating Only	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating and Cooling	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	None	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Cooling Only	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating Only	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating and Cooling	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	None	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+None	Cooling Only	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+None	Heating Only	Non-Ducted Heating	Ducted Heating	0	1	0	0	0	1.01767e-06
+None	Heating and Cooling	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+None	None	Non-Ducted Heating	Ducted Heating	0	1	0	0	0	1.8078e-05
+Room AC	Cooling Only	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Room AC	Heating Only	Non-Ducted Heating	Ducted Heating	0	1	0	0	0	0
+Room AC	Heating and Cooling	Non-Ducted Heating	Ducted Heating	0	0	1	0	0	0
+Room AC	None	Non-Ducted Heating	Ducted Heating	0	1	0	0	0	0
+Central AC	Cooling Only	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0	0	0
+Central AC	Heating Only	Non-Ducted Heating	Non-Ducted Heating	0	1	0	0	0	0
+Central AC	Heating and Cooling	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0	0	0
+Central AC	None	Non-Ducted Heating	Non-Ducted Heating	0	1	0	0	0	0
+Ducted Heat Pump	Cooling Only	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating Only	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating and Cooling	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	None	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Cooling Only	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating Only	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating and Cooling	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	None	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Cooling Only	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating Only	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating and Cooling	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	None	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+None	Cooling Only	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+None	Heating Only	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0	0	1.7885e-05
+None	Heating and Cooling	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+None	None	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0	0	0.000267418
+Room AC	Cooling Only	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Room AC	Heating Only	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0	0	0
+Room AC	Heating and Cooling	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0	0	0
+Room AC	None	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0	0	0
+Central AC	Cooling Only	Non-Ducted Heating	None	1	0	0	40	429091	0.00382116
+Central AC	Heating Only	Non-Ducted Heating	None	0	1	0	32	320675	0.00291913
+Central AC	Heating and Cooling	Non-Ducted Heating	None	1	0	0	94	832047	0.00777911
+Central AC	None	Non-Ducted Heating	None	0	1	0	819	5.42212e+06	0.0521776
+Ducted Heat Pump	Cooling Only	Non-Ducted Heating	None	0	0	1	0	0	0
+Ducted Heat Pump	Heating Only	Non-Ducted Heating	None	0	0	1	0	0	0
+Ducted Heat Pump	Heating and Cooling	Non-Ducted Heating	None	0	0	1	0	0	0
+Ducted Heat Pump	None	Non-Ducted Heating	None	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Cooling Only	Non-Ducted Heating	None	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating Only	Non-Ducted Heating	None	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating and Cooling	Non-Ducted Heating	None	0	0	1	4	37002.4	0
+Evaporative or Swamp Cooler	None	Non-Ducted Heating	None	0	0	1	45	254875	0
+Non-Ducted Heat Pump	Cooling Only	Non-Ducted Heating	None	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating Only	Non-Ducted Heating	None	0	0	1	5	39736.4	0
+Non-Ducted Heat Pump	Heating and Cooling	Non-Ducted Heating	None	0	0	1	4	25522.3	0
+Non-Ducted Heat Pump	None	Non-Ducted Heating	None	0	0	1	122	588770	0
+None	Cooling Only	Non-Ducted Heating	None	0	0	1	0	0	0
+None	Heating Only	Non-Ducted Heating	None	1	0	0	141	1.07634e+06	0.00973631
+None	Heating and Cooling	Non-Ducted Heating	None	0	0	1	0	0	0
+None	None	Non-Ducted Heating	None	1	0	0	741	3.84132e+06	0.0382524
+Room AC	Cooling Only	Non-Ducted Heating	None	0	0	1	14	137001	0
+Room AC	Heating Only	Non-Ducted Heating	None	1	0	0	380	3.39243e+06	0.0326338
+Room AC	Heating and Cooling	Non-Ducted Heating	None	0	0	1	51	474402	0
+Room AC	None	Non-Ducted Heating	None	1	0	0	1370	9.25592e+06	0.0879265
+Central AC	Cooling Only	None	Ducted Heating	0	1	0	0	0	0
+Central AC	Heating Only	None	Ducted Heating	0	0	1	0	0	0
+Central AC	Heating and Cooling	None	Ducted Heating	0	0	1	0	0	0
+Central AC	None	None	Ducted Heating	0	1	0	0	0	0
+Ducted Heat Pump	Cooling Only	None	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating Only	None	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating and Cooling	None	Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	None	None	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Cooling Only	None	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating Only	None	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating and Cooling	None	Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	None	None	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Cooling Only	None	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating Only	None	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating and Cooling	None	Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	None	None	Ducted Heating	0	0	1	0	0	0
+None	Cooling Only	None	Ducted Heating	0	0	1	0	0	0
+None	Heating Only	None	Ducted Heating	0	0	1	0	0	0
+None	Heating and Cooling	None	Ducted Heating	0	0	1	0	0	0
+None	None	None	Ducted Heating	0	1	0	0	0	0
+Room AC	Cooling Only	None	Ducted Heating	0	0	1	0	0	0
+Room AC	Heating Only	None	Ducted Heating	0	0	1	0	0	0
+Room AC	Heating and Cooling	None	Ducted Heating	0	0	1	0	0	0
+Room AC	None	None	Ducted Heating	0	1	0	0	0	0
+Central AC	Cooling Only	None	Non-Ducted Heating	1	0	0	0	0	0
+Central AC	Heating Only	None	Non-Ducted Heating	0	0	1	0	0	0
+Central AC	Heating and Cooling	None	Non-Ducted Heating	0	0	1	0	0	0
+Central AC	None	None	Non-Ducted Heating	0	1	0	0	0	0
+Ducted Heat Pump	Cooling Only	None	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating Only	None	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	Heating and Cooling	None	Non-Ducted Heating	0	0	1	0	0	0
+Ducted Heat Pump	None	None	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Cooling Only	None	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating Only	None	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating and Cooling	None	Non-Ducted Heating	0	0	1	0	0	0
+Evaporative or Swamp Cooler	None	None	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Cooling Only	None	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating Only	None	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating and Cooling	None	Non-Ducted Heating	0	0	1	0	0	0
+Non-Ducted Heat Pump	None	None	Non-Ducted Heating	0	0	1	0	0	0
+None	Cooling Only	None	Non-Ducted Heating	0	0	1	0	0	0
+None	Heating Only	None	Non-Ducted Heating	0	0	1	0	0	0
+None	Heating and Cooling	None	Non-Ducted Heating	0	0	1	0	0	0
+None	None	None	Non-Ducted Heating	1	0	0	0	0	0
+Room AC	Cooling Only	None	Non-Ducted Heating	0	0	1	0	0	0
+Room AC	Heating Only	None	Non-Ducted Heating	0	0	1	0	0	0
+Room AC	Heating and Cooling	None	Non-Ducted Heating	0	0	1	0	0	0
+Room AC	None	None	Non-Ducted Heating	1	0	0	0	0	0
+Central AC	Cooling Only	None	None	1	0	0	40	413263	0.000512093
+Central AC	Heating Only	None	None	0	0	1	0	0	0
+Central AC	Heating and Cooling	None	None	0	0	1	0	0	0
+Central AC	None	None	None	0	1	0	279	2.81744e+06	0.00384895
+Ducted Heat Pump	Cooling Only	None	None	0	0	1	0	0	0
+Ducted Heat Pump	Heating Only	None	None	0	0	1	0	0	0
+Ducted Heat Pump	Heating and Cooling	None	None	0	0	1	0	0	0
+Ducted Heat Pump	None	None	None	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Cooling Only	None	None	0	0	1	1	17584.8	0
+Evaporative or Swamp Cooler	Heating Only	None	None	0	0	1	0	0	0
+Evaporative or Swamp Cooler	Heating and Cooling	None	None	0	0	1	0	0	0
+Evaporative or Swamp Cooler	None	None	None	0	0	1	4	39064.4	0
+Non-Ducted Heat Pump	Cooling Only	None	None	0	0	1	1	1833.49	0
+Non-Ducted Heat Pump	Heating Only	None	None	0	0	1	0	0	0
+Non-Ducted Heat Pump	Heating and Cooling	None	None	0	0	1	0	0	0
+Non-Ducted Heat Pump	None	None	None	0	0	1	40	126209	0
+None	Cooling Only	None	None	0	0	1	0	0	0
+None	Heating Only	None	None	0	0	1	0	0	0
+None	Heating and Cooling	None	None	0	0	1	0	0	0
+None	None	None	None	1	0	0	218	1.3483e+06	0.00416014
+Room AC	Cooling Only	None	None	0	0	1	7	88537.8	0
+Room AC	Heating Only	None	None	0	0	1	0	0	0
+Room AC	Heating and Cooling	None	None	0	0	1	0	0	0
+Room AC	None	None	None	1	0	0	161	937990	0.00281793
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: The presence of ducts in the dwelling unit.
+# Source: The sample counts and sample weights are constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+# Assumption: Ducted Heat Pump HVAC type assumed to have ducts
+# Assumption: Non-Ducted Heat Pump HVAC type assumed to have no ducts
+# Assumption: There are likely homes with non-ducted heat pump having ducts (Central AC with non-ducted HP) But due to structure of ResStock we are not accounting those homes
+# Assumption: Evaporative or Swamp Cooler assigned Void option
+# Assumption: None of the shared system options currently modeled (in HVAC Shared Efficiencies) are ducted, therefore where there are discrepancies between HVAC Heating Type, HVAC Cooling Type, and HVAC Has Shared System, HVAC Has Shared System takes precedence. (e.g., Central AC + Ducted Heating + Shared Heating and Cooling = No (Ducts)) (This is a temporary fix and will change when ducted shared system options are introduced.)

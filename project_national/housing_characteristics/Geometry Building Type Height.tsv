@@ -1,0 +1,94 @@
+Dependency=Geometry Building Type RECS	Dependency=Geometry Stories	Option=Mobile Home	Option=Multifamily with 2-4 Units	Option=Multifamily with 5+ units, 1-3 stories	Option=Multifamily with 5+ units, 4-7 stories	Option=Multifamily with 5+ units, 8+ stories	Option=Single-Family Attached	Option=Single-Family Detached	source_count	source_weight	sampling_probability
+Mobile Home	1	1	0	0	0	0	0	0	541	6.94096e+06	0.0624897
+Mobile Home	2	1	0	0	0	0	0	0	0	0	0
+Mobile Home	3	1	0	0	0	0	0	0	0	0	0
+Mobile Home	4	1	0	0	0	0	0	0	0	0	0
+Mobile Home	5	1	0	0	0	0	0	0	0	0	0
+Mobile Home	6	1	0	0	0	0	0	0	0	0	0
+Mobile Home	7	1	0	0	0	0	0	0	0	0	0
+Mobile Home	8	1	0	0	0	0	0	0	0	0	0
+Mobile Home	9	1	0	0	0	0	0	0	0	0	0
+Mobile Home	10	1	0	0	0	0	0	0	0	0	0
+Mobile Home	11	1	0	0	0	0	0	0	0	0	0
+Mobile Home	12	1	0	0	0	0	0	0	0	0	0
+Mobile Home	13	1	0	0	0	0	0	0	0	0	0
+Mobile Home	14	1	0	0	0	0	0	0	0	0	0
+Mobile Home	15	1	0	0	0	0	0	0	0	0	0
+Mobile Home	20	1	0	0	0	0	0	0	0	0	0
+Mobile Home	21	1	0	0	0	0	0	0	0	0	0
+Mobile Home	35	1	0	0	0	0	0	0	0	0	0
+Multi-Family with 2 - 4 Units	1	0	1	0	0	0	0	0	0	0	0.0130108
+Multi-Family with 2 - 4 Units	2	0	1	0	0	0	0	0	0	0	0.0535952
+Multi-Family with 2 - 4 Units	3	0	1	0	0	0	0	0	0	0	0.011292
+Multi-Family with 2 - 4 Units	4	0	1	0	0	0	0	0	0	0	0.00207836
+Multi-Family with 2 - 4 Units	5	0	1	0	0	0	0	0	0	0	0
+Multi-Family with 2 - 4 Units	6	0	1	0	0	0	0	0	0	0	0
+Multi-Family with 2 - 4 Units	7	0	1	0	0	0	0	0	0	0	0
+Multi-Family with 2 - 4 Units	8	0	1	0	0	0	0	0	0	0	0
+Multi-Family with 2 - 4 Units	9	0	1	0	0	0	0	0	0	0	0
+Multi-Family with 2 - 4 Units	10	0	1	0	0	0	0	0	0	0	0
+Multi-Family with 2 - 4 Units	11	0	1	0	0	0	0	0	0	0	0
+Multi-Family with 2 - 4 Units	12	0	1	0	0	0	0	0	0	0	0
+Multi-Family with 2 - 4 Units	13	0	1	0	0	0	0	0	0	0	0
+Multi-Family with 2 - 4 Units	14	0	1	0	0	0	0	0	0	0	0
+Multi-Family with 2 - 4 Units	15	0	1	0	0	0	0	0	0	0	0
+Multi-Family with 2 - 4 Units	20	0	1	0	0	0	0	0	0	0	0
+Multi-Family with 2 - 4 Units	21	0	1	0	0	0	0	0	0	0	0
+Multi-Family with 2 - 4 Units	35	0	1	0	0	0	0	0	0	0	0
+Multi-Family with 5+ Units	1	0	0	1	0	0	0	0	149	1.38542e+06	0.0117413
+Multi-Family with 5+ Units	2	0	0	1	0	0	0	0	739	7.3518e+06	0.0616695
+Multi-Family with 5+ Units	3	0	0	1	0	0	0	0	591	5.86158e+06	0.0559483
+Multi-Family with 5+ Units	4	0	0	0	1	0	0	0	127	1.35945e+06	0.0177326
+Multi-Family with 5+ Units	5	0	0	0	1	0	0	0	75	731535	0.00792207
+Multi-Family with 5+ Units	6	0	0	0	1	0	0	0	62	577566	0.00701718
+Multi-Family with 5+ Units	7	0	0	0	1	0	0	0	19	171245	0.00155383
+Multi-Family with 5+ Units	8	0	0	0	0	1	0	0	13	141790	0.00162715
+Multi-Family with 5+ Units	9	0	0	0	0	1	0	0	10	122228	0.00132173
+Multi-Family with 5+ Units	10	0	0	0	0	1	0	0	12	106310	0.00165043
+Multi-Family with 5+ Units	11	0	0	0	0	1	0	0	8	86678.7	0.00089699
+Multi-Family with 5+ Units	12	0	0	0	0	1	0	0	14	160368	0.00186565
+Multi-Family with 5+ Units	13	0	0	0	0	1	0	0	9	75150.4	0.00121017
+Multi-Family with 5+ Units	14	0	0	0	0	1	0	0	10	95842.6	0.00111998
+Multi-Family with 5+ Units	15	0	0	0	0	1	0	0	11	108549	0.00115789
+Multi-Family with 5+ Units	20	0	0	0	0	1	0	0	15	120772	0.00206217
+Multi-Family with 5+ Units	21	0	0	0	0	1	0	0	51	572630	0.00660916
+Multi-Family with 5+ Units	35	0	0	0	0	1	0	0	8	80784.2	0.00112057
+Single-Family Attached	1	0	0	0	0	0	1	0	384	2.79222e+06	0.0239746
+Single-Family Attached	2	0	0	0	0	0	1	0	457	3.51494e+06	0.0305069
+Single-Family Attached	3	0	0	0	0	0	1	0	49	409689	0.00408269
+Single-Family Attached	4	0	0	0	0	0	1	0	0	0	0
+Single-Family Attached	5	0	0	0	0	0	1	0	0	0	0
+Single-Family Attached	6	0	0	0	0	0	1	0	0	0	0
+Single-Family Attached	7	0	0	0	0	0	1	0	0	0	0
+Single-Family Attached	8	0	0	0	0	0	1	0	0	0	0
+Single-Family Attached	9	0	0	0	0	0	1	0	0	0	0
+Single-Family Attached	10	0	0	0	0	0	1	0	0	0	0
+Single-Family Attached	11	0	0	0	0	0	1	0	0	0	0
+Single-Family Attached	12	0	0	0	0	0	1	0	0	0	0
+Single-Family Attached	13	0	0	0	0	0	1	0	0	0	0
+Single-Family Attached	14	0	0	0	0	0	1	0	0	0	0
+Single-Family Attached	15	0	0	0	0	0	1	0	0	0	0
+Single-Family Attached	20	0	0	0	0	0	1	0	0	0	0
+Single-Family Attached	21	0	0	0	0	0	1	0	0	0	0
+Single-Family Attached	35	0	0	0	0	0	1	0	0	0	0
+Single-Family Detached	1	0	0	0	0	0	0	1	4740	4.34002e+07	0.377732
+Single-Family Detached	2	0	0	0	0	0	0	1	2928	2.72824e+07	0.228318
+Single-Family Detached	3	0	0	0	0	0	0	1	135	1.15319e+06	0.00869288
+Single-Family Detached	4	0	0	0	0	0	0	1	0	0	0
+Single-Family Detached	5	0	0	0	0	0	0	1	0	0	0
+Single-Family Detached	6	0	0	0	0	0	0	1	0	0	0
+Single-Family Detached	7	0	0	0	0	0	0	1	0	0	0
+Single-Family Detached	8	0	0	0	0	0	0	1	0	0	0
+Single-Family Detached	9	0	0	0	0	0	0	1	0	0	0
+Single-Family Detached	10	0	0	0	0	0	0	1	0	0	0
+Single-Family Detached	11	0	0	0	0	0	0	1	0	0	0
+Single-Family Detached	12	0	0	0	0	0	0	1	0	0	0
+Single-Family Detached	13	0	0	0	0	0	0	1	0	0	0
+Single-Family Detached	14	0	0	0	0	0	0	1	0	0	0
+Single-Family Detached	15	0	0	0	0	0	0	1	0	0	0
+Single-Family Detached	20	0	0	0	0	0	0	1	0	0	0
+Single-Family Detached	21	0	0	0	0	0	0	1	0	0	0
+Single-Family Detached	35	0	0	0	0	0	0	1	0	0	0
+# Created by: sources\recs\recs2009\tsv_maker.py
+# Description: The 2009 U.S. Energy Information Administration Residential Energy Consumption Survey  building type with multi-family buildings split out by low-rise, mid-rise, and high-rise.
+# Source: Calculated directly from other distributions

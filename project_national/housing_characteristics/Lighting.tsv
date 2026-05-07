@@ -1,0 +1,58 @@
+Dependency=Census Division RECS	Dependency=Geometry Building Type RECS	Option=100% CFL	Option=100% Incandescent	Option=100% LED	source_count	source_weight	sampling_probability
+East North Central	Mobile Home	0.368079	0.348728	0.283193	594	6.46727e+06	0.00591748
+East North Central	Multi-Family with 2 - 4 Units	0.402282	0.440908	0.156809	189	2.14483e+06	0.0131058
+East North Central	Multi-Family with 5+ Units	0.402282	0.440908	0.156809	189	2.14483e+06	0.0240749
+East North Central	Single-Family Attached	0.415393	0.313736	0.270871	53	870186	0.00723013
+East North Central	Single-Family Detached	0.368079	0.348728	0.283193	594	6.46727e+06	0.102463
+East South Central	Mobile Home	0.381673	0.41724	0.201087	304	2.91543e+06	0.00742399
+East South Central	Multi-Family with 2 - 4 Units	0.266116	0.543254	0.19063	48	601133	0.00372387
+East South Central	Multi-Family with 5+ Units	0.266116	0.543254	0.19063	48	601133	0.00722751
+East South Central	Single-Family Attached	0.356506	0.404008	0.239486	20	164067	0.00139723
+East South Central	Single-Family Detached	0.381673	0.41724	0.201087	304	2.91543e+06	0.0423596
+Middle Atlantic	Mobile Home	0.324881	0.319463	0.355657	320	3.9764e+06	0.00332758
+Middle Atlantic	Multi-Family with 2 - 4 Units	0.338088	0.411462	0.25045	170	2.92073e+06	0.0182528
+Middle Atlantic	Multi-Family with 5+ Units	0.338088	0.411462	0.25045	170	2.92073e+06	0.0310028
+Middle Atlantic	Single-Family Attached	0.365438	0.486422	0.14814	51	1.58343e+06	0.0133576
+Middle Atlantic	Single-Family Detached	0.324881	0.319463	0.355657	320	3.9764e+06	0.063634
+Mountain North	Mobile Home	0.356955	0.25186	0.391185	176	1.5489e+06	0.00205631
+Mountain North	Multi-Family with 2 - 4 Units	0.337867	0.29328	0.368853	33	449854	0.00214325
+Mountain North	Multi-Family with 5+ Units	0.337867	0.29328	0.368853	33	449854	0.00573523
+Mountain North	Single-Family Attached	0.385547	0.419581	0.194872	19	249379	0.00207959
+Mountain North	Single-Family Detached	0.356955	0.25186	0.391185	176	1.5489e+06	0.0234512
+Mountain South	Mobile Home	0.411721	0.305513	0.282766	182	1.57901e+06	0.00400453
+Mountain South	Multi-Family with 2 - 4 Units	0.330664	0.486895	0.182441	46	458690	0.0021309
+Mountain South	Multi-Family with 5+ Units	0.330664	0.486895	0.182441	46	458690	0.00614287
+Mountain South	Single-Family Attached	0.426449	0.30622	0.267331	14	191461	0.0016872
+Mountain South	Single-Family Detached	0.411721	0.305513	0.282766	182	1.57901e+06	0.0235303
+New England	Mobile Home	0.302378	0.279379	0.418243	173	1.67069e+06	0.00117344
+New England	Multi-Family with 2 - 4 Units	0.423516	0.408921	0.167563	55	1.00207e+06	0.0084154
+New England	Multi-Family with 5+ Units	0.423516	0.408921	0.167563	55	1.00207e+06	0.0085647
+New England	Single-Family Attached	0.350202	0.321674	0.328124	25	283319	0.00233464
+New England	Single-Family Detached	0.302378	0.279379	0.418243	173	1.67069e+06	0.0277589
+Pacific	Mobile Home	0.328179	0.219138	0.452684	695	5.58772e+06	0.00656282
+Pacific	Multi-Family with 2 - 4 Units	0.455301	0.32851	0.216188	238	2.42912e+06	0.0110175
+Pacific	Multi-Family with 5+ Units	0.455301	0.32851	0.216188	238	2.42912e+06	0.032619
+Pacific	Single-Family Attached	0.384923	0.296203	0.318874	108	1.14445e+06	0.00925804
+Pacific	Single-Family Detached	0.328179	0.219138	0.452684	695	5.58772e+06	0.0854403
+South Atlantic	Mobile Home	0.352832	0.391493	0.255674	762	8.17404e+06	0.0186886
+South Atlantic	Multi-Family with 2 - 4 Units	0.350557	0.486635	0.162808	174	2.67801e+06	0.0105897
+South Atlantic	Multi-Family with 5+ Units	0.350557	0.486635	0.162808	174	2.67801e+06	0.0389657
+South Atlantic	Single-Family Attached	0.382731	0.348247	0.269023	122	1.77076e+06	0.0151219
+South Atlantic	Single-Family Detached	0.352832	0.391493	0.255674	762	8.17404e+06	0.121265
+West North Central	Mobile Home	0.320511	0.369704	0.309785	352	3.10252e+06	0.00328164
+West North Central	Multi-Family with 2 - 4 Units	0.355388	0.471765	0.172847	99	831358	0.00411237
+West North Central	Multi-Family with 5+ Units	0.355388	0.471765	0.172847	99	831358	0.0101911
+West North Central	Single-Family Attached	0.275542	0.460663	0.263795	40	409583	0.0032776
+West North Central	Single-Family Detached	0.320511	0.369704	0.309785	352	3.10252e+06	0.0483216
+West South Central	Mobile Home	0.380602	0.384103	0.235295	464	5.1999e+06	0.0100533
+West South Central	Multi-Family with 2 - 4 Units	0.244977	0.625411	0.129612	89	1.51332e+06	0.0064847
+West South Central	Multi-Family with 5+ Units	0.244977	0.625411	0.129612	89	1.51332e+06	0.0197029
+West South Central	Single-Family Attached	0.244977	0.625411	0.129612	89	343496	0.00282032
+West South Central	Single-Family Detached	0.380602	0.384103	0.235295	464	5.1999e+06	0.0765195
+# Created by: sources\recs\2015\tsv_maker.py
+# Source: Constructed using U.S. EIA 2015 Residential Energy Consumption Survey (RECS) microdata.
+# Source: 2019 Energy Savings Forecast of Solid-State Lighting in General Illumination Applications. https://www.energy.gov/sites/prod/files/2019/12/f69/2019_ssl-energy-savings-forecast.pdf
+# Assumption: Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options.
+# Assumption: Due to low sample sizes for some Building Types, Building Type data are grouped into: 1) Single-Family Detached and Mobile Homes, and 2) Multifamily 2-4 units and Multifamily 5+ units, and 3) Single-Family Attached.
+# Assumption: Single-Family Attached units in the West South Central census division has the same LED saturation as Multi-Family
+# Assumption: LED saturation is adjusted to match the U.S. projected saturation in the 2019 Energy Savings Forecast of Solid-State Lighting in General Illumination Applications.

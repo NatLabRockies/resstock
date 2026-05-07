@@ -1,0 +1,9 @@
+Dependency=Geometry Building Type RECS	Option=None	Option=Yes	Option=No	sampling_probability
+Mobile Home	0	0	1	0.0624897
+Single-Family Detached	0	0	1	0.614743
+Single-Family Attached	0	0	1	0.0585642
+Multi-Family with 2 - 4 Units	1	0	0	0.0799763
+Multi-Family with 5+ Units	1	0	0	0.184227
+# Created by: manually created
+# Description: Presence of radiant barrier in the attic (not modeled in project_national).
+# Source: Not applicable; all homes are assumed to not have attic radiant barriers installed.

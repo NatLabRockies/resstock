@@ -1,0 +1,5 @@
+Option=No Exterior Use	sampling_probability
+1	1
+# Created by: manually created
+# Description: Use of holiday lighting (not used in project_national).
+# Source: Not applicable (holiday lighting is not currently modeled separate from other exterior lighting)

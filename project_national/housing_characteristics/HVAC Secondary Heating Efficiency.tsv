@@ -1,0 +1,387 @@
+Dependency=Custom State	Dependency=HVAC Secondary Heating Fuel	Dependency=HVAC Secondary Heating Type	Dependency=Vintage	Option=Fuel Boiler, 76% AFUE	Option=Fuel Boiler, 80% AFUE	Option=Fuel Boiler, 90% AFUE	Option=Fuel Furnace, 60% AFUE	Option=Fuel Furnace, 76% AFUE	Option=Fuel Furnace, 80% AFUE	Option=Fuel Furnace, 92.5% AFUE	Option=None	Option=Shared Heating	Option=Void	source_count	source_weight	sampling_probability
+AK	Electricity	Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	None	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	None	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	None	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	None	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	None	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	None	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	None	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	None	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Electricity	None	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Fuel Oil	Ducted Heating	1940s	0	0	0	0	0.125	0.875	0	0	0	0	16	16	4.67821e-07
+AK	Fuel Oil	Ducted Heating	1950s	0	0	0	0	0.212121	0.666667	0	0	0.121212	0	33	33	1.13004e-06
+AK	Fuel Oil	Ducted Heating	1960s	0	0	0	0	0.189189	0.783784	0	0	0.027027	0	37	37	1.22338e-06
+AK	Fuel Oil	Ducted Heating	1970s	0	0	0	0	0.230159	0.746032	0.015873	0	0.00793651	0	126	126	4.02122e-06
+AK	Fuel Oil	Ducted Heating	1980s	0	0	0	0	0.204724	0.779528	0.00787402	0	0.00787402	0	127	127	3.61006e-06
+AK	Fuel Oil	Ducted Heating	1990s	0	0	0	0	0.304348	0.608696	0.0434783	0	0.0434783	0	23	23	1.20932e-06
+AK	Fuel Oil	Ducted Heating	2000s	0	0	0	0	0.0555556	0.944444	0	0	0	0	18	18	1.05063e-06
+AK	Fuel Oil	Ducted Heating	2010s	0	0	0	0	0.199519	0.764423	0.00961538	0	0.0264423	0	416	1	1.78487e-07
+AK	Fuel Oil	Ducted Heating	<1940	0	0	0	0	0.114286	0.828571	0	0	0.0571429	0	35	35	4.18156e-07
+AK	Fuel Oil	Non-Ducted Heating	1940s	0.493653	0.441467	0.0253879	0	0	0	0	0	0.0394922	0	709	9	1.93435e-06
+AK	Fuel Oil	Non-Ducted Heating	1950s	0.645161	0.290323	0	0	0	0	0	0	0.0645161	0	31	31	3.91751e-06
+AK	Fuel Oil	Non-Ducted Heating	1960s	0.506849	0.410959	0.0136986	0	0	0	0	0	0.0684932	0	73	73	6.88498e-06
+AK	Fuel Oil	Non-Ducted Heating	1970s	0.540179	0.383929	0.0401786	0	0	0	0	0	0.0357143	0	224	224	1.78088e-05
+AK	Fuel Oil	Non-Ducted Heating	1980s	0.457516	0.48366	0.0261438	0	0	0	0	0	0.0326797	0	153	153	2.77098e-05
+AK	Fuel Oil	Non-Ducted Heating	1990s	0.525773	0.43299	0	0	0	0	0	0	0.0412371	0	97	97	1.43364e-05
+AK	Fuel Oil	Non-Ducted Heating	2000s	0.426471	0.544118	0.0294118	0	0	0	0	0	0	0	68	68	1.35707e-05
+AK	Fuel Oil	Non-Ducted Heating	2010s	0.166667	0.583333	0.0833333	0	0	0	0	0	0.166667	0	12	12	1.66306e-06
+AK	Fuel Oil	Non-Ducted Heating	<1940	0.380952	0.547619	0.0238095	0	0	0	0	0	0.047619	0	42	42	2.33284e-06
+AK	Fuel Oil	None	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Fuel Oil	None	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Fuel Oil	None	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Fuel Oil	None	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Fuel Oil	None	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Fuel Oil	None	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Fuel Oil	None	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Fuel Oil	None	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Fuel Oil	None	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Natural Gas	Ducted Heating	1940s	0	0	0	0	0.147982	0.303438	0.539611	0	0.00896861	0	669	4	8.54103e-08
+AK	Natural Gas	Ducted Heating	1950s	0	0	0	0	0.166667	0.5	0.333333	0	0	0	30	30	7.16709e-07
+AK	Natural Gas	Ducted Heating	1960s	0	0	0	0	0.16	0.32	0.52	0	0	0	25	25	6.11365e-07
+AK	Natural Gas	Ducted Heating	1970s	0	0	0	0	0.16875	0.31875	0.49375	0	0.01875	0	160	160	3.42851e-06
+AK	Natural Gas	Ducted Heating	1980s	0	0	0	0	0.163333	0.323333	0.506667	0	0.00666667	0	300	300	5.85519e-06
+AK	Natural Gas	Ducted Heating	1990s	0	0	0	0	0.0927835	0.278351	0.628866	0	0	0	97	97	3.01246e-06
+AK	Natural Gas	Ducted Heating	2000s	0	0	0	0	0.147982	0.303438	0.539611	0	0.00896861	0	669	9	5.442e-07
+AK	Natural Gas	Ducted Heating	2010s	0	0	0	0	0.0294118	0	0.941176	0	0.0294118	0	34	34	1.92972e-07
+AK	Natural Gas	Ducted Heating	<1940	0	0	0	0	0.2	0.1	0.7	0	0	0	10	10	4.60284e-08
+AK	Natural Gas	Non-Ducted Heating	1940s	0.349771	0.104358	0.511468	0	0	0	0	0	0.0344037	0	872	4	1.40743e-07
+AK	Natural Gas	Non-Ducted Heating	1950s	0.384615	0.205128	0.384615	0	0	0	0	0	0.025641	0	39	39	1.09533e-06
+AK	Natural Gas	Non-Ducted Heating	1960s	0.398374	0.113821	0.430894	0	0	0	0	0	0.0569106	0	123	123	3.14354e-06
+AK	Natural Gas	Non-Ducted Heating	1970s	0.32987	0.0961039	0.54026	0	0	0	0	0	0.0337662	0	385	385	9.97297e-06
+AK	Natural Gas	Non-Ducted Heating	1980s	0.392308	0.0807692	0.5	0	0	0	0	0	0.0269231	0	260	260	7.88149e-06
+AK	Natural Gas	Non-Ducted Heating	1990s	0.166667	0.2	0.633333	0	0	0	0	0	0	0	30	30	1.30415e-06
+AK	Natural Gas	Non-Ducted Heating	2000s	0.349771	0.104358	0.511468	0	0	0	0	0	0.0344037	0	872	4	1.02612e-06
+AK	Natural Gas	Non-Ducted Heating	2010s	0.349771	0.104358	0.511468	0	0	0	0	0	0.0344037	0	872	6	2.34933e-07
+AK	Natural Gas	Non-Ducted Heating	<1940	0.190476	0.047619	0.761905	0	0	0	0	0	0	0	21	21	1.06293e-07
+AK	Natural Gas	None	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Natural Gas	None	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Natural Gas	None	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Natural Gas	None	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Natural Gas	None	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Natural Gas	None	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Natural Gas	None	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Natural Gas	None	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Natural Gas	None	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	None	None	1940s	0	0	0	0	0	0	0	1	0	0	786	786	2.56422e-05
+AK	None	None	1950s	0	0	0	0	0	0	0	1	0	0	2998	2998	9.41611e-05
+AK	None	None	1960s	0	0	0	0	0	0	0	1	0	0	5350	5350	0.000154147
+AK	None	None	1970s	0	0	0	0	0	0	0	1	0	0	15511	15511	0.000444195
+AK	None	None	1980s	0	0	0	0	0	0	0	1	0	0	16715	16715	0.000483305
+AK	None	None	1990s	0	0	0	0	0	0	0	1	0	0	5816	5816	0.000264436
+AK	None	None	2000s	0	0	0	0	0	0	0	1	0	0	5289	5289	0.000328407
+AK	None	None	2010s	0	0	0	0	0	0	0	1	0	0	12297	12297	9.4402e-05
+AK	None	None	<1940	0	0	0	0	0	0	0	1	0	0	2255	2255	3.0393e-05
+AK	Other Fuel	Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	2	0	0
+AK	Other Fuel	Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	2	1	0
+AK	Other Fuel	Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	2	0	0
+AK	Other Fuel	Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	2	1	0
+AK	Other Fuel	Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	2	0	0
+AK	Other Fuel	Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	2	0	0
+AK	Other Fuel	Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	2	0	0
+AK	Other Fuel	Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	2	0	0
+AK	Other Fuel	Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	2	0	0
+AK	Other Fuel	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	7	0	1.73572e-08
+AK	Other Fuel	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	7	0	8.857e-08
+AK	Other Fuel	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	7	0	6.40693e-08
+AK	Other Fuel	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	7	1	6.61748e-07
+AK	Other Fuel	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	7	5	5.31341e-07
+AK	Other Fuel	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	7	0	1.00121e-07
+AK	Other Fuel	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	7	1	1.21935e-07
+AK	Other Fuel	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	7	0	4.19618e-08
+AK	Other Fuel	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	7	0	5.8393e-08
+AK	Other Fuel	None	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Other Fuel	None	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Other Fuel	None	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Other Fuel	None	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Other Fuel	None	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Other Fuel	None	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Other Fuel	None	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Other Fuel	None	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Other Fuel	None	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Propane	Ducted Heating	1940s	0	0	0	0	0.323529	0.352941	0.323529	0	0	0	34	0	8.07787e-09
+AK	Propane	Ducted Heating	1950s	0	0	0	0	0.323529	0.352941	0.323529	0	0	0	34	1	4.62921e-08
+AK	Propane	Ducted Heating	1960s	0	0	0	0	0.323529	0.352941	0.323529	0	0	0	34	0	6.12168e-10
+AK	Propane	Ducted Heating	1970s	0	0	0	0	0.323529	0.352941	0.323529	0	0	0	34	9	2.63198e-07
+AK	Propane	Ducted Heating	1980s	0	0	0	0	0.375	0.3125	0.3125	0	0	0	16	16	4.64271e-07
+AK	Propane	Ducted Heating	1990s	0	0	0	0	0.323529	0.352941	0.323529	0	0	0	34	2	1.16091e-07
+AK	Propane	Ducted Heating	2000s	0	0	0	0	0.323529	0.352941	0.323529	0	0	0	34	3	2.18835e-07
+AK	Propane	Ducted Heating	2010s	0	0	0	0	0.323529	0.352941	0.323529	0	0	0	34	1	3.04477e-08
+AK	Propane	Ducted Heating	<1940	0	0	0	0	0.323529	0.352941	0.323529	0	0	0	34	2	2.34476e-08
+AK	Propane	Non-Ducted Heating	1940s	0.0909091	0.181818	0.727273	0	0	0	0	0	0	0	22	0	1.06443e-07
+AK	Propane	Non-Ducted Heating	1950s	0.0909091	0.181818	0.727273	0	0	0	0	0	0	0	22	1	3.42917e-07
+AK	Propane	Non-Ducted Heating	1960s	0.0909091	0.181818	0.727273	0	0	0	0	0	0	0	22	0	4.08605e-07
+AK	Propane	Non-Ducted Heating	1970s	0.0909091	0.181818	0.727273	0	0	0	0	0	0	0	22	4	1.7319e-06
+AK	Propane	Non-Ducted Heating	1980s	0.0909091	0.181818	0.727273	0	0	0	0	0	0	0	22	4	2.28327e-06
+AK	Propane	Non-Ducted Heating	1990s	0.0909091	0.181818	0.727273	0	0	0	0	0	0	0	22	4	2.54163e-06
+AK	Propane	Non-Ducted Heating	2000s	0.0909091	0.181818	0.727273	0	0	0	0	0	0	0	22	1	3.79185e-06
+AK	Propane	Non-Ducted Heating	2010s	0.0909091	0.181818	0.727273	0	0	0	0	0	0	0	22	7	5.63632e-07
+AK	Propane	Non-Ducted Heating	<1940	0.0909091	0.181818	0.727273	0	0	0	0	0	0	0	22	1	2.48781e-07
+AK	Propane	None	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Propane	None	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Propane	None	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Propane	None	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Propane	None	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Propane	None	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Propane	None	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Propane	None	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Propane	None	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Wood	Ducted Heating	1940s	0	0	0	1	0	0	0	0	0	0	17	0	0
+AK	Wood	Ducted Heating	1950s	0	0	0	1	0	0	0	0	0	0	17	0	0
+AK	Wood	Ducted Heating	1960s	0	0	0	1	0	0	0	0	0	0	17	3	7.35646e-08
+AK	Wood	Ducted Heating	1970s	0	0	0	1	0	0	0	0	0	0	17	5	1.06744e-07
+AK	Wood	Ducted Heating	1980s	0	0	0	1	0	0	0	0	0	0	17	7	1.5804e-07
+AK	Wood	Ducted Heating	1990s	0	0	0	1	0	0	0	0	0	0	17	1	3.72878e-08
+AK	Wood	Ducted Heating	2000s	0	0	0	1	0	0	0	0	0	0	17	0	0
+AK	Wood	Ducted Heating	2010s	0	0	0	1	0	0	0	0	0	0	17	0	0
+AK	Wood	Ducted Heating	<1940	0	0	0	1	0	0	0	0	0	0	17	1	1.34125e-08
+AK	Wood	Non-Ducted Heating	1940s	0.507937	0.444444	0	0	0	0	0	0	0.047619	0	63	0	3.19781e-06
+AK	Wood	Non-Ducted Heating	1950s	0.507937	0.444444	0	0	0	0	0	0	0.047619	0	63	1	9.39233e-06
+AK	Wood	Non-Ducted Heating	1960s	0.507937	0.444444	0	0	0	0	0	0	0.047619	0	63	1	1.82127e-05
+AK	Wood	Non-Ducted Heating	1970s	0.583333	0.333333	0	0	0	0	0	0	0.0833333	0	12	12	5.63755e-05
+AK	Wood	Non-Ducted Heating	1980s	0.5	0.4375	0	0	0	0	0	0	0.0625	0	16	16	6.69997e-05
+AK	Wood	Non-Ducted Heating	1990s	0.5	0.5	0	0	0	0	0	0	0	0	12	12	3.27364e-05
+AK	Wood	Non-Ducted Heating	2000s	0.507937	0.444444	0	0	0	0	0	0	0.047619	0	63	5	3.05478e-05
+AK	Wood	Non-Ducted Heating	2010s	0.6	0.3	0	0	0	0	0	0	0.1	0	10	10	5.96092e-06
+AK	Wood	Non-Ducted Heating	<1940	0.507937	0.444444	0	0	0	0	0	0	0.047619	0	63	6	5.65417e-06
+AK	Wood	None	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Wood	None	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Wood	None	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Wood	None	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Wood	None	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Wood	None	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Wood	None	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Wood	None	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+AK	Wood	None	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	None	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	None	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	None	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	None	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	None	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	None	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	None	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	None	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Electricity	None	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	None	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	None	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	None	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	None	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	None	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	None	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	None	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	None	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Fuel Oil	None	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	None	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	None	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	None	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	None	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	None	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	None	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	None	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	None	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Natural Gas	None	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	None	None	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0.0493751
+Others	None	None	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0.10373
+Others	None	None	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0.106456
+Others	None	None	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0.151784
+Others	None	None	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0.133734
+Others	None	None	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0.137583
+Others	None	None	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0.137044
+Others	None	None	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0.0506319
+Others	None	None	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0.127356
+Others	Other Fuel	Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	None	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	None	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	None	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	None	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	None	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	None	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	None	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	None	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Other Fuel	None	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	None	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	None	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	None	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	None	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	None	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	None	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	None	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	None	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Propane	None	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	None	1940s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	None	1950s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	None	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	None	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	None	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	None	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	None	2000s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	None	2010s	0	0	0	0	0	0	0	1	0	0	0	0	0
+Others	Wood	None	<1940	0	0	0	0	0	0	0	1	0	0	0	0	0
+# Created by: sources\aris\tsv_maker.py
+# Description: The efficiency and type of the heating system.
+# Source: Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+# Assumption: For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+# Assumption: For Alaska, electric space heaters are modelled as electric baseboards.
+# Assumption: For Alaska, Toyo/monitor direct-vent devices and other fuel space heaters are not modeled.
+# Assumption: For Alaska, fireplace and stoves are not modeled.
+# Assumption: For Alaska, heat pumps are assumed to be non-ducted air source heat pumps.

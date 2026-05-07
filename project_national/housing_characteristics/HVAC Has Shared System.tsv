@@ -1,0 +1,1359 @@
+Dependency=Geometry Building Type RECS	Dependency=HVAC Cooling Type	Dependency=HVAC Heating Type	Dependency=Vintage	Option=Cooling Only	Option=Heating and Cooling	Option=Heating Only	Option=None	Option=Void	source_count	source_weight	sampling_probability
+Mobile Home	Central AC	Ducted Heat Pump	1940s	0	0	0	0	1	6	0	0
+Mobile Home	Ducted Heat Pump	Ducted Heat Pump	1940s	0	0	0	1	0	168	1175.14	3.81209e-05
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heat Pump	1940s	0	0	0	0	1	2	0	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heat Pump	1940s	0	0	0	0	1	10	0	0
+Mobile Home	None	Ducted Heat Pump	1940s	0	0	0	0	1	10	0	0
+Mobile Home	Room AC	Ducted Heat Pump	1940s	0	0	0	0	1	10	0	0
+Mobile Home	Central AC	Ducted Heating	1940s	0	0	0	1	0	301	7020.39	9.44716e-05
+Mobile Home	Ducted Heat Pump	Ducted Heating	1940s	0	0	0	0	1	6	0	0
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heating	1940s	0	0	0	0	1	19	0	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heating	1940s	0	0	0	0	1	10	0	0
+Mobile Home	None	Ducted Heating	1940s	0	0	0	1	0	10	8796.48	1.4089e-05
+Mobile Home	Room AC	Ducted Heating	1940s	0	0	0	1	0	10	0	1.94235e-05
+Mobile Home	Central AC	Non-Ducted Heat Pump	1940s	0	0	0	0	1	2	0	0
+Mobile Home	Ducted Heat Pump	Non-Ducted Heat Pump	1940s	0	0	0	0	1	3	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1940s	0	0	0	0	1	1	0	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1940s	0	0	0	1	0	5	0	7.91511e-06
+Mobile Home	None	Non-Ducted Heat Pump	1940s	0	0	0	0	1	1	0	0
+Mobile Home	Room AC	Non-Ducted Heat Pump	1940s	0	0	0	0	1	1	0	0
+Mobile Home	Central AC	Non-Ducted Heating	1940s	0	0	0	1	0	45	1302.51	1.74446e-05
+Mobile Home	Ducted Heat Pump	Non-Ducted Heating	1940s	0	0	0	0	1	3	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heating	1940s	0	0	0	0	1	6	0	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heating	1940s	0	0	0	0	1	1	1352.37	0
+Mobile Home	None	Non-Ducted Heating	1940s	0	0	0	1	0	34	0	1.45078e-05
+Mobile Home	Room AC	Non-Ducted Heating	1940s	0	0	0	1	0	109	6595.61	4.49099e-05
+Mobile Home	Central AC	None	1940s	0	0	0	1	0	6	0	2.86747e-06
+Mobile Home	Ducted Heat Pump	None	1940s	0	0	0	0	1	3	0	0
+Mobile Home	Evaporative or Swamp Cooler	None	1940s	0	0	0	0	1	1	0	0
+Mobile Home	Non-Ducted Heat Pump	None	1940s	0	0	0	0	1	2	0	0
+Mobile Home	None	None	1940s	0	0	0	1	0	3	0	3.7071e-06
+Mobile Home	Room AC	None	1940s	0	0	0	1	0	10	0	1.9144e-06
+Mobile Home	Central AC	Ducted Heat Pump	1950s	0	0	0	0	1	6	0	0
+Mobile Home	Ducted Heat Pump	Ducted Heat Pump	1950s	0	0	0	1	0	168	11821	0.000159682
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heat Pump	1950s	0	0	0	0	1	2	0	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heat Pump	1950s	0	0	0	0	1	10	0	0
+Mobile Home	None	Ducted Heat Pump	1950s	0	0	0	0	1	10	0	0
+Mobile Home	Room AC	Ducted Heat Pump	1950s	0	0	0	0	1	10	0	0
+Mobile Home	Central AC	Ducted Heating	1950s	0	0	0	1	0	301	2940.12	0.000331437
+Mobile Home	Ducted Heat Pump	Ducted Heating	1950s	0	0	0	0	1	6	0	0
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heating	1950s	0	0	0	0	1	19	8312.16	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heating	1950s	0	0	0	0	1	10	0	0
+Mobile Home	None	Ducted Heating	1950s	0	0	0	1	0	10	12284.4	5.05282e-05
+Mobile Home	Room AC	Ducted Heating	1950s	0	0	0	1	0	10	34386.9	6.92544e-05
+Mobile Home	Central AC	Non-Ducted Heat Pump	1950s	0	0	0	0	1	2	7878.44	0
+Mobile Home	Ducted Heat Pump	Non-Ducted Heat Pump	1950s	0	0	0	0	1	3	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1950s	0	0	0	0	1	1	0	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1950s	0	0	0	1	0	5	0	1.98911e-05
+Mobile Home	None	Non-Ducted Heat Pump	1950s	0	0	0	0	1	1	0	0
+Mobile Home	Room AC	Non-Ducted Heat Pump	1950s	0	0	0	0	1	1	0	0
+Mobile Home	Central AC	Non-Ducted Heating	1950s	0	0	0	1	0	45	19799.7	5.02234e-05
+Mobile Home	Ducted Heat Pump	Non-Ducted Heating	1950s	0	0	0	0	1	3	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heating	1950s	0	0	0	0	1	6	7514.34	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heating	1950s	0	0	0	0	1	1	0	0
+Mobile Home	None	Non-Ducted Heating	1950s	0	0	0	1	0	34	6433.79	5.02158e-05
+Mobile Home	Room AC	Non-Ducted Heating	1950s	0	0	0	1	0	109	42073.1	0.000131583
+Mobile Home	Central AC	None	1950s	0	0	0	1	0	6	0	7.44776e-06
+Mobile Home	Ducted Heat Pump	None	1950s	0	0	0	0	1	3	0	0
+Mobile Home	Evaporative or Swamp Cooler	None	1950s	0	0	0	0	1	1	0	0
+Mobile Home	Non-Ducted Heat Pump	None	1950s	0	0	0	0	1	2	10894.8	0
+Mobile Home	None	None	1950s	0	0	0	1	0	3	0	1.07727e-05
+Mobile Home	Room AC	None	1950s	0	0	0	1	0	10	0	5.15805e-06
+Mobile Home	Central AC	Ducted Heat Pump	1960s	0	0	0	0	1	24	0	0
+Mobile Home	Ducted Heat Pump	Ducted Heat Pump	1960s	0	0	0	1	0	24	26934.4	0.000801199
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heat Pump	1960s	0	0	0	0	1	6	0	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heat Pump	1960s	0	0	0	0	1	33	0	0
+Mobile Home	None	Ducted Heat Pump	1960s	0	0	0	0	1	33	3634.8	0
+Mobile Home	Room AC	Ducted Heat Pump	1960s	0	0	0	0	1	59	0	0
+Mobile Home	Central AC	Ducted Heating	1960s	0	0	0	1	0	13	113364	0.000856997
+Mobile Home	Ducted Heat Pump	Ducted Heating	1960s	0	0	0	0	1	61	0	0
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heating	1960s	0	0	0	0	1	19	6362.02	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heating	1960s	0	0	0	0	1	31	0	0
+Mobile Home	None	Ducted Heating	1960s	0	0	0	1	0	30	14745.2	0.000236228
+Mobile Home	Room AC	Ducted Heating	1960s	0	0	0	1	0	11	82380.8	0.000628068
+Mobile Home	Central AC	Non-Ducted Heat Pump	1960s	0	0	0	0	1	10	0	0
+Mobile Home	Ducted Heat Pump	Non-Ducted Heat Pump	1960s	0	0	0	0	1	10	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1960s	0	0	0	0	1	3	0	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1960s	0	0	0	1	0	58	0	5.53042e-05
+Mobile Home	None	Non-Ducted Heat Pump	1960s	0	0	0	0	1	58	0	0
+Mobile Home	Room AC	Non-Ducted Heat Pump	1960s	0	0	0	0	1	58	0	0
+Mobile Home	Central AC	Non-Ducted Heating	1960s	0	0	0	1	0	10	0	0.000240913
+Mobile Home	Ducted Heat Pump	Non-Ducted Heating	1960s	0	0	0	0	1	10	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heating	1960s	0	0	0	0	1	6	0	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heating	1960s	0	0	0	0	1	15	0	0
+Mobile Home	None	Non-Ducted Heating	1960s	0	0	0	1	0	15	27605.9	0.000198918
+Mobile Home	Room AC	Non-Ducted Heating	1960s	0	0	0	1	0	10	69254	0.000538127
+Mobile Home	Central AC	None	1960s	0	0	0	1	0	10	0	2.69174e-05
+Mobile Home	Ducted Heat Pump	None	1960s	0	0	0	0	1	10	0	0
+Mobile Home	Evaporative or Swamp Cooler	None	1960s	0	0	0	0	1	1	4487.39	0
+Mobile Home	Non-Ducted Heat Pump	None	1960s	0	0	0	0	1	58	0	0
+Mobile Home	None	None	1960s	0	0	0	1	0	58	0	1.48895e-05
+Mobile Home	Room AC	None	1960s	0	0	0	1	0	58	23160.9	7.84977e-06
+Mobile Home	Central AC	Ducted Heat Pump	1970s	0	0	0	0	1	24	0	0
+Mobile Home	Ducted Heat Pump	Ducted Heat Pump	1970s	0	0	0	1	0	20	180819	0.00242027
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heat Pump	1970s	0	0	0	0	1	6	0	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heat Pump	1970s	0	0	0	0	1	33	0	0
+Mobile Home	None	Ducted Heat Pump	1970s	0	0	0	0	1	33	7867.11	0
+Mobile Home	Room AC	Ducted Heat Pump	1970s	0	0	0	0	1	59	17847.4	0
+Mobile Home	Central AC	Ducted Heating	1970s	0	0	0	1	0	48	349980	0.00373549
+Mobile Home	Ducted Heat Pump	Ducted Heating	1970s	0	0	0	0	1	61	0	0
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heating	1970s	0	0	0	0	1	19	11189	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heating	1970s	0	0	0	0	1	31	3215.32	0
+Mobile Home	None	Ducted Heating	1970s	0	0	0	1	0	26	120442	0.000901962
+Mobile Home	Room AC	Ducted Heating	1970s	0	0	0	1	0	46	296902	0.00249083
+Mobile Home	Central AC	Non-Ducted Heat Pump	1970s	0	0	0	0	1	10	0	0
+Mobile Home	Ducted Heat Pump	Non-Ducted Heat Pump	1970s	0	0	0	0	1	10	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1970s	0	0	0	0	1	3	0	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1970s	0	0	0	1	0	58	4875.77	5.85553e-05
+Mobile Home	None	Non-Ducted Heat Pump	1970s	0	0	0	0	1	58	0	0
+Mobile Home	Room AC	Non-Ducted Heat Pump	1970s	0	0	0	0	1	58	0	0
+Mobile Home	Central AC	Non-Ducted Heating	1970s	0	0	0	1	0	10	53851.1	0.00070662
+Mobile Home	Ducted Heat Pump	Non-Ducted Heating	1970s	0	0	0	0	1	10	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heating	1970s	0	0	0	0	1	6	6700.49	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heating	1970s	0	0	0	0	1	15	0	0
+Mobile Home	None	Non-Ducted Heating	1970s	0	0	0	1	0	12	66995.4	0.000682877
+Mobile Home	Room AC	Non-Ducted Heating	1970s	0	0	0	1	0	27	175559	0.00162953
+Mobile Home	Central AC	None	1970s	0	0	0	1	0	10	19049.6	7.29892e-05
+Mobile Home	Ducted Heat Pump	None	1970s	0	0	0	0	1	10	0	0
+Mobile Home	Evaporative or Swamp Cooler	None	1970s	0	0	0	0	1	1	0	0
+Mobile Home	Non-Ducted Heat Pump	None	1970s	0	0	0	0	1	58	0	0
+Mobile Home	None	None	1970s	0	0	0	1	0	58	9576.53	2.77498e-05
+Mobile Home	Room AC	None	1970s	0	0	0	1	0	58	12805.5	1.809e-05
+Mobile Home	Central AC	Ducted Heat Pump	1980s	0	0	0	0	1	85	0	0
+Mobile Home	Ducted Heat Pump	Ducted Heat Pump	1980s	0	0	0	1	0	29	239365	0.00370498
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heat Pump	1980s	0	0	0	0	1	7	0	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heat Pump	1980s	0	0	0	0	1	10	0	0
+Mobile Home	None	Ducted Heat Pump	1980s	0	0	0	0	1	10	46697.6	0
+Mobile Home	Room AC	Ducted Heat Pump	1980s	0	0	0	0	1	83	19648.2	0
+Mobile Home	Central AC	Ducted Heating	1980s	0	0	0	1	0	44	309447	0.00361426
+Mobile Home	Ducted Heat Pump	Ducted Heating	1980s	0	0	0	0	1	121	0	0
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heating	1980s	0	0	0	0	1	19	19189.5	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heating	1980s	0	0	0	0	1	29	2876.23	0
+Mobile Home	None	Ducted Heating	1980s	0	0	0	1	0	13	64689.7	0.000719694
+Mobile Home	Room AC	Ducted Heating	1980s	0	0	0	1	0	36	238858	0.00206343
+Mobile Home	Central AC	Non-Ducted Heat Pump	1980s	0	0	0	0	1	26	0	0
+Mobile Home	Ducted Heat Pump	Non-Ducted Heat Pump	1980s	0	0	0	0	1	26	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1980s	0	0	0	0	1	2	0	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1980s	0	0	0	1	0	11	7757.03	5.76101e-05
+Mobile Home	None	Non-Ducted Heat Pump	1980s	0	0	0	0	1	11	6954.09	0
+Mobile Home	Room AC	Non-Ducted Heat Pump	1980s	0	0	0	0	1	11	0	0
+Mobile Home	Central AC	Non-Ducted Heating	1980s	0	0	0	1	0	12	94965.6	0.00113064
+Mobile Home	Ducted Heat Pump	Non-Ducted Heating	1980s	0	0	0	0	1	23	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heating	1980s	0	0	0	0	1	6	0	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heating	1980s	0	0	0	0	1	10	0	0
+Mobile Home	None	Non-Ducted Heating	1980s	0	0	0	1	0	10	19666	0.000538366
+Mobile Home	Room AC	Non-Ducted Heating	1980s	0	0	0	1	0	27	220884	0.00200824
+Mobile Home	Central AC	None	1980s	0	0	0	1	0	26	12289.1	6.97762e-05
+Mobile Home	Ducted Heat Pump	None	1980s	0	0	0	0	1	26	0	0
+Mobile Home	Evaporative or Swamp Cooler	None	1980s	0	0	0	0	1	1	0	0
+Mobile Home	Non-Ducted Heat Pump	None	1980s	0	0	0	0	1	11	0	0
+Mobile Home	None	None	1980s	0	0	0	1	0	11	14519.6	2.06175e-05
+Mobile Home	Room AC	None	1980s	0	0	0	1	0	11	14169.2	1.0341e-05
+Mobile Home	Central AC	Ducted Heat Pump	1990s	0	0	0	0	1	85	0	0
+Mobile Home	Ducted Heat Pump	Ducted Heat Pump	1990s	0	0	0	1	0	56	501079	0.00531683
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heat Pump	1990s	0	0	0	0	1	7	0	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heat Pump	1990s	0	0	0	0	1	10	0	0
+Mobile Home	None	Ducted Heat Pump	1990s	0	0	0	0	1	10	42470.9	0
+Mobile Home	Room AC	Ducted Heat Pump	1990s	0	0	0	0	1	83	44626.8	0
+Mobile Home	Central AC	Ducted Heating	1990s	0	0	0	1	0	77	565162	0.00519749
+Mobile Home	Ducted Heat Pump	Ducted Heating	1990s	0	0	0	0	1	121	0	0
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heating	1990s	0	0	0	0	1	19	19070.3	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heating	1990s	0	0	0	0	1	29	0	0
+Mobile Home	None	Ducted Heating	1990s	0	0	0	1	0	15	88528.4	0.000911538
+Mobile Home	Room AC	Ducted Heating	1990s	0	0	0	1	0	39	252310	0.00274573
+Mobile Home	Central AC	Non-Ducted Heat Pump	1990s	0	0	0	0	1	26	5513.22	0
+Mobile Home	Ducted Heat Pump	Non-Ducted Heat Pump	1990s	0	0	0	0	1	26	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1990s	0	0	0	0	1	2	0	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1990s	0	0	0	1	0	11	5808.92	6.82002e-05
+Mobile Home	None	Non-Ducted Heat Pump	1990s	0	0	0	0	1	11	0	0
+Mobile Home	Room AC	Non-Ducted Heat Pump	1990s	0	0	0	0	1	11	8088.1	0
+Mobile Home	Central AC	Non-Ducted Heating	1990s	0	0	0	1	0	11	79415.5	0.0010127
+Mobile Home	Ducted Heat Pump	Non-Ducted Heating	1990s	0	0	0	0	1	23	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heating	1990s	0	0	0	0	1	6	11748.3	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heating	1990s	0	0	0	0	1	10	0	0
+Mobile Home	None	Non-Ducted Heating	1990s	0	0	0	1	0	10	49047.7	0.000508166
+Mobile Home	Room AC	Non-Ducted Heating	1990s	0	0	0	1	0	27	197449	0.00186528
+Mobile Home	Central AC	None	1990s	0	0	0	1	0	26	7985.57	8.13195e-05
+Mobile Home	Ducted Heat Pump	None	1990s	0	0	0	0	1	26	0	0
+Mobile Home	Evaporative or Swamp Cooler	None	1990s	0	0	0	0	1	1	0	0
+Mobile Home	Non-Ducted Heat Pump	None	1990s	0	0	0	0	1	11	0	0
+Mobile Home	None	None	1990s	0	0	0	1	0	11	5535.44	1.93624e-05
+Mobile Home	Room AC	None	1990s	0	0	0	1	0	11	37249.5	1.15251e-05
+Mobile Home	Central AC	Ducted Heat Pump	2000s	0	0	0	0	1	35	0	0
+Mobile Home	Ducted Heat Pump	Ducted Heat Pump	2000s	0	0	0	1	0	35	225385	0.00277705
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heat Pump	2000s	0	0	0	0	1	4	0	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heat Pump	2000s	0	0	0	0	1	22	0	0
+Mobile Home	None	Ducted Heat Pump	2000s	0	0	0	0	1	22	9836.52	0
+Mobile Home	Room AC	Ducted Heat Pump	2000s	0	0	0	0	1	14	6295.43	0
+Mobile Home	Central AC	Ducted Heating	2000s	0	0	0	1	0	71	453582	0.00470444
+Mobile Home	Ducted Heat Pump	Ducted Heating	2000s	0	0	0	0	1	71	0	0
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heating	2000s	0	0	0	0	1	19	18836.9	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heating	2000s	0	0	0	0	1	22	0	0
+Mobile Home	None	Ducted Heating	2000s	0	0	0	1	0	22	44612.5	0.000482878
+Mobile Home	Room AC	Ducted Heating	2000s	0	0	0	1	0	13	41848.2	0.000288366
+Mobile Home	Central AC	Non-Ducted Heat Pump	2000s	0	0	0	0	1	2	0	0
+Mobile Home	Ducted Heat Pump	Non-Ducted Heat Pump	2000s	0	0	0	0	1	9	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	2000s	0	0	0	0	1	1	0	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heat Pump	2000s	0	0	0	1	0	19	3195.89	5.45922e-05
+Mobile Home	None	Non-Ducted Heat Pump	2000s	0	0	0	0	1	19	0	0
+Mobile Home	Room AC	Non-Ducted Heat Pump	2000s	0	0	0	0	1	19	0	0
+Mobile Home	Central AC	Non-Ducted Heating	2000s	0	0	0	1	0	12	43445.8	0.00094612
+Mobile Home	Ducted Heat Pump	Non-Ducted Heating	2000s	0	0	0	0	1	9	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heating	2000s	0	0	0	0	1	6	2278.66	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heating	2000s	0	0	0	0	1	17	0	0
+Mobile Home	None	Non-Ducted Heating	2000s	0	0	0	1	0	17	26892.4	0.000150739
+Mobile Home	Room AC	Non-Ducted Heating	2000s	0	0	0	1	0	12	71627.7	0.000439864
+Mobile Home	Central AC	None	2000s	0	0	0	1	0	6	23864.7	5.81351e-05
+Mobile Home	Ducted Heat Pump	None	2000s	0	0	0	0	1	9	0	0
+Mobile Home	Evaporative or Swamp Cooler	None	2000s	0	0	0	0	1	1	0	0
+Mobile Home	Non-Ducted Heat Pump	None	2000s	0	0	0	0	1	19	9950.11	0
+Mobile Home	None	None	2000s	0	0	0	1	0	19	0	8.23664e-06
+Mobile Home	Room AC	None	2000s	0	0	0	1	0	19	0	4.92182e-06
+Mobile Home	Central AC	Ducted Heat Pump	2010s	0	0	0	0	1	22	0	0
+Mobile Home	Ducted Heat Pump	Ducted Heat Pump	2010s	0	0	0	1	0	22	189392	0.00100173
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heat Pump	2010s	0	0	0	0	1	0	0	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heat Pump	2010s	0	0	0	0	1	14	0	0
+Mobile Home	None	Ducted Heat Pump	2010s	0	0	0	0	1	14	0	0
+Mobile Home	Room AC	Ducted Heat Pump	2010s	0	0	0	0	1	14	0	0
+Mobile Home	Central AC	Ducted Heating	2010s	0	0	0	1	0	44	293871	0.00147898
+Mobile Home	Ducted Heat Pump	Ducted Heating	2010s	0	0	0	0	1	44	0	0
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heating	2010s	0	0	0	0	1	19	0	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heating	2010s	0	0	0	0	1	14	13678.6	0
+Mobile Home	None	Ducted Heating	2010s	0	0	0	1	0	14	29396.5	7.54434e-05
+Mobile Home	Room AC	Ducted Heating	2010s	0	0	0	1	0	14	28039.1	7.22725e-05
+Mobile Home	Central AC	Non-Ducted Heat Pump	2010s	0	0	0	0	1	2	0	0
+Mobile Home	Ducted Heat Pump	Non-Ducted Heat Pump	2010s	0	0	0	0	1	5	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	2010s	0	0	0	0	1	0	0	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heat Pump	2010s	0	0	0	1	0	5	12762	6.97444e-05
+Mobile Home	None	Non-Ducted Heat Pump	2010s	0	0	0	0	1	1	0	0
+Mobile Home	Room AC	Non-Ducted Heat Pump	2010s	0	0	0	0	1	1	0	0
+Mobile Home	Central AC	Non-Ducted Heating	2010s	0	0	0	1	0	12	35639.7	0.000191897
+Mobile Home	Ducted Heat Pump	Non-Ducted Heating	2010s	0	0	0	0	1	5	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heating	2010s	0	0	0	0	1	6	0	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heating	2010s	0	0	0	0	1	1	0	0
+Mobile Home	None	Non-Ducted Heating	2010s	0	0	0	1	0	34	13848.4	7.01531e-05
+Mobile Home	Room AC	Non-Ducted Heating	2010s	0	0	0	1	0	12	0	3.17588e-05
+Mobile Home	Central AC	None	2010s	0	0	0	1	0	6	0	1.91824e-05
+Mobile Home	Ducted Heat Pump	None	2010s	0	0	0	0	1	5	0	0
+Mobile Home	Evaporative or Swamp Cooler	None	2010s	0	0	0	0	1	1	0	0
+Mobile Home	Non-Ducted Heat Pump	None	2010s	0	0	0	0	1	2	0	0
+Mobile Home	None	None	2010s	0	0	0	1	0	3	0	4.18754e-06
+Mobile Home	Room AC	None	2010s	0	0	0	1	0	10	13153.1	8.05253e-07
+Mobile Home	Central AC	Ducted Heat Pump	<1940	0	0	0	0	1	4	0	0
+Mobile Home	Ducted Heat Pump	Ducted Heat Pump	<1940	0	0	0	1	0	168	3036.83	3.59157e-05
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heat Pump	<1940	0	0	0	0	1	0	0	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heat Pump	<1940	0	0	0	0	1	2	0	0
+Mobile Home	None	Ducted Heat Pump	<1940	0	0	0	0	1	13	0	0
+Mobile Home	Room AC	Ducted Heat Pump	<1940	0	0	0	0	1	11	0	0
+Mobile Home	Central AC	Ducted Heating	<1940	0	0	0	1	0	301	18142.3	0.000116542
+Mobile Home	Ducted Heat Pump	Ducted Heating	<1940	0	0	0	0	1	4	0	0
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heating	<1940	0	0	0	0	1	19	0	0
+Mobile Home	Non-Ducted Heat Pump	Ducted Heating	<1940	0	0	0	0	1	4	0	0
+Mobile Home	None	Ducted Heating	<1940	0	0	0	1	0	77	22732.1	2.17093e-05
+Mobile Home	Room AC	Ducted Heating	<1940	0	0	0	1	0	155	0	3.3646e-05
+Mobile Home	Central AC	Non-Ducted Heat Pump	<1940	0	0	0	0	1	2	0	0
+Mobile Home	Ducted Heat Pump	Non-Ducted Heat Pump	<1940	0	0	0	0	1	1	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	<1940	0	0	0	0	1	0	0	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heat Pump	<1940	0	0	0	1	0	5	0	8.83945e-06
+Mobile Home	None	Non-Ducted Heat Pump	<1940	0	0	0	0	1	1	0	0
+Mobile Home	Room AC	Non-Ducted Heat Pump	<1940	0	0	0	0	1	1	0	0
+Mobile Home	Central AC	Non-Ducted Heating	<1940	0	0	0	1	0	45	3365.97	1.81327e-05
+Mobile Home	Ducted Heat Pump	Non-Ducted Heating	<1940	0	0	0	0	1	1	0	0
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heating	<1940	0	0	0	0	1	6	0	0
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heating	<1940	0	0	0	0	1	1	3494.82	0
+Mobile Home	None	Non-Ducted Heating	<1940	0	0	0	1	0	34	0	2.51068e-05
+Mobile Home	Room AC	Non-Ducted Heating	<1940	0	0	0	1	0	109	17044.6	6.98611e-05
+Mobile Home	Central AC	None	<1940	0	0	0	1	0	6	0	1.65472e-05
+Mobile Home	Ducted Heat Pump	None	<1940	0	0	0	0	1	1	0	0
+Mobile Home	Evaporative or Swamp Cooler	None	<1940	0	0	0	0	1	1	0	0
+Mobile Home	Non-Ducted Heat Pump	None	<1940	0	0	0	0	1	2	0	0
+Mobile Home	None	None	<1940	0	0	0	1	0	3	0	2.87615e-05
+Mobile Home	Room AC	None	<1940	0	0	0	1	0	10	0	1.1093e-05
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heat Pump	1940s	0	0	0	0	1	47	0	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heat Pump	1940s	0	0	0	1	0	47	8216.15	0.000282393
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heat Pump	1940s	0	0	0	0	1	0	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heat Pump	1940s	0	0	0	0	1	24	0	0
+Multi-Family with 2 - 4 Units	None	Ducted Heat Pump	1940s	0	0	0	0	1	24	3817.28	0
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heat Pump	1940s	0	0	0	0	1	66	7869.85	0
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heating	1940s	0.0552619	0.308628	0.185987	0.450124	0	32	94543.7	0.000618529
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heating	1940s	0	0	0	0	1	40	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heating	1940s	0	0	0	0	1	2	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heating	1940s	0	0	0	0	1	20	1464.03	0
+Multi-Family with 2 - 4 Units	None	Ducted Heating	1940s	0	0	0.719816	0.280184	0	17	45917.4	0.000236448
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heating	1940s	0	0	0.575192	0.424808	0	47	128048	0.00121025
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heat Pump	1940s	0	0	0	0	1	15	0	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heat Pump	1940s	0	0	0	0	1	15	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1940s	0	0	0	0	1	1	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1940s	0	0	0	1	0	12	0	1.11512e-05
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heat Pump	1940s	0	0	0	0	1	12	0	0
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heat Pump	1940s	0	0	0	0	1	12	0	0
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heating	1940s	0.25757	0.293814	0.131547	0.31707	0	10	21135.6	0.000209806
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heating	1940s	0	0	0	0	1	13	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heating	1940s	0	0	0	0	1	3	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heating	1940s	0	0	0	0	1	41	2628.74	0
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heating	1940s	0	0	0.355066	0.644934	0	33	83136.7	0.000571536
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heating	1940s	0	0	0.503736	0.496264	0	84	248945	0.00172863
+Multi-Family with 2 - 4 Units	Central AC	None	1940s	0.138246	0	0	0.861754	0	15	756.068	1.99918e-05
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	None	1940s	0	0	0	0	1	15	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	None	1940s	0	0	0	0	1	1	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	None	1940s	0	0	0	0	1	12	511.543	0
+Multi-Family with 2 - 4 Units	None	None	1940s	0	0	0	1	0	12	8210.54	3.12131e-05
+Multi-Family with 2 - 4 Units	Room AC	None	1940s	0	0	0	1	0	12	4095.18	1.79073e-05
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heat Pump	1950s	0	0	0	0	1	47	0	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heat Pump	1950s	0	0	0	1	0	47	11582.8	0.000410349
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heat Pump	1950s	0	0	0	0	1	0	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heat Pump	1950s	0	0	0	0	1	24	0	0
+Multi-Family with 2 - 4 Units	None	Ducted Heat Pump	1950s	0	0	0	0	1	24	12736.1	0
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heat Pump	1950s	0	0	0	0	1	66	13034.6	0
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heating	1950s	0.0321155	0.179359	0.108086	0.680439	0	40	68140	0.000980098
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heating	1950s	0	0	0	0	1	40	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heating	1950s	0	0	0	0	1	2	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heating	1950s	0	0	0	0	1	20	0	0
+Multi-Family with 2 - 4 Units	None	Ducted Heating	1950s	0	0	0.823726	0.176274	0	19	27067.4	0.000358826
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heating	1950s	0	0	0.434036	0.565964	0	16	200469	0.00139485
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heat Pump	1950s	0	0	0	0	1	15	0	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heat Pump	1950s	0	0	0	0	1	15	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1950s	0	0	0	0	1	1	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1950s	0	0	0	1	0	12	0	2.22808e-07
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heat Pump	1950s	0	0	0	0	1	12	0	0
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heat Pump	1950s	0	0	0	0	1	12	0	0
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heating	1950s	0.123551	0.140937	0.343366	0.392146	0	13	22926.2	0.000342465
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heating	1950s	0	0	0	0	1	13	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heating	1950s	0	0	0	0	1	3	6363.2	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heating	1950s	0	0	0	0	1	41	0	0
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heating	1950s	0	0	0.49908	0.50092	0	40	75073.4	0.000834961
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heating	1950s	0	0	0.577132	0.422868	0	29	274834	0.00276605
+Multi-Family with 2 - 4 Units	Central AC	None	1950s	0.138246	0	0	0.861754	0	15	15899.8	4.37356e-05
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	None	1950s	0	0	0	0	1	15	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	None	1950s	0	0	0	0	1	1	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	None	1950s	0	0	0	0	1	12	0	0
+Multi-Family with 2 - 4 Units	None	None	1950s	0	0	0	1	0	12	26399.3	5.44702e-05
+Multi-Family with 2 - 4 Units	Room AC	None	1950s	0	0	0	1	0	12	11545.3	3.15322e-05
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heat Pump	1960s	0	0	0	0	1	24	0	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heat Pump	1960s	0	0	0	1	0	24	69369.5	0.00081729
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heat Pump	1960s	0	0	0	0	1	2	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heat Pump	1960s	0	0	0	0	1	31	0	0
+Multi-Family with 2 - 4 Units	None	Ducted Heat Pump	1960s	0	0	0	0	1	31	0	0
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heat Pump	1960s	0	0	0	0	1	36	20594.5	0
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heating	1960s	0.0660011	0.13635	0.174309	0.62334	0	30	289733	0.00231832
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heating	1960s	0	0	0	0	1	74	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heating	1960s	0	0	0	0	1	2	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heating	1960s	0	0	0	0	1	30	0	0
+Multi-Family with 2 - 4 Units	None	Ducted Heating	1960s	0	0	0.465658	0.534342	0	30	72440.2	0.000642424
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heating	1960s	0	0	0.863446	0.136554	0	16	133941	0.000891233
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heat Pump	1960s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heat Pump	1960s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1960s	0	0	0	0	1	1	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1960s	0	0	0	1	0	10	0	6.23902e-05
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heat Pump	1960s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heat Pump	1960s	0	0	0	0	1	10	12236.7	0
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heating	1960s	0.0900667	0.0658588	0.245196	0.598878	0	16	59281.4	0.000713621
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heating	1960s	0	0	0	0	1	16	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heating	1960s	0	0	0	0	1	3	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heating	1960s	0	0	0	0	1	23	0	0
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heating	1960s	0	0	0.224222	0.775778	0	12	87272.2	0.000625958
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heating	1960s	0	0	0.487727	0.512273	0	32	307280	0.00211448
+Multi-Family with 2 - 4 Units	Central AC	None	1960s	0.278502	0	0	0.721498	0	10	29641.5	3.74434e-05
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	None	1960s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	None	1960s	0	0	0	0	1	1	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	None	1960s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	None	None	1960s	0	0	0	1	0	10	3001.7	5.01508e-05
+Multi-Family with 2 - 4 Units	Room AC	None	1960s	0	0	0	1	0	10	30991.9	7.72618e-05
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heat Pump	1970s	0	0	0	0	1	24	0	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heat Pump	1970s	0	0	0	1	0	18	149263	0.00148117
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heat Pump	1970s	0	0	0	0	1	2	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heat Pump	1970s	0	0	0	0	1	31	0	0
+Multi-Family with 2 - 4 Units	None	Ducted Heat Pump	1970s	0	0	0	0	1	31	6781.64	0
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heat Pump	1970s	0	0	0	0	1	36	10167.1	0
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heating	1970s	0.172325	0.145986	0.0439256	0.637764	0	44	427962	0.00369554
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heating	1970s	0	0	0	0	1	74	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heating	1970s	0	0	0	0	1	2	18894.8	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heating	1970s	0	0	0	0	1	30	0	0
+Multi-Family with 2 - 4 Units	None	Ducted Heating	1970s	0	0	0.445583	0.554417	0	21	152137	0.000922859
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heating	1970s	0	0	0.739468	0.260532	0	17	164984	0.000832711
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heat Pump	1970s	0	0	0	0	1	10	9684.78	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heat Pump	1970s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1970s	0	0	0	0	1	1	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1970s	0	0	0	1	0	10	0	0.00018775
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heat Pump	1970s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heat Pump	1970s	0	0	0	0	1	10	14571.9	0
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heating	1970s	0.145857	0.106654	0.124092	0.623397	0	12	95702.2	0.00103014
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heating	1970s	0	0	0	0	1	16	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heating	1970s	0	0	0	0	1	3	6902.11	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heating	1970s	0	0	0	0	1	23	12343.7	0
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heating	1970s	0	0	0.487414	0.512586	0	10	98009.6	0.00102391
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heating	1970s	0	0	0.521099	0.478901	0	32	275410	0.00279216
+Multi-Family with 2 - 4 Units	Central AC	None	1970s	0.278502	0	0	0.721498	0	10	67503.1	5.09425e-05
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	None	1970s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	None	1970s	0	0	0	0	1	1	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	None	1970s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	None	None	1970s	0	0	0	1	0	10	37306.2	6.49153e-05
+Multi-Family with 2 - 4 Units	Room AC	None	1970s	0	0	0	1	0	10	10092.1	8.57814e-05
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heat Pump	1980s	0	0	0	0	1	30	0	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heat Pump	1980s	0	0	0	1	0	14	130183	0.00207802
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heat Pump	1980s	0	0	0	0	1	0	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heat Pump	1980s	0	0	0	0	1	18	0	0
+Multi-Family with 2 - 4 Units	None	Ducted Heat Pump	1980s	0	0	0	0	1	18	16383.7	0
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heat Pump	1980s	0	0	0	0	1	20	4582.31	0
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heating	1980s	0.105843	0.162908	0.0830503	0.648199	0	48	504115	0.00317419
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heating	1980s	0	0	0	0	1	80	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heating	1980s	0	0	0	0	1	2	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heating	1980s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	None	Ducted Heating	1980s	0	0	0.378686	0.621314	0	11	77317.5	0.000404675
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heating	1980s	0	0	0.613513	0.386487	0	12	140913	0.000822658
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heat Pump	1980s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heat Pump	1980s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1980s	0	0	0	0	1	1	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1980s	0	0	0	1	0	11	0	8.48023e-05
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heat Pump	1980s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heat Pump	1980s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heating	1980s	0.191034	0.117267	0.140616	0.551083	0	10	72660.8	0.000793653
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heating	1980s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heating	1980s	0	0	0	0	1	3	6917.8	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heating	1980s	0	0	0	0	1	35	0	0
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heating	1980s	0	0	0.426203	0.573797	0	19	117572	0.00112501
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heating	1980s	0	0	0.665161	0.334839	0	21	207768	0.00153591
+Multi-Family with 2 - 4 Units	Central AC	None	1980s	0.511849	0	0	0.488151	0	10	78316.2	5.88779e-05
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	None	1980s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	None	1980s	0	0	0	0	1	1	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	None	1980s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	None	None	1980s	0	0	0	1	0	11	46121.6	6.12784e-05
+Multi-Family with 2 - 4 Units	Room AC	None	1980s	0	0	0	1	0	11	28494.2	3.39255e-05
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heat Pump	1990s	0	0	0	0	1	30	0	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heat Pump	1990s	0	0	0	1	0	16	145611	0.00150826
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heat Pump	1990s	0	0	0	0	1	0	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heat Pump	1990s	0	0	0	0	1	18	0	0
+Multi-Family with 2 - 4 Units	None	Ducted Heat Pump	1990s	0	0	0	0	1	18	48007.6	0
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heat Pump	1990s	0	0	0	0	1	20	0	0
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heating	1990s	0.156971	0.190581	0.020053	0.632395	0	32	318984	0.00261015
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heating	1990s	0	0	0	0	1	80	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heating	1990s	0	0	0	0	1	2	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heating	1990s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	None	Ducted Heating	1990s	0	0	0.378686	0.621314	0	11	7290.6	0.000248227
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heating	1990s	0	0	0.567399	0.432601	0	19	66774.3	0.000540714
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heat Pump	1990s	0	0	0	0	1	11	6034.28	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heat Pump	1990s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1990s	0	0	0	0	1	1	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1990s	0	0	0	1	0	11	0	9.84263e-05
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heat Pump	1990s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heat Pump	1990s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heating	1990s	0.191034	0.117267	0.140616	0.551083	0	10	25970.3	0.000429664
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heating	1990s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heating	1990s	0	0	0	0	1	3	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heating	1990s	0	0	0	0	1	35	0	0
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heating	1990s	0	0	0.437048	0.562952	0	16	123460	0.000813583
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heating	1990s	0	0	0.417559	0.582441	0	13	146222	0.0011724
+Multi-Family with 2 - 4 Units	Central AC	None	1990s	0.511849	0	0	0.488151	0	10	20798.2	4.52105e-05
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	None	1990s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	None	1990s	0	0	0	0	1	1	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	None	1990s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	None	None	1990s	0	0	0	1	0	11	15281.2	4.25241e-05
+Multi-Family with 2 - 4 Units	Room AC	None	1990s	0	0	0	1	0	11	25300.8	2.39466e-05
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heat Pump	2000s	0	0	0	0	1	13	0	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heat Pump	2000s	0	0	0	1	0	13	85245.8	0.000859697
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heat Pump	2000s	0	0	0	0	1	0	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heat Pump	2000s	0	0	0	0	1	12	0	0
+Multi-Family with 2 - 4 Units	None	Ducted Heat Pump	2000s	0	0	0	0	1	12	39166.8	0
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heat Pump	2000s	0	0	0	0	1	17	7308.61	0
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heating	2000s	0.222921	0.101661	0.115405	0.560013	0	33	261286	0.00260326
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heating	2000s	0	0	0	0	1	33	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heating	2000s	0	0	0	0	1	2	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heating	2000s	0	0	0	0	1	12	0	0
+Multi-Family with 2 - 4 Units	None	Ducted Heating	2000s	0	0	0.621121	0.378879	0	12	51483.6	0.000357069
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heating	2000s	0	0	0.628445	0.371555	0	17	37853.1	0.000357111
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heat Pump	2000s	0	0	0	0	1	3	11853.7	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heat Pump	2000s	0	0	0	0	1	9	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	2000s	0	0	0	0	1	0	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	2000s	0	0	0	1	0	18	0	0.000138586
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heat Pump	2000s	0	0	0	0	1	18	11954.6	0
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heat Pump	2000s	0	0	0	0	1	18	0	0
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heating	2000s	0.268156	0.0892579	0.016137	0.626449	0	10	26270.6	0.000578041
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heating	2000s	0	0	0	0	1	9	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heating	2000s	0	0	0	0	1	3	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heating	2000s	0	0	0	0	1	15	0	0
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heating	2000s	0	0	0.478326	0.521674	0	15	24942.3	0.000281968
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heating	2000s	0	0	0.502723	0.497277	0	11	93070.4	0.000613885
+Multi-Family with 2 - 4 Units	Central AC	None	2000s	0.328519	0	0	0.671481	0	29	44908	3.88989e-05
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	None	2000s	0	0	0	0	1	9	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	None	2000s	0	0	0	0	1	0	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	None	2000s	0	0	0	0	1	18	13188.5	0
+Multi-Family with 2 - 4 Units	None	None	2000s	0	0	0	1	0	18	10491.3	2.72081e-05
+Multi-Family with 2 - 4 Units	Room AC	None	2000s	0	0	0	1	0	18	0	9.10391e-06
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heat Pump	2010s	0	0	0	0	1	31	0	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heat Pump	2010s	0	0	0	1	0	31	48335.5	0.000428432
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heat Pump	2010s	0	0	0	0	1	0	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heat Pump	2010s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	None	Ducted Heat Pump	2010s	0	0	0	0	1	11	28550.6	0
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heat Pump	2010s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heating	2010s	0.18241	0.301568	0.0589878	0.457034	0	24	186236	0.00111224
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heating	2010s	0	0	0	0	1	24	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heating	2010s	0	0	0	0	1	2	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heating	2010s	0	0	0	0	1	11	8467.29	0
+Multi-Family with 2 - 4 Units	None	Ducted Heating	2010s	0	0	0.62418	0.37582	0	11	23984.8	8.72281e-05
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heating	2010s	0	0	0.62418	0.37582	0	11	14688.4	8.03648e-05
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heat Pump	2010s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heat Pump	2010s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	2010s	0	0	0	0	1	0	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	2010s	0	0	0	1	0	11	0	6.26814e-05
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heat Pump	2010s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heat Pump	2010s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heating	2010s	0.18876	0.07832	0	0.73292	0	10	34602.3	0.000305492
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heating	2010s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heating	2010s	0	0	0	0	1	3	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heating	2010s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heating	2010s	0	0	0.592817	0.407183	0	10	27651.1	8.76887e-05
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heating	2010s	0	0	0.592817	0.407183	0	10	29965.8	0.000241741
+Multi-Family with 2 - 4 Units	Central AC	None	2010s	0.2048	0	0	0.7952	0	10	34771.8	2.0313e-05
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	None	2010s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	None	2010s	0	0	0	0	1	0	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	None	2010s	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	None	None	2010s	0	0	0	1	0	11	0	5.1907e-06
+Multi-Family with 2 - 4 Units	Room AC	None	2010s	0	0	0	1	0	11	1802.26	7.79044e-06
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heat Pump	<1940	0	0	0	0	1	38	0	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heat Pump	<1940	0	0	0	1	0	38	21232.4	0.000659901
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heat Pump	<1940	0	0	0	0	1	0	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heat Pump	<1940	0	0	0	0	1	21	0	0
+Multi-Family with 2 - 4 Units	None	Ducted Heat Pump	<1940	0	0	0	0	1	21	9864.72	0
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heat Pump	<1940	0	0	0	0	1	49	20337.5	0
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heating	<1940	0.0552619	0.308628	0.185987	0.450124	0	32	244323	0.00341709
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heating	<1940	0	0	0	0	1	32	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heating	<1940	0	0	0	0	1	2	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heating	<1940	0	0	0	0	1	18	3783.4	0
+Multi-Family with 2 - 4 Units	None	Ducted Heating	<1940	0	0	0.719816	0.280184	0	17	118661	0.00163583
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heating	<1940	0	0	0.575192	0.424808	0	47	330904	0.00464094
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heat Pump	<1940	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heat Pump	<1940	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	<1940	0	0	0	0	1	0	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	<1940	0	0	0	1	0	124	0	4.90885e-05
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heat Pump	<1940	0	0	0	0	1	124	0	0
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heat Pump	<1940	0	0	0	0	1	124	0	0
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heating	<1940	0.25757	0.293814	0.131547	0.31707	0	10	54619.3	0.000817672
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heating	<1940	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heating	<1940	0	0	0	0	1	3	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heating	<1940	0	0	0	0	1	34	6793.27	0
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heating	<1940	0	0	0.355066	0.644934	0	33	214844	0.00235887
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heating	<1940	0	0	0.503736	0.496264	0	84	643330	0.00753452
+Multi-Family with 2 - 4 Units	Central AC	None	<1940	0.421961	0	0	0.578039	0	11	1953.85	6.96538e-05
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	None	<1940	0	0	0	0	1	11	0	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	None	<1940	0	0	0	0	1	0	0	0
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	None	<1940	0	0	0	0	1	124	1321.94	0
+Multi-Family with 2 - 4 Units	None	None	<1940	0	0	0	1	0	124	21217.9	6.00741e-05
+Multi-Family with 2 - 4 Units	Room AC	None	<1940	0	0	0	1	0	124	10582.9	4.87099e-05
+Multi-Family with 5+ Units	Central AC	Ducted Heat Pump	1940s	0	0	0	0	1	25	0	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heat Pump	1940s	0	0	0	1	0	18	36806.2	0.000474336
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heat Pump	1940s	0	0	0	0	1	0	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heat Pump	1940s	0	0	0	0	1	28	0	0
+Multi-Family with 5+ Units	None	Ducted Heat Pump	1940s	0	0	0	0	1	28	4263.04	0
+Multi-Family with 5+ Units	Room AC	Ducted Heat Pump	1940s	0	0	0	0	1	11	19895.6	0
+Multi-Family with 5+ Units	Central AC	Ducted Heating	1940s	0.180084	0.264477	0.0446106	0.510829	0	49	127157	0.000831763
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heating	1940s	0	0	0	0	1	70	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heating	1940s	0	0	0	0	1	3	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heating	1940s	0	0	0	0	1	24	0	0
+Multi-Family with 5+ Units	None	Ducted Heating	1940s	0	0	0.548251	0.451749	0	18	41195.9	0.000256382
+Multi-Family with 5+ Units	Room AC	Ducted Heating	1940s	0	0	0.702159	0.297841	0	33	106204	0.000602625
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heat Pump	1940s	0	0	0	0	1	33	0	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heat Pump	1940s	0	0	0	0	1	33	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1940s	0	0	0	0	1	2	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1940s	0	0	0	1	0	18	3037.18	4.67837e-05
+Multi-Family with 5+ Units	None	Non-Ducted Heat Pump	1940s	0	0	0	0	1	18	0	0
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heat Pump	1940s	0	0	0	0	1	11	6487.57	0
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heating	1940s	0.102833	0.275214	0.323609	0.298345	0	19	46546.7	0.000370226
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heating	1940s	0	0	0	0	1	29	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heating	1940s	0	0	0	0	1	6	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heating	1940s	0	0	0	0	1	47	0	0
+Multi-Family with 5+ Units	None	Non-Ducted Heating	1940s	0	0	0.72267	0.27733	0	33	106348	0.000764313
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heating	1940s	0	0	0.722289	0.277711	0	111	319961	0.0021113
+Multi-Family with 5+ Units	Central AC	None	1940s	0.0502691	0	0	0.949731	0	33	10337.6	6.28177e-05
+Multi-Family with 5+ Units	Ducted Heat Pump	None	1940s	0	0	0	0	1	33	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	None	1940s	0	0	0	0	1	2	4722.87	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	None	1940s	0	0	0	0	1	18	0	0
+Multi-Family with 5+ Units	None	None	1940s	0	0	0	1	0	18	14569.8	9.68867e-05
+Multi-Family with 5+ Units	Room AC	None	1940s	0	0	0	1	0	11	11213.7	5.58232e-05
+Multi-Family with 5+ Units	Central AC	Ducted Heat Pump	1950s	0	0	0	0	1	25	0	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heat Pump	1950s	0	0	0	1	0	25	61887.7	0.000781545
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heat Pump	1950s	0	0	0	0	1	0	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heat Pump	1950s	0	0	0	0	1	28	1774.41	0
+Multi-Family with 5+ Units	None	Ducted Heat Pump	1950s	0	0	0	0	1	28	10395.6	0
+Multi-Family with 5+ Units	Room AC	Ducted Heat Pump	1950s	0	0	0	0	1	11	28621.5	0
+Multi-Family with 5+ Units	Central AC	Ducted Heating	1950s	0.0935737	0.431594	0.093668	0.381164	0	21	199665	0.00187423
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heating	1950s	0	0	0	0	1	70	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heating	1950s	0	0	0	0	1	3	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heating	1950s	0	0	0	0	1	24	4652.03	0
+Multi-Family with 5+ Units	None	Ducted Heating	1950s	0	0	0.606321	0.393679	0	23	42458.7	0.00053099
+Multi-Family with 5+ Units	Room AC	Ducted Heating	1950s	0	0	0.86162	0.13838	0	14	146162	0.00121947
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heat Pump	1950s	0	0	0	0	1	33	0	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heat Pump	1950s	0	0	0	0	1	33	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1950s	0	0	0	0	1	2	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1950s	0	0	0	1	0	18	0	1.8601e-07
+Multi-Family with 5+ Units	None	Non-Ducted Heat Pump	1950s	0	0	0	0	1	18	0	0
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heat Pump	1950s	0	0	0	0	1	11	0	0
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heating	1950s	0	0.539671	0.125432	0.334897	0	10	99328.8	0.00076301
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heating	1950s	0	0	0	0	1	29	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heating	1950s	0	0	0	0	1	6	10605	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heating	1950s	0	0	0	0	1	47	0	0
+Multi-Family with 5+ Units	None	Non-Ducted Heating	1950s	0	0	0.531868	0.468132	0	14	138353	0.00149527
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heating	1950s	0	0	0.754623	0.245377	0	49	408681	0.0037986
+Multi-Family with 5+ Units	Central AC	None	1950s	0.0502691	0	0	0.949731	0	33	32941.9	0.000116109
+Multi-Family with 5+ Units	Ducted Heat Pump	None	1950s	0	0	0	0	1	33	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	None	1950s	0	0	0	0	1	2	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	None	1950s	0	0	0	0	1	18	0	0
+Multi-Family with 5+ Units	None	None	1950s	0	0	0	1	0	18	19410.3	0.000179147
+Multi-Family with 5+ Units	Room AC	None	1950s	0	0	0	1	0	11	42890	0.000104071
+Multi-Family with 5+ Units	Central AC	Ducted Heat Pump	1960s	0	0	0	0	1	47	0	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heat Pump	1960s	0	0	0	1	0	16	170825	0.00247414
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heat Pump	1960s	0	0	0	0	1	1	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heat Pump	1960s	0	0	0	0	1	14	0	0
+Multi-Family with 5+ Units	None	Ducted Heat Pump	1960s	0	0	0	0	1	12	56126.8	0
+Multi-Family with 5+ Units	Room AC	Ducted Heat Pump	1960s	0	0	0	0	1	56	10356.6	0
+Multi-Family with 5+ Units	Central AC	Ducted Heating	1960s	0.109435	0.422175	0.048424	0.419966	0	51	477341	0.0047583
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heating	1960s	0	0	0	0	1	155	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heating	1960s	0	0	0	0	1	3	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heating	1960s	0	0	0	0	1	29	0	0
+Multi-Family with 5+ Units	None	Ducted Heating	1960s	0	0	0.49265	0.50735	0	14	112375	0.000859845
+Multi-Family with 5+ Units	Room AC	Ducted Heating	1960s	0	0	0.468459	0.531541	0	22	249049	0.00178799
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heat Pump	1960s	0	0	0	0	1	21	9892.25	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heat Pump	1960s	0	0	0	0	1	21	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1960s	0	0	0	0	1	5	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1960s	0	0	0	1	0	29	9851.08	0.000191246
+Multi-Family with 5+ Units	None	Non-Ducted Heat Pump	1960s	0	0	0	0	1	29	0	0
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heat Pump	1960s	0	0	0	0	1	30	0	0
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heating	1960s	0.0580992	0.603822	0.0922198	0.245859	0	26	248014	0.00220365
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heating	1960s	0	0	0	0	1	58	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heating	1960s	0	0	0	0	1	6	18914.3	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heating	1960s	0	0	0	0	1	61	15900.4	0
+Multi-Family with 5+ Units	None	Non-Ducted Heating	1960s	0	0	0.488082	0.511918	0	23	222758	0.00176116
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heating	1960s	0	0	0.662964	0.337036	0	63	600932	0.005792
+Multi-Family with 5+ Units	Central AC	None	1960s	0.197785	0	0	0.802215	0	19	39154.4	0.000187455
+Multi-Family with 5+ Units	Ducted Heat Pump	None	1960s	0	0	0	0	1	19	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	None	1960s	0	0	0	0	1	2	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	None	1960s	0	0	0	0	1	26	0	0
+Multi-Family with 5+ Units	None	None	1960s	0	0	0	1	0	11	70297.7	0.00024806
+Multi-Family with 5+ Units	Room AC	None	1960s	0	0	0	1	0	10	98368.5	0.000315243
+Multi-Family with 5+ Units	Central AC	Ducted Heat Pump	1970s	0	0	0	0	1	47	0	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heat Pump	1970s	0	0	0	1	0	31	315434	0.00578522
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heat Pump	1970s	0	0	0	0	1	1	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heat Pump	1970s	0	0	0	0	1	14	21280.3	0
+Multi-Family with 5+ Units	None	Ducted Heat Pump	1970s	0	0	0	0	1	12	77723.3	0
+Multi-Family with 5+ Units	Room AC	Ducted Heat Pump	1970s	0	0	0	0	1	56	61765	0
+Multi-Family with 5+ Units	Central AC	Ducted Heating	1970s	0.0582281	0.172813	0.1576	0.611359	0	104	1.04646e+06	0.00861699
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heating	1970s	0	0	0	0	1	155	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heating	1970s	0	0	0	0	1	3	12738	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heating	1970s	0	0	0	0	1	29	12680.1	0
+Multi-Family with 5+ Units	None	Ducted Heating	1970s	0	0	0.574468	0.425532	0	14	138437	0.00149295
+Multi-Family with 5+ Units	Room AC	Ducted Heating	1970s	0	0	0.623042	0.376958	0	28	234561	0.00283078
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heat Pump	1970s	0	0	0	0	1	21	12040.6	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heat Pump	1970s	0	0	0	0	1	21	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1970s	0	0	0	0	1	5	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1970s	0	0	0	1	0	29	6574.56	0.000419328
+Multi-Family with 5+ Units	None	Non-Ducted Heat Pump	1970s	0	0	0	0	1	29	8578.96	0
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heat Pump	1970s	0	0	0	0	1	30	7968.85	0
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heating	1970s	0.0284219	0.531966	0.0398825	0.39973	0	32	355643	0.00369226
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heating	1970s	0	0	0	0	1	58	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heating	1970s	0	0	0	0	1	6	9558.79	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heating	1970s	0	0	0	0	1	61	9072.43	0
+Multi-Family with 5+ Units	None	Non-Ducted Heating	1970s	0	0	0.257407	0.742593	0	35	239282	0.00267061
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heating	1970s	0	0	0.478069	0.521931	0	110	934776	0.00801694
+Multi-Family with 5+ Units	Central AC	None	1970s	0.234683	0	0	0.765317	0	17	209883	0.000272143
+Multi-Family with 5+ Units	Ducted Heat Pump	None	1970s	0	0	0	0	1	19	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	None	1970s	0	0	0	0	1	2	17584.8	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	None	1970s	0	0	0	0	1	26	0	0
+Multi-Family with 5+ Units	None	None	1970s	0	0	0	1	0	15	103495	0.000338503
+Multi-Family with 5+ Units	Room AC	None	1970s	0	0	0	1	0	19	171160	0.000418684
+Multi-Family with 5+ Units	Central AC	Ducted Heat Pump	1980s	0	0	0	0	1	71	0	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heat Pump	1980s	0	0	0	1	0	40	474848	0.00668893
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heat Pump	1980s	0	0	0	0	1	1	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heat Pump	1980s	0	0	0	0	1	36	16076.4	0
+Multi-Family with 5+ Units	None	Ducted Heat Pump	1980s	0	0	0	0	1	36	31912.5	0
+Multi-Family with 5+ Units	Room AC	Ducted Heat Pump	1980s	0	0	0	0	1	41	35293	0
+Multi-Family with 5+ Units	Central AC	Ducted Heating	1980s	0.126589	0.215991	0.0582714	0.599148	0	100	994195	0.00925703
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heating	1980s	0	0	0	0	1	173	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heating	1980s	0	0	0	0	1	3	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heating	1980s	0	0	0	0	1	30	6671.25	0
+Multi-Family with 5+ Units	None	Ducted Heating	1980s	0	0	0.294185	0.705815	0	19	170994	0.00119123
+Multi-Family with 5+ Units	Room AC	Ducted Heating	1980s	0	0	0.516786	0.483214	0	22	166148	0.00138806
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heat Pump	1980s	0	0	0	0	1	38	35532.6	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heat Pump	1980s	0	0	0	0	1	38	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1980s	0	0	0	0	1	1	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1980s	0	0	0	1	0	24	23741.6	0.000582238
+Multi-Family with 5+ Units	None	Non-Ducted Heat Pump	1980s	0	0	0	0	1	24	0	0
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heat Pump	1980s	0	0	0	0	1	33	0	0
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heating	1980s	0.255632	0.257303	0.132491	0.354574	0	36	384157	0.00391775
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heating	1980s	0	0	0	0	1	64	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heating	1980s	0	0	0	0	1	6	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heating	1980s	0	0	0	0	1	45	46254.9	0
+Multi-Family with 5+ Units	None	Non-Ducted Heating	1980s	0	0	0.404793	0.595207	0	28	217455	0.00179428
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heating	1980s	0	0	0.345605	0.654395	0	62	571350	0.00469153
+Multi-Family with 5+ Units	Central AC	None	1980s	0.344333	0	0	0.655667	0	20	290193	0.000267561
+Multi-Family with 5+ Units	Ducted Heat Pump	None	1980s	0	0	0	0	1	34	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	None	1980s	0	0	0	0	1	2	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	None	1980s	0	0	0	0	1	20	10798.4	0
+Multi-Family with 5+ Units	None	None	1980s	0	0	0	1	0	19	78315.1	0.000249428
+Multi-Family with 5+ Units	Room AC	None	1980s	0	0	0	1	0	33	42592.4	0.000115867
+Multi-Family with 5+ Units	Central AC	Ducted Heat Pump	1990s	0	0	0	0	1	71	0	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heat Pump	1990s	0	0	0	1	0	31	350463	0.00461654
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heat Pump	1990s	0	0	0	0	1	1	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heat Pump	1990s	0	0	0	0	1	36	12458.1	0
+Multi-Family with 5+ Units	None	Ducted Heat Pump	1990s	0	0	0	0	1	36	7431.23	0
+Multi-Family with 5+ Units	Room AC	Ducted Heat Pump	1990s	0	0	0	0	1	41	0	0
+Multi-Family with 5+ Units	Central AC	Ducted Heating	1990s	0.111565	0.18002	0.0850409	0.623374	0	73	755751	0.00889325
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heating	1990s	0	0	0	0	1	173	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heating	1990s	0	0	0	0	1	3	7261.08	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heating	1990s	0	0	0	0	1	30	18325.5	0
+Multi-Family with 5+ Units	None	Ducted Heating	1990s	0	0	0.339077	0.660923	0	28	78176.2	0.000993056
+Multi-Family with 5+ Units	Room AC	Ducted Heating	1990s	0	0	0.54391	0.45609	0	14	96997	0.00101839
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heat Pump	1990s	0	0	0	0	1	38	5765.99	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heat Pump	1990s	0	0	0	0	1	38	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1990s	0	0	0	0	1	1	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1990s	0	0	0	1	0	24	20605.5	0.000328541
+Multi-Family with 5+ Units	None	Non-Ducted Heat Pump	1990s	0	0	0	0	1	24	0	0
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heat Pump	1990s	0	0	0	0	1	33	0	0
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heating	1990s	0.155574	0.301334	0.125278	0.417814	0	28	305489	0.0032647
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heating	1990s	0	0	0	0	1	64	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heating	1990s	0	0	0	0	1	6	13762.3	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heating	1990s	0	0	0	0	1	45	4654.08	0
+Multi-Family with 5+ Units	None	Non-Ducted Heating	1990s	0	0	0.284554	0.715446	0	12	108712	0.00148424
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heating	1990s	0	0	0.443577	0.556423	0	47	435622	0.00401442
+Multi-Family with 5+ Units	Central AC	None	1990s	0.0664049	0	0	0.933595	0	14	198550	0.000208076
+Multi-Family with 5+ Units	Ducted Heat Pump	None	1990s	0	0	0	0	1	34	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	None	1990s	0	0	0	0	1	2	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	None	1990s	0	0	0	0	1	20	0	0
+Multi-Family with 5+ Units	None	None	1990s	0	0	0	1	0	11	93882.6	0.000187384
+Multi-Family with 5+ Units	Room AC	None	1990s	0	0	0	1	0	33	36473.3	8.86242e-05
+Multi-Family with 5+ Units	Central AC	Ducted Heat Pump	2000s	0	0	0	0	1	35	0	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heat Pump	2000s	0	0	0	1	0	35	318336	0.00407977
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heat Pump	2000s	0	0	0	0	1	1	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heat Pump	2000s	0	0	0	0	1	19	0	0
+Multi-Family with 5+ Units	None	Ducted Heat Pump	2000s	0	0	0	0	1	19	47855.5	0
+Multi-Family with 5+ Units	Room AC	Ducted Heat Pump	2000s	0	0	0	0	1	18	32389.3	0
+Multi-Family with 5+ Units	Central AC	Ducted Heating	2000s	0.244082	0.177121	0.0228312	0.555965	0	141	1.21441e+06	0.0104785
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heating	2000s	0	0	0	0	1	141	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heating	2000s	0	0	0	0	1	3	6629.42	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heating	2000s	0	0	0	0	1	14	0	0
+Multi-Family with 5+ Units	None	Ducted Heating	2000s	0	0	0.30965	0.69035	0	14	144547	0.00142367
+Multi-Family with 5+ Units	Room AC	Ducted Heating	2000s	0	0	0.633227	0.366773	0	16	121121	0.00099907
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heat Pump	2000s	0	0	0	0	1	27	22022	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heat Pump	2000s	0	0	0	0	1	27	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	2000s	0	0	0	0	1	0	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	2000s	0	0	0	1	0	13	10797.8	0.000275589
+Multi-Family with 5+ Units	None	Non-Ducted Heat Pump	2000s	0	0	0	0	1	13	0	0
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heat Pump	2000s	0	0	0	0	1	19	0	0
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heating	2000s	0.151661	0.257419	0.100718	0.490203	0	38	367788	0.00262255
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heating	2000s	0	0	0	0	1	38	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heating	2000s	0	0	0	0	1	6	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heating	2000s	0	0	0	0	1	19	16963.1	0
+Multi-Family with 5+ Units	None	Non-Ducted Heating	2000s	0	0	0.461709	0.538291	0	16	125956	0.00142658
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heating	2000s	0	0	0.169166	0.830834	0	38	293449	0.00238904
+Multi-Family with 5+ Units	Central AC	None	2000s	0.347709	0	0	0.652291	0	24	282301	0.0001961
+Multi-Family with 5+ Units	Ducted Heat Pump	None	2000s	0	0	0	0	1	24	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	None	2000s	0	0	0	0	1	2	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	None	2000s	0	0	0	0	1	11	14638.6	0
+Multi-Family with 5+ Units	None	None	2000s	0	0	0	1	0	10	104336	0.000129599
+Multi-Family with 5+ Units	Room AC	None	2000s	0	0	0	1	0	19	47110.4	4.78308e-05
+Multi-Family with 5+ Units	Central AC	Ducted Heat Pump	2010s	0	0	0	0	1	50	0	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heat Pump	2010s	0	0	0	1	0	50	468203	0.00295349
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heat Pump	2010s	0	0	0	0	1	0	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heat Pump	2010s	0	0	0	0	1	14	0	0
+Multi-Family with 5+ Units	None	Ducted Heat Pump	2010s	0	0	0	0	1	14	28093.3	0
+Multi-Family with 5+ Units	Room AC	Ducted Heat Pump	2010s	0	0	0	0	1	12	9571.27	0
+Multi-Family with 5+ Units	Central AC	Ducted Heating	2010s	0.116173	0.345094	0.0559973	0.482736	0	133	1.05667e+06	0.0057603
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heating	2010s	0	0	0	0	1	133	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heating	2010s	0	0	0	0	1	3	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heating	2010s	0	0	0	0	1	10	0	0
+Multi-Family with 5+ Units	None	Ducted Heating	2010s	0	0	0.326254	0.673746	0	10	81011.4	0.0004728
+Multi-Family with 5+ Units	Room AC	Ducted Heating	2010s	0	0	0.440292	0.559708	0	11	67396.3	0.000424423
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heat Pump	2010s	0	0	0	0	1	17	30578.3	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heat Pump	2010s	0	0	0	0	1	17	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	2010s	0	0	0	0	1	0	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	2010s	0	0	0	1	0	11	39746.2	0.00050132
+Multi-Family with 5+ Units	None	Non-Ducted Heat Pump	2010s	0	0	0	0	1	11	11248	0
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heat Pump	2010s	0	0	0	0	1	20	24009	0
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heating	2010s	0.322443	0.16096	0.0434224	0.473175	0	43	363701	0.00175081
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heating	2010s	0	0	0	0	1	43	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heating	2010s	0	0	0	0	1	6	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heating	2010s	0	0	0	0	1	14	19661.5	0
+Multi-Family with 5+ Units	None	Non-Ducted Heating	2010s	0	0	0.28808	0.71192	0	12	88675.7	0.000538939
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heating	2010s	0	0	0.309761	0.690239	0	49	315002	0.00173496
+Multi-Family with 5+ Units	Central AC	None	2010s	0.448606	0	0	0.551394	0	13	124776	0.000131872
+Multi-Family with 5+ Units	Ducted Heat Pump	None	2010s	0	0	0	0	1	13	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	None	2010s	0	0	0	0	1	2	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	None	2010s	0	0	0	0	1	11	1490.69	0
+Multi-Family with 5+ Units	None	None	2010s	0	0	0	1	0	11	22320.1	3.89374e-05
+Multi-Family with 5+ Units	Room AC	None	2010s	0	0	0	1	0	20	23531.5	4.40492e-05
+Multi-Family with 5+ Units	Central AC	Ducted Heat Pump	<1940	0	0	0	0	1	18	0	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heat Pump	<1940	0	0	0	1	0	18	95115.8	0.00107972
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heat Pump	<1940	0	0	0	0	1	0	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heat Pump	<1940	0	0	0	0	1	20	0	0
+Multi-Family with 5+ Units	None	Ducted Heat Pump	<1940	0	0	0	0	1	20	11016.7	0
+Multi-Family with 5+ Units	Room AC	Ducted Heat Pump	<1940	0	0	0	0	1	41	51414.7	0
+Multi-Family with 5+ Units	Central AC	Ducted Heating	<1940	0.180084	0.264477	0.0446106	0.510829	0	49	328602	0.0023294
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heating	<1940	0	0	0	0	1	49	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heating	<1940	0	0	0	0	1	3	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heating	<1940	0	0	0	0	1	18	0	0
+Multi-Family with 5+ Units	None	Ducted Heating	<1940	0	0	0.548251	0.451749	0	18	106460	0.000889122
+Multi-Family with 5+ Units	Room AC	Ducted Heating	<1940	0	0	0.702159	0.297841	0	33	274456	0.00263844
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heat Pump	<1940	0	0	0	0	1	21	0	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heat Pump	<1940	0	0	0	0	1	21	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	<1940	0	0	0	0	1	1	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	<1940	0	0	0	1	0	12	7848.77	0.000201827
+Multi-Family with 5+ Units	None	Non-Ducted Heat Pump	<1940	0	0	0	0	1	12	0	0
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heat Pump	<1940	0	0	0	0	1	12	16765.4	0
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heating	<1940	0.102833	0.275214	0.323609	0.298345	0	19	120287	0.00107541
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heating	<1940	0	0	0	0	1	19	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heating	<1940	0	0	0	0	1	6	0	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heating	<1940	0	0	0	0	1	33	0	0
+Multi-Family with 5+ Units	None	Non-Ducted Heating	<1940	0	0	0.72267	0.27733	0	33	274827	0.00246232
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heating	<1940	0	0	0.722289	0.277711	0	111	826853	0.00763423
+Multi-Family with 5+ Units	Central AC	None	<1940	0.164989	0	0	0.835011	0	21	26714.7	0.00021717
+Multi-Family with 5+ Units	Ducted Heat Pump	None	<1940	0	0	0	0	1	21	0	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	None	<1940	0	0	0	0	1	2	12205	0
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	None	<1940	0	0	0	0	1	12	0	0
+Multi-Family with 5+ Units	None	None	<1940	0	0	0	1	0	12	37651.6	0.000207006
+Multi-Family with 5+ Units	Room AC	None	<1940	0	0	0	1	0	12	28978.8	0.000161303
+Single-Family Attached	Central AC	Ducted Heat Pump	1940s	0	0	0	0	1	12	0	0
+Single-Family Attached	Ducted Heat Pump	Ducted Heat Pump	1940s	0	0	0	1	0	11	13614.7	0.000133595
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heat Pump	1940s	0	0	0	0	1	3	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heat Pump	1940s	0	0	0	0	1	21	0	0
+Single-Family Attached	None	Ducted Heat Pump	1940s	0	0	0	0	1	21	0	0
+Single-Family Attached	Room AC	Ducted Heat Pump	1940s	0	0	0	0	1	53	2705.69	0
+Single-Family Attached	Central AC	Ducted Heating	1940s	0	0	0	1	0	73	82745.6	0.000863321
+Single-Family Attached	Ducted Heat Pump	Ducted Heating	1940s	0	0	0	0	1	103	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heating	1940s	0	0	0	0	1	6	587.323	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heating	1940s	0	0	0	0	1	21	643.592	0
+Single-Family Attached	None	Ducted Heating	1940s	0	0	0	1	0	12	24550.6	0.000225425
+Single-Family Attached	Room AC	Ducted Heating	1940s	0	0	0	1	0	31	54920.3	0.000477351
+Single-Family Attached	Central AC	Non-Ducted Heat Pump	1940s	0	0	0	0	1	22	0	0
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heat Pump	1940s	0	0	0	0	1	22	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1940s	0	0	0	0	1	1	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1940s	0	0	0	1	0	12	3136.88	4.81276e-05
+Single-Family Attached	None	Non-Ducted Heat Pump	1940s	0	0	0	0	1	12	2142.63	0
+Single-Family Attached	Room AC	Non-Ducted Heat Pump	1940s	0	0	0	0	1	12	2360.2	0
+Single-Family Attached	Central AC	Non-Ducted Heating	1940s	0	0	0	1	0	16	16976.6	0.000256206
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heating	1940s	0	0	0	0	1	21	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heating	1940s	0	0	0	0	1	2	739.85	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heating	1940s	0	0	0	0	1	21	3783.62	0
+Single-Family Attached	None	Non-Ducted Heating	1940s	0	0	0	1	0	13	20542.2	0.0001117
+Single-Family Attached	Room AC	Non-Ducted Heating	1940s	0	0	0	1	0	45	83501.1	0.000640866
+Single-Family Attached	Central AC	None	1940s	0	0	0	1	0	22	2204.84	8.28466e-06
+Single-Family Attached	Ducted Heat Pump	None	1940s	0	0	0	0	1	22	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	None	1940s	0	0	0	0	1	1	0	0
+Single-Family Attached	Non-Ducted Heat Pump	None	1940s	0	0	0	0	1	12	0	0
+Single-Family Attached	None	None	1940s	0	0	0	1	0	12	3089.03	3.5926e-05
+Single-Family Attached	Room AC	None	1940s	0	0	0	1	0	12	344.735	1.58016e-05
+Single-Family Attached	Central AC	Ducted Heat Pump	1950s	0	0	0	0	1	12	0	0
+Single-Family Attached	Ducted Heat Pump	Ducted Heat Pump	1950s	0	0	0	1	0	12	2753.13	0.000365908
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heat Pump	1950s	0	0	0	0	1	3	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heat Pump	1950s	0	0	0	0	1	21	0	0
+Single-Family Attached	None	Ducted Heat Pump	1950s	0	0	0	0	1	21	0	0
+Single-Family Attached	Room AC	Ducted Heat Pump	1950s	0	0	0	0	1	53	4533.1	0
+Single-Family Attached	Central AC	Ducted Heating	1950s	0	0	0	1	0	30	140110	0.00162533
+Single-Family Attached	Ducted Heat Pump	Ducted Heating	1950s	0	0	0	0	1	103	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heating	1950s	0	0	0	0	1	6	10544.1	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heating	1950s	0	0	0	0	1	21	1320.5	0
+Single-Family Attached	None	Ducted Heating	1950s	0	0	0	1	0	19	36276.9	0.000366787
+Single-Family Attached	Room AC	Ducted Heating	1950s	0	0	0	1	0	20	104191	0.000827849
+Single-Family Attached	Central AC	Non-Ducted Heat Pump	1950s	0	0	0	0	1	22	0	0
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heat Pump	1950s	0	0	0	0	1	22	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1950s	0	0	0	0	1	1	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1950s	0	0	0	1	0	12	0	4.69927e-05
+Single-Family Attached	None	Non-Ducted Heat Pump	1950s	0	0	0	0	1	12	0	0
+Single-Family Attached	Room AC	Non-Ducted Heat Pump	1950s	0	0	0	0	1	12	0	0
+Single-Family Attached	Central AC	Non-Ducted Heating	1950s	0	0	0	1	0	21	29006.5	0.000159092
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heating	1950s	0	0	0	0	1	21	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heating	1950s	0	0	0	0	1	2	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heating	1950s	0	0	0	0	1	21	6005	0
+Single-Family Attached	None	Non-Ducted Heating	1950s	0	0	0	1	0	17	12785.8	0.000130604
+Single-Family Attached	Room AC	Non-Ducted Heating	1950s	0	0	0	1	0	52	34825.6	0.000446762
+Single-Family Attached	Central AC	None	1950s	0	0	0	1	0	22	0	1.21888e-05
+Single-Family Attached	Ducted Heat Pump	None	1950s	0	0	0	0	1	22	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	None	1950s	0	0	0	0	1	1	0	0
+Single-Family Attached	Non-Ducted Heat Pump	None	1950s	0	0	0	0	1	12	0	0
+Single-Family Attached	None	None	1950s	0	0	0	1	0	12	7046.08	4.53927e-05
+Single-Family Attached	Room AC	None	1950s	0	0	0	1	0	12	9320.8	2.11344e-05
+Single-Family Attached	Central AC	Ducted Heat Pump	1960s	0	0	0	0	1	29	0	0
+Single-Family Attached	Ducted Heat Pump	Ducted Heat Pump	1960s	0	0	0	1	0	29	36080.2	0.000552367
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heat Pump	1960s	0	0	0	0	1	2	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heat Pump	1960s	0	0	0	0	1	40	0	0
+Single-Family Attached	None	Ducted Heat Pump	1960s	0	0	0	0	1	40	0	0
+Single-Family Attached	Room AC	Ducted Heat Pump	1960s	0	0	0	0	1	32	6970.42	0
+Single-Family Attached	Central AC	Ducted Heating	1960s	0	0	0	1	0	54	246067	0.00148077
+Single-Family Attached	Ducted Heat Pump	Ducted Heating	1960s	0	0	0	0	1	160	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heating	1960s	0	0	0	0	1	6	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heating	1960s	0	0	0	0	1	37	0	0
+Single-Family Attached	None	Ducted Heating	1960s	0	0	0	1	0	14	69256	0.000290389
+Single-Family Attached	Room AC	Ducted Heating	1960s	0	0	0	1	0	12	41306.2	0.000281233
+Single-Family Attached	Central AC	Non-Ducted Heat Pump	1960s	0	0	0	0	1	11	2113.79	0
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heat Pump	1960s	0	0	0	0	1	11	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1960s	0	0	0	0	1	0	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1960s	0	0	0	1	0	12	11678.5	5.12168e-05
+Single-Family Attached	None	Non-Ducted Heat Pump	1960s	0	0	0	0	1	12	0	0
+Single-Family Attached	Room AC	Non-Ducted Heat Pump	1960s	0	0	0	0	1	20	0	0
+Single-Family Attached	Central AC	Non-Ducted Heating	1960s	0	0	0	1	0	15	49483.1	0.000386883
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heating	1960s	0	0	0	0	1	15	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heating	1960s	0	0	0	0	1	2	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heating	1960s	0	0	0	0	1	23	5571.28	0
+Single-Family Attached	None	Non-Ducted Heating	1960s	0	0	0	1	0	21	39345.2	0.000233526
+Single-Family Attached	Room AC	Non-Ducted Heating	1960s	0	0	0	1	0	18	84881.5	0.000412463
+Single-Family Attached	Central AC	None	1960s	0	0	0	1	0	10	14779.1	2.48516e-05
+Single-Family Attached	Ducted Heat Pump	None	1960s	0	0	0	0	1	10	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	None	1960s	0	0	0	0	1	0	0	0
+Single-Family Attached	Non-Ducted Heat Pump	None	1960s	0	0	0	0	1	10	0	0
+Single-Family Attached	None	None	1960s	0	0	0	1	0	10	16130.5	3.09647e-05
+Single-Family Attached	Room AC	None	1960s	0	0	0	1	0	20	2469.96	1.72842e-05
+Single-Family Attached	Central AC	Ducted Heat Pump	1970s	0	0	0	0	1	29	0	0
+Single-Family Attached	Ducted Heat Pump	Ducted Heat Pump	1970s	0	0	0	1	0	21	95742.9	0.00131184
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heat Pump	1970s	0	0	0	0	1	2	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heat Pump	1970s	0	0	0	0	1	40	0	0
+Single-Family Attached	None	Ducted Heat Pump	1970s	0	0	0	0	1	40	12517.2	0
+Single-Family Attached	Room AC	Ducted Heat Pump	1970s	0	0	0	0	1	32	4308.99	0
+Single-Family Attached	Central AC	Ducted Heating	1970s	0	0	0	1	0	106	448486	0.00373122
+Single-Family Attached	Ducted Heat Pump	Ducted Heating	1970s	0	0	0	0	1	160	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heating	1970s	0	0	0	0	1	6	6917.52	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heating	1970s	0	0	0	0	1	37	8379.46	0
+Single-Family Attached	None	Ducted Heating	1970s	0	0	0	1	0	22	65864.7	0.000708943
+Single-Family Attached	Room AC	Ducted Heating	1970s	0	0	0	1	0	17	84937.5	0.000583607
+Single-Family Attached	Central AC	Non-Ducted Heat Pump	1970s	0	0	0	0	1	11	0	0
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heat Pump	1970s	0	0	0	0	1	11	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1970s	0	0	0	0	1	0	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1970s	0	0	0	1	0	12	0	6.84583e-05
+Single-Family Attached	None	Non-Ducted Heat Pump	1970s	0	0	0	0	1	12	0	0
+Single-Family Attached	Room AC	Non-Ducted Heat Pump	1970s	0	0	0	0	1	20	0	0
+Single-Family Attached	Central AC	Non-Ducted Heating	1970s	0	0	0	1	0	15	25775.5	0.00049482
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heating	1970s	0	0	0	0	1	15	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heating	1970s	0	0	0	0	1	2	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heating	1970s	0	0	0	0	1	23	6920.42	0
+Single-Family Attached	None	Non-Ducted Heating	1970s	0	0	0	1	0	14	44711.6	0.000350738
+Single-Family Attached	Room AC	Non-Ducted Heating	1970s	0	0	0	1	0	18	68823.8	0.000657403
+Single-Family Attached	Central AC	None	1970s	0	0	0	1	0	10	54593.2	4.55594e-05
+Single-Family Attached	Ducted Heat Pump	None	1970s	0	0	0	0	1	10	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	None	1970s	0	0	0	0	1	0	0	0
+Single-Family Attached	Non-Ducted Heat Pump	None	1970s	0	0	0	0	1	10	0	0
+Single-Family Attached	None	None	1970s	0	0	0	1	0	10	26212.2	4.2097e-05
+Single-Family Attached	Room AC	None	1970s	0	0	0	1	0	20	19193.4	2.79259e-05
+Single-Family Attached	Central AC	Ducted Heat Pump	1980s	0	0	0	0	1	52	0	0
+Single-Family Attached	Ducted Heat Pump	Ducted Heat Pump	1980s	0	0	0	1	0	29	116284	0.00169299
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heat Pump	1980s	0	0	0	0	1	1	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heat Pump	1980s	0	0	0	0	1	45	0	0
+Single-Family Attached	None	Ducted Heat Pump	1980s	0	0	0	0	1	45	2095.37	0
+Single-Family Attached	Room AC	Ducted Heat Pump	1980s	0	0	0	0	1	29	0	0
+Single-Family Attached	Central AC	Ducted Heating	1980s	0	0	0	1	0	163	724966	0.00558472
+Single-Family Attached	Ducted Heat Pump	Ducted Heating	1980s	0	0	0	0	1	311	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heating	1980s	0	0	0	0	1	6	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heating	1980s	0	0	0	0	1	40	1320.17	0
+Single-Family Attached	None	Ducted Heating	1980s	0	0	0	1	0	26	95441.3	0.000780602
+Single-Family Attached	Room AC	Ducted Heating	1980s	0	0	0	1	0	16	71228.9	0.000447769
+Single-Family Attached	Central AC	Non-Ducted Heat Pump	1980s	0	0	0	0	1	13	0	0
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heat Pump	1980s	0	0	0	0	1	13	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1980s	0	0	0	0	1	0	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1980s	0	0	0	1	0	14	9607.71	0.000158371
+Single-Family Attached	None	Non-Ducted Heat Pump	1980s	0	0	0	0	1	14	0	0
+Single-Family Attached	Room AC	Non-Ducted Heat Pump	1980s	0	0	0	0	1	14	0	0
+Single-Family Attached	Central AC	Non-Ducted Heating	1980s	0	0	0	1	0	16	82139.4	0.00060903
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heating	1980s	0	0	0	0	1	25	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heating	1980s	0	0	0	0	1	2	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heating	1980s	0	0	0	0	1	32	10058.8	0
+Single-Family Attached	None	Non-Ducted Heating	1980s	0	0	0	1	0	21	41115	0.000358194
+Single-Family Attached	Room AC	Non-Ducted Heating	1980s	0	0	0	1	0	20	41022.5	0.000475957
+Single-Family Attached	Central AC	None	1980s	0	0	0	1	0	13	50701.6	5.8965e-05
+Single-Family Attached	Ducted Heat Pump	None	1980s	0	0	0	0	1	13	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	None	1980s	0	0	0	0	1	0	0	0
+Single-Family Attached	Non-Ducted Heat Pump	None	1980s	0	0	0	0	1	14	0	0
+Single-Family Attached	None	None	1980s	0	0	0	1	0	14	15223.4	3.03295e-05
+Single-Family Attached	Room AC	None	1980s	0	0	0	1	0	14	2071.06	2.0156e-05
+Single-Family Attached	Central AC	Ducted Heat Pump	1990s	0	0	0	0	1	52	0	0
+Single-Family Attached	Ducted Heat Pump	Ducted Heat Pump	1990s	0	0	0	1	0	23	101440	0.00140514
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heat Pump	1990s	0	0	0	0	1	1	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heat Pump	1990s	0	0	0	0	1	45	0	0
+Single-Family Attached	None	Ducted Heat Pump	1990s	0	0	0	0	1	45	19278.2	0
+Single-Family Attached	Room AC	Ducted Heat Pump	1990s	0	0	0	0	1	29	9658.16	0
+Single-Family Attached	Central AC	Ducted Heating	1990s	0	0	0	1	0	148	637991	0.00474998
+Single-Family Attached	Ducted Heat Pump	Ducted Heating	1990s	0	0	0	0	1	311	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heating	1990s	0	0	0	0	1	6	2601.38	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heating	1990s	0	0	0	0	1	40	0	0
+Single-Family Attached	None	Ducted Heating	1990s	0	0	0	1	0	13	65391.3	0.000490689
+Single-Family Attached	Room AC	Ducted Heating	1990s	0	0	0	1	0	12	43572.4	0.000378569
+Single-Family Attached	Central AC	Non-Ducted Heat Pump	1990s	0	0	0	0	1	13	0	0
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heat Pump	1990s	0	0	0	0	1	13	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1990s	0	0	0	0	1	0	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1990s	0	0	0	1	0	14	0	4.5198e-05
+Single-Family Attached	None	Non-Ducted Heat Pump	1990s	0	0	0	0	1	14	0	0
+Single-Family Attached	Room AC	Non-Ducted Heat Pump	1990s	0	0	0	0	1	14	3756.73	0
+Single-Family Attached	Central AC	Non-Ducted Heating	1990s	0	0	0	1	0	25	49960.8	0.000473872
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heating	1990s	0	0	0	0	1	25	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heating	1990s	0	0	0	0	1	2	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heating	1990s	0	0	0	0	1	32	0	0
+Single-Family Attached	None	Non-Ducted Heating	1990s	0	0	0	1	0	28	17142.7	0.000223012
+Single-Family Attached	Room AC	Non-Ducted Heating	1990s	0	0	0	1	0	29	46622.6	0.000331323
+Single-Family Attached	Central AC	None	1990s	0	0	0	1	0	13	71597.3	3.96029e-05
+Single-Family Attached	Ducted Heat Pump	None	1990s	0	0	0	0	1	13	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	None	1990s	0	0	0	0	1	0	0	0
+Single-Family Attached	Non-Ducted Heat Pump	None	1990s	0	0	0	0	1	14	0	0
+Single-Family Attached	None	None	1990s	0	0	0	1	0	14	1339.48	2.23261e-05
+Single-Family Attached	Room AC	None	1990s	0	0	0	1	0	14	13427	1.73654e-05
+Single-Family Attached	Central AC	Ducted Heat Pump	2000s	0	0	0	0	1	39	0	0
+Single-Family Attached	Ducted Heat Pump	Ducted Heat Pump	2000s	0	0	0	1	0	39	184755	0.00164428
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heat Pump	2000s	0	0	0	0	1	0	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heat Pump	2000s	0	0	0	0	1	19	0	0
+Single-Family Attached	None	Ducted Heat Pump	2000s	0	0	0	0	1	19	524.772	0
+Single-Family Attached	Room AC	Ducted Heat Pump	2000s	0	0	0	0	1	27	1940.08	0
+Single-Family Attached	Central AC	Ducted Heating	2000s	0	0	0	1	0	228	852733	0.00688223
+Single-Family Attached	Ducted Heat Pump	Ducted Heating	2000s	0	0	0	0	1	228	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heating	2000s	0	0	0	0	1	6	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heating	2000s	0	0	0	0	1	18	7822.57	0
+Single-Family Attached	None	Ducted Heating	2000s	0	0	0	1	0	17	49469.5	0.000298376
+Single-Family Attached	Room AC	Ducted Heating	2000s	0	0	0	1	0	27	32877.2	0.000287101
+Single-Family Attached	Central AC	Non-Ducted Heat Pump	2000s	0	0	0	0	1	11	0	0
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heat Pump	2000s	0	0	0	0	1	11	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	2000s	0	0	0	0	1	1	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	2000s	0	0	0	1	0	14	0	3.41818e-05
+Single-Family Attached	None	Non-Ducted Heat Pump	2000s	0	0	0	0	1	14	3817.81	0
+Single-Family Attached	Room AC	Non-Ducted Heat Pump	2000s	0	0	0	0	1	14	0	0
+Single-Family Attached	Central AC	Non-Ducted Heating	2000s	0	0	0	1	0	12	60372.1	0.000480494
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heating	2000s	0	0	0	0	1	12	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heating	2000s	0	0	0	0	1	2	5199.87	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heating	2000s	0	0	0	0	1	11	0	0
+Single-Family Attached	None	Non-Ducted Heating	2000s	0	0	0	1	0	11	11336.1	0.000173928
+Single-Family Attached	Room AC	Non-Ducted Heating	2000s	0	0	0	1	0	11	13724.6	0.000169395
+Single-Family Attached	Central AC	None	2000s	0	0	0	1	0	11	71597.8	6.78651e-05
+Single-Family Attached	Ducted Heat Pump	None	2000s	0	0	0	0	1	11	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	None	2000s	0	0	0	0	1	1	0	0
+Single-Family Attached	Non-Ducted Heat Pump	None	2000s	0	0	0	0	1	14	0	0
+Single-Family Attached	None	None	2000s	0	0	0	1	0	14	4630.01	1.52625e-05
+Single-Family Attached	Room AC	None	2000s	0	0	0	1	0	14	5027.42	1.16049e-05
+Single-Family Attached	Central AC	Ducted Heat Pump	2010s	0	0	0	0	1	25	0	0
+Single-Family Attached	Ducted Heat Pump	Ducted Heat Pump	2010s	0	0	0	1	0	25	92870.6	0.000657667
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heat Pump	2010s	0	0	0	0	1	0	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heat Pump	2010s	0	0	0	0	1	11	0	0
+Single-Family Attached	None	Ducted Heat Pump	2010s	0	0	0	0	1	11	0	0
+Single-Family Attached	Room AC	Ducted Heat Pump	2010s	0	0	0	0	1	14	4478.7	0
+Single-Family Attached	Central AC	Ducted Heating	2010s	0	0	0	1	0	134	443583	0.00217647
+Single-Family Attached	Ducted Heat Pump	Ducted Heating	2010s	0	0	0	0	1	134	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heating	2010s	0	0	0	0	1	6	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heating	2010s	0	0	0	0	1	11	0	0
+Single-Family Attached	None	Ducted Heating	2010s	0	0	0	1	0	11	31664.7	0.000166787
+Single-Family Attached	Room AC	Ducted Heating	2010s	0	0	0	1	0	14	3239.19	2.44247e-05
+Single-Family Attached	Central AC	Non-Ducted Heat Pump	2010s	0	0	0	0	1	11	5537.93	0
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heat Pump	2010s	0	0	0	0	1	11	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	2010s	0	0	0	0	1	0	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	2010s	0	0	0	1	0	16	11033	8.24593e-05
+Single-Family Attached	None	Non-Ducted Heat Pump	2010s	0	0	0	0	1	16	0	0
+Single-Family Attached	Room AC	Non-Ducted Heat Pump	2010s	0	0	0	0	1	16	0	0
+Single-Family Attached	Central AC	Non-Ducted Heating	2010s	0	0	0	1	0	11	21568.6	0.000111738
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heating	2010s	0	0	0	0	1	11	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heating	2010s	0	0	0	0	1	2	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heating	2010s	0	0	0	0	1	16	7069.8	0
+Single-Family Attached	None	Non-Ducted Heating	2010s	0	0	0	1	0	16	2615.59	6.13198e-05
+Single-Family Attached	Room AC	Non-Ducted Heating	2010s	0	0	0	1	0	16	1847.96	3.71476e-05
+Single-Family Attached	Central AC	None	2010s	0	0	0	1	0	11	21502.8	2.49977e-05
+Single-Family Attached	Ducted Heat Pump	None	2010s	0	0	0	0	1	11	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	None	2010s	0	0	0	0	1	0	0	0
+Single-Family Attached	Non-Ducted Heat Pump	None	2010s	0	0	0	0	1	16	1849.94	0
+Single-Family Attached	None	None	2010s	0	0	0	1	0	16	9297.58	1.01625e-05
+Single-Family Attached	Room AC	None	2010s	0	0	0	1	0	16	0	2.16899e-07
+Single-Family Attached	Central AC	Ducted Heat Pump	<1940	0	0	0	0	1	11	0	0
+Single-Family Attached	Ducted Heat Pump	Ducted Heat Pump	<1940	0	0	0	1	0	11	35183.5	0.000246985
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heat Pump	<1940	0	0	0	0	1	1	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heat Pump	<1940	0	0	0	0	1	13	0	0
+Single-Family Attached	None	Ducted Heat Pump	<1940	0	0	0	0	1	13	0	0
+Single-Family Attached	Room AC	Ducted Heat Pump	<1940	0	0	0	0	1	32	6992.11	0
+Single-Family Attached	Central AC	Ducted Heating	<1940	0	0	0	1	0	73	213834	0.00242437
+Single-Family Attached	Ducted Heat Pump	Ducted Heating	<1940	0	0	0	0	1	73	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heating	<1940	0	0	0	0	1	6	1517.78	0
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heating	<1940	0	0	0	0	1	13	1663.19	0
+Single-Family Attached	None	Ducted Heating	<1940	0	0	0	1	0	12	63444.4	0.000628775
+Single-Family Attached	Room AC	Ducted Heating	<1940	0	0	0	1	0	31	141927	0.0014222
+Single-Family Attached	Central AC	Non-Ducted Heat Pump	<1940	0	0	0	0	1	17	0	0
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heat Pump	<1940	0	0	0	0	1	17	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	<1940	0	0	0	0	1	1	0	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	<1940	0	0	0	1	0	68	8106.42	0.000117769
+Single-Family Attached	None	Non-Ducted Heat Pump	<1940	0	0	0	0	1	68	5537.05	0
+Single-Family Attached	Room AC	Non-Ducted Heat Pump	<1940	0	0	0	0	1	68	6099.29	0
+Single-Family Attached	Central AC	Non-Ducted Heating	<1940	0	0	0	1	0	16	43871.5	0.000453033
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heating	<1940	0	0	0	0	1	16	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heating	<1940	0	0	0	0	1	2	1911.94	0
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heating	<1940	0	0	0	0	1	16	9777.73	0
+Single-Family Attached	None	Non-Ducted Heating	<1940	0	0	0	1	0	13	53085.7	0.000381885
+Single-Family Attached	Room AC	Non-Ducted Heating	<1940	0	0	0	1	0	45	215786	0.00233695
+Single-Family Attached	Central AC	None	<1940	0	0	0	1	0	17	5697.8	9.86157e-06
+Single-Family Attached	Ducted Heat Pump	None	<1940	0	0	0	0	1	17	0	0
+Single-Family Attached	Evaporative or Swamp Cooler	None	<1940	0	0	0	0	1	1	0	0
+Single-Family Attached	Non-Ducted Heat Pump	None	<1940	0	0	0	0	1	68	0	0
+Single-Family Attached	None	None	<1940	0	0	0	1	0	68	7982.76	6.38958e-05
+Single-Family Attached	Room AC	None	<1940	0	0	0	1	0	68	890.874	1.698e-05
+Single-Family Detached	Central AC	Ducted Heat Pump	1940s	0	0	0	0	1	145	0	0
+Single-Family Detached	Ducted Heat Pump	Ducted Heat Pump	1940s	0	0	0	1	0	62	122764	0.00208598
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heat Pump	1940s	0	0	0	0	1	25	1697.42	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heat Pump	1940s	0	0	0	0	1	12	0	0
+Single-Family Detached	None	Ducted Heat Pump	1940s	0	0	0	0	1	11	7721.48	0
+Single-Family Detached	Room AC	Ducted Heat Pump	1940s	0	0	0	0	1	444	5610.9	0
+Single-Family Detached	Central AC	Ducted Heating	1940s	0	0	0	1	0	808	1.64106e+06	0.0177922
+Single-Family Detached	Ducted Heat Pump	Ducted Heating	1940s	0	0	0	0	1	1544	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heating	1940s	0	0	0	0	1	24	14485.8	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heating	1940s	0	0	0	0	1	11	16839.6	0
+Single-Family Detached	None	Ducted Heating	1940s	0	0	0	1	0	164	344920	0.00240856
+Single-Family Detached	Room AC	Ducted Heating	1940s	0	0	0	1	0	295	565093	0.0034679
+Single-Family Detached	Central AC	Non-Ducted Heat Pump	1940s	0	0	0	0	1	16	4084.92	0
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heat Pump	1940s	0	0	0	0	1	16	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1940s	0	0	0	0	1	8	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1940s	0	0	0	1	0	14	23937.6	0.000555897
+Single-Family Detached	None	Non-Ducted Heat Pump	1940s	0	0	0	0	1	27	7978.41	0
+Single-Family Detached	Room AC	Non-Ducted Heat Pump	1940s	0	0	0	0	1	16	0	0
+Single-Family Detached	Central AC	Non-Ducted Heating	1940s	0	0	0	1	0	93	172191	0.00215636
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heating	1940s	0	0	0	0	1	158	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heating	1940s	0	0	0	0	1	32	5145.87	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heating	1940s	0	0	0	0	1	26	38891.6	0
+Single-Family Detached	None	Non-Ducted Heating	1940s	0	0	0	1	0	107	180265	0.00178908
+Single-Family Detached	Room AC	Non-Ducted Heating	1940s	0	0	0	1	0	304	567657	0.00514583
+Single-Family Detached	Central AC	None	1940s	0	0	0	1	0	11	18650.7	6.23935e-05
+Single-Family Detached	Ducted Heat Pump	None	1940s	0	0	0	0	1	11	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	None	1940s	0	0	0	0	1	2	0	0
+Single-Family Detached	Non-Ducted Heat Pump	None	1940s	0	0	0	0	1	40	1082.93	0
+Single-Family Detached	None	None	1940s	0	0	0	1	0	16	33567.2	0.000181566
+Single-Family Detached	Room AC	None	1940s	0	0	0	1	0	10	15057.4	7.37998e-05
+Single-Family Detached	Central AC	Ducted Heat Pump	1950s	0	0	0	0	1	145	0	0
+Single-Family Detached	Ducted Heat Pump	Ducted Heat Pump	1950s	0	0	0	1	0	83	680492	0.00676434
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heat Pump	1950s	0	0	0	0	1	25	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heat Pump	1950s	0	0	0	0	1	12	8085.66	0
+Single-Family Detached	None	Ducted Heat Pump	1950s	0	0	0	0	1	11	52626	0
+Single-Family Detached	Room AC	Ducted Heat Pump	1950s	0	0	0	0	1	444	12873	0
+Single-Family Detached	Central AC	Ducted Heating	1950s	0	0	0	1	0	736	5.5641e+06	0.0439086
+Single-Family Detached	Ducted Heat Pump	Ducted Heating	1950s	0	0	0	0	1	1544	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heating	1950s	0	0	0	0	1	15	95577.2	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heating	1950s	0	0	0	0	1	19	44316.6	0
+Single-Family Detached	None	Ducted Heating	1950s	0	0	0	1	0	95	598701	0.00572644
+Single-Family Detached	Room AC	Ducted Heating	1950s	0	0	0	1	0	144	948731	0.00874812
+Single-Family Detached	Central AC	Non-Ducted Heat Pump	1950s	0	0	0	0	1	16	26771.2	0
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heat Pump	1950s	0	0	0	0	1	16	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1950s	0	0	0	0	1	8	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1950s	0	0	0	1	0	22	51676.1	0.000769575
+Single-Family Detached	None	Non-Ducted Heat Pump	1950s	0	0	0	0	1	27	5675.47	0
+Single-Family Detached	Room AC	Non-Ducted Heat Pump	1950s	0	0	0	0	1	16	0	0
+Single-Family Detached	Central AC	Non-Ducted Heating	1950s	0	0	0	1	0	65	426293	0.003287
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heating	1950s	0	0	0	0	1	158	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heating	1950s	0	0	0	0	1	32	40102.1	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heating	1950s	0	0	0	0	1	12	55128.4	0
+Single-Family Detached	None	Non-Ducted Heating	1950s	0	0	0	1	0	39	241794	0.00270395
+Single-Family Detached	Room AC	Non-Ducted Heating	1950s	0	0	0	1	0	114	821726	0.00828269
+Single-Family Detached	Central AC	None	1950s	0	0	0	1	0	11	46433.5	0.000142438
+Single-Family Detached	Ducted Heat Pump	None	1950s	0	0	0	0	1	11	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	None	1950s	0	0	0	0	1	2	0	0
+Single-Family Detached	Non-Ducted Heat Pump	None	1950s	0	0	0	0	1	40	4154.62	0
+Single-Family Detached	None	None	1950s	0	0	0	1	0	19	121971	0.000350818
+Single-Family Detached	Room AC	None	1950s	0	0	0	1	0	16	55168.5	0.000142648
+Single-Family Detached	Central AC	Ducted Heat Pump	1960s	0	0	0	0	1	312	0	0
+Single-Family Detached	Ducted Heat Pump	Ducted Heat Pump	1960s	0	0	0	1	0	114	770430	0.00937888
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heat Pump	1960s	0	0	0	0	1	30	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heat Pump	1960s	0	0	0	0	1	21	0	0
+Single-Family Detached	None	Ducted Heat Pump	1960s	0	0	0	0	1	21	56167.8	0
+Single-Family Detached	Room AC	Ducted Heat Pump	1960s	0	0	0	0	1	202	37932.6	0
+Single-Family Detached	Central AC	Ducted Heating	1960s	0	0	0	1	0	712	4.66516e+06	0.0379982
+Single-Family Detached	Ducted Heat Pump	Ducted Heating	1960s	0	0	0	0	1	1639	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heating	1960s	0	0	0	0	1	10	39912.2	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heating	1960s	0	0	0	0	1	16	37045.7	0
+Single-Family Detached	None	Ducted Heating	1960s	0	0	0	1	0	72	418680	0.00364914
+Single-Family Detached	Room AC	Ducted Heating	1960s	0	0	0	1	0	96	529672	0.00413727
+Single-Family Detached	Central AC	Non-Ducted Heat Pump	1960s	0	0	0	0	1	41	15978.5	0
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heat Pump	1960s	0	0	0	0	1	41	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1960s	0	0	0	0	1	14	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1960s	0	0	0	1	0	16	32140.9	0.0005816
+Single-Family Detached	None	Non-Ducted Heat Pump	1960s	0	0	0	0	1	17	0	0
+Single-Family Detached	Room AC	Non-Ducted Heat Pump	1960s	0	0	0	0	1	23	0	0
+Single-Family Detached	Central AC	Non-Ducted Heating	1960s	0	0	0	1	0	78	509044	0.00546372
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heating	1960s	0	0	0	0	1	175	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heating	1960s	0	0	0	0	1	14	17658.1	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heating	1960s	0	0	0	0	1	28	36719.6	0
+Single-Family Detached	None	Non-Ducted Heating	1960s	0	0	0	1	0	53	259848	0.00278285
+Single-Family Detached	Room AC	Non-Ducted Heating	1960s	0	0	0	1	0	94	552224	0.0058353
+Single-Family Detached	Central AC	None	1960s	0	0	0	1	0	15	167624	0.000199801
+Single-Family Detached	Ducted Heat Pump	None	1960s	0	0	0	0	1	35	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	None	1960s	0	0	0	0	1	14	0	0
+Single-Family Detached	Non-Ducted Heat Pump	None	1960s	0	0	0	0	1	42	9281.71	0
+Single-Family Detached	None	None	1960s	0	0	0	1	0	10	23932.3	0.000198488
+Single-Family Detached	Room AC	None	1960s	0	0	0	1	0	13	52210.4	0.000118156
+Single-Family Detached	Central AC	Ducted Heat Pump	1970s	0	0	0	0	1	312	0	0
+Single-Family Detached	Ducted Heat Pump	Ducted Heat Pump	1970s	0	0	0	1	0	198	1.39668e+06	0.0144246
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heat Pump	1970s	0	0	0	0	1	30	3886.24	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heat Pump	1970s	0	0	0	0	1	21	0	0
+Single-Family Detached	None	Ducted Heat Pump	1970s	0	0	0	0	1	13	86295.1	0
+Single-Family Detached	Room AC	Ducted Heat Pump	1970s	0	0	0	0	1	202	17140.5	0
+Single-Family Detached	Central AC	Ducted Heating	1970s	0	0	0	1	0	927	5.65448e+06	0.0446395
+Single-Family Detached	Ducted Heat Pump	Ducted Heating	1970s	0	0	0	0	1	1639	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heating	1970s	0	0	0	0	1	19	93289.7	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heating	1970s	0	0	0	0	1	16	36259.5	0
+Single-Family Detached	None	Ducted Heating	1970s	0	0	0	1	0	99	598778	0.00456782
+Single-Family Detached	Room AC	Ducted Heating	1970s	0	0	0	1	0	98	468427	0.00426682
+Single-Family Detached	Central AC	Non-Ducted Heat Pump	1970s	0	0	0	0	1	41	26478.6	0
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heat Pump	1970s	0	0	0	0	1	41	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1970s	0	0	0	0	1	14	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1970s	0	0	0	1	0	11	73535.2	0.000894477
+Single-Family Detached	None	Non-Ducted Heat Pump	1970s	0	0	0	0	1	17	5747.52	0
+Single-Family Detached	Room AC	Non-Ducted Heat Pump	1970s	0	0	0	0	1	23	0	0
+Single-Family Detached	Central AC	Non-Ducted Heating	1970s	0	0	0	1	0	97	585496	0.00583921
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heating	1970s	0	0	0	0	1	175	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heating	1970s	0	0	0	0	1	10	45172.7	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heating	1970s	0	0	0	0	1	21	87681.9	0
+Single-Family Detached	None	Non-Ducted Heating	1970s	0	0	0	1	0	80	271504	0.00310304
+Single-Family Detached	Room AC	Non-Ducted Heating	1970s	0	0	0	1	0	134	682253	0.00651866
+Single-Family Detached	Central AC	None	1970s	0	0	0	1	0	20	186737	0.000221431
+Single-Family Detached	Ducted Heat Pump	None	1970s	0	0	0	0	1	35	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	None	1970s	0	0	0	0	1	14	0	0
+Single-Family Detached	Non-Ducted Heat Pump	None	1970s	0	0	0	0	1	42	2611.79	0
+Single-Family Detached	None	None	1970s	0	0	0	1	0	24	105084	0.000210959
+Single-Family Detached	Room AC	None	1970s	0	0	0	1	0	10	36753.7	0.000145905
+Single-Family Detached	Central AC	Ducted Heat Pump	1980s	0	0	0	0	1	441	0	0
+Single-Family Detached	Ducted Heat Pump	Ducted Heat Pump	1980s	0	0	0	1	0	215	1.55266e+06	0.0148031
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heat Pump	1980s	0	0	0	0	1	19	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heat Pump	1980s	0	0	0	0	1	25	0	0
+Single-Family Detached	None	Ducted Heat Pump	1980s	0	0	0	0	1	13	91115.2	0
+Single-Family Detached	Room AC	Ducted Heat Pump	1980s	0	0	0	0	1	138	24102.2	0
+Single-Family Detached	Central AC	Ducted Heating	1980s	0	0	0	1	0	721	4.62854e+06	0.0381272
+Single-Family Detached	Ducted Heat Pump	Ducted Heating	1980s	0	0	0	0	1	1706	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heating	1980s	0	0	0	0	1	12	77546.9	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heating	1980s	0	0	0	0	1	10	36023.6	0
+Single-Family Detached	None	Ducted Heating	1980s	0	0	0	1	0	72	361958	0.00283666
+Single-Family Detached	Room AC	Ducted Heating	1980s	0	0	0	1	0	71	297504	0.0023628
+Single-Family Detached	Central AC	Non-Ducted Heat Pump	1980s	0	0	0	0	1	44	5418.03	0
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heat Pump	1980s	0	0	0	0	1	44	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1980s	0	0	0	0	1	10	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1980s	0	0	0	1	0	12	45479.9	0.00072461
+Single-Family Detached	None	Non-Ducted Heat Pump	1980s	0	0	0	0	1	15	16631.1	0
+Single-Family Detached	Room AC	Non-Ducted Heat Pump	1980s	0	0	0	0	1	28	8892.69	0
+Single-Family Detached	Central AC	Non-Ducted Heating	1980s	0	0	0	1	0	73	463129	0.00428445
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heating	1980s	0	0	0	0	1	132	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heating	1980s	0	0	0	0	1	10	27043.7	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heating	1980s	0	0	0	0	1	19	78401.2	0
+Single-Family Detached	None	Non-Ducted Heating	1980s	0	0	0	1	0	84	299622	0.00267776
+Single-Family Detached	Room AC	Non-Ducted Heating	1980s	0	0	0	1	0	71	346320	0.00351965
+Single-Family Detached	Central AC	None	1980s	0	0	0	1	0	20	218915	0.000233236
+Single-Family Detached	Ducted Heat Pump	None	1980s	0	0	0	0	1	41	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	None	1980s	0	0	0	0	1	10	0	0
+Single-Family Detached	Non-Ducted Heat Pump	None	1980s	0	0	0	0	1	13	7108.63	0
+Single-Family Detached	None	None	1980s	0	0	0	1	0	14	60545.6	0.000153671
+Single-Family Detached	Room AC	None	1980s	0	0	0	1	0	15	27284.2	0.000138017
+Single-Family Detached	Central AC	Ducted Heat Pump	1990s	0	0	0	0	1	441	0	0
+Single-Family Detached	Ducted Heat Pump	Ducted Heat Pump	1990s	0	0	0	1	0	226	1.67857e+06	0.0162348
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heat Pump	1990s	0	0	0	0	1	19	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heat Pump	1990s	0	0	0	0	1	25	8610.71	0
+Single-Family Detached	None	Ducted Heat Pump	1990s	0	0	0	0	1	11	80724.7	0
+Single-Family Detached	Room AC	Ducted Heat Pump	1990s	0	0	0	0	1	138	28040.7	0
+Single-Family Detached	Central AC	Ducted Heating	1990s	0	0	0	1	0	985	6.85528e+06	0.0473112
+Single-Family Detached	Ducted Heat Pump	Ducted Heating	1990s	0	0	0	0	1	1706	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heating	1990s	0	0	0	0	1	19	35692.3	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heating	1990s	0	0	0	0	1	12	5034.11	0
+Single-Family Detached	None	Ducted Heating	1990s	0	0	0	1	0	72	437569	0.00328137
+Single-Family Detached	Room AC	Ducted Heating	1990s	0	0	0	1	0	60	313226	0.00251667
+Single-Family Detached	Central AC	Non-Ducted Heat Pump	1990s	0	0	0	0	1	44	19800.4	0
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heat Pump	1990s	0	0	0	0	1	44	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	1990s	0	0	0	0	1	10	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	1990s	0	0	0	1	0	12	23745.4	0.000484232
+Single-Family Detached	None	Non-Ducted Heat Pump	1990s	0	0	0	0	1	15	0	0
+Single-Family Detached	Room AC	Non-Ducted Heat Pump	1990s	0	0	0	0	1	28	12130.9	0
+Single-Family Detached	Central AC	Non-Ducted Heating	1990s	0	0	0	1	0	59	361548	0.00348091
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heating	1990s	0	0	0	0	1	132	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heating	1990s	0	0	0	0	1	10	27775	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heating	1990s	0	0	0	0	1	22	14694.1	0
+Single-Family Detached	None	Non-Ducted Heating	1990s	0	0	0	1	0	46	166162	0.00245815
+Single-Family Detached	Room AC	Non-Ducted Heating	1990s	0	0	0	1	0	59	299919	0.00309778
+Single-Family Detached	Central AC	None	1990s	0	0	0	1	0	21	217458	0.000233388
+Single-Family Detached	Ducted Heat Pump	None	1990s	0	0	0	0	1	41	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	None	1990s	0	0	0	0	1	10	5048.57	0
+Single-Family Detached	Non-Ducted Heat Pump	None	1990s	0	0	0	0	1	13	11473.4	0
+Single-Family Detached	None	None	1990s	0	0	0	1	0	12	33036.4	0.000133266
+Single-Family Detached	Room AC	None	1990s	0	0	0	1	0	10	16224.6	0.000125136
+Single-Family Detached	Central AC	Ducted Heat Pump	2000s	0	0	0	0	1	284	0	0
+Single-Family Detached	Ducted Heat Pump	Ducted Heat Pump	2000s	0	0	0	1	0	284	1.71933e+06	0.0187242
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heat Pump	2000s	0	0	0	0	1	2	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heat Pump	2000s	0	0	0	0	1	15	0	0
+Single-Family Detached	None	Ducted Heat Pump	2000s	0	0	0	0	1	15	90849.8	0
+Single-Family Detached	Room AC	Ducted Heat Pump	2000s	0	0	0	0	1	48	10514.4	0
+Single-Family Detached	Central AC	Ducted Heating	2000s	0	0	0	1	0	1137	6.46727e+06	0.0555418
+Single-Family Detached	Ducted Heat Pump	Ducted Heating	2000s	0	0	0	0	1	1137	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heating	2000s	0	0	0	0	1	79	42515.1	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heating	2000s	0	0	0	0	1	10	39717.6	0
+Single-Family Detached	None	Ducted Heating	2000s	0	0	0	1	0	77	334875	0.00304574
+Single-Family Detached	Room AC	Ducted Heating	2000s	0	0	0	1	0	45	180190	0.00168766
+Single-Family Detached	Central AC	Non-Ducted Heat Pump	2000s	0	0	0	0	1	41	4286.05	0
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heat Pump	2000s	0	0	0	0	1	41	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	2000s	0	0	0	0	1	2	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	2000s	0	0	0	1	0	14	11372.7	0.000323908
+Single-Family Detached	None	Non-Ducted Heat Pump	2000s	0	0	0	0	1	14	5207.66	0
+Single-Family Detached	Room AC	Non-Ducted Heat Pump	2000s	0	0	0	0	1	18	0	0
+Single-Family Detached	Central AC	Non-Ducted Heating	2000s	0	0	0	1	0	80	430866	0.00458805
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heating	2000s	0	0	0	0	1	80	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heating	2000s	0	0	0	0	1	32	6564.41	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heating	2000s	0	0	0	0	1	58	29440.7	0
+Single-Family Detached	None	Non-Ducted Heating	2000s	0	0	0	1	0	50	113182	0.0014014
+Single-Family Detached	Room AC	Non-Ducted Heating	2000s	0	0	0	1	0	34	149475	0.00165718
+Single-Family Detached	Central AC	None	2000s	0	0	0	1	0	40	282444	0.000382815
+Single-Family Detached	Ducted Heat Pump	None	2000s	0	0	0	0	1	40	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	None	2000s	0	0	0	0	1	2	12600.6	0
+Single-Family Detached	Non-Ducted Heat Pump	None	2000s	0	0	0	0	1	11	14657.8	0
+Single-Family Detached	None	None	2000s	0	0	0	1	0	11	30996.9	9.20691e-05
+Single-Family Detached	Room AC	None	2000s	0	0	0	1	0	18	6410.3	6.5525e-05
+Single-Family Detached	Central AC	Ducted Heat Pump	2010s	0	0	0	0	1	171	0	0
+Single-Family Detached	Ducted Heat Pump	Ducted Heat Pump	2010s	0	0	0	1	0	171	1.06168e+06	0.00645262
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heat Pump	2010s	0	0	0	0	1	2	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heat Pump	2010s	0	0	0	0	1	45	0	0
+Single-Family Detached	None	Ducted Heat Pump	2010s	0	0	0	0	1	45	40857.6	0
+Single-Family Detached	Room AC	Ducted Heat Pump	2010s	0	0	0	0	1	19	9651.28	0
+Single-Family Detached	Central AC	Ducted Heating	2010s	0	0	0	1	0	699	3.64662e+06	0.0175139
+Single-Family Detached	Ducted Heat Pump	Ducted Heating	2010s	0	0	0	0	1	699	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heating	2010s	0	0	0	0	1	79	8980.8	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heating	2010s	0	0	0	0	1	39	9743.75	0
+Single-Family Detached	None	Ducted Heating	2010s	0	0	0	1	0	37	141748	0.000659574
+Single-Family Detached	Room AC	Ducted Heating	2010s	0	0	0	1	0	18	71359.8	0.000340584
+Single-Family Detached	Central AC	Non-Ducted Heat Pump	2010s	0	0	0	0	1	23	0	0
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heat Pump	2010s	0	0	0	0	1	23	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	2010s	0	0	0	0	1	0	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	2010s	0	0	0	1	0	16	21816.9	0.000184316
+Single-Family Detached	None	Non-Ducted Heat Pump	2010s	0	0	0	0	1	16	0	0
+Single-Family Detached	Room AC	Non-Ducted Heat Pump	2010s	0	0	0	0	1	16	0	0
+Single-Family Detached	Central AC	Non-Ducted Heating	2010s	0	0	0	1	0	36	195320	0.00130259
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heating	2010s	0	0	0	0	1	36	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heating	2010s	0	0	0	0	1	32	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heating	2010s	0	0	0	0	1	40	24260.5	0
+Single-Family Detached	None	Non-Ducted Heating	2010s	0	0	0	1	0	33	91937.3	0.00063387
+Single-Family Detached	Room AC	Non-Ducted Heating	2010s	0	0	0	1	0	17	48252.4	0.000322456
+Single-Family Detached	Central AC	None	2010s	0	0	0	1	0	23	178982	0.000120595
+Single-Family Detached	Ducted Heat Pump	None	2010s	0	0	0	0	1	23	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	None	2010s	0	0	0	0	1	2	0	0
+Single-Family Detached	Non-Ducted Heat Pump	None	2010s	0	0	0	0	1	16	10228.6	0
+Single-Family Detached	None	None	2010s	0	0	0	1	0	16	19535.8	4.02992e-05
+Single-Family Detached	Room AC	None	2010s	0	0	0	1	0	16	0	3.76945e-06
+Single-Family Detached	Central AC	Ducted Heat Pump	<1940	0	0	0	0	1	62	0	0
+Single-Family Detached	Ducted Heat Pump	Ducted Heat Pump	<1940	0	0	0	1	0	62	317251	0.00313228
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heat Pump	<1940	0	0	0	0	1	10	4386.51	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heat Pump	<1940	0	0	0	0	1	180	0	0
+Single-Family Detached	None	Ducted Heat Pump	<1940	0	0	0	0	1	180	19954.1	0
+Single-Family Detached	Room AC	Ducted Heat Pump	<1940	0	0	0	0	1	298	14499.8	0
+Single-Family Detached	Central AC	Ducted Heating	<1940	0	0	0	1	0	808	4.24088e+06	0.0339437
+Single-Family Detached	Ducted Heat Pump	Ducted Heating	<1940	0	0	0	0	1	808	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heating	<1940	0	0	0	0	1	10	37434.6	0
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heating	<1940	0	0	0	0	1	11	43517.4	0
+Single-Family Detached	None	Ducted Heating	<1940	0	0	0	1	0	164	891353	0.00686119
+Single-Family Detached	Room AC	Ducted Heating	<1940	0	0	0	1	0	295	1.46033e+06	0.0121202
+Single-Family Detached	Central AC	Non-Ducted Heat Pump	<1940	0	0	0	0	1	102	10556.4	0
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heat Pump	<1940	0	0	0	0	1	102	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	<1940	0	0	0	0	1	3	0	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	<1940	0	0	0	1	0	14	61860.2	0.000935575
+Single-Family Detached	None	Non-Ducted Heat Pump	<1940	0	0	0	0	1	18	20618	0
+Single-Family Detached	Room AC	Non-Ducted Heat Pump	<1940	0	0	0	0	1	10	0	0
+Single-Family Detached	Central AC	Non-Ducted Heating	<1940	0	0	0	1	0	93	444981	0.00367389
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heating	<1940	0	0	0	0	1	93	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heating	<1940	0	0	0	0	1	32	13298.1	0
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heating	<1940	0	0	0	0	1	26	100505	0
+Single-Family Detached	None	Non-Ducted Heating	<1940	0	0	0	1	0	107	465846	0.00435783
+Single-Family Detached	Room AC	Non-Ducted Heating	<1940	0	0	0	1	0	304	1.46696e+06	0.0132305
+Single-Family Detached	Central AC	None	<1940	0	0	0	1	0	102	48197.7	7.32175e-05
+Single-Family Detached	Ducted Heat Pump	None	<1940	0	0	0	0	1	102	0	0
+Single-Family Detached	Evaporative or Swamp Cooler	None	<1940	0	0	0	0	1	2	0	0
+Single-Family Detached	Non-Ducted Heat Pump	None	<1940	0	0	0	0	1	18	2798.55	0
+Single-Family Detached	None	None	<1940	0	0	0	1	0	16	86745.2	0.000292388
+Single-Family Detached	Room AC	None	<1940	0	0	0	1	0	10	38911.7	9.73487e-05
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: The presence of an HVAC system shared between multiple dwelling units.
+# Source: The sample counts and sample weights are constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+# Assumption: Due to low sample sizes, the fallback rules are applied in following order
+# Assumption: [1] Vintage: Vintage ACS 20 year bin[2] HVAC Cooling Type: Lump 1) Central AC and Ducted Heat Pump and 2) Non-Ducted Heat Pump and None[3] HVAC Heating Type: Lump 1) Ducted Heating and Ducted Heat Pump and 2) Non-Ducted Heat Pump and None[4] HVAC Cooling Type: Lump 1) Central AC and Ducted Heat Pump and 2) Non-Ducted Heat Pump, Non-Ducted Heating, and None[5] HVAC Heating Type: Lump 1) Ducted Heating and Ducted Heat Pump and 2) Non-Ducted Heat Pump, None, and Room AC[6] Vintage: Vintage pre 1960s and post 2000[7] Vintage: All vintages
+# Assumption: Evaporative or Swamp Cooler Cooling Type assigned Void option
+# Assumption: Ducted Heat Pump assigned for both heating and cooling, other combinations assigned Void option
+# Assumption: Non-Ducted Heat Pump assigned for both heating and cooling, other combinations assigned Void option

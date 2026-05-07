@@ -1,0 +1,5 @@
+Option=No	Option=Yes	sampling_probability
+1	0	1
+# Created by: manually created
+# Description: Whether the HVAC system has been undersized or oversized (not used in project_national).
+# Source: Assuming no oversizing or undersizing until we have data necessary to characterize all types of systems.

@@ -4,8 +4,8 @@ water heater,electric,240,,4500,,,the data the brennan shared,
 water heater,"electric tankless, 1 bathroom",240,,18000,,,https://images.homedepot-static.com/catalog/pdfImages/24/242f1617-96e6-4618-ae47-82644b6baf21.pdf,Sized to service 1 shower and kitchen sink at 3gpm and 40F rise
 water heater,"electric tankless, 2 bathrooms",240,,24000,,,https://images.homedepot-static.com/catalog/pdfImages/24/242f1617-96e6-4618-ae47-82644b6baf21.pdf,In between 1 and 3+ bath
 water heater,"electric tankless, 3+ bathrooms",240,,36000,,,https://images.homedepot-static.com/catalog/pdfImages/24/242f1617-96e6-4618-ae47-82644b6baf21.pdf,Sized to service 6 gpm at 40F rise
-water heater,heat pump,240,,4500,,,the data the brennan shared,
-water heater,"heat pump, 120V, shared",120,,1000,,,,
+water heater,heat pump,240,,5000,,,the data the brennan shared,"EnergyStar now has max amp in product catelog which shows average power to be 5000W, 4500W is electric resistance heating elements only"
+water heater,"heat pump, 120V, shared",120,15,900,,,Brennan,data products surveyed by LBNL
 dishwasher,standard,120,10,1200,,,,
 garage door opener,1/2 HP,120,,373,,,,"1 mech HP = 745.7 W, used"
 garage door opener,3/4 HP,120,,559,,,,1 mech HP = 745.7 W
@@ -13,12 +13,12 @@ garbage disposal,1/3 HP,120,,246,,,NEC,1 mech HP = 745.7 W
 garbage disposal,1/2 HP,120,,373,,,NEC,1 mech HP = 745.7 W
 garbage disposal,3/4 HP,120,,559,,,NEC,"Used, 1 mech HP = 745.7 W, for home constructed in 1940 or after"
 garbage disposal,1 HP,120,,746,,,,1 mech HP = 745.7 W
-hot tub/spa,electric,240,32,1000,,,https://www.homedepot.com/p/Comfortflo-60-in-Rectangular-Drop-in-Whirlpool-Bathtub-in-White-W6048WM-White/306361376?source=shoppingads&locale=en-US&srsltid=AfmBOopv4Qowbpirlnrcp7JmicsPG6sXizYhA6tZd08A6febokbLv-SCcfU,"700-1500W, in-line heater tends to be 1.5 kW, 2-person tubs range from 700-1500W"
+hot tub/spa,electric,240,32,5500,,,ResStock default,OS-HPXML default values for spa heater and spa pump
 well pump,1 HP,240,,746,,,https://www.rpswaterpumps.com/collections/pump-for-wells-100-300-feet/products/05rps10-5gpm-1hp-submersible-pump-end-motor-starter-box,"for 3 bedrooms and less, 1 HP submersible pump provides 3-8 gpm from up to 500 ft, most residential wells are 100-800 ft deep, 4-bedroom water needs 8-12 gpm, 1 gpm per water appliance and fixture"
 well pump,1.5 HP,240,,1119,,,https://www.rpswaterpumps.com/collections/pump-for-wells-100-300-feet/products/10rps15-10gpm-1-5hp-submersible-pump-end-motor-starter-box,"for 4+ bedrooms, 1.5 HP submersible provides 9-18 gpm from up to 450 ft"
 clothes dryer,electric ventless,240,,2640,,,the data the brennan shared,NEC 220-18 says min 5000 W
 clothes dryer,electric,240,,5760,,,the data the brennan shared,NEC 220-18 says min 5000 W
-clothes dryer,"electric, 120V",120,,996,,,,brennan shared
+clothes dryer,"electric, 120V",120,,996,,,,"Doesn't really exist, not used, assigned the same value as 120V heat pump dryer"
 clothes dryer,heat pump,240,30,5760,,,the data the brennan shared,same as electric resistance (previously 860)
 clothes dryer,"heat pump, 120V",120,,996,,,,same as electric resistance
 range/oven,electric,240,,12000,,,,"brennan shared, 8000-16000 W, Kopperfield 8000W"
@@ -30,8 +30,8 @@ pool pump,1.5 HP,240,,1119,,,https://www.nrel.gov/docs/fy12osti/54242.pdf,"1 mec
 pool pump,2 HP,240,,1491,,,https://www.nrel.gov/docs/fy12osti/54242.pdf,"Used, 1 mech HP = 745.7 W, for 25k gal pool, can typically draw 2kW, pool pumps are designed to draw higher than nameplate power by ~1.5 (known as service factor)"
 ventilation,"kitchen, 300 cfm",120,,90,,,OS-HPXML,300 cfm * 0.3 W/cfm
 ventilation,"bathroom, 50 cfm",120,,15,,,OS-HPXML,"50cfm * 0.3 W/cfm, one per bathroom"
-electric vehicle charger,"electric, level 1",120,15,1650,,,NEMA 5-15,
-electric vehicle charger,"electric, level 2",240,50,7680,,,NEMA 14-50 plug,"32A operating current, does not need continuous load adjustment by 1.25, which is only needed for sizing branch circuit"
+electric vehicle charger,"electric, level 1",120,15,1440,,,NEMA 5-15,
+electric vehicle charger,"electric, level 2",240,32,7680,,,NEMA 14-50 plug,32A operating current
 space heating,heat pump,230,"0.626, 1.634",,,,regression model,"the coefficient for amperage is capacity of max heating and cooling (kbtuhr), intercept"
 space cooling,heat pump,230,"0.626, 1.634",,,,regression model,"the coefficient for amperage is capacity of max heating and cooling (kbtuhr), intercept"
 space cooling,central ac,230,"0.626, 1.634",,,,regression model,"the coefficient for amperage is capacity of max heating and cooling (kbtuhr), intercept"

@@ -1,0 +1,5 @@
+Option=Cooling Season, 7 days/wk	sampling_probability
+1	1
+# Created by: manually created
+# Description: Schedule of natural ventilation from windows.
+# Source: Wilson et al. 'Building America House Simulation Protocols' 2014

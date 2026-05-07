@@ -1,0 +1,174 @@
+schema_version: '0.3'
+os_version: 3.7.0
+os_sha: d5269793f1
+buildstock_directory: ../ # Relative to this file or absolute
+project_directory: project_national # Relative to buildstock_directory
+output_directory: /kfs2/projects/panels/run/hpwh_20240430
+#weather_files_url: https://data.nrel.gov/system/files/156/BuildStock_TMY3_FIPS.zip
+weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip
+
+sampler:
+  type: residential_quota
+  args:
+    n_datapoints: 1000
+
+workflow_generator:
+  type: residential_hpxml
+  args:
+    build_existing_model:
+      simulation_control_timestep: 15
+      simulation_control_run_period_begin_month: 1
+      simulation_control_run_period_begin_day_of_month: 1
+      simulation_control_run_period_end_month: 12
+      simulation_control_run_period_end_day_of_month: 31
+      simulation_control_run_period_calendar_year: 2007
+
+    simulation_output_report:
+      timeseries_frequency: timestep
+      include_timeseries_total_consumptions: true
+      include_timeseries_fuel_consumptions: true
+      include_timeseries_end_use_consumptions: true
+      include_timeseries_emissions: true
+      include_timeseries_emission_fuels: true
+      include_timeseries_emission_end_uses: true
+      include_timeseries_hot_water_uses: true
+      include_timeseries_total_loads: true
+      include_timeseries_component_loads: true
+      include_timeseries_unmet_hours: true
+      include_timeseries_zone_temperatures: true
+      include_timeseries_airflows: true
+      include_timeseries_weather: true
+      include_timeseries_resilience: true
+
+    reporting_measures:
+      - measure_dir_name: QOIReport
+
+    server_directory_cleanup:
+      retain_in_idf: false
+      retain_schedules_csv: false
+
+baseline:
+  n_buildings_represented: 139647020 # American Community Survey 2021 5-year, B25001, does not include territories ( 138765649 without AK and HI )
+
+upgrades:
+  - upgrade_name: 120VHPWH - 50 gal # 1
+    options:
+      - &water_heater_fuel_type
+        option: Water Heater Fuel|Electricity
+      - &120v_hpwh_50_gal_all
+        option: Water Heater Efficiency|Electric Heat Pump, 50 gal, 120 V Shared
+        costs:
+          - value: 2099
+            multiplier: Fixed (1)
+
+  - upgrade_name: 120VHPWH - 65 gal # 2
+    options:
+      - *water_heater_fuel_type
+      - &120v_hpwh_65_gal_all
+        option: Water Heater Efficiency|Electric Heat Pump, 65 gal, 120 V Shared
+        costs:
+          - value: 2499
+            multiplier: Fixed (1)
+
+  - upgrade_name: 120VHPWH - 80 gal # 3
+    options:
+      - *water_heater_fuel_type
+      - &120v_hpwh_80_gal_all
+        option: Water Heater Efficiency|Electric Heat Pump, 80 gal, 120 V Shared
+        costs:
+          - value: 3000
+            multiplier: Fixed (1)
+
+
+  - upgrade_name: 120VHPWH - 50 gal + same usage # 4
+    options:
+      - *water_heater_fuel_type
+      - *120v_hpwh_50_gal_all
+      - &100_usage
+        option: Hot Water Fixtures|100% Usage
+
+  - upgrade_name: 120VHPWH - 65 gal + same usage # 5
+    options:
+      - *water_heater_fuel_type
+      - *120v_hpwh_65_gal_all
+      - *100_usage
+
+  - upgrade_name: 120VHPWH - 80 gal + same usage # 6
+    options:
+      - *water_heater_fuel_type
+      - *120v_hpwh_80_gal_all
+      - *100_usage
+
+
+  - upgrade_name: 120VHPWH - 50 gal + same usage + same location # 7
+    options:
+      - *water_heater_fuel_type
+      - *120v_hpwh_50_gal_all
+      - *100_usage
+      - &living_space
+        option: Water Heater Location|Living Space
+
+  - upgrade_name: 120VHPWH - 65 gal + same usage + same location # 8
+    options:
+      - *water_heater_fuel_type
+      - *120v_hpwh_65_gal_all
+      - *100_usage
+      - *living_space
+
+  - upgrade_name: 120VHPWH - 80 gal + same usage + same location # 9
+    options:
+      - *water_heater_fuel_type
+      - *120v_hpwh_80_gal_all
+      - *100_usage
+      - *living_space
+
+
+  - upgrade_name: 120VHPWH # 10
+    options:
+      - *water_heater_fuel_type
+      - &120v_hpwh_50_gal
+        option: Water Heater Efficiency|Electric Heat Pump, 50 gal, 120 V Shared
+        apply_logic:
+          - or:
+            - Bedrooms|1
+            - Bedrooms|2
+        costs:
+          - value: 2099
+            multiplier: Fixed (1)
+      - &120v_hpwh_65_gal
+        option: Water Heater Efficiency|Electric Heat Pump, 65 gal, 120 V Shared
+        apply_logic:
+          - Bedrooms|3
+        costs:
+          - value: 2499
+            multiplier: Fixed (1)
+      - &120v_hpwh_80_gal
+        option: Water Heater Efficiency|Electric Heat Pump, 80 gal, 120 V Shared
+        apply_logic:
+          - or:
+            - Bedrooms|4
+            - Bedrooms|5
+        costs:
+          - value: 3000
+            multiplier: Fixed (1)
+
+kestrel:
+  n_jobs: 2
+  minutes_per_sim: 4
+  account: panels
+  sampling:
+    time: 10
+  postprocessing:
+    time: 100
+    n_workers: 1
+
+postprocessing:
+  aws:
+    region_name: us-west-2
+    s3:
+      bucket: resstock-panels
+      prefix: resstock-panels_runs
+    athena:
+      glue_service_role: service-role/AWSGlueServiceRole-default
+      database_name: resstock_panels 
+      max_crawling_time: 100

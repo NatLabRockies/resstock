@@ -1,0 +1,14 @@
+Dependency=Census Division	Option=Midwest	Option=Northeast	Option=South	Option=West	source_count	source_weight	sampling_probability
+East North Central	1	0	0	0	1.66695e+06	2.04825e+07	0.152791
+East South Central	0	0	1	0	825832	8.32914e+06	0.0621322
+Middle Atlantic	0	1	0	0	941302	1.73702e+07	0.129575
+Mountain	0	0	0	1	1.17962e+06	9.78085e+06	0.0729614
+New England	0	1	0	0	401202	6.46778e+06	0.0482471
+Pacific	0	0	0	1	1.17265e+06	1.94243e+07	0.144898
+South Atlantic	0	0	1	0	1.84331e+06	2.74318e+07	0.204631
+West North Central	1	0	0	0	1.47348e+06	9.27452e+06	0.0691843
+West South Central	0	0	1	0	1.57401e+06	1.54942e+07	0.115581
+# Created by: sources\spatial\tsv_maker.py
+# Description: The U.S. Census Region that the sample is located.
+# Source: Spatial definitions are from the U.S. Census Bureau as of July 1, 2015.
+# Source: Unit counts are from the American Community Survey 5-yr 2016.

@@ -1,0 +1,13 @@
+Dependency=Geometry Building Type ACS	Option=None	Option=2	Option=3	Option=4	Option=5	Option=6	Option=7	Option=8	Option=9	Option=10	Option=12	Option=15	Option=16	Option=20	Option=24	Option=30	Option=36	Option=50	Option=60	Option=90	Option=144	sampling_probability
+Single-Family Attached	0	0	0	0	0.122416	0.132617	0.061208	0.193826	0	0.065235	0.096644	0.024161	0.05557	0.045369	0.045369	0.045369	0.045369	0.022886	0.017718	0.014765	0.018456	0.0585642
+10 to 19 Unit	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0445628
+2 Unit	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0361162
+20 to 49 Unit	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0367574
+3 or 4 Unit	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0438601
+5 to 9 Unit	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0473605
+50 or more Unit	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.055546
+Mobile Home	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0624897
+Single-Family Detached	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.614743
+# Created by: manually created
+# Description: Number of units in the single-family attached building.
+# Source: U.S. EIA 2009 Residential Energy Consumption Survey (RECS) microdata.

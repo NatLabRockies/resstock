@@ -1,0 +1,6 @@
+Dependency=Has PV	Option=None	Option=10 kWh	Option=20 kWh, Outside	Option=20 kWh, Garage	Option=20 kWh, 80% Round Trip Efficiency	sampling_probability
+Yes	1	0	0	0	0	0.00937984
+No	1	0	0	0	0	0.99062
+# Created by: manually created
+# Description: The presence, size, location, and efficiency of an onsite battery (not modeled in project_national).
+# Source: n/a

@@ -1,0 +1,636 @@
+Dependency=Custom State	Dependency=Geometry Building Type RECS	Dependency=HVAC Secondary Heating Fuel	Dependency=Vintage	Option=Ducted Heating	Option=Non-Ducted Heating	Option=None	source_count	source_weight	sampling_probability
+AK	Mobile Home	Electricity	1940s	0	0	1	0	0	0
+AK	Mobile Home	Electricity	1950s	0	0	1	0	0	0
+AK	Mobile Home	Electricity	1960s	0	0	1	0	0	0
+AK	Mobile Home	Electricity	1970s	0	0	1	0	0	0
+AK	Mobile Home	Electricity	1980s	0	0	1	0	0	0
+AK	Mobile Home	Electricity	1990s	0	0	1	0	0	0
+AK	Mobile Home	Electricity	2000s	0	0	1	0	0	0
+AK	Mobile Home	Electricity	2010s	0	0	1	0	0	0
+AK	Mobile Home	Electricity	<1940	0	0	1	0	0	0
+AK	Mobile Home	Fuel Oil	1940s	0.51875	0.48125	0	160	0	7.48276e-08
+AK	Mobile Home	Fuel Oil	1950s	0.51875	0.48125	0	160	5	2.36049e-07
+AK	Mobile Home	Fuel Oil	1960s	0.444444	0.555556	0	27	27	9.10022e-07
+AK	Mobile Home	Fuel Oil	1970s	0.6	0.4	0	80	80	3.31708e-06
+AK	Mobile Home	Fuel Oil	1980s	0.354839	0.645161	0	31	31	1.31174e-06
+AK	Mobile Home	Fuel Oil	1990s	0.51875	0.48125	0	160	6	4.82732e-07
+AK	Mobile Home	Fuel Oil	2000s	0.51875	0.48125	0	160	2	2.62238e-07
+AK	Mobile Home	Fuel Oil	2010s	0.51875	0.48125	0	160	0	1.87283e-07
+AK	Mobile Home	Fuel Oil	<1940	0.51875	0.48125	0	160	9	5.55738e-08
+AK	Mobile Home	Natural Gas	1940s	0.933333	0.0666667	0	15	0	2.44313e-09
+AK	Mobile Home	Natural Gas	1950s	0.933333	0.0666667	0	15	1	6.3874e-08
+AK	Mobile Home	Natural Gas	1960s	0.933333	0.0666667	0	15	2	6.92427e-08
+AK	Mobile Home	Natural Gas	1970s	0.933333	0.0666667	0	15	7	3.33789e-07
+AK	Mobile Home	Natural Gas	1980s	0.933333	0.0666667	0	15	4	2.66749e-07
+AK	Mobile Home	Natural Gas	1990s	0.933333	0.0666667	0	15	0	4.37082e-08
+AK	Mobile Home	Natural Gas	2000s	0.933333	0.0666667	0	15	1	2.35459e-08
+AK	Mobile Home	Natural Gas	2010s	0.933333	0.0666667	0	15	0	3.60015e-08
+AK	Mobile Home	Natural Gas	<1940	0.933333	0.0666667	0	15	0	9.26185e-09
+AK	Mobile Home	None	1940s	0	0	1	2393	4	7.03803e-07
+AK	Mobile Home	None	1950s	0	0	1	44	44	2.6466e-06
+AK	Mobile Home	None	1960s	0	0	1	376	376	1.14769e-05
+AK	Mobile Home	None	1970s	0	0	1	1358	1358	4.98258e-05
+AK	Mobile Home	None	1980s	0	0	1	407	407	2.12441e-05
+AK	Mobile Home	None	1990s	0	0	1	98	98	4.69844e-06
+AK	Mobile Home	None	2000s	0	0	1	26	26	3.25427e-06
+AK	Mobile Home	None	2010s	0	0	1	2393	7	3.30882e-06
+AK	Mobile Home	None	<1940	0	0	1	73	73	4.78117e-07
+AK	Mobile Home	Other Fuel	1940s	0	1	0	2	0	1.06325e-09
+AK	Mobile Home	Other Fuel	1950s	0	1	0	2	0	8.09393e-10
+AK	Mobile Home	Other Fuel	1960s	0	1	0	2	0	4.4477e-09
+AK	Mobile Home	Other Fuel	1970s	0	1	0	2	2	2.75156e-08
+AK	Mobile Home	Other Fuel	1980s	0	1	0	2	0	1.19306e-08
+AK	Mobile Home	Other Fuel	1990s	0	1	0	2	0	2.95073e-09
+AK	Mobile Home	Other Fuel	2000s	0	1	0	2	0	2.31214e-09
+AK	Mobile Home	Other Fuel	2010s	0	1	0	2	0	1.34258e-09
+AK	Mobile Home	Other Fuel	<1940	0	1	0	2	0	1.64254e-10
+AK	Mobile Home	Propane	1940s	0.642857	0.357143	0	14	0	4.74652e-09
+AK	Mobile Home	Propane	1950s	0.642857	0.357143	0	14	0	3.14866e-08
+AK	Mobile Home	Propane	1960s	0.642857	0.357143	0	14	1	5.5278e-10
+AK	Mobile Home	Propane	1970s	0.642857	0.357143	0	14	8	3.43152e-07
+AK	Mobile Home	Propane	1980s	0.642857	0.357143	0	14	4	2.12237e-07
+AK	Mobile Home	Propane	1990s	0.642857	0.357143	0	14	0	4.12723e-08
+AK	Mobile Home	Propane	2000s	0.642857	0.357143	0	14	0	2.15402e-08
+AK	Mobile Home	Propane	2010s	0.642857	0.357143	0	14	0	2.52858e-08
+AK	Mobile Home	Propane	<1940	0.642857	0.357143	0	14	1	7.464e-09
+AK	Mobile Home	Wood	1940s	0	1	0	171	0	1.18979e-07
+AK	Mobile Home	Wood	1950s	0	1	0	171	2	3.47881e-07
+AK	Mobile Home	Wood	1960s	0	1	0	24	24	1.18661e-06
+AK	Mobile Home	Wood	1970s	0	1	0	102	102	5.72555e-06
+AK	Mobile Home	Wood	1980s	0	1	0	37	37	2.36217e-06
+AK	Mobile Home	Wood	1990s	0	1	0	171	2	7.69671e-07
+AK	Mobile Home	Wood	2000s	0	1	0	171	2	4.18901e-07
+AK	Mobile Home	Wood	2010s	0	1	0	171	2	2.81087e-07
+AK	Mobile Home	Wood	<1940	0	1	0	171	0	7.91629e-08
+AK	Multi-Family with 2 - 4 Units	Electricity	1940s	0	0	1	0	0	0
+AK	Multi-Family with 2 - 4 Units	Electricity	1950s	0	0	1	0	0	0
+AK	Multi-Family with 2 - 4 Units	Electricity	1960s	0	0	1	0	0	0
+AK	Multi-Family with 2 - 4 Units	Electricity	1970s	0	0	1	0	0	0
+AK	Multi-Family with 2 - 4 Units	Electricity	1980s	0	0	1	0	0	0
+AK	Multi-Family with 2 - 4 Units	Electricity	1990s	0	0	1	0	0	0
+AK	Multi-Family with 2 - 4 Units	Electricity	2000s	0	0	1	0	0	0
+AK	Multi-Family with 2 - 4 Units	Electricity	2010s	0	0	1	0	0	0
+AK	Multi-Family with 2 - 4 Units	Electricity	<1940	0	0	1	0	0	0
+AK	Multi-Family with 2 - 4 Units	Fuel Oil	1940s	0.157143	0.842857	0	70	0	1.34783e-07
+AK	Multi-Family with 2 - 4 Units	Fuel Oil	1950s	0.157143	0.842857	0	70	2.1	8.73728e-07
+AK	Multi-Family with 2 - 4 Units	Fuel Oil	1960s	0.157143	0.842857	0	70	2.1	3.71459e-07
+AK	Multi-Family with 2 - 4 Units	Fuel Oil	1970s	0.0909091	0.909091	0	11	3.3	1.04996e-06
+AK	Multi-Family with 2 - 4 Units	Fuel Oil	1980s	0.05	0.95	0	20	6	1.58901e-06
+AK	Multi-Family with 2 - 4 Units	Fuel Oil	1990s	0.157143	0.842857	0	70	1.8	7.32771e-07
+AK	Multi-Family with 2 - 4 Units	Fuel Oil	2000s	0.157143	0.842857	0	70	0.3	5.45591e-07
+AK	Multi-Family with 2 - 4 Units	Fuel Oil	2010s	0.157143	0.842857	0	70	2.4	2.88504e-07
+AK	Multi-Family with 2 - 4 Units	Fuel Oil	<1940	0.2	0.8	0	10	3	2.04983e-07
+AK	Multi-Family with 2 - 4 Units	Natural Gas	1940s	0.139535	0.860465	0	43	0	2.15683e-09
+AK	Multi-Family with 2 - 4 Units	Natural Gas	1950s	0.139535	0.860465	0	43	0.3	1.20177e-07
+AK	Multi-Family with 2 - 4 Units	Natural Gas	1960s	0.139535	0.860465	0	43	2.1	5.60831e-07
+AK	Multi-Family with 2 - 4 Units	Natural Gas	1970s	0.166667	0.833333	0	18	5.4	1.80964e-06
+AK	Multi-Family with 2 - 4 Units	Natural Gas	1980s	0.181818	0.818182	0	11	3.3	1.70764e-06
+AK	Multi-Family with 2 - 4 Units	Natural Gas	1990s	0.139535	0.860465	0	43	0	9.96577e-08
+AK	Multi-Family with 2 - 4 Units	Natural Gas	2000s	0.139535	0.860465	0	43	0	1.66055e-07
+AK	Multi-Family with 2 - 4 Units	Natural Gas	2010s	0.139535	0.860465	0	43	1.8	1.46593e-07
+AK	Multi-Family with 2 - 4 Units	Natural Gas	<1940	0.139535	0.860465	0	43	0	2.39416e-08
+AK	Multi-Family with 2 - 4 Units	None	1940s	0	0	1	44	13.2	4.01814e-06
+AK	Multi-Family with 2 - 4 Units	None	1950s	0	0	1	142	42.6	1.7748e-05
+AK	Multi-Family with 2 - 4 Units	None	1960s	0	0	1	259	77.7	2.17272e-05
+AK	Multi-Family with 2 - 4 Units	None	1970s	0	0	1	659	197.7	6.71316e-05
+AK	Multi-Family with 2 - 4 Units	None	1980s	0	0	1	543	162.9	6.93091e-05
+AK	Multi-Family with 2 - 4 Units	None	1990s	0	0	1	133	39.9	2.73204e-05
+AK	Multi-Family with 2 - 4 Units	None	2000s	0	0	1	132	39.6	3.37116e-05
+AK	Multi-Family with 2 - 4 Units	None	2010s	0	0	1	651	195.3	1.60456e-05
+AK	Multi-Family with 2 - 4 Units	None	<1940	0	0	1	133	39.9	5.50104e-06
+AK	Multi-Family with 2 - 4 Units	Other Fuel	1940s	0	1	0	1	0	2.59262e-09
+AK	Multi-Family with 2 - 4 Units	Other Fuel	1950s	0	1	0	1	0	1.1289e-08
+AK	Multi-Family with 2 - 4 Units	Other Fuel	1960s	0	1	0	1	0	1.41988e-08
+AK	Multi-Family with 2 - 4 Units	Other Fuel	1970s	0	1	0	1	0.3	2.40099e-07
+AK	Multi-Family with 2 - 4 Units	Other Fuel	1980s	0	1	0	1	0	1.94154e-08
+AK	Multi-Family with 2 - 4 Units	Other Fuel	1990s	0	1	0	1	0	2.53594e-08
+AK	Multi-Family with 2 - 4 Units	Other Fuel	2000s	0	1	0	1	0	4.40587e-08
+AK	Multi-Family with 2 - 4 Units	Other Fuel	2010s	0	1	0	1	0	9.5762e-09
+AK	Multi-Family with 2 - 4 Units	Other Fuel	<1940	0	1	0	1	0	6.91063e-09
+AK	Multi-Family with 2 - 4 Units	Propane	1940s	0	1	0	12	0	1.76015e-08
+AK	Multi-Family with 2 - 4 Units	Propane	1950s	0	1	0	12	0.3	2.51392e-08
+AK	Multi-Family with 2 - 4 Units	Propane	1960s	0	1	0	12	0	1.96348e-08
+AK	Multi-Family with 2 - 4 Units	Propane	1970s	0	1	0	12	0.9	1.39021e-07
+AK	Multi-Family with 2 - 4 Units	Propane	1980s	0	1	0	12	0.6	1.40001e-07
+AK	Multi-Family with 2 - 4 Units	Propane	1990s	0	1	0	12	0.6	1.73411e-07
+AK	Multi-Family with 2 - 4 Units	Propane	2000s	0	1	0	12	0.3	2.48669e-07
+AK	Multi-Family with 2 - 4 Units	Propane	2010s	0	1	0	12	0.6	2.64016e-08
+AK	Multi-Family with 2 - 4 Units	Propane	<1940	0	1	0	12	0.3	3.27283e-08
+AK	Multi-Family with 2 - 4 Units	Wood	1940s	0	1	0	142	0	2.67456e-07
+AK	Multi-Family with 2 - 4 Units	Wood	1950s	0	1	0	142	1.2	8.25043e-07
+AK	Multi-Family with 2 - 4 Units	Wood	1960s	0	1	0	23	6.9	1.36477e-06
+AK	Multi-Family with 2 - 4 Units	Wood	1970s	0	1	0	53	15.9	4.43045e-06
+AK	Multi-Family with 2 - 4 Units	Wood	1980s	0	1	0	34	10.2	4.48528e-06
+AK	Multi-Family with 2 - 4 Units	Wood	1990s	0	1	0	142	2.4	1.68018e-06
+AK	Multi-Family with 2 - 4 Units	Wood	2000s	0	1	0	142	0.3	9.90383e-07
+AK	Multi-Family with 2 - 4 Units	Wood	2010s	0	1	0	14	4.2	6.34776e-07
+AK	Multi-Family with 2 - 4 Units	Wood	<1940	0	1	0	142	1.5	4.01447e-07
+AK	Multi-Family with 5+ Units	Electricity	1940s	0	0	1	0	0	0
+AK	Multi-Family with 5+ Units	Electricity	1950s	0	0	1	0	0	0
+AK	Multi-Family with 5+ Units	Electricity	1960s	0	0	1	0	0	0
+AK	Multi-Family with 5+ Units	Electricity	1970s	0	0	1	0	0	0
+AK	Multi-Family with 5+ Units	Electricity	1980s	0	0	1	0	0	0
+AK	Multi-Family with 5+ Units	Electricity	1990s	0	0	1	0	0	0
+AK	Multi-Family with 5+ Units	Electricity	2000s	0	0	1	0	0	0
+AK	Multi-Family with 5+ Units	Electricity	2010s	0	0	1	0	0	0
+AK	Multi-Family with 5+ Units	Electricity	<1940	0	0	1	0	0	0
+AK	Multi-Family with 5+ Units	Fuel Oil	1940s	0.157143	0.842857	0	70	0	1.16077e-07
+AK	Multi-Family with 5+ Units	Fuel Oil	1950s	0.157143	0.842857	0	70	4.9	7.42768e-07
+AK	Multi-Family with 5+ Units	Fuel Oil	1960s	0.157143	0.842857	0	70	4.9	4.84986e-07
+AK	Multi-Family with 5+ Units	Fuel Oil	1970s	0.0909091	0.909091	0	11	7.7	1.08384e-06
+AK	Multi-Family with 5+ Units	Fuel Oil	1980s	0.05	0.95	0	20	14	1.5467e-06
+AK	Multi-Family with 5+ Units	Fuel Oil	1990s	0.157143	0.842857	0	70	4.2	5.42756e-07
+AK	Multi-Family with 5+ Units	Fuel Oil	2000s	0.157143	0.842857	0	70	0.7	2.74346e-07
+AK	Multi-Family with 5+ Units	Fuel Oil	2010s	0.157143	0.842857	0	70	5.6	2.16343e-07
+AK	Multi-Family with 5+ Units	Fuel Oil	<1940	0.2	0.8	0	10	7	1.70995e-07
+AK	Multi-Family with 5+ Units	Natural Gas	1940s	0.139535	0.860465	0	43	0	9.92232e-09
+AK	Multi-Family with 5+ Units	Natural Gas	1950s	0.139535	0.860465	0	43	0.7	7.50036e-08
+AK	Multi-Family with 5+ Units	Natural Gas	1960s	0.139535	0.860465	0	43	4.9	6.48305e-07
+AK	Multi-Family with 5+ Units	Natural Gas	1970s	0.166667	0.833333	0	18	12.6	1.73868e-06
+AK	Multi-Family with 5+ Units	Natural Gas	1980s	0.181818	0.818182	0	11	7.7	1.8045e-06
+AK	Multi-Family with 5+ Units	Natural Gas	1990s	0.139535	0.860465	0	43	0	6.99979e-08
+AK	Multi-Family with 5+ Units	Natural Gas	2000s	0.139535	0.860465	0	43	0	6.13734e-08
+AK	Multi-Family with 5+ Units	Natural Gas	2010s	0.139535	0.860465	0	43	4.2	8.78633e-08
+AK	Multi-Family with 5+ Units	Natural Gas	<1940	0.139535	0.860465	0	43	0	9.61663e-09
+AK	Multi-Family with 5+ Units	None	1940s	0	0	1	44	30.8	4.59123e-06
+AK	Multi-Family with 5+ Units	None	1950s	0	0	1	142	99.4	1.23452e-05
+AK	Multi-Family with 5+ Units	None	1960s	0	0	1	259	181.3	2.60321e-05
+AK	Multi-Family with 5+ Units	None	1970s	0	0	1	659	461.3	6.97684e-05
+AK	Multi-Family with 5+ Units	None	1980s	0	0	1	543	380.1	7.12512e-05
+AK	Multi-Family with 5+ Units	None	1990s	0	0	1	133	93.1	2.79096e-05
+AK	Multi-Family with 5+ Units	None	2000s	0	0	1	132	92.4	1.82389e-05
+AK	Multi-Family with 5+ Units	None	2010s	0	0	1	651	455.7	1.10626e-05
+AK	Multi-Family with 5+ Units	None	<1940	0	0	1	133	93.1	3.75605e-06
+AK	Multi-Family with 5+ Units	Other Fuel	1940s	0	1	0	1	0	3.60717e-09
+AK	Multi-Family with 5+ Units	Other Fuel	1950s	0	1	0	1	0	1.0709e-08
+AK	Multi-Family with 5+ Units	Other Fuel	1960s	0	1	0	1	0	1.83831e-08
+AK	Multi-Family with 5+ Units	Other Fuel	1970s	0	1	0	1	0.7	2.03898e-07
+AK	Multi-Family with 5+ Units	Other Fuel	1980s	0	1	0	1	0	2.23261e-08
+AK	Multi-Family with 5+ Units	Other Fuel	1990s	0	1	0	1	0	1.73983e-08
+AK	Multi-Family with 5+ Units	Other Fuel	2000s	0	1	0	1	0	1.67572e-08
+AK	Multi-Family with 5+ Units	Other Fuel	2010s	0	1	0	1	0	7.36068e-09
+AK	Multi-Family with 5+ Units	Other Fuel	<1940	0	1	0	1	0	4.51091e-09
+AK	Multi-Family with 5+ Units	Propane	1940s	0	1	0	12	0	1.64335e-08
+AK	Multi-Family with 5+ Units	Propane	1950s	0	1	0	12	0.7	1.97271e-08
+AK	Multi-Family with 5+ Units	Propane	1960s	0	1	0	12	0	2.06157e-08
+AK	Multi-Family with 5+ Units	Propane	1970s	0	1	0	12	2.1	1.53377e-07
+AK	Multi-Family with 5+ Units	Propane	1980s	0	1	0	12	1.4	1.4729e-07
+AK	Multi-Family with 5+ Units	Propane	1990s	0	1	0	12	1.4	1.20768e-07
+AK	Multi-Family with 5+ Units	Propane	2000s	0	1	0	12	0.7	1.03683e-07
+AK	Multi-Family with 5+ Units	Propane	2010s	0	1	0	12	1.4	9.65527e-09
+AK	Multi-Family with 5+ Units	Propane	<1940	0	1	0	12	0.7	2.6776e-08
+AK	Multi-Family with 5+ Units	Wood	1940s	0	1	0	142	0	2.08757e-07
+AK	Multi-Family with 5+ Units	Wood	1950s	0	1	0	142	2.8	6.06289e-07
+AK	Multi-Family with 5+ Units	Wood	1960s	0	1	0	23	16.1	1.66845e-06
+AK	Multi-Family with 5+ Units	Wood	1970s	0	1	0	53	37.1	4.75988e-06
+AK	Multi-Family with 5+ Units	Wood	1980s	0	1	0	34	23.8	4.26206e-06
+AK	Multi-Family with 5+ Units	Wood	1990s	0	1	0	142	5.6	1.56721e-06
+AK	Multi-Family with 5+ Units	Wood	2000s	0	1	0	142	0.7	5.46062e-07
+AK	Multi-Family with 5+ Units	Wood	2010s	0	1	0	14	9.8	5.0095e-07
+AK	Multi-Family with 5+ Units	Wood	<1940	0	1	0	142	3.5	3.24098e-07
+AK	Single-Family Attached	Electricity	1940s	0	0	1	0	0	0
+AK	Single-Family Attached	Electricity	1950s	0	0	1	0	0	0
+AK	Single-Family Attached	Electricity	1960s	0	0	1	0	0	0
+AK	Single-Family Attached	Electricity	1970s	0	0	1	0	0	0
+AK	Single-Family Attached	Electricity	1980s	0	0	1	0	0	0
+AK	Single-Family Attached	Electricity	1990s	0	0	1	0	0	0
+AK	Single-Family Attached	Electricity	2000s	0	0	1	0	0	0
+AK	Single-Family Attached	Electricity	2010s	0	0	1	0	0	0
+AK	Single-Family Attached	Electricity	<1940	0	0	1	0	0	0
+AK	Single-Family Attached	Fuel Oil	1940s	0.0191083	0.980892	0	157	2	3.46383e-08
+AK	Single-Family Attached	Fuel Oil	1950s	0.0191083	0.980892	0	157	3	7.50222e-08
+AK	Single-Family Attached	Fuel Oil	1960s	0.0191083	0.980892	0	157	5	1.86564e-07
+AK	Single-Family Attached	Fuel Oil	1970s	0.0714286	0.928571	0	14	14	2.39989e-07
+AK	Single-Family Attached	Fuel Oil	1980s	0.00884956	0.99115	0	113	113	1.62437e-06
+AK	Single-Family Attached	Fuel Oil	1990s	0.0191083	0.980892	0	157	8	3.26775e-07
+AK	Single-Family Attached	Fuel Oil	2000s	0.0191083	0.980892	0	157	6	3.40979e-07
+AK	Single-Family Attached	Fuel Oil	2010s	0.0191083	0.980892	0	157	3	1.04711e-07
+AK	Single-Family Attached	Fuel Oil	<1940	0.0191083	0.980892	0	157	3	1.83999e-08
+AK	Single-Family Attached	Natural Gas	1940s	0.506024	0.493976	0	249	1	0
+AK	Single-Family Attached	Natural Gas	1950s	0.506024	0.493976	0	249	1	4.2153e-08
+AK	Single-Family Attached	Natural Gas	1960s	0.506024	0.493976	0	249	4	7.34304e-08
+AK	Single-Family Attached	Natural Gas	1970s	0.388889	0.611111	0	90	90	1.33214e-06
+AK	Single-Family Attached	Natural Gas	1980s	0.561151	0.438849	0	139	139	1.99977e-06
+AK	Single-Family Attached	Natural Gas	1990s	0.506024	0.493976	0	249	7	3.1306e-07
+AK	Single-Family Attached	Natural Gas	2000s	0.506024	0.493976	0	249	1	7.53423e-08
+AK	Single-Family Attached	Natural Gas	2010s	0.506024	0.493976	0	249	0	2.34305e-10
+AK	Single-Family Attached	Natural Gas	<1940	0.506024	0.493976	0	249	6	3.22345e-08
+AK	Single-Family Attached	None	1940s	0	0	1	31	31	4.85595e-07
+AK	Single-Family Attached	None	1950s	0	0	1	117	117	3.30278e-06
+AK	Single-Family Attached	None	1960s	0	0	1	241	241	5.89724e-06
+AK	Single-Family Attached	None	1970s	0	0	1	1627	1627	2.44188e-05
+AK	Single-Family Attached	None	1980s	0	0	1	2676	2676	4.89184e-05
+AK	Single-Family Attached	None	1990s	0	0	1	500	500	1.98416e-05
+AK	Single-Family Attached	None	2000s	0	0	1	583	583	4.26648e-05
+AK	Single-Family Attached	None	2010s	0	0	1	1870	1870	7.87485e-06
+AK	Single-Family Attached	None	<1940	0	0	1	155	155	7.534e-07
+AK	Single-Family Attached	Other Fuel	1940s	0	1	0	0	0	6.86709e-10
+AK	Single-Family Attached	Other Fuel	1950s	0	1	0	0	0	1.77563e-09
+AK	Single-Family Attached	Other Fuel	1960s	0	1	0	0	0	3.55125e-09
+AK	Single-Family Attached	Other Fuel	1970s	0	1	0	0	0	4.88543e-09
+AK	Single-Family Attached	Other Fuel	1980s	0	1	0	0	0	2.34462e-08
+AK	Single-Family Attached	Other Fuel	1990s	0	1	0	0	0	6.47469e-09
+AK	Single-Family Attached	Other Fuel	2000s	0	1	0	0	0	9.29017e-09
+AK	Single-Family Attached	Other Fuel	2010s	0	1	0	0	0	3.9829e-09
+AK	Single-Family Attached	Other Fuel	<1940	0	1	0	0	0	6.86709e-11
+AK	Single-Family Attached	Propane	1940s	0.08	0.92	0	25	0	2.48959e-09
+AK	Single-Family Attached	Propane	1950s	0.08	0.92	0	25	0	6.19235e-09
+AK	Single-Family Attached	Propane	1960s	0.08	0.92	0	25	0	3.21012e-09
+AK	Single-Family Attached	Propane	1970s	0.08	0.92	0	25	4	1.56031e-08
+AK	Single-Family Attached	Propane	1980s	0.08	0.92	0	25	9	1.33856e-07
+AK	Single-Family Attached	Propane	1990s	0.08	0.92	0	25	3	4.55671e-08
+AK	Single-Family Attached	Propane	2000s	0.08	0.92	0	25	3	1.20407e-07
+AK	Single-Family Attached	Propane	2010s	0.08	0.92	0	25	5	3.17797e-08
+AK	Single-Family Attached	Propane	<1940	0.08	0.92	0	25	1	9.80271e-10
+AK	Single-Family Attached	Wood	1940s	0	1	0	362	1	4.44607e-08
+AK	Single-Family Attached	Wood	1950s	0	1	0	362	1	1.29009e-07
+AK	Single-Family Attached	Wood	1960s	0	1	0	362	5	2.60788e-07
+AK	Single-Family Attached	Wood	1970s	0	1	0	101	101	1.51619e-06
+AK	Single-Family Attached	Wood	1980s	0	1	0	221	221	3.87227e-06
+AK	Single-Family Attached	Wood	1990s	0	1	0	10	10	7.90633e-07
+AK	Single-Family Attached	Wood	2000s	0	1	0	362	5	5.49149e-07
+AK	Single-Family Attached	Wood	2010s	0	1	0	362	6	8.25781e-08
+AK	Single-Family Attached	Wood	<1940	0	1	0	12	12	6.12119e-08
+AK	Single-Family Detached	Electricity	1940s	0	0	1	0	0	0
+AK	Single-Family Detached	Electricity	1950s	0	0	1	0	0	0
+AK	Single-Family Detached	Electricity	1960s	0	0	1	0	0	0
+AK	Single-Family Detached	Electricity	1970s	0	0	1	0	0	0
+AK	Single-Family Detached	Electricity	1980s	0	0	1	0	0	0
+AK	Single-Family Detached	Electricity	1990s	0	0	1	0	0	0
+AK	Single-Family Detached	Electricity	2000s	0	0	1	0	0	0
+AK	Single-Family Detached	Electricity	2010s	0	0	1	0	0	0
+AK	Single-Family Detached	Electricity	<1940	0	0	1	0	0	0
+AK	Single-Family Detached	Fuel Oil	1940s	0.190476	0.809524	0	84	84	2.04184e-06
+AK	Single-Family Detached	Fuel Oil	1950s	0.241071	0.758929	0	112	112	3.11998e-06
+AK	Single-Family Detached	Fuel Oil	1960s	0.110599	0.889401	0	217	217	6.15532e-06
+AK	Single-Family Detached	Fuel Oil	1970s	0.11276	0.88724	0	674	674	1.61391e-05
+AK	Single-Family Detached	Fuel Oil	1980s	0.117769	0.882231	0	968	968	2.52481e-05
+AK	Single-Family Detached	Fuel Oil	1990s	0.0558824	0.944118	0	340	340	1.34607e-05
+AK	Single-Family Detached	Fuel Oil	2000s	0.0590406	0.940959	0	271	271	1.31981e-05
+AK	Single-Family Detached	Fuel Oil	2010s	0	1	0	70	70	1.04471e-06
+AK	Single-Family Detached	Fuel Oil	<1940	0.136364	0.863636	0	198	198	2.30105e-06
+AK	Single-Family Detached	Natural Gas	1940s	0.384842	0.615158	0	1359	9	2.11631e-07
+AK	Single-Family Detached	Natural Gas	1950s	0.402778	0.597222	0	72	72	1.51083e-06
+AK	Single-Family Detached	Natural Gas	1960s	0.141844	0.858156	0	141	141	2.40309e-06
+AK	Single-Family Detached	Natural Gas	1970s	0.245203	0.754797	0	469	469	8.18724e-06
+AK	Single-Family Detached	Natural Gas	1980s	0.483221	0.516779	0	447	447	7.95803e-06
+AK	Single-Family Detached	Natural Gas	1990s	0.736	0.264	0	125	125	3.79018e-06
+AK	Single-Family Detached	Natural Gas	2000s	0.363636	0.636364	0	22	22	1.244e-06
+AK	Single-Family Detached	Natural Gas	2010s	0.804878	0.195122	0	41	41	1.57213e-07
+AK	Single-Family Detached	Natural Gas	<1940	0.212121	0.787879	0	33	33	7.72672e-08
+AK	Single-Family Detached	None	1940s	0	0	1	707	707	1.58435e-05
+AK	Single-Family Detached	None	1950s	0	0	1	2695	2695	5.81185e-05
+AK	Single-Family Detached	None	1960s	0	0	1	4474	4474	8.90133e-05
+AK	Single-Family Detached	None	1970s	0	0	1	11867	11867	0.00023305
+AK	Single-Family Detached	None	1980s	0	0	1	13089	13089	0.000272582
+AK	Single-Family Detached	None	1990s	0	0	1	5085	5085	0.000184666
+AK	Single-Family Detached	None	2000s	0	0	1	4548	4548	0.000230538
+AK	Single-Family Detached	None	2010s	0	0	1	9769	9769	5.61102e-05
+AK	Single-Family Detached	None	<1940	0	0	1	1894	1894	1.99044e-05
+AK	Single-Family Detached	Other Fuel	1940s	0	1	0	24	0	9.4075e-09
+AK	Single-Family Detached	Other Fuel	1950s	0	1	0	24	1	6.39869e-08
+AK	Single-Family Detached	Other Fuel	1960s	0	1	0	24	0	2.34884e-08
+AK	Single-Family Detached	Other Fuel	1970s	0	1	0	24	6	1.8535e-07
+AK	Single-Family Detached	Other Fuel	1980s	0	1	0	13	13	4.54223e-07
+AK	Single-Family Detached	Other Fuel	1990s	0	1	0	24	1	4.79381e-08
+AK	Single-Family Detached	Other Fuel	2000s	0	1	0	24	1	4.95166e-08
+AK	Single-Family Detached	Other Fuel	2010s	0	1	0	24	1	1.96995e-08
+AK	Single-Family Detached	Other Fuel	<1940	0	1	0	24	1	4.67386e-08
+AK	Single-Family Detached	Propane	1940s	0.0659026	0.934097	0	349	4	7.325e-08
+AK	Single-Family Detached	Propane	1950s	0.0833333	0.916667	0	12	12	3.06664e-07
+AK	Single-Family Detached	Propane	1960s	0	1	0	16	16	3.65204e-07
+AK	Single-Family Detached	Propane	1970s	0.0307692	0.969231	0	65	65	1.34395e-06
+AK	Single-Family Detached	Propane	1980s	0.15	0.85	0	80	80	2.11416e-06
+AK	Single-Family Detached	Propane	1990s	0.0377358	0.962264	0	53	53	2.2767e-06
+AK	Single-Family Detached	Propane	2000s	0.0555556	0.944444	0	54	54	3.51639e-06
+AK	Single-Family Detached	Propane	2010s	0.0232558	0.976744	0	43	43	5.00958e-07
+AK	Single-Family Detached	Propane	<1940	0.0909091	0.909091	0	22	22	2.0428e-07
+AK	Single-Family Detached	Wood	1940s	0	1	0	74	74	2.55816e-06
+AK	Single-Family Detached	Wood	1950s	0	1	0	289	289	7.48411e-06
+AK	Single-Family Detached	Wood	1960s	0.0053286	0.994671	0	563	563	1.38056e-05
+AK	Single-Family Detached	Wood	1970s	0.00266525	0.997335	0	1876	1876	4.00502e-05
+AK	Single-Family Detached	Wood	1980s	0.00302899	0.996971	0	2311	2311	5.2176e-05
+AK	Single-Family Detached	Wood	1990s	0.00133333	0.998667	0	750	750	2.79659e-05
+AK	Single-Family Detached	Wood	2000s	0	1	0	620	620	2.80433e-05
+AK	Single-Family Detached	Wood	2010s	0	1	0	519	519	4.46152e-06
+AK	Single-Family Detached	Wood	<1940	0.0027933	0.997207	0	358	358	4.80167e-06
+Others	Mobile Home	Electricity	1940s	0	0	1	0	0	0
+Others	Mobile Home	Electricity	1950s	0	0	1	0	0	0
+Others	Mobile Home	Electricity	1960s	0	0	1	0	0	0
+Others	Mobile Home	Electricity	1970s	0	0	1	0	0	0
+Others	Mobile Home	Electricity	1980s	0	0	1	0	0	0
+Others	Mobile Home	Electricity	1990s	0	0	1	0	0	0
+Others	Mobile Home	Electricity	2000s	0	0	1	0	0	0
+Others	Mobile Home	Electricity	2010s	0	0	1	0	0	0
+Others	Mobile Home	Electricity	<1940	0	0	1	0	0	0
+Others	Mobile Home	Fuel Oil	1940s	0	0	1	0	0	0
+Others	Mobile Home	Fuel Oil	1950s	0	0	1	0	0	0
+Others	Mobile Home	Fuel Oil	1960s	0	0	1	0	0	0
+Others	Mobile Home	Fuel Oil	1970s	0	0	1	0	0	0
+Others	Mobile Home	Fuel Oil	1980s	0	0	1	0	0	0
+Others	Mobile Home	Fuel Oil	1990s	0	0	1	0	0	0
+Others	Mobile Home	Fuel Oil	2000s	0	0	1	0	0	0
+Others	Mobile Home	Fuel Oil	2010s	0	0	1	0	0	0
+Others	Mobile Home	Fuel Oil	<1940	0	0	1	0	0	0
+Others	Mobile Home	Natural Gas	1940s	0	0	1	0	0	0
+Others	Mobile Home	Natural Gas	1950s	0	0	1	0	0	0
+Others	Mobile Home	Natural Gas	1960s	0	0	1	0	0	0
+Others	Mobile Home	Natural Gas	1970s	0	0	1	0	0	0
+Others	Mobile Home	Natural Gas	1980s	0	0	1	0	0	0
+Others	Mobile Home	Natural Gas	1990s	0	0	1	0	0	0
+Others	Mobile Home	Natural Gas	2000s	0	0	1	0	0	0
+Others	Mobile Home	Natural Gas	2010s	0	0	1	0	0	0
+Others	Mobile Home	Natural Gas	<1940	0	0	1	0	0	0
+Others	Mobile Home	None	1940s	0	0	1	0	0	0.000258466
+Others	Mobile Home	None	1950s	0	0	1	0	0	0.000882866
+Others	Mobile Home	None	1960s	0	0	1	0	0	0.00359176
+Others	Mobile Home	None	1970s	0	0	1	0	0	0.0126854
+Others	Mobile Home	None	1980s	0	0	1	0	0	0.0139126
+Others	Mobile Home	None	1990s	0	0	1	0	0	0.0177321
+Others	Mobile Home	None	2000s	0	0	1	0	0	0.00991136
+Others	Mobile Home	None	2010s	0	0	1	0	0	0.00301232
+Others	Mobile Home	None	<1940	0	0	1	0	0	0.000385525
+Others	Mobile Home	Other Fuel	1940s	0	0	1	0	0	0
+Others	Mobile Home	Other Fuel	1950s	0	0	1	0	0	0
+Others	Mobile Home	Other Fuel	1960s	0	0	1	0	0	0
+Others	Mobile Home	Other Fuel	1970s	0	0	1	0	0	0
+Others	Mobile Home	Other Fuel	1980s	0	0	1	0	0	0
+Others	Mobile Home	Other Fuel	1990s	0	0	1	0	0	0
+Others	Mobile Home	Other Fuel	2000s	0	0	1	0	0	0
+Others	Mobile Home	Other Fuel	2010s	0	0	1	0	0	0
+Others	Mobile Home	Other Fuel	<1940	0	0	1	0	0	0
+Others	Mobile Home	Propane	1940s	0	0	1	0	0	0
+Others	Mobile Home	Propane	1950s	0	0	1	0	0	0
+Others	Mobile Home	Propane	1960s	0	0	1	0	0	0
+Others	Mobile Home	Propane	1970s	0	0	1	0	0	0
+Others	Mobile Home	Propane	1980s	0	0	1	0	0	0
+Others	Mobile Home	Propane	1990s	0	0	1	0	0	0
+Others	Mobile Home	Propane	2000s	0	0	1	0	0	0
+Others	Mobile Home	Propane	2010s	0	0	1	0	0	0
+Others	Mobile Home	Propane	<1940	0	0	1	0	0	0
+Others	Mobile Home	Wood	1940s	0	0	1	0	0	0
+Others	Mobile Home	Wood	1950s	0	0	1	0	0	0
+Others	Mobile Home	Wood	1960s	0	0	1	0	0	0
+Others	Mobile Home	Wood	1970s	0	0	1	0	0	0
+Others	Mobile Home	Wood	1980s	0	0	1	0	0	0
+Others	Mobile Home	Wood	1990s	0	0	1	0	0	0
+Others	Mobile Home	Wood	2000s	0	0	1	0	0	0
+Others	Mobile Home	Wood	2010s	0	0	1	0	0	0
+Others	Mobile Home	Wood	<1940	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Electricity	1940s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Electricity	1950s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Electricity	1960s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Electricity	1970s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Electricity	1980s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Electricity	1990s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Electricity	2000s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Electricity	2010s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Electricity	<1940	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Fuel Oil	1940s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Fuel Oil	1950s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Fuel Oil	1960s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Fuel Oil	1970s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Fuel Oil	1980s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Fuel Oil	1990s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Fuel Oil	2000s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Fuel Oil	2010s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Fuel Oil	<1940	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Natural Gas	1940s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Natural Gas	1950s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Natural Gas	1960s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Natural Gas	1970s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Natural Gas	1980s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Natural Gas	1990s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Natural Gas	2000s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Natural Gas	2010s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Natural Gas	<1940	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	None	1940s	0	0	1	0	0	0.00493341
+Others	Multi-Family with 2 - 4 Units	None	1950s	0	0	1	0	0	0.00719796
+Others	Multi-Family with 2 - 4 Units	None	1960s	0	0	1	0	0	0.00832651
+Others	Multi-Family with 2 - 4 Units	None	1970s	0	0	1	0	0	0.0120931
+Others	Multi-Family with 2 - 4 Units	None	1980s	0	0	1	0	0	0.0100958
+Others	Multi-Family with 2 - 4 Units	None	1990s	0	0	1	0	0	0.00750307
+Others	Multi-Family with 2 - 4 Units	None	2000s	0	0	1	0	0	0.00582912
+Others	Multi-Family with 2 - 4 Units	None	2010s	0	0	1	0	0	0.00242201
+Others	Multi-Family with 2 - 4 Units	None	<1940	0	0	1	0	0	0.0212862
+Others	Multi-Family with 2 - 4 Units	Other Fuel	1940s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Other Fuel	1950s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Other Fuel	1960s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Other Fuel	1970s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Other Fuel	1980s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Other Fuel	1990s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Other Fuel	2000s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Other Fuel	2010s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Other Fuel	<1940	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Propane	1940s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Propane	1950s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Propane	1960s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Propane	1970s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Propane	1980s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Propane	1990s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Propane	2000s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Propane	2010s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Propane	<1940	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Wood	1940s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Wood	1950s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Wood	1960s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Wood	1970s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Wood	1980s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Wood	1990s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Wood	2000s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Wood	2010s	0	0	1	0	0	0
+Others	Multi-Family with 2 - 4 Units	Wood	<1940	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Electricity	1940s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Electricity	1950s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Electricity	1960s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Electricity	1970s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Electricity	1980s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Electricity	1990s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Electricity	2000s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Electricity	2010s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Electricity	<1940	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Fuel Oil	1940s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Fuel Oil	1950s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Fuel Oil	1960s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Fuel Oil	1970s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Fuel Oil	1980s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Fuel Oil	1990s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Fuel Oil	2000s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Fuel Oil	2010s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Fuel Oil	<1940	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Natural Gas	1940s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Natural Gas	1950s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Natural Gas	1960s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Natural Gas	1970s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Natural Gas	1980s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Natural Gas	1990s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Natural Gas	2000s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Natural Gas	2010s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Natural Gas	<1940	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	None	1940s	0	0	1	0	0	0.00566831
+Others	Multi-Family with 5+ Units	None	1950s	0	0	1	0	0	0.0108488
+Others	Multi-Family with 5+ Units	None	1960s	0	0	1	0	0	0.0205502
+Others	Multi-Family with 5+ Units	None	1970s	0	0	1	0	0	0.0344767
+Others	Multi-Family with 5+ Units	None	1980s	0	0	1	0	0	0.0300649
+Others	Multi-Family with 5+ Units	None	1990s	0	0	1	0	0	0.025067
+Others	Multi-Family with 5+ Units	None	2000s	0	0	1	0	0	0.0240491
+Others	Multi-Family with 5+ Units	None	2010s	0	0	1	0	0	0.01434
+Others	Multi-Family with 5+ Units	None	<1940	0	0	1	0	0	0.0188917
+Others	Multi-Family with 5+ Units	Other Fuel	1940s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Other Fuel	1950s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Other Fuel	1960s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Other Fuel	1970s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Other Fuel	1980s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Other Fuel	1990s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Other Fuel	2000s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Other Fuel	2010s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Other Fuel	<1940	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Propane	1940s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Propane	1950s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Propane	1960s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Propane	1970s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Propane	1980s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Propane	1990s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Propane	2000s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Propane	2010s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Propane	<1940	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Wood	1940s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Wood	1950s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Wood	1960s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Wood	1970s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Wood	1980s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Wood	1990s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Wood	2000s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Wood	2010s	0	0	1	0	0	0
+Others	Multi-Family with 5+ Units	Wood	<1940	0	0	1	0	0	0
+Others	Single-Family Attached	Electricity	1940s	0	0	1	0	0	0
+Others	Single-Family Attached	Electricity	1950s	0	0	1	0	0	0
+Others	Single-Family Attached	Electricity	1960s	0	0	1	0	0	0
+Others	Single-Family Attached	Electricity	1970s	0	0	1	0	0	0
+Others	Single-Family Attached	Electricity	1980s	0	0	1	0	0	0
+Others	Single-Family Attached	Electricity	1990s	0	0	1	0	0	0
+Others	Single-Family Attached	Electricity	2000s	0	0	1	0	0	0
+Others	Single-Family Attached	Electricity	2010s	0	0	1	0	0	0
+Others	Single-Family Attached	Electricity	<1940	0	0	1	0	0	0
+Others	Single-Family Attached	Fuel Oil	1940s	0	0	1	0	0	0
+Others	Single-Family Attached	Fuel Oil	1950s	0	0	1	0	0	0
+Others	Single-Family Attached	Fuel Oil	1960s	0	0	1	0	0	0
+Others	Single-Family Attached	Fuel Oil	1970s	0	0	1	0	0	0
+Others	Single-Family Attached	Fuel Oil	1980s	0	0	1	0	0	0
+Others	Single-Family Attached	Fuel Oil	1990s	0	0	1	0	0	0
+Others	Single-Family Attached	Fuel Oil	2000s	0	0	1	0	0	0
+Others	Single-Family Attached	Fuel Oil	2010s	0	0	1	0	0	0
+Others	Single-Family Attached	Fuel Oil	<1940	0	0	1	0	0	0
+Others	Single-Family Attached	Natural Gas	1940s	0	0	1	0	0	0
+Others	Single-Family Attached	Natural Gas	1950s	0	0	1	0	0	0
+Others	Single-Family Attached	Natural Gas	1960s	0	0	1	0	0	0
+Others	Single-Family Attached	Natural Gas	1970s	0	0	1	0	0	0
+Others	Single-Family Attached	Natural Gas	1980s	0	0	1	0	0	0
+Others	Single-Family Attached	Natural Gas	1990s	0	0	1	0	0	0
+Others	Single-Family Attached	Natural Gas	2000s	0	0	1	0	0	0
+Others	Single-Family Attached	Natural Gas	2010s	0	0	1	0	0	0
+Others	Single-Family Attached	Natural Gas	<1940	0	0	1	0	0	0
+Others	Single-Family Attached	None	1940s	0	0	1	0	0	0.00281604
+Others	Single-Family Attached	None	1950s	0	0	1	0	0	0.00404449
+Others	Single-Family Attached	None	1960s	0	0	1	0	0	0.00375552
+Others	Single-Family Attached	None	1970s	0	0	1	0	0	0.00799509
+Others	Single-Family Attached	None	1980s	0	0	1	0	0	0.0101605
+Others	Single-Family Attached	None	1990s	0	0	1	0	0	0.00815576
+Others	Single-Family Attached	None	2000s	0	0	1	0	0	0.010021
+Others	Single-Family Attached	None	2010s	0	0	1	0	0	0.00334529
+Others	Single-Family Attached	None	<1940	0	0	1	0	0	0.00810184
+Others	Single-Family Attached	Other Fuel	1940s	0	0	1	0	0	0
+Others	Single-Family Attached	Other Fuel	1950s	0	0	1	0	0	0
+Others	Single-Family Attached	Other Fuel	1960s	0	0	1	0	0	0
+Others	Single-Family Attached	Other Fuel	1970s	0	0	1	0	0	0
+Others	Single-Family Attached	Other Fuel	1980s	0	0	1	0	0	0
+Others	Single-Family Attached	Other Fuel	1990s	0	0	1	0	0	0
+Others	Single-Family Attached	Other Fuel	2000s	0	0	1	0	0	0
+Others	Single-Family Attached	Other Fuel	2010s	0	0	1	0	0	0
+Others	Single-Family Attached	Other Fuel	<1940	0	0	1	0	0	0
+Others	Single-Family Attached	Propane	1940s	0	0	1	0	0	0
+Others	Single-Family Attached	Propane	1950s	0	0	1	0	0	0
+Others	Single-Family Attached	Propane	1960s	0	0	1	0	0	0
+Others	Single-Family Attached	Propane	1970s	0	0	1	0	0	0
+Others	Single-Family Attached	Propane	1980s	0	0	1	0	0	0
+Others	Single-Family Attached	Propane	1990s	0	0	1	0	0	0
+Others	Single-Family Attached	Propane	2000s	0	0	1	0	0	0
+Others	Single-Family Attached	Propane	2010s	0	0	1	0	0	0
+Others	Single-Family Attached	Propane	<1940	0	0	1	0	0	0
+Others	Single-Family Attached	Wood	1940s	0	0	1	0	0	0
+Others	Single-Family Attached	Wood	1950s	0	0	1	0	0	0
+Others	Single-Family Attached	Wood	1960s	0	0	1	0	0	0
+Others	Single-Family Attached	Wood	1970s	0	0	1	0	0	0
+Others	Single-Family Attached	Wood	1980s	0	0	1	0	0	0
+Others	Single-Family Attached	Wood	1990s	0	0	1	0	0	0
+Others	Single-Family Attached	Wood	2000s	0	0	1	0	0	0
+Others	Single-Family Attached	Wood	2010s	0	0	1	0	0	0
+Others	Single-Family Attached	Wood	<1940	0	0	1	0	0	0
+Others	Single-Family Detached	Electricity	1940s	0	0	1	0	0	0
+Others	Single-Family Detached	Electricity	1950s	0	0	1	0	0	0
+Others	Single-Family Detached	Electricity	1960s	0	0	1	0	0	0
+Others	Single-Family Detached	Electricity	1970s	0	0	1	0	0	0
+Others	Single-Family Detached	Electricity	1980s	0	0	1	0	0	0
+Others	Single-Family Detached	Electricity	1990s	0	0	1	0	0	0
+Others	Single-Family Detached	Electricity	2000s	0	0	1	0	0	0
+Others	Single-Family Detached	Electricity	2010s	0	0	1	0	0	0
+Others	Single-Family Detached	Electricity	<1940	0	0	1	0	0	0
+Others	Single-Family Detached	Fuel Oil	1940s	0	0	1	0	0	0
+Others	Single-Family Detached	Fuel Oil	1950s	0	0	1	0	0	0
+Others	Single-Family Detached	Fuel Oil	1960s	0	0	1	0	0	0
+Others	Single-Family Detached	Fuel Oil	1970s	0	0	1	0	0	0
+Others	Single-Family Detached	Fuel Oil	1980s	0	0	1	0	0	0
+Others	Single-Family Detached	Fuel Oil	1990s	0	0	1	0	0	0
+Others	Single-Family Detached	Fuel Oil	2000s	0	0	1	0	0	0
+Others	Single-Family Detached	Fuel Oil	2010s	0	0	1	0	0	0
+Others	Single-Family Detached	Fuel Oil	<1940	0	0	1	0	0	0
+Others	Single-Family Detached	Natural Gas	1940s	0	0	1	0	0	0
+Others	Single-Family Detached	Natural Gas	1950s	0	0	1	0	0	0
+Others	Single-Family Detached	Natural Gas	1960s	0	0	1	0	0	0
+Others	Single-Family Detached	Natural Gas	1970s	0	0	1	0	0	0
+Others	Single-Family Detached	Natural Gas	1980s	0	0	1	0	0	0
+Others	Single-Family Detached	Natural Gas	1990s	0	0	1	0	0	0
+Others	Single-Family Detached	Natural Gas	2000s	0	0	1	0	0	0
+Others	Single-Family Detached	Natural Gas	2010s	0	0	1	0	0	0
+Others	Single-Family Detached	Natural Gas	<1940	0	0	1	0	0	0
+Others	Single-Family Detached	None	1940s	0	0	1	0	0	0.0356989
+Others	Single-Family Detached	None	1950s	0	0	1	0	0	0.0807561
+Others	Single-Family Detached	None	1960s	0	0	1	0	0	0.0702316
+Others	Single-Family Detached	None	1970s	0	0	1	0	0	0.0845335
+Others	Single-Family Detached	None	1980s	0	0	1	0	0	0.0695006
+Others	Single-Family Detached	None	1990s	0	0	1	0	0	0.0791247
+Others	Single-Family Detached	None	2000s	0	0	1	0	0	0.0872337
+Others	Single-Family Detached	None	2010s	0	0	1	0	0	0.0275122
+Others	Single-Family Detached	None	<1940	0	0	1	0	0	0.0786908
+Others	Single-Family Detached	Other Fuel	1940s	0	0	1	0	0	0
+Others	Single-Family Detached	Other Fuel	1950s	0	0	1	0	0	0
+Others	Single-Family Detached	Other Fuel	1960s	0	0	1	0	0	0
+Others	Single-Family Detached	Other Fuel	1970s	0	0	1	0	0	0
+Others	Single-Family Detached	Other Fuel	1980s	0	0	1	0	0	0
+Others	Single-Family Detached	Other Fuel	1990s	0	0	1	0	0	0
+Others	Single-Family Detached	Other Fuel	2000s	0	0	1	0	0	0
+Others	Single-Family Detached	Other Fuel	2010s	0	0	1	0	0	0
+Others	Single-Family Detached	Other Fuel	<1940	0	0	1	0	0	0
+Others	Single-Family Detached	Propane	1940s	0	0	1	0	0	0
+Others	Single-Family Detached	Propane	1950s	0	0	1	0	0	0
+Others	Single-Family Detached	Propane	1960s	0	0	1	0	0	0
+Others	Single-Family Detached	Propane	1970s	0	0	1	0	0	0
+Others	Single-Family Detached	Propane	1980s	0	0	1	0	0	0
+Others	Single-Family Detached	Propane	1990s	0	0	1	0	0	0
+Others	Single-Family Detached	Propane	2000s	0	0	1	0	0	0
+Others	Single-Family Detached	Propane	2010s	0	0	1	0	0	0
+Others	Single-Family Detached	Propane	<1940	0	0	1	0	0	0
+Others	Single-Family Detached	Wood	1940s	0	0	1	0	0	0
+Others	Single-Family Detached	Wood	1950s	0	0	1	0	0	0
+Others	Single-Family Detached	Wood	1960s	0	0	1	0	0	0
+Others	Single-Family Detached	Wood	1970s	0	0	1	0	0	0
+Others	Single-Family Detached	Wood	1980s	0	0	1	0	0	0
+Others	Single-Family Detached	Wood	1990s	0	0	1	0	0	0
+Others	Single-Family Detached	Wood	2000s	0	0	1	0	0	0
+Others	Single-Family Detached	Wood	2010s	0	0	1	0	0	0
+Others	Single-Family Detached	Wood	<1940	0	0	1	0	0	0
+# Created by: sources\aris\tsv_maker.py
+# Description: The efficiency and type of the heating system.
+# Source: Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+# Assumption: For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+# Assumption: For Alaska, all heat pumps are assumed to be non-ducted mini-splits.

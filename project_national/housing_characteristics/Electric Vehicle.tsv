@@ -1,0 +1,5 @@
+Option=None	Option=EV, 5000 miles, 0.3 kWh/mi	Option=EV, 4000 miles, 0.3 kWh/mi	sampling_probability
+1	0	0	1
+# Created by: manually created
+# Description: Electric vehicle usage and efficiency (not used in project_national).
+# Source: Not applicable (electric vehicle charging is not currently modeled separate from plug loads)

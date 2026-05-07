@@ -1,0 +1,5 @@
+Option=Hour0	Option=Hour1	Option=Hour2	Option=Hour3	Option=Hour4	Option=Hour5	Option=Hour6	Option=Hour7	Option=Hour8	Option=Hour9	Option=Hour10	Option=Hour11	Option=Hour12	Option=Hour13	Option=Hour14	Option=Hour15	Option=Hour16	Option=Hour17	Option=Hour18	Option=Hour19	Option=Hour20	Option=Hour21	Option=Hour22	Option=Hour23	sampling_probability
+0.007	0.007	0.004	0.004	0.007	0.011	0.025	0.042	0.046	0.048	0.042	0.05	0.057	0.046	0.057	0.044	0.092	0.15	0.117	0.06	0.035	0.025	0.016	0.011	1
+# Created by: manually created
+# Description: Range spot ventilation daily start hour.
+# Source: derived from national average cooking range schedule in Wilson et al. 'Building America House Simulation Protocols' 2014

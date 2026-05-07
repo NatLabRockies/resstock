@@ -1,0 +1,35 @@
+Dependency=Heating Fuel	Dependency=HVAC Has Shared System	Option=Boiler Baseboards Heating Only, Electricity	Option=Boiler Baseboards Heating Only, Fuel	Option=Fan Coil Cooling Only	Option=Fan Coil Heating and Cooling, Electricity	Option=Fan Coil Heating and Cooling, Fuel	Option=None	Option=Void	source_count	source_weight	sampling_probability
+Electricity	Cooling Only	0	0	1	0	0	0	0	161	1.60314e+06	0.00755233
+Fuel Oil	Cooling Only	0	0	1	0	0	0	0	0	0	0.000175458
+Natural Gas	Cooling Only	0	0	1	0	0	0	0	65	647299	0.0055849
+None	Cooling Only	0	0	1	0	0	0	0	49	521219	0.000512093
+Other Fuel	Cooling Only	0	0	1	0	0	0	0	2	0	7.37574e-05
+Propane	Cooling Only	0	0	1	0	0	0	0	2	25488.3	0.000156341
+Wood	Cooling Only	0	0	1	0	0	0	0	2	0	9.5525e-06
+Electricity	Heating Only	1	0	0	0	0	0	0	315	2.63761e+06	0.028173
+Fuel Oil	Heating Only	0	1	0	0	0	0	0	85	595692	0.00464367
+Natural Gas	Heating Only	0	1	0	0	0	0	0	527	4.88373e+06	0.0369543
+None	Heating Only	0	0	0	0	0	0	1	0	0	0
+Other Fuel	Heating Only	0	1	0	0	0	0	0	28	0	0.000823985
+Propane	Heating Only	0	1	0	0	0	0	0	22	118515	0.00134928
+Wood	Heating Only	0	1	0	0	0	0	0	28	36874.9	8.27888e-05
+Electricity	Heating and Cooling	0	0	0	1	0	0	0	234	2.14233e+06	0.0131141
+Fuel Oil	Heating and Cooling	0	0	0	0	1	0	0	13	109612	0.000423302
+Natural Gas	Heating and Cooling	0	0	0	0	1	0	0	203	1.77971e+06	0.0102548
+None	Heating and Cooling	0	0	0	0	0	0	1	0	0	0
+Other Fuel	Heating and Cooling	0	0	0	0	1	0	0	5	0	0.000172276
+Propane	Heating and Cooling	0	0	0	0	1	0	0	5	13141.6	0.000279229
+Wood	Heating and Cooling	0	0	0	0	1	0	0	5	10363.4	1.40834e-05
+Electricity	None	0	0	0	0	0	1	0	4989	3.61909e+07	0.345199
+Fuel Oil	None	0	0	0	0	0	1	0	999	4.22964e+06	0.0433498
+Natural Gas	None	0	0	0	0	0	1	0	8800	5.54027e+07	0.415874
+None	None	0	0	0	0	0	1	0	702	5.26901e+06	0.010827
+Other Fuel	None	0	0	0	0	0	1	0	1319	54510.4	0.00637082
+Propane	None	0	0	0	0	0	1	0	901	5.05448e+06	0.048501
+Wood	None	0	0	0	0	0	1	0	410	2.20303e+06	0.0195289
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: The presence and efficiency of the shared HVAC system.
+# Source: The sample counts and sample weights are constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+# Assumption: Assume that all Heating and Cooling shared systems are fan coils in each dwelling unit served by a central chiller and boiler.
+# Assumption: Assume all Heating Only shared systems are hot water baseboards in each dwelling unit served by a central boiler.
+# Assumption: Assume all Cooling Only shared systems are fan coils in each dwelling unit served by a central chiller.
