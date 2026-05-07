@@ -406,6 +406,9 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       return true
     end
 
+    return false
+  end
+
   def set_header(measures, hpxml, values)
     # Whole SFA/MF Building Simulation?
     measures['BuildResidentialHPXML'][0]['whole_sfa_or_mf_building_sim'] = hpxml.header.whole_sfa_or_mf_building_sim
