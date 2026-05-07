@@ -204,13 +204,64 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
     }}
     iframe {{ width: 100%; height: 100%; border: 0; }}
     .empty {{ padding: 14px; color: #b3261e; }}
+    .learn-more-link {{
+      color: #0b57d0;
+      text-decoration: none;
+      cursor: pointer;
+      margin-left: 4px;
+    }}
+    .learn-more-link:hover {{ text-decoration: underline; }}
+    dialog#aboutDialog {{
+      width: 90vw;
+      max-width: 1100px;
+      height: 88vh;
+      padding: 0;
+      border: 1px solid #c6c6c6;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+      overflow: hidden;
+    }}
+    dialog#aboutDialog[open] {{
+      display: flex;
+      flex-direction: column;
+    }}
+    dialog#aboutDialog::backdrop {{ background: rgba(0,0,0,0.45); }}
+    dialog#aboutDialog .dialog-header {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      border-bottom: 1px solid #e5e5e5;
+      background: #fafafa;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a1a1a;
+      flex: 0 0 auto;
+    }}
+    dialog#aboutDialog .dialog-close {{
+      background: transparent;
+      border: 1px solid #c6c6c6;
+      border-radius: 4px;
+      padding: 3px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      color: #555;
+    }}
+    dialog#aboutDialog .dialog-close:hover {{ background: #efefef; }}
+    dialog#aboutDialog iframe {{
+      width: 100%;
+      flex: 1 1 auto;
+      border: 0;
+      display: block;
+    }}
   </style>
 </head>
 <body>
   <div class='app'>
     <aside class='sidebar'>
       <div class='title'>ResStock Comparison Explorer</div>
-      <div class='subtitle'>uses AMY2018 versions</div>
+      <div class='subtitle'>uses AMY2018 weather.<a id='learnMoreLink' class='learn-more-link' href='#'>Learn more</a></div>
       <div id='filters'></div>
     </aside>
     <main class='main'>
@@ -219,6 +270,14 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
       <div class='viewer' id='viewer'></div>
     </main>
   </div>
+
+  <dialog id='aboutDialog'>
+    <div class='dialog-header'>
+      <span>About this dashboard</span>
+      <button type='button' class='dialog-close' id='aboutDialogClose'>Close</button>
+    </div>
+    <iframe id='aboutDialogFrame' title='About this dashboard'></iframe>
+  </dialog>
 
   <script>
     const HEADERS = {headers_json};
@@ -915,6 +974,81 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
     }});
 
     document.addEventListener('DOMContentLoaded', initPage);
+
+    document.addEventListener('DOMContentLoaded', () => {{
+      const dlg = document.getElementById('aboutDialog');
+      const frame = document.getElementById('aboutDialogFrame');
+      const link = document.getElementById('learnMoreLink');
+      const closeBtn = document.getElementById('aboutDialogClose');
+      if (!dlg || !frame || !link || !closeBtn) return;
+
+      const ABOUT_PARAM = 'about';
+      const ABOUT_SEEN_KEY = 'aboutDashboardSeen';
+      let suppressUrlSync = false;
+
+      function urlHasAboutParam() {{
+        return new URLSearchParams(window.location.search).get(ABOUT_PARAM) === '1';
+      }}
+
+      function setAboutParam(present, replace) {{
+        const url = new URL(window.location.href);
+        if (present) url.searchParams.set(ABOUT_PARAM, '1');
+        else url.searchParams.delete(ABOUT_PARAM);
+        const method = replace ? 'replaceState' : 'pushState';
+        history[method](history.state, '', url.toString());
+      }}
+
+      function openAbout(updateUrl) {{
+        if (!frame.getAttribute('src')) frame.setAttribute('src', 'about.html');
+        if (dlg.open) return;
+        if (typeof dlg.showModal === 'function') dlg.showModal();
+        else dlg.setAttribute('open', '');
+        if (updateUrl && !urlHasAboutParam()) {{
+          suppressUrlSync = true;
+          setAboutParam(true, false);
+          suppressUrlSync = false;
+        }}
+      }}
+
+      function closeAbout(updateUrl) {{
+        if (dlg.open) dlg.close();
+        try {{ localStorage.setItem(ABOUT_SEEN_KEY, '1'); }} catch (e) {{}}
+        if (updateUrl && urlHasAboutParam()) {{
+          suppressUrlSync = true;
+          setAboutParam(false, false);
+          suppressUrlSync = false;
+        }}
+      }}
+
+      link.addEventListener('click', (e) => {{
+        e.preventDefault();
+        openAbout(true);
+      }});
+      closeBtn.addEventListener('click', () => closeAbout(true));
+      dlg.addEventListener('click', (e) => {{
+        const r = dlg.getBoundingClientRect();
+        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {{
+          closeAbout(true);
+        }}
+      }});
+      dlg.addEventListener('close', () => {{
+        try {{ localStorage.setItem(ABOUT_SEEN_KEY, '1'); }} catch (e) {{}}
+        if (!suppressUrlSync && urlHasAboutParam()) setAboutParam(false, false);
+      }});
+
+      window.addEventListener('popstate', () => {{
+        if (urlHasAboutParam()) openAbout(false);
+        else if (dlg.open) closeAbout(false);
+      }});
+
+      let firstVisit = false;
+      try {{ firstVisit = !localStorage.getItem(ABOUT_SEEN_KEY); }} catch (e) {{}}
+      if (urlHasAboutParam()) {{
+        openAbout(false);
+      }} else if (firstVisit) {{
+        openAbout(true);
+      }}
+    }});
   </script>
 
 {data_scripts_html}

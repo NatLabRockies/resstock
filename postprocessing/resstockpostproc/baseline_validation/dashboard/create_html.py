@@ -32,6 +32,7 @@ from collections import defaultdict
 from collections.abc import Sequence
 from pathlib import Path
 
+from resstockpostproc.baseline_validation.dashboard.create_about_html import write_about_html
 from resstockpostproc.baseline_validation.dashboard.create_html_viewer import (
     COMBINATIONS_FILENAME,
     NON_FILTER_COLUMNS,
@@ -287,6 +288,7 @@ def create_html_from_rows(
     )
 
     html_path.write_text(build_html(headers_list, manifest, data_dir_href), encoding="utf-8")
+    write_about_html(html_path.parent)
     print(f"HTML file created: {html_path} ({len(row_list)} rows, {len(manifest)} shards)")
 
 
@@ -311,6 +313,7 @@ def init_html_index(
     state = IndexState(html_path=html_path, headers=headers, data_dir=data_dir)
     (data_dir / COMBINATIONS_FILENAME).write_text("", encoding="utf-8")
     state.open_combo_file()
+    write_about_html(html_path.parent)
     return state
 
 
