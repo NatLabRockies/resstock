@@ -20,7 +20,7 @@ env:
   OPENSTUDIO_PLATFORM: Ubuntu-24.04-x86_64
   OPENSTUDIO_EXT: deb
   OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.10.0
-  BUILDSTOCK_BATCH_BRANCH: fix-pandas3
+  BUILDSTOCK_BATCH_BRANCH: develop
   BUILDSTOCK_QUERY_BRANCH: main
 
 jobs:
