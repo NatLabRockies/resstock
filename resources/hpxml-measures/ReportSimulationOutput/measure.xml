@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>report_simulation_output</name>
   <uid>df9d170c-c21a-4130-866d-0d46b06073fd</uid>
-  <version_id>f11d5b77-4320-47e3-b4cf-60f70702476f</version_id>
-  <version_modified>2025-12-11T00:16:13Z</version_modified>
+  <version_id>3cd8f87c-0a7f-4420-af7d-d1b9459f6260</version_id>
+  <version_modified>2026-05-06T20:12:20Z</version_modified>
   <xml_checksum>9BF1E6AC</xml_checksum>
   <class_name>ReportSimulationOutput</class_name>
   <display_name>HPXML Simulation Output Report</display_name>
@@ -308,6 +308,25 @@
       <name>include_annual_resilience</name>
       <display_name>Generate Annual Output: Resilience</display_name>
       <description>Generates annual resilience outputs.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_dwelling_unit_outputs</name>
+      <display_name>Generate Annual Output: By Dwelling Unit</display_name>
+      <description>Generates annual outputs by dwelling unit for whole SFA/MF building simulations.</description>
       <type>Boolean</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -643,6 +662,25 @@
       <name>include_timeseries_resilience</name>
       <display_name>Generate Timeseries Output: Resilience</display_name>
       <description>Generates timeseries resilience outputs.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_timeseries_dwelling_unit_outputs</name>
+      <display_name>Generate Timeseries Output: By Dwelling Unit</display_name>
+      <description>Generates timeseries outputs by dwelling unit for whole SFA/MF building simulations. Only applies when timeseries total and/or fuel consumptions are also requested.</description>
       <type>Boolean</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -1619,16 +1657,16 @@
       <model_dependent>false</model_dependent>
     </output>
     <output>
-      <name>peak_load_heating_delivered_k_btu_hr</name>
-      <display_name>peak_load_heating_delivered_k_btu_hr</display_name>
-      <short_name>peak_load_heating_delivered_k_btu_hr</short_name>
+      <name>peak_load_heating_delivered_btu_hr</name>
+      <display_name>peak_load_heating_delivered_btu_hr</display_name>
+      <short_name>peak_load_heating_delivered_btu_hr</short_name>
       <type>Double</type>
       <model_dependent>false</model_dependent>
     </output>
     <output>
-      <name>peak_load_cooling_delivered_k_btu_hr</name>
-      <display_name>peak_load_cooling_delivered_k_btu_hr</display_name>
-      <short_name>peak_load_cooling_delivered_k_btu_hr</short_name>
+      <name>peak_load_cooling_delivered_btu_hr</name>
+      <display_name>peak_load_cooling_delivered_btu_hr</display_name>
+      <short_name>peak_load_cooling_delivered_btu_hr</short_name>
       <type>Double</type>
       <model_dependent>false</model_dependent>
     </output>
@@ -1974,13 +2012,13 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>D0A0BB5E</checksum>
+      <checksum>CE9B7B60</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
       <filetype>erb</filetype>
       <usage_type>readmeerb</usage_type>
-      <checksum>513F28E9</checksum>
+      <checksum>5238CEA2</checksum>
     </file>
     <file>
       <version>
@@ -1991,13 +2029,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>1A026522</checksum>
+      <checksum>D68FD0C9</checksum>
     </file>
     <file>
       <filename>test_report_sim_output.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>C7F737E4</checksum>
+      <checksum>85981580</checksum>
     </file>
   </files>
 </measure>

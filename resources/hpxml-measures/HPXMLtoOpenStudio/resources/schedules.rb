@@ -142,14 +142,14 @@ class HourlyByMonthSchedule
 
     prev_wkdy_vals, prev_wkdy_rule = nil, nil
     prev_wknd_vals, prev_wknd_rule = nil, nil
-    for m in 1..12
-      date_s = OpenStudio::Date::fromDayOfYear(day_startm[m - 1], year)
-      date_e = OpenStudio::Date::fromDayOfYear(day_endm[m - 1], year)
+    for m in 0..11
+      date_s = OpenStudio::Date::fromDayOfYear(day_startm[m], year)
+      date_e = OpenStudio::Date::fromDayOfYear(day_endm[m], year)
 
       wkdy_vals, wknd_vals = [], []
-      for h in 1..24
-        wkdy_vals[h] = (@weekday_month_by_hour_values[m - 1][h - 1]) / @maxval
-        wknd_vals[h] = (@weekend_month_by_hour_values[m - 1][h - 1]) / @maxval
+      for h in 0..23
+        wkdy_vals[h] = (@weekday_month_by_hour_values[m][h]) / @maxval
+        wknd_vals[h] = (@weekend_month_by_hour_values[m][h]) / @maxval
       end
 
       if (wkdy_vals == prev_wkdy_vals) && (wknd_vals == prev_wknd_vals)
@@ -277,14 +277,14 @@ class HourlyByDaySchedule
 
     prev_wkdy_vals, prev_wkdy_rule = nil, nil
     prev_wknd_vals, prev_wknd_rule = nil, nil
-    for d in 1..num_days
-      date_s = OpenStudio::Date::fromDayOfYear(d, year)
-      date_e = OpenStudio::Date::fromDayOfYear(d, year)
+    for d in 0..num_days - 1
+      date_s = OpenStudio::Date::fromDayOfYear(d + 1, year)
+      date_e = OpenStudio::Date::fromDayOfYear(d + 1, year)
 
       wkdy_vals, wknd_vals = [], []
-      for h in 1..24
-        wkdy_vals[h] = (@weekday_day_by_hour_values[d - 1][h - 1]) / @maxval
-        wknd_vals[h] = (@weekend_day_by_hour_values[d - 1][h - 1]) / @maxval
+      for h in 0..23
+        wkdy_vals[h] = (@weekday_day_by_hour_values[d][h]) / @maxval
+        wknd_vals[h] = (@weekend_day_by_hour_values[d][h]) / @maxval
       end
 
       if (wkdy_vals == prev_wkdy_vals) && (wknd_vals == prev_wknd_vals)
@@ -482,21 +482,21 @@ class MonthWeekdayWeekendSchedule
 
     periods = []
     if begin_month <= end_month # contiguous period
-      periods << [begin_month, end_month]
+      periods << [begin_month - 1, end_month - 1]
     else # non-contiguous period
-      periods << [1, end_month]
-      periods << [begin_month, 12]
+      periods << [0, end_month - 1]
+      periods << [begin_month - 1, 11]
     end
 
     periods.each do |period|
       for m in period[0]..period[1]
-        date_s = OpenStudio::Date::fromDayOfYear(day_startm[m - 1], year)
-        date_e = OpenStudio::Date::fromDayOfYear(day_endm[m - 1], year)
+        date_s = OpenStudio::Date::fromDayOfYear(day_startm[m], year)
+        date_e = OpenStudio::Date::fromDayOfYear(day_endm[m], year)
 
         wkdy_vals, wknd_vals = [], []
-        for h in 1..24
-          wkdy_vals[h] = (@monthly_values[m - 1] * @weekday_hourly_values[h - 1]) / @maxval
-          wknd_vals[h] = (@monthly_values[m - 1] * @weekend_hourly_values[h - 1]) / @maxval
+        for h in 0..23
+          wkdy_vals[h] = (@monthly_values[m] * @weekday_hourly_values[h]) / @maxval
+          wknd_vals[h] = (@monthly_values[m] * @weekend_hourly_values[h]) / @maxval
         end
 
         if (wkdy_vals == prev_wkdy_vals) && (wknd_vals == prev_wknd_vals)
@@ -669,7 +669,7 @@ module Schedule
       # Special Values
       # FUTURE: Assign an object type to the schedules and use that to determine what
       # kind of schedule each is, rather than looking at object names. That would
-      # be more robust. See https://github.com/NREL/OpenStudio-HPXML/issues/1450.
+      # be more robust. See https://github.com/NatLabRockies/OpenStudio-HPXML/issues/1450.
       if sch_name.include? Constants::ObjectTypeWaterHeaterSetpoint
         # Water heater setpoint
         # Temperature of tank < 2C indicates of possibility of freeze.
@@ -822,9 +822,7 @@ module Schedule
       end
       if applies == 1
         if not runner.nil?
-          if [SchedulesFile::Columns[:SpaceHeating].name, SchedulesFile::Columns[:SpaceCooling].name].include?(schedule_name)
-            runner.registerWarning('It is not possible to eliminate all HVAC energy use (e.g. crankcase/defrost energy) in EnergyPlus during an unavailable period.')
-          elsif schedule_name == SchedulesFile::Columns[:WaterHeater].name
+          if schedule_name == SchedulesFile::Columns[:WaterHeater].name
             runner.registerWarning('It is not possible to eliminate all DHW energy use (e.g. water heater parasitics) in EnergyPlus during an unavailable period.')
           end
         end

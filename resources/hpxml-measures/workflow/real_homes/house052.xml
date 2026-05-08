@@ -1,0 +1,2451 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<HPXML xmlns='http://hpxmlonline.com/2025/12' schemaVersion='5.0'>
+  <XMLTransactionHeaderInformation>
+    <XMLType>HPXML</XMLType>
+    <XMLGeneratedBy>redacted</XMLGeneratedBy>
+    <CreatedDateAndTime>2000-01-01T00:00:00-07:00</CreatedDateAndTime>
+    <Transaction>create</Transaction>
+  </XMLTransactionHeaderInformation>
+  <SoftwareInfo/>
+  <Building>
+    <BuildingID id='MyBuilding'/>
+    <ProjectStatus>
+      <EventType>audit</EventType>
+    </ProjectStatus>
+    <BuildingDetails>
+      <BuildingSummary>
+        <Site>
+          <FuelTypesAvailable>
+            <Fuel>natural gas</Fuel>
+            <Fuel>electricity</Fuel>
+          </FuelTypesAvailable>
+        </Site>
+        <BuildingConstruction>
+          <YearBuilt>2026</YearBuilt>
+          <ResidentialFacilityType>single-family detached</ResidentialFacilityType>
+          <NumberofUnits>1</NumberofUnits>
+          <NumberofConditionedFloors>3.0</NumberofConditionedFloors>
+          <NumberofConditionedFloorsAboveGrade>2.0</NumberofConditionedFloorsAboveGrade>
+          <NumberofBedrooms>6</NumberofBedrooms>
+          <ConditionedFloorArea>31113.0</ConditionedFloorArea>
+          <ConditionedBuildingVolume>311130.0</ConditionedBuildingVolume>
+        </BuildingConstruction>
+      </BuildingSummary>
+      <ClimateandRiskZones>
+        <WeatherStation>
+          <SystemIdentifier id='WeatherStation'/>
+          <Name>Cape May</Name>
+          <extension>
+            <EPWFilePath>USA_NJ_Cape.May.County.AP.745966_TMY3.epw</EPWFilePath>
+          </extension>
+        </WeatherStation>
+      </ClimateandRiskZones>
+      <Enclosure>
+        <AirInfiltration>
+          <AirInfiltrationMeasurement>
+            <SystemIdentifier id='AirInfiltrationMeasurement1'/>
+            <HousePressure>50.0</HousePressure>
+            <BuildingAirLeakage>
+              <UnitofMeasure>ACH</UnitofMeasure>
+              <AirLeakage>2.0</AirLeakage>
+            </BuildingAirLeakage>
+            <InfiltrationVolume>311130.0</InfiltrationVolume>
+          </AirInfiltrationMeasurement>
+        </AirInfiltration>
+        <Foundations>
+          <Foundation>
+            <SystemIdentifier id='Foundation1'/>
+            <FoundationType>
+              <Basement>
+                <Conditioned>true</Conditioned>
+              </Basement>
+            </FoundationType>
+          </Foundation>
+        </Foundations>
+        <Roofs>
+          <Roof>
+            <SystemIdentifier id='Roof1'/>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <Area>11705.0</Area>
+            <SolarAbsorptance>0.92</SolarAbsorptance>
+            <Emittance>0.9</Emittance>
+            <Pitch>2.0</Pitch>
+            <RadiantBarrier>false</RadiantBarrier>
+            <Insulation>
+              <SystemIdentifier id='Roof1Insulation'/>
+              <AssemblyEffectiveRValue>50.72266</AssemblyEffectiveRValue>
+            </Insulation>
+          </Roof>
+        </Roofs>
+        <RimJoists>
+          <RimJoist>
+            <SystemIdentifier id='RimJoist1'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <Area>884.0</Area>
+            <SolarAbsorptance>0.75</SolarAbsorptance>
+            <Emittance>0.75</Emittance>
+            <Insulation>
+              <SystemIdentifier id='RimJoist1Insulation'/>
+              <AssemblyEffectiveRValue>26.14518</AssemblyEffectiveRValue>
+            </Insulation>
+          </RimJoist>
+          <RimJoist>
+            <SystemIdentifier id='RimJoist2'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <Area>770.0</Area>
+            <SolarAbsorptance>0.75</SolarAbsorptance>
+            <Emittance>0.75</Emittance>
+            <Insulation>
+              <SystemIdentifier id='RimJoist2Insulation'/>
+              <AssemblyEffectiveRValue>26.14518</AssemblyEffectiveRValue>
+            </Insulation>
+          </RimJoist>
+          <RimJoist>
+            <SystemIdentifier id='RimJoist3'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <Area>960.0</Area>
+            <SolarAbsorptance>0.75</SolarAbsorptance>
+            <Emittance>0.75</Emittance>
+            <Insulation>
+              <SystemIdentifier id='RimJoist3Insulation'/>
+              <AssemblyEffectiveRValue>26.14518</AssemblyEffectiveRValue>
+            </Insulation>
+          </RimJoist>
+        </RimJoists>
+        <Walls>
+          <Wall>
+            <SystemIdentifier id='Wall1'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>2890.0</Area>
+            <Azimuth>0</Azimuth>
+            <SolarAbsorptance>0.75</SolarAbsorptance>
+            <Emittance>0.75</Emittance>
+            <Insulation>
+              <SystemIdentifier id='Wall1Insulation'/>
+              <AssemblyEffectiveRValue>22.67191</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='Wall2'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>5610.0</Area>
+            <Azimuth>90</Azimuth>
+            <SolarAbsorptance>0.75</SolarAbsorptance>
+            <Emittance>0.75</Emittance>
+            <Insulation>
+              <SystemIdentifier id='Wall2Insulation'/>
+              <AssemblyEffectiveRValue>22.67191</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='Wall3'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>3170.0</Area>
+            <Azimuth>180</Azimuth>
+            <SolarAbsorptance>0.75</SolarAbsorptance>
+            <Emittance>0.75</Emittance>
+            <Insulation>
+              <SystemIdentifier id='Wall3Insulation'/>
+              <AssemblyEffectiveRValue>22.67191</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='Wall4'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>5630.0</Area>
+            <Azimuth>270</Azimuth>
+            <SolarAbsorptance>0.75</SolarAbsorptance>
+            <Emittance>0.75</Emittance>
+            <Insulation>
+              <SystemIdentifier id='Wall4Insulation'/>
+              <AssemblyEffectiveRValue>22.67191</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='Wall5'/>
+            <ExteriorAdjacentTo>garage</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>200.0</Area>
+            <Azimuth>0</Azimuth>
+            <SolarAbsorptance>0.75</SolarAbsorptance>
+            <Emittance>0.75</Emittance>
+            <Insulation>
+              <SystemIdentifier id='Wall5Insulation'/>
+              <AssemblyEffectiveRValue>22.67191</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+          <Wall>
+            <SystemIdentifier id='Wall6'/>
+            <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>garage</InteriorAdjacentTo>
+            <WallType>
+              <WoodStud/>
+            </WallType>
+            <Area>573.4075</Area>
+            <Azimuth>0</Azimuth>
+            <SolarAbsorptance>0.75</SolarAbsorptance>
+            <Emittance>0.75</Emittance>
+            <Insulation>
+              <SystemIdentifier id='Wall6Insulation'/>
+              <AssemblyEffectiveRValue>3.782095</AssemblyEffectiveRValue>
+            </Insulation>
+          </Wall>
+        </Walls>
+        <FoundationWalls>
+          <FoundationWall>
+            <SystemIdentifier id='FoundationWall1'/>
+            <ExteriorAdjacentTo>ground</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Height>10.0</Height>
+            <Area>1200.0</Area>
+            <Thickness>8.0</Thickness>
+            <DepthBelowGrade>9.0</DepthBelowGrade>
+            <Insulation>
+              <SystemIdentifier id='FoundationWall1Insulation'/>
+              <Layer>
+                <InstallationType>continuous - exterior</InstallationType>
+                <NominalRValue>10.0</NominalRValue>
+                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
+                <DistanceToBottomOfInsulation>10.0</DistanceToBottomOfInsulation>
+              </Layer>
+              <Layer>
+                <InstallationType>continuous - interior</InstallationType>
+                <NominalRValue>19.9062</NominalRValue>
+                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
+                <DistanceToBottomOfInsulation>10.0</DistanceToBottomOfInsulation>
+              </Layer>
+            </Insulation>
+          </FoundationWall>
+          <FoundationWall>
+            <SystemIdentifier id='FoundationWall2'/>
+            <ExteriorAdjacentTo>ground</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Height>10.0</Height>
+            <Area>2820.0</Area>
+            <Thickness>8.0</Thickness>
+            <DepthBelowGrade>9.0</DepthBelowGrade>
+            <Insulation>
+              <SystemIdentifier id='FoundationWall2Insulation'/>
+              <Layer>
+                <InstallationType>continuous - exterior</InstallationType>
+                <NominalRValue>10.0</NominalRValue>
+                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
+                <DistanceToBottomOfInsulation>10.0</DistanceToBottomOfInsulation>
+              </Layer>
+              <Layer>
+                <InstallationType>continuous - interior</InstallationType>
+                <NominalRValue>19.9062</NominalRValue>
+                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
+                <DistanceToBottomOfInsulation>10.0</DistanceToBottomOfInsulation>
+              </Layer>
+            </Insulation>
+          </FoundationWall>
+          <FoundationWall>
+            <SystemIdentifier id='FoundationWall3'/>
+            <ExteriorAdjacentTo>ground</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Height>10.0</Height>
+            <Area>1300.0</Area>
+            <Thickness>8.0</Thickness>
+            <DepthBelowGrade>9.0</DepthBelowGrade>
+            <Insulation>
+              <SystemIdentifier id='FoundationWall3Insulation'/>
+              <Layer>
+                <InstallationType>continuous - exterior</InstallationType>
+                <NominalRValue>10.0</NominalRValue>
+                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
+                <DistanceToBottomOfInsulation>10.0</DistanceToBottomOfInsulation>
+              </Layer>
+              <Layer>
+                <InstallationType>continuous - interior</InstallationType>
+                <NominalRValue>19.9062</NominalRValue>
+                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
+                <DistanceToBottomOfInsulation>10.0</DistanceToBottomOfInsulation>
+              </Layer>
+            </Insulation>
+          </FoundationWall>
+          <FoundationWall>
+            <SystemIdentifier id='FoundationWall4'/>
+            <ExteriorAdjacentTo>ground</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Height>10.0</Height>
+            <Area>3020.0</Area>
+            <Thickness>8.0</Thickness>
+            <DepthBelowGrade>9.0</DepthBelowGrade>
+            <Insulation>
+              <SystemIdentifier id='FoundationWall4Insulation'/>
+              <Layer>
+                <InstallationType>continuous - exterior</InstallationType>
+                <NominalRValue>10.0</NominalRValue>
+                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
+                <DistanceToBottomOfInsulation>10.0</DistanceToBottomOfInsulation>
+              </Layer>
+              <Layer>
+                <InstallationType>continuous - interior</InstallationType>
+                <NominalRValue>19.9062</NominalRValue>
+                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
+                <DistanceToBottomOfInsulation>10.0</DistanceToBottomOfInsulation>
+              </Layer>
+            </Insulation>
+          </FoundationWall>
+          <FoundationWall>
+            <SystemIdentifier id='FoundationWall5'/>
+            <ExteriorAdjacentTo>garage</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Height>10.0</Height>
+            <Area>260.0</Area>
+            <Thickness>8.0</Thickness>
+            <DepthBelowGrade>9.0</DepthBelowGrade>
+            <Insulation>
+              <SystemIdentifier id='FoundationWall5Insulation'/>
+              <Layer>
+                <InstallationType>continuous - exterior</InstallationType>
+                <NominalRValue>10.0</NominalRValue>
+                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
+                <DistanceToBottomOfInsulation>10.0</DistanceToBottomOfInsulation>
+              </Layer>
+              <Layer>
+                <InstallationType>continuous - interior</InstallationType>
+                <NominalRValue>19.9062</NominalRValue>
+                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
+                <DistanceToBottomOfInsulation>10.0</DistanceToBottomOfInsulation>
+              </Layer>
+            </Insulation>
+          </FoundationWall>
+          <FoundationWall>
+            <SystemIdentifier id='FoundationWall6'/>
+            <ExteriorAdjacentTo>garage</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Height>10.0</Height>
+            <Area>240.0</Area>
+            <Thickness>8.0</Thickness>
+            <DepthBelowGrade>9.0</DepthBelowGrade>
+            <Insulation>
+              <SystemIdentifier id='FoundationWall6Insulation'/>
+              <Layer>
+                <InstallationType>continuous - exterior</InstallationType>
+                <NominalRValue>10.0</NominalRValue>
+                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
+                <DistanceToBottomOfInsulation>10.0</DistanceToBottomOfInsulation>
+              </Layer>
+              <Layer>
+                <InstallationType>continuous - interior</InstallationType>
+                <NominalRValue>19.9062</NominalRValue>
+                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
+                <DistanceToBottomOfInsulation>10.0</DistanceToBottomOfInsulation>
+              </Layer>
+            </Insulation>
+          </FoundationWall>
+        </FoundationWalls>
+        <Floors>
+          <Floor>
+            <SystemIdentifier id='Floor1'/>
+            <ExteriorAdjacentTo>garage</ExteriorAdjacentTo>
+            <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
+            <FloorOrCeiling>floor</FloorOrCeiling>
+            <FloorType>
+              <WoodFrame/>
+            </FloorType>
+            <Area>1695.0</Area>
+            <Insulation>
+              <SystemIdentifier id='Floor1Insulation'/>
+              <AssemblyEffectiveRValue>33.34345</AssemblyEffectiveRValue>
+            </Insulation>
+          </Floor>
+        </Floors>
+        <Slabs>
+          <Slab>
+            <SystemIdentifier id='Slab1'/>
+            <InteriorAdjacentTo>garage</InteriorAdjacentTo>
+            <Area>1695.0</Area>
+            <Thickness>4.0</Thickness>
+            <ExposedPerimeter>114.6815</ExposedPerimeter>
+            <DepthBelowGrade>0.0</DepthBelowGrade>
+            <PerimeterInsulation>
+              <SystemIdentifier id='Slab1PerimeterInsulation'/>
+              <Layer>
+                <NominalRValue>0.0</NominalRValue>
+                <InsulationDepth>0.0</InsulationDepth>
+              </Layer>
+            </PerimeterInsulation>
+            <UnderSlabInsulation>
+              <SystemIdentifier id='Slab1UnderSlabInsulation'/>
+              <Layer>
+                <NominalRValue>0.0</NominalRValue>
+                <InsulationWidth>0.0</InsulationWidth>
+              </Layer>
+            </UnderSlabInsulation>
+            <extension>
+              <CarpetFraction>0.0</CarpetFraction>
+              <CarpetRValue>0.0</CarpetRValue>
+            </extension>
+          </Slab>
+          <Slab>
+            <SystemIdentifier id='Slab2'/>
+            <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Area>11705.0</Area>
+            <Thickness>4.0</Thickness>
+            <ExposedPerimeter>834.0</ExposedPerimeter>
+            <PerimeterInsulation>
+              <SystemIdentifier id='Slab2PerimeterInsulation'/>
+              <Layer>
+                <NominalRValue>10.0</NominalRValue>
+                <InsulationDepth>2.0</InsulationDepth>
+              </Layer>
+            </PerimeterInsulation>
+            <UnderSlabInsulation>
+              <SystemIdentifier id='SLB-Slab2UnderSlabInsulation'/>
+              <Layer>
+                <NominalRValue>10.0</NominalRValue>
+                <InsulationWidth>2.0</InsulationWidth>
+              </Layer>
+            </UnderSlabInsulation>
+            <extension>
+              <CarpetFraction>0.0</CarpetFraction>
+              <CarpetRValue>0.0</CarpetRValue>
+            </extension>
+          </Slab>
+        </Slabs>
+        <Windows>
+          <Window>
+            <SystemIdentifier id='Window1'/>
+            <Area>80.0</Area>
+            <Azimuth>0</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall1'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window2'/>
+            <Area>55.5</Area>
+            <Azimuth>0</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall1'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window3'/>
+            <Area>55.5</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window4'/>
+            <Area>44.4</Area>
+            <Azimuth>0</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall1'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window5'/>
+            <Area>45.8</Area>
+            <Azimuth>0</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall1'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window6'/>
+            <Area>55.5</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window7'/>
+            <Area>55.5</Area>
+            <Azimuth>0</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall1'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window8'/>
+            <Area>55.5</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window9'/>
+            <Area>22.9</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window10'/>
+            <Area>68.7</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window11'/>
+            <Area>45.8</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window12'/>
+            <Area>55.5</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window13'/>
+            <Area>84.0</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window14'/>
+            <Area>46.2</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window15'/>
+            <Area>44.4</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window16'/>
+            <Area>83.8</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window17'/>
+            <Area>137.4</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window18'/>
+            <Area>84.0</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window19'/>
+            <Area>46.2</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window20'/>
+            <Area>55.5</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window21'/>
+            <Area>80.0</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window22'/>
+            <Area>31.2</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window23'/>
+            <Area>23.0</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window24'/>
+            <Area>31.2</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window25'/>
+            <Area>23.0</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window26'/>
+            <Area>31.2</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window27'/>
+            <Area>23.0</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window28'/>
+            <Area>33.0</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window29'/>
+            <Area>12.0</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window30'/>
+            <Area>36.0</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window31'/>
+            <Area>12.0</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window32'/>
+            <Area>6.1</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window33'/>
+            <Area>15.9</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window34'/>
+            <Area>79.5</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window35'/>
+            <Area>15.9</Area>
+            <Azimuth>0</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall1'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window36'/>
+            <Area>36.0</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window37'/>
+            <Area>15.9</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window38'/>
+            <Area>15.9</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window39'/>
+            <Area>12.0</Area>
+            <Azimuth>0</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall1'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window40'/>
+            <Area>32.5</Area>
+            <Azimuth>0</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall1'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window41'/>
+            <Area>12.0</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window42'/>
+            <Area>84.0</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window43'/>
+            <Area>23.0</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window44'/>
+            <Area>36.0</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window45'/>
+            <Area>12.0</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window46'/>
+            <Area>36.0</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window47'/>
+            <Area>12.0</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window48'/>
+            <Area>12.0</Area>
+            <Azimuth>0</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall1'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window49'/>
+            <Area>12.0</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window50'/>
+            <Area>38.5</Area>
+            <Azimuth>0</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall1'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window51'/>
+            <Area>15.9</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window52'/>
+            <Area>33.0</Area>
+            <Azimuth>0</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall1'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window53'/>
+            <Area>47.7</Area>
+            <Azimuth>0</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall1'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window54'/>
+            <Area>15.9</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window55'/>
+            <Area>38.5</Area>
+            <Azimuth>0</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall1'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window56'/>
+            <Area>15.9</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window57'/>
+            <Area>12.0</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window58'/>
+            <Area>36.0</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window59'/>
+            <Area>31.8</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window60'/>
+            <Area>38.5</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window61'/>
+            <Area>31.8</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window62'/>
+            <Area>33.0</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window63'/>
+            <Area>79.5</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window64'/>
+            <Area>15.9</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window65'/>
+            <Area>38.5</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window66'/>
+            <Area>12.0</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window67'/>
+            <Area>12.0</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window68'/>
+            <Area>36.0</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window69'/>
+            <Area>60.0</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window70'/>
+            <Area>36.0</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window71'/>
+            <Area>12.0</Area>
+            <Azimuth>0</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall1'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window72'/>
+            <Area>31.8</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window73'/>
+            <Area>38.5</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window74'/>
+            <Area>31.8</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window75'/>
+            <Area>12.0</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window76'/>
+            <Area>12.0</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window77'/>
+            <Area>12.0</Area>
+            <Azimuth>0</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall1'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window78'/>
+            <Area>12.0</Area>
+            <Azimuth>90</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall2'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window79'/>
+            <Area>12.0</Area>
+            <Azimuth>180</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall3'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window80'/>
+            <Area>36.0</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+          <Window>
+            <SystemIdentifier id='Window81'/>
+            <Area>6.1</Area>
+            <Azimuth>270</Azimuth>
+            <UFactor>0.3</UFactor>
+            <SHGC>0.27</SHGC>
+            <FractionOperable>1.0</FractionOperable>
+            <AttachedToWall idref='Wall4'/>
+          </Window>
+        </Windows>
+        <Doors>
+          <Door>
+            <SystemIdentifier id='Door1'/>
+            <AttachedToWall idref='Wall1'/>
+            <Area>39.8</Area>
+            <Azimuth>0</Azimuth>
+            <RValue>2.8</RValue>
+          </Door>
+        </Doors>
+      </Enclosure>
+      <Systems>
+        <HVAC>
+          <HVACPlant>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump1'/>
+              <DistributionSystem idref='HVACDistribution1'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>37600.0</HeatingCapacity>
+              <CoolingCapacity>52000.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.1087963</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.107084</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>20.2</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>4.1</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>11.53846</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump2'/>
+              <DistributionSystem idref='HVACDistribution2'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>28400.0</HeatingCapacity>
+              <CoolingCapacity>39200.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.08217591</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.08072489</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>19.5</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>4.2</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>30.61225</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump3'/>
+              <DistributionSystem idref='HVACDistribution3'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>17800.0</HeatingCapacity>
+              <CoolingCapacity>26300.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.05150462</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.05415981</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>19.9</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>4.1</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>45.62738</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump4'/>
+              <DistributionSystem idref='HVACDistribution4'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>17800.0</HeatingCapacity>
+              <CoolingCapacity>26300.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.05150462</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.05415981</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>19.9</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>4.1</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>45.62738</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump5'/>
+              <DistributionSystem idref='HVACDistribution5'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>28400.0</HeatingCapacity>
+              <CoolingCapacity>39200.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.08217591</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.08072489</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>19.5</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>4.2</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>30.61225</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump6'/>
+              <DistributionSystem idref='HVACDistribution6'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>44300.0</HeatingCapacity>
+              <CoolingCapacity>62200.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.1281829</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.128089</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>18.7</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>3.9</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>9.646302</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump7'/>
+              <DistributionSystem idref='HVACDistribution7'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>28400.0</HeatingCapacity>
+              <CoolingCapacity>39200.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.08217591</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.08072489</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>19.5</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>4.2</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>30.61225</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump8'/>
+              <DistributionSystem idref='HVACDistribution8'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>17800.0</HeatingCapacity>
+              <CoolingCapacity>26300.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.05150462</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.05415981</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>19.9</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>4.1</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>45.62738</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump9'/>
+              <DistributionSystem idref='HVACDistribution9'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>17800.0</HeatingCapacity>
+              <CoolingCapacity>26300.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.05150462</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.05415981</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>19.9</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>4.1</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>45.62738</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump10'/>
+              <DistributionSystem idref='HVACDistribution10'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>9200.0</HeatingCapacity>
+              <CoolingCapacity>12400.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.02662037</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.02553542</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>18.9</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>3.6</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>96.77419</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump11'/>
+              <DistributionSystem idref='HVACDistribution11'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>9200.0</HeatingCapacity>
+              <CoolingCapacity>12400.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.02662037</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.02553542</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>18.9</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>3.6</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>96.77419</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump12'/>
+              <DistributionSystem idref='HVACDistribution12'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>9200.0</HeatingCapacity>
+              <CoolingCapacity>12400.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.02662037</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.02553542</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>18.9</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>3.6</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>96.77419</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump13'/>
+              <DistributionSystem idref='HVACDistribution13'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>14500.0</HeatingCapacity>
+              <CoolingCapacity>20100.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.04195601</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.0413921</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>19.5</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>4.1</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>89.55224</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump14'/>
+              <DistributionSystem idref='HVACDistribution14'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>14500.0</HeatingCapacity>
+              <CoolingCapacity>20100.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.04195601</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.0413921</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>19.5</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>4.1</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>89.55224</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump15'/>
+              <DistributionSystem idref='HVACDistribution15'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>9200.0</HeatingCapacity>
+              <CoolingCapacity>12400.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.02662037</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.02553542</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>18.9</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>3.6</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>96.77419</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump16'/>
+              <DistributionSystem idref='HVACDistribution16'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>17800.0</HeatingCapacity>
+              <CoolingCapacity>26300.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.05150462</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.05415981</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>19.9</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>4.1</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>45.62738</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump17'/>
+              <DistributionSystem idref='HVACDistribution17'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>14500.0</HeatingCapacity>
+              <CoolingCapacity>20100.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.04195601</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.0413921</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>19.5</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>4.1</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>89.55224</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+            <HeatPump>
+              <SystemIdentifier id='HeatPump18'/>
+              <DistributionSystem idref='HVACDistribution18'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
+              <HeatPumpFuel>electricity</HeatPumpFuel>
+              <HeatingCapacity>9200.0</HeatingCapacity>
+              <CoolingCapacity>12400.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
+              <FractionHeatLoadServed>0.02662037</FractionHeatLoadServed>
+              <FractionCoolLoadServed>0.02553542</FractionCoolLoadServed>
+              <AnnualCoolingEfficiency>
+                <Units>EER</Units>
+                <Value>18.9</Value>
+              </AnnualCoolingEfficiency>
+              <AnnualHeatingEfficiency>
+                <Units>COP</Units>
+                <Value>3.6</Value>
+              </AnnualHeatingEfficiency>
+              <extension>
+                <FanPowerWattsPerCFM>0.58</FanPowerWattsPerCFM>
+                <PumpPowerWattsPerTon>96.77419</PumpPowerWattsPerTon>
+              </extension>
+            </HeatPump>
+          </HVACPlant>
+          <HVACControl>
+            <SystemIdentifier id='HVACControl1'/>
+            <ControlType>programmable thermostat</ControlType>
+            <SetpointTempHeatingSeason>68.0</SetpointTempHeatingSeason>
+            <SetpointTempCoolingSeason>78.0</SetpointTempCoolingSeason>
+          </HVACControl>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution1'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts1'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>891.918</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts2'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>165.17</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>3303.4</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution2'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts3'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>672.03</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts4'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>124.45</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>2489.0</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution3'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts5'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>448.038</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts6'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>82.97</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>1659.4</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution4'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts7'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>448.038</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts8'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>82.97</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>1659.4</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution5'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts9'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>672.03</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts10'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>124.45</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>2489.0</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution6'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts11'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>1119.56</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts12'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>207.325</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>4146.5</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution7'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts13'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>672.03</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts14'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>124.45</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>2489.0</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution8'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts15'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>448.038</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts16'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>82.97</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>1659.4</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution9'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts17'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>448.038</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts18'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>82.97</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>1659.4</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution10'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts19'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>224.019</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts20'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>41.485</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>829.7</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution11'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts21'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>224.019</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts22'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>41.485</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>829.7</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution12'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts23'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>224.019</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts24'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>41.485</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>829.7</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution13'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts25'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>335.88</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts26'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>62.2</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>1244.0</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution14'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts27'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>335.88</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts28'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>62.2</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>1244.0</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution15'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts29'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>224.019</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts30'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>41.485</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>829.7</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution16'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts31'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>448.038</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts32'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>82.97</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>1659.4</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution17'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts33'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>335.88</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts34'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>62.2</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>1244.0</ConditionedFloorAreaServed>
+          </HVACDistribution>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution18'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>2.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>3.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts35'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>229.041</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts36'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <DuctSurfaceArea>42.415</DuctSurfaceArea>
+                </Ducts>
+                <NumberofReturnRegisters>1</NumberofReturnRegisters>
+              </AirDistribution>
+            </DistributionSystemType>
+            <ConditionedFloorAreaServed>848.3</ConditionedFloorAreaServed>
+          </HVACDistribution>
+        </HVAC>
+        <MechanicalVentilation>
+          <VentilationFans>
+            <VentilationFan>
+              <SystemIdentifier id='VentilationFan1'/>
+              <FanType>energy recovery ventilator</FanType>
+              <TestedFlowRate>388.0</TestedFlowRate>
+              <HoursInOperation>22.5</HoursInOperation>
+              <UsedForWholeBuildingVentilation>true</UsedForWholeBuildingVentilation>
+              <AdjustedTotalRecoveryEfficiency>0.56</AdjustedTotalRecoveryEfficiency>
+              <AdjustedSensibleRecoveryEfficiency>0.88</AdjustedSensibleRecoveryEfficiency>
+              <FanPower>184.0</FanPower>
+            </VentilationFan>
+          </VentilationFans>
+        </MechanicalVentilation>
+        <WaterHeating>
+          <WaterHeatingSystem>
+            <SystemIdentifier id='WaterHeatingSystem1'/>
+            <FuelType>natural gas</FuelType>
+            <WaterHeaterType>storage water heater</WaterHeaterType>
+            <Location>basement - conditioned</Location>
+            <TankVolume>240.0</TankVolume>
+            <FractionDHWLoadServed>1.0</FractionDHWLoadServed>
+            <UniformEnergyFactor>0.85</UniformEnergyFactor>
+            <FirstHourRating>300.0</FirstHourRating>
+            <RecoveryEfficiency>0.9</RecoveryEfficiency>
+          </WaterHeatingSystem>
+          <HotWaterDistribution>
+            <SystemIdentifier id='HotWaterDistribution1'/>
+            <SystemType>
+              <Recirculation>
+                <ControlType>temperature</ControlType>
+                <RecirculationPipingLoopLength>540.0</RecirculationPipingLoopLength>
+                <BranchPipingLength>5.0</BranchPipingLength>
+                <PumpPower>50.0</PumpPower>
+              </Recirculation>
+            </SystemType>
+            <PipeInsulation>
+              <PipeRValue>3.0</PipeRValue>
+            </PipeInsulation>
+          </HotWaterDistribution>
+          <WaterFixture>
+            <SystemIdentifier id='WaterFixture1'/>
+            <WaterFixtureType>shower head</WaterFixtureType>
+            <LowFlow>true</LowFlow>
+          </WaterFixture>
+          <WaterFixture>
+            <SystemIdentifier id='WaterFixture2'/>
+            <WaterFixtureType>faucet</WaterFixtureType>
+            <LowFlow>true</LowFlow>
+          </WaterFixture>
+        </WaterHeating>
+      </Systems>
+      <Lighting>
+        <LightingGroup>
+          <SystemIdentifier id='LightingGroup1'/>
+          <Location>interior</Location>
+          <FractionofUnitsInLocation>0.0</FractionofUnitsInLocation>
+          <LightingType>
+            <FluorescentTube/>
+          </LightingType>
+        </LightingGroup>
+        <LightingGroup>
+          <SystemIdentifier id='LightingGroup2'/>
+          <Location>exterior</Location>
+          <FractionofUnitsInLocation>0.0</FractionofUnitsInLocation>
+          <LightingType>
+            <FluorescentTube/>
+          </LightingType>
+        </LightingGroup>
+        <LightingGroup>
+          <SystemIdentifier id='LightingGroup3'/>
+          <Location>garage</Location>
+          <FractionofUnitsInLocation>1.0</FractionofUnitsInLocation>
+          <LightingType>
+            <LightEmittingDiode/>
+          </LightingType>
+        </LightingGroup>
+        <LightingGroup>
+          <SystemIdentifier id='LightingGroup4'/>
+          <Location>garage</Location>
+          <FractionofUnitsInLocation>0.0</FractionofUnitsInLocation>
+          <LightingType>
+            <FluorescentTube/>
+          </LightingType>
+        </LightingGroup>
+        <LightingGroup>
+          <SystemIdentifier id='LightingGroup5'/>
+          <Location>interior</Location>
+          <FractionofUnitsInLocation>1.0</FractionofUnitsInLocation>
+          <LightingType>
+            <LightEmittingDiode/>
+          </LightingType>
+        </LightingGroup>
+        <LightingGroup>
+          <SystemIdentifier id='LightingGroup6'/>
+          <Location>exterior</Location>
+          <FractionofUnitsInLocation>1.0</FractionofUnitsInLocation>
+          <LightingType>
+            <LightEmittingDiode/>
+          </LightingType>
+        </LightingGroup>
+        <LightingGroup>
+          <SystemIdentifier id='LightingGroup7'/>
+          <Location>interior</Location>
+          <FractionofUnitsInLocation>0.0</FractionofUnitsInLocation>
+          <LightingType>
+            <CompactFluorescent/>
+          </LightingType>
+        </LightingGroup>
+        <LightingGroup>
+          <SystemIdentifier id='LightingGroup8'/>
+          <Location>exterior</Location>
+          <FractionofUnitsInLocation>0.0</FractionofUnitsInLocation>
+          <LightingType>
+            <CompactFluorescent/>
+          </LightingType>
+        </LightingGroup>
+        <LightingGroup>
+          <SystemIdentifier id='LightingGroup9'/>
+          <Location>garage</Location>
+          <FractionofUnitsInLocation>0.0</FractionofUnitsInLocation>
+          <LightingType>
+            <CompactFluorescent/>
+          </LightingType>
+        </LightingGroup>
+      </Lighting>
+      <MiscLoads>
+        <PlugLoad>
+          <SystemIdentifier id='PlugLoad1'/>
+          <PlugLoadType>other</PlugLoadType>
+        </PlugLoad>
+      </MiscLoads>
+    </BuildingDetails>
+  </Building>
+</HPXML>

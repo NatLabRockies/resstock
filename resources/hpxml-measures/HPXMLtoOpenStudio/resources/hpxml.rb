@@ -153,6 +153,7 @@ class HPXML < Object
   FoundationTypeBasementConditioned = 'ConditionedBasement'
   FoundationTypeBasementUnconditioned = 'UnconditionedBasement'
   FoundationTypeBasementUnknown = 'UnknownBasement'
+  FoundationTypeCombination = 'Combination'
   FoundationTypeCrawlspaceConditioned = 'ConditionedCrawlspace'
   FoundationTypeCrawlspaceUnvented = 'UnventedCrawlspace'
   FoundationTypeCrawlspaceUnknown = 'UnknownCrawlspace'
@@ -923,6 +924,8 @@ class HPXML < Object
              :temperature_capacitance_multiplier,          # [Double] SoftwareInfo/extension/SimulationControl/AdvancedResearchFeatures/TemperatureCapacitanceMultiplier
              :ground_to_air_heat_pump_model_type,          # [String] SoftwareInfo/extension/SimulationControl/AdvancedResearchFeatures/GroundToAirHeatPumpModelType (HPXML::GroundToAirHeatPumpModelTypeXXX)
              :hvac_onoff_thermostat_deadband,              # [Double] SoftwareInfo/extension/SimulationControl/AdvancedResearchFeatures/OnOffThermostatDeadbandTemperature (F)
+             :latent_degradation_model_enabled,            # [Boolean] SoftwareInfo/extension/SimulationControl/AdvancedResearchFeatures/LatentDegradationModel/Enabled
+             :latent_degradation_model_blower_off_delay,   # [Double] SoftwareInfo/extension/SimulationControl/AdvancedResearchFeatures/LatentDegradationModel/HVACBlowerOffDelay (sec)
              :heat_pump_backup_heating_capacity_increment, # [Double] SoftwareInfo/extension/SimulationControl/AdvancedResearchFeatures/HeatPumpBackupCapacityIncrement (Btu/hr)
              :service_feeders_load_calculation_types]      # [Array<String>] SoftwareInfo/extension/ElectricPanelLoadCalculations/ServiceFeeders/Type
     attr_reader(*CLASS_ATTRS)
@@ -987,7 +990,7 @@ class HPXML < Object
           XMLHelper.add_element(calculation, 'Version', calculation_version, :string)
         end
       end
-      if (not @timestep.nil?) || (not @sim_begin_month.nil?) || (not @sim_begin_day.nil?) || (not @sim_end_month.nil?) || (not @sim_end_day.nil?) || (not @sim_calendar_year.nil?) || (not @temperature_capacitance_multiplier.nil?) || (not @hvac_onoff_thermostat_deadband.nil?) || (not @heat_pump_backup_heating_capacity_increment.nil?) || (not @ground_to_air_heat_pump_model_type.nil?)
+      if (not @timestep.nil?) || (not @sim_begin_month.nil?) || (not @sim_begin_day.nil?) || (not @sim_end_month.nil?) || (not @sim_end_day.nil?) || (not @sim_calendar_year.nil?) || (not @temperature_capacitance_multiplier.nil?) || (not @hvac_onoff_thermostat_deadband.nil?) || (not @latent_degradation_model_enabled.nil?) || (not @latent_degradation_model_blower_off_delay.nil?) || (not @heat_pump_backup_heating_capacity_increment.nil?) || (not @ground_to_air_heat_pump_model_type.nil?)
         extension = XMLHelper.create_elements_as_needed(software_info, ['extension'])
         simulation_control = XMLHelper.add_element(extension, 'SimulationControl')
         XMLHelper.add_element(simulation_control, 'Timestep', @timestep, :integer, @timestep_isdefaulted) unless @timestep.nil?
@@ -996,10 +999,15 @@ class HPXML < Object
         XMLHelper.add_element(simulation_control, 'EndMonth', @sim_end_month, :integer, @sim_end_month_isdefaulted) unless @sim_end_month.nil?
         XMLHelper.add_element(simulation_control, 'EndDayOfMonth', @sim_end_day, :integer, @sim_end_day_isdefaulted) unless @sim_end_day.nil?
         XMLHelper.add_element(simulation_control, 'CalendarYear', @sim_calendar_year, :integer, @sim_calendar_year_isdefaulted) unless @sim_calendar_year.nil?
-        if (not @temperature_capacitance_multiplier.nil?) || (not @hvac_onoff_thermostat_deadband.nil?) || (not @heat_pump_backup_heating_capacity_increment.nil?) || (not @ground_to_air_heat_pump_model_type.nil?)
+        if (not @temperature_capacitance_multiplier.nil?) || (not @hvac_onoff_thermostat_deadband.nil?) || (not @latent_degradation_model_enabled.nil?) || (not @latent_degradation_model_blower_off_delay.nil?) || (not @heat_pump_backup_heating_capacity_increment.nil?) || (not @ground_to_air_heat_pump_model_type.nil?)
           advanced_research_features = XMLHelper.create_elements_as_needed(simulation_control, ['AdvancedResearchFeatures'])
           XMLHelper.add_element(advanced_research_features, 'TemperatureCapacitanceMultiplier', @temperature_capacitance_multiplier, :float, @temperature_capacitance_multiplier_isdefaulted) unless @temperature_capacitance_multiplier.nil?
           XMLHelper.add_element(advanced_research_features, 'OnOffThermostatDeadbandTemperature', @hvac_onoff_thermostat_deadband, :float, @hvac_onoff_thermostat_deadband_isdefaulted) unless @hvac_onoff_thermostat_deadband.nil?
+          if (not @latent_degradation_model_enabled.nil?) || (not @latent_degradation_model_blower_off_delay.nil?)
+            latent_degradation_model = XMLHelper.add_element(advanced_research_features, 'LatentDegradationModel')
+            XMLHelper.add_element(latent_degradation_model, 'Enabled', @latent_degradation_model_enabled, :boolean, @latent_degradation_model_enabled_isdefaulted) unless @latent_degradation_model_enabled.nil?
+            XMLHelper.add_element(latent_degradation_model, 'HVACBlowerOffDelay', @latent_degradation_model_blower_off_delay, :float, @latent_degradation_model_blower_off_delay_isdefaulted) unless @latent_degradation_model_blower_off_delay.nil?
+          end
           XMLHelper.add_element(advanced_research_features, 'HeatPumpBackupCapacityIncrement', @heat_pump_backup_heating_capacity_increment, :float, @heat_pump_backup_heating_capacity_increment_isdefaulted) unless @heat_pump_backup_heating_capacity_increment.nil?
           XMLHelper.add_element(advanced_research_features, 'GroundToAirHeatPumpModelType', @ground_to_air_heat_pump_model_type, :string, @ground_to_air_heat_pump_model_type_isdefaulted) unless @ground_to_air_heat_pump_model_type.nil?
         end
@@ -1043,6 +1051,8 @@ class HPXML < Object
       @sim_calendar_year = XMLHelper.get_value(hpxml, 'SoftwareInfo/extension/SimulationControl/CalendarYear', :integer)
       @temperature_capacitance_multiplier = XMLHelper.get_value(hpxml, 'SoftwareInfo/extension/SimulationControl/AdvancedResearchFeatures/TemperatureCapacitanceMultiplier', :float)
       @hvac_onoff_thermostat_deadband = XMLHelper.get_value(hpxml, 'SoftwareInfo/extension/SimulationControl/AdvancedResearchFeatures/OnOffThermostatDeadbandTemperature', :float)
+      @latent_degradation_model_enabled = XMLHelper.get_value(hpxml, 'SoftwareInfo/extension/SimulationControl/AdvancedResearchFeatures/LatentDegradationModel/Enabled', :boolean)
+      @latent_degradation_model_blower_off_delay = XMLHelper.get_value(hpxml, 'SoftwareInfo/extension/SimulationControl/AdvancedResearchFeatures/LatentDegradationModel/HVACBlowerOffDelay', :float)
       @heat_pump_backup_heating_capacity_increment = XMLHelper.get_value(hpxml, 'SoftwareInfo/extension/SimulationControl/AdvancedResearchFeatures/HeatPumpBackupCapacityIncrement', :float)
       @ground_to_air_heat_pump_model_type = XMLHelper.get_value(hpxml, 'SoftwareInfo/extension/SimulationControl/AdvancedResearchFeatures/GroundToAirHeatPumpModelType', :string)
       @apply_ashrae140_assumptions = XMLHelper.get_value(hpxml, 'SoftwareInfo/extension/ApplyASHRAE140Assumptions', :boolean)
@@ -3674,7 +3684,8 @@ class HPXML < Object
            FoundationTypeCrawlspaceUnknown,
            FoundationTypeGarage,
            FoundationTypeRubbleStone,
-           FoundationTypeOther
+           FoundationTypeOther,
+           FoundationTypeCombination
         return # Not currently used
       else
         fail "Unexpected foundation type: '#{@foundation_type}'."
@@ -3745,6 +3756,8 @@ class HPXML < Object
           XMLHelper.add_element(basement, 'Conditioned', false, :boolean)
         when FoundationTypeBasementUnknown
           XMLHelper.add_element(foundation_type_el, 'Basement')
+        when FoundationTypeCombination
+          XMLHelper.add_element(foundation_type_el, 'Combination')
         when FoundationTypeCrawlspaceVented
           crawlspace = XMLHelper.add_element(foundation_type_el, 'Crawlspace')
           XMLHelper.add_element(crawlspace, 'Vented', true, :boolean)
@@ -3825,6 +3838,8 @@ class HPXML < Object
         @foundation_type = FoundationTypeBasementConditioned
       elsif XMLHelper.has_element(foundation, 'FoundationType/Basement')
         @foundation_type = FoundationTypeBasementUnknown
+      elsif XMLHelper.has_element(foundation, 'FoundationType/Combination')
+        @foundation_type = FoundationTypeCombination
       elsif XMLHelper.has_element(foundation, "FoundationType/Crawlspace[Vented='false']")
         @foundation_type = FoundationTypeCrawlspaceUnvented
       elsif XMLHelper.has_element(foundation, "FoundationType/Crawlspace[Vented='true']")
@@ -12470,7 +12485,7 @@ class HPXML < Object
               adjacent_ap.adjacent_unit_number = hpxml.buildings.index(sameas_object.parent_object)
               # Note: sameas surface is assumed to have the same interior_adjacent_to as the adjacent surface.
               # If that's not the case, we would have to allow InteriorAdjacentTo to be provided for the sameas
-              # surface. See https://github.com/NREL/OpenStudio-HPXML/pull/2105#discussion_r2583146171.
+              # surface. See https://github.com/NatLabRockies/OpenStudio-HPXML/pull/2105#discussion_r2583146171.
               adjacent_ap.adjacent_space_type = adjacent_obj.interior_adjacent_to
             elsif adjacent_ap.adjacent_hpxml_id != sameas_object.id
               fail "'#{adjacent_obj.id}' is referenced by multiple objects."

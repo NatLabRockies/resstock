@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <measure>
   <schema_version>3.1</schema_version>
+  <error>Failed to infer measure name from '/mnt/c/git/openstudio-hpxml/ReportUtilityBills/measure.rb'</error>
   <name>report_utility_bills</name>
   <uid>ca88a425-e59a-4bc4-af51-c7e7d1e960fe</uid>
-  <version_id>b0f44e4b-fc76-4a7b-b41b-ff2d6e693009</version_id>
-  <version_modified>2025-12-30T21:33:00Z</version_modified>
+  <version_id>ddfb35ca-7422-40c3-bd7e-f42ae5a3f47f</version_id>
+  <version_modified>2026-05-05T22:18:16Z</version_modified>
   <xml_checksum>15BF4E57</xml_checksum>
   <class_name>ReportUtilityBills</class_name>
   <display_name>Utility Bills Report</display_name>
@@ -163,13 +164,13 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>13D965BE</checksum>
+      <checksum>2B4C57DC</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
       <filetype>erb</filetype>
       <usage_type>readmeerb</usage_type>
-      <checksum>513F28E9</checksum>
+      <checksum>5238CEA2</checksum>
     </file>
     <file>
       <version>
@@ -180,13 +181,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>26A6E541</checksum>
+      <checksum>06397C29</checksum>
     </file>
     <file>
       <filename>detailed_rates/README.md</filename>
       <filetype>md</filetype>
       <usage_type>resource</usage_type>
-      <checksum>4BA8526F</checksum>
+      <checksum>EFDAFA72</checksum>
     </file>
     <file>
       <filename>detailed_rates/Sample Flat Rate Fixed Daily Charge.json</filename>
@@ -294,7 +295,7 @@
       <filename>detailed_rates/openei_rates.zip</filename>
       <filetype>zip</filetype>
       <usage_type>resource</usage_type>
-      <checksum>FCDE5F5D</checksum>
+      <checksum>ED0DBE6D</checksum>
     </file>
     <file>
       <filename>simple_rates/HouseholdConsumption.csv</filename>
@@ -306,13 +307,13 @@
       <filename>simple_rates/README.md</filename>
       <filetype>md</filetype>
       <usage_type>resource</usage_type>
-      <checksum>C7E1E1CB</checksum>
+      <checksum>1DB35659</checksum>
     </file>
     <file>
-      <filename>simple_rates/pr_all_update.csv</filename>
+      <filename>simple_rates/eia_fuel_rates_by_state.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>C6074A83</checksum>
+      <checksum>5A5BF6C3</checksum>
     </file>
     <file>
       <filename>util.rb</filename>
@@ -360,7 +361,7 @@
       <filename>test_report_utility_bills.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>5CE33C3D</checksum>
+      <checksum>7BD8C7FE</checksum>
     </file>
   </files>
 </measure>

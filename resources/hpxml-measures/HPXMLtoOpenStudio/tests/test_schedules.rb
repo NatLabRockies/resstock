@@ -72,7 +72,7 @@ class HPXMLtoOpenStudioSchedulesTest < Minitest::Test
     assert_in_epsilon(2765, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMiscTelevision + ' schedule'), @tol)
     assert_in_epsilon(4244, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeFixtures + ' schedule'), @tol)
     assert_in_epsilon(5000, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeGeneralWaterUse + ' schedule'), @tol)
-    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechanicalVentilationHouseFan + ' schedule'), @tol)
+    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechVentHouseFan + ' schedule'), @tol)
   end
 
   def test_simple_schedules
@@ -104,7 +104,7 @@ class HPXMLtoOpenStudioSchedulesTest < Minitest::Test
     assert_in_epsilon(4204, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeFixtures + ' schedule'), @tol)
     assert_in_epsilon(4244, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeHotWaterRecircPump + ' schedule'), @tol)
     assert_in_epsilon(5000, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeGeneralWaterUse + ' schedule'), @tol)
-    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechanicalVentilationHouseFan + ' schedule'), @tol)
+    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechVentHouseFan + ' schedule'), @tol)
     assert_in_epsilon(5110.0, get_annual_equivalent_full_load_hrs(model, 'Vehicle1 charging schedule'), @tol)
     assert_in_epsilon(1032.46, get_annual_equivalent_full_load_hrs(model, 'Vehicle1 discharging schedule'), @tol)
   end
@@ -129,7 +129,7 @@ class HPXMLtoOpenStudioSchedulesTest < Minitest::Test
     assert_in_epsilon(4204 * get_available_hrs_ratio(unavailable_month_hrs, @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterFixtures].name]['WaterFixturesMonthlyScheduleMultipliers']), get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeFixtures + ' schedule'), @tol)
     assert_in_epsilon(4244 * get_available_hrs_ratio(unavailable_month_hrs, @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterRecirculationPump].name]['RecirculationPumpMonthlyScheduleMultipliers']), get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeHotWaterRecircPump + ' schedule'), @tol)
     assert_in_epsilon(5000 * get_available_hrs_ratio(unavailable_month_hrs, @default_schedules_csv_data[SchedulesFile::Columns[:GeneralWaterUse].name]['GeneralWaterUseMonthlyScheduleMultipliers']), get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeGeneralWaterUse + ' schedule'), @tol)
-    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechanicalVentilationHouseFan + ' schedule'), @tol)
+    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechVentHouseFan + ' schedule'), @tol)
   end
 
   def test_simple_vacancy_year_round_schedules
@@ -157,7 +157,7 @@ class HPXMLtoOpenStudioSchedulesTest < Minitest::Test
     assert_equal(0, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeFixtures + ' schedule'))
     assert_equal(0, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeHotWaterRecircPump + ' schedule'))
     assert_equal(0, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeGeneralWaterUse + ' schedule'))
-    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechanicalVentilationHouseFan + ' schedule'), @tol)
+    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechVentHouseFan + ' schedule'), @tol)
   end
 
   def test_simple_power_outage_schedules
@@ -180,7 +180,7 @@ class HPXMLtoOpenStudioSchedulesTest < Minitest::Test
     assert_in_epsilon(4204 * get_available_hrs_ratio(unavailable_month_hrs, @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterFixtures].name]['WaterFixturesMonthlyScheduleMultipliers']), get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeFixtures + ' schedule'), @tol)
     assert_in_epsilon(4244 * get_available_hrs_ratio(unavailable_month_hrs, @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterRecirculationPump].name]['RecirculationPumpMonthlyScheduleMultipliers']), get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeHotWaterRecircPump + ' schedule'), @tol)
     assert_in_epsilon(5000, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeGeneralWaterUse + ' schedule'), @tol)
-    assert_in_epsilon(8760 * get_available_hrs_ratio(unavailable_month_hrs), get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechanicalVentilationHouseFan + ' schedule'), @tol)
+    assert_in_epsilon(8760 * get_available_hrs_ratio(unavailable_month_hrs), get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechVentHouseFan + ' schedule'), @tol)
   end
 
   def test_simple_power_outage_schedules_overnight
@@ -212,7 +212,7 @@ class HPXMLtoOpenStudioSchedulesTest < Minitest::Test
     assert_in_epsilon(4204 * get_available_hrs_ratio(unavailable_month_hrs, @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterFixtures].name]['WaterFixturesMonthlyScheduleMultipliers']), get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeFixtures + ' schedule'), @tol)
     assert_in_epsilon(4244 * get_available_hrs_ratio(unavailable_month_hrs, @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterRecirculationPump].name]['RecirculationPumpMonthlyScheduleMultipliers']), get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeHotWaterRecircPump + ' schedule'), @tol)
     assert_in_epsilon(5000, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeGeneralWaterUse + ' schedule'), @tol)
-    assert_in_epsilon(8760 * get_available_hrs_ratio(unavailable_month_hrs), get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechanicalVentilationHouseFan + ' schedule'), @tol)
+    assert_in_epsilon(8760 * get_available_hrs_ratio(unavailable_month_hrs), get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechVentHouseFan + ' schedule'), @tol)
   end
 
   def test_stochastic_schedules
@@ -271,7 +271,7 @@ class HPXMLtoOpenStudioSchedulesTest < Minitest::Test
     assert_in_epsilon(1090.49, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules), @tol)
     assert(!schedule_file_names.include?(SchedulesFile::Columns[:GeneralWaterUse].name))
     assert(!sf.tmp_schedules.key?(SchedulesFile::Columns[:GeneralWaterUse].name))
-    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechanicalVentilationHouseFan + ' schedule'), @tol)
+    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechVentHouseFan + ' schedule'), @tol)
     assert(!schedule_file_names.include?(SchedulesFile::Columns[:Sleeping].name))
     assert(!schedule_file_names.include?('Vacancy'))
     assert(!schedule_file_names.include?('Power Outage'))
@@ -311,7 +311,7 @@ class HPXMLtoOpenStudioSchedulesTest < Minitest::Test
     assert_in_epsilon(287.3 - sf.period_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, period: unavailable_period), sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, schedules: sf.tmp_schedules), @tol)
     assert_in_epsilon(322.6 - sf.period_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, period: unavailable_period), sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, schedules: sf.tmp_schedules), @tol)
     assert_in_epsilon(1090.49 - sf.period_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, period: unavailable_period), sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechanicalVentilationHouseFan + ' schedule'), @tol)
+    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechVentHouseFan + ' schedule'), @tol)
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
     assert_in_epsilon(unavailable_month_hrs.values.sum, sf.annual_equivalent_full_load_hrs(col_name: column_name, schedules: sf.tmp_schedules), 0.001)
   end
@@ -367,7 +367,7 @@ class HPXMLtoOpenStudioSchedulesTest < Minitest::Test
     assert_in_epsilon(287.3 - sf.period_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, period: unavailable_period), sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, schedules: sf.tmp_schedules), @tol)
     assert_in_epsilon(322.6 - sf.period_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, period: unavailable_period), sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, schedules: sf.tmp_schedules), @tol)
     assert_in_epsilon(1090.49 - sf.period_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, period: unavailable_period), sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechanicalVentilationHouseFan + ' schedule'), @tol)
+    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechVentHouseFan + ' schedule'), @tol)
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
     assert_in_epsilon(unavailable_month_hrs.values.sum, sf.annual_equivalent_full_load_hrs(col_name: column_name, schedules: sf.tmp_schedules), 0.001)
   end
@@ -409,7 +409,7 @@ class HPXMLtoOpenStudioSchedulesTest < Minitest::Test
     assert_equal(0, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, schedules: sf.tmp_schedules))
     assert_equal(0, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, schedules: sf.tmp_schedules))
     assert_equal(0, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules))
-    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechanicalVentilationHouseFan + ' schedule'), @tol)
+    assert_in_epsilon(8760, get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechVentHouseFan + ' schedule'), @tol)
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
     assert_in_epsilon(Calendar.num_hours_in_year(@year), sf.annual_equivalent_full_load_hrs(col_name: column_name, schedules: sf.tmp_schedules), @tol)
   end
@@ -447,7 +447,7 @@ class HPXMLtoOpenStudioSchedulesTest < Minitest::Test
     assert_in_epsilon(287.3 - sf.period_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, period: unavailable_period), sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, schedules: sf.tmp_schedules), @tol)
     assert_in_epsilon(322.6 - sf.period_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, period: unavailable_period), sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, schedules: sf.tmp_schedules), @tol)
     assert_in_epsilon(1090.49 - sf.period_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, period: unavailable_period), sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(8760 * get_available_hrs_ratio(unavailable_month_hrs), get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechanicalVentilationHouseFan + ' schedule'), @tol)
+    assert_in_epsilon(8760 * get_available_hrs_ratio(unavailable_month_hrs), get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechVentHouseFan + ' schedule'), @tol)
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
     assert_in_epsilon(unavailable_month_hrs.values.sum, sf.annual_equivalent_full_load_hrs(col_name: column_name, schedules: sf.tmp_schedules), 0.001)
   end
@@ -505,7 +505,7 @@ class HPXMLtoOpenStudioSchedulesTest < Minitest::Test
     assert_in_epsilon(287.3 - sf.period_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, period: unavailable_period), sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, schedules: sf.tmp_schedules), @tol)
     assert_in_epsilon(322.6 - sf.period_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, period: unavailable_period), sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, schedules: sf.tmp_schedules), @tol)
     assert_in_epsilon(1090.49 - sf.period_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, period: unavailable_period), sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(8760 * get_available_hrs_ratio(unavailable_month_hrs), get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechanicalVentilationHouseFan + ' schedule'), @tol)
+    assert_in_epsilon(8760 * get_available_hrs_ratio(unavailable_month_hrs), get_annual_equivalent_full_load_hrs(model, Constants::ObjectTypeMechVentHouseFan + ' schedule'), @tol)
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
     assert_in_epsilon(unavailable_month_hrs.values.sum, sf.annual_equivalent_full_load_hrs(col_name: column_name, schedules: sf.tmp_schedules), 0.001)
   end
@@ -786,7 +786,7 @@ class HPXMLtoOpenStudioSchedulesTest < Minitest::Test
 
   def _test_measure(args_hash)
     # create an instance of the measure
-    measure = HPXMLtoOpenStudio.new
+    measure = HPXMLToOpenStudio.new
 
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     model = OpenStudio::Model::Model.new

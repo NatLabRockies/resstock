@@ -71,7 +71,7 @@ class HPXMLtoOpenStudioSimControlsTest < Minitest::Test
 
   def _test_measure(args_hash)
     # create an instance of the measure
-    measure = HPXMLtoOpenStudio.new
+    measure = HPXMLToOpenStudio.new
 
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     model = OpenStudio::Model::Model.new

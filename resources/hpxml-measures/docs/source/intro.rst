@@ -1,7 +1,7 @@
 Introduction
 ============
 
-OpenStudio-HPXML allows running residential EnergyPlus simulations using an `HPXML file <https://hpxml.nrel.gov/>`_ for the building description.
+OpenStudio-HPXML allows running residential EnergyPlus simulations using an `HPXML file <https://hpxml.nlr.gov/>`_ for the building description.
 It is intended to be used by user interfaces or other automated software workflows that automatically produce the HPXML file.
 A `Schematron <http://schematron.com/>`_ document for the EnergyPlus use case is used to validate that the appropriate HPXML inputs are provided to run EnergyPlus.
 
@@ -20,7 +20,7 @@ OpenStudio-HPXML capabilities include:
 - Annual and timeseries outputs (energy, loads, temperatures, etc.)
 - Optional HPXML inputs with transparent defaults
 - Schematron and XSD Schema input validation
-- Can be used for `automated calibration to utility bills <https://github.com/NREL/OpenStudio-HPXML-calibration>`_
+- Can be used for `automated calibration to utility bills <https://github.com/NatLabRockies/OpenStudio-HPXML-calibration>`_
 
 .. note::
   OpenStudio-HPXML can be used to meet the `IRA HOMES Rebates program <https://www.energy.gov/sites/default/files/2024-05/ira-home-rebates-single-family-software-verification_050324.pdf>`_.
@@ -53,7 +53,7 @@ There are additional ways that software developers using this workflow can reduc
 OpenStudio Measures
 -------------------
 
-You can read about OpenStudio measures `here <http://nrel.github.io/OpenStudio-user-documentation/getting_started/about_measures/>`_.
+You can read about OpenStudio measures `here <http://natlabrockies.github.io/OpenStudio-user-documentation/getting_started/about_measures/>`_.
 The OpenStudio measures used by the workflow are:
 
 #. ``BuildResidentialHPXML``: A measure that generates an HPXML file from a set of building description inputs (including, e.g., simplified geometry inputs).
@@ -91,4 +91,4 @@ For illustrative purposes, a 3D representation of the above home (excluding neig
 License
 -------
 
-This project is available under a BSD-3-like license, which is a free, open-source, and permissive license. For more information, check out the `license file <https://github.com/NREL/OpenStudio-HPXML/blob/master/LICENSE.md>`_.
+This project is available under a BSD-3-like license, which is a free, open-source, and permissive license. For more information, check out the `license file <https://github.com/NatLabRockies/OpenStudio-HPXML/blob/master/LICENSE.md>`_.

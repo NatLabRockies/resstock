@@ -5,6 +5,28 @@ module Outputs
   MeterCustomElectricityTotal = 'Electricity:Total'
   MeterCustomElectricityNet = 'Electricity:Net'
   MeterCustomElectricityPV = 'Electricity:PV'
+  MeterCustomElectricityCritical = 'Electricity:Critical'
+  MeterCustomElectricityNetCritical = 'Electricity:NetCritical'
+
+  FT_to_HPXML_fuel_map = {
+    FT::Elec => HPXML::FuelTypeElectricity,
+    FT::Gas => HPXML::FuelTypeNaturalGas,
+    FT::Oil => HPXML::FuelTypeOil,
+    FT::Propane => HPXML::FuelTypePropane,
+    FT::WoodCord => HPXML::FuelTypeWoodCord,
+    FT::WoodPellets => HPXML::FuelTypeWoodPellets,
+    FT::Coal => HPXML::FuelTypeCoal
+  }
+
+  FT_to_EPlus_fuel_map = {
+    FT::Elec => EPlus::FuelTypeElectricity,
+    FT::Gas => EPlus::FuelTypeNaturalGas,
+    FT::Oil => EPlus::FuelTypeOil,
+    FT::Propane => EPlus::FuelTypePropane,
+    FT::WoodCord => EPlus::FuelTypeWoodCord,
+    FT::WoodPellets => EPlus::FuelTypeWoodPellets,
+    FT::Coal => EPlus::FuelTypeCoal
+  }
 
   # Add EMS programs for output reporting. In the case where a whole SFA/MF building is
   # being simulated, these programs are added to the whole building (merged) model, not
@@ -39,11 +61,10 @@ module Outputs
   # @return [Hash] Mapping of unit index => heating/cooling season begin and end dates for use by subsequent programs
   def self.apply_unmet_hours_ems_program(model, hpxml_osm_map, hpxml_header)
     # Create sensors and gather data
-    htg_sensors, clg_sensors = {}, {}
-    zone_air_temp_sensors, htg_spt_sensors, clg_spt_sensors = {}, {}, {}
+    htg_sensors, clg_sensors, htg_avail_sensors, clg_avail_sensors = {}, {}, {}, {}
+    zone_air_temp_sensors, htg_sp_sensors, clg_sp_sensors = {}, {}, {}
     total_heat_load_serveds, total_cool_load_serveds = {}, {}
     season_day_nums = {}
-    onoff_deadbands = hpxml_header.hvac_onoff_thermostat_deadband.to_f
     hpxml_osm_map.each_with_index do |(hpxml_bldg, unit_model), unit|
       conditioned_zone = unit_model.getThermalZones.find { |z| z.additionalProperties.getFeatureAsString('ObjectType').to_s == HPXML::LocationConditionedSpace }
       conditioned_zone_name = conditioned_zone.name.to_s
@@ -69,29 +90,10 @@ module Outputs
       hvac_control = hpxml_bldg.hvac_controls[0]
       next if hvac_control.nil?
 
-      if (onoff_deadbands > 0)
-        zone_air_temp_sensors[unit] = Model.add_ems_sensor(
-          model,
-          name: "#{conditioned_zone_name} space temp",
-          output_var_or_meter_name: 'Zone Air Temperature',
-          key_name: conditioned_zone_name
-        )
-
-        htg_sch = conditioned_zone.thermostatSetpointDualSetpoint.get.heatingSetpointTemperatureSchedule.get
-        htg_spt_sensors[unit] = Model.add_ems_sensor(
-          model,
-          name: "#{htg_sch.name} sch value",
-          output_var_or_meter_name: 'Schedule Value',
-          key_name: htg_sch.name
-        )
-
-        clg_sch = conditioned_zone.thermostatSetpointDualSetpoint.get.coolingSetpointTemperatureSchedule.get
-        clg_spt_sensors[unit] = Model.add_ems_sensor(
-          model,
-          name: "#{clg_sch.name} sch value",
-          output_var_or_meter_name: 'Schedule Value',
-          key_name: clg_sch.name
-        )
+      if hpxml_header.hvac_onoff_thermostat_deadband.to_f > 0
+        zone_air_temp_sensors[unit] = unit_model.getEnergyManagementSystemSensors.find { |s| s.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeSensorIndoorAirDBTemp }
+        htg_sp_sensors[unit] = unit_model.getEnergyManagementSystemSensors.find { |s| s.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeSensorIndoorHeatingSetpointTemp }
+        clg_sp_sensors[unit] = unit_model.getEnergyManagementSystemSensors.find { |s| s.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeSensorIndoorCoolingSetpointTemp }
       end
 
       sim_year = hpxml_header.sim_calendar_year
@@ -101,9 +103,13 @@ module Outputs
         clg_start: Calendar.get_day_num_from_month_day(sim_year, hvac_control.seasons_cooling_begin_month, hvac_control.seasons_cooling_begin_day),
         clg_end: Calendar.get_day_num_from_month_day(sim_year, hvac_control.seasons_cooling_end_month, hvac_control.seasons_cooling_end_day)
       }
+
+      htg_avail_sensors[unit] = unit_model.getEnergyManagementSystemSensors.find { |s| s.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeSensorScheduleHeatingAvailability }
+      clg_avail_sensors[unit] = unit_model.getEnergyManagementSystemSensors.find { |s| s.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeSensorScheduleCoolingAvailability }
     end
 
-    hvac_availability_sensor = model.getEnergyManagementSystemSensors.find { |s| s.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeHVACAvailabilitySensor }
+    htg_tol = model.getOutputControlReportingTolerances.toleranceforTimeHeatingSetpointNotMet
+    clg_tol = model.getOutputControlReportingTolerances.toleranceforTimeCoolingSetpointNotMet
 
     # EMS program
     clg_hrs = 'clg_unmet_hours'
@@ -125,10 +131,10 @@ module Outputs
         else
           line = "If ((DayOfYear >= #{season_day_nums[unit][:htg_start]}) || (DayOfYear <= #{season_day_nums[unit][:htg_end]}))"
         end
-        line += " && (#{hvac_availability_sensor.name} == 1)" if not hvac_availability_sensor.nil?
+        line += " && (#{htg_avail_sensors[unit].name} == 1)" unless htg_avail_sensors[unit].nil?
         program.addLine(line)
-        if zone_air_temp_sensors.keys.include? unit # on off deadband
-          program.addLine("  If #{zone_air_temp_sensors[unit].name} < (#{htg_spt_sensors[unit].name} - #{UnitConversions.convert(onoff_deadbands, 'deltaF', 'deltaC')})")
+        if not zone_air_temp_sensors[unit].nil? # on off deadband
+          program.addLine("  If #{zone_air_temp_sensors[unit].name} < (#{htg_sp_sensors[unit].name} - #{htg_tol})")
           program.addLine("    Set #{unit_htg_hrs} = #{unit_htg_hrs} + #{htg_sensors[unit].name}")
           program.addLine('  EndIf')
         else
@@ -147,10 +153,10 @@ module Outputs
       else
         line = "If ((DayOfYear >= #{season_day_nums[unit][:clg_start]}) || (DayOfYear <= #{season_day_nums[unit][:clg_end]}))"
       end
-      line += " && (#{hvac_availability_sensor.name} == 1)" if not hvac_availability_sensor.nil?
+      line += " && (#{clg_avail_sensors[unit].name} == 1)" unless clg_avail_sensors[unit].nil?
       program.addLine(line)
-      if zone_air_temp_sensors.keys.include? unit # on off deadband
-        program.addLine("  If #{zone_air_temp_sensors[unit].name} > (#{clg_spt_sensors[unit].name} + #{UnitConversions.convert(onoff_deadbands, 'deltaF', 'deltaC')})")
+      if not zone_air_temp_sensors[unit].nil? # on off deadband
+        program.addLine("  If #{zone_air_temp_sensors[unit].name} > (#{clg_sp_sensors[unit].name} + #{clg_tol})")
         program.addLine("    Set #{unit_clg_hrs} = #{unit_clg_hrs} + #{clg_sensors[unit].name}")
         program.addLine('  EndIf')
       else
@@ -165,7 +171,7 @@ module Outputs
     # EMS calling manager
     Model.add_ems_program_calling_manager(
       model,
-      name: "#{program.name} calling manager",
+      name: "#{program.name} manager",
       calling_point: 'EndOfZoneTimestepBeforeZoneReporting',
       ems_programs: [program]
     )
@@ -197,7 +203,7 @@ module Outputs
       next if vehicle.nil?
 
       ev_elcd = unit_model.getElectricLoadCenterDistributions.find { |elcd| elcd.name.to_s.include?(vehicle.id) }
-      discharge_sch_sensor = unit_model.getEnergyManagementSystemSensors.find { |s| s.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeVehicleDischargeScheduleSensor }
+      discharge_sch_sensor = unit_model.getEnergyManagementSystemSensors.find { |s| s.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeSensorScheduleVehicleDischarge }
 
       unit_model.getElectricLoadCenterStorageLiIonNMCBatterys.each do |elcs|
         next unless elcs.name.to_s.include? vehicle.id
@@ -228,7 +234,7 @@ module Outputs
 
     Model.add_ems_program_calling_manager(
       model,
-      name: "#{program.name} calling manager",
+      name: "#{program.name} manager",
       calling_point: 'BeginTimestepBeforePredictor',
       ems_programs: [program]
     )
@@ -331,14 +337,14 @@ module Outputs
       # calling managers
       Model.add_ems_program_calling_manager(
         model,
-        name: "#{timestep_offset_program.name} calling manager",
+        name: "#{timestep_offset_program.name} manager",
         calling_point: 'BeginNewEnvironment',
         ems_programs: [timestep_offset_program]
       )
 
       Model.add_ems_program_calling_manager(
         model,
-        name: "#{timestep_offset_program.name} calling manager2",
+        name: "#{timestep_offset_program.name} manager2",
         calling_point: 'AfterNewEnvironmentWarmUpIsComplete',
         ems_programs: [timestep_offset_program]
       )
@@ -396,7 +402,7 @@ module Outputs
     # EMS calling manager
     Model.add_ems_program_calling_manager(
       model,
-      name: "#{program.name} calling manager",
+      name: "#{program.name} manager",
       calling_point: 'EndOfZoneTimestepAfterZoneReporting',
       ems_programs: [program]
     )
@@ -591,7 +597,7 @@ module Outputs
       # EMS Sensors: Mechanical Ventilation
       mechvents_sensors = []
       unit_model.getElectricEquipments.sort.each do |o|
-        next unless o.endUseSubcategory == Constants::ObjectTypeMechanicalVentilation
+        next unless o.endUseSubcategory == Constants::ObjectTypeMechVent
 
         objects_already_processed << o
         { 'Electric Equipment Convective Heating Energy' => 'mv_conv',
@@ -605,7 +611,7 @@ module Outputs
         end
       end
       unit_model.getOtherEquipments.sort.each do |o|
-        next unless o.endUseSubcategory == Constants::ObjectTypeMechanicalVentilationHouseFan
+        next unless o.endUseSubcategory == Constants::ObjectTypeMechVentHouseFan
 
         objects_already_processed << o
         { 'Other Equipment Convective Heating Energy' => 'mv_conv',
@@ -785,7 +791,7 @@ module Outputs
         next if sensors.empty?
 
         s = "Set hr_#{loadtype} = hr_#{loadtype}"
-        sensors.each do |sensor|
+        sensors.each_with_index do |sensor, i|
           if ['intgains', 'lighting', 'mechvent', 'ducts'].include? loadtype
             s += " - #{sensor.name}"
           elsif sensor.name.to_s.include? 'gain'
@@ -793,6 +799,11 @@ module Outputs
           elsif sensor.name.to_s.include? 'loss'
             s += " + #{sensor.name}"
           end
+          next unless (i + 1) % 10 == 0
+
+          # Split into separate lines to fix https://github.com/NatLabRockies/OpenStudio-HPXML/issues/2210
+          program.addLine(s)
+          s = "Set hr_#{loadtype} = hr_#{loadtype}"
         end
         program.addLine(s)
       end
@@ -805,30 +816,12 @@ module Outputs
       end
 
       # EMS Sensors: Indoor temperature, setpoints
-      tin_sensor = Model.add_ems_sensor(
-        model,
-        name: 'tin s',
-        output_var_or_meter_name: 'Zone Mean Air Temperature',
-        key_name: conditioned_zone.name
-      )
+      tin_sensor = unit_model.getEnergyManagementSystemSensors.find { |s| s.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeSensorIndoorAirDBTemp }
 
-      thermostat = nil
+      htg_sp_sensor, clg_sp_sensor = nil, nil
       if conditioned_zone.thermostatSetpointDualSetpoint.is_initialized
-        thermostat = conditioned_zone.thermostatSetpointDualSetpoint.get
-
-        htg_sp_sensor = Model.add_ems_sensor(
-          model,
-          name: 'htg sp s',
-          output_var_or_meter_name: 'Schedule Value',
-          key_name: thermostat.heatingSetpointTemperatureSchedule.get.name
-        )
-
-        clg_sp_sensor = Model.add_ems_sensor(
-          model,
-          name: 'clg sp s',
-          output_var_or_meter_name: 'Schedule Value',
-          key_name: thermostat.coolingSetpointTemperatureSchedule.get.name
-        )
+        htg_sp_sensor = unit_model.getEnergyManagementSystemSensors.find { |s| s.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeSensorIndoorHeatingSetpointTemp }
+        clg_sp_sensor = unit_model.getEnergyManagementSystemSensors.find { |s| s.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeSensorIndoorCoolingSetpointTemp }
       end
 
       # EMS program: Heating vs Cooling logic
@@ -862,7 +855,7 @@ module Outputs
       program.addLine("    Set clg_mode = #{total_cool_load_serveds[unit]}")
       program.addLine("  ElseIf ((#{whf_sensors[0].name} <> 0) || (#{whf_sensors[1].name} <> 0)) && (clg_season == 1)") # Assign hour to cooling if whole house fan is operating
       program.addLine("    Set clg_mode = #{total_cool_load_serveds[unit]}")
-      if not thermostat.nil?
+      if (not htg_sp_sensor.nil?) && (not clg_sp_sensor.nil?)
         program.addLine('  Else') # Indoor temperature floating between setpoints; determine assignment by comparing to average of heating/cooling setpoints
         program.addLine("    Set Tmid_setpoint = (#{htg_sp_sensor.name} + #{clg_sp_sensor.name}) / 2")
         program.addLine("    If (#{tin_sensor.name} > Tmid_setpoint) && (clg_season == 1)")
@@ -893,7 +886,7 @@ module Outputs
     # EMS calling manager
     Model.add_ems_program_calling_manager(
       model,
-      name: "#{program.name} calling manager",
+      name: "#{program.name} manager",
       calling_point: 'EndOfZoneTimestepAfterZoneReporting',
       ems_programs: [program]
     )
@@ -914,7 +907,7 @@ module Outputs
     unit_multipliers = []
     hpxml_osm_map.each do |hpxml_bldg, unit_model|
       infil_vars << unit_model.getEnergyManagementSystemGlobalVariables.find { |v| v.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeInfiltration }
-      mechvent_vars << unit_model.getEnergyManagementSystemGlobalVariables.find { |v| v.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeMechanicalVentilation }
+      mechvent_vars << unit_model.getEnergyManagementSystemGlobalVariables.find { |v| v.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeMechVent }
       natvent_vars << unit_model.getEnergyManagementSystemGlobalVariables.find { |v| v.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeNaturalVentilation }
       whf_vars << unit_model.getEnergyManagementSystemGlobalVariables.find { |v| v.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeWholeHouseFan }
       unit_multipliers << hpxml_bldg.building_construction.number_of_units
@@ -946,7 +939,7 @@ module Outputs
     # EMS calling manager
     Model.add_ems_program_calling_manager(
       model,
-      name: "#{program.name} calling manager",
+      name: "#{program.name} manager",
       calling_point: 'EndOfZoneTimestepAfterZoneReporting',
       ems_programs: [program]
     )
@@ -994,6 +987,7 @@ module Outputs
     additionalProperties = model.getBuilding.additionalProperties
     additionalProperties.setFeature('hpxml_path', hpxml_path)
     additionalProperties.setFeature('hpxml_defaults_path', hpxml_defaults_path)
+    additionalProperties.setFeature('hpxml_bldgs_size', hpxml.buildings.size)
     additionalProperties.setFeature('building_id', building_id.to_s)
     additionalProperties.setFeature('emissions_scenario_names', hpxml.header.emissions_scenarios.map { |s| s.name }.to_s)
     additionalProperties.setFeature('emissions_scenario_types', hpxml.header.emissions_scenarios.map { |s| s.emissions_type }.to_s)
@@ -1166,9 +1160,9 @@ module Outputs
 
     # Summary HVAC capacities
     all_hvac_capacities = hpxml_bldgs.map { |hpxml_bldg| get_total_hvac_capacities(hpxml_bldg) }
-    results_out << ['HVAC Capacity: Heating (Btu/h)', all_hvac_capacities.sum { |h| h[:htg] }.round(1)]
-    results_out << ['HVAC Capacity: Cooling (Btu/h)', all_hvac_capacities.sum { |h| h[:clg] }.round(1)]
-    results_out << ['HVAC Capacity: Heat Pump Backup (Btu/h)', all_hvac_capacities.sum { |h| h[:htg_backup] }.round(1)]
+    results_out << ['HVAC Capacity: Heating (Btu/h)', all_hvac_capacities.sum { |h| h[:htg] }.round]
+    results_out << ['HVAC Capacity: Cooling (Btu/h)', all_hvac_capacities.sum { |h| h[:clg] }.round]
+    results_out << ['HVAC Capacity: Heat Pump Backup (Btu/h)', all_hvac_capacities.sum { |h| h[:htg_backup] }.round]
 
     # HVAC design temperatures
     results_out << [line_break]
@@ -1177,39 +1171,39 @@ module Outputs
 
     # HVAC Building design loads
     results_out << [line_break]
-    results_out << ['HVAC Design Load: Heating: Total (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_total * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Heating: Ducts (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_ducts * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Heating: Windows (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_windows * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Heating: Skylights (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_skylights * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Heating: Doors (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_doors * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Heating: Walls (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_walls * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Heating: Roofs (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_roofs * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Heating: Floors (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_floors * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Heating: Slabs (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_slabs * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Heating: Ceilings (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_ceilings * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Heating: Infiltration (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_infil * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Heating: Ventilation (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_vent * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Heating: Piping (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_piping * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Sensible: Total (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_total * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Sensible: Ducts (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_ducts * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Sensible: Windows (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_windows * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Sensible: Skylights (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_skylights * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Sensible: Doors (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_doors * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Sensible: Walls (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_walls * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Sensible: Roofs (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_roofs * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Sensible: Floors (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_floors * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Sensible: Slabs (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_slabs * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Sensible: Ceilings (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_ceilings * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Sensible: Infiltration (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_infil * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Sensible: Ventilation (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_vent * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Sensible: Internal Gains (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_intgains * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Sensible: Blower Heat (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_blowerheat * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Sensible: AED Excursion (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_aedexcursion * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Latent: Total (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_lat_total * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Latent: Ducts (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_lat_ducts * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Latent: Infiltration (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_lat_infil * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Latent: Ventilation (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_lat_vent * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
-    results_out << ['HVAC Design Load: Cooling Latent: Internal Gains (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_lat_intgains * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round(1)]
+    results_out << ['HVAC Design Load: Heating: Total (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_total * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Heating: Ducts (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_ducts * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Heating: Windows (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_windows * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Heating: Skylights (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_skylights * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Heating: Doors (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_doors * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Heating: Walls (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_walls * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Heating: Roofs (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_roofs * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Heating: Floors (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_floors * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Heating: Slabs (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_slabs * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Heating: Ceilings (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_ceilings * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Heating: Infiltration (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_infil * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Heating: Ventilation (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_vent * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Heating: Piping (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.hdl_piping * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Sensible: Total (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_total * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Sensible: Ducts (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_ducts * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Sensible: Windows (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_windows * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Sensible: Skylights (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_skylights * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Sensible: Doors (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_doors * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Sensible: Walls (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_walls * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Sensible: Roofs (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_roofs * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Sensible: Floors (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_floors * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Sensible: Slabs (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_slabs * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Sensible: Ceilings (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_ceilings * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Sensible: Infiltration (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_infil * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Sensible: Ventilation (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_vent * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Sensible: Internal Gains (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_intgains * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Sensible: Blower Heat (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_blowerheat * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Sensible: AED Excursion (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_sens_aedexcursion * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Latent: Total (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_lat_total * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Latent: Ducts (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_lat_ducts * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Latent: Infiltration (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_lat_infil * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Latent: Ventilation (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_lat_vent * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
+    results_out << ['HVAC Design Load: Cooling Latent: Internal Gains (Btu/h)', hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.hvac_plant.cdl_lat_intgains * hpxml_bldg.building_construction.number_of_units }.sum(0.0).round]
 
     # HVAC Zone design loads
     hpxml_bldgs.each do |hpxml_bldg|
@@ -1217,39 +1211,39 @@ module Outputs
         next if zone.id.start_with? Constants::AutomaticallyAdded
 
         results_out << [line_break]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Total (Btu/h)", zone.hdl_total.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Ducts (Btu/h)", zone.hdl_ducts.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Windows (Btu/h)", zone.hdl_windows.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Skylights (Btu/h)", zone.hdl_skylights.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Doors (Btu/h)", zone.hdl_doors.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Walls (Btu/h)", zone.hdl_walls.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Roofs (Btu/h)", zone.hdl_roofs.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Floors (Btu/h)", zone.hdl_floors.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Slabs (Btu/h)", zone.hdl_slabs.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Ceilings (Btu/h)", zone.hdl_ceilings.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Infiltration (Btu/h)", zone.hdl_infil.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Ventilation (Btu/h)", zone.hdl_vent.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Piping (Btu/h)", zone.hdl_piping.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Total (Btu/h)", zone.cdl_sens_total.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Ducts (Btu/h)", zone.cdl_sens_ducts.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Windows (Btu/h)", zone.cdl_sens_windows.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Skylights (Btu/h)", zone.cdl_sens_skylights.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Doors (Btu/h)", zone.cdl_sens_doors.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Walls (Btu/h)", zone.cdl_sens_walls.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Roofs (Btu/h)", zone.cdl_sens_roofs.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Floors (Btu/h)", zone.cdl_sens_floors.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Slabs (Btu/h)", zone.cdl_sens_slabs.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Ceilings (Btu/h)", zone.cdl_sens_ceilings.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Infiltration (Btu/h)", zone.cdl_sens_infil.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Ventilation (Btu/h)", zone.cdl_sens_vent.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Internal Gains (Btu/h)", zone.cdl_sens_intgains.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Blower Heat (Btu/h)", zone.cdl_sens_blowerheat.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: AED Excursion (Btu/h)", zone.cdl_sens_aedexcursion.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Latent: Total (Btu/h)", zone.cdl_lat_total.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Latent: Ducts (Btu/h)", zone.cdl_lat_ducts.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Latent: Infiltration (Btu/h)", zone.cdl_lat_infil.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Latent: Ventilation (Btu/h)", zone.cdl_lat_vent.round(1)]
-        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Latent: Internal Gains (Btu/h)", zone.cdl_lat_intgains.round(1)]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Total (Btu/h)", zone.hdl_total.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Ducts (Btu/h)", zone.hdl_ducts.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Windows (Btu/h)", zone.hdl_windows.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Skylights (Btu/h)", zone.hdl_skylights.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Doors (Btu/h)", zone.hdl_doors.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Walls (Btu/h)", zone.hdl_walls.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Roofs (Btu/h)", zone.hdl_roofs.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Floors (Btu/h)", zone.hdl_floors.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Slabs (Btu/h)", zone.hdl_slabs.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Ceilings (Btu/h)", zone.hdl_ceilings.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Infiltration (Btu/h)", zone.hdl_infil.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Ventilation (Btu/h)", zone.hdl_vent.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Heating: Piping (Btu/h)", zone.hdl_piping.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Total (Btu/h)", zone.cdl_sens_total.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Ducts (Btu/h)", zone.cdl_sens_ducts.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Windows (Btu/h)", zone.cdl_sens_windows.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Skylights (Btu/h)", zone.cdl_sens_skylights.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Doors (Btu/h)", zone.cdl_sens_doors.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Walls (Btu/h)", zone.cdl_sens_walls.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Roofs (Btu/h)", zone.cdl_sens_roofs.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Floors (Btu/h)", zone.cdl_sens_floors.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Slabs (Btu/h)", zone.cdl_sens_slabs.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Ceilings (Btu/h)", zone.cdl_sens_ceilings.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Infiltration (Btu/h)", zone.cdl_sens_infil.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Ventilation (Btu/h)", zone.cdl_sens_vent.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Internal Gains (Btu/h)", zone.cdl_sens_intgains.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: Blower Heat (Btu/h)", zone.cdl_sens_blowerheat.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Sensible: AED Excursion (Btu/h)", zone.cdl_sens_aedexcursion.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Latent: Total (Btu/h)", zone.cdl_lat_total.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Latent: Ducts (Btu/h)", zone.cdl_lat_ducts.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Latent: Infiltration (Btu/h)", zone.cdl_lat_infil.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Latent: Ventilation (Btu/h)", zone.cdl_lat_vent.round]
+        results_out << ["HVAC Zone Design Load: #{zone.id}: Cooling Latent: Internal Gains (Btu/h)", zone.cdl_lat_intgains.round]
       end
     end
 
@@ -1258,30 +1252,30 @@ module Outputs
       hpxml_bldg.conditioned_spaces.each do |space|
         results_out << [line_break]
         # Note: Latent loads are not calculated for spaces
-        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Total (Btu/h)", space.hdl_total.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Ducts (Btu/h)", space.hdl_ducts.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Windows (Btu/h)", space.hdl_windows.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Skylights (Btu/h)", space.hdl_skylights.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Doors (Btu/h)", space.hdl_doors.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Walls (Btu/h)", space.hdl_walls.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Roofs (Btu/h)", space.hdl_roofs.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Floors (Btu/h)", space.hdl_floors.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Slabs (Btu/h)", space.hdl_slabs.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Ceilings (Btu/h)", space.hdl_ceilings.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Infiltration (Btu/h)", space.hdl_infil.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Total (Btu/h)", space.cdl_sens_total.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Ducts (Btu/h)", space.cdl_sens_ducts.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Windows (Btu/h)", space.cdl_sens_windows.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Skylights (Btu/h)", space.cdl_sens_skylights.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Doors (Btu/h)", space.cdl_sens_doors.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Walls (Btu/h)", space.cdl_sens_walls.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Roofs (Btu/h)", space.cdl_sens_roofs.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Floors (Btu/h)", space.cdl_sens_floors.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Slabs (Btu/h)", space.cdl_sens_slabs.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Ceilings (Btu/h)", space.cdl_sens_ceilings.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Infiltration (Btu/h)", space.cdl_sens_infil.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Internal Gains (Btu/h)", space.cdl_sens_intgains.round(1)]
-        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: AED Excursion (Btu/h)", space.cdl_sens_aedexcursion.round(1)]
+        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Total (Btu/h)", space.hdl_total.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Ducts (Btu/h)", space.hdl_ducts.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Windows (Btu/h)", space.hdl_windows.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Skylights (Btu/h)", space.hdl_skylights.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Doors (Btu/h)", space.hdl_doors.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Walls (Btu/h)", space.hdl_walls.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Roofs (Btu/h)", space.hdl_roofs.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Floors (Btu/h)", space.hdl_floors.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Slabs (Btu/h)", space.hdl_slabs.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Ceilings (Btu/h)", space.hdl_ceilings.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Heating: Infiltration (Btu/h)", space.hdl_infil.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Total (Btu/h)", space.cdl_sens_total.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Ducts (Btu/h)", space.cdl_sens_ducts.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Windows (Btu/h)", space.cdl_sens_windows.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Skylights (Btu/h)", space.cdl_sens_skylights.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Doors (Btu/h)", space.cdl_sens_doors.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Walls (Btu/h)", space.cdl_sens_walls.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Roofs (Btu/h)", space.cdl_sens_roofs.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Floors (Btu/h)", space.cdl_sens_floors.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Slabs (Btu/h)", space.cdl_sens_slabs.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Ceilings (Btu/h)", space.cdl_sens_ceilings.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Infiltration (Btu/h)", space.cdl_sens_infil.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: Internal Gains (Btu/h)", space.cdl_sens_intgains.round]
+        results_out << ["HVAC Space Design Load: #{space.id}: Cooling Sensible: AED Excursion (Btu/h)", space.cdl_sens_aedexcursion.round]
       end
     end
 
@@ -1444,16 +1438,20 @@ module Outputs
   # Creates custom output meters that are used across reporting measures.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param custom_unit_meter [OpenStudio::Model::MeterCustom] optional OpenStudio custom meter object
   # @return [nil]
-  def self.create_custom_meters(model)
+  def self.create_custom_electricity_meters(model, custom_unit_meter = nil)
     # Create custom meters:
     # - Total Electricity (Electricity:Facility plus EV charging, batteries, generators)
     # - Net Electricity (above plus PV)
     # - PV Electricity
+    # - Critical Electricity (Electricity:Facility plus generators)
+    # - Net Critical Electricity (Electricity:Facility plus PV, generators)
 
     total_key_vars = []
     net_key_vars = []
     pv_key_vars = []
+    gen_key_vars = []
     model.getElectricLoadCenterDistributions.each do |elcd|
       # Batteries & EV charging output variables
       if elcd.electricalStorage.is_initialized
@@ -1473,9 +1471,15 @@ module Outputs
       elcd.generators.each do |generator|
         next unless generator.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypePhotovoltaics
 
-        net_key_vars << ['', 'Photovoltaic:ElectricityProduced']
-        pv_key_vars << net_key_vars[-1]
-        net_key_vars << ['', 'PowerConversion:ElectricityProduced']
+        if generator.to_GeneratorPVWatts.is_initialized
+          net_key_vars << [generator.name.to_s.upcase, 'Generator Produced DC Electricity Energy']
+          pv_key_vars << net_key_vars[-1]
+        end
+      end
+
+      if elcd.inverter.is_initialized
+        inv = elcd.inverter.get
+        net_key_vars << [inv.name.to_s.upcase, 'Inverter Conversion Loss Decrement Energy']
         pv_key_vars << net_key_vars[-1]
       end
 
@@ -1483,17 +1487,29 @@ module Outputs
       elcd.generators.each do |generator|
         next unless generator.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeGenerator
 
-        net_key_vars << ['', 'Cogeneration:ElectricityProduced']
+        next unless generator.to_GeneratorMicroTurbine.is_initialized
+
+        net_key_vars << [generator.name.to_s, 'Generator Produced AC Electricity Energy']
         total_key_vars << net_key_vars[-1]
+        gen_key_vars << net_key_vars[-1]
       end
     end
 
-    # Create Total/Net meters
+    # Create Total/Net/Critical meters
     { MeterCustomElectricityTotal => total_key_vars,
-      MeterCustomElectricityNet => net_key_vars }.each do |meter_name, key_vars|
+      MeterCustomElectricityNet => net_key_vars,
+      MeterCustomElectricityCritical => gen_key_vars,
+      MeterCustomElectricityNetCritical => pv_key_vars + gen_key_vars }.each do |meter_name, key_vars|
       if key_vars.empty?
         # Avoid OpenStudio warnings if nothing to decrement
-        key_vars << ['', 'Electricity:Facility']
+        if custom_unit_meter.nil?
+          key_vars << ['', 'Electricity:Facility']
+        else
+          # Meter:Custom cannot reference another Meter:Custom,
+          # so we pass key/variable groups from one to the other.
+          # https://github.com/NatLabRockies/EnergyPlus/issues/11400
+          key_vars = custom_unit_meter.keyVarGroups
+        end
         Model.add_meter_custom(
           model,
           name: meter_name,
@@ -1501,12 +1517,17 @@ module Outputs
           key_var_pairs: key_vars
         )
       else
+        if custom_unit_meter.nil?
+          source_meter_name = 'Electricity:Facility'
+        else
+          source_meter_name = 'Electricity:DwellingUnit'
+        end
         Model.add_meter_custom_decrement(
           model,
           name: meter_name,
           fuel_type: EPlus::FuelTypeElectricity,
           key_var_pairs: key_vars,
-          source_meter_name: 'Electricity:Facility'
+          source_meter_name: source_meter_name
         )
       end
     end
@@ -1520,5 +1541,393 @@ module Outputs
         key_var_pairs: pv_key_vars
       )
     end
+  end
+
+  # Create custom meters with fuel usage *for each unit*.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param hpxml [HPXML] HPXML object
+  # @return [nil]
+  def self.create_custom_unit_meters(model, hpxml)
+    return if hpxml.buildings.size == 1
+
+    FT_to_EPlus_fuel_map.values.each do |fuel_type|
+      key_vars = []
+      model.getModelObjects.sort.each do |object|
+        next if object.to_AdditionalProperties.is_initialized
+
+        vars_by_key = get_object_outputs_by_key(object, EUT)
+        vars_by_key.each do |key, output_vars|
+          ft, eut = key
+
+          next if FT_to_EPlus_fuel_map[ft] != fuel_type
+
+          # The electricity meter should only include generation, so we exclude any outputs associated with production.
+          if fuel_type == EPlus::FuelTypeElectricity
+            next if [EUT::PV, EUT::Generator, EUT::Vehicle, EUT::Battery].include?(eut) &&
+                    !output_vars.any? { |x| x.include?(Constants::ObjectTypeBatteryLossesAdjustment) || x.include?(Constants::ObjectTypeMiscElectricVehicleCharging) }
+          end
+
+          output_vars.each do |output_var|
+            if object.to_EnergyManagementSystemOutputVariable.is_initialized
+              varkey = 'EMS'
+            else
+              varkey = object.name.to_s.upcase
+              varkey = '' if output_var.include?(':') # Avoid the "Output Variable or Meter Name="x:y:z" referenced multiple times warning by just not including key names for meters
+            end
+
+            key_vars << [varkey, output_var]
+          end
+        end
+      end
+
+      next if key_vars.empty?
+
+      custom_unit_meter = Model.add_meter_custom(
+        model,
+        name: "#{fuel_type}:DwellingUnit",
+        fuel_type: fuel_type,
+        key_var_pairs: key_vars
+      )
+
+      # We're in the fuel types loop so that we can pass in custom_unit_meter from above.
+      # But we don't want to call create_custom_electricity_meters multiple times.
+      # We only need the electricity Total, Net, PV, Critical meters by unit when there are multiple units.
+      if fuel_type == EPlus::FuelTypeElectricity
+        create_custom_electricity_meters(model, custom_unit_meter)
+      end
+    end
+  end
+
+  # Returns all the Output:Variables or Output:Meters that are related to the
+  # energy use of the given HPXML system (e.g., HeatPump, WaterHeatingSystem).
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param sys_id [String] HPXML System ID
+  # @param eut_list [Array<String>] Optional list of EUT::XXX that we should filter down to
+  # @return [Hash] Map of output key => (Map of OpenStudio model object => array of EnergyPlus output variable/meter names)
+  def self.get_object_outputs_for_hpxml_system(model, sys_id, eut_filter = nil)
+    vars = {}
+    model.getModelObjects.sort.each do |object|
+      next if object.to_AdditionalProperties.is_initialized
+
+      obj_id = object.additionalProperties.getFeatureAsString('HPXML_ID')
+      next unless obj_id.is_initialized
+      next if sys_id != obj_id.get
+
+      vars_by_key = get_object_outputs_by_key(object, EUT)
+      vars_by_key.each do |key, object_vars|
+        if eut_filter.nil? || eut_filter.include?(key[1])
+          vars[key] = {} if vars[key].nil?
+          vars[key][object] = object_vars
+        end
+      end
+    end
+
+    return vars
+  end
+
+  # For a given object, returns the Output:Variables or Output:Meters to be requested,
+  # and associates them with the appropriate keys (e.g., [FT::Elec, EUT::Heating]).
+  #
+  # @param object [OpenStudio::Model::Foo] A given object in the OpenStudio Model
+  # @param class_type [Module] The output class type
+  # @return [Hash] Map of output key => array of EnergyPlus output variable/meter names
+  def self.get_object_outputs_by_key(object, class_type)
+    object_type = object.additionalProperties.getFeatureAsString('ObjectType')
+    object_type = object_type.get if object_type.is_initialized
+
+    # Map of EPlus => FT fuel
+    to_ft = FT_to_EPlus_fuel_map.invert
+
+    if class_type == EUT
+
+      # End uses
+
+      if object.to_CoilHeatingDXSingleSpeed.is_initialized || object.to_CoilHeatingDXMultiSpeed.is_initialized
+        vars = { [FT::Elec, EUT::Heating] => ['Heating Coil Electricity Energy', 'Heating Coil Defrost Electricity Energy'] }
+        return vars
+
+      elsif object.to_CoilHeatingElectric.is_initialized || object.to_CoilHeatingElectricMultiStage.is_initialized
+        if object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').is_initialized && object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').get
+          return { [FT::Elec, EUT::HeatingHeatPumpBackup] => ['Heating Coil Electricity Energy'] }
+        else
+          return { [FT::Elec, EUT::Heating] => ['Heating Coil Electricity Energy'] }
+        end
+
+      elsif object.to_CoilHeatingGas.is_initialized
+        fuel = object.to_CoilHeatingGas.get.fuelType
+        if object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').is_initialized && object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').get
+          return { [to_ft[fuel], EUT::HeatingHeatPumpBackup] => ["Heating Coil #{fuel} Energy", "Heating Coil Ancillary #{fuel} Energy"] }
+        else
+          return { [to_ft[fuel], EUT::Heating] => ["Heating Coil #{fuel} Energy", "Heating Coil Ancillary #{fuel} Energy"] }
+        end
+
+      elsif object.to_CoilHeatingWaterToAirHeatPumpEquationFit.is_initialized || object.to_CoilHeatingWaterToAirHeatPumpVariableSpeedEquationFit.is_initialized
+        return { [FT::Elec, EUT::Heating] => ['Heating Coil Electricity Energy'] }
+
+      elsif object.to_ZoneHVACBaseboardConvectiveElectric.is_initialized
+        object = object.to_ZoneHVACBaseboardConvectiveElectric.get
+        if object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').is_initialized && object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').get
+          return { [FT::Elec, EUT::HeatingHeatPumpBackup] => ['Baseboard Electricity Energy'] }
+        else
+          return { [FT::Elec, EUT::Heating] => ['Baseboard Electricity Energy'] }
+        end
+
+      elsif object.to_BoilerHotWater.is_initialized
+        is_combi_boiler = false
+        if object.additionalProperties.getFeatureAsBoolean('IsCombiBoiler').is_initialized
+          is_combi_boiler = object.additionalProperties.getFeatureAsBoolean('IsCombiBoiler').get
+        end
+        if not is_combi_boiler # Exclude combi boiler, whose heating & dhw energy is handled separately via EMS
+          fuel = object.to_BoilerHotWater.get.fuelType
+          if object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').is_initialized && object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').get
+            return { [to_ft[fuel], EUT::HeatingHeatPumpBackup] => ["Boiler #{fuel} Energy", "Boiler Ancillary #{fuel} Energy"] }
+          else
+            return { [to_ft[fuel], EUT::Heating] => ["Boiler #{fuel} Energy", "Boiler Ancillary #{fuel} Energy"] }
+          end
+        else
+          fuel = object.to_BoilerHotWater.get.fuelType
+          return { [to_ft[fuel], EUT::HotWater] => ["Boiler #{fuel} Energy", "Boiler Ancillary #{fuel} Energy"] }
+        end
+
+      elsif object.to_CoilCoolingDXSingleSpeed.is_initialized || object.to_CoilCoolingDXMultiSpeed.is_initialized
+        return { [FT::Elec, EUT::Cooling] => ['Cooling Coil Electricity Energy'] }
+
+      elsif object.to_CoilCoolingWaterToAirHeatPumpEquationFit.is_initialized || object.to_CoilCoolingWaterToAirHeatPumpVariableSpeedEquationFit.is_initialized
+        return { [FT::Elec, EUT::Cooling] => ['Cooling Coil Electricity Energy'] }
+
+      elsif object.to_EvaporativeCoolerDirectResearchSpecial.is_initialized
+        return { [FT::Elec, EUT::Cooling] => ['Evaporative Cooler Electricity Energy'] }
+
+      elsif object.to_CoilWaterHeatingAirToWaterHeatPumpWrapped.is_initialized
+        return { [FT::Elec, EUT::HotWater] => ['Cooling Coil Water Heating Electricity Energy'] }
+
+      elsif object.to_FanSystemModel.is_initialized
+        if object_type == Constants::ObjectTypeWaterHeater
+          return { [FT::Elec, EUT::HotWater] => ['Fan Electricity Energy'] }
+        end
+
+      elsif object.to_PumpConstantSpeed.is_initialized
+        if object_type == Constants::ObjectTypeSolarHotWater
+          return { [FT::Elec, EUT::HotWaterSolarThermalPump] => ['Pump Electricity Energy'] }
+        end
+
+      elsif object.to_WaterHeaterMixed.is_initialized
+        fuel = object.to_WaterHeaterMixed.get.heaterFuelType
+        return { [to_ft[fuel], EUT::HotWater] => ["Water Heater #{fuel} Energy", 'Water Heater Off Cycle Parasitic Electricity Energy', 'Water Heater On Cycle Parasitic Electricity Energy'] }
+
+      elsif object.to_WaterHeaterStratified.is_initialized
+        fuel = object.to_WaterHeaterStratified.get.heaterFuelType
+        return { [to_ft[fuel], EUT::HotWater] => ["Water Heater #{fuel} Energy", 'Water Heater Off Cycle Parasitic Electricity Energy', 'Water Heater On Cycle Parasitic Electricity Energy'] }
+
+      elsif object.to_Lights.is_initialized
+        object = object.to_Lights.get
+        subcategory = object.endUseSubcategory
+        end_use = { Constants::ObjectTypeLightingInterior => EUT::LightsInterior,
+                    Constants::ObjectTypeLightingGarage => EUT::LightsGarage }[subcategory]
+        fail 'Unexpected error: InteriorLights:Electricity without a space.' unless object.space.is_initialized
+
+        zone_name = object.space.get.thermalZone.get.name.to_s.upcase
+        return { [FT::Elec, end_use] => ["#{subcategory}:InteriorLights:Electricity:Zone:#{zone_name}"] }
+
+      elsif object.to_ElectricLoadCenterInverterPVWatts.is_initialized
+        return { [FT::Elec, EUT::PV] => ['Inverter Conversion Loss Decrement Energy'] }
+
+      elsif object.to_GeneratorPVWatts.is_initialized
+        return { [FT::Elec, EUT::PV] => ['Generator Produced DC Electricity Energy'] }
+
+      elsif object.to_GeneratorMicroTurbine.is_initialized
+        fuel = object.to_GeneratorMicroTurbine.get.fuelType
+        return { [FT::Elec, EUT::Generator] => ['Generator Produced AC Electricity Energy'],
+                 [to_ft[fuel], EUT::Generator] => ["Generator #{fuel} HHV Basis Energy"] }
+
+      elsif object.to_ElectricLoadCenterStorageLiIonNMCBattery.is_initialized
+        if object_type == Constants::ObjectTypeVehicle
+          return { [FT::Elec, EUT::Vehicle] => ['Electric Storage Charge Energy'] }
+        elsif object_type == Constants::ObjectTypeBattery
+          return { [FT::Elec, EUT::Battery] => ['Electric Storage Production Decrement Energy', 'Electric Storage Discharge Energy'] }
+        else
+          fail "Unexpected elcs: #{object.name}"
+        end
+
+      elsif object.to_ElectricEquipment.is_initialized
+        object = object.to_ElectricEquipment.get
+        subcategory = object.endUseSubcategory
+        end_use = nil
+        { Constants::ObjectTypeHotWaterRecircPump => EUT::HotWaterRecircPump,
+          Constants::ObjectTypeClothesWasher => EUT::ClothesWasher,
+          Constants::ObjectTypeClothesDryer => EUT::ClothesDryer,
+          Constants::ObjectTypeDishwasher => EUT::Dishwasher,
+          Constants::ObjectTypeRefrigerator => EUT::Refrigerator,
+          Constants::ObjectTypeFreezer => EUT::Freezer,
+          Constants::ObjectTypeCookingRange => EUT::RangeOven,
+          Constants::ObjectTypeCeilingFan => EUT::CeilingFan,
+          Constants::ObjectTypeWholeHouseFan => EUT::WholeHouseFan,
+          Constants::ObjectTypeMechVent => EUT::MechVent,
+          Constants::ObjectTypeMiscPlugLoads => EUT::PlugLoads,
+          Constants::ObjectTypeMiscTelevision => EUT::Television,
+          Constants::ObjectTypeMiscPoolHeater => EUT::PoolHeater,
+          Constants::ObjectTypeMiscPoolPump => EUT::PoolPump,
+          Constants::ObjectTypeMiscPermanentSpaHeater => EUT::PermanentSpaHeater,
+          Constants::ObjectTypeMiscPermanentSpaPump => EUT::PermanentSpaPump,
+          Constants::ObjectTypeMiscElectricVehicleCharging => EUT::Vehicle,
+          Constants::ObjectTypeMiscWellPump => EUT::WellPump,
+          Constants::ObjectTypeLightingExterior => EUT::LightsExterior,
+          Constants::ObjectTypeLightingExteriorHoliday => EUT::LightsExterior }.each do |obj_name, eut|
+          next unless subcategory.start_with? obj_name
+          fail "Unexpected error: multiple matches for #{eut}." unless end_use.nil?
+
+          end_use = eut
+        end
+
+        if not end_use.nil?
+          # Use Output:Meter instead of Output:Variable because they incorporate thermal zone multipliers
+          fail 'Unexpected error: InteriorEquipment:Electricity without a space.' unless object.space.is_initialized
+
+          zone_name = object.space.get.thermalZone.get.name.to_s.upcase
+          return { [FT::Elec, end_use] => ["#{subcategory}:InteriorEquipment:Electricity:Zone:#{zone_name}"] }
+        end
+
+      elsif object.to_OtherEquipment.is_initialized
+        object = object.to_OtherEquipment.get
+        subcategory = object.endUseSubcategory
+        fuel = object.fuelType
+        end_use = nil
+        { Constants::ObjectTypeClothesDryer => EUT::ClothesDryer,
+          Constants::ObjectTypeCookingRange => EUT::RangeOven,
+          Constants::ObjectTypeMiscGrill => EUT::Grill,
+          Constants::ObjectTypeMiscLighting => EUT::Lighting,
+          Constants::ObjectTypeMiscFireplace => EUT::Fireplace,
+          Constants::ObjectTypeMiscPoolHeater => EUT::PoolHeater,
+          Constants::ObjectTypeMiscPermanentSpaHeater => EUT::PermanentSpaHeater,
+          Constants::ObjectTypeMechVentPreheat => EUT::MechVentPreheat,
+          Constants::ObjectTypeMechVentPrecool => EUT::MechVentPrecool,
+          Constants::ObjectTypeHPDefrostSupplHeat => EUT::HeatingHeatPumpBackup,
+          Constants::ObjectTypeCrankcaseHeater => [EUT::Heating, EUT::Cooling],
+          Constants::ObjectTypePanHeater => EUT::Heating,
+          Constants::ObjectTypeWaterHeaterAdjustment => EUT::HotWater,
+          Constants::ObjectTypeDSEHeating => EUT::Heating,
+          Constants::ObjectTypeDSEHeatingHeatPumpBackup => EUT::HeatingHeatPumpBackup,
+          Constants::ObjectTypeDSEHeatingFanPump => EUT::HeatingFanPump,
+          Constants::ObjectTypeDSEHeatingHeatPumpBackupFanPump => EUT::HeatingHeatPumpBackupFanPump,
+          Constants::ObjectTypeDSECooling => EUT::Cooling,
+          Constants::ObjectTypeDSECoolingFanPump => EUT::CoolingFanPump,
+          Constants::ObjectTypeBlowerOffDelayFanPower => EUT::CoolingFanPump,
+          Constants::ObjectTypeBatteryLossesAdjustment => EUT::Battery }.each do |obj_name, eut|
+          next unless subcategory.start_with? obj_name
+          fail "Unexpected error: multiple matches for #{eut}." unless end_use.nil?
+
+          if obj_name == Constants::ObjectTypeCrankcaseHeater
+            if object.additionalProperties.getFeatureAsDouble('FractionHeatLoadServed').get <= 0
+              # Allocate crankcase to cooling end use (cooling system or HP only provides cooling)
+              eut = eut[1]
+            else
+              eut = eut[0]
+            end
+          end
+
+          end_use = eut
+        end
+
+        if not end_use.nil?
+          # Use Output:Meter instead of Output:Variable because they incorporate thermal zone multipliers
+          fail "Unexpected error: InteriorEquipment:#{fuel} without a space." unless object.space.is_initialized
+
+          zone_name = object.space.get.thermalZone.get.name.to_s.upcase
+          return { [to_ft[fuel], end_use] => ["#{subcategory}:InteriorEquipment:#{fuel}:Zone:#{zone_name}"] }
+        end
+
+      elsif object.to_ZoneHVACDehumidifierDX.is_initialized
+        return { [FT::Elec, EUT::Dehumidifier] => ['Zone Dehumidifier Electricity Energy'] }
+
+      elsif object.to_EnergyManagementSystemOutputVariable.is_initialized
+        if object_type == Constants::ObjectTypeFanPumpDisaggregatePrimaryHeat
+          return { [FT::Elec, EUT::HeatingFanPump] => [object.name.to_s] }
+        elsif object_type == Constants::ObjectTypeFanPumpDisaggregateBackupHeat
+          return { [FT::Elec, EUT::HeatingHeatPumpBackupFanPump] => [object.name.to_s] }
+        elsif object_type == Constants::ObjectTypeFanPumpDisaggregateCool
+          return { [FT::Elec, EUT::CoolingFanPump] => [object.name.to_s] }
+        else
+          return { ems: [object.name.to_s] }
+        end
+
+      end
+
+    elsif class_type == HWT
+
+      # Hot Water Use
+
+      if object.to_WaterUseEquipment.is_initialized
+        hot_water_use = { Constants::ObjectTypeFixtures => HWT::Fixtures,
+                          Constants::ObjectTypeDistributionWaste => HWT::DistributionWaste,
+                          Constants::ObjectTypeClothesWasher => HWT::ClothesWasher,
+                          Constants::ObjectTypeDishwasher => HWT::Dishwasher }[object.to_WaterUseEquipment.get.waterUseEquipmentDefinition.endUseSubcategory]
+        return { hot_water_use => ['Water Use Equipment Hot Water Volume'] }
+
+      end
+
+    elsif class_type == LT
+
+      # Load
+
+      if object.to_WaterHeaterMixed.is_initialized || object.to_WaterHeaterStratified.is_initialized
+        if object.to_WaterHeaterMixed.is_initialized
+          capacity = object.to_WaterHeaterMixed.get.heaterMaximumCapacity.get
+          object_type = object.to_WaterHeaterMixed.get.additionalProperties.getFeatureAsString('ObjectType')
+        else
+          capacity = object.to_WaterHeaterStratified.get.heater1Capacity.get
+          object_type = object.to_WaterHeaterStratified.get.additionalProperties.getFeatureAsString('ObjectType')
+        end
+        object_type = object_type.get if object_type.is_initialized
+        is_combi_boiler = false
+        if object.additionalProperties.getFeatureAsBoolean('IsCombiBoiler').is_initialized
+          is_combi_boiler = object.additionalProperties.getFeatureAsBoolean('IsCombiBoiler').get
+        end
+        if capacity == 0 && object_type == Constants::ObjectTypeSolarHotWater
+          return { LT::HotWaterSolarThermal => ['Water Heater Use Side Heat Transfer Energy'] }
+        elsif capacity > 0 || is_combi_boiler # Active water heater only (e.g., exclude desuperheater and solar thermal storage tanks)
+          return { LT::HotWaterTankLosses => ['Water Heater Heat Loss Energy'] }
+        end
+
+      elsif object.to_WaterUseConnections.is_initialized
+        return { LT::HotWaterDelivered => ['Water Use Connections Plant Hot Water Energy'] }
+
+      elsif object.to_CoilWaterHeatingDesuperheater.is_initialized
+        return { LT::HotWaterDesuperheater => ['Water Heater Heating Energy'] }
+
+      elsif object.to_CoilHeatingGas.is_initialized || object.to_CoilHeatingElectric.is_initialized
+        if object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').is_initialized && object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').get
+          return { LT::HeatingHeatPumpBackup => ['Heating Coil Heating Energy'] }
+        end
+
+      elsif object.to_ZoneHVACBaseboardConvectiveElectric.is_initialized || object.to_ZoneHVACBaseboardConvectiveWater.is_initialized
+        if object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').is_initialized && object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').get
+          return { LT::HeatingHeatPumpBackup => ['Baseboard Total Heating Energy'] }
+        end
+
+      elsif object.to_EnergyManagementSystemOutputVariable.is_initialized
+        object_type = object.to_EnergyManagementSystemOutputVariable.get.additionalProperties.getFeatureAsString('ObjectType')
+        object_type = object_type.get if object_type.is_initialized
+        if object_type == Constants::ObjectTypeFanPumpDisaggregateBackupHeat
+          # Fan/pump energy is contributing to the load
+          return { LT::HeatingHeatPumpBackup => [object.name.to_s] }
+        end
+
+      end
+
+    elsif class_type == RT
+
+      # Resilience
+
+      if object.to_ElectricLoadCenterStorageLiIonNMCBattery.is_initialized
+        if object.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeBattery
+          return { RT::Battery => ['Electric Storage Charge Fraction'] }
+        end
+
+      end
+    end
+
+    return {}
   end
 end

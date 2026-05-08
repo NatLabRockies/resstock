@@ -83,6 +83,8 @@
               </Attic>
             </AtticType>
             <AttachedToRoof idref='Roof1'/>
+            <AttachedToWall idref='Wall2'/>
+            <AttachedToWall idref='Wall3'/>
           </Attic>
           <Attic>
             <SystemIdentifier id='Attic2'/>
@@ -92,6 +94,10 @@
               </Attic>
             </AtticType>
             <WithinInfiltrationVolume>false</WithinInfiltrationVolume>
+            <AttachedToRoof idref='Roof2'/>
+            <AttachedToWall idref='Wall2'/>
+            <AttachedToWall idref='Wall4'/>
+            <AttachedToFloor idref='Floor1'/>
           </Attic>
         </Attics>
         <Foundations>
