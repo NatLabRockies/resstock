@@ -112,6 +112,7 @@ class BaseCompare:
         deltas = deltas.round(2)
         deltas.reset_index(level=aggregate_columns, inplace=True)
         deltas.index.name = 'enduse'
+        deltas[deltas.columns] = deltas[deltas.columns].astype('object')
         deltas.fillna('n/a', inplace=True)
         sims_df = pd.DataFrame({'base': sim_ct_base,
                                 'feature': sim_ct_feature,
