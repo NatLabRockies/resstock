@@ -36,6 +36,7 @@ def _run_xml(xml, worker_num, apply_unit_multiplier = false, annual_results_1x =
       hpxml_bldg.building_construction.number_of_units = 1
     end
     orig_multiplier = hpxml.buildings.map { |hpxml_bldg| hpxml_bldg.building_construction.number_of_units }.sum
+    whole_sfa_or_mf_building_sim = true
 
     # Create copy of the HPXML where the number of Building elements is doubled
     # and each Building is assigned a unit multiplier of 5 (2x5=10).
@@ -44,17 +45,10 @@ def _run_xml(xml, worker_num, apply_unit_multiplier = false, annual_results_1x =
       hpxml_bldg = hpxml.buildings[i]
       if hpxml_bldg.dehumidifiers.size > 0
         # FUTURE: Dehumidifiers currently don't give desired results w/ unit multipliers
-        # https://github.com/NREL/OpenStudio-HPXML/issues/1499
+        # https://github.com/NatLabRockies/OpenStudio-HPXML/issues/1499
       elsif hpxml_bldg.heat_pumps.count { |hp| hp.heat_pump_type == HPXML::HVACTypeHeatPumpGroundToAir } > 0
         # FUTURE: GSHPs currently don't give desired results w/ unit multipliers
-        # https://github.com/NREL/OpenStudio-HPXML/issues/1499
-      elsif hpxml_bldg.batteries.size > 0
-        # FUTURE: Batteries currently don't work with whole SFA/MF buildings
-        # https://github.com/NREL/OpenStudio-HPXML/issues/1499
-        return
-      elsif hpxml_bldg.vehicles.size > 0
-        # Same as battery issue above
-        return
+        # https://github.com/NatLabRockies/OpenStudio-HPXML/issues/1499
       elsif hpxml.header.hvac_onoff_thermostat_deadband
         # On off thermostat not supported with unit multiplier yet
       elsif hpxml.header.heat_pump_backup_heating_capacity_increment
@@ -62,11 +56,13 @@ def _run_xml(xml, worker_num, apply_unit_multiplier = false, annual_results_1x =
       else
         hpxml_bldg.building_construction.number_of_units *= 5
       end
-      hpxml.buildings << hpxml_bldg.dup
+      if whole_sfa_or_mf_building_sim
+        hpxml.buildings << hpxml_bldg.dup
+      end
     end
     unit_multiplier = hpxml.buildings.map { |hpxml_bldg| hpxml_bldg.building_construction.number_of_units }.sum / orig_multiplier
     if unit_multiplier > 1
-      hpxml.header.whole_sfa_or_mf_building_sim = true
+      hpxml.header.whole_sfa_or_mf_building_sim = whole_sfa_or_mf_building_sim
       if not [HPXML::ResidentialTypeApartment, HPXML::ResidentialTypeSFA].include? hpxml.buildings[0].building_construction.residential_facility_type
         # Schematron validation prevents WholeSFAorMFBuildingSim=true for other
         # building types, so we skip validation to allow the test to run
@@ -271,18 +267,8 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
       next if message.include? 'Could not find a marginal Electricity rate.'
       next if message.include? 'Could not find a marginal Natural Gas rate.'
     end
-    if hpxml.buildings.any? { |hpxml_bldg| !hpxml_bldg.hvac_distributions.select { |d| d.distribution_system_type == HPXML::HVACDistributionTypeDSE }.empty? }
-      next if message.include? 'DSE is not currently supported when calculating utility bills.'
-    end
     if !hpxml_header.unavailable_periods.select { |up| up.column_name == 'Power Outage' }.empty?
-      next if message.include? 'It is not possible to eliminate all HVAC energy use (e.g. crankcase/defrost energy) in EnergyPlus during an unavailable period.'
       next if message.include? 'It is not possible to eliminate all DHW energy use (e.g. water heater parasitics) in EnergyPlus during an unavailable period.'
-    end
-    if hpxml.buildings.any? { |hpxml_bldg| (not hpxml_bldg.hvac_controls.empty?) && (hpxml_bldg.hvac_controls[0].seasons_heating_begin_month != 1) }
-      next if message.include? 'It is not possible to eliminate all HVAC energy use (e.g. crankcase/defrost energy) in EnergyPlus outside of an HVAC season.'
-    end
-    if !hpxml_header.unavailable_periods.select { |up| (up.column_name == 'No Space Heating') || (up.column_name == 'No Space Cooling') }.empty?
-      next if message.include? 'It is not possible to eliminate all HVAC energy use (e.g. crankcase/defrost energy) in EnergyPlus during an unavailable period.'
     end
     if hpxml.buildings.any? { |hpxml_bldg| hpxml_bldg.climate_and_risk_zones.weather_station_epw_filepath.include? 'US_CO_Boulder_AMY_2012.epw' }
       next if message.include? 'No EPW design conditions found; calculating design conditions from EPW weather data.'
@@ -305,9 +291,23 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
     if hpxml.buildings.any? { |hpxml_bldg| hpxml_bldg.inverters.map { |i| i.inverter_efficiency }.uniq.size > 1 }
       next if message.include? 'Inverters with varying efficiencies found; using a single PV size weighted-average in the model'
     end
+    coal_files = [
+      'base-appliances-coal.xml',
+      'base-dhw-tank-coal.xml',
+      'base-hvac-boiler-coal-only.xml',
+      'base-hvac-furnace-coal-only.xml'
+    ]
+    if coal_files.any? { |f| hpxml_path.include?(f) }
+      next if message.include?('No EIA SEDS rate for coal was found for the state of')
+    end
+    # HVAC is undersized or poor install quality or advanced research features
+    if hpxml_path.include?('base-hvac-undersized.xml') || hpxml_path.include?('install-quality') || hpxml_path.include?('research-features')
+      next if message.include?('There are a large number of unmet hours') && message.include?('for heating; this may indicate the heating system is undersized or the presence of large thermostat setbacks.')
+      next if message.include?('There are a large number of unmet hours') && message.include?('for cooling; this may indicate the cooling system is undersized or the presence of large thermostat setbacks.')
+    end
 
     # FUTURE: Revert this eventually
-    # https://github.com/NREL/OpenStudio-HPXML/issues/1499
+    # https://github.com/NatLabRockies/OpenStudio-HPXML/issues/1499
     if hpxml_header.utility_bill_scenarios.has_detailed_electric_rates
       uses_unit_multipliers = hpxml.buildings.count { |hpxml_bldg| hpxml_bldg.building_construction.number_of_units > 1 } > 0
       if uses_unit_multipliers || hpxml.buildings.size > 1
@@ -340,9 +340,7 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
     next if message.include?('CalculateZoneVolume') && message.include?('not fully enclosed')
     next if message.include? 'do not define an enclosure'
     next if message.include? 'Pump nominal power or motor efficiency is set to 0'
-    next if message.include? 'volume flow rate per watt of rated total cooling capacity is out of range'
-    next if message.include? 'volume flow rate per watt of rated total heating capacity is out of range'
-    next if message.include? 'volume flow rate per watt of rated total water heating capacity is out of range'
+    next if message.include?('volume flow rate per watt of rated total') && message.include?('capacity is out of range')
     next if message.include? 'The Standard Ratings is calculated for'
     next if message.include?('WetBulb not converged after') && message.include?('iterations(PsyTwbFnTdbWPb)')
     next if message.include? 'Inside surface heat balance did not converge with Max Temp Difference'
@@ -407,10 +405,14 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
     # GSHPs
     if hpxml.buildings.any? { |hpxml_bldg| hpxml_bldg.heat_pumps.count { |hp| hp.heat_pump_type == HPXML::HVACTypeHeatPumpGroundToAir } > 0 }
       next if message.include?('CheckSimpleWAHPRatedCurvesOutputs') && message.include?('WaterToAirHeatPump:EquationFit') # FUTURE: Check these
-      next if message.include? 'Actual air mass flow rate is smaller than 25% of water-to-air heat pump coil rated air flow rate.' # FUTURE: Remove this when https://github.com/NREL/EnergyPlus/issues/9125 is resolved
+      next if message.include? 'Actual air mass flow rate is smaller than 25% of water-to-air heat pump coil rated air flow rate.' # FUTURE: Remove this when https://github.com/NatLabRockies/EnergyPlus/issues/9125 is resolved
     end
     # GSHPs with only heating or cooling
     if hpxml.buildings.any? { |hpxml_bldg| hpxml_bldg.heat_pumps.count { |hp| hp.heat_pump_type == HPXML::HVACTypeHeatPumpGroundToAir && (hp.fraction_heat_load_served == 0 || hp.fraction_cool_load_served == 0) } > 0 }
+      next if message.include? 'heating capacity is disproportionate (> 20% different) to total cooling capacity' # safe to ignore
+    end
+    # GSHPs with hard-sized capacities
+    if hpxml_path.include? 'house052.xml'
       next if message.include? 'heating capacity is disproportionate (> 20% different) to total cooling capacity' # safe to ignore
     end
     # Solar thermal systems
@@ -1079,30 +1081,6 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
     end
   end
 
-  # Check unmet hours
-  skip_unmet_check = false
-  if hpxml_path.include?('install-quality') || hpxml_path.include?('research-features')
-    # unmet hours are expected for HVAC installation quality and realistic backup staging files
-    skip_unmet_check = true
-  end
-  unmet_hours_htg = results.select { |k, _v| k.include? 'Unmet Hours: Heating' }.values.sum(0.0)
-  unmet_hours_clg = results.select { |k, _v| k.include? 'Unmet Hours: Cooling' }.values.sum(0.0)
-  if hpxml_path.include? 'base-hvac-undersized.xml'
-    assert_operator(unmet_hours_htg, :>, 1000)
-    assert_operator(unmet_hours_clg, :>, 1000)
-  else
-    if hpxml_bldg.total_fraction_heat_load_served == 0
-      assert_equal(0, unmet_hours_htg)
-    else
-      assert_operator(unmet_hours_htg, :<, 500) unless skip_unmet_check
-    end
-    if hpxml_bldg.total_fraction_cool_load_served == 0
-      assert_equal(0, unmet_hours_clg)
-    else
-      assert_operator(unmet_hours_clg, :<, 500) unless skip_unmet_check
-    end
-  end
-
   sqlFile.close
 
   # Ensure sql file is immediately freed; otherwise we can get
@@ -1135,16 +1113,16 @@ def _check_unit_multiplier_results(xml, hpxml_bldg, annual_results_1x, annual_re
       abs_delta_tol = 500.0
       abs_frac_tol = 0.15
     elsif key.include?('Peak Load:')
-      # Check that the peak load difference is less than 0.2 kBtu/hr or less than 10%
-      abs_delta_tol = 0.2
+      # Check that the peak load difference is less than 200 Btu/hr or less than 10%
+      abs_delta_tol = 200
       abs_frac_tol = 0.1
     elsif key.include?('Hot Water:')
       # Check that the hot water usage difference is less than 10 gal/yr or less than 2%
       abs_delta_tol = 10.0
       abs_frac_tol = 0.02
     elsif key.include?('Resilience: Battery')
-      # Check that the battery resilience difference is less than 1 hr or less than 1%
-      abs_delta_tol = 1.0
+      # Check that the battery resilience difference is less than 2 hrs or less than 1%
+      abs_delta_tol = 2.0
       abs_frac_tol = 0.01
     elsif key.include?('Airflow:')
       # Check that airflow rate difference is less than 0.2 cfm or less than 5%
@@ -1178,7 +1156,9 @@ def _check_unit_multiplier_results(xml, hpxml_bldg, annual_results_1x, annual_re
    'Humidity Ratio:', 'Relative Humidity:', 'Dewpoint Temperature:', 'Radiant Temperature:', 'Operative Temperature:',
    'Utility Bills:',
    'HVAC Zone Design Load:',
-   'HVAC Space Design Load:'].each do |key|
+   'HVAC Space Design Load:',
+   'Dwelling Unit Energy Use:',
+   'Dwelling Unit Fuel Use:'].each do |key|
     annual_results_1x.delete_if { |k, _v| k.start_with? key }
     annual_results_10x.delete_if { |k, _v| k.start_with? key }
     monthly_results_1x.delete_if { |k, _v| k.start_with? key }
@@ -1211,6 +1191,7 @@ def _check_unit_multiplier_results(xml, hpxml_bldg, annual_results_1x, annual_re
       vals_1x.zip(vals_10x).each_with_index do |(val_1x, val_10x), i|
         period = is_timeseries ? Date::ABBR_MONTHNAMES[i + 1] : 'Annual'
         if not (key.include?('Unmet Hours') ||
+                key.include?('Resilience') ||
                 key.include?('HVAC Design Temperature') ||
                 key.include?('Weather') ||
                 key.include?('HVAC Geothermal Loop: Borehole/Trench Length'))

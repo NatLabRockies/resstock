@@ -20,7 +20,7 @@ Absolute/relative path of the HPXML file.
 
 - **Required:** ``true``
 
-<br/>
+
 
 **Directory for Output Files**
 
@@ -31,7 +31,7 @@ Absolute/relative path for the output files directory.
 
 - **Required:** ``true``
 
-<br/>
+
 
 **Output Format**
 
@@ -42,9 +42,11 @@ The file format of the HVAC design load details output.
 
 - **Required:** ``false``
 
-- **Choices:** `csv`, `json`, `msgpack`
+- **Choices:** <br/>  - `csv`<br/>  - `json`<br/>  - `msgpack`
 
-<br/>
+
+- **Default:** `csv`
+
 
 **Annual Output File Name**
 
@@ -55,7 +57,9 @@ The name of the file w/ HVAC design loads and capacities. If not provided, defau
 
 - **Required:** ``false``
 
-<br/>
+
+- **Default:** `results_annual`
+
 
 **Electric Panel Output File Name**
 
@@ -66,7 +70,9 @@ The name of the file w/ electric panel outputs. If not provided, defaults to 're
 
 - **Required:** ``false``
 
-<br/>
+
+- **Default:** `results_panel`
+
 
 **Design Load Details Output File Name**
 
@@ -77,7 +83,9 @@ The name of the file w/ additional HVAC design load details. If not provided, de
 
 - **Required:** ``false``
 
-<br/>
+
+- **Default:** `results_design_load_details`
+
 
 **Add component loads?**
 
@@ -88,7 +96,9 @@ If true, adds the calculation of heating/cooling component loads (not enabled by
 
 - **Required:** ``false``
 
-<br/>
+
+- **Default:** `false`
+
 
 **BuildingID**
 
@@ -99,7 +109,7 @@ The ID of the HPXML Building. Only required if the HPXML has multiple Building e
 
 - **Required:** ``false``
 
-<br/>
+
 
 **Skip Validation?**
 
@@ -110,7 +120,9 @@ If true, bypasses HPXML input validation for faster performance. WARNING: This s
 
 - **Required:** ``false``
 
-<br/>
+
+- **Default:** `false`
+
 
 **Debug Mode?**
 
@@ -121,7 +133,22 @@ If true: 1) Writes in.osm file, 2) Generates additional log output, and 3) Creat
 
 - **Required:** ``false``
 
-<br/>
+
+- **Default:** `false`
+
+
+**EMS Debug Mode?**
+
+If true, writes the EnergyPlus EDD file with timeseries debug output for each EMS program. Note that this file can be VERY large.
+
+- **Name:** ``ems_debug``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+
+- **Default:** `false`
+
 
 
 

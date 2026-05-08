@@ -1244,7 +1244,7 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
 
   def _test_measure(args_hash, skip_in_xml_validation: false)
     # create an instance of the measure
-    measure = HPXMLtoOpenStudio.new
+    measure = HPXMLToOpenStudio.new
 
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     model = OpenStudio::Model::Model.new

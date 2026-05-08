@@ -21,7 +21,7 @@
 
 project = u'OpenStudio-HPXML'
 copyright = u'2026, NLR'
-author = u'NREL'
+author = u'NLR'
 
 # The short X.Y version
 version = u''
@@ -139,7 +139,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'OpenStudio-HPXML.tex', u'OpenStudio-HPXML Documentation',
-     u'NREL', 'manual'),
+     u'NLR', 'manual'),
 ]
 
 

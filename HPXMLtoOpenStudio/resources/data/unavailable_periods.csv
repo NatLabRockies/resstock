@@ -19,10 +19,10 @@ plug_loads_well_pump,1,1,0,0
 fuel_loads_grill,1,1,0,0
 fuel_loads_lighting,1,1,0,0
 fuel_loads_fireplace,1,1,0,0
-pool_pump,0,1,0,0
-pool_heater,0,1,0,0
-permanent_spa_pump,0,1,0,0
-permanent_spa_heater,0,1,0,0
+pool_pump,1,1,0,0
+pool_heater,1,1,0,0
+permanent_spa_pump,1,1,0,0
+permanent_spa_heater,1,1,0,0
 hot_water_fixtures,1,1,0,0
 hot_water_recirculation_pump,1,1,0,0
 general_water_use,1,0,0,0

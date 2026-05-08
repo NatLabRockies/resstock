@@ -8,18 +8,19 @@ module Vehicle
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
+  # @param hpxml [HPXML] HPXML object
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param schedules_file [SchedulesFile] SchedulesFile wrapper class instance of detailed schedule files
   # @return [nil]
-  def self.apply(runner, model, spaces, hpxml_bldg, hpxml_header, schedules_file)
+  def self.apply(runner, model, spaces, hpxml, hpxml_bldg, hpxml_header, schedules_file)
     hpxml_bldg.vehicles.each do |vehicle|
       if vehicle.vehicle_type != HPXML::VehicleTypeBEV
         # Warning issued by Schematron validator
         next
       end
 
-      apply_electric_vehicle(runner, model, spaces, hpxml_bldg, hpxml_header, vehicle, schedules_file)
+      apply_electric_vehicle(runner, model, spaces, hpxml, hpxml_bldg, hpxml_header, vehicle, schedules_file)
     end
   end
 
@@ -30,12 +31,14 @@ module Vehicle
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
+  # @param hpxml [HPXML] HPXML object
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param vehicle [HPXML::Vehicle] Object that defines a single electric vehicle
   # @param schedules_file [SchedulesFile] SchedulesFile wrapper class instance of detailed schedule files
   # @return [nil]
-  def self.apply_electric_vehicle(runner, model, spaces, hpxml_bldg, hpxml_header, vehicle, schedules_file)
+  def self.apply_electric_vehicle(runner, model, spaces, hpxml, hpxml_bldg, hpxml_header, vehicle, schedules_file)
+    unit_multiplier = hpxml_bldg.building_construction.number_of_units
     if hpxml_bldg.plug_loads.any? { |pl| pl.plug_load_type == HPXML::PlugLoadTypeElectricVehicleCharging }
       # Warning issued by Schematron validator
       return
@@ -49,7 +52,7 @@ module Vehicle
     end
 
     # We don't use the EV/charger location in the HPXML because it doesn't currently affect simulation results.
-    # See https://github.com/NREL/OpenStudio-HPXML/pull/1961
+    # See https://github.com/NatLabRockies/OpenStudio-HPXML/pull/1961
     vehicle.additional_properties.location = HPXML::LocationOutside
 
     if vehicle.fuel_economy_units == HPXML::UnitsKwhPerMile
@@ -91,19 +94,14 @@ module Vehicle
     # Scale the effective discharge power by 2.25 to assign the rated discharge power.
     # This value reflects the maximum power adjustment allowed in the EMS EV discharge program at -17.8 C.
     vehicle.additional_properties.rated_power_output = eff_discharge_power * 2.25
-    vehicle.additional_properties.eff_discharge_power = eff_discharge_power
+    vehicle.additional_properties.eff_discharge_power = eff_discharge_power * unit_multiplier
 
     # Apply vehicle battery to model
-    Battery.apply_battery(runner, model, spaces, hpxml_bldg, vehicle, charging_schedule, discharging_schedule)
+    Battery.apply_battery(runner, model, spaces, hpxml, hpxml_bldg, vehicle, charging_schedule, discharging_schedule)
 
-    temp_sensor = Model.add_ems_sensor(
-      model,
-      name: 'site_temp',
-      output_var_or_meter_name: 'Site Outdoor Air Drybulb Temperature',
-      key_name: 'Environment'
-    )
+    t_out_sensor = model.getEnergyManagementSystemSensors.find { |s| s.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeSensorSiteOutdoorAirDBTemp }
 
-    # Power adjustment vs ambient temperature curve; derived from most recent data in Figure 9 of https://www.nrel.gov/docs/fy23osti/83916.pdf
+    # Power adjustment vs ambient temperature curve; derived from most recent data in Figure 9 of https://docs.nlr.gov/docs/fy23osti/83916.pdf
     # This adjustment scales power demand based on ambient temperature, and encompasses losses due to battery and space conditioning (i.e., discharging losses), as well as charging losses.
     coefs = [1.412768, -3.910397E-02, 9.408235E-04, 8.971560E-06, -7.699244E-07, 1.265614E-08]
     power_curve = ''
@@ -117,10 +115,10 @@ module Vehicle
       model,
       name: 'ev_discharge_program'
     )
-    ev_discharge_program.addLine("  Set site_temp_adj = #{temp_sensor.name}")
-    ev_discharge_program.addLine("  If #{temp_sensor.name} < #{UnitConversions.convert(0, 'F', 'C').round(3)}")
+    ev_discharge_program.addLine("  Set site_temp_adj = #{t_out_sensor.name}")
+    ev_discharge_program.addLine("  If #{t_out_sensor.name} < #{UnitConversions.convert(0, 'F', 'C').round(3)}")
     ev_discharge_program.addLine("    Set site_temp_adj = #{UnitConversions.convert(0, 'F', 'C').round(3)}")
-    ev_discharge_program.addLine("  ElseIf #{temp_sensor.name} > #{UnitConversions.convert(100, 'F', 'C').round(3)}")
+    ev_discharge_program.addLine("  ElseIf #{t_out_sensor.name} > #{UnitConversions.convert(100, 'F', 'C').round(3)}")
     ev_discharge_program.addLine("    Set site_temp_adj = #{UnitConversions.convert(100, 'F', 'C').round(3)}")
     ev_discharge_program.addLine('  EndIf')
     ev_discharge_program.addLine("  Set power_mult = #{power_curve}")
@@ -137,7 +135,7 @@ module Vehicle
       output_var_or_meter_name: 'Schedule Value',
       key_name: discharging_schedule.name.to_s
     )
-    discharge_sch_sensor.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeVehicleDischargeScheduleSensor)
+    discharge_sch_sensor.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeSensorScheduleVehicleDischarge)
     charge_sch_sensor = Model.add_ems_sensor(
       model,
       name: "#{charging_schedule.name} charge_sch_sensor",
@@ -169,7 +167,7 @@ module Vehicle
 
     Model.add_ems_program_calling_manager(
       model,
-      name: 'ev_discharge_pcm',
+      name: "#{ev_discharge_program.name} manager",
       calling_point: 'BeginTimestepBeforePredictor',
       ems_programs: [ev_discharge_program]
     )

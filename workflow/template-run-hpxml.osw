@@ -9,6 +9,7 @@
         "hpxml_path": "../../sample_files/base.xml",
         "output_dir": "..",
         "debug": false,
+        "ems_debug": false,
         "add_component_loads": false,
         "skip_validation": false,
         "building_id": ""
@@ -33,6 +34,7 @@
         "include_annual_hot_water_uses": true,
         "include_annual_hvac_summary": true,
         "include_annual_resilience": true,
+        "include_annual_dwelling_unit_outputs": true,
         "timeseries_frequency": "none",
         "include_timeseries_total_consumptions": false,
         "include_timeseries_fuel_consumptions": false,
@@ -50,6 +52,7 @@
         "include_timeseries_airflows": false,
         "include_timeseries_weather": false,
         "include_timeseries_resilience": false,
+        "include_timeseries_dwelling_unit_outputs": false,
         "timeseries_timestamp_convention": "start",
         "add_timeseries_dst_column": false,
         "add_timeseries_utc_column": false,

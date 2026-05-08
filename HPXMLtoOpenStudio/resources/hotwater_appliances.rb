@@ -397,7 +397,7 @@ module HotWaterAndAppliances
         end
 
         # Fixtures (showers, sinks, baths)
-        Model.add_water_use_equipment(
+        fx_wue = Model.add_water_use_equipment(
           model,
           name: fixtures_obj_name,
           end_use: fixtures_obj_name,
@@ -406,9 +406,10 @@ module HotWaterAndAppliances
           water_use_connections: water_use_connections[water_heating_system.id],
           target_temperature_schedule: mw_temp_schedule
         )
+        fx_wue.additionalProperties.setFeature('HPXML_ID', water_heating_system.id) # Used by reporting measure
 
         # Distribution waste (primary driven by fixture draws)
-        Model.add_water_use_equipment(
+        dist_wue = Model.add_water_use_equipment(
           model,
           name: Constants::ObjectTypeDistributionWaste,
           end_use: Constants::ObjectTypeDistributionWaste,
@@ -417,6 +418,7 @@ module HotWaterAndAppliances
           water_use_connections: water_use_connections[water_heating_system.id],
           target_temperature_schedule: mw_temp_schedule
         )
+        dist_wue.additionalProperties.setFeature('HPXML_ID', water_heating_system.id) # Used by reporting measure
 
         # Recirculation pump
         recirc_pump_annual_kwh = get_hwdist_recirc_pump_energy(hpxml_bldg)
@@ -480,7 +482,7 @@ module HotWaterAndAppliances
             water_cw_schedule = cw_schedule_obj.schedule
           end
 
-          Model.add_water_use_equipment(
+          cw_wue = Model.add_water_use_equipment(
             model,
             name: cw_object_name,
             end_use: cw_object_name,
@@ -489,6 +491,7 @@ module HotWaterAndAppliances
             water_use_connections: water_use_connections[water_heating_system.id],
             target_temperature_schedule: nil
           )
+          cw_wue.additionalProperties.setFeature('HPXML_ID', water_heating_system.id) # Used by reporting measure
         end
       end
 
@@ -516,7 +519,7 @@ module HotWaterAndAppliances
         water_dw_schedule = dw_schedule_obj.schedule
       end
 
-      Model.add_water_use_equipment(
+      dw_wue = Model.add_water_use_equipment(
         model,
         name: dw_obj_name,
         end_use: dw_obj_name,
@@ -525,6 +528,7 @@ module HotWaterAndAppliances
         water_use_connections: water_use_connections[water_heating_system.id],
         target_temperature_schedule: nil
       )
+      dw_wue.additionalProperties.setFeature('HPXML_ID', water_heating_system.id) # Used by reporting measure
     end
   end
 
@@ -1009,7 +1013,7 @@ module HotWaterAndAppliances
 
     Model.add_ems_program_calling_manager(
       model,
-      name: "#{schedule.name} program calling manager",
+      name: "#{schedule_program.name} manager",
       calling_point: 'BeginZoneTimestepAfterInitHeatBalance',
       ems_programs: [schedule_program]
     )

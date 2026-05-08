@@ -76,6 +76,26 @@
             <AttachedToFloor idref='Floor2'/>
           </Attic>
         </Attics>
+        <Foundations>
+          <Foundation>
+            <SystemIdentifier id='Foundation1'/>
+            <FoundationType>
+              <Basement>
+                <Conditioned>false</Conditioned>
+              </Basement>
+            </FoundationType>
+            <AttachedToRimJoist idref='RimJoist1'/>
+            <AttachedToRimJoist idref='RimJoist2'/>
+            <AttachedToRimJoist idref='RimJoist3'/>
+            <AttachedToRimJoist idref='RimJoist4'/>
+            <AttachedToFoundationWall idref='FoundationWall1'/>
+            <AttachedToFoundationWall idref='FoundationWall2'/>
+            <AttachedToFoundationWall idref='FoundationWall3'/>
+            <AttachedToFoundationWall idref='FoundationWall4'/>
+            <AttachedToFloor idref='Floor1'/>
+            <AttachedToSlab idref='Slab1'/>
+          </Foundation>
+        </Foundations>
         <Roofs>
           <Roof>
             <SystemIdentifier id='Roof1'/>

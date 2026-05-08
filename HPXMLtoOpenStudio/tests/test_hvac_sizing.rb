@@ -1023,6 +1023,34 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
     assert_operator(hpxml_bldg1.heat_pumps[0].heating_capacity, :>, hpxml_bldg2.heat_pumps[0].heating_capacity)
   end
 
+  def test_heat_pump_dual_fuel_switchover_temperature
+    # Test that dual-fuel HP capacity is not changed when the compressor lockout
+    # exceeds 25F; see https://github.com/NatLabRockies/OpenStudio-HPXML/pull/2161
+    args_hash = {}
+    args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
+
+    hpxml, hpxml_bldg = _create_hpxml('base-hvac-dual-fuel-mini-split-heat-pump-ducted.xml')
+    _remove_hardsized_capacities(hpxml_bldg)
+
+    # Switchover temp = 0F
+    hpxml_bldg.heat_pumps[0].backup_heating_switchover_temp = 0
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model, _hpxml, hpxml_bldg1 = _test_measure(args_hash)
+
+    # Switchover temp = 25F
+    hpxml_bldg.heat_pumps[0].backup_heating_switchover_temp = 25
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model, _hpxml, hpxml_bldg2 = _test_measure(args_hash)
+
+    # Switchover temp = 40F
+    hpxml_bldg.heat_pumps[0].backup_heating_switchover_temp = 40
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model, _hpxml, hpxml_bldg3 = _test_measure(args_hash)
+
+    assert_operator(hpxml_bldg1.heat_pumps[0].heating_capacity, :>, hpxml_bldg2.heat_pumps[0].heating_capacity)
+    assert_equal(hpxml_bldg2.heat_pumps[0].heating_capacity, hpxml_bldg3.heat_pumps[0].heating_capacity)
+  end
+
   def test_allow_increased_fixed_capacities
     for allow_increased_fixed_capacities in [true, false]
       # Test hard-sized capacities are increased (or not) for various equipment types
@@ -1749,6 +1777,52 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
     assert_in_epsilon(2.1, rvalue, tol)
   end
 
+  def test_vented_attic_roof_types
+    args_hash = {}
+    args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
+    hpxml, hpxml_bldg = _create_hpxml('base-atticroof-vented.xml')
+    hpxml_bldg.heating_systems[0].heating_capacity = nil
+    hpxml_bldg.cooling_systems[0].cooling_capacity = nil
+
+    # ClayTile, Concrete, Cool
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypeClayTile
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_1 = _test_measure(args_hash)
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypeCool
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_2 = _test_measure(args_hash)
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypeConcrete
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_3 = _test_measure(args_hash)
+    # Added roof type in the same category is sized the same as existing roof type in the same category
+    assert_equal(test_hpxml_bldg_1.cooling_systems[0].cooling_capacity, test_hpxml_bldg_2.cooling_systems[0].cooling_capacity)
+    assert_equal(test_hpxml_bldg_1.cooling_systems[0].cooling_capacity, test_hpxml_bldg_3.cooling_systems[0].cooling_capacity)
+
+    # Metal, PlasticRubber, EPS
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypeMetal
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_1 = _test_measure(args_hash)
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypePlasticRubber
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_2 = _test_measure(args_hash)
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypeEPS
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_3 = _test_measure(args_hash)
+    # Added roof type in the same category is sized the same as existing roof type in the same category
+    assert_equal(test_hpxml_bldg_1.cooling_systems[0].cooling_capacity, test_hpxml_bldg_2.cooling_systems[0].cooling_capacity)
+    assert_equal(test_hpxml_bldg_1.cooling_systems[0].cooling_capacity, test_hpxml_bldg_3.cooling_systems[0].cooling_capacity)
+
+    # AsphaltShingles, Shingles
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypeAsphaltShingles
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_1 = _test_measure(args_hash)
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypeShingles
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_2 = _test_measure(args_hash)
+    # Added roof type in the same category is sized the same as existing roof type in the same category
+    assert_equal(test_hpxml_bldg_1.cooling_systems[0].cooling_capacity, test_hpxml_bldg_2.cooling_systems[0].cooling_capacity)
+  end
+
   def test_multiple_zones
     # Run base-zones-spaces-multiple.xml
     args_hash = {}
@@ -1928,7 +2002,7 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
 
   def _test_measure(args_hash, expect_num_warnings: nil, skip_in_xml_validation: false)
     # create an instance of the measure
-    measure = HPXMLtoOpenStudio.new
+    measure = HPXMLToOpenStudio.new
 
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     model = OpenStudio::Model::Model.new

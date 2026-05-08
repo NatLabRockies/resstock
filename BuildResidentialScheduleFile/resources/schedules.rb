@@ -738,37 +738,37 @@ class ScheduleGenerator
     monthly_kwh_per_day = []
     days_m = Calendar.num_days_in_months(1999) # Intentionally excluding leap year designation
     wtd_avg_monthly_kwh_per_day = 0
-    for monthNum in 1..12
-      month = monthNum - 1
+    for month_num in 1..12
+      month = month_num - 1
       monthHalfHourKWHs = [0]
-      for hourNum in 0..9
-        monthHalfHourKWHs[hourNum] = june_kws[hourNum]
+      for hour_num in 0..9
+        monthHalfHourKWHs[hour_num] = june_kws[hour_num]
       end
-      for hourNum in 9..17
-        hour = (hourNum + 1.0) * 0.5
-        monthHalfHourKWHs[hourNum] = (monthHalfHourKWHs[8] - (0.15 / (2 * Math::PI)) * Math.sin((2 * Math::PI) * (hour - 4.5) / 3.5) + (0.15 / 3.5) * (hour - 4.5)) * lighting_seasonal_multiplier[month]
+      for hour_num in 9..17
+        hour = (hour_num + 1.0) * 0.5
+        monthHalfHourKWHs[hour_num] = (monthHalfHourKWHs[8] - (0.15 / (2 * Math::PI)) * Math.sin((2 * Math::PI) * (hour - 4.5) / 3.5) + (0.15 / 3.5) * (hour - 4.5)) * lighting_seasonal_multiplier[month]
       end
-      for hourNum in 17..29
-        hour = (hourNum + 1.0) * 0.5
-        monthHalfHourKWHs[hourNum] = (monthHalfHourKWHs[16] - (-0.02 / (2 * Math::PI)) * Math.sin((2 * Math::PI) * (hour - 8.5) / 5.5) + (-0.02 / 5.5) * (hour - 8.5)) * lighting_seasonal_multiplier[month]
+      for hour_num in 17..29
+        hour = (hour_num + 1.0) * 0.5
+        monthHalfHourKWHs[hour_num] = (monthHalfHourKWHs[16] - (-0.02 / (2 * Math::PI)) * Math.sin((2 * Math::PI) * (hour - 8.5) / 5.5) + (-0.02 / 5.5) * (hour - 8.5)) * lighting_seasonal_multiplier[month]
       end
-      for hourNum in 29..45
-        hour = (hourNum + 1.0) * 0.5
-        monthHalfHourKWHs[hourNum] = (monthHalfHourKWHs[28] + amplConst1 * Math.exp((-1.0 * (hour - (sunset_hour[month] + sunsetLag1))**2) / (2.0 * ((25.5 / ((6.5 - monthNum).abs + 20.0)) * stdDevCons1)**2)) / ((25.5 / ((6.5 - monthNum).abs + 20.0)) * stdDevCons1 * (2.0 * Math::PI)**0.5))
+      for hour_num in 29..45
+        hour = (hour_num + 1.0) * 0.5
+        monthHalfHourKWHs[hour_num] = (monthHalfHourKWHs[28] + amplConst1 * Math.exp((-1.0 * (hour - (sunset_hour[month] + sunsetLag1))**2) / (2.0 * ((25.5 / ((6.5 - month_num).abs + 20.0)) * stdDevCons1)**2)) / ((25.5 / ((6.5 - month_num).abs + 20.0)) * stdDevCons1 * (2.0 * Math::PI)**0.5))
       end
-      for hourNum in 45..46
-        hour = (hourNum + 1.0) * 0.5
-        temp1 = (monthHalfHourKWHs[44] + amplConst1 * Math.exp((-1.0 * (hour - (sunset_hour[month] + sunsetLag1))**2) / (2.0 * ((25.5 / ((6.5 - monthNum).abs + 20.0)) * stdDevCons1)**2)) / ((25.5 / ((6.5 - monthNum).abs + 20.0)) * stdDevCons1 * (2.0 * Math::PI)**0.5))
+      for hour_num in 45..46
+        hour = (hour_num + 1.0) * 0.5
+        temp1 = (monthHalfHourKWHs[44] + amplConst1 * Math.exp((-1.0 * (hour - (sunset_hour[month] + sunsetLag1))**2) / (2.0 * ((25.5 / ((6.5 - month_num).abs + 20.0)) * stdDevCons1)**2)) / ((25.5 / ((6.5 - month_num).abs + 20.0)) * stdDevCons1 * (2.0 * Math::PI)**0.5))
         temp2 = (0.04 + amplConst2 * Math.exp((-1.0 * (hour - sunsetLag2)**2) / (2.0 * stdDevCons2**2)) / (stdDevCons2 * (2.0 * Math::PI)**0.5))
         if sunsetLag2 < sunset_hour[month] + sunsetLag1
-          monthHalfHourKWHs[hourNum] = [temp1, temp2].min
+          monthHalfHourKWHs[hour_num] = [temp1, temp2].min
         else
-          monthHalfHourKWHs[hourNum] = [temp1, temp2].max
+          monthHalfHourKWHs[hour_num] = [temp1, temp2].max
         end
       end
-      for hourNum in 46..47
-        hour = (hourNum + 1) * 0.5
-        monthHalfHourKWHs[hourNum] = (0.04 + amplConst2 * Math.exp((-1.0 * (hour - sunsetLag2)**2) / (2.0 * stdDevCons2**2)) / (stdDevCons2 * (2.0 * Math::PI)**0.5))
+      for hour_num in 46..47
+        hour = (hour_num + 1) * 0.5
+        monthHalfHourKWHs[hour_num] = (0.04 + amplConst2 * Math.exp((-1.0 * (hour - sunsetLag2)**2) / (2.0 * stdDevCons2**2)) / (stdDevCons2 * (2.0 * Math::PI)**0.5))
       end
 
       sum_kWh = 0.0

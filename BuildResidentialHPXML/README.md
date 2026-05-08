@@ -23,7 +23,6 @@ Absolute/relative path of the HPXML file.
 
 - **Default:** `hpxml.xml`
 
-<br/>
 
 **Simulation Control: Timestep**
 
@@ -39,7 +38,6 @@ The timestep for the simulation; defaults to hourly calculations for fastest run
 
 - **Default:** `60`
 
-<br/>
 
 **Simulation Control: Run Period**
 
@@ -53,7 +51,6 @@ Enter a date range like 'Mar 1 - May 31'. Defaults to the entire year.
 
 - **Default:** `Jan 1 - Dec 31`
 
-<br/>
 
 **Location: Zip Code**
 
@@ -65,7 +62,6 @@ Zip code of the home address. Either this or the EnergyPlus Weather (EPW) File P
 - **Required:** ``false``
 
 
-<br/>
 
 **Location: EnergyPlus Weather (EPW) File Path**
 
@@ -77,7 +73,6 @@ Path to the EPW file. Either this or the Zip Code input above must be provided.
 - **Required:** ``false``
 
 
-<br/>
 
 **Location: Site Type**
 
@@ -93,7 +88,6 @@ The terrain/shielding of the home, for the infiltration model. Defaults to 'Subu
 
 - **Default:** `Default`
 
-<br/>
 
 **Location: Soil Type**
 
@@ -104,12 +98,11 @@ The soil and moisture type.
 
 - **Required:** ``false``
 
-- **Choices:** <br/>  - `Unknown`<br/>  - `Clay, Dry`<br/>  - `Clay, Mixed`<br/>  - `Clay, Wet`<br/>  - `Gravel, Dry`<br/>  - `Gravel, Mixed`<br/>  - `Gravel, Wet`<br/>  - `Loam, Dry`<br/>  - `Loam, Mixed`<br/>  - `Loam, Wet`<br/>  - `Sand, Dry`<br/>  - `Sand, Mixed`<br/>  - `Sand, Wet`<br/>  - `Silt, Dry`<br/>  - `Silt, Mixed`<br/>  - `Silt, Wet`<br/>  - `0.5 Btu/hr-ft-F`<br/>  - `0.8 Btu/hr-ft-F`<br/>  - `1.1 Btu/hr-ft-F`<br/>  - `1.4 Btu/hr-ft-F`<br/>  - `1.7 Btu/hr-ft-F`<br/>  - `2.0 Btu/hr-ft-F`<br/>  - `2.3 Btu/hr-ft-F`<br/>  - `2.6 Btu/hr-ft-F`<br/>  - `Detailed Example: Sand, Dry, 0.03 Diffusivity`
+- **Choices:** <br/>  - `Unknown`<br/>  - `Unknown, Dry`<br/>  - `Unknown, Mixed`<br/>  - `Unknown, Wet`<br/>  - `Clay, Dry`<br/>  - `Clay, Mixed`<br/>  - `Clay, Wet`<br/>  - `Gravel, Dry`<br/>  - `Gravel, Mixed`<br/>  - `Gravel, Wet`<br/>  - `Loam, Dry`<br/>  - `Loam, Mixed`<br/>  - `Loam, Wet`<br/>  - `Sand, Dry`<br/>  - `Sand, Mixed`<br/>  - `Sand, Wet`<br/>  - `Silt, Dry`<br/>  - `Silt, Mixed`<br/>  - `Silt, Wet`<br/>  - `Other, Dry`<br/>  - `Other, Mixed`<br/>  - `Other, Wet`<br/>  - `0.5 Btu/hr-ft-F`<br/>  - `0.8 Btu/hr-ft-F`<br/>  - `1.1 Btu/hr-ft-F`<br/>  - `1.4 Btu/hr-ft-F`<br/>  - `1.7 Btu/hr-ft-F`<br/>  - `2.0 Btu/hr-ft-F`<br/>  - `2.3 Btu/hr-ft-F`<br/>  - `2.6 Btu/hr-ft-F`<br/>  - `Detailed Example: Sand, Dry, 0.03 Diffusivity`
 
 
 - **Default:** `Unknown`
 
-<br/>
 
 **Building Construction: Year Built**
 
@@ -123,7 +116,6 @@ The year the building was built.
 
 - **Default:** `2026`
 
-<br/>
 
 **Geometry: Unit Type**
 
@@ -139,7 +131,6 @@ The type of dwelling unit and number of stories. Includes conditioned attics and
 
 - **Default:** `Single-Family Detached, 2 Stories`
 
-<br/>
 
 **Geometry: Unit Attached Walls**
 
@@ -155,7 +146,6 @@ For single-family attached and apartment units, the location(s) of the attached 
 
 - **Default:** `None`
 
-<br/>
 
 **Geometry: Unit Conditioned Floor Area**
 
@@ -171,7 +161,6 @@ The total floor area of the unit's conditioned space (including any conditioned 
 
 - **Default:** `2000.0`
 
-<br/>
 
 **Geometry: Unit Aspect Ratio**
 
@@ -187,7 +176,6 @@ The ratio of front/back wall length to left/right wall length for the unit, excl
 
 - **Default:** `2.0`
 
-<br/>
 
 **Geometry: Unit Direction**
 
@@ -203,7 +191,6 @@ Direction of the front of the unit.
 
 - **Default:** `South`
 
-<br/>
 
 **Geometry: Unit Number of Bedrooms**
 
@@ -219,7 +206,6 @@ The number of bedrooms in the unit.
 
 - **Default:** `3`
 
-<br/>
 
 **Geometry: Unit Number of Bathrooms**
 
@@ -235,7 +221,6 @@ The number of bathrooms in the unit. Defaults to NumberofBedrooms/2 + 0.5.
 
 - **Default:** `Default`
 
-<br/>
 
 **Geometry: Unit Number of Occupants**
 
@@ -251,7 +236,6 @@ The number of occupants in the unit. Defaults to an *asset* calculation assuming
 
 - **Default:** `Default`
 
-<br/>
 
 **Geometry: Ceiling Height**
 
@@ -267,7 +251,6 @@ Average distance from the floor to the ceiling.
 
 - **Default:** `8.0 ft`
 
-<br/>
 
 **Geometry: Attached Garage**
 
@@ -283,7 +266,6 @@ The type of attached garage. Only applies to single-family detached units.
 
 - **Default:** `None`
 
-<br/>
 
 **Geometry: Foundation Type**
 
@@ -299,7 +281,6 @@ The foundation type of the building. Garages are assumed to be over slab-on-grad
 
 - **Default:** `Crawlspace, Vented`
 
-<br/>
 
 **Geometry: Attic Type**
 
@@ -315,7 +296,6 @@ The attic/roof type of the building.
 
 - **Default:** `Attic, Vented, Gable`
 
-<br/>
 
 **Geometry: Roof Pitch**
 
@@ -331,7 +311,6 @@ The roof pitch of the attic. Ignored if the building has a flat roof.
 
 - **Default:** `6:12`
 
-<br/>
 
 **Geometry: Eaves**
 
@@ -347,7 +326,6 @@ The type of eaves extending from the roof.
 
 - **Default:** `2 ft`
 
-<br/>
 
 **Geometry: Neighbor Buildings**
 
@@ -363,7 +341,6 @@ The presence and geometry of neighboring buildings, for shading purposes.
 
 - **Default:** `None`
 
-<br/>
 
 **Geometry: Window Areas or WWRs**
 
@@ -377,7 +354,6 @@ The amount of window area on the unit's front/back/left/right facades. Use a com
 
 - **Default:** `0.15, 0.15, 0.15, 0.15`
 
-<br/>
 
 **Geometry: Skylight Areas**
 
@@ -391,7 +367,6 @@ The amount of skylight area on the unit's front/back/left/right roofs. Use a com
 
 - **Default:** `0, 0, 0, 0`
 
-<br/>
 
 **Geometry: Doors Area**
 
@@ -407,7 +382,6 @@ The area of the opaque door(s). Any door glazing (e.g., sliding glass doors) sho
 
 - **Default:** `20.0`
 
-<br/>
 
 **Enclosure: Floor Over Foundation**
 
@@ -423,7 +397,6 @@ The type and insulation level of the floor over the foundation (e.g., crawlspace
 
 - **Default:** `Wood Frame, Uninsulated`
 
-<br/>
 
 **Enclosure: Floor Over Garage**
 
@@ -439,7 +412,6 @@ The type and insulation level of the floor over the garage.
 
 - **Default:** `Wood Frame, Uninsulated`
 
-<br/>
 
 **Enclosure: Foundation Wall**
 
@@ -455,7 +427,6 @@ The type and insulation level of the foundation walls.
 
 - **Default:** `Solid Concrete, Uninsulated`
 
-<br/>
 
 **Enclosure: Rim Joists**
 
@@ -471,7 +442,6 @@ The type and insulation level of the rim joists.
 
 - **Default:** `Uninsulated`
 
-<br/>
 
 **Enclosure: Slab**
 
@@ -487,7 +457,6 @@ The type and insulation level of the slab. Applies to slab-on-grade as well as b
 
 - **Default:** `Uninsulated`
 
-<br/>
 
 **Enclosure: Carpet**
 
@@ -503,7 +472,6 @@ The amount of carpet. Applies to floors/slabs adjacent to conditioned space. The
 
 - **Default:** `80% Carpet`
 
-<br/>
 
 **Enclosure: Ceiling**
 
@@ -519,7 +487,6 @@ The type and insulation level of the ceiling (attic floor).
 
 - **Default:** `R-30`
 
-<br/>
 
 **Enclosure: Roof**
 
@@ -535,7 +502,6 @@ The type and insulation level of the roof.
 
 - **Default:** `Uninsulated`
 
-<br/>
 
 **Enclosure: Roof Material**
 
@@ -551,7 +517,6 @@ The material type and color of the roof.
 
 - **Default:** `Asphalt/Fiberglass Shingles, Medium`
 
-<br/>
 
 **Enclosure: Radiant Barrier**
 
@@ -567,7 +532,6 @@ The type of radiant barrier in the attic.
 
 - **Default:** `None`
 
-<br/>
 
 **Enclosure: Walls**
 
@@ -583,7 +547,6 @@ The type and insulation level of the walls.
 
 - **Default:** `Wood Stud, R-13`
 
-<br/>
 
 **Enclosure: Wall Continuous Insulation**
 
@@ -599,7 +562,6 @@ The insulation level of the wall continuous insulation. The R-value of the conti
 
 - **Default:** `Uninsulated`
 
-<br/>
 
 **Enclosure: Wall Siding**
 
@@ -615,7 +577,6 @@ The type, color, and insulation level of the wall siding. The R-value of the sid
 
 - **Default:** `Wood, Medium`
 
-<br/>
 
 **Enclosure: Windows**
 
@@ -631,7 +592,6 @@ The type of windows.
 
 - **Default:** `Double, Clear, Metal, Air`
 
-<br/>
 
 **Enclosure: Window Natural Ventilation**
 
@@ -647,7 +607,6 @@ The amount of natural ventilation from occupants opening operable windows when o
 
 - **Default:** `67% Operable Windows`
 
-<br/>
 
 **Enclosure: Window Interior Shading**
 
@@ -663,7 +622,6 @@ The type of window interior shading. If shading coefficients are selected, note 
 
 - **Default:** `Curtains, Light`
 
-<br/>
 
 **Enclosure: Window Exterior Shading**
 
@@ -679,7 +637,6 @@ The type of window exterior shading. If shading coefficients are selected, note 
 
 - **Default:** `None`
 
-<br/>
 
 **Enclosure: Window Insect Screens**
 
@@ -695,7 +652,6 @@ The type of window insect screens.
 
 - **Default:** `None`
 
-<br/>
 
 **Enclosure: Window Storm**
 
@@ -711,7 +667,6 @@ The type of storm window.
 
 - **Default:** `None`
 
-<br/>
 
 **Enclosure: Window Overhangs**
 
@@ -727,7 +682,6 @@ The type of window overhangs.
 
 - **Default:** `None`
 
-<br/>
 
 **Enclosure: Skylights**
 
@@ -743,7 +697,6 @@ The type of skylights.
 
 - **Default:** `Single, Clear, Metal`
 
-<br/>
 
 **Enclosure: Doors**
 
@@ -759,7 +712,6 @@ The type of doors.
 
 - **Default:** `Solid Wood, R-2`
 
-<br/>
 
 **Enclosure: Air Leakage**
 
@@ -775,7 +727,6 @@ The amount of air leakage coming from outside. If a qualitative leakiness descri
 
 - **Default:** `Average`
 
-<br/>
 
 **HVAC: Heating System**
 
@@ -791,7 +742,6 @@ The type and efficiency of the heating system. Use 'None' if there is no heating
 
 - **Default:** `Central Furnace, 78% AFUE`
 
-<br/>
 
 **HVAC: Heating System Fuel Type**
 
@@ -807,7 +757,6 @@ The fuel type of the heating system. Ignored for ElectricResistance.
 
 - **Default:** `Natural Gas`
 
-<br/>
 
 **HVAC: Heating System Capacity**
 
@@ -823,7 +772,6 @@ The output capacity of the heating system.
 
 - **Default:** `Autosize`
 
-<br/>
 
 **HVAC: Heating System Fraction Heat Load Served**
 
@@ -839,7 +787,6 @@ The fraction of the heating load served by the heating system.
 
 - **Default:** `100%`
 
-<br/>
 
 **HVAC: Cooling System**
 
@@ -855,7 +802,6 @@ The type and efficiency of the cooling system. Use 'None' if there is no cooling
 
 - **Default:** `Central AC, SEER2 13.4`
 
-<br/>
 
 **HVAC: Cooling System Capacity**
 
@@ -871,7 +817,6 @@ The output capacity of the cooling system.
 
 - **Default:** `Autosize`
 
-<br/>
 
 **HVAC: Cooling System Fraction Cool Load Served**
 
@@ -887,7 +832,6 @@ The fraction of the cooling load served by the cooling system.
 
 - **Default:** `100%`
 
-<br/>
 
 **HVAC: Heat Pump**
 
@@ -903,7 +847,6 @@ The type and efficiency of the heat pump.
 
 - **Default:** `None`
 
-<br/>
 
 **HVAC: Heat Pump Capacity**
 
@@ -919,7 +862,6 @@ The output capacity of the heat pump.
 
 - **Default:** `Autosize`
 
-<br/>
 
 **HVAC: Heat Pump Fraction Heat Load Served**
 
@@ -935,7 +877,6 @@ The fraction of the heating load served by the heat pump.
 
 - **Default:** `100%`
 
-<br/>
 
 **HVAC: Heat Pump Fraction Cool Load Served**
 
@@ -951,7 +892,6 @@ The fraction of the cooling load served by the heat pump.
 
 - **Default:** `100%`
 
-<br/>
 
 **HVAC: Heat Pump Temperatures**
 
@@ -967,7 +907,6 @@ Specifies the minimum compressor temperature and/or maximum HP backup temperatur
 
 - **Default:** `Default`
 
-<br/>
 
 **HVAC: Heat Pump Backup Type**
 
@@ -983,7 +922,6 @@ The type and efficiency of the heat pump backup. Use 'None' if there is no backu
 
 - **Default:** `Integrated, Electricity, 100% Efficiency`
 
-<br/>
 
 **HVAC: Heat Pump Backup Capacity**
 
@@ -999,7 +937,6 @@ The output capacity of the heat pump backup if there is integrated backup heatin
 
 - **Default:** `Autosize`
 
-<br/>
 
 **HVAC: Geothermal Loop**
 
@@ -1015,7 +952,6 @@ The geothermal loop configuration if there's a ground-to-air heat pump.
 
 - **Default:** `Default`
 
-<br/>
 
 **HVAC: Heating System 2**
 
@@ -1031,7 +967,6 @@ The type and efficiency of the second heating system. If a heat pump is specifie
 
 - **Default:** `None`
 
-<br/>
 
 **HVAC: Heating System 2 Fuel Type**
 
@@ -1047,7 +982,6 @@ The fuel type of the second heating system. Ignored for ElectricResistance.
 
 - **Default:** `Electricity`
 
-<br/>
 
 **HVAC: Heating System 2 Capacity**
 
@@ -1063,7 +997,6 @@ The output capacity of the second heating system.
 
 - **Default:** `Autosize`
 
-<br/>
 
 **HVAC: Heating System 2 Fraction Heat Load Served**
 
@@ -1079,7 +1012,6 @@ The fraction of the heating load served by the second heating system.
 
 - **Default:** `25%`
 
-<br/>
 
 **HVAC Control: Heating Weekday Setpoint Schedule**
 
@@ -1093,7 +1025,6 @@ Specify the constant or 24-hour comma-separated weekday heating setpoint schedul
 
 - **Default:** `68`
 
-<br/>
 
 **HVAC Control: Heating Weekend Setpoint Schedule**
 
@@ -1107,7 +1038,6 @@ Specify the constant or 24-hour comma-separated weekend heating setpoint schedul
 
 - **Default:** `68`
 
-<br/>
 
 **HVAC Control: Cooling Weekday Setpoint Schedule**
 
@@ -1121,7 +1051,6 @@ Specify the constant or 24-hour comma-separated weekday cooling setpoint schedul
 
 - **Default:** `78`
 
-<br/>
 
 **HVAC Control: Cooling Weekend Setpoint Schedule**
 
@@ -1135,7 +1064,6 @@ Specify the constant or 24-hour comma-separated weekend cooling setpoint schedul
 
 - **Default:** `78`
 
-<br/>
 
 **HVAC Control: Heating Season Period**
 
@@ -1149,7 +1077,6 @@ Enter a date range like 'Nov 1 - Jun 30'. Defaults to year-round heating availab
 
 - **Default:** `Jan 1 - Dec 31`
 
-<br/>
 
 **HVAC Control: Cooling Season Period**
 
@@ -1163,7 +1090,6 @@ Enter a date range like 'Jun 1 - Oct 31'. Defaults to year-round cooling availab
 
 - **Default:** `Jan 1 - Dec 31`
 
-<br/>
 
 **HVAC Ducts**
 
@@ -1179,7 +1105,6 @@ The leakage to outside and insulation level of the ducts.
 
 - **Default:** `15% Leakage, Uninsulated`
 
-<br/>
 
 **HVAC Ducts: Supply Location**
 
@@ -1195,7 +1120,6 @@ The primary location of the supply ducts. The remainder of the supply ducts are 
 
 - **Default:** `Default`
 
-<br/>
 
 **HVAC Ducts: Return Location**
 
@@ -1211,7 +1135,6 @@ The primary location of the return ducts. The remainder of the return ducts are 
 
 - **Default:** `Default`
 
-<br/>
 
 **Ventilation Fans: Mechanical Ventilation**
 
@@ -1227,7 +1150,6 @@ The type of mechanical ventilation system used for whole building ventilation.
 
 - **Default:** `None`
 
-<br/>
 
 **Ventilation Fans: Kitchen Exhaust Fan**
 
@@ -1243,7 +1165,6 @@ The type of kitchen exhaust fan used for local ventilation.
 
 - **Default:** `None`
 
-<br/>
 
 **Ventilation Fans: Bathroom Exhaust Fans**
 
@@ -1259,7 +1180,6 @@ The type of bathroom exhaust fans used for local ventilation.
 
 - **Default:** `None`
 
-<br/>
 
 **Ventilation Fans: Whole House Fan**
 
@@ -1275,7 +1195,6 @@ The type of whole house fans used for seasonal cooling load reduction.
 
 - **Default:** `None`
 
-<br/>
 
 **DHW: Water Heater**
 
@@ -1291,7 +1210,6 @@ The type and efficiency of the water heater.
 
 - **Default:** `Electricity, Tank, UEF 0.92`
 
-<br/>
 
 **DHW: Water Heater Location**
 
@@ -1302,12 +1220,11 @@ The location of the water heater. Defaults based on the foundation/garage type.
 
 - **Required:** ``false``
 
-- **Choices:** <br/>  - `Default`<br/>  - `Conditioned Space`<br/>  - `Basement`<br/>  - `Garage`<br/>  - `Crawlspace`<br/>  - `Attic`<br/>  - `Other Heated Space`<br/>  - `Outside`
+- **Choices:** <br/>  - `Default`<br/>  - `Conditioned Space`<br/>  - `Basement`<br/>  - `Garage`<br/>  - `Crawlspace`<br/>  - `Attic`<br/>  - `SFA/MF Other Heated Space`<br/>  - `Outside`
 
 
 - **Default:** `Default`
 
-<br/>
 
 **DHW: Hot Water Distribution**
 
@@ -1323,7 +1240,6 @@ The type of domestic hot water distrubtion.
 
 - **Default:** `Uninsulated, Standard`
 
-<br/>
 
 **DHW: Hot Water Fixtures**
 
@@ -1339,7 +1255,6 @@ The type and usage of domestic hot water fixtures.
 
 - **Default:** `Standard, 100% Usage`
 
-<br/>
 
 **DHW: Drain Water Heat Reovery**
 
@@ -1355,7 +1270,6 @@ The type of drain water heater recovery.
 
 - **Default:** `None`
 
-<br/>
 
 **DHW: Solar Thermal**
 
@@ -1371,7 +1285,6 @@ The size and type of the solar thermal system for domestic hot water.
 
 - **Default:** `None`
 
-<br/>
 
 **DHW: Solar Thermal Direction**
 
@@ -1387,7 +1300,6 @@ The azimuth and tilt of the solar thermal system collectors.
 
 - **Default:** `Roof Pitch, South`
 
-<br/>
 
 **PV: System**
 
@@ -1403,7 +1315,6 @@ The size and type of the PV system.
 
 - **Default:** `None`
 
-<br/>
 
 **PV: System Direction**
 
@@ -1419,7 +1330,6 @@ The azimuth and tilt of the PV system array.
 
 - **Default:** `Roof Pitch, South`
 
-<br/>
 
 **PV: System 2**
 
@@ -1435,7 +1345,6 @@ The size and type of the second PV system.
 
 - **Default:** `None`
 
-<br/>
 
 **PV: System 2 Direction**
 
@@ -1451,7 +1360,6 @@ The azimuth and tilt of the second PV system array.
 
 - **Default:** `Roof Pitch, South`
 
-<br/>
 
 **Battery**
 
@@ -1467,7 +1375,6 @@ The size and type of battery storage.
 
 - **Default:** `None`
 
-<br/>
 
 **Electric Vehicle**
 
@@ -1483,7 +1390,6 @@ The type of battery electric vehicle.
 
 - **Default:** `None`
 
-<br/>
 
 **Electric Vehicle: Charger**
 
@@ -1499,7 +1405,6 @@ The type and usage of electric vehicle charger.
 
 - **Default:** `None`
 
-<br/>
 
 **Appliances: Clothes Washer**
 
@@ -1515,7 +1420,6 @@ The type and usage of clothes washer.
 
 - **Default:** `Standard, 2008-2017, 100% Usage`
 
-<br/>
 
 **Appliances: Clothes Dryer**
 
@@ -1531,7 +1435,6 @@ The type and usage of clothes dryer.
 
 - **Default:** `Electricity, Standard, 100% Usage`
 
-<br/>
 
 **Appliances: Dishwasher**
 
@@ -1547,7 +1450,6 @@ The type and usage of dishwasher.
 
 - **Default:** `Federal Minimum, Standard, 100% Usage`
 
-<br/>
 
 **Appliances: Refrigerator**
 
@@ -1563,7 +1465,6 @@ The type and usage of refrigerator.
 
 - **Default:** `434 kWh/yr, 100% Usage`
 
-<br/>
 
 **Appliances: Extra Refrigerator**
 
@@ -1579,7 +1480,6 @@ The type and usage of extra refrigerator.
 
 - **Default:** `None`
 
-<br/>
 
 **Appliances: Freezer**
 
@@ -1595,7 +1495,6 @@ The type and usage of freezer.
 
 - **Default:** `None`
 
-<br/>
 
 **Appliances: Cooking Range/Oven**
 
@@ -1611,7 +1510,6 @@ The type and usage of cooking range/oven.
 
 - **Default:** `Electricity, Standard, Non-Convection, 100% Usage`
 
-<br/>
 
 **Appliances: Dehumidifier**
 
@@ -1627,7 +1525,6 @@ The type of dehumidifier.
 
 - **Default:** `None`
 
-<br/>
 
 **Appliances: Dehumidifier Setpoint**
 
@@ -1643,7 +1540,6 @@ The dehumidifier's relative humidity (RH) setpoint.
 
 - **Default:** `50% RH`
 
-<br/>
 
 **Lighting**
 
@@ -1659,7 +1555,6 @@ The type and usage of interior, exterior, and garage lighting.
 
 - **Default:** `50% LED, 100% Usage`
 
-<br/>
 
 **Ceiling Fans**
 
@@ -1675,7 +1570,6 @@ The type of ceiling fans.
 
 - **Default:** `None`
 
-<br/>
 
 **Misc: Television**
 
@@ -1691,7 +1585,6 @@ The amount of television usage, relative to the national average.
 
 - **Default:** `100% Usage`
 
-<br/>
 
 **Misc: Plug Loads**
 
@@ -1707,7 +1600,6 @@ The amount of additional plug load usage, relative to the national average.
 
 - **Default:** `100% Usage`
 
-<br/>
 
 **Misc: Well Pump**
 
@@ -1723,7 +1615,6 @@ The amount of well pump usage, relative to the national average.
 
 - **Default:** `None`
 
-<br/>
 
 **Misc: Electric Vehicle Charging**
 
@@ -1739,7 +1630,6 @@ The amount of EV charging usage, relative to the national average. Only use this
 
 - **Default:** `None`
 
-<br/>
 
 **Misc: Gas Grill**
 
@@ -1755,7 +1645,6 @@ The amount of outdoor gas grill usage, relative to the national average.
 
 - **Default:** `None`
 
-<br/>
 
 **Misc: Gas Lighting**
 
@@ -1771,7 +1660,6 @@ The amount of gas lighting usage, relative to the national average.
 
 - **Default:** `None`
 
-<br/>
 
 **Misc: Fireplace**
 
@@ -1787,7 +1675,6 @@ The amount of fireplace usage, relative to the national average. Fireplaces can 
 
 - **Default:** `None`
 
-<br/>
 
 **Misc: Pool**
 
@@ -1803,7 +1690,6 @@ The type of pool (pump & heater).
 
 - **Default:** `None`
 
-<br/>
 
 **Misc: Permanent Spa**
 
@@ -1819,7 +1705,6 @@ The type of permanent spa (pump & heater).
 
 - **Default:** `None`
 
-<br/>
 
 **Schedules: CSV File Paths**
 
@@ -1831,7 +1716,6 @@ Absolute/relative paths of csv files containing user-specified detailed schedule
 - **Required:** ``false``
 
 
-<br/>
 
 **Advanced Feature**
 
@@ -1842,12 +1726,11 @@ Select an advanced research feature to use in the model, if desired.
 
 - **Required:** ``false``
 
-- **Choices:** <br/>  - `None`<br/>  - `Temperature Capacitance Multiplier, 1`<br/>  - `Temperature Capacitance Multiplier, 4`<br/>  - `Temperature Capacitance Multiplier, 10`<br/>  - `Temperature Capacitance Multiplier, 15`<br/>  - `On/Off Thermostat Deadband, 1F`<br/>  - `On/Off Thermostat Deadband, 2F`<br/>  - `On/Off Thermostat Deadband, 3F`<br/>  - `Heat Pump Backup Staging, 5 kW`<br/>  - `Heat Pump Backup Staging, 10 kW`<br/>  - `Experimental Ground-to-Air Heat Pump Model`<br/>  - `HVAC Allow Increased Fixed Capacities`
+- **Choices:** <br/>  - `None`<br/>  - `Temperature Capacitance Multiplier, 1`<br/>  - `Temperature Capacitance Multiplier, 4`<br/>  - `Temperature Capacitance Multiplier, 10`<br/>  - `Temperature Capacitance Multiplier, 15`<br/>  - `On/Off Thermostat Deadband, 1F`<br/>  - `On/Off Thermostat Deadband, 2F`<br/>  - `On/Off Thermostat Deadband, 3F`<br/>  - `Latent Degradation Model w/ Blower-Off Delay, 0 sec`<br/>  - `Latent Degradation Model w/ Blower-Off Delay, 45 sec`<br/>  - `Latent Degradation Model w/ Blower-Off Delay, 90 sec`<br/>  - `Heat Pump Backup Staging, 5 kW`<br/>  - `Heat Pump Backup Staging, 10 kW`<br/>  - `Experimental Ground-to-Air Heat Pump Model`<br/>  - `HVAC Allow Increased Fixed Capacities`
 
 
 - **Default:** `None`
 
-<br/>
 
 **Advanced Feature 2**
 
@@ -1858,12 +1741,11 @@ Select a second advanced research feature to use in the model, if desired.
 
 - **Required:** ``false``
 
-- **Choices:** <br/>  - `None`<br/>  - `Temperature Capacitance Multiplier, 1`<br/>  - `Temperature Capacitance Multiplier, 4`<br/>  - `Temperature Capacitance Multiplier, 10`<br/>  - `Temperature Capacitance Multiplier, 15`<br/>  - `On/Off Thermostat Deadband, 1F`<br/>  - `On/Off Thermostat Deadband, 2F`<br/>  - `On/Off Thermostat Deadband, 3F`<br/>  - `Heat Pump Backup Staging, 5 kW`<br/>  - `Heat Pump Backup Staging, 10 kW`<br/>  - `Experimental Ground-to-Air Heat Pump Model`<br/>  - `HVAC Allow Increased Fixed Capacities`
+- **Choices:** <br/>  - `None`<br/>  - `Temperature Capacitance Multiplier, 1`<br/>  - `Temperature Capacitance Multiplier, 4`<br/>  - `Temperature Capacitance Multiplier, 10`<br/>  - `Temperature Capacitance Multiplier, 15`<br/>  - `On/Off Thermostat Deadband, 1F`<br/>  - `On/Off Thermostat Deadband, 2F`<br/>  - `On/Off Thermostat Deadband, 3F`<br/>  - `Latent Degradation Model w/ Blower-Off Delay, 0 sec`<br/>  - `Latent Degradation Model w/ Blower-Off Delay, 45 sec`<br/>  - `Latent Degradation Model w/ Blower-Off Delay, 90 sec`<br/>  - `Heat Pump Backup Staging, 5 kW`<br/>  - `Heat Pump Backup Staging, 10 kW`<br/>  - `Experimental Ground-to-Air Heat Pump Model`<br/>  - `HVAC Allow Increased Fixed Capacities`
 
 
 - **Default:** `None`
 
-<br/>
 
 **Utility Bill Scenario**
 
@@ -1879,7 +1761,6 @@ The type of utility bill calculations to perform.
 
 - **Default:** `Default (EIA Average Rates)`
 
-<br/>
 
 **Utility Bill Scenario 2**
 
@@ -1895,7 +1776,6 @@ The second type of utility bill calculations to perform, if desired.
 
 - **Default:** `None`
 
-<br/>
 
 **Utility Bill Scenario 3**
 
@@ -1911,7 +1791,6 @@ The third type of utility bill calculations to perform, if desired.
 
 - **Default:** `None`
 
-<br/>
 
 **Additional Properties**
 
@@ -1923,7 +1802,6 @@ Additional properties specified as key-value pairs (i.e., key=value). If multipl
 - **Required:** ``false``
 
 
-<br/>
 
 **Whole SFA/MF Building Simulation?**
 
@@ -1935,7 +1813,8 @@ Set true if creating an HPXML file to simulate a whole single-family attached or
 - **Required:** ``false``
 
 
-<br/>
+- **Default:** `false`
+
 
 **Combine like surfaces?**
 
@@ -1947,7 +1826,8 @@ If true, combines like surfaces to simplify the HPXML file generated.
 - **Required:** ``false``
 
 
-<br/>
+- **Default:** `false`
+
 
 **Apply Default Values?**
 
@@ -1959,7 +1839,8 @@ If true, applies OS-HPXML default values to the HPXML output file. Setting to tr
 - **Required:** ``false``
 
 
-<br/>
+- **Default:** `false`
+
 
 **Apply Validation?**
 
@@ -1971,7 +1852,8 @@ If true, validates the HPXML output file. Set to false for faster performance. N
 - **Required:** ``false``
 
 
-<br/>
+- **Default:** `false`
+
 
 
 

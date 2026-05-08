@@ -156,8 +156,8 @@ class ReportSimulationOutputTest < Minitest::Test
     "Peak Electricity: #{PFT::Winter} #{TE::Net} (W)",
     "Peak Electricity: #{PFT::Summer} #{TE::Net} (W)",
     "Peak Electricity: #{PFT::Annual} #{TE::Net} (W)",
-    "Peak Load: #{PLT::Heating} (kBtu/hr)",
-    "Peak Load: #{PLT::Cooling} (kBtu/hr)",
+    "Peak Load: #{PLT::Heating} (Btu/hr)",
+    "Peak Load: #{PLT::Cooling} (Btu/hr)",
     "Component Load: Heating: #{CLT::Roofs} (MBtu)",
     "Component Load: Heating: #{CLT::Ceilings} (MBtu)",
     "Component Load: Heating: #{CLT::Walls} (MBtu)",
@@ -601,7 +601,33 @@ class ReportSimulationOutputTest < Minitest::Test
     return cols
   end
 
-  def pv_battery_timeseries_cols
+  def whole_building_unit_ids
+    return ['MyBuilding',
+            'MyBuilding_2',
+            'MyBuilding_3',
+            'MyBuilding_4',
+            'MyBuilding_5',
+            'MyBuilding_6']
+  end
+
+  def dwelling_unit_annual_cols
+    cols = []
+    whole_building_unit_ids.each do |unit_id|
+      cols.concat(["Dwelling Unit Energy Use: #{unit_id}: #{TE::Total} (MBtu)",
+                   "Dwelling Unit Energy Use: #{unit_id}: #{TE::Net} (MBtu)",
+                   "Dwelling Unit Fuel Use: #{unit_id}: #{FT::Elec}: Total (MBtu)",
+                   "Dwelling Unit Fuel Use: #{unit_id}: #{FT::Elec}: Net (MBtu)",
+                   "Dwelling Unit Fuel Use: #{unit_id}: #{FT::Gas}: Total (MBtu)",
+                   "Dwelling Unit Fuel Use: #{unit_id}: #{FT::Oil}: Total (MBtu)",
+                   "Dwelling Unit Fuel Use: #{unit_id}: #{FT::Propane}: Total (MBtu)",
+                   "Dwelling Unit Fuel Use: #{unit_id}: #{FT::WoodCord}: Total (MBtu)",
+                   "Dwelling Unit Fuel Use: #{unit_id}: #{FT::WoodPellets}: Total (MBtu)",
+                   "Dwelling Unit Fuel Use: #{unit_id}: #{FT::Coal}: Total (MBtu)"])
+    end
+    return cols
+  end
+
+  def pv_battery_vehicle_timeseries_cols
     return ["End Use: #{FT::Elec}: #{EUT::PV}",
             "End Use: #{FT::Elec}: #{EUT::Battery}",
             "End Use: #{FT::Elec}: #{EUT::Vehicle}"]
@@ -627,7 +653,8 @@ class ReportSimulationOutputTest < Minitest::Test
                   'include_timeseries_zone_conditions' => false,
                   'include_timeseries_airflows' => false,
                   'include_timeseries_weather' => false,
-                  'include_timeseries_resilience' => false }
+                  'include_timeseries_resilience' => false,
+                  'include_timeseries_dwelling_unit_outputs' => false }
     annual_csv, timeseries_csv = _test_measure(args_hash)
     assert(File.exist?(annual_csv))
     assert(!File.exist?(timeseries_csv))
@@ -668,11 +695,37 @@ class ReportSimulationOutputTest < Minitest::Test
                   'include_timeseries_zone_conditions' => true,
                   'include_timeseries_airflows' => true,
                   'include_timeseries_weather' => true,
-                  'include_timeseries_resilience' => true }
+                  'include_timeseries_resilience' => true,
+                  'include_timeseries_dwelling_unit_outputs' => true }
     annual_csv, timeseries_csv = _test_measure(args_hash)
     assert(File.exist?(annual_csv))
     assert(!File.exist?(timeseries_csv))
     expected_annual_rows = AnnualRows + emission_annual_cols
+    actual_annual_rows = _get_annual_values(annual_csv)
+    assert_equal(expected_annual_rows.sort, actual_annual_rows.keys.sort)
+    _check_runner_registered_values_and_measure_xml_outputs(actual_annual_rows)
+  end
+
+  def test_annual_whole_mf_building
+    args_hash = { 'hpxml_path' => File.join(File.dirname(__FILE__), '../../workflow/sample_files/base-bldgtype-mf-whole-building-fuels.xml'),
+                  'skip_validation' => true,
+                  'add_component_loads' => true,
+                  'timeseries_frequency' => 'none' }
+    annual_csv, timeseries_csv = _test_measure(args_hash)
+    assert(File.exist?(annual_csv))
+    assert(!File.exist?(timeseries_csv))
+    expected_annual_rows = AnnualRows + dwelling_unit_annual_cols
+    expected_annual_rows << "System Use: WaterHeatingSystem1: #{FT::Propane}: #{EUT::HotWater} (MBtu)"
+    for i in 2..whole_building_unit_ids.size
+      expected_annual_rows << "System Use: HeatingSystem1_#{i}: #{FT::Elec}: #{EUT::HeatingFanPump} (MBtu)"
+      expected_annual_rows << "System Use: HeatingSystem1_#{i}: #{FT::Gas}: #{EUT::Heating} (MBtu)"
+      expected_annual_rows << "System Use: CoolingSystem1_#{i}: #{FT::Elec}: #{EUT::Cooling} (MBtu)"
+      expected_annual_rows << "System Use: CoolingSystem1_#{i}: #{FT::Elec}: #{EUT::CoolingFanPump} (MBtu)"
+      expected_annual_rows << "System Use: WaterHeatingSystem1_#{i}: #{FT::Propane}: #{EUT::HotWater} (MBtu)"
+    end
+    expected_annual_rows.each do |row|
+      expected_annual_rows.delete(row) if row.include?('System Use') && row.include?(FT::Elec) && row.include?(EUT::HotWater)
+    end
     actual_annual_rows = _get_annual_values(annual_csv)
     assert_equal(expected_annual_rows.sort, actual_annual_rows.keys.sort)
     _check_runner_registered_values_and_measure_xml_outputs(actual_annual_rows)
@@ -695,7 +748,8 @@ class ReportSimulationOutputTest < Minitest::Test
                   'include_annual_component_loads' => false,
                   'include_annual_hot_water_uses' => false,
                   'include_annual_hvac_summary' => false,
-                  'include_annual_resilience' => false }
+                  'include_annual_resilience' => false,
+                  'include_annual_dwelling_unit_outputs' => false }
     annual_csv, timeseries_csv = _test_measure(args_hash)
     assert(File.exist?(annual_csv))
     assert(!File.exist?(timeseries_csv))
@@ -989,15 +1043,49 @@ class ReportSimulationOutputTest < Minitest::Test
     assert(File.exist?(timeseries_csv))
     actual_timeseries_cols = File.readlines(timeseries_csv)[0].strip.split(',')
     expected_timeseries_cols = ['Time']
-    for i in 1..6
-      expected_timeseries_cols << "Temperature: Unit#{i} Conditioned Space"
+    for i in 1..whole_building_unit_ids.size
+      i == 1 ? building_id = 'MyBuilding' : building_id = "MyBuilding_#{i}"
+      expected_timeseries_cols << "Temperature: #{building_id} Conditioned Space"
       if i <= 2
-        expected_timeseries_cols << "Temperature: Unit#{i} Basement Unconditioned"
+        expected_timeseries_cols << "Temperature: #{building_id} Basement Unconditioned"
       elsif i >= 5
-        expected_timeseries_cols << "Temperature: Unit#{i} Attic Vented"
+        expected_timeseries_cols << "Temperature: #{building_id} Attic Vented"
       end
-      expected_timeseries_cols << "Temperature: Unit#{i} Heating Setpoint"
-      expected_timeseries_cols << "Temperature: Unit#{i} Cooling Setpoint"
+      expected_timeseries_cols << "Temperature: #{building_id} Heating Setpoint"
+      expected_timeseries_cols << "Temperature: #{building_id} Cooling Setpoint"
+    end
+    assert_equal(expected_timeseries_cols.sort, actual_timeseries_cols.sort)
+    timeseries_rows = CSV.read(timeseries_csv)
+    assert_equal(8760, timeseries_rows.size - 2)
+  end
+
+  def test_timeseries_hourly_dwelling_unit_outputs_whole_mf_building
+    args_hash = { 'hpxml_path' => File.join(File.dirname(__FILE__), '../../workflow/sample_files/base-bldgtype-mf-whole-building-fuels.xml'),
+                  'skip_validation' => true,
+                  'timeseries_frequency' => 'hourly',
+                  'include_timeseries_total_consumptions' => true,
+                  'include_timeseries_fuel_consumptions' => true,
+                  'include_timeseries_dwelling_unit_outputs' => true }
+    annual_csv, timeseries_csv = _test_measure(args_hash)
+    assert(File.exist?(annual_csv))
+    assert(File.exist?(timeseries_csv))
+    actual_timeseries_cols = File.readlines(timeseries_csv)[0].strip.split(',')
+    expected_timeseries_cols = ['Time']
+    expected_timeseries_cols << "Energy Use: #{TE::Total}"
+    expected_timeseries_cols << "Energy Use: #{TE::Net}"
+    expected_timeseries_cols << "Fuel Use: #{FT::Elec}: #{TE::Total}"
+    expected_timeseries_cols << "Fuel Use: #{FT::Elec}: #{TE::Net}"
+    expected_timeseries_cols << "Fuel Use: #{FT::Gas}: #{TE::Total}"
+    expected_timeseries_cols << "Fuel Use: #{FT::Propane}: #{TE::Total}"
+    expected_timeseries_cols << "Fuel Use: #{FT::WoodCord}: #{TE::Total}"
+    whole_building_unit_ids.each do |unit_id|
+      expected_timeseries_cols << "Dwelling Unit Energy Use: #{unit_id}: #{TE::Total}"
+      expected_timeseries_cols << "Dwelling Unit Energy Use: #{unit_id}: #{TE::Net}"
+      expected_timeseries_cols << "Dwelling Unit Fuel Use: #{unit_id}: #{FT::Elec}: #{TE::Total}"
+      expected_timeseries_cols << "Dwelling Unit Fuel Use: #{unit_id}: #{FT::Elec}: #{TE::Net}"
+      expected_timeseries_cols << "Dwelling Unit Fuel Use: #{unit_id}: #{FT::Gas}: #{TE::Total}"
+      expected_timeseries_cols << "Dwelling Unit Fuel Use: #{unit_id}: #{FT::Propane}: #{TE::Total}"
+      expected_timeseries_cols << "Dwelling Unit Fuel Use: #{unit_id}: #{FT::WoodCord}: #{TE::Total}"
     end
     assert_equal(expected_timeseries_cols.sort, actual_timeseries_cols.sort)
     timeseries_rows = CSV.read(timeseries_csv)
@@ -1104,7 +1192,7 @@ class ReportSimulationOutputTest < Minitest::Test
                                emissions_timeseries_cols +
                                emission_fuels_timeseries_cols +
                                emission_end_uses_timeseries_cols +
-                               pv_battery_timeseries_cols +
+                               pv_battery_vehicle_timeseries_cols +
                                BaseHPXMLTimeseriesColsResilience
     actual_timeseries_cols = File.readlines(timeseries_csv)[0].strip.split(',')
     assert_equal(expected_timeseries_cols.sort, actual_timeseries_cols.sort)
@@ -1148,7 +1236,7 @@ class ReportSimulationOutputTest < Minitest::Test
                                emissions_timeseries_cols +
                                emission_fuels_timeseries_cols +
                                emission_end_uses_timeseries_cols +
-                               pv_battery_timeseries_cols +
+                               pv_battery_vehicle_timeseries_cols +
                                BaseHPXMLTimeseriesColsResilience
     actual_timeseries_cols = File.readlines(timeseries_csv)[0].strip.split(',')
     assert_equal(expected_timeseries_cols.sort, actual_timeseries_cols.sort)
@@ -1188,7 +1276,7 @@ class ReportSimulationOutputTest < Minitest::Test
                                emissions_timeseries_cols +
                                emission_fuels_timeseries_cols +
                                emission_end_uses_timeseries_cols +
-                               pv_battery_timeseries_cols +
+                               pv_battery_vehicle_timeseries_cols +
                                BaseHPXMLTimeseriesColsResilience
     actual_timeseries_cols = File.readlines(timeseries_csv)[0].strip.split(',')
     assert_equal(expected_timeseries_cols.sort, actual_timeseries_cols.sort)
