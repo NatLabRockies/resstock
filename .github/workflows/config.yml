@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout feature branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
@@ -41,7 +41,7 @@ jobs:
           mv sorted_options_lookup.tsv resources/options_lookup.tsv # Sort on first two columns
 
       - name: Upload formatted options_lookup
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: options_lookup
           path: resources/options_lookup.tsv
@@ -52,7 +52,7 @@ jobs:
     needs: [format-files]
     steps:
       - name: Checkout feature branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
@@ -69,7 +69,7 @@ jobs:
           pip3 install --progress-bar off pandas pyyaml
 
       - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: resources
           name: options_lookup
@@ -100,14 +100,14 @@ jobs:
           python3 test/update_yml_precomputed_files.py
 
       - name: Upload precomputed buildstocks
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: precomputed_buildstocks
           path: test/tests_yml_files/yml_precomputed*/buildstock*.csv
           if-no-files-found: error
 
       - name: Upload feature samples
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: feature_samples
           path: resources/buildstock.csv
@@ -117,17 +117,17 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout feature branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Setup python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v8.0.0
 
       - name: Install postprocessing dependencies
         working-directory: postprocessing
@@ -145,7 +145,7 @@ jobs:
     needs: [format-files]
     steps:
       - name: Checkout feature branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
@@ -156,7 +156,7 @@ jobs:
           sudo -E apt-get install -y wget python3-sphinx-rtd-theme
 
       - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: resources
           name: options_lookup
@@ -183,7 +183,7 @@ jobs:
           args: -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -output-directory=_build
 
       - name: Save documentation
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: documentation
           path: |
@@ -211,18 +211,18 @@ jobs:
     needs: [unit-tests]
     steps:
       - name: Checkout feature branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: resources
           name: options_lookup
 
       - name: Download precomputed buildstocks
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: test/tests_yml_files
           name: precomputed_buildstocks
@@ -240,7 +240,7 @@ jobs:
           openstudio test/test_run_analysis.rb
 
       - name: Upload run_analysis.rb results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: run_analysis_results_csvs
           path: |
@@ -254,25 +254,25 @@ jobs:
     steps:
       - name: Checkout base branch
         if: github.event_name == 'pull_request'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.base.sha }}
 
       - name: Upload base results
         if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: base_results
           path: test/base_results
           if-no-files-found: error
 
       - name: Checkout feature branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Setup python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
@@ -310,7 +310,7 @@ jobs:
           python test/process_bsb_analysis.py
 
       - name: Upload buildstockbatch results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: buildstockbatch_results_csvs
           path: |
@@ -319,7 +319,7 @@ jobs:
           if-no-files-found: error
 
       - name: Upload raw simulation output
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: raw_simulation_output
           path: |
@@ -333,19 +333,19 @@ jobs:
           openstudio test/test_bsb_analysis.rb
 
       - name: Download feature samples
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: samples
           name: feature_samples
 
       - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: resources
           name: options_lookup
 
       - name: Download precomputed buildstocks
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: test/tests_yml_files
           name: precomputed_buildstocks
@@ -372,7 +372,7 @@ jobs:
 
       - name: Download base results
         if: github.event_name == 'pull_request'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: base_results
           name: base_results
@@ -398,7 +398,7 @@ jobs:
 
       - name: Upload comparisons
         if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: comparisons
           path: test/base_results/comparisons
@@ -409,18 +409,18 @@ jobs:
     needs: [analysis-tests, integration-tests]
     steps:
       - name: Checkout feature branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Download buildstockbatch results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: buildstockbatch
           name: buildstockbatch_results_csvs
 
       - name: Download run_analysis results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: run_analysis
           name: run_analysis_results_csvs
@@ -442,7 +442,7 @@ jobs:
     needs: [unit-tests]
     steps:
       - name: Checkout feature branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
@@ -479,7 +479,7 @@ jobs:
 
       - name: Upload 550K samples if on develop branch
         if: github.ref == 'refs/heads/develop'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: national_550ksamples
           path: project_national/resources/national_550ksamples.csv.gz
@@ -518,7 +518,7 @@ jobs:
           rm national_550ksamples.csv.gz
 
       - name: Upload SDR options analysis artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: sdr_options_analysis
           path: |
@@ -577,17 +577,17 @@ jobs:
     needs: [sdr-options-analysis]
     steps:
       - name: Checkout feature branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Setup python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4.1.0
+        uses: aws-actions/configure-aws-credentials@v6.1.1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -607,7 +607,7 @@ jobs:
           rm ./$OS_DEBFILE
 
       - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: resources
           name: options_lookup
@@ -655,14 +655,14 @@ jobs:
           gunzip -v project_national/sdr_upgrades_amy2018/results_csvs/*.csv.gz
 
       - name: Upload buildstockbatch results - published
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: buildstockbatch_results_sdr_published_csvs
           path: project_national/sdr_upgrades_amy2018/results_csvs_pub
           if-no-files-found: error
 
       - name: Upload buildstockbatch results - raw
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: buildstockbatch_results_sdr_raw_csvs
           path: project_national/sdr_upgrades_amy2018/results_csvs
@@ -699,7 +699,7 @@ jobs:
 
       - name: Download base results
         if: github.event_name == 'pull_request'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: base_results
           name: base_results
@@ -727,7 +727,7 @@ jobs:
 
       - name: Upload comparisons
         if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: sdr_comparisons
           path: test/base_results/sdr_comparisons
@@ -737,12 +737,12 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout feature branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Setup python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
@@ -759,10 +759,10 @@ jobs:
         run: echo "BROWSER_PATH=${{ steps.chrome.outputs.chrome-path }}" >> $GITHUB_ENV
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v8.0.0
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4.1.0
+        uses: aws-actions/configure-aws-credentials@v6.1.1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -799,7 +799,7 @@ jobs:
       #     uv run python resstockpostproc/upgrade_comparison/main.py
 
       - name: Upload plots
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: plots
           path: postprocessing/resstockpostproc/upgrade_comparison/sdr_plots/plots/sdr_plots_ci

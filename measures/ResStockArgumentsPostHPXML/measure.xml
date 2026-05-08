@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>865b714c-3e2c-4019-9305-c225b59801a3</version_id>
-  <version_modified>2026-02-25T23:13:43Z</version_modified>
+  <version_id>18fd7071-fc5f-4fd8-b5ce-d43eef1d9dc3</version_id>
+  <version_modified>2026-05-08T21:33:05Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -12542,7 +12542,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>B952664E</checksum>
+      <checksum>DE1AA52C</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

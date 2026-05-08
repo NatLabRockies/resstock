@@ -7,6 +7,21 @@ Development Changelog
     :released: pending
 
     .. change::
+        :tags: feature
+        :pullreq: 1503
+
+        **Date**: 2026-04-27
+
+        Title:
+        Add four upgrades to the SDR
+
+        Description:
+        Add four upgrades to the SDR.
+        These are upgrade IDs 29-32 in ResStock 2025 Release 1.
+
+        Assignees: Andrew Parker
+
+    .. change::
         :tags: workflow, options, hpxml
         :pullreq: 1460
 
