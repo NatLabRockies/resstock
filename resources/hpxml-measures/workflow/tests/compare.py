@@ -85,11 +85,11 @@ class BaseCompare:
                     feature_df = group_df.merge(feature_df, 'outer', left_index=True, right_index=True)\
                                          .groupby(aggregate_columns)
                     if aggregate_function == 'sum':
-                        base_df = base_df.sum(min_count=1).stack(dropna=False)
-                        feature_df = feature_df.sum(min_count=1).stack(dropna=False)
+                        base_df = base_df.sum(min_count=1).stack()
+                        feature_df = feature_df.sum(min_count=1).stack()
                     elif aggregate_function == 'mean':
-                        base_df = base_df.mean(numeric_only=True).stack(dropna=False)
-                        feature_df = feature_df.mean(numeric_only=True).stack(dropna=False)
+                        base_df = base_df.mean(numeric_only=True).stack()
+                        feature_df = feature_df.mean(numeric_only=True).stack()
                 else:
                     if aggregate_function == 'sum':
                         base_df = base_df.sum(min_count=1)
