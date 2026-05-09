@@ -1,3 +1,15 @@
+"""
+This file compares the old and new results of NEC calculations for panels project, 
+and generates summary stats for each param in the results, as well as changes between old and new results. 
+The summary stats include value counts for string/bool params, and descriptive stats for numeric params. 
+The output is saved in csv files for each upgrade and each folder (revision vs. no revision).
+
+old results: panels_results_550k/old_results (generated on Sep 25, 2024, using _v1)
+new results: panels_results_550k (generated on May 08, 2026, with bug fixes using _v2)
+output: panels_results_550k/compare_old_new_results
+
+date: 2026-05-08
+"""
 from pathlib import Path
 import pandas as pd
 import pandas.api.types as pd_types

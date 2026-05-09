@@ -133,9 +133,9 @@ def get_values(column):
 def check_water_heater_load(df, type: Literal["120v_hpwh", "240v_hpwh", "er"]):
     match type:
         case "120v_hpwh":
-            assert get_values(df["new_load_water_heater"]) == {1000} # HP, 120V, shared
+            assert get_values(df["new_load_water_heater"]) == {900} # HP, 120V, shared
         case "240v_hpwh":
-            assert get_values(df["new_load_water_heater"]) == {4500} # HP, 240V
+            assert get_values(df["new_load_water_heater"]) == {5000} # HP, 240V
         case "er":
             # ER storage and tankless
             assert get_values(df["new_load_water_heater"]) == {4500, 18000, 24000, 36000}
@@ -162,7 +162,7 @@ def check_ev_load(df, level: Literal[0,1,2]):
     if level == 0:
         assert get_values(df["new_load_evse"]) == set()
     elif level == 1:
-        assert get_values(df["new_load_evse"]) == {1650}
+        assert get_values(df["new_load_evse"]) == {1440}
     elif level == 2:
         assert get_values(df["new_load_evse"]) == {7680}
     else:
