@@ -126,7 +126,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     errors = _run_osw(osw_hash, expect_success: false)
 
     assert_equal(1, errors.size)
-    assert(errors[0].include? 'HeatingAutosizingFactor should be greater than 0')
+    assert(errors[0].include? 'Expected HeatingAutosizingFactor to be greater than 0')
 
     FileUtils.rm_rf(File.join(curdir, 'run'))
   end
