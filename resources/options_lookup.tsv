@@ -13805,7 +13805,7 @@ Water Heater Fuel	Wood
 Water Heater In Unit	No
 Water Heater In Unit	Yes
 Water Heater Location	Attic	ResStockArguments	dhw_water_heater_location=Attic
-Water Heater Location	Conditioned Mechanical Room	ResStockArguments	dhw_water_heater_location=Other Heated Space
+Water Heater Location	Conditioned Mechanical Room	ResStockArguments	dhw_water_heater_location=SFA/MF Other Heated Space
 Water Heater Location	Crawlspace	ResStockArguments	dhw_water_heater_location=Crawlspace
 Water Heater Location	Garage	ResStockArguments	dhw_water_heater_location=Garage
 Water Heater Location	Heated Basement	ResStockArguments	dhw_water_heater_location=Basement
