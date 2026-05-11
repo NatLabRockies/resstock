@@ -108,8 +108,11 @@ module Outputs
       clg_avail_sensors[unit] = unit_model.getEnergyManagementSystemSensors.find { |s| s.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeSensorScheduleCoolingAvailability }
     end
 
-    htg_tol = model.getOutputControlReportingTolerances.toleranceforTimeHeatingSetpointNotMet
-    clg_tol = model.getOutputControlReportingTolerances.toleranceforTimeCoolingSetpointNotMet
+    # Set unmet hours tolerance to 0.5 deg-F
+    rep_tols = model.getOutputControlReportingTolerances
+    unmet_tol = UnitConversions.convert(0.5, 'deltaF', 'deltaC')
+    rep_tols.setToleranceforTimeHeatingSetpointNotMet(unmet_tol)
+    rep_tols.setToleranceforTimeCoolingSetpointNotMet(unmet_tol)
 
     # EMS program
     clg_hrs = 'clg_unmet_hours'
@@ -134,7 +137,7 @@ module Outputs
         line += " && (#{htg_avail_sensors[unit].name} == 1)" unless htg_avail_sensors[unit].nil?
         program.addLine(line)
         if not zone_air_temp_sensors[unit].nil? # on off deadband
-          program.addLine("  If #{zone_air_temp_sensors[unit].name} < (#{htg_sp_sensors[unit].name} - #{htg_tol})")
+          program.addLine("  If #{zone_air_temp_sensors[unit].name} < (#{htg_sp_sensors[unit].name} - #{unmet_tol})")
           program.addLine("    Set #{unit_htg_hrs} = #{unit_htg_hrs} + #{htg_sensors[unit].name}")
           program.addLine('  EndIf')
         else
@@ -156,7 +159,7 @@ module Outputs
       line += " && (#{clg_avail_sensors[unit].name} == 1)" unless clg_avail_sensors[unit].nil?
       program.addLine(line)
       if not zone_air_temp_sensors[unit].nil? # on off deadband
-        program.addLine("  If #{zone_air_temp_sensors[unit].name} > (#{clg_sp_sensors[unit].name} + #{clg_tol})")
+        program.addLine("  If #{zone_air_temp_sensors[unit].name} > (#{clg_sp_sensors[unit].name} + #{unmet_tol})")
         program.addLine("    Set #{unit_clg_hrs} = #{unit_clg_hrs} + #{clg_sensors[unit].name}")
         program.addLine('  EndIf')
       else
