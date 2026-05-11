@@ -334,7 +334,7 @@ If running :ref:`bldg_type_whole_mf_buildings`, values will reflect hours in whi
   Unmet Hours: EV Driving (hr)  Number of hours where the EV driving demand is not met. [#]_
   ============================  =====
 
-  .. [#] The unmet heating and cooling numbers reflect the number of hours during the heating/cooling season when the conditioned space temperature deviates more than 0.2 deg-C (0.36 deg-F) from the heating/cooling setpoint.
+  .. [#] The unmet heating and cooling numbers reflect the number of hours during the heating/cooling season when the conditioned space temperature deviates more than 0.5 deg-F from the heating/cooling setpoint.
          OpenStudio-HPXML will issue a warning if there are more than 300 unmet hours for heating or cooling.
 
   .. [#] The unmet EV driving number represents the total time in which the electric vehicle discharge schedule exceeds zero while the EV battery's state of charge is at its minimum level.
