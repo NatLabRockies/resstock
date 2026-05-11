@@ -898,9 +898,9 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
       if key == UHT::Driving && unmet_hour.annual_output > 0.0
         runner.registerWarning("A total of #{unmet_hour.annual_output} driving hours could not be met due to insufficient vehicle charge. This issue may result from a combination EV battery parameters, charging power, and driving or discharging schedules.")
       elsif key == UHT::Heating && unmet_hour.annual_output > 300
-        runner.registerWarning("There are a large number of unmet hours (#{unmet_hour.annual_output}) for heating; this may indicate the heating system is undersized or the presence of large thermostat setbacks.")
+        runner.registerWarning("There are a large number of unmet hours (#{unmet_hour.annual_output}) for heating; this may indicate the heating system is undersized or can be caused by recovery from thermostat setbacks.")
       elsif key == UHT::Cooling && unmet_hour.annual_output > 300
-        runner.registerWarning("There are a large number of unmet hours (#{unmet_hour.annual_output}) for cooling; this may indicate the cooling system is undersized or the presence of large thermostat setbacks.")
+        runner.registerWarning("There are a large number of unmet hours (#{unmet_hour.annual_output}) for cooling; this may indicate the cooling system is undersized or can be caused by recovery from thermostat setbacks.")
       end
     end
 
