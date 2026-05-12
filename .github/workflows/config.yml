@@ -848,6 +848,11 @@ jobs:
           uv pip install -e . --group dev
           uv pip install git+https://github.com/NREL/buildstock-query.git@$BUILDSTOCK_QUERY_BRANCH
 
+      - name: Run baseline validation unit tests
+        working-directory: postprocessing
+        run: |
+          uv run pytest resstockpostproc/baseline_validation/tests -q
+
       - name: Run baseline validation test subset
         working-directory: postprocessing
         run: |
