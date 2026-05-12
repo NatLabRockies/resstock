@@ -40,6 +40,7 @@ from resstockpostproc.baseline_validation.dashboard.create_html_viewer import (
 )
 from resstockpostproc.baseline_validation.dashboard.dashboard_paths import (
     COMPARISONS_INDEX_DIRNAME,
+    DASHBOARD_DATA_DIRNAME,
     relative_href_from_file,
 )
 from resstockpostproc.baseline_validation.schema.plot_spec import ALL_ENDUSES_DISPLAY
@@ -329,6 +330,20 @@ def finalize_html_index(state: IndexState) -> None:
     state.close_combo_file()
 
 
+def _resolve_canonical_data_dir(tsv_path: Path, html_path: Path) -> Path:
+    """Resolve the shard directory the full pipeline writes to.
+
+    The canonical layout is ``<output_root>/dashboard_data/comparisons_index/``.
+    Prefer the TSV's parent (where the full pipeline puts the TSV) and append
+    the shard subdir. Fall back to the HTML-sibling layout only when the TSV
+    is not under ``dashboard_data/``.
+    """
+    tsv_parent = tsv_path.resolve().parent
+    if tsv_parent.name == DASHBOARD_DATA_DIRNAME:
+        return tsv_parent / COMPARISONS_INDEX_DIRNAME
+    return html_path.parent / DASHBOARD_DATA_DIRNAME / COMPARISONS_INDEX_DIRNAME
+
+
 def main() -> int:
     if len(sys.argv) != 3:
         print("Usage: python -m resstockpostproc.baseline_validation.dashboard.create_html <input.tsv> <output.html>")
@@ -341,7 +356,8 @@ def main() -> int:
         print(f"Error: Input file not found: {csv_path}")
         return 1
 
-    create_html_from_csv(csv_path, html_path)
+    data_dir = _resolve_canonical_data_dir(csv_path, html_path)
+    create_html_from_csv(csv_path, html_path, data_dir=data_dir)
     return 0
 
 
