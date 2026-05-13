@@ -1289,7 +1289,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'emissions-wrong-columns' => ['Emissions File has too few columns. Cannot find column number'],
                             'emissions-wrong-filename' => ["Emissions File file path 'invalid-wrong-filename.csv' does not exist."],
                             'emissions-wrong-rows' => ['Emissions File has invalid number of rows'],
-                            'geothermal-loop-multiple-attached-hps' => ["Multiple heat pumps found attached to geothermal loop 'GeothermalLoop1'."],
                             'heat-pump-backup-system-load-fraction' => ['Heat pump backup system cannot have a fraction heat load served specified.'],
                             'heat-pump-switchover-temp-elec-backup' => ['Switchover temperature should only be used for a heat pump with fossil fuel backup; use compressor lockout temperature instead.'],
                             'heat-pump-lockout-temps-elec-backup' => ['Similar compressor/backup lockout temperatures should only be used for a heat pump with fossil fuel backup.'],
@@ -1513,19 +1512,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         csv_data = CSV.read(File.join(File.dirname(hpxml.hpxml_path), scenario.elec_schedule_filepath))
         File.write(@tmp_csv_path, csv_data[0..-2].map(&:to_csv).join)
         hpxml.header.emissions_scenarios[1].elec_schedule_filepath = @tmp_csv_path
-      when 'geothermal-loop-multiple-attached-hps'
-        hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop.xml')
-        hpxml_bldg.heat_pumps[0].fraction_cool_load_served = 0.5
-        hpxml_bldg.heat_pumps[0].fraction_heat_load_served = 0.5
-        hpxml_bldg.heat_pumps << hpxml_bldg.heat_pumps[0].dup
-        hpxml_bldg.heat_pumps[1].id = "HeatPump#{hpxml_bldg.heat_pumps.size}"
-        hpxml_bldg.heat_pumps[0].primary_heating_system = false
-        hpxml_bldg.heat_pumps[0].primary_cooling_system = false
-        hpxml_bldg.hvac_distributions.add(id: "HVACDistribution#{hpxml_bldg.hvac_distributions.size + 1}",
-                                          distribution_system_type: HPXML::HVACDistributionTypeDSE,
-                                          annual_cooling_dse: 1.0,
-                                          annual_heating_dse: 1.0)
-        hpxml_bldg.heat_pumps[1].distribution_system_idref = hpxml_bldg.hvac_distributions[1].id
       when 'heat-pump-backup-system-load-fraction'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-var-speed-backup-boiler.xml')
         hpxml_bldg.heating_systems[0].fraction_heat_load_served = 0.5
@@ -1586,6 +1572,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml_bldg.site.ground_conductivity = 0.1
       when 'hvac-gshp-invalid-num-bore-holes'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop.xml')
+        hpxml_bldg.geothermal_loops[0].bore_config = HPXML::GeothermalLoopBoreConfigLopsidedU
         hpxml_bldg.geothermal_loops[0].num_bore_holes = 5
       when 'hvac-gshp-invalid-num-bore-holes-autosized'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump-1-speed.xml')
@@ -2029,7 +2016,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                                  'HPWH exhaust air ducting for a water heater located outside conditioned space is not currently supported; exhaust ducting will not be modeled.',
                                                  'HPWH supply air ducted from another location is not currently supported; supply ducting will not be modeled.'],
                               'hpwh-small-containment-volume-without-backup-element' => ['Heat pump water heater: WaterHeatingSystem1 has no backup electric resistance element, COP adjustment for confined space may not be accurate when the containment space volume is below 450 cubic feet.'],
-                              'hvac-gshp-bore-depth-autosized-high' => ['Reached a maximum of 10 boreholes; setting bore depth to the maximum (500 ft).'],
+                              'hvac-gshp-bore-depth-autosized-high' => ['Reached a maximum of 15 boreholes; setting bore depth to the maximum (500 ft).'],
                               'hvac-setpoint-adjustments' => ['HVAC setpoints have been automatically adjusted to prevent periods where the heating setpoint is greater than the cooling setpoint.'],
                               'hvac-setpoint-adjustments-daily-setbacks' => ['HVAC setpoints have been automatically adjusted to prevent periods where the heating setpoint is greater than the cooling setpoint.'],
                               'hvac-setpoint-adjustments-daily-schedules' => ['HVAC setpoints have been automatically adjusted to prevent periods where the heating setpoint is greater than the cooling setpoint.'],
@@ -2208,7 +2195,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml_bldg.water_heating_systems[0].hpwh_containment_volume = 250.0
       when 'hvac-gshp-bore-depth-autosized-high'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump-1-speed.xml')
-        hpxml_bldg.site.ground_conductivity = 0.07
+        hpxml_bldg.site.ground_conductivity = 0.01
       when 'hvac-setpoint-adjustments'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.hvac_controls[0].heating_setpoint_temp = 76.0

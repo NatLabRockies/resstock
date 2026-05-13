@@ -1894,10 +1894,10 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
 
       # Bore depth greater than the max -> increase number of boreholes until the max, set depth to the max, and issue warning
       hpxml, hpxml_bldg = _create_hpxml(ghp_filename)
-      hpxml_bldg.site.ground_conductivity = 0.07
+      hpxml_bldg.site.ground_conductivity = 0.01
       XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
       _model, _test_hpxml, test_hpxml_bldg = _test_measure(args_hash)
-      assert_equal(10, test_hpxml_bldg.geothermal_loops[0].num_bore_holes)
+      assert_equal(15, test_hpxml_bldg.geothermal_loops[0].num_bore_holes)
       assert_in_delta(500.0, test_hpxml_bldg.geothermal_loops[0].bore_length, 1.0)
 
       # Boreholes greater than the max -> decrease the number of boreholes until the max
@@ -1905,13 +1905,13 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
       hpxml_bldg.heat_pumps[0].cooling_capacity *= 5
       XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
       _model, _test_hpxml, test_hpxml_bldg = _test_measure(args_hash)
-      assert_equal(10, test_hpxml_bldg.geothermal_loops[0].num_bore_holes)
-      assert_in_delta(226.0, test_hpxml_bldg.geothermal_loops[0].bore_length, 1.0)
+      assert_equal(15, test_hpxml_bldg.geothermal_loops[0].num_bore_holes)
+      assert_in_delta(150.0, test_hpxml_bldg.geothermal_loops[0].bore_length, 1.0)
     end
   end
 
   def test_gshp_g_function_library_linear_interpolation_example
-    bore_config = HPXML::GeothermalLoopBorefieldConfigurationRectangle
+    bore_config = HPXML::GeothermalLoopBoreConfigRectangle
     num_bore_holes = 40
     bore_depth = UnitConversions.convert(150.0, 'm', 'ft')
     g_functions_filename = HVACSizing.get_geothermal_loop_valid_configurations[bore_config]
@@ -1935,12 +1935,12 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
   end
 
   def test_gshp_all_g_function_configs_exist
-    valid_configs = { HPXML::GeothermalLoopBorefieldConfigurationRectangle => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                      HPXML::GeothermalLoopBorefieldConfigurationOpenRectangle => [8, 10],
-                      HPXML::GeothermalLoopBorefieldConfigurationC => [7, 9],
-                      HPXML::GeothermalLoopBorefieldConfigurationL => [4, 5, 6, 7, 8, 9, 10],
-                      HPXML::GeothermalLoopBorefieldConfigurationU => [7, 9, 10],
-                      HPXML::GeothermalLoopBorefieldConfigurationLopsidedU => [6, 7, 8, 9, 10] }
+    valid_configs = { HPXML::GeothermalLoopBoreConfigRectangle => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                      HPXML::GeothermalLoopBoreConfigOpenRectangle => [8, 10],
+                      HPXML::GeothermalLoopBoreConfigC => [7, 9],
+                      HPXML::GeothermalLoopBoreConfigL => [4, 5, 6, 7, 8, 9, 10],
+                      HPXML::GeothermalLoopBoreConfigU => [7, 9, 10],
+                      HPXML::GeothermalLoopBoreConfigLopsidedU => [6, 7, 8, 9, 10] }
 
     valid_configs.each do |bore_config, valid_num_bores|
       g_functions_filename = HVACSizing.get_geothermal_loop_valid_configurations[bore_config]

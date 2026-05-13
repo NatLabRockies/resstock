@@ -1860,8 +1860,11 @@
   },
   "sample_files/base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop.xml": {
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-1-speed.xml",
-    "hvac_geothermal_loop": "Detailed Example: Lopsided U Configuration, 10 Boreholes",
+    "hvac_geothermal_loop": "Detailed Example: Vertical Loop, L Configuration, 4 Boreholes",
     "location_soil_type": "Detailed Example: Sand, Dry, 0.03 Diffusivity"
+  },
+  "sample_files/base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop-multiple.xml": {
+    "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop.xml"
   },
   "sample_files/base-hvac-ground-to-air-heat-pump-cooling-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-1-speed.xml",

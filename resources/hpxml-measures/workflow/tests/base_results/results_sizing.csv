@@ -256,6 +256,9 @@ denver-hvac-autosize-ground-to-air-heat-pump-backup-stove-sizing-methodology-Max
 denver-hvac-autosize-ground-to-air-heat-pump-cooling-only-sizing-methodology-ACCA.xml,0.0,37068.0,0.0,0.0,1112.0
 denver-hvac-autosize-ground-to-air-heat-pump-cooling-only-sizing-methodology-HERS.xml,0.0,37068.0,0.0,0.0,1112.0
 denver-hvac-autosize-ground-to-air-heat-pump-cooling-only-sizing-methodology-MaxLoad.xml,0.0,37068.0,0.0,0.0,1112.0
+denver-hvac-autosize-ground-to-air-heat-pump-detailed-geothermal-loop-multiple-sizing-methodology-ACCA.xml,40684.0,40684.0,0.0,1220.0,1220.0
+denver-hvac-autosize-ground-to-air-heat-pump-detailed-geothermal-loop-multiple-sizing-methodology-HERS.xml,40684.0,40684.0,0.0,1220.0,1220.0
+denver-hvac-autosize-ground-to-air-heat-pump-detailed-geothermal-loop-multiple-sizing-methodology-MaxLoad.xml,47830.0,47830.0,0.0,1434.0,1434.0
 denver-hvac-autosize-ground-to-air-heat-pump-detailed-geothermal-loop-sizing-methodology-ACCA.xml,40683.0,40683.0,0.0,1221.0,1221.0
 denver-hvac-autosize-ground-to-air-heat-pump-detailed-geothermal-loop-sizing-methodology-HERS.xml,40683.0,40683.0,0.0,1221.0,1221.0
 denver-hvac-autosize-ground-to-air-heat-pump-detailed-geothermal-loop-sizing-methodology-MaxLoad.xml,47830.0,47830.0,0.0,1435.0,1435.0
@@ -686,6 +689,9 @@ houston-hvac-autosize-ground-to-air-heat-pump-backup-stove-sizing-methodology-Ma
 houston-hvac-autosize-ground-to-air-heat-pump-cooling-only-sizing-methodology-ACCA.xml,0.0,43657.0,0.0,0.0,1310.0
 houston-hvac-autosize-ground-to-air-heat-pump-cooling-only-sizing-methodology-HERS.xml,0.0,43657.0,0.0,0.0,1310.0
 houston-hvac-autosize-ground-to-air-heat-pump-cooling-only-sizing-methodology-MaxLoad.xml,0.0,43657.0,0.0,0.0,1310.0
+houston-hvac-autosize-ground-to-air-heat-pump-detailed-geothermal-loop-multiple-sizing-methodology-ACCA.xml,43656.0,43656.0,0.0,1310.0,1310.0
+houston-hvac-autosize-ground-to-air-heat-pump-detailed-geothermal-loop-multiple-sizing-methodology-HERS.xml,43656.0,43656.0,0.0,1310.0,1310.0
+houston-hvac-autosize-ground-to-air-heat-pump-detailed-geothermal-loop-multiple-sizing-methodology-MaxLoad.xml,43656.0,43656.0,0.0,1310.0,1310.0
 houston-hvac-autosize-ground-to-air-heat-pump-detailed-geothermal-loop-sizing-methodology-ACCA.xml,43657.0,43657.0,0.0,1310.0,1310.0
 houston-hvac-autosize-ground-to-air-heat-pump-detailed-geothermal-loop-sizing-methodology-HERS.xml,43657.0,43657.0,0.0,1310.0,1310.0
 houston-hvac-autosize-ground-to-air-heat-pump-detailed-geothermal-loop-sizing-methodology-MaxLoad.xml,43657.0,43657.0,0.0,1310.0,1310.0

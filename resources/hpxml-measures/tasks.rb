@@ -2321,6 +2321,36 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
       hpxml_bldg.heat_pumps[0].heating_efficiency_hspf2 = nil
       hpxml_bldg.heat_pumps[0].heating_efficiency_hspf = 7.7
     end
+    if ['base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop-multiple.xml'].include? hpxml_file
+      # Split into 2 GSHPs, each with its own geothermal loop
+      hpxml_bldg.heat_pumps[0].fraction_heat_load_served /= 2
+      hpxml_bldg.heat_pumps[0].fraction_cool_load_served /= 2
+      hpxml_bldg.heat_pumps[0].heating_capacity /= 2
+      hpxml_bldg.heat_pumps[0].cooling_capacity /= 2
+      hpxml_bldg.heat_pumps << hpxml_bldg.heat_pumps[0].dup
+      hpxml_bldg.heat_pumps[-1].id = 'HeatPump2'
+      hpxml_bldg.heat_pumps[-1].primary_heating_system = false
+      hpxml_bldg.heat_pumps[-1].primary_cooling_system = false
+      hpxml_bldg.hvac_distributions[0].duct_leakage_measurements[0].duct_leakage_value /= 2
+      hpxml_bldg.hvac_distributions[0].duct_leakage_measurements[1].duct_leakage_value /= 2
+      hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served /= 2
+      hpxml_bldg.hvac_distributions.add(id: "HVACDistribution#{hpxml_bldg.hvac_distributions.size + 1}",
+                                        distribution_system_type: HPXML::HVACDistributionTypeAir,
+                                        air_type: HPXML::AirTypeRegularVelocity,
+                                        conditioned_floor_area_served: hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served)
+      hpxml_bldg.heat_pumps[-1].distribution_system_idref = hpxml_bldg.hvac_distributions[-1].id
+      hpxml_bldg.hvac_distributions[-1].duct_leakage_measurements << hpxml_bldg.hvac_distributions[0].duct_leakage_measurements[0].dup
+      hpxml_bldg.hvac_distributions[-1].duct_leakage_measurements << hpxml_bldg.hvac_distributions[0].duct_leakage_measurements[1].dup
+      hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
+        hpxml_bldg.hvac_distributions[-1].ducts << duct.dup
+        hpxml_bldg.hvac_distributions[-1].ducts[-1].id = "Ducts#{hpxml_bldg.hvac_distributions[0].ducts.size + hpxml_bldg.hvac_distributions[1].ducts.size}"
+      end
+      hpxml_bldg.geothermal_loops[0].num_bore_holes /= 2
+      hpxml_bldg.geothermal_loops[0].bore_config = HPXML::GeothermalLoopBoreConfigRectangle
+      hpxml_bldg.geothermal_loops << hpxml_bldg.geothermal_loops[0].dup
+      hpxml_bldg.geothermal_loops[-1].id = 'GeothermalLoop2'
+      hpxml_bldg.heat_pumps[-1].geothermal_loop_idref = hpxml_bldg.geothermal_loops[-1].id
+    end
 
     # ------------------ #
     # HPXML WaterHeating #

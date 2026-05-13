@@ -5,6 +5,7 @@ __New Features__
   - Adds a warning if there are more than 300 unmet hours for heating or cooling; setpoint tolerance increased from 0.36 deg-F (0.2 deg-C) to 0.5 deg-F.
   - Dual-fuel heat pumps with switchover temperatures > 25F are now autosized based on 25F to allow some additional heating capacity buffer.
   - Improves handling of duct leakage specified using cfm25/cfm50.
+  - Allows multiple ground-source heat pumps attached to a single geothermal loop; yields runtime speed improvements.
   - Crankcase heating energy is now disabled during unavailable periods, e.g., power outages.
   - Adds advanced research feature to model latent degradation for cooling systems, including an input to specify an HVAC blower-off delay.
 - Output updates:

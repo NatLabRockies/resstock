@@ -2698,7 +2698,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                       '1-1/4" pipe' => 1.25 }[args[:hvac_geothermal_loop_pipe_diameter]]
 
     hpxml_bldg.geothermal_loops.add(id: "GeothermalLoop#{hpxml_bldg.geothermal_loops.size + 1}",
-                                    loop_configuration: args[:hvac_geothermal_loop_configuration],
+                                    loop_config: args[:hvac_geothermal_loop_configuration],
                                     loop_flow: args[:hvac_geothermal_loop_loop_flow],
                                     bore_config: args[:hvac_geothermal_loop_borefield_configuration],
                                     num_bore_holes: args[:hvac_geothermal_loop_boreholes_count],

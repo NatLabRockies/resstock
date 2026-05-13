@@ -1712,7 +1712,7 @@
     <sch:rule context='/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:GeothermalLoop'>
       <sch:assert role='ERROR' test='h:LoopConfiguration[text()="vertical"]'>Expected LoopConfiguration to be 'vertical'</sch:assert>
       <sch:assert role='ERROR' test='number(h:BoreholesOrTrenches/h:Count) &gt;= 1 or not(h:BoreholesOrTrenches/h:Count)'>Expected BoreholesOrTrenches/Count to be greater than or equal to 1</sch:assert>
-      <sch:assert role='ERROR' test='number(h:BoreholesOrTrenches/h:Count) &lt;= 10 or not(h:BoreholesOrTrenches/h:Count)'>Expected BoreholesOrTrenches/Count to be less than or equal to 10</sch:assert>
+      <sch:assert role='ERROR' test='number(h:BoreholesOrTrenches/h:Count) &lt;= 15 or not(h:BoreholesOrTrenches/h:Count)'>Expected BoreholesOrTrenches/Count to be less than or equal to 15</sch:assert>
       <sch:assert role='ERROR' test='number(h:BoreholesOrTrenches/h:Length) &gt;= 80 or not(h:BoreholesOrTrenches/h:Length)'>Expected BoreholesOrTrenches/Length to be greater than or equal to 80</sch:assert>
       <sch:assert role='ERROR' test='number(h:BoreholesOrTrenches/h:Length) &lt;= 500 or not(h:BoreholesOrTrenches/h:Length)'>Expected BoreholesOrTrenches/Length to be less than or equal to 500</sch:assert>
       <sch:assert role='ERROR' test='number(h:Pipe/h:Diameter) = 0.75 or number(h:Pipe/h:Diameter) = 1.0 or number(h:Pipe/h:Diameter) = 1.25 or not(h:Pipe/h:Diameter)'>Expected Pipe/Diameter to be 0.75, 1.0, or 1.25</sch:assert>

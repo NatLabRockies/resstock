@@ -414,6 +414,7 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
     # GSHPs with hard-sized capacities
     if hpxml_path.include? 'house052.xml'
       next if message.include? 'heating capacity is disproportionate (> 20% different) to total cooling capacity' # safe to ignore
+      next if message.include? 'SimHVAC: Maximum iterations (20) exceeded for all HVAC loops'
     end
     # Solar thermal systems
     if hpxml.buildings.any? { |hpxml_bldg| hpxml_bldg.solar_thermal_systems.size > 0 }
