@@ -429,6 +429,29 @@
     "parent_hpxml": "sample_files/base-appliances-dehumidifier.xml",
     "appliance_dehumidifier": "Detailed Example: Whole-Home, 60 pints/day, EF 2.3"
   },
+  "sample_files/base-appliances-dehumidifier-mechvent.xml": {
+    "parent_hpxml": "sample_files/base-appliances-dehumidifier.xml",
+    "location_epw_path": "USA_TX_Houston-Bush.Intercontinental.AP.722430_TMY3.epw",
+    "ventilation_mechanical": "Supply Only"
+  },
+  "sample_files/base-appliances-dehumidifier-mechvent-latent-degradation-model-0s.xml": {
+    "parent_hpxml": "sample_files/base-appliances-dehumidifier-mechvent.xml",
+    "advanced_feature_2": "Latent Degradation Model w/ Blower-Off Delay, 0 sec"
+  },
+  "sample_files/base-appliances-dehumidifier-mechvent-latent-degradation-model-45s.xml": {
+    "parent_hpxml": "sample_files/base-appliances-dehumidifier-mechvent.xml",
+    "advanced_feature_2": "Latent Degradation Model w/ Blower-Off Delay, 45 sec"
+  },
+  "sample_files/base-appliances-dehumidifier-mechvent-latent-degradation-model-ashp.xml": {
+    "parent_hpxml": "sample_files/base-appliances-dehumidifier-mechvent.xml",
+    "advanced_feature_2": "Latent Degradation Model w/ Blower-Off Delay, 45 sec",
+    "hvac_heating_system": "None",
+    "hvac_cooling_system": "None",
+    "hvac_heat_pump": "Central HP, SEER2 21.0, HSPF2 9.2",
+    "hvac_heat_pump_capacity": "2.0 tons",
+    "hvac_heat_pump_heating_load_served": "100%",
+    "hvac_heat_pump_cooling_load_served": "100%"
+  },
   "sample_files/base-appliances-dehumidifier-multiple.xml": {
     "parent_hpxml": "sample_files/base-appliances-dehumidifier.xml"
   },
@@ -623,8 +646,8 @@
     "geometry_window_areas_or_wwrs": "0.18, 0.18, 0.18, 0.18",
     "geometry_door_area": "20",
     "enclosure_carpet": "80% Carpet",
-    "hvac_heating_system_capacity": "10 kBtu/hr",
-    "hvac_cooling_system_capacity": "1.0 tons",
+    "hvac_heating_system_capacity": "20 kBtu/hr",
+    "hvac_cooling_system_capacity": "1.5 tons",
     "hvac_ducts": "0 CFM25 per 100ft2, Uninsulated",
     "hvac_ducts_supply_location": "Conditioned Space",
     "hvac_ducts_return_location": "Conditioned Space"
@@ -636,9 +659,7 @@
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml"
   },
   "sample_files/base-bldgtype-mf-unit-adjacent-to-non-freezing-space.xml": {
-    "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
-    "hvac_heating_system_capacity": "20 kBtu/hr",
-    "hvac_cooling_system_capacity": "1.5 tons"
+    "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml"
   },
   "sample_files/base-bldgtype-mf-unit-adjacent-to-other-heated-space.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml"
@@ -777,10 +798,11 @@
   },
   "sample_files/base-bldgtype-mf-unit-shared-water-heater.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
-    "dhw_water_heater": "Natural Gas, Tank, UEF 0.60"
+    "dhw_water_heater": "Natural Gas, Tank, UEF 0.60",
+    "dhw_water_heater_location": "SFA/MF Other Heated Space"
   },
   "sample_files/base-bldgtype-mf-unit-shared-water-heater-heat-pump.xml": {
-    "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
+    "parent_hpxml": "sample_files/base-bldgtype-mf-unit-shared-water-heater.xml",
     "dhw_water_heater": "Electricity, Heat Pump, UEF 3.50"
   },
   "sample_files/base-bldgtype-mf-unit-shared-water-heater-recirc.xml": {
@@ -1260,7 +1282,8 @@
     "geometry_foundation_type": "Belly and Wing, No Skirt"
   },
   "sample_files/base-foundation-complex.xml": {
-    "parent_hpxml": "sample_files/base.xml"
+    "parent_hpxml": "sample_files/base.xml",
+    "hvac_cooling_system_capacity": "2.5 tons"
   },
   "sample_files/base-foundation-conditioned-basement-slab-insulation.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -1418,6 +1441,14 @@
   "sample_files/base-hvac-air-to-air-heat-pump-1-speed-seer-hspf.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml"
   },
+  "sample_files/base-hvac-air-to-air-heat-pump-1-speed-power-outage.xml": {
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml"
+  },
+  "sample_files/base-hvac-air-to-air-heat-pump-1-speed-hvac-seasons.xml": {
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml",
+    "hvac_control_heating_season_period": "Nov 1 - May 1",
+    "hvac_control_cooling_season_period": "Jun 1 - Oct 1"
+  },
   "sample_files/base-hvac-air-to-air-heat-pump-2-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml",
     "hvac_heat_pump": "Central HP, SEER2 17.0, HSPF2 8.2"
@@ -1446,7 +1477,7 @@
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
     "hvac_heat_pump": "Central HP, SEER2 21.0, HSPF2 9.2",
-    "hvac_heat_pump_capacity": "1.5 tons",
+    "hvac_heat_pump_capacity": "2.0 tons",
     "hvac_heat_pump_backup": "Separate Heating System",
     "hvac_heating_system_2": "Boiler, 80% AFUE",
     "hvac_heating_system_2_fuel": "Natural Gas",
@@ -1461,8 +1492,7 @@
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler.xml",
     "hvac_heat_pump": "Central HP, SEER2 21.0, HSPF2 9.2",
     "hvac_heat_pump_backup": "Separate Heating System",
-    "hvac_heat_pump_temperatures": "30F Min Compressor Temp, 30F Max HP Backup Temp",
-    "hvac_heat_pump_capacity": "2.0 tons"
+    "hvac_heat_pump_temperatures": "30F Min Compressor Temp, 30F Max HP Backup Temp"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-furnace.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler.xml",
@@ -1490,14 +1520,12 @@
     "schedules_paths": "../../HPXMLtoOpenStudio/resources/schedule_files/hvac-variable-system-maximum-power-ratios-varied.csv",
     "simulation_control_timestep": "60"
   },
-  "sample_files/base-hvac-air-to-air-heat-pump-var-speed-max-power-ratio-schedule-two-systems.xml": {
-    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
-    "schedules_paths": "../../HPXMLtoOpenStudio/resources/schedule_files/hvac-variable-system-maximum-power-ratios-varied.csv",
+  "sample_files/base-hvac-air-to-air-heat-pump-var-speed-research-features-two-systems.xml": {
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-research-features.xml",
     "hvac_ducts": "2 CFM25 per 100ft2, R-4"
   },
-  "sample_files/base-hvac-air-to-air-heat-pump-var-speed-max-power-ratio-schedule-10-mins.xml": {
-    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
-    "schedules_paths": "../../HPXMLtoOpenStudio/resources/schedule_files/hvac-variable-system-maximum-power-ratios-varied.csv",
+  "sample_files/base-hvac-air-to-air-heat-pump-var-speed-research-features-10-mins.xml": {
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-research-features.xml",
     "simulation_control_timestep": "10"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-detailed-performance.xml": {
@@ -1588,7 +1616,7 @@
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
     "hvac_cooling_system": "Central AC, SEER2 23.0"
   },
-  "sample_files/base-hvac-central-ac-only-var-speed-max-power-ratio-schedule.xml": {
+  "sample_files/base-hvac-central-ac-only-var-speed-research-features.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-var-speed.xml",
     "schedules_paths": "../../HPXMLtoOpenStudio/resources/schedule_files/hvac-variable-system-maximum-power-ratios-varied.csv"
   },
@@ -1619,31 +1647,39 @@
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml",
     "hvac_heat_pump": "Central HP, SEER2 13.4, HSPF2 7.0",
     "hvac_heat_pump_backup": "Integrated, Natural Gas, 95% AFUE",
-    "hvac_heat_pump_temperatures": "30F Min Compressor Temp, 30F Max HP Backup Temp"
+    "hvac_heat_pump_temperatures": "30F Min Compressor Temp, 30F Max HP Backup Temp",
+    "hvac_heat_pump_backup_capacity": "60 kBtu/hr"
   },
   "sample_files/base-hvac-dual-fuel-air-to-air-heat-pump-1-speed-lockout-temperatures.xml": {
     "parent_hpxml": "sample_files/base-hvac-dual-fuel-air-to-air-heat-pump-1-speed.xml",
     "hvac_heat_pump": "Central HP, SEER2 13.4, HSPF2 7.0",
     "hvac_heat_pump_backup": "Integrated, Natural Gas, 95% AFUE",
-    "hvac_heat_pump_temperatures": "Detailed Example: 25F Min Compressor Temp, 45F Max HP Backup Temp"
+    "hvac_heat_pump_temperatures": "Detailed Example: 25F Min Compressor Temp, 45F Max HP Backup Temp",
+    "hvac_heat_pump_backup_capacity": "60 kBtu/hr"
   },
   "sample_files/base-hvac-dual-fuel-air-to-air-heat-pump-2-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-2-speed.xml",
     "hvac_heat_pump": "Central HP, SEER2 17.0, HSPF2 8.2",
     "hvac_heat_pump_backup": "Integrated, Natural Gas, 95% AFUE",
-    "hvac_heat_pump_temperatures": "30F Min Compressor Temp, 30F Max HP Backup Temp"
+    "hvac_heat_pump_temperatures": "30F Min Compressor Temp, 30F Max HP Backup Temp",
+    "hvac_heat_pump_backup_capacity": "60 kBtu/hr"
   },
   "sample_files/base-hvac-dual-fuel-air-to-air-heat-pump-var-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
     "hvac_heat_pump": "Central HP, SEER2 21.0, HSPF2 9.2",
     "hvac_heat_pump_backup": "Integrated, Natural Gas, 95% AFUE",
-    "hvac_heat_pump_temperatures": "30F Min Compressor Temp, 30F Max HP Backup Temp"
+    "hvac_heat_pump_temperatures": "30F Min Compressor Temp, 30F Max HP Backup Temp",
+    "hvac_heat_pump_backup_capacity": "60 kBtu/hr"
+  },
+  "sample_files/base-hvac-dual-fuel-air-to-air-heat-pump-var-speed-dse.xml": {
+    "parent_hpxml": "sample_files/base-hvac-dual-fuel-air-to-air-heat-pump-var-speed.xml"
   },
   "sample_files/base-hvac-dual-fuel-mini-split-heat-pump-ducted.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ducted.xml",
     "hvac_heat_pump": "Central HP, SEER2 18.0, HSPF2 8.5",
     "hvac_heat_pump_backup": "Integrated, Natural Gas, 95% AFUE",
-    "hvac_heat_pump_temperatures": "30F Min Compressor Temp, 30F Max HP Backup Temp"
+    "hvac_heat_pump_temperatures": "30F Min Compressor Temp, 30F Max HP Backup Temp",
+    "hvac_heat_pump_backup_capacity": "60 kBtu/hr"
   },
   "sample_files/base-hvac-ducts-leakage-cfm50.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -1732,7 +1768,7 @@
     "parent_hpxml": "sample_files/base.xml",
     "hvac_cooling_system": "Central AC, SEER2 23.0"
   },
-  "sample_files/base-hvac-furnace-gas-central-ac-var-speed-max-power-ratio-schedule.xml": {
+  "sample_files/base-hvac-furnace-gas-central-ac-var-speed-research-features.xml": {
     "parent_hpxml": "sample_files/base-hvac-furnace-gas-central-ac-var-speed.xml",
     "schedules_paths": "../../HPXMLtoOpenStudio/resources/schedule_files/hvac-variable-system-maximum-power-ratios-varied.csv"
   },
@@ -1824,8 +1860,11 @@
   },
   "sample_files/base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop.xml": {
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-1-speed.xml",
-    "hvac_geothermal_loop": "Detailed Example: Lopsided U Configuration, 10 Boreholes",
+    "hvac_geothermal_loop": "Detailed Example: Vertical Loop, L Configuration, 4 Boreholes",
     "location_soil_type": "Detailed Example: Sand, Dry, 0.03 Diffusivity"
+  },
+  "sample_files/base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop-multiple.xml": {
+    "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop.xml"
   },
   "sample_files/base-hvac-ground-to-air-heat-pump-cooling-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-1-speed.xml",
@@ -1915,11 +1954,11 @@
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ducted.xml",
     "hvac_heat_pump_cooling_load_served": "0%"
   },
-  "sample_files/base-hvac-mini-split-heat-pump-ducted-heating-only-max-power-ratio-schedule.xml": {
+  "sample_files/base-hvac-mini-split-heat-pump-ducted-heating-only-research-features.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ducted-heating-only.xml",
     "schedules_paths": "../../HPXMLtoOpenStudio/resources/schedule_files/hvac-variable-system-maximum-power-ratios-varied.csv"
   },
-  "sample_files/base-hvac-mini-split-heat-pump-ducted-max-power-ratio-schedule.xml": {
+  "sample_files/base-hvac-mini-split-heat-pump-ducted-research-features.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ducted.xml",
     "schedules_paths": "../../HPXMLtoOpenStudio/resources/schedule_files/hvac-variable-system-maximum-power-ratios-varied.csv"
   },
@@ -2049,6 +2088,13 @@
     "parent_hpxml": "sample_files/base.xml",
     "hvac_control_heating_season_period": "Nov 1 - May 1",
     "hvac_control_cooling_season_period": "Jun 1 - Oct 1"
+  },
+  "sample_files/base-hvac-seasons-and-inverted-setpoints.xml": {
+    "parent_hpxml": "sample_files/base-hvac-seasons.xml",
+    "hvac_control_heating_weekday_setpoint": "76",
+    "hvac_control_heating_weekend_setpoint": "76",
+    "hvac_control_cooling_weekday_setpoint": "75",
+    "hvac_control_cooling_weekend_setpoint": "75"
   },
   "sample_files/base-hvac-setpoints.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -2218,7 +2264,9 @@
     "parent_hpxml": "sample_files/base-mechvent-cfis.xml"
   },
   "sample_files/base-mechvent-cfis-no-outdoor-air-control.xml": {
-    "parent_hpxml": "sample_files/base-mechvent-cfis.xml"
+    "parent_hpxml": "sample_files/base-mechvent-cfis.xml",
+    "hvac_heating_system_capacity": "50 kBtu/hr",
+    "hvac_cooling_system_capacity": "3.0 tons"
   },
   "sample_files/base-mechvent-cfis-supplemental-fan-exhaust.xml": {
     "parent_hpxml": "sample_files/base-mechvent-cfis.xml"
@@ -2430,6 +2478,17 @@
     "hvac_heating_system_capacity": "10 kBtu/hr",
     "appliance_clothes_dryer": "None"
   },
+  "sample_files/base-bldgtype-mf-whole-building-fuels.xml": {
+    "parent_hpxml": "sample_files/base-bldgtype-mf-whole-building.xml",
+    "hvac_heating_system_fuel": "Natural Gas",
+    "hvac_heating_system": "Central Furnace, 92% AFUE",
+    "hvac_cooling_system": "Central AC, SEER2 13.4",
+    "hvac_ducts": "0 CFM25 per 100ft2, Uninsulated",
+    "hvac_ducts_supply_location": "Conditioned Space",
+    "hvac_ducts_return_location": "Conditioned Space",
+    "dhw_water_heater": "Propane, Tankless, UEF 0.82",
+    "misc_fireplace": "Detailed Example: Wood, 55 therm/yr"
+  },
   "sample_files/base-bldgtype-mf-whole-building-inter-unit-heat-transfer.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-whole-building.xml",
     "hvac_heating_system_capacity": "25 kBtu/hr"
@@ -2442,6 +2501,9 @@
     "parent_hpxml": "sample_files/base-bldgtype-mf-whole-building.xml"
   },
   "sample_files/base-bldgtype-mf-whole-building-vehicle-ev-charger.xml": {
+    "parent_hpxml": "sample_files/base-bldgtype-mf-whole-building.xml"
+  },
+  "sample_files/base-bldgtype-mf-whole-building-pv-battery.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-whole-building.xml"
   },
   "sample_files/base-pv.xml": {

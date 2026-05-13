@@ -79,7 +79,7 @@ The soil and moisture type.
 
 - **Required:** ``false``
 
-- **Choices:** `Unknown`, `Clay, Dry`, `Clay, Mixed`, `Clay, Wet`, `Gravel, Dry`, `Gravel, Mixed`, `Gravel, Wet`, `Loam, Dry`, `Loam, Mixed`, `Loam, Wet`, `Sand, Dry`, `Sand, Mixed`, `Sand, Wet`, `Silt, Dry`, `Silt, Mixed`, `Silt, Wet`, `0.5 Btu/hr-ft-F`, `0.8 Btu/hr-ft-F`, `1.1 Btu/hr-ft-F`, `1.4 Btu/hr-ft-F`, `1.7 Btu/hr-ft-F`, `2.0 Btu/hr-ft-F`, `2.3 Btu/hr-ft-F`, `2.6 Btu/hr-ft-F`, `Detailed Example: Sand, Dry, 0.03 Diffusivity`
+- **Choices:** `Unknown`, `Unknown, Dry`, `Unknown, Mixed`, `Unknown, Wet`, `Clay, Dry`, `Clay, Mixed`, `Clay, Wet`, `Gravel, Dry`, `Gravel, Mixed`, `Gravel, Wet`, `Loam, Dry`, `Loam, Mixed`, `Loam, Wet`, `Sand, Dry`, `Sand, Mixed`, `Sand, Wet`, `Silt, Dry`, `Silt, Mixed`, `Silt, Wet`, `Other, Dry`, `Other, Mixed`, `Other, Wet`, `0.5 Btu/hr-ft-F`, `0.8 Btu/hr-ft-F`, `1.1 Btu/hr-ft-F`, `1.4 Btu/hr-ft-F`, `1.7 Btu/hr-ft-F`, `2.0 Btu/hr-ft-F`, `2.3 Btu/hr-ft-F`, `2.6 Btu/hr-ft-F`, `Detailed Example: Sand, Dry, 0.03 Diffusivity`
 
 <br/>
 
@@ -1023,7 +1023,7 @@ The location of the water heater. Defaults based on the foundation/garage type.
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `Conditioned Space`, `Basement`, `Garage`, `Crawlspace`, `Attic`, `Other Heated Space`, `Outside`
+- **Choices:** `Default`, `Conditioned Space`, `Basement`, `Garage`, `Crawlspace`, `Attic`, `SFA/MF Other Heated Space`, `Outside`
 
 <br/>
 
@@ -1463,7 +1463,7 @@ Select an advanced research feature to use in the model, if desired.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Temperature Capacitance Multiplier, 1`, `Temperature Capacitance Multiplier, 4`, `Temperature Capacitance Multiplier, 10`, `Temperature Capacitance Multiplier, 15`, `On/Off Thermostat Deadband, 1F`, `On/Off Thermostat Deadband, 2F`, `On/Off Thermostat Deadband, 3F`, `Heat Pump Backup Staging, 5 kW`, `Heat Pump Backup Staging, 10 kW`, `Experimental Ground-to-Air Heat Pump Model`, `HVAC Allow Increased Fixed Capacities`
+- **Choices:** `None`, `Temperature Capacitance Multiplier, 1`, `Temperature Capacitance Multiplier, 4`, `Temperature Capacitance Multiplier, 10`, `Temperature Capacitance Multiplier, 15`, `On/Off Thermostat Deadband, 1F`, `On/Off Thermostat Deadband, 2F`, `On/Off Thermostat Deadband, 3F`, `Latent Degradation Model w/ Blower-Off Delay, 0 sec`, `Latent Degradation Model w/ Blower-Off Delay, 45 sec`, `Latent Degradation Model w/ Blower-Off Delay, 90 sec`, `Heat Pump Backup Staging, 5 kW`, `Heat Pump Backup Staging, 10 kW`, `Experimental Ground-to-Air Heat Pump Model`, `HVAC Allow Increased Fixed Capacities`
 
 <br/>
 
@@ -1476,7 +1476,7 @@ Select a second advanced research feature to use in the model, if desired.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Temperature Capacitance Multiplier, 1`, `Temperature Capacitance Multiplier, 4`, `Temperature Capacitance Multiplier, 10`, `Temperature Capacitance Multiplier, 15`, `On/Off Thermostat Deadband, 1F`, `On/Off Thermostat Deadband, 2F`, `On/Off Thermostat Deadband, 3F`, `Heat Pump Backup Staging, 5 kW`, `Heat Pump Backup Staging, 10 kW`, `Experimental Ground-to-Air Heat Pump Model`, `HVAC Allow Increased Fixed Capacities`
+- **Choices:** `None`, `Temperature Capacitance Multiplier, 1`, `Temperature Capacitance Multiplier, 4`, `Temperature Capacitance Multiplier, 10`, `Temperature Capacitance Multiplier, 15`, `On/Off Thermostat Deadband, 1F`, `On/Off Thermostat Deadband, 2F`, `On/Off Thermostat Deadband, 3F`, `Latent Degradation Model w/ Blower-Off Delay, 0 sec`, `Latent Degradation Model w/ Blower-Off Delay, 45 sec`, `Latent Degradation Model w/ Blower-Off Delay, 90 sec`, `Heat Pump Backup Staging, 5 kW`, `Heat Pump Backup Staging, 10 kW`, `Experimental Ground-to-Air Heat Pump Model`, `HVAC Allow Increased Fixed Capacities`
 
 <br/>
 

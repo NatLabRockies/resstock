@@ -309,7 +309,7 @@
                 <Units>AFUE</Units>
                 <Value>0.95</Value>
               </BackupAnnualHeatingEfficiency>
-              <BackupHeatingCapacity>34121.0</BackupHeatingCapacity>
+              <BackupHeatingCapacity>60000.0</BackupHeatingCapacity>
               <BackupHeatingLockoutTemperature>45.0</BackupHeatingLockoutTemperature>
               <FractionHeatLoadServed>1.0</FractionHeatLoadServed>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>

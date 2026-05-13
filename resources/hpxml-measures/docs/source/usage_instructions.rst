@@ -8,13 +8,13 @@ Setup
 
 To get started:
 
-#. Download `OpenStudio 3.11.0 <https://github.com/NREL/OpenStudio/releases/tag/v3.11.0>`_ and install the Command Line Interface/EnergyPlus components, or use the `nrel/openstudio docker image <https://hub.docker.com/r/nrel/openstudio>`_.
-#. Download the `latest release <https://github.com/NREL/OpenStudio-HPXML/releases>`_.
+#. Download `OpenStudio 3.11.0 <https://github.com/NatLabRockies/OpenStudio/releases/tag/v3.11.0>`_ and install the Command Line Interface/EnergyPlus components, or use the `nrel/openstudio docker image <https://hub.docker.com/r/nrel/openstudio>`_.
+#. Download the `latest release <https://github.com/NatLabRockies/OpenStudio-HPXML/releases>`_.
 
 Running
 -------
 
-To programatically run simulations, it's recommended to use the OpenStudio `Command Line Interface <http://nrel.github.io/OpenStudio-user-documentation/reference/command_line_interface/>`_.
+To programatically run simulations, it's recommended to use the OpenStudio `Command Line Interface <http://natlabrockies.github.io/OpenStudio-user-documentation/reference/command_line_interface/>`_.
 Two general approaches (basic and advanced) for running via the CLI are described below.
 The OpenStudio measures can also be run from user interfaces (e.g., the OpenStudio Application or OpenStudio Parametric Analysis Tool (PAT)).
 
@@ -40,7 +40,7 @@ Basic Run
 | ``openstudio workflow/run_simulation.rb -x workflow/sample_files/base.xml --monthly fuels --hourly temperatures --hourly 'Zone People Occupant Count'``
 | ``openstudio workflow/run_simulation.rb -x workflow/sample_files/base.xml --monthly fuels --hourly temperatures --hourly 'MainsWater:Facility'``
 | ``openstudio workflow/run_simulation.rb -x workflow/sample_files/base.xml --hourly ALL --output-format csv_dview``
-| The last command will create a timeseries CSV output file that can be visualized by `DView <https://github.com/NREL/wex/wiki/DView>`_ (available for download `here <https://beopt.nrel.gov>`_).
+| The last command will create a timeseries CSV output file that can be visualized by `DView <https://github.com/NatLabRockies/wex/wiki/DView>`_ (available for download `here <https://www.nlr.gov/buildings/beopt>`_).
 
 | You can also add stochastic occupancy schedules as part of the simulation:
 | ``openstudio workflow/run_simulation.rb -x workflow/sample_files/base.xml --add-stochastic-schedules``
@@ -56,7 +56,7 @@ Run ``openstudio workflow/run_simulation.rb -h`` to see all available commands/a
 Advanced Run
 ~~~~~~~~~~~~
 
-If additional flexibility is desired (e.g., specifying individual measure arguments, including additional OpenStudio measures to run alongside this measure in a workflow, etc.), create an `OpenStudio Workflow (OSW) <https://nrel.github.io/OpenStudio-user-documentation/reference/command_line_interface/#osw-structure>`_ file.
+If additional flexibility is desired (e.g., specifying individual measure arguments, including additional OpenStudio measures to run alongside this measure in a workflow, etc.), create an `OpenStudio Workflow (OSW) <https://natlabrockies.github.io/OpenStudio-user-documentation/reference/command_line_interface/#osw-structure>`_ file.
 The OSW is a JSON file that will specify all the OpenStudio measures (and their arguments) to be run sequentially.
 A template OSW that simply runs the HPXMLtoOpenStudio, ReportSimulationOutput, and ReportUtilityBills measures on the ``workflow/sample_files/base.xml`` file can be found at ``workflow/template-run-hpxml.osw``.
 

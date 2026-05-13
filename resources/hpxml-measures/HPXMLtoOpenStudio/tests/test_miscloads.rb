@@ -212,21 +212,16 @@ class HPXMLtoOpenStudioMiscLoadsTest < Minitest::Test
      HPXML::FuelLoadTypeLighting].each do |fuel_load_type|
       hpxml_bldg.fuel_loads.add(id: "FuelLoad#{hpxml_bldg.fuel_loads.size + 1}",
                                 fuel_type: HPXML::FuelTypeNaturalGas,
-                                fuel_load_type: fuel_load_type,
-                                therm_per_year: 100)
+                                fuel_load_type: fuel_load_type)
     end
     hpxml_bldg.pools.add(id: "Pool#{hpxml_bldg.pools.size + 1}",
                          type: HPXML::TypeUnknown,
                          pump_type: HPXML::TypeUnknown,
-                         heater_type: HPXML::HeaterTypeGas,
-                         heater_load_units: HPXML::UnitsThermPerYear)
+                         heater_type: HPXML::HeaterTypeGas)
     hpxml_bldg.permanent_spas.add(id: "PermanentSpa#{hpxml_bldg.permanent_spas.size + 1}",
                                   type: HPXML::TypeUnknown,
                                   pump_type: HPXML::TypeUnknown,
-                                  pump_kwh_per_year: 100,
-                                  heater_type: HPXML::HeaterTypeElectricResistance,
-                                  heater_load_units: HPXML::UnitsKwhPerYear,
-                                  heater_load_value: 100)
+                                  heater_type: HPXML::HeaterTypeElectricResistance)
 
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
@@ -253,22 +248,22 @@ class HPXMLtoOpenStudioMiscLoadsTest < Minitest::Test
 
     # Check pool pump
     kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscPoolPump)
-    refute_equal(0, kwh_yr)
+    assert_equal(0, kwh_yr)
     assert_equal(0, therm_yr)
 
     # Check pool heater
     kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscPoolHeater)
     assert_equal(0, kwh_yr)
-    refute_equal(0, therm_yr)
+    assert_equal(0, therm_yr)
 
     # Check permanent spa pump
     kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscPermanentSpaPump)
-    refute_equal(0, kwh_yr)
+    assert_equal(0, kwh_yr)
     assert_equal(0, therm_yr)
 
     # Check permanent spa heater
     kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscPermanentSpaHeater)
-    refute_equal(0, kwh_yr)
+    assert_equal(0, kwh_yr)
     assert_equal(0, therm_yr)
 
     # Check grill
@@ -285,6 +280,103 @@ class HPXMLtoOpenStudioMiscLoadsTest < Minitest::Test
     kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscFireplace)
     assert_equal(0, kwh_yr)
     assert_equal(0, therm_yr)
+  end
+
+  def test_operational_0_occupants_kwh_or_therm_per_year
+    # Test that any provided kWh/yr or therm/yr values are not overridden
+    args_hash = {}
+    args_hash['hpxml_path'] = @tmp_hpxml_path
+    hpxml, hpxml_bldg = _create_hpxml('base-residents-0.xml')
+    [HPXML::PlugLoadTypeElectricVehicleCharging,
+     HPXML::PlugLoadTypeWellPump].each do |plug_load_type|
+      hpxml_bldg.plug_loads.add(id: "PlugLoad#{hpxml_bldg.plug_loads.size + 1}",
+                                plug_load_type: plug_load_type)
+    end
+    hpxml_bldg.plug_loads.each do |plug_load|
+      plug_load.kwh_per_year = 100
+    end
+    [HPXML::FuelLoadTypeFireplace,
+     HPXML::FuelLoadTypeGrill,
+     HPXML::FuelLoadTypeLighting].each do |fuel_load_type|
+      hpxml_bldg.fuel_loads.add(id: "FuelLoad#{hpxml_bldg.fuel_loads.size + 1}",
+                                fuel_type: HPXML::FuelTypeNaturalGas,
+                                fuel_load_type: fuel_load_type)
+    end
+    hpxml_bldg.fuel_loads.each do |fuel_load|
+      fuel_load.therm_per_year = 100
+    end
+    hpxml_bldg.pools.add(id: "Pool#{hpxml_bldg.pools.size + 1}",
+                         type: HPXML::TypeUnknown,
+                         pump_type: HPXML::TypeUnknown,
+                         heater_type: HPXML::HeaterTypeGas,
+                         pump_kwh_per_year: 100,
+                         heater_load_units: HPXML::UnitsThermPerYear,
+                         heater_load_value: 100)
+    hpxml_bldg.permanent_spas.add(id: "PermanentSpa#{hpxml_bldg.permanent_spas.size + 1}",
+                                  type: HPXML::TypeUnknown,
+                                  pump_type: HPXML::TypeUnknown,
+                                  heater_type: HPXML::HeaterTypeElectricResistance,
+                                  pump_kwh_per_year: 100,
+                                  heater_load_units: HPXML::UnitsKwhPerYear,
+                                  heater_load_value: 100)
+
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
+
+    # Check misc plug loads
+    kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscPlugLoads)
+    assert_in_delta(100, kwh_yr, 1.0)
+    assert_equal(0, therm_yr)
+
+    # Check television
+    kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscTelevision)
+    assert_in_delta(100, kwh_yr, 1.0)
+    assert_equal(0, therm_yr)
+
+    # Check vehicle
+    kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscElectricVehicleCharging)
+    assert_in_delta(100, kwh_yr, 1.0)
+    assert_equal(0, therm_yr)
+
+    # Check well pump
+    kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscWellPump)
+    assert_in_delta(100, kwh_yr, 1.0)
+    assert_equal(0, therm_yr)
+
+    # Check pool pump
+    kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscPoolPump)
+    assert_in_delta(100, kwh_yr, 1.0)
+    assert_equal(0, therm_yr)
+
+    # Check pool heater
+    kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscPoolHeater)
+    assert_equal(0, kwh_yr)
+    assert_in_delta(100, therm_yr, 1.0)
+
+    # Check permanent spa pump
+    kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscPermanentSpaPump)
+    assert_in_delta(100, kwh_yr, 1.0)
+    assert_equal(0, therm_yr)
+
+    # Check permanent spa heater
+    kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscPermanentSpaHeater)
+    assert_in_delta(100, kwh_yr, 1.0)
+    assert_equal(0, therm_yr)
+
+    # Check grill
+    kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscGrill)
+    assert_equal(0, kwh_yr)
+    assert_in_delta(100, therm_yr, 1.0)
+
+    # Check lighting
+    kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscLighting)
+    assert_equal(0, kwh_yr)
+    assert_in_delta(100, therm_yr, 1.0)
+
+    # Check fireplace
+    kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscFireplace)
+    assert_equal(0, kwh_yr)
+    assert_in_delta(100, therm_yr, 1.0)
   end
 
   def test_operational_5point5_occupants
@@ -472,7 +564,7 @@ class HPXMLtoOpenStudioMiscLoadsTest < Minitest::Test
 
   def _test_measure(args_hash)
     # create an instance of the measure
-    measure = HPXMLtoOpenStudio.new
+    measure = HPXMLToOpenStudio.new
 
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     model = OpenStudio::Model::Model.new

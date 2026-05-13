@@ -99,6 +99,16 @@
             <AttachedToFoundationWall idref='FoundationWall1'/>
             <AttachedToSlab idref='Slab1'/>
           </Foundation>
+          <Foundation>
+            <SystemIdentifier id='Foundation2'/>
+            <FoundationType>
+              <Garage/>
+            </FoundationType>
+            <AttachedToWall idref='Wall3'/>
+            <AttachedToWall idref='Wall4'/>
+            <AttachedToFloor idref='Floor2'/>
+            <AttachedToSlab idref='Slab2'/>
+          </Foundation>
         </Foundations>
         <Roofs>
           <Roof>

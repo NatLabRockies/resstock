@@ -6,22 +6,22 @@ Resources
 HPXML Resources
 ---------------
 
-- `HPXML Toolbox Website <https://hpxml.nrel.gov/>`_
+- `HPXML Toolbox Website <https://hpxml.nlr.gov/>`_
 
-- `HPXML Python Version Translator <https://github.com/NREL/hpxml_version_translator>`_
+- `HPXML Python Version Translator <https://github.com/NatLabRockies/hpxml_version_translator>`_
 
-- `HPXML Calibration <https://github.com/NREL/OpenStudio-HPXML-calibration>`_
+- `HPXML Calibration <https://github.com/NatLabRockies/OpenStudio-HPXML-calibration>`_
 
 OpenStudio Resources
 --------------------
 
 - `OpenStudio website <https://openstudio.net/>`_
 
-- `OpenStudio Measure Writer's Guide <https://nrel.github.io/OpenStudio-user-documentation/reference/measure_writing_guide/>`_
+- `OpenStudio Measure Writer's Guide <https://natlabrockies.github.io/OpenStudio-user-documentation/reference/measure_writing_guide/>`_
 
 - `OpenStudio SDK documentation <https://openstudio-sdk-documentation.s3.amazonaws.com/index.html>`_
 
-- `OpenStudio Command Line Interface <https://nrel.github.io/OpenStudio-user-documentation/reference/command_line_interface/>`_
+- `OpenStudio Command Line Interface <https://natlabrockies.github.io/OpenStudio-user-documentation/reference/command_line_interface/>`_
 
 EnergyPlus Resources
 --------------------

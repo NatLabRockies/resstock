@@ -1,0 +1,261 @@
+year,state,fuel,rate_dollar_per_mmbtu
+2024,AK,fuel oil,24.52
+2024,AK,electricity,72.75
+2024,AK,natural gas,11.69
+2024,AK,propane,32.98
+2024,AK,wood,14.07
+2024,AL,fuel oil,19.81
+2024,AL,electricity,44.48
+2024,AL,natural gas,18.09
+2024,AL,propane,27.31
+2024,AL,wood,10.46
+2024,AR,fuel oil,20.28
+2024,AR,electricity,36.1
+2024,AR,natural gas,15.77
+2024,AR,propane,25.93
+2024,AR,wood,10.46
+2024,AZ,fuel oil,25.88
+2024,AZ,electricity,43.69
+2024,AZ,natural gas,19.92
+2024,AZ,propane,31.25
+2024,AZ,wood,14.07
+2024,CA,fuel oil,26.28
+2024,CA,electricity,93.69
+2024,CA,natural gas,18.44
+2024,CA,propane,30.89
+2024,CA,wood,14.07
+2024,CO,fuel oil,22.66
+2024,CO,electricity,43.72
+2024,CO,natural gas,10.09
+2024,CO,propane,24.16
+2024,CO,wood,14.07
+2024,CT,fuel oil,21.64
+2024,CT,electricity,84.25
+2024,CT,natural gas,16.36
+2024,CT,propane,42.56
+2024,CT,wood,8.38
+2024,DC,fuel oil,25.46
+2024,DC,electricity,51.9
+2024,DC,natural gas,16.03
+2024,DC,propane,36.43
+2020,DC,wood,7.04
+2024,DE,fuel oil,25.63
+2024,DE,electricity,48.55
+2024,DE,natural gas,14.29
+2024,DE,propane,34.96
+2024,DE,wood,10.46
+2024,FL,fuel oil,24.54
+2024,FL,electricity,41.43
+2024,FL,natural gas,24.66
+2024,FL,propane,43.2
+2024,FL,wood,10.46
+2024,GA,fuel oil,24.08
+2024,GA,electricity,41.27
+2024,GA,natural gas,17.66
+2024,GA,propane,32.44
+2024,GA,wood,10.46
+2024,HI,fuel oil,25.49
+2024,HI,electricity,125.63
+2024,HI,natural gas,53.25
+2024,HI,propane,49.95
+2024,HI,wood,14.07
+2024,IA,fuel oil,23.32
+2024,IA,electricity,39.28
+2024,IA,natural gas,9.69
+2024,IA,propane,16.67
+2024,IA,wood,10.56
+2024,ID,fuel oil,23.34
+2024,ID,electricity,33.76
+2024,ID,natural gas,8.25
+2024,ID,propane,26.48
+2024,ID,wood,14.07
+2024,IL,fuel oil,24.07
+2024,IL,electricity,46.51
+2024,IL,natural gas,10.64
+2024,IL,propane,19.96
+2024,IL,wood,10.56
+2024,IN,fuel oil,23.82
+2024,IN,electricity,43.28
+2024,IN,natural gas,8.99
+2024,IN,propane,24.07
+2024,IN,wood,10.56
+2024,KS,fuel oil,24.13
+2024,KS,electricity,41.47
+2024,KS,natural gas,12.65
+2024,KS,propane,19.76
+2024,KS,wood,10.56
+2024,KY,fuel oil,23.63
+2024,KY,electricity,37.47
+2024,KY,natural gas,12.85
+2024,KY,propane,27.15
+2024,KY,wood,10.46
+2024,LA,fuel oil,19.89
+2024,LA,electricity,34.38
+2024,LA,natural gas,16.04
+2024,LA,propane,30.49
+2024,LA,wood,10.46
+2024,MA,fuel oil,23.29
+2024,MA,electricity,86.02
+2024,MA,natural gas,21.27
+2024,MA,propane,41.72
+2024,MA,wood,8.38
+2024,MD,fuel oil,25.17
+2024,MD,electricity,52.34
+2024,MD,natural gas,15.55
+2024,MD,propane,36.61
+2024,MD,wood,10.46
+2024,ME,fuel oil,23.73
+2024,ME,electricity,71.18
+2024,ME,natural gas,18.17
+2024,ME,propane,34.26
+2024,ME,wood,8.38
+2024,MI,fuel oil,22.81
+2024,MI,electricity,56.56
+2024,MI,natural gas,10.21
+2024,MI,propane,23.05
+2024,MI,wood,10.56
+2024,MN,fuel oil,26.1
+2024,MN,electricity,45.28
+2024,MN,natural gas,10.03
+2024,MN,propane,19.91
+2024,MN,wood,10.56
+2024,MO,fuel oil,23.61
+2024,MO,electricity,37.84
+2024,MO,natural gas,16.49
+2024,MO,propane,21.3
+2024,MO,wood,10.56
+2024,MS,fuel oil,20.38
+2024,MS,electricity,39.26
+2024,MS,natural gas,15.03
+2024,MS,propane,29.42
+2024,MS,wood,10.46
+2024,MT,fuel oil,22.02
+2024,MT,electricity,37.11
+2024,MT,natural gas,7.77
+2024,MT,propane,22.28
+2024,MT,wood,14.07
+2024,NC,fuel oil,23.28
+2024,NC,electricity,41.42
+2024,NC,natural gas,15.82
+2024,NC,propane,35.57
+2024,NC,wood,10.46
+2024,ND,fuel oil,23.79
+2024,ND,electricity,33.73
+2024,ND,natural gas,8.44
+2024,ND,propane,17.33
+2024,ND,wood,10.56
+2024,NE,fuel oil,21.89
+2024,NE,electricity,33.79
+2024,NE,natural gas,10.06
+2024,NE,propane,17.8
+2024,NE,wood,10.56
+2024,NH,fuel oil,24.23
+2024,NH,electricity,68.59
+2024,NH,natural gas,18.09
+2024,NH,propane,33.0
+2024,NH,wood,8.38
+2024,NJ,fuel oil,24.99
+2024,NJ,electricity,56.69
+2024,NJ,natural gas,12.72
+2024,NJ,propane,34.8
+2024,NJ,wood,8.38
+2024,NM,fuel oil,19.98
+2024,NM,electricity,41.61
+2024,NM,natural gas,8.83
+2024,NM,propane,27.3
+2024,NM,wood,14.07
+2024,NV,fuel oil,26.18
+2024,NV,electricity,43.95
+2024,NV,natural gas,17.91
+2024,NV,propane,31.51
+2024,NV,wood,14.07
+2024,NY,fuel oil,23.11
+2024,NY,electricity,71.6
+2024,NY,natural gas,16.03
+2024,NY,propane,34.35
+2024,NY,wood,8.38
+2024,OH,fuel oil,24.71
+2024,OH,electricity,46.85
+2024,OH,natural gas,12.89
+2024,OH,propane,27.54
+2024,OH,wood,10.56
+2024,OK,fuel oil,23.68
+2024,OK,electricity,35.86
+2024,OK,natural gas,13.54
+2024,OK,propane,20.89
+2024,OK,wood,10.46
+2024,OR,fuel oil,24.51
+2024,OR,electricity,43.08
+2024,OR,natural gas,14.6
+2024,OR,propane,28.74
+2024,OR,wood,14.07
+2024,PA,fuel oil,25.15
+2024,PA,electricity,52.07
+2024,PA,natural gas,13.12
+2024,PA,propane,28.79
+2024,PA,wood,8.38
+2024,RI,fuel oil,22.61
+2024,RI,electricity,83.97
+2024,RI,natural gas,21.08
+2024,RI,propane,38.79
+2024,RI,wood,8.38
+2024,SC,fuel oil,24.54
+2024,SC,electricity,41.71
+2024,SC,natural gas,16.37
+2024,SC,propane,36.97
+2024,SC,wood,10.46
+2024,SD,fuel oil,23.61
+2024,SD,electricity,37.69
+2024,SD,natural gas,8.57
+2024,SD,propane,19.41
+2024,SD,wood,10.56
+2024,TN,fuel oil,24.24
+2024,TN,electricity,36.41
+2024,TN,natural gas,10.32
+2024,TN,propane,25.75
+2024,TN,wood,10.46
+2024,TX,fuel oil,20.24
+2024,TX,electricity,43.78
+2024,TX,natural gas,17.64
+2024,TX,propane,28.63
+2024,TX,wood,10.46
+2024,US,fuel oil,23.75
+2024,US,electricity,48.3
+2024,US,natural gas,13.88
+2024,US,propane,27.08
+2024,US,wood,10.45
+2024,UT,fuel oil,23.36
+2024,UT,electricity,35.8
+2024,UT,natural gas,12.55
+2024,UT,propane,25.36
+2024,UT,wood,14.07
+2024,VA,fuel oil,25.19
+2024,VA,electricity,42.23
+2024,VA,natural gas,14.64
+2024,VA,propane,36.01
+2024,VA,wood,10.46
+2024,VT,fuel oil,26.53
+2024,VT,electricity,64.2
+2024,VT,natural gas,16.61
+2024,VT,propane,33.0
+2024,VT,wood,8.38
+2024,WA,fuel oil,26.1
+2024,WA,electricity,34.87
+2024,WA,natural gas,11.65
+2024,WA,propane,26.3
+2024,WA,wood,14.07
+2024,WI,fuel oil,22.37
+2024,WI,electricity,50.37
+2024,WI,natural gas,9.65
+2024,WI,propane,18.91
+2024,WI,wood,10.56
+2024,WV,fuel oil,24.54
+2024,WV,electricity,44.18
+2024,WV,natural gas,14.15
+2024,WV,propane,36.34
+2024,WV,wood,10.46
+2024,WY,fuel oil,22.9
+2024,WY,electricity,36.54
+2024,WY,natural gas,11.7
+2024,WY,propane,24.69
+2024,WY,wood,14.07

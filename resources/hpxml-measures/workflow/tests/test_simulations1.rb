@@ -18,9 +18,9 @@ class WorkflowSimulations1Test < Minitest::Test
     sample_files_dir = File.absolute_path(File.join(File.dirname(__FILE__), '..', 'sample_files'))
     real_homes_dir = File.absolute_path(File.join(File.dirname(__FILE__), '..', 'real_homes'))
 
-    # Run simulations BEFORE base-hvac-furnace*.xml; the remaining simulations are run using test_simulations2.rb
+    # Run simulations BEFORE base-hvac-install-quality*.xml; the remaining simulations are run using test_simulations2.rb
     # This distributes the simulations across two CI jobs for faster turnaround time.
-    split_at_file = Dir["#{sample_files_dir}/*.xml"].sort.find_index { |f| f.include? 'base-hvac-furnace' }
+    split_at_file = Dir["#{sample_files_dir}/*.xml"].sort.find_index { |f| f.include? 'base-hvac-install-quality' }
     fail 'Unexpected error.' if split_at_file.nil?
 
     xmls = []

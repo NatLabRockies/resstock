@@ -70,6 +70,14 @@ def run_hpxml_workflow(rundir, measures, measures_dir, debug: false, run_measure
     end
   end
 
+  # Remove sizing objects that we don't use
+  # Remove this case when https://github.com/NatLabRockies/OpenStudio/issues/5601 is addressed
+  ['Sizing:Parameters', 'Sizing:System'].each do |sizing_type|
+    workspace.getObjectsByType(sizing_type.to_IddObjectType).each do |sizing_obj|
+      sizing_obj.remove
+    end
+  end
+
   if not success
     print "Creating input unsuccessful.\n"
     print "See #{File.join(rundir, 'run.log')} for details.\n"

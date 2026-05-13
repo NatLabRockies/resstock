@@ -1,6 +1,6 @@
-Cambium data obtained from https://data.nrel.gov/system/files/183/Cambium21_LRMER_GEAregions.xlsx
+Cambium data obtained from https://data.nlr.gov/system/files/183/Cambium21_LRMER_GEAregions.xlsx
 
-- User Inputs		
+- User Inputs
 - Emission: CO2e
 - Emission stage: Combined
 - Start year: 2023

@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>18fd7071-fc5f-4fd8-b5ce-d43eef1d9dc3</version_id>
-  <version_modified>2026-05-08T21:33:05Z</version_modified>
+  <version_id>23c68d02-3438-4a8b-a2bb-c165a08cc355</version_id>
+  <version_modified>2026-05-09T02:45:11Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -161,6 +161,18 @@
           <display_name>Unknown</display_name>
         </choice>
         <choice>
+          <value>Unknown, Dry</value>
+          <display_name>Unknown, Dry</display_name>
+        </choice>
+        <choice>
+          <value>Unknown, Mixed</value>
+          <display_name>Unknown, Mixed</display_name>
+        </choice>
+        <choice>
+          <value>Unknown, Wet</value>
+          <display_name>Unknown, Wet</display_name>
+        </choice>
+        <choice>
           <value>Clay, Dry</value>
           <display_name>Clay, Dry</display_name>
         </choice>
@@ -219,6 +231,18 @@
         <choice>
           <value>Silt, Wet</value>
           <display_name>Silt, Wet</display_name>
+        </choice>
+        <choice>
+          <value>Other, Dry</value>
+          <display_name>Other, Dry</display_name>
+        </choice>
+        <choice>
+          <value>Other, Mixed</value>
+          <display_name>Other, Mixed</display_name>
+        </choice>
+        <choice>
+          <value>Other, Wet</value>
+          <display_name>Other, Wet</display_name>
         </choice>
         <choice>
           <value>0.5 Btu/hr-ft-F</value>
@@ -6833,8 +6857,8 @@
           <display_name>Attic</display_name>
         </choice>
         <choice>
-          <value>Other Heated Space</value>
-          <display_name>Other Heated Space</display_name>
+          <value>SFA/MF Other Heated Space</value>
+          <display_name>SFA/MF Other Heated Space</display_name>
         </choice>
         <choice>
           <value>Outside</value>
@@ -10976,6 +11000,18 @@
           <display_name>On/Off Thermostat Deadband, 3F</display_name>
         </choice>
         <choice>
+          <value>Latent Degradation Model w/ Blower-Off Delay, 0 sec</value>
+          <display_name>Latent Degradation Model w/ Blower-Off Delay, 0 sec</display_name>
+        </choice>
+        <choice>
+          <value>Latent Degradation Model w/ Blower-Off Delay, 45 sec</value>
+          <display_name>Latent Degradation Model w/ Blower-Off Delay, 45 sec</display_name>
+        </choice>
+        <choice>
+          <value>Latent Degradation Model w/ Blower-Off Delay, 90 sec</value>
+          <display_name>Latent Degradation Model w/ Blower-Off Delay, 90 sec</display_name>
+        </choice>
+        <choice>
           <value>Heat Pump Backup Staging, 5 kW</value>
           <display_name>Heat Pump Backup Staging, 5 kW</display_name>
         </choice>
@@ -11033,6 +11069,18 @@
         <choice>
           <value>On/Off Thermostat Deadband, 3F</value>
           <display_name>On/Off Thermostat Deadband, 3F</display_name>
+        </choice>
+        <choice>
+          <value>Latent Degradation Model w/ Blower-Off Delay, 0 sec</value>
+          <display_name>Latent Degradation Model w/ Blower-Off Delay, 0 sec</display_name>
+        </choice>
+        <choice>
+          <value>Latent Degradation Model w/ Blower-Off Delay, 45 sec</value>
+          <display_name>Latent Degradation Model w/ Blower-Off Delay, 45 sec</display_name>
+        </choice>
+        <choice>
+          <value>Latent Degradation Model w/ Blower-Off Delay, 90 sec</value>
+          <display_name>Latent Degradation Model w/ Blower-Off Delay, 90 sec</display_name>
         </choice>
         <choice>
           <value>Heat Pump Backup Staging, 5 kW</value>
@@ -12626,7 +12674,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>3D353AD9</checksum>
+      <checksum>E019CB4F</checksum>
     </file>
     <file>
       <filename>test_hvac_load_flexibility.rb</filename>
@@ -12638,7 +12686,7 @@
       <filename>test_resstock_arguments_post_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>B579F1E7</checksum>
+      <checksum>3D920ABE</checksum>
     </file>
     <file>
       <filename>test_schema_error.osw</filename>

@@ -3,7 +3,7 @@
 HPXML Files
 ===========
 
-OpenStudio-HPXML requires a building description in an `HPXML file <https://hpxml.nrel.gov/>`_ format.
+OpenStudio-HPXML requires a building description in an `HPXML file <https://hpxml.nlr.gov/>`_ format.
 HPXML is an open data standard for collecting and transferring home energy data.
 Using HPXML files reduces the complexity and effort for software developers to leverage the EnergyPlus simulation engine.
 
@@ -43,13 +43,13 @@ There are a number of software tools that can generate HPXML files (and potentia
 .. note::
 
   Some software tools may generate older versions of HPXML or produce HPXML files that do not meet the input requirements.
-  In these cases, the HPXML file `may need to be updated <https://github.com/NREL/hpxml_version_translator>`_ or manually adjusted.
+  In these cases, the HPXML file `may need to be updated <https://github.com/NatLabRockies/hpxml_version_translator>`_ or manually adjusted.
 
 BuildResidentialHPXML measure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Another option to create an HPXML file is to use OpenStudio-HPXML's ``BuildResidentialHPXML`` measure.
-The measure uses high-level geometry inputs and simple option-based inputs that are specified through an `OpenStudio Workflow (OSW) <https://nrel.github.io/OpenStudio-user-documentation/reference/command_line_interface/#osw-structure>`_ file.
+The measure uses high-level geometry inputs and simple option-based inputs that are specified through an `OpenStudio Workflow (OSW) <https://natlabrockies.github.io/OpenStudio-user-documentation/reference/command_line_interface/#osw-structure>`_ file.
 The OSW is a JSON file that will specify all the OpenStudio measures (and their arguments) to be run sequentially.
 
 | Here's an example of creating an HPXML file (and not running the EnergyPlus model):

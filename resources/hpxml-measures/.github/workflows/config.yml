@@ -17,13 +17,13 @@ concurrency:
 env:
   OS_VERSION: "3.11.0"
   OS_SHA: 241b8abb4d
-  OS_URL: https://github.com/NREL/OpenStudio/releases/download
+  OS_URL: https://github.com/NatLabRockies/OpenStudio/releases/download
 
 jobs:
   run-unit-tests:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref }}
 
@@ -73,7 +73,7 @@ jobs:
           openstudio tasks.rb unit_tests
 
       - name: Store results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: workflow/tests/test_results
           name: results-unit-tests
@@ -89,7 +89,7 @@ jobs:
           for RST_FILE in docs/source/*.rst; do NUM_REFS=$(grep -F -o "[#]_" $RST_FILE | wc -l); NUM_FOOTNOTES=$(grep -F -o ".. [#]" $RST_FILE | wc -l); if [ $NUM_REFS != $NUM_FOOTNOTES ]; then echo "ERROR: Number of footnote references doesn't match number of footnotes in $RST_FILE." && exit 1; fi done
 
       - name: Save Docs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: documentation
           path: docs/_build/html/
@@ -97,7 +97,7 @@ jobs:
   run-workflow1-tests:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref }}
 
@@ -112,7 +112,7 @@ jobs:
           openstudio tasks.rb workflow_tests1
 
       - name: Store results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: workflow/tests/test_results
           name: results-workflow1-tests
@@ -120,7 +120,7 @@ jobs:
   run-workflow2-tests:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref }}
 
@@ -135,7 +135,7 @@ jobs:
           openstudio tasks.rb workflow_tests2
 
       - name: Store results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: workflow/tests/test_results
           name: results-workflow2-tests
@@ -143,7 +143,7 @@ jobs:
   run-windows-tests:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref }}
 
@@ -158,19 +158,19 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [run-unit-tests, run-workflow1-tests, run-workflow2-tests]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref }}
 
       - name: Download all results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: test_results
           pattern: results-*
           merge-multiple: true
 
       - name: Delete artifacts
-        uses: geekyeggo/delete-artifact@v5
+        uses: geekyeggo/delete-artifact@v6
         with:
           name: results-*
 
@@ -183,7 +183,7 @@ jobs:
           for csv in test_results/*1_*.csv; do csv2="${csv/1_/2_}"; csv_out="${csv/1_/_}"; python merge.py $csv $csv2 $csv_out; rm $csv; rm $csv2; done
 
       - name: Store results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: workflow/tests/test_results
           name: test_results
@@ -193,28 +193,28 @@ jobs:
     runs-on: ubuntu-24.04
     needs: merge-results
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.base.sha }}
 
       - name: Store base results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: workflow/tests/base_results
           name: base_results
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Download base results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: base_results
           name: base_results
 
       - name: Download feature results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: test_results
           name: test_results
@@ -234,7 +234,7 @@ jobs:
           python workflow/tests/compare.py -a visualize
 
       - name: Store comparisons
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: workflow/tests/comparisons
           name: comparisons
@@ -243,12 +243,12 @@ jobs:
     runs-on: ubuntu-24.04
     needs: merge-results
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref }}
 
       - name: Download feature results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: test_results
           name: test_results
@@ -264,7 +264,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "Latest results."
+            git commit -m "Latest results. [skip ci]"
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
