@@ -2390,8 +2390,10 @@ module Defaults
         set_hvac_heating_performance(heat_pump, hpxml_header)
 
         if heat_pump.geothermal_loop.nil?
-          hpxml_bldg.geothermal_loops.add(id: get_id('GeothermalLoop', hpxml_bldg.geothermal_loops, unit_num),
-                                          loop_configuration: HPXML::GeothermalLoopLoopConfigurationVertical)
+          if hpxml_bldg.geothermal_loops.empty? # If there are multiple GSHPs, assign them all to the same geothermal loop
+            hpxml_bldg.geothermal_loops.add(id: get_id('GeothermalLoop', hpxml_bldg.geothermal_loops, unit_num),
+                                            loop_config: HPXML::GeothermalLoopConfigVertical)
+          end
           heat_pump.geothermal_loop_idref = hpxml_bldg.geothermal_loops[-1].id
         end
 
@@ -2441,8 +2443,8 @@ module Defaults
         end
 
         if heat_pump.geothermal_loop.shank_spacing.nil?
-          hp_ap = heat_pump.additional_properties
-          heat_pump.geothermal_loop.shank_spacing = (hp_ap.u_tube_spacing + hp_ap.pipe_od).round(2) # Distance from center of pipe to center of pipe
+          gl_ap = heat_pump.geothermal_loop.additional_properties
+          heat_pump.geothermal_loop.shank_spacing = (gl_ap.u_tube_spacing + gl_ap.pipe_od).round(2) # Distance from center of pipe to center of pipe
           heat_pump.geothermal_loop.shank_spacing_isdefaulted = true
         end
       when HPXML::HVACTypeHeatPumpWaterLoopToAir
@@ -8624,47 +8626,47 @@ module Defaults
   # @param weather [WeatherFile] Weather object containing EPW information
   # @return [nil]
   def self.set_geothermal_loop_assumptions(heat_pump, weather)
-    hp_ap = heat_pump.additional_properties
     geothermal_loop = heat_pump.geothermal_loop
+    gl_ap = geothermal_loop.additional_properties
 
-    hp_ap.design_chw = [85.0, weather.design.CoolingDrybulb - 15.0, weather.data.DeepGroundAnnualTemp + 10.0].max # Temperature of water entering indoor coil, use 85F as lower bound
-    hp_ap.design_delta_t = 10.0
-    hp_ap.fluid_type = EPlus::FluidPropyleneGlycol
-    hp_ap.frac_glycol = 0.2 # This was changed from 0.3 to 0.2 -- more typical based on experts/spec sheets
-    if hp_ap.fluid_type == EPlus::FluidWater
-      hp_ap.design_hw = [45.0, weather.design.HeatingDrybulb + 35.0, weather.data.DeepGroundAnnualTemp - 10.0].max # Temperature of fluid entering indoor coil, use 45F as lower bound for water
+    gl_ap.design_chw = [85.0, weather.design.CoolingDrybulb - 15.0, weather.data.DeepGroundAnnualTemp + 10.0].max # Temperature of water entering indoor coil, use 85F as lower bound
+    gl_ap.design_delta_t = 10.0
+    gl_ap.fluid_type = EPlus::FluidPropyleneGlycol
+    gl_ap.frac_glycol = 0.2 # This was changed from 0.3 to 0.2 -- more typical based on experts/spec sheets
+    if gl_ap.fluid_type == EPlus::FluidWater
+      gl_ap.design_hw = [45.0, weather.design.HeatingDrybulb + 35.0, weather.data.DeepGroundAnnualTemp - 10.0].max # Temperature of fluid entering indoor coil, use 45F as lower bound for water
     else
-      hp_ap.design_hw = [35.0, weather.design.HeatingDrybulb + 35.0, weather.data.DeepGroundAnnualTemp - 10.0].min # Temperature of fluid entering indoor coil, use 35F as upper bound
+      gl_ap.design_hw = [35.0, weather.design.HeatingDrybulb + 35.0, weather.data.DeepGroundAnnualTemp - 10.0].min # Temperature of fluid entering indoor coil, use 35F as upper bound
     end
 
     # Pipe nominal size conversion to pipe outside diameter and inside diameter,
     # only pipe sizes <= 2" are used here with DR11 (dimension ratio)
     case geothermal_loop.pipe_diameter
     when 0.75 # 3/4" pipe
-      hp_ap.pipe_od = 1.050 # in
-      hp_ap.pipe_id = 0.859 # in
+      gl_ap.pipe_od = 1.050 # in
+      gl_ap.pipe_id = 0.859 # in
     when 1.0 # 1" pipe
-      hp_ap.pipe_od = 1.315 # in
-      hp_ap.pipe_id = 1.076 # in
+      gl_ap.pipe_od = 1.315 # in
+      gl_ap.pipe_id = 1.076 # in
     when 1.25 # 1-1/4" pipe
-      hp_ap.pipe_od = 1.660 # in
-      hp_ap.pipe_id = 1.358 # in
+      gl_ap.pipe_od = 1.660 # in
+      gl_ap.pipe_id = 1.358 # in
     else
       fail "Unexpected pipe size: #{geothermal_loop.pipe_diameter}"
     end
 
     # Calculate distance between pipes
-    hp_ap.u_tube_spacing_type = 'b' # Currently not exposed to the user
-    case hp_ap.u_tube_spacing_type
+    gl_ap.u_tube_spacing_type = 'b' # Currently not exposed to the user
+    case gl_ap.u_tube_spacing_type
     when 'as'
       # Two tubes, spaced 1/8” apart at the center of the borehole
-      hp_ap.u_tube_spacing = 0.125
+      gl_ap.u_tube_spacing = 0.125
     when 'b'
       # Two tubes equally spaced between the borehole edges
-      hp_ap.u_tube_spacing = 0.9661
+      gl_ap.u_tube_spacing = 0.9661
     when 'c'
       # Both tubes placed against outer edge of borehole
-      hp_ap.u_tube_spacing = geothermal_loop.bore_diameter - 2 * hp_ap.pipe_od
+      gl_ap.u_tube_spacing = geothermal_loop.bore_diameter - 2 * gl_ap.pipe_od
     end
   end
 end

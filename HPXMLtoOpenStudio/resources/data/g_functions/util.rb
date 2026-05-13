@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Downselect jsons found at https://gdr.openei.org/files/1325/g-function_library_1.0.zip.
+# See https://data.openei.org/submissions/7442 for more information.
 #
 # @param filepath [String] temporary file path to store downloaded g-function config json files
 # @return [Integer] total number of g-function config json files generated
@@ -30,6 +31,11 @@ def process_g_functions(filepath)
       add_m_n(json, json2, 8, '2_4')
       add_m_n(json, json2, 9, '3_3')
       add_m_n(json, json2, 10, '2_5')
+      add_m_n(json, json2, 11, '1_11')
+      add_m_n(json, json2, 12, '3_4')
+      add_m_n(json, json2, 13, '1_13')
+      add_m_n(json, json2, 14, '2_7')
+      add_m_n(json, json2, 15, '3_5')
       add_m_n(json, json2, 40, '5_8') # test case
     when 'L_configurations_5m_v1.0.json'
       add_m_n(json, json2, 4, '2_3')
@@ -39,24 +45,45 @@ def process_g_functions(filepath)
       add_m_n(json, json2, 8, '4_5')
       add_m_n(json, json2, 9, '5_5')
       add_m_n(json, json2, 10, '5_6')
+      add_m_n(json, json2, 11, '6_6')
+      add_m_n(json, json2, 12, '6_7')
+      add_m_n(json, json2, 13, '7_7')
+      add_m_n(json, json2, 14, '7_8')
+      add_m_n(json, json2, 15, '8_8')
     when 'C_configurations_5m_v1.0.json' # has key2
       add_m_n(json, json2, 7, '3_3', '1')
       add_m_n(json, json2, 9, '3_4', '1')
+      add_m_n(json, json2, 11, '4_4', '1')
+      add_m_n(json, json2, 13, '4_5', '1')
+      add_m_n(json, json2, 14, '5_5', '2')
+      add_m_n(json, json2, 15, '5_5', '1')
     when 'LopU_configurations_5m_v1.0.json'
       add_m_n(json, json2, 6, '3_3', '1')
       add_m_n(json, json2, 7, '3_4', '2')
       add_m_n(json, json2, 8, '3_4', '1')
       add_m_n(json, json2, 9, '4_4', '1')
       add_m_n(json, json2, 10, '3_5', '1')
+      add_m_n(json, json2, 11, '4_5', '1')
+      add_m_n(json, json2, 12, '5_5', '1')
+      add_m_n(json, json2, 13, '5_6', '2')
+      add_m_n(json, json2, 14, '5_6', '1')
+      add_m_n(json, json2, 15, '6_6', '1')
     when 'Open_configurations_5m_v1.0.json' # has key2
       add_m_n(json, json2, 8, '3_3', '1')
       add_m_n(json, json2, 10, '3_4', '1')
+      add_m_n(json, json2, 12, '4_4', '1')
+      add_m_n(json, json2, 14, '4_5', '1')
     when 'U_configurations_5m_v1.0.json' # has key2
       add_m_n(json, json2, 7, '3_3', '1')
       add_m_n(json, json2, 9, '3_4', '1')
       add_m_n(json, json2, 10, '4_4', '1')
-    when 'zoned_rectangle_5m_v1.0.json' # there are none for which num_boreholes less than or equal to 10
-      # add_m_n(json, json2, 17, '5_5', '1_1')
+      add_m_n(json, json2, 11, '3_5', '1')
+      add_m_n(json, json2, 12, '4_5', '1')
+      add_m_n(json, json2, 13, '5_5', '1')
+      add_m_n(json, json2, 14, '4_6', '1')
+      add_m_n(json, json2, 15, '3_7', '1')
+    when 'zoned_rectangle_5m_v1.0.json'
+      # requires larger number of boreholes and is unusual for residential application, skip it
     else
       fail "Unrecognized config_json: #{config_json}"
     end

@@ -585,6 +585,7 @@ module HVAC
     obj_name = Constants::ObjectTypeGroundSourceHeatPump
 
     geothermal_loop = heat_pump.geothermal_loop
+    gl_ap = geothermal_loop.additional_properties
     hp_ap = heat_pump.additional_properties
 
     htg_cfm = hp_ap.heating_actual_airflow_cfm
@@ -592,9 +593,9 @@ module HVAC
     htg_air_flow_rated = calc_rated_airflow(heat_pump.heating_capacity, hp_ap.heat_rated_cfm_per_ton, 'm^3/s')
     clg_air_flow_rated = calc_rated_airflow(heat_pump.cooling_capacity, hp_ap.cool_rated_cfm_per_ton, 'm^3/s')
 
-    if hp_ap.frac_glycol == 0
-      hp_ap.fluid_type = EPlus::FluidWater
-      runner.registerWarning("Specified #{hp_ap.fluid_type} fluid type and 0 fraction of glycol, so assuming #{EPlus::FluidWater} fluid type.")
+    if gl_ap.frac_glycol == 0
+      gl_ap.fluid_type = EPlus::FluidWater
+      runner.registerWarning("Specified #{gl_ap.fluid_type} fluid type and 0 fraction of glycol, so assuming #{EPlus::FluidWater} fluid type.")
     end
 
     # Apply unit multiplier
@@ -813,94 +814,6 @@ module HVAC
     # Supplemental Heating Coil
     htg_supp_coil = create_heat_pump_supplemental_heating_coil(model, obj_name, heat_pump)
 
-    # Site Ground Temperature Undisturbed
-    xing = OpenStudio::Model::SiteGroundTemperatureUndisturbedXing.new(model)
-    xing.setSoilSurfaceTemperatureAmplitude1(UnitConversions.convert(weather.data.DeepGroundSurfTempAmp1, 'deltaf', 'deltac'))
-    xing.setSoilSurfaceTemperatureAmplitude2(UnitConversions.convert(weather.data.DeepGroundSurfTempAmp2, 'deltaf', 'deltac'))
-    xing.setPhaseShiftofTemperatureAmplitude1(weather.data.DeepGroundPhaseShiftTempAmp1)
-    xing.setPhaseShiftofTemperatureAmplitude2(weather.data.DeepGroundPhaseShiftTempAmp2)
-
-    # Ground Heat Exchanger
-    ground_heat_exch_vert = OpenStudio::Model::GroundHeatExchangerVertical.new(model, xing)
-    ground_heat_exch_vert.setName(obj_name + ' exchanger')
-    ground_heat_exch_vert.setBoreHoleRadius(UnitConversions.convert(geothermal_loop.bore_diameter / 2.0, 'in', 'm'))
-    ground_heat_exch_vert.setGroundThermalConductivity(UnitConversions.convert(hpxml_bldg.site.ground_conductivity, 'Btu/(hr*ft*R)', 'W/(m*K)'))
-    ground_heat_exch_vert.setGroundThermalHeatCapacity(UnitConversions.convert(hpxml_bldg.site.ground_conductivity / hpxml_bldg.site.ground_diffusivity, 'Btu/(ft^3*F)', 'J/(m^3*K)'))
-    ground_heat_exch_vert.setGroundTemperature(UnitConversions.convert(weather.data.DeepGroundAnnualTemp, 'F', 'C'))
-    ground_heat_exch_vert.setGroutThermalConductivity(UnitConversions.convert(geothermal_loop.grout_conductivity, 'Btu/(hr*ft*R)', 'W/(m*K)'))
-    ground_heat_exch_vert.setPipeThermalConductivity(UnitConversions.convert(geothermal_loop.pipe_conductivity, 'Btu/(hr*ft*R)', 'W/(m*K)'))
-    ground_heat_exch_vert.setPipeOutDiameter(UnitConversions.convert(hp_ap.pipe_od, 'in', 'm'))
-    ground_heat_exch_vert.setUTubeDistance(UnitConversions.convert(geothermal_loop.shank_spacing, 'in', 'm'))
-    ground_heat_exch_vert.setPipeThickness(UnitConversions.convert((hp_ap.pipe_od - hp_ap.pipe_id) / 2.0, 'in', 'm'))
-    ground_heat_exch_vert.setMaximumLengthofSimulation(1)
-    ground_heat_exch_vert.setDesignFlowRate(UnitConversions.convert(geothermal_loop.loop_flow, 'gal/min', 'm^3/s'))
-    ground_heat_exch_vert.setNumberofBoreHoles(geothermal_loop.num_bore_holes)
-    ground_heat_exch_vert.setBoreHoleLength(UnitConversions.convert(geothermal_loop.bore_length, 'ft', 'm'))
-    ground_heat_exch_vert.setBoreHoleTopDepth(2) # Consistent with G-function library
-    ground_heat_exch_vert.setGFunctionReferenceRatio(ground_heat_exch_vert.boreHoleRadius.get / ground_heat_exch_vert.boreHoleLength.get) # ensure this ratio is consistent with rb/H so that g values will be taken as-is
-    ground_heat_exch_vert.removeAllGFunctions
-    for i in 0..(hp_ap.GSHP_G_Functions[0].size - 1)
-      ground_heat_exch_vert.addGFunction(hp_ap.GSHP_G_Functions[0][i], hp_ap.GSHP_G_Functions[1][i])
-    end
-    xing = ground_heat_exch_vert.undisturbedGroundTemperatureModel.to_SiteGroundTemperatureUndisturbedXing.get
-    xing.setSoilThermalConductivity(ground_heat_exch_vert.groundThermalConductivity.get)
-    xing.setSoilSpecificHeat(ground_heat_exch_vert.groundThermalHeatCapacity.get / xing.soilDensity)
-    xing.setAverageSoilSurfaceTemperature(ground_heat_exch_vert.groundTemperature.get)
-
-    # Plant Loop
-    plant_loop = Model.add_plant_loop(
-      model,
-      name: "#{obj_name} condenser loop",
-      fluid_type: hp_ap.fluid_type,
-      glycol_concentration: (hp_ap.frac_glycol * 100).to_i,
-      min_temp: UnitConversions.convert(hp_ap.design_hw, 'F', 'C'),
-      max_temp: 48.88889,
-      max_flow_rate: UnitConversions.convert(geothermal_loop.loop_flow, 'gal/min', 'm^3/s')
-    )
-
-    plant_loop.addSupplyBranchForComponent(ground_heat_exch_vert)
-    plant_loop.addDemandBranchForComponent(htg_coil)
-    plant_loop.addDemandBranchForComponent(clg_coil)
-
-    sizing_plant = plant_loop.sizingPlant
-    sizing_plant.setLoopType('Condenser')
-    sizing_plant.setDesignLoopExitTemperature(UnitConversions.convert(hp_ap.design_chw, 'F', 'C'))
-    sizing_plant.setLoopDesignTemperatureDifference(UnitConversions.convert(hp_ap.design_delta_t, 'deltaF', 'deltaC'))
-
-    setpoint_mgr_follow_ground_temp = OpenStudio::Model::SetpointManagerFollowGroundTemperature.new(model)
-    setpoint_mgr_follow_ground_temp.setName(obj_name + ' condenser loop temp')
-    setpoint_mgr_follow_ground_temp.setControlVariable('Temperature')
-    setpoint_mgr_follow_ground_temp.setMaximumSetpointTemperature(48.88889)
-    setpoint_mgr_follow_ground_temp.setMinimumSetpointTemperature(UnitConversions.convert(hp_ap.design_hw, 'F', 'C'))
-    setpoint_mgr_follow_ground_temp.setReferenceGroundTemperatureObjectType('Site:GroundTemperature:Deep')
-    setpoint_mgr_follow_ground_temp.addToNode(plant_loop.supplyOutletNode)
-
-    # Pump
-    pump_w = get_pump_power_watts(heat_pump)
-    if heat_pump.is_shared_system
-      pump_w += heat_pump.shared_loop_watts / heat_pump.number_of_units_served.to_f
-    end
-    pump_w = [pump_w, 1.0].max # prevent error if zero
-    pump = Model.add_pump_variable_speed(
-      model,
-      name: "#{obj_name} pump",
-      rated_power: pump_w
-    )
-    pump.addToNode(plant_loop.supplyInletNode)
-    add_fan_pump_disaggregation_ems_program(model, pump, htg_coil, clg_coil, htg_supp_coil, heat_pump)
-
-    # Pipes
-    chiller_bypass_pipe = Model.add_pipe_adiabatic(model)
-    plant_loop.addSupplyBranchForComponent(chiller_bypass_pipe)
-    coil_bypass_pipe = Model.add_pipe_adiabatic(model)
-    plant_loop.addDemandBranchForComponent(coil_bypass_pipe)
-    supply_outlet_pipe = Model.add_pipe_adiabatic(model)
-    supply_outlet_pipe.addToNode(plant_loop.supplyOutletNode)
-    demand_inlet_pipe = Model.add_pipe_adiabatic(model)
-    demand_inlet_pipe.addToNode(plant_loop.demandInletNode)
-    demand_outlet_pipe = Model.add_pipe_adiabatic(model)
-    demand_outlet_pipe.addToNode(plant_loop.demandOutletNode)
-
     # Fan
     fan_cfms = []
     hp_ap.cool_capacity_ratios.each do |capacity_ratio|
@@ -914,13 +827,14 @@ module HVAC
 
     # Unitary System
     air_loop_unitary = create_air_loop_unitary_system(model, obj_name, fan, htg_coil, clg_coil, htg_supp_coil, htg_cfm, clg_cfm, 40.0)
-    add_pump_power_ems_program(model, pump, air_loop_unitary, heat_pump)
-    if (heat_pump.compressor_type == HPXML::HVACCompressorTypeVariableSpeed) && (hpxml_header.ground_to_air_heat_pump_model_type == HPXML::GroundToAirHeatPumpModelTypeExperimental)
-      add_ghp_pump_mass_flow_rate_ems_program(model, pump, control_zone, htg_coil, clg_coil)
-    end
 
     # Air Loop
-    air_loop = create_air_loop(model, obj_name, air_loop_unitary, control_zone, hvac_sequential_load_fracs, [htg_cfm, clg_cfm].max, heat_pump, hvac_unavailable_periods)
+    air_loop = create_air_loop(model, obj_name, air_loop_unitary, control_zone, hvac_sequential_load_fracs,
+                               [htg_cfm, clg_cfm].max, heat_pump, hvac_unavailable_periods)
+
+    # Geothermal Loop/Plant Loop
+    apply_geothermal_loop(model, obj_name, weather, hpxml_bldg, hpxml_header, geothermal_loop,
+                          heat_pump, air_loop_unitary, htg_coil, clg_coil, htg_supp_coil, control_zone)
 
     # HVAC Installation Quality
     add_installation_quality_ems_program(model, heat_pump, heat_pump, air_loop_unitary, htg_coil, clg_coil)
@@ -929,6 +843,141 @@ module HVAC
     add_dse_ems_program(:htg, model, hpxml_bldg, heat_pump, obj_name)
 
     return air_loop
+  end
+
+  # Adds the HPXML GeothermalLoop to the OpenStudio model. If it has already been
+  # added to the model (because there are multiple ground-source heat pumps attached
+  # to it), then it reuses the existing one.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param obj_name [String] Name for the OpenStudio object
+  # @param weather [WeatherFile] Weather object containing EPW information
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
+  # @param geothermal_loop [HPXML::GeothermalLoop] The HPXML geothermal loop of interest
+  # @param heat_pump [HPXML::HeatPump] The HPXML heat pump of interest
+  # @param air_loop_unitary [OpenStudio::Model::AirLoopHVACUnitarySystem] Air loop for the HVAC system
+  # @param htg_coil [OpenStudio::Model::CoilHeatingWaterToAirHeatPumpEquationFit or OpenStudio::Model::CoilHeatingWaterToAirHeatPumpVariableSpeedEquationFit] OpenStudio Heating Coil object
+  # @param clg_coil [OpenStudio::Model::CoilCoolingWaterToAirHeatPumpEquationFit or OpenStudio::Model::CoilCoolingWaterToAirHeatPumpVariableSpeedEquationFit] OpenStudio Cooling Coil object
+  # @param htg_supp_coil [OpenStudio::Model::CoilHeatingXXX] Heat pump backup heating coil model object
+  # @param control_zone [OpenStudio::Model::ThermalZone] Conditioned space thermal zone
+  # @return [nil]
+  def self.apply_geothermal_loop(model, obj_name, weather, hpxml_bldg, hpxml_header, geothermal_loop, heat_pump,
+                                 air_loop_unitary, htg_coil, clg_coil, htg_supp_coil, control_zone)
+    # Check if we already created the plant loop for another GSHP
+    plant_loop = model.getPlantLoops.find { |pl| pl.additionalProperties.getFeatureAsString('HPXML_ID').to_s == geothermal_loop.id }
+    if plant_loop.nil?
+      # Create plant loop and supporting objects
+      gl_ap = geothermal_loop.additional_properties
+
+      # Site Ground Temperature Undisturbed
+      xing = OpenStudio::Model::SiteGroundTemperatureUndisturbedXing.new(model)
+      xing.setSoilSurfaceTemperatureAmplitude1(UnitConversions.convert(weather.data.DeepGroundSurfTempAmp1, 'deltaf', 'deltac'))
+      xing.setSoilSurfaceTemperatureAmplitude2(UnitConversions.convert(weather.data.DeepGroundSurfTempAmp2, 'deltaf', 'deltac'))
+      xing.setPhaseShiftofTemperatureAmplitude1(weather.data.DeepGroundPhaseShiftTempAmp1)
+      xing.setPhaseShiftofTemperatureAmplitude2(weather.data.DeepGroundPhaseShiftTempAmp2)
+
+      # Ground Heat Exchanger
+      ground_heat_exch_vert = OpenStudio::Model::GroundHeatExchangerVertical.new(model, xing)
+      ground_heat_exch_vert.setName(obj_name + ' exchanger')
+      ground_heat_exch_vert.setBoreHoleRadius(UnitConversions.convert(geothermal_loop.bore_diameter / 2.0, 'in', 'm'))
+      ground_heat_exch_vert.setGroundThermalConductivity(UnitConversions.convert(hpxml_bldg.site.ground_conductivity, 'Btu/(hr*ft*R)', 'W/(m*K)'))
+      ground_heat_exch_vert.setGroundThermalHeatCapacity(UnitConversions.convert(hpxml_bldg.site.ground_conductivity / hpxml_bldg.site.ground_diffusivity, 'Btu/(ft^3*F)', 'J/(m^3*K)'))
+      ground_heat_exch_vert.setGroundTemperature(UnitConversions.convert(weather.data.DeepGroundAnnualTemp, 'F', 'C'))
+      ground_heat_exch_vert.setGroutThermalConductivity(UnitConversions.convert(geothermal_loop.grout_conductivity, 'Btu/(hr*ft*R)', 'W/(m*K)'))
+      ground_heat_exch_vert.setPipeThermalConductivity(UnitConversions.convert(geothermal_loop.pipe_conductivity, 'Btu/(hr*ft*R)', 'W/(m*K)'))
+      ground_heat_exch_vert.setPipeOutDiameter(UnitConversions.convert(gl_ap.pipe_od, 'in', 'm'))
+      ground_heat_exch_vert.setUTubeDistance(UnitConversions.convert(geothermal_loop.shank_spacing, 'in', 'm'))
+      ground_heat_exch_vert.setPipeThickness(UnitConversions.convert((gl_ap.pipe_od - gl_ap.pipe_id) / 2.0, 'in', 'm'))
+      ground_heat_exch_vert.setMaximumLengthofSimulation(1)
+      ground_heat_exch_vert.setDesignFlowRate(UnitConversions.convert(geothermal_loop.loop_flow, 'gal/min', 'm^3/s'))
+      ground_heat_exch_vert.setNumberofBoreHoles(geothermal_loop.num_bore_holes)
+      ground_heat_exch_vert.setBoreHoleLength(UnitConversions.convert(geothermal_loop.bore_length, 'ft', 'm'))
+      ground_heat_exch_vert.setBoreHoleTopDepth(2) # Consistent with G-function library
+      ground_heat_exch_vert.setGFunctionReferenceRatio(ground_heat_exch_vert.boreHoleRadius.get / ground_heat_exch_vert.boreHoleLength.get) # ensure this ratio is consistent with rb/H so that g values will be taken as-is
+      ground_heat_exch_vert.removeAllGFunctions
+      for i in 0..(gl_ap.g_functions[0].size - 1)
+        ground_heat_exch_vert.addGFunction(gl_ap.g_functions[0][i], gl_ap.g_functions[1][i])
+      end
+      xing = ground_heat_exch_vert.undisturbedGroundTemperatureModel.to_SiteGroundTemperatureUndisturbedXing.get
+      xing.setSoilThermalConductivity(ground_heat_exch_vert.groundThermalConductivity.get)
+      xing.setSoilSpecificHeat(ground_heat_exch_vert.groundThermalHeatCapacity.get / xing.soilDensity)
+      xing.setAverageSoilSurfaceTemperature(ground_heat_exch_vert.groundTemperature.get)
+
+      # Plant Loop
+      plant_loop = Model.add_plant_loop(
+        model,
+        name: "#{obj_name} condenser loop",
+        fluid_type: gl_ap.fluid_type,
+        glycol_concentration: (gl_ap.frac_glycol * 100).to_i,
+        min_temp: UnitConversions.convert(gl_ap.design_hw, 'F', 'C'),
+        max_temp: 48.88889,
+        max_flow_rate: UnitConversions.convert(geothermal_loop.loop_flow, 'gal/min', 'm^3/s')
+      )
+      plant_loop.additionalProperties.setFeature('HPXML_ID', geothermal_loop.id)
+      plant_loop.addSupplyBranchForComponent(ground_heat_exch_vert)
+
+      sizing_plant = plant_loop.sizingPlant
+      sizing_plant.setLoopType('Condenser')
+      sizing_plant.setDesignLoopExitTemperature(UnitConversions.convert(gl_ap.design_chw, 'F', 'C'))
+      sizing_plant.setLoopDesignTemperatureDifference(UnitConversions.convert(gl_ap.design_delta_t, 'deltaF', 'deltaC'))
+
+      setpoint_mgr_follow_ground_temp = OpenStudio::Model::SetpointManagerFollowGroundTemperature.new(model)
+      setpoint_mgr_follow_ground_temp.setName(obj_name + ' condenser loop temp')
+      setpoint_mgr_follow_ground_temp.setControlVariable('Temperature')
+      setpoint_mgr_follow_ground_temp.setMaximumSetpointTemperature(48.88889)
+      setpoint_mgr_follow_ground_temp.setMinimumSetpointTemperature(UnitConversions.convert(gl_ap.design_hw, 'F', 'C'))
+      setpoint_mgr_follow_ground_temp.setReferenceGroundTemperatureObjectType('Site:GroundTemperature:Deep')
+      setpoint_mgr_follow_ground_temp.addToNode(plant_loop.supplyOutletNode)
+
+      # Pump
+      pump_w = 0 # Total pump power across all GSHPs attached to this geothermal loop
+      geothermal_loop.heat_pumps.each do |heat_pump|
+        pump_w += get_pump_power_watts(heat_pump)
+        if heat_pump.is_shared_system
+          pump_w += heat_pump.shared_loop_watts / heat_pump.number_of_units_served.to_f
+        end
+      end
+      pump_w = [pump_w, 1.0].max # prevent error if zero
+      pump = Model.add_pump_variable_speed(
+        model,
+        name: "#{obj_name} pump",
+        rated_power: pump_w
+      )
+      pump.addToNode(plant_loop.supplyInletNode)
+
+      # For all of these pump EMS programs, it's fine to just look at the first GSHP on the
+      # geothermal loop:
+      #
+      # fan_pump_disaggregation_ems_program: The program only cares if the GSHP is in heating
+      #     or cooling mode, and all GSHPs will be in the same mode.
+      #
+      # pump_power_ems_program: The program ultimately calculates the system PLR; the PLR for
+      #     the first GSHP should be a reasonably approximate the average PLR across all GSHPs.
+      #
+      # ghp_pump_mass_flow_rate: The program compares the estimated water flow rate to the
+      #     1st speed rated flow rate; using only the first GSHP should be fine.
+      add_fan_pump_disaggregation_ems_program(model, pump, htg_coil, clg_coil, htg_supp_coil, heat_pump)
+      add_pump_power_ems_program(model, pump, air_loop_unitary, heat_pump)
+      if (heat_pump.compressor_type == HPXML::HVACCompressorTypeVariableSpeed) && (hpxml_header.ground_to_air_heat_pump_model_type == HPXML::GroundToAirHeatPumpModelTypeExperimental)
+        add_ghp_pump_mass_flow_rate_ems_program(model, pump, control_zone, htg_coil, clg_coil)
+      end
+
+      # Pipes
+      chiller_bypass_pipe = Model.add_pipe_adiabatic(model)
+      plant_loop.addSupplyBranchForComponent(chiller_bypass_pipe)
+      coil_bypass_pipe = Model.add_pipe_adiabatic(model)
+      plant_loop.addDemandBranchForComponent(coil_bypass_pipe)
+      supply_outlet_pipe = Model.add_pipe_adiabatic(model)
+      supply_outlet_pipe.addToNode(plant_loop.supplyOutletNode)
+      demand_inlet_pipe = Model.add_pipe_adiabatic(model)
+      demand_inlet_pipe.addToNode(plant_loop.demandInletNode)
+      demand_outlet_pipe = Model.add_pipe_adiabatic(model)
+      demand_outlet_pipe.addToNode(plant_loop.demandOutletNode)
+    end
+
+    plant_loop.addDemandBranchForComponent(htg_coil)
+    plant_loop.addDemandBranchForComponent(clg_coil)
   end
 
   # Adds the HPXML water-loop heat pump system to the OpenStudio model.
@@ -1995,41 +2044,41 @@ module HVAC
       pump_program.addLine("Set cooling_pump_vfr_max = #{clg_coil.speeds[-1].referenceUnitRatedWaterFlowRate}")
       pump_program.addLine('Set htg_flow_rate = 0.0')
       pump_program.addLine('Set clg_flow_rate = 0.0')
-      (1..htg_coil.speeds.size).each do |i|
+      for i in 1..htg_coil.speeds.size
         # Initialization
         pump_program.addLine("Set heating_pump_vfr_#{i} = heating_pump_vfr_max * #{hvac_ap.heat_capacity_ratios[i - 1]}")
         pump_program.addLine("Set heating_fraction_time_#{i} = 0.0")
       end
       pump_program.addLine("If #{heating_usl_sensor.name} == 1")
       pump_program.addLine("  Set heating_fraction_time_1 = #{heating_plr_sensor.name}")
-      (1..(htg_coil.speeds.size - 1)).each do |i|
+      for i in 1..(htg_coil.speeds.size - 1)
         pump_program.addLine("ElseIf #{heating_usl_sensor.name} == #{i + 1}")
         pump_program.addLine("  Set heating_fraction_time_#{i} = 1.0 - #{heating_nsl_sensor.name}")
         pump_program.addLine("  Set heating_fraction_time_#{i + 1} = #{heating_nsl_sensor.name}")
       end
       pump_program.addLine('EndIf')
       # sum up to get the actual flow rate
-      (1..htg_coil.speeds.size).each do |i|
+      for i in 1..htg_coil.speeds.size
         pump_program.addLine("Set htg_flow_rate = htg_flow_rate + heating_fraction_time_#{i} * heating_pump_vfr_#{i}")
       end
       pump_program.addLine('Set heating_plr = htg_flow_rate / heating_pump_vfr_max')
 
       # Cooling
-      (1..clg_coil.speeds.size).each do |i|
+      for i in 1..clg_coil.speeds.size
         # Initialization
         pump_program.addLine("Set cooling_pump_vfr_#{i} = cooling_pump_vfr_max * #{hvac_ap.cool_capacity_ratios[i - 1]}")
         pump_program.addLine("Set cooling_fraction_time_#{i} = 0.0")
       end
       pump_program.addLine("If #{cooling_usl_sensor.name} == 1")
       pump_program.addLine("  Set cooling_fraction_time_1 = #{cooling_plr_sensor.name}")
-      (1..(clg_coil.speeds.size - 1)).each do |i|
+      for i in 1..(clg_coil.speeds.size - 1)
         pump_program.addLine("ElseIf (#{cooling_usl_sensor.name}) == #{i + 1}")
         pump_program.addLine("  Set cooling_fraction_time_#{i} = 1.0 - #{cooling_nsl_sensor.name}")
         pump_program.addLine("  Set cooling_fraction_time_#{i + 1} = #{cooling_nsl_sensor.name}")
       end
       pump_program.addLine('EndIf')
       # sum up to get the actual flow rate
-      (1..clg_coil.speeds.size).each do |i|
+      for i in 1..clg_coil.speeds.size
         pump_program.addLine("Set clg_flow_rate = clg_flow_rate + cooling_fraction_time_#{i} * heating_pump_vfr_#{i}")
       end
       pump_program.addLine('Set cooling_plr = clg_flow_rate / cooling_pump_vfr_max')

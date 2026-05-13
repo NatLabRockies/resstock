@@ -1544,8 +1544,8 @@ class ReportSimulationOutputTest < Minitest::Test
     assert(File.exist?(annual_csv))
     assert(!File.exist?(timeseries_csv))
     actual_annual_rows = _get_annual_values(annual_csv)
-    assert_equal(9.0, actual_annual_rows['HVAC Geothermal Loop: Borehole/Trench Count'])
-    assert_equal(315.0, actual_annual_rows['HVAC Geothermal Loop: Borehole/Trench Length (ft)'])
+    assert_equal(4.0, actual_annual_rows['HVAC Geothermal Loop: Borehole/Trench Count'])
+    assert_equal(150.0, actual_annual_rows['HVAC Geothermal Loop: Borehole/Trench Length (ft)'])
   end
 
   private
