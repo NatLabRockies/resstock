@@ -537,7 +537,9 @@ class WorkflowOtherTest < Minitest::Test
       system(command)
       assert(File.exist? 'OpenStudio-HPXML/workflow/sample_files/run/results_annual.csv')
 
-      File.delete(zip_path)
+      if not ENV['CI'] # Keep on CI to store as an artifact
+        File.delete(zip_path)
+      end
       rm_path('OpenStudio-HPXML')
     end
   end
