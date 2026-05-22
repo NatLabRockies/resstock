@@ -1,13 +1,36 @@
 """
-This script will create an Athena view from raw timeseries results following the SightGlassDataProcessing OEDI timeseries format. 
-The view will be created in the same database as the source table, and will be named <table_name>_timeseries_view.
+This script will create an Athena view from raw timeseries results following
+the SightGlassDataProcessing OEDI timeseries format.
+===================================================================================
+
+The view will be created in the same database as the source table, and will be
+named <table_name>_timeseries_view.
+
+If a table does not yet exist in the database, rerun the script by adding an S3
+path to create an external table pointing to the raw data on S3 using boto3. The
+script will create the view on top of that.
+
 The view definition will perform the following transformations:
-- Select relevant columns from the baseline and timeseries tables, including building_id, county (if needed for time conversion), conditioned sqft, and all timeseries columns matching the expected ResStock naming convention for energy consumption
-- Adjust the time column to be in Eastern Standard Time (EST) and follow a period-beginning convention. This involves:
-    - For results that do not contain timeutc column, convert time to timeutc using the county-based UTC offset from options_lookup.tsv
-    - Applying the appropriate time shift to convert from UTC to EST
-- Rename columns to match the OEDI timeseries schema (e.g. "electricity_heating_kwh" -> "out.electricity.heating.energy_consumption")
-- Calculate energy intensity columns for each fuel type and end use by dividing energy consumption by conditioned sqft (e.g
+
+- Select relevant columns from the baseline and timeseries tables, including
+  building_id, county (if needed for time conversion), conditioned sqft, and all
+  timeseries columns matching the expected ResStock naming convention for energy
+  consumption.
+
+- Adjust the time column to be in Eastern Standard Time (EST) and follow a
+  period-beginning convention. This involves:
+    - For results that do not contain a timeutc column, convert time to timeutc
+      using the county-based UTC offset from options_lookup.tsv.
+    - Applying the appropriate time shift to convert from UTC to EST.
+
+- Rename columns to match the OEDI timeseries schema (e.g.
+  "electricity_heating_kwh" -> "out.electricity.heating.energy_consumption").
+
+- Calculate energy intensity columns for each fuel type and end use by dividing
+  energy consumption by conditioned sqft.
+
+- Wrap time back to the simulation year (i.e., by replacing the year of the
+  timestamp with the simulation year).
 """
 
 import re
@@ -19,15 +42,17 @@ import pandas as pd
 
 import boto3
 from botocore.exceptions import ClientError
+import pyarrow.parquet as pq
 from buildstock_query import BuildStockQuery
 
-
-options_lookup_file = Path(__file__).parents[3] / "resources" / "options_lookup.tsv"
+options_lookup_file = Path(__file__).parents[2] / "resources" / "options_lookup.tsv"
 
 energy_unit_conv_to_kwh = {
-    'mbtu': 293.07107,
-    'therm': 29.3001,
+    "mbtu": 293.07107,
+    "kbtu": 0.29307107,
+    "therm": 29.3001,
 }
+
 
 def initialize_buildstock_query(
     database: str,
@@ -154,7 +179,8 @@ def read_options_lookup() -> pd.DataFrame:
     df = pd.read_csv(
         options_lookup_file,
         sep="\t",
-        header=0,          # skip the original header row
+        header=None,
+        skiprows=1,  # skip the original header row
         names=col_names,
     )
 
@@ -166,7 +192,7 @@ def get_county_utc_offset() -> dict[str, int]:
     Get the UTC offset for each county from options_lookup
     """
     df = read_options_lookup()
-    cond = df["Parameter Name"]=="County"
+    cond = df["Parameter Name"] == "County"
     dct = df.loc[cond].set_index("Option Name")["Measure Arg 4"].to_dict()
     dct = {k: int(v.removeprefix("site_time_zone_utc_offset=")) for k, v in dct.items()}
     return dct
@@ -182,23 +208,25 @@ def create_query_part_conditional_county_utc_offset() -> str:
     offset_groups = {}
     for county, offset in county_utc_offsets.items():
         offset_groups.setdefault(offset, []).append(county)
-    
+
     # create a CASE statement to adjust time based on county
     case_statements = []
     for offset, counties in offset_groups.items():
-        county_list = ", ".join(f"'{c}'" for c in counties)
-        case_statements.append(f"WHEN \"county\" IN ({county_list}) THEN {offset}")
-    
+        county_list = ", ".join(f"'{c.replace(chr(39), chr(39)*2)}'" for c in counties)
+        case_statements.append(f'WHEN "county" IN ({county_list}) THEN {offset}')
+
     case_sql = "CASE\n" + "\n".join(case_statements) + "\nELSE 0 END"
     return case_sql
 
 
-def create_query_part_est_time(bsq: BuildStockQuery, time_col: str, has_timeutc: bool) -> tuple[str, int]:
+def create_query_part_est_time(
+    bsq: BuildStockQuery, time_col: str, has_timeutc: bool
+) -> tuple[str, int]:
     """
     Create sql string to format time column to Eastern Standard Time (EST), period-beginning
 
     Not time-wrapping yet to simulation year
-    
+
     EST is UTC-5, so direction of math is:
         -   From EST to UTC, add 5 hrs, or SUBTRACT UTC-offset value: -(-5)
         -   From UTC to EST, subtract 5 hrs, or ADD UTC-offset value: +(-5)
@@ -212,41 +240,46 @@ def create_query_part_est_time(bsq: BuildStockQuery, time_col: str, has_timeutc:
         """).iloc[0, 0]
 
     except Exception as e:
-        print(f"Could not determine timeseries timestamp convention from {table_name}_baseline. Defaulting to 'end'. Error: {e}")
+        print(
+            f"Could not determine timeseries timestamp convention from {table_name}_baseline. Defaulting to 'end'. Error: {e}"
+        )
         time_convention = "end"
 
     df = bsq.execute(f"""
         SELECT DISTINCT "time" FROM {table_name}_timeseries
         ORDER BY 1
         LIMIT 2
-    """
-    )
+    """)
     sim_year = df["time"].dt.year[0]
 
-    delta_hours = -5  # UTC offset for EST
+    delta_minutes = -5 * 60  # UTC offset for EST in minutes
     match time_convention:
         case "end":
-            timestep_hours = (df["time"].iloc[1] - df["time"].iloc[0]).total_seconds() / 3600
-            delta_hours -= timestep_hours 
+            timestep_minutes = int(
+                (df["time"].iloc[1] - df["time"].iloc[0]).total_seconds() / 60
+            )
+            delta_minutes -= timestep_minutes
         case "begin":
             # already set for period-beginning convention, no adjustment needed
             pass
         case _:
-            raise NotImplementedError(f"Time convention '{time_convention}' not supported.")
+            raise NotImplementedError(
+                f"Time convention '{time_convention}' not supported."
+            )
 
     if has_timeutc:
-        # delta hours maintains UTC offset convention
+        # delta minutes maintains UTC offset convention
         time_sql = f"""
-        DATE_ADD('hour', {delta_hours}, "timeutc") AS "{time_col}"
+        DATE_ADD('minute', {delta_minutes}, "timeutc") AS "{time_col}"
         """
-        
+
     else:
         # additionally add conversion from local standard time to UTC
         county_utc_offset_sql = create_query_part_conditional_county_utc_offset()
 
-        # must minus the county UTC offset because it's going from local standard to UTC
+        # must minus the county UTC offset (in hours) because it's going from local standard to UTC
         time_sql = f"""
-        DATE_ADD('hour', {delta_hours} - {county_utc_offset_sql}, "time") AS "{time_col}"
+        DATE_ADD('minute', {delta_minutes} - 60 * ({county_utc_offset_sql}), "time") AS "{time_col}"
         """
 
     return time_sql, sim_year
@@ -272,7 +305,8 @@ def get_partition_columns(bsq: BuildStockQuery) -> list[str]:
     during SQLAlchemy table reflection from the Glue catalog.
     """
     return [
-        col.name for col in bsq.ts_table.columns
+        col.name
+        for col in bsq.ts_table.columns
         if col.dialect_options.get("awsathena", {}).get("partition") is True
     ]
 
@@ -299,19 +333,26 @@ def create_query_oedi_timeseries(bsq: BuildStockQuery) -> str:
     # Auto-detect partition columns from table metadata
     partition_cols = get_partition_columns(bsq)
 
+    print(f"Timeseries table columns ({len(columns)} total): {columns}")
+    print(f"Partition columns: {partition_cols}")
+
     bldg_id_col = "bldg_id"
     upgrade_col = "upgrade"
     time_col = "timestamp"
     sqft_col = "in.sqft"
 
-    must_have_cols = [bldg_id_col, upgrade_col, time_col] # these columns are called out explicitly in the SQL
+    must_have_cols = [
+        bldg_id_col,
+        upgrade_col,
+        time_col,
+    ]  # these columns are called out explicitly in the SQL
 
     # CTE table 1: simplified baseline
     if "timeutc" in columns:
         county_sql = ""
         has_timeutc = True
     else:
-        county_sql = "\"build_existing_model.county\" AS \"in.county\","
+        county_sql = '"build_existing_model.county" AS "in.county",'
         has_timeutc = False
 
     cte_sql = f"""
@@ -324,21 +365,38 @@ def create_query_oedi_timeseries(bsq: BuildStockQuery) -> str:
 
     # CTE table 2: timeseries table with renamed columns joined with simplified baseline table and time adjustment to EST
     columns_sql_list = [
-       f"\"{bldg_id_col}\"",
-       f"\"{upgrade_col}\"",
-       f"\"{sqft_col}\"",
+        f'"{bldg_id_col}"',
+        f'"{upgrade_col}"',
+        f'"{sqft_col}"',
     ]
     for pc in partition_cols:
-        if pc not in must_have_cols:  # avoid duplicating partition columns that are already called out explicitly
-            columns_sql_list.append(f"\"{pc}\"")
-    time_sql, sim_year = create_query_part_est_time(bsq, time_col, has_timeutc)  # use sim_year to wrap time in the final select statement
+        if (
+            pc not in must_have_cols
+        ):  # avoid duplicating partition columns that are already called out explicitly
+            columns_sql_list.append(f'"{pc}"')
+    time_sql, sim_year = create_query_part_est_time(
+        bsq, time_col, has_timeutc
+    )  # use sim_year to wrap time in the final select statement
     columns_sql_list.append(time_sql)
     ts_cols = []
+    breakpoint()
     for col in columns:
+
+        # ResStock timeseries columns (sightglass)
+        # Examples: End Use: Electricity: Hot Water
+        m1 = re.search(
+            r"^(electricity|natural_gas|fuel_oil|propane|wood)_(\w+)_(kwh|therm|mbtu)",
+            col,
+        )
+        m2 = re.search(
+            r"^total_site_(electricity|natural_gas|fuel_oil|propane|wood)_(kwh|therm|mbtu)",
+            col,
+        )
+        m3 = re.search(r"^(total)_(site_energy)_(kwh|therm|mbtu)", col)
+
         # ResStock timeseries columns
-        m1 = re.search(r'^(electricity|natural_gas|fuel_oil|propane|wood)_(\w+)_(kwh|therm|mbtu)', col)
-        m2 = re.search(r'^total_site_(electricity|natural_gas|fuel_oil|propane|wood)_(kwh|therm|mbtu)', col)
-        m3 = re.search(r'^(total)_(site_energy)_(kwh|therm|mbtu)', col)
+        # Examples: end_use__electricity__hot_water__kwh
+
 
         # OCHRE timeseries columns
 
@@ -349,18 +407,20 @@ def create_query_oedi_timeseries(bsq: BuildStockQuery) -> str:
             fueltype, enduse, fuel_units = m1.groups()
         elif m2:
             fueltype, fuel_units = m2.groups()
-            enduse = 'total'
+            enduse = "total"
         elif m3:
             enduse, fueltype, fuel_units = m3.groups()
         new_col = f"out.{fueltype}.{enduse}.energy_consumption"
         ts_cols.append((col, new_col))
 
         if fuel_units in energy_unit_conv_to_kwh.keys():
-            columns_sql_list.append(f"{energy_unit_conv_to_kwh[fuel_units]} * \"{col}\" AS \"{new_col}\"")
+            columns_sql_list.append(
+                f'{energy_unit_conv_to_kwh[fuel_units]} * "{col}" AS "{new_col}"'
+            )
         else:
-            assert fuel_units == 'kwh'
-            columns_sql_list.append(f"\"{col}\" AS \"{new_col}\"")
-    
+            assert fuel_units == "kwh"
+            columns_sql_list.append(f'"{col}" AS "{new_col}"')
+
     columns_sql = ", \n".join(columns_sql_list)
     cte_sql += f"""
     renamed_table AS (
@@ -371,18 +431,22 @@ def create_query_oedi_timeseries(bsq: BuildStockQuery) -> str:
 
     # Final table: renamed table + energy intensity columns + time wrapped to sim year
     final_columns_sql_list = [
-       f"\"{bldg_id_col}\"",
-       f"\"{upgrade_col}\"",
-       create_query_part_wrap_time_to_sim_year(time_col, sim_year),
+        f'"{bldg_id_col}"',
+        f'"{upgrade_col}"',
+        f'"{sqft_col}"',
+        create_query_part_wrap_time_to_sim_year(time_col, sim_year),
     ]
     for pc in partition_cols:
-        final_columns_sql_list.append(f"\"{pc}\"")
-    final_columns_sql_list += [f"\"{col[1]}\"" for col in ts_cols]
+        if pc not in must_have_cols:
+            final_columns_sql_list.append(f'"{pc}"')
+    final_columns_sql_list += [f'"{col[1]}"' for col in ts_cols]
 
     # Calculate energy intensity
     for old_col, new_col in ts_cols:
         intensity_col = f"{new_col}_intensity"
-        final_columns_sql_list.append(f"\"{new_col}\" / \"{sqft_col}\" AS \"{intensity_col}\"")
+        final_columns_sql_list.append(
+            f'"{new_col}" / "{sqft_col}" AS "{intensity_col}"'
+        )
 
     # Final statement
     final_columns_sql = ", \n".join(final_columns_sql_list)
@@ -393,22 +457,28 @@ def create_query_oedi_timeseries(bsq: BuildStockQuery) -> str:
 
 
 def create_view_oedi_timeseries(
-        bsq: BuildStockQuery,
-        view_name: str,
-        force: bool = False,
-    ):
-    """ 
+    bsq: BuildStockQuery,
+    view_name: str,
+    force: bool = False,
+):
+    """
     Create a view with OEDI timeseries schema using create_view
     """
     select_sql = create_query_oedi_timeseries(bsq)
+    print("=" * 60)
+    print("GENERATED SQL:")
+    print("=" * 60)
+    print(select_sql)
+    print("=" * 60)
+    breakpoint()
     create_view(bsq, view_name, select_sql, force)
 
 
 def check_view_result(
-        bsq: BuildStockQuery,
-        view_name: str,
-        limit_rows: int = 10,
-    ):
+    bsq: BuildStockQuery,
+    view_name: str,
+    limit_rows: int = 10,
+):
     """
     Run a simple query against the created view to check results
     """
@@ -419,17 +489,28 @@ def check_view_result(
     has_intensity = any("intensity" in c for c in df.columns)
     has_energy_consumption = any("energy_consumption" in c for c in df.columns)
     if not (has_timestamp and has_intensity and has_energy_consumption):
-        raise ValueError(f"Expected 'timestamp', '*intensity*', and '*energy_consumption*' columns not found in view results. Found columns: {list(df.columns)}")
-    
+        raise ValueError(
+            f"Expected 'timestamp', '*intensity*', and '*energy_consumption*' columns not found in view results. Found columns: {list(df.columns)}"
+        )
+
     # 2. Check timestamps are in simulation-year and has expected number of unique timestamps
     df2 = bsq.execute(f"""SELECT DISTINCT timestamp FROM {view_name} ORDER BY 1""")
-    assert df2["timestamp"].dt.year.nunique() == 1, "Timestamps are not all in the same year."
+    assert (
+        df2["timestamp"].dt.year.nunique() == 1
+    ), "Timestamps are not all in the same year."
 
     year = df2["timestamp"].dt.year[0]
-    timestep_hours = (df2["timestamp"].iloc[1] - df2["timestamp"].iloc[0]).total_seconds() / 3600
-    expected_hours = (pd.Timestamp(year=year+1, month=1, day=1, hour=0) - pd.Timestamp(year=year, month=1, day=1, hour=0)).total_seconds() / 3600
+    timestep_hours = (
+        df2["timestamp"].iloc[1] - df2["timestamp"].iloc[0]
+    ).total_seconds() / 3600
+    expected_hours = (
+        pd.Timestamp(year=year + 1, month=1, day=1, hour=0)
+        - pd.Timestamp(year=year, month=1, day=1, hour=0)
+    ).total_seconds() / 3600
     expected_timesteps = int(expected_hours / timestep_hours)
-    assert len(df2) == expected_timesteps, f"Expected {expected_timesteps} unique timestamps for a full simulation year with {timestep_hours}-hour timesteps, but found {len(df2)}."
+    assert (
+        len(df2) == expected_timesteps
+    ), f"Expected {expected_timesteps} unique timestamps for a full simulation year with {timestep_hours}-hour timesteps, but found {len(df2)}."
 
 
 # =============================================================================
@@ -456,7 +537,13 @@ def wait_for_query(client, execution_id: str, max_wait: int = 300) -> dict:
     raise TimeoutError(f"Query {execution_id} did not complete within {max_wait}s")
 
 
-def _start_query(client, query_string: str, database: str, workgroup: str, s3_output: Optional[str] = None) -> str:
+def _start_query(
+    client,
+    query_string: str,
+    database: str,
+    workgroup: str,
+    s3_output: Optional[str] = None,
+) -> str:
     """
     Start an Athena query, defaulting to workgroup-managed output location.
 
@@ -476,7 +563,10 @@ def _start_query(client, query_string: str, database: str, workgroup: str, s3_ou
     except ClientError as e:
         error_code = e.response["Error"]["Code"]
         error_msg = e.response["Error"]["Message"]
-        if error_code == "InvalidRequestException" and "output location" in error_msg.lower():
+        if (
+            error_code == "InvalidRequestException"
+            and "output location" in error_msg.lower()
+        ):
             raise RuntimeError(
                 f"Workgroup '{workgroup}' does not have a default output location configured. "
                 f"Either configure the workgroup's output location in the AWS console, or "
@@ -515,12 +605,76 @@ def list_tables_boto3(
         Table names in the database.
     """
     client = get_athena_client(region_name)
-    execution_id = _start_query(client, f"SHOW TABLES IN {database}", database, workgroup, s3_output)
+    execution_id = _start_query(
+        client, f"SHOW TABLES IN {database}", database, workgroup, s3_output
+    )
     wait_for_query(client, execution_id)
 
     results = client.get_query_results(QueryExecutionId=execution_id)
     tables = [row["Data"][0]["VarCharValue"] for row in results["ResultSet"]["Rows"]]
     return tables
+
+
+def _infer_parquet_schema_from_s3(s3_location: str, region_name: str = "us-west-2") -> list[dict]:
+    """
+    Read schema from the first Parquet file found at an S3 location.
+
+    Returns a list of dicts: [{"Name": col_name, "Type": athena_type}, ...]
+    """
+    s3 = boto3.client("s3", region_name=region_name)
+    path = s3_location[5:]  # strip "s3://"
+    bucket, _, prefix = path.partition("/")
+    if prefix and not prefix.endswith("/"):
+        prefix += "/"
+
+    # Find first .parquet file
+    response = s3.list_objects_v2(Bucket=bucket, Prefix=prefix, MaxKeys=100)
+    parquet_key = None
+    for obj in response.get("Contents", []):
+        if obj["Key"].endswith(".parquet") or obj["Key"].endswith(".snappy.parquet"):
+            parquet_key = obj["Key"]
+            break
+
+    if not parquet_key:
+        raise FileNotFoundError(
+            f"No Parquet files found at s3://{bucket}/{prefix}"
+        )
+
+    # Read schema using pyarrow via S3 filesystem
+    import pyarrow.fs as pafs
+
+    fs = pafs.S3FileSystem(region=region_name)
+    schema = pq.read_schema(f"{bucket}/{parquet_key}", filesystem=fs)
+
+    # Map pyarrow types to Athena/Hive types
+    type_map = {
+        "int8": "tinyint",
+        "int16": "smallint",
+        "int32": "int",
+        "int64": "bigint",
+        "float": "float",
+        "double": "double",
+        "bool": "boolean",
+        "string": "string",
+        "large_string": "string",
+        "binary": "binary",
+        "date32[day]": "date",
+    }
+
+    columns = []
+    for field in schema:
+        pa_type = str(field.type)
+        if pa_type.startswith("timestamp"):
+            athena_type = "timestamp"
+        elif pa_type.startswith("decimal"):
+            athena_type = pa_type  # e.g. "decimal(10,2)"
+        elif pa_type.startswith("list"):
+            athena_type = "string"  # simplified fallback
+        else:
+            athena_type = type_map.get(pa_type, "string")
+        columns.append({"Name": field.name, "Type": athena_type})
+
+    return columns
 
 
 def create_external_table(
@@ -531,12 +685,12 @@ def create_external_table(
     s3_output: Optional[str] = None,
     input_format: str = "PARQUET",
     region_name: str = "us-west-2",
-) -> str:
+) -> None:
     """
-    Create an external table in Athena pointing to existing data on S3.
+    Create an external table in Athena/Glue pointing to existing data on S3.
 
-    Defaults to workgroup-managed query result location. Pass s3_output
-    explicitly if the workgroup does not have one configured.
+    For Parquet/ORC, infers the schema from the data files and registers the
+    table via the Glue API directly (avoids Athena DDL column-list requirement).
 
     Parameters
     ----------
@@ -546,38 +700,83 @@ def create_external_table(
         Name for the new external table.
     s3_location : str
         S3 path where the data lives (e.g. "s3://bucket/path/to/data/").
-        Must end with a trailing slash.
     workgroup : str
         Athena workgroup name.
     s3_output : str, optional
         S3 path for Athena query results/logs. If None, uses workgroup default.
     input_format : str
-        Storage format of the source data (PARQUET, ORC, AVRO, JSON, CSV).
+        Storage format of the source data (PARQUET, ORC, JSON, CSV).
     region_name : str
         AWS region.
-
-    Returns
-    -------
-    str
-        The query execution ID on success.
 
     Raises
     ------
     RuntimeError
-        If table creation fails, or if the workgroup has no output location.
+        If table creation fails.
     """
-    # Map format to the appropriate Hive SerDe / InputFormat / OutputFormat
+    fmt = input_format.upper()
+
+    # For self-describing formats, use Glue API with inferred schema
+    if fmt in ("PARQUET", "ORC"):
+        format_configs = {
+            "PARQUET": {
+                "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+                "OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+                "SerdeInfo": {
+                    "SerializationLibrary": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+                },
+            },
+            "ORC": {
+                "InputFormat": "org.apache.hadoop.hive.ql.io.orc.OrcInputFormat",
+                "OutputFormat": "org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat",
+                "SerdeInfo": {
+                    "SerializationLibrary": "org.apache.hadoop.hive.ql.io.orc.OrcSerde",
+                },
+            },
+        }
+
+        print(f"Inferring schema from Parquet files at '{s3_location}'...")
+        columns = _infer_parquet_schema_from_s3(s3_location, region_name)
+        print(f"  Found {len(columns)} columns.")
+
+        # Ensure trailing slash for Location
+        location = s3_location if s3_location.endswith("/") else s3_location + "/"
+
+        storage_descriptor = {
+            "Columns": columns,
+            "Location": location,
+            "InputFormat": format_configs[fmt]["InputFormat"],
+            "OutputFormat": format_configs[fmt]["OutputFormat"],
+            "SerdeInfo": format_configs[fmt]["SerdeInfo"],
+        }
+
+        glue = boto3.client("glue", region_name=region_name)
+        try:
+            glue.create_table(
+                DatabaseName=database,
+                TableInput={
+                    "Name": table_name,
+                    "TableType": "EXTERNAL_TABLE",
+                    "Parameters": {
+                        "classification": fmt.lower(),
+                        "EXTERNAL": "TRUE",
+                    },
+                    "StorageDescriptor": storage_descriptor,
+                },
+            )
+        except ClientError as e:
+            if e.response["Error"]["Code"] == "AlreadyExistsException":
+                print(f"Table '{table_name}' already exists.")
+                return
+            raise RuntimeError(
+                f"Glue create_table failed: {e.response['Error']['Message']}"
+            ) from e
+
+        print(f"External table '{table_name}' created via Glue pointing to '{s3_location}'.")
+        return
+
+    # For non-self-describing formats, fall back to Athena DDL
     format_configs = {
-        "PARQUET": (
-            "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
-            "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
-            "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
-        ),
-        "ORC": (
-            "org.apache.hadoop.hive.ql.io.orc.OrcSerde",
-            "org.apache.hadoop.hive.ql.io.orc.OrcInputFormat",
-            "org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat",
-        ),
         "JSON": (
             "org.openx.data.jsonserde.JsonSerDe",
             "org.apache.hadoop.mapred.TextInputFormat",
@@ -590,12 +789,12 @@ def create_external_table(
         ),
     }
 
-    fmt = input_format.upper()
     if fmt not in format_configs:
-        raise ValueError(f"Unsupported format '{input_format}'. Use one of: {list(format_configs.keys())}")
+        raise ValueError(
+            f"Unsupported format '{input_format}'. Use one of: PARQUET, ORC, JSON, CSV"
+        )
 
     serde, input_fmt, output_fmt = format_configs[fmt]
-
     ddl = (
         f"CREATE EXTERNAL TABLE IF NOT EXISTS {table_name} "
         f"ROW FORMAT SERDE '{serde}' "
@@ -615,7 +814,6 @@ def create_external_table(
         raise RuntimeError(f"CREATE EXTERNAL TABLE failed ({state}): {reason}")
 
     print(f"External table '{table_name}' created pointing to '{s3_location}'.")
-    return execution_id
 
 
 def ensure_table_exists(
@@ -655,7 +853,9 @@ def ensure_table_exists(
     SystemExit
         If the table does not exist and no s3_location is provided.
     """
-    tables = list_tables_boto3(database, workgroup=workgroup, s3_output=s3_output, region_name=region_name)
+    tables = list_tables_boto3(
+        database, workgroup=workgroup, s3_output=s3_output, region_name=region_name
+    )
     print(f"Available tables for database='{database}': {tables}")
 
     if table in tables:
@@ -684,19 +884,44 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Create an Athena view from raw timeseries results."
     )
-    parser.add_argument("-d", "--database", required=True, help="Athena/Glue database name.")
+    parser.add_argument(
+        "-d", "--database", required=True, help="Athena/Glue database name."
+    )
     parser.add_argument("-t", "--table", required=True, help="Source table name.")
-    parser.add_argument("-w", "--workgroup", default="primary", help="Athena workgroup (default: primary).")
-    parser.add_argument("-l", "--s3-location", default=None, help="S3 path to raw data (for creating external table).")
-    parser.add_argument("-o", "--s3-output", default=None, help="S3 path for query results (if workgroup has no default).")
-    parser.add_argument("-r", "--region", default="us-west-2", help="AWS region (default: us-west-2).")
-    parser.add_argument("-i", "--input-format", default="PARQUET", help="Source data format (default: PARQUET).")
-    parser.add_argument("-f", "--force", action="store_true", help="Overwrite existing view if it already exists.")
+    parser.add_argument(
+        "-w",
+        "--workgroup",
+        default="primary",
+        help="Athena workgroup (default: primary).",
+    )
+    parser.add_argument(
+        "-l",
+        "--s3-location",
+        default=None,
+        help="S3 path to raw data (for creating external table).",
+    )
+    parser.add_argument(
+        "-r", "--region", default="us-west-2", help="AWS region (default: us-west-2)."
+    )
+    parser.add_argument(
+        "-i",
+        "--input-format",
+        default="PARQUET",
+        help="Source data format (default: PARQUET).",
+    )
+    parser.add_argument(
+        "-f",
+        "--force",
+        action="store_true",
+        help="Overwrite existing view if it already exists.",
+    )
     args = parser.parse_args()
 
     # --- Try BuildStockQuery path first; fall back to boto3 if table missing ---
     try:
-        bsq = initialize_buildstock_query(database=args.database, table=args.table, workgroup=args.workgroup)
+        bsq = initialize_buildstock_query(
+            database=args.database, table=args.table, workgroup=args.workgroup
+        )
 
     except Exception as e:
         print(f"BuildStockQuery initialization failed: {e}")
@@ -727,17 +952,20 @@ if __name__ == "__main__":
             table=args.table,
             workgroup=args.workgroup,
             s3_location=args.s3_location,
-            s3_output=args.s3_output,
             input_format=args.input_format,
             region_name=args.region,
         )
 
     # --- resume with BuildStockQuery path (will succeed now if we had to create the external table) ---
-    bsq = initialize_buildstock_query(database=args.database, table=args.table, workgroup=args.workgroup)
+    bsq = initialize_buildstock_query(
+        database=args.database, table=args.table, workgroup=args.workgroup
+    )
     print("Creating view from raw timeseries results...")
+    view_name = f"{args.table}_timeseries_view"
     create_view_oedi_timeseries(
         bsq,
-        view_name="timeseries_view",
+        view_name=view_name,
         force=args.force,
     )
+    check_view_result(bsq, view_name=view_name)
     print("View creation complete.")

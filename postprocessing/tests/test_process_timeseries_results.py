@@ -19,6 +19,9 @@ from resstockpostproc.process_timeseries_results import (
     create_query_part_wrap_time_to_sim_year,
     create_query_oedi_timeseries,
     energy_unit_conv_to_kwh,
+    get_county_utc_offset,
+    read_options_lookup,
+    options_lookup_file,
 )
 
 
@@ -90,6 +93,79 @@ def mock_bsq_without_timeutc():
 
     bsq.execute.side_effect = mock_execute
     return bsq
+
+
+# =============================================================================
+# Tests: read_options_lookup and get_county_utc_offset
+# =============================================================================
+
+
+class TestOptionsLookupAndCountyUtcOffset:
+    def test_options_lookup_file_exists(self):
+        assert options_lookup_file.exists(), (
+            f"options_lookup.tsv not found at {options_lookup_file}"
+        )
+
+    def test_read_options_lookup_returns_dataframe(self):
+        df = read_options_lookup()
+        assert isinstance(df, pd.DataFrame)
+        assert len(df) > 0
+        assert "Parameter Name" in df.columns
+        assert "Option Name" in df.columns
+        assert "Measure Arg 4" in df.columns
+
+    def test_read_options_lookup_has_county_rows(self):
+        df = read_options_lookup()
+        county_rows = df[df["Parameter Name"] == "County"]
+        assert len(county_rows) > 0, "No County rows found in options_lookup"
+
+    def test_get_county_utc_offset_returns_dict(self):
+        result = get_county_utc_offset()
+        assert isinstance(result, dict)
+        assert len(result) > 0
+
+    def test_get_county_utc_offset_values_are_integers(self):
+        result = get_county_utc_offset()
+        for county, offset in result.items():
+            assert isinstance(offset, int), (
+                f"Offset for '{county}' is {type(offset)}, expected int"
+            )
+
+    def test_get_county_utc_offset_values_in_valid_range(self):
+        """UTC offsets for US counties should be between -10 and -4."""
+        result = get_county_utc_offset()
+        for county, offset in result.items():
+            assert -10 <= offset <= -4, (
+                f"Offset {offset} for '{county}' outside expected range [-10, -4]"
+            )
+
+    def test_get_county_utc_offset_known_counties(self):
+        """Spot-check known counties and their expected offsets."""
+        result = get_county_utc_offset()
+        # Eastern Time counties should be -5
+        eastern_counties = [k for k in result if k.startswith("NY,")]
+        assert len(eastern_counties) > 0
+        for county in eastern_counties:
+            assert result[county] == -5, (
+                f"Expected -5 for '{county}', got {result[county]}"
+            )
+
+        # Mountain Time counties should be -7
+        mountain_counties = [k for k in result if k.startswith("CO,")]
+        assert len(mountain_counties) > 0
+        for county in mountain_counties:
+            assert result[county] == -7, (
+                f"Expected -7 for '{county}', got {result[county]}"
+            )
+
+    def test_get_county_utc_offset_count(self):
+        """Should have a county entry for each County row in options_lookup."""
+        df = read_options_lookup()
+        county_rows = df[df["Parameter Name"] == "County"]
+        result = get_county_utc_offset()
+        assert len(result) == len(county_rows), (
+            f"Expected {len(county_rows)} entries, got {len(result)}"
+        )
 
 
 # =============================================================================
