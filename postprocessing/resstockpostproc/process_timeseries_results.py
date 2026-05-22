@@ -33,24 +33,50 @@ The view definition will perform the following transformations:
   timestamp with the simulation year).
 """
 
+import io
 import re
 import time
 import argparse
 from typing import Optional, Union, Literal
 from pathlib import Path
 import pandas as pd
-
 import boto3
 from botocore.exceptions import ClientError
 import pyarrow.parquet as pq
+
 from buildstock_query import BuildStockQuery
 
 options_lookup_file = Path(__file__).parents[2] / "resources" / "options_lookup.tsv"
+sdr_column_definitions_file = (
+    Path(__file__).parents[0]
+    / "resources"
+    / "publication"
+    / "sdr_column_definitions.csv"
+)
 
-energy_unit_conv_to_kwh = {
-    "mbtu": 293.07107,
-    "kbtu": 0.29307107,
-    "therm": 29.3001,
+# Mapping of raw end-use names to final (OEDI) end-use names
+_ENDUSE_REMAP = {
+    "electric_vehicle_charging": "ev_charging",
+    "heating_heat_pump_backup": "heating_hp_bkup",
+    "heating_heat_pump_backup_fans_pumps": "heating_hp_bkup_fa",
+    "permanent_spa_heater": "permanent_spa_heat",
+}
+
+# Unit conversions: raw_unit -> (final_unit, multiplier)
+# multiplier is None for temperature (requires F→C formula)
+_UNIT_CONVERSIONS = {
+    "kwh": ("kwh", 1.0),
+    "kbtu": ("kwh", 0.293071),
+    "therm": ("kwh", 29.3001),
+    "mbtu": ("kwh", 293.07107),
+    "btu/(hr*ft^2)": ("watt_per_m2", 3.15459),
+    "mph": ("meter_per_second", 0.44704),
+    "f": ("c", None),  # special: (F-32)*5/9
+    "%": ("percentage", 1.0),
+    "fraction": ("kgwater_per_kgdryair", 1.0),
+    "kgwater/kgdryair": ("kgwater_per_kgdryair", 1.0),
+    "hr": ("hour", 1.0),
+    "gal": ("gal", 1.0),
 }
 
 
@@ -162,9 +188,17 @@ def create_view(
     return state, reason
 
 
-def read_options_lookup() -> pd.DataFrame:
-    """
-    Read the options_lookup.tsv file into a pandas dataframe
+def _read_options_lookup() -> pd.DataFrame:
+    """Read the options_lookup.tsv file into a DataFrame.
+
+    Handles variable-width TSV by detecting the maximum column count,
+    then assigns fixed column names.
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame with columns: Parameter Name, Option Name, Measure Dir,
+        and Measure Arg 1..N.
     """
 
     # First, determine the max number of columns across all rows
@@ -187,22 +221,35 @@ def read_options_lookup() -> pd.DataFrame:
     return df
 
 
-def get_county_utc_offset() -> dict[str, int]:
+def _get_county_utc_offset() -> dict[str, int]:
+    """Get the UTC offset (hours) for each county from options_lookup.tsv.
+
+    Returns
+    -------
+    dict[str, int]
+        Mapping of county option name (e.g. 'NY, Albany County') to its
+        UTC offset in hours (e.g. -5).
     """
-    Get the UTC offset for each county from options_lookup
-    """
-    df = read_options_lookup()
+    df = _read_options_lookup()
     cond = df["Parameter Name"] == "County"
     dct = df.loc[cond].set_index("Option Name")["Measure Arg 4"].to_dict()
     dct = {k: int(v.removeprefix("site_time_zone_utc_offset=")) for k, v in dct.items()}
     return dct
 
 
-def create_query_part_conditional_county_utc_offset() -> str:
-    """Create a SQL CASE statement to adjust time based on county UTC offset.
-    E.g., CASE WHEN county IN ('NY, Albany County', ...) THEN -5
+def _build_county_utc_offset_case_sql_expr() -> str:
+    """Build a SQL CASE expression mapping counties to their UTC offsets.
+
+    Groups counties by UTC offset and generates a CASE/WHEN expression
+    suitable for embedding in an Athena SQL query.
+
+    Returns
+    -------
+    str
+        SQL CASE expression, e.g.
+        ``CASE WHEN "in.county" IN ('NY, Albany County', ...) THEN -5 ... ELSE 0 END``
     """
-    county_utc_offsets = get_county_utc_offset()
+    county_utc_offsets = _get_county_utc_offset()
 
     # group counties by their UTC offset
     offset_groups = {}
@@ -213,23 +260,39 @@ def create_query_part_conditional_county_utc_offset() -> str:
     case_statements = []
     for offset, counties in offset_groups.items():
         county_list = ", ".join(f"'{c.replace(chr(39), chr(39)*2)}'" for c in counties)
-        case_statements.append(f'WHEN "county" IN ({county_list}) THEN {offset}')
+        case_statements.append(f'WHEN "in.county" IN ({county_list}) THEN {offset}')
 
-    case_sql = "CASE\n" + "\n".join(case_statements) + "\nELSE 0 END"
-    return case_sql
+    case_sql_expr = "CASE\n" + "\n".join(case_statements) + "\nELSE 0 END"
+    return case_sql_expr
 
 
-def create_query_part_est_time(
+def _build_est_time_sql_expr(
     bsq: BuildStockQuery, time_col: str, has_timeutc: bool
 ) -> tuple[str, int]:
-    """
-    Create sql string to format time column to Eastern Standard Time (EST), period-beginning
+    """Build a SQL expression to convert timestamps to EST period-beginning.
 
-    Not time-wrapping yet to simulation year
+    Queries the baseline table to determine the timestamp convention (begin/end)
+    and the simulation year. Returns a DATE_ADD expression that shifts the raw
+    time column to UTC-5 (EST) with period-beginning alignment.
 
-    EST is UTC-5, so direction of math is:
-        -   From EST to UTC, add 5 hrs, or SUBTRACT UTC-offset value: -(-5)
-        -   From UTC to EST, subtract 5 hrs, or ADD UTC-offset value: +(-5)
+    Does **not** wrap time to the simulation year (see
+    ``_build_wrap_time_to_sim_year_sql_expr``).
+
+    Parameters
+    ----------
+    bsq : BuildStockQuery
+        An initialized BuildStockQuery instance.
+    time_col : str
+        Desired output column name for the timestamp.
+    has_timeutc : bool
+        If True, the source table contains a ``timeutc`` column and no
+        county-based local-to-UTC conversion is needed.
+
+    Returns
+    -------
+    tuple[str, int]
+        (time_sql_expr, sim_year) — the SQL expression string and detected
+        simulation year.
     """
     table_name = bsq.table_name
 
@@ -239,9 +302,9 @@ def create_query_part_est_time(
             LIMIT 1
         """).iloc[0, 0]
 
-    except Exception as e:
+    except Exception:
         print(
-            f"Could not determine timeseries timestamp convention from {table_name}_baseline. Defaulting to 'end'. Error: {e}"
+            f"Could not determine timeseries timestamp convention from {table_name}_baseline. Defaulting to 'end'."
         )
         time_convention = "end"
 
@@ -269,35 +332,47 @@ def create_query_part_est_time(
 
     if has_timeutc:
         # delta minutes maintains UTC offset convention
-        time_sql = f"""
+        time_sql_expr = f"""
         DATE_ADD('minute', {delta_minutes}, "timeutc") AS "{time_col}"
         """
 
     else:
         # additionally add conversion from local standard time to UTC
-        county_utc_offset_sql = create_query_part_conditional_county_utc_offset()
+        county_utc_offset_sql_expr = _build_county_utc_offset_case_sql_expr()
 
         # must minus the county UTC offset (in hours) because it's going from local standard to UTC
-        time_sql = f"""
-        DATE_ADD('minute', {delta_minutes} - 60 * ({county_utc_offset_sql}), "time") AS "{time_col}"
+        time_sql_expr = f"""
+        DATE_ADD('minute', {delta_minutes} - 60 * ({county_utc_offset_sql_expr}), "time") AS "{time_col}"
         """
 
-    return time_sql, sim_year
+    return time_sql_expr, sim_year
 
 
-def create_query_part_wrap_time_to_sim_year(time_col: str, target_year: int) -> str:
+def _build_wrap_time_to_sim_year_sql_expr(time_col: str, target_year: int) -> str:
+    """Build a SQL expression that resets timestamps to the simulation year.
+
+    Uses Athena/Presto DATE_ADD to shift the year component of the timestamp
+    to ``target_year``, preserving month/day/time.
+
+    Parameters
+    ----------
+    time_col : str
+        Name of the timestamp column to wrap.
+    target_year : int
+        The simulation year to normalize timestamps to.
+
+    Returns
+    -------
+    str
+        SQL expression: ``DATE_ADD('year', <shift>, "<time_col>") AS "<time_col>"``.
     """
-    Create a SQL expression to wrap time back to the simulation year.
-
-    In Athena SQL (Presto/Trino), replacing the year is done with date_add('year', target_year - year(col), col)
-    """
-    time_sql = f"""
+    time_sql_expr = f"""
     DATE_ADD('year', {target_year} - YEAR("{time_col}"), "{time_col}") AS "{time_col}"
     """
-    return time_sql
+    return time_sql_expr
 
 
-def get_partition_columns(bsq: BuildStockQuery) -> list[str]:
+def _get_partition_columns(bsq: BuildStockQuery) -> list[str]:
     """
     Get partition column names from the timeseries table.
 
@@ -311,60 +386,7 @@ def get_partition_columns(bsq: BuildStockQuery) -> list[str]:
     ]
 
 
-def reformat_fuel_column(col: str) -> Optional[tuple[str, str]]:
-    """
-    Reformat fuel columns from the raw timeseries table to match OEDI schema.
-    """
-    m1 = re.search(
-        r"^(electricity|natural_gas|fuel_oil|propane|wood)_(\w+)_(kwh|therm|mbtu)",
-        col,
-    )
-    m2 = re.search(
-        r"^total_site_(electricity|natural_gas|fuel_oil|propane|wood)_(kwh|therm|mbtu)",
-        col,
-    )
-    m3 = re.search(r"^(total)_(site_energy)_(kwh|therm|mbtu)", col)
-
-    if not (m1 or m2 or m3):
-        return None, None
-
-    if m1:
-        fueltype, enduse, fuel_units = m1.groups()
-    elif m2:
-        fueltype, fuel_units = m2.groups()
-        enduse = "total"
-    elif m3:
-        enduse, fueltype, fuel_units = m3.groups()
-
-    new_col = f"out.{fueltype}.{enduse}.energy_consumption"
-    return new_col, fuel_units
-
-
-# Mapping of raw end-use names to final (OEDI) end-use names
-_ENDUSE_REMAP = {
-    "electric_vehicle_charging": "ev_charging",
-    "heating_heat_pump_backup": "heating_hp_bkup",
-    "heating_heat_pump_backup_fans_pumps": "heating_hp_bkup_fa",
-    "permanent_spa_heater": "permanent_spa_heat",
-}
-
-# Unit conversions: (raw_unit, final_unit, multiplier)
-# For energy columns that need kBtu → kWh conversion
-_UNIT_CONVERSIONS = {
-    "kbtu": ("kwh", 0.293071),
-    "kwh": ("kwh", 1.0),
-    "btu/(hr*ft^2)": ("watt_per_m2", 3.15459),
-    "mph": ("meter_per_second", 0.44704),
-    "f": ("c", None),  # special: (F-32)*5/9
-    "%": ("percentage", 1.0),
-    "fraction": ("kgwater_per_kgdryair", 1.0),
-    "kgwater/kgdryair": ("kgwater_per_kgdryair", 1.0),
-    "hr": ("hour", 1.0),
-    "gal": ("gal", 1.0),
-}
-
-
-def reformat_raw_column(col: str) -> Optional[tuple[str, str, Optional[float]]]:
+def _reformat_raw_column(col: str) -> Optional[tuple[str, str, Optional[float]]]:
     """
     Reformat raw ResStock timeseries columns (double-underscore format) to OEDI schema.
 
@@ -446,8 +468,6 @@ def reformat_raw_column(col: str) -> Optional[tuple[str, str, Optional[float]]]:
             "radiant_temperature": "indoor_radiant_temperature",
         }
         oedi_measure = measure_map[measure]
-        zone_clean = zone.replace("_-_", " - ").replace("_", " ").replace(" ", "_")
-        # Keep zone as-is with underscores (matching raw format)
         new_col = f"out.{oedi_measure}.{zone}..c"
         return new_col, "f", None  # None means F→C conversion
 
@@ -476,8 +496,16 @@ def reformat_raw_column(col: str) -> Optional[tuple[str, str, Optional[float]]]:
     if m:
         measure, unit = m.groups()
         weather_map = {
-            ("drybulb_temperature", "f"): ("out.outdoor_air_drybulb_temp..c", "f", None),
-            ("wetbulb_temperature", "f"): ("out.outdoor_air_wetbulb_temp..c", "f", None),
+            ("drybulb_temperature", "f"): (
+                "out.outdoor_air_drybulb_temp..c",
+                "f",
+                None,
+            ),
+            ("wetbulb_temperature", "f"): (
+                "out.outdoor_air_wetbulb_temp..c",
+                "f",
+                None,
+            ),
             ("relative_humidity", "%"): (
                 "out.outdoor_air_relative_humidity..percentage",
                 "%",
@@ -507,7 +535,144 @@ def reformat_raw_column(col: str) -> Optional[tuple[str, str, Optional[float]]]:
     return None, None, None
 
 
-def create_query_oedi_timeseries(bsq: BuildStockQuery) -> str:
+def _build_column_sql_expr(
+    col: str, new_col: str, fuel_units: Optional[str], mult: Optional[float]
+) -> str:
+    """Build a single SQL column expression with appropriate unit conversion.
+
+    Applies the correct arithmetic transformation based on the source unit
+    and multiplier (e.g. F→C formula, kBtu→kWh scaling, or identity).
+
+    Parameters
+    ----------
+    col : str
+        Raw column name in the source table.
+    new_col : str
+        Desired output column alias.
+    fuel_units : str or None
+        Original unit string (e.g. 'kwh', 'f', 'therm'). None for passthrough.
+    mult : float or None
+        Conversion multiplier. None triggers F→C formula when fuel_units='f'.
+
+    Returns
+    -------
+    str
+        SQL expression such as ``0.293071 * "col" AS "new_col"`` or
+        ``("col" - 32) * 5.0 / 9.0 AS "new_col"``.
+    """
+    if mult is None and fuel_units == "f":
+        return f'(("{col}" - 32) * 5.0 / 9.0) AS "{new_col}"'
+    elif mult is not None and mult != 1.0:
+        return f'{mult} * "{col}" AS "{new_col}"'
+    elif fuel_units in _UNIT_CONVERSIONS:
+        _, conv = _UNIT_CONVERSIONS[fuel_units]
+        if conv is not None and conv != 1.0:
+            return f'{conv} * "{col}" AS "{new_col}"'
+    return f'"{col}" AS "{new_col}"'
+
+
+def _build_renamed_columns(
+    columns: list[str],
+    keep_unmapped_cols: bool = False,
+    skip_cols: set[str] | None = None,
+) -> tuple[list[str], list[tuple[str, str]]]:
+    """Map raw timeseries column names to OEDI names with unit-conversion SQL.
+
+    Iterates over ``columns``, applies ``_reformat_raw_column`` to determine
+    the OEDI name and conversion, then builds the SQL expression for each.
+
+    Parameters
+    ----------
+    columns : list[str]
+        Raw column names from the timeseries table.
+    keep_unmapped_cols : bool
+        If True, columns that do not match any known pattern are passed through
+        unchanged (useful for Ochre workflow).
+    skip_cols : set[str] or None
+        Column names to exclude entirely (e.g. structural/partition columns
+        already handled elsewhere).
+
+    Returns
+    -------
+    tuple[list[str], list[tuple[str, str]]]
+        (sql_expressions, ts_cols) where ts_cols is [(raw_name, oedi_name), ...].
+    """
+    if skip_cols is None:
+        skip_cols = set()
+    sql_exprs = []
+    ts_cols = []
+    for col in columns:
+        if col in skip_cols:
+            continue
+        new_col, fuel_units, mult = _reformat_raw_column(col)
+
+        if new_col is None:
+            if keep_unmapped_cols:
+                # pass through all non-standard columns
+                new_col = col
+                fuel_units = mult = None
+                print(" - Unmapped column (passed through):", col)
+            else:
+                continue
+        ts_cols.append((col, new_col))
+        sql_exprs.append(_build_column_sql_expr(col, new_col, fuel_units, mult))
+    return sql_exprs, ts_cols
+
+
+def _build_intensity_columns(
+    ts_cols: list[tuple[str, str]], sqft_col: str
+) -> list[str]:
+    """Generate SQL expressions for energy intensity columns.
+
+    Each expression divides an energy column by conditioned floor area.
+
+    Parameters
+    ----------
+    ts_cols : list[tuple[str, str]]
+        List of (raw_name, oedi_name) column pairs.
+    sqft_col : str
+        Name of the conditioned floor area column.
+
+    Returns
+    -------
+    list[str]
+        SQL expressions like ``"col" / "in.sqft" AS "col_intensity"``.
+    """
+    return [
+        f'"{new_col}" / "{sqft_col}" AS "{new_col}_intensity"' for _, new_col in ts_cols
+    ]
+
+
+def _get_column_mapping_config(ochre_workflow: bool) -> tuple[bool, bool]:
+    """Determine column-mapping behaviour based on workflow type.
+
+    Parameters
+    ----------
+    ochre_workflow : bool
+        True for OCHRE-aligned workflow, False for standard ResStock.
+
+    Returns
+    -------
+    tuple[bool, bool]
+        (compute_intensity_cols, keep_unmapped_cols)
+        - compute_intensity_cols: whether to generate energy/sqft intensity columns.
+        - keep_unmapped_cols: whether unmapped timeseries columns are passed through.
+    """
+    if ochre_workflow:
+        # OCHRE workflow does not currently include conditioned sqft, 
+        # so skip intensity columns for now if ochre_workflow is True
+        compute_intensity_cols = False
+        keep_unmapped_cols = True  # keep all columns for maximum flexibility in Ochre
+    else:
+        # ResStock standard workflow
+        compute_intensity_cols = True
+        keep_unmapped_cols = False  # only include mapped columns for cleaner OEDI output
+    return compute_intensity_cols, keep_unmapped_cols
+
+
+def create_query_oedi_timeseries(
+    bsq: BuildStockQuery, ochre_workflow: bool = False
+) -> str:
     """
     Create the SQL body for a view that transforms raw timeseries results into OEDI format.
 
@@ -515,147 +680,126 @@ def create_query_oedi_timeseries(bsq: BuildStockQuery) -> str:
     ----------
     bsq : BuildStockQuery
         An initialized BuildStockQuery instance.
-    partition_cols : Optional[list[str]]
-        Partition column names. If None, auto-detected from table metadata.
+    ochre_workflow : bool
+        If True, generate OEDI timeseries columns for Ochre workflow.
 
     Returns
     -------
     str
         The SQL SELECT statement body for the view definition.
     """
+    
+    compute_intensity_cols, keep_unmapped_cols = _get_column_mapping_config(ochre_workflow)
+
     table_name = bsq.table_name
     columns = [c.name for c in bsq.ts_table.columns]
+    partition_cols = _get_partition_columns(bsq)
 
-    # Auto-detect partition columns from table metadata
-    partition_cols = get_partition_columns(bsq)
-
-    print(f"Timeseries table columns ({len(columns)} total): {columns}")
-    print(f"Partition columns: {partition_cols}")
+    print(f"Timeseries table columns ({len(columns)} total): \n{columns}")
+    print()
+    print(f"Partition columns inferred from table ({len(partition_cols)} total): \n{partition_cols}")
+    print()
 
     bldg_id_col = "bldg_id"
     upgrade_col = "upgrade"
     time_col = "timestamp"
     sqft_col = "in.sqft"
+    must_have_cols = [bldg_id_col, upgrade_col, time_col]
 
-    must_have_cols = [
-        bldg_id_col,
-        upgrade_col,
-        time_col,
-    ]  # these columns are called out explicitly in the SQL
+    # CTE 1: simplified baseline
+    has_timeutc = "timeutc" in columns
 
-    # CTE table 1: simplified baseline
-    if "timeutc" in columns:
-        county_sql = ""
-        has_timeutc = True
-    else:
-        county_sql = '"build_existing_model.county" AS "in.county",'
-        has_timeutc = False
+    bl_cols = [f'"building_id" AS "{bldg_id_col}"']
+    if not has_timeutc:
+        bl_cols.append('"build_existing_model.county" AS "in.county"')
+    if compute_intensity_cols:
+        bl_cols.append(
+            f'"upgrade_costs.floor_area_conditioned_ft_2" AS "{sqft_col}"'
+        )
 
-    cte_sql = f"""
+    cte_sql_expr = f"""
     WITH bl_table AS (
-        SELECT "building_id" AS "{bldg_id_col}", {county_sql}
-        "upgrade_costs.floor_area_conditioned_ft_2" AS "{sqft_col}"
+        SELECT {", ".join(bl_cols)}
         FROM {table_name}_baseline
         ),
     """
 
-    # CTE table 2: timeseries table with renamed columns joined with simplified baseline table and time adjustment to EST
-    columns_sql_list = [
-        f'"{bldg_id_col}"',
-        f'"{upgrade_col}"',
-        f'"{sqft_col}"',
+    # CTE 2: renamed timeseries joined with baseline + time adjustment
+    id_cols = [f'"{bldg_id_col}"', f'"{upgrade_col}"']
+    if compute_intensity_cols:
+        id_cols.append(f'"{sqft_col}"')
+    partition_exprs = [f'"{pc}"' for pc in partition_cols if pc not in must_have_cols]
+    time_sql_expr, sim_year = _build_est_time_sql_expr(bsq, time_col, has_timeutc)
+    skip_cols = set(partition_cols) | {"time", "timeutc", "building_id", "upgrade"}
+    ts_exprs, ts_cols = _build_renamed_columns(
+        columns, keep_unmapped_cols=keep_unmapped_cols, skip_cols=skip_cols,
+    )
+
+    # Identify columns that were not mapped to final table
+    mapped_raw_cols = {old for old, _ in ts_cols}
+    unmapped_cols = [
+        c for c in columns if c not in mapped_raw_cols and c not in skip_cols
     ]
-    for pc in partition_cols:
-        if (
-            pc not in must_have_cols
-        ):  # avoid duplicating partition columns that are already called out explicitly
-            columns_sql_list.append(f'"{pc}"')
-    time_sql, sim_year = create_query_part_est_time(
-        bsq, time_col, has_timeutc
-    )  # use sim_year to wrap time in the final select statement
-    columns_sql_list.append(time_sql)
-    ts_cols = []
-    for col in columns:
-        new_col = None
-        fuel_units = None
-        mult = None
+    if unmapped_cols:
+        print()
+        print("-" * 60)
+        print(f"Unmapped columns ({len(unmapped_cols)}):")
+        for col in unmapped_cols:
+            print(f"  - {col}")
+        print("-" * 60)
+        print()
 
-        # ResStock timeseries columns (sightglass format)
-        # Examples: electricity_hot_water_kwh, total_site_energy_kwh
-        new_col, fuel_units = reformat_fuel_column(col)
-
-        # ResStock timeseries columns (raw double-underscore format)
-        # Examples: end_use__electricity__hot_water__kwh
-        if new_col is None:
-            new_col, fuel_units, mult = reformat_raw_column(col)
-
-        # OCHRE timeseries columns — skip for now
-        if new_col is None:
-            continue
-
-        ts_cols.append((col, new_col))
-
-        # Build the SQL expression with appropriate unit conversion
-        if mult is None and fuel_units == "f":
-            # Fahrenheit → Celsius: (F - 32) * 5.0 / 9.0
-            columns_sql_list.append(
-                f'(("{col}" - 32) * 5.0 / 9.0) AS "{new_col}"'
-            )
-        elif fuel_units in energy_unit_conv_to_kwh:
-            columns_sql_list.append(
-                f'{energy_unit_conv_to_kwh[fuel_units]} * "{col}" AS "{new_col}"'
-            )
-        elif mult is not None and mult != 1.0:
-            columns_sql_list.append(
-                f'{mult} * "{col}" AS "{new_col}"'
-            )
-        else:
-            columns_sql_list.append(f'"{col}" AS "{new_col}"')
-
-    columns_sql = ", \n".join(columns_sql_list)
-    cte_sql += f"""
+    columns_sql_expr = ", \n".join(
+        id_cols + partition_exprs + [time_sql_expr] + ts_exprs
+    )
+    cte_sql_expr += f"""
     renamed_table AS (
-    SELECT {columns_sql} FROM bl_table JOIN
+    SELECT {columns_sql_expr} FROM bl_table JOIN
     {table_name}_timeseries ON "bldg_id" = "building_id"
     )
     """
 
-    # Final table: renamed table + energy intensity columns + time wrapped to sim year
-    final_columns_sql_list = [
-        f'"{bldg_id_col}"',
-        f'"{upgrade_col}"',
-        f'"{sqft_col}"',
-        create_query_part_wrap_time_to_sim_year(time_col, sim_year),
-    ]
-    for pc in partition_cols:
-        if pc not in must_have_cols:
-            final_columns_sql_list.append(f'"{pc}"')
-    final_columns_sql_list += [f'"{col[1]}"' for col in ts_cols]
+    # Final SELECT: id cols + wrapped time + partitions + ts cols + intensity cols
+    final_cols = (
+        id_cols
+        + [_build_wrap_time_to_sim_year_sql_expr(time_col, sim_year)]
+        + partition_exprs
+        + [f'"{new}"' for _, new in ts_cols]
+    )
+    if compute_intensity_cols:
+        final_cols += _build_intensity_columns(ts_cols, sqft_col)
 
-    # Calculate energy intensity
-    for old_col, new_col in ts_cols:
-        intensity_col = f"{new_col}_intensity"
-        final_columns_sql_list.append(
-            f'"{new_col}" / "{sqft_col}" AS "{intensity_col}"'
-        )
-
-    # Final statement
-    final_columns_sql = ", \n".join(final_columns_sql_list)
-    select_sql = f"""
-    {cte_sql} SELECT {final_columns_sql} FROM renamed_table
+    final_columns_sql_expr = ", \n".join(final_cols)
+    select_sql_expr = f"""
+    {cte_sql_expr} SELECT {final_columns_sql_expr} FROM renamed_table
     """
-    return select_sql
+    return select_sql_expr
 
 
 def create_view_oedi_timeseries(
     bsq: BuildStockQuery,
     view_name: str,
+    ochre_workflow: bool = False,
     force: bool = False,
-):
+) -> None:
+    """Create an Athena view with OEDI timeseries schema.
+
+    Generates the full SELECT SQL via ``create_query_oedi_timeseries`` and
+    executes ``create_view`` to register it in the database.
+
+    Parameters
+    ----------
+    bsq : BuildStockQuery
+        An initialized BuildStockQuery instance.
+    view_name : str
+        Name for the new view.
+    ochre_workflow : bool
+        If True, use Ochre-aligned column mapping (pass-through unmapped
+        columns, skip intensity columns).
+    force : bool
+        If True, overwrite an existing view with the same name.
     """
-    Create a view with OEDI timeseries schema using create_view
-    """
-    select_sql = create_query_oedi_timeseries(bsq)
+    select_sql = create_query_oedi_timeseries(bsq, ochre_workflow=ochre_workflow)
     # print("=" * 60)
     # print("GENERATED SQL:")
     # print("=" * 60)
@@ -667,20 +811,69 @@ def create_view_oedi_timeseries(
 def check_view_result(
     bsq: BuildStockQuery,
     view_name: str,
+    ochre_workflow: bool = False,
     limit_rows: int = 10,
-):
+) -> None:
+    """Run basic validation checks on a created timeseries view.
+
+    Queries the view and verifies:
+    1. Expected columns are present (timestamp, energy_consumption, intensity).
+    2. All timestamps share a single simulation year.
+    3. The number of distinct timestamps matches a full year at the detected
+       timestep resolution.
+
+    A sample CSV of the first ``limit_rows`` rows is saved to the working
+    directory.
+
+    Parameters
+    ----------
+    bsq : BuildStockQuery
+        An initialized BuildStockQuery instance.
+    view_name : str
+        Name of the view to check.
+    ochre_workflow : bool
+        If True, skip intensity-column checks.
+    limit_rows : int
+        Number of sample rows to fetch for the CSV export.
+
+    Raises
+    ------
+    ValueError
+        If expected column types are missing from the view.
+    AssertionError
+        If timestamps span multiple years or the count is unexpected.
     """
-    Run a simple query against the created view to check results
-    """
+    compute_intensity_cols, _ = _get_column_mapping_config(ochre_workflow)
+
+    print("-" * 60)
+    print(f"Checking results of view '{view_name}', this may take a few moments...")
+    print("-" * 60)
+    print()
+    t0 = time.time()
     # 1. Check that expected columns are present
     df = bsq.execute(f"SELECT * FROM {view_name} LIMIT {limit_rows}")
 
-    has_timestamp = "timestamp" in df.columns
-    has_intensity = any("intensity" in c for c in df.columns)
+    print(f"Columns in view '{view_name}' ({len(df.columns)} total): \n{list(df.columns)}")
+    print()
+
+    filename = f"{view_name}_sample_output.csv"
+    df.to_csv(filename, index=False)
+    print(f"Sample view output saved to: {filename}")
+
+    missing_cols = []
+    if "timestamp" not in df.columns:
+        missing_cols.append("timestamp")
+    if compute_intensity_cols:
+        has_intensity = any("intensity" in c for c in df.columns)
+        if not has_intensity:
+            missing_cols.append("*intensity*")
     has_energy_consumption = any("energy_consumption" in c for c in df.columns)
-    if not (has_timestamp and has_intensity and has_energy_consumption):
+    if not has_energy_consumption:
+        missing_cols.append("*energy_consumption*")
+
+    if missing_cols:
         raise ValueError(
-            f"Expected 'timestamp', '*intensity*', and '*energy_consumption*' columns not found in view results. Found columns: {list(df.columns)}"
+            f"Expected {missing_cols} column type(s) not found in view results. Check printed columns above."
         )
 
     # 2. Check timestamps are in simulation-year and has expected number of unique timestamps
@@ -701,8 +894,10 @@ def check_view_result(
     assert (
         len(df2) == expected_timesteps
     ), f"Expected {expected_timesteps} unique timestamps for a full simulation year with {timestep_hours}-hour timesteps, but found {len(df2)}."
+    
+    print(f"View '{view_name}' passed basic checks on column names and timestamps.")
+    print(f"check_view_result completed in {time.time() - t0:.1f}s")
 
-    breakpoint()
 
 # =============================================================================
 # boto3 fallback — used when BuildStockQuery cannot initialize (e.g. table
@@ -711,12 +906,43 @@ def check_view_result(
 
 
 def get_athena_client(region_name: str = "us-west-2"):
-    """Create a boto3 Athena client."""
+    """Create a boto3 Athena client.
+
+    Parameters
+    ----------
+    region_name : str
+        AWS region (default: us-west-2).
+
+    Returns
+    -------
+    botocore.client.Athena
+        A boto3 Athena service client.
+    """
     return boto3.client("athena", region_name=region_name)
 
 
 def wait_for_query(client, execution_id: str, max_wait: int = 300) -> dict:
-    """Poll until an Athena query completes or fails."""
+    """Poll until an Athena query completes or fails.
+
+    Parameters
+    ----------
+    client : botocore.client.Athena
+        boto3 Athena client.
+    execution_id : str
+        The Athena query execution ID to monitor.
+    max_wait : int
+        Maximum seconds to wait before raising TimeoutError.
+
+    Returns
+    -------
+    dict
+        Full GetQueryExecution response once the query reaches a terminal state.
+
+    Raises
+    ------
+    TimeoutError
+        If the query does not complete within ``max_wait`` seconds.
+    """
     elapsed = 0
     while elapsed < max_wait:
         response = client.get_query_execution(QueryExecutionId=execution_id)
@@ -806,7 +1032,9 @@ def list_tables_boto3(
     return tables
 
 
-def _infer_parquet_schema_from_s3(s3_location: str, region_name: str = "us-west-2") -> list[dict]:
+def _infer_parquet_schema_from_s3(
+    s3_location: str, region_name: str = "us-west-2"
+) -> list[dict]:
     """
     Read schema from the first Parquet file found at an S3 location.
 
@@ -830,13 +1058,9 @@ def _infer_parquet_schema_from_s3(s3_location: str, region_name: str = "us-west-
                 parquet_size = obj["Size"]
 
     if not parquet_key:
-        raise FileNotFoundError(
-            f"No Parquet files found at s3://{bucket}/{prefix}"
-        )
+        raise FileNotFoundError(f"No Parquet files found at s3://{bucket}/{prefix}")
 
     # Read schema via boto3 (handles keys with special characters like commas/spaces)
-    import io
-
     obj = s3.get_object(Bucket=bucket, Key=parquet_key)
     buf = io.BytesIO(obj["Body"].read())
     schema = pq.read_schema(buf)
@@ -967,7 +1191,9 @@ def create_external_table(
                 f"Glue create_table failed: {e.response['Error']['Message']}"
             ) from e
 
-        print(f"External table '{table_name}' created via Glue pointing to '{s3_location}'.")
+        print(
+            f"External table '{table_name}' created via Glue pointing to '{s3_location}'."
+        )
         return
 
     # For non-self-describing formats, fall back to Athena DDL
@@ -1033,13 +1259,11 @@ def _list_s3_subfolders(s3_location: str, region_name: str = "us-west-2") -> lis
     if prefix and not prefix.endswith("/"):
         prefix += "/"
 
-    response = s3.list_objects_v2(
-        Bucket=bucket, Prefix=prefix, Delimiter="/"
-    )
+    response = s3.list_objects_v2(Bucket=bucket, Prefix=prefix, Delimiter="/")
     subfolders = []
     for cp in response.get("CommonPrefixes", []):
         # cp["Prefix"] is like "prefix/subfolder/"
-        folder_name = cp["Prefix"][len(prefix):].rstrip("/")
+        folder_name = cp["Prefix"][len(prefix) :].rstrip("/")
         if folder_name:
             subfolders.append(folder_name)
     return subfolders
@@ -1148,7 +1372,14 @@ def ensure_table_exists(
         print()
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """CLI entry point for creating OEDI timeseries views from ResStock results.
+
+    Parses command-line arguments, initializes a BuildStockQuery connection
+    (falling back to boto3 table creation if needed), and creates an Athena
+    view with the OEDI timeseries schema. Optionally runs basic validation
+    checks on the resulting view.
+    """
     parser = argparse.ArgumentParser(
         description="Create an Athena view from raw timeseries results."
     )
@@ -1183,7 +1414,34 @@ if __name__ == "__main__":
         action="store_true",
         help="Overwrite existing view if it already exists.",
     )
+    parser.add_argument(
+        "-c",
+        "--check",
+        action="store_true",
+        help="Run check_view_result after creating the view.",
+    )
+    parser.add_argument(
+        "-o",
+        "--ochre-workflow",
+        action="store_true",
+        help="Whether output results are from OCHRE.",
+    )
     args = parser.parse_args()
+
+    print()
+    print("=" * 60)
+    print("Processing timeseries result to OEDI/sightglass format with the following input parameters:")
+    print("-" * 60)
+    print(f"  database:      {args.database}")
+    print(f"  table:         {args.table}")
+    print(f"  workgroup:     {args.workgroup}")
+    print(f"  s3-location:   {args.s3_location}")
+    print(f"  region:        {args.region}")
+    print(f"  input-format:  {args.input_format}")
+    print(f"  force:         {args.force}")
+    print(f"  check:         {args.check}")
+    print(f"  ochre-workflow: {args.ochre_workflow}")
+    print("=" * 60)
 
     # --- Try BuildStockQuery path first; fall back to boto3 if table missing ---
     try:
@@ -1224,18 +1482,27 @@ if __name__ == "__main__":
             region_name=args.region,
         )
 
+        bsq = initialize_buildstock_query(
+            database=args.database, table=args.table, workgroup=args.workgroup
+        )
+
     # --- resume with BuildStockQuery path (will succeed now if we had to create the external table) ---
-    bsq = initialize_buildstock_query(
-        database=args.database, table=args.table, workgroup=args.workgroup
-    )
     print()
     print("-" * 60)
     print("Creating view from raw timeseries results...")
+    print("-" * 60)
+    print()
     view_name = f"{args.table}_timeseries_view"
     create_view_oedi_timeseries(
         bsq,
         view_name=view_name,
+        ochre_workflow=args.ochre_workflow,
         force=args.force,
     )
-    check_view_result(bsq, view_name=view_name)
-    print("View creation complete.")
+    print()
+    if args.check:
+        check_view_result(bsq, view_name=view_name, ochre_workflow=args.ochre_workflow)
+
+
+if __name__ == "__main__":
+    main()
