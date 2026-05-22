@@ -311,6 +311,202 @@ def get_partition_columns(bsq: BuildStockQuery) -> list[str]:
     ]
 
 
+def reformat_fuel_column(col: str) -> Optional[tuple[str, str]]:
+    """
+    Reformat fuel columns from the raw timeseries table to match OEDI schema.
+    """
+    m1 = re.search(
+        r"^(electricity|natural_gas|fuel_oil|propane|wood)_(\w+)_(kwh|therm|mbtu)",
+        col,
+    )
+    m2 = re.search(
+        r"^total_site_(electricity|natural_gas|fuel_oil|propane|wood)_(kwh|therm|mbtu)",
+        col,
+    )
+    m3 = re.search(r"^(total)_(site_energy)_(kwh|therm|mbtu)", col)
+
+    if not (m1 or m2 or m3):
+        return None, None
+
+    if m1:
+        fueltype, enduse, fuel_units = m1.groups()
+    elif m2:
+        fueltype, fuel_units = m2.groups()
+        enduse = "total"
+    elif m3:
+        enduse, fueltype, fuel_units = m3.groups()
+
+    new_col = f"out.{fueltype}.{enduse}.energy_consumption"
+    return new_col, fuel_units
+
+
+# Mapping of raw end-use names to final (OEDI) end-use names
+_ENDUSE_REMAP = {
+    "electric_vehicle_charging": "ev_charging",
+    "heating_heat_pump_backup": "heating_hp_bkup",
+    "heating_heat_pump_backup_fans_pumps": "heating_hp_bkup_fa",
+    "permanent_spa_heater": "permanent_spa_heat",
+}
+
+# Unit conversions: (raw_unit, final_unit, multiplier)
+# For energy columns that need kBtu → kWh conversion
+_UNIT_CONVERSIONS = {
+    "kbtu": ("kwh", 0.293071),
+    "kwh": ("kwh", 1.0),
+    "btu/(hr*ft^2)": ("watt_per_m2", 3.15459),
+    "mph": ("meter_per_second", 0.44704),
+    "f": ("c", None),  # special: (F-32)*5/9
+    "%": ("percentage", 1.0),
+    "fraction": ("kgwater_per_kgdryair", 1.0),
+    "kgwater/kgdryair": ("kgwater_per_kgdryair", 1.0),
+    "hr": ("hour", 1.0),
+    "gal": ("gal", 1.0),
+}
+
+
+def reformat_raw_column(col: str) -> Optional[tuple[str, str, Optional[float]]]:
+    """
+    Reformat raw ResStock timeseries columns (double-underscore format) to OEDI schema.
+
+    Parameters
+    ----------
+    col : str
+        Raw column name, e.g. "end_use__electricity__hot_water__kwh"
+
+    Returns
+    -------
+    tuple[str, str, float | None] or (None, None, None)
+        (new_column_name, raw_unit, conversion_multiplier)
+        multiplier is None for temperature (requires F→C formula), or float.
+        Returns (None, None, None) if column doesn't match any known pattern.
+    """
+    # Pattern 1: end_use__<fuel>__<enduse>__<unit>
+    m = re.match(r"^end_use__(\w+)__(\w+)__(\w+)$", col)
+    if m:
+        fuel, enduse, unit = m.groups()
+        enduse = _ENDUSE_REMAP.get(enduse, enduse)
+        final_unit, mult = _UNIT_CONVERSIONS.get(unit, (unit, 1.0))
+        new_col = f"out.{fuel}.{enduse}.energy_consumption..{final_unit}"
+        return new_col, unit, mult
+
+    # Pattern 2: fuel_use__<fuel>__<total|net>__<unit>
+    m = re.match(r"^fuel_use__(\w+)__(\w+)__(\w+)$", col)
+    if m:
+        fuel, agg, unit = m.groups()
+        final_unit, mult = _UNIT_CONVERSIONS.get(unit, (unit, 1.0))
+        new_col = f"out.{fuel}.{agg}.energy_consumption..{final_unit}"
+        return new_col, unit, mult
+
+    # Pattern 3: energy_use__<total|net>__<unit>
+    m = re.match(r"^energy_use__(\w+)__(\w+)$", col)
+    if m:
+        agg, unit = m.groups()
+        final_unit, mult = _UNIT_CONVERSIONS.get(unit, (unit, 1.0))
+        new_col = f"out.site_energy.{agg}.energy_consumption..{final_unit}"
+        return new_col, unit, mult
+
+    # Pattern 4: hot_water__<enduse>__<unit>
+    m = re.match(r"^hot_water__(\w+)__(\w+)$", col)
+    if m:
+        enduse, unit = m.groups()
+        final_unit, mult = _UNIT_CONVERSIONS.get(unit, (unit, 1.0))
+        new_col = f"out.hot_water.{enduse}..{final_unit}"
+        return new_col, unit, mult
+
+    # Pattern 5: load__<type>__<subtype>__<unit>
+    m = re.match(r"^load__(\w+)__(\w+)__(\w+)$", col)
+    if m:
+        load_type, subtype, unit = m.groups()
+        final_unit, mult = _UNIT_CONVERSIONS.get(unit, (unit, 1.0))
+        new_col = f"out.load.{load_type}.{subtype}..{final_unit}"
+        return new_col, unit, mult
+
+    # Pattern 6: unmet_hours__<type>__<unit>
+    m = re.match(r"^unmet_hours__(\w+)__(\w+)$", col)
+    if m:
+        utype, unit = m.groups()
+        final_unit, mult = _UNIT_CONVERSIONS.get(unit, (unit, 1.0))
+        new_col = f"out.unmet_hours.{utype}..{final_unit}"
+        return new_col, unit, mult
+
+    # Pattern 7: Indoor environment - temperature, humidity, etc. for conditioned_space
+    # temperature__<zone>__f, dewpoint_temperature__<zone>__f, etc.
+    m = re.match(
+        r"^(temperature|dewpoint_temperature|operative_temperature|radiant_temperature)"
+        r"__(\w+(?:_-_\w+)?)__f$",
+        col,
+    )
+    if m:
+        measure, zone = m.groups()
+        # Map measure names to OEDI prefix
+        measure_map = {
+            "temperature": "indoor_temperature",
+            "dewpoint_temperature": "indoor_dewpoint_temperature",
+            "operative_temperature": "indoor_operative_temperature",
+            "radiant_temperature": "indoor_radiant_temperature",
+        }
+        oedi_measure = measure_map[measure]
+        zone_clean = zone.replace("_-_", " - ").replace("_", " ").replace(" ", "_")
+        # Keep zone as-is with underscores (matching raw format)
+        new_col = f"out.{oedi_measure}.{zone}..c"
+        return new_col, "f", None  # None means F→C conversion
+
+    # Pattern 8: relative_humidity__<zone>__%
+    m = re.match(r"^relative_humidity__(\w+(?:_-_\w+)?)__\%$", col)
+    if m:
+        zone = m.group(1)
+        new_col = f"out.indoor_relative_humidity.{zone}..percentage"
+        return new_col, "%", 1.0
+
+    # Pattern 9: humidity_ratio__<zone>__fraction
+    m = re.match(r"^humidity_ratio__(\w+(?:_-_\w+)?)__fraction$", col)
+    if m:
+        zone = m.group(1)
+        new_col = f"out.indoor_humidity_ratio.{zone}..kgwater_per_kgdryair"
+        return new_col, "fraction", 1.0
+
+    # Pattern 10: site_outdoor_air_humidity_ratio__environment__kgwater/kgdryair
+    m = re.match(r"^site_outdoor_air_humidity_ratio__\w+__kgwater/kgdryair$", col)
+    if m:
+        new_col = "out.outdoor_humidity_ratio..kgwater_per_kgdryair"
+        return new_col, "kgwater/kgdryair", 1.0
+
+    # Pattern 11: weather columns
+    m = re.match(r"^weather__(\w+)__(.+)$", col)
+    if m:
+        measure, unit = m.groups()
+        weather_map = {
+            ("drybulb_temperature", "f"): ("out.outdoor_air_drybulb_temp..c", "f", None),
+            ("wetbulb_temperature", "f"): ("out.outdoor_air_wetbulb_temp..c", "f", None),
+            ("relative_humidity", "%"): (
+                "out.outdoor_air_relative_humidity..percentage",
+                "%",
+                1.0,
+            ),
+            ("diffuse_solar_radiation", "btu/(hr*ft^2)"): (
+                "out.weather.diffuse_solar_radiation..watt_per_m2",
+                "btu/(hr*ft^2)",
+                3.15459,
+            ),
+            ("direct_solar_radiation", "btu/(hr*ft^2)"): (
+                "out.weather.direct_normal_solar_radiation..watt_per_m2",
+                "btu/(hr*ft^2)",
+                3.15459,
+            ),
+            ("wind_speed", "mph"): (
+                "out.weather.wind_speed..meter_per_second",
+                "mph",
+                0.44704,
+            ),
+        }
+        key = (measure, unit)
+        if key in weather_map:
+            new_col, raw_unit, mult = weather_map[key]
+            return new_col, raw_unit, mult
+
+    return None, None, None
+
+
 def create_query_oedi_timeseries(bsq: BuildStockQuery) -> str:
     """
     Create the SQL body for a view that transforms raw timeseries results into OEDI format.
@@ -379,46 +575,41 @@ def create_query_oedi_timeseries(bsq: BuildStockQuery) -> str:
     )  # use sim_year to wrap time in the final select statement
     columns_sql_list.append(time_sql)
     ts_cols = []
-    breakpoint()
     for col in columns:
+        new_col = None
+        fuel_units = None
+        mult = None
 
-        # ResStock timeseries columns (sightglass)
-        # Examples: End Use: Electricity: Hot Water
-        m1 = re.search(
-            r"^(electricity|natural_gas|fuel_oil|propane|wood)_(\w+)_(kwh|therm|mbtu)",
-            col,
-        )
-        m2 = re.search(
-            r"^total_site_(electricity|natural_gas|fuel_oil|propane|wood)_(kwh|therm|mbtu)",
-            col,
-        )
-        m3 = re.search(r"^(total)_(site_energy)_(kwh|therm|mbtu)", col)
+        # ResStock timeseries columns (sightglass format)
+        # Examples: electricity_hot_water_kwh, total_site_energy_kwh
+        new_col, fuel_units = reformat_fuel_column(col)
 
-        # ResStock timeseries columns
+        # ResStock timeseries columns (raw double-underscore format)
         # Examples: end_use__electricity__hot_water__kwh
+        if new_col is None:
+            new_col, fuel_units, mult = reformat_raw_column(col)
 
-
-        # OCHRE timeseries columns
-
-        if not (m1 or m2 or m3):
+        # OCHRE timeseries columns — skip for now
+        if new_col is None:
             continue
 
-        if m1:
-            fueltype, enduse, fuel_units = m1.groups()
-        elif m2:
-            fueltype, fuel_units = m2.groups()
-            enduse = "total"
-        elif m3:
-            enduse, fueltype, fuel_units = m3.groups()
-        new_col = f"out.{fueltype}.{enduse}.energy_consumption"
         ts_cols.append((col, new_col))
 
-        if fuel_units in energy_unit_conv_to_kwh.keys():
+        # Build the SQL expression with appropriate unit conversion
+        if mult is None and fuel_units == "f":
+            # Fahrenheit → Celsius: (F - 32) * 5.0 / 9.0
+            columns_sql_list.append(
+                f'(("{col}" - 32) * 5.0 / 9.0) AS "{new_col}"'
+            )
+        elif fuel_units in energy_unit_conv_to_kwh:
             columns_sql_list.append(
                 f'{energy_unit_conv_to_kwh[fuel_units]} * "{col}" AS "{new_col}"'
             )
+        elif mult is not None and mult != 1.0:
+            columns_sql_list.append(
+                f'{mult} * "{col}" AS "{new_col}"'
+            )
         else:
-            assert fuel_units == "kwh"
             columns_sql_list.append(f'"{col}" AS "{new_col}"')
 
     columns_sql = ", \n".join(columns_sql_list)
@@ -465,12 +656,11 @@ def create_view_oedi_timeseries(
     Create a view with OEDI timeseries schema using create_view
     """
     select_sql = create_query_oedi_timeseries(bsq)
-    print("=" * 60)
-    print("GENERATED SQL:")
-    print("=" * 60)
-    print(select_sql)
-    print("=" * 60)
-    breakpoint()
+    # print("=" * 60)
+    # print("GENERATED SQL:")
+    # print("=" * 60)
+    # print(select_sql)
+    # print("=" * 60)
     create_view(bsq, view_name, select_sql, force)
 
 
@@ -512,6 +702,7 @@ def check_view_result(
         len(df2) == expected_timesteps
     ), f"Expected {expected_timesteps} unique timestamps for a full simulation year with {timestep_hours}-hour timesteps, but found {len(df2)}."
 
+    breakpoint()
 
 # =============================================================================
 # boto3 fallback — used when BuildStockQuery cannot initialize (e.g. table
@@ -627,24 +818,28 @@ def _infer_parquet_schema_from_s3(s3_location: str, region_name: str = "us-west-
     if prefix and not prefix.endswith("/"):
         prefix += "/"
 
-    # Find first .parquet file
+    # Find first .parquet file (prefer smaller files for faster schema read)
     response = s3.list_objects_v2(Bucket=bucket, Prefix=prefix, MaxKeys=100)
     parquet_key = None
+    parquet_size = float("inf")
     for obj in response.get("Contents", []):
-        if obj["Key"].endswith(".parquet") or obj["Key"].endswith(".snappy.parquet"):
-            parquet_key = obj["Key"]
-            break
+        key = obj["Key"]
+        if key.endswith(".parquet") or key.endswith(".snappy.parquet"):
+            if obj["Size"] < parquet_size:
+                parquet_key = key
+                parquet_size = obj["Size"]
 
     if not parquet_key:
         raise FileNotFoundError(
             f"No Parquet files found at s3://{bucket}/{prefix}"
         )
 
-    # Read schema using pyarrow via S3 filesystem
-    import pyarrow.fs as pafs
+    # Read schema via boto3 (handles keys with special characters like commas/spaces)
+    import io
 
-    fs = pafs.S3FileSystem(region=region_name)
-    schema = pq.read_schema(f"{bucket}/{parquet_key}", filesystem=fs)
+    obj = s3.get_object(Bucket=bucket, Key=parquet_key)
+    buf = io.BytesIO(obj["Body"].read())
+    schema = pq.read_schema(buf)
 
     # Map pyarrow types to Athena/Hive types
     type_map = {
@@ -816,6 +1011,40 @@ def create_external_table(
     print(f"External table '{table_name}' created pointing to '{s3_location}'.")
 
 
+def _list_s3_subfolders(s3_location: str, region_name: str = "us-west-2") -> list[str]:
+    """
+    List immediate subfolder names under an S3 prefix.
+
+    Parameters
+    ----------
+    s3_location : str
+        S3 path (e.g. "s3://bucket/prefix/").
+    region_name : str
+        AWS region.
+
+    Returns
+    -------
+    list[str]
+        Subfolder names (without trailing slash).
+    """
+    s3 = boto3.client("s3", region_name=region_name)
+    path = s3_location[5:]  # strip "s3://"
+    bucket, _, prefix = path.partition("/")
+    if prefix and not prefix.endswith("/"):
+        prefix += "/"
+
+    response = s3.list_objects_v2(
+        Bucket=bucket, Prefix=prefix, Delimiter="/"
+    )
+    subfolders = []
+    for cp in response.get("CommonPrefixes", []):
+        # cp["Prefix"] is like "prefix/subfolder/"
+        folder_name = cp["Prefix"][len(prefix):].rstrip("/")
+        if folder_name:
+            subfolders.append(folder_name)
+    return subfolders
+
+
 def ensure_table_exists(
     database: str,
     table: str,
@@ -826,21 +1055,22 @@ def ensure_table_exists(
     region_name: str = "us-west-2",
 ) -> None:
     """
-    Ensure a table exists in Athena, creating it from S3 if necessary.
+    Ensure tables exist in Athena for each subfolder under the S3 location.
 
-    Uses boto3 directly — intended as a fallback when BuildStockQuery cannot
-    initialize because the table does not yet exist.
+    For each immediate subfolder under s3_location (e.g. baseline/, timeseries/,
+    upgrades/), creates an external table named <table>_<subfolder_name> if it
+    does not already exist. This matches BuildStockQuery's naming convention.
 
     Parameters
     ----------
     database : str
         The Athena/Glue database name.
     table : str
-        The expected table name.
+        The base table name prefix.
     workgroup : str
         Athena workgroup name.
     s3_location : str, optional
-        S3 path to raw data. Required if the table does not already exist.
+        S3 path to raw data root. Required if tables do not already exist.
     s3_output : str, optional
         S3 path for query results. If None, uses workgroup default.
     input_format : str
@@ -851,33 +1081,71 @@ def ensure_table_exists(
     Raises
     ------
     SystemExit
-        If the table does not exist and no s3_location is provided.
+        If tables do not exist and no s3_location is provided.
     """
     tables = list_tables_boto3(
         database, workgroup=workgroup, s3_output=s3_output, region_name=region_name
     )
-    print(f"Available tables for database='{database}': {tables}")
-
-    if table in tables:
-        print(f"Table '{table}' already exists.")
-        return
+    print(f"\nAvailable tables for database='{database}': {tables}")
+    print("-" * 40)
+    print()
 
     if not s3_location:
+        # Check if any expected sub-tables exist
+        if table in tables or any(t.startswith(f"{table}_") for t in tables):
+            print(f"Table(s) for '{table}' already exist.")
+            return
         raise SystemExit(
             f"Table '{table}' not found and --s3-location not provided. "
-            f"Pass --s3-location to create the external table."
+            f"Pass --s3-location to create the external table(s)."
         )
 
-    print(f"Table '{table}' not found. Creating external table...")
-    create_external_table(
-        database=database,
-        table_name=table,
-        s3_location=s3_location,
-        workgroup=workgroup,
-        s3_output=s3_output,
-        input_format=input_format,
-        region_name=region_name,
-    )
+    print(f"Table '{table}' not found. Creating external table(s) using Glue API...")
+    # Discover subfolders under the S3 location
+    s3_loc = s3_location if s3_location.endswith("/") else s3_location + "/"
+    subfolders = _list_s3_subfolders(s3_loc, region_name)
+
+    if not subfolders:
+        # No subfolders — create a single table at the root location
+        if table not in tables:
+            create_external_table(
+                database=database,
+                table_name=table,
+                s3_location=s3_loc,
+                workgroup=workgroup,
+                s3_output=s3_output,
+                input_format=input_format,
+                region_name=region_name,
+            )
+        else:
+            print(f"Table '{table}' already exists.")
+        return
+
+    # Create a table for each subfolder: <table>_<subfolder_name>
+    print(f"Found subfolders: {subfolders}")
+    for subfolder in subfolders:
+        sub_table_name = f"{table}_{subfolder}"
+        sub_s3_location = f"{s3_loc}{subfolder}/"
+        if sub_table_name in tables:
+            print(f"Table '{sub_table_name}' already exists. Skipping.")
+            continue
+        print(f"Creating external table '{sub_table_name}' -> '{sub_s3_location}'...")
+        try:
+            create_external_table(
+                database=database,
+                table_name=sub_table_name,
+                s3_location=sub_s3_location,
+                workgroup=workgroup,
+                s3_output=s3_output,
+                input_format=input_format,
+                region_name=region_name,
+            )
+        except FileNotFoundError as e:
+            print(f"  Skipping '{sub_table_name}': {e}")
+            continue
+        print(f"Table '{sub_table_name}' created.")
+        print("-" * 40)
+        print()
 
 
 if __name__ == "__main__":
@@ -960,6 +1228,8 @@ if __name__ == "__main__":
     bsq = initialize_buildstock_query(
         database=args.database, table=args.table, workgroup=args.workgroup
     )
+    print()
+    print("-" * 60)
     print("Creating view from raw timeseries results...")
     view_name = f"{args.table}_timeseries_view"
     create_view_oedi_timeseries(
