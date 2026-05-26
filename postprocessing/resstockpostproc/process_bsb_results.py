@@ -14,6 +14,7 @@ either be in their own folders (baseline and upgrades) or all be in the same fol
 import re
 import polars as pl
 from pathlib import Path
+import s3fs
 from resstockpostproc.process_metadata import (
     get_schema_superset,
     get_upgrade_rename_dict,
@@ -34,8 +35,16 @@ def export_metadata_and_annual_results(raw_results_dir: str,
     output_dir = setup_fsspec_filesystem(output_dir, aws_profile_name)
 
     # Find the raw results files
-    pqt_glob = f'{raw_results_dir["fs_path"]}/**/*.parquet'
-    result_files = raw_results_dir['fs'].glob(pqt_glob)
+    baseline_pqt_glob = f'{raw_results_dir["fs_path"]}/baseline/*.parquet'
+    baseline_result_files = list(raw_results_dir['fs'].glob(baseline_pqt_glob))
+    upgrade_pqt_glob = f'{raw_results_dir["fs_path"]}/upgrades/**/*.parquet'
+    upgrade_result_files = list(raw_results_dir['fs'].glob(upgrade_pqt_glob))
+    result_files = baseline_result_files + upgrade_result_files
+    print(f"Found results files for {len(result_files)} upgrades (including baseline)")
+    # Prepend s3:// to paths for Polars compatibility
+    if isinstance(raw_results_dir['fs'], s3fs.S3FileSystem):
+        result_files = [f"s3://{f}" for f in result_files]
+
     baseline_file = [f for f in result_files if "up00" in Path(f).name.lower()][0]
     upgrade_ids = [int(re.search(r'up(\d+)', p).group(1)) for p in result_files]
     upgrade_ids.sort()
@@ -49,10 +58,18 @@ def export_metadata_and_annual_results(raw_results_dir: str,
     baseline_df = pl.scan_parquet(baseline_file, storage_options=raw_results_dir['storage_options'])
     failed_bldgs = get_failed_building_list(baseline_df)
     processed_baseline_df = None
+
+    # Determine if we need to prepend s3:// prefix for Polars compatibility
+    use_s3_prefix = isinstance(raw_results_dir['fs'], s3fs.S3FileSystem)
+
     for upgrade_id in upgrade_ids:
         upgrade_file = f'{raw_results_dir["fs_path"]}/upgrades/upgrade={upgrade_id}/results_up{upgrade_id:02d}.parquet'
         if upgrade_id == 0:
             upgrade_file = f'{raw_results_dir["fs_path"]}/baseline/results_up{upgrade_id:02d}.parquet'
+
+        # Prepend s3:// prefix for Polars compatibility when using S3
+        if use_s3_prefix:
+            upgrade_file = f's3://{upgrade_file}'
 
         print(f"Processing upgrade file: {upgrade_file}, upgrade number: {upgrade_id} {'*'*100}")
         raw_upgrade_df = pl.scan_parquet(upgrade_file, storage_options=raw_results_dir['storage_options'])

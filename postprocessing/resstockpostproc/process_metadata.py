@@ -206,7 +206,8 @@ def downselect_and_rename_cols(df: pl.LazyFrame, col_maps: Sequence[dict]) -> pl
 
 
 def get_upgrade_rename_dict(raw_results_dir):
-    file_path = pathlib.Path(raw_results_dir["fs_path"]) / "rename_upgrades.json"
+    # Use forward slashes for S3 compatibility (don't use pathlib.Path which uses OS separators)
+    file_path = f"{raw_results_dir['fs_path']}/rename_upgrades.json"
     if not raw_results_dir["fs"].exists(file_path):
         return dict()
     with raw_results_dir['fs'].open(file_path, "r") as f:
@@ -481,7 +482,9 @@ def add_puma_column(df: pl.LazyFrame):
     print("Adding PUMA column")
     here = pathlib.Path(__file__).resolve().parent
     pumas = gpd.read_file(here / "resources" / "gisdata" / "ipums_pums_2010_simple_t100_area_us_puma.geojson")
-    puma_map = pumas[["GISJOIN", "puma_tsv"]].set_index("puma_tsv")["GISJOIN"].to_dict()
+    # Filter out rows with NaN values before creating the dictionary
+    pumas_clean = pumas[["GISJOIN", "puma_tsv"]].dropna()
+    puma_map = pumas_clean.set_index("puma_tsv")["GISJOIN"].to_dict()
     df = df.with_columns([pl.col("in.puma").replace(puma_map).alias("in.puma")])
     return df
 
