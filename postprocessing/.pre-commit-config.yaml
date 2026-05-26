@@ -1,4 +1,4 @@
-files: ^postprocessing/resstockpostproc/upgrade_comparison/
+files: ^postprocessing/resstockpostproc/.*\.py$
 repos:
   - repo: https://github.com/crate-ci/typos
     rev: v1.34.0

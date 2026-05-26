@@ -62,7 +62,7 @@ def get_failures(csv_path: str, verbose: bool = False) -> list[dict[str, Any]]:
         failed_sims = df_lazy.select(columns_to_select).filter(pl.col("completed_status") == "Fail").collect()
         failures = failed_sims.to_dicts() if not failed_sims.is_empty() else []
         return failures
-    except Exception as e:  # noqa: BLE001
+    except Exception as e:
         print(f"Error processing {csv_path}: {e!s}")
         return [
             {

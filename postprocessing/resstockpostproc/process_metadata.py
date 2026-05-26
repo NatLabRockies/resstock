@@ -6,18 +6,19 @@ import s3fs
 import json
 import re
 from collections import defaultdict
-from typing import Sequence
+from collections.abc import Sequence
 
 from resstockpostproc.utils import (
     fix_site_energy_total,
     fix_all_fuels_emissions,
     get_col_maps,
     write_geo_data,
-    conversion_factor
+    conversion_factor,
 )
 from resstockpostproc.income_mapper import assign_representative_income
 
 logger = logging.getLogger(__name__)
+
 
 def get_failed_bldgs(metadata_df: pl.LazyFrame) -> set[int]:
     failed_bldgs = metadata_df.filter(pl.col("completed_status") == "Fail")
@@ -32,7 +33,7 @@ def process_simulation_outputs(
     upgrade_raw_df: pl.LazyFrame,
     upgrade_num: int,
     upgrade_renamer: dict[str, str],
-    upgrade_col_schema: dict[str, str]
+    upgrade_col_schema: dict[str, str],
 ) -> pl.LazyFrame:
     """
     Publishes the annual results for a specific upgrade.
@@ -46,7 +47,7 @@ def process_simulation_outputs(
         LazyFrame containing published upgrade results.
     """
 
-    is_baseline = (upgrade_num == 0)
+    is_baseline = upgrade_num == 0
     col_maps = get_col_maps()
 
     df = upgrade_raw_df
@@ -64,11 +65,11 @@ def process_simulation_outputs(
     df = rename_upgrades(df, upgrade_renamer)
     df = fix_site_energy_total(df)
     df = add_upgrade_foo_cols(df)
-    df = add_panel_contraint_cols(df)
+    df = add_panel_constraint_cols(df)
     df = fix_all_fuels_emissions(df)
     df = downselect_fuel_emissions_cols(df)
 
-    if is_baseline:
+    if is_baseline:  # noqa: SIM108
         df = add_saving_cols(df, df)  # Intentionally calculate savings = baseline - baseline = 0
     else:
         df = add_saving_cols(df, base_proc_df)
@@ -85,7 +86,7 @@ def process_simulation_outputs(
 def get_schema_superset(upgrade_files: list, files_dir) -> dict:
     upgrade_col_schema = {}
     for upgrade_file in upgrade_files:
-        upgrade_df = pl.scan_parquet(upgrade_file, storage_options=files_dir['storage_options'])
+        upgrade_df = pl.scan_parquet(upgrade_file, storage_options=files_dir["storage_options"])
         upgrade_col_schema.update(get_upgrade_columns(upgrade_df))
     return upgrade_col_schema
 
@@ -94,27 +95,25 @@ def set_baseline_applicability(df: pl.LazyFrame, is_baseline: bool) -> pl.LazyFr
     if not is_baseline:
         # Non-baseline upgrades already have an applicability column
         return df
-    print('Setting applicability to True for all baseline buildings')
+    print("Setting applicability to True for all baseline buildings")
     df = df.with_columns(pl.lit(True).alias("applicability"))
     return df
 
 
-def remove_failed_baseline_buildings(df: pl.LazyFrame, baseline_failed_bldgs: set[int],) -> pl.LazyFrame:
-    print('Removing buildings that failed in the baseline')
-    df = df.filter(
-        ~pl.col("building_id").is_in(baseline_failed_bldgs)
-    )
+def remove_failed_baseline_buildings(df: pl.LazyFrame, baseline_failed_bldgs: set[int]) -> pl.LazyFrame:
+    print("Removing buildings that failed in the baseline")
+    df = df.filter(~pl.col("building_id").is_in(baseline_failed_bldgs))
     return df
 
 
 def remove_na_or_failed_buildings(df: pl.LazyFrame) -> pl.LazyFrame:
-    print('Removing buildings that failed in this upgrade or where the upgrade was not applicable')
+    print("Removing buildings that failed in this upgrade or where the upgrade was not applicable")
     df = df.filter(pl.col("completed_status") == "Success")
     return df
 
 
-def get_failed_building_list(df: pl.LazyFrame, ) -> list[int]:
-    print('Getting failed building list')
+def get_failed_building_list(df: pl.LazyFrame) -> list[int]:
+    print("Getting failed building list")
     failed_bldgs = (
         df.filter(pl.col("completed_status") != "Success")
         .select(pl.col("building_id"))
@@ -137,25 +136,27 @@ def add_baseline_upgrade_name_col(df: pl.LazyFrame, is_baseline: bool) -> pl.Laz
     return df
 
 
-def add_missing_cols_from_baseline_to_upgrade(upgrade_df: pl.LazyFrame, baseline_df: pl.LazyFrame,
-        is_baseline: bool) -> pl.LazyFrame:
+def add_missing_cols_from_baseline_to_upgrade(
+    upgrade_df: pl.LazyFrame, baseline_df: pl.LazyFrame, is_baseline: bool
+) -> pl.LazyFrame:
     if is_baseline:
         # Baseline already has all the columns, no need to add
         return upgrade_df
-    print('Adding missing columns from baseline to upgrade')
+    print("Adding missing columns from baseline to upgrade")
     base_cols = baseline_df.collect_schema().names()
     upgrade_cols = upgrade_df.collect_schema().names()
-    missing_cols = [c for c in list(set(base_cols) - set(upgrade_cols)) + ["building_id"]]
+    missing_cols = list(set(base_cols) - set(upgrade_cols)) + ["building_id"]
     upgrade_df = upgrade_df.join(baseline_df.select(missing_cols), on="building_id", how="left")
     return upgrade_df
 
 
-def replace_missing_buildings_with_baseline(upgrade_df: pl.LazyFrame, baseline_df: pl.LazyFrame,
-        is_baseline: bool) -> pl.LazyFrame:
+def replace_missing_buildings_with_baseline(
+    upgrade_df: pl.LazyFrame, baseline_df: pl.LazyFrame, is_baseline: bool
+) -> pl.LazyFrame:
     if is_baseline:
         # Baseline determines the full set of buildings, will never be missing any by definition
         return upgrade_df
-    print('Replacing buildings missing from the upgrade with baseline data')
+    print("Replacing buildings missing from the upgrade with baseline data")
     # All buildings present in the upgrade_df are there because the upgrade was applicable to them
     upgrade_df = upgrade_df.with_columns(pl.lit(True).alias("applicability"))
     upgrade_name_df = upgrade_df.select(pl.col("apply_upgrade.upgrade_name").first())
@@ -173,21 +174,21 @@ def replace_missing_buildings_with_baseline(upgrade_df: pl.LazyFrame, baseline_d
     ).drop("apply_upgrade.upgrade_name")
     missing_bldgs_df = missing_bldgs_df.join(upgrade_name_df, how="cross")
     upgrade_df = pl.concat([upgrade_df, missing_bldgs_df], how="diagonal_relaxed")
-    base_ids = set(baseline_successful_df.select('building_id').collect().to_series().to_list())
-    up_ids = set(upgrade_df.select('building_id').collect().to_series().to_list())
+    base_ids = set(baseline_successful_df.select("building_id").collect().to_series().to_list())
+    up_ids = set(upgrade_df.select("building_id").collect().to_series().to_list())
     assert base_ids == up_ids, f"{len(base_ids)} buildings in baseline, {len(up_ids)} in upgrade"
     print(f"{len(base_ids)} buildings in baseline, {len(up_ids)} in upgrade")
     return upgrade_df
 
 
 def downselect_and_rename_cols(df: pl.LazyFrame, col_maps: Sequence[dict]) -> pl.LazyFrame:
-    print('Downselecting and renaming columns from raw simulation outputs per sdr_column_definitions.csv')
-    transformed_cols = ['applicability']  # Special case
+    print("Downselecting and renaming columns from raw simulation outputs per sdr_column_definitions.csv")
+    transformed_cols = ["applicability"]  # Special case
     all_cols = df.collect_schema().names()
     for col_map in col_maps:
         if col_map["column_type"] not in ["Input", "Output"]:
             continue
-        if not col_map["import_from_raw"] == 'yes':
+        if col_map["import_from_raw"] != "yes":
             continue
         assert col_map["column_name"] is not None, "ResStock column name must be provided for Input or Output columns"
         if col_map["column_name"] not in all_cols:
@@ -209,8 +210,8 @@ def get_upgrade_rename_dict(raw_results_dir):
     # Use forward slashes for S3 compatibility (don't use pathlib.Path which uses OS separators)
     file_path = f"{raw_results_dir['fs_path']}/rename_upgrades.json"
     if not raw_results_dir["fs"].exists(file_path):
-        return dict()
-    with raw_results_dir['fs'].open(file_path, "r") as f:
+        return {}
+    with raw_results_dir["fs"].open(file_path, "r") as f:
         upgrade_renamer = json.load(f)
     return upgrade_renamer
 
@@ -262,11 +263,10 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
     burden = (
         pl.when(adj_income.is_not_null())
         .then(
-            (
-            pl.col("out.utility_bills.total_bill..usd") -
-            ((pl.col(dol_per_kwh).cast(pl.Float64))*pl.col(ev_kwh))
-            )
-            / adj_income * 100)
+            (pl.col("out.utility_bills.total_bill..usd") - ((pl.col(dol_per_kwh).cast(pl.Float64)) * pl.col(ev_kwh)))
+            / adj_income
+            * 100
+        )
         .otherwise(None)
         .alias("out.energy_burden..percentage")
     )
@@ -278,15 +278,17 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
     print("Adding savings columns")
     savings_cols = []
     all_cols = df.collect_schema().names()
-    out_cols = [col for col in all_cols if 'out.' in col and not (
-        "out.params" in col or
-        "out.panel" in col or
-        "out.capacity" in col or
-        "out.unmet_hours.ev" in col
-        )]
+    out_cols = [
+        col
+        for col in all_cols
+        if "out." in col
+        and not ("out.params" in col or "out.panel" in col or "out.capacity" in col or "out.unmet_hours.ev" in col)
+    ]
     # Selectively include the following for params
-    out_panel_cols = [col for col in all_cols if
-        "out.params.panel_load_total_load" in col
+    out_panel_cols = [
+        col
+        for col in all_cols
+        if "out.params.panel_load_total_load" in col
         or "out.params.panel_load_occupied_capacity" in col
         or "out.params.panel_breaker_space_occupied" in col
     ]
@@ -297,7 +299,7 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
     all_base_cols = baseline_df.collect_schema().names()
     for c in out_cols:
         if c not in all_base_cols:
-            print(f'ERROR: {c} is in upgrade but not baseline df, cannot calc savings for this column')
+            print(f"ERROR: {c} is in upgrade but not baseline df, cannot calc savings for this column")
     baseline_df_with_renamed = baseline_df.select(
         [pl.col(col).alias(f"baseline_{col}") for col in out_cols] + ["bldg_id"]
     )
@@ -312,11 +314,11 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
 
 
 def col_name_to_intensity(col_name: str, new_units=None) -> str:
-    col_name = col_name.replace('energy_consumption', 'energy_consumption_intensity')
-    col_name = col_name.replace('energy_savings', 'energy_savings_intensity')
+    col_name = col_name.replace("energy_consumption", "energy_consumption_intensity")
+    col_name = col_name.replace("energy_savings", "energy_savings_intensity")
     if new_units is not None:
         old_units = units_from_col_name(col_name)
-        col_name = col_name.replace(f'..{old_units}', f'..{new_units}')
+        col_name = col_name.replace(f"..{old_units}", f"..{new_units}")
 
     return col_name
 
@@ -324,40 +326,30 @@ def col_name_to_intensity(col_name: str, new_units=None) -> str:
 def add_intensity_cols(df: pl.LazyFrame) -> pl.LazyFrame:
     print("Adding intensity columns")
     all_cols = df.collect_schema().names()
-    int_cols = [col for col in all_cols if 'out.' in col and (
-        ".energy_consumption" in col or
-        ".energy_savings" in col
-        )]
+    int_cols = [col for col in all_cols if "out." in col and (".energy_consumption" in col or ".energy_savings" in col)]
 
     for col in int_cols:
         new_units = "kwh_per_ft2"
         wtd_col_name = col_name_to_intensity(col, new_units)
-        df = df.with_columns(
-            pl.col(col)
-            .truediv(pl.col("in.sqft..ft2"))
-            .alias(wtd_col_name)
-        )
+        df = df.with_columns(pl.col(col).truediv(pl.col("in.sqft..ft2")).alias(wtd_col_name))
 
     return df
 
 
 def col_name_to_weighted(col_name: str, new_units=None) -> str:
-    col_name = col_name.replace('out.', 'calc.')
-    col_name = col_name.replace('calc.', 'calc.weighted.')
+    col_name = col_name.replace("out.", "calc.")
+    col_name = col_name.replace("calc.", "calc.weighted.")
     if new_units is not None:
         old_units = units_from_col_name(col_name)
-        col_name = col_name.replace(f'..{old_units}', f'..{new_units}')
+        col_name = col_name.replace(f"..{old_units}", f"..{new_units}")
 
     return col_name
 
 
 def units_from_col_name(col_name: str) -> str:
     # Extract the units from the column name
-    match = re.search('\.\.(.*)', col_name)
-    if match:
-        units = match.group(1)
-    else:
-        units = ''
+    match = re.search("\.\.(.*)", col_name)
+    units = match.group(1) if match else ""
 
     return units
 
@@ -365,23 +357,23 @@ def units_from_col_name(col_name: str) -> str:
 def col_name_to_savings(col_name: str) -> str:
     converted_col_name = str(col_name)
     svg_renames = {
-        '.energy_consumption': '.energy_savings',
-        '_bill..': '_bill_savings..',
-        '_daily_peak_': '_daily_peak_savings_',
-        '.peak_': '.peak_savings_',
-        '.energy_burden': '.energy_burden_savings',
-        '.unmet_hours': '.unmet_hours_reduction',
-        'out.hot_water': 'out.hot_water_savings',
-        '.load.cooling.peak': '.load.cooling.peak_savings',
-        '.load.heating.peak': '.load.heating.peak_savings',
-        '.energy_delivered': '.energy_delivered_savings',
-        '.energy_solar_thermal': '.energy_solar_thermal_savings',
-        '.energy_tank_losses': '.energy_tank_losses_savings',
-        '.emissions.': '.emissions_reduction.',
-        'panel_load_total_load': 'panel_load_total_load_savings',
-        'panel_load_occupied_capacity': 'panel_load_occupied_capacity_savings',
-        'panel_breaker_space_occupied': 'panel_breaker_space_occupied_savings',
-        "component_load": "component_load_savings"
+        ".energy_consumption": ".energy_savings",
+        "_bill..": "_bill_savings..",
+        "_daily_peak_": "_daily_peak_savings_",
+        ".peak_": ".peak_savings_",
+        ".energy_burden": ".energy_burden_savings",
+        ".unmet_hours": ".unmet_hours_reduction",
+        "out.hot_water": "out.hot_water_savings",
+        ".load.cooling.peak": ".load.cooling.peak_savings",
+        ".load.heating.peak": ".load.heating.peak_savings",
+        ".energy_delivered": ".energy_delivered_savings",
+        ".energy_solar_thermal": ".energy_solar_thermal_savings",
+        ".energy_tank_losses": ".energy_tank_losses_savings",
+        ".emissions.": ".emissions_reduction.",
+        "panel_load_total_load": "panel_load_total_load_savings",
+        "panel_load_occupied_capacity": "panel_load_occupied_capacity_savings",
+        "panel_breaker_space_occupied": "panel_breaker_space_occupied_savings",
+        "component_load": "component_load_savings",
     }
     for bef, aft in svg_renames.items():
         converted_col_name = converted_col_name.replace(bef, aft)
@@ -395,34 +387,31 @@ def col_name_to_savings(col_name: str) -> str:
 def add_weighted_cols(df: pl.LazyFrame) -> pl.LazyFrame:
     print("Adding weighted columns")
     all_cols = df.collect_schema().names()
-    wtd_cols = [col for col in all_cols if 'out.' in col and (
-        ".energy_consumption." in col or
-        ".energy_savings." in col or
-        ".emissions." in col or
-        ".emissions_reduction." in col
-        )]
+    wtd_cols = [
+        col
+        for col in all_cols
+        if "out." in col
+        and (
+            ".energy_consumption." in col
+            or ".energy_savings." in col
+            or ".emissions." in col
+            or ".emissions_reduction." in col
+        )
+    ]
 
-    wtd_col_unit_convs = {
-        'kwh': 'tbtu',
-        'co2e_kg': 'co2e_mmt'
-    }
+    wtd_col_unit_convs = {"kwh": "tbtu", "co2e_kg": "co2e_mmt"}
 
     for col in wtd_cols:
         old_units = units_from_col_name(col)
         new_units = wtd_col_unit_convs[old_units]
         conv_fact = conversion_factor(old_units, new_units)
         wtd_col_name = col_name_to_weighted(col, new_units)
-        df = df.with_columns(
-            pl.col(col)
-            .mul(pl.col("weight"))
-            .mul(conv_fact)
-            .alias(wtd_col_name)
-        )
+        df = df.with_columns(pl.col(col).mul(pl.col("weight")).mul(conv_fact).alias(wtd_col_name))
 
     return df
 
 
-def add_panel_contraint_cols(df: pl.LazyFrame) -> pl.LazyFrame:
+def add_panel_constraint_cols(df: pl.LazyFrame) -> pl.LazyFrame:
     print("Adding panel constraint columns")
     all_cols = df.collect_schema().names()
     amp_prefix = "out.params.panel_load_headroom_capacity."
@@ -554,9 +543,7 @@ def add_missing_upgrade_cols(df: pl.LazyFrame, upgrade_col_schema: dict) -> pl.L
     for col_name, col_dtype in upgrade_col_schema.items():
         if col_name in all_cols:
             continue
-        df = df.with_columns(
-            pl.lit(None).cast(col_dtype).alias(col_name)
-        )
+        df = df.with_columns(pl.lit(None).cast(col_dtype).alias(col_name))
     return df
 
 
@@ -571,7 +558,7 @@ def downselect_fuel_emissions_cols(df: pl.LazyFrame):
     """
 
     for each scenario
-        out.emissions.electricity.total.lrmer_lowrecost_15..co2e_kg (This actually uses the net column from the raw result)
+        out.emissions.electricity.total.lrmer_lowrecost_15..co2e_kg (This actually uses the net col from the raw result)
         out.emissions.electricity.total.aer_lowrecosthighngprice_avg..co2e_kg
 
     Downselect to just one column for natural gas, propane, and fuel oil emissions
@@ -588,12 +575,12 @@ def downselect_fuel_emissions_cols(df: pl.LazyFrame):
     fuel_emissions_re = re.compile(r"^out\.emissions\.(natural_gas|fuel_oil|propane).(\w+)..co2e_kg")
     scenario2cols = defaultdict(list)
     for col in all_cols:
-        if (match := re.search(fuel_emissions_re, col)):
+        if match := re.search(fuel_emissions_re, col):
             scenario2cols[match[2]].append(col)
 
     for i, s2c in enumerate(scenario2cols.items()):
         scenario, cols = s2c
-        if i == 0:
+        if i == 0:  # noqa: SIM108
             # Keep the first scenario's columns and rename them
             df = df.rename({col: col.replace(scenario, "total") for col in cols})
             # for col in cols:
@@ -644,19 +631,20 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
     sim_out_cache_dir = f"{output_dir['fs_path']}/cached_simulation_outputs"
     parquet_file_dir = pathlib.Path(f"{sim_out_cache_dir}/upgrade={upgrade_id}")
     parquet_file = parquet_file_dir / f"cached_simulation_outputs_upgrade{upgrade_id}.parquet"
-    if isinstance(output_dir['fs'], s3fs.S3FileSystem):
-        parquet_file = f's3://{parquet_file.as_posix()}'
-    if not output_dir['fs'].exists(parquet_file):
+    if isinstance(output_dir["fs"], s3fs.S3FileSystem):
+        parquet_file = f"s3://{parquet_file.as_posix()}"
+    if not output_dir["fs"].exists(parquet_file):
         raise FileNotFoundError(
-        f'Cannot load upgrade data from {parquet_file}, call process_upgrade_simulation_outputs() first.')
-    up_df = pl.read_parquet(parquet_file, storage_options=output_dir['storage_options'] )
+            f"Cannot load upgrade data from {parquet_file}, call process_upgrade_simulation_outputs() first."
+        )
+    up_df = pl.read_parquet(parquet_file, storage_options=output_dir["storage_options"])
 
     # Export each geo export level
     for ge in geo_exports:
-        geo_top_dir = ge['geo_top_dir']
-        partition_cols = ge['partition_cols']
-        data_types = ge['data_types']
-        file_types = ge['file_types']
+        geo_top_dir = ge["geo_top_dir"]
+        partition_cols = ge["partition_cols"]
+        data_types = ge["data_types"]
+        file_types = ge["file_types"]
         print(f"Exporting {geo_top_dir} by {partition_cols} {data_types} {file_types}")
 
         # geo_col_names = list(partition_cols.keys())
@@ -665,27 +653,29 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
         full_geo_dir = f"{output_dir['fs_path']}/metadata_and_annual_results/{geo_top_dir}"
 
         # Make a directory for the geography type
-        if not isinstance(output_dir['fs'], s3fs.S3FileSystem):
-            output_dir['fs'].mkdirs(full_geo_dir, exist_ok=True)
+        if not isinstance(output_dir["fs"], s3fs.S3FileSystem):
+            output_dir["fs"].mkdirs(full_geo_dir, exist_ok=True)
 
         # Make a directory for each data type X file type combo
-        if not isinstance(output_dir['fs'], s3fs.S3FileSystem):
+        if not isinstance(output_dir["fs"], s3fs.S3FileSystem):
             for data_type in data_types:
                 for file_type in file_types:
-                    output_dir['fs'].mkdirs(f'{full_geo_dir}/{data_type}/{file_type}', exist_ok=True)
+                    output_dir["fs"].mkdirs(f"{full_geo_dir}/{data_type}/{file_type}", exist_ok=True)
 
         # Export by various geographies
         if partition_cols:
-            for by_col, by_dir_name  in partition_cols.items():
-                for by_val, geo_df in up_df.group_by(by_col):
-                    by_val = by_val[0]
-                    geo_levels = [f'{by_dir_name}={by_val}']
+            for by_col, by_dir_name in partition_cols.items():
+                for by_val_tuple, geo_df in up_df.group_by(by_col):
+                    by_val = by_val_tuple[0]
+                    geo_levels = [f"{by_dir_name}={by_val}"]
                     geo_prefixes = [by_val]
                     for data_type in data_types:
                         # TODO Downselect the DF to fewer columns for basic version
 
                         for file_type in file_types:
-                            file_path = get_file_path(output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, data_type, upgrade_id)
+                            file_path = get_file_path(
+                                output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, data_type, upgrade_id
+                            )
                             print(f"Writing {file_path}")
                             input_args = (geo_df, output_dir, file_type, file_path)
                             write_geo_data(input_args)
@@ -697,7 +687,9 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
                 # TODO Downselect the DF to fewer columns for basic version
 
                 for file_type in file_types:
-                    file_path = get_file_path(output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, data_type, upgrade_id)
+                    file_path = get_file_path(
+                        output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, data_type, upgrade_id
+                    )
                     print(f"Writing {file_path}")
                     input_args = (up_df, output_dir, file_type, file_path)
                     write_geo_data(input_args)
@@ -707,23 +699,23 @@ def get_file_path(output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type,
     """
     Builds a file path for each aggregate based on name, file type, and aggregation level
     """
-    geo_level_dir = f'{full_geo_dir}/{data_type}/{file_type}'
+    geo_level_dir = f"{full_geo_dir}/{data_type}/{file_type}"
     if len(geo_levels) > 0:
-        geo_level_dir = f'{geo_level_dir}/' + '/'.join(geo_levels)
-    if not isinstance(output_dir['fs'], s3fs.S3FileSystem):
-        output_dir['fs'].mkdirs(geo_level_dir, exist_ok=True)
-    file_name = f'upgrade{upgrade_id}'
+        geo_level_dir = f"{geo_level_dir}/" + "/".join(geo_levels)
+    if not isinstance(output_dir["fs"], s3fs.S3FileSystem):
+        output_dir["fs"].mkdirs(geo_level_dir, exist_ok=True)
+    file_name = f"upgrade{upgrade_id}"
     # Add geography prefix to filename
     if len(geo_prefixes) > 0:
-        geo_prefix = '_'.join(geo_prefixes)
-        file_name = f'{geo_prefix}_{file_name}'
+        geo_prefix = "_".join(geo_prefixes)
+        file_name = f"{geo_prefix}_{file_name}"
     # Add data_type suffix to filename
-    if data_type == 'basic':
-        file_name = f'{file_name}_{data_type}'
+    if data_type == "basic":
+        file_name = f"{file_name}_{data_type}"
     # Add the filetype extension to filename
-    file_name = f'{file_name}.{file_type}'
+    file_name = f"{file_name}.{file_type}"
     # Write the file, depending on filetype
-    file_path = f'{geo_level_dir}/{file_name}'
+    file_path = f"{geo_level_dir}/{file_name}"
 
     return file_path
 
@@ -732,10 +724,10 @@ def cache_simulation_outputs_file(output_dir, sim_out_cache_dir: pathlib.Path, u
     file_name = f"cached_simulation_outputs_upgrade{upgrade_id}.parquet"
     upgrade_cache_dir = pathlib.Path(f"{sim_out_cache_dir}/upgrade={upgrade_id}")
     file_path = upgrade_cache_dir / file_name
-    if isinstance(output_dir['fs'], s3fs.S3FileSystem):
-        file_path = f's3://{file_path.as_posix()}'
+    if isinstance(output_dir["fs"], s3fs.S3FileSystem):
+        file_path = f"s3://{file_path.as_posix()}"
     else:
         upgrade_cache_dir.mkdir(parents=True, exist_ok=True)
-    with output_dir['fs'].open(str(file_path), "wb") as f:
+    with output_dir["fs"].open(str(file_path), "wb") as f:
         df.sink_parquet(f)
     print(f"Cached simulation outputs for upgrade {upgrade_id} to {file_path}")

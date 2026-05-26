@@ -7,7 +7,6 @@ rep_inc = "in.representative_income"
 
 
 def process_income_lookup(geography: str, lazy: bool = False) -> tuple[pl.DataFrame, list[str]]:
-
     deps = [
         "Occupants",
         "Federal Poverty Level",
@@ -35,10 +34,7 @@ def process_income_lookup(geography: str, lazy: bool = False) -> tuple[pl.DataFr
             raise ValueError(f"{geography=} not supported")
     file = f"income_bin_representative_values_by_{ext}.parquet"
 
-    if lazy:
-        income_lookup = pl.scan_parquet(data_dir / file)
-    else:
-        income_lookup = pl.read_parquet(data_dir / file)
+    income_lookup = pl.scan_parquet(data_dir / file) if lazy else pl.read_parquet(data_dir / file)
 
     if geography not in ["National", "National2"]:
         deps = [geography] + deps
@@ -52,7 +48,6 @@ def process_income_lookup(geography: str, lazy: bool = False) -> tuple[pl.DataFr
 
 
 def assign_representative_income(df: pl.LazyFrame | pl.DataFrame, return_map_only: bool = False) -> pl.LazyFrame:
-
     lazy = isinstance(df, pl.LazyFrame)
 
     non_geo_cols = [
@@ -96,10 +91,9 @@ def assign_representative_income(df: pl.LazyFrame | pl.DataFrame, return_map_onl
         matched_dfs.append(join_df.filter(pl.col(rep_inc).is_not_null()))
         remaining_df = join_df.filter(pl.col(rep_inc).is_null())
 
-        if not lazy:
-            if len(remaining_df) == 0:
-                print(f"Mapping completed, highest resolution used: {geo}")
-                break
+        if not lazy and len(remaining_df) == 0:
+            print(f"Mapping completed, highest resolution used: {geo}")
+            break
 
     df2 = pl.concat(matched_dfs + [remaining_df])
 
