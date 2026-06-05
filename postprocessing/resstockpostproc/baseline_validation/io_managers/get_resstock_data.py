@@ -1,4 +1,5 @@
 import functools
+import logging
 from collections.abc import Sequence
 import numpy as np
 
@@ -27,6 +28,8 @@ from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.caching import cached
 from resstockpostproc.shared_utils.timing import timed
 from resstockpostproc.shared_utils.mapping import UtilityName2ID
+
+logger = logging.getLogger(__name__)
 
 
 @timed
@@ -565,8 +568,30 @@ def _get_db_enduses(bsq: BuildStockQuery, db_schema: DBSchema, table: str, skip_
             continue
         if new_name in [DataCol.OUTDOOR_DRYBULB_TEMP] and table == "baseline":
             continue  # temperature - only available in timeseries table
-        enduse_expr = " + ".join(dbcols) if isinstance(dbcols, tuple) else dbcols
-        col = bsq.get_calculated_column(column_name=new_name, column_expr=enduse_expr, table=table)
+
+        if isinstance(dbcols, tuple) and skip_missing:
+            # Try each sub-column individually; keep only those that exist
+            valid_cols = []
+            for subcol in dbcols:
+                try:
+                    bsq.get_calculated_column(column_name="_probe", column_expr=subcol, table=table)
+                    valid_cols.append(subcol)
+                except (KeyError, ValueError):
+                    logger.warning("Column not found: '%s' (part of '%s') — skipping.", subcol, new_name)
+            if not valid_cols:
+                logger.warning("No valid columns for '%s' — skipping entirely.", new_name)
+                continue
+            enduse_expr = " + ".join(valid_cols)
+        else:
+            enduse_expr = " + ".join(dbcols) if isinstance(dbcols, tuple) else dbcols
+
+        try:
+            col = bsq.get_calculated_column(column_name=new_name, column_expr=enduse_expr, table=table)
+        except (KeyError, ValueError):
+            if skip_missing:
+                logger.warning("Column(s) not found for '%s' (expr: %s) — skipping.", new_name, enduse_expr)
+                continue
+            raise
         enduses.append(col)
 
     return tuple(enduses)
