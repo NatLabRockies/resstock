@@ -37,13 +37,23 @@ def get_buildstock_query(
 ) -> BuildStockQuery:
     """Create and configure a BuildStockQuery instance."""
     cache_folder = str(Path(__file__).resolve().parent.parent.parent / ".bsq_cache")
+    query_unload_s3_bucket = config.query_unload_s3_bucket or workgroup
+    db_schema = _load_db_schema(config.db_schema.value)
+    if config.has_upgrades:
+        table_name = config.table_name
+    else:
+        # Pass a tuple to BSQ: (baseline, timeseries, None) to skip the upgrades table
+        baseline_suffix = db_schema["table_suffix"]["baseline"]
+        ts_suffix = db_schema["table_suffix"]["timeseries"]
+        table_name = (f"{config.table_name}{baseline_suffix}", f"{config.table_name}{ts_suffix}", None)
     bsq = BuildStockQuery(
         workgroup=workgroup,
         db_name=config.db_name,
-        table_name=config.table_name,
+        table_name=table_name,
         skip_reports=skip_reports,
-        db_schema=_load_db_schema(config.db_schema.value),
+        db_schema=db_schema,
         cache_folder=cache_folder,
+        query_unload_s3_bucket=query_unload_s3_bucket,
     )
     bsq.utility.eia_mapping_year = comparison_data_year
     return bsq

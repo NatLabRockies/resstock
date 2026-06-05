@@ -1,14 +1,16 @@
 # Baseline Validation Workflow Configuration
 # =========================================
 
-workgroup: rescore
+workgroup: resstock-panels
 
 data_sources:
-  - db_name: buildstock_sdr
-    table_name: resstock_2024_amy2018_release_2
-    name: resstock_2024
-    db_schema: resstock_oedi_vu
-    baseline_metadata_and_annual_results_parquet_url: s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2024/resstock_amy2018_release_2/metadata_and_annual_results/national/parquet/baseline_metadata_and_annual_results.parquet
+  - db_name: resstock_panels
+    table_name: test_run_output7
+    name: ochre_10k
+    db_schema: resstock_oedi_new
+    skip_missing_enduses: true
+    has_upgrades: false
+    baseline_metadata_and_annual_results_parquet_url: s3://resstock-panels/ochre_runs/test_run_output7/pub_annual/upgrade=0/results_up00.parquet
   - db_name: buildstock_sdr
     table_name: resstock_amy2018_r1_2025
     name: resstock_2025
@@ -24,8 +26,8 @@ reference_years:
 
 output:
   # Override this with your own directory — the script expands ~
-  output_dir: ~/baseline_validation_outputs
-  run_name: run_2025_release1
+  output_dir: ~/ochre_baseline_validation_outputs
+  run_name: ochre_10k_06052026
 # Data Source Labels
 # ------------------
 # Human-readable labels for data sources appearing in plot legends.

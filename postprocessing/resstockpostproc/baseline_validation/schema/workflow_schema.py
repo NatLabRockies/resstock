@@ -28,6 +28,18 @@ class DataSourceConfig(NoExtraModel):
             "Optional S3 URL for the baseline metadata-and-annual-results parquet cached locally for fast reads."
         ),
     )
+    skip_missing_enduses: bool = Field(
+        default=False,
+        description="If True, silently skip end-use columns not present in the Athena table instead of raising.",
+    )
+    query_unload_s3_bucket: str | None = Field(
+        default=None,
+        description="S3 bucket for Athena query unload results. Defaults to the workgroup name if not set.",
+    )
+    has_upgrades: bool = Field(
+        default=True,
+        description="If False, tells BSQ that no upgrades table exists for this data source.",
+    )
 
     def __hash__(self):
         return hash((self.name, self.db_name, self.table_name, self.db_schema))

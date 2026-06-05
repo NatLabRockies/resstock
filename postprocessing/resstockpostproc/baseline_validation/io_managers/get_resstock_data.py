@@ -199,7 +199,7 @@ def _get_timeseries_by_char(
     resolution: str = "month",
 ):
     db_char_col = get_db_characteristics_colnames(data_source.db_schema)
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="timeseries")
+    enduses = _get_db_enduses(bsq, data_source.db_schema, table="timeseries", skip_missing=data_source.skip_missing_enduses)
     restrict = [(db_char_col.VACANCY, ["Occupied"])] if occupied_only else []
     if restrict_list:
         restrict += [(db_char_col.STATE, restrict_list)]
@@ -235,7 +235,7 @@ def _get_timeseries_by_utilities(
     resolution: Resolution = Resolution.month,
 ):
     db_char_col = get_db_characteristics_colnames(data_source.db_schema)
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="timeseries")
+    enduses = _get_db_enduses(bsq, data_source.db_schema, table="timeseries", skip_missing=data_source.skip_missing_enduses)
     timestamp_grouping_func = _get_timestamp_grouping_func(resolution)
     ercot_pd = bsq.query(
         enduses=enduses,
@@ -520,7 +520,7 @@ def _get_annual_by_chars(
     The US-Total row is computed by dropping `by` from the group_by.
     """
     char_cols = get_db_characteristics_colnames(data_source.db_schema)
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline")
+    enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline", skip_missing=data_source.skip_missing_enduses)
     restrict = [(char_cols.VACANCY, ["Occupied"])] if occupied_only else []
 
     by_col = _get_by_col(by, bsq)
@@ -537,7 +537,7 @@ def _get_annual_by_chars(
 
 
 def _get_annual_by_eiaid(bsq, data_source):
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline")
+    enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline", skip_missing=data_source.skip_missing_enduses)
     db_char_col = get_db_characteristics_colnames(data_source.db_schema)
     ercot_pd = bsq.query(
         enduses=enduses,
@@ -557,7 +557,7 @@ def _get_annual_by_eiaid(bsq, data_source):
     return df
 
 
-def _get_db_enduses(bsq: BuildStockQuery, db_schema: DBSchema, table: str) -> tuple[str, ...]:
+def _get_db_enduses(bsq: BuildStockQuery, db_schema: DBSchema, table: str, skip_missing: bool = False) -> tuple[str, ...]:
     data_col_to_db_col = get_db_enduse_colnames_map(db_schema)
     enduses = []
     for new_name, dbcols in data_col_to_db_col.items():
