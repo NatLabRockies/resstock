@@ -1,16 +1,56 @@
 """
-This script will create an Athena view from raw timeseries results following
-the SightGlassDataProcessing OEDI timeseries format.
+This script will create Athena views from raw ResStock results following
+the SightGlassDataProcessing OEDI format (db_schema: resstock_oedi_new).
+
+Views created:
+  - Timeseries view: <table>_ts_by_state (always created)
+  - Baseline view:   <table>_md_national_parquet (only with --baseline-view flag)
+
 ===================================================================================
 
-The view will be created in the same database as the source table, and will be
-named <table_name>_timeseries_view.
+Usage
+-----
+  # Create timeseries view only:
+  python process_timeseries_results.py -d my_database -t my_table
 
-If a table does not yet exist in the database, rerun the script by adding an S3
+  # Create both baseline and timeseries views:
+  python process_timeseries_results.py -d my_database -t my_table -b
+
+  # Force overwrite existing views:
+  python process_timeseries_results.py -d my_database -t my_table -b --force
+
+  # Create views and run validation checks:
+  python process_timeseries_results.py -d my_database -t my_table -b --check
+
+  # Use OCHRE workflow (pass-through unmapped columns, skip intensity):
+  python process_timeseries_results.py -d my_database -t my_table --ochre-workflow
+
+  # Create external tables from S3 data first:
+  python process_timeseries_results.py -d my_database -t my_table \\
+      --s3-location s3://bucket/path/to/data/ --workgroup my_workgroup
+
+Flags
+-----
+  -d, --database        Athena/Glue database name (required).
+  -t, --table           Source table name (required).
+  -w, --workgroup       Athena workgroup (default: primary).
+  -l, --s3-location     S3 path to raw data (for creating external tables).
+  -r, --region          AWS region (default: us-west-2).
+  -i, --input-format    Source data format (default: PARQUET).
+  -f, --force           Overwrite existing views.
+  -c, --check           Run validation checks on the timeseries view after creation.
+  -o, --ochre-workflow   Use OCHRE-aligned column mapping.
+  -b, --baseline-view   Also create the baseline view from <table>_pub_annual.
+
+===================================================================================
+
+Data Processing
+-----------------
+If the input table does not yet exist in the database, rerun the script by adding an S3
 path to create an external table pointing to the raw data on S3 using boto3. The
 script will create the view on top of that.
 
-The view definition will perform the following transformations:
+[1] The timeseries view definition will perform the following transformations:
 
 - Select relevant columns from the baseline and timeseries tables, including
   building_id, county (if needed for time conversion), conditioned sqft, and all
@@ -31,6 +71,12 @@ The view definition will perform the following transformations:
 
 - Wrap time back to the simulation year (i.e., by replacing the year of the
   timestamp with the simulation year).
+
+- Optionally, run basic validation checks on the created timeseries view.
+
+[2] The baseline view is a simple passthrough (SELECT *) from <table>_pub_annual.
+No validation checks.
+
 """
 
 import io
@@ -46,6 +92,13 @@ import pyarrow.parquet as pq
 
 from buildstock_query import BuildStockQuery
 
+
+# --- Constants and configuration ---
+# postprocessing/baseline_validation db_schema = "resstock_oedi_new" 
+BL_VIEW_SUFFIX = "_md_national_parquet"
+TS_VIEW_SUFFIX = "_ts_by_state"
+UG_VIEW_SUFFIX = BL_VIEW_SUFFIX
+
 options_lookup_file = Path(__file__).parents[2] / "resources" / "options_lookup.tsv"
 sdr_column_definitions_file = (
     Path(__file__).parents[0]
@@ -55,7 +108,7 @@ sdr_column_definitions_file = (
 )
 
 # Mapping of raw end-use names to final (OEDI) end-use names
-_ENDUSE_REMAP = {
+ENDUSE_REMAP = {
     "electric_vehicle_charging": "ev_charging",
     "heating_heat_pump_backup": "heating_hp_bkup",
     "heating_heat_pump_backup_fans_pumps": "heating_hp_bkup_fa",
@@ -64,7 +117,7 @@ _ENDUSE_REMAP = {
 
 # Unit conversions: raw_unit -> (final_unit, multiplier)
 # multiplier is None for temperature (requires F→C formula)
-_UNIT_CONVERSIONS = {
+UNIT_CONVERSIONS = {
     "kwh": ("kwh", 1.0),
     "kbtu": ("kwh", 0.293071),
     "therm": ("kwh", 29.3001),
@@ -79,6 +132,13 @@ _UNIT_CONVERSIONS = {
     "gal": ("gal", 1.0),
 }
 
+# The EIA ID weights table is needed for the LRD comparison queries in the BSQ utility_query module.
+EIAID_WEIGHTS_TABLE = "eiaid_weights"
+EIAID_WEIGHTS_S3_LOCATION = (
+    "s3://resstock-core/truth_data/v01/EIA/eia_processed/eiaid_weights/"
+)
+
+# --- Functions for Athena view creation and SQL generation ---
 
 def initialize_buildstock_query(
     database: str,
@@ -115,7 +175,7 @@ def initialize_buildstock_query(
         sample_weight_override=1,
         **kwargs,
     )
-    print("bsq handle initialized")
+    print(" ** bsq handle initialized. ** ")
 
     return bsq
 
@@ -184,7 +244,7 @@ def create_view(
     if state != "SUCCEEDED":
         raise RuntimeError(f"View creation failed ({state}): {reason}")
 
-    print(f"View '{view_name}' created successfully in database '{bsq.db_name}'.")
+    print(f" ** View '{view_name}' created successfully in database '{bsq.db_name}'. ** ")
     return state, reason
 
 
@@ -406,8 +466,8 @@ def _reformat_raw_column(col: str) -> Optional[tuple[str, str, Optional[float]]]
     m = re.match(r"^end_use__(\w+)__(\w+)__(\w+)$", col)
     if m:
         fuel, enduse, unit = m.groups()
-        enduse = _ENDUSE_REMAP.get(enduse, enduse)
-        final_unit, mult = _UNIT_CONVERSIONS.get(unit, (unit, 1.0))
+        enduse = ENDUSE_REMAP.get(enduse, enduse)
+        final_unit, mult = UNIT_CONVERSIONS.get(unit, (unit, 1.0))
         new_col = f"out.{fuel}.{enduse}.energy_consumption..{final_unit}"
         return new_col, unit, mult
 
@@ -415,7 +475,7 @@ def _reformat_raw_column(col: str) -> Optional[tuple[str, str, Optional[float]]]
     m = re.match(r"^fuel_use__(\w+)__(\w+)__(\w+)$", col)
     if m:
         fuel, agg, unit = m.groups()
-        final_unit, mult = _UNIT_CONVERSIONS.get(unit, (unit, 1.0))
+        final_unit, mult = UNIT_CONVERSIONS.get(unit, (unit, 1.0))
         new_col = f"out.{fuel}.{agg}.energy_consumption..{final_unit}"
         return new_col, unit, mult
 
@@ -423,7 +483,7 @@ def _reformat_raw_column(col: str) -> Optional[tuple[str, str, Optional[float]]]
     m = re.match(r"^energy_use__(\w+)__(\w+)$", col)
     if m:
         agg, unit = m.groups()
-        final_unit, mult = _UNIT_CONVERSIONS.get(unit, (unit, 1.0))
+        final_unit, mult = UNIT_CONVERSIONS.get(unit, (unit, 1.0))
         new_col = f"out.site_energy.{agg}.energy_consumption..{final_unit}"
         return new_col, unit, mult
 
@@ -431,7 +491,7 @@ def _reformat_raw_column(col: str) -> Optional[tuple[str, str, Optional[float]]]
     m = re.match(r"^hot_water__(\w+)__(\w+)$", col)
     if m:
         enduse, unit = m.groups()
-        final_unit, mult = _UNIT_CONVERSIONS.get(unit, (unit, 1.0))
+        final_unit, mult = UNIT_CONVERSIONS.get(unit, (unit, 1.0))
         new_col = f"out.hot_water.{enduse}..{final_unit}"
         return new_col, unit, mult
 
@@ -439,7 +499,7 @@ def _reformat_raw_column(col: str) -> Optional[tuple[str, str, Optional[float]]]
     m = re.match(r"^load__(\w+)__(\w+)__(\w+)$", col)
     if m:
         load_type, subtype, unit = m.groups()
-        final_unit, mult = _UNIT_CONVERSIONS.get(unit, (unit, 1.0))
+        final_unit, mult = UNIT_CONVERSIONS.get(unit, (unit, 1.0))
         new_col = f"out.load.{load_type}.{subtype}..{final_unit}"
         return new_col, unit, mult
 
@@ -447,7 +507,7 @@ def _reformat_raw_column(col: str) -> Optional[tuple[str, str, Optional[float]]]
     m = re.match(r"^unmet_hours__(\w+)__(\w+)$", col)
     if m:
         utype, unit = m.groups()
-        final_unit, mult = _UNIT_CONVERSIONS.get(unit, (unit, 1.0))
+        final_unit, mult = UNIT_CONVERSIONS.get(unit, (unit, 1.0))
         new_col = f"out.unmet_hours.{utype}..{final_unit}"
         return new_col, unit, mult
 
@@ -564,8 +624,8 @@ def _build_column_sql_expr(
         return f'(("{col}" - 32) * 5.0 / 9.0) AS "{new_col}"'
     elif mult is not None and mult != 1.0:
         return f'{mult} * "{col}" AS "{new_col}"'
-    elif fuel_units in _UNIT_CONVERSIONS:
-        _, conv = _UNIT_CONVERSIONS[fuel_units]
+    elif fuel_units in UNIT_CONVERSIONS:
+        _, conv = UNIT_CONVERSIONS[fuel_units]
         if conv is not None and conv != 1.0:
             return f'{conv} * "{col}" AS "{new_col}"'
     return f'"{col}" AS "{new_col}"'
@@ -808,7 +868,103 @@ def create_view_oedi_timeseries(
     create_view(bsq, view_name, select_sql, force)
 
 
-def check_view_result(
+def _reformat_baseline_column(col: str) -> Optional[str]:
+    """Reformat a baseline column name to OEDI double-dot convention.
+
+    For ``out.*`` columns (excluding ``out.params.*``), inserts an extra dot
+    before the unit segment to match the timeseries convention.
+
+    Examples
+    --------
+    >>> _reformat_baseline_column("out.electricity.total.energy_consumption.kwh")
+    'out.electricity.total.energy_consumption..kwh'
+    >>> _reformat_baseline_column("out.load.cooling.energy_delivered.kbtu")
+    'out.load.cooling.energy_delivered..kbtu'
+    >>> _reformat_baseline_column("in.sqft")
+    None
+    >>> _reformat_baseline_column("out.params.door_area_ft_2")
+    None
+
+    Parameters
+    ----------
+    col : str
+        Raw column name from the pub_annual table.
+
+    Returns
+    -------
+    str or None
+        Reformatted column name with double-dot, or None if the column
+        should not be renamed.
+    """
+    if not col.startswith("out.") or col.startswith("out.params."):
+        return None
+    # Insert extra dot before the last segment (the unit)
+    last_dot = col.rfind(".")
+    if last_dot <= 0:
+        return None
+    return col[:last_dot] + "." + col[last_dot:]
+
+
+def create_query_oedi_baseline(bsq: BuildStockQuery) -> str:
+    """Build a SELECT statement that renames baseline columns to OEDI convention.
+
+    Queries the pub_annual table schema, then for each ``out.*`` column
+    (excluding ``out.params.*``) renames it using the double-dot convention.
+    All other columns are passed through unchanged.
+
+    Parameters
+    ----------
+    bsq : BuildStockQuery
+        An initialized BuildStockQuery instance.
+
+    Returns
+    -------
+    str
+        SQL SELECT statement with column aliases.
+    """
+    source_table = f"{bsq.table_name}_pub_annual"
+
+    # Get column names from the table
+    df = bsq.execute(f"SELECT * FROM {source_table} LIMIT 0")
+    columns = list(df.columns)
+
+    col_exprs = []
+    for col in columns:
+        new_col = _reformat_baseline_column(col)
+        if new_col is not None:
+            col_exprs.append(f'"{col}" AS "{new_col}"')
+        else:
+            col_exprs.append(f'"{col}"')
+
+    select_sql = f"SELECT {', '.join(col_exprs)} FROM {source_table}"
+    return select_sql
+
+
+def create_view_oedi_baseline(
+    bsq: BuildStockQuery,
+    view_name: str,
+    force: bool = False,
+) -> None:
+    """Create an Athena view with OEDI baseline schema.
+
+    Renames energy columns in ``<table_name>_pub_annual`` to use the OEDI
+    double-dot convention (e.g. ``out.electricity.total.energy_consumption..kwh``)
+    and creates the view as ``<table_name>{BL_VIEW_SUFFIX}``.
+
+    Parameters
+    ----------
+    bsq : BuildStockQuery
+        An initialized BuildStockQuery instance.
+    view_name : str
+        Name for the new view.
+    force : bool
+        If True, overwrite an existing view with the same name.
+    """
+    select_sql = create_query_oedi_baseline(bsq)
+    create_view(bsq, view_name, select_sql, force)
+
+
+def check_view_oedi_timeseries(
     bsq: BuildStockQuery,
     view_name: str,
     ochre_workflow: bool = False,
@@ -1372,6 +1528,85 @@ def ensure_table_exists(
         print()
 
 
+# --- EIA ID weights table ---
+def ensure_eiaid_weights_table(
+    database: str,
+    workgroup: str = "primary",
+    region_name: str = "us-west-2",
+) -> None:
+    """
+    Ensure the eiaid_weights table exists in the given Athena database.
+
+    This table maps county FIPS codes to EIA utility IDs with associated weights.
+    It is required by BuildStockQuery's utility_query module for LRD comparisons.
+    If the table does not exist, it is created as a CSV external table pointing
+    to the canonical S3 location.
+
+    Parameters
+    ----------
+    database : str
+        The Athena/Glue database name.
+    workgroup : str
+        Athena workgroup name.
+    region_name : str
+        AWS region.
+    """
+    tables = list_tables_boto3(
+        database, workgroup=workgroup, region_name=region_name
+    )
+    if EIAID_WEIGHTS_TABLE in tables:
+        print(f"Table '{EIAID_WEIGHTS_TABLE}' already exists in '{database}'.")
+        return
+
+    print(
+        f"Table '{EIAID_WEIGHTS_TABLE}' not found in '{database}'. Creating..."
+    )
+    glue = boto3.client("glue", region_name=region_name)
+    try:
+        glue.create_table(
+            DatabaseName=database,
+            TableInput={
+                "Name": EIAID_WEIGHTS_TABLE,
+                "TableType": "EXTERNAL_TABLE",
+                "Parameters": {
+                    "EXTERNAL": "TRUE",
+                    "skip.header.line.count": "1",
+                },
+                "StorageDescriptor": {
+                    "Columns": [
+                        {"Name": "county", "Type": "string"},
+                        {"Name": "eiaid", "Type": "string"},
+                        {"Name": "weight", "Type": "double"},
+                        {"Name": "gisjoin", "Type": "string"},
+                    ],
+                    "Location": EIAID_WEIGHTS_S3_LOCATION,
+                    "InputFormat": "org.apache.hadoop.mapred.TextInputFormat",
+                    "OutputFormat": "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
+                    "SerdeInfo": {
+                        "SerializationLibrary": "org.apache.hadoop.hive.serde2.OpenCSVSerde",
+                        "Parameters": {
+                            "quoteChar": '"',
+                            "separatorChar": ",",
+                            "serialization.format": "1",
+                        },
+                    },
+                },
+            },
+        )
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "AlreadyExistsException":
+            print(f"Table '{EIAID_WEIGHTS_TABLE}' already exists (race condition).")
+            return
+        raise RuntimeError(
+            f"Failed to create '{EIAID_WEIGHTS_TABLE}': {e.response['Error']['Message']}"
+        ) from e
+
+    print(
+        f"Table '{EIAID_WEIGHTS_TABLE}' created in '{database}' "
+        f"pointing to '{EIAID_WEIGHTS_S3_LOCATION}'."
+    )
+
+
 def main() -> None:
     """CLI entry point for creating OEDI timeseries views from ResStock results.
 
@@ -1426,11 +1661,17 @@ def main() -> None:
         action="store_true",
         help="Whether output results are from OCHRE.",
     )
+    parser.add_argument(
+        "-b",
+        "--baseline-view",
+        action="store_true",
+        help="Also create the baseline view (SELECT * FROM <table>_pub_annual).",
+    )
     args = parser.parse_args()
 
     print()
     print("=" * 60)
-    print("Processing timeseries result to OEDI/sightglass format with the following input parameters:")
+    print("Processing timeseries result to OEDI/sightglass format (per resstock_oedi_new db_schema) with the following input parameters:")
     print("-" * 60)
     print(f"  database:      {args.database}")
     print(f"  table:         {args.table}")
@@ -1441,6 +1682,7 @@ def main() -> None:
     print(f"  force:         {args.force}")
     print(f"  check:         {args.check}")
     print(f"  ochre-workflow: {args.ochre_workflow}")
+    print(f"  baseline-view: {args.baseline_view}")
     print("=" * 60)
 
     # --- Try BuildStockQuery path first; fall back to boto3 if table missing ---
@@ -1487,22 +1729,33 @@ def main() -> None:
         )
 
     # --- resume with BuildStockQuery path (will succeed now if we had to create the external table) ---
+
+    # Ensure the eiaid_weights table exists (needed by BSQ utility_query for LRD comparisons)
+    ensure_eiaid_weights_table(
+        database=args.database,
+        workgroup=args.workgroup,
+        region_name=args.region,
+    )
+
     print()
     print("-" * 60)
     print("Creating view from raw timeseries results...")
     print("-" * 60)
     print()
-    view_name = f"{args.table}_timeseries_view"
+
+    if args.baseline_view:
+        bl_view_name = f"{args.table}{BL_VIEW_SUFFIX}"
+        create_view_oedi_baseline(bsq, view_name=bl_view_name, force=args.force)
+
+    ts_view_name = f"{args.table}{TS_VIEW_SUFFIX}"
     create_view_oedi_timeseries(
         bsq,
-        view_name=view_name,
+        view_name=ts_view_name,
         ochre_workflow=args.ochre_workflow,
         force=args.force,
     )
-    print()
     if args.check:
-        check_view_result(bsq, view_name=view_name, ochre_workflow=args.ochre_workflow)
-
+        check_view_oedi_timeseries(bsq, view_name=ts_view_name, ochre_workflow=args.ochre_workflow)
 
 if __name__ == "__main__":
     main()
