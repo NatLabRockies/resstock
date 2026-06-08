@@ -81,10 +81,11 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
       display: flex;
       flex-direction: column;
       gap: 8px;
+      overflow-y: auto;
     }}
     .filter-block {{
       margin-bottom: 0;
-      min-height: 0;
+      min-height: 110px;
       display: flex;
       flex-direction: column;
       flex: 1 1 0;
