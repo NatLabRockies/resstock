@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>qoi_report</name>
   <uid>be0bfc7f-25c6-435a-9acd-2f5fa8ac817d</uid>
-  <version_id>d0162a9c-0a92-4d84-a00d-2a15f32d1aa4</version_id>
-  <version_modified>2025-06-12T19:44:12Z</version_modified>
+  <version_id>96962630-6037-49b0-acef-4c592c121e09</version_id>
+  <version_modified>2026-01-05T22:45:15Z</version_modified>
   <xml_checksum>15BF4E57</xml_checksum>
   <class_name>QOIReport</class_name>
   <display_name>QOI Report</display_name>
@@ -45,7 +45,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>58EBB489</checksum>
+      <checksum>FE5767AE</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>

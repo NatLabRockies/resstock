@@ -258,8 +258,8 @@
               <CompressorType>single stage</CompressorType>
               <FractionCoolLoadServed>0.5</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
-                <Units>SEER</Units>
-                <Value>13.0</Value>
+                <Units>SEER2</Units>
+                <Value>13.4</Value>
               </AnnualCoolingEfficiency>
             </CoolingSystem>
             <CoolingSystem>
@@ -271,8 +271,8 @@
               <CompressorType>single stage</CompressorType>
               <FractionCoolLoadServed>0.5</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
-                <Units>SEER</Units>
-                <Value>13.0</Value>
+                <Units>SEER2</Units>
+                <Value>13.4</Value>
               </AnnualCoolingEfficiency>
             </CoolingSystem>
           </HVACPlant>

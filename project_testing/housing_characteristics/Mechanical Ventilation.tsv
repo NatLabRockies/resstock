@@ -1,4 +1,4 @@
-Option=None	Option=Exhaust	Option=Supply	Option=HRV, 60%	Option=ERV, 72%	sampling_probability
+Option=None	Option=Exhaust	Option=Supply	Option=HRV, 60%	Option=ERV, 70%	sampling_probability
 0.2	0.2	0.2	0.2	0.2	1
 # Created by: manually created
 # Description: Mechanical ventilation type and efficiency.

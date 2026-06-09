@@ -8,10 +8,9 @@ This advanced tutorial describes the processes for:
 .. toctree::
    :maxdepth: 2
 
-   running_task_commands
    updating_options_lookup
-   increasing_upgrade_options
    upgrade_scenario_config
+   increasing_upgrade_options
    heat_pump_upgrades
    repository_development
-   
+   testing_infrastructure/index

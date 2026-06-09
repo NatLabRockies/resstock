@@ -1,0 +1,32 @@
+Option Name	Efficiency Type	Efficiency [kWh/yr or #]	Label Electric Rate [$/kWh]	Label Gas Rate [$/therm]	Label Annual Gas Cost [$]	Label Usage [cyc/wk]	Place Setting Capacity [#]	Usage Multiplier	Location
+None									
+"Federal Minimum, Standard, 50% Usage"	RatedAnnualkWh	307	0.12	1.09	22.32	4	12	0.5	
+"Federal Minimum, Standard, 75% Usage"	RatedAnnualkWh	307	0.12	1.09	22.32	4	12	0.75	
+"Federal Minimum, Standard, 100% Usage"	RatedAnnualkWh	307	0.12	1.09	22.32	4	12		
+"Federal Minimum, Standard, 150% Usage"	RatedAnnualkWh	307	0.12	1.09	22.32	4	12	1.5	
+"Federal Minimum, Standard, 200% Usage"	RatedAnnualkWh	307	0.12	1.09	22.32	4	12	2	
+"EnergyStar, Standard, 50% Usage"	RatedAnnualkWh	270	0.12	1.09	22.23	4	12	0.5	
+"EnergyStar, Standard, 75% Usage"	RatedAnnualkWh	270	0.12	1.09	22.23	4	12	0.75	
+"EnergyStar, Standard, 100% Usage"	RatedAnnualkWh	270	0.12	1.09	22.23	4	12		
+"EnergyStar, Standard, 150% Usage"	RatedAnnualkWh	270	0.12	1.09	22.23	4	12	1.5	
+"EnergyStar, Standard, 200% Usage"	RatedAnnualkWh	270	0.12	1.09	22.23	4	12	2	
+"EnergyStar, Compact, 50% Usage"	RatedAnnualkWh	203	0.12	1.09	14.2	4	8	0.5	
+"EnergyStar, Compact, 75% Usage"	RatedAnnualkWh	203	0.12	1.09	14.2	4	8	0.75	
+"EnergyStar, Compact, 100% Usage"	RatedAnnualkWh	203	0.12	1.09	14.2	4	8		
+"EnergyStar, Compact, 150% Usage"	RatedAnnualkWh	203	0.12	1.09	14.2	4	8	1.5	
+"EnergyStar, Compact, 200% Usage"	RatedAnnualkWh	203	0.12	1.09	14.2	4	8	2	
+Detailed Example: ERI Reference 2006	RatedAnnualkWh	467	0.12	1.09	33.12	4	12		
+"Detailed Example: EF 0.7, Compact"	EnergyFactor	0.7	0.12	1.09	22.32	4	6		
+"Detailed Example: Federal Minimum, Standard, Conditioned Basement"	RatedAnnualkWh	307	0.12	1.09	22.32	4	12		basement - conditioned
+"Detailed Example: Federal Minimum, Standard, Unconditioned Basement"	RatedAnnualkWh	307	0.12	1.09	22.32	4	12		basement - unconditioned
+"Detailed Example: Federal Minimum, Standard, Garage"	RatedAnnualkWh	307	0.12	1.09	22.32	4	12		garage
+									
+# Efficiency Type: The efficiency type of the dishwasher.									
+# Efficiency: The efficiency from the EnergyGuide label.									
+# Label Electric Rate: The electricity rate from the EnergyGuide label.									
+# Label Gas Rate: The natural gas rate from the EnergyGuide label.									
+# Label Annual Gas Cost: The annual cost of using the system under test conditions with a natural gas water heater. Input is obtained from the EnergyGuide label.									
+# Label Usage: The dishwasher loads per week from the EnergyGuide label.									
+# Place Setting Capacity: The number of place settings for the unit. Data obtained from manufacturer's literature.									
+"# Usage Multiplier: Multiplier on the dishwasher energy usage that can reflect, e.g., high/low usage occupants."									
+# Location: The space type where the dishwasher is located.									

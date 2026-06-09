@@ -126,7 +126,7 @@
             <Emittance>0.92</Emittance>
             <Insulation>
               <SystemIdentifier id='RimJoist1Insulation'/>
-              <AssemblyEffectiveRValue>21.8</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>13.9</AssemblyEffectiveRValue>
             </Insulation>
           </RimJoist>
         </RimJoists>
@@ -328,12 +328,12 @@
               <FractionHeatLoadServed>1.0</FractionHeatLoadServed>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
-                <Units>SEER</Units>
-                <Value>18.0</Value>
+                <Units>SEER2</Units>
+                <Value>17.0</Value>
               </AnnualCoolingEfficiency>
               <AnnualHeatingEfficiency>
-                <Units>HSPF</Units>
-                <Value>9.3</Value>
+                <Units>HSPF2</Units>
+                <Value>8.2</Value>
               </AnnualHeatingEfficiency>
             </HeatPump>
           </HVACPlant>

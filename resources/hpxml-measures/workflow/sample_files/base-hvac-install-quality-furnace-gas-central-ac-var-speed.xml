@@ -126,7 +126,7 @@
             <Emittance>0.92</Emittance>
             <Insulation>
               <SystemIdentifier id='RimJoist1Insulation'/>
-              <AssemblyEffectiveRValue>21.8</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>13.9</AssemblyEffectiveRValue>
             </Insulation>
           </RimJoist>
         </RimJoists>
@@ -337,8 +337,8 @@
               <CompressorType>variable speed</CompressorType>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
-                <Units>SEER</Units>
-                <Value>24.0</Value>
+                <Units>SEER2</Units>
+                <Value>23.0</Value>
               </AnnualCoolingEfficiency>
               <extension>
                 <AirflowDefectRatio>-0.25</AirflowDefectRatio>

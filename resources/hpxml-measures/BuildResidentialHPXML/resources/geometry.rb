@@ -6,53 +6,53 @@ module Geometry
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param geometry_unit_cfa [Double] conditioned floor area (ft2)
-  # @param geometry_average_ceiling_height [Double] average ceiling height (ft)
-  # @param geometry_unit_num_floors_above_grade [Integer] number of floors above grade
+  # @param geometry_unit_conditioned_floor_area [Double] conditioned floor area (ft2)
+  # @param geometry_ceiling_height_height [Double] average ceiling height (ft)
+  # @param geometry_unit_type_number_of_stories [Integer] number of floors above grade
   # @param geometry_unit_aspect_ratio [Double] ratio of front/back wall length to left/right wall length (frac)
-  # @param geometry_garage_width [Double] width of the garage (ft)
-  # @param geometry_garage_depth [Double] depth of the garage (ft)
-  # @param geometry_garage_protrusion [Double] fraction of garage that protrudes from conditioned space
-  # @param geometry_garage_position [String] Right or Left
-  # @param geometry_foundation_type [String] foundation type of the building
-  # @param geometry_foundation_height [Double] height of the foundation (ft)
-  # @param geometry_rim_joist_height [Double] height of the rim joists (ft)
-  # @param geometry_attic_type [String] attic type of the building
-  # @param geometry_roof_type [String] roof type of the building
+  # @param geometry_garage_type_width [Double] width of the garage (ft)
+  # @param geometry_garage_type_depth [Double] depth of the garage (ft)
+  # @param geometry_garage_type_protrusion [Double] fraction of garage that protrudes from conditioned space
+  # @param geometry_garage_type_position [String] Right or Left
+  # @param geometry_foundation_type_type [String] foundation type of the building
+  # @param geometry_foundation_type_height [Double] height of the foundation (ft)
+  # @param geometry_foundation_type_rim_joist_height [Double] height of the rim joists (ft)
+  # @param geometry_attic_type_attic_type [String] attic type of the building
+  # @param geometry_attic_type_roof_type [String] roof type of the building
   # @param geometry_roof_pitch [Double] ratio of vertical rise to horizontal run (frac)
   # @return [Boolean] true if model is successfully updated with a single-family detached unit
   def self.create_single_family_detached(runner, model,
-                                         geometry_unit_cfa:,
-                                         geometry_average_ceiling_height:,
-                                         geometry_unit_num_floors_above_grade:,
+                                         geometry_unit_conditioned_floor_area:,
+                                         geometry_ceiling_height_height:,
+                                         geometry_unit_type_number_of_stories:,
                                          geometry_unit_aspect_ratio:,
-                                         geometry_garage_width:,
-                                         geometry_garage_depth:,
-                                         geometry_garage_protrusion:,
-                                         geometry_garage_position:,
-                                         geometry_foundation_type:,
-                                         geometry_foundation_height:,
-                                         geometry_rim_joist_height:,
-                                         geometry_attic_type:,
-                                         geometry_roof_type:,
+                                         geometry_garage_type_width:,
+                                         geometry_garage_type_depth:,
+                                         geometry_garage_type_protrusion:,
+                                         geometry_garage_type_position:,
+                                         geometry_foundation_type_type:,
+                                         geometry_foundation_type_height:,
+                                         geometry_foundation_type_rim_joist_height:,
+                                         geometry_attic_type_attic_type:,
+                                         geometry_attic_type_roof_type:,
                                          geometry_roof_pitch:,
                                          **)
-    cfa = geometry_unit_cfa
-    average_ceiling_height = geometry_average_ceiling_height
-    num_floors = geometry_unit_num_floors_above_grade
+    cfa = geometry_unit_conditioned_floor_area
+    average_ceiling_height = geometry_ceiling_height_height
+    num_floors = geometry_unit_type_number_of_stories
     aspect_ratio = geometry_unit_aspect_ratio
-    garage_width = geometry_garage_width
-    garage_depth = geometry_garage_depth
-    garage_protrusion = geometry_garage_protrusion
-    garage_position = geometry_garage_position
-    foundation_type = geometry_foundation_type
-    foundation_height = geometry_foundation_height
-    rim_joist_height = geometry_rim_joist_height
-    attic_type = geometry_attic_type
+    garage_width = geometry_garage_type_width
+    garage_depth = geometry_garage_type_depth
+    garage_protrusion = geometry_garage_type_protrusion
+    garage_position = geometry_garage_type_position
+    foundation_type = geometry_foundation_type_type
+    foundation_height = geometry_foundation_type_height
+    rim_joist_height = geometry_foundation_type_rim_joist_height
+    attic_type = geometry_attic_type_attic_type
     if attic_type == HPXML::AtticTypeConditioned
       num_floors -= 1
     end
-    roof_type = geometry_roof_type
+    roof_type = geometry_attic_type_roof_type
     roof_pitch = geometry_roof_pitch
 
     # Convert to SI
@@ -63,43 +63,30 @@ module Geometry
     foundation_height = UnitConversions.convert(foundation_height, 'ft', 'm')
     rim_joist_height = UnitConversions.convert(rim_joist_height, 'ft', 'm')
 
-    garage_area = garage_width * garage_depth
-    has_garage = false
-    if garage_area > 0
-      has_garage = true
+    length, width = calculate_footprint_length_width(garage_width, garage_depth, garage_protrusion, foundation_type, attic_type, num_floors, cfa, aspect_ratio)
+
+    # Error checking: adjust garage width if too wide relative the living space dimensions
+    # e.g., this can happen if garage protrudes too much for a small dwelling unit
+    garage_width_adjusted = false
+    while ((garage_width >= length) && (garage_depth > 0))
+      garage_width -= UnitConversions.convert(1, 'ft', 'm') # reduce garage width in 1 ft increments
+      length, width = calculate_footprint_length_width(garage_width, garage_depth, garage_protrusion, foundation_type, attic_type, num_floors, cfa, aspect_ratio)
+      garage_width_adjusted = true
+    end
+    if garage_width_adjusted
+      runner.registerWarning("Garage is as wide as the single-family detached unit; garage width reduced from #{geometry_garage_type_width} ft to #{UnitConversions.convert(garage_width, 'm', 'ft').round(1)} ft.")
     end
 
-    # calculate the footprint of the building
-    garage_area_inside_footprint = 0
-    if has_garage
-      garage_area_inside_footprint = garage_area * (1.0 - garage_protrusion)
+    # Error checking: adjust garage depth if too deep relative the living space dimensions
+    # e.g., this can happen if garage doesn't protrude enough for a small dwelling unit
+    garage_depth_adjusted = false
+    while ((((1.0 - garage_protrusion) * garage_depth) >= width) && (garage_width > 0))
+      garage_depth -= UnitConversions.convert(1, 'ft', 'm') # reduce garage depth in 1 ft increments
+      length, width = calculate_footprint_length_width(garage_width, garage_depth, garage_protrusion, foundation_type, attic_type, num_floors, cfa, aspect_ratio)
+      garage_depth_adjusted = true
     end
-    bonus_area_above_garage = garage_area * garage_protrusion
-    if (foundation_type == HPXML::FoundationTypeBasementConditioned) && (attic_type == HPXML::AtticTypeConditioned)
-      footprint = (cfa + 2 * garage_area_inside_footprint - num_floors * bonus_area_above_garage) / (num_floors + 2)
-    elsif foundation_type == HPXML::FoundationTypeBasementConditioned
-      footprint = (cfa + 2 * garage_area_inside_footprint - (num_floors - 1) * bonus_area_above_garage) / (num_floors + 1)
-    elsif attic_type == HPXML::AtticTypeConditioned
-      footprint = (cfa + garage_area_inside_footprint - num_floors * bonus_area_above_garage) / (num_floors + 1)
-    else
-      footprint = (cfa + garage_area_inside_footprint - (num_floors - 1) * bonus_area_above_garage) / num_floors
-    end
-
-    # calculate the dimensions of the building
-    # we have: (1) aspect_ratio = fb / lr, and (2) footprint = fb * lr
-    fb = Math.sqrt(footprint * aspect_ratio)
-    lr = footprint / fb
-    length = fb
-    width = lr
-
-    # error checking
-    if ((garage_width >= length) && (garage_depth > 0))
-      runner.registerError('Garage is as wide as the single-family detached unit.')
-      return false
-    end
-    if ((((1.0 - garage_protrusion) * garage_depth) >= width) && (garage_width > 0))
-      runner.registerError('Garage is as deep as the single-family detached unit.')
-      return false
+    if garage_depth_adjusted
+      runner.registerWarning("Garage is as deep as the single-family detached unit; garage depth reduced from #{geometry_garage_type_depth} ft to #{UnitConversions.convert(garage_depth, 'm', 'ft').round(1)} ft.")
     end
 
     # create conditioned zone
@@ -111,7 +98,7 @@ module Geometry
     for floor in (0..num_floors - 1)
       z = average_ceiling_height * floor + rim_joist_height
 
-      if has_garage && (z == rim_joist_height) # first floor and has garage
+      if (garage_width * garage_depth > 0) && (z == rim_joist_height) # first floor and has garage
 
         # create garage zone
         garage_space_name = HPXML::LocationGarage
@@ -179,7 +166,7 @@ module Geometry
         foundation_polygon_with_wrong_zs = conditioned_polygon
       else # first floor without garage or above first floor
 
-        if has_garage
+        if (garage_width * garage_depth > 0)
           garage_se_point = OpenStudio::Point3d.new(garage_se_point.x, garage_se_point.y, z)
           garage_sw_point = OpenStudio::Point3d.new(garage_sw_point.x, garage_sw_point.y, z)
           garage_nw_point = OpenStudio::Point3d.new(garage_nw_point.x, garage_nw_point.y, z)
@@ -438,7 +425,7 @@ module Geometry
     OpenStudio::Model.intersectSurfaces(spaces)
     OpenStudio::Model.matchSurfaces(spaces)
 
-    if has_garage && attic_type != HPXML::AtticTypeFlatRoof
+    if (garage_width * garage_depth > 0) && attic_type != HPXML::AtticTypeFlatRoof
       if num_floors > 1
         space_with_roof_over_garage = conditioned_space
       else
@@ -654,55 +641,55 @@ module Geometry
   # Create a 3D representation of a single-family attached home using the following arguments.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param geometry_unit_cfa [Double] conditioned floor area (ft2)
-  # @param geometry_average_ceiling_height [Double] average ceiling height (ft)
-  # @param geometry_unit_num_floors_above_grade [Integer] number of floors above grade
+  # @param geometry_unit_conditioned_floor_area [Double] conditioned floor area (ft2)
+  # @param geometry_ceiling_height_height [Double] average ceiling height (ft)
+  # @param geometry_unit_type_number_of_stories [Integer] number of floors above grade
   # @param geometry_unit_aspect_ratio [Double] ratio of front/back wall length to left/right wall length (frac)
-  # @param geometry_foundation_type [String] foundation type of the building
-  # @param geometry_foundation_height [Double] height of the foundation (ft)
-  # @param geometry_rim_joist_height [Double] height of the rim joists (ft)
-  # @param geometry_attic_type [String] attic type of the building
-  # @param geometry_roof_type [String] roof type of the building
+  # @param geometry_foundation_type_type [String] foundation type of the building
+  # @param geometry_foundation_type_height [Double] height of the foundation (ft)
+  # @param geometry_foundation_type_rim_joist_height [Double] height of the rim joists (ft)
+  # @param geometry_attic_type_attic_type [String] attic type of the building
+  # @param geometry_attic_type_roof_type [String] roof type of the building
   # @param geometry_roof_pitch [Double] ratio of vertical rise to horizontal run (frac)
-  # @param geometry_unit_left_wall_is_adiabatic [Boolean] presence of an adiabatic left wall
-  # @param geometry_unit_right_wall_is_adiabatic [Boolean] presence of an adiabatic right wall
-  # @param geometry_unit_front_wall_is_adiabatic [Boolean] presence of an adiabatic front wall
-  # @param geometry_unit_back_wall_is_adiabatic [Boolean] presence of an adiabatic back wall
+  # @param geometry_attached_walls_left_wall_is_adiabatic [Boolean] presence of an adiabatic left wall
+  # @param geometry_attached_walls_right_wall_is_adiabatic [Boolean] presence of an adiabatic right wall
+  # @param geometry_attached_walls_front_wall_is_adiabatic [Boolean] presence of an adiabatic front wall
+  # @param geometry_attached_walls_back_wall_is_adiabatic [Boolean] presence of an adiabatic back wall
   # @return [Boolean] true if model is successfully updated with a single-family attached unit
   def self.create_single_family_attached(model,
-                                         geometry_unit_cfa:,
-                                         geometry_average_ceiling_height:,
-                                         geometry_unit_num_floors_above_grade:,
+                                         geometry_unit_conditioned_floor_area:,
+                                         geometry_ceiling_height_height:,
+                                         geometry_unit_type_number_of_stories:,
                                          geometry_unit_aspect_ratio:,
-                                         geometry_foundation_type:,
-                                         geometry_foundation_height:,
-                                         geometry_rim_joist_height:,
-                                         geometry_attic_type:,
-                                         geometry_roof_type:,
+                                         geometry_foundation_type_type:,
+                                         geometry_foundation_type_height:,
+                                         geometry_foundation_type_rim_joist_height:,
+                                         geometry_attic_type_attic_type:,
+                                         geometry_attic_type_roof_type:,
                                          geometry_roof_pitch:,
-                                         geometry_unit_left_wall_is_adiabatic:,
-                                         geometry_unit_right_wall_is_adiabatic:,
-                                         geometry_unit_front_wall_is_adiabatic:,
-                                         geometry_unit_back_wall_is_adiabatic:,
+                                         geometry_attached_walls_left_wall_is_adiabatic:,
+                                         geometry_attached_walls_right_wall_is_adiabatic:,
+                                         geometry_attached_walls_front_wall_is_adiabatic:,
+                                         geometry_attached_walls_back_wall_is_adiabatic:,
                                          **)
 
-    cfa = geometry_unit_cfa
-    average_ceiling_height = geometry_average_ceiling_height
-    num_floors = geometry_unit_num_floors_above_grade
+    cfa = geometry_unit_conditioned_floor_area
+    average_ceiling_height = geometry_ceiling_height_height
+    num_floors = geometry_unit_type_number_of_stories
     aspect_ratio = geometry_unit_aspect_ratio
-    foundation_type = geometry_foundation_type
-    foundation_height = geometry_foundation_height
-    rim_joist_height = geometry_rim_joist_height
-    attic_type = geometry_attic_type
+    foundation_type = geometry_foundation_type_type
+    foundation_height = geometry_foundation_type_height
+    rim_joist_height = geometry_foundation_type_rim_joist_height
+    attic_type = geometry_attic_type_attic_type
     if attic_type == HPXML::AtticTypeConditioned
       num_floors -= 1
     end
-    roof_type = geometry_roof_type
+    roof_type = geometry_attic_type_roof_type
     roof_pitch = geometry_roof_pitch
-    adiabatic_left_wall = geometry_unit_left_wall_is_adiabatic
-    adiabatic_right_wall = geometry_unit_right_wall_is_adiabatic
-    adiabatic_front_wall = geometry_unit_front_wall_is_adiabatic
-    adiabatic_back_wall = geometry_unit_back_wall_is_adiabatic
+    adiabatic_left_wall = geometry_attached_walls_left_wall_is_adiabatic
+    adiabatic_right_wall = geometry_attached_walls_right_wall_is_adiabatic
+    adiabatic_front_wall = geometry_attached_walls_front_wall_is_adiabatic
+    adiabatic_back_wall = geometry_attached_walls_back_wall_is_adiabatic
 
     # Convert to SI
     cfa = UnitConversions.convert(cfa, 'ft^2', 'm^2')
@@ -956,52 +943,52 @@ module Geometry
   # Create a 3D representation of an apartment (dwelling unit in a multifamily building) home using the following arguments.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param geometry_unit_cfa [Double] conditioned floor area (ft2)
-  # @param geometry_average_ceiling_height [Double] average ceiling height (ft)
-  # @param geometry_unit_num_floors_above_grade [Integer] number of floors above grade
+  # @param geometry_unit_conditioned_floor_area [Double] conditioned floor area (ft2)
+  # @param geometry_ceiling_height_height [Double] average ceiling height (ft)
+  # @param geometry_unit_type_number_of_stories [Integer] number of floors above grade
   # @param geometry_unit_aspect_ratio [Double] ratio of front/back wall length to left/right wall length (frac)
-  # @param geometry_foundation_type [String] foundation type of the building
-  # @param geometry_foundation_height [Double] height of the foundation (ft)
-  # @param geometry_rim_joist_height [Double] height of the rim joists (ft)
-  # @param geometry_attic_type [String] attic type of the building
-  # @param geometry_roof_type [String] roof type of the building
+  # @param geometry_foundation_type_type [String] foundation type of the building
+  # @param geometry_foundation_type_height [Double] height of the foundation (ft)
+  # @param geometry_foundation_type_rim_joist_height [Double] height of the rim joists (ft)
+  # @param geometry_attic_type_attic_type [String] attic type of the building
+  # @param geometry_attic_type_roof_type [String] roof type of the building
   # @param geometry_roof_pitch [Double] ratio of vertical rise to horizontal run (frac)
-  # @param geometry_unit_left_wall_is_adiabatic [Boolean] presence of an adiabatic left wall
-  # @param geometry_unit_right_wall_is_adiabatic [Boolean] presence of an adiabatic right wall
-  # @param geometry_unit_front_wall_is_adiabatic [Boolean] presence of an adiabatic front wall
-  # @param geometry_unit_back_wall_is_adiabatic [Boolean] presence of an adiabatic back wall
+  # @param geometry_attached_walls_left_wall_is_adiabatic [Boolean] presence of an adiabatic left wall
+  # @param geometry_attached_walls_right_wall_is_adiabatic [Boolean] presence of an adiabatic right wall
+  # @param geometry_attached_walls_front_wall_is_adiabatic [Boolean] presence of an adiabatic front wall
+  # @param geometry_attached_walls_back_wall_is_adiabatic [Boolean] presence of an adiabatic back wall
   # @return [Boolean] true if model is successfully updated with an apartment unit
   def self.create_apartment(model,
-                            geometry_unit_cfa:,
-                            geometry_average_ceiling_height:,
-                            geometry_unit_num_floors_above_grade:,
+                            geometry_unit_conditioned_floor_area:,
+                            geometry_ceiling_height_height:,
+                            geometry_unit_type_number_of_stories:,
                             geometry_unit_aspect_ratio:,
-                            geometry_foundation_type:,
-                            geometry_foundation_height:,
-                            geometry_rim_joist_height:,
-                            geometry_attic_type:,
-                            geometry_roof_type:,
+                            geometry_foundation_type_type:,
+                            geometry_foundation_type_height:,
+                            geometry_foundation_type_rim_joist_height:,
+                            geometry_attic_type_attic_type:,
+                            geometry_attic_type_roof_type:,
                             geometry_roof_pitch:,
-                            geometry_unit_left_wall_is_adiabatic:,
-                            geometry_unit_right_wall_is_adiabatic:,
-                            geometry_unit_front_wall_is_adiabatic:,
-                            geometry_unit_back_wall_is_adiabatic:,
+                            geometry_attached_walls_left_wall_is_adiabatic:,
+                            geometry_attached_walls_right_wall_is_adiabatic:,
+                            geometry_attached_walls_front_wall_is_adiabatic:,
+                            geometry_attached_walls_back_wall_is_adiabatic:,
                             **)
 
-    cfa = geometry_unit_cfa
-    average_ceiling_height = geometry_average_ceiling_height
-    num_floors = geometry_unit_num_floors_above_grade
+    cfa = geometry_unit_conditioned_floor_area
+    average_ceiling_height = geometry_ceiling_height_height
+    num_floors = geometry_unit_type_number_of_stories
     aspect_ratio = geometry_unit_aspect_ratio
-    foundation_type = geometry_foundation_type
-    foundation_height = geometry_foundation_height
-    rim_joist_height = geometry_rim_joist_height
-    attic_type = geometry_attic_type
-    roof_type = geometry_roof_type
+    foundation_type = geometry_foundation_type_type
+    foundation_height = geometry_foundation_type_height
+    rim_joist_height = geometry_foundation_type_rim_joist_height
+    attic_type = geometry_attic_type_attic_type
+    roof_type = geometry_attic_type_roof_type
     roof_pitch = geometry_roof_pitch
-    adiabatic_left_wall = geometry_unit_left_wall_is_adiabatic
-    adiabatic_right_wall = geometry_unit_right_wall_is_adiabatic
-    adiabatic_front_wall = geometry_unit_front_wall_is_adiabatic
-    adiabatic_back_wall = geometry_unit_back_wall_is_adiabatic
+    adiabatic_left_wall = geometry_attached_walls_left_wall_is_adiabatic
+    adiabatic_right_wall = geometry_attached_walls_right_wall_is_adiabatic
+    adiabatic_front_wall = geometry_attached_walls_front_wall_is_adiabatic
+    adiabatic_back_wall = geometry_attached_walls_back_wall_is_adiabatic
 
     if foundation_type == HPXML::FoundationTypeAboveApartment
       foundation_type = HPXML::LocationOtherHousingUnit
@@ -1243,21 +1230,62 @@ module Geometry
     return true
   end
 
+  # Calculate the overall dimensions (length, width) of the dwelling unit based on garage presence/size/protrusion,
+  # foundation/attic type, conditioned floor area, number of floors, and aspect ratio.
+  #
+  # @param garage_width [Double] width of the garage (m)
+  # @param garage_depth [Double] depth of the garage (m)
+  # @param garage_protrusion [Double] fraction of garage that protrudes from conditioned space
+  # @param foundation_type [String] foundation type of the building
+  # @param attic_type [String] attic type of the building
+  # @param num_floors [Integer] number of floors above grade
+  # @param cfa [Double] conditioned floor area (m2)
+  # @param aspect_ratio [Double] ratio of front/back wall length to left/right wall length (frac)
+  # @return [Array<Double, Double>] length (m) and width (m) of the footprint
+  def self.calculate_footprint_length_width(garage_width, garage_depth, garage_protrusion, foundation_type, attic_type, num_floors, cfa, aspect_ratio)
+    garage_area = garage_width * garage_depth
+    has_garage = (garage_area > 0)
+
+    # calculate the footprint of the building
+    garage_area_inside_footprint = 0
+    if has_garage
+      garage_area_inside_footprint = garage_area * (1.0 - garage_protrusion)
+    end
+    bonus_area_above_garage = garage_area * garage_protrusion
+    if (foundation_type == HPXML::FoundationTypeBasementConditioned) && (attic_type == HPXML::AtticTypeConditioned)
+      footprint = (cfa + 2 * garage_area_inside_footprint - num_floors * bonus_area_above_garage) / (num_floors + 2)
+    elsif foundation_type == HPXML::FoundationTypeBasementConditioned
+      footprint = (cfa + 2 * garage_area_inside_footprint - (num_floors - 1) * bonus_area_above_garage) / (num_floors + 1)
+    elsif attic_type == HPXML::AtticTypeConditioned
+      footprint = (cfa + garage_area_inside_footprint - num_floors * bonus_area_above_garage) / (num_floors + 1)
+    else
+      footprint = (cfa + garage_area_inside_footprint - (num_floors - 1) * bonus_area_above_garage) / num_floors
+    end
+
+    # calculate the dimensions of the building
+    # we have: (1) aspect_ratio = fb / lr, and (2) footprint = fb * lr
+    fb = Math.sqrt(footprint * aspect_ratio)
+    lr = footprint / fb
+    length = fb
+    width = lr
+
+    return length, width
+  end
+
   # Place a door subsurface on an exterior wall surface (with enough area) prioritized by front, then back, then left, then right, and lowest story.
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param door_area [Double] the area of the opaque door(s) (ft2)
+  # @param geometry_door_area [Double] the area of the opaque door(s) (ft2)
   # @return [Boolean] true if successful
-  def self.create_doors(runner, model, door_area:, **)
+  def self.create_doors(runner, model, geometry_door_area:, **)
     # error checking
-    if door_area == 0
-      runner.registerFinalCondition('No doors added because door area was set to 0.')
+    if geometry_door_area == 0
       return true
     end
 
     door_height = 7.0 # ft
-    door_width = door_area / door_height
+    door_width = geometry_door_area / door_height
     door_offset = 0.5 # ft
 
     # Get all exterior walls prioritized by front, then back, then left, then right
@@ -1306,7 +1334,7 @@ module Geometry
       wall_gross_area = UnitConversions.convert(min_story_avail_wall.grossArea, 'm^2', 'ft^2')
 
       # Try to place door on any surface with enough area
-      next if door_area >= wall_gross_area
+      next if geometry_door_area >= wall_gross_area
 
       facade = get_surface_facade(min_story_avail_wall)
 
@@ -1381,43 +1409,63 @@ module Geometry
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param window_front_wwr [Double] ratio of window to wall area for the unit's front facade (frac)
-  # @param window_back_wwr [Double] ratio of window to wall area for the unit's back facade (frac)
-  # @param window_left_wwr [Double] ratio of window to wall area for the unit's left facade (frac)
-  # @param window_right_wwr [Double] ratio of window to wall area for the unit's right facade (frac)
-  # @param window_area_front [Double] amount of window area on unit's front facade (ft2)
-  # @param window_area_back [Double] amount of window area on unit's back facade (ft2)
-  # @param window_area_left [Double] amount of window area on unit's left facade (ft2)
-  # @param window_area_right [Double] amount of window area on unit's right facade (ft2)
-  # @param window_aspect_ratio [Double] ratio of window height to width (frac)
-  # @param skylight_area_front [Double] amount of skylight area on the unit's front conditioned roof facade (ft2)
-  # @param skylight_area_back [Double] amount of skylight area on the unit's back conditioned roof facade (ft2)
-  # @param skylight_area_left [Double] amount of skylight area on the unit's left conditioned roof facade (ft2)
-  # @param skylight_area_right [Double] amount of skylight area on the unit's right conditioned roof facade (ft2)
+  # @param geometry_window_areas_or_wwrs [String] comma-separated list of window areas or window-to-wall ratios for unit's front/back/left/right facades (ft2 or frac)
+  # @param geometry_skylight_areas [String] comma-separated list of skylight areas for unit's front/back/left/right roofs (ft2)
   # @return [Boolean] true if successful
   def self.create_windows_and_skylights(runner, model,
-                                        window_front_wwr:, window_back_wwr:, window_left_wwr:, window_right_wwr:,
-                                        window_area_front:, window_area_back:, window_area_left:, window_area_right:, window_aspect_ratio:,
-                                        skylight_area_front:, skylight_area_back:, skylight_area_left:, skylight_area_right:,
+                                        geometry_window_areas_or_wwrs:,
+                                        geometry_skylight_areas:,
                                         **)
     facades = [Constants::FacadeBack, Constants::FacadeRight, Constants::FacadeFront, Constants::FacadeLeft]
 
-    wwrs = {}
-    wwrs[Constants::FacadeBack] = window_back_wwr
-    wwrs[Constants::FacadeRight] = window_right_wwr
-    wwrs[Constants::FacadeFront] = window_front_wwr
-    wwrs[Constants::FacadeLeft] = window_left_wwr
-    window_areas = {}
-    window_areas[Constants::FacadeBack] = window_area_back
-    window_areas[Constants::FacadeRight] = window_area_right
-    window_areas[Constants::FacadeFront] = window_area_front
-    window_areas[Constants::FacadeLeft] = window_area_left
+    wwrs = { Constants::FacadeFront => 0, Constants::FacadeBack => 0, Constants::FacadeLeft => 0, Constants::FacadeRight => 0 }
+    window_areas = { Constants::FacadeFront => 0, Constants::FacadeBack => 0, Constants::FacadeLeft => 0, Constants::FacadeRight => 0 }
+    if geometry_window_areas_or_wwrs.split(',').count != 4
+      runner.registerError('Enclosure window areas must be a comma-separated list of 4 numbers.')
+      return false
+    end
+    begin
+      w_front, w_back, w_left, w_right = geometry_window_areas_or_wwrs.split(',').map(&:strip).map { |x| Float(x) }
+    rescue
+      runner.registerError('Enclosure window areas must be a comma-separated list of 4 numbers.')
+      return false
+    end
+    if w_front < 1
+      wwrs[Constants::FacadeFront] = w_front
+    else
+      window_areas[Constants::FacadeFront] = w_front
+    end
+    if w_back < 1
+      wwrs[Constants::FacadeBack] = w_back
+    else
+      window_areas[Constants::FacadeBack] = w_back
+    end
+    if w_left < 1
+      wwrs[Constants::FacadeLeft] = w_left
+    else
+      window_areas[Constants::FacadeLeft] = w_left
+    end
+    if w_right < 1
+      wwrs[Constants::FacadeRight] = w_right
+    else
+      window_areas[Constants::FacadeRight] = w_right
+    end
 
-    skylight_areas = {}
-    skylight_areas[Constants::FacadeBack] = skylight_area_back
-    skylight_areas[Constants::FacadeRight] = skylight_area_right
-    skylight_areas[Constants::FacadeFront] = skylight_area_front
-    skylight_areas[Constants::FacadeLeft] = skylight_area_left
+    skylight_areas = { Constants::FacadeFront => 0, Constants::FacadeBack => 0, Constants::FacadeLeft => 0, Constants::FacadeRight => 0 }
+    if geometry_skylight_areas.split(',').count != 4
+      runner.registerError('Enclosure skylight areas must be a comma-separated list of 4 numbers.')
+      return false
+    end
+    begin
+      s_front, s_back, s_left, s_right = geometry_skylight_areas.split(',').map(&:strip).map { |x| Float(x) }
+    rescue
+      runner.registerError('Enclosure skylight areas must be a comma-separated list of 4 numbers.')
+      return false
+    end
+    skylight_areas[Constants::FacadeFront] = s_front
+    skylight_areas[Constants::FacadeBack] = s_back
+    skylight_areas[Constants::FacadeLeft] = s_left
+    skylight_areas[Constants::FacadeRight] = s_right
     skylight_areas[Constants::FacadeNone] = 0
 
     # Store surfaces that should get windows by facade
@@ -1492,6 +1540,7 @@ module Geometry
     max_single_window_area = 12.0 # sqft
     window_gap_y = 1.0 # ft; distance from top of wall
     window_gap_x = 0.2 # ft; distance between windows in a two-window group
+    window_aspect_ratio = 1.333
     min_wall_height = Math.sqrt(max_single_window_area * window_aspect_ratio) + window_gap_y * 1.05 # allow some wall area above/below
     min_wall_width = Math.sqrt(min_single_window_area / window_aspect_ratio) * 1.05 # allow some wall area to the left/right
 
@@ -1629,10 +1678,6 @@ module Geometry
       end
     end
 
-    if (tot_win_area == 0) && (tot_sky_area == 0)
-      runner.registerFinalCondition('No windows or skylights added.')
-    end
-
     return true
   end
 
@@ -1738,17 +1783,17 @@ module Geometry
   # This is perimeter adjacent to a 100% protruding garage that is not exposed.
   # We need this because it's difficult to set this surface to Adiabatic using our geometry methods.
   #
-  # @param geometry_garage_protrusion [Double] fraction of the garage that is protruding from the conditioned space
-  # @param geometry_garage_width [Double] width of the garage (ft)
-  # @param geometry_garage_depth [Double] depth of the garage (ft)
+  # @param geometry_garage_type_protrusion [Double] fraction of the garage that is protruding from the conditioned space
+  # @param geometry_garage_type_width [Double] width of the garage (ft)
+  # @param geometry_garage_type_depth [Double] depth of the garage (ft)
   # @return [Double] the unexposed garage perimeter
-  def self.get_unexposed_garage_perimeter(geometry_garage_protrusion:,
-                                          geometry_garage_width:,
-                                          geometry_garage_depth:,
+  def self.get_unexposed_garage_perimeter(geometry_garage_type_protrusion:,
+                                          geometry_garage_type_width:,
+                                          geometry_garage_type_depth:,
                                           **)
-    protrusion = geometry_garage_protrusion
-    width = geometry_garage_width
-    depth = geometry_garage_depth
+    protrusion = geometry_garage_type_protrusion
+    width = geometry_garage_type_width
+    depth = geometry_garage_type_depth
 
     if (protrusion == 1.0) && (width * depth > 0)
       return width
@@ -1835,21 +1880,17 @@ module Geometry
     return
   end
 
-  # Get the absolute tilt based on tilt, roof pitch, and latitude.
+  # Get the absolute tilt based on tilt and roof pitch inputs.
   #
-  # @param tilt_str [Double, String] tilt in degrees or RoofPitch, RoofPitch+20, Latitude, Latitude-15, etc.
+  # @param tilt [Double] tilt in degrees.
   # @param roof_pitch [Double] roof pitch in vertical rise inches for every 12 inches of horizontal run
-  # @param latitude [Double] latitude (degrees)
   # @return [Double] absolute tilt
-  def self.get_absolute_tilt(tilt_str:, roof_pitch:, latitude:)
-    tilt_str = tilt_str.downcase
-    if tilt_str.start_with? 'roofpitch'
-      roof_angle = Math.atan(roof_pitch / 12.0) * 180.0 / Math::PI
-      return Float(eval(tilt_str.gsub('roofpitch', roof_angle.to_s))).round(2)
-    elsif tilt_str.start_with? 'latitude'
-      return Float(eval(tilt_str.gsub('latitude', latitude.to_s))).round(2)
+  def self.get_absolute_tilt(tilt:, roof_pitch:)
+    if tilt.nil?
+      # Roof pitch
+      return (Math.atan(roof_pitch / 12.0) * 180.0 / Math::PI).round(2)
     else
-      return Float(tilt_str)
+      return tilt
     end
   end
 

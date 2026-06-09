@@ -1,0 +1,50 @@
+\paragraph{Description}
+% \input{characteristics/description/Clothes Dryer}
+The presence, rated efficiency, and fuel type of the clothes dryer in a housing unit.
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/Clothes Dryer}
+Constructed using U.S. EIA 2020 RECS microdata. 
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/Clothes Dryer}
+
+\paragraph{Options}
+The ResStock options are shown in Table \ref{table:hc_opt_clothes_dryer}.
+
+\input{characteristics/options/Clothes Dryer}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_clothes_dryer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-clothes-dryer}{Clothes Dryer} documentation for additional information.
+
+\input{characteristics/properties/Clothes Dryer}
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/Clothes Dryer}
+Clothes dryer option is ``None'' if the clothes washer is not present.
+
+Due to the low sample count, the input file is constructed by downscaling a housing unit sub-input file with a household sub-input file. The sub-input files have the following dependencies: 
+housing unit sub-input file: dependencies = Geometry Building Type RECS, State, Heating Fuel, and Clothes Washer Presence, with the following fallback coarsening order:
+\begin{enumerate}
+    \item State coarsened to Census Division RECS without AK, HI 
+    \item  Heating Fuel coarsened to Other Fuel, Wood and Propane combined 
+    \item Heating Fuel coarsened to Fuel Oil, Other Fuel, Wood and Propane combined 
+    \item Geometry Building Type RECS coarsened to SF/MF/MH
+    \item  Geometry Building Type RECS coarsened to SF and MH/MF 
+    \item  State coarsened to Census Division RECS 
+    \item State coarsened to Census Region 
+    \item State coarsened to National. 
+\end{enumerate}
+
+Household sub-input file: dependencies = Geometry Building Type RECS, Tenure, and Federal Poverty Level, with the following fallback coarsening order:
+\begin{enumerate}
+\item  State coarsened to Census Division RECS without AK, HI 
+\item  Geometry Building Type RECS coarsened to SF/MF/MH 
+\item  Geometry Building Type RECS coarsened to SF and MH/MF 
+\item  Federal Poverty Level coarsened every 100\% 
+\item Federal Poverty Level coarsened every 200\%
+\item  State coarsened to Census Division RECS
+\item State coarsened to Census Region
+\item State coarsened to National.
+\end{enumerate}
+
+In combining the housing unit sub-input file and household sub-input file, the conditional relationships are ignored across Heating Fuel and Clothes Washer Presence, as well as across Tenure and Federal Poverty Level.

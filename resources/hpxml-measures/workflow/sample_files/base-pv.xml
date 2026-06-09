@@ -126,7 +126,7 @@
             <Emittance>0.92</Emittance>
             <Insulation>
               <SystemIdentifier id='RimJoist1Insulation'/>
-              <AssemblyEffectiveRValue>21.8</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>13.9</AssemblyEffectiveRValue>
             </Insulation>
           </RimJoist>
         </RimJoists>
@@ -332,8 +332,8 @@
               <CompressorType>single stage</CompressorType>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
-                <Units>SEER</Units>
-                <Value>13.0</Value>
+                <Units>SEER2</Units>
+                <Value>13.4</Value>
               </AnnualCoolingEfficiency>
             </CoolingSystem>
           </HVACPlant>
@@ -431,7 +431,6 @@
             <ArrayAzimuth>180</ArrayAzimuth>
             <ArrayTilt>20.0</ArrayTilt>
             <MaxPowerOutput>4000.0</MaxPowerOutput>
-            <AttachedToInverter idref='Inverter1'/>
           </PVSystem>
           <PVSystem>
             <SystemIdentifier id='PVSystem2'/>
@@ -439,11 +438,7 @@
             <ArrayAzimuth>90</ArrayAzimuth>
             <ArrayTilt>20.0</ArrayTilt>
             <MaxPowerOutput>1500.0</MaxPowerOutput>
-            <AttachedToInverter idref='Inverter1'/>
           </PVSystem>
-          <Inverter>
-            <SystemIdentifier id='Inverter1'/>
-          </Inverter>
         </Photovoltaics>
       </Systems>
       <Appliances>

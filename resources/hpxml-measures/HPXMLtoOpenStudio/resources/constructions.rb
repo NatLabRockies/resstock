@@ -2749,25 +2749,26 @@ module Constructions
 
   # TODO
   #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param storm_type [TODO] TODO
   # @param base_ufactor [TODO] TODO
   # @param base_shgc [TODO] TODO
   # @return [TODO] TODO
-  def self.get_ufactor_shgc_adjusted_by_storms(storm_type, base_ufactor, base_shgc)
+  def self.get_ufactor_shgc_adjusted_by_storms(runner, storm_type, base_ufactor, base_shgc)
     return base_ufactor, base_shgc if storm_type.nil?
 
-    # Ref: https://labhomes.pnnl.gov/documents/PNNL_24444_Thermal_and_Optical_Properties_Low-E_Storm_Windows_Panels.pdf
+    # Ref: https://www.pnnl.gov/main/publications/external/technical_reports/PNNL-24444.pdf
     # U-factor and SHGC adjustment based on the data obtained from the above reference
-    min_base_ufactor_for_storm = 0.45
+    min_base_ufactor_for_storm = 0.3
     if base_ufactor < min_base_ufactor_for_storm
-      fail "Storm windows are currently restricted to windows with U-factor >= #{min_base_ufactor_for_storm}, while base window U-Factor was #{base_ufactor}."
+      runner.registerWarning("Storm windows may not be modeled accurately when window U-factor is lower than #{min_base_ufactor_for_storm}, while base window U-Factor was #{base_ufactor}.")
     end
 
     if storm_type == HPXML::WindowGlassTypeClear
-      ufactor_abs_reduction = 0.6435 * base_ufactor - 0.1533
+      ufactor_abs_reduction = [0.6435 * base_ufactor - 0.1533, 0.0].max
       shgc_corr = 0.9
     elsif storm_type == HPXML::WindowGlassTypeLowE
-      ufactor_abs_reduction = 0.766 * base_ufactor - 0.1532
+      ufactor_abs_reduction = [0.766 * base_ufactor - 0.1532, 0.0].max
       shgc_corr = 0.8
     else
       fail "Could not find adjustment factors for storm type '#{storm_type}'"

@@ -17,19 +17,21 @@ concurrency:
 env:
   OPENSTUDIO_VER: 3.10.0
   OPENSTUDIO_SHA: 86d7e215a1
-  OPENSTUDIO_PLATFORM: Ubuntu-22.04-x86_64
+  OPENSTUDIO_PLATFORM: Ubuntu-24.04-x86_64
   OPENSTUDIO_EXT: deb
   OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.10.0
-  BUILDSTOCK_BRANCH: develop
+  BUILDSTOCK_BATCH_BRANCH: develop
   BUILDSTOCK_QUERY_BRANCH: main
 
 jobs:
   format-files:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v6
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
+
       - name: Format Files
         shell: bash
         run: |
@@ -37,133 +39,22 @@ jobs:
           (sed -u 1q ; sort -k1 -k2) < resources/options_lookup.tsv > sorted_options_lookup.tsv
           mv sorted_options_lookup.tsv resources/options_lookup.tsv # Sort on first two columns
 
-      - name: Upload formatted options_lookup 
-        uses: actions/upload-artifact@v4
+      - name: Upload formatted options_lookup
+        uses: actions/upload-artifact@v7
         with:
           name: options_lookup
           path: resources/options_lookup.tsv
           if-no-files-found: error
 
   unit-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [format-files]
-    container:
-      image: docker://nrel/openstudio:3.10.0
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v6
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
-      - name: Install gems
-        run: |
-          rm -f Gemfile.lock && bundle install
-
-      - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
-        with:
-          path: resources
-          name: options_lookup
-      
-      - name: Run integrity checks for all projects
-        run: |
-          bundle exec rake unit_tests:project_integrity_checks
-
-      - name: Run all integrity check unit tests
-        run: |
-          bundle exec rake unit_tests:integrity_check_tests
-
-      - name: Run all measure tests
-        run: |
-          bundle exec rake unit_tests:measure_tests
-
-      - name: Upload feature samples
-        uses: actions/upload-artifact@v4
-        with:
-          name: feature_samples
-          path: resources/buildstock.csv
-          if-no-files-found: error
-
-      - name: Store code coverage
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage
-          path: coverage
-          if-no-files-found: error
-
-  build-documentation:
-    runs-on: ubuntu-22.04
-    needs: format-files
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
-      - name: Install software
-        run: |
-          export DEBIAN_FRONTEND=noninteractive
-          sudo apt update
-          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
-
-      - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
-        with:
-          path: resources
-          name: options_lookup
-
-      - name: Build technical development guide
-        run: |
-          sudo gem install oga
-          ruby docs/technical_development_guide/source/workflow_inputs/create_characteristics_rst.rb
-          ruby docs/technical_development_guide/source/workflow_outputs/csv_tables.rb
-          cd docs/technical_development_guide
-          pip install changelog
-          make html SPHINXOPTS="-W --keep-going -n"
-      
-      - name: Build technical reference guide
-        uses: dante-ev/latex-action@2023-A
-        with:
-          working_directory: docs/technical_reference_guide
-          root_file: ResStockTechnicalReferenceGuide.tex
-          args: -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -output-directory=_build
-
-      - name: Save documentation
-        uses: actions/upload-artifact@v4
-        with:
-          name: documentation
-          path: |
-            docs/technical_development_guide/_build/html/
-            docs/technical_reference_guide/_build/ResStockTechnicalReferenceGuide.pdf
-          if-no-files-found: error
-
-      - name: Commit latest documentation
-        shell: bash
-        run: |
-          branch_name="${{ github.head_ref }}"
-          git pull origin $branch_name
-          git add docs
-          git status
-          if [[ $(git diff --cached --exit-code) ]]; then
-            git config --global user.email "github-action@users.noreply.github.com"
-            git config --global user.name "GitHub Action"
-            git commit -m "Update documentation."
-            echo "Pushing to branch: $branch_name"
-            git push -u origin $branch_name
-          fi
-
-  analysis-tests:
-    runs-on: ubuntu-22.04
-    needs: [unit-tests]
-    container:
-      image: docker://nrel/openstudio:3.10.0
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
-      - name: Install gems
-        run: |
-          rm -f Gemfile.lock && bundle install
-      
       - name: Install python
         shell: bash
         run: |
@@ -177,28 +68,179 @@ jobs:
           pip3 install --progress-bar off pandas pyyaml
 
       - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: resources
           name: options_lookup
+
+      - name: Download and Install OpenStudio
+        run: |
+          export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
+          sudo apt install -y ./$OS_DEBFILE
+          rm ./$OS_DEBFILE
+
+      - name: Run unit tests
+        run: |
+          openstudio tasks.rb unit_tests
 
       - name: Generate precomputed buildstocks
         run: |
           python3 test/update_yml_precomputed_files.py
 
-      - name: Run run_analysis.rb
-        run: |          
-          bundle exec rake workflow:analysis_tests
-
       - name: Upload precomputed buildstocks
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: precomputed_buildstocks
           path: test/tests_yml_files/yml_precomputed*/buildstock*.csv
           if-no-files-found: error
 
+      - name: Upload feature samples
+        uses: actions/upload-artifact@v7
+        with:
+          name: feature_samples
+          path: resources/buildstock.csv
+          if-no-files-found: error
+
+  postprocessing-tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Setup python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.0.0
+
+      - name: Install postprocessing dependencies
+        working-directory: postprocessing
+        run: |
+          uv venv
+          uv pip install -e . --group dev
+
+      - name: Run postprocessing tests
+        working-directory: postprocessing
+        run: |
+          uv run pytest tests
+
+  build-documentation:
+    runs-on: ubuntu-24.04
+    needs: [format-files]
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Install software
+        run: |
+          export DEBIAN_FRONTEND=noninteractive
+          sudo apt update
+          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
+
+      - name: Download formatted options_lookup
+        uses: actions/download-artifact@v8
+        with:
+          path: resources
+          name: options_lookup
+
+      - name: Build technical development guide
+        run: |
+          sudo gem install oga
+          ruby docs/technical_development_guide/source/workflow_inputs/create_characteristics_rst.rb
+          ruby docs/technical_development_guide/source/workflow_outputs/csv_tables.rb
+          cd docs/technical_development_guide
+          pip install changelog
+          make html SPHINXOPTS="-W --keep-going -n"
+
+      - name: Technical reference guide sections
+        run: |
+          sudo gem install oga
+          ruby docs/technical_reference_guide/characteristics/create_characteristics_tex.rb
+
+      - name: Build technical reference guide
+        uses: dante-ev/latex-action@2023-A
+        with:
+          working_directory: docs/technical_reference_guide
+          root_file: ResStockTechnicalReferenceGuide.tex
+          args: -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -output-directory=_build
+
+      - name: Save documentation
+        uses: actions/upload-artifact@v7
+        with:
+          name: documentation
+          path: |
+            docs/technical_development_guide/_build/html/
+            docs/technical_reference_guide/_build/ResStockTechnicalReferenceGuide.pdf
+          if-no-files-found: error
+
+      - name: Commit latest documentation
+        shell: bash
+        run: |
+          branch_name="${{ github.head_ref || github.ref_name }}"
+          git pull --ff-only --no-tags --depth=3 origin $branch_name
+          git add docs
+          git status
+          if [[ $(git diff --cached --exit-code) ]]; then
+            git config --global user.email "github-action@users.noreply.github.com"
+            git config --global user.name "GitHub Action"
+            git commit -m "Update documentation."
+            echo "Pushing to branch: $branch_name"
+            git push -u origin $branch_name
+          fi
+
+  analysis-tests:
+    runs-on: ubuntu-24.04
+    needs: [unit-tests]
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Install python
+        shell: bash
+        run: |
+          export DEBIAN_FRONTEND=noninteractive
+          sudo apt update
+          sudo -E apt-get install -y python3-pip
+
+      - name: Install python dependencies
+        run : |
+          python3 -m pip install --progress-bar off --upgrade pip
+          pip3 install --progress-bar off pandas pyyaml
+
+      - name: Download formatted options_lookup
+        uses: actions/download-artifact@v8
+        with:
+          path: resources
+          name: options_lookup
+
+      - name: Download precomputed buildstocks
+        uses: actions/download-artifact@v8
+        with:
+          path: test/tests_yml_files
+          name: precomputed_buildstocks
+
+      - name: Download and Install OpenStudio
+        run: |
+          export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
+          sudo apt install -y ./$OS_DEBFILE
+          rm ./$OS_DEBFILE
+
+      - name: Run run_analysis.rb
+        run: |
+          openstudio test/test_run_analysis.rb
+
       - name: Upload run_analysis.rb results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: run_analysis_results_csvs
           path: |
@@ -207,35 +249,44 @@ jobs:
           if-no-files-found: error
 
   integration-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [unit-tests]
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout base branch
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v6
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.event.pull_request.base.sha }}
 
-      - uses: actions/setup-python@v5
+      - name: Upload base results
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v7
         with:
-          python-version: '3.11'
+          name: base_results
+          path: test/base_results
+          if-no-files-found: error
+
+      - name: Checkout feature branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Setup python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
 
       - name: Download and Install OpenStudio
         run: |
           export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
           wget -q $OPENSTUDIO_URL/$OS_DEBFILE
           sudo apt install -y ./$OS_DEBFILE
-          openstudio openstudio_version
-          which openstudio
-
-      - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
-        with:
-          path: resources
-          name: options_lookup
+          rm ./$OS_DEBFILE
 
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
-          git clone --single-branch --branch $BUILDSTOCK_BRANCH https://github.com/NREL/buildstockbatch.git
+          git clone --single-branch --branch $BUILDSTOCK_BATCH_BRANCH https://github.com/NREL/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
@@ -249,34 +300,25 @@ jobs:
         run: |
           gunzip -v project_national/national_baseline/results_csvs/*.csv.gz
           gunzip -v project_testing/testing_baseline/results_csvs/*.csv.gz
-          
+
           tar -xvf project_national/national_baseline/simulation_output/*.tar.gz -C project_national/national_baseline/simulation_output --wildcards '*results_timeseries.csv' --wildcards '*.xml' --wildcards '*data_point_out.json' --wildcards '*.osw'
           tar -xvf project_testing/testing_baseline/simulation_output/*.tar.gz -C project_testing/testing_baseline/simulation_output --wildcards '*results_timeseries.csv' --wildcards '*.xml' --wildcards '*data_point_out.json' --wildcards '*.osw' --wildcards '*in.osm' --wildcards '*in.idf'
 
       - name: Process results
         run: |
-          pip install plotly
           python test/process_bsb_analysis.py
 
-      - name: Upload integration results
-        uses: actions/upload-artifact@v4
-        with:
-          name: feature_results
-          path: |
-            baseline
-            upgrades
-          if-no-files-found: error
-
       - name: Upload buildstockbatch results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: buildstockbatch_results_csvs
           path: |
             project_national/national_baseline/results_csvs/results_up00.csv
             project_testing/testing_baseline/results_csvs/results_up00.csv
           if-no-files-found: error
+
       - name: Upload raw simulation output
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: raw_simulation_output
           path: |
@@ -292,104 +334,6 @@ jobs:
           sudo gem install simplecov-html
           ruby test/test_bsb_analysis.rb
 
-  compare-tools:
-    runs-on: ubuntu-22.04
-    needs: [analysis-tests, integration-tests]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
-      - name: Download buildstockbatch results
-        uses: actions/download-artifact@v4
-        with:
-          path: buildstockbatch
-          name: buildstockbatch_results_csvs
-
-      - name: Download run_analysis results
-        uses: actions/download-artifact@v4
-        with:
-          path: run_analysis
-          name: run_analysis_results_csvs
-
-      - name: Run tests
-        run: |
-          sudo gem install minitest-reporters
-          sudo gem install simplecov
-          sudo gem install simplecov-html
-          ruby test/test_analysis_tools.rb
-
-  compare-results:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-22.04
-    needs: [integration-tests]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.sha }}
-
-      - name: Upload base results
-        uses: actions/upload-artifact@v4
-        with:
-          name: base_results
-          path: test/base_results
-          if-no-files-found: error
-
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - name: Download base results
-        uses: actions/download-artifact@v4
-        with:
-          path: base_results
-          name: base_results
-
-      - name: Download feature samples
-        uses: actions/download-artifact@v4
-        with:
-          path: samples
-          name: feature_samples
-
-      - name: Download feature results
-        uses: actions/download-artifact@v4
-        with:
-          path: results
-          name: feature_results
-
-      - name: Compare samples and results
-        run: |          
-          pip install numpy
-          pip install pandas
-          pip install plotly
-          pip install kaleido
-          
-          # baseline annual
-          mkdir -p test/base_results/comparisons/baseline/annual
-          python test/compare.py -a samples -b base_results/baseline/annual -f samples -e test/base_results/comparisons/baseline/annual # base_samples.csv, feature_samples.csv
-          python test/compare.py -a results -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
-          python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
-          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -x results_output_building_type.html -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
-          
-          # baseline timeseries
-          mkdir test/base_results/comparisons/baseline/timeseries
-          python test/compare.py -a timeseries -b base_results/baseline/timeseries -f results/baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
-
-      - name: Upload comparisons
-        uses: actions/upload-artifact@v4
-        with:
-          name: comparisons
-          path: test/base_results/comparisons
-          if-no-files-found: error
-
-  update-results:
-    runs-on: ubuntu-22.04
-    needs: [analysis-tests, integration-tests]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
       - name: Install software
         run: |
           export DEBIAN_FRONTEND=noninteractive
@@ -397,37 +341,31 @@ jobs:
           sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
 
       - name: Download feature samples
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: samples
           name: feature_samples
 
-      - name: Download feature results
-        uses: actions/download-artifact@v4
-        with:
-          path: results
-          name: feature_results
-
       - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: resources
           name: options_lookup
 
       - name: Download precomputed buildstocks
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: test/tests_yml_files
           name: precomputed_buildstocks
 
       - name: Commit the integration tests results
-        shell: bash        
+        shell: bash
         run: |
-          branch_name="${{ github.head_ref }}"
-          git pull origin $branch_name
+          branch_name="${{ github.head_ref || github.ref_name }}"
+          git pull --ff-only --no-tags --depth=3 origin $branch_name
           cp -r samples/buildstock*.csv test/base_results/baseline/annual
-          cp -r results/baseline/annual/results*.csv test/base_results/baseline/annual
-          cp -r results/baseline/timeseries/*.csv test/base_results/baseline/timeseries
+          cp -r baseline/annual/results*.csv test/base_results/baseline/annual
+          cp -r baseline/timeseries/*.csv test/base_results/baseline/timeseries
           git add test/base_results
           git add resources/options_lookup.tsv
           git add test/tests_yml_files
@@ -440,19 +378,76 @@ jobs:
             git push -u origin $branch_name
           fi
 
-  sdr-options-analysis:
-    runs-on: ubuntu-22.04
-    needs: [unit-tests]
-    container:
-      image: docker://nrel/openstudio:3.10.0
-    steps:
-      - uses: actions/checkout@v4
+      - name: Download base results
+        if: github.event_name == 'pull_request'
+        uses: actions/download-artifact@v8
         with:
-          ref: ${{ github.head_ref }}
+          path: base_results
+          name: base_results
 
-      - name: Install gems
+      - name: Compare samples and results
+        if: github.event_name == 'pull_request'
         run: |
-          rm -f Gemfile.lock && bundle install
+          pip install numpy
+          pip install pandas
+          pip install plotly
+          pip install kaleido
+
+          # baseline annual
+          mkdir -p test/base_results/comparisons/baseline/annual
+          python test/compare.py -a samples -b base_results/baseline/annual -f samples -e test/base_results/comparisons/baseline/annual # base_samples.csv, feature_samples.csv
+          python test/compare.py -a results -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
+          python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
+          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
+
+          # baseline timeseries
+          mkdir test/base_results/comparisons/baseline/timeseries
+          python test/compare.py -a timeseries -b base_results/baseline/timeseries -f baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
+
+      - name: Upload comparisons
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v7
+        with:
+          name: comparisons
+          path: test/base_results/comparisons
+          if-no-files-found: error
+
+  compare-tools:
+    runs-on: ubuntu-24.04
+    needs: [analysis-tests, integration-tests]
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Download buildstockbatch results
+        uses: actions/download-artifact@v8
+        with:
+          path: buildstockbatch
+          name: buildstockbatch_results_csvs
+
+      - name: Download run_analysis results
+        uses: actions/download-artifact@v8
+        with:
+          path: run_analysis
+          name: run_analysis_results_csvs
+
+      - name: Run tests
+        run: |
+          sudo gem install minitest-reporters
+          sudo gem install simplecov
+          sudo gem install simplecov-html
+          ruby test/test_analysis_tools.rb
+
+  sdr-options-analysis:
+    runs-on: ubuntu-24.04
+    needs: [unit-tests]
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Install python
         shell: bash
@@ -471,6 +466,13 @@ jobs:
         run: |
           python3 -m pip install git+https://github.com/NREL/buildstock-query.git@$BUILDSTOCK_QUERY_BRANCH
 
+      - name: Download and Install OpenStudio
+        run: |
+          export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
+          sudo apt install -y ./$OS_DEBFILE
+          rm ./$OS_DEBFILE
+
       - name: Generate 550K Sample
         run: |
           openstudio resources/run_sampling.rb -p project_national -n 550000 -o ../project_national/resources/national_550ksamples.csv
@@ -479,7 +481,7 @@ jobs:
 
       - name: Upload 550K samples if on develop branch
         if: github.ref == 'refs/heads/develop'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: national_550ksamples
           path: project_national/resources/national_550ksamples.csv.gz
@@ -513,12 +515,12 @@ jobs:
       - name: Generate minimal buildstock and other files
         run: |
           cd project_national/resources
-          python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_tmy3.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --output_prefix sdr_
+          python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_amy2018.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --output_prefix sdr_
           rm national_550ksamples.csv
           rm national_550ksamples.csv.gz
 
       - name: Upload SDR options analysis artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: sdr_options_analysis
           path: |
@@ -526,7 +528,7 @@ jobs:
             project_national/resources/sdr_option_application_detailed_report.txt
             project_national/resources/sdr_option_application_report.csv
           retention-days: 90
-          if-no-files-found: error          
+          if-no-files-found: error
 
       - name: Test for zero applicable_to values
         run: |
@@ -560,8 +562,8 @@ jobs:
       - name: Commit the options analysis results
         shell: bash
         run: |
-          branch_name="${{ github.head_ref }}"
-          git pull origin $branch_name
+          branch_name="${{ github.head_ref || github.ref_name }}"
+          git pull --ff-only --no-tags --depth=3 origin $branch_name
           git add project_national/resources
           git status
           if [[ $(git diff --cached --exit-code) ]]; then
@@ -573,36 +575,40 @@ jobs:
           fi
 
   sdr-integration-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [sdr-options-analysis]
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v6
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
-      - uses: actions/setup-python@v5
+      - name: Setup python
+        uses: actions/setup-python@v6
         with:
-          python-version: '3.11'
+          python-version: '3.12'
+
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4.1.0
+        uses: aws-actions/configure-aws-credentials@v6.1.1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
           role-duration-seconds: 1200
           role-session-name: MySession
+
       - name: Who am I?
         run: aws sts get-caller-identity
+
       - name: Download and Install OpenStudio
         run: |
           export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
           wget -q $OPENSTUDIO_URL/$OS_DEBFILE
           sudo apt install -y ./$OS_DEBFILE
-          openstudio openstudio_version
-          which openstudio
+          rm ./$OS_DEBFILE
 
       - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: resources
           name: options_lookup
@@ -610,11 +616,11 @@ jobs:
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
-          git clone --single-branch --branch $BUILDSTOCK_BRANCH https://github.com/NREL/buildstockbatch.git
+          git clone --single-branch --branch $BUILDSTOCK_BATCH_BRANCH https://github.com/NREL/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
-  
+
       # Only replace existing files and tables in s3 and Athena for develop branch to prevent
       # every branch/PR from fighting over the same s3 files and Athena tables.
       # Each branch/PR will still be able to create local output files and commit them to the
@@ -630,11 +636,11 @@ jobs:
             EXTRA_ARGS="--replace_existing"
           else
             echo "Not on develop branch, removing AWS config from YAML"
-            python .github/scripts/remove_aws_from_yaml.py project_national/sdr_upgrades_tmy3.yml
+            python .github/scripts/remove_aws_from_yaml.py project_national/sdr_upgrades_amy2018.yml
           fi
 
           # Run buildstockbatch and tee output to a log file
-          buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml 2>&1 | tee buildstock_local.log
+          buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_amy2018.yml 2>&1 | tee buildstock_local.log
 
           # Check the log for schema mismatch warnings and fail if any are present
           SCHEMA_MISMATCH_PATTERN='^Missing columns in output data|^Extra columns in output data'
@@ -646,28 +652,28 @@ jobs:
 
       - name: Unzip results
         run: |
-          gunzip -v project_national/sdr_upgrades_tmy3/results_csvs_pub/*.csv.gz
-          gunzip -v project_national/sdr_upgrades_tmy3/results_csvs/*.csv.gz
+          gunzip -v project_national/sdr_upgrades_amy2018/results_csvs_pub/*.csv.gz
+          gunzip -v project_national/sdr_upgrades_amy2018/results_csvs/*.csv.gz
 
       - name: Upload buildstockbatch results - published
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: buildstockbatch_results_sdr_published_csvs
-          path: project_national/sdr_upgrades_tmy3/results_csvs_pub
+          path: project_national/sdr_upgrades_amy2018/results_csvs_pub
           if-no-files-found: error
 
       - name: Upload buildstockbatch results - raw
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: buildstockbatch_results_sdr_raw_csvs
-          path: project_national/sdr_upgrades_tmy3/results_csvs
+          path: project_national/sdr_upgrades_amy2018/results_csvs
           if-no-files-found: error
 
       - name: Check for failed simulations
         run: |
           echo "Checking for failed simulations in results files..."
           FAILED=false
-          for csv_file in project_national/sdr_upgrades_tmy3/results_csvs/*.csv; do
+          for csv_file in project_national/sdr_upgrades_amy2018/results_csvs/*.csv; do
             python -m resstockpostproc.get_failures "$csv_file" --verbose --exit-code || FAILED=true
           done
           if [ "$FAILED" = true ]; then
@@ -677,9 +683,11 @@ jobs:
 
       - name: Commit the integration tests results
         run: |
-          branch_name="${{ github.head_ref }}"
-          git pull origin $branch_name
-          cp -r project_national/sdr_upgrades_tmy3/results_csvs_pub/* test/base_results/upgrades/sdr_annual
+          branch_name="${{ github.head_ref || github.ref_name }}"
+          git checkout resources/options_lookup.tsv
+          git pull --ff-only --no-tags --depth=3 origin $branch_name
+          rm -rf test/base_results/upgrades/sdr_annual/*
+          cp -r project_national/sdr_upgrades_amy2018/results_csvs_pub/* test/base_results/upgrades/sdr_annual
           git add test/base_results/upgrades/sdr_annual
           git status
           if [[ $(git diff --cached --exit-code) ]]; then
@@ -689,3 +697,111 @@ jobs:
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
+
+      - name: Download base results
+        if: github.event_name == 'pull_request'
+        uses: actions/download-artifact@v8
+        with:
+          path: base_results
+          name: base_results
+
+      - name: Process results
+        if: github.event_name == 'pull_request'
+        run: |
+          python test/process_sdr_analysis.py
+
+      - name: Compare samples and results
+        if: github.event_name == 'pull_request'
+        run: |
+          pip install numpy
+          pip install pandas
+          pip install plotly
+          pip install kaleido
+
+          # results_characteristics.csv
+          python test/base_results/upgrades/create_results_characteristics.py -f base_results/upgrades/sdr_annual/combined/results.csv
+          python test/base_results/upgrades/create_results_characteristics.py -f test/base_results/upgrades/sdr_annual/combined/results.csv
+
+          # upgrades annual
+          mkdir -p test/base_results/sdr_comparisons/upgrades/sdr_annual
+          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/upgrades/sdr_annual/combined -f test/base_results/upgrades/sdr_annual/combined -e test/base_results/sdr_comparisons/upgrades/sdr_annual # *.html
+
+      - name: Upload comparisons
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v7
+        with:
+          name: sdr_comparisons
+          path: test/base_results/sdr_comparisons
+          if-no-files-found: error
+
+  standard-plots-tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Setup python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      # Install Google Chrome/Chromium and expose its path
+      - name: Setup chrome
+        uses: browser-actions/setup-chrome@v2
+        id: chrome
+        with:
+          chrome-version: stable
+          install-dependencies: true   # Linux-only: pulls needed libs
+
+      # Make Kaleido see Chrome (important on all OSes)
+      - name: Set BROWSER_PATH
+        run: echo "BROWSER_PATH=${{ steps.chrome.outputs.chrome-path }}" >> $GITHUB_ENV
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.0.0
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6.1.1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+          role-duration-seconds: 1200
+          role-session-name: MySession
+
+      - name: Install postprocessing dependencies
+        working-directory: postprocessing
+        run: |
+          uv venv
+          uv pip install pre-commit
+          uv pip install -e . --group dev
+
+      - name: Run pre-commit checks
+        working-directory: postprocessing
+        run: |
+          uv run pre-commit run --all-files --show-diff-on-failure
+
+      - name: Run standard plots tests
+        working-directory: postprocessing
+        run: |
+          uv run pytest resstockpostproc/upgrade_comparison/tests -q
+
+      - name: Generate some plots (FAIL FAST)
+        working-directory: postprocessing
+        run: |
+          uv run python resstockpostproc/upgrade_comparison/main.py --quantity_group="Unmet HVAC Hours"
+
+      # Takes 4 hours+ in CI - skip until more efficient method is found.
+      # - name: Generate rest of the plots
+      #   working-directory: postprocessing
+      #   run: |
+      #     uv run python resstockpostproc/upgrade_comparison/main.py
+
+      - name: Upload plots
+        uses: actions/upload-artifact@v7
+        with:
+          name: plots
+          path: postprocessing/resstockpostproc/upgrade_comparison/sdr_plots/plots/sdr_plots_ci
+          if-no-files-found: error

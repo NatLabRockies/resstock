@@ -54,8 +54,9 @@ Or say we want to apply the upgrade only to houses with 3 car garages that aren'
    
    (!Location Census Division|New England)&&(Geometry Garage|3 Car)
    
-Currently, you can enter up to 25 options per upgrade.
-To allow additional options per upgrade you would need to update a method defined in a resource file, run a rake task, and update the outputs section for all PAT projects. See :doc:`../advanced_tutorial/increasing_upgrade_options` for more information.
+Currently, you can enter up to 100 options per upgrade.
+You can allow additional options per upgrade.
+See :doc:`../advanced_tutorial/increasing_upgrade_options` for more information.
 
 Option <#> Cost <#>
 -------------------

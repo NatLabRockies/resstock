@@ -834,7 +834,9 @@ module Schedule
       end
     end
 
-    runner.registerWarning("Could not find row='#{schedule_name}' in unavailable_periods.csv; it will not be affected by the '#{col_name}' unavailable period.")
+    if not runner.nil?
+      runner.registerWarning("Could not find row='#{schedule_name}' in unavailable_periods.csv; it will not be affected by the '#{col_name}' unavailable period.")
+    end
     return false
   end
 
@@ -1097,7 +1099,9 @@ class SchedulesFile
         column = Columns.values.find { |c| c.name == col_name }
         if column.nil?
           @schedules[col_name] = col[1..-1]
-          runner.registerWarning("Unknown column found in schedule file: #{col_name}. [context: #{schedules_path}]")
+          if not runner.nil?
+            runner.registerWarning("Unknown column found in schedule file: #{col_name}. [context: #{schedules_path}]")
+          end
           next
         end
         values = col[1..-1].reject { |v| v.nil? }

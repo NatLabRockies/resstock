@@ -87,7 +87,7 @@ module Defaults
     apply_pools_and_permanent_spas(hpxml_bldg, schedules_file)
     apply_plug_loads(hpxml_bldg, schedules_file)
     apply_fuel_loads(hpxml_bldg, schedules_file)
-    apply_pv_systems(hpxml_bldg)
+    apply_pv_systems(hpxml_bldg, unit_num)
     apply_generators(hpxml_bldg)
     apply_batteries(hpxml_bldg)
     apply_vehicles(hpxml_bldg, schedules_file)
@@ -222,7 +222,7 @@ module Defaults
     end
 
     if hpxml_header.ground_to_air_heat_pump_model_type.nil? && (hpxml_bldg.heat_pumps.any? { |hp| hp.heat_pump_type == HPXML::HVACTypeHeatPumpGroundToAir })
-      hpxml_header.ground_to_air_heat_pump_model_type = HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeStandard
+      hpxml_header.ground_to_air_heat_pump_model_type = HPXML::GroundToAirHeatPumpModelTypeStandard
       hpxml_header.ground_to_air_heat_pump_model_type_isdefaulted = true
     end
 
@@ -420,20 +420,18 @@ module Defaults
     end
 
     if hpxml_bldg.header.shading_summer_begin_month.nil? || hpxml_bldg.header.shading_summer_begin_day.nil? || hpxml_bldg.header.shading_summer_end_month.nil? || hpxml_bldg.header.shading_summer_end_day.nil?
-      if not weather.nil?
-        # Default based on Building America seasons
-        _, default_cooling_months = HVAC.get_building_america_hvac_seasons(weather, hpxml_bldg.latitude)
-        begin_month, begin_day, end_month, end_day = Calendar.get_begin_and_end_dates_from_monthly_array(default_cooling_months, hpxml_header.sim_calendar_year)
-        if not begin_month.nil? # Check if no summer
-          hpxml_bldg.header.shading_summer_begin_month = begin_month
-          hpxml_bldg.header.shading_summer_begin_day = begin_day
-          hpxml_bldg.header.shading_summer_end_month = end_month
-          hpxml_bldg.header.shading_summer_end_day = end_day
-          hpxml_bldg.header.shading_summer_begin_month_isdefaulted = true
-          hpxml_bldg.header.shading_summer_begin_day_isdefaulted = true
-          hpxml_bldg.header.shading_summer_end_month_isdefaulted = true
-          hpxml_bldg.header.shading_summer_end_day_isdefaulted = true
-        end
+      # Default based on Building America seasons
+      _, default_cooling_months = HVAC.get_building_america_hvac_seasons(weather, hpxml_bldg.latitude)
+      begin_month, begin_day, end_month, end_day = Calendar.get_begin_and_end_dates_from_monthly_array(default_cooling_months, hpxml_header.sim_calendar_year)
+      if not begin_month.nil? # Check if no summer
+        hpxml_bldg.header.shading_summer_begin_month = begin_month
+        hpxml_bldg.header.shading_summer_begin_day = begin_day
+        hpxml_bldg.header.shading_summer_end_month = end_month
+        hpxml_bldg.header.shading_summer_end_day = end_day
+        hpxml_bldg.header.shading_summer_begin_month_isdefaulted = true
+        hpxml_bldg.header.shading_summer_begin_day_isdefaulted = true
+        hpxml_bldg.header.shading_summer_end_month_isdefaulted = true
+        hpxml_bldg.header.shading_summer_end_day_isdefaulted = true
       end
     end
   end
@@ -719,66 +717,67 @@ module Defaults
       hpxml_bldg.site.ground_diffusivity_isdefaulted = true
     end
 
-    if hpxml_bldg.dst_enabled.nil?
-      hpxml_bldg.dst_enabled = true # Assume DST since it occurs in most US locations
-      hpxml_bldg.dst_enabled_isdefaulted = true
+    if hpxml_bldg.state_code.nil?
+      hpxml_bldg.state_code = get_state_code(hpxml_bldg.state_code, weather, hpxml_bldg.zip_code)
+      hpxml_bldg.state_code_isdefaulted = true
     end
 
-    if not weather.nil?
-
-      if hpxml_bldg.state_code.nil?
-        hpxml_bldg.state_code = get_state_code(hpxml_bldg.state_code, weather)
-        hpxml_bldg.state_code_isdefaulted = true
+    if hpxml_bldg.dst_observed.nil?
+      if ['AZ', 'HI'].include? hpxml_bldg.state_code
+        hpxml_bldg.dst_observed = false
+      else
+        hpxml_bldg.dst_observed = true
       end
+      hpxml_bldg.dst_observed_isdefaulted = true
+    end
 
-      if hpxml_bldg.city.nil?
-        hpxml_bldg.city = weather.header.City
-        hpxml_bldg.city_isdefaulted = true
-      end
+    if hpxml_bldg.city.nil?
+      hpxml_bldg.city = get_city(hpxml_bldg.city, weather, hpxml_bldg.zip_code)
+      hpxml_bldg.city_isdefaulted = true
+    end
 
-      if hpxml_bldg.time_zone_utc_offset.nil?
-        hpxml_bldg.time_zone_utc_offset = get_time_zone(hpxml_bldg.time_zone_utc_offset, weather)
-        hpxml_bldg.time_zone_utc_offset_isdefaulted = true
-      end
+    if hpxml_bldg.time_zone_utc_offset.nil?
+      hpxml_bldg.time_zone_utc_offset = get_time_zone(hpxml_bldg.time_zone_utc_offset, weather, hpxml_bldg.zip_code)
+      hpxml_bldg.time_zone_utc_offset_isdefaulted = true
+    end
 
-      if hpxml_bldg.dst_enabled
-        if hpxml_bldg.dst_begin_month.nil? || hpxml_bldg.dst_begin_day.nil? || hpxml_bldg.dst_end_month.nil? || hpxml_bldg.dst_end_day.nil?
-          if (not weather.header.DSTStartDate.nil?) && (not weather.header.DSTEndDate.nil?)
-            # Use weather file DST dates if available
-            dst_start_date = weather.header.DSTStartDate
-            dst_end_date = weather.header.DSTEndDate
-            hpxml_bldg.dst_begin_month = dst_start_date.monthOfYear.value
-            hpxml_bldg.dst_begin_day = dst_start_date.dayOfMonth
-            hpxml_bldg.dst_end_month = dst_end_date.monthOfYear.value
-            hpxml_bldg.dst_end_day = dst_end_date.dayOfMonth
-          else
-            # Roughly average US dates according to https://en.wikipedia.org/wiki/Daylight_saving_time_in_the_United_States
-            hpxml_bldg.dst_begin_month = 3
-            hpxml_bldg.dst_begin_day = 12
-            hpxml_bldg.dst_end_month = 11
-            hpxml_bldg.dst_end_day = 5
-          end
-          hpxml_bldg.dst_begin_month_isdefaulted = true
-          hpxml_bldg.dst_begin_day_isdefaulted = true
-          hpxml_bldg.dst_end_month_isdefaulted = true
-          hpxml_bldg.dst_end_day_isdefaulted = true
+    if hpxml_bldg.dst_observed
+      if hpxml_bldg.dst_begin_month.nil? || hpxml_bldg.dst_begin_day.nil? || hpxml_bldg.dst_end_month.nil? || hpxml_bldg.dst_end_day.nil?
+        if (not weather.header.DSTStartDate.nil?) && (not weather.header.DSTEndDate.nil?)
+          # Use weather file DST dates if available
+          dst_start_date = weather.header.DSTStartDate
+          dst_end_date = weather.header.DSTEndDate
+          hpxml_bldg.dst_begin_month = dst_start_date.monthOfYear.value
+          hpxml_bldg.dst_begin_day = dst_start_date.dayOfMonth
+          hpxml_bldg.dst_end_month = dst_end_date.monthOfYear.value
+          hpxml_bldg.dst_end_day = dst_end_date.dayOfMonth
+        else
+          # Roughly average US dates according to https://en.wikipedia.org/wiki/Daylight_saving_time_in_the_United_States
+          hpxml_bldg.dst_begin_month = 3
+          hpxml_bldg.dst_begin_day = 12
+          hpxml_bldg.dst_end_month = 11
+          hpxml_bldg.dst_end_day = 5
         end
+        hpxml_bldg.dst_begin_month_isdefaulted = true
+        hpxml_bldg.dst_begin_day_isdefaulted = true
+        hpxml_bldg.dst_end_month_isdefaulted = true
+        hpxml_bldg.dst_end_day_isdefaulted = true
       end
+    end
 
-      if hpxml_bldg.elevation.nil?
-        hpxml_bldg.elevation = weather.header.Elevation.round(1)
-        hpxml_bldg.elevation_isdefaulted = true
-      end
+    if hpxml_bldg.elevation.nil?
+      hpxml_bldg.elevation = get_elevation(weather)
+      hpxml_bldg.elevation_isdefaulted = true
+    end
 
-      if hpxml_bldg.latitude.nil?
-        hpxml_bldg.latitude = get_latitude(hpxml_bldg.latitude, weather)
-        hpxml_bldg.latitude_isdefaulted = true
-      end
+    if hpxml_bldg.latitude.nil?
+      hpxml_bldg.latitude = get_latitude(hpxml_bldg.latitude, weather, hpxml_bldg.zip_code)
+      hpxml_bldg.latitude_isdefaulted = true
+    end
 
-      if hpxml_bldg.longitude.nil?
-        hpxml_bldg.longitude = get_longitude(hpxml_bldg.longitude, weather)
-        hpxml_bldg.longitude_isdefaulted = true
-      end
+    if hpxml_bldg.longitude.nil?
+      hpxml_bldg.longitude = get_longitude(hpxml_bldg.longitude, weather, hpxml_bldg.zip_code)
+      hpxml_bldg.longitude_isdefaulted = true
     end
   end
 
@@ -945,7 +944,7 @@ module Defaults
   # @param unit_num [Integer] Dwelling unit number
   # @return [nil]
   def self.apply_climate_and_risk_zones(hpxml_bldg, weather, unit_num)
-    if (not weather.nil?) && hpxml_bldg.climate_and_risk_zones.climate_zone_ieccs.empty?
+    if hpxml_bldg.climate_and_risk_zones.climate_zone_ieccs.empty?
       weather_data = lookup_weather_data_from_wmo(weather.header.WMONumber)
       if not weather_data.empty?
         hpxml_bldg.climate_and_risk_zones.climate_zone_ieccs.add(zone: weather_data[:zipcode_iecc_zone],
@@ -1613,58 +1612,56 @@ module Defaults
         window.orientation = get_orientation_from_azimuth(window.azimuth)
         window.orientation_isdefaulted = true
       end
-      if window.interior_shading_factor_winter.nil? || window.interior_shading_factor_summer.nil?
-        if window.interior_shading_type.nil?
-          if window.glass_layers == HPXML::WindowLayersGlassBlock
-            window.interior_shading_type = HPXML::InteriorShadingTypeNone
-          else
-            window.interior_shading_type = HPXML::InteriorShadingTypeLightCurtains # ANSI/RESNET/ICC 301-2022
-          end
-          window.interior_shading_type_isdefaulted = true
+      if window.interior_shading_type.nil?
+        if window.glass_layers == HPXML::WindowLayersGlassBlock
+          window.interior_shading_type = HPXML::InteriorShadingTypeNone
+        else
+          window.interior_shading_type = HPXML::InteriorShadingTypeLightCurtains # ANSI/RESNET/ICC 301-2022
         end
-        if window.interior_shading_coverage_summer.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNone
-          if blinds_types.include? window.interior_shading_type
-            window.interior_shading_coverage_summer = 1.0
-          else
-            window.interior_shading_coverage_summer = 0.5 # ANSI/RESNET/ICC 301-2022
-          end
-          window.interior_shading_coverage_summer_isdefaulted = true
-        end
-        if window.interior_shading_coverage_winter.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNone
-          if blinds_types.include? window.interior_shading_type
-            window.interior_shading_coverage_winter = 1.0
-          else
-            window.interior_shading_coverage_winter = 0.5 # ANSI/RESNET/ICC 301-2022
-          end
-          window.interior_shading_coverage_winter_isdefaulted = true
-        end
+        window.interior_shading_type_isdefaulted = true
+      end
+      if window.interior_shading_coverage_summer.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNone
         if blinds_types.include? window.interior_shading_type
-          if window.interior_shading_blinds_summer_closed_or_open.nil?
-            window.interior_shading_blinds_summer_closed_or_open = HPXML::BlindsHalfOpen
-            window.interior_shading_blinds_summer_closed_or_open_isdefaulted = true
-          end
-          if window.interior_shading_blinds_winter_closed_or_open.nil?
-            window.interior_shading_blinds_winter_closed_or_open = HPXML::BlindsHalfOpen
-            window.interior_shading_blinds_winter_closed_or_open_isdefaulted = true
-          end
+          window.interior_shading_coverage_summer = 1.0
+        else
+          window.interior_shading_coverage_summer = 0.5 # ANSI/RESNET/ICC 301-2022
         end
-        default_int_sf_summer, default_int_sf_winter = get_window_interior_shading_factors(
-          window.interior_shading_type,
-          window.shgc,
-          window.interior_shading_coverage_summer,
-          window.interior_shading_coverage_winter,
-          window.interior_shading_blinds_summer_closed_or_open,
-          window.interior_shading_blinds_winter_closed_or_open,
-          eri_version
-        )
-        if window.interior_shading_factor_summer.nil? && (not default_int_sf_summer.nil?)
-          window.interior_shading_factor_summer = default_int_sf_summer
-          window.interior_shading_factor_summer_isdefaulted = true
+        window.interior_shading_coverage_summer_isdefaulted = true
+      end
+      if window.interior_shading_coverage_winter.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNone
+        if blinds_types.include? window.interior_shading_type
+          window.interior_shading_coverage_winter = 1.0
+        else
+          window.interior_shading_coverage_winter = 0.5 # ANSI/RESNET/ICC 301-2022
         end
-        if window.interior_shading_factor_winter.nil? && (not default_int_sf_winter.nil?)
-          window.interior_shading_factor_winter = default_int_sf_winter
-          window.interior_shading_factor_winter_isdefaulted = true
+        window.interior_shading_coverage_winter_isdefaulted = true
+      end
+      if blinds_types.include? window.interior_shading_type
+        if window.interior_shading_blinds_summer_closed_or_open.nil?
+          window.interior_shading_blinds_summer_closed_or_open = HPXML::BlindsHalfOpen
+          window.interior_shading_blinds_summer_closed_or_open_isdefaulted = true
         end
+        if window.interior_shading_blinds_winter_closed_or_open.nil?
+          window.interior_shading_blinds_winter_closed_or_open = HPXML::BlindsHalfOpen
+          window.interior_shading_blinds_winter_closed_or_open_isdefaulted = true
+        end
+      end
+      default_int_sf_summer, default_int_sf_winter = get_window_interior_shading_factors(
+        window.interior_shading_type,
+        window.shgc,
+        window.interior_shading_coverage_summer,
+        window.interior_shading_coverage_winter,
+        window.interior_shading_blinds_summer_closed_or_open,
+        window.interior_shading_blinds_winter_closed_or_open,
+        eri_version
+      )
+      if window.interior_shading_factor_summer.nil? && (not default_int_sf_summer.nil?)
+        window.interior_shading_factor_summer = default_int_sf_summer
+        window.interior_shading_factor_summer_isdefaulted = true
+      end
+      if window.interior_shading_factor_winter.nil? && (not default_int_sf_winter.nil?)
+        window.interior_shading_factor_winter = default_int_sf_winter
+        window.interior_shading_factor_winter_isdefaulted = true
       end
       if window.exterior_shading_factor_winter.nil? || window.exterior_shading_factor_summer.nil?
         if window.exterior_shading_type.nil?
@@ -3259,20 +3256,25 @@ module Defaults
   def self.apply_water_heaters(hpxml_bldg, eri_version, schedules_file)
     nbeds = hpxml_bldg.building_construction.number_of_bedrooms
     nbaths = hpxml_bldg.building_construction.number_of_bathrooms
+    n_occ = hpxml_bldg.building_occupancy.number_of_residents
+
     hpxml_bldg.water_heating_systems.each do |water_heating_system|
       if water_heating_system.is_shared_system.nil?
         water_heating_system.is_shared_system = false
         water_heating_system.is_shared_system_isdefaulted = true
       end
+
       schedules_file_includes_water_heater_setpoint_temp = (schedules_file.nil? ? false : schedules_file.includes_col_name(SchedulesFile::Columns[:WaterHeaterSetpoint].name))
       if water_heating_system.temperature.nil? && !schedules_file_includes_water_heater_setpoint_temp
         water_heating_system.temperature = get_water_heater_temperature(eri_version)
         water_heating_system.temperature_isdefaulted = true
       end
+
       if water_heating_system.performance_adjustment.nil?
         water_heating_system.performance_adjustment = get_water_heater_performance_adjustment(water_heating_system)
         water_heating_system.performance_adjustment_isdefaulted = true
       end
+
       if water_heating_system.usage_bin.nil? && (not water_heating_system.uniform_energy_factor.nil?) # FHR & UsageBin only applies to UEF
         if not water_heating_system.first_hour_rating.nil?
           water_heating_system.usage_bin = get_water_heater_usage_bin(water_heating_system.first_hour_rating)
@@ -3281,11 +3283,13 @@ module Defaults
         end
         water_heating_system.usage_bin_isdefaulted = true
       end
-      if (water_heating_system.water_heater_type == HPXML::WaterHeaterTypeCombiStorage)
+
+      if water_heating_system.water_heater_type == HPXML::WaterHeaterTypeCombiStorage
         if water_heating_system.tank_volume.nil?
-          water_heating_system.tank_volume = get_water_heater_tank_volume(water_heating_system.related_hvac_system.heating_system_fuel, nbeds, nbaths)
+          water_heating_system.tank_volume = get_water_heater_tank_volume(water_heating_system.related_hvac_system.heating_system_fuel, false, nbeds, nbaths, n_occ)
           water_heating_system.tank_volume_isdefaulted = true
         end
+
         if water_heating_system.standby_loss_value.nil?
           # Use equation fit from AHRI database
           # calculate independent variable SurfaceArea/vol(physically linear to standby_loss/skin_u under test condition) to fit the linear equation from AHRI database
@@ -3297,44 +3301,52 @@ module Defaults
           water_heating_system.standby_loss_units = HPXML::UnitsDegFPerHour
           water_heating_system.standby_loss_units_isdefaulted = true
         end
-      end
-      if (water_heating_system.water_heater_type == HPXML::WaterHeaterTypeStorage)
+
+      elsif water_heating_system.water_heater_type == HPXML::WaterHeaterTypeStorage
         if water_heating_system.heating_capacity.nil?
-          water_heating_system.heating_capacity = (get_water_heater_heating_capacity(water_heating_system.fuel_type, nbeds, hpxml_bldg.water_heating_systems.size, nbaths) * 1000.0).round
+          water_heating_system.heating_capacity = get_water_heater_heating_capacity(water_heating_system.fuel_type, nbeds, hpxml_bldg.water_heating_systems.size, nbaths)
           water_heating_system.heating_capacity_isdefaulted = true
         end
+
         if water_heating_system.tank_volume.nil?
-          water_heating_system.tank_volume = get_water_heater_tank_volume(water_heating_system.fuel_type, nbeds, nbaths)
+          water_heating_system.tank_volume = get_water_heater_tank_volume(water_heating_system.fuel_type, false, nbeds, nbaths, n_occ)
           water_heating_system.tank_volume_isdefaulted = true
         end
+
         if water_heating_system.recovery_efficiency.nil?
           water_heating_system.recovery_efficiency = get_water_heater_recovery_efficiency(water_heating_system)
           water_heating_system.recovery_efficiency_isdefaulted = true
         end
+
         if water_heating_system.tank_model_type.nil?
           water_heating_system.tank_model_type = HPXML::WaterHeaterTankModelTypeMixed
           water_heating_system.tank_model_type_isdefaulted = true
         end
-      end
-      if (water_heating_system.water_heater_type == HPXML::WaterHeaterTypeHeatPump)
-        Waterheater.set_heat_pump_cop(water_heating_system)
+
+      elsif water_heating_system.water_heater_type == HPXML::WaterHeaterTypeHeatPump
+        water_heating_system.additional_properties.cop = get_water_heater_heat_pump_cop(water_heating_system)
+
         if water_heating_system.heating_capacity.nil?
           water_heating_system.heating_capacity = (UnitConversions.convert(0.5, 'kW', 'Btu/hr') * water_heating_system.additional_properties.cop).round
           water_heating_system.heating_capacity_isdefaulted = true
         end
+
         if water_heating_system.backup_heating_capacity.nil?
           water_heating_system.backup_heating_capacity = UnitConversions.convert(4.5, 'kW', 'Btu/hr').round
           water_heating_system.backup_heating_capacity_isdefaulted = true
         end
+
         if water_heating_system.tank_volume.nil?
-          water_heating_system.tank_volume = get_water_heater_tank_volume(water_heating_system.fuel_type, nbeds, nbaths)
+          water_heating_system.tank_volume = get_water_heater_tank_volume(water_heating_system.fuel_type, true, nbeds, nbaths, n_occ)
           water_heating_system.tank_volume_isdefaulted = true
         end
+
         schedules_file_includes_water_heater_operating_mode = (schedules_file.nil? ? false : schedules_file.includes_col_name(SchedulesFile::Columns[:WaterHeaterOperatingMode].name))
         if water_heating_system.operating_mode.nil? && !schedules_file_includes_water_heater_operating_mode
           water_heating_system.operating_mode = HPXML::WaterHeaterOperatingModeHybridAuto
           water_heating_system.operating_mode_isdefaulted = true
         end
+
       end
       next unless water_heating_system.location.nil?
 
@@ -3504,8 +3516,9 @@ module Defaults
   # Assigns default values for omitted optional inputs in the HPXML::PVSystem objects
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param unit_num [Integer] Dwelling unit number
   # @return [nil]
-  def self.apply_pv_systems(hpxml_bldg)
+  def self.apply_pv_systems(hpxml_bldg, unit_num)
     hpxml_bldg.pv_systems.each do |pv_system|
       if pv_system.array_azimuth.nil?
         pv_system.array_azimuth = get_azimuth_from_orientation(pv_system.array_orientation)
@@ -3535,6 +3548,12 @@ module Defaults
         pv_system.system_losses_fraction = get_pv_system_losses(pv_system.year_modules_manufactured)
         pv_system.system_losses_fraction_isdefaulted = true
       end
+      next unless pv_system.inverter_idref.nil?
+
+      if hpxml_bldg.inverters.size == 0
+        hpxml_bldg.inverters.add(id: get_id('Inverter', hpxml_bldg.inverters, unit_num))
+      end
+      pv_system.inverter_idref = hpxml_bldg.inverters[0].id
     end
     hpxml_bldg.inverters.each do |inverter|
       if inverter.inverter_efficiency.nil?
@@ -5200,48 +5219,103 @@ module Defaults
     return shading_coverage * shading_factor + (1 - shading_coverage) * non_shading_factor
   end
 
-  # Gets the default latitude from the HPXML file or, as backup, weather file.
+  # Gets the default latitude from the HPXML file, or as backup from the
+  # zip code, or as backup from the weather file.
   #
   # @param latitude [Double] Latitude from the HPXML file (degrees)
   # @param weather [WeatherFile] Weather object containing EPW information
+  # @param zipcode [String] Zipcode of interest
   # @return [Double] Default value for latitude (degrees)
-  def self.get_latitude(latitude, weather)
+  def self.get_latitude(latitude, weather, zipcode)
     return latitude unless latitude.nil?
+
+    if not zipcode.nil?
+      weather_data = lookup_weather_data_from_zipcode(zipcode, false)
+      return Float(weather_data[:zipcode_latitude]) unless weather_data[:zipcode_latitude].nil?
+    end
 
     return weather.header.Latitude
   end
 
-  # Gets the default longitude from the HPXML file or, as backup, weather file.
+  # Gets the default longitude from the HPXML file, or as backup from the
+  # zip code, or as backup from the weather file.
   #
   # @param longitude [Double] Longitude from the HPXML file (degrees)
   # @param weather [WeatherFile] Weather object containing EPW information
+  # @param zipcode [String] Zipcode of interest
   # @return [Double] Default value for longitude (degrees)
-  def self.get_longitude(longitude, weather)
+  def self.get_longitude(longitude, weather, zipcode)
     return longitude unless longitude.nil?
 
+    if not zipcode.nil?
+      weather_data = lookup_weather_data_from_zipcode(zipcode, false)
+      return Float(weather_data[:zipcode_longitude]) unless weather_data[:zipcode_longitude].nil?
+    end
+
     return weather.header.Longitude
+  end
+
+  # Gets the default elevation from the HPXML file, or as backup from the
+  # weather file.
+  #
+  # @param weather [WeatherFile] Weather object containing EPW information
+  # @return [Double] Default value for elevation (ft)
+  def self.get_elevation(weather)
+    # FUTURE: Add elevation to zipcode_weather_stations.csv and use here first.
+    return weather.header.Elevation.round(1)
   end
 
   # Gets the default time zone from the HPXML file or, as backup, weather file.
   #
   # @param time_zone [Double] Time zone (UTC offset) from the HPXML file
   # @param weather [WeatherFile] Weather object containing EPW information
+  # @param zipcode [String] Zipcode of interest
   # @return [Double] Default value for time zone (UTC offset)
-  def self.get_time_zone(time_zone, weather)
+  def self.get_time_zone(time_zone, weather, zipcode)
     return time_zone unless time_zone.nil?
+
+    if not zipcode.nil?
+      weather_data = lookup_weather_data_from_zipcode(zipcode, false)
+      return Float(weather_data[:zipcode_utc_offset]) unless weather_data[:zipcode_utc_offset].nil?
+    end
 
     return weather.header.TimeZone
   end
 
-  # Gets the default state code from the HPXML file or, as backup, weather file.
+  # Gets the default state code from the HPXML file, or as backup from the
+  # zip code, or as backup from the weather file.
   #
   # @param state_code [String] State code from the HPXML file
   # @param weather [WeatherFile] Weather object containing EPW information
+  # @param zipcode [String] Zipcode of interest
   # @return [String] Uppercase state code
-  def self.get_state_code(state_code, weather)
+  def self.get_state_code(state_code, weather, zipcode)
     return state_code unless state_code.nil?
 
+    if not zipcode.nil?
+      weather_data = lookup_weather_data_from_zipcode(zipcode, false)
+      return weather_data[:zipcode_state] unless weather_data[:zipcode_state].nil?
+    end
+
     return weather.header.StateProvinceRegion.upcase
+  end
+
+  # Gets the default city from the HPXML file, or as backup from the
+  # zip code, or as backup from the weather file.
+  #
+  # @param city [String] city from the HPXML file
+  # @param weather [WeatherFile] Weather object containing EPW information
+  # @param zipcode [String] Zipcode of interest
+  # @return [String] City
+  def self.get_city(city, weather, zipcode)
+    return city unless city.nil?
+
+    if not zipcode.nil?
+      weather_data = lookup_weather_data_from_zipcode(zipcode, false)
+      return weather_data[:zipcode_city] unless weather_data[:zipcode_city].nil?
+    end
+
+    return weather.header.City
   end
 
   # Gets the default weekday/weekend schedule fractions and monthly multipliers for each end use.
@@ -5286,8 +5360,9 @@ module Defaults
   # zipcode is not found, we find the closest zipcode that shares the first 3 digits.
   #
   # @param zipcode [String] Zipcode of interest
+  # @param raise_error [Boolean] True to raise an error if the zip code is not found
   # @return [Hash] Mapping with keys for every column name in zipcode_weather_stations.csv
-  def self.lookup_weather_data_from_zipcode(zipcode)
+  def self.lookup_weather_data_from_zipcode(zipcode, raise_error = true)
     if not $weather_lookup_cache["zipcode_#{zipcode}"].nil?
       # Use cache
       return $weather_lookup_cache["zipcode_#{zipcode}"]
@@ -5332,7 +5407,11 @@ module Defaults
     end
 
     if weather_station.empty?
-      fail "Zip code '#{zipcode}' could not be found in zipcode_weather_stations.csv"
+      if raise_error
+        fail "Zip code '#{zipcode}' could not be found in zipcode_weather_stations.csv"
+      else
+        return weather_station
+      end
     end
 
     $weather_lookup_cache["zipcode_#{zipcode}"] = weather_station
@@ -6030,13 +6109,11 @@ module Defaults
   # Gets the default heating capacity for the water heater based on fuel type and number of bedrooms
   # and bathrooms in the home.
   #
-  # Source: Table 8. Benchmark DHW Storage and Burner Capacity in 2014 BA HSP
-  #
   # @param fuel [String] Water heater fuel type (HPXML::FuelTypeXXX)
   # @param nbeds [Integer] Number of bedrooms in the dwelling unit
   # @param num_water_heaters [Integer] Number of water heaters serving the dwelling unit
   # @param nbaths [Integer] Number of bathrooms in the dwelling unit
-  # @return [Double] Water heater heating capacity (kBtu/hr)
+  # @return [Double] Water heater heating capacity (Btu/hr)
   def self.get_water_heater_heating_capacity(fuel, nbeds, num_water_heaters, nbaths = nil)
     if nbaths.nil?
       nbaths = Defaults.get_num_bathrooms(nbeds)
@@ -6045,100 +6122,134 @@ module Defaults
     # Adjust the heating capacity if there are multiple water heaters in the home
     nbaths /= num_water_heaters.to_f
 
-    if fuel != HPXML::FuelTypeElectricity
+    if fuel == HPXML::FuelTypeElectricity # Electric tank WHs
+      # Source: Table 8. Benchmark DHW Storage and Burner Capacity in 2014 BA HSP
+      if nbeds <= 1
+        cap_kw = 2.5
+      elsif nbeds <= 2
+        cap_kw = (nbaths <= 1.5 ? 3.5 : 4.5)
+      elsif nbeds <= 3
+        cap_kw = (nbaths <= 1.5 ? 4.5 : 5.5)
+      else
+        cap_kw = 5.5
+      end
+      cap_btuh = UnitConversions.convert(cap_kw, 'kW', 'Btu/hr')
+
+    else # Non-electric tank WHs
+      # Source: Table 8. Benchmark DHW Storage and Burner Capacity in 2014 BA HSP
       if nbeds <= 3
         cap_kbtuh = 36.0
-      elsif nbeds == 4
+      elsif nbeds <= 4
         cap_kbtuh = 38.0
-      elsif nbeds == 5
+      elsif nbeds <= 5
         cap_kbtuh = 48.0
       else
         cap_kbtuh = 50.0
       end
-      return cap_kbtuh
-    else
-      if nbeds == 1
-        cap_kw = 2.5
-      elsif nbeds == 2
-        if nbaths <= 1.5
-          cap_kw = 3.5
-        else
-          cap_kw = 4.5
-        end
-      elsif nbeds == 3
-        if nbaths <= 1.5
-          cap_kw = 4.5
-        else
-          cap_kw = 5.5
-        end
-      else
-        cap_kw = 5.5
-      end
-      return UnitConversions.convert(cap_kw, 'kW', 'kBtu/hr')
+      cap_btuh = UnitConversions.convert(cap_kbtuh, 'kBtu/hr', 'Btu/hr')
+
     end
+
+    return cap_btuh.round
   end
 
   # Gets the default tank volume for a storage water heater based on fuel type and number of bedrooms
   # and bathrooms in the home.
   #
-  # Source: Table 8. Benchmark DHW Storage and Burner Capacity in 2014 BA HSP
-  #
   # @param fuel [String] Water heater fuel type (HPXML::FuelTypeXXX)
+  # @param is_hpwh [Boolean] True if a heat pump water heater
   # @param nbeds [Integer] Number of bedrooms in the dwelling unit
   # @param nbaths [Integer] Number of bathrooms in the dwelling unit
+  # @param n_occ [Double] Number of occupants in the dwelling unit
   # @return [Double] Water heater tank volume (gal)
-  def self.get_water_heater_tank_volume(fuel, nbeds, nbaths = nil)
+  def self.get_water_heater_tank_volume(fuel, is_hpwh, nbeds, nbaths, n_occ)
+    # FUTURE: Take into account usage multipliers
+    # FUTURE: Incorporate number of occupants for conventional elec/gas storage WHs.
+
     if nbaths.nil?
       nbaths = Defaults.get_num_bathrooms(nbeds)
     end
 
-    if fuel != HPXML::FuelTypeElectricity # Non-electric tank WHs
-      case nbeds
-      when 0, 1, 2
+    if is_hpwh && !n_occ.nil? # Heat pump water heater
+      # Source: Jeff Maguire recommendation for ResStock when num occupants is known
+      if (nbeds <= 2) && (n_occ <= 3)
+        # Up to 2 bedrooms AND up to 3 occupants
+        return 50.0
+      elsif (nbeds >= 4) || (n_occ >= 5)
+        # 4 or more bedrooms OR 5 or more occupants
+        return 80.0
+      else
+        # (3 bedrooms AND up to 4 occupants) OR (up to 3 bedrooms AND 4 occupants)
+        return 66.0
+      end
+
+    elsif fuel == HPXML::FuelTypeElectricity # Electric tank WHs
+      # Source: Table 8. Benchmark DHW Storage and Burner Capacity in 2014 BA HSP
+      if nbeds <= 1
+        tank_vol = 30.0
+      elsif nbeds <= 2
+        tank_vol = (nbaths <= 1.5 ? 30.0 : 40.0)
+      elsif nbeds <= 3
+        tank_vol = (nbaths <= 1.5 ? 40.0 : 50.0)
+      elsif nbeds <= 4
+        tank_vol = (nbaths <= 2.5 ? 50.0 : 66.0)
+      elsif nbeds <= 5
+        tank_vol = 66.0
+      else
+        tank_vol = 80.0
+      end
+
+      if is_hpwh
+        # Bump up size (e.g., 30/40 => 50, 50 => 66, 66 => 80)
+        # Note: There are very few HPWHs < 50 or > 80 gal in AHRI
+        if tank_vol < 50
+          tank_vol = 50.0
+        elsif tank_vol < 66
+          tank_vol = 66.0
+        else
+          tank_vol = 80.0
+        end
+      end
+
+      return tank_vol
+
+    else # Non-electric tank WHs
+      # Source: Table 8. Benchmark DHW Storage and Burner Capacity in 2014 BA HSP
+      if nbeds <= 2
         return 30.0
-      when 3
-        if nbaths <= 1.5
-          return 30.0
-        else
-          return 40.0
-        end
-      when 4
-        if nbaths <= 2.5
-          return 40.0
-        else
-          return 50.0
-        end
+      elsif nbeds <= 3
+        return (nbaths <= 1.5 ? 30.0 : 40.0)
+      elsif nbeds <= 4
+        return (nbaths <= 2.5 ? 40.0 : 50.0)
       else
         return 50.0
       end
-    else
-      case nbeds
-      when 0, 1
-        return 30.0
-      when 2
-        if nbaths <= 1.5
-          return 30.0
-        else
-          return 40.0
-        end
-      when 3
-        if nbaths <= 1.5
-          return 40.0
-        else
-          return 50.0
-        end
-      when 4
-        if nbaths <= 2.5
-          return 50.0
-        else
-          return 66.0
-        end
-      when 5
-        return 66.0
-      else
-        return 80.0
+    end
+  end
+
+  # Gets the assumed COP of the water heater's heat pump based on UEF regressions.
+  #
+  # @param water_heating_system [HPXML::WaterHeatingSystem] The HPXML water heating system of interest
+  # @return [Double] COP of the heat pump (W/W)
+  def self.get_water_heater_heat_pump_cop(water_heating_system)
+    # Based on simulations of the UEF test procedure at varying COPs
+    if not water_heating_system.energy_factor.nil?
+      uef = (0.60522 + water_heating_system.energy_factor) / 1.2101
+      cop = 1.174536058 * uef
+    elsif not water_heating_system.uniform_energy_factor.nil?
+      uef = water_heating_system.uniform_energy_factor
+      case water_heating_system.usage_bin
+      when HPXML::WaterHeaterUsageBinVerySmall
+        fail 'It is unlikely that a heat pump water heater falls into the very small bin of the First Hour Rating (FHR) test. Double check input.'
+      when HPXML::WaterHeaterUsageBinLow
+        cop = 1.0005 * uef - 0.0789
+      when HPXML::WaterHeaterUsageBinMedium
+        cop = 1.0909 * uef - 0.0868
+      when HPXML::WaterHeaterUsageBinHigh
+        cop = 1.1022 * uef - 0.0877
       end
     end
+    return cop
   end
 
   # Gets the default recovery efficiency for the water heater based on fuel type and efficiency.
@@ -6840,7 +6951,7 @@ module Defaults
         end
 
         watts += HVAC.get_blower_fan_power_watts(heating_system.fan_watts_per_cfm, heating_system.additional_properties.heating_actual_airflow_cfm)
-        watts += HVAC.get_pump_power_watts(heating_system.electric_auxiliary_energy)
+        watts += HVAC.get_pump_power_watts(heating_system)
 
         if branch_circuit.occupied_spaces.nil?
           branch_circuit.occupied_spaces = get_breaker_spaces_from_power_watts_voltage_amps(watts, branch_circuit.voltage, branch_circuit.max_current_rating)
@@ -6856,6 +6967,7 @@ module Defaults
         branch_circuit_ahu = get_or_add_branch_circuit(electric_panel, heat_pump, unit_num, true)
 
         watts_ahu = HVAC.get_blower_fan_power_watts(heat_pump.fan_watts_per_cfm, heat_pump.additional_properties.heating_actual_airflow_cfm)
+        watts_ahu += HVAC.get_pump_power_watts(heat_pump)
         watts_odu = HVAC.get_dx_coil_power_watts_from_capacity(UnitConversions.convert(heat_pump.heating_capacity, 'btu/hr', 'kbtu/hr'), branch_circuit_odu.voltage)
 
         if heat_pump.backup_type == HPXML::HeatPumpBackupTypeIntegrated
@@ -6932,6 +7044,7 @@ module Defaults
         next if heat_pump.fraction_cool_load_served == 0
 
         watts_ahu = HVAC.get_blower_fan_power_watts(heat_pump.fan_watts_per_cfm, heat_pump.additional_properties.cooling_actual_airflow_cfm)
+        watts_ahu += HVAC.get_pump_power_watts(heat_pump)
         watts_odu = HVAC.get_dx_coil_power_watts_from_capacity(UnitConversions.convert(heat_pump.cooling_capacity, 'btu/hr', 'kbtu/hr'), HPXML::ElectricPanelVoltage240)
 
         if heat_pump.fraction_heat_load_served == 0
@@ -7742,7 +7855,7 @@ module Defaults
       clg_ap.cool_rated_cfm_per_ton = HVAC::RatedCFMPerTon
 
       case hpxml_header.ground_to_air_heat_pump_model_type
-      when HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeStandard
+      when HPXML::GroundToAirHeatPumpModelTypeStandard
         clg_ap.cool_capacity_ratios = [1.0]
 
         # E+ equation fit coil coefficients generated following approach in Tang's thesis:
@@ -7758,7 +7871,7 @@ module Defaults
 
         cool_cop_ratios = [1.0]
 
-      when HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeExperimental
+      when HPXML::GroundToAirHeatPumpModelTypeExperimental
         case cooling_system.compressor_type
         when HPXML::HVACCompressorTypeSingleStage
           clg_ap.cool_capacity_ratios = [1.0]
@@ -7948,7 +8061,7 @@ module Defaults
       htg_ap.heat_rated_cfm_per_ton = HVAC::RatedCFMPerTon
 
       case hpxml_header.ground_to_air_heat_pump_model_type
-      when HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeStandard
+      when HPXML::GroundToAirHeatPumpModelTypeStandard
         htg_ap.heat_capacity_ratios = [1.0]
         # E+ equation fit coil coefficients following approach from Tang's thesis:
         # See Appendix B Figure B.3 of  https://shareok.org/bitstream/handle/11244/10075/Tang_okstate_0664M_1318.pdf?sequence=1&isAllowed=y
@@ -7960,7 +8073,7 @@ module Defaults
         htg_ap.heat_cap_curve_spec = [[-3.75031847962047, -2.18062040443483, 6.8363364819032, 0.188376814356582, 0.0869274802923634]]
         htg_ap.heat_power_curve_spec = [[-8.4754723813072, 8.10952801956388, 1.38771494628738, -0.33766445915032, 0.0223085217874051]]
         heat_cop_ratios = [1.0]
-      when HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeExperimental
+      when HPXML::GroundToAirHeatPumpModelTypeExperimental
         case heating_system.compressor_type
         when HPXML::HVACCompressorTypeSingleStage
           htg_ap.heat_capacity_ratios = [1.0]
@@ -8051,12 +8164,12 @@ module Defaults
       end
     end
     if htg_ap.qm17full.nil?
+      # Default maximum capacity maintenance
       case heating_system.compressor_type
       when HPXML::HVACCompressorTypeSingleStage, HPXML::HVACCompressorTypeTwoStage
-        htg_ap.qm17full = 0.59 # Approximately based on Cutler curves
+        htg_ap.qm17full = 0.626 # Per RESNET HERS Addendum 82
       when HPXML::HVACCompressorTypeVariableSpeed
-        # Default maximum capacity maintenance based on NEEP data for all var speed heat pump types, if not provided
-        htg_ap.qm17full = (0.0329 * HVAC.calc_hspf_from_hspf2(heating_system) + 0.3996).round(4)
+        htg_ap.qm17full = 0.69 # NEEP database
       end
     end
 

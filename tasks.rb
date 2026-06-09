@@ -26,7 +26,14 @@ def download_epws
   exit!
 end
 
-command_list = [:update_measures, :update_resources, :integrity_check_national, :integrity_check_testing, :download_weather]
+command_list = [
+  :update_measures,
+  :update_resources,
+  :integrity_check_national,
+  :integrity_check_testing,
+  :download_weather,
+  :unit_tests
+]
 
 def display_usage(command_list)
   puts "Usage: openstudio #{File.basename(__FILE__)} [COMMAND]\nCommands:\n  " + command_list.join("\n  ")
@@ -47,16 +54,12 @@ elsif not command_list.include? ARGV[0].to_sym
 end
 
 if ARGV[0].to_sym == :update_measures
-  # Prevent NREL error regarding U: drive when not VPNed in
-  ENV['HOME'] = 'C:' if !ENV['HOME'].nil? && ENV['HOME'].start_with?('U:')
-  ENV['HOMEDRIVE'] = 'C:\\' if !ENV['HOMEDRIVE'].nil? && ENV['HOMEDRIVE'].start_with?('U:')
-
   # Apply rubocop (uses .rubocop.yml)
   commands = ["\"require 'rubocop/rake_task' \"",
               "\"require 'stringio' \"",
               "\"RuboCop::RakeTask.new(:rubocop) do |t| t.options = ['--autocorrect-all', '--format', 'simple'] end\"",
               '"Rake.application[:rubocop].invoke"']
-  command = "#{OpenStudio.getOpenStudioCLI} -e #{commands.join(' -e ')}"
+  command = "\"#{OpenStudio.getOpenStudioCLI}\" -e #{commands.join(' -e ')}"
   puts 'Applying rubocop auto-correct to measures...'
   system(command)
 
@@ -65,14 +68,16 @@ if ARGV[0].to_sym == :update_measures
   # Without this, the ResStockArguments measure has no differences and so OpenStudio
   # would skip updating it.
   measure_rb_path = File.join(File.dirname(__FILE__), 'resources/hpxml-measures/BuildResidentialHPXML/measure.rb')
-  measure_txt_path = File.join(File.dirname(__FILE__), 'measures/ResStockArguments/resources/measure.txt')
-  File.write(measure_txt_path, Digest::MD5.file(measure_rb_path).hexdigest)
+  ['ResStockArguments', 'ResStockArgumentsPostHPXML'].each do |resstock_measure_name|
+    measure_txt_path = File.join(File.dirname(__FILE__), "measures/#{resstock_measure_name}/resources/measure.txt")
+    File.write(measure_txt_path, Digest::MD5.file(measure_rb_path).hexdigest)
+  end
 
   # Update measures XMLs
   puts 'Updating measure.xmls...'
   Dir['measures/**/measure.xml'].each do |measure_xml|
     measure_dir = File.dirname(measure_xml)
-    command = "#{OpenStudio.getOpenStudioCLI} measure -u '#{measure_dir}'"
+    command = "\"#{OpenStudio.getOpenStudioCLI}\" measure -u '#{measure_dir}'"
     system(command, [:out, :err] => File::NULL)
   end
 
@@ -105,4 +110,32 @@ end
 
 if ARGV[0].to_sym == :download_weather
   download_epws
+end
+
+if ARGV[0].to_sym == :unit_tests
+  tests_rbs = Dir['project_*/tests/*.rb'] + Dir['test/test_integrity_checks.rb'] + Dir['measures/*/tests/*.rb']
+
+  # Run tests in random order; we don't want them to only
+  # work when run in a specific order
+  tests_rbs.shuffle!
+
+  # Ensure we run all tests even if there are failures
+  failed_tests = []
+  tests_rbs.each do |test_rb|
+    success = system("\"#{OpenStudio.getOpenStudioCLI}\" #{test_rb}")
+    failed_tests << test_rb unless success
+  end
+
+  puts
+  puts
+
+  if not failed_tests.empty?
+    puts 'The following tests FAILED:'
+    failed_tests.each do |failed_test|
+      puts "- #{failed_test}"
+    end
+    exit! 1
+  end
+
+  puts 'All tests passed.'
 end
