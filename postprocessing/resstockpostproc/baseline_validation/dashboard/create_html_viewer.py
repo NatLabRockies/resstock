@@ -66,15 +66,15 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
     .app {{ display: grid; grid-template-columns: 322px 1fr; height: 100vh; height: 100dvh; }}
     .sidebar {{
       border-right: 1px solid #ddd;
-      padding: 12px;
+      padding: 12px 0 12px 12px;
       overflow: hidden;
       background: #fafafa;
       display: flex;
       flex-direction: column;
       min-height: 0;
     }}
-    .title {{ font-size: 20px; font-weight: 700; margin: 4px 0 2px; }}
-    .subtitle {{ font-size: 12px; font-weight: 400; color: #6b6b6b; margin: 0 0 12px; }}
+    .title {{ font-size: 20px; font-weight: 700; margin: 4px 12px 2px 0; }}
+    .subtitle {{ font-size: 12px; font-weight: 400; color: #6b6b6b; margin: 0 12px 12px 0; }}
     #filters {{
       flex: 1 1 auto;
       min-height: 0;
@@ -82,10 +82,11 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
       flex-direction: column;
       gap: 8px;
       overflow-y: auto;
+      padding-right: 12px;
     }}
     .filter-block {{
       margin-bottom: 0;
-      min-height: 110px;
+      min-height: 0;
       display: flex;
       flex-direction: column;
       flex: 1 1 0;
@@ -149,6 +150,29 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
       position: sticky;
       top: 0;
       z-index: 1;
+    }}
+    .filter-dropdown {{
+      width: 100%;
+      padding: 6px 8px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      color: #1a1a1a;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      background: #d2e3fc;
+      box-sizing: border-box;
+      cursor: pointer;
+    }}
+    .filter-dropdown:focus {{
+      outline: none;
+      border-color: #1a73e8;
+      box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.18);
+    }}
+    .filter-dropdown.with-tabs {{
+      border-top: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
     }}
     .main {{ display: grid; grid-template-rows: auto auto 1fr; min-width: 0; }}
     .tabs {{
@@ -696,6 +720,33 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
       renderMain();
     }}
 
+    function shouldUseDropdown(col) {{
+      if (col === 'Filter 1' || col === 'Filter 2') return true;
+      if (col === 'Quantity') {{
+        return norm(selection['Comparison Dataset'] ?? '') === 'RECS 2020';
+      }}
+      return false;
+    }}
+
+    function renderDropdown(block, col, shownOpts, hasFilterTabs) {{
+      const labelForVal = v => isFilterPairCol(col) ? filterOptionDisplayLabel(v) : fmt(v);
+      const select = document.createElement('select');
+      select.className = 'filter-dropdown' + (hasFilterTabs ? ' with-tabs' : '');
+      const currentVal = norm(selection[col] ?? '');
+      for (const val of shownOpts) {{
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.textContent = String(labelForVal(val));
+        if (val === currentVal) opt.selected = true;
+        select.appendChild(opt);
+      }}
+      select.addEventListener('change', () => {{
+        selection[col] = select.value;
+        rebuildFilters(col);
+      }});
+      block.appendChild(select);
+    }}
+
     function renderFilters() {{
       const host = document.getElementById('filters');
       host.innerHTML = '';
@@ -740,6 +791,13 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
             if (!activeTab) return true;
             return parseFilterCategoryValue(text).category === activeTab;
           }});
+        }}
+
+        if (shouldUseDropdown(col)) {{
+          block.style.flex = '0 0 auto';
+          renderDropdown(block, col, shownOpts, hasFilterTabs);
+          host.appendChild(block);
+          return;
         }}
 
         const list = document.createElement('div');
