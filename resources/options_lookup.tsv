@@ -9158,13 +9158,13 @@ Dehumidifier	None	ResStockArguments	appliance_dehumidifier=None	appliance_dehumi
 Dehumidifier	Portable, 30 pints/day, 50% RH	ResStockArguments	appliance_dehumidifier=Portable, 30 pints/day	appliance_dehumidifier_setpoint=50% RH
 Dehumidifier	Whole-Home, 75 pints/day, 50% RH	ResStockArguments	appliance_dehumidifier=Whole-Home, 75 pints/day	appliance_dehumidifier_setpoint=50% RH
 Dehumidifier	Whole-Home, 75 pints/day, 60% RH	ResStockArguments	appliance_dehumidifier=Whole-Home, 75 pints/day	appliance_dehumidifier_setpoint=60% RH
-Demand Flexibility Electric Vehicle	Enabled	ResStockArgumentsPostHPXML	ev_flex_enabled=true
-Demand Flexibility HVAC	"On-peak Load Shedding, 2F Offset"	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=2	hvac_flex_pre_peak_duration_hours=0	hvac_flex_pre_peak_offset=0
-Demand Flexibility HVAC	"On-peak Load Shedding, 4F Offset"	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=4	hvac_flex_pre_peak_duration_hours=0	hvac_flex_pre_peak_offset=0
-Demand Flexibility HVAC	"Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration"	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=1	hvac_flex_pre_peak_offset=2
-Demand Flexibility HVAC	"Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration"	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=2
-Demand Flexibility HVAC	"Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration"	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=4
-Demand Flexibility Random Shift	30 minutes	ResStockArgumentsPostHPXML	flex_random_shift_minutes=30
+Demand Flexibility Electric Vehicle	Enabled	ResStockArguments	ev_flex_enabled=true
+Demand Flexibility HVAC	On-peak Load Shedding, 2F Offset	ResStockArguments	hvac_flex_peak_offset=2	hvac_flex_pre_peak_duration_hours=0	hvac_flex_pre_peak_offset=0
+Demand Flexibility HVAC	On-peak Load Shedding, 4F Offset	ResStockArguments	hvac_flex_peak_offset=4	hvac_flex_pre_peak_duration_hours=0	hvac_flex_pre_peak_offset=0
+Demand Flexibility HVAC	Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration	ResStockArguments	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=1	hvac_flex_pre_peak_offset=2
+Demand Flexibility HVAC	Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration	ResStockArguments	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=2
+Demand Flexibility HVAC	Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration	ResStockArguments	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=4
+Demand Flexibility Random Shift	30 minutes	ResStockArguments	flex_random_shift_minutes=30
 Dishwasher	EnergyStar	ResStockArguments	appliance_dishwasher=EnergyStar, Standard, 100% Usage
 Dishwasher	None	ResStockArguments	appliance_dishwasher=None
 Dishwasher	Standard	ResStockArguments	appliance_dishwasher=Federal Minimum, Standard, 100% Usage
