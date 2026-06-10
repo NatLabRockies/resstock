@@ -147,7 +147,8 @@ def sample(project: str, num_datapoints: int, output: str) -> None:
     initial_samples_df = pl.from_pandas(sample_all(pathlib.Path(project), initial_sample_size, segment_vars=segment_vars))
     print(f"Initial sampling completed in {time.time() - start_time:.2f} seconds. Sample size: {initial_samples_df.shape}")
     initial_samples_df = initial_samples_df.drop("Building")
-    num_segments = num_datapoints // config.get('num_samples_per_segment', 12)
+    num_samples_per_segment = config.get('num_samples_per_segment', 12)
+    num_segments = num_datapoints // num_samples_per_segment
     top_segments = initial_samples_df.group_by(segment_vars).agg(pl.len().alias("count")).sort("count", descending=True).limit(num_segments)
     new_df = initial_samples_df.join(top_segments, on=segment_vars, validate="m:1", how="left")
     valid_df = new_df.filter(~pl.col('count').is_null())
@@ -155,7 +156,7 @@ def sample(project: str, num_datapoints: int, output: str) -> None:
     limited_df = (
         valid_df
         .group_by(segment_vars, maintain_order=True)   # keep incoming row-order inside groups
-        .head(12)                                     # take the first 12 rows per group
+        .head(num_samples_per_segment)
     )
     new_total = limited_df.shape[0]
     if new_total < num_datapoints:
