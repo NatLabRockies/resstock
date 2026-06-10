@@ -6,6 +6,8 @@ import click
 import pathlib
 import yaml
 import polars as pl
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from sampler.sampling_utils import get_param2tsv, get_samples, TSVTuple
 from sampler.utils import log_error_details, get_error_details
 import random
@@ -84,7 +86,8 @@ def sample_all(project_path, num_samples, *, segment_vars: set[str] | None = Non
 
     s_time = time.time()
     tsv_count = 0
-    with multiprocessing.Pool(processes=max(multiprocessing.cpu_count() - 2, 1)) as pool:
+
+    with multiprocessing.Pool(processes=1) as pool:
         for level, params in get_topological_generations(param2dep, segment_vars):
             print(f"Sampling {len(params)} params in a batch at level {level}")
             results = []
@@ -123,7 +126,7 @@ def cli():
 @cli.command()
 @click.option("-p", "--project", type=str, required=True,
               help="The path to the project (most have housing_characteristics folder inside)")
-@click.option("-n", "--num_datapoints", type=int, required=True,
+@click.option("-n", "--num-datapoints", type=int, required=True,
               help="The number of datapoints to sample.")
 @click.option("-o", "--output", type=str, required=True,
               help="The output filename for samples.")
@@ -167,6 +170,9 @@ def sample(project: str, num_datapoints: int, output: str) -> None:
     sample_df = sample_all(pathlib.Path(project), new_total, initial_samples_df=initial_samples_df)
     print(f"Final sampling completed in {time.time() - start_time:.2f} seconds")
     click.echo("Writing Buildstock CSV")
+    if not pathlib.Path(output).is_absolute():
+        output = str((pathlib.Path(__file__).resolve().parent / ".." / ".." / ".."/ "resources" / output).resolve())
+        print(output)
     pl.from_pandas(sample_df).write_csv(output)
     click.echo(f"Completed sampling in {time.time() - start_time:.2f} seconds")
 
