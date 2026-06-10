@@ -173,7 +173,6 @@ def sample(project: str, num_datapoints: int, output: str) -> None:
     click.echo("Writing Buildstock CSV")
     if not pathlib.Path(output).is_absolute():
         output = str((pathlib.Path(__file__).resolve().parent / ".." / ".." / ".."/ "resources" / output).resolve())
-        print(output)
     pl.from_pandas(sample_df).write_csv(output)
     click.echo(f"Completed sampling in {time.time() - start_time:.2f} seconds")
 
