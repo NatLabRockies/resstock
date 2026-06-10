@@ -9,7 +9,7 @@ def download_epws
   require 'tempfile'
   tmpfile = Tempfile.new('epw')
 
-  UrlResolver.fetch('https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip', tmpfile)
+  UrlResolver.fetch('https://data.nlr.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip', tmpfile)
 
   puts 'Extracting weather files...'
   require 'zip'
@@ -86,7 +86,7 @@ end
 
 if ARGV[0].to_sym == :update_resources
   prefix = 'resources/hpxml-measures'
-  repository = 'https://github.com/NREL/OpenStudio-HPXML.git'
+  repository = 'https://github.com/NatLabRockies/OpenStudio-HPXML.git'
   branch_or_tag = 'master'
 
   system("git subtree pull --prefix #{prefix} #{repository} #{branch_or_tag} --squash")
