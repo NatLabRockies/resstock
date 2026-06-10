@@ -475,7 +475,7 @@ jobs:
 
       - name: Generate 550K Sample
         run: |
-          openstudio resources/run_sampling.rb -p project_national -n 550000 -o ../project_national/resources/national_550ksamples.csv
+          openstudio samplers/quota/run_sampling.rb -p project_national -n 550000 -o ../project_national/resources/national_550ksamples.csv
           cd project_national/resources
           gzip -c national_550ksamples.csv > national_550ksamples.csv.gz
 
