@@ -16,6 +16,7 @@ baseline:
 # Sampler type and number of data points per baseline or upgrade
 sampler:
   type: residential_quota
+  # type: residential_stratified
   args:
     n_datapoints: 250
 
