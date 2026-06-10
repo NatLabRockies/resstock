@@ -8,7 +8,7 @@ require 'time'
 require 'yaml'
 require 'zlib'
 
-require_relative '../resources/run_sampling_lib'
+require_relative '../samplers/quota/run_sampling_lib'
 require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/util'
 
 $start_time = Time.now
