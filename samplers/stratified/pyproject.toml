@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [project.scripts]
-resstock-sampler = "sampler.sampler:main"
+resstock-sampler = "sampler.run_sampler:main"
 
 [build-system]
 requires = ["hatchling"]
