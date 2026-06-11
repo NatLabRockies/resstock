@@ -2,7 +2,6 @@
 
 require_relative '../resources/minitest_helper'
 require 'openstudio'
-require 'openstudio/measure/ShowRunnerOutput'
 require 'fileutils'
 require_relative '../measure.rb'
 require_relative 'util.rb'
@@ -11,10 +10,13 @@ class HPXMLtoOpenStudioWaterHeaterTest < Minitest::Test
   def setup
     @root_path = File.absolute_path(File.join(File.dirname(__FILE__), '..', '..'))
     @sample_files_path = File.join(@root_path, 'workflow', 'sample_files')
+    @tmp_hpxml_path = File.join(File.dirname(__FILE__), 'tmp.xml')
+    @schema_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', 'resources', 'hpxml_schema', 'HPXML.xsd'))
+    @schematron_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', 'resources', 'hpxml_schematron', 'EPvalidator.sch'))
   end
 
   def teardown
-    cleanup_results_files
+    cleanup_output_files([@tmp_hpxml_path])
   end
 
   def test_tank_gas
@@ -60,7 +62,7 @@ class HPXMLtoOpenStudioWaterHeaterTest < Minitest::Test
     tank_volume = UnitConversions.convert(water_heating_system.tank_volume * 0.95, 'gal', 'm^3') # convert to actual volume
     cap = UnitConversions.convert(water_heating_system.heating_capacity / 1000.0, 'kBtu/hr', 'W')
     fuel = EPlus.fuel_type(water_heating_system.fuel_type)
-    ua = 4.19
+    ua = 4.12
     t_set = UnitConversions.convert(water_heating_system.temperature, 'F', 'C') + 1 # setpoint + 1/2 deadband
     ther_eff = 0.775
     loc = water_heating_system.location
@@ -433,41 +435,48 @@ class HPXMLtoOpenStudioWaterHeaterTest < Minitest::Test
   end
 
   def test_desuperheater_gshp
-    args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-dhw-desuperheater-ghp.xml'))
-    model, _hpxml, hpxml_bldg = _test_measure(args_hash)
+    ['base-dhw-desuperheater-ghp.xml',
+     'base-dhw-desuperheater-ghp-experimental.xml'].each do |hpxml_name|
+      args_hash = {}
+      args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, hpxml_name))
+      model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    # Get HPXML values
-    water_heating_system = hpxml_bldg.water_heating_systems[0]
+      # Get HPXML values
+      water_heating_system = hpxml_bldg.water_heating_systems[0]
 
-    # Expected value
-    tank_volume = UnitConversions.convert(water_heating_system.tank_volume * 0.9, 'gal', 'm^3') # convert to actual volume
-    cap = UnitConversions.convert(water_heating_system.heating_capacity / 1000.0, 'kBtu/hr', 'W')
-    fuel = EPlus.fuel_type(water_heating_system.fuel_type)
-    ua = 0.97
-    t_set = UnitConversions.convert(water_heating_system.temperature, 'F', 'C') + 1 # setpoint + 1/2 deadband
-    loc = water_heating_system.location
-    ther_eff = 1.0
+      # Expected value
+      tank_volume = UnitConversions.convert(water_heating_system.tank_volume * 0.9, 'gal', 'm^3') # convert to actual volume
+      cap = UnitConversions.convert(water_heating_system.heating_capacity / 1000.0, 'kBtu/hr', 'W')
+      fuel = EPlus.fuel_type(water_heating_system.fuel_type)
+      ua = 0.97
+      t_set = UnitConversions.convert(water_heating_system.temperature, 'F', 'C') + 1 # setpoint + 1/2 deadband
+      loc = water_heating_system.location
+      ther_eff = 1.0
 
-    # Check water heater
-    assert_equal(2, model.getWaterHeaterMixeds.size) # preheat tank + water heater
-    wh = model.getWaterHeaterMixeds.find { |wh| (not wh.name.get.include? 'storage tank') }
-    assert_equal(fuel, wh.heaterFuelType)
-    assert_equal(loc, wh.ambientTemperatureThermalZone.get.name.get)
-    assert_in_epsilon(tank_volume, wh.tankVolume.get, 0.01)
-    assert_in_epsilon(cap, wh.heaterMaximumCapacity.get, 0.01)
-    assert_in_epsilon(ua, wh.onCycleLossCoefficienttoAmbientTemperature.get, 0.01)
-    assert_in_epsilon(ua, wh.offCycleLossCoefficienttoAmbientTemperature.get, 0.01)
-    assert_in_epsilon(t_set, wh.setpointTemperatureSchedule.get.to_ScheduleConstant.get.value, 0.01)
-    assert_in_epsilon(ther_eff, wh.heaterThermalEfficiency.get, 0.01)
-    assert_equal(1.0, wh.offCycleLossFractiontoThermalZone)
+      # Check water heater
+      assert_equal(2, model.getWaterHeaterMixeds.size) # preheat tank + water heater
+      wh = model.getWaterHeaterMixeds.find { |wh| (not wh.name.get.include? 'storage tank') }
+      assert_equal(fuel, wh.heaterFuelType)
+      assert_equal(loc, wh.ambientTemperatureThermalZone.get.name.get)
+      assert_in_epsilon(tank_volume, wh.tankVolume.get, 0.01)
+      assert_in_epsilon(cap, wh.heaterMaximumCapacity.get, 0.01)
+      assert_in_epsilon(ua, wh.onCycleLossCoefficienttoAmbientTemperature.get, 0.01)
+      assert_in_epsilon(ua, wh.offCycleLossCoefficienttoAmbientTemperature.get, 0.01)
+      assert_in_epsilon(t_set, wh.setpointTemperatureSchedule.get.to_ScheduleConstant.get.value, 0.01)
+      assert_in_epsilon(ther_eff, wh.heaterThermalEfficiency.get, 0.01)
+      assert_equal(1.0, wh.offCycleLossFractiontoThermalZone)
 
-    # Check desuperheater
-    assert_equal(1, model.getCoilWaterHeatingDesuperheaters.size)
-    preheat_tank = model.getWaterHeaterMixeds.find { |wh| wh.name.get.include? 'storage tank' }
-    dsh_coil = model.getCoilWaterHeatingDesuperheaters[0]
-    assert_equal(true, dsh_coil.heatingSource.get.to_CoilCoolingWaterToAirHeatPumpEquationFit.is_initialized)
-    assert_equal(preheat_tank, dsh_coil.heatRejectionTarget.get.to_WaterHeaterMixed.get)
+      # Check desuperheater
+      assert_equal(1, model.getCoilWaterHeatingDesuperheaters.size)
+      preheat_tank = model.getWaterHeaterMixeds.find { |wh| wh.name.get.include? 'storage tank' }
+      dsh_coil = model.getCoilWaterHeatingDesuperheaters[0]
+      if hpxml_name == 'base-dhw-desuperheater-ghp.xml'
+        assert_equal(true, dsh_coil.heatingSource.get.to_CoilCoolingWaterToAirHeatPumpEquationFit.is_initialized)
+      elsif hpxml_name == 'base-dhw-desuperheater-ghp-experimental.xml'
+        assert_equal(true, dsh_coil.heatingSource.get.to_CoilCoolingWaterToAirHeatPumpVariableSpeedEquationFit.is_initialized)
+      end
+      assert_equal(preheat_tank, dsh_coil.heatRejectionTarget.get.to_WaterHeaterMixed.get)
+    end
   end
 
   def test_solar_direct_evacuated_tube
@@ -1048,6 +1057,41 @@ class HPXMLtoOpenStudioWaterHeaterTest < Minitest::Test
     assert_in_epsilon(cap, coil.ratedHeatingCapacity, 0.01)
   end
 
+  def test_tank_heat_pump_containment_volume_adjustment
+    # Volumes are based on RESNET spreadsheet: https://github.com/user-attachments/files/23135608/ConstrainedHPWH_04xlsx.xlsx,
+    containment_volumes = [3000, 1500, 960, 707, 453, 200, 83.5]
+    # Replaced the COP in the spreadsheet to 3.73135, and the expected COP are calculated as below:
+    expected_cop = [3.720, 3.720, 3.647, 3.518, 3.191, 2.367, 1.642]
+    expected_cap = 500.0 * 3.73135 # not adjusted
+    args_hash = {}
+    args_hash['hpxml_path'] = @tmp_hpxml_path
+    containment_volumes.each_with_index do |v, i|
+      hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-confined-space.xml')
+      hpxml_bldg.water_heating_systems[0].hpwh_containment_volume = v
+      XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+      model, _hpxml, hpxml_bldg = _test_measure(args_hash)
+      # Get HPXML values
+      water_heating_system = hpxml_bldg.water_heating_systems[0]
+      # Check EnergyPlus inputs
+      assert_equal(1, model.getWaterHeaterHeatPumpWrappedCondensers.size)
+      assert_equal(1, model.getWaterHeaterStratifieds.size)
+      hpwh = model.getWaterHeaterHeatPumpWrappedCondensers[0]
+      wh = hpwh.tank.to_WaterHeaterStratified.get
+      coil = hpwh.dXCoil.to_CoilWaterHeatingAirToWaterHeatPumpWrapped.get
+      assert_equal(EPlus.fuel_type(water_heating_system.fuel_type), wh.heaterFuelType)
+      assert_equal('Schedule', wh.ambientTemperatureIndicator)
+      assert_in_epsilon(UnitConversions.convert(water_heating_system.tank_volume * 0.9, 'gal', 'm^3'), wh.tankVolume.get, 0.01)
+      assert_in_epsilon(1.3343, wh.tankHeight.get, 0.01)
+      assert_in_epsilon(UnitConversions.convert(water_heating_system.backup_heating_capacity, 'Btu/hr', 'W'), wh.heater1Capacity.get, 0.01)
+      assert_in_epsilon(UnitConversions.convert(water_heating_system.backup_heating_capacity, 'Btu/hr', 'W'), wh.heater2Capacity, 0.01)
+      assert_in_epsilon(0.926, wh.uniformSkinLossCoefficientperUnitAreatoAmbientTemperature.get, 0.01)
+      assert_in_epsilon(1.0, wh.heaterThermalEfficiency, 0.01)
+      # Check heat pump cooling coil cop being adjusted
+      assert_in_epsilon(expected_cop[i], coil.ratedCOP, 0.01)
+      assert_in_epsilon(expected_cap, coil.ratedHeatingCapacity, 0.01)
+    end
+  end
+
   def test_tank_jacket
     args_hash = {}
     args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-dhw-jacket-electric.xml'))
@@ -1302,15 +1346,37 @@ class HPXMLtoOpenStudioWaterHeaterTest < Minitest::Test
     result = runner.result
 
     # show the output
-    show_output(result) unless result.value.valueName == 'Success'
+    result.showOutput() unless result.value.valueName == 'Success'
 
     # assert that it ran correctly
     assert_equal('Success', result.value.valueName)
 
-    hpxml = HPXML.new(hpxml_path: File.join(File.dirname(__FILE__), 'in.xml'))
+    hpxml_defaults_path = File.join(File.dirname(__FILE__), 'in.xml')
+    if args_hash['hpxml_path'] == @tmp_hpxml_path
+      # Since there is a penalty to performing schema/schematron validation, we only do it for custom models
+      # Sample files already have their in.xml's checked in the workflow tests
+      schema_validator = @schema_validator
+      schematron_validator = @schematron_validator
+    else
+      schema_validator = nil
+      schematron_validator = nil
+    end
+    hpxml = HPXML.new(hpxml_path: hpxml_defaults_path, schema_validator: schema_validator, schematron_validator: schematron_validator)
+    if not hpxml.errors.empty?
+      puts 'ERRORS:'
+      hpxml.errors.each do |error|
+        puts error
+      end
+      flunk "Validation error(s) in #{hpxml_defaults_path}."
+    end
 
-    File.delete(File.join(File.dirname(__FILE__), 'in.xml'))
+    File.delete(hpxml_defaults_path)
 
     return model, hpxml, hpxml.buildings[0]
+  end
+
+  def _create_hpxml(hpxml_name)
+    hpxml = HPXML.new(hpxml_path: File.join(@sample_files_path, hpxml_name))
+    return hpxml, hpxml.buildings[0]
   end
 end

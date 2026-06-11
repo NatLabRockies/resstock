@@ -1106,26 +1106,14 @@ module Model
           # Retain object for model
           unit_model_objects << model_object
           first_model_object_by_type = model_object
-          if idd_obj == 'OS:Site:WaterMainsTemperature' # Handle referenced child object too
-            unit_model_objects << unit_model.getObjectsByName(model_object.temperatureSchedule.get.name.to_s)[0]
-          end
         else
           # Throw error if different values between this model_object and first_model_object_by_type
           if model_object.to_s.gsub(uuid_regex, '') != first_model_object_by_type.to_s.gsub(uuid_regex, '')
             fail "Unique object (#{idd_obj}) has different values across dwelling units."
           end
-
-          if idd_obj == 'OS:Site:WaterMainsTemperature' # Handle referenced child object too
-            if model_object.temperatureSchedule.get.to_s.gsub(uuid_regex, '') != first_model_object_by_type.temperatureSchedule.get.to_s.gsub(uuid_regex, '')
-              fail "Unique object (#{idd_obj}) has different values across dwelling units."
-            end
-          end
         end
 
         unique_handles_to_skip << model_object.handle.to_s
-        if idd_obj == 'OS:Site:WaterMainsTemperature' # Handle referenced child object too
-          unique_handles_to_skip << model_object.temperatureSchedule.get.handle.to_s
-        end
       end
     end
 
@@ -1143,7 +1131,7 @@ module Model
     end
 
     model_size = model.to_s.size
-    model.addObjects(unit_model_objects, true)
+    merged_model_objects = model.addObjects(unit_model_objects, true)
     if model.to_s.size == model_size
       # Objects not added, check for the culprit
       unit_model_objects.each do |o|
@@ -1154,6 +1142,70 @@ module Model
         end
       end
     end
+
+    create_adjacent_surfaces_for_whole_mf_building(merged_model_objects, hpxml_osm_map)
+  end
+
+  # Create adjacent surfaces (identical surfaces in other multifamily units) for HPXML
+  # surfaces w/ sameas attribute.
+  #
+  # @param merged_model_objects [Array<OpenStudio::WorkspaceObject>] All model objects in the merged multifamily model
+  # @param hpxml_osm_map [Hash] Map of HPXML::Building objects => OpenStudio Model objects for each dwelling unit
+  # @return [nil]
+  def self.create_adjacent_surfaces_for_whole_mf_building(merged_model_objects, hpxml_osm_map)
+    merged_model_objects.each do |obj|
+      next unless obj.to_Surface.is_initialized
+
+      surface = obj.to_Surface.get
+      next unless surface.additionalProperties.getFeatureAsInteger('adjacentUnitNumber').is_initialized
+
+      adjacent_unit_number = surface.additionalProperties.getFeatureAsInteger('adjacentUnitNumber').get
+      adjacent_space_type = surface.additionalProperties.getFeatureAsString('adjacentSpaceType').get
+      adjacent_hpxml_id = make_variable_name(surface.additionalProperties.getFeatureAsString('adjacentHpxmlID').get, adjacent_unit_number)
+      adjacent_space_type = HPXML::LocationConditionedSpace if HPXML::conditioned_locations_this_unit.include?(adjacent_space_type)
+
+      unit_model = hpxml_osm_map.values[adjacent_unit_number]
+      unit_adjacent_zone = unit_model.getThermalZones.find { |z| z.additionalProperties.getFeatureAsString('ObjectType').to_s == adjacent_space_type }
+      if unit_adjacent_zone.nil?
+        fail "Could not find adjacent space type ('#{adjacent_space_type}') in unit #{adjacent_unit_number}."
+      end
+
+      unit_adjacent_space = unit_adjacent_zone.spaces[0]
+      adjacent_space = merged_model_objects.find { |s| s.to_Space.is_initialized && s.name.to_s == unit_adjacent_space.name.to_s }.to_Space.get
+
+      # Create/assign adjacent surface
+      adjacent_surface = surface.createAdjacentSurface(adjacent_space)
+      adjacent_surface = adjacent_surface.get
+      adjacent_surface.setName(adjacent_hpxml_id)
+
+      # Add new surface to unit_model as well so that the component loads program
+      # created later accounts for this surface.
+      unit_surface = OpenStudio::Model::Surface.new(adjacent_surface.vertices, unit_model)
+      surface_type = surface.additionalProperties.getFeatureAsString('SurfaceType').get
+      if surface_type == 'Floor'
+        surface_type = 'Ceiling'
+      elsif surface_type == 'Ceiling'
+        surface_type = 'Floor'
+      end
+      unit_surface.additionalProperties.setFeature('SurfaceType', surface_type)
+      unit_surface.setSpace(unit_adjacent_space)
+      unit_surface.setName(adjacent_surface.name.to_s)
+    end
+  end
+
+  # Create a new OpenStudio object name by prefixing the old with "unit" plus the unit number.
+  #
+  # @param obj_name [String] the OpenStudio object name
+  # @param unit_number [Integer] index number corresponding to an HPXML Building object
+  # @return [String] the new OpenStudio object name with unique unit prefix
+  def self.make_variable_name(obj_name, unit_number)
+    new_name = ems_friendly_name("unit#{unit_number + 1}_#{obj_name}")
+
+    # Need to fix HWPH outlet node name
+    if new_name.include?('_Outlet') && new_name.include?(ems_friendly_name(Constants::ObjectTypeWaterHeater))
+      new_name.gsub!('_Outlet', ' Outlet')
+    end
+    return new_name
   end
 
   # Prefix all object names using using a provided unit number.
@@ -1163,15 +1215,6 @@ module Model
   # @return [nil]
   def self.prefix_object_names(unit_model, unit_number)
     # FUTURE: Create objects with unique names up front so we don't have to do this
-
-    # Create a new OpenStudio object name by prefixing the old with "unit" plus the unit number.
-    #
-    # @param obj_name [String] the OpenStudio object name
-    # @param unit_number [Integer] index number corresponding to an HPXML Building object
-    # @return [String] the new OpenStudio object name with unique unit prefix
-    def self.make_variable_name(obj_name, unit_number)
-      return ems_friendly_name("unit#{unit_number + 1}_#{obj_name}")
-    end
 
     # EMS objects
     ems_map = {}

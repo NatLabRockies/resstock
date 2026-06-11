@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = u'OpenStudio-HPXML'
-copyright = u'2025, NREL'
+copyright = u'2026, NLR'
 author = u'NREL'
 
 # The short X.Y version

@@ -180,13 +180,13 @@ module Airflow
     if manualj_infiltration_method.nil? || (manualj_infiltration_method == HPXML::ManualJInfiltrationMethodBlowerDoor)
       hpxml_bldg.air_infiltration_measurements.each do |measurement|
         # Returns the infiltration measurement that has the minimum information needed for simulation
-        if measurement.air_leakage
+        if not measurement.air_leakage.nil?
           if [HPXML::UnitsACH, HPXML::UnitsCFM].include?(measurement.unit_of_measure) && !measurement.house_pressure.nil?
             return measurement
           elsif [HPXML::UnitsACHNatural, HPXML::UnitsCFMNatural].include? measurement.unit_of_measure
             return measurement
           end
-        elsif measurement.effective_leakage_area
+        elsif (not measurement.effective_leakage_area.nil?) || (not measurement.specific_leakage_area.nil?)
           return measurement
         end
       end
@@ -210,7 +210,7 @@ module Airflow
     cfa = hpxml_bldg.building_construction.conditioned_floor_area
     measurement = get_infiltration_measurement_of_interest(hpxml_bldg)
 
-    default_infil_height, default_infil_volume = Defaults.get_infiltration_height_and_volume(hpxml_bldg)
+    default_infil_height, default_infil_volume = Defaults.get_infiltration_height_and_volume(hpxml_bldg, nil)
     infil_volume = measurement.infiltration_volume
     infil_volume = default_infil_volume if infil_volume.nil?
     infil_height = measurement.infiltration_height
@@ -235,8 +235,12 @@ module Airflow
       end
       sla = get_infiltration_SLA_from_ACH(nach, infil_height, infil_avg_ceil_height, weather)
       ach50 = get_infiltration_ACH50_from_SLA(sla, infil_avg_ceil_height)
-    elsif !measurement.effective_leakage_area.nil?
-      sla = UnitConversions.convert(measurement.effective_leakage_area, 'in^2', 'ft^2') / cfa
+    elsif (not measurement.effective_leakage_area.nil?) || (not measurement.specific_leakage_area.nil?)
+      if not measurement.effective_leakage_area.nil?
+        sla = UnitConversions.convert(measurement.effective_leakage_area, 'in^2', 'ft^2') / cfa
+      else
+        sla = measurement.specific_leakage_area
+      end
       ach50 = get_infiltration_ACH50_from_SLA(sla, infil_avg_ceil_height)
       nach = get_infiltration_ACH_from_SLA(sla, infil_height, infil_avg_ceil_height, weather)
     else
@@ -857,7 +861,7 @@ module Airflow
     end
   end
 
-  # Issues warnings if duct leakage to outside is detected to be suspiciously high. We check here
+  # Issues warnings/errors if duct leakage to outside is detected to be suspiciously high. We check here
   # instead of in the Schematron validator in case duct locations are defaulted.
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
@@ -873,34 +877,47 @@ module Airflow
       lto_measurements = hvac_distribution.duct_leakage_measurements.select { |dlm| dlm.duct_leakage_total_or_to_outside == HPXML::DuctLeakageToOutside }
       sum_lto = lto_measurements.map { |dlm| dlm.duct_leakage_value }.sum(0.0)
 
+      issue_warning = false
+      issue_error = false
+
       if hvac_distribution.ducts.count { |d| !HPXML::conditioned_locations_this_unit.include?(d.duct_location) } == 0
-        # If ducts completely in conditioned space, issue warning if duct leakage to outside above a certain threshold (e.g., 5%)
-        issue_warning = false
+        # If ducts completely in conditioned space, issue warning/error if duct leakage to outside above a certain threshold
         case units
         when HPXML::UnitsCFM25
           issue_warning = true if sum_lto > 0.04 * cfa
+          issue_error = true if sum_lto > 0.04 * 2.5 * cfa
         when HPXML::UnitsCFM50
           issue_warning = true if sum_lto > 0.06 * cfa
+          issue_error = true if sum_lto > 0.06 * 2.5 * cfa
         when HPXML::UnitsPercent
           issue_warning = true if sum_lto > 0.05
+          issue_error = true if sum_lto > 0.05 * 2.5
         end
-        next unless issue_warning
 
-        runner.registerWarning('Ducts are entirely within conditioned space but there is moderate leakage to the outside. Leakage to the outside is typically zero or near-zero in these situations, consider revising leakage values. Leakage will be modeled as heat lost to the ambient environment.')
+        if issue_error
+          fail 'Duct leakage to outside is too high; double-check inputs.'
+        elsif issue_warning
+          runner.registerWarning('Ducts are entirely within conditioned space but there is moderate leakage to the outside. Leakage to the outside is typically zero or near-zero in these situations, consider revising leakage values. Leakage will be modeled as heat lost to the ambient environment.')
+        end
       else
-        # If ducts in unconditioned space, issue warning if duct leakage to outside above a certain threshold (e.g., 40%)
-        issue_warning = false
+        # If ducts in unconditioned space, issue warning/error if duct leakage to outside above a certain threshold
         case units
         when HPXML::UnitsCFM25
           issue_warning = true if sum_lto >= 0.32 * cfa
+          issue_error = true if sum_lto >= 0.32 * 2.5 * cfa
         when HPXML::UnitsCFM50
           issue_warning = true if sum_lto >= 0.48 * cfa
+          issue_error = true if sum_lto >= 0.48 * 2.5 * cfa
         when HPXML::UnitsPercent
           issue_warning = true if sum_lto >= 0.4
+          issue_error = true if sum_lto >= 0.4 * 2.5
         end
-        next unless issue_warning
 
-        runner.registerWarning('Very high sum of supply + return duct leakage to the outside; double-check inputs.')
+        if issue_error
+          fail 'Duct leakage to outside is too high; double-check inputs.'
+        elsif issue_warning
+          runner.registerWarning('Very high sum of supply + return duct leakage to the outside; double-check inputs.')
+        end
       end
     end
   end
@@ -2316,6 +2333,7 @@ module Airflow
   def self.apply_infiltration_adjustment_to_conditioned(runner, model, spaces, hpxml_bldg, hpxml_header, infil_program, vent_fans, duct_lk_imbals, schedules_file)
     conditioned_space = spaces[HPXML::LocationConditionedSpace]
     conditioned_zone = conditioned_space.thermalZone.get
+    unit_multiplier = hpxml_bldg.building_construction.number_of_units
 
     infil_flow = Model.add_infiltration_flow_rate(
       model,
@@ -2337,6 +2355,7 @@ module Airflow
     bal_cfm_tot = vent_fans[:mech_balanced].map { |vent_mech| vent_mech.average_unit_flow_rate }.sum(0.0)
     erv_hrv_cfm_tot = vent_fans[:mech_erv_hrv].map { |vent_mech| vent_mech.average_unit_flow_rate }.sum(0.0)
 
+    # Handle any cooking range hood ventilation
     infil_program.addLine('Set Qrange = 0')
     cooking_range_in_cond_space = hpxml_bldg.cooking_ranges.empty? ? true : HPXML::conditioned_locations_this_unit.include?(hpxml_bldg.cooking_ranges[0].location)
     vent_fans[:kitchen].each_with_index do |vent_kitchen, index|
@@ -2349,6 +2368,7 @@ module Airflow
       infil_program.addLine("Set Qrange = Qrange + #{UnitConversions.convert(vent_kitchen.flow_rate * vent_kitchen.count, 'cfm', 'm^3/s').round(5)} * #{obj_sch_sensor.name}")
     end
 
+    # Handle any bathroom fan ventilation
     infil_program.addLine('Set Qbath = 0')
     vent_fans[:bath].each_with_index do |vent_bath, index|
       # Electricity impact
@@ -2359,12 +2379,11 @@ module Airflow
       infil_program.addLine("Set Qbath = Qbath + #{UnitConversions.convert(vent_bath.flow_rate * vent_bath.count, 'cfm', 'm^3/s').round(5)} * #{obj_sch_sensor.name}")
     end
 
+    # Handle any clothes dryer venting
     infil_program.addLine('Set Qdryer = 0')
-    clothes_dryer_in_cond_space = hpxml_bldg.clothes_dryers.empty? ? true : HPXML::conditioned_locations_this_unit.include?(hpxml_bldg.clothes_dryers[0].location)
-    vented_dryers = hpxml_bldg.clothes_dryers.select { |cd| cd.is_vented && cd.vented_flow_rate.to_f > 0 }
-    vented_dryers.each_with_index do |vented_dryer, index|
+    vented_dryers_in_cond_space = hpxml_bldg.clothes_dryers.select { |cd| cd.is_vented && cd.vented_flow_rate.to_f > 0 && HPXML::conditioned_locations_this_unit.include?(cd.location) }
+    vented_dryers_in_cond_space.each_with_index do |vented_dryer, index|
       next if hpxml_bldg.building_occupancy.number_of_residents == 0 # Operational calculation w/ zero occupants, zero out energy use
-      next unless clothes_dryer_in_cond_space
 
       # Infiltration impact
       vented_dryer_unavailable_periods = Schedule.get_unavailable_periods(runner, SchedulesFile::Columns[:ClothesDryer].name, hpxml_header.unavailable_periods)
@@ -2372,12 +2391,28 @@ module Airflow
       infil_program.addLine("Set Qdryer = Qdryer + #{UnitConversions.convert(vented_dryer.vented_flow_rate * cfm_mult, 'cfm', 'm^3/s').round(5)} * #{obj_sch_sensor.name}")
     end
 
+    # Handle any HPWHs
+    infil_program.addLine('Set Qhpwh = 0')
+    ducted_hpwhs_in_cond_space = hpxml_bldg.water_heating_systems.select { |wh| wh.water_heater_type == HPXML::WaterHeaterTypeHeatPump && wh.hpwh_ducting_exhaust == HPXML::LocationOutside && HPXML::conditioned_locations_this_unit.include?(wh.location) }
+    ducted_hpwhs_in_cond_space.each_with_index do |ducted_hpwh, i|
+      # Create sensor to get HPWH airflow rate
+      hpwh = model.getWaterHeaterHeatPumpWrappedCondensers.find { |h| h.additionalProperties.getFeatureAsString('HPXML_ID').to_s == ducted_hpwh.id }
+      hpwh_flow_rate = Model.add_ems_sensor(
+        model,
+        name: "hpwh_flow_rate_#{i}",
+        output_var_or_meter_name: 'System Node Current Density Volume Flow Rate',
+        key_name: hpwh.airOutletNodeName
+      )
+
+      infil_program.addLine("Set Qhpwh = Qhpwh + #{hpwh_flow_rate.name} / #{unit_multiplier}")
+    end
+
     infil_program.addLine("Set QWHV_sup = #{UnitConversions.convert(sup_cfm_tot + bal_cfm_tot + erv_hrv_cfm_tot, 'cfm', 'm^3/s').round(5)}")
     infil_program.addLine("Set QWHV_exh = #{UnitConversions.convert(exh_cfm_tot + bal_cfm_tot + erv_hrv_cfm_tot, 'cfm', 'm^3/s').round(5)}")
 
     # Ventilation fans
     infil_program.addLine('Set Qsupply = QWHV_sup + QWHV_cfis_sup + QWHV_cfis_suppl_sup')
-    infil_program.addLine('Set Qexhaust = Qrange + Qbath + Qdryer + QWHV_exh + QWHV_cfis_suppl_exh')
+    infil_program.addLine('Set Qexhaust = Qrange + Qbath + Qdryer + Qhpwh + QWHV_exh + QWHV_cfis_suppl_exh')
     infil_program.addLine('Set Qfan = (@Max Qexhaust Qsupply)')
 
     # Duct leakage imbalance induced infiltration
