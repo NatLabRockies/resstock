@@ -87,7 +87,7 @@ def sample_all(project_path, num_samples, *, segment_vars: set[str] | None = Non
     s_time = time.time()
     tsv_count = 0
 
-    with multiprocessing.Pool(processes=1) as pool:
+    with multiprocessing.Pool(processes=max(multiprocessing.cpu_count() - 2, 1)) as pool:
         for level, params in get_topological_generations(param2dep, segment_vars):
             print(f"Sampling {len(params)} params in a batch at level {level}")
             results = []
@@ -135,10 +135,12 @@ def cli():
 def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
     """Performs sampling for project and writes output parquet file.
     """
-    # Load config file from same directory as this script
+    # Load config file
     if config:
+        # from argument passed in
         config_path = pathlib.Path(config)
     else:
+        # from same directory as this script
         config_path = pathlib.Path(__file__).parent / "sampler_config.yaml"
     segment_vars = None
     config = {}
@@ -147,13 +149,12 @@ def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
             config = yaml.safe_load(f)
     segment_vars = set(config.get('segment_vars', []))
     initial_sample_size = config.get('segment_selection_sample_size', 10000000)
-    # initial_samples_df = read_csv('/Users/radhikar/Documents/buildstock2025/geographic sampling/starter_samples.csv')
     initial_samples_df = None
-    start_time = time.time()
+    init_start_time = time.time()
     print(project, num_datapoints, output, segment_vars)
     print(f"Performing initial sampling with {initial_sample_size} samples to pick the segments")
     initial_samples_df = pl.from_pandas(sample_all(pathlib.Path(project), initial_sample_size, segment_vars=segment_vars))
-    print(f"Initial sampling completed in {time.time() - start_time:.2f} seconds. Sample size: {initial_samples_df.shape}")
+    print(f"Initial sampling completed in {time.time() - init_start_time:.2f} seconds. Sample size: {initial_samples_df.shape}")
     initial_samples_df = initial_samples_df.drop("Building")
     num_samples_per_segment = config.get('num_samples_per_segment', 12)
     num_segments = num_datapoints // num_samples_per_segment
@@ -171,15 +172,15 @@ def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
         print(f"Will be sampling {new_total} samples instead of {num_datapoints} due to rounding")
     limited_df = limited_df.with_row_index("Building", offset=1)
     initial_samples_df = limited_df.to_pandas()
-    start_time = time.time()
+    final_start_time = time.time()
     print(f"Performing final sampling with {num_segments} segments")
     sample_df = sample_all(pathlib.Path(project), new_total, initial_samples_df=initial_samples_df)
-    print(f"Final sampling completed in {time.time() - start_time:.2f} seconds")
+    print(f"Final sampling completed in {time.time() - final_start_time:.2f} seconds")
     click.echo("Writing Buildstock CSV")
     if not pathlib.Path(output).is_absolute():
         output = str((pathlib.Path(__file__).resolve().parent / ".." / ".." / ".."/ "resources" / output).resolve())
     pl.from_pandas(sample_df).write_csv(output)
-    click.echo(f"Completed sampling in {time.time() - start_time:.2f} seconds")
+    click.echo(f"Completed sampling in {(time.time() - init_start_time) / 60:.2f} minutes")
 
 
 @log_error_details("sampler_error.txt")

@@ -22,11 +22,14 @@ sampler:
   args:
     n_datapoints: 250
     segment_vars:
+      - Federal Poverty Level
+      - Geometry Floor Area Bin
+      - Geometry Building Type RECS
       - Vintage
       - Heating Fuel
       - Sampling Region
-    segment_selection_sample_size: 5000000
-    num_samples_per_segment: 10
+    segment_selection_sample_size: 10000000
+    num_samples_per_segment: 8
 
 # NLR High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
