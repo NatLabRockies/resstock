@@ -125,16 +125,21 @@ def cli():
 
 @cli.command()
 @click.option("-p", "--project", type=str, required=True,
-              help="The path to the project (most have housing_characteristics folder inside)")
+              help="The path to the project (most have housing_characteristics folder inside).")
 @click.option("-n", "--num-datapoints", type=int, required=True,
               help="The number of datapoints to sample.")
+@click.option("-c", "--config", type=str, required=False,
+              help="The path to the config.")
 @click.option("-o", "--output", type=str, required=True,
               help="The output filename for samples.")
-def sample(project: str, num_datapoints: int, output: str) -> None:
+def sample(project: str, num_datapoints: int, config: str, output: str) -> None:
     """Performs sampling for project and writes output parquet file.
     """
     # Load config file from same directory as this script
-    config_path = pathlib.Path(__file__).parent / "sampler_config.yaml"
+    if config:
+        config_path = pathlib.Path(config)
+    else:
+        config_path = pathlib.Path(__file__).parent / "sampler_config.yaml"
     segment_vars = None
     config = {}
     if config_path.exists():

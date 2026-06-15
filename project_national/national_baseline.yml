@@ -15,10 +15,18 @@ baseline:
 
 # Sampler type and number of data points per baseline or upgrade
 sampler:
-  type: residential_quota
-  # type: residential_stratified
+  # type: residential_quota
+  # args:
+    # n_datapoints: 250
+  type: residential_stratified
   args:
     n_datapoints: 250
+    segment_vars:
+      - Vintage
+      - Heating Fuel
+      - Sampling Region
+    segment_selection_sample_size: 5000000
+    num_samples_per_segment: 10
 
 # NLR High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
