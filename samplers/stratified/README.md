@@ -24,6 +24,10 @@ pip install uv
 ```bash
 uv sync
 source .venv/bin/activate
+
+# Alternatively, install via pip
+cd samplers/stratified/
+uv pip install -e . --group dev
 ```
 
 ## Usage
