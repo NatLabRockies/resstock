@@ -55,17 +55,10 @@ jobs:
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
-      - name: Install python
-        shell: bash
-        run: |
-          export DEBIAN_FRONTEND=noninteractive
-          sudo apt update
-          sudo -E apt-get install -y python3-pip
-
-      - name: Install python dependencies
-        run : |
-          python3 -m pip install --progress-bar off --upgrade pip
-          pip3 install --progress-bar off pandas pyyaml
+      - name: Setup python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
 
       - name: Download formatted options_lookup
         uses: actions/download-artifact@v8
@@ -86,7 +79,10 @@ jobs:
 
       - name: Generate precomputed buildstocks
         run: |
-          python3 test/update_yml_precomputed_files.py
+          pip install pandas
+          pip install pyyaml
+          
+          python test/update_yml_precomputed_files.py
 
       - name: Upload precomputed buildstocks
         uses: actions/upload-artifact@v7
@@ -237,15 +233,6 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install uv
-        uses: astral-sh/setup-uv@v8.0.0
-
-      - name: Install sampler dependencies
-        working-directory: samplers/stratified
-        run: |
-          uv venv
-          uv pip install -e . --group dev
-
       - name: Download formatted options_lookup
         uses: actions/download-artifact@v8
         with:
@@ -268,6 +255,12 @@ jobs:
       - name: Run run_analysis.rb
         run: |
           which python
+          python -m pip list
+          pip install pandas
+          pip install pyyaml
+          pip install networkx
+          pip install polars
+          pip install joblib
           python -m pip list
           openstudio test/test_run_analysis.rb
 
@@ -366,12 +359,6 @@ jobs:
           sudo gem install simplecov-html
           ruby test/test_bsb_analysis.rb
 
-      - name: Install software
-        run: |
-          export DEBIAN_FRONTEND=noninteractive
-          sudo apt update
-          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
-
       - name: Download feature samples
         uses: actions/download-artifact@v8
         with:
@@ -424,14 +411,14 @@ jobs:
           pip install pandas
           pip install plotly
           pip install kaleido
-
+          
           # baseline annual
           mkdir -p test/base_results/comparisons/baseline/annual
           python test/compare.py -a samples -b base_results/baseline/annual -f samples -e test/base_results/comparisons/baseline/annual # base_samples.csv, feature_samples.csv
           python test/compare.py -a results -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
           python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
           python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
-
+          
           # baseline timeseries
           mkdir test/base_results/comparisons/baseline/timeseries
           python test/compare.py -a timeseries -b base_results/baseline/timeseries -f baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
