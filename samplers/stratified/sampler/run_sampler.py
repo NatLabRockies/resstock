@@ -12,7 +12,7 @@ from sampler.sampling_utils import get_param2tsv, get_samples, TSVTuple
 from sampler.utils import log_error_details, get_error_details
 import random
 
-# Set seeds for reproducibility at the start of your script
+# Set seeds for reproducibility
 RANDOM_SEED = 42  # Use a fixed seed
 random.seed(RANDOM_SEED)
 

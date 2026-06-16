@@ -19,7 +19,7 @@ env:
   OPENSTUDIO_SHA: 86d7e215a1
   OPENSTUDIO_PLATFORM: Ubuntu-24.04-x86_64
   OPENSTUDIO_EXT: deb
-  OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.10.0
+  OPENSTUDIO_URL: https://github.com/NatLabRockies/OpenStudio/releases/download/v3.10.0
   BUILDSTOCK_BATCH_BRANCH: sampling_regions
   BUILDSTOCK_QUERY_BRANCH: main
 
@@ -267,6 +267,8 @@ jobs:
 
       - name: Run run_analysis.rb
         run: |
+          which python
+          python -m pip list
           openstudio test/test_run_analysis.rb
 
       - name: Upload run_analysis.rb results
@@ -316,7 +318,7 @@ jobs:
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
-          git clone --single-branch --branch $BUILDSTOCK_BATCH_BRANCH https://github.com/NREL/buildstockbatch.git
+          git clone --single-branch --branch $BUILDSTOCK_BATCH_BRANCH https://github.com/NatLabRockies/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
@@ -494,7 +496,7 @@ jobs:
 
       - name: Install buildstock_query
         run: |
-          python3 -m pip install git+https://github.com/NREL/buildstock-query.git@$BUILDSTOCK_QUERY_BRANCH
+          python3 -m pip install git+https://github.com/NatLabRockies/buildstock-query.git@$BUILDSTOCK_QUERY_BRANCH
 
       - name: Download and Install OpenStudio
         run: |
@@ -646,7 +648,7 @@ jobs:
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
-          git clone --single-branch --branch $BUILDSTOCK_BATCH_BRANCH https://github.com/NREL/buildstockbatch.git
+          git clone --single-branch --branch $BUILDSTOCK_BATCH_BRANCH https://github.com/NatLabRockies/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev

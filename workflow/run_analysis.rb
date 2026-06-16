@@ -78,7 +78,9 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     create_buildstock_csv(project_directory, sampler_type, n_datapoints, buildstock_csv_path)
     return if samplingonly
 
-    datapoints = (1..n_datapoints).to_a
+    buildstock_csv = CSV.read(buildstock_csv_path, headers: true)
+    datapoints = buildstock_csv['Building'].map { |x| Integer(x) }
+    n_datapoints = datapoints.size # Re-assign n_datapoints since stratified samples can be less than specified
   else
     buildstock_csv_path = cfg['sampler']['args']['sample_file']
     unless (Pathname.new buildstock_csv_path).absolute?
@@ -496,7 +498,9 @@ def create_buildstock_csv(project_dir, sampler_type, num_samples, outfile)
     r = RunSampling.new
     r.run(project_dir, num_samples, outfile)
   elsif sampler_type == 'residential_stratified'
-    command = "uv run python #{File.dirname(__FILE__)}/../samplers/stratified/sampler/run_sampler.py sample"
+    # command = "python #{File.dirname(__FILE__)}/../samplers/stratified/sampler/run_sampler.py sample"
+    # command = "uv run python #{File.dirname(__FILE__)}/../samplers/stratified/sampler/run_sampler.py sample"
+    command = "resstock-sampler sample"
     command += " -p \"#{project_dir}\""
     command += " -n \"#{num_samples}\""
     command += " -o \"#{outfile}\""
