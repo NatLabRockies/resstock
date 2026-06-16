@@ -254,14 +254,13 @@ jobs:
 
       - name: Run run_analysis.rb
         run: |
-          which python
-          python -m pip list
           pip install pandas
           pip install pyyaml
           pip install networkx
           pip install polars
           pip install joblib
-          python -m pip list
+          pip install click
+          
           openstudio test/test_run_analysis.rb
 
       - name: Upload run_analysis.rb results

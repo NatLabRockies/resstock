@@ -499,8 +499,6 @@ def create_buildstock_csv(project_dir, sampler_type, num_samples, outfile)
     r.run(project_dir, num_samples, outfile)
   elsif sampler_type == 'residential_stratified'
     command = "python #{File.dirname(__FILE__)}/../samplers/stratified/sampler/run_sampler.py sample"
-    # command = "uv run python #{File.dirname(__FILE__)}/../samplers/stratified/sampler/run_sampler.py sample"
-    # command = "resstock-sampler sample"
     command += " -p \"#{project_dir}\""
     command += " -n \"#{num_samples}\""
     command += " -o \"#{outfile}\""
