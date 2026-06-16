@@ -137,13 +137,13 @@ if __name__ == '__main__':
 
     groups = sorted(os.listdir('project_national/national_baseline/parquet/timeseries/upgrade=0'))
     for group in groups:
-        df_national = pd.read_parquet('project_national/national_baseline/parquet/timeseries/upgrade=0/{}'.format(group)).reset_index()
+        df_national = pd.read_parquet('project_national/national_baseline/parquet/timeseries/upgrade=0/{}'.format(group))
         df_national = df_national.drop(drops, axis=1)
         df_nationals.append(df_national)
 
     groups = sorted(os.listdir('project_testing/testing_baseline/parquet/timeseries/upgrade=0'))
     for group in groups:
-        df_testing = pd.read_parquet('project_testing/testing_baseline/parquet/timeseries/upgrade=0/{}'.format(group)).reset_index()
+        df_testing = pd.read_parquet('project_testing/testing_baseline/parquet/timeseries/upgrade=0/{}'.format(group))
         df_testing = df_testing.drop(drops, axis=1)
         df_testings.append(df_testing)
 

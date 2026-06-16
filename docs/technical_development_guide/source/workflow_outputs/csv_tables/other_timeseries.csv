@@ -79,3 +79,6 @@ Electricity:Facility,electricity_facility__j,J,"Any user-specified EnergyPlus ou
 ,schedules_electric_vehicle_discharging,frac,Availability schedule for electric vehicle discharging.
 ,schedules_peak_period,frac,Load flexibility measure ouput that indicates when the system is in the peak demand period.
 ,schedules_pre_peak_period,frac,Load flexibility measure ouput that identifies when the system is in the period leading up to the peak demand period.
+People Sensible Heating Rate: Occupants,people_sensible_heating_rate__occupants__w,W,People Sensible Heating Rate
+People Total Heating Rate: Occupants,people_total_heating_rate__occupants__w,W,People Total Heating Rate
+Site Outdoor Air Humidity Ratio: Environment,site_outdoor_air_humidity_ratio__environment__kgwater/kgdryair,kgWater/kgDryAir,Site Outdoor Air Humidity Ratio Environment

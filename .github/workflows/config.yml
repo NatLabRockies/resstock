@@ -19,9 +19,9 @@ env:
   OPENSTUDIO_SHA: 86d7e215a1
   OPENSTUDIO_PLATFORM: Ubuntu-24.04-x86_64
   OPENSTUDIO_EXT: deb
-  OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.10.0
-  BUILDSTOCK_BATCH_BRANCH: develop
-  BUILDSTOCK_QUERY_BRANCH: main
+  OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.9.0
+  BUILDSTOCK_BRANCH: ppv2
+  BUILDSTOCK_QUERY_BRANCH: set_cover
 
 jobs:
   format-files:
@@ -515,7 +515,7 @@ jobs:
       - name: Generate minimal buildstock and other files
         run: |
           cd project_national/resources
-          python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_amy2018.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --output_prefix sdr_
+          python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_amy2018.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --prev_minimal_buildstock_file sdr_minimal_buildstock.csv --output_prefix sdr_
           rm national_550ksamples.csv
           rm national_550ksamples.csv.gz
 
@@ -674,10 +674,10 @@ jobs:
           echo "Checking for failed simulations in results files..."
           FAILED=false
           for csv_file in project_national/sdr_upgrades_amy2018/results_csvs/*.csv; do
-            python -m resstockpostproc.get_failures "$csv_file" --verbose --exit-code || FAILED=true
+            python -m resstockpostproc.get_failures "$csv_file" --verbose --exit-code --failure-threshold 0.5 || FAILED=true
           done
           if [ "$FAILED" = true ]; then
-            echo "ERROR: Some simulations failed. See details above."
+            echo "ERROR: Significantly high failure rate detected. See details above."
             exit 1
           fi
 

@@ -1,0 +1,298 @@
+Input Name,Input Description,Data Type
+build_existing_model.ahs_region,:ref:`ahs_region`,string
+build_existing_model.aiannh_area,:ref:`aiannh_area`,string
+build_existing_model.area_median_income,:ref:`area_median_income`,string
+build_existing_model.ashrae_iecc_climate_zone_2004,:ref:`ashrae_iecc_climate_zone_2004`,string
+build_existing_model.ashrae_iecc_climate_zone_2004_sub_cz_split,:ref:`ashrae_iecc_climate_zone_2004___sub_cz_split`,string
+build_existing_model.bathroom_spot_vent_hour,:ref:`bathroom_spot_vent_hour`,string
+build_existing_model.battery,:ref:`battery`,string
+build_existing_model.bedrooms,:ref:`bedrooms`,string
+build_existing_model.building_america_climate_zone,:ref:`building_america_climate_zone`,string
+build_existing_model.cec_climate_zone,:ref:`cec_climate_zone`,string
+build_existing_model.ceiling_fan,:ref:`ceiling_fan`,string
+build_existing_model.census_division,:ref:`census_division`,string
+build_existing_model.census_division_recs,:ref:`census_division_recs`,string
+build_existing_model.census_region,:ref:`census_region`,string
+build_existing_model.city,:ref:`city`,string
+build_existing_model.clothes_dryer,:ref:`clothes_dryer`,string
+build_existing_model.clothes_dryer_usage_level,:ref:`clothes_dryer_usage_level`,string
+build_existing_model.clothes_washer,:ref:`clothes_washer`,string
+build_existing_model.clothes_washer_presence,:ref:`clothes_washer_presence`,string
+build_existing_model.clothes_washer_usage_level,:ref:`clothes_washer_usage_level`,string
+build_existing_model.cooking_range,:ref:`cooking_range`,string
+build_existing_model.cooking_range_usage_level,:ref:`cooking_range_usage_level`,string
+build_existing_model.cooling_unavailable_days,:ref:`cooling_unavailable_days`,string
+build_existing_model.cooling_setpoint,:ref:`cooling_setpoint`,string
+build_existing_model.cooling_setpoint_has_offset,:ref:`cooling_setpoint_has_offset`,string
+build_existing_model.cooling_setpoint_offset_magnitude,:ref:`cooling_setpoint_offset_magnitude`,string
+build_existing_model.cooling_setpoint_offset_period,:ref:`cooling_setpoint_offset_period`,string
+build_existing_model.corridor,:ref:`corridor`,string
+build_existing_model.county,:ref:`county`,string
+build_existing_model.county_and_puma,:ref:`county_and_puma`,string
+build_existing_model.county_metro_status,:ref:`county_metro_status`,string
+build_existing_model.custom_state,:ref:`custom_state`,string
+build_existing_model.dehumidifier,:ref:`dehumidifier`,string
+build_existing_model.dishwasher,:ref:`dishwasher`,string
+build_existing_model.dishwasher_usage_level,:ref:`dishwasher_usage_level`,string
+build_existing_model.door_area,:ref:`door_area`,string
+build_existing_model.doors,:ref:`doors`,string
+build_existing_model.duct_leakage_and_insulation,:ref:`duct_leakage_and_insulation`,string
+build_existing_model.duct_location,:ref:`duct_location`,string
+build_existing_model.eaves,:ref:`eaves`,string
+build_existing_model.electric_vehicle_battery,:ref:`electric_vehicle_battery`,string
+build_existing_model.electric_vehicle_charge_at_home,:ref:`electric_vehicle_charge_at_home`,string
+build_existing_model.electric_vehicle_charger,:ref:`electric_vehicle_charger`,string
+build_existing_model.electric_vehicle_miles_traveled,:ref:`electric_vehicle_miles_traveled`,int
+build_existing_model.electric_vehicle_outlet_access,:ref:`electric_vehicle_outlet_access`,string
+build_existing_model.electric_vehicle_ownership,:ref:`electric_vehicle_ownership`,string
+build_existing_model.energystar_climate_zone_2023,:ref:`energystar_climate_zone_2023`,string
+build_existing_model.federal_poverty_level,:ref:`federal_poverty_level`,string
+build_existing_model.generation_and_emissions_assessment_region,:ref:`generation_and_emissions_assessment_region`,string
+build_existing_model.geometry_attic_type,:ref:`geometry_attic_type`,string
+build_existing_model.geometry_building_horizontal_location_mf,:ref:`geometry_building_horizontal_location_mf`,string
+build_existing_model.geometry_building_horizontal_location_sfa,:ref:`geometry_building_horizontal_location_sfa`,string
+build_existing_model.geometry_building_level_mf,:ref:`geometry_building_level_mf`,string
+build_existing_model.geometry_building_number_units_mf,:ref:`geometry_building_number_units_mf`,string
+build_existing_model.geometry_building_number_units_sfa,:ref:`geometry_building_number_units_sfa`,string
+build_existing_model.geometry_building_type_acs,:ref:`geometry_building_type_acs`,string
+build_existing_model.geometry_building_type_height,:ref:`geometry_building_type_height`,string
+build_existing_model.geometry_building_type_recs,:ref:`geometry_building_type_recs`,string
+build_existing_model.geometry_floor_area,:ref:`geometry_floor_area`,string
+build_existing_model.geometry_floor_area_bin,:ref:`geometry_floor_area_bin`,string
+build_existing_model.geometry_foundation_type,:ref:`geometry_foundation_type`,string
+build_existing_model.geometry_garage,:ref:`geometry_garage`,string
+build_existing_model.geometry_space_combination,:ref:`geometry_space_combination`,string
+build_existing_model.geometry_stories,:ref:`geometry_stories`,string
+build_existing_model.geometry_stories_low_rise,:ref:`geometry_stories_low_rise`,string
+build_existing_model.geometry_story_bin,:ref:`geometry_story_bin`,string
+build_existing_model.geometry_wall_exterior_finish,:ref:`geometry_wall_exterior_finish`,string
+build_existing_model.geometry_wall_type,:ref:`geometry_wall_type`,string
+build_existing_model.ground_thermal_conductivity,:ref:`ground_thermal_conductivity`,float
+build_existing_model.has_pv,:ref:`has_pv`,string
+build_existing_model.heating_fuel,:ref:`heating_fuel`,string
+build_existing_model.heating_unavailable_days,:ref:`heating_unavailable_days`,string
+build_existing_model.heating_setpoint,:ref:`heating_setpoint`,string
+build_existing_model.heating_setpoint_has_offset,:ref:`heating_setpoint_has_offset`,string
+build_existing_model.heating_setpoint_offset_magnitude,:ref:`heating_setpoint_offset_magnitude`,string
+build_existing_model.heating_setpoint_offset_period,:ref:`heating_setpoint_offset_period`,string
+build_existing_model.holiday_lighting,:ref:`holiday_lighting`,string
+build_existing_model.hot_water_distribution,:ref:`hot_water_distribution`,string
+build_existing_model.hot_water_fixtures,:ref:`hot_water_fixtures`,string
+build_existing_model.household_has_tribal_persons,:ref:`household_has_tribal_persons`,string
+build_existing_model.hvac_cooling_autosizing_factor,:ref:`hvac_cooling_autosizing_factor`,string
+build_existing_model.hvac_cooling_efficiency,:ref:`hvac_cooling_efficiency`,string
+build_existing_model.hvac_cooling_partial_space_conditioning,:ref:`hvac_cooling_partial_space_conditioning`,string
+build_existing_model.hvac_cooling_type,:ref:`hvac_cooling_type`,string
+build_existing_model.hvac_has_ducts,:ref:`hvac_has_ducts`,string
+build_existing_model.hvac_has_shared_system,:ref:`hvac_has_shared_system`,string
+build_existing_model.hvac_has_zonal_electric_heating,:ref:`hvac_has_zonal_electric_heating`,string
+build_existing_model.hvac_heating_autosizing_factor,:ref:`hvac_heating_autosizing_factor`,string
+build_existing_model.hvac_heating_efficiency,:ref:`hvac_heating_efficiency`,string
+build_existing_model.hvac_heating_type,:ref:`hvac_heating_type`,string
+build_existing_model.hvac_heating_type_and_fuel,:ref:`hvac_heating_type_and_fuel`,string
+build_existing_model.hvac_secondary_heating_efficiency,:ref:`hvac_secondary_heating_efficiency`,string
+build_existing_model.hvac_secondary_heating_fuel,:ref:`hvac_secondary_heating_fuel`,string
+build_existing_model.hvac_secondary_heating_partial_space_conditioning,:ref:`hvac_secondary_heating_partial_space_conditioning`,string
+build_existing_model.hvac_secondary_heating_type,:ref:`hvac_secondary_heating_type`,string
+build_existing_model.hvac_shared_efficiencies,:ref:`hvac_shared_efficiencies`,string
+build_existing_model.hvac_system_is_faulted,:ref:`hvac_system_is_faulted`,string
+build_existing_model.hvac_system_is_scaled,:ref:`hvac_system_is_scaled`,string
+build_existing_model.hvac_system_single_speed_ac_airflow,:ref:`hvac_system_single_speed_ac_airflow`,string
+build_existing_model.hvac_system_single_speed_ac_charge,:ref:`hvac_system_single_speed_ac_charge`,string
+build_existing_model.hvac_system_single_speed_ashp_airflow,:ref:`hvac_system_single_speed_ashp_airflow`,string
+build_existing_model.hvac_system_single_speed_ashp_charge,:ref:`hvac_system_single_speed_ashp_charge`,string
+build_existing_model.income,:ref:`income`,string
+build_existing_model.income_recs_2015,:ref:`income_recs2015`,string
+build_existing_model.income_recs_2020,:ref:`income_recs2020`,string
+build_existing_model.infiltration,:ref:`infiltration`,string
+build_existing_model.insulation_ceiling,:ref:`insulation_ceiling`,string
+build_existing_model.insulation_floor,:ref:`insulation_floor`,string
+build_existing_model.insulation_foundation_wall,:ref:`insulation_foundation_wall`,string
+build_existing_model.insulation_rim_joist,:ref:`insulation_rim_joist`,string
+build_existing_model.insulation_roof,:ref:`insulation_roof`,string
+build_existing_model.insulation_slab,:ref:`insulation_slab`,string
+build_existing_model.insulation_wall,:ref:`insulation_wall`,string
+build_existing_model.interior_shading,:ref:`interior_shading`,string
+build_existing_model.iso_rto_region,:ref:`iso_rto_region`,string
+build_existing_model.lighting,:ref:`lighting`,string
+build_existing_model.lighting_interior_use,:ref:`lighting_interior_use`,string
+build_existing_model.lighting_other_use,:ref:`lighting_other_use`,string
+build_existing_model.location_region,:ref:`location_region`,string
+build_existing_model.mechanical_ventilation,:ref:`mechanical_ventilation`,string
+build_existing_model.metropolitan_and_micropolitan_statistical_area,:ref:`metropolitan_and_micropolitan_statistical_area`,string
+build_existing_model.misc_extra_refrigerator,:ref:`misc_extra_refrigerator`,string
+build_existing_model.misc_freezer,:ref:`misc_freezer`,string
+build_existing_model.misc_gas_fireplace,:ref:`misc_gas_fireplace`,string
+build_existing_model.misc_gas_grill,:ref:`misc_gas_grill`,string
+build_existing_model.misc_gas_lighting,:ref:`misc_gas_lighting`,string
+build_existing_model.misc_hot_tub_spa,:ref:`misc_hot_tub_spa`,string
+build_existing_model.misc_pool,:ref:`misc_pool`,string
+build_existing_model.misc_pool_heater,:ref:`misc_pool_heater`,string
+build_existing_model.misc_pool_pump,:ref:`misc_pool_pump`,string
+build_existing_model.misc_well_pump,:ref:`misc_well_pump`,string
+build_existing_model.natural_ventilation,:ref:`natural_ventilation`,string
+build_existing_model.neighbors,:ref:`neighbors`,string
+build_existing_model.occupants,:ref:`occupants`,string
+build_existing_model.orientation,:ref:`orientation`,string
+build_existing_model.overhangs,:ref:`overhangs`,string
+build_existing_model.plug_load_diversity,:ref:`plug_load_diversity`,string
+build_existing_model.plug_loads,:ref:`plug_loads`,string
+build_existing_model.puma,:ref:`puma`,string
+build_existing_model.puma_metro_status,:ref:`puma_metro_status`,string
+build_existing_model.pv_orientation,:ref:`pv_orientation`,string
+build_existing_model.pv_system_size,:ref:`pv_system_size`,string
+build_existing_model.radiant_barrier,:ref:`radiant_barrier`,string
+build_existing_model.range_spot_vent_hour,:ref:`range_spot_vent_hour`,string
+build_existing_model.reeds_balancing_area,:ref:`reeds_balancing_area`,string
+build_existing_model.refrigerator,:ref:`refrigerator`,string
+build_existing_model.refrigerator_usage_level,:ref:`refrigerator_usage_level`,string
+build_existing_model.roof_material,:ref:`roof_material`,string
+build_existing_model.state,:ref:`state`,string
+build_existing_model.state_metro_median_income,:ref:`state_metro_median_income`,string
+build_existing_model.tenure,:ref:`tenure`,string
+build_existing_model.usage_level,:ref:`usage_level`,string
+build_existing_model.vacancy_status,:ref:`vacancy_status`,string
+build_existing_model.vintage,:ref:`vintage`,string
+build_existing_model.vintage_acs,:ref:`vintage_acs`,string
+build_existing_model.water_heater_efficiency,:ref:`water_heater_efficiency`,string
+build_existing_model.water_heater_fuel,:ref:`water_heater_fuel`,string
+build_existing_model.water_heater_in_unit,:ref:`water_heater_in_unit`,string
+build_existing_model.water_heater_location,:ref:`water_heater_location`,string
+build_existing_model.window_areas,:ref:`window_areas`,string
+build_existing_model.windows,:ref:`windows`,string
+building_id,The building unit number (between 1 and the number of samples).,int
+upgrade,The upgrade run number (will be present for upgrade run).,int
+job_id,The unique identifier of the job/processor.,int
+started_at,Simulation start time.,string
+completed_at,Simulation end time.,string
+completed_status,"Simulation Success, Fail, or Invalid.",string
+eplusout_err,Contents of the eplusout.err file.,string
+step_failures,Contents of the step_failures.,string
+build_existing_model.air_leakage_to_outside_ach_50,Total infiltration to the dwelling unit adjusted by ratio of exterior envelope surface area to total envelope surface area.,float
+build_existing_model.applicable,The measure was applied to the workflow.,bool
+build_existing_model.buildstock_csv_path,Absolute/relative path of the buildstock CSV file. Relative is compared to the 'lib/housing_characteristics' directory.,string
+build_existing_model.project_directory,The project directory containing the housing characteristics folder (e.g. project_national).,string
+build_existing_model.sample_weight,Number of buildings this simulation represents.,float
+build_existing_model.units_represented,The number of dwelling units this simulation represents. Should always be one.,int
+build_existing_model.emissions_electricity_folders,"Relative paths of electricity emissions factor schedule files with hourly values. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. File names must contain GEA region names.",string
+build_existing_model.emissions_electricity_units,"Electricity emissions factors units. If multiple scenarios, use a comma-separated list. Only lb/MWh and kg/MWh are allowed.",string
+build_existing_model.emissions_electricity_values_or_filepaths,"Electricity emissions factors values, specified as either an annual factor or an absolute/relative path to a file with hourly factors. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.emissions_fossil_fuel_units,"Fossil fuel emissions factors units. If multiple scenarios, use a comma-separated list. Only lb/MBtu and kg/MBtu are allowed.",string
+build_existing_model.emissions_fuel_oil_values,"Fuel oil emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.emissions_natural_gas_values,"Natural gas emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.emissions_propane_values,"Propane emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.emissions_scenario_names,"Names of emissions scenarios. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.emissions_types,"Types of emissions (e.g., CO2e, NOx, etc.). If multiple scenarios, use a comma-separated list.",string
+build_existing_model.emissions_wood_values,"Wood emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.simulation_control_run_period_begin_day_of_month,This numeric field should contain the starting day of the starting month (must be valid for month) for the annual run period desired.,int
+build_existing_model.simulation_control_run_period_begin_month,"This numeric field should contain the starting month number (1 = January, 2 = February, etc.) for the annual run period desired.",int
+build_existing_model.simulation_control_run_period_calendar_year,"This numeric field should contain the calendar year that determines the start day of week. If you are running simulations using AMY weather files, the value entered for calendar year will not be used; it will be overridden by the actual year found in the AMY weather file.",int
+build_existing_model.simulation_control_run_period_end_day_of_month,This numeric field should contain the ending day of the ending month (must be valid for month) for the annual run period desired.,int
+build_existing_model.simulation_control_run_period_end_month,"This numeric field should contain the end month number (1 = January, 2 = February, etc.) for the annual run period desired.",int
+build_existing_model.simulation_control_timestep,Value must be a divisor of 60.,int
+build_existing_model.utility_bill_detailed_filepaths,"Relative paths of detailed utility rates. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. Files must contain the name of the Parameter as the column header.",string
+build_existing_model.utility_bill_electricity_filepaths,"Electricity tariff file specified as an absolute/relative path to a file with utility rate structure information. Tariff file must be formatted to OpenEI API version 7. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_electricity_fixed_charges,"Electricity utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_electricity_marginal_rates,"Electricity utility bill marginal rates. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_fuel_oil_fixed_charges,"Fuel oil utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_fuel_oil_marginal_rates,"Fuel oil utility bill marginal rates. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_natural_gas_fixed_charges,"Natural gas utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_natural_gas_marginal_rates,"Natural gas utility bill marginal rates. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_propane_fixed_charges,"Propane utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_propane_marginal_rates,"Propane utility bill marginal rates. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_pv_compensation_types,"Utility bill PV compensation types. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_pv_feed_in_tariff_rates,"Utility bill PV annual full/gross feed-in tariff rates. Only applies if the PV compensation type is 'FeedInTariff'. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_pv_monthly_grid_connection_fee_units,"Utility bill PV monthly grid connection fee units. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_pv_monthly_grid_connection_fees,"Utility bill PV monthly grid connection fees. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_pv_net_metering_annual_excess_sellback_rate_types,"Utility bill PV net metering annual excess sellback rate types. Only applies if the PV compensation type is 'NetMetering'. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_pv_net_metering_annual_excess_sellback_rates,"Utility bill PV net metering annual excess sellback rates. Only applies if the PV compensation type is 'NetMetering' and the PV annual excess sellback rate type is 'User-Specified'. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_scenario_names,"Names of utility bill scenarios. If multiple scenarios, use a comma-separated list. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_simple_filepaths,"Relative paths of simple utility rates. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. Files must contain the name of the Parameter as the column header.",string
+build_existing_model.utility_bill_wood_fixed_charges,"Wood utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.utility_bill_wood_marginal_rates,"Wood utility bill marginal rates. If multiple scenarios, use a comma-separated list.",string
+build_existing_model.weather_file_city,City from the EPW weather file.,string
+build_existing_model.weather_file_latitude,Latitude from the EPW weather file.,float
+build_existing_model.weather_file_longitude,Longitude from the EPW weather file.,float
+build_existing_model.heating_unavailable_period,Heating unavailable period.,string
+build_existing_model.cooling_unavailable_period,Cooling unavailable period.,string
+build_existing_model.electric_panel_service_rating,The service rating capacity value corresponding to the bin.,float
+build_existing_model.electric_panel_service_rating_bin,The sampled service rating capacity bin of the electric panel.,string
+build_existing_model.unit_height_above_grade,Height of the lowest conditioned floor above grade for the unit.,float
+apply_upgrade.applicable,The measure was applied to the workflow.,bool
+apply_upgrade.upgrade_name,User-specificed name that describes the upgrade.,string
+apply_upgrade.reference_scenario,The upgrade_name which should act as a reference to this upgrade to calculate savings.,string
+report_simulation_output.applicable,The measure was applied to the workflow.,bool
+report_simulation_output.output_format,"The file format of the annual (and timeseries, if requested) outputs. If 'csv_dview' is selected, the timeseries CSV file will include header rows that facilitate opening the file in the DView application.",string
+report_simulation_output.timeseries_frequency,The frequency at which to report timeseries output data. Using 'none' will disable timeseries outputs.,string
+report_simulation_output.include_annual_total_consumptions,Generates annual energy consumptions for the total building.,bool
+report_simulation_output.include_annual_fuel_consumptions,Generates annual energy consumptions for each fuel type.,bool
+report_simulation_output.include_annual_end_use_consumptions,Generates annual energy consumptions for each end use.,bool
+report_simulation_output.include_annual_system_use_consumptions,Generates annual energy consumptions for each end use of each HVAC and water heating system.,bool
+report_simulation_output.include_annual_emissions,Generates annual emissions. Requires the appropriate HPXML inputs to be specified.,bool
+report_simulation_output.include_annual_emission_fuels,Generates annual emissions for each fuel type. Requires the appropriate HPXML inputs to be specified.,bool
+report_simulation_output.include_annual_emission_end_uses,Generates annual emissions for each end use. Requires the appropriate HPXML inputs to be specified.,bool
+report_simulation_output.include_annual_total_loads,"Generates annual heating, cooling, and hot water loads.",bool
+report_simulation_output.include_annual_unmet_hours,Generates annual unmet hours for heating and cooling.,bool
+report_simulation_output.include_annual_peak_fuels,Generates annual electricity peaks for summer/winter.,bool
+report_simulation_output.include_annual_peak_loads,Generates annual peak loads for heating/cooling.,bool
+report_simulation_output.include_annual_component_loads,Generates annual heating and cooling loads disaggregated by component type.,bool
+report_simulation_output.include_annual_hot_water_uses,Generates annual hot water usages for each end use.,bool
+report_simulation_output.include_annual_hvac_summary,"Generates HVAC capacities, design temperatures, and design loads.",bool
+report_simulation_output.include_annual_panel_summary,Generates electric panel breaker spaces and loads.,bool
+report_simulation_output.include_annual_resilience,Generates annual resilience outputs.,bool
+report_simulation_output.include_timeseries_total_consumptions,Generates timeseries energy consumptions for the total building.,bool
+report_simulation_output.include_timeseries_fuel_consumptions,Generates timeseries energy consumptions for each fuel type.,bool
+report_simulation_output.include_timeseries_end_use_consumptions,Generates timeseries energy consumptions for each end use.,bool
+report_simulation_output.include_timeseries_system_use_consumptions,Generates timeseries energy consumptions for each end use of each HVAC and water heating system.,bool
+report_simulation_output.include_timeseries_emissions,Generates timeseries emissions. Requires the appropriate HPXML inputs to be specified.,bool
+report_simulation_output.include_timeseries_emission_fuels,Generates timeseries emissions for each fuel type. Requires the appropriate HPXML inputs to be specified.,bool
+report_simulation_output.include_timeseries_emission_end_uses,Generates timeseries emissions for each end use. Requires the appropriate HPXML inputs to be specified.,bool
+report_simulation_output.include_timeseries_hot_water_uses,Generates timeseries hot water usages for each end use.,bool
+report_simulation_output.include_timeseries_total_loads,"Generates timeseries total heating, cooling, and hot water loads.",bool
+report_simulation_output.include_timeseries_component_loads,Generates timeseries heating and cooling loads disaggregated by component type.,bool
+report_simulation_output.include_timeseries_unmet_hours,Generates timeseries unmet hours for heating and cooling.,bool
+report_simulation_output.include_timeseries_zone_temperatures,Generates timeseries temperatures for each thermal zone.,bool
+report_simulation_output.include_timeseries_zone_conditions,Generates timeseries temperatures and humidities for each thermal zone.,bool
+report_simulation_output.include_timeseries_airflows,Generates timeseries airflows.,bool
+report_simulation_output.include_timeseries_weather,Generates timeseries weather data.,bool
+report_simulation_output.include_timeseries_resilience,Generates timeseries resilience outputs.,bool
+report_simulation_output.timeseries_timestamp_convention,Determines whether timeseries timestamps use the start-of-period or end-of-period convention. Doesn't apply if the output format is 'csv_dview'.,string
+report_simulation_output.timeseries_num_decimal_places,"Allows overriding the default number of decimal places for timeseries output. Does not apply if output format is msgpack, where no rounding is performed because there is no file size penalty to storing full precision.",int
+report_simulation_output.add_timeseries_dst_column,"Optionally add, in addition to the default local standard Time column, a local clock TimeDST column. Requires that daylight saving time is enabled.",bool
+report_simulation_output.add_timeseries_utc_column,"Optionally add, in addition to the default local standard Time column, a local clock TimeUTC column. If the time zone UTC offset is not provided in the HPXML file, the time zone in the EPW header will be used.",bool
+report_simulation_output.user_output_variables,"Optionally generates timeseries EnergyPlus output variables. If multiple output variables are desired, use a comma-separated list. Do not include key values; by default all key values will be requested. Example: 'Zone People Occupant Count, Zone People Total Heating Energy'",string
+report_simulation_output.user_output_meters,"Optionally generates timeseries EnergyPlus output meters. If multiple output meters are desired, use a comma-separated list. Example: 'Electricity:Facility, HeatingCoils:EnergyTransfer'",string
+report_utility_bills.applicable,The measure was applied to the workflow.,bool
+report_utility_bills.output_format,"The file format of the annual (and timeseries, if requested) outputs.",string
+report_utility_bills.include_annual_bills,Generates output file containing annual utility bills.,bool
+report_utility_bills.include_monthly_bills,Generates output file containing monthly utility bills.,bool
+report_utility_bills.monthly_timestamp_convention,Determines whether monthly timestamps use the start-of-period or end-of-period convention.,string
+report_utility_bills.register_annual_bills,Registers annual utility bills with the OpenStudio runner for downstream processing.,bool
+report_utility_bills.register_monthly_bills,Registers monthly utility bills with the OpenStudio runner for downstream processing.,bool
+upgrade_costs.applicable,The measure was applied to the workflow.,bool
+upgrade_costs.debug,"If true, retain existing and upgraded intermediate files.",bool
+upgrade_costs.upgrade_cost_usd,Total cost of the upgrade.,float
+upgrade_costs.door_area_ft_2,"Total area of doors in the building in square feet.",float
+upgrade_costs.duct_unconditioned_surface_area_ft_2,"Total unconditioned surface area of ducts in the building in square feet.",float
+upgrade_costs.floor_area_attic_ft_2,"Total attic floor area in the building in square feet.",float
+upgrade_costs.floor_area_attic_insulation_increase_ft_2_delta_r_value,"Total attic floor area in the building in square feet.",float
+upgrade_costs.floor_area_conditioned_ft_2,"Total conditioned floor area in the building in square feet.",float
+upgrade_costs.floor_area_conditioned_infiltration_reduction_ft_2_delta_ach_50,"Total conditioned floor area in the building in square feet.",float
+upgrade_costs.floor_area_foundation_ft_2,"Total foundation floor area in the building in square feet.",float
+upgrade_costs.floor_area_lighting_ft_2,"Total floor area in the building in square feet.",float
+upgrade_costs.flow_rate_mechanical_ventilation_cfm,"Total flow rate of mechanical ventilation in cubic feet per minute.",float
+upgrade_costs.rim_joist_area_above_grade_exterior_ft_2,"Total rim joist area above grade in the building in square feet.",float
+upgrade_costs.roof_area_ft_2,"Total roof area in the building in square feet.",float
+upgrade_costs.size_cooling_system_primary_k_btu_h,"Total size of primary cooling system in the building in kilowatt-hours.",float
+upgrade_costs.size_heat_pump_backup_primary_k_btu_h,"Total size of primary heat pump backup in the building in kilowatt-hours.",float
+upgrade_costs.size_heating_system_primary_k_btu_h,"Total size of primary heating system in the building in kilowatt-hours.",float
+upgrade_costs.size_heating_system_secondary_k_btu_h,"Total size of secondary heating system in the building in kilowatt-hours.",float
+upgrade_costs.size_water_heater_gal,"Total size of water heater in the building in gallons.",float
+upgrade_costs.slab_perimeter_exposed_conditioned_ft,"Total perimeter of slab exposed in the building in feet.",float
+upgrade_costs.upgrade_cost_usd,"Total cost of the upgrade in US dollars.",float
+upgrade_costs.wall_area_above_grade_conditioned_ft_2,"Total wall area above grade in the building in square feet.",float
+upgrade_costs.wall_area_above_grade_exterior_ft_2,"Total wall area above grade in the building in square feet.",float
+upgrade_costs.wall_area_below_grade_ft_2,"Total wall area below grade in the building in square feet.",float
+upgrade_costs.window_area_ft_2,"Total window area in the building in square feet.",float
+upgrade_costs.option_<option_number>_name,"Name of the option.",string
+qoi_report.applicable,The measure was applied to the workflow.,bool

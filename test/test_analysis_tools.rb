@@ -20,6 +20,7 @@ class TestTools < Minitest::Test
       buildstockbatch_extras -= ['apply_upgrade.applicable']
       buildstockbatch_extras -= ['apply_upgrade.upgrade_name']
       buildstockbatch_extras -= ['apply_upgrade.reference_scenario']
+      buildstockbatch_extras -= ['upgrade']
       puts "#{project}_baseline, buildstockbatch - run_analysis: #{buildstockbatch_extras}" if !buildstockbatch_extras.empty?
 
       run_analysis_extras = run_analysis.headers - buildstockbatch.headers
