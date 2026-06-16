@@ -26,7 +26,7 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     return false
   end
 
-  if !['residential_quota', 'residential_quota_downselect', 'precomputed'].include?(cfg['sampler']['type'])
+  if !['residential_quota', 'residential_quota_downselect', 'residential_stratified', 'precomputed'].include?(cfg['sampler']['type'])
     puts "Error: Sampler type '#{cfg['sampler']['type']}' is invalid or not supported."
     return false
   end
@@ -56,6 +56,7 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
 
   project_directory = cfg['project_directory']
   output_directory = cfg['output_directory']
+  sampler_type = cfg['sampler']['type']
   n_datapoints = cfg['sampler']['args']['n_datapoints']
 
   if (Pathname.new output_directory).absolute?
@@ -72,9 +73,9 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
   Dir.mkdir(results_dir)
 
   # Create or read buildstock.csv
-  if !['precomputed'].include?(cfg['sampler']['type'])
+  if !['precomputed'].include?(sampler_type)
     buildstock_csv_path = File.join(results_dir, 'buildstock.csv')
-    create_buildstock_csv(project_directory, n_datapoints, buildstock_csv_path)
+    create_buildstock_csv(project_directory, sampler_type, n_datapoints, buildstock_csv_path)
     return if samplingonly
 
     datapoints = (1..n_datapoints).to_a
@@ -490,9 +491,19 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
   return true
 end
 
-def create_buildstock_csv(project_dir, num_samples, outfile)
-  r = RunSampling.new
-  r.run(project_dir, num_samples, outfile)
+def create_buildstock_csv(project_dir, sampler_type, num_samples, outfile)
+  if sampler_type == 'residential_quota'
+    r = RunSampling.new
+    r.run(project_dir, num_samples, outfile)
+  elsif sampler_type == 'residential_stratified'
+    command = "python #{File.dirname(__FILE__)}/../samplers/stratified/sampler/run_sampler.py"
+    command += " sample"
+    command += " -p \"#{project_dir}\""
+    command += " -n \"#{num_samples}\""
+    command += " -o \"#{outfile}\""
+
+    system(command)
+  end
   puts "Sampling took: #{get_elapsed_time(Time.now, $start_time)}."
 end
 

@@ -218,7 +218,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "Update documentation."
+            git commit -m "Update documentation. [skip ci]"
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
@@ -242,7 +242,7 @@ jobs:
       - name: Install python dependencies
         run : |
           python3 -m pip install --progress-bar off --upgrade pip
-          pip3 install --progress-bar off pandas pyyaml
+          pip3 install --progress-bar off pandas pyyaml networkx
 
       - name: Download formatted options_lookup
         uses: actions/download-artifact@v8
@@ -401,7 +401,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "Baseline integration tests results."
+            git commit -m "Baseline integration tests results. [skip ci]"
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
@@ -597,7 +597,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "SDR options analysis results."
+            git commit -m "SDR options analysis results. [skip ci]"
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
@@ -721,7 +721,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "SDR integration tests results."
+            git commit -m "SDR integration tests results. [skip ci]"
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
