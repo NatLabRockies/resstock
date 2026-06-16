@@ -11,7 +11,10 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from sampler.sampling_utils import get_param2tsv, get_samples, TSVTuple
 from sampler.utils import log_error_details, get_error_details
 import random
-random.seed(42)
+
+# Set seeds for reproducibility at the start of your script
+RANDOM_SEED = 42  # Use a fixed seed
+random.seed(RANDOM_SEED)
 
 
 def get_param_graph(param2dep: dict[str, list[str]]) -> nx.DiGraph:
@@ -71,6 +74,13 @@ def sample_param(param_tuple: TSVTuple, sample_df: pd.DataFrame, param: str, num
     return samples
 
 
+def sample_param_wrapper(args):
+    """Wrapper function to unpack arguments for pool.map()"""
+    param, param_tsv_data, sample_data, num_samples, seed = args
+    result = sample_param(param_tsv_data, sample_data, param, num_samples, seed)
+    return param, result
+
+
 def sample_all(project_path, num_samples, *, segment_vars: set[str] | None = None, initial_samples_df: pd.DataFrame | None = None) -> pd.DataFrame:
     param2tsv = get_param2tsv(project_path)
     param2dep = {param: tsv_tuple[1] for (param, tsv_tuple) in param2tsv.items()}
@@ -90,26 +100,34 @@ def sample_all(project_path, num_samples, *, segment_vars: set[str] | None = Non
     with multiprocessing.Pool(processes=max(multiprocessing.cpu_count() - 2, 1)) as pool:
         for level, params in get_topological_generations(param2dep, segment_vars):
             print(f"Sampling {len(params)} params in a batch at level {level}")
-            results = []
-            already_sampled = already_available_columns.intersection(params)
-            remaining_params = set(params) - already_sampled
+
+            # Ensure deterministic ordering
+            already_sampled = sorted(already_available_columns.intersection(params))
+            remaining_params = sorted(set(params) - set(already_sampled))
+
             if already_sampled:
                 print(f"Skipping {len(already_sampled)} params as they are already available")
             if not remaining_params:
                 continue
-            for param in remaining_params:
+
+            # Prepare arguments for pool.map()
+            task_args = []
+            for i, param in enumerate(remaining_params):
                 _, dep_cols, _ = param2tsv[param]
-                seed = random.randint(0, 10**10)
-                res = pool.apply_async(sample_param,
-                                       (param2tsv[param], sample_df[dep_cols], param, num_samples, seed))
-                results.append(res)
-                tsv_count += 1
+                seed = RANDOM_SEED + i
+                task_args.append((param, param2tsv[param], sample_df[dep_cols], num_samples, seed))
+
             st = time.time()
-            samples_dict = {param: res_val.get() for param, res_val in zip(remaining_params, results)}
+            results = pool.map(sample_param_wrapper, task_args)
+            samples_dict = {param: result for param, result in results}
             print(f"Got results for {len(samples_dict)} params in {time.time()-st:.2f}s")
+
             assert len(samples_dict) == len(remaining_params)
+            tsv_count += len(samples_dict)
+
             new_df = pd.DataFrame(samples_dict)
             sample_df = pd.concat([sample_df, new_df], axis=1)
+
     print(f"Sampled in {time.time()-s_time:.2f} seconds")
     print(f"Done sampling {tsv_count} TSVs with {num_samples} samples.")
     return sample_df
