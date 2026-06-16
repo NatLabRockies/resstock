@@ -242,7 +242,7 @@ jobs:
       - name: Install python dependencies
         run : |
           python3 -m pip install --progress-bar off --upgrade pip
-          pip3 install --progress-bar off pandas pyyaml networkx
+          pip3 install --progress-bar off pandas pyyaml networkx polars
 
       - name: Download formatted options_lookup
         uses: actions/download-artifact@v8
