@@ -1,5 +1,6 @@
 """Pure transformation functions for processing BuildStock data for baseline validation."""
 
+import logging
 import polars as pl
 from functools import cache
 
@@ -20,6 +21,8 @@ from resstockpostproc.baseline_validation.plot_helpers.plot_semantics import app
 from resstockpostproc.shared_utils.db_column_names import DataCol
 from resstockpostproc.shared_utils.mapping import ID2UtilityName
 from resstockpostproc.shared_utils.timing import timed
+
+logger = logging.getLogger(__name__)
 
 # Translation from config-level group_by names to raw DB column names.
 # The config layer uses "utility"; the IO layer (queries, DataFrames pre-mapping) uses "eiaid".
@@ -99,7 +102,19 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
         if col in df.columns:
             df = df.filter(pl.col(col) == val)
             if is_multi_col and plot_spec.group_by is not None and col != plot_spec.group_by:
+                logger.warning(
+                    "Dropping focus_on column after filter application. column=%s value=%s group_by=%s",
+                    col,
+                    val,
+                    plot_spec.group_by,
+                )
                 df = df.drop(col)
+        else:
+            logger.warning(
+                "Skipping focus_on filter because column is missing from dataset. column=%s value=%s",
+                col,
+                val,
+            )
 
     # When focus_on filters are active (e.g. "Building Type: Mobile Home"),
     # "US Total" rows in the group_by column are actually filtered-subset
@@ -146,6 +161,9 @@ def _add_percent_difference(
     df: pl.DataFrame, join_columns: list[str], value_columns: list[str], ref_column: str, ref_cols: list[str]
 ) -> pl.DataFrame:
     """Add signed percent difference columns against the reference source."""
+    if not ref_cols:
+        msg = f"No reference rows found in column '{ref_column}' for percent-difference calculation."
+        raise ValueError(msg)
     ref_val = ref_cols[0]
     ref_df = df.filter(pl.col(ref_column) == ref_val).select(join_columns + value_columns)
     full_df = df.join(ref_df, on=join_columns, suffix="_ref", maintain_order="left_right")

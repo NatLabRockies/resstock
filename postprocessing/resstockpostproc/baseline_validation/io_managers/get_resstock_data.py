@@ -202,7 +202,20 @@ def _get_timeseries_by_char(
     resolution: str = "month",
 ):
     db_char_col = get_db_characteristics_colnames(data_source.db_schema)
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="timeseries", skip_missing=data_source.skip_missing_enduses)
+    enduses = _get_db_enduses(
+        bsq,
+        data_source.db_schema,
+        table="timeseries",
+        skip_missing=data_source.skip_missing_enduses,
+    )
+    if not enduses:
+        logger.warning(
+            "No usable enduses for timeseries query; source=%s table=%s by=%s skip_missing_enduses=%s",
+            data_source.name,
+            data_source.table_name,
+            by,
+            data_source.skip_missing_enduses,
+        )
     restrict = [(db_char_col.VACANCY, ["Occupied"])] if occupied_only else []
     if restrict_list:
         restrict += [(db_char_col.STATE, restrict_list)]
@@ -238,7 +251,20 @@ def _get_timeseries_by_utilities(
     resolution: Resolution = Resolution.month,
 ):
     db_char_col = get_db_characteristics_colnames(data_source.db_schema)
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="timeseries", skip_missing=data_source.skip_missing_enduses)
+    enduses = _get_db_enduses(
+        bsq,
+        data_source.db_schema,
+        table="timeseries",
+        skip_missing=data_source.skip_missing_enduses,
+    )
+    if not enduses:
+        logger.warning(
+            "No usable enduses for utility timeseries query; source=%s table=%s eiaid_count=%s skip_missing_enduses=%s",
+            data_source.name,
+            data_source.table_name,
+            len(eiaid_list),
+            data_source.skip_missing_enduses,
+        )
     timestamp_grouping_func = _get_timestamp_grouping_func(resolution)
     ercot_pd = bsq.query(
         enduses=enduses,
@@ -308,6 +334,11 @@ def _get_raw_annual_data(
 ) -> pl.DataFrame | None:
     """Aggregate annual non-utility data directly from the downloaded raw parquet."""
     if not group_cols or any(col == "eiaid" for col in group_cols):
+        logger.warning(
+            "Skipping raw annual parquet path; unsupported grouping for raw aggregation. source=%s group_cols=%s",
+            data_source.name,
+            list(group_cols),
+        )
         return None
 
     raw_path = workflow.get_resstock_data_file(data_source.name)
@@ -315,6 +346,11 @@ def _get_raw_annual_data(
     schema = lf.collect_schema()
     available_cols = set(schema.names())
     if "weight" not in available_cols:
+        logger.warning(
+            "Skipping raw annual parquet path; required column 'weight' missing. source=%s raw_path=%s",
+            data_source.name,
+            raw_path,
+        )
         return None
 
     try:
@@ -327,9 +363,21 @@ def _get_raw_annual_data(
             )
             lf = lf.filter(pl.col(vacancy_col) == "Occupied")
     except ValueError:
+        logger.warning(
+            "Skipping raw annual parquet path; unable to resolve grouping "
+            "or occupancy columns. source=%s group_cols=%s",
+            data_source.name,
+            list(group_cols),
+        )
         return None
 
     if not quantity_exprs:
+        logger.warning(
+            "Skipping raw annual parquet path; no usable enduse quantity "
+            "expressions were built. source=%s db_schema=%s",
+            data_source.name,
+            data_source.db_schema,
+        )
         return None
 
     raw_rows = lf.select(
@@ -523,7 +571,21 @@ def _get_annual_by_chars(
     The US-Total row is computed by dropping `by` from the group_by.
     """
     char_cols = get_db_characteristics_colnames(data_source.db_schema)
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline", skip_missing=data_source.skip_missing_enduses)
+    enduses = _get_db_enduses(
+        bsq,
+        data_source.db_schema,
+        table="baseline",
+        skip_missing=data_source.skip_missing_enduses,
+    )
+    if not enduses:
+        logger.warning(
+            "No usable enduses for annual query; source=%s table=%s by=%s filter_char=%s skip_missing_enduses=%s",
+            data_source.name,
+            data_source.table_name,
+            by,
+            filter_char,
+            data_source.skip_missing_enduses,
+        )
     restrict = [(char_cols.VACANCY, ["Occupied"])] if occupied_only else []
 
     by_col = _get_by_col(by, bsq)
@@ -540,7 +602,19 @@ def _get_annual_by_chars(
 
 
 def _get_annual_by_eiaid(bsq, data_source):
-    enduses = _get_db_enduses(bsq, data_source.db_schema, table="baseline", skip_missing=data_source.skip_missing_enduses)
+    enduses = _get_db_enduses(
+        bsq,
+        data_source.db_schema,
+        table="baseline",
+        skip_missing=data_source.skip_missing_enduses,
+    )
+    if not enduses:
+        logger.warning(
+            "No usable enduses for annual utility query; source=%s table=%s skip_missing_enduses=%s",
+            data_source.name,
+            data_source.table_name,
+            data_source.skip_missing_enduses,
+        )
     db_char_col = get_db_characteristics_colnames(data_source.db_schema)
     ercot_pd = bsq.query(
         enduses=enduses,
@@ -560,7 +634,12 @@ def _get_annual_by_eiaid(bsq, data_source):
     return df
 
 
-def _get_db_enduses(bsq: BuildStockQuery, db_schema: DBSchema, table: str, skip_missing: bool = False) -> tuple[str, ...]:
+def _get_db_enduses(
+    bsq: BuildStockQuery,
+    db_schema: DBSchema,
+    table: str,
+    skip_missing: bool = False,
+) -> tuple[str, ...]:
     data_col_to_db_col = get_db_enduse_colnames_map(db_schema)
     enduses = []
     for new_name, dbcols in data_col_to_db_col.items():
@@ -577,11 +656,31 @@ def _get_db_enduses(bsq: BuildStockQuery, db_schema: DBSchema, table: str, skip_
                     bsq.get_calculated_column(column_name="_probe", column_expr=subcol, table=table)
                     valid_cols.append(subcol)
                 except (KeyError, ValueError):
-                    logger.warning("Column not found: '%s' (part of '%s') — skipping.", subcol, new_name)
+                    logger.warning(
+                        "BuildStockQuery missing sub-column; skipping from "
+                        "calculated enduse. table=%s enduse=%s sub_column=%s",
+                        table,
+                        new_name,
+                        subcol,
+                    )
             if not valid_cols:
-                logger.warning("No valid columns for '%s' — skipping entirely.", new_name)
+                logger.warning(
+                    "BuildStockQuery found no valid sub-columns; skipping enduse entirely. table=%s enduse=%s",
+                    table,
+                    new_name,
+                )
                 continue
             enduse_expr = " + ".join(valid_cols)
+            skipped_cols = [subcol for subcol in dbcols if subcol not in valid_cols]
+            if skipped_cols:
+                logger.warning(
+                    "BuildStockQuery partially dropped enduse expression "
+                    "columns. table=%s enduse=%s kept=%s dropped=%s",
+                    table,
+                    new_name,
+                    valid_cols,
+                    skipped_cols,
+                )
         else:
             enduse_expr = " + ".join(dbcols) if isinstance(dbcols, tuple) else dbcols
 
@@ -589,10 +688,18 @@ def _get_db_enduses(bsq: BuildStockQuery, db_schema: DBSchema, table: str, skip_
             col = bsq.get_calculated_column(column_name=new_name, column_expr=enduse_expr, table=table)
         except (KeyError, ValueError):
             if skip_missing:
-                logger.warning("Column(s) not found for '%s' (expr: %s) — skipping.", new_name, enduse_expr)
+                logger.warning(
+                    "BuildStockQuery could not build calculated column; skipping enduse. table=%s enduse=%s expr=%s",
+                    table,
+                    new_name,
+                    enduse_expr,
+                )
                 continue
             raise
         enduses.append(col)
+
+    if skip_missing and not enduses:
+        logger.warning("BuildStockQuery produced zero enduses after missing-column filtering. table=%s", table)
 
     return tuple(enduses)
 
@@ -607,6 +714,7 @@ def _transform_columns(df: pl.DataFrame, db_schema: DBSchema) -> pl.DataFrame:
     new_cols_expr = []
     to_drop_cols = []
 
+    missing_value_cols = []
     for new_name, db_name in db_enduse_colmap.items():
         # Skip if this enduse is not mapped (db_name is None)
         if db_name is None:
@@ -614,6 +722,7 @@ def _transform_columns(df: pl.DataFrame, db_schema: DBSchema) -> pl.DataFrame:
 
         # BSQ returns columns with new_name already
         if new_name not in df.columns:
+            missing_value_cols.append(new_name)
             continue
 
         value_col_name = new_name + "_value"
@@ -648,6 +757,15 @@ def _transform_columns(df: pl.DataFrame, db_schema: DBSchema) -> pl.DataFrame:
         if nonzero_quartiles_db_col in df.columns:
             new_cols_expr.append(pl.col(nonzero_quartiles_db_col).alias(nonzero_quartiles_col_name))
             to_drop_cols.append(nonzero_quartiles_db_col)
+
+    if missing_value_cols:
+        logger.warning(
+            "Dropping unmapped/missing enduse outputs during column transform; missing_value_columns=%s",
+            missing_value_cols,
+        )
+
+    if not new_cols_expr:
+        logger.warning("No transformed enduse columns were produced from query result; output may be incomplete.")
 
     df = df.with_columns(new_cols_expr)
     df = df.drop(to_drop_cols)
