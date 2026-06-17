@@ -260,6 +260,7 @@ jobs:
           pip install polars
           pip install joblib
           pip install click
+          pip install pyarrow
           
           openstudio test/test_run_analysis.rb
 
