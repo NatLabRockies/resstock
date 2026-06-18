@@ -34,6 +34,7 @@ buildstockbatch_crash_details.log
 .vscode/
 node_modules/
 .DS_Store
+*.pyc
 **/.ipynb_checkpoints/*
 **/.bsq_cache/
 

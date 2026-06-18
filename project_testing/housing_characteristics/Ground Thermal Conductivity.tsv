@@ -1,4 +1,4 @@
-Option=0.5	Option=0.8	Option=1.1	Option=1.4	Option=1.7	Option=2.0	Option=2.3	Option=2.6	sampling_probability
+Option=0.5	Option=0.8	Option=1.1	Option=1.4	Option=1.7	Option=2	Option=2.3	Option=2.6	sampling_probability
 0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125	1
 # Created by: sources\smu\tsv_maker.py
 # Description: The thermal conductivity (in Btu/hr-ft-F) of the ground using in foundation and geothermal heat pump heat transfer calculations.

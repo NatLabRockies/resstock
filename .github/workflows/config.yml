@@ -20,7 +20,7 @@ env:
   OPENSTUDIO_PLATFORM: Ubuntu-24.04-x86_64
   OPENSTUDIO_EXT: deb
   OPENSTUDIO_URL: https://github.com/NatLabRockies/OpenStudio/releases/download/v3.10.0
-  BUILDSTOCK_BATCH_BRANCH: develop
+  BUILDSTOCK_BATCH_BRANCH: sampling_regions
   BUILDSTOCK_QUERY_BRANCH: main
 
 jobs:
@@ -97,6 +97,34 @@ jobs:
           name: feature_samples
           path: resources/buildstock.csv
           if-no-files-found: error
+
+  sampler-tests:
+    runs-on: ubuntu-24.04
+    needs: [format-files]
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Setup python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.0.0
+
+      - name: Install sampler dependencies
+        working-directory: samplers/stratified
+        run: |
+          uv venv
+          uv pip install -e . --group dev
+
+      - name: Run sampler tests
+        working-directory: samplers/stratified
+        run: |
+          uv run pytest tests
 
   postprocessing-tests:
     runs-on: ubuntu-24.04
@@ -200,6 +228,11 @@ jobs:
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
+      - name: Setup python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
       - name: Download formatted options_lookup
         uses: actions/download-artifact@v8
         with:
@@ -221,6 +254,14 @@ jobs:
 
       - name: Run run_analysis.rb
         run: |
+          pip install pandas
+          pip install pyyaml
+          pip install networkx
+          pip install polars
+          pip install joblib
+          pip install click
+          pip install pyarrow
+          
           openstudio test/test_run_analysis.rb
 
       - name: Upload run_analysis.rb results
@@ -453,7 +494,7 @@ jobs:
 
       - name: Generate 550K Sample
         run: |
-          openstudio resources/run_sampling.rb -p project_national -n 550000 -o ../project_national/resources/national_550ksamples.csv
+          openstudio samplers/quota/run_sampling.rb -p project_national -n 550000 -o ../project_national/resources/national_550ksamples.csv
           cd project_national/resources
           gzip -c national_550ksamples.csv > national_550ksamples.csv.gz
 
