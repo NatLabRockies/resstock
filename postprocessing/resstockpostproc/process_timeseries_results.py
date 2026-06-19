@@ -1,6 +1,6 @@
 """
 This script will create Athena views from raw ResStock results following
-the SightGlassDataProcessing OEDI format (db_schema: resstock_oedi_new).
+the OEDI format (with db_schema: resstock_oedi_new).
 
 Views created:
   - Timeseries view: <table>_ts_by_state (always created)
@@ -83,6 +83,8 @@ import io
 import re
 import time
 import argparse
+import logging
+import traceback
 from typing import Optional, Union, Literal
 from pathlib import Path
 import pandas as pd
@@ -91,6 +93,10 @@ from botocore.exceptions import ClientError
 import pyarrow.parquet as pq
 
 from buildstock_query import BuildStockQuery
+
+# Configure logging for column processing traceability
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 
 # --- Constants and configuration ---
@@ -166,18 +172,27 @@ def initialize_buildstock_query(
     else:
         db_schema = f"{buildstock_type}_default"
 
-    bsq = BuildStockQuery(
-        workgroup=workgroup,
-        db_name=database,
-        table_name=table,
-        buildstock_type=buildstock_type,
-        db_schema=db_schema,
-        sample_weight_override=1,
-        **kwargs,
-    )
-    print(" ** bsq handle initialized. ** ")
-
-    return bsq
+    logger.info(f"Initializing BuildStockQuery with database='{database}', table='{table}', workgroup='{workgroup}', db_schema='{db_schema}'")
+    
+    try:
+        bsq = BuildStockQuery(
+            workgroup=workgroup,
+            db_name=database,
+            table_name=table,
+            buildstock_type=buildstock_type,
+            db_schema=db_schema,
+            sample_weight_override=1,
+            skip_reports=True,
+            **kwargs,
+        )
+        logger.info(f"Successfully initialized BuildStockQuery for table '{table}' ** ")
+        return bsq
+    except Exception as e:
+        logger.error(f"BuildStockQuery initialization failed for database='{database}', table='{table}', workgroup='{workgroup}'")
+        logger.error(f"Exception type: {type(e).__name__}")
+        logger.error(f"Exception message: {str(e)}")
+        logger.debug(f"Full traceback:\n{traceback.format_exc()}")
+        raise
 
 
 def list_views(bsq: BuildStockQuery) -> list[str]:
@@ -244,7 +259,7 @@ def create_view(
     if state != "SUCCEEDED":
         raise RuntimeError(f"View creation failed ({state}): {reason}")
 
-    print(f" ** View '{view_name}' created successfully in database '{bsq.db_name}'. ** ")
+    logger.info(f" ** View '{view_name}' created successfully in database '{bsq.db_name}'. ** ")
     return state, reason
 
 
@@ -327,7 +342,10 @@ def _build_county_utc_offset_case_sql_expr() -> str:
 
 
 def _build_est_time_sql_expr(
-    bsq: BuildStockQuery, time_col: str, has_timeutc: bool
+    bsq: BuildStockQuery,
+    time_col: str,
+    has_timeutc: bool,
+    time_table: Optional[str] = None,
 ) -> tuple[str, int]:
     """Build a SQL expression to convert timestamps to EST period-beginning.
 
@@ -347,6 +365,10 @@ def _build_est_time_sql_expr(
     has_timeutc : bool
         If True, the source table contains a ``timeutc`` column and no
         county-based local-to-UTC conversion is needed.
+    time_table : str or None
+        Time table to infer timestep/simulation year from. If None,
+        defaults to ``<table_name>_timeseries``. This can be a subquery,
+        e.g., hourly-resampled times.
 
     Returns
     -------
@@ -363,13 +385,14 @@ def _build_est_time_sql_expr(
         """).iloc[0, 0]
 
     except Exception:
-        print(
-            f"Could not determine timeseries timestamp convention from {table_name}_baseline. Defaulting to 'end'."
-        )
+        logger.warning(f"Could not determine timeseries timestamp convention from {table_name}_baseline. Defaulting to 'end'.")
         time_convention = "end"
 
+    if time_table is None:
+        time_table = f"{table_name}_timeseries"
+
     df = bsq.execute(f"""
-        SELECT DISTINCT "time" FROM {table_name}_timeseries
+        SELECT DISTINCT "time" FROM {time_table}
         ORDER BY 1
         LIMIT 2
     """)
@@ -661,6 +684,9 @@ def _build_renamed_columns(
         skip_cols = set()
     sql_exprs = []
     ts_cols = []
+    skipped_cols = []
+    passed_through_cols = []
+    
     for col in columns:
         if col in skip_cols:
             continue
@@ -671,11 +697,25 @@ def _build_renamed_columns(
                 # pass through all non-standard columns
                 new_col = col
                 fuel_units = mult = None
-                print(" - Unmapped column (passed through):", col)
+                passed_through_cols.append(col)
+                logger.info(f"Unmapped column (passed through): {col}")
             else:
+                skipped_cols.append((col, "does not match any known pattern"))
+                logger.debug(f"Dropping column (no pattern match): {col}")
                 continue
         ts_cols.append((col, new_col))
         sql_exprs.append(_build_column_sql_expr(col, new_col, fuel_units, mult))
+    
+    # Log summary of column processing
+    if skipped_cols:
+        # Only log those unintentionally dropped
+        logger.info(f"Total columns dropped: {len(skipped_cols)}")
+        for col, reason in skipped_cols:
+            logger.debug(f"  - {col}: {reason}")
+    
+    if passed_through_cols:
+        logger.info(f"Total columns passed through (unmapped): {len(passed_through_cols)}")
+    
     return sql_exprs, ts_cols
 
 
@@ -698,9 +738,11 @@ def _build_intensity_columns(
     list[str]
         SQL expressions like ``"col" / "in.sqft" AS "col_intensity"``.
     """
-    return [
+    intensity_exprs = [
         f'"{new_col}" / "{sqft_col}" AS "{new_col}_intensity"' for _, new_col in ts_cols
     ]
+    logger.info(f"Generated {len(intensity_exprs)} intensity column expressions from {len(ts_cols)} energy columns")
+    return intensity_exprs
 
 
 def _get_column_mapping_config(ochre_workflow: bool) -> tuple[bool, bool]:
@@ -723,10 +765,12 @@ def _get_column_mapping_config(ochre_workflow: bool) -> tuple[bool, bool]:
         # so skip intensity columns for now if ochre_workflow is True
         compute_intensity_cols = False
         keep_unmapped_cols = True  # keep all columns for maximum flexibility in Ochre
+        logger.info("Column mapping config: OCHRE workflow - pass through all unmapped columns, skip intensity calculations")
     else:
         # ResStock standard workflow
         compute_intensity_cols = True
         keep_unmapped_cols = False  # only include mapped columns for cleaner OEDI output
+        logger.info("Column mapping config: ResStock standard workflow - compute intensity columns, drop unmapped columns")
     return compute_intensity_cols, keep_unmapped_cols
 
 
@@ -755,10 +799,9 @@ def create_query_oedi_timeseries(
     columns = [c.name for c in bsq.ts_table.columns]
     partition_cols = _get_partition_columns(bsq)
 
-    print(f"Timeseries table columns ({len(columns)} total): \n{columns}")
-    print()
-    print(f"Partition columns inferred from table ({len(partition_cols)} total): \n{partition_cols}")
-    print()
+    logger.info(f"Timeseries table columns ({len(columns)} total): {columns}")
+    logger.info(f"Partition columns inferred from table ({len(partition_cols)} total): {partition_cols}")
+    logger.info(f"Starting timeseries column processing: {len(columns)} total columns, {len(partition_cols)} partition columns")
 
     bldg_id_col = "bldg_id"
     upgrade_col = "upgrade"
@@ -766,8 +809,36 @@ def create_query_oedi_timeseries(
     sqft_col = "in.sqft"
     must_have_cols = [bldg_id_col, upgrade_col, time_col]
 
-    # CTE 1: simplified baseline
-    has_timeutc = "timeutc" in columns
+    # CTE 1: resample timeseries to hourly
+    ts_group_cols = ["building_id", "upgrade"] + [
+        c for c in partition_cols if c not in {"building_id", "upgrade", "time", "timeutc"}
+    ]
+    ts_group_exprs = [f'"{c}"' for c in ts_group_cols]
+    ts_select_exprs = [f'"{c}"' for c in ts_group_cols]
+
+    # omit timeutc even if it exists since DATE_TRUNC may not align between two time cols
+    ts_select_exprs.append('DATE_TRUNC(\'hour\', "time") AS "time"')
+    ts_group_exprs.append('DATE_TRUNC(\'hour\', "time")')
+
+    ts_agg_skip_cols = set(ts_group_cols) | {"time", "timeutc"}
+    for col in columns:
+        if col in ts_agg_skip_cols:
+            continue
+        if col.endswith("_kwh") or col.endswith("_kbtu"):
+            ts_select_exprs.append(f'SUM("{col}") AS "{col}"')
+        else:
+            ts_select_exprs.append(f'AVG("{col}") AS "{col}"')
+
+    cte_sql_expr = f"""
+    WITH ts_table AS (
+        SELECT {", ".join(ts_select_exprs)}
+        FROM {table_name}_timeseries
+        GROUP BY {", ".join(ts_group_exprs)}
+    ),
+    """
+
+    # CTE 2: simplified baseline
+    has_timeutc = False # always false because of CTE 1
 
     bl_cols = [f'"building_id" AS "{bldg_id_col}"']
     if not has_timeutc:
@@ -776,20 +847,31 @@ def create_query_oedi_timeseries(
         bl_cols.append(
             f'"upgrade_costs.floor_area_conditioned_ft_2" AS "{sqft_col}"'
         )
-
-    cte_sql_expr = f"""
-    WITH bl_table AS (
+    
+    cte_sql_expr += f"""
+    bl_table AS (
         SELECT {", ".join(bl_cols)}
         FROM {table_name}_baseline
-        ),
+    ),
     """
 
-    # CTE 2: renamed timeseries joined with baseline + time adjustment
+    # CTE 3: renamed timeseries joined with baseline + time adjustment
     id_cols = [f'"{bldg_id_col}"', f'"{upgrade_col}"']
     if compute_intensity_cols:
         id_cols.append(f'"{sqft_col}"')
     partition_exprs = [f'"{pc}"' for pc in partition_cols if pc not in must_have_cols]
-    time_sql_expr, sim_year = _build_est_time_sql_expr(bsq, time_col, has_timeutc)
+    resampled_time_table = f"""
+    (
+        SELECT DATE_TRUNC('hour', "time") AS "time"
+        FROM {table_name}_timeseries
+    )
+    """
+    time_sql_expr, sim_year = _build_est_time_sql_expr(
+        bsq,
+        time_col,
+        has_timeutc,
+        time_table=resampled_time_table,
+    )
     skip_cols = set(partition_cols) | {"time", "timeutc", "building_id", "upgrade"}
     ts_exprs, ts_cols = _build_renamed_columns(
         columns, keep_unmapped_cols=keep_unmapped_cols, skip_cols=skip_cols,
@@ -801,13 +883,14 @@ def create_query_oedi_timeseries(
         c for c in columns if c not in mapped_raw_cols and c not in skip_cols
     ]
     if unmapped_cols:
-        print()
-        print("-" * 60)
-        print(f"Unmapped columns ({len(unmapped_cols)}):")
+        logger.debug("-" * 60)
+        logger.warning(f"Unmapped columns ({len(unmapped_cols)})")
         for col in unmapped_cols:
-            print(f"  - {col}")
-        print("-" * 60)
-        print()
+            logger.debug(f"  - {col}")
+        logger.debug("-" * 60)
+        logger.warning(f"Total unmapped columns (not computed): {len(unmapped_cols)}")
+        for col in unmapped_cols:
+            logger.warning(f"  - Column not computed: {col}")
 
     columns_sql_expr = ", \n".join(
         id_cols + partition_exprs + [time_sql_expr] + ts_exprs
@@ -815,7 +898,7 @@ def create_query_oedi_timeseries(
     cte_sql_expr += f"""
     renamed_table AS (
     SELECT {columns_sql_expr} FROM bl_table JOIN
-    {table_name}_timeseries ON "bldg_id" = "building_id"
+    ts_table ON "bldg_id" = "building_id"
     )
     """
 
@@ -860,11 +943,11 @@ def create_view_oedi_timeseries(
         If True, overwrite an existing view with the same name.
     """
     select_sql = create_query_oedi_timeseries(bsq, ochre_workflow=ochre_workflow)
-    # print("=" * 60)
-    # print("GENERATED SQL:")
-    # print("=" * 60)
-    # print(select_sql)
-    # print("=" * 60)
+    # logger.info("=" * 60)
+    # logger.info("GENERATED SQL:")
+    # logger.info("=" * 60)
+    # logger.info(select_sql)
+    # logger.info("=" * 60)
     create_view(bsq, view_name, select_sql, force)
 
 
@@ -1001,20 +1084,18 @@ def check_view_oedi_timeseries(
     """
     compute_intensity_cols, _ = _get_column_mapping_config(ochre_workflow)
 
-    print("-" * 60)
-    print(f"Checking results of view '{view_name}', this may take a few moments...")
-    print("-" * 60)
-    print()
+    logger.debug("-" * 60)
+    logger.info(f"Checking results of view '{view_name}', this may take a few moments...")
+    logger.debug("-" * 60)
     t0 = time.time()
     # 1. Check that expected columns are present
     df = bsq.execute(f"SELECT * FROM {view_name} LIMIT {limit_rows}")
 
-    print(f"Columns in view '{view_name}' ({len(df.columns)} total): \n{list(df.columns)}")
-    print()
+    logger.info(f"Columns in view '{view_name}' ({len(df.columns)} total): {list(df.columns)}")
 
     filename = f"{view_name}_sample_output.csv"
     df.to_csv(filename, index=False)
-    print(f"Sample view output saved to: {filename}")
+    logger.info(f"Sample view output saved to: {filename}")
 
     missing_cols = []
     if "timestamp" not in df.columns:
@@ -1051,8 +1132,8 @@ def check_view_oedi_timeseries(
         len(df2) == expected_timesteps
     ), f"Expected {expected_timesteps} unique timestamps for a full simulation year with {timestep_hours}-hour timesteps, but found {len(df2)}."
     
-    print(f"View '{view_name}' passed basic checks on column names and timestamps.")
-    print(f"check_view_result completed in {time.time() - t0:.1f}s")
+    logger.info(f"View '{view_name}' passed basic checks on column names and timestamps.")
+    logger.info(f"check_view_result completed in {time.time() - t0:.1f}s")
 
 
 # =============================================================================
@@ -1310,9 +1391,9 @@ def create_external_table(
             },
         }
 
-        print(f"Inferring schema from Parquet files at '{s3_location}'...")
+        logger.info(f"Inferring schema from Parquet files at '{s3_location}'...")
         columns = _infer_parquet_schema_from_s3(s3_location, region_name)
-        print(f"  Found {len(columns)} columns.")
+        logger.info(f"Found {len(columns)} columns.")
 
         # Ensure trailing slash for Location
         location = s3_location if s3_location.endswith("/") else s3_location + "/"
@@ -1341,15 +1422,13 @@ def create_external_table(
             )
         except ClientError as e:
             if e.response["Error"]["Code"] == "AlreadyExistsException":
-                print(f"Table '{table_name}' already exists.")
+                logger.info(f"Table '{table_name}' already exists.")
                 return
             raise RuntimeError(
                 f"Glue create_table failed: {e.response['Error']['Message']}"
             ) from e
 
-        print(
-            f"External table '{table_name}' created via Glue pointing to '{s3_location}'."
-        )
+        logger.info(f"External table '{table_name}' created via Glue pointing to '{s3_location}'.")
         return
 
     # For non-self-describing formats, fall back to Athena DDL
@@ -1390,7 +1469,7 @@ def create_external_table(
         reason = result["QueryExecution"]["Status"].get("StateChangeReason", "unknown")
         raise RuntimeError(f"CREATE EXTERNAL TABLE failed ({state}): {reason}")
 
-    print(f"External table '{table_name}' created pointing to '{s3_location}'.")
+    logger.info(f"External table '{table_name}' created pointing to '{s3_location}'.")
 
 
 def _list_s3_subfolders(s3_location: str, region_name: str = "us-west-2") -> list[str]:
@@ -1466,21 +1545,20 @@ def ensure_table_exists(
     tables = list_tables_boto3(
         database, workgroup=workgroup, s3_output=s3_output, region_name=region_name
     )
-    print(f"\nAvailable tables for database='{database}': {tables}")
-    print("-" * 40)
-    print()
+    logger.info(f"Available tables for database='{database}': {tables}")
+    logger.debug("-" * 40)
 
     if not s3_location:
         # Check if any expected sub-tables exist
         if table in tables or any(t.startswith(f"{table}_") for t in tables):
-            print(f"Table(s) for '{table}' already exist.")
+            logger.info(f"Table(s) for '{table}' already exist.")
             return
         raise SystemExit(
             f"Table '{table}' not found and --s3-location not provided. "
             f"Pass --s3-location to create the external table(s)."
         )
 
-    print(f"Table '{table}' not found. Creating external table(s) using Glue API...")
+    logger.info(f"Table '{table}' not found. Creating external table(s) using Glue API...")
     # Discover subfolders under the S3 location
     s3_loc = s3_location if s3_location.endswith("/") else s3_location + "/"
     subfolders = _list_s3_subfolders(s3_loc, region_name)
@@ -1498,18 +1576,18 @@ def ensure_table_exists(
                 region_name=region_name,
             )
         else:
-            print(f"Table '{table}' already exists.")
+            logger.info(f"Table '{table_name}' already exists.")
         return
 
     # Create a table for each subfolder: <table>_<subfolder_name>
-    print(f"Found subfolders: {subfolders}")
+    logger.info(f"Found subfolders: {subfolders}")
     for subfolder in subfolders:
         sub_table_name = f"{table}_{subfolder}"
         sub_s3_location = f"{s3_loc}{subfolder}/"
         if sub_table_name in tables:
-            print(f"Table '{sub_table_name}' already exists. Skipping.")
+            logger.info(f"Table '{table_name}' already exists.")
             continue
-        print(f"Creating external table '{sub_table_name}' -> '{sub_s3_location}'...")
+        logger.info(f"Creating external table '{sub_table_name}' -> '{sub_s3_location}'...")
         try:
             create_external_table(
                 database=database,
@@ -1521,11 +1599,10 @@ def ensure_table_exists(
                 region_name=region_name,
             )
         except FileNotFoundError as e:
-            print(f"  Skipping '{sub_table_name}': {e}")
+            logger.warning(f"  Skipping '{sub_table_name}': {e}")
             continue
-        print(f"Table '{sub_table_name}' created.")
-        print("-" * 40)
-        print()
+        logger.info(f"Table '{sub_table_name}' created.")
+        logger.debug("-" * 40)
 
 
 # --- EIA ID weights table ---
@@ -1555,12 +1632,10 @@ def ensure_eiaid_weights_table(
         database, workgroup=workgroup, region_name=region_name
     )
     if EIAID_WEIGHTS_TABLE in tables:
-        print(f"Table '{EIAID_WEIGHTS_TABLE}' already exists in '{database}'.")
+        logger.info(f"Table '{EIAID_WEIGHTS_TABLE}' already exists (race condition).")
         return
 
-    print(
-        f"Table '{EIAID_WEIGHTS_TABLE}' not found in '{database}'. Creating..."
-    )
+    logger.info(f"Table '{EIAID_WEIGHTS_TABLE}' not found in '{database}'. Creating...")
     glue = boto3.client("glue", region_name=region_name)
     try:
         glue.create_table(
@@ -1595,16 +1670,13 @@ def ensure_eiaid_weights_table(
         )
     except ClientError as e:
         if e.response["Error"]["Code"] == "AlreadyExistsException":
-            print(f"Table '{EIAID_WEIGHTS_TABLE}' already exists (race condition).")
+            logger.info(f"Table '{EIAID_WEIGHTS_TABLE}' already exists (race condition).")
             return
         raise RuntimeError(
             f"Failed to create '{EIAID_WEIGHTS_TABLE}': {e.response['Error']['Message']}"
         ) from e
 
-    print(
-        f"Table '{EIAID_WEIGHTS_TABLE}' created in '{database}' "
-        f"pointing to '{EIAID_WEIGHTS_S3_LOCATION}'."
-    )
+    logger.info(f"Table '{EIAID_WEIGHTS_TABLE}' created in '{database}' pointing to '{EIAID_WEIGHTS_S3_LOCATION}'.")
 
 
 def main() -> None:
@@ -1615,6 +1687,16 @@ def main() -> None:
     view with the OEDI timeseries schema. Optionally runs basic validation
     checks on the resulting view.
     """
+    # Configure logging with both console and file handlers
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler('process_timeseries_results.log'),
+            logging.StreamHandler()
+        ]
+    )
+    logger.info("Starting process_timeseries_results script")
     parser = argparse.ArgumentParser(
         description="Create an Athena view from raw timeseries results."
     )
@@ -1669,21 +1751,26 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    print()
-    print("=" * 60)
-    print("Processing timeseries result to OEDI/sightglass format (per resstock_oedi_new db_schema) with the following input parameters:")
-    print("-" * 60)
-    print(f"  database:      {args.database}")
-    print(f"  table:         {args.table}")
-    print(f"  workgroup:     {args.workgroup}")
-    print(f"  s3-location:   {args.s3_location}")
-    print(f"  region:        {args.region}")
-    print(f"  input-format:  {args.input_format}")
-    print(f"  force:         {args.force}")
-    print(f"  check:         {args.check}")
-    print(f"  ochre-workflow: {args.ochre_workflow}")
-    print(f"  baseline-view: {args.baseline_view}")
-    print("=" * 60)
+    logger.info("=" * 60)
+    logger.info("Processing timeseries result to OEDI/sightglass format (per resstock_oedi_new db_schema) with the following input parameters:")
+    logger.debug("-" * 60)
+    logger.info(f"  database:      {args.database}")
+    logger.info(f"  table:         {args.table}")
+    logger.info(f"  workgroup:     {args.workgroup}")
+    logger.info(f"  s3-location:   {args.s3_location}")
+    logger.info(f"  region:        {args.region}")
+    logger.info(f"  input-format:  {args.input_format}")
+    logger.info(f"  force:         {args.force}")
+    logger.info(f"  check:         {args.check}")
+    logger.info(f"  ochre-workflow: {args.ochre_workflow}")
+    logger.info(f"  baseline-view: {args.baseline_view}")
+    logger.info("=" * 60)
+    
+    # Log execution parameters
+    logger.info("Processing parameters:")
+    logger.info(f"  database={args.database}, table={args.table}, workgroup={args.workgroup}")
+    logger.info(f"  ochre_workflow={args.ochre_workflow}, baseline_view={args.baseline_view}")
+    logger.info(f"  force={args.force}, check={args.check}")
 
     # --- Try BuildStockQuery path first; fall back to boto3 if table missing ---
     try:
@@ -1692,8 +1779,18 @@ def main() -> None:
         )
 
     except Exception as e:
-        print(f"BuildStockQuery initialization failed: {e}")
-        print("Falling back to boto3 workflow to ingest S3 data first into Athena...")
+        logger.info("=" * 60)
+        logger.error("BuildStockQuery initialization failed")
+        logger.info("=" * 60)
+        logger.error(f"Exception type: {type(e).__name__}")
+        logger.error(f"Exception message: {e}")
+        logger.error("For detailed diagnostic information, check process_timeseries_results.log")
+        logger.info("=" * 60)
+        logger.error("Falling back to boto3 workflow to ingest S3 data first into Athena...")
+        logger.error(f"Caught exception during initialize_buildstock_query fallback:")
+        logger.error(f"  Exception type: {type(e).__name__}")
+        logger.error(f"  Exception message: {str(e)}")
+        logger.debug(f"  Full traceback:\n{traceback.format_exc()}")
 
         # Validate required inputs for the boto3 fallback path
         missing = []
@@ -1737,25 +1834,35 @@ def main() -> None:
         region_name=args.region,
     )
 
-    print()
-    print("-" * 60)
-    print("Creating view from raw timeseries results...")
-    print("-" * 60)
-    print()
+    logger.debug("-" * 60)
+    logger.info("Creating view from raw timeseries results...")
+    logger.debug("-" * 60)
 
     if args.baseline_view:
         bl_view_name = f"{args.table}{BL_VIEW_SUFFIX}"
+        logger.info(f"Creating baseline view: {bl_view_name}")
         create_view_oedi_baseline(bsq, view_name=bl_view_name, force=args.force)
+        logger.info(f"Successfully created baseline view: {bl_view_name}")
 
     ts_view_name = f"{args.table}{TS_VIEW_SUFFIX}"
+    logger.info(f"Creating timeseries view: {ts_view_name}")
     create_view_oedi_timeseries(
         bsq,
         view_name=ts_view_name,
         ochre_workflow=args.ochre_workflow,
         force=args.force,
     )
+    logger.info(f"Successfully created timeseries view: {ts_view_name}")
+    
     if args.check:
+        logger.info(f"Running validation checks on view: {ts_view_name}")
         check_view_oedi_timeseries(bsq, view_name=ts_view_name, ochre_workflow=args.ochre_workflow)
+        logger.info(f"Validation checks completed for view: {ts_view_name}")
+    
+    logger.info("process_timeseries_results script completed successfully")
+    logger.info("=" * 60)
+    logger.info("Processing completed. Check process_timeseries_results.log for detailed traceability.")
+    logger.info("=" * 60)
 
 if __name__ == "__main__":
     main()
