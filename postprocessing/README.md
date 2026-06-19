@@ -35,6 +35,27 @@ To install the package, we recommend using `uv` for Python package management.
    uv run --group dev pre-commit install
    ```
 
+### Updating Dependencies with Branch References
+
+Some dependencies may point to development branches (e.g., `buildstock-query @ git+https://github.com/NREL/buildstock-query.git@branch_name`) rather than stable releases. When changes are pushed to these branches, you need to refresh your environment to pick up the updates:
+
+```bash
+cd path/to/postprocessing
+rm -f uv.lock && uv sync
+```
+
+This will:
+- Delete the lock file (which caches the commit hash)
+- Re-fetch the latest commit from the branch and reinstall all dependencies
+
+If that doesn't work, consider deleting the virtual environment too to removes old installed packages before resyncing with `rm -rf .venv`
+
+If you want to pin to a specific commit instead of tracking a branch, you can use:
+
+```toml
+"buildstock-query @ git+https://github.com/NREL/buildstock-query.git@<commit-sha>"
+```
+
 4. Run the scripts as desired
    ```bash
    # Output the failure log

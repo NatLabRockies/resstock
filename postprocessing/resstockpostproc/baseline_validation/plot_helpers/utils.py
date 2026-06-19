@@ -37,17 +37,13 @@ def get_buildstock_query(
     comparison_data_year: int = 2018,
     skip_reports: bool = False,
 ) -> BuildStockQuery:
-    """Create and configure a BuildStockQuery instance."""
+    """Create and configure a BuildStockQuery instance.
+    
+    BuildStockQuery will automatically fetch the Athena workgroup's configured
+    query output location. You only need to provide query_unload_s3_bucket in
+    workflow.yaml if you want to override the workgroup's default.
+    """
     cache_folder = str(Path(__file__).resolve().parent.parent.parent / ".bsq_cache")
-    query_unload_s3_bucket = config.query_unload_s3_bucket or workgroup
-    if config.query_unload_s3_bucket is None:
-        logger.warning(
-            "BuildStockQuery using workgroup as default "
-            "query_unload_s3_bucket. source=%s workgroup=%s bucket=%s",
-            config.name,
-            workgroup,
-            query_unload_s3_bucket,
-        )
     db_schema = _load_db_schema(config.db_schema.value)
     if config.has_upgrades:
         table_name = config.table_name
@@ -63,14 +59,21 @@ def get_buildstock_query(
             table_name[0],
             table_name[1],
         )
-    bsq = BuildStockQuery(
-        workgroup=workgroup,
-        db_name=config.db_name,
-        table_name=table_name,
-        skip_reports=skip_reports,
-        db_schema=db_schema,
-        cache_folder=cache_folder,
-        query_unload_s3_bucket=query_unload_s3_bucket,
-    )
+
+    # BuildStockQuery will automatically fetch the workgroup's query output location
+    # if query_unload_s3_bucket is not provided. Only pass it if explicitly configured.
+    bsq_kwargs = {
+        "workgroup": workgroup,
+        "db_name": config.db_name,
+        "table_name": table_name,
+        "skip_reports": skip_reports,
+        "db_schema": db_schema,
+        "cache_folder": cache_folder,
+        "skip_timestamp_offset_validation": config.skip_timestamp_offset_validation,
+    }
+    if config.query_unload_s3_bucket:
+        bsq_kwargs["query_unload_s3_bucket"] = config.query_unload_s3_bucket
+
+    bsq = BuildStockQuery(**bsq_kwargs)
     bsq.utility.eia_mapping_year = comparison_data_year
     return bsq

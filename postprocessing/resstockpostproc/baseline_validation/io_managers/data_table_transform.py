@@ -219,16 +219,6 @@ def filter_columns(data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFrame:
             drop_cols.append(col)
             continue
 
-    if drop_cols:
-        logger.warning(
-            "Dropping columns during data-table filtering. dropped_columns=%s "
-            "quantity=%s coverage=%s view=%s resolution=%s",
-            drop_cols,
-            plot_spec.quantity,
-            plot_spec.coverage,
-            plot_spec.view,
-            plot_spec.resolution,
-        )
     return data.drop(drop_cols)
 
 

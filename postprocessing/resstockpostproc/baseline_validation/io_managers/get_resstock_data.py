@@ -714,7 +714,6 @@ def _transform_columns(df: pl.DataFrame, db_schema: DBSchema) -> pl.DataFrame:
     new_cols_expr = []
     to_drop_cols = []
 
-    missing_value_cols = []
     for new_name, db_name in db_enduse_colmap.items():
         # Skip if this enduse is not mapped (db_name is None)
         if db_name is None:
@@ -722,7 +721,6 @@ def _transform_columns(df: pl.DataFrame, db_schema: DBSchema) -> pl.DataFrame:
 
         # BSQ returns columns with new_name already
         if new_name not in df.columns:
-            missing_value_cols.append(new_name)
             continue
 
         value_col_name = new_name + "_value"
@@ -757,12 +755,6 @@ def _transform_columns(df: pl.DataFrame, db_schema: DBSchema) -> pl.DataFrame:
         if nonzero_quartiles_db_col in df.columns:
             new_cols_expr.append(pl.col(nonzero_quartiles_db_col).alias(nonzero_quartiles_col_name))
             to_drop_cols.append(nonzero_quartiles_db_col)
-
-    if missing_value_cols:
-        logger.warning(
-            "Dropping unmapped/missing enduse outputs during column transform; missing_value_columns=%s",
-            missing_value_cols,
-        )
 
     if not new_cols_expr:
         logger.warning("No transformed enduse columns were produced from query result; output may be incomplete.")

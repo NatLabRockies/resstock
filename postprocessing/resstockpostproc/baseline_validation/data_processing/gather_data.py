@@ -102,12 +102,6 @@ def apply_plot_spec(base_data: pl.DataFrame, plot_spec: PlotSpec) -> pl.DataFram
         if col in df.columns:
             df = df.filter(pl.col(col) == val)
             if is_multi_col and plot_spec.group_by is not None and col != plot_spec.group_by:
-                logger.warning(
-                    "Dropping focus_on column after filter application. column=%s value=%s group_by=%s",
-                    col,
-                    val,
-                    plot_spec.group_by,
-                )
                 df = df.drop(col)
         else:
             logger.warning(

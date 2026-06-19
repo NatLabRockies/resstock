@@ -62,11 +62,6 @@ def get_distribution_histogram_data(plot_spec: PlotSpec) -> pl.DataFrame:
     cols_to_keep = {plot_spec.group_by} if plot_spec.group_by else set()
     drop_cols = [col for col in plot_spec.effective_group_by if col in out.columns and col not in cols_to_keep]
     if drop_cols:
-        logger.warning(
-            "Dropping histogram grouping columns after focus filtering. dropped_columns=%s kept_columns=%s",
-            drop_cols,
-            list(cols_to_keep),
-        )
         out = out.drop(drop_cols)
 
     out = apply_source_labels(out, workflow.data_source_labels)

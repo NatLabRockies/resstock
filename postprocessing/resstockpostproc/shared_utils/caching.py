@@ -19,6 +19,28 @@ CACHE_READ_ONLY: bool = False
 CACHE_ROOT = Path(__file__).resolve().parents[2] / ".cache"
 
 
+def _get_workflow_state_hash() -> str | None:
+    """Get a hash of the current workflow data sources for cache invalidation.
+
+    Returns None if workflow not yet loaded (safe for optional inclusion in cache key).
+    """
+    try:
+        from resstockpostproc.baseline_validation.schema.workflow_schema import (
+            workflow,
+        )
+
+        if not workflow.data_sources:
+            return None
+        # Include source names and tables to detect configuration changes
+        source_info = tuple(
+            (src.name, src.config.table_name) for src in workflow.data_sources
+        )
+        source_bytes = pickle.dumps(source_info)
+        return hashlib.sha256(source_bytes).hexdigest()[:8]
+    except Exception:
+        return None
+
+
 def cached(cache_file: str) -> Callable:
     """
     Decorator that caches function results to disk using per-key shelve files.
@@ -44,6 +66,11 @@ def cached(cache_file: str) -> Callable:
                 "args": args,
                 "kwargs": kwargs
             }
+            # Include workflow data sources to invalidate cache when sources change
+            workflow_hash = _get_workflow_state_hash()
+            if workflow_hash:
+                key_data["workflow_sources"] = workflow_hash
+
             # Serialize and hash the key data
             key_bytes = pickle.dumps(key_data)
             cache_key = hashlib.sha256(key_bytes).hexdigest()
