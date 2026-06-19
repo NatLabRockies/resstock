@@ -1,0 +1,125 @@
+hvac_system,geometry_foundation_type,living_space_temp_descr,building_id
+Cooling Only,Ambient,above heat/cool,41
+Cooling Only,Ambient,at heat/cool,4
+Cooling Only,Ambient,at heating,9
+Cooling Only,Ambient,below heat/cool,428
+Cooling Only,Ambient,between heat/cool,512
+Cooling Only,Heated Basement,above heat/cool,10
+Cooling Only,Heated Basement,below heat/cool,78
+Cooling Only,Heated Basement,between heat/cool,52
+Cooling Only,Slab,above heat/cool,882
+Cooling Only,Slab,at cooling,16
+Cooling Only,Slab,at heat/cool,16
+Cooling Only,Slab,at heating,42
+Cooling Only,Slab,below heat/cool,2762
+Cooling Only,Slab,between heat/cool,5538
+Cooling Only,Unheated Basement,above heat/cool,104
+Cooling Only,Unheated Basement,at heating,1
+Cooling Only,Unheated Basement,below heat/cool,1043
+Cooling Only,Unheated Basement,between heat/cool,741
+Cooling Only,Unvented Crawlspace,below heat/cool,76
+Cooling Only,Unvented Crawlspace,between heat/cool,58
+Cooling Only,Vented Crawlspace,above heat/cool,309
+Cooling Only,Vented Crawlspace,at cooling,8
+Cooling Only,Vented Crawlspace,at heat/cool,9
+Cooling Only,Vented Crawlspace,at heating,12
+Cooling Only,Vented Crawlspace,below heat/cool,1697
+Cooling Only,Vented Crawlspace,between heat/cool,1961
+Heating Only,Ambient,above heat/cool,3777
+Heating Only,Ambient,at heat/cool,274
+Heating Only,Ambient,at heating,2638
+Heating Only,Ambient,below heat/cool,35386
+Heating Only,Ambient,between heat/cool,29614
+Heating Only,Heated Basement,above heat/cool,5421
+Heating Only,Heated Basement,at cooling,9
+Heating Only,Heated Basement,at heat/cool,802
+Heating Only,Heated Basement,at heating,8949
+Heating Only,Heated Basement,below heat/cool,60363
+Heating Only,Heated Basement,between heat/cool,47220
+Heating Only,Slab,above heat/cool,37759
+Heating Only,Slab,at cooling,265
+Heating Only,Slab,at heat/cool,855
+Heating Only,Slab,at heating,6405
+Heating Only,Slab,below heat/cool,95980
+Heating Only,Slab,between heat/cool,152341
+Heating Only,Unheated Basement,above heat/cool,11469
+Heating Only,Unheated Basement,at cooling,33
+Heating Only,Unheated Basement,at heat/cool,652
+Heating Only,Unheated Basement,at heating,4958
+Heating Only,Unheated Basement,below heat/cool,80266
+Heating Only,Unheated Basement,between heat/cool,74208
+Heating Only,Unvented Crawlspace,above heat/cool,736
+Heating Only,Unvented Crawlspace,at cooling,6
+Heating Only,Unvented Crawlspace,at heat/cool,36
+Heating Only,Unvented Crawlspace,at heating,548
+Heating Only,Unvented Crawlspace,below heat/cool,6697
+Heating Only,Unvented Crawlspace,between heat/cool,5690
+Heating Only,Vented Crawlspace,above heat/cool,20197
+Heating Only,Vented Crawlspace,at cooling,204
+Heating Only,Vented Crawlspace,at heat/cool,1120
+Heating Only,Vented Crawlspace,at heating,7226
+Heating Only,Vented Crawlspace,below heat/cool,112881
+Heating Only,Vented Crawlspace,between heat/cool,114908
+Heating and Cooling,Ambient,above heat/cool,17423
+Heating and Cooling,Ambient,at cooling,142
+Heating and Cooling,Ambient,at heat/cool,1252
+Heating and Cooling,Ambient,at heating,14977
+Heating and Cooling,Ambient,below heat/cool,201900
+Heating and Cooling,Ambient,between heat/cool,203735
+Heating and Cooling,Heated Basement,above heat/cool,10828
+Heating and Cooling,Heated Basement,at cooling,247
+Heating and Cooling,Heated Basement,at heat/cool,6160
+Heating and Cooling,Heated Basement,at heating,55686
+Heating and Cooling,Heated Basement,below heat/cool,329663
+Heating and Cooling,Heated Basement,between heat/cool,206938
+Heating and Cooling,Slab,above heat/cool,116318
+Heating and Cooling,Slab,at cooling,1684
+Heating and Cooling,Slab,at heat/cool,6663
+Heating and Cooling,Slab,at heating,56725
+Heating and Cooling,Slab,below heat/cool,714482
+Heating and Cooling,Slab,between heat/cool,1076035
+Heating and Cooling,Unheated Basement,above heat/cool,33600
+Heating and Cooling,Unheated Basement,at cooling,98
+Heating and Cooling,Unheated Basement,at heat/cool,2878
+Heating and Cooling,Unheated Basement,at heating,22267
+Heating and Cooling,Unheated Basement,below heat/cool,371494
+Heating and Cooling,Unheated Basement,between heat/cool,306331
+Heating and Cooling,Unvented Crawlspace,above heat/cool,4485
+Heating and Cooling,Unvented Crawlspace,at cooling,53
+Heating and Cooling,Unvented Crawlspace,at heat/cool,410
+Heating and Cooling,Unvented Crawlspace,at heating,3125
+Heating and Cooling,Unvented Crawlspace,below heat/cool,44045
+Heating and Cooling,Unvented Crawlspace,between heat/cool,41741
+Heating and Cooling,Vented Crawlspace,above heat/cool,51292
+Heating and Cooling,Vented Crawlspace,at cooling,620
+Heating and Cooling,Vented Crawlspace,at heat/cool,3623
+Heating and Cooling,Vented Crawlspace,at heating,31330
+Heating and Cooling,Vented Crawlspace,below heat/cool,467828
+Heating and Cooling,Vented Crawlspace,between heat/cool,475726
+None,Ambient,above heat/cool,18
+None,Ambient,below heat/cool,95
+None,Ambient,between heat/cool,133
+None,Heated Basement,above heat/cool,13
+None,Heated Basement,at heating,4
+None,Heated Basement,below heat/cool,82
+None,Heated Basement,between heat/cool,31
+None,Slab,above heat/cool,767
+None,Slab,at cooling,19
+None,Slab,at heat/cool,19
+None,Slab,at heating,39
+None,Slab,below heat/cool,1500
+None,Slab,between heat/cool,2938
+None,Unheated Basement,above heat/cool,98
+None,Unheated Basement,at heat/cool,4
+None,Unheated Basement,at heating,7
+None,Unheated Basement,below heat/cool,624
+None,Unheated Basement,between heat/cool,588
+None,Unvented Crawlspace,above heat/cool,6
+None,Unvented Crawlspace,below heat/cool,30
+None,Unvented Crawlspace,between heat/cool,13
+None,Vented Crawlspace,above heat/cool,562
+None,Vented Crawlspace,at cooling,12
+None,Vented Crawlspace,at heat/cool,13
+None,Vented Crawlspace,at heating,13
+None,Vented Crawlspace,below heat/cool,1301
+None,Vented Crawlspace,between heat/cool,1832
