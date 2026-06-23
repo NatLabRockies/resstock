@@ -1,0 +1,14 @@
+\begin{itemize}
+\item Check the assumptions on the source tsv files.
+\item If a house has a wall furnace with fuel other than natural\_gas, efficiency level based on natural\_gas from expanded\_HESC\_HVAC\_efficiencies.tsv is assigned.
+\item If a house has a heat pump with fuel other than electricity (presumed dual-fuel heat pump), the heating type is assumed to be furnace and not heat pump.
+\item The shipment volume for boiler was not available, so shipment volume for furnace in furnace-shipments-table.tsv was used instead.
+\item Due to low sample size for some categories, the HVAC Has Shared System categories 'Cooling Only' and 'None' are combined for the purpose of querying Heating Efficiency distributions.
+\item For 'other' heating system types, we assign them to Electric Baseboard if fuel is Electric, and assign them to Wall/Floor Furnace if fuel is natural\_gas, fuel\_oil or propane.
+\item For Other Fuel and Wood, the lowest efficiency systems are assumed.
+\item For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+\item For Alaska, electric space heaters are modeled as electric baseboards.
+\item For Alaska, Toyo/monitor direct-vent devices and other fuel space heaters are not modeled.
+\item For Alaska, fireplace and stoves are not modeled.
+\item For Alaska, all heat pumps (including geothermal) are assumed to be non-ducted air source heat pumps.
+\end{itemize}

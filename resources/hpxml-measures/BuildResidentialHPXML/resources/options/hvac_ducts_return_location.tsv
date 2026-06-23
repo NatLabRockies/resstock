@@ -1,0 +1,16 @@
+Option Name	Location	Location Fraction [frac]
+Default		
+Conditioned Space	conditioned space	
+Basement	basement	
+Crawlspace	crawlspace	
+Attic	attic	
+Garage	garage	
+Outside	outside	
+Exterior Wall	exterior wall	
+Under Slab	under slab	
+Roof Deck	roof deck	
+Manufactured Home Belly	manufactured home belly	
+"Detailed Example: Attic, 75%"	attic	0.75
+		
+# Location: The primary location of the return ducts.		
+# Location Fraction: The fraction of return ducts in this location. The remainder are assumed to be in conditioned space.		

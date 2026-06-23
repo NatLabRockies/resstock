@@ -1,0 +1,24 @@
+\paragraph{Description}
+% \input{characteristics/description/HVAC Has Ducts}
+The presence of ducts in the housing unit.
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/HVAC Has Ducts}
+\begin{itemize}
+\item The sample counts and sample weights are constructed using RECS 2020 microdata.
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/HVAC Has Ducts}
+
+\paragraph{Options}
+Two options are available for this input characteristic: ``Yes'' and ``No.'' The presence of ductwork is dependent upon the types of heating and cooling systems.
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/HVAC Has Ducts}
+\begin{itemize}
+    \item Ducted Heat Pump HVAC type assumed to have ducts.
+    \item Non-Ducted Heat Pump HVAC type assumed to have no ducts.
+    \item There could be homes with non-ducted heat pump having ducts (Central AC with non-ducted heat pump), but due to structure of ResStock we are not accounting for those homes.
+    \item None of the shared system options currently modeled (in HVAC Shared Efficiencies) are ducted, therefore where there are discrepancies between HVAC Heating Type, HVAC Cooling Type, and HVAC Has Shared System, HVAC Has Shared System takes precedence (e.g., Central AC + Ducted Heating + Shared Heating and Cooling = No (Ducts)). (This is a temporary fix and will change when ducted shared system options are introduced.)
+\end{itemize}

@@ -1,9 +1,9 @@
 {
   "items": [
     {
-      "name": "Sample Tiered Time-of-Use Rate",
+      "name": "Sample Tiered Time-of-Use Rate Min Monthly Charge",
       "sector": "Residential",
-      "description": "Sample file defined by BEopt.",
+      "description": "Sample file",
       "fixedchargeunits": "$/month",
       "fixedchargefirstmeter": 9,
       "minchargeunits": "$/month",

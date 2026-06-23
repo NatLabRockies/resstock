@@ -1,0 +1,50 @@
+Option Name	U-Factor [Btu/hr-ft2-F]	SHGC
+"Single, Clear, Metal"	1.16	0.76
+"Single, Clear, Non-Metal"	0.84	0.63
+"Double, Clear, Metal, Air"	0.76	0.67
+"Double, Clear, Thermal-Break, Air"	0.63	0.62
+"Double, Clear, Non-Metal, Air"	0.49	0.56
+"Double, Low-E, Non-Metal, Air, High Gain"	0.39	0.53
+"Double, Low-E, Non-Metal, Air, Med Gain"	0.38	0.44
+"Double, Low-E, Non-Metal, Air, Low Gain"	0.37	0.3
+"Double, Low-E, Non-Metal, Gas, High Gain"	0.37	0.53
+"Double, Low-E, Non-Metal, Gas, Med Gain"	0.35	0.44
+"Double, Low-E, Non-Metal, Gas, Low Gain"	0.34	0.3
+"Double, Low-E, Insulated, Air, High Gain"	0.32	0.56
+"Double, Low-E, Insulated, Air, Med Gain"	0.3	0.46
+"Double, Low-E, Insulated, Air, Low Gain"	0.29	0.31
+"Double, Low-E, Insulated, Gas, High Gain"	0.29	0.56
+"Double, Low-E, Insulated, Gas, Med Gain"	0.27	0.46
+"Double, Low-E, Insulated, Gas, Low Gain"	0.26	0.31
+"Triple, Low-E, Non-Metal, Air, High Gain"	0.3	0.38
+"Triple, Low-E, Non-Metal, Air, Low Gain"	0.29	0.26
+"Triple, Low-E, Non-Metal, Gas, High Gain"	0.29	0.38
+"Triple, Low-E, Non-Metal, Gas, Low Gain"	0.27	0.26
+"Triple, Low-E, Insulated, Air, High Gain"	0.21	0.4
+"Triple, Low-E, Insulated, Air, Low Gain"	0.19	0.27
+"Triple, Low-E, Insulated, Gas, High Gain"	0.18	0.4
+"Triple, Low-E, Insulated, Gas, Low Gain"	0.17	0.27
+"IECC U-1.20, SHGC 0.40"	1.2	0.4
+"IECC U-1.20, SHGC 0.30"	1.2	0.3
+"IECC U-1.20, SHGC 0.25"	1.2	0.25
+"IECC U-0.75, SHGC 0.40"	0.75	0.4
+"IECC U-0.65, SHGC 0.40"	0.65	0.4
+"IECC U-0.65, SHGC 0.30"	0.65	0.3
+"IECC U-0.50, SHGC 0.30"	0.5	0.3
+"IECC U-0.50, SHGC 0.25"	0.5	0.25
+"IECC U-0.40, SHGC 0.40"	0.4	0.4
+"IECC U-0.40, SHGC 0.25"	0.4	0.25
+"IECC U-0.35, SHGC 0.40"	0.35	0.4
+"IECC U-0.35, SHGC 0.30"	0.35	0.3
+"IECC U-0.35, SHGC 0.25"	0.35	0.25
+"IECC U-0.32, SHGC 0.25"	0.32	0.25
+"IECC U-0.30, SHGC 0.25"	0.3	0.25
+"EnergyStar, North-Central"	0.25	0.4
+"EnergyStar, Northern"	0.22	0.17
+"EnergyStar, South-Central"	0.28	0.23
+"EnergyStar, Southern"	0.32	0.23
+"Detailed Example: Single, Clear, Aluminum w/ Thermal Break"	1.039	0.67
+"Detailed Example: Double, Low-E, Wood, Argon, Insulated Spacer"	0.3	0.335
+		
+# U-Factor: Full-assembly NFRC U-factor.		
+# SHGC: Full-assembly NFRC solar heat gain coefficient.		

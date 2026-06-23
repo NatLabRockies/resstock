@@ -1,0 +1,22 @@
+Option Name	Type	Height [ft]	Height Above Grade [ft]	Rim Joist Height [in]
+Slab-on-Grade	SlabOnGrade	0	0	0
+"Crawlspace, Vented"	VentedCrawlspace	4	1	9.25
+"Crawlspace, Unvented"	UnventedCrawlspace	4	1	9.25
+"Crawlspace, Conditioned"	ConditionedCrawlspace	4	1	9.25
+"Basement, Unconditioned"	UnconditionedBasement	8	1	9.25
+"Basement, Unconditioned, Half Above-Grade"	UnconditionedBasement	8	4	9.25
+"Basement, Conditioned"	ConditionedBasement	8	1	9.25
+"Basement, Conditioned, Half Above-Grade"	ConditionedBasement	8	4	9.25
+Ambient	Ambient	4	1	0
+Above Apartment	AboveApartment	0	0	0
+"Belly and Wing, With Skirt"	BellyAndWingWithSkirt	4	1	9.25
+"Belly and Wing, No Skirt"	BellyAndWingNoSkirt	4	1	9.25
+"Detailed Example: Basement, Unconditioned, 7.25 ft Height, 8 in Above-Grade, 9 in Rim Joists"	UnconditionedBasement	7.25	0.667	9
+"Detailed Example: Basement, Conditioned, 7.25 ft Height, 8 in Above-Grade, 9 in Rim Joists"	ConditionedBasement	7.25	0.667	9
+"Detailed Example: Basement, Conditioned, 5 ft Height"	ConditionedBasement	5	1	9.25
+"Detailed Example: Crawlspace, Vented, Above-Grade"	VentedCrawlspace	4	4	9.25
+				
+# Type: The foundation type of the building. Garages are assumed to be over slab-on-grade.				
+# Height: The height of the foundation.				
+# Height Above Grade: The height of the foundation that is above-grade.				
+# Rim Joist Height: The height of the rim joists.				

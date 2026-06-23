@@ -1,0 +1,19 @@
+\paragraph{Description}
+% \input{characteristics/description/Has PV}
+Presence of a rooftop photovoltaic system.
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/Has PV}
+Constructed using ACS population and data from \href{https://www.nrel.gov/analysis/dgen/}{dGen} on PV installation that combines LBNL's 2020 Tracking the Sun (\cite{LBNLTTS2019}) and Wood Mackenzie's 2020 Q4 PV report (\cite{WoodsMackenzie2020}; prepared on Jun 22, 2021). The PV penetration in Hawaii is from \href{https://www.eia.gov/electricity/data/eia861/}{EIA form 861}. 
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/Has PV}
+
+\paragraph{Options}
+The options for Has PV are ``Yes'' if the housing unit has a rooftop PV system and ``No'' if the housing unit does not have a rooftop PV system.
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/Has PV}
+Imposed an upper bound of 14 kWDC, which contains 95\% of all installations. Counties with source\_count <10 are backfilled with aggregates at the state level. Distribution based on all installations is applied only to occupied single-family detached homes; actual distribution for single-family detached homes may be higher. PV is not modeled in AK. No data have been identified. 
+
+For Hawaii, EIA Form 861 reports the number of residential utility customers with rooftop PV in the Net Metering 2023 worksheet and the total number of residential utility customers in Sales Ult Cust 2023 worksheet. Taking the ratio of these two gives us the fraction of homes with rooftop PV. We place the additional constraint that all of these rooftop PV customers are in single-family detached homes. Because Hawaii is composed of multiple islands, the four electric utilities in Hawaii (and which report to EIA Form 861) approximately align with the county boundaries with Hawaii, Honolulu, and Kauai having one county for one electric utility, and both Maui and Kalawao mapping to the same electric utility, so we we develop distinct PV saturation rates for each county in Hawaii (note Kalawao has population 81 people and is located on the island of Maui).

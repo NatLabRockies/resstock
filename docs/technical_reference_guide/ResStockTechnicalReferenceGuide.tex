@@ -1,12 +1,13 @@
-\documentclass[]{nrel}
+\documentclass[]{nlr}
 
-\usepackage{lipsum} 
+\usepackage{lipsum}
 \usepackage{longtable}
 \usepackage{ragged2e}
 \usepackage{comment}
 \usepackage{caption}
 \usepackage{hyperref}
 \usepackage{makecell}
+\usepackage{biblatex}
 
 \newenvironment{customLongTable}[4]{ % #1 is format, #2 is caption, #3 is label, #4 is header row
     \begin{longtable}{#1}
@@ -28,17 +29,18 @@
     \end{longtable}
 }
 
-\hypersetup{colorlinks=true, urlcolor=nrelblue}
+\hypersetup{colorlinks=true, urlcolor=nlrblue}
 % -----------------------------------
 % DOCUMENT PROPERTIES
 % -----------------------------------
 \title{ResStock Technical Reference Documentation, Active Development Version}
 
-\author{Janet Reyna} 
-\author{Anthony Fontanini}
-\author{Elaina Present} 
-\author{Lixi Liu} 
 
+\author{Janet Reyna}
+\author{Anthony Fontanini}
+\author{Andrew Parker}
+\author{Elaina Present}
+\author{Lixi Liu}
 \author{Rajendra Adhikari}
 \author{Carlo Bianchi}
 \author{Jes Brossman}
@@ -51,6 +53,7 @@
 \author{Noel Merket}
 \author{Nathan Moore}
 \author{Prateek Munankarmi}
+\author{Sinoun Phoung}
 \author{Joseph Robertson}
 \author{Noah Sandoval}
 \author{Andrew Speake}
@@ -58,7 +61,7 @@
 \author{Philip White}
 \author{Eric Wilson}
 
-\affil{National Renewable Energy Laboratory}
+\affil{National Laboratory of the Rockies}
 
 
 \fancypagestyle{plain}{}
@@ -79,15 +82,15 @@ ResStock\textsuperscript{TM} is the best-in-class building stock energy model fo
 
 \section*{Motivation}
 
-The primary objective of ResStock is to empower decision makers to make data-driven choices to improve energy affordability, comfort, and resilience in the U.S. housing sector.  Across the United States, increasing numbers of cities, counties, and states are setting goals around energy use and associated metrics. Although much of this planning rightfully focuses on the electric grid, the on-site combustion of fossil fuels in U.S.~homes, primarily for space and water heating, accounts for 56\% of on-site energy usage. Furthermore, pathways to improving the resiliency and reliability of the electric grid are highly dependent upon the future timing and magnitude of electricity demand. Buildings currently comprise 74\% of electricity demand in the United States~\citep{MER2023}, and this could grow with electric vehicle adoption. Much of the work in supporting grid resiliency through building sector demand will fall on state and local government staff, the engineering and policy consulting communities, and advocacy and research organizations to ensure that these goals are realistic, achievable, and distributed appropriately. ResStock was developed by the National Renewable Energy Laboratory (NREL) with funding from the U.S.~Department of Energy (DOE) to assist the professionals and researchers tasked with implementing these initiatives.
+The primary objective of ResStock is to empower decision makers to make data-driven choices to improve energy affordability, comfort, and resilience in the U.S. housing sector.  Across the United States, increasing numbers of cities, counties, and states are setting goals around energy use and associated metrics. Although much of this planning rightfully focuses on the electric grid, the on-site combustion of fossil fuels in U.S.~homes, primarily for space and water heating, accounts for 56\% of on-site energy usage. Furthermore, pathways to improving the resiliency and reliability of the electric grid are highly dependent upon the future timing and magnitude of electricity demand. Buildings currently comprise 74\% of electricity demand in the United States~\citep{MER2023}, and this could grow with electric vehicle adoption. Much of the work in supporting grid resiliency through building sector demand will fall on state and local government staff, the engineering and policy consulting communities, and advocacy and research organizations to ensure that these goals are realistic, achievable, and distributed appropriately. ResStock was developed by the National Laboratory of the Rockies (NLR) with funding from the U.S.~Department of Energy (DOE) to assist the professionals and researchers tasked with implementing these initiatives.
 
 \section*{How Is ResStock Accessed?}
 
-The ResStock model and its published datasets are foundational for a wide range of stakeholders. Professionals and researchers have several pathways for using ResStock data and insights. They can review published fact sheets and reports based upon ResStock data. They can use a web-based visualization platform to interact with the dataset of annual and timeseries results, or they can use a simple spreadsheet-type analysis to interact with annual energy consumption results and aggregated timeseries load profiles. If users want to go deeper, they can even use the raw simulation results dataset, which may require big-data skills and cloud or high-performance computing assets. 
+The ResStock model and its published datasets are foundational for a wide range of stakeholders. Professionals and researchers have several pathways for using ResStock data and insights. They can review published fact sheets and reports based upon ResStock data. They can use a web-based visualization platform to interact with the dataset of annual and timeseries results, or they can use a simple spreadsheet-type analysis to interact with annual energy consumption results and aggregated timeseries load profiles. If users want to go deeper, they can even use the raw simulation results dataset, which may require big-data skills and cloud or high-performance computing assets.
 
 \section*{Impact}
 
-The ResStock data viewer for the public data has to date been accessed by accounts from 5,724 unique email addresses across 1,907 domain names that mainly support consultants, utilities, city, county, and local governments, state offices, DOE, and other federal offices. It is estimated that the datasets that ResStock produces are used by utilities that serve over 38\% of the U.S.~population (126 million people), 5 regional energy efficiency offices, 12 state energy offices, and 3 public utility commissions. In fiscal year 2024, the combined ResStock and ComStock datasets had 18.4 million unique data file downloads from the Open Energy Dataset Initiative (OEDI), including datasets derived from End-Use Load Profiles (EULP) (82\% of all OEDI downloads), as of July 31, 2024.
+In 2024-25, The ResStock Data Viewer for the public data was accessed across all 50 U.S. states, by more than 2,000 unique users who queried the data on average 16 times per user. The queries mainly support consultants, utilities, city, county, and local governments, state offices, DOE, and other federal offices. It is estimated that the datasets that ResStock produces are used by utilities that deliver over half of all US electric sales. The combined ResStock and ComStock datasets contributed to over \$2 billion dollars worth of industry project revenue. Cumulatively, the datasets have been downloaded over 45 million times, making it the most downloaded dataset across the Open Energy Data Initiative's (OEDI) 2,976 datasets.
 
 %% Add citation statistics
 
@@ -98,9 +101,9 @@ The purpose of this document is to provide a central technical reference of the 
 \chapter{Acknowledgments}
 Since initial development over a decade ago, ResStock has had dozens of researchers contribute to the structure, features, theory, and publication of data. In particular, we'd like to acknowledge Craig Christensen, who was instrumental in the initial model development. Additionally, we'd like to acknowledge our peer reviewers on this document: Andrew Parker and Jon Winkler. Additionally, we'd like to acknowledge U.S. Department of Energy (DOE) staff who have supported and guided ResStock development, including Dale Hoffmeyer, Amir Roth, Gretchen Maia, Asa Foss, Amy Royden-Bloom, and Eric Werling of the Building Technologies Office; Joan Glickman of the Office of State and Community Energy Programs; John Agan, Jenah Zweig, and Erin Boyd of the Office of Policy; and Robert Weber of the Bonneville Power Administration. Additionally, ResStock has been improved upon through work for parties outside of DOE, most notably the Los Angeles Department of Water and Power. We also would like to acknowledge the work of the EnergyPlus\textsuperscript{\textregistered} whole-building energy modeling tool, the OpenStudio\textsuperscript{\textregistered} SDK, and the OpenStudio-HPXML schema implementation, which provide the foundational model underpinnings of energy simulation in ResStock and which are the result of years of hard work by many people across DOE, the national laboratories, and the private sector.
 
-This work was authored by the National Renewable Energy Laboratory, operated by Alliance for Sustainable Energy, LLC, for the U.S. Department of Energy (DOE) under Contract No. DE-AC36-08GO28308. Funding provided by U.S. Department of Energy Office of Energy Efficiency and Renewable Energy Building Technologies Office. The views expressed in the article do not necessarily represent the views of the DOE or the U.S. Government. 
+This work was authored by the National Laboratory of the Rockies, operated by Alliance for Energy Innovation, LLC, for the U.S. Department of Energy (DOE) under Contract No. DE-AC36-08GO28308. Funding provided by U.S. Department of Energy Office of Critical Minerals and Energy Innovation. The views expressed in the article do not necessarily represent the views of the DOE or the U.S. Government.
 
-A portion of this research was performed using computational resources sponsored by the U.S. Department of Energy's Office of Energy Efficiency and Renewable Energy and located at the National Renewable Energy Laboratory.
+A portion of this research was performed using computational resources sponsored by the U.S. Department of Energy's Office of Critical Minerals and Energy Innovation and located at the National Laboratory of the Rockies.
 
 %%%%%%%%
 \chapter{Version History}
@@ -108,17 +111,29 @@ A portion of this research was performed using computational resources sponsored
 \vspace{1cm}
 
 \begin{center}
-\begin{tabular}{ |c || c c c c|}
+\begin{tabular}{ |c || c c|}
 \hline
- Technical Reference Documentation & Standard Data Release & ResStock & BuildStock Batch  & OpenStudio-HPXML \\ \hline \hline
-Active Development & \href{https://resstock.nrel.gov/datasets}{To be determined} & \href{https://github.com/NREL/resstock}{develop} &  \href{https://github.com/NREL/buildstockbatch} {develop} & \href{https://github.com/NREL/OpenStudio-HPXML}{master} \\\hline
- v1.0.0, January 2025 & \href{https://resstock.nrel.gov/datasets}{2024.2} & \href{https://github.com/NREL/resstock/tree/v3.3.0}{v3.3.0} &  \href{https://github.com/NREL/buildstockbatch/tree/v2023.10.0} {v2023.10.0} & \href{https://github.com/NREL/OpenStudio-HPXML/tree/v1.8.1}{v1.8.0} \\\hline
- 
+    Technical Reference Documentation & Standard Data Release & ResStock \\ \hline \hline
+Draft, ResStock 2025 Release 1, October 2025 & \href{https://resstock.nrel.gov/datasets}{2025 Release 1} &
+\href{https://github.com/NREL/resstock/releases/tag/2025_Release_1}{\texttt{sdr\_2025\_Release\_1}} \\\hline
+v3.3.0, July 2025 & \href{https://resstock.nrel.gov/datasets}{2024.2} &
+\href{https://github.com/NREL/resstock/tree/v3.3.0}{v3.3.0} \\\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ |c || c c|}
+\hline
+    Technical Reference Documentation & BuildStock Batch  & OpenStudio-HPXML \\ \hline \hline
+Draft, ResStock 2025 Release 1, October 2025 & \href{https://github.com/NREL/buildstockbatch/releases/tag/ResStock_SDR_2025_Release_1}{ResStock SDR 2025 Release 1} &
+\href{https://github.com/NREL/OpenStudio-HPXML/releases/tag/v1.10.0}{v1.10.0} \\\hline
+v3.3.0, July 2025 & \href{https://github.com/NREL/buildstockbatch/tree/v2023.10.0}{v2023.10.0} &
+\href{https://github.com/NREL/OpenStudio-HPXML/tree/v1.8.1}{v1.8.1} \\\hline
 \end{tabular}
 \end{center}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{List of Acronyms}
 
 \begin{acronym}
@@ -162,8 +177,9 @@ Active Development & \href{https://resstock.nrel.gov/datasets}{To be determined}
 \acro {NEEA}{Northwest Energy Efficiency Alliance}
 \acro {NFRC}{National Fenestration Rating Council}
 \acro {NHTS}{National Household Travel Survey}
-\acro {NREL}{National Renewable Energy Laboratory}
+\acro {NLR}{National Laboratory of the Rockies}
 \acro {OEDI}{Open Energy Dataset Initiative}
+\acro {PADD}{Petroleum Administration for Defense District}
 \acro {PUMA}{Public Use Microdata Area}
 \acro {PUMS}{Public Use Microdata Samples}
 \acro {PV}{photovoltaic}
@@ -176,6 +192,7 @@ Active Development & \href{https://resstock.nrel.gov/datasets}{To be determined}
 \acro {SUV}{sport utility vehicle}
 \acro {TEMPO}{Transportation Energy \& Mobility Pathway Options Model}
 \acro {TMY}{Typical Meteorological Year}
+\acro {URDB}{Utility Rate Database}
 \acro {WWR}{window-to-wall ratio}
 
 \end{acronym}

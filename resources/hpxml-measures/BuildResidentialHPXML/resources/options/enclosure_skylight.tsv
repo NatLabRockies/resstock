@@ -1,0 +1,26 @@
+Option Name	U-Factor [Btu/hr-ft2-F]	SHGC
+"Single, Clear, Metal"	1.13	0.78
+"Single, Clear, Non-Metal"	0.98	0.75
+"Double, Clear, Metal"	0.69	0.69
+"Double, Clear, Non-Metal"	0.56	0.66
+"Double, Low-E, Metal, High Gain"	0.64	0.61
+"Double, Low-E, Non-Metal, High Gain"	0.51	0.61
+"Double, Low-E, Metal, Med Gain"	0.59	0.55
+"Double, Low-E, Non-Metal, Med Gain"	0.45	0.53
+"Double, Low-E, Metal, Low Gain"	0.59	0.38
+"Double, Low-E, Non-Metal, Low Gain"	0.45	0.36
+"Triple, Clear, Metal"	0.55	0.62
+"Triple, Clear, Non-Metal"	0.42	0.59
+"IECC U-0.75, SHGC 0.40"	0.75	0.4
+"IECC U-0.75, SHGC 0.30"	0.75	0.3
+"IECC U-0.75, SHGC 0.25"	0.75	0.25
+"IECC U-0.65, SHGC 0.40"	0.65	0.4
+"IECC U-0.65, SHGC 0.30"	0.65	0.3
+"IECC U-0.65, SHGC 0.25"	0.65	0.25
+"IECC U-0.60, SHGC 0.40"	0.6	0.4
+"IECC U-0.60, SHGC 0.30"	0.6	0.3
+"IECC U-0.55, SHGC 0.40"	0.55	0.4
+"IECC U-0.55, SHGC 0.25"	0.55	0.25
+		
+# U-Factor: Full-assembly NFRC U-factor.		
+# SHGC: Full-assembly NFRC solar heat gain coefficient.		

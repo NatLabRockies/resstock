@@ -1,0 +1,62 @@
+Option Name	Type	Color	Solar Absorptance	Emittance	R-Value [F-ft2-hr/Btu]
+None	none	medium			0
+"Aluminum, Dark"	aluminum siding	dark			0.6
+"Aluminum, Medium"	aluminum siding	medium			0.6
+"Aluminum, Medium Dark"	aluminum siding	medium dark			0.6
+"Aluminum, Light"	aluminum siding	light			0.6
+"Aluminum, Reflective"	aluminum siding	reflective			0.6
+"Brick, Dark"	brick veneer	dark			0.7
+"Brick, Medium"	brick veneer	medium			0.7
+"Brick, Medium Dark"	brick veneer	medium dark			0.7
+"Brick, Light"	brick veneer	light			0.7
+"Brick, Reflective"	brick veneer	reflective			0.7
+"Fiber-Cement, Dark"	fiber cement siding	dark			0.2
+"Fiber-Cement, Medium"	fiber cement siding	medium			0.2
+"Fiber-Cement, Medium Dark"	fiber cement siding	medium dark			0.2
+"Fiber-Cement, Light"	fiber cement siding	light			0.2
+"Fiber-Cement, Reflective"	fiber cement siding	reflective			0.2
+"Asbestos, Dark"	asbestos siding	dark			0.6
+"Asbestos, Medium"	asbestos siding	medium			0.6
+"Asbestos, Medium Dark"	asbestos siding	medium dark			0.6
+"Asbestos, Light"	asbestos siding	light			0.6
+"Asbestos, Reflective"	asbestos siding	reflective			0.6
+"Composition Shingle, Dark"	composite shingle siding	dark			0.6
+"Composition Shingle, Medium"	composite shingle siding	medium			0.6
+"Composition Shingle, Medium Dark"	composite shingle siding	medium dark			0.6
+"Composition Shingle, Light"	composite shingle siding	light			0.6
+"Composition Shingle, Reflective"	composite shingle siding	reflective			0.6
+"Stucco, Dark"	stucco	dark			0.2
+"Stucco, Medium"	stucco	medium			0.2
+"Stucco, Medium Dark"	stucco	medium dark			0.2
+"Stucco, Light"	stucco	light			0.2
+"Stucco, Reflective"	stucco	reflective			0.2
+"Vinyl, Dark"	vinyl siding	dark			0.6
+"Vinyl, Medium"	vinyl siding	medium			0.6
+"Vinyl, Medium Dark"	vinyl siding	medium dark			0.6
+"Vinyl, Light"	vinyl siding	light			0.6
+"Vinyl, Reflective"	vinyl siding	reflective			0.6
+"Wood, Dark"	wood siding	dark			1.4
+"Wood, Medium"	wood siding	medium			1.4
+"Wood, Medium Dark"	wood siding	medium dark			1.4
+"Wood, Light"	wood siding	light			1.4
+"Wood, Reflective"	wood siding	reflective			1.4
+"Synthetic Stucco, Dark"	synthetic stucco	dark			0.2
+"Synthetic Stucco, Medium"	synthetic stucco	medium			0.2
+"Synthetic Stucco, Medium Dark"	synthetic stucco	medium dark			0.2
+"Synthetic Stucco, Light"	synthetic stucco	light			0.2
+"Synthetic Stucco, Reflective"	synthetic stucco	reflective			0.2
+"Masonite, Dark"	masonite siding	dark			0.2
+"Masonite, Medium"	masonite siding	medium			0.2
+"Masonite, Medium Dark"	masonite siding	medium dark			0.2
+"Masonite, Light"	masonite siding	light			0.2
+"Masonite, Reflective"	masonite siding	reflective			0.2
+Detailed Example: 0.2 Solar Absorptance			0.2	0.9	0.67
+Detailed Example: 0.4 Solar Absorptance			0.4	0.9	0.67
+Detailed Example: 0.6 Solar Absorptance			0.6	0.9	0.67
+Detailed Example: 0.75 Solar Absorptance			0.75	0.9	0.67
+					
+# Type: The type of wall siding.					
+# Color: The color of the walls.					
+# Solar Absorptance: The solar absorptance of the outermost wall material.					
+# Emittance: The emittance of the outermost wall material.					
+# R-Value: The R-value of the siding.					

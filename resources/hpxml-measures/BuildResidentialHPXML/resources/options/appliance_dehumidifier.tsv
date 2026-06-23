@@ -1,0 +1,18 @@
+Option Name	Type	Efficiency Type	Efficiency [liters/kWh]	Capacity [pints/day]
+None				
+"Portable, 15 pints/day"	portable	IntegratedEnergyFactor	1.3	15
+"Portable, 20 pints/day"	portable	IntegratedEnergyFactor	1.5	20
+"Portable, 30 pints/day"	portable	IntegratedEnergyFactor	1.7	30
+"Portable, 40 pints/day"	portable	IntegratedEnergyFactor	1.9	40
+"Whole-Home, 60 pints/day"	whole-home	IntegratedEnergyFactor	2.1	60
+"Whole-Home, 75 pints/day"	whole-home	IntegratedEnergyFactor	2.2	75
+"Whole-Home, 95 pints/day"	whole-home	IntegratedEnergyFactor	2.3	95
+"Whole-Home, 125 pints/day"	whole-home	IntegratedEnergyFactor	2.4	125
+"Detailed Example: Portable, 40 pints/day, EF 1.8"	portable	EnergyFactor	1.8	40
+"Detailed Example: Whole-Home, 60 pints/day, EF 2.3"	whole-home	EnergyFactor	2.3	60
+"Detailed Example: Portable, 40 pints/day, IEF 1.4"	portable	IntegratedEnergyFactor	1.4	40
+				
+# Type: The type of dehumidifier.				
+# Efficiency Type: The efficiency type of the dehumidifier.				
+# Efficiency: The rated efficiency of the dehumidifier.				
+# Capacity: The capacity (water removal rate) of the dehumidifier.				

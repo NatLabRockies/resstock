@@ -1,0 +1,55 @@
+Option Name	Type	Assembly R-Value [F-ft2-hr/Btu]
+"Wood Stud, Uninsulated"	WoodStud	3.4
+"Wood Stud, R-7"	WoodStud	8.7
+"Wood Stud, R-11"	WoodStud	10.3
+"Wood Stud, R-13"	WoodStud	11.3
+"Wood Stud, R-15"	WoodStud	12.1
+"Wood Stud, R-19"	WoodStud	15.4
+"Wood Stud, R-21"	WoodStud	17.1
+"Double Wood Stud, R-33"	DoubleWoodStud	28.2
+"Double Wood Stud, R-39"	DoubleWoodStud	31.4
+"Double Wood Stud, R-45"	DoubleWoodStud	34.3
+"Steel Stud, Uninsulated"	SteelFrame	3
+"Steel Stud, R-11"	SteelFrame	7.5
+"Steel Stud, R-13"	SteelFrame	7.9
+"Steel Stud, R-15"	SteelFrame	8.4
+"Steel Stud, R-19"	SteelFrame	10.5
+"Steel Stud, R-21"	SteelFrame	11
+"Steel Stud, R-25"	SteelFrame	11.5
+"Concrete Masonry Unit, Hollow or Concrete Filled, Uninsulated"	ConcreteMasonryUnit	4
+"Concrete Masonry Unit, Hollow or Concrete Filled, R-7"	ConcreteMasonryUnit	9.7
+"Concrete Masonry Unit, Hollow or Concrete Filled, R-11"	ConcreteMasonryUnit	13
+"Concrete Masonry Unit, Hollow or Concrete Filled, R-13"	ConcreteMasonryUnit	14.5
+"Concrete Masonry Unit, Hollow or Concrete Filled, R-15"	ConcreteMasonryUnit	15.9
+"Concrete Masonry Unit, Hollow or Concrete Filled, R-19"	ConcreteMasonryUnit	19.7
+"Concrete Masonry Unit, Perlite Filled, Uninsulated"	ConcreteMasonryUnit	6.8
+"Concrete Masonry Unit, Perlite Filled, R-7"	ConcreteMasonryUnit	12.5
+"Concrete Masonry Unit, Perlite Filled, R-11"	ConcreteMasonryUnit	15.7
+"Concrete Masonry Unit, Perlite Filled, R-13"	ConcreteMasonryUnit	17.2
+"Concrete Masonry Unit, Perlite Filled, R-15"	ConcreteMasonryUnit	18.6
+"Concrete Masonry Unit, Perlite Filled, R-19"	ConcreteMasonryUnit	22.3
+"Structural Insulated Panel, R-17.5"	StructuralInsulatedPanel	15.4
+"Structural Insulated Panel, R-27.5"	StructuralInsulatedPanel	22.4
+"Structural Insulated Panel, R-37.5"	StructuralInsulatedPanel	29.1
+"Structural Insulated Panel, R-47.5"	StructuralInsulatedPanel	35.9
+"Insulated Concrete Forms, R-5 per side"	InsulatedConcreteForms	12.3
+"Insulated Concrete Forms, R-10 per side"	InsulatedConcreteForms	21.6
+"Insulated Concrete Forms, R-15 per side"	InsulatedConcreteForms	30.6
+"Insulated Concrete Forms, R-20 per side"	InsulatedConcreteForms	39.3
+"Structural Brick, Uninsulated"	StructuralBrick	4.9
+"Structural Brick, R-7"	StructuralBrick	10.3
+"Structural Brick, R-11"	StructuralBrick	13.3
+"Structural Brick, R-15"	StructuralBrick	15.9
+"Structural Brick, R-19"	StructuralBrick	18.3
+"Wood Stud, IECC U-0.084"	WoodStud	11.9
+"Wood Stud, IECC U-0.082"	WoodStud	12.2
+"Wood Stud, IECC U-0.060"	WoodStud	16.67
+"Wood Stud, IECC U-0.057"	WoodStud	17.54
+"Wood Stud, IECC U-0.048"	WoodStud	20.83
+"Wood Stud, IECC U-0.045"	WoodStud	22.22
+"Detailed Example: Wood Stud, Uninsulated, 2x4, 16 in o.c., 25% Framing"	WoodStud	4.17
+"Detailed Example: Wood Stud, R-11, 2x4, 16 in o.c., 25% Framing"	WoodStud	11.09
+"Detailed Example: Wood Stud, R-18, 2x6, 24 in o.c., 25% Framing"	WoodStud	15.71
+		
+# Type: The type of wall.		
+# Assembly R-Value: Assembly R-value for the wall excluding any siding and/or continuous insulation.		

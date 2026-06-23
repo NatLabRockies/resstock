@@ -1,0 +1,12 @@
+Option Name	Attic Type	Roof Type
+Flat Roof	FlatRoof	
+"Attic, Vented, Gable"	VentedAttic	gable
+"Attic, Vented, Hip"	VentedAttic	hip
+"Attic, Unvented, Gable"	UnventedAttic	gable
+"Attic, Unvented, Hip"	UnventedAttic	hip
+"Attic, Conditioned, Gable"	ConditionedAttic	gable
+"Attic, Conditioned, Hip"	ConditionedAttic	hip
+Below Apartment	BelowApartment	
+		
+# Attic Type: The type of attic. Conditioned attics are not allowed for apartment units.		
+# Roof Type: The type of roof.		

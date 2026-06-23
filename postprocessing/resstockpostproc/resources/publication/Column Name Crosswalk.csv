@@ -1,0 +1,814 @@
+﻿Published Annual Name,Published Timeseries Name,ResStock 2024 Release 2 Equivalent
+bldg_id,bldg_id,bldg_id
+upgrade,,upgrade
+weight,,weight
+,timestamp,timestamp
+applicability,,applicability
+in.ahs_region,,in.ahs_region
+in.aiannh_area,,in.aiannh_area
+in.air_leakage_to_outside_ach50,,New in ResStock 2025 Release 1
+in.area_median_income,,in.area_median_income
+in.ashrae_iecc_climate_zone_2004,,in.ashrae_iecc_climate_zone_2004
+in.ashrae_iecc_climate_zone_2004_sub_cz_split,,in.ashrae_iecc_climate_zone_2004_2_a_split
+in.bathroom_spot_vent_hour,,in.bathroom_spot_vent_hour
+in.battery,,in.battery
+in.bedrooms,,in.bedrooms
+in.building_america_climate_zone,,in.building_america_climate_zone
+in.cec_climate_zone,,in.cec_climate_zone
+in.ceiling_fan,,in.ceiling_fan
+in.census_division,,in.census_division
+in.census_division_recs,,in.census_division_recs
+in.census_region,,in.census_region
+in.city,,in.city
+in.clothes_dryer,,in.clothes_dryer
+in.clothes_dryer_usage_level,,in.clothes_dryer_usage_level
+in.clothes_washer,,in.clothes_washer
+in.clothes_washer_presence,,in.clothes_washer_presence
+in.clothes_washer_usage_level,,in.clothes_washer_usage_level
+in.cooking_range,,in.cooking_range
+in.cooking_range_usage_level,,in.cooking_range_usage_level
+in.cooling_setpoint,,in.cooling_setpoint
+in.cooling_setpoint_has_offset,,in.cooling_setpoint_has_offset
+in.cooling_setpoint_offset_magnitude,,in.cooling_setpoint_offset_magnitude
+in.cooling_setpoint_offset_period,,in.cooling_setpoint_offset_period
+in.cooling_unavailable_days,,New in ResStock 2025 Release 1
+in.cooling_unavailable_period,,New in ResStock 2025 Release 1
+in.corridor,,in.corridor
+in.county,,in.county
+in.county_and_puma,,in.county_and_puma
+in.county_metro_status,,New in ResStock 2025 Release 1
+in.county_name,,in.county_name
+in.custom_state,,New in ResStock 2025 Release 1
+in.dehumidifier,,in.dehumidifier
+in.dishwasher,,in.dishwasher
+in.dishwasher_usage_level,,in.dishwasher_usage_level
+in.door_area,,in.door_area
+in.doors,,in.doors
+in.duct_leakage_and_insulation,,in.duct_leakage_and_insulation
+in.duct_location,,in.duct_location
+in.eaves,,in.eaves
+in.electric_panel_breaker_space_total_count,,New in ResStock 2025 Release 1
+in.electric_panel_service_rating..a,,New in ResStock 2025 Release 1
+in.electric_panel_service_rating_bin..a,,New in ResStock 2025 Release 1
+in.electric_vehicle_battery,,New in ResStock 2025 Release 1
+in.electric_vehicle_charge_at_home,,New in ResStock 2025 Release 1
+in.electric_vehicle_charger,,New in ResStock 2025 Release 1
+in.electric_vehicle_miles_traveled,,New in ResStock 2025 Release 1
+in.electric_vehicle_outlet_access,,New in ResStock 2025 Release 1
+in.electric_vehicle_ownership,,New in ResStock 2025 Release 1
+in.energystar_climate_zone_2023,,in.energystar_climate_zone_2023
+in.federal_poverty_level,,in.federal_poverty_level
+in.generation_and_emissions_assessment_region,,in.generation_and_emissions_assessment_region
+in.geometry_attic_type,,in.geometry_attic_type
+in.geometry_building_horizontal_location_mf,,in.geometry_building_horizontal_location_mf
+in.geometry_building_horizontal_location_sfa,,in.geometry_building_horizontal_location_sfa
+in.geometry_building_level_mf,,in.geometry_building_level_mf
+in.geometry_building_number_units_mf,,in.geometry_building_number_units_mf
+in.geometry_building_number_units_sfa,,in.geometry_building_number_units_sfa
+in.geometry_building_type_acs,,in.geometry_building_type_acs
+in.geometry_building_type_height,,in.geometry_building_type_height
+in.geometry_building_type_recs,,in.geometry_building_type_recs
+in.geometry_floor_area,,in.geometry_floor_area
+in.geometry_floor_area_bin,,in.geometry_floor_area_bin
+in.geometry_foundation_type,,in.geometry_foundation_type
+in.geometry_garage,,in.geometry_garage
+in.geometry_space_combination,,in.geometry_space_combination
+in.geometry_stories,,in.geometry_stories
+in.geometry_stories_low_rise,,in.geometry_stories_low_rise
+in.geometry_story_bin,,in.geometry_story_bin
+in.geometry_wall_exterior_finish,,in.geometry_wall_exterior_finish
+in.geometry_wall_type,,in.geometry_wall_type
+in.ground_thermal_conductivity,,in.ground_thermal_conductivity
+in.has_pv,,in.has_pv
+in.heating_fuel,,in.heating_fuel
+in.heating_setpoint,,in.heating_setpoint
+in.heating_setpoint_has_offset,,in.heating_setpoint_has_offset
+in.heating_setpoint_offset_magnitude,,in.heating_setpoint_offset_magnitude
+in.heating_setpoint_offset_period,,in.heating_setpoint_offset_period
+in.heating_unavailable_days,,New in ResStock 2025 Release 1
+in.heating_unavailable_period,,New in ResStock 2025 Release 1
+in.holiday_lighting,,in.holiday_lighting
+in.hot_water_distribution,,in.hot_water_distribution
+in.hot_water_fixtures,,in.hot_water_fixtures
+in.household_has_tribal_persons,,in.household_has_tribal_persons
+in.hvac_cooling_autosizing_factor,,New in ResStock 2025 Release 1
+in.hvac_cooling_efficiency,,in.hvac_cooling_efficiency
+in.hvac_cooling_partial_space_conditioning,,in.hvac_cooling_partial_space_conditioning
+in.hvac_cooling_type,,in.hvac_cooling_type
+in.hvac_has_ducts,,in.hvac_has_ducts
+in.hvac_has_shared_system,,in.hvac_has_shared_system
+in.hvac_has_zonal_electric_heating,,in.hvac_has_zonal_electric_heating
+in.hvac_heating_autosizing_factor,,New in ResStock 2025 Release 1
+in.hvac_heating_efficiency,,in.hvac_heating_efficiency
+in.hvac_heating_type,,in.hvac_heating_type
+in.hvac_heating_type_and_fuel,,in.hvac_heating_type_and_fuel
+in.hvac_secondary_heating_efficiency,,in.hvac_secondary_heating_efficiency
+in.hvac_secondary_heating_fuel,,in.hvac_secondary_heating_fuel
+in.hvac_secondary_heating_partial_space_conditioning,,in.hvac_secondary_heating_partial_space_conditioning
+in.hvac_secondary_heating_type,,New in ResStock 2025 Release 1
+in.hvac_shared_efficiencies,,in.hvac_shared_efficiencies
+in.hvac_system_is_faulted,,in.hvac_system_is_faulted
+in.hvac_system_is_scaled,,New in ResStock 2025 Release 1
+in.hvac_system_single_speed_ac_airflow,,in.hvac_system_single_speed_ac_airflow
+in.hvac_system_single_speed_ac_charge,,in.hvac_system_single_speed_ac_charge
+in.hvac_system_single_speed_ashp_airflow,,in.hvac_system_single_speed_ashp_airflow
+in.hvac_system_single_speed_ashp_charge,,in.hvac_system_single_speed_ashp_charge
+in.income,,in.income
+in.income_recs_2015,,in.income_recs_2015
+in.income_recs_2020,,in.income_recs_2020
+in.infiltration,,in.infiltration
+in.insulation_ceiling,,in.insulation_ceiling
+in.insulation_floor,,in.insulation_floor
+in.insulation_foundation_wall,,in.insulation_foundation_wall
+in.insulation_rim_joist,,in.insulation_rim_joist
+in.insulation_roof,,in.insulation_roof
+in.insulation_slab,,in.insulation_slab
+in.insulation_wall,,in.insulation_wall
+in.interior_shading,,in.interior_shading
+in.iso_rto_region,,in.iso_rto_region
+in.lighting,,in.lighting
+in.lighting_interior_use,,in.lighting_interior_use
+in.lighting_other_use,,in.lighting_other_use
+in.location_region,,in.location_region
+in.mechanical_ventilation,,in.mechanical_ventilation
+in.metropolitan_and_micropolitan_statistical_area,,New in ResStock 2025 Release 1
+in.misc_extra_refrigerator,,in.misc_extra_refrigerator
+in.misc_freezer,,in.misc_freezer
+in.misc_gas_fireplace,,in.misc_gas_fireplace
+in.misc_gas_grill,,in.misc_gas_grill
+in.misc_gas_lighting,,in.misc_gas_lighting
+in.misc_hot_tub_spa,,in.misc_hot_tub_spa
+in.misc_pool,,in.misc_pool
+in.misc_pool_heater,,in.misc_pool_heater
+in.misc_pool_pump,,in.misc_pool_pump
+in.misc_well_pump,,in.misc_well_pump
+in.natural_ventilation,,in.natural_ventilation
+in.neighbors,,in.neighbors
+in.occupants,,in.occupants
+in.orientation,,in.orientation
+in.overhangs,,in.overhangs
+in.plug_load_diversity,,in.plug_load_diversity
+in.plug_loads,,in.plug_loads
+in.puma,,in.puma
+in.puma_metro_status,,in.puma_metro_status
+in.pv_orientation,,in.pv_orientation
+in.pv_system_size,,in.pv_system_size
+in.radiant_barrier,,in.radiant_barrier
+in.range_spot_vent_hour,,in.range_spot_vent_hour
+in.reeds_balancing_area,,in.reeds_balancing_area
+in.refrigerator,,in.refrigerator
+in.refrigerator_usage_level,,in.refrigerator_usage_level
+in.representative_income,,in.representative_income
+in.roof_material,,in.roof_material
+in.simulation_control_run_period_begin_day_of_month,,in.simulation_control_run_period_begin_day_of_month
+in.simulation_control_run_period_begin_month,,in.simulation_control_run_period_begin_month
+in.simulation_control_run_period_calendar_year,,in.simulation_control_run_period_calendar_year
+in.simulation_control_run_period_end_day_of_month,,in.simulation_control_run_period_end_day_of_month
+in.simulation_control_run_period_end_month,,in.simulation_control_run_period_end_month
+in.simulation_control_timestep,,in.simulation_control_timestep
+in.sqft..ft2,in.sqft,in.sqft
+in.state,,in.state
+in.state_metro_median_income,,New in ResStock 2025 Release 1
+in.tenure,,in.tenure
+in.units_represented,,in.units_represented
+in.upgrade_name,,upgrade_name
+in.usage_level,,in.usage_level
+in.utility_bill_electricity_fixed_charges,,in.utility_bill_electricity_fixed_charges
+in.utility_bill_electricity_marginal_rates,,in.utility_bill_electricity_marginal_rates
+in.utility_bill_fuel_oil_fixed_charges,,in.utility_bill_fuel_oil_fixed_charges
+in.utility_bill_fuel_oil_marginal_rates,,in.utility_bill_fuel_oil_marginal_rates
+in.utility_bill_natural_gas_fixed_charges,,in.utility_bill_natural_gas_fixed_charges
+in.utility_bill_natural_gas_marginal_rates,,in.utility_bill_natural_gas_marginal_rates
+in.utility_bill_propane_fixed_charges,,in.utility_bill_propane_fixed_charges
+in.utility_bill_propane_marginal_rates,,in.utility_bill_propane_marginal_rates
+in.vacancy_status,,in.vacancy_status
+in.vintage,,in.vintage
+in.vintage_acs,,in.vintage_acs
+in.water_heater_efficiency,,in.water_heater_efficiency
+in.water_heater_fuel,,in.water_heater_fuel
+in.water_heater_in_unit,,in.water_heater_in_unit
+in.water_heater_location,,in.water_heater_location
+in.weather_file_city,,in.weather_file_city
+in.weather_file_latitude,,in.weather_file_latitude
+in.weather_file_longitude,,in.weather_file_longitude
+in.window_areas,,in.window_areas
+in.windows,,in.windows
+out.capacity.cooling..btu_per_hr,,New in ResStock 2025 Release 1
+out.capacity.heat_pump_backup..btu_per_hr,,New in ResStock 2025 Release 1
+out.capacity.heating..btu_per_hr,,New in ResStock 2025 Release 1
+out.params.door_area..ft2,,out.params.door_area_ft_2
+out.params.duct_unconditioned_surface_area..ft2,,out.params.duct_unconditioned_surface_area_ft_2
+out.params.floor_area_attic..ft2,,out.params.floor_area_attic_ft_2
+out.params.floor_area_attic_insulation_increase..ft2_delta_r_value,,out.params.floor_area_attic_insulation_increase_ft_2_delta_r_value
+out.params.floor_area_conditioned_infiltration_reduction..ft2_delta_ach50,,out.params.floor_area_conditioned_infiltration_reduction_ft_2_delta_ach_50
+out.params.floor_area_foundation..ft2,,out.params.floor_area_foundation_ft_2
+out.params.floor_area_lighting..ft2,,out.params.floor_area_lighting_ft_2
+out.params.flow_rate_mechanical_ventilation..cfm,,out.params.flow_rate_mechanical_ventilation_cfm
+out.params.hvac_geothermal_loop_borehole_trench_count,,New in ResStock 2025 Release 1
+out.params.hvac_geothermal_loop_borehole_trench_length..ft,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_clothes_dryer_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_cooling_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_dishwasher_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_ev_charging_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_headroom_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_heating_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_hot_water_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_mech_vent_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_occupied_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_occupied_savings_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_other_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_permanent_spa_heat_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_permanent_spa_pump_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_pool_heater_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_pool_pump_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_range_oven_count,,New in ResStock 2025 Release 1
+out.params.panel_breaker_space_well_pump_count,,New in ResStock 2025 Release 1
+out.params.panel_constraint_breaker_space,,New in ResStock 2025 Release 1
+out.params.panel_constraint_capacity.2023_nec_existing_dwelling_load_based,,New in ResStock 2025 Release 1
+out.params.panel_constraint_overall.2023_nec_existing_dwelling_load_based,,New in ResStock 2025 Release 1
+out.params.panel_load_clothes_dryer..w,,New in ResStock 2025 Release 1
+out.params.panel_load_cooling..w,,New in ResStock 2025 Release 1
+out.params.panel_load_dishwasher..w,,New in ResStock 2025 Release 1
+out.params.panel_load_ev_charging..w,,New in ResStock 2025 Release 1
+out.params.panel_load_headroom_capacity.2023_nec_existing_dwelling_load_based..a,,New in ResStock 2025 Release 1
+out.params.panel_load_heating..w,,New in ResStock 2025 Release 1
+out.params.panel_load_hot_water..w,,New in ResStock 2025 Release 1
+out.params.panel_load_mech_vent..w,,New in ResStock 2025 Release 1
+out.params.panel_load_occupied_capacity.2023_nec_existing_dwelling_load_based..a,,New in ResStock 2025 Release 1
+out.params.panel_load_occupied_capacity_savings.2023_nec_existing_dwelling_load_based..a,,New in ResStock 2025 Release 1
+out.params.panel_load_other..w,,New in ResStock 2025 Release 1
+out.params.panel_load_permanent_spa_heat..w,,New in ResStock 2025 Release 1
+out.params.panel_load_permanent_spa_pump..w,,New in ResStock 2025 Release 1
+out.params.panel_load_pool_heater..w,,New in ResStock 2025 Release 1
+out.params.panel_load_pool_pump..w,,New in ResStock 2025 Release 1
+out.params.panel_load_range_oven..w,,New in ResStock 2025 Release 1
+out.params.panel_load_total_load.2023_nec_existing_dwelling_load_based..w,,New in ResStock 2025 Release 1
+out.params.panel_load_total_load_savings.2023_nec_existing_dwelling_load_based..w,,New in ResStock 2025 Release 1
+out.params.panel_load_well_pump..w,,New in ResStock 2025 Release 1
+out.params.rim_joist_area_above_grade_exterior..ft2,,out.params.rim_joist_area_above_grade_exterior_ft_2
+out.params.roof_area..ft2,,out.params.roof_area_ft_2
+out.params.size_cooling_system_primary..kbtu_per_hr,,out.params.size_cooling_system_primary_k_btu_h
+out.params.size_heat_pump_backup_primary..kbtu_per_hr,,out.params.size_heat_pump_backup_primary_k_btu_h
+out.params.size_heating_system_primary..kbtu_per_hr,,out.params.size_heating_system_primary_k_btu_h
+out.params.size_heating_system_secondary..kbtu_per_hr,,out.params.size_heating_system_secondary_k_btu_h
+out.params.size_water_heater..gal,,out.params.size_water_heater_gal
+out.params.slab_perimeter_exposed_conditioned..ft,,out.params.slab_perimeter_exposed_conditioned_ft
+out.params.wall_area_above_grade_conditioned..ft2,,out.params.wall_area_above_grade_conditioned_ft_2
+out.params.wall_area_above_grade_exterior..ft2,,out.params.wall_area_above_grade_exterior_ft_2
+out.params.wall_area_below_grade..ft2,,out.params.wall_area_below_grade_ft_2
+out.params.window_area..ft2,,out.params.window_area_ft_2
+,out.indoor_airflow.infiltration..cfm,Not published in ResStock 2024 Release 2
+,out.indoor_airflow.mechanical_ventilation..cfm,Not published in ResStock 2024 Release 2
+,out.indoor_airflow.natural_ventilation..cfm,Not published in ResStock 2024 Release 2
+,out.indoor_dewpoint_temperature.conditioned_space..c,Not published in ResStock 2024 Release 2
+,out.indoor_humidity_ratio.conditioned_space..kgwater_per_kgdryair,Not published in ResStock 2024 Release 2
+,out.indoor_operative_temperature.conditioned_space..c,Not published in ResStock 2024 Release 2
+,out.indoor_radiant_temperature.conditioned_space..c,Not published in ResStock 2024 Release 2
+,out.indoor_relative_humidity.conditioned_space..percentage,Not published in ResStock 2024 Release 2
+,out.indoor_temperature.conditioned_space..c,out.zone_mean_air_temp.conditioned_space.c
+upgrade.demand_flexibility_electric_vehicle,,No direct equivalent in ResStock 2024 Release 2
+upgrade.demand_flexibility_hvac,,No direct equivalent in ResStock 2024 Release 2
+upgrade.demand_flexibility_random_shift,,No direct equivalent in ResStock 2024 Release 2
+upgrade.duct_leakage_and_insulation,,No direct equivalent in ResStock 2024 Release 2
+upgrade.electric_vehicle_charger,,No direct equivalent in ResStock 2024 Release 2
+upgrade.electric_vehicle_efficiency_increase,,No direct equivalent in ResStock 2024 Release 2
+upgrade.electric_vehicle_ownership,,No direct equivalent in ResStock 2024 Release 2
+upgrade.heating_fuel,,No direct equivalent in ResStock 2024 Release 2
+upgrade.hvac_cooling_efficiency,,upgrade.hvac_cooling_efficiency
+upgrade.hvac_cooling_partial_space_conditioning,,upgrade.hvac_cooling_partial_space_conditioning
+upgrade.hvac_detailed_performance_data,,No direct equivalent in ResStock 2024 Release 2
+upgrade.hvac_heating_efficiency,,upgrade.hvac_heating_efficiency
+upgrade.hvac_heating_type_and_fuel,,No direct equivalent in ResStock 2024 Release 2
+upgrade.infiltration,,No direct equivalent in ResStock 2024 Release 2
+upgrade.infiltration_reduction,,upgrade.infiltration_reduction
+upgrade.insulation_ceiling,,upgrade.insulation_ceiling
+upgrade.insulation_wall,,No direct equivalent in ResStock 2024 Release 2
+upgrade.water_heater_efficiency,,upgrade.water_heater_efficiency
+upgrade.water_heater_fuel,,upgrade.water_heater_fuel
+upgrade.windows,,No direct equivalent in ResStock 2024 Release 2
+out.hot_water.clothes_washer..gal,out.hot_water.clothes_washer..gal,out.hot_water.clothes_washer.gal
+out.hot_water.dishwasher..gal,out.hot_water.dishwasher..gal,out.hot_water.dishwasher.gal
+out.hot_water.distribution_waste..gal,out.hot_water.distribution_waste..gal,out.hot_water.distribution_waste.gal
+out.hot_water.fixtures..gal,out.hot_water.fixtures..gal,out.hot_water.fixtures.gal
+out.hot_water_savings.clothes_washer..gal,,out.hot_water.clothes_washer.gal.savings
+out.hot_water_savings.dishwasher..gal,,out.hot_water.dishwasher.gal.savings
+out.hot_water_savings.distribution_waste..gal,,out.hot_water.distribution_waste.gal.savings
+out.hot_water_savings.fixtures..gal,,out.hot_water.fixtures.gal.savings
+out.load.cooling.energy_delivered..kbtu,out.load.cooling.energy_delivered..kbtu,out.load.cooling.energy_delivered.kbtu
+out.load.cooling.energy_delivered_savings..kbtu,,out.load.cooling.energy_delivered.kbtu.savings
+out.load.cooling.peak..kbtu_per_hr,,out.load.cooling.peak.kbtu_hr
+out.load.cooling.peak_savings..kbtu_per_hr,,out.load.cooling.peak.kbtu_hr.savings
+out.load.heating.energy_delivered..kbtu,out.load.heating.energy_delivered..kbtu,out.load.heating.energy_delivered.kbtu
+out.load.heating.energy_delivered_savings..kbtu,,out.load.heating.energy_delivered.kbtu.savings
+out.load.heating.peak..kbtu_per_hr,,out.load.heating.peak.kbtu_hr
+out.load.heating.peak_savings..kbtu_per_hr,,out.load.heating.peak.kbtu_hr.savings
+out.load.hot_water.energy_delivered..kbtu,out.load.hot_water.energy_delivered..kbtu,out.load.hot_water.energy_delivered.kbtu
+out.load.hot_water.energy_delivered_savings..kbtu,,out.load.hot_water.energy_delivered.kbtu.savings
+out.load.hot_water.energy_solar_thermal..kbtu,out.load.hot_water_solar_thermal..kbtu,New in ResStock 2025 Release 1
+out.load.hot_water.energy_solar_thermal_savings..kbtu,,New in ResStock 2025 Release 1
+out.load.hot_water.energy_tank_losses..kbtu,out.load.hot_water_tank_losses..kbtu,New in ResStock 2025 Release 1
+out.load.hot_water.energy_tank_losses_savings..kbtu,,New in ResStock 2025 Release 1
+out.unmet_hours.cooling..hr,out.unmet_hours.cooling..hour,out.unmet_hours.cooling.hour
+out.unmet_hours.ev_driving..hr,out.unmet_hours.ev_driving..hour,New in ResStock 2025 Release 1
+out.unmet_hours.heating..hr,out.unmet_hours.heating..hour,out.unmet_hours.heating.hour
+out.unmet_hours_reduction.cooling..hr,,out.unmet_hours.cooling.hour.savings
+out.unmet_hours_reduction.heating..hr,,out.unmet_hours.heating.hour.savings
+out.electricity.ceiling_fan.energy_consumption..kwh,out.electricity.ceiling_fan.energy_consumption..kwh,out.electricity.ceiling_fan.energy_consumption.kwh
+out.electricity.ceiling_fan.energy_consumption_intensity..kwh_per_ft2,out.electricity.ceiling_fan.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.ceiling_fan.energy_savings..kwh,,out.electricity.ceiling_fan.energy_consumption.kwh.savings
+out.electricity.ceiling_fan.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.clothes_dryer.energy_consumption..kwh,out.electricity.clothes_dryer.energy_consumption..kwh,out.electricity.clothes_dryer.energy_consumption.kwh
+out.electricity.clothes_dryer.energy_consumption_intensity..kwh_per_ft2,out.electricity.clothes_dryer.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.clothes_dryer.energy_savings..kwh,,out.electricity.clothes_dryer.energy_consumption.kwh.savings
+out.electricity.clothes_dryer.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.clothes_washer.energy_consumption..kwh,out.electricity.clothes_washer.energy_consumption..kwh,out.electricity.clothes_washer.energy_consumption.kwh
+out.electricity.clothes_washer.energy_consumption_intensity..kwh_per_ft2,out.electricity.clothes_washer.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.clothes_washer.energy_savings..kwh,,out.electricity.clothes_washer.energy_consumption.kwh.savings
+out.electricity.clothes_washer.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.cooling.energy_consumption..kwh,out.electricity.cooling.energy_consumption..kwh,out.electricity.cooling.energy_consumption.kwh
+out.electricity.cooling.energy_consumption_intensity..kwh_per_ft2,out.electricity.cooling.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.cooling.energy_savings..kwh,,out.electricity.cooling.energy_consumption.kwh.savings
+out.electricity.cooling.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.cooling_fans_pumps.energy_consumption..kwh,out.electricity.cooling_fans_pumps.energy_consumption..kwh,out.electricity.cooling_fans_pumps.energy_consumption.kwh
+out.electricity.cooling_fans_pumps.energy_consumption_intensity..kwh_per_ft2,out.electricity.cooling_fans_pumps.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.cooling_fans_pumps.energy_savings..kwh,,out.electricity.cooling_fans_pumps.energy_consumption.kwh.savings
+out.electricity.cooling_fans_pumps.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.dishwasher.energy_consumption..kwh,out.electricity.dishwasher.energy_consumption..kwh,out.electricity.dishwasher.energy_consumption.kwh
+out.electricity.dishwasher.energy_consumption_intensity..kwh_per_ft2,out.electricity.dishwasher.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.dishwasher.energy_savings..kwh,,out.electricity.dishwasher.energy_consumption.kwh.savings
+out.electricity.dishwasher.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.ev_charging.energy_consumption..kwh,out.electricity.ev_charging.energy_consumption..kwh,New in ResStock 2025 Release 1
+out.electricity.ev_charging.energy_consumption_intensity..kwh_per_ft2,out.electricity.ev_charging.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.ev_charging.energy_savings..kwh,,New in ResStock 2025 Release 1
+out.electricity.ev_charging.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.freezer.energy_consumption..kwh,out.electricity.freezer.energy_consumption..kwh,out.electricity.freezer.energy_consumption.kwh
+out.electricity.freezer.energy_consumption_intensity..kwh_per_ft2,out.electricity.freezer.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.freezer.energy_savings..kwh,,out.electricity.freezer.energy_consumption.kwh.savings
+out.electricity.freezer.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.heating.energy_consumption..kwh,out.electricity.heating.energy_consumption..kwh,out.electricity.heating.energy_consumption.kwh
+out.electricity.heating.energy_consumption_intensity..kwh_per_ft2,out.electricity.heating.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.heating.energy_savings..kwh,,out.electricity.heating.energy_consumption.kwh.savings
+out.electricity.heating.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.heating_fans_pumps.energy_consumption..kwh,out.electricity.heating_fans_pumps.energy_consumption..kwh,out.electricity.heating_fans_pumps.energy_consumption.kwh
+out.electricity.heating_fans_pumps.energy_consumption_intensity..kwh_per_ft2,out.electricity.heating_fans_pumps.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.heating_fans_pumps.energy_savings..kwh,,out.electricity.heating_fans_pumps.energy_consumption.kwh.savings
+out.electricity.heating_fans_pumps.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.heating_hp_bkup.energy_consumption..kwh,out.electricity.heating_hp_bkup.energy_consumption..kwh,out.electricity.heating_hp_bkup.energy_consumption.kwh
+out.electricity.heating_hp_bkup.energy_consumption_intensity..kwh_per_ft2,out.electricity.heating_hp_bkup.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.heating_hp_bkup.energy_savings..kwh,,out.electricity.heating_hp_bkup.energy_consumption.kwh.savings
+out.electricity.heating_hp_bkup.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.heating_hp_bkup_fa.energy_consumption..kwh,out.electricity.heating_hp_bkup_fa.energy_consumption..kwh,out.electricity.heating_hp_bkup_fa.energy_consumption.kwh
+out.electricity.heating_hp_bkup_fa.energy_consumption_intensity..kwh_per_ft2,out.electricity.heating_hp_bkup_fa.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.heating_hp_bkup_fa.energy_savings..kwh,,out.electricity.heating_hp_bkup_fa.energy_consumption.kwh.savings
+out.electricity.heating_hp_bkup_fa.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.hot_water.energy_consumption..kwh,out.electricity.hot_water.energy_consumption..kwh,out.electricity.hot_water.energy_consumption.kwh
+out.electricity.hot_water.energy_consumption_intensity..kwh_per_ft2,out.electricity.hot_water.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.hot_water.energy_savings..kwh,,out.electricity.hot_water.energy_consumption.kwh.savings
+out.electricity.hot_water.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.hot_water_solar_th.energy_consumption..kwh,out.electricity.hot_water_solar_th.energy_consumption..kwh,New in ResStock 2025 Release 1
+out.electricity.hot_water_solar_th.energy_consumption_intensity..kwh_per_ft2,out.electricity.hot_water_solar_th.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.hot_water_solar_th.energy_savings..kwh,,New in ResStock 2025 Release 1
+out.electricity.hot_water_solar_th.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.lighting_exterior.energy_consumption..kwh,out.electricity.lighting_exterior.energy_consumption..kwh,out.electricity.lighting_exterior.energy_consumption.kwh
+out.electricity.lighting_exterior.energy_consumption_intensity..kwh_per_ft2,out.electricity.lighting_exterior.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.lighting_exterior.energy_savings..kwh,,out.electricity.lighting_exterior.energy_consumption.kwh.savings
+out.electricity.lighting_exterior.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.lighting_garage.energy_consumption..kwh,out.electricity.lighting_garage.energy_consumption..kwh,out.electricity.lighting_garage.energy_consumption.kwh
+out.electricity.lighting_garage.energy_consumption_intensity..kwh_per_ft2,out.electricity.lighting_garage.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.lighting_garage.energy_savings..kwh,,out.electricity.lighting_garage.energy_consumption.kwh.savings
+out.electricity.lighting_garage.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.lighting_interior.energy_consumption..kwh,out.electricity.lighting_interior.energy_consumption..kwh,out.electricity.lighting_interior.energy_consumption.kwh
+out.electricity.lighting_interior.energy_consumption_intensity..kwh_per_ft2,out.electricity.lighting_interior.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.lighting_interior.energy_savings..kwh,,out.electricity.lighting_interior.energy_consumption.kwh.savings
+out.electricity.lighting_interior.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.mech_vent.energy_consumption..kwh,out.electricity.mech_vent.energy_consumption..kwh,out.electricity.mech_vent.energy_consumption.kwh
+out.electricity.mech_vent.energy_consumption_intensity..kwh_per_ft2,out.electricity.mech_vent.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.mech_vent.energy_savings..kwh,,out.electricity.mech_vent.energy_consumption.kwh.savings
+out.electricity.mech_vent.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.net.energy_consumption..kwh,out.electricity.net.energy_consumption..kwh,out.electricity.net.energy_consumption.kwh
+out.electricity.net.energy_consumption_intensity..kwh_per_ft2,out.electricity.net.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.net.energy_savings..kwh,,out.electricity.net.energy_consumption.kwh.savings
+out.electricity.net.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.permanent_spa_heat.energy_consumption..kwh,out.electricity.permanent_spa_heat.energy_consumption..kwh,out.electricity.permanent_spa_heat.energy_consumption.kwh
+out.electricity.permanent_spa_heat.energy_consumption_intensity..kwh_per_ft2,out.electricity.permanent_spa_heat.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.permanent_spa_heat.energy_savings..kwh,,out.electricity.permanent_spa_heat.energy_consumption.kwh.savings
+out.electricity.permanent_spa_heat.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.permanent_spa_pump.energy_consumption..kwh,out.electricity.permanent_spa_pump.energy_consumption..kwh,out.electricity.permanent_spa_pump.energy_consumption.kwh
+out.electricity.permanent_spa_pump.energy_consumption_intensity..kwh_per_ft2,out.electricity.permanent_spa_pump.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.permanent_spa_pump.energy_savings..kwh,,out.electricity.permanent_spa_pump.energy_consumption.kwh.savings
+out.electricity.permanent_spa_pump.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.plug_loads.energy_consumption..kwh,out.electricity.plug_loads.energy_consumption..kwh,out.electricity.plug_loads.energy_consumption.kwh
+out.electricity.plug_loads.energy_consumption_intensity..kwh_per_ft2,out.electricity.plug_loads.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.plug_loads.energy_savings..kwh,,out.electricity.plug_loads.energy_consumption.kwh.savings
+out.electricity.plug_loads.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.pool_heater.energy_consumption..kwh,out.electricity.pool_heater.energy_consumption..kwh,out.electricity.pool_heater.energy_consumption.kwh
+out.electricity.pool_heater.energy_consumption_intensity..kwh_per_ft2,out.electricity.pool_heater.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.pool_heater.energy_savings..kwh,,out.electricity.pool_heater.energy_consumption.kwh.savings
+out.electricity.pool_heater.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.pool_pump.energy_consumption..kwh,out.electricity.pool_pump.energy_consumption..kwh,out.electricity.pool_pump.energy_consumption.kwh
+out.electricity.pool_pump.energy_consumption_intensity..kwh_per_ft2,out.electricity.pool_pump.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.pool_pump.energy_savings..kwh,,out.electricity.pool_pump.energy_consumption.kwh.savings
+out.electricity.pool_pump.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.pv.energy_consumption..kwh,out.electricity.pv.energy_consumption..kwh,out.electricity.pv.energy_consumption.kwh
+out.electricity.pv.energy_consumption_intensity..kwh_per_ft2,out.electricity.pv.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.pv.energy_savings..kwh,,out.electricity.pv.energy_consumption.kwh.savings
+out.electricity.pv.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.range_oven.energy_consumption..kwh,out.electricity.range_oven.energy_consumption..kwh,out.electricity.range_oven.energy_consumption.kwh
+out.electricity.range_oven.energy_consumption_intensity..kwh_per_ft2,out.electricity.range_oven.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.range_oven.energy_savings..kwh,,out.electricity.range_oven.energy_consumption.kwh.savings
+out.electricity.range_oven.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.refrigerator.energy_consumption..kwh,out.electricity.refrigerator.energy_consumption..kwh,out.electricity.refrigerator.energy_consumption.kwh
+out.electricity.refrigerator.energy_consumption_intensity..kwh_per_ft2,out.electricity.refrigerator.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.refrigerator.energy_savings..kwh,,out.electricity.refrigerator.energy_consumption.kwh.savings
+out.electricity.refrigerator.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.television.energy_consumption..kwh,out.electricity.television.energy_consumption..kwh,New in ResStock 2025 Release 1
+out.electricity.television.energy_consumption_intensity..kwh_per_ft2,out.electricity.television.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.television.energy_savings..kwh,,New in ResStock 2025 Release 1
+out.electricity.television.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.total.energy_consumption..kwh,out.electricity.total.energy_consumption..kwh,out.electricity.total.energy_consumption.kwh
+out.electricity.total.energy_consumption_intensity..kwh_per_ft2,out.electricity.total.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.total.energy_savings..kwh,,out.electricity.total.energy_consumption.kwh.savings
+out.electricity.total.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.electricity.well_pump.energy_consumption..kwh,out.electricity.well_pump.energy_consumption..kwh,out.electricity.well_pump.energy_consumption.kwh
+out.electricity.well_pump.energy_consumption_intensity..kwh_per_ft2,out.electricity.well_pump.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.electricity.well_pump.energy_savings..kwh,,out.electricity.well_pump.energy_consumption.kwh.savings
+out.electricity.well_pump.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.fuel_oil.heating.energy_consumption..kwh,out.fuel_oil.heating.energy_consumption..kwh,out.fuel_oil.heating.energy_consumption.kwh
+out.fuel_oil.heating.energy_consumption_intensity..kwh_per_ft2,out.fuel_oil.heating.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.fuel_oil.heating.energy_savings..kwh,,out.fuel_oil.heating.energy_consumption.kwh.savings
+out.fuel_oil.heating.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.fuel_oil.heating_hp_bkup.energy_consumption..kwh,,out.fuel_oil.heating_hp_bkup.energy_consumption.kwh
+out.fuel_oil.heating_hp_bkup.energy_consumption_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.fuel_oil.heating_hp_bkup.energy_savings..kwh,,out.fuel_oil.heating_hp_bkup.energy_consumption.kwh.savings
+out.fuel_oil.heating_hp_bkup.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.fuel_oil.hot_water.energy_consumption..kwh,out.fuel_oil.hot_water.energy_consumption..kwh,out.fuel_oil.hot_water.energy_consumption.kwh
+out.fuel_oil.hot_water.energy_consumption_intensity..kwh_per_ft2,out.fuel_oil.hot_water.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.fuel_oil.hot_water.energy_savings..kwh,,out.fuel_oil.hot_water.energy_consumption.kwh.savings
+out.fuel_oil.hot_water.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.fuel_oil.total.energy_consumption..kwh,out.fuel_oil.total.energy_consumption..kwh,out.fuel_oil.total.energy_consumption.kwh
+out.fuel_oil.total.energy_consumption_intensity..kwh_per_ft2,out.fuel_oil.total.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.fuel_oil.total.energy_savings..kwh,,out.fuel_oil.total.energy_consumption.kwh.savings
+out.fuel_oil.total.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.natural_gas.clothes_dryer.energy_consumption..kwh,out.natural_gas.clothes_dryer.energy_consumption..kwh,out.natural_gas.clothes_dryer.energy_consumption.kwh
+out.natural_gas.clothes_dryer.energy_consumption_intensity..kwh_per_ft2,out.natural_gas.clothes_dryer.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.natural_gas.clothes_dryer.energy_savings..kwh,,out.natural_gas.clothes_dryer.energy_consumption.kwh.savings
+out.natural_gas.clothes_dryer.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.natural_gas.fireplace.energy_consumption..kwh,out.natural_gas.fireplace.energy_consumption..kwh,out.natural_gas.fireplace.energy_consumption.kwh
+out.natural_gas.fireplace.energy_consumption_intensity..kwh_per_ft2,out.natural_gas.fireplace.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.natural_gas.fireplace.energy_savings..kwh,,out.natural_gas.fireplace.energy_consumption.kwh.savings
+out.natural_gas.fireplace.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.natural_gas.grill.energy_consumption..kwh,out.natural_gas.grill.energy_consumption..kwh,out.natural_gas.grill.energy_consumption.kwh
+out.natural_gas.grill.energy_consumption_intensity..kwh_per_ft2,out.natural_gas.grill.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.natural_gas.grill.energy_savings..kwh,,out.natural_gas.grill.energy_consumption.kwh.savings
+out.natural_gas.grill.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.natural_gas.heating.energy_consumption..kwh,out.natural_gas.heating.energy_consumption..kwh,out.natural_gas.heating.energy_consumption.kwh
+out.natural_gas.heating.energy_consumption_intensity..kwh_per_ft2,out.natural_gas.heating.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.natural_gas.heating.energy_savings..kwh,,out.natural_gas.heating.energy_consumption.kwh.savings
+out.natural_gas.heating.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.natural_gas.heating_hp_bkup.energy_consumption..kwh,out.natural_gas.heating_hp_bkup.energy_consumption..kwh,out.natural_gas.heating.energy_consumption.kwh
+out.natural_gas.heating_hp_bkup.energy_consumption_intensity..kwh_per_ft2,out.natural_gas.heating_hp_bkup.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.natural_gas.heating_hp_bkup.energy_savings..kwh,,out.natural_gas.heating_hp_bkup.energy_consumption.kwh.savings
+out.natural_gas.heating_hp_bkup.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.natural_gas.hot_water.energy_consumption..kwh,out.natural_gas.hot_water.energy_consumption..kwh,out.natural_gas.hot_water.energy_consumption.kwh
+out.natural_gas.hot_water.energy_consumption_intensity..kwh_per_ft2,out.natural_gas.hot_water.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.natural_gas.hot_water.energy_savings..kwh,,out.natural_gas.hot_water.energy_consumption.kwh.savings
+out.natural_gas.hot_water.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.natural_gas.lighting.energy_consumption..kwh,out.natural_gas.lighting.energy_consumption..kwh,out.natural_gas.lighting.energy_consumption.kwh
+out.natural_gas.lighting.energy_consumption_intensity..kwh_per_ft2,out.natural_gas.lighting.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.natural_gas.lighting.energy_savings..kwh,,out.natural_gas.lighting.energy_consumption.kwh.savings
+out.natural_gas.lighting.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.natural_gas.permanent_spa_heat.energy_consumption..kwh,out.natural_gas.permanent_spa_heat.energy_consumption..kwh,out.natural_gas.permanent_spa_heat.energy_consumption.kwh
+out.natural_gas.permanent_spa_heat.energy_consumption_intensity..kwh_per_ft2,out.natural_gas.permanent_spa_heat.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.natural_gas.permanent_spa_heat.energy_savings..kwh,,out.natural_gas.permanent_spa_heat.energy_consumption.kwh.savings
+out.natural_gas.permanent_spa_heat.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.natural_gas.pool_heater.energy_consumption..kwh,out.natural_gas.pool_heater.energy_consumption..kwh,out.natural_gas.pool_heater.energy_consumption.kwh
+out.natural_gas.pool_heater.energy_consumption_intensity..kwh_per_ft2,out.natural_gas.pool_heater.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.natural_gas.pool_heater.energy_savings..kwh,,out.natural_gas.pool_heater.energy_consumption.kwh.savings
+out.natural_gas.pool_heater.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.natural_gas.range_oven.energy_consumption..kwh,out.natural_gas.range_oven.energy_consumption..kwh,out.natural_gas.range_oven.energy_consumption.kwh
+out.natural_gas.range_oven.energy_consumption_intensity..kwh_per_ft2,out.natural_gas.range_oven.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.natural_gas.range_oven.energy_savings..kwh,,out.natural_gas.range_oven.energy_consumption.kwh.savings
+out.natural_gas.range_oven.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.natural_gas.total.energy_consumption..kwh,out.natural_gas.total.energy_consumption..kwh,out.natural_gas.total.energy_consumption.kwh
+out.natural_gas.total.energy_consumption_intensity..kwh_per_ft2,out.natural_gas.total.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.natural_gas.total.energy_savings..kwh,,out.natural_gas.total.energy_consumption.kwh.savings
+out.natural_gas.total.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.propane.clothes_dryer.energy_consumption..kwh,out.propane.clothes_dryer.energy_consumption..kwh,out.propane.clothes_dryer.energy_consumption.kwh
+out.propane.clothes_dryer.energy_consumption_intensity..kwh_per_ft2,out.propane.clothes_dryer.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.propane.clothes_dryer.energy_savings..kwh,,out.propane.clothes_dryer.energy_consumption.kwh.savings
+out.propane.clothes_dryer.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.propane.heating.energy_consumption..kwh,out.propane.heating.energy_consumption..kwh,out.propane.heating.energy_consumption.kwh
+out.propane.heating.energy_consumption_intensity..kwh_per_ft2,out.propane.heating.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.propane.heating.energy_savings..kwh,,out.propane.heating.energy_consumption.kwh.savings
+out.propane.heating.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.propane.heating_hp_bkup.energy_consumption..kwh,,out.propane.heating_hp_bkup.energy_consumption.kwh
+out.propane.heating_hp_bkup.energy_consumption_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.propane.heating_hp_bkup.energy_savings..kwh,,out.propane.heating_hp_bkup.energy_consumption.kwh.savings
+out.propane.heating_hp_bkup.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.propane.hot_water.energy_consumption..kwh,out.propane.hot_water.energy_consumption..kwh,out.propane.hot_water.energy_consumption.kwh
+out.propane.hot_water.energy_consumption_intensity..kwh_per_ft2,out.propane.hot_water.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.propane.hot_water.energy_savings..kwh,,out.propane.hot_water.energy_consumption.kwh.savings
+out.propane.hot_water.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.propane.range_oven.energy_consumption..kwh,out.propane.range_oven.energy_consumption..kwh,out.propane.range_oven.energy_consumption.kwh
+out.propane.range_oven.energy_consumption_intensity..kwh_per_ft2,out.propane.range_oven.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.propane.range_oven.energy_savings..kwh,,out.propane.range_oven.energy_consumption.kwh.savings
+out.propane.range_oven.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.propane.total.energy_consumption..kwh,out.propane.total.energy_consumption..kwh,out.propane.total.energy_consumption.kwh
+out.propane.total.energy_consumption_intensity..kwh_per_ft2,out.propane.total.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.propane.total.energy_savings..kwh,,out.propane.total.energy_consumption.kwh.savings
+out.propane.total.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.qoi.electricity.maximum_daily_peak_savings_summer..kw,,New in ResStock 2025 Release 1
+out.qoi.electricity.maximum_daily_peak_savings_winter..kw,,New in ResStock 2025 Release 1
+out.qoi.electricity.maximum_daily_peak_summer..kw,,out.electricity.summer.peak.kw
+out.qoi.electricity.maximum_daily_peak_winter..kw,,out.electricity.winter.peak.kw
+out.site_energy.net.energy_consumption..kwh,out.site_energy.net.energy_consumption..kwh,out.site_energy.net.energy_consumption.kwh
+out.site_energy.net.energy_consumption_intensity..kwh_per_ft2,out.site_energy.net.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.site_energy.net.energy_savings..kwh,,out.site_energy.net.energy_consumption.kwh.savings
+out.site_energy.net.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.site_energy.total.energy_consumption..kwh,out.site_energy.total.energy_consumption..kwh,out.site_energy.total.energy_consumption.kwh
+out.site_energy.total.energy_consumption_intensity..kwh_per_ft2,out.site_energy.total.energy_consumption_intensity..kwh_per_ft2,Not published in ResStock 2024 Release 2
+out.site_energy.total.energy_savings..kwh,,out.site_energy.total.energy_consumption.kwh.savings
+out.site_energy.total.energy_savings_intensity..kwh_per_ft2,,Not published in ResStock 2024 Release 2
+out.utility_bills.electricity_bill..usd,,out.bills.electricity.usd
+out.utility_bills.electricity_bill_savings..usd,,out.bills.electricity.usd.savings
+out.utility_bills.fuel_oil_bill..usd,,out.bills.fuel_oil.usd
+out.utility_bills.fuel_oil_bill_savings..usd,,out.bills.fuel_oil.usd.savings
+out.utility_bills.natural_gas_bill..usd,,out.bills.natural_gas.usd
+out.utility_bills.natural_gas_bill_savings..usd,,out.bills.natural_gas.usd.savings
+out.utility_bills.propane_bill..usd,,out.bills.propane.usd
+out.utility_bills.propane_bill_savings..usd,,out.bills.propane.usd.savings
+out.utility_bills.total_bill..usd,,out.bills.all_fuels.usd
+out.utility_bills.total_bill_savings..usd,,out.bills.all_fuels.usd.savings
+out.emissions.electricity.aer_high_re_cost_avg..co2e_kg,out.emissions.electricity.total.aer_highrecost_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.aer_high_re_cost_low_ng_price_avg..co2e_kg,out.emissions.electricity.total.aer_highrecostlowngprice_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.aer_low_re_cost_avg..co2e_kg,out.emissions.electricity.total.aer_lowrecost_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.aer_low_re_cost_high_ng_price_avg..co2e_kg,out.emissions.electricity.total.aer_lowrecosthighngprice_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.aer_mid_case_avg..co2e_kg,out.emissions.electricity.total.aer_midcase_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_high_re_cost_15..co2e_kg,out.emissions.electricity.total.lrmer_highrecost_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_high_re_cost_25..co2e_kg,out.emissions.electricity.total.lrmer_highrecost_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_high_re_cost_low_ng_price_15..co2e_kg,out.emissions.electricity.total.lrmer_highrecostlowngprice_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_high_re_cost_low_ng_price_25..co2e_kg,out.emissions.electricity.total.lrmer_highrecostlowngprice_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_low_re_cost_15..co2e_kg,out.emissions.electricity.total.lrmer_lowrecost_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_low_re_cost_25..co2e_kg,out.emissions.electricity.total.lrmer_lowrecost_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_low_re_cost_high_ng_price_15..co2e_kg,out.emissions.electricity.total.lrmer_lowrecosthighngprice_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_low_re_cost_high_ng_price_25..co2e_kg,out.emissions.electricity.total.lrmer_lowrecosthighngprice_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_mid_case_15..co2e_kg,out.emissions.electricity.total.lrmer_midcase_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.electricity.lrmer_mid_case_25..co2e_kg,out.emissions.electricity.total.lrmer_midcase_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.fuel_oil.total..co2e_kg,out.emissions.fuel_oil.total..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.natural_gas.total..co2e_kg,out.emissions.natural_gas.total..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.propane.total..co2e_kg,out.emissions.propane.total..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.total.aer_high_re_cost_avg..co2e_kg,out.emissions.total.aer_highrecost_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.total.aer_high_re_cost_low_ng_price_avg..co2e_kg,out.emissions.total.aer_highrecostlowngprice_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.total.aer_low_re_cost_avg..co2e_kg,out.emissions.total.aer_lowrecost_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.total.aer_low_re_cost_high_ng_price_avg..co2e_kg,out.emissions.total.aer_lowrecosthighngprice_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.total.aer_mid_case_avg..co2e_kg,out.emissions.total.aer_midcase_avg..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.total.lrmer_high_re_cost_15..co2e_kg,out.emissions.total.lrmer_highrecost_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.total.lrmer_high_re_cost_25..co2e_kg,out.emissions.total.lrmer_highrecost_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.total.lrmer_high_re_cost_low_ng_price_15..co2e_kg,out.emissions.total.lrmer_highrecostlowngprice_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.total.lrmer_high_re_cost_low_ng_price_25..co2e_kg,out.emissions.total.lrmer_highrecostlowngprice_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.total.lrmer_low_re_cost_15..co2e_kg,out.emissions.total.lrmer_lowrecost_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.total.lrmer_low_re_cost_25..co2e_kg,out.emissions.total.lrmer_lowrecost_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.total.lrmer_low_re_cost_high_ng_price_15..co2e_kg,out.emissions.total.lrmer_lowrecosthighngprice_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.total.lrmer_low_re_cost_high_ng_price_25..co2e_kg,out.emissions.total.lrmer_lowrecosthighngprice_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.total.lrmer_mid_case_15..co2e_kg,out.emissions.total.lrmer_midcase_15..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions.total.lrmer_mid_case_25..co2e_kg,out.emissions.total.lrmer_midcase_25..co2e_kg,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.electricity.aer_high_re_cost_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.electricity.aer_high_re_cost_low_ng_price_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.electricity.aer_low_re_cost_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.electricity.aer_low_re_cost_high_ng_price_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.electricity.aer_mid_case_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.electricity.lrmer_high_re_cost_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.electricity.lrmer_high_re_cost_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.electricity.lrmer_high_re_cost_low_ng_price_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.electricity.lrmer_high_re_cost_low_ng_price_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.electricity.lrmer_low_re_cost_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.electricity.lrmer_low_re_cost_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.electricity.lrmer_low_re_cost_high_ng_price_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.electricity.lrmer_low_re_cost_high_ng_price_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.electricity.lrmer_mid_case_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.electricity.lrmer_mid_case_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.fuel_oil.total..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.natural_gas.total..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.propane.total..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.total.aer_high_re_cost_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.total.aer_high_re_cost_low_ng_price_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.total.aer_low_re_cost_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.total.aer_low_re_cost_high_ng_price_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.total.aer_mid_case_avg..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.total.lrmer_high_re_cost_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.total.lrmer_high_re_cost_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.total.lrmer_high_re_cost_low_ng_price_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.total.lrmer_high_re_cost_low_ng_price_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.total.lrmer_low_re_cost_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.total.lrmer_low_re_cost_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.total.lrmer_low_re_cost_high_ng_price_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.total.lrmer_low_re_cost_high_ng_price_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.total.lrmer_mid_case_15..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.emissions_reduction.total.lrmer_mid_case_25..co2e_kg,,No direct equivalent in ResStock 2024 Release 2
+out.energy_burden..percentage,,out.energy_burden.percentage
+out.energy_burden_savings..percentage,,out.energy_burden.percentage.savings
+,out.outdoor_air_drybulb_temp..c,out.outdoor_air_dryblub_temp.c
+,out.outdoor_air_relative_humidity..percentage,Not published in ResStock 2024 Release 2
+,out.outdoor_air_wetbulb_temp..c,Not published in ResStock 2024 Release 2
+,out.outdoor_humidity_ratio..kgwater_per_kgdryair,Not published in ResStock 2024 Release 2
+,out.weather.diffuse_solar_radiation..watt_per_m2,Not published in ResStock 2024 Release 2
+,out.weather.direct_normal_solar_radiation..watt_per_m2,Not published in ResStock 2024 Release 2
+,out.weather.wind_speed..meter_per_second,Not published in ResStock 2024 Release 2
+,out.people.sensible_heating_rate..watt,Not published in ResStock 2024 Release 2
+,out.people.total_heating_rate..watt,Not published in ResStock 2024 Release 2
+,out.schedules.ceiling_fan,Not published in ResStock 2024 Release 2
+,out.schedules.clothes_dryer,Not published in ResStock 2024 Release 2
+,out.schedules.clothes_washer,Not published in ResStock 2024 Release 2
+,out.schedules.cooking_range,Not published in ResStock 2024 Release 2
+,out.schedules.cooling_setpoint..c,Not published in ResStock 2024 Release 2
+,out.schedules.dishwasher,Not published in ResStock 2024 Release 2
+,out.schedules.electric_vehicle_charging,Not published in ResStock 2024 Release 2
+,out.schedules.electric_vehicle_discharging,Not published in ResStock 2024 Release 2
+,out.schedules.heating_setpoint..c,Not published in ResStock 2024 Release 2
+,out.schedules.hot_water_clothes_washer,Not published in ResStock 2024 Release 2
+,out.schedules.hot_water_dishwasher,Not published in ResStock 2024 Release 2
+,out.schedules.hot_water_fixtures,Not published in ResStock 2024 Release 2
+,out.schedules.lighting_garage,Not published in ResStock 2024 Release 2
+,out.schedules.lighting_interior,Not published in ResStock 2024 Release 2
+,out.schedules.no_space_cooling,Not published in ResStock 2024 Release 2
+,out.schedules.no_space_heating,Not published in ResStock 2024 Release 2
+,out.schedules.occupants,Not published in ResStock 2024 Release 2
+,out.schedules.peak_period,Not published in ResStock 2024 Release 2
+,out.schedules.plug_loads_other,Not published in ResStock 2024 Release 2
+,out.schedules.plug_loads_tv,Not published in ResStock 2024 Release 2
+,out.schedules.power_outage,Not published in ResStock 2024 Release 2
+,out.schedules.pre_peak_period,Not published in ResStock 2024 Release 2
+,out.schedules.vacancy,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.ceiling_fan.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.ceiling_fan.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.clothes_dryer.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.clothes_dryer.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.clothes_washer.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.clothes_washer.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.cooling.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.cooling.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.cooling_fans_pumps.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.cooling_fans_pumps.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.dishwasher.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.dishwasher.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.ev_charging.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.ev_charging.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.freezer.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.freezer.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.heating.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.heating.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.heating_fans_pumps.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.heating_fans_pumps.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.heating_hp_bkup.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.heating_hp_bkup.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.heating_hp_bkup_fa.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.heating_hp_bkup_fa.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.hot_water.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.hot_water.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.hot_water_solar_th.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.hot_water_solar_th.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.lighting_exterior.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.lighting_exterior.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.lighting_garage.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.lighting_garage.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.lighting_interior.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.lighting_interior.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.mech_vent.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.mech_vent.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.net.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.net.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.permanent_spa_heat.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.permanent_spa_heat.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.permanent_spa_pump.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.permanent_spa_pump.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.plug_loads.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.plug_loads.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.pool_heater.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.pool_heater.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.pool_pump.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.pool_pump.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.pv.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.pv.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.range_oven.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.range_oven.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.refrigerator.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.refrigerator.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.television.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.television.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.total.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.total.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.well_pump.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.electricity.well_pump.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.electricity.aer_high_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.electricity.aer_high_re_cost_low_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.electricity.aer_low_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.electricity.aer_low_re_cost_high_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.electricity.aer_mid_case_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.electricity.lrmer_high_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.electricity.lrmer_high_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.electricity.lrmer_high_re_cost_low_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.electricity.lrmer_high_re_cost_low_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.electricity.lrmer_low_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.electricity.lrmer_low_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.electricity.lrmer_low_re_cost_high_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.electricity.lrmer_low_re_cost_high_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.electricity.lrmer_mid_case_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.electricity.lrmer_mid_case_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.fuel_oil.total..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.natural_gas.total..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.propane.total..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total.aer_high_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total.aer_high_re_cost_low_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total.aer_low_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total.aer_low_re_cost_high_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total.aer_mid_case_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total.lrmer_high_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total.lrmer_high_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total.lrmer_high_re_cost_low_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total.lrmer_high_re_cost_low_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total.lrmer_low_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total.lrmer_low_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total.lrmer_low_re_cost_high_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total.lrmer_low_re_cost_high_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total.lrmer_mid_case_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions.total.lrmer_mid_case_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.electricity.aer_high_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.electricity.aer_high_re_cost_low_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.electricity.aer_low_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.electricity.aer_low_re_cost_high_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.electricity.aer_mid_case_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.electricity.lrmer_high_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.electricity.lrmer_high_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.electricity.lrmer_high_re_cost_low_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.electricity.lrmer_high_re_cost_low_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.electricity.lrmer_low_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.electricity.lrmer_low_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.electricity.lrmer_low_re_cost_high_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.electricity.lrmer_low_re_cost_high_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.electricity.lrmer_mid_case_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.electricity.lrmer_mid_case_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.fuel_oil.total..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.natural_gas.total..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.propane.total..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total.aer_high_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total.aer_high_re_cost_low_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total.aer_low_re_cost_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total.aer_low_re_cost_high_ng_price_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total.aer_mid_case_avg..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total.lrmer_high_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total.lrmer_high_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total.lrmer_high_re_cost_low_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total.lrmer_high_re_cost_low_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total.lrmer_low_re_cost_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total.lrmer_low_re_cost_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total.lrmer_low_re_cost_high_ng_price_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total.lrmer_low_re_cost_high_ng_price_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total.lrmer_mid_case_15..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.emissions_reduction.total.lrmer_mid_case_25..co2e_mmt,,Not published in ResStock 2024 Release 2
+calc.weighted.fuel_oil.heating.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.fuel_oil.heating.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.fuel_oil.heating_hp_bkup.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.fuel_oil.heating_hp_bkup.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.fuel_oil.hot_water.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.fuel_oil.hot_water.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.fuel_oil.total.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.fuel_oil.total.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.clothes_dryer.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.clothes_dryer.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.fireplace.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.fireplace.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.grill.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.grill.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.heating.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.heating.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.heating_hp_bkup.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.heating_hp_bkup.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.hot_water.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.hot_water.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.lighting.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.lighting.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.permanent_spa_heat.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.permanent_spa_heat.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.pool_heater.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.pool_heater.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.range_oven.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.range_oven.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.total.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.natural_gas.total.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.propane.clothes_dryer.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.propane.clothes_dryer.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.propane.heating.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.propane.heating.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.propane.heating_hp_bkup.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.propane.heating_hp_bkup.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.propane.hot_water.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.propane.hot_water.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.propane.range_oven.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.propane.range_oven.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.propane.total.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.propane.total.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.site_energy.net.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.site_energy.net.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.site_energy.total.energy_consumption..tbtu,,Not published in ResStock 2024 Release 2
+calc.weighted.site_energy.total.energy_savings..tbtu,,Not published in ResStock 2024 Release 2
+completed_status,,Not published in ResStock 2024 Release 2

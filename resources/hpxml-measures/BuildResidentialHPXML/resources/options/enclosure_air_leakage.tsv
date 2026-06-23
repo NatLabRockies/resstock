@@ -1,0 +1,53 @@
+Option Name	Leakiness Description	Units	House Pressure [Pa]	Value
+Very Tight	very tight			
+Tight	tight			
+Average	average			
+Leaky	leaky			
+Very Leaky	very leaky			
+1 ACH50		ACH	50	1
+2 ACH50		ACH	50	2
+3 ACH50		ACH	50	3
+4 ACH50		ACH	50	4
+5 ACH50		ACH	50	5
+6 ACH50		ACH	50	6
+7 ACH50		ACH	50	7
+8 ACH50		ACH	50	8
+9 ACH50		ACH	50	9
+10 ACH50		ACH	50	10
+11 ACH50		ACH	50	11
+12 ACH50		ACH	50	12
+13 ACH50		ACH	50	13
+14 ACH50		ACH	50	14
+15 ACH50		ACH	50	15
+16 ACH50		ACH	50	16
+17 ACH50		ACH	50	17
+18 ACH50		ACH	50	18
+19 ACH50		ACH	50	19
+20 ACH50		ACH	50	20
+25 ACH50		ACH	50	25
+30 ACH50		ACH	50	30
+35 ACH50		ACH	50	35
+40 ACH50		ACH	50	40
+45 ACH50		ACH	50	45
+50 ACH50		ACH	50	50
+0.2 nACH		ACHnatural		0.2
+0.3 nACH		ACHnatural		0.3
+0.335 nACH		ACHnatural		0.335
+0.5 nACH		ACHnatural		0.5
+0.67 nACH		ACHnatural		0.67
+1.0 nACH		ACHnatural		1
+1.5 nACH		ACHnatural		1.5
+Detailed Example: 3.57 ACH50		ACH	50	3.57
+Detailed Example: 12.16 ACH50		ACH	50	12.16
+Detailed Example: 2.8 ACH45		ACH	45	2.8
+Detailed Example: 0.375 nACH		ACHnatural		0.375
+Detailed Example: 72 nCFM		CFMnatural		72
+Detailed Example: 79.8 sq. in. ELA		EffectiveLeakageArea		79.8
+Detailed Example: 123 sq. in. ELA		EffectiveLeakageArea		123
+Detailed Example: 1080 CFM50		CFM	50	1080
+Detailed Example: 1010 CFM45		CFM	45	1010
+				
+# Leakiness Description: Qualitative description of infiltration.				
+# Units: The unit of measure for the air leakage if providing a numeric air leakage value.				
+# House Pressure: The house pressure relative to outside if providing a numeric air leakage value. Required when units are ACH or CFM.				
+"# Value: Numeric air leakage value. For EffectiveLeakageArea, the value is in sq. in."				

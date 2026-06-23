@@ -60,7 +60,7 @@ class HVACScheduleModifier < ScheduleModifier
       end
     end
 
-    {
+    return {
       heating_setpoint: heating_setpoint,
       cooling_setpoint: cooling_setpoint,
       peak_period: peak_period,
@@ -75,7 +75,7 @@ class HVACScheduleModifier < ScheduleModifier
     return 82 if setpoint > 82
     return 55 if setpoint < 55
 
-    setpoint
+    return setpoint
   end
 
   # Logs the flexibility inputs to the runner for debugging and information purposes

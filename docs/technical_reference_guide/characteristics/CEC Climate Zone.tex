@@ -1,0 +1,32 @@
+\paragraph{Description}
+% \input{characteristics/description/CEC Climate Zone}
+The CEC Climate Zone where the sample is located. See Figure \ref{fig:cec_cz} for a map of the CEC building climate zones.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{images/CEC_Building_Climate_Zones.pdf}
+    \caption{California Energy Commission \href{https://cecgis-caenergy.opendata.arcgis.com/documents/CAEnergy::building-climate-zones/explore}{Building Climate Zone map}}
+    \label{fig:cec_cz}
+\end{figure}
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/CEC Climate Zone}
+\begin{itemize}
+    \item Spatial definitions are from the U.S.~Census Bureau as of July 1, 2015.
+    \item Zip code definitions are from the end of Q2 2020.
+    \item The climate zone to zip codes in California are from the CEC website.
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/CEC Climate Zone}
+
+\paragraph{Options}
+The options range from 1--16 in California. For other states, the option is set to None.
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/CEC Climate Zone}
+\begin{itemize}
+    \item CEC Climate zones are defined by zip codes.
+    \item The dependency selected is County and PUMA as zip codes are not modeled in ResStock.
+    \item The mapping between Census Tracts and zip codes is approximate and some discrepancies may exist.
+\end{itemize}

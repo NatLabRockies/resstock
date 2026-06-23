@@ -1,0 +1,23 @@
+Option Name	Type	Fuel	Heating Efficiency [Frac]
+None	none		
+"Integrated, Electricity, 100% Efficiency"	integrated	electricity	1
+"Integrated, Natural Gas, 60% AFUE"	integrated	natural gas	0.6
+"Integrated, Natural Gas, 76% AFUE"	integrated	natural gas	0.76
+"Integrated, Natural Gas, 80% AFUE"	integrated	natural gas	0.8
+"Integrated, Natural Gas, 92.5% AFUE"	integrated	natural gas	0.925
+"Integrated, Natural Gas, 95% AFUE"	integrated	natural gas	0.95
+"Integrated, Fuel Oil, 60% AFUE"	integrated	fuel oil	0.6
+"Integrated, Fuel Oil, 76% AFUE"	integrated	fuel oil	0.76
+"Integrated, Fuel Oil, 80% AFUE"	integrated	fuel oil	0.8
+"Integrated, Fuel Oil, 92.5% AFUE"	integrated	fuel oil	0.925
+"Integrated, Fuel Oil, 95% AFUE"	integrated	fuel oil	0.95
+"Integrated, Propane, 60% AFUE"	integrated	propane	0.6
+"Integrated, Propane, 76% AFUE"	integrated	propane	0.76
+"Integrated, Propane, 80% AFUE"	integrated	propane	0.8
+"Integrated, Propane, 92.5% AFUE"	integrated	propane	0.925
+"Integrated, Propane, 95% AFUE"	integrated	propane	0.95
+Separate Heating System	separate		
+			
+# Type: The backup type. Use 'integrated' to represent e.g. built-in electric strip heat or dual-fuel integrated furnace. Use 'separate' to represent e.g. electric baseboard or boiler (based on Heating System 2).			
+# Fuel: The fuel type of the integrated backup.			
+# Heating Efficiency: The rated heating efficiency of the integrated backup.			

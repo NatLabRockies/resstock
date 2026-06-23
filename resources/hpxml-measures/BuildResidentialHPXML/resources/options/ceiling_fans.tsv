@@ -1,0 +1,39 @@
+Option Name	Label Energy Use [W]	Efficiency [cfm/W]	Count [#]	Cooling Setpoint Temperature Offset [F]
+None			0
+"NumBedrooms+1 Fans, 45.0 W"	45
+"NumBedrooms+1 Fans, 37.5 W"	37.5
+"NumBedrooms+1 Fans, 30.0 W"	30
+"NumBedrooms+1 Fans, 22.5 W"	22.5
+"NumBedrooms+1 Fans, 15.0 W"	15
+"1 Fan, 45.0 W"	45		1
+"1 Fan, 37.5 W"	37.5		1
+"1 Fan, 30.0 W"	30		1
+"1 Fan, 22.5 W"	22.5		1
+"1 Fan, 15.0 W"	15		1
+"2 Fans, 45.0 W"	45		2
+"2 Fans, 37.5 W"	37.5		2
+"2 Fans, 30.0 W"	30		2
+"2 Fans, 22.5 W"	22.5		2
+"2 Fans, 15.0 W"	15		2
+"3 Fans, 45.0 W"	45		3
+"3 Fans, 37.5 W"	37.5		3
+"3 Fans, 30.0 W"	30		3
+"3 Fans, 22.5 W"	22.5		3
+"3 Fans, 15.0 W"	15		3
+"4 Fans, 45.0 W"	45		4
+"4 Fans, 37.5 W"	37.5		4
+"4 Fans, 30.0 W"	30		4
+"4 Fans, 22.5 W"	22.5		4
+"4 Fans, 15.0 W"	15		4
+"5 Fans, 45.0 W"	45		5
+"5 Fans, 37.5 W"	37.5		5
+"5 Fans, 30.0 W"	30		5
+"5 Fans, 22.5 W"	22.5		5
+"5 Fans, 15.0 W"	15		5
+"Detailed Example: 4 Fans, 39 W, 0.5 deg-F Setpoint Offset"	39		4	0.5
+"Detailed Example: 4 Fans, 100 cfm/W, 0.5 deg-F Setpoint Offset"		100	4	0.5
+
+"# Label Energy Use: The average energy use of the ceiling fan(s), as found on the label."
+# Efficiency: The efficiency rating of the ceiling fan(s) at medium speed. Only used if Label Energy Use not provided.
+# Count: Total number of ceiling fans.
+# Cooling Setpoint Temperature Offset: The cooling setpoint temperature offset during months when the ceiling fans are operating.

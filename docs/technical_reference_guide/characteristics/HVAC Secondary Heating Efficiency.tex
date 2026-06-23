@@ -1,0 +1,30 @@
+\paragraph{Description}
+% \input{characteristics/description/HVAC Secondary Heating Efficiency}
+The efficiency of the secondary heating system.
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/HVAC Secondary Heating Efficiency}
+\begin{itemize}
+\item Alaska-specific distribution is based on Alaska Retrofit Information System (2008 to 2022), maintained by Alaska Housing Finance Corporation. Secondary heating is not currently implemented in baseline for other states.
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/HVAC Secondary Heating Efficiency}
+
+\paragraph{Options}
+The options for the efficiency of the secondary heating system are shown in Table \ref{table:hc_opt_hvac_secondary_heating_efficiency}. The ``None'' option is used for systems without secondary heating systems.
+
+\input{characteristics/options/HVAC Secondary Heating Efficiency}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_hvac_secondary_heating_efficiency}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating Systems} documentation for additional information.
+
+\input{characteristics/properties/HVAC Secondary Heating Efficiency}
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/HVAC Secondary Heating Efficiency}
+\begin{itemize}
+    \item For Alaska, we are using a field in ARIS that lumps multifamily 2--4 units and multifamily 5+ units buildings together. Data from the American Community Survey are used to distribute between these two building types.
+    \item For Alaska, electricity cannot be a secondary heating fuel, therefore no secondary heating efficiency.
+    \item For Alaska, Toyo/monitor direct-vent devices and other fuel space heaters are not modeled.
+    \item For Alaska, fireplace and stoves are not modeled.
+\end{itemize}

@@ -1,0 +1,47 @@
+\paragraph{Description}
+% \input{characteristics/description/Misc Hot Tub Spa}
+The presence and heating fuel of a hot tub/spa at the housing unit.
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/Misc Hot Tub Spa}
+Constructed using U.S. EIA 2020 RECS microdata. 
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/Misc Hot Tub Spa}
+
+\paragraph{Options}
+Options for the Misc Hot tub Spa characteristic are shown in Table \ref{table:hc_opt_misc_hot_tub_spa}. The None option is used when the housing unit does not have a hot tub. The “Other Fuel” option is currently not modeled in ResStock and will result in no energy consumption.
+
+\input{characteristics/options/Misc Hot Tub Spa}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_misc_hot_tub_spa}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-permanent-spas}{Permanent Spas} documentation for additional information.
+
+\input{characteristics/properties/Misc Hot Tub Spa}
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/Misc Hot Tub Spa}
+Due to the low sample count, the input file is constructed by downscaling a housing unit sub-input file with a household sub-input file. The sub-input files have the following dependencies: 
+
+housing unit sub-input file  dependencies = Geometry Building Type RECS, State, and Heating Fuel, with the following fallback coarsening order:
+\begin{enumerate}
+    \item State coarsened to Census Division RECS with AK/HI separate 
+    \item  Heating Fuel coarsened to Other Fuel, Wood and Propane combined
+    \item Heating Fuel coarsened to Fuel Oil, Other Fuel, Wood and Propane combined
+    \item Geometry Building Type RECS coarsened to SF/MF/MH
+    \item  Geometry Building Type RECS coarsened to SF and MH/MF 
+    \item  Census Division RECS with AK/HI separate coarsened to Census Division RECS 
+    \item Census Division RECS to Census Region 
+    \item Census Region to National.  
+\end{enumerate}
+Household sub-input file: dependencies = Geometry Building Type RECS, State, Tenure, and Federal Poverty Level, with the following fallback coarsening order:
+\begin{enumerate}
+    \item State coarsened to Census Division RECS with AK/HI separate 
+    \item  Geometry Building Type RECS coarsened to SF/MF/MH 
+    \item  Geometry Building Type RECS coarsened to SF and MH/MF 
+    \item  Federal Poverty Level coarsened every 100\% 
+    \item Federal Poverty Level coarsened every 200\% 
+    \item Census Division RECS with AK/HI separate coarsened to Census Division RECS 
+    \item Census Division RECS to Census Region 
+    \item Census Region to National. 
+\end{enumerate}
+In combining the housing unit sub-input file and household sub-input file, the conditional relationships are ignored across Heating Fuel, as well as across Tenure and Federal Poverty Level.

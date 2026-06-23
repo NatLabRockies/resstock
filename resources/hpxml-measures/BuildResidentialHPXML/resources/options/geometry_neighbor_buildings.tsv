@@ -1,0 +1,42 @@
+Option Name	Left Distance [ft]	Right Distance [ft]	Back Distance [ft]	Front Distance [ft]	Left Height [ft]	Right Height [ft]	Back Height [ft]	Front Height [ft]
+None								
+Left/Right at 2ft	2	2						
+Left/Right at 4ft	4	4						
+Left/Right at 5ft	5	5						
+Left/Right at 7ft	7	7						
+Left/Right at 10ft	10	10						
+Left/Right at 12ft	12	12						
+Left/Right at 15ft	15	15						
+Left/Right at 20ft	20	20						
+Left/Right at 25ft	25	25						
+Left/Right at 27ft	27	27						
+Left at 2ft	2							
+Left at 4ft	4							
+Left at 5ft	5							
+Left at 7ft	7							
+Left at 10ft	10							
+Left at 12ft	12							
+Left at 15ft	15							
+Left at 20ft	20							
+Left at 25ft	25							
+Left at 27ft	27							
+Right at 2ft		2						
+Right at 4ft		4						
+Right at 5ft		5						
+Right at 7ft		7						
+Right at 10ft		10						
+Right at 12ft		12						
+Right at 15ft		15						
+Right at 20ft		20						
+Right at 25ft		25						
+Right at 27ft		27						
+"Detailed Example: Left/Right at 25ft, Front/Back at 80ft, 12ft Height"	25	25	80	80	12	12	12	12
+								
+# Left Distance: The distance between the unit and the neighboring building to the left (not including eaves).								
+# Right Distance: The distance between the unit and the neighboring building to the right (not including eaves).								
+# Back Distance: The distance between the unit and the neighboring building to the back (not including eaves).								
+# Front Distance: The distance between the unit and the neighboring building to the front (not including eaves).								
+# Left Height: The height of the neighboring building to the left.								
+# Right Height: The height of the neighboring building to the right.								
+# Back Height: The height of the neighboring building to the back.								
+# Front Height: The height of the neighboring building to the front.								

@@ -1,0 +1,112 @@
+{
+  "run_directory": "run",
+  "measure_paths": [
+    ".."
+  ],
+  "steps": [
+    {
+      "arguments": {
+        "hpxml_path": "../built.xml",
+        "location_epw_path": "USA_CO_Denver.Intl.AP.725650_TMY3.epw",
+        "geometry_attic_type": "Attic, Unvented, Gable",
+        "geometry_ceiling_height": "8.0 ft",
+        "geometry_foundation_type": "Basement, Conditioned",
+        "geometry_roof_pitch": "6:12",
+        "geometry_unit_aspect_ratio": "1.5",
+        "geometry_unit_conditioned_floor_area": "2700.0",
+        "geometry_unit_num_bedrooms": "3",
+        "geometry_unit_direction": "South",
+        "geometry_unit_type": "Single-Family Detached, 1 Story",
+        "geometry_window_areas_or_wwrs": "108, 108, 72, 72",
+        "geometry_door_area": "40.0",
+        "enclosure_air_leakage": "3 ACH50",
+        "enclosure_ceiling": "R-38",
+        "enclosure_door": "Solid Wood, R-3",
+        "enclosure_foundation_wall": "Solid Concrete, Whole Wall, R-10",
+        "enclosure_rim_joist": "Interior, R-13",
+        "enclosure_roof": "Uninsulated",
+        "enclosure_wall": "Wood Stud, R-21",
+        "enclosure_window": "Double, Low-E, Insulated, Air, Med Gain",
+        "hvac_ducts": "4 CFM25 per 100ft2, Uninsulated",
+        "hvac_ducts_return_location": "Attic",
+        "hvac_ducts_supply_location": "Attic",
+        "hvac_heating_system": "Central Furnace, 92% AFUE",
+        "hvac_heating_system_capacity": "40 kBtu/hr",
+        "hvac_heating_system_fuel": "Natural Gas",
+        "hvac_cooling_system": "Central AC, SEER2 13.4",
+        "hvac_cooling_system_capacity": "2.0 tons",
+        "hvac_control_cooling_weekday_setpoint": "78",
+        "hvac_control_cooling_weekend_setpoint": "78",
+        "hvac_control_heating_weekday_setpoint": "68",
+        "hvac_control_heating_weekend_setpoint": "68",
+        "dhw_water_heater": "Electricity, Tank, UEF 0.94",
+        "utility_bill_scenario": "Default (EIA Average Rates)"
+      },
+      "measure_dir_name": "BuildResidentialHPXML"
+    },
+    {
+      "arguments": {
+        "hpxml_path": "../built.xml",
+        "output_dir": "..",
+        "debug": false,
+        "add_component_loads": false,
+        "skip_validation": false
+      },
+      "measure_dir_name": "HPXMLtoOpenStudio"
+    },
+    {
+      "arguments": {
+        "output_format": "csv",
+        "include_annual_total_consumptions": true,
+        "include_annual_fuel_consumptions": true,
+        "include_annual_end_use_consumptions": true,
+        "include_annual_system_use_consumptions": true,
+        "include_annual_emissions": true,
+        "include_annual_emission_fuels": true,
+        "include_annual_emission_end_uses": true,
+        "include_annual_total_loads": true,
+        "include_annual_unmet_hours": true,
+        "include_annual_peak_fuels": true,
+        "include_annual_peak_loads": true,
+        "include_annual_component_loads": true,
+        "include_annual_hot_water_uses": true,
+        "include_annual_hvac_summary": true,
+        "include_annual_resilience": true,
+        "timeseries_frequency": "none",
+        "include_timeseries_total_consumptions": false,
+        "include_timeseries_fuel_consumptions": false,
+        "include_timeseries_end_use_consumptions": false,
+        "include_timeseries_system_use_consumptions": false,
+        "include_timeseries_emissions": false,
+        "include_timeseries_emission_fuels": false,
+        "include_timeseries_emission_end_uses": false,
+        "include_timeseries_hot_water_uses": false,
+        "include_timeseries_total_loads": false,
+        "include_timeseries_component_loads": false,
+        "include_timeseries_unmet_hours": false,
+        "include_timeseries_zone_temperatures": false,
+        "include_timeseries_zone_conditions": false,
+        "include_timeseries_airflows": false,
+        "include_timeseries_weather": false,
+        "include_timeseries_resilience": false,
+        "timeseries_timestamp_convention": "start",
+        "add_timeseries_dst_column": false,
+        "add_timeseries_utc_column": false,
+        "user_output_variables": "",
+        "user_output_meters": ""
+      },
+      "measure_dir_name": "ReportSimulationOutput"
+    },
+    {
+      "arguments": {
+        "output_format": "csv"
+      },
+      "measure_dir_name": "ReportUtilityBills"
+    }
+  ],
+  "run_options": {
+    "fast": true,
+    "skip_expand_objects": true,
+    "skip_energyplus_preprocess": true
+  }
+}

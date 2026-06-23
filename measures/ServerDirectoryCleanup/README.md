@@ -66,6 +66,17 @@ Present a bunch of bool arguments corresponding to EnergyPlus output files. "Fal
 
 <br/>
 
+**Retain eplusout.csv**
+
+
+
+- **Name:** ``retain_eplusout_csv``
+- **Type:** ``Boolean``
+
+- **Required:** ``true``
+
+<br/>
+
 **Retain eplusout.eio**
 
 
@@ -154,11 +165,55 @@ Present a bunch of bool arguments corresponding to EnergyPlus output files. "Fal
 
 <br/>
 
+**Retain eplusout.sql**
+
+
+
+- **Name:** ``retain_eplusout_sql``
+- **Type:** ``Boolean``
+
+- **Required:** ``true``
+
+<br/>
+
+**Retain eplusout_perflog.csv**
+
+
+
+- **Name:** ``retain_eplusout_perflog_csv``
+- **Type:** ``Boolean``
+
+- **Required:** ``true``
+
+<br/>
+
+**Retain eplusout*.json**
+
+
+
+- **Name:** ``retain_eplusout_json``
+- **Type:** ``Boolean``
+
+- **Required:** ``true``
+
+<br/>
+
 **Retain eplusout*.msgpack**
 
 
 
 - **Name:** ``retain_eplusout_msgpack``
+- **Type:** ``Boolean``
+
+- **Required:** ``true``
+
+<br/>
+
+**Retain eplusmtr.csv**
+
+
+
+- **Name:** ``retain_eplusmtr_csv``
 - **Type:** ``Boolean``
 
 - **Required:** ``true``

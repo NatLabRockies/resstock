@@ -698,7 +698,6 @@ class ReportSimulationOutputTest < Minitest::Test
                   'include_annual_component_loads' => false,
                   'include_annual_hot_water_uses' => false,
                   'include_annual_hvac_summary' => false,
-                  'include_annual_panel_summary' => false,
                   'include_annual_resilience' => false }
     annual_csv, timeseries_csv = _test_measure(args_hash)
     assert(File.exist?(annual_csv))
@@ -917,31 +916,29 @@ class ReportSimulationOutputTest < Minitest::Test
                                                              "Component Load: Cooling: #{CLT::InternalGains}"])
   end
 
-  def check_timeseries_hourly_unmet_hours(xml_file, unmet_hours_cols)
-    args_hash = { 'hpxml_path' => File.join(File.dirname(__FILE__), "../../workflow/sample_files/#{xml_file}"),
-                  'skip_validation' => true,
-                  'add_component_loads' => true,
-                  'timeseries_frequency' => 'hourly',
-                  'include_timeseries_unmet_hours' => true }
-    annual_csv, timeseries_csv, run_log = _test_measure(args_hash)
-    assert(File.exist?(annual_csv))
-    assert(File.exist?(timeseries_csv))
-    expected_timeseries_cols = ['Time'] + BaseHPXMLTimeseriesColsUnmetHours
-    actual_timeseries_cols = File.readlines(timeseries_csv)[0].strip.split(',')
-    assert_equal(expected_timeseries_cols.sort, actual_timeseries_cols.sort)
-    timeseries_rows = CSV.read(timeseries_csv)
-    assert_equal(8760, timeseries_rows.size - 2)
-    timeseries_cols = timeseries_rows.transpose
-    assert_equal(1, _check_for_constant_timeseries_step(timeseries_cols[0]))
-    _check_for_nonzero_avg_timeseries_value(timeseries_csv, unmet_hours_cols)
-    if xml_file.include? 'base-vehicle-ev-charger-undercharged'
-      assert(File.readlines(run_log).any? { |line| line.include?('driving hours could not be met') })
-    end
-  end
-
   def test_timeseries_hourly_unmet_hours
-    check_timeseries_hourly_unmet_hours('base-hvac-undersized.xml', ["Unmet Hours: #{UHT::Heating}", "Unmet Hours: #{UHT::Cooling}"])
-    check_timeseries_hourly_unmet_hours('base-vehicle-ev-charger-undercharged.xml', ["Unmet Hours: #{UHT::Driving}"])
+    { 'base-hvac-undersized.xml' => ["Unmet Hours: #{UHT::Heating}", "Unmet Hours: #{UHT::Cooling}"],
+      'base-vehicle-ev-charger-undercharged.xml' => ["Unmet Hours: #{UHT::Driving}"] }.each do |xml_file, unmet_hours_cols|
+      args_hash = { 'hpxml_path' => File.join(File.dirname(__FILE__), "../../workflow/sample_files/#{xml_file}"),
+                    'skip_validation' => true,
+                    'add_component_loads' => true,
+                    'timeseries_frequency' => 'hourly',
+                    'include_timeseries_unmet_hours' => true }
+      annual_csv, timeseries_csv, run_log = _test_measure(args_hash)
+      assert(File.exist?(annual_csv))
+      assert(File.exist?(timeseries_csv))
+      expected_timeseries_cols = ['Time'] + BaseHPXMLTimeseriesColsUnmetHours
+      actual_timeseries_cols = File.readlines(timeseries_csv)[0].strip.split(',')
+      assert_equal(expected_timeseries_cols.sort, actual_timeseries_cols.sort)
+      timeseries_rows = CSV.read(timeseries_csv)
+      assert_equal(8760, timeseries_rows.size - 2)
+      timeseries_cols = timeseries_rows.transpose
+      assert_equal(1, _check_for_constant_timeseries_step(timeseries_cols[0]))
+      _check_for_nonzero_avg_timeseries_value(timeseries_csv, unmet_hours_cols)
+      if xml_file == 'base-vehicle-ev-charger-undercharged.xml'
+        assert(File.readlines(run_log).any? { |line| line.include?('driving hours could not be met') })
+      end
+    end
   end
 
   def test_timeseries_hourly_zone_temperatures
@@ -1232,13 +1229,35 @@ class ReportSimulationOutputTest < Minitest::Test
     timeseries_rows = CSV.read(timeseries_csv)
     assert_equal(8760, timeseries_rows.size - 2)
     timeseries_cols = timeseries_rows.transpose
-    assert_equal(1, _check_for_constant_timeseries_step(timeseries_cols[0]))
     assert_equal(1, timeseries_rows[0].count { |r| r == 'Time' })
     assert_equal(1, timeseries_rows[0].count { |r| r == 'TimeDST' })
     assert_equal(1, timeseries_rows[0].count { |r| r == 'TimeUTC' })
     assert_equal(1, _check_for_constant_timeseries_step(timeseries_cols[0]))
     assert_equal(3, _check_for_constant_timeseries_step(timeseries_cols[1]))
-    assert_equal(1, _check_for_constant_timeseries_step(timeseries_cols[2])) end
+    assert_equal(1, _check_for_constant_timeseries_step(timeseries_cols[2]))
+  end
+
+  def test_timeseries_json_timedst_timeutc
+    args_hash = { 'hpxml_path' => File.join(File.dirname(__FILE__), '../../workflow/sample_files/base.xml'),
+                  'output_format' => 'json',
+                  'timeseries_frequency' => 'hourly',
+                  'include_timeseries_fuel_consumptions' => true,
+                  'add_timeseries_dst_column' => true,
+                  'add_timeseries_utc_column' => true }
+    annual_json, timeseries_json = _test_measure(args_hash)
+    assert(File.exist?(annual_json))
+    assert(File.exist?(timeseries_json))
+    timeseries_data = JSON.load(File.open(timeseries_json))
+    assert(timeseries_data.keys.include? 'Time')
+    assert(timeseries_data.keys.include? 'TimeDST')
+    assert(timeseries_data.keys.include? 'TimeUTC')
+    assert_equal(8760, timeseries_data['Time'].size)
+    assert_equal(8760, timeseries_data['TimeDST'].size)
+    assert_equal(8760, timeseries_data['TimeUTC'].size)
+    assert_equal(1, _check_for_constant_timeseries_step(['Time', nil] + timeseries_data['Time']))
+    assert_equal(3, _check_for_constant_timeseries_step(['TimeDST', nil] + timeseries_data['TimeDST']))
+    assert_equal(1, _check_for_constant_timeseries_step(['TimeUTC', nil] + timeseries_data['TimeUTC']))
+  end
 
   def test_timeseries_timestep_emissions
     args_hash = { 'hpxml_path' => File.join(File.dirname(__FILE__), '../../workflow/sample_files/base-misc-emissions.xml'),
@@ -1444,93 +1463,6 @@ class ReportSimulationOutputTest < Minitest::Test
     assert_equal(315.0, actual_annual_rows['HVAC Geothermal Loop: Borehole/Trench Length (ft)'])
   end
 
-  def test_electric_panel
-    hpxml_path = File.join(File.dirname(__FILE__), '../../workflow/sample_files/base-detailed-electric-panel.xml')
-    hpxml = HPXML.new(hpxml_path: hpxml_path)
-
-    args_hash = { 'hpxml_path' => hpxml_path,
-                  'skip_validation' => true, }
-    _annual_csv, _timeseries_csv, _run_log, panel_csv = _test_measure(args_hash)
-    assert(File.exist?(panel_csv))
-    actual_panel_rows = _get_annual_values(panel_csv)
-    assert_equal(16, actual_panel_rows['Electric Panel Breaker Spaces: Total Count'])
-    assert_equal(11, actual_panel_rows['Electric Panel Breaker Spaces: Occupied Count'])
-    assert_equal(16 - 11, actual_panel_rows['Electric Panel Breaker Spaces: Headroom Count'])
-    assert_equal(9444.2, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Load-Based: Total Load (W)'])
-    assert_equal(39.4, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Load-Based: Total Capacity (A)'])
-    assert_in_epsilon(100.0 - 39.4, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Load-Based: Headroom Capacity (A)'], 0.01)
-    assert_equal(5625.0, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Meter-Based: Total Load (W)'])
-    assert_equal(23.4, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Meter-Based: Total Capacity (A)'])
-    assert_in_epsilon(100.0 - 23.4, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Meter-Based: Headroom Capacity (A)'], 0.01)
-
-    # Upgrade
-    hpxml_bldg = hpxml.buildings[0]
-    electric_panel = hpxml_bldg.electric_panels[0]
-    electric_panel.rated_total_spaces = 16
-    branch_circuits = electric_panel.branch_circuits
-    service_feeders = electric_panel.service_feeders
-    sf = service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeHeating }
-    sf.power = 16942
-    sf.is_new_load = true
-    branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
-                        voltage: HPXML::ElectricPanelVoltage240,
-                        occupied_spaces: 5,
-                        component_idrefs: [hpxml_bldg.heating_systems[0].id])
-    sf = service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeCooling }
-    sf.power = 16942
-    sf.is_new_load = true
-    branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
-                        voltage: HPXML::ElectricPanelVoltage240,
-                        occupied_spaces: 0,
-                        component_idrefs: [hpxml_bldg.cooling_systems[0].id])
-    service_feeders.add(type: HPXML::ElectricPanelLoadTypeWaterHeater,
-                        power: 4500,
-                        is_new_load: true,
-                        component_idrefs: [hpxml_bldg.water_heating_systems[0].id])
-    branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
-                        voltage: HPXML::ElectricPanelVoltage240,
-                        occupied_spaces: 2,
-                        component_idrefs: [hpxml_bldg.water_heating_systems[0].id])
-    service_feeders.add(type: HPXML::ElectricPanelLoadTypeClothesDryer,
-                        power: 5760,
-                        is_new_load: true,
-                        component_idrefs: [hpxml_bldg.clothes_dryers[0].id])
-    branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
-                        voltage: HPXML::ElectricPanelVoltage240,
-                        occupied_spaces: 2,
-                        component_idrefs: [hpxml_bldg.clothes_dryers[0].id])
-    service_feeders.add(type: HPXML::ElectricPanelLoadTypeRangeOven,
-                        power: 12000,
-                        is_new_load: true,
-                        component_idrefs: [hpxml_bldg.cooking_ranges[0].id])
-    branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
-                        voltage: HPXML::ElectricPanelVoltage240,
-                        occupied_spaces: 2,
-                        component_idrefs: [hpxml_bldg.cooking_ranges[0].id])
-    hpxml_bldg.plug_loads.add(id: "PlugLoad#{hpxml_bldg.plug_loads.size + 1}",
-                              plug_load_type: HPXML::PlugLoadTypeElectricVehicleCharging)
-    service_feeders.add(type: HPXML::ElectricPanelLoadTypeElectricVehicleCharging,
-                        power: 1650,
-                        is_new_load: true,
-                        component_idrefs: [hpxml_bldg.plug_loads[-1].id])
-    XMLHelper.write_file(hpxml.to_doc(), @tmp_hpxml_path)
-
-    args_hash = { 'hpxml_path' => @tmp_hpxml_path,
-                  'skip_validation' => true, }
-    _annual_csv, _timeseries_csv, _run_log, panel_csv = _test_measure(args_hash)
-    assert(File.exist?(panel_csv))
-    actual_panel_rows = _get_annual_values(panel_csv)
-    assert_equal(16, actual_panel_rows['Electric Panel Breaker Spaces: Total Count'])
-    assert_equal(20, actual_panel_rows['Electric Panel Breaker Spaces: Occupied Count'])
-    assert_equal(16 - 20, actual_panel_rows['Electric Panel Breaker Spaces: Headroom Count'])
-    assert_equal(34827.2, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Load-Based: Total Load (W)'])
-    assert_equal(145.1, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Load-Based: Total Capacity (A)'])
-    assert_in_epsilon(100.0 - 145.1, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Load-Based: Headroom Capacity (A)'], 0.01)
-    assert_equal(46477.0, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Meter-Based: Total Load (W)'])
-    assert_equal(193.7, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Meter-Based: Total Capacity (A)'])
-    assert_in_epsilon(100.0 - 193.7, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Meter-Based: Headroom Capacity (A)'], 0.01)
-  end
-
   private
 
   def _test_measure(args_hash, expect_success: true)
@@ -1572,11 +1504,18 @@ class ReportSimulationOutputTest < Minitest::Test
     # Cleanup
     File.delete(osw_path)
 
-    annual_csv = File.join(File.dirname(template_osw), 'run', 'results_annual.csv')
-    timeseries_csv = File.join(File.dirname(template_osw), 'run', 'results_timeseries.csv')
+    if File.exist? File.join(File.dirname(template_osw), 'run', 'results_annual.json')
+      annual_results = File.join(File.dirname(template_osw), 'run', 'results_annual.json')
+    else
+      annual_results = File.join(File.dirname(template_osw), 'run', 'results_annual.csv')
+    end
+    if File.exist? File.join(File.dirname(template_osw), 'run', 'results_timeseries.json')
+      timeseries_results = File.join(File.dirname(template_osw), 'run', 'results_timeseries.json')
+    else
+      timeseries_results = File.join(File.dirname(template_osw), 'run', 'results_timeseries.csv')
+    end
     run_log = File.join(File.dirname(template_osw), 'run', 'run.log')
-    panel_csv = File.join(File.dirname(template_osw), 'run', 'results_panel.csv')
-    return annual_csv, timeseries_csv, run_log, panel_csv
+    return annual_results, timeseries_results, run_log
   end
 
   def _parse_time(ts)

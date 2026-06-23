@@ -3,7 +3,6 @@
 module Constants
   NumApplyUpgradeOptions = 100
   NumApplyUpgradesCostsPerOption = 2
-  DuctRestrictionAssumedAirflow = 400.0 # Per Jon W, the recommended airflow for most heat pumps; it's also the max cfm/ton airflow rate for typical DX equipment (per hvac_sizing.rb).
 
   CostMultiplierChoices = [
     '',

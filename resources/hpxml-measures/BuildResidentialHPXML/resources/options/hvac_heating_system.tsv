@@ -1,0 +1,62 @@
+Option Name	Type	Heating Efficiency [Frac]	Pilot Light [Btu/hr]
+None	none		
+Electric Resistance	ElectricResistance	1	
+"Central Furnace, 60% AFUE"	Furnace	0.6	
+"Central Furnace, 64% AFUE"	Furnace	0.64	
+"Central Furnace, 68% AFUE"	Furnace	0.68	
+"Central Furnace, 72% AFUE"	Furnace	0.72	
+"Central Furnace, 76% AFUE"	Furnace	0.76	
+"Central Furnace, 78% AFUE"	Furnace	0.78	
+"Central Furnace, 80% AFUE"	Furnace	0.8	
+"Central Furnace, 83% AFUE"	Furnace	0.83	
+"Central Furnace, 85% AFUE"	Furnace	0.85	
+"Central Furnace, 88% AFUE"	Furnace	0.88	
+"Central Furnace, 90% AFUE"	Furnace	0.9	
+"Central Furnace, 92% AFUE"	Furnace	0.92	
+"Central Furnace, 92.5% AFUE"	Furnace	0.925	
+"Central Furnace, 95% AFUE"	Furnace	0.95	
+"Central Furnace, 96% AFUE"	Furnace	0.96	
+"Central Furnace, 98% AFUE"	Furnace	0.98	
+"Central Furnace, 100% AFUE"	Furnace	1	
+"Wall Furnace, 60% AFUE"	WallFurnace	0.6	
+"Wall Furnace, 68% AFUE"	WallFurnace	0.68	
+"Wall Furnace, 82% AFUE"	WallFurnace	0.82	
+"Wall Furnace, 98% AFUE"	WallFurnace	0.98	
+"Wall Furnace, 100% AFUE"	WallFurnace	1	
+"Floor Furnace, 60% AFUE"	FloorFurnace	0.6	
+"Floor Furnace, 70% AFUE"	FloorFurnace	0.7	
+"Floor Furnace, 80% AFUE"	FloorFurnace	0.8	
+"Boiler, 60% AFUE"	Boiler	0.6	
+"Boiler, 72% AFUE"	Boiler	0.72	
+"Boiler, 76% AFUE"	Boiler	0.76	
+"Boiler, 78% AFUE"	Boiler	0.78	
+"Boiler, 80% AFUE"	Boiler	0.8	
+"Boiler, 83% AFUE"	Boiler	0.83	
+"Boiler, 85% AFUE"	Boiler	0.85	
+"Boiler, 88% AFUE"	Boiler	0.88	
+"Boiler, 90% AFUE"	Boiler	0.9	
+"Boiler, 92% AFUE"	Boiler	0.92	
+"Boiler, 92.5% AFUE"	Boiler	0.925	
+"Boiler, 95% AFUE"	Boiler	0.95	
+"Boiler, 96% AFUE"	Boiler	0.96	
+"Boiler, 98% AFUE"	Boiler	0.98	
+"Boiler, 100% AFUE"	Boiler	1	
+"Stove, 60% Efficiency"	Stove	0.6	
+"Stove, 70% Efficiency"	Stove	0.7	
+"Stove, 80% Efficiency"	Stove	0.8	
+"Space Heater, 60% Efficiency"	SpaceHeater	0.6	
+"Space Heater, 70% Efficiency"	SpaceHeater	0.7	
+"Space Heater, 80% Efficiency"	SpaceHeater	0.8	
+"Space Heater, 92% Efficiency"	SpaceHeater	0.92	
+"Space Heater, 100% Efficiency"	SpaceHeater	1	
+"Fireplace, 60% Efficiency"	Fireplace	0.6	
+"Fireplace, 70% Efficiency"	Fireplace	0.7	
+"Fireplace, 80% Efficiency"	Fireplace	0.8	
+"Fireplace, 100% Efficiency"	Fireplace	1	
+"Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light"	Furnace	0.92	600
+"Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light"	FloorFurnace	0.8	600
+"Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light"	Boiler	0.92	600
+			
+# Type: The type of system.			
+# Heating Efficiency: The rated heating efficiency.			
+"# Pilot Light: The fuel usage of the pilot light. Applies to Furnaces, Boilers, Stoves, and Fireplaces with non-electric fuel."			

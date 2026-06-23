@@ -3,7 +3,7 @@ Script to remove the aws section from the yaml file.
 
 Usage: python remove_aws_from_yaml.py <yaml_file>
 
-Example: python remove_aws_from_yaml.py project_national/sdr_upgrades_tmy3.yml
+Example: python remove_aws_from_yaml.py project_national/sdr_upgrades_amy2018.yml
 
 This script is used in the GitHub workflow to remove the aws section from the yaml file
 when being run in a PR branch so as to prevent the workflow from trying to upload the

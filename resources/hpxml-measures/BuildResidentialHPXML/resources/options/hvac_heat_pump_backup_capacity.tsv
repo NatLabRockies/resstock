@@ -1,0 +1,69 @@
+Option Name	Capacity [Btu/hr]	Autosizing Methodology	Autosizing Factor [mult]	Autosizing Limit [Btu/hr]
+Autosize				
+Autosize (Supplemental)		supplemental		
+5 kW	17061			
+10 kW	34121			
+15 kW	51182			
+20 kW	68242			
+25 kW	85303			
+5 kBtu/hr	5000			
+10 kBtu/hr	10000			
+15 kBtu/hr	15000			
+20 kBtu/hr	20000			
+25 kBtu/hr	25000			
+30 kBtu/hr	30000			
+35 kBtu/hr	35000			
+40 kBtu/hr	40000			
+45 kBtu/hr	45000			
+50 kBtu/hr	50000			
+55 kBtu/hr	55000			
+60 kBtu/hr	60000			
+65 kBtu/hr	65000			
+70 kBtu/hr	70000			
+75 kBtu/hr	75000			
+80 kBtu/hr	80000			
+85 kBtu/hr	85000			
+90 kBtu/hr	90000			
+95 kBtu/hr	95000			
+100 kBtu/hr	100000			
+105 kBtu/hr	105000			
+110 kBtu/hr	110000			
+115 kBtu/hr	115000			
+120 kBtu/hr	120000			
+125 kBtu/hr	125000			
+130 kBtu/hr	130000			
+135 kBtu/hr	135000			
+140 kBtu/hr	140000			
+145 kBtu/hr	145000			
+150 kBtu/hr	150000			
+"Detailed Example: Autosize, 140% Multiplier"			1.4	
+"Detailed Example: Autosize, 170% Multiplier"			1.7	
+"Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit"			0.9	45000
+				
+# Capacity: The output capacity.				
+# Autosizing Methodology: Logic for autosized heat pump backup.				
+# Autosizing Factor: A capacity scaling factor that can be applied to the autosizing methodology.				
+# Autosizing Limit: A maximum capacity limit that can be applied to the autosizing methodology.				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			600	
+			600	
+			600	

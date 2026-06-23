@@ -68,7 +68,7 @@ module Psychrometrics
     tsat1 = tsat # (F)
     tsat2 = tsat # (F)
 
-    error = p - self.Psat_fT(tsat) # (psia)
+    error = p - Psat_fT(tsat) # (psia)
     error1 = error # (psia)
     error2 = error # (psia)
 
@@ -77,7 +77,7 @@ module Psychrometrics
 
     for i in 1..itmax
 
-      error = p - self.Psat_fT(tsat) # (psia)
+      error = p - Psat_fT(tsat) # (psia)
 
       tsat, cvg, tsat1, error1, tsat2, error2 = MathTools.Iterate(tsat, error, tsat1, error1, tsat2, error2, i, cvg)
 
@@ -208,13 +208,13 @@ module Psychrometrics
   # @return [Double] wetbulb temperature (F)
   def self.Twb_fT_w_P(runner, tdb, w, p)
     # Initialize
-    tboil = self.Tsat_fP(runner, p) # (F)
+    tboil = Tsat_fP(runner, p) # (F)
     twb = [[tdb, tboil - 0.1].min, 0.0].max # (F)
 
     twb1 = twb # (F)
     twb2 = twb # (F)
 
-    psat_star = self.Psat_fT(twb) # (psia)
+    psat_star = Psat_fT(twb) # (psia)
     w_star = w_fP(p, psat_star) # (lbm/lbm)
     w_new = ((Liquid.H2O_l.h_fg - (Liquid.H2O_l.cp - Gas.H2O_v.cp) * twb) * w_star - Gas.Air.cp * (tdb - twb)) / (Liquid.H2O_l.h_fg + Gas.H2O_v.cp * tdb - Liquid.H2O_l.cp * twb) # (lbm/lbm)
 
@@ -227,7 +227,7 @@ module Psychrometrics
 
     for i in 1..itmax
 
-      psat_star = self.Psat_fT(twb) # (psia)
+      psat_star = Psat_fT(twb) # (psia)
       w_star = w_fP(p, psat_star) # (lbm/lbm)
       w_new = ((Liquid.H2O_l.h_fg - (Liquid.H2O_l.cp - Gas.H2O_v.cp) * twb) * w_star - Gas.Air.cp * (tdb - twb)) / (Liquid.H2O_l.h_fg + Gas.H2O_v.cp * tdb - Liquid.H2O_l.cp * twb) # (lbm/lbm)
 
@@ -282,7 +282,7 @@ module Psychrometrics
   # @param p [Double] pressure (kPa)
   # @return [Double] relative humidity (frac)
   def self.R_fT_w_P_SI(tdb, w, p)
-    return self.R_fT_w_P(UnitConversions.convert(tdb, 'C', 'F'), w, UnitConversions.convert(p, 'kPa', 'psi'))
+    return R_fT_w_P(UnitConversions.convert(tdb, 'C', 'F'), w, UnitConversions.convert(p, 'kPa', 'psi'))
   end
 
   # Calculate the dewpoint temperature at a given pressure and humidity ratio (SI units).
@@ -293,7 +293,7 @@ module Psychrometrics
   # @param w [Double] humidity ratio (g/g)
   # @return [Double] dewpoint temperature(C)
   def self.Tdp_fP_w_SI(p, w)
-    return UnitConversions.convert(self.Tdp_fP_w(UnitConversions.convert(p, 'kPa', 'psi'), w), 'F', 'C')
+    return UnitConversions.convert(Tdp_fP_w(UnitConversions.convert(p, 'kPa', 'psi'), w), 'F', 'C')
   end
 
   # Calculate the humidity ratio at a given drybulb temperature, wetbulb temperature, and pressure (SI units).
@@ -317,7 +317,7 @@ module Psychrometrics
   # @param p [Double] pressure (psia)
   # @return [Double] humidity ratio (lbm/lbm)
   def self.w_fT_Twb_P(tdb, twb, p)
-    w_star = w_fP(p, self.Psat_fT(twb))
+    w_star = w_fP(p, Psat_fT(twb))
 
     w = ((Liquid.H2O_l.h_fg - (Liquid.H2O_l.cp - Gas.H2O_v.cp) * twb) * w_star - Gas.Air.cp * (tdb - twb)) / (Liquid.H2O_l.h_fg + Gas.H2O_v.cp * tdb - Liquid.H2O_l.cp * twb) # (lbm/lbm)
 
@@ -333,8 +333,8 @@ module Psychrometrics
   # @param p [Double] pressure (psia)
   # @return [Double] relative humidity (frac)
   def self.R_fT_w_P(tdb, w, p)
-    pw = self.Pw_fP_w(p, w)
-    r = pw / self.Psat_fT(tdb)
+    pw = Pw_fP_w(p, w)
+    r = pw / Psat_fT(tdb)
     return r
   end
 
@@ -364,7 +364,7 @@ module Psychrometrics
     c17 = 0.17074
     c18 = 1.2063
 
-    pw = self.Pw_fP_w(p, w) # (psia)
+    pw = Pw_fP_w(p, w) # (psia)
     alpha = Math.log(pw)
     tdp1 = c14 + c15 * alpha + c16 * alpha**2 + c17 * alpha**3 + c18 * pw**0.1984
     tdp2 = 90.12 + 26.142 * alpha + 0.8927 * alpha**2
@@ -384,7 +384,7 @@ module Psychrometrics
   # @param p [Double] pressure (psia)
   # @return [Double] humidity ratio (lbm/lbm)
   def self.w_fT_R_P(tdb, r, p)
-    pws = self.Psat_fT(tdb)
+    pws = Psat_fT(tdb)
     pw = r * pws
     w = 0.62198 * pw / (p - pw)
 
@@ -400,7 +400,7 @@ module Psychrometrics
   # @param p [Double] pressure (kPa)
   # @return [Double] humidity ratio (g/g)
   def self.w_fT_R_P_SI(tdb, r, p)
-    pws = UnitConversions.convert(self.Psat_fT(UnitConversions.convert(tdb, 'C', 'F')), 'psi', 'kPa')
+    pws = UnitConversions.convert(Psat_fT(UnitConversions.convert(tdb, 'C', 'F')), 'psi', 'kPa')
     pw = r * pws
     w = 0.62198 * pw / (p - pw)
     return w
@@ -415,7 +415,7 @@ module Psychrometrics
   # @return [Double] wetbulb temperature (F)
   def self.Twb_fT_R_P(runner, tdb, r, p)
     w = w_fT_R_P(tdb, r, p)
-    twb = self.Twb_fT_w_P(runner, tdb, w, p)
+    twb = Twb_fT_w_P(runner, tdb, w, p)
     return twb
   end
 
@@ -432,8 +432,8 @@ module Psychrometrics
   # @param win [Double] Entering humidity ratio
   # @return [Double] Coil Ao Factor
   def self.CoilAoFactor(dBin, p, qdot, cfm, shr, win)
-    bf = self.CoilBypassFactor(dBin, p, qdot, cfm, shr, win)
-    mfr = UnitConversions.convert(self.CalculateMassflowRate(dBin, p, cfm, win), 'lbm/min', 'kg/s')
+    bf = CoilBypassFactor(dBin, p, qdot, cfm, shr, win)
+    mfr = UnitConversions.convert(CalculateMassflowRate(dBin, p, cfm, win), 'lbm/min', 'kg/s')
 
     ntu = -1.0 * Math.log(bf) # Number of Transfer Units
     ao = ntu * mfr
@@ -453,7 +453,7 @@ module Psychrometrics
   # @param win [Double] Entering humidity ratio
   # @return [Double] Coil Bypass Factor
   def self.CoilBypassFactor(dBin, p, qdot, cfm, shr, win)
-    mfr = UnitConversions.convert(self.CalculateMassflowRate(dBin, p, cfm, win), 'lbm/min', 'kg/s')
+    mfr = UnitConversions.convert(CalculateMassflowRate(dBin, p, cfm, win), 'lbm/min', 'kg/s')
 
     tin = UnitConversions.convert(dBin, 'F', 'C')
     p = UnitConversions.convert(p, 'psi', 'kPa')
@@ -464,13 +464,13 @@ module Psychrometrics
     wout = w_fT_h_SI(tin, h_Tin_Wout)
     dW = win - wout
     hout = hin - dH
-    tout = self.T_fw_h_SI(wout, hout)
-    # rH_out = self.R_fT_w_P_SI(tout, wout, p)
+    tout = T_fw_h_SI(wout, hout)
+    # rH_out = R_fT_w_P_SI(tout, wout, p)
 
     dT = tin - tout
     m_c = dW / dT
 
-    t_ADP = self.Tdp_fP_w_SI(p, wout) # Initial guess for iteration
+    t_ADP = Tdp_fP_w_SI(p, wout) # Initial guess for iteration
 
     if shr == 1
       w_ADP = w_fT_Twb_P_SI(t_ADP, t_ADP, p)
@@ -528,7 +528,7 @@ module Psychrometrics
   # @param win [Double] Entering humidity ratio (dimensionless)
   # @return [Double] Sensible Heat Ratio
   def self.CalculateSHR(dBin, p, q, cfm, ao, win)
-    mfr = UnitConversions.convert(self.CalculateMassflowRate(dBin, p, cfm, win), 'lbm/min', 'kg/s')
+    mfr = UnitConversions.convert(CalculateMassflowRate(dBin, p, cfm, win), 'lbm/min', 'kg/s')
     bf = Math.exp(-1.0 * ao / mfr)
 
     p = UnitConversions.convert(p, 'psi', 'kPa')
@@ -537,11 +537,11 @@ module Psychrometrics
     dH = UnitConversions.convert(q, 'kBtu/hr', 'W') / mfr
     h_ADP = hin - dH / (1 - bf)
 
-    # T_ADP = self.Tsat_fh_P_SI(H_ADP, P)
-    # W_ADP = self.w_fT_h_SI(T_ADP, H_ADP)
+    # T_ADP = Tsat_fh_P_SI(H_ADP, P)
+    # W_ADP = w_fT_h_SI(T_ADP, H_ADP)
 
     # Initialize
-    t_ADP = self.Tdp_fP_w_SI(p, win)
+    t_ADP = Tdp_fP_w_SI(p, win)
     t_ADP_1 = t_ADP # (C)
     t_ADP_2 = t_ADP # (C)
     w_ADP = w_fT_R_P_SI(t_ADP, 1.0, p)

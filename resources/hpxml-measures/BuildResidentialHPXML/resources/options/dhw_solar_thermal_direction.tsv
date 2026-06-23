@@ -1,0 +1,63 @@
+Option Name	Collector Azimuth [deg]	Collector Tilt [deg]
+"Roof Pitch, West"	270	
+"Roof Pitch, Southwest"	225	
+"Roof Pitch, South"	180	
+"Roof Pitch, Southeast"	135	
+"Roof Pitch, East"	90	
+"Roof Pitch, Northeast"	45	
+"Roof Pitch, North"	0	
+"Roof Pitch, Northwest"	315	
+0 Degrees		0
+"5 Degrees, West"	270	5
+"5 Degrees, Southwest"	225	5
+"5 Degrees, South"	180	5
+"5 Degrees, Southeast"	135	5
+"5 Degrees, East"	90	5
+"10 Degrees, West"	270	10
+"10 Degrees, Southwest"	225	10
+"10 Degrees, South"	180	10
+"10 Degrees, Southeast"	135	10
+"10 Degrees, East"	90	10
+"15 Degrees, West"	270	15
+"15 Degrees, Southwest"	225	15
+"15 Degrees, South"	180	15
+"15 Degrees, Southeast"	135	15
+"15 Degrees, East"	90	15
+"20 Degrees, West"	270	20
+"20 Degrees, Southwest"	225	20
+"20 Degrees, South"	180	20
+"20 Degrees, Southeast"	135	20
+"20 Degrees, East"	90	20
+"25 Degrees, West"	270	25
+"25 Degrees, Southwest"	225	25
+"25 Degrees, South"	180	25
+"25 Degrees, Southeast"	135	25
+"25 Degrees, East"	90	25
+"30 Degrees, West"	270	30
+"30 Degrees, Southwest"	225	30
+"30 Degrees, South"	180	30
+"30 Degrees, Southeast"	135	30
+"30 Degrees, East"	90	30
+"35 Degrees, West"	270	35
+"35 Degrees, Southwest"	225	35
+"35 Degrees, South"	180	35
+"35 Degrees, Southeast"	135	35
+"35 Degrees, East"	90	35
+"40 Degrees, West"	270	40
+"40 Degrees, Southwest"	225	40
+"40 Degrees, South"	180	40
+"40 Degrees, Southeast"	135	40
+"40 Degrees, East"	90	40
+"45 Degrees, West"	270	45
+"45 Degrees, Southwest"	225	45
+"45 Degrees, South"	180	45
+"45 Degrees, Southeast"	135	45
+"45 Degrees, East"	90	45
+"50 Degrees, West"	270	50
+"50 Degrees, Southwest"	225	50
+"50 Degrees, South"	180	50
+"50 Degrees, Southeast"	135	50
+"50 Degrees, East"	90	50
+		
+"# Collector Azimuth: The azimuth of the solar thermal system collectors. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270)."		
+# Collector Tilt: The tilt of the solar thermal system collectors. Defaults to roof pitch.		

@@ -1,0 +1,330 @@
+{
+  "$defs": {
+    "AggregationType": {
+      "description": "Different kinds of aggregation to use for plot.",
+      "enum": [
+        "total",
+        "average",
+        "distribution"
+      ],
+      "title": "AggregationType",
+      "type": "string"
+    },
+    "BuildingInclusion": {
+      "description": "Different ways to include a quantity in a plot.",
+      "enum": [
+        "all",
+        "applied_only"
+      ],
+      "title": "BuildingInclusion",
+      "type": "string"
+    },
+    "QuantityGroup": {
+      "additionalProperties": false,
+      "description": "Definition of a quantity group with constituents and sum",
+      "properties": {
+        "name": {
+          "description": "Name of the quantity group",
+          "title": "Name",
+          "type": "string"
+        },
+        "constituents": {
+          "description": "List of constituent columns",
+          "items": {
+            "type": "string"
+          },
+          "title": "Constituents",
+          "type": "array"
+        },
+        "sum": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Column name for the sum quantity",
+          "title": "Sum"
+        }
+      },
+      "required": [
+        "name",
+        "constituents"
+      ],
+      "title": "QuantityGroup",
+      "type": "object"
+    },
+    "QuantityType": {
+      "description": "Different kinds of values to use for plot.",
+      "enum": [
+        "absolute",
+        "savings",
+        "percent_savings",
+        "model_count",
+        "prevalence"
+      ],
+      "title": "QuantityType",
+      "type": "string"
+    },
+    "SelectionLogic": {
+      "description": "Selection logic for plots based on upgrade apply logic rules",
+      "properties": {
+        "and": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SelectionLogic"
+            },
+            {
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/SelectionLogic"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "And"
+        },
+        "or": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SelectionLogic"
+            },
+            {
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/SelectionLogic"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Or"
+        },
+        "not": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SelectionLogic"
+            },
+            {
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/SelectionLogic"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Not"
+        }
+      },
+      "title": "SelectionLogic",
+      "type": "object"
+    },
+    "VacancyInclusion": {
+      "description": "Different ways to include a quantity in a plot.",
+      "enum": [
+        "all",
+        "occupied_only"
+      ],
+      "title": "VacancyInclusion",
+      "type": "string"
+    },
+    "VizType": {
+      "description": "Supported chart templates.",
+      "enum": [
+        "bar",
+        "box",
+        "histogram",
+        "heatmap",
+        "choropleth"
+      ],
+      "title": "VizType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Configuration for plot generation",
+  "properties": {
+    "s3_results_dir": {
+      "description": "Path to s3 results directory",
+      "title": "S3 Results Dir",
+      "type": "string"
+    },
+    "output_dir": {
+      "description": "Path to output directory",
+      "title": "Output Directory",
+      "type": "string"
+    },
+    "run_name": {
+      "description": "Name of the run to identify it later",
+      "title": "Run Name",
+      "type": "string"
+    },
+    "upgrades": {
+      "description": "List of upgrade indices to include",
+      "items": {
+        "type": "integer"
+      },
+      "title": "Upgrades",
+      "type": "array"
+    },
+    "upgrade_names": {
+      "description": "List of upgrade names to include",
+      "items": {
+        "type": "string"
+      },
+      "title": "Upgrade Names",
+      "type": "array"
+    },
+    "selection_logic": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SelectionLogic"
+        },
+        {
+          "items": {
+            "$ref": "#/$defs/SelectionLogic"
+          },
+          "type": "array"
+        },
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Selection logic for",
+      "title": "Selection Logic"
+    },
+    "numerical_quantities": {
+      "description": "List of quantity groups to generate plots for",
+      "items": {
+        "$ref": "#/$defs/QuantityGroup"
+      },
+      "title": "Numerical Quantities",
+      "type": "array"
+    },
+    "categorical_quantities": {
+      "description": "List of quantity groups to generate prevalance plots for",
+      "items": {
+        "$ref": "#/$defs/QuantityGroup"
+      },
+      "title": "Categorical Quantities",
+      "type": "array"
+    },
+    "group_by": {
+      "description": "List of grouping columns",
+      "items": {
+        "type": "string"
+      },
+      "title": "Group By",
+      "type": "array"
+    },
+    "visualization_types": {
+      "description": "List of visualization types to generate",
+      "items": {
+        "$ref": "#/$defs/VizType"
+      },
+      "title": "Visualization Types",
+      "type": "array"
+    },
+    "quantity_types": {
+      "description": "List of quantity types to generate",
+      "items": {
+        "$ref": "#/$defs/QuantityType"
+      },
+      "title": "Quantity Types",
+      "type": "array"
+    },
+    "aggregation_types": {
+      "description": "List of aggregation types to generate",
+      "items": {
+        "$ref": "#/$defs/AggregationType"
+      },
+      "title": "Aggregation Types",
+      "type": "array"
+    },
+    "building_inclusion": {
+      "description": "Building inclusion type",
+      "items": {
+        "$ref": "#/$defs/BuildingInclusion"
+      },
+      "title": "Building Inclusion",
+      "type": "array"
+    },
+    "vacancy_inclusion": {
+      "description": "Vacancy inclusion type",
+      "items": {
+        "$ref": "#/$defs/VacancyInclusion"
+      },
+      "title": "Vacancy Inclusion",
+      "type": "array"
+    },
+    "storage_backend": {
+      "default": "filesystem",
+      "description": "Storage backend",
+      "enum": [
+        "minio",
+        "filesystem"
+      ],
+      "title": "Storage Backend",
+      "type": "string"
+    }
+  },
+  "required": [
+    "s3_results_dir",
+    "output_dir",
+    "run_name",
+    "upgrades",
+    "upgrade_names",
+    "numerical_quantities",
+    "categorical_quantities",
+    "group_by",
+    "visualization_types",
+    "quantity_types",
+    "aggregation_types",
+    "building_inclusion",
+    "vacancy_inclusion"
+  ],
+  "title": "WorkflowConfig",
+  "type": "object"
+}

@@ -76,7 +76,7 @@ module Battery
 
     if !is_ev && battery.is_shared_system
       # Apportion to single dwelling unit by # bedrooms
-      fail if battery.number_of_bedrooms_served.to_f <= nbeds.to_f # EPvalidator.xml should prevent this
+      fail if battery.number_of_bedrooms_served.to_f <= nbeds.to_f # EPvalidator.sch should prevent this
 
       nominal_capacity_kwh = nominal_capacity_kwh * nbeds.to_f / battery.number_of_bedrooms_served.to_f
       usable_capacity_kwh = usable_capacity_kwh * nbeds.to_f / battery.number_of_bedrooms_served.to_f

@@ -1,0 +1,17 @@
+Option Name	Facility Type	Number of Stories
+"Single-Family Detached, 1 Story"	single-family detached	1
+"Single-Family Detached, 2 Stories"	single-family detached	2
+"Single-Family Detached, 3 Stories"	single-family detached	3
+"Single-Family Detached, 4 Stories"	single-family detached	4
+"Single-Family Attached, 1 Story"	single-family attached	1
+"Single-Family Attached, 2 Stories"	single-family attached	2
+"Single-Family Attached, 3 Stories"	single-family attached	3
+"Single-Family Attached, 4 Stories"	single-family attached	4
+"Apartment Unit, 1 Story"	apartment unit	1
+"Manufactured Home, 1 Story"	manufactured home	1
+"Manufactured Home, 2 Stories"	manufactured home	2
+"Manufactured Home, 3 Stories"	manufactured home	3
+"Manufactured Home, 4 Stories"	manufactured home	4
+		
+# Facility Type: The type of dwelling unit.		
+"# Number of Stories: The number of floors above grade in the unit, including conditioned attics. Apartment units must be 1 story."		

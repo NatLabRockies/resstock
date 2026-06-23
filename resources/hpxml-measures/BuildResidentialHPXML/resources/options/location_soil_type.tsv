@@ -1,0 +1,31 @@
+Option Name	Soil Type	Moisture Type	Conductivity [Btu/hr-ft-F]	Diffusivity [ft2/hr]
+Unknown	unknown	mixed		
+"Clay, Dry"	clay	dry		
+"Clay, Mixed"	clay	mixed		
+"Clay, Wet"	clay	wet		
+"Gravel, Dry"	gravel	dry		
+"Gravel, Mixed"	gravel	mixed		
+"Gravel, Wet"	gravel	wet		
+"Loam, Dry"	loam	dry		
+"Loam, Mixed"	loam	mixed		
+"Loam, Wet"	loam	wet		
+"Sand, Dry"	sand	dry		
+"Sand, Mixed"	sand	mixed		
+"Sand, Wet"	sand	wet		
+"Silt, Dry"	silt	dry		
+"Silt, Mixed"	silt	mixed		
+"Silt, Wet"	silt	wet		
+0.5 Btu/hr-ft-F			0.5	
+0.8 Btu/hr-ft-F			0.8	
+1.1 Btu/hr-ft-F			1.1	
+1.4 Btu/hr-ft-F			1.4	
+1.7 Btu/hr-ft-F			1.7	
+2.0 Btu/hr-ft-F			2	
+2.3 Btu/hr-ft-F			2.3	
+2.6 Btu/hr-ft-F			2.6	
+"Detailed Example: Sand, Dry, 0.03 Diffusivity"	sand	dry		0.03
+				
+# Soil Type: The soil type.				
+# Moisture Type: The soil moisture type.				
+# Conductivity: The soil thermal conductivity.				
+# Diffusivity: The soil thermal diffusivity.				

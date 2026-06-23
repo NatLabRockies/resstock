@@ -1,0 +1,17 @@
+Option Name	Rated Flow Rate [cfm]	Power [W]
+None		
+1000 cfm	1000	100
+1500 cfm	1500	150
+2000 cfm	2000	200
+2500 cfm	2500	250
+3000 cfm	3000	300
+3500 cfm	3500	350
+4000 cfm	4000	400
+4500 cfm	4500	450
+5000 cfm	5000	500
+5500 cfm	5500	550
+6000 cfm	6000	600
+"Detailed Example: 4500 cfm, 300 W"	4500	300
+		
+# Rated Flow Rate: The rated flow rate of the whole house fan.		
+# Power: The fan power of the whole house fan.		

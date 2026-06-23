@@ -1,3 +1,5 @@
+.env
+resstockpostproc.egg-info/
 __pycache__
 *.egg-info
 .idea
@@ -12,3 +14,5 @@ coverage/
 build/
 .env
 .history
+resstockpostproc/upgrade_comparison/sdr_plots/
+uv

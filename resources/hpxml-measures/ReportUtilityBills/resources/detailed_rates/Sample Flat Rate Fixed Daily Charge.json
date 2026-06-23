@@ -1,9 +1,9 @@
 {
   "items": [
     {
-      "name": "Sample Tiered Rate",
+      "name": "Sample Flat Rate Fixed Daily Charge",
       "sector": "Residential",
-      "description": "Sample file defined by BEopt.",
+      "description": "Sample file",
       "fixedchargeunits": "$/day",
       "fixedchargefirstmeter": 0.25,
       "energyweekdayschedule": [

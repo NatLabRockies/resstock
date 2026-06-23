@@ -1,0 +1,16 @@
+Option Name	Flow Rate [cfm]	Hours in Operation [hrs/day]	Fan Power [W]	Start Hour [hr]	Count
+None					0
+Default					
+"100 cfm, 1 hr/day"	100	1			
+"100 cfm, 2 hrs/day"	100	2			
+"200 cfm, 1 hr/day"	200	1			
+"200 cfm, 2 hrs/day"	200	2			
+"300 cfm, 1 hr/day"	300	1			
+"300 cfm, 2 hrs/day"	300	2			
+"Detailed Example: 100 cfm, 1.5 hrs/day @ 6pm, 30 W"	100	1.5	30	18	
+					
+# Flow Rate: The flow rate for each kitchen fan.					
+# Hours in Operation: The hours per day of operation for each kitchen fan.					
+# Fan Power: The fan power for each kitchen fan.					
+# Start Hour: The start hour for each kitchen fan.					
+# Count: The number of kitchen fans in the home.					

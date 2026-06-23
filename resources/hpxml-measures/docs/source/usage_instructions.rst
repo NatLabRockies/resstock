@@ -8,7 +8,7 @@ Setup
 
 To get started:
 
-#. Download `OpenStudio 3.9.0 <https://github.com/NREL/OpenStudio/releases/tag/v3.9.0>`_ and install the Command Line Interface/EnergyPlus components, or use the `nrel/openstudio docker image <https://hub.docker.com/r/nrel/openstudio>`_.
+#. Download `OpenStudio 3.10.0 <https://github.com/NREL/OpenStudio/releases/tag/v3.10.0>`_ and install the Command Line Interface/EnergyPlus components, or use the `nrel/openstudio docker image <https://hub.docker.com/r/nrel/openstudio>`_.
 #. Download the `latest release <https://github.com/NREL/OpenStudio-HPXML/releases>`_.
 
 Running
@@ -72,7 +72,7 @@ A template OSW that simply runs the HPXMLtoOpenStudio, ReportSimulationOutput, a
 | ``openstudio run -w workflow/template-build-and-run-hpxml-with-stochastic-occupancy.osw``
 | This workflow builds an HPXML file on the fly from building description inputs in the OSW, then automatically generates and uses a CSV file with stochastic occupancy schedules, and finally runs the EnergyPlus simulation.
 
-| And here's an example of just creating an HPXML file and not creating/running the EnergyPlus model:
+| And here's an example of just creating an HPXML file and not running the EnergyPlus model:
 | ``openstudio run -m -w workflow/template-build-hpxml.osw``
 
 Outputs
