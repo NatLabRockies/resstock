@@ -55,7 +55,6 @@ def process_simulation_outputs(
     df = remove_failed_baseline_buildings(df, baseline_failed_bldgs)
     df = remove_na_or_failed_buildings(df)
     df = replace_missing_buildings_with_baseline(df, base_raw_df, is_baseline)
-    print("upgrade_num: {}".format(upgrade_num))
     df = downselect_and_rename_cols(df, col_maps)  # Per sdr_column_definitions.csv
     df = add_income_and_burden(df)
     df = add_county_column(df)
@@ -68,7 +67,6 @@ def process_simulation_outputs(
     df = add_panel_contraint_cols(df)
     df = fix_all_fuels_emissions(df)
     df = downselect_fuel_emissions_cols(df)
-
     if is_baseline:
         df = add_saving_cols(df, df)  # Intentionally calculate savings = baseline - baseline = 0
     else:
@@ -76,7 +74,7 @@ def process_simulation_outputs(
 
     df = add_intensity_cols(df)
     df = add_weighted_cols(df)
-    df = add_missing_upgrade_cols(df, upgrade_col_schema)
+    df = add_missing_upgrade_cols(df, upgrade_col_schema, is_baseline)
     df = adjust_col_dtypes(df)
     df = downselect_and_order_pub_cols(df, col_maps)  # Per sdr_column_definitions.csv
     df = df.sort("bldg_id")
@@ -203,13 +201,7 @@ def downselect_and_rename_cols(df: pl.LazyFrame, col_maps: Sequence[dict]) -> pl
 
     upgrade_cols = [col for col in all_cols if col.startswith("upgrade_costs.") and col.endswith("_name")]
     transformed_cols.extend([pl.col(col).alias(col) for col in upgrade_cols])
-    print("transformed_cols: {}".format(len(transformed_cols)))
-    print("df.shape before: {}".format(df.collect().shape))
-    print("df.head before: {}".format(df.collect().head()))
-    df2 = df.select(transformed_cols)
-    print("df.shape after: {}".format(df2.collect().shape))
-    print("df.head after: {}".format(df2.collect().head()))
-    return df2
+    return df.select(transformed_cols)
 
 
 def get_upgrade_rename_dict(raw_results_dir):
@@ -523,10 +515,10 @@ def get_upgrade_columns(lf: pl.LazyFrame) -> list:
 
 
 def add_upgrade_foo_cols(lf: pl.LazyFrame) -> pl.LazyFrame:
-    print("Adding upgrade columns from this upgrade")
     upgrade_cols = [c for c in lf.collect_schema().names() if c.startswith("upgrade_costs.") and c.endswith("_name")]
     if not upgrade_cols:
         return lf
+    print("Adding upgrade columns from this upgrade")
     upgrade_lf = lf.select(["bldg_id"] + upgrade_cols)
     upgrade_df = (
         upgrade_lf.unpivot(
@@ -552,7 +544,10 @@ def add_upgrade_foo_cols(lf: pl.LazyFrame) -> pl.LazyFrame:
     return lf.drop(upgrade_cols).join(upgrade_df.lazy(), on="bldg_id", how="left")
 
 
-def add_missing_upgrade_cols(df: pl.LazyFrame, upgrade_col_schema: dict) -> pl.LazyFrame:
+def add_missing_upgrade_cols(df: pl.LazyFrame, upgrade_col_schema: dict,
+        is_baseline: bool) -> pl.LazyFrame:
+    if is_baseline:
+        return df
     print("Adding upgrade columns from superset across all upgrades")
     all_cols = df.collect_schema().names()
     for col_name, col_dtype in upgrade_col_schema.items():
