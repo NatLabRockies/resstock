@@ -55,6 +55,7 @@ def process_simulation_outputs(
     df = remove_failed_baseline_buildings(df, baseline_failed_bldgs)
     df = remove_na_or_failed_buildings(df)
     df = replace_missing_buildings_with_baseline(df, base_raw_df, is_baseline)
+    print("upgrade_num: {}".format(upgrade_num))
     df = downselect_and_rename_cols(df, col_maps)  # Per sdr_column_definitions.csv
     df = add_income_and_burden(df)
     df = add_county_column(df)
