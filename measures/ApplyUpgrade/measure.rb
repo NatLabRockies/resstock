@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# see the URL below for information on how to write OpenStudio measures
-# http://nrel.github.io/OpenStudio-user-documentation/reference/measure_writing_guide/
-
 require 'openstudio'
 require_relative 'resources/constants'
 require_relative '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
@@ -263,7 +260,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       end
 
       # Check the size of the measures hash at this point, and halt the workflow if it's empty
-      if halt_workflow(runner, measures)
+      if halt_workflow(model, runner, measures)
         return false
       end
 
@@ -310,7 +307,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     # Register the upgrade name
     register_value(runner, 'upgrade_name', args[:upgrade_name])
 
-    if halt_workflow(runner, measures)
+    if halt_workflow(model, runner, measures)
       return false
     end
 
@@ -394,12 +391,18 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     return true
   end
 
-  def halt_workflow(runner, measures)
+  def halt_workflow(model, runner, measures)
     if measures.size == 0
       # Upgrade not applied; don't re-run existing home simulation
       FileUtils.rm_rf(File.expand_path('../existing.osw'))
       FileUtils.rm_rf(File.expand_path('../existing.xml'))
       runner.haltWorkflow('Invalid')
+      # If we made it here, HPXMLtoOpenStudio will be skipped.
+      # Therefore, neither in.osm nor home.xml will reflect the upgraded home.
+      # So we may as well strip/delete them.
+      # The workflow gem prevents us from removing in.osm/in.idf entirely.
+      Model.reset(runner, model)
+      FileUtils.rm_rf(File.expand_path('../home.xml'))
       return true
     end
 

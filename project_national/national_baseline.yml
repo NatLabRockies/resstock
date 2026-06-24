@@ -4,7 +4,7 @@ os_sha: 86d7e215a1
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
 output_directory: national_baseline
-weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
+weather_files_url: https://data.nlr.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
 # weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
@@ -19,7 +19,7 @@ sampler:
   args:
     n_datapoints: 250
 
-# NREL High Performance Computing machine configuration
+# NLR High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
 # kestrel:
 #   n_jobs: 3

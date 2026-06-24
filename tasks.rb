@@ -9,7 +9,7 @@ def download_epws
   require 'tempfile'
   tmpfile = Tempfile.new('epw')
 
-  UrlResolver.fetch('https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip', tmpfile)
+  UrlResolver.fetch('https://data.nlr.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip', tmpfile)
 
   puts 'Extracting weather files...'
   require 'zip'
@@ -59,7 +59,7 @@ if ARGV[0].to_sym == :update_measures
               "\"require 'stringio' \"",
               "\"RuboCop::RakeTask.new(:rubocop) do |t| t.options = ['--autocorrect-all', '--format', 'simple'] end\"",
               '"Rake.application[:rubocop].invoke"']
-  command = "#{OpenStudio.getOpenStudioCLI} -e #{commands.join(' -e ')}"
+  command = "\"#{OpenStudio.getOpenStudioCLI}\" -e #{commands.join(' -e ')}"
   puts 'Applying rubocop auto-correct to measures...'
   system(command)
 
@@ -77,7 +77,7 @@ if ARGV[0].to_sym == :update_measures
   puts 'Updating measure.xmls...'
   Dir['measures/**/measure.xml'].each do |measure_xml|
     measure_dir = File.dirname(measure_xml)
-    command = "#{OpenStudio.getOpenStudioCLI} measure -u '#{measure_dir}'"
+    command = "\"#{OpenStudio.getOpenStudioCLI}\" measure -u '#{measure_dir}'"
     system(command, [:out, :err] => File::NULL)
   end
 
@@ -86,7 +86,7 @@ end
 
 if ARGV[0].to_sym == :update_resources
   prefix = 'resources/hpxml-measures'
-  repository = 'https://github.com/NREL/OpenStudio-HPXML.git'
+  repository = 'https://github.com/NatLabRockies/OpenStudio-HPXML.git'
   branch_or_tag = 'master'
 
   system("git subtree pull --prefix #{prefix} #{repository} #{branch_or_tag} --squash")
@@ -122,7 +122,7 @@ if ARGV[0].to_sym == :unit_tests
   # Ensure we run all tests even if there are failures
   failed_tests = []
   tests_rbs.each do |test_rb|
-    success = system("#{OpenStudio.getOpenStudioCLI} #{test_rb}")
+    success = system("\"#{OpenStudio.getOpenStudioCLI}\" #{test_rb}")
     failed_tests << test_rb unless success
   end
 

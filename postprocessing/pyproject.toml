@@ -29,7 +29,7 @@ dependencies = [
     "nbformat>=4.2.0",
     "pandas",
     "plotly",
-    "polars-lts-cpu",
+    "polars",
     "prefect>=3.4.5",
     "pyarrow",
     "pydantic>=2.11.5",

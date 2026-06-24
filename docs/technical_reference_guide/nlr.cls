@@ -1,15 +1,15 @@
-%  File: nrel.cls v4.0.1, October 2025
+%  File: nlr.cls v4.0.1, October 2025
 % This class file provides basic functionality for producing
-% PDFs that meet NREL's style and formatting requirements.
+% PDFs that meet NLR's style and formatting requirements.
 
 % -------------------------------------------------------------
 % Identification Part
 % -------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nrel}
+\ProvidesClass{nlr}
 \typeout{ }
-\typeout{NREL.cls -- ResStock 2025 Release 1, October 2025}
-\typeout{Formats documents according to the NREL style guide}
+\typeout{NLR.cls -- ResStock 2025 Release 1, October 2025}
+\typeout{Formats documents according to the NLR style guide}
 \typeout{ }
 
 % -------------------------------------------------------------
@@ -26,10 +26,10 @@
 % print links in black
 \newboolean{blacklinks}
 \setboolean{blacklinks}{false}
-% Set flag to meet NREL RAAW requirements
+% Set flag to meet NLR RAAW requirements
 % true by default
-\newboolean{IsNREL}
-\setboolean{IsNREL}{true}
+\newboolean{IsNLR}
+\setboolean{IsNLR}{true}
 % Set flag to meet EERE RAAW requirements
 \newboolean{IsEERE}
 \setboolean{IsEERE}{false}
@@ -54,15 +54,15 @@
 % If EERE option is set, format as EERE RAAW
 \DeclareOption{EERE}{
 	\setboolean{IsEERE}{true}
-	\setboolean{IsNREL}{false}
-	\def\NREL@class{report}
+	\setboolean{IsNLR}{false}
+	\def\NLR@class{report}
 	\typeout{Using EERE report RAAW}
 }
-% NREL is assumed to be true by default
+% NLR is assumed to be true by default
 % unless switched off by EERE flag
-\ifthenelse{\boolean{IsNREL}}{
-	\def\NREL@class{report}
-	\typeout{Using NREL report RAAW}
+\ifthenelse{\boolean{IsNLR}}{
+	\def\NLR@class{report}
+	\typeout{Using NLR report RAAW}
 }{}
 % If tagged option is set, format as tagged pdf
 \DeclareOption{tagged}{
@@ -83,10 +83,10 @@
 % -------------------------------------------------------------
 % Process Options
 % -------------------------------------------------------------
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{\NREL@class}}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{\NLR@class}}
 \ExecuteOptions{12pt}
 \ProcessOptions\relax
-\LoadClass{\NREL@class}
+\LoadClass{\NLR@class}
 
 % -------------------------------------------------------------
 % Package Loading
@@ -128,7 +128,7 @@
 \RequirePackage[T1]{fontenc}
 % colours
 \RequirePackage{xcolor}
-\definecolor{nrelblue}{RGB}{0, 121, 193}
+\definecolor{nlrblue}{RGB}{0, 121, 193}
 % set languages
 \RequirePackage[english]{babel}
 % To stop hyphenation in titles etc
@@ -176,7 +176,7 @@
 	% \titleformat{\chapter}{\fontsize{18pt}{0pt}\bfseries\selectfont}
 	% \vspace*{12pt}
 	}
-% see NREL formatting guidelines at
+% see NLR formatting guidelines at
 % https://communications_resources.nrel.gov/style_guide/references
 % technical reports
 \DeclareBibliographyAlias{techreport}{book}
@@ -189,7 +189,7 @@
 % --------------------------------------------------------
 % Main Code
 % --------------------------------------------------------
-% NREL default is ragged right.
+% NLR default is ragged right.
 % Load ragged2e so \justifying and environment justify are available.
 % Redefines \centering, \raggedleft, and \raggedright, and environments center
 % flushleft and flushright to use versions made by ragged2e.
@@ -216,9 +216,9 @@
 \renewcommand{\cfttabaftersnum}{.}
 
 % title font
-\renewcommand{\cfttoctitlefont}{\color{nrelblue} \raggedright  \fontsize{18}{21}\sffamily\bfseries}
-\renewcommand{\cftloftitlefont}{\color{nrelblue} \raggedright  \fontsize{18}{21}\sffamily\bfseries}
-\renewcommand{\cftlottitlefont}{\color{nrelblue} \raggedright  \fontsize{18}{21}\sffamily\bfseries}
+\renewcommand{\cfttoctitlefont}{\color{nlrblue} \raggedright  \fontsize{18}{21}\sffamily\bfseries}
+\renewcommand{\cftloftitlefont}{\color{nlrblue} \raggedright  \fontsize{18}{21}\sffamily\bfseries}
+\renewcommand{\cftlottitlefont}{\color{nlrblue} \raggedright  \fontsize{18}{21}\sffamily\bfseries}
 \renewcommand{\cftchapfont}{ \fontsize{10pt}{10pt}\sffamily\bfseries}
 \renewcommand{\cftsecfont}{ \fontsize{11pt}{11pt}}
 \renewcommand{\cftsubsecfont}{ \fontsize{11pt}{11pt}}
@@ -256,7 +256,7 @@
 % Chapter Headings
 \renewcommand{\@makechapterhead}[1]{%
 	\vspace*{-20\p@}%
-	{\color{nrelblue} \parindent \z@ \raggedright \normalfont \interlinepenalty\@M
+	{\color{nlrblue} \parindent \z@ \raggedright \normalfont \interlinepenalty\@M
 	\ifnum \c@secnumdepth >\m@ne
 		\fontfamily{phv} \fontsize{18}{21}\fontseries{b}\selectfont
 		\thechapter \hspace*{1em}#1
@@ -268,7 +268,7 @@
 	}}
 \renewcommand{\@makeschapterhead}[1]{%
 	\vspace*{-20\p@}%
-	{\color{nrelblue} \parindent \z@ \raggedright \normalfont \interlinepenalty\@M
+	{\color{nlrblue} \parindent \z@ \raggedright \normalfont \interlinepenalty\@M
 	\Large\sffamily\bfseries #1
 	\par\nobreak
 	% \vspace*{-12pt}
@@ -280,17 +280,17 @@
 	\@startsection{section}{1}{\z@}
 	{-3.25ex \@plus -1ex \@minus -.2ex}
 	{0.25ex \@plus .2ex}
-	{\color{nrelblue}\fontfamily{phv}\fontsize{14}{14}\fontseries{b}\selectfont}}
+	{\color{nlrblue}\fontfamily{phv}\fontsize{14}{14}\fontseries{b}\selectfont}}
 \renewcommand{\subsection}{%
 	\@startsection{subsection}{2}{\z@}
 	{-3.25ex \@plus -1ex \@minus -.2ex}
 	{0.25ex \@plus .2ex}
-	{\color{nrelblue}\sffamily\normalsize\bfseries\slshape}}
+	{\color{nlrblue}\sffamily\normalsize\bfseries\slshape}}
 \renewcommand{\subsubsection}{%
 	\@startsection{subsubsection}{3}{\z@}
 	{-3.25ex \@plus -1ex \@minus -.2ex}
 	{0.25ex \@plus .2ex}
-	{\color{nrelblue}\sffamily\normalsize\itshape}}
+	{\color{nlrblue}\sffamily\normalsize\itshape}}
 \renewcommand{\paragraph}{%
 	\@startsection{paragraph}{4}{\z@}
 	{-3.25ex \@plus -1ex \@minus -.2ex}
@@ -386,8 +386,8 @@
 
 \ifthenelse{\boolean{IssingleAppendix}}{ % true
 	\AtBeginEnvironment{appendices}{
-		\titleformat{\chapter}{\fontfamily{phv}\fontsize{18}{21}\selectfont\bfseries}{\textcolor{nrelblue}
-		{Appendix}}{11pt}{\textcolor{nrelblue}}
+		\titleformat{\chapter}{\fontfamily{phv}\fontsize{18}{21}\selectfont\bfseries}{\textcolor{nlrblue}
+		{Appendix}}{11pt}{\textcolor{nlrblue}}
 		\titlespacing*{\chapter}{0pt}{-20pt}{0pt}
 		} %<--------- Use this if only one appendix
 	\newcommand{\appchapter}[1]{
@@ -396,8 +396,8 @@
 	}
 	{% False
 	\AtBeginEnvironment{appendices}{
-		\titleformat{\chapter}{\fontfamily{phv}\fontsize{18}{21}\selectfont\bfseries}{\textcolor{nrelblue}
-  		{Appendix \thechapter.}}{11pt}{\textcolor{nrelblue}}
+		\titleformat{\chapter}{\fontfamily{phv}\fontsize{18}{21}\selectfont\bfseries}{\textcolor{nlrblue}
+  		{Appendix \thechapter.}}{11pt}{\textcolor{nlrblue}}
 		\titlespacing*{\chapter}{0pt}{-20pt}{-6pt}
 		  } %<--------- Use this if more than one appendix
 	\newcommand{\appchapter}[1]{
@@ -464,9 +464,9 @@
 % 		colorlinks,
 % 		linktoc=all,
 % 		linkcolor=black,
-% 		citecolor=nrelblue,
+% 		citecolor=nlrblue,
 % 		menucolor=black,
-% 		urlcolor=nrelblue,
+% 		urlcolor=nlrblue,
 % 		pdfborder={0 0 0},
 % 		unicode,
 % 		pdflang={en-US}
@@ -513,35 +513,35 @@
 \RequirePackage{fancyhdr}
 % \fancyhf{} % clear all header and footer fields
 \ifthenelse{\boolean{IsConfidential}}{%IsConfidential==True
-	\fancypagestyle{nrel}{%
+	\fancypagestyle{nlr}{%
 	\fancyhf{}
 	\renewcommand{\headrulewidth}{0pt}
 	\fancyfoot[C]{\thepage\\\vspace{1em} \textbf{The contents of the report are confidential} }}
 }{%IsConfidential==False
-	\fancypagestyle{nrel}{%
+	\fancypagestyle{nlr}{%
 	\fancyhf{}
 	\renewcommand{\headrulewidth}{0pt}
-	\fancyfoot[C]{\thepage\\\vspace{1em} \fontsize{10pt}{10pt}\sffamily \textcolor{lightgray}{This report is available at no cost from the National Renewable Energy Laboratory (NREL) at \href{www.nrel.gov/publications}{www.nrel.gov/publications}}}
+	\fancyfoot[C]{\thepage\\\vspace{1em} \fontsize{10pt}{10pt}\sffamily \textcolor{lightgray}{This report is available at no cost from the National Laboratory of the Rockies (NLR) at \href{www.nrel.gov/publications}{www.nrel.gov/publications}}}
 }
 
 
 	% \renewcommand{\headrulewidth}{0.5pt}
 	% \renewcommand{\headrule}{\hbox to\headwidth{%
-	% 		\color{nrelblue}\leaders\hrule height \headrulewidth\hfill}}
+	% 		\color{nlrblue}\leaders\hrule height \headrulewidth\hfill}}
 
 	% \renewcommand{\footrulewidth}{0.5pt}
 	% \renewcommand{\footrule}{\hbox to\headwidth{%
-	% 		\color{nrelblue}\leaders\hrule height \headrulewidth\hfill}}
-% \thispagestyle{nrel}
-% \pagestyle{nrel}
+	% 		\color{nlrblue}\leaders\hrule height \headrulewidth\hfill}}
+% \thispagestyle{nlr}
+% \pagestyle{nlr}
 }
 
-\appto\frontmatter{\pagestyle{nrel}}
-\appto\mainmatter{\pagestyle{nrel}}
+\appto\frontmatter{\pagestyle{nlr}}
+\appto\mainmatter{\pagestyle{nlr}}
 \appto\backmatter{\pagestyle{empty}}
 
-% note that the first page of a chapter uses "plain", so we need to redefine that to match the "nrel" page style.
-% \let\ps@plain\ps@nrel
+% note that the first page of a chapter uses "plain", so we need to redefine that to match the "nlr" page style.
+% \let\ps@plain\ps@nlr
 
 
 
@@ -569,9 +569,9 @@
 	colorlinks=false,
 	linktoc=all,
 	linkcolor=black,
-	citecolor=nrelblue,
+	citecolor=nlrblue,
 	menucolor=black,
-	urlcolor=nrelblue,
+	urlcolor=nlrblue,
 	pdfborder={0 0 0},
 	unicode,
 	pdflang={en-US},
@@ -604,7 +604,7 @@
 
 
 
-%#TODO add ifthenelse statement to change from NREL cover page to EERE cover page
+%#TODO add ifthenelse statement to change from NLR cover page to EERE cover page
 %% THINGS WE NEED TO DO AT THE START OF THE DOCUMENT
 \AtBeginDocument{
 	\setlength{\headsep}{6em}
