@@ -74,7 +74,7 @@ def process_simulation_outputs(
 
     df = add_intensity_cols(df)
     df = add_weighted_cols(df)
-    df = add_missing_upgrade_cols(df, upgrade_col_schema, is_baseline)
+    df = add_missing_upgrade_cols(df, upgrade_col_schema)
     df = adjust_col_dtypes(df)
     df = downselect_and_order_pub_cols(df, col_maps)  # Per sdr_column_definitions.csv
     df = df.sort("bldg_id")
@@ -547,13 +547,12 @@ def add_upgrade_foo_cols(lf: pl.LazyFrame) -> pl.LazyFrame:
     return lf.drop(upgrade_cols).join(upgrade_df.lazy(), on="bldg_id", how="left")
 
 
-def add_missing_upgrade_cols(df: pl.LazyFrame, upgrade_col_schema: dict,
-        is_baseline: bool) -> pl.LazyFrame:
-    if is_baseline:
-        return df
+def add_missing_upgrade_cols(df: pl.LazyFrame, upgrade_col_schema: dict) -> pl.LazyFrame:
     print("Adding upgrade columns from superset across all upgrades")
     all_cols = df.collect_schema().names()
     for col_name, col_dtype in upgrade_col_schema.items():
+        if not col_name.startswith("upgrade."):
+            continue
         if col_name in all_cols:
             continue
         df = df.with_columns(
