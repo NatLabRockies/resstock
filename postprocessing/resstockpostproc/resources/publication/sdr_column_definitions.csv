@@ -821,7 +821,7 @@ Calculated,yes,yes,string,no,,,upgrade.hvac_cooling_efficiency,,,,,,,,,,Indicate
 Calculated,yes,yes,string,no,,,upgrade.hvac_cooling_partial_space_conditioning,,,,,,,,,,Indicates the partial space conditioning of the HVAC cooling the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,string,no,,,upgrade.hvac_heating_efficiency,,,,,,,,,,Indicates the efficiency of the HVAC heating the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,string,no,,,upgrade.hvac_heating_type_and_fuel,,,,,,,,,,Indicates the heating type and fuel the model is upgraded to. Blank value indicates no upgrade.
-Calculated,yes,no,string,no,,,upgrade.hvac_secondary_heating_efficiency,,,,,,,,,,Indicates the efficiency of the HVAC secondary heating the model is upgraded to. Blank value indicates no upgrade.
+Calculated,yes,yes,string,no,,,upgrade.hvac_secondary_heating_efficiency,,,,,,,,,,Indicates the efficiency of the HVAC secondary heating the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,no,string,no,,,upgrade.hvac_secondary_heating_fuel,,,,,,,,,,Indicates the fuel of the HVAC secondary heating the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,string,no,,,upgrade.infiltration_reduction,,,,,,,,,,Indicates the infiltration reduction of the building the model is upgraded to. Blank value indicates no upgrade.
 Calculated,yes,yes,string,no,,,upgrade.insulation_ceiling,,,,,,,,,,Indicates the insulation ceiling of the building the model is upgraded to. Blank value indicates no upgrade.
