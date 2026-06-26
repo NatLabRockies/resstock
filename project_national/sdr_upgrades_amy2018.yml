@@ -570,6 +570,11 @@ references:
           - Infiltration|40 ACH50
           - Infiltration|50 ACH50
 
+  remove_secondary_ducted_heating: &remove_secondary_ducted_heating
+    option: HVAC Secondary Heating Efficiency|None
+    apply_logic:
+      - HVAC Secondary Heating Type|Ducted Heating
+
 ### Standard Data Release - Residential -- ###
 upgrades:
   ### -- HVAC: Furnaces -- ###
@@ -585,6 +590,7 @@ upgrades:
       - option: Heating Fuel|Natural Gas
         apply_logic:
           - not: Heating Fuel|Natural Gas
+      - *remove_secondary_ducted_heating
 
   - upgrade_name: Propane Furnace 95% AFUE or Fuel Oil Furnace 88% AFUE
     package_apply_logic: *remove_heating_shared_other_wood
@@ -815,6 +821,8 @@ upgrades:
               - *typical_cold_climate_logic
               - not: HVAC Heating Type And Fuel|Electricity ASHP
 
+      - *remove_secondary_ducted_heating
+
   - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Limited
     package_apply_logic: *fossil_fuel_or_electricity
     options:
@@ -841,6 +849,8 @@ upgrades:
             and:
               - *typical_cold_climate_logic
               - not: HVAC Heating Type And Fuel|Electricity ASHP
+
+      - *remove_secondary_ducted_heating
 
   - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump Circa 2025, Existing
     package_apply_logic: *fossil_fuel_or_electricity
@@ -869,6 +879,8 @@ upgrades:
               - *typical_cold_climate_logic
               - not: HVAC Heating Type And Fuel|Electricity ASHP
 
+      - *remove_secondary_ducted_heating
+
   - upgrade_name: Dual Fuel Heat Pump System
     package_apply_logic: *fossil_fuel_or_electricity
     options:
@@ -890,6 +902,8 @@ upgrades:
       - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
         apply_logic: *dual_fuel_system_warm_climate
 
+      - *remove_secondary_ducted_heating
+
   ### -- HVAC: Geothermal Heat Pumps -- ###
   - upgrade_name: Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
     package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
@@ -899,6 +913,7 @@ upgrades:
 
       - *heat_pump_cooling_efficiency_ducted
       - *partial_conditioning_100_percent_ducts_only
+      - *remove_secondary_ducted_heating
 
   - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
     package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
@@ -906,6 +921,7 @@ upgrades:
       - *dual_speed_ducted_ghp
       - *heat_pump_cooling_efficiency_ducted
       - *partial_conditioning_100_percent_ducts_only
+      - *remove_secondary_ducted_heating
 
   - upgrade_name: Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
     package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
@@ -915,6 +931,7 @@ upgrades:
 
       - *heat_pump_cooling_efficiency_ducted
       - *partial_conditioning_100_percent_ducts_only
+      - *remove_secondary_ducted_heating
 
   ### -- Water Heater -- ###
   - upgrade_name: Heat Pump Water Heater
@@ -988,6 +1005,7 @@ upgrades:
       - *dual_speed_ducted_ghp
       - *heat_pump_cooling_efficiency_ducted
       - *partial_conditioning_100_percent_ducts_only
+      - *remove_secondary_ducted_heating
 
       ### --Envelope Package -- ###
       - *infiltration_all_cz_sf_mf_mb
@@ -1088,6 +1106,7 @@ upgrades:
       - *dual_speed_ducted_ghp
       - *heat_pump_cooling_efficiency_ducted
       - *partial_conditioning_100_percent_ducts_only
+      - *remove_secondary_ducted_heating
       ### --Envelope Package -- ###
       - *air_sealing_infiltration_reduction
       - *attic_insulation_cz1_sf
@@ -1104,6 +1123,7 @@ upgrades:
 
       - *heat_pump_cooling_efficiency_ducted
       - *partial_conditioning_100_percent_ducts_only
+      - *remove_secondary_ducted_heating
       ### --Envelope Package -- ###
       - *air_sealing_infiltration_reduction
       - *attic_insulation_cz1_sf
