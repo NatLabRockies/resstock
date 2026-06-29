@@ -424,10 +424,14 @@ class WeatherFile
       row = row.split(',')
       v2 = Vector[row[3].to_f, row[4].to_f]
       new_dist = (v1 - v2).magnitude
-      if new_dist < dist
-        temperatures_amplitudes = row[5..9].map(&:to_f)
-        dist = new_dist
-      end
+      next unless new_dist < dist
+
+      row_values = row[5..9].map(&:to_f)
+      next unless not row_values.empty?
+
+      temperatures_amplitudes = row_values
+
+      dist = new_dist
     end
 
     data.DeepGroundAnnualTemp = UnitConversions.convert(temperatures_amplitudes[0], 'C', 'F')
