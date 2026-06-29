@@ -67,7 +67,6 @@ def process_simulation_outputs(
     df = add_panel_contraint_cols(df)
     df = fix_all_fuels_emissions(df)
     df = downselect_fuel_emissions_cols(df)
-
     if is_baseline:
         df = add_saving_cols(df, df)  # Intentionally calculate savings = baseline - baseline = 0
     else:
@@ -516,10 +515,10 @@ def get_upgrade_columns(lf: pl.LazyFrame) -> list:
 
 
 def add_upgrade_foo_cols(lf: pl.LazyFrame) -> pl.LazyFrame:
-    print("Adding upgrade columns from this upgrade")
     upgrade_cols = [c for c in lf.collect_schema().names() if c.startswith("upgrade_costs.") and c.endswith("_name")]
     if not upgrade_cols:
         return lf
+    print("Adding upgrade columns from this upgrade")
     upgrade_lf = lf.select(["bldg_id"] + upgrade_cols)
     upgrade_df = (
         upgrade_lf.unpivot(
@@ -549,6 +548,8 @@ def add_missing_upgrade_cols(df: pl.LazyFrame, upgrade_col_schema: dict) -> pl.L
     print("Adding upgrade columns from superset across all upgrades")
     all_cols = df.collect_schema().names()
     for col_name, col_dtype in upgrade_col_schema.items():
+        if not col_name.startswith("upgrade."):
+            continue
         if col_name in all_cols:
             continue
         df = df.with_columns(
