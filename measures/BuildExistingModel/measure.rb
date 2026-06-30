@@ -530,6 +530,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       sampling_region = false
       if args[:utility_bill_scenario_names].include?('Sampling Region')
         sampling_region = true
+        msn_codes = Constants::StateCodesMap.keys
 
         if !args[:utility_bill_simple_filepaths].include?('State.tsv')
           fail "Using 'Sampling Region' bill calculation approach, but specified filepath is not /path/to/State.tsv."
@@ -577,13 +578,17 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
         if !simple_filepath.nil? && !simple_filepath.empty?
           simple_filepath = File.join(resources_dir, simple_filepath)
 
+          orig_state_code = bldg_data['State']
           if sampling_region
             utility_bill_scenario_names = args[:utility_bill_scenario_names].split(',').map(&:strip)
-            state = utility_bill_scenario_names[i]
-            bldg_data['State'] = state
+            scenario_name = utility_bill_scenario_names[i]
+            if msn_codes.include? scenario_name
+              bldg_data['State'] = scenario_name
+            end
           end
 
           utility_rate = get_utility_rate(runner, simple_filepath, bldg_data)
+          bldg_data['State'] = orig_state_code
         elsif !detailed_filepath.nil? && !detailed_filepath.empty?
           detailed_filepath = File.join(resources_dir, detailed_filepath)
           utility_rate = get_utility_rate(runner, detailed_filepath, bldg_data)
