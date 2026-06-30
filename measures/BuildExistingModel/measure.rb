@@ -361,7 +361,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     hpxml_path = File.expand_path('../existing.xml')
     measures['BuildResidentialHPXML'] = [{ 'hpxml_path' => hpxml_path }]
 
-    set_header(runner, measures, args, whole_sfa_or_mf_building_sim, bldg_data, resources_dir)
+    set_header(runner, measures, args, whole_sfa_or_mf_building_sim, bldg_data, resources_dir, characteristics_dir)
     set_building_header(measures)
     set_battery(measures, whole_sfa_or_mf_building_sim, num_units_modeled)
 
@@ -465,7 +465,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     return true
   end
 
-  def set_header(runner, measures, args, whole_sfa_or_mf_building_sim, bldg_data, resources_dir)
+  def set_header(runner, measures, args, whole_sfa_or_mf_building_sim, bldg_data, resources_dir, characteristics_dir)
     # Whole SFA/MF Building Simulation?
     measures['BuildResidentialHPXML'][0]['whole_sfa_or_mf_building_sim'] = whole_sfa_or_mf_building_sim
 
@@ -527,6 +527,17 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     # Utility Bills
     if not args[:utility_bill_scenario_names].nil?
 
+      sampling_region = false
+      if args[:utility_bill_scenario_names].start_with?('Sampling Region')
+        fail "Using 'Sampling Region' bill calculation approach, but more than one scenario is specified." if args[:utility_bill_scenario_names].count(',') > 0
+        fail "Using 'Sampling Region' bill calculation approach, but specified filepath is not State.tsv." if !args[:utility_bill_simple_filepaths].include?('State.tsv')
+
+        args[:utility_bill_scenario_names] = get_statecodes_for_sampling_region(bldg_data, characteristics_dir)
+        utility_bill_simple_filepaths = [args[:utility_bill_simple_filepaths]] * (args[:utility_bill_scenario_names].count(',') + 1)
+        args[:utility_bill_simple_filepaths] = utility_bill_simple_filepaths.join(', ')
+        sampling_region = true
+      end
+
       num_scenarios = args[:utility_bill_scenario_names].count(',') + 1
       utility_bill = {
         'electricity_filepaths' => [nil] * num_scenarios,
@@ -555,6 +566,13 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
         if !simple_filepath.nil? && !simple_filepath.empty?
           simple_filepath = File.join(resources_dir, simple_filepath)
+
+          if sampling_region
+            utility_bill_scenario_names = args[:utility_bill_scenario_names].split(',').map(&:strip)
+            state = utility_bill_scenario_names[i]
+            bldg_data['State'] = state
+          end
+
           utility_rate = get_utility_rate(runner, simple_filepath, bldg_data)
         elsif !detailed_filepath.nil? && !detailed_filepath.empty?
           detailed_filepath = File.join(resources_dir, detailed_filepath)
@@ -661,6 +679,32 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       utility_rate = utility_rates[0]
     end
     return utility_rate
+  end
+
+  def get_statecodes_for_sampling_region(bldg_data, characteristics_dir)
+    parameter = 'Sampling Region'
+    if !bldg_data.keys.include?(parameter)
+      runner.registerError("Utility bill scenario(s) were specified, but could not find #{parameter}.")
+      return false
+    end
+
+    sampling_region = bldg_data[parameter]
+    filepath = File.join(characteristics_dir, "#{parameter}.tsv")
+    rows = CSV.read(filepath, headers: true, col_sep: "\t")
+
+    option_col = "Option=#{sampling_region}"
+    statecodes = []
+    rows.each do |row|
+      next unless row[option_col].to_s.strip == '1'
+
+      # Format is typically "AK, Aleutians East Borough"
+      county_field = row['Dependency=County'].to_s
+      statecode = county_field.split(',', 2).first.to_s.strip
+
+      statecodes << statecode if statecode.match?(/\A[A-Z]{2}\z/)
+    end
+
+    return statecodes.uniq.sort.join(',')
   end
 end
 
