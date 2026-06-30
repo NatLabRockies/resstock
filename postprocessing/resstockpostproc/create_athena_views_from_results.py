@@ -11,22 +11,22 @@ Views created:
 Usage
 -----
   # Create timeseries view only:
-  python process_timeseries_results.py -d my_database -t my_table
+  python create_athena_views_from_results.py -d my_database -t my_table
 
   # Create both baseline and timeseries views:
-  python process_timeseries_results.py -d my_database -t my_table -b
+  python create_athena_views_from_results.py -d my_database -t my_table -b
 
   # Force overwrite existing views:
-  python process_timeseries_results.py -d my_database -t my_table -b --force
+  python create_athena_views_from_results.py -d my_database -t my_table -b --force
 
   # Create views and run validation checks:
-  python process_timeseries_results.py -d my_database -t my_table -b --check
+  python create_athena_views_from_results.py -d my_database -t my_table -b --check
 
   # Use OCHRE workflow (pass-through unmapped columns, skip intensity):
-  python process_timeseries_results.py -d my_database -t my_table --ochre-workflow
+  python create_athena_views_from_results.py -d my_database -t my_table --ochre-workflow
 
   # Create external tables from S3 data first:
-  python process_timeseries_results.py -d my_database -t my_table \\
+  python create_athena_views_from_results.py -d my_database -t my_table \\
       --s3-location s3://bucket/path/to/data/ --workgroup my_workgroup
 
 Flags
@@ -40,7 +40,7 @@ Flags
   -f, --force           Overwrite existing views.
   -c, --check           Run validation checks on the timeseries view after creation.
   -o, --ochre-workflow   Use OCHRE-aligned column mapping.
-  -b, --baseline-view   Also create the baseline view from <table>_pub_annual.
+  -b, --baseline-view   Also create the baseline view from <table>_pub_annual or <table>_baseline.
 
 ===================================================================================
 
@@ -199,6 +199,9 @@ def list_views(bsq: BuildStockQuery) -> list[str]:
     """
     List all views in the Athena database associated with the BuildStockQuery instance.
 
+    Uses the Glue API to avoid Athena query restrictions and metadata issues
+    (e.g. invalid column types in existing tables breaking information_schema).
+
     Parameters
     ----------
     bsq : BuildStockQuery
@@ -209,8 +212,14 @@ def list_views(bsq: BuildStockQuery) -> list[str]:
     list[str]
         View names in the database.
     """
-    df = bsq.execute(f"SHOW VIEWS IN {bsq.db_name}")
-    return df.iloc[:, 0].tolist() if not df.empty else []
+    glue = boto3.client("glue", region_name=bsq.run_params.region_name)
+    views = []
+    paginator = glue.get_paginator("get_tables")
+    for page in paginator.paginate(DatabaseName=bsq.db_name):
+        for table in page["TableList"]:
+            if table.get("TableType") == "VIRTUAL_VIEW":
+                views.append(table["Name"])
+    return views
 
 
 def create_view(
@@ -218,9 +227,13 @@ def create_view(
     view_name: str,
     select_sql: str,
     force: bool = False,
-) -> tuple[str, str]:
+) -> None:
     """
     Create (or replace) a view in Athena from a SELECT statement.
+
+    Uses the Glue API directly to register the view as a VIRTUAL_VIEW table,
+    which avoids Athena DDL restrictions that some workgroups enforce.
+    Column names and types are inferred by executing the SELECT with LIMIT 0.
 
     Parameters
     ----------
@@ -235,16 +248,14 @@ def create_view(
         If True, overwrite an existing view. If False and the view exists,
         raises RuntimeError.
 
-    Returns
-    -------
-    tuple[str, str]
-        (state, reason) from the Athena execution.
-
     Raises
     ------
     RuntimeError
         If the view already exists (and force=False), or if creation fails.
     """
+    import base64
+    import json as _json
+
     # Check if view already exists
     existing_views = list_views(bsq)
     if view_name in existing_views and not force:
@@ -253,14 +264,56 @@ def create_view(
             f"Rerun with force=True to overwrite."
         )
 
-    ddl = f"CREATE OR REPLACE VIEW {view_name} AS {select_sql}"
-    state, reason = bsq.execute_raw(ddl)
+    # Athena stores views in Glue as VIRTUAL_VIEW tables. The SQL is encoded in
+    # ViewOriginalText as: /* Presto View: <base64(json)> */
+    # Column metadata is optional for view execution; Athena resolves columns
+    # dynamically from the SQL.
+    view_json = _json.dumps({
+        "originalSql": select_sql,
+        "catalog": "awsdatacatalog",
+        "schema": bsq.db_name,
+        "columns": [],
+    })
+    view_text = "/* Presto View: " + base64.b64encode(view_json.encode()).decode() + " */"
 
-    if state != "SUCCEEDED":
-        raise RuntimeError(f"View creation failed ({state}): {reason}")
+    table_input = {
+        "Name": view_name,
+        "TableType": "VIRTUAL_VIEW",
+        "ViewOriginalText": view_text,
+        "ViewExpandedText": "/* Presto View */",
+        "StorageDescriptor": {
+            "Columns": [],
+            "Location": "",
+            "InputFormat": "",
+            "OutputFormat": "",
+            "SerdeInfo": {"SerializationLibrary": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe"},
+        },
+        "PartitionKeys": [],
+    }
+
+    glue = boto3.client("glue", region_name=bsq.run_params.region_name)
+    try:
+        if view_name in existing_views:
+            glue.update_table(DatabaseName=bsq.db_name, TableInput=table_input)
+        else:
+            glue.create_table(DatabaseName=bsq.db_name, TableInput=table_input)
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "AlreadyExistsException":
+            # The view exists in Glue but wasn't found via information_schema
+            # (e.g. created via Glue API directly). Update it instead.
+            if not force:
+                msg = (
+                    f"View '{view_name}' already exists in database '{bsq.db_name}'. "
+                    f"Rerun with force=True to overwrite."
+                )
+                raise RuntimeError(msg) from e
+            glue.update_table(DatabaseName=bsq.db_name, TableInput=table_input)
+        else:
+            msg = f"View creation via Glue failed: {e.response['Error']['Message']}"
+            raise RuntimeError(msg) from e
 
     logger.info(f" ** View '{view_name}' created successfully in database '{bsq.db_name}'. ** ")
-    return state, reason
+
 
 
 def _read_options_lookup() -> pd.DataFrame:
@@ -951,7 +1004,7 @@ def create_view_oedi_timeseries(
     create_view(bsq, view_name, select_sql, force)
 
 
-def _reformat_baseline_column(col: str) -> Optional[str]:
+def _reformat_baseline_column_pub_annual_schema(col: str) -> Optional[str]:
     """Reformat a baseline column name to OEDI double-dot convention.
 
     For ``out.*`` columns (excluding ``out.params.*``), inserts an extra dot
@@ -959,13 +1012,13 @@ def _reformat_baseline_column(col: str) -> Optional[str]:
 
     Examples
     --------
-    >>> _reformat_baseline_column("out.electricity.total.energy_consumption.kwh")
+    >>> _reformat_baseline_column_pub_annual_schema("out.electricity.total.energy_consumption.kwh")
     'out.electricity.total.energy_consumption..kwh'
-    >>> _reformat_baseline_column("out.load.cooling.energy_delivered.kbtu")
+    >>> _reformat_baseline_column_pub_annual_schema("out.load.cooling.energy_delivered.kbtu")
     'out.load.cooling.energy_delivered..kbtu'
-    >>> _reformat_baseline_column("in.sqft")
+    >>> _reformat_baseline_column_pub_annual_schema("in.sqft")
     None
-    >>> _reformat_baseline_column("out.params.door_area_ft_2")
+    >>> _reformat_baseline_column_pub_annual_schema("out.params.door_area_ft_2")
     None
 
     Parameters
@@ -988,8 +1041,8 @@ def _reformat_baseline_column(col: str) -> Optional[str]:
     return col[:last_dot] + "." + col[last_dot:]
 
 
-def create_query_oedi_baseline(bsq: BuildStockQuery) -> str:
-    """Build a SELECT statement that renames baseline columns to OEDI convention.
+def create_query_oedi_baseline_from_pub_annual(bsq: BuildStockQuery) -> str:
+    """Build a SELECT statement that renames baseline columns in _pub_annual table to OEDI convention.
 
     Queries the pub_annual table schema, then for each ``out.*`` column
     (excluding ``out.params.*``) renames it using the double-dot convention.
@@ -1007,17 +1060,121 @@ def create_query_oedi_baseline(bsq: BuildStockQuery) -> str:
     """
     source_table = f"{bsq.table_name}_pub_annual"
 
-    # Get column names from the table
-    df = bsq.execute(f"SELECT * FROM {source_table} LIMIT 0")
-    columns = list(df.columns)
+    # Use Glue to get column names — bsq.execute() wraps with UNLOAD which
+    # produces a 0-row Parquet that loses all schema information.
+    glue = boto3.client("glue", region_name=bsq.run_params.region_name)
+    table_info = glue.get_table(DatabaseName=bsq.db_name, Name=source_table)
+    columns = [col["Name"] for col in table_info["Table"]["StorageDescriptor"]["Columns"]]
 
     col_exprs = []
     for col in columns:
-        new_col = _reformat_baseline_column(col)
+        new_col = _reformat_baseline_column_pub_annual_schema(col)
         if new_col is not None:
             col_exprs.append(f'"{col}" AS "{new_col}"')
         else:
             col_exprs.append(f'"{col}"')
+
+    select_sql = f"SELECT {', '.join(col_exprs)} FROM {source_table}"
+    return select_sql
+
+
+def _load_baseline_to_pub_annual_mapping() -> dict[str, tuple[str, float]]:
+    """Build a {baseline_col: (pub_annual_col, factor)} mapping from the SDR definitions file.
+
+    Reads ``Annual Name``, ``Published Annual Name``, and
+    ``ResStock To Published Annual Unit Conversion Factor`` from the SDR column
+    definitions CSV.  Only rows where both names are non-empty are included.
+
+    Returns
+    -------
+    dict[str, tuple[str, float]]
+        Mapping ``{baseline_col: (pub_annual_col, conversion_factor)}``.
+    """
+    import csv as _csv
+
+    mapping: dict[str, tuple[str, float]] = {}
+    with open(sdr_column_definitions_file) as f:
+        reader = _csv.DictReader(f)
+        for row in reader:
+            ann = row["Annual Name"].strip()
+            pub = row["Published Annual Name"].strip()
+            if not ann or not pub:
+                continue
+            factor_str = row["ResStock To Published Annual Unit Conversion Factor"].strip()
+            try:
+                factor = float(factor_str) if factor_str else 1.0
+            except ValueError:
+                factor = 1.0
+            if ann not in mapping:
+                mapping[ann] = (pub, factor)
+    return mapping
+
+
+def create_query_oedi_baseline_from_baseline(bsq: BuildStockQuery) -> str:
+    """Build a SELECT that converts _baseline columns to _pub_annual naming.
+
+    Uses the SDR column definitions CSV to map raw ``build_existing_model.*``,
+    ``report_simulation_output.*``, and ``upgrade_costs.*`` column names
+    (``Annual Name``) to their published equivalents (``Published Annual Name``),
+    applying unit conversion factors where required.
+
+    The resulting query can serve as a drop-in substitute for selecting from
+    ``_pub_annual`` when that table does not yet exist.  Columns present in the
+    baseline table but absent from the SDR mapping are silently skipped.
+
+    Parameters
+    ----------
+    bsq : BuildStockQuery
+        An initialized BuildStockQuery instance.
+
+    Returns
+    -------
+    str
+        SQL SELECT statement with column aliases and unit conversions.
+    """
+    source_table = f"{bsq.table_name}_baseline"
+
+    # Use Glue to get column names — bsq.execute() wraps with UNLOAD which
+    # produces a 0-row Parquet that loses all schema information.
+    glue = boto3.client("glue", region_name=bsq.run_params.region_name)
+    table_info = glue.get_table(DatabaseName=bsq.db_name, Name=source_table)
+    columns = [col["Name"] for col in table_info["Table"]["StorageDescriptor"]["Columns"]]
+
+    baseline_to_pub = _load_baseline_to_pub_annual_mapping()
+
+    col_exprs: list[str] = []
+    mapped_cols: list[tuple[str, str]] = []
+    skipped_cols: list[str] = []
+
+    for col in columns:
+        if col not in baseline_to_pub:
+            skipped_cols.append(col)
+            logger.debug("Baseline column not in SDR mapping (skipping): %s", col)
+            continue
+
+        pub_col, factor = baseline_to_pub[col]
+        mapped_cols.append((col, pub_col))
+
+        if factor != 1.0:
+            col_exprs.append(f'{factor} * "{col}" AS "{pub_col}"')
+        else:
+            col_exprs.append(f'"{col}" AS "{pub_col}"')
+
+    logger.info(
+        "Baseline → pub_annual mapping: %d mapped, %d skipped",
+        len(mapped_cols),
+        len(skipped_cols),
+    )
+    logger.debug("Skipped baseline columns: %s", skipped_cols)
+
+    if not col_exprs:
+        msg = (
+            f"No baseline columns matched the SDR mapping. "
+            f"Table '{source_table}' has {len(columns)} columns but none matched "
+            f"the {len(baseline_to_pub)} entries in {sdr_column_definitions_file}. "
+            f"First 10 table columns: {columns[:10]}"
+        )
+        raise ValueError(msg)
 
     select_sql = f"SELECT {', '.join(col_exprs)} FROM {source_table}"
     return select_sql
@@ -1030,9 +1187,14 @@ def create_view_oedi_baseline(
 ) -> None:
     """Create an Athena view with OEDI baseline schema.
 
+    [1] Use _pub_annual if exists 
+
     Renames energy columns in ``<table_name>_pub_annual`` to use the OEDI
     double-dot convention (e.g. ``out.electricity.total.energy_consumption..kwh``)
     and creates the view as ``<table_name>{BL_VIEW_SUFFIX}``.
+
+    [2] If the _pub_annual table does not exist, falls back to the _baseline table
+    and renames columns to OEDI convention.
 
     Parameters
     ----------
@@ -1043,7 +1205,15 @@ def create_view_oedi_baseline(
     force : bool
         If True, overwrite an existing view with the same name.
     """
-    select_sql = create_query_oedi_baseline(bsq)
+    pub_annual_table = f"{bsq.table_name}_pub_annual"
+    if pub_annual_table in list_tables_boto3(
+        database=bsq.db_name, 
+        workgroup=bsq.workgroup, 
+        region_name=bsq.region_name
+        ):
+        select_sql = create_query_oedi_baseline_from_pub_annual(bsq)
+    else:
+        select_sql = create_query_oedi_baseline_from_baseline(bsq)
     create_view(bsq, view_name, select_sql, force)
 
 
@@ -1692,11 +1862,11 @@ def main() -> None:
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         handlers=[
-            logging.FileHandler('process_timeseries_results.log'),
+            logging.FileHandler('create_athena_views_from_results.log'),
             logging.StreamHandler()
         ]
     )
-    logger.info("Starting process_timeseries_results script")
+    logger.info("Starting create_athena_views_from_results script")
     parser = argparse.ArgumentParser(
         description="Create an Athena view from raw timeseries results."
     )
@@ -1784,7 +1954,7 @@ def main() -> None:
         logger.info("=" * 60)
         logger.error(f"Exception type: {type(e).__name__}")
         logger.error(f"Exception message: {e}")
-        logger.error("For detailed diagnostic information, check process_timeseries_results.log")
+        logger.error("For detailed diagnostic information, check create_athena_views_from_results.log")
         logger.info("=" * 60)
         logger.error("Falling back to boto3 workflow to ingest S3 data first into Athena...")
         logger.error(f"Caught exception during initialize_buildstock_query fallback:")
@@ -1802,7 +1972,7 @@ def main() -> None:
             raise SystemExit(
                 f"The boto3 fallback requires additional arguments: {', '.join(missing)}.\n"
                 f"Usage example:\n"
-                f"  python process_timeseries_results.py \\\n"
+                f"  python create_athena_views_from_results.py \\\n"
                 f"    --database <db_name> \\\n"
                 f"    --table <table_name> \\\n"
                 f"    --workgroup <workgroup_name> \\\n"
@@ -1859,9 +2029,9 @@ def main() -> None:
         check_view_oedi_timeseries(bsq, view_name=ts_view_name, ochre_workflow=args.ochre_workflow)
         logger.info(f"Validation checks completed for view: {ts_view_name}")
     
-    logger.info("process_timeseries_results script completed successfully")
+    logger.info("create_athena_views_from_results script completed successfully")
     logger.info("=" * 60)
-    logger.info("Processing completed. Check process_timeseries_results.log for detailed traceability.")
+    logger.info("Processing completed. Check create_athena_views_from_results.log for detailed traceability.")
     logger.info("=" * 60)
 
 if __name__ == "__main__":

@@ -13,7 +13,7 @@ from types import SimpleNamespace
 import pandas as pd
 import pytest
 
-from resstockpostproc.process_timeseries_results import (
+from postprocessing.resstockpostproc.create_athena_views_from_results import (
     _build_column_sql_expr,
     _build_county_utc_offset_case_sql_expr,
     _build_est_time_sql_expr,
