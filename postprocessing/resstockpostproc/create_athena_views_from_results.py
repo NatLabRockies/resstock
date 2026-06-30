@@ -2,6 +2,8 @@
 This script will create Athena views from raw ResStock results following
 the OEDI format (with db_schema: resstock_oedi_new).
 
+For OCHRE workflow, use the --simple-workflow (-s) flag to pass through unmapped columns and skip intensity calculations.
+
 Views created:
   - Timeseries view: <table>_ts_by_state (always created)
   - Baseline view:   <table>_md_national_parquet (only with --baseline-view flag)
@@ -22,8 +24,8 @@ Usage
   # Create views and run validation checks:
   python create_athena_views_from_results.py -d my_database -t my_table -b --check
 
-  # Use OCHRE workflow (pass-through unmapped columns, skip intensity):
-  python create_athena_views_from_results.py -d my_database -t my_table --ochre-workflow
+  # Use simple workflow (pass-through unmapped columns, skip intensity):
+  python create_athena_views_from_results.py -d my_database -t my_table --simple-workflow
 
   # Create external tables from S3 data first:
   python create_athena_views_from_results.py -d my_database -t my_table \\
@@ -39,7 +41,7 @@ Flags
   -i, --input-format    Source data format (default: PARQUET).
   -f, --force           Overwrite existing views.
   -c, --check           Run validation checks on the timeseries view after creation.
-  -o, --ochre-workflow   Use OCHRE-aligned column mapping.
+  -s, --simple-workflow   Use simple column mapping (pass-through unmapped columns, skip intensity calculations).
   -b, --baseline-view   Also create the baseline view from <table>_pub_annual or <table>_baseline.
 
 ===================================================================================
@@ -266,13 +268,37 @@ def create_view(
 
     # Athena stores views in Glue as VIRTUAL_VIEW tables. The SQL is encoded in
     # ViewOriginalText as: /* Presto View: <base64(json)> */
-    # Column metadata is optional for view execution; Athena resolves columns
-    # dynamically from the SQL.
+    # Athena requires the "columns" list in the JSON to be populated for the
+    # view to appear in the console.  We run the SELECT via execute_raw (no
+    # UNLOAD wrapping) and read column metadata from get_query_results.
+    schema_sql = select_sql if select_sql.lstrip().upper().startswith("WITH") else (
+        f"SELECT * FROM ({select_sql})"
+    )
+    schema_sql = schema_sql + " LIMIT 1"
+    exe_id = str(bsq.execute_raw(schema_sql, run_async=True))
+    while True:
+        stat = bsq._aws_athena.get_query_execution(QueryExecutionId=exe_id)
+        state = stat["QueryExecution"]["Status"]["State"]
+        if state in ("SUCCEEDED", "FAILED", "CANCELLED"):
+            break
+        time.sleep(1)
+    if state != "SUCCEEDED":
+        reason = stat["QueryExecution"]["Status"].get("StateChangeReason", "")
+        logger.warning("Schema inference query failed (%s: %s); view columns will be empty", state, reason)
+        view_columns: list[dict] = []
+    else:
+        col_info = bsq._aws_athena.get_query_results(
+            QueryExecutionId=exe_id, MaxResults=1
+        )["ResultSet"]["ResultSetMetadata"]["ColumnInfo"]
+        view_columns = [{"name": c["Name"], "type": c["Type"].lower()} for c in col_info]
+        logger.info("Schema inference succeeded: %d columns inferred for view '%s'", len(view_columns), view_name)
+        logger.debug("View columns: %s", view_columns)
+
     view_json = _json.dumps({
         "originalSql": select_sql,
         "catalog": "awsdatacatalog",
         "schema": bsq.db_name,
-        "columns": [],
+        "columns": view_columns,
     })
     view_text = "/* Presto View: " + base64.b64encode(view_json.encode()).decode() + " */"
 
@@ -281,6 +307,11 @@ def create_view(
         "TableType": "VIRTUAL_VIEW",
         "ViewOriginalText": view_text,
         "ViewExpandedText": "/* Presto View */",
+        # "presto_view": "true" is required for Athena engine v3 (Trino) to
+        # recognise this as an Athena-managed view instead of a Hive view.
+        # Without it, Athena falls back to Hive view translation, which fails
+        # and causes the view to be invisible in the Athena console.
+        "Parameters": {"presto_view": "true"},
         "StorageDescriptor": {
             "Columns": [],
             "Location": "",
@@ -723,7 +754,7 @@ def _build_renamed_columns(
         Raw column names from the timeseries table.
     keep_unmapped_cols : bool
         If True, columns that do not match any known pattern are passed through
-        unchanged (useful for Ochre workflow).
+        unchanged (useful for simple workflow).
     skip_cols : set[str] or None
         Column names to exclude entirely (e.g. structural/partition columns
         already handled elsewhere).
@@ -798,13 +829,13 @@ def _build_intensity_columns(
     return intensity_exprs
 
 
-def _get_column_mapping_config(ochre_workflow: bool) -> tuple[bool, bool]:
+def _get_column_mapping_config(simple_workflow: bool) -> tuple[bool, bool]:
     """Determine column-mapping behaviour based on workflow type.
 
     Parameters
     ----------
-    ochre_workflow : bool
-        True for OCHRE-aligned workflow, False for standard ResStock.
+    simple_workflow : bool
+        True for simple workflow, False for standard ResStock.
 
     Returns
     -------
@@ -813,12 +844,12 @@ def _get_column_mapping_config(ochre_workflow: bool) -> tuple[bool, bool]:
         - compute_intensity_cols: whether to generate energy/sqft intensity columns.
         - keep_unmapped_cols: whether unmapped timeseries columns are passed through.
     """
-    if ochre_workflow:
-        # OCHRE workflow does not currently include conditioned sqft, 
-        # so skip intensity columns for now if ochre_workflow is True
+    if simple_workflow:
+        # simple workflow does not currently include conditioned sqft, 
+        # so skip intensity columns for now if simple_workflow is True
         compute_intensity_cols = False
-        keep_unmapped_cols = True  # keep all columns for maximum flexibility in Ochre
-        logger.info("Column mapping config: OCHRE workflow - pass through all unmapped columns, skip intensity calculations")
+        keep_unmapped_cols = True  # keep all columns for maximum flexibility in simple workflow
+        logger.info("Column mapping config: simple workflow - pass through all unmapped columns, skip intensity calculations")
     else:
         # ResStock standard workflow
         compute_intensity_cols = True
@@ -828,7 +859,7 @@ def _get_column_mapping_config(ochre_workflow: bool) -> tuple[bool, bool]:
 
 
 def create_query_oedi_timeseries(
-    bsq: BuildStockQuery, ochre_workflow: bool = False
+    bsq: BuildStockQuery, simple_workflow: bool = False
 ) -> str:
     """
     Create the SQL body for a view that transforms raw timeseries results into OEDI format.
@@ -837,8 +868,8 @@ def create_query_oedi_timeseries(
     ----------
     bsq : BuildStockQuery
         An initialized BuildStockQuery instance.
-    ochre_workflow : bool
-        If True, generate OEDI timeseries columns for Ochre workflow.
+    simple_workflow : bool
+        If True, generate OEDI timeseries columns for simple workflow.
 
     Returns
     -------
@@ -846,7 +877,7 @@ def create_query_oedi_timeseries(
         The SQL SELECT statement body for the view definition.
     """
     
-    compute_intensity_cols, keep_unmapped_cols = _get_column_mapping_config(ochre_workflow)
+    compute_intensity_cols, keep_unmapped_cols = _get_column_mapping_config(simple_workflow)
 
     table_name = bsq.table_name
     columns = [c.name for c in bsq.ts_table.columns]
@@ -873,7 +904,11 @@ def create_query_oedi_timeseries(
     ts_select_exprs.append('DATE_TRUNC(\'hour\', "time") AS "time"')
     ts_group_exprs.append('DATE_TRUNC(\'hour\', "time")')
 
-    ts_agg_skip_cols = set(ts_group_cols) | {"time", "timeutc"}
+    # Skip all time-prefixed columns: they are timestamps and avg() rejects them.
+    # "time" and "timeutc" are already in ts_group_cols / the explicit set;
+    # "timedst" (and any future timestamp column whose name starts with "time")
+    # must also be excluded to avoid FUNCTION_NOT_FOUND errors in Athena.
+    ts_agg_skip_cols = set(ts_group_cols) | {c for c in columns if c.lower().startswith("time")}
     for col in columns:
         if col in ts_agg_skip_cols:
             continue
@@ -975,7 +1010,7 @@ def create_query_oedi_timeseries(
 def create_view_oedi_timeseries(
     bsq: BuildStockQuery,
     view_name: str,
-    ochre_workflow: bool = False,
+    simple_workflow: bool = False,
     force: bool = False,
 ) -> None:
     """Create an Athena view with OEDI timeseries schema.
@@ -989,13 +1024,13 @@ def create_view_oedi_timeseries(
         An initialized BuildStockQuery instance.
     view_name : str
         Name for the new view.
-    ochre_workflow : bool
-        If True, use Ochre-aligned column mapping (pass-through unmapped
+    simple_workflow : bool
+        If True, use simple column mapping (pass-through unmapped
         columns, skip intensity columns).
     force : bool
         If True, overwrite an existing view with the same name.
     """
-    select_sql = create_query_oedi_timeseries(bsq, ochre_workflow=ochre_workflow)
+    select_sql = create_query_oedi_timeseries(bsq, simple_workflow=simple_workflow)
     # logger.info("=" * 60)
     # logger.info("GENERATED SQL:")
     # logger.info("=" * 60)
@@ -1220,7 +1255,7 @@ def create_view_oedi_baseline(
 def check_view_oedi_timeseries(
     bsq: BuildStockQuery,
     view_name: str,
-    ochre_workflow: bool = False,
+    simple_workflow: bool = False,
     limit_rows: int = 10,
 ) -> None:
     """Run basic validation checks on a created timeseries view.
@@ -1240,7 +1275,7 @@ def check_view_oedi_timeseries(
         An initialized BuildStockQuery instance.
     view_name : str
         Name of the view to check.
-    ochre_workflow : bool
+    simple_workflow : bool
         If True, skip intensity-column checks.
     limit_rows : int
         Number of sample rows to fetch for the CSV export.
@@ -1252,7 +1287,7 @@ def check_view_oedi_timeseries(
     AssertionError
         If timestamps span multiple years or the count is unexpected.
     """
-    compute_intensity_cols, _ = _get_column_mapping_config(ochre_workflow)
+    compute_intensity_cols, _ = _get_column_mapping_config(simple_workflow)
 
     logger.debug("-" * 60)
     logger.info(f"Checking results of view '{view_name}', this may take a few moments...")
@@ -1857,14 +1892,19 @@ def main() -> None:
     view with the OEDI timeseries schema. Optionally runs basic validation
     checks on the resulting view.
     """
-    # Configure logging with both console and file handlers
+    # Configure logging with both console and file handlers.
+    # force=True is required because imported modules (e.g. buildstock_query)
+    # often add handlers to the root logger before main() is called, which
+    # makes basicConfig a no-op without it.
+    log_file = Path(__file__).parent / "create_athena_views_from_results.log"
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         handlers=[
-            logging.FileHandler('create_athena_views_from_results.log'),
+            logging.FileHandler(log_file),
             logging.StreamHandler()
-        ]
+        ],
+        force=True,
     )
     logger.info("Starting create_athena_views_from_results script")
     parser = argparse.ArgumentParser(
@@ -1908,10 +1948,10 @@ def main() -> None:
         help="Run check_view_result after creating the view.",
     )
     parser.add_argument(
-        "-o",
-        "--ochre-workflow",
+        "-s",
+        "--simple-workflow",
         action="store_true",
-        help="Whether output results are from OCHRE.",
+        help="Use simple column mapping (pass-through unmapped columns, skip intensity columns).",
     )
     parser.add_argument(
         "-b",
@@ -1932,14 +1972,14 @@ def main() -> None:
     logger.info(f"  input-format:  {args.input_format}")
     logger.info(f"  force:         {args.force}")
     logger.info(f"  check:         {args.check}")
-    logger.info(f"  ochre-workflow: {args.ochre_workflow}")
+    logger.info(f"  simple-workflow: {args.simple_workflow}")
     logger.info(f"  baseline-view: {args.baseline_view}")
     logger.info("=" * 60)
     
     # Log execution parameters
     logger.info("Processing parameters:")
     logger.info(f"  database={args.database}, table={args.table}, workgroup={args.workgroup}")
-    logger.info(f"  ochre_workflow={args.ochre_workflow}, baseline_view={args.baseline_view}")
+    logger.info(f"  simple_workflow={args.simple_workflow}, baseline_view={args.baseline_view}")
     logger.info(f"  force={args.force}, check={args.check}")
 
     # --- Try BuildStockQuery path first; fall back to boto3 if table missing ---
@@ -2019,14 +2059,14 @@ def main() -> None:
     create_view_oedi_timeseries(
         bsq,
         view_name=ts_view_name,
-        ochre_workflow=args.ochre_workflow,
+        simple_workflow=args.simple_workflow,
         force=args.force,
     )
     logger.info(f"Successfully created timeseries view: {ts_view_name}")
     
     if args.check:
         logger.info(f"Running validation checks on view: {ts_view_name}")
-        check_view_oedi_timeseries(bsq, view_name=ts_view_name, ochre_workflow=args.ochre_workflow)
+        check_view_oedi_timeseries(bsq, view_name=ts_view_name, simple_workflow=args.simple_workflow)
         logger.info(f"Validation checks completed for view: {ts_view_name}")
     
     logger.info("create_athena_views_from_results script completed successfully")
