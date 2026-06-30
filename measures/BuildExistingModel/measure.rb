@@ -615,6 +615,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       end
 
       measures['ResStockArgumentsPostHPXML'][0]['utility_bill_scenario_names'] = args[:utility_bill_scenario_names]
+      register_value(runner, 'utility_bill_scenario_names', args[:utility_bill_scenario_names])
 
       utility_bill.each do |arg, value_array|
         full_arg = "utility_bill_#{arg}"
