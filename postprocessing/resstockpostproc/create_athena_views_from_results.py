@@ -299,6 +299,11 @@ def create_view(
         "catalog": "awsdatacatalog",
         "schema": bsq.db_name,
         "columns": view_columns,
+        # runAsInvoker and path are required by Trino's ConnectorViewDefinition
+        # JSON codec (Athena engine v3).  Omitting them causes
+        # GENERIC_INTERNAL_ERROR: Invalid JSON bytes.
+        "runAsInvoker": False,
+        "path": [],
     })
     view_text = "/* Presto View: " + base64.b64encode(view_json.encode()).decode() + " */"
 
@@ -960,7 +965,12 @@ def create_query_oedi_timeseries(
         has_timeutc,
         time_table=resampled_time_table,
     )
-    skip_cols = set(partition_cols) | {"time", "timeutc", "building_id", "upgrade"}
+    # skip_cols must be a superset of ts_agg_skip_cols: any column excluded from
+    # the ts_table CTE (e.g. time-prefixed timestamp columns like "timedst") must
+    # also be excluded from the renamed_table SELECT.  Without this, simple
+    # workflow's keep_unmapped_cols=True would pass them through and cause a
+    # COLUMN_NOT_FOUND error because ts_table doesn't carry those columns.
+    skip_cols = ts_agg_skip_cols
     ts_exprs, ts_cols = _build_renamed_columns(
         columns, keep_unmapped_cols=keep_unmapped_cols, skip_cols=skip_cols,
     )
