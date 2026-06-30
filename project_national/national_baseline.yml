@@ -87,6 +87,9 @@ workflow_generator:
     utility_bills:
       - scenario_name: Bills
 
+      - scenario_name: Sampling Region
+        simple_filepath: data/utility_bills/sdr_rates/State.tsv
+
     # Outputs to include
     simulation_output_report:
       include_annual_emission_end_uses: true
