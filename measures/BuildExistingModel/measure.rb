@@ -528,14 +528,24 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     if not args[:utility_bill_scenario_names].nil?
 
       sampling_region = false
-      if args[:utility_bill_scenario_names].start_with?('Sampling Region')
-        fail "Using 'Sampling Region' bill calculation approach, but more than one scenario is specified." if args[:utility_bill_scenario_names].count(',') > 0
-        fail "Using 'Sampling Region' bill calculation approach, but specified filepath is not State.tsv." if !args[:utility_bill_simple_filepaths].include?('State.tsv')
-
-        args[:utility_bill_scenario_names] = get_statecodes_for_sampling_region(bldg_data, characteristics_dir)
-        utility_bill_simple_filepaths = [args[:utility_bill_simple_filepaths]] * (args[:utility_bill_scenario_names].count(',') + 1)
-        args[:utility_bill_simple_filepaths] = utility_bill_simple_filepaths.join(', ')
+      if args[:utility_bill_scenario_names].include?('Sampling Region')
         sampling_region = true
+
+        if !args[:utility_bill_simple_filepaths].include?('State.tsv')
+          fail "Using 'Sampling Region' bill calculation approach, but specified filepath is not /path/to/State.tsv."
+        end
+
+        utility_bill_scenario_names = args[:utility_bill_scenario_names].split(',').map(&:strip)
+        utility_bill_simple_filepaths = args[:utility_bill_simple_filepaths].split(',').map(&:strip)
+
+        ix = utility_bill_scenario_names.index('Sampling Region')
+        utility_bill_scenario_names.delete_at(ix)
+        utility_bill_simple_filepath = utility_bill_simple_filepaths[ix]
+        utility_bill_simple_filepaths.delete_at(ix)
+
+        statecodes = get_statecodes_for_sampling_region(bldg_data, characteristics_dir)
+        args[:utility_bill_scenario_names] = (utility_bill_scenario_names + statecodes).join(',')
+        args[:utility_bill_simple_filepaths] = (utility_bill_simple_filepaths + [utility_bill_simple_filepath] * statecodes.size).join(',')
       end
 
       num_scenarios = args[:utility_bill_scenario_names].count(',') + 1
@@ -704,7 +714,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       statecodes << statecode if statecode.match?(/\A[A-Z]{2}\z/)
     end
 
-    return statecodes.uniq.sort.join(',')
+    return statecodes.uniq.sort
   end
 end
 
