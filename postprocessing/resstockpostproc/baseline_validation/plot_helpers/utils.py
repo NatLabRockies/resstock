@@ -5,8 +5,9 @@ import logging
 import tomllib
 from pathlib import Path
 
-from resstockpostproc.baseline_validation.schema.workflow_schema import DataSourceConfig
 from buildstock_query import BuildStockQuery
+
+from resstockpostproc.baseline_validation.schema.workflow_schema import DataSourceConfig
 
 
 KBTU2KWH = 0.29307107

@@ -48,13 +48,19 @@ def get_timeseries_all(
 
     all_dfs = []
     for data_source in workflow.data_sources:
-        df = get_timeseries(
-            data_source=data_source,
-            by=by,
-            restrict_list=restrict_list,
-            occupied_only=occupied_only,
-            resolution=resolution,
-        )
+        try:
+            df = get_timeseries(
+                data_source=data_source,
+                by=by,
+                restrict_list=restrict_list,
+                occupied_only=occupied_only,
+                resolution=resolution,
+            )
+        except ValueError as exc:
+            logger.warning(
+                "Skipping timeseries for source '%s': %s", data_source.name, exc
+            )
+            continue
         annual_df = get_annual(data_source, by, occupied_only=occupied_only)
         value_cols = [col for col in df.columns if col.endswith("_value")]
         percent_users_cols = [col.replace("_value", "_percent_users") for col in value_cols]
@@ -70,6 +76,8 @@ def get_timeseries_all(
         df = apply_aggregation(data_key, df)
         df = df.with_columns(pl.lit(data_source.name).alias("source"))
         all_dfs.append(df)
+    if not all_dfs:
+        return None
     final_df = pl.concat(all_dfs, how="diagonal")
     return final_df
 
@@ -175,6 +183,13 @@ def get_timeseries(
         skip_reports=True,
     )
     ts_col = get_db_characteristics_colnames(data_source.db_schema).TIMESTAMP
+
+    if bsq.ts_table is None:
+        msg = (
+            f"No timeseries table found for source '{data_source.name}' "
+            f"(table_name='{data_source.table_name}'). Skipping timeseries query."
+        )
+        raise ValueError(msg)
 
     if by == "eiaid":
         assert not occupied_only, "occupied_only is not supported when by='eiaid'"
@@ -380,6 +395,8 @@ def _get_raw_annual_data(
         )
         return None
 
+    # Drop rows with null weights — they become NaN in numpy and poison weighted sums.
+    lf = lf.filter(pl.col("weight").is_not_null())
     raw_rows = lf.select(
         *group_exprs,
         pl.col("weight").cast(pl.Float64).alias("weight"),

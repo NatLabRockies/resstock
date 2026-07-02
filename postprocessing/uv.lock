@@ -273,7 +273,7 @@ wheels = [
 [[package]]
 name = "buildstock-query"
 version = "0.3.0"
-source = { git = "https://github.com/NREL/buildstock-query.git?rev=fix%2Fs3-sso-credential-chain#44e5afe23b65ccec3ddd088651cc3b2ae9c3ab45" }
+source = { git = "https://github.com/NREL/buildstock-query.git?rev=fix%2Fquery_from_view#d842d10bf6449f6318a189ebea229b80aa61c802" }
 dependencies = [
     { name = "filelock" },
     { name = "inquirerpy" },
@@ -2425,7 +2425,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "boto3", extras = ["crt"], specifier = ">=1.39.4" },
-    { name = "buildstock-query", git = "https://github.com/NREL/buildstock-query.git?rev=fix%2Fs3-sso-credential-chain" },
+    { name = "buildstock-query", git = "https://github.com/NREL/buildstock-query.git?rev=fix%2Fquery_from_view" },
     { name = "connectorx", specifier = ">=0.4.3" },
     { name = "dash", extras = ["diskcache"], specifier = ">=3.0.4" },
     { name = "dash-bootstrap-components", specifier = ">=2.0.3" },
