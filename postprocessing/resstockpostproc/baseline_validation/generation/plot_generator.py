@@ -99,6 +99,18 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
     # Initialize the CSV (header only) and the HTML index (shell + data dir).
     csv_path.parent.mkdir(parents=True, exist_ok=True)
 
+    # Persist WARNING+ log lines to run.log in the output directory so skipped
+    # sources, missing columns, and other non-fatal issues are reviewable after
+    # the run completes (worker stderr is silenced; without this they are lost).
+    log_file_path = output_root / "run.log"
+    _log_file_handler = logging.FileHandler(log_file_path, mode="w", encoding="utf-8")
+    _log_file_handler.setLevel(logging.WARNING)
+    _log_file_handler.setFormatter(
+        logging.Formatter("%(asctime)s - %(levelname)s - %(name)s - %(message)s")
+    )
+    logging.getLogger().addHandler(_log_file_handler)
+    logger.info("Run log: %s", log_file_path)
+
     # Chrome Trace Event Format — streaming writes for Perfetto UI visualization
     trace_path = trace_output_path(output_root)
     TimingStats.start_trace(trace_path)
@@ -137,6 +149,7 @@ def generate_plots(index=None, test_only=False, parallel=True, no_svg=False):
         results=results,
         index_state=index_state,
         csv_path=csv_path,
+        log_file_path=log_file_path,
     )
 
     # Pass 4: Assemble synthetic "All Enduses (Stacked)" pages by combining

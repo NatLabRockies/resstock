@@ -56,9 +56,9 @@ def get_timeseries_all(
                 occupied_only=occupied_only,
                 resolution=resolution,
             )
-        except ValueError as exc:
+        except Exception as exc:
             logger.warning(
-                "Skipping timeseries for source '%s': %s", data_source.name, exc
+                "Skipping timeseries for source '%s': %s", data_source.name, exc, exc_info=True
             )
             continue
         annual_df = get_annual(data_source, by, occupied_only=occupied_only)
@@ -640,12 +640,22 @@ def _get_annual_by_eiaid(bsq, data_source):
     )
     bsq.save_cache()
     ercot_pd["eiaid"] = str(UtilityName2ID["ERCOT"])
-    result_pd = bsq.utility.aggregate_annual_by_eiaid(
-        enduses=enduses,
-        get_nonzero_count=True,
-    )
-    bsq.save_cache()
-    df = pl.concat([pl.from_pandas(ercot_pd), pl.from_pandas(result_pd)], how="diagonal_relaxed")
+    try:
+        result_pd = bsq.utility.aggregate_annual_by_eiaid(
+            enduses=enduses,
+            get_nonzero_count=True,
+        )
+        bsq.save_cache()
+        combined_pd = pd.concat([ercot_pd, result_pd], ignore_index=True)
+    except Exception as exc:
+        logger.warning(
+            "aggregate_annual_by_eiaid failed for source '%s', returning ERCOT-only: %s",
+            data_source.name,
+            exc,
+            exc_info=True,
+        )
+        combined_pd = ercot_pd
+    df = pl.from_pandas(combined_pd)
     df = df.with_columns(pl.col("eiaid").cast(pl.Int64))
     df = _transform_columns(df, data_source.db_schema)
     return df
