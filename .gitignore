@@ -39,3 +39,4 @@ buildstockbatch_crash_details.log
 /postprocessing/resstockpostproc.egg-info/
 
 .history/
+*.log

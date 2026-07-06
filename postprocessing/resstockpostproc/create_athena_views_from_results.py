@@ -229,6 +229,7 @@ def create_view(
     view_name: str,
     select_sql: str,
     force: bool = False,
+    columns: list[dict] | None = None,
 ) -> None:
     """
     Create (or replace) a view in Athena from a SELECT statement.
@@ -260,6 +261,7 @@ def create_view(
 
     # Check if view already exists
     existing_views = list_views(bsq)
+
     if view_name in existing_views and not force:
         raise RuntimeError(
             f"View '{view_name}' already exists in database '{bsq.db_name}'. "
@@ -271,22 +273,35 @@ def create_view(
     # Athena requires the "columns" list in the JSON to be populated for the
     # view to appear in the console.  We run the SELECT via execute_raw (no
     # UNLOAD wrapping) and read column metadata from get_query_results.
-    schema_sql = select_sql if select_sql.lstrip().upper().startswith("WITH") else (
-        f"SELECT * FROM ({select_sql})"
-    )
-    schema_sql = schema_sql + " LIMIT 1"
-    exe_id = str(bsq.execute_raw(schema_sql, run_async=True))
-    while True:
-        stat = bsq._aws_athena.get_query_execution(QueryExecutionId=exe_id)
-        state = stat["QueryExecution"]["Status"]["State"]
-        if state in ("SUCCEEDED", "FAILED", "CANCELLED"):
-            break
-        time.sleep(1)
-    if state != "SUCCEEDED":
-        reason = stat["QueryExecution"]["Status"].get("StateChangeReason", "")
-        logger.warning("Schema inference query failed (%s: %s); view columns will be empty", state, reason)
-        view_columns: list[dict] = []
+    if columns is not None:
+        # Caller supplied pre-computed column metadata (e.g. from
+        # create_query_oedi_timeseries).  Skip the schema-inference query
+        # entirely — it would run a full aggregation over the dataset which
+        # can time out on large tables.
+        view_columns: list[dict] = columns
+        logger.info(
+            "Using pre-computed columns for view '%s': %d columns",
+            view_name, len(view_columns),
+        )
     else:
+        schema_sql = select_sql if select_sql.lstrip().upper().startswith("WITH") else (
+            f"SELECT * FROM ({select_sql})"
+        )
+        schema_sql = schema_sql + " LIMIT 1"
+        exe_id = str(bsq.execute_raw(schema_sql, run_async=True))
+        while True:
+            stat = bsq._aws_athena.get_query_execution(QueryExecutionId=exe_id)
+            state = stat["QueryExecution"]["Status"]["State"]
+            if state in ("SUCCEEDED", "FAILED", "CANCELLED"):
+                break
+            time.sleep(1)
+        if state != "SUCCEEDED":
+            reason = stat["QueryExecution"]["Status"].get("StateChangeReason", "")
+            msg = (
+                f"Schema inference query for view '{view_name}' {state}: {reason}. "
+                "Pass `columns` to skip schema inference for complex queries."
+            )
+            raise RuntimeError(msg)
         col_info = bsq._aws_athena.get_query_results(
             QueryExecutionId=exe_id, MaxResults=1
         )["ResultSet"]["ResultSetMetadata"]["ColumnInfo"]
@@ -865,7 +880,7 @@ def _get_column_mapping_config(simple_workflow: bool) -> tuple[bool, bool]:
 
 def create_query_oedi_timeseries(
     bsq: BuildStockQuery, simple_workflow: bool = False
-) -> str:
+) -> tuple[str, list[dict]]:
     """
     Create the SQL body for a view that transforms raw timeseries results into OEDI format.
 
@@ -878,8 +893,12 @@ def create_query_oedi_timeseries(
 
     Returns
     -------
-    str
-        The SQL SELECT statement body for the view definition.
+    tuple[str, list[dict]]
+        (select_sql, output_columns) — the SQL SELECT statement body for the
+        view definition, and the list of output column dicts
+        ``[{"name": ..., "type": ...}, ...]`` derived from the SQL structure.
+        Passing these directly to ``create_view`` avoids a slow schema-inference
+        query on the full aggregated dataset.
     """
     
     compute_intensity_cols, keep_unmapped_cols = _get_column_mapping_config(simple_workflow)
@@ -1014,7 +1033,28 @@ def create_query_oedi_timeseries(
     select_sql_expr = f"""
     {cte_sql_expr} SELECT {final_columns_sql_expr} FROM renamed_table
     """
-    return select_sql_expr
+
+    # Derive output column metadata from the SQL structure we just built.
+    # All aggregated timeseries values come out of AVG/SUM → double.
+    # Partition-derived and id columns use their natural Glue/Athena types.
+    # Passing this to create_view avoids a slow full-dataset schema-inference
+    # query that aggregates the entire timeseries table.
+    output_columns: list[dict] = []
+    output_columns.append({"name": bldg_id_col, "type": "bigint"})
+    output_columns.append({"name": upgrade_col, "type": "varchar"})
+    if compute_intensity_cols:
+        output_columns.append({"name": sqft_col, "type": "double"})
+    output_columns.append({"name": time_col, "type": "timestamp"})
+    for pc in partition_cols:
+        if pc not in must_have_cols:
+            output_columns.append({"name": pc, "type": "varchar"})
+    for _, new_col in ts_cols:
+        output_columns.append({"name": new_col, "type": "double"})
+    if compute_intensity_cols:
+        for _, new_col in ts_cols:
+            output_columns.append({"name": f"{new_col}_intensity", "type": "double"})
+
+    return select_sql_expr, output_columns
 
 
 def create_view_oedi_timeseries(
@@ -1040,13 +1080,13 @@ def create_view_oedi_timeseries(
     force : bool
         If True, overwrite an existing view with the same name.
     """
-    select_sql = create_query_oedi_timeseries(bsq, simple_workflow=simple_workflow)
+    select_sql, output_columns = create_query_oedi_timeseries(bsq, simple_workflow=simple_workflow)
     # logger.info("=" * 60)
     # logger.info("GENERATED SQL:")
     # logger.info("=" * 60)
     # logger.info(select_sql)
     # logger.info("=" * 60)
-    create_view(bsq, view_name, select_sql, force)
+    create_view(bsq, view_name, select_sql, force, columns=output_columns)
 
 
 def _reformat_baseline_column_pub_annual_schema(col: str) -> Optional[str]:
