@@ -20,7 +20,7 @@ env:
   OPENSTUDIO_VER_TO_SHA: "+" # "+" or "%2B" depending on OPENSTUDIO_URL
   OPENSTUDIO_PLATFORM: Ubuntu-24.04-x86_64
   OPENSTUDIO_EXT: deb
-  OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.11.0
+  OPENSTUDIO_URL: https://github.com/NatLabRockies/OpenStudio/releases/download/v3.11.0
   BUILDSTOCK_BATCH_BRANCH: develop
   BUILDSTOCK_QUERY_BRANCH: main
 
@@ -56,17 +56,10 @@ jobs:
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
-      - name: Install python
-        shell: bash
-        run: |
-          export DEBIAN_FRONTEND=noninteractive
-          sudo apt update
-          sudo -E apt-get install -y python3-pip
-
-      - name: Install python dependencies
-        run : |
-          python3 -m pip install --progress-bar off --upgrade pip
-          pip3 install --progress-bar off pandas pyyaml
+      - name: Setup python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
 
       - name: Download formatted options_lookup
         uses: actions/download-artifact@v8
@@ -97,7 +90,10 @@ jobs:
 
       - name: Generate precomputed buildstocks
         run: |
-          python3 test/update_yml_precomputed_files.py
+          pip install pandas
+          pip install pyyaml
+          
+          python test/update_yml_precomputed_files.py
 
       - name: Upload precomputed buildstocks
         uses: actions/upload-artifact@v7
@@ -201,7 +197,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "Update documentation."
+            git commit -m "Update documentation. [skip ci]"
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
@@ -287,7 +283,7 @@ jobs:
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
-          git clone --single-branch --branch $BUILDSTOCK_BATCH_BRANCH https://github.com/NREL/buildstockbatch.git
+          git clone --single-branch --branch $BUILDSTOCK_BATCH_BRANCH https://github.com/NatLabRockies/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
@@ -365,7 +361,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "Baseline integration tests results."
+            git commit -m "Baseline integration tests results. [skip ci]"
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
@@ -384,14 +380,14 @@ jobs:
           pip install pandas
           pip install plotly
           pip install kaleido
-
+          
           # baseline annual
           mkdir -p test/base_results/comparisons/baseline/annual
           python test/compare.py -a samples -b base_results/baseline/annual -f samples -e test/base_results/comparisons/baseline/annual # base_samples.csv, feature_samples.csv
           python test/compare.py -a results -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
           python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
           python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
-
+          
           # baseline timeseries
           mkdir test/base_results/comparisons/baseline/timeseries
           python test/compare.py -a timeseries -b base_results/baseline/timeseries -f baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
@@ -461,7 +457,7 @@ jobs:
 
       - name: Install buildstock_query
         run: |
-          python3 -m pip install git+https://github.com/NREL/buildstock-query.git@$BUILDSTOCK_QUERY_BRANCH
+          python3 -m pip install git+https://github.com/NatLabRockies/buildstock-query.git@$BUILDSTOCK_QUERY_BRANCH
 
       - name: Download and Install OpenStudio
         run: |
@@ -567,7 +563,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "SDR options analysis results."
+            git commit -m "SDR options analysis results. [skip ci]"
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
@@ -615,7 +611,7 @@ jobs:
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
-          git clone --single-branch --branch $BUILDSTOCK_BATCH_BRANCH https://github.com/NREL/buildstockbatch.git
+          git clone --single-branch --branch $BUILDSTOCK_BATCH_BRANCH https://github.com/NatLabRockies/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
@@ -692,7 +688,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "SDR integration tests results."
+            git commit -m "SDR integration tests results. [skip ci]"
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
