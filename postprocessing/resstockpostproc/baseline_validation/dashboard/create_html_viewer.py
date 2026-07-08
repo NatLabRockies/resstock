@@ -622,6 +622,14 @@ def build_html(
       }}
     }}
 
+    // Percent-encode each path segment for use as a URL. Segment-wise so
+    // '/' separators are preserved. Critically encodes '+' as %2B: a literal
+    // '+' in a path is reinterpreted as a space by S3 (and inconsistently
+    // over file://), which 404s plots like "Multi-Family with 5+ Units".
+    function encodePath(p) {{
+      return String(p).split('/').map(encodeURIComponent).join('/');
+    }}
+
     function parseEntries(cellValue) {{
       if (!cellValue || !cellValue.trim()) return [];
       return cellValue
@@ -992,7 +1000,7 @@ def build_html(
       openLink.textContent = 'Open in a new tab';
       openLink.target = '_blank';
       openLink.rel = 'noopener noreferrer';
-      openLink.href = currentTabs[activeTabIdx].path;
+      openLink.href = encodePath(currentTabs[activeTabIdx].path);
       host.appendChild(openLink);
     }}
 
@@ -1007,7 +1015,7 @@ def build_html(
         return;
       }}
       const iframe = document.createElement('iframe');
-      iframe.src = currentTabs[activeTabIdx].path;
+      iframe.src = encodePath(currentTabs[activeTabIdx].path);
       host.appendChild(iframe);
     }}
 
