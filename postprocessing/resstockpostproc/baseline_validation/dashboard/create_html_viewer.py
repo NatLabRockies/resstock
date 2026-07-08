@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import Sequence
+from pathlib import Path
 
 from resstockpostproc.baseline_validation.schema.plot_spec import ALL_ENDUSES_DISPLAY
 
@@ -29,7 +30,24 @@ METRIC_ORDER = [
 ]
 
 
-def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: str) -> str:
+FFLATE_ASSET_FILENAME = "fflate-0.8.2.min.js"
+FFLATE_SOURCE_PATH = Path(__file__).parent / "vendor" / FFLATE_ASSET_FILENAME
+
+
+def copy_fflate_asset(dest_dir: Path) -> Path:
+    """Vendor the fflate decompressor into the dashboard data directory."""
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    dest = dest_dir / FFLATE_ASSET_FILENAME
+    dest.write_bytes(FFLATE_SOURCE_PATH.read_bytes())
+    return dest
+
+
+def build_html(
+    headers: Sequence[str],
+    manifest: dict[str, str],
+    data_dir_href: str,
+    fflate_href: str,
+) -> str:
     filter_cols = [h for h in headers if h not in NON_FILTER_COLUMNS]
     headers_json = json.dumps(list(headers), ensure_ascii=False)
     filter_cols_json = json.dumps(filter_cols, ensure_ascii=False)
@@ -50,6 +68,19 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
 <head>
   <meta charset='UTF-8'>
   <title>ResStock Comparison Explorer</title>
+  <script src="{fflate_href}"></script>
+  <script>
+    // Decode a gzip+base64 data payload to a UTF-8 string. Native
+    // DecompressionStream is async and cannot be used here because the
+    // data <script> tags call addRowsZ/setCombinationsZ synchronously as
+    // they load, so we use fflate's synchronous gunzipSync.
+    function __bvInflate(b64) {{
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return new TextDecoder('utf-8').decode(window.fflate.gunzipSync(bytes));
+    }}
+  </script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-S5YQKCKW13"></script>
   <script>
@@ -523,8 +554,16 @@ def build_html(headers: Sequence[str], manifest: dict[str, str], data_dir_href: 
       for (const row of rows) ROWS.push(row);
     }};
 
+    window.addRowsZ = function(b64) {{
+      window.addRows(__bvInflate(b64));
+    }};
+
     window.setCombinations = function(combos) {{
       COMBOS = combos;
+    }};
+
+    window.setCombinationsZ = function(b64) {{
+      window.setCombinations(JSON.parse(__bvInflate(b64)));
     }};
 
     window.addCombos = function(combo) {{
