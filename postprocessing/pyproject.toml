@@ -34,7 +34,7 @@ dependencies = [
     "pandas",
     "playwright>=1.58.0",
     "plotly",
-    "polars-lts-cpu",
+    "polars",
     "prefect>=3.4.5",
     "pyarrow",
     "pyathena >= 3.19.0",
