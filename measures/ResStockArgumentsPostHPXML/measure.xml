@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>23c68d02-3438-4a8b-a2bb-c165a08cc355</version_id>
-  <version_modified>2026-05-09T02:45:11Z</version_modified>
+  <version_id>25eb3210-d38b-48f2-8670-57fde85b3842</version_id>
+  <version_modified>2026-07-08T22:26:35Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -5412,8 +5412,8 @@
           <display_name>Vertical Loop, Enhanced Grout &amp; Pipe</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Lopsided U Configuration, 10 Boreholes</value>
-          <display_name>Detailed Example: Lopsided U Configuration, 10 Boreholes</display_name>
+          <value>Detailed Example: Vertical Loop, L Configuration, 4 Boreholes</value>
+          <display_name>Detailed Example: Vertical Loop, L Configuration, 4 Boreholes</display_name>
         </choice>
       </choices>
     </argument>
@@ -12674,7 +12674,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E019CB4F</checksum>
+      <checksum>30E35BE3</checksum>
     </file>
     <file>
       <filename>test_hvac_load_flexibility.rb</filename>
