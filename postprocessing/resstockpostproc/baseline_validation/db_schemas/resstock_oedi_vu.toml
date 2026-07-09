@@ -1,0 +1,31 @@
+[table_suffix]
+baseline = "_metadata"
+timeseries = "_by_state_vu"
+upgrades = "_metadata"
+
+[column_prefix]
+characteristics = "in."
+output = "out."
+
+[column_names]
+building_id = "bldg_id"
+sample_weight = "weight"
+sqft = "in.sqft"
+timestamp = "timestamp"
+completed_status = "applicability"
+unmet_hours_cooling_hr = ""
+unmet_hours_heating_hr = ""
+map_eiaid_column = "gisjoin"
+fuel_totals = ["out.electricity.total.energy_consumption",
+               "out.natural_gas.total.energy_consumption",
+               "out.fuel_oil.total.energy_consumption",
+               "out.propane.total.energy_consumption",
+               ]
+
+[completion_values]
+success = "true"
+fail = ""
+inapplicable = "false"
+
+[structure]
+inapplicables_have_ts = "true"
