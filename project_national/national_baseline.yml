@@ -22,7 +22,7 @@ sampler:
   # type: precomputed
   type: precomputed # For production run
   args:
-    sample_file: res_sdr_2025_r1.csv # For CI
+    sample_file: res_sdr_2025_r1.csv
     # n_datapoints: 10000 # For production run
 # NREL High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
@@ -64,6 +64,13 @@ workflow_generator:
   args:
     # Annual simulation and timestep
     use_ochre: true
+
+    # OCHRE simulates at simulation_control_timestep (1 min) but writes the
+    # timeseries at output_res_minutes to keep output size manageable. Annual
+    # totals are still computed from the full-resolution data.
+    ochre:
+      output_res_minutes: 15
+
     build_existing_model:
       simulation_control_timestep: 1
       simulation_control_run_period_begin_month: 1
