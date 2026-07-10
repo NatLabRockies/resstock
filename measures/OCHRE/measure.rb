@@ -60,6 +60,11 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(365)
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('output_res_minutes', false)
+    arg.setDisplayName('Output Resolution (minutes)')
+    arg.setDescription('Reporting resolution in minutes for the OCHRE timeseries output. The simulation still runs at Time Resolution; the written timeseries is downsampled to this resolution to reduce file size. Must be a whole multiple of Time Resolution. Leave blank to write at the simulation resolution.')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('start_year', false)
     arg.setDisplayName('Simulation Start Year')
     arg.setDescription('Year to start the OCHRE simulation.')
@@ -169,6 +174,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     start_month = args[:start_month] || 1
     start_day = args[:start_day] || 1
     export_res_minutes = args[:export_res]
+    output_res_minutes = args[:output_res_minutes]
 
     # get weather file path
     hpxml_bldg = hpxml.buildings[0]
@@ -187,7 +193,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
                                     time_res_minutes, duration_days,
                                     schedule_file, weather_file,
                                     start_year, start_month, start_day,
-                                    export_res_minutes, seed)
+                                    export_res_minutes, seed, output_res_minutes)
 
     runner.registerInfo("Running OCHRE simulation: #{ochre_cmd}")
 
@@ -235,7 +241,7 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
   private
 
   # Build OCHRE command to run via CLI
-  def build_ochre_command(ochre_cli, hpxml_path, output_dir, time_res_minutes, duration_days, schedule_file, weather_file, start_year, start_month, start_day, export_res_minutes = nil, seed = nil)
+  def build_ochre_command(ochre_cli, hpxml_path, output_dir, time_res_minutes, duration_days, schedule_file, weather_file, start_year, start_month, start_day, export_res_minutes = nil, seed = nil, output_res_minutes = nil)
     # Get directory and filename for HPXML
     hpxml_dir = File.dirname(hpxml_path)
     hpxml_name = File.basename(hpxml_path)
@@ -255,7 +261,8 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     cmd += " --duration #{duration_days}"
     cmd += " --start_year #{start_year} --start_month #{start_month} --start_day #{start_day}"
     # cmd += " --time_zone DST"
-    cmd += ' --verbosity=9'
+    cmd += ' --verbosity=3'
+    # cmd += ' --use_advanced_defrost'
 
     if schedule_file && !schedule_file.empty?
       schedule_file_safe = schedule_file.gsub("'", "\\\\'")
@@ -267,6 +274,12 @@ class OCHRE < OpenStudio::Measure::ModelMeasure
     # Convert from minutes to days for the CLI (which expects days)
     if export_res_minutes && export_res_minutes > 0
       cmd += " --export_res #{export_res_minutes}"
+    end
+
+    # Add output (reporting) resolution if specified. Simulation still runs at
+    # time_res_minutes; the written timeseries is downsampled to this resolution.
+    if output_res_minutes && output_res_minutes > 0
+      cmd += " --output_res #{output_res_minutes}"
     end
 
     # Use ResStock output format for direct compatibility with downstream measures

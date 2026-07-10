@@ -46,6 +46,14 @@
       <default_value>365</default_value>
     </argument>
     <argument>
+      <name>output_res_minutes</name>
+      <display_name>Output Resolution (minutes)</display_name>
+      <description>Reporting resolution in minutes for the OCHRE timeseries output. The simulation still runs at Time Resolution; the written timeseries is downsampled to this resolution to reduce file size. Must be a whole multiple of Time Resolution. Leave blank to write at the simulation resolution.</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>start_year</name>
       <display_name>Simulation Start Year</display_name>
       <description>Year to start the OCHRE simulation.</description>
