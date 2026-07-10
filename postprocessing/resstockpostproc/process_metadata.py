@@ -142,19 +142,23 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
     df = assign_representative_income(df)
     income_col = "in.representative_income"
 
-    new_cols = []
     # Reassign negative or zero dollar income to 1 dollar
     adj_income = pl.when(pl.col(income_col) <= 0).then(pl.lit(1)).otherwise(pl.col(income_col)).alias(income_col)
+    new_cols = [adj_income]
 
-    # Calculate burden only when income is not null and positive
-    burden = (
-        pl.when(adj_income.is_not_null())
-        .then(pl.col("out.bills.all_fuels.usd") / adj_income * 100)
-        .otherwise(None)
-        .alias("out.energy_burden.percentage")
-    )
+    # Burden depends on utility bills, which are not produced by the OCHRE workflow
+    # (ReportUtilityBills is skipped when use_ochre: true). Skip the burden column
+    # gracefully when the source bills column isn't present.
+    if "out.bills.all_fuels.usd" in df.collect_schema().names():
+        burden = (
+            pl.when(adj_income.is_not_null())
+            .then(pl.col("out.bills.all_fuels.usd") / adj_income * 100)
+            .otherwise(None)
+            .alias("out.energy_burden.percentage")
+        )
+        new_cols.append(burden)
 
-    return df.with_columns([adj_income, burden])
+    return df.with_columns(new_cols)
 
 
 def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame:
@@ -197,16 +201,26 @@ def add_panel_contraint_cols(df: pl.LazyFrame) -> pl.LazyFrame:
     amp_cols = [col for col in all_cols if amp_prefix in col]
     space_col = "out.panel.breaker_space.headroom.count"
 
+    # Panel constraint columns require panel-load outputs from the panel reporting
+    # measure. Those aren't produced by the OCHRE workflow; skip silently in that case.
+    if space_col not in all_cols and not amp_cols:
+        return df
+
     out_space_col = "out.panel.constraint.breaker_space"
-    space_constraint = pl.when(pl.col(space_col) < 0).then(True).otherwise(False).alias(out_space_col)
-    ind_constraints = [space_constraint]
+    ind_constraints = []
+    if space_col in all_cols:
+        space_constraint = pl.when(pl.col(space_col) < 0).then(True).otherwise(False).alias(out_space_col)
+        ind_constraints.append(space_constraint)
     overall_constraint = None
+    have_space_col = space_col in all_cols
     for amp_col in amp_cols:
         nec_method = amp_col.removeprefix(amp_prefix).removesuffix(".a")
         out_amp_col = "out.panel.constraint.capacity." + nec_method
         amp_constraint = pl.when(pl.col(amp_col) < 0).then(True).otherwise(False).alias(out_amp_col)
         ind_constraints.append(amp_constraint)
 
+        if not have_space_col:
+            continue
         out_overall_col = "out.panel.constraint.overall." + nec_method
         overall_constraint = pl.coalesce(
             pl.when(pl.col(out_amp_col) & pl.col(out_space_col)).then(pl.lit("Capacity and Space Constrained")),
