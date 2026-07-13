@@ -530,13 +530,6 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     _default_hpxml, default_hpxml_bldg = _test_measure()
     _test_default_building_construction_values(default_hpxml_bldg, 21600, 8.0, 2, 1, -7)
 
-    # Test defaults w/ conditioned crawlspace
-    hpxml, hpxml_bldg = _create_hpxml('base-foundation-conditioned-crawlspace.xml')
-    hpxml_bldg.building_construction.conditioned_building_volume = nil
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-    _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_building_construction_values(default_hpxml_bldg, 16200, 8.0, 2, 1, 0)
-
     # Test defaults w/ belly-and-wing foundation
     hpxml, hpxml_bldg = _create_hpxml('base-foundation-belly-wing-skirt.xml')
     hpxml_bldg.building_construction.conditioned_building_volume = nil
@@ -617,13 +610,6 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
     _test_default_infiltration_values(default_hpxml_bldg, 1350 * 8, false)
-
-    # Test defaults w/ conditioned crawlspace
-    hpxml, hpxml_bldg = _create_hpxml('base-foundation-conditioned-crawlspace.xml')
-    hpxml_bldg.air_infiltration_measurements[0].infiltration_volume = nil
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-    _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_infiltration_values(default_hpxml_bldg, 1350 * 12, false)
 
     # Test defaults w/ shared system
     hpxml, hpxml_bldg = _create_hpxml('base-bldgtype-mf-unit-shared-boiler-only-baseboard.xml')
@@ -829,17 +815,6 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     _default_hpxml, default_hpxml_bldg = _test_measure()
     assert_in_epsilon(16.22, default_hpxml_bldg.air_infiltration_measurements[0].infiltration_height, 0.01)
     assert_in_epsilon(14500, default_hpxml_bldg.air_infiltration_measurements[0].infiltration_volume, 0.01)
-
-    # Test conditioned crawlspace
-    hpxml, hpxml_bldg = _create_hpxml('base-foundation-conditioned-crawlspace.xml')
-    hpxml_bldg.building_construction.average_ceiling_height = nil
-    hpxml_bldg.building_construction.conditioned_building_volume = nil
-    hpxml_bldg.air_infiltration_measurements[0].infiltration_volume = nil
-    hpxml_bldg.air_infiltration_measurements[0].infiltration_height = nil
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-    _default_hpxml, default_hpxml_bldg = _test_measure()
-    assert_in_epsilon(9.75, default_hpxml_bldg.air_infiltration_measurements[0].infiltration_height, 0.01)
-    assert_in_epsilon(16200, default_hpxml_bldg.air_infiltration_measurements[0].infiltration_volume, 0.01)
 
     # Test unconditioned basement
     hpxml, hpxml_bldg = _create_hpxml('base-foundation-unconditioned-basement.xml')
@@ -3648,21 +3623,21 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.water_heating_systems[0].hpwh_confined_space_without_mitigation = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [66.0, HPXML::WaterHeaterHPWHOperatingModeHybridAuto, 6366.0, 15355.0, false])
+    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [66.0, HPXML::WaterHeaterHPWHOperatingModeHybridAuto, 1706.0, 15355.0, false])
 
     # Test defaults w/ num occupants = 1, num bedrooms = 1
     hpxml_bldg.building_construction.number_of_bedrooms = 1
     hpxml_bldg.building_occupancy.number_of_residents = 1
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [50.0, HPXML::WaterHeaterHPWHOperatingModeHybridAuto, 6366.0, 15355.0, false])
+    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [50.0, HPXML::WaterHeaterHPWHOperatingModeHybridAuto, 1706.0, 15355.0, false])
 
     # Test defaults w/ num occupants = 10, num bedrooms = 1
     hpxml_bldg.building_construction.number_of_bedrooms = 1
     hpxml_bldg.building_occupancy.number_of_residents = 10
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [80.0, HPXML::WaterHeaterHPWHOperatingModeHybridAuto, 6366.0, 15355.0, false])
+    _test_default_heat_pump_water_heater_values(default_hpxml_bldg, [80.0, HPXML::WaterHeaterHPWHOperatingModeHybridAuto, 1706.0, 15355.0, false])
   end
 
   def test_indirect_water_heaters

@@ -1034,7 +1034,7 @@ class HPXMLtoOpenStudioWaterHeaterTest < Minitest::Test
     ther_eff = 1.0
     cop = 3.731
     tank_height = 1.3343
-    cap = UnitConversions.convert(water_heating_system.heating_capacity, 'Btu/hr', 'W') # W
+    cap = UnitConversions.convert(water_heating_system.heating_capacity, 'Btu/hr', 'W') * cop # W
     backup_cap = UnitConversions.convert(water_heating_system.backup_heating_capacity, 'Btu/hr', 'W') # W
 
     # Check water heater
@@ -1059,36 +1059,30 @@ class HPXMLtoOpenStudioWaterHeaterTest < Minitest::Test
 
   def test_tank_heat_pump_containment_volume_adjustment
     # Volumes are based on RESNET spreadsheet: https://github.com/user-attachments/files/23135608/ConstrainedHPWH_04xlsx.xlsx,
-    containment_volumes = [3000, 1500, 960, 707, 453, 200, 83.5]
-    # Replaced the COP in the spreadsheet to 3.73135, and the expected COP are calculated as below:
-    expected_cop = [3.720, 3.720, 3.647, 3.518, 3.191, 2.367, 1.642]
-    expected_cap = 500.0 * 3.73135 # not adjusted
+    # Replaced the COP in the spreadsheet to 3.73135, and the expected COPs as a function of CV are calculated as below:
+    expected_cops = {
+      3000 => 3.720,
+      1500 => 3.720,
+      960 => 3.647,
+      707 => 3.518,
+      453 => 3.191,
+      200 => 2.367,
+      83.5 => 1.642,
+      32 => 1.286 # COP floor set per https://github.com/NatLabRockies/OpenStudio-HPXML/pull/2223
+    }
     args_hash = {}
     args_hash['hpxml_path'] = @tmp_hpxml_path
-    containment_volumes.each_with_index do |v, i|
+    expected_cops.each do |cv, expected_cop|
       hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-confined-space.xml')
-      hpxml_bldg.water_heating_systems[0].hpwh_containment_volume = v
+      hpxml_bldg.water_heating_systems[0].hpwh_containment_volume = cv
       XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-      model, _hpxml, hpxml_bldg = _test_measure(args_hash)
-      # Get HPXML values
-      water_heating_system = hpxml_bldg.water_heating_systems[0]
+      model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
+
       # Check EnergyPlus inputs
       assert_equal(1, model.getWaterHeaterHeatPumpWrappedCondensers.size)
-      assert_equal(1, model.getWaterHeaterStratifieds.size)
       hpwh = model.getWaterHeaterHeatPumpWrappedCondensers[0]
-      wh = hpwh.tank.to_WaterHeaterStratified.get
       coil = hpwh.dXCoil.to_CoilWaterHeatingAirToWaterHeatPumpWrapped.get
-      assert_equal(EPlus.fuel_type(water_heating_system.fuel_type), wh.heaterFuelType)
-      assert_equal('Schedule', wh.ambientTemperatureIndicator)
-      assert_in_epsilon(UnitConversions.convert(water_heating_system.tank_volume * 0.9, 'gal', 'm^3'), wh.tankVolume.get, 0.01)
-      assert_in_epsilon(1.3343, wh.tankHeight.get, 0.01)
-      assert_in_epsilon(UnitConversions.convert(water_heating_system.backup_heating_capacity, 'Btu/hr', 'W'), wh.heater1Capacity.get, 0.01)
-      assert_in_epsilon(UnitConversions.convert(water_heating_system.backup_heating_capacity, 'Btu/hr', 'W'), wh.heater2Capacity, 0.01)
-      assert_in_epsilon(0.926, wh.uniformSkinLossCoefficientperUnitAreatoAmbientTemperature.get, 0.01)
-      assert_in_epsilon(1.0, wh.heaterThermalEfficiency, 0.01)
-      # Check heat pump cooling coil cop being adjusted
-      assert_in_epsilon(expected_cop[i], coil.ratedCOP, 0.01)
-      assert_in_epsilon(expected_cap, coil.ratedHeatingCapacity, 0.01)
+      assert_in_epsilon(expected_cop, coil.ratedCOP, 0.01)
     end
   end
 

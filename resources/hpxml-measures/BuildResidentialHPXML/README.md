@@ -276,7 +276,7 @@ The foundation type of the building. Garages are assumed to be over slab-on-grad
 
 - **Required:** ``true``
 
-- **Choices:** <br/>  - `Slab-on-Grade`<br/>  - `Crawlspace, Vented`<br/>  - `Crawlspace, Unvented`<br/>  - `Crawlspace, Conditioned`<br/>  - `Basement, Unconditioned`<br/>  - `Basement, Unconditioned, Half Above-Grade`<br/>  - `Basement, Conditioned`<br/>  - `Basement, Conditioned, Half Above-Grade`<br/>  - `Ambient`<br/>  - `Above Apartment`<br/>  - `Belly and Wing, With Skirt`<br/>  - `Belly and Wing, No Skirt`<br/>  - `Detailed Example: Crawlspace, Vented, Above-Grade`<br/>  - `ASHRAE 140 Tests: Basement, Conditioned`<br/>  - `ASHRAE 140 Tests: Basement, Unconditioned`
+- **Choices:** <br/>  - `Slab-on-Grade`<br/>  - `Crawlspace, Vented`<br/>  - `Crawlspace, Unvented`<br/>  - `Basement, Unconditioned`<br/>  - `Basement, Unconditioned, Half Above-Grade`<br/>  - `Basement, Conditioned`<br/>  - `Basement, Conditioned, Half Above-Grade`<br/>  - `Ambient`<br/>  - `Above Apartment`<br/>  - `Belly and Wing, With Skirt`<br/>  - `Belly and Wing, No Skirt`<br/>  - `Detailed Example: Crawlspace, Vented, Above-Grade`<br/>  - `ASHRAE 140 Tests: Basement, Conditioned`<br/>  - `ASHRAE 140 Tests: Basement, Unconditioned`
 
 
 - **Default:** `Crawlspace, Vented`

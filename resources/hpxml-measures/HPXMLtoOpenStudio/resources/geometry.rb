@@ -788,21 +788,8 @@ module Geometry
     floor_surface.additionalProperties.setFeature('SurfaceType', 'InferredFloor')
     floor_surface.additionalProperties.setFeature('Tilt', 0.0)
 
-    # Add ceiling surface
-    vertices = create_ceiling_vertices(floor_length, floor_width, z_origin, default_azimuths)
-    ceiling_surface = OpenStudio::Model::Surface.new(vertices, model)
-
-    ceiling_surface.setSunExposure(EPlus::SurfaceSunExposureNo)
-    ceiling_surface.setWindExposure(EPlus::SurfaceWindExposureNo)
-    ceiling_surface.setName('inferred conditioned ceiling')
-    ceiling_surface.setSurfaceType(EPlus::SurfaceTypeRoofCeiling)
-    ceiling_surface.setSpace(create_or_get_space(model, spaces, HPXML::LocationConditionedSpace, hpxml_bldg))
-    ceiling_surface.setOutsideBoundaryCondition(EPlus::BoundaryConditionAdiabatic)
-    ceiling_surface.additionalProperties.setFeature('SurfaceType', 'InferredCeiling')
-    ceiling_surface.additionalProperties.setFeature('Tilt', 0.0)
-
     # Apply Construction
-    Constructions.apply_adiabatic_construction(model, [floor_surface, ceiling_surface], 'floor')
+    Constructions.apply_adiabatic_construction(model, [floor_surface], 'floor')
   end
 
   # Calls construction methods for applying partition walls and furniture to the OpenStudio model.
@@ -1317,7 +1304,6 @@ module Geometry
         HPXML::LocationBasementUnconditioned,
         HPXML::LocationCrawlspaceUnvented,
         HPXML::LocationCrawlspaceVented,
-        HPXML::LocationCrawlspaceConditioned,
         HPXML::LocationGarage].include? location
       floor_area = hpxml_bldg.slabs.select { |s| s.interior_adjacent_to == location }.map { |s| s.area }.sum(0.0)
       height = calculate_zone_height(hpxml_bldg, location)
@@ -1342,7 +1328,6 @@ module Geometry
         HPXML::LocationBasementUnconditioned,
         HPXML::LocationCrawlspaceUnvented,
         HPXML::LocationCrawlspaceVented,
-        HPXML::LocationCrawlspaceConditioned,
         HPXML::LocationGarage].include? location
       if above_grade
         height = hpxml_bldg.foundation_walls.select { |w| w.interior_adjacent_to == location }.map { |w| w.height - w.depth_below_grade }.max
@@ -1354,7 +1339,6 @@ module Geometry
                    HPXML::LocationBasementUnconditioned => 8,
                    HPXML::LocationCrawlspaceUnvented => 3,
                    HPXML::LocationCrawlspaceVented => 3,
-                   HPXML::LocationCrawlspaceConditioned => 3,
                    HPXML::LocationGarage => 8 }[location]
       end
     elsif [HPXML::LocationAtticUnvented,
