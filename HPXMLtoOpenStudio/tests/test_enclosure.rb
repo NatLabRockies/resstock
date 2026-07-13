@@ -784,7 +784,6 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
       'base-foundation-slab.xml' => 1,                                # 1 slab-on-grade foundation
       'base-foundation-basement-garage.xml' => 2,                     # 1 basement foundation + 1 garage slab
       'base-foundation-unconditioned-basement-above-grade.xml' => 1,  # 1 basement foundation
-      'base-foundation-conditioned-crawlspace.xml' => 1,              # 1 crawlspace foundation
       'base-foundation-ambient.xml' => 0,                             # 0 foundations
       'base-foundation-walkout-basement.xml' => 2,                    # 1 basement foundation with 1 effective below-grade depth + additional no-wall exposed perimeter
       'base-foundation-multiple.xml' => 2,                            # 1 basement foundation + 1 crawlspace foundation
@@ -913,7 +912,6 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
 
   def test_kiva_initial_temperatures
     initial_temps = { 'base.xml' => 68.0, # foundation adjacent to conditioned space, IECC zone 5
-                      'base-foundation-conditioned-crawlspace.xml' => 68.0, # foundation adjacent to conditioned space, IECC zone 5
                       'base-foundation-slab.xml' => 68.0, # foundation adjacent to conditioned space, IECC zone 5
                       'base-foundation-unconditioned-basement.xml' => 41.4, # foundation adjacent to unconditioned basement w/ ceiling insulation
                       'base-foundation-unvented-crawlspace.xml' => 38.6, # foundation adjacent to unvented crawlspace w/ ceiling insulation

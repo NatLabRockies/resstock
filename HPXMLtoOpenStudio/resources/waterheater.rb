@@ -973,7 +973,8 @@ module Waterheater
     )
 
     # Assumptions and values
-    cap = UnitConversions.convert(water_heating_system.heating_capacity, 'Btu/hr', 'W') * unit_multiplier # kW
+    cop = water_heating_system.additional_properties.cop
+    cap = UnitConversions.convert(water_heating_system.heating_capacity, 'Btu/hr', 'W') * cop * unit_multiplier # W, output capacity
     shr = 0.88 # unitless
 
     # Calculate an altitude adjusted rated evaporator wetbulb temperature
@@ -987,20 +988,33 @@ module Waterheater
     w_adj = Psychrometrics.w_fT_Twb_P(dp_rated, dp_rated, p_atm)
     twb_adj = Psychrometrics.Twb_fT_w_P(runner, rated_edb_F, w_adj, p_atm)
 
-    cop = water_heating_system.additional_properties.cop
-
     # Adjust COP based on RESNET HERS Addendum 77
-    if not water_heating_system.hpwh_containment_volume.nil?
+    cv = water_heating_system.hpwh_containment_volume
+    if not cv.nil?
+      # Very small containment volume and low COP can result in E+ error (Rated total cooling capacity is zero or less)
+      # Prevent that by setting a minimum CV value that avoids the error
+      # Equation determined empirically by running different combinations of CV & UEF using base-dhw-tank-heat-pump-confined-space.xml
+      #   UEF  | COP  | Min CV
+      #   ---  | ---  | ------
+      #   2.00 | 2.09 | 105
+      #   2.25 | 2.37 | 85
+      #   2.50 | 2.64 | 70
+      #   2.75 | 2.91 | 60
+      #   3.00 | 3.19 | 55
+      #   3.25 | 3.46 | 45
+      min_cv = 347.57 * cop**-1.631
+      cv = [cv, min_cv].max
+
       if not water_heating_system.hpwh_confined_space_without_mitigation
-        if water_heating_system.hpwh_containment_volume < 1000.0
+        if cv < 1000.0
           runner.registerWarning("HPWH COP adjustment based on HPWHContainmentVolume will not be applied to #{water_heating_system.id} because HPWHInConfinedSpaceWithoutMitigation is not 'true'.")
         end
       else
         # FUTURE: apply for 120V HPWH and other system types that the correction may not be accurate for
-        if water_heating_system.hpwh_containment_volume < 450.0 && (water_heating_system.backup_heating_capacity == 0.0)
+        if cv < 450.0 && (water_heating_system.backup_heating_capacity == 0.0)
           runner.registerWarning("Heat pump water heater: #{water_heating_system.id} has no backup electric resistance element, COP adjustment for confined space may not be accurate when the containment space volume is below 450 cubic feet.")
         end
-        rv = [water_heating_system.hpwh_containment_volume / 1500.0, 1.0].min
+        rv = [cv / 1500.0, 1.0].min
         cop = (cop - 0.92) * (1 - (1.009 * Math.exp(-5.492 * rv))) + 0.92
       end
     end
@@ -1022,15 +1036,6 @@ module Waterheater
     coil.additionalProperties.setFeature('HPXML_ID', water_heating_system.id) # Used by reporting measure
 
     return coil
-  end
-
-  # Returns the heating input capacity, calculated as the heating rated (output) capacity divided by the rated efficiency.
-  #
-  # @param heating_capacity [Double]
-  # @param heating_efficiency_cop [Double] Rated efficiency [COP]
-  # @return [Double] The heating input capacity [Btu/hr]
-  def self.get_heating_input_capacity(heating_capacity, heating_efficiency_cop)
-    return heating_capacity / UnitConversions.convert(heating_efficiency_cop, 'btu/hr', 'w')
   end
 
   # Adds a WaterHeaterStratified object for the HPWH to the OpenStudio model.

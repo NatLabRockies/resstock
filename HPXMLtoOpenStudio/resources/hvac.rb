@@ -1058,21 +1058,21 @@ module HVAC
     return power
   end
 
-  # Get the indoor unit (air handler) power (W).
+  # Get the indoor unit (air handler) power.
   #
-  # @param fan_watts_per_cfm [Double] Blower fan watts per cfm [W/cfm]
-  # @param airflow_cfm [Double] HVAC system airflow rate [cfm]
-  # @return [Double] Blower fan power [W]
+  # @param fan_watts_per_cfm [Double] Blower fan efficacy (W/cfm)
+  # @param airflow_cfm [Double] HVAC system airflow rate (cfm)
+  # @return [Double] Blower fan power (W)
   def self.get_blower_fan_power_watts(fan_watts_per_cfm, airflow_cfm)
     return 0.0 if fan_watts_per_cfm.nil? || airflow_cfm.nil?
 
     return fan_watts_per_cfm * airflow_cfm
   end
 
-  # Get the boiler or GHP pump power (W).
+  # Get the boiler or GHP pump power.
   #
   # @param hvac_system [HPXML::HeatingSystem or HPXML::HeatPump] The HPXML HVAC system of interest
-  # @return [Double] Pump power [W]
+  # @return [Double] Pump power (W)
   def self.get_pump_power_watts(hvac_system)
     if hvac_system.is_a?(HPXML::HeatingSystem) && (not hvac_system.electric_auxiliary_energy.nil?)
       return hvac_system.electric_auxiliary_energy / 2.08
@@ -1089,10 +1089,10 @@ module HVAC
 
   # Returns the heating input capacity, calculated as the heating rated (output) capacity divided by the rated efficiency.
   #
-  # @param heating_capacity [Double] Heating output capacity [Btu/hr]
-  # @param heating_efficiency_afue [Double] Rated efficiency [AFUE]
-  # @param heating_efficiency_percent [Double] Rated efficiency [Percent]
-  # @return [Double] The heating input capacity [Btu/hr]
+  # @param heating_capacity [Double] Heating output capacity (Btu/hr)
+  # @param heating_efficiency_afue [Double] Rated efficiency (AFUE)
+  # @param heating_efficiency_percent [Double] Rated efficiency (Percent)
+  # @return [Double] The heating input capacity (Btu/hr)
   def self.get_heating_input_capacity(heating_capacity, heating_efficiency_afue, heating_efficiency_percent)
     if not heating_efficiency_afue.nil?
       return heating_capacity / heating_efficiency_afue
@@ -2467,7 +2467,7 @@ module HVAC
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param obj_name [String] Name for the OpenStudio object
-  # @param fan_watts_per_cfm [Double] Fan efficacy watts per cfm
+  # @param fan_watts_per_cfm [Double] Blower fan efficacy (W/cfm)
   # @param fan_cfms [Array<Double>] Fan airflow rates at all speeds, both heating and cooling
   # @param hvac_system [HPXML::HeatingSystem or HPXML::CoolingSystem or HPXML::HeatPump] The HPXML HVAC system of interest
   # @return [OpenStudio::Model::FanSystemModel] OpenStudio FanSystemModel object

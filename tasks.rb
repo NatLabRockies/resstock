@@ -3495,8 +3495,7 @@ def check_hpxml(hpxml_path, hpxml)
       next unless [HPXML::LocationBasementConditioned,
                    HPXML::LocationBasementUnconditioned,
                    HPXML::LocationCrawlspaceUnvented,
-                   HPXML::LocationCrawlspaceVented,
-                   HPXML::LocationCrawlspaceConditioned].include? wall.interior_adjacent_to
+                   HPXML::LocationCrawlspaceVented].include? wall.interior_adjacent_to
 
       found_wall = false
       hpxml_bldg.foundations.each do |fnd|
@@ -3763,7 +3762,7 @@ if ARGV[0].to_sym == :update_measures
               "\"require 'stringio' \"",
               "\"RuboCop::RakeTask.new(:rubocop) do |t| t.options = ['--autocorrect-all', '--format', 'simple'] end\"",
               '"Rake.application[:rubocop].invoke"']
-  command = "#{OpenStudio.getOpenStudioCLI} -e #{commands.join(' -e ')}"
+  command = "\"#{OpenStudio.getOpenStudioCLI}\" -e #{commands.join(' -e ')}"
   puts 'Applying rubocop auto-correct to measures...'
   system(command)
 
@@ -3771,7 +3770,7 @@ if ARGV[0].to_sym == :update_measures
   puts 'Updating measure.xmls...'
   Dir['**/measure.xml'].each do |measure_xml|
     measure_dir = File.dirname(measure_xml)
-    command = "#{OpenStudio.getOpenStudioCLI} measure -u '#{measure_dir}'"
+    command = "\"#{OpenStudio.getOpenStudioCLI}\" measure -u '#{measure_dir}'"
     system(command, [:out, :err] => File::NULL)
   end
 
@@ -3816,7 +3815,7 @@ if [:unit_tests, :workflow_tests1, :workflow_tests2].include? ARGV[0].to_sym
   # Ensure we run all tests even if there are failures
   failed_tests = []
   tests_rbs.each do |test_rb|
-    success = system("#{OpenStudio.getOpenStudioCLI} #{test_rb}")
+    success = system("\"#{OpenStudio.getOpenStudioCLI}\" #{test_rb}")
     failed_tests << test_rb unless success
   end
 
