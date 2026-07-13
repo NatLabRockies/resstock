@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>3e7094ab-ccd3-429d-8cd7-8c5fd43e31f2</version_id>
-  <version_modified>2026-05-09T02:45:05Z</version_modified>
+  <version_id>2abafcda-c555-4359-90e2-35c8ac39b2e9</version_id>
+  <version_modified>2026-07-08T22:26:33Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -5412,8 +5412,8 @@
           <display_name>Vertical Loop, Enhanced Grout &amp; Pipe</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Lopsided U Configuration, 10 Boreholes</value>
-          <display_name>Detailed Example: Lopsided U Configuration, 10 Boreholes</display_name>
+          <value>Detailed Example: Vertical Loop, L Configuration, 4 Boreholes</value>
+          <display_name>Detailed Example: Vertical Loop, L Configuration, 4 Boreholes</display_name>
         </choice>
       </choices>
     </argument>
@@ -12577,7 +12577,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>C039C1E3</checksum>
+      <checksum>E948B4CC</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12606,7 +12606,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E019CB4F</checksum>
+      <checksum>30E35BE3</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>
