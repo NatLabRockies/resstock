@@ -811,7 +811,7 @@ jobs:
         uses: astral-sh/setup-uv@v6
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4.1.0
+        uses: aws-actions/configure-aws-credentials@v6.1.1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -843,7 +843,7 @@ jobs:
           tar -czf /home/runner/baseline-validation-plots.tar.gz -C /home/runner baseline_validation_outputs/run_2025_release1
 
       - name: Upload baseline validation plots
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: baseline-validation-plots
           path: /home/runner/baseline-validation-plots.tar.gz
