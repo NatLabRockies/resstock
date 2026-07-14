@@ -25,9 +25,9 @@ class UtilityBills
   # @param marginal_rate [Double] the marginal flat rate (USD/kWh or USD/therm, etc.)
   # @return [Array<Double, Double>] the marginal and average rates (USD/kWh or USD/therm, etc., USD/month)
   def self.get_rates_from_eia_data(runner, state_code, fuel_type, fixed_charge, marginal_rate = nil)
-    msn_codes = Constants::StateCodesMap.keys
-    msn_codes << 'US'
-    return unless msn_codes.include? state_code # Check if the state_code is valid
+    state_codes = Constants::StateCodesMap.keys
+    state_codes << 'US'
+    return unless state_codes.include? state_code # Check if the state_code is valid
 
     average_rate = nil
 
@@ -104,31 +104,39 @@ class UtilityBills
   # @param fuel_type [String] HPXML fuel type
   # @return [Double] average rate for electricity or natural gas, and marginal rate for all other fuel types (USD/kWh or USD/therm, etc.)
   def self.get_eia_seds_rate(runner, state_code, fuel_type)
-    msn_code_map = {
-      HPXML::FuelTypeElectricity => 'ESRCD',
-      HPXML::FuelTypeNaturalGas => 'NGRCD',
-      HPXML::FuelTypeOil => 'DFRCD',
-      HPXML::FuelTypePropane => 'PQRCD',
-      HPXML::FuelTypeCoal => 'CLRCD',
-      HPXML::FuelTypeWoodCord => 'WDRCD',
-      HPXML::FuelTypeWoodPellets => 'WDRCD'
-    }
+    csv_path = File.join(File.dirname(__FILE__), '../../ReportUtilityBills/resources/simple_rates/eia_fuel_rates_by_state.csv')
 
-    CSV.foreach(File.join(File.dirname(__FILE__), '../../ReportUtilityBills/resources/simple_rates/pr_all_update.csv'), headers: true) do |row|
-      next if row['State'].upcase != state_code.upcase # State
-      next if row['MSN'].upcase != msn_code_map[fuel_type] # EIA SEDS MSN code
+    # Collect the latest matching EIA SEDS rate for this state and fuel
+    matching_rate = nil
+    csv_fuel = fuel_type.to_s.downcase == HPXML::FuelTypeWoodPellets.to_s.downcase ? 'wood' : fuel_type.to_s.downcase
 
-      seds_rate = row.to_h.values.reverse.find { |rate| rate.to_f != 0 } # If the rate for the latest year is unavailable, find the last non-nil/non-zero rate.
-      begin
-        seds_rate = Float(seds_rate)
-      rescue ArgumentError, TypeError
-        seds_rate = 0.0
-        runner.registerWarning("No EIA SEDS rate for #{fuel_type} was found for the state of #{state_code}.") if not runner.nil?
-      end
+    CSV.foreach(csv_path, headers: true) do |row|
+      next if row['state'].to_s.upcase != state_code.to_s.upcase
+      next if row['fuel'].to_s.downcase != csv_fuel
 
-      # Convert $/MBtu to $/XXX
-      seds_rate = UnitConversions.convert(seds_rate, get_fuel_units(fuel_type), 'mbtu')
-      return seds_rate
+      year = row['year'].to_i
+      rate = row['rate_dollar_per_mmbtu'].to_f
+      matching_rate = { year: year, rate: rate }
+      break
     end
+
+    if matching_rate.nil?
+      runner.registerWarning("No EIA SEDS rate for #{fuel_type} was found for the state of #{state_code}.") if !runner.nil?
+      return 0.0
+    end
+
+    if matching_rate[:rate] != 0.0
+      seds_rate = matching_rate[:rate]
+    else
+      # Rate is zero/missing
+      runner.registerWarning(
+        "EIA SEDS rate for #{fuel_type} in #{state_code} is unavailable for #{matching_rate[:year]}."
+      ) if !runner.nil?
+      return 0.0
+    end
+
+    # Convert $/MMBtu to $/[fuel unit]
+    seds_rate = UnitConversions.convert(seds_rate, get_fuel_units(fuel_type), 'mbtu')
+    return seds_rate
   end
 end

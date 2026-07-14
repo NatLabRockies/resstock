@@ -712,6 +712,7 @@
             <FoundationType>
               <AboveApartment/>
             </FoundationType>
+            <AttachedToFloor idref='Floor1_3'/>
           </Foundation>
         </Foundations>
         <Walls>
@@ -1006,6 +1007,7 @@
             <FoundationType>
               <AboveApartment/>
             </FoundationType>
+            <AttachedToFloor idref='Floor1_4'/>
           </Foundation>
         </Foundations>
         <Walls>
@@ -1347,6 +1349,7 @@
             <FoundationType>
               <AboveApartment/>
             </FoundationType>
+            <AttachedToFloor idref='Floor1_5'/>
           </Foundation>
         </Foundations>
         <Walls>
@@ -1641,6 +1644,7 @@
             <FoundationType>
               <AboveApartment/>
             </FoundationType>
+            <AttachedToFloor idref='Floor1_6'/>
           </Foundation>
         </Foundations>
         <Walls>
@@ -1971,6 +1975,7 @@
             <FoundationType>
               <AboveApartment/>
             </FoundationType>
+            <AttachedToFloor idref='Floor1_7'/>
           </Foundation>
         </Foundations>
         <Roofs>
@@ -2172,6 +2177,7 @@
             <FoundationType>
               <AboveApartment/>
             </FoundationType>
+            <AttachedToFloor idref='Floor1_8'/>
           </Foundation>
         </Foundations>
         <Roofs>

@@ -3,7 +3,7 @@ Default
 "Vertical Loop, Enhanced Grout"	vertical							thermally enhanced			
 "Vertical Loop, Enhanced Pipe"	vertical								thermally enhanced		
 "Vertical Loop, Enhanced Grout & Pipe"	vertical							thermally enhanced	thermally enhanced		
-"Detailed Example: Lopsided U Configuration, 10 Boreholes"	vertical	Lopsided U	10	9	315	16.4	5.9	standard	standard	"1"" pipe"	2.5
+"Detailed Example: Vertical Loop, L Configuration, 4 Boreholes"	vertical	L	10	4	150	16.4	5.9	standard	standard	"1"" pipe"	2.5
 											
 # Configuration: Configuration of the geothermal loop for ground-to-air heat pumps.											
 # Borefield Configuration: Borefield configuration of the geothermal loop.											

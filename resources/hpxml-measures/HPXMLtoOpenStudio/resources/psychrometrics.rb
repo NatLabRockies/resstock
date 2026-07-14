@@ -426,7 +426,7 @@ module Psychrometrics
   #
   # @param dBin [Double] Entering Dry Bulb (F)
   # @param p [Double] Barometric pressure (psi)
-  # @param qdot [Double] Total capacity of unit (kBtu/h)
+  # @param qdot [Double] Total capacity of unit (Btu/h)
   # @param cfm [Double] Volumetric flow rate of unit (CFM)
   # @param shr [Double] Sensible heat ratio
   # @param win [Double] Entering humidity ratio
@@ -447,7 +447,7 @@ module Psychrometrics
   #
   # @param dBin [Double] Entering Dry Bulb (F)
   # @param p [Double] Barometric pressure (psi)
-  # @param qdot [Double] Total capacity of unit (kBtu/h)
+  # @param qdot [Double] Total capacity of unit (Btu/h)
   # @param cfm [Double] Volumetric flow rate of unit (CFM)
   # @param shr [Double] Sensible heat ratio
   # @param win [Double] Entering humidity ratio
@@ -458,7 +458,7 @@ module Psychrometrics
     tin = UnitConversions.convert(dBin, 'F', 'C')
     p = UnitConversions.convert(p, 'psi', 'kPa')
 
-    dH = UnitConversions.convert(qdot, 'kBtu/hr', 'W') / mfr
+    dH = UnitConversions.convert(qdot, 'Btu/hr', 'W') / mfr
     hin = h_fT_w_SI(tin, win)
     h_Tin_Wout = hin - (1 - shr) * dH
     wout = w_fT_h_SI(tin, h_Tin_Wout)
@@ -522,7 +522,7 @@ module Psychrometrics
   #
   # @param dBin [Double] Entering Dry Bulb (F)
   # @param p [Double] Barometric pressure (psi)
-  # @param q [Double] Total capacity of unit (kBtu/h)
+  # @param q [Double] Total capacity of unit (Btu/h)
   # @param cfm [Double] Volumetric flow rate of unit (CFM)
   # @param ao [Double] Coil Ao factor (=UA/Cp - IN SI UNITS)
   # @param win [Double] Entering humidity ratio (dimensionless)
@@ -534,7 +534,7 @@ module Psychrometrics
     p = UnitConversions.convert(p, 'psi', 'kPa')
     tin = UnitConversions.convert(dBin, 'F', 'C')
     hin = h_fT_w_SI(tin, win)
-    dH = UnitConversions.convert(q, 'kBtu/hr', 'W') / mfr
+    dH = UnitConversions.convert(q, 'Btu/hr', 'W') / mfr
     h_ADP = hin - dH / (1 - bf)
 
     # T_ADP = Tsat_fh_P_SI(H_ADP, P)

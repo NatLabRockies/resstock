@@ -20,7 +20,7 @@ class WorkflowOtherTest < Minitest::Test
 
       # Check for output files
       run_dir = File.join(File.dirname(xml), 'run')
-      assert(File.exist? File.join(run_dir, 'eplusout.msgpack')) # Produced because --debug flag if used
+      assert(File.exist? File.join(run_dir, 'eplusout.msgpack')) # Produced because --debug flag is used
       assert(File.exist? File.join(run_dir, "results_annual.#{output_format}"))
       assert(File.exist? File.join(run_dir, "results_timeseries.#{output_format}"))
       assert(File.exist?(File.join(run_dir, "results_bills.#{output_format}")))
@@ -76,6 +76,21 @@ class WorkflowOtherTest < Minitest::Test
 
     # Check for no E+ msgpack files
     refute(File.exist? File.join(run_dir, 'eplusout.msgpack'))
+  end
+
+  def test_run_simulation_ems_debug
+    rb_path = File.join(File.dirname(__FILE__), '..', 'run_simulation.rb')
+    xml = File.join(File.dirname(__FILE__), '..', 'sample_files', 'base.xml')
+    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\" --ems-debug"
+    system(command, err: File::NULL)
+
+    # Check for output file
+    run_dir = File.join(File.dirname(xml), 'run')
+    edd_path = File.join(run_dir, 'eplusout.edd')
+    assert(File.exist? edd_path) # Produced because --ems-debug flag is used
+
+    # Cleanup
+    File.delete(edd_path)
   end
 
   def test_run_simulation_faster_performance
@@ -502,7 +517,7 @@ class WorkflowOtherTest < Minitest::Test
   def test_release_zips
     # Check release zips successfully created
     top_dir = File.join(File.dirname(__FILE__), '..', '..')
-    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{File.join(top_dir, 'tasks.rb')}\" create_release_zips"
+    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{File.join(top_dir, 'tasks.rb')}\" create_release_zip"
     system(command)
     assert_equal(1, Dir["#{top_dir}/*.zip"].size)
 

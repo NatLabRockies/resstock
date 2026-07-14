@@ -29,7 +29,7 @@ module SimControls
 
     # 15 is based on EPA'sIndoor Humidity Assessment Tool (IHAT) Reference Manual and previous
     # studies for simulation of residential buildings by Hugh Henderson
-    # See https://docs.nrel.gov/docs/fy11osti/49899.pdf
+    # See https://docs.nlr.gov/docs/fy11osti/49899.pdf
     zonecap.setHumidityCapacityMultiplier(15)
 
     convlim = model.getConvergenceLimits

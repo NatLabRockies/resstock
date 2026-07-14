@@ -13,7 +13,7 @@ Dir["#{File.dirname(__FILE__)}/resources/*.rb"].each do |resource_file|
 end
 
 # start the measure
-class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
+class HPXMLToOpenStudio < OpenStudio::Measure::ModelMeasure
   # human readable name
   def name
     return 'HPXML to OpenStudio Translator'
@@ -97,6 +97,12 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(false)
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('ems_debug', false)
+    arg.setDisplayName('EMS Debug Mode?')
+    arg.setDescription('If true, writes the EnergyPlus EDD file with timeseries debug output for each EMS program. Note that this file can be VERY large.')
+    arg.setDefaultValue(false)
+    args << arg
+
     return args
   end
 
@@ -126,7 +132,6 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
 
       # Do these once upfront for the entire HPXML object
       weather = process_weather(runner, hpxml, args)
-      process_whole_sfa_mf_inputs(hpxml)
       hpxml_sch_map, design_loads_results_out = process_defaults_schedules_emissions_files(runner, weather, hpxml, args)
 
       # Write updated HPXML object (w/ defaults) to file for inspection
@@ -156,8 +161,10 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
       Outputs.apply_ems_programs(model, hpxml_osm_map, hpxml.header, args[:add_component_loads])
       Outputs.apply_output_file_controls(model, args[:debug])
       Outputs.apply_additional_properties(model, hpxml, hpxml_osm_map, args[:hpxml_path], args[:building_id], args[:hpxml_defaults_path])
-      Outputs.create_custom_meters(model)
-      # Outputs.apply_ems_debug_output(model) # Uncomment to debug EMS
+      Outputs.create_custom_electricity_meters(model)
+      if args[:ems_debug]
+        Outputs.apply_ems_debug_output(model)
+      end
 
       # Write output files
       Outputs.write_debug_files(runner, model, weather, args[:debug], args[:output_dir])
@@ -265,23 +272,6 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
     return weather
   end
 
-  # Performs error-checking on the inputs for whole SFA/MF building simulations.
-  #
-  # @param hpxml [HPXML] HPXML object
-  # @return [nil]
-  def process_whole_sfa_mf_inputs(hpxml)
-    if hpxml.header.whole_sfa_or_mf_building_sim && (hpxml.buildings.size > 1)
-      if hpxml.buildings.map { |hpxml_bldg| hpxml_bldg.batteries.size }.sum > 0
-        # FUTURE: Figure out how to allow this. If we allow it, update docs and hpxml_translator_test.rb too.
-        # Batteries use "TrackFacilityElectricDemandStoreExcessOnSite"; to support modeling of batteries in whole
-        # SFA/MF building simulations, we'd need to create custom meters with electricity usage *for each unit*
-        # and switch to "TrackMeterDemandStoreExcessOnSite".
-        # https://github.com/NREL/OpenStudio-HPXML/issues/1499
-        fail 'Modeling batteries for whole SFA/MF buildings is not currently supported.'
-      end
-    end
-  end
-
   # Processes HPXML defaults, schedules, and emissions files upfront.
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
@@ -341,10 +331,11 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
     SimControls.apply(model, hpxml.header)
     Location.apply(model, weather, hpxml_bldg, hpxml.header)
 
-    # Conditioned space & setpoints
+    # Conditioned space and setpoints
     spaces = {} # Map of HPXML locations => OpenStudio Space objects
     Geometry.create_or_get_space(model, spaces, HPXML::LocationConditionedSpace, hpxml_bldg)
-    hvac_days = HVAC.apply_setpoints(runner, model, weather, spaces, hpxml_bldg, hpxml.header, schedules_file)
+    hvac_season_days = HVAC.apply_setpoints(runner, model, weather, spaces, hpxml_bldg, hpxml.header, schedules_file)
+    create_global_ems_sensors(model, spaces)
 
     # Geometry & Enclosure
     Geometry.apply_foundation_and_walls_top(hpxml_bldg, hpxml.header)
@@ -360,10 +351,9 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
     Geometry.apply_thermal_mass(model, spaces, hpxml_bldg, hpxml.header)
     Geometry.set_zone_volumes(spaces, hpxml_bldg, hpxml.header)
     Geometry.explode_surfaces(model, hpxml_bldg)
-    Geometry.apply_building_unit(model, hpxml, hpxml_bldg)
 
     # HVAC
-    airloop_map = HVAC.apply_hvac_systems(runner, model, weather, spaces, hpxml_bldg, hpxml.header, schedules_file, hvac_days)
+    airloop_map = HVAC.apply_hvac_systems(runner, model, weather, spaces, hpxml_bldg, hpxml.header, schedules_file, hvac_season_days)
     HVAC.apply_dehumidifiers(runner, model, spaces, hpxml_bldg, hpxml.header)
     HVAC.apply_ceiling_fans(runner, model, spaces, weather, hpxml_bldg, hpxml.header, schedules_file)
 
@@ -388,8 +378,11 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
     # Other
     PV.apply(runner, model, hpxml_bldg)
     Generator.apply(model, hpxml_bldg)
-    Battery.apply(runner, model, spaces, hpxml_bldg, schedules_file)
-    Vehicle.apply(runner, model, spaces, hpxml_bldg, hpxml.header, schedules_file)
+    Battery.apply(runner, model, spaces, hpxml, hpxml_bldg, schedules_file)
+    Vehicle.apply(runner, model, spaces, hpxml, hpxml_bldg, hpxml.header, schedules_file)
+
+    # Unit Meters
+    Outputs.create_custom_unit_meters(model, hpxml)
   end
 
   # Miscellaneous logic that needs to occur upfront.
@@ -404,7 +397,7 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
     # we didn't go this, we'd end up with successful EnergyPlus simulations that
     # use the wrong (default) value unless we check the return value of *every*
     # OS SDK setter method to notice there was an invalid value provided.
-    # See https://github.com/NREL/OpenStudio/pull/4505 for more background.
+    # See https://github.com/NatLabRockies/OpenStudio/pull/4505 for more background.
     model.setStrictnessLevel('None'.to_StrictnessLevel)
 
     # Store the fraction of windows operable before we collapse surfaces
@@ -428,7 +421,125 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
       hpxml_header.apply_ashrae140_assumptions = false
     end
   end
+
+  # Creates a variety of global EMS sensors used throughout the code. Prevents creating
+  # duplicate sensors for different EMS programs.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
+  # @return [nil]
+  def create_global_ems_sensors(model, spaces)
+    # Create site sensors
+
+    s = Model.add_ems_sensor(
+      model,
+      name: 'out_db_s',
+      output_var_or_meter_name: 'Site Outdoor Air Drybulb Temperature',
+      key_name: 'Environment'
+    )
+    s.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeSensorSiteOutdoorAirDBTemp)
+
+    s = Model.add_ems_sensor(
+      model,
+      name: 'out_rh_s',
+      output_var_or_meter_name: 'Site Outdoor Air Relative Humidity',
+      key_name: 'Environment'
+    )
+    s.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeSensorSiteOutdoorAirRH)
+
+    s = Model.add_ems_sensor(
+      model,
+      name: 'out_hr_s',
+      output_var_or_meter_name: 'Site Outdoor Air Humidity Ratio',
+      key_name: 'Environment'
+    )
+    s.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeSensorSiteOutdoorAirHR)
+
+    s = Model.add_ems_sensor(
+      model,
+      name: 'out_pb_s',
+      output_var_or_meter_name: 'Site Outdoor Air Barometric Pressure',
+      key_name: 'Environment'
+    )
+    s.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeSensorSiteOutdoorAirBarPressure)
+
+    s = Model.add_ems_sensor(
+      model,
+      name: 'out_vw_s',
+      output_var_or_meter_name: 'Site Wind Speed',
+      key_name: 'Environment'
+    )
+    s.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeSensorSiteWindSpeed)
+
+    s = Model.add_ems_sensor(
+      model,
+      name: 'ground_temp_s',
+      output_var_or_meter_name: 'Site Surface Ground Temperature',
+      key_name: nil
+    )
+    s.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeSensorSiteGroundTemp)
+
+    s = Model.add_ems_sensor(
+      model,
+      name: 'mains_temp_s',
+      output_var_or_meter_name: 'Site Mains Water Temperature',
+      key_name: 'Environment'
+    )
+    s.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeSensorSiteMainsWaterTemp)
+
+    # Create conditioned zone temperatures
+
+    conditioned_zone = spaces[HPXML::LocationConditionedSpace].thermalZone.get
+
+    s = Model.add_ems_sensor(
+      model,
+      name: 'in_db_s',
+      output_var_or_meter_name: 'Zone Mean Air Temperature',
+      key_name: conditioned_zone.name
+    )
+    s.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeSensorIndoorAirDBTemp)
+
+    s = Model.add_ems_sensor(
+      model,
+      name: 'in_rh_s',
+      output_var_or_meter_name: 'Zone Air Relative Humidity',
+      key_name: conditioned_zone.name
+    )
+    s.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeSensorIndoorAirRH)
+
+    s = Model.add_ems_sensor(
+      model,
+      name: 'in_hr_s',
+      output_var_or_meter_name: 'Zone Mean Air Humidity Ratio',
+      key_name: conditioned_zone.name
+    )
+    s.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeSensorIndoorAirHR)
+
+    # Conditioned zone setpoints
+    # Note that we use the schedule value, rather than the Zone Thermostat Heating (or Cooling) Setpoint Temperature output
+    # variable, because the latter gets adjusted by EnergyPlus when the on-off thermostat deadband model is used.
+
+    if conditioned_zone.thermostatSetpointDualSetpoint.is_initialized
+      thermostat = conditioned_zone.thermostatSetpointDualSetpoint.get
+
+      s = Model.add_ems_sensor(
+        model,
+        name: 'in_clg_sp_s',
+        output_var_or_meter_name: 'Schedule Value',
+        key_name: thermostat.coolingSetpointTemperatureSchedule.get.name
+      )
+      s.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeSensorIndoorCoolingSetpointTemp)
+
+      s = Model.add_ems_sensor(
+        model,
+        name: 'in_htg_sp_s',
+        output_var_or_meter_name: 'Schedule Value',
+        key_name: thermostat.heatingSetpointTemperatureSchedule.get.name
+      )
+      s.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeSensorIndoorHeatingSetpointTemp)
+    end
+  end
 end
 
 # register the measure to be used by the application
-HPXMLtoOpenStudio.new.registerWithApplication
+HPXMLToOpenStudio.new.registerWithApplication

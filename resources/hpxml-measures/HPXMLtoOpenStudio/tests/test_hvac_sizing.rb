@@ -1023,6 +1023,34 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
     assert_operator(hpxml_bldg1.heat_pumps[0].heating_capacity, :>, hpxml_bldg2.heat_pumps[0].heating_capacity)
   end
 
+  def test_heat_pump_dual_fuel_switchover_temperature
+    # Test that dual-fuel HP capacity is not changed when the compressor lockout
+    # exceeds 25F; see https://github.com/NatLabRockies/OpenStudio-HPXML/pull/2161
+    args_hash = {}
+    args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
+
+    hpxml, hpxml_bldg = _create_hpxml('base-hvac-dual-fuel-mini-split-heat-pump-ducted.xml')
+    _remove_hardsized_capacities(hpxml_bldg)
+
+    # Switchover temp = 0F
+    hpxml_bldg.heat_pumps[0].backup_heating_switchover_temp = 0
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model, _hpxml, hpxml_bldg1 = _test_measure(args_hash)
+
+    # Switchover temp = 25F
+    hpxml_bldg.heat_pumps[0].backup_heating_switchover_temp = 25
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model, _hpxml, hpxml_bldg2 = _test_measure(args_hash)
+
+    # Switchover temp = 40F
+    hpxml_bldg.heat_pumps[0].backup_heating_switchover_temp = 40
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model, _hpxml, hpxml_bldg3 = _test_measure(args_hash)
+
+    assert_operator(hpxml_bldg1.heat_pumps[0].heating_capacity, :>, hpxml_bldg2.heat_pumps[0].heating_capacity)
+    assert_equal(hpxml_bldg2.heat_pumps[0].heating_capacity, hpxml_bldg3.heat_pumps[0].heating_capacity)
+  end
+
   def test_allow_increased_fixed_capacities
     for allow_increased_fixed_capacities in [true, false]
       # Test hard-sized capacities are increased (or not) for various equipment types
@@ -1749,6 +1777,52 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
     assert_in_epsilon(2.1, rvalue, tol)
   end
 
+  def test_vented_attic_roof_types
+    args_hash = {}
+    args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
+    hpxml, hpxml_bldg = _create_hpxml('base-atticroof-vented.xml')
+    hpxml_bldg.heating_systems[0].heating_capacity = nil
+    hpxml_bldg.cooling_systems[0].cooling_capacity = nil
+
+    # ClayTile, Concrete, Cool
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypeClayTile
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_1 = _test_measure(args_hash)
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypeCool
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_2 = _test_measure(args_hash)
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypeConcrete
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_3 = _test_measure(args_hash)
+    # Added roof type in the same category is sized the same as existing roof type in the same category
+    assert_equal(test_hpxml_bldg_1.cooling_systems[0].cooling_capacity, test_hpxml_bldg_2.cooling_systems[0].cooling_capacity)
+    assert_equal(test_hpxml_bldg_1.cooling_systems[0].cooling_capacity, test_hpxml_bldg_3.cooling_systems[0].cooling_capacity)
+
+    # Metal, PlasticRubber, EPS
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypeMetal
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_1 = _test_measure(args_hash)
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypePlasticRubber
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_2 = _test_measure(args_hash)
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypeEPS
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_3 = _test_measure(args_hash)
+    # Added roof type in the same category is sized the same as existing roof type in the same category
+    assert_equal(test_hpxml_bldg_1.cooling_systems[0].cooling_capacity, test_hpxml_bldg_2.cooling_systems[0].cooling_capacity)
+    assert_equal(test_hpxml_bldg_1.cooling_systems[0].cooling_capacity, test_hpxml_bldg_3.cooling_systems[0].cooling_capacity)
+
+    # AsphaltShingles, Shingles
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypeAsphaltShingles
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_1 = _test_measure(args_hash)
+    hpxml_bldg.roofs[0].roof_type = HPXML::RoofTypeShingles
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _model_mult, _base_hpxml, test_hpxml_bldg_2 = _test_measure(args_hash)
+    # Added roof type in the same category is sized the same as existing roof type in the same category
+    assert_equal(test_hpxml_bldg_1.cooling_systems[0].cooling_capacity, test_hpxml_bldg_2.cooling_systems[0].cooling_capacity)
+  end
+
   def test_multiple_zones
     # Run base-zones-spaces-multiple.xml
     args_hash = {}
@@ -1820,10 +1894,10 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
 
       # Bore depth greater than the max -> increase number of boreholes until the max, set depth to the max, and issue warning
       hpxml, hpxml_bldg = _create_hpxml(ghp_filename)
-      hpxml_bldg.site.ground_conductivity = 0.07
+      hpxml_bldg.site.ground_conductivity = 0.01
       XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
       _model, _test_hpxml, test_hpxml_bldg = _test_measure(args_hash)
-      assert_equal(10, test_hpxml_bldg.geothermal_loops[0].num_bore_holes)
+      assert_equal(15, test_hpxml_bldg.geothermal_loops[0].num_bore_holes)
       assert_in_delta(500.0, test_hpxml_bldg.geothermal_loops[0].bore_length, 1.0)
 
       # Boreholes greater than the max -> decrease the number of boreholes until the max
@@ -1831,13 +1905,13 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
       hpxml_bldg.heat_pumps[0].cooling_capacity *= 5
       XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
       _model, _test_hpxml, test_hpxml_bldg = _test_measure(args_hash)
-      assert_equal(10, test_hpxml_bldg.geothermal_loops[0].num_bore_holes)
-      assert_in_delta(226.0, test_hpxml_bldg.geothermal_loops[0].bore_length, 1.0)
+      assert_equal(15, test_hpxml_bldg.geothermal_loops[0].num_bore_holes)
+      assert_in_delta(150.0, test_hpxml_bldg.geothermal_loops[0].bore_length, 1.0)
     end
   end
 
   def test_gshp_g_function_library_linear_interpolation_example
-    bore_config = HPXML::GeothermalLoopBorefieldConfigurationRectangle
+    bore_config = HPXML::GeothermalLoopBoreConfigRectangle
     num_bore_holes = 40
     bore_depth = UnitConversions.convert(150.0, 'm', 'ft')
     g_functions_filename = HVACSizing.get_geothermal_loop_valid_configurations[bore_config]
@@ -1861,12 +1935,12 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
   end
 
   def test_gshp_all_g_function_configs_exist
-    valid_configs = { HPXML::GeothermalLoopBorefieldConfigurationRectangle => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                      HPXML::GeothermalLoopBorefieldConfigurationOpenRectangle => [8, 10],
-                      HPXML::GeothermalLoopBorefieldConfigurationC => [7, 9],
-                      HPXML::GeothermalLoopBorefieldConfigurationL => [4, 5, 6, 7, 8, 9, 10],
-                      HPXML::GeothermalLoopBorefieldConfigurationU => [7, 9, 10],
-                      HPXML::GeothermalLoopBorefieldConfigurationLopsidedU => [6, 7, 8, 9, 10] }
+    valid_configs = { HPXML::GeothermalLoopBoreConfigRectangle => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                      HPXML::GeothermalLoopBoreConfigOpenRectangle => [8, 10],
+                      HPXML::GeothermalLoopBoreConfigC => [7, 9],
+                      HPXML::GeothermalLoopBoreConfigL => [4, 5, 6, 7, 8, 9, 10],
+                      HPXML::GeothermalLoopBoreConfigU => [7, 9, 10],
+                      HPXML::GeothermalLoopBoreConfigLopsidedU => [6, 7, 8, 9, 10] }
 
     valid_configs.each do |bore_config, valid_num_bores|
       g_functions_filename = HVACSizing.get_geothermal_loop_valid_configurations[bore_config]
@@ -1928,7 +2002,7 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
 
   def _test_measure(args_hash, expect_num_warnings: nil, skip_in_xml_validation: false)
     # create an instance of the measure
-    measure = HPXMLtoOpenStudio.new
+    measure = HPXMLToOpenStudio.new
 
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     model = OpenStudio::Model::Model.new

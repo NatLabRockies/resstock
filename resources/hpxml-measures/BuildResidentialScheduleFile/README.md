@@ -20,7 +20,7 @@ Absolute/relative path of the HPXML file.
 
 - **Required:** ``true``
 
-<br/>
+
 
 **Schedules: Column Names**
 
@@ -31,7 +31,7 @@ A comma-separated list of the column names to generate. If not provided, default
 
 - **Required:** ``false``
 
-<br/>
+
 
 **Schedules: Random Seed**
 
@@ -44,7 +44,7 @@ This numeric field is the seed for the random number generator.
 
 - **Required:** ``false``
 
-<br/>
+
 
 **Schedules: Output CSV Path**
 
@@ -55,7 +55,7 @@ Absolute/relative path of the CSV file containing occupancy schedules. Relative 
 
 - **Required:** ``true``
 
-<br/>
+
 
 **HPXML Output File Path**
 
@@ -66,7 +66,7 @@ Absolute/relative output path of the HPXML file. This HPXML file will include th
 
 - **Required:** ``true``
 
-<br/>
+
 
 **Append Output?**
 
@@ -77,7 +77,9 @@ If true and the output CSV file already exists, appends columns to the file rath
 
 - **Required:** ``false``
 
-<br/>
+
+- **Default:** `false`
+
 
 **Debug Mode?**
 
@@ -88,7 +90,9 @@ If true, writes extra column(s) for informational purposes.
 
 - **Required:** ``false``
 
-<br/>
+
+- **Default:** `false`
+
 
 **BuildingID**
 
@@ -99,7 +103,7 @@ The ID of the HPXML Building. Only required if there are multiple Building eleme
 
 - **Required:** ``false``
 
-<br/>
+
 
 
 

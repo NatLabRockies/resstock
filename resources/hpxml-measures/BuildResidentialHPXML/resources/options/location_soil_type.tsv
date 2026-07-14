@@ -1,5 +1,8 @@
 Option Name	Soil Type	Moisture Type	Conductivity [Btu/hr-ft-F]	Diffusivity [ft2/hr]
-Unknown	unknown	mixed		
+Unknown	unknown			
+"Unknown, Dry"	unknown	dry		
+"Unknown, Mixed"	unknown	mixed		
+"Unknown, Wet"	unknown	wet		
 "Clay, Dry"	clay	dry		
 "Clay, Mixed"	clay	mixed		
 "Clay, Wet"	clay	wet		
@@ -15,6 +18,9 @@ Unknown	unknown	mixed
 "Silt, Dry"	silt	dry		
 "Silt, Mixed"	silt	mixed		
 "Silt, Wet"	silt	wet		
+"Other, Dry"	other	dry		
+"Other, Mixed"	other	mixed		
+"Other, Wet"	other	wet		
 0.5 Btu/hr-ft-F			0.5	
 0.8 Btu/hr-ft-F			0.8	
 1.1 Btu/hr-ft-F			1.1	

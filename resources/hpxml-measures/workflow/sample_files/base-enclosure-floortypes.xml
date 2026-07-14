@@ -82,6 +82,7 @@
             </AtticType>
             <AttachedToRoof idref='Roof1'/>
             <AttachedToWall idref='Wall2'/>
+            <AttachedToFloor idref='Floor4'/>
           </Attic>
         </Attics>
         <Foundations>
@@ -90,6 +91,9 @@
             <FoundationType>
               <Ambient/>
             </FoundationType>
+            <AttachedToFloor idref='Floor1'/>
+            <AttachedToFloor idref='Floor2'/>
+            <AttachedToFloor idref='Floor3'/>
           </Foundation>
         </Foundations>
         <Roofs>

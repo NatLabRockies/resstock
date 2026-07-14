@@ -7,17 +7,18 @@ module Battery
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
+  # @param hpxml [HPXML] HPXML object
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param schedules_file [SchedulesFile] SchedulesFile wrapper class instance of detailed schedule files
   # @return [nil]
-  def self.apply(runner, model, spaces, hpxml_bldg, schedules_file)
+  def self.apply(runner, model, spaces, hpxml, hpxml_bldg, schedules_file)
     charging_schedule, discharging_schedule = nil, nil
     if not schedules_file.nil?
       charging_schedule = schedules_file.create_schedule_file(model, col_name: SchedulesFile::Columns[:BatteryCharging].name)
       discharging_schedule = schedules_file.create_schedule_file(model, col_name: SchedulesFile::Columns[:BatteryDischarging].name)
     end
     hpxml_bldg.batteries.each do |battery|
-      apply_battery(runner, model, spaces, hpxml_bldg, battery, charging_schedule, discharging_schedule)
+      apply_battery(runner, model, spaces, hpxml, hpxml_bldg, battery, charging_schedule, discharging_schedule)
     end
   end
 
@@ -32,12 +33,13 @@ module Battery
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
+  # @param hpxml [HPXML] HPXML object
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param battery [HPXML::Battery, HPXML::Vehicle] Object that defines a single home battery or EV battery
   # @param charging_schedule [OpenStudio::Model::ScheduleXXX] The battery charging schedule
   # @param discharging_schedule [OpenStudio::Model::ScheduleXXX] The battery discharging schedule
   # @return [nil]
-  def self.apply_battery(runner, model, spaces, hpxml_bldg, battery, charging_schedule, discharging_schedule)
+  def self.apply_battery(runner, model, spaces, hpxml, hpxml_bldg, battery, charging_schedule, discharging_schedule)
     nbeds = hpxml_bldg.building_construction.number_of_bedrooms
     unit_multiplier = hpxml_bldg.building_construction.number_of_units
     pv_systems = hpxml_bldg.pv_systems
@@ -149,7 +151,14 @@ module Battery
       elcd = elcds.find { |elcd| elcd.name.to_s.include?('PVSystem') }
       if elcd
         elcd.setElectricalBussType('DirectCurrentWithInverterACStorage')
-        elcd.setStorageOperationScheme('TrackFacilityElectricDemandStoreExcessOnSite')
+        if hpxml.buildings.size == 1
+          elcd.setStorageOperationScheme('TrackFacilityElectricDemandStoreExcessOnSite')
+        else
+          elcd.setStorageOperationScheme('TrackMeterDemandStoreExcessOnSite')
+          unit_num = hpxml.buildings.index(hpxml_bldg)
+          meter_name = Model.make_unit_meter_name(Outputs::MeterCustomElectricityCritical, unit_num, hpxml.buildings.size)
+          elcd.setStorageControlTrackMeterName(meter_name)
+        end
       else
         elcd = OpenStudio::Model::ElectricLoadCenterDistribution.new(model)
         elcd.setName("#{obj_name} elec load center dist")
@@ -165,6 +174,7 @@ module Battery
 
     if (not charging_schedule.nil?) && (not discharging_schedule.nil?)
       elcd.setStorageOperationScheme('TrackChargeDischargeSchedules')
+      elcd.resetStorageControlTrackMeterName # In case scheduled battery w/PV
       elcd.setStorageChargePowerFractionSchedule(charging_schedule)
       elcd.setStorageDischargePowerFractionSchedule(discharging_schedule)
 
@@ -188,7 +198,7 @@ module Battery
     return if is_ev
 
     # Apply round trip efficiency as EMS program b/c E+ input is not hooked up.
-    # Replace this when the first item in https://github.com/NREL/EnergyPlus/issues/9176 is fixed.
+    # Replace this when the first item in https://github.com/NatLabRockies/EnergyPlus/issues/9176 is fixed.
     charge_sensor = Model.add_ems_sensor(
       model,
       name: 'battery_charge',
@@ -208,7 +218,6 @@ module Battery
       name: Constants::ObjectTypeBatteryLossesAdjustment,
       end_use: Constants::ObjectTypeBatteryLossesAdjustment,
       space: space,
-      design_level: 0.01,
       frac_radiant: 0,
       frac_latent: 0,
       frac_lost: frac_lost,
@@ -234,7 +243,7 @@ module Battery
 
     Model.add_ems_program_calling_manager(
       model,
-      name: 'battery losses calling manager',
+      name: "#{battery_losses_program.name} manager",
       calling_point: 'EndOfSystemTimestepBeforeHVACReporting',
       ems_programs: [battery_losses_program]
     )

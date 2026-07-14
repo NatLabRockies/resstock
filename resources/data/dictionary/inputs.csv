@@ -236,6 +236,7 @@ report_simulation_output.include_annual_component_loads,Generates annual heating
 report_simulation_output.include_annual_hot_water_uses,Generates annual hot water usages for each end use.
 report_simulation_output.include_annual_hvac_summary,"Generates HVAC capacities, design temperatures, and design loads."
 report_simulation_output.include_annual_resilience,Generates annual resilience outputs.
+report_simulation_output.include_annual_dwelling_unit_outputs,Generates annual outputs by dwelling unit for whole SFA/MF building simulations.
 report_simulation_output.include_timeseries_total_consumptions,Generates timeseries energy consumptions for the total building.
 report_simulation_output.include_timeseries_fuel_consumptions,Generates timeseries energy consumptions for each fuel type.
 report_simulation_output.include_timeseries_end_use_consumptions,Generates timeseries energy consumptions for each end use.
@@ -252,6 +253,7 @@ report_simulation_output.include_timeseries_zone_conditions,Generates timeseries
 report_simulation_output.include_timeseries_airflows,Generates timeseries airflows.
 report_simulation_output.include_timeseries_weather,Generates timeseries weather data.
 report_simulation_output.include_timeseries_resilience,Generates timeseries resilience outputs.
+report_simulation_output.include_timeseries_dwelling_unit_outputs,Generates timeseries outputs by dwelling unit for whole SFA/MF building simulations. Only applies when timeseries total and/or fuel consumptions are also requested.
 report_simulation_output.timeseries_timestamp_convention,Determines whether timeseries timestamps use the start-of-period or end-of-period convention. Doesn't apply if the output format is 'csv_dview'.
 report_simulation_output.timeseries_num_decimal_places,"Allows overriding the default number of decimal places for timeseries output. Does not apply if output format is msgpack, where no rounding is performed because there is no file size penalty to storing full precision."
 report_simulation_output.add_timeseries_dst_column,"Optionally add, in addition to the default local standard Time column, a local clock TimeDST column. Requires that daylight saving time is enabled."

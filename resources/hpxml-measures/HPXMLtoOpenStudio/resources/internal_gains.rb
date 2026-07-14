@@ -121,8 +121,7 @@ module InternalGains
         frac_radiant: 0.6,
         frac_latent: 0,
         frac_lost: 0,
-        schedule: water_schedule,
-        fuel_type: nil
+        schedule: water_schedule
       )
 
       Model.add_other_equipment(
@@ -134,8 +133,7 @@ module InternalGains
         frac_radiant: 0,
         frac_latent: 1,
         frac_lost: 0,
-        schedule: water_schedule,
-        fuel_type: nil
+        schedule: water_schedule
       )
     end
   end

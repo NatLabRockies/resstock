@@ -329,8 +329,8 @@
               <LoopConfiguration>vertical</LoopConfiguration>
               <LoopFlow>10.0</LoopFlow>
               <BoreholesOrTrenches>
-                <Count>9</Count>
-                <Length>315.0</Length>
+                <Count>4</Count>
+                <Length>150.0</Length>
                 <Spacing>16.4</Spacing>
                 <Diameter>5.9</Diameter>
               </BoreholesOrTrenches>
@@ -343,7 +343,7 @@
                 <ShankSpacing>2.5</ShankSpacing>
               </Pipe>
               <extension>
-                <BorefieldConfiguration>Lopsided U</BorefieldConfiguration>
+                <BorefieldConfiguration>L</BorefieldConfiguration>
               </extension>
             </GeothermalLoop>
           </HVACPlant>

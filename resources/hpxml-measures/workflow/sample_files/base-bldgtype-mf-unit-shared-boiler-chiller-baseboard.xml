@@ -80,6 +80,7 @@
             <AtticType>
               <BelowApartment/>
             </AtticType>
+            <AttachedToFloor idref='Floor2'/>
           </Attic>
         </Attics>
         <Foundations>
@@ -88,6 +89,7 @@
             <FoundationType>
               <AboveApartment/>
             </FoundationType>
+            <AttachedToFloor idref='Floor1'/>
           </Foundation>
         </Foundations>
         <Walls>

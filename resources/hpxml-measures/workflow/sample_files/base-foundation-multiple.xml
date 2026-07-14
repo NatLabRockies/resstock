@@ -95,6 +95,7 @@
             </FoundationType>
             <AttachedToRimJoist idref='RimJoist1'/>
             <AttachedToFoundationWall idref='FoundationWall1'/>
+            <AttachedToFoundationWall idref='FoundationWall2'/>
             <AttachedToFloor idref='Floor1'/>
             <AttachedToSlab idref='Slab1'/>
           </Foundation>
@@ -106,6 +107,19 @@
               </Crawlspace>
             </FoundationType>
             <WithinInfiltrationVolume>false</WithinInfiltrationVolume>
+            <AttachedToRimJoist idref='RimJoist2'/>
+          </Foundation>
+          <Foundation>
+            <SystemIdentifier id='Foundation3'/>
+            <FoundationType>
+              <Crawlspace>
+                <Vented>false</Vented>
+              </Crawlspace>
+            </FoundationType>
+            <AttachedToFoundationWall idref='FoundationWall2'/>
+            <AttachedToFoundationWall idref='FoundationWall3'/>
+            <AttachedToFloor idref='Floor3'/>
+            <AttachedToSlab idref='Slab2'/>
           </Foundation>
         </Foundations>
         <Roofs>

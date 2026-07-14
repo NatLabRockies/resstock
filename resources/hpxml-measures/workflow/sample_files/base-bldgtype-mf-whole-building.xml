@@ -83,6 +83,7 @@
             <AtticType>
               <BelowApartment/>
             </AtticType>
+            <AttachedToFloor idref='Floor2'/>
           </Attic>
         </Attics>
         <Foundations>
@@ -531,6 +532,7 @@
             <AtticType>
               <BelowApartment/>
             </AtticType>
+            <AttachedToFloor idref='Floor2_2'/>
           </Attic>
         </Attics>
         <Foundations>
@@ -979,6 +981,7 @@
             <AtticType>
               <BelowApartment/>
             </AtticType>
+            <AttachedToFloor idref='Floor2_3'/>
           </Attic>
         </Attics>
         <Foundations>
@@ -987,6 +990,7 @@
             <FoundationType>
               <AboveApartment/>
             </FoundationType>
+            <AttachedToFloor idref='Floor1_3'/>
           </Foundation>
         </Foundations>
         <Walls>
@@ -1331,6 +1335,7 @@
             <AtticType>
               <BelowApartment/>
             </AtticType>
+            <AttachedToFloor idref='Floor2_4'/>
           </Attic>
         </Attics>
         <Foundations>
@@ -1339,6 +1344,7 @@
             <FoundationType>
               <AboveApartment/>
             </FoundationType>
+            <AttachedToFloor idref='Floor1_4'/>
           </Foundation>
         </Foundations>
         <Walls>
@@ -1697,6 +1703,7 @@
             <FoundationType>
               <AboveApartment/>
             </FoundationType>
+            <AttachedToFloor idref='Floor1_5'/>
           </Foundation>
         </Foundations>
         <Roofs>
@@ -2098,6 +2105,7 @@
             <FoundationType>
               <AboveApartment/>
             </FoundationType>
+            <AttachedToFloor idref='Floor1_6'/>
           </Foundation>
         </Foundations>
         <Roofs>

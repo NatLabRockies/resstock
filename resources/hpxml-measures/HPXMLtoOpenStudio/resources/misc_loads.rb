@@ -12,11 +12,6 @@ module MiscLoads
   # @param schedules_file [SchedulesFile] SchedulesFile wrapper class instance of detailed schedule files
   # @return [nil]
   def self.apply_plug_loads(runner, model, spaces, hpxml_bldg, hpxml_header, schedules_file)
-    if hpxml_bldg.building_occupancy.number_of_residents == 0 && (not hpxml_header.apply_ashrae140_assumptions)
-      # Operational calculation w/ zero occupants, zero out energy use
-      return
-    end
-
     hpxml_bldg.plug_loads.each do |plug_load|
       case plug_load.plug_load_type
       when HPXML::PlugLoadTypeOther
@@ -117,11 +112,6 @@ module MiscLoads
   # @param schedules_file [SchedulesFile] SchedulesFile wrapper class instance of detailed schedule files
   # @return [nil]
   def self.apply_fuel_loads(runner, model, spaces, hpxml_bldg, hpxml_header, schedules_file)
-    if hpxml_bldg.building_occupancy.number_of_residents == 0
-      # Operational calculation w/ zero occupants, zero out energy use
-      return
-    end
-
     hpxml_bldg.fuel_loads.each do |fuel_load|
       case fuel_load.fuel_load_type
       when HPXML::FuelLoadTypeGrill
