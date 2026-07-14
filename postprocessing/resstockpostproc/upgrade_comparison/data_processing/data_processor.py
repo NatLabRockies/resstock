@@ -12,7 +12,7 @@ import numpy as np
 import polars as pl
 from scipy.stats import gaussian_kde
 
-from resstockpostproc.upgrade_comparison.schema.end_use_dicts import EnduseGroupToEnduses
+from resstockpostproc.shared_utils.end_use_dicts import EnduseGroupToEnduses
 from resstockpostproc.upgrade_comparison.schema.plot_spec import (
     BuildingInclusion,
     PlotSpec,
