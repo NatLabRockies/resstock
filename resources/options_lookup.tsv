@@ -9378,7 +9378,6 @@ Geometry Floor Area Bin	1500-2499
 Geometry Floor Area Bin	2500-3999
 Geometry Floor Area Bin	4000+
 Geometry Foundation Type	Ambient	ResStockArguments	geometry_foundation_type=Ambient
-Geometry Foundation Type	Conditioned Crawlspace	ResStockArguments	geometry_foundation_type=Crawlspace, Conditioned
 Geometry Foundation Type	Heated Basement	ResStockArguments	geometry_foundation_type=Basement, Conditioned
 Geometry Foundation Type	Slab	ResStockArguments	geometry_foundation_type=Slab-on-Grade
 Geometry Foundation Type	Unheated Basement	ResStockArguments	geometry_foundation_type=Basement, Unconditioned

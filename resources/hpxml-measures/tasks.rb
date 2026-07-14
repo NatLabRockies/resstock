@@ -3495,8 +3495,7 @@ def check_hpxml(hpxml_path, hpxml)
       next unless [HPXML::LocationBasementConditioned,
                    HPXML::LocationBasementUnconditioned,
                    HPXML::LocationCrawlspaceUnvented,
-                   HPXML::LocationCrawlspaceVented,
-                   HPXML::LocationCrawlspaceConditioned].include? wall.interior_adjacent_to
+                   HPXML::LocationCrawlspaceVented].include? wall.interior_adjacent_to
 
       found_wall = false
       hpxml_bldg.foundations.each do |fnd|
@@ -3763,7 +3762,7 @@ if ARGV[0].to_sym == :update_measures
               "\"require 'stringio' \"",
               "\"RuboCop::RakeTask.new(:rubocop) do |t| t.options = ['--autocorrect-all', '--format', 'simple'] end\"",
               '"Rake.application[:rubocop].invoke"']
-  command = "#{OpenStudio.getOpenStudioCLI} -e #{commands.join(' -e ')}"
+  command = "\"#{OpenStudio.getOpenStudioCLI}\" -e #{commands.join(' -e ')}"
   puts 'Applying rubocop auto-correct to measures...'
   system(command)
 
@@ -3771,7 +3770,7 @@ if ARGV[0].to_sym == :update_measures
   puts 'Updating measure.xmls...'
   Dir['**/measure.xml'].each do |measure_xml|
     measure_dir = File.dirname(measure_xml)
-    command = "#{OpenStudio.getOpenStudioCLI} measure -u '#{measure_dir}'"
+    command = "\"#{OpenStudio.getOpenStudioCLI}\" measure -u '#{measure_dir}'"
     system(command, [:out, :err] => File::NULL)
   end
 
@@ -3816,7 +3815,7 @@ if [:unit_tests, :workflow_tests1, :workflow_tests2].include? ARGV[0].to_sym
   # Ensure we run all tests even if there are failures
   failed_tests = []
   tests_rbs.each do |test_rb|
-    success = system("#{OpenStudio.getOpenStudioCLI} #{test_rb}")
+    success = system("\"#{OpenStudio.getOpenStudioCLI}\" #{test_rb}")
     failed_tests << test_rb unless success
   end
 
@@ -3846,6 +3845,8 @@ if ARGV[0].to_sym == :create_release_zip
   if ENV['CI']
     # CI doesn't have git, so default to everything
     git_files = Dir['**/*.*']
+    git_files -= Dir['workflow/tests/run*/**/*.*']
+    git_files -= Dir['workflow/tests/test_results/*.*']
   else
     # Only include files under git version control
     command = 'git ls-files'
@@ -3875,31 +3876,7 @@ if ARGV[0].to_sym == :create_release_zip
            'workflow/sample_files/*.xml',
            'workflow/tests/*.rb',
            'workflow/tests/**/*.xml',
-           'workflow/tests/**/*.csv',
-           'documentation/index.html',
-           'documentation/_static/**/*.*']
-
-  if not ENV['CI']
-    # Generate documentation
-    puts 'Generating documentation...'
-    command = 'sphinx-build -b singlehtml docs/source documentation'
-    begin
-      `#{command}`
-      if not File.exist? File.join(File.dirname(__FILE__), 'documentation', 'index.html')
-        puts 'Documentation was not successfully generated. Aborting...'
-        exit!
-      end
-    rescue
-      puts "Command failed: '#{command}'. Perhaps sphinx needs to be installed?"
-      exit!
-    end
-
-    # Remove large fonts dir to keep package smaller
-    fonts_dir = File.join(File.dirname(__FILE__), 'documentation', '_static', 'css', 'fonts')
-    if Dir.exist? fonts_dir
-      FileUtils.rm_r(fonts_dir)
-    end
-  end
+           'workflow/tests/**/*.csv']
 
   # Create zip files
   require 'zip'
@@ -3909,24 +3886,15 @@ if ARGV[0].to_sym == :create_release_zip
   Zip::File.open(zip_path, create: true) do |zipfile|
     files.each do |f|
       Dir[f].each do |file|
-        if file.start_with? 'documentation'
-          # always include
-        else
-          if not git_files.include? file
-            next
-          end
+        if not git_files.include? file
+          next
         end
+
         zipfile.add(File.join('OpenStudio-HPXML', file), file)
       end
     end
   end
   puts "Wrote file at #{zip_path}."
-
-  # Cleanup
-  if not ENV['CI']
-    FileUtils.rm_r(File.join(File.dirname(__FILE__), 'documentation'))
-  end
-
   puts 'Done.'
 end
 

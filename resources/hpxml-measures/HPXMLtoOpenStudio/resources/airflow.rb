@@ -81,7 +81,7 @@ module Airflow
     apply_natural_ventilation_and_whole_house_fan(runner, model, spaces, hpxml_bldg, hpxml_header, vent_fans, infil_values)
 
     # Infiltration/ventilation
-    apply_infiltration_to_garage(model, spaces, hpxml_bldg, infil_values, duct_lk_imbals)
+    apply_infiltration_to_garage(model, spaces, weather, duct_lk_imbals)
     apply_infiltration_to_unconditioned_basement(model, spaces, duct_lk_imbals)
     apply_infiltration_to_vented_crawlspace(model, spaces, weather, hpxml_bldg, duct_lk_imbals)
     apply_infiltration_to_unvented_crawlspace(model, spaces, duct_lk_imbals)
@@ -1587,24 +1587,23 @@ module Airflow
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
-  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
-  # @param infil_values [Hash] Map with various infiltration key-value pairs (SLA, infiltration volume & height, etc.)
+  # @param weather [WeatherFile] Weather object containing EPW information
   # @param duct_lk_imbals [Array] List of duct leakage imbalance information
   # @return [nil]
-  def self.apply_infiltration_to_garage(model, spaces, hpxml_bldg, infil_values, duct_lk_imbals)
+  def self.apply_infiltration_to_garage(model, spaces, weather, duct_lk_imbals)
     return if spaces[HPXML::LocationGarage].nil?
 
-    ach50 = infil_values[:ach50] * infil_values[:a_ext]
-
     space = spaces[HPXML::LocationGarage]
-    area = UnitConversions.convert(space.floorArea, 'm^2', 'ft^2')
-    volume = UnitConversions.convert(space.volume, 'm^3', 'ft^3')
-    hor_lk_frac = 0.4 # DOE-2 Default
-    neutral_level = 0.5 # DOE-2 Default
-    sla = get_infiltration_SLA_from_ACH50(ach50, volume / area)
-    ela = sla * area
-    c_w_SG, c_s_SG = calc_wind_stack_coeffs(hpxml_bldg, hor_lk_frac, neutral_level, HPXML::LocationGarage)
-    apply_infiltration_to_unconditioned_space(model, space, nil, ela, c_w_SG, c_s_SG, duct_lk_imbals)
+    height = 8.0
+
+    # Assumed to be same ventilation rate as a vented crawlspace when you consider
+    # leakage around garage doors, doors being opened, etc.
+    # FUTURE: Connect to HPXML's Garage/VentilationRate input when available;
+    # see https://github.com/hpxmlwg/hpxml/pull/483
+    sla = (1.0 / 150.0).round(6)
+
+    ach = get_infiltration_ACH_from_SLA(sla, height, ReferenceHeight, weather)
+    apply_infiltration_to_unconditioned_space(model, space, ach, nil, nil, nil, duct_lk_imbals)
   end
 
   # Adds infiltration to the OpenStudio unconditioned basement space.
@@ -1827,13 +1826,11 @@ module Airflow
 
           # Calculate the apparent sensible effectiveness
           vent_mech_apparent_sens_eff = (t_sup_out - t_sup_in) / (t_exh_in - t_sup_in)
-
         else
-          # The following is derived from (taken from CSA 439, Clause 9.2.1, Eq. 7):
+          # The following is derived from CSA 439, Clause 9.2.1, Eq. 7:
           t_sup_out = t_sup_in + (vent_mech.sensible_recovery_efficiency_adjusted * (t_exh_in - t_sup_in))
 
           vent_mech_apparent_sens_eff = vent_mech.sensible_recovery_efficiency_adjusted
-
         end
 
         # Calculate the supply temperature before the fan
@@ -1864,11 +1861,11 @@ module Airflow
 
           if not vent_mech.total_recovery_efficiency.nil?
             # The following is derived from CSA 439, Clause 9.3.3.2, Eq. 13:
-            #    E_THR = (m_sup,fan * Cp * (h_sup,out - h_sup,in) - P_sup,fan) / (m_exh,fan * Cp * (h_exh,in - h_sup,in) + P_exh,fan)
-            h_sup_out = h_sup_in - (vent_mech.total_recovery_efficiency * (m_fan * (h_sup_in - h_exh_in) + p_fan) + p_fan) / m_fan
+            #    E_THR = (m_sup,fan * (h_sup,out - h_sup,in) - P_sup,fan) / (m_exh,fan * (h_exh,in - h_sup,in) + P_exh,fan)
+            h_sup_out = h_sup_in + (vent_mech.total_recovery_efficiency * (m_fan * (h_exh_in - h_sup_in) + p_fan) + p_fan) / m_fan
           else
-            # The following is derived from (taken from CSA 439, Clause 9.2.1, Eq. 7):
-            h_sup_out = h_sup_in - (vent_mech.total_recovery_efficiency_adjusted * (h_sup_in - h_exh_in))
+            # The following is derived from CSA 439, Clause 9.2.1, Eq. 7:
+            h_sup_out = h_sup_in + (vent_mech.total_recovery_efficiency_adjusted * (h_exh_in - h_sup_in))
           end
 
           w_sup_out = Psychrometrics.w_fT_h_SI(t_sup_out, h_sup_out)
@@ -2873,7 +2870,7 @@ module Airflow
   # @param is_balanced [Double] Whether the mechanical ventilation fan is balanced (supply airflow equal to exhaust airflow)
   # @param frac_imbal [Double] The fraction of total mechanical ventilation airflow that is imbalanced
   # @param a_ext [Double] Ratio of exterior envelope area to total envelope area for SFA/MF units
-  # @param unit_type [String] Type of dwelling unit (HXPML::ResidentialTypeXXX)
+  # @param unit_type [String] Type of dwelling unit (HPXML::ResidentialTypeXXX)
   # @param eri_version [String] Version of the ANSI/RESNET/ICC 301 Standard to use for equations/assumptions
   # @param hours_in_operation [Double] Hours/day that the fan is operating
   # @return [Double] Mechanical ventilation fan airflow rate (cfm)

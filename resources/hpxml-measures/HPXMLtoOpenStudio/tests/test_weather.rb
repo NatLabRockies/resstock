@@ -298,4 +298,30 @@ class HPXMLtoOpenStudioWeatherTest < Minitest::Test
     assert_equal(0, runner.result.stepErrors.size)
     assert_equal(0, runner.result.stepWarnings.size)
   end
+
+  def test_missing_deep_ground_temperatures
+    runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
+    weather = WeatherFile.new(epw_path: File.join(weather_dir, 'USA_CO_Denver.Intl.AP.725650_TMY3.epw'), runner: runner)
+
+    # For epw w/ LOCATION,Hydaburg Seaplane Base,AK,USA,TMY3,703884,55.20250,-132.8230,-9.0,0.0,
+    # row in the lookup file is mostly blank
+    header = weather.header
+    orig_lat, orig_long = header.Latitude, header.Longitude
+    header.Latitude = 55.2025
+    header.Longitude = -132.823
+
+    weather.send(:calc_deep_ground_temperatures) # access private method
+
+    # Check ground temps
+    # Corresponds to Station=Ketchikan Intl AP, i.e., next closest location with data
+    assert_in_delta(45.32, weather.data.DeepGroundAnnualTemp, 0.1)
+    assert_in_delta(14.76, weather.data.DeepGroundSurfTempAmp1, 0.1)
+    assert_in_delta(-0.9, weather.data.DeepGroundSurfTempAmp2, 0.1)
+    assert_equal(29, weather.data.DeepGroundPhaseShiftTempAmp1)
+    assert_equal(10, weather.data.DeepGroundPhaseShiftTempAmp2)
+
+    # Revert changes (since weather data is cached)
+    header.Latitude, header.Longitude = orig_lat, orig_long
+    weather.send(:calc_deep_ground_temperatures) # access private method
+  end
 end

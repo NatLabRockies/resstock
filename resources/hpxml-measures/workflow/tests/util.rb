@@ -362,11 +362,11 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
     next if message.include?('setupIHGOutputs: Output variables=Zone Other Equipment') && message.include?('are not available.')
     next if message.include?('setupIHGOutputs: Output variables=Space Other Equipment') && message.include?('are not available')
     next if message.include? 'Multiple speed fan will be applied to this unit. The speed number is determined by load.'
+    next if message.include?('Maximum iterations') && message.include?('for all HVAC loops')
 
     # HPWHs
     if hpxml.buildings.any? { |hpxml_bldg| hpxml_bldg.water_heating_systems.count { |wh| wh.water_heater_type == HPXML::WaterHeaterTypeHeatPump } > 0 }
       next if message.include? 'Recovery Efficiency and Energy Factor could not be calculated during the test for standard ratings'
-      next if message.include? 'SimHVAC: Maximum iterations (20) exceeded for all HVAC loops'
       next if message.include? 'For object = Coil:WaterHeating:AirToWaterHeatPump:Wrapped'
       next if message.include? 'Enthalpy out of range (PsyTsatFnHPb)'
       next if message.include?('CheckWarmupConvergence: Loads Initialization') && message.include?('did not converge after 25 warmup days')
@@ -414,7 +414,6 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
     # GSHPs with hard-sized capacities
     if hpxml_path.include? 'house052.xml'
       next if message.include? 'heating capacity is disproportionate (> 20% different) to total cooling capacity' # safe to ignore
-      next if message.include? 'SimHVAC: Maximum iterations (20) exceeded for all HVAC loops'
     end
     # Solar thermal systems
     if hpxml.buildings.any? { |hpxml_bldg| hpxml_bldg.solar_thermal_systems.size > 0 }
@@ -509,9 +508,6 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
   # Conditioned Floor Area
   if (hpxml_bldg.total_fraction_cool_load_served > 0) || (hpxml_bldg.total_fraction_heat_load_served > 0) # EnergyPlus will only report conditioned floor area if there is an HVAC system
     hpxml_value = hpxml_bldg.building_construction.conditioned_floor_area
-    if hpxml_bldg.has_location(HPXML::LocationCrawlspaceConditioned)
-      hpxml_value += hpxml_bldg.slabs.select { |s| s.interior_adjacent_to == HPXML::LocationCrawlspaceConditioned }.map { |s| s.area }.sum
-    end
     query = "SELECT Value FROM TabularDataWithStrings WHERE ReportName='InputVerificationandResultsSummary' AND ReportForString='Entire Facility' AND TableName='Zone Summary' AND RowName='Conditioned Total' AND ColumnName='Area' AND Units='m2'"
     sql_value = UnitConversions.convert(sqlFile.execAndReturnFirstDouble(query).get, 'm^2', 'ft^2')
     assert_in_epsilon(hpxml_value, sql_value, 0.1)

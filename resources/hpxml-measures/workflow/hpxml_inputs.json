@@ -1299,17 +1299,6 @@
     "parent_hpxml": "sample_files/base.xml",
     "enclosure_foundation_wall": "Concrete Block Foam Core, Whole Wall, R-18.9"
   },
-  "sample_files/base-foundation-conditioned-crawlspace.xml": {
-    "parent_hpxml": "sample_files/base.xml",
-    "geometry_unit_conditioned_floor_area": "1350",
-    "geometry_foundation_type": "Crawlspace, Conditioned",
-    "enclosure_floor_over_foundation": "Wood Frame, R-15",
-    "enclosure_carpet": "80% Carpet",
-    "hvac_ducts": "0 CFM25 per 100ft2, R-4",
-    "hvac_ducts_supply_location": "Crawlspace",
-    "hvac_ducts_return_location": "Crawlspace",
-    "dhw_water_heater_location": "Crawlspace"
-  },
   "sample_files/base-foundation-slab.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "geometry_unit_conditioned_floor_area": "1350",

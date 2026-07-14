@@ -436,6 +436,10 @@ module Model
   # @param max_y [Double] Maximum allowable value for y
   # @return [OpenStudio::Model::CurveQuadratic] The model object
   def self.add_curve_quadratic(model, name:, coeff:, min_x: nil, max_x: nil, min_y: nil, max_y: nil)
+    if coeff.length != 3
+      fail 'Error: There must be 3 coefficients in a quadratic curve'
+    end
+
     curve = OpenStudio::Model::CurveQuadratic.new(model)
     curve.setName(name)
     curve.setCoefficient1Constant(coeff[0])
@@ -461,6 +465,10 @@ module Model
   # @param max_y [Double] Maximum allowable value for y
   # @return [OpenStudio::Model::CurveBiquadratic] The model object
   def self.add_curve_biquadratic(model, name:, coeff:, min_x: nil, max_x: nil, min_y: nil, max_y: nil)
+    if coeff.length != 6
+      fail 'Error: There must be 6 coefficients in a biquadratic curve'
+    end
+
     curve = OpenStudio::Model::CurveBiquadratic.new(model)
     curve.setName(name)
     curve.setCoefficient1Constant(coeff[0])
@@ -489,6 +497,10 @@ module Model
   # @param max_y [Double] Maximum allowable value for y
   # @return [OpenStudio::Model::CurveCubic] The model object
   def self.add_curve_cubic(model, name:, coeff:, min_x: nil, max_x: nil, min_y: nil, max_y: nil)
+    if coeff.length != 4
+      fail 'Error: There must be 4 coefficients in a cubic curve'
+    end
+
     curve = OpenStudio::Model::CurveCubic.new(model)
     curve.setName(name)
     curve.setCoefficient1Constant(coeff[0])
@@ -515,6 +527,10 @@ module Model
   # @param max_y [Double] Maximum allowable value for y
   # @return [OpenStudio::Model::CurveBicubic] The model object
   def self.add_curve_bicubic(model, name:, coeff:, min_x: nil, max_x: nil, min_y: nil, max_y: nil)
+    if coeff.length != 10
+      fail 'Error: There must be 10 coefficients in a bicubic curve'
+    end
+
     curve = OpenStudio::Model::CurveBicubic.new(model)
     curve.setName(name)
     curve.setCoefficient1Constant(coeff[0])
@@ -543,6 +559,10 @@ module Model
   # @param coeff [Array<Double>] Coefficients for the above equation
   # @return [OpenStudio::Model::CurveQuadLinear] The model object
   def self.add_curve_quad_linear(model, name:, coeff:)
+    if coeff.length != 5
+      fail 'Error: There must be 5 coefficients in a quad linear curve'
+    end
+
     curve = OpenStudio::Model::CurveQuadLinear.new(model)
     curve.setName(name)
     curve.setCoefficient1Constant(coeff[0])
@@ -562,6 +582,10 @@ module Model
   # @param coeff [Array<Double>] Coefficients for the above equation
   # @return [OpenStudio::Model::CurveQuintLinear] The model object
   def self.add_curve_quint_linear(model, name:, coeff:)
+    if coeff.length != 6
+      fail 'Error: There must be 6 coefficients in a quint linear curve'
+    end
+
     curve = OpenStudio::Model::CurveQuintLinear.new(model)
     curve.setName(name)
     curve.setCoefficient1Constant(coeff[0])

@@ -32,8 +32,10 @@ module SimControls
     # See https://docs.nlr.gov/docs/fy11osti/49899.pdf
     zonecap.setHumidityCapacityMultiplier(15)
 
+    # Speed improvements with minimal effect on results
     convlim = model.getConvergenceLimits
-    convlim.setMinimumSystemTimestep(0) # Speed improvement with minimal effect on results
+    convlim.setMinimumSystemTimestep(0)
+    convlim.setMaximumHVACIterations(8)
 
     run_period = model.getRunPeriod
     run_period.setBeginMonth(hpxml_header.sim_begin_month)

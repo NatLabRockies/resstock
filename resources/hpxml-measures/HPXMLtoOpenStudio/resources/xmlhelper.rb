@@ -250,10 +250,11 @@ module XMLHelper
     return doc
   end
 
-  # Obtains the XML document for the XML file at the specified path.
+  # Obtains the XML document for the XML file, either using the HPXML contents
+  # if provided, otherwise reading the HPXML contents from the specified path.
   #
   # @param hpxml_path [String] Path to the HPXML file
-  # @param hpxml_path [String] Contents of the HPXML file if already available
+  # @param hpxml_contents [String] Contents of the HPXML file if already available
   # @return [Oga::XML::Document] The XML document
   def self.parse_file(hpxml_path, hpxml_contents: nil)
     if hpxml_contents.nil?
