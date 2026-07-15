@@ -24,7 +24,7 @@ from prefect.runtime import flow_run
 from pydantic import BaseModel, Field, ValidationInfo, field_validator
 from pydantic_settings import BaseSettings
 
-from resstockpostproc.upgrade_comparison.schema.end_use_dicts import EnduseGroupToEnduses
+from resstockpostproc.shared_utils.end_use_dicts import EnduseGroupToEnduses
 
 
 class NoExtraModel(BaseModel):
