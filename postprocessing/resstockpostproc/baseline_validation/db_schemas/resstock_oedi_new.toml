@@ -1,0 +1,31 @@
+[table_suffix]
+baseline = "_md_national_parquet"
+timeseries = "_ts_by_state"
+upgrades = "_md_national_parquet"
+
+[column_prefix]
+characteristics = "in."
+output = "out."
+
+[column_names]
+building_id = "bldg_id"
+sample_weight = "weight"
+sqft = "in.sqft..ft2"
+timestamp = "timestamp"
+completed_status = "applicability"
+unmet_hours_cooling_hr = ""
+unmet_hours_heating_hr = ""
+map_eiaid_column = "gisjoin"
+fuel_totals = ["out.electricity.total.energy_consumption..kwh",
+               "out.natural_gas.total.energy_consumption..kwh",
+               "out.fuel_oil.total.energy_consumption..kwh",
+               "out.propane.total.energy_consumption..kwh",
+               ]
+
+[completion_values]
+success = "true"
+fail = ""
+inapplicable = "false"
+
+[structure]
+inapplicables_have_ts = "true"
