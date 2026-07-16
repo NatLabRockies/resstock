@@ -532,19 +532,21 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
         sampling_region = true
         msn_codes = Constants::StateCodesMap.keys
 
-        if !args[:utility_bill_simple_filepaths].include?('State.tsv')
-          fail "Using 'Sampling Region' bill calculation approach, but specified filepath is not /path/to/State.tsv."
-        end
-
         utility_bill_scenario_names = args[:utility_bill_scenario_names].split(',').map(&:strip)
         utility_bill_simple_filepaths = args[:utility_bill_simple_filepaths].split(',').map(&:strip)
 
         ix = utility_bill_scenario_names.index('Sampling Region')
+
+        if File.basename(utility_bill_simple_filepaths[ix]) != 'State.tsv'
+          runner.registerError("Using 'Sampling Region' bill calculation approach, but specified filepath is not /path/to/State.tsv.")
+          return false
+        end
+
         utility_bill_scenario_names.delete_at(ix)
         utility_bill_simple_filepath = utility_bill_simple_filepaths[ix]
         utility_bill_simple_filepaths.delete_at(ix)
 
-        statecodes = get_statecodes_for_sampling_region(bldg_data, characteristics_dir)
+        statecodes = get_statecodes_for_sampling_region(runner, bldg_data, characteristics_dir)
         args[:utility_bill_scenario_names] = (utility_bill_scenario_names + statecodes).join(',')
         args[:utility_bill_simple_filepaths] = (utility_bill_simple_filepaths + [utility_bill_simple_filepath] * statecodes.size).join(',')
       end
@@ -674,7 +676,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
   def get_utility_rate(runner, filepath, bldg_data)
     if !File.exist?(filepath)
       runner.registerError("Utility bill scenario file '#{filepath}' does not exist.")
-      return false
+      return {}
     end
 
     rows = CSV.read(filepath, headers: true, col_sep: "\t")
@@ -683,7 +685,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
     if !bldg_data.keys.include?(parameter)
       runner.registerError("Utility bill scenario(s) were specified, but could not find #{parameter}.")
-      return false
+      return {}
     end
 
     utility_rates = utility_rates.select { |r| r[parameter] == bldg_data[parameter] }
@@ -697,11 +699,11 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     return utility_rate
   end
 
-  def get_statecodes_for_sampling_region(bldg_data, characteristics_dir)
+  def get_statecodes_for_sampling_region(runner, bldg_data, characteristics_dir)
     parameter = 'Sampling Region'
     if !bldg_data.keys.include?(parameter)
       runner.registerError("Utility bill scenario(s) were specified, but could not find #{parameter}.")
-      return false
+      return []
     end
 
     sampling_region = bldg_data[parameter]

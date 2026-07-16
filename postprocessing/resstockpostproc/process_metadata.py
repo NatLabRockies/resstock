@@ -249,7 +249,7 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
 
     # With multiple bill scenarios, this column is comma-separated; retain just the first entry
     df = df.with_columns(
-        pl.col("in.utility_bill_electricity_marginal_rates").str.split(",").list.first()
+        pl.col("in.utility_bill_electricity_marginal_rates").str.split(",").list.first().str.strip_chars()
     )
 
     # Reassign negative or zero dollar income to 1 dollar
