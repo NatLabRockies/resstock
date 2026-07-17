@@ -1,0 +1,33 @@
+\paragraph{Description}
+% \input{characteristics/description/HVAC Has Shared System}
+The presence of an HVAC system shared by multiple housing units.
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/HVAC Has Shared System}
+\begin{itemize}
+\item The sample counts and sample weights are constructed using U.S.~EIA 2020 RECS microdata.
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/HVAC Has Shared System}
+
+\paragraph{Options}
+Homes can be assigned to have shared cooling, shared heating, shared both heating and cooling, or no shared systems. No modeling properties are assigned based on this characteristic, but these options are used as dependencies in other ResStock characteristics, such as HVAC Shared Efficiencies, where properties are assigned.
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/HVAC Has Shared System}
+\begin{itemize}
+    \item Due to low sample sizes, the fallback rules are applied in following order:
+    \begin{enumerate}
+        \item Vintage: Vintage ACS 20-year bin
+        \item HVAC Cooling Type: Lump (1) Central AC and Ducted Heat Pump, and (2) Non-Ducted Heat Pump and None
+        \item HVAC Heating Type: Lump (1) Ducted Heating and Ducted Heat Pump, and (2) Non-Ducted Heat Pump and None
+        \item HVAC Cooling Type: Lump (1) Central AC and Ducted Heat Pump, and (2) Non-Ducted Heat Pump, Non-Ducted Heating, and None
+        \item HVAC Heating Type: Lump (1) Ducted Heating and Ducted Heat Pump, and (2) Non-Ducted Heat Pump, None, and Room AC
+        \item Vintage: Vintage pre-1960s and post 2000
+        \item Vintage: All vintages
+    \end{enumerate}
+
+    \item Ducted Heat Pump option (a non-shared system) assigned for both heating and cooling
+    \item Non-Ducted Heat Pump option (a non-shared system) assigned for both heating and cooling.
+\end{itemize}

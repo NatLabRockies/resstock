@@ -1,0 +1,32 @@
+\paragraph{Description}
+% \input{characteristics/description/Heating Fuel}
+The fuel used for primary heating of the housing unit.
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/Heating Fuel}
+\begin{itemize}
+    \item 2019 5-year PUMS 
+    \item Alaska-specific distribution is based on Alaska Retrofit Information System (2008 to 2022), maintained by Alaska Housing Finance Corporation.
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/Heating Fuel}
+
+\paragraph{Options}
+The Heating Fuel characteristic options are shown in Table \ref{table:hc_opt_heating_fuel}. Other Fuel is currently modeled as wood energy. However, although ResStock simulates wood energy consumption for heating, current datasets do not publish data on heating with wood.
+
+\input{characteristics/options/Heating Fuel}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_heating_fuel}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating Systems} documentation for additional information.
+
+\input{characteristics/properties/Heating Fuel}
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/Heating Fuel}
+\begin{itemize}
+    \item In ACS, Heating Fuel is reported for occupied units only. By excluding Vacancy Status as a dependency, we assume vacant units share the same Heating Fuel distribution as occupied units. Where sample counts are less than 10, the State average distribution has been inserted. Prior to insertion, the following adjustments have been made to the state distribution so all rows have sample count > 10: 1. Where sample counts < 10 (which consists of Mobile Home and Single-Family Attached only), the Vintage ACS distribution is used instead of Vintage: [CT, DE, ID, MD, ME, MT, ND, NE, NH, NV, RI, SD, UT, VT, WY].
+    \item Remaining Mobile Homes < 10 are replaced by Single-Family Detached + Mobile Homes combined: [DE, RI, SD, VT, WY, and all DC].
+    \item For Alaska, we are using a field in ARIS that lumps multifamily 2--4 units and multifamily 5+ units buildings together. Data from the American Community Survey are used to distribute between these two building types.
+    \item For Alaska, all wood is modeled as cord wood.
+    \item For Alaska, when heating uses more than one fuel, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10\% of total energy use across all fuels) is considered secondary (heating) fuel---except in case of electric heating, which is always assumed as primary. The rest of the fuels are ignored.
+\end{itemize}

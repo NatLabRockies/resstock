@@ -1,0 +1,29 @@
+\paragraph{Description}
+% \input{characteristics/description/Geometry Building Number Units MF}
+The number of housing units in the multifamily building.
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/Geometry Building Number Units MF}
+\begin{itemize}
+    \item U.S.~EIA 2009 RECS microdata.
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/Geometry Building Number Units MF}
+
+\paragraph{Options}
+The options for the Geometry Building Level MF characteristic are shown in Table \ref{table:hc_opt_geometry_building_number_units_mf}. The ``None'' option is used for all building types other than multifamily.
+
+\input{characteristics/options/Geometry Building Number Units MF}
+
+Property definitions are shown in Table~\ref{table:hc_arg_def_geometry_building_number_units_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#whole-sfa-mf-buildings}{Whole-SFA-MF-Buildings} documentation for additional information.
+
+\input{characteristics/properties/Geometry Building Number Units MF}
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/Geometry Building Number Units MF}
+\begin{itemize}
+    \item Uses NUMAPTS (number of apartments) field in EIA RECS 2009
+    \item EIA RECS 2009 does not report NUMAPTS for Multifamily 2--4 units, so assumptions are made based on the number of stories
+    \item Data were sampled from the following bins of Geometry Stories: 1, 2, 3, 4-7, 8+.
+\end{itemize}

@@ -234,7 +234,7 @@ Wood emissions factors values, specified as an annual factor. If multiple scenar
 
 **Utility Bills: Scenario Names**
 
-Names of utility bill scenarios. If multiple scenarios, use a comma-separated list. If multiple scenarios, use a comma-separated list.
+Names of utility bill scenarios. If multiple scenarios, use a comma-separated list.
 
 - **Name:** ``utility_bill_scenario_names``
 - **Type:** ``String``

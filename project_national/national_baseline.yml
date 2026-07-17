@@ -1,10 +1,10 @@
 schema_version: '0.4'
-os_version: 3.9.0
-os_sha: c77fbb9569
+os_version: 3.10.0
+os_sha: 86d7e215a1
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
 output_directory: national_baseline
-weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
+weather_files_url: https://data.nlr.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
 # weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
@@ -15,11 +15,20 @@ baseline:
 
 # Sampler type and number of data points per baseline or upgrade
 sampler:
-  type: residential_quota
+  type: residential_stratified
   args:
     n_datapoints: 250
+    segment_vars:
+      - Federal Poverty Level
+      - Geometry Floor Area Bin
+      - Geometry Building Type RECS
+      - Vintage
+      - Heating Fuel
+      - Sampling Region
+    segment_selection_sample_size: 10000000
+    num_samples_per_segment: 8
 
-# NREL High Performance Computing machine configuration
+# NLR High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
 # kestrel:
 #   n_jobs: 3
@@ -54,7 +63,7 @@ sampler:
 workflow_generator:
   # ResStock HPXML workflow generator
   type: residential_hpxml
-  version: 2025.04.29
+  version: 2025.12.03
   args:
     # Annual simulation and timestep
     build_existing_model:
@@ -77,6 +86,7 @@ workflow_generator:
 
     # Outputs to include
     simulation_output_report:
+      include_annual_emission_end_uses: true
       timeseries_frequency: hourly
       include_timeseries_total_consumptions: true
       include_timeseries_fuel_consumptions: true

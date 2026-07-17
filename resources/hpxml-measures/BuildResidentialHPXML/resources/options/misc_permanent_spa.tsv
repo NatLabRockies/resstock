@@ -1,0 +1,39 @@
+Option Name	Pump Annual Energy Use [kWh/yr]	Pump Usage Multiplier	Heater Type	Heater Annual Electricity Use [kWh/yr]	Heater Annual Natural Gas Use [kWh/yr]	Heater Usage Multiplier
+None	0			0	0	
+"Unheated, 25% Usage"		0.25	none			
+"Unheated, 50% Usage"		0.5	none			
+"Unheated, 75% Usage"		0.75	none			
+"Unheated, 100% Usage"			none			
+"Unheated, 150% Usage"		1.5	none			
+"Unheated, 200% Usage"		2	none			
+"Unheated, 400% Usage"		4	none			
+"Electric Resistance Heater, 25% Usage"		0.25	electric resistance			0.25
+"Electric Resistance Heater, 50% Usage"		0.5	electric resistance			0.5
+"Electric Resistance Heater, 75% Usage"		0.75	electric resistance			0.75
+"Electric Resistance Heater, 100% Usage"			electric resistance			
+"Electric Resistance Heater, 150% Usage"		1.5	electric resistance			1.5
+"Electric Resistance Heater, 200% Usage"		2	electric resistance			2
+"Electric Resistance Heater, 400% Usage"		4	electric resistance			4
+"Heat Pump Heater, 25% Usage"		0.25	heat pump			0.25
+"Heat Pump Heater, 50% Usage"		0.5	heat pump			0.5
+"Heat Pump Heater, 75% Usage"		0.75	heat pump			0.75
+"Heat Pump Heater, 100% Usage"			heat pump			
+"Heat Pump Heater, 150% Usage"		1.5	heat pump			1.5
+"Heat Pump Heater, 200% Usage"		2	heat pump			2
+"Heat Pump Heater, 400% Usage"		4	heat pump			4
+"Natural Gas Heater, 25% Usage"		0.25	gas fired			0.25
+"Natural Gas Heater, 50% Usage"		0.5	gas fired			0.5
+"Natural Gas Heater, 75% Usage"		0.75	gas fired			0.75
+"Natural Gas Heater, 100% Usage"			gas fired			
+"Natural Gas Heater, 150% Usage"		1.5	gas fired			1.5
+"Natural Gas Heater, 200% Usage"		2	gas fired			2
+"Natural Gas Heater, 400% Usage"		4	gas fired			4
+"Detailed Example: 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater"	1000		electric resistance	1300		
+"Detailed Example: 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater"	1000		heat pump	260		
+						
+# Pump Annual Energy Use: The annual energy consumption of the spa.						
+"# Pump Usage Multiplier: Multiplier on the spa pump energy usage that can reflect, e.g., high/low usage occupants."						
+# Heater Type: The type of spa heater.						
+# Heater Annual Electricity Use: The annual electricity consumption of the spa heater.						
+# Heater Annual Natural Gas Use: The annual natural gas consumption of the spa heater.						
+"# Heater Usage Multiplier: Multiplier on the spa heater energy usage that can reflect, e.g., high/low usage occupants."						

@@ -1,0 +1,72 @@
+Option Name	Leakage Units	Leakage to Outside Value	Supply Insulation R-Value [F-ft2-hr/Btu]	Return Insulation R-Value [F-ft2-hr/Btu]	Supply Leakage Fraction [frac]
+None	Percent	0	0	0	
+"0% Leakage, Uninsulated"	Percent	0	0	0	
+"0% Leakage, R-4"	Percent	0	4	4	
+"0% Leakage, R-6"	Percent	0	6	6	
+"0% Leakage, R-8"	Percent	0	8	8	
+"5% Leakage, Uninsulated"	Percent	0.05	0	0	
+"5% Leakage, R-4"	Percent	0.05	4	4	
+"5% Leakage, R-6"	Percent	0.05	6	6	
+"5% Leakage, R-8"	Percent	0.05	8	8	
+"10% Leakage, Uninsulated"	Percent	0.1	0	0	
+"10% Leakage, R-4"	Percent	0.1	4	4	
+"10% Leakage, R-6"	Percent	0.1	6	6	
+"10% Leakage, R-8"	Percent	0.1	8	8	
+"15% Leakage, Uninsulated"	Percent	0.15	0	0	
+"15% Leakage, R-4"	Percent	0.15	4	4	
+"15% Leakage, R-6"	Percent	0.15	6	6	
+"15% Leakage, R-8"	Percent	0.15	8	8	
+"20% Leakage, Uninsulated"	Percent	0.2	0	0	
+"20% Leakage, R-4"	Percent	0.2	4	4	
+"20% Leakage, R-6"	Percent	0.2	6	6	
+"20% Leakage, R-8"	Percent	0.2	8	8	
+"25% Leakage, Uninsulated"	Percent	0.25	0	0	
+"25% Leakage, R-4"	Percent	0.25	4	4	
+"25% Leakage, R-6"	Percent	0.25	6	6	
+"25% Leakage, R-8"	Percent	0.25	8	8	
+"30% Leakage, Uninsulated"	Percent	0.3	0	0	
+"30% Leakage, R-4"	Percent	0.3	4	4	
+"30% Leakage, R-6"	Percent	0.3	6	6	
+"30% Leakage, R-8"	Percent	0.3	8	8	
+"35% Leakage, Uninsulated"	Percent	0.35	0	0	
+"35% Leakage, R-4"	Percent	0.35	4	4	
+"35% Leakage, R-6"	Percent	0.35	6	6	
+"35% Leakage, R-8"	Percent	0.35	8	8	
+"0 CFM25 per 100ft2, Uninsulated"	CFM25 per 100ft2	0	0	0	
+"0 CFM25 per 100ft2, R-4"	CFM25 per 100ft2	0	4	4	
+"0 CFM25 per 100ft2, R-6"	CFM25 per 100ft2	0	6	6	
+"0 CFM25 per 100ft2, R-8"	CFM25 per 100ft2	0	8	8	
+"1 CFM25 per 100ft2, Uninsulated"	CFM25 per 100ft2	1	0	0	
+"1 CFM25 per 100ft2, R-4"	CFM25 per 100ft2	1	4	4	
+"1 CFM25 per 100ft2, R-6"	CFM25 per 100ft2	1	6	6	
+"1 CFM25 per 100ft2, R-8"	CFM25 per 100ft2	1	8	8	
+"2 CFM25 per 100ft2, Uninsulated"	CFM25 per 100ft2	2	0	0	
+"2 CFM25 per 100ft2, R-4"	CFM25 per 100ft2	2	4	4	
+"2 CFM25 per 100ft2, R-6"	CFM25 per 100ft2	2	6	6	
+"2 CFM25 per 100ft2, R-8"	CFM25 per 100ft2	2	8	8	
+"4 CFM25 per 100ft2, Uninsulated"	CFM25 per 100ft2	4	0	0	
+"4 CFM25 per 100ft2, R-4"	CFM25 per 100ft2	4	4	4	
+"4 CFM25 per 100ft2, R-6"	CFM25 per 100ft2	4	6	6	
+"4 CFM25 per 100ft2, R-8"	CFM25 per 100ft2	4	8	8	
+"6 CFM25 per 100ft2, Uninsulated"	CFM25 per 100ft2	6	0	0	
+"6 CFM25 per 100ft2, R-4"	CFM25 per 100ft2	6	4	4	
+"6 CFM25 per 100ft2, R-6"	CFM25 per 100ft2	6	6	6	
+"6 CFM25 per 100ft2, R-8"	CFM25 per 100ft2	6	8	8	
+"8 CFM25 per 100ft2, Uninsulated"	CFM25 per 100ft2	8	0	0	
+"8 CFM25 per 100ft2, R-4"	CFM25 per 100ft2	8	4	4	
+"8 CFM25 per 100ft2, R-6"	CFM25 per 100ft2	8	6	6	
+"8 CFM25 per 100ft2, R-8"	CFM25 per 100ft2	8	8	8	
+"12 CFM25 per 100ft2, Uninsulated"	CFM25 per 100ft2	12	0	0	
+"12 CFM25 per 100ft2, R-4"	CFM25 per 100ft2	12	4	4	
+"12 CFM25 per 100ft2, R-6"	CFM25 per 100ft2	12	6	6	
+"12 CFM25 per 100ft2, R-8"	CFM25 per 100ft2	12	8	8	
+"Detailed Example: 4 CFM25 per 100ft2 (75% Supply), R-4"	CFM25 per 100ft2	4	4	4	0.75
+"Detailed Example: 5 CFM50 per 100ft2 (75% Supply), R-4"	CFM50 per 100ft2	5	4	4	0.75
+"Detailed Example: 250 CFM25, R-6"	CFM25	250	6	6	
+"Detailed Example: 400 CFM50 (75% Supply), R-6"	CFM50	400	6	6	0.75
+					
+# Leakage Units: The units for the duct leakage.					
+# Leakage to Outside Value: The leakage to outside value.					
+# Supply Insulation R-Value: The nominal insulation r-value of the supply ducts excluding air films. Use 0 for uninsulated ducts.					
+# Return Insulation R-Value: The nominal insulation r-value of the return ducts excluding air films. Use 0 for uninsulated ducts.					
+# Supply Leakage Fraction: The fraction of duct leakage associated with the supply ducts; the remainder is associated with the return ducts.					

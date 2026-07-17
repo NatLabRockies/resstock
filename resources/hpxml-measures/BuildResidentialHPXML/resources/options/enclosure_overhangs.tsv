@@ -1,0 +1,41 @@
+Option Name	Front Depth [ft]	Back Depth [ft]	Left Depth [ft]	Right Depth [ft]	Distance to Top of Window [ft]	Distance to Bottom of Window [ft]
+None						
+"1ft, All Windows"	1	1	1	1	1	4
+"2ft, All Windows"	2	2	2	2	1	4
+"3ft, All Windows"	3	3	3	3	1	4
+"4ft, All Windows"	4	4	4	4	1	4
+"5ft, All Windows"	5	5	5	5	1	4
+"10ft, All Windows"	10	10	10	10	1	4
+"1ft, Front Windows"	1				1	4
+"2ft, Front Windows"	2				1	4
+"3ft, Front Windows"	3				1	4
+"4ft, Front Windows"	4				1	4
+"5ft, Front Windows"	5				1	4
+"10ft, Front Windows"	10				1	4
+"1ft, Back Windows"		1			1	4
+"2ft, Back Windows"		2			1	4
+"3ft, Back Windows"		3			1	4
+"4ft, Back Windows"		4			1	4
+"5ft, Back Windows"		5			1	4
+"10ft, Back Windows"		10			1	4
+"1ft, Left Windows"			1		1	4
+"2ft, Left Windows"			2		1	4
+"3ft, Left Windows"			3		1	4
+"4ft, Left Windows"			4		1	4
+"5ft, Left Windows"			5		1	4
+"10ft, Left Windows"			10		1	4
+"1ft, Right Windows"				1	1	4
+"2ft, Right Windows"				2	1	4
+"3ft, Right Windows"				3	1	4
+"4ft, Right Windows"				4	1	4
+"5ft, Right Windows"				5	1	4
+"10ft, Right Windows"				10	1	4
+"Detailed Example: 1.5ft, Back/Left/Right Windows, 2ft Offset, 4ft Window Height"		1.5	1.5	1.5	2	6
+"Detailed Example: 2.5ft, Front Windows, 1ft Offset, 5ft Window Height"	2.5				1	6
+						
+# Front Depth: The depth of overhangs for windows for the front facade.						
+# Back Depth: The depth of overhangs for windows for the back facade.						
+# Left Depth: The depth of overhangs for windows for the left facade.						
+# Right Depth: The depth of overhangs for windows for the right facade.						
+# Distance to Top of Window: Average distance between the overhangs and the top of the windows.						
+# Distance to Bottom of Window: Average distance between the overhangs and the bottom of the windows.						

@@ -1,0 +1,27 @@
+Option Name	Fan Type	Sensible Recovery Efficiency [frac]	Total Recovery Efficiency [frac]	Flow Rate [cfm]	Fan Power [W]	Hours In Operation [hrs/day]
+None						
+Exhaust Only	exhaust only					
+Supply Only	supply only					
+Balanced	balanced					
+CFIS	central fan integrated supply					
+"HRV, 55%"	heat recovery ventilator	0.55				
+"HRV, 60%"	heat recovery ventilator	0.6				
+"HRV, 65%"	heat recovery ventilator	0.65				
+"HRV, 70%"	heat recovery ventilator	0.7				
+"HRV, 75%"	heat recovery ventilator	0.75				
+"HRV, 80%"	heat recovery ventilator	0.8				
+"HRV, 85%"	heat recovery ventilator	0.85				
+"ERV, 55%"	energy recovery ventilator	0.55	0.47			
+"ERV, 60%"	energy recovery ventilator	0.6	0.51			
+"ERV, 65%"	energy recovery ventilator	0.65	0.55			
+"ERV, 70%"	energy recovery ventilator	0.7	0.6			
+"ERV, 75%"	energy recovery ventilator	0.75	0.64			
+"ERV, 80%"	energy recovery ventilator	0.8	0.68			
+"ERV, 85%"	energy recovery ventilator	0.85	0.72			
+						
+# Fan Type: The type of the mechanical ventilation.						
+# Sensible Recovery Efficiency: The sensible recovery efficiency for heating mode. Applies to HRVs and ERVs only.						
+# Total Recovery Efficiency: The total recovery efficiency. Applies to ERVs only.						
+# Flow Rate: The flow rate of the mechanical ventilation.						
+# Fan Power: The fan power of the mechanical ventilation.						
+# Hours In Operation: The hours in operation of the mechanical ventilation.						

@@ -1,0 +1,47 @@
+\paragraph{Description}
+% \input{characteristics/description/Occupants}
+The number of occupants living in the housing unit.
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/Occupants}
+\begin{itemize}
+\item
+  2019 5-year PUMS from the University of Minnesota.
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/Occupants}
+
+\paragraph{Options}
+The Occupants options are shown in Table \ref{table:hc_opt_occupants}.
+
+\input{characteristics/options/Occupants}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_occupants}.
+
+\input{characteristics/properties/Occupants}
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/Occupants}
+\begin{itemize}
+\item
+  Option=10+ has a (weighted) representative value of 11. In ACS,
+  Income, Tenure, and Occupants are reported for occupied units only.
+  Because we assume vacant units share the same Income and Tenure
+  distributions as occupied units, by extension, we assume this
+  Occupants distribution applies to all units regardless of Vacancy
+  Status. Where sample counts are less than 10 (6,243 / 18,000 rows), the
+  Census Region average distribution has been inserted first (2,593),
+  followed by national average distribution (2,678), followed by national
+  +
+ `MF'/`SF'
+  average distribution (252), followed by national +
+  `MF'/`SF'
+  +
+  `Metro'/`Non-metro'
+  average distribution (315), followed by national +
+  `MF'/`SF'
+  +
+  `Metro'/`Non-metro'
+  + Vacancy Status average distribution (657).
+\end{itemize}

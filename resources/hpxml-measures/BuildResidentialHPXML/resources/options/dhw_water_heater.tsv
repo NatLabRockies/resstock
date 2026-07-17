@@ -1,0 +1,55 @@
+Option Name	Type	Fuel Type	Efficiency Type	Efficiency [frac]	Tank Volume [gal]	Recovery Efficiency [frac]	Usage Bin	Temperature [F]
+None	none							
+"Electricity, Tank, UEF 0.90"	storage water heater	electricity	UniformEnergyFactor	0.9				
+"Electricity, Tank, UEF 0.92"	storage water heater	electricity	UniformEnergyFactor	0.92				
+"Electricity, Tank, UEF 0.94"	storage water heater	electricity	UniformEnergyFactor	0.94				
+"Electricity, Tankless, UEF 0.94"	instantaneous water heater	electricity	UniformEnergyFactor	0.94				
+"Electricity, Tankless, UEF 0.98"	instantaneous water heater	electricity	UniformEnergyFactor	0.98				
+"Electricity, Heat Pump, UEF 3.50"	heat pump water heater	electricity	UniformEnergyFactor	3.5				
+"Electricity, Heat Pump, UEF 3.75"	heat pump water heater	electricity	UniformEnergyFactor	3.75				
+"Electricity, Heat Pump, UEF 4.00"	heat pump water heater	electricity	UniformEnergyFactor	4				
+"Natural Gas, Tank, UEF 0.57"	storage water heater	natural gas	UniformEnergyFactor	0.57				
+"Natural Gas, Tank, UEF 0.60"	storage water heater	natural gas	UniformEnergyFactor	0.6				
+"Natural Gas, Tank, UEF 0.64"	storage water heater	natural gas	UniformEnergyFactor	0.64				
+"Natural Gas, Tank, UEF 0.67"	storage water heater	natural gas	UniformEnergyFactor	0.67				
+"Natural Gas, Tank, UEF 0.70"	storage water heater	natural gas	UniformEnergyFactor	0.7				
+"Natural Gas, Tank, UEF 0.80"	storage water heater	natural gas	UniformEnergyFactor	0.8				
+"Natural Gas, Tank, UEF 0.90"	storage water heater	natural gas	UniformEnergyFactor	0.9				
+"Natural Gas, Tankless, UEF 0.82"	instantaneous water heater	natural gas	UniformEnergyFactor	0.82				
+"Natural Gas, Tankless, UEF 0.93"	instantaneous water heater	natural gas	UniformEnergyFactor	0.93				
+"Natural Gas, Tankless, UEF 0.96"	instantaneous water heater	natural gas	UniformEnergyFactor	0.96				
+"Natural Gas, Tankless, UEF 0.98"	instantaneous water heater	natural gas	UniformEnergyFactor	0.98				
+"Fuel Oil, Tank, UEF 0.61"	storage water heater	fuel oil	UniformEnergyFactor	0.61				
+"Fuel Oil, Tank, UEF 0.64"	storage water heater	fuel oil	UniformEnergyFactor	0.64				
+"Fuel Oil, Tank, UEF 0.67"	storage water heater	fuel oil	UniformEnergyFactor	0.67				
+"Propane, Tank, UEF 0.57"	storage water heater	propane	UniformEnergyFactor	0.57				
+"Propane, Tank, UEF 0.60"	storage water heater	propane	UniformEnergyFactor	0.6				
+"Propane, Tank, UEF 0.64"	storage water heater	propane	UniformEnergyFactor	0.64				
+"Propane, Tank, UEF 0.67"	storage water heater	propane	UniformEnergyFactor	0.67				
+"Propane, Tank, UEF 0.70"	storage water heater	propane	UniformEnergyFactor	0.7				
+"Propane, Tank, UEF 0.80"	storage water heater	propane	UniformEnergyFactor	0.8				
+"Propane, Tank, UEF 0.90"	storage water heater	propane	UniformEnergyFactor	0.9				
+"Propane, Tankless, UEF 0.82"	instantaneous water heater	propane	UniformEnergyFactor	0.82				
+"Propane, Tankless, UEF 0.93"	instantaneous water heater	propane	UniformEnergyFactor	0.93				
+"Propane, Tankless, UEF 0.96"	instantaneous water heater	propane	UniformEnergyFactor	0.96				
+"Wood, Tank, UEF 0.60"	storage water heater	wood	UniformEnergyFactor	0.6				
+"Coal, Tank, UEF 0.60"	storage water heater	coal	UniformEnergyFactor	0.6				
+Space-Heating Boiler w/ Storage Tank	space-heating boiler with storage tank							
+Space-Heating Boiler w/ Tankless Coil	space-heating boiler with tankless coil							
+"Detailed Example: Electricity, Tank, 40 gal, EF 0.93"	storage water heater	electricity	EnergyFactor	0.93	40			
+"Detailed Example: Electricity, Tank, UEF 0.94, 135F"	storage water heater	electricity	UniformEnergyFactor	0.94				135
+"Detailed Example: Electricity, Tankless, EF 0.96"	instantaneous water heater	electricity	EnergyFactor	0.96				
+"Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1"	heat pump water heater	electricity	EnergyFactor	3.1	80			
+"Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78"	storage water heater	natural gas	EnergyFactor	0.56	40	0.78		
+"Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78"	storage water heater	natural gas	EnergyFactor	0.62	40	0.78		
+"Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76"	storage water heater	natural gas	EnergyFactor	0.59	50	0.76		
+"Detailed Example: Natural Gas, Tankless, EF 0.95"	instantaneous water heater	natural gas	EnergyFactor	0.95				
+								
+# Type: The type of water heater.								
+# Fuel Type: The fuel type of the water heater.								
+# Efficiency Type: The efficiency type of the water heater. Does not apply to space-heating boilers.								
+# Efficiency: EnergyGuide Label rated Uniform Energy Factor (UEF) or Energy Factor (EF).								
+# Tank Volume: The nominal volume of the water heater storage tank.								
+# Recovery Efficiency: Ratio of energy delivered to water heater to the energy content of the fuel consumed by the water heater. Only used for non-electric storage water heaters.								
+# Usage Bin: EnergyGuide label usage bin (based on First Hour Rating).								
+# Temperature: The setpoint temperature of water heater.								

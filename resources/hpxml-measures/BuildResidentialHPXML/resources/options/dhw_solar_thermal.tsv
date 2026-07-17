@@ -1,0 +1,28 @@
+Option Name	Collector Loop Type	Collector Type	Collector Area [ft2]	Collector Rated Optical Efficiency [frac]	Collector Rated Thermal Losses [Btu/hr-ft2-F]	Storage Volume [gal]	Solar Fraction [frac]
+None							
+"Indirect, Flat Plate, 40 sqft"	liquid indirect	single glazing black	40	0.77	0.793	60	
+"Indirect, Flat Plate, 64 sqft"	liquid indirect	single glazing black	64	0.77	0.793	96	
+"Direct, Flat Plate, 40 sqft"	liquid direct	single glazing black	40	0.77	0.793	60	
+"Direct. Flat Plate, 64 sqft"	liquid direct	single glazing black	64	0.77	0.793	96	
+"Direct, Integrated Collector Storage, 40 sqft"	liquid direct	integrated collector storage	40	0.77	0.793	60	
+"Direct, Integrated Collector Storage, 64 sqft"	liquid direct	integrated collector storage	64	0.77	0.793	96	
+"Direct, Evacuated Tube, 40 sqft"	liquid direct	evacuated tube	40	0.5	0.2799	60	
+"Direct, Evacuated Tube, 64 sqft"	liquid direct	evacuated tube	64	0.5	0.2799	96	
+"Thermosyphon, Flat Plate, 40 sqft"	passive thermosyphon	single glazing black	40	0.77	0.793	60	
+"Thermosyphon, Flat Plate, 64 sqft"	passive thermosyphon	single glazing black	64	0.77	0.793	96	
+60% Solar Fraction							0.6
+65% Solar Fraction							0.65
+70% Solar Fraction							0.7
+75% Solar Fraction							0.75
+80% Solar Fraction							0.8
+85% Solar Fraction							0.85
+90% Solar Fraction							0.9
+95% Solar Fraction							0.95
+							
+# Collector Loop Type: The loop type of the solar thermal system.							
+# Collector Type: The type of collector.							
+# Collector Area: The surface area for the collector.							
+# Collector Rated Optical Efficiency: FRTA (y-intercept) from the Directory of SRCC OG-100 Certified Solar Collector Ratings.							
+# Collector Rated Thermal Losses: FRUL (slope) from the Directory of SRCC OG-100 Certified Solar Collector Ratings							
+# Storage Volume: Hot water storage volume.							
+# Solar Fraction: Portion of total conventional hot water heating load (delivered energy plus tank standby losses). Can be obtained from Directory of SRCC OG-300 Solar Water Heating System Ratings or NREL's System Advisor Model or equivalent.							

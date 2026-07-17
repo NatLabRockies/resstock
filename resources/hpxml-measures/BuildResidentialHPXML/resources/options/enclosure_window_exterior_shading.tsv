@@ -1,0 +1,24 @@
+Option Name	Type	Summer Coefficient [frac]	Winter Coefficient [frac]
+None	none		
+Solar Film	solar film		
+Solar Screen	solar screens		
+"Summer 0.25, Winter 0.25"		0.25	0.25
+"Summer 0.25, Winter 0.50"		0.25	0.5
+"Summer 0.25, Winter 0.75"		0.25	0.75
+"Summer 0.25, Winter 1.00"		0.25	1
+"Summer 0.50, Winter 0.25"		0.5	0.25
+"Summer 0.50, Winter 0.50"		0.5	0.5
+"Summer 0.50, Winter 0.75"		0.5	0.75
+"Summer 0.50, Winter 1.00"		0.5	1
+"Summer 0.75, Winter 0.25"		0.75	0.25
+"Summer 0.75, Winter 0.50"		0.75	0.5
+"Summer 0.75, Winter 0.75"		0.75	0.75
+"Summer 0.75, Winter 1.00"		0.75	1
+"Summer 1.00, Winter 0.25"		1	0.25
+"Summer 1.00, Winter 0.50"		1	0.5
+"Summer 1.00, Winter 0.75"		1	0.75
+"Summer 1.00, Winter 1.00"		1	1
+			
+# Type: The type of window exterior shading.			
+"# Summer Coefficient: Exterior shading coefficient for the summer season. 1.0 indicates no reduction in solar gain, 0.85 indicates 15% reduction, etc."			
+"# Winter Coefficient: Exterior shading coefficient for the winter season. 1.0 indicates no reduction in solar gain, 0.85 indicates 15% reduction, etc."			

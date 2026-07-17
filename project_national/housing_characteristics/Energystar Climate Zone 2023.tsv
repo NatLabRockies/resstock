@@ -3164,14 +3164,14 @@ None	AZ, Yuma County	0	0	0	1	0	1	1	0.000671895
 1	CA, Alameda County	0	0	0	0	1	1	1	0
 10	CA, Alameda County	0	0	0	0	1	1	1	0
 11	CA, Alameda County	0	0	0	0	1	1	1	0
-12	CA, Alameda County	0	0	1	0	0	1	1	0.000600257
+12	CA, Alameda County	0	0	1	0	0	1	1	0.000600505
 13	CA, Alameda County	0	0	0	0	1	1	1	0
 14	CA, Alameda County	0	0	0	0	1	1	1	0
 15	CA, Alameda County	0	0	0	0	1	1	1	0
 16	CA, Alameda County	0	0	0	0	1	1	1	0
 2	CA, Alameda County	0	0	0	0	1	1	1	0
-3	CA, Alameda County	1	0	0	0	0	1	1	0.00382154
-4	CA, Alameda County	0	0	1	0	0	1	1	2.20668e-07
+3	CA, Alameda County	1	0	0	0	0	1	1	0.00382151
+4	CA, Alameda County	0	0	1	0	0	1	1	0
 5	CA, Alameda County	0	0	0	0	1	1	1	0
 6	CA, Alameda County	0	0	0	0	1	1	1	0
 7	CA, Alameda County	0	0	0	0	1	1	1	0
@@ -3198,11 +3198,11 @@ None	CA, Alpine County	0	0	0	0	1	1	1	0
 1	CA, Amador County	0	0	0	0	1	1	1	0
 10	CA, Amador County	0	0	0	0	1	1	1	0
 11	CA, Amador County	0	0	0	0	1	1	1	0
-12	CA, Amador County	0	0	1	0	0	1	1	0.000106377
+12	CA, Amador County	0	0	1	0	0	1	1	0.000103405
 13	CA, Amador County	0	0	0	0	1	1	1	0
 14	CA, Amador County	0	0	0	0	1	1	1	0
 15	CA, Amador County	0	0	0	0	1	1	1	0
-16	CA, Amador County	1	0	0	0	0	1	1	2.94102e-05
+16	CA, Amador County	1	0	0	0	0	1	1	3.23822e-05
 2	CA, Amador County	0	0	0	0	1	1	1	0
 3	CA, Amador County	0	0	0	0	1	1	1	0
 4	CA, Amador County	0	0	0	0	1	1	1	0
@@ -3214,12 +3214,12 @@ None	CA, Alpine County	0	0	0	0	1	1	1	0
 None	CA, Amador County	0	0	0	0	1	1	1	0
 1	CA, Butte County	0	0	0	0	1	1	1	0
 10	CA, Butte County	0	0	0	0	1	1	1	0
-11	CA, Butte County	0	0	1	0	0	1	1	0.000675356
+11	CA, Butte County	0	0	1	0	0	1	1	0.000685038
 12	CA, Butte County	0	0	0	0	1	1	1	0
 13	CA, Butte County	0	0	0	0	1	1	1	0
 14	CA, Butte County	0	0	0	0	1	1	1	0
 15	CA, Butte County	0	0	0	0	1	1	1	0
-16	CA, Butte County	1	0	0	0	0	1	1	5.20527e-05
+16	CA, Butte County	1	0	0	0	0	1	1	4.23705e-05
 2	CA, Butte County	0	0	0	0	1	1	1	0
 3	CA, Butte County	0	0	0	0	1	1	1	0
 4	CA, Butte County	0	0	0	0	1	1	1	0
@@ -3232,11 +3232,11 @@ None	CA, Butte County	0	0	0	0	1	1	1	0
 1	CA, Calaveras County	0	0	0	0	1	1	1	0
 10	CA, Calaveras County	0	0	0	0	1	1	1	0
 11	CA, Calaveras County	0	0	0	0	1	1	1	0
-12	CA, Calaveras County	0	0	1	0	0	1	1	0.000166917
+12	CA, Calaveras County	0	0	1	0	0	1	1	0.000166207
 13	CA, Calaveras County	0	0	0	0	1	1	1	0
 14	CA, Calaveras County	0	0	0	0	1	1	1	0
 15	CA, Calaveras County	0	0	0	0	1	1	1	0
-16	CA, Calaveras County	1	0	0	0	0	1	1	4.27279e-05
+16	CA, Calaveras County	1	0	0	0	0	1	1	4.34374e-05
 2	CA, Calaveras County	0	0	0	0	1	1	1	0
 3	CA, Calaveras County	0	0	0	0	1	1	1	0
 4	CA, Calaveras County	0	0	0	0	1	1	1	0
@@ -3266,13 +3266,13 @@ None	CA, Colusa County	0	0	0	0	1	1	1	0
 1	CA, Contra Costa County	0	0	0	0	1	1	1	0
 10	CA, Contra Costa County	0	0	0	0	1	1	1	0
 11	CA, Contra Costa County	0	0	0	0	1	1	1	0
-12	CA, Contra Costa County	0	0	1	0	0	1	1	0.00233524
+12	CA, Contra Costa County	0	0	1	0	0	1	1	0.00232996
 13	CA, Contra Costa County	0	0	0	0	1	1	1	0
 14	CA, Contra Costa County	0	0	0	0	1	1	1	0
 15	CA, Contra Costa County	0	0	0	0	1	1	1	0
 16	CA, Contra Costa County	0	0	0	0	1	1	1	0
 2	CA, Contra Costa County	0	0	0	0	1	1	1	0
-3	CA, Contra Costa County	1	0	0	0	0	1	1	0.000699349
+3	CA, Contra Costa County	1	0	0	0	0	1	1	0.000704627
 4	CA, Contra Costa County	0	0	0	0	1	1	1	0
 5	CA, Contra Costa County	0	0	0	0	1	1	1	0
 6	CA, Contra Costa County	0	0	0	0	1	1	1	0
@@ -3280,14 +3280,14 @@ None	CA, Colusa County	0	0	0	0	1	1	1	0
 8	CA, Contra Costa County	0	0	0	0	1	1	1	0
 9	CA, Contra Costa County	0	0	0	0	1	1	1	0
 None	CA, Contra Costa County	0	0	0	0	1	1	1	0
-1	CA, Del Norte County	1	0	0	0	0	1	1	8.29682e-05
+1	CA, Del Norte County	1	0	0	0	0	1	1	8.44876e-05
 10	CA, Del Norte County	0	0	0	0	1	1	1	0
 11	CA, Del Norte County	0	0	0	0	1	1	1	0
 12	CA, Del Norte County	0	0	0	0	1	1	1	0
 13	CA, Del Norte County	0	0	0	0	1	1	1	0
 14	CA, Del Norte County	0	0	0	0	1	1	1	0
 15	CA, Del Norte County	0	0	0	0	1	1	1	0
-16	CA, Del Norte County	1	0	0	0	0	1	1	1.51943e-06
+16	CA, Del Norte County	1	0	0	0	0	1	1	0
 2	CA, Del Norte County	0	0	0	0	1	1	1	0
 3	CA, Del Norte County	0	0	0	0	1	1	1	0
 4	CA, Del Norte County	0	0	0	0	1	1	1	0
@@ -3300,11 +3300,11 @@ None	CA, Del Norte County	0	0	0	0	1	1	1	0
 1	CA, El Dorado County	0	0	0	0	1	1	1	0
 10	CA, El Dorado County	0	0	0	0	1	1	1	0
 11	CA, El Dorado County	0	0	0	0	1	1	1	0
-12	CA, El Dorado County	0	0	1	0	0	1	1	0.000427195
+12	CA, El Dorado County	0	0	1	0	0	1	1	0.00041697
 13	CA, El Dorado County	0	0	0	0	1	1	1	0
 14	CA, El Dorado County	0	0	0	0	1	1	1	0
 15	CA, El Dorado County	0	0	0	0	1	1	1	0
-16	CA, El Dorado County	1	0	0	0	0	1	1	0.000235829
+16	CA, El Dorado County	1	0	0	0	0	1	1	0.000246055
 2	CA, El Dorado County	0	0	0	0	1	1	1	0
 3	CA, El Dorado County	0	0	0	0	1	1	1	0
 4	CA, El Dorado County	0	0	0	0	1	1	1	0
@@ -3317,11 +3317,11 @@ None	CA, El Dorado County	0	0	0	0	1	1	1	0
 1	CA, Fresno County	0	0	0	0	1	1	1	0
 10	CA, Fresno County	0	0	0	0	1	1	1	0
 11	CA, Fresno County	0	0	0	0	1	1	1	0
-12	CA, Fresno County	0	0	1	0	0	1	1	1.60274e-06
-13	CA, Fresno County	0	0	1	0	0	1	1	0.00238245
+12	CA, Fresno County	0	0	1	0	0	1	1	2.78244e-06
+13	CA, Fresno County	0	0	1	0	0	1	1	0.00236532
 14	CA, Fresno County	0	0	0	0	1	1	1	0
 15	CA, Fresno County	0	0	0	0	1	1	1	0
-16	CA, Fresno County	1	0	0	0	0	1	1	3.17947e-05
+16	CA, Fresno County	1	0	0	0	0	1	1	4.77416e-05
 2	CA, Fresno County	0	0	0	0	1	1	1	0
 3	CA, Fresno County	0	0	0	0	1	1	1	0
 4	CA, Fresno County	0	0	0	0	1	1	1	0
@@ -3348,15 +3348,15 @@ None	CA, Fresno County	0	0	0	0	1	1	1	0
 8	CA, Glenn County	0	0	0	0	1	1	1	0
 9	CA, Glenn County	0	0	0	0	1	1	1	0
 None	CA, Glenn County	0	0	0	0	1	1	1	0
-1	CA, Humboldt County	1	0	0	0	0	1	1	0.000406998
+1	CA, Humboldt County	1	0	0	0	0	1	1	0.000406429
 10	CA, Humboldt County	0	0	0	0	1	1	1	0
 11	CA, Humboldt County	0	0	0	0	1	1	1	0
 12	CA, Humboldt County	0	0	0	0	1	1	1	0
 13	CA, Humboldt County	0	0	0	0	1	1	1	0
 14	CA, Humboldt County	0	0	0	0	1	1	1	0
 15	CA, Humboldt County	0	0	0	0	1	1	1	0
-16	CA, Humboldt County	1	0	0	0	0	1	1	2.20027e-08
-2	CA, Humboldt County	0	0	1	0	0	1	1	5.83552e-05
+16	CA, Humboldt County	1	0	0	0	0	1	1	0
+2	CA, Humboldt County	0	0	1	0	0	1	1	5.89458e-05
 3	CA, Humboldt County	0	0	0	0	1	1	1	0
 4	CA, Humboldt County	0	0	0	0	1	1	1	0
 5	CA, Humboldt County	0	0	0	0	1	1	1	0
@@ -3370,7 +3370,7 @@ None	CA, Humboldt County	0	0	0	0	1	1	1	0
 11	CA, Imperial County	0	0	0	0	1	1	1	0
 12	CA, Imperial County	0	0	0	0	1	1	1	0
 13	CA, Imperial County	0	0	0	0	1	1	1	0
-14	CA, Imperial County	0	0	1	0	0	1	1	7.60965e-25
+14	CA, Imperial County	0	0	1	0	0	1	1	0
 15	CA, Imperial County	0	0	1	0	0	1	1	0.000424497
 16	CA, Imperial County	0	0	0	0	1	1	1	0
 2	CA, Imperial County	0	0	0	0	1	1	1	0
@@ -3387,9 +3387,9 @@ None	CA, Imperial County	0	0	0	0	1	1	1	0
 11	CA, Inyo County	0	0	0	0	1	1	1	0
 12	CA, Inyo County	0	0	0	0	1	1	1	0
 13	CA, Inyo County	0	0	0	0	1	1	1	0
-14	CA, Inyo County	0	0	1	0	0	1	1	1.56908e-06
+14	CA, Inyo County	0	0	1	0	0	1	1	0
 15	CA, Inyo County	0	0	0	0	1	1	1	0
-16	CA, Inyo County	1	0	0	0	0	1	1	6.93942e-05
+16	CA, Inyo County	1	0	0	0	0	1	1	7.09632e-05
 2	CA, Inyo County	0	0	0	0	1	1	1	0
 3	CA, Inyo County	0	0	0	0	1	1	1	0
 4	CA, Inyo County	0	0	0	0	1	1	1	0
@@ -3403,13 +3403,13 @@ None	CA, Inyo County	0	0	0	0	1	1	1	0
 10	CA, Kern County	0	0	0	0	1	1	1	0
 11	CA, Kern County	0	0	0	0	1	1	1	0
 12	CA, Kern County	0	0	0	0	1	1	1	0
-13	CA, Kern County	0	0	1	0	0	1	1	0.00170124
-14	CA, Kern County	0	0	1	0	0	1	1	0.00024715
+13	CA, Kern County	0	0	1	0	0	1	1	0.00169297
+14	CA, Kern County	0	0	1	0	0	1	1	0.00025488
 15	CA, Kern County	0	0	0	0	1	1	1	0
-16	CA, Kern County	1	0	0	0	0	1	1	0.000224523
+16	CA, Kern County	1	0	0	0	0	1	1	0.000225071
 2	CA, Kern County	0	0	0	0	1	1	1	0
 3	CA, Kern County	0	0	0	0	1	1	1	0
-4	CA, Kern County	0	0	1	0	0	1	1	7.48956e-09
+4	CA, Kern County	0	0	1	0	0	1	1	0
 5	CA, Kern County	0	0	0	0	1	1	1	0
 6	CA, Kern County	0	0	0	0	1	1	1	0
 7	CA, Kern County	0	0	0	0	1	1	1	0
@@ -3468,30 +3468,30 @@ None	CA, Lake County	0	0	0	0	1	1	1	0
 9	CA, Lassen County	0	0	0	0	1	1	1	0
 None	CA, Lassen County	0	0	0	0	1	1	1	0
 1	CA, Los Angeles County	0	0	0	0	1	1	1	0
-10	CA, Los Angeles County	0	0	1	0	0	1	1	2.59924e-07
+10	CA, Los Angeles County	0	0	1	0	0	1	1	0
 11	CA, Los Angeles County	0	0	0	0	1	1	1	0
 12	CA, Los Angeles County	0	0	0	0	1	1	1	0
 13	CA, Los Angeles County	0	0	0	0	1	1	1	0
-14	CA, Los Angeles County	0	0	1	0	0	1	1	0.000938397
+14	CA, Los Angeles County	0	0	1	0	0	1	1	0.00093166
 15	CA, Los Angeles County	0	0	0	0	1	1	1	0
-16	CA, Los Angeles County	1	0	0	0	0	1	1	0.000186284
+16	CA, Los Angeles County	1	0	0	0	0	1	1	0.000182671
 2	CA, Los Angeles County	0	0	0	0	1	1	1	0
 3	CA, Los Angeles County	0	0	0	0	1	1	1	0
 4	CA, Los Angeles County	0	0	0	0	1	1	1	0
 5	CA, Los Angeles County	0	0	0	0	1	1	1	0
-6	CA, Los Angeles County	1	0	0	0	0	1	1	0.00414884
+6	CA, Los Angeles County	1	0	0	0	0	1	1	0.00413115
 7	CA, Los Angeles County	0	0	0	0	1	1	1	0
-8	CA, Los Angeles County	0	0	1	0	0	1	1	0.00579384
-9	CA, Los Angeles County	0	0	1	0	0	1	1	0.0149673
+8	CA, Los Angeles County	0	0	1	0	0	1	1	0.00581518
+9	CA, Los Angeles County	0	0	1	0	0	1	1	0.0149742
 None	CA, Los Angeles County	0	0	0	0	1	1	1	0
 1	CA, Madera County	0	0	0	0	1	1	1	0
 10	CA, Madera County	0	0	0	0	1	1	1	0
 11	CA, Madera County	0	0	0	0	1	1	1	0
-12	CA, Madera County	0	0	1	0	0	1	1	5.07005e-08
-13	CA, Madera County	0	0	1	0	0	1	1	0.000347167
+12	CA, Madera County	0	0	1	0	0	1	1	0
+13	CA, Madera County	0	0	1	0	0	1	1	0.000347603
 14	CA, Madera County	0	0	0	0	1	1	1	0
 15	CA, Madera County	0	0	0	0	1	1	1	0
-16	CA, Madera County	1	0	0	0	0	1	1	2.45984e-05
+16	CA, Madera County	1	0	0	0	0	1	1	2.42139e-05
 2	CA, Madera County	0	0	0	0	1	1	1	0
 3	CA, Madera County	0	0	0	0	1	1	1	0
 4	CA, Madera County	0	0	0	0	1	1	1	0
@@ -3509,8 +3509,8 @@ None	CA, Madera County	0	0	0	0	1	1	1	0
 14	CA, Marin County	0	0	0	0	1	1	1	0
 15	CA, Marin County	0	0	0	0	1	1	1	0
 16	CA, Marin County	0	0	0	0	1	1	1	0
-2	CA, Marin County	0	0	1	0	0	1	1	0.000577368
-3	CA, Marin County	1	0	0	0	0	1	1	0.000260039
+2	CA, Marin County	0	0	1	0	0	1	1	0.000578506
+3	CA, Marin County	1	0	0	0	0	1	1	0.0002589
 4	CA, Marin County	0	0	0	0	1	1	1	0
 5	CA, Marin County	0	0	0	0	1	1	1	0
 6	CA, Marin County	0	0	0	0	1	1	1	0
@@ -3521,11 +3521,11 @@ None	CA, Marin County	0	0	0	0	1	1	1	0
 1	CA, Mariposa County	0	0	0	0	1	1	1	0
 10	CA, Mariposa County	0	0	0	0	1	1	1	0
 11	CA, Mariposa County	0	0	0	0	1	1	1	0
-12	CA, Mariposa County	0	0	1	0	0	1	1	6.82862e-05
-13	CA, Mariposa County	0	0	1	0	0	1	1	5.62896e-07
+12	CA, Mariposa County	0	0	1	0	0	1	1	6.89864e-05
+13	CA, Mariposa County	0	0	1	0	0	1	1	0
 14	CA, Mariposa County	0	0	0	0	1	1	1	0
 15	CA, Mariposa County	0	0	0	0	1	1	1	0
-16	CA, Mariposa County	1	0	0	0	0	1	1	8.23842e-06
+16	CA, Mariposa County	1	0	0	0	0	1	1	8.10113e-06
 2	CA, Mariposa County	0	0	0	0	1	1	1	0
 3	CA, Mariposa County	0	0	0	0	1	1	1	0
 4	CA, Mariposa County	0	0	0	0	1	1	1	0
@@ -3535,7 +3535,7 @@ None	CA, Marin County	0	0	0	0	1	1	1	0
 8	CA, Mariposa County	0	0	0	0	1	1	1	0
 9	CA, Mariposa County	0	0	0	0	1	1	1	0
 None	CA, Mariposa County	0	0	0	0	1	1	1	0
-1	CA, Mendocino County	1	0	0	0	0	1	1	0.000105972
+1	CA, Mendocino County	1	0	0	0	0	1	1	0.000113177
 10	CA, Mendocino County	0	0	0	0	1	1	1	0
 11	CA, Mendocino County	0	0	0	0	1	1	1	0
 12	CA, Mendocino County	0	0	0	0	1	1	1	0
@@ -3543,7 +3543,7 @@ None	CA, Mariposa County	0	0	0	0	1	1	1	0
 14	CA, Mendocino County	0	0	0	0	1	1	1	0
 15	CA, Mendocino County	0	0	0	0	1	1	1	0
 16	CA, Mendocino County	0	0	0	0	1	1	1	0
-2	CA, Mendocino County	0	0	1	0	0	1	1	0.000197596
+2	CA, Mendocino County	0	0	1	0	0	1	1	0.000190392
 3	CA, Mendocino County	0	0	0	0	1	1	1	0
 4	CA, Mendocino County	0	0	0	0	1	1	1	0
 5	CA, Mendocino County	0	0	0	0	1	1	1	0
@@ -3555,8 +3555,8 @@ None	CA, Mendocino County	0	0	0	0	1	1	1	0
 1	CA, Merced County	0	0	0	0	1	1	1	0
 10	CA, Merced County	0	0	0	0	1	1	1	0
 11	CA, Merced County	0	0	0	0	1	1	1	0
-12	CA, Merced County	0	0	1	0	0	1	1	0.000627138
-13	CA, Merced County	0	0	1	0	0	1	1	5.13276e-07
+12	CA, Merced County	0	0	1	0	0	1	1	0.000627652
+13	CA, Merced County	0	0	1	0	0	1	1	0
 14	CA, Merced County	0	0	0	0	1	1	1	0
 15	CA, Merced County	0	0	0	0	1	1	1	0
 16	CA, Merced County	0	0	0	0	1	1	1	0
@@ -3607,13 +3607,13 @@ None	CA, Mono County	0	0	0	0	1	1	1	0
 10	CA, Monterey County	0	0	0	0	1	1	1	0
 11	CA, Monterey County	0	0	0	0	1	1	1	0
 12	CA, Monterey County	0	0	0	0	1	1	1	0
-13	CA, Monterey County	0	0	1	0	0	1	1	3.09648e-08
+13	CA, Monterey County	0	0	1	0	0	1	1	0
 14	CA, Monterey County	0	0	0	0	1	1	1	0
 15	CA, Monterey County	0	0	0	0	1	1	1	0
 16	CA, Monterey County	0	0	0	0	1	1	1	0
 2	CA, Monterey County	0	0	0	0	1	1	1	0
-3	CA, Monterey County	1	0	0	0	0	1	1	0.000962955
-4	CA, Monterey County	0	0	1	0	0	1	1	8.26177e-05
+3	CA, Monterey County	1	0	0	0	0	1	1	0.000962355
+4	CA, Monterey County	0	0	1	0	0	1	1	8.32491e-05
 5	CA, Monterey County	0	0	0	0	1	1	1	0
 6	CA, Monterey County	0	0	0	0	1	1	1	0
 7	CA, Monterey County	0	0	0	0	1	1	1	0
@@ -3623,12 +3623,12 @@ None	CA, Monterey County	0	0	0	0	1	1	1	0
 1	CA, Napa County	0	0	0	0	1	1	1	0
 10	CA, Napa County	0	0	0	0	1	1	1	0
 11	CA, Napa County	0	0	0	0	1	1	1	0
-12	CA, Napa County	0	0	1	0	0	1	1	1.36945e-08
+12	CA, Napa County	0	0	1	0	0	1	1	0
 13	CA, Napa County	0	0	0	0	1	1	1	0
 14	CA, Napa County	0	0	0	0	1	1	1	0
 15	CA, Napa County	0	0	0	0	1	1	1	0
 16	CA, Napa County	0	0	0	0	1	1	1	0
-2	CA, Napa County	0	0	1	0	0	1	1	0.000412509
+2	CA, Napa County	0	0	1	0	0	1	1	0.000412522
 3	CA, Napa County	0	0	0	0	1	1	1	0
 4	CA, Napa County	0	0	0	0	1	1	1	0
 5	CA, Napa County	0	0	0	0	1	1	1	0
@@ -3639,12 +3639,12 @@ None	CA, Monterey County	0	0	0	0	1	1	1	0
 None	CA, Napa County	0	0	0	0	1	1	1	0
 1	CA, Nevada County	0	0	0	0	1	1	1	0
 10	CA, Nevada County	0	0	0	0	1	1	1	0
-11	CA, Nevada County	0	0	1	0	0	1	1	0.000284371
+11	CA, Nevada County	0	0	1	0	0	1	1	0.000275514
 12	CA, Nevada County	0	0	0	0	1	1	1	0
 13	CA, Nevada County	0	0	0	0	1	1	1	0
 14	CA, Nevada County	0	0	0	0	1	1	1	0
 15	CA, Nevada County	0	0	0	0	1	1	1	0
-16	CA, Nevada County	1	0	0	0	0	1	1	0.000112399
+16	CA, Nevada County	1	0	0	0	0	1	1	0.000121256
 2	CA, Nevada County	0	0	0	0	1	1	1	0
 3	CA, Nevada County	0	0	0	0	1	1	1	0
 4	CA, Nevada County	0	0	0	0	1	1	1	0
@@ -3666,19 +3666,19 @@ None	CA, Nevada County	0	0	0	0	1	1	1	0
 3	CA, Orange County	0	0	0	0	1	1	1	0
 4	CA, Orange County	0	0	0	0	1	1	1	0
 5	CA, Orange County	0	0	0	0	1	1	1	0
-6	CA, Orange County	1	0	0	0	0	1	1	0.00276974
+6	CA, Orange County	1	0	0	0	0	1	1	0.00272147
 7	CA, Orange County	0	0	0	0	1	1	1	0
-8	CA, Orange County	0	0	1	0	0	1	1	0.00522686
-9	CA, Orange County	0	0	1	0	0	1	1	1.00373e-06
+8	CA, Orange County	0	0	1	0	0	1	1	0.00527614
+9	CA, Orange County	0	0	1	0	0	1	1	0
 None	CA, Orange County	0	0	0	0	1	1	1	0
 1	CA, Placer County	0	0	0	0	1	1	1	0
 10	CA, Placer County	0	0	0	0	1	1	1	0
-11	CA, Placer County	0	0	1	0	0	1	1	0.00107412
-12	CA, Placer County	0	0	1	0	0	1	1	9.18838e-07
+11	CA, Placer County	0	0	1	0	0	1	1	0.001021
+12	CA, Placer County	0	0	1	0	0	1	1	0
 13	CA, Placer County	0	0	0	0	1	1	1	0
 14	CA, Placer County	0	0	0	0	1	1	1	0
 15	CA, Placer County	0	0	0	0	1	1	1	0
-16	CA, Placer County	1	0	0	0	0	1	1	0.000102743
+16	CA, Placer County	1	0	0	0	0	1	1	0.000156786
 2	CA, Placer County	0	0	0	0	1	1	1	0
 3	CA, Placer County	0	0	0	0	1	1	1	0
 4	CA, Placer County	0	0	0	0	1	1	1	0
@@ -3706,13 +3706,13 @@ None	CA, Placer County	0	0	0	0	1	1	1	0
 9	CA, Plumas County	0	0	0	0	1	1	1	0
 None	CA, Plumas County	0	0	0	0	1	1	1	0
 1	CA, Riverside County	0	0	0	0	1	1	1	0
-10	CA, Riverside County	0	0	1	0	0	1	1	0.00413957
+10	CA, Riverside County	0	0	1	0	0	1	1	0.00414144
 11	CA, Riverside County	0	0	0	0	1	1	1	0
 12	CA, Riverside County	0	0	0	0	1	1	1	0
 13	CA, Riverside County	0	0	0	0	1	1	1	0
 14	CA, Riverside County	0	0	0	0	1	1	1	0
-15	CA, Riverside County	0	0	1	0	0	1	1	0.00194847
-16	CA, Riverside County	1	0	0	0	0	1	1	3.10715e-05
+15	CA, Riverside County	0	0	1	0	0	1	1	0.00191039
+16	CA, Riverside County	1	0	0	0	0	1	1	6.72857e-05
 2	CA, Riverside County	0	0	0	0	1	1	1	0
 3	CA, Riverside County	0	0	0	0	1	1	1	0
 4	CA, Riverside County	0	0	0	0	1	1	1	0
@@ -3724,8 +3724,8 @@ None	CA, Plumas County	0	0	0	0	1	1	1	0
 None	CA, Riverside County	0	0	0	0	1	1	1	0
 1	CA, Sacramento County	0	0	0	0	1	1	1	0
 10	CA, Sacramento County	0	0	0	0	1	1	1	0
-11	CA, Sacramento County	0	0	1	0	0	1	1	8.2399e-08
-12	CA, Sacramento County	0	0	1	0	0	1	1	0.00419224
+11	CA, Sacramento County	0	0	1	0	0	1	1	0
+12	CA, Sacramento County	0	0	1	0	0	1	1	0.00419232
 13	CA, Sacramento County	0	0	0	0	1	1	1	0
 14	CA, Sacramento County	0	0	0	0	1	1	1	0
 15	CA, Sacramento County	0	0	0	0	1	1	1	0
@@ -3748,8 +3748,8 @@ None	CA, Sacramento County	0	0	0	0	1	1	1	0
 15	CA, San Benito County	0	0	0	0	1	1	1	0
 16	CA, San Benito County	0	0	0	0	1	1	1	0
 2	CA, San Benito County	0	0	0	0	1	1	1	0
-3	CA, San Benito County	1	0	0	0	0	1	1	8.51449e-09
-4	CA, San Benito County	0	0	1	0	0	1	1	0.000135301
+3	CA, San Benito County	1	0	0	0	0	1	1	0
+4	CA, San Benito County	0	0	1	0	0	1	1	0.00013531
 5	CA, San Benito County	0	0	0	0	1	1	1	0
 6	CA, San Benito County	0	0	0	0	1	1	1	0
 7	CA, San Benito County	0	0	0	0	1	1	1	0
@@ -3757,13 +3757,13 @@ None	CA, Sacramento County	0	0	0	0	1	1	1	0
 9	CA, San Benito County	0	0	0	0	1	1	1	0
 None	CA, San Benito County	0	0	0	0	1	1	1	0
 1	CA, San Bernardino County	0	0	0	0	1	1	1	0
-10	CA, San Bernardino County	0	0	1	0	0	1	1	0.00331215
+10	CA, San Bernardino County	0	0	1	0	0	1	1	0.00327865
 11	CA, San Bernardino County	0	0	0	0	1	1	1	0
 12	CA, San Bernardino County	0	0	0	0	1	1	1	0
 13	CA, San Bernardino County	0	0	0	0	1	1	1	0
-14	CA, San Bernardino County	0	0	1	0	0	1	1	0.00136027
-15	CA, San Bernardino County	0	0	1	0	0	1	1	4.36046e-05
-16	CA, San Bernardino County	1	0	0	0	0	1	1	0.000561349
+14	CA, San Bernardino County	0	0	1	0	0	1	1	0.00136154
+15	CA, San Bernardino County	0	0	1	0	0	1	1	4.34523e-05
+16	CA, San Bernardino County	1	0	0	0	0	1	1	0.000586661
 2	CA, San Bernardino County	0	0	0	0	1	1	1	0
 3	CA, San Bernardino County	0	0	0	0	1	1	1	0
 4	CA, San Bernardino County	0	0	0	0	1	1	1	0
@@ -3771,22 +3771,22 @@ None	CA, San Benito County	0	0	0	0	1	1	1	0
 6	CA, San Bernardino County	0	0	0	0	1	1	1	0
 7	CA, San Bernardino County	0	0	0	0	1	1	1	0
 8	CA, San Bernardino County	0	0	0	0	1	1	1	0
-9	CA, San Bernardino County	0	0	1	0	0	1	1	7.32971e-06
+9	CA, San Bernardino County	0	0	1	0	0	1	1	1.43971e-05
 None	CA, San Bernardino County	0	0	0	0	1	1	1	0
 1	CA, San Diego County	0	0	0	0	1	1	1	0
-10	CA, San Diego County	0	0	1	0	0	1	1	0.00245816
+10	CA, San Diego County	0	0	1	0	0	1	1	0.00243415
 11	CA, San Diego County	0	0	0	0	1	1	1	0
 12	CA, San Diego County	0	0	0	0	1	1	1	0
 13	CA, San Diego County	0	0	0	0	1	1	1	0
-14	CA, San Diego County	0	0	1	0	0	1	1	7.45825e-05
-15	CA, San Diego County	0	0	1	0	0	1	1	1.65588e-05
+14	CA, San Diego County	0	0	1	0	0	1	1	6.9106e-05
+15	CA, San Diego County	0	0	1	0	0	1	1	2.54448e-05
 16	CA, San Diego County	0	0	0	0	1	1	1	0
 2	CA, San Diego County	0	0	0	0	1	1	1	0
 3	CA, San Diego County	0	0	0	0	1	1	1	0
 4	CA, San Diego County	0	0	0	0	1	1	1	0
 5	CA, San Diego County	0	0	0	0	1	1	1	0
-6	CA, San Diego County	1	0	0	0	0	1	1	8.46707e-06
-7	CA, San Diego County	0	0	1	0	0	1	1	0.00630159
+6	CA, San Diego County	1	0	0	0	0	1	1	0
+7	CA, San Diego County	0	0	1	0	0	1	1	0.00633066
 8	CA, San Diego County	0	0	0	0	1	1	1	0
 9	CA, San Diego County	0	0	0	0	1	1	1	0
 None	CA, San Diego County	0	0	0	0	1	1	1	0
@@ -3828,14 +3828,14 @@ None	CA, San Joaquin County	0	0	0	0	1	1	1	0
 10	CA, San Luis Obispo County	0	0	0	0	1	1	1	0
 11	CA, San Luis Obispo County	0	0	0	0	1	1	1	0
 12	CA, San Luis Obispo County	0	0	0	0	1	1	1	0
-13	CA, San Luis Obispo County	0	0	1	0	0	1	1	3.89432e-08
+13	CA, San Luis Obispo County	0	0	1	0	0	1	1	0
 14	CA, San Luis Obispo County	0	0	0	0	1	1	1	0
 15	CA, San Luis Obispo County	0	0	0	0	1	1	1	0
 16	CA, San Luis Obispo County	0	0	0	0	1	1	1	0
 2	CA, San Luis Obispo County	0	0	0	0	1	1	1	0
 3	CA, San Luis Obispo County	0	0	0	0	1	1	1	0
-4	CA, San Luis Obispo County	0	0	1	0	0	1	1	0.0003025
-5	CA, San Luis Obispo County	1	0	0	0	0	1	1	0.000588131
+4	CA, San Luis Obispo County	0	0	1	0	0	1	1	0.000298914
+5	CA, San Luis Obispo County	1	0	0	0	0	1	1	0.000591756
 6	CA, San Luis Obispo County	0	0	0	0	1	1	1	0
 7	CA, San Luis Obispo County	0	0	0	0	1	1	1	0
 8	CA, San Luis Obispo County	0	0	0	0	1	1	1	0
@@ -3850,8 +3850,8 @@ None	CA, San Luis Obispo County	0	0	0	0	1	1	1	0
 15	CA, San Mateo County	0	0	0	0	1	1	1	0
 16	CA, San Mateo County	0	0	0	0	1	1	1	0
 2	CA, San Mateo County	0	0	0	0	1	1	1	0
-3	CA, San Mateo County	1	0	0	0	0	1	1	0.00198623
-4	CA, San Mateo County	0	0	1	0	0	1	1	5.61915e-05
+3	CA, San Mateo County	1	0	0	0	0	1	1	0.00198218
+4	CA, San Mateo County	0	0	1	0	0	1	1	6.0244e-05
 5	CA, San Mateo County	0	0	0	0	1	1	1	0
 6	CA, San Mateo County	0	0	0	0	1	1	1	0
 7	CA, San Mateo County	0	0	0	0	1	1	1	0
@@ -3862,15 +3862,15 @@ None	CA, San Mateo County	0	0	0	0	1	1	1	0
 10	CA, Santa Barbara County	0	0	0	0	1	1	1	0
 11	CA, Santa Barbara County	0	0	0	0	1	1	1	0
 12	CA, Santa Barbara County	0	0	0	0	1	1	1	0
-13	CA, Santa Barbara County	0	0	1	0	0	1	1	1.08303e-06
+13	CA, Santa Barbara County	0	0	1	0	0	1	1	0
 14	CA, Santa Barbara County	0	0	0	0	1	1	1	0
 15	CA, Santa Barbara County	0	0	0	0	1	1	1	0
 16	CA, Santa Barbara County	0	0	0	0	1	1	1	0
 2	CA, Santa Barbara County	0	0	0	0	1	1	1	0
 3	CA, Santa Barbara County	0	0	0	0	1	1	1	0
-4	CA, Santa Barbara County	0	0	1	0	0	1	1	1.49546e-06
-5	CA, Santa Barbara County	1	0	0	0	0	1	1	0.000548082
-6	CA, Santa Barbara County	1	0	0	0	0	1	1	0.000602401
+4	CA, Santa Barbara County	0	0	1	0	0	1	1	4.25199e-06
+5	CA, Santa Barbara County	1	0	0	0	0	1	1	0.000544932
+6	CA, Santa Barbara County	1	0	0	0	0	1	1	0.000603877
 7	CA, Santa Barbara County	0	0	0	0	1	1	1	0
 8	CA, Santa Barbara County	0	0	0	0	1	1	1	0
 9	CA, Santa Barbara County	0	0	0	0	1	1	1	0
@@ -3878,14 +3878,14 @@ None	CA, Santa Barbara County	0	0	0	0	1	1	1	0
 1	CA, Santa Clara County	0	0	0	0	1	1	1	0
 10	CA, Santa Clara County	0	0	0	0	1	1	1	0
 11	CA, Santa Clara County	0	0	0	0	1	1	1	0
-12	CA, Santa Clara County	0	0	1	0	0	1	1	5.28042e-07
+12	CA, Santa Clara County	0	0	1	0	0	1	1	0
 13	CA, Santa Clara County	0	0	0	0	1	1	1	0
 14	CA, Santa Clara County	0	0	0	0	1	1	1	0
 15	CA, Santa Clara County	0	0	0	0	1	1	1	0
 16	CA, Santa Clara County	0	0	0	0	1	1	1	0
 2	CA, Santa Clara County	0	0	0	0	1	1	1	0
-3	CA, Santa Clara County	1	0	0	0	0	1	1	6.86981e-06
-4	CA, Santa Clara County	0	0	1	0	0	1	1	0.00485555
+3	CA, Santa Clara County	1	0	0	0	0	1	1	0
+4	CA, Santa Clara County	0	0	1	0	0	1	1	0.00486295
 5	CA, Santa Clara County	0	0	0	0	1	1	1	0
 6	CA, Santa Clara County	0	0	0	0	1	1	1	0
 7	CA, Santa Clara County	0	0	0	0	1	1	1	0
@@ -3901,8 +3901,8 @@ None	CA, Santa Clara County	0	0	0	0	1	1	1	0
 15	CA, Santa Cruz County	0	0	0	0	1	1	1	0
 16	CA, Santa Cruz County	0	0	0	0	1	1	1	0
 2	CA, Santa Cruz County	0	0	0	0	1	1	1	0
-3	CA, Santa Cruz County	1	0	0	0	0	1	1	0.000769154
-4	CA, Santa Cruz County	0	0	1	0	0	1	1	1.60066e-05
+3	CA, Santa Cruz County	1	0	0	0	0	1	1	0.000773859
+4	CA, Santa Cruz County	0	0	1	0	0	1	1	1.13013e-05
 5	CA, Santa Cruz County	0	0	0	0	1	1	1	0
 6	CA, Santa Cruz County	0	0	0	0	1	1	1	0
 7	CA, Santa Cruz County	0	0	0	0	1	1	1	0
@@ -3911,12 +3911,12 @@ None	CA, Santa Clara County	0	0	0	0	1	1	1	0
 None	CA, Santa Cruz County	0	0	0	0	1	1	1	0
 1	CA, Shasta County	0	0	0	0	1	1	1	0
 10	CA, Shasta County	0	0	0	0	1	1	1	0
-11	CA, Shasta County	0	0	1	0	0	1	1	0.000536774
+11	CA, Shasta County	0	0	1	0	0	1	1	0.000550318
 12	CA, Shasta County	0	0	0	0	1	1	1	0
 13	CA, Shasta County	0	0	0	0	1	1	1	0
 14	CA, Shasta County	0	0	0	0	1	1	1	0
 15	CA, Shasta County	0	0	0	0	1	1	1	0
-16	CA, Shasta County	1	0	0	0	0	1	1	4.46428e-05
+16	CA, Shasta County	1	0	0	0	0	1	1	3.10991e-05
 2	CA, Shasta County	0	0	0	0	1	1	1	0
 3	CA, Shasta County	0	0	0	0	1	1	1	0
 4	CA, Shasta County	0	0	0	0	1	1	1	0
@@ -3963,13 +3963,13 @@ None	CA, Siskiyou County	0	0	0	0	1	1	1	0
 1	CA, Solano County	0	0	0	0	1	1	1	0
 10	CA, Solano County	0	0	0	0	1	1	1	0
 11	CA, Solano County	0	0	0	0	1	1	1	0
-12	CA, Solano County	0	0	1	0	0	1	1	0.000956414
+12	CA, Solano County	0	0	1	0	0	1	1	0.000956956
 13	CA, Solano County	0	0	0	0	1	1	1	0
 14	CA, Solano County	0	0	0	0	1	1	1	0
 15	CA, Solano County	0	0	0	0	1	1	1	0
 16	CA, Solano County	0	0	0	0	1	1	1	0
-2	CA, Solano County	0	0	1	0	0	1	1	3.19402e-07
-3	CA, Solano County	1	0	0	0	0	1	1	0.000200185
+2	CA, Solano County	0	0	1	0	0	1	1	0
+3	CA, Solano County	1	0	0	0	0	1	1	0.000199962
 4	CA, Solano County	0	0	0	0	1	1	1	0
 5	CA, Solano County	0	0	0	0	1	1	1	0
 6	CA, Solano County	0	0	0	0	1	1	1	0
@@ -3977,7 +3977,7 @@ None	CA, Siskiyou County	0	0	0	0	1	1	1	0
 8	CA, Solano County	0	0	0	0	1	1	1	0
 9	CA, Solano County	0	0	0	0	1	1	1	0
 None	CA, Solano County	0	0	0	0	1	1	1	0
-1	CA, Sonoma County	1	0	0	0	0	1	1	5.42665e-05
+1	CA, Sonoma County	1	0	0	0	0	1	1	4.99793e-05
 10	CA, Sonoma County	0	0	0	0	1	1	1	0
 11	CA, Sonoma County	0	0	0	0	1	1	1	0
 12	CA, Sonoma County	0	0	0	0	1	1	1	0
@@ -3985,7 +3985,7 @@ None	CA, Solano County	0	0	0	0	1	1	1	0
 14	CA, Sonoma County	0	0	0	0	1	1	1	0
 15	CA, Sonoma County	0	0	0	0	1	1	1	0
 16	CA, Sonoma County	0	0	0	0	1	1	1	0
-2	CA, Sonoma County	0	0	1	0	0	1	1	0.0014903
+2	CA, Sonoma County	0	0	1	0	0	1	1	0.00149459
 3	CA, Sonoma County	0	0	0	0	1	1	1	0
 4	CA, Sonoma County	0	0	0	0	1	1	1	0
 5	CA, Sonoma County	0	0	0	0	1	1	1	0
@@ -4013,8 +4013,8 @@ None	CA, Sonoma County	0	0	0	0	1	1	1	0
 None	CA, Stanislaus County	0	0	0	0	1	1	1	0
 1	CA, Sutter County	0	0	0	0	1	1	1	0
 10	CA, Sutter County	0	0	0	0	1	1	1	0
-11	CA, Sutter County	0	0	1	0	0	1	1	0.000253724
-12	CA, Sutter County	0	0	1	0	0	1	1	6.64012e-07
+11	CA, Sutter County	0	0	1	0	0	1	1	0.000254387
+12	CA, Sutter County	0	0	1	0	0	1	1	0
 13	CA, Sutter County	0	0	0	0	1	1	1	0
 14	CA, Sutter County	0	0	0	0	1	1	1	0
 15	CA, Sutter County	0	0	0	0	1	1	1	0
@@ -4030,12 +4030,12 @@ None	CA, Stanislaus County	0	0	0	0	1	1	1	0
 None	CA, Sutter County	0	0	0	0	1	1	1	0
 1	CA, Tehama County	0	0	0	0	1	1	1	0
 10	CA, Tehama County	0	0	0	0	1	1	1	0
-11	CA, Tehama County	0	0	1	0	0	1	1	0.000197855
+11	CA, Tehama County	0	0	1	0	0	1	1	0.000203088
 12	CA, Tehama County	0	0	0	0	1	1	1	0
 13	CA, Tehama County	0	0	0	0	1	1	1	0
 14	CA, Tehama County	0	0	0	0	1	1	1	0
 15	CA, Tehama County	0	0	0	0	1	1	1	0
-16	CA, Tehama County	1	0	0	0	0	1	1	5.2326e-06
+16	CA, Tehama County	1	0	0	0	0	1	1	0
 2	CA, Tehama County	0	0	0	0	1	1	1	0
 3	CA, Tehama County	0	0	0	0	1	1	1	0
 4	CA, Tehama County	0	0	0	0	1	1	1	0
@@ -4052,8 +4052,8 @@ None	CA, Tehama County	0	0	0	0	1	1	1	0
 13	CA, Trinity County	0	0	0	0	1	1	1	0
 14	CA, Trinity County	0	0	0	0	1	1	1	0
 15	CA, Trinity County	0	0	0	0	1	1	1	0
-16	CA, Trinity County	1	0	0	0	0	1	1	5.8354e-05
-2	CA, Trinity County	0	0	1	0	0	1	1	7.20102e-06
+16	CA, Trinity County	1	0	0	0	0	1	1	5.85504e-05
+2	CA, Trinity County	0	0	1	0	0	1	1	7.00455e-06
 3	CA, Trinity County	0	0	0	0	1	1	1	0
 4	CA, Trinity County	0	0	0	0	1	1	1	0
 5	CA, Trinity County	0	0	0	0	1	1	1	0
@@ -4066,10 +4066,10 @@ None	CA, Trinity County	0	0	0	0	1	1	1	0
 10	CA, Tulare County	0	0	0	0	1	1	1	0
 11	CA, Tulare County	0	0	0	0	1	1	1	0
 12	CA, Tulare County	0	0	0	0	1	1	1	0
-13	CA, Tulare County	0	0	1	0	0	1	1	0.00106382
+13	CA, Tulare County	0	0	1	0	0	1	1	0.00105671
 14	CA, Tulare County	0	0	0	0	1	1	1	0
 15	CA, Tulare County	0	0	0	0	1	1	1	0
-16	CA, Tulare County	1	0	0	0	0	1	1	2.27505e-05
+16	CA, Tulare County	1	0	0	0	0	1	1	2.98683e-05
 2	CA, Tulare County	0	0	0	0	1	1	1	0
 3	CA, Tulare County	0	0	0	0	1	1	1	0
 4	CA, Tulare County	0	0	0	0	1	1	1	0
@@ -4082,11 +4082,11 @@ None	CA, Tulare County	0	0	0	0	1	1	1	0
 1	CA, Tuolumne County	0	0	0	0	1	1	1	0
 10	CA, Tuolumne County	0	0	0	0	1	1	1	0
 11	CA, Tuolumne County	0	0	0	0	1	1	1	0
-12	CA, Tuolumne County	0	0	1	0	0	1	1	0.000217728
+12	CA, Tuolumne County	0	0	1	0	0	1	1	0.000233918
 13	CA, Tuolumne County	0	0	0	0	1	1	1	0
 14	CA, Tuolumne County	0	0	0	0	1	1	1	0
 15	CA, Tuolumne County	0	0	0	0	1	1	1	0
-16	CA, Tuolumne County	1	0	0	0	0	1	1	1.61909e-05
+16	CA, Tuolumne County	1	0	0	0	0	1	1	0
 2	CA, Tuolumne County	0	0	0	0	1	1	1	0
 3	CA, Tuolumne County	0	0	0	0	1	1	1	0
 4	CA, Tuolumne County	0	0	0	0	1	1	1	0
@@ -4100,23 +4100,23 @@ None	CA, Tuolumne County	0	0	0	0	1	1	1	0
 10	CA, Ventura County	0	0	0	0	1	1	1	0
 11	CA, Ventura County	0	0	0	0	1	1	1	0
 12	CA, Ventura County	0	0	0	0	1	1	1	0
-13	CA, Ventura County	0	0	1	0	0	1	1	7.54773e-07
+13	CA, Ventura County	0	0	1	0	0	1	1	0
 14	CA, Ventura County	0	0	0	0	1	1	1	0
 15	CA, Ventura County	0	0	0	0	1	1	1	0
-16	CA, Ventura County	1	0	0	0	0	1	1	3.61965e-06
+16	CA, Ventura County	1	0	0	0	0	1	1	3.93867e-06
 2	CA, Ventura County	0	0	0	0	1	1	1	0
 3	CA, Ventura County	0	0	0	0	1	1	1	0
 4	CA, Ventura County	0	0	0	0	1	1	1	0
 5	CA, Ventura County	0	0	0	0	1	1	1	0
-6	CA, Ventura County	1	0	0	0	0	1	1	0.00116502
+6	CA, Ventura County	1	0	0	0	0	1	1	0.00117139
 7	CA, Ventura County	0	0	0	0	1	1	1	0
 8	CA, Ventura County	0	0	0	0	1	1	1	0
-9	CA, Ventura County	0	0	1	0	0	1	1	0.000954796
+9	CA, Ventura County	0	0	1	0	0	1	1	0.000948861
 None	CA, Ventura County	0	0	0	0	1	1	1	0
 1	CA, Yolo County	0	0	0	0	1	1	1	0
 10	CA, Yolo County	0	0	0	0	1	1	1	0
-11	CA, Yolo County	0	0	1	0	0	1	1	5.06795e-07
-12	CA, Yolo County	0	0	1	0	0	1	1	0.000569989
+11	CA, Yolo County	0	0	1	0	0	1	1	0
+12	CA, Yolo County	0	0	1	0	0	1	1	0.000570496
 13	CA, Yolo County	0	0	0	0	1	1	1	0
 14	CA, Yolo County	0	0	0	0	1	1	1	0
 15	CA, Yolo County	0	0	0	0	1	1	1	0
@@ -4132,12 +4132,12 @@ None	CA, Ventura County	0	0	0	0	1	1	1	0
 None	CA, Yolo County	0	0	0	0	1	1	1	0
 1	CA, Yuba County	0	0	0	0	1	1	1	0
 10	CA, Yuba County	0	0	0	0	1	1	1	0
-11	CA, Yuba County	0	0	1	0	0	1	1	0.00020311
+11	CA, Yuba County	0	0	1	0	0	1	1	0.00020916
 12	CA, Yuba County	0	0	0	0	1	1	1	0
 13	CA, Yuba County	0	0	0	0	1	1	1	0
 14	CA, Yuba County	0	0	0	0	1	1	1	0
 15	CA, Yuba County	0	0	0	0	1	1	1	0
-16	CA, Yuba County	1	0	0	0	0	1	1	6.04988e-06
+16	CA, Yuba County	1	0	0	0	0	1	1	0
 2	CA, Yuba County	0	0	0	0	1	1	1	0
 3	CA, Yuba County	0	0	0	0	1	1	1	0
 4	CA, Yuba County	0	0	0	0	1	1	1	0

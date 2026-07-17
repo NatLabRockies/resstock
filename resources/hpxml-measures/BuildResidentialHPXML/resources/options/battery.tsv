@@ -1,0 +1,18 @@
+Option Name	Nominal Capacity [kWh]	Usable Capacity [kWh]	Location	Rated Power Output [W]	Round Trip Efficiency [frac]
+None					
+5.0 kWh	5				
+7.5 kWh	7.5				
+10.0 kWh	10				
+12.5 kWh	12.5				
+15.0 kWh	15				
+17.5 kWh	17.5				
+20.0 kWh	20				
+"Detailed Example: 20.0 kWh, 6 kW, Garage"	20	18	garage	6000	
+"Detailed Example: 20.0 kWh, 6 kW, Outside"	20	18	outside	6000	
+"Detailed Example: 20.0 kWh, 6 kW, Outside, 80% Efficiency"	20	18	outside	6000	0.8
+					
+# Nominal Capacity: The battery's nominal (total) capacity.					
+# Usable Capacity: The battery's usable capacity.					
+# Location: The location of the battery.					
+# Rated Power Output: The battery's power output under non-peak conditions.					
+# Round Trip Efficiency: The round trip efficiency.					

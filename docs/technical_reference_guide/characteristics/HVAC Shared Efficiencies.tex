@@ -1,0 +1,35 @@
+\paragraph{Description}
+% \input{characteristics/description/HVAC Shared Efficiencies}
+The efficiency of a shared HVAC system.
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/HVAC Shared Efficiencies}
+\begin{itemize}
+    \item The sample counts and sample weights are constructed using U.S.~EIA 2020 RECS microdata.
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/HVAC Shared Efficiencies}
+
+\paragraph{Options}
+Shared HVAC system options are shown in Table FIXME. 89\% of homes have no shared system.
+
+For homes with only shared cooling (and in-unit heating or no heating), ResStock currently approximates these fan coil systems as a mini-split heat pumps.
+
+For homes with only shared heating (and in-unit cooling or no cooling), ResStock models two shared boilers with different fuel types (note: the heating system fuel is set by the Heating Fuel characteristic, which is why it's not listed here).
+
+For homes with both shared heating and cooling, the options are a combination of the options for shared cooling only and shared heating only.
+
+\input{characteristics/options/HVAC Shared Efficiencies}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_hvac_shared_efficiencies}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#boiler-shared}{Boiler-Shared} or \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump}{Mini-Split Heat Pumps} documentation for additional information.
+
+\input{characteristics/properties/HVAC Shared Efficiencies}
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/HVAC Shared Efficiencies}
+\begin{itemize}
+    \item Assume that all Heating and Cooling shared systems are fan coils in each housing unit served by a central chiller and boiler.
+    \item Assume all Heating Only shared systems are hot water baseboards in each housing unit served by a central boiler.
+    \item Assume all Cooling Only shared systems are fan coils in each housing unit served by a central chiller.
+\end{itemize}

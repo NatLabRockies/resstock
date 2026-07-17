@@ -1,12 +1,13 @@
 {
   "items": [
     {
-      "description": "Sample file defined by BEopt.",
+      "name": "Sample Real-Time Pricing Rate Min Monthly Charge",
+      "sector": "Residential",
+      "description": "Sample file",
       "fixedchargeunits": "$/month",
       "fixedchargefirstmeter": 9,
       "minchargeunits": "$/month",
       "mincharge": 15,
-      "name": "Sample Real-Time Pricing Rate",
       "realtimepricing": [
         0.04625,
         0.0444,

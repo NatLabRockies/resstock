@@ -1,0 +1,386 @@
+"""PlotConfig dataclass and builders that resolve a PlotSpec into render-ready fields.
+
+``build_plot_config`` composes focused per-field resolvers; each resolver
+dispatches on comparison_dataset, resolution, and view_type.
+"""
+
+from dataclasses import dataclass
+
+import polars as pl
+
+from resstockpostproc.baseline_validation.schema.plot_spec import (
+    PlotSpec,
+    ViewType,
+    Layout,
+    ComparisonDataset,
+    Resolution,
+    format_group_by,
+)
+from resstockpostproc.shared_utils.db_column_names import DataCol
+from resstockpostproc.baseline_validation.plot_helpers.plot_semantics import (
+    quartile_list_column,
+    resolve_quantity_title,
+    resolve_timeseries_column,
+)
+
+
+@dataclass(frozen=True)
+class PlotConfig:
+    """Intermediate representation between user-facing PlotSpec and the renderer."""
+
+    # Column names
+    quantity_column: str
+    sidebar_column: str | None
+    lower_bound_column: str | None
+    upper_bound_column: str | None
+    timeseries_column: str | None
+
+    # Titles and labels
+    title: str
+    quantity_title: str
+    sidebar_title: str
+
+    # Axis configuration
+    ts_xtick_vals: tuple | None
+    ts_xtick_text: tuple | None
+    x_unit: str
+
+    # Layout dimensions
+    height: float
+    width: float
+
+    # Rendering mode flags
+    uses_stacked_layout: bool
+    is_single_entity: bool
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Main Entry Point
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+def build_plot_config(plot_spec: PlotSpec, data: pl.DataFrame) -> PlotConfig:
+    """Resolve ``plot_spec`` into a PlotConfig; ``data`` is used for single-entity detection."""
+    # Resolve all config fields
+    quantity_column = _resolve_quantity_column(plot_spec)
+    sidebar_column = _resolve_sidebar_column(plot_spec)
+    lower_bound_column, upper_bound_column = _resolve_bound_columns(plot_spec)
+    if (
+        lower_bound_column is not None
+        and upper_bound_column is not None
+        and (lower_bound_column not in data.columns or upper_bound_column not in data.columns)
+    ):
+        lower_bound_column, upper_bound_column = None, None
+    timeseries_column = resolve_timeseries_column(plot_spec)
+    title = plot_spec.display_title
+    quantity_title = resolve_quantity_title(plot_spec)
+    comparison_label = _extract_comparison_dataset_label(plot_spec.comparison_dataset, data) if sidebar_column else ""
+    sidebar_title = _resolve_sidebar_title(plot_spec, comparison_label)
+    ts_xtick_vals, ts_xtick_text = _resolve_tick_config(plot_spec, data)
+    x_unit = _resolve_x_unit(plot_spec)
+    uses_stacked_layout = _uses_stacked_layout(plot_spec)
+    is_single_entity = _check_single_entity(data, plot_spec)
+    height, width = _resolve_dimensions(plot_spec, is_single_entity, data)
+
+    # Post-processing: diff_view swaps quantity <-> sidebar
+    if plot_spec.view == ViewType.diff_view and sidebar_column:
+        quantity_column, sidebar_column = sidebar_column, quantity_column
+        sidebar_title = quantity_title
+        quantity_title = "% diff"
+        title = _resolve_diff_view_title(plot_spec, comparison_label)
+        lower_bound_column, upper_bound_column = None, None
+
+    # Post-processing: monthly resolution clears sidebar (RECS/EIA only)
+    if plot_spec.resolution == Resolution.month and plot_spec.comparison_dataset != ComparisonDataset.lrd:
+        sidebar_column = None
+        sidebar_title = ""
+
+    return PlotConfig(
+        quantity_column=quantity_column,
+        sidebar_column=sidebar_column,
+        lower_bound_column=lower_bound_column,
+        upper_bound_column=upper_bound_column,
+        timeseries_column=timeseries_column,
+        title=title,
+        quantity_title=quantity_title,
+        sidebar_title=sidebar_title,
+        ts_xtick_vals=ts_xtick_vals,
+        ts_xtick_text=ts_xtick_text,
+        x_unit=x_unit,
+        height=height,
+        width=width,
+        uses_stacked_layout=uses_stacked_layout,
+        is_single_entity=is_single_entity,
+    )
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Resolver Functions
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+def _resolve_quantity_column(plot_spec: PlotSpec) -> str:
+    """Resolve the main quantity column name.
+
+    LRD: Simple pattern with special case for temp_count_view.
+    RECS/EIA: Handles units_count, quartiles, percent_users, and value columns.
+    """
+    # LRD: simple pattern
+    if plot_spec.comparison_dataset == ComparisonDataset.lrd:
+        if plot_spec.view == ViewType.temp_distribution_view:
+            return "temp_count"
+        return f"{plot_spec.quantity}_value"
+
+    # RECS/EIA: dwelling unit count case
+    if plot_spec.quantity == DataCol.UNITS_COUNT:
+        return "units_count"
+
+    # RECS/EIA: distribution box plot uses quartiles
+    if plot_spec.is_distribution_metric:
+        return quartile_list_column(plot_spec.quantity, plot_spec.coverage)
+
+    # RECS/EIA: penetration bar plot uses percent_users
+    if plot_spec.is_penetration_metric:
+        return f"{plot_spec.quantity}_percent_users"
+
+    # Default: value column
+    return f"{plot_spec.quantity}_value"
+
+
+def resolve_percent_difference_column(quantity_column: str, data: pl.DataFrame) -> str | None:
+    """Return the per-row percent_difference companion column if it exists in data, else None.
+
+    Returns None when quantity_column is already a percent_difference (e.g. diff_view), since
+    the main axis itself carries the diff and a hover line would be redundant.
+    """
+    if quantity_column.endswith("_percent_difference"):
+        return None
+    derived = f"{quantity_column}_percent_difference"
+    return derived if derived in data.columns else None
+
+
+def _resolve_sidebar_column(plot_spec: PlotSpec) -> str | None:
+    """Resolve the sidebar column name (percent difference).
+
+    LRD: Only shows sidebar for year resolution.
+    RECS/EIA: Distribution views don't have sidebar; others get percent_difference.
+    """
+    # LRD: sidebar only for year resolution
+    if plot_spec.comparison_dataset == ComparisonDataset.lrd:
+        if plot_spec.resolution == Resolution.year:
+            return f"{plot_spec.quantity}_value_percent_difference"
+        return None
+
+    # RECS/EIA: distribution plots don't have sidebar
+    if plot_spec.is_distribution_metric:
+        return None
+
+    # RECS/EIA: dwelling unit count case
+    if plot_spec.quantity == DataCol.UNITS_COUNT:
+        return "units_count_percent_difference"
+
+    # RECS/EIA: penetration view uses percent_users difference
+    if plot_spec.is_penetration_metric:
+        return f"{plot_spec.quantity}_percent_users_percent_difference"
+
+    # Default: value percent difference
+    return f"{plot_spec.quantity}_value_percent_difference"
+
+
+def _resolve_bound_columns(plot_spec: PlotSpec) -> tuple[str | None, str | None]:
+    """Resolve lower/upper confidence-bound column names for uncertainty plots."""
+    lower_col: str | None = None
+    upper_col: str | None = None
+
+    if plot_spec.comparison_dataset != ComparisonDataset.recs:
+        return lower_col, upper_col
+
+    if plot_spec.is_distribution_metric:
+        return lower_col, upper_col
+
+    if plot_spec.quantity == DataCol.UNITS_COUNT:
+        return lower_col, upper_col
+
+    if plot_spec.is_penetration_metric:
+        base_col = f"{plot_spec.quantity}_percent_users"
+    else:
+        base_col = f"{plot_spec.quantity}_value"
+
+    return f"{base_col}_lower_bound", f"{base_col}_upper_bound"
+
+
+def _resolve_diff_view_title(plot_spec: PlotSpec, comparison_label: str) -> str:
+    """Build the figure title for diff_view plots.
+
+    Reuses the value_view title and wraps it with percent difference framing.
+    """
+    base = plot_spec.display_title
+    return f"Percent Difference on {base}<br> Compared to {comparison_label}"
+
+
+def _resolve_sidebar_title(plot_spec: PlotSpec, comparison_label: str) -> str:
+    """Resolve the sidebar subplot title.
+
+    Returns a full description like 'Percent difference compared to RECS 2020'.
+    """
+    if plot_spec.is_distribution_metric:
+        return ""
+    return f"Percent Difference<br>Compared to {comparison_label}"
+
+
+def _resolve_tick_config(plot_spec: PlotSpec, data: pl.DataFrame) -> tuple[tuple | None, tuple | None]:
+    """Resolve x-axis tick values and labels based on resolution.
+
+    Returns (tick_vals, tick_text) tuples or (None, None) for auto-ticks.
+    """
+    match plot_spec.resolution:
+        case Resolution.month:
+            return ("JAN", "DEC"), ("   Jan", "Dec   ")
+
+        case Resolution.day_of_year:
+            # Let Plotly auto-generate date ticks
+            return None, None
+
+        case Resolution.hour_of_year | Resolution.top_100_hours:
+            if plot_spec.view in [ViewType.temp_view, ViewType.temp_distribution_view]:
+                # Temperature plots use auto-ticks
+                return None, None
+            # Load duration curve: compute ticks from data
+            return _compute_percent_time_ticks(data, plot_spec)
+
+        case Resolution.hour_of_day | Resolution.hour_of_day_summer | Resolution.hour_of_day_winter:
+            return (0, 23), ("     Hour 1", "Hour 24       ")
+
+        case Resolution.hour_of_day_matrix:
+            return (0, 23), ("     Hour 1", "Hour 24       ")
+
+        case _:
+            return None, None
+
+
+def _compute_percent_time_ticks(data: pl.DataFrame, plot_spec: PlotSpec) -> tuple[tuple | None, tuple | None]:
+    """Compute tick values for load duration curve from data."""
+    if "percent_time" not in data.columns:
+        return None, None
+
+    min_val = data["percent_time"].min()
+    max_val = data["percent_time"].max()
+
+    if plot_spec.resolution == Resolution.top_100_hours:
+        ts_xtick_text = ("  0%", f"{max_val:.1f}%    ")
+    else:
+        ts_xtick_text = ("  0%", "100%    ")
+
+    return (min_val, max_val), ts_xtick_text
+
+
+def _resolve_x_unit(plot_spec: PlotSpec) -> str:
+    """Resolve the x-axis unit label.
+
+    Returns '°F' for temperature views, empty string otherwise.
+    """
+    if plot_spec.view in [ViewType.temp_view, ViewType.temp_distribution_view]:
+        return "°F"
+    return ""
+
+
+def _extract_comparison_dataset_label(comparison_dataset: ComparisonDataset, data: pl.DataFrame) -> str:
+    """Extract a human-readable comparison dataset label like 'EIA 2018' from data."""
+    if "source" not in data.columns:
+        return comparison_dataset.value.upper()
+    sources = data["source"].unique(maintain_order=True).to_list()
+    ref_sources = [s for s in sources if comparison_dataset.value in s.lower()]
+    if ref_sources:
+        # First match is the primary reference (same insertion order used by _add_percent_difference).
+        # Already human-readable after source renaming (e.g. "EIA 2018", "RECS 2020").
+        return ref_sources[0]
+    return comparison_dataset.value.upper()
+
+
+def _resolve_dimensions(
+    plot_spec: PlotSpec, is_single_entity: bool, data: pl.DataFrame | None = None
+) -> tuple[float, float]:
+    """Resolve plot height and width based on resolution and entity count.
+
+    Returns (height, width) in pixels.
+    """
+    # Grouped histogram: scale height with group count
+    if plot_spec.layout == Layout.histogram and not is_single_entity and data is not None:
+        group_col = plot_spec.group_by
+        if group_col and group_col in data.columns:
+            n_groups = data[group_col].n_unique()
+            return max(400, 250 * n_groups), 1920 * 0.5
+
+    # LRD: resolution-specific dimensions
+    if plot_spec.comparison_dataset == ComparisonDataset.lrd:
+        match plot_spec.resolution:
+            case Resolution.hour_of_day_matrix:
+                return 1800, 900  # Taller for 13 rows
+            case Resolution.day_of_year:
+                return 2000, 1400  # Tall for 15 rows, wide for date axis
+            case _:
+                return 1080 * 0.8, 1920 * 0.7
+
+    # RECS/EIA: single entity gets smaller dimensions (except ALL enduse plots
+    # which contain all fuel/enduse combos and need full size)
+    if is_single_entity and not plot_spec.is_all_enduses:
+        return 1080 * 0.34, 1920 * 0.4
+
+    return 1080 * 0.75, 1920 * 0.75
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Shared Helpers
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+def _uses_stacked_layout(plot_spec: PlotSpec) -> bool:
+    """True when the plot needs stacked subplots (one row per entity).
+
+    Covers two_column layout, box plots, all-enduses splits, and every
+    non-state group_by.
+    """
+    return (
+        plot_spec.layout == Layout.two_column
+        or plot_spec.is_distribution_metric
+        or plot_spec.is_all_enduses
+        or plot_spec.group_by is None
+        or plot_spec.group_by not in [DataCol.STATE]
+    )
+
+
+def _check_single_entity(data: pl.DataFrame, plot_spec: PlotSpec) -> bool:
+    """Check if data contains a single entity (triggers simplified rendering)."""
+    if plot_spec.group_by is None or plot_spec.group_by not in data.columns:
+        return True  # No aggregation = single entity
+
+    unique_entities = data[plot_spec.group_by].unique().to_list()
+    return len(unique_entities) == 1
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Public Utilities
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+def get_second_category_column(plot_spec: PlotSpec) -> str:
+    """Column for tilemap layout grouping; falls back to DataKey when ``group_by`` is unset."""
+    match plot_spec.resolution:
+        case Resolution.hour_of_day_matrix:
+            return "month_daytype"
+        case Resolution.day_of_year:
+            return "utility_vertical"
+        case _:
+            return plot_spec.group_by or plot_spec.effective_group_by[-1]
+
+
+def get_second_category_title(plot_spec: PlotSpec) -> str:
+    """Get the title for the second category axis."""
+    match plot_spec.resolution:
+        case Resolution.hour_of_day_matrix:
+            return "Month / Day Type"
+        case _:
+            agg = plot_spec.group_by or plot_spec.effective_group_by[-1]
+            if agg == "utility":
+                return "Utility (State)"
+            return format_group_by(agg)

@@ -1,0 +1,37 @@
+\paragraph{Description}
+% \input{characteristics/description/Geometry Wall Exterior Finish}
+Wall siding material and color. This is the main input file that provides the thermal property arguments for the exterior cladding of a wall.
+
+\paragraph{Distribution Data Sources}
+% \input{characteristics/sources/Geometry Wall Exterior Finish}
+\begin{itemize}
+
+\item
+  HIFLD Parcel data.
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+\input{characteristics/dependencies/Geometry Wall Exterior Finish}
+
+\paragraph{Options}
+See Table \ref{table:hc_opt_geometry_wall_exterior_finish}) for the wall exterior finish options---correlated with the Geometry Wall Type via the input dependencies. A portion of the wall R-value is attributable to this exterior finish.
+
+\input{characteristics/options/Geometry Wall Exterior Finish}
+
+Property definitions are shown in Table \ref{table:hc_arg_def_geometry_wall_exterior_finish}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-walls}{Walls} documentation for additional information.
+
+\input{characteristics/properties/Geometry Wall Exterior Finish}
+
+\paragraph{Distribution Assumptions}
+% \input{characteristics/assumptions/Geometry Wall Exterior Finish}
+\begin{itemize}
+\item
+  Rows where sample size \textless{} 10 are replaced with aggregated
+  values down-scaled from dep=\textquotesingle State\textquotesingle{}
+  to dep=\textquotesingle Census Division RECS\textquotesingle{}
+\item
+  Brick wall types are assumed to not have an additional brick exterior
+  finish
+\item
+  Steel and wood frame walls must have an exterior finish.
+\end{itemize}

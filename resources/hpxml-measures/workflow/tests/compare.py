@@ -85,11 +85,11 @@ class BaseCompare:
                     feature_df = group_df.merge(feature_df, 'outer', left_index=True, right_index=True)\
                                          .groupby(aggregate_columns)
                     if aggregate_function == 'sum':
-                        base_df = base_df.sum(min_count=1).stack(dropna=False)
-                        feature_df = feature_df.sum(min_count=1).stack(dropna=False)
+                        base_df = base_df.sum(min_count=1).stack()
+                        feature_df = feature_df.sum(min_count=1).stack()
                     elif aggregate_function == 'mean':
-                        base_df = base_df.mean(numeric_only=True).stack(dropna=False)
-                        feature_df = feature_df.mean(numeric_only=True).stack(dropna=False)
+                        base_df = base_df.mean(numeric_only=True).stack()
+                        feature_df = feature_df.mean(numeric_only=True).stack()
                 else:
                     if aggregate_function == 'sum':
                         base_df = base_df.sum(min_count=1)
@@ -112,6 +112,7 @@ class BaseCompare:
         deltas = deltas.round(2)
         deltas.reset_index(level=aggregate_columns, inplace=True)
         deltas.index.name = 'enduse'
+        deltas[deltas.columns] = deltas[deltas.columns].astype('object')
         deltas.fillna('n/a', inplace=True)
         sims_df = pd.DataFrame({'base': sim_ct_base,
                                 'feature': sim_ct_feature,
@@ -135,7 +136,6 @@ class BaseCompare:
 
     def visualize(self, aggregate_column=None, aggregate_function=None, display_column=None,
                   excludes=[], enum_maps={}, cols_to_ignore=[]):
-        colors = px.colors.qualitative.Dark24
 
         aggregate_columns = []
         if aggregate_column:
@@ -291,6 +291,12 @@ class BaseCompare:
                                                      showlegend=False),
                                           row=nrow, col=ncol)
                     else:
+                        n_colors = 1
+                        colors = px.colors.sample_colorscale('Viridis', [0.0])
+                        if 'color_index' in y.columns.values:
+                            n_colors = max(2, len(list(set(y['color_index']))))
+                            colors = px.colors.sample_colorscale('Viridis', [n/(n_colors - 1) for n in range(n_colors)])
+
                         color = [colors[0] for i in y[col]]
                         if 'color_index' in y.columns.values:
                             color = [colors[i] for i in y['color_index']]

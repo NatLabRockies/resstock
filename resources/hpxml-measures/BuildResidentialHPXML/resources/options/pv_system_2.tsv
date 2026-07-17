@@ -1,0 +1,39 @@
+Option Name	Maximum Power Output [W]	Module Type	System Losses Fraction [frac]
+None			
+0.5 kW	500		
+1.0 kW	1000		
+1.5 kW	1500		
+2.0 kW	2000		
+2.5 kW	2500		
+3.0 kW	3000		
+3.5 kW	3500		
+4.0 kW	4000		
+4.5 kW	4500		
+5.0 kW	5000		
+5.5 kW	5500		
+6.0 kW	6000		
+6.5 kW	6500		
+7.0 kW	7000		
+7.5 kW	7500		
+8.0 kW	8000		
+8.5 kW	8500		
+9.0 kW	9000		
+9.5 kW	9500		
+10.0 kW	10000		
+10.5 kW	10500		
+11.0 kW	11000		
+11.5 kW	11500		
+12.0 kW	12000		
+12.5 kW	12500		
+13.0 kW	13000		
+13.5 kW	13500		
+14.0 kW	14000		
+14.5 kW	14500		
+15.0 kW	15000		
+"Detailed Example: 10.0 kW, Standard, 14% System Losses"	10000	standard	0.14
+"Detailed Example: 1.5 kW, Premium"	1500	premium	
+"Detailed Example: 1.5 kW, Thin Film"	1500	thin film	
+			
+# Maximum Power Output: Peak power for the PV system.			
+# Module Type: The type of PV module.			
+"# System Losses Fraction: The total PV system losses including soiling, shading, snow, degradation, etc."			

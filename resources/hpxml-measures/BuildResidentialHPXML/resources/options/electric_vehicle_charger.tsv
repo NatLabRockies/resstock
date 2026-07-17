@@ -1,0 +1,19 @@
+Option Name	Level	Power [W]	Fraction Charged at Home [frac]
+None			
+"Level 1, 10% Charging at Home"	1	1600	0.1
+"Level 1, 30% Charging at Home"	1	1600	0.3
+"Level 1, 50% Charging at Home"	1	1600	0.5
+"Level 1, 70% Charging at Home"	1	1600	0.7
+"Level 1, 90% Charging at Home"	1	1600	0.9
+"Level 1, 100% Charging at Home"	1	1600	1
+"Level 2, 10% Charging at Home"	2	5690	0.1
+"Level 2, 30% Charging at Home"	2	5690	0.3
+"Level 2, 50% Charging at Home"	2	5690	0.5
+"Level 2, 70% Charging at Home"	2	5690	0.7
+"Level 2, 90% Charging at Home"	2	5690	0.9
+"Level 2, 100% Charging at Home"	2	5690	1
+"Detailed Example: Level 2, 7000 W, 75% Charging at Home"	2	7000	0.75
+			
+# Level: The charging level of the EV charger.			
+# Power: The rated power output of the EV charger.			
+# Fraction Charged at Home: The fraction of charging energy provided by the at-home charger to the vehicle.			

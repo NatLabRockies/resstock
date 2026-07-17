@@ -1,4 +1,4 @@
-Dependency=ASHRAE IECC Climate Zone 2004	Option=0.5	Option=0.8	Option=1.1	Option=1.4	Option=1.7	Option=2.0	Option=2.3	Option=2.6	source_count	source_weight	sampling_probability
+Dependency=ASHRAE IECC Climate Zone 2004	Option=0.5	Option=0.8	Option=1.1	Option=1.4	Option=1.7	Option=2	Option=2.3	Option=2.6	source_count	source_weight	sampling_probability
 1A	0	0.0340716	0.962521	0.00340716	0	0	0	0	587	587	0.0179403
 2A	0	0.00281546	0.962631	0.0345534	0	0	0	0	7814	7814	0.115935
 2B	0.00415061	0.0587015	0.249926	0.659947	0.0183813	0.00711533	0.00148236	0.000296472	3373	3373	0.0197434

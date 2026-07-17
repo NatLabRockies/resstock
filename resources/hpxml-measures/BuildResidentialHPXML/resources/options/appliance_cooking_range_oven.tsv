@@ -1,0 +1,51 @@
+Option Name	Fuel Type	Is Induction	Is Convection	Usage Multiplier	Location
+None					
+"Electricity, Standard, Non-Convection, 50% Usage"	electricity	FALSE	FALSE	0.5	
+"Electricity, Standard, Non-Convection, 75% Usage"	electricity	FALSE	FALSE	0.75	
+"Electricity, Standard, Non-Convection, 100% Usage"	electricity	FALSE	FALSE		
+"Electricity, Standard, Non-Convection, 150% Usage"	electricity	FALSE	FALSE	1.5	
+"Electricity, Standard, Non-Convection, 200% Usage"	electricity	FALSE	FALSE	2	
+"Electricity, Standard, Convection, 50% Usage"	electricity	FALSE	TRUE	0.5	
+"Electricity, Standard, Convection, 75% Usage"	electricity	FALSE	TRUE	0.75	
+"Electricity, Standard, Convection, 100% Usage"	electricity	FALSE	TRUE		
+"Electricity, Standard, Convection, 150% Usage"	electricity	FALSE	TRUE	1.5	
+"Electricity, Standard, Convection, 200% Usage"	electricity	FALSE	TRUE	2	
+"Electricity, Induction, Non-Convection, 50% Usage"	electricity	TRUE	FALSE	0.5	
+"Electricity, Induction, Non-Convection, 75% Usage"	electricity	TRUE	FALSE	0.75	
+"Electricity, Induction, Non-Convection, 100% Usage"	electricity	TRUE	FALSE		
+"Electricity, Induction, Non-Convection, 150% Usage"	electricity	TRUE	FALSE	1.5	
+"Electricity, Induction, Non-Convection, 200% Usage"	electricity	TRUE	FALSE	2	
+"Electricity, Induction, Convection, 50% Usage"	electricity	TRUE	TRUE	0.5	
+"Electricity, Induction, Convection, 75% Usage"	electricity	TRUE	TRUE	0.75	
+"Electricity, Induction, Convection, 100% Usage"	electricity	TRUE	TRUE		
+"Electricity, Induction, Convection, 150% Usage"	electricity	TRUE	TRUE	1.5	
+"Electricity, Induction, Convection, 200% Usage"	electricity	TRUE	TRUE	2	
+"Natural Gas, Non-Convection, 50% Usage"	natural gas		FALSE	0.5	
+"Natural Gas, Non-Convection, 75% Usage"	natural gas		FALSE	0.75	
+"Natural Gas, Non-Convection, 100% Usage"	natural gas		FALSE		
+"Natural Gas, Non-Convection, 150% Usage"	natural gas		FALSE	1.5	
+"Natural Gas, Non-Convection, 200% Usage"	natural gas		FALSE	2	
+"Natural Gas, Convection, 50% Usage"	natural gas		TRUE	0.5	
+"Natural Gas, Convection, 75% Usage"	natural gas		TRUE	0.75	
+"Natural Gas, Convection, 100% Usage"	natural gas		TRUE		
+"Natural Gas, Convection, 150% Usage"	natural gas		TRUE	1.5	
+"Natural Gas, Convection, 200% Usage"	natural gas		TRUE	2	
+"Propane, Non-Convection, 50% Usage"	propane		FALSE	0.5	
+"Propane, Non-Convection, 75% Usage"	propane		FALSE	0.75	
+"Propane, Non-Convection, 100% Usage"	propane		FALSE		
+"Propane, Non-Convection, 150% Usage"	propane		FALSE	1.5	
+"Propane, Non-Convection, 200% Usage"	propane		FALSE	2	
+"Propane, Convection, 50% Usage"	propane		TRUE	0.5	
+"Propane, Convection, 75% Usage"	propane		TRUE	0.75	
+"Propane, Convection, 100% Usage"	propane		TRUE		
+"Propane, Convection, 150% Usage"	propane		TRUE	1.5	
+"Propane, Convection, 200% Usage"	propane		TRUE	2	
+"Detailed Example: Electricity, Standard, Non-Convection, Conditioned Basement"	electricity	FALSE	FALSE		basement - conditioned
+"Detailed Example: Electricity, Standard, Non-Convection, Unconditioned Basement"	electricity	FALSE	FALSE		basement - unconditioned
+"Detailed Example: Electricity, Standard, Non-Convection, Garage"	electricity	FALSE	FALSE		garage
+					
+# Fuel Type: Type of fuel used by the cooking range/oven					
+# Is Induction: Whether the electric cooking range is induction.					
+# Is Convection: Whether the oven is convection					
+"# Usage Multiplier: Multiplier on the cooking range/oven energy usage that can reflect, e.g., high/low usage occupants."					
+# Location: The space type where the cooking range/oven is located.					

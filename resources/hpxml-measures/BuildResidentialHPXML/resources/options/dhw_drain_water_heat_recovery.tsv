@@ -1,0 +1,23 @@
+Option Name	Efficiency [frac]	Facilities Connected	Equal Flow
+None			
+"25% Efficient, Preheats Hot Only, All Showers"	0.25	all	FALSE
+"25% Efficient, Preheats Hot Only, 1 Shower"	0.25	one	FALSE
+"25% Efficient, Preheats Hot and Cold, All Showers"	0.25	all	TRUE
+"25% Efficient, Preheats Hot and Cold, 1 Shower"	0.25	one	TRUE
+"35% Efficient, Preheats Hot Only, All Showers"	0.35	all	FALSE
+"35% Efficient, Preheats Hot Only, 1 Shower"	0.35	one	FALSE
+"35% Efficient, Preheats Hot and Cold, All Showers"	0.35	all	TRUE
+"35% Efficient, Preheats Hot and Cold, 1 Shower"	0.35	one	TRUE
+"45% Efficient, Preheats Hot Only, All Showers"	0.45	all	FALSE
+"45% Efficient, Preheats Hot Only, 1 Shower"	0.45	one	FALSE
+"45% Efficient, Preheats Hot and Cold, All Showers"	0.45	all	TRUE
+"45% Efficient, Preheats Hot and Cold, 1 Shower"	0.45	one	TRUE
+"55% Efficient, Preheats Hot Only, All Showers"	0.55	all	FALSE
+"55% Efficient, Preheats Hot Only, 1 Shower"	0.55	one	FALSE
+"55% Efficient, Preheats Hot and Cold, All Showers"	0.55	all	TRUE
+"55% Efficient, Preheats Hot and Cold, 1 Shower"	0.55	one	TRUE
+"Detailed Example: 54% Efficient, Preheats Hot and Cold, All Showers"	0.54	all	TRUE
+			
+# Efficiency: The efficiency of the DWHR according to CSA 55.1.			
+# Facilities Connected: Use 'one' if there are All Showers and only one of them is connected to the DWHR. Use 'all' if there is one shower and it's connected to the DWHR or there are two or more showers connected to the DWHR.			
+# Equal Flow: True if the DWHR supplies pre-heated water to both the fixture cold water piping and the hot water heater potable supply piping. False if the DWHR only supply pre-heated water to the hot water heater potable supply piping.			
