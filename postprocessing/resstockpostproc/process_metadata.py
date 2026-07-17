@@ -247,6 +247,11 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
     df = assign_representative_income(df)
     income_col = "in.representative_income"
 
+    # With multiple bill scenarios, this column is comma-separated; retain just the first entry
+    df = df.with_columns(
+        pl.col("in.utility_bill_electricity_marginal_rates").str.split(",").list.first().str.strip_chars()
+    )
+
     # Reassign negative or zero dollar income to 1 dollar
     adj_income = pl.when(pl.col(income_col) <= 0).then(pl.lit(1)).otherwise(pl.col(income_col)).alias(income_col)
 

@@ -125,6 +125,8 @@ workflow_generator:
     utility_bills:
       - scenario_name: Utility Rates - Fixed + Variable
         simple_filepath: data/utility_bills/sdr_rates/State.tsv
+      - scenario_name: Sampling Region # Bills for each state in sampling region
+        simple_filepath: data/utility_bills/sdr_rates/State.tsv
 
     # Outputs to include
     simulation_output_report:
