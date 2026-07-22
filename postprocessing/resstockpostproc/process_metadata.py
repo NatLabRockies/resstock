@@ -1,5 +1,6 @@
-from typing import Sequence
+from collections.abc import Sequence
 
+import datetime
 import polars as pl
 import pathlib
 import geopandas as gpd
@@ -18,6 +19,7 @@ from resstockpostproc.utils import (
     conversion_factor
 )
 from resstockpostproc.income_mapper import assign_representative_income
+from resstockpostproc.create_allocated_weights import get_allocated_weights_plus_util_bills_for_upgrade
 
 logger = logging.getLogger(__name__)
 
@@ -58,7 +60,7 @@ def process_simulation_outputs(
     df = remove_na_or_failed_buildings(df)
     df = replace_missing_buildings_with_baseline(df, base_raw_df, is_baseline)
     df = downselect_and_rename_cols(df, col_maps)  # Per sdr_column_definitions.csv
-    df = add_income_and_burden(df)
+    # df = add_income_and_burden(df) # TODO Move this
     df = add_county_column(df)
     df = add_puma_column(df)
     df = add_baseline_upgrade_name_col(df, is_baseline)
@@ -87,7 +89,12 @@ def process_simulation_outputs(
 def get_schema_superset(upgrade_files: list, files_dir) -> dict:
     upgrade_col_schema = {}
     for upgrade_file in upgrade_files:
-        upgrade_df = pl.scan_parquet(upgrade_file, storage_options=files_dir["storage_options"])
+        # Add s3:// prefix for polars if using S3
+        if files_dir["storage_options"] is not None:
+            file_path = f"s3://{upgrade_file}"
+        else:
+            file_path = upgrade_file
+        upgrade_df = pl.scan_parquet(file_path, storage_options=files_dir["storage_options"])
         upgrade_col_schema.update(get_upgrade_columns(upgrade_df))
     return upgrade_col_schema
 
@@ -208,7 +215,13 @@ def downselect_and_rename_cols(df: pl.LazyFrame, col_maps: Sequence[dict]) -> pl
 
 
 def get_upgrade_rename_dict(raw_results_dir):
-    file_path = pathlib.Path(raw_results_dir["fs_path"]) / "rename_upgrades.json"
+    # Use string concatenation with forward slashes for S3 paths instead of pathlib
+    fs_path = raw_results_dir["fs_path"]
+    if isinstance(fs_path, pathlib.Path):
+        file_path = fs_path / "rename_upgrades.json"
+    else:
+        # For S3 paths, use forward slashes
+        file_path = f"{fs_path}/rename_upgrades.json"
     if not raw_results_dir["fs"].exists(file_path):
         return dict()
     with raw_results_dir["fs"].open(file_path, "r") as f:
@@ -354,7 +367,7 @@ def col_name_to_weighted(col_name: str, new_units=None) -> str:
 
 def units_from_col_name(col_name: str) -> str:
     # Extract the units from the column name
-    match = re.search("\.\.(.*)", col_name)
+    match = re.search(r"\.\.(.*)", col_name)
     units = match.group(1) if match else ""
 
     return units
@@ -466,8 +479,8 @@ def add_county_column(df: pl.LazyFrame):
 
     df = df.with_columns(
         [
-            pl.col("in.county").str.split(",").list.get(1).str.replace(r"^\s+|\s+$", "").alias("in.county_name"),
-            pl.col("in.county").replace(county_map).alias("in.county"),
+            pl.col("in.as_simulated_county").str.split(",").list.get(1).str.replace(r"^\s+|\s+$", "").alias("in.as_simulated_county_name"),
+            pl.col("in.as_simulated_county").replace(county_map).alias("in.as_simulated_county"),
         ]
     )
     return df
@@ -481,8 +494,116 @@ def add_puma_column(df: pl.LazyFrame):
     here = pathlib.Path(__file__).resolve().parent
     pumas = gpd.read_file(here / "resources" / "gisdata" / "ipums_pums_2010_simple_t100_area_us_puma.geojson")
     puma_map = pumas[["GISJOIN", "puma_tsv"]].set_index("puma_tsv")["GISJOIN"].to_dict()
-    df = df.with_columns([pl.col("in.puma").replace(puma_map).alias("in.puma")])
+    df = df.with_columns([pl.col("in.as_simulated_puma").replace(puma_map).alias("in.as_simulated_puma")])
     return df
+
+
+# def remove_unused_as_simulated_geog_cols(df: pl.LazyFrame):
+#     """
+#     Removes all as-simulated geography columns 
+#     """
+#     print("Renaming geography columns as simulated")
+
+#     # as-simulated columns in ComStock that are imported
+#     # in.as_simulated_census_division_name
+#     # in.as_simulated_ashrae_iecc_climate_zone_2006
+#     # in.as_simulated_nhgis_county_gisjoin
+#     # in.as_simulated_nhgis_puma_gisjoin
+#     # in.as_simulated_nhgis_tract_gisjoin
+#     # in.as_simulated_state_name
+#     # in.as_simulated_weather_file_2018
+#     # in.as_simulated_weather_file_tmy3
+#     # in.as_simulated_nhgis_state_gisjoin
+
+
+
+#     # Variables needed by the apportionment sampling regime
+#     SAMPLING_REGION = 'in.sampling_region_id'
+
+# Geography columns in resstock
+# ahs_region
+# aiannh_area
+# ashrae_iecc_climate_zone_2004
+# ashrae_iecc_climate_zone_2004_sub_cz_split
+# building_america_climate_zone
+# cec_climate_zone
+# census_division
+# census_division_recs
+# census_region
+# city
+# county
+# county_and_puma
+# county_metro_status
+# custom_state
+# energystar_climate_zone_2023
+# federal_poverty_level
+# iso_rto_region
+# location_region
+# metropolitan_and_micropolitan_statistical_area
+# puma
+# puma_metro_status
+# state
+# state_metro_median_income
+# weather_file_city
+# weather_file_latitude
+# weather_file_longitude
+
+#     # Geography-defining columns
+#     COLS_GEOG = [
+#         'in.as_simulated_nhgis_tract_gisjoin',
+#         'in.as_simulated_nhgis_county_gisjoin',
+#         'in.as_simulated_nhgis_state_gisjoin',
+#         'in.as_simulated_census_division_name',
+#         'in.as_simulated_ashrae_iecc_climate_zone_2006',
+#         'in.as_simulated_weather_file_2018',
+#         'in.as_simulated_weather_file_tmy3',
+#         'in.ashrae_iecc_climate_zone_2006',
+#         'in.ashrae_or_cec_climate_zone',
+#         'in.cec_climate_zone',
+#         'in.building_america_climate_zone',
+#         'in.cambium_grid_region',
+#         'in.census_division_name',
+#         'in.census_region_name',
+#         'in.iso_rto_region',
+#         'in.nhgis_county_gisjoin',
+#         'in.nhgis_puma_gisjoin',
+#         'in.nhgis_tract_gisjoin',
+#         'in.reeds_balancing_area',
+#         'in.county_name',
+#         'in.nhgis_state_gisjoin',
+#         'in.state',
+#         'in.state_name',
+#         'in.cluster_id',
+#         'in.cluster_name',
+#         'in.weather_file_2018',
+#         'in.weather_file_tmy3',
+#         'in.ejscreen_census_tract_percentile_for_demographic_index',
+#         'in.ejscreen_census_tract_percentile_for_people_of_color',
+#         'in.cejst_is_disadvantaged',
+#         'in.ejscreen_census_tract_percentile_percent_people_under_5',
+#         'in.ejscreen_census_tract_percentile_for_less_than_hs_educ',
+#         'in.ejscreen_census_tract_percentile_for_low_income',
+#         'in.ejscreen_census_tract_percentile_for_people_over_64',
+#         'in.ejscreen_census_tract_percentile_for_people_in_ling_isol',
+#     ]
+#     as_sim_geog_cols_to_keep = [
+#         'in.as_simulated_nhgis_county_gisjoin',
+#         'in.as_simulated_nhgis_tract_gisjoin',
+#         'in.as_simulated_nhgis_state_gisjoin',
+#         'in.as_simulated_census_division_name',
+#         'in.as_simulated_ashrae_iecc_climate_zone_2006',
+#         'in.as_simulated_weather_file_2018',
+#         'in.as_simulated_weather_file_tmy3'
+#     ]
+#     geog_cols_to_remove = []
+#     for geog_col in COLS_GEOG:
+#         if geog_col not in data.columns:
+#             continue
+#         if geog_col not in as_sim_geog_cols_to_keep:
+#             geog_cols_to_remove.append(geog_col)
+#     logger.debug('geog_cols_to_remove')
+#     logger.debug(geog_cols_to_remove)
+#     data = data.drop(geog_cols_to_remove)
 
 
 def get_upgrade_columns(lf: pl.LazyFrame) -> list:
@@ -620,109 +741,6 @@ def downselect_and_order_pub_cols(lf: pl.LazyFrame, col_maps: Sequence[dict]):
     return lf.select(available_cols)
 
 
-def create_weighted_aggregate_output(output_dir, sim_outputs, alloc_wts):
-    # TODO see this function in comstock.py
-    # Sum the allocated weights to the desired geography
-
-    # Join the simulation outputs to the summed allocated weights
-
-    # Create the weighted columns
-
-    # Return the weighted, aggregated, simulation oputputs
-
-    return None
-
-
-def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_exports):
-    """
-    Subdivides the annual results by geography and writes to OEDI.
-    Creates .parquet and .csv.gz files.
-
-    Args:
-        output_dir: Dict of filesystem object information
-        upgrade_id: Integer ID for the upgrade to process
-        geo_exports: List of Dicts of export definitions
-    Returns:
-        None
-
-    """
-
-    print(f"Exporting metadata and annual results for upgrade {upgrade_id}")
-
-    # Read the cached simulation results
-    sim_out_cache_dir = f"{output_dir["fs_path"]}/cached_simulation_outputs"
-    parquet_file_dir = pathlib.Path(f"{sim_out_cache_dir}/upgrade={upgrade_id}")
-    parquet_file = parquet_file_dir / f"cached_simulation_outputs_upgrade{upgrade_id}.parquet"
-    if isinstance(output_dir["fs"], s3fs.S3FileSystem):
-        parquet_file = f"s3://{parquet_file.as_posix()}"
-    if not output_dir["fs"].exists(parquet_file):
-        raise FileNotFoundError(
-        f"Cannot load upgrade data from {parquet_file}, call process_upgrade_simulation_outputs() first.")
-    up_df = pl.read_parquet(parquet_file, storage_options=output_dir["storage_options"] )
-
-    # Read the cached allocated weights
-    alloc_weights = pl.read_parquet(cached_wts_path)
-
-
-    # Export each geo export level
-    for ge in geo_exports:
-        geo_top_dir = ge["geo_top_dir"]
-        partition_cols = ge["partition_cols"]
-        data_types = ge["data_types"]
-        file_types = ge["file_types"]
-        print(f"Exporting {geo_top_dir} by {partition_cols} {data_types} {file_types}")
-
-        # geo_col_names = list(partition_cols.keys())
-
-        # Name the top-level directory
-        full_geo_dir = f"{output_dir["fs_path"]}/metadata_and_annual_results/{geo_top_dir}"
-
-        # Make a directory for the geography type
-        if not isinstance(output_dir["fs"], s3fs.S3FileSystem):
-            output_dir["fs"].mkdirs(full_geo_dir, exist_ok=True)
-
-        # Make a directory for each data type X file type combo
-        if not isinstance(output_dir["fs"], s3fs.S3FileSystem):
-            for data_type in data_types:
-                for file_type in file_types:
-                    output_dir["fs"].mkdirs(f"{full_geo_dir}/{data_type}/{file_type}", exist_ok=True)
-
-        # Export by various geographies
-        # TODO look at this code in ComStock
-        if partition_cols:
-            wtd_agg_outs = create_weighted_aggregate_output(
-                                            up_df,
-                                            alloc_weights,
-                                            agg_lvl_list # What geographic level(s) to aggregate to
-                                            )
-            for by_col, by_dir_name  in partition_cols.items():
-                for by_val, geo_df in up_df.group_by(by_col):
-
-                    by_val = by_val[0]
-                    geo_levels = [f"{by_dir_name}={by_val}"]
-                    geo_prefixes = [by_val]
-                    for data_type in data_types:
-                        # TODO Downselect the DF to fewer columns for basic version
-
-                        for file_type in file_types:
-                            file_path = get_file_path(output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, data_type, upgrade_id)
-                            print(f"Writing {file_path}")
-                            input_args = (geo_df, output_dir, file_type, file_path)
-                            write_geo_data(input_args)
-        else:
-            # National level is not partitioned
-            geo_levels = []
-            geo_prefixes = []
-            for data_type in data_types:
-                # TODO Downselect the DF to fewer columns for basic version
-
-                for file_type in file_types:
-                    file_path = get_file_path(output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, data_type, upgrade_id)
-                    print(f"Writing {file_path}")
-                    input_args = (up_df, output_dir, file_type, file_path)
-                    write_geo_data(input_args)
-
-
 def get_file_path(output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, data_type, upgrade_id):
     """
     Builds a file path for each aggregate based on name, file type, and aggregation level
@@ -759,3 +777,28 @@ def cache_simulation_outputs_file(output_dir, sim_out_cache_dir: pathlib.Path, u
     with output_dir["fs"].open(str(file_path), "wb") as f:
         df.sink_parquet(f)
     print(f"Cached simulation outputs for upgrade {upgrade_id} to {file_path}")
+
+
+def get_cached_simulation_outputs_file(output_dir, sim_out_cache_dir: pathlib.Path, upgrade_id: int):
+    file_name = f"cached_simulation_outputs_upgrade{upgrade_id}.parquet"
+    upgrade_cache_dir = pathlib.Path(f"{sim_out_cache_dir}/upgrade={upgrade_id}")
+    file_path = upgrade_cache_dir / file_name
+    if isinstance(output_dir["fs"], s3fs.S3FileSystem):
+        file_path = f"s3://{file_path.as_posix()}"
+    if not upgrade_cache_dir.exists():
+        raise Exception(f"{file_path} does not exist. Ensure cache_simulation_outputs_file has been called previously.")
+    return file_path
+
+
+def get_cached_simulation_outputs_for_upgrade(output_dir, upgrade_id: int) -> pl.LazyFrame:
+    sim_out_cache_dir = f"{output_dir['fs_path']}/cached_simulation_outputs"
+    parquet_file_dir = pathlib.Path(f"{sim_out_cache_dir}/upgrade={upgrade_id}")
+    parquet_file = parquet_file_dir / f"cached_simulation_outputs_upgrade{upgrade_id}.parquet"
+    if isinstance(output_dir["fs"], s3fs.S3FileSystem):
+        parquet_file = f"s3://{parquet_file.as_posix()}"
+    if not output_dir["fs"].exists(parquet_file):
+        raise FileNotFoundError(
+        f"Cannot load upgrade data from {parquet_file}, call process_upgrade_simulation_outputs() first.")
+    up_sim_outs = pl.scan_parquet(parquet_file, storage_options=output_dir["storage_options"] )
+
+    return up_sim_outs

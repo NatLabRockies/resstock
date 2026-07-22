@@ -12,6 +12,7 @@ either be in their own folders (baseline and upgrades) or all be in the same fol
 """
 
 import re
+import logging
 import polars as pl
 from pathlib import Path
 from resstockpostproc.process_metadata import (
@@ -19,12 +20,15 @@ from resstockpostproc.process_metadata import (
     get_upgrade_rename_dict,
     get_failed_building_list,
     process_simulation_outputs,
-    export_metadata_and_annual_results_for_upgrade,
-    cache_simulation_outputs_file
+    cache_simulation_outputs_file,
+    get_cached_simulation_outputs_file
 )
+from resstockpostproc.export_metadata import export_metadata_and_annual_results_for_upgrade
 from resstockpostproc.utils import (
     setup_fsspec_filesystem
 )
+from resstockpostproc.create_allocated_weights import create_allocated_weights, create_allocated_weights_plus_util_bills_for_upgrade
+
 
 def export_metadata_and_annual_results(raw_results_dir: str,
                                        output_dir: str,
@@ -36,123 +40,118 @@ def export_metadata_and_annual_results(raw_results_dir: str,
     # Find the raw results files
     pqt_glob = f'{raw_results_dir["fs_path"]}/**/*.parquet'
     result_files = raw_results_dir['fs'].glob(pqt_glob)
-    baseline_file = [f for f in result_files if "up00" in Path(f).name.lower()][0]
-    upgrade_ids = [int(re.search(r'up(\d+)', p).group(1)) for p in result_files]
-    upgrade_ids.sort()
+    baseline_files = [f for f in result_files if "up00" in Path(f).name.lower()]
+    upgrade_files = [f for f in result_files if "up00" not in Path(f).name.lower()]
 
     # Information used across upgrades
     upgrade_renamer = get_upgrade_rename_dict(raw_results_dir)
-    col_schema = get_schema_superset(result_files, raw_results_dir)
+    col_schema  = get_schema_superset(upgrade_files, raw_results_dir)
     sim_out_cache_dir = Path(f"{output_dir['fs_path']}/cached_simulation_outputs")
 
-    # Process and cache the simulation outputs, starting with the baseline
-    baseline_df = pl.scan_parquet(baseline_file, storage_options=raw_results_dir['storage_options'])
-    failed_bldgs = get_failed_building_list(baseline_df)
-    bs_pub_df = process_simulation_outputs(
-            failed_bldgs,
-            baseline_df,
-            None,
-            baseline_df,
-            upgrade_id,
-            upgrade_renamer,
-            upgrade_foo_col_schema,
-            skip_if_cached # Add some argument here to skip if cached files already exist
-        )
-    cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, bs_pub_df)
-    base_cols = set(sorted(bs_pub_df.collect_schema().names()))
+    # # Process and cache the baseline simulation outputs
+    # upgrade_id = 0
+    # baseline_file = baseline_files[0]
+    # print(f"Processing baseline file: {baseline_file}")
+    # # Add s3:// prefix for polars if using S3
+    # if raw_results_dir["storage_options"] is not None:
+    #     baseline_path = f"s3://{baseline_file}"
+    # else:
+    #     baseline_path = baseline_file
+    # baseline_df = pl.scan_parquet(baseline_path, storage_options=raw_results_dir["storage_options"])
+    # failed_bldgs = get_failed_building_list(baseline_df)
+    # bs_pub_df = process_simulation_outputs(
+    #         failed_bldgs,
+    #         baseline_df,
+    #         None,
+    #         baseline_df,
+    #         upgrade_id,
+    #         upgrade_renamer,
+    #         col_schema ,
+    #         # skip_if_cached # Add some argument here to skip if cached files already exist
+    #     )
+    # cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, bs_pub_df)
+    # base_cols = set(bs_pub_df.collect_schema().names())
 
+    # Process and cache the upgrade simulation outputs
+    upgrade_ids = [0]
+    for upgrade_file in upgrade_files:
+        up_info = re.search(r"up(\d+)", Path(upgrade_file).name)
+        if up_info is None:
+            continue
+        upgrade_id = int(up_info.group(1))
+        upgrade_ids.append(upgrade_id)
         print(f"Processing upgrade file: {upgrade_file}, upgrade number: {upgrade_id} {'*'*100}")
-        raw_upgrade_df = pl.scan_parquet(upgrade_file, storage_options=raw_results_dir['storage_options'])
-        processed_upgrade_df = process_simulation_outputs(
+        # Add s3:// prefix for polars if using S3
+        if raw_results_dir["storage_options"] is not None:
+            upgrade_path = f"s3://{upgrade_file}"
+        else:
+            upgrade_path = upgrade_file
+        upgrade_df = pl.scan_parquet(upgrade_path, storage_options=raw_results_dir["storage_options"])
+        up_df = process_simulation_outputs(
             failed_bldgs,
             baseline_df,
-            processed_baseline_df,
-            raw_upgrade_df,
+            bs_pub_df,
+            upgrade_df,
             upgrade_id,
             upgrade_renamer,
-            upgrade_foo_col_schema,
-            skip_if_cached # Add some argument here to skip if cached files already exist
+            col_schema ,
+            # skip_if_cached # Add some argument here to skip if cached files already exist
         )
-        cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, processed_upgrade_df)
-        up_cols = set(sorted(processed_upgrade_df.collect_schema().names()))
-
-        if upgrade_id == 0:
-            processed_baseline_df = processed_upgrade_df
-            base_cols = set(sorted(processed_baseline_df.collect_schema().names()))
-
+        cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, up_df)
+        up_cols = set(up_df.collect_schema().names())
         if not base_cols == up_cols:
             raise ValueError("Column set in baseline and upgrade don't match")
+    upgrade_ids.sort()
 
-    # Create the allocated weights table and cache that
+    # Process and cache allocated weights
     # Have 2 versions of this function:
     # a pre-sampling version that just adds a simple 2 column file with ID and fixed weight
     # and a post-sampling version with all the jazz.
-    create_allocated_weights()
+    bs_pub_df_path = get_cached_simulation_outputs_file(output_dir, sim_out_cache_dir, 0)
+    # create_allocated_weights(bs_pub_df_path, Path(f"{output_dir['fs_path']}"))
 
-    def create_allocated_weights():
-        # Read the baseline simulation outputs file from S3 cached_simulation_outputs
-
-        # Do more stuff
-
-        # Cache the allocated weights file to S3
+    # Process and cache allocated weights plus utility bills
+    # for upgrade_id in upgrade_ids:
+    #     create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
 
     # Define the geographic partitions to export
-    geo_exports = [
-    {
-        'geo_top_dir': 'national',
-        'partition_cols': {},
-        'aggregation_levels': ['national'],  # TODO add this to define aggregation levels (or not)
-        'data_types': ['full'],
-        'file_types': [ 'csv', 'parquet'],
-    },
-    {
-        'geo_top_dir': 'by_state',
-        'partition_cols': {
-            'in.state': 'state'
-        },
-        'data_types': ['full'],
-        'file_types': ['csv', 'parquet'],
-    }
-    ]
-
-
     # This is an example from ComStock SDR
-    # geo_exports = [
-    # {'geo_top_dir': 'national',
-    #     'partition_cols': {},
-    #     'aggregation_levels': ['national'],
-    #     'data_types': ['detailed', 'full', 'basic'],
-    #     'file_types': ['csv', 'parquet'],
+    geo_exports = [
+    # {"geo_top_dir": "national",
+    #     "partition_cols": {},
+    #     "aggregation_levels": ["national"],
+    #     "data_types": ["full"],  # TODO add basic downselect method
+    #     "file_types": ["csv", "parquet"],
     # },
-    # {'geo_top_dir': 'by_state_and_county',
-    #     'partition_cols': {
-    #         "in.state": 'state',
-    #         "in.county": 'county',
-    #     },
-    #     'aggregation_levels': [None, "in.county"],  # The only one by at full resolution (no agg)
-    #     'data_types': ['full', 'basic'],
-    #     'file_types': ['csv', 'parquet'],
-    # },
+    {"geo_top_dir": "by_state_and_county",
+        "partition_cols": {
+            "in.state": "state",
+            "in.nhgis_county_gisjoin": "county",
+        },
+        "aggregation_levels": ["in.nhgis_county_gisjoin"],  # The only one by at full resolution (no agg)
+        # TODO "aggregation_levels": [None, "in.nhgis_county_gisjoin"],  # The only one by at full resolution (no agg)
+        "data_types": ["full"],  # TODO add basic downselect method
+        "file_types": ["csv", "parquet"],
+    },
     # {
-    #     'geo_top_dir': 'by_state',
-    #     'partition_cols': {
-    #         "in.state": 'state'
+    #     "geo_top_dir": "by_state",
+    #     "partition_cols": {
+    #         "in.state": "state"
     #     },
-    #     'aggregation_levels': ["in.state"],
-    #     'data_types': ['full', 'basic'],
-    #     'file_types': ['csv', 'parquet'],
+    #     "aggregation_levels": ["in.state"],
+    #     "data_types": ["full"],  # TODO add basic downselect method
+    #     "file_types": ["csv", "parquet"],
     # },
-    # {'geo_top_dir': 'by_state_and_puma',
-    #     'partition_cols': {
-    #         "in.state": 'state',
-    #         "in.puma": 'puma',
+    # {"geo_top_dir": "by_state_and_puma",
+    #     "partition_cols": {
+    #         "in.state": "state",
+    #         "in.nhgis_puma_gisjoin": "puma",
     #     },
-    #     'aggregation_levels': ["in.puma"],
-    #     'data_types': ['full', 'basic'],
-    #     'file_types': ['csv', 'parquet'],
-    # },
-
-
+    #     "aggregation_levels": ["in.nhgis_puma_gisjoin"],
+    #     "data_types": ["full"],  # TODO add basic downselect method
+    #     "file_types": ["csv", "parquet"],
+    # }
+    ]
 
     for upgrade_id in upgrade_ids:
         export_metadata_and_annual_results_for_upgrade(
@@ -163,6 +162,11 @@ def export_metadata_and_annual_results(raw_results_dir: str,
 
 if __name__ == "__main__":
     import argparse
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(name)s %(levelname)s: %(message)s",
+    )
 
     parser = argparse.ArgumentParser(
         description="Process raw BuildStock results and write transformed data"

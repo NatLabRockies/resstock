@@ -1,5 +1,5 @@
-import argparse
 import boto3
+import datetime
 import json
 import logging
 import os
@@ -28,7 +28,7 @@ def load_catalogue_file(output_dir: FsspecOutputDir, catalogue_file_version: str
     catalogue_local_path = f"{output_dir['fs_path']}/{catalogue_file}"
 
     # Download from S3 if not already cached locally
-    if not os.path.isfile(catalogue_local_path):
+    if not output_dir["fs"].exists(catalogue_local_path):
         logger.info("Catalogue file not found locally, downloading from S3")
         s3_client = boto3.client("s3")
         s3_client.download_file(
@@ -43,6 +43,64 @@ def load_catalogue_file(output_dir: FsspecOutputDir, catalogue_file_version: str
     catalogue_df = pl.read_parquet(catalogue_local_path)
     catalogue_df = catalogue_df.with_columns(
         pl.col("tract_gisjoin").str.slice(0, 8).alias("county_gisjoin")
+    )
+
+    # Add state_gisjoin derived from first 2 chars of tract_gisjoin
+    catalogue_df = catalogue_df.with_columns(
+        pl.col("tract_gisjoin").str.slice(0, 3).alias("state_gisjoin")
+    )
+
+    # Rename columns to match expected format
+    catalogue_df = catalogue_df.rename(
+        {
+            "tract_gisjoin": "in.nhgis_tract_gisjoin",
+            "puma_gisjoin": "in.nhgis_puma_gisjoin",
+            "county_gisjoin": "in.nhgis_county_gisjoin",
+            "state_gisjoin": "in.nhgis_state_gisjoin",
+            "Tenure": "in.tenure",
+            "Vacancy Status": "in.vacancy_status",
+            "Geometry Building Type RECS": "in.geometry_building_type_recs",
+            "Vintage": "in.vintage",
+            "Heating Fuel": "in.heating_fuel",
+            "Federal Poverty Level": "in.federal_poverty_level",
+        }
+    )
+
+    # Load state-census region map
+    state_table_file = "state_region_division_table.csv"
+    state_table_local_path = f"{output_dir['fs_path']}/{state_table_file}"
+
+    # Download from S3 if not already cached locally
+    if not output_dir["fs"].exists(state_table_local_path):
+        logger.info("State table file not found locally, downloading from S3")
+        s3_client = boto3.client("s3")
+        s3_client.download_file(
+            "resstock-core",
+            "truth_data/v01/EIA/CBECS/state_region_division_table.csv",
+            str(state_table_local_path),
+        )
+        logger.info(f"Downloaded state table file to {state_table_local_path}")
+
+    # Read state table
+    logger.info(f"Reading state table file from {state_table_local_path}")
+    state_table_df = pl.read_csv(state_table_local_path)
+
+    # Make the FIPS code a string with a "G" and leading zeros
+    state_table_df = state_table_df.with_columns(
+        (pl.lit("G") + pl.col("FIPS Code").cast(pl.Utf8).str.zfill(2)).alias("FIPS Code")
+    )
+
+    # Map state FIPS codes to state abbreviations
+    state_table_df = state_table_df.with_columns(
+        pl.col("FIPS Code").alias("in.nhgis_state_gisjoin"),
+        pl.col("State Code").alias("in.state")
+    )
+
+    # Join the state abbreviations onto the catalogue
+    catalogue_df = catalogue_df.join(
+        state_table_df.select(["in.nhgis_state_gisjoin", "in.state"]),
+        on="in.nhgis_state_gisjoin",
+        how="left"
     )
 
     return catalogue_df
@@ -63,7 +121,7 @@ def load_sampling_regions(output_dir: FsspecOutputDir, sampling_region_version: 
     sample_regions_local_path = f"{output_dir['fs_path']}/{sampling_regions_file}"
 
     # Download from S3 if not already cached locally
-    if not os.path.isfile(sample_regions_local_path):
+    if not output_dir["fs"].exists(sample_regions_local_path):
         logger.info("Sampling regions file not found locally, downloading from S3")
         s3_client = boto3.client("s3")
         s3_client.download_file(
@@ -84,11 +142,10 @@ def load_sampling_regions(output_dir: FsspecOutputDir, sampling_region_version: 
     # Convert dictionary to DataFrame
     sampling_regions_df = pl.DataFrame(
         {
-            "county_gisjoin": list(sampling_regions_dict.keys()),
-            "sampling_region": list(sampling_regions_dict.values()),
+            "in.nhgis_county_gisjoin": list(sampling_regions_dict.keys()),
+            "in.sampling_region_id": list(sampling_regions_dict.values()),
         }
     )
-
     return sampling_regions_df
 
 def load_cec_climate_zones(output_dir: FsspecOutputDir) -> pl.DataFrame:
@@ -127,7 +184,7 @@ def load_cec_climate_zones(output_dir: FsspecOutputDir) -> pl.DataFrame:
     cec_2010_cz_lkup_local_path = f"{output_dir['fs_path']}/{cec_2010_cz_lkup_file}"
 
     # Download from S3 if not already cached locally
-    if not os.path.isfile(cec_2010_cz_lkup_local_path):
+    if not output_dir["fs"].exists(cec_2010_cz_lkup_local_path):
         logger.info("CEC 2010 CZ lookup file not found locally, downloading from S3")
         s3_client = boto3.client("s3")
         s3_client.download_file(
@@ -147,19 +204,19 @@ def load_cec_climate_zones(output_dir: FsspecOutputDir) -> pl.DataFrame:
     # Convert to DataFrame and map CEC zones to sampling region numbers
     cec_2010_cz_lkup_df = pl.DataFrame(
         {
-            "tract_gisjoin": list(cec_2010_cz_lkup_dict.keys()),
-            "sampling_region": list(cec_2010_cz_lkup_dict.values()),
+            "in.nhgis_tract_gisjoin": list(cec_2010_cz_lkup_dict.keys()),
+            "in.sampling_region_id": list(cec_2010_cz_lkup_dict.values()),
         }
     )
     cec_2010_cz_lkup_df = cec_2010_cz_lkup_df.with_columns(
-        pl.col("sampling_region").replace(ca_regions_lkup)
+        pl.col("in.sampling_region_id").replace(ca_regions_lkup)
     )
 
     # This is future proofing code for the world where we upgrade to the 2020 census geographies
     # # Read cec_cz_by_tract_2020_lkup.json from local path or download from S3 if not found
     # cec_2020_cz_lkup_file = "cec_cz_by_tract_2020_lkup.json"
     # cec_2020_cz_lkup_local_path = f"{output_dir['fs_path']}/{cec_2020_cz_lkup_file}"
-    # if not os.path.isfile(cec_2020_cz_lkup_local_path):
+    # if not output_dir["fs"].exists(cec_2020_cz_lkup_local_path):
     #     logger.info(f"CEC 2020 CZ lookup file not found locally, downloading from S3")
     #     s3_client = boto3.client('s3')
     #     s3_client.download_file(
@@ -170,10 +227,10 @@ def load_cec_climate_zones(output_dir: FsspecOutputDir) -> pl.DataFrame:
     # with open(cec_2020_cz_lkup_local_path, 'r') as f:
     #     cec_2020_cz_lkup_dict = json.load(f)
     # cec_2020_cz_lkup_df = pl.DataFrame({
-    #     "tract_gisjoin": list(cec_2020_cz_lkup_dict.keys()),
-    #     "sampling_region": list(cec_2020_cz_lkup_dict.values())
+    #     "in.nhgis_tract_gisjoin": list(cec_2020_cz_lkup_dict.keys()),
+    #     "in.sampling_region_id": list(cec_2020_cz_lkup_dict.values())
     # })
-    # cec_2020_cz_lkup_df = cec_2020_cz_lkup_df.with_columns(pl.col('sampling_region').replace(ca_regions_lkup))
+    # cec_2020_cz_lkup_df = cec_2020_cz_lkup_df.with_columns(pl.col('in.sampling_region_id').replace(ca_regions_lkup))
 
     return cec_2010_cz_lkup_df
 
@@ -196,51 +253,52 @@ def merge_geographical_data(
     Raises:
         ValueError: If any rows are missing sampling region assignments
     """
-
     # Join catalogue with county-based sampling regions (covers most of US)
     logger.info("Merging catalogue and sample regions data")
-    df = catalogue_df.join(sampling_regions_df, on="county_gisjoin", how="left")
+    df = catalogue_df.join(sampling_regions_df, on="in.nhgis_county_gisjoin", how="left")
 
     # Join with CEC climate zone-based sampling regions (covers California)
-    df = df.join(cec_2010_cz_lkup_df, on="tract_gisjoin", how="left", suffix="_cec2010")
-    # df = df.join(cec_2020_cz_lkup_df, on="tract_gisjoin", how="left", suffix="_cec2020")
+    df = df.join(cec_2010_cz_lkup_df, on="in.nhgis_tract_gisjoin", how="left", suffix="_cec2010")
+    # df = df.join(cec_2020_cz_lkup_df, on="in.nhgis_tract_gisjoin", how="left", suffix="_cec2020")
 
     # Use county-based region, falling back to CEC climate zone region for CA tracts
     df = df.with_columns(
         pl.coalesce(
             [
-                pl.col("sampling_region"),
+                pl.col("in.sampling_region_id"),
                 pl.col(
-                    "sampling_region_cec2010"
+                    "in.sampling_region_id_cec2010"
                 ),  # , pl.col("sampling_region_cec2020")
             ]
         )
         .cast(pl.Int64)
-        .alias("sampling_region")
+        .alias("in.sampling_region_id")
     )
 
     # Clean up temporary columns and rename to final column name
-    df = df.drop(["sampling_region_cec2010"])  # , "sampling_region_cec2020"])
-    df = df.rename({"sampling_region": "Sampling Region"})
+    df = df.drop(["in.sampling_region_id_cec2010"])  # , "in.sampling_region_id_cec2020"])
 
     # Validate that all rows have been assigned a sampling region
     if df.filter(pl.any_horizontal(pl.all().is_null())).shape[0] > 0:
         missing_counties = (
-            df.filter(pl.col("Sampling Region").is_null())
-            .select("county_gisjoin")
+            df.filter(pl.col("in.sampling_region_id").is_null())
+            .select("in.nhgis_county_gisjoin")
             .unique()
         )
         missing_tracts = (
-            df.filter(pl.col("Sampling Region").is_null())
-            .select("tract_gisjoin")
+            df.filter(pl.col("in.sampling_region_id").is_null())
+            .select("in.nhgis_tract_gisjoin")
             .unique()
         )
         raise ValueError(
             f"\n{df.filter(pl.any_horizontal(pl.all().is_null())).shape[0]} rows are missing sampling regions.\n"
-            + f"Missing counties: {missing_counties.to_series().to_list()}.\n"
-            + f"Missing tracts: {missing_tracts.to_series().to_list()}"
+            f"Missing counties: {missing_counties.to_series().to_list()}.\n"
+            f"Missing tracts: {missing_tracts.to_series().to_list()}"
         )
     logger.info("Successfully assigned sampling regions")
+
+    # Convert sampling_region_id to string to match the type in bs_df
+    df = df.with_columns(pl.col("in.sampling_region_id").cast(pl.Utf8))
 
     return df
 
@@ -266,15 +324,15 @@ def allocate_buildings_to_geography(geo_df: pl.DataFrame, bs_df: pl.DataFrame) -
     # Group buildstock buildings by their key characteristics to create pools of similar buildings
     grouped_df = bs_df.group_by(
         [
-            "Sampling Region",
-            "Tenure",
-            "Vacancy Status",
-            "Geometry Building Type RECS",
-            "Vintage",
-            "Heating Fuel",
-            "Federal Poverty Level",
+            "in.sampling_region_id",
+            "in.tenure",
+            "in.vacancy_status",
+            "in.geometry_building_type_recs",
+            "in.vintage",
+            "in.heating_fuel",
+            "in.federal_poverty_level",
         ]
-    ).agg(pl.col("Building").unique())
+    ).agg(pl.col("bldg_id").unique())
 
     # Join geography with building pools and randomly sample one building per geography row
     allocated_df = (
@@ -282,23 +340,23 @@ def allocate_buildings_to_geography(geo_df: pl.DataFrame, bs_df: pl.DataFrame) -
         .join(
             grouped_df.lazy(),
             on=[
-                "Sampling Region",
-                "Tenure",
-                "Vacancy Status",
-                "Geometry Building Type RECS",
-                "Vintage",
-                "Heating Fuel",
-                "Federal Poverty Level",
+                "in.sampling_region_id",
+                "in.tenure",
+                "in.vacancy_status",
+                "in.geometry_building_type_recs",
+                "in.vintage",
+                "in.heating_fuel",
+                "in.federal_poverty_level",
             ],
             how="left",
         )
-        .with_columns(pl.col("Building").list.sample(n=1).list.first())
+        .with_columns(pl.col("bldg_id").list.sample(n=1).list.first())
         .collect()
     )
 
     # Extract foreign key table with building-to-geography mappings
     fkt = allocated_df.select(
-        [pl.col("Building"), pl.col("tract_gisjoin"), pl.col("puma_gisjoin")]
+        [pl.col("bldg_id"), pl.col("in.nhgis_tract_gisjoin"), pl.col("in.nhgis_puma_gisjoin")]
     )
 
     return allocated_df, fkt
@@ -309,7 +367,7 @@ def write_parquet_outputs(output_dir: FsspecOutputDir, allocated_df: pl.DataFram
 
     Writes two files:
         - fkt.parquet: Foreign key table mapping buildings to geography
-        - allocated_weights.parquet: Full allocation data
+        - cached_allocated_weights.parquet: Full allocation data
 
     Args:
         output_dir: Dictionary containing filesystem info from setup_fsspec_filesystem
@@ -327,17 +385,17 @@ def write_parquet_outputs(output_dir: FsspecOutputDir, allocated_df: pl.DataFram
     with output_dir["fs"].open(str(file_path), "wb") as f:
         LazyFrame(fkt).sink_parquet(f)
     logger.info("Finished writing fkt")
-
+    
     # Construct file path for allocated weights output and handle S3 vs local paths
     logger.info(f"Writing allocated weights to {output_dir}")
-    file_path = Path(output_dir["fs_path"]) / "allocated_weights.parquet"
+    file_path = Path(output_dir["fs_path"]) / "cached_allocated_weights.parquet"
     if isinstance(output_dir["fs"], s3fs.S3FileSystem):
         file_path = f"s3://{Path(output_dir['fs_path']).as_posix()}"
 
     # Write allocated weights DataFrame to parquet format
     with output_dir["fs"].open(str(file_path), "wb") as f:
         LazyFrame(allocated_df).sink_parquet(f)
-    logger.info("Finished writing allocated weights")
+    logger.info(f"Finished caching allocated weights to {file_path}")
     logger.info("Completed creating allocated weights artifacts")
 
 def create_allocated_weights(
@@ -377,36 +435,186 @@ def create_allocated_weights(
 
     # Load buildstock sample data
     logger.info(f"Reading buildstock file from {bs_file}")
-    bs_df = pl.read_csv(bs_file, infer_schema_length=10000)
+    bs_df = pl.read_parquet(bs_file)
 
     # Allocate buildings to geographical units
     allocated_df, fkt = allocate_buildings_to_geography(geo_df, bs_df)
+
+    # Add weight column (each row represents one housing unit)
+    allocated_df = allocated_df.with_columns(pl.lit(1).alias("weight"))
 
     # Write output parquet files
     write_parquet_outputs(output_dir, allocated_df, fkt)
 
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
-    logger.info("hejhej")
+def get_cached_allocated_weights(output_dir) -> pl.LazyFrame:
 
-    # Initialize argument parser
-    parser = argparse.ArgumentParser(
-        description="Process raw sample file and write allocation weights table"
-    )
-    parser.add_argument(
-        "-s",
-        "--sample_file",
-        default="./geo_samples.csv",
-        help="Path to the raw sample csv file",
-    )
-    parser.add_argument(
-        "-o",
-        "--output_dir",
-        default="./../output/",
-        help="Path to write the allocated weights output parquet to",
-    )
+    # Read the cached allocated weights
+    cached_wts_path = f"{output_dir['fs_path']}/cached_allocated_weights.parquet"
+    if isinstance(output_dir["fs"], s3fs.S3FileSystem):
+        cached_wts_path = f"s3://{Path(cached_wts_path).as_posix()}"
+    if not output_dir["fs"].exists(cached_wts_path):
+        raise FileNotFoundError(
+        f"Cannot load allocated weights from {cached_wts_path}, call create_allocated_weights() first.")
+    alloc_weights = pl.scan_parquet(cached_wts_path, storage_options=output_dir["storage_options"])
 
-    # Parse command-line arguments and call the create_allocated_weights function
-    args = parser.parse_args()
-    create_allocated_weights(args.sample_file, args.output_dir)
+    # Rename the allocated weights columns to match the publication-formatted simulation outputs
+    # alloc_weights = alloc_weights.rename({
+    #     "Building": "bldg_id",
+    #     "Sampling Region": "in.sampling_region_id",
+    #     "Tenure": "in.tenure",
+    #     "Vacancy Status": "in.vacancy_status",
+    #     "Geometry Building Type RECS": "in.geometry_building_type_recs",
+    #     "Vintage": "in.vintage",
+    #     "Heating Fuel": "in.heating_fuel",
+    #     "Federal Poverty Level": "in.federal_poverty_level",
+    #     "Weight": "weight"
+    # })
+
+    return alloc_weights
+
+
+def create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id) -> None:
+    """
+
+    Each building is simulated in only one location, so the energy consumption results are the
+    same regardless of where this building is allocated. However, utility rates are calculated
+    for each of the possible locations where a building could be allocated. For each building,
+    this step pulls the utility bills for the assigned location.
+
+    The simulation outputs have a set of utility bill results columns for each state. e.g.
+    bldg_id | electric_bill_AK | gas_bill_AK | electric_bill_WA | gas_bill_WA | electric_bill_OR | gas_bill_OR
+    1234    | 1000             | 500         | 500              | 200         | 300              | 100    
+    Unpivot the utility bill columns so that each row corresponds to a single utility bill/state pair. e.g.
+    bldg_id | state | electric_bill | gas_bill | ...
+    1234    | AK    | 1000          | 500      |
+    1234    | WA    | 500           | 200      |
+    1234    | OR    | 300           | 100      |
+
+    After unpivoting, the utility bills can be joined with the allocated weights to determine the
+    utility costs for the assigned location of each building.
+
+    """
+    # Late import to avoid circular dependency
+    from resstockpostproc.process_metadata import get_cached_simulation_outputs_for_upgrade
+    
+    print("TODO Setting utility bills for each building based on the allocated location.")
+    # Read the cached simulation results
+    sim_outs = get_cached_simulation_outputs_for_upgrade(output_dir, upgrade_id)
+
+    # Read the cached allocated weights
+    alloc_wts = get_cached_allocated_weights(output_dir)
+
+    # Add the upgrade ID to the allocated weights
+    alloc_wts = alloc_wts.with_columns([
+            pl.lit(upgrade_id).cast(pl.Int64).alias("upgrade")
+        ])
+
+    # Where the results will be cached
+    alloc_wts_bills_dir = f'{output_dir["fs_path"]}/cached_allocated_weights_plus_bills/upgrade={upgrade_id}'
+    logger.info(f"Creating allocated weights plus bills for upgrade {upgrade_id}")
+    
+    print("TODO Calculate the bills once the per-state bill columns are availble")
+    # # Unpivot the utility bill columns so that each row corresponds to a single utility bill/state pair
+    # sim_outs = sim_outs.unpivot(
+    #     id_vars=["bldg_id", "state"],
+    #     value_vars="COLS_UTIL_BILLS",
+    #     variable_name="UTIL_BILL_TYPE",
+    #     value_name="UTIL_BILL_AMOUNT"
+    # )
+
+    # # Join the utility bills onto each building based on building ID and state
+    # alloc_wts = alloc_wts.join(sim_outs, on=["bldg_id", "state"], how="left")
+
+    # Calculate weighted utility bill columns based on the allocated weights TODO
+    # conv_fact = conv_fact('usd', weighted_utility_units)
+    # cost_cols = (UTIL_ELEC_BILL_COSTS + COST_STATE_UTIL_COSTS + [UTIL_BILL_TOTAL_MEAN])
+    # for col in cost_cols:
+    #     weighted_col_name = col_name_to_weighted(col, weighted_utility_units)
+    #     unweighted_weighted_map.update({col: weighted_col_name})
+
+    # TODO calculate the unweighted utility cost savings here?
+    # would require doing the baseline and upgrade.
+
+    # TODO consider if we want to calculate the weighted utility costs here
+    # or in the next step after we aggregate to a specific geography.
+    # Calculate weighted utility costs
+    # alloc_wts = alloc_wts.with_columns(
+    #     [pl.col(col)
+    #         .cast(pl.Int64)
+    #         .mul(pl.col(BLDG_WEIGHT))
+    #         .mul(conv_fact)
+    #         .alias(col_name_to_weighted(col, weighted_utility_units))
+    #         for col in cost_cols
+    #     ]
+    # )
+
+    # Write to parquet file, hive partition on upgrade to make later processing faster
+    if not isinstance(output_dir["fs"], s3fs.S3FileSystem):
+        output_dir["fs"].mkdirs(alloc_wts_bills_dir, exist_ok=True)
+    collect_tstart = datetime.datetime.now()
+    alloc_wts = alloc_wts.collect()
+    collect_tend = datetime.datetime.now()
+    elapsed_time = (collect_tend - collect_tstart).total_seconds()
+    logger.info(f"Collect time for upgrade {upgrade_id}: {elapsed_time} seconds")
+    alloc_wts = alloc_wts.drop("upgrade")  # upgrade column will be read from hive partition dir name
+    logger.info(f"Caching allocated weights plus bills for upgrade {upgrade_id} to: {alloc_wts_bills_dir}")
+    # Cache by state to enable faster reading
+    for state_abbv_tuple, state_alloc_wts in alloc_wts.group_by("in.state"):
+        state_abbv = state_abbv_tuple[0]
+        cached_file_name = f"cached_allocated_weights_plus_bills_upgrade{upgrade_id}_{state_abbv}.parquet"
+        logger.info(f"Caching {cached_file_name}")
+        alloc_wts_bills_state_dir = f"{alloc_wts_bills_dir}/state={state_abbv}"
+        if not isinstance(output_dir["fs"], s3fs.S3FileSystem):
+            output_dir["fs"].mkdirs(alloc_wts_bills_state_dir, exist_ok=True)
+        cached_file_path = f"{alloc_wts_bills_state_dir}/{cached_file_name}"
+        with output_dir["fs"].open(cached_file_path, "wb") as f:
+            state_alloc_wts.write_parquet(f)
+
+
+def get_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id) -> pl.LazyFrame:
+    """
+    Get the allocated weights plus utility bills for a specific upgrade.
+    Files must have already been written to disk
+    by calling create_allocated_weights_plus_util_bills_for_upgrade().
+
+    Parameters:
+    output_dir (dict): Dictionary containing the output directory information.
+    upgrade_id (int): The ID of the upgrade.
+
+    Returns:
+    pl.LazyFrame: A long (~120M rows) Polars LazyFrame containing the allocated weights plus utility bills.
+    """
+
+    # Check if the allocated weights plus bills directory exists for the given upgrade
+    alloc_wts_bills_dir = f"{output_dir['fs_path']}/cached_allocated_weights_plus_bills/upgrade={upgrade_id}"
+    if isinstance(output_dir["fs"], s3fs.S3FileSystem):
+        alloc_wts_bills_dir = f"s3://{alloc_wts_bills_dir}"
+    if not output_dir["fs"].exists(alloc_wts_bills_dir):
+        logger.error(f"Allocated weights plus bills directory does not exist: {alloc_wts_bills_dir}")
+        raise FileNotFoundError(
+            f"Cannot load allocated weights plus bills for upgrade {upgrade_id} from "
+            f"{alloc_wts_bills_dir}, call create_allocated_weights_plus_util_bills_for_upgrade() first."
+        )
+
+    # Find the existing parquet files
+    state_pqts = []
+    pqt_glob = f"{alloc_wts_bills_dir}/**/cached_allocated_weights_plus_bills_*.parquet"
+    for p in output_dir["fs"].glob(pqt_glob):
+        if isinstance(output_dir["fs"], s3fs.S3FileSystem):
+            state_pqts.append(f"s3://{p}")
+        else:
+            state_pqts.append(p)
+    if state_pqts:
+        logger.info(f"Reloading allocated weights plus bills from: {alloc_wts_bills_dir}")
+    else:
+        logger.error(f"No cached parquet files were found in {alloc_wts_bills_dir}")
+        raise FileNotFoundError(
+            f"Cannot load allocated weights plus bills for upgrade {upgrade_id} from "
+            f"{alloc_wts_bills_dir}, call create_allocated_weights_plus_util_bills_for_upgrade() first."
+        )
+
+    # Scan and return existing parquet files as a LazyFrame
+    alloc_wts = pl.scan_parquet(state_pqts, hive_partitioning=True, storage_options=output_dir["storage_options"])
+
+    return alloc_wts
