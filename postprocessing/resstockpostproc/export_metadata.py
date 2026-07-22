@@ -305,9 +305,7 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
                 starting_downselect = "basic"
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
             # Handle census tract vs. larger geography aggregation differently because of memory usage
-            if aggregation_level is None:
-                # "No aggregation" for ResStock means that the data is at the census tract level.
-                aggregation_level = "in.nhgis_tract_gisjoin"  # noqa: PLW2901
+            if aggregation_level == "in.nhgis_tract_gisjoin":
 
                 # Iterate by first level of geographic partitioning, collecting the DataFrame
                 # for this geography then writing files for all the sub-geographies within it.

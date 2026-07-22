@@ -128,8 +128,7 @@ def export_metadata_and_annual_results(raw_results_dir: str,
             "in.state": "state",
             "in.nhgis_county_gisjoin": "county",
         },
-        "aggregation_levels": ["in.nhgis_county_gisjoin"],  # The only one by at full resolution (no agg)
-        # TODO "aggregation_levels": [None, "in.nhgis_county_gisjoin"],  # The only one by at full resolution (no agg)
+        "aggregation_levels": ["in.nhgis_tract_gisjoin"],  # The only one by at full resolution (tract)
         "data_types": ["full"],  # TODO add basic downselect method
         "file_types": ["csv", "parquet"],
     },
