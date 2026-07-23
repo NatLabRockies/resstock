@@ -500,7 +500,7 @@ def create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
     # # Late import to avoid circular dependency
     # from resstockpostproc.simulation_outputs import get_cached_simulation_outputs_for_upgrade
     
-    print("TODO Setting utility bills for each building based on the allocated location.")
+    logger.warning("TODO Setting utility bills for each building based on the allocated location.")
     # Read the cached simulation results
     sim_outs = get_cached_simulation_outputs_for_upgrade(output_dir, upgrade_id)
 
@@ -516,7 +516,7 @@ def create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
     alloc_wts_bills_dir = f'{output_dir["fs_path"]}/cached_allocated_weights_plus_bills/upgrade={upgrade_id}'
     logger.info(f"Creating allocated weights plus bills for upgrade {upgrade_id}")
     
-    print("TODO Calculate the bills once the per-state bill columns are availble")
+    logger.warning("TODO Calculate the bills once the per-state bill columns are availble")
     # # Unpivot the utility bill columns so that each row corresponds to a single utility bill/state pair
     # sim_outs = sim_outs.unpivot(
     #     id_vars=["bldg_id", "state"],

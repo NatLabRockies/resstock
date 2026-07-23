@@ -83,7 +83,7 @@ def aggregate_allocated_weights_to_geography(alloc_wts,
         ]
     )
 
-    # print(f"wtd_agg_outs schema: {wtd_agg_outs.collect_schema()}\n\n")
+    # logger.info(f"wtd_agg_outs schema: {wtd_agg_outs.collect_schema()}\n\n")
 
     return wtd_agg_outs
 
@@ -230,7 +230,7 @@ def _process_and_write_geo_data(output_dir, geog_agg_alloc_wts, sim_outs, geo_ke
             # Join the aggregated allocated weights to the simulation outputs by building ID and upgrade ID
             geog_results = geog_agg_alloc_wts_slice.join(sim_outs, on=[pl.col("upgrade"), pl.col("bldg_id")])
 
-            # TODO Calculate the weighted columns
+            # Calculate the weighted columns
             geog_results = add_weighted_cols(geog_results)
 
             # Add geospatial data columns based on most informative geography column
@@ -243,7 +243,8 @@ def _process_and_write_geo_data(output_dir, geog_agg_alloc_wts, sim_outs, geo_ke
                 # TODO wide = add_ejscreen_columns(wide)
 
             # Add income and burden columns based on the assigned geography
-            geog_results = add_income_and_burden(geog_results)
+            # TODO Calculate the income and burden columns based on the assigned geography
+            # geog_results = add_income_and_burden(geog_results)
 
             # Collect the results for this slice of this geography
             geog_results = geog_results.collect().sort(by="bldg_id")
@@ -580,7 +581,7 @@ def add_electric_utility_column(input_lf: pl.LazyFrame, geography_to_join_on) ->
 
 
 def add_weighted_cols(df: pl.LazyFrame) -> pl.LazyFrame:
-    print("Adding weighted columns")
+    logger.info("Adding weighted columns")
     all_cols = df.collect_schema().names()
     wtd_cols = [col for col in all_cols if "out." in col and (
         ".energy_consumption." in col or

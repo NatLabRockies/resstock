@@ -35,7 +35,7 @@ def remove_all_empty_cols(df: pl.DataFrame):
     ]
     all_empty_cols = all_empty_str_cols + all_zero_numeric_cols
     # drop the empty columns
-    print(f"Dropping {len(all_empty_cols)} columns: {all_empty_cols}")
+    logger.info(f"Dropping {len(all_empty_cols)} columns: {all_empty_cols}")
     cleaned_base = df.drop(all_empty_cols)
     return cleaned_base
 
@@ -43,7 +43,7 @@ def fix_site_energy_total(df: pl.LazyFrame):
     """
     We need to do this because normally site energy total includes coal and wood but we don't want to include those.
     """
-    print("Removing coal and wood from energy totals")
+    logger.info("Removing coal and wood from energy totals")
     all_cols = df.collect_schema().names()
     updated_cols = []
     for suffix in ["", "_intensity", "energy_consumption..kwh", "energy_savings..kwh"]:
@@ -66,7 +66,7 @@ def fix_all_fuels_emissions(df: pl.LazyFrame):
     Recalculate out.all_fuels.total.<scenario_name>.co2e_kg columns using
     only the subset of fuel total columns. Basically, exclude wood from the all_fuel emissions.
     """
-    print("Removing coal and wood from emissions totals")
+    logger.info("Removing coal and wood from emissions totals")
     all_cols = df.collect_schema().names()
     all_fuel_cols = []
     emissions_re = re.compile(r"^out\.emissions\.(electricity|natural_gas|fuel_oil|propane).(\w+)..co2e_kg")

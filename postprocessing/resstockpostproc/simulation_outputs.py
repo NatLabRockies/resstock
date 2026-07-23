@@ -92,13 +92,13 @@ def set_baseline_applicability(df: pl.LazyFrame, is_baseline: bool) -> pl.LazyFr
     if not is_baseline:
         # Non-baseline upgrades already have an applicability column
         return df
-    print("Setting applicability to True for all baseline buildings")
+    logger.info("Setting applicability to True for all baseline buildings")
     df = df.with_columns(pl.lit(True).alias("applicability"))
     return df
 
 
 def remove_failed_baseline_buildings(df: pl.LazyFrame, baseline_failed_bldgs: set[int]) -> pl.LazyFrame:
-    print("Removing buildings that failed in the baseline")
+    logger.info("Removing buildings that failed in the baseline")
     df = df.filter(
         ~pl.col("building_id").is_in(baseline_failed_bldgs)
     )
@@ -106,13 +106,13 @@ def remove_failed_baseline_buildings(df: pl.LazyFrame, baseline_failed_bldgs: se
 
 
 def remove_na_or_failed_buildings(df: pl.LazyFrame) -> pl.LazyFrame:
-    print("Removing buildings that failed in this upgrade or where the upgrade was not applicable")
+    logger.info("Removing buildings that failed in this upgrade or where the upgrade was not applicable")
     df = df.filter(pl.col("completed_status") == "Success")
     return df
 
 
 def get_failed_building_list(df: pl.LazyFrame ) -> list[int]:
-    print("Getting failed building list")
+    logger.info("Getting failed building list")
     failed_bldgs = (
         df.filter(pl.col("completed_status") != "Success")
         .select(pl.col("building_id"))
@@ -140,7 +140,7 @@ def add_missing_cols_from_baseline_to_upgrade(upgrade_df: pl.LazyFrame, baseline
     if is_baseline:
         # Baseline already has all the columns, no need to add
         return upgrade_df
-    print("Adding missing columns from baseline to upgrade")
+    logger.info("Adding missing columns from baseline to upgrade")
     base_cols = baseline_df.collect_schema().names()
     upgrade_cols = upgrade_df.collect_schema().names()
     missing_cols = list(set(base_cols) - set(upgrade_cols)) + ["building_id"]
@@ -153,7 +153,7 @@ def replace_missing_buildings_with_baseline(upgrade_df: pl.LazyFrame, baseline_d
     if is_baseline:
         # Baseline determines the full set of buildings, will never be missing any by definition
         return upgrade_df
-    print("Replacing buildings missing from the upgrade with baseline data")
+    logger.info("Replacing buildings missing from the upgrade with baseline data")
     # All buildings present in the upgrade_df are there because the upgrade was applicable to them
     upgrade_df = upgrade_df.with_columns(pl.lit(True).alias("applicability"))
     upgrade_name_df = upgrade_df.select(pl.col("apply_upgrade.upgrade_name").first())
@@ -174,12 +174,12 @@ def replace_missing_buildings_with_baseline(upgrade_df: pl.LazyFrame, baseline_d
     base_ids = set(baseline_successful_df.select("building_id").collect().to_series().to_list())
     up_ids = set(upgrade_df.select("building_id").collect().to_series().to_list())
     assert base_ids == up_ids, f"{len(base_ids)} buildings in baseline, {len(up_ids)} in upgrade"
-    print(f"{len(base_ids)} buildings in baseline, {len(up_ids)} in upgrade")
+    logger.info(f"{len(base_ids)} buildings in baseline, {len(up_ids)} in upgrade")
     return upgrade_df
 
 
 def downselect_and_rename_cols(df: pl.LazyFrame, col_maps: Sequence[dict]) -> pl.LazyFrame:
-    print("Downselecting and renaming columns from raw simulation outputs per sdr_column_definitions.csv")
+    logger.info("Downselecting and renaming columns from raw simulation outputs per sdr_column_definitions.csv")
     transformed_cols = ["applicability"]  # Special case
     all_cols = df.collect_schema().names()
     for col_map in col_maps:
@@ -231,12 +231,12 @@ def rename_upgrades(df: pl.LazyFrame, upgrade_renamer: dict) -> pl.LazyFrame:
         LazyFrame containing results with modified in.upgrade_name column values.
     """
     if not upgrade_renamer:
-        print("No upgrade renamer was supplied, upgrades not renamed.")
+        logger.warning("No upgrade renamer was supplied, upgrades not renamed.")
         return df
     else:
-        print("Renaming upgrades")
+        logger.info("Renaming upgrades")
         # for old, new in upgrade_renamer.items():
-        #     print(f"{old} -> {new}")
+        #     logger.info(f"{old} -> {new}")
 
     # Check that each upgrade name is present in the upgrade renamer dict
     up_names = df.select(pl.col("in.upgrade_name")).unique().collect().to_series().to_list()
@@ -283,7 +283,7 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
 
 
 def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame:
-    print("Adding savings columns")
+    logger.info("Adding savings columns")
     savings_cols = []
     all_cols = df.collect_schema().names()
     out_cols = [col for col in all_cols if "out." in col and not (
@@ -299,13 +299,13 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
         or "out.params.panel_breaker_space_occupied" in col
     ]
     out_cols += out_panel_cols
-    # print("Columns to calculate savings for (from up_df):")
+    # logger.info("Columns to calculate savings for (from up_df):")
     # for c in sorted(out_cols):
-    #     print(c)
+    #     logger.info(c)
     all_base_cols = baseline_df.collect_schema().names()
     for c in out_cols:
         if c not in all_base_cols:
-            print(f"ERROR: {c} is in upgrade but not baseline df, cannot calc savings for this column")
+            logger.error(f"ERROR: {c} is in upgrade but not baseline df, cannot calc savings for this column")
     baseline_df_with_renamed = baseline_df.select(
         [pl.col(col).alias(f"baseline_{col}") for col in out_cols] + ["bldg_id"]
     )
@@ -320,7 +320,7 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
 
 
 def add_intensity_cols(df: pl.LazyFrame) -> pl.LazyFrame:
-    print("Adding intensity columns")
+    logger.info("Adding intensity columns")
     all_cols = df.collect_schema().names()
     int_cols = [col for col in all_cols if "out." in col and (
         ".energy_consumption" in col or
@@ -340,7 +340,7 @@ def add_intensity_cols(df: pl.LazyFrame) -> pl.LazyFrame:
 
 
 def add_panel_contraint_cols(df: pl.LazyFrame) -> pl.LazyFrame:
-    print("Adding panel constraint columns")
+    logger.info("Adding panel constraint columns")
     all_cols = df.collect_schema().names()
     amp_prefix = "out.params.panel_load_headroom_capacity."
     amp_cols = [col for col in all_cols if amp_prefix in col]
@@ -375,7 +375,7 @@ def add_panel_contraint_cols(df: pl.LazyFrame) -> pl.LazyFrame:
 #     """
 #     Removes all as-simulated geography columns 
 #     """
-#     print("Renaming geography columns as simulated")
+#     logger.info("Renaming geography columns as simulated")
 
 #     # as-simulated columns in ComStock that are imported
 #     # in.as_simulated_census_division_name
@@ -512,7 +512,7 @@ def add_upgrade_foo_cols(lf: pl.LazyFrame) -> pl.LazyFrame:
     upgrade_cols = [c for c in lf.collect_schema().names() if c.startswith("upgrade_costs.") and c.endswith("_name")]
     if not upgrade_cols:
         return lf
-    print("Adding upgrade columns from this upgrade")
+    logger.info("Adding upgrade columns from this upgrade")
     upgrade_lf = lf.select(["bldg_id"] + upgrade_cols)
     upgrade_df = (
         upgrade_lf.unpivot(
@@ -539,7 +539,7 @@ def add_upgrade_foo_cols(lf: pl.LazyFrame) -> pl.LazyFrame:
 
 
 def add_missing_upgrade_cols(df: pl.LazyFrame, upgrade_col_schema: dict) -> pl.LazyFrame:
-    print("Adding upgrade columns from superset across all upgrades")
+    logger.info("Adding upgrade columns from superset across all upgrades")
     all_cols = df.collect_schema().names()
     for col_name, col_dtype in upgrade_col_schema.items():
         if not col_name.startswith("upgrade."):
@@ -553,7 +553,7 @@ def add_missing_upgrade_cols(df: pl.LazyFrame, upgrade_col_schema: dict) -> pl.L
 
 
 def adjust_col_dtypes(df: pl.LazyFrame) -> pl.LazyFrame:
-    print("Adjusting column dtypes")
+    logger.info("Adjusting column dtypes")
     # Upgrade ID must be Athena bigint (np.int64)
     df = df.with_columns(pl.col("upgrade").cast(pl.Int64))
     return df
@@ -574,7 +574,7 @@ def downselect_fuel_emissions_cols(df: pl.LazyFrame):
 
     out.emissions.total.lrmer_midcase_15..co2e_kg (total for a scenario)
     """
-    print("Downselecting fuel emissions to one scenario")
+    logger.info("Downselecting fuel emissions to one scenario")
     all_cols = df.collect_schema().names()
 
     fuel_emissions_re = re.compile(r"^out\.emissions\.(natural_gas|fuel_oil|propane).(\w+)..co2e_kg")
@@ -589,29 +589,29 @@ def downselect_fuel_emissions_cols(df: pl.LazyFrame):
             # Keep the first scenario's columns and rename them
             df = df.rename({col: col.replace(scenario, "total") for col in cols})
             # for col in cols:
-            #     print(f"Renaming {col} to {col.replace(scenario, "total")}")
+            #     logger.info(f"Renaming {col} to {col.replace(scenario, "total")}")
         else:
             # Delete the fuel emissions columns for all other scenarios
             df = df.drop(cols)
-            # print(f"Dropping: {cols}")
+            # logger.info(f"Dropping: {cols}")
     return df
 
 
 def downselect_and_order_pub_cols(lf: pl.LazyFrame, col_maps: Sequence[dict]):
-    print("Reordering columns and checking for missing/extra columns")
+    logger.info("Reordering columns and checking for missing/extra columns")
     # verify that all the columns in lf are one published_name in col_maps
     all_df_cols = set(lf.collect_schema().names())
     all_defined_cols = [col_map["published_name"] for col_map in col_maps if "yes" in col_map["publish_in_full"]]
     extra_cols = all_df_cols - set(all_defined_cols)
     if extra_cols:
-        print("Extra columns in output data not defined in publication column definition:")
+        logger.warning("Extra columns in output data not defined in publication column definition:")
         for c in sorted(extra_cols):
-            print(f"Extra column: {c}")
+            logger.warning(f"Extra column: {c}")
     missing_cols = [col for col in set(all_defined_cols) - all_df_cols if not col.startswith("upgrade.")]
     if missing_cols:
-        print("Missing columns in output data that are defined in publication column definition:")
+        logger.warning("Missing columns in output data that are defined in publication column definition:")
         for c in sorted(missing_cols):
-            print(f"Missing column: {c}")
+            logger.warning(f"Missing column: {c}")
     available_cols = [col for col in all_defined_cols if col in all_df_cols]
     return lf.select(available_cols)
 
@@ -651,7 +651,7 @@ def cache_simulation_outputs_file(output_dir, sim_out_cache_dir: pathlib.Path, u
         upgrade_cache_dir.mkdir(parents=True, exist_ok=True)
     with output_dir["fs"].open(str(file_path), "wb") as f:
         df.sink_parquet(f)
-    print(f"Cached simulation outputs for upgrade {upgrade_id} to {file_path}")
+    logger.info(f"Cached simulation outputs for upgrade {upgrade_id} to {file_path}")
 
 
 def get_cached_simulation_outputs_file(output_dir, sim_out_cache_dir: pathlib.Path, upgrade_id: int):
