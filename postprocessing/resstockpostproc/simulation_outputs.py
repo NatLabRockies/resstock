@@ -1,6 +1,5 @@
 from collections.abc import Sequence
 
-import datetime
 import polars as pl
 import pathlib
 import geopandas as gpd
@@ -16,11 +15,9 @@ from resstockpostproc.utils import (
     col_name_to_savings,
     fix_site_energy_total,
     fix_all_fuels_emissions,
-    get_col_maps,
-    conversion_factor
+    get_col_maps
 )
 from resstockpostproc.income_mapper import assign_representative_income
-from resstockpostproc.allocated_weights import get_allocated_weights_plus_util_bills_for_upgrade
 
 logger = logging.getLogger(__name__)
 
@@ -88,10 +85,7 @@ def get_schema_superset(upgrade_files: list, files_dir) -> dict:
     upgrade_col_schema = {}
     for upgrade_file in upgrade_files:
         # Add s3:// prefix for polars if using S3
-        if files_dir["storage_options"] is not None:
-            file_path = f"s3://{upgrade_file}"
-        else:
-            file_path = upgrade_file
+        file_path = f"s3://{upgrade_file}" if files_dir["storage_options"] is not None else upgrade_file
         upgrade_df = pl.scan_parquet(file_path, storage_options=files_dir["storage_options"])
         upgrade_col_schema.update(get_upgrade_columns(upgrade_df))
     return upgrade_col_schema
@@ -106,7 +100,7 @@ def set_baseline_applicability(df: pl.LazyFrame, is_baseline: bool) -> pl.LazyFr
     return df
 
 
-def remove_failed_baseline_buildings(df: pl.LazyFrame, baseline_failed_bldgs: set[int],) -> pl.LazyFrame:
+def remove_failed_baseline_buildings(df: pl.LazyFrame, baseline_failed_bldgs: set[int]) -> pl.LazyFrame:
     print("Removing buildings that failed in the baseline")
     df = df.filter(
         ~pl.col("building_id").is_in(baseline_failed_bldgs)
@@ -120,7 +114,7 @@ def remove_na_or_failed_buildings(df: pl.LazyFrame) -> pl.LazyFrame:
     return df
 
 
-def get_failed_building_list(df: pl.LazyFrame, ) -> list[int]:
+def get_failed_building_list(df: pl.LazyFrame ) -> list[int]:
     print("Getting failed building list")
     failed_bldgs = (
         df.filter(pl.col("completed_status") != "Success")
@@ -152,7 +146,7 @@ def add_missing_cols_from_baseline_to_upgrade(upgrade_df: pl.LazyFrame, baseline
     print("Adding missing columns from baseline to upgrade")
     base_cols = baseline_df.collect_schema().names()
     upgrade_cols = upgrade_df.collect_schema().names()
-    missing_cols = [c for c in list(set(base_cols) - set(upgrade_cols)) + ["building_id"]]
+    missing_cols = list(set(base_cols) - set(upgrade_cols)) + ["building_id"]
     upgrade_df = upgrade_df.join(baseline_df.select(missing_cols), on="building_id", how="left")
     return upgrade_df
 
@@ -221,7 +215,7 @@ def get_upgrade_rename_dict(raw_results_dir):
         # For S3 paths, use forward slashes
         file_path = f"{fs_path}/rename_upgrades.json"
     if not raw_results_dir["fs"].exists(file_path):
-        return dict()
+        return {}
     with raw_results_dir["fs"].open(file_path, "r") as f:
         upgrade_renamer = json.load(f)
     return upgrade_renamer
@@ -605,7 +599,7 @@ def downselect_fuel_emissions_cols(df: pl.LazyFrame):
     """
 
     for each scenario
-        out.emissions.electricity.total.lrmer_lowrecost_15..co2e_kg (This actually uses the net column from the raw result)
+        out.emissions.electricity.total.lrmer_lowrecost_15..co2e_kg (This uses the net column from the raw result)
         out.emissions.electricity.total.aer_lowrecosthighngprice_avg..co2e_kg
 
     Downselect to just one column for natural gas, propane, and fuel oil emissions

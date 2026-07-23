@@ -16,9 +16,9 @@ import logging
 import polars as pl
 from pathlib import Path
 from resstockpostproc.simulation_outputs import (
+    get_failed_building_list,
     get_schema_superset,
     get_upgrade_rename_dict,
-    get_failed_building_list,
     process_simulation_outputs,
     cache_simulation_outputs_file,
     get_cached_simulation_outputs_file
@@ -27,7 +27,10 @@ from resstockpostproc.metadata_and_annual_results import export_metadata_and_ann
 from resstockpostproc.utils import (
     setup_fsspec_filesystem
 )
-from resstockpostproc.allocated_weights import create_allocated_weights, create_allocated_weights_plus_util_bills_for_upgrade
+from resstockpostproc.allocated_weights import (
+    create_allocated_weights,
+    create_allocated_weights_plus_util_bills_for_upgrade
+)
 
 
 def export_metadata_and_annual_results(raw_results_dir: str,
@@ -42,7 +45,7 @@ def export_metadata_and_annual_results(raw_results_dir: str,
 
     # Find the raw results files
     pqt_glob = f'{raw_results_dir["fs_path"]}/**/*.parquet'
-    result_files = raw_results_dir['fs'].glob(pqt_glob)
+    result_files = raw_results_dir["fs"].glob(pqt_glob)
     baseline_files = [f for f in result_files if "up00" in Path(f).name.lower()]
     upgrade_files = [f for f in result_files if "up00" not in Path(f).name.lower()]
 
@@ -51,29 +54,26 @@ def export_metadata_and_annual_results(raw_results_dir: str,
     col_schema  = get_schema_superset(upgrade_files, raw_results_dir)
     sim_out_cache_dir = Path(f"{output_dir['fs_path']}/cached_simulation_outputs")
 
-    # # Process and cache the baseline simulation outputs
-    # upgrade_id = 0
-    # baseline_file = baseline_files[0]
-    # print(f"Processing baseline file: {baseline_file}")
-    # # Add s3:// prefix for polars if using S3
-    # if raw_results_dir["storage_options"] is not None:
-    #     baseline_path = f"s3://{baseline_file}"
-    # else:
-    #     baseline_path = baseline_file
-    # baseline_df = pl.scan_parquet(baseline_path, storage_options=raw_results_dir["storage_options"])
-    # failed_bldgs = get_failed_building_list(baseline_df)
-    # bs_pub_df = process_simulation_outputs(
-    #         failed_bldgs,
-    #         baseline_df,
-    #         None,
-    #         baseline_df,
-    #         upgrade_id,
-    #         upgrade_renamer,
-    #         col_schema ,
-    #         # skip_if_cached # Add some argument here to skip if cached files already exist
-    #     )
-    # cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, bs_pub_df)
-    # base_cols = set(bs_pub_df.collect_schema().names())
+    # Process and cache the baseline simulation outputs
+    upgrade_id = 0
+    baseline_file = baseline_files[0]
+    print(f"Processing baseline file: {baseline_file}")
+    # Add s3:// prefix for polars if using S3
+    baseline_path = f"s3://{baseline_file}" if raw_results_dir["storage_options"] is not None else baseline_file
+    baseline_df = pl.scan_parquet(baseline_path, storage_options=raw_results_dir["storage_options"])
+    failed_bldgs = get_failed_building_list(baseline_df)
+    bs_pub_df = process_simulation_outputs(
+            failed_bldgs,
+            baseline_df,
+            None,
+            baseline_df,
+            upgrade_id,
+            upgrade_renamer,
+            col_schema ,
+            # skip_if_cached # Add some argument here to skip if cached files already exist
+        )
+    cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, bs_pub_df)
+    base_cols = set(bs_pub_df.collect_schema().names())
 
     # Process and cache the upgrade simulation outputs
     upgrade_ids = [0]
@@ -85,10 +85,7 @@ def export_metadata_and_annual_results(raw_results_dir: str,
         upgrade_ids.append(upgrade_id)
         print(f"Processing upgrade file: {upgrade_file}, upgrade number: {upgrade_id} {'*'*100}")
         # Add s3:// prefix for polars if using S3
-        if raw_results_dir["storage_options"] is not None:
-            upgrade_path = f"s3://{upgrade_file}"
-        else:
-            upgrade_path = upgrade_file
+        upgrade_path = f"s3://{upgrade_file}" if raw_results_dir["storage_options"] is not None else upgrade_file
         upgrade_df = pl.scan_parquet(upgrade_path, storage_options=raw_results_dir["storage_options"])
         up_df = process_simulation_outputs(
             failed_bldgs,
@@ -111,11 +108,11 @@ def export_metadata_and_annual_results(raw_results_dir: str,
     # a pre-sampling version that just adds a simple 2 column file with ID and fixed weight
     # and a post-sampling version with all the jazz.
     bs_pub_df_path = get_cached_simulation_outputs_file(output_dir, sim_out_cache_dir, 0)
-    # create_allocated_weights(bs_pub_df_path, Path(f"{output_dir['fs_path']}"))
+    create_allocated_weights(bs_pub_df_path, Path(f"{output_dir['fs_path']}"))
 
     # Process and cache allocated weights plus utility bills
-    # for upgrade_id in upgrade_ids:
-    #     create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
+    for upgrade_id in upgrade_ids:
+        create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
 
     # Define the geographic partitions to export
     # This is an example from ComStock SDR

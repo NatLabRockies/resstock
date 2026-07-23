@@ -9,8 +9,19 @@ import s3fs
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from functools import lru_cache
 
-from resstockpostproc.utils import col_name_to_percent_savings, col_name_to_savings, col_name_to_weighted, conversion_factor, get_col_maps, units_from_col_name
-from resstockpostproc.simulation_outputs import add_income_and_burden, downselect_and_order_pub_cols, get_cached_simulation_outputs_for_upgrade
+from resstockpostproc.utils import (
+    col_name_to_percent_savings,
+    col_name_to_savings,
+    col_name_to_weighted,
+    conversion_factor,
+    get_col_maps,
+    units_from_col_name,
+)
+from resstockpostproc.simulation_outputs import (
+    add_income_and_burden,
+    downselect_and_order_pub_cols,
+    get_cached_simulation_outputs_for_upgrade,
+)
 from resstockpostproc.allocated_weights import get_allocated_weights_plus_util_bills_for_upgrade
 
 logger = logging.getLogger(__name__)
@@ -30,7 +41,10 @@ def aggregate_allocated_weights_to_geography(alloc_wts,
         LazyFrame with aggregated allocated weights and utility bills
     """
 
-    logger.info(f"Filtering allocated weights to: {geography_filters} and aggregating to: {geographic_aggregation_levels}")
+    logger.info(
+        f"Filtering allocated weights to: {geography_filters} "
+        f"and aggregating to: {geographic_aggregation_levels}"
+    )
 
     # Filter to specified geography
     if len(geography_filters) > 0:
@@ -77,7 +91,8 @@ def aggregate_allocated_weights_to_geography(alloc_wts,
 def add_weighted_utility_cost_savings_columns(input_lf, baseline_lf, geo_agg_cols):
     """
     the data contains the weighted extracted utility bills for the apportioned tract
-    This method will calculate the weighted utility cost savings by each metric - min, median_low, median_high, mean, max, and state average
+    This method will calculate the weighted utility cost savings by each metric
+    - min, median_low, median_high, mean, max, and state average
     """
 
     logger.debug("Adding weighted utility cost savings")
@@ -97,7 +112,8 @@ def add_weighted_utility_cost_savings_columns(input_lf, baseline_lf, geo_agg_col
         val_cols.append(weighted_col)
         abs_svgs_cols[weighted_col] = col_name_to_savings(weighted_col, None)
         pct_svgs_cols[weighted_col] = col_name_to_percent_savings(weighted_col, "percent")
-        # mapping for column name to intensity savings column name  # TODO do we need intensity savings for utility bills?
+        # TODO do we need intensity savings for utility bills?
+        # mapping for column name to intensity savings column name
         # intensity_col = col_name_to_area_intensity(col)
         # val_cols.append(intensity_col)
         # abs_svgs_cols[intensity_col] = col_name_to_savings(intensity_col, None)
@@ -123,7 +139,12 @@ def add_weighted_utility_cost_savings_columns(input_lf, baseline_lf, geo_agg_col
 
     # percent savings
     pct_svgs = pl.concat([up_vals, base_vals], how="horizontal").with_columns(
-        [((pl.col(f"{col}_base") - pl.col(col)) / pl.col(f"{col}_base") * 100).alias(pct_svgs_cols[col]) for col in val_cols]
+        [
+            (
+                (pl.col(f"{col}_base") - pl.col(col)) / pl.col(f"{col}_base") * 100
+            ).alias(pct_svgs_cols[col])
+            for col in val_cols
+        ]
     ).select(list(pct_svgs_cols.values()) + geo_agg_cols + ["bldg_id"])
 
     pct_svgs = pct_svgs.fill_null(0.0)
@@ -202,7 +223,9 @@ def _process_and_write_geo_data(output_dir, geog_agg_alloc_wts, sim_outs, geo_ke
             # before joining the simulation outputs. Requires the baseline (upgrade 0)
             # allocated weights aggregated the same way as this geography.
             # See add_weighted_utility_cost_savings_columns().
-            # geog_agg_alloc_wts_slice = add_utility_cost_savings_columns(geog_agg_alloc_wts_slice, base_agg_alloc_wts, geo_agg_cols)
+            # geog_agg_alloc_wts_slice = add_utility_cost_savings_columns(geog_agg_alloc_wts_slice,
+            #                                                             base_agg_alloc_wts,
+            #                                                             geo_agg_cols)
 
             # Join the aggregated allocated weights to the simulation outputs by building ID and upgrade ID
             geog_results = geog_agg_alloc_wts_slice.join(sim_outs, on=[pl.col("upgrade"), pl.col("bldg_id")])
@@ -248,7 +271,9 @@ def _process_and_write_geo_data(output_dir, geog_agg_alloc_wts, sim_outs, geo_ke
             csv_f.close()
 
 
-def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_exports, write_workers=4, slice_rows=200_000) -> None:
+def export_metadata_and_annual_results_for_upgrade(
+    output_dir, upgrade_id, geo_exports, write_workers=4, slice_rows=200_000
+) -> None:
     """
     Subdivides the annual results by geography and writes to OEDI.
     Creates .parquet and .csv.gz files.
@@ -444,7 +469,10 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
         logger.info(f"Geographic aggregation levels: {aggregation_levels}")
         logger.info(f"Time elapsed: {(ge_tend - ge_tstart).total_seconds()} seconds")
 
-    return f"Finished {len(geo_exports)} geo exports for upgrade {upgrade_id} in {(datetime.datetime.now() - tstart).total_seconds()} seconds."
+    return (
+        f"Finished {len(geo_exports)} geo exports for upgrade {upgrade_id} in "
+        f"{(datetime.datetime.now() - tstart).total_seconds()} seconds."
+    )
 
 
 @lru_cache(maxsize=1)

@@ -2,12 +2,14 @@ import boto3
 import datetime
 import json
 import logging
-import os
 from pathlib import Path
 import polars as pl
 from polars.lazyframe.frame import LazyFrame
 from resstockpostproc.utils import FsspecOutputDir, setup_fsspec_filesystem
 import s3fs
+
+
+from resstockpostproc.simulation_outputs import get_cached_simulation_outputs_for_upgrade
 
 logger = logging.getLogger(__name__)
 
@@ -133,7 +135,7 @@ def load_sampling_regions(output_dir: FsspecOutputDir, sampling_region_version: 
 
     # Load JSON file containing county to sampling region mappings
     logger.info(f"Reading sample file from {sample_regions_local_path}")
-    with open(sample_regions_local_path, "r") as f:
+    with open(sample_regions_local_path) as f:
         sampling_regions_dict = json.load(f)
 
     # Manually add in Oglala Lakota County, SD which used to be Shannon county (G4601130)
@@ -198,7 +200,7 @@ def load_cec_climate_zones(output_dir: FsspecOutputDir) -> pl.DataFrame:
 
     # Load JSON file containing tract to CEC climate zone mappings
     logger.info(f"Reading CEC 2010 CZ lookup file from {cec_2010_cz_lkup_local_path}")
-    with open(cec_2010_cz_lkup_local_path, "r") as f:
+    with open(cec_2010_cz_lkup_local_path) as f:
         cec_2010_cz_lkup_dict = json.load(f)
 
     # Convert to DataFrame and map CEC zones to sampling region numbers
@@ -495,8 +497,8 @@ def create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
     utility costs for the assigned location of each building.
 
     """
-    # Late import to avoid circular dependency
-    from resstockpostproc.simulation_outputs import get_cached_simulation_outputs_for_upgrade
+    # # Late import to avoid circular dependency
+    # from resstockpostproc.simulation_outputs import get_cached_simulation_outputs_for_upgrade
     
     print("TODO Setting utility bills for each building based on the allocated location.")
     # Read the cached simulation results

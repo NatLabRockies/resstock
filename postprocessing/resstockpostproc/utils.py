@@ -1,8 +1,6 @@
 from functools import lru_cache
 
 import boto3
-import gzip
-from io import BytesIO
 import logging
 import pathlib
 import re
@@ -11,8 +9,7 @@ from fsspec import AbstractFileSystem, register_implementation, url_to_fs
 import polars as pl
 import polars.selectors as cs
 import s3fs
-import tarfile
-from typing import Optional, TypedDict
+from typing import TypedDict
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +19,7 @@ class FsspecOutputDir(TypedDict):
 
     fs: AbstractFileSystem
     fs_path: pathlib.Path | str
-    storage_options: Optional[dict[str, str]]
+    storage_options: dict[str, str] | None
 
 def remove_all_empty_cols(df: pl.DataFrame):
     """
@@ -49,19 +46,19 @@ def fix_site_energy_total(df: pl.LazyFrame):
     print("Removing coal and wood from energy totals")
     all_cols = df.collect_schema().names()
     updated_cols = []
-    for suffix in ['', '_intensity', 'energy_consumption..kwh', 'energy_savings..kwh']:
-        if f'out.electricity.total.{suffix}' not in df:
+    for suffix in ["", "_intensity", "energy_consumption..kwh", "energy_savings..kwh"]:
+        if f"out.electricity.total.{suffix}" not in df:
             continue
         total_energy_col = pl.lit(0)
-        for fuel in ['electricity','natural_gas', 'fuel_oil', 'propane']:  # exclude other fuel types
-            if (col := f'out.{fuel}.total.{suffix}') in all_cols:
+        for fuel in ["electricity","natural_gas", "fuel_oil", "propane"]:  # exclude other fuel types
+            if (col := f"out.{fuel}.total.{suffix}") in all_cols:
                 total_energy_col += pl.col(col)
-        updated_cols.append(total_energy_col.alias(f'out.site_energy.total.{suffix}'))
-        if (pvcol := f'out.electricity.pv.{suffix}'):
+        updated_cols.append(total_energy_col.alias(f"out.site_energy.total.{suffix}"))
+        if (pvcol := f"out.electricity.pv.{suffix}"):
             net_energy_col = total_energy_col + pl.col(pvcol)
-            net_electricity_col = pl.col(f'out.electricity.total.{suffix}') + pl.col(pvcol)
-            updated_cols.append(net_energy_col.alias(f'out.site_energy.net.{suffix}'))
-            updated_cols.append(net_electricity_col.alias(f'out.electricity.net.{suffix}'))
+            net_electricity_col = pl.col(f"out.electricity.total.{suffix}") + pl.col(pvcol)
+            updated_cols.append(net_energy_col.alias(f"out.site_energy.net.{suffix}"))
+            updated_cols.append(net_electricity_col.alias(f"out.electricity.net.{suffix}"))
     return df.with_columns(updated_cols)
 
 def fix_all_fuels_emissions(df: pl.LazyFrame):
@@ -80,7 +77,7 @@ def fix_all_fuels_emissions(df: pl.LazyFrame):
             scenario2cols[match[2]].append(col)
 
     for scenario, cols in scenario2cols.items():
-        new_col = f'out.emissions.total.{scenario}..co2e_kg'
+        new_col = f"out.emissions.total.{scenario}..co2e_kg"
         all_fuel_cols.append(pl.sum_horizontal(cols).alias(new_col))
 
     return df.with_columns(all_fuel_cols)
@@ -95,11 +92,11 @@ def get_col_maps():
     col_map_df = col_def_df.filter(
                     pl.col("Published Annual Name").is_not_null()
                 ).select(
-                    pl.col('Column Type').alias('column_type'),
-                    pl.col('Import From Raw').alias('import_from_raw'),
-                    pl.col('Publish In Full').alias('publish_in_full'),
-                    pl.col("Annual Name").alias('column_name'),
-                    pl.col("Published Annual Name").alias('published_name'),
+                    pl.col("Column Type").alias("column_type"),
+                    pl.col("Import From Raw").alias("import_from_raw"),
+                    pl.col("Publish In Full").alias("publish_in_full"),
+                    pl.col("Annual Name").alias("column_name"),
+                    pl.col("Published Annual Name").alias("published_name"),
                     pl.col("ResStock To Published Annual Unit Conversion Factor").alias("conversion_factor")
                 )
     col_maps = col_map_df.to_dicts()
@@ -121,25 +118,25 @@ def setup_fsspec_filesystem(output_dir: str, aws_profile_name=None) -> FsspecOut
     register_implementation("s3", s3fs.S3FileSystem, clobber=True)
     out_fs, out_fs_path = url_to_fs(output_dir, profile=aws_profile_name)
     output_dir = {
-        'fs': out_fs,
-        'fs_path': out_fs_path
+        "fs": out_fs,
+        "fs_path": out_fs_path
     }
-    if isinstance(output_dir['fs'], s3fs.S3FileSystem):
+    if isinstance(output_dir["fs"], s3fs.S3FileSystem):
         if aws_profile_name is None:
-            logger.info(f'Accessing AWS using profile: None, which uses the [default] profile in .aws/config file')
+            logger.info("Accessing AWS using profile: None, which uses the [default] profile in .aws/config file")
         else:
-            logger.info(f'Accessing AWS using profile: {aws_profile_name}')
+            logger.info(f"Accessing AWS using profile: {aws_profile_name}")
         session = boto3.Session(aws_profile_name)
         credentials = session.get_credentials().get_frozen_credentials()
-        output_dir['storage_options'] = {
+        output_dir["storage_options"] = {
             "aws_access_key_id": credentials.access_key,
             "aws_secret_access_key": credentials.secret_key,
             "aws_region": "us-west-2",
         }
         if credentials.token:
-            output_dir['storage_options']['aws_session_token'] = credentials.token
+            output_dir["storage_options"]["aws_session_token"] = credentials.token
     else:
-        output_dir['storage_options'] = None
+        output_dir["storage_options"] = None
 
     return output_dir
 
