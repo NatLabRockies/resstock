@@ -32,7 +32,10 @@ from resstockpostproc.create_allocated_weights import create_allocated_weights, 
 
 def export_metadata_and_annual_results(raw_results_dir: str,
                                        output_dir: str,
-                                       aws_profile_name = None) -> None:
+                                       aws_profile_name = None,
+                                       write_workers=4,
+                                       slice_rows=200_000
+                                       ) -> None:
     # Set up filesystem objects for raw results and output directories
     raw_results_dir = setup_fsspec_filesystem(raw_results_dir, aws_profile_name)
     output_dir = setup_fsspec_filesystem(output_dir, aws_profile_name)
@@ -117,12 +120,12 @@ def export_metadata_and_annual_results(raw_results_dir: str,
     # Define the geographic partitions to export
     # This is an example from ComStock SDR
     geo_exports = [
-    # {"geo_top_dir": "national",
-    #     "partition_cols": {},
-    #     "aggregation_levels": ["national"],
-    #     "data_types": ["full"],  # TODO add basic downselect method
-    #     "file_types": ["csv", "parquet"],
-    # },
+    {"geo_top_dir": "national",
+        "partition_cols": {},
+        "aggregation_levels": ["national"],
+        "data_types": ["full"],  # TODO add basic downselect method
+        "file_types": ["csv", "parquet"],
+    },
     {"geo_top_dir": "by_state_and_county",
         "partition_cols": {
             "in.state": "state",
@@ -132,31 +135,33 @@ def export_metadata_and_annual_results(raw_results_dir: str,
         "data_types": ["full"],  # TODO add basic downselect method
         "file_types": ["csv", "parquet"],
     },
-    # {
-    #     "geo_top_dir": "by_state",
-    #     "partition_cols": {
-    #         "in.state": "state"
-    #     },
-    #     "aggregation_levels": ["in.state"],
-    #     "data_types": ["full"],  # TODO add basic downselect method
-    #     "file_types": ["csv", "parquet"],
-    # },
-    # {"geo_top_dir": "by_state_and_puma",
-    #     "partition_cols": {
-    #         "in.state": "state",
-    #         "in.nhgis_puma_gisjoin": "puma",
-    #     },
-    #     "aggregation_levels": ["in.nhgis_puma_gisjoin"],
-    #     "data_types": ["full"],  # TODO add basic downselect method
-    #     "file_types": ["csv", "parquet"],
-    # }
+    {
+        "geo_top_dir": "by_state",
+        "partition_cols": {
+            "in.state": "state"
+        },
+        "aggregation_levels": ["in.state"],
+        "data_types": ["full"],  # TODO add basic downselect method
+        "file_types": ["csv", "parquet"],
+    },
+    {"geo_top_dir": "by_state_and_puma",
+        "partition_cols": {
+            "in.state": "state",
+            "in.nhgis_puma_gisjoin": "puma",
+        },
+        "aggregation_levels": ["in.nhgis_puma_gisjoin"],
+        "data_types": ["full"],  # TODO add basic downselect method
+        "file_types": ["csv", "parquet"],
+    }
     ]
 
     for upgrade_id in upgrade_ids:
         export_metadata_and_annual_results_for_upgrade(
             output_dir,
             upgrade_id,
-            geo_exports)
+            geo_exports,
+            write_workers=write_workers,
+            slice_rows=slice_rows)
 
 
 if __name__ == "__main__":
