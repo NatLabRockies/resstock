@@ -10,8 +10,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from functools import lru_cache
 
 from resstockpostproc.utils import col_name_to_percent_savings
-from resstockpostproc.process_metadata import col_name_to_weighted, get_cached_simulation_outputs_for_upgrade, col_name_to_savings
-from resstockpostproc.create_allocated_weights import get_allocated_weights_plus_util_bills_for_upgrade
+from postprocessing.resstockpostproc.simulation_outputs import col_name_to_weighted, get_cached_simulation_outputs_for_upgrade, col_name_to_savings
+from postprocessing.resstockpostproc.allocated_weights import get_allocated_weights_plus_util_bills_for_upgrade
 
 logger = logging.getLogger(__name__)
 

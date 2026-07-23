@@ -19,7 +19,7 @@ from resstockpostproc.utils import (
     conversion_factor
 )
 from resstockpostproc.income_mapper import assign_representative_income
-from resstockpostproc.create_allocated_weights import get_allocated_weights_plus_util_bills_for_upgrade
+from postprocessing.resstockpostproc.allocated_weights import get_allocated_weights_plus_util_bills_for_upgrade
 
 logger = logging.getLogger(__name__)
 

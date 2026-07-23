@@ -15,7 +15,7 @@ import re
 import logging
 import polars as pl
 from pathlib import Path
-from resstockpostproc.process_metadata import (
+from postprocessing.resstockpostproc.simulation_outputs import (
     get_schema_superset,
     get_upgrade_rename_dict,
     get_failed_building_list,
@@ -23,11 +23,11 @@ from resstockpostproc.process_metadata import (
     cache_simulation_outputs_file,
     get_cached_simulation_outputs_file
 )
-from resstockpostproc.export_metadata import export_metadata_and_annual_results_for_upgrade
+from postprocessing.resstockpostproc.metadata_and_annual_results import export_metadata_and_annual_results_for_upgrade
 from resstockpostproc.utils import (
     setup_fsspec_filesystem
 )
-from resstockpostproc.create_allocated_weights import create_allocated_weights, create_allocated_weights_plus_util_bills_for_upgrade
+from postprocessing.resstockpostproc.allocated_weights import create_allocated_weights, create_allocated_weights_plus_util_bills_for_upgrade
 
 
 def export_metadata_and_annual_results(raw_results_dir: str,
