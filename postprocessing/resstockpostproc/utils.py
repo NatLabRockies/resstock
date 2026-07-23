@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 import boto3
 import gzip
 from io import BytesIO
@@ -83,7 +85,7 @@ def fix_all_fuels_emissions(df: pl.LazyFrame):
 
     return df.with_columns(all_fuel_cols)
 
-
+@lru_cache(maxsize=1)
 def get_col_maps():
     """
     Get the column maps from the publication list.
@@ -142,82 +144,6 @@ def setup_fsspec_filesystem(output_dir: str, aws_profile_name=None) -> FsspecOut
     return output_dir
 
 
-def write_geo_data(combo):
-    """
-    Writes the data to the desired location and file format.
-    This function must be a global static function in order to work with parallel processing.
-    """
-    geo_data, out_location, file_type, file_path = combo
-    if isinstance(geo_data, pl.LazyFrame):
-        geo_data = geo_data.collect()
-    if file_type == 'csv':
-        write_polars_csv_to_s3_or_local(geo_data, out_location['fs'], file_path)
-    elif file_type == 'parquet':
-        with out_location['fs'].open(file_path, "wb") as f:
-            geo_data.write_parquet(f, use_pyarrow=True)
-    else:
-        raise RuntimeError(f'Unknown file type {file_type} requested in export_metadata_and_annual_results()')
-
-
-def write_polars_csv_to_s3_or_local(data: pl.DataFrame, out_fs, out_path):
-    """
-    Writes the data to the desired location and file format.
-    This function must be a global static function in order to work with parallel processing
-    """
-    # If local, write uncompressed CSV
-    if not isinstance(out_fs, s3fs.S3FileSystem):
-        data.write_csv(out_path)
-        return True
-
-    # Get filename from full path
-    file_name = out_path.split('/')[-1]
-
-    # Create a tar archive in memory that contains the CSV
-    tar_buffer = BytesIO()
-    with tarfile.open(mode='w', fileobj=tar_buffer) as tar:
-        # Get CSV data
-        csv_buffer = BytesIO()
-        data.write_csv(csv_buffer)
-        csv_buffer.seek(0)
-
-        # Create a TarInfo object with file metadata
-        tarinfo = tarfile.TarInfo(name=file_name)
-        tarinfo.size = len(csv_buffer.getvalue())
-
-        # Add the CSV data to the tar archive
-        tar.addfile(tarinfo, csv_buffer)
-
-    # Compress the in memory tar archive with gzip
-    tar_buffer.seek(0)
-    gzip_buffer = BytesIO()
-    with gzip.GzipFile(filename=f'{file_name}', mode='wb', fileobj=gzip_buffer, compresslevel=9) as gz:
-        gz.write(tar_buffer.getvalue())
-
-    # Upload directly to S3
-    bucket_name = out_path.split('/')[0]
-    s3_key = '/'.join(out_path.split('/')[1:]) + '.gz'
-    s3_client = boto3.client('s3')
-    try:
-        gzip_buffer.seek(0)
-        s3_client.upload_fileobj(
-            gzip_buffer,      # File-like object
-            bucket_name,     # Bucket name
-            s3_key          # S3 object key
-        )
-    except Exception as e:
-        logger.error(f"S3 upload failed: {str(e)}")
-    finally:
-        # Clean up
-        csv_buffer.close()
-        tar_buffer.close()
-        gzip_buffer.close()
-
-    # Clean up
-    csv_buffer.close()
-    tar_buffer.close()
-    gzip_buffer.close()
-
-
 def conversion_factor(from_unit, to_unit):
     # Constants for unit conversion
     # Created using OpenStudio unit conversion library
@@ -268,9 +194,60 @@ def col_name_to_percent_savings(col_name, new_units=None):
     return col_name    
 
 
-def units_from_col_name(col_name):
+def units_from_col_name(col_name: str) -> str:
     # Extract the units from the column name
-    match = re.search("\.\.(.*)", col_name)
+    match = re.search(r"\.\.(.*)", col_name)
     units = match.group(1) if match else ""
 
     return units
+
+
+def col_name_to_weighted(col_name: str, new_units=None) -> str:
+    col_name = col_name.replace("out.", "calc.")
+    col_name = col_name.replace("calc.", "calc.weighted.")
+    if new_units is not None:
+        old_units = units_from_col_name(col_name)
+        col_name = col_name.replace(f"..{old_units}", f"..{new_units}")
+
+    return col_name
+
+
+def col_name_to_intensity(col_name: str, new_units=None) -> str:
+    col_name = col_name.replace("energy_consumption", "energy_consumption_intensity")
+    col_name = col_name.replace("energy_savings", "energy_savings_intensity")
+    if new_units is not None:
+        old_units = units_from_col_name(col_name)
+        col_name = col_name.replace(f"..{old_units}", f"..{new_units}")
+
+    return col_name
+
+
+def col_name_to_savings(col_name: str) -> str:
+    converted_col_name = str(col_name)
+    svg_renames = {
+        ".energy_consumption": ".energy_savings",
+        "_bill..": "_bill_savings..",
+        "_daily_peak_": "_daily_peak_savings_",
+        ".peak_": ".peak_savings_",
+        ".energy_burden": ".energy_burden_savings",
+        ".unmet_hours": ".unmet_hours_reduction",
+        "out.hot_water": "out.hot_water_savings",
+        ".load.cooling.peak": ".load.cooling.peak_savings",
+        ".load.heating.peak": ".load.heating.peak_savings",
+        ".energy_delivered": ".energy_delivered_savings",
+        ".energy_solar_thermal": ".energy_solar_thermal_savings",
+        ".energy_tank_losses": ".energy_tank_losses_savings",
+        ".emissions.": ".emissions_reduction.",
+        "panel_load_total_load": "panel_load_total_load_savings",
+        "panel_load_occupied_capacity": "panel_load_occupied_capacity_savings",
+        "panel_breaker_space_occupied": "panel_breaker_space_occupied_savings",
+        "component_load": "component_load_savings"
+    }
+    for bef, aft in svg_renames.items():
+        converted_col_name = converted_col_name.replace(bef, aft)
+
+    if converted_col_name == col_name:
+        raise ValueError(f"Cannot convert column name {col_name} to savings column")
+
+    return converted_col_name
+

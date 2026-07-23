@@ -12,14 +12,15 @@ from collections import defaultdict
 
 
 from resstockpostproc.utils import (
+    col_name_to_intensity,
+    col_name_to_savings,
     fix_site_energy_total,
     fix_all_fuels_emissions,
     get_col_maps,
-    write_geo_data,
     conversion_factor
 )
 from resstockpostproc.income_mapper import assign_representative_income
-from postprocessing.resstockpostproc.allocated_weights import get_allocated_weights_plus_util_bills_for_upgrade
+from resstockpostproc.allocated_weights import get_allocated_weights_plus_util_bills_for_upgrade
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +61,6 @@ def process_simulation_outputs(
     df = remove_na_or_failed_buildings(df)
     df = replace_missing_buildings_with_baseline(df, base_raw_df, is_baseline)
     df = downselect_and_rename_cols(df, col_maps)  # Per sdr_column_definitions.csv
-    # df = add_income_and_burden(df) # TODO Move this
     df = add_county_column(df)
     df = add_puma_column(df)
     df = add_baseline_upgrade_name_col(df, is_baseline)
@@ -78,10 +78,8 @@ def process_simulation_outputs(
         df = add_saving_cols(df, base_proc_df)
 
     df = add_intensity_cols(df)
-    df = add_weighted_cols(df) # TODO Move this
     df = add_missing_upgrade_cols(df, upgrade_col_schema)
     df = adjust_col_dtypes(df)
-    df = downselect_and_order_pub_cols(df, col_maps)  # Per sdr_column_definitions.csv  # TODO Move this
     df = df.sort("bldg_id")
     return df
 
@@ -330,16 +328,6 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
     return df
 
 
-def col_name_to_intensity(col_name: str, new_units=None) -> str:
-    col_name = col_name.replace("energy_consumption", "energy_consumption_intensity")
-    col_name = col_name.replace("energy_savings", "energy_savings_intensity")
-    if new_units is not None:
-        old_units = units_from_col_name(col_name)
-        col_name = col_name.replace(f"..{old_units}", f"..{new_units}")
-
-    return col_name
-
-
 def add_intensity_cols(df: pl.LazyFrame) -> pl.LazyFrame:
     print("Adding intensity columns")
     all_cols = df.collect_schema().names()
@@ -354,84 +342,6 @@ def add_intensity_cols(df: pl.LazyFrame) -> pl.LazyFrame:
         df = df.with_columns(
             pl.col(col)
             .truediv(pl.col("in.sqft..ft2"))
-            .alias(wtd_col_name)
-        )
-
-    return df
-
-
-def col_name_to_weighted(col_name: str, new_units=None) -> str:
-    col_name = col_name.replace("out.", "calc.")
-    col_name = col_name.replace("calc.", "calc.weighted.")
-    if new_units is not None:
-        old_units = units_from_col_name(col_name)
-        col_name = col_name.replace(f"..{old_units}", f"..{new_units}")
-
-    return col_name
-
-
-def units_from_col_name(col_name: str) -> str:
-    # Extract the units from the column name
-    match = re.search(r"\.\.(.*)", col_name)
-    units = match.group(1) if match else ""
-
-    return units
-
-
-def col_name_to_savings(col_name: str) -> str:
-    converted_col_name = str(col_name)
-    svg_renames = {
-        ".energy_consumption": ".energy_savings",
-        "_bill..": "_bill_savings..",
-        "_daily_peak_": "_daily_peak_savings_",
-        ".peak_": ".peak_savings_",
-        ".energy_burden": ".energy_burden_savings",
-        ".unmet_hours": ".unmet_hours_reduction",
-        "out.hot_water": "out.hot_water_savings",
-        ".load.cooling.peak": ".load.cooling.peak_savings",
-        ".load.heating.peak": ".load.heating.peak_savings",
-        ".energy_delivered": ".energy_delivered_savings",
-        ".energy_solar_thermal": ".energy_solar_thermal_savings",
-        ".energy_tank_losses": ".energy_tank_losses_savings",
-        ".emissions.": ".emissions_reduction.",
-        "panel_load_total_load": "panel_load_total_load_savings",
-        "panel_load_occupied_capacity": "panel_load_occupied_capacity_savings",
-        "panel_breaker_space_occupied": "panel_breaker_space_occupied_savings",
-        "component_load": "component_load_savings"
-    }
-    for bef, aft in svg_renames.items():
-        converted_col_name = converted_col_name.replace(bef, aft)
-
-    if converted_col_name == col_name:
-        raise ValueError(f"Cannot convert column name {col_name} to savings column")
-
-    return converted_col_name
-
-
-def add_weighted_cols(df: pl.LazyFrame) -> pl.LazyFrame:
-    print("Adding weighted columns")
-    all_cols = df.collect_schema().names()
-    wtd_cols = [col for col in all_cols if "out." in col and (
-        ".energy_consumption." in col or
-        ".energy_savings." in col or
-        ".emissions." in col or
-        ".emissions_reduction." in col
-        )]
-
-    wtd_col_unit_convs = {
-        "kwh": "tbtu",
-        "co2e_kg": "co2e_mmt"
-    }
-
-    for col in wtd_cols:
-        old_units = units_from_col_name(col)
-        new_units = wtd_col_unit_convs[old_units]
-        conv_fact = conversion_factor(old_units, new_units)
-        wtd_col_name = col_name_to_weighted(col, new_units)
-        df = df.with_columns(
-            pl.col(col)
-            .mul(pl.col("weight"))
-            .mul(conv_fact)
             .alias(wtd_col_name)
         )
 

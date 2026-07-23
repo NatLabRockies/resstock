@@ -9,9 +9,9 @@ import s3fs
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from functools import lru_cache
 
-from resstockpostproc.utils import col_name_to_percent_savings
-from postprocessing.resstockpostproc.simulation_outputs import col_name_to_weighted, get_cached_simulation_outputs_for_upgrade, col_name_to_savings
-from postprocessing.resstockpostproc.allocated_weights import get_allocated_weights_plus_util_bills_for_upgrade
+from resstockpostproc.utils import col_name_to_percent_savings, col_name_to_savings, col_name_to_weighted, conversion_factor, get_col_maps, units_from_col_name
+from resstockpostproc.simulation_outputs import add_income_and_burden, downselect_and_order_pub_cols, get_cached_simulation_outputs_for_upgrade
+from resstockpostproc.allocated_weights import get_allocated_weights_plus_util_bills_for_upgrade
 
 logger = logging.getLogger(__name__)
 
@@ -31,9 +31,7 @@ def aggregate_allocated_weights_to_geography(alloc_wts,
     """
 
     logger.info(f"Filtering allocated weights to: {geography_filters} and aggregating to: {geographic_aggregation_levels}")
-    # print(f"geography_filters: {geography_filters}")
-    # print(f"geographic_aggregation_levels: {geographic_aggregation_levels}")
-    # print(f"alloc_wts.schema inside aggregate_allocated_weights_to_geography: {alloc_wts.collect_schema()}\n\n")
+
     # Filter to specified geography
     if len(geography_filters) > 0:
         geo_filter_exprs = [(pl.col(k) == v) for k, v in geography_filters.items()]
@@ -210,7 +208,7 @@ def _process_and_write_geo_data(output_dir, geog_agg_alloc_wts, sim_outs, geo_ke
             geog_results = geog_agg_alloc_wts_slice.join(sim_outs, on=[pl.col("upgrade"), pl.col("bldg_id")])
 
             # TODO Calculate the weighted columns
-            # wide = add_weighted_area_energy_savings_columns(wide)
+            geog_results = add_weighted_cols(geog_results)
 
             # Add geospatial data columns based on most informative geography column
             geog_results = add_geospatial_columns(geog_results, geo_key)
@@ -221,12 +219,15 @@ def _process_and_write_geo_data(output_dir, geog_agg_alloc_wts, sim_outs, geo_ke
                 # TODO wide = add_cejst_columns(wide)
                 # TODO wide = add_ejscreen_columns(wide)
 
+            # Add income and burden columns based on the assigned geography
+            geog_results = add_income_and_burden(geog_results)
+
             # Collect the results for this slice of this geography
             geog_results = geog_results.collect().sort(by="bldg_id")
 
-            # TODO Downselect and order columns based on the export's data_type
-            # ordered_cols = reorder_columns(columns_for_export(df, column_downselection))
-            # df = df.select(ordered_cols)
+            # Downselect and order columns based on the export's data_type
+            col_maps = get_col_maps()
+            geog_results = downselect_and_order_pub_cols(geog_results, col_maps)  # Per sdr_column_definitions.csv
 
             # Write the files
             if write_parquet:
@@ -297,6 +298,7 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
     _get_elec_util_lookup()
     for geog in ["in.nhgis_tract_gisjoin", "in.nhgis_county_gisjoin", "in.nhgis_puma_gisjoin", "in.state"]:
         _get_geospatial_lookup(geog)
+    get_col_maps()
 
     # Export to all geographies
     logger.info("Exporting /metadata_and_annual_results and /metadata_and_annual_results_aggregates")
@@ -547,3 +549,33 @@ def add_electric_utility_column(input_lf: pl.LazyFrame, geography_to_join_on) ->
     input_lf = input_lf.join(_get_elec_util_lookup().lazy(), on=geography_to_join_on)
 
     return input_lf
+
+
+def add_weighted_cols(df: pl.LazyFrame) -> pl.LazyFrame:
+    print("Adding weighted columns")
+    all_cols = df.collect_schema().names()
+    wtd_cols = [col for col in all_cols if "out." in col and (
+        ".energy_consumption." in col or
+        ".energy_savings." in col or
+        ".emissions." in col or
+        ".emissions_reduction." in col
+        )]
+
+    wtd_col_unit_convs = {
+        "kwh": "tbtu",
+        "co2e_kg": "co2e_mmt"
+    }
+
+    for col in wtd_cols:
+        old_units = units_from_col_name(col)
+        new_units = wtd_col_unit_convs[old_units]
+        conv_fact = conversion_factor(old_units, new_units)
+        wtd_col_name = col_name_to_weighted(col, new_units)
+        df = df.with_columns(
+            pl.col(col)
+            .mul(pl.col("weight"))
+            .mul(conv_fact)
+            .alias(wtd_col_name)
+        )
+
+    return df

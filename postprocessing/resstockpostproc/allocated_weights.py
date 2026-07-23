@@ -496,7 +496,7 @@ def create_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
 
     """
     # Late import to avoid circular dependency
-    from resstockpostproc.process_metadata import get_cached_simulation_outputs_for_upgrade
+    from resstockpostproc.simulation_outputs import get_cached_simulation_outputs_for_upgrade
     
     print("TODO Setting utility bills for each building based on the allocated location.")
     # Read the cached simulation results
