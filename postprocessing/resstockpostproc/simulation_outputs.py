@@ -2,7 +2,6 @@ from collections.abc import Sequence
 
 import polars as pl
 import pathlib
-import geopandas as gpd
 import logging
 import s3fs
 import json
@@ -58,8 +57,6 @@ def process_simulation_outputs(
     df = remove_na_or_failed_buildings(df)
     df = replace_missing_buildings_with_baseline(df, base_raw_df, is_baseline)
     df = downselect_and_rename_cols(df, col_maps)  # Per sdr_column_definitions.csv
-    df = add_county_column(df)
-    df = add_puma_column(df)
     df = add_baseline_upgrade_name_col(df, is_baseline)
     df = add_upgrade_id_col(df, upgrade_num)
     df = rename_upgrades(df, upgrade_renamer)
@@ -372,39 +369,6 @@ def add_panel_contraint_cols(df: pl.LazyFrame) -> pl.LazyFrame:
         new_df = new_df.with_columns(overall_constraint)  # needs to be sequential
 
     return new_df
-
-
-def add_county_column(df: pl.LazyFrame):
-    """
-    Changes the county column to the FIPS code and adds a county name column.
-    """
-    print("Adding county column")
-    here = pathlib.Path(__file__).resolve().parent
-    county_map_df = pl.read_csv(
-        here / "resources" / "gisdata" / "county_lookup_table.csv",
-        columns=["long_name", "original_FIP"],
-    ).select(pl.col("long_name"), pl.col("original_FIP").alias("county_fip"))
-    county_map = dict(county_map_df.iter_rows())
-
-    df = df.with_columns(
-        [
-            pl.col("in.as_simulated_county").str.split(",").list.get(1).str.replace(r"^\s+|\s+$", "").alias("in.as_simulated_county_name"),
-            pl.col("in.as_simulated_county").replace(county_map).alias("in.as_simulated_county"),
-        ]
-    )
-    return df
-
-
-def add_puma_column(df: pl.LazyFrame):
-    """
-    Changes the puma column to the GISJOIN code.
-    """
-    print("Adding PUMA column")
-    here = pathlib.Path(__file__).resolve().parent
-    pumas = gpd.read_file(here / "resources" / "gisdata" / "ipums_pums_2010_simple_t100_area_us_puma.geojson")
-    puma_map = pumas[["GISJOIN", "puma_tsv"]].set_index("puma_tsv")["GISJOIN"].to_dict()
-    df = df.with_columns([pl.col("in.as_simulated_puma").replace(puma_map).alias("in.as_simulated_puma")])
-    return df
 
 
 # def remove_unused_as_simulated_geog_cols(df: pl.LazyFrame):
