@@ -1,14 +1,12 @@
 import datetime
 import os
-import boto3
 import polars as pl
 import logging
+import s3fs
 
-from joblib import Parallel, delayed
-
-from resstockpostproc.utils import write_geo_data, col_name_to_percent_savings
+from resstockpostproc.utils import col_name_to_percent_savings
 from resstockpostproc.process_metadata import col_name_to_weighted, get_cached_simulation_outputs_for_upgrade, col_name_to_savings
-from resstockpostproc.create_allocated_weights import get_cached_allocated_weights, get_allocated_weights_plus_util_bills_for_upgrade
+from resstockpostproc.create_allocated_weights import get_allocated_weights_plus_util_bills_for_upgrade
 
 logger = logging.getLogger(__name__)
 
@@ -192,10 +190,58 @@ def create_weighted_aggregate_output(up_alloc_wts,
     return wtd_agg_outs
 
 
-def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_exports, n_parallel=-1):
+def _export_file_name(geo_prefixes, upgrade_id, agg_suffix, data_type):
+    """
+    Builds an export file name (without extension) from its parts.
+    e.g. CO_G0800590_upgrade0_agg for geo_prefixes=["CO", "G0800590"], agg_suffix="_agg"
+    """
+    file_name = f"upgrade{upgrade_id}{agg_suffix}"
+    # Add geography prefix to filename
+    if geo_prefixes:
+        file_name = "_".join(geo_prefixes) + f"_{file_name}"
+    # Add data_type suffix to filename
+    if data_type == "basic":
+        file_name = f"{file_name}_{data_type}"
+    return file_name
+
+
+def _make_partition_path_provider(partition_cols, upgrade_id, agg_suffix, data_type, ext):
+    """
+    Builds a callable that names each partition's output file for pl.PartitionBy.
+    Produces paths like state=CO/county=G0800590/CO_G0800590_upgrade0.parquet
+    relative to the PartitionBy base path.
+
+    Args:
+        partition_cols: Dict mapping partition column name to directory prefix,
+            e.g. {"in.state": "state", "in.nhgis_county_gisjoin": "county"}
+        upgrade_id: Integer ID for the upgrade being written
+        agg_suffix: "" for full-resolution (tract) data, "_agg" for aggregates
+        data_type: Data type of the export, e.g. "full" or "basic"
+        ext: File extension, e.g. "parquet" or "csv.gz"
+    Returns:
+        Callable suitable for the file_path_provider argument of pl.PartitionBy
+    """
+    def provider(args):
+        vals = [str(args.partition_keys[c][0]) for c in partition_cols]
+        if args.index_in_partition != 0:
+            raise RuntimeError(
+                f"Partition {vals} was split into multiple files; expected one file per partition"
+            )
+        geo_level_dirs = "/".join(f"{d}={v}" for d, v in zip(partition_cols.values(), vals))
+        file_name = _export_file_name(vals, upgrade_id, agg_suffix, data_type)
+        return f"{geo_level_dirs}/{file_name}.{ext}"
+    return provider
+
+
+def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_exports):
     """
     Subdivides the annual results by geography and writes to OEDI.
     Creates .parquet and .csv.gz files.
+
+    The data is written with partitioned streaming sinks so that the full dataset
+    is never materialized in memory: the parquet files are written in one streaming
+    pass, then re-scanned (cheap, already aggregated/joined/sorted) to produce the
+    gzipped CSVs.
 
     Args:
         output_dir: Dict of filesystem object information
@@ -211,6 +257,18 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
     # Read the cached simulation results
     up_sim_outs = get_cached_simulation_outputs_for_upgrade(output_dir, upgrade_id)
 
+    # Get the allocated weights plus utility bills for the baseline and the upgrade
+    base_alloc_wts_plus_bills = get_allocated_weights_plus_util_bills_for_upgrade(output_dir, 0)
+    up_alloc_wts_plus_bills = get_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
+
+    storage_options = output_dir["storage_options"]
+
+    # Add the s3:// prefix for polars paths when writing to S3
+    def to_polars_path(path):
+        if isinstance(output_dir["fs"], s3fs.S3FileSystem):
+            return f"s3://{path}"
+        return path
+
     # Export to all geographies
     logger.info("Exporting /metadata_and_annual_results and /metadata_and_annual_results_aggregates")
     tstart = datetime.datetime.now()
@@ -224,76 +282,13 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
         geo_col_names = list(partition_cols.keys())
         logger.info(f"Exporting: {geo_top_dir} partitioned by: {geo_col_names}, aggregated to: {aggregation_levels}")
 
-        # Get the unique set of combinations of all geography column partitions
-        logger.debug("Get the unique set of combinations of all geography column partitions")
-        if len(geo_col_names) == 0:
-            geo_combos = pl.DataFrame({"geography": ["national"]})
-            first_geo_combos = pl.DataFrame({"geography": ["national"]})
-        else:
-            alloc_wts = get_allocated_weights_plus_util_bills_for_upgrade(output_dir, 0)
-            geo_combos = alloc_wts.select(geo_col_names).unique().collect()
-            geo_combos = geo_combos.sort(by=geo_col_names)
-            alloc_wts = get_allocated_weights_plus_util_bills_for_upgrade(output_dir, 0)
-            first_geo_combos = alloc_wts.select(geo_col_names[0]).unique().collect()
-            first_geo_combos = first_geo_combos.sort(by=geo_col_names[0])
-
-        # Make a directory for the geography type
+        # Full-resolution (tract) and aggregate exports go to different top-level directories
         full_geo_dir = f"{output_dir['fs_path']}/metadata_and_annual_results/{geo_top_dir}"
-        output_dir["fs"].mkdirs(full_geo_dir, exist_ok=True)
-
-        # Make a directory for each data type X file type combo
-        if None in aggregation_levels:
-            for data_type in data_types:
-                for file_type in file_types:
-                    output_dir["fs"].mkdirs(f"{full_geo_dir}/{data_type}/{file_type}", exist_ok=True)
-
-        # Make an aggregates directory for the geography type
         full_geo_agg_dir = f"{output_dir['fs_path']}/metadata_and_annual_results_aggregates/{geo_top_dir}"
-        output_dir["fs"].mkdirs(full_geo_agg_dir, exist_ok=True)
 
-        # Make a directory for each data type X file type combo
-        for data_type in data_types:
-            for file_type in file_types:
-                output_dir["fs"].mkdirs(f"{full_geo_agg_dir}/{data_type}/{file_type}", exist_ok=True)
-
-        # Builds a file path for each aggregate based on name, file type, and aggregation level
-        def get_file_path(full_geo_agg_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, aggregation_level):
-            # Start with either /metadata_and_annual_results or /metadata_and_annual_results_aggregates
-            agg_level_dir = full_geo_agg_dir
-            if aggregation_level == "in.nhgis_tract_gisjoin":
-                agg_level_dir = full_geo_dir
-            geo_level_dir = f"{agg_level_dir}/{data_type}/{file_type}"
-            if len(geo_levels) > 0:
-                geo_level_dir = f"{geo_level_dir}/" + "/".join(geo_levels)
-            output_dir["fs"].mkdirs(geo_level_dir, exist_ok=True)
-            file_name = f"upgrade{upgrade_id}"
-            # Add geography prefix to filename
-            if len(geo_prefixes) > 0:
-                geo_prefix = "_".join(geo_prefixes)
-                file_name = f"{geo_prefix}_{file_name}"
-            # Add aggregate suffix to filename
-            if aggregation_level != "in.nhgis_tract_gisjoin":
-                file_name = f"{file_name}_agg"
-            # Add data_type suffix to filename
-            if data_type == "basic":
-                file_name = f"{file_name}_{data_type}"
-            # Add the filetype extension to filename
-            file_name = f"{file_name}.{file_type}"
-            # Write the file, depending on filetype
-            file_path = f"{geo_level_dir}/{file_name}"
-
-            return file_path
-
-        # Get the allocated weights plus utility bills for the baseline
-        base_alloc_wts_plus_bills = get_allocated_weights_plus_util_bills_for_upgrade(output_dir, 0)
-
-        # Get the allocated weights plus utility bills for the upgrade
-        up_alloc_wts_plus_bills = get_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
-
-        # print(f"up_alloc_wts_plus_bills schema: {up_alloc_wts_plus_bills.collect_schema()}\n\n")
-
-        # Write raw data and all aggregation levels
+        # Write all aggregation levels
         for aggregation_level in aggregation_levels:
+            agg_lvl_tstart = datetime.datetime.now()
             logger.info(f"Starting aggregation_level: {aggregation_level}")
 
             # Start with the most expansive set of columns, the downselect later as-needed.
@@ -303,167 +298,90 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
                 starting_downselect = "full"
             elif "basic" in data_types:
                 starting_downselect = "basic"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
-            # Handle census tract vs. larger geography aggregation differently because of memory usage
-            if aggregation_level == "in.nhgis_tract_gisjoin":
+            # Tract is the least-aggregated level published; it goes to
+            # /metadata_and_annual_results and everything else goes to
+            # /metadata_and_annual_results_aggregates
+            is_full_resolution = aggregation_level == "in.nhgis_tract_gisjoin"
+            agg_level_dir = full_geo_dir if is_full_resolution else full_geo_agg_dir
+            agg_suffix = "" if is_full_resolution else "_agg"
 
-                # Iterate by first level of geographic partitioning, collecting the DataFrame
-                # for this geography then writing files for all the sub-geographies within it.
-                for first_geo_combo in first_geo_combos.iter_rows(named=True):
-                    fgc_tstart = datetime.datetime.now()
-                    print("")
-                    logger.info(f"Creating aggregates for: {first_geo_combo}")
+            # Build the lazy query for the entire aggregation level, with no geography filters.
+            # This query is never collected; the partitioned sinks below stream it to disk,
+            # so memory usage stays bounded regardless of the number of output rows.
+            agg_lvl_list = [aggregation_level]
+            if isinstance(aggregation_level, list):
+                agg_lvl_list = aggregation_level  # Pass list if a list is already supplied
+            wtd_agg_outs = create_weighted_aggregate_output(up_alloc_wts_plus_bills,
+                                                                up_sim_outs,
+                                                                base_alloc_wts_plus_bills,
+                                                                {},
+                                                                agg_lvl_list,
+                                                                starting_downselect)
 
-                    # Get the filters for the first level geography
-                    first_geo_filters = {}
-                    for k, v in first_geo_combo.items():
-                        if k == "geography" and v == "national":
-                            continue
-                        first_geo_filters[k] = v
+            # Sort by building ID; the sinks maintain order, so each output file is sorted
+            wtd_agg_outs = wtd_agg_outs.sort(by="bldg_id")
 
-                    # Collect the dataframe for the first level geography
-                    agg_lvl_list = [aggregation_level]
-                    if isinstance(aggregation_level, list):
-                        agg_lvl_list = aggregation_level  # Pass list if a list is already supplied
-                    wtd_agg_tstart = datetime.datetime.now()
-                    wtd_agg_outs = create_weighted_aggregate_output(up_alloc_wts_plus_bills,
-                                                                        up_sim_outs,
-                                                                        base_alloc_wts_plus_bills,
-                                                                        first_geo_filters,
-                                                                        agg_lvl_list,
-                                                                        starting_downselect)
-                    logger.info(f"Weighted agg time for {first_geo_combo}: {(datetime.datetime.now() - wtd_agg_tstart).total_seconds()} seconds")
-                    collect_tstart = datetime.datetime.now()
-                    wtd_agg_outs = wtd_agg_outs.collect()
-                    logger.info(f"Collect time for {first_geo_combo}: {(datetime.datetime.now() - collect_tstart).total_seconds()} seconds")
+            for data_type in data_types:
 
-                    # Determine the column subset and order for each data type
-                    # TODO ordered_cols = {data_type: reorder_columns(columns_for_export(wtd_agg_outs, data_type)) for data_type in data_types}
+                # Downselect columns based on the data type
+                wtd_agg_outs_for_data_type = wtd_agg_outs  # TODO .select(ordered_cols[data_type])
 
-                    # Queue writes for each geography
-                    combos_to_write = []
-                    for geo_combo in geo_combos.iter_rows(named=True):
-                        # print(f'geo_combo: {geo_combo}')
+                pqt_dir = f"{agg_level_dir}/{data_type}/parquet"
+                csv_dir = f"{agg_level_dir}/{data_type}/csv"
 
-                        # Get the filters for the geography
-                        geo_filters = {}
-                        geo_levels = []
-                        geo_prefixes = []
-                        for k, v in geo_combo.items():
-                            if k == "geography" and v == "national":
-                                continue
-                            geo_filters[k] = v
-                            geo_levels.append(f"{partition_cols[k]}={v}")
-                            geo_prefixes.append(v)
+                # Write the parquet files in one streaming pass, one file per geography combo
+                pqt_tstart = datetime.datetime.now()
+                if geo_col_names:
+                    pqt_target = pl.PartitionBy(
+                        to_polars_path(pqt_dir),
+                        key=geo_col_names,
+                        file_path_provider=_make_partition_path_provider(
+                            partition_cols, upgrade_id, agg_suffix, data_type, "parquet"),
+                        include_key=True,
+                    )
+                    pqt_scan_path = f"{pqt_dir}/**/*.parquet"
+                else:
+                    # No partition columns (e.g. national): write a single file
+                    pqt_scan_path = f"{pqt_dir}/{_export_file_name([], upgrade_id, agg_suffix, data_type)}.parquet"
+                    pqt_target = to_polars_path(pqt_scan_path)
+                logger.info(f"Sinking parquet files to {pqt_dir}")
+                wtd_agg_outs_for_data_type.sink_parquet(pqt_target, mkdir=True, engine="streaming",
+                                                        storage_options=storage_options)
+                logger.info(f"Parquet sink time for {aggregation_level} {data_type}: "
+                            f"{(datetime.datetime.now() - pqt_tstart).total_seconds()} seconds")
 
-                        # Skip geo_combos that aren't in this first-level partitioning. e.g. counties not in a state
-                        first_level_geo_combo_val = next(iter(first_geo_filters.values()))
-                        geo_combo_val = next(iter(geo_filters.values()))
-                        if geo_combo_val != first_level_geo_combo_val:
-                            # logger.info(f'Skipping {geo_combo} because not in this partition ({geo_combo_val} != {first_level_geo_combo_val})')
-                            continue
-
-                        # Filter already-collected dataframe to specified geography
-                        if len(geo_filters) > 0:
-                            geo_filter_exprs = [(pl.col(k) == v) for k, v in geo_filters.items()]
-                            geo_data = wtd_agg_outs.filter(geo_filter_exprs)
-                        else:
-                            geo_data = wtd_agg_outs
-
-                        # Sort by building ID
-                        geo_data = geo_data.sort(by="bldg_id")
-
-                        # Queue write for each data type
-                        for data_type in data_types:
-
-                            # Downselect columns based on the data type
-                            geo_data_for_data_type = geo_data  # TODO .clone().select(ordered_cols[data_type])
-
-                            # Queue write for all selected filetypes
-                            for file_type in file_types:
-                                file_path = get_file_path(full_geo_agg_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, aggregation_level)
-                                logger.debug(f"Queuing {file_path}")
-                                combo = (geo_data_for_data_type, output_dir, file_type, file_path)
-                                combos_to_write.append(combo)
-
-                    # Write files in parallel
-                    logger.info(f"Writing {len(combos_to_write)} files in parallel")
-                    write_tstart = datetime.datetime.now()
-                    with Parallel(n_jobs=n_parallel) as parallel:
-                        parallel(delayed(write_geo_data)(combo) for combo in combos_to_write)
-                    logger.info(f"Write time for {first_geo_combo}: {(datetime.datetime.now() - write_tstart).total_seconds()} seconds")
-                    # # Attempting to avoid crashes
-                    # wtd_agg_outs.clear()
-                    # del to_write
-                    # time.sleep(2)
-                    # gc.collect()
-                    logger.info(f"Total time for {first_geo_combo}: {(datetime.datetime.now() - fgc_tstart).total_seconds()} seconds")
-            else:
-                # If there is any aggregation, collect a single dataframe with all geographies and savings columns
-                # Memory usage should work on most laptops
-                no_geo_filters = {}
-                agg_lvl_list = [aggregation_level]
-                if isinstance(aggregation_level, list):
-                    agg_lvl_list = aggregation_level  # Pass list if a list is already supplied
-                wtd_agg_outs = create_weighted_aggregate_output(up_alloc_wts_plus_bills,
-                                                                    up_sim_outs,
-                                                                    base_alloc_wts_plus_bills,
-                                                                    no_geo_filters,
-                                                                    agg_lvl_list,
-                                                                    starting_downselect)
-                collect_tstart = datetime.datetime.now()
-                wtd_agg_outs = wtd_agg_outs.collect()
-                logger.info(f"Collect time for {aggregation_level}: {(datetime.datetime.now() - collect_tstart).total_seconds()} seconds")
-                logger.info(f"There are {wtd_agg_outs.shape[0]:,} total rows at the aggregation level {aggregation_level}")
-
-                # Determine the column subset and order for each data type
-                # ordered_cols = {data_type: reorder_columns(columns_for_export(wtd_agg_outs, data_type)) for data_type in data_types} # TODO
-
-                # Process each geography and downselect columns
-                combos_to_write = []
-                for geo_combo in geo_combos.iter_rows(named=True):
-                    # print(f'geo_combo: {geo_combo}')
-
-                    geo_filters = {}
-                    geo_levels = []
-                    geo_prefixes = []
-                    for k, v in geo_combo.items():
-                        if k == "geography" and v == "national":
-                            continue
-                        geo_filters[k] = v
-                        geo_levels.append(f"{partition_cols[k]}={v}")
-                        geo_prefixes.append(v)
-
-                    # Filter already-collected dataframe to specified geography
-                    if len(geo_filters) > 0:
-                        geo_filter_exprs = [(pl.col(k) == v) for k, v in geo_filters.items()]
-                        geo_data = wtd_agg_outs.filter(geo_filter_exprs)
+                # Re-scan the parquet files just written (already aggregated, joined, and
+                # sorted) and write the CSVs from them instead of re-executing the query above
+                if "csv" in file_types:
+                    csv_tstart = datetime.datetime.now()
+                    pqt_written = pl.scan_parquet(to_polars_path(pqt_scan_path),
+                                                  hive_partitioning=False,
+                                                  storage_options=storage_options)
+                    if geo_col_names:
+                        csv_target = pl.PartitionBy(
+                            to_polars_path(csv_dir),
+                            key=geo_col_names,
+                            file_path_provider=_make_partition_path_provider(
+                                partition_cols, upgrade_id, agg_suffix, data_type, "csv.gz"),
+                            include_key=True,
+                        )
                     else:
-                        geo_data = wtd_agg_outs
+                        csv_target = to_polars_path(
+                            f"{csv_dir}/{_export_file_name([], upgrade_id, agg_suffix, data_type)}.csv.gz")
+                    logger.info(f"Sinking csv.gz files to {csv_dir}")
+                    pqt_written.sink_csv(csv_target, compression="gzip", check_extension=False,
+                                         mkdir=True, engine="streaming", storage_options=storage_options)
+                    logger.info(f"CSV sink time for {aggregation_level} {data_type}: "
+                                f"{(datetime.datetime.now() - csv_tstart).total_seconds()} seconds")
 
-                    # Sort by building ID
-                    geo_data = geo_data.sort(by="bldg_id")
+                # The parquet files are the source for the CSVs, so they are always written;
+                # remove them afterward if parquet wasn't a requested file type
+                if "parquet" not in file_types:
+                    logger.info(f"Removing parquet files from {pqt_dir}: parquet not in file_types")
+                    output_dir["fs"].rm(pqt_dir, recursive=True)
 
-                    # Queue write for each data type
-                    for data_type in data_types:
-
-                        # Downselect columns further if appropriate
-                        # data_type_df = geo_data.clone().select(ordered_cols[data_type])  # TODO
-
-                        # Queue write for all selected filetypes
-                        n_rows, n_cols = geo_data.shape
-                        for file_type in file_types:
-                            file_path = get_file_path(full_geo_agg_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, aggregation_level)
-                            logger.debug(f"Queuing {file_path}: n_cols = {n_cols:,}, n_rows = {n_rows:,}")
-                            combo = (geo_data, output_dir, file_type, file_path)
-                            combos_to_write.append(combo)
-
-                # Write files in parallel
-                logger.info(f"Writing {len(combos_to_write)} files in parallel")
-                write_tstart = datetime.datetime.now()
-                with Parallel(n_jobs=n_parallel) as parallel:
-                    parallel(delayed(write_geo_data)(combo) for combo in combos_to_write)
-                logger.info(f"Write time for {aggregation_level}: {(datetime.datetime.now() - write_tstart).total_seconds()} seconds")
+            logger.info(f"Total time for {aggregation_level}: "
+                        f"{(datetime.datetime.now() - agg_lvl_tstart).total_seconds()} seconds")
 
         ge_tend = datetime.datetime.now()
         logger.info(f"Finished exporting: {geo_top_dir}. ")
@@ -471,7 +389,7 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
         logger.info(f"Geographic aggregation levels: {aggregation_levels}")
         logger.info(f"Time elapsed: {(ge_tend - ge_tstart).total_seconds()} seconds")
 
-    return f"Finished {geo_exports} for upgrade {"upgrade"} in {(datetime.datetime.now() - tstart).total_seconds()} seconds."
+    return f"Finished {len(geo_exports)} geo exports for upgrade {upgrade_id} in {(datetime.datetime.now() - tstart).total_seconds()} seconds."
 
 
 def add_geospatial_columns(input_lf: pl.LazyFrame, geography_to_join_on) -> pl.LazyFrame:
