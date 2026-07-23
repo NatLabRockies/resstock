@@ -263,6 +263,11 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
     df = assign_representative_income(df)
     income_col = "in.representative_income"
 
+    # With multiple bill scenarios, this column is comma-separated; retain just the first entry
+    df = df.with_columns(
+        pl.col("in.utility_bill_electricity_marginal_rates").str.split(",").list.first().str.strip_chars()
+    )
+
     # Reassign negative or zero dollar income to 1 dollar
     adj_income = pl.when(pl.col(income_col) <= 0).then(pl.lit(1)).otherwise(pl.col(income_col)).alias(income_col)
 
@@ -636,10 +641,10 @@ def get_upgrade_columns(lf: pl.LazyFrame) -> list:
 
 
 def add_upgrade_foo_cols(lf: pl.LazyFrame) -> pl.LazyFrame:
-    print("Adding upgrade columns from this upgrade")
     upgrade_cols = [c for c in lf.collect_schema().names() if c.startswith("upgrade_costs.") and c.endswith("_name")]
     if not upgrade_cols:
         return lf
+    print("Adding upgrade columns from this upgrade")
     upgrade_lf = lf.select(["bldg_id"] + upgrade_cols)
     upgrade_df = (
         upgrade_lf.unpivot(
@@ -669,6 +674,8 @@ def add_missing_upgrade_cols(df: pl.LazyFrame, upgrade_col_schema: dict) -> pl.L
     print("Adding upgrade columns from superset across all upgrades")
     all_cols = df.collect_schema().names()
     for col_name, col_dtype in upgrade_col_schema.items():
+        if not col_name.startswith("upgrade."):
+            continue
         if col_name in all_cols:
             continue
         df = df.with_columns(

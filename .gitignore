@@ -34,9 +34,11 @@ buildstockbatch_crash_details.log
 .vscode/
 node_modules/
 .DS_Store
+*.pyc
 **/.ipynb_checkpoints/*
 **/.bsq_cache/
-
+.history/
+.cache/
 # Data directories
 **/data/*
 
@@ -49,3 +51,4 @@ node_modules/
 # Postprocessing build outputs
 /postprocessing/build/
 /postprocessing/resstockpostproc.egg-info/
+test_output/
