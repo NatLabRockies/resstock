@@ -57,6 +57,7 @@ def process_simulation_outputs(
     df = remove_na_or_failed_buildings(df)
     df = replace_missing_buildings_with_baseline(df, base_raw_df, is_baseline)
     df = downselect_and_rename_cols(df, col_maps)  # Per sdr_column_definitions.csv
+    df = remove_weight_col(df)
     df = add_baseline_upgrade_name_col(df, is_baseline)
     df = add_upgrade_id_col(df, upgrade_num)
     df = rename_upgrades(df, upgrade_renamer)
@@ -201,6 +202,21 @@ def downselect_and_rename_cols(df: pl.LazyFrame, col_maps: Sequence[dict]) -> pl
     upgrade_cols = [col for col in all_cols if col.startswith("upgrade_costs.") and col.endswith("_name")]
     transformed_cols.extend([pl.col(col).alias(col) for col in upgrade_cols])
     return df.select(transformed_cols)
+
+def remove_weight_col(df: pl.LazyFrame) -> pl.LazyFrame:
+    """
+    Removes the weight column from the simulation outputs if it exists.
+
+    Args:
+        df: LazyFrame containing the simulation outputs.
+
+    Returns:
+        LazyFrame with the weight column removed if it was present.
+    """
+    logger.info("Removing weight column from simulation outputs - assigned in allocated weights.")
+    if "weight" in df.collect_schema().names():
+        df = df.drop("weight")
+    return df
 
 
 def get_upgrade_rename_dict(raw_results_dir):
