@@ -47,7 +47,7 @@ def fix_site_energy_total(df: pl.LazyFrame):
     all_cols = df.collect_schema().names()
     updated_cols = []
     for suffix in ["", "_intensity", "energy_consumption..kwh", "energy_savings..kwh"]:
-        if f"out.electricity.total.{suffix}" not in df:
+        if f"out.electricity.total.{suffix}" not in all_cols:
             continue
         total_energy_col = pl.lit(0)
         for fuel in ["electricity","natural_gas", "fuel_oil", "propane"]:  # exclude other fuel types
