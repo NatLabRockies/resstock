@@ -29,6 +29,7 @@ from resstockpostproc.utils import (
 )
 from resstockpostproc.allocated_weights import (
     create_allocated_weights,
+    create_allocated_weights_for_quota_sampler,
     create_allocated_weights_plus_util_bills_for_upgrade
 )
 
@@ -37,8 +38,20 @@ def export_metadata_and_annual_results(raw_results_dir: str,
                                        output_dir: str,
                                        aws_profile_name = None,
                                        write_workers=4,
-                                       slice_rows=200_000
+                                       slice_rows=200_000,
+                                       sampler_type="stratified"
                                        ) -> None:
+    """
+    Export metadata and annual results for the given raw BuildStockBatch results.
+
+    Args:
+        raw_results_dir: Directory containing raw BuildStockBatch results (baseline and upgrades)
+        output_dir: Directory to write transformed results
+        aws_profile_name: Optional AWS profile name for S3 access
+        write_workers: Number of parallel workers for writing output files
+        slice_rows: Number of rows per slice when writing output files
+        sampler_type: Type of sampler used for allocation (e.g., "TODO_new_sampler", "quota")
+    """    
     # Set up filesystem objects for raw results and output directories
     raw_results_dir = setup_fsspec_filesystem(raw_results_dir, aws_profile_name)
     output_dir = setup_fsspec_filesystem(output_dir, aws_profile_name)
@@ -104,11 +117,11 @@ def export_metadata_and_annual_results(raw_results_dir: str,
     upgrade_ids.sort()
 
     # Process and cache allocated weights
-    # Have 2 versions of this function:
-    # a pre-sampling version that just adds a simple 2 column file with ID and fixed weight
-    # and a post-sampling version with all the jazz.
     bs_pub_df_path = get_cached_simulation_outputs_file(output_dir, sim_out_cache_dir, 0)
-    create_allocated_weights(bs_pub_df_path, Path(f"{output_dir['fs_path']}"))
+    if sampler_type == "stratified":
+        create_allocated_weights(bs_pub_df_path, Path(f"{output_dir['fs_path']}"))
+    elif sampler_type == "quota":
+        create_allocated_weights_for_quota_sampler(bs_pub_df_path, Path(f"{output_dir['fs_path']}"))
 
     # Process and cache allocated weights plus utility bills
     for upgrade_id in upgrade_ids:
@@ -119,7 +132,7 @@ def export_metadata_and_annual_results(raw_results_dir: str,
     geo_exports = [
     {"geo_top_dir": "national",
         "partition_cols": {},
-        "aggregation_levels": ["national"],
+        "aggregation_levels": ["in.state"],
         "data_types": ["full"],  # TODO add basic downselect method
         "file_types": ["csv", "parquet"],
     },

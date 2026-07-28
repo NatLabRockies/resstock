@@ -400,8 +400,53 @@ def write_parquet_outputs(output_dir: FsspecOutputDir, allocated_df: pl.DataFram
     logger.info(f"Finished caching allocated weights to {file_path}")
     logger.info("Completed creating allocated weights artifacts")
 
+
+def create_allocated_weights_for_quota_sampler(
+    simulation_outputs_file: str, output_dir: str, aws_profile_name=None
+) -> None:
+    """Create allocated weights specifically for the quota sampler.
+    This version of the method simply uses the `weight` column already present
+    in the simulation outputs from buildstockbatch.
+    
+    Args:
+        simulation_outputs_file: Path to the simulation outputs Parquet file
+        output_dir: Path to write output parquet files (local or S3)
+        aws_profile_name: Optional AWS profile name for S3 access
+    """
+
+    # Set up filesystem for local or S3 for output file
+    logger.debug(f"Setting up filesystem for output directory: {output_dir}")
+    output_dir = setup_fsspec_filesystem(output_dir, aws_profile_name)
+
+    # Load simulation outputs
+    logger.info(f"Reading simulation outputs from {simulation_outputs_file}")
+    sim_outs = pl.read_parquet(simulation_outputs_file)
+
+    # Rename the "as-simulated" geography columns
+    sim_outs = sim_outs.rename({"in.as_simulated_state": "in.state"})
+
+    # Downselect to just the columns expected in allocated weights
+    alloc_wts = sim_outs.select(
+        [
+            "bldg_id",
+            "weight",
+            "in.sampling_region_id",
+            "in.tenure",
+            "in.vacancy_status",
+            "in.geometry_building_type_recs",
+            "in.vintage",
+            "in.heating_fuel",
+            "in.federal_poverty_level",
+            "in.state"            
+        ]
+    )
+
+    # Write output parquet files
+    write_parquet_outputs(output_dir, alloc_wts, alloc_wts)
+
+
 def create_allocated_weights(
-    bs_file: str, output_dir: str, aws_profile_name=None, catalogue_file_version="v0", sampling_region_version="v1"
+    simulation_outputs_file: str, output_dir: str, aws_profile_name=None, catalogue_file_version="v0", sampling_region_version="v1"
 ) -> None:
     """Create allocated weights table from raw sample file and write to output parquet.
 
@@ -414,7 +459,7 @@ def create_allocated_weights(
     6. Writes output files
 
     Args:
-        bs_file: Path to the buildstock sample CSV file
+        simulation_outputs_file: Path to the simulation outputs Parquet file
         output_dir: Path to write output parquet files (local or S3)
         aws_profile_name: Optional AWS profile name for S3 access
         catalogue_file_version: Version of catalogue file to use (default 'v0')
@@ -436,11 +481,11 @@ def create_allocated_weights(
     )
 
     # Load buildstock sample data
-    logger.info(f"Reading buildstock file from {bs_file}")
-    bs_df = pl.read_parquet(bs_file)
+    logger.info(f"Reading buildstock file from {simulation_outputs_file}")
+    sim_outs = pl.read_parquet(simulation_outputs_file)
 
     # Allocate buildings to geographical units
-    allocated_df, fkt = allocate_buildings_to_geography(geo_df, bs_df)
+    allocated_df, fkt = allocate_buildings_to_geography(geo_df, sim_outs)
 
     # Add weight column (each row represents one housing unit)
     allocated_df = allocated_df.with_columns(pl.lit(1).alias("weight"))
@@ -459,19 +504,6 @@ def get_cached_allocated_weights(output_dir) -> pl.LazyFrame:
         raise FileNotFoundError(
         f"Cannot load allocated weights from {cached_wts_path}, call create_allocated_weights() first.")
     alloc_weights = pl.scan_parquet(cached_wts_path, storage_options=output_dir["storage_options"])
-
-    # Rename the allocated weights columns to match the publication-formatted simulation outputs
-    # alloc_weights = alloc_weights.rename({
-    #     "Building": "bldg_id",
-    #     "Sampling Region": "in.sampling_region_id",
-    #     "Tenure": "in.tenure",
-    #     "Vacancy Status": "in.vacancy_status",
-    #     "Geometry Building Type RECS": "in.geometry_building_type_recs",
-    #     "Vintage": "in.vintage",
-    #     "Heating Fuel": "in.heating_fuel",
-    #     "Federal Poverty Level": "in.federal_poverty_level",
-    #     "Weight": "weight"
-    # })
 
     return alloc_weights
 

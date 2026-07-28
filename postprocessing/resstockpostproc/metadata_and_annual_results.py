@@ -315,6 +315,13 @@ def export_metadata_and_annual_results_for_upgrade(
                 f"{(datetime.datetime.now() - sim_tstart).total_seconds():.0f} seconds")
     up_sim_outs = up_sim_outs_df.lazy()
 
+    # CRITICAL to drop the weight column from the simulation outputs
+    # if buildstockbatch didn't already do this,
+    # otherwise the weight column from the allocated weights would be ignored.
+    if "weight" in up_sim_outs_df:
+        logger.info("Removing weight column from simulation outputs, using weight column from allocated weights.")
+        up_sim_outs = up_sim_outs.drop("weight")
+
     # Get the allocated weights plus utility bills for the upgrade
     up_alloc_wts_plus_bills = get_allocated_weights_plus_util_bills_for_upgrade(output_dir, upgrade_id)
 
