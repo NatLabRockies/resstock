@@ -443,7 +443,11 @@ def create_allocated_weights_for_quota_sampler(
 
 
 def create_allocated_weights(
-    simulation_outputs_file: str, output_dir: str, aws_profile_name=None, catalogue_file_version="v0", sampling_region_version="v1"
+    simulation_outputs_file: str,
+    output_dir: str,
+    aws_profile_name=None,
+    catalogue_file_version="v0",
+    sampling_region_version="v1",
 ) -> None:
     """Create allocated weights table from raw sample file and write to output parquet.
 
