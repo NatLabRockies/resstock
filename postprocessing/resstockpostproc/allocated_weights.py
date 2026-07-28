@@ -480,8 +480,8 @@ def create_allocated_weights(
         catalogue_df, sampling_regions_df, cec_2010_cz_lkup_df
     )
 
-    # Load buildstock sample data
-    logger.info(f"Reading buildstock file from {simulation_outputs_file}")
+    # Load simulation outputs
+    logger.info(f"Reading simulation outputs from {simulation_outputs_file}")
     sim_outs = pl.read_parquet(simulation_outputs_file)
 
     # Allocate buildings to geographical units
