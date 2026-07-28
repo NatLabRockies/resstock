@@ -28,10 +28,13 @@ from resstockpostproc.utils import (
     setup_fsspec_filesystem
 )
 from resstockpostproc.allocated_weights import (
+    DEFAULT_ALLOCATION_SEED,
     create_allocated_weights,
     create_allocated_weights_for_quota_sampler,
     create_allocated_weights_plus_util_bills_for_upgrade
 )
+
+SUPPORTED_SAMPLER_TYPES = ("stratified", "quota")
 
 
 def export_metadata_and_annual_results(raw_results_dir: str,
@@ -39,7 +42,11 @@ def export_metadata_and_annual_results(raw_results_dir: str,
                                        aws_profile_name = None,
                                        write_workers=4,
                                        slice_rows=200_000,
-                                       sampler_type="stratified"
+                                       sampler_type="stratified",
+                                       baseline_file: str | None = None,
+                                       upgrade_files: list[str] | None = None,
+                                       rename_upgrades_path: str | None = None,
+                                       allocation_seed: int | None = DEFAULT_ALLOCATION_SEED,
                                        ) -> None:
     """
     Export metadata and annual results for the given raw BuildStockBatch results.
@@ -50,26 +57,56 @@ def export_metadata_and_annual_results(raw_results_dir: str,
         aws_profile_name: Optional AWS profile name for S3 access
         write_workers: Number of parallel workers for writing output files
         slice_rows: Number of rows per slice when writing output files
-        sampler_type: Type of sampler used for allocation (e.g., "TODO_new_sampler", "quota")
-    """    
+        sampler_type: Type of sampler used for allocation ("stratified" or "quota")
+        baseline_file: Optional explicit path to the baseline results parquet file
+            (results_up00.parquet). When omitted, raw_results_dir is globbed for
+            results files. Callers like buildstockbatch that know exactly which
+            files they wrote should pass explicit paths so the glob cannot pick up
+            unrelated parquet files (e.g. timeseries). Paths must be on the same
+            filesystem as raw_results_dir.
+        upgrade_files: Optional explicit paths to the upgrade results parquet files
+            (results_upXX.parquet, XX > 0). Only used when baseline_file is given.
+        rename_upgrades_path: Optional explicit path to rename_upgrades.json. When
+            omitted, raw_results_dir/rename_upgrades.json is used if present.
+        allocation_seed: Seed for the random building-to-geography allocation
+            (stratified sampler only) so identical inputs produce identical
+            publications. Pass None for unseeded allocation.
+    """
+    if sampler_type not in SUPPORTED_SAMPLER_TYPES:
+        raise ValueError(f"Unsupported sampler_type {sampler_type!r}; expected one of {SUPPORTED_SAMPLER_TYPES}")
+    if baseline_file is None and upgrade_files is not None:
+        raise ValueError("baseline_file must be provided when upgrade_files are passed explicitly")
+
     # Set up filesystem objects for raw results and output directories
     raw_results_dir = setup_fsspec_filesystem(raw_results_dir, aws_profile_name)
     output_dir = setup_fsspec_filesystem(output_dir, aws_profile_name)
 
-    # Find the raw results files
-    pqt_glob = f'{raw_results_dir["fs_path"]}/**/*.parquet'
-    result_files = raw_results_dir["fs"].glob(pqt_glob)
-    baseline_files = [f for f in result_files if "up00" in Path(f).name.lower()]
-    upgrade_files = [f for f in result_files if "up00" not in Path(f).name.lower()]
+    # Find the raw results files, unless the caller passed explicit paths
+    if baseline_file is None:
+        pqt_glob = f'{raw_results_dir["fs_path"]}/**/*.parquet'
+        result_files = raw_results_dir["fs"].glob(pqt_glob)
+        baseline_files = [f for f in result_files if "up00" in Path(f).name.lower()]
+        upgrade_files = [f for f in result_files if "up00" not in Path(f).name.lower()]
+        if not baseline_files:
+            raise FileNotFoundError(
+                f"No baseline results file (results_up00.parquet) found under "
+                f"{raw_results_dir['fs_path']}. The baseline is required: weights are "
+                f"allocated from baseline characteristics."
+            )
+        baseline_file = baseline_files[0]
+    else:
+        upgrade_files = list(upgrade_files or [])
+        missing = [f for f in [baseline_file] + upgrade_files if not raw_results_dir["fs"].exists(f)]
+        if missing:
+            raise FileNotFoundError(f"Results files not found on the raw results filesystem: {missing}")
 
     # Information used across upgrades
-    upgrade_renamer = get_upgrade_rename_dict(raw_results_dir)
+    upgrade_renamer = get_upgrade_rename_dict(raw_results_dir, rename_upgrades_path)
     col_schema  = get_schema_superset(upgrade_files, raw_results_dir)
     sim_out_cache_dir = Path(f"{output_dir['fs_path']}/cached_simulation_outputs")
 
     # Process and cache the baseline simulation outputs
     upgrade_id = 0
-    baseline_file = baseline_files[0]
     print(f"Processing baseline file: {baseline_file}")
     # Add s3:// prefix for polars if using S3
     baseline_path = f"s3://{baseline_file}" if raw_results_dir["storage_options"] is not None else baseline_file
@@ -119,7 +156,7 @@ def export_metadata_and_annual_results(raw_results_dir: str,
     # Process and cache allocated weights
     bs_pub_df_path = get_cached_simulation_outputs_file(output_dir, sim_out_cache_dir, 0)
     if sampler_type == "stratified":
-        create_allocated_weights(bs_pub_df_path, Path(f"{output_dir['fs_path']}"))
+        create_allocated_weights(bs_pub_df_path, Path(f"{output_dir['fs_path']}"), seed=allocation_seed)
     elif sampler_type == "quota":
         create_allocated_weights_for_quota_sampler(bs_pub_df_path, Path(f"{output_dir['fs_path']}"))
 
@@ -195,5 +232,22 @@ if __name__ == "__main__":
         default="Users/radhikar/Documents/buildstock2025/resstock/postprocessing/resstockpostproc/upgrade_comparison/sdr_plots/s3_data/res-sdr/testing-sdr-fy25/ghp_envelope_0807_30k/annual_results",
         help="Directory to write transformed results",
     )
+    parser.add_argument(
+        "--sampler_type",
+        default="stratified",
+        choices=SUPPORTED_SAMPLER_TYPES,
+        help="Type of sampler used for the run, determines how weights are allocated",
+    )
+    parser.add_argument(
+        "--allocation_seed",
+        type=int,
+        default=DEFAULT_ALLOCATION_SEED,
+        help="Seed for the random building-to-geography allocation (stratified sampler only)",
+    )
     args = parser.parse_args()
-    export_metadata_and_annual_results(args.raw_results_dir, args.output_dir)
+    export_metadata_and_annual_results(
+        args.raw_results_dir,
+        args.output_dir,
+        sampler_type=args.sampler_type,
+        allocation_seed=args.allocation_seed,
+    )

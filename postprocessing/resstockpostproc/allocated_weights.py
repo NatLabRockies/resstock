@@ -13,6 +13,32 @@ from resstockpostproc.simulation_outputs import get_cached_simulation_outputs_fo
 
 logger = logging.getLogger(__name__)
 
+# Default seed for the random building-to-geography allocation so that identical
+# inputs produce identical publications. Pass seed=None for unseeded allocation.
+DEFAULT_ALLOCATION_SEED = 42
+
+# Truth data (catalogue, sampling regions, CEC climate zone lookups) is downloaded
+# from this bucket when not already present in the output directory. Environments
+# without AWS credentials or internet access (e.g. HPC compute nodes) can pre-stage
+# the files in the output directory instead; files found there are never re-downloaded.
+TRUTH_DATA_BUCKET = "resstock-core"
+
+
+def _download_truth_file(local_path, s3_key, file_desc: str) -> None:
+    """Download a truth-data file from S3, with an actionable error on failure."""
+    logger.info(f"{file_desc} not found locally, downloading from S3")
+    try:
+        s3_client = boto3.client("s3")
+        s3_client.download_file(TRUTH_DATA_BUCKET, s3_key, str(local_path))
+    except Exception as err:
+        raise RuntimeError(
+            f"Could not download {file_desc} from s3://{TRUTH_DATA_BUCKET}/{s3_key}. "
+            f"If this machine has no AWS credentials or no internet access, pre-stage "
+            f"the file at {local_path} and rerun; files already present locally are "
+            f"not re-downloaded."
+        ) from err
+    logger.info(f"Downloaded {file_desc} to {local_path}")
+
 
 def load_catalogue_file(output_dir: FsspecOutputDir, catalogue_file_version: str) -> pl.DataFrame:
     """Load and preprocess catalogue file, downloading from S3 if necessary.
@@ -31,14 +57,7 @@ def load_catalogue_file(output_dir: FsspecOutputDir, catalogue_file_version: str
 
     # Download from S3 if not already cached locally
     if not output_dir["fs"].exists(catalogue_local_path):
-        logger.info("Catalogue file not found locally, downloading from S3")
-        s3_client = boto3.client("s3")
-        s3_client.download_file(
-            "resstock-core",
-            f"truth_data/v01/StockE/{catalogue_file}",
-            str(catalogue_local_path),
-        )
-        logger.info(f"Downloaded catalogue file to {catalogue_local_path}")
+        _download_truth_file(catalogue_local_path, f"truth_data/v01/StockE/{catalogue_file}", "Catalogue file")
 
     # Read catalogue and add county_gisjoin derived from first 8 chars of tract_gisjoin
     logger.info(f"Reading catalogue file from {catalogue_local_path}")
@@ -74,14 +93,9 @@ def load_catalogue_file(output_dir: FsspecOutputDir, catalogue_file_version: str
 
     # Download from S3 if not already cached locally
     if not output_dir["fs"].exists(state_table_local_path):
-        logger.info("State table file not found locally, downloading from S3")
-        s3_client = boto3.client("s3")
-        s3_client.download_file(
-            "resstock-core",
-            "truth_data/v01/EIA/CBECS/state_region_division_table.csv",
-            str(state_table_local_path),
+        _download_truth_file(
+            state_table_local_path, "truth_data/v01/EIA/CBECS/state_region_division_table.csv", "State table file"
         )
-        logger.info(f"Downloaded state table file to {state_table_local_path}")
 
     # Read state table
     logger.info(f"Reading state table file from {state_table_local_path}")
@@ -124,14 +138,9 @@ def load_sampling_regions(output_dir: FsspecOutputDir, sampling_region_version: 
 
     # Download from S3 if not already cached locally
     if not output_dir["fs"].exists(sample_regions_local_path):
-        logger.info("Sampling regions file not found locally, downloading from S3")
-        s3_client = boto3.client("s3")
-        s3_client.download_file(
-            "resstock-core",
-            f"truth_data/v01/StockE/{sampling_regions_file}",
-            str(sample_regions_local_path),
+        _download_truth_file(
+            sample_regions_local_path, f"truth_data/v01/StockE/{sampling_regions_file}", "Sampling regions file"
         )
-        logger.info(f"Downloaded sampling regions file to {sample_regions_local_path}")
 
     # Load JSON file containing county to sampling region mappings
     logger.info(f"Reading sample file from {sample_regions_local_path}")
@@ -187,15 +196,8 @@ def load_cec_climate_zones(output_dir: FsspecOutputDir) -> pl.DataFrame:
 
     # Download from S3 if not already cached locally
     if not output_dir["fs"].exists(cec_2010_cz_lkup_local_path):
-        logger.info("CEC 2010 CZ lookup file not found locally, downloading from S3")
-        s3_client = boto3.client("s3")
-        s3_client.download_file(
-            "resstock-core",
-            f"truth_data/v01/StockE/{cec_2010_cz_lkup_file}",
-            str(cec_2010_cz_lkup_local_path),
-        )
-        logger.info(
-            f"Downloaded CEC 2010 CZ lookup file to {cec_2010_cz_lkup_local_path}"
+        _download_truth_file(
+            cec_2010_cz_lkup_local_path, f"truth_data/v01/StockE/{cec_2010_cz_lkup_file}", "CEC 2010 CZ lookup file"
         )
 
     # Load JSON file containing tract to CEC climate zone mappings
@@ -305,7 +307,9 @@ def merge_geographical_data(
     return df
 
 
-def allocate_buildings_to_geography(geo_df: pl.DataFrame, bs_df: pl.DataFrame) -> tuple[pl.DataFrame, pl.DataFrame]:
+def allocate_buildings_to_geography(
+    geo_df: pl.DataFrame, bs_df: pl.DataFrame, seed: int | None = DEFAULT_ALLOCATION_SEED
+) -> tuple[pl.DataFrame, pl.DataFrame]:
     """Allocate buildings from sample to geographical units.
 
     Groups buildings by key characteristics, then randomly samples one building
@@ -314,6 +318,8 @@ def allocate_buildings_to_geography(geo_df: pl.DataFrame, bs_df: pl.DataFrame) -
     Args:
         geo_df: Geographical data with sampling regions assigned
         bs_df: Buildstock sample data with building characteristics
+        seed: Seed for the random sampling so identical inputs produce identical
+            allocations. Pass None for unseeded (non-reproducible) allocation.
 
     Returns:
         Tuple of (allocated_df, fkt) where:
@@ -321,7 +327,7 @@ def allocate_buildings_to_geography(geo_df: pl.DataFrame, bs_df: pl.DataFrame) -
             - fkt: Foreign key table with Building, tract_gisjoin, and puma_gisjoin
     """
 
-    logger.info("Allocating simulated buildings to geographical units")
+    logger.info(f"Allocating simulated buildings to geographical units (seed={seed})")
 
     # Group buildstock buildings by their key characteristics to create pools of similar buildings
     grouped_df = bs_df.group_by(
@@ -352,7 +358,7 @@ def allocate_buildings_to_geography(geo_df: pl.DataFrame, bs_df: pl.DataFrame) -
             ],
             how="left",
         )
-        .with_columns(pl.col("bldg_id").list.sample(n=1).list.first())
+        .with_columns(pl.col("bldg_id").list.sample(n=1, seed=seed).list.first())
         .collect()
     )
 
@@ -448,6 +454,7 @@ def create_allocated_weights(
     aws_profile_name=None,
     catalogue_file_version="v0",
     sampling_region_version="v1",
+    seed: int | None = DEFAULT_ALLOCATION_SEED,
 ) -> None:
     """Create allocated weights table from raw sample file and write to output parquet.
 
@@ -465,6 +472,8 @@ def create_allocated_weights(
         aws_profile_name: Optional AWS profile name for S3 access
         catalogue_file_version: Version of catalogue file to use (default 'v0')
         sampling_region_version: Version of sampling regions file to use (default 'v1')
+        seed: Seed for the random building-to-geography allocation so identical
+            inputs produce identical publications. Pass None for unseeded allocation.
     """
 
     # Set up filesystem for local or S3 for output file
@@ -486,7 +495,7 @@ def create_allocated_weights(
     sim_outs = pl.read_parquet(simulation_outputs_file)
 
     # Allocate buildings to geographical units
-    allocated_df, fkt = allocate_buildings_to_geography(geo_df, sim_outs)
+    allocated_df, fkt = allocate_buildings_to_geography(geo_df, sim_outs, seed=seed)
 
     # Add weight column (each row represents one housing unit)
     allocated_df = allocated_df.with_columns(pl.lit(1).alias("weight"))

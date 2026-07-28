@@ -7,6 +7,7 @@ import s3fs
 import json
 import re
 from collections import defaultdict
+from fsspec import url_to_fs
 
 
 from resstockpostproc.utils import (
@@ -203,7 +204,22 @@ def downselect_and_rename_cols(df: pl.LazyFrame, col_maps: Sequence[dict]) -> pl
     return df.select(transformed_cols)
 
 
-def get_upgrade_rename_dict(raw_results_dir):
+def get_upgrade_rename_dict(raw_results_dir, rename_upgrades_path: str | None = None):
+    """
+    Load the upgrade rename map (rename_upgrades.json).
+
+    By default the file is looked up in the raw results directory and an empty
+    dict is returned when absent (no renaming). Callers such as buildstockbatch
+    can pass an explicit ``rename_upgrades_path`` (local or s3:// URI) instead;
+    an explicitly-given path that doesn't exist is an error.
+    """
+    if rename_upgrades_path is not None:
+        fs, fs_path = url_to_fs(rename_upgrades_path)
+        if not fs.exists(fs_path):
+            raise FileNotFoundError(f"rename_upgrades file not found: {rename_upgrades_path}")
+        with fs.open(fs_path, "r") as f:
+            return json.load(f)
+
     # Use string concatenation with forward slashes for S3 paths instead of pathlib
     fs_path = raw_results_dir["fs_path"]
     if isinstance(fs_path, pathlib.Path):
