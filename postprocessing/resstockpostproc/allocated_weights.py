@@ -321,7 +321,7 @@ def allocate_buildings_to_geography(geo_df: pl.DataFrame, bs_df: pl.DataFrame) -
             - fkt: Foreign key table with Building, tract_gisjoin, and puma_gisjoin
     """
 
-    logger.info("Processing allocated weights")
+    logger.info("Allocating simulated buildings to geographical units")
 
     # Group buildstock buildings by their key characteristics to create pools of similar buildings
     grouped_df = bs_df.group_by(
@@ -378,7 +378,6 @@ def write_parquet_outputs(output_dir: FsspecOutputDir, allocated_df: pl.DataFram
     """
 
     # Construct file path for fkt output and handle S3 vs local paths
-    logger.info(f"Writing fkt to {output_dir}")
     file_path = Path(output_dir["fs_path"]) / "fkt.parquet"
     if isinstance(output_dir["fs"], s3fs.S3FileSystem):
         file_path = f"s3://{Path(output_dir['fs_path']).as_posix()}"
@@ -386,10 +385,8 @@ def write_parquet_outputs(output_dir: FsspecOutputDir, allocated_df: pl.DataFram
     # Write fkt DataFrame to parquet format
     with output_dir["fs"].open(str(file_path), "wb") as f:
         LazyFrame(fkt).sink_parquet(f)
-    logger.info("Finished writing fkt")
     
     # Construct file path for allocated weights output and handle S3 vs local paths
-    logger.info(f"Writing allocated weights to {output_dir}")
     file_path = Path(output_dir["fs_path"]) / "cached_allocated_weights.parquet"
     if isinstance(output_dir["fs"], s3fs.S3FileSystem):
         file_path = f"s3://{Path(output_dir['fs_path']).as_posix()}"
