@@ -57,13 +57,13 @@ module Defaults
     apply_building_construction(hpxml.header, hpxml_bldg)
     apply_zone_spaces(hpxml_bldg)
     apply_climate_and_risk_zones(hpxml_bldg, weather, unit_num)
-    apply_attics(hpxml_bldg)
-    apply_foundations(hpxml_bldg)
+    apply_attics(hpxml_bldg, unit_num)
+    apply_foundations(hpxml_bldg, unit_num)
     apply_roofs(hpxml_bldg)
-    apply_rim_joists(hpxml_bldg)
-    apply_walls(hpxml_bldg)
-    apply_foundation_walls(hpxml_bldg)
-    apply_floors(runner, hpxml_bldg)
+    apply_rim_joists(hpxml.header, hpxml_bldg)
+    apply_walls(hpxml.header, hpxml_bldg)
+    apply_foundation_walls(hpxml.header, hpxml_bldg)
+    apply_floors(runner, hpxml.header, hpxml_bldg)
     apply_slabs(hpxml_bldg)
     apply_windows(hpxml_bldg, eri_version)
     apply_skylights(hpxml_bldg)
@@ -73,7 +73,7 @@ module Defaults
     apply_hvac(runner, hpxml_bldg, weather, convert_shared_systems, unit_num, hpxml.header)
     apply_hvac_control(hpxml_bldg, schedules_file, eri_version)
     apply_hvac_distribution(hpxml_bldg)
-    apply_infiltration(hpxml_bldg)
+    apply_infiltration(hpxml_bldg, unit_num)
     apply_hvac_location(hpxml_bldg)
     apply_ventilation_fans(hpxml_bldg, weather, eri_version)
     apply_water_heaters(hpxml_bldg, eri_version, schedules_file)
@@ -160,12 +160,12 @@ module Defaults
   # @return [nil]
   def self.add_zones_spaces_if_needed(hpxml_bldg, unit_num)
     if hpxml_bldg.conditioned_zones.empty?
-      hpxml_bldg.zones.add(id: "#{Constants::AutomaticallyAdded}Zone#{unit_num}",
+      hpxml_bldg.zones.add(id: get_id("#{Constants::AutomaticallyAdded}Zone", hpxml_bldg.conditioned_zones, unit_num),
                            zone_type: HPXML::ZoneTypeConditioned)
       hpxml_bldg.hvac_systems.each do |hvac_system|
         hvac_system.attached_to_zone_idref = hpxml_bldg.zones[-1].id
       end
-      hpxml_bldg.zones[-1].spaces.add(id: "#{Constants::AutomaticallyAdded}Space#{unit_num}",
+      hpxml_bldg.zones[-1].spaces.add(id: get_id("#{Constants::AutomaticallyAdded}Space", hpxml_bldg.conditioned_spaces, unit_num),
                                       floor_area: hpxml_bldg.building_construction.conditioned_floor_area)
       hpxml_bldg.surfaces.each do |surface|
         next unless HPXML::conditioned_locations_this_unit.include? surface.interior_adjacent_to
@@ -383,7 +383,7 @@ module Defaults
 
     if hpxml_bldg.header.manualj_infiltration_method.nil?
       infil_measurement = Airflow.get_infiltration_measurement_of_interest(hpxml_bldg)
-      if (not infil_measurement.air_leakage.nil?) || (not infil_measurement.effective_leakage_area.nil?)
+      if (not infil_measurement.air_leakage.nil?) || (not infil_measurement.effective_leakage_area.nil?) || (not infil_measurement.specific_leakage_area.nil?)
         hpxml_bldg.header.manualj_infiltration_method = HPXML::ManualJInfiltrationMethodBlowerDoor
       else
         hpxml_bldg.header.manualj_infiltration_method = HPXML::ManualJInfiltrationMethodDefaultTable
@@ -968,12 +968,13 @@ module Defaults
   # Assigns default values for omitted optional inputs in the HPXML::Attic objects
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param unit_num [Integer] Dwelling unit number
   # @return [nil]
-  def self.apply_attics(hpxml_bldg)
+  def self.apply_attics(hpxml_bldg, unit_num)
     if hpxml_bldg.has_location(HPXML::LocationAtticUnvented)
       unvented_attics = hpxml_bldg.attics.select { |a| a.attic_type == HPXML::AtticTypeUnvented }
       if unvented_attics.empty?
-        hpxml_bldg.attics.add(id: 'UnventedAttic',
+        hpxml_bldg.attics.add(id: get_id('UnventedAttic', hpxml_bldg.attics, unit_num),
                               attic_type: HPXML::AtticTypeUnvented)
         unvented_attics << hpxml_bldg.attics[-1]
       end
@@ -991,7 +992,7 @@ module Defaults
     if hpxml_bldg.has_location(HPXML::LocationAtticVented)
       vented_attics = hpxml_bldg.attics.select { |a| a.attic_type == HPXML::AtticTypeVented }
       if vented_attics.empty?
-        hpxml_bldg.attics.add(id: 'VentedAttic',
+        hpxml_bldg.attics.add(id: get_id('VentedAttic', hpxml_bldg.attics, unit_num),
                               attic_type: HPXML::AtticTypeVented)
         vented_attics << hpxml_bldg.attics[-1]
       end
@@ -1013,12 +1014,13 @@ module Defaults
   # Assigns default values for omitted optional inputs in the HPXML::Foundation objects
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param unit_num [Integer] Dwelling unit number
   # @return [nil]
-  def self.apply_foundations(hpxml_bldg)
+  def self.apply_foundations(hpxml_bldg, unit_num)
     if hpxml_bldg.has_location(HPXML::LocationCrawlspaceUnvented)
       unvented_crawls = hpxml_bldg.foundations.select { |f| f.foundation_type == HPXML::FoundationTypeCrawlspaceUnvented }
       if unvented_crawls.empty?
-        hpxml_bldg.foundations.add(id: 'UnventedCrawlspace',
+        hpxml_bldg.foundations.add(id: get_id('UnventedCrawlspace', hpxml_bldg.foundations, unit_num),
                                    foundation_type: HPXML::FoundationTypeCrawlspaceUnvented)
         unvented_crawls << hpxml_bldg.foundations[-1]
       end
@@ -1036,7 +1038,7 @@ module Defaults
     if hpxml_bldg.has_location(HPXML::LocationCrawlspaceConditioned)
       cond_crawls = hpxml_bldg.foundations.select { |f| f.foundation_type == HPXML::FoundationTypeCrawlspaceConditioned }
       if cond_crawls.empty?
-        hpxml_bldg.foundations.add(id: 'ConditionedCrawlspace',
+        hpxml_bldg.foundations.add(id: get_id('ConditionedCrawlspace', hpxml_bldg.foundations, unit_num),
                                    foundation_type: HPXML::FoundationTypeCrawlspaceConditioned)
         cond_crawls << hpxml_bldg.foundations[-1]
       end
@@ -1054,7 +1056,7 @@ module Defaults
     if hpxml_bldg.has_location(HPXML::LocationBasementUnconditioned)
       uncond_bsmts = hpxml_bldg.foundations.select { |f| f.foundation_type == HPXML::FoundationTypeBasementUnconditioned }
       if uncond_bsmts.empty?
-        hpxml_bldg.foundations.add(id: 'UnconditionedBasement',
+        hpxml_bldg.foundations.add(id: get_id('UnconditionedBasement', hpxml_bldg.foundations, unit_num),
                                    foundation_type: HPXML::FoundationTypeBasementUnconditioned)
         uncond_bsmts << hpxml_bldg.foundations[-1]
       end
@@ -1072,7 +1074,7 @@ module Defaults
     if hpxml_bldg.has_location(HPXML::LocationBasementConditioned)
       cond_bsmts = hpxml_bldg.foundations.select { |f| f.foundation_type == HPXML::FoundationTypeBasementConditioned }
       if cond_bsmts.empty?
-        hpxml_bldg.foundations.add(id: 'ConditionedBasement',
+        hpxml_bldg.foundations.add(id: get_id('ConditionedBasement', hpxml_bldg.foundations, unit_num),
                                    foundation_type: HPXML::FoundationTypeBasementConditioned)
         cond_bsmts << hpxml_bldg.foundations[-1]
       end
@@ -1090,7 +1092,7 @@ module Defaults
     if hpxml_bldg.has_location(HPXML::LocationCrawlspaceVented)
       vented_crawls = hpxml_bldg.foundations.select { |f| f.foundation_type == HPXML::FoundationTypeCrawlspaceVented }
       if vented_crawls.empty?
-        hpxml_bldg.foundations.add(id: 'VentedCrawlspace',
+        hpxml_bldg.foundations.add(id: get_id('VentedCrawlspace', hpxml_bldg.foundations, unit_num),
                                    foundation_type: HPXML::FoundationTypeCrawlspaceVented)
         vented_crawls << hpxml_bldg.foundations[-1]
       end
@@ -1108,7 +1110,7 @@ module Defaults
     if hpxml_bldg.has_location(HPXML::LocationManufacturedHomeUnderBelly)
       belly_and_wing_foundations = hpxml_bldg.foundations.select { |f| f.foundation_type == HPXML::FoundationTypeBellyAndWing }
       if belly_and_wing_foundations.empty?
-        hpxml_bldg.foundations.add(id: 'BellyAndWing',
+        hpxml_bldg.foundations.add(id: get_id('BellyAndWing', hpxml_bldg.foundations, unit_num),
                                    foundation_type: HPXML::FoundationTypeBellyAndWing)
         belly_and_wing_foundations << hpxml_bldg.foundations[-1]
       end
@@ -1129,10 +1131,11 @@ module Defaults
   # Note: This needs to be called after we have applied defaults for ducts.
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param unit_num [Integer] Dwelling unit number
   # @return [nil]
-  def self.apply_infiltration(hpxml_bldg)
+  def self.apply_infiltration(hpxml_bldg, unit_num)
     infil_measurement = Airflow.get_infiltration_measurement_of_interest(hpxml_bldg)
-    default_infil_height, default_infil_volume = get_infiltration_height_and_volume(hpxml_bldg)
+    default_infil_height, default_infil_volume = get_infiltration_height_and_volume(hpxml_bldg, unit_num)
     if infil_measurement.infiltration_volume.nil?
       infil_measurement.infiltration_volume = default_infil_volume
       infil_measurement.infiltration_volume_isdefaulted = true
@@ -1141,7 +1144,7 @@ module Defaults
       infil_measurement.infiltration_height = default_infil_height
       infil_measurement.infiltration_height_isdefaulted = true
     end
-    if (not infil_measurement.leakiness_description.nil?) && infil_measurement.air_leakage.nil? && infil_measurement.effective_leakage_area.nil?
+    if (not infil_measurement.leakiness_description.nil?) && infil_measurement.air_leakage.nil? && infil_measurement.effective_leakage_area.nil? && infil_measurement.specific_leakage_area.nil?
       cfa = hpxml_bldg.building_construction.conditioned_floor_area
       ncfl_ag = hpxml_bldg.building_construction.number_of_conditioned_floors_above_grade
       year_built = hpxml_bldg.building_construction.year_built
@@ -1213,7 +1216,7 @@ module Defaults
     if infil_measurement.a_ext.nil?
       if (infil_measurement.infiltration_type == HPXML::InfiltrationTypeUnitTotal) &&
          [HPXML::ResidentialTypeApartment, HPXML::ResidentialTypeSFA].include?(hpxml_bldg.building_construction.residential_facility_type)
-        tot_cb_area, ext_cb_area = get_compartmentalization_boundary_areas(hpxml_bldg)
+        tot_cb_area, ext_cb_area = get_compartmentalization_boundary_areas(hpxml_bldg, unit_num)
         infil_measurement.a_ext = (ext_cb_area / tot_cb_area).round(5)
         infil_measurement.a_ext_isdefaulted = true
       end
@@ -1267,13 +1270,13 @@ module Defaults
         if HPXML::conditioned_finished_locations.include? roof.interior_adjacent_to
           roof.interior_finish_type = HPXML::InteriorFinishGypsumBoard
         else
-          roof.interior_finish_type = HPXML::InteriorFinishNone
+          roof.interior_finish_type = HPXML::InteriorFinishNotPresent
         end
         roof.interior_finish_type_isdefaulted = true
       end
       next unless roof.interior_finish_thickness.nil?
 
-      if roof.interior_finish_type != HPXML::InteriorFinishNone
+      if roof.interior_finish_type != HPXML::InteriorFinishNotPresent
         roof.interior_finish_thickness = 0.5
         roof.interior_finish_thickness_isdefaulted = true
       end
@@ -1282,10 +1285,13 @@ module Defaults
 
   # Assigns default values for omitted optional inputs in the HPXML::RimJoist objects
   #
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
-  def self.apply_rim_joists(hpxml_bldg)
+  def self.apply_rim_joists(hpxml_header, hpxml_bldg)
     hpxml_bldg.rim_joists.each do |rim_joist|
+      next if hpxml_header.whole_sfa_or_mf_building_sim && rim_joist.sameas_id
+
       if rim_joist.azimuth.nil?
         rim_joist.azimuth = get_azimuth_from_orientation(rim_joist.orientation)
         rim_joist.azimuth_isdefaulted = true
@@ -1321,10 +1327,13 @@ module Defaults
 
   # Assigns default values for omitted optional inputs in the HPXML::Wall objects
   #
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
-  def self.apply_walls(hpxml_bldg)
+  def self.apply_walls(hpxml_header, hpxml_bldg)
     hpxml_bldg.walls.each do |wall|
+      next if hpxml_header.whole_sfa_or_mf_building_sim && wall.sameas_id
+
       if wall.azimuth.nil?
         wall.azimuth = get_azimuth_from_orientation(wall.orientation)
         wall.azimuth_isdefaulted = true
@@ -1359,13 +1368,13 @@ module Defaults
         if HPXML::conditioned_finished_locations.include? wall.interior_adjacent_to
           wall.interior_finish_type = HPXML::InteriorFinishGypsumBoard
         else
-          wall.interior_finish_type = HPXML::InteriorFinishNone
+          wall.interior_finish_type = HPXML::InteriorFinishNotPresent
         end
         wall.interior_finish_type_isdefaulted = true
       end
       next unless wall.interior_finish_thickness.nil?
 
-      if wall.interior_finish_type != HPXML::InteriorFinishNone
+      if wall.interior_finish_type != HPXML::InteriorFinishNotPresent
         wall.interior_finish_thickness = 0.5
         wall.interior_finish_thickness_isdefaulted = true
       end
@@ -1384,10 +1393,13 @@ module Defaults
 
   # Assigns default values for omitted optional inputs in the HPXML::FoundationWall objects
   #
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
-  def self.apply_foundation_walls(hpxml_bldg)
+  def self.apply_foundation_walls(hpxml_header, hpxml_bldg)
     hpxml_bldg.foundation_walls.each do |foundation_wall|
+      next if hpxml_header.whole_sfa_or_mf_building_sim && foundation_wall.sameas_id
+
       if foundation_wall.type.nil?
         foundation_wall.type = HPXML::FoundationWallTypeSolidConcrete
         foundation_wall.type_isdefaulted = true
@@ -1412,7 +1424,7 @@ module Defaults
         if HPXML::conditioned_finished_locations.include? foundation_wall.interior_adjacent_to
           foundation_wall.interior_finish_type = HPXML::InteriorFinishGypsumBoard
         else
-          foundation_wall.interior_finish_type = HPXML::InteriorFinishNone
+          foundation_wall.interior_finish_type = HPXML::InteriorFinishNotPresent
         end
         foundation_wall.interior_finish_type_isdefaulted = true
       end
@@ -1434,7 +1446,7 @@ module Defaults
       end
       next unless foundation_wall.interior_finish_thickness.nil?
 
-      if foundation_wall.interior_finish_type != HPXML::InteriorFinishNone
+      if foundation_wall.interior_finish_type != HPXML::InteriorFinishNotPresent
         foundation_wall.interior_finish_thickness = 0.5
         foundation_wall.interior_finish_thickness_isdefaulted = true
       end
@@ -1444,10 +1456,13 @@ module Defaults
   # Assigns default values for omitted optional inputs in the HPXML::Floor objects
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
-  def self.apply_floors(runner, hpxml_bldg)
+  def self.apply_floors(runner, hpxml_header, hpxml_bldg)
     hpxml_bldg.floors.each do |floor|
+      next if hpxml_header.whole_sfa_or_mf_building_sim && floor.sameas_id
+
       if floor.floor_or_ceiling.nil?
         if floor.is_ceiling
           floor.floor_or_ceiling = HPXML::FloorOrCeilingCeiling
@@ -1473,17 +1488,17 @@ module Defaults
 
       if floor.interior_finish_type.nil?
         if floor.is_floor
-          floor.interior_finish_type = HPXML::InteriorFinishNone
+          floor.interior_finish_type = HPXML::InteriorFinishNotPresent
         elsif HPXML::conditioned_finished_locations.include? floor.interior_adjacent_to
           floor.interior_finish_type = HPXML::InteriorFinishGypsumBoard
         else
-          floor.interior_finish_type = HPXML::InteriorFinishNone
+          floor.interior_finish_type = HPXML::InteriorFinishNotPresent
         end
         floor.interior_finish_type_isdefaulted = true
       end
       next unless floor.interior_finish_thickness.nil?
 
-      if floor.interior_finish_type != HPXML::InteriorFinishNone
+      if floor.interior_finish_type != HPXML::InteriorFinishNotPresent
         floor.interior_finish_thickness = 0.5
         floor.interior_finish_thickness_isdefaulted = true
       end
@@ -1614,13 +1629,13 @@ module Defaults
       end
       if window.interior_shading_type.nil?
         if window.glass_layers == HPXML::WindowLayersGlassBlock
-          window.interior_shading_type = HPXML::InteriorShadingTypeNone
+          window.interior_shading_type = HPXML::InteriorShadingTypeNotPresent
         else
           window.interior_shading_type = HPXML::InteriorShadingTypeLightCurtains # ANSI/RESNET/ICC 301-2022
         end
         window.interior_shading_type_isdefaulted = true
       end
-      if window.interior_shading_coverage_summer.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNone
+      if window.interior_shading_coverage_summer.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNotPresent
         if blinds_types.include? window.interior_shading_type
           window.interior_shading_coverage_summer = 1.0
         else
@@ -1628,7 +1643,7 @@ module Defaults
         end
         window.interior_shading_coverage_summer_isdefaulted = true
       end
-      if window.interior_shading_coverage_winter.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNone
+      if window.interior_shading_coverage_winter.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNotPresent
         if blinds_types.include? window.interior_shading_type
           window.interior_shading_coverage_winter = 1.0
         else
@@ -1665,10 +1680,10 @@ module Defaults
       end
       if window.exterior_shading_factor_winter.nil? || window.exterior_shading_factor_summer.nil?
         if window.exterior_shading_type.nil?
-          window.exterior_shading_type = HPXML::ExteriorShadingTypeNone
+          window.exterior_shading_type = HPXML::ExteriorShadingTypeNotPresent
           window.exterior_shading_type_isdefaulted = true
         end
-        if window.exterior_shading_coverage_summer.nil? && window.exterior_shading_type != HPXML::ExteriorShadingTypeNone
+        if window.exterior_shading_coverage_summer.nil? && window.exterior_shading_type != HPXML::ExteriorShadingTypeNotPresent
           window.exterior_shading_coverage_summer = {
             HPXML::ExteriorShadingTypeExternalOverhangs => 1.0, # Assume window area fully shaded
             HPXML::ExteriorShadingTypeAwnings => 1.0, # Assume fully shaded
@@ -1681,7 +1696,7 @@ module Defaults
           }[window.exterior_shading_type]
           window.exterior_shading_coverage_summer_isdefaulted = true
         end
-        if window.exterior_shading_coverage_winter.nil? && window.exterior_shading_type != HPXML::ExteriorShadingTypeNone
+        if window.exterior_shading_coverage_winter.nil? && window.exterior_shading_type != HPXML::ExteriorShadingTypeNotPresent
           window.exterior_shading_coverage_winter = {
             HPXML::ExteriorShadingTypeExternalOverhangs => 1.0, # Assume window area fully shaded
             HPXML::ExteriorShadingTypeAwnings => 1.0, # Assume window area fully shaded
@@ -3238,10 +3253,11 @@ module Defaults
         # 10 W/ton of cooling capacity per RESNET HERS Addendum 82
         if hvac_system.is_a?(HPXML::HeatPump) && (hvac_system.fraction_cool_load_served == 0)
           # Heat pump only provides heating, use heating capacity instead
-          hvac_system.crankcase_heater_watts = 10.0 * UnitConversions.convert(hvac_system.heating_capacity, 'Btu/hr', 'ton')
+          capacity_tons = UnitConversions.convert(hvac_system.heating_capacity, 'Btu/hr', 'ton')
         else
-          hvac_system.crankcase_heater_watts = 10.0 * UnitConversions.convert(hvac_system.cooling_capacity, 'Btu/hr', 'ton')
+          capacity_tons = UnitConversions.convert(hvac_system.cooling_capacity, 'Btu/hr', 'ton')
         end
+        hvac_system.crankcase_heater_watts = (10.0 * capacity_tons).round(2)
       end
       hvac_system.crankcase_heater_watts_isdefaulted = true
     end
@@ -3341,10 +3357,15 @@ module Defaults
           water_heating_system.tank_volume_isdefaulted = true
         end
 
-        schedules_file_includes_water_heater_operating_mode = (schedules_file.nil? ? false : schedules_file.includes_col_name(SchedulesFile::Columns[:WaterHeaterOperatingMode].name))
-        if water_heating_system.operating_mode.nil? && !schedules_file_includes_water_heater_operating_mode
-          water_heating_system.operating_mode = HPXML::WaterHeaterOperatingModeHybridAuto
-          water_heating_system.operating_mode_isdefaulted = true
+        schedules_file_includes_water_heater_operating_mode = (schedules_file.nil? ? false : schedules_file.includes_col_name(SchedulesFile::Columns[:WaterHeaterHPWHOperatingMode].name))
+        if water_heating_system.hpwh_operating_mode.nil? && !schedules_file_includes_water_heater_operating_mode
+          water_heating_system.hpwh_operating_mode = HPXML::WaterHeaterHPWHOperatingModeHybridAuto
+          water_heating_system.hpwh_operating_mode_isdefaulted = true
+        end
+
+        if water_heating_system.hpwh_confined_space_without_mitigation.nil?
+          water_heating_system.hpwh_confined_space_without_mitigation = false
+          water_heating_system.hpwh_confined_space_without_mitigation_isdefaulted = true
         end
 
       end
@@ -3694,7 +3715,7 @@ module Defaults
       end
 
       hpxml_bldg.permanent_spas.each do |permanent_spa|
-        next if permanent_spa.type == HPXML::TypeNone
+        next if permanent_spa.type == HPXML::TypeNotPresent
 
         if permanent_spa.pump_service_feeders.empty?
           service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
@@ -3715,7 +3736,7 @@ module Defaults
       end
 
       hpxml_bldg.pools.each do |pool|
-        next if pool.type == HPXML::TypeNone
+        next if pool.type == HPXML::TypeNotPresent
 
         if pool.pump_service_feeders.empty?
           service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
@@ -4091,10 +4112,6 @@ module Defaults
   # @param default_values [Hash] map of home battery or vehicle battery properties to default values
   # @return [nil]
   def self.apply_battery(battery, default_values)
-    # if battery.lifetime_model.nil?
-    #   battery.lifetime_model = default_values[:lifetime_model]
-    #   battery.lifetime_model_isdefaulted = true
-    # end
     if battery.nominal_voltage.nil?
       battery.nominal_voltage = default_values[:nominal_voltage] # V
       battery.nominal_voltage_isdefaulted = true
@@ -4591,9 +4608,9 @@ module Defaults
     unit_type = hpxml_bldg.building_construction.residential_facility_type
     cfa = hpxml_bldg.building_construction.conditioned_floor_area
     hpxml_bldg.pools.each do |pool|
-      next if pool.type == HPXML::TypeNone
+      next if pool.type == HPXML::TypeNotPresent
 
-      if pool.pump_type != HPXML::TypeNone
+      if pool.pump_type != HPXML::TypeNotPresent
         # Pump
         if pool.pump_kwh_per_year.nil?
           pool.pump_kwh_per_year = get_pool_pump_annual_energy(cfa, nbeds, n_occ, unit_type)
@@ -4618,7 +4635,7 @@ module Defaults
         end
       end
 
-      next unless pool.heater_type != HPXML::TypeNone
+      next unless pool.heater_type != HPXML::TypeNotPresent
 
       # Heater
       if pool.heater_load_value.nil?
@@ -4647,9 +4664,9 @@ module Defaults
     end
 
     hpxml_bldg.permanent_spas.each do |spa|
-      next if spa.type == HPXML::TypeNone
+      next if spa.type == HPXML::TypeNotPresent
 
-      if spa.pump_type != HPXML::TypeNone
+      if spa.pump_type != HPXML::TypeNotPresent
         # Pump
         if spa.pump_kwh_per_year.nil?
           spa.pump_kwh_per_year = get_permanent_spa_pump_annual_energy(cfa, nbeds, n_occ, unit_type)
@@ -4674,7 +4691,7 @@ module Defaults
         end
       end
 
-      next unless spa.heater_type != HPXML::TypeNone
+      next unless spa.heater_type != HPXML::TypeNotPresent
 
       # Heater
       if spa.heater_load_value.nil?
@@ -5097,7 +5114,7 @@ module Defaults
   # @param eri_version [String] Version of the ANSI/RESNET/ICC 301 Standard to use for equations/assumptions
   # @return [Array<Double, Double>] The interior summer and winter shading factors
   def self.get_window_interior_shading_factors(type, shgc, coverage_summer, coverage_winter, blinds_summer, blinds_winter, eri_version)
-    return 1.0, 1.0 if type == HPXML::InteriorShadingTypeNone
+    return 1.0, 1.0 if type == HPXML::InteriorShadingTypeNotPresent
 
     if Constants::ERIVersions.index(eri_version) >= Constants::ERIVersions.index('2022C')
       # C1/C2 coefficients derived from ASHRAE 2021 Handbook of Fundamentals Chapter 15 Table 14
@@ -5154,7 +5171,7 @@ module Defaults
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [Array<Double, Double>] The exterior summer and winter shading factors
   def self.get_window_exterior_shading_factors(window, hpxml_bldg)
-    return 1.0, 1.0 if window.exterior_shading_type == HPXML::ExteriorShadingTypeNone
+    return 1.0, 1.0 if window.exterior_shading_type == HPXML::ExteriorShadingTypeNotPresent
 
     if [HPXML::ExteriorShadingTypeExternalOverhangs,
         HPXML::ExteriorShadingTypeAwnings].include?(window.exterior_shading_type) && window.overhangs_depth.to_f > 0
@@ -5738,12 +5755,13 @@ module Defaults
   # volume plus the volume of any spaces within the infiltration volume.
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param unit_num [Integer] Dwelling unit number
   # @return [Double, Double] Default infiltration height (ft) and volume (ft3)
-  def self.get_infiltration_height_and_volume(hpxml_bldg)
+  def self.get_infiltration_height_and_volume(hpxml_bldg, unit_num)
     # Make sure AverageCeilingHeight & WithinInfiltrationVolume properties have been set
     apply_building_construction(nil, hpxml_bldg)
-    apply_attics(hpxml_bldg)
-    apply_foundations(hpxml_bldg)
+    apply_attics(hpxml_bldg, unit_num)
+    apply_foundations(hpxml_bldg, unit_num)
 
     # Get base infiltration height, excluding foundations and attics
     avg_ceiling_height = hpxml_bldg.building_construction.average_ceiling_height
@@ -5811,11 +5829,12 @@ module Defaults
   # Source: ANSI/RESNET/ICC 301
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param unit_num [Integer] Dwelling unit number
   # @return [Array<Double, Double>] Total and exterior compartmentalization areas (ft2)
-  def self.get_compartmentalization_boundary_areas(hpxml_bldg)
+  def self.get_compartmentalization_boundary_areas(hpxml_bldg, unit_num)
     # Make sure WithinInfiltrationVolume properties have been set
-    apply_attics(hpxml_bldg)
-    apply_foundations(hpxml_bldg)
+    apply_attics(hpxml_bldg, unit_num)
+    apply_foundations(hpxml_bldg, unit_num)
 
     total_area = 0.0 # Total surface area that bounds the Infiltration Volume
     exterior_area = 0.0 # Same as above excluding surfaces attached to garage, other housing units, or other multifamily spaces
@@ -5996,7 +6015,7 @@ module Defaults
   # @param f_rect [Double] The fraction of duct length that is rectangular (not round)
   # @return [Double] Duct effective R-value (hr-ft2-F/Btu)
   def self.get_duct_effective_r_value(r_nominal, side, buried_level, f_rect)
-    # This methodology has been proposed by NREL for ANSI/RESNET/ICC 301-2025.
+    # This methodology has been proposed for ANSI/RESNET/ICC 301-2025.
     if buried_level == HPXML::DuctBuriedInsulationNone
       if r_nominal <= 0
         # Uninsulated ducts are set to R-1.7 based on ASHRAE HOF and the above paper.
@@ -6397,7 +6416,7 @@ module Defaults
     end
 
     if window.glass_layers == HPXML::WindowLayersSinglePane
-      gas_fill = 'none'
+      gas_fill = 'not present'
     else
       case window.gas_fill
       when HPXML::WindowGasAir
@@ -6417,10 +6436,10 @@ module Defaults
     # From http://hes-documentation.lbl.gov/calculation-methodology/calculation-of-energy-consumption/heating-and-cooling-calculation/building-envelope/window-skylight-construction-types
     key = [is_metal_frame, window.thermal_break, n_panes, glass_type, gas_fill]
     if type.downcase == 'window'
-      vals = { [true, false, 1, 'clear', 'none'] => [1.27, 0.75], # Single-pane, clear, aluminum frame
-               [false, nil, 1, 'clear', 'none'] => [0.89, 0.64], # Single-pane, clear, wood or vinyl frame
-               [true, false, 1, 'tinted', 'none'] => [1.27, 0.64], # Single-pane, tinted, aluminum frame
-               [false, nil, 1, 'tinted', 'none'] => [0.89, 0.54], # Single-pane, tinted, wood or vinyl frame
+      vals = { [true, false, 1, 'clear', 'not present'] => [1.27, 0.75], # Single-pane, clear, aluminum frame
+               [false, nil, 1, 'clear', 'not present'] => [0.89, 0.64], # Single-pane, clear, wood or vinyl frame
+               [true, false, 1, 'tinted', 'not present'] => [1.27, 0.64], # Single-pane, tinted, aluminum frame
+               [false, nil, 1, 'tinted', 'not present'] => [0.89, 0.54], # Single-pane, tinted, wood or vinyl frame
                [true, false, 2, 'clear', 'air'] => [0.81, 0.67], # Double-pane, clear, aluminum frame
                [true, true, 2, 'clear', 'air'] => [0.60, 0.67], # Double-pane, clear, aluminum frame w/ thermal break
                [false, nil, 2, 'clear', 'air'] => [0.51, 0.56], # Double-pane, clear, wood or vinyl frame
@@ -6436,10 +6455,10 @@ module Defaults
                [false, nil, 2, 'low_e_solar_control', 'gas'] => [0.36, 0.31], # Double-pane, solar-control low-E, argon gas fill, wood or vinyl frame
                [false, nil, 3, 'low_e_insulating', 'gas'] => [0.27, 0.31] }[key] # Triple-pane, insulating low-E, argon gas fill, wood or vinyl frame
     elsif type.downcase == 'skylight'
-      vals = { [true, false, 1, 'clear', 'none'] => [1.98, 0.75], # Single-pane, clear, aluminum frame
-               [false, nil, 1, 'clear', 'none'] => [1.47, 0.64], # Single-pane, clear, wood or vinyl frame
-               [true, false, 1, 'tinted', 'none'] => [1.98, 0.64], # Single-pane, tinted, aluminum frame
-               [false, nil, 1, 'tinted', 'none'] => [1.47, 0.54], # Single-pane, tinted, wood or vinyl frame
+      vals = { [true, false, 1, 'clear', 'not present'] => [1.98, 0.75], # Single-pane, clear, aluminum frame
+               [false, nil, 1, 'clear', 'not present'] => [1.47, 0.64], # Single-pane, clear, wood or vinyl frame
+               [true, false, 1, 'tinted', 'not present'] => [1.98, 0.64], # Single-pane, tinted, aluminum frame
+               [false, nil, 1, 'tinted', 'not present'] => [1.47, 0.54], # Single-pane, tinted, wood or vinyl frame
                [true, false, 2, 'clear', 'air'] => [1.30, 0.67], # Double-pane, clear, aluminum frame
                [true, true, 2, 'clear', 'air'] => [1.10, 0.67], # Double-pane, clear, aluminum frame w/ thermal break
                [false, nil, 2, 'clear', 'air'] => [0.84, 0.56], # Double-pane, clear, wood or vinyl frame
@@ -7378,7 +7397,7 @@ module Defaults
     return breaker_spaces
   end
 
-  # Get default location, lifetime model, nominal capacity/voltage, round trip efficiency, and usable fraction for a battery.
+  # Get default values for a battery.
   #
   # @param has_garage [Boolean] Whether the dwelling unit has a garage
   # @return [Hash] Map of battery properties to default values
@@ -7389,20 +7408,17 @@ module Defaults
       location = HPXML::LocationOutside
     end
     return { location: location,
-             lifetime_model: HPXML::BatteryLifetimeModelNone,
              nominal_capacity_kwh: 10.0,
              nominal_voltage: 50.0,
              round_trip_efficiency: 0.925, # Based on Tesla Powerwall round trip efficiency (new)
              usable_fraction: 0.9 } # Fraction of usable capacity to nominal capacity
   end
 
-  # Get default lifetime model, miles/year, hours/week, nominal capacity/voltage, round trip efficiency, fraction charged at home,
-  # and usable fraction for an electric vehicle and its battery.
+  # Get default values for an electric vehicle and its battery.
   #
   # @return [Hash] map of EV properties to default values
   def self.get_electric_vehicle_values()
     return { battery_type: HPXML::BatteryTypeLithiumIon,
-             lifetime_model: HPXML::BatteryLifetimeModelNone,
              miles_per_year: 11000,
              hours_per_week: 9.6,
              nominal_capacity_kwh: 63,

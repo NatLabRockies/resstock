@@ -30,8 +30,8 @@ None
 "Propane, Standard, 100% Usage"	CombinedEnergyFactor	3.3	propane	conventional		
 "Propane, Standard, 150% Usage"	CombinedEnergyFactor	3.3	propane	conventional	1.5	
 "Propane, Standard, 200% Usage"	CombinedEnergyFactor	3.3	propane	conventional	2	
-"Detailed Example: Electricity, ERI Reference 2006"	CombinedEnergyFactor	3.01	electricity	conventional		
-"Detailed Example: Natural Gas, ERI Reference 2006"	CombinedEnergyFactor	3.01	natural gas	conventional		
+HERS Reference: Electricity	CombinedEnergyFactor	3.01	electricity	conventional		
+HERS Reference: Natural Gas	CombinedEnergyFactor	3.01	natural gas	conventional		
 "Detailed Example: Electricity, EF 4.29"	EnergyFactor	4.29	electricity	condensing		
 "Detailed Example: Electricity, Standard, Conditioned Basement"	CombinedEnergyFactor	3.73	electricity	conventional		basement - conditioned
 "Detailed Example: Electricity, Standard, Unconditioned Basement"	CombinedEnergyFactor	3.73	electricity	conventional		basement - unconditioned

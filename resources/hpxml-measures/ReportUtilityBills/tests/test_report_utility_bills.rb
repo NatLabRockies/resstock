@@ -1,23 +1,11 @@
 # frozen_string_literal: true
 
 require 'oga'
-require_relative '../../HPXMLtoOpenStudio/resources/calendar'
-require_relative '../../HPXMLtoOpenStudio/resources/constants'
-require_relative '../../HPXMLtoOpenStudio/resources/energyplus'
-require_relative '../../HPXMLtoOpenStudio/resources/hpxml'
-require_relative '../../HPXMLtoOpenStudio/resources/defaults'
-require_relative '../../HPXMLtoOpenStudio/resources/materials'
-require_relative '../../HPXMLtoOpenStudio/resources/minitest_helper'
-require_relative '../../HPXMLtoOpenStudio/resources/psychrometrics'
-require_relative '../../HPXMLtoOpenStudio/resources/schedules'
-require_relative '../../HPXMLtoOpenStudio/resources/unit_conversions'
-require_relative '../../HPXMLtoOpenStudio/resources/utility_bills'
-require_relative '../../HPXMLtoOpenStudio/resources/version'
-require_relative '../../HPXMLtoOpenStudio/resources/weather'
-require_relative '../../HPXMLtoOpenStudio/resources/xmlhelper'
+Dir["#{File.dirname(__FILE__)}/../../HPXMLtoOpenStudio/resources/*.rb"].each do |resource_file|
+  require resource_file
+end
 require_relative '../resources/util.rb'
 require 'openstudio'
-require 'openstudio/measure/ShowRunnerOutput'
 require_relative '../measure.rb'
 require 'csv'
 

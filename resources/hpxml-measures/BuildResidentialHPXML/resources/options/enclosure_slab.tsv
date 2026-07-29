@@ -1,37 +1,30 @@
-Option Name	Under Slab Insulation Nominal R-Value [F-ft2-hr/Btu]	Under Slab Insulation Width [ft]	Perimeter Insulation Nominal R-Value [F-ft2-hr/Btu]	Perimeter Insulation Depth [ft]	Thickness [in]	Carpet Fraction [frac]	Carpet R-Value [F-ft2-hr/Btu]
-Uninsulated	0	0	0	0			
-"Under Slab, 2ft, R-5"	5	2	0	0			
-"Under Slab, 2ft, R-10"	10	2	0	0			
-"Under Slab, 2ft, R-15"	15	2	0	0			
-"Under Slab, 2ft, R-20"	20	2	0	0			
-"Under Slab, 4ft, R-5"	5	4	0	0			
-"Under Slab, 4ft, R-10"	10	4	0	0			
-"Under Slab, 4ft, R-15"	15	4	0	0			
-"Under Slab, 4ft, R-20"	20	4	0	0			
-"Perimeter, 2ft, R-5"	0	0	5	2			
-"Perimeter, 2ft, R-10"	0	0	10	2			
-"Perimeter, 2ft, R-15"	0	0	15	2			
-"Perimeter, 2ft, R-20"	0	0	20	2			
-"Perimeter, 4ft, R-5"	0	0	5	4			
-"Perimeter, 4ft, R-10"	0	0	10	4			
-"Perimeter, 4ft, R-15"	0	0	15	4			
-"Perimeter, 4ft, R-20"	0	0	20	4			
-"Whole Slab, R-5"	5	999	0	0			
-"Whole Slab, R-10"	10	999	0	0			
-"Whole Slab, R-15"	15	999	0	0			
-"Whole Slab, R-20"	20	999	0	0			
-"Whole Slab, R-30"	30	999	0	0			
-"Whole Slab, R-40"	40	999	0	0			
-"Detailed Example: Uninsulated, No Carpet"	0	0	0	0		0	0
-"Detailed Example: Uninsulated, 100% R-2.08 Carpet"	0	0	0	0		1	2.08
-"Detailed Example: Uninsulated, 100% R-2.50 Carpet"	0	0	0	0		1	2.5
-"Detailed Example: Perimeter, 2ft, R-5, 100% R-2.08 Carpet"	0	0	5	2		1	2.08
-"Detailed Example: Whole Slab, R-5, 100% R-2.5 Carpet"	5	999	0	0		1	2.5
-							
-# Perimeter Insulation Nominal R-Value: Nominal R-value of the vertical slab perimeter insulation.							
-# Perimeter Insulation Depth: Depth from grade to bottom of vertical slab perimeter insulation.							
-# Under Slab Insulation Nominal R-Value: Nominal R-value of the horizontal under slab insulation.							
-# Under Slab Insulation Width: Width from slab edge inward of horizontal under-slab insulation. Use 999 to specify that the under slab insulation spans the entire slab.							
-# Thickness: The thickness of the slab. Zero can be entered if there is a dirt floor instead of a slab.							
-# Carpet Fraction: Fraction of the slab floor area that is carpeted.							
-# Carpet R-Value: R-value of the slab carpet.							
+Option Name	Under Slab Insulation Nominal R-Value [F-ft2-hr/Btu]	Under Slab Insulation Width [ft]	Perimeter Insulation Nominal R-Value [F-ft2-hr/Btu]	Perimeter Insulation Depth [ft]	Thickness [in]
+Uninsulated	0	0	0	0	
+"Under Slab, 2ft, R-5"	5	2	0	0	
+"Under Slab, 2ft, R-10"	10	2	0	0	
+"Under Slab, 2ft, R-15"	15	2	0	0	
+"Under Slab, 2ft, R-20"	20	2	0	0	
+"Under Slab, 4ft, R-5"	5	4	0	0	
+"Under Slab, 4ft, R-10"	10	4	0	0	
+"Under Slab, 4ft, R-15"	15	4	0	0	
+"Under Slab, 4ft, R-20"	20	4	0	0	
+"Perimeter, 2ft, R-5"	0	0	5	2	
+"Perimeter, 2ft, R-10"	0	0	10	2	
+"Perimeter, 2ft, R-15"	0	0	15	2	
+"Perimeter, 2ft, R-20"	0	0	20	2	
+"Perimeter, 4ft, R-5"	0	0	5	4	
+"Perimeter, 4ft, R-10"	0	0	10	4	
+"Perimeter, 4ft, R-15"	0	0	15	4	
+"Perimeter, 4ft, R-20"	0	0	20	4	
+"Whole Slab, R-5"	5	999	0	0	
+"Whole Slab, R-10"	10	999	0	0	
+"Whole Slab, R-15"	15	999	0	0	
+"Whole Slab, R-20"	20	999	0	0	
+"Whole Slab, R-30"	30	999	0	0	
+"Whole Slab, R-40"	40	999	0	0	
+					
+# Perimeter Insulation Nominal R-Value: Nominal R-value of the vertical slab perimeter insulation.					
+# Perimeter Insulation Depth: Depth from grade to bottom of vertical slab perimeter insulation.					
+# Under Slab Insulation Nominal R-Value: Nominal R-value of the horizontal under slab insulation.					
+# Under Slab Insulation Width: Width from slab edge inward of horizontal under-slab insulation. Use 999 to specify that the under slab insulation spans the entire slab.					
+# Thickness: The thickness of the slab. Zero can be entered if there is a dirt floor instead of a slab.					

@@ -110,20 +110,13 @@ module Battery
     minimum_storage_state_of_charge_fraction = 0.75 * unusable_fraction
     maximum_storage_state_of_charge_fraction = 1.0 - 0.25 * unusable_fraction
 
-    # disable voltage dependency unless lifetime model is requested: this prevents some scenarios where changes to SoC didn't seem to reflect charge rate due to voltage dependency and constant current
-    voltage_dependence = false
-    if battery.lifetime_model == HPXML::BatteryLifetimeModelKandlerSmith
-      voltage_dependence = true
-    end
-
     elcs = OpenStudio::Model::ElectricLoadCenterStorageLiIonNMCBattery.new(model, number_of_cells_in_series, number_of_strings_in_parallel, battery_mass, battery_surface_area)
     elcs.setName("#{obj_name} li ion")
     if not is_outside
       elcs.setThermalZone(space.thermalZone.get)
     end
     elcs.setRadiativeFraction(0.9 * frac_sens)
-    # elcs.setLifetimeModel(battery.lifetime_model)
-    elcs.setLifetimeModel(HPXML::BatteryLifetimeModelNone)
+    elcs.setLifetimeModel('None')
     elcs.setNumberofCellsinSeries(number_of_cells_in_series)
     elcs.setNumberofStringsinParallel(number_of_strings_in_parallel)
     elcs.setBatteryMass(battery_mass)
@@ -131,12 +124,7 @@ module Battery
     elcs.setDefaultNominalCellVoltage(default_nominal_cell_voltage)
     elcs.setFullyChargedCellCapacity(default_cell_capacity)
     elcs.setCellVoltageatEndofNominalZone(default_nominal_cell_voltage)
-    if not voltage_dependence
-      elcs.setBatteryCellInternalElectricalResistance(0.002) # 2 mOhm/cell, based on OCHRE defaults (which are based on fitting to lab results)
-      # Note: if the voltage reported during charge/discharge is different, energy may not balance
-      # elcs.setFullyChargedCellVoltage(default_nominal_cell_voltage)
-      # elcs.setCellVoltageatEndofExponentialZone(default_nominal_cell_voltage)
-    end
+    elcs.setBatteryCellInternalElectricalResistance(0.002) # 2 mOhm/cell, based on OCHRE defaults (which are based on fitting to lab results)
     elcs.setFullyChargedCellVoltage(default_nominal_cell_voltage)
     elcs.setCellVoltageatEndofExponentialZone(default_nominal_cell_voltage)
     if is_ev

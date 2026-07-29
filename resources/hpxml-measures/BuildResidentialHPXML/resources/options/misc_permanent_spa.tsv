@@ -1,12 +1,12 @@
 Option Name	Pump Annual Energy Use [kWh/yr]	Pump Usage Multiplier	Heater Type	Heater Annual Electricity Use [kWh/yr]	Heater Annual Natural Gas Use [kWh/yr]	Heater Usage Multiplier
 None	0			0	0	
-"Unheated, 25% Usage"		0.25	none			
-"Unheated, 50% Usage"		0.5	none			
-"Unheated, 75% Usage"		0.75	none			
-"Unheated, 100% Usage"			none			
-"Unheated, 150% Usage"		1.5	none			
-"Unheated, 200% Usage"		2	none			
-"Unheated, 400% Usage"		4	none			
+"Unheated, 25% Usage"		0.25	not present			
+"Unheated, 50% Usage"		0.5	not present			
+"Unheated, 75% Usage"		0.75	not present			
+"Unheated, 100% Usage"			not present			
+"Unheated, 150% Usage"		1.5	not present			
+"Unheated, 200% Usage"		2	not present			
+"Unheated, 400% Usage"		4	not present			
 "Electric Resistance Heater, 25% Usage"		0.25	electric resistance			0.25
 "Electric Resistance Heater, 50% Usage"		0.5	electric resistance			0.5
 "Electric Resistance Heater, 75% Usage"		0.75	electric resistance			0.75

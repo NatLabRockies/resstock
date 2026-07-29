@@ -10,7 +10,7 @@ IECC U-0.035	28.57	28.57
 IECC U-0.030	33.33	33.33
 IECC U-0.026	38.46	38.46
 IECC U-0.024	41.67	41.67
-"Detailed Example: Uninsulated, 0.5 in plywood, 0.25 in asphalt shingle"	1.99	
+ASHRAE 140 Tests: Uninsulated	1.99	
 		
 # Unconditioned Assembly R-Value: Assembly R-value for the roof if above an unconditioned attic.		
 # Conditioned Assembly R-Value: Assembly R-value for the roof if above conditioned space.		

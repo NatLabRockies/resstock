@@ -15,7 +15,7 @@ None
 "EnergyStar, Compact, 100% Usage"	RatedAnnualkWh	203	0.12	1.09	14.2	4	8		
 "EnergyStar, Compact, 150% Usage"	RatedAnnualkWh	203	0.12	1.09	14.2	4	8	1.5	
 "EnergyStar, Compact, 200% Usage"	RatedAnnualkWh	203	0.12	1.09	14.2	4	8	2	
-Detailed Example: ERI Reference 2006	RatedAnnualkWh	467	0.12	1.09	33.12	4	12		
+HERS Reference	RatedAnnualkWh	467	0.12	1.09	33.12	4	12		
 "Detailed Example: EF 0.7, Compact"	EnergyFactor	0.7	0.12	1.09	22.32	4	6		
 "Detailed Example: Federal Minimum, Standard, Conditioned Basement"	RatedAnnualkWh	307	0.12	1.09	22.32	4	12		basement - conditioned
 "Detailed Example: Federal Minimum, Standard, Unconditioned Basement"	RatedAnnualkWh	307	0.12	1.09	22.32	4	12		basement - unconditioned

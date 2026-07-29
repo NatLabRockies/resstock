@@ -31,7 +31,7 @@ None
 "5ft, Right Windows"				5	1	4
 "10ft, Right Windows"				10	1	4
 "Detailed Example: 1.5ft, Back/Left/Right Windows, 2ft Offset, 4ft Window Height"		1.5	1.5	1.5	2	6
-"Detailed Example: 2.5ft, Front Windows, 1ft Offset, 5ft Window Height"	2.5				1	6
+"ASHRAE 140 Tests: 2.5ft, Front Windows"	2.5				1	6
 						
 # Front Depth: The depth of overhangs for windows for the front facade.						
 # Back Depth: The depth of overhangs for windows for the back facade.						

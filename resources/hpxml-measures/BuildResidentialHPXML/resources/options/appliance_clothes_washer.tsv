@@ -25,7 +25,7 @@ None
 "CEE Tier II, 2018, 100% Usage"	IntegratedModifiedEnergyFactor	2.92	125	0.12	1.09	9	6	5.2		
 "CEE Tier II, 2018, 150% Usage"	IntegratedModifiedEnergyFactor	2.92	125	0.12	1.09	9	6	5.2	1.5	
 "CEE Tier II, 2018, 200% Usage"	IntegratedModifiedEnergyFactor	2.92	125	0.12	1.09	9	6	5.2	2	
-Detailed Example: ERI Reference 2006	IntegratedModifiedEnergyFactor	1	400	0.12	1.09	27	6	3		
+HERS Reference	IntegratedModifiedEnergyFactor	1	400	0.12	1.09	27	6	3		
 Detailed Example: MEF 1.65	ModifiedEnergyFactor	1.65	380	0.12	1.09	27	6	3.2		
 "Detailed Example: Standard, 2008-2017, Conditioned Basement"	IntegratedModifiedEnergyFactor	1.21	380	0.12	1.09	27	6	3.2		basement - conditioned
 "Detailed Example: Standard, 2008-2017, Unconditioned Basement"	IntegratedModifiedEnergyFactor	1.21	380	0.12	1.09	27	6	3.2		basement - unconditioned

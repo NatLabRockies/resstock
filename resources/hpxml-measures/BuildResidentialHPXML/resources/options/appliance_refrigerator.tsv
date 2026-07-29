@@ -33,9 +33,9 @@ None
 "348 kWh/yr, 90% Usage"	348	0.9	
 "348 kWh/yr, 100% Usage"	348		
 "348 kWh/yr, 110% Usage"	348	1.1	
-"Detailed Example: ERI Reference 2006, 2-Bedroom Home"	673		
-"Detailed Example: ERI Reference 2006, 3-Bedroom Home"	691		
-"Detailed Example: ERI Reference 2006, 4-Bedroom Home"	709		
+HERS Reference: 2-Bedroom Home	673		
+HERS Reference: 3-Bedroom Home	691		
+HERS Reference: 4-Bedroom Home	709		
 "Detailed Example: 650 kWh/yr, Conditioned Basement"	650		basement - conditioned
 "Detailed Example: 650 kWh/yr, Unconditioned Basement"	650		basement - unconditioned
 "Detailed Example: 650 kWh/yr, Garage"	650		garage

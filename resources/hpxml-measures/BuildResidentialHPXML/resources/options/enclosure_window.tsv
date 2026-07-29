@@ -43,8 +43,8 @@ Option Name	U-Factor [Btu/hr-ft2-F]	SHGC
 "EnergyStar, Northern"	0.22	0.17
 "EnergyStar, South-Central"	0.28	0.23
 "EnergyStar, Southern"	0.32	0.23
-"Detailed Example: Single, Clear, Aluminum w/ Thermal Break"	1.039	0.67
-"Detailed Example: Double, Low-E, Wood, Argon, Insulated Spacer"	0.3	0.335
+"ASHRAE 140 Tests: Single, Clear"	1.039	0.67
+"ASHRAE 140 Tests: Double, Low-E"	0.3	0.335
 		
 # U-Factor: Full-assembly NFRC U-factor.		
 # SHGC: Full-assembly NFRC solar heat gain coefficient.		

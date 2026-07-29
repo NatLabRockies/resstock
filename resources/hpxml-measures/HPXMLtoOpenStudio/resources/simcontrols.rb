@@ -26,7 +26,11 @@ module SimControls
 
     zonecap = model.getZoneCapacitanceMultiplierResearchSpecial
     zonecap.setTemperatureCapacityMultiplier(hpxml_header.temperature_capacitance_multiplier)
-    zonecap.setHumidityCapacityMultiplier(15) # Per Hugh Henderson ACEEE 2008 Summer Study Paper
+
+    # 15 is based on EPA'sIndoor Humidity Assessment Tool (IHAT) Reference Manual and previous
+    # studies for simulation of residential buildings by Hugh Henderson
+    # See https://docs.nrel.gov/docs/fy11osti/49899.pdf
+    zonecap.setHumidityCapacityMultiplier(15)
 
     convlim = model.getConvergenceLimits
     convlim.setMinimumSystemTimestep(0) # Speed improvement with minimal effect on results

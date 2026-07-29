@@ -13,8 +13,8 @@ None	0
 200% Usage		2		
 300% Usage		3		
 400% Usage		4		
-"Detailed Example: 2457 kWh/yr, 85.5% Sensible, 4.5% Latent"	2457		0.855	0.045
-"Detailed Example: 7302 kWh/yr, 82.2% Sensible, 17.8% Latent"	7302		0.822	0.178
+Detailed Example: 2457 kWh/yr	2457		0.855	0.045
+ASHRAE 140 Tests	7302		0.822	0.178
 				
 # Annual Energy Use: The annual energy consumption of the plug loads.				
 "# Usage Multiplier: Multiplier on the energy usage that can reflect, e.g., high/low usage occupants."				

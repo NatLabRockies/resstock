@@ -1,20 +1,17 @@
 Option Name	Type	Assembly R-Value [F-ft2-hr/Btu]
-"Wood Frame, Uninsulated"	WoodFrame	5.3
-"Wood Frame, R-11"	WoodFrame	16
-"Wood Frame, R-13"	WoodFrame	17.8
-"Wood Frame, R-15"	WoodFrame	19.4
-"Wood Frame, R-19"	WoodFrame	22.6
-"Wood Frame, R-21"	WoodFrame	24.1
-"Wood Frame, R-25"	WoodFrame	27
-"Wood Frame, R-30"	WoodFrame	30.3
-"Wood Frame, R-35"	WoodFrame	33.4
-"Wood Frame, R-38"	WoodFrame	35.1
-"Wood Frame, IECC U-0.064"	WoodFrame	15.63
-"Wood Frame, IECC U-0.047"	WoodFrame	21.28
-"Wood Frame, IECC U-0.033"	WoodFrame	30.3
-"Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor"	WoodFrame	4.24
-"Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor"	WoodFrame	13.85
-"Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor"	WoodFrame	14.15
+"Wood Frame, Uninsulated"	WoodFrame	3.7
+"Wood Frame, R-11"	WoodFrame	14.4
+"Wood Frame, R-13"	WoodFrame	16.2
+"Wood Frame, R-15"	WoodFrame	17.8
+"Wood Frame, R-19"	WoodFrame	21
+"Wood Frame, R-21"	WoodFrame	22.5
+"Wood Frame, R-25"	WoodFrame	25.4
+"Wood Frame, R-30"	WoodFrame	28.7
+"Wood Frame, R-35"	WoodFrame	31.8
+"Wood Frame, R-38"	WoodFrame	33.5
+"Wood Frame, IECC U-0.064"	WoodFrame	14.03
+"Wood Frame, IECC U-0.047"	WoodFrame	19.68
+"Wood Frame, IECC U-0.033"	WoodFrame	28.7
 		
 # Type: The type of floor.		
-# Assembly R-Value: Assembly R-value for the floor.		
+# Assembly R-Value: Assembly R-value for the floor excluding any carpet.		

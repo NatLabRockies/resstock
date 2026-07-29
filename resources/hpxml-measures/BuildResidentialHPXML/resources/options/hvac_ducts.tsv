@@ -62,8 +62,8 @@ None	Percent	0	0	0
 "12 CFM25 per 100ft2, R-8"	CFM25 per 100ft2	12	8	8	
 "Detailed Example: 4 CFM25 per 100ft2 (75% Supply), R-4"	CFM25 per 100ft2	4	4	4	0.75
 "Detailed Example: 5 CFM50 per 100ft2 (75% Supply), R-4"	CFM50 per 100ft2	5	4	4	0.75
-"Detailed Example: 250 CFM25, R-6"	CFM25	250	6	6	
 "Detailed Example: 400 CFM50 (75% Supply), R-6"	CFM50	400	6	6	0.75
+"HERS DSE Tests: 250 CFM25, R-6"	CFM25	250	6	6	
 					
 # Leakage Units: The units for the duct leakage.					
 # Leakage to Outside Value: The leakage to outside value.					

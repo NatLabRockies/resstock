@@ -340,21 +340,20 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
     # Optional whole SFA/MF building simulation
     whole_sfa_or_mf_building_sim = false
-    geometry_building_num_units = 1
-    if whole_sfa_or_mf_building_sim
-      resstock_arguments_runner.result.stepValues.each do |step_value|
-        if step_value.name == 'geometry_building_num_units'
-          geometry_building_num_units = Integer(get_value_from_workflow_step_value(step_value))
-        end
-      end
+    n_units = measures['ResStockArguments'][0]['geometry_building_num_units']
+    if n_units.nil? # SFD
+      whole_sfa_or_mf_building_sim = false
+      n_units = 1
+    else
+      n_units = Integer(n_units)
     end
 
     num_units_modeled = 1
-    max_num_units_modeled = 5
     unit_multipliers = []
-    if whole_sfa_or_mf_building_sim && geometry_building_num_units > 1
-      num_units_modeled = [geometry_building_num_units, max_num_units_modeled].min
-      unit_multipliers = split_into(geometry_building_num_units, num_units_modeled)
+    if whole_sfa_or_mf_building_sim
+      max_num_units_modeled = 5
+      num_units_modeled = [n_units, max_num_units_modeled].min
+      unit_multipliers = split_into(n_units, num_units_modeled)
     end
 
     # Set arguments for the BuildResidentialHPXML measure
@@ -363,19 +362,15 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
     set_header(runner, measures, args, whole_sfa_or_mf_building_sim, bldg_data, resources_dir)
     set_building_header(measures)
-    set_battery(measures, whole_sfa_or_mf_building_sim, num_units_modeled)
+    set_battery(measures, whole_sfa_or_mf_building_sim)
 
     new_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     (1..num_units_modeled).each do |unit_number|
-      if unit_number > 1
-        measures['BuildResidentialHPXML'][0]['existing_hpxml_path'] = hpxml_path
+      if not unit_multipliers.empty?
+        unit_multiplier = unit_multipliers[unit_number - 1]
       end
 
       set_resstock_arguments(measures, resstock_arguments_runner)
-      if not unit_multipliers.empty?
-        unit_multiplier = unit_multipliers[unit_number]
-      end
-      set_building_construction(measures, unit_multiplier)
       set_dehumidifier(measures, unit_multiplier)
 
       # Specify measures to run
@@ -406,6 +401,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     measures['ResStockArgumentsPostHPXML'] = [{}] if !measures.keys.include?('ResStockArgumentsPostHPXML')
     measures['ResStockArgumentsPostHPXML'][0]['hpxml_path'] = hpxml_path
     measures['ResStockArgumentsPostHPXML'][0]['building_id'] = args[:building_id]
+    measures['ResStockArgumentsPostHPXML'][0]['unit_multipliers'] = unit_multipliers.join(', ')
     measures_hash = { 'ResStockArgumentsPostHPXML' => measures['ResStockArgumentsPostHPXML'] }
     if not apply_measures(measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
       register_logs(runner, new_runner)
@@ -627,8 +623,8 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     end
   end
 
-  def set_battery(measures, whole_sfa_or_mf_building_sim, num_units_modeled)
-    if whole_sfa_or_mf_building_sim && num_units_modeled > 1
+  def set_battery(measures, whole_sfa_or_mf_building_sim)
+    if whole_sfa_or_mf_building_sim
       measures['BuildResidentialHPXML'][0]['battery'] = 'None' # limitation of OS-HPXML
     end
   end

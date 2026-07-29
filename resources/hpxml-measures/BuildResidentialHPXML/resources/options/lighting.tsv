@@ -45,7 +45,7 @@ None
 "100% CFL, 100% Usage"	1	0	0		1	0	0		1	0	0	
 "100% CFL, 150% Usage"	1	0	0	1.5	1	0	0	1.5	1	0	0	1.5
 "100% CFL, 200% Usage"	1	0	0	2	1	0	0	2	1	0	0	2
-Detailed Example: 10% CFL	0.1	0	0		0.1	0	0		0.1	0	0	
+HERS Reference	0.1	0	0		0	0	0		0	0	0	
 "Detailed Example: 40% CFL, 10% LFL, 25% LED"	0.4	0.1	0.25		0.4	0.1	0.25		0.4	0.1	0.25	
 												
 "# Interior Fraction CFL: Fraction of all interior lamps that are compact fluorescent. Lighting not specified as CFL, LFL, or LED is assumed to be incandescent."												

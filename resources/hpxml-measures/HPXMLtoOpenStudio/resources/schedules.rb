@@ -1015,7 +1015,7 @@ class SchedulesFile
     HeatingSetpoint: Column.new('heating_setpoint', false, false, :setpoint),
     CoolingSetpoint: Column.new('cooling_setpoint', false, false, :setpoint),
     WaterHeaterSetpoint: Column.new('water_heater_setpoint', false, false, :setpoint),
-    WaterHeaterOperatingMode: Column.new('water_heater_operating_mode', false, false, :zero_or_one),
+    WaterHeaterHPWHOperatingMode: Column.new('water_heater_operating_mode', false, false, :zero_or_one),
     Battery: Column.new('battery', false, false, :neg_one_to_one),
     BatteryCharging: Column.new('battery_charging', true, false, nil),
     BatteryDischarging: Column.new('battery_discharging', true, false, nil),

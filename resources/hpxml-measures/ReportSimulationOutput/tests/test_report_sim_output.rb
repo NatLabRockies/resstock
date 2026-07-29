@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
-require_relative '../../HPXMLtoOpenStudio/resources/minitest_helper'
 require 'openstudio'
-require 'openstudio/measure/ShowRunnerOutput'
 require 'fileutils'
 require 'csv'
 require_relative '../measure.rb'
-require_relative '../../HPXMLtoOpenStudio/resources/xmlhelper.rb'
-require_relative '../../HPXMLtoOpenStudio/resources/constants.rb'
-require_relative '../../HPXMLtoOpenStudio/resources/version.rb'
-require_relative '../../HPXMLtoOpenStudio/resources/calendar.rb'
+Dir["#{File.dirname(__FILE__)}/../../HPXMLtoOpenStudio/resources/*.rb"].each do |resource_file|
+  require resource_file
+end
 require 'oga'
 require 'json'
 

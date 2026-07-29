@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<HPXML xmlns='http://hpxmlonline.com/2023/09' schemaVersion='4.2'>
+<HPXML xmlns='http://hpxmlonline.com/2025/12' schemaVersion='5.0'>
   <XMLTransactionHeaderInformation>
     <XMLType>HPXML</XMLType>
     <XMLGeneratedBy>redacted</XMLGeneratedBy>
@@ -275,7 +275,7 @@
             <SHGC>0.56</SHGC>
             <ExteriorShading>
               <SystemIdentifier id='Window1ExteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window1InteriorShading'/>
@@ -304,7 +304,7 @@
             <SHGC>0.56</SHGC>
             <ExteriorShading>
               <SystemIdentifier id='Window2ExteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window2InteriorShading'/>
@@ -333,7 +333,7 @@
             <SHGC>0.56</SHGC>
             <ExteriorShading>
               <SystemIdentifier id='Window3ExteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window3InteriorShading'/>
@@ -362,7 +362,7 @@
             <SHGC>0.56</SHGC>
             <ExteriorShading>
               <SystemIdentifier id='Window4ExteriorShading'/>
-              <Type>none</Type>
+              <Type>not present</Type>
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window4InteriorShading'/>
@@ -614,7 +614,7 @@
       <Pools>
         <Pool>
           <SystemIdentifier id='Pool1'/>
-          <Type>none</Type>
+          <Type>not present</Type>
         </Pool>
       </Pools>
       <MiscLoads>

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
+require 'open3'
+require 'json'
+require 'openstudio'
 require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/minitest_helper'
 require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/version'
 require_relative '../resources/buildstock'
 require_relative '../test/analysis'
-require 'open3'
-require 'openstudio'
-require 'json'
 
 class TestRunAnalysis < Minitest::Test
   def before_setup
@@ -417,6 +417,7 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, "Could not find row='peak_period' in unavailable_periods.csv")
       next if _expected_warning_message(message, "Could not find row='pre_peak_period' in unavailable_periods.csv")
       next if _expected_warning_message(message, 'Electric vehicle specified with no charger provided; home EV charging will not be modeled.')
+      next if _expected_warning_message(message, 'Based on the assumed vintage parsed in the title string of ASHRAE Handbook of Fundamentals 2017, we expected 15 Extreme fields but got 16, falling to back to heuristics.')
 
       # For the EV minutes warning try replacing the number of minutes as a string rather than a number.
       new_message = message.gsub(/\(([^)]+)\)/) { |match| $1.match?(/^\d+(\.\d+)?$/) ? '(<number of minutes>)' : match }

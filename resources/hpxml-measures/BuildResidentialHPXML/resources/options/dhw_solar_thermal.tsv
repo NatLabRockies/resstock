@@ -25,4 +25,4 @@ None
 # Collector Rated Optical Efficiency: FRTA (y-intercept) from the Directory of SRCC OG-100 Certified Solar Collector Ratings.							
 # Collector Rated Thermal Losses: FRUL (slope) from the Directory of SRCC OG-100 Certified Solar Collector Ratings							
 # Storage Volume: Hot water storage volume.							
-# Solar Fraction: Portion of total conventional hot water heating load (delivered energy plus tank standby losses). Can be obtained from Directory of SRCC OG-300 Solar Water Heating System Ratings or NREL's System Advisor Model or equivalent.							
+# Solar Fraction: Portion of total conventional hot water heating load (delivered energy plus tank standby losses). Can be obtained from Directory of SRCC OG-300 Solar Water Heating System Ratings or NLR's System Advisor Model or equivalent.							
