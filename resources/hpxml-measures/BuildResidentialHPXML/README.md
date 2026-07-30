@@ -857,7 +857,7 @@ The output capacity of the heat pump.
 
 - **Required:** ``false``
 
-- **Choices:** <br/>  - `Autosize`<br/>  - `Autosize (ACCA)`<br/>  - `Autosize (MaxLoad)`<br/>  - `0.5 tons`<br/>  - `0.75 tons`<br/>  - `1.0 tons`<br/>  - `1.5 tons`<br/>  - `2.0 tons`<br/>  - `2.5 tons`<br/>  - `3.0 tons`<br/>  - `3.5 tons`<br/>  - `4.0 tons`<br/>  - `4.5 tons`<br/>  - `5.0 tons`<br/>  - `5.5 tons`<br/>  - `6.0 tons`<br/>  - `6.5 tons`<br/>  - `7.0 tons`<br/>  - `7.5 tons`<br/>  - `8.0 tons`<br/>  - `8.5 tons`<br/>  - `9.0 tons`<br/>  - `9.5 tons`<br/>  - `10.0 tons`<br/>  - `Detailed Example: Autosize, 140% Multiplier`<br/>  - `Detailed Example: Autosize, 170% Multiplier`<br/>  - `Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit`
+- **Choices:** <br/>  - `Autosize`<br/>  - `Autosize (HERS)`<br/>  - `Autosize (MaxLoad)`<br/>  - `0.5 tons`<br/>  - `0.75 tons`<br/>  - `1.0 tons`<br/>  - `1.5 tons`<br/>  - `2.0 tons`<br/>  - `2.5 tons`<br/>  - `3.0 tons`<br/>  - `3.5 tons`<br/>  - `4.0 tons`<br/>  - `4.5 tons`<br/>  - `5.0 tons`<br/>  - `5.5 tons`<br/>  - `6.0 tons`<br/>  - `6.5 tons`<br/>  - `7.0 tons`<br/>  - `7.5 tons`<br/>  - `8.0 tons`<br/>  - `8.5 tons`<br/>  - `9.0 tons`<br/>  - `9.5 tons`<br/>  - `10.0 tons`<br/>  - `Detailed Example: Autosize, 140% Multiplier`<br/>  - `Detailed Example: Autosize, 170% Multiplier`<br/>  - `Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit`
 
 
 - **Default:** `Autosize`

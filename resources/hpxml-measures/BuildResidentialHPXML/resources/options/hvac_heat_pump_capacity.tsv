@@ -1,6 +1,6 @@
 Option Name	Capacity [Btu/hr]	Autosizing Methodology	Autosizing Factor [mult]	Autosizing Limit [Btu/hr]
 Autosize				
-Autosize (ACCA)		ACCA		
+Autosize (HERS)		HERS		
 Autosize (MaxLoad)		MaxLoad		
 0.5 tons	6000			
 0.75 tons	9000			
