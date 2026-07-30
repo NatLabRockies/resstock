@@ -30472,25 +30472,25 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
    * - ``hvac_heat_pump_capacity_autosizing_methodology``
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
-     - ACCA
+     - HERS
+     - HERS
+     - HERS
+     - HERS
+     - HERS
+     - HERS
+     - HERS
+     - HERS
+     - HERS
+     - HERS
+     - HERS
+     - HERS
+     - HERS
+     - HERS
+     - HERS
+     - HERS
+     - HERS
+     - HERS
+     - HERS
      - 
      - 
    * - ``hvac_heat_pump_heating_load_served_fraction``
@@ -31266,11 +31266,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
    * - ``hvac_heat_pump_capacity_autosizing_methodology``
-     - ACCA
-     - ACCA
+     - HERS
+     - HERS
      - 
-     - ACCA
-     - ACCA
+     - HERS
+     - HERS
      - 
      - 
    * - ``hvac_heat_pump_heating_load_served_fraction``
