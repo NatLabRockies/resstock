@@ -35,7 +35,7 @@ def process_income_lookup(geography: str) -> tuple[pl.DataFrame, list[str]]:
             raise ValueError(f"{geography=} not supported")
     file = f"income_bin_representative_values_by_{ext}.parquet"
 
-    income_lookup = pl.scan_parquet(data_dir / file)
+    income_lookup = pl.read_parquet(data_dir / file)
 
     if geography not in ["National", "National2"]:
         deps = [geography] + deps
@@ -95,7 +95,6 @@ def assign_representative_income(df: pl.LazyFrame | pl.DataFrame, return_map_onl
 
     # QC
     check_df = df2.filter((pl.col("in.income") != "Not Available") & (pl.col(rep_inc).is_null()))
-    check_df = check_df.collect()
     assert len(check_df) == 0, f"rep_income could not be mapped for {len(check_df)} rows\n{check_df}"
 
     # print(f"Note: {rep_inc} is not available for vacant units, which have 'Not Available' for in.income")
