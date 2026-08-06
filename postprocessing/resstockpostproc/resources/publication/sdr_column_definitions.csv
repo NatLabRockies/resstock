@@ -8,21 +8,45 @@ Calculated,yes,yes,boolean,no,,,applicability,applicability,,,,,,,,,Whether the 
 Output,yes,yes,float,no,upgrade_costs.floor_area_conditioned_ft_2,ft^2,in.sqft..ft2,in.sqft,ft2,1,,,,,,,"Floor Area, Conditioned"
 Calculated,yes,yes,float,no,,,in.representative_income,in.representative_income,usd,,,,,,,,Income for this dwelling unit.
 Calculated,yes,yes,string,no,,,in.county_name,in.county_name,,,,,,,,,County name
-Input,yes,yes,string,no,build_existing_model.ahs_region,,in.ahs_region,in.ahs_region,,,,,,,,,American Housing Survey region where the sample is located.
-Input,yes,yes,boolean,no,build_existing_model.aiannh_area,,in.aiannh_area,in.aiannh_area,,,,,,,,,If the dwelling unit model is located in an American Indian/Alaska Native/Native Hawaiian (AIANNH) Area or not.
+Calculated,yes,yes,string,no,,,in.american_housing_survey_region,in.american_housing_survey_region,,,,,,,,,American Housing Survey region where the dwelling unit is located.
+Calculated,yes,yes,string,no,,,in.ashrae_iecc_climate_zone_2006,in.ashrae_iecc_climate_zone_2006,,,,,,,,,ASHRAE Standard 169 - 2006 Climate Zone.
+Calculated,yes,yes,string,no,,,in.building_america_climate_zone,in.building_america_climate_zone,,,,,,,,,DOE Building America climate zone.
+Calculated,yes,yes,string,no,,,in.cambium_grid_region,in.cambium_grid_region,,,,,,,,,Specifies Cambium grid region.
+Calculated,yes,yes,string,no,,,in.cec_climate_zone,in.cec_climate_zone,,,,,,,,,Specifies the California Energy Commission climate zone. Only applicable inside California.
+Calculated,yes,yes,string,no,,,in.census_division_name,in.census_division_name,,,,,,,,,Census division name.
+Calculated,yes,yes,string,no,,,in.census_division_name_recs,in.census_division_name_recs,,,,,,,,,"Census division name as used in RECS 2015. RECS 2015 split the Mountain Census Division into north (CO, ID, MT, UT, WY) and south (AZ, NM, NV)."
+Calculated,yes,yes,string,no,,,in.census_region_name,in.census_region_name,,,,,,,,,Census region name
+Calculated,yes,yes,integer,no,,,in.cluster_id,in.cluster_id,,,,,,,,,The identifier for the geographic cluster ResStock uses to group together areas with similar building stocks.
+Calculated,yes,yes,string,no,,,in.cluster_name,in.cluster_name,,,,,,,,,The name for the geographic cluster ResStock uses to group together areas with similar building stocks.
+Calculated,yes,yes,integer,no,,,in.electric_utility_eia_code,in.electric_utility_eia_code,,,,,,,,,The EIA ID of the electric utility for this building.
+Calculated,yes,yes,string,no,,,in.iso_rto_region,in.iso_rto_region,,,,,,,,,Electric system ISO/RTO region.
+Calculated,yes,yes,string,no,,,in.nhgis_county_gisjoin,in.nhgis_county_gisjoin,,,,,,,,,"County identifier where the model is located, according to format of https://www.nhgis.org/geographic-crosswalks#details"
+Calculated,yes,yes,string,no,,,in.nhgis_puma_gisjoin,in.nhgis_puma_gisjoin,,,,,,,,,"Census PUMA identifier where the model is located, according to format of https://www.nhgis.org/geographic-crosswalks#details"
+Calculated,yes,yes,string,no,,,in.nhgis_state_gisjoin,in.nhgis_state_gisjoin,,,,,,,,,"State identifier where the model is located, according to format of https://www.nhgis.org/geographic-crosswalks#details"
+Calculated,yes,yes,string,no,,,in.nhgis_tract_gisjoin,in.nhgis_tract_gisjoin,,,,,,,,,"Census tract identifier where the model is located, according to format of https://www.nhgis.org/geographic-crosswalks#details"
+Calculated,yes,yes,string,no,,,in.reeds_balancing_area,in.reeds_balancing_area,,,,,,,,,Balancing area ID for the NREL ReEDS modeling tool.
+Calculated,yes,yes,string,no,,,in.resstock_county_id,in.resstock_county_id,,,,,,,,,State abbreviation and county name.
+Calculated,yes,yes,string,no,,,in.resstock_custom_region,in.resstock_custom_region,,,,,,,,,ResStock custom geographic region where the dwelling unit is located.
+Calculated,yes,yes,string,no,,,in.resstock_puma_id,in.resstock_puma_id,,,,,,,,,State abbreviation and PUMA identifier.
+Calculated,yes,yes,string,no,,,in.state,in.state,,,,,,,,,Postal abbreviation of state.
+Calculated,yes,yes,string,no,,,in.state_name,in.state_name,,,,,,,,,Full name of state.
+Calculated,yes,yes,string,no,,,in.weather_file_2018,in.weather_file_2018,,,,,,,,,Weather file used for the 2018 AMY simulations.
+Calculated,yes,yes,string,no,,,in.weather_file_TMY3,in.weather_file_TMY3,,,,,,,,,Weather file used for the TMY3 simulations.
+Input,yes,yes,string,no,build_existing_model.ahs_region,,in.as_simulated_ahs_region,in.as_simulated_ahs_region,,,,,,,,,American Housing Survey region where the model was simulated.
+Input,yes,yes,boolean,no,build_existing_model.aiannh_area,,in.as_simulated_aiannh_area,in.as_simulated_aiannh_area,,,,,,,,,Whether the dwelling unit model was simulated in an American Indian/Alaska Native/Native Hawaiian (AIANNH) Area or not.
 Input,yes,yes,string,no,build_existing_model.area_median_income,,in.area_median_income,in.area_median_income,,,,,,,,,Area median income of the household occupying the dwelling unit. Zero for vacant units.
-Input,yes,yes,string,no,build_existing_model.ashrae_iecc_climate_zone_2004,,in.ashrae_iecc_climate_zone_2004,in.ashrae_iecc_climate_zone_2004,,,,,,,,,Climate zone of the dwelling unit according to ASHRAE 169 in 2004 and IECC in 2012.
-Input,yes,yes,string,no,build_existing_model.ashrae_iecc_climate_zone_2004_sub_cz_split,,in.ashrae_iecc_climate_zone_2004_sub_cz_split,in.ashrae_iecc_climate_zone_2004_sub_cz_split,,,,,,,,,"Climate zone of the dwelling unit according to ASHRAE 169 in 2004 and IECC in 2012. Climate zone 2A is split between counties in TX, LA and FL, GA, AL, and MS and climate zone 1A is split between counties in FL and HI."
+Input,yes,yes,string,no,build_existing_model.ashrae_iecc_climate_zone_2004,,in.as_simulated_ashrae_iecc_climate_zone_2004,in.as_simulated_ashrae_iecc_climate_zone_2004,,,,,,,,,Climate zone of the dwelling unit according to ASHRAE 169 in 2004 and IECC in 2012.
+Input,yes,yes,string,no,build_existing_model.ashrae_iecc_climate_zone_2004_sub_cz_split,,in.as_simulated_ashrae_iecc_climate_zone_2004_sub_cz_split,in.as_simulated_ashrae_iecc_climate_zone_2004_sub_cz_split,,,,,,,,,"Climate zone of the dwelling unit according to ASHRAE 169 in 2004 and IECC in 2012. Climate zone 2A is split between counties in TX, LA and FL, GA, AL, and MS and climate zone 1A is split between counties in FL and HI."
 Input,yes,yes,string,no,build_existing_model.bathroom_spot_vent_hour,,in.bathroom_spot_vent_hour,in.bathroom_spot_vent_hour,,,,,,,,,Bathroom spot ventilation daily start hour.
 Input,yes,yes,string,no,build_existing_model.battery,,in.battery,in.battery,,,,,,,,,"The presence, size, location, and efficiency of an onsite battery (not used in baseline models)."
 Input,yes,yes,integer,no,build_existing_model.bedrooms,,in.bedrooms,in.bedrooms,,,,,,,,,The number of bedrooms in the dwelling unit.
-Input,yes,yes,string,no,build_existing_model.building_america_climate_zone,,in.building_america_climate_zone,in.building_america_climate_zone,,,,,,,,,The Building America Climate Zone where the sample is located.
-Input,yes,yes,string,no,build_existing_model.cec_climate_zone,,in.cec_climate_zone,in.cec_climate_zone,,,,,,,,,The California Energy Commission Climate Zone where the sample is located.
+Input,yes,yes,string,no,build_existing_model.building_america_climate_zone,,in.as_simulated_building_america_climate_zone,in.as_simulated_building_america_climate_zone,,,,,,,,,The Building America Climate Zone where the model was simulated.
+Input,yes,yes,string,no,build_existing_model.cec_climate_zone,,in.as_simulated_cec_climate_zone,in.as_simulated_cec_climate_zone,,,,,,,,,The California Energy Commission Climate Zone where the model was simulated.
 Input,yes,yes,string,no,build_existing_model.ceiling_fan,,in.ceiling_fan,in.ceiling_fan,,,,,,,,,Presence and energy usage of ceiling fans at medium speed.
-Input,yes,yes,string,no,build_existing_model.census_division,,in.census_division,in.census_division,,,,,,,,,The 2010 U.S. Census Division where the sample is located.
-Input,yes,yes,string,no,build_existing_model.census_division_recs,,in.census_division_recs,in.census_division_recs,,,,,,,,,"Census Division as used in RECS 2015 where the sample is located. RECS 2015 split the Mountain Census Division into north (CO, ID, MT, UT, WY) and south (AZ, NM, NV)."
-Input,yes,yes,string,no,build_existing_model.census_region,,in.census_region,in.census_region,,,,,,,,,The 2010 U.S. Census Region where the sample is located.
-Input,yes,yes,string,no,build_existing_model.city,,in.city,in.city,,,,,,,,,The census-designated city where the sample is located.
+Input,yes,yes,string,no,build_existing_model.census_division,,in.as_simulated_census_division,in.as_simulated_census_division,,,,,,,,,The 2010 U.S. Census Division where the model was simulated.
+Input,yes,yes,string,no,build_existing_model.census_division_recs,,in.as_simulated_census_division_recs,in.as_simulated_census_division_recs,,,,,,,,,"Census Division as used in RECS 2015 where the model was simulated. RECS 2015 split the Mountain Census Division into north (CO, ID, MT, UT, WY) and south (AZ, NM, NV)."
+Input,yes,yes,string,no,build_existing_model.census_region,,in.as_simulated_census_region,in.as_simulated_census_region,,,,,,,,,The 2010 U.S. Census Region where the model was simulated.
+Input,yes,yes,string,no,build_existing_model.city,,in.as_simulated_city,in.as_simulated_city,,,,,,,,,The census-designated city where the model was simulated.
 Input,yes,yes,string,no,build_existing_model.clothes_dryer,,in.clothes_dryer,in.clothes_dryer,,,,,,,,,"The presence, rated efficiency, and fuel type of the clothes dryer in a dwelling unit."
 Input,yes,yes,string,no,build_existing_model.clothes_dryer_usage_level,,in.clothes_dryer_usage_level,in.clothes_dryer_usage_level,,,,,,,,,Clothes dryer energy usage level multiplier.
 Input,yes,yes,string,no,build_existing_model.clothes_washer,,in.clothes_washer,in.clothes_washer,,,,,,,,,Presence and rated efficiency of the clothes washer.
@@ -36,10 +60,10 @@ Input,yes,yes,boolean,no,build_existing_model.cooling_setpoint_has_offset,,in.co
 Input,yes,yes,string,no,build_existing_model.cooling_setpoint_offset_magnitude,,in.cooling_setpoint_offset_magnitude,in.cooling_setpoint_offset_magnitude,,,,,,,,,The magnitude of cooling setpoint offset.
 Input,yes,yes,string,no,build_existing_model.cooling_setpoint_offset_period,,in.cooling_setpoint_offset_period,in.cooling_setpoint_offset_period,,,,,,,,,The period and offset for the dwelling unit’s cooling setpoint. Default for the day is from 9am to 5pm and for the night is 10pm to 7am.
 Input,yes,yes,string,no,build_existing_model.corridor,,in.corridor,in.corridor,,,,,,,,,Type of corridor attached to multi-family units.
-Input,yes,yes,string,no,build_existing_model.county,,in.county,in.county,,,,,,,,,The U.S. County where the sample is located.
-Input,yes,yes,string,no,build_existing_model.county_and_puma,,in.county_and_puma,in.county_and_puma,,,,,,,,,The GISJOIN identifier for the County and the Public Use Microdata Area (PUMA) where the sample is located.
-Input,yes,yes,string,no,build_existing_model.county_metro_status,,in.county_metro_status,in.county_metro_status,,,,,,,,,Whether the county is part of a census-defined metro area.
-Input,yes,yes,string,no,build_existing_model.custom_state,,in.custom_state,in.custom_state,,,,,,,,,A custom selection of states to be able to have more fine tuned probability distributionin states where we have more data.
+Input,yes,yes,string,no,build_existing_model.county,,in.as_simulated_county,in.as_simulated_county,,,,,,,,,The U.S. County where the model was simulated.
+Input,yes,yes,string,no,build_existing_model.county_and_puma,,in.as_simulated_county_and_puma,in.as_simulated_county_and_puma,,,,,,,,,The GISJOIN identifier for the County and the Public Use Microdata Area (PUMA) where the model was simulated.
+Input,yes,yes,string,no,build_existing_model.county_metro_status,,in.as_simulated_county_metro_status,in.as_simulated_county_metro_status,,,,,,,,,Whether the county is part of a census-defined metro area.
+Input,yes,yes,string,no,build_existing_model.custom_state,,in.as_simulated_custom_state,in.as_simulated_custom_state,,,,,,,,,A custom selection of states to be able to have more fine tuned probability distributionin states where we have more data.
 Input,yes,yes,string,no,build_existing_model.dehumidifier,,in.dehumidifier,in.dehumidifier,,,,,,,,,"Presence, water removal rate, and humidity setpoint of the dehumidifier."
 Input,yes,yes,string,no,build_existing_model.dishwasher,,in.dishwasher,in.dishwasher,,,,,,,,,The presence and rated efficiency of the dishwasher.
 Input,yes,yes,string,no,build_existing_model.dishwasher_usage_level,,in.dishwasher_usage_level,in.dishwasher_usage_level,,,,,,,,,Dishwasher energy usage level multiplier.
@@ -56,7 +80,7 @@ Input,yes,yes,string,no,build_existing_model.electric_vehicle_charger,,in.electr
 Input,yes,yes,integer,no,build_existing_model.electric_vehicle_miles_traveled,,in.electric_vehicle_miles_traveled,in.electric_vehicle_miles_traveled,,,,,,,,,"The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle. EVs are driven fewer miles than internal combustine engine (ICE) cars, so the max value is capped at 22,500 miles/yr and the distribution is shifted to reduce the mean."
 Input,yes,yes,boolean,no,build_existing_model.electric_vehicle_outlet_access,,in.electric_vehicle_outlet_access,in.electric_vehicle_outlet_access,,,,,,,,,If the dwelling unit has an electric outlet within 20 feet of EV parking.
 Input,yes,yes,boolean,no,build_existing_model.electric_vehicle_ownership,,in.electric_vehicle_ownership,in.electric_vehicle_ownership,,,,,,,,,If the dwelling unit owns an EV.
-Input,yes,yes,string,no,build_existing_model.energystar_climate_zone_2023,,in.energystar_climate_zone_2023,in.energystar_climate_zone_2023,,,,,,,,,"Climate zones for windows, doors, and skylights per 2023 ENERGYSTAR guidelines."
+Input,yes,yes,string,no,build_existing_model.energystar_climate_zone_2023,,in.as_simulated_energystar_climate_zone_2023,in.as_simulated_energystar_climate_zone_2023,,,,,,,,,"Climate zones for windows, doors, and skylights per 2023 ENERGYSTAR guidelines."
 Input,yes,yes,string,no,build_existing_model.federal_poverty_level,,in.federal_poverty_level,in.federal_poverty_level,,,,,,,,,Federal poverty level of the household occupying the dwelling unit.
 Input,yes,yes,string,no,build_existing_model.generation_and_emissions_assessment_region,,in.generation_and_emissions_assessment_region,in.generation_and_emissions_assessment_region,,,,,,,,,The generation and carbon emissions assessment (GEA) region from Cambium 2023 and 2024.
 Input,yes,yes,string,no,build_existing_model.geometry_attic_type,,in.geometry_attic_type,in.geometry_attic_type,,,,,,,,,The dwelling unit attic type.
@@ -124,13 +148,13 @@ Input,yes,yes,string,no,build_existing_model.insulation_roof,,in.insulation_roof
 Input,yes,yes,string,no,build_existing_model.insulation_slab,,in.insulation_slab,in.insulation_slab,,,,,,,,,Slab insulation level.
 Input,yes,yes,string,no,build_existing_model.insulation_wall,,in.insulation_wall,in.insulation_wall,,,,,,,,,Wall construction type and insulation level.
 Input,yes,yes,string,no,build_existing_model.interior_shading,,in.interior_shading,in.interior_shading,,,,,,,,,Type of window interior shading.
-Input,yes,yes,string,no,build_existing_model.iso_rto_region,,in.iso_rto_region,in.iso_rto_region,,,,,,,,,The independent system operator (ISO) or regional transmission organization (RTO) region where the dwelling unit is located.
+Input,yes,yes,string,no,build_existing_model.iso_rto_region,,in.as_simulated_iso_rto_region,in.as_simulated_iso_rto_region,,,,,,,,,The independent system operator (ISO) or regional transmission organization (RTO) region where the model was simulated.
 Input,yes,yes,string,no,build_existing_model.lighting,,in.lighting,in.lighting,,,,,,,,,Fraction of lighting types.
 Input,yes,yes,string,no,build_existing_model.lighting_interior_use,,in.lighting_interior_use,in.lighting_interior_use,,,,,,,,,Interior lighting usage relative to the national average.
 Input,yes,yes,string,no,build_existing_model.lighting_other_use,,in.lighting_other_use,in.lighting_other_use,,,,,,,,,Exterior and garage lighting usage relative to the national average.
-Input,yes,yes,string,no,build_existing_model.location_region,,in.location_region,in.location_region,,,,,,,,,Custom ResStock region where the sample is located.
+Input,yes,yes,string,no,build_existing_model.location_region,,in.as_simulated_location_region,in.as_simulated_location_region,,,,,,,,,Custom ResStock region where the model was simulated.
 Input,yes,yes,string,no,build_existing_model.mechanical_ventilation,,in.mechanical_ventilation,in.mechanical_ventilation,,,,,,,,,Mechanical ventilation type and efficiency.
-Input,yes,yes,string,no,build_existing_model.metropolitan_and_micropolitan_statistical_area,,in.metropolitan_and_micropolitan_statistical_area,in.metropolitan_and_micropolitan_statistical_area,,,,,,,,,The U.S. Metropolitan Statistical Area (MSA) or Micropolitan Statistical Area (MicroSA) where the sample is located.
+Input,yes,yes,string,no,build_existing_model.metropolitan_and_micropolitan_statistical_area,,in.as_simulated_metropolitan_and_micropolitan_statistical_area,in.as_simulated_metropolitan_and_micropolitan_statistical_area,,,,,,,,,The U.S. Metropolitan Statistical Area (MSA) or Micropolitan Statistical Area (MicroSA) where the model was simulated.
 Input,yes,yes,string,no,build_existing_model.misc_extra_refrigerator,,in.misc_extra_refrigerator,in.misc_extra_refrigerator,,,,,,,,,The presence and rated efficiency of the secondary refrigerator.
 Input,yes,yes,string,no,build_existing_model.misc_freezer,,in.misc_freezer,in.misc_freezer,,,,,,,,,The presence and rated efficiency of a standalone freezer.
 Input,yes,yes,string,no,build_existing_model.misc_gas_fireplace,,in.misc_gas_fireplace,in.misc_gas_fireplace,,,,,,,,,Presence of a gas fireplace.`
@@ -147,18 +171,19 @@ Input,yes,yes,string,no,build_existing_model.occupants,,in.occupants,in.occupant
 Input,yes,yes,string,no,build_existing_model.orientation,,in.orientation,in.orientation,,,,,,,,,Orientation of the front of the dwelling unit as it faces the street.
 Input,yes,yes,string,no,build_existing_model.plug_load_diversity,,in.plug_load_diversity,in.plug_load_diversity,,,,,,,,,Plug load diversity multiplier intended to add variation in plug load profiles across all simulations.
 Input,yes,yes,string,no,build_existing_model.plug_loads,,in.plug_loads,in.plug_loads,,,,,,,,,Plug load usage level which is varied by Census Division RECS and Building Type RECS.
-Input,yes,yes,string,no,build_existing_model.puma,,in.puma,in.puma,,,,,,,,,The 2010 Public Use Microdata Area (PUMA) where the dwelling unit is located.
-Input,yes,yes,string,no,build_existing_model.puma_metro_status,,in.puma_metro_status,in.puma_metro_status,,,,,,,,,The Public Use Microdata Area (PUMA) metropolitan status where the dwelling unit is located.
+Input,yes,yes,string,no,build_existing_model.puma,,in.as_simulated_puma,in.as_simulated_puma,,,,,,,,,The 2010 Public Use Microdata Area (PUMA) where the model was simulated.
+Input,yes,yes,string,no,build_existing_model.puma_metro_status,,in.as_simulated_puma_metro_status,in.as_simulated_puma_metro_status,,,,,,,,,The Public Use Microdata Area (PUMA) metropolitan status where the model was simulated.
 Input,yes,yes,string,no,build_existing_model.pv_orientation,,in.pv_orientation,in.pv_orientation,,,,,,,,,The presence and orientation of the photovoltaic system.
 Input,yes,yes,string,no,build_existing_model.pv_system_size,,in.pv_system_size,in.pv_system_size,,,,,,,,,The size of the photovoltaic system.
 Input,yes,yes,string,no,build_existing_model.radiant_barrier,,in.radiant_barrier,in.radiant_barrier,,,,,,,,,Presence of radiant barrier in the attic (not modeled).
 Input,yes,yes,string,no,build_existing_model.range_spot_vent_hour,,in.range_spot_vent_hour,in.range_spot_vent_hour,,,,,,,,,Range spot ventilation daily start hour.
-Input,yes,yes,string,no,build_existing_model.reeds_balancing_area,,in.reeds_balancing_area,in.reeds_balancing_area,,,,,,,,,The Regional Energy Deployment System Model (ReEDS) balancing area where the dwelling unit is located.
+Input,yes,yes,string,no,build_existing_model.reeds_balancing_area,,in.as_simulated_reeds_balancing_area,in.as_simulated_reeds_balancing_area,,,,,,,,,The Regional Energy Deployment System Model (ReEDS) balancing area where the model was simulated.
 Input,yes,yes,string,no,build_existing_model.refrigerator,,in.refrigerator,in.refrigerator,,,,,,,,,The presence and rated efficiency of the primary refrigerator.
 Input,yes,yes,string,no,build_existing_model.refrigerator_usage_level,,in.refrigerator_usage_level,in.refrigerator_usage_level,,,,,,,,,Refrigerator energy usage level multiplier.
 Input,yes,yes,string,no,build_existing_model.roof_material,,in.roof_material,in.roof_material,,,,,,,,,Roof material and color.
-Input,yes,yes,string,no,build_existing_model.state,,in.state,in.state,,,,,,,,,The U.S. State.
-Input,yes,yes,string,no,build_existing_model.state_metro_median_income,,in.state_metro_median_income,in.state_metro_median_income,,,,,,,,,"The census-supplied median income for dwelling units in the metro area where the dwelling unit is located, which can be different from the State Median Income."
+Input,yes,yes,string,no,build_existing_model.sampling_region,,in.sampling_region_id,in.sampling_region_id,,,,,,,,,Region assigned through the sampling process.
+Input,yes,yes,string,no,build_existing_model.state,,in.as_simulated_state,in.as_simulated_state,,,,,,,,,The U.S. State.
+Input,yes,yes,string,no,build_existing_model.state_metro_median_income,,in.as_simulated_state_metro_median_income,in.as_simulated_state_metro_median_income,,,,,,,,,"The census-supplied median income for dwelling units in the metro area where the model was simulated, which can be different from the State Median Income."
 Input,yes,yes,string,no,build_existing_model.tenure,,in.tenure,in.tenure,,,,,,,,,The tenancy (owner or renter) of the household occupying the dwelling unit.
 Input,yes,yes,string,no,build_existing_model.usage_level,,in.usage_level,in.usage_level,,,,,,,,,Usage of major appliances relative to the national average.
 Input,yes,yes,string,no,build_existing_model.vacancy_status,,in.vacancy_status,in.vacancy_status,,,,,,,,,The vacancy status (occupied or vacant) of the dwelling unit.
@@ -211,8 +236,8 @@ Input,no,no,string,no,build_existing_model.utility_bill_simple_filepaths,,in.uti
 Input,no,no,float,no,build_existing_model.utility_bill_wood_fixed_charges,$/month,in.utility_bill_wood_fixed_charges,in.utility_bill_wood_fixed_charges,usd/month,,,,,,,,"Wood utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list."
 Input,no,no,float,no,build_existing_model.utility_bill_wood_marginal_rates,$/kBtu,in.utility_bill_wood_marginal_rates,in.utility_bill_wood_marginal_rates,usd/kbtu,,,,,,,,"Wood utility bill marginal rates. If multiple scenarios, use a comma-separated list."
 Input,yes,yes,string,no,build_existing_model.weather_file_city,,in.weather_file_city,in.weather_file_city,,,,,,,,,City from the EPW weather file.
-Input,yes,yes,float,no,build_existing_model.weather_file_latitude,,in.weather_file_latitude,in.weather_file_latitude,,,,,,,,,Latitude from the EPW weather file.
-Input,yes,yes,float,no,build_existing_model.weather_file_longitude,,in.weather_file_longitude,in.weather_file_longitude,,,,,,,,,Longitude from the EPW weather file.
+Input,yes,yes,float,no,build_existing_model.weather_file_latitude,,in.as_simulated_weather_file_latitude,in.as_simulated_weather_file_latitude,,,,,,,,,Latitude from the EPW weather file.
+Input,yes,yes,float,no,build_existing_model.weather_file_longitude,,in.as_simulated_weather_file_longitude,in.as_simulated_weather_file_longitude,,,,,,,,,Longitude from the EPW weather file.
 Input,yes,yes,string,no,build_existing_model.heating_unavailable_period,,in.heating_unavailable_period,in.heating_unavailable_period,,,,,,,,,Date range when the heating system is unavailable.
 Input,yes,yes,string,no,build_existing_model.cooling_unavailable_period,,in.cooling_unavailable_period,in.cooling_unavailable_period,,,,,,,,,Date range when the cooling system is unavailable.
 Output,yes,yes,float,no,upgrade_costs.door_area_ft_2,ft^2,out.params.door_area..ft2,out.params.door_area_ft_2,ft2,1,,,,,,,Door Area

@@ -27,6 +27,7 @@ dependencies = [
     "fsspec",
     "geopandas",
     "gunicorn>=23.0.0",
+    "joblib",
     "kaleido",
     "markdown>=3.9",
     "nbformat>=4.2.0",
