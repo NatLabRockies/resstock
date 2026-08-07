@@ -2,6 +2,7 @@ import argparse
 import boto3
 import json
 import logging
+import numpy as np
 import os
 from pathlib import Path
 import polars as pl
@@ -10,6 +11,20 @@ from resstockpostproc.utils import FsspecOutputDir, setup_fsspec_filesystem
 import s3fs
 
 logger = logging.getLogger(__name__)
+
+# Seed for the per-row uniform draws that pick a building out of each pool
+DEFAULT_RANDOM_SEED = 1
+
+# Characteristics that define a pool of interchangeable buildings for a catalogue row
+ALLOCATION_KEYS = [
+    "Sampling Region",
+    "Tenure",
+    "Vacancy Status",
+    "Geometry Building Type RECS",
+    "Vintage",
+    "Heating Fuel",
+    "Federal Poverty Level",
+]
 
 
 def load_catalogue_file(output_dir: FsspecOutputDir, catalogue_file_version: str) -> pl.DataFrame:
@@ -245,15 +260,47 @@ def merge_geographical_data(
     return df
 
 
-def allocate_buildings_to_geography(geo_df: pl.DataFrame, bs_df: pl.DataFrame) -> tuple[pl.DataFrame, pl.DataFrame]:
+def draw_from_pools(df: pl.DataFrame, rng: np.random.Generator) -> pl.DataFrame:
+    """Replace each row's list of candidate buildings with one building drawn from it.
+
+    Every row gets its own uniform variate, so the draw is independent row to row and uniform
+    over that row's pool. Rows whose pool is null, because the join found no matching buildings,
+    keep a null Building.
+
+    Args:
+        df: Frame whose Building column holds a list of candidate buildings per row
+        rng: Seeded generator supplying one uniform variate per row
+
+    Returns:
+        Frame with Building reduced to a single drawn building per row
+    """
+
+    return (
+        df.with_columns(pl.Series("draw", rng.random(df.height), dtype=pl.Float64))
+        .with_columns(
+            pl.col("Building").list.get(
+                (pl.col("draw") * pl.col("Building").list.len()).floor().cast(pl.Int64),
+                null_on_oob=True,
+            )
+        )
+        .drop("draw")
+    )
+
+
+def allocate_buildings_to_geography(
+    geo_df: pl.DataFrame,
+    bs_df: pl.DataFrame,
+    random_seed: int = DEFAULT_RANDOM_SEED,
+) -> tuple[pl.DataFrame, pl.DataFrame]:
     """Allocate buildings from sample to geographical units.
 
-    Groups buildings by key characteristics, then randomly samples one building
-    for each row in the geographical catalogue.
+    Groups buildings by key characteristics, then draws one building uniformly at random for
+    each row in the geographical catalogue.
 
     Args:
         geo_df: Geographical data with sampling regions assigned
         bs_df: Buildstock sample data with building characteristics
+        random_seed: Seed making the draws reproducible
 
     Returns:
         Tuple of (allocated_df, fkt) where:
@@ -262,39 +309,16 @@ def allocate_buildings_to_geography(geo_df: pl.DataFrame, bs_df: pl.DataFrame) -
     """
 
     logger.info("Processing allocated weights")
+    rng = np.random.default_rng(random_seed)
 
     # Group buildstock buildings by their key characteristics to create pools of similar buildings
-    grouped_df = bs_df.group_by(
-        [
-            "Sampling Region",
-            "Tenure",
-            "Vacancy Status",
-            "Geometry Building Type RECS",
-            "Vintage",
-            "Heating Fuel",
-            "Federal Poverty Level",
-        ]
-    ).agg(pl.col("Building").unique())
+    grouped_df = bs_df.group_by(ALLOCATION_KEYS).agg(pl.col("Building").unique())
 
-    # Join geography with building pools and randomly sample one building per geography row
-    allocated_df = (
-        geo_df.lazy()
-        .join(
-            grouped_df.lazy(),
-            on=[
-                "Sampling Region",
-                "Tenure",
-                "Vacancy Status",
-                "Geometry Building Type RECS",
-                "Vintage",
-                "Heating Fuel",
-                "Federal Poverty Level",
-            ],
-            how="left",
-        )
-        .with_columns(pl.col("Building").list.sample(n=1).list.first())
-        .collect()
+    # Join geography with building pools, then draw one building per geography row
+    joined_df = (
+        geo_df.lazy().join(grouped_df.lazy(), on=ALLOCATION_KEYS, how="left").collect()
     )
+    allocated_df = draw_from_pools(joined_df, rng)
 
     # Extract foreign key table with building-to-geography mappings
     fkt = allocated_df.select(
@@ -341,7 +365,12 @@ def write_parquet_outputs(output_dir: FsspecOutputDir, allocated_df: pl.DataFram
     logger.info("Completed creating allocated weights artifacts")
 
 def create_allocated_weights(
-    bs_file: str, output_dir: str, aws_profile_name=None, catalogue_file_version="v0", sampling_region_version="v1"
+    bs_file: str,
+    output_dir: str,
+    aws_profile_name=None,
+    catalogue_file_version="v0",
+    sampling_region_version="v1",
+    random_seed: int = DEFAULT_RANDOM_SEED,
 ) -> None:
     """Create allocated weights table from raw sample file and write to output parquet.
 
@@ -359,6 +388,7 @@ def create_allocated_weights(
         aws_profile_name: Optional AWS profile name for S3 access
         catalogue_file_version: Version of catalogue file to use (default 'v0')
         sampling_region_version: Version of sampling regions file to use (default 'v1')
+        random_seed: Seed making the building draws reproducible
     """
 
     # Set up filesystem for local or S3 for output file
@@ -380,7 +410,7 @@ def create_allocated_weights(
     bs_df = pl.read_csv(bs_file, infer_schema_length=10000)
 
     # Allocate buildings to geographical units
-    allocated_df, fkt = allocate_buildings_to_geography(geo_df, bs_df)
+    allocated_df, fkt = allocate_buildings_to_geography(geo_df, bs_df, random_seed)
 
     # Write output parquet files
     write_parquet_outputs(output_dir, allocated_df, fkt)
@@ -406,7 +436,13 @@ if __name__ == "__main__":
         default="./../output/",
         help="Path to write the allocated weights output parquet to",
     )
+    parser.add_argument(
+        "--random_seed",
+        type=int,
+        default=DEFAULT_RANDOM_SEED,
+        help="Seed for the building draws",
+    )
 
     # Parse command-line arguments and call the create_allocated_weights function
     args = parser.parse_args()
-    create_allocated_weights(args.sample_file, args.output_dir)
+    create_allocated_weights(args.sample_file, args.output_dir, random_seed=args.random_seed)
