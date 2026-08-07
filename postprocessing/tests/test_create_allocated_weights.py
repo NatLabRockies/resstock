@@ -1,6 +1,11 @@
 import polars as pl
+import pytest
 
-from resstockpostproc.create_allocated_weights import allocate_buildings_to_geography
+from resstockpostproc.create_allocated_weights import (
+    allocate_buildings_to_geography,
+    check_allocation_misses,
+    coerce_vacant_join_keys,
+)
 
 # Three cells with pools of different sizes, keyed only by Sampling Region since the other
 # characteristics are held constant across the synthetic frame
@@ -68,3 +73,81 @@ def test_seed_controls_the_draw():
 
     assert first.to_list() == repeat.to_list()
     assert first.to_list() != other.to_list()
+
+
+def test_vacant_rows_draw_across_fuels():
+    bs_df = pl.concat(
+        [
+            make_bs_df(),
+            pl.DataFrame(
+                {
+                    "Building": [40, 41],
+                    "Sampling Region": [1, 1],
+                    "Tenure": "Not Available",
+                    "Vacancy Status": "Vacant",
+                    "Geometry Building Type RECS": "Single-Family Detached",
+                    "Vintage": "1980s",
+                    "Heating Fuel": ["Natural Gas", "Electricity"],
+                    "Federal Poverty Level": "Not Available",
+                }
+            ),
+        ]
+    )
+    geo_df = make_geo_df(rows_per_cell=1_000).with_columns(
+        pl.when(pl.col("Sampling Region") == 1)
+        .then(pl.lit("Vacant"))
+        .otherwise(pl.col("Vacancy Status"))
+        .alias("Vacancy Status"),
+        # The catalogue never models these three characteristics for a vacant unit
+        pl.when(pl.col("Sampling Region") == 1)
+        .then(None)
+        .otherwise(pl.col("Heating Fuel"))
+        .alias("Heating Fuel"),
+        pl.when(pl.col("Sampling Region") == 1)
+        .then(None)
+        .otherwise(pl.col("Tenure"))
+        .alias("Tenure"),
+        pl.when(pl.col("Sampling Region") == 1)
+        .then(None)
+        .otherwise(pl.col("Federal Poverty Level"))
+        .alias("Federal Poverty Level"),
+    )
+
+    allocated_df, _ = allocate_buildings_to_geography(
+        coerce_vacant_join_keys(geo_df), bs_df, random_seed=7
+    )
+
+    vacant = allocated_df.filter(pl.col("Vacancy Status") == "Vacant")
+    assert vacant.height == 1_000
+    assert vacant["Building"].null_count() == 0
+    assert set(vacant["Building"].unique().to_list()) == {40, 41}
+
+
+def test_unmatched_rows_raise_above_the_threshold():
+    bs_df = make_bs_df().filter(pl.col("Sampling Region") != 3)
+    allocated_df, _ = allocate_buildings_to_geography(
+        make_geo_df(rows_per_cell=1_000), bs_df, random_seed=7
+    )
+
+    misses = allocated_df.filter(pl.col("Building").is_null())
+    assert misses.height == 1_000
+
+    assert check_allocation_misses(allocated_df, null_building_threshold=0.5).height == 1_000
+    with pytest.raises(ValueError, match="found no matching building"):
+        check_allocation_misses(allocated_df, null_building_threshold=0.005)
+
+
+def test_coerce_vacant_join_keys_leaves_occupied_rows_alone():
+    catalogue_df = pl.DataFrame(
+        {
+            "Vacancy Status": ["Vacant", "Occupied"],
+            "Tenure": [None, "Owner"],
+            "Federal Poverty Level": [None, "400%+"],
+            "Heating Fuel": [None, "Natural Gas"],
+        }
+    )
+    coerced = coerce_vacant_join_keys(catalogue_df)
+
+    assert coerced["Tenure"].to_list() == ["Not Available", "Owner"]
+    assert coerced["Federal Poverty Level"].to_list() == ["Not Available", "400%+"]
+    assert coerced["Heating Fuel"].to_list() == [None, "Natural Gas"]
